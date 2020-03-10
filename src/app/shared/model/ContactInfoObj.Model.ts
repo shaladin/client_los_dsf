@@ -1,0 +1,23 @@
+export class ContactInfoObj{
+    name : any;
+    idNo : any;
+    custRelationshipName : any;
+    mobilePhone : any;
+    genderName : any;
+    isEmergencyContact : any;
+    mrCustRelationship : any;
+    mrIdType : any;
+    mrGender : any;
+    motherMaidenName : any;
+    idExpDt : any;
+    mrMaritalStat : any;
+    birthPlace : any;
+    birthDt : any;
+    mrNationality : any;
+    country : any;
+    email : any;
+    mrEducation : any;
+    profession : any;
+    mrReligion : any;
+    addressObj : any;   
+}

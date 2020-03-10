@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CONFINS - LOS</title>
+  <base href="/">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="assets/fonts/feather/style.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="assets/vendor/pace/themes/black/pace-theme-flash.css" />
+  <link rel="stylesheet" type="text/css" href="assets/css/open-sans.css" />
+  
+  <style type="text/css">
+    .pace .pace-activity {
+      top: 19px;
+      right: 19px;
+      display: none;
+    }
+
+    .page-loading {
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      overflow: hidden;
+      background: rgba(51, 51, 51, 1.00);
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      z-index: -1;
+    }
+
+    .loading-icon {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 38px;
+      height: 38px;
+      margin-left: -19px;
+      margin-top: -19px;
+    }
+
+    app-root:empty~.page-loading {
+      opacity: 1;
+      z-index: 1;
+    }
+  </style>
+  <script>
+    function getLocalIP() {
+      return new Promise(function (resolve, reject) {
+        // NOTE: window.RTCPeerConnection is "not a constructor" in FF22/23
+        var RTCPeerConnection = /*window.RTCPeerConnection ||*/ window.webkitRTCPeerConnection || window.mozRTCPeerConnection;
+
+        if (!RTCPeerConnection) {
+          reject('Your browser does not support this API');
+        }
+
+        var rtc = new RTCPeerConnection({ iceServers: [] });
+        var addrs = {};
+        addrs["0.0.0.0"] = false;
+
+        function grepSDP(sdp) {
+          var hosts = [];
+          var finalIP = '';
+          sdp.split('\r\n').forEach(function (line) { // c.f. http://tools.ietf.org/html/rfc4566#page-39
+            if (~line.indexOf("a=candidate")) {     // http://tools.ietf.org/html/rfc4566#section-5.13
+              var parts = line.split(' '),        // http://tools.ietf.org/html/rfc5245#section-15.1
+                addr = parts[4],
+                type = parts[7];
+              if (type === 'host') {
+                finalIP = addr;
+              }
+            } else if (~line.indexOf("c=")) {       // http://tools.ietf.org/html/rfc4566#section-5.7
+              var parts = line.split(' '),
+                addr = parts[2];
+              finalIP = addr;
+            }
+          });
+          return finalIP;
+        }
+
+        if (1 || window.mozRTCPeerConnection) {      // FF [and now Chrome!] needs a channel/stream to proceed
+          rtc.createDataChannel('', { reliable: false });
+        };
+
+        rtc.onicecandidate = function (evt) {
+          // convert the candidate to SDP so we can run it through our general parser
+          // see https://twitter.com/lancestout/status/525796175425720320 for details
+          if (evt.candidate) {
+            var addr = grepSDP("a=" + evt.candidate.candidate);
+            resolve(addr);
+          }
+        };
+        rtc.createOffer(function (offerDesc) {
+          rtc.setLocalDescription(offerDesc);
+        }, function (e) { console.warn("offer failed", e); });
+      });
+    }
+
+    getLocalIP().then((ipAddr) => {
+      localStorage.setItem("LocalIp",ipAddr);
+      console.log(ipAddr); // 192.168.0.122
+    });
+  </script>
+</head>
+
+<body>
+
+  <app-root></app-root>
+</body>
+
+</html>

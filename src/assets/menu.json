@@ -1,0 +1,354 @@
+[
+  {
+    "path": "/dashboard/dash-board",
+    "title": "Menu",
+    "icon": "ft-home",
+    "class": "",
+    "badge": "",
+    "badgeClass": "",
+    "isExternalLink": false,
+    "submenu": []
+  },
+  {
+    "path": "",
+    "title": "Common Setting",
+    "icon": "ft-users",
+    "class": "has-sub",
+    "badge": "",
+    "badgeClass": "",
+    "isExternalLink": false,
+    "submenu": [
+      {
+        "path": "",
+        "title": "Master",
+        "icon": "",
+        "class": "has-sub",
+        "badge": "",
+        "badgeClass": "",
+        "isExternalLink": false,
+        "submenu": [
+          {
+            "path": "/commonSetting/master",
+            "title": "Master Maintenance",
+            "icon": "",
+            "class": "",
+            "badge": "",
+            "badgeClass": "",
+            "isExternalLink": false,
+            "submenu": []
+          },
+          {
+            "path": "/commonSetting/master/detail",
+            "title": "Master Add",
+            "icon": "",
+            "class": "",
+            "badge": "",
+            "badgeClass": "",
+            "isExternalLink": false,
+            "submenu": []
+          }
+        ]
+      },
+      {
+        "path": "/commonSetting/generalSetting",
+        "title": "General Setting",
+        "icon": "",
+        "class": "",
+        "badge": "",
+        "badgeClass": "",
+        "isExternalLink": false,
+        "submenu": []
+      }
+    ]
+  },
+  {
+    "path": "",
+    "title": "Organization Struct",
+    "icon": "ft-bar-chart-2",
+    "class": "has-sub",
+    "badge": "",
+    "badgeClass": "",
+    "isExternalLink": false,
+    "submenu": [
+
+      { "path": "", "title": "Job Title", "icon": "", "class": "has-sub", "badge": "", "badgeClass": "", "isExternalLink": false, "submenu": [
+        { "path": "/organization/refjobtitle", "title": "Job Title Maintenance", "icon": "", "class": "", "badge": "", "badgeClass": "", "isExternalLink": false, "submenu": []},
+        { "path": "/organization/refjobtitle/add", "title": "Add Job Title", "icon": "", "class": "", "badge": "", "badgeClass": "", "isExternalLink": false, "submenu": []}
+    ] },
+    { "path": "", "title": "Organization", "icon": "", "class": "has-sub", "badge": "", "badgeClass": "", "isExternalLink": false, "submenu": [
+        { "path": "/organization/organization", "title": "Organization Maintenance", "icon": "", "class": "", "badge": "", "badgeClass": "", "isExternalLink": false, "submenu": []},
+        { "path": "/organization/organization/add", "title": "Add Organization", "icon": "", "class": "", "badge": "", "badgeClass": "", "isExternalLink": false, "submenu": []}
+    ] }
+    ]
+  },
+  {
+    "path": "",
+    "title": "Customer",
+    "icon": "ft-user-plus",
+    "class": "has-sub",
+    "badge": "",
+    "badgeClass": "",
+    "isExternalLink": false,
+    "submenu": [
+      {
+        "path": "/customer",
+        "title": "Customer Maintenance",
+        "icon": "",
+        "class": "",
+        "badge": "",
+        "badgeClass": "",
+        "isExternalLink": false,
+        "submenu": []
+      }
+    ]
+  },
+  {
+    "path": "",
+    "title": "Company",
+    "icon": "ft-user-plus",
+    "class": "has-sub",
+    "badge": "",
+    "badgeClass": "",
+    "isExternalLink": false,
+    "submenu": [
+      {
+        "path": "/company",
+        "title": "Company Maintenance",
+        "icon": "",
+        "class": "",
+        "badge": "",
+        "badgeClass": "",
+        "isExternalLink": false,
+        "submenu": []
+      }
+    ]
+  },
+  {
+    "path": "",
+    "title": "Office",
+    "icon": "ft-airplay",
+    "class": "has-sub",
+    "badge": "",
+    "badgeClass": "",
+    "isExternalLink": false,
+    "submenu": [
+      {
+        "path": "/office",
+        "title": "Office Maintenance",
+        "icon": "",
+        "class": "",
+        "badge": "",
+        "badgeClass": "",
+        "isExternalLink": false,
+        "submenu": []
+      },
+      {
+        "path": "/office/add",
+        "title": "Office Add",
+        "icon": "",
+        "class": "",
+        "badge": "",
+        "badgeClass": "",
+        "isExternalLink": false,
+        "submenu": []
+      },
+      {
+        "path": "",
+        "title": "Office Area",
+        "icon": "",
+        "class": "has-sub",
+        "badge": "",
+        "badgeClass": "",
+        "isExternalLink": false,
+        "submenu": [
+          {
+            "path": "/office/officeArea",
+            "title": "Office Area Maintenance",
+            "icon": "",
+            "class": "",
+            "badge": "",
+            "badgeClass": "",
+            "isExternalLink": false,
+            "submenu": []
+          },
+          {
+            "path": "/office/officeArea/detail",
+            "title": "Office Area Add",
+            "icon": "",
+            "class": "",
+            "badge": "",
+            "badgeClass": "",
+            "isExternalLink": false,
+            "submenu": []
+          }
+        ]}
+    ]
+  },
+  {
+    "path": "",
+    "title": "Bank",
+    "icon": "ft-airplay",
+    "class": "has-sub",
+    "badge": "",
+    "badgeClass": "",
+    "isExternalLink": false,
+    "submenu": [
+      {
+        "path": "/bank",
+        "title": "Bank Maintenance",
+        "icon": "",
+        "class": "",
+        "badge": "",
+        "badgeClass": "",
+        "isExternalLink": false,
+        "submenu": []
+      }
+    ]
+  },
+  {
+    "path": "",
+    "title": "Employee",
+    "icon": "ft-users",
+    "class": "has-sub",
+    "badge": "",
+    "badgeClass": "",
+    "isExternalLink": false,
+    "submenu": [
+      {
+        "path": "/employee",
+        "title": "Employee  Maintenance",
+        "icon": "",
+        "class": "",
+        "badge": "",
+        "badgeClass": "",
+        "isExternalLink": false,
+        "submenu": []
+      }
+    ]
+  },
+  {
+    "path": "",
+    "title": "Marketing",
+    "icon": "ft-copy",
+    "class": "has-sub",
+    "badge": "",
+    "badgeClass": "",
+    "isExternalLink": false,
+    "submenu": [
+      {
+        "path": "/prospect",
+        "title": "Prospect Request",
+        "icon": "",
+        "class": "",
+        "badge": "",
+        "badgeClass": "",
+        "isExternalLink": false,
+        "submenu": []
+      }
+    ]
+  },
+  {
+    "path": "",
+    "title": "System Setting",
+    "icon": "ft-users",
+    "class": "has-sub",
+    "badge": "",
+    "badgeClass": "",
+    "isExternalLink": false,
+    "submenu": [
+      {
+        "path": "",
+        "title": "Role",
+        "icon": "",
+        "class": "has-sub",
+        "badge": "",
+        "badgeClass": "",
+        "isExternalLink": false,
+        "submenu": [
+          {
+            "path": "/systemSetting/role",
+            "title": "Role Maintenance",
+            "icon": "",
+            "class": "",
+            "badge": "",
+            "badgeClass": "",
+            "isExternalLink": false,
+            "submenu": []
+          },
+          {
+            "path": "/systemSetting/role/detail",
+            "title": "Role Add",
+            "icon": "",
+            "class": "",
+            "badge": "",
+            "badgeClass": "",
+            "isExternalLink": false,
+            "submenu": []
+          }
+        ]
+      },
+      {
+        "path": "",
+        "title": "User",
+        "icon": "",
+        "class": "has-sub",
+        "badge": "",
+        "badgeClass": "",
+        "isExternalLink": false,
+        "submenu": [
+          {
+            "path": "/systemSetting/refUser",
+            "title": "User Maintenance",
+            "icon": "",
+            "class": "",
+            "badge": "",
+            "badgeClass": "",
+            "isExternalLink": false,
+            "submenu": []
+          },
+          {
+            "path": "/systemSetting/refUser/detail",
+            "title": "User Add",
+            "icon": "",
+            "class": "",
+            "badge": "",
+            "badgeClass": "",
+            "isExternalLink": false,
+            "submenu": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "path": "",
+    "title": "Menu Setting",
+    "icon": "ft-copy",
+    "class": "has-sub",
+    "badge": "",
+    "badgeClass": "",
+    "isExternalLink": false,
+    "submenu": [
+      {
+        "path": "/menuSetting",
+        "title": "Menu Maintenance",
+        "icon": "",
+        "class": "",
+        "badge": "",
+        "badgeClass": "",
+        "isExternalLink": false,
+        "submenu": []
+      },
+      {
+        "path": "/menuSetting/add",
+        "title": "Menu Add",
+        "icon": "",
+        "class": "",
+        "badge": "",
+        "badgeClass": "",
+        "isExternalLink": false,
+        "submenu": []
+      }
+    ]
+  }
+]

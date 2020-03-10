@@ -1,0 +1,64 @@
+{
+    "module" : "setting",
+    "tableName" : "REF_BANK",
+    "component": [
+        {
+            "section" : "Atas",
+            "form": [
+                {
+                    "type": "textbox",
+                    "name": "bank_Code",
+                    "id": "bankCodeId",
+                    "value": "",
+                    "label": "Bank Code",
+                    "placeholder": "Placeholder",
+                    "isMandatory" : "true",
+                    "pattern" : ""
+                },
+                {
+                    "type": "textbox",
+                    "name": "bank_Name",
+                    "id": "bankNameId",
+                    "value": "",
+                    "label": "Bank Name",
+                    "placeholder": "Placeholder",
+                    "isMandatory" : "true",
+                    "pattern" : ""
+                },
+                {
+                    "type": "textbox",
+                    "name": "REG_RPT_CODE",
+                    "id": "biCodeId",
+                    "value": "",
+                    "label": "Reg Rpt Code",
+                    "placeholder": "Placeholder",
+                    "isMandatory" : "false",
+                    "pattern" : ""
+                },
+                {
+                    "type": "dropdown",
+                    "name": "is_Active",
+                    "id": "activeStatusId",
+                    "label": "Active Status",
+                    "value": "",
+                    "placeholder": "Placeholder",
+                    "isFromURL": false,
+                    "isSelectOne": false,
+                    "items": [
+                        {
+                            "key": "1",
+                            "value": "Yes"
+                        },
+                        {
+                            "key": "0",
+                            "value": "No"
+                        }
+                    ],
+                    "itemsUrl": [],
+                    "isMandatory" : "false",
+                    "pattern" : ""
+                }
+            ]
+        }
+    ]
+}

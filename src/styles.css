@@ -1,0 +1,297 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+body{
+    background-image: url('assets/img/background.png');
+     /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.no-padding{
+    padding-left:0px !important;
+    padding-right:0px !important;
+}
+
+.header-title{
+    padding-left:0px !important;
+    padding-right:0px !important;
+    padding-bottom:0px !important;
+}
+
+.form-actions{
+    padding: 0px !important;
+    margin-top: 10px !important;
+    border-top: 0px !important;
+}
+
+.search-form-control{
+    padding: 0.75rem !important;
+    height: calc(1.5rem + 2px) !important;
+    font-size: 12px !important;
+}
+
+.lookup-form-control{
+    height: calc(1.5rem + 2px) !important;
+    font-size: 12px !important;
+}
+
+.form-group{
+    margin-bottom: 5px !important;
+}
+
+.form-section{
+    line-height: 2rem !important;
+    margin-bottom: 7px !important;
+}
+
+.card{
+    margin: 3px !important;
+    margin-top : -7px !important;
+    padding-top: 5px !important;
+}
+
+.card-title{
+    font-weight: bold !important;
+}
+
+.row-button-search{
+    margin-top: -20px !important;
+}
+
+.navbar{
+    padding: 5px 1.5rem !important;
+}
+
+form label{
+    letter-spacing: 1px !important;
+}
+
+.btn-lookup{
+    padding: 3px 0.75rem !important;
+}
+
+.table-header{
+    font-size: 12px !important;
+    background-color:lightgray;
+}
+
+.table{
+    background-color:white;
+    margin-bottom:3px !important;
+}
+
+.navigation li > a {
+    margin: 0px !important;
+}
+
+.thead-header {
+    cursor: pointer;
+}
+
+.gridFooter{
+    border-top: 1px solid #e7e7e7;
+    background-color:white;
+    margin-left:0px !important;
+    padding-top:10px;
+}
+
+.light-gray{
+    background-color: #F0F0F0;
+}
+
+.font-navbar{
+    font-size:12px;
+}
+
+#role-modal{
+    background-color:white !important;
+    color:black !important;
+}
+
+.white-background{
+    background-color:white !important;
+    color:black !important;
+}
+
+.mat-dialog-container{
+    background-color: #BD362F;
+    color: #FFFFFF;
+}
+
+.header-page{
+    background-color:white !important;
+    color:black !important;
+}
+
+thead tr th {
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+.form-section {
+    text-transform: uppercase;
+}
+
+.align-left{
+    text-align: left;
+}
+
+.align-mid{
+    text-align:center;
+}
+
+.align-right{
+    text-align:right;
+}
+
+.button-right {
+    text-align: right;
+}
+
+.margin-bottom-0 {
+    margin-bottom: 0 !important;
+}
+
+.link-Button{
+    color: blue !important;
+    text-decoration-color: blue !important;
+}
+
+.ucSearch-Button-Right{
+    z-index:1 ;
+    position:absolute;
+    right: 50px; 
+    text-decoration-line: underline;
+}
+
+.overlay {
+    position : fixed !important;
+}
+
+#toast-container > div {
+    opacity:1;
+}
+
+.toast-error {
+    background-color: #BD362F !important;
+}
+
+select.form-control{
+    width: unset;
+}
+
+select.form-control.search-form-control{
+    width: 100%;
+}
+
+.custom-radio, input[type="checkbox"].border-primary{
+    height: 26.5px;
+}
+
+.custom-control.custom-radio{
+    padding-right: 10px;
+}
+
+label.custom-control-label{
+    padding-top: 4px;
+}
+
+.custom-control-label{
+    font-size: 1rem;
+}
+
+.text-center{
+    text-align: center;
+}
+
+.addButton{
+    text-align: center;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.5;
+    white-space: nowrap;
+    vertical-align: middle;
+    color: #fff !important;
+    background-color: #009DA0 !important;
+    border: 1px solid transparent;
+    border-color: #009DA0;
+    border-radius: 0.2rem;
+    margin-right: 0.375rem !important;
+    margin-bottom: 1rem;
+    padding: 0.25rem 0.5rem;
+    display: inline-block;
+    user-select: none;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.backButton{
+    text-align: center;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.5;
+    white-space: nowrap;
+    vertical-align: middle;
+    background-color: #FF8D60 !important;
+    color: #fff !important;
+    border-color: #FF8D60;
+    border: 1px solid transparent;
+    border-radius: 0.2rem;
+    margin-right: 0.375rem !important;
+    margin-bottom: 1rem;
+    padding: 0.25rem 0.5rem;
+    display: inline-block;
+    user-select: none;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.formHeader{
+    background-color: #b2b3b5 !important;
+    padding: 0.75rem 1.25rem !important;
+}
+
+form .form-section{
+    font-size: 1rem;
+}
+
+.card .card-header{
+    padding-left: 10px !important;
+}
+
+.adins-required label::after{
+    content:"*";
+    color:red;
+}
+
+.adins-back-fixed{
+    position:fixed;
+    top:8px;
+    right:10%;
+}
+.adins-add-fixed{
+    position:fixed;
+    top:8px;
+    right:6%;
+}
+
+aw-wizard-navigation-bar.horizontal ul.steps-indicator li a .label {
+    font-size: smaller;
+}
+
+/* 
+.adInsReqMsg {
+    
+}
+
+.adInsLabel {
+
+}
+
+.adInsInput {
+
+}
+ */

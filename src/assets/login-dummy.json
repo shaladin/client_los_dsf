@@ -1,0 +1,36 @@
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZWZ1c2VyaWQiOiI5OCIsInVzZXJuYW1lIjoidXNlcjEiLCJyb2xlY29kZSI6IkNPREUwMDEiLCJvZmZpY2UiOiIwNjYyIiwibmJmIjoxNTc0ODIwMDQzLCJleHAiOjE1NzUwMzYwNDMsImlhdCI6MTU3NDgyMDA0M30.orlVAM1Vz6r1VFsrdmXjT41jxCWEbeNHXkyOzdDF-2s",
+  "returnObject": [
+    {
+      "refUserId": 98,
+      "fullName": "USER1",
+      "userEmail": "EMAIL1@OWNER.COM",
+      "mrOfficeType": "",
+      "isHeadOffice": false,
+      "refOfficeId": 42,
+      "officeCode": "0662",
+      "officeName": "JATENG SYARIAH",
+      "refRoleId": 1,
+      "roleCode": "CODE001",
+      "roleName": "DIREKTUR",
+      "refJobTitleId": 264,
+      "jobTitleCode": "M2200001HO",
+      "jobTitleName": "TALENT MANAGEMENT ACQUISITION SECTION HEAD",
+      "userSessionLogId": 0,
+      "userTitleRoleId": 92,
+      "language": "EK",
+      "centerGrpId": 0,
+      "businessDtStr": "2019-11-29",
+      "userId": "user1",
+      "office": "",
+      "role": "",
+      "openPageDt": "2019-11-29T10:42:26",
+      "businessDt": "2019-11-29T00:00:00",
+      "token": ""
+    }
+  ],
+  "isError": false,
+  "statusCode": "200",
+  "message": "Success",
+  "errorMessages": null
+}
