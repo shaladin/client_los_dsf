@@ -26,5 +26,9 @@ export const Full_ROUTES: Routes = [
   {
     path: 'CustomerDocPrinting',
     loadChildren: './customer-doc-printing/customer-doc-printing.module#CustomerDocPrintingModule'
+  },
+  {
+    path: 'Mou',
+    loadChildren: './MOU/mou.module#MouModule'
   }
 ];
