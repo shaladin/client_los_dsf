@@ -6,10 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./customer-doc-printing-detail.component.css']
 })
 export class CustomerDocPrintingDetailComponent implements OnInit {
+  viewObj: string;
 
   constructor() { }
 
   ngOnInit(): void {
+    this.viewObj = "./assets/ucviewgeneric/viewCustomerDocPrinting.json";
   }
 
 }

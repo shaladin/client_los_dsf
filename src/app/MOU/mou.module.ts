@@ -11,6 +11,8 @@ import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
 import { UcgridfooterModule, UcgridfooterComponent } from "@adins/ucgridfooter";
 import { MouRoutingComponent } from "./mou-routing.module";
 import { DocSignerComponent } from "./doc-signer/doc-signer.component";
+import { CustomerDocPrintingDetailComponent } from "./customer-doc-printing/customer-doc-printing-detail/customer-doc-printing-detail.component";
+import { CustomerDocPrintingPagingComponent } from "./customer-doc-printing/customer-doc-printing-paging/customer-doc-printing-paging.component";
 // import { ShowErrorsComponent } from "./app/test-new/show-errors.component";
 
 @NgModule({
@@ -25,10 +27,13 @@ import { DocSignerComponent } from "./doc-signer/doc-signer.component";
     NgbModule,
     ReactiveFormsModule,
     UcSubsectionModule,
-    SharingComponentModule
+    SharingComponentModule,
+    UcgridfooterModule
   ],
   declarations: [
-    DocSignerComponent
+    DocSignerComponent,
+    CustomerDocPrintingDetailComponent,
+    CustomerDocPrintingPagingComponent
   ]
 })
 export class MouModule { }

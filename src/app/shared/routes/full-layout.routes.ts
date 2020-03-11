@@ -24,10 +24,6 @@ export const Full_ROUTES: Routes = [
     loadChildren: './pages/full-pages/full-pages.module#FullPagesModule'
   },
   {
-    path: 'CustomerDocPrinting',
-    loadChildren: './customer-doc-printing/customer-doc-printing.module#CustomerDocPrintingModule'
-  },
-  {
     path: 'Mou',
     loadChildren: './MOU/mou.module#MouModule'
   }
