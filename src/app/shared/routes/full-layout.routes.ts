@@ -22,5 +22,9 @@ export const Full_ROUTES: Routes = [
   {
     path: 'pages',
     loadChildren: './pages/full-pages/full-pages.module#FullPagesModule'
+  },
+  {
+    path: 'Mou',
+    loadChildren: './MOU/mou.module#MouModule'
   }
 ];
