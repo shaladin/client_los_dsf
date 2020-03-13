@@ -1,0 +1,285 @@
+{
+  "title": "Application Inquiry",
+  "exportExcel": false,
+  "component": [
+    {
+      "type": "dropdown",
+      "datatype": "text",
+      "name": "A.ORI_OFFICE_CODE",
+      "id": "oriOfficeCodeId",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": true,
+      "isSelectOne": true,
+      "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefOffice/GetListKeyValueActiveByCode",
+      "label": "Original Office Name",
+      "items": [],
+      "itemsUrl": []
+    },
+    {
+      "type": "textbox",
+      "name": "C.CUST_NO",
+      "id": "custNoId",
+      "value": "",
+      "label": "Customer No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "A.APP_NO",
+      "id": "appNoId",
+      "value": "",
+      "label": "Application No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "C.CUST_NAME",
+      "id": "custNameId",
+      "value": "",
+      "label": "Customer Name",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "B.AGRMNT_NO",
+      "id": "agrmntNoId",
+      "value": "",
+      "label": "Agreement No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "A.PROD_OFFERING_NAME",
+      "id": "prodOfferingNameId",
+      "value": "",
+      "label": "Product Offering Name",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "numeric",
+      "name": "E.INST_AMT",
+      "id": "instAmtIdgte",
+      "value": "",
+      "label": "Installment Amount >=",
+      "restriction": "gte",
+      "placeholder": "",
+      "datatype": "numeric"
+    },
+    {
+      "type": "numeric",
+      "name": "E.INST_AMT",
+      "id": "instAmtIdlte",
+      "value": "",
+      "label": "Installment Amount <=",
+      "restriction": "lte",
+      "placeholder": "",
+      "datatype": "numeric"
+    },
+    {
+      "type": "datepicker",
+      "name": "A.APP_CREATED_DT",
+      "id": "appDtgte",
+      "value": "",
+      "label": "Application Date >=",
+      "restriction": "gte",
+      "datatype": "date"
+    },
+    {
+      "type": "datepicker",
+      "name": "A.APP_CREATED_DT",
+      "id": "appDtlte",
+      "value": "",
+      "label": "Application Date <=",
+      "restriction": "lte",
+      "datatype": "date"
+    },
+    {
+      "type": "dropdown",
+      "datatype": "text",
+      "name": "A.APP_STAT",
+      "id": "appStatId",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": true,
+      "isSelectOne": true,
+      "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
+      "label": "Application Status",
+      "items": [],
+      "itemsUrl": [],
+      "criteriaPropValue": "APP_STAT"
+    },
+    {
+      "type": "dropdown",
+      "datatype": "text",
+      "name": "A.APP_CURR_STEP",
+      "id": "appStepId",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": true,
+      "isSelectOne": true,
+      "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
+      "label": "Current Application Step",
+      "items": [],
+      "itemsUrl": [],
+      "criteriaPropValue": "APP_STEP"
+    }
+  ],
+  "querystring": {
+    "select": "SELECT A.APP_NO AS appNo, B.AGRMNT_NO AS agrmntNo, C.CUST_NO AS custNo, C.CUST_NAME AS custName, A.PROD_OFFERING_NAME AS prodOfferingName, A.APP_CREATED_DT AS appDt, E.INST_AMT AS instAmt, A.IS_APP_INIT_DONE AS isNapSub, B.AGRMNT_STAT AS contractStat, A.APP_CURR_STEP AS appStep, A.APP_STAT AS appStat, A.APP_ID AS appId, B.AGRMNT_ID as agrmntId, C.APP_CUST_ID as appCustId, D.CURRENT_PROD_OFFERING_H_ID as prodOfferingHid",
+    "from": "FROM dbo.APP A WITH(NOLOCK) LEFT JOIN dbo.AGRMNT B WITH(NOLOCK) ON A.APP_ID = B.APP_ID LEFT JOIN dbo.APP_CUST C WITH (NOLOCK) ON A.APP_ID = C.APP_ID LEFT JOIN dbo.PROD_OFFERING D WITH (NOLOCK) ON A.PROD_OFFERING_CODE = D.PROD_OFFERING_CODE LEFT JOIN dbo.APP_FIN_DATA E WITH (NOLOCK) ON A.APP_ID = E.APP_ID"
+  },
+  "headerList": [
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Application No",
+      "name": "A.APP_NO"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Agreement No",
+      "name": "B.AGRMNT_NO"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Customer No",
+      "name": "C.CUST_NO"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Customer Name",
+      "name": "C.CUST_NAME"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Product Offering Name",
+      "name": "A.PROD_OFFERING_NAME"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Application Date",
+      "name": "A.APP_CREATED_DT"
+    },
+    {
+      "type": "label",
+      "position": "left",
+      "label": "Installment Amount",
+      "name": "E.INST_AMT"
+    },
+    {
+      "type": "label",
+      "position": "left",
+      "label": "NAP Submitted",
+      "name": "A.IS_APP_INIT_DONE"
+    },
+    {
+      "type": "label",
+      "position": "left",
+      "label": "Contract Status",
+      "name": "B.AGRMNT_STAT"
+    },
+    {
+      "type": "label",
+      "position": "left",
+      "label": "Application Step",
+      "name": "A.APP_CURR_STEP"
+    },
+    {
+      "type": "label",
+      "position": "left",
+      "label": "Application Status",
+      "name": "A.APP_STAT"
+    }
+  ],
+  "bodyList": [
+    {
+      "type": "link",
+      "position": "left",
+      "property": "appNo",
+      "path": "",
+      "param": [
+        {
+          "type": "appId",
+          "property": "appId"
+        }
+      ]
+    },
+    {
+      "type": "link",
+      "position": "left",
+      "property": "agrmntNo",
+      "path": "",
+      "param": [
+        {
+          "type": "agrmntId",
+          "property": "agrmntId"
+        }
+      ]
+    },
+    {
+      "type": "link",
+      "position": "left",
+      "property": "custNo",
+      "path": "",
+      "param": [
+        {
+          "type": "appCustId",
+          "property": "appCustId"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "custName"
+    },
+    {
+      "type": "link",
+      "position": "left",
+      "property": "prodOfferingName",
+      "path": "",
+      "param": [
+        {
+          "type": "prodOfferingHid",
+          "property": "prodOfferingHid"
+        }
+      ]
+    },
+    {
+      "type": "date",
+      "position": "left",
+      "property": "appDt"
+    },
+    {
+      "type": "decimal",
+      "position": "left",
+      "property": "instAmt"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "isNapSub"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "contractStat"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "appStep"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "appStat"
+    }
+  ]
+}
