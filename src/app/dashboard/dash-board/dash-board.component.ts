@@ -102,6 +102,7 @@ export class DashBoardComponent implements OnInit {
   // Line area chart configuration Ends
 
   ngOnInit() {
+    
   }
 
   showMessage(message: any) {

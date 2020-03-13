@@ -1,6 +1,39 @@
-import { formatDate } from "@angular/common";
-
 export class AdInsConstant {
+
+    //App Step
+    public static AppStepNew = "NEW";
+    public static AppStepCust = "CUST";
+    public static AppStepGuar = "GUAR";
+    public static AppStepRef = "REF";
+    public static AppStepApp = "APP";
+    public static AppStepAsset = "ASSET";
+    public static AppStepIns = "INS";
+    public static AppStepLIns = "LFI";
+    public static AppStepFin = "FIN";
+    public static AppStepTC = "TC";
+    public static AppStepOther = "OTH";
+    public static AppStepCrdIns = "CRI";
+    public static AppStepComm = "COM";
+    public static AppStepRSVFund = "RSV";
+    public static AppStepPhnVerif = "PHN";
+    public static AppStepSurvey = "SRVY";
+    public static AppStepFraud = "FRD";
+    public static AppStepCrdInv = "CINV";
+    public static AppStepScoring = "SCOR";
+    public static AppStepDev = "DEVC";
+    public static AppStepRvw = "RVW";
+    public static AppStepApv = "APV";
+    public static AppStepRtn = "RTN";
+    public static AppStepAgr = "AGR";
+    public static AppStepPO = "PO";
+    public static AppStepOFVC = "OFVC";
+    public static AppStepOFVA = "OFVA";
+    public static AppStepDO = "DO";
+    public static AppStepCNFR = "CNFR";
+    public static AppStepPGLV = "PGLV";
+    public static AppStepCSR = "CSR";
+    
+
     public static RestrictionLike = "Like";
     public static RestrictionEq = "Eq";
     public static RestrictionNotIn = "NotIn";
@@ -9,7 +42,7 @@ export class AdInsConstant {
     public static showData = "10,50,100";
     public static TimeoutSession = 6000000;
     public static GetListProduct = "http://creator_websvr:7272/NEW_FINANCING/api/Catalog/getPopularViewByCriteria";
-    public static Login = "/UserManagement/HTML5Login";
+    public static Login = "/Authenticate/Login";
     public static LoginToken = "/UserManagement/HTML6Login";
     public static Logout = "/UserManagement/LogOut"
     public static GetListOffice = "/RefOffice/GetRefOfficePaging";
@@ -19,6 +52,9 @@ export class AdInsConstant {
     public static submitNCProspect = "/api/MobileProspectTask/submitNCProspect";
     public static addCustPersonal = "";
     public static FormDefault = "dashboard/dash-board";
+    public static LoginByRole = "/Authenticate/LoginByRole";
+    public static LoginByToken = "/Authenticate/LoginByToken";
+    public static UpdateToken = "/Authenticate/UpdateRole";
 
     //GENERAL SETTING
     public static GetBusinessDt = "/GeneralSetting/GetBusinessDate";
