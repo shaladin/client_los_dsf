@@ -16,6 +16,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { ErrorDialogService } from 'app/error-dialog/error-dialog.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { RequestCriteriaObj } from 'app/shared/model/RequestCriteriaObj.model';
 
 
 @Injectable()
@@ -24,6 +25,8 @@ export class HttpConfigInterceptor implements HttpInterceptor {
     constructor(public errorDialogService: ErrorDialogService, private spinner: NgxSpinnerService, private router: Router, public toastr: ToastrService) { }
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         console.log(request);
+        var asdasd = new RequestCriteriaObj();
+        console.log(asdasd);
         if (request.method == "POST" && (request.body == null || request.body.isLoading == true)) {
             this.spinner.show();
         }
@@ -38,7 +41,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
         if (checkSession == "1") {
             // this.errorDialogService.openDialog(AdInsErrorMessage.SessionTimeout);
             this.spinner.hide();
-            // this.router.navigate(["/pages/login"]);
+            this.router.navigate(["/pages/login"]);
         }
 
         if (request.url.includes("Add") || request.url.includes("Edit") || request.url.includes("Delete")) {
@@ -52,56 +55,43 @@ export class HttpConfigInterceptor implements HttpInterceptor {
         if (request.url == "http://r3app-server/foundation/UserManagement/HTML5Login") {
             if (currentUserContext != null) {
                 token = localStorage.getItem("Token");
-                myObj = {
-                    UserName: localStorage.getItem("Username"),
-                    Role: currentUserContext.Role,
-                    Office: currentUserContext.Office,
-                    SendDateTime: businessDt,
-                    Ip: localStorage.getItem("LocalIp"),
-                    RequestObject: request.body,
-                    UserLog: JSON.parse(localStorage.getItem("PageAccess")),
-                    Method: oldPath
-                };
+                myObj = new Object();
+                if (request.body != null) {
+                    myObj = request.body;
+                }
+                myObj["Ip"] = localStorage.getItem("LocalIp");
+                myObj["RequestDateTime"] = businessDt;
             }
             else {
-                myObj = {
-                    Role: null,
-                    Office: null,
-                    SendDateTime: businessDt,
-                    UserName: localStorage.getItem("Username"),
-                    Ip: localStorage.getItem("LocalIp"),
-                    RequestObject: request.body,
-                    UserLog: JSON.parse(localStorage.getItem("PageAccess"))
-                };
+                myObj = new Object();
+                if (request.body != null) {
+                    myObj = request.body;
+                }
+                myObj["Ip"] = localStorage.getItem("LocalIp");
+                myObj["RequestDateTime"] = businessDt;
             }
         } else {
             if (currentUserContext != null) {
                 token = localStorage.getItem("Token");
-                myObj = {
-                    UserName: currentUserContext.UserName,
-                    Role: currentUserContext.Role,
-                    Office: currentUserContext.Office,
-                    SendDateTime: businessDt,
-                    Ip: localStorage.getItem("LocalIp"),
-                    RequestObject: request.body,
-                    UserLog: JSON.parse(localStorage.getItem("PageAccess"))
-                };
+                myObj = new Object();
+                if (request.body != null) {
+                    myObj = request.body;
+                }
+                myObj["Ip"] = localStorage.getItem("LocalIp");
+                myObj["RequestDateTime"] = businessDt;
             }
             else {
-                myObj = {
-                    Role: null,
-                    Office: null,
-                    SendDateTime: businessDt,
-                    UserName: localStorage.getItem("Username"),
-                    Ip: localStorage.getItem("LocalIp"),
-                    RequestObject: request.body,
-                    UserLog: JSON.parse(localStorage.getItem("PageAccess"))
-                };
+                myObj = new Object();
+                if (request.body != null) {
+                    myObj = request.body;
+                }
+                myObj["Ip"] = localStorage.getItem("LocalIp");
+                myObj["RequestDateTime"] = businessDt;
             }
         }
 
         if (token != "") {
-            request = request.clone({ headers: request.headers.set('Authorization', 'Bearer ' + token) });
+            request = request.clone({ headers: request.headers.set('Authorization', token) });
         }
 
         if (!request.headers.has('Content-Type')) {
@@ -131,27 +121,29 @@ export class HttpConfigInterceptor implements HttpInterceptor {
             map((event: HttpEvent<any>) => {
                 if (event instanceof HttpResponse) {
                     //Ini Error kalau sudah masuk sampai ke Back End
-                    if (event.body.isError == true) {
-                        let data = {};
-                        data = {
-                            reason: event.body.message ? event.body.message : '',
-                            status: event.body.statusCode
-                        };
-                        this.toastr.error(data['reason'], 'Status: ' + data['status'], { "tapToDismiss": true});
-                        return;
+                    if(event.body.StatusCode != undefined) {
+                        if (event.body.StatusCode != '200') {
+                            let data = {};
+                            data = {
+                                reason: event.body.Message ? event.body.Message : '',
+                                status: event.body.StatusCode
+                            };
+                            this.toastr.error(data['reason'], 'Status: ' + data['status'], { "tapToDismiss": true });
+                            return;
+                        }
                     }
                     else {
                         //Kalau pake Http Get yang bukan ke Backend sendiri g punya token, jadi g boleh asal di replace
-                        if (event.body.token == undefined) {
-                            localStorage.setItem("Token", localStorage.getItem("Token"));
-                        }
-                        else {
-                            localStorage.setItem("Token", event.body.token);
-                        }
+                        // if (event.body.token == undefined) {
+                        //     localStorage.setItem("Token", localStorage.getItem("Token"));
+                        // }
+                        // else {
+                        //     localStorage.setItem("Token", event.body.token);
+                        // }
 
                     }
                 }
-                
+
                 return event;
             }),
             //Ini Error kalau tidak sampai ke Back End
@@ -159,21 +151,21 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                 if (error.error != null) {
                     if (error.error.errorMessages != null) {
                         for (var i = 0; i < error.error.errorMessages.length; i++) {
-                            this.toastr.error(error.error.errorMessages[i].message, 'Status: ' + error.status, { "tapToDismiss": true});
+                            this.toastr.error(error.error.errorMessages[i].message, 'Status: ' + error.status, { "tapToDismiss": true });
                         }
-                    }else {
-                        this.toastr.error(error.error.Message, 'Status: ' + error.status, { "tapToDismiss": true});
+                    } else {
+                        this.toastr.error(error.error.Message, 'Status: ' + error.status, { "tapToDismiss": true });
                     }
                 }
-                else{
-                    this.toastr.error(error.message, 'Status: ' + error.status, { "tapToDismiss": true});
+                else {
+                    this.toastr.error(error.message, 'Status: ' + error.status, { "tapToDismiss": true });
                 }
-                
+
                 console.log(JSON.stringify(request.body));
                 return throwError(error);
             }), finalize(() => {
                 this.count--;
-                
+
                 if (request.method == "POST") {
                     AdInsHelper.ClearPageAccessLog();
                 }
