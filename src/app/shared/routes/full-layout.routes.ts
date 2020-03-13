@@ -26,5 +26,9 @@ export const Full_ROUTES: Routes = [
   {
     path: 'Mou',
     loadChildren: './MOU/mou.module#MouModule'
+  },
+  {
+    path: 'Inquiry',
+    loadChildren: '/inquiry/inquiry.module#InquiryModule'
   }
 ];

@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\app",
+    "\\src\\app\\inquiry",
+    "\\src\\app\\inquiry\\app-inquiry",
+    "\\src\\assets",
+    "\\src\\assets\\ucpaging"
+  ],
+  "SelectedNode": "\\src\\app\\inquiry\\app-inquiry\\app-inquiry-paging.component.ts",
+  "PreviewInSolutionExplorer": false
+}
