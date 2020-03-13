@@ -50,6 +50,25 @@ export class NapAppModel{
     RowVersion: any;
 
     constructor () {
+        this.AppNo = "";
+        this.OriOfficeCode = "";
+        this.OriOfficeName = "";
+        this.CrtOfficeCode = "";
+        this.CrtOfficeName = "";
+        this.ProdOfferingCode = "";
+        this.ProdOfferingName = "";
+        this.ProdOfferingVersion = "";
+        this.AppCreatedDt = "";
+        this.AppStat = "";
+        this.AppCurrStep = "";
+        this.CurrCode = "";
+        this.LobCode = "";
+        this.RefProdTypeCode = "";
+        this.Tenor = "";
+        this.NumOfInst = "";
+        this.PayFreqCode = "";
+        this.MrFirstInstTypeCode = "";
+        this.NumOfAsset = "";
         
         this.RowVersion = "";
     }

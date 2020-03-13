@@ -42,7 +42,7 @@ export class AdInsConstant {
     public static showData = "10,50,100";
     public static TimeoutSession = 6000000;
     public static GetListProduct = "http://creator_websvr:7272/NEW_FINANCING/api/Catalog/getPopularViewByCriteria";
-    public static Login = "/UserManagement/HTML5Login";
+    public static Login = "/Authenticate/Login";
     public static LoginToken = "/UserManagement/HTML6Login";
     public static Logout = "/UserManagement/LogOut"
     public static GetListOffice = "/RefOffice/GetRefOfficePaging";
@@ -52,6 +52,9 @@ export class AdInsConstant {
     public static submitNCProspect = "/api/MobileProspectTask/submitNCProspect";
     public static addCustPersonal = "";
     public static FormDefault = "dashboard/dash-board";
+    public static LoginByRole = "/Authenticate/LoginByRole";
+    public static LoginByToken = "/Authenticate/LoginByToken";
+    public static UpdateToken = "/Authenticate/UpdateRole";
 
     //GENERAL SETTING
     public static GetBusinessDt = "/GeneralSetting/GetBusinessDate";
