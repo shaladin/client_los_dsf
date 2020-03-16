@@ -1,3 +1,5 @@
+import { environment } from "environments/environment";
+
 export class AdInsConstant {
 
     //App Step
@@ -335,4 +337,6 @@ export class AdInsConstant {
     // GENERIC
     public static GetPagingObjectBySQL = "/Generic/GetPagingObjectBySQL"
 
+    //GUARANTOR
+    public static GetListAppGuarantor =environment.losUrl +"/AppGuarantor/GetListAppGuarantor"
 }

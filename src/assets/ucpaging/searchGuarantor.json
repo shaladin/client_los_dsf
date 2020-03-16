@@ -1,0 +1,73 @@
+{
+  "isSeq": true,
+  "headerList" : [
+    {
+        "type" : "sort", 
+        "position" : "center", 
+        "label" : "Guarantor Name", 
+        "name" : "sortId1", 
+        "width" : "width-50-per" 
+    },
+    {
+      "type" : "sort", 
+      "position" : "center", 
+      "label" : "Guarantor Type", 
+      "name" : "sortId2", 
+      "width" : "width-50-per" 
+    },
+    {
+      "type" : "sort", 
+      "position" : "center", 
+      "label" : "Relationship", 
+      "name" : "sortId3", 
+      "width" : "width-50-per" 
+    },
+    {
+      "type" : "label", 
+      "position" : "center", 
+      "label" : "Action"
+    }
+  ],
+    "bodyList": [
+      {
+        "type" : "text", 
+        "position" : "center", 
+        "property" : "GuarantorName" 
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "MrGuarantorTypeCode"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "MrCustRelationshipCode"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "edit",
+            "path": "/guarantor/paging",
+            "param": [
+              {
+                "type":"AppGuarantorId",
+                "property": "AppGuarantorId"
+              },
+              {
+                "type": "mode",
+                "property": "edit"
+              }
+            ]
+          },
+          {
+            "type": "delete",
+            "property": "AppGuarantorId"
+        }
+        ]
+      }
+    ]
+  }
+  

@@ -1,0 +1,51 @@
+{
+    "title": "Search Guarantor",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "textbox",
+            "name": "CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "Guarantor Name",
+            "placeholder": "Placeholder"
+        }
+    ],
+    "querystring": {
+        "select": " SELECT CUST_NAME AS CustName",
+        "from": "FROM CUST A WITH(NOLOCK) WHERE MR_CUST_TYPE_CODE='Personal'"
+    },
+        "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Guarantor Name",
+            "name": "CustName"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Action",
+            "name": "Action"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "CustName"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "select",
+                    "property": "ProdName"
+                }
+            ]
+        }
+    ],
+    "propertyId": "CustName", 
+    "propertyName": "CustName" 
+}

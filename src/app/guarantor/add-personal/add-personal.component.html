@@ -1,0 +1,70 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header header-title">
+        <div class="row">
+          <div class="col-md-8">
+            <h4 class="card-title" translate>ADD </h4>
+          </div>
+          <div class="col-md-4" style="text-align-last: right">
+            <button type="button" class="backButton" [routerLink]="['/Guarantor/paging']" translate>
+              <i class="ft-arrow-left"></i> Back
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="px-3">
+          <form class="form form-horizontal" [formGroup]="PersonalForm" #enjiForm="ngForm">
+            <div class="form-body">
+              <h4 class="form-section card-title" translate><i class="ft-file-text"></i>Main Data</h4>
+              <div class="class=form-group row adins-required">
+                <label class="col-md-2 adInsLabel">Guarantor Name </label>
+                <div class="col-md-4">
+                  <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]="PersonalForm" [enjiForm]="enjiForm" [identifier]="GuarantorName" (lookup)="handleOutput($event)"></lib-uclookupgeneric>
+                </div>
+                <label class="col-md-2 adInsLabel">Customer Relationship </label>
+                <div class="col-md-4">
+                  <select class="form-control adInsInput" style="width: auto" formControlName="MrCustomerRelationship"
+                    >
+                    <option *ngFor="let it of MrCustomerRelationship" value="{{it.MasterCode}}">
+                      {{it.Descr}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="class=form-group row adins-required">
+                <label class="col-md-2 adInsLabel">Id Type </label>
+                <div class="col-md-4">
+                  <select class="form-control adInsInput" style="width: auto" formControlName="MrIdType"
+                    >
+                    <option *ngFor="let it of MrIdType" value="{{it.MasterCode}}">
+                      {{it.Descr}}</option>
+                  </select>
+                </div>
+
+                <!-- <label class="col-md-2 adInsLabel">End Date </label>
+                <label class="col-md-4 adInsLabel">{{ProdOfferingForm.controls.EndDt.value}} </label> -->
+              </div>
+
+              <!-- <div class="form-group row">
+                <label class="col-md-2 adInsLabel">Offering Description </label>
+                <label class="col-md-4 adInsLabel">{{ProdOfferingForm.controls.ProdOfferingDescr.value}} </label>
+
+                <label class="col-md-2 adInsLabel">Status</label>
+                <label class="col-md-4 adInsLabel">{{ProdOfferingForm.controls.ProdOfferingStat.value}} </label>
+              </div> -->
+              <div class="form-actions right">
+                <button type="submit" class="btn btn-raised btn-primary" >
+                  <i class="fa fa-check-square-o"></i> Cancel
+                </button>
+                <button type="submit" class="btn btn-raised btn-primary" >
+                  <i class="fa fa-check-square-o"></i> Save
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
