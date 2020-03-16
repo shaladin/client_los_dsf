@@ -224,16 +224,16 @@
       "path": "",
       "param": [
         {
+          "type": "prodOfferingHId",
+          "property": "0"
+        },
+        {
           "type": "prodOfferingCode",
           "property": "prodOfferingCode"
         },
         {
           "type": "prodOfferingVersion",
           "property": "prodOfferingVersion"
-        },
-        {
-          "type": "",
-          "property": "prodOfferingHId"
         }
       ]
     },
