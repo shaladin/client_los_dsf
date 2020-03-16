@@ -56,26 +56,7 @@
       "label": "Product Offering Name",
       "placeholder": "Placeholder"
     },
-    {
-      "type": "numeric",
-      "name": "E.INST_AMT",
-      "id": "instAmtIdgte",
-      "value": "0",
-      "label": "Installment Amount >=",
-      "restriction": "gte",
-      "placeholder": "",
-      "datatype": "numeric"
-    },
-    {
-      "type": "numeric",
-      "name": "E.INST_AMT",
-      "id": "instAmtIdlte",
-      "value": "1000000000000",
-      "label": "Installment Amount <=",
-      "restriction": "lte",
-      "placeholder": "",
-      "datatype": "numeric"
-    },
+
     {
       "type": "datepicker",
       "name": "A.APP_CREATED_DT",
@@ -168,12 +149,7 @@
       "label": "Application Date",
       "name": "A.APP_CREATED_DT"
     },
-    {
-      "type": "label",
-      "position": "left",
-      "label": "Installment Amount",
-      "name": "E.INST_AMT"
-    },
+
     {
       "type": "label",
       "position": "left",
