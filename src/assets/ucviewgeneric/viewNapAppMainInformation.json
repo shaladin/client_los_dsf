@@ -1,0 +1,63 @@
+{
+    "subsection": [
+      {
+        "subSectionId": "New Application",
+        "subSectionTitle": "Main Information",
+        "mainInfoUrl": "https://localhost:5001/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {
+            "type": "text",
+            "label": "Application No",
+            "property": "AppNo"
+          },
+          {
+            "type": "text",
+            "label": "Original Office",
+            "property": "OriOfficeName"
+          },
+          {
+            "type": "text",
+            "label": "Customer Name",
+            "property": "CustName"
+          },
+          {
+            "type": "text",
+            "label": "Product Offering",
+            "property": "ProdOfferingName"
+          },
+          {
+            "type": "text",
+            "label": "Tenor",
+            "property": "Tenor"
+          },
+          {
+            "type": "text",
+            "label": "Currency",
+            "property": "CurrCode"
+          },
+          {
+            "type": "text",
+            "label": "Order Information",
+            "property": "MrOrderInfoCode"
+          },
+          {
+            "type": "text",
+            "label": "Asset Name",
+            "property": "FullAssetName"
+          },
+          {
+            "type": "text",
+            "label": "Lead No",
+            "property": "LeadNo"
+          }
+  
+        ],
+        "querystring": {
+          "select": "SELECT a.APP_NO AS AppNo, a.ORI_OFFICE_NAME AS OriOfficeName, b.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.TENOR AS Tenor, a.CURR_CODE AS CurrCode, a.MR_ORDER_INFO_CODE AS MrOrderInfoCode, c.FULL_ASSET_NAME AS FullAssetName, d.LEAD_NO AS LeadNo",
+          "from": "FROM dbo.APP a WITH(NOLOCK) LEFT JOIN dbo.APP_CUST b ON a.APP_ID = b.APP_ID LEFT JOIN dbo.APP_ASSET c ON a.APP_ID = c.APP_ID LEFT JOIN dbo.LEAD d ON a.LEAD_ID = d.LEAD_ID",
+          "where": "WHERE a.APP_ID = {0}"
+        }
+      }
+    ]
+  }
+  

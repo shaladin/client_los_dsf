@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
 import { NapRoutingModule } from "./nap-routing.module";
 import { RouterModule } from "@angular/router";
+import { AppAddDetailComponent } from './app-add-detail/app-add-detail.component';
 
 
 
@@ -17,6 +18,7 @@ import { RouterModule } from "@angular/router";
     declarations: [
         AppAddComponent,
         AppPagingComponent,
+        AppAddDetailComponent,
     ],
     imports: [ 
         NapRoutingModule,
