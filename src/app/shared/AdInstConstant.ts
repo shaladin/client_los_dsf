@@ -32,7 +32,11 @@ export class AdInsConstant {
     public static AppStepCNFR = "CNFR";
     public static AppStepPGLV = "PGLV";
     public static AppStepCSR = "CSR";
-    
+
+    // App
+    public static AddApp = "/Application/AddApp";
+    public static EditApp = "/Application/EditApp";
+    public static GetAppById = "/Application/GetAppById";    
 
     public static RestrictionLike = "Like";
     public static RestrictionEq = "Eq";
@@ -76,7 +80,8 @@ export class AdInsConstant {
     public static GetCenterGrpByCenterGrpTypeCode = "/RefOffice/GetCenterGrpByCenterGrpCode";
     public static GetListOfficeCenterGrp = "/RefOffice/GetListOfficeCenterGrp";
     public static AddCenterGroupOfficeMember = "RefOffice/AddCenterGroupOfficeMember";
-    public static DeleteCenterGroupOfficeMember= "/RefOffice/DeleteCenterGroupOfficeMember";
+    public static DeleteCenterGroupOfficeMember= "/RefOffice/DeleteCenterGroupOfficeMember"; 
+    public static GetListKvpActiveRefOffice= "/RefOffice/GetListKvpActiveRefOffice"; 
 
     //REF OFFICE AREA
     public static GetAllListArea = "/RefOfficeArea/GetAllListArea";
@@ -86,6 +91,7 @@ export class AdInsConstant {
     public static EditRefOfficeArea = "/RefOfficeArea/EditRefOfficeArea";
     public static DeleteRefOfficeArea = "/RefOfficeArea/DeleteRefOfficeArea";
     public static CheckDuplAreaCode = "/RefOfficeArea/CheckDuplAreaCode";
+    // public static GetListKvpActiveRefOfficeArea = "/RefOfficeArea/GetListKvpActiveRefOfficeArea";
 
     //ORGANIZATION
     public static GetRefOrg = "/OrganizationDefinition/GetRefOrg";

@@ -1,0 +1,69 @@
+{
+    "title": "Lookup Copy Application",
+    "component": [
+      {
+        "type": "textbox",
+        "name": "a.PROD_OFFERING_CODE",
+        "id": "prodOfferingCode",
+        "value": "",
+        "label": "Product Offering Code",
+        "placeholder": "Product Offering Code"
+      },
+      {
+        "type": "textbox",
+        "name": "a.PROD_OFFERING_NAME",
+        "id": "prodOfferingName",
+        "value": "",
+        "label": "Product Offering Name",
+        "placeholder": "Product Offering Name"
+      }
+    ],
+    "querystring": {
+      "select": "SELECT a.PROD_OFFERING_CODE AS ProdOfferingCode, a.PROD_OFFERING_NAME AS ProdOfferingName, a.PROD_OFFERING_VERSION AS ProdOfferingVersion, a.APP_ID AS AppId, a.APP_NO AS AppNo, a.MOU_CUST_ID AS MouCustId, a.LEAD_ID AS LeadId, a.CURR_CODE AS CurrCode, a.LOB_CODE As LobCode, a.REF_PROD_TYPE_CODE AS RefProdTypeCode, a.TENOR AS Tenor, a.NUM_OF_INST AS NumOfInst, a.PAY_FREQ_CODE AS PayFreqCode, a.MR_FIRST_INST_TYPE_CODE AS MrFirstInstTypeCode, a.NUM_OF_ASSET AS NumOfAsset, a.MR_APP_SOURCE_CODE AS MrAppSourceCode, a.MR_WOP_CODE AS MrWopCode, a.SALES_OFFICER_NO AS SalesOfficerNo, a.MR_CUST_NOTIFY_OPT_CODE AS MrCustNotifyOptCode",
+      "from": "FROM dbo.APP a WITH(NOLOCK)"
+    },
+    "headerList": [
+        {
+          "type": "sort",
+          "position": "left",
+          "label": "Product Offering Code",
+          "name": "ProdOfferingCode"
+        },
+        {
+          "type": "sort",
+          "position": "left",
+          "label": "Product Offering Name",
+          "name": "ProdOfferingName"
+        },
+        {
+          "type": "label",
+          "position": "center",
+          "label": "Action"
+        }
+    ],
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "left",
+        "property": "ProdOfferingCode"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "ProdOfferingName"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "select",
+            "property": "AppNo"
+          }
+        ]
+      }
+    ],
+    "propertyId": "AppNo",
+    "propertyName": "AppNo"
+  }
+  
