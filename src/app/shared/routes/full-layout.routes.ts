@@ -29,6 +29,6 @@ export const Full_ROUTES: Routes = [
   },
   {
     path: 'Inquiry',
-    loadChildren: '.inquiry/inquiry.module#InquiryModule'
+    loadChildren: './inquiry/inquiry.module#InquiryModule'
   }
 ];

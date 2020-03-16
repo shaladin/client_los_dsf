@@ -7,7 +7,7 @@ const routes: Routes = [
     path: '',
     children: [
       {
-        path: './AppInquiry',
+        path: 'AppInquiry',
         component: AppInquiryPagingComponent,
         data: {
           title: 'App Inquiry'
