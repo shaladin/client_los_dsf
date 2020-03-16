@@ -1,0 +1,45 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+
+      <div class="card-header header-title">
+        <div class="row">
+        </div>
+      </div>
+
+      <div class="card-body">
+        <div class="px-3">
+
+          <form class="form form-horizontal" [formGroup]="NapAppForm" (ngSubmit)="NapAppForm.valid && SaveForm()"
+            #enjiForm="ngForm">
+            <!-- Main Info -->
+            <div class="form-body">
+              <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Add Application </h4>
+
+              <div class="form-group row adins-required">
+                <label class="col-md-3 adInsLabel">Office </label>
+                <!-- <div class="col-md-9">
+                  <input type="text" class="form-control adInsInput width-25-per" formControlName=""
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppForm.controls.test.invalid }">
+                </div>
+                <show-errors [control]="NapAppForm.controls.ProdCode" [submit]="enjiForm.submitted"></show-errors> -->
+              </div>
+
+            </div>
+
+            <div class="form-actions right">
+              <button type="submit" class="btn btn-raised btn-primary">
+                <i class="fa fa-check-square-o"></i> Next
+              </button>
+              <button type="button" class="btn btn-raised btn_cancel" [routerLink]="['/Nap/AppPaging']" translate>
+                <i class="fa fa-check-square-o"></i> Cancel
+              </button>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

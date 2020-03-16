@@ -14,7 +14,9 @@
   "dependencies": {
     "@adins/uc-subsection": "^1.0.4",
     "@adins/ucgridfooter": "^1.0.1",
+    "@adins/uclookupgeneric": "^2.0.9",
     "@adins/ucpaging": "^2.0.10",
+    "@adins/ucviewgeneric": "^2.0.7",
     "@agm/core": "1.0.0-beta.5",
     "@angular/animations": "^7.2.16",
     "@angular/cdk": "^7.3.7",
