@@ -1,3 +1,5 @@
+import { environment } from "environments/environment";
+
 export class AdInsConstant {
 
     //App Step
@@ -237,6 +239,8 @@ export class AdInsConstant {
     public static DeleteRefMaster = "/RefMaster/DeleteRefMaster";
     public static GetRefMasterPaging = "/RefMaster/GetRefMasterPaging";
     public static GetRefMasterListDesc = "/RefMaster/GetRefMasterListDesc";
+    public static GetRefMasterListKeyValueActiveByCode = environment.FoundationR3Url + "/RefMaster/GetListKeyValueActiveByCode"
+
 
     //REF PROV DISTRICT
     public static GetRefProvDistrictPaging = "/RefProvDistrict/GetRefProvDistrictPaging";
@@ -335,4 +339,10 @@ export class AdInsConstant {
     // GENERIC
     public static GetPagingObjectBySQL = "/Generic/GetPagingObjectBySQL"
 
+    // REF COUNTRY
+    public static GetRefCountryByCountryCode = environment.FoundationR3Url + "/RefCountry/GetRefCountryByCountryCode";
+
+    //CUST DATA PERSONAL
+    public static AddEditCustDataPersonal = "https://localhost:5001/AppCust/AddEditCustDataPersonal";
+    public static GetCustDataByAppId = "https://localhost:5001/AppCust/GetCustDataByAppId";
 }

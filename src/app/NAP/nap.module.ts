@@ -10,6 +10,12 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
 import { NapRoutingModule } from "./nap-routing.module";
 import { RouterModule } from "@angular/router";
+import { CustomerDataComponent } from "./nap-tab/customer-data/customer-data.component";
+import { MatRadioModule } from "@angular/material";
+import { UcSubsectionModule } from "@adins/uc-subsection";
+import { SharingComponentModule } from "app/shared/sharingcomponent.module";
+import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
+import { MainDataComponent } from "./nap-tab/customer-data/main-data/main-data.component";
 
 
 
@@ -17,6 +23,8 @@ import { RouterModule } from "@angular/router";
     declarations: [
         AppAddComponent,
         AppPagingComponent,
+        CustomerDataComponent,
+        MainDataComponent
     ],
     imports: [ 
         NapRoutingModule,
@@ -29,10 +37,13 @@ import { RouterModule } from "@angular/router";
         ReactiveFormsModule,
         HttpModule,
         CommonModule,
-        RouterModule
+        RouterModule,
+        MatRadioModule,
+        UcSubsectionModule,
+        SharingComponentModule
     ],
     exports: [],
-    providers: [],
+    providers: [NGXToastrService],
 })
 
 export class NapModule { }
