@@ -22,5 +22,28 @@ export class AppCustPersonalObj {
     Email2: any;
     Email3: any;
 
-constructor() { this.AppCustPersonalId = 0; }
+constructor() { 
+        this.AppCustPersonalId = 0;
+        this.AppCustId = 0;
+        this.CustFullName = "";
+        this.NickName = "";
+        this.BirthPlace = "";
+        this.BirthDt = "";
+        this.MotherMaidenName = "";
+        this.MrGenderCode = "";
+        this.MrReligionCode = "";
+        this.MrEducationCode = "";
+        this.MrNationalityCode = "";
+        this.NationalityCountryCode = "";
+        this.MrMaritalStatCode = "";
+        this.FamilyCardNo = "";
+        this.NoOfResidence = "";
+        this.NoOfDependents = "";
+        this.MobilePhnNo1 = "";
+        this.MobilePhnNo2 = "";
+        this.MobilePhnNo3 = "";
+        this.Email1 = "";
+        this.Email2 = "";
+        this.Email3 = "";
+    }
 }
