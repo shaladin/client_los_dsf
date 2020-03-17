@@ -30,5 +30,9 @@ export const Full_ROUTES: Routes = [
   {
     path: 'Guarantor',
     loadChildren: './guarantor/guarantor.module#GuarantorModule'
+  },
+  {
+    path: 'Nap',
+    loadChildren: './NAP/nap.module#NapModule'
   }
 ];
