@@ -13,9 +13,11 @@ import { RouterModule } from "@angular/router";
 import { CustomerDataComponent } from "./nap-tab/customer-data/customer-data.component";
 import { MatRadioModule } from "@angular/material";
 import { UcSubsectionModule } from "@adins/uc-subsection";
+import { UcaddressModule } from "@adins/ucaddress";
 import { SharingComponentModule } from "app/shared/sharingcomponent.module";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
-import { MainDataComponent } from "./nap-tab/customer-data/main-data/main-data.component";
+import { MainDataComponent } from "./nap-tab/customer-data/component/main-data/main-data.component";
+import { CustUcaddressComponent } from "./nap-tab/customer-data/component/address/ucaddress.component";
 
 
 
@@ -24,8 +26,9 @@ import { MainDataComponent } from "./nap-tab/customer-data/main-data/main-data.c
         AppAddComponent,
         AppPagingComponent,
         CustomerDataComponent,
-        MainDataComponent
-    ],
+        MainDataComponent,
+        CustUcaddressComponent
+        ],
     imports: [ 
         NapRoutingModule,
         CommonModule,
@@ -40,7 +43,8 @@ import { MainDataComponent } from "./nap-tab/customer-data/main-data/main-data.c
         RouterModule,
         MatRadioModule,
         UcSubsectionModule,
-        SharingComponentModule
+        SharingComponentModule,
+        UcaddressModule
     ],
     exports: [],
     providers: [NGXToastrService],

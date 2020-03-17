@@ -3,15 +3,14 @@ import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CustDataPersonalObj } from 'app/shared/model/CustDataPersonalObj.Model';
 import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
-import { formatDate } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { MainDataComponent } from './main-data/main-data.component';
+import { MainDataComponent } from './component/main-data/main-data.component';
+import { AddrObj } from 'app/shared/model/AddrObj.Model';
+import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
+import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 
 @Component({
   selector: 'app-customer-data',
@@ -21,32 +20,11 @@ import { MainDataComponent } from './main-data/main-data.component';
 
 export class CustomerDataComponent implements OnInit {
 
+  @ViewChild(MainDataComponent) mainDataComponent;
+
 
   CustDataForm = this.fb.group({
-    MrCustTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
-    CustFullName: ['', [Validators.required, Validators.maxLength(500)]],
-    MrIdTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
-    MrGenderCode: ['', [Validators.required, Validators.maxLength(50)]],
-    IdNo: ['', [Validators.required, Validators.maxLength(50)]],
-    MotherMaidenName: ['', [Validators.required, Validators.maxLength(500)]],
-    IdExpiredDt: [''],
-    MrMaritalStatCode: ['', Validators.maxLength(50)],
-    BirthPlace: ['', [Validators.required, Validators.maxLength(100)]],
-    BirthDt: ['', Validators.required],
-    MrNationalityCode: ['', Validators.maxLength(50)],
-    TaxIdNo: ['', Validators.maxLength(50)],
-    MobilePhnNo1: ['', [Validators.required, Validators.maxLength(50)]],
-    MrEducationCode: ['', Validators.maxLength(50)],
-    MobilePhnNo2: ['', Validators.maxLength(50)],
-    MrReligionCode: ['', Validators.maxLength(50)],
-    MobilePhnNo3: ['', Validators.maxLength(50)],
-    IsVip: [false],
-    Email1: ['', Validators.maxLength(100)],
-    FamilyCardNo: ['', Validators.maxLength(50)],
-    Email2: ['', Validators.maxLength(50)],
-    NoOfResidence: ['', Validators.maxLength(4)],
-    Email3: ['', Validators.maxLength(50)],
-    NoOfDependents: ['', Validators.maxLength(4)],
+    MrCustTypeCode: ['', [Validators.required, Validators.maxLength(50)]]
   });
 
   appId: any;
@@ -56,25 +34,25 @@ export class CustomerDataComponent implements OnInit {
   countryObj = {
     CountryCode: ""
   };
-  selectedCustNo: any;
-  selectedNationalityCountryCode: any;
   custDataObj: CustDataObj;
   custDataPersonalObj: CustDataPersonalObj;
+  legalAddrObj: AddrObj;
+  inputFieldLegalObj: InputFieldObj;
+  residenceAddrObj: AddrObj;
+  inputFieldResidenceObj: InputFieldObj;
 
-  InputLookupCustomerObj: any;
-  InputLookupCountryObj: any;
-  CustTypeObj: any;
-  IdTypeObj: any;
-  GenderObj: any;
-  MaritalStatObj: any;
-  NationalityObj: any;
-  EducationObj: any;
-  ReligionObj: any;
 
   getRefMasterUrl: any;
   addEditCustDataPersonalUrl: any;
   getCustDataUrl: any;
-  getCountryUrl: any;
+
+  CustTypeObj: any;
+  copyToResidenceTypeObj: any = [
+    {
+    Key: "LEGAL",
+    Value: "Legal"
+    },
+  ];
 
 
   constructor(
@@ -89,15 +67,14 @@ export class CustomerDataComponent implements OnInit {
 
   ngOnInit() {
     this.initUrl();
-    this.initLookup();
-    this.bindAllRefMasterObj();
+    this.bindCustTypeObj();
     this.getCustData();
   }
 
   SaveForm(){
-    if(this.CustDataForm.controls.MrCustTypeCode.value == "PERSONAL"){
+    if(this.CustDataForm.controls.MrCustTypeCode.value == AdInsConstant.CustTypePersonal){
       this.custDataPersonalObj = new CustDataPersonalObj();
-      this.setCustPersonalObj();
+      this.setCustPersonalObjForSave();
       this.http.post(this.addEditCustDataPersonalUrl, this.custDataPersonalObj).subscribe(
         (response) => {
           console.log(response);
@@ -110,119 +87,112 @@ export class CustomerDataComponent implements OnInit {
     }
   }
 
-  setCustPersonalObj(){
+  setCustPersonalObjForSave(){
+    this.setAppCust();
+    this.setAppCustPersonal();
+    this.setAppCustAddrLegal();
+    this.setAppCustAddrResidence();
+  }
+
+  setAppCust(){
     this.custDataPersonalObj.AppCustObj.MrCustTypeCode = this.CustDataForm.controls.MrCustTypeCode.value;
-    this.custDataPersonalObj.AppCustObj.CustName = this.InputLookupCustomerObj.nameSelect;
-    this.custDataPersonalObj.AppCustObj.CustNo = this.selectedCustNo;
-    this.custDataPersonalObj.AppCustObj.MrIdTypeCode = this.CustDataForm.controls.MrIdTypeCode.value;
-    this.custDataPersonalObj.AppCustObj.IdNo = this.CustDataForm.controls.IdNo.value;
-    this.custDataPersonalObj.AppCustObj.IdExpiredDt = this.CustDataForm.controls.IdExpiredDt.value;
-    this.custDataPersonalObj.AppCustObj.TaxIdNo = this.CustDataForm.controls.TaxIdNo.value;
-    this.custDataPersonalObj.AppCustObj.IsVip = this.CustDataForm.controls.IsVip.value;
+    this.custDataPersonalObj.AppCustObj.CustName = this.mainDataComponent.InputLookupCustomerObj.nameSelect;
+    this.custDataPersonalObj.AppCustObj.CustNo = this.mainDataComponent.selectedCustNo;
+    this.custDataPersonalObj.AppCustObj.MrIdTypeCode = this.CustDataForm.controls["mainData"]["controls"].MrIdTypeCode.value;
+    this.custDataPersonalObj.AppCustObj.IdNo = this.CustDataForm.controls["mainData"]["controls"].IdNo.value;
+    this.custDataPersonalObj.AppCustObj.IdExpiredDt = this.CustDataForm.controls["mainData"]["controls"].IdExpiredDt.value;
+    this.custDataPersonalObj.AppCustObj.TaxIdNo = this.CustDataForm.controls["mainData"]["controls"].TaxIdNo.value;
+    this.custDataPersonalObj.AppCustObj.IsVip = this.CustDataForm.controls["mainData"]["controls"].IsVip.value;
     this.custDataPersonalObj.AppCustObj.CustModelCode = "PROF";
-    this.custDataPersonalObj.AppCustObj.AppId = 11;
-
-    this.custDataPersonalObj.AppCustPersonalObj.CustFullName = this.CustDataForm.controls.CustFullName.value;
-    this.custDataPersonalObj.AppCustPersonalObj.MrGenderCode = this.CustDataForm.controls.MrGenderCode.value;
-    this.custDataPersonalObj.AppCustPersonalObj.MotherMaidenName = this.CustDataForm.controls.MotherMaidenName.value;
-    this.custDataPersonalObj.AppCustPersonalObj.MrMaritalStatCode = this.CustDataForm.controls.MrMaritalStatCode.value;
-    this.custDataPersonalObj.AppCustPersonalObj.BirthPlace = this.CustDataForm.controls.BirthPlace.value;
-    this.custDataPersonalObj.AppCustPersonalObj.BirthDt = this.CustDataForm.controls.BirthDt.value;
-    this.custDataPersonalObj.AppCustPersonalObj.MrNationalityCode = this.CustDataForm.controls.MrNationalityCode.value;
-    this.custDataPersonalObj.AppCustPersonalObj.NationalityCountryCode = this.selectedNationalityCountryCode;
-    this.custDataPersonalObj.AppCustPersonalObj.MobilePhnNo1 = this.CustDataForm.controls.MobilePhnNo1.value;
-    this.custDataPersonalObj.AppCustPersonalObj.MobilePhnNo2 = this.CustDataForm.controls.MobilePhnNo2.value;
-    this.custDataPersonalObj.AppCustPersonalObj.MobilePhnNo3= this.CustDataForm.controls.MobilePhnNo3.value;
-    this.custDataPersonalObj.AppCustPersonalObj.MrEducationCode = this.CustDataForm.controls.MrEducationCode.value;
-    this.custDataPersonalObj.AppCustPersonalObj.MrReligionCode = this.CustDataForm.controls.MrReligionCode.value;
-    this.custDataPersonalObj.AppCustPersonalObj.Email1 = this.CustDataForm.controls.Email1.value;
-    this.custDataPersonalObj.AppCustPersonalObj.Email2 = this.CustDataForm.controls.Email2.value;
-    this.custDataPersonalObj.AppCustPersonalObj.Email3 = this.CustDataForm.controls.Email3.value;
-    this.custDataPersonalObj.AppCustPersonalObj.FamilyCardNo = this.CustDataForm.controls.FamilyCardNo.value;
-    this.custDataPersonalObj.AppCustPersonalObj.NoOfResidence = this.CustDataForm.controls.NoOfResidence.value;
-    this.custDataPersonalObj.AppCustPersonalObj.NoOfDependents = this.CustDataForm.controls.NoOfDependents.value;
+    this.custDataPersonalObj.AppCustObj.AppId = this.appId;
   }
 
-  CopyCustomer(event) {
-    this.selectedCustNo = event.CustNo;
-    this.InputLookupCustomerObj.isReadonly = true;
+  setAppCustPersonal(){
+    this.custDataPersonalObj.AppCustPersonalObj.CustFullName = this.CustDataForm.controls["mainData"]["controls"].CustFullName.value;
+    this.custDataPersonalObj.AppCustPersonalObj.MrGenderCode = this.CustDataForm.controls["mainData"]["controls"].MrGenderCode.value;
+    this.custDataPersonalObj.AppCustPersonalObj.MotherMaidenName = this.CustDataForm.controls["mainData"]["controls"].MotherMaidenName.value;
+    this.custDataPersonalObj.AppCustPersonalObj.MrMaritalStatCode = this.CustDataForm.controls["mainData"]["controls"].MrMaritalStatCode.value;
+    this.custDataPersonalObj.AppCustPersonalObj.BirthPlace = this.CustDataForm.controls["mainData"]["controls"].BirthPlace.value;
+    this.custDataPersonalObj.AppCustPersonalObj.BirthDt = this.CustDataForm.controls["mainData"]["controls"].BirthDt.value;
+    this.custDataPersonalObj.AppCustPersonalObj.MrNationalityCode = this.CustDataForm.controls["mainData"]["controls"].MrNationalityCode.value;
+    this.custDataPersonalObj.AppCustPersonalObj.NationalityCountryCode = this.mainDataComponent.selectedNationalityCountryCode;
+    this.custDataPersonalObj.AppCustPersonalObj.MobilePhnNo1 = this.CustDataForm.controls["mainData"]["controls"].MobilePhnNo1.value;
+    this.custDataPersonalObj.AppCustPersonalObj.MobilePhnNo2 = this.CustDataForm.controls["mainData"]["controls"].MobilePhnNo2.value;
+    this.custDataPersonalObj.AppCustPersonalObj.MobilePhnNo3= this.CustDataForm.controls["mainData"]["controls"].MobilePhnNo3.value;
+    this.custDataPersonalObj.AppCustPersonalObj.MrEducationCode = this.CustDataForm.controls["mainData"]["controls"].MrEducationCode.value;
+    this.custDataPersonalObj.AppCustPersonalObj.MrReligionCode = this.CustDataForm.controls["mainData"]["controls"].MrReligionCode.value;
+    this.custDataPersonalObj.AppCustPersonalObj.Email1 = this.CustDataForm.controls["mainData"]["controls"].Email1.value;
+    this.custDataPersonalObj.AppCustPersonalObj.Email2 = this.CustDataForm.controls["mainData"]["controls"].Email2.value;
+    this.custDataPersonalObj.AppCustPersonalObj.Email3 = this.CustDataForm.controls["mainData"]["controls"].Email3.value;
+    this.custDataPersonalObj.AppCustPersonalObj.FamilyCardNo = this.CustDataForm.controls["mainData"]["controls"].FamilyCardNo.value;
+    this.custDataPersonalObj.AppCustPersonalObj.NoOfResidence = this.CustDataForm.controls["mainData"]["controls"].NoOfResidence.value;
+    this.custDataPersonalObj.AppCustPersonalObj.NoOfDependents = this.CustDataForm.controls["mainData"]["controls"].NoOfDependents.value;
   }
 
-  
-  GetCountry(event){
-    this.selectedNationalityCountryCode = event.CountryCode;
+  setAppCustAddrLegal(){
+    this.custDataPersonalObj.AppCustAddrLegalObj.MrCustAddrTypeCode = AdInsConstant.AddrTypeLegal;
+    this.custDataPersonalObj.AppCustAddrLegalObj.Addr = this.CustDataForm.controls["legalAddr"]["controls"].Addr.value;
+    this.custDataPersonalObj.AppCustAddrLegalObj.AreaCode3 = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode3.value;
+    this.custDataPersonalObj.AppCustAddrLegalObj.AreaCode4 = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode4.value;
+    this.custDataPersonalObj.AppCustAddrLegalObj.Zipcode = this.CustDataForm.controls["legalAddrZipcode"]["controls"].value.value;
+    this.custDataPersonalObj.AppCustAddrLegalObj.AreaCode1 = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode1.value;
+    this.custDataPersonalObj.AppCustAddrLegalObj.AreaCode2 = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode2.value;
+    this.custDataPersonalObj.AppCustAddrLegalObj.City = this.CustDataForm.controls["legalAddr"]["controls"].City.value;
+    this.custDataPersonalObj.AppCustAddrLegalObj.PhnArea1 = this.CustDataForm.controls["legalAddr"]["controls"].PhnArea1.value;
+    this.custDataPersonalObj.AppCustAddrLegalObj.Phn1 = this.CustDataForm.controls["legalAddr"]["controls"].Phn1.value;
+    this.custDataPersonalObj.AppCustAddrLegalObj.PhnExt1 = this.CustDataForm.controls["legalAddr"]["controls"].PhnExt1.value;
+    this.custDataPersonalObj.AppCustAddrLegalObj.PhnArea2 = this.CustDataForm.controls["legalAddr"]["controls"].PhnArea2.value;
+    this.custDataPersonalObj.AppCustAddrLegalObj.Phn2 = this.CustDataForm.controls["legalAddr"]["controls"].Phn2.value;
+    this.custDataPersonalObj.AppCustAddrLegalObj.PhnExt2 = this.CustDataForm.controls["legalAddr"]["controls"].PhnExt2.value;
+    this.custDataPersonalObj.AppCustAddrLegalObj.FaxArea = this.CustDataForm.controls["legalAddr"]["controls"].FaxArea.value;
+    this.custDataPersonalObj.AppCustAddrLegalObj.Fax = this.CustDataForm.controls["legalAddr"]["controls"].Fax.value;
+  }
+
+  setAppCustAddrResidence(){
+    this.custDataPersonalObj.AppCustAddrResidenceObj.MrCustAddrTypeCode = AdInsConstant.AddrTypeResidence;
+    this.custDataPersonalObj.AppCustAddrResidenceObj.Addr = this.CustDataForm.controls["residenceAddr"]["controls"].Addr.value;
+    this.custDataPersonalObj.AppCustAddrResidenceObj.AreaCode3 = this.CustDataForm.controls["residenceAddr"]["controls"].AreaCode3.value;
+    this.custDataPersonalObj.AppCustAddrResidenceObj.AreaCode4 = this.CustDataForm.controls["residenceAddr"]["controls"].AreaCode4.value;
+    this.custDataPersonalObj.AppCustAddrResidenceObj.Zipcode = this.CustDataForm.controls["residenceAddrZipcode"]["controls"].value.value;
+    this.custDataPersonalObj.AppCustAddrResidenceObj.AreaCode1 = this.CustDataForm.controls["residenceAddr"]["controls"].AreaCode1.value;
+    this.custDataPersonalObj.AppCustAddrResidenceObj.AreaCode2 = this.CustDataForm.controls["residenceAddr"]["controls"].AreaCode2.value;
+    this.custDataPersonalObj.AppCustAddrResidenceObj.City = this.CustDataForm.controls["residenceAddr"]["controls"].City.value;
+    this.custDataPersonalObj.AppCustAddrResidenceObj.PhnArea1 = this.CustDataForm.controls["residenceAddr"]["controls"].PhnArea1.value;
+    this.custDataPersonalObj.AppCustAddrResidenceObj.Phn1 = this.CustDataForm.controls["residenceAddr"]["controls"].Phn1.value;
+    this.custDataPersonalObj.AppCustAddrResidenceObj.PhnExt1 = this.CustDataForm.controls["residenceAddr"]["controls"].PhnExt1.value;
+    this.custDataPersonalObj.AppCustAddrResidenceObj.PhnArea2 = this.CustDataForm.controls["residenceAddr"]["controls"].PhnArea2.value;
+    this.custDataPersonalObj.AppCustAddrResidenceObj.Phn2 = this.CustDataForm.controls["residenceAddr"]["controls"].Phn2.value;
+    this.custDataPersonalObj.AppCustAddrResidenceObj.PhnExt2 = this.CustDataForm.controls["residenceAddr"]["controls"].PhnExt2.value;
+    this.custDataPersonalObj.AppCustAddrResidenceObj.FaxArea = this.CustDataForm.controls["residenceAddr"]["controls"].FaxArea.value;
+    this.custDataPersonalObj.AppCustAddrResidenceObj.Fax = this.CustDataForm.controls["residenceAddr"]["controls"].Fax.value;
+    this.custDataPersonalObj.AppCustAddrResidenceObj.MrHouseOwnershipCode = this.CustDataForm.controls["residenceAddr"]["controls"].MrHouseOwnershipCode.value;
   }
 
   CustTypeChanged(event){
-    this.setCriteriaLookupCustomer(event.value);
+    this.mainDataComponent.setCriteriaLookupCustomer(event.value);
   }
 
-  setCriteriaLookupCustomer(custTypeCode){
-    var arrCrit = new Array();
-    var critObj = new CriteriaObj();
-    critObj.DataType = 'text';
-    critObj.restriction = AdInsConstant.RestrictionEq;
-    critObj.propName = 'MR_CUST_TYPE_CODE';
-    critObj.value = custTypeCode;
-    arrCrit.push(critObj);
-    this.InputLookupCustomerObj.addCritInput = arrCrit;
+  test(){
+    console.log(this.mainDataComponent);
+    console.log(this.CustDataForm);
   }
-
-  setCountryName(countryCode){
-    this.countryObj.CountryCode = countryCode;
-
-    this.http.post(this.getCountryUrl, this.countryObj).subscribe(
-      (response) => {
-        console.log(response);
-        this.InputLookupCountryObj.nameSelect = response["CountryName"];     
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-
-  }
-
+  
   getCustData(){
     this.custDataObj = new CustDataObj();
     this.custDataObj.AppId = this.appId;
-    console.log(this.custDataObj);
     this.http.post(this.getCustDataUrl, this.custDataObj).subscribe(
       (response) => {
         console.log(response);
-        var appCustObj = response["AppCustObj"];
-        var appCustPersonalObj = response["AppCustPersonalObj"];
+        this.custDataPersonalObj = new CustDataPersonalObj();
+        this.custDataPersonalObj.AppCustObj = response["AppCustObj"];
+        this.custDataPersonalObj.AppCustPersonalObj = response["AppCustPersonalObj"];
+        this.custDataPersonalObj.AppCustAddrLegalObj = response["AppCustAddrLegalObj"];
+        this.custDataPersonalObj.AppCustAddrResidenceObj = response["AppCustAddrResidenceObj"];
+        this.setAddrLegalObj();
+        this.setAddrResidenceObj();
         this.CustDataForm.patchValue({
-          MrCustTypeCode: appCustObj.MrCustTypeCode,
-          CustFullName: appCustPersonalObj.CustFullName,
-          MrIdTypeCode: appCustObj.MrIdTypeCode,
-          MrGenderCode: appCustPersonalObj.MrGenderCode,		
-          IdNo: appCustObj.IdNo,
-          MotherMaidenName: appCustPersonalObj.MotherMaidenName,
-          IdExpiredDt: formatDate(appCustObj.IdExpiredDt, 'yyyy-MM-dd', 'en-US'),
-          MrMaritalStatCode: appCustPersonalObj.MrMaritalStatCode,
-          BirthPlace: appCustPersonalObj.BirthPlace,
-          BirthDt: formatDate(appCustPersonalObj.BirthDt, 'yyyy-MM-dd', 'en-US'),
-          MrNationalityCode: appCustPersonalObj.MrNationalityCode,
-          TaxIdNo: appCustObj.TaxIdNo,
-          MobilePhnNo1: appCustPersonalObj.MobilePhnNo1,
-          MrEducationCode: appCustPersonalObj.MrEducationCode,
-          MobilePhnNo2: appCustPersonalObj.MobilePhnNo2,
-          MrReligionCode: appCustPersonalObj.MrReligionCode,
-          MobilePhnNo3: appCustPersonalObj.MobilePhnNo3,
-          IsVip: appCustObj.IsVip,
-          Email1: appCustPersonalObj.Email1,
-          FamilyCardNo: appCustPersonalObj.FamilyCardNo,
-          Email2: appCustPersonalObj.Email2,
-          NoOfResidence: appCustPersonalObj.NoOfResidence,
-          Email3: appCustPersonalObj.Email3,
-          NoOfDependents: appCustPersonalObj.NoOfDependents
+          MrCustTypeCode: this.custDataPersonalObj.AppCustObj.MrCustTypeCode
         });
-        this.setCriteriaLookupCustomer(appCustObj.MrCustTypeCode);
-        this.InputLookupCustomerObj.nameSelect = appCustObj.CustName;
-        this.selectedCustNo = appCustObj.CustNo;
-        this.selectedNationalityCountryCode = appCustPersonalObj.NationalityCountryCode;
-        this.setCountryName(appCustPersonalObj.NationalityCountryCode);
       },
       (error) => {
         console.log(error);
@@ -230,39 +200,63 @@ export class CustomerDataComponent implements OnInit {
     );
   }
 
+  setAddrLegalObj(){
+    this.inputFieldLegalObj = new InputFieldObj();
+    this.inputFieldLegalObj.inputLookupObj = new InputLookupObj();
+
+    if(this.custDataPersonalObj.AppCustAddrLegalObj != undefined){
+      this.legalAddrObj = new AddrObj();
+      this.legalAddrObj.Addr = this.custDataPersonalObj.AppCustAddrLegalObj.Addr;
+      this.legalAddrObj.AreaCode1 = this.custDataPersonalObj.AppCustAddrLegalObj.AreaCode1;
+      this.legalAddrObj.AreaCode2 = this.custDataPersonalObj.AppCustAddrLegalObj.AreaCode2;
+      this.legalAddrObj.AreaCode3 = this.custDataPersonalObj.AppCustAddrLegalObj.AreaCode3;
+      this.legalAddrObj.AreaCode4 = this.custDataPersonalObj.AppCustAddrLegalObj.AreaCode4;
+      this.legalAddrObj.City = this.custDataPersonalObj.AppCustAddrLegalObj.City;
+      this.legalAddrObj.Fax = this.custDataPersonalObj.AppCustAddrLegalObj.Fax;
+      this.legalAddrObj.FaxArea = this.custDataPersonalObj.AppCustAddrLegalObj.FaxArea;
+      this.legalAddrObj.Phn1 = this.custDataPersonalObj.AppCustAddrLegalObj.Phn1;
+      this.legalAddrObj.Phn2 = this.custDataPersonalObj.AppCustAddrLegalObj.Phn2;
+      this.legalAddrObj.PhnArea1 = this.custDataPersonalObj.AppCustAddrLegalObj.PhnArea1;
+      this.legalAddrObj.PhnArea2 = this.custDataPersonalObj.AppCustAddrLegalObj.PhnArea2;
+
+      this.inputFieldLegalObj.inputLookupObj.nameSelect = this.custDataPersonalObj.AppCustAddrLegalObj.Zipcode;
+      this.inputFieldLegalObj.inputLookupObj.jsonSelect = {Zipcode: this.custDataPersonalObj.AppCustAddrLegalObj.Zipcode};
+    }
+    
+
+    
+    
+  }
+
+  setAddrResidenceObj(){
+    this.inputFieldResidenceObj = new InputFieldObj();
+    this.inputFieldResidenceObj.inputLookupObj = new InputLookupObj();
+
+    if(this.custDataPersonalObj.AppCustAddrResidenceObj != undefined){
+      this.residenceAddrObj = new AddrObj();
+      this.residenceAddrObj.Addr = this.custDataPersonalObj.AppCustAddrResidenceObj.Addr;
+      this.residenceAddrObj.AreaCode1 = this.custDataPersonalObj.AppCustAddrResidenceObj.AreaCode1;
+      this.residenceAddrObj.AreaCode2 = this.custDataPersonalObj.AppCustAddrResidenceObj.AreaCode2;
+      this.residenceAddrObj.AreaCode3 = this.custDataPersonalObj.AppCustAddrResidenceObj.AreaCode3;
+      this.residenceAddrObj.AreaCode4 = this.custDataPersonalObj.AppCustAddrResidenceObj.AreaCode4;
+      this.residenceAddrObj.City = this.custDataPersonalObj.AppCustAddrResidenceObj.City;
+      this.residenceAddrObj.Fax = this.custDataPersonalObj.AppCustAddrResidenceObj.Fax;
+      this.residenceAddrObj.FaxArea = this.custDataPersonalObj.AppCustAddrResidenceObj.FaxArea;
+      this.residenceAddrObj.Phn1 = this.custDataPersonalObj.AppCustAddrResidenceObj.Phn1;
+      this.residenceAddrObj.Phn2 = this.custDataPersonalObj.AppCustAddrResidenceObj.Phn2;
+      this.residenceAddrObj.PhnArea1 = this.custDataPersonalObj.AppCustAddrResidenceObj.PhnArea1;
+      this.residenceAddrObj.PhnArea2 = this.custDataPersonalObj.AppCustAddrResidenceObj.PhnArea2;
+      this.residenceAddrObj.MrHouseOwnershipCode = this.custDataPersonalObj.AppCustAddrResidenceObj.MrHouseOwnershipCode;
+      
+      this.inputFieldResidenceObj.inputLookupObj.nameSelect = this.custDataPersonalObj.AppCustAddrResidenceObj.Zipcode;
+      this.inputFieldResidenceObj.inputLookupObj.jsonSelect = {Zipcode: this.custDataPersonalObj.AppCustAddrResidenceObj.Zipcode};
+    }
+  }
+
   initUrl(){
-    this.getRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
     this.addEditCustDataPersonalUrl = AdInsConstant.AddEditCustDataPersonal;
     this.getCustDataUrl = AdInsConstant.GetCustDataByAppId;
-    this.getCountryUrl = AdInsConstant.GetRefCountryByCountryCode;
-  }
-
-  initLookup(){
-    this.InputLookupCustomerObj = new InputLookupObj();
-    this.InputLookupCustomerObj.urlJson = "./assets/uclookup/lookupCustomer.json";
-    this.InputLookupCustomerObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupCustomerObj.urlEnviPaging = environment.FoundationR3Url;
-    this.InputLookupCustomerObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
-    this.InputLookupCustomerObj.genericJson = "./assets/uclookup/lookupCustomer.json";
-    this.InputLookupCustomerObj.isReadonly = false;
-
-    this.InputLookupCountryObj = new InputLookupObj();
-    this.InputLookupCountryObj.urlJson = "./assets/uclookup/lookupCountry.json";
-    this.InputLookupCountryObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupCountryObj.urlEnviPaging = environment.FoundationR3Url;
-    this.InputLookupCountryObj.pagingJson = "./assets/uclookup/lookupCountry.json";
-    this.InputLookupCountryObj.genericJson = "./assets/uclookup/lookupCountry.json";
-
-  }
-
-  bindAllRefMasterObj(){
-    this.bindCustTypeObj();
-    this.bindIdTypeObj();
-    this.bindGenderObj();
-    this.bindMaritalStatObj();
-    this.bindNationalityObj();
-    this.bindEducationObj();
-    this.bindReligionObj();
+    this.getRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
   }
 
   bindCustTypeObj(){
@@ -274,94 +268,9 @@ export class CustomerDataComponent implements OnInit {
           this.CustDataForm.patchValue({
             MrCustTypeCode: this.CustTypeObj[0].Key
           });
-          this.setCriteriaLookupCustomer(this.CustTypeObj[0].Key);
+          this.mainDataComponent.setCriteriaLookupCustomer(this.CustTypeObj[0].Key);
         }
       }
     );
   }
-
-  bindIdTypeObj(){
-    this.refMasterObj.RefMasterTypeCode = "ID_TYPE";
-    this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
-      (response) => {
-        this.IdTypeObj = response["ReturnObject"];
-        if(this.IdTypeObj.length > 0){
-          this.CustDataForm.patchValue({
-            MrIdTypeCode: this.IdTypeObj[0].Key
-          });
-        }
-      }
-    );
-  }
-
-  bindGenderObj(){
-    this.refMasterObj.RefMasterTypeCode = "GENDER";
-    this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
-      (response) => {
-        this.GenderObj = response["ReturnObject"];
-        if(this.GenderObj.length > 0){
-          this.CustDataForm.patchValue({
-            MrGenderCode: this.GenderObj[0].Key
-          });
-        }
-      }
-    );
-  }
-
-  bindMaritalStatObj(){
-    this.refMasterObj.RefMasterTypeCode = "MARITAL_STAT";
-    this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
-      (response) => {
-        this.MaritalStatObj = response["ReturnObject"];
-        if(this.MaritalStatObj.length > 0){
-          this.CustDataForm.patchValue({
-            MrMaritalStatCode: this.MaritalStatObj[0].Key
-          });
-        }
-      }
-    );
-  }
-
-  bindNationalityObj(){
-    this.refMasterObj.RefMasterTypeCode = "NATIONALITY";
-    this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
-      (response) => {
-        this.NationalityObj = response["ReturnObject"];
-        if(this.NationalityObj.length > 0){
-          this.CustDataForm.patchValue({
-            MrNationalityCode: this.NationalityObj[0].Key
-          });
-        }
-      }
-    );
-  }
-
-  bindEducationObj(){
-    this.refMasterObj.RefMasterTypeCode = "EDUCATION";
-    this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
-      (response) => {
-        this.EducationObj = response["ReturnObject"];
-        if(this.EducationObj.length > 0){
-          this.CustDataForm.patchValue({
-            MrEducationCode: this.EducationObj[0].Key
-          });
-        }
-      }
-    );
-  }
-
-  bindReligionObj(){
-    this.refMasterObj.RefMasterTypeCode = "RELIGION";
-    this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
-      (response) => {
-        this.ReligionObj = response["ReturnObject"];
-        if(this.ReligionObj.length > 0){
-          this.CustDataForm.patchValue({
-            MrReligionCode: this.ReligionObj[0].Key
-          });
-        }
-      }
-    );
-  }
-
 }

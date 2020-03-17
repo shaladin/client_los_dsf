@@ -58,6 +58,15 @@ export class AdInsConstant {
     public static LoginByToken = "/Authenticate/LoginByToken";
     public static UpdateToken = "/Authenticate/UpdateRole";
 
+    //CUST TYPE
+    public static CustTypePersonal = "PERSONAL";
+
+    //ADDR TYPE
+    public static AddrTypeLegal = "LEGAL";
+    public static AddrTypeResidence = "RESIDENCE";
+
+
+
     //GENERAL SETTING
     public static GetBusinessDt = "/GeneralSetting/GetBusinessDate";
     public static AddGeneralSetting = "/GeneralSetting/AddGeneralSetting";
