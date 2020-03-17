@@ -23,18 +23,50 @@
                 </lib-ucSubsection>
                 <div id="residenceAddr">
                   <div class="form-group row">
-                    <label class="col-md-2" translate>Copy From</label>
+                    <label class="col-md-2" translate>Copy Address From</label>
                     <div class="col-md-4">
-                      <select class="form-control">
-                        <option *ngFor="let item of copyToResidenceTypeObj" [value]="item.Key">
-                          {{item.Value}}
-                        </option>
-                      </select>
+                      <div class="input-group">
+                        <select class="form-control" formControlName="CopyFromResidence" [(ngModel)]="copyFromResidence">
+                          <option *ngFor="let item of copyToResidenceTypeObj" [value]="item.Key">
+                            {{item.Value}}
+                          </option>
+                        </select>
+                        <div class="input-group-append">
+                            <span class="input-group-btn">
+                                <button class="btn btn-raised btn-primary" type="button" (click)="copyToResidence()">
+                                    <i class="fa fa-check-square-o"></i>Copy
+                                </button>
+                            </span>
+                          </div>
+                      </div>
                     </div>
                   </div>
-                  <lib-ucaddress #UcAddrGrp [showSubsection]="false" [title]="'Residence Address'" [UCAddrForm]="CustDataForm" [enjiForm]="enjiForm" [identifier]="'residenceAddr'" [default]="residenceAddrObj" [inputField]="inputFieldResidenceObj" [showPhn3]="false" [showOwnership]="true"></lib-ucaddress>
+                  <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="CustDataForm" [enjiForm]="enjiForm" [identifier]="'residenceAddr'" [default]="residenceAddrObj" [inputField]="inputFieldResidenceObj" [showPhn3]="false" [showOwnership]="true"></lib-ucaddress>
                 </div>
-
+                <lib-ucSubsection [id]="'mailingAddrId'" [title]="'Mailing Address'" [panel]="'mailingAddr'">
+                </lib-ucSubsection>
+                <div id="mailingAddr">
+                  <div class="form-group row">
+                    <label class="col-md-2" translate>Copy Address From</label>
+                    <div class="col-md-4">
+                      <div class="input-group">
+                        <select class="form-control" formControlName="CopyFromMailing" [(ngModel)]="copyFromMailing">
+                          <option *ngFor="let item of copyToMailingTypeObj" [value]="item.Key">
+                            {{item.Value}}
+                          </option>
+                        </select>
+                        <div class="input-group-append">
+                            <span class="input-group-btn">
+                                <button class="btn btn-raised btn-primary" type="button" (click)="copyToMailing()">
+                                    <i class="fa fa-check-square-o"></i>Copy
+                                </button>
+                            </span>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                  <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="CustDataForm" [enjiForm]="enjiForm" [identifier]="'mailingAddr'" [default]="mailingAddrObj" [inputField]="inputFieldMailingObj" [showPhn3]="false"></lib-ucaddress>
+                </div>
               </div>
             </div>
             <div class="form-actions right">

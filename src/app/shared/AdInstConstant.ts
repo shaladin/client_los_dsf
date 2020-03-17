@@ -64,6 +64,7 @@ export class AdInsConstant {
     //ADDR TYPE
     public static AddrTypeLegal = "LEGAL";
     public static AddrTypeResidence = "RESIDENCE";
+    public static AddrTypeMailing = "MAILING";
 
 
 

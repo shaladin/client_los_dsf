@@ -24,7 +24,9 @@ export class CustomerDataComponent implements OnInit {
 
 
   CustDataForm = this.fb.group({
-    MrCustTypeCode: ['', [Validators.required, Validators.maxLength(50)]]
+    MrCustTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
+    CopyFromResidence: [''],
+    CopyFromMailing: ['']
   });
 
   appId: any;
@@ -40,6 +42,10 @@ export class CustomerDataComponent implements OnInit {
   inputFieldLegalObj: InputFieldObj;
   residenceAddrObj: AddrObj;
   inputFieldResidenceObj: InputFieldObj;
+  copyFromResidence: any;
+  mailingAddrObj: AddrObj;
+  inputFieldMailingObj: InputFieldObj;
+  copyFromMailing: any;
 
 
   getRefMasterUrl: any;
@@ -54,6 +60,16 @@ export class CustomerDataComponent implements OnInit {
     },
   ];
 
+  copyToMailingTypeObj: any = [
+    {
+    Key: "LEGAL",
+    Value: "Legal"
+    },
+    {
+      Key: "RESIDENCE",
+      Value: "Residence"
+    }
+  ];
 
   constructor(
     private fb: FormBuilder, 
@@ -67,6 +83,7 @@ export class CustomerDataComponent implements OnInit {
 
   ngOnInit() {
     this.initUrl();
+    this.bindCopyFrom();
     this.bindCustTypeObj();
     this.getCustData();
   }
@@ -92,6 +109,7 @@ export class CustomerDataComponent implements OnInit {
     this.setAppCustPersonal();
     this.setAppCustAddrLegal();
     this.setAppCustAddrResidence();
+    this.setAppCustAddrMailing();
   }
 
   setAppCust(){
@@ -168,6 +186,48 @@ export class CustomerDataComponent implements OnInit {
     this.custDataPersonalObj.AppCustAddrResidenceObj.MrHouseOwnershipCode = this.CustDataForm.controls["residenceAddr"]["controls"].MrHouseOwnershipCode.value;
   }
 
+  setAppCustAddrMailing(){
+    this.custDataPersonalObj.AppCustAddrMailingObj.MrCustAddrTypeCode = AdInsConstant.AddrTypeMailing;
+    this.custDataPersonalObj.AppCustAddrMailingObj.Addr = this.CustDataForm.controls["mailingAddr"]["controls"].Addr.value;
+    this.custDataPersonalObj.AppCustAddrMailingObj.AreaCode3 = this.CustDataForm.controls["mailingAddr"]["controls"].AreaCode3.value;
+    this.custDataPersonalObj.AppCustAddrMailingObj.AreaCode4 = this.CustDataForm.controls["mailingAddr"]["controls"].AreaCode4.value;
+    this.custDataPersonalObj.AppCustAddrMailingObj.Zipcode = this.CustDataForm.controls["mailingAddrZipcode"]["controls"].value.value;
+    this.custDataPersonalObj.AppCustAddrMailingObj.AreaCode1 = this.CustDataForm.controls["mailingAddr"]["controls"].AreaCode1.value;
+    this.custDataPersonalObj.AppCustAddrMailingObj.AreaCode2 = this.CustDataForm.controls["mailingAddr"]["controls"].AreaCode2.value;
+    this.custDataPersonalObj.AppCustAddrMailingObj.City = this.CustDataForm.controls["mailingAddr"]["controls"].City.value;
+    this.custDataPersonalObj.AppCustAddrMailingObj.PhnArea1 = this.CustDataForm.controls["mailingAddr"]["controls"].PhnArea1.value;
+    this.custDataPersonalObj.AppCustAddrMailingObj.Phn1 = this.CustDataForm.controls["mailingAddr"]["controls"].Phn1.value;
+    this.custDataPersonalObj.AppCustAddrMailingObj.PhnExt1 = this.CustDataForm.controls["mailingAddr"]["controls"].PhnExt1.value;
+    this.custDataPersonalObj.AppCustAddrMailingObj.PhnArea2 = this.CustDataForm.controls["mailingAddr"]["controls"].PhnArea2.value;
+    this.custDataPersonalObj.AppCustAddrMailingObj.Phn2 = this.CustDataForm.controls["mailingAddr"]["controls"].Phn2.value;
+    this.custDataPersonalObj.AppCustAddrMailingObj.PhnExt2 = this.CustDataForm.controls["mailingAddr"]["controls"].PhnExt2.value;
+    this.custDataPersonalObj.AppCustAddrMailingObj.FaxArea = this.CustDataForm.controls["mailingAddr"]["controls"].FaxArea.value;
+    this.custDataPersonalObj.AppCustAddrMailingObj.Fax = this.CustDataForm.controls["mailingAddr"]["controls"].Fax.value;
+  }
+
+  copyToResidence(){
+    console.log(this.copyFromResidence);
+    if(this.copyFromResidence == AdInsConstant.AddrTypeLegal){
+      this.residenceAddrObj = this.legalAddrObj;
+      this.inputFieldResidenceObj.inputLookupObj.nameSelect = this.inputFieldLegalObj.inputLookupObj.nameSelect;
+      this.inputFieldResidenceObj.inputLookupObj.jsonSelect = this.inputFieldLegalObj.inputLookupObj.jsonSelect;
+    }
+  }
+
+  copyToMailing(){
+    if(this.copyFromMailing == AdInsConstant.AddrTypeLegal){
+      this.mailingAddrObj = this.legalAddrObj;
+      this.inputFieldMailingObj.inputLookupObj.nameSelect = this.inputFieldLegalObj.inputLookupObj.nameSelect;
+      this.inputFieldMailingObj.inputLookupObj.jsonSelect = this.inputFieldLegalObj.inputLookupObj.jsonSelect;
+    }
+
+    if(this.copyFromMailing == AdInsConstant.AddrTypeResidence){
+      this.mailingAddrObj = this.residenceAddrObj;
+      this.inputFieldMailingObj.inputLookupObj.nameSelect = this.inputFieldResidenceObj.inputLookupObj.nameSelect;
+      this.inputFieldMailingObj.inputLookupObj.jsonSelect = this.inputFieldResidenceObj.inputLookupObj.jsonSelect;
+    }
+  }
+
   CustTypeChanged(event){
     this.mainDataComponent.setCriteriaLookupCustomer(event.value);
   }
@@ -188,8 +248,12 @@ export class CustomerDataComponent implements OnInit {
         this.custDataPersonalObj.AppCustPersonalObj = response["AppCustPersonalObj"];
         this.custDataPersonalObj.AppCustAddrLegalObj = response["AppCustAddrLegalObj"];
         this.custDataPersonalObj.AppCustAddrResidenceObj = response["AppCustAddrResidenceObj"];
+        this.custDataPersonalObj.AppCustAddrMailingObj = response["AppCustAddrMailingObj"];
+
         this.setAddrLegalObj();
         this.setAddrResidenceObj();
+        this.setAddrMailingObj();
+        
         this.CustDataForm.patchValue({
           MrCustTypeCode: this.custDataPersonalObj.AppCustObj.MrCustTypeCode
         });
@@ -218,14 +282,12 @@ export class CustomerDataComponent implements OnInit {
       this.legalAddrObj.Phn2 = this.custDataPersonalObj.AppCustAddrLegalObj.Phn2;
       this.legalAddrObj.PhnArea1 = this.custDataPersonalObj.AppCustAddrLegalObj.PhnArea1;
       this.legalAddrObj.PhnArea2 = this.custDataPersonalObj.AppCustAddrLegalObj.PhnArea2;
+      this.legalAddrObj.PhnExt1 = this.custDataPersonalObj.AppCustAddrLegalObj.PhnExt1;
+      this.legalAddrObj.PhnExt2 = this.custDataPersonalObj.AppCustAddrLegalObj.PhnExt2;
 
       this.inputFieldLegalObj.inputLookupObj.nameSelect = this.custDataPersonalObj.AppCustAddrLegalObj.Zipcode;
       this.inputFieldLegalObj.inputLookupObj.jsonSelect = {Zipcode: this.custDataPersonalObj.AppCustAddrLegalObj.Zipcode};
-    }
-    
-
-    
-    
+    }  
   }
 
   setAddrResidenceObj(){
@@ -246,6 +308,8 @@ export class CustomerDataComponent implements OnInit {
       this.residenceAddrObj.Phn2 = this.custDataPersonalObj.AppCustAddrResidenceObj.Phn2;
       this.residenceAddrObj.PhnArea1 = this.custDataPersonalObj.AppCustAddrResidenceObj.PhnArea1;
       this.residenceAddrObj.PhnArea2 = this.custDataPersonalObj.AppCustAddrResidenceObj.PhnArea2;
+      this.residenceAddrObj.PhnExt1 = this.custDataPersonalObj.AppCustAddrResidenceObj.PhnExt1;
+      this.residenceAddrObj.PhnExt2 = this.custDataPersonalObj.AppCustAddrResidenceObj.PhnExt2;
       this.residenceAddrObj.MrHouseOwnershipCode = this.custDataPersonalObj.AppCustAddrResidenceObj.MrHouseOwnershipCode;
       
       this.inputFieldResidenceObj.inputLookupObj.nameSelect = this.custDataPersonalObj.AppCustAddrResidenceObj.Zipcode;
@@ -253,10 +317,43 @@ export class CustomerDataComponent implements OnInit {
     }
   }
 
+  setAddrMailingObj(){
+    this.inputFieldMailingObj = new InputFieldObj();
+    this.inputFieldMailingObj.inputLookupObj = new InputLookupObj();
+
+    if(this.custDataPersonalObj.AppCustAddrMailingObj != undefined){
+      this.mailingAddrObj = new AddrObj();
+      this.mailingAddrObj.Addr = this.custDataPersonalObj.AppCustAddrMailingObj.Addr;
+      this.mailingAddrObj.AreaCode1 = this.custDataPersonalObj.AppCustAddrMailingObj.AreaCode1;
+      this.mailingAddrObj.AreaCode2 = this.custDataPersonalObj.AppCustAddrMailingObj.AreaCode2;
+      this.mailingAddrObj.AreaCode3 = this.custDataPersonalObj.AppCustAddrMailingObj.AreaCode3;
+      this.mailingAddrObj.AreaCode4 = this.custDataPersonalObj.AppCustAddrMailingObj.AreaCode4;
+      this.mailingAddrObj.City = this.custDataPersonalObj.AppCustAddrMailingObj.City;
+      this.mailingAddrObj.Fax = this.custDataPersonalObj.AppCustAddrMailingObj.Fax;
+      this.mailingAddrObj.FaxArea = this.custDataPersonalObj.AppCustAddrMailingObj.FaxArea;
+      this.mailingAddrObj.Phn1 = this.custDataPersonalObj.AppCustAddrMailingObj.Phn1;
+      this.mailingAddrObj.Phn2 = this.custDataPersonalObj.AppCustAddrMailingObj.Phn2;
+      this.mailingAddrObj.PhnArea1 = this.custDataPersonalObj.AppCustAddrMailingObj.PhnArea1;
+      this.mailingAddrObj.PhnArea2 = this.custDataPersonalObj.AppCustAddrMailingObj.PhnArea2;
+      this.mailingAddrObj.PhnExt1 = this.custDataPersonalObj.AppCustAddrMailingObj.PhnExt1;
+      this.mailingAddrObj.PhnExt2 = this.custDataPersonalObj.AppCustAddrMailingObj.PhnExt2;
+      
+      this.inputFieldMailingObj.inputLookupObj.nameSelect = this.custDataPersonalObj.AppCustAddrMailingObj.Zipcode;
+      this.inputFieldMailingObj.inputLookupObj.jsonSelect = {Zipcode: this.custDataPersonalObj.AppCustAddrMailingObj.Zipcode};
+    }
+  }
+
   initUrl(){
     this.addEditCustDataPersonalUrl = AdInsConstant.AddEditCustDataPersonal;
     this.getCustDataUrl = AdInsConstant.GetCustDataByAppId;
     this.getRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
+  }
+
+  bindCopyFrom(){
+    this.CustDataForm.patchValue({
+      CopyFromResidence: this.copyToResidenceTypeObj[0].Key,
+      CopyFromMailing: this.copyToMailingTypeObj[0].Key
+    }); 
   }
 
   bindCustTypeObj(){

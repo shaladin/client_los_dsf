@@ -8,6 +8,7 @@ export class CustDataPersonalObj {
     AppCustPersonalObj: AppCustPersonalObj;
     AppCustAddrLegalObj: AppCustAddrObj;
     AppCustAddrResidenceObj: AppCustAddrObj;
+    AppCustAddrMailingObj: AppCustAddrObj;
     RowVersion: any;
 
     constructor() { 
@@ -15,6 +16,7 @@ export class CustDataPersonalObj {
         this.AppCustPersonalObj = new AppCustPersonalObj();
         this.AppCustAddrLegalObj = new AppCustAddrObj();
         this.AppCustAddrResidenceObj = new AppCustAddrObj();
+        this.AppCustAddrMailingObj = new AppCustAddrObj();
         this.RowVersion = ""; 
     }
 }
