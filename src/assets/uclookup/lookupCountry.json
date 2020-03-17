@@ -1,0 +1,69 @@
+{
+    "url": "",
+    "title":"Lookup - Country",
+    "component": [
+      {
+        "type": "textbox",
+        "name": "COUNTRY_CODE",
+        "id": "countryCodeId",
+        "value": "",
+        "label": "Country Code",
+        "placeholder": ""
+      },
+      {
+        "type": "textbox",
+        "name": "COUNTRY_NAME",
+        "id": "countryNameId",
+        "value": "",
+        "label": "Country Name",
+        "placeholder": ""
+      }
+    ],
+    "querystring": {
+      "select": "SELECT COUNTRY_CODE AS CountryCode, COUNTRY_NAME AS CountryName",
+      "from": "FROM REF_COUNTRY WITH(NOLOCK)"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Country Code",
+            "name": "COUNTRY_CODE"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Country Name",
+            "name": "COUNTRY_NAME"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Select"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "CountryCode"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CountryName"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "select",
+                    "property": "CountryCode"
+                }
+            ]
+        }
+    ],
+    "propertyId": "CountryCode",
+    "propertyName": "CountryName"
+}
