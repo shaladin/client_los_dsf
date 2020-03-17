@@ -1,3 +1,5 @@
+import { environment } from "environments/environment";
+
 export class AdInsConstant {
 
     //App Step
@@ -67,6 +69,16 @@ export class AdInsConstant {
     public static LoginByRole = "/Authenticate/LoginByRole";
     public static LoginByToken = "/Authenticate/LoginByToken";
     public static UpdateToken = "/Authenticate/UpdateRole";
+
+    //CUST TYPE
+    public static CustTypePersonal = "PERSONAL";
+
+    //ADDR TYPE
+    public static AddrTypeLegal = "LEGAL";
+    public static AddrTypeResidence = "RESIDENCE";
+    public static AddrTypeMailing = "MAILING";
+
+
 
     //GENERAL SETTING
     public static GetBusinessDt = "/GeneralSetting/GetBusinessDate";
@@ -252,6 +264,8 @@ export class AdInsConstant {
     public static GetRefMasterPaging = "/RefMaster/GetRefMasterPaging";
     public static GetRefMasterListDesc = "/RefMaster/GetRefMasterListDesc";
     public static GetRefMasterByMasterCode = "/RefMaster/GetRefMasterByMasterCode";
+    public static GetRefMasterListKeyValueActiveByCode = environment.FoundationR3Url + "/RefMaster/GetListKeyValueActiveByCode"
+
 
     //REF PROV DISTRICT
     public static GetRefProvDistrictPaging = "/RefProvDistrict/GetRefProvDistrictPaging";
@@ -355,4 +369,10 @@ export class AdInsConstant {
     public static GetListVendorBankAccByVendorCode= "/VendorBankAcc/GetListVendorBankAccByVendorCode";
 
 
+    // REF COUNTRY
+    public static GetRefCountryByCountryCode = environment.FoundationR3Url + "/RefCountry/GetRefCountryByCountryCode";
+
+    //CUST DATA PERSONAL
+    public static AddEditCustDataPersonal = "https://localhost:5001/AppCust/AddEditCustDataPersonal";
+    public static GetCustDataByAppId = "https://localhost:5001/AppCust/GetCustDataByAppId";
 }

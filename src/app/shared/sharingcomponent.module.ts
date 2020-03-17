@@ -19,6 +19,7 @@ import { LookupAssetComponent } from './lookup/lookup-asset/lookup-asset.compone
 import { LookupBpkbCityComponent } from './lookup/lookup-bpkb-city/lookup-bpkb-city.component';
 import { LookupAccessoriesComponent } from './lookup/lookup-accessories/lookup-accessories.component';
 import { LookupAgencyComponent } from './lookup/lookup-agency/lookup-agency.component';
+import { ShowErrorsComponent } from './show-error/show-errors.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { LookupAgencyComponent } from './lookup/lookup-agency/lookup-agency.comp
         LookupAssetComponent,
         LookupBpkbCityComponent,
         LookupAccessoriesComponent,
-        LookupAgencyComponent
+        LookupAgencyComponent,
+        ShowErrorsComponent
     ],
     imports: [
         FormsModule,
@@ -57,7 +59,8 @@ import { LookupAgencyComponent } from './lookup/lookup-agency/lookup-agency.comp
         LookupAssetComponent,
         LookupBpkbCityComponent,
         LookupAccessoriesComponent,
-        LookupAgencyComponent
+        LookupAgencyComponent,
+        ShowErrorsComponent
     ]
 })
 

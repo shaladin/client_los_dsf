@@ -4,6 +4,8 @@ import { AppPagingComponent } from "./app-paging/app-paging.component";
 import { AppAddComponent } from "./app-add/app-add.component";
 import { AppAddDetailComponent } from "./app-add-detail/app-add-detail.component";
 import { AppReferantorComponent } from "./App-Referantor/app-referantor/app-referantor.component";
+import { CustomerDataComponent } from "./nap-tab/customer-data/customer-data.component";
+
 
 const routes: Routes = [
     {
@@ -35,6 +37,13 @@ const routes: Routes = [
                 component: AppReferantorComponent,
                 data: {
                     title: 'Referantor'
+                }
+            },
+            {
+                path: 'CustData',
+                component: CustomerDataComponent,
+                data: {
+                    title: 'Customer Data'
                 }
             },
         ]
