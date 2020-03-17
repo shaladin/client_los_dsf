@@ -3,8 +3,9 @@
 <div class="card-body">
   <div class="px-3">
     <aw-wizard #wizard navBarLayout="large-empty-symbols" [defaultStepIndex]="0">
-      <aw-wizard-step [stepTitle]="'Tab 1'"
+      <aw-wizard-step [stepTitle]="'Referantor'"
         [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
+        <app-app-referantor [appId]=param></app-app-referantor>
       </aw-wizard-step>
     
       <aw-wizard-step [stepTitle]="'Tab 2'"
