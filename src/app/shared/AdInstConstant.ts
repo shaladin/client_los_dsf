@@ -38,8 +38,16 @@ export class AdInsConstant {
     public static EditApp = "/Application/EditApp";
     public static GetAppById = "/Application/GetAppById";    
 
+    // App Referantor
+    public static AddAppReferantor = "/AppReferantor/AddAppReferantor";
+    public static EditAppReferantor = "/AppReferantor/EditAppReferantor";
+    public static DeleteAppReferantor = "/AppReferantor/DeleteAppReferantor";
+    public static GetAppReferantorByAppReferantorId = "/AppReferantor/GetAppReferantorByAppReferantorId";
+    public static GetAppReferantorByAppId = "/AppReferantor/GetAppReferantorByAppId";
+
     public static RestrictionLike = "Like";
     public static RestrictionEq = "Eq";
+    public static RestrictionIn = "IN";
     public static RestrictionNotIn = "NotIn";
     public static RestrictionIsNull = "isnull";
     public static RestrictionIsNotNull = "isnotnull";
@@ -243,6 +251,7 @@ export class AdInsConstant {
     public static DeleteRefMaster = "/RefMaster/DeleteRefMaster";
     public static GetRefMasterPaging = "/RefMaster/GetRefMasterPaging";
     public static GetRefMasterListDesc = "/RefMaster/GetRefMasterListDesc";
+    public static GetRefMasterByMasterCode = "/RefMaster/GetRefMasterByMasterCode";
 
     //REF PROV DISTRICT
     public static GetRefProvDistrictPaging = "/RefProvDistrict/GetRefProvDistrictPaging";
@@ -340,5 +349,10 @@ export class AdInsConstant {
 
     // GENERIC
     public static GetPagingObjectBySQL = "/Generic/GetPagingObjectBySQL"
+
+    // Vendor
+    public static GetListVendorBankAccByVendorId= "/VendorBankAcc/GetListVendorBankAccByVendorId";
+    public static GetListVendorBankAccByVendorCode= "/VendorBankAcc/GetListVendorBankAccByVendorCode";
+
 
 }
