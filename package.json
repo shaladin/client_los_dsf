@@ -13,6 +13,7 @@
   "private": true,
   "dependencies": {
     "@adins/uc-subsection": "^1.0.4",
+    "@adins/ucaddress": "^1.0.8",
     "@adins/ucgridfooter": "^1.0.1",
     "@adins/uclookupgeneric": "^2.0.12",
     "@adins/ucpaging": "^2.0.11",

@@ -1,0 +1,98 @@
+{
+    "title":"Lookup Zip Code",
+    "component": [
+      {
+        "type": "textbox",
+        "name": "RZ.ZIPCODE",
+        "id": "ZipCode",
+        "value": "",
+        "label": "Zip Code",
+        "placeholder": "Zip Code"
+      },
+      {
+        "type": "textbox",
+        "name": "RZ.AREA_CODE_2",
+        "id": "Kelurahan",
+        "value": "",
+        "label": "Kelurahan",
+        "placeholder": "Kelurahan"
+      },
+      {
+        "type": "textbox",
+        "name": "RZ.AREA_CODE_1",
+        "id": "kecamatan",
+        "value": "",
+        "label": "Kecamatan",
+        "placeholder": "Kecamatan"
+      }
+    ],
+    "querystring": {
+      "select": "SELECT RZ.AREA_CODE_1 AS AreaCode1, RZ.AREA_CODE_2 AS AreaCode2, RZ.ZIPCODE AS Zipcode, RZ.CITY AS City, RPD.PROV_DISTRICT_NAME AS Province, RZ.REF_ZIPCODE_ID AS RefZipcodeId, RZ.IS_ACTIVE AS IsActive, RZ.PHN_AREA AS PhnArea",
+      "from": "FROM REF_ZIPCODE RZ WITH(NOLOCK) LEFT JOIN dbo.REF_PROV_DISTRICT RPD WITH(NOLOCK) ON RZ.REF_PROV_DISTRICT_ID = RPD.REF_PROV_DISTRICT_ID"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "City",
+            "name": "RZ.CITY"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Kelurahan",
+            "name": "RZ.AREA_CODE_2"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Kecamatan",
+            "name": "RZ.AREA_CODE_1"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Zipcode",
+            "name": "RZ.ZIPCODE"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Action"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "City"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "AreaCode2"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "AreaCode1"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "Zipcode"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "select",
+                    "property": "Zipcode"
+                }
+            ]
+        }
+    ],
+    "propertyId": "Zipcode",
+    "propertyName": "Zipcode"
+}
