@@ -1,0 +1,88 @@
+{
+    "title": "Lookup Officer",
+    "component": [
+      {
+        "type": "textbox",
+        "name": "re.EMP_NO",
+        "id": "salesOfficerNo",
+        "value": "",
+        "label": "Sales Officer Code",
+        "placeholder": "Sales Office Code"
+      },
+      {
+        "type": "textbox",
+        "name": "re.EMP_NAME",
+        "id": "salesOfficerName",
+        "value": "",
+        "label": "Sales Officer Name",
+        "placeholder": "Sales Officer Name"
+      },
+      {
+        "type": "textbox",
+        "name": "ru.USERNAME",
+        "id": "salesHeadName",
+        "value": "",
+        "label": "Sales Head Name",
+        "placeholder": "Sales Head Name"
+      }
+    ],
+    "querystring": {
+      "select": "SELECT re.EMP_NO AS SalesOfficerNo, re.EMP_NAME AS SalesOfficerName, ru.REF_USER_ID AS SalesHeadNo, ru.USERNAME AS SalesHeadName, re.IS_ACTIVE AS OfficerActive, ru.IS_ACTIVE AS HeadActive",
+      "from": "FROM dbo.REF_EMP re WITH(NOLOCK) JOIN dbo.REF_USER ru WITH(NOLOCK) ON re.REF_EMP_ID = ru.REF_EMP_ID"
+    },
+    "headerList": [
+        {
+          "type": "sort",
+          "position": "center",
+          "label": "Sales Officer Code",
+          "name": "SalesOfficerNo"
+        },
+        {
+          "type": "sort",
+          "position": "left",
+          "label": "Sales Officer Name",
+          "name": "SalesOfficerName"
+        },
+        {
+          "type": "sort",
+          "position": "left",
+          "label": "Sales Head Name",
+          "name": "SalesHeadName"
+        },
+        {
+          "type": "label",
+          "position": "center",
+          "label": "Select"
+        }
+    ],
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "center",
+        "property": "SalesOfficerNo"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "SalesOfficerName"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "SalesHeadName"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "select",
+            "property": "SalesOfficerName"
+          }
+        ]
+      }
+    ],
+    "propertyId": "SalesOfficerName",
+    "propertyName": "SalesOfficerName"
+  }
+  

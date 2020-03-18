@@ -11,9 +11,9 @@ import { HttpModule } from "@angular/http";
 import { NapRoutingModule } from "./nap-routing.module";
 import { RouterModule } from "@angular/router";
 import { AppAddDetailComponent } from './app-add-detail/app-add-detail.component';
-import { AppReferantorComponent } from './App-Referantor/app-referantor/app-referantor.component';
 import { MatCheckboxModule } from "@angular/material";
-
+import { AppReferantorComponent } from "./App-Tab/app-referantor/app-referantor.component";
+import { AppModelComponent } from './App-Tab/app-model/app-model.component';
 
 
 @NgModule({
@@ -22,6 +22,7 @@ import { MatCheckboxModule } from "@angular/material";
         AppPagingComponent,
         AppAddDetailComponent,
         AppReferantorComponent,
+        AppModelComponent,
     ],
     imports: [ 
         NapRoutingModule,
