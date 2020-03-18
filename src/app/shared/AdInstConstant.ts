@@ -372,7 +372,13 @@ export class AdInsConstant {
     // REF COUNTRY
     public static GetRefCountryByCountryCode = environment.FoundationR3Url + "/RefCountry/GetRefCountryByCountryCode";
 
+    // REF PROFESSION
+    public static GetRefProfessionByCode = environment.FoundationR3Url + "/RefProfession/GetRefProfessionByProfessionCode";
+
     //CUST DATA PERSONAL
-    public static AddEditCustDataPersonal = "https://localhost:5001/AppCust/AddEditCustDataPersonal";
-    public static GetCustDataByAppId = "https://localhost:5001/AppCust/GetCustDataByAppId";
+    public static AddEditCustDataPersonal = "http://localhost:5001/AppCust/AddEditCustDataPersonal";
+    public static GetCustDataByAppId = "http://localhost:5001/AppCust/GetCustDataByAppId";
+    public static GetAppCustPersonalContactPersonsByAppCustPersonalId = "http://localhost:5001/AppCustPersonalContactPerson/GetAppCustPersonalContactPersonsByAppCustPersonalId";
+    public static DeleteAppCustPersonalContactPerson = "http://localhost:5001/AppCustPersonalContactPerson/DeleteAppCustPersonalContactPerson";
+
 }

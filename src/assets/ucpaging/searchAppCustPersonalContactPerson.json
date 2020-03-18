@@ -1,0 +1,102 @@
+{
+    "isSeq": false,
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Name",
+            "name": "CONTACT_PERSON_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Id No",
+            "name": "ID_NO"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Customer Relationship",
+            "name": "cr.DESCR"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Mobile Phone",
+            "name": "MOBILE_PHN_NO_1"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Gender",
+            "name": "g.DESCR"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Emergency Contact",
+            "name": "IS_EMERGENCY_CONTACT"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Action"
+        }
+    ],
+    "querystring": {
+        "select": "SELECT a.CONTACT_PERSON_NAME AS ContactPersonName, a.ID_NO AS IdNo, cr.DESCR AS CustRelationship, a.MOBILE_PHN_NO_1 AS MobilePhnNo1, g.DESCR AS Gender, a.IS_EMERGENCY_CONTACT AS IsEmergencyContact, a.APP_CUST_PERSONAL_CONTACT_PERSON_ID AS AppCustPersonalContactPersonId",
+        "from": "FROM dbo.APP_CUST_PERSONAL_CONTACT_PERSON a WITH(NOLOCK) LEFT JOIN dbo.REF_MASTER cr WITH(NOLOCK) ON a.MR_CUST_RELATIONSHIP_CODE = cr.MASTER_CODE LEFT JOIN dbo.REF_MASTER g WITH(NOLOCK) ON a.MR_GENDER_CODE = g.MASTER_CODE"
+    },
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "ContactPersonName"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "IdNo"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "CustRelationship"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "MobilePhnNo1"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "Gender"
+        },
+        {
+            "type": "boolean",
+            "position": "center",
+            "property": "IsEmergencyContact"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "edit",
+                    "path": "/Nap/appAdd",
+                    "param": [
+                        {
+                            "type": "AppId",
+                            "property": "AppId"
+                        },
+                        {
+                            "type": "mode",
+                            "property": "edit"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,6 +1,7 @@
 import { AppCustObj } from "./AppCustObj.Model";
 import { AppCustPersonalObj } from "./AppCustPersonalObj.Model";
 import { AppCustAddrObj } from "./AppCustAddrObj.Model";
+import { AppCustPersonalContactPersonObj } from "./AppCustPersonalContactPersonObj.Model";
 
 
 export class CustDataPersonalObj {
@@ -9,6 +10,7 @@ export class CustDataPersonalObj {
     AppCustAddrLegalObj: AppCustAddrObj;
     AppCustAddrResidenceObj: AppCustAddrObj;
     AppCustAddrMailingObj: AppCustAddrObj;
+    AppCustPersonalContactPersonObjs: any;
     RowVersion: any;
 
     constructor() { 
