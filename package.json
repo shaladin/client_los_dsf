@@ -13,8 +13,9 @@
   "private": true,
   "dependencies": {
     "@adins/uc-subsection": "^1.0.4",
-    "@adins/ucaddress": "^1.0.8",
+    "@adins/ucaddress": "^1.0.9",
     "@adins/ucgridfooter": "^1.0.1",
+    "@adins/ucgridview": "^2.0.10",
     "@adins/uclookupgeneric": "^2.0.12",
     "@adins/ucpaging": "^2.0.11",
     "@adins/ucviewgeneric": "^2.0.7",
