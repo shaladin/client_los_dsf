@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -26,7 +26,6 @@ export class AppModelComponent implements OnInit {
     private route: ActivatedRoute,
     private toastr: NGXToastrService
   ) { }
-  salesRecommendationItems = [];
   NapAppModelForm = this.fb.group({
     MouCustId: [''],
     LeadId: [''],
@@ -45,7 +44,7 @@ export class AppModelComponent implements OnInit {
     CurrCode: [''],
     LobCode: [''],
     RefProdTypeCode: [''],
-    Tenor: [''],
+    Tenor: ['', Validators.pattern("^[0-9]+$")],
     NumOfInst: [''],
     PayFreqCode: [''],
     MrFirstInstTypeCode: [''],
@@ -76,12 +75,14 @@ export class AppModelComponent implements OnInit {
     RsvField2: [''],
     RsvField3: [''],
     RsvField4: [''],
-    RsvField5: ['']
+    RsvField5: [''],
+    SurveyNo: ['']
   });
 
   inputLookupObj;
   arrAddCrit;
   employeeIdentifier;
+  salesRecommendationItems = [];
   ngOnInit() {
     this.makeNewLookupCriteria();
 
@@ -95,18 +96,19 @@ export class AppModelComponent implements OnInit {
     this.inputLookupObj.addCritInput = this.arrAddCrit;
 
     this.getAppModelInfo();
-    this.salesRecommendationItems = [
-      {
-        "Key": "COMPANY",
-        "Value": "Company"
-      },
-      {
-        "Key": "PERSONAL",
-        "Value": "personal"
-      }
-    ];
-  }
 
+    this.applicationDDLitems = [];
+    // data dummy test
+    this.getRefMasterTypeCode("CUST_TYPE");
+    // data real
+    this.getRefMasterTypeCode("SLS_RECOM");
+    this.getRefMasterTypeCode("WOP");
+    this.getRefMasterTypeCode("INST_SCHM");
+    this.getRefMasterTypeCode("INTEREST_TYPE");
+    this.getRefMasterTypeCode("CUST_NOTIFY_OPT");
+    this.getRefMasterTypeCode("FIRST_INST_TYPE");
+  }
+  applicationDDLitems;
   resultResponse;
   getAppModelInfo() {
     var obj = {
@@ -177,6 +179,25 @@ export class AppModelComponent implements OnInit {
     );
   }
 
+  getRefMasterTypeCode(code) {
+    var url = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
+    var obj = {
+      RefMasterTypeCode: code,
+      RowVersion: ""
+    };
+
+    this.http.post(url, obj).subscribe(
+      (response) => {
+        // console.log(response);
+        var objTemp = response["ReturnObject"];
+        this.applicationDDLitems[code] = objTemp;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
   getLookupEmployeeResponse(ev) {
     console.log(ev);
     this.NapAppModelForm.patchValue({
@@ -208,8 +229,12 @@ export class AppModelComponent implements OnInit {
     // console.log(this.arrAddCrit);
   }
 
-  ChangeRecommendation(ev, idx){
-    console.log(ev);
-    console.log(idx);
+  ChangeRecommendation(ev) {
+    // console.log(ev);
+    // console.log(this.NapAppModelForm);  
+  }
+
+  ChangeNumOfInstallment(){
+
   }
 }

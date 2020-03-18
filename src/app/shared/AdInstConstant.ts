@@ -263,12 +263,9 @@ export class AdInsConstant {
     public static DeleteRefMaster = "/RefMaster/DeleteRefMaster";
     public static GetRefMasterPaging = "/RefMaster/GetRefMasterPaging";
     public static GetRefMasterListDesc = "/RefMaster/GetRefMasterListDesc";
-<<<<<<< HEAD
     public static GetRefMasterByMasterCode = "/RefMaster/GetRefMasterByMasterCode";
-=======
     public static GetRefMasterListKeyValueActiveByCode = environment.FoundationR3Url + "/RefMaster/GetListKeyValueActiveByCode"
 
->>>>>>> 0e1e14897ae31f972fd82fff33e4dbb01e96d70b
 
     //REF PROV DISTRICT
     public static GetRefProvDistrictPaging = "/RefProvDistrict/GetRefProvDistrictPaging";
@@ -367,18 +364,15 @@ export class AdInsConstant {
     // GENERIC
     public static GetPagingObjectBySQL = "/Generic/GetPagingObjectBySQL"
 
-<<<<<<< HEAD
     // Vendor
     public static GetListVendorBankAccByVendorId= "/VendorBankAcc/GetListVendorBankAccByVendorId";
     public static GetListVendorBankAccByVendorCode= "/VendorBankAcc/GetListVendorBankAccByVendorCode";
 
 
-=======
     // REF COUNTRY
     public static GetRefCountryByCountryCode = environment.FoundationR3Url + "/RefCountry/GetRefCountryByCountryCode";
 
     //CUST DATA PERSONAL
     public static AddEditCustDataPersonal = "https://localhost:5001/AppCust/AddEditCustDataPersonal";
     public static GetCustDataByAppId = "https://localhost:5001/AppCust/GetCustDataByAppId";
->>>>>>> 0e1e14897ae31f972fd82fff33e4dbb01e96d70b
 }
