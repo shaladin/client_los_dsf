@@ -5,6 +5,8 @@ import { AppAddComponent } from "./app-add/app-add.component";
 import { AppAddDetailComponent } from "./app-add-detail/app-add-detail.component";
 import { AppReferantorComponent } from "./App-Tab/app-referantor/app-referantor.component";
 import { AppModelComponent } from "./App-Tab/app-model/app-model.component";
+import { CustomerDataComponent } from "./nap-tab/customer-data/customer-data.component";
+
 
 const routes: Routes = [
     {
@@ -43,6 +45,13 @@ const routes: Routes = [
                 component: AppModelComponent,
                 data: {
                     title: 'Model'
+                }
+            },
+            {
+                path: 'CustData',
+                component: CustomerDataComponent,
+                data: {
+                    title: 'Customer Data'
                 }
             },
         ]

@@ -1,0 +1,80 @@
+{
+    "url": "",
+    "title":"Lookup - Customer",
+    "component": [
+      {
+        "type": "textbox",
+        "name": "CUST_NO",
+        "id": "custNoId",
+        "value": "",
+        "label": "Customer No",
+        "placeholder": ""
+      },
+      {
+        "type": "textbox",
+        "name": "CUST_NAME",
+        "id": "custNameId",
+        "value": "",
+        "label": "Customer Name",
+        "placeholder": ""
+      }
+    ],
+    "querystring": {
+      "select": "SELECT CUST_NO AS CustNo, CUST_NAME AS CustName, FULL_ADDR AS FullAddr, MR_CUST_TYPE_CODE AS MrCustTypeCode",
+      "from": "FROM CUST C WITH(NOLOCK) LEFT JOIN CUST_ADDR CA WITH(NOLOCK) ON C.CUST_ID = CA.CUST_ID AND CA.MR_CUST_ADDR_TYPE_CODE = 'LEGAL'"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Customer No",
+            "name": "CUST_NO"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Customer Name",
+            "name": "CUST_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Address",
+            "name": "FULL_ADDR"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Select"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "CustNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "FullAddr"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "select",
+                    "property": "CustNo"
+                }
+            ]
+        }
+    ],
+    "propertyId": "CustNo",
+    "propertyName": "CustName"
+}

@@ -14,6 +14,15 @@ import { AppAddDetailComponent } from './app-add-detail/app-add-detail.component
 import { MatCheckboxModule } from "@angular/material";
 import { AppReferantorComponent } from "./App-Tab/app-referantor/app-referantor.component";
 import { AppModelComponent } from './App-Tab/app-model/app-model.component';
+import { CustomerDataComponent } from "./nap-tab/customer-data/customer-data.component";
+import { MatRadioModule } from "@angular/material";
+import { UcSubsectionModule } from "@adins/uc-subsection";
+import { UcaddressModule } from "@adins/ucaddress";
+import { SharingComponentModule } from "app/shared/sharingcomponent.module";
+import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
+import { MainDataComponent } from "./nap-tab/customer-data/component/main-data/main-data.component";
+import { CustUcaddressComponent } from "./nap-tab/customer-data/component/address/ucaddress.component";
+
 
 
 @NgModule({
@@ -23,6 +32,9 @@ import { AppModelComponent } from './App-Tab/app-model/app-model.component';
         AppAddDetailComponent,
         AppReferantorComponent,
         AppModelComponent,
+        CustomerDataComponent,
+        MainDataComponent,
+        CustUcaddressComponent
     ],
     imports: [ 
         NapRoutingModule,
@@ -36,10 +48,14 @@ import { AppModelComponent } from './App-Tab/app-model/app-model.component';
         HttpModule,
         CommonModule,
         RouterModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatRadioModule,
+        UcSubsectionModule,
+        SharingComponentModule,
+        UcaddressModule
     ],
     exports: [],
-    providers: [],
+    providers: [NGXToastrService],
 })
 
 export class NapModule { }
