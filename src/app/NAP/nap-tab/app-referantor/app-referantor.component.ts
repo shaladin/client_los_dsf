@@ -84,13 +84,14 @@ export class AppReferantorComponent implements OnInit {
         console.log(response);
         this.ReferantorOn = true;
         this.ExistedData = true;
-        this.NapAppReferantorForm.patchValue({
-          CheckBoxAppReferantor: true
-        });
         this.appReferantorObj = response;
         this.inputLookupObj.nameSelect = response["ReferantorName"];
         this.NapAppReferantorForm.controls.AccountBank.enable();
         this.NpwpOn = true;
+        this.NapAppReferantorForm.patchValue({
+          CheckBoxAppReferantor: true,
+          AccountBank: this.appReferantorObj.ReferantorCode
+        });
         console.log(this.NapAppReferantorForm);
         this.getDDLBank(this.appReferantorObj.ReferantorCode);
       },
@@ -177,6 +178,10 @@ export class AppReferantorComponent implements OnInit {
     this.appReferantorObj.TaxIdZipcode = ev.ZipCode;
     this.appReferantorObj.MrTaxCalcMethod = ev.MrTaxCalcMethod;
     console.log(this.appReferantorObj);
+
+    this.NapAppReferantorForm.patchValue({
+      AccountBank: ev.ReferantorCode
+    });
     
     // this.NpwpOn = ev.IsNPWPExist;
     this.NpwpOn = true;
@@ -213,6 +218,9 @@ export class AppReferantorComponent implements OnInit {
     this.appReferantorObj.RefBankCode = this.bankItems[idx].BankCode;
     this.appReferantorObj.BankAccNo = this.bankItems[idx].BankAccountNo;
     this.appReferantorObj.BankAccName = this.bankItems[idx].BankAccountName;
+    this.NapAppReferantorForm.patchValue({
+      AccountBank: this.bankItems[idx].BankCode
+    });
     // console.log(this.appReferantorObj);
   }
 }

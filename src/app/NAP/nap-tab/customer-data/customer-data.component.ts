@@ -7,10 +7,11 @@ import { CustDataPersonalObj } from 'app/shared/model/CustDataPersonalObj.Model'
 import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute } from '@angular/router';
-import { MainDataComponent } from './component/main-data/main-data.component';
+import { CustMainDataComponent } from './component/main-data/cust-main-data.component';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { CustContactInformationComponent } from './component/contact-information/cust-contact-information.component';
 
 @Component({
   selector: 'app-customer-data',
@@ -20,7 +21,8 @@ import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 
 export class CustomerDataComponent implements OnInit {
 
-  @ViewChild(MainDataComponent) mainDataComponent;
+  @ViewChild(CustMainDataComponent) mainDataComponent;
+  @ViewChild(CustContactInformationComponent) custContactInformationComponent;
 
 
   CustDataForm = this.fb.group({
@@ -46,6 +48,8 @@ export class CustomerDataComponent implements OnInit {
   mailingAddrObj: AddrObj;
   inputFieldMailingObj: InputFieldObj;
   copyFromMailing: any;
+  appCustPersonalId: any;
+  listAppCustPersonalContactInformation: any;
 
 
   getRefMasterUrl: any;
@@ -110,6 +114,8 @@ export class CustomerDataComponent implements OnInit {
     this.setAppCustAddrLegal();
     this.setAppCustAddrResidence();
     this.setAppCustAddrMailing();
+
+    this.custDataPersonalObj.AppCustPersonalContactPersonObjs = this.listAppCustPersonalContactInformation;
   }
 
   setAppCust(){
@@ -205,8 +211,33 @@ export class CustomerDataComponent implements OnInit {
     this.custDataPersonalObj.AppCustAddrMailingObj.Fax = this.CustDataForm.controls["mailingAddr"]["controls"].Fax.value;
   }
 
+  getCustContactInformation(event){
+    console.log(event);
+    this.listAppCustPersonalContactInformation = event;
+    console.log(this.listAppCustPersonalContactInformation);
+  }
+
+  copyToContactPersonAddr(event){
+    if(event == AdInsConstant.AddrTypeLegal){
+      this.custContactInformationComponent.contactPersonAddrObj = this.legalAddrObj;
+      this.custContactInformationComponent.inputFieldContactPersonObj.inputLookupObj.nameSelect = this.inputFieldLegalObj.inputLookupObj.nameSelect;
+      this.custContactInformationComponent.inputFieldContactPersonObj.inputLookupObj.jsonSelect = this.inputFieldLegalObj.inputLookupObj.jsonSelect;
+    }
+
+    if(event == AdInsConstant.AddrTypeResidence){
+      this.custContactInformationComponent.contactPersonAddrObj = this.residenceAddrObj;
+      this.custContactInformationComponent.inputFieldContactPersonObj.inputLookupObj.nameSelect = this.inputFieldResidenceObj.inputLookupObj.nameSelect;
+      this.custContactInformationComponent.inputFieldContactPersonObj.inputLookupObj.jsonSelect = this.inputFieldResidenceObj.inputLookupObj.jsonSelect;
+    }
+
+    if(event == AdInsConstant.AddrTypeMailing){
+      this.custContactInformationComponent.contactPersonAddrObj = this.mailingAddrObj;
+      this.custContactInformationComponent.inputFieldContactPersonObj.inputLookupObj.nameSelect = this.inputFieldMailingObj.inputLookupObj.nameSelect;
+      this.custContactInformationComponent.inputFieldContactPersonObj.inputLookupObj.jsonSelect = this.inputFieldMailingObj.inputLookupObj.jsonSelect;
+    }
+  }
+
   copyToResidence(){
-    console.log(this.copyFromResidence);
     if(this.copyFromResidence == AdInsConstant.AddrTypeLegal){
       this.residenceAddrObj = this.legalAddrObj;
       this.inputFieldResidenceObj.inputLookupObj.nameSelect = this.inputFieldLegalObj.inputLookupObj.nameSelect;
@@ -253,7 +284,9 @@ export class CustomerDataComponent implements OnInit {
         this.setAddrLegalObj();
         this.setAddrResidenceObj();
         this.setAddrMailingObj();
-        
+
+        this.appCustPersonalId = this.custDataPersonalObj.AppCustPersonalObj.AppCustPersonalId;
+
         this.CustDataForm.patchValue({
           MrCustTypeCode: this.custDataPersonalObj.AppCustObj.MrCustTypeCode
         });

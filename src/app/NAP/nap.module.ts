@@ -11,16 +11,19 @@ import { HttpModule } from "@angular/http";
 import { NapRoutingModule } from "./nap-routing.module";
 import { RouterModule } from "@angular/router";
 import { AppAddDetailComponent } from './app-add-detail/app-add-detail.component';
-import { AppReferantorComponent } from './App-Referantor/app-referantor/app-referantor.component';
 import { MatCheckboxModule } from "@angular/material";
+import { AppReferantorComponent } from "./nap-tab/app-referantor/app-referantor.component";
+import { AppModelComponent } from './nap-tab/app-model/app-model.component';
 import { CustomerDataComponent } from "./nap-tab/customer-data/customer-data.component";
 import { MatRadioModule } from "@angular/material";
 import { UcSubsectionModule } from "@adins/uc-subsection";
 import { UcaddressModule } from "@adins/ucaddress";
+import { UcgridviewModule } from "@adins/ucgridview";
 import { SharingComponentModule } from "app/shared/sharingcomponent.module";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
-import { MainDataComponent } from "./nap-tab/customer-data/component/main-data/main-data.component";
+import { CustMainDataComponent } from "./nap-tab/customer-data/component/main-data/cust-main-data.component";
 import { CustUcaddressComponent } from "./nap-tab/customer-data/component/address/ucaddress.component";
+import { CustContactInformationComponent } from "./nap-tab/customer-data/component/contact-information/cust-contact-information.component";
 
 
 
@@ -31,9 +34,13 @@ import { CustUcaddressComponent } from "./nap-tab/customer-data/component/addres
         AppAddDetailComponent,
         AppReferantorComponent,
         CustomerDataComponent,
-        MainDataComponent,
-        CustUcaddressComponent
-        ],
+        CustUcaddressComponent,
+        AppModelComponent,
+        CustomerDataComponent,
+        CustMainDataComponent,
+        CustUcaddressComponent,
+        CustContactInformationComponent
+    ],
     imports: [ 
         NapRoutingModule,
         CommonModule,
@@ -50,7 +57,8 @@ import { CustUcaddressComponent } from "./nap-tab/customer-data/component/addres
         MatRadioModule,
         UcSubsectionModule,
         SharingComponentModule,
-        UcaddressModule
+        UcaddressModule,
+        UcgridviewModule
     ],
     exports: [],
     providers: [NGXToastrService],

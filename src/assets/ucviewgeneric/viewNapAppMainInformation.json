@@ -3,7 +3,7 @@
       {
         "subSectionId": "New Application",
         "subSectionTitle": "Main Information",
-        "mainInfoUrl": "https://localhost:5001/Generic/GetDataViewBySQL",
+        "mainInfoUrl": "http://localhost:5001/Generic/GetDataViewBySQL",
         "mainInfo": [
           {
             "type": "text",

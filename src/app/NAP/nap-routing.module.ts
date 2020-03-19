@@ -3,7 +3,8 @@ import { RouterModule, Routes } from "@angular/router";
 import { AppPagingComponent } from "./app-paging/app-paging.component";
 import { AppAddComponent } from "./app-add/app-add.component";
 import { AppAddDetailComponent } from "./app-add-detail/app-add-detail.component";
-import { AppReferantorComponent } from "./App-Referantor/app-referantor/app-referantor.component";
+import { AppReferantorComponent } from "./nap-tab/app-referantor/app-referantor.component";
+import { AppModelComponent } from "./nap-tab/app-model/app-model.component";
 import { CustomerDataComponent } from "./nap-tab/customer-data/customer-data.component";
 
 
@@ -37,6 +38,13 @@ const routes: Routes = [
                 component: AppReferantorComponent,
                 data: {
                     title: 'Referantor'
+                }
+            },           
+            {
+                path: 'AppModel',
+                component: AppModelComponent,
+                data: {
+                    title: 'Model'
                 }
             },
             {
