@@ -1,0 +1,42 @@
+<lib-ucviewgeneric [viewInput]="viewProdMainInfoObj"> </lib-ucviewgeneric>
+
+<div class="card-body">
+  <div class="px-3">
+    <aw-wizard #wizard navBarLayout="large-empty-symbols" [defaultStepIndex]="1">
+
+      <aw-wizard-step [stepTitle]="'Referantor'" (stepEnter)="EnterTab('tab1')"
+        [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
+        <app-app-referantor *ngIf="isTab1 == true" [appId]=param></app-app-referantor>
+      </aw-wizard-step>
+
+      <aw-wizard-step [stepTitle]="'Model'" (stepEnter)="EnterTab('tab2')"
+        [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
+        <app-app-model *ngIf="isTab2 == true" [appId]=param></app-app-model>
+      </aw-wizard-step>
+      
+      <aw-wizard-step [stepTitle]="'Tab 3'" (stepEnter)="EnterTab('tab3')"
+        [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
+      </aw-wizard-step>
+
+      <aw-wizard-step [stepTitle]="'Tab 4'" (stepEnter)="EnterTab('tab4')"
+        [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
+      </aw-wizard-step>
+
+      <aw-wizard-step [stepTitle]="'Tab 5'" (stepEnter)="EnterTab('tab5')"
+        [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
+      </aw-wizard-step>
+    </aw-wizard>
+  </div>
+</div>
+
+<div class="form-actions ucSearch-Button-Right">
+  <button type="button" class="btn btn-raised btn_cancel" [routerLink]="['/Nap/AppPaging']" translate>
+    <i class="fa fa-check-square-o"></i> Cancel
+  </button>
+  <button type="button" class="btn btn-raised btn-primary">
+    <i class="fa fa-check-square-o"></i> Save
+  </button>
+  <button type="button" class="btn btn-raised btn-primary">
+    <i class="fa fa-check-square-o"></i> Submit
+  </button>
+</div>

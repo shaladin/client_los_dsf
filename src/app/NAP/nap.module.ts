@@ -10,6 +10,10 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
 import { NapRoutingModule } from "./nap-routing.module";
 import { RouterModule } from "@angular/router";
+import { AppAddDetailComponent } from './app-add-detail/app-add-detail.component';
+import { MatCheckboxModule } from "@angular/material";
+import { AppReferantorComponent } from "./nap-tab/app-referantor/app-referantor.component";
+import { AppModelComponent } from './nap-tab/app-model/app-model.component';
 import { CustomerDataComponent } from "./nap-tab/customer-data/customer-data.component";
 import { MatRadioModule } from "@angular/material";
 import { UcSubsectionModule } from "@adins/uc-subsection";
@@ -29,6 +33,11 @@ import { CustBankAccountComponent } from "./nap-tab/customer-data/component/bank
     declarations: [
         AppAddComponent,
         AppPagingComponent,
+        AppAddDetailComponent,
+        AppReferantorComponent,
+        CustomerDataComponent,
+        CustUcaddressComponent,
+        AppModelComponent,
         CustomerDataComponent,
         CustMainDataComponent,
         CustUcaddressComponent,
@@ -48,6 +57,7 @@ import { CustBankAccountComponent } from "./nap-tab/customer-data/component/bank
         HttpModule,
         CommonModule,
         RouterModule,
+        MatCheckboxModule,
         MatRadioModule,
         UcSubsectionModule,
         SharingComponentModule,

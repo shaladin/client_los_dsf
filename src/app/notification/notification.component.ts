@@ -18,7 +18,7 @@ export class NotificationComponent implements OnInit {
   type: any = 'success';
   notificationObj: NotificationObj;
   apiUrl: any;
-  foundationUrl: string = environment.foundationUrl;
+  foundationUrl: string = environment.FoundationR3Url;
   payload: any;
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) { 
