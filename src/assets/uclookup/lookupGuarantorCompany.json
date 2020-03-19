@@ -13,14 +13,14 @@
     ],
     "querystring": {
         "select": " SELECT CUST_NAME AS CustName",
-        "from": "FROM CUST A WITH(NOLOCK) WHERE MR_CUST_TYPE_CODE='Personal'"
+        "from": "FROM CUST A WITH(NOLOCK) WHERE MR_CUST_TYPE_CODE='Company'"
     },
         "headerList": [
         {
             "type": "sort",
             "position": "center",
             "label": "Guarantor Name",
-            "name": "CUST_NAME"
+            "name": "CustName"
         },
         {
             "type": "sort",

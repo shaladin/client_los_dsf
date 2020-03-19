@@ -14,6 +14,7 @@ import { CustomerDataComponent } from "./nap-tab/customer-data/customer-data.com
 import { MatRadioModule } from "@angular/material";
 import { UcSubsectionModule } from "@adins/uc-subsection";
 import { UcaddressModule } from "@adins/ucaddress";
+
 import { SharingComponentModule } from "app/shared/sharingcomponent.module";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { MainDataComponent } from "./nap-tab/customer-data/component/main-data/main-data.component";

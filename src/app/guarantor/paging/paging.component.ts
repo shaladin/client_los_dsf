@@ -5,6 +5,7 @@ import { environment } from 'environments/environment';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { AppGuarantorObj } from 'app/shared/model/AppGuarantorObj.Model';
 import { HttpClient } from '@angular/common/http';
+import { GuarantorObj } from 'app/shared/model/GuarantorObj.Model';
 
 @Component({
   selector: 'app-paging',
@@ -22,9 +23,9 @@ export class PagingComponent implements OnInit {
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucpaging/searchGuarantor.json";
 
-    var appGuarantorObj = new AppGuarantorObj();
-    appGuarantorObj.AppId = "11";
-    this.http.post(AdInsConstant.GetListAppGuarantor, appGuarantorObj).subscribe(
+    var guarantorObj = new GuarantorObj();
+    guarantorObj.AppGuarantorObj.AppId = "11";
+    this.http.post(AdInsConstant.GetListAppGuarantor, guarantorObj).subscribe(
       (response) => {
         console.log("response: ");
         console.log(response);

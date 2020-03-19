@@ -249,6 +249,9 @@ export class AdInsConstant {
     public static GetRefMasterPaging = "/RefMaster/GetRefMasterPaging";
     public static GetRefMasterListDesc = "/RefMaster/GetRefMasterListDesc";
     public static GetRefMasterListKeyValueActiveByCode = environment.FoundationR3Url + "/RefMaster/GetListKeyValueActiveByCode"
+    public static GetListActiveRefMaster = environment.FoundationR3Url + "/RefMaster/GetListActiveRefMaster"
+    
+    
 
 
     //REF PROV DISTRICT
@@ -350,6 +353,14 @@ export class AdInsConstant {
 
     //GUARANTOR
     public static GetListAppGuarantor =environment.losUrl +"/AppGuarantor/GetListAppGuarantor"
+    public static AddAppGuarantorPersonal =environment.losUrl +"/AppGuarantor/AddAppGuarantorPersonal"
+    public static AddAppGuarantorCompany =environment.losUrl +"/AppGuarantor/AddAppGuarantorCompany"
+    public static GetAppGuarantorPersonalByAppGuarantorId =environment.losUrl +"/AppGuarantor/GetAppGuarantorPersonalByAppGuarantorId"
+    public static GetAppGuarantorCompanyByAppGuarantorId =environment.losUrl +"/AppGuarantor/GetAppGuarantorCompanyByAppGuarantorId"
+    public static EditAppGuarantorPersonal =environment.losUrl +"/AppGuarantor/EditAppGuarantorPersonal"
+    public static EditAppGuarantorCompany =environment.losUrl +"/AppGuarantor/EditAppGuarantorCompany"
+
+
     // REF COUNTRY
     public static GetRefCountryByCountryCode = environment.FoundationR3Url + "/RefCountry/GetRefCountryByCountryCode";
 

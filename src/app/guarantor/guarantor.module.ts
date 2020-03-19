@@ -12,7 +12,12 @@ import { UcSubsectionModule } from '@adins/uc-subsection';
 import { CommonModule } from '@angular/common';
 import { PagingComponent } from 'app/guarantor/paging/paging.component';
 import { AddPersonalComponent } from './add-personal/add-personal.component';
+import { UcaddressModule } from "@adins/ucaddress";
 import { UcgridviewModule} from '@adins/ucgridview';
+import { MatRadioModule } from '@angular/material';
+import { AddCompanyComponent } from './add-company/add-company.component';
+import { CustUcaddressComponent } from "app/NAP/nap-tab/customer-data/component/address/ucaddress.component";
+import { GuarantorComponent } from './guarantor.component';
 
 @NgModule({
     imports: [
@@ -28,11 +33,17 @@ import { UcgridviewModule} from '@adins/ucgridview';
         UcgridfooterModule,
         UcSubsectionModule,
         CommonModule,
-        UcgridviewModule
+        UcgridviewModule,
+        MatRadioModule,
+        UcSubsectionModule,
+        UcaddressModule
     ],
     declarations: [
         PagingComponent,
         AddPersonalComponent,
+        AddCompanyComponent,
+        CustUcaddressComponent,
+        GuarantorComponent
     ]
   })
 

@@ -1,26 +1,26 @@
 {
-    "title": "Search Guarantor",
+    "title": "Search Industry",
     "exportExcel": false,
     "component": [
         {
             "type": "textbox",
-            "name": "CUST_NAME",
-            "id": "CustNameId",
+            "name": "INDUSTRY_TYPE_NAME",
+            "id": "IndustryTypeNameId",
             "value": "",
-            "label": "Guarantor Name",
+            "label": "Industry Type",
             "placeholder": "Placeholder"
         }
     ],
     "querystring": {
-        "select": " SELECT CUST_NAME AS CustName",
-        "from": "FROM CUST A WITH(NOLOCK) WHERE MR_CUST_TYPE_CODE='Personal'"
+        "select": " SELECT INDUSTRY_TYPE_NAME AS IndustryTypeName",
+        "from": "FROM REF_INDUSTRY_TYPE A WITH(NOLOCK)"
     },
         "headerList": [
         {
             "type": "sort",
             "position": "center",
-            "label": "Guarantor Name",
-            "name": "CUST_NAME"
+            "label": "Industry Type",
+            "name": "IndustryTypeName"
         },
         {
             "type": "sort",
@@ -33,7 +33,7 @@
         {
             "type": "text",
             "position": "center",
-            "property": "CustName"
+            "property": "IndustryTypeName"
         },
         {
             "type": "action",
@@ -41,11 +41,11 @@
             "action": [
                 {
                     "type": "select",
-                    "property": "CustName"
+                    "property": "IndustryTypeName"
                 }
             ]
         }
     ],
-    "propertyId": "CustName", 
-    "propertyName": "CustName" 
+    "propertyId": "IndustryTypeName", 
+    "propertyName": "IndustryTypeName" 
 }
