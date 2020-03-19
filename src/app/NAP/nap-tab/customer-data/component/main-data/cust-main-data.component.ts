@@ -12,14 +12,14 @@ import { formatDate } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-main-data',
-  templateUrl: './main-data.component.html',
-  styleUrls: ['./main-data.component.scss'],
+  selector: 'app-cust-main-data',
+  templateUrl: './cust-main-data.component.html',
+  styleUrls: ['./cust-main-data.component.scss'],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 
 })
 
-export class MainDataComponent implements OnInit {
+export class CustMainDataComponent implements OnInit {
 
   @Input() appId;
   @Input() enjiForm: NgForm;

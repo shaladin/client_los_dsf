@@ -1,0 +1,99 @@
+{
+    "title": "Lookup Referantor",
+    "component": [
+      {
+        "type": "textbox",
+        "name": "v.VENDOR_CODE",
+        "id": "referantorCode",
+        "value": "",
+        "label": "Referantor Code",
+        "placeholder": "Referantor Code"
+      },
+      {
+        "type": "dropdown",
+        "name": "v.MR_VENDOR_CATEGORY_CODE",
+        "id": "referantorType",
+        "value": "",
+        "label": "Referantor Type",
+        "placeholder": "Referantor Type",
+        "isSelectOne" : false,
+        "items" : [ 
+            {
+                "key" : "AGENCY_PERSONAL",
+                "value" : "Agency Personal"
+            },
+            {
+                "key" : "AGENCY_COMPANY",
+                "value" : "Agency Company"
+            }
+        ]
+      },
+      {
+        "type": "textbox",
+        "name": "v.VENDOR_NAME",
+        "id": "referantorName",
+        "value": "",
+        "label": "Referantor Name",
+        "placeholder": "Referantor Name"
+      }
+    ],
+    "querystring": {
+      "select": "SELECT v.VENDOR_CODE AS ReferantorCode, v.VENDOR_NAME AS ReferantorName, v.MR_VENDOR_CATEGORY_CODE AS ReferantorType, v.IS_NPWP_EXIST AS IsNPWPExist, v.TAXPAYER_NO AS TaxPayerNo, v.TAXPAYER_NAME AS TaxPayerName, v.TAX_ID_NO AS TaxIdNo, va.ADDR AS Addr, va.CITY AS City, va.ZIPCODE AS ZipCode, va.AREA_CODE_1 AS Kecamatan, va.AREA_CODE_2 AS Kelurahan, va.AREA_CODE_3 AS RW, va.AREA_CODE_4 AS RT, v.MR_TAX_CALC_METHOD_CODE AS MrTaxCalcMethod, v.VENDOR_ID AS VendorId",
+      "from": "FROM dbo.VENDOR v WITH(NOLOCK) JOIN dbo.VENDOR_ADDR va WITH(NOLOCK) ON v.VENDOR_ID = va.VENDOR_ID"
+    },
+    "headerList": [
+        {
+          "type": "sort",
+          "position": "center",
+          "label": "Referantor Code",
+          "name": "ReferantorCode"
+        },
+        {
+          "type": "sort",
+          "position": "left",
+          "label": "Referantor Name",
+          "name": "ReferantorName"
+        },
+        {
+          "type": "sort",
+          "position": "center",
+          "label": "Referantor Type",
+          "name": "ReferantorType"
+        },
+        {
+          "type": "label",
+          "position": "center",
+          "label": "Select"
+        }
+    ],
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "center",
+        "property": "ReferantorCode"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "ReferantorName"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "ReferantorType"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "select",
+            "property": "ReferantorName"
+          }
+        ]
+      }
+    ],
+    "propertyId": "ReferantorName",
+    "propertyName": "ReferantorName"
+  }
+  
