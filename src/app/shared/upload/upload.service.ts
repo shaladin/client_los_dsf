@@ -24,7 +24,7 @@ export class UploadService {
     AssignRoleToUploadSetting: any;
     GetListRefRoleByUploadTypeId: any;
     GetListUploadSettingDByUploadSettingHId: any;
-    foundationUrl: string = environment.foundationUrl;
+    foundationUrl: string = environment.FoundationR3Url;
 
     constructor(private http: HttpClient) {
         this.GetUploadTypeByUploadTypeId = this.foundationUrl + AdInsConstant.GetUploadTypeByUploadTypeId;

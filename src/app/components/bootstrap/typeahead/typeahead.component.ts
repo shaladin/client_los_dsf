@@ -144,7 +144,7 @@ export class TypeaheadComponent {
   searching = false;
   searchFailed = false;
   hideSearchingWhenUnsubscribed = new Observable(() => () => this.searching = false);
-  settingUrl: string = environment.settingUrl;
+  settingUrl: string = environment.FoundationR3Url;
   userData: any[] = [];
   
   constructor(private http: HttpClient) { }

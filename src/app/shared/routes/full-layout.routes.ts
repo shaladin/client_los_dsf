@@ -34,5 +34,9 @@ export const Full_ROUTES: Routes = [
   {
     path: 'Nap',
     loadChildren: './NAP/nap.module#NapModule'
+  },
+  {
+    path: 'Inquiry',
+    loadChildren: './inquiry/inquiry.module#InquiryModule'
   }
 ];
