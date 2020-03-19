@@ -145,8 +145,6 @@ export class AppAddComponent implements OnInit {
 
     if(this.user.MrOfficeTypeCode == "HO"){
       napAppObj.OriOfficeCode = this.user.OfficeCode;
-    }else if(this.user.MrOfficeTypeCode == "Center Group"){
-      
     }
     console.log(napAppObj);
 
