@@ -135,6 +135,7 @@ export class CustContactInformationComponent implements OnInit {
   }
 
   edit(i, content){
+    this.clearForm();
     this.mode = "edit";
     this.currentEditedIndex = i;
     this.ContactInfoPersonalForm.patchValue({
@@ -345,7 +346,7 @@ export class CustContactInformationComponent implements OnInit {
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
         this.CustRelationshipObj = response["ReturnObject"];
-        if(this.IdTypeObj.length > 0){
+        if(this.CustRelationshipObj.length > 0){
           this.ContactInfoPersonalForm.patchValue({
             MrCustRelationshipCode: this.CustRelationshipObj[0].Key
           });

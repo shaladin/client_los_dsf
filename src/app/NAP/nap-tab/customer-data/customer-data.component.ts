@@ -50,6 +50,7 @@ export class CustomerDataComponent implements OnInit {
   copyFromMailing: any;
   appCustPersonalId: any;
   listAppCustPersonalContactInformation: any;
+  listAppCustBankAcc: any;
 
 
   getRefMasterUrl: any;
@@ -114,8 +115,9 @@ export class CustomerDataComponent implements OnInit {
     this.setAppCustAddrLegal();
     this.setAppCustAddrResidence();
     this.setAppCustAddrMailing();
-
+    this.setAppCustPersonalFinData();
     this.custDataPersonalObj.AppCustPersonalContactPersonObjs = this.listAppCustPersonalContactInformation;
+    this.custDataPersonalObj.AppCustBankAccObjs = this.listAppCustBankAcc;
   }
 
   setAppCust(){
@@ -211,10 +213,25 @@ export class CustomerDataComponent implements OnInit {
     this.custDataPersonalObj.AppCustAddrMailingObj.Fax = this.CustDataForm.controls["mailingAddr"]["controls"].Fax.value;
   }
 
+  setAppCustPersonalFinData(){
+    this.custDataPersonalObj.AppCustPersonalFinDataObj.MonthlyIncomeAmt = this.CustDataForm.controls["financialData"]["controls"].MonthlyIncomeAmt.value;
+    this.custDataPersonalObj.AppCustPersonalFinDataObj.MonthlyExpenseAmt = this.CustDataForm.controls["financialData"]["controls"].MonthlyExpenseAmt.value;
+    this.custDataPersonalObj.AppCustPersonalFinDataObj.MrSourceOfIncomeTypeCode = this.CustDataForm.controls["financialData"]["controls"].MrSourceOfIncomeTypeCode.value;
+    this.custDataPersonalObj.AppCustPersonalFinDataObj.MonthlyInstallmentAmt = this.CustDataForm.controls["financialData"]["controls"].MonthlyInstallmentAmt.value;
+    this.custDataPersonalObj.AppCustPersonalFinDataObj.IsJoinIncome = this.CustDataForm.controls["financialData"]["controls"].IsJoinIncome.value;
+    this.custDataPersonalObj.AppCustPersonalFinDataObj.SpouseMonthlyIncomeAmt = this.CustDataForm.controls["financialData"]["controls"].SpouseMonthlyIncomeAmt.value;
+  }
+
   getCustContactInformation(event){
     console.log(event);
     this.listAppCustPersonalContactInformation = event;
     console.log(this.listAppCustPersonalContactInformation);
+  }
+
+  getAppCustBankAcc(event){
+    console.log(event);
+    this.listAppCustBankAcc = event;
+    console.log(this.listAppCustBankAcc);
   }
 
   copyToContactPersonAddr(event){
@@ -280,6 +297,8 @@ export class CustomerDataComponent implements OnInit {
         this.custDataPersonalObj.AppCustAddrLegalObj = response["AppCustAddrLegalObj"];
         this.custDataPersonalObj.AppCustAddrResidenceObj = response["AppCustAddrResidenceObj"];
         this.custDataPersonalObj.AppCustAddrMailingObj = response["AppCustAddrMailingObj"];
+        this.custDataPersonalObj.AppCustPersonalFinDataObj = response["AppCustPersonalFinDataObj"];
+        this.custDataPersonalObj.AppCustBankAccObjs = response["AppCustBankAccObjs"];
 
         this.setAddrLegalObj();
         this.setAddrResidenceObj();
