@@ -11,8 +11,8 @@ export const environment = {
   localHostUrl: 'http://R2AppServer/CONFINS',
   r2AppServerUrl: 'http://R2AppServer/POC/api',
   // losUrl : 'http://r3web.ad-ins.com/LOSR3/pages/login',
-  losUrl : 'https://localhost:5001',
-  FoundationR3Url: 'https://r3app-server.ad-ins.com/foundation_r3',
+  losUrl : 'http://localhost:5001',
+  FoundationR3Url: 'http://r3app-server.ad-ins.com/foundation_r3',
 };
 
 
