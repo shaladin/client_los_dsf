@@ -50,7 +50,7 @@
       "action": [
         {
           "type": "edit",
-          "path": "/Guarantor/Main",
+          "path": "Guarantor/Main",
           "param": [
             {
               "type": "AppGuarantorId",

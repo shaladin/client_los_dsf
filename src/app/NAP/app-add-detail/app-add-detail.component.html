@@ -11,10 +11,11 @@
 
       <aw-wizard-step [stepTitle]="'Model'" (stepEnter)="EnterTab('tab2')"
         [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
-        <app-app-model *ngIf="isTab2 == true" [appId]=param></app-app-model>
+        <app-guarantor-paging *ngIf="isTab2 == true" [AppId]=param></app-guarantor-paging>
+        <!-- <app-app-model *ngIf="isTab2 == true" [appId]=param></app-app-model> -->
       </aw-wizard-step>
       
-      <aw-wizard-step [stepTitle]="'Tab 3'" (stepEnter)="EnterTab('tab3')"
+      <aw-wizard-step [stepTitle]="'Guarantor'" (stepEnter)="EnterTab('tab3')"
         [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
       </aw-wizard-step>
 

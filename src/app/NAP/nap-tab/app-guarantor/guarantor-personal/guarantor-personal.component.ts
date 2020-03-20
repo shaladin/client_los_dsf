@@ -15,12 +15,12 @@ import { formatDate } from '@angular/common';
 import { environment } from 'environments/environment';
 
 @Component({
-  selector: 'app-add-personal',
-  templateUrl: './add-personal.component.html',
-  styleUrls: ['./add-personal.component.scss'],
+  selector: 'app-guarantor-personal',
+  templateUrl: './guarantor-personal.component.html',
+  styleUrls: [],
   providers: [NGXToastrService]
 })
-export class AddPersonalComponent implements OnInit {
+export class GuarantorPersonalComponent implements OnInit {
 
   mode: string = "add";
   param: string;
@@ -241,7 +241,6 @@ export class AddPersonalComponent implements OnInit {
     this.guarantorPersonalObj.AppGuarantorObj.TaxIdNo = this.PersonalForm.controls.TaxIdNo.value;
     this.guarantorPersonalObj.AppGuarantorObj.MrCustRelationshipCode = this.PersonalForm.controls.MrCustRelationshipCode.value;
     this.guarantorPersonalObj.AppGuarantorObj.RowVersion = "";
-    this.guarantorPersonalObj.AppGuarantorObj.AppId = "11";
   }
 
   setAppGuarantorPersonal(){

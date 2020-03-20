@@ -375,6 +375,7 @@ export class AdInsConstant {
     public static GetAppGuarantorCompanyByAppGuarantorId =environment.losUrl +"/AppGuarantor/GetAppGuarantorCompanyByAppGuarantorId"
     public static EditAppGuarantorPersonal =environment.losUrl +"/AppGuarantor/EditAppGuarantorPersonal"
     public static EditAppGuarantorCompany =environment.losUrl +"/AppGuarantor/EditAppGuarantorCompany"
+    public static DeleteAppGuarantor =environment.losUrl +"/AppGuarantor/DeleteAppGuarantor"
     // Vendor
     public static GetListVendorBankAccByVendorId= "/VendorBankAcc/GetListVendorBankAccByVendorId";
     public static GetListVendorBankAccByVendorCode= "/VendorBankAcc/GetListVendorBankAccByVendorCode";

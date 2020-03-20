@@ -7,12 +7,12 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 
 @Component({
-  selector: 'app-guarantor',
-  templateUrl: './guarantor.component.html',
-  styleUrls: ['./guarantor.component.scss'],
+  selector: 'app-app-guarantor',
+  templateUrl: './app-guarantor.component.html',
+  styleUrls: [],
   providers: [NGXToastrService]
 })
-export class GuarantorComponent implements OnInit {
+export class AppGuarantorComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,

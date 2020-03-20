@@ -24,6 +24,11 @@ import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { CustMainDataComponent } from "./nap-tab/customer-data/component/main-data/cust-main-data.component";
 import { CustUcaddressComponent } from "./nap-tab/customer-data/component/address/ucaddress.component";
 import { CustContactInformationComponent } from "./nap-tab/customer-data/component/contact-information/cust-contact-information.component";
+import { AppGuarantorComponent } from "./nap-tab/app-guarantor/app-guarantor.component";
+import { GuarantorCompanyComponent } from "./nap-tab/app-guarantor/guarantor-company/guarantor-company.component";
+import { GuarantorPagingComponent } from "./nap-tab/app-guarantor/guarantor-paging/guarantor-paging.component";
+import { GuarantorPersonalComponent } from "./nap-tab/app-guarantor/guarantor-personal/guarantor-personal.component";
+
 
 
 
@@ -39,7 +44,12 @@ import { CustContactInformationComponent } from "./nap-tab/customer-data/compone
         CustomerDataComponent,
         CustMainDataComponent,
         CustUcaddressComponent,
-        CustContactInformationComponent
+        CustContactInformationComponent,
+        GuarantorPagingComponent,
+        GuarantorPersonalComponent,
+        GuarantorCompanyComponent,
+        CustUcaddressComponent,
+        AppGuarantorComponent
     ],
     imports: [ 
         NapRoutingModule,
@@ -58,7 +68,7 @@ import { CustContactInformationComponent } from "./nap-tab/customer-data/compone
         UcSubsectionModule,
         SharingComponentModule,
         UcaddressModule,
-        UcgridviewModule
+        UcgridviewModule,
     ],
     exports: [],
     providers: [NGXToastrService],

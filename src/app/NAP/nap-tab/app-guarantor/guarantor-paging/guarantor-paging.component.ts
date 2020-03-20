@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { environment } from 'environments/environment';
@@ -8,12 +8,13 @@ import { HttpClient } from '@angular/common/http';
 import { GuarantorObj } from 'app/shared/model/GuarantorObj.Model';
 
 @Component({
-  selector: 'app-paging',
-  templateUrl: './paging.component.html',
-  styleUrls: ['./paging.component.scss']
+  selector: 'app-guarantor-paging',
+  templateUrl: './guarantor-paging.component.html',
+  styleUrls: []
 })
-export class PagingComponent implements OnInit {
+export class GuarantorPagingComponent implements OnInit {
 
+  @Input() AppId: any;
   inputGridObj: any;
 
   constructor(private http: HttpClient) {
@@ -22,9 +23,10 @@ export class PagingComponent implements OnInit {
   ngOnInit() {
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucpaging/searchGuarantor.json";
+    this.inputGridObj.deleteUrl = AdInsConstant.DeleteAppGuarantor;
 
     var guarantorObj = new GuarantorObj();
-    guarantorObj.AppGuarantorObj.AppId = "11";
+    guarantorObj.AppGuarantorObj.AppId = this.AppId;
     this.http.post(AdInsConstant.GetListAppGuarantor, guarantorObj).subscribe(
       (response) => {
         console.log("response: ");

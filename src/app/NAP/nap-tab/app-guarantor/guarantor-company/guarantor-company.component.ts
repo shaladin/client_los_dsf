@@ -15,13 +15,13 @@ import { environment } from 'environments/environment';
 import { formatDate } from '@angular/common';
 
 @Component({
-  selector: 'app-add-company',
-  templateUrl: './add-company.component.html',
-  styleUrls: ['./add-company.component.scss'],
+  selector: 'app-guarantor-company',
+  templateUrl: './guarantor-company.component.html',
+  styleUrls: [],
   providers: [NGXToastrService]
 })
 
-export class AddCompanyComponent implements OnInit {
+export class GuarantorCompanyComponent implements OnInit {
 
   param: string;
   mode: string = "add";

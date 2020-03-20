@@ -14,9 +14,9 @@
     </div>
   </form>
   <div id="CustMainDataPersonal" *ngIf="CustDataForm.controls.MrCustTypeCode.value == 'PERSONAL'">
-    <app-add-personal></app-add-personal>
+    <app-guarantor-personal></app-guarantor-personal>
   </div>
   <div id="CustMainDataPersonal" *ngIf="CustDataForm.controls.MrCustTypeCode.value == 'COMPANY'">
-    <app-add-company></app-add-company>
+    <app-guarantor-company></app-guarantor-company>
   </div>
 </div>

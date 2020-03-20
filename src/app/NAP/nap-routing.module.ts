@@ -6,7 +6,10 @@ import { AppAddDetailComponent } from "./app-add-detail/app-add-detail.component
 import { AppReferantorComponent } from "./nap-tab/app-referantor/app-referantor.component";
 import { AppModelComponent } from "./nap-tab/app-model/app-model.component";
 import { CustomerDataComponent } from "./nap-tab/customer-data/customer-data.component";
-
+import { AppGuarantorComponent } from "./nap-tab/app-guarantor/app-guarantor.component";
+import { GuarantorCompanyComponent } from "./nap-tab/app-guarantor/guarantor-company/guarantor-company.component";
+import { GuarantorPagingComponent } from "./nap-tab/app-guarantor/guarantor-paging/guarantor-paging.component";
+import { GuarantorPersonalComponent } from "./nap-tab/app-guarantor/guarantor-personal/guarantor-personal.component";
 
 const routes: Routes = [
     {
@@ -54,6 +57,34 @@ const routes: Routes = [
                     title: 'Customer Data'
                 }
             },
+            {
+                path: 'Guarantor/paging',
+                component: GuarantorPagingComponent,
+                data: {
+                  title: 'Paging'
+                },
+              },
+              {
+                path: 'Guarantor/personal',
+                component: GuarantorPersonalComponent,
+                data: {
+                  title: 'Personal'
+                },
+              },
+              {
+                path: 'Guarantor/company',
+                component: GuarantorCompanyComponent,
+                data: {
+                  title: 'Company'
+                },
+              },
+              {
+                path: 'AppAddDetail/Guarantor/Main',
+                component: AppGuarantorComponent,
+                data: {
+                  title: 'Main'
+                },
+              },
         ]
     }
 ]
