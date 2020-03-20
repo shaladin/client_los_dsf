@@ -3,6 +3,7 @@ import { AppCustPersonalObj } from "./AppCustPersonalObj.Model";
 import { AppCustAddrObj } from "./AppCustAddrObj.Model";
 import { AppCustPersonalContactPersonObj } from "./AppCustPersonalContactPersonObj.Model";
 import { AppCustPersonalFinDataObj } from "./AppCustPersonalFinDataObj.Model";
+import { AppCustPersonalJobDataObj } from "./AppCustPersonalJobDataObj.Model";
 
 
 export class CustDataPersonalObj {
@@ -14,6 +15,7 @@ export class CustDataPersonalObj {
     AppCustPersonalContactPersonObjs: any;
     AppCustPersonalFinDataObj: AppCustPersonalFinDataObj;
     AppCustBankAccObjs: any;
+    AppCustPersonalJobDataObj: AppCustPersonalJobDataObj;
     RowVersion: any;
 
     constructor() { 
@@ -23,6 +25,7 @@ export class CustDataPersonalObj {
         this.AppCustAddrResidenceObj = new AppCustAddrObj();
         this.AppCustAddrMailingObj = new AppCustAddrObj();
         this.AppCustPersonalFinDataObj = new AppCustPersonalFinDataObj();
+        this.AppCustPersonalJobDataObj = new AppCustPersonalJobDataObj();
         this.RowVersion = ""; 
     }
 }

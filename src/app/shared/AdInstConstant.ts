@@ -77,7 +77,13 @@ export class AdInsConstant {
     public static AddrTypeLegal = "LEGAL";
     public static AddrTypeResidence = "RESIDENCE";
     public static AddrTypeMailing = "MAILING";
+    public static AddrTypeJob = "JOB";
 
+    //CUST MODEL
+    public static CustModelProfessional = "PROF";
+    public static CustModelNonProfessional = "NONPROF";
+    public static CustModelEmployee = "EMP";
+    public static CustModelSmallMediumEnterprise = "SME";
 
 
     //GENERAL SETTING
@@ -375,6 +381,12 @@ export class AdInsConstant {
 
     // REF PROFESSION
     public static GetRefProfessionByCode = environment.FoundationR3Url + "/RefProfession/GetRefProfessionByProfessionCode";
+
+    //REF INDUSTRY TYPE
+    public static GetRefIndustryTypeByCode = environment.FoundationR3Url + "/RefIndustryType/GetRefIndustryTypeByIndustryTypeCode";
+
+    //REF CUST MODEL
+    public static GetListKeyValueByMrCustTypeCode = "http://localhost:5000/RefCustModel/GetListKeyValueByMrCustTypeCode";
 
     //CUST DATA PERSONAL
     public static AddEditCustDataPersonal = "http://localhost:5001/AppCust/AddEditCustDataPersonal";
