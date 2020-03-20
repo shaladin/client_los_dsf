@@ -68,6 +68,8 @@
                   <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="CustDataForm" [enjiForm]="enjiForm" [identifier]="'mailingAddr'" [default]="mailingAddrObj" [inputField]="inputFieldMailingObj" [showPhn3]="false"></lib-ucaddress>
                 </div>
                 <app-cust-contact-information (callbackCopyAddr)="copyToContactPersonAddr($event)" (callbackSubmit)="getCustContactInformation($event)" [appCustPersonalId]="appCustPersonalId" [custType]="CustDataForm.controls.MrCustTypeCode.value" [enjiForm]="enjiForm" [parentForm]="CustDataForm" [identifier]="'contactData'"></app-cust-contact-information>
+                <app-cust-financial-data [appCustPersonalFinDataObj]="custDataPersonalObj.AppCustPersonalFinDataObj" [custType]="CustDataForm.controls.MrCustTypeCode.value" [enjiForm]="enjiForm" [parentForm]="CustDataForm" [identifier]="'financialData'"></app-cust-financial-data>
+                <app-cust-bank-account (callbackSubmit)="getAppCustBankAcc($event)" [listBankAcc]="custDataPersonalObj.AppCustBankAccObjs"></app-cust-bank-account>
               </div>
             </div>
             <div class="form-actions right">

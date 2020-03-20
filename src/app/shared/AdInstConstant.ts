@@ -162,6 +162,7 @@ export class AdInsConstant {
     public static AddRefBank = "/RefBank/AddRefBank";
     public static DeleteRefBank = "/RefBank/DeleteRefBank";
     public static GetBankByBankCode = "/RefBank/GetBankByBankCode";
+    public static GetRefBankByBankCodeAsync = environment.FoundationR3Url + "/RefBank/GetRefBankByBankCodeAsync";
 
     //REF-EMP
     public static GetListEmployee = "/RefEmp/GetRefEmpPaging";
@@ -380,5 +381,7 @@ export class AdInsConstant {
     public static GetCustDataByAppId = "http://localhost:5001/AppCust/GetCustDataByAppId";
     public static GetAppCustPersonalContactPersonsByAppCustPersonalId = "http://localhost:5001/AppCustPersonalContactPerson/GetAppCustPersonalContactPersonsByAppCustPersonalId";
     public static DeleteAppCustPersonalContactPerson = "http://localhost:5001/AppCustPersonalContactPerson/DeleteAppCustPersonalContactPerson";
+    public static GetAppCustBankAccsByAppCustId = "http://localhost:5001/AppCustBankAcc/GetAppCustBankAccsByAppCustId";
+
 
 }
