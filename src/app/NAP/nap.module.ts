@@ -26,6 +26,7 @@ import { CustUcaddressComponent } from "./nap-tab/customer-data/component/addres
 import { CustContactInformationComponent } from "./nap-tab/customer-data/component/contact-information/cust-contact-information.component";
 import { CustFinancialDataComponent } from "./nap-tab/customer-data/component/financial-data/cust-financial-data.component";
 import { CustBankAccountComponent } from "./nap-tab/customer-data/component/bank-account/cust-bank-account.component";
+import { CustJobDataComponent } from "./nap-tab/customer-data/component/job-data/cust-job-data.component";
 
 
 
@@ -43,7 +44,8 @@ import { CustBankAccountComponent } from "./nap-tab/customer-data/component/bank
         CustUcaddressComponent,
         CustContactInformationComponent,
         CustFinancialDataComponent,
-        CustBankAccountComponent
+        CustBankAccountComponent,
+        CustJobDataComponent
         ],
     imports: [ 
         NapRoutingModule,
