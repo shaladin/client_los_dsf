@@ -243,11 +243,6 @@
       "property": "appDt"
     },
     {
-      "type": "decimal",
-      "position": "left",
-      "property": "instAmt"
-    },
-    {
       "type": "text",
       "position": "left",
       "property": "isNapSub"

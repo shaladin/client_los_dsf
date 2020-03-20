@@ -1,0 +1,68 @@
+{
+  "title": "Lookup District",
+  "component": [
+    {
+      "type": "textbox",
+      "name": "PROV_DISTRICT_CODE",
+      "id": "districtCode",
+      "value": "",
+      "label": "District Code",
+      "placeholder": "District Code"
+    },
+    {
+      "type": "textbox",
+      "name": "PROV_DISTRICT_NAME",
+      "id": "districtName",
+      "value": "",
+      "label": "District Name",
+      "placeholder": "District Name"
+    }
+  ],
+  "querystring": {
+    "select": "SELECT PROV_DISTRICT_CODE AS DistrictCode, PROV_DISTRICT_NAME AS DistrictName",
+    "from": "FROM dbo.REF_PROV_DISTRICT WITH(NOLOCK)"
+  },
+  "headerList": [
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "District Code",
+      "name": "DistrictCode"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "District Name",
+      "name": "DistrictName"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Select"
+    }
+  ],
+  "bodyList": [
+    {
+      "type": "text",
+      "position": "center",
+      "property": "DistrictCode"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "DistrictName"
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
+        {
+          "type": "select",
+          "property": "DistrictCode"
+        }
+      ]
+    }
+  ],
+  "propertyId": "DistrictCode",
+  "propertyName": "DistrictName"
+}
