@@ -10,7 +10,7 @@ export class InputLookupObj{
     isRequired: any
     pagingJson: any
     genericJson: any
-    isReadonly: any;
+    isReadonly: any 
 
     constructor()
     {

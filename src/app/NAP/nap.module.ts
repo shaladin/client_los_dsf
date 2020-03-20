@@ -35,6 +35,8 @@ import { UCSearchModule } from '@adins/ucsearch';
         AppPagingComponent,
         AppAddDetailComponent,
         AppReferantorComponent,
+        CustomerDataComponent,
+        CustUcaddressComponent,
         AppModelComponent,
         CustomerDataComponent,
         CustMainDataComponent,
