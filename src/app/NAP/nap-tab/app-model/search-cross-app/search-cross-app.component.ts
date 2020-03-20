@@ -59,8 +59,8 @@ export class SearchCrossAppComponent implements OnInit {
 
     if(this.ListCrossAppObjInput["result"].length){
       var addCrit = new CriteriaObj();
-      addCrit.DataType = "numeric";
-      addCrit.propName = "ag.AGRMNT_ID";
+      addCrit.DataType = "string";
+      addCrit.propName = "ag.AGRMNT_NO";
       addCrit.restriction = AdInsConstant.RestrictionNotIn;
       addCrit.listValue = this.ListCrossAppObjInput["result"];
       // console.log(addCrit);
@@ -156,12 +156,13 @@ export class SearchCrossAppComponent implements OnInit {
         }
       }
       var addCrit = new CriteriaObj();
-      addCrit.DataType = "numeric";
-      addCrit.propName = "ag.AGRMNT_ID";
+      addCrit.DataType = "string";
+      addCrit.propName = "ag.AGRMNT_NO";
       addCrit.restriction = AdInsConstant.RestrictionNotIn;
       var tempList = [];
       for(var i=0;i<this.tempListId.length;i++){
-        tempList.push(this.tempListId[i]);
+        var temp = this.resultData.Data.find(x => x.AgrmntId == this.tempListId[i]);
+        tempList.push(temp["AgrmntNo"]);
       }
       for(var i=0;i<this.ListCrossAppObjInput["result"].length;i++){
         tempList.push(this.ListCrossAppObjInput["result"][i]);
@@ -204,12 +205,13 @@ export class SearchCrossAppComponent implements OnInit {
         this.tempData.splice(index, 1);
       }
       var addCrit = new CriteriaObj();
-      addCrit.DataType = "numeric";
-      addCrit.propName = "ag.AGRMNT_ID";
+      addCrit.DataType = "string";
+      addCrit.propName = "ag.AGRMNT_NO";
       addCrit.restriction = AdInsConstant.RestrictionNotIn;
       var tempList = [];
       for(var i=0;i<this.tempListId.length;i++){
-        tempList.push(this.tempListId[i]);
+        var temp = this.resultData.Data.find(x => x.AgrmntId == this.tempListId[i]);
+        tempList.push(temp["AgrmntNo"]);
       }
       for(var i=0;i<this.ListCrossAppObjInput["result"].length;i++){
         tempList.push(this.ListCrossAppObjInput["result"][i]);
