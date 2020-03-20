@@ -8,6 +8,8 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { environment } from 'environments/environment';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { UcpagingModule } from '@adins/ucpaging';
 
 @Component({
   selector: 'app-app-model',
@@ -18,14 +20,16 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 export class AppModelComponent implements OnInit {
 
   @Input() appId: any;
-
+  ListCrossAppObj: any = {};
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private http: HttpClient,
     private route: ActivatedRoute,
-    private toastr: NGXToastrService
+    private toastr: NGXToastrService,
+    private modalService: NgbModal
   ) { }
+
   NapAppModelForm = this.fb.group({
     MouCustId: [''],
     LeadId: [''],
@@ -76,9 +80,12 @@ export class AppModelComponent implements OnInit {
     RsvField3: [''],
     RsvField4: [''],
     RsvField5: [''],
-    SurveyNo: ['']
+    SurveyNo: [''],
+    MrInstSchemeCode: [''],
+    InterestType: ['']
   });
 
+  inputPagingObj;
   inputLookupObj;
   arrAddCrit;
   employeeIdentifier;
@@ -86,6 +93,10 @@ export class AppModelComponent implements OnInit {
   ngOnInit() {
     this.makeNewLookupCriteria();
 
+    this.ListCrossAppObj["appId"]=this.appId;
+    this.ListCrossAppObj["result"] = [];
+
+    // Lookup obj
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
@@ -94,7 +105,7 @@ export class AppModelComponent implements OnInit {
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.nameSelect = this.NapAppModelForm.controls.SalesOfficerName.value;
     this.inputLookupObj.addCritInput = this.arrAddCrit;
-
+    
     this.getAppModelInfo();
 
     this.applicationDDLitems = [];
@@ -107,7 +118,10 @@ export class AppModelComponent implements OnInit {
     this.getRefMasterTypeCode("INTEREST_TYPE");
     this.getRefMasterTypeCode("CUST_NOTIFY_OPT");
     this.getRefMasterTypeCode("FIRST_INST_TYPE");
+    this.getRefMasterTypeCode("INTRSTTYPE");
+    this.getPayFregData();
   }
+
   applicationDDLitems;
   resultResponse;
   getAppModelInfo() {
@@ -179,6 +193,25 @@ export class AppModelComponent implements OnInit {
     );
   }
 
+  getPayFregData(){
+    var url = environment.FoundationR3Url + AdInsConstant.GetListActiveRefPayFreq;
+    var obj = {
+      RowVersion: ""
+    };
+
+    this.http.post(url, obj).subscribe(
+      (response) => {
+        // console.log(response);
+        var objTemp = response["ReturnObject"];
+        this.applicationDDLitems["Pay_Freq"] = objTemp;
+        console.log(this.applicationDDLitems);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
   getRefMasterTypeCode(code) {
     var url = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
     var obj = {
@@ -234,7 +267,80 @@ export class AppModelComponent implements OnInit {
     // console.log(this.NapAppModelForm);  
   }
 
-  ChangeNumOfInstallment(){
+  PayFreqVal;
+  PayFreqTimeOfYear;
+  ChangeNumOfInstallmentTenor(){
+    console.log("Change Num from tenor");
+    var temp = this.NapAppModelForm.controls.Tenor.value;
+    if(!isNaN(temp)){
+      console.log("isNUM");
+      var total = ((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
+      this.PatchNumOfInstallment(total);      
+    }
+  }
 
+  ChangeNumOfInstallmentPayFreq(ev){
+    console.log(ev);
+    console.log("Change Num from pay freq");
+    var idx = ev.target.selectedIndex;
+    console.log(idx);
+    var temp = this.NapAppModelForm.controls.Tenor.value;
+    if(!isNaN(temp)){
+      console.log("isNUM");
+      this.PayFreqVal = this.applicationDDLitems["Pay_Freq"][idx].PayFreqVal;
+      this.PayFreqTimeOfYear = this.applicationDDLitems["Pay_Freq"][idx].TimeOfYear;
+      var total = ((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
+      this.PatchNumOfInstallment(total);      
+    }
+  } 
+
+  PatchNumOfInstallment(num){
+    this.NapAppModelForm.patchValue({
+      NumOfInst: num
+    });
+  }
+
+  ClickSave(){
+    console.log(this.NapAppModelForm);
+  }
+
+  closeResult;
+  Open(contentCrossApp){
+    this.modalService.open(contentCrossApp).result.then(
+      (result) =>{
+        this.closeResult = `Closed with: ${result}`;
+      },
+      (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      }
+    );
+  }
+
+  private getDismissReason(reason): string{
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+
+  AddTemp(contentCrossApp){
+    this.Open(contentCrossApp);
+  }
+
+  resultCrossApp=[];
+  GetDataTemp(ev){
+    for(let i of ev){
+      this.resultCrossApp.push(i);
+      this.ListCrossAppObj["result"].push(i.AgrmntNo);
+    }
+    // console.log("result cross app");
+    // console.log(this.resultCrossApp);
+  }
+
+  DeleteCrossApp(idx){
+    console.log(idx);
   }
 }

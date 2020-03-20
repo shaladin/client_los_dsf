@@ -211,6 +211,10 @@ export class AdInsConstant {
     public static AssignRoleToUsers = "/UserManagement/AssignRoleToUsers";
     public static GetUserTitleRoleByEmpPositionIdAndRefRoleId = "/UserManagement/GetUserTitleRoleByEmpPositionIdAndRefRoleId";
 
+    //REF-PAY
+    public static GetListLKvpActiveRefPayFreq = "/RefPayFreq/GetListLKvpActiveRefPayFreq"; 
+    public static GetListActiveRefPayFreq = "/RefPayFreq/GetListActiveRefPayFreq"; 
+
     //ZIPCODE
     public static GetRefZipcodePaging = "/RefZipcode/GetRefZipcodePaging";
     public static GetRefZipCode = "/RefZipcode/GetRefZipcode";
