@@ -1,0 +1,57 @@
+{
+  "title": "",
+  "subsection": [
+    {
+      "subSectionId": "AgrMainInformationId",
+      "subSectionTitle": "Main Information",
+      "mainInfoUrl": "http://localhost:5001/Generic/GetDataViewBySQL",
+      "mainInfo": [
+        {
+          "type": "text",
+          "label": "Application No",
+          "property": "AppNo"
+        },
+        {
+          "type": "text",
+          "label": "Number Of Asset",
+          "property": "NumOfAsset"
+        },
+        {
+          "type": "text",
+          "label": "Customer Name",
+          "property": "CustName"
+        },
+        {
+          "type": "text",
+          "label": "Original Office",
+          "property": "OfficeName"
+        },
+        {
+          "type": "text",
+          "label": "Tenor",
+          "property": "Tenor"
+        },
+        {
+          "type": "text",
+          "label": "Product Offering Name",
+          "property": "ProdOfferingName"
+        },
+        {
+          "type": "text",
+          "label": "Curreny",
+          "property": "CurrCode"
+        },
+        {
+          "type": "text",
+          "label": "Order Information",
+          "property": "MrOrderInfoCode"
+        }
+      ],
+      "querystring": {
+        "select": "SELECT A.APP_NO AS AppNo, AGR.CUST_NAME AS CustName, AGR.TENOR AS Tenor, AGR.CURR_CODE AS CurrCode, AGR.NUM_OF_ASSET AS NumOfAsset, AGR.OFFICE_NAME AS OfficeName, A.PROD_OFFERING_NAME AS ProdOfferingName, A.MR_ORDER_INFO_CODE AS MrOrderInfoCode, AGR.AGRMNT_ID AS AgrmntId",
+        "from": "FROM dbo.AGRMNT AGR WITH(NOLOCK) JOIN dbo.APP A WITH(NOLOCK) ON A.APP_ID = AGR.APP_ID",
+        "where": "WHERE AGR.AGRMNT_ID = {0}"
+      }
+    }
+  ]
+}
