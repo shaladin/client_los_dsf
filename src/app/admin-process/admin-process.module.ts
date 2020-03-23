@@ -10,6 +10,9 @@ import { UcgridfooterModule } from "@adins/ucgridfooter";
 import { UcShowErrorsModule } from "@adins/uc-show-errors";
 import { PurchaseOrderPagingComponent } from "./purchase-order/purchase-order-paging/purchase-order-paging.component";
 import { AdminProcessRoutingModule } from "./admin-process-routing.module";
+import { PurchaseOrderDetailComponent } from './purchase-order/purchase-order-detail/purchase-order-detail.component';
+import { SharingComponentModule } from "app/shared/sharingcomponent.module";
+import { PurchaseOrderComponent } from './purchase-order/purchase-order/purchase-order.component';
 
 @NgModule({
   imports: [
@@ -23,10 +26,13 @@ import { AdminProcessRoutingModule } from "./admin-process-routing.module";
     ReactiveFormsModule,
     UcSubsectionModule,
     UcShowErrorsModule,
-    AdminProcessRoutingModule
+    AdminProcessRoutingModule,
+    SharingComponentModule
   ],
   declarations: [
-    PurchaseOrderPagingComponent
+    PurchaseOrderPagingComponent,
+    PurchaseOrderDetailComponent,
+    PurchaseOrderComponent
   ]
 })
 export class AdminProcessModule { }
