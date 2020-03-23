@@ -11,4 +11,10 @@ export const ROUTES: RouteInfo[] = [
 
     ]
   },
+  {
+    path: '', title: 'Administrator Process', icon: 'ft-bar-chart-2', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false,
+    submenu: [
+      { path: '/AdminProcess/PurchaseOrder/Paging', title: 'Purchase Order', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+    ]
+  },
 ];
