@@ -362,11 +362,14 @@ export class AdInsConstant {
     public static GetListUploadSettingDByUploadSettingHId = '/UploadSetting/GetListUploadSettingDByUploadSettingHId'
 
     // GENERIC
-    public static GetPagingObjectBySQL = environment.losUrl + "/Generic/GetPagingObjectBySQL";
+    public static GetPagingObjectBySQL = "/Generic/GetPagingObjectBySQL";
 
     // Vendor
     public static GetListVendorBankAccByVendorId= "/VendorBankAcc/GetListVendorBankAccByVendorId";
     public static GetListVendorBankAccByVendorCode= "/VendorBankAcc/GetListVendorBankAccByVendorCode";
+
+    // MOU CUST
+    public static GetMouCustById = environment.losUrl + "/MouCust/GetMouCustById";
 
 
     // REF COUNTRY

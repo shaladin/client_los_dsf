@@ -6,13 +6,15 @@ import { UCSearchModule } from "@adins/ucsearch";
 import { UcpagingModule } from "@adins/ucpaging";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { RouterModule } from "@angular/router";
+import { SharingModule } from 'app/shared/sharing.module';
+import { ArchwizardModule } from 'angular-archwizard';
 import { UcSubsectionModule } from "@adins/uc-subsection";
 import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
 import { UcgridfooterModule, UcgridfooterComponent } from "@adins/ucgridfooter";
 import { MouRoutingModule } from "./mou-routing.module";
 import { DocSignerComponent } from "./doc-signer/doc-signer.component";
 import { MouReviewPagingComponent } from './mou-customer/mou-review/mou-review-paging/mou-review-paging.component';
-import { MouReviewDetailComponent } from './mou-customer/mou-review/mou-review-detail/mou-review-detail.component';
+import { MouReviewGeneralComponent } from './mou-customer/mou-review/mou-review-general/mou-review-general.component';
 import { MouViewDetailComponent } from './mou-customer/mou-view/mou-view-detail/mou-view-detail.component';
 import { MouViewFeeComponent } from './mou-customer/mou-view/mou-view-fee/mou-view-fee.component';
 import { MouViewAddcollComponent } from './mou-customer/mou-view/mou-view-addcoll/mou-view-addcoll.component';
@@ -32,6 +34,8 @@ import { MouViewLegalComponent } from './mou-customer/mou-view/mou-view-legal/mo
     UcgridfooterModule,
     UcpagingModule,
     NgbModule,
+    SharingModule,
+    ArchwizardModule,
     ReactiveFormsModule,
     UcSubsectionModule,
     SharingComponentModule
@@ -39,7 +43,7 @@ import { MouViewLegalComponent } from './mou-customer/mou-view/mou-view-legal/mo
   declarations: [
     DocSignerComponent,
     MouReviewPagingComponent,
-    MouReviewDetailComponent,
+    MouReviewGeneralComponent,
     MouViewDetailComponent,
     MouViewFeeComponent,
     MouViewAddcollComponent,

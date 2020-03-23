@@ -18,6 +18,7 @@ export class MouReviewPagingComponent implements OnInit {
     this.inputPagingObj._url = "./assets/ucpaging/mou/searchMouReview.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    console.log(AdInsConstant.GetPagingObjectBySQL);
     this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchMouReview.json";
   }
 }

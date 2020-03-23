@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
   selector: 'app-mou-view-detail',
@@ -7,9 +11,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MouViewDetailComponent implements OnInit {
 
-  constructor() { }
+  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) { }
 
   ngOnInit() {
   }
+
+  MouDataForm = this.fb.group({
+  })
 
 }

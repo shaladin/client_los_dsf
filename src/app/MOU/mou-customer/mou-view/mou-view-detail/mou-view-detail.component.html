@@ -1,3 +1,4 @@
-<p>
-  mou-view-detail works!
-</p>
+<form class="form form-horizontal" [formGroup]="MouDataForm" (ngSubmit)="MouDataForm.valid" #enjiForm="ngForm">
+  <lib-ucSubsection [id]="'MouDataId'" [title]="'Mou Data'" [panel]="'MouData'">
+  </lib-ucSubsection>
+</form>

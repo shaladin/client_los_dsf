@@ -13,8 +13,8 @@
         {
             "type": "dropdown",
             "datatype": "text",
-            "name": "MOU_TYPE",
-            "id": "MouTypeId",
+            "name": "MR_MOU_TYPE_CODE",
+            "id": "MrMouTypeCode",
             "value": "",
             "placeholder": "Placeholder",
             "isFromURL": true,
@@ -22,7 +22,9 @@
             "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
             "label": "MOU TYPE",
             "items": [],
-            "itemsUrl": []
+            "itemsUrl": [],
+            "criteriaPropName": "RefMasterTypeCode",
+            "criteriaPropValue": "MOU_TYPE"
         },
         {
             "type": "textbox",
@@ -33,7 +35,7 @@
             "placeholder": "Placeholder"
         },
         {
-            "type": "label",
+            "type": "textbox",
             "name": "A.CUST_NAME",
             "id": "CustNameId",
             "value": "",
@@ -60,10 +62,18 @@
                 }
             ],
             "itemsUrl": []
+        },
+        {
+            "type": "textbox",
+            "name": "A.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "CLAIM BY",
+            "placeholder": "Placeholder"
         }
     ],
     "querystring": {
-        "select": "SELECT A.MOU_CUST_NO AS MouCustNo, A.MOU_CUST_ID AS MouCustId, A.CUST_NAME AS CustName, A.MOU_CUST_DT AS MouCustDt, A.END_DT AS EndDt, A.PLAFOND_AMT AS PlafondAmt, A.IS_REVOLVING AS IsRevolving, A.MR_MOU_TYPE_CODE AS MouType, A.REF_NO AS RefNo",
+        "select": "SELECT A.MOU_CUST_ID AS MouCustId, A.MOU_CUST_NO AS MouCustNo, A.MOU_CUST_ID AS MouCustId, A.CUST_NAME AS CustName, A.MOU_CUST_DT AS MouCustDt, A.END_DT AS EndDt, A.PLAFOND_AMT AS PlafondAmt, A.IS_REVOLVING AS IsRevolving, A.MR_MOU_TYPE_CODE AS MouType, A.REF_NO AS RefNo",
         "from": "FROM dbo.MOU_CUST A WITH(NOLOCK)"
     },
     "headerList": [
@@ -87,25 +97,25 @@
         },
         {
             "type": "sort",
-            "position": "left",
+            "position": "center",
             "label": "Expired Date",
             "name": "EndDt"
         },
         {
             "type": "sort",
-            "position": "left",
+            "position": "right",
             "label": "Plafond Amount",
             "name": "PlafondAmt"
         },
         {
             "type": "sort",
-            "position": "left",
+            "position": "center",
             "label": "Revolving",
             "name": "IsRevolving"
         },
         {
             "type": "label",
-            "position": "left",
+            "position": "center",
             "label": "Mou Type",
             "name": "MouType"
         },
@@ -127,28 +137,28 @@
             "property": "CustName"
         },
         {
-            "type": "text",
+            "type": "date",
             "position": "left",
             "property": "MouCustDt"
         },
         {
-            "type": "text",
-            "position": "left",
+            "type": "date",
+            "position": "center",
             "property": "EndDt"
         },
         {
-            "type": "text",
-            "position": "left",
+            "type": "decimal",
+            "position": "right",
             "property": "PlafondAmt"
         },
         {
             "type": "boolean",
-            "position": "left",
+            "position": "center",
             "property": "IsRevolving"
         },
         {
             "type": "text",
-            "position": "left",
+            "position": "center",
             "property": "MouType"
         },
         {
@@ -156,16 +166,49 @@
             "position": "center",
             "action": [
                 {
-                    "type": "edit",
-                    "path": "/MOU/Review",
-                    "param": [
+                    "type": "switch",
+                    "case": [
                         {
-                            "type": "RefOfficeId",
-                            "property": "RefOfficeId"
+                            "conditions": [
+                                {
+                                    "property": "MouType",
+                                    "value": "FACTORING",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "/Mou/Cust/ReviewDetail",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "MouCustId",
+                                        "property": "MouCustId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
                         },
                         {
-                            "type": "mode",
-                            "property": "edit"
+                            "conditions": [
+                                {
+                                    "property": "MouType",
+                                    "value": "GENERAL",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "/Mou/Cust/ReviewGeneral",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "MouCustId",
+                                        "property": "MouCustId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
                         }
                     ]
                 }
