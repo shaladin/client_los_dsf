@@ -1,5 +1,5 @@
 {
-    "title": "MOU Review",
+    "title": "Office",
     "exportExcel": false,
     "component": [
         {
@@ -11,35 +11,9 @@
             "placeholder": "Placeholder"
         },
         {
-            "type": "textbox",
-            "name": "A.CUST_NAME",
-            "id": "CustNameId",
-            "value": "",
-            "label": "CUSTOMER NAME",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type" : "datepicker",
-            "name" : "A.MOU_CUST_DT",
-            "id" : "MouDtId",
-            "value" : "",
-            "label" : "MOU DATE >=",
-            "restriction" : "gte",
-            "datatype" : "date"
-        },
-        {
-            "type" : "datepicker",
-            "name" : "A.END_DT",
-            "id" : "EndDtId",
-            "value" : "",
-            "label" : "MOU DATE <=",
-            "restriction" : "gte",
-            "datatype" : "date"
-        },
-        {
             "type": "dropdown",
             "datatype": "text",
-            "name": "MR_MOU_TYPE",
+            "name": "MOU_TYPE",
             "id": "MouTypeId",
             "value": "",
             "placeholder": "Placeholder",
@@ -49,10 +23,47 @@
             "label": "MOU TYPE",
             "items": [],
             "itemsUrl": []
-          }
+        },
+        {
+            "type": "textbox",
+            "name": "A.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "CUSTOMER NAME",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "label",
+            "name": "A.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "name": "Claimed",
+            "id": "ActiveStatusId",
+            "label": "TASK CLAIM STATUS",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": false,
+            "isSelectOne": false,
+            "items": [
+                {
+                    "key": "CLAIMED",
+                    "value": "CLAIMED"
+                },
+                {
+                    "key": "UNCLAIMED",
+                    "value": "UNCLAIMED"
+                }
+            ],
+            "itemsUrl": []
+        }
     ],
     "querystring": {
-        "select": "SELECT A.MOU_CUST_NO AS MouCustNo, A.MOU_CUST_ID AS MouCustId, A.CUST_NAME AS CustName, A.MOU_CUST_DT AS MouCustDt, A.END_DT AS EndDt, A.PLAFOND_AMT AS PlafondAmt, A.IS_REVOLVING AS IsRevolving, A.MR_MOU_TYPE AS MouType, A.REF_NO AS RefNo",
+        "select": "SELECT A.MOU_CUST_NO AS MouCustNo, A.MOU_CUST_ID AS MouCustId, A.CUST_NAME AS CustName, A.MOU_CUST_DT AS MouCustDt, A.END_DT AS EndDt, A.PLAFOND_AMT AS PlafondAmt, A.IS_REVOLVING AS IsRevolving, A.MR_MOU_TYPE_CODE AS MouType, A.REF_NO AS RefNo",
         "from": "FROM dbo.MOU_CUST A WITH(NOLOCK)"
     },
     "headerList": [
@@ -77,7 +88,7 @@
         {
             "type": "sort",
             "position": "left",
-            "label": "End Date",
+            "label": "Expired Date",
             "name": "EndDt"
         },
         {
@@ -97,12 +108,6 @@
             "position": "left",
             "label": "Mou Type",
             "name": "MouType"
-        },
-        {
-            "type": "label",
-            "position": "left",
-            "label": "Ref No",
-            "name": "RefNo"
         },
         {
             "type": "label",
@@ -147,25 +152,16 @@
             "property": "MouType"
         },
         {
-            "type": "text",
-            "position": "left",
-            "property": "RefNo"
-        },
-        {
             "type": "action",
             "position": "center",
             "action": [
                 {
                     "type": "edit",
-                    "path": "/Mou/ReviewDetail",
+                    "path": "/MOU/Review",
                     "param": [
                         {
-                            "type": "MouId",
-                            "property": "MouId"
-                        },
-                        {
-                            "type": "MouType",
-                            "property": "MouType"
+                            "type": "RefOfficeId",
+                            "property": "RefOfficeId"
                         },
                         {
                             "type": "mode",
