@@ -6,16 +6,16 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 
 @Component({
-  selector: 'app-mou-review-general',
-  templateUrl: './mou-review-general.component.html',
-  styleUrls: ['./mou-review-general.component.scss'],
+  selector: 'app-mou-review-factoring',
+  templateUrl: './mou-review-factoring.component.html',
+  styleUrls: ['./mou-review-factoring.component.scss'],
   providers: [NGXToastrService]
 })
-export class MouReviewGeneralComponent implements OnInit {
+export class MouReviewFactoringComponent implements OnInit {
   mouCustObj: MouCustObj;
   MouCustId : any;
-  MouType : string = "GENERAL";
-
+  MouType : string = "FACTORING";
+  
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       this.MouCustId = params["MouCustId"];
