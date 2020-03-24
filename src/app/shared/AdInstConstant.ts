@@ -38,7 +38,8 @@ export class AdInsConstant {
     // App
     public static AddApp = "/Application/AddApp";
     public static EditApp = "/Application/EditApp";
-    public static GetAppById = "/Application/GetAppById";    
+    public static GetAppById = "/Application/GetAppById";   
+    public static EditAppAddAppCross = "/Application/EditAppAddAppCross";   
 
     // App Referantor
     public static AddAppReferantor = "/AppReferantor/AddAppReferantor";
@@ -46,6 +47,16 @@ export class AdInsConstant {
     public static DeleteAppReferantor = "/AppReferantor/DeleteAppReferantor";
     public static GetAppReferantorByAppReferantorId = "/AppReferantor/GetAppReferantorByAppReferantorId";
     public static GetAppReferantorByAppId = "/AppReferantor/GetAppReferantorByAppId";
+    
+    // App Cross
+    public static GetAppCrossByCrossAgrmntNo = "/AppCross/GetAppCrossByCrossAgrmntNo";
+    public static DeleteAppCross = "/AppCross/DeleteAppCross";
+    public static GetListAppCross = "/AppCross/GetListAppCross";
+    public static AddListAppCross = "/AppCross/AddListAppCross";
+    
+    // Ref App Src
+    public static GetListKvpActiveRefAppSrc = "/RefAppSrc/GetListKvpActiveRefAppSrc";
+
 
     public static RestrictionLike = "Like";
     public static RestrictionEq = "Eq";
@@ -218,6 +229,10 @@ export class AdInsConstant {
     public static AddUserTitleRole = "/UserManagement/AddUserTitleRole";
     public static AssignRoleToUsers = "/UserManagement/AssignRoleToUsers";
     public static GetUserTitleRoleByEmpPositionIdAndRefRoleId = "/UserManagement/GetUserTitleRoleByEmpPositionIdAndRefRoleId";
+
+    //REF-PAY
+    public static GetListLKvpActiveRefPayFreq = "/RefPayFreq/GetListLKvpActiveRefPayFreq"; 
+    public static GetListActiveRefPayFreq = "/RefPayFreq/GetListActiveRefPayFreq"; 
 
     //ZIPCODE
     public static GetRefZipcodePaging = "/RefZipcode/GetRefZipcodePaging";
