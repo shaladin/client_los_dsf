@@ -4,6 +4,7 @@ import { AppCustAddrObj } from "./AppCustAddrObj.Model";
 import { AppCustPersonalContactPersonObj } from "./AppCustPersonalContactPersonObj.Model";
 import { AppCustPersonalFinDataObj } from "./AppCustPersonalFinDataObj.Model";
 import { AppCustPersonalJobDataObj } from "./AppCustPersonalJobDataObj.Model";
+import { AppCustSocmedObj } from "./AppCustSocmedObj.Model";
 
 
 export class CustDataPersonalObj {
@@ -16,6 +17,8 @@ export class CustDataPersonalObj {
     AppCustPersonalFinDataObj: AppCustPersonalFinDataObj;
     AppCustBankAccObjs: any;
     AppCustPersonalJobDataObj: AppCustPersonalJobDataObj;
+    AppCustSocmedObjs: any;
+    AppCustGrpObjs: any;
     RowVersion: any;
 
     constructor() { 

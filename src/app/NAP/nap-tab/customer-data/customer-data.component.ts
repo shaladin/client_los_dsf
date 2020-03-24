@@ -7,13 +7,16 @@ import { CustDataPersonalObj } from 'app/shared/model/CustDataPersonalObj.Model'
 import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute } from '@angular/router';
-import { CustMainDataComponent } from './component/main-data/cust-main-data.component';
+import { CustPersonalMainDataComponent } from './component/personal-main-data/cust-personal-main-data.component';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { CustContactInformationComponent } from './component/contact-information/cust-contact-information.component';
 import { CustJobDataComponent } from './component/job-data/cust-job-data.component';
 import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
+import { AppCustSocmedObj } from 'app/shared/model/AppCustSocmedObj.Model';
+import { AppCustGrpObj } from 'app/shared/model/AppCustGrpObj.Model';
+import { CustCompanyMainDataComponent } from './component/company-main-data/cust-company-main-data.component';
 
 @Component({
   selector: 'app-customer-data',
@@ -23,13 +26,18 @@ import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 
 export class CustomerDataComponent implements OnInit {
 
-  @ViewChild(CustMainDataComponent) mainDataComponent;
+  @ViewChild(CustPersonalMainDataComponent) mainDataComponent;
+  @ViewChild(CustCompanyMainDataComponent) companyDataComponent;
   @ViewChild(CustContactInformationComponent) custContactInformationComponent;
   @ViewChild(CustJobDataComponent) custJobDataComponent;
 
 
   CustDataForm = this.fb.group({
-    MrCustTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
+    CopyFromResidence: [''],
+    CopyFromMailing: ['']
+  });
+
+  CustDataCompanyForm = this.fb.group({
     CopyFromResidence: [''],
     CopyFromMailing: ['']
   });
@@ -80,6 +88,7 @@ export class CustomerDataComponent implements OnInit {
   ];
 
   defCustModelCode: any;
+  MrCustTypeCode: any;
 
   constructor(
     private fb: FormBuilder, 
@@ -99,7 +108,7 @@ export class CustomerDataComponent implements OnInit {
   }
 
   SaveForm(){
-    if(this.CustDataForm.controls.MrCustTypeCode.value == AdInsConstant.CustTypePersonal){
+    if(this.MrCustTypeCode == AdInsConstant.CustTypePersonal){
       this.custDataPersonalObj = new CustDataPersonalObj();
       this.setCustPersonalObjForSave();
       console.log(this.custDataPersonalObj);
@@ -125,40 +134,42 @@ export class CustomerDataComponent implements OnInit {
     this.custDataPersonalObj.AppCustPersonalContactPersonObjs = this.listAppCustPersonalContactInformation;
     this.custDataPersonalObj.AppCustBankAccObjs = this.listAppCustBankAcc;
     this.setAppCustPersonalJobData();
+    this.setAppCustSocmedObj();
+    this.setAppCustGrpObj();
   }
 
   setAppCust(){
-    this.custDataPersonalObj.AppCustObj.MrCustTypeCode = this.CustDataForm.controls.MrCustTypeCode.value;
+    this.custDataPersonalObj.AppCustObj.MrCustTypeCode = this.MrCustTypeCode;
     this.custDataPersonalObj.AppCustObj.CustName = this.mainDataComponent.InputLookupCustomerObj.nameSelect;
     this.custDataPersonalObj.AppCustObj.CustNo = this.mainDataComponent.selectedCustNo;
-    this.custDataPersonalObj.AppCustObj.MrIdTypeCode = this.CustDataForm.controls["mainData"]["controls"].MrIdTypeCode.value;
-    this.custDataPersonalObj.AppCustObj.IdNo = this.CustDataForm.controls["mainData"]["controls"].IdNo.value;
-    this.custDataPersonalObj.AppCustObj.IdExpiredDt = this.CustDataForm.controls["mainData"]["controls"].IdExpiredDt.value;
-    this.custDataPersonalObj.AppCustObj.TaxIdNo = this.CustDataForm.controls["mainData"]["controls"].TaxIdNo.value;
-    this.custDataPersonalObj.AppCustObj.IsVip = this.CustDataForm.controls["mainData"]["controls"].IsVip.value;
+    this.custDataPersonalObj.AppCustObj.MrIdTypeCode = this.CustDataForm.controls["personalMainData"]["controls"].MrIdTypeCode.value;
+    this.custDataPersonalObj.AppCustObj.IdNo = this.CustDataForm.controls["personalMainData"]["controls"].IdNo.value;
+    this.custDataPersonalObj.AppCustObj.IdExpiredDt = this.CustDataForm.controls["personalMainData"]["controls"].IdExpiredDt.value;
+    this.custDataPersonalObj.AppCustObj.TaxIdNo = this.CustDataForm.controls["personalMainData"]["controls"].TaxIdNo.value;
+    this.custDataPersonalObj.AppCustObj.IsVip = this.CustDataForm.controls["personalMainData"]["controls"].IsVip.value;
     this.custDataPersonalObj.AppCustObj.AppId = this.appId;
   }
 
   setAppCustPersonal(){
-    this.custDataPersonalObj.AppCustPersonalObj.CustFullName = this.CustDataForm.controls["mainData"]["controls"].CustFullName.value;
-    this.custDataPersonalObj.AppCustPersonalObj.MrGenderCode = this.CustDataForm.controls["mainData"]["controls"].MrGenderCode.value;
-    this.custDataPersonalObj.AppCustPersonalObj.MotherMaidenName = this.CustDataForm.controls["mainData"]["controls"].MotherMaidenName.value;
-    this.custDataPersonalObj.AppCustPersonalObj.MrMaritalStatCode = this.CustDataForm.controls["mainData"]["controls"].MrMaritalStatCode.value;
-    this.custDataPersonalObj.AppCustPersonalObj.BirthPlace = this.CustDataForm.controls["mainData"]["controls"].BirthPlace.value;
-    this.custDataPersonalObj.AppCustPersonalObj.BirthDt = this.CustDataForm.controls["mainData"]["controls"].BirthDt.value;
-    this.custDataPersonalObj.AppCustPersonalObj.MrNationalityCode = this.CustDataForm.controls["mainData"]["controls"].MrNationalityCode.value;
+    this.custDataPersonalObj.AppCustPersonalObj.CustFullName = this.CustDataForm.controls["personalMainData"]["controls"].CustFullName.value;
+    this.custDataPersonalObj.AppCustPersonalObj.MrGenderCode = this.CustDataForm.controls["personalMainData"]["controls"].MrGenderCode.value;
+    this.custDataPersonalObj.AppCustPersonalObj.MotherMaidenName = this.CustDataForm.controls["personalMainData"]["controls"].MotherMaidenName.value;
+    this.custDataPersonalObj.AppCustPersonalObj.MrMaritalStatCode = this.CustDataForm.controls["personalMainData"]["controls"].MrMaritalStatCode.value;
+    this.custDataPersonalObj.AppCustPersonalObj.BirthPlace = this.CustDataForm.controls["personalMainData"]["controls"].BirthPlace.value;
+    this.custDataPersonalObj.AppCustPersonalObj.BirthDt = this.CustDataForm.controls["personalMainData"]["controls"].BirthDt.value;
+    this.custDataPersonalObj.AppCustPersonalObj.MrNationalityCode = this.CustDataForm.controls["personalMainData"]["controls"].MrNationalityCode.value;
     this.custDataPersonalObj.AppCustPersonalObj.NationalityCountryCode = this.mainDataComponent.selectedNationalityCountryCode;
-    this.custDataPersonalObj.AppCustPersonalObj.MobilePhnNo1 = this.CustDataForm.controls["mainData"]["controls"].MobilePhnNo1.value;
-    this.custDataPersonalObj.AppCustPersonalObj.MobilePhnNo2 = this.CustDataForm.controls["mainData"]["controls"].MobilePhnNo2.value;
-    this.custDataPersonalObj.AppCustPersonalObj.MobilePhnNo3= this.CustDataForm.controls["mainData"]["controls"].MobilePhnNo3.value;
-    this.custDataPersonalObj.AppCustPersonalObj.MrEducationCode = this.CustDataForm.controls["mainData"]["controls"].MrEducationCode.value;
-    this.custDataPersonalObj.AppCustPersonalObj.MrReligionCode = this.CustDataForm.controls["mainData"]["controls"].MrReligionCode.value;
-    this.custDataPersonalObj.AppCustPersonalObj.Email1 = this.CustDataForm.controls["mainData"]["controls"].Email1.value;
-    this.custDataPersonalObj.AppCustPersonalObj.Email2 = this.CustDataForm.controls["mainData"]["controls"].Email2.value;
-    this.custDataPersonalObj.AppCustPersonalObj.Email3 = this.CustDataForm.controls["mainData"]["controls"].Email3.value;
-    this.custDataPersonalObj.AppCustPersonalObj.FamilyCardNo = this.CustDataForm.controls["mainData"]["controls"].FamilyCardNo.value;
-    this.custDataPersonalObj.AppCustPersonalObj.NoOfResidence = this.CustDataForm.controls["mainData"]["controls"].NoOfResidence.value;
-    this.custDataPersonalObj.AppCustPersonalObj.NoOfDependents = this.CustDataForm.controls["mainData"]["controls"].NoOfDependents.value;
+    this.custDataPersonalObj.AppCustPersonalObj.MobilePhnNo1 = this.CustDataForm.controls["personalMainData"]["controls"].MobilePhnNo1.value;
+    this.custDataPersonalObj.AppCustPersonalObj.MobilePhnNo2 = this.CustDataForm.controls["personalMainData"]["controls"].MobilePhnNo2.value;
+    this.custDataPersonalObj.AppCustPersonalObj.MobilePhnNo3= this.CustDataForm.controls["personalMainData"]["controls"].MobilePhnNo3.value;
+    this.custDataPersonalObj.AppCustPersonalObj.MrEducationCode = this.CustDataForm.controls["personalMainData"]["controls"].MrEducationCode.value;
+    this.custDataPersonalObj.AppCustPersonalObj.MrReligionCode = this.CustDataForm.controls["personalMainData"]["controls"].MrReligionCode.value;
+    this.custDataPersonalObj.AppCustPersonalObj.Email1 = this.CustDataForm.controls["personalMainData"]["controls"].Email1.value;
+    this.custDataPersonalObj.AppCustPersonalObj.Email2 = this.CustDataForm.controls["personalMainData"]["controls"].Email2.value;
+    this.custDataPersonalObj.AppCustPersonalObj.Email3 = this.CustDataForm.controls["personalMainData"]["controls"].Email3.value;
+    this.custDataPersonalObj.AppCustPersonalObj.FamilyCardNo = this.CustDataForm.controls["personalMainData"]["controls"].FamilyCardNo.value;
+    this.custDataPersonalObj.AppCustPersonalObj.NoOfResidence = this.CustDataForm.controls["personalMainData"]["controls"].NoOfResidence.value;
+    this.custDataPersonalObj.AppCustPersonalObj.NoOfDependents = this.CustDataForm.controls["personalMainData"]["controls"].NoOfDependents.value;
   }
 
   setAppCustAddrLegal(){
@@ -293,6 +304,28 @@ export class CustomerDataComponent implements OnInit {
     } 
   }
 
+  setAppCustSocmedObj(){
+    this.custDataPersonalObj.AppCustSocmedObjs = new Array<AppCustSocmedObj>();
+      for(let i = 0; i < this.CustDataForm.controls["socmed"].value.length; i++){
+        var appCustSocmedObj = new AppCustSocmedObj();
+        appCustSocmedObj.MrSocmedCode = this.CustDataForm.controls["socmed"].value[i].MrSocmedCode;
+        appCustSocmedObj.MrSocmedName = this.CustDataForm.controls["socmed"].value[i].MrSocmedName;
+        appCustSocmedObj.SocmedId = this.CustDataForm.controls["socmed"].value[i].SocmedId;       
+        this.custDataPersonalObj.AppCustSocmedObjs.push(appCustSocmedObj);
+      }
+    }
+
+    setAppCustGrpObj(){
+      this.custDataPersonalObj.AppCustGrpObjs = new Array<AppCustGrpObj>();
+        for(let i = 0; i < this.CustDataForm.controls["custGrpMember"].value.length; i++){
+          var appCustGrpObj = new AppCustGrpObj();
+          appCustGrpObj.CustNo = this.CustDataForm.controls["custGrpMember"].value[i].CustNo;
+          appCustGrpObj.MrCustRelationshipCode = this.CustDataForm.controls["custGrpMember"].value[i].MrCustRelationshipCode;
+          appCustGrpObj.CustGrpNotes = this.CustDataForm.controls["custGrpMember"].value[i].CustGrpNotes;       
+          this.custDataPersonalObj.AppCustGrpObjs.push(appCustGrpObj);
+        }
+      }
+
   getCustContactInformation(event){
     console.log(event);
     this.listAppCustPersonalContactInformation = event;
@@ -348,12 +381,24 @@ export class CustomerDataComponent implements OnInit {
   }
 
   CustTypeChanged(event){
-    this.mainDataComponent.setCriteriaLookupCustomer(event.value);
+    console.log(event.value);
+    if(event.value == AdInsConstant.CustTypePersonal){
+      this.mainDataComponent.setCriteriaLookupCustomer(event.value);
+    }
+
+    if(event.value == AdInsConstant.CustTypeCompany){
+      this.companyDataComponent.setCriteriaLookupCustomer(event.value);
+    }
   }
 
   test(){
     console.log(this.mainDataComponent);
     console.log(this.CustDataForm);
+  }
+
+  testCompany(){
+    console.log(this.companyDataComponent);
+    console.log(this.CustDataCompanyForm);
   }
   
   getCustData(){
@@ -371,6 +416,9 @@ export class CustomerDataComponent implements OnInit {
         this.custDataPersonalObj.AppCustPersonalFinDataObj = response["AppCustPersonalFinDataObj"];
         this.custDataPersonalObj.AppCustBankAccObjs = response["AppCustBankAccObjs"];
         this.custDataPersonalObj.AppCustPersonalJobDataObj = response["AppCustPersonalJobDataObj"];
+        this.custDataPersonalObj.AppCustSocmedObjs = response["AppCustSocmedObjs"];
+        this.custDataPersonalObj.AppCustGrpObjs = response["AppCustGrpObjs"];
+
         if(this.custDataPersonalObj.AppCustObj != undefined){
           this.defCustModelCode = this.custDataPersonalObj.AppCustObj.CustModelCode;
         }
@@ -379,10 +427,7 @@ export class CustomerDataComponent implements OnInit {
         this.setAddrMailingObj();
 
         this.appCustPersonalId = this.custDataPersonalObj.AppCustPersonalObj.AppCustPersonalId;
-
-        this.CustDataForm.patchValue({
-          MrCustTypeCode: this.custDataPersonalObj.AppCustObj.MrCustTypeCode
-        });
+        this.MrCustTypeCode= this.custDataPersonalObj.AppCustObj.MrCustTypeCode;
       },
       (error) => {
         console.log(error);

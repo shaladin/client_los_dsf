@@ -70,8 +70,9 @@ export class AdInsConstant {
   public static LoginByToken = "/Authenticate/LoginByToken";
   public static UpdateToken = "/Authenticate/UpdateRole";
 
-  //CUST TYPE
-  public static CustTypePersonal = "PERSONAL";
+    //CUST TYPE
+    public static CustTypePersonal = "PERSONAL";
+    public static CustTypeCompany = "COMPANY";
 
   //ADDR TYPE
   public static AddrTypeLegal = "LEGAL";
@@ -387,8 +388,12 @@ export class AdInsConstant {
   //REF INDUSTRY TYPE
   public static GetRefIndustryTypeByCode = environment.FoundationR3Url + "/RefIndustryType/GetRefIndustryTypeByIndustryTypeCode";
 
-  //REF CUST MODEL
-  public static GetListKeyValueByMrCustTypeCode = "http://localhost:5000/RefCustModel/GetListKeyValueByMrCustTypeCode";
+    //REF CUST MODEL
+    public static GetListKeyValueByMrCustTypeCode = environment.FoundationR3Url + "/RefCustModel/GetListKeyValueByMrCustTypeCode";
+
+    //CUST
+    public static GetCustByCustNo = "http://localhost:5000/Cust/GetCustByCustNo";
+
 
   //CUST DATA PERSONAL
   public static AddEditCustDataPersonal = "http://localhost:5001/AppCust/AddEditCustDataPersonal";
