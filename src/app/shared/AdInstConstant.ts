@@ -381,4 +381,8 @@ export class AdInsConstant {
     public static GetAppCustPersonalContactPersonsByAppCustPersonalId = "http://localhost:5001/AppCustPersonalContactPerson/GetAppCustPersonalContactPersonsByAppCustPersonalId";
     public static DeleteAppCustPersonalContactPerson = "http://localhost:5001/AppCustPersonalContactPerson/DeleteAppCustPersonalContactPerson";
 
+    // MOU
+    public static GetMouCustById = environment.losUrl + "/MouCust/GetMouCustById";
+    public static AddMouCust = environment.losUrl + "/MouCust/AddMouCust";
+    public static EditMouCust = environment.losUrl + "/MouCust/EditMouCust";
 }

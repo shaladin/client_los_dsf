@@ -11,6 +11,9 @@ import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
 import { UcgridfooterModule, UcgridfooterComponent } from "@adins/ucgridfooter";
 import { MouRoutingComponent } from "./mou-routing.module";
 import { DocSignerComponent } from "./doc-signer/doc-signer.component";
+import { MouCustomerRequestComponent } from './mou-customer-request/mou-customer-request.component';
+import { MouCustomerRequestDetailComponent } from './mou-customer-request/mou-customer-request-detail/mou-customer-request-detail.component';
+import { UclookupgenericModule } from "@adins/uclookupgeneric";
 // import { ShowErrorsComponent } from "./app/test-new/show-errors.component";
 
 @NgModule({
@@ -25,10 +28,13 @@ import { DocSignerComponent } from "./doc-signer/doc-signer.component";
     NgbModule,
     ReactiveFormsModule,
     UcSubsectionModule,
-    SharingComponentModule
+    SharingComponentModule,
+    UclookupgenericModule
   ],
   declarations: [
-    DocSignerComponent
+    DocSignerComponent,
+    MouCustomerRequestComponent,
+    MouCustomerRequestDetailComponent
   ]
 })
 export class MouModule { }
