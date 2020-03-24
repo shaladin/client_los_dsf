@@ -11,6 +11,7 @@ import { ArchwizardModule } from 'angular-archwizard';
 import { UcSubsectionModule } from "@adins/uc-subsection";
 import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
 import { UcgridfooterModule, UcgridfooterComponent } from "@adins/ucgridfooter";
+import { MainInfoComponent } from 'app/view/main-info/main-info.component';
 import { MouRoutingModule } from "./mou-routing.module";
 import { DocSignerComponent } from "./doc-signer/doc-signer.component";
 import { MouReviewPagingComponent } from './mou-customer/mou-review/mou-review-paging/mou-review-paging.component';
@@ -41,6 +42,7 @@ import { MouViewLegalComponent } from './mou-customer/mou-view/mou-view-legal/mo
     SharingComponentModule
   ],
   declarations: [
+    MainInfoComponent,
     DocSignerComponent,
     MouReviewPagingComponent,
     MouReviewGeneralComponent,
