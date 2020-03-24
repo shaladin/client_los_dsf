@@ -1,0 +1,59 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="card-header header-title">
+          <div class="row">
+            <div class="col-md-8">
+              <h4 class="card-title" id="horz-layout-colored-controls" translate> MOU Review - General
+              </h4>
+            </div>
+          </div>
+        </div>
+        <div class="px-3">
+          <app-main-info [MouCustId]="MouCustId"></app-main-info>
+          
+          <mat-tab-group>
+            <mat-tab label="MOU Detail">
+              <ng-template matTabContent>
+                <app-mou-view-detail></app-mou-view-detail>
+              </ng-template>
+            </mat-tab>
+            <mat-tab label="Fee">
+              <ng-template matTabContent>
+                <app-mou-view-fee></app-mou-view-fee>
+              </ng-template>
+            </mat-tab>
+            <mat-tab label="Additional Collateral">
+              <ng-template matTabContent>
+                <app-mou-view-addcoll></app-mou-view-addcoll>
+              </ng-template>
+            </mat-tab>
+            <mat-tab label="Term and Condition">
+              <ng-template matTabContent>
+                <app-mou-view-tc></app-mou-view-tc>
+              </ng-template>
+            </mat-tab>
+            <mat-tab label="Document">
+              <ng-template matTabContent>
+                <app-mou-view-doc></app-mou-view-doc>
+              </ng-template>
+            </mat-tab>
+            <mat-tab label="Survey">
+              <ng-template matTabContent>
+                <app-mou-view-survey></app-mou-view-survey>
+              </ng-template>
+            </mat-tab>
+            <mat-tab label="Legal Review">
+              <ng-template matTabContent>
+                <app-mou-view-legal></app-mou-view-legal>
+              </ng-template>
+            </mat-tab>
+          </mat-tab-group>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
