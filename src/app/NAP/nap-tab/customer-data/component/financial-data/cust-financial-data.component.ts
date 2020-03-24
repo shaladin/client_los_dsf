@@ -50,6 +50,7 @@ export class CustFinancialDataComponent implements OnInit {
     console.log(this.identifier);
     console.log(this.parentForm);
 
+    this.parentForm.removeControl(this.identifier);
     this.parentForm.addControl(this.identifier, this.fb.group({
       MonthlyIncomeAmt: ['0', Validators.required],
       MonthlyExpenseAmt: ['0', Validators.required],

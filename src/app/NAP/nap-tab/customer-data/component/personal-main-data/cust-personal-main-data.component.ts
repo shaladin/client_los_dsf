@@ -12,20 +12,21 @@ import { formatDate } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-cust-main-data',
-  templateUrl: './cust-main-data.component.html',
-  styleUrls: ['./cust-main-data.component.scss'],
+  selector: 'app-cust-personal-main-data',
+  templateUrl: './cust-personal-main-data.component.html',
+  styleUrls: ['./cust-personal-main-data.component.scss'],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 
 })
 
-export class CustMainDataComponent implements OnInit {
+export class CustPersonalMainDataComponent implements OnInit {
 
   @Input() appId;
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
   @Input() identifier: any;
   @Input() custDataPersonalObj: CustDataPersonalObj = new CustDataPersonalObj();
+  @Input() custType: any;
 
   refMasterObj = {
     RefMasterTypeCode: "",
