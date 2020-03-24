@@ -1,0 +1,121 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+
+      <div class="card-body">
+        <div class="px-3">
+
+          <form class="form form-horizontal" [formGroup]="NapAppModelForm" (ngSubmit)="NapAppModelForm.valid"
+            #enjiForm="ngForm">
+            <!-- Sales Info -->
+            <div class="form-body">
+              <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Sales Information </h4>
+
+              <div class="form-group row">
+                <!-- Sales Officer -->
+                <div class="form-group col-md-2 adins-required">
+                  <label class="adInsLabel">Sales Officer </label>
+                </div>
+                <div class="col-md-4">
+                  <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]='NapAppModelForm'
+                    [enjiForm]='enjiForm' [identifier]="'employeeIdentifier'"
+                    (lookup)="getLookupEmployeeResponse($event)">
+                  </lib-uclookupgeneric>
+                  <show-errors [control]="NapAppModelForm.controls.SalesOfficerName" [submit]="enjiForm.submitted"></show-errors>
+                </div>
+                <!-- Sales Supervisor -->
+                <label class="col-md-2 adInsLabel">Sales Supervisor </label>
+                <label class="col-md-4 adInsLabel">{{NapAppModelForm.controls.SalesHeadName.value}} </label>
+              </div>
+
+              <div class="form-group row">
+                <!-- Sales Officer -->
+                <div class="form-group col-md-2 adins-required">
+                  <label class="adInsLabel">Sales Officer </label>
+                </div>
+                <div class="col-md-4">
+                  <mat-radio-group formControlName="MrSalesRecommendCode">
+                    <mat-radio-button class="custom-control custom-radio"
+                      *ngFor="let item of applicationDDLitems['SLS_RECOM']" [value]="item.Key"
+                      (change)="ChangeRecommendation($event)" color="primary">
+                      {{item.Value}}
+                    </mat-radio-button>
+                  </mat-radio-group>
+                  <show-errors [control]="NapAppModelForm.controls.MrSalesRecommendCode" [submit]="enjiForm.submitted"></show-errors>
+                </div>
+                <!-- Sales Notes -->
+                <label class="col-md-2 adInsLabel">Sales Notes </label>
+                <textarea class="form-control col-md-4 adInsLabel" id="basicTextarea" formControlName="SalesNotes"
+                  rows="3"></textarea>
+              </div>
+
+            </div>
+
+            <!-- Application Info -->
+            <div class="form-body">
+              <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Application Information </h4>
+
+              <div class="form-group row">
+                <!-- Application Source -->
+                <div class="form-group col-md-3 adins-required">
+                  <label class="adInsLabel">Application Source </label>
+                </div>
+                <div class="col-md-3">
+                  <select class="form-control adInsInput" style="width: auto" formControlName="MrAppSourceCode"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrAppSourceCode.invalid }">
+                    <option *ngFor="let it of applicationDDLitems['APP_SOURCE']" value="{{it.Key}}">
+                      {{it.Value}} </option>
+                  </select>
+                  <show-errors [control]="NapAppModelForm.controls.MrAppSourceCode" [submit]="enjiForm.submitted"></show-errors>
+                </div>
+                <!-- Survey No -->
+                <label class="col-md-3 adInsLabel">Survey No </label>
+                <label class="col-md-3 adInsLabel" *ngIf="NapAppModelForm.controls.SurveyNo.value != ''">
+                  {{NapAppModelForm.controls.SurveyNo.value}} </label>
+                <label class="col-md-3 adInsLabel" *ngIf="NapAppModelForm.controls.SurveyNo.value == ''"> --- </label>
+              </div>
+              
+              <div class="form-group row adins-required">
+                <!-- Tenor -->
+                <label class="col-md-3 adInsLabel">Tenor </label>
+                <div class="col-md-3">
+                  <input type="text" class="form-control adInsInput width-25-per" formControlName="Tenor"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.Tenor.invalid }" (change) = "ChangeNumOfInstallment()">
+                  <show-errors [control]="NapAppModelForm.controls.Tenor" [submit]="enjiForm.submitted"></show-errors>
+                </div>
+                <!-- First Installment Type -->
+                <label class="col-md-3 adInsLabel"> First Installment Type </label>
+                <div class="col-md-3">
+                  <select class="form-control adInsInput" style="width: auto" formControlName="MrFirstInstTypeCode"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrFirstInstTypeCode.invalid }">
+                    <option *ngFor="let it of applicationDDLitems['FIRST_INST_TYPE']" value="{{it.Key}}">
+                      {{it.Value}} </option>
+                  </select>
+                  <show-errors [control]="NapAppModelForm.controls.MrFirstInstTypeCode" [submit]="enjiForm.submitted"></show-errors>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Cross Info -->
+            <div class="form-body">
+              <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Cross Information </h4>
+
+            </div>
+
+            <div class="form-actions right">
+              <button type="button" (click)="ClickSave()" class="btn btn-raised btn-primary">
+                <i class="fa fa-check-square-o"></i> Save and Continue
+              </button>
+              <!-- <button type="submit" (click)="ClickSave('next')" class="btn btn-raised btn-primary">
+                <i class="fa fa-check-square-o"></i> Next
+              </button> -->
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

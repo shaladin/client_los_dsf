@@ -267,6 +267,11 @@ form .form-section{
     color:red;
 }
 
+.adins-required-label::after{
+    content:"*";
+    color:red;
+}
+
 .adins-back-fixed{
     position:fixed;
     top:8px;

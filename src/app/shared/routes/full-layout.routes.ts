@@ -26,5 +26,17 @@ export const Full_ROUTES: Routes = [
   {
     path: 'Mou',
     loadChildren: './MOU/mou.module#MouModule'
+  },
+  {
+    path: 'Nap',
+    loadChildren: './NAP/nap.module#NapModule'
+  },
+  {
+    path: 'Inquiry',
+    loadChildren: './inquiry/inquiry.module#InquiryModule'
+  },
+  {
+    path: 'AdminProcess',
+    loadChildren: './admin-process/admin-process.module#AdminProcessModule'
   }
 ];

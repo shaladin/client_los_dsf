@@ -1,15 +1,62 @@
-import { formatDate } from "@angular/common";
+import { environment } from "environments/environment";
 
 export class AdInsConstant {
+
+    //App Step
+    public static AppStepNew = "NEW";
+    public static AppStepCust = "CUST";
+    public static AppStepGuar = "GUAR";
+    public static AppStepRef = "REF";
+    public static AppStepApp = "APP";
+    public static AppStepAsset = "ASSET";
+    public static AppStepIns = "INS";
+    public static AppStepLIns = "LFI";
+    public static AppStepFin = "FIN";
+    public static AppStepTC = "TC";
+    public static AppStepOther = "OTH";
+    public static AppStepCrdIns = "CRI";
+    public static AppStepComm = "COM";
+    public static AppStepRSVFund = "RSV";
+    public static AppStepPhnVerif = "PHN";
+    public static AppStepSurvey = "SRVY";
+    public static AppStepFraud = "FRD";
+    public static AppStepCrdInv = "CINV";
+    public static AppStepScoring = "SCOR";
+    public static AppStepDev = "DEVC";
+    public static AppStepRvw = "RVW";
+    public static AppStepApv = "APV";
+    public static AppStepRtn = "RTN";
+    public static AppStepAgr = "AGR";
+    public static AppStepPO = "PO";
+    public static AppStepOFVC = "OFVC";
+    public static AppStepOFVA = "OFVA";
+    public static AppStepDO = "DO";
+    public static AppStepCNFR = "CNFR";
+    public static AppStepPGLV = "PGLV";
+    public static AppStepCSR = "CSR";
+
+    // App
+    public static AddApp = "/Application/AddApp";
+    public static EditApp = "/Application/EditApp";
+    public static GetAppById = "/Application/GetAppById";    
+
+    // App Referantor
+    public static AddAppReferantor = "/AppReferantor/AddAppReferantor";
+    public static EditAppReferantor = "/AppReferantor/EditAppReferantor";
+    public static DeleteAppReferantor = "/AppReferantor/DeleteAppReferantor";
+    public static GetAppReferantorByAppReferantorId = "/AppReferantor/GetAppReferantorByAppReferantorId";
+    public static GetAppReferantorByAppId = "/AppReferantor/GetAppReferantorByAppId";
+
     public static RestrictionLike = "Like";
     public static RestrictionEq = "Eq";
+    public static RestrictionIn = "IN";
     public static RestrictionNotIn = "NotIn";
     public static RestrictionIsNull = "isnull";
     public static RestrictionIsNotNull = "isnotnull";
     public static showData = "10,50,100";
     public static TimeoutSession = 6000000;
     public static GetListProduct = "http://creator_websvr:7272/NEW_FINANCING/api/Catalog/getPopularViewByCriteria";
-    public static Login = "/UserManagement/HTML5Login";
+    public static Login = "/Authenticate/Login";
     public static LoginToken = "/UserManagement/HTML6Login";
     public static Logout = "/UserManagement/LogOut"
     public static GetListOffice = "/RefOffice/GetRefOfficePaging";
@@ -19,6 +66,19 @@ export class AdInsConstant {
     public static submitNCProspect = "/api/MobileProspectTask/submitNCProspect";
     public static addCustPersonal = "";
     public static FormDefault = "dashboard/dash-board";
+    public static LoginByRole = "/Authenticate/LoginByRole";
+    public static LoginByToken = "/Authenticate/LoginByToken";
+    public static UpdateToken = "/Authenticate/UpdateRole";
+
+    //CUST TYPE
+    public static CustTypePersonal = "PERSONAL";
+
+    //ADDR TYPE
+    public static AddrTypeLegal = "LEGAL";
+    public static AddrTypeResidence = "RESIDENCE";
+    public static AddrTypeMailing = "MAILING";
+
+
 
     //GENERAL SETTING
     public static GetBusinessDt = "/GeneralSetting/GetBusinessDate";
@@ -40,7 +100,8 @@ export class AdInsConstant {
     public static GetCenterGrpByCenterGrpTypeCode = "/RefOffice/GetCenterGrpByCenterGrpCode";
     public static GetListOfficeCenterGrp = "/RefOffice/GetListOfficeCenterGrp";
     public static AddCenterGroupOfficeMember = "RefOffice/AddCenterGroupOfficeMember";
-    public static DeleteCenterGroupOfficeMember= "/RefOffice/DeleteCenterGroupOfficeMember";
+    public static DeleteCenterGroupOfficeMember= "/RefOffice/DeleteCenterGroupOfficeMember"; 
+    public static GetListKvpActiveRefOffice= "/RefOffice/GetListKvpActiveRefOffice"; 
 
     //REF OFFICE AREA
     public static GetAllListArea = "/RefOfficeArea/GetAllListArea";
@@ -50,6 +111,7 @@ export class AdInsConstant {
     public static EditRefOfficeArea = "/RefOfficeArea/EditRefOfficeArea";
     public static DeleteRefOfficeArea = "/RefOfficeArea/DeleteRefOfficeArea";
     public static CheckDuplAreaCode = "/RefOfficeArea/CheckDuplAreaCode";
+    // public static GetListKvpActiveRefOfficeArea = "/RefOfficeArea/GetListKvpActiveRefOfficeArea";
 
     //ORGANIZATION
     public static GetRefOrg = "/OrganizationDefinition/GetRefOrg";
@@ -201,6 +263,9 @@ export class AdInsConstant {
     public static DeleteRefMaster = "/RefMaster/DeleteRefMaster";
     public static GetRefMasterPaging = "/RefMaster/GetRefMasterPaging";
     public static GetRefMasterListDesc = "/RefMaster/GetRefMasterListDesc";
+    public static GetRefMasterByMasterCode = "/RefMaster/GetRefMasterByMasterCode";
+    public static GetRefMasterListKeyValueActiveByCode = environment.FoundationR3Url + "/RefMaster/GetListKeyValueActiveByCode"
+
 
     //REF PROV DISTRICT
     public static GetRefProvDistrictPaging = "/RefProvDistrict/GetRefProvDistrictPaging";
@@ -298,5 +363,22 @@ export class AdInsConstant {
 
     // GENERIC
     public static GetPagingObjectBySQL = "/Generic/GetPagingObjectBySQL"
+
+    // Vendor
+    public static GetListVendorBankAccByVendorId= "/VendorBankAcc/GetListVendorBankAccByVendorId";
+    public static GetListVendorBankAccByVendorCode= "/VendorBankAcc/GetListVendorBankAccByVendorCode";
+
+
+    // REF COUNTRY
+    public static GetRefCountryByCountryCode = environment.FoundationR3Url + "/RefCountry/GetRefCountryByCountryCode";
+
+    // REF PROFESSION
+    public static GetRefProfessionByCode = environment.FoundationR3Url + "/RefProfession/GetRefProfessionByProfessionCode";
+
+    //CUST DATA PERSONAL
+    public static AddEditCustDataPersonal = "http://localhost:5001/AppCust/AddEditCustDataPersonal";
+    public static GetCustDataByAppId = "http://localhost:5001/AppCust/GetCustDataByAppId";
+    public static GetAppCustPersonalContactPersonsByAppCustPersonalId = "http://localhost:5001/AppCustPersonalContactPerson/GetAppCustPersonalContactPersonsByAppCustPersonalId";
+    public static DeleteAppCustPersonalContactPerson = "http://localhost:5001/AppCustPersonalContactPerson/DeleteAppCustPersonalContactPerson";
 
 }

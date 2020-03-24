@@ -14,7 +14,7 @@ export class ErrorDialogService {
         if(data.status=="001" && localStorage.getItem("Username") != undefined)
         {   
 
-            var url = environment.foundationUrl+AdInsConstant.Logout;
+            var url = environment.FoundationR3Url+AdInsConstant.Logout;
             this.http.post(url,"");
         }
         const dialogRef = this.dialog.open(ErrorDialogComponent, {

@@ -1,0 +1,69 @@
+{
+    "url": "",
+    "title":"Lookup - Profession",
+    "component": [
+      {
+        "type": "textbox",
+        "name": "PROFESSION_CODE",
+        "id": "professionCodeId",
+        "value": "",
+        "label": "Profession Code",
+        "placeholder": ""
+      },
+      {
+        "type": "textbox",
+        "name": "PROFESSION_NAME",
+        "id": "professionNameId",
+        "value": "",
+        "label": "Profesion Name",
+        "placeholder": ""
+      }
+    ],
+    "querystring": {
+      "select": "SELECT PROFESSION_CODE AS ProfessionCode, PROFESSION_NAME AS ProfessionName",
+      "from": "FROM dbo.REF_PROFESSION WITH(NOLOCK)"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Profession Code",
+            "name": "PROFESSION_CODE"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Profession Name",
+            "name": "PROFESSION_NAME"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Select"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "ProfessionCode"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "ProfessionName"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "select",
+                    "property": "ProfessionCode"
+                }
+            ]
+        }
+    ],
+    "propertyId": "ProfessionCode",
+    "propertyName": "ProfessionName"
+}

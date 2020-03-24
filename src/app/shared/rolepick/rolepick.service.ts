@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { RolepickComponent } from 'app/shared/rolepick/rolepick.component';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
@@ -7,7 +7,6 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { formatDate } from '@angular/common';
 import { Router } from '@angular/router';
-import { forEach } from '@angular/router/src/utils/collection';
 import { CurrentUserContextService } from 'app/shared/CurrentUserContext/current-user-context.service';
 
 @Injectable()
@@ -17,108 +16,75 @@ export class RolePickService {
         private router: Router) { }
     openDialog(data, type = ""): void {
         console.log("Get User Title Role");
-        console.log(data);
-        if (data.length == undefined) {
-            var url = environment.foundationUrl + AdInsConstant.GetListDataCurrentUser;
-            var user = { Username: localStorage.getItem("Username") };
-            this.http.post(url, user).subscribe(
+        if (type == "modal") {
+            var loginByRole = environment.FoundationR3Url+AdInsConstant.LoginByToken;
+            var roleObject2 = {
+                RequestDateTime: localStorage.getItem("BusinessDateRaw"),
+                Ip: "",
+                RowVersion: ""
+
+            };
+            this.http.post(loginByRole, roleObject2).subscribe(
                 (response) => {
-                    console.log(response["returnObject"]);
-                    //Kalau cuman 1 Role maka lgsg masuk ke Dashboard
-                    var obj = response["returnObject"];
-                    if (obj.length == 1 && type == "") {
-                        var item = obj[0];
-                        var url = environment.foundationUrl + AdInsConstant.GetAllActiveRefFormByRefRoleId;
-                        var roleObject = { RefRoleId: item.refRoleId };
-                        this.http.post(url, roleObject).subscribe(
-                            (response) => {
-                                localStorage.setItem("Menu", JSON.stringify(response["returnObject"]));
-                                var currentUserContext = new CurrentUserContext;
-                                currentUserContext.UserName = localStorage.getItem("Username");
-                                currentUserContext.Office = item.officeCode;
-                                currentUserContext.Role = item.roleCode;
-                                currentUserContext.FullName = item.fullName;
-                                currentUserContext.BusinessDate = item.businessDt;
-                                var dateParse = formatDate(item.businessDt, 'yyyy-MM-dd', 'en-US');
-                                localStorage.setItem("BusinessDate", dateParse);
-                                localStorage.setItem("FullName", item.fullName);
-                                localStorage.setItem("UserAccess", JSON.stringify(item));
-                                this.currentUserContextService.addCurrentUserContext(currentUserContext);
-                                localStorage.setItem("RoleId", item.refRoleId);
-                                this.router.navigate(['dashboard/dash-board']);
-                            },
-                            (error) => {
-                                console.log(error);
-                            }
-                        )
-                    }
-                    //Ini kalau dia ada lebih dari 1 Role, maka buka modal
-                    else {
-                        const dialogRef = this.dialog.open(RolepickComponent, {
-                            id: 'role-modal',
-                            width: '85%',
-                            position: {
-                                top: '12px'
-                            },
-                            data: response["returnObject"]
-                        });
+                    console.log(response);
+                    const object = {
+                        response: response["ReturnObject"]
+                    };
 
-                        dialogRef.afterClosed().subscribe(result => {
-                            console.log('The dialog was closed');
-                        });
-                    }
+                    const dialogRef = this.dialog.open(RolepickComponent, {
+                        id: 'role-modal',
+                        width: '85%',
+                        position: {
+                            top: '12px'
+                        },
+                        data: object
+                    });
 
+                    dialogRef.afterClosed().subscribe(result => {
+                        console.log('The dialog was closed');
+                    });
                 },
                 (error) => {
                     console.log(error);
                 }
             );
 
+
         } else {
-            var obj = data;
-            if (obj.length == 1 && type == "") {
-                var item = obj[0];
-                var url = environment.foundationUrl + AdInsConstant.GetAllActiveRefFormByRefRoleId;
-                var roleObject = { RefRoleId: item.refRoleId };
+            if (data.response.length == 1 && type == "") {
+                var item = data.response[0];
+                var url = environment.FoundationR3Url + AdInsConstant.LoginByRole;
+                var roleObject = {
+                    UserName: data.user,
+                    Password: data.pwd,
+                    OfficeCode: item.OfficeCode,
+                    RoleCode: item.RoleCode,
+                    JobTitleCode: item.JobTitleCode,
+                    RequestDateTime: item.BusinessDt,
+                    Ip: "",
+                    RowVersion: ""
 
-                //jgn lupa delete
-                localStorage.setItem("Menu", "[]");//JSON.stringify(response["returnObject"]));
-                var currentUserContext = new CurrentUserContext;
-                currentUserContext.UserName = localStorage.getItem("Username");
-                currentUserContext.Office = item.officeCode;
-                currentUserContext.Role = item.roleCode;
-                currentUserContext.FullName = item.fullName;
-                currentUserContext.BusinessDate = item.businessDt;
-                var dateParse = formatDate(item.businessDt, 'yyyy-MM-dd', 'en-US');
-                localStorage.setItem("BusinessDate", dateParse);
-                localStorage.setItem("FullName", item.fullName);
-                localStorage.setItem("UserAccess", JSON.stringify(item));
-                this.currentUserContextService.addCurrentUserContext(currentUserContext);
-                localStorage.setItem("RoleId", item.refRoleId);
-                this.router.navigate(['dashboard/dash-board']);
-                //jgn lupa delete
-
-                // this.http.post(url, roleObject).subscribe(
-                //     (response) => {
-                //         localStorage.setItem("Menu", JSON.stringify(response["returnObject"]));
-                //         var currentUserContext = new CurrentUserContext;
-                //         currentUserContext.UserName = localStorage.getItem("Username");
-                //         currentUserContext.Office = item.officeCode;
-                //         currentUserContext.Role = item.roleCode;
-                //         currentUserContext.FullName = item.fullName;
-                //         currentUserContext.BusinessDate = item.businessDt;
-                //         var dateParse = formatDate(item.businessDt, 'yyyy-MM-dd', 'en-US');
-                //         localStorage.setItem("BusinessDate", dateParse);
-                //         localStorage.setItem("FullName", item.fullName);
-                //         localStorage.setItem("UserAccess", JSON.stringify(item));
-                //         this.currentUserContextService.addCurrentUserContext(currentUserContext);
-                //         localStorage.setItem("RoleId", item.refRoleId);
-                //         this.router.navigate(['dashboard/dash-board']);
-                //     },
-                //     (error) => {
-                //         console.log(error);
-                //     }
-                // )
+                };
+                this.http.post(url, roleObject).subscribe(
+                    (response) => {
+                        // localStorage.setItem("Menu", JSON.stringify(response["returnObject"]));
+                        localStorage.setItem("Token", response["Token"]);
+                        var currentUserContext = new CurrentUserContext;
+                        currentUserContext.UserName = localStorage.getItem("Username");
+                        currentUserContext.Office = item.OfficeCode;
+                        currentUserContext.Role = item.RoleCode;
+                        currentUserContext.BusinessDate = item.BusinessDt;
+                        localStorage.setItem("BusinessDateRaw",item.BusinessDt);
+                        var DateParse = formatDate(item.BusinessDt, 'yyyy/MM/dd', 'en-US');
+                        localStorage.setItem("BusinessDate", DateParse);
+                        localStorage.setItem("UserAccess", JSON.stringify(response["Identity"]));
+                        this.currentUserContextService.addCurrentUserContext(currentUserContext);
+                        this.router.navigate(['dashboard/dash-board']);
+                    },
+                    (error) => {
+                        console.log(error);
+                    }
+                )
             }
             //Ini kalau dia ada lebih dari 1 Role, maka buka modal
             else {
@@ -135,7 +101,6 @@ export class RolePickService {
                     console.log('The dialog was closed');
                 });
             }
-            //console.log(data)
         }
     }
 
