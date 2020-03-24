@@ -3,41 +3,49 @@
     <lib-ucSubsection [id]="'formInfomationId'" [title]="FormInputObj['title']" [panel]="'formInfomation'">
     </lib-ucSubsection>
     <div class="form-body" id="formInfomation">
-    
-      <div class="form-actions ucSearch-Button-Right">
+
+      <div class="row ucSearch-Button-Right">
         <button type="button" (click)="AddNewDataForm()" class="btn btn-raised btn-primary" translate>
-          <i class="fa fa-check-square-o"></i> Add
+          <i class="fa fa-check-square-o"></i> Add 
         </button>
-        <!-- <button type="button" (click)="CheckData()" class="btn btn-raised btn-primary" translate>
-          <i class="fa fa-check-square-o"></i> Check Data
-        </button> -->
       </div>
-    
-      <form class="form form-horizontal" [formGroup]="FormObj" (DataEmit)="PassData()"> 
+
+
+      <form class="form form-horizontal" [formGroup]="FormObj">
+
+        <!-- <div class="form-actions ucSearch-Button-Right">
+          <button type="button" (click)="AddNewDataForm()" class="btn btn-raised btn-primary" translate>
+            <i class="fa fa-check-square-o"></i> Add
+          </button>
+          <button type="button" (click)="CheckData()" class="btn btn-raised btn-primary" translate>
+            <i class="fa fa-check-square-o"></i> Check Data
+          </button>
+        </div> -->
+
         <div class="form-body">
           <div formArrayName="arr">
             <div *ngFor="let item of FormObj.controls.arr.controls; let i = index;">
-              <div [formGroupName]="i" >
-    
+              <div [formGroupName]="i">
+
                 <div class="form-group row">
                   <div class="form-group col-md-2">
                     <label class="adInsLabel"> {{FormInputObj['content']}} {{i+1}} </label>
                   </div>
-                  <div class="form-actions col-md-4 right">
-                    <button type="button" (click)="DeleteDataForm(i)" class="btn btn-raised btn-primary" translate>
-                      <i class="fa fa-check-square-o"></i> Delete
+                  <div class="form-actions right">
+                    <button type="button" (click)="DeleteDataForm(i)" class="btn btn-raised" translate>
+                      <i class="ft-trash-2 font-medium-2"></i>
                     </button>
                   </div>
                 </div>
-    
-                <div class="form-group row">
+
+                <div class="form-group row" [hidden]="FormInputObj['content'] == 'Referantor'">
                   <!-- Content Name -->
                   <div class="form-group col-md-2">
                     <label class="adInsLabel">{{FormInputObj['content']}} Name</label>
                   </div>
                   <div class="col-md-4">
                     <mat-form-field>
-                      <mat-select formControlName="ContentName">
+                      <mat-select formControlName="ContentName" (change)="ChooseContentName()">
                         <mat-option *ngFor="let it of DDLContentName" value="{{it.Key}}">
                           {{it.Value}}
                         </mat-option>
@@ -45,127 +53,129 @@
                     </mat-form-field>
                   </div>
                 </div>
-    
-                <div class="form-group row">
-                  <!-- Bank Account -->
-                  <div class="form-group col-md-2">
-                    <label class="adInsLabel">Bank Account</label>
+
+                <div [hidden]="item.controls.ContentName.value == '' && FormInputObj['content'] != 'Referantor'">
+                  <div class="form-group row">
+                    <!-- Bank Account -->
+                    <div class="form-group col-md-2">
+                      <label class="adInsLabel">Bank Account</label>
+                    </div>
+                    <div class="col-md-4">
+                      <mat-form-field>
+                        <mat-select formControlName="BankAccount" (change)="PassData()">
+                          <mat-option *ngFor="let it of DDLBankAccount" value="{{it.Key}}">
+                            {{it.Value}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+
+                    <!-- Tax Amount -->
+                    <label class="col-md-2 adInsLabel">Tax Amount </label>
+                    <div class="col-md-4">
+                      <label class="adInsLabel" *ngIf="item.controls.TaxAmount.value != ''">
+                        {{item.controls.TaxAmount.value}} </label>
+                      <label class="adInsLabel" *ngIf="item.controls.TaxAmount.value == ''"> --- </label>
+                    </div>
                   </div>
-                  <div class="col-md-4">
-                    <mat-form-field>
-                      <mat-select formControlName="BankAccount">
-                        <mat-option *ngFor="let it of DDLBankAccount" value="{{it.Key}}">
-                          {{it.Value}}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
+
+                  <div class="form-group row">
+                    <!-- Total Commission Amount -->
+                    <div class="form-group col-md-2">
+                      <label class="adInsLabel">Total Commission Amount</label>
+                    </div>
+                    <div class="col-md-4">
+                      <label class="adInsLabel" *ngIf="item.controls.TotalCommisionAmount.value != ''">
+                        {{item.controls.TotalCommisionAmount.value}} </label>
+                      <label class="adInsLabel" *ngIf="item.controls.TotalCommisionAmount.value == ''"> --- </label>
+                    </div>
+
+                    <!-- VAT Amount -->
+                    <label class="col-md-2 adInsLabel">VAT Amount </label>
+                    <div class="col-md-4">
+                      <label class="adInsLabel" *ngIf="item.controls.VATAmount.value != ''">
+                        {{item.controls.VATAmount.value}} </label>
+                      <label class="adInsLabel" *ngIf="item.controls.VATAmount.value == ''"> --- </label>
+                    </div>
                   </div>
-    
-                  <!-- Tax Amount -->
-                  <label class="col-md-2 adInsLabel">Tax Amount </label>
-                  <div class="col-md-4">
-                    <label class="adInsLabel" *ngIf="item.controls.TaxAmount.value != ''">
-                      {{item.controls.TaxAmount.value}} </label>
-                    <label class="adInsLabel" *ngIf="item.controls.TaxAmount.value == ''"> --- </label>
+
+                  <div class="form-group row">
+                    <!-- Allocate From Upping rate -->
+                    <div class="form-group col-md-2">
+                      <label class="adInsLabel">Allocate From Upping rate</label>
+                    </div>
+                    <div class="col-md-4">
+                      <input type="text" class="form-control adInsInput width-100-per text-left"
+                        formControlName="AllocateFromUppingRate" (change)="ChangeDataLabel(i)">
+                    </div>
+
+                    <!-- Allocate From Fee / Upping Fee -->
+                    <div class="form-group col-md-2">
+                      <label class="adInsLabel">Allocate From Fee / Upping Fee</label>
+                    </div>
+                    <div class="col-md-4">
+                      <input type="text" class="form-control adInsInput width-100-per text-left"
+                        formControlName="AllocateFromFeeOrUppingFee" (change)="ChangeDataLabel(i)">
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <!-- Allocate From Insurance Income -->
+                    <div class="form-group col-md-2">
+                      <label class="adInsLabel">Allocate From Insurance Income</label>
+                    </div>
+                    <div class="col-md-4">
+                      <input type="text" class="form-control adInsInput width-100-per text-left"
+                        formControlName="AllocateFromInsuranceIncome" (change)="ChangeDataLabel(i)">
+                    </div>
+
+                    <!-- Allocate From Fee / Upping Fee -->
+                    <div class="form-group col-md-2">
+                    </div>
+                    <div class="col-md-4">
+                      <input type="text" class="form-control adInsInput width-100-per text-left"
+                        formControlName="AllocateFromFeeOrUppingFee" (change)="ChangeDataLabel(i)">
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <!-- Allocate From Life Insurance Income -->
+                    <div class="form-group col-md-2">
+                      <label class="adInsLabel">Allocate From Life Insurance Income</label>
+                    </div>
+                    <div class="col-md-4">
+                      <input type="text" class="form-control adInsInput width-100-per text-left"
+                        formControlName="AllocateFromLifeInsuranceIncome" (change)="ChangeDataLabel(i)">
+                    </div>
+
+                    <!-- Allocate From Fee / Upping Fee -->
+                    <div class="form-group col-md-2">
+                    </div>
+                    <div class="col-md-4">
+                      <input type="text" class="form-control adInsInput width-100-per text-left"
+                        formControlName="AllocateFromFeeOrUppingFee" (change)="ChangeDataLabel(i)">
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <!-- Allocate From Other -->
+                    <div class="form-group col-md-2">
+                      <label class="adInsLabel">Allocate From Other</label>
+                    </div>
+                    <div class="col-md-4">
+                      <input type="text" class="form-control adInsInput width-100-per text-left"
+                        formControlName="AllocateFromOther" (change)="ChangeDataLabel(i)">
+                    </div>
+
                   </div>
                 </div>
-    
-                <div class="form-group row">
-                  <!-- Total Commission Amount -->
-                  <div class="form-group col-md-2">
-                    <label class="adInsLabel">Total Commission Amount</label>
-                  </div>
-                  <div class="col-md-4">
-                    <label class="adInsLabel" *ngIf="item.controls.TotalCommisionAmount.value != ''">
-                      {{item.controls.TotalCommisionAmount.value}} </label>
-                    <label class="adInsLabel" *ngIf="item.controls.TotalCommisionAmount.value == ''"> --- </label>
-                  </div>
-    
-                  <!-- VAT Amount -->
-                  <label class="col-md-2 adInsLabel">VAT Amount </label>
-                  <div class="col-md-4">
-                    <label class="adInsLabel" *ngIf="item.controls.VATAmount.value != ''">
-                      {{item.controls.VATAmount.value}} </label>
-                    <label class="adInsLabel" *ngIf="item.controls.VATAmount.value == ''"> --- </label>
-                  </div>
-                </div>
-    
-                <div class="form-group row">
-                  <!-- Allocate From Upping rate -->
-                  <div class="form-group col-md-2">
-                    <label class="adInsLabel">Allocate From Upping rate</label>
-                  </div>
-                  <div class="col-md-4">
-                    <input type="text" class="form-control adInsInput width-100-per text-left"
-                      formControlName="AllocateFromUppingRate">
-                  </div>
-    
-                  <!-- Allocate From Fee / Upping Fee -->
-                  <div class="form-group col-md-2">
-                    <label class="adInsLabel">Allocate From Fee / Upping Fee</label>
-                  </div>
-                  <div class="col-md-4">
-                    <input type="text" class="form-control adInsInput width-100-per text-left"
-                      formControlName="AllocateFromFeeOrUppingFee">
-                  </div>
-                </div>
-    
-                <div class="form-group row">
-                  <!-- Allocate From Insurance Income -->
-                  <div class="form-group col-md-2">
-                    <label class="adInsLabel">Allocate From Insurance Income</label>
-                  </div>
-                  <div class="col-md-4">
-                    <input type="text" class="form-control adInsInput width-100-per text-left"
-                      formControlName="AllocateFromInsuranceIncome">
-                  </div>
-    
-                  <!-- Allocate From Fee / Upping Fee -->
-                  <div class="form-group col-md-2">
-                  </div>
-                  <div class="col-md-4">
-                    <input type="text" class="form-control adInsInput width-100-per text-left"
-                      formControlName="AllocateFromFeeOrUppingFee">
-                  </div>
-                </div>
-    
-                <div class="form-group row">
-                  <!-- Allocate From Life Insurance Income -->
-                  <div class="form-group col-md-2">
-                    <label class="adInsLabel">Allocate From Life Insurance Income</label>
-                  </div>
-                  <div class="col-md-4">
-                    <input type="text" class="form-control adInsInput width-100-per text-left"
-                      formControlName="AllocateFromLifeInsuranceIncome">
-                  </div>
-    
-                  <!-- Allocate From Fee / Upping Fee -->
-                  <div class="form-group col-md-2">
-                  </div>
-                  <div class="col-md-4">
-                    <input type="text" class="form-control adInsInput width-100-per text-left"
-                      formControlName="AllocateFromFeeOrUppingFee">
-                  </div>
-                </div>
-    
-                <div class="form-group row">
-                  <!-- Allocate From Other -->
-                  <div class="form-group col-md-2">
-                    <label class="adInsLabel">Allocate From Other</label>
-                  </div>
-                  <div class="col-md-4">
-                    <input type="text" class="form-control adInsInput width-100-per text-left"
-                      formControlName="AllocateFromOther">
-                  </div>
-    
-                </div>
-    
+
               </div>
             </div>
           </div>
         </div>
       </form>
-    
+
     </div>
   </div>
 </div>
