@@ -1,0 +1,68 @@
+{
+  "title": "Lookup Asset Accessories",
+  "component": [
+    {
+      "type": "textbox",
+      "name": "ASSET_ACCESSORY_CODE",
+      "id": "accessoryCode",
+      "value": "",
+      "label": "Asset Accessory Code",
+      "placeholder": "Asset Accessory Code"
+    },
+    {
+      "type": "textbox",
+      "name": "ASSET_ACCESSORY_NAME",
+      "id": "accessoryName",
+      "value": "",
+      "label": "Asset Accessory Name",
+      "placeholder": "Asset Accessory Name"
+    }
+  ],
+  "querystring": {
+    "select": "SELECT ASSET_ACCESSORY_CODE AS AssetAccessoryCode, ASSET_ACCESSORY_NAME AS AssetAccessoryName",
+    "from": "FROM dbo.ASSET_ACCESSORY WITH(NOLOCK)"
+  },
+  "headerList": [
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Asset Accessory Code",
+      "name": "AssetAccessoryCode"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Asset Accessory Name",
+      "name": "AssetAccessoryName"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Select"
+    }
+  ],
+  "bodyList": [
+    {
+      "type": "text",
+      "position": "center",
+      "property": "AssetAccessoryCode"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "AssetAccessoryName"
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
+        {
+          "type": "select",
+          "property": "AssetAccessoryCode"
+        }
+      ]
+    }
+  ],
+  "propertyId": "AssetAccessoryCode",
+  "propertyName": "AssetAccessoryName"
+}

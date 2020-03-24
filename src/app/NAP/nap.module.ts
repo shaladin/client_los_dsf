@@ -24,6 +24,9 @@ import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { CustMainDataComponent } from "./nap-tab/customer-data/component/main-data/cust-main-data.component";
 import { CustUcaddressComponent } from "./nap-tab/customer-data/component/address/ucaddress.component";
 import { CustContactInformationComponent } from "./nap-tab/customer-data/component/contact-information/cust-contact-information.component";
+import { CustFinancialDataComponent } from "./nap-tab/customer-data/component/financial-data/cust-financial-data.component";
+import { CustBankAccountComponent } from "./nap-tab/customer-data/component/bank-account/cust-bank-account.component";
+import { CustJobDataComponent } from "./nap-tab/customer-data/component/job-data/cust-job-data.component";
 
 
 
@@ -39,8 +42,11 @@ import { CustContactInformationComponent } from "./nap-tab/customer-data/compone
         CustomerDataComponent,
         CustMainDataComponent,
         CustUcaddressComponent,
-        CustContactInformationComponent
-    ],
+        CustContactInformationComponent,
+        CustFinancialDataComponent,
+        CustBankAccountComponent,
+        CustJobDataComponent
+        ],
     imports: [ 
         NapRoutingModule,
         CommonModule,
