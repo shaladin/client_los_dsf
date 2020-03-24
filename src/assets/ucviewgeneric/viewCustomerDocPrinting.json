@@ -4,7 +4,7 @@
       {
         "subSectionId": "MainId",
         "subSectionTitle": "Main Info",
-        "mainInfoUrl": "http://r3app-server.ad-ins.com/FOUNDATION_R3/Generic/GetDataViewBySQL",
+        "mainInfoUrl": "http://localhost:5001/Generic/GetDataViewBySQL",
         "mainInfo": [
           {
             "type": "text",

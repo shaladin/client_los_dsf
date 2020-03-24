@@ -127,8 +127,18 @@
         "position": "center",
         "action": [
           {
-            "type": "delete",
-            "property": "MouCustId"
+            "type": "edit",
+            "path": "/Mou/CustomerDoc/Detail",
+            "param": [
+              {
+                "type": "MouCustId",
+                "property": "MouCustId"
+              },
+              {
+                "type": "param",
+                "property": "edit"
+              }
+            ]
           }
         ]
       }

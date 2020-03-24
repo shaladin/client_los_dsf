@@ -2,34 +2,20 @@
 
 
 <table class="table table-responsive-md text-center table-hover">
-    <thead>
-      <tr class="table-header">
-        <th><input type="checkbox" [checked]="checkboxAll" (change)="SelectAll($event.target.checked)" id="checkAll"
-            name="CheckAll">
-        </th>
-        <th class="text-left"><span class="thead-header" (click)="searchSort($event)" name='fullAssetCode'
-            translate>DOCUMENT NAME</span>
-        </th>
-        <th class="text-left"><span class="thead-header" (click)="searchSort($event)" name='fullAssetName'
-            translate>LAST PRINTED DATE</span>
-        </th>
-        <th class="text-left"><span class="thead-header" (click)="searchSort($event)" name='assetCategoryName'
-            translate>LAST PRINTED BY</span>
-        </th>
-        <th class="text-left"><span class="thead-header" (click)="searchSort($event)" name='assetCategoryName'
-            translate>NUMBER OF PRINTED</span>
-        </th>
-        <th class="text-left"><span class="thead-header" (click)="searchSort($event)" name='assetCategoryName'
-            translate>PRINT</span>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- <tr *ngFor="let item of resultData">
-        <td class="text-left">{{item.FullAssetCode}}</td>
-        <td class="text-left">{{item.FullAssetName}}</td>
-        <td class="text-left">{{item.AssetCategoryName}}</td>
-      </tr> -->
-    </tbody>
-  </table>
-  <lib-ucgridfooter (select)="onSelect($event)"></lib-ucgridfooter>
+  <thead>
+    <tr class="table-header">
+      <th class="text-left"><span class="thead-header" name='fullAssetCode' translate>DOCUMENT NAME</span>
+      </th>
+      <th class="text-left"><span class="thead-header" name='fullAssetName' translate>LAST PRINTED DATE</span>
+      </th>
+      <th class="text-left"><span class="thead-header" name='assetCategoryName' translate>LAST PRINTED BY</span>
+      </th>
+      <th class="text-left"><span class="thead-header" name='assetCategoryName' translate>NUMBER OF PRINTED</span>
+      </th>
+      <th class="text-left"><span class="thead-header" name='assetCategoryName' translate>PRINT</span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
