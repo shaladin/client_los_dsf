@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-customer-doc-printing-paging',
@@ -20,10 +21,11 @@ export class CustomerDocPrintingPagingComponent implements OnInit {
 
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
-    this.inputPagingObj._url = "./assets/ucpaging/searchAssetType.json";
-    this.inputPagingObj.enviromentUrl = "http://localhost:5000";
+    this.inputPagingObj._url = "./assets/ucpaging/searchCustomerDocPrinting.json";
+    // this.inputPagingObj.enviromentUrl = "http://localhost:5000";
+    this.inputPagingObj.enviromentUrl = environment.FoundationR3Url;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
-    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAssetType.json";
+    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCustomerDocPrinting.json";
   }
 
 }

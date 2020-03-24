@@ -32,8 +32,6 @@ import { RolepickComponent } from 'app/shared/rolepick/rolepick.component';
 import { RolePickService } from 'app/shared/rolepick/rolepick.service';
 import { GrowlModule } from 'primeng/primeng';
 import { TreeViewModule } from '@progress/kendo-angular-treeview';
-import { CustomerDocPrintingPagingComponent } from './customer-doc-printing/customer-doc-printing-paging/customer-doc-printing-paging.component';
-import { CustomerDocPrintingDetailComponent } from './customer-doc-printing/customer-doc-printing-detail/customer-doc-printing-detail.component';
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -45,8 +43,6 @@ export function createTranslateLoader(http: HttpClient) {
         ContentLayoutComponent,
         ErrorDialogComponent,
         RolepickComponent,
-        CustomerDocPrintingPagingComponent,
-        CustomerDocPrintingDetailComponent,
     ],
     imports: [
         HttpModule,

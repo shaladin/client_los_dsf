@@ -14,7 +14,7 @@ import { DocSignerComponent } from "./doc-signer/doc-signer.component";
 import { CustomerDocPrintingDetailComponent } from "./customer-doc-printing/customer-doc-printing-detail/customer-doc-printing-detail.component";
 import { CustomerDocPrintingPagingComponent } from "./customer-doc-printing/customer-doc-printing-paging/customer-doc-printing-paging.component";
 // import { ShowErrorsComponent } from "./app/test-new/show-errors.component";
-
+import { UcviewgenericModule } from "@adins/ucviewgeneric";
 @NgModule({
   imports: [
     MouRoutingComponent,
@@ -28,7 +28,8 @@ import { CustomerDocPrintingPagingComponent } from "./customer-doc-printing/cust
     ReactiveFormsModule,
     UcSubsectionModule,
     SharingComponentModule,
-    UcgridfooterModule
+    UcgridfooterModule,
+    UcviewgenericModule
   ],
   declarations: [
     DocSignerComponent,
