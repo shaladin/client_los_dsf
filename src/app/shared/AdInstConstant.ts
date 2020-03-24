@@ -400,5 +400,8 @@ export class AdInsConstant {
     public static DeleteAppCustPersonalContactPerson = "http://localhost:5001/AppCustPersonalContactPerson/DeleteAppCustPersonalContactPerson";
     public static GetAppCustBankAccsByAppCustId = "http://localhost:5001/AppCustBankAcc/GetAppCustBankAccsByAppCustId";
 
+    //CUST DATA COMPANY
+    public static AddEditCustDataCompany = "http://localhost:5001/AppCust/AddEditCustDataCompany";
+
 
 }

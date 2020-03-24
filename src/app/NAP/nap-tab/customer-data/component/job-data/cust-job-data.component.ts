@@ -86,6 +86,9 @@ export class CustJobDataComponent implements OnInit {
       MrInvestmentTypeCode: ['', Validators.maxLength(50)]
     }));
 
+    this.inputFieldJobDataObj = new InputFieldObj();
+    this.inputFieldJobDataObj.inputLookupObj = new InputLookupObj();
+    
     this.initLookup();
     this.bindCustModelObj();
     this.bindAllRefMasterObj();
