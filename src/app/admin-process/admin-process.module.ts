@@ -13,6 +13,8 @@ import { AdminProcessRoutingModule } from "./admin-process-routing.module";
 import { PurchaseOrderDetailComponent } from './purchase-order/purchase-order-detail/purchase-order-detail.component';
 import { SharingComponentModule } from "app/shared/sharingcomponent.module";
 import { PurchaseOrderComponent } from './purchase-order/purchase-order/purchase-order.component';
+import { DeliveryOrderDetailComponent } from "./delivery-order/delivery-order-detail/delivery-order-detail.component";
+import { DeliveryOrderPagingComponent } from "./delivery-order/delivery-order-paging/delivery-order-paging.component";
 
 @NgModule({
   imports: [
@@ -32,7 +34,9 @@ import { PurchaseOrderComponent } from './purchase-order/purchase-order/purchase
   declarations: [
     PurchaseOrderPagingComponent,
     PurchaseOrderDetailComponent,
-    PurchaseOrderComponent
+    PurchaseOrderComponent,
+    DeliveryOrderDetailComponent,
+    DeliveryOrderPagingComponent
   ]
 })
 export class AdminProcessModule { }

@@ -1,0 +1,114 @@
+{
+    "title": "DELIVERY ORDER PAGING",
+    "component": [
+        {
+            "type": "textbox",
+            "name": "AG.AGRMNT_NO",
+            "id": "AgrmntNoId",
+            "value": "",
+            "label": "AGREEMENT NO",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "AP.APP_NO",
+            "id": "AppNoId",
+            "value": "",
+            "label": "APPLICATION NO",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "AG.PROD_OFFERING_NAME",
+            "id": "ProdOfferingNameId",
+            "value": "",
+            "label": "PROD OFFERING NAME",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "AG.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "CUSTOMER NAME",
+            "placeholder": "Placeholder"
+        }
+    ],
+    "querystring": {
+        "select": "SELECT AG.AGRMNT_NO AS AgrmntNo, AP.APP_NO AS AppNo, AG.PROD_OFFERING_NAME AS ProdOfferingName, AG.CUST_NAME AS CustName, AG.APP_ID AS AppId",
+        "from": "FROM dbo.APP AP LEFT JOIN dbo.AGRMNT AG ON AP.APP_ID = AG.APP_ID"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "AGREEMENT NO",
+            "name": "AgrmntNo"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "APPLICATION NO",
+            "name": "AppNo"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "CUSTOMER NAME",
+            "name": "CustName"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "PROD OFFERING NAME",
+            "name": "ProdOfferingName"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Action"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "AgrmntNo"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "AppNo"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "CustName"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "ProdOfferingName"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "edit",
+                    "path": "/AdminProcess/DeliveryOrder/Detail",
+                    "param": [
+                        {
+                            "type": "AppId",
+                            "property": "AppId"
+                        },
+                        {
+                            "type": "mode",
+                            "property": "edit"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
