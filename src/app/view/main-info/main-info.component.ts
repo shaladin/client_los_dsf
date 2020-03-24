@@ -7,7 +7,6 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { DatePipe } from '@angular/common';
 
-
 @Component({
   selector: 'app-main-info',
   templateUrl: './main-info.component.html',
@@ -15,6 +14,8 @@ import { DatePipe } from '@angular/common';
   providers: [NGXToastrService, DatePipe]
 })
 export class MainInfoComponent implements OnInit {
+  @Input() MouCustId: any;
+
   mouCustObj: MouCustObj;
   mode : any;
   mouCustId : any;
@@ -32,7 +33,7 @@ export class MainInfoComponent implements OnInit {
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, public datepipe: DatePipe) { }
 
   ngOnInit() {
-    var mouCustObj = { MouCustId: this.mouCustId }
+    var mouCustObj = { MouCustId: this.MouCustId }
     console.log(mouCustObj);
     this.http.post(AdInsConstant.GetMouCustById, mouCustObj).subscribe(
       (response) => {

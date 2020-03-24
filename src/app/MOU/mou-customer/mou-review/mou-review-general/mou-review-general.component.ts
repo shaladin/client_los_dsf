@@ -15,23 +15,14 @@ import { MainInfoComponent } from 'app/view/main-info/main-info.component';
   providers: [NGXToastrService]
 })
 export class MouReviewGeneralComponent implements OnInit {
-  @ViewChild(MainInfoComponent) mainInfoComponent;
-  
   mouCustObj: MouCustObj;
-  mouCustId : any;
+  MouCustId : any;
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
-      this.mouCustId = params["MouCustId"];
+      this.MouCustId = params["MouCustId"];
     })
   }
 
   ngOnInit() {
-    this.bindMainInfoData()
   }
-
-  bindMainInfoData()
-  {
-    this.mainInfoComponent.mouCustId = this.mouCustId;
-  }
-
 }
