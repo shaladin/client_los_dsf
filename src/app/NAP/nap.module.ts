@@ -21,12 +21,15 @@ import { UcaddressModule } from "@adins/ucaddress";
 import { UcgridviewModule } from "@adins/ucgridview";
 import { SharingComponentModule } from "app/shared/sharingcomponent.module";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
-import { CustMainDataComponent } from "./nap-tab/customer-data/component/main-data/cust-main-data.component";
+import { CustPersonalMainDataComponent } from "./nap-tab/customer-data/component/personal-main-data/cust-personal-main-data.component";
 import { CustUcaddressComponent } from "./nap-tab/customer-data/component/address/ucaddress.component";
 import { CustContactInformationComponent } from "./nap-tab/customer-data/component/contact-information/cust-contact-information.component";
 import { CustFinancialDataComponent } from "./nap-tab/customer-data/component/financial-data/cust-financial-data.component";
 import { CustBankAccountComponent } from "./nap-tab/customer-data/component/bank-account/cust-bank-account.component";
 import { CustJobDataComponent } from "./nap-tab/customer-data/component/job-data/cust-job-data.component";
+import { CustSocmedComponent } from "./nap-tab/customer-data/component/socmed/cust-socmed.component";
+import { CustGrpMemberComponent } from "./nap-tab/customer-data/component/cust-grp-member/cust-grp-member.component";
+import { CustCompanyMainDataComponent } from "./nap-tab/customer-data/component/company-main-data/cust-company-main-data.component";
 
 
 
@@ -40,12 +43,15 @@ import { CustJobDataComponent } from "./nap-tab/customer-data/component/job-data
         CustUcaddressComponent,
         AppModelComponent,
         CustomerDataComponent,
-        CustMainDataComponent,
+        CustPersonalMainDataComponent,
         CustUcaddressComponent,
         CustContactInformationComponent,
         CustFinancialDataComponent,
         CustBankAccountComponent,
-        CustJobDataComponent
+        CustJobDataComponent,
+        CustSocmedComponent,
+        CustGrpMemberComponent,
+        CustCompanyMainDataComponent
         ],
     imports: [ 
         NapRoutingModule,

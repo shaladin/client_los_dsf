@@ -71,6 +71,7 @@ export class CustJobDataComponent implements OnInit {
     console.log(this.identifier);
     console.log(this.parentForm);
 
+    this.parentForm.removeControl(this.identifier);
     this.parentForm.addControl(this.identifier, this.fb.group({
       CustModelCode: ['', [Validators.required, Validators.maxLength(50)]],
       ProfessionalNo: ['', Validators.maxLength(50)],
