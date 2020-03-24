@@ -9,13 +9,14 @@ import { RouterModule } from "@angular/router";
 import { UcSubsectionModule } from "@adins/uc-subsection";
 import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
 import { UcgridfooterModule, UcgridfooterComponent } from "@adins/ucgridfooter";
-import { MouRoutingComponent } from "./mou-routing.module";
+import { MouRoutingModule } from "./mou-routing.module";
 import { DocSignerComponent } from "./doc-signer/doc-signer.component";
+import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 // import { ShowErrorsComponent } from "./app/test-new/show-errors.component";
 
 @NgModule({
   imports: [
-    MouRoutingComponent,
+    MouRoutingModule,
     CommonModule,
     FormsModule,
     HttpModule,
@@ -29,6 +30,8 @@ import { DocSignerComponent } from "./doc-signer/doc-signer.component";
   ],
   declarations: [
     DocSignerComponent
-  ]
+  ],
+  exports: [],
+    providers: [NGXToastrService],
 })
 export class MouModule { }

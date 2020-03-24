@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DocSignerComponent } from './doc-signer/doc-signer.component';
+
 const routes: Routes = [
   {
     path: '',
@@ -20,4 +21,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class MouRoutingComponent { }
+export class MouRoutingModule { }
