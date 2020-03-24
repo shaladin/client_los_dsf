@@ -11,7 +11,7 @@ import { HttpModule } from "@angular/http";
 import { NapRoutingModule } from "./nap-routing.module";
 import { RouterModule } from "@angular/router";
 import { AppAddDetailComponent } from './app-add-detail/app-add-detail.component';
-import { MatCheckboxModule } from "@angular/material";
+import { MatCheckboxModule, MatSelectModule } from "@angular/material";
 import { AppReferantorComponent } from "./nap-tab/app-referantor/app-referantor.component";
 import { AppModelComponent } from './nap-tab/app-model/app-model.component';
 import { CustomerDataComponent } from "./nap-tab/customer-data/customer-data.component";
@@ -26,6 +26,9 @@ import { CustUcaddressComponent } from "./nap-tab/customer-data/component/addres
 import { CustContactInformationComponent } from "./nap-tab/customer-data/component/contact-information/cust-contact-information.component";
 import { SearchCrossAppComponent } from './nap-tab/app-model/search-cross-app/search-cross-app.component';
 import { UCSearchModule } from '@adins/ucsearch';
+import { CommissionPagingComponent } from './commission-paging/commission-paging.component';
+import { CommissionAddComponent } from './commission-add/commission-add.component';
+import { FormAddDynamicComponent } from './form-add-dynamic/form-add-dynamic.component';
 
 
 
@@ -42,7 +45,10 @@ import { UCSearchModule } from '@adins/ucsearch';
         CustMainDataComponent,
         CustUcaddressComponent,
         CustContactInformationComponent,
-        SearchCrossAppComponent
+        SearchCrossAppComponent,
+        CommissionPagingComponent,
+        CommissionAddComponent,
+        FormAddDynamicComponent
     ],
     imports: [ 
         NapRoutingModule,
@@ -58,6 +64,7 @@ import { UCSearchModule } from '@adins/ucsearch';
         RouterModule,
         MatCheckboxModule,
         MatRadioModule,
+        MatSelectModule,
         UcSubsectionModule,
         SharingComponentModule,
         UcaddressModule,

@@ -4,10 +4,12 @@ export class InputSearchObj{
     apiQryPaging: any
     arrCritObj: any
     addCritInput: any
+    ddlEnvironments: any
 
     constructor()
     {
         this.arrCritObj = null;
         this.addCritInput = null;
+        this.ddlEnvironments = [];
     }
 }

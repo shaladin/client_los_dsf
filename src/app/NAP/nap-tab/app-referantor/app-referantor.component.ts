@@ -189,7 +189,7 @@ export class AppReferantorComponent implements OnInit {
   }
 
   getDDLBank(VendorCode) {
-    var url = "http://localhost:5005" + AdInsConstant.GetListVendorBankAccByVendorCode;
+    var url = "http://localhost:5000" + AdInsConstant.GetListVendorBankAccByVendorCode;
     var obj = {
       VendorCode: VendorCode,
       RowVersion: ""
