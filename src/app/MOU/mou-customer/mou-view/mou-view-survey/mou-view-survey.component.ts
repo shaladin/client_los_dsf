@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-mou-view-survey',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./mou-view-survey.component.scss']
 })
 export class MouViewSurveyComponent implements OnInit {
-
+  @Input() MouCustId: any;
   constructor() { }
 
   ngOnInit() {
