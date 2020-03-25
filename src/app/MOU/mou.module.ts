@@ -26,6 +26,7 @@ import { MouViewSurveyComponent } from './mou-customer/mou-view/mou-view-survey/
 import { MouViewLegalComponent } from './mou-customer/mou-view/mou-view-legal/mou-view-legal.component';
 import { DocSignerDetailComponent } from "./doc-signer/doc-signer-detail/doc-signer-detail.component";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
+import { UclookupgenericModule } from "@adins/uclookupgeneric";
 // import { ShowErrorsComponent } from "./app/test-new/show-errors.component";
 
 @NgModule({
@@ -42,7 +43,8 @@ import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
     ArchwizardModule,
     ReactiveFormsModule,
     UcSubsectionModule,
-    SharingComponentModule
+    SharingComponentModule,
+    UclookupgenericModule,
   ],
   declarations: [
     MainInfoComponent,
