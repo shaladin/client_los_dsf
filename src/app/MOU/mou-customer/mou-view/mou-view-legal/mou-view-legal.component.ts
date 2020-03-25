@@ -1,15 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
 
 @Component({
   selector: 'app-mou-view-legal',
   templateUrl: './mou-view-legal.component.html',
-  styleUrls: ['./mou-view-legal.component.scss']
+  styleUrls: ['./mou-view-legal.component.scss'],
+  providers: [NGXToastrService]
 })
 export class MouViewLegalComponent implements OnInit {
+  @Input() MouCustId: any;
 
-  constructor() { }
+  listLglReviewData: any;
+  
+  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) { }
 
   ngOnInit() {
+    var mouCustObj = { MouCustId: this.MouCustId }
+    console.log(mouCustObj);
+    this.http.post(AdInsConstant.GetMouCustLglReviewByMouCustId, mouCustObj).subscribe(
+      (response) => {
+        this.listLglReviewData = response['ReturnObject'];
+      })
   }
+
+  LegalReviewForm = this.fb.group({
+  })
 
 }

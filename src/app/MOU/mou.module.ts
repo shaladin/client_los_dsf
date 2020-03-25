@@ -18,6 +18,7 @@ import { CustomerDocPrintingDetailComponent } from "./customer-doc-printing/cust
 import { CustomerDocPrintingPagingComponent } from "./customer-doc-printing/customer-doc-printing-paging/customer-doc-printing-paging.component";
 import { MouReviewPagingComponent } from './mou-customer/mou-review/mou-review-paging/mou-review-paging.component';
 import { MouReviewGeneralComponent } from './mou-customer/mou-review/mou-review-general/mou-review-general.component';
+import { MouReviewFactoringComponent } from './mou-customer/mou-review/mou-review-factoring/mou-review-factoring.component';
 import { MouViewDetailComponent } from './mou-customer/mou-view/mou-view-detail/mou-view-detail.component';
 import { MouViewFeeComponent } from './mou-customer/mou-view/mou-view-fee/mou-view-fee.component';
 import { MouViewAddcollComponent } from './mou-customer/mou-view/mou-view-addcoll/mou-view-addcoll.component';
@@ -60,6 +61,7 @@ import { UcviewgenericModule } from "@adins/ucviewgeneric";
     MouViewDocComponent,
     MouViewSurveyComponent,
     MouViewLegalComponent,
+    MouReviewFactoringComponent,
   ]
 })
 export class MouModule { }
