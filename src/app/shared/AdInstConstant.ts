@@ -371,7 +371,26 @@ export class AdInsConstant {
     // MOU CUST
     public static GetMouCustById = environment.losUrl + "/MouCust/GetMouCustById";
 
+    // MOU CUST ASSET
+    public static GetMouCustAssetByMouCustId = environment.losUrl + "/MouCustAsset/GetMouCustAssetByMouCustId";
 
+    // MOU CUST ASSET
+    public static GetMouCustFeeByMouCustId = environment.losUrl + "/MouCustFee/GetMouCustFeeByMouCustId";
+
+    // MOU CUST CLAUSE
+    public static GetMouCustDataByMouCustId = environment.losUrl + "/MouCustClause/GetMouCustDataByMouCustId";
+    
+    // MOU CUST COLLATERAL
+    public static GetMouCustCollateralByMouCustId = environment.losUrl + "/MouCustCollateral/GetMouCustCollateralByMouCustId";
+
+    // MOU CUST COLLATERAL DOC
+
+    // MOU CUST LEGAL REVIEW
+    public static GetMouCustLglReviewByMouCustId = environment.losUrl + "/MouCustLglReview/GetMouCustLglReviewByMouCustId";
+
+    // MOU CUST TC
+    public static GetCustMouTcByCustMouId = environment.losUrl + "/MouCustTc/GetCustMouTcByCustMouId";
+    
     // REF COUNTRY
     public static GetRefCountryByCountryCode = environment.FoundationR3Url + "/RefCountry/GetRefCountryByCountryCode";
 

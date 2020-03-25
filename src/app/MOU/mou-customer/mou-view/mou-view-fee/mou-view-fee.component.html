@@ -1,3 +1,28 @@
-<p>
-  mou-view-fee works!
-</p>
+<form class="form form-horizontal" [formGroup]="FeeDataForm" (ngSubmit)="FeeDataForm.valid" #enjiForm="ngForm">
+  <lib-ucSubsection [id]="'FeeDataId'" [title]="'Fee Data'" [panel]="'FeeData'">
+  </lib-ucSubsection>
+  <div class="form-body" id="FeeData">
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+        <tr class="table-header">
+          <th><span class="thead-header" name='FeeCode' translate>MOU FEE</span>
+          </th>
+          <th><span class="thead-header" name='PaymentType' translate>PAYMENT TYPE</span>
+          </th>
+          <th><span class="thead-header" name='PaymentType' translate>FEE TYPE</span>
+          </th>
+          <th><span class="thead-header" name='PaymentType' translate>AMOUNT</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of listFeeData; let i = index">
+          <td>{{item.FeeCode}}</td>
+          <td>Direct Payment</td>
+          <td>{{item.FeeCode}}</td>
+          <td>{{item.FeeAmt | number}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</form>
