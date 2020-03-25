@@ -1,5 +1,5 @@
 {
-    "title": "Asset Type",
+    "title": "Mou Doc Printing",
     "exportExcel": false,
     "component": [
       {
@@ -24,50 +24,50 @@
     "headerList": [
       {
         "type": "sort",
-        "position": "right",
+        "position": "center",
         "label": "MOU NO",
         "name": "MouCustNo"
       },
       {
         "type": "sort",
-        "position": "left",
+        "position": "center",
         "label": "CUSTOMER NAME",
         "name": "CustName"
       },
       {
         "type": "sort",
-        "position": "left",
+        "position": "center",
         "label": "MOU DATE",
         "name": "MouCustDt"
       },
       {
         "type": "sort",
-        "position": "left",
+        "position": "center",
         "label": "END DATE",
         "name": "EndDate"
       },
       {
         "type": "sort",
-        "position": "left",
+        "position": "center",
         "label": "PLAFOND AMOUNT",
         "name": "PlafondAmt"
       },
 
       {
         "type": "sort",
-        "position": "left",
+        "position": "center",
         "label": "REVOLVING",
         "name": "IsRevolving"
       },
       {
         "type": "sort",
-        "position": "left",
+        "position": "center",
         "label": "REFERENCE NO",
         "name": "RefNo"
       },
       {
         "type": "sort",
-        "position": "left",
+        "position": "center",
         "label": "MOU TYPE",
         "name": "MrMouTypeCode"
       },
@@ -84,7 +84,7 @@
     "bodyList": [
       {
         "type": "text",
-        "position": "right",
+        "position": "left",
         "property": "MouCustNo"
       },
       {
@@ -93,18 +93,18 @@
         "property": "CustName"
       },
       {
-        "type": "text",
-        "position": "left",
+        "type": "date",
+        "position": "center",
         "property": "MouCustDt"
       },
       {
-        "type": "text",
-        "position": "left",
+        "type": "date",
+        "position": "center",
         "property": "EndDate"
       },
       {
         "type": "text",
-        "position": "left",
+        "position": "right",
         "property": "PlafondAmt"
       },
       {
@@ -133,10 +133,6 @@
               {
                 "type": "MouCustId",
                 "property": "MouCustId"
-              },
-              {
-                "type": "param",
-                "property": "edit"
               }
             ]
           }
