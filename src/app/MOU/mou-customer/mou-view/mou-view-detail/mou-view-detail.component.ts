@@ -27,8 +27,16 @@ export class MouViewDetailComponent implements OnInit {
   TenorFrom: any;
   TenorTo: any;
 
+  WopCode: any;
   PlafondAmt: any;
   IsRevolving: any;
+  TopDays: any;
+  InterestRatePrcnt: any;
+  RetentionPrcnt: any;
+  IsDisclosed: any;
+  IsListedCust: any;
+  MrRecourseTypeCode: any;
+  Notes: any;
 
   mouCustClause: any;
   listAssetData: any;
@@ -54,8 +62,16 @@ export class MouViewDetailComponent implements OnInit {
         this.TenorFrom = this.mouCustClause.TenorFrom;
         this.TenorTo = this.mouCustClause.TenorTo;
 
+        this.WopCode = this.mouCustClause.WopCode;
         this.PlafondAmt = this.mouCustClause.PlafondAmt;
         this.IsRevolving = this.mouCustClause.IsRevolving;
+        this.TopDays = this.mouCustClause.TopDays;
+        this.InterestRatePrcnt = this.mouCustClause.InterestRatePrcnt;
+        this.RetentionPrcnt = this.mouCustClause.RetentionPrcnt;
+        this.IsListedCust = this.mouCustClause.IsListedCust;
+        this.IsDisclosed = this.mouCustClause.IsDisclosed;
+        this.MrRecourseTypeCode = this.mouCustClause.MrRecourseTypeCode;
+        this.Notes - this.mouCustClause.Notes;
       })
 
     this.http.post(AdInsConstant.GetMouCustAssetByMouCustId, mouCustObj).subscribe(
