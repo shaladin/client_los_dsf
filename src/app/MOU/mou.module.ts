@@ -23,6 +23,8 @@ import { MouViewTcComponent } from './mou-customer/mou-view/mou-view-tc/mou-view
 import { MouViewDocComponent } from './mou-customer/mou-view/mou-view-doc/mou-view-doc.component';
 import { MouViewSurveyComponent } from './mou-customer/mou-view/mou-view-survey/mou-view-survey.component';
 import { MouViewLegalComponent } from './mou-customer/mou-view/mou-view-legal/mou-view-legal.component';
+import { DocSignerDetailComponent } from "./doc-signer/doc-signer-detail/doc-signer-detail.component";
+import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 // import { ShowErrorsComponent } from "./app/test-new/show-errors.component";
 
 @NgModule({
@@ -53,6 +55,10 @@ import { MouViewLegalComponent } from './mou-customer/mou-view/mou-view-legal/mo
     MouViewDocComponent,
     MouViewSurveyComponent,
     MouViewLegalComponent,
-  ]
+    DocSignerDetailComponent
+  ],
+    exports: [],
+    providers: [NGXToastrService],
 })
+
 export class MouModule { }
