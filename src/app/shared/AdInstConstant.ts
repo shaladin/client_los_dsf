@@ -83,12 +83,19 @@ export class AdInsConstant {
 
     //CUST TYPE
     public static CustTypePersonal = "PERSONAL";
+    public static CustTypeCompany = "COMPANY";
 
     //ADDR TYPE
     public static AddrTypeLegal = "LEGAL";
     public static AddrTypeResidence = "RESIDENCE";
     public static AddrTypeMailing = "MAILING";
+    public static AddrTypeJob = "JOB";
 
+    //CUST MODEL
+    public static CustModelProfessional = "PROF";
+    public static CustModelNonProfessional = "NONPROF";
+    public static CustModelEmployee = "EMP";
+    public static CustModelSmallMediumEnterprise = "SME";
 
 
     //GENERAL SETTING
@@ -173,6 +180,7 @@ export class AdInsConstant {
     public static AddRefBank = "/RefBank/AddRefBank";
     public static DeleteRefBank = "/RefBank/DeleteRefBank";
     public static GetBankByBankCode = "/RefBank/GetBankByBankCode";
+    public static GetRefBankByBankCodeAsync = environment.FoundationR3Url + "/RefBank/GetRefBankByBankCodeAsync";
 
     //REF-EMP
     public static GetListEmployee = "/RefEmp/GetRefEmpPaging";
@@ -412,10 +420,25 @@ export class AdInsConstant {
     // REF PROFESSION
     public static GetRefProfessionByCode = environment.FoundationR3Url + "/RefProfession/GetRefProfessionByProfessionCode";
 
+    //REF INDUSTRY TYPE
+    public static GetRefIndustryTypeByCode = environment.FoundationR3Url + "/RefIndustryType/GetRefIndustryTypeByIndustryTypeCode";
+
+    //REF CUST MODEL
+    public static GetListKeyValueByMrCustTypeCode = environment.FoundationR3Url + "/RefCustModel/GetListKeyValueByMrCustTypeCode";
+
+    //CUST
+    public static GetCustByCustNo = "http://localhost:5000/Cust/GetCustByCustNo";
+
+
     //CUST DATA PERSONAL
     public static AddEditCustDataPersonal = "http://localhost:5001/AppCust/AddEditCustDataPersonal";
     public static GetCustDataByAppId = "http://localhost:5001/AppCust/GetCustDataByAppId";
     public static GetAppCustPersonalContactPersonsByAppCustPersonalId = "http://localhost:5001/AppCustPersonalContactPerson/GetAppCustPersonalContactPersonsByAppCustPersonalId";
     public static DeleteAppCustPersonalContactPerson = "http://localhost:5001/AppCustPersonalContactPerson/DeleteAppCustPersonalContactPerson";
+    public static GetAppCustBankAccsByAppCustId = "http://localhost:5001/AppCustBankAcc/GetAppCustBankAccsByAppCustId";
+
+    //CUST DATA COMPANY
+    public static AddEditCustDataCompany = "http://localhost:5001/AppCust/AddEditCustDataCompany";
+
 
 }

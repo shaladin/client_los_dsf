@@ -1,0 +1,49 @@
+export class AppCustCompanyMgmntShrholderObj {
+    AppCustCompanyMgmntShrholderId: any;
+    AppCustCompanyId: any;
+    MgmntShrholderName: any;
+    MrJobPositionCode: any;
+    SharePrcnt: any;
+    IsSigner: any;
+    MrIdTypeCode: any;
+    IdNo: any;
+    IdExpiredDt: any;
+    BirthPlace: any;
+    BirthDt: any;
+    MrGenderCode: any;
+    MrNationalityCode: any;
+    NationalityCountryCode: any;
+    TaxIdNo: any;
+    MobilePhnNo: any;
+    Email: any;
+    IndustryTypeCode: any;
+    EstablishmentDt: any;
+    MrCompanyTypeCode: any;
+    MrCustTypeCode: any;
+    CustNo: any;
+
+
+constructor() { 
+        this.AppCustCompanyId = 0;
+        this.AppCustCompanyId = 0;
+        this.MgmntShrholderName = "";
+        this.MrJobPositionCode = "";
+        this.SharePrcnt = 0;
+        this.IsSigner = false;
+        this.MrIdTypeCode = "";
+        this.IdNo = "";
+        this.IdExpiredDt = new Date();
+        this.EstablishmentDt = new Date();
+        this.BirthPlace = "";
+        this.MrGenderCode = "";
+        this.MrNationalityCode = "";
+        this.NationalityCountryCode = "";
+        this.TaxIdNo = "";
+        this.MobilePhnNo = "";
+        this.Email = "";
+        this.IndustryTypeCode = "";
+        this.MrCompanyTypeCode = "";
+        this.MrCustTypeCode = "";
+        this.CustNo = "";
+    }
+}

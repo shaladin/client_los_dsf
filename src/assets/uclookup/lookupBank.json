@@ -1,0 +1,68 @@
+{
+    "title": "Bank",
+    "component": [
+        {
+            "type": "textbox",
+            "name": "BANK_CODE",
+            "id": "BankCode",
+            "value": "",
+            "label": "Bank Code",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "BANK_NAME",
+            "id": "BankName",
+            "value": "",
+            "label": "Bank Name",
+            "placeholder": "Placeholder"
+        }
+    ],
+    "querystring": {
+        "select": "SELECT BANK_CODE AS BankCode, BANK_NAME AS BankName, REG_RPT_CODE AS regRptCode",
+        "from": "FROM REF_BANK WITH(NOLOCK)"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Bank Code",
+            "name": "BANK_CODE"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Bank Name",
+            "name": "BANK_NAME"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Select"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "BankCode"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "BankName"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "select",
+                    "property": "BankCode"
+                }
+            ]
+        }
+    ],
+    "propertyId": "BankCode",
+    "propertyName": "BankName"
+}
