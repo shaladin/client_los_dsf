@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, NgForm, FormGroup, ControlContainer, FormGroupDirective, FormArray } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
@@ -11,6 +11,9 @@ import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { formatDate } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { AllAssetDataObj } from '../../../shared/model/AllAssetDataObj.Model';
+import { InputFieldObj } from '../../../shared/model/InputFieldObj.Model';
+import { AddrObj } from '../../../shared/model/AddrObj.Model';
+import { AppAssetAccessoryObj } from '../../../shared/model/AppAssetAccessoryObj.model';
 
 
 @Component({
@@ -22,6 +25,14 @@ export class AssetDataComponent implements OnInit {
 
   appId: any;
   BranchManagerName: any;
+  SelfUsage: boolean = true;
+  inputFieldOwnerAddrObj: InputFieldObj;
+  ownerAddrObj: AddrObj;
+  inputFieldLocationAddrObj: InputFieldObj;
+  locationAddrObj: AddrObj;
+  identifier: 'Accessories';
+  appAssetAccessoriesObjs: Array<AppAssetAccessoryObj>;
+  SocmedObj: any;
 
   AssetDataForm = this.fb.group({
     /* AppAsset Value that in form*/
@@ -32,6 +43,8 @@ export class AssetDataComponent implements OnInit {
     SerialNo1: [''],
     SerialNo2: [''],
     SerialNo3: [''],
+    SerialNo4: [''],
+    SerialNo5: [''],
     SupplName: ['', Validators.maxLength(500)],
     AssetPriceAmt: ['', Validators.required],
     DownPaymentAmt: ['', Validators.required],
@@ -91,6 +104,15 @@ export class AssetDataComponent implements OnInit {
     LocationCity: ['', Validators.maxLength(50)],
     LocationZipcode: ['', Validators.maxLength(50)],
 
+    AssetAccessoriesObjs: this.fb.array([])
+    //AssetAccessoryCode: ['', [Validators.required, Validators.maxLength(50)]],
+    //AssetAccessoryName: ['', [Validators.maxLength(100)]],
+    //SupplCodeAccessory: ['', [Validators.required, Validators.maxLength(50)]],
+    //SupplNameAccessory: ['', [Validators.required, Validators.maxLength(100)]],
+    //AccessoryPriceAmt: ['', Validators.required],
+    //AccessoryDownPaymentAmt: ['', Validators.required],
+    //AccessoryNotes: ['']
+
   });
 
 
@@ -147,6 +169,9 @@ export class AssetDataComponent implements OnInit {
 
   OfficeCode: any;
 
+  defaultSocmedCode: any;
+  defaultSocmedName: any;
+
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -161,16 +186,23 @@ export class AssetDataComponent implements OnInit {
     this.initUrl();
     this.initLookup();
     this.bindAllRefMasterObj();
+    this.appId = 11;
+    this.GetAppData();
+    this.assetMasterObj.FullAssetCode = 'CAR';
+    this.GetAssetMaster(this.assetMasterObj);
+    this.AssetDataForm.removeControl(this.identifier);
+    this.AssetDataForm.addControl(this.identifier, this.fb.array([]));
     //this.getCustData();
   }
 
   initUrl() {
     this.getRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
-    this.GetAllAssetDataUrl = AdInsConstant.GetCustDataByAppId;
+    this.GetAllAssetDataUrl = AdInsConstant.GetAllAssetDataByAppId;
     this.getAppUrl = AdInsConstant.GetAppById;
     this.getVendorUrl = AdInsConstant.GetVendorByVendorCode;
     this.getVendorEmpUrl = AdInsConstant.GetListVendorEmpByVendorId;
     this.getAssetMasterTypeUrl = AdInsConstant.GetAssetMasterTypeByFullAssetCode;
+    this.AddEditAllAssetDataUrl = AdInsConstant.AddEditAllAssetData;
   }
 
   SaveForm() {
@@ -195,6 +227,8 @@ export class AssetDataComponent implements OnInit {
     this.allAssetDataObj.AppAssetObj.SerialNo1 = this.AssetDataForm.controls.SerialNo1.value;
     this.allAssetDataObj.AppAssetObj.SerialNo2 = this.AssetDataForm.controls.SerialNo2.value;
     this.allAssetDataObj.AppAssetObj.SerialNo3 = this.AssetDataForm.controls.SerialNo3.value;
+    this.allAssetDataObj.AppAssetObj.SerialNo4 = this.AssetDataForm.controls.SerialNo4.value;
+    this.allAssetDataObj.AppAssetObj.SerialNo5 = this.AssetDataForm.controls.SerialNo5.value;
     this.allAssetDataObj.AppAssetObj.SupplName = this.AssetDataForm.controls.SupplName.value;
     this.allAssetDataObj.AppAssetObj.AssetPriceAmt = this.AssetDataForm.controls.AssetPriceAmt.value;
     this.allAssetDataObj.AppAssetObj.DownPaymentAmt = this.AssetDataForm.controls.DownPaymentAmt.value;
@@ -268,11 +302,16 @@ export class AssetDataComponent implements OnInit {
     this.allAssetDataObj.AppCollateralRegistrationObj.LocationZipcode = this.AssetDataForm.controls.LocationZipcode.value;
   }
 
-  SetSupplier(event) {
+  async SetSupplier(event) {
+    this.AdminHeadObj = null;
+    this.SalesPersonObj = null;
     this.vendorObj.VendorCode = event.VendorCode;
-    this.GetVendor(this.vendorObj);
-    this.GetVendorEmpList(this.vendorObj);
+    this.vendorObj.VendorId = event.VendorId;
+    console.log(event)
+    await this.GetVendor(this.vendorObj);
+    await this.GetVendorEmpList(this.vendorObj);
   }
+
 
   SetAsset(event) {
     this.assetMasterObj.FullAssetCode = event.FullAssetCode;
@@ -388,49 +427,56 @@ export class AssetDataComponent implements OnInit {
 
   initLookup() {
     this.InputLookupSupplierObj = new InputLookupObj();
-    this.InputLookupSupplierObj.urlJson = "./assets/uclookup/lookupSupplier.json";
+    this.InputLookupSupplierObj.urlJson = "./assets/uclookup/NAP/lookupSupplier.json";
     this.InputLookupSupplierObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
     this.InputLookupSupplierObj.urlEnviPaging = environment.FoundationR3Url;
-    this.InputLookupSupplierObj.pagingJson = "./assets/uclookup/lookupSupplier.json";
-    this.InputLookupSupplierObj.genericJson = "./assets/uclookup/lookupSupplier.json";
+    this.InputLookupSupplierObj.pagingJson = "./assets/uclookup/NAP/lookupSupplier.json";
+    this.InputLookupSupplierObj.genericJson = "./assets/uclookup/NAP/lookupSupplier.json";
     var suppCrit = new Array();
     var critSuppObj = new CriteriaObj();
     critSuppObj.DataType = 'text';
     critSuppObj.restriction = AdInsConstant.RestrictionEq;
     critSuppObj.propName = 'ro.OFFICE_CODE';
     critSuppObj.value = this.OfficeCode;
-    suppCrit.push(critSuppObj);
+    //suppCrit.push(critSuppObj);
+
+    var critSupp2Obj = new CriteriaObj();
+    critSupp2Obj.DataType = 'text';
+    critSupp2Obj.restriction = AdInsConstant.RestrictionEq;
+    critSupp2Obj.propName = 'v.MR_VENDOR_CATEGORY_CODE';
+    critSupp2Obj.value = 'SUPPLIER_BRANCH';
+    suppCrit.push(critSupp2Obj);
     this.InputLookupSupplierObj.addCritInput = suppCrit;
 
     this.InputLookupCityIssuerObj = new InputLookupObj();
-    this.InputLookupCityIssuerObj.urlJson = "./assets/uclookup/lookupDistrict.json";
+    this.InputLookupCityIssuerObj.urlJson = "./assets/uclookup/NAP/lookupDistrict.json";
     this.InputLookupCityIssuerObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
     this.InputLookupCityIssuerObj.urlEnviPaging = environment.FoundationR3Url;
-    this.InputLookupCityIssuerObj.pagingJson = "./assets/uclookup/lookupDistrict.json";
-    this.InputLookupCityIssuerObj.genericJson = "./assets/uclookup/lookupDistrict.json";
+    this.InputLookupCityIssuerObj.pagingJson = "./assets/uclookup/NAP/lookupDistrict.json";
+    this.InputLookupCityIssuerObj.genericJson = "./assets/uclookup/NAP/lookupDistrict.json";
     var disCrit = new Array();
     var critDisObj = new CriteriaObj();
     critDisObj.DataType = 'text';
     critDisObj.restriction = AdInsConstant.RestrictionEq;
-    critDisObj.propName = 'DISTRICT_REG_RPT_CODE';
+    critDisObj.propName = 'TYPE';
     critDisObj.value = 'DIS';
     disCrit.push(critDisObj);
-    this.InputLookupSupplierObj.addCritInput = disCrit;
+    this.InputLookupCityIssuerObj.addCritInput = disCrit;
 
     this.InputLookupAssetObj = new InputLookupObj();
-    this.InputLookupAssetObj.urlJson = "./assets/uclookup/lookupAsset.json";
+    this.InputLookupAssetObj.urlJson = "./assets/uclookup/NAP/lookupAsset.json";
     this.InputLookupAssetObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
     this.InputLookupAssetObj.urlEnviPaging = environment.FoundationR3Url;
-    this.InputLookupAssetObj.pagingJson = "./assets/uclookup/lookupAsset.json";
-    this.InputLookupAssetObj.genericJson = "./assets/uclookup/lookupAsset.json";
+    this.InputLookupAssetObj.pagingJson = "./assets/uclookup/NAP/lookupAsset.json";
+    this.InputLookupAssetObj.genericJson = "./assets/uclookup/NAP/lookupAsset.json";
 
 
     this.InputLookupAccObj = new InputLookupObj();
-    this.InputLookupAccObj.urlJson = "./assets/uclookup/lookupSupplier.json";
+    this.InputLookupAccObj.urlJson = "./assets/uclookup/NAP/lookupSupplier.json";
     this.InputLookupAccObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
     this.InputLookupAccObj.urlEnviPaging = environment.FoundationR3Url;
-    this.InputLookupAccObj.pagingJson = "./assets/uclookup/lookupSupplier.json";
-    this.InputLookupAccObj.genericJson = "./assets/uclookup/lookupSupplier.json";
+    this.InputLookupAccObj.pagingJson = "./assets/uclookup/NAP/lookupSupplier.json";
+    this.InputLookupAccObj.genericJson = "./assets/uclookup/NAP/lookupSupplier.json";
 
   }
 
@@ -516,18 +562,18 @@ export class AssetDataComponent implements OnInit {
     this.appObj.AppId = this.appId;
     this.http.post(this.getAppUrl, this.appObj).subscribe(
       (response) => {
-        this.AppObj = response["ReturnObject"];
+        console.log(response);
+        this.AppObj = response;
         this.OfficeCode = this.AppObj.OriOfficeCode;
-
+        console.log(this.OfficeCode);
       }
     );
   }
 
-  GetVendor(vendorObj) {
+  async GetVendor(vendorObj) {
     this.http.post(this.getVendorUrl, this.vendorObj).subscribe(
       (response) => {
-        this.VendorObj = response["ReturnObject"];
-        this.vendorObj.VendorId = this.VendorObj.VendorId;
+        this.VendorObj = response;
         this.AssetDataForm.patchValue({
           SupplName: this.VendorObj.SupplName,
           SupplCode: this.VendorObj.SupplCode,
@@ -536,9 +582,10 @@ export class AssetDataComponent implements OnInit {
     );
   }
 
-  GetVendorEmpList(vendorObj) {
+  async GetVendorEmpList(vendorObj) {
     this.http.post(this.getVendorEmpUrl, this.vendorObj).subscribe(
       (response) => {
+        console.log(response);
         this.EmpObj = response["ReturnObject"];
         this.AdminHeadObj = this.EmpObj.filter(
           emp => emp.MrVendorEmpPositionCode === 'ADMIN_HEAD');
@@ -581,7 +628,7 @@ export class AssetDataComponent implements OnInit {
             }
           }
 
-          if (SuperVisorId = 0) {
+          if (SuperVisorId == 0) {
             this.AssetDataForm.patchValue({
               BranchManagerName: this.SalesPersonObj[0].VendorEmpName,
               BranchManagerNo: this.SalesPersonObj[0].VendorEmpNo,
@@ -605,9 +652,9 @@ export class AssetDataComponent implements OnInit {
   }
 
   GetAssetMaster(assetMasterObj) {
-    this.http.post(this.getVendorUrl, this.assetMasterObj).subscribe(
+    this.http.post(this.getAssetMasterTypeUrl, this.assetMasterObj).subscribe(
       (response) => {
-        this.AssetMasterObj = response["ReturnObject"];
+        this.AssetMasterObj = response;
         this.AssetDataForm.patchValue({
           FullAssetCode: this.AssetMasterObj.FullAssetCode,
           FullAssetName: this.AssetMasterObj.FullAssetName,
@@ -617,4 +664,112 @@ export class AssetDataComponent implements OnInit {
     );
   }
 
+  setAddrOwnerObj() {
+    this.inputFieldOwnerAddrObj = new InputFieldObj();
+    this.inputFieldOwnerAddrObj.inputLookupObj = new InputLookupObj();
+
+
+    this.ownerAddrObj = new AddrObj();
+    this.ownerAddrObj.Addr = this.allAssetDataObj.AppCollateralRegistrationObj.OwnerAddr;
+    this.ownerAddrObj.AreaCode1 = this.allAssetDataObj.AppCollateralRegistrationObj.OwnerAreaCode1;
+    this.ownerAddrObj.AreaCode2 = this.allAssetDataObj.AppCollateralRegistrationObj.OwnerAreaCode2;
+    this.ownerAddrObj.AreaCode3 = this.allAssetDataObj.AppCollateralRegistrationObj.OwnerAreaCode3;
+    this.ownerAddrObj.AreaCode4 = this.allAssetDataObj.AppCollateralRegistrationObj.OwnerAreaCode4;
+    this.ownerAddrObj.City = this.allAssetDataObj.AppCollateralRegistrationObj.OwnerCity;
+
+
+    this.inputFieldOwnerAddrObj.inputLookupObj.nameSelect = this.allAssetDataObj.AppCollateralRegistrationObj.OwnerZipcode;
+    this.inputFieldOwnerAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.allAssetDataObj.AppCollateralRegistrationObj.OwnerZipcode };
+
+  }
+
+  setAddrLocationObj() {
+    this.inputFieldLocationAddrObj = new InputFieldObj();
+    this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
+
+
+    this.locationAddrObj = new AddrObj();
+    this.locationAddrObj.Addr = this.allAssetDataObj.AppCollateralRegistrationObj.OwnerAddr;
+    this.locationAddrObj.AreaCode1 = this.allAssetDataObj.AppCollateralRegistrationObj.OwnerAreaCode1;
+    this.locationAddrObj.AreaCode2 = this.allAssetDataObj.AppCollateralRegistrationObj.OwnerAreaCode2;
+    this.locationAddrObj.AreaCode3 = this.allAssetDataObj.AppCollateralRegistrationObj.OwnerAreaCode3;
+    this.locationAddrObj.AreaCode4 = this.allAssetDataObj.AppCollateralRegistrationObj.OwnerAreaCode4;
+    this.locationAddrObj.City = this.allAssetDataObj.AppCollateralRegistrationObj.OwnerCity;
+
+
+    this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.allAssetDataObj.AppCollateralRegistrationObj.OwnerZipcode;
+    this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.allAssetDataObj.AppCollateralRegistrationObj.OwnerZipcode };
+
+  }
+
+  addAccessories() {
+    var appAccessoryObj = this.AssetDataForm.controls["AssetAccessoriesObjs"] as FormArray;
+    appAccessoryObj.push(this.addGroup(undefined));
+  }
+
+  deleteSocmed(i) {
+    var appAccessoryObj = this.AssetDataForm.controls[this.identifier] as FormArray;
+    appAccessoryObj.removeAt(i);
+  }
+
+  bindAccessories() {
+    var listAppAccessories = this.AssetDataForm.controls[this.identifier] as FormArray;
+    if (this.appAssetAccessoriesObjs != undefined) {
+      for (let i = 0; i < this.appAssetAccessoriesObjs.length; i++) {
+        listAppAccessories.push(this.addGroup(this.appAssetAccessoriesObjs[i]));
+      }
+    }
+  }
+
+  addGroup(appAssetAccessoriesObj) {
+    if (appAssetAccessoriesObj == undefined) {
+      return this.fb.group({
+        AssetAccessoryCode: [this.defaultSocmedCode, [Validators.required, Validators.maxLength(50)]],
+        AssetAccessoryName: [this.defaultSocmedName, [Validators.maxLength(100)]],
+        SupplCodeAccessory: ['', [Validators.required, Validators.maxLength(50)]],
+        SupplNameAccessory: ['', [Validators.required, Validators.maxLength(100)]],
+        AccessoryPriceAmt: ['', Validators.required],
+        DownPaymentAmt: ['', Validators.required],
+        AccessoryNotes: ['']
+      })
+    } else {
+      return this.fb.group({
+        AssetAccessoryCode: [this.defaultSocmedCode, [Validators.required, Validators.maxLength(50)]],
+        AssetAccessoryName: [this.defaultSocmedName, [Validators.maxLength(100)]],
+        SupplCodeAccessory: ['', [Validators.required, Validators.maxLength(50)]],
+        SupplNameAccessory: ['', [Validators.required, Validators.maxLength(100)]],
+        AccessoryPriceAmt: ['', Validators.required],
+        DownPaymentAmt: ['', Validators.required],
+        AccessoryNotes: ['', Validators.maxLength(4000)]
+      })
+    }
+  }
+
+  setAccessoryName(i) {
+    this.AssetDataForm.controls[this.identifier]["controls"][i].patchValue({
+      AssetAccessoryName: this.SocmedObj.find(x => x.Key == this.AssetDataForm.controls["Accessories"].value[i].AssetAccessoryName).Value
+    });
+  }
+  SetSupplierAccessory(i,event) {
+    this.vendorObj.VendorCode = event.VendorCode;
+    this.GetVendorAccessories(this.vendorObj);
+  }
+
+  setSupplierName(i) {
+    this.AssetDataForm.controls[this.identifier]["controls"][i].patchValue({
+      SupplNameAccessory: this.SocmedObj.find(x => x.Key == this.AssetDataForm.controls["Accessories"].value[i].SupplNameAccessory).Value
+    });
+  }
+
+  GetVendorAccessories(vendorObj) {
+    this.http.post(this.getVendorUrl, this.vendorObj).subscribe(
+      (response) => {
+        this.VendorObj = response;
+        this.AssetDataForm.patchValue({
+          SupplNameAccessory: this.VendorObj.SupplName,
+          SupplCodeAccessory: this.VendorObj.SupplCode,
+        });
+      }
+    );
+  }
 }
