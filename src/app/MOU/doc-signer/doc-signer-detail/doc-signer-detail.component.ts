@@ -10,6 +10,8 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder } from '@angular/forms';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { MouCustSignerObj } from 'app/shared/model/MouCustSignerObj.Model';
+import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 
 
 @Component({
@@ -23,20 +25,32 @@ export class DocSignerDetailComponent implements OnInit {
   MouCustId: any;
   MouType: any;
   mouCustObj: any;
+  mouCustSignerObj: any;
   returnMouCust: any;
+  returnMouCustSigner: any;
   getMouCustById:any;
-  tempShareholder: any;
-  tempShareholderPosition: any;
+  addMouCustSigner: any;
+  getMouCustSignerByMouCustId: any;
+  getCustSignerObj: any;
+  tempShareholder1: any;
+  tempShareholderPosition1: any;
+  tempShareholder2: any;
+  tempShareholderPosition2: any;
   tempEmployee1: any;
   tempEmployeePosition1: any;
   tempEmployee2: any;
   tempEmployeePosition2: any;
-  custShareholderLookUpObj: any;
+  custShareholderLookUpObj1: any;
+  custShareholderLookUpObj2: any;
   employeeLookUpObj1: any;
   employeeLookUpObj2: any;
+  pageType: any;
+  page:any;
   MouCustSignerForm = this.fb.group({
-    MfSigner: [''],
-    MfSignerPosition: [''],
+    MfSigner1: [''],
+    MfSignerPosition1: [''],
+    MfSigner2: [''],
+    MfSignerPosition2: [''],
     CustSigner1: [''],
     CustSignerPosition1: [''],
     CustSigner2: [''],
@@ -45,33 +59,37 @@ export class DocSignerDetailComponent implements OnInit {
   
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.getMouCustById = AdInsConstant.GetMouCustById;
+    this.addMouCustSigner = AdInsConstant.AddMouCustSigner;
+    this.getMouCustSignerByMouCustId = AdInsConstant.GetMouCustSignerByMouCustId;
 
     this.route.queryParams.subscribe(params => {
         if (params["MouCustId"] != null) {
             this.MouCustId = params["MouCustId"];
         }
-        if (params["MouType"] != null) {
-            this.MouType = params["MouType"];
-        }
     });
   }
 
-  getLookUpShareholder(event) {
-    this.tempShareholder = event.ShareholderName;
-    this.tempShareholderPosition = event.Descr;
+  getLookUpShareholder1(event) {
+    this.tempShareholder1 = event.ShareholderName;
+    this.tempShareholderPosition1 = event.Descr;
 
     this.MouCustSignerForm.patchValue({
-      MfSignerPosition: this.tempShareholderPosition
+      MfSignerPosition1: this.tempShareholderPosition1
+    });
+  }
+
+  getLookUpShareholder2(event) {
+    this.tempShareholder2 = event.ShareholderName;
+    this.tempShareholderPosition2 = event.Descr;
+
+    this.MouCustSignerForm.patchValue({
+      MfSignerPosition2: this.tempShareholderPosition2
     });
   }
 
   getLookUpEmployee1(event) {
     this.tempEmployee1 = event.EmpName;
     this.tempEmployeePosition1 = event.RoleName;
-
-    console.log("aaa")
-    console.log(this.tempEmployee1)
-    console.log(this.tempEmployeePosition1)
 
     this.MouCustSignerForm.patchValue({
       CustSignerPosition1: this.tempEmployeePosition1
@@ -82,23 +100,27 @@ export class DocSignerDetailComponent implements OnInit {
     this.tempEmployee2 = event.EmpName;
     this.tempEmployeePosition2 = event.RoleName;
 
-    console.log("bbb")
-    console.log(this.tempEmployee2)
-    console.log(this.tempEmployeePosition2)
-
     this.MouCustSignerForm.patchValue({
       CustSignerPosition2: this.tempEmployeePosition2
     });
   }
 
   ngOnInit() {
-    this.custShareholderLookUpObj = new InputLookupObj();
-    this.custShareholderLookUpObj.isRequired = false;
-    this.custShareholderLookUpObj.urlJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
-    this.custShareholderLookUpObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.custShareholderLookUpObj.urlEnviPaging = environment.FoundationR3Url;
-    this.custShareholderLookUpObj.pagingJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
-    this.custShareholderLookUpObj.genericJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
+    this.custShareholderLookUpObj1 = new InputLookupObj();
+    this.custShareholderLookUpObj1.isRequired = false;
+    this.custShareholderLookUpObj1.urlJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
+    this.custShareholderLookUpObj1.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.custShareholderLookUpObj1.urlEnviPaging = environment.FoundationR3Url;
+    this.custShareholderLookUpObj1.pagingJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
+    this.custShareholderLookUpObj1.genericJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
+
+    this.custShareholderLookUpObj2 = new InputLookupObj();
+    this.custShareholderLookUpObj2.isRequired = false;
+    this.custShareholderLookUpObj2.urlJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
+    this.custShareholderLookUpObj2.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.custShareholderLookUpObj2.urlEnviPaging = environment.FoundationR3Url;
+    this.custShareholderLookUpObj2.pagingJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
+    this.custShareholderLookUpObj2.genericJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
 
     this.employeeLookUpObj1 = new InputLookupObj();
     this.employeeLookUpObj1.isRequired = false;
@@ -122,5 +144,35 @@ export class DocSignerDetailComponent implements OnInit {
       (response) => {
           this.returnMouCust = response;
       });
+  }
+
+  setMouCustSigner(){
+    this.mouCustSignerObj.MouCustId = this.MouCustId;
+    this.mouCustSignerObj.MfSignerName1 = this.tempShareholder1;
+    this.mouCustSignerObj.MfSignerJobPosition1 = this.tempShareholderPosition1;
+    this.mouCustSignerObj.MfSignerName2 = this.tempShareholder2;
+    this.mouCustSignerObj.MfSignerJobPosition2 = this.tempShareholderPosition2;
+    this.mouCustSignerObj.CustSignerName1 = this.tempEmployee1;
+    this.mouCustSignerObj.CustSignerJobPosition1 = this.tempEmployeePosition1;
+    this.mouCustSignerObj.CustSignerName2 = this.tempEmployee2;
+    this.mouCustSignerObj.CustSignerJobPosition2 = this.tempEmployeePosition2;
+  }
+
+  SaveForm(){
+    this.mouCustSignerObj = new MouCustSignerObj();
+    this.setMouCustSigner();
+    console.log("aaa")
+    console.log(this.mouCustSignerObj)
+    this.http.post(this.addMouCustSigner, this.mouCustSignerObj).subscribe(
+      (response) => {
+        console.log(response);
+        this.toastr.successMessage(response["message"]);
+        this.router.navigate(["/Mou/DocSigner/Paging"]);
+        console.log(response)
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 }

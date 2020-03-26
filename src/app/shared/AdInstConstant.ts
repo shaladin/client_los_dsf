@@ -413,7 +413,11 @@ export class AdInsConstant {
 
     // MOU CUST TC
     public static GetCustMouTcByCustMouId = environment.losUrl + "/MouCustTc/GetCustMouTcByCustMouId";
-    
+
+    // MOU DOC SIGNER
+    public static AddMouCustSigner = environment.losUrl + "/MouCustSigner/AddMouCustSigner";
+    public static GetMouCustSignerByMouCustId = environment.losUrl + "/MouCustSigner/GetMouCustSignerByMouCustId";
+
     // REF COUNTRY
     public static GetRefCountryByCountryCode = environment.FoundationR3Url + "/RefCountry/GetRefCountryByCountryCode";
 

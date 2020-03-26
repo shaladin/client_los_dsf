@@ -39,7 +39,7 @@
         {
             "type": "dropdown",
             "datatype": "text",
-            "name": "A.MR_MOU_TYPE",
+            "name": "A.MR_MOU_TYPE_CODE",
             "id": "MouTypeId",
             "value": "",
             "placeholder": "Placeholder",
@@ -55,14 +55,14 @@
           {
             "type": "textbox",
             "name": "A.CUST_NAME",
-            "id": "CustNameId",
+            "id": "custNameId",
             "value": "",
             "label": "CLAIM BY",
             "placeholder": "Placeholder"
         }
     ],
     "querystring": {
-        "select": "SELECT A.MOU_CUST_ID AS MouCustId, A.MOU_CUST_NO AS MouCustNo, A.MOU_CUST_ID AS MouCustId, A.CUST_NAME AS CustName, A.MOU_CUST_DT AS MouCustDt, A.END_DT AS EndDt, A.PLAFOND_AMT AS PlafondAmt, A.IS_REVOLVING AS IsRevolving, A.MR_MOU_TYPE AS MouType, A.REF_NO AS RefNo",
+        "select": "SELECT A.MOU_CUST_NO AS MouCustNo, A.MOU_CUST_ID AS MouCustId, A.MOU_CUST_ID AS MouCustId, A.CUST_NAME AS CustName, A.MOU_CUST_DT AS MouCustDt, A.END_DT AS EndDt, A.PLAFOND_AMT AS PlafondAmt, A.IS_REVOLVING AS IsRevolving, A.MR_MOU_TYPE_CODE AS MouTypeCode, A.REF_NO AS RefNo",
         "from": "FROM dbo.MOU_CUST A WITH(NOLOCK)"
     },
     "headerList": [
@@ -70,49 +70,49 @@
             "type": "sort",
             "position": "left",
             "label": "Mou No",
-            "name": "MouCustNo"
+            "name": "A.MOU_CUST_NO"
         },
         {
             "type": "sort",
-            "position": "left",
+            "position": "center",
             "label": "Customer Name",
-            "name": "CustName"
+            "name": "A.CUST_NAME"
         },
         {
             "type": "sort",
             "position": "left",
             "label": "Mou Date",
-            "name": "MouCustDt"
+            "name": "A.MOU_CUST_DT"
         },
         {
             "type": "sort",
             "position": "left",
             "label": "End Date",
-            "name": "EndDt"
+            "name": "A.END_DT"
         },
         {
             "type": "sort",
             "position": "left",
             "label": "Plafond Amount",
-            "name": "PlafondAmt"
+            "name": "A.PLAFOND_AMT"
         },
         {
             "type": "sort",
             "position": "left",
             "label": "Revolving",
-            "name": "IsRevolving"
+            "name": "A.IS_REVOLVING"
         },
         {
             "type": "label",
             "position": "left",
             "label": "Mou Type",
-            "name": "MouType"
+            "name": "A.MR_MOU_TYPE_CODE"
         },
         {
             "type": "label",
             "position": "left",
             "label": "Ref No",
-            "name": "RefNo"
+            "name": "A.REF_NO"
         },
         {
             "type": "label",
@@ -128,33 +128,33 @@
         },
         {
             "type": "text",
-            "position": "left",
+            "position": "center",
             "property": "CustName"
         },
         {
-            "type": "text",
+            "type": "date",
             "position": "left",
             "property": "MouCustDt"
         },
         {
-            "type": "text",
+            "type": "date",
             "position": "left",
             "property": "EndDt"
         },
         {
-            "type": "text",
+            "type": "decimal",
             "position": "left",
             "property": "PlafondAmt"
         },
         {
             "type": "boolean",
-            "position": "left",
+            "position": "center",
             "property": "IsRevolving"
         },
         {
             "type": "text",
             "position": "left",
-            "property": "MouType"
+            "property": "MouTypeCode"
         },
         {
             "type": "text",
@@ -172,10 +172,6 @@
                         {
                             "type": "MouCustId",
                             "property": "MouCustId"
-                        },
-                        {
-                            "type": "MouType",
-                            "property": "MouType"
                         },
                         {
                             "type": "mode",
