@@ -14,6 +14,7 @@ import { DocSignerComponent } from "./doc-signer/doc-signer.component";
 import { MouCustomerRequestComponent } from './mou-customer-request/mou-customer-request.component';
 import { MouCustomerRequestDetailComponent } from './mou-customer-request/mou-customer-request-detail/mou-customer-request-detail.component';
 import { UclookupgenericModule } from "@adins/uclookupgeneric";
+import { MouCustomerDetailComponent } from "./mou-customer-request/mou-customer-detail/mou-customer-detail.component";
 // import { ShowErrorsComponent } from "./app/test-new/show-errors.component";
 
 @NgModule({
@@ -34,7 +35,8 @@ import { UclookupgenericModule } from "@adins/uclookupgeneric";
   declarations: [
     DocSignerComponent,
     MouCustomerRequestComponent,
-    MouCustomerRequestDetailComponent
+    MouCustomerRequestDetailComponent,
+    MouCustomerDetailComponent
   ]
 })
 export class MouModule { }

@@ -8,6 +8,7 @@ import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { RefOfficeObj } from 'app/shared/model/RefOfficeObj.model';
 
 @Component({
   selector: 'app-mou-customer-request-detail',
@@ -19,6 +20,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
   inputLookupCust: InputLookupObj;
   pageType: string = "add";
   mouCustId: number;
+  refOfficeId: number;
 
   MOUMainInfoForm = this.fb.group({
     MouCustId: [0, [Validators.required]],
@@ -62,12 +64,26 @@ export class MouCustomerRequestDetailComponent implements OnInit {
    }
 
   ngOnInit() {
+    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    console.log(currentUserContext);
     this.inputLookupCust = new InputLookupObj();
     this.inputLookupCust.urlJson = "./assets/uclookup/MOU/lookupCust_MOURequest.json";
     this.inputLookupCust.urlQryPaging = "/Generic/GetPagingObjectBySQL";
     this.inputLookupCust.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupCust.pagingJson = "./assets/uclookup/MOU/lookupCust_MOURequest.json";
     this.inputLookupCust.genericJson = "./assets/uclookup/MOU/lookupCust_MOURequest.json";
+
+    var refOffice = new RefOfficeObj();
+    refOffice.OfficeCode = currentUserContext["Office"];
+    this.httpClient.post(AdInsConstant.GetRefOfficeByOfficeCode, refOffice).subscribe(
+      (response: any) => {
+        this.refOfficeId = response.RefOfficeId;
+      },
+      (error) => {
+        console.log("ERROR");
+        console.log(error);
+      }
+    );
 
     if(this.pageType == "edit"){
       var mouCust = new MouCustObj();
@@ -106,6 +122,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     var mouCustFormData = this.MOUMainInfoForm.value;
 
     if(this.pageType == "add"){
+      mouCustFormData["RefOfficeId"] = this.refOfficeId;
       this.httpClient.post(AdInsConstant.AddMouCust, mouCustFormData).subscribe(
         (response: any) => {
           alert(response["message"]);

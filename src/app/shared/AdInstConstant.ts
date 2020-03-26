@@ -69,6 +69,7 @@ export class AdInsConstant {
     public static LoginByRole = "/Authenticate/LoginByRole";
     public static LoginByToken = "/Authenticate/LoginByToken";
     public static UpdateToken = "/Authenticate/UpdateRole";
+    public static GetRefOfficeByOfficeCode = environment.FoundationR3Url + "/RefOffice/GetRefOfficeByOfficeCode";
 
     //CUST TYPE
     public static CustTypePersonal = "PERSONAL";
