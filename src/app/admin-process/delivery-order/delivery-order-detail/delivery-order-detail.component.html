@@ -86,10 +86,11 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                  <tr *ngFor="let item of resultData">
+                    <td>{{item.AssetDocName}}</td>
+                    <td>{{item.IsValueNeeded}}</td>
+                    <td *ngIf="this.MrAssetConditionCode=='NEW'" >{{item.IsMandatoryNew}}</td>
+                    <td *ngIf="this.MrAssetConditionCode=='USED'" >{{item.IsMandatoryUsed}}</td>
                     <td>
                       <input type="checkbox" class="border-primary" formControlName="IsReceived">
                     </td>

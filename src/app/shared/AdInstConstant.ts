@@ -440,5 +440,9 @@ export class AdInsConstant {
     //CUST DATA COMPANY
     public static AddEditCustDataCompany = "http://localhost:5001/AppCust/AddEditCustDataCompany";
 
-
+    // App Asset
+    public static GetAppAssetByAgrmntId = environment.losUrl + "/AppAsset/GetAppAssetByAgrmntId";
+    
+    //Asset Doc List
+    public static GetListAssetDocListByAssetTypeCode = environment.FoundationR3Url + "/AssetDocList/GetListAssetDocListByAssetTypeCode";
 }
