@@ -11,7 +11,7 @@ import { HttpModule } from "@angular/http";
 import { NapRoutingModule } from "./nap-routing.module";
 import { RouterModule } from "@angular/router";
 import { AppAddDetailComponent } from './app-add-detail/app-add-detail.component';
-import { MatCheckboxModule } from "@angular/material";
+import { MatCheckboxModule, MatSelectModule } from "@angular/material";
 import { AppReferantorComponent } from "./nap-tab/app-referantor/app-referantor.component";
 import { AppModelComponent } from './nap-tab/app-model/app-model.component';
 import { CustomerDataComponent } from "./nap-tab/customer-data/customer-data.component";
@@ -24,58 +24,71 @@ import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { CustPersonalMainDataComponent } from "./nap-tab/customer-data/component/personal-main-data/cust-personal-main-data.component";
 import { CustUcaddressComponent } from "./nap-tab/customer-data/component/address/ucaddress.component";
 import { CustContactInformationComponent } from "./nap-tab/customer-data/component/contact-information/cust-contact-information.component";
+import { SearchCrossAppComponent } from './nap-tab/app-model/search-cross-app/search-cross-app.component';
+import { UCSearchModule } from '@adins/ucsearch';
+import { CommissionPagingComponent } from './commission-paging/commission-paging.component';
+import { CommissionAddComponent } from './commission-add/commission-add.component';
+import { FormAddDynamicComponent } from './form-add-dynamic/form-add-dynamic.component';
 import { CustFinancialDataComponent } from "./nap-tab/customer-data/component/financial-data/cust-financial-data.component";
 import { CustBankAccountComponent } from "./nap-tab/customer-data/component/bank-account/cust-bank-account.component";
 import { CustJobDataComponent } from "./nap-tab/customer-data/component/job-data/cust-job-data.component";
 import { CustSocmedComponent } from "./nap-tab/customer-data/component/socmed/cust-socmed.component";
 import { CustGrpMemberComponent } from "./nap-tab/customer-data/component/cust-grp-member/cust-grp-member.component";
 import { CustCompanyMainDataComponent } from "./nap-tab/customer-data/component/company-main-data/cust-company-main-data.component";
+import { CustShareholderComponent } from "./nap-tab/customer-data/component/shareholder/cust-shareholder.component";
 import { AssetDataComponent } from "./nap-tab/asset-data/asset-data.component";
 
 
 
 @NgModule({
-  declarations: [
-    AppAddComponent,
-    AppPagingComponent,
-    AppAddDetailComponent,
-    AppReferantorComponent,
-    CustomerDataComponent,
-    CustUcaddressComponent,
-    AppModelComponent,
-    CustomerDataComponent,
-    CustPersonalMainDataComponent,
-    CustUcaddressComponent,
-    CustContactInformationComponent,
-    CustFinancialDataComponent,
-    CustBankAccountComponent,
-    CustJobDataComponent,
-    CustSocmedComponent,
-    CustGrpMemberComponent,
-    CustCompanyMainDataComponent,
-    AssetDataComponent
-  ],
-  imports: [
-    NapRoutingModule,
-    CommonModule,
-    ArchwizardModule,
-    UcpagingModule,
-    UcviewgenericModule,
-    UclookupgenericModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpModule,
-    CommonModule,
-    RouterModule,
-    MatCheckboxModule,
-    MatRadioModule,
-    UcSubsectionModule,
-    SharingComponentModule,
-    UcaddressModule,
-    UcgridviewModule
-  ],
-  exports: [],
-  providers: [NGXToastrService],
+    declarations: [
+        AppAddComponent,
+        AppPagingComponent,
+        AppAddDetailComponent,
+        AppReferantorComponent,
+        CustomerDataComponent,
+        CustUcaddressComponent,
+        AppModelComponent,
+        CustomerDataComponent,
+        CustPersonalMainDataComponent,
+        CustUcaddressComponent,
+        CustContactInformationComponent,
+        CustFinancialDataComponent,
+        CustBankAccountComponent,
+        CustJobDataComponent,
+        CustSocmedComponent,
+        CustGrpMemberComponent,
+        CustCompanyMainDataComponent,
+        SearchCrossAppComponent,
+        CommissionPagingComponent,
+        CommissionAddComponent,
+        FormAddDynamicComponent,
+        CustShareholderComponent,
+        AssetDataComponent
+        ],
+    imports: [ 
+        NapRoutingModule,
+        CommonModule,
+        ArchwizardModule,
+        UcpagingModule,
+        UcviewgenericModule,
+        UclookupgenericModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpModule,
+        CommonModule,
+        RouterModule,
+        MatCheckboxModule,
+        MatRadioModule,
+        MatSelectModule,
+        UcSubsectionModule,
+        SharingComponentModule,
+        UcaddressModule,
+        UcgridviewModule,
+        UCSearchModule
+    ],
+    exports: [],
+    providers: [NGXToastrService],
 })
 
 export class NapModule { }

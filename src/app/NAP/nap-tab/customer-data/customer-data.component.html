@@ -10,7 +10,7 @@
                 <label class="col-md-2" translate>Customer Type</label>
                 <div class="col-md-10">
                   <mat-radio-group [(ngModel)]="MrCustTypeCode" name="MrCustTypeCode">
-                    <mat-radio-button class="custom-control custom-radio display-inline-block" *ngFor="let item of CustTypeObj" [value]="item.Key" (change)="CustTypeChanged($event)">
+                    <mat-radio-button class="custom-control custom-radio display-inline-block" *ngFor="let item of CustTypeObj" [value]="item.Key">
                       {{item.Value}}
                     </mat-radio-button>
                   </mat-radio-group>
@@ -93,7 +93,35 @@
             <form class="form form-horizontal" [formGroup]="CustDataCompanyForm" (ngSubmit)="CustDataCompanyForm.valid && SaveForm()"
             #enjiFormCompany="ngForm">
               <div class="form-body">
-                  <app-cust-company-main-data  [enjiForm]="enjiFormCompany" [parentForm]="CustDataCompanyForm" [identifier]="'companyMainData'"></app-cust-company-main-data>  
+                <div *ngIf="isBindDataDone == true">
+                  <app-cust-company-main-data [custDataCompanyObj]="custDataCompanyObj" [enjiForm]="enjiFormCompany" [parentForm]="CustDataCompanyForm" [identifier]="'companyMainData'"></app-cust-company-main-data>
+                  <lib-ucaddress [title]="'Company Legal Address'" [UCAddrForm]="CustDataCompanyForm" [enjiForm]="enjiFormCompany" [identifier]="'legalAddrCompany'" [default]="legalAddrCompanyObj" [inputField]="inputFieldLegalCompanyObj" [showPhn3]="false"></lib-ucaddress>
+                  <lib-ucSubsection [id]="'mailingAddrCompanyId'" [title]="'Mailing Address'" [panel]="'mailingAddrCompany'">
+                  </lib-ucSubsection>
+                  <div id="mailingAddrCompany">
+                    <div class="form-group row">
+                      <label class="col-md-2" translate>Copy Address From</label>
+                      <div class="col-md-4">
+                        <div class="input-group">
+                          <select class="form-control" formControlName="CopyFromMailing" [(ngModel)]="copyFromMailingCompany">
+                            <option *ngFor="let item of copyToMailingCompanyTypeObj" [value]="item.Key">
+                              {{item.Value}}
+                            </option>
+                          </select>
+                          <div class="input-group-append">
+                              <span class="input-group-btn">
+                                  <button class="btn btn-raised btn-primary" type="button" (click)="copyToMailingCompany()">
+                                      <i class="fa fa-check-square-o"></i>Copy
+                                  </button>
+                              </span>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                    <lib-ucaddress [showSubsection]="false" [UCAddrForm]="CustDataCompanyForm" [enjiForm]="enjiFormCompany" [identifier]="'mailingAddrCompany'" [default]="mailingAddrCompanyObj" [inputField]="inputFieldMailingCompanyObj" [showPhn3]="false"></lib-ucaddress>
+                  </div>
+                  <app-cust-shareholder></app-cust-shareholder>
+                </div>
               </div>
               <div class="form-actions right">
                 <button type="submit" class="btn btn-raised btn-primary">

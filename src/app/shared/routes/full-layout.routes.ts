@@ -38,5 +38,9 @@ export const Full_ROUTES: Routes = [
   {
     path: 'AdminProcess',
     loadChildren: './admin-process/admin-process.module#AdminProcessModule'
+  },
+  {
+    path: 'View',
+    loadChildren: './view/view.module#ViewModule'
   }
 ];

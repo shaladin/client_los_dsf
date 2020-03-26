@@ -8,6 +8,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { NapAppReferantorModel } from 'app/shared/model/NapAppReferantor.Model';
+import { WizardComponent } from 'angular-archwizard';
 
 @Component({
   selector: 'app-app-referantor',
@@ -24,7 +25,8 @@ export class AppReferantorComponent implements OnInit {
     private router: Router,
     private http: HttpClient,
     private route: ActivatedRoute,
-    private toastr: NGXToastrService
+    private toastr: NGXToastrService,
+    private wizard: WizardComponent
   ) { }
 
   NapAppReferantorForm = this.fb.group({
@@ -121,15 +123,13 @@ export class AppReferantorComponent implements OnInit {
         console.log("Save Existed Data");
         url = environment.losUrl + AdInsConstant.EditAppReferantor;
         this.SaveData(url);
-        // Sementara
-        // this.router.navigate(["/Nap/AppPaging"]);
+        this.wizard.goToNextStep();
       } else {
         // delete & go to paging
         console.log("Delete Existed Data");
         url = environment.losUrl + AdInsConstant.DeleteAppReferantor;
-        this.SaveData(url);
-        // Sementara
-        // this.router.navigate(["/Nap/AppPaging"]);
+        this.SaveData(url);    
+        this.wizard.goToNextStep();
       }
     } else {
       if (this.ReferantorOn) {
@@ -138,10 +138,7 @@ export class AppReferantorComponent implements OnInit {
         url = environment.losUrl + AdInsConstant.AddAppReferantor;
         this.appReferantorObj.AppId = this.appId;
         this.SaveData(url);
-        
-        // Sementara
-        // this.router.navigate(["/Nap/AppPaging"]);
-
+        this.wizard.goToNextStep();
       } else {
         // Go to paging
         console.log("Go to paging");
@@ -192,7 +189,7 @@ export class AppReferantorComponent implements OnInit {
   }
 
   getDDLBank(VendorCode) {
-    var url = "http://localhost:5005" + AdInsConstant.GetListVendorBankAccByVendorCode;
+    var url = environment.FoundationR3Url + AdInsConstant.GetListVendorBankAccByVendorCode;
     var obj = {
       VendorCode: VendorCode,
       RowVersion: ""

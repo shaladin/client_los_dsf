@@ -51,7 +51,6 @@ export class CustPersonalMainDataComponent implements OnInit {
   getRefMasterUrl: any;
   getCountryUrl: any;
 
-
   constructor(
     private fb: FormBuilder, 
     private http: HttpClient,
@@ -143,7 +142,6 @@ export class CustPersonalMainDataComponent implements OnInit {
         TaxIdNo: this.custDataPersonalObj.AppCustObj.TaxIdNo,
         IsVip: this.custDataPersonalObj.AppCustObj.IsVip,
       });
-      this.setCriteriaLookupCustomer(this.custDataPersonalObj.AppCustObj.MrCustTypeCode);
       this.InputLookupCustomerObj.nameSelect = this.custDataPersonalObj.AppCustObj.CustName;
       this.InputLookupCustomerObj.jsonSelect = {CustName: this.custDataPersonalObj.AppCustObj.CustName};
       this.selectedCustNo = this.custDataPersonalObj.AppCustObj.CustNo;
@@ -189,6 +187,7 @@ export class CustPersonalMainDataComponent implements OnInit {
     this.InputLookupCustomerObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustomerObj.genericJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustomerObj.isReadonly = false;
+    this.setCriteriaLookupCustomer(AdInsConstant.CustTypePersonal);
 
     this.InputLookupCountryObj = new InputLookupObj();
     this.InputLookupCountryObj.urlJson = "./assets/uclookup/lookupCountry.json";
@@ -206,21 +205,6 @@ export class CustPersonalMainDataComponent implements OnInit {
     this.bindNationalityObj();
     this.bindEducationObj();
     this.bindReligionObj();
-  }
-
-  bindCustTypeObj(){
-    this.refMasterObj.RefMasterTypeCode = "CUST_TYPE";
-    this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
-      (response) => {
-        this.CustTypeObj = response["ReturnObject"];
-        if(this.CustTypeObj.length > 0){
-          this.parentForm.controls[this.identifier].patchValue({
-            MrCustTypeCode: this.CustTypeObj[0].Key
-          });
-          this.setCriteriaLookupCustomer(this.CustTypeObj[0].Key);
-        }
-      }
-    );
   }
 
   bindIdTypeObj(){

@@ -11,7 +11,7 @@
       "placeholder": "Placeholder",
       "isFromURL": true,
       "isSelectOne": true,
-      "url": "https://r3app-server.ad-ins.com/FOUNDATION_R3/RefOffice/GetListKeyValueActiveByCode",
+      "url": "http://r3app-server/FOUNDATION_R3/RefOffice/GetListKeyValueActiveByCode",
       "label": "Original Office Name",
       "items": [],
       "itemsUrl": []
