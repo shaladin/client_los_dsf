@@ -1,0 +1,98 @@
+<div class="col-md-12 text-left">
+    <div class="card">
+        <lib-ucviewgeneric [viewInput]="viewProdMainInfoObj"> </lib-ucviewgeneric>
+
+        <!-- Income Information -->
+        <div class="card-body">
+            <div class="px-3">
+                <lib-ucSubsection [id]="'viewIncomeInfoId'" [title]="'Income Information'" [panel]="'viewIncomeInfo'">
+                </lib-ucSubsection>
+                <div class="form-body" id="viewIncomeInfo">
+                    <div class="row">
+                        <div class="col-md-6 ">
+                            <div class="row">
+                                <label class="col-md-6 adInsLabel"> Upping Rate </label>
+                                <label class="col-md-6 adInsLabel"> {{viewIncomeInfoObj.UppingRate}} </label>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-6 adInsLabel"> Insurance Income </label>
+                                <label class="col-md-6 adInsLabel"> {{viewIncomeInfoObj.InsuranceIncome}} </label>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-6 adInsLabel"> Life Insurance Income </label>
+                                <label class="col-md-6 adInsLabel"> {{viewIncomeInfoObj.LifeInsuranceIncome}} </label>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-6 adInsLabel"> Max Allocated Amount </label>
+                                <label class="col-md-6 adInsLabel"> {{viewIncomeInfoObj.MaxAllocatedAmount}} </label>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-6 adInsLabel"> Remaining Allocated Amount </label>
+                                <label class="col-md-6 adInsLabel"> {{viewIncomeInfoObj.RemainingAllocatedAmount}}
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 ">
+                            <div class="row" *ngFor="let item of viewIncomeInfoObj.Other; let i = index">
+                                <label class="col-md-6 adInsLabel"> Fee / Upping Fee {{i + 1}} </label>
+                                <label class="col-md-6 adInsLabel"> {{item}} </label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        
+        <app-form-add-dynamic [FormInputObj]="FormInputObjSupplier" (update)="GetData($event)"></app-form-add-dynamic>
+        <app-form-add-dynamic [FormInputObj]="FormInputObjSupplierEmpl" (update)="GetData($event)">
+        </app-form-add-dynamic>
+        <app-form-add-dynamic [FormInputObj]="FormInputObjReferantor" (update)="GetData($event)"></app-form-add-dynamic>
+        
+        
+
+        <!-- Summary -->
+        <div class="card-body">
+            <div class="px-3">
+                <lib-ucSubsection [id]="'viewSummaryId'" [title]="'Summary'" [panel]="'viewSummary'">
+                </lib-ucSubsection>
+                <div class="form-body" id="viewSummary">
+                    <div class="row">
+                        <div class="ucSearch-Button-Right">
+                            <button type="button" (click)="CalculateTotal()" class="btn btn-raised btn-primary" translate>
+                                <i class="fa fa-check-square-o"></i> Calculate
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-md-2 adInsLabel"> Total Commision Amount </label>
+                        <label class="col-md-4 adInsLabel"> {{viewIncomeInfoObj.UppingRate}} </label>
+                    </div>
+                    <div class="row">
+                        <label class="col-md-2 adInsLabel"> Total TAX </label>
+                        <label class="col-md-4 adInsLabel"> {{viewIncomeInfoObj.UppingRate}} </label>
+                    </div>
+                    <div class="row">
+                        <label class="col-md-2 adInsLabel"> Total VAT </label>
+                        <label class="col-md-4 adInsLabel"> {{viewIncomeInfoObj.UppingRate}} </label>
+                    </div>
+                    <div class="row">
+                        <label class="col-md-2 adInsLabel"> Gross Yield </label>
+                        <label class="col-md-4 adInsLabel"> {{viewIncomeInfoObj.UppingRate}} </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-actions ucSearch-Button-Right">
+              <button type="button" (click)="Cancel()" class="btn btn-raised btn-warning" translate>
+                <i class="fa fa-check-square-o"></i> Cancel
+              </button>
+              <button type="button" (click)="Submit()" class="btn btn-raised btn-primary" translate>
+                <i class="fa fa-check-square-o"></i> Submit
+              </button>
+            </div>
+        </div>
+    </div>
+</div>

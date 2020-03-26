@@ -7,7 +7,7 @@ import { UcpagingModule } from "@adins/ucpaging";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { UcSubsectionModule } from "@adins/uc-subsection";
 import { UcgridfooterModule } from "@adins/ucgridfooter";
-import { UcShowErrorsModule } from "@adins/uc-show-errors";
+// import { UcShowErrorsModule } from "@adins/uc-show-errors";
 import { PurchaseOrderPagingComponent } from "./purchase-order/purchase-order-paging/purchase-order-paging.component";
 import { AdminProcessRoutingModule } from "./admin-process-routing.module";
 import { PurchaseOrderDetailComponent } from './purchase-order/purchase-order-detail/purchase-order-detail.component';
@@ -26,7 +26,7 @@ import { PurchaseOrderInfoComponent } from './purchase-order/purchase-order-deta
     NgbModule,
     ReactiveFormsModule,
     UcSubsectionModule,
-    UcShowErrorsModule,
+    // UcShowErrorsModule,
     AdminProcessRoutingModule,
     SharingComponentModule
   ],

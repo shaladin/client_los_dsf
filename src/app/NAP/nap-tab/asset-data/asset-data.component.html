@@ -1,0 +1,364 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="px-3">
+          <form class="form form-horizontal">
+            <div class="form-body">
+              <lib-ucSubsection [id]="'supplInfoId'" [title]="'Supplier Info'" [panel]="'supplInfo'">
+              </lib-ucSubsection>
+              <div id="supplInfo">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-md-4" translate>Supplier Name</label>
+                      <div class="col-md-8">
+                        <app-lookup-supplier></app-lookup-supplier>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-4" translate>Admin head</label>
+                      <div class="col-md-8">
+                        <select class="form-control" style="width: inherit">
+                          <option value="1">Admin 1</option>
+                          <option value="2">Admin 2</option>
+                          <option value="3">Admin 3</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-md-4" translate>Sales Person </label>
+                      <div class="col-md-8">
+                        <select class="form-control" style="width: inherit">
+                          <option value="1">Sales 1</option>
+                          <option value="2">Sales 2</option>
+                          <option value="3">Sales 3</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-4" translate>Branch Manager</label>
+                      <div class="col-md-8">
+                        <select class="form-control" style="width: inherit">
+                          <option value="1">Manager 1</option>
+                          <option value="2">Manager 2</option>
+                          <option value="3">Manager 3</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <lib-ucSubsection [id]="'assetInfoid'" [title]="'Asset Info'" [panel]="'assetInfo'">
+              </lib-ucSubsection>
+              <div id="assetInfo">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-md-4" translate>Asset Name</label>
+                      <div class="col-md-8">
+                        <app-lookup-asset></app-lookup-asset>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-4" translate>Asset Price</label>
+                      <div class="col-md-8">
+                        <input type="number" class="form-control">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-4" translate>Asset Condition</label>
+                      <div class="col-md-8">
+                        <div class="custom-control custom-radio display-inline-block">
+                          <input type="radio" id="new" name="assetCond" value="new">
+                          <label for="new">New</label>
+                        </div>
+                        <div class="custom-control custom-radio display-inline-block">
+                          <input type="radio" id="used" name="assetCond" value="used">
+                          <label for="used">Used</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-4" translate>License Plate No</label>
+                      <div class="col-md-8">
+                        <input type="text" class="form-control">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-4" translate>Manufacturing Year</label>
+                      <div class="col-md-8">
+                        <input type="text" class="form-control">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-4" translate>Notes</label>
+                      <div class="col-md-8">
+                        <textarea class="form-control"></textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-md-4" translate>Down Payment Type</label>
+                      <div class="col-md-8">
+                        <div class="custom-control custom-radio display-inline-block">
+                          <input type="radio" id="Percentage" name="dpType" value="Percentage">
+                          <label for="Percentage">Percentage</label>
+                        </div>
+                        <div class="custom-control custom-radio display-inline-block">
+                          <input type="radio" id="Amount" name="dpType" value="Amount">
+                          <label for="Amount">Amount</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-4" translate>Down Payment</label>
+                      <div class="col-md-8">
+                        <input type="number" class="form-control">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-4" translate>Asset Usage</label>
+                      <div class="col-md-8">
+                        <select class="form-control" style="width: inherit">
+                          <option value="1">PRIBADI</option>
+                          <option value="2">RENTAL</option>
+                          <option value="3">ANGKUTAN BARANG</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-4" translate>Chasis No</label>
+                      <div class="col-md-8">
+                        <input type="text" class="form-control">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-4" translate>Engine No</label>
+                      <div class="col-md-8">
+                        <input type="text" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <lib-ucSubsection [id]="'assetInfoid'" [title]="'Asset Atribute'" [panel]="'assetAttr'">
+              </lib-ucSubsection>
+              <div id="assetAttr">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-md-4" translate>Color </label>
+                      <div class="col-md-8">
+                        <input class="form-control" type="text">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-4" translate>Asset Region</label>
+                      <div class="col-md-8">
+                        <select class="form-control" style="width: inherit">
+                          <option value="1">Region 1</option>
+                          <option value="2">Region 2</option>
+                          <option value="3">Region 3</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-md-4" translate>BPKB Issue Date </label>
+                      <div class="col-md-8">
+                        <input class="form-control" type="text">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-4" translate>BPKB City Issuer</label>
+                      <div class="col-md-8">
+                        <app-lookup-bpkb-city></app-lookup-bpkb-city>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <lib-ucSubsection [id]="'accessoriesId'" [title]="'Accessories'" [panel]="'accessories'">
+              </lib-ucSubsection>
+              <div id="accessories">
+                <div class="form-actions right">
+                  <button type="button" name="add" id="add" (click)="addRow()" class="btn btn-raised btn-primary">
+                    Add
+                  </button>
+                </div>
+                <table class="table table-responsive-md text-center table-hover">
+                  <thead>
+                    <tr class="table-header">
+                      <th><span translate class="thead-header">Supplier Name</span></th>
+                      <th><span translate class="thead-header">Accessory Name</span></th>
+                      <th><span translate class="thead-header">Accessory Price</span></th>
+                      <th><span translate class="thead-header">Down Payment</span></th>
+                      <th><span translate class="thead-header">Notes</span></th>
+                      <th><span translate class="thead-header">Action</span></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of listAcc ;let i = index">
+                      <td>{{i}}</td>
+                      <td>
+                        <app-lookup-supplier></app-lookup-supplier>
+                      </td>
+                      <td>
+                        <app-lookup-accessories></app-lookup-accessories>
+                      </td>
+                      <td>
+                        <input type="number" class="form-control" name="accPrice{{i}}" id="accPrice"
+                               [(ngModel)]="item.accPrice">
+                      </td>
+                      <td>
+                        <input type="number" class="form-control" name="downPayment{{i}}" id="downPayment"
+                               [(ngModel)]="item.downPayment">
+                      </td>
+                      <td>
+                        <textarea class="form-control" id="notes" name="notes{{i}}" [(ngModel)]="item.notes"></textarea>
+                      </td>
+                      <td>
+                        <a class="danger p-0" data-original-title="" title="" (click)="deleteAcc(i)">
+                          <i class="ft-trash-2 font-medium-3 mr-2"></i>
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <lib-ucSubsection [id]="'assetUserId'" [title]="'Asset User'" [panel]="'assetUser'">
+              </lib-ucSubsection>
+              <div id="assetUser">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-md-4" translate>Self Usage</label>
+                      <div class="col-md-8">
+                        <input type="checkbox" class="border-primary">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-4" translate>User Name</label>
+                      <div class="col-md-8">
+                        <input type="text" class="form-control">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-4" translate>User Relationship</label>
+                      <div class="col-md-8">
+                        <select class="form-control" style="width: inherit">
+                          <option value="1">CUSTOMER</option>
+                          <option value="2">COUSIN</option>
+                          <option value="3">SPOUSE</option>
+                          <option value="4">CHILD</option>
+                          <option value="5">PARENT</option>
+                          <option value="6">OTHER</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <lib-ucSubsection [id]="'assetOwnerId'" [title]="'Asset Owner'" [panel]="'assetOwner'">
+              </lib-ucSubsection>
+              <div id="assetOwner">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-md-4" translate>Owner Name</label>
+                      <div class="col-md-8">
+                        <input type="text" class="form-control">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-4" translate>Owner Relationship</label>
+                      <div class="col-md-8">
+                        <select class="form-control" style="width: inherit">
+                          <option value="1">CUSTOMER</option>
+                          <option value="2">COUSIN</option>
+                          <option value="3">SPOUSE</option>
+                          <option value="4">CHILD</option>
+                          <option value="5">PARENT</option>
+                          <option value="6">OTHER</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-md-4" translate>ID Type</label>
+                      <div class="col-md-8">
+                        <select class="form-control adInsInput" id="idType" name="selectedIdType">
+                          <option value="KTP">Kartu Tanda Penduduk</option>
+                          <option value="SIM">Surat Izin Mengemudi</option>
+                          <option value="KITAS">KITAS</option>
+                          <option value="AKTA">AKTA</option>
+                          <option value="KIMS">KIMS</option>
+                          <option value="NIK">NIK</option>
+                          <option value="pass">PASSPORT</option>
+                          <option value="other">OTHERS</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-4" translate>Owner Id No</label>
+                      <div class="col-md-8">
+                        <input type="text" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2" translate>Copy From</label>
+                  <div class="col-md-4">
+                    <div class="input-group">
+                      <select class="form-control adInsInput" name="selectedResidenceAddressCopy">
+                        <option value="Legal">Legal Address</option>
+                      </select>
+                      <div class="input-group-append">
+                        <span class="input-group-btn">
+                          <button class="btn btn-raised btn-primary" (click)="copyAddr()">Copy</button>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <app-address [inputField]="inputFieldAssetOwn"></app-address>
+              </div>
+              <lib-ucSubsection [id]="'assetLocationId'" [title]="'Asset Location'" [panel]="'assetLoc'">
+              </lib-ucSubsection>
+              <div id="assetLoc">
+                <div class="form-group row">
+                  <label class="col-md-2" translate>Copy From</label>
+                  <div class="col-md-4">
+                    <div class="input-group">
+                      <select class="form-control adInsInput" name="selectedResidenceAddressCopy">
+                        <option value="Legal">Legal Address</option>
+                      </select>
+                      <div class="input-group-append">
+                        <span class="input-group-btn">
+                          <button class="btn btn-raised btn-primary" (click)="copyAddrLoc()">Copy</button>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <app-address [inputField]="inputFieldAssetLoc"></app-address>
+              </div>
+            </div>
+            <div class="form-actions right">
+              <button type="button" class="btn btn-raised btn-primary" (click)="SaveContinue()" translate>
+                Save and Continue
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
