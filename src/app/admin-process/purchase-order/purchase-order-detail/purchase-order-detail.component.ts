@@ -11,9 +11,15 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 export class PurchaseOrderDetailComponent implements OnInit {
 
   arrValue = [];
-  AgrmntId: any;
-  AppId: any;
-  AppAssetId: any;
+  AgrmntId: number;
+  AppId: number;
+  AppAssetId: number;
+  SupplCode: string;
+  AssetObj: Object;
+  MouNo: string = "";
+  Notes: string = "";
+  ProportionalValue: number;
+  TotalPurchaseOrderAmt: number;
 
   constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
@@ -26,17 +32,37 @@ export class PurchaseOrderDetailComponent implements OnInit {
       if (params["AppAssetId"] != null) {
         this.AppAssetId = params["AppAssetId"];
       }
+      if (params["SupplCode"] != null) {
+        this.SupplCode = params["SupplCode"];
+      }
     });
   }
 
   ngOnInit() {
     this.arrValue.push(this.AgrmntId);
     var appAssetObj = {
-      AppId: this.AppId
+      AppId: this.AppId,
+      AgrmntId: this.AgrmntId,
+      SupplCode: this.SupplCode
     }
-    this.http.post(AdInsConstant.GetAppAssetByAppId, appAssetObj).subscribe(
+    this.http.post(AdInsConstant.GetAllAssetDataForPOByAsset, appAssetObj).subscribe(
       (response) => {
-        console.log(response);  
+        this.AssetObj = response["ReturnObject"];
+        this.ProportionalValue = this.AssetObj["ProportionalValue"];
+
+        this.TotalPurchaseOrderAmt = this.AssetObj["AgrmntFinDataObj"].TotalAssetPriceAmt +
+          this.AssetObj["AgrmntFinDataObj"].TotalDownPaymentNettAmt +
+          (this.AssetObj["AgrmntFinDataObj"].TdpPaidCoyAmt * this.ProportionalValue) +
+          (this.AssetObj["AgrmntFinDataObj"].InstAmt * this.ProportionalValue) +
+          (this.AssetObj["AgrmntFinDataObj"].TotalInsCustAmt * this.ProportionalValue) +
+          (this.AssetObj["AgrmntFinDataObj"].TotalLifeInsCustAmt * this.ProportionalValue);
+
+        if (this.AssetObj["AgrmntFeeListObj"].length != 0) {
+          for (let i = 0; i < this.AssetObj["AgrmntFeeListObj"].length; i++) {
+            this.TotalPurchaseOrderAmt = this.TotalPurchaseOrderAmt + (this.AssetObj["AgrmntFeeListObj"][i].AppFeeAmt);
+          }
+        }
+        console.log(response);
       },
       (error) => {
         console.log(error);
