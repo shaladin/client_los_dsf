@@ -4,7 +4,7 @@
     "component": [
         {
             "type": "textbox",
-            "name": "A.MOU_CUST_NO",
+            "name": "MOU.MOU_CUST_NO",
             "id": "MouCustNoId",
             "value": "",
             "label": "MOU NO",
@@ -12,7 +12,7 @@
         },
         {
             "type": "textbox",
-            "name": "A.CUST_NAME",
+            "name": "MOU.CUST_NAME",
             "id": "CustNameId",
             "value": "",
             "label": "CUSTOMER NAME",
@@ -20,7 +20,7 @@
         },
         {
             "type" : "datepicker",
-            "name" : "A.MOU_CUST_DT",
+            "name" : "MOU.MOU_CUST_DT",
             "id" : "MouDtId",
             "value" : "",
             "label" : "MOU DATE >=",
@@ -29,7 +29,7 @@
         },
         {
             "type" : "datepicker",
-            "name" : "A.END_DT",
+            "name" : "MOU.END_DT",
             "id" : "EndDtId",
             "value" : "",
             "label" : "MOU DATE <=",
@@ -39,7 +39,7 @@
         {
             "type": "dropdown",
             "datatype": "text",
-            "name": "A.MR_MOU_TYPE_CODE",
+            "name": "MOU.MR_MOU_TYPE_CODE",
             "id": "MouTypeId",
             "value": "",
             "placeholder": "Placeholder",
@@ -54,65 +54,73 @@
           },
           {
             "type": "textbox",
-            "name": "A.CUST_NAME",
-            "id": "custNameId",
+            "name": "WTL.USERNAME",
+            "id": "claimById",
             "value": "",
             "label": "CLAIM BY",
             "placeholder": "Placeholder"
-        }
+          },
+          {
+            "type": "textbox",
+            "name": "WTL.OFFICE_CODE",
+            "id": "officeCodeId",
+            "value": "",
+            "label": "OFFICE CODE",
+            "placeholder": "Placeholder"
+          }
     ],
     "querystring": {
-        "select": "SELECT A.MOU_CUST_NO AS MouCustNo, A.MOU_CUST_ID AS MouCustId, A.MOU_CUST_ID AS MouCustId, A.CUST_NAME AS CustName, A.MOU_CUST_DT AS MouCustDt, A.END_DT AS EndDt, A.PLAFOND_AMT AS PlafondAmt, A.IS_REVOLVING AS IsRevolving, A.MR_MOU_TYPE_CODE AS MouTypeCode, A.REF_NO AS RefNo",
-        "from": "FROM dbo.MOU_CUST A WITH(NOLOCK)"
+        "select": "SELECT WTL.WF_TASK_LIST_ID AS WfTaskListId, WTL.USERNAME AS ClaimBy, WTL.OFFICE_CODE AS OfficeCode, MOU.MOU_CUST_NO AS MouCustNo, MOU.MOU_CUST_ID AS MouCustId, MOU.CUST_NAME AS CustName, MOU.MOU_CUST_DT AS MouCustDt, MOU.END_DT AS EndDt, MOU.PLAFOND_AMT AS PlafondAmt, MOU.IS_REVOLVING AS IsRevolving, MOU.REF_NO AS RefNo, MOU.MR_MOU_TYPE_CODE AS MouTypeCode",
+        "from": "FROM dbo.MOU_CUST MOU WITH(NOLOCK) JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON MOU.MOU_CUST_NO = WTL.TRANSACTION_CODE AND WTL.ACT_CODE = 'MOU_DOC_SIGNER' WHERE MOU.MOU_STAT = 'MOU_DOC_SIGN' AND WTL.OFFICE_CODE = 'HO'"
     },
     "headerList": [
         {
             "type": "sort",
             "position": "left",
             "label": "Mou No",
-            "name": "A.MOU_CUST_NO"
+            "name": "MOU.MOU_CUST_NO"
         },
         {
             "type": "sort",
             "position": "center",
             "label": "Customer Name",
-            "name": "A.CUST_NAME"
+            "name": "MOU.CUST_NAME"
         },
         {
             "type": "sort",
             "position": "left",
             "label": "Mou Date",
-            "name": "A.MOU_CUST_DT"
+            "name": "MOU.MOU_CUST_DT"
         },
         {
             "type": "sort",
             "position": "left",
             "label": "End Date",
-            "name": "A.END_DT"
+            "name": "MOU.END_DT"
         },
         {
             "type": "sort",
             "position": "left",
             "label": "Plafond Amount",
-            "name": "A.PLAFOND_AMT"
+            "name": "MOU.PLAFOND_AMT"
         },
         {
             "type": "sort",
             "position": "left",
             "label": "Revolving",
-            "name": "A.IS_REVOLVING"
+            "name": "MOU.IS_REVOLVING"
         },
         {
             "type": "label",
             "position": "left",
             "label": "Mou Type",
-            "name": "A.MR_MOU_TYPE_CODE"
+            "name": "MOU.MR_MOU_TYPE_CODE"
         },
         {
             "type": "label",
             "position": "left",
             "label": "Ref No",
-            "name": "A.REF_NO"
+            "name": "MOU.REF_NO"
         },
         {
             "type": "label",
