@@ -1,0 +1,172 @@
+<form class="form form-horizontal" [formGroup]="MouDataForm" (ngSubmit)="MouDataForm.valid"
+  #enjiForm="ngForm">
+  <lib-ucSubsection [id]="'MouDataId'" [title]="'Mou Data'" [panel]="'MouData'">
+  </lib-ucSubsection>
+  <div class="form-body" id="MouData">
+    <div class="form-group">
+      <label class="col-md-2 adInsLabel" translate>Currency </label>
+      <label class="col-md-2 adInsLabel" translate>{{CurrCode}} </label>
+    </div>
+    <div *ngIf="MouType == 'FACTORING'" class="form-group">
+      <label class="col-md-2 adInsLabel" translate>Plafond Amount</label>
+      <label style="align-items: left;" class="col-md-2 adInsLabel" translate>{{PlafondAmt | number}} </label>
+    </div>
+
+    <div *ngIf="MouType == 'FACTORING'" class="form-group">
+      <label class="col-md-2 adInsLabel" translate>Revolving</label>
+      <label *ngIf="IsRevolving == true" class="col-md-2 adInsLabel" translate>Yes </label>
+      <label *ngIf="IsRevolving == false" class="col-md-2 adInsLabel" translate>No </label>
+    </div>
+
+    <div *ngIf="MouType == 'FACTORING'" class="form-group">
+      <label class="col-md-2 adInsLabel" translate>Recourse Type</label>
+      <label *ngIf="MrRecourseTypeCode == 'IS_RECOURSE'" class="col-md-2 adInsLabel" translate>With Recourse </label>
+      <label *ngIf="MrRecourseTypeCode == 'IS_NOT_RECOURSE'" class="col-md-2 adInsLabel" translate>Without Recourse </label>
+    </div>
+    <div *ngIf="MouType == 'FACTORING'" class="form-group">
+      <label class="col-md-2 adInsLabel" translate>Is Disclosed</label>
+      <label *ngIf="IsDisclosed == true" class="col-md-2 adInsLabel" translate>Yes </label>
+      <label *ngIf="IsDisclosed == false" class="col-md-2 adInsLabel" translate>No </label>
+    </div>
+    <div *ngIf="MouType == 'FACTORING'" class="form-group">
+      <label class="col-md-2 adInsLabel" translate>WOP</label>
+      <label  *ngIf="WopCode == 'AD'" class="col-md-2 adInsLabel" translate>Auto Debit </label>
+      <label  *ngIf="WopCode == 'CA'" class="col-md-2 adInsLabel" translate>Cash </label>
+      <label  *ngIf="WopCode == 'PICK'" class="col-md-2 adInsLabel" translate>Pick-Up </label>
+      <label  *ngIf="WopCode == 'BT'" class="col-md-2 adInsLabel" translate>Bank Transfer </label>
+      <label  *ngIf="WopCode == 'PDC'" class="col-md-2 adInsLabel" translate>{{WopCode}} </label>
+    </div>
+    <div *ngIf="MouType == 'FACTORING'" class="form-group">
+      <label class="col-md-2 adInsLabel" translate>TOP</label>
+      <label style="align-items: left;" class="col-md-2 adInsLabel" translate>{{TopDays}} days </label>
+    </div>
+
+    <div *ngIf="MouType == 'FACTORING'" class="form-group">
+      <label class="col-md-2 adInsLabel" translate>Tenor From</label>
+      <label class="col-md-1 adInsLabel" translate>{{TenorFrom}}</label>
+      <label class="col-md-1 adInsLabel" translate>to</label>
+      <label class="col-md-1 adInsLabel" translate>{{TenorTo}}</label>
+    </div>
+
+    <div *ngIf="MouType == 'FACTORING'" class="form-group">
+      <label class="col-md-2 adInsLabel" translate>Payment Frequency </label>
+      <label *ngIf="PayFreqCode == 'MONTHLY'" class="col-md-2 adInsLabel" translate>Monthly </label>
+      <label *ngIf="PayFreqCode == 'BIMONTHLY'" class="col-md-2 adInsLabel" translate>BiMonthly </label>
+      <label *ngIf="PayFreqCode == 'QUATERLY'" class="col-md-2 adInsLabel" translate>Quarterly </label>
+      <label *ngIf="PayFreqCode == 'TRIMESTER'" class="col-md-2 adInsLabel" translate>Trisemester </label>
+      <label *ngIf="PayFreqCode == 'SEMI_ANNUALY'" class="col-md-2 adInsLabel" translate>Semi Annualy</label>
+      <label *ngIf="PayFreqCode == 'ANNUALY'" class="col-md-2 adInsLabel" translate>Annualy</label>
+      <label *ngIf="PayFreqCode == 'WEEKLY'" class="col-md-2 adInsLabel" translate>Weekly </label>
+      <label *ngIf="PayFreqCode == 'BIWEEKLY'" class="col-md-2 adInsLabel" translate>Biweekly </label>
+      <label *ngIf="PayFreqCode == 'DAILY'" class="col-md-2 adInsLabel" translate>Daily </label>
+      <label *ngIf="PayFreqCode == 'BIDAILY'" class="col-md-2 adInsLabel" translate>Bidaily </label>
+    </div>
+
+
+    <div *ngIf="MouType == 'GENERAL'" class="form-group">
+      <label class="col-md-2 adInsLabel" translate>Interest type </label>
+      <label *ngIf="MrInterestTypeCode == 'FIXED'" class="col-md-2 adInsLabel" translate>Fixed Rate </label>
+      <label *ngIf="MrInterestTypeCode == 'FLOAT'" class="col-md-2 adInsLabel" translate>Float Rate </label>
+    </div>
+    <div *ngIf="MouType == 'FACTORING'" class="form-group">
+      <label class="col-md-2 adInsLabel" translate>Payment Frequency </label>
+      <label *ngIf="PayFreqCode == 'MONTHLY'" class="col-md-2 adInsLabel" translate>Monthly </label>
+      <label *ngIf="PayFreqCode == 'BIMONTHLY'" class="col-md-2 adInsLabel" translate>BiMonthly </label>
+      <label *ngIf="PayFreqCode == 'QUATERLY'" class="col-md-2 adInsLabel" translate>Quarterly </label>
+      <label *ngIf="PayFreqCode == 'TRIMESTER'" class="col-md-2 adInsLabel" translate>Trisemester </label>
+      <label *ngIf="PayFreqCode == 'SEMI_ANNUALY'" class="col-md-2 adInsLabel" translate>Semi Annualy</label>
+      <label *ngIf="PayFreqCode == 'ANNUALY'" class="col-md-2 adInsLabel" translate>Annualy</label>
+      <label *ngIf="PayFreqCode == 'WEEKLY'" class="col-md-2 adInsLabel" translate>Weekly </label>
+      <label *ngIf="PayFreqCode == 'BIWEEKLY'" class="col-md-2 adInsLabel" translate>Biweekly </label>
+      <label *ngIf="PayFreqCode == 'DAILY'" class="col-md-2 adInsLabel" translate>Daily </label>
+      <label *ngIf="PayFreqCode == 'BIDAILY'" class="col-md-2 adInsLabel" translate>Bidaily </label>
+    </div>
+    <div class="form-group">
+      <label class="col-md-2 adInsLabel" translate>Installment Scheme </label>
+      <label *ngIf="MrInstSchmCode == 'BL'" class="col-md-2 adInsLabel" translate>Balloon </label>
+      <label *ngIf="MrInstSchmCode == 'EP'" class="col-md-2 adInsLabel" translate>Even Principle </label>
+      <label *ngIf="MrInstSchmCode == 'IR'" class="col-md-2 adInsLabel" translate>Irregular </label>
+      <label *ngIf="MrInstSchmCode == 'RF'" class="col-md-2 adInsLabel" translate>Regular Fixed </label>
+      <label *ngIf="MrInstSchmCode == 'STLS'" class="col-md-2 adInsLabel" translate>Step Up Step Down Leasing </label>
+      <label *ngIf="MrInstSchmCode == 'STNM'" class="col-md-2 adInsLabel" translate>Step Up Step Down Normal </label>
+      <label *ngIf="MrInstSchmCode == 'STRL'" class="col-md-2 adInsLabel" translate>Step Up Step Down Regular
+        Leasing</label>
+    </div>
+    <div *ngIf="MouType == 'GENERAL'" class="form-group">
+      <label class="col-md-2 adInsLabel" translate>Payment Frequency </label>
+      <label *ngIf="PayFreqCode == 'MONTHLY'" class="col-md-2 adInsLabel" translate>Monthly </label>
+      <label *ngIf="PayFreqCode == 'BIMONTHLY'" class="col-md-2 adInsLabel" translate>BiMonthly </label>
+      <label *ngIf="PayFreqCode == 'QUATERLY'" class="col-md-2 adInsLabel" translate>Quarterly </label>
+      <label *ngIf="PayFreqCode == 'TRIMESTER'" class="col-md-2 adInsLabel" translate>Trisemester </label>
+      <label *ngIf="PayFreqCode == 'SEMI_ANNUALY'" class="col-md-2 adInsLabel" translate>Semi Annualy</label>
+      <label *ngIf="PayFreqCode == 'ANNUALY'" class="col-md-2 adInsLabel" translate>Annualy</label>
+      <label *ngIf="PayFreqCode == 'WEEKLY'" class="col-md-2 adInsLabel" translate>Weekly </label>
+      <label *ngIf="PayFreqCode == 'BIWEEKLY'" class="col-md-2 adInsLabel" translate>Biweekly </label>
+      <label *ngIf="PayFreqCode == 'DAILY'" class="col-md-2 adInsLabel" translate>Daily </label>
+      <label *ngIf="PayFreqCode == 'BIDAILY'" class="col-md-2 adInsLabel" translate>Bidaily </label>
+    </div>
+    <div *ngIf="MouType == 'GENERAL'" class="form-group">
+      <label class="col-md-2 adInsLabel" translate>First Installment Type</label>
+      <label *ngIf="MrFirstInstTypeCode == 'AD'" class="col-md-2 adInsLabel" translate>Advance </label>
+      <label *ngIf="MrFirstInstTypeCode == 'AR'" class="col-md-2 adInsLabel" translate>Arrear </label>
+    </div>
+    <div *ngIf="MouType == 'FACTORING'" class="form-group">
+      <label class="col-md-2 adInsLabel" translate>Interest Rate (%)</label>
+      <label class="col-md-2 adInsLabel" translate>{{InterestRatePrcnt}}%</label>
+    </div>
+    <div *ngIf="MouType == 'FACTORING'" class="form-group">
+      <label class="col-md-2 adInsLabel" translate>Retention (%)</label>
+      <label class="col-md-2 adInsLabel" translate>{{RetentionPrcnt}}%</label>
+    </div>
+    <div *ngIf="MouType == 'FACTORING'" class="form-group">
+      <label class="col-md-2 adInsLabel" translate>Revolving</label>
+      <label *ngIf="IsListedCust == true" class="col-md-2 adInsLabel" translate>Yes </label>
+      <label *ngIf="IsListedCust == false" class="col-md-2 adInsLabel" translate>No </label>
+    </div>
+    <div *ngIf="MouType == 'FACTORING'" class="form-group">
+      <label class="col-md-2 adInsLabel" translate>Notes</label>
+      <label *ngIf="Notes == '' || Notes == null" class="col-md-2 adInsLabel" translate>-</label>
+      <label *ngIf="Notes != '' && Notes != null" class="col-md-2 adInsLabel" translate>{{Notes}}</label>
+    </div>
+    <div *ngIf="MouType == 'GENERAL'" class="form-group">
+      <label class="col-md-2 adInsLabel" translate>Insure By</label>
+      <label class="col-md-2 adInsLabel" translate>Company</label>
+    </div>
+    <div *ngIf="MouType == 'GENERAL'" class="form-group">
+      <label class="col-md-2 adInsLabel" translate>Down Payment (%)</label>
+      <label class="col-md-1 adInsLabel" translate>{{DownPaymentFromPrcnt}}% </label>
+      <label class="col-md-1 adInsLabel" translate>to</label>
+      <label class="col-md-1 adInsLabel" translate>{{DownPaymentToPrcnt}}% </label>
+    </div>
+    <div *ngIf="MouType == 'GENERAL'" class="form-group">
+      <label class="col-md-2 adInsLabel" translate>Tenor</label>
+      <label class="col-md-1 adInsLabel" translate>{{TenorFrom}}</label>
+      <label class="col-md-1 adInsLabel" translate>to</label>
+      <label class="col-md-1 adInsLabel" translate>{{TenorTo}}</label>
+    </div>
+  </div>
+
+  <div *ngIf="MouType == 'GENERAL'">
+    <lib-ucSubsection [id]="'AssetDataId'" [title]="'Asset Data'" [panel]="'AssetData'">
+    </lib-ucSubsection>
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+        <tr class="table-header">
+          <th><span class="thead-header" name='No' translate>No</span>
+          </th>
+          <th><span class="thead-header" name='AssetType' translate>Asset Type</span>
+          </th>
+          <th><span class="thead-header" name='Brand' translate>Brand</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of listAssetData; let i = index">
+          <td>{{i+1}}</td>
+          <td>{{item.FullAssetCode}}</td>
+          <td>{{item.FullAssetName}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</form>
