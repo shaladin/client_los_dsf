@@ -59,30 +59,36 @@ export class CustCompanyMainDataComponent implements OnInit {
   ngOnInit() {
 
     this.parentForm.addControl(this.identifier, this.fb.group({
+      CustNo: [''],
+      IndustryTypeCode: [''],
       CustModelCode: ['', [Validators.required, Validators.maxLength(50)]],
       CompanyBrandName: ['', Validators.maxLength(100)],
       MrCompanyTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
       NumOfEmp: [0],
-      IsAffiliation: [false],
+      IsAffiliated: [false],
       EstablishmentDt: [''],
-      TaxIdNo: ['', Validators.maxLength(50)],
+      TaxIdNo: ['', [Validators.required, Validators.maxLength(50)]],
       IsVip: [false]
     }));
 
     this.initLookup();
     this.bindAllRefMasterObj();
-    this.bindCustData();
     this.bindCustModelObj();
+    this.bindCustData();
   }
 
   CopyCustomer(event) {
-    this.selectedCustNo = event.CustNo;
+    this.parentForm[this.identifier].patchValue({
+      CustNo: event.CustNo
+    });
     this.InputLookupCustomerObj.isReadonly = true;
   }
 
   
   GetIndustryType(event){
-    this.selectedIndustryTypeCode = event.IndustryTypeCode;
+    this.parentForm[this.identifier].patchValue({
+      IndustryTypeCode: event.IndustryTypeCode
+    });
   }
 
 
@@ -114,44 +120,31 @@ export class CustCompanyMainDataComponent implements OnInit {
   }
 
   bindCustData(){
+    console.log("bind cust data");
+    console.log(this.custDataCompanyObj);
     if(this.custDataCompanyObj.AppCustObj != undefined){
       this.parentForm.controls[this.identifier].patchValue({
-        MrIdTypeCode: this.custDataCompanyObj.AppCustObj.MrIdTypeCode,
-        IdNo: this.custDataCompanyObj.AppCustObj.IdNo,
+        CustNo: this.custDataCompanyObj.AppCustObj.CustNo,
+        CustModelCode: this.custDataCompanyObj.AppCustObj.CustModelCode,
         TaxIdNo: this.custDataCompanyObj.AppCustObj.TaxIdNo,
         IsVip: this.custDataCompanyObj.AppCustObj.IsVip
       });
-      this.setCriteriaLookupCustomer(this.custDataCompanyObj.AppCustObj.MrCustTypeCode);
       this.InputLookupCustomerObj.nameSelect = this.custDataCompanyObj.AppCustObj.CustName;
       this.InputLookupCustomerObj.jsonSelect = {CustName: this.custDataCompanyObj.AppCustObj.CustName};
-      this.selectedCustNo = this.custDataCompanyObj.AppCustObj.CustNo;
     }
     
-    // if(this.custDataCompanyObj.AppCustPersonalObj != undefined){
-    //   this.parentForm.controls[this.identifier].patchValue({
-    //     CustFullName: this.custDataCompanyObj.AppCustPersonalObj.CustFullName,
-    //     MrGenderCode: this.custDataCompanyObj.AppCustPersonalObj.MrGenderCode,		
-    //     MotherMaidenName: this.custDataCompanyObj.AppCustPersonalObj.MotherMaidenName,
-    //     MrMaritalStatCode: this.custDataCompanyObj.AppCustPersonalObj.MrMaritalStatCode,
-    //     BirthPlace: this.custDataCompanyObj.AppCustPersonalObj.BirthPlace,
-    //     BirthDt: formatDate(this.custDataCompanyObj.AppCustPersonalObj.BirthDt, 'yyyy-MM-dd', 'en-US'),
-    //     MrNationalityCode: this.custDataCompanyObj.AppCustPersonalObj.MrNationalityCode,
-    //     MobilePhnNo1: this.custDataCompanyObj.AppCustPersonalObj.MobilePhnNo1,
-    //     MrEducationCode: this.custDataCompanyObj.AppCustPersonalObj.MrEducationCode,
-    //     MobilePhnNo2: this.custDataCompanyObj.AppCustPersonalObj.MobilePhnNo2,
-    //     MrReligionCode: this.custDataCompanyObj.AppCustPersonalObj.MrReligionCode,
-    //     MobilePhnNo3: this.custDataCompanyObj.AppCustPersonalObj.MobilePhnNo3,
-    //     Email1: this.custDataCompanyObj.AppCustPersonalObj.Email1,
-    //     FamilyCardNo: this.custDataCompanyObj.AppCustPersonalObj.FamilyCardNo,
-    //     Email2: this.custDataCompanyObj.AppCustPersonalObj.Email2,
-    //     NoOfResidence: this.custDataCompanyObj.AppCustPersonalObj.NoOfResidence,
-    //     Email3: this.custDataCompanyObj.AppCustPersonalObj.Email3,
-    //     NoOfDependents: this.custDataCompanyObj.AppCustPersonalObj.NoOfDependents
-    //   });
+    if(this.custDataCompanyObj.AppCustCompanyObj != undefined){
+      this.parentForm.controls[this.identifier].patchValue({
+        IndustryTypeCode: this.custDataCompanyObj.AppCustCompanyObj.IndustryTypeCode,
+        CompanyBrandName: this.custDataCompanyObj.AppCustCompanyObj.CompanyBrandName,
+        MrCompanyTypeCode: this.custDataCompanyObj.AppCustCompanyObj.MrCompanyTypeCode,		
+        NumOfEmp: this.custDataCompanyObj.AppCustCompanyObj.NumOfEmp,
+        IsAffiliated: this.custDataCompanyObj.AppCustCompanyObj.IsAffiliated,
+        EstablishmentDt: formatDate(this.custDataCompanyObj.AppCustCompanyObj.EstablishmentDt, 'yyyy-MM-dd', 'en-US')
+      });
       
-      // this.selectedNationalityCountryCode = this.custDataCompanyObj.AppCustPersonalObj.NationalityCountryCode;
-      // this.setCountryName(this.custDataCompanyObj.AppCustPersonalObj.NationalityCountryCode);
-    //}
+      this.setIndustryTypeName(this.custDataCompanyObj.AppCustCompanyObj.IndustryTypeCode);
+    }
   }
 
   initLookup(){
@@ -162,6 +155,7 @@ export class CustCompanyMainDataComponent implements OnInit {
     this.InputLookupCustomerObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustomerObj.genericJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustomerObj.isReadonly = false;
+    this.setCriteriaLookupCustomer(AdInsConstant.CustTypeCompany);
 
     this.InputLookupIndustryTypeObj = new InputLookupObj();
     this.InputLookupIndustryTypeObj.urlJson = "./assets/uclookup/lookupIndustryType.json";
@@ -173,22 +167,7 @@ export class CustCompanyMainDataComponent implements OnInit {
   }
 
   bindAllRefMasterObj(){
-    this.bindIdTypeObj();
     this.bindCompanyTypeObj();
-  }
-
-  bindIdTypeObj(){
-    this.refMasterObj.RefMasterTypeCode = "ID_TYPE";
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
-      (response) => {
-        this.IdTypeObj = response["ReturnObject"];
-        if(this.IdTypeObj.length > 0){
-          this.parentForm.controls[this.identifier].patchValue({
-            MrIdTypeCode: this.IdTypeObj[0].Key
-          });
-        }
-      }
-    );
   }
 
   bindCompanyTypeObj(){
@@ -196,10 +175,11 @@ export class CustCompanyMainDataComponent implements OnInit {
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.CompanyTypeObj = response["ReturnObject"];
-        if(this.CompanyTypeObj.length > 0){
+        if(this.CompanyTypeObj.length > 0  && (this.parentForm.controls[this.identifier]["controls"].MrCompanyTypeCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrCompanyTypeCode.value == "")){
           this.parentForm.controls[this.identifier].patchValue({
             MrCompanyTypeCode: this.CompanyTypeObj[0].Key
           });
+          console.log("bind company type");
         }
       }
     );
@@ -210,7 +190,7 @@ export class CustCompanyMainDataComponent implements OnInit {
      this.http.post(AdInsConstant.GetListKeyValueByMrCustTypeCode, this.custModelReqObj).toPromise().then(
       (response) => {
         this.CustModelObj = response["ReturnObject"];
-        if(this.CustModelObj.length > 0){
+        if(this.CustModelObj.length > 0  && (this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "")){
           this.parentForm.controls[this.identifier].patchValue({
             CustModelCode: this.CustModelObj[0].Key
           });
