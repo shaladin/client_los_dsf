@@ -21,7 +21,7 @@
     ],
     "querystring": {
       "select": "SELECT CUST_NO AS CustNo, CUST_NAME AS CustName, FULL_ADDR AS FullAddr, MR_CUST_TYPE_CODE AS MrCustTypeCode",
-      "from": "FROM CUST C WITH(NOLOCK) LEFT JOIN CUST_ADDR CA WITH(NOLOCK) ON C.CUST_ID = CA.CUST_ID AND CA.MR_CUST_ADDR_TYPE_CODE = 'LEGAL'"
+      "from": "FROM CUST C WITH(NOLOCK) JOIN CUST_ADDR CA WITH(NOLOCK) ON C.CUST_ID = CA.CUST_ID AND CA.MR_CUST_ADDR_TYPE_CODE = 'LEGAL'"
     },
     "headerList": [
         {
