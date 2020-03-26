@@ -86,7 +86,7 @@ export class CustGrpMemberComponent implements OnInit {
     custSocmedObjs.push(this.addGroup(undefined, max + 1));
 
     var InputLookupCustomerObj = this.initLookup();
-    this.InputLookupCustomerObjs.push(InputLookupCustomerObj);
+    // this.InputLookupCustomerObjs.push(InputLookupCustomerObj);
     this.dictLookup[max + 1] = InputLookupCustomerObj;
 
     this.CustRelationshipObjs.push({list: []});

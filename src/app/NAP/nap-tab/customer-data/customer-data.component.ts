@@ -11,12 +11,11 @@ import { CustPersonalMainDataComponent } from './component/personal-main-data/cu
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { CustContactInformationComponent } from './component/contact-information/cust-contact-information.component';
+import { CustPersonalContactInformationComponent } from './component/personal-contact-information/cust-personal-contact-information.component';
 import { CustJobDataComponent } from './component/job-data/cust-job-data.component';
 import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 import { AppCustSocmedObj } from 'app/shared/model/AppCustSocmedObj.Model';
 import { AppCustGrpObj } from 'app/shared/model/AppCustGrpObj.Model';
-import { CustCompanyMainDataComponent } from './component/company-main-data/cust-company-main-data.component';
 import { CustDataCompanyObj } from 'app/shared/model/CustDataCompanyObj.Model';
 
 @Component({
@@ -28,7 +27,7 @@ import { CustDataCompanyObj } from 'app/shared/model/CustDataCompanyObj.Model';
 export class CustomerDataComponent implements OnInit {
 
   @ViewChild(CustPersonalMainDataComponent) mainDataComponent;
-  @ViewChild(CustContactInformationComponent) custContactInformationComponent;
+  @ViewChild(CustPersonalContactInformationComponent) custContactInformationComponent;
   @ViewChild(CustJobDataComponent) custJobDataComponent;
 
 
@@ -67,6 +66,8 @@ export class CustomerDataComponent implements OnInit {
   appCustPersonalId: any;
   listAppCustPersonalContactInformation: any;
   listAppCustBankAcc: any;
+  listShareholder: any;
+  listContactPersonCompany: any;
 
   isBindDataDone: boolean = false;
 
@@ -173,6 +174,9 @@ export class CustomerDataComponent implements OnInit {
     this.setAppCustCompany();
     this.setAppCustAddrLegal();
     this.setAppCustAddrMailing();
+    this.custDataCompanyObj.AppCustCompanyMgmntShrholderObjs = this.listShareholder;
+    this.custDataCompanyObj.AppCustCompanyContactPersonObjs = this.listContactPersonCompany;
+    this.setAppCustCompanyFinData();
   }
 
   setAppCust(){
@@ -361,6 +365,20 @@ export class CustomerDataComponent implements OnInit {
     this.custDataPersonalObj.AppCustPersonalFinDataObj.SpouseMonthlyIncomeAmt = this.CustDataForm.controls["financialData"]["controls"].SpouseMonthlyIncomeAmt.value;
   }
 
+  setAppCustCompanyFinData(){
+    this.custDataCompanyObj.AppCustCompanyFinDataObj.GrossMonthlyIncomeAmt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].GrossMonthlyIncomeAmt.value;
+    this.custDataCompanyObj.AppCustCompanyFinDataObj.GrossMonthlyExpenseAmt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].GrossMonthlyExpenseAmt.value;
+    this.custDataCompanyObj.AppCustCompanyFinDataObj.ReturnOfInvestmentPrcnt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].ReturnOfInvestmentPrcnt.value;
+    this.custDataCompanyObj.AppCustCompanyFinDataObj.ProfitMarginPrcnt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].ProfitMarginPrcnt.value;
+    this.custDataCompanyObj.AppCustCompanyFinDataObj.ReturnOfAssetPrcnt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].ReturnOfAssetPrcnt.value;
+    this.custDataCompanyObj.AppCustCompanyFinDataObj.DebtEquityRatioPrcnt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].DebtEquityRatioPrcnt.value;
+    this.custDataCompanyObj.AppCustCompanyFinDataObj.CurrentRatioPrcnt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].CurrentRatioPrcnt.value;
+    this.custDataCompanyObj.AppCustCompanyFinDataObj.InvTurnOverPrcnt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].InvTurnOverPrcnt.value;
+    this.custDataCompanyObj.AppCustCompanyFinDataObj.GrowthPrcnt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].GrowthPrcnt.value;
+    this.custDataCompanyObj.AppCustCompanyFinDataObj.ArTurnOverPrcnt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].ArTurnOverPrcnt.value;
+    this.custDataCompanyObj.AppCustCompanyFinDataObj.WorkingCapitalAmt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].WorkingCapitalAmt.value;
+  }
+
   setAppCustPersonalJobData(){
     this.custDataPersonalObj.AppCustObj.CustModelCode = this.CustDataForm.controls["jobData"]["controls"].CustModelCode.value;
     
@@ -429,15 +447,19 @@ export class CustomerDataComponent implements OnInit {
       }
 
   getCustContactInformation(event){
-    console.log(event);
     this.listAppCustPersonalContactInformation = event;
-    console.log(this.listAppCustPersonalContactInformation);
   }
 
   getAppCustBankAcc(event){
-    console.log(event);
     this.listAppCustBankAcc = event;
-    console.log(this.listAppCustBankAcc);
+  }
+
+  getAppCustShareholder(event){
+    this.listShareholder = event;
+  }
+
+  getAppCustCompanyContactPerson(event){
+    this.listContactPersonCompany = event;
   }
 
   copyToContactPersonAddr(event){
@@ -604,8 +626,6 @@ export class CustomerDataComponent implements OnInit {
     this.custDataObj.AppId = this.appId;
     this.http.post(this.getCustDataUrl, this.custDataObj).toPromise().then(
       (response) => {
-        console.log("response");
-        console.log(response);
         if(response != ""){
           if(response["AppCustObj"]["MrCustTypeCode"] == AdInsConstant.CustTypePersonal){
             this.custDataPersonalObj = new CustDataPersonalObj();
@@ -616,6 +636,7 @@ export class CustomerDataComponent implements OnInit {
             this.custDataPersonalObj.AppCustAddrMailingObj = response["AppCustAddrMailingObj"];
             this.custDataPersonalObj.AppCustPersonalFinDataObj = response["AppCustPersonalFinDataObj"];
             this.custDataPersonalObj.AppCustBankAccObjs = response["AppCustBankAccObjs"];
+            this.listAppCustBankAcc = this.custDataPersonalObj.AppCustBankAccObjs;
             this.custDataPersonalObj.AppCustPersonalJobDataObj = response["AppCustPersonalJobDataObj"];
             this.custDataPersonalObj.AppCustSocmedObjs = response["AppCustSocmedObjs"];
             this.custDataPersonalObj.AppCustGrpObjs = response["AppCustGrpObjs"];
@@ -623,6 +644,7 @@ export class CustomerDataComponent implements OnInit {
             if(this.custDataPersonalObj.AppCustObj != undefined){
               this.defCustModelCode = this.custDataPersonalObj.AppCustObj.CustModelCode;
             }
+
             this.setAddrLegalObj(AdInsConstant.CustTypePersonal);
             this.setAddrResidenceObj();
             this.setAddrMailingObj(AdInsConstant.CustTypePersonal);
@@ -637,11 +659,16 @@ export class CustomerDataComponent implements OnInit {
             this.custDataCompanyObj.AppCustCompanyObj = response["AppCustCompanyObj"];
             this.custDataCompanyObj.AppCustAddrLegalObj = response["AppCustAddrLegalObj"];
             this.custDataCompanyObj.AppCustAddrMailingObj = response["AppCustAddrMailingObj"];
+            this.custDataCompanyObj.AppCustCompanyMgmntShrholderObjs = response["AppCustCompanyMgmntShrholderObjs"];
+            this.listShareholder = this.custDataCompanyObj.AppCustCompanyMgmntShrholderObjs;
+            this.custDataCompanyObj.AppCustCompanyContactPersonObjs = response["AppCustCompanyContactPersonObjs"];
+            this.listContactPersonCompany = this.custDataCompanyObj.AppCustCompanyContactPersonObjs;
+            this.custDataCompanyObj.AppCustCompanyFinDataObj = response["AppCustCompanyFinDataObj"];
 
             this.setAddrLegalObj(AdInsConstant.CustTypeCompany);
             this.setAddrMailingObj(AdInsConstant.CustTypeCompany);
 
-            this.MrCustTypeCode= this.custDataCompanyObj.AppCustObj.MrCustTypeCode;
+            this.MrCustTypeCode = this.custDataCompanyObj.AppCustObj.MrCustTypeCode;
           }
         }
         this.isBindDataDone = true;

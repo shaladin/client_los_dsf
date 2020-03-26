@@ -72,8 +72,8 @@
                     </div>
                     <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="CustDataForm" [enjiForm]="enjiForm" [identifier]="'mailingAddr'" [default]="mailingAddrObj" [inputField]="inputFieldMailingObj" [showPhn3]="false"></lib-ucaddress>
                   </div>
-                  <app-cust-contact-information (callbackCopyAddr)="copyToContactPersonAddr($event)" (callbackSubmit)="getCustContactInformation($event)" [appCustPersonalId]="appCustPersonalId" [custType]="MrCustTypeCode" [enjiForm]="enjiForm" [parentForm]="CustDataForm" [identifier]="'contactData'"></app-cust-contact-information>
-                  <app-cust-financial-data [appCustPersonalFinDataObj]="custDataPersonalObj.AppCustPersonalFinDataObj" [custType]="MrCustTypeCode" [enjiForm]="enjiForm" [parentForm]="CustDataForm" [identifier]="'financialData'"></app-cust-financial-data>
+                  <app-cust-personal-contact-information (callbackCopyAddr)="copyToContactPersonAddr($event)" (callbackSubmit)="getCustContactInformation($event)" [appCustPersonalId]="appCustPersonalId"></app-cust-personal-contact-information>
+                  <app-cust-personal-financial-data [appCustPersonalFinDataObj]="custDataPersonalObj.AppCustPersonalFinDataObj" [enjiForm]="enjiForm" [parentForm]="CustDataForm" [identifier]="'financialData'"></app-cust-personal-financial-data>
                   <app-cust-bank-account (callbackSubmit)="getAppCustBankAcc($event)" [listBankAcc]="custDataPersonalObj.AppCustBankAccObjs"></app-cust-bank-account>
                   <app-cust-job-data [custModelCode]="defCustModelCode" [appCustPersonalJobDataObj]="custDataPersonalObj.AppCustPersonalJobDataObj" [enjiForm]="enjiForm" [parentForm]="CustDataForm" [identifier]="'jobData'"></app-cust-job-data>
                   <app-cust-socmed [appCustSocmedObjs]="custDataPersonalObj.AppCustSocmedObjs" [enjiForm]="enjiForm" [parentForm]="CustDataForm" [identifier]="'socmed'"></app-cust-socmed>
@@ -120,7 +120,9 @@
                     </div>
                     <lib-ucaddress [showSubsection]="false" [UCAddrForm]="CustDataCompanyForm" [enjiForm]="enjiFormCompany" [identifier]="'mailingAddrCompany'" [default]="mailingAddrCompanyObj" [inputField]="inputFieldMailingCompanyObj" [showPhn3]="false"></lib-ucaddress>
                   </div>
-                  <app-cust-shareholder></app-cust-shareholder>
+                  <app-cust-shareholder (callbackSubmit)="getAppCustShareholder($event)" [listShareholder]="custDataCompanyObj.AppCustCompanyMgmntShrholderObjs"></app-cust-shareholder>
+                  <app-cust-company-contact-information (callbackSubmit)="getAppCustCompanyContactPerson($event)" [listContactPersonCompany]="custDataCompanyObj.AppCustCompanyContactPersonObjs"></app-cust-company-contact-information>
+                  <app-cust-company-financial-data [appCustCompanyFinDataObj]="custDataCompanyObj.AppCustCompanyFinDataObj" [enjiForm]="enjiFormCompany" [parentForm]="CustDataCompanyForm" [identifier]="'financialDataCompany'"></app-cust-company-financial-data>
                 </div>
               </div>
               <div class="form-actions right">

@@ -119,9 +119,26 @@ export class CustShareholderComponent implements OnInit {
     this.clearForm();
   }
 
+  CustTypeChanged(event){
+    this.setCriteriaLookupCustomer(event.value);
+  }
+
+  setCriteriaLookupCustomer(custTypeCode){
+    this.initLookup();
+    var arrCrit = new Array();
+    var critObj = new CriteriaObj();
+    critObj.DataType = 'text';
+    critObj.restriction = AdInsConstant.RestrictionEq;
+    critObj.propName = 'MR_CUST_TYPE_CODE';
+    critObj.value = custTypeCode;
+    arrCrit.push(critObj);
+    this.InputLookupCustomerObj.addCritInput = arrCrit;
+  }
+
   add(content){
     this.mode = "add";
     this.clearForm();
+    this.setCriteriaLookupCustomer(this.defaultCustType);
     this.open(content);
   }
 
@@ -136,16 +153,17 @@ export class CustShareholderComponent implements OnInit {
         MrGenderCode: this.listShareholder[i].MrGenderCode,
         MrIdTypeCode: this.listShareholder[i].MrIdTypeCode,
         BirthPlace: this.listShareholder[i].BirthPlace,
-        BirthDt: this.listShareholder[i].BirthDt,
+        BirthDt: formatDate(this.listShareholder[i].BirthDt, 'yyyy-MM-dd', 'en-US'),
         IdNo: this.listShareholder[i].IdNo,
         TaxIdNo: this.listShareholder[i].TaxIdNo,
-        IdExpiredDt: this.listShareholder[i].IdExpiredDt,
+        IdExpiredDt: formatDate(this.listShareholder[i].IdExpiredDt, 'yyyy-MM-dd', 'en-US'),
         MobilePhnNo: this.listShareholder[i].MobilePhnNo,
         Email: this.listShareholder[i].Email,
         SharePrcnt: this.listShareholder[i].SharePrcnt,
         MrJobPositionCode: this.listShareholder[i].MrJobPositionCode,
         IsSigner: this.listShareholder[i].IsSigner
       });
+      this.setCriteriaLookupCustomer(this.listShareholder[i].MrCustTypeCode);
     }
 
     if(this.listShareholder[i].MrCustTypeCode == AdInsConstant.CustTypeCompany){
@@ -160,6 +178,7 @@ export class CustShareholderComponent implements OnInit {
 
       this.selectedIndustryTypeCode = this.listShareholder[i].IndustryTypeCode;
       this.setIndustryTypeName(this.listShareholder[i].IndustryTypeCode);
+      this.setCriteriaLookupCustomer(this.listShareholder[i].MrCustTypeCode);
     }
     this.InputLookupCustomerObj.nameSelect = this.listShareholder[i].MgmntShrholderName;
     this.InputLookupCustomerObj.jsonSelect = {CustName: this.listShareholder[i].MgmntShrholderName};

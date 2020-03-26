@@ -20,20 +20,16 @@ import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 
 @Component({
-  selector: 'app-cust-contact-information',
-  templateUrl: './cust-contact-information.component.html',
-  styleUrls: ['./cust-contact-information.component.scss'],
+  selector: 'app-cust-personal-contact-information',
+  templateUrl: './cust-personal-contact-information.component.html',
+  styleUrls: ['./cust-personal-contact-information.component.scss'],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 
 })
 
-export class CustContactInformationComponent implements OnInit {
+export class CustPersonalContactInformationComponent implements OnInit {
 
   @Input() appCustPersonalId: any;
-  @Input() custType: any;
-  @Input() enjiForm: NgForm;
-  @Input() parentForm: FormGroup;
-  @Input() identifier: any;
 
   @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
   @Output() callbackCopyAddr: EventEmitter<any> = new EventEmitter();
@@ -112,20 +108,20 @@ export class CustContactInformationComponent implements OnInit {
   }
 
   SaveForm(){
-    console.log(this.ContactInfoPersonalForm);
-    if(this.custType == AdInsConstant.CustTypePersonal){
-      this.appCustPersonalContactPersonObj = new AppCustPersonalContactPersonObj();
-      this.setAppCustPersonalContactPerson();
-      if(this.mode == "add"){
-        this.listContactPersonPersonal.push(this.appCustPersonalContactPersonObj);
-      }
-      if(this.mode == "edit"){
-        this.listContactPersonPersonal[this.currentEditedIndex] = this.appCustPersonalContactPersonObj;
-      }
-      this.callbackSubmit.emit(this.listContactPersonPersonal);
-      this.modalService.dismissAll();
-      this.clearForm();
+    this.appCustPersonalContactPersonObj = new AppCustPersonalContactPersonObj();
+    if(this.listContactPersonPersonal == undefined){
+      this.listContactPersonPersonal = new Array<AppCustPersonalContactPersonObj>();
     }
+    this.setAppCustPersonalContactPerson();
+    if(this.mode == "add"){
+      this.listContactPersonPersonal.push(this.appCustPersonalContactPersonObj);
+    }
+    if(this.mode == "edit"){
+      this.listContactPersonPersonal[this.currentEditedIndex] = this.appCustPersonalContactPersonObj;
+    }
+    this.callbackSubmit.emit(this.listContactPersonPersonal);
+    this.modalService.dismissAll();
+    this.clearForm();
   }
 
   add(content){
@@ -169,7 +165,7 @@ export class CustContactInformationComponent implements OnInit {
 
   clearForm(){
     this.ContactInfoPersonalForm = this.fb.group({
-      ContactPersonName: ['', [Validators.required, Validators.maxLength(1000)]],
+      ContactPersonName: ['', [Validators.required, Validators.maxLength(500)]],
       MrGenderCode: ['', [Validators.required, Validators.maxLength(50)]],
       MrIdTypeCode: ['', Validators.maxLength(50)],
       MrCustRelationshipCode: ['', Validators.maxLength(50)],
@@ -285,18 +281,16 @@ export class CustContactInformationComponent implements OnInit {
   getListContactPersonForPaging(){
     this.appCustPersonalContactPersonObj = new AppCustPersonalContactPersonObj();
     this.appCustPersonalContactPersonObj.AppCustPersonalId = this.appCustPersonalId;
-    if(this.custType == AdInsConstant.CustTypePersonal){
-      this.http.post(this.getCustContactPersonPersonalUrl, this.appCustPersonalContactPersonObj).subscribe(
-        (response) => {
-          console.log(response);
-          this.listContactPersonPersonal = response["ReturnObject"];
-          this.callbackSubmit.emit(this.listContactPersonPersonal);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    }
+    this.http.post(this.getCustContactPersonPersonalUrl, this.appCustPersonalContactPersonObj).subscribe(
+      (response) => {
+        console.log(response);
+        this.listContactPersonPersonal = response["ReturnObject"];
+        this.callbackSubmit.emit(this.listContactPersonPersonal);
+      },
+      (error) => {
+        console.log(error);
+      }
+    ); 
   }
 
   bindCopyFrom(){
@@ -340,9 +334,7 @@ export class CustContactInformationComponent implements OnInit {
   }
 
   bindCustRelationshipObj(){
-    if(this.custType == AdInsConstant.CustTypePersonal){
-      this.refMasterObj.RefMasterTypeCode = "CUST_PERSONAL_RELATIONSHIP";
-    }
+    this.refMasterObj.RefMasterTypeCode = "CUST_PERSONAL_RELATIONSHIP";  
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
         this.CustRelationshipObj = response["ReturnObject"];

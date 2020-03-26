@@ -1,6 +1,7 @@
 import { AppCustObj } from "./AppCustObj.Model";
 import { AppCustCompanyObj } from "./AppCustCompanyObj.Model";
 import { AppCustAddrObj } from "./AppCustAddrObj.Model";
+import { AppCustCompanyFinDataObj } from "./AppCustCompanyFinDataObj.Model";
 
 
 
@@ -10,6 +11,8 @@ export class CustDataCompanyObj {
     AppCustAddrLegalObj: AppCustAddrObj;
     AppCustAddrMailingObj: AppCustAddrObj;
     AppCustCompanyMgmntShrholderObjs: any;
+    AppCustCompanyContactPersonObjs: any;
+    AppCustCompanyFinDataObj: AppCustCompanyFinDataObj;
     RowVersion: any;
 
     constructor() { 
@@ -17,6 +20,7 @@ export class CustDataCompanyObj {
         this.AppCustCompanyObj = new AppCustCompanyObj();
         this.AppCustAddrLegalObj = new AppCustAddrObj();
         this.AppCustAddrMailingObj = new AppCustAddrObj();
+        this.AppCustCompanyFinDataObj = new AppCustCompanyFinDataObj();
         this.RowVersion = ""; 
     }
 }

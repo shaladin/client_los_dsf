@@ -412,7 +412,7 @@ export class AdInsConstant {
     public static GetListKeyValueByMrCustTypeCode = environment.FoundationR3Url + "/RefCustModel/GetListKeyValueByMrCustTypeCode";
 
     //CUST
-    public static GetCustByCustNo = "http://localhost:5000/Cust/GetCustByCustNo";
+    public static GetCustByCustNo = environment.FoundationR3Url + "/Cust/GetCustByCustNo";
 
 
     //CUST DATA PERSONAL
