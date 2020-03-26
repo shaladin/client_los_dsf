@@ -25,28 +25,9 @@
             "value": "",
             "label": "Product Offering Name",
             "placeholder": "Placeholder"
-        },
-        {
-            "type": "dropdown",
-            "name": "OfficeName",
-            "id": "OfficeNameId",
-            "value": "Office",
-            "placeholder": "Placeholder",
-            "isFromURL": true,
-            "isSelectOne": false,
-            "url": "http://r3app-server/FOUNDATION_R3/RefOffice/GetListKvpActiveRefOffice",
-            "label": "Office",
-            "items": [],
-            "itemsUrl": []
         }
     ],
     "headerList": [
-        {
-            "type": "sort",
-            "position": "left",
-            "label": "Office",
-            "name": "OfficeName"
-        },
         {
             "type": "sort",
             "position": "center",
@@ -72,15 +53,10 @@
         }
     ],
     "querystring": {
-        "select": "SELECT a.ORI_OFFICE_NAME AS OfficeName, a.APP_NO AS AppNo, ac.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.APP_ID AS AppId",
-        "from": "FROM dbo.APP a WITH(NOLOCK) LEFT JOIN dbo.APP_CUST ac WITH(NOLOCK) ON a.APP_ID = ac.APP_ID"
+        "select": "SELECT a.APP_NO AS AppNo, ac.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.APP_ID AS AppId",
+        "from": "FROM dbo.APP a WITH(NOLOCK) JOIN dbo.APP_CUST ac WITH(NOLOCK) ON a.APP_ID = ac.APP_ID"
     },
     "bodyList": [
-        {
-            "type": "text",
-            "position": "left",
-            "property": "OfficeName"
-        },
         {
             "type": "text",
             "position": "center",
@@ -102,7 +78,7 @@
             "action": [
                 {
                     "type": "edit",
-                    "path": "/Nap/AppAddDetail",
+                    "path": "/Nap/CommissionAdd",
                     "param": [
                         {
                             "type": "AppId",

@@ -19,6 +19,7 @@ export class AppAddComponent implements OnInit {
 
   param;
   ProductOfferingIdentifier;
+  ProductOfferingNameIdentifier;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -28,92 +29,69 @@ export class AppAddComponent implements OnInit {
   ) { }
 
   NapAppForm = this.fb.group({
-    MouCustId : [''],
-    LeadId : [''],
-    AppNo : [''],
-    OriOfficeCode : [''],
-    OriOfficeName : [''],
-    CrtOfficeCode : [''],
-    CrtOfficeName : [''],
-    ProdOfferingCode : [''],
-    ProdOfferingName : [''],
-    ProdOfferingVersion : [''],
-    AppCreatedDt : [''],
-    AppStat : [''],
-    AppCurrStep : [''],
-    AppLastStep : [''],
-    CurrCode : [''],
-    LobCode : [''],
-    RefProdTypeCode : [''],
-    Tenor : [''],
-    NumOfInst : [''],
-    PayFreqCode : [''],
-    MrFirstInstTypeCode : [''],
-    NumOfAsset : [''],
-    MrLcCalcMethodCode : [''],
-    LcInstRatePrml : [''],
-    LcInsRatePrml : [''],
-    MrAppSourceCode : [''],
-    MrWopCode : [''],
-    SrvyOrderNo : [''],
-    ApvDt : [''],
-    SalesHeadNo : [''],
-    SalesNotes : [''],
-    SalesOfficerNo : [''],
-    CreditAdminNo : [''],
-    CreditAnalystNo : [''],
-    CreditRiskNo : [''],
-    DataEntryNo : [''],
-    MrSalesRecommendCode : [''],
-    MrCustNotifyOptCode : [''],
-    PreviousAppId : [''],
-    IsAppInitDone : [''],
-    MrOrderInfoCode : [''],
-    ApprovalStat : [''],
-    RsvField1 : [''],
-    RsvField2 : [''],
-    RsvField3 : [''],
-    RsvField4 : [''],
-    RsvField5 : ['']
+    MouCustId: [''],
+    LeadId: [''],
+    AppNo: [''],
+    OriOfficeCode: [''],
+    OriOfficeName: [''],
+    CrtOfficeCode: [''],
+    CrtOfficeName: [''],
+    ProdOfferingCode: [''],
+    ProdOfferingName: [''],
+    ProdOfferingVersion: [''],
+    AppCreatedDt: [''],
+    AppStat: [''],
+    AppCurrStep: [''],
+    AppLastStep: [''],
+    CurrCode: [''],
+    LobCode: [''],
+    RefProdTypeCode: [''],
+    Tenor: [''],
+    NumOfInst: [''],
+    PayFreqCode: [''],
+    MrFirstInstTypeCode: [''],
+    NumOfAsset: [''],
+    MrLcCalcMethodCode: [''],
+    LcInstRatePrml: [''],
+    LcInsRatePrml: [''],
+    MrAppSourceCode: [''],
+    MrWopCode: [''],
+    SrvyOrderNo: [''],
+    ApvDt: [''],
+    SalesHeadNo: [''],
+    SalesNotes: [''],
+    SalesOfficerNo: [''],
+    CreditAdminNo: [''],
+    CreditAnalystNo: [''],
+    CreditRiskNo: [''],
+    DataEntryNo: [''],
+    MrSalesRecommendCode: [''],
+    MrCustNotifyOptCode: [''],
+    PreviousAppId: [''],
+    IsAppInitDone: [''],
+    MrOrderInfoCode: [''],
+    ApprovalStat: [''],
+    RsvField1: [''],
+    RsvField2: [''],
+    RsvField3: [''],
+    RsvField4: [''],
+    RsvField5: ['']
   });
 
-  inputLookupObj;
+  inputLookupObjCopyProduct;
+  inputLookupObjName;
   officeItems;
   user;
   ngOnInit() {
     // Lookup Obj
     console.log(JSON.parse(localStorage.getItem("UserAccess")));
-    this.inputLookupObj = new InputLookupObj();
-    this.inputLookupObj.urlJson = "./assets/uclookup/NAP/lookupApp.json";
-    this.inputLookupObj.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
-    this.inputLookupObj.urlEnviPaging = environment.losUrl;
-    this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupApp.json";
-    this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupApp.json";
-
-    console.log(this.inputLookupObj.urlQryPaging );
-    
-
-    // Office DDL
-    var obj = {
-      RowVersion: ""
-    };
-    var url = environment.FoundationR3Url + AdInsConstant.GetListKvpActiveRefOffice;
-    this.http.post(url, obj).subscribe(
-      (response) =>{
-        console.log(response);
-        this.officeItems = response["ReturnObject"];
-        this.NapAppForm.patchValue({
-          OriOfficeCode: this.officeItems[0].Key,
-          OriOfficeName: this.officeItems[0].Value,
-        });
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-    
     this.user = JSON.parse(localStorage.getItem("UserAccess"));
-    if(this.user.MrOfficeTypeCode == "HO"){
+
+    this.MakeLookUpObj();
+
+    this.GetOfficeDDL();
+
+    if (this.user.MrOfficeTypeCode == "HO") {
       this.NapAppForm.controls.OriOfficeCode.disable();
       this.NapAppForm.patchValue({
         OriOfficeCode: this.user.OfficeCode,
@@ -121,7 +99,7 @@ export class AppAddComponent implements OnInit {
         CrtOfficeCode: this.user.OfficeCode,
         CrtOfficeName: this.user.OfficeName,
       });
-    }else if(this.user.MrOfficeTypeCode == "Center Group"){
+    } else if (this.user.MrOfficeTypeCode == "Center Group") {
       this.NapAppForm.patchValue({
         CrtOfficeCode: this.user.OfficeCode,
         CrtOfficeName: this.user.OfficeName,
@@ -134,6 +112,56 @@ export class AppAddComponent implements OnInit {
 
   }
 
+  arrAddCrit;
+  MakeLookUpObj(){
+    this.inputLookupObjCopyProduct = new InputLookupObj();
+    this.inputLookupObjCopyProduct.urlJson = "./assets/uclookup/NAP/lookupApp.json";
+    this.inputLookupObjCopyProduct.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputLookupObjCopyProduct.urlEnviPaging = environment.losUrl;
+    this.inputLookupObjCopyProduct.pagingJson = "./assets/uclookup/NAP/lookupApp.json";
+    this.inputLookupObjCopyProduct.genericJson = "./assets/uclookup/NAP/lookupApp.json";
+    
+    this.inputLookupObjName = new InputLookupObj();
+    this.inputLookupObjName.urlJson = "./assets/uclookup/NAP/lookupAppName.json";
+    this.inputLookupObjName.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputLookupObjName.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupObjName.pagingJson = "./assets/uclookup/NAP/lookupAppName.json";
+    this.inputLookupObjName.genericJson = "./assets/uclookup/NAP/lookupAppName.json";
+    this.inputLookupObjName.nameSelect = this.NapAppForm.controls.ProdOfferingName.value;
+    
+    this.arrAddCrit = new Array();
+
+    var addCrit = new CriteriaObj();
+    addCrit.DataType = "text";
+    addCrit.propName = "ro.OFFICE_CODE ";
+    addCrit.restriction = AdInsConstant.RestrictionIn;
+    addCrit.listValue = [this.user.MrOfficeTypeCode];
+    this.arrAddCrit.push(addCrit);
+
+    this.inputLookupObjName.addCritInput = this.arrAddCrit;
+  }
+
+  GetOfficeDDL() {
+    // Office DDL
+    var obj = {
+      RowVersion: ""
+    };
+    var url = environment.FoundationR3Url + AdInsConstant.GetListKvpActiveRefOffice;
+    this.http.post(url, obj).subscribe(
+      (response) => {
+        console.log(response);
+        this.officeItems = response["ReturnObject"];
+        this.NapAppForm.patchValue({
+          OriOfficeCode: this.officeItems[0].Key,
+          OriOfficeName: this.officeItems[0].Value,
+        });
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
   SaveForm() {
     // this.router.navigate(["Nap/AppAddDetail"], { queryParams: { "AppId": response["AppId"] } });
     var napAppObj = new NapAppModel();
@@ -143,16 +171,16 @@ export class AppAddComponent implements OnInit {
     napAppObj.AppStat = AdInsConstant.AppStepNew;
     napAppObj.AppCurrStep = AdInsConstant.AppStepNew;
 
-    if(this.user.MrOfficeTypeCode == "HO"){
+    if (this.user.MrOfficeTypeCode == "HO") {
       napAppObj.OriOfficeCode = this.user.OfficeCode;
-    }else if(this.user.MrOfficeTypeCode == "Center Group"){
-      
+    } else if (this.user.MrOfficeTypeCode == "Center Group") {
+
     }
     console.log(napAppObj);
 
     var url = environment.losUrl + AdInsConstant.AddApp;
     this.http.post(url, napAppObj).subscribe(
-      (response) =>{
+      (response) => {
         console.log(response);
         this.toastr.successMessage(response["message"]);
         this.router.navigate(["Nap/AppAddDetail"], { queryParams: { "AppId": response["AppId"] } });
@@ -164,8 +192,8 @@ export class AppAddComponent implements OnInit {
 
   }
 
-  getLookupAppResponse(ev: any){
-    console.log(ev);
+  getLookupAppResponseCopy(ev: any) {
+    // console.log(ev);
     this.NapAppForm.patchValue({
       ProdOfferingCode: ev.ProdOfferingCode,
       ProdOfferingName: ev.ProdOfferingName,
@@ -187,9 +215,18 @@ export class AppAddComponent implements OnInit {
       SalesOfficerNo: ev.SalesOfficerNo
     });
     console.log(this.NapAppForm);
+    this.inputLookupObjName.nameSelect = ev.ProdOfferingName;
   }
 
-  ChangeValueOffice(ev: any){
+  getLookupAppResponseName(ev: any) {
+    // console.log(ev);
+    this.NapAppForm.patchValue({
+      ProdOfferingCode: ev.ProdOfferingCode,
+      ProdOfferingName: ev.ProdOfferingName
+    });
+  }
+
+  ChangeValueOffice(ev: any) {
     // console.log(ev);
     this.NapAppForm.patchValue({
       OriOfficeCode: ev.target.selectedOptions[0].value,
