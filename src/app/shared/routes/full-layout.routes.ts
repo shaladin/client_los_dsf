@@ -34,5 +34,13 @@ export const Full_ROUTES: Routes = [
   {
     path: 'Inquiry',
     loadChildren: './inquiry/inquiry.module#InquiryModule'
+  },
+  {
+    path: 'AdminProcess',
+    loadChildren: './admin-process/admin-process.module#AdminProcessModule'
+  },
+  {
+    path: 'View',
+    loadChildren: './view/view.module#ViewModule'
   }
 ];

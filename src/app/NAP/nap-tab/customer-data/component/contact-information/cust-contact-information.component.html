@@ -62,7 +62,7 @@
     <div class="modal-body">
       <div class="px-3">
         <form class="form form-horizontal" [formGroup]="ContactInfoPersonalForm" #enjiForm="ngForm" 
-          (ngSubmit)="SaveForm()">
+          (ngSubmit)="ContactInfoPersonalForm.valid && SaveForm()">
           <div class="form-body">
             <lib-ucSubsection [id]="'addContactInfomationId'" [title]="'Add Contact Information'"
               [panel]="'addContactInfomation'">

@@ -11,95 +11,112 @@ import { GuarantorCompanyComponent } from "./nap-tab/app-guarantor/guarantor-com
 import { GuarantorPagingComponent } from "./nap-tab/app-guarantor/guarantor-paging/guarantor-paging.component";
 import { GuarantorPersonalComponent } from "./nap-tab/app-guarantor/guarantor-personal/guarantor-personal.component";
 import { AppLifeInsComponent } from "./nap-tab/app-life-ins/app-life-ins.component";
+import { CommissionPagingComponent } from "./commission-paging/commission-paging.component";
+import { CommissionAddComponent } from "./commission-add/commission-add.component";
+
 
 const routes: Routes = [
-    {
-        path: '',
-        children: [
-            {
-                path: 'AppPaging',
-                component: AppPagingComponent,
-                data: {
-                    title: 'Paging'
-                }
-            },
-            {
-                path: 'AppAdd',
-                component: AppAddComponent,
-                data: {
-                    title: 'Add'
-                }
-            },
-            {
-                path: 'AppAddDetail',
-                component: AppAddDetailComponent,
-                data: {
-                    title: 'AddDetail'
-                }
-            },            
-            {
-                path: 'AppReferantor',
-                component: AppReferantorComponent,
-                data: {
-                    title: 'Referantor'
-                }
-            },           
-            {
-                path: 'AppModel',
-                component: AppModelComponent,
-                data: {
-                    title: 'Model'
-                }
-            },
-            {
-                path: 'CustData',
-                component: CustomerDataComponent,
-                data: {
-                    title: 'Customer Data'
-                }
-            },
-            {
-                path: 'Guarantor/paging',
-                component: GuarantorPagingComponent,
-                data: {
-                  title: 'Paging'
-                },
-              },
-              {
-                path: 'Guarantor/personal',
-                component: GuarantorPersonalComponent,
-                data: {
-                  title: 'Personal'
-                },
-              },
-              {
-                path: 'Guarantor/company',
-                component: GuarantorCompanyComponent,
-                data: {
-                  title: 'Company'
-                },
-              },
-              {
-                path: 'AppAddDetail/Guarantor/Main',
-                component: AppGuarantorComponent,
-                data: {
-                  title: 'Main'
-                },
-              },
-              {
-                path: 'LifeIns',
-                component: AppLifeInsComponent,
-                data: {
-                  title: 'Life Insurance'
-                },
-              },
-        ]
-    }
+  {
+    path: '',
+    children: [
+      {
+        path: 'AppPaging',
+        component: AppPagingComponent,
+        data: {
+          title: 'Paging'
+        }
+      },
+      {
+        path: 'AppAdd',
+        component: AppAddComponent,
+        data: {
+          title: 'Add'
+        }
+      },
+      {
+        path: 'AppAddDetail',
+        component: AppAddDetailComponent,
+        data: {
+          title: 'AddDetail'
+        }
+      },
+      {
+        path: 'AppReferantor',
+        component: AppReferantorComponent,
+        data: {
+          title: 'Referantor'
+        }
+      },
+      {
+        path: 'AppModel',
+        component: AppModelComponent,
+        data: {
+          title: 'Model'
+        }
+      },
+      {
+        path: 'CustData',
+        component: CustomerDataComponent,
+        data: {
+          title: 'Customer Data'
+        }
+      },
+      {
+        path: 'Guarantor/paging',
+        component: GuarantorPagingComponent,
+        data: {
+          title: 'Paging'
+        },
+      },
+      {
+        path: 'Guarantor/personal',
+        component: GuarantorPersonalComponent,
+        data: {
+          title: 'Personal'
+        },
+      },
+      {
+        path: 'Guarantor/company',
+        component: GuarantorCompanyComponent,
+        data: {
+          title: 'Company'
+        },
+      },
+      {
+        path: 'AppAddDetail/Guarantor/Main',
+        component: AppGuarantorComponent,
+        data: {
+          title: 'Main'
+        },
+      },
+      {
+        path: 'LifeIns',
+        component: AppLifeInsComponent,
+        data: {
+          title: 'Life Insurance'
+        },
+      },
+      {
+        path: 'CommissionPaging',
+        component: CommissionPagingComponent,
+        data: {
+          title: 'Commission Paging'
+        }
+      },
+      {
+        path: 'CommissionAdd',
+        component: CommissionAddComponent,
+        data: {
+          title: 'Commission Add'
+        }
+      },
+    ]
+  }
 ]
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 
 export class NapRoutingModule { }

@@ -1,0 +1,87 @@
+<div class="card-header row">
+  <h4 class="card-title col-md-6">Add App Cross</h4>
+</div>
+<lib-UCSearch id="ucSearch" style="width:100%;" [searchInput]='inputObj' (result)="getResult($event)">
+</lib-UCSearch>
+
+<div [hidden]="resultData?.Data == null">
+  <table class="table table-responsive-md text-center table-hover">
+    <thead>
+      <tr class="table-header">
+        <th><input type="checkbox" [checked]="checkboxAll" (change)="SelectAll($event.target.checked)" id="checkAll"
+            name="CheckAll"></th>
+        <th class="text-left"><span translate class="thead-header" (click)="searchSort($event)"
+            name='AgrmntNo'>Agreement No</span></th>
+        <th class="text-left"><span translate class="thead-header" (click)="searchSort($event)" name='CustName'>Customer
+            Name</span></th>
+        <th class="text-left"><span translate class="thead-header" (click)="searchSort($event)" name='AppNo'>Application
+            No</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of resultData?.Data">
+        <td>
+          <div *ngIf="listSelectedId.indexOf(item.AgrmntId) >- 1">
+            <input type="checkbox" id="checkSame" name="itemSame"
+              (change)="Checked(item.AgrmntId,  $event.target.checked)" [checked]="true">
+          </div>
+          <div *ngIf="listSelectedId.indexOf(item.AgrmntId) < 0">
+            <input type="checkbox" id="checkDiff" name="itemDiff"
+              (change)="Checked(item.AgrmntId,  $event.target.checked)" [checked]=false>
+          </div>
+        </td>
+        <td class="text-left">{{item.AgrmntNo}}</td>
+        <td class="text-left">{{item.CustName}}</td>
+        <td class="text-left">{{item.AppNo}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="card-header">
+    <div class="text-right">
+      <button type="button" (click)="addToTemp()" class="btn btn-raised btn-warning mr-1">
+        <i class="fa ft-plus"></i> Add To Temp
+      </button>
+    </div>
+  </div>
+
+  <div [hidden]="tempData?.length == 0">
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+        <tr class="table-header">
+          <th><span translate class="thead-header" (click)="searchSort($event)" name='AgrmntNo'>Aggreement No</span>
+          </th>
+          <th><span translate class="thead-header" (click)="searchSort($event)" name='CustName'>Customer Name</span>
+          </th>
+          <th><span translate class="thead-header" (click)="searchSort($event)" name='AppNo'>Application No</span>
+          </th>
+          <th translate>ACTION</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of tempData">
+          <td>{{item.AgrmntNo}}</td>
+          <td>{{item.CustName}}</td>
+          <td>{{item.AppNo}}</td>
+          <td>
+            <div>
+              <a class="danger p-0" data-original-title="" title="" (click)="deleteFromTemp(item.AgrmntId)">
+                <i class="ft-trash-2 font-medium-3 mr-2"></i>
+              </a></div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+</div>
+<div class="card-header">
+  <div class="text-right">
+    <div [hidden]="tempData?.length == 0">
+      <button type="submit" (click)="SaveToTemp()" class="btn btn-raised btn-primary" translate>
+        <i class="far"></i> Submit
+      </button>
+    </div>
+  </div>
+</div>
