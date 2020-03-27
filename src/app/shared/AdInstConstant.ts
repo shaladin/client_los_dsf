@@ -394,6 +394,8 @@ export class AdInsConstant {
 
     // MOU CUST
     public static GetMouCustById = environment.losUrl + "/MouCust/GetMouCustById";
+    public static AddMouCust = environment.losUrl + "/MouCust/AddMouCust";
+    public static EditMouCust = environment.losUrl + "/MouCust/EditMouCust";
     public static GetMouCustClauseByMouCustId = environment.losUrl + "/MouCustClause/GetMouCustClauseByMouCustId";
     public static AddMouCustClause = environment.losUrl + "/MouCustClause/AddMouCustClause";
     public static EditMouCustClause = environment.losUrl + "/MouCustClause/EditMouCustClause";
@@ -445,10 +447,11 @@ export class AdInsConstant {
 
     //CUST DATA COMPANY
     public static AddEditCustDataCompany = "http://localhost:5001/AppCust/AddEditCustDataCompany";
-
-
-    // MOU
-    // public static GetMouCustById = environment.losUrl + "/MouCust/GetMouCustById";
-    public static AddMouCust = environment.losUrl + "/MouCust/AddMouCust";
-    public static EditMouCust = environment.losUrl + "/MouCust/EditMouCust";
+    
+    //APP ASSET
+    public static GetAppAssetListByAgrmntId = environment.losUrl + "/AppAsset/GetAppAssetListByAgrmntId";
+    public static GetAppAssetByAppId = environment.losUrl + "/AppAsset/GetAppAssetByAppId";
+    public static GetAppAssetListByAppId = environment.losUrl + "/AppAsset/GetAppAssetListByAppId";
+    public static GetAllAssetDataForPOByAsset = environment.losUrl + "/AppAsset/GetAllAssetDataForPOByAsset";
+    
 }

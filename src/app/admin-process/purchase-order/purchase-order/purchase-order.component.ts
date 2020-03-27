@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
 
 @Component({
   selector: 'app-purchase-order',
@@ -9,8 +11,9 @@ import { ActivatedRoute } from '@angular/router';
 export class PurchaseOrderComponent implements OnInit {
 
   AgrmntId: any;
-  arrValue= [];
-  constructor(private route: ActivatedRoute) { 
+  arrValue = [];
+  AppAssetList = [];
+  constructor(private route: ActivatedRoute, private http: HttpClient) { 
     this.route.queryParams.subscribe(params => {
       if (params["AgrmntId"] != null) {
         this.AgrmntId = params["AgrmntId"];
@@ -19,6 +22,16 @@ export class PurchaseOrderComponent implements OnInit {
 
   ngOnInit() {
     this.arrValue.push(this.AgrmntId);
+    var appAssetObj = {
+      AgrmntId: this.AgrmntId
+    }
+    this.http.post(AdInsConstant.GetAppAssetListByAgrmntId, appAssetObj).subscribe(
+      (response) => {
+        console.log(response);  
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
-
 }
