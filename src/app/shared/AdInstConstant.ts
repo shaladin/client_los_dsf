@@ -392,9 +392,6 @@ export class AdInsConstant {
     public static GetListVendorBankAccByVendorId= "/VendorBankAcc/GetListVendorBankAccByVendorId";
     public static GetListVendorBankAccByVendorCode= "/VendorBankAcc/GetListVendorBankAccByVendorCode";
 
-    // MOU CUST
-    public static GetMouCustById = environment.losUrl + "/MouCust/GetMouCustById";
-
     // MOU CUST ASSET
     public static GetMouCustAssetByMouCustId = environment.losUrl + "/MouCustAsset/GetMouCustAssetByMouCustId";
 
@@ -450,4 +447,11 @@ export class AdInsConstant {
     public static GetMouCustById = environment.losUrl + "/MouCust/GetMouCustById";
     public static AddMouCust = environment.losUrl + "/MouCust/AddMouCust";
     public static EditMouCust = environment.losUrl + "/MouCust/EditMouCust";
+
+    //APP ASSET
+    public static GetAppAssetListByAgrmntId = environment.losUrl + "/AppAsset/GetAppAssetListByAgrmntId";
+    public static GetAppAssetByAppId = environment.losUrl + "/AppAsset/GetAppAssetByAppId";
+    public static GetAppAssetListByAppId = environment.losUrl + "/AppAsset/GetAppAssetListByAppId";
+    public static GetAllAssetDataForPOByAsset = environment.losUrl + "/AppAsset/GetAllAssetDataForPOByAsset";
+    
 }
