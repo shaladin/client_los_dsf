@@ -49,15 +49,7 @@
                                 </div>
                                 <div class="row">
                                     <label class="col-md-6">Address </label>
-                                    <label class="col-md-6">
-                                        {{AssetObj?.AppCustAddrObj.Addr + ' RT/RW: ' + 
-                                        AssetObj?.AppCustAddrObj.AreaCode4 + '/' + 
-                                        AssetObj?.AppCustAddrObj.AreaCode3 + ' ' + 
-                                        AssetObj?.AppCustAddrObj.AreaCode2 + ' ' + 
-                                        AssetObj?.AppCustAddrObj.AreaCode1 + ' ' + 
-                                        AssetObj?.AppCustAddrObj.City + ' ' + 
-                                        AssetObj?.AppCustAddrObj.Zipcode}}
-                                    </label>
+                                    <label class="col-md-6">{{Address}} </label>
                                 </div>
                             </div>
                         </div>
@@ -119,12 +111,12 @@
                             <div class="col-md-6">
                                 <div class="row">
                                     <label class="col-md-6">Insurance Premium </label>
-                                    <label class="col-md-6">{{AssetObj?.AgrmntFinDataObj.TotalInsCustAmt | number}}
+                                    <label class="col-md-6">{{TotalInsCustAmt | number}}
                                     </label>
                                 </div>
                                 <div class="row">
                                     <label class="col-md-6">Life Insurance Premium </label>
-                                    <label class="col-md-6">{{AssetObj?.AgrmntFinDataObj.TotalLifeInsCustAmt | number}}
+                                    <label class="col-md-6">{{TotalLifeInsCustAmt | number}}
                                     </label>
                                 </div>
                                 <div class="row">
@@ -135,8 +127,7 @@
                             <div class="col-md-6" *ngFor="let item of AssetObj?.AgrmntFeeListObj">
                                 <div class="row">
                                     <label class="col-md-6">{{item.FeeName}} </label>
-                                    <label class="col-md-6" *ngIf="item.IsCapitalized == false">{{item.AppFeeAmt | number}} </label>
-                                    <label class="col-md-6" *ngIf="item.IsCapitalized == true">0 </label>
+                                    <label class="col-md-6">{{item.AppFeeAmt | number}} </label>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -144,7 +135,7 @@
                                     <div class="col-md-6">
                                         <div class="row">
                                             <label class="col-md-6">Total Purchase Order </label>
-                                            <label class="col-md-6">{{TotalPurchaseOrderAmt}} </label>
+                                            <label class="col-md-6">{{TotalPurchaseOrderAmt | number}} </label>
                                         </div>
                                     </div>
                                 </div>
@@ -192,7 +183,7 @@
                             <div class="col-md-6">
                                 <div class="row">
                                     <label class="col-md-6">Expired Date </label>
-                                    <label class="col-md-6">DATEEEEE</label>
+                                    <label class="col-md-6">{{PurchaseOrderExpiredDt | date: 'dd-MMM-yyyy' }}</label>
                                 </div>
                             </div>
                         </div>
@@ -204,7 +195,7 @@
                                 translate>
                                 <i class="fa fa-arrow-circle-left"></i> Cancel
                             </button>
-                            <button type="submit" class="btn btn-raised btn-primary">
+                            <button type="submit" (click)="SaveForm()" class="btn btn-raised btn-primary">
                                 <i class="fa fa-check-square-o"></i> Save And Continue
                             </button>
                         </div>
