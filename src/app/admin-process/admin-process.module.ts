@@ -7,12 +7,13 @@ import { UcpagingModule } from "@adins/ucpaging";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { UcSubsectionModule } from "@adins/uc-subsection";
 import { UcgridfooterModule } from "@adins/ucgridfooter";
-import { UcShowErrorsModule } from "@adins/uc-show-errors";
+// import { UcShowErrorsModule } from "@adins/uc-show-errors";
 import { PurchaseOrderPagingComponent } from "./purchase-order/purchase-order-paging/purchase-order-paging.component";
 import { AdminProcessRoutingModule } from "./admin-process-routing.module";
 import { PurchaseOrderDetailComponent } from './purchase-order/purchase-order-detail/purchase-order-detail.component';
 import { SharingComponentModule } from "app/shared/sharingcomponent.module";
 import { PurchaseOrderComponent } from './purchase-order/purchase-order/purchase-order.component';
+import { PurchaseOrderInfoComponent } from './purchase-order/purchase-order-detail/purchase-order-info/purchase-order-info.component';
 
 @NgModule({
   imports: [
@@ -25,14 +26,15 @@ import { PurchaseOrderComponent } from './purchase-order/purchase-order/purchase
     NgbModule,
     ReactiveFormsModule,
     UcSubsectionModule,
-    UcShowErrorsModule,
+    // UcShowErrorsModule,
     AdminProcessRoutingModule,
     SharingComponentModule
   ],
   declarations: [
     PurchaseOrderPagingComponent,
     PurchaseOrderDetailComponent,
-    PurchaseOrderComponent
+    PurchaseOrderComponent,
+    PurchaseOrderInfoComponent
   ]
 })
 export class AdminProcessModule { }
