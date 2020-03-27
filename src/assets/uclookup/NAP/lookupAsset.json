@@ -1,0 +1,68 @@
+{
+  "title": "Lookup Asset",
+  "component": [
+    {
+      "type": "textbox",
+      "name": "ASSET_CODE",
+      "id": "assetCode",
+      "value": "",
+      "label": "Asset Code",
+      "placeholder": "Asset Code"
+    },
+    {
+      "type": "textbox",
+      "name": "ASSET_NAME",
+      "id": "assetName",
+      "value": "",
+      "label": "Asset Name",
+      "placeholder": "Asset Name"
+    }
+  ],
+  "querystring": {
+    "select": "SELECT ASSET_CODE AS AssetCode, ASSET_NAME AS AssetName",
+    "from": "FROM dbo.ASSET_MASTER WITH(NOLOCK)"
+  },
+  "headerList": [
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Asset Code",
+      "name": "AssetCode"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Asset Name",
+      "name": "AssetName"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Select"
+    }
+  ],
+  "bodyList": [
+    {
+      "type": "text",
+      "position": "center",
+      "property": "AssetCode"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "AssetName"
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
+        {
+          "type": "select",
+          "property": "AssetCode"
+        }
+      ]
+    }
+  ],
+  "propertyId": "AssetCode",
+  "propertyName": "AssetName"
+}

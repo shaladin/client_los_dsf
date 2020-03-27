@@ -12,20 +12,21 @@ import { formatDate } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-cust-main-data',
-  templateUrl: './cust-main-data.component.html',
-  styleUrls: ['./cust-main-data.component.scss'],
+  selector: 'app-cust-personal-main-data',
+  templateUrl: './cust-personal-main-data.component.html',
+  styleUrls: ['./cust-personal-main-data.component.scss'],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 
 })
 
-export class CustMainDataComponent implements OnInit {
+export class CustPersonalMainDataComponent implements OnInit {
 
   @Input() appId;
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
   @Input() identifier: any;
   @Input() custDataPersonalObj: CustDataPersonalObj = new CustDataPersonalObj();
+  @Input() custType: any;
 
   refMasterObj = {
     RefMasterTypeCode: "",
@@ -49,7 +50,6 @@ export class CustMainDataComponent implements OnInit {
 
   getRefMasterUrl: any;
   getCountryUrl: any;
-
 
   constructor(
     private fb: FormBuilder, 
@@ -142,7 +142,6 @@ export class CustMainDataComponent implements OnInit {
         TaxIdNo: this.custDataPersonalObj.AppCustObj.TaxIdNo,
         IsVip: this.custDataPersonalObj.AppCustObj.IsVip,
       });
-      this.setCriteriaLookupCustomer(this.custDataPersonalObj.AppCustObj.MrCustTypeCode);
       this.InputLookupCustomerObj.nameSelect = this.custDataPersonalObj.AppCustObj.CustName;
       this.InputLookupCustomerObj.jsonSelect = {CustName: this.custDataPersonalObj.AppCustObj.CustName};
       this.selectedCustNo = this.custDataPersonalObj.AppCustObj.CustNo;
@@ -188,6 +187,7 @@ export class CustMainDataComponent implements OnInit {
     this.InputLookupCustomerObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustomerObj.genericJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustomerObj.isReadonly = false;
+    this.setCriteriaLookupCustomer(AdInsConstant.CustTypePersonal);
 
     this.InputLookupCountryObj = new InputLookupObj();
     this.InputLookupCountryObj.urlJson = "./assets/uclookup/lookupCountry.json";
@@ -205,21 +205,6 @@ export class CustMainDataComponent implements OnInit {
     this.bindNationalityObj();
     this.bindEducationObj();
     this.bindReligionObj();
-  }
-
-  bindCustTypeObj(){
-    this.refMasterObj.RefMasterTypeCode = "CUST_TYPE";
-    this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
-      (response) => {
-        this.CustTypeObj = response["ReturnObject"];
-        if(this.CustTypeObj.length > 0){
-          this.parentForm.controls[this.identifier].patchValue({
-            MrCustTypeCode: this.CustTypeObj[0].Key
-          });
-          this.setCriteriaLookupCustomer(this.CustTypeObj[0].Key);
-        }
-      }
-    );
   }
 
   bindIdTypeObj(){

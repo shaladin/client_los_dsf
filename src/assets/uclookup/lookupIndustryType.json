@@ -1,0 +1,107 @@
+{
+    "url": "",
+    "title":"Lookup - Industry Type",
+    "component": [
+    {
+        "type": "textbox",
+        "name": "ECONOMIC_SECTOR_CODE",
+        "id": "economicSectorCodeId",
+        "value": "",
+        "label": "Economic Sector Code",
+        "placeholder": ""
+        },
+        {
+        "type": "textbox",
+        "name": "ECONOMIC_SECTOR_NAME",
+        "id": "economicSectorNameId",
+        "value": "",
+        "label": "Economic Sector Name",
+        "placeholder": ""
+        },
+      {
+        "type": "textbox",
+        "name": "INDUSTRY_TYPE_CODE",
+        "id": "industryTypeCodeId",
+        "value": "",
+        "label": "Industry Type Code",
+        "placeholder": ""
+      },
+      {
+        "type": "textbox",
+        "name": "INDUSTRY_TYPE_NAME",
+        "id": "industryTypeNameId",
+        "value": "",
+        "label": "Industry Type Name",
+        "placeholder": ""
+      }
+    ],
+    "querystring": {
+      "select": "SELECT ECONOMIC_SECTOR_CODE AS EconomicSectorCode, ECONOMIC_SECTOR_NAME AS EconomicSectorName, INDUSTRY_TYPE_CODE AS IndustryTypeCode, INDUSTRY_TYPE_NAME AS IndustryTypeName",
+      "from": "FROM dbo.REF_INDUSTRY_TYPE RIT WITH(NOLOCK) JOIN dbo.REF_ECONOMIC_SECTOR RES WITH(NOLOCK) ON RIT.REF_ECONOMIC_SECTOR_ID = RES.REF_ECONOMIC_SECTOR_ID"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Economic Sector Code",
+            "name": "ECONOMIC_SECTOR_CODE"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Economic Sector Name",
+            "name": "ECONOMIC_SECTOR_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Industry Type Code",
+            "name": "INDUSTRY_TYPE_CODE"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Industry Type Name",
+            "name": "INDUSTRY_TYPE_NAME"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Select"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "EconomicSectorCode"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "EconomicSectorName"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "IndustryTypeCode"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "IndustryTypeName"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "select",
+                    "property": "IndustryTypeCode"
+                }
+            ]
+        }
+    ],
+    "propertyId": "IndustryTypeCode",
+    "propertyName": "IndustryTypeName"
+}
