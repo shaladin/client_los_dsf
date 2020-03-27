@@ -1,34 +1,10 @@
 {
-    "title": "MOU Review",
+    "title": "MOU Approval",
     "exportExcel": false,
     "component": [
         {
             "type": "textbox",
-            "name": "A.MOU_CUST_NO",
-            "id": "MouCustNoId",
-            "value": "",
-            "label": "MOU NO",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type": "dropdown",
-            "datatype": "text",
-            "name": "MR_MOU_TYPE_CODE",
-            "id": "MrMouTypeCode",
-            "value": "",
-            "placeholder": "Placeholder",
-            "isFromURL": true,
-            "isSelectOne": false,
-            "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
-            "label": "MOU TYPE",
-            "items": [],
-            "itemsUrl": [],
-            "criteriaPropName": "RefMasterTypeCode",
-            "criteriaPropValue": "MOU_TYPE"
-        },
-        {
-            "type": "textbox",
-            "name": "A.CUST_NAME",
+            "name": "CUST_NAME",
             "id": "CustNameId",
             "value": "",
             "label": "CUSTOMER NAME",
@@ -36,52 +12,63 @@
         },
         {
             "type": "textbox",
-            "name": "A.CUST_NAME",
-            "id": "CustNameId",
+            "name": "TRX_NO",
+            "id": "TrxNoId",
             "value": "",
-            "label": "",
+            "label": "TRANSACTION NO",
             "placeholder": "Placeholder"
         },
         {
-            "type": "dropdown",
-            "name": "Claimed",
-            "id": "ActiveStatusId",
-            "label": "TASK CLAIM STATUS",
+            "type": "textbox",
+            "name": "APV_NO",
+            "id": "ApvNoId",
             "value": "",
-            "placeholder": "Placeholder",
-            "isFromURL": false,
-            "isSelectOne": false,
-            "items": [
-                {
-                    "key": "CLAIMED",
-                    "value": "CLAIMED"
-                },
-                {
-                    "key": "UNCLAIMED",
-                    "value": "UNCLAIMED"
-                }
-            ],
-            "itemsUrl": []
+            "label": "APPROVAL NO",
+            "placeholder": "Placeholder"
         },
         {
             "type": "textbox",
-            "name": "A.CUST_NAME",
-            "id": "CustNameId",
+            "name": "A.REQUEST_BY",
+            "id": "ReqById",
             "value": "",
-            "label": "CLAIM BY",
+            "label": "REQUEST BY",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "MAIN_USERNAME",
+            "id": "TaskOwnerId",
+            "value": "",
+            "label": "TASK OWNER",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "USERNAME",
+            "id": "CurrentUserId",
+            "value": "",
+            "label": "CURRENT USER",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "datepicker",
+            "name": "A.REQUEST_DATE",
+            "id": "ReqDtId",
+            "value": "",
+            "label": "REQUEST DATE",
             "placeholder": "Placeholder"
         }
     ],
     "querystring": {
-        "select": "SELECT A.MOU_CUST_ID AS MouCustId, A.MOU_CUST_NO AS MouCustNo, A.MOU_CUST_ID AS MouCustId, A.CUST_NAME AS CustName, A.MOU_CUST_DT AS MouCustDt, A.END_DT AS EndDt, A.PLAFOND_AMT AS PlafondAmt, A.IS_REVOLVING AS IsRevolving, A.MR_MOU_TYPE_CODE AS MouType, A.REF_NO AS RefNo",
-        "from": "FROM dbo.MOU_CUST A WITH(NOLOCK)"
+        "select": "SELECT TL.TASK_ID AS TaskId, TL.INSTANCE_ID AS InstanceId, TL.APV_REQ_ID AS ApvReqId, TL.TRX_NO AS TrxNo, TL.APV_NO AS ApvNo, TL.REQUEST_BY AS RequestBy, TL.REQUEST_DATE AS RequestDate, TL.MAIN_USER_ID AS MainUserId, TL.CURRENT_USER_ID AS CurrentUserId, TL.CATEGORY_CODE AS CategoryCode, A.MOU_CUST_ID AS MouCustId, A.MOU_CUST_NO AS MouCustNo, A.MOU_CUST_ID AS MouCustId, A.CUST_NAME AS CustName, A.MOU_CUST_DT AS MouCustDt, A.END_DT AS EndDt, A.PLAFOND_AMT AS PlafondAmt, A.IS_REVOLVING AS IsRevolving, A.MR_MOU_TYPE_CODE AS MouType, A.MOU_STAT AS MouStat, A.REF_NO AS RefNo",
+        "from": "FROM dbo.V_APV_TASK_LIST AS TL WITH(NOLOCK) JOIN dbo.MOU_CUST A WITH(NOLOCK) ON TL.TRX_NO = A.MOU_CUST_NO"
     },
     "headerList": [
         {
             "type": "sort",
-            "position": "left",
-            "label": "Mou No",
-            "name": "MouCustNo"
+            "position": "center",
+            "label": "Apv No",
+            "name": "APV_NO"
         },
         {
             "type": "sort",
@@ -92,32 +79,32 @@
         {
             "type": "sort",
             "position": "left",
-            "label": "Mou Date",
-            "name": "MouCustDt"
+            "label": "Mou No",
+            "name": "MouCustNo"
         },
         {
             "type": "sort",
             "position": "center",
-            "label": "Expired Date",
-            "name": "EndDt"
-        },
-        {
-            "type": "sort",
-            "position": "right",
-            "label": "Plafond Amount",
-            "name": "PlafondAmt"
+            "label": "Request By",
+            "name": "RequestBy"
         },
         {
             "type": "sort",
             "position": "center",
-            "label": "Revolving",
-            "name": "IsRevolving"
+            "label": "Task Owner",
+            "name": "MainUserId"
         },
         {
-            "type": "label",
+            "type": "sort",
             "position": "center",
-            "label": "Mou Type",
-            "name": "MouType"
+            "label": "Current User",
+            "name": "CurrentUserId"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Request Date",
+            "name": "RequestDate"
         },
         {
             "type": "label",
@@ -128,8 +115,8 @@
     "bodyList": [
         {
             "type": "text",
-            "position": "left",
-            "property": "MouCustNo"
+            "position": "center",
+            "property": "TrxNo"
         },
         {
             "type": "text",
@@ -137,29 +124,34 @@
             "property": "CustName"
         },
         {
+            "type": "text",
+            "position": "left",
+            "property": "MouCustNo"
+        },
+        {
             "type": "date",
             "position": "left",
             "property": "MouCustDt"
         },
         {
-            "type": "date",
+            "type": "text",
             "position": "center",
-            "property": "EndDt"
-        },
-        {
-            "type": "decimal",
-            "position": "right",
-            "property": "PlafondAmt"
-        },
-        {
-            "type": "boolean",
-            "position": "center",
-            "property": "IsRevolving"
+            "property": "RequestBy"
         },
         {
             "type": "text",
             "position": "center",
-            "property": "MouType"
+            "property": "MainUserId"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "CurrentUserId"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "RequestDate"
         },
         {
             "type": "action",
@@ -178,9 +170,17 @@
                             ],
                             "result": {
                                 "type": "url",
-                                "path": "/Mou/Cust/ReviewFactoring",
+                                "path": "/Mou/Cust/ApprovalFactoring",
                                 "icon": "ft-edit-2",
                                 "param": [
+                                    {
+                                        "type": "TaskId",
+                                        "property": "TaskId"
+                                    },
+                                    {
+                                        "type": "InstanceId",
+                                        "property": "InstanceId"
+                                    },
                                     {
                                         "type": "MouCustId",
                                         "property": "MouCustId"
@@ -199,9 +199,17 @@
                             ],
                             "result": {
                                 "type": "url",
-                                "path": "/Mou/Cust/ReviewGeneral",
+                                "path": "/Mou/Cust/ApprovalGeneral",
                                 "icon": "ft-edit-2",
                                 "param": [
+                                    {
+                                        "type": "TaskId",
+                                        "property": "TaskId"
+                                    },
+                                    {
+                                        "type": "InstanceId",
+                                        "property": "InstanceId"
+                                    },
                                     {
                                         "type": "MouCustId",
                                         "property": "MouCustId"

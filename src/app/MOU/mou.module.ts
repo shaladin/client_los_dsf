@@ -24,6 +24,9 @@ import { MouViewTcComponent } from './mou-customer/mou-view/mou-view-tc/mou-view
 import { MouViewDocComponent } from './mou-customer/mou-view/mou-view-doc/mou-view-doc.component';
 import { MouViewSurveyComponent } from './mou-customer/mou-view/mou-view-survey/mou-view-survey.component';
 import { MouViewLegalComponent } from './mou-customer/mou-view/mou-view-legal/mou-view-legal.component';
+import { MouCustomerApprovalComponent } from './mou-customer/mou-customer-approval/mou-customer-approval.component';
+import { MouApprovalGeneralComponent } from './mou-customer/mou-customer-approval/mou-approval-general/mou-approval-general.component';
+import { MouApprovalFactoringComponent } from './mou-customer/mou-customer-approval/mou-approval-factoring/mou-approval-factoring.component';
 // import { ShowErrorsComponent } from "./app/test-new/show-errors.component";
 
 @NgModule({
@@ -55,6 +58,9 @@ import { MouViewLegalComponent } from './mou-customer/mou-view/mou-view-legal/mo
     MouViewSurveyComponent,
     MouViewLegalComponent,
     MouReviewFactoringComponent,
+    MouCustomerApprovalComponent,
+    MouApprovalGeneralComponent,
+    MouApprovalFactoringComponent,
   ]
 })
 export class MouModule { }
