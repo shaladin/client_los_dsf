@@ -4,6 +4,7 @@ import { PurchaseOrderPagingComponent } from './purchase-order/purchase-order-pa
 import { PurchaseOrderComponent } from './purchase-order/purchase-order/purchase-order.component';
 import { DeliveryOrderDetailComponent } from './delivery-order/delivery-order-detail/delivery-order-detail.component';
 import { DeliveryOrderPagingComponent } from './delivery-order/delivery-order-paging/delivery-order-paging.component';
+import { PurchaseOrderDetailComponent } from './purchase-order/purchase-order-detail/purchase-order-detail.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,13 @@ const routes: Routes = [
         component: DeliveryOrderPagingComponent,
         data: {
           title: 'Delivery Order'
+        }
+      },
+      {
+        path: 'PurchaseOrder/PO/Detail',
+        component: PurchaseOrderDetailComponent,
+        data: {
+          title: 'Purchase Order Detail'
         }
       }
     ]

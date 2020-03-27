@@ -15,6 +15,7 @@ import { SharingComponentModule } from "app/shared/sharingcomponent.module";
 import { PurchaseOrderComponent } from './purchase-order/purchase-order/purchase-order.component';
 import { DeliveryOrderDetailComponent } from "./delivery-order/delivery-order-detail/delivery-order-detail.component";
 import { DeliveryOrderPagingComponent } from "./delivery-order/delivery-order-paging/delivery-order-paging.component";
+import { PurchaseOrderInfoComponent } from './purchase-order/purchase-order-detail/purchase-order-info/purchase-order-info.component';
 
 @NgModule({
   imports: [
@@ -36,7 +37,8 @@ import { DeliveryOrderPagingComponent } from "./delivery-order/delivery-order-pa
     PurchaseOrderDetailComponent,
     PurchaseOrderComponent,
     DeliveryOrderDetailComponent,
-    DeliveryOrderPagingComponent
+    DeliveryOrderPagingComponent,
+    PurchaseOrderInfoComponent
   ]
 })
 export class AdminProcessModule { }
