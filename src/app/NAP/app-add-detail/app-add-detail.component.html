@@ -19,8 +19,9 @@
         [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
       </aw-wizard-step>
 
-      <aw-wizard-step [stepTitle]="'Tab 4'" (stepEnter)="EnterTab('tab4')"
+      <aw-wizard-step [stepTitle]="'Life Insurance'" (stepEnter)="EnterTab('tab4')"
         [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
+        <app-app-life-ins *ngIf="isTab1 == true" [AppId]=param></app-app-life-ins>
       </aw-wizard-step>
 
       <aw-wizard-step [stepTitle]="'Tab 5'" (stepEnter)="EnterTab('tab5')"

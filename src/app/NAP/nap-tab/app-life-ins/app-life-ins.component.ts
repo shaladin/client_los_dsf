@@ -11,7 +11,7 @@ import { LifeInsDObj } from 'app/shared/model/LifeInsDObj.Model';
 @Component({
   selector: 'app-app-life-ins',
   templateUrl: './app-life-ins.component.html',
-  styleUrls: ['./app-life-ins.component.scss'],
+  styleUrls: [],
   providers: [NGXToastrService]
 })
 export class AppLifeInsComponent implements OnInit {
