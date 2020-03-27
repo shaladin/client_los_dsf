@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 
 @Component({
   selector: 'app-edit-mou-customer',
@@ -15,14 +16,23 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 export class EditMouCustomerComponent implements OnInit {
   @ViewChild(UcpagingComponent) ucpaging;
   inputPagingObj: any;
+  arrCrit: any;
   
   constructor(private http: HttpClient, private toastr: NGXToastrService) { }
+
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
-    this.inputPagingObj._url = "./assets/ucpaging/searchMouCustomerRequest.json";
+    this.inputPagingObj._url = "./assets/ucpaging/searchEditMouCustomer.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = "/Generic/GetPagingObjectBySQL";
     this.inputPagingObj.deleteUrl = "";
-    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchMouCustomerRequest.json";
+    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchEditMouCustomer.json";
+    this.arrCrit = new Array();
+    var critObj = new CriteriaObj();
+    critObj.restriction = AdInsConstant.RestrictionEq;
+    critObj.propName = 'MOU.MOU_STAT';
+    critObj.value = 'MOU_RTN';
+    this.arrCrit.push(critObj);
+    this.inputPagingObj.addCritInput = this.arrCrit;
   }
 }
