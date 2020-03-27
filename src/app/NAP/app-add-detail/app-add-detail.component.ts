@@ -12,8 +12,8 @@ export class AppAddDetailComponent implements OnInit {
   appId : number;
   viewProdMainInfoObj : string;
   isTab1: boolean = false;
-  isTab2: boolean = true;
-  isTab3: boolean = false;
+  isTab2: boolean = false;
+  isTab3: boolean = true;
   isTab4: boolean = false;
   isTab5: boolean = false;
 
