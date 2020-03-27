@@ -6,6 +6,7 @@ import { MouCustomerRequestDetailComponent } from './mou-customer-request/mou-cu
 import { MouReviewPagingComponent } from './mou-customer/mou-review/mou-review-paging/mou-review-paging.component';
 import { MouReviewGeneralComponent } from './mou-customer/mou-review/mou-review-general/mou-review-general.component';
 import { MouReviewFactoringComponent } from './mou-customer/mou-review/mou-review-factoring/mou-review-factoring.component';
+import { MouCustomerDetailComponent } from './mou-customer-request/mou-customer-detail/mou-customer-detail.component';
 const routes: Routes = [
   {
     path: '',
@@ -29,6 +30,13 @@ const routes: Routes = [
         component: MouCustomerRequestDetailComponent,
         data: {
           title: 'MOU Customer Request Detail'
+        }
+      },
+      {
+        path: 'Detail/:MOUType',
+        component: MouCustomerDetailComponent,
+        data: {
+          title: 'MOU Customer Detail'
         }
       },
       {

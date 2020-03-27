@@ -9,11 +9,14 @@ import { environment } from 'environments/environment';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { RefOfficeObj } from 'app/shared/model/RefOfficeObj.model';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { link } from 'fs';
 
 @Component({
   selector: 'app-mou-customer-request-detail',
   templateUrl: './mou-customer-request-detail.component.html',
-  styleUrls: ['./mou-customer-request-detail.component.scss']
+  styleUrls: ['./mou-customer-request-detail.component.scss'],
+  providers: [NGXToastrService]
 })
 export class MouCustomerRequestDetailComponent implements OnInit {
   mouType: string;
@@ -24,7 +27,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
 
   MOUMainInfoForm = this.fb.group({
     MouCustId: [0, [Validators.required]],
-    MouCustNo: ['DUMMYNO'],
+    MouCustNo: [''],
     MouCustDt: ['', [Validators.required]],
     TopupMouCustId: [],
     CustNo: ['', [Validators.required]],
@@ -48,7 +51,8 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location,
     private httpClient: HttpClient,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toastr: NGXToastrService
   ) {
     this.route.queryParams.subscribe(params => {
       if (params['mode'] != null) {
@@ -125,7 +129,9 @@ export class MouCustomerRequestDetailComponent implements OnInit {
       mouCustFormData["RefOfficeId"] = this.refOfficeId;
       this.httpClient.post(AdInsConstant.AddMouCust, mouCustFormData).subscribe(
         (response: any) => {
-          alert(response["message"]);
+          this.toastr.successMessage(response["Message"]);
+          var mouCustId = response["MouCustId"];
+          this.router.navigate(["/Mou/Detail", this.mouType], { queryParams: { mouCustId: mouCustFormData.MouCustId }});
         },
         (error) => {
           console.log("ERROR");
@@ -136,7 +142,8 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     else if(this.pageType == "edit"){
       this.httpClient.post(AdInsConstant.EditMouCust, mouCustFormData).subscribe(
         (response: any) => {
-          alert(response["message"]);
+          this.toastr.successMessage(response["Message"]);
+          this.router.navigate(['/Mou/Detail', this.mouType], { queryParams: { mouCustId: mouCustFormData.MouCustId }});
         },
         (error) => {
           console.log("ERROR");

@@ -7,10 +7,10 @@
             <h4 class="form-section card-title" translate><i class="ft-file-text"></i>Negative Asset Information</h4>
           </div>
           <div class="col-md-4" style="text-align: right; padding-right: 0px;">
-            <button type="button" class="btn btn-raised btn-success" translate>
+            <button type="button" class="btn btn-raised btn-success mr-1" translate>
               Edit Main Info
             </button>
-            <button type="button" class="btn btn-raised btn-warning" translate>
+            <button type="button" class="btn btn-raised btn-warning mr-1" translate>
               Cancel
             </button>
             <button type="button" class="btn btn-raised btn-primary" translate>
@@ -19,7 +19,34 @@
           </div>
         </div>
         <div class="row">
-          
+          <div class="col-md-12">
+            <app-main-info [MouCustId]="mouCustId"></app-main-info>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <aw-wizard #wizard navBarLayout="large-empty-symbols" [disableNavigationBar]=true [awNavigationMode]
+              navigateBackward="allow" navigateForward="allow">
+              <aw-wizard-step [stepTitle]="'MOU Detail'" [navigationSymbol]="{ symbol: '1', fontFamily: 'FontAwesome', fontWeight: 'bold' }" (stepEnter)="enterTab()">
+                MOU Detail
+              </aw-wizard-step>
+              <aw-wizard-step [stepTitle]="'Fee'" [navigationSymbol]="{ symbol: '2', fontFamily: 'FontAwesome' }" (stepEnter)="enterTab()">
+                Fee
+              </aw-wizard-step>
+              <aw-wizard-step [stepTitle]="'Collateral'" [navigationSymbol]="{ symbol: '3', fontFamily: 'FontAwesome' }" (stepEnter)="enterTab()">
+                Collateral
+              </aw-wizard-step>
+              <aw-wizard-step [stepTitle]="'Term and Condition'" [navigationSymbol]="{ symbol: '4', fontFamily: 'FontAwesome' }" (stepEnter)="enterTab()">
+                Term and Condition
+              </aw-wizard-step>
+              <aw-wizard-step [stepTitle]="'Document'" [navigationSymbol]="{ symbol: '5', fontFamily: 'FontAwesome' }" (stepEnter)="enterTab()">
+                Document
+              </aw-wizard-step>
+            </aw-wizard>
+          </div>
+          <div class="col-md-12">
+            <button class="btn btn-raised btn-primary" (click)="nextStep()">Next</button>
+          </div>
         </div>
       </div>
     </div>

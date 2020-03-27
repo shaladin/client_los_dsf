@@ -28,6 +28,10 @@ import { MouViewTcComponent } from './mou-customer/mou-view/mou-view-tc/mou-view
 import { MouViewDocComponent } from './mou-customer/mou-view/mou-view-doc/mou-view-doc.component';
 import { MouViewSurveyComponent } from './mou-customer/mou-view/mou-view-survey/mou-view-survey.component';
 import { MouViewLegalComponent } from './mou-customer/mou-view/mou-view-legal/mou-view-legal.component';
+import { MouDetailGeneralComponent } from './mou-customer-request/mou-detail-general/mou-detail-general.component';
+import { MouDetailFactoringComponent } from './mou-customer-request/mou-detail-factoring/mou-detail-factoring.component';
+import { MouCustAssetComponent } from './mou-customer-request/mou-detail-general/mou-cust-asset/mou-cust-asset.component';
+import { MouCustAssetDetailComponent } from './mou-customer-request/mou-detail-general/mou-cust-asset/mou-cust-asset-detail/mou-cust-asset-detail.component';
 // import { ShowErrorsComponent } from "./app/test-new/show-errors.component";
 
 @NgModule({
@@ -64,6 +68,11 @@ import { MouViewLegalComponent } from './mou-customer/mou-view/mou-view-legal/mo
     MouViewSurveyComponent,
     MouViewLegalComponent,
     MouReviewFactoringComponent,
-  ]
+    MouDetailGeneralComponent,
+    MouDetailFactoringComponent,
+    MouCustAssetComponent,
+    MouCustAssetDetailComponent,
+  ],
+  entryComponents: [MouCustAssetDetailComponent]
 })
 export class MouModule { }
