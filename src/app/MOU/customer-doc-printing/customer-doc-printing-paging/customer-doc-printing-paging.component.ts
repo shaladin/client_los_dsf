@@ -22,7 +22,6 @@ export class CustomerDocPrintingPagingComponent implements OnInit {
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchCustomerDocPrinting.json";
-    // this.inputPagingObj.enviromentUrl = "http://localhost:5000";
     this.inputPagingObj.enviromentUrl = environment.FoundationR3Url;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCustomerDocPrinting.json";

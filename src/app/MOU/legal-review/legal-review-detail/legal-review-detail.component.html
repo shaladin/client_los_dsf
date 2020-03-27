@@ -1,0 +1,73 @@
+<lib-ucviewgeneric [viewInput]="viewObj"></lib-ucviewgeneric>
+<lib-ucSubsection  [id]="'Hierarchy'" [title]="'Term And Condition'" [panel]="'TermId'">
+</lib-ucSubsection>
+<div id="TermId">
+  <table class="table table-responsive-md text-center table-hover">
+    <thead>
+      <tr class="table-header">
+        <th class="text-center"><span class="thead-header" name='no' translate>NO</span>
+        </th>
+        <th class="text-center"><span class="thead-header" name='docName' translate>DOCUMENT NAME</span>
+        </th>
+        <th class="text-center"><span class="thead-header" name='checked' translate>CHECKED</span>
+        </th>
+        <th class="text-center"><span class="thead-header" name='mandatory' translate>MANDATORY</span>
+        </th>
+        <th class="text-center"><span class="thead-header" name='exp' translate>EXPIRED DATE</span>
+        </th>
+        <th class="text-center"><span class="thead-header" name='promise' translate>PROMISE DATE</span>
+        </th>
+        <th class="text-center"><span class="thead-header" name='notes' translate>NOTES</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of responseMouObj; let i = index">
+        <td class="text-center">{{i+1}}</td>
+        <td class="text-left">{{item.DocumentName}}</td>
+        <td class="text-center">
+          <input *ngIf="item.IsChecked == true" checked class="border-primary" type="checkbox" data-md-icheck  />
+          <input *ngIf="item.IsChecked == false" class="border-primary" type="checkbox" data-md-icheck />
+        </td>
+        <td class="text-center">
+          <input *ngIf="item.IsMandatory == true" [checked]=true class="border-primary" type="checkbox" data-md-icheck  />
+          <input *ngIf="item.IsMandatory == false" [checked]=false class="border-primary" type="checkbox" data-md-icheck />
+        </td>  
+        <!-- <td class="text-left">{{item.IsChecked}}</td> -->
+        <!-- <td class="text-left">{{item.IsMandatory}}</td> -->
+        <td class="text-center">{{item.ExpiredDt | date: 'dd-MM-yyyy'}}</td>
+        <td class="text-center">{{item.PromisedDt | date: 'dd-MM-yyyy'}}</td>
+        <td class="text-left">{{item.Notes}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<lib-ucSubsection [id]="'Review'" [title]="'Review Result'" [panel]="'ReviewId'">
+</lib-ucSubsection>
+<div id="ReviewId">
+  <!-- <form class="form form-horizontal" [formGroup]="LegalForm" (ngSubmit)="LegalForm.valid && SaveForm()"
+          #enjiForm="ngForm">
+  <div *ngFor="let item of ReviewArr.controls;let i = index;">
+    <div class="form-group row adins-required" [formGroupName]="i">
+      <label class="col-md-4 adInsLabel" translate>{{item.controls.label.value}} </label>
+      <div class="col-md-7">
+        <input type="text" class="form-control adInsInput" formControlName="values" required>
+        <show-errors [control]="LegalForm.controls.ReviewArr['controls'][i]['controls'].values"
+          [submit]="enjiForm.submitted"></show-errors>
+      </div>
+    </div>
+  </div>
+  </form> -->
+</div>
+
+<div class="float-right">
+  <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['/Mou/CustomerLegalReview/Paging']" translate>
+    <i class="ft-x"></i> Back
+  </button>
+  <button type="submit" class="btn btn-raised btn-primary" translate>
+    <i class="fa fa-check-square-o"></i> Save
+  </button>
+  <button type="submit" class="btn btn-raised btn-primary" translate>
+    <i class="fa fa-check-square-o"></i> Submit
+  </button>
+</div>

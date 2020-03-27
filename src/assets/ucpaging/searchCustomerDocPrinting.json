@@ -20,61 +20,61 @@
         "placeholder": "Placeholder",
         "datatype": "text"
       }
+
     ],	
     "headerList": [
       {
         "type": "sort",
         "position": "center",
         "label": "MOU NO",
-        "name": "MouCustNo"
+        "name": "MC.MOU_CUST_NO"
       },
       {
         "type": "sort",
         "position": "center",
         "label": "CUSTOMER NAME",
-        "name": "CustName"
+        "name": "MC.CUST_NAME"
       },
       {
         "type": "sort",
         "position": "center",
         "label": "MOU DATE",
-        "name": "MouCustDt"
+        "name": "MC.MOU_CUST_DT"
       },
       {
         "type": "sort",
         "position": "center",
         "label": "END DATE",
-        "name": "EndDate"
+        "name": "MC.END_DT"
       },
       {
         "type": "sort",
         "position": "center",
         "label": "PLAFOND AMOUNT",
-        "name": "PlafondAmt"
+        "name": "MC.PLAFOND_AMT"
       },
-
       {
         "type": "sort",
         "position": "center",
         "label": "REVOLVING",
-        "name": "IsRevolving"
+        "name": "MC.IS_REVOLVING"
       },
       {
         "type": "sort",
         "position": "center",
         "label": "REFERENCE NO",
-        "name": "RefNo"
+        "name": "MC.REF_NO"
       },
       {
         "type": "sort",
         "position": "center",
         "label": "MOU TYPE",
-        "name": "MrMouTypeCode"
+        "name": "MC.MR_MOU_TYPE_CODE"
       },
       {
         "type": "label",
         "position": "center",
-        "label": "Edit"
+        "label": "EDIT"
       }
     ],
     "querystring": {

@@ -28,6 +28,8 @@ import { MouViewSurveyComponent } from './mou-customer/mou-view/mou-view-survey/
 import { MouViewLegalComponent } from './mou-customer/mou-view/mou-view-legal/mou-view-legal.component';
 // import { ShowErrorsComponent } from "./app/test-new/show-errors.component";
 import { UcviewgenericModule } from "@adins/ucviewgeneric";
+import { LegalReviewPagingComponent } from './legal-review/legal-review-paging/legal-review-paging.component';
+import { LegalReviewDetailComponent } from './legal-review/legal-review-detail/legal-review-detail.component';
 @NgModule({
   imports: [
     MouRoutingModule,
@@ -62,6 +64,8 @@ import { UcviewgenericModule } from "@adins/ucviewgeneric";
     MouViewSurveyComponent,
     MouViewLegalComponent,
     MouReviewFactoringComponent,
+    LegalReviewPagingComponent,
+    LegalReviewDetailComponent,
   ]
 })
 export class MouModule { }
