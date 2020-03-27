@@ -294,6 +294,9 @@ export class AdInsConstant {
     public static GetRefMasterListDesc = "/RefMaster/GetRefMasterListDesc";
     public static GetRefMasterByMasterCode = "/RefMaster/GetRefMasterByMasterCode";
     public static GetRefMasterListKeyValueActiveByCode = environment.FoundationR3Url + "/RefMaster/GetListKeyValueActiveByCode"
+    public static GetListActiveRefMaster = environment.FoundationR3Url + "/RefMaster/GetListActiveRefMaster"
+    
+    
 
 
     //REF PROV DISTRICT
@@ -393,13 +396,28 @@ export class AdInsConstant {
     // GENERIC
     public static GetPagingObjectBySQL = "/Generic/GetPagingObjectBySQL";
 
+    //GUARANTOR
+    public static GetListAppGuarantor =environment.losUrl +"/AppGuarantor/GetListAppGuarantor"
+    public static AddAppGuarantorPersonal =environment.losUrl +"/AppGuarantor/AddAppGuarantorPersonal"
+    public static AddAppGuarantorCompany =environment.losUrl +"/AppGuarantor/AddAppGuarantorCompany"
+    public static GetAppGuarantorPersonalByAppGuarantorId =environment.losUrl +"/AppGuarantor/GetAppGuarantorPersonalByAppGuarantorId"
+    public static GetAppGuarantorCompanyByAppGuarantorId =environment.losUrl +"/AppGuarantor/GetAppGuarantorCompanyByAppGuarantorId"
+    public static EditAppGuarantorPersonal =environment.losUrl +"/AppGuarantor/EditAppGuarantorPersonal"
+    public static EditAppGuarantorCompany =environment.losUrl +"/AppGuarantor/EditAppGuarantorCompany"
+    public static DeleteAppGuarantor =environment.losUrl +"/AppGuarantor/DeleteAppGuarantor"
     // Vendor
     public static GetListVendorBankAccByVendorId= "/VendorBankAcc/GetListVendorBankAccByVendorId";
     public static GetListVendorBankAccByVendorCode= "/VendorBankAcc/GetListVendorBankAccByVendorCode";
     
     // VendorEmp
     public static GetListVendorBankByVendorEmpNo= "/VendorEmp​/GetListVendorBankByVendorEmpNo";
+    public static GetVendorByVendorCode= "/Vendor/GetVendorByVendorCode";
+    public static GetVendorByCategoryCodeAndOfficeCode= environment.FoundationR3Url +"/Vendor/GetVendorByCategoryCodeAndOfficeCode";
 
+    //Life Ins
+    public static AddAppLifeInsH=environment.losUrl+ "/AppLifeIns/AddAppLifeInsH";
+    public static EditAppLifeInsH=environment.losUrl+ "/AppLifeIns/EditAppLifeInsH";
+    public static InitAppLifeInsH=environment.losUrl+ "/AppLifeIns/InitAppLifeInsH";
     // MOU CUST
     public static GetMouCustById = environment.losUrl + "/MouCust/GetMouCustById";
 

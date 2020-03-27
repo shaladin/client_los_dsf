@@ -14,8 +14,9 @@
         <app-app-model *ngIf="isTab2 == true" [appId]=appId></app-app-model>
       </aw-wizard-step>
       
-      <aw-wizard-step [stepTitle]="'Tab 3'" (stepEnter)="EnterTab('tab3')"
+      <aw-wizard-step [stepTitle]="'Guarantor'" (stepEnter)="EnterTab('tab3')"
         [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
+        <app-guarantor-paging *ngIf="isTab3 == true" [AppId]=appId></app-guarantor-paging>
       </aw-wizard-step>
 
       <aw-wizard-step [stepTitle]="'Tab 4'" (stepEnter)="EnterTab('tab4')"

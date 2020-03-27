@@ -24,6 +24,12 @@ import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { CustPersonalMainDataComponent } from "./nap-tab/customer-data/component/personal-main-data/cust-personal-main-data.component";
 import { CustUcaddressComponent } from "./nap-tab/customer-data/component/address/ucaddress.component";
 import { CustContactInformationComponent } from "./nap-tab/customer-data/component/contact-information/cust-contact-information.component";
+import { AppGuarantorComponent } from "./nap-tab/app-guarantor/app-guarantor.component";
+import { GuarantorCompanyComponent } from "./nap-tab/app-guarantor/guarantor-company/guarantor-company.component";
+import { GuarantorPagingComponent } from "./nap-tab/app-guarantor/guarantor-paging/guarantor-paging.component";
+import { GuarantorPersonalComponent } from "./nap-tab/app-guarantor/guarantor-personal/guarantor-personal.component";
+import { AppLifeInsComponent } from './nap-tab/app-life-ins/app-life-ins.component';
+
 import { SearchCrossAppComponent } from './nap-tab/app-model/search-cross-app/search-cross-app.component';
 import { UCSearchModule } from '@adins/ucsearch';
 import { CommissionPagingComponent } from './commission-paging/commission-paging.component';
@@ -52,6 +58,12 @@ import { CustShareholderComponent } from "./nap-tab/customer-data/component/shar
         CustPersonalMainDataComponent,
         CustUcaddressComponent,
         CustContactInformationComponent,
+        GuarantorPagingComponent,
+        GuarantorPersonalComponent,
+        GuarantorCompanyComponent,
+        CustUcaddressComponent,
+        AppGuarantorComponent,
+        AppLifeInsComponent,
         CustFinancialDataComponent,
         CustBankAccountComponent,
         CustJobDataComponent,
