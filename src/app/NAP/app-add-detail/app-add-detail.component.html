@@ -5,13 +5,13 @@
     <aw-wizard #wizard navBarLayout="large-empty-symbols" [defaultStepIndex]="0">
 
       <aw-wizard-step [stepTitle]="'Referantor'" (stepEnter)="EnterTab('tab1')"
-        [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
-        <app-app-referantor *ngIf="isTab1 == true" [appId]=param></app-app-referantor>
+        [navigationSymbol]="{ symbol: '&#xf2b9;', fontFamily: 'FontAwesome' }">
+        <app-app-referantor *ngIf="isTab1 == true" [appId]=appId></app-app-referantor>
       </aw-wizard-step>
 
       <aw-wizard-step [stepTitle]="'Model'" (stepEnter)="EnterTab('tab2')"
         [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
-        <app-app-model *ngIf="isTab2 == true" [appId]=param></app-app-model>
+        <app-app-model *ngIf="isTab2 == true" [appId]=appId></app-app-model>
       </aw-wizard-step>
       
       <aw-wizard-step [stepTitle]="'Tab 3'" (stepEnter)="EnterTab('tab3')"
