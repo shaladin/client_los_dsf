@@ -27,7 +27,7 @@
               <div class="form-group row">
                 <label class="col-md-2  adins-required-label" translate>Admin Head</label>
                 <div class="col-md-4">
-                  <select class="form-control" id="adminHead" formControlName="AdminHeadName" (change)="AdminHeadChanged($event)"
+                  <select *ngIf="AdminHeadObj" class="form-control" id="adminHead" formControlName="AdminHeadId" (change)="AdminHeadChanged($event)"
                           [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.AdminHeadName.invalid }">
                     <option *ngFor="let item of AdminHeadObj" [value]="item.VendorEmpId">
                       {{item.VendorEmpName}}
@@ -52,8 +52,8 @@
                 </div>
                 <label class="col-md-2  adins-required-label" translate>Down Payment Type</label>
                 <div class="col-md-4">
-                  <mat-radio-group formControl="selectedDpType" (change)="DpTypeChange($event)">
-                    <mat-radio-button class="custom-control custom-radio display-inline-block" *ngFor="let item of DpObj" [value]="item.Key">
+                  <mat-radio-group formControlName="selectedDpType" (change)="DpTypeChange($event)">
+                    <mat-radio-button class="custom-control custom-radio display-inline-block" *ngFor="let item of dpTypeValue" [value]="item.Key">
                       {{item.Value}}
                     </mat-radio-button>
                   </mat-radio-group>
@@ -95,40 +95,30 @@
               </div>
               <div *ngIf="this.AssetMasterObj">
                 <div class="form-group row">
-                  
                     <label class="col-md-2  adins-required-label" translate *ngIf="this.AssetMasterObj?.SerialNo1Label">{{this.AssetMasterObj.SerialNo1Label}}</label>
                     <div class="col-md-4" *ngIf="this.AssetMasterObj?.SerialNo1Label">
                       <input type="text" class="form-control" formControlName="SerialNo1">
                     </div>
-
-                  <div *ngIf="this.AssetMasterObj?.SerialNo2Label">
-                    <label class="col-md-2  adins-required-label" translate>{{this.AssetMasterObj.SerialNo2Label}}</label>
-                    <div class="col-md-4">
+                    <label class="col-md-2  adins-required-label" translate *ngIf="this.AssetMasterObj?.SerialNo2Label">{{this.AssetMasterObj.SerialNo2Label}}</label>
+                    <div class="col-md-4" *ngIf="this.AssetMasterObj?.SerialNo2Label">
                       <input type="text" class="form-control" formControlName="SerialNo2">
                     </div>
-                  </div>
                 </div>
                 <div class="form-group row">
-                  <div *ngIf="this.AssetMasterObj?.SerialNo3Label">
-                    <label class="col-md-2  adins-required-label" translate>{{this.AssetMasterObj.SerialNo3Label}}</label>
-                    <div class="col-md-4">
+                    <label class="col-md-2  adins-required-label" translate *ngIf="this.AssetMasterObj?.SerialNo3Label">{{this.AssetMasterObj.SerialNo3Label}}</label>
+                    <div class="col-md-4" *ngIf="this.AssetMasterObj?.SerialNo3Label">
                       <input type="text" class="form-control" formControlName="SerialNo3">
                     </div>
-                  </div>
-                  <div *ngIf="this.AssetMasterObj?.SerialNo4Label">
-                    <label class="col-md-2  adins-required-label" translate>{{this.AssetMasterObj.SerialNo4Label}}</label>
-                    <div class="col-md-4">
+                    <label class="col-md-2  adins-required-label" translate *ngIf="this.AssetMasterObj?.SerialNo4Label">{{this.AssetMasterObj.SerialNo4Label}}</label>
+                    <div class="col-md-4" *ngIf="this.AssetMasterObj?.SerialNo4Label">
                       <input type="text" class="form-control" formControlName="SerialNo4">
                     </div>
-                  </div>
                 </div>
                 <div class="form-group row">
-                  <div *ngIf="this.AssetMasterObj?.SerialNo5Label">
-                    <label class="col-md-2  adins-required-label" translate>{{this.AssetMasterObj.SerialNo5Label}}</label>
-                    <div class="col-md-4">
+                    <label class="col-md-2  adins-required-label" translate *ngIf="this.AssetMasterObj?.SerialNo5Label">{{this.AssetMasterObj.SerialNo5Label}}</label>
+                    <div class="col-md-4" *ngIf="this.AssetMasterObj?.SerialNo5Label">
                       <input type="text" class="form-control" formControlName="SerialNo5">
                     </div>
-                  </div>
                 </div>
 
               </div>
@@ -161,7 +151,7 @@
                 </div>
                 <label class="col-md-2  adins-required-label" translate>BPKB City Issuer</label>
                 <div class="col-md-4">
-                  <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupCityIssuerObj" [identifier]="'DistrictCode'" [enjiForm]='enjiForm' [parentForm]='AssetDataForm'>
+                  <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupCityIssuerObj" [identifier]="'DistrictCode'" [enjiForm]='enjiForm' [parentForm]='AssetDataForm' (lookup)="SetBpkbCity($event)">
                   </lib-uclookupgeneric>
                 </div>
               </div>
@@ -193,13 +183,14 @@
                         {{i + 1}}
                       </td>
                       <td [formGroupName]="i" class="text-center">
-                        <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupSupplierObj" [identifier]="'identifier[i]'" [enjiForm]='enjiForm' [parentForm]='AssetDataForm' (lookup)="SetSupplierAccessory(i,$event)">
-                        </lib-uclookupgeneric>
-                        <!--<lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="dictLookup[AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].No.value]" [parentForm]="AssetDataForm" [identifier]="'lookupCustomerForGrp' + AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].No.value" (lookup)="SetSupplierAccessory(i,$event)"></lib-uclookupgeneric>-->
+                        <!--<lib-uclookupgeneric width-75-per [lookupInput]="InputLookupSupplierObj" [identifier]="'identifier[i]'" [enjiForm]='enjiForm' [parentForm]='AssetDataForm' (lookup)="SetSupplierAccessory(i,$event)">
+                        </lib-uclookupgeneric>-->
+                        <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="dictSuppLookup[AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].No.value]" [parentForm]="AssetDataForm" [identifier]="'lookupSupplierObj' + AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].No.value" (lookup)="SetSupplierAccessory(i,$event)"></lib-uclookupgeneric>
                       </td>
                       <td [formGroupName]="i" class="text-center">
-                        <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupAccObj" [identifier]="'identifier[i]'" [enjiForm]='enjiForm' [parentForm]='AssetDataForm' (lookup)="setAccessoryName(i)">
-                        </lib-uclookupgeneric>
+                        <!--<lib-uclookupgeneric width-75-per [lookupInput]="InputLookupAccObj" [identifier]="'identifier[i]'" [enjiForm]='enjiForm' [parentForm]='AssetDataForm' (lookup)="setAccessoryName(i)">
+                        </lib-uclookupgeneric>-->
+                        <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="dictAccLookup[AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].No.value]" [parentForm]="AssetDataForm" [identifier]="'lookupAccObj' + AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].No.value" (lookup)="SetAccessory(i,$event)"></lib-uclookupgeneric>
                       </td>
                       <td [formGroupName]="i">
                         <input type="number" class="form-control" formControlName="AccessoryPriceAmt"
@@ -230,9 +221,9 @@
             </lib-ucSubsection>
             <div id="userData">
               <div class="form-group row">
-                <label class="col-md-2  adInsLabel" translate>Self Usage Name </label>
+                <label class="col-md-2" for="selfUsage" translate>Self Usage Name </label>
                 <div class="col-md-4">
-                  <input class="border-primary" type="checkbox" data-md-icheck formControlName="SelfUsage">
+                  <input class="border-primary" type="checkbox" data-md-icheck id="selfUsage" formControlName="SelfUsage">
                 </div>
               </div>
               <div class="form-group row">
@@ -349,7 +340,7 @@
               </div>
             </div>
             <div class="form-actions right">
-              <button type="submit" class="btn btn-raised btn-primary">
+              <button type="submit" class="btn btn-raised btn-primary" (click)="SaveForm()">
                 <i class="fa fa-check-square-o"></i> Save And Continue
               </button>
               <button type="button" class="btn btn-raised btn-primary" (click)="test()">
