@@ -41,6 +41,12 @@ export class AdInsConstant {
     public static GetAppById = "/Application/GetAppById";   
     public static EditAppAddAppCross = "/Application/EditAppAddAppCross";   
 
+    // App Asset
+    public static GetAppAssetListByAppIdForCommision = "/AppAsset/GetAppAssetListByAppIdForCommision";
+    
+    // App Asset
+    public static GetListAppAssetSupplEmpByListAppAssetId = "/AppAssetSupplEmp/GetListAppAssetSupplEmpByListAppAssetId";
+
     // App Referantor
     public static AddAppReferantor = "/AppReferantor/AddAppReferantor";
     public static EditAppReferantor = "/AppReferantor/EditAppReferantor";
@@ -390,6 +396,9 @@ export class AdInsConstant {
     // Vendor
     public static GetListVendorBankAccByVendorId= "/VendorBankAcc/GetListVendorBankAccByVendorId";
     public static GetListVendorBankAccByVendorCode= "/VendorBankAcc/GetListVendorBankAccByVendorCode";
+    
+    // VendorEmp
+    public static GetListVendorBankByVendorEmpNo= "/VendorEmp​/GetListVendorBankByVendorEmpNo";
 
     // MOU CUST
     public static GetMouCustById = environment.losUrl + "/MouCust/GetMouCustById";
