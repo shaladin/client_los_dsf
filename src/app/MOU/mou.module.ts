@@ -14,6 +14,10 @@ import { UcgridfooterModule, UcgridfooterComponent } from "@adins/ucgridfooter";
 import { MainInfoComponent } from 'app/view/main-info/main-info.component';
 import { MouRoutingModule } from "./mou-routing.module";
 import { DocSignerComponent } from "./doc-signer/doc-signer.component";
+import { MouCustomerRequestComponent } from './mou-customer-request/mou-customer-request.component';
+import { MouCustomerRequestDetailComponent } from './mou-customer-request/mou-customer-request-detail/mou-customer-request-detail.component';
+import { UclookupgenericModule } from "@adins/uclookupgeneric";
+import { MouCustomerDetailComponent } from "./mou-customer-request/mou-customer-detail/mou-customer-detail.component";
 import { MouReviewPagingComponent } from './mou-customer/mou-review/mou-review-paging/mou-review-paging.component';
 import { MouReviewGeneralComponent } from './mou-customer/mou-review/mou-review-general/mou-review-general.component';
 import { MouReviewFactoringComponent } from './mou-customer/mou-review/mou-review-factoring/mou-review-factoring.component';
@@ -26,7 +30,7 @@ import { MouViewSurveyComponent } from './mou-customer/mou-view/mou-view-survey/
 import { MouViewLegalComponent } from './mou-customer/mou-view/mou-view-legal/mou-view-legal.component';
 import { DocSignerDetailComponent } from "./doc-signer/doc-signer-detail/doc-signer-detail.component";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
-import { UclookupgenericModule } from "@adins/uclookupgeneric";
+import { EditMouCustomerComponent } from "./mou-customer/edit-mou-customer/edit-mou-customer.component";
 // import { ShowErrorsComponent } from "./app/test-new/show-errors.component";
 
 @NgModule({
@@ -47,6 +51,10 @@ import { UclookupgenericModule } from "@adins/uclookupgeneric";
     UclookupgenericModule,
   ],
   declarations: [
+    DocSignerComponent,
+    MouCustomerRequestComponent,
+    MouCustomerRequestDetailComponent,
+    MouCustomerDetailComponent,
     MainInfoComponent,
     DocSignerComponent,
     MouReviewPagingComponent,
@@ -60,6 +68,7 @@ import { UclookupgenericModule } from "@adins/uclookupgeneric";
     MouViewLegalComponent,
     MouReviewFactoringComponent,
     DocSignerDetailComponent,
+    EditMouCustomerComponent
   ],
     exports: [],
     providers: [NGXToastrService],

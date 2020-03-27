@@ -80,6 +80,7 @@ export class AdInsConstant {
     public static LoginByRole = "/Authenticate/LoginByRole";
     public static LoginByToken = "/Authenticate/LoginByToken";
     public static UpdateToken = "/Authenticate/UpdateRole";
+    public static GetRefOfficeByOfficeCode = environment.FoundationR3Url + "/RefOffice/GetRefOfficeByOfficeCode";
 
     //CUST TYPE
     public static CustTypePersonal = "PERSONAL";
@@ -445,4 +446,8 @@ export class AdInsConstant {
     public static AddEditCustDataCompany = "http://localhost:5001/AppCust/AddEditCustDataCompany";
 
 
+    // MOU
+    public static GetMouCustById = environment.losUrl + "/MouCust/GetMouCustById";
+    public static AddMouCust = environment.losUrl + "/MouCust/AddMouCust";
+    public static EditMouCust = environment.losUrl + "/MouCust/EditMouCust";
 }

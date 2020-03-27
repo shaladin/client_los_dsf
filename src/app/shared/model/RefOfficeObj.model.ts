@@ -1,7 +1,45 @@
 export class RefOfficeObj {
-    refOfficeId: any
-    listAddOffice: any;
-    listDelOffice: any;
-
-    constructor() { this.refOfficeId = 0 }
+    RefOfficeId: any;
+    OfficeCode: any;
+    OfficeName: any;
+    OfficeShortName: any;
+    MrKonvenSyariahCode: any;
+    OfficeAddr: any;
+    Zipcode: any;
+    AreaCode1: any;
+    AreaCode2: any;
+    AreaCode3: any;
+    AreaCode4: any;
+    PhnArea1: any;
+    Phn1: any;
+    PhnExt1: any;
+    PhnArea2: any;
+    Phn2: any;
+    PhnExt2: any;
+    PhnArea3: any;
+    Phn3: any;
+    PhnExt3: any;
+    FaxArea: any;
+    Fax: any;
+    CntctPersonName: any;
+    CntctPersonJobTitle: any;
+    CntctPersonEmail1: any;
+    CntctPersonEmail2: any;
+    CntctPersonMobilePhnNo1: any;
+    CntctPersonMobilePhnNo2: any;
+    MrOfficeClassCode: any;
+    RefOfficeAreaId: any;
+    ParentOfficeCode: any;
+    IsActive: any;
+    ParentId: any;
+    IsOfficeClose: any;
+    OfficeOpeningDt: any;
+    IsAllowAppCreated: any;
+    HolidaySchmHId: any;
+    WorkingHourSchmHId: any;
+    IsVirtualOffice: any;
+    MrOfficeTypeCode: any;
+    MrCenterGrpTypeCode: any;
+    RowVersion: any;
+    constructor() { this.RefOfficeId = 0; this.RowVersion = '' }
 }
