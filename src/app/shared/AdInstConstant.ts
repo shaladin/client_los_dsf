@@ -379,7 +379,13 @@ export class AdInsConstant {
     // Vendor
     public static GetListVendorBankAccByVendorId= "/VendorBankAcc/GetListVendorBankAccByVendorId";
     public static GetListVendorBankAccByVendorCode= "/VendorBankAcc/GetListVendorBankAccByVendorCode";
+    public static GetVendorByVendorCode= "/Vendor/GetVendorByVendorCode";
+    public static GetVendorByCategoryCodeAndOfficeCode= environment.FoundationR3Url +"/Vendor/GetVendorByCategoryCodeAndOfficeCode";
 
+    //Life Ins
+    public static AddAppLifeInsH=environment.losUrl+ "/AppLifeIns/AddAppLifeInsH";
+    public static EditAppLifeInsH=environment.losUrl+ "/AppLifeIns/EditAppLifeInsH";
+    public static InitAppLifeInsH=environment.losUrl+ "/AppLifeIns/InitAppLifeInsH";
 
     // REF COUNTRY
     public static GetRefCountryByCountryCode = environment.FoundationR3Url + "/RefCountry/GetRefCountryByCountryCode";

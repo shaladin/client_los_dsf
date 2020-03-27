@@ -28,6 +28,7 @@ import { AppGuarantorComponent } from "./nap-tab/app-guarantor/app-guarantor.com
 import { GuarantorCompanyComponent } from "./nap-tab/app-guarantor/guarantor-company/guarantor-company.component";
 import { GuarantorPagingComponent } from "./nap-tab/app-guarantor/guarantor-paging/guarantor-paging.component";
 import { GuarantorPersonalComponent } from "./nap-tab/app-guarantor/guarantor-personal/guarantor-personal.component";
+import { AppLifeInsComponent } from './nap-tab/app-life-ins/app-life-ins.component';
 
 
 
@@ -49,7 +50,8 @@ import { GuarantorPersonalComponent } from "./nap-tab/app-guarantor/guarantor-pe
         GuarantorPersonalComponent,
         GuarantorCompanyComponent,
         CustUcaddressComponent,
-        AppGuarantorComponent
+        AppGuarantorComponent,
+        AppLifeInsComponent
     ],
     imports: [ 
         NapRoutingModule,

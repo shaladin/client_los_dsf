@@ -107,7 +107,7 @@
               <div class="class=form-group row adins-required">
                 <label class="col-md-2 adInsLabel">NPWP </label>
                 <div class="col-md-4">
-                  <input type="number" class="form-control"  formControlName="TaxIdNo">
+                  <input type="number" class="form-control" formControlName="TaxIdNo">
                 </div>
                 <label class="col-md-2 adInsLabel">Religion </label>
                 <div class="col-md-4">
@@ -124,19 +124,21 @@
                   <input type="number" class="form-control" id="npwp" formControlName="MobilePhnNo">
                 </div>
               </div>
-              <lib-ucaddress #UcAddrGrp [title]="'Address'" [UCAddrForm]="PersonalForm" [enjiForm]="enjiForm" [identifier]="'AddrObj'" [default]="AddrObj" [inputField]="inputFieldObj" [showPhn3]="false"></lib-ucaddress> 
-            <div class="form-actions right">
-              <button type="submit" class="btn btn-raised btn-primary" [routerLink]="['Guarantor/paging']" >
-                <i class="fa fa-check-square-o"></i> Cancel
-              </button>
-              <button type="submit" class="btn btn-raised btn-primary" (click)="SaveForm()">
-                <i class="fa fa-check-square-o"></i> Save
-              </button>
+              <lib-ucaddress #UcAddrGrp [title]="'Address'" [UCAddrForm]="PersonalForm" [enjiForm]="enjiForm"
+                [identifier]="'AddrObj'" [default]="AddrObj" [inputField]="inputFieldObj" [showPhn3]="false">
+              </lib-ucaddress>
+              <div class="form-actions right">
+                <button type="submit" class="btn btn-raised btn-primary" [routerLink]="['Guarantor/paging']">
+                  <i class="fa fa-check-square-o"></i> Cancel
+                </button>
+                <button type="submit" class="btn btn-raised btn-primary" (click)="SaveForm()">
+                  <i class="fa fa-check-square-o"></i> Save
+                </button>
+              </div>
             </div>
+          </form>
         </div>
-        </form>
       </div>
     </div>
   </div>
-</div>
 </div>

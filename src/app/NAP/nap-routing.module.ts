@@ -10,6 +10,7 @@ import { AppGuarantorComponent } from "./nap-tab/app-guarantor/app-guarantor.com
 import { GuarantorCompanyComponent } from "./nap-tab/app-guarantor/guarantor-company/guarantor-company.component";
 import { GuarantorPagingComponent } from "./nap-tab/app-guarantor/guarantor-paging/guarantor-paging.component";
 import { GuarantorPersonalComponent } from "./nap-tab/app-guarantor/guarantor-personal/guarantor-personal.component";
+import { AppLifeInsComponent } from "./nap-tab/app-life-ins/app-life-ins.component";
 
 const routes: Routes = [
     {
@@ -83,6 +84,13 @@ const routes: Routes = [
                 component: AppGuarantorComponent,
                 data: {
                   title: 'Main'
+                },
+              },
+              {
+                path: 'LifeIns',
+                component: AppLifeInsComponent,
+                data: {
+                  title: 'Life Insurance'
                 },
               },
         ]
