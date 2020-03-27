@@ -409,6 +409,7 @@ export class AdInsConstant {
     public static AddAppLifeInsH=environment.losUrl+ "/AppLifeIns/AddAppLifeInsH";
     public static EditAppLifeInsH=environment.losUrl+ "/AppLifeIns/EditAppLifeInsH";
     public static InitAppLifeInsH=environment.losUrl+ "/AppLifeIns/InitAppLifeInsH";
+    public static GetAppLifeInsHByAppId=environment.losUrl+ "/AppLifeIns/GetAppLifeInsHByAppId";
     // MOU CUST
     public static GetMouCustById = environment.losUrl + "/MouCust/GetMouCustById";
 
