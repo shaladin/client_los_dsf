@@ -36,7 +36,7 @@
         },
         {
             "type" : "textbox",
-            "name" : "TASK_CLAIM_BY",
+            "name" : "WF.USERNAME",
             "id" : "TaskClaimById",
             "value" : "",
             "label" : "Task Claim By",
@@ -55,26 +55,29 @@
             "label": "Task Claim Status",
             "criteriaPropName": "RefMasterTypeCode",
             "criteriaPropValue": "OFFICE_CLASS",
-            "items": [],
+            "items": [
+                {
+                    "key": "CLAIMED",
+                    "value": "CLAIMED"
+                },
+                {
+                    "key": "UNCLAIMED",
+                    "value": "UNCLAIMED"
+                }
+            ],
             "itemsUrl": []
           }
     ],
     "querystring": {
-        "select": "",
-        "from": ""
+        "select": "SELECT WF.USERNAME AS Username, AGR.AGRMNT_NO AS AgrmntNo, A.APP_NO AS AppNo, AGR.CUST_NAME AS CustName, A.PROD_OFFERING_NAME AS ProdOfferingName, CASE WHEN WF.USERNAME = NULL OR WF.USERNAME = '' THEN 'UNCLAIMED' ELSE 'CLAIMED' END AS ClaimStatus, A.APP_ID AS AppId, AGR.AGRMNT_ID AS AgrmntId",
+        "from": "FROM dbo.APP A WITH(NOLOCK) JOIN dbo.AGRMNT AGR WITH(NOLOCK) ON AGR.APP_ID = A.APP_ID JOIN dbo.V_WF_TASK_LIST WF WITH(NOLOCK) ON WF.TRANSACTION_CODE = A.APP_NO"
     },
     "headerList": [
-        {
-            "type": "text",
-            "position": "center",
-            "label": "SLA",
-            "name": "SLA"
-        },
         {
             "type": "sort",
             "position": "left",
             "label": "Claim By",
-            "name": "CLAIM_BY"
+            "name": "WF.USERNAME"
         },
         {
             "type": "sort",
@@ -109,13 +112,8 @@
     "bodyList": [
         {
             "type": "text",
-            "position": "Center ",
-            "property": "Sla"
-        },
-        {
-            "type": "text",
             "position": "left",
-            "property": "ClaimBy"
+            "property": "Username"
         },
         {
             "type": "text",
