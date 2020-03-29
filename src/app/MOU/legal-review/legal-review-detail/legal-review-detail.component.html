@@ -26,11 +26,11 @@
         <td class="text-center">{{i+1}}</td>
         <td class="text-left">{{item.DocumentName}}</td>
         <td class="text-center">
-          <input *ngIf="item.IsChecked == true" checked class="border-primary" type="checkbox" data-md-icheck  />
+          <input *ngIf="item.IsChecked == true" [disabled]=true [checked]=true class="border-primary" type="checkbox" data-md-icheck  />
           <input *ngIf="item.IsChecked == false" class="border-primary" type="checkbox" data-md-icheck />
         </td>
         <td class="text-center">
-          <input *ngIf="item.IsMandatory == true" [checked]=true class="border-primary" type="checkbox" data-md-icheck  />
+          <input *ngIf="item.IsMandatory == true" [disabled]=true [checked]=true class="border-primary" type="checkbox" data-md-icheck  />
           <input *ngIf="item.IsMandatory == false" [checked]=false class="border-primary" type="checkbox" data-md-icheck />
         </td>  
         <!-- <td class="text-left">{{item.IsChecked}}</td> -->
@@ -45,9 +45,26 @@
 <lib-ucSubsection [id]="'Review'" [title]="'Review Result'" [panel]="'ReviewId'">
 </lib-ucSubsection>
 <div id="ReviewId">
-  <!-- <form class="form form-horizontal" [formGroup]="LegalForm" (ngSubmit)="LegalForm.valid && SaveForm()"
+
+  <form class="form form-horizontal" [formGroup]="LegalForm" #enjiForm="ngForm">
+    <!-- <div *ngFor="let item of LegalForm.controls"> -->
+      <h4 class="form-section card-title" translate><i class="ft-file-text"></i> </h4>
+
+      <div formArrayName="items">
+        <div *ngFor="let item of LegalForm.controls.items.controls; let i = index;">
+          <div class="form-group row" [formGroupName]="i">
+            <label class="col-md-3 text-left" translate> {{item.controls.ReviewComponentName.value}} </label>
+            <!-- <div class="col-md-6" style="border-right: 1px solid grey"
+              [ngSwitch]="item.controls.ReviewComponentType.value">
+            </div> -->
+          </div>
+        <!-- </div> -->
+      </div>
+
+      <!--  -->
+  <form class="form form-horizontal" [formGroup]="LegalForm" (ngSubmit)="LegalForm.valid && SaveForm()"
           #enjiForm="ngForm">
-  <div *ngFor="let item of ReviewArr.controls;let i = index;">
+  <div *ngFor="let item of ReviewArr.controls.items.controls;let i = index;">
     <div class="form-group row adins-required" [formGroupName]="i">
       <label class="col-md-4 adInsLabel" translate>{{item.controls.label.value}} </label>
       <div class="col-md-7">
@@ -57,7 +74,7 @@
       </div>
     </div>
   </div>
-  </form> -->
+  </form>
 </div>
 
 <div class="float-right">
