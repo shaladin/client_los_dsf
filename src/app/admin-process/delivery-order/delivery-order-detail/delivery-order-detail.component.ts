@@ -29,6 +29,8 @@ export class DeliveryOrderDetailComponent implements OnInit {
   AgrmntId: number;
   MrAssetConditionCode: string;
 
+  arrValue = [];
+
   constructor(private fb: FormBuilder, private http: HttpClient,
     private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -56,6 +58,8 @@ export class DeliveryOrderDetailComponent implements OnInit {
   })
 
   ngOnInit() {
+    this.arrValue.push(this.AgrmntId);
+    
     var refMasterTypeObj = {
       RefMasterTypeCode: "CUST_RELATIONSHIP",
     }
