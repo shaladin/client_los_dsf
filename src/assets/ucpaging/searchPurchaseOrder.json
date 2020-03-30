@@ -49,12 +49,9 @@
             "id": "TaskClaimStatId",
             "value": "",
             "placeholder": "Placeholder",
-            "isFromURL": true,
-            "isSelectOne": true,
-            "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
+            "isFromURL": false,
+            "isSelectOne": false,
             "label": "Task Claim Status",
-            "criteriaPropName": "RefMasterTypeCode",
-            "criteriaPropValue": "OFFICE_CLASS",
             "items": [
                 {
                     "key": "CLAIMED",
