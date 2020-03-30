@@ -10,11 +10,15 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 })
 export class PurchaseOrderComponent implements OnInit {
 
-  AgrmntId: any;
+  AppId: number;
+  AgrmntId: number;
   arrValue = [];
   AppAssetList = [];
   constructor(private route: ActivatedRoute, private http: HttpClient) { 
     this.route.queryParams.subscribe(params => {
+      if (params["AppId"] != null) {
+        this.AppId = params["AppId"];
+      }
       if (params["AgrmntId"] != null) {
         this.AgrmntId = params["AgrmntId"];
       }
