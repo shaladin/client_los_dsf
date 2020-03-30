@@ -441,4 +441,14 @@ export class AdInsConstant {
     public static AddEditCustDataCompany = "http://localhost:5001/AppCust/AddEditCustDataCompany";
 
 
+    //APP ASSET
+    public static GetAppAssetListByAgrmntId = environment.losUrl + "/AppAsset/GetAppAssetListByAgrmntId";
+    public static GetAppAssetByAppId = environment.losUrl + "/AppAsset/GetAppAssetByAppId";
+    public static GetAppAssetListByAppId = environment.losUrl + "/AppAsset/GetAppAssetListByAppId";
+    public static GetAllAssetDataForPOByAsset = environment.losUrl + "/AppAsset/GetAllAssetDataForPOByAsset";
+    
+
+    //PURCHASE ORDER
+    public static SubmitPurchaseOrder = environment.losUrl + "/PurchaseOrderH/SubmitPurchaseOrder";
+    
 }

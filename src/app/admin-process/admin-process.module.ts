@@ -13,6 +13,8 @@ import { AdminProcessRoutingModule } from "./admin-process-routing.module";
 import { PurchaseOrderDetailComponent } from './purchase-order/purchase-order-detail/purchase-order-detail.component';
 import { SharingComponentModule } from "app/shared/sharingcomponent.module";
 import { PurchaseOrderComponent } from './purchase-order/purchase-order/purchase-order.component';
+import { PurchaseOrderInfoComponent } from './purchase-order/purchase-order-detail/purchase-order-info/purchase-order-info.component';
+import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 
 @NgModule({
   imports: [
@@ -32,7 +34,11 @@ import { PurchaseOrderComponent } from './purchase-order/purchase-order/purchase
   declarations: [
     PurchaseOrderPagingComponent,
     PurchaseOrderDetailComponent,
-    PurchaseOrderComponent
+    PurchaseOrderComponent,
+    PurchaseOrderInfoComponent
+  ],
+  providers: [
+    NGXToastrService
   ]
 })
 export class AdminProcessModule { }
