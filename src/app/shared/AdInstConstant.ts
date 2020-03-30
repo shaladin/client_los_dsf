@@ -412,6 +412,7 @@ export class AdInsConstant {
 
     // MOU CUST LEGAL REVIEW
     public static GetMouCustLglReviewByMouCustId = environment.losUrl + "/MouCustLglReview/GetMouCustLglReviewByMouCustId";
+    public static AddRangeMouCustLglReview = "http://localhost:5001" + "/MouCustLglReview/AddRangeMouCustLglReview";
 
     // MOU CUST TC
     public static GetCustMouTcByCustMouId = environment.losUrl + "/MouCustTc/GetCustMouTcByCustMouId";
