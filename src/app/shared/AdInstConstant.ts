@@ -456,6 +456,9 @@ export class AdInsConstant {
     public static SubmitDeliveryOrderData = environment.losUrl + "/DeliveryOrder/SubmitDeliveryOrderData";
     public static GetRefAssetDocList = environment.losUrl + "/DeliveryOrder/GetRefAssetDocList";
     
+    //APP TC
+    public static GetListTCbyAppId = environment.losUrl + "/AppTc/GetListTCbyAppId";
+    
     //PURCHASE ORDER
     public static SubmitPurchaseOrder = environment.losUrl + "/PurchaseOrderH/SubmitPurchaseOrder";
     
