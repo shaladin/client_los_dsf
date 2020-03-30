@@ -49,7 +49,8 @@
                 </div>
               </div>
             </div>
-            <lib-ucSubsection [id]="'MainDocumentLetterId'" [title]="'Main Document Letter'"
+            <div *ngIf="this.MrAssetConditionCode != 'USED'">
+              <lib-ucSubsection [id]="'MainDocumentLetterId'" [title]="'Main Document Letter'"
               [panel]="'MainDocumentLetter'">
             </lib-ucSubsection>
             <div class="form-body" id="MainDocumentLetter">
@@ -69,6 +70,7 @@
                   </lib-uc-show-errors>
                 </div>
               </div>
+            </div>
             </div>
             <lib-ucSubsection [id]="'AssetDocumentId'" [title]="'Asset Document'" [panel]="'AssetDocument'">
             </lib-ucSubsection>
@@ -90,7 +92,7 @@
                       <td>{{item.controls.AssetDocName.value}}</td>
                       <td>{{item.controls.IsValueNeeded.value}}</td>
                       <td *ngIf="this.MrAssetConditionCode=='NEW'">{{item.controls.IsMandatoryNew.value}}</td>
-                      <td *ngIf="this.MrAssetConditionCode=='USED'">{{item.controls.s.value}}</td>
+                      <td *ngIf="this.MrAssetConditionCode=='USED'">{{item.controls.IsMandatoryUsed.value}}</td>
                       <td>
                         <input type="checkbox" class="border-primary" formControlName="IsReceived">
                       </td>
@@ -149,8 +151,8 @@
                 <div class="col-md-4">
                   <select class="form-control adInsInput" style="width: auto" formControlName="MrCustRelationshipCode"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && DeliveryOrderForm.controls.MrCustRelationshipCode.invalid }">
-                    <!-- <option *ngFor="let it of itemCategoryType" value="{{it.MasterCode}}">
-                        {{it.Descr}}</option> -->
+                      <option *ngFor="let it of itemType" value="{{it.Key}}">
+                        {{it.Value}}</option>
                   </select>
                   <show-errors [control]="DeliveryOrderForm.controls.MrCustRelationshipCode"
                     [submit]="enjiForm.submitted">
