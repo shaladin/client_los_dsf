@@ -36,6 +36,7 @@ import { CustSocmedComponent } from "./nap-tab/customer-data/component/socmed/cu
 import { CustGrpMemberComponent } from "./nap-tab/customer-data/component/cust-grp-member/cust-grp-member.component";
 import { CustCompanyMainDataComponent } from "./nap-tab/customer-data/component/company-main-data/cust-company-main-data.component";
 import { CustShareholderComponent } from "./nap-tab/customer-data/component/shareholder/cust-shareholder.component";
+import { AppFinDataComponent } from './nap-tab/app-fin-data/app-fin-data.component';
 
 
 
@@ -62,7 +63,8 @@ import { CustShareholderComponent } from "./nap-tab/customer-data/component/shar
         CommissionPagingComponent,
         CommissionAddComponent,
         FormAddDynamicComponent,
-        CustShareholderComponent
+        CustShareholderComponent,
+        AppFinDataComponent
         ],
     imports: [ 
         NapRoutingModule,
