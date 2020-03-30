@@ -1,4 +1,4 @@
-export class AppCollateralDocObj{
+export class DeliveryOrderHObj{
 DeliveryOrderHId: any;
 AppId: any;
 AgrmntId: any;
@@ -9,5 +9,5 @@ RecipientName: any;
 MrCustRelationshipCode: any;
 RowVersion: any;
 
-constructor() { }
+constructor() {}
 }

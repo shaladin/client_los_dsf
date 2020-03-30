@@ -72,7 +72,7 @@
             </div>
             <lib-ucSubsection [id]="'AssetDocumentId'" [title]="'Asset Document'" [panel]="'AssetDocument'">
             </lib-ucSubsection>
-            <div class="form-body" id="AssetDocument">
+            <div class="form-body" id="AssetDocument" formArrayName="items">
               <table class="table table-responsive-md text-center table-hover">
                 <thead>
                   <tr class="table-header">
@@ -86,30 +86,30 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let item of resultData">
-                    <td>{{item.AssetDocName}}</td>
-                    <td>{{item.IsValueNeeded}}</td>
-                    <td *ngIf="this.MrAssetConditionCode=='NEW'" >{{item.IsMandatoryNew}}</td>
-                    <td *ngIf="this.MrAssetConditionCode=='USED'" >{{item.IsMandatoryUsed}}</td>
-                    <td>
-                      <input type="checkbox" class="border-primary" formControlName="IsReceived">
-                    </td>
-                    <td>
-                      <input type="text" class="form-control adInsInput width-100-per" formControlName="DocNo">
-                      <lib-uc-show-errors [control]="DeliveryOrderForm.controls.DocNo" [submit]="enjiForm.submitted">
-                      </lib-uc-show-errors>
-                    </td>
-                    <td>
-                      <input type="date" class="form-control adInsInput width-100-per" formControlName="ACDExpiredDt">
-                      <lib-uc-show-errors [control]="DeliveryOrderForm.controls.ACDExpiredDt"
-                        [submit]="enjiForm.submitted">
-                      </lib-uc-show-errors>
-                    </td>
-                    <td>
-                      <input type="text" class="form-control adInsInput width-100-per" formControlName="DocNotes">
-                      <lib-uc-show-errors [control]="DeliveryOrderForm.controls.DocNotes" [submit]="enjiForm.submitted">
-                      </lib-uc-show-errors>
-                    </td>
+                  <tr *ngFor="let item of DeliveryOrderForm.controls.items.controls; let i = index" [formGroupName]="i">
+                      <td>{{item.controls.AssetDocName.value}}</td>
+                      <td>{{item.controls.IsValueNeeded.value}}</td>
+                      <td *ngIf="this.MrAssetConditionCode=='NEW'">{{item.controls.IsMandatoryNew.value}}</td>
+                      <td *ngIf="this.MrAssetConditionCode=='USED'">{{item.controls.s.value}}</td>
+                      <td>
+                        <input type="checkbox" class="border-primary" formControlName="IsReceived">
+                      </td>
+                      <td>
+                        <input type="text" class="form-control adInsInput width-100-per" formControlName="DocNo">
+                        <!-- <lib-uc-show-errors [control]="DeliveryOrderForm.controls.DocNo" [submit]="enjiForm.submitted">
+                            </lib-uc-show-errors> -->
+                      </td>
+                      <td>
+                        <input type="date" class="form-control adInsInput width-100-per" formControlName="ACDExpiredDt">
+                        <!-- <lib-uc-show-errors [control]="DeliveryOrderForm.controls.ACDExpiredDt"
+                              [submit]="enjiForm.submitted">
+                            </lib-uc-show-errors> -->
+                      </td>
+                      <td>
+                        <input type="text" class="form-control adInsInput width-100-per" formControlName="DocNotes">
+                        <!-- <lib-uc-show-errors [control]="DeliveryOrderForm.controls.DocNotes" [submit]="enjiForm.submitted">
+                            </lib-uc-show-errors> -->
+                      </td>
                   </tr>
                 </tbody>
               </table>
@@ -120,7 +120,7 @@
               <div class="form-group row">
                 <label class="col-md-2  adInsLabel" translate>Delivery Order No</label>
                 <div class="col-md-4">
-                  <input type="text" class="form-control adInsInput width-75-per" formControlName="DeliveryDt">
+                  <input type="text" class="form-control adInsInput width-75-per" formControlName="DeliveryNo">
                 </div>
                 <label class="col-md-2  adInsLabel" translate>Recipient Name</label>
                 <div class="col-md-4">
@@ -207,10 +207,9 @@
                 [routerLink]="['/AdminProcess/DeliveryOrder/Paging']" translate>
                 <i class="fa fa-arrow-circle-left"></i> Back
               </button>
-              <button type="submit" class="btn btn-raised btn-primary"
-              translate>
-              <i class="far"></i> Submit
-            </button>
+              <button type="submit" class="btn btn-raised btn-primary" translate>
+                <i class="far"></i> Submit
+              </button>
             </div>
           </form>
         </div>
