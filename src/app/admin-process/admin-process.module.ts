@@ -16,6 +16,7 @@ import { PurchaseOrderComponent } from './purchase-order/purchase-order/purchase
 import { DeliveryOrderDetailComponent } from "./delivery-order/delivery-order-detail/delivery-order-detail.component";
 import { DeliveryOrderPagingComponent } from "./delivery-order/delivery-order-paging/delivery-order-paging.component";
 import { PurchaseOrderInfoComponent } from './purchase-order/purchase-order-detail/purchase-order-info/purchase-order-info.component';
+import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 
 @NgModule({
   imports: [
@@ -39,6 +40,9 @@ import { PurchaseOrderInfoComponent } from './purchase-order/purchase-order-deta
     DeliveryOrderDetailComponent,
     DeliveryOrderPagingComponent,
     PurchaseOrderInfoComponent
+  ],
+  providers: [
+    NGXToastrService
   ]
 })
 export class AdminProcessModule { }
