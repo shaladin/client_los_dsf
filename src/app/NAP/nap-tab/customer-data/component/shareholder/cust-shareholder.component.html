@@ -55,7 +55,7 @@
     <div class="modal-body">
       <div class="px-3">
         <form class="form form-horizontal" [formGroup]="CustShareholderForm" #enjiForm="ngForm"
-          (ngSubmit)="SaveForm()">
+          (ngSubmit)="CustShareholderForm.valid && SaveForm()">
           <lib-ucSubsection [id]="'addShareholderId'" [title]="'Add Management / Shareholder'" [panel]="'addShareholder'">
           </lib-ucSubsection>
           <div id="addShareholder">
@@ -171,9 +171,10 @@
                   <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupCustomerObj" [parentForm]="CustShareholderForm" [identifier]="'lookupCustomerShareholder'" (lookup)="CopyCustomer($event)"></lib-uclookupgeneric>
                 </div>
                 <label class="col-md-2 adins-required-label" for="industryType" translate>Industry Type</label>
-                <div class="col-md-4">
+                <div class="col-md-4" [hidden]="isCust == true">
                   <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupIndustryTypeObj" [parentForm]="CustShareholderForm" [identifier]="'lookupIndustryTypeShareholder'" (lookup)="GetIndustryType($event)"></lib-uclookupgeneric>
                 </div>
+                <label [hidden]="isCust == false" class="col-md-4" translate>{{industryTypeName}}</label>
               </div>
               <div class="form-group row">
                 <label class="col-md-2" for="companyType" translate>Company Type</label>

@@ -149,6 +149,17 @@ export class CustGrpMemberComponent implements OnInit {
     }
   }
 
+  copyAppGrp(){
+    var custCustGrpObjs = this.parentForm.controls[this.identifier] as FormArray;
+    for(let i = 0; i < custCustGrpObjs.controls.length; i++){
+      var no = custCustGrpObjs.controls[i]["controls"]["No"].value;
+      this.parentForm.removeControl("lookupCustomerForGrp" + no);
+    }
+    this.parentForm.removeControl(this.identifier);
+    this.parentForm.addControl(this.identifier, this.fb.array([]));
+    this.bindAppGrp();
+  }
+
   addGroup(appCustGrpObj, i){
     if(appCustGrpObj == undefined){
       return this.fb.group({

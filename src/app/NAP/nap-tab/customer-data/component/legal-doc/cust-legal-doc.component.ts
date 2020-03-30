@@ -100,8 +100,8 @@ export class CustLegalDocComponent implements OnInit {
     this.LegalDocForm.patchValue({
       MrLegalDocTypeCode: this.listLegalDoc[i].MrLegalDocTypeCode,
       DocNo: this.listLegalDoc[i].DocNo,
-      DocDt: this.listLegalDoc[i].DocDt,
-      DocExpiredDt: this.listLegalDoc[i].DocExpiredDt,
+      DocDt: formatDate(this.listLegalDoc[i].DocDt, 'yyyy-MM-dd', 'en-US'),
+      DocExpiredDt: formatDate(this.listLegalDoc[i].DocExpiredDt, 'yyyy-MM-dd', 'en-US'),
       ReleaseBy: this.listLegalDoc[i].ReleaseBy,
       DocNotes: this.listLegalDoc[i].DocNotes,
       ReleaseLocation: this.listLegalDoc[i].ReleaseLocation

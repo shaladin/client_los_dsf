@@ -5,7 +5,7 @@
     <div class="form-group row">
       <label class="col-md-2 adins-required-label" for="custName" translate>Customer Name</label>
       <div class="col-md-4">
-        <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupCustomerObj" [parentForm]="parentForm" [identifier]="'lookupCustomerCompany'" (lookup)="CopyCustomer($event)"></lib-uclookupgeneric>
+        <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupCustomerObj" [parentForm]="parentForm" [identifier]="'lookupCustomerCompany'" (lookup)="CopyCustomerEvent($event)"></lib-uclookupgeneric>
       </div>
       <label class="col-md-2 adins-required-label" for="custModel" translate>Customer Model</label>
       <div class="col-md-4">

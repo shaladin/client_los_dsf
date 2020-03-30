@@ -9,7 +9,7 @@
   <table class="table table-responsive-md text-center table-hover">
     <thead>
       <tr class="table-header">
-        <th style="text-align: center;"><span class="thead-header" name="BankCode" translate>Bank Code
+        <th style="text-align: center;"><span class="thead-header" name="BankCode" translate>Bank Name
         </span>
         </th>
         <th style="text-align: center;"><span class="thead-header" name="BankBranch" translate>Bank Branch
@@ -29,7 +29,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let item of listBankAcc; let i = index">
-        <td style="text-align: center;">{{item.BankCode}}</td>
+        <td style="text-align: center;">{{item.BankName}}</td>
         <td style="text-align: center;">{{item.BankBranch}}</td>
         <td style="text-align: center;">{{item.BankAccNo}}</td>
         <td style="text-align: center;">{{item.BankAccName}}</td>

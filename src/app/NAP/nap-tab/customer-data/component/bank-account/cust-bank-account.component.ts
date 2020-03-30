@@ -45,12 +45,14 @@ export class CustBankAccountComponent implements OnInit {
     RefMasterTypeCode: ""
   };
   bankObj = {
+    RefBankId: 0,
     BankCode: ""
   };
   RefBankObj: any;
   MonthObj: any;
   defaultMonth: any;
   InputLookupBankObj: any;
+  selectedBankName: any;
 
 
 
@@ -83,19 +85,28 @@ export class CustBankAccountComponent implements OnInit {
     if(this.listBankAcc == undefined){
       this.listBankAcc = new Array<AppCustBankAccObj>();
     }
-    if(this.CustBankAccountForm.controls.IsDefault.value == true){
-      var check = this.listBankAcc.find(x => x.IsDefault == true);
-
-      if(check != undefined){
-        this.toastr.errorMessage("Other bank account is already default");
-        return;
-      }
-    }
     this.setAppCustBankAcc();
     if(this.mode == "add"){
+      if(this.CustBankAccountForm.controls.IsDefault.value == true){
+        var check = this.listBankAcc.find(x => x.IsDefault == true);
+  
+        if(check != undefined){
+          this.toastr.errorMessage("Other bank account is already default");
+          return;
+        }
+      }
+
       this.listBankAcc.push(this.appCustBankAccObj);
     }
     if(this.mode == "edit"){
+      if(this.CustBankAccountForm.controls.IsDefault.value == true && this.listBankAcc[this.currentEditedIndex].IsDefault == false){
+        var check = this.listBankAcc.find(x => x.IsDefault == true);
+  
+        if(check != undefined){
+          this.toastr.errorMessage("Other bank account is already default");
+          return;
+        }
+      }
       this.listBankAcc[this.currentEditedIndex] = this.appCustBankAccObj;
     }
     this.callbackSubmit.emit(this.listBankAcc);
@@ -128,6 +139,7 @@ export class CustBankAccountComponent implements OnInit {
     }
 
     this.selectedBankCode = this.listBankAcc[i].BankCode;
+    this.selectedBankName = this.listBankAcc[i].BankName;
     this.setBankName(this.listBankAcc[i].BankCode);
 
     this.open(content);
@@ -149,6 +161,7 @@ export class CustBankAccountComponent implements OnInit {
       BankStmntObjs: this.fb.array([])
     });
     this.selectedBankCode = "";
+    this.selectedBankName = "";
     this.initLookup();
   }
 
@@ -204,10 +217,6 @@ export class CustBankAccountComponent implements OnInit {
   deleteBankStmnt(i){
     var bankStmnObjs = this.CustBankAccountForm.controls['BankStmntObjs'] as FormArray;
     bankStmnObjs.removeAt(i);
-  }
-
-  checkDefault(){
-    
   }
 
   addGroup(bankStmntObj){

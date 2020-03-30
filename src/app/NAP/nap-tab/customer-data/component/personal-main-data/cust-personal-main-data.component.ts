@@ -194,7 +194,7 @@ export class CustPersonalMainDataComponent implements OnInit {
       this.parentForm.controls[this.identifier].patchValue({
         MrIdTypeCode: this.custDataPersonalObj.AppCustObj.MrIdTypeCode,
         IdNo: this.custDataPersonalObj.AppCustObj.IdNo,
-        IdExpiredDt: formatDate(this.custDataPersonalObj.AppCustObj.IdExpiredDt, 'yyyy-MM-dd', 'en-US'),
+        IdExpiredDt: this.custDataPersonalObj.AppCustObj.IdExpiredDt != undefined ? formatDate(this.custDataPersonalObj.AppCustObj.IdExpiredDt, 'yyyy-MM-dd', 'en-US') : '',
         TaxIdNo: this.custDataPersonalObj.AppCustObj.TaxIdNo,
         IsVip: this.custDataPersonalObj.AppCustObj.IsVip,
       });
@@ -213,7 +213,7 @@ export class CustPersonalMainDataComponent implements OnInit {
         MotherMaidenName: this.custDataPersonalObj.AppCustPersonalObj.MotherMaidenName,
         MrMaritalStatCode: this.custDataPersonalObj.AppCustPersonalObj.MrMaritalStatCode,
         BirthPlace: this.custDataPersonalObj.AppCustPersonalObj.BirthPlace,
-        BirthDt: formatDate(this.custDataPersonalObj.AppCustPersonalObj.BirthDt, 'yyyy-MM-dd', 'en-US'),
+        BirthDt: this.custDataPersonalObj.AppCustPersonalObj.BirthDt != undefined ? formatDate(this.custDataPersonalObj.AppCustPersonalObj.BirthDt, 'yyyy-MM-dd', 'en-US') : '',
         MrNationalityCode: this.custDataPersonalObj.AppCustPersonalObj.MrNationalityCode,
         MobilePhnNo1: this.custDataPersonalObj.AppCustPersonalObj.MobilePhnNo1,
         MrEducationCode: this.custDataPersonalObj.AppCustPersonalObj.MrEducationCode,

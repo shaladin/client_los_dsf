@@ -86,7 +86,7 @@ export class CustCompanyFinancialDataComponent implements OnInit {
         ArTurnOverPrcnt: this.appCustCompanyFinDataObj.ArTurnOverPrcnt,
         WorkingCapitalAmt: this.appCustCompanyFinDataObj.WorkingCapitalAmt,
         OthMonthlyInstAmt: this.appCustCompanyFinDataObj.OthMonthlyInstAmt,
-        DateAsOf: formatDate(this.appCustCompanyFinDataObj.DateAsOf, 'yyyy-MM-dd', 'en-US'),
+        DateAsOf: this.appCustCompanyFinDataObj.DateAsOf != undefined ? formatDate(this.appCustCompanyFinDataObj.DateAsOf, 'yyyy-MM-dd', 'en-US') : '',
         Revenue: this.appCustCompanyFinDataObj.Revenue,
         OprCost: this.appCustCompanyFinDataObj.OprCost,
         ProfitBeforeTax: this.appCustCompanyFinDataObj.ProfitBeforeTax,

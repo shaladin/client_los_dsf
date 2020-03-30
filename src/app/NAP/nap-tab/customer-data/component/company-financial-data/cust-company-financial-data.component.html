@@ -5,13 +5,13 @@
     <div class="form-group row">
       <label class="col-md-2" for="monthlyIncome" translate>Monthly Income </label>
       <div class="col-md-4">
-        <input type="number" class="form-control" id="monthlyIncome" formControlName="GrossMonthlyIncomeAmt"
+        <input type="number" class="form-control" id="monthlyIncome" formControlName="GrossMonthlyIncomeAmt" [(ngModel)]="appCustCompanyFinDataObj.GrossMonthlyIncomeAmt"
         [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].GrossMonthlyIncomeAmt.invalid }">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].GrossMonthlyIncomeAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
       </div>
       <label class="col-md-2" for="monthlyExpense" translate>Monthly Expense </label>
       <div class="col-md-4">
-        <input type="number" class="form-control" id="monthlyExpense" formControlName="GrossMonthlyExpenseAmt"
+        <input type="number" class="form-control" id="monthlyExpense" formControlName="GrossMonthlyExpenseAmt" [(ngModel)]="appCustCompanyFinDataObj.GrossMonthlyExpenseAmt"
         [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].GrossMonthlyExpenseAmt.invalid }">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].GrossMonthlyExpenseAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
       </div>
@@ -19,13 +19,13 @@
     <div class="form-group row">
       <label class="col-md-2" for="returnInvest" translate>Return of Investment (%) </label>
       <div class="col-md-4">
-        <input type="number" class="form-control" id="returnInvest" formControlName="ReturnOfInvestmentPrcnt"
+        <input type="number" class="form-control" id="returnInvest" formControlName="ReturnOfInvestmentPrcnt" [(ngModel)]="appCustCompanyFinDataObj.ReturnOfInvestmentPrcnt"
         [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].ReturnOfInvestmentPrcnt.invalid }">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].ReturnOfInvestmentPrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
       </div>
       <label class="col-md-2" for="returnInvest" translate>Return of Equity (%) </label>
       <div class="col-md-4">
-        <input type="number" class="form-control" id="returnEquityPrcnt" formControlName="ReturnOfEquityPrcnt"
+        <input type="number" class="form-control" id="returnEquityPrcnt" formControlName="ReturnOfEquityPrcnt" [(ngModel)]="appCustCompanyFinDataObj.ReturnOfEquityPrcnt"
         [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].ReturnOfEquityPrcnt.invalid }">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].ReturnOfEquityPrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
       </div>
@@ -33,13 +33,13 @@
     <div class="form-group row">
       <label class="col-md-2" for="returnAsset" translate>Return of Asset (%) </label>
       <div class="col-md-4">
-        <input type="number" class="form-control" id="returnAsset" formControlName="ReturnOfAssetPrcnt"
+        <input type="number" class="form-control" id="returnAsset" formControlName="ReturnOfAssetPrcnt" [(ngModel)]="appCustCompanyFinDataObj.ReturnOfAssetPrcnt"
         [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].ReturnOfAssetPrcnt.invalid }">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].ReturnOfAssetPrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
       </div>
       <label class="col-md-2" for="profitMarginPrcnt" translate>Profit Margin (%) </label>
       <div class="col-md-4">
-        <input type="text" class="form-control" id="profitMarginPrcnt" formControlName="ProfitMarginPrcnt"
+        <input type="text" class="form-control" id="profitMarginPrcnt" formControlName="ProfitMarginPrcnt" [(ngModel)]="appCustCompanyFinDataObj.ProfitMarginPrcnt"
         [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].ProfitMarginPrcnt.invalid }">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].ProfitMarginPrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
       </div>
@@ -47,13 +47,13 @@
     <div class="form-group row">
       <label class="col-md-2" for="currentRatioPrcnt" translate>Current Ratio (%) </label>
       <div class="col-md-4">
-        <input type="number" class="form-control" id="currentRatioPrcnt" formControlName="CurrentRatioPrcnt"
+        <input type="number" class="form-control" id="currentRatioPrcnt" formControlName="CurrentRatioPrcnt" [(ngModel)]="appCustCompanyFinDataObj.CurrentRatioPrcnt"
         [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].CurrentRatioPrcnt.invalid }">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].CurrentRatioPrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
       </div>
       <label class="col-md-2" for="debtEquityRatioPrcnt" translate>Debt Equity Ratio (%) </label>
       <div class="col-md-4">
-        <input type="number" class="form-control" id="debtEquityRatioPrcnt" formControlName="DebtEquityRatioPrcnt"
+        <input type="number" class="form-control" id="debtEquityRatioPrcnt" formControlName="DebtEquityRatioPrcnt" [(ngModel)]="appCustCompanyFinDataObj.DebtEquityRatioPrcnt"
         [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].DebtEquityRatioPrcnt.invalid }">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].DebtEquityRatioPrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
       </div>
@@ -61,13 +61,13 @@
     <div class="form-group row">
       <label class="col-md-2" for="invTurnOverPrcnt" translate>Inventory Turn Over (%) </label>
       <div class="col-md-4">
-        <input type="number" class="form-control" id="invTurnOverPrcnt" formControlName="InvTurnOverPrcnt"
+        <input type="number" class="form-control" id="invTurnOverPrcnt" formControlName="InvTurnOverPrcnt" [(ngModel)]="appCustCompanyFinDataObj.InvTurnOverPrcnt"
         [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].InvTurnOverPrcnt.invalid }">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].InvTurnOverPrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
       </div>
       <label class="col-md-2" for="arTurnOverPrcnt" translate>AR Turn Over (%) </label>
       <div class="col-md-4">
-        <input type="number" class="form-control" id="arTurnOverPrcnt" formControlName="ArTurnOverPrcnt"
+        <input type="number" class="form-control" id="arTurnOverPrcnt" formControlName="ArTurnOverPrcnt" [(ngModel)]="appCustCompanyFinDataObj.ArTurnOverPrcnt"
         [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].ArTurnOverPrcnt.invalid }">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].ArTurnOverPrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
       </div>
@@ -75,13 +75,13 @@
     <div class="form-group row">
       <label class="col-md-2" for="growthPrcnt" translate>Growth (%) </label>
       <div class="col-md-4">
-        <input type="number" class="form-control" id="growthPrcnt" formControlName="GrowthPrcnt"
+        <input type="number" class="form-control" id="growthPrcnt" formControlName="GrowthPrcnt" [(ngModel)]="appCustCompanyFinDataObj.GrowthPrcnt"
         [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].GrowthPrcnt.invalid }">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].GrowthPrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
       </div>
       <label class="col-md-2" for="workingCapitalAmt" translate>Working Capital (Amt)</label>
       <div class="col-md-4">
-        <input type="number" class="form-control" id="workingCapitalAmt" formControlName="WorkingCapitalAmt"
+        <input type="number" class="form-control" id="workingCapitalAmt" formControlName="WorkingCapitalAmt" [(ngModel)]="appCustCompanyFinDataObj.WorkingCapitalAmt"
         [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].WorkingCapitalAmt.invalid }">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].WorkingCapitalAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
       </div>
@@ -89,13 +89,13 @@
     <div class="form-group row">
       <label class="col-md-2" for="othMonthlyInstAmt" translate>Other Monthly Installment </label>
       <div class="col-md-4">
-        <input type="number" class="form-control" id="othMonthlyInstAmt" formControlName="OthMonthlyInstAmt"
+        <input type="number" class="form-control" id="othMonthlyInstAmt" formControlName="OthMonthlyInstAmt" [(ngModel)]="appCustCompanyFinDataObj.OthMonthlyInstAmt"
         [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].OthMonthlyInstAmt.invalid }">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].OthMonthlyInstAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
       </div>
       <label class="col-md-2" for="dateAsOf" translate>Date As Of</label>
       <div class="col-md-4">
-        <input type="date" class="form-control" id="dateAsOf" formControlName="DateAsOf"
+        <input type="date" class="form-control" id="dateAsOf" formControlName="DateAsOf" [(ngModel)]="appCustCompanyFinDataObj.DateAsOf"
         [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].DateAsOf.invalid }">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].DateAsOf" [submit]="enjiForm.submitted"></lib-uc-show-errors>
       </div>
@@ -103,13 +103,13 @@
     <div class="form-group row">
       <label class="col-md-2" for="revenue" translate>Revenue </label>
       <div class="col-md-4">
-        <input type="number" class="form-control" id="revenue" formControlName="Revenue"
+        <input type="number" class="form-control" id="revenue" formControlName="Revenue" [(ngModel)]="appCustCompanyFinDataObj.Revenue"
         [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].Revenue.invalid }">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].Revenue" [submit]="enjiForm.submitted"></lib-uc-show-errors>
       </div>
       <label class="col-md-2" for="oprCost" translate>Opr Cost</label>
       <div class="col-md-4">
-        <input type="number" class="form-control" id="oprCost" formControlName="OprCost"
+        <input type="number" class="form-control" id="oprCost" formControlName="OprCost" [(ngModel)]="appCustCompanyFinDataObj.OprCost"
         [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].OprCost.invalid }">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].OprCost" [submit]="enjiForm.submitted"></lib-uc-show-errors>
       </div>
@@ -117,13 +117,13 @@
     <div class="form-group row">
       <label class="col-md-2" for="profitBeforeTax" translate>Profit Before Tax</label>
       <div class="col-md-4">
-        <input type="number" class="form-control" id="profitBeforeTax" formControlName="ProfitBeforeTax"
+        <input type="number" class="form-control" id="profitBeforeTax" formControlName="ProfitBeforeTax" [(ngModel)]="appCustCompanyFinDataObj.ProfitBeforeTax"
         [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].ProfitBeforeTax.invalid }">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].ProfitBeforeTax" [submit]="enjiForm.submitted"></lib-uc-show-errors>
       </div>
       <label class="col-md-2" for="currAsset" translate>Current Asset </label>
       <div class="col-md-4">
-        <input type="number" class="form-control" id="currAsset" formControlName="CurrAsset"
+        <input type="number" class="form-control" id="currAsset" formControlName="CurrAsset" [(ngModel)]="appCustCompanyFinDataObj.CurrAsset"
         [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].CurrAsset.invalid }">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].CurrAsset" [submit]="enjiForm.submitted"></lib-uc-show-errors>
       </div>
@@ -131,13 +131,13 @@
     <div class="form-group row">
       <label class="col-md-2" for="netFixedAsset" translate>Net Fixed Asset</label>
       <div class="col-md-4">
-        <input type="number" class="form-control" id="netFixedAsset" formControlName="NetFixedAsset"
+        <input type="number" class="form-control" id="netFixedAsset" formControlName="NetFixedAsset" [(ngModel)]="appCustCompanyFinDataObj.NetFixedAsset"
         [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].NetFixedAsset.invalid }">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].NetFixedAsset" [submit]="enjiForm.submitted"></lib-uc-show-errors>
       </div>
       <label class="col-md-2" for="totalAsset" translate>Total Asset </label>
       <div class="col-md-4">
-        <input type="number" class="form-control" id="totalAsset" formControlName="TotalAsset"
+        <input type="number" class="form-control" id="totalAsset" formControlName="TotalAsset" [(ngModel)]="appCustCompanyFinDataObj.TotalAsset"
         [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].TotalAsset.invalid }">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].TotalAsset" [submit]="enjiForm.submitted"></lib-uc-show-errors>
       </div>
@@ -145,13 +145,13 @@
     <div class="form-group row">
       <label class="col-md-2" for="currLiablts" translate>Current Liabilities</label>
       <div class="col-md-4">
-        <input type="number" class="form-control" id="currLiablts" formControlName="CurrLiablts"
+        <input type="number" class="form-control" id="currLiablts" formControlName="CurrLiablts" [(ngModel)]="appCustCompanyFinDataObj.CurrLiablts"
         [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].CurrLiablts.invalid }">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].CurrLiablts" [submit]="enjiForm.submitted"></lib-uc-show-errors>
       </div>
       <label class="col-md-2" for="longTemrLiablts" translate>Long Term Liabilities </label>
       <div class="col-md-4">
-        <input type="number" class="form-control" id="longTemrLiablts" formControlName="LongTemrLiablts"
+        <input type="number" class="form-control" id="longTemrLiablts" formControlName="LongTemrLiablts" [(ngModel)]="appCustCompanyFinDataObj.LongTemrLiablts"
         [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].LongTemrLiablts.invalid }">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].LongTemrLiablts" [submit]="enjiForm.submitted"></lib-uc-show-errors>
       </div>
@@ -159,13 +159,13 @@
     <div class="form-group row">
       <label class="col-md-2" for="shareholderEquity" translate>Shareholder Equity</label>
       <div class="col-md-4">
-        <input type="number" class="form-control" id="shareholderEquity" formControlName="ShareholderEquity"
+        <input type="number" class="form-control" id="shareholderEquity" formControlName="ShareholderEquity" [(ngModel)]="appCustCompanyFinDataObj.ShareholderEquity"
         [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].ShareholderEquity.invalid }">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].ShareholderEquity" [submit]="enjiForm.submitted"></lib-uc-show-errors>
       </div>
       <label class="col-md-2" for="currRatio" translate>Current Ratio</label>
       <div class="col-md-4">
-        <input type="number" class="form-control" id="currRatio" formControlName="CurrRatio"
+        <input type="number" class="form-control" id="currRatio" formControlName="CurrRatio" [(ngModel)]="appCustCompanyFinDataObj.CurrRatio"
         [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].CurrRatio.invalid }">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].CurrRatio" [submit]="enjiForm.submitted"></lib-uc-show-errors>
       </div>

@@ -181,6 +181,7 @@ export class AdInsConstant {
     public static DeleteRefBank = "/RefBank/DeleteRefBank";
     public static GetBankByBankCode = "/RefBank/GetBankByBankCode";
     public static GetRefBankByBankCodeAsync = environment.FoundationR3Url + "/RefBank/GetRefBankByBankCodeAsync";
+    public static GetRefBankByRefBankIdAsync = environment.FoundationR3Url + "/RefBank/GetRefBankByRefBankIdAsync";
 
     //REF-EMP
     public static GetListEmployee = "/RefEmp/GetRefEmpPaging";
@@ -429,6 +430,12 @@ export class AdInsConstant {
     //CUST
     public static GetCustByCustNo = environment.FoundationR3Url + "/Cust/GetCustByCustNo";
     public static GetCustPersonalForCopyByCustId = "http://localhost:5000/Cust/GetCustPersonalForCopyByCustId";
+    public static GetCustCompanyForCopyByCustId = "http://localhost:5000/Cust/GetCustCompanyForCopyByCustId";
+    public static GetCustPersonalForCopyMgmntShrholderByCustId = "http://localhost:5000/Cust/GetCustPersonalForCopyMgmntShrholderByCustId";
+    public static GetCustCompanyForCopyMgmntShrholderByCustId = "http://localhost:5000/Cust/GetCustCompanyForCopyMgmntShrholderByCustId";
+
+
+
 
 
     //CUST DATA PERSONAL
