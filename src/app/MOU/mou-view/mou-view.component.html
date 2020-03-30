@@ -1,0 +1,109 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-body">
+      <div class="px-3">
+        <div class="form-body">
+          <!-- <h4 class="form-section card-title" *ngIf="custType == 'PERSONAL'" translate>CUSTOMER PERSONAL</h4>
+          <h4 class="form-section card-title" *ngIf="custType == 'COMPANY'" translate>CUSTOMER COMPANY</h4> -->
+          <h4 class="form-section card-title" translate>MOU VIEW</h4>
+          <!-- <div *ngIf="custType == 'PERSONAL'"> -->
+            <lib-ucviewgeneric [viewInput]="viewMouGeneralHeader"></lib-ucviewgeneric>
+             
+            <aw-wizard #wizard navBarLayout="large-empty-symbols" [awNavigationMode] navigateBackward="allow"
+              navigateForward="allow" [defaultStepIndex]="0">
+
+              <aw-wizard-step [stepTitle]="'MOU Detail'" (stepEnter)="EnterTab('detail')"
+                [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
+                <app-mou-view-general-detail *ngIf="isDetail == true">
+                </app-mou-view-general-detail>
+              </aw-wizard-step>
+
+              <aw-wizard-step [stepTitle]="'Fee'" (stepEnter)="EnterTab('fee')"
+                [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
+                <app-mou-view-general-detail *ngIf="isFee == true">
+                </app-mou-view-general-detail>
+              </aw-wizard-step>
+
+              <aw-wizard-step [stepTitle]="'Additional Collateral'" (stepEnter)="EnterTab('collateral')"
+                [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
+                <app-mou-view-general-detail *ngIf="isCollateral == true">
+                </app-mou-view-general-detail>
+              </aw-wizard-step>
+
+              <aw-wizard-step [stepTitle]="'Term and Condition'" (stepEnter)="EnterTab('TC')"
+                [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
+                <app-mou-view-general-detail *ngIf="isTC == true">
+                </app-mou-view-general-detail>
+              </aw-wizard-step>
+
+              <aw-wizard-step [stepTitle]="'Document'" (stepEnter)="EnterTab('document')"
+                [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
+                <app-mou-view-general-detail *ngIf="isDocument == true">
+                </app-mou-view-general-detail>
+              </aw-wizard-step>
+
+
+              <aw-wizard-step [stepTitle]="'Survey'" (stepEnter)="EnterTab('survey')"
+                [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
+                <app-mou-view-general-detail *ngIf="isSurvey == true">
+                </app-mou-view-general-detail>
+              </aw-wizard-step>
+
+              <aw-wizard-step [stepTitle]="'Approval History'" (stepEnter)="EnterTab('approvalHistory')"
+                [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
+                <app-mou-view-general-detail *ngIf="isApprovalHistory == true">
+                </app-mou-view-general-detail>
+              </aw-wizard-step>
+              <aw-wizard-step [stepTitle]="'Legal Review'" (stepEnter)="EnterTab('mainData')"
+                [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
+                <app-mou-view-general-detail *ngIf="isMainData == true">
+                </app-mou-view-general-detail>
+              </aw-wizard-step>
+
+            </aw-wizard>
+          <!-- </div> -->
+          <!-- <div *ngIf="custType == 'COMPANY'">
+						<lib-ucviewgeneric [viewInput]="viewCustCoyMainInfoHeader"></lib-ucviewgeneric>
+						<aw-wizard #wizard navBarLayout="large-empty-symbols" [awNavigationMode]
+							navigateBackward="allow" navigateForward="allow" [defaultStepIndex]="0">
+							<aw-wizard-step [stepTitle]="'Main Data'" (stepEnter)="EnterTabCoy('mainData')"
+								[navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
+								<app-customer-view-coy-detail *ngIf="isMainData == true">
+								</app-customer-view-coy-detail>
+							</aw-wizard-step>
+							<aw-wizard-step [stepTitle]="'Address'" (stepEnter)="EnterTab('address')"
+								[navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
+								<app-customer-view-coy-address *ngIf="isAddress == true">
+								</app-customer-view-coy-address>
+							</aw-wizard-step>
+							<aw-wizard-step [stepTitle]="'Management / Shareholder'"
+								(stepEnter)="EnterTabCoy('management')"
+								[navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
+								<app-customer-view-coy-management *ngIf="isManagement == true">
+								</app-customer-view-coy-management>
+							</aw-wizard-step>
+							<aw-wizard-step [stepTitle]="'Contact Information'" (stepEnter)="EnterTabCoy('contact')"
+								[navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
+								<app-customer-view-coy-contact *ngIf="isContact == true">
+								</app-customer-view-coy-contact>
+							</aw-wizard-step>
+							<aw-wizard-step [stepTitle]="'Financial Data'" (stepEnter)="EnterTabCoy('finData')"
+								[navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
+								<app-customer-view-coy-financial *ngIf="isFinData == true">
+								</app-customer-view-coy-financial>
+							</aw-wizard-step>
+							<aw-wizard-step [stepTitle]="'Legal Document'" (stepEnter)="EnterTabCoy('legal')"
+								[navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
+								<app-customer-view-coy-legal *ngIf="isLegal == true"> </app-customer-view-coy-legal>
+							</aw-wizard-step>
+							<aw-wizard-step [stepTitle]="'Other Attribute'" (stepEnter)="EnterTabCoy('other')"
+								[navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
+								<app-customer-view-coy-other *ngIf="isOther == true"> </app-customer-view-coy-other>
+							</aw-wizard-step>
+						</aw-wizard>
+					</div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

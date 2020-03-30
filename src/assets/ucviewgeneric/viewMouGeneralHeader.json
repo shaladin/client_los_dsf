@@ -1,0 +1,78 @@
+{
+  "title": "",
+  "subsection": [
+    {
+      "subSectionId": "CustMainInfoHeaderId",
+      "subSectionTitle": "Main Info",
+      "mainInfoUrl": "http://r3app-server.ad-ins.com/FOUNDATION_R3/Generic/GetDataViewBySQL",
+      "mainInfo": [
+        {
+          "type": "text",
+          "label": "MOU No",
+          "property": "MouNo"
+        },
+        {
+          "type": "text",
+          "label": "MOU Date",
+          "property": "MouCustDt"
+        },
+        {
+          "type": "text",
+          "label": "Customer Name",
+          "property": "CustName"
+        },
+        {
+          "type": "text",
+          "label": "MOU Type",
+          "property": "MrMouTypeCode"
+        },
+        {
+          "type": "text",
+          "label": "Start Date",
+          "property": "StartDt"
+        },
+        {
+          "type": "date",
+          "label": "Plafond Amount",
+          "property": "PlafondAmt"
+        },
+        {
+          "type": "text",
+          "label": "Expired Date",
+          "property": "EndDt"
+        },
+        {
+          "type": "text",
+          "label": "Reff No",
+          "property": "RefNo"
+        },
+        {
+          "type": "text",
+          "label": "Status",
+          "property": "MouStat"
+        },
+        {
+          "type": "text",
+          "label": "Realisation Amount",
+          "property": "MrGenderCode"
+        },
+        {
+          "type": "text",
+          "label": "In Process Amount",
+          "property": "InProcessAmt"
+        },
+        {
+          "type": "text",
+          "label": "Available Amount",
+          "property": "RealisationAmt"
+        }
+       
+      ],
+      "querystring": {
+        "select": "MOU_CUST_NO AS MouCustNo, MOU_CUST_DT AS MouCustDt, CUST_NAME AS CustName, MR_MOU_TYPE_CODE AS MrMouTypeCode, START_DT as StartDt, PLAFOND_AMT AS PlafondAmt, END_DT as EndDt, REF_NO AS RefNo, MOU_STAT AS MouStat, REALISATION_AMT AS RealisationAmt, IN_PROCESS_AMT AS InProcessAmt",
+        "from": "FROM dbo.MOU_CUST WITH(NOLOCK)",
+        "where": "WHERE MOU_CUST_ID = {0}"
+      }
+    }
+  ]
+}

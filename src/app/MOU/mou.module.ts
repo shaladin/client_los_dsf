@@ -23,7 +23,10 @@ import { MouViewAddcollComponent } from './mou-customer/mou-view/mou-view-addcol
 import { MouViewTcComponent } from './mou-customer/mou-view/mou-view-tc/mou-view-tc.component';
 import { MouViewDocComponent } from './mou-customer/mou-view/mou-view-doc/mou-view-doc.component';
 import { MouViewSurveyComponent } from './mou-customer/mou-view/mou-view-survey/mou-view-survey.component';
-import { MouViewLegalComponent } from './mou-customer/mou-view/mou-view-legal/mou-view-legal.component';
+import { MouViewLegalComponent } from './mou-customer/mou-view/mou-view-legal/mou-view-legal.component'; 
+import { MouViewComponent } from "./mou-view/mou-view.component";
+import { UcviewgenericModule } from "@adins/ucviewgeneric";
+import { MouViewGeneralDetailComponent } from "./mou-view/mou-view-general-detail/mou-view-general-detail.component";
 // import { ShowErrorsComponent } from "./app/test-new/show-errors.component";
 
 @NgModule({
@@ -40,7 +43,8 @@ import { MouViewLegalComponent } from './mou-customer/mou-view/mou-view-legal/mo
     ArchwizardModule,
     ReactiveFormsModule,
     UcSubsectionModule,
-    SharingComponentModule
+    SharingComponentModule, 
+    UcviewgenericModule,
   ],
   declarations: [
     MainInfoComponent,
@@ -54,7 +58,9 @@ import { MouViewLegalComponent } from './mou-customer/mou-view/mou-view-legal/mo
     MouViewDocComponent,
     MouViewSurveyComponent,
     MouViewLegalComponent,
-    MouReviewFactoringComponent,
+    MouReviewFactoringComponent, 
+    MouViewComponent,
+    MouViewGeneralDetailComponent
   ]
 })
 export class MouModule { }

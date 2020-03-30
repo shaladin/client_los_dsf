@@ -4,6 +4,7 @@ import { DocSignerComponent } from './doc-signer/doc-signer.component';
 import { MouReviewPagingComponent } from './mou-customer/mou-review/mou-review-paging/mou-review-paging.component';
 import { MouReviewGeneralComponent } from './mou-customer/mou-review/mou-review-general/mou-review-general.component';
 import { MouReviewFactoringComponent } from './mou-customer/mou-review/mou-review-factoring/mou-review-factoring.component';
+import { MouViewComponent } from './mou-view/mou-view.component';
 const routes: Routes = [
   {
     path: '',
@@ -35,7 +36,14 @@ const routes: Routes = [
         data: {
           title: 'MOU Review Factoring'
         }
-      }
+      },
+      {
+        path: 'Cust/Paging',
+        component: MouViewComponent,
+        data: {
+          title: 'MOU View Factoring'
+        }
+      },
     ]
   }
 ];
