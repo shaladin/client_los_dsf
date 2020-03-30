@@ -7,6 +7,7 @@ import { MouReviewFactoringComponent } from './mou-customer/mou-review/mou-revie
 import { MouCustomerApprovalComponent } from './mou-customer/mou-customer-approval/mou-customer-approval.component';
 import { MouApprovalGeneralComponent } from './mou-customer/mou-customer-approval/mou-approval-general/mou-approval-general.component';
 import { MouApprovalFactoringComponent } from './mou-customer/mou-customer-approval/mou-approval-factoring/mou-approval-factoring.component';
+import { MouRequestAddcollComponent } from './mou-customer/mou-request/mou-request-addcoll/mou-request-addcoll.component';
 
 const routes: Routes = [
   {
@@ -59,6 +60,13 @@ const routes: Routes = [
         component: MouApprovalFactoringComponent,
         data: {
           title: 'MOU Approval Factoring'
+        }
+      },
+      {
+        path: 'Cust/RequestAddColl',
+        component: MouRequestAddcollComponent,
+        data: {
+          title: 'MOU Additional Collateral'
         }
       },
     ]
