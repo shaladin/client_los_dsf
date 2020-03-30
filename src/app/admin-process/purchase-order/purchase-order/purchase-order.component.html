@@ -18,12 +18,17 @@
                 <td>{{item.SupplName}}</td>
                 <td>{{item.PurchaseOrderNo}}</td>
                 <td>
-                    <a class="success p-0" [routerLink]="['/AdminProcess/PurchaseOrder/PO/Detail']" 
-                    [queryParams]="{AgrmntId:item.AgrmntId, AppId:item.AppId, AppAssetId:item.AppAssetId, SupplCode:item.SupplCode}" >
+                    <a class="success p-0" [routerLink]="['/AdminProcess/PurchaseOrder/PO/Detail']"
+                        [queryParams]="{AgrmntId:item.AgrmntId, AppId:item.AppId, AppAssetId:item.AppAssetId, SupplCode:item.SupplCode}">
                         <i class="ft-edit-2 font-medium-3 mr-2"></i>
                     </a>
                 </td>
             </tr>
         </tbody>
     </table>
+</div>
+<lib-ucSubsection [id]="'TermConditionsId'" [title]="'Term & Conditions'" [panel]="'TermConditions'">
+</lib-ucSubsection>
+<div class="form-body" id="TermConditions">
+    <app-term-conditions [AppId]="AppId"></app-term-conditions>
 </div>

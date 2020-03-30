@@ -10,12 +10,14 @@ import { UcgridfooterModule } from '@adins/ucgridfooter';
 import { ShowErrorsComponent } from './show-error/show-errors.component';
 import { UcviewgenericModule } from '@adins/ucviewgeneric';
 import { AgrMainInfoComponent } from './components/agr-main-info/agr-main-info.component';
+import { TermConditionsComponent } from './components/term-conditions/term-conditions.component';
 
 
 @NgModule({
     exports: [
         ShowErrorsComponent,
-        AgrMainInfoComponent
+        AgrMainInfoComponent,
+        TermConditionsComponent
     ],
     imports: [
         FormsModule,
@@ -29,7 +31,8 @@ import { AgrMainInfoComponent } from './components/agr-main-info/agr-main-info.c
     ],
     declarations: [
         ShowErrorsComponent,
-        AgrMainInfoComponent
+        AgrMainInfoComponent,
+        TermConditionsComponent
     ]
 })
 
