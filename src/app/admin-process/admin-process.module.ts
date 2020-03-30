@@ -18,6 +18,7 @@ import { PreGoLivePagingComponent } from './pre-go-live/pre-go-live-paging/pre-g
 import { PreGoLiveComponent } from './pre-go-live/pre-go-live/pre-go-live.component';
 import { UcgridviewModule } from "@adins/ucgridview";
 import { UcviewgenericModule } from "@adins/ucviewgeneric";
+import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 
 @NgModule({
   imports: [
@@ -42,7 +43,11 @@ import { UcviewgenericModule } from "@adins/ucviewgeneric";
     PurchaseOrderComponent,
     PurchaseOrderInfoComponent,
     PreGoLivePagingComponent,
-    PreGoLiveComponent
+    PreGoLiveComponent,
+    PurchaseOrderInfoComponent
+  ],
+  providers: [
+    NGXToastrService
   ]
 })
 export class AdminProcessModule { }
