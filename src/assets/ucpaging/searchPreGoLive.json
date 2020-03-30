@@ -1,0 +1,153 @@
+{
+    "title": "Pre Go Live Paging",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "textbox",
+            "name": "AGRMNT_NO",
+            "id": "AgrmntNo",
+            "value": "",
+            "label": "AGREEMENT NO",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "APP_NO",
+            "id": "AppNoId",
+            "value": "",
+            "label": "APPLICATION NO",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "PROD_OFFERING_NAME",
+            "id": "ProdOfferingNameId",
+            "value": "",
+            "label": "PROD OFFERING NAME",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "CUSTOMER NAME",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "datepicker",
+            "name": "DELIVERY_DT",
+            "id": "DeliveryDt",
+            "value": "",
+            "label": "DELIVERY DATE",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "label": "TASK CLAIM STATUS",
+            "name": "MR_VENDOR_CATEGORY_CODE",
+            "id": "VendorCategoryId",
+            "value": "",
+            "datatype": "text",
+            "isSelectOne": false,
+            "items": [],
+            "isFromURL": true,
+            "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
+            "itemsUrl": [],
+            "criteriaPropName": "RefMasterTypeCode",
+            "criteriaPropValue": "VENDOR_CATEGORY"
+        },
+        {
+            "type": "textbox",
+            "name": "DELIVERY_DT",
+            "id": "DeliveryDt",
+            "value": "",
+            "label": "TASK CLAIM BY",
+            "placeholder": "Placeholder"
+        }
+    ],
+    "querystring": {
+        "select": "SELECT arg.AGRMNT_NO AS AgrmntNo, app.APP_NO AS AppNo, arg.CUST_NAME AS CustName, arg.PROD_OFFERING_NAME AS ProdOfferingName, doh.DELIVERY_DT AS DeliveryDt, arg.AGRMNT_ID AS AgrmntId ",
+        "from": "FROM dbo.AGRMNT arg WITH(NOLOCK) JOIN dbo.DELIVERY_ORDER_H doh WITH(NOLOCK) ON arg.AGRMNT_ID = doh.AGRMNT_ID JOIN dbo.APP app WITH(NOLOCK) ON app.APP_ID = arg.APP_ID"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "AGREEMENT NO",
+            "name": "AgrmntNo"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "APPLICATION NO",
+            "name": "AppNo"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "CUSTOMER NAME",
+            "name": "CustName"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "PRODUCT OFFERING NAME",
+            "name": "ProdOfferingName"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "DELIVERY DATE",
+            "name": "DeliveryDt"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Action"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "AgrmntNo"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "AppNo"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "CustName"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "ProdOfferingName"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "DeliveryDt"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "edit",
+                    "path": "/Nap/AppAddDetail",
+                    "param": [
+                        {
+                            "type": "AppId",
+                            "property": "AppId"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

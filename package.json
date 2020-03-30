@@ -14,7 +14,7 @@
   "dependencies": {
     "@adins/uc-show-errors": "0.0.1",
     "@adins/uc-subsection": "^1.0.4",
-    "@adins/ucaddress": "^1.0.9",
+    "@adins/ucaddress": "^1.0.10",
     "@adins/ucgridfooter": "^1.0.1",
     "@adins/ucgridview": "^2.0.10",
     "@adins/uclookupgeneric": "^2.0.12",

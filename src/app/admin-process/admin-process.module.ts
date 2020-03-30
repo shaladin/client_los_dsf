@@ -14,6 +14,10 @@ import { PurchaseOrderDetailComponent } from './purchase-order/purchase-order-de
 import { SharingComponentModule } from "app/shared/sharingcomponent.module";
 import { PurchaseOrderComponent } from './purchase-order/purchase-order/purchase-order.component';
 import { PurchaseOrderInfoComponent } from './purchase-order/purchase-order-detail/purchase-order-info/purchase-order-info.component';
+import { PreGoLivePagingComponent } from './pre-go-live/pre-go-live-paging/pre-go-live-paging.component';
+import { PreGoLiveComponent } from './pre-go-live/pre-go-live/pre-go-live.component';
+import { UcgridviewModule } from "@adins/ucgridview";
+import { UcviewgenericModule } from "@adins/ucviewgeneric";
 
 @NgModule({
   imports: [
@@ -23,6 +27,8 @@ import { PurchaseOrderInfoComponent } from './purchase-order/purchase-order-deta
     UCSearchModule,
     UcgridfooterModule,
     UcpagingModule,
+    UcgridviewModule,
+    UcviewgenericModule,
     NgbModule,
     ReactiveFormsModule,
     UcSubsectionModule,
@@ -34,7 +40,9 @@ import { PurchaseOrderInfoComponent } from './purchase-order/purchase-order-deta
     PurchaseOrderPagingComponent,
     PurchaseOrderDetailComponent,
     PurchaseOrderComponent,
-    PurchaseOrderInfoComponent
+    PurchaseOrderInfoComponent,
+    PreGoLivePagingComponent,
+    PreGoLiveComponent
   ]
 })
 export class AdminProcessModule { }
