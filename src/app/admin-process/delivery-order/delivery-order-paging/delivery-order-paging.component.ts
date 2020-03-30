@@ -20,13 +20,13 @@ export class DeliveryOrderPagingComponent implements OnInit {
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchDeliveryOrder.json";
 
-    // this.arrCrit = new Array();
-    // var critObj = new CriteriaObj();
-    // critObj.restriction = AdInsConstant.RestrictionEq;
-    // critObj.propName = 'AG.AGRMNT_CURR_STEP';
-    // critObj.value = "DELIVERY_ORDER";
-    // this.arrCrit.push(critObj);
-    // this.inputPagingObj.addCritInput = this.arrCrit;
+    this.arrCrit = new Array();
+    var critObj = new CriteriaObj();
+    critObj.restriction = AdInsConstant.RestrictionEq;
+    critObj.propName = 'AG.AGRMNT_CURR_STEP';
+    critObj.value = "DELIVERY_ORDER";
+    this.arrCrit.push(critObj);
+    this.inputPagingObj.addCritInput = this.arrCrit;
 
   }
 }

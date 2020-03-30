@@ -61,7 +61,6 @@ export class DeliveryOrderDetailComponent implements OnInit {
     }
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterTypeObj).subscribe(
       (response) => {
-        console.log(response)
         this.itemType = response["ReturnObject"];
         this.DeliveryOrderForm.patchValue({
           MrCustRelationshipCode: this.itemType[0].Key
@@ -155,16 +154,15 @@ export class DeliveryOrderDetailComponent implements OnInit {
     this.deliveryOrderObj.DeliveryOrderHObj = deliveryOrderH;
     this.deliveryOrderObj.ListAppCollateralDocObj = this.listAppCollateralDocObj.AppCollateralDocObj;
 
-    console.log(this.deliveryOrderObj)
-      this.http.post(AdInsConstant.SubmitDeliveryOrderData,this.deliveryOrderObj).subscribe(
-        response => {
-          this.toastr.successMessage(response["message"]);
-          this.router.navigate(["/AdminProcess/DeliveryOrder/Paging"]);
-        },
-        error => {
-          console.log(error);
-        }
-      );
+    this.http.post(AdInsConstant.SubmitDeliveryOrderData, this.deliveryOrderObj).subscribe(
+      response => {
+        this.toastr.successMessage(response["message"]);
+        this.router.navigate(["/AdminProcess/DeliveryOrder/Paging"]);
+      },
+      error => {
+        console.log(error);
+      }
+    );
 
   }
 }
