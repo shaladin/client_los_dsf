@@ -14,6 +14,7 @@ import { PurchaseOrderDetailComponent } from './purchase-order/purchase-order-de
 import { SharingComponentModule } from "app/shared/sharingcomponent.module";
 import { PurchaseOrderComponent } from './purchase-order/purchase-order/purchase-order.component';
 import { PurchaseOrderInfoComponent } from './purchase-order/purchase-order-detail/purchase-order-info/purchase-order-info.component';
+import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 
 @NgModule({
   imports: [
@@ -35,6 +36,9 @@ import { PurchaseOrderInfoComponent } from './purchase-order/purchase-order-deta
     PurchaseOrderDetailComponent,
     PurchaseOrderComponent,
     PurchaseOrderInfoComponent
+  ],
+  providers: [
+    NGXToastrService
   ]
 })
 export class AdminProcessModule { }
