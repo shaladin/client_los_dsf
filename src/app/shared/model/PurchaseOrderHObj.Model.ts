@@ -13,6 +13,7 @@ export class PurchaseOrderHObj {
     Notes: string;
     NumOfExtension: number;
     MouNo: string;
+    RowVersion: string;
 
     constructor() {
         this.PurchaseOrderHId = 0;
@@ -29,5 +30,6 @@ export class PurchaseOrderHObj {
         this.Notes = "";
         this.NumOfExtension = 0;
         this.MouNo = "";
+        this.RowVersion = "";
     }
 }

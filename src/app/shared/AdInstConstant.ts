@@ -447,4 +447,10 @@ export class AdInsConstant {
     public static GetAppAssetListByAppId = environment.losUrl + "/AppAsset/GetAppAssetListByAppId";
     public static GetAllAssetDataForPOByAsset = environment.losUrl + "/AppAsset/GetAllAssetDataForPOByAsset";
     
+    //APP TC
+    public static GetListTCbyAppId = environment.losUrl + "/AppTc/GetListTCbyAppId";
+    
+    //PURCHASE ORDER
+    public static SubmitPurchaseOrder = environment.losUrl + "/PurchaseOrderH/SubmitPurchaseOrder";
+    
 }
