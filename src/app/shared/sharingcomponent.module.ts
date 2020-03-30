@@ -1,6 +1,6 @@
 
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpModule } from '@angular/http';
@@ -9,15 +9,19 @@ import { UcSubsectionModule } from '@adins/uc-subsection';
 import { UcgridfooterModule } from '@adins/ucgridfooter';
 import { ShowErrorsComponent } from './show-error/show-errors.component';
 import { UcviewgenericModule } from '@adins/ucviewgeneric';
+import { UcShowErrorsModule } from '@adins/uc-show-errors';
 import { AgrMainInfoComponent } from './components/agr-main-info/agr-main-info.component';
+import { TermConditionsComponent } from './components/term-conditions/term-conditions.component';
 
 
 @NgModule({
     exports: [
         ShowErrorsComponent,
-        AgrMainInfoComponent
+        AgrMainInfoComponent,
+        TermConditionsComponent
     ],
     imports: [
+        ReactiveFormsModule,
         FormsModule,
         NgbModule,
         RouterModule,
@@ -25,11 +29,13 @@ import { AgrMainInfoComponent } from './components/agr-main-info/agr-main-info.c
         CommonModule,
         UcSubsectionModule,
         UcgridfooterModule,
-        UcviewgenericModule
+        UcviewgenericModule,
+        UcShowErrorsModule
     ],
     declarations: [
         ShowErrorsComponent,
-        AgrMainInfoComponent
+        AgrMainInfoComponent,
+        TermConditionsComponent
     ]
 })
 
