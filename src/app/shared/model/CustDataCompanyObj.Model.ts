@@ -13,6 +13,9 @@ export class CustDataCompanyObj {
     AppCustCompanyMgmntShrholderObjs: any;
     AppCustCompanyContactPersonObjs: any;
     AppCustCompanyFinDataObj: AppCustCompanyFinDataObj;
+    AppCustBankAccObjs: any;
+    AppCustCompanyLegalDocObjs: any;
+    AppCustGrpObjs: any;
     RowVersion: any;
 
     constructor() { 

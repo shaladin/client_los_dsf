@@ -428,6 +428,7 @@ export class AdInsConstant {
 
     //CUST
     public static GetCustByCustNo = environment.FoundationR3Url + "/Cust/GetCustByCustNo";
+    public static GetCustPersonalForCopyByCustId = "http://localhost:5000/Cust/GetCustPersonalForCopyByCustId";
 
 
     //CUST DATA PERSONAL

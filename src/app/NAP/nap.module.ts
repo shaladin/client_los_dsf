@@ -39,6 +39,7 @@ import { CustShareholderComponent } from "./nap-tab/customer-data/component/shar
 import { CustCompanyContactInformationComponent } from "./nap-tab/customer-data/component/company-contact-information/cust-company-contact-information.component";
 import { UcShowErrorsModule } from "@adins/uc-show-errors";
 import { CustCompanyFinancialDataComponent } from "./nap-tab/customer-data/component/company-financial-data/cust-company-financial-data.component";
+import { CustLegalDocComponent } from "./nap-tab/customer-data/component/legal-doc/cust-legal-doc.component";
 
 
 
@@ -68,7 +69,8 @@ import { CustCompanyFinancialDataComponent } from "./nap-tab/customer-data/compo
         CommissionPagingComponent,
         CommissionAddComponent,
         FormAddDynamicComponent,
-        CustShareholderComponent
+        CustShareholderComponent,
+        CustLegalDocComponent
         ],
     imports: [ 
         NapRoutingModule,

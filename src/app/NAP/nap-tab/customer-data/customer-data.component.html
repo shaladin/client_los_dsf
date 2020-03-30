@@ -22,7 +22,8 @@
             <form class="form form-horizontal" [formGroup]="CustDataForm" (ngSubmit)="CustDataForm.valid && SaveForm()"
             #enjiForm="ngForm">
             <div class="form-body">
-                  <app-cust-personal-main-data [appId]="appId" [custDataPersonalObj]="custDataPersonalObj" [enjiForm]="enjiForm" [parentForm]="CustDataForm" [identifier]="'personalMainData'"></app-cust-personal-main-data>
+              <div *ngIf="isBindDataDone == true">
+                  <app-cust-personal-main-data (callbackCopyCust)="CopyCustomer($event)" [appId]="appId" [custDataPersonalObj]="custDataPersonalObj" [enjiForm]="enjiForm" [parentForm]="CustDataForm" [identifier]="'personalMainData'"></app-cust-personal-main-data>
                   <lib-ucaddress #UcAddrGrp [title]="'Legal Address'" [UCAddrForm]="CustDataForm" [enjiForm]="enjiForm" [identifier]="'legalAddr'" [default]="legalAddrObj" [inputField]="inputFieldLegalObj" [showPhn3]="false"></lib-ucaddress>
                   <lib-ucSubsection [id]="'residenceAddrId'" [title]="'Residence Address'" [panel]="'residenceAddr'">
                   </lib-ucSubsection>
@@ -72,12 +73,13 @@
                     </div>
                     <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="CustDataForm" [enjiForm]="enjiForm" [identifier]="'mailingAddr'" [default]="mailingAddrObj" [inputField]="inputFieldMailingObj" [showPhn3]="false"></lib-ucaddress>
                   </div>
-                  <app-cust-personal-contact-information (callbackCopyAddr)="copyToContactPersonAddr($event)" (callbackSubmit)="getCustContactInformation($event)" [appCustPersonalId]="appCustPersonalId"></app-cust-personal-contact-information>
+                  <app-cust-personal-contact-information (callbackCopyAddr)="copyToContactPersonAddr($event)" (callbackSubmit)="getCustContactInformation($event)" [listContactPersonPersonal]="listAppCustPersonalContactInformation"></app-cust-personal-contact-information>
                   <app-cust-personal-financial-data [appCustPersonalFinDataObj]="custDataPersonalObj.AppCustPersonalFinDataObj" [enjiForm]="enjiForm" [parentForm]="CustDataForm" [identifier]="'financialData'"></app-cust-personal-financial-data>
                   <app-cust-bank-account (callbackSubmit)="getAppCustBankAcc($event)" [listBankAcc]="custDataPersonalObj.AppCustBankAccObjs"></app-cust-bank-account>
                   <app-cust-job-data [custModelCode]="defCustModelCode" [appCustPersonalJobDataObj]="custDataPersonalObj.AppCustPersonalJobDataObj" [enjiForm]="enjiForm" [parentForm]="CustDataForm" [identifier]="'jobData'"></app-cust-job-data>
                   <app-cust-socmed [appCustSocmedObjs]="custDataPersonalObj.AppCustSocmedObjs" [enjiForm]="enjiForm" [parentForm]="CustDataForm" [identifier]="'socmed'"></app-cust-socmed>
                   <app-cust-grp-member [appCustGrpObjs]="custDataPersonalObj.AppCustGrpObjs" [enjiForm]="enjiForm" [parentForm]="CustDataForm" [identifier]="'custGrpMember'"></app-cust-grp-member>
+                </div>              
               </div>
               <div class="form-actions right">
                 <button type="submit" class="btn btn-raised btn-primary">
@@ -123,6 +125,9 @@
                   <app-cust-shareholder (callbackSubmit)="getAppCustShareholder($event)" [listShareholder]="custDataCompanyObj.AppCustCompanyMgmntShrholderObjs"></app-cust-shareholder>
                   <app-cust-company-contact-information (callbackSubmit)="getAppCustCompanyContactPerson($event)" [listContactPersonCompany]="custDataCompanyObj.AppCustCompanyContactPersonObjs"></app-cust-company-contact-information>
                   <app-cust-company-financial-data [appCustCompanyFinDataObj]="custDataCompanyObj.AppCustCompanyFinDataObj" [enjiForm]="enjiFormCompany" [parentForm]="CustDataCompanyForm" [identifier]="'financialDataCompany'"></app-cust-company-financial-data>
+                  <app-cust-bank-account (callbackSubmit)="getAppCustBankAccCompany($event)" [listBankAcc]="custDataCompanyObj.AppCustBankAccObjs"></app-cust-bank-account>
+                  <app-cust-legal-doc (callbackSubmit)="getAppCustLegalDoc($event)" [listLegalDoc]="custDataCompanyObj.AppCustCompanyLegalDocObjs"></app-cust-legal-doc>
+                  <app-cust-grp-member [appCustGrpObjs]="custDataCompanyObj.AppCustGrpObjs" [enjiForm]="enjiFormCompany" [parentForm]="CustDataCompanyForm" [identifier]="'custGrpMemberCompany'"></app-cust-grp-member>
                 </div>
               </div>
               <div class="form-actions right">

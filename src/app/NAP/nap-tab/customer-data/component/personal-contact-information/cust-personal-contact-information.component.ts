@@ -28,8 +28,8 @@ import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 })
 
 export class CustPersonalContactInformationComponent implements OnInit {
+  @Input() listContactPersonPersonal: any = new Array<AppCustPersonalContactPersonObj>();
 
-  @Input() appCustPersonalId: any;
 
   @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
   @Output() callbackCopyAddr: EventEmitter<any> = new EventEmitter();
@@ -38,7 +38,6 @@ export class CustPersonalContactInformationComponent implements OnInit {
   currentEditedIndex: any;
   closeResult: any;
   selectedProfessionCode: any;
-  listContactPersonPersonal: any;
   getCustContactPersonPersonalUrl: any;
   getRefMasterUrl: any;
   getRefProfessionUrl: any;
@@ -104,7 +103,6 @@ export class CustPersonalContactInformationComponent implements OnInit {
     this.initUrl();
     this.bindAllRefMasterObj();
     this.initContactPersonAddrObj();
-    this.getListContactPersonForPaging();
   }
 
   SaveForm(){
@@ -200,7 +198,6 @@ export class CustPersonalContactInformationComponent implements OnInit {
     this.appCustPersonalContactPersonObj.MobilePhnNo1 = this.ContactInfoPersonalForm.controls.MobilePhnNo1.value;
     this.appCustPersonalContactPersonObj.MobilePhnNo2 = this.ContactInfoPersonalForm.controls.MobilePhnNo2.value;
     this.appCustPersonalContactPersonObj.Email = this.ContactInfoPersonalForm.controls.Email.value;
-    this.appCustPersonalContactPersonObj.AppCustPersonalId = this.appCustPersonalId;
     this.appCustPersonalContactPersonObj.Zipcode = this.ContactInfoPersonalForm.controls["contactPersonAddrZipcode"]["controls"].value.value;
     this.appCustPersonalContactPersonObj.Addr = this.ContactInfoPersonalForm.controls["contactPersonAddr"]["controls"].Addr.value;
     this.appCustPersonalContactPersonObj.AreaCode1 = this.ContactInfoPersonalForm.controls["contactPersonAddr"]["controls"].AreaCode1.value;
@@ -278,21 +275,6 @@ export class CustPersonalContactInformationComponent implements OnInit {
     this.getRefProfessionUrl = AdInsConstant.GetRefProfessionByCode;
   }
 
-  getListContactPersonForPaging(){
-    this.appCustPersonalContactPersonObj = new AppCustPersonalContactPersonObj();
-    this.appCustPersonalContactPersonObj.AppCustPersonalId = this.appCustPersonalId;
-    this.http.post(this.getCustContactPersonPersonalUrl, this.appCustPersonalContactPersonObj).subscribe(
-      (response) => {
-        console.log(response);
-        this.listContactPersonPersonal = response["ReturnObject"];
-        this.callbackSubmit.emit(this.listContactPersonPersonal);
-      },
-      (error) => {
-        console.log(error);
-      }
-    ); 
-  }
-
   bindCopyFrom(){
     this.ContactInfoPersonalForm.patchValue({
       CopyFromContactPerson: this.copyToContactPersonAddrObj[0].Key
@@ -334,7 +316,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
   }
 
   bindCustRelationshipObj(){
-    this.refMasterObj.RefMasterTypeCode = "CUST_PERSONAL_RELATIONSHIP";  
+    this.refMasterObj.RefMasterTypeCode = "CUST_RELATIONSHIP";  
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
         this.CustRelationshipObj = response["ReturnObject"];

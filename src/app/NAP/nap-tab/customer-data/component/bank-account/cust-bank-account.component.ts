@@ -58,6 +58,7 @@ export class CustBankAccountComponent implements OnInit {
     BankBranch: ['', [Validators.required, Validators.maxLength(50)]],
     BankAccName: ['', [Validators.required, Validators.maxLength(50)]],
     BankAccNo: ['', [Validators.required, Validators.maxLength(50)]],
+    IsDefault: [false],
     BankStmntObjs: this.fb.array([])
   });
 
@@ -81,6 +82,14 @@ export class CustBankAccountComponent implements OnInit {
     this.appCustBankAccObj = new AppCustBankAccObj();
     if(this.listBankAcc == undefined){
       this.listBankAcc = new Array<AppCustBankAccObj>();
+    }
+    if(this.CustBankAccountForm.controls.IsDefault.value == true){
+      var check = this.listBankAcc.find(x => x.IsDefault == true);
+
+      if(check != undefined){
+        this.toastr.errorMessage("Other bank account is already default");
+        return;
+      }
     }
     this.setAppCustBankAcc();
     if(this.mode == "add"){
@@ -107,7 +116,8 @@ export class CustBankAccountComponent implements OnInit {
     this.CustBankAccountForm.patchValue({
       BankBranch: this.listBankAcc[i].BankBranch,
       BankAccName: this.listBankAcc[i].BankAccName,
-      BankAccNo: this.listBankAcc[i].BankAccNo
+      BankAccNo: this.listBankAcc[i].BankAccNo,
+      IsDefault: this.listBankAcc[i].IsDefault
     });
 
     if(this.listBankAcc[i].AppCustBankStmntObjs != undefined){
@@ -135,6 +145,7 @@ export class CustBankAccountComponent implements OnInit {
       BankBranch: ['', [Validators.required, Validators.maxLength(50)]],
       BankAccName: ['', [Validators.required, Validators.maxLength(50)]],
       BankAccNo: ['', [Validators.required, Validators.maxLength(50)]],
+      IsDefault: [false],
       BankStmntObjs: this.fb.array([])
     });
     this.selectedBankCode = "";
@@ -147,6 +158,7 @@ export class CustBankAccountComponent implements OnInit {
     this.appCustBankAccObj.BankAccName = this.CustBankAccountForm.controls.BankAccName.value;
     this.appCustBankAccObj.BankAccNo = this.CustBankAccountForm.controls.BankAccNo.value;
     this.appCustBankAccObj.BalanceAmt = 0;
+    this.appCustBankAccObj.IsDefault = this.CustBankAccountForm.controls.IsDefault.value;
     this.appCustBankAccObj.AppCustBankStmntObjs = new Array<AppCustBankStmntObj>();
     for(let i = 0; i < this.CustBankAccountForm.controls["BankStmntObjs"].value.length; i++){
       var appCustBankStmntObj = new AppCustBankStmntObj();
@@ -192,6 +204,10 @@ export class CustBankAccountComponent implements OnInit {
   deleteBankStmnt(i){
     var bankStmnObjs = this.CustBankAccountForm.controls['BankStmntObjs'] as FormArray;
     bankStmnObjs.removeAt(i);
+  }
+
+  checkDefault(){
+    
   }
 
   addGroup(bankStmntObj){

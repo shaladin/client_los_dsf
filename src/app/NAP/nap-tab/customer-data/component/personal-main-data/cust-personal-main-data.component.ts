@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormBuilder, Validators, NgForm, FormGroup, ControlContainer, FormGroupDirective } from '@angular/forms';
@@ -27,6 +27,9 @@ export class CustPersonalMainDataComponent implements OnInit {
   @Input() identifier: any;
   @Input() custDataPersonalObj: CustDataPersonalObj = new CustDataPersonalObj();
   @Input() custType: any;
+
+  @Output() callbackCopyCust: EventEmitter<any> = new EventEmitter();
+
 
   refMasterObj = {
     RefMasterTypeCode: "",
@@ -84,9 +87,9 @@ export class CustPersonalMainDataComponent implements OnInit {
       Email1: ['', Validators.maxLength(100)],
       FamilyCardNo: ['', Validators.maxLength(50)],
       Email2: ['', Validators.maxLength(50)],
-      NoOfResidence: ['', Validators.maxLength(4)],
+      NoOfResidence: ['', [Validators.pattern("^[0-9]+$"), Validators.maxLength(4)]],
       Email3: ['', Validators.maxLength(50)],
-      NoOfDependents: ['', Validators.maxLength(4)],
+      NoOfDependents: ['', [Validators.pattern("^[0-9]+$"), Validators.maxLength(4)]],
     }));
 
     this.initUrl();
@@ -95,16 +98,69 @@ export class CustPersonalMainDataComponent implements OnInit {
     this.bindCustData();
   }
 
-  CopyCustomer(event) {
+  CopyCustomerEvent(event) {
     this.selectedCustNo = event.CustNo;
     this.InputLookupCustomerObj.isReadonly = true;
+
+    var custObj = {CustId: event.CustId};
+    this.http.post(AdInsConstant.GetCustPersonalForCopyByCustId, custObj).subscribe(
+      (response) => {
+        console.log(response);
+        this.CopyCustomer(response);
+        this.callbackCopyCust.emit(response);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+  }
+
+  CopyCustomer(response){
+    if(response["CustObj"] != undefined){
+      this.parentForm.controls[this.identifier].patchValue({
+        MrIdTypeCode: response["CustObj"].MrIdTypeCode,
+        IdNo: response["CustObj"].IdNo,
+        IdExpiredDt: formatDate(response["CustObj"].IdExpiredDt, 'yyyy-MM-dd', 'en-US'),
+        TaxIdNo: response["CustObj"].TaxIdNo,
+        IsVip: response["CustObj"].IsVip,
+      });
+      this.InputLookupCustomerObj.nameSelect = response["CustObj"].CustName;
+      this.InputLookupCustomerObj.jsonSelect = {CustName: response["CustObj"].CustName};
+      this.selectedCustNo = response["CustObj"].CustNo;
+    }
+    
+    if(response["CustPersonalObj"] != undefined){
+      this.parentForm.controls[this.identifier].patchValue({
+        CustFullName: response["CustPersonalObj"].CustFullName,
+        MrGenderCode: response["CustPersonalObj"].MrGenderCode,		
+        MotherMaidenName: response["CustPersonalObj"].MotherMaidenName,
+        MrMaritalStatCode: response["CustPersonalObj"].MrMaritalStatCode,
+        BirthPlace: response["CustPersonalObj"].BirthPlace,
+        BirthDt: formatDate(response["CustPersonalObj"].BirthDt, 'yyyy-MM-dd', 'en-US'),
+        MrNationalityCode: response["CustPersonalObj"].MrNationalityCode,
+        MobilePhnNo1: response["CustPersonalObj"].MobilePhnNo1,
+        MrEducationCode: response["CustPersonalObj"].MrEducationCode,
+        MobilePhnNo2: response["CustPersonalObj"].MobilePhnNo2,
+        MrReligionCode: response["CustPersonalObj"].MrReligionCode,
+        MobilePhnNo3: response["CustPersonalObj"].MobilePhnNo3,
+        Email1: response["CustPersonalObj"].Email1,
+        FamilyCardNo: response["CustPersonalObj"].FamilyCardNo,
+        Email2: response["CustPersonalObj"].Email2,
+        NoOfResidence: response["CustPersonalObj"].NoOfResidence,
+        Email3: response["CustPersonalObj"].Email3,
+        NoOfDependents: response["CustPersonalObj"].NoOfDependents
+      });
+      
+      this.selectedNationalityCountryCode = response["CustPersonalObj"].NationalityCountryCode;
+      this.setCountryName(response["CustPersonalObj"].NationalityCountryCode);
+    }
   }
 
   
   GetCountry(event){
     this.selectedNationalityCountryCode = event.CountryCode;
   }
-
 
   setCriteriaLookupCustomer(custTypeCode){
     var arrCrit = new Array();
@@ -145,6 +201,9 @@ export class CustPersonalMainDataComponent implements OnInit {
       this.InputLookupCustomerObj.nameSelect = this.custDataPersonalObj.AppCustObj.CustName;
       this.InputLookupCustomerObj.jsonSelect = {CustName: this.custDataPersonalObj.AppCustObj.CustName};
       this.selectedCustNo = this.custDataPersonalObj.AppCustObj.CustNo;
+      if(this.custDataPersonalObj.AppCustObj.CustNo != undefined && this.custDataPersonalObj.AppCustObj.CustNo != ""){
+        this.InputLookupCustomerObj.isReadonly = true;
+      }
     }
     
     if(this.custDataPersonalObj.AppCustPersonalObj != undefined){
@@ -195,6 +254,7 @@ export class CustPersonalMainDataComponent implements OnInit {
     this.InputLookupCountryObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupCountryObj.pagingJson = "./assets/uclookup/lookupCountry.json";
     this.InputLookupCountryObj.genericJson = "./assets/uclookup/lookupCountry.json";
+    this.InputLookupCountryObj.isRequired = false;
 
   }
 
