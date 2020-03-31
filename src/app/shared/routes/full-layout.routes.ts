@@ -34,5 +34,10 @@ export const Full_ROUTES: Routes = [
   {
     path: 'Inquiry',
     loadChildren: './inquiry/inquiry.module#InquiryModule'
+  },
+  {
+    path: 'AppDupCheck',
+    loadChildren: './app-dup-check/app-dup-check.module#AppDupCheckModule'
   }
+    
 ];

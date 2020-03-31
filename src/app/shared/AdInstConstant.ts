@@ -38,8 +38,16 @@ export class AdInsConstant {
     // App
     public static AddApp = "/Application/AddApp";
     public static EditApp = "/Application/EditApp";
-    public static GetAppById = "/Application/GetAppById";    
-
+    public static GetAppById = "/Application/GetAppById";  
+    
+    //App Duplicate Checking
+    public static GetCustomerDuplicateCheck = "CustDuplicateCheck/GetCustomerDuplicateCheck";
+    public static GetNegativeCustomerDuplicateCheck = "CustDuplicateCheck/GetNegativeCustomerDuplicateCheck";
+    public static GetAppCustDuplicateCheck = "AppDupCheck/GetAppCustDuplicateCheck";
+    public static GetAppGuarantorDuplicateCheck = "AppDupCheck/GetAppGuarantorDuplicateCheck";
+    public static GetSpouseDuplicateCheck = "AppDupCheck/GetSpouseDuplicateCheck";
+    public static GetAppShareholderDuplicateCheck = "AppDupCheck/GetAppShareholderDuplicateCheck";
+    public static AddAppDupCheckCust = "AppDupCheck/AddAppDupCheckCust";
     // App Referantor
     public static AddAppReferantor = "/AppReferantor/AddAppReferantor";
     public static EditAppReferantor = "/AppReferantor/EditAppReferantor";

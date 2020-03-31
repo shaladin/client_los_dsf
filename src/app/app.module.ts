@@ -35,6 +35,8 @@ import { TreeViewModule } from '@progress/kendo-angular-treeview';
 import { AppPagingComponent } from './NAP/app-paging/app-paging.component';
 import { AppAddComponent } from './NAP/app-add/app-add.component';
 
+
+
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -45,8 +47,8 @@ export function createTranslateLoader(http: HttpClient) {
         FullLayoutComponent,
         ContentLayoutComponent,
         ErrorDialogComponent,
-        RolepickComponent,
-    ],
+        RolepickComponent
+        ],
     imports: [
         HttpModule,
         BrowserAnimationsModule,
