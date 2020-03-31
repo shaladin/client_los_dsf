@@ -4,11 +4,16 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
 import { UCSearchModule } from "@adins/ucsearch";
 import { UcpagingModule } from "@adins/ucpaging";
+import { UcShowErrorsModule } from '@adins/uc-show-errors';
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { RouterModule } from "@angular/router";
 import { SharingModule } from 'app/shared/sharing.module';
 import { ArchwizardModule } from 'angular-archwizard';
 import { UcSubsectionModule } from "@adins/uc-subsection";
+import { UclookupgenericModule } from '@adins/uclookupgeneric';
+import { UcviewgenericModule } from '@adins/ucviewgeneric';
+import { UcaddressModule } from "@adins/ucaddress";
+import { UCSearchComponent } from '@adins/ucsearch';
 import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
 import { UcgridfooterModule, UcgridfooterComponent } from "@adins/ucgridfooter";
 import { MainInfoComponent } from 'app/view/main-info/main-info.component';
@@ -26,6 +31,11 @@ import { MouViewTcComponent } from './mou-customer/mou-view/mou-view-tc/mou-view
 import { MouViewDocComponent } from './mou-customer/mou-view/mou-view-doc/mou-view-doc.component';
 import { MouViewSurveyComponent } from './mou-customer/mou-view/mou-view-survey/mou-view-survey.component';
 import { MouViewLegalComponent } from './mou-customer/mou-view/mou-view-legal/mou-view-legal.component';
+import { MouCustomerApprovalComponent } from './mou-customer/mou-customer-approval/mou-customer-approval.component';
+import { MouApprovalGeneralComponent } from './mou-customer/mou-customer-approval/mou-approval-general/mou-approval-general.component';
+import { MouApprovalFactoringComponent } from './mou-customer/mou-customer-approval/mou-approval-factoring/mou-approval-factoring.component';
+import { MouRequestAddcollComponent } from './mou-customer/mou-request/mou-request-addcoll/mou-request-addcoll.component';
+import { MouRequestAddcollAddeditComponent } from './mou-customer/mou-request/mou-request-addcoll-addedit/mou-request-addcoll-addedit.component';
 // import { ShowErrorsComponent } from "./app/test-new/show-errors.component";
 import { UcviewgenericModule } from "@adins/ucviewgeneric";
 import { LegalReviewPagingComponent } from './legal-review/legal-review-paging/legal-review-paging.component';
@@ -43,10 +53,12 @@ import { LegalReviewDetailComponent } from './legal-review/legal-review-detail/l
     SharingModule,
     ArchwizardModule,
     ReactiveFormsModule,
+    UcaddressModule,
     UcSubsectionModule,
-    SharingComponentModule,
-    UcgridfooterModule,
-    UcviewgenericModule
+    UcShowErrorsModule,
+    UclookupgenericModule,
+    UcviewgenericModule,
+    SharingComponentModule
   ],
   declarations: [
     DocSignerComponent,
@@ -66,6 +78,11 @@ import { LegalReviewDetailComponent } from './legal-review/legal-review-detail/l
     MouReviewFactoringComponent,
     LegalReviewPagingComponent,
     LegalReviewDetailComponent,
+    MouCustomerApprovalComponent,
+    MouApprovalGeneralComponent,
+    MouApprovalFactoringComponent,
+    MouRequestAddcollComponent,
+    MouRequestAddcollAddeditComponent,
   ]
 })
 export class MouModule { }
