@@ -43,6 +43,8 @@ export class CustCompanyContactInformationComponent implements OnInit {
   };
   JobPositionObj: any;
   defaultJobPosition: any;
+  selectedJobPositionName: any;
+  defaultJobPositionName: any;
 
 
   ContactInfoCompanyForm = this.fb.group({
@@ -103,6 +105,7 @@ export class CustCompanyContactInformationComponent implements OnInit {
       JobTitleName: this.listContactPersonCompany[i].JobTitleName,
       Email1: this.listContactPersonCompany[i].Email1
     });
+    this.selectedJobPositionName = this.listContactPersonCompany[i].JobPositionName;
     this.open(content);
   }
 
@@ -113,6 +116,10 @@ export class CustCompanyContactInformationComponent implements OnInit {
     }
   }
 
+  JobPositionChanged(event){
+    this.selectedJobPositionName = event.target.options[event.target.options.selectedIndex].text;
+  }
+  
   clearForm(){
     this.ContactInfoCompanyForm = this.fb.group({
       ContactPersonName: ['', [Validators.required, Validators.maxLength(500)]],
@@ -122,7 +129,7 @@ export class CustCompanyContactInformationComponent implements OnInit {
       JobTitleName: ['', Validators.maxLength(100)],
       Email1: ['', Validators.maxLength(50)]
     });
-
+    this.selectedJobPositionName = this.defaultJobPositionName;
   }
 
   setAppCustCompanyContactPerson(){
@@ -132,6 +139,7 @@ export class CustCompanyContactInformationComponent implements OnInit {
     this.appCustCompanyContactPersonObj.MobilePhnNo2 = this.ContactInfoCompanyForm.controls.MobilePhnNo2.value;
     this.appCustCompanyContactPersonObj.JobTitleName = this.ContactInfoCompanyForm.controls.JobTitleName.value;
     this.appCustCompanyContactPersonObj.Email1 = this.ContactInfoCompanyForm.controls.Email1.value;
+    this.appCustCompanyContactPersonObj.JobPositionName = this.selectedJobPositionName;
   }
 
   bindJobPositionObj(){
@@ -141,6 +149,7 @@ export class CustCompanyContactInformationComponent implements OnInit {
         this.JobPositionObj = response["ReturnObject"];
         if(this.JobPositionObj.length > 0){
             this.defaultJobPosition = this.JobPositionObj[0].Key;
+            this.defaultJobPositionName = this.JobPositionObj[0].Value;
         }
       }
     );

@@ -438,24 +438,24 @@ export class AdInsConstant {
 
     //CUST
     public static GetCustByCustNo = environment.FoundationR3Url + "/Cust/GetCustByCustNo";
-    public static GetCustPersonalForCopyByCustId = "http://localhost:5000/Cust/GetCustPersonalForCopyByCustId";
-    public static GetCustCompanyForCopyByCustId = "http://localhost:5000/Cust/GetCustCompanyForCopyByCustId";
-    public static GetCustPersonalForCopyMgmntShrholderByCustId = "http://localhost:5000/Cust/GetCustPersonalForCopyMgmntShrholderByCustId";
-    public static GetCustCompanyForCopyMgmntShrholderByCustId = "http://localhost:5000/Cust/GetCustCompanyForCopyMgmntShrholderByCustId";
+    public static GetCustPersonalForCopyByCustId = environment.FoundationR3Url + "/Cust/GetCustPersonalForCopyByCustId";
+    public static GetCustCompanyForCopyByCustId = environment.FoundationR3Url + "/Cust/GetCustCompanyForCopyByCustId";
+    public static GetCustPersonalForCopyMgmntShrholderByCustId = environment.FoundationR3Url + "/Cust/GetCustPersonalForCopyMgmntShrholderByCustId";
+    public static GetCustCompanyForCopyMgmntShrholderByCustId = environment.FoundationR3Url + "/Cust/GetCustCompanyForCopyMgmntShrholderByCustId";
 
 
 
 
 
     //CUST DATA PERSONAL
-    public static AddEditCustDataPersonal = "http://localhost:5001/AppCust/AddEditCustDataPersonal";
-    public static GetCustDataByAppId = "http://localhost:5001/AppCust/GetCustDataByAppId";
-    public static GetAppCustPersonalContactPersonsByAppCustPersonalId = "http://localhost:5001/AppCustPersonalContactPerson/GetAppCustPersonalContactPersonsByAppCustPersonalId";
-    public static DeleteAppCustPersonalContactPerson = "http://localhost:5001/AppCustPersonalContactPerson/DeleteAppCustPersonalContactPerson";
-    public static GetAppCustBankAccsByAppCustId = "http://localhost:5001/AppCustBankAcc/GetAppCustBankAccsByAppCustId";
+    public static AddEditCustDataPersonal = environment.losUrl + "/AppCust/AddEditCustDataPersonal";
+    public static GetCustDataByAppId = environment.losUrl + "/AppCust/GetCustDataByAppId";
+    public static GetAppCustPersonalContactPersonsByAppCustPersonalId = environment.losUrl + "/AppCustPersonalContactPerson/GetAppCustPersonalContactPersonsByAppCustPersonalId";
+    public static DeleteAppCustPersonalContactPerson = environment.losUrl + "/AppCustPersonalContactPerson/DeleteAppCustPersonalContactPerson";
+    public static GetAppCustBankAccsByAppCustId = environment.losUrl + "/AppCustBankAcc/GetAppCustBankAccsByAppCustId";
 
     //CUST DATA COMPANY
-    public static AddEditCustDataCompany = "http://localhost:5001/AppCust/AddEditCustDataCompany";
+    public static AddEditCustDataCompany = environment.losUrl + "/AppCust/AddEditCustDataCompany";
 
     // App Asset
     public static GetAppAssetByAgrmntId = environment.losUrl + "/AppAsset/GetAppAssetByAgrmntId";

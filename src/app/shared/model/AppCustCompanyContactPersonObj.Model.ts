@@ -2,7 +2,8 @@ export class AppCustCompanyContactPersonObj {
     AppCustCompanyContactPersonId: any;
     AppCustCompanyId: any; 
     ContactPersonName: any; 
-    MrJobPositionCode: any; 
+    MrJobPositionCode: any;
+    JobPositionName: any; 
     JobTitleName: any; 
     MobilePhnNo1: any; 
     MobilePhnNo2: any; 

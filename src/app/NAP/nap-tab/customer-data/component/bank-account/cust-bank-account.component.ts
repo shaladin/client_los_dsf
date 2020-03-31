@@ -140,7 +140,8 @@ export class CustBankAccountComponent implements OnInit {
 
     this.selectedBankCode = this.listBankAcc[i].BankCode;
     this.selectedBankName = this.listBankAcc[i].BankName;
-    this.setBankName(this.listBankAcc[i].BankCode);
+    this.InputLookupBankObj.nameSelect = this.listBankAcc[i].BankName;
+    this.InputLookupBankObj.jsonSelect = {BankName: this.listBankAcc[i].BankName}; 
 
     this.open(content);
   }
@@ -167,6 +168,7 @@ export class CustBankAccountComponent implements OnInit {
 
   setAppCustBankAcc(){
     this.appCustBankAccObj.BankCode = this.selectedBankCode;
+    this.appCustBankAccObj.BankName = this.selectedBankName;
     this.appCustBankAccObj.BankBranch = this.CustBankAccountForm.controls.BankBranch.value;
     this.appCustBankAccObj.BankAccName = this.CustBankAccountForm.controls.BankAccName.value;
     this.appCustBankAccObj.BankAccNo = this.CustBankAccountForm.controls.BankAccNo.value;
@@ -192,6 +194,7 @@ export class CustBankAccountComponent implements OnInit {
 
   GetBank(event){
     this.selectedBankCode = event.BankCode;
+    this.selectedBankName = event.BankName;
   }
 
   setBankName(bankCode){
@@ -215,8 +218,10 @@ export class CustBankAccountComponent implements OnInit {
   }
 
   deleteBankStmnt(i){
-    var bankStmnObjs = this.CustBankAccountForm.controls['BankStmntObjs'] as FormArray;
-    bankStmnObjs.removeAt(i);
+    if (confirm("Are you sure to delete this record?")) {
+      var bankStmnObjs = this.CustBankAccountForm.controls['BankStmntObjs'] as FormArray;
+      bankStmnObjs.removeAt(i);
+    }
   }
 
   addGroup(bankStmntObj){

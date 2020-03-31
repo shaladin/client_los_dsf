@@ -44,6 +44,8 @@ export class CustLegalDocComponent implements OnInit {
   };
   LegalDocTypeObj: any;
   defaultLegalDocType: any;
+  selectedLegalDocName: any;
+  defaultLegalDocName: any;
 
 
   LegalDocForm = this.fb.group({
@@ -106,6 +108,7 @@ export class CustLegalDocComponent implements OnInit {
       DocNotes: this.listLegalDoc[i].DocNotes,
       ReleaseLocation: this.listLegalDoc[i].ReleaseLocation
     });
+    this.selectedLegalDocName = this.listLegalDoc[i].LegalDocName;
     this.open(content);
   }
 
@@ -126,7 +129,7 @@ export class CustLegalDocComponent implements OnInit {
       DocNotes: ['', Validators.maxLength(1000)],
       ReleaseLocation: ['', Validators.maxLength(200)]
     });
-
+    this.selectedLegalDocName = this.defaultLegalDocName;
   }
 
   setAppCustCompanyLegalDoc(){
@@ -137,6 +140,7 @@ export class CustLegalDocComponent implements OnInit {
     this.appCustCompanyLegalDocObj.ReleaseBy = this.LegalDocForm.controls.ReleaseBy.value;
     this.appCustCompanyLegalDocObj.DocNotes = this.LegalDocForm.controls.DocNotes.value;
     this.appCustCompanyLegalDocObj.ReleaseLocation = this.LegalDocForm.controls.ReleaseLocation.value;
+    this.appCustCompanyLegalDocObj.LegalDocName = this.selectedLegalDocName;
   }
 
   bindLegalDocTypeObj(){
@@ -146,6 +150,7 @@ export class CustLegalDocComponent implements OnInit {
         this.LegalDocTypeObj = response["ReturnObject"];
         if(this.LegalDocTypeObj.length > 0){
             this.defaultLegalDocType = this.LegalDocTypeObj[0].Key;
+            this.defaultLegalDocName = this.LegalDocTypeObj[0].Value;
         }
       }
     );

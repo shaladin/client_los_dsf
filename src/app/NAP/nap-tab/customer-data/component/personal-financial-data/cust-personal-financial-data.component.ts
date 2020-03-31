@@ -51,12 +51,8 @@ export class CustPersonalFinancialDataComponent implements OnInit {
 
     this.parentForm.removeControl(this.identifier);
     this.parentForm.addControl(this.identifier, this.fb.group({
-      MonthlyIncomeAmt: ['0', Validators.required],
-      MonthlyExpenseAmt: ['0', Validators.required],
       MrSourceOfIncomeTypeCode: [''],
-      MonthlyInstallmentAmt: ['0', Validators.required],
-      IsJoinIncome: [false],
-      SpouseMonthlyIncomeAmt: ['0', Validators.required],
+      IsJoinIncome: [false]
     }));
 
     this.initUrl();
@@ -66,21 +62,15 @@ export class CustPersonalFinancialDataComponent implements OnInit {
 
   setSpouseMonthlyIncome(){
     if(this.parentForm.controls[this.identifier]["controls"].IsJoinIncome.value == false){
-      this.parentForm.controls[this.identifier].patchValue({
-        SpouseMonthlyIncomeAmt: 0
-      });
+      this.appCustPersonalFinDataObj.SpouseMonthlyIncomeAmt = 0;
     }
   }
 
   bindAppCustPersonalFinData(){
     if(this.appCustPersonalFinDataObj != undefined){
       this.parentForm.controls[this.identifier].patchValue({
-        MonthlyIncomeAmt: this.appCustPersonalFinDataObj.MonthlyIncomeAmt,
-        MonthlyExpenseAmt: this.appCustPersonalFinDataObj.MonthlyExpenseAmt,
         MrSourceOfIncomeTypeCode: this.appCustPersonalFinDataObj.MrSourceOfIncomeTypeCode,
-        MonthlyInstallmentAmt: this.appCustPersonalFinDataObj.MonthlyInstallmentAmt,
         IsJoinIncome: this.appCustPersonalFinDataObj.IsJoinIncome,
-        SpouseMonthlyIncomeAmt: this.appCustPersonalFinDataObj.SpouseMonthlyIncomeAmt,
       });
     }
   }

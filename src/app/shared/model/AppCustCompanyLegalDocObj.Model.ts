@@ -1,7 +1,8 @@
 export class AppCustCompanyLegalDocObj {
     AppCustCompanyLegalDocId: number;
     AppCustCompanyId: number; 
-    MrLegalDocTypeCode: string; 
+    MrLegalDocTypeCode: string;
+    LegalDocName: string; 
     DocNo: string; 
     DocDt: Date; 
     DocExpiredDt: Date; 

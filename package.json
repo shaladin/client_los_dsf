@@ -17,6 +17,7 @@
     "@adins/ucaddress": "^1.0.10",
     "@adins/ucgridfooter": "^1.0.1",
     "@adins/ucgridview": "^2.0.10",
+    "@adins/ucinputnumber": "^1.0.1",
     "@adins/uclookupgeneric": "^2.0.12",
     "@adins/ucpaging": "^2.0.12",
     "@adins/ucviewgeneric": "^2.0.8",
@@ -96,8 +97,8 @@
     "zone.js": "0.8.26"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.13.9",
-    "@angular/cli": "^7.3.9",
+    "@angular-devkit/build-angular": "^0.13.10",
+    "@angular/cli": "^7.3.10",
     "@angular/compiler-cli": "^7.2.16",
     "@angular/language-service": "7.0.0",
     "@fortawesome/fontawesome-free": "^5.13.0",

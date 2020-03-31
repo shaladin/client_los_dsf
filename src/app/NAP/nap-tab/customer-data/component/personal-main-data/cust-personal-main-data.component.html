@@ -11,7 +11,7 @@
       <div class="col-md-4">
         <input type="text" class="form-control" formControlName="CustFullName" id="custFullName"
         [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].CustFullName.invalid }">
-        <show-errors [control]="parentForm.controls[identifier]['controls'].CustFullName" [submit]="enjiForm.submitted"></show-errors>
+        <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].CustFullName" [submit]="enjiForm.submitted"></lib-uc-show-errors>
       </div>
     </div>
     <div class="form-group row">
@@ -23,7 +23,7 @@
             {{item.Value}}
           </option>
         </select>
-        <show-errors [control]="parentForm.controls[identifier]['controls'].MrIdTypeCode" [submit]="enjiForm.submitted"></show-errors>
+        <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].MrIdTypeCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
       </div>
       <label class="col-md-2 adins-required-label" for="gender" translate>Gender</label>
       <div class="col-md-4">
@@ -39,13 +39,13 @@
       <div class="col-md-4">
         <input type="text" class="form-control" formControlName="IdNo" id="idNo"
         [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].IdNo.invalid}">
-        <show-errors [control]="parentForm.controls[identifier]['controls'].IdNo" [submit]="enjiForm.submitted"></show-errors>
+        <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].IdNo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
       </div>
       <label class="col-md-2 adins-required-label" for="motherMaidenName" translate>Mother Maiden Name</label>
       <div class="col-md-4">
         <input type="text" class="form-control" formControlName="MotherMaidenName" id="motherMaidenName"
         [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].MotherMaidenName.invalid}">
-        <show-errors [control]="parentForm.controls[identifier]['controls'].MotherMaidenName" [submit]="enjiForm.submitted"></show-errors>
+        <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].MotherMaidenName" [submit]="enjiForm.submitted"></lib-uc-show-errors>
       </div>
     </div>
     <div class="form-group row">
@@ -67,12 +67,12 @@
       <div class="col-md-2" style="border-right: 1px solid grey">
         <input type="text" class="form-control" formControlName="BirthPlace" id="birthPlace"
         [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].BirthPlace.invalid}">
-        <show-errors [control]="parentForm.controls[identifier]['controls'].BirthPlace" [submit]="enjiForm.submitted"></show-errors>
+        <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].BirthPlace" [submit]="enjiForm.submitted"></lib-uc-show-errors>
       </div>
       <div class="col-md-2">
         <input type="date" class="form-control" formControlName="BirthDt" id="birthDt"
         [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].BirthDt.invalid}">
-        <show-errors [control]="parentForm.controls[identifier]['controls'].BirthDt" [submit]="enjiForm.submitted"></show-errors>
+        <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].BirthDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
       </div>
       <label class="col-md-2" for="nationality" translate>Nationality</label>
       <div class="col-md-4">
@@ -98,7 +98,7 @@
       <div class="col-md-4">
         <input type="number" class="form-control" id="mobilePhone1" formControlName="MobilePhnNo1"
         [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].MobilePhnNo1.invalid}">
-        <show-errors [control]="parentForm.controls[identifier]['controls'].MobilePhnNo1" [submit]="enjiForm.submitted"></show-errors>
+        <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].MobilePhnNo1" [submit]="enjiForm.submitted"></lib-uc-show-errors>
       </div>
       <label class="col-md-2" for="education" translate>Education</label>
       <div class="col-md-4">
