@@ -13,6 +13,7 @@ import { GuarantorPersonalComponent } from "./nap-tab/app-guarantor/guarantor-pe
 import { AppLifeInsComponent } from "./nap-tab/app-life-ins/app-life-ins.component";
 import { CommissionPagingComponent } from "./commission-paging/commission-paging.component";
 import { CommissionAddComponent } from "./commission-add/commission-add.component";
+import { AppTcComponent } from "./nap-tab/app-tc/app-tc.component";
 
 
 const routes: Routes = [
@@ -109,6 +110,13 @@ const routes: Routes = [
         data: {
           title: 'Commission Add'
         }
+      },
+      {
+        path: 'AppTC',
+        component: AppTcComponent,
+        data: {
+          title: 'APP TC'
+        },
       },
     ]
   }
