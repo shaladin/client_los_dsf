@@ -288,9 +288,9 @@ export class AdInsConstant {
     public static GetRefMasterListDesc = "/RefMaster/GetRefMasterListDesc";
     public static GetRefMasterByMasterCode = "/RefMaster/GetRefMasterByMasterCode";
     public static GetRefMasterListKeyValueActiveByCode = environment.FoundationR3Url + "/RefMaster/GetListKeyValueActiveByCode";
-    public static GetListActiveRefMaster = "http://localhost:5000" + "/RefMaster/GetListActiveRefMaster";
+    public static GetListActiveRefMaster = environment.FoundationR3Url + "/RefMaster/GetListActiveRefMaster";
 
-    public static GetRefMasterByRefMasterTypeCode = "http://localhost:5000" + "/RefMaster/GetRefMasterByRefMasterTypeCode"
+    public static GetRefMasterByRefMasterTypeCode = environment.FoundationR3Url + "/RefMaster/GetRefMasterByRefMasterTypeCode"
     // public static GetRefMasterByRefMasterTypeCode  = environment.FoundationR3Url + "/RefMaster/GetRefMasterByRefMasterTypeCode";
     //REF PROV DISTRICT
     public static GetRefProvDistrictPaging = "/RefProvDistrict/GetRefProvDistrictPaging";
