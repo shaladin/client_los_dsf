@@ -2,6 +2,9 @@ import { environment } from "environments/environment";
 
 export class AdInsConstant {
 
+    // Rule
+    public static Rule = "http://r3app-server/RULE_FINAL/RuleService/ExecuteRuleSet"; 
+
     //App Step
     public static AppStepNew = "NEW";
     public static AppStepCust = "CUST";
@@ -46,6 +49,15 @@ export class AdInsConstant {
     
     // App Asset
     public static GetListAppAssetSupplEmpByListAppAssetId = "/AppAssetSupplEmp/GetListAppAssetSupplEmpByListAppAssetId";
+    
+    // App Commission
+    public static AddAppCommissionData = "/AppCommission/AddAppCommissionData";
+
+    // App Fee Data
+    public static GetListAppFeeByAppId = "/AppFee/GetListAppFeeByAppId";
+
+    // App Fin Data
+    public static GetAppFinDataByAppId = "/AppFinData/GetAppFinDataByAppId";
 
     // App Referantor
     public static AddAppReferantor = "/AppReferantor/AddAppReferantor";
@@ -186,7 +198,7 @@ export class AdInsConstant {
     public static AddRefBank = "/RefBank/AddRefBank";
     public static DeleteRefBank = "/RefBank/DeleteRefBank";
     public static GetBankByBankCode = "/RefBank/GetBankByBankCode";
-    public static GetRefBankByBankCodeAsync = environment.FoundationR3Url + "/RefBank/GetRefBankByBankCodeAsync";
+    public static GetRefBankByBankCodeAsync = "/RefBank/GetRefBankByBankCodeAsync";
 
     //REF-EMP
     public static GetListEmployee = "/RefEmp/GetRefEmpPaging";
@@ -394,11 +406,15 @@ export class AdInsConstant {
     public static GetPagingObjectBySQL = "/Generic/GetPagingObjectBySQL";
 
     // Vendor
+    public static GetVendorByVendorCode= "/Vendor/GetVendorByVendorCode";
+
+    // Vendor Bank Acc
     public static GetListVendorBankAccByVendorId= "/VendorBankAcc/GetListVendorBankAccByVendorId";
     public static GetListVendorBankAccByVendorCode= "/VendorBankAcc/GetListVendorBankAccByVendorCode";
     
     // VendorEmp
-    public static GetListVendorBankByVendorEmpNo= "/VendorEmp​/GetListVendorBankByVendorEmpNo";
+    public static GetListVendorBankAccByListVendorEmpNo= "/VendorEmp/GetListVendorBankAccByListVendorEmpNo";
+    public static GetVendorEmpByVendorEmpNo= "/VendorEmp/GetVendorEmpByVendorEmpNo";
 
     // MOU CUST
     public static GetMouCustById = environment.losUrl + "/MouCust/GetMouCustById";
@@ -456,4 +472,6 @@ export class AdInsConstant {
     public static GetAppAssetListByAppId = environment.losUrl + "/AppAsset/GetAppAssetListByAppId";
     public static GetAllAssetDataForPOByAsset = environment.losUrl + "/AppAsset/GetAllAssetDataForPOByAsset";
     
+    // Product Offering
+    public static GetListProdOfferingDByProdOfferingCode = "/ProductOffering/GetListProdOfferingDByProdOfferingCode";
 }

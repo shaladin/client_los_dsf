@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, CheckboxControlValueAccessor } from '@angular/forms';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
@@ -46,27 +46,27 @@ export class AppAddComponent implements OnInit {
     CurrCode: [''],
     LobCode: [''],
     RefProdTypeCode: [''],
-    Tenor: [''],
-    NumOfInst: [''],
+    Tenor: 0,
+    NumOfInst: 0,
     PayFreqCode: [''],
-    MrFirstInstTypeCode: [''],
-    NumOfAsset: [''],
+    MrFirstInstTypeCode: "test",
+    NumOfAsset: 1,
     MrLcCalcMethodCode: [''],
     LcInstRatePrml: [''],
     LcInsRatePrml: [''],
-    MrAppSourceCode: [''],
-    MrWopCode: [''],
+    MrAppSourceCode: "test",
+    MrWopCode: "test",
     SrvyOrderNo: [''],
     ApvDt: [''],
     SalesHeadNo: [''],
     SalesNotes: [''],
-    SalesOfficerNo: [''],
+    SalesOfficerNo: "test",
     CreditAdminNo: [''],
     CreditAnalystNo: [''],
     CreditRiskNo: [''],
     DataEntryNo: [''],
     MrSalesRecommendCode: [''],
-    MrCustNotifyOptCode: [''],
+    MrCustNotifyOptCode: "test",
     PreviousAppId: [''],
     IsAppInitDone: [''],
     MrOrderInfoCode: [''],
@@ -120,6 +120,7 @@ export class AppAddComponent implements OnInit {
     this.inputLookupObjCopyProduct.urlEnviPaging = environment.losUrl;
     this.inputLookupObjCopyProduct.pagingJson = "./assets/uclookup/NAP/lookupApp.json";
     this.inputLookupObjCopyProduct.genericJson = "./assets/uclookup/NAP/lookupApp.json";
+    this.inputLookupObjCopyProduct.isRequired = false;
     
     this.inputLookupObjName = new InputLookupObj();
     this.inputLookupObjName.urlJson = "./assets/uclookup/NAP/lookupAppName.json";
@@ -162,6 +163,26 @@ export class AppAddComponent implements OnInit {
     );
   }
 
+  CheckValue(obj){
+    if(obj.MrWopCode == null){
+      obj.MrWopCode = "";
+    }
+    if(obj.SalesOfficerNo == null){
+      obj.SalesOfficerNo = "";
+    }
+    if(obj.MrAppSourceCode == null){
+      obj.MrAppSourceCode = "";
+    }
+    if(obj.MrCustNotifyOptCode == null){
+      obj.MrCustNotifyOptCode = "";
+    }
+    if(obj.MrFirstInstTypeCode == null){
+      obj.MrFirstInstTypeCode = "";
+    }
+
+    return obj;
+  }
+
   SaveForm() {
     // this.router.navigate(["Nap/AppAddDetail"], { queryParams: { "AppId": response["AppId"] } });
     var napAppObj = new NapAppModel();
@@ -171,6 +192,7 @@ export class AppAddComponent implements OnInit {
     napAppObj.AppStat = AdInsConstant.AppStepNew;
     napAppObj.AppCurrStep = AdInsConstant.AppStepNew;
 
+    napAppObj = this.CheckValue(napAppObj);
     if (this.user.MrOfficeTypeCode == "HO") {
       napAppObj.OriOfficeCode = this.user.OfficeCode;
     } else if (this.user.MrOfficeTypeCode == "Center Group") {
@@ -219,11 +241,46 @@ export class AppAddComponent implements OnInit {
   }
 
   getLookupAppResponseName(ev: any) {
-    // console.log(ev);
-    this.NapAppForm.patchValue({
-      ProdOfferingCode: ev.ProdOfferingCode,
-      ProdOfferingName: ev.ProdOfferingName
-    });
+    console.log(ev);
+    var url = environment.FoundationR3Url + AdInsConstant.GetListProdOfferingDByProdOfferingCode;
+    var obj = {
+      ProdOfferingCode: ev.ProdOfferingCode
+    };
+    var tempLobCode;
+    var tempCurrCode;
+    var tempPayFreqCode;
+    var tempRefProdTypeCode;
+    this.http.post(url,obj).subscribe(
+      (response) => {
+        // console.log(response);
+        var temp = response["ReturnObject"];
+        for(var i=0;i<temp.length;i++){
+          if(temp[i].RefProdCompntCode == "LOB"){
+            tempLobCode = temp[i].CompntValue;
+          }else if(temp[i].RefProdCompntCode == "CURR"){
+            tempCurrCode = temp[i].CompntValue;
+          }else if(temp[i].RefProdCompntCode == "PAYFREQ"){
+            tempPayFreqCode = temp[i].CompntValue;
+          }else if(temp[i].RefProdCompntCode == "PROD_TYPE"){
+            tempRefProdTypeCode = temp[i].CompntValue;
+          }else{
+            console.log("Not");
+          }
+        }
+        this.NapAppForm.patchValue({
+          ProdOfferingCode: ev.ProdOfferingCode,
+          ProdOfferingName: ev.ProdOfferingName,
+          ProdOfferingVersion: ev.ProdOfferingVersion,
+          CurrCode: tempCurrCode,
+          LobCode: tempLobCode,
+          PayFreqCode: tempPayFreqCode,
+          RefProdTypeCode: tempRefProdTypeCode
+        });
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   ChangeValueOffice(ev: any) {

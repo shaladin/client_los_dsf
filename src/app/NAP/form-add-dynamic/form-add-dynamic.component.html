@@ -2,7 +2,7 @@
   <div class="px-3">
     <lib-ucSubsection [id]="'formInfomationId'" [title]="FormInputObj['title']" [panel]="'formInfomation'">
     </lib-ucSubsection>
-    <div class="form-body" id="formInfomation">
+    <div class="form-body" id="'formInfomation'">
 
       <div class="row ucSearch-Button-Right">
         <button type="button" (click)="AddNewDataForm()" class="btn btn-raised btn-primary" [hidden]="lenDDLContentName == 0" translate>
@@ -11,7 +11,7 @@
       </div>
 
 
-      <form class="form form-horizontal" [formGroup]="FormObj">
+      <form class="form form-horizontal" [formGroup]="FormObj" #enjiForm="ngForm">
 
         <!-- <div class="form-actions ucSearch-Button-Right">
           <button type="button" (click)="AddNewDataForm()" class="btn btn-raised btn-primary" translate>
@@ -44,7 +44,7 @@
                     <label class="adInsLabel">{{FormInputObj['content']}} Name</label>
                   </div>
                   <div class="col-md-4">
-                    <select *ngIf="item.controls.ContentName.value == ''" class="form-control adInsInput" style="width: auto" formControlName="ContentName" (change)="ChooseContentName($event)">
+                    <select *ngIf="item.controls.ContentName.value == ''" class="form-control adInsInput" style="width: auto" formControlName="ContentName" (change)="ChooseContentName($event, i)">
                       <option value="">-Select One-</option>
                       <option *ngFor="let it of DDLContentName" value="{{it.Key}}">
                         {{it.Value}} </option>
@@ -61,13 +61,13 @@
                       <label class="adInsLabel">Bank Account</label>
                     </div>
                     <div class="col-md-4">
-                      <mat-form-field>
-                        <mat-select formControlName="BankAccount" (change)="PassData()">
-                          <mat-option *ngFor="let it of DDLBankAccount" value="{{it.Key}}">
-                            {{it.Value}}
-                          </mat-option>
-                        </mat-select>
-                      </mat-form-field>
+                      <select class="form-control adInsInput" style="width: auto" formControlName="BankAccountNo" (change)="ChangeBankAcc($event, i)">
+                        <option value="">-Select One-</option>
+                        <option *ngFor="let it of item.controls.DropDownList.controls" value="{{it.value.Key}}"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && item.controls.BankAccount.value == null }">
+                          {{it.value.Value}} </option>
+                        <show-errors [control]="item.controls.BankAccount" [submit]="enjiForm.submitted"></show-errors>
+                      </select>
                     </div>
 
                     <!-- Tax Amount -->
