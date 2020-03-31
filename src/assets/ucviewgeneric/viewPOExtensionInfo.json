@@ -1,0 +1,62 @@
+{
+    "title": "",
+    "subsection": [
+      {
+        "subSectionId": "MainInfoId",
+        "subSectionTitle": "Main Information",
+        "mainInfoUrl": "http://localhost:5001/Generic/GetDataViewBySQL",
+        "mainInfo": [
+            {
+                "type": "text",
+                "label": "Application No",
+                "property": "AppNo"
+            },
+            {
+                "type": "text",
+                "label": "Supplier Branch Name",
+                "property": "SupplName"
+            },
+            {
+                "type": "text",
+                "label": "Agreement No",
+                "property": "AgrmntNo"
+            },
+            {
+                "type": "text",
+                "label": "Total PO Amount",
+                "property": "TotalPurchaseOrderAmt"
+            },
+            {
+                "type": "text",
+                "label": "Customer Name",
+                "property": "CustName"
+            },
+            {
+                "type": "date",
+                "label": "PO Date",
+                "property": "PurchaseOrderDt"
+            },
+            {
+                "type": "text",
+                "label": "Purchase Order No",
+                "property": "PurchaseOrderNo"
+            },
+            {
+                "type": "date",
+                "label": "PO Exipired Date",
+                "property": "PurchaseOrderExpiredDt"
+            },
+            {
+                "type": "text",
+                "label": "Number Of Extension",
+                "property": "NumOfExtension"
+            }
+        ],
+        "querystring": {
+          "select": "SELECT A.APP_NO AS AppNo, A.PROD_OFFERING_NAME AS ProdOfferingName, AC.CUST_NAME As CustName, POH.PURCHASE_ORDER_NO AS PurchaseOrderNo, AG.AGRMNT_NO AS AgrmntNo, POH.PURCHASE_ORDER_DT AS PurchaseOrderDt, POH.PURCHASE_ORDER_EXPIRED_DT AS PurchaseOrderExpiredDt, AA.SUPPL_NAME AS SupplName, POH.TOTAL_PURCHASE_ORDER_AMT AS TotalPurchaseOrderAmt, POH.NUM_OF_EXTENSION AS NumOfExtension, (CASE WHEN DATEDIFF(DAY,CONVERT(DATETIME, SCC.SYS_VALUE), POH.PURCHASE_ORDER_EXPIRED_DT) < 0 THEN 0 ELSE DATEDIFF(DAY,CONVERT(DATETIME, SCC.SYS_VALUE), POH.PURCHASE_ORDER_EXPIRED_DT) END) AS RemainingDays",
+          "from": "FROM dbo.APP A WITH(NOLOCK) JOIN dbo.APP_CUST AC WITH(NOLOCK) ON A.APP_ID = AC.APP_ID JOIN dbo.AGRMNT AG WITH(NOLOCK) ON A.APP_ID = AG.APP_ID JOIN dbo.APP_ASSET AA ON AA.AGRMNT_ID = AG.AGRMNT_ID LEFT JOIN dbo.PURCHASE_ORDER_H POH WITH(NOLOCK) ON AG.AGRMNT_ID = POH.AGRMNT_ID LEFT JOIN dbo.V_SYS_CTRL_COY SCC WITH(NOLOCK) ON 1=1 AND SCC.SYS_KEY = 'BusinessDate'",
+          "where": "WHERE A.APP_ID = {0}"
+        }
+      }
+    ]
+  }

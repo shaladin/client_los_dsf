@@ -471,4 +471,6 @@ export class AdInsConstant {
     //PURCHASE ORDER
     public static SubmitPurchaseOrder = environment.losUrl + "/PurchaseOrderH/SubmitPurchaseOrder";
     
+    //PURCHASE ORDER EXTENSION
+    public static SubmitNewExpDate = environment.losUrl + "/PurchaseOrderH/SubmitNewExpDate";
 }
