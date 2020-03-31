@@ -37,7 +37,6 @@ import { MouApprovalFactoringComponent } from './mou-customer/mou-customer-appro
 import { MouRequestAddcollComponent } from './mou-customer/mou-request/mou-request-addcoll/mou-request-addcoll.component';
 import { MouRequestAddcollAddeditComponent } from './mou-customer/mou-request/mou-request-addcoll-addedit/mou-request-addcoll-addedit.component';
 // import { ShowErrorsComponent } from "./app/test-new/show-errors.component";
-import { UcviewgenericModule } from "@adins/ucviewgeneric";
 import { LegalReviewPagingComponent } from './legal-review/legal-review-paging/legal-review-paging.component';
 import { LegalReviewDetailComponent } from './legal-review/legal-review-detail/legal-review-detail.component';
 @NgModule({
