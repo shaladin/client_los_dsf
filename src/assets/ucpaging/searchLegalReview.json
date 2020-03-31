@@ -24,7 +24,7 @@
       "type": "datepicker",
       "name": "MC.MOU_CUST_DT",
       "id": "CustDtIdGte",
-      "value": "BD-10",
+      "value": "",
       "label": "MOU Date From",
       "restriction": "gte",
       "datatype": "date"
@@ -33,7 +33,7 @@
       "type": "datepicker",
       "name": "MC.MOU_CUST_DT",
       "id": "CustDtIdLte",
-      "value": "BD+10",
+      "value": "",
       "label": "MOU Date To",
       "restriction": "lte",
       "datatype": "date"

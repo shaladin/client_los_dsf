@@ -21,16 +21,15 @@ export class LegalReviewDetailComponent implements OnInit {
   GetMouCustTcForMouLglByCustMouIdUrl = AdInsConstant.GetMouCustTcForMouLglByCustMouId;
   responseMouObj: any;
   items: any;
-  statusCheckeds : any;
-  statusMandatories : any;
+  termConditions : any;
   LegalForm = this.fb.group(
     {
       items: this.fb.array([]),
-      statusCheckeds : this.fb.array([]),
-      statusMandatories : this.fb.array([])
+      termConditions : this.fb.array([])
     }
   );
   GetRefMasterByRefMasterTypeCodeUrl = AdInsConstant.GetRefMasterByRefMasterTypeCode;
+  EditListMouCustTc = AdInsConstant.EditListMouCustTc;
 
   constructor(
     private http: HttpClient,
@@ -41,6 +40,8 @@ export class LegalReviewDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.items = this.LegalForm.get('items') as FormArray;
+    this.termConditions = this.LegalForm.get('termConditions') as FormArray;
     this.viewObj = "./assets/ucviewgeneric/viewCustomerDocPrinting.json";
     this.route.queryParams.subscribe(params => {
       if (params['MouCustId'] != null) {
@@ -53,13 +54,17 @@ export class LegalReviewDetailComponent implements OnInit {
         this.responseMouObj = response['ReturnObject'];
         for(let i=0;i<this.responseMouObj.length;i++){
           var tempChecked = this.fb.group({
-            values : [this.responseMouObj[i]['IsChecked']]
-          });
-          var tempMandatory = this.fb.group({
-            values : [this.responseMouObj[i]['IsMandatory']]
-          });
-          this.statusCheckeds.push(tempChecked);
-          this.statusMandatories.push(tempMandatory);
+            IsChecked : new FormControl({value:this.responseMouObj[i]['IsChecked'], disabled:this.responseMouObj[i]['IsChecked'] }),
+            IsMandatory : new FormControl({value:this.responseMouObj[i]['IsMandatory'], disabled:this.responseMouObj[i]['IsMandatory'] }),
+            DocumentName : [this.responseMouObj[i]['DocumentName']],
+            ExpiredDt : [this.responseMouObj[i]['ExpiredDt']],
+            PromisedDt : [this.responseMouObj[i]['PromisedDt']],
+            Notes : [this.responseMouObj[i]['Notes']],
+            TcCode  : [this.responseMouObj[i]['TcCode']],
+            PriorTo  : [this.responseMouObj[i]['PriorTo']],
+            CheckedDt : [this.responseMouObj[i]['CheckedDt']]
+          })as FormGroup;
+          this.termConditions.push(tempChecked);
         }
       },
       error => {
@@ -68,9 +73,6 @@ export class LegalReviewDetailComponent implements OnInit {
     );
     console.log('few');
     var refLglReviewObj = { "RefMasterTypeCode": "LGL_REVIEW" };
-    this.items = this.LegalForm.get('items') as FormArray;
-    this.statusCheckeds = this.LegalForm.get('statusCheckeds') as FormArray; 
-    this.statusMandatories = this.LegalForm.get('statusMandatories') as FormArray; 
     this.http.post(this.GetListActiveRefMasterUrl, refLglReviewObj).subscribe(
       (response) => {
         var lengthDataReturnObj = response["ReturnObject"].length;
@@ -89,9 +91,8 @@ export class LegalReviewDetailComponent implements OnInit {
       }
     );
   }
-
   SaveData(formObj: any) {
-    console.log("nih" + formObj);
+    console.log(formObj);
     var mouObj = new MouCustLglReviewObj();
     for (let index = 0; index < this.responseRefMasterObj.length; index++) {
       var tempMouObj = {
@@ -102,6 +103,51 @@ export class LegalReviewDetailComponent implements OnInit {
       mouObj.MouCustLglReviewObjs.push(tempMouObj);
     }
     this.http.post(this.AddRangeMouCustLglReview, mouObj).subscribe(
+      response => {
+        console.log('success');
+        // this.toastr.successMessage(response['message']);
+        // this.router.navigate(["/Mou/CustomerLegalReview"], { queryParams: { "MouCustId": this.MouCustId } });
+      },
+      error => {
+        console.log(error);
+      }
+    );
+    
+    var tempMouTc = new Array();
+    for(var i=0;i<this.responseMouObj.length;i++){
+      var tempIsChecked, tempIsMandatory;
+      if(formObj.value.termConditions[i].IsChecked == true || formObj.value.termConditions[i].IsChecked == null){
+        tempIsChecked = true;
+      }
+      else if(formObj.value.termConditions[i].IsChecked == false){
+        tempIsChecked = false;
+      }
+
+      if(formObj.value.termConditions[i].IsMandatory == true || formObj.value.termConditions[i].IsMandatory == null){
+        tempIsMandatory = true;
+      }
+      else if(formObj.value.termConditions[i].IsMandatory == false){
+        tempIsMandatory = false;
+      }
+      
+      var tempChecked = {
+        IsChecked : tempIsChecked,
+        IsMandatory : tempIsMandatory,
+        DocumentName : this.responseMouObj[i]['DocumentName'],
+        ExpiredDt : this.responseMouObj[i]['ExpiredDt'],
+        PromisedDt : this.responseMouObj[i]['PromisedDt'],
+        Notes : this.responseMouObj[i]['Notes'],
+        TcCode : this.responseMouObj[i]['TcCode'],
+        PriorTo : this.responseMouObj[i]['PriorTo'],
+        CheckedDt : this.responseMouObj[i]['CheckedDt'],
+        MouCustId : this.MouCustId
+      };
+      tempMouTc.push(tempChecked);
+    }
+    var mouTcObjs = {
+      "MouCustTcObjs" : tempMouTc
+    }
+    this.http.post(this.EditListMouCustTc, mouTcObjs).subscribe(
       response => {
         console.log('success');
         // this.toastr.successMessage(response['message']);

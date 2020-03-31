@@ -412,11 +412,12 @@ export class AdInsConstant {
 
     // MOU CUST LEGAL REVIEW
     public static GetMouCustLglReviewByMouCustId = environment.losUrl + "/MouCustLglReview/GetMouCustLglReviewByMouCustId";
-    public static AddRangeMouCustLglReview = "http://localhost:5001" + "/MouCustLglReview/AddRangeMouCustLglReview";
+    public static AddRangeMouCustLglReview = environment.losUrl + "/MouCustLglReview/AddRangeMouCustLglReview";
 
     // MOU CUST TC
     public static GetCustMouTcByCustMouId = environment.losUrl + "/MouCustTc/GetCustMouTcByCustMouId";
-    public static GetMouCustTcForMouLglByCustMouId = "http://localhost:5001"+ "/MouCustTc/GetMouCustTcForMouLglByCustMouId";
+    public static GetMouCustTcForMouLglByCustMouId = environment.losUrl+ "/MouCustTc/GetMouCustTcForMouLglByCustMouId";
+    public static EditListMouCustTc = environment.losUrl+ "/MouCustTc/EditListMouCustTc";
     // MOU CUST DOC PRINT
     public static GetListMouCustDocPrintForViewByMouCustId = environment.losUrl + "/MouCustDocPrint/GetListMouCustDocPrintForViewByMouCustId";
     public static EditMouCustDocPrintSequenceNo = environment.losUrl + "/MouCustDocPrint/EditMouCustDocPrintSequenceNo";
