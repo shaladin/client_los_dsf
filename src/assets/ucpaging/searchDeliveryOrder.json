@@ -1,37 +1,36 @@
 {
-    "title": "Purchase Order Paging",
-    "exportExcel": false,
+    "title": "DELIVERY ORDER PAGING",
     "component": [
         {
             "type": "textbox",
-            "name": "AGR.AGREEMENT_NO",
-            "id": "AgreementNoId",
+            "name": "AG.AGRMNT_NO",
+            "id": "AgrmntNoId",
             "value": "",
-            "label": "Agreement No",
+            "label": "AGREEMENT NO",
             "placeholder": "Placeholder"
         },
         {
             "type": "textbox",
-            "name": "A.APP_NO",
+            "name": "AP.APP_NO",
             "id": "AppNoId",
             "value": "",
-            "label": "Application No",
+            "label": "APPLICATION NO",
             "placeholder": "Placeholder"
         },
         {
-            "type" : "textbox",
-            "name" : "AGR.PROD_OFFERING_NAME",
-            "id" : "ProdOfferingNameId",
-            "value" : "",
-            "label" : "Prod Offering Name",
+            "type": "textbox",
+            "name": "AG.PROD_OFFERING_NAME",
+            "id": "ProdOfferingNameId",
+            "value": "",
+            "label": "PROD OFFERING NAME",
             "placeholder": "Placeholder"
         },
         {
-            "type" : "textbox",
-            "name" : "AGR.CUST_NAME",
-            "id" : "CustNameId",
-            "value" : "",
-            "label" : "Customer Name",
+            "type": "textbox",
+            "name": "AG.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "CUSTOMER NAME",
             "placeholder": "Placeholder"
         },
         {
@@ -44,8 +43,8 @@
         }
     ],
     "querystring": {
-        "select": "SELECT WF.USERNAME AS Username, AGR.AGRMNT_NO AS AgrmntNo, A.APP_NO AS AppNo, AGR.CUST_NAME AS CustName, A.PROD_OFFERING_NAME AS ProdOfferingName, CASE WHEN WF.USERNAME = NULL OR WF.USERNAME = '' THEN 'UNCLAIMED' ELSE 'CLAIMED' END AS ClaimStatus, A.APP_ID AS AppId, AGR.AGRMNT_ID AS AgrmntId",
-        "from": "FROM dbo.APP A WITH(NOLOCK) JOIN dbo.AGRMNT AGR WITH(NOLOCK) ON AGR.APP_ID = A.APP_ID JOIN dbo.V_WF_TASK_LIST WF WITH(NOLOCK) ON WF.TRANSACTION_CODE = A.APP_NO"
+        "select": "SELECT WF.USERNAME AS UserName, CASE WHEN WF.USERNAME = NULL OR WF.USERNAME = '' THEN 'UNCLAIMED' ELSE 'CLAIMED' END AS ClaimStatus, AG.AGRMNT_NO AS AgrmntNo, AP.APP_NO AS AppNo, AG.PROD_OFFERING_NAME AS ProdOfferingName, AG.CUST_NAME AS CustName, AG.APP_ID AS AppId, AG.AGRMNT_CURR_STEP AS AgrmntCurrStep",
+        "from": "FROM dbo.APP AP WITH(NOLOCK) JOIN dbo.AGRMNT AG WITH(NOLOCK) ON AP.APP_ID = AG.APP_ID JOIN dbo.V_WF_TASK_LIST WF WITH(NOLOCK) ON WF.TRANSACTION_CODE = AP.APP_NO"
     },
     "headerList": [
         {
@@ -56,27 +55,27 @@
         },
         {
             "type": "sort",
-            "position": "left",
-            "label": "Agreement No",
-            "name": "AGR.AGREEMENT_NO"
+            "position": "center",
+            "label": "AGREEMENT NO",
+            "name": "AG.AGRMNT_NO"
         },
         {
             "type": "sort",
-            "position": "left",
-            "label": "Application No",
-            "name": "A.APP_NO"
+            "position": "center",
+            "label": "APPLICATION NO",
+            "name": "AP.APP_NO"
         },
         {
             "type": "sort",
-            "position": "left",
-            "label": "Customer Name",
-            "name": "AGR.CUST_NAME"
+            "position": "center",
+            "label": "CUSTOMER NAME",
+            "name": "AG.CUST_NAME"
         },
         {
             "type": "sort",
-            "position": "left",
-            "label": "Prod Offering Name",
-            "name": "AGR.PROD_OFFERING_NAME"
+            "position": "center",
+            "label": "PROD OFFERING NAME",
+            "name": "AG.PROD_OFFERING_NAME"
         },
         {
             "type": "label",
@@ -92,22 +91,22 @@
         },
         {
             "type": "text",
-            "position": "left",
-            "property": "AgreementNo"
+            "position": "center",
+            "property": "AgrmntNo"
         },
         {
             "type": "text",
-            "position": "left",
+            "position": "center",
             "property": "AppNo"
         },
         {
             "type": "text",
-            "position": "left",
+            "position": "center",
             "property": "CustName"
         },
         {
             "type": "text",
-            "position": "left",
+            "position": "center",
             "property": "ProdOfferingName"
         },
         {
@@ -116,7 +115,7 @@
             "action": [
                 {
                     "type": "edit",
-                    "path": "/AdminProcess/PurchaseOrder/PO",
+                    "path": "/AdminProcess/DeliveryOrder/Detail",
                     "param": [
                         {
                             "type": "AgrmntId",

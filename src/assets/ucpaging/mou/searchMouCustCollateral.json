@@ -1,0 +1,31 @@
+
+{
+    "title": "Collateral List",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "textbox",
+            "name": "CL.FULL_ASSET_CODE",
+            "id": "CollateralCodeId",
+            "value": "",
+            "label": "Collateral Code",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "CL.FULL_ASSET_NAME",
+            "id": "CollateralNameId",
+            "value": "",
+            "label": "Collateral Name",
+            "placeholder": "Placeholder"
+        }
+    ],
+    "querystring": {
+        "select": "SELECT CL.COLLATERAL_ID AS CollateralId, CL.COLLATERAL_NO AS CollateralNo, CL.FULL_ASSET_CODE AS FullAssetCode, CL.FULL_ASSET_CODE AS FullAssetCode, CL.COLLATERAL_PRICE_AMT AS CollateralValueAmt, CU.CUST_NAME AS CustName",
+        "from": "FROM dbo.CUST CU WITH(NOLOCK) JOIN dbo.COLLATERAL CL WITH(NOLOCK) ON CL.CUST_ID = CU.CUST_ID"
+    },
+    "headerList": [
+    ],
+    "bodyList": [
+    ]
+}
