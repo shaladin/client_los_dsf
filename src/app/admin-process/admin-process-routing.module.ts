@@ -5,6 +5,9 @@ import { PurchaseOrderComponent } from './purchase-order/purchase-order/purchase
 import { DeliveryOrderDetailComponent } from './delivery-order/delivery-order-detail/delivery-order-detail.component';
 import { DeliveryOrderPagingComponent } from './delivery-order/delivery-order-paging/delivery-order-paging.component';
 import { PurchaseOrderDetailComponent } from './purchase-order/purchase-order-detail/purchase-order-detail.component';
+import { CustConfirmationPagingComponent } from './cust-confirmation/cust-confirmation-paging/cust-confirmation-paging.component';
+import { CustConfirmationDetailComponent } from './cust-confirmation/cust-confirmation-detail/cust-confirmation-detail.component';
+import { CustConfirmationSubjViewComponent } from './cust-confirmation/cust-confirmation-subj-view/cust-confirmation-subj-view.component';
 
 const routes: Routes = [
   {
@@ -25,10 +28,10 @@ const routes: Routes = [
         }
       },
       {
-        path: 'DeliveryOrder/Detail',
-        component: DeliveryOrderDetailComponent,
+        path: 'PurchaseOrder/PO/Detail',
+        component: PurchaseOrderDetailComponent,
         data: {
-          title: 'Delivery Order'
+          title: 'Purchase Order Detail'
         }
       },
       {
@@ -39,12 +42,33 @@ const routes: Routes = [
         }
       },
       {
-        path: 'PurchaseOrder/PO/Detail',
-        component: PurchaseOrderDetailComponent,
+        path: 'DeliveryOrder/Detail',
+        component: DeliveryOrderDetailComponent,
         data: {
-          title: 'Purchase Order Detail'
+          title: 'Delivery Order'
         }
-      }
+      },
+      {
+        path: 'CustConfirmation/Paging',
+        component: CustConfirmationPagingComponent,
+        data: {
+          title: 'Customer Confirmation Paging'
+        }
+      },
+      {
+        path: 'CustConfirmation/Detail',
+        component: CustConfirmationDetailComponent,
+        data: {
+          title: 'Customer Confirmation Detail'
+        }
+      },
+      {
+        path: 'CustConfirmation/Subj/View',
+        component: CustConfirmationSubjViewComponent,
+        data: {
+          title: 'Customer Confirmation Subject View'
+        }
+      },
     ]
   }
 ];

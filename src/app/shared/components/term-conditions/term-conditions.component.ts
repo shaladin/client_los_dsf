@@ -27,7 +27,6 @@ export class TermConditionsComponent implements OnInit {
     }
     this.http.post(AdInsConstant.GetListTCbyAppId, appTcObj).subscribe(
       (response) => {
-        console.log(response);
         if (response != null && response["length"] != 0) {
           for (let i = 0; i < response["length"]; i++) {
             var TCDetail = this.fb.group({
