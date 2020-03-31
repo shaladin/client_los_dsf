@@ -1,0 +1,69 @@
+{
+    "title": "Lookup Copy Application",
+    "component": [
+      {
+        "type": "textbox",
+        "name": "po.PROD_OFFERING_CODE",
+        "id": "prodOfferingCode",
+        "value": "",
+        "label": "Product Offering Code",
+        "placeholder": "Product Offering Code"
+      },
+      {
+        "type": "textbox",
+        "name": "po.PROD_OFFERING_NAME",
+        "id": "prodOfferingName",
+        "value": "",
+        "label": "Product Offering Name",
+        "placeholder": "Product Offering Name"
+      }
+    ],
+    "querystring": {
+      "select": "SELECT po.PROD_OFFERING_CODE AS ProdOfferingCode, po.PROD_OFFERING_NAME AS ProdOfferingName, ro.OFFICE_CODE AS OfficeCode ",
+      "from": "FROM dbo.REF_OFFICE ro WITH(NOLOCK) JOIN dbo.PROD_OFFERING_BRANCH_MBR pobm WITH(NOLOCK) ON ro.REF_OFFICE_ID = pobm.REF_OFFICE_ID INNER JOIN dbo.PROD_OFFERING po WITH(NOLOCK) ON pobm.PROD_OFFERING_H_ID = po.CURRENT_PROD_OFFERING_H_ID"
+    },
+    "headerList": [
+        {
+          "type": "sort",
+          "position": "left",
+          "label": "Product Offering Code",
+          "name": "ProdOfferingCode"
+        },
+        {
+          "type": "sort",
+          "position": "left",
+          "label": "Product Offering Name",
+          "name": "ProdOfferingName"
+        },
+        {
+          "type": "label",
+          "position": "center",
+          "label": "Action"
+        }
+    ],
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "left",
+        "property": "ProdOfferingCode"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "ProdOfferingName"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "select",
+            "property": "ProdOfferingName"
+          }
+        ]
+      }
+    ],
+    "propertyId": "ProdOfferingName",
+    "propertyName": "ProdOfferingName"
+  }
+  

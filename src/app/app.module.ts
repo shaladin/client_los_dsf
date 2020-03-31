@@ -32,8 +32,6 @@ import { RolepickComponent } from 'app/shared/rolepick/rolepick.component';
 import { RolePickService } from 'app/shared/rolepick/rolepick.service';
 import { GrowlModule } from 'primeng/primeng';
 import { TreeViewModule } from '@progress/kendo-angular-treeview';
-import { AppPagingComponent } from './NAP/app-paging/app-paging.component';
-import { AppAddComponent } from './NAP/app-add/app-add.component';
 
 
 
@@ -49,6 +47,7 @@ export function createTranslateLoader(http: HttpClient) {
         ErrorDialogComponent,
         RolepickComponent
         ],
+    
     imports: [
         HttpModule,
         BrowserAnimationsModule,

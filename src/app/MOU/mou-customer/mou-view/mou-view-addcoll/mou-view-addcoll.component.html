@@ -1,0 +1,28 @@
+<form class="form form-horizontal" [formGroup]="AddCollDataForm" (ngSubmit)="AddCollDataForm.valid" #enjiForm="ngForm">
+  <lib-ucSubsection [id]="'AddCollDataId'" [title]="'Additional Collateral'" [panel]="'AddCollData'">
+  </lib-ucSubsection>
+  <div class="form-body" id="AddCollData">
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+        <tr class="table-header">
+          <th><span class="thead-header" name='CollNo' translate>Collateral No</span>
+          </th>
+          <th><span style="float: left;" class="thead-header" name='CollName' translate>Collateral Name</span>
+          </th>
+          <th><span style="float: left;" class="thead-header" name='MouCustName' translate>Current Owner Name</span>
+          </th>
+          <th><span style="float: right;" class="thead-header" name='CollPrice' translate>Collateral Price</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of listCollateralData; let i = index">
+          <td>{{item.CollateralNo}}</td>
+          <td align="left">{{item.FullAssetName}}</td>
+          <td align="left">{{item.CustName}}</td>
+          <td align="right">{{item.CollateralValueAmt | number}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</form>

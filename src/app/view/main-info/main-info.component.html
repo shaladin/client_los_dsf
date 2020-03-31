@@ -1,0 +1,40 @@
+<form class="form form-horizontal" [formGroup]="MainInfoForm" (ngSubmit)="MainInfoForm.valid" #enjiForm="ngForm">
+  <lib-ucSubsection [id]="'MainInfoId'" [title]="'Main Info'" [panel]="'MainInfo'">
+  </lib-ucSubsection>
+  <div class="form-body" id="MainInfo">
+    <div class="form-group">
+      <label class="col-md-2 adInsLabel" translate>MOU No: </label>
+      <label class="col-md-2 adInsLabel" translate>{{mouCustNo}} </label>
+      <label class="col-md-2"></label>
+      <label class="col-md-2 adInsLabel" translate>MOU Date: </label>
+      <label class="col-md-2 adInsLabel" translate>{{mouCustDt}} </label>
+    </div>
+    <div class="form-group">
+      <label class="col-md-2 adInsLabel" translate>Customer Name: </label>
+      <label class="col-md-2 adInsLabel" translate>{{custName}} </label>
+      <label class="col-md-2"></label>
+      <label class="col-md-2 adInsLabel" translate>MOU Type: </label>
+      <label class="col-md-2 adInsLabel" translate>{{mrMouTypeCode}} </label>
+    </div>
+    <div class="form-group">
+      <label class="col-md-2 adInsLabel" translate>Start Date: </label>
+      <label class="col-md-2 adInsLabel" translate>{{startDt}} </label>
+      <label class="col-md-2"></label>
+      <label class="col-md-2 adInsLabel" translate>Plafond Amount: </label>
+      <label class="col-md-2 adInsLabel" translate>{{plafondAmt | number}} </label>
+    </div>
+    <div class="form-group">
+      <label class="col-md-2 adInsLabel" translate>Expired Date: </label>
+      <label class="col-md-2 adInsLabel" translate>{{endDt}} </label>
+      <label class="col-md-2"></label>
+      <label class="col-md-2 adInsLabel" translate>Reff No: </label>
+      <label class="col-md-2 adInsLabel" translate>{{refNo}} </label>
+    </div>
+    <div class="form-group">
+      <label class="col-md-2 adInsLabel" translate>Status: </label>
+      <label *ngIf="mouStat == 'ACT'" class="col-md-2 adInsLabel" translate>Active </label>
+      <label *ngIf="mouStat == 'BRW'" class="col-md-2 adInsLabel" translate>Borrow </label>
+      <label *ngIf="mouStat == 'REQ'" class="col-md-2 adInsLabel" translate>Review Request </label>
+    </div>
+  </div>
+</form>
