@@ -19,6 +19,8 @@ import { PreGoLiveComponent } from './pre-go-live/pre-go-live/pre-go-live.compon
 import { UcgridviewModule } from "@adins/ucgridview";
 import { UcviewgenericModule } from "@adins/ucviewgeneric";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
+import { ApplicationAgreementCancellationPagingComponent } from './application-agreement-cancellation/application-agreement-cancellation-paging/application-agreement-cancellation-paging.component';
+import { ApplicationAgreementCancellationDetailComponent } from './application-agreement-cancellation/application-agreement-cancellation-detail/application-agreement-cancellation-detail.component';
 
 @NgModule({
   imports: [
@@ -44,7 +46,9 @@ import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
     PurchaseOrderInfoComponent,
     PreGoLivePagingComponent,
     PreGoLiveComponent,
-    PurchaseOrderInfoComponent
+    PurchaseOrderInfoComponent,
+    ApplicationAgreementCancellationPagingComponent,
+    ApplicationAgreementCancellationDetailComponent
   ],
   providers: [
     NGXToastrService

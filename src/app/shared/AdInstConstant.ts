@@ -57,13 +57,18 @@ export class AdInsConstant {
     // Ref App Src
     public static GetListKvpActiveRefAppSrc = "/RefAppSrc/GetListKvpActiveRefAppSrc";
 
+    // AppAgrmntCancel
+    public static AddAppAgrmntCancel = environment.losUrl + "/AppAgrmntCancel/AddAppAgrmntCancel"
 
     public static RestrictionLike = "Like";
     public static RestrictionEq = "Eq";
+    public static RestrictionNeq = "NEQ";
     public static RestrictionIn = "IN";
     public static RestrictionNotIn = "NotIn";
     public static RestrictionIsNull = "isnull";
     public static RestrictionIsNotNull = "isnotnull";
+    public static RestrictionOr = "Or"; //pastikan ada 1 criteria sebelumnya
+    public static RestrictionOrNeq = "OrNeq";
     public static showData = "10,50,100";
     public static TimeoutSession = 6000000;
     public static GetListProduct = "http://creator_websvr:7272/NEW_FINANCING/api/Catalog/getPopularViewByCriteria";
@@ -288,6 +293,9 @@ export class AdInsConstant {
     public static GetRefMasterListDesc = "/RefMaster/GetRefMasterListDesc";
     public static GetRefMasterByMasterCode = "/RefMaster/GetRefMasterByMasterCode";
     public static GetRefMasterListKeyValueActiveByCode = environment.FoundationR3Url + "/RefMaster/GetListKeyValueActiveByCode"
+    
+    //REF REASON
+    public static GetListActiveRefReason = environment.FoundationR3Url + "/RefReason/GetListActiveRefReason";
 
 
     //REF PROV DISTRICT

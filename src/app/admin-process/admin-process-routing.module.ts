@@ -5,6 +5,8 @@ import { PurchaseOrderComponent } from './purchase-order/purchase-order/purchase
 import { PurchaseOrderDetailComponent } from './purchase-order/purchase-order-detail/purchase-order-detail.component';
 import { PreGoLivePagingComponent } from './pre-go-live/pre-go-live-paging/pre-go-live-paging.component';
 import { PreGoLiveComponent } from './pre-go-live/pre-go-live/pre-go-live.component';
+import { ApplicationAgreementCancellationPagingComponent } from './application-agreement-cancellation/application-agreement-cancellation-paging/application-agreement-cancellation-paging.component';
+import { ApplicationAgreementCancellationDetailComponent } from './application-agreement-cancellation/application-agreement-cancellation-detail/application-agreement-cancellation-detail.component';
 const routes: Routes = [
   {
     path: '',
@@ -42,6 +44,22 @@ const routes: Routes = [
         component: PreGoLiveComponent,
         data: {
           title: 'PreGoLive Detail'
+        }
+      }
+      ,
+      {
+        path: 'AgreementCancellation/Paging',
+        component: ApplicationAgreementCancellationPagingComponent,
+        data: {
+          title: 'Agreement Cancellation Paging'
+        }
+      }
+      ,
+      {
+        path: 'AgreementCancellation/Detail',
+        component: ApplicationAgreementCancellationDetailComponent,
+        data: {
+          title: 'Agreement Cancellation Detail'
         }
       }
     ]
