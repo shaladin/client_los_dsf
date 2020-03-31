@@ -8,6 +8,7 @@ import { AppModelComponent } from "./nap-tab/app-model/app-model.component";
 import { CustomerDataComponent } from "./nap-tab/customer-data/customer-data.component";
 import { CommissionPagingComponent } from "./commission-paging/commission-paging.component";
 import { CommissionAddComponent } from "./commission-add/commission-add.component";
+import { InsuranceDataComponent } from "./nap-tab/insurance-data/insurance-data.component";
 
 
 const routes: Routes = [
@@ -54,6 +55,13 @@ const routes: Routes = [
                 component: CustomerDataComponent,
                 data: {
                     title: 'Customer Data'
+                }
+            },
+            {
+                path: 'InsuranceData',
+                component: InsuranceDataComponent,
+                data: {
+                    title: 'Insurance Data'
                 }
             },
             {

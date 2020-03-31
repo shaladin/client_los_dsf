@@ -42,6 +42,7 @@ import { CustCompanyFinancialDataComponent } from "./nap-tab/customer-data/compo
 import { CustLegalDocComponent } from "./nap-tab/customer-data/component/legal-doc/cust-legal-doc.component";
 import { UcinputnumberModule } from "@adins/ucinputnumber";
 import { UcinputnumberComponent } from "./nap-tab/customer-data/component/ucinputnumber/ucinputnumber.component";
+import { InsuranceDataComponent } from "./nap-tab/insurance-data/insurance-data.component";
 
 
 
@@ -73,7 +74,8 @@ import { UcinputnumberComponent } from "./nap-tab/customer-data/component/ucinpu
         FormAddDynamicComponent,
         CustShareholderComponent,
         CustLegalDocComponent,
-        UcinputnumberComponent
+        UcinputnumberComponent,
+        InsuranceDataComponent
         ],
     imports: [ 
         NapRoutingModule,

@@ -1,0 +1,134 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-body">
+      <div class="px-3">
+        <form class="form form-horizontal" [formGroup]="InsuranceDataForm" (ngSubmit)="InsuranceDataForm.valid && SaveForm()"
+            #enjiForm="ngForm">
+            <div class="form-body">
+              <lib-ucSubsection [id]="'assetDataId'" [title]="'Asset Data'" [panel]="'assetData'">
+              </lib-ucSubsection>
+              <div id="assetData">
+                <div class="form-group row">
+                  <label class="col-md-2" translate>Asset Name</label>
+                  <label class="col-md-4" translate>{{appAssetObj?.FullAssetName}}</label>
+                </div>
+              </div>
+              <lib-ucSubsection [id]="'assetAccessoriesId'" [title]="'Asset Accessories'" [panel]="'assetAccessories'">
+              </lib-ucSubsection>
+              <div id="assetAccessories">
+                <div class="form-group row">
+                  <div class="col-md-6">
+                    <table class="table table-responsive-md text-center table-hover">
+                      <thead>
+                        <tr class="table-header">
+                          <th style="text-align: center;"><span class="thead-header" translate>No
+                          </span>
+                          </th>
+                          <th style="text-align: center;"><span class="thead-header" translate>Accessory
+                          </span>
+                          </th>
+                          <th style="text-align: center;"><span class="thead-header" translate>Accessory Price
+                          </span>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of appAssetAccessoryObjs; let i = index">
+                          <td style="text-align: center;">{{i + 1}}</td>
+                          <td style="text-align: center;">{{item.AssetAccessoryName}}</td>
+                          <td style="text-align: center;">{{item.AccessoryPriceAmt | number:'.2':'en-US'}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <lib-ucSubsection [id]="'insuranceInfoId'" [title]="'Insurance Information'" [panel]="'insuranceInformation'">
+              </lib-ucSubsection>
+              <div id="insuranceInformation">
+                <div class="form-group row">
+                  <label class="col-md-2 adins-required-label" for="insuredBy" translate>Insured By</label>
+                  <div class="col-md-4">
+                    <select class="form-control" id="insuredBy" formControlName="InsAssetCoveredBy" (change)="InsuredByChanged($event)"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.InsAssetCoveredBy.invalid }">
+                      <option *ngFor="let item of insuredByObj" [value]="item.Key">
+                        {{item.Value}}
+                      </option>
+                    </select>
+                    <lib-uc-show-errors [control]="InsuranceDataForm.controls.InsAssetCoveredBy" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                  </div>
+                </div>
+                <div *ngIf="InsuranceDataForm.controls.InsAssetCoveredBy.value == 'CU' || InsuranceDataForm.controls.InsAssetCoveredBy.value == 'CUCO'">
+                  <div *ngIf="InsuranceDataForm.controls.InsAssetCoveredBy.value == 'CUCO'">
+                    <div class="form-group row">
+                      <label class="col-md-2" style="font-weight:bold" translate>Customer</label>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-2 adins-required-label" for="insuredBy" translate>Insco Branch Name</label>
+                    <div class="col-md-4">
+                      <select class="form-control" id="insuredBy" formControlName="InscoBranchCode"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.InscoBranchCode.invalid }">
+                        <option *ngFor="let item of inscoBranchObj" [value]="item.Key">
+                          {{item.Value}}
+                        </option>
+                      </select>
+                      <lib-uc-show-errors [control]="InsuranceDataForm.controls.InscoBranchCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                    </div>
+                    <label class="col-md-2" for="policyNo" translate>Policy No</label>
+                    <div class="col-md-4">
+                      <input type="text" id="policyNo" class="form-control" formControlName="InsPolicyNo"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.InsPolicyNo.invalid }">
+                      <lib-uc-show-errors [control]="InsuranceDataForm.controls.InsPolicyNo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-2 adins-required-label" for="insuredBy" translate>Coverage Amount</label>
+                    <div class="col-md-4">
+                      <lib-ucinputnumber [parentForm]="InsuranceDataForm" [enjiForm]="enjiForm" [identifier]="'CvgAmt'" [ucNumber]="cvgAmt"></lib-ucinputnumber>
+                    </div>
+                    <label class="col-md-2" for="policyName" translate>Policy Name</label>
+                    <div class="col-md-4">
+                      <input type="text" id="policyName" class="form-control" formControlName="InsPolicyName"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.InsPolicyName.invalid }">
+                      <lib-uc-show-errors [control]="InsuranceDataForm.controls.InsPolicyName" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-2 adins-required-label" for="startDt" translate>Start Date</label>
+                    <div class="col-md-4">
+                      <input type="date" class="form-control" formControlName="StartDt" id="startDt"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.StartDt.invalid }">
+                      <lib-uc-show-errors [control]="InsuranceDataForm.controls.StartDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                    </div>
+                    <label class="col-md-2 adins-required-label" for="endDt" translate>End Date</label>
+                    <div class="col-md-4">
+                      <input type="date" class="form-control" formControlName="EndDt" id="endDt"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.EndDt.invalid }">
+                      <lib-uc-show-errors [control]="InsuranceDataForm.controls.EndDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-2" for="notes" translate>Insurance Notes</label>
+                    <div class="col-md-4">
+                      <textarea rows="5" id="notes" class="form-control" formControlName="Notes" 
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.Notes.invalid }"></textarea>
+                      <lib-uc-show-errors [control]="InsuranceDataForm.controls.Notes" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-actions right">
+              <button type="submit" class="btn btn-raised btn-primary">
+                <i class="fa fa-check-square-o"></i> Save And Continue
+              </button>
+              <button type="button" class="btn btn-raised btn-primary" (click)="test()">
+                <i class="fa fa-check-square-o"></i> test
+              </button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

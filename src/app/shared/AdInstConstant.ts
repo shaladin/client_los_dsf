@@ -100,6 +100,14 @@ export class AdInsConstant {
     public static CustModelEmployee = "EMP";
     public static CustModelSmallMediumEnterprise = "SME";
 
+    //VENDOR CATEGORY 
+    public static VendorCategoryAssetInscoBranch = "ASSET_INSCO_BRANCH";
+
+    //INSURED BY
+    public static InsuredByCustomer = "CU";
+    public static InsuredByOffSystem = "OFF";
+    public static InsuredByCompany = "CO";
+    public static InsuredByCustomerCompany = "CUCO";
 
     //GENERAL SETTING
     public static GetBusinessDt = "/GeneralSetting/GetBusinessDate";
@@ -394,6 +402,7 @@ export class AdInsConstant {
     // Vendor
     public static GetListVendorBankAccByVendorId= "/VendorBankAcc/GetListVendorBankAccByVendorId";
     public static GetListVendorBankAccByVendorCode= "/VendorBankAcc/GetListVendorBankAccByVendorCode";
+    public static GetListKeyValueByCategoryCodeAndOfficeCode = "http://localhost:5000/Vendor/GetListKeyValueByCategoryCodeAndOfficeCode";
 
     // MOU CUST
     public static GetMouCustById = environment.losUrl + "/MouCust/GetMouCustById";
@@ -478,5 +487,9 @@ export class AdInsConstant {
     
     //PURCHASE ORDER
     public static SubmitPurchaseOrder = environment.losUrl + "/PurchaseOrderH/SubmitPurchaseOrder";
+
+    //APP INSURANCE
+    public static GetInsuranceDataByAppId = environment.losUrl + "/AppIns/GetInsDataByAppId";
+
     
 }
