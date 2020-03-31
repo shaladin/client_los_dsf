@@ -1,0 +1,226 @@
+{
+    "title": "MOU Approval",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "textbox",
+            "name": "CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "CUSTOMER NAME",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "TRX_NO",
+            "id": "TrxNoId",
+            "value": "",
+            "label": "TRANSACTION NO",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "APV_NO",
+            "id": "ApvNoId",
+            "value": "",
+            "label": "APPROVAL NO",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "A.REQUEST_BY",
+            "id": "ReqById",
+            "value": "",
+            "label": "REQUEST BY",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "MAIN_USERNAME",
+            "id": "TaskOwnerId",
+            "value": "",
+            "label": "TASK OWNER",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "USERNAME",
+            "id": "CurrentUserId",
+            "value": "",
+            "label": "CURRENT USER",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "datepicker",
+            "name": "A.REQUEST_DATE",
+            "id": "ReqDtId",
+            "value": "",
+            "label": "REQUEST DATE",
+            "placeholder": "Placeholder"
+        }
+    ],
+    "querystring": {
+        "select": "SELECT TL.TASK_ID AS TaskId, TL.INSTANCE_ID AS InstanceId, TL.APV_REQ_ID AS ApvReqId, TL.TRX_NO AS TrxNo, TL.APV_NO AS ApvNo, TL.REQUEST_BY AS RequestBy, TL.REQUEST_DATE AS RequestDate, TL.MAIN_USER_ID AS MainUserId, TL.CURRENT_USER_ID AS CurrentUserId, TL.CATEGORY_CODE AS CategoryCode, A.MOU_CUST_ID AS MouCustId, A.MOU_CUST_NO AS MouCustNo, A.MOU_CUST_ID AS MouCustId, A.CUST_NAME AS CustName, A.MOU_CUST_DT AS MouCustDt, A.END_DT AS EndDt, A.PLAFOND_AMT AS PlafondAmt, A.IS_REVOLVING AS IsRevolving, A.MR_MOU_TYPE_CODE AS MouType, A.MOU_STAT AS MouStat, A.REF_NO AS RefNo",
+        "from": "FROM dbo.V_APV_TASK_LIST AS TL WITH(NOLOCK) JOIN dbo.MOU_CUST A WITH(NOLOCK) ON TL.TRX_NO = A.MOU_CUST_NO"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Apv No",
+            "name": "APV_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Customer Name",
+            "name": "CustName"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Mou No",
+            "name": "MouCustNo"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Request By",
+            "name": "RequestBy"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Task Owner",
+            "name": "MainUserId"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Current User",
+            "name": "CurrentUserId"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Request Date",
+            "name": "RequestDate"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Action"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "TrxNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "MouCustNo"
+        },
+        {
+            "type": "date",
+            "position": "left",
+            "property": "MouCustDt"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "RequestBy"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "MainUserId"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "CurrentUserId"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "RequestDate"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "switch",
+                    "case": [
+                        {
+                            "conditions": [
+                                {
+                                    "property": "MouType",
+                                    "value": "FACTORING",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "/Mou/Cust/ApprovalFactoring",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "TaskId",
+                                        "property": "TaskId"
+                                    },
+                                    {
+                                        "type": "InstanceId",
+                                        "property": "InstanceId"
+                                    },
+                                    {
+                                        "type": "MouCustId",
+                                        "property": "MouCustId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "property": "MouType",
+                                    "value": "GENERAL",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "/Mou/Cust/ApprovalGeneral",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "TaskId",
+                                        "property": "TaskId"
+                                    },
+                                    {
+                                        "type": "InstanceId",
+                                        "property": "InstanceId"
+                                    },
+                                    {
+                                        "type": "MouCustId",
+                                        "property": "MouCustId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

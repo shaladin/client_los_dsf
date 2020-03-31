@@ -1,0 +1,69 @@
+{
+    "title": "Lookup Collateral Type",
+    "component": [
+      {
+        "type": "textbox",
+        "name": "A.FULL_ASSET_CODE",
+        "id": "FullAssetCode",
+        "value": "",
+        "label": "Full Asset Code",
+        "placeholder": "Full Asset Code"
+      },
+      {
+        "type": "textbox",
+        "name": "A.FULL_ASSET_NAME",
+        "id": "FullAssetName",
+        "value": "",
+        "label": "Collateral Name",
+        "placeholder": "Collateral Name"
+      }
+    ],
+    "querystring": {
+      "select": "SELECT A.FULL_ASSET_CODE AS FullAssetCode, A.FULL_ASSET_NAME AS FullAssetName, A.ASSET_MASTER_ID AS AssetMasterId, A.ASSET_TYPE_ID AS AssetTypeId",
+      "from": "FROM ASSET_MASTER AS A WITH(NOLOCK) INNER JOIN ASSET_TYPE AS B WITH(NOLOCK) ON A.ASSET_TYPE_ID = B.ASSET_TYPE_ID"
+    },
+    "headerList": [
+        {
+          "type": "sort",
+          "position": "left",
+          "label": "Collateral Code",
+          "name": "FullAssetCode"
+        },
+        {
+          "type": "sort",
+          "position": "left",
+          "label": "Collateral Name",
+          "name": "FullAssetName"
+        },
+        {
+          "type": "label",
+          "position": "center",
+          "label": "Action"
+        }
+    ],
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "left",
+        "property": "FullAssetCode"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "FullAssetName"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "select",
+            "property": "FullAssetCode"
+          }
+        ]
+      }
+    ],
+    "propertyId": "FullAssetCode",
+    "propertyName": "FullAssetName"
+  }
+  
