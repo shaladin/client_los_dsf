@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { FormArray, FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-purchase-order',
@@ -14,7 +15,10 @@ export class PurchaseOrderComponent implements OnInit {
   AgrmntId: number;
   arrValue = [];
   AppAssetList = [];
-  constructor(private route: ActivatedRoute, private http: HttpClient) { 
+  tcForm: FormGroup = this.fb.group({
+  });
+  
+  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder) { 
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.AppId = params["AppId"];
@@ -37,5 +41,9 @@ export class PurchaseOrderComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  SaveForm(){
+    console.log(this.tcForm);
   }
 }
