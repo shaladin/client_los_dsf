@@ -30,6 +30,9 @@ export class ApplicationAgreementCancellationDetailComponent implements OnInit {
       this.AppId = params["AppId"];
       this.AgrmntId = params["AgrmntId"];
     });
+    if(this.AgrmntId == "AgrmntId"){
+      this.AgrmntId = -1;
+    }
   }
 
   ngOnInit() {
