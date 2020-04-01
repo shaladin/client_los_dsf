@@ -15,18 +15,15 @@ import { MainInfoComponent } from 'app/view/main-info/main-info.component';
 import { MouRoutingModule } from "./mou-routing.module";
 import { DocSignerComponent } from "./doc-signer/doc-signer.component";
 import { MouReviewPagingComponent } from './mou-customer/mou-review/mou-review-paging/mou-review-paging.component';
-import { MouReviewGeneralComponent } from './mou-customer/mou-review/mou-review-general/mou-review-general.component';
-import { MouReviewFactoringComponent } from './mou-customer/mou-review/mou-review-factoring/mou-review-factoring.component';
 import { MouViewDetailComponent } from './mou-customer/mou-view/mou-view-detail/mou-view-detail.component';
 import { MouViewFeeComponent } from './mou-customer/mou-view/mou-view-fee/mou-view-fee.component';
 import { MouViewAddcollComponent } from './mou-customer/mou-view/mou-view-addcoll/mou-view-addcoll.component';
 import { MouViewTcComponent } from './mou-customer/mou-view/mou-view-tc/mou-view-tc.component';
 import { MouViewDocComponent } from './mou-customer/mou-view/mou-view-doc/mou-view-doc.component';
 import { MouViewSurveyComponent } from './mou-customer/mou-view/mou-view-survey/mou-view-survey.component';
-import { MouViewLegalComponent } from './mou-customer/mou-view/mou-view-legal/mou-view-legal.component'; 
-import { MouViewComponent } from "./mou-view/mou-view.component";
-import { UcviewgenericModule } from "@adins/ucviewgeneric";
-import { MouViewGeneralDetailComponent } from "./mou-view/mou-view-general-detail/mou-view-general-detail.component";
+import { MouViewLegalComponent } from './mou-customer/mou-view/mou-view-legal/mou-view-legal.component';  
+import { UcviewgenericModule } from "@adins/ucviewgeneric"; 
+import { MouViewComponent } from "./mou-customer/mou-view/mou-view.component";
 // import { ShowErrorsComponent } from "./app/test-new/show-errors.component";
 
 @NgModule({
@@ -49,18 +46,15 @@ import { MouViewGeneralDetailComponent } from "./mou-view/mou-view-general-detai
   declarations: [
     MainInfoComponent,
     DocSignerComponent,
-    MouReviewPagingComponent,
-    MouReviewGeneralComponent,
+    MouReviewPagingComponent, 
     MouViewDetailComponent,
     MouViewFeeComponent,
     MouViewAddcollComponent,
     MouViewTcComponent,
     MouViewDocComponent,
     MouViewSurveyComponent,
-    MouViewLegalComponent,
-    MouReviewFactoringComponent, 
-    MouViewComponent,
-    MouViewGeneralDetailComponent
+    MouViewLegalComponent, 
+    MouViewComponent, 
   ]
 })
 export class MouModule { }

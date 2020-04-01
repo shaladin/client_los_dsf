@@ -4,15 +4,15 @@
     {
       "subSectionId": "CustMainInfoHeaderId",
       "subSectionTitle": "Main Info",
-      "mainInfoUrl": "http://r3app-server.ad-ins.com/FOUNDATION_R3/Generic/GetDataViewBySQL",
+      "mainInfoUrl": "http://localhost:5001/Generic/GetDataViewBySQL",
       "mainInfo": [
         {
           "type": "text",
           "label": "MOU No",
-          "property": "MouNo"
+          "property": "MouCustNo"
         },
         {
-          "type": "text",
+          "type": "date",
           "label": "MOU Date",
           "property": "MouCustDt"
         },
@@ -27,17 +27,17 @@
           "property": "MrMouTypeCode"
         },
         {
-          "type": "text",
+          "type": "date",
           "label": "Start Date",
           "property": "StartDt"
         },
         {
-          "type": "date",
+          "type": "text",
           "label": "Plafond Amount",
           "property": "PlafondAmt"
         },
         {
-          "type": "text",
+          "type": "date",
           "label": "Expired Date",
           "property": "EndDt"
         },
@@ -54,7 +54,7 @@
         {
           "type": "text",
           "label": "Realisation Amount",
-          "property": "MrGenderCode"
+          "property": "RealisationAmt"
         },
         {
           "type": "text",
@@ -64,12 +64,12 @@
         {
           "type": "text",
           "label": "Available Amount",
-          "property": "RealisationAmt"
+          "property": "AvailableAmt"
         }
        
       ],
       "querystring": {
-        "select": "MOU_CUST_NO AS MouCustNo, MOU_CUST_DT AS MouCustDt, CUST_NAME AS CustName, MR_MOU_TYPE_CODE AS MrMouTypeCode, START_DT as StartDt, PLAFOND_AMT AS PlafondAmt, END_DT as EndDt, REF_NO AS RefNo, MOU_STAT AS MouStat, REALISATION_AMT AS RealisationAmt, IN_PROCESS_AMT AS InProcessAmt",
+        "select": "SELECT MOU_CUST_NO AS MouCustNo, MOU_CUST_DT AS MouCustDt, CUST_NAME AS CustName, MR_MOU_TYPE_CODE AS MrMouTypeCode, START_DT as StartDt, PLAFOND_AMT AS PlafondAmt, END_DT as EndDt, REF_NO AS RefNo, MOU_STAT AS MouStat, REALISATION_AMT AS RealisationAmt, IN_PROCESS_AMT AS InProcessAmt, AVAILABLE_AMT as AvailableAmt",
         "from": "FROM dbo.MOU_CUST WITH(NOLOCK)",
         "where": "WHERE MOU_CUST_ID = {0}"
       }

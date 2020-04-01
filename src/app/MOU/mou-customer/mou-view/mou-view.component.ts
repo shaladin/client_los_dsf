@@ -7,7 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MouViewComponent implements OnInit {
 
-  constructor() { }
+  constructor() { 
+    
+  }
   viewMouGeneralHeader: any;
   ngOnInit() {
     this.viewMouGeneralHeader = "./assets/ucviewgeneric/viewMouGeneralHeader.json";
