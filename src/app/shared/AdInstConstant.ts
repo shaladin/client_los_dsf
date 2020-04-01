@@ -38,6 +38,9 @@ export class AdInsConstant {
     public static AppStepPGLV = "PGLV";
     public static AppStepCSR = "CSR";
 
+    // ASSET
+    public static GetListKeyValueByCode = environment.FoundationR3Url + "/AssetType/GetListKeyValueByCode";
+
     // App
     public static AddApp = "/Application/AddApp";
     public static EditApp = "/Application/EditApp";
@@ -429,7 +432,13 @@ export class AdInsConstant {
     public static GetMouCustDataByMouCustId = environment.losUrl + "/MouCustClause/GetMouCustDataByMouCustId";
     
     // MOU CUST COLLATERAL
+    public static AddMouCustCollateralData = environment.losUrl + "/MouCustCollateral/AddMouCustCollateralData";
+    public static AddExistingCustCollateralData = environment.losUrl + "/MouCustCollateral/AddExistingCustCollateralData";
+    public static EditMouCustCollateralData = environment.losUrl + "/MouCustCollateral/EditMouCustCollateralData";
+    public static DeleteMouCustCollateral = environment.losUrl + "/MouCustCollateral/DeleteMouCustCollateral";
     public static GetMouCustCollateralByMouCustId = environment.losUrl + "/MouCustCollateral/GetMouCustCollateralByMouCustId";
+    public static GetMouCustCollateralDataForUpdateByMouCustCollateralId = environment.losUrl + "/MouCustCollateral/GetMouCustCollateralDataForUpdateByMouCustCollateralId";
+    public static GetListCollateralByCustNo = environment.FoundationR3Url + "/Collateral/GetListCollateralByCustNo";
 
     // MOU CUST COLLATERAL DOC
 
@@ -465,6 +474,11 @@ export class AdInsConstant {
     //CUST DATA COMPANY
     public static AddEditCustDataCompany = "http://localhost:5001/AppCust/AddEditCustDataCompany";
 
+    // App Asset
+    public static GetAppAssetByAgrmntId = environment.losUrl + "/AppAsset/GetAppAssetByAgrmntId";
+    
+    //Asset Doc List
+    public static GetListAssetDocListByAssetTypeCode = environment.FoundationR3Url + "/AssetDocList/GetListAssetDocListByAssetTypeCode";
 
     //APP ASSET
     public static GetAppAssetListByAgrmntId = environment.losUrl + "/AppAsset/GetAppAssetListByAgrmntId";
@@ -472,6 +486,19 @@ export class AdInsConstant {
     public static GetAppAssetListByAppId = environment.losUrl + "/AppAsset/GetAppAssetListByAppId";
     public static GetAllAssetDataForPOByAsset = environment.losUrl + "/AppAsset/GetAllAssetDataForPOByAsset";
     
+<<<<<<< HEAD
     // Product Offering
     public static GetListProdOfferingDByProdOfferingCode = "/ProductOffering/GetListProdOfferingDByProdOfferingCode";
+=======
+    //DELIVERY ORDER
+    public static SubmitDeliveryOrderData = environment.losUrl + "/DeliveryOrder/SubmitDeliveryOrderData";
+    public static GetRefAssetDocList = environment.losUrl + "/DeliveryOrder/GetRefAssetDocList";
+    
+    //APP TC
+    public static GetListTCbyAppId = environment.losUrl + "/AppTc/GetListTCbyAppId";
+    
+    //PURCHASE ORDER
+    public static SubmitPurchaseOrder = environment.losUrl + "/PurchaseOrderH/SubmitPurchaseOrder";
+    
+>>>>>>> dcfc1632ddf1d52fa04ef1d9f68d9e4f70497fa0
 }
