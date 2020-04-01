@@ -486,10 +486,9 @@ export class AdInsConstant {
     public static GetAppAssetListByAppId = environment.losUrl + "/AppAsset/GetAppAssetListByAppId";
     public static GetAllAssetDataForPOByAsset = environment.losUrl + "/AppAsset/GetAllAssetDataForPOByAsset";
     
-<<<<<<< HEAD
     // Product Offering
     public static GetListProdOfferingDByProdOfferingCode = "/ProductOffering/GetListProdOfferingDByProdOfferingCode";
-=======
+    
     //DELIVERY ORDER
     public static SubmitDeliveryOrderData = environment.losUrl + "/DeliveryOrder/SubmitDeliveryOrderData";
     public static GetRefAssetDocList = environment.losUrl + "/DeliveryOrder/GetRefAssetDocList";
@@ -500,5 +499,4 @@ export class AdInsConstant {
     //PURCHASE ORDER
     public static SubmitPurchaseOrder = environment.losUrl + "/PurchaseOrderH/SubmitPurchaseOrder";
     
->>>>>>> dcfc1632ddf1d52fa04ef1d9f68d9e4f70497fa0
 }
