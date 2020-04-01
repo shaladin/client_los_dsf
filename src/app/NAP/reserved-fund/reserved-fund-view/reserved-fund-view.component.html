@@ -1,2 +1,57 @@
 <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Application Reserved Fund</h4>
 <lib-ucviewgeneric [viewInput]="viewObj"> </lib-ucviewgeneric>
+<div class="card">
+  <div class="card-body">
+    <lib-ucSubsection [id]="'incomeInformationId'" [title]="'Income Information'" [panel]="'incomeInfo'">
+    </lib-ucSubsection>
+    <div id="incomeInfo">
+      <br />
+      <br />
+      <div>
+        <label class="col-md-2">Upping Rate</label>
+        <label class="col-md-2">{{uppingRate}}</label>
+        <label class="col-md-2">Life Insurance Income</label>
+        <label class="col-md-2">{{lifeInsuranceIncome}}</label>
+      </div>
+      <div>
+        <label class="col-md-2">Insurance Income</label>
+        <label class="col-md-2">{{uppingRate}}</label>
+      </div>
+      <div *ngFor="let item of appFeeObj">
+        <label class="col-md-2">{{item.MrFeeTypeCode}}</label>
+        <label class="col-md-2">{{item.AppFeeAmt}}</label>
+      </div>
+    </div>
+
+    <form class="form form-horizontal" [formGroup]="RsvForm" (ngSubmit)="RsvForm.valid && SaveForm()"
+          #enjiForm="ngForm">
+      <div class="form-body">
+        <div formArrayName="ReservedFundObjs">
+          <div *ngFor="let item of RsvForm.controls['ReservedFundObjs'].controls;let i = index">
+            <lib-ucSubsection [id]="'reservedFundDataId[i]'" [title]="RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].MrReservedFundSourceCode.value" [panel]="'reservedFundData'">
+            </lib-ucSubsection>
+            <div id="reservedFundData[i]">
+
+              <div [formGroupName]="i">
+                <label class="col-md-2  adins-required-label" translate>Reserved Fund</label>
+                <div class="col-md-4">
+                  <input type="number" class="form-control" formControlName="ReservedFundAmt"
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].ReservedFundAmt.invalid }">
+                  <show-errors [control]="RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].ReservedFundAmt" [submit]="enjiForm.submitted"></show-errors>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-actions right">
+          <button type="submit" class="btn btn-raised btn-primary">
+            <i class="fa fa-check-square-o"></i> Save And Continue
+          </button>
+          <button type="button" class="btn btn-raised btn-primary" (click)="test()">
+            <i class="fa fa-check-square-o"></i> Check Value
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
