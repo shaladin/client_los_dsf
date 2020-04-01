@@ -43,13 +43,13 @@
         }
     ],
     "querystring": {
-        "select": "SELECT A.APP_NO AS AppNo, A.PROD_OFFERING_NAME AS ProdOfferingName, AC.CUST_NAME As CustName, POH.PURCHASE_ORDER_NO AS PurchaseOrderNo, AG.AGRMNT_NO AS AgrmntNo, POH.PURCHASE_ORDER_DT AS PurchaseOrderDt, POH.PURCHASE_ORDER_EXPIRED_DT AS PurchaseOrderExpiredDt, AA.SUPPL_NAME AS SupplName, DATEDIFF(DAY,POH.PURCHASE_ORDER_DT,POH.PURCHASE_ORDER_EXPIRED_DT) AS RemainingDays, A.APP_ID AS AppId, AG.AGRMNT_ID, POH.PURCHASE_ORDER_H_ID AS PurchaseOrderHId",
-        "from": "FROM dbo.APP A WITH(NOLOCK) JOIN dbo.APP_CUST AC WITH(NOLOCK) ON A.APP_ID = AC.APP_ID JOIN dbo.AGRMNT AG WITH(NOLOCK) ON A.APP_ID = AG.APP_ID JOIN dbo.APP_ASSET AA ON AA.AGRMNT_ID = AG.AGRMNT_ID JOIN dbo.PURCHASE_ORDER_H POH WITH(NOLOCK) ON AG.AGRMNT_ID = POH.AGRMNT_ID"
+        "select": "SELECT A.APP_NO AS AppNo, A.PROD_OFFERING_NAME AS ProdOfferingName, AC.CUST_NAME As CustName, POH.PURCHASE_ORDER_NO AS PurchaseOrderNo, AG.AGRMNT_NO AS AgrmntNo, POH.PURCHASE_ORDER_DT AS PurchaseOrderDt, POH.PURCHASE_ORDER_EXPIRED_DT AS PurchaseOrderExpiredDt, AA.SUPPL_NAME AS SupplName, DATEDIFF(DAY,POH.PURCHASE_ORDER_DT,POH.PURCHASE_ORDER_EXPIRED_DT) AS RemainingDays, A.APP_ID AS AppId, AG.AGRMNT_ID, POH.PURCHASE_ORDER_H_ID AS PurchaseOrderHId, POH.NUM_OF_EXTENSION AS NumOfExtension",
+        "from": "FROM dbo.APP A WITH(NOLOCK) JOIN dbo.APP_CUST AC WITH(NOLOCK) ON A.APP_ID = AC.APP_ID  JOIN dbo.AGRMNT AG WITH(NOLOCK) ON A.APP_ID = AG.APP_ID  JOIN dbo.APP_ASSET AA ON AA.AGRMNT_ID = AG.AGRMNT_ID  JOIN dbo.PURCHASE_ORDER_H POH WITH(NOLOCK) ON AG.AGRMNT_ID = POH.AGRMNT_ID"
     },
     "headerList": [
         {
             "type": "sort",
-            "position": "left",
+            "position": "center",
             "label": "Purchase Order No",
             "name": "POH.PURCHASE_ORDER_NO"
         },
@@ -109,29 +109,69 @@
     ],
     "bodyList": [
         {
-            "type": "text",
+            "type" : "link",
             "position": "left",
-            "property": "PurchaseOrderNo"
+            "property": "PurchaseOrderNo",
+            "target" : "_blank",
+            "path" : "//",
+            "param" : [
+                {
+                    "type" : "",
+                    "property" : ""
+                }
+            ]
         },
         {
-            "type": "text",
+            "type" : "link",
             "position": "center",
-            "property": "AppNo"
+            "property": "AppNo",
+            "target" : "_blank",
+            "path" : "//",
+            "param" : [
+                {
+                    "type" : "",
+                    "property" : ""
+                }
+            ]
         },
         {
-            "type": "text",
+            "type" : "link",
             "position": "center",
-            "property": "AgrmntNo"
+            "property": "AgrmntNo",
+            "target" : "_blank",
+            "path" : "//",
+            "param" : [
+                {
+                    "type" : "",
+                    "property" : ""
+                }
+            ]
         },
         {
-            "type": "text",
+            "type" : "link",
             "position": "center",
-            "property": "CustName"
+            "property": "CustName",
+            "target" : "_blank",
+            "path" : "//",
+            "param" : [
+                {
+                    "type" : "",
+                    "property" : ""
+                }
+            ]
         },
         {
-            "type": "text",
+            "type" : "link",
             "position": "center",
-            "property": "SupplName"
+            "property": "SupplName",
+            "target" : "_blank",
+            "path" : "//",
+            "param" : [
+                {
+                    "type" : "",
+                    "property" : ""
+                }
+            ]
         },
         {
             "type": "date",
@@ -151,7 +191,7 @@
         {
             "type": "text",
             "position": "center",
-            "property": ""
+            "property": "NumOfExtension"
         },
         {
             "type": "action",

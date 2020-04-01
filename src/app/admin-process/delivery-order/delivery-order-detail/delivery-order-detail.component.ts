@@ -26,6 +26,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
   itemType: any;
 
   AppAssetId: number;
+  AppId: number;
   AgrmntId: number;
   MrAssetConditionCode: string;
 
@@ -34,6 +35,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
   constructor(private fb: FormBuilder, private http: HttpClient,
     private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
+      this.AppId = params['AppId'];
       this.AgrmntId = params['AgrmntId'];
     });
   }

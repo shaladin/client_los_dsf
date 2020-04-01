@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule, FormGroupDirective } from "@angular/forms";
 import { HttpModule } from "@angular/http";
 import { UCSearchModule } from "@adins/ucsearch";
 import { UcpagingModule } from "@adins/ucpaging";
@@ -11,6 +11,10 @@ import { AddProcessRoutingModule } from "./add-process-routing.module";
 import { PoExtensionDetailComponent } from './po-extension/po-extension-detail/po-extension-detail.component';
 import { UcviewgenericModule } from "@adins/ucviewgeneric";
 import { UcShowErrorsModule } from "@adins/uc-show-errors";
+import { OutstandingTcPagingComponent } from './outstanding-tc/outstanding-tc-paging/outstanding-tc-paging.component';
+import { OutstandingTcDetailComponent } from './outstanding-tc/outstanding-tc-detail/outstanding-tc-detail.component';
+import { TermConditionsComponent } from "app/shared/components/term-conditions/term-conditions.component";
+import { SharingComponentModule } from "app/shared/sharingcomponent.module";
 
 @NgModule({
   imports: [
@@ -23,11 +27,14 @@ import { UcShowErrorsModule } from "@adins/uc-show-errors";
     ReactiveFormsModule,
     AddProcessRoutingModule,
     UcviewgenericModule,
-    UcShowErrorsModule
+    UcShowErrorsModule,
+    SharingComponentModule
   ],
   declarations: [
   PoExtensionPagingComponent,
-  PoExtensionDetailComponent],
+  PoExtensionDetailComponent,
+  OutstandingTcPagingComponent,
+  OutstandingTcDetailComponent],
   providers: [
     NGXToastrService
   ]

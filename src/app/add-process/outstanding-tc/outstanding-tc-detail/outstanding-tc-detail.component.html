@@ -1,0 +1,15 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="px-3">
+          <lib-ucviewgeneric [viewInput]="viewObj"></lib-ucviewgeneric>
+          <form class="form form-horizontal" [formGroup]="OustandingTCForm"
+          (ngSubmit)="OustandingTCForm.valid && SaveForm()" #enjiForm="ngForm">
+            <app-term-conditions [AppId]="AppId" [parentForm]="OustandingTCForm" [enjiForm]="enjiForm"></app-term-conditions>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
