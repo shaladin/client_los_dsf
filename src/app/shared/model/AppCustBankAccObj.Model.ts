@@ -2,6 +2,7 @@ export class AppCustBankAccObj {
     AppCustBankAccId: any;
     AppCustId: any;
     BankCode: any;
+    BankName: any;
     BankBranch: any;
     BankAccNo: any;
     BankAccName: any;

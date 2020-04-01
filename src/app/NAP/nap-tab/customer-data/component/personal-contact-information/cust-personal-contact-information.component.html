@@ -34,9 +34,9 @@
       <tr *ngFor="let item of listContactPersonPersonal; let i = index">
         <td style="text-align: left;">{{item.ContactPersonName}}</td>
         <td style="text-align: center;">{{item.IdNo}}</td>
-        <td style="text-align: center;">{{item.MrCustRelationshipCode}}</td>
+        <td style="text-align: center;">{{item.RelationshipName}}</td>
         <td style="text-align: center;">{{item.MobilePhnNo1}}</td>
-        <td style="text-align: center;">{{item.MrGenderCode}}</td>
+        <td style="text-align: center;">{{item.GenderName}}</td>
         <td style="text-align: center;">
           <span *ngIf="item.IsEmergencyContact == true">Yes</span>
           <span *ngIf="item.IsEmergencyContact == false">No</span>
@@ -69,15 +69,15 @@
             </lib-ucSubsection>
             <div id="addContactInfomation">
               <div class="form-group row">
-                <label class="col-md-2" for="ContactPersonName" translate>Name</label>
+                <label class="col-md-2 adins-required-label" for="ContactPersonName" translate>Name</label>
                 <div class="col-md-4">
                   <input type="text" id="ContactPersonName" class="form-control" formControlName="ContactPersonName"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && ContactInfoPersonalForm.controls.ContactPersonName.invalid }">
-                  <show-errors [control]="ContactInfoPersonalForm.controls.ContactPersonName" [submit]="enjiForm.submitted"></show-errors>
+                  <lib-uc-show-errors [control]="ContactInfoPersonalForm.controls.ContactPersonName" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
                 <label class="col-md-2" for="Gender" translate>Gender</label>
                 <div class="col-md-4">
-                  <mat-radio-group formControlName="MrGenderCode">
+                  <mat-radio-group formControlName="MrGenderCode" (change)="GenderChanged($event)">
                     <mat-radio-button class="custom-control custom-radio display-inline-block" *ngFor="let item of GenderObj" [value]="item.Key">
                       {{item.Value}}
                     </mat-radio-button>
@@ -87,7 +87,7 @@
               <div class="form-group row">
                 <label class="col-md-2" for="idType" translate>ID Type</label>
                 <div class="col-md-4">
-                  <select class="form-control" id="idType" formControlName="MrIdTypeCode"
+                  <select class="form-control" id="idType" formControlName="MrIdTypeCode" 
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && ContactInfoPersonalForm.controls.MrIdTypeCode.invalid }">
                     <option *ngFor="let item of IdTypeObj" [value]="item.Key">
                       {{item.Value}}
@@ -96,7 +96,7 @@
                 </div>
                 <label class="col-md-2" for="CustRelationship" translate>Customer Relationship</label>
                 <div class="col-md-4">
-                  <select class="form-control" id="CustRelationship" formControlName="MrCustRelationshipCode"
+                  <select class="form-control" id="CustRelationship" formControlName="MrCustRelationshipCode" (change)="RelationshipChanged($event)"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && ContactInfoPersonalForm.controls.MrCustRelationshipCode.invalid }">
                     <option *ngFor="let item of CustRelationshipObj" [value]="item.Key">
                       {{item.Value}}
@@ -115,7 +115,7 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-md-2 adins-required-label" translate>Birth Place / Date</label>
+                <label class="col-md-2" translate>Birth Place / Date</label>
                 <div class="col-md-2" style="border-right: 1px solid grey">
                   <input type="text" class="form-control" formControlName="BirthPlace" id="birthPlace">
                 </div>
@@ -128,9 +128,11 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-md-2" for="mobilePhone" translate>Mobile Phone 1</label>
+                <label class="col-md-2 adins-required-label" for="mobilePhone" translate>Mobile Phone 1</label>
                 <div class="col-md-4">
-                  <input type="number" class="form-control" id="mobilePhone" formControlName="MobilePhnNo1">
+                  <input type="number" class="form-control" id="mobilePhone" formControlName="MobilePhnNo1"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && ContactInfoPersonalForm.controls.MobilePhnNo1.invalid }">
+                  <lib-uc-show-errors [control]="ContactInfoPersonalForm.controls.MobilePhnNo1" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
                 <label class="col-md-2" for="isFamily" translate>Is Family</label>
                 <div class="col-md-4">

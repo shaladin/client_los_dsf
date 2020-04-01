@@ -23,19 +23,26 @@ import { SharingComponentModule } from "app/shared/sharingcomponent.module";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { CustPersonalMainDataComponent } from "./nap-tab/customer-data/component/personal-main-data/cust-personal-main-data.component";
 import { CustUcaddressComponent } from "./nap-tab/customer-data/component/address/ucaddress.component";
-import { CustContactInformationComponent } from "./nap-tab/customer-data/component/contact-information/cust-contact-information.component";
+import { CustPersonalContactInformationComponent } from "./nap-tab/customer-data/component/personal-contact-information/cust-personal-contact-information.component";
+import { CustPersonalFinancialDataComponent } from "./nap-tab/customer-data/component/personal-financial-data/cust-personal-financial-data.component";
 import { SearchCrossAppComponent } from './nap-tab/app-model/search-cross-app/search-cross-app.component';
 import { UCSearchModule } from '@adins/ucsearch';
 import { CommissionPagingComponent } from './commission-paging/commission-paging.component';
 import { CommissionAddComponent } from './commission-add/commission-add.component';
 import { FormAddDynamicComponent } from './form-add-dynamic/form-add-dynamic.component';
-import { CustFinancialDataComponent } from "./nap-tab/customer-data/component/financial-data/cust-financial-data.component";
 import { CustBankAccountComponent } from "./nap-tab/customer-data/component/bank-account/cust-bank-account.component";
 import { CustJobDataComponent } from "./nap-tab/customer-data/component/job-data/cust-job-data.component";
 import { CustSocmedComponent } from "./nap-tab/customer-data/component/socmed/cust-socmed.component";
 import { CustGrpMemberComponent } from "./nap-tab/customer-data/component/cust-grp-member/cust-grp-member.component";
 import { CustCompanyMainDataComponent } from "./nap-tab/customer-data/component/company-main-data/cust-company-main-data.component";
 import { CustShareholderComponent } from "./nap-tab/customer-data/component/shareholder/cust-shareholder.component";
+import { CustCompanyContactInformationComponent } from "./nap-tab/customer-data/component/company-contact-information/cust-company-contact-information.component";
+import { UcShowErrorsModule } from "@adins/uc-show-errors";
+import { CustCompanyFinancialDataComponent } from "./nap-tab/customer-data/component/company-financial-data/cust-company-financial-data.component";
+import { CustLegalDocComponent } from "./nap-tab/customer-data/component/legal-doc/cust-legal-doc.component";
+import { UcinputnumberModule } from "@adins/ucinputnumber";
+import { UcinputnumberComponent } from "./nap-tab/customer-data/component/ucinputnumber/ucinputnumber.component";
+import { InsuranceDataComponent } from "./nap-tab/insurance-data/insurance-data.component";
 import { AssetDataComponent } from "./nap-tab/asset-data/asset-data.component";
 import { RsvFundPagingComponent } from "./reserved-fund/reserved-fund-paging/reserved-fund-paging.component";
 import { RsvFundViewComponent } from "./reserved-fund/reserved-fund-view/reserved-fund-view.component";
@@ -43,56 +50,64 @@ import { RsvFundViewComponent } from "./reserved-fund/reserved-fund-view/reserve
 
 
 @NgModule({
-  declarations: [
-    AppAddComponent,
-    AppPagingComponent,
-    AppAddDetailComponent,
-    AppReferantorComponent,
-    CustomerDataComponent,
-    CustUcaddressComponent,
-    AppModelComponent,
-    CustomerDataComponent,
-    CustPersonalMainDataComponent,
-    CustUcaddressComponent,
-    CustContactInformationComponent,
-    CustFinancialDataComponent,
-    CustBankAccountComponent,
-    CustJobDataComponent,
-    CustSocmedComponent,
-    CustGrpMemberComponent,
-    CustCompanyMainDataComponent,
-    SearchCrossAppComponent,
-    CommissionPagingComponent,
-    CommissionAddComponent,
-    FormAddDynamicComponent,
-    CustShareholderComponent,
-    AssetDataComponent,
-    RsvFundPagingComponent,
-    RsvFundViewComponent
-  ],
-  imports: [
-    NapRoutingModule,
-    CommonModule,
-    ArchwizardModule,
-    UcpagingModule,
-    UcviewgenericModule,
-    UclookupgenericModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpModule,
-    CommonModule,
-    RouterModule,
-    MatCheckboxModule,
-    MatRadioModule,
-    MatSelectModule,
-    UcSubsectionModule,
-    SharingComponentModule,
-    UcaddressModule,
-    UcgridviewModule,
-    UCSearchModule
-  ],
-  exports: [],
-  providers: [NGXToastrService],
+    declarations: [
+        AppAddComponent,
+        AppPagingComponent,
+        AppAddDetailComponent,
+        AppReferantorComponent,
+        CustomerDataComponent,
+        CustUcaddressComponent,
+        AppModelComponent,
+        CustomerDataComponent,
+        CustPersonalMainDataComponent,
+        CustUcaddressComponent,
+        CustPersonalContactInformationComponent,
+        CustPersonalFinancialDataComponent,
+        CustBankAccountComponent,
+        CustJobDataComponent,
+        CustSocmedComponent,
+        CustGrpMemberComponent,
+        CustCompanyMainDataComponent,
+        CustShareholderComponent,
+        CustCompanyContactInformationComponent,
+        CustCompanyFinancialDataComponent,
+        SearchCrossAppComponent,
+        CommissionPagingComponent,
+        CommissionAddComponent,
+        FormAddDynamicComponent,
+        CustShareholderComponent,
+        CustLegalDocComponent,
+        UcinputnumberComponent,
+        InsuranceDataComponent,
+        AssetDataComponent,
+        RsvFundPagingComponent,
+        RsvFundViewComponent
+        ],
+    imports: [ 
+        NapRoutingModule,
+        CommonModule,
+        ArchwizardModule,
+        UcpagingModule,
+        UcviewgenericModule,
+        UclookupgenericModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpModule,
+        CommonModule,
+        RouterModule,
+        MatCheckboxModule,
+        MatRadioModule,
+        MatSelectModule,
+        UcSubsectionModule,
+        SharingComponentModule,
+        UcaddressModule,
+        UcgridviewModule,
+        UcShowErrorsModule,
+        UCSearchModule,
+        UcinputnumberModule
+    ],
+    exports: [],
+    providers: [NGXToastrService],
 })
 
 export class NapModule { }

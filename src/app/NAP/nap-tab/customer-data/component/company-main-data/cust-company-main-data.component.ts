@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormBuilder, Validators, NgForm, FormGroup, ControlContainer, FormGroupDirective } from '@angular/forms';
@@ -27,6 +27,8 @@ export class CustCompanyMainDataComponent implements OnInit {
   @Input() identifier: any;
   @Input() custDataCompanyObj: CustDataCompanyObj = new CustDataCompanyObj();
   @Input() custType: any;
+  @Output() callbackCopyCust: EventEmitter<any> = new EventEmitter();
+
 
   refMasterObj = {
     RefMasterTypeCode: "",
@@ -77,11 +79,50 @@ export class CustCompanyMainDataComponent implements OnInit {
     this.bindCustData();
   }
 
-  CopyCustomer(event) {
-    this.parentForm[this.identifier].patchValue({
+  CopyCustomerEvent(event) {
+    this.parentForm.controls[this.identifier].patchValue({
       CustNo: event.CustNo
     });
     this.InputLookupCustomerObj.isReadonly = true;
+
+    var custObj = {CustId: event.CustId};
+    this.http.post(AdInsConstant.GetCustCompanyForCopyByCustId, custObj).subscribe(
+      (response) => {
+        console.log(response);
+        this.CopyCustomer(response);
+        this.callbackCopyCust.emit(response);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  CopyCustomer(response){
+    if(response["CustObj"] != undefined){
+      this.parentForm.controls[this.identifier].patchValue({
+        CustNo: response["CustObj"].CustNo,
+        CustModelCode: response["CustObj"].MrCustModelCode,
+        TaxIdNo: response["CustObj"].TaxIdNo,
+        IsVip: response["CustObj"].IsVip
+      });
+      this.InputLookupCustomerObj.nameSelect = response["CustObj"].CustName;
+      this.InputLookupCustomerObj.jsonSelect = {CustName: response["CustObj"].CustName};
+      this.selectedCustNo = response["CustObj"].CustNo;
+    }
+
+    if(response["CustCompanyObj"] != undefined){
+      this.parentForm.controls[this.identifier].patchValue({
+        IndustryTypeCode: response["CustCompanyObj"].IndustryTypeCode,
+        CompanyBrandName: response["CustCompanyObj"].CompanyBrandName,
+        MrCompanyTypeCode: response["CustCompanyObj"].MrCompanyTypeCode,		
+        NumOfEmp: response["CustCompanyObj"].NumOfEmp,
+        IsAffiliated: response["CustCompanyObj"].IsAffiliated,
+        EstablishmentDt: formatDate(response["CustCompanyObj"].EstablishmentDt, 'yyyy-MM-dd', 'en-US')
+      });
+      
+      this.setIndustryTypeName(response["CustCompanyObj"].IndustryTypeCode);
+    }    
   }
 
   
@@ -131,6 +172,9 @@ export class CustCompanyMainDataComponent implements OnInit {
       });
       this.InputLookupCustomerObj.nameSelect = this.custDataCompanyObj.AppCustObj.CustName;
       this.InputLookupCustomerObj.jsonSelect = {CustName: this.custDataCompanyObj.AppCustObj.CustName};
+      if(this.custDataCompanyObj.AppCustObj.CustNo != undefined && this.custDataCompanyObj.AppCustObj.CustNo != ""){
+        this.InputLookupCustomerObj.isReadonly = true;
+      }
     }
     
     if(this.custDataCompanyObj.AppCustCompanyObj != undefined){
