@@ -1,3 +1,49 @@
-<p>
-  app-tc works!
-</p>
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header header-title">
+        <div class="row">
+          <div class="col-md-4" style="text-align-last: right">
+            <button type="button" class="backButton" [routerLink]="[]" translate>
+              <i class="ft-arrow-left"></i> Back
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="px-3">
+          <div id="appTc" [hidden]="result?.length < 1">
+            <table class="table table-responsive-md text-center table-hover">
+              <thead>
+                <tr class="table-header">
+                  <th><span translate class="thead-header">No</span></th>
+                  <th><span translate class="thead-header" name='DocName'>Document Name</span></th>
+                  <th><span translate class="thead-header" name='PriorTo'>Prior To</span>
+                  </th>
+                  <th><span translate class="thead-header" name='Required'>Required</span>
+                  </th>
+                  <th><span translate class="thead-header" name='Check'>Check</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of result; let i = index">
+                  <td>{{i}}</td>
+                  <td>{{item.TCCode}}</td>
+                  <td>{{item.TCPriorTo}}</td>
+                  <td>{{item.TcMandatory}}</td>
+                  <td><input type="checkbox" class="form-check-input" (change)="ObjSelected($event,i)"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="form-actions right">
+            <button type="submit" class="btn btn-raised btn-primary" (click)="Save()">
+              <i class="fa fa-check-square-o"></i> Save
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
