@@ -1,0 +1,112 @@
+<p>
+  lead-verif works!
+</p>
+
+<!-- <section id="horizontal-form-layouts">
+  <div class="row text-left">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-md-8">
+              <h4 class="card-title" id="horz-layout-colored-controls" translate>{{pageType}} ASSET SCHEME MEMBER</h4>
+            </div>
+            <div class="col-md-4" style="text-align-last: right">
+              <button type="button" class="backButton" [routerLink]="['/Asset/Scheme/MemberDetail']"
+                [queryParams]="{AssetSchmHId: this.AssetSchmHId}" translate>
+                <i class="ft-arrow-left"></i> Back
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<lib-ucviewgeneric [viewInput]="viewObj"></lib-ucviewgeneric>
+<form class="form form-horizontal" name="AssetSchmForm" #AssetSchmForm="ngForm" novalidate
+  (ngSubmit)="SaveAssetSchmMember(AssetSchmForm)">
+  <lib-UCSearch id="ucSearch" style="width:100%;" [searchInput]='inputObj' (result)="getResult($event)">
+  </lib-UCSearch>
+  <div [hidden]="resultData == null">
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+        <tr class="table-header">
+          <th><input type="checkbox" [checked]="checkboxAll" (change)="SelectAll($event.target.checked)" id="checkAll"
+              name="CheckAll">
+          </th>
+          <th class="text-left"><span class="thead-header" (click)="searchSort($event)" name='fullAssetCode'
+              translate>Full Asset Code</span>
+          </th>
+          <th class="text-left"><span class="thead-header" (click)="searchSort($event)" name='fullAssetName'
+              translate>Full Asset Name</span>
+          </th>
+          <th class="text-left"><span class="thead-header" (click)="searchSort($event)" name='assetCategoryName'
+              translate>Asset Category Name</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of resultData">
+          <td>
+            <div *ngIf="listSelectedId.indexOf(item.AssetMasterId) >- 1">
+              <input type="checkbox" id="checkSame" name="itemSame"
+                (change)="Checked(item.AssetMasterId,  $event.target.checked)" [checked]="true">
+            </div>
+            <div *ngIf="listSelectedId.indexOf(item.AssetMasterId) < 0">
+              <input type="checkbox" id="checkDiff" name="itemDiff"
+                (change)="Checked(item.AssetMasterId,  $event.target.checked)" [checked]=false>
+            </div>
+          </td>
+          <td class="text-left">{{item.FullAssetCode}}</td>
+          <td class="text-left">{{item.FullAssetName}}</td>
+          <td class="text-left">{{item.AssetCategoryName}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <lib-ucgridfooter (select)="onSelect($event)"></lib-ucgridfooter>
+    <div class="form-body">
+      <div class="form-actions right">
+        <button type="button" class="btn btn-raised btn-primary mr-1" (click)="addToTemp()" translate>
+          <i class="fa ft-plus"></i> Add To Temp
+        </button>
+      </div>
+    </div>
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+        <tr class="table-header">
+          <th class="text-left"><span class="thead-header" name='fullAssetCode' translate>Full Asset Code</span>
+          </th>
+          <th class="text-left"><span class="thead-header" name='fullAssetName' translate>Full Asset Name</span>
+          </th>
+          <th class="text-left"><span class="thead-header" name='assetCategoryName' translate>Asset Category
+              Name</span>
+          </th>
+          <th translate>Active Status</th>
+          <th translate>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of tempData">
+          <td class="text-left">{{item.FullAssetCode}}</td>
+          <td class="text-left">{{item.FullAssetName}}</td>
+          <td class="text-left">{{item.AssetCategoryName}}</td>
+          <td *ngIf="item.IsActive === true">Yes</td>
+          <td *ngIf="item.IsActive === false">No</td>
+          <td>
+            <a class="danger p-0" data-original-title="" title="" (click)="deleteFromTemp(item.AssetMasterId)">
+              <i class="ft-trash-2 font-medium-3 mr-2"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="form-body">
+      <div class="form-actions right">
+        <button type="submit" (click)="formValidate(AssetSchmForm)" class="btn btn-raised btn-primary" translate>
+          <i class="far"></i> Submit
+        </button>
+      </div>
+    </div>
+  </div>
+</form> -->

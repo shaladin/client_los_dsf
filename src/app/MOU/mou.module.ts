@@ -22,6 +22,8 @@ import { DocSignerComponent } from "./doc-signer/doc-signer.component";
 import { MouCustomerRequestComponent } from './mou-customer-request/mou-customer-request.component';
 import { MouCustomerRequestDetailComponent } from './mou-customer-request/mou-customer-request-detail/mou-customer-request-detail.component';
 import { MouCustomerDetailComponent } from "./mou-customer-request/mou-customer-detail/mou-customer-detail.component";
+import { CustomerDocPrintingDetailComponent } from "./customer-doc-printing/customer-doc-printing-detail/customer-doc-printing-detail.component";
+import { CustomerDocPrintingPagingComponent } from "./customer-doc-printing/customer-doc-printing-paging/customer-doc-printing-paging.component";
 import { MouReviewPagingComponent } from './mou-customer/mou-review/mou-review-paging/mou-review-paging.component';
 import { MouReviewGeneralComponent } from './mou-customer/mou-review/mou-review-general/mou-review-general.component';
 import { MouReviewFactoringComponent } from './mou-customer/mou-review/mou-review-factoring/mou-review-factoring.component';
@@ -41,7 +43,8 @@ import { MouApprovalFactoringComponent } from './mou-customer/mou-customer-appro
 import { MouRequestAddcollComponent } from './mou-customer/mou-request/mou-request-addcoll/mou-request-addcoll.component';
 import { MouRequestAddcollAddeditComponent } from './mou-customer/mou-request/mou-request-addcoll-addedit/mou-request-addcoll-addedit.component';
 // import { ShowErrorsComponent } from "./app/test-new/show-errors.component";
-
+import { LegalReviewPagingComponent } from './legal-review/legal-review-paging/legal-review-paging.component';
+import { LegalReviewDetailComponent } from './legal-review/legal-review-detail/legal-review-detail.component';
 @NgModule({
   imports: [
     MouRoutingModule,
@@ -67,6 +70,8 @@ import { MouRequestAddcollAddeditComponent } from './mou-customer/mou-request/mo
     MouCustomerRequestComponent,
     MouCustomerRequestDetailComponent,
     MouCustomerDetailComponent,
+    CustomerDocPrintingDetailComponent,
+    CustomerDocPrintingPagingComponent,
     MainInfoComponent,
     DocSignerComponent,
     MouReviewPagingComponent,
@@ -81,6 +86,8 @@ import { MouRequestAddcollAddeditComponent } from './mou-customer/mou-request/mo
     MouReviewFactoringComponent,
     DocSignerDetailComponent,
     EditMouCustomerComponent,
+    LegalReviewPagingComponent,
+    LegalReviewDetailComponent,
     MouCustomerApprovalComponent,
     MouApprovalGeneralComponent,
     MouApprovalFactoringComponent,

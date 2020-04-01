@@ -291,9 +291,11 @@ export class AdInsConstant {
     public static GetRefMasterPaging = "/RefMaster/GetRefMasterPaging";
     public static GetRefMasterListDesc = "/RefMaster/GetRefMasterListDesc";
     public static GetRefMasterByMasterCode = "/RefMaster/GetRefMasterByMasterCode";
-    public static GetRefMasterListKeyValueActiveByCode = environment.FoundationR3Url + "/RefMaster/GetListKeyValueActiveByCode"
+    public static GetRefMasterListKeyValueActiveByCode = environment.FoundationR3Url + "/RefMaster/GetListKeyValueActiveByCode";
+    public static GetListActiveRefMaster = environment.FoundationR3Url + "/RefMaster/GetListActiveRefMaster";
 
-
+    public static GetRefMasterByRefMasterTypeCode = environment.FoundationR3Url + "/RefMaster/GetRefMasterByRefMasterTypeCode"
+    // public static GetRefMasterByRefMasterTypeCode  = environment.FoundationR3Url + "/RefMaster/GetRefMasterByRefMasterTypeCode";
     //REF PROV DISTRICT
     public static GetRefProvDistrictPaging = "/RefProvDistrict/GetRefProvDistrictPaging";
 
@@ -417,6 +419,7 @@ export class AdInsConstant {
 
     // MOU CUST LEGAL REVIEW
     public static GetMouCustLglReviewByMouCustId = environment.losUrl + "/MouCustLglReview/GetMouCustLglReviewByMouCustId";
+    public static AddRangeMouCustLglReview = environment.losUrl + "/MouCustLglReview/AddRangeMouCustLglReview";
 
     // MOU CUST TC
     public static GetCustMouTcByCustMouId = environment.losUrl + "/MouCustTc/GetCustMouTcByCustMouId";
@@ -425,6 +428,13 @@ export class AdInsConstant {
     public static AddMouCustSigner = environment.losUrl + "/MouCustSigner/AddMouCustSigner";
     public static GetMouCustSignerByMouCustId = environment.losUrl + "/MouCustSigner/GetMouCustSignerByMouCustId";
 
+    public static GetMouCustTcForMouLglByCustMouId = environment.losUrl+ "/MouCustTc/GetMouCustTcForMouLglByCustMouId";
+    public static EditListMouCustTc = environment.losUrl+ "/MouCustTc/EditListMouCustTc";
+    
+    // MOU CUST DOC PRINT
+    public static GetListMouCustDocPrintForViewByMouCustId = environment.losUrl + "/MouCustDocPrint/GetListMouCustDocPrintForViewByMouCustId";
+    public static EditMouCustDocPrintSequenceNo = environment.losUrl + "/MouCustDocPrint/EditMouCustDocPrintSequenceNo";
+    
     // REF COUNTRY
     public static GetRefCountryByCountryCode = environment.FoundationR3Url + "/RefCountry/GetRefCountryByCountryCode";
 
@@ -467,6 +477,7 @@ export class AdInsConstant {
     public static GetAppAssetByAppId = environment.losUrl + "/AppAsset/GetAppAssetByAppId";
     public static GetAppAssetListByAppId = environment.losUrl + "/AppAsset/GetAppAssetListByAppId";
     public static GetAllAssetDataForPOByAsset = environment.losUrl + "/AppAsset/GetAllAssetDataForPOByAsset";
+  
     
     //DELIVERY ORDER
     public static SubmitDeliveryOrderData = environment.losUrl + "/DeliveryOrder/SubmitDeliveryOrderData";
