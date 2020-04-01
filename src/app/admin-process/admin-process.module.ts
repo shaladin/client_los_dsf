@@ -17,6 +17,11 @@ import { DeliveryOrderDetailComponent } from "./delivery-order/delivery-order-de
 import { DeliveryOrderPagingComponent } from "./delivery-order/delivery-order-paging/delivery-order-paging.component";
 import { PurchaseOrderInfoComponent } from './purchase-order/purchase-order-detail/purchase-order-info/purchase-order-info.component';
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
+import { CustConfirmationPagingComponent } from './cust-confirmation/cust-confirmation-paging/cust-confirmation-paging.component';
+import { CustConfirmationDetailComponent } from './cust-confirmation/cust-confirmation-detail/cust-confirmation-detail.component';
+import { CustConfirmationSubjDetailComponent } from './cust-confirmation/cust-confirmation-subj-detail/cust-confirmation-subj-detail.component';
+import { CustConfirmationSubjViewComponent } from './cust-confirmation/cust-confirmation-subj-view/cust-confirmation-subj-view.component';
+import { CustConfirmationVerfViewComponent } from './cust-confirmation/cust-confirmation-verf-view/cust-confirmation-verf-view.component';
 
 @NgModule({
   imports: [
@@ -39,7 +44,12 @@ import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
     PurchaseOrderComponent,
     DeliveryOrderDetailComponent,
     DeliveryOrderPagingComponent,
-    PurchaseOrderInfoComponent
+    PurchaseOrderInfoComponent,
+    CustConfirmationPagingComponent,
+    CustConfirmationDetailComponent,
+    CustConfirmationSubjDetailComponent,
+    CustConfirmationSubjViewComponent,
+    CustConfirmationVerfViewComponent
   ],
   providers: [
     NGXToastrService

@@ -41,29 +41,7 @@
             "value" : "",
             "label" : "Task Claim By",
             "placeholder": "Placeholder"
-        },
-        {
-            "type": "dropdown",
-            "datatype": "text",
-            "name": "TASK_CLAIM_STAT",
-            "id": "TaskClaimStatId",
-            "value": "",
-            "placeholder": "Placeholder",
-            "isFromURL": false,
-            "isSelectOne": false,
-            "label": "Task Claim Status",
-            "items": [
-                {
-                    "key": "CLAIMED",
-                    "value": "CLAIMED"
-                },
-                {
-                    "key": "UNCLAIMED",
-                    "value": "UNCLAIMED"
-                }
-            ],
-            "itemsUrl": []
-          }
+        }
     ],
     "querystring": {
         "select": "SELECT WF.USERNAME AS Username, AGR.AGRMNT_NO AS AgrmntNo, A.APP_NO AS AppNo, AGR.CUST_NAME AS CustName, A.PROD_OFFERING_NAME AS ProdOfferingName, CASE WHEN WF.USERNAME = NULL OR WF.USERNAME = '' THEN 'UNCLAIMED' ELSE 'CLAIMED' END AS ClaimStatus, A.APP_ID AS AppId, AGR.AGRMNT_ID AS AgrmntId",
