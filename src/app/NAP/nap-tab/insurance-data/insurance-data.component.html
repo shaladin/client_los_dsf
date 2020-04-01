@@ -67,7 +67,7 @@
                   <div class="form-group row">
                     <label class="col-md-2 adins-required-label" for="insuredBy" translate>Insco Branch Name</label>
                     <div class="col-md-4">
-                      <select class="form-control" id="insuredBy" formControlName="InscoBranchCode"
+                      <select class="form-control" id="insuredBy" formControlName="InscoBranchCode" (change)="InscoBranchCodeChanged($event)"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.InscoBranchCode.invalid }">
                         <option *ngFor="let item of inscoBranchObj" [value]="item.Key">
                           {{item.Value}}
@@ -97,9 +97,9 @@
                   <div class="form-group row">
                     <label class="col-md-2 adins-required-label" for="startDt" translate>Start Date</label>
                     <div class="col-md-4">
-                      <input type="date" class="form-control" formControlName="StartDt" id="startDt"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.StartDt.invalid }">
-                      <lib-uc-show-errors [control]="InsuranceDataForm.controls.StartDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                      <input type="date" class="form-control" formControlName="CustCoverStartDt" id="startDt"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.CustCoverStartDt.invalid }">
+                      <lib-uc-show-errors [control]="InsuranceDataForm.controls.CustCoverStartDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                     </div>
                     <label class="col-md-2 adins-required-label" for="endDt" translate>End Date</label>
                     <div class="col-md-4">
@@ -114,6 +114,84 @@
                       <textarea rows="5" id="notes" class="form-control" formControlName="Notes" 
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.Notes.invalid }"></textarea>
                       <lib-uc-show-errors [control]="InsuranceDataForm.controls.Notes" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="InsuranceDataForm.controls.InsAssetCoveredBy.value == 'CO' || InsuranceDataForm.controls.InsAssetCoveredBy.value == 'CUCO'">
+                  <div *ngIf="InsuranceDataForm.controls.InsAssetCoveredBy.value == 'CUCO'">
+                    <div class="form-group row">
+                      <label class="col-md-2" style="font-weight:bold" translate>Company</label>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-2 adins-required-label" for="paidBy" translate>Paid By</label>
+                    <div class="col-md-4">
+                      <mat-radio-group formControlName="InsAssetPaidBy">
+                        <mat-radio-button class="custom-control custom-radio display-inline-block" *ngFor="let item of paidByObj" [value]="item.Key">
+                          {{item.Value}}
+                        </mat-radio-button>
+                      </mat-radio-group>
+                      <lib-uc-show-errors [control]="InsuranceDataForm.controls.InsAssetPaidBy" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                    </div>
+                    <label class="col-md-2 adins-required-label" for="insuredBy" translate>Insco Branch Name</label>
+                    <div class="col-md-4">
+                      <select class="form-control" id="insuredBy" formControlName="InscoBranchCode" (change)="InscoBranchCodeChanged($event)"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.InscoBranchCode.invalid }">
+                        <option *ngFor="let item of inscoBranchObj" [value]="item.Key">
+                          {{item.Value}}
+                        </option>
+                      </select>
+                      <lib-uc-show-errors [control]="InsuranceDataForm.controls.InscoBranchCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-2 adins-required-label" for="mainCvg" translate>Main Coverage</label>
+                    <div class="col-md-4">
+                      <select class="form-control" id="mainCvg" formControlName="InsMainCvgType"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.InsMainCvgType.invalid }">
+                        <option *ngFor="let item of insMainCvgTypeObj" [value]="item.Key">
+                          {{item.Value}}
+                        </option>
+                      </select>
+                      <lib-uc-show-errors [control]="InsuranceDataForm.controls.InsMainCvgType" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                    </div>
+                    <label class="col-md-2 adins-required-label" for="coverPeriod" translate>Cover Period</label>
+                    <div class="col-md-4">
+                      <select class="form-control" id="coverPeriod" formControlName="InsAssetCoverPeriod"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.InsAssetCoverPeriod.invalid }">
+                        <option *ngFor="let item of insAssetCoverPeriodObj" [value]="item.Key">
+                          {{item.Value}}
+                        </option>
+                      </select>
+                      <lib-uc-show-errors [control]="InsuranceDataForm.controls.InsAssetCoverPeriod" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-2" for="startDt" translate>Additional Coverage</label>
+                    <div class="col-md-4">
+                      <label formArrayName="InsAddCvgTypes" *ngFor="let item of InsuranceDataForm.controls.InsAddCvgTypes.controls; let i=index" class="custom-control display-inline-block">
+                        <div [formGroupName]="i">
+                          <input type="checkbox" formControlName="Value" data-md-icheck />{{insAddCvgTypeObj[i].Value}}
+                        </div>
+                      </label>
+                    </div>
+                    <label class="col-md-2 adins-required-label" for="insLength" translate>Insurance Length</label>
+                    <div class="col-md-4">
+                      <input type="number" id="insLength" min="1" max="100" step="0.01" class="form-control adInsInput" formControlName="InsLength"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.InsLength.invalid}">
+                      <lib-uc-show-errors [control]="InsuranceDataForm.controls.InsLength" [submit]="enjiForm.submitted"></lib-uc-show-errors>  
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-2" for="notes" translate>Insurance Notes</label>
+                    <div class="col-md-4">
+                      <textarea rows="5" id="notes" class="form-control" formControlName="Notes" 
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.Notes.invalid }"></textarea>
+                      <lib-uc-show-errors [control]="InsuranceDataForm.controls.Notes" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                    </div>
+                    <label class="col-md-2 adins-required-label" for="insuredBy" translate>Coverage Amount</label>
+                    <div class="col-md-4">
+                      <lib-ucinputnumber [parentForm]="InsuranceDataForm" [enjiForm]="enjiForm" [identifier]="'CvgAmt'" [ucNumber]="cvgAmt"></lib-ucinputnumber>
                     </div>
                   </div>
                 </div>

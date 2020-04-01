@@ -109,6 +109,9 @@ export class AdInsConstant {
     public static InsuredByCompany = "CO";
     public static InsuredByCustomerCompany = "CUCO";
 
+    //INS PAID BY
+    public static InsPaidByCustomer = "CU";
+
     //GENERAL SETTING
     public static GetBusinessDt = "/GeneralSetting/GetBusinessDate";
     public static AddGeneralSetting = "/GeneralSetting/AddGeneralSetting";
@@ -490,6 +493,6 @@ export class AdInsConstant {
 
     //APP INSURANCE
     public static GetInsuranceDataByAppId = environment.losUrl + "/AppIns/GetInsDataByAppId";
-
+    public static AddEditInsuranceData = environment.losUrl + "/AppIns/AddEditInsuranceData";
     
 }
