@@ -42,5 +42,9 @@ export const Full_ROUTES: Routes = [
   {
     path: 'View',
     loadChildren: './view/view.module#ViewModule'
+  },
+  {
+    path:'Document',
+    loadChildren:'./Document/document.module#DocumentModule'
   }
 ];

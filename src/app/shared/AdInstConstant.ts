@@ -198,7 +198,7 @@ export class AdInsConstant {
     public static DeleteRefEmpAndEmpBankAcc = "/RefEmp/DeleteRefEmpAndEmpBankAcc";
     public static GetListEmployeebyRefEmpId = "/EmpPosition/GetListEmployeebyRefEmpId";
     public static GetEmpListByOfficeIdAndIsActive = "/RefEmp/GetEmpListByOfficeIdAndIsActive";
-
+    public static GetRefEmpByEmpNo = "/RefEmp/GetRefEmpByEmpNo"
     //EMP_POSITION
     public static GetEmpPositionPaging = "/EmpPosition/GetEmpPositionPaging";
     public static GetEmpByEmpPositionId = "/EmpPosition/GetEmpByEmpPositionId";
@@ -473,4 +473,9 @@ export class AdInsConstant {
     
     //AGREEMENT DOC
     public static GetListAgrmntDocByAgrmntId = environment.losUrl + "/AgrmntDoc/GetListAgrmntDocByAgrmntId"
+    public static GetAgrmntDocDataByAgrmntDocId =environment.losUrl +"/AgrmntDoc/GetAgrmntDocDataByAgrmntDocId"
+    public static EditAgrmntDoc = environment.losUrl + "/AgrmntDoc/EditAgrmntDoc"
+
+    //AGREEMENT DOC PRINT
+    public static AddAgrmntDocPrint = environment.losUrl + "/AgrmntDocPrint/AddAgrmntDocPrint"
 }
