@@ -1,0 +1,106 @@
+{
+    "title": "LEAD VERIFICATION",
+    "component": [
+        {
+            "type": "dropdown",
+            "name": "L.ORI_OFFICE_NAME",
+            "id": "OriOffName",
+            "value": "",
+            "placeholder": "Placeholder",
+            "datatype": "text",
+            "isFromURL": true,
+            "isSelectOne": false,
+            "url": "http://",
+            "label": "Office Name",
+            "items": [],
+            "itemsUrl": []
+          },
+          {
+            "type": "dropdown",
+            "name": "L.ORI_OFFICE_NAME",
+            "id": "OriOffName",
+            "value": "",
+            "placeholder": "Placeholder",
+            "datatype": "text",
+            "isFromURL": true,
+            "isSelectOne": false,
+            "url": "http://",
+            "label": "Office Name",
+            "items": [],
+            "itemsUrl": []
+          },
+      {
+        "type": "textbox",
+        "name": "MC.CUST_NAME",
+        "id": "CustNameId",
+        "value": "",
+        "label": "CUST NAME",
+        "placeholder": "Placeholder",
+        "datatype": "text"
+      }
+
+    ],
+    "querystring": {
+      "select": "SELECT L.LEAD_NO AS LeadNo, L.ORI_OFFICE_NAME AS OfficeName, LC.CUST_NAME AS CustName, LC.CUST_NAME AS CustName, LA.FULL_ASSET_NAME AS FullAssetName, L.ORDER_NO AS OrderNo, L.MR_LEAD_SOURCE_CODE AS LeadSource, DL.LEAD_NO AS DuplicateLeadNo",
+      "from": "FROM  dbo.LEAD L WITH(NOLOCK) JOIN dbo.LEAD_CUST LC WITH(NOLOCK) ON LC.LEAD_ID = L.LEAD_ID JOIN dbo.LEAD DL WITH(NOLOCK) ON DL.LEAD_ID = L.DUPLICATE_LEAD_ID JOIN dbo.LEAD_ASSET LA WITH(NOLOCK) ON LA.LEAD_ID = LC.LEAD_ID"
+    },
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "left",
+        "property": "MouCustNo"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "CustName"
+      },
+      {
+        "type": "date",
+        "position": "center",
+        "property": "MouCustDt"
+      },
+      {
+        "type": "date",
+        "position": "center",
+        "property": "EndDate"
+      },
+      {
+        "type": "text",
+        "position": "right",
+        "property": "PlafondAmt"
+      },
+      {
+        "type": "boolean",
+        "position": "center",
+        "property": "IsRevolving"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "RefNo"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "MrMouTypeCode"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "edit",
+            "path": "/Mou/CustomerDoc/Detail",
+            "param": [
+              {
+                "type": "MouCustId",
+                "property": "MouCustId"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+  

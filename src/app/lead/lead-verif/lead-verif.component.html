@@ -1,8 +1,8 @@
 <p>
   lead-verif works!
 </p>
-
-<!-- <section id="horizontal-form-layouts">
+<!-- 
+<section id="horizontal-form-layouts">
   <div class="row text-left">
     <div class="col-md-12">
       <div class="card">
@@ -12,10 +12,15 @@
               <h4 class="card-title" id="horz-layout-colored-controls" translate>{{pageType}} ASSET SCHEME MEMBER</h4>
             </div>
             <div class="col-md-4" style="text-align-last: right">
-              <button type="button" class="backButton" [routerLink]="['/Asset/Scheme/MemberDetail']"
-                [queryParams]="{AssetSchmHId: this.AssetSchmHId}" translate>
-                <i class="ft-arrow-left"></i> Back
+              [queryParams]="{AssetSchmHId: this.AssetSchmHId}"  
+              <button type="button" class="backButton" [routerLink]="['/']"
+                translate>
+                <i class="ft-x"></i> Reject
               </button>
+              <button type="button" class="backButton" [routerLink]="['/']"
+              translate>
+              <i class="ft-x"></i> Verify
+            </button>
             </div>
           </div>
         </div>
@@ -24,8 +29,8 @@
   </div>
 </section>
 <lib-ucviewgeneric [viewInput]="viewObj"></lib-ucviewgeneric>
-<form class="form form-horizontal" name="AssetSchmForm" #AssetSchmForm="ngForm" novalidate
-  (ngSubmit)="SaveAssetSchmMember(AssetSchmForm)">
+<form class="form form-horizontal" name="LeadVerfForm" #LeadVerfForm="ngForm" novalidate
+  (ngSubmit)="SaveLeadVerf(LeadVerfForm)">
   <lib-UCSearch id="ucSearch" style="width:100%;" [searchInput]='inputObj' (result)="getResult($event)">
   </lib-UCSearch>
   <div [hidden]="resultData == null">
@@ -103,7 +108,7 @@
     </table>
     <div class="form-body">
       <div class="form-actions right">
-        <button type="submit" (click)="formValidate(AssetSchmForm)" class="btn btn-raised btn-primary" translate>
+        <button type="submit" (click)="formValidate(LeadVerfForm)" class="btn btn-raised btn-primary" translate>
           <i class="far"></i> Submit
         </button>
       </div>

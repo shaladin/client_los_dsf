@@ -31,13 +31,12 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsService } from 'app/shared/services/adIns.service';
 
 @Component({
-  selector: 'app-add-asset-scheme',
-  templateUrl: './add-asset-scheme.component.html',
-  styleUrls: ['./add-asset-scheme.component.scss'],
-  providers: [NgbPaginationConfig, NGXToastrService]
+  selector: 'app-lead-verif',
+  templateUrl: './lead-verif.component.html',
+  styleUrls: ['./lead-verif.component.scss']
 })
 
-export class AddAssetSchemeComponent implements OnInit {
+export class LeadVerifComponent implements OnInit {
   @ViewChild(UcgridfooterComponent) ucgridFooter;
   @ViewChild(UCSearchComponent) UCSearchComponent;
   resultData: any;
