@@ -1,5 +1,5 @@
 {
-    "title": "PURCHASE ORDER EXTENSION",
+    "title": "OUTSTANDING TERM AND CONDITION",
     "component": [
         {
             "type": "textbox",
@@ -126,8 +126,8 @@
             "path" : "//",
             "param" : [
                 {
-                    "type" : "AppId",
-                    "property" : "AppId"
+                    "type" : "",
+                    "property" : ""
                 }
             ]
         },
@@ -139,8 +139,8 @@
             "path" : "//",
             "param" : [
                 {
-                    "type" : "AppId",
-                    "property" : "AppId"
+                    "type" : "",
+                    "property" : ""
                 }
             ]
         },
@@ -152,8 +152,8 @@
             "path" : "//",
             "param" : [
                 {
-                    "type" : "AppId",
-                    "property" : "AppId"
+                    "type" : "",
+                    "property" : ""
                 }
             ]
         },
@@ -165,8 +165,8 @@
             "path" : "//",
             "param" : [
                 {
-                    "type" : "AppId",
-                    "property" : "AppId"
+                    "type" : "",
+                    "property" : ""
                 }
             ]
         },

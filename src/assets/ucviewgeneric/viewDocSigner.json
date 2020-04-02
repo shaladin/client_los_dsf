@@ -1,0 +1,57 @@
+{
+    "title": "",
+    "subsection": [
+      {
+        "subSectionId": "MainInfoId",
+        "subSectionTitle": "Main Information",
+        "mainInfoUrl": "http://localhost:5001/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {
+            "type": "text",
+            "label": "Application No",
+            "property": "AppNo"
+          },
+          {
+            "type": "text",
+            "label": "Num Of Asset",
+            "property": "NumOfAsset"
+          },
+          {
+            "type": "text",
+            "label": "Agreement No",
+            "property": "AgrmntNo"
+          },
+          {
+            "type": "text",
+            "label": "Tenor",
+            "property": "Tenor"
+          },
+          {
+            "type": "text",
+            "label": "Customer Name",
+            "property": "CustName"
+          },
+          {
+            "type": "text",
+            "label": "Interest Type",
+            "property": "MrInterestTypeCode"
+          },
+          {
+            "type": "text",
+            "label": "Product Offering Name",
+            "property": "ProdOfferingName"
+          },
+          {
+            "type": "text",
+            "label": "Installment Scheme",
+            "property": "MrInstSchemeCode"
+          }
+        ],
+        "querystring": {
+          "select": "SELECT A.APP_NO AS AppNo, AG.NUM_OF_ASSET AS NumOfAsset, AG.AGRMNT_NO AS AgrmntNo, AG.TENOR AS Tenor, AG.CUST_NAME AS CustName, AFD.MR_INTEREST_TYPE_CODE AS MrInterestTypeCode, AG.PROD_OFFERING_NAME AS ProdOfferingName, AFD.MR_INST_SCHEME_CODE AS MrInstSchemeCode",
+          "from": "FROM DBO.APP A WITH(NOLOCK) JOIN DBO.AGRMNT AG WITH(NOLOCK) ON A.APP_ID = AG.APP_ID LEFT JOIN DBO.AGRMNT_FIN_DATA AFD WITH(NOLOCK) ON AG.AGRMNT_ID = AFD.AGRMNT_ID",
+          "where": "WHERE A.APP_ID = {0}"
+        }
+      }
+    ]
+  }

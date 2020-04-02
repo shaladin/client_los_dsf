@@ -22,6 +22,10 @@ import { CustConfirmationDetailComponent } from './cust-confirmation/cust-confir
 import { CustConfirmationSubjDetailComponent } from './cust-confirmation/cust-confirmation-subj-detail/cust-confirmation-subj-detail.component';
 import { CustConfirmationSubjViewComponent } from './cust-confirmation/cust-confirmation-subj-view/cust-confirmation-subj-view.component';
 import { CustConfirmationVerfViewComponent } from './cust-confirmation/cust-confirmation-verf-view/cust-confirmation-verf-view.component';
+import { DocSingerPagingComponent } from './doc-signer/doc-singer-paging/doc-singer-paging.component';
+import { DocSingerDetailComponent } from './doc-signer/doc-singer-detail/doc-singer-detail.component';
+import { UcviewgenericModule } from "@adins/ucviewgeneric";
+import { UclookupgenericModule } from "@adins/uclookupgeneric";
 
 @NgModule({
   imports: [
@@ -36,7 +40,9 @@ import { CustConfirmationVerfViewComponent } from './cust-confirmation/cust-conf
     UcSubsectionModule,
     UcShowErrorsModule,
     AdminProcessRoutingModule,
-    SharingComponentModule
+    SharingComponentModule,
+    UcviewgenericModule,
+    UclookupgenericModule
   ],
   declarations: [
     PurchaseOrderPagingComponent,
@@ -49,7 +55,9 @@ import { CustConfirmationVerfViewComponent } from './cust-confirmation/cust-conf
     CustConfirmationDetailComponent,
     CustConfirmationSubjDetailComponent,
     CustConfirmationSubjViewComponent,
-    CustConfirmationVerfViewComponent
+    CustConfirmationVerfViewComponent,
+    DocSingerPagingComponent,
+    DocSingerDetailComponent
   ],
   providers: [
     NGXToastrService

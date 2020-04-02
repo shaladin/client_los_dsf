@@ -1,0 +1,158 @@
+<div class="row text-left">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <lib-ucviewgeneric [viewInput]="viewObj"></lib-ucviewgeneric>
+                <div class="px-3">
+                    <form class="form form-horizontal" [formGroup]="DocSignerForm"
+                        (ngSubmit)="DocSignerForm.valid && SaveForm()" #enjiForm="ngForm">
+                        <lib-ucSubsection [id]="'SupplierSignerId'" [title]="'Supplier Signer'"
+                            [panel]="'SupplierSigner'">
+                        </lib-ucSubsection>
+                        <div class="form-body" id="SupplierSigner">
+                            <div class="form-group row">
+                                <label class="col-md-5 adInsLabel">Supplier Officer Name 1</label>
+                                <div class="col-md-5">
+                                    <lib-uclookupgeneric [lookupInput]="inputLookupBranchEmpObj"
+                                        [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
+                                        [identifier]="'lookupBranchEmp'" (lookup)="getLookupBranchEmp($event)">
+                                    </lib-uclookupgeneric>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-5 adInsLabel">Supplier Employee Position 2</label>
+                                <div class="col-md-5">
+                                    <input type="text" class="form-control adInsInput width-75-per"
+                                        formControlName="SerialNo3">
+                                    <lib-uc-show-errors [control]="DocSignerForm.controls.SerialNo3"
+                                        [submit]="enjiForm.submitted">
+                                    </lib-uc-show-errors>
+                                </div>
+                            </div>
+                        </div>
+                        <lib-ucSubsection [id]="'CompanySignerId'" [title]="'Company Signer'" [panel]="'CompanySigner'">
+                        </lib-ucSubsection>
+                        <div class="form-body" id="CompanySigner">
+                            <div class="form-group row">
+                                <label class="col-md-5 adInsLabel">Company Officer Name 1</label>
+                                <div class="col-md-5">
+                                    <lib-uclookupgeneric [lookupInput]="inputLookupOfficeEmp2Obj"
+                                        [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
+                                        [identifier]="'lookupOfficeEmp'" (lookup)="getLookupOfficeEmp($event)">
+                                    </lib-uclookupgeneric>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-5 adInsLabel">Company Position 1</label>
+                                <div class="col-md-5">
+                                    <input type="text" class="form-control adInsInput width-75-per"
+                                        formControlName="SerialNo3">
+                                    <lib-uc-show-errors [control]="DocSignerForm.controls.SerialNo3"
+                                        [submit]="enjiForm.submitted">
+                                    </lib-uc-show-errors>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-5 adInsLabel">Company Officer Name 2</label>
+                                <div class="col-md-5">
+                                    <lib-uclookupgeneric [lookupInput]="inputLookupOfficeEmp2Obj"
+                                        [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
+                                        [identifier]="'lookupOfficeEmp'" (lookup)="getLookupOfficeEmp($event)">
+                                    </lib-uclookupgeneric>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-5 adInsLabel">Company Position 2</label>
+                                <div class="col-md-5">
+                                    <input type="text" class="form-control adInsInput width-75-per"
+                                        formControlName="SerialNo3">
+                                    <lib-uc-show-errors [control]="DocSignerForm.controls.SerialNo3"
+                                        [submit]="enjiForm.submitted">
+                                    </lib-uc-show-errors>
+                                </div>
+                            </div>
+                        </div>
+                        <lib-ucSubsection [id]="'ManagementShareholderSignerId'"
+                            [title]="'Management / Shareholder Signer'" [panel]="'ManagementShareholderSigner'">
+                        </lib-ucSubsection>
+                        <div class="form-body" id="ManagementShareholderSigner">
+                            <div class="form-group row">
+                                <label class="col-md-5 adInsLabel">Management / Shareholder</label>
+                                <div class="col-md-5">
+                                    <lib-uclookupgeneric [lookupInput]="inputLookupCustCoyShareHolderObj"
+                                        [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
+                                        [identifier]="'lookupCustCoyShareHolder'"
+                                        (lookup)="getLookupCustCoyShareHolder($event)">
+                                    </lib-uclookupgeneric>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-5 adInsLabel">Management / Shareholder Position</label>
+                                <div class="col-md-5">
+                                    <input type="text" class="form-control adInsInput width-75-per"
+                                        formControlName="SerialNo3">
+                                    <lib-uc-show-errors [control]="DocSignerForm.controls.SerialNo3"
+                                        [submit]="enjiForm.submitted">
+                                    </lib-uc-show-errors>
+                                </div>
+                            </div>
+                        </div>
+                        <lib-ucSubsection [id]="'ApproverSignerId'" [title]="'Approver Signer'"
+                            [panel]="'ApproverSigner'">
+                        </lib-ucSubsection>
+                        <div class="form-body" id="ApproverSigner">
+                            <div class="form-group row">
+                                <label class="col-md-5 adInsLabel">Customer Commisioner Approver 1</label>
+                                <div class="col-md-5">
+                                    <lib-uclookupgeneric [lookupInput]="inputLookupCustCoyShareHolder2Obj"
+                                        [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
+                                        [identifier]="'lookupCustCoyShareHolder'"
+                                        (lookup)="getCustCoyShareHolder($event)">
+                                    </lib-uclookupgeneric>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-5 adInsLabel">Customer Commisioner Position Approver 1</label>
+                                <div class="col-md-5">
+                                    <input type="text" class="form-control adInsInput width-75-per"
+                                        formControlName="SerialNo3">
+                                    <lib-uc-show-errors [control]="DocSignerForm.controls.SerialNo3"
+                                        [submit]="enjiForm.submitted">
+                                    </lib-uc-show-errors>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-5 adInsLabel">Customer Commisioner Approver 2</label>
+                                <div class="col-md-5">
+                                    <lib-uclookupgeneric [lookupInput]="inputLookupCustCoyShareHolder3Obj"
+                                        [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
+                                        [identifier]="'lookupCustCoyShareHolder'"
+                                        (lookup)="getCustCoyShareHolder($event)">
+                                    </lib-uclookupgeneric>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-5 adInsLabel">Customer Commisioner Position Approver 2</label>
+                                <div class="col-md-5">
+                                    <input type="text" class="form-control adInsInput width-75-per"
+                                        formControlName="SerialNo3">
+                                    <lib-uc-show-errors [control]="DocSignerForm.controls.SerialNo3"
+                                        [submit]="enjiForm.submitted">
+                                    </lib-uc-show-errors>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions right">
+                            <button type="button" class="btn btn-raised btn-warning mr-1" translate>
+                              <i class="fa fa-arrow-circle-left"></i> Back
+                            </button>
+                            <button type="submit" class="btn btn-raised btn-primary">
+                              <i class="far"></i> Submit
+                            </button>
+                          </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
