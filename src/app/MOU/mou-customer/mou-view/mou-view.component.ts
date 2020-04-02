@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 
 @Component({
   selector: 'app-mou-view',
@@ -6,13 +10,38 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./mou-view.component.scss']
 })
 export class MouViewComponent implements OnInit {
-
-  constructor() { 
-    
+  getMouCustByIdUrl : any;
+  MouCustId : any;
+  mouCustObj : any;
+  resultData : any;
+  MrMouTypeCode : any;
+  constructor(private http: HttpClient, private route: ActivatedRoute) { 
+    this.getMouCustByIdUrl = AdInsConstant.GetMouCustById;
+    this.route.queryParams.subscribe(params => {
+      if (params["MouCustId"] != null) {
+        this.MouCustId = params["MouCustId"];
+      }
+    });
+   
   }
   viewMouGeneralHeader: any;
   ngOnInit() {
     this.viewMouGeneralHeader = "./assets/ucviewgeneric/viewMouGeneralHeader.json";
+    this.mouCustObj = new MouCustObj();
+    this.mouCustObj.MouCustId = this.MouCustId;
+     
+    this.http.post(this.getMouCustByIdUrl, this.mouCustObj).subscribe(
+      (response) => {
+        this.resultData = response;
+        this.MrMouTypeCode = this.resultData['MrMouTypeCode']; 
+        console.log( this.MrMouTypeCode);
+      },
+      (error) =>{
+        // this.custModel = "";
+        // this.custType = "";
+        console.log(error);
+      }
+    );
   }
   isDetail: any;
   isFee: any;
