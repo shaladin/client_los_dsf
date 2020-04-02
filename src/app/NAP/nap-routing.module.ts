@@ -13,6 +13,7 @@ import { GuarantorPersonalComponent } from "./nap-tab/app-guarantor/guarantor-pe
 import { AppLifeInsComponent } from "./nap-tab/app-life-ins/app-life-ins.component";
 import { CommissionPagingComponent } from "./commission-paging/commission-paging.component";
 import { CommissionAddComponent } from "./commission-add/commission-add.component";
+import { InsuranceDataComponent } from "./nap-tab/insurance-data/insurance-data.component";
 
 
 const routes: Routes = [
@@ -60,6 +61,13 @@ const routes: Routes = [
         data: {
           title: 'Customer Data'
         }
+      },
+      {
+          path: 'InsuranceData',
+          component: InsuranceDataComponent,
+          data: {
+              title: 'Insurance Data'
+          }
       },
       {
         path: 'Guarantor/paging',

@@ -3,6 +3,7 @@ export class AppCustCompanyMgmntShrholderObj {
     AppCustCompanyId: any;
     MgmntShrholderName: any;
     MrJobPositionCode: any;
+    JobPositionName: any;
     SharePrcnt: any;
     IsSigner: any;
     MrIdTypeCode: any;
@@ -20,6 +21,7 @@ export class AppCustCompanyMgmntShrholderObj {
     EstablishmentDt: any;
     MrCompanyTypeCode: any;
     MrCustTypeCode: any;
+    CustTypeName: any;
     CustNo: any;
 
 

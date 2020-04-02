@@ -30,18 +30,26 @@ import { GuarantorPagingComponent } from "./nap-tab/app-guarantor/guarantor-pagi
 import { GuarantorPersonalComponent } from "./nap-tab/app-guarantor/guarantor-personal/guarantor-personal.component";
 import { AppLifeInsComponent } from './nap-tab/app-life-ins/app-life-ins.component';
 
+import { CustPersonalContactInformationComponent } from "./nap-tab/customer-data/component/personal-contact-information/cust-personal-contact-information.component";
+import { CustPersonalFinancialDataComponent } from "./nap-tab/customer-data/component/personal-financial-data/cust-personal-financial-data.component";
 import { SearchCrossAppComponent } from './nap-tab/app-model/search-cross-app/search-cross-app.component';
 import { UCSearchModule } from '@adins/ucsearch';
 import { CommissionPagingComponent } from './commission-paging/commission-paging.component';
 import { CommissionAddComponent } from './commission-add/commission-add.component';
 import { FormAddDynamicComponent } from './form-add-dynamic/form-add-dynamic.component';
-import { CustFinancialDataComponent } from "./nap-tab/customer-data/component/financial-data/cust-financial-data.component";
 import { CustBankAccountComponent } from "./nap-tab/customer-data/component/bank-account/cust-bank-account.component";
 import { CustJobDataComponent } from "./nap-tab/customer-data/component/job-data/cust-job-data.component";
 import { CustSocmedComponent } from "./nap-tab/customer-data/component/socmed/cust-socmed.component";
 import { CustGrpMemberComponent } from "./nap-tab/customer-data/component/cust-grp-member/cust-grp-member.component";
 import { CustCompanyMainDataComponent } from "./nap-tab/customer-data/component/company-main-data/cust-company-main-data.component";
 import { CustShareholderComponent } from "./nap-tab/customer-data/component/shareholder/cust-shareholder.component";
+import { CustCompanyContactInformationComponent } from "./nap-tab/customer-data/component/company-contact-information/cust-company-contact-information.component";
+import { UcShowErrorsModule } from "@adins/uc-show-errors";
+import { CustCompanyFinancialDataComponent } from "./nap-tab/customer-data/component/company-financial-data/cust-company-financial-data.component";
+import { CustLegalDocComponent } from "./nap-tab/customer-data/component/legal-doc/cust-legal-doc.component";
+import { UcinputnumberModule } from "@adins/ucinputnumber";
+import { UcinputnumberComponent } from "./nap-tab/customer-data/component/ucinputnumber/ucinputnumber.component";
+import { InsuranceDataComponent } from "./nap-tab/insurance-data/insurance-data.component";
 
 
 
@@ -65,16 +73,24 @@ import { CustShareholderComponent } from "./nap-tab/customer-data/component/shar
         AppGuarantorComponent,
         AppLifeInsComponent,
         CustFinancialDataComponent,
+        CustPersonalContactInformationComponent,
+        CustPersonalFinancialDataComponent,
         CustBankAccountComponent,
         CustJobDataComponent,
         CustSocmedComponent,
         CustGrpMemberComponent,
         CustCompanyMainDataComponent,
+        CustShareholderComponent,
+        CustCompanyContactInformationComponent,
+        CustCompanyFinancialDataComponent,
         SearchCrossAppComponent,
         CommissionPagingComponent,
         CommissionAddComponent,
         FormAddDynamicComponent,
-        CustShareholderComponent
+        CustShareholderComponent,
+        CustLegalDocComponent,
+        UcinputnumberComponent,
+        InsuranceDataComponent
         ],
     imports: [ 
         NapRoutingModule,
@@ -95,7 +111,9 @@ import { CustShareholderComponent } from "./nap-tab/customer-data/component/shar
         SharingComponentModule,
         UcaddressModule,
         UcgridviewModule,
-        UCSearchModule
+        UcShowErrorsModule,
+        UCSearchModule,
+        UcinputnumberModule
     ],
     exports: [],
     providers: [NGXToastrService],
