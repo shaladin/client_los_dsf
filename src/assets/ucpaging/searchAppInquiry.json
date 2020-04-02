@@ -84,11 +84,11 @@
       "placeholder": "Placeholder",
       "isFromURL": true,
       "isSelectOne": true,
-      "url": "http://r3app-server/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
+      "url": "https://r3app-server.ad-ins.com/FOUNDATION_R3/RefStatus/GetListKeyValueActiveGrpCodeByCode",
       "label": "Application Status",
       "items": [],
       "itemsUrl": [],
-      "criteriaPropName": "RefMasterTypeCode",
+      "criteriaPropName": "StatusGrpCode",
       "criteriaPropValue": "APP_STAT"
     },
     {
@@ -100,11 +100,11 @@
       "placeholder": "Placeholder",
       "isFromURL": true,
       "isSelectOne": true,
-      "url": "http://r3app-server/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
+      "url": "https://r3app-server.ad-ins.com/FOUNDATION_R3/RefStatus/GetListKeyValueActiveGrpCodeByCode",
       "label": "Current Application Step",
       "items": [],
       "itemsUrl": [],
-      "criteriaPropName": "RefMasterTypeCode",
+      "criteriaPropName": "StatusGrpCode",
       "criteriaPropValue": "APP_STEP"
     }
   ],

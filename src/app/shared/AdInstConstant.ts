@@ -522,4 +522,21 @@ export class AdInsConstant {
     public static GetInsuranceDataByAppId = environment.losUrl + "/AppIns/GetInsDataByAppId";
     public static AddEditInsuranceData = environment.losUrl + "/AppIns/AddEditInsuranceData";
     
+  //AppCustAddr
+  public static GetListAppCustAddrByAppId = "http://localhost:5001/AppCustAddr/GetListAppCustAddrByAppId";
+
+  //Asset Accessory
+  public static GetAssetAccessoryByCode = "http://localhost:5000/AssetAccessory/GetAssetAccessoryByCode";
+
+  //App Fee
+  public static GetListAppFeeByAppId = "http://localhost:5001/AppFee/GetListAppFeeByAppId";
+
+  //App Reserved Fund
+  public static AddEditAppReservedFund = "http://localhost:5001/AppReservedFund/AddEditAppReservedFund";
+  public static GetListAppReservedFundByAppId = "http://localhost:5001/AppReservedFund/GetListAppReservedFundByAppId";
+  public static CreateRsvFundRule = "http://localhost:5001/AppReservedFund/CreateRsvFundRule";
+
+  //App Fin Data
+  public static GetAppFinDataByAppId = "http://localhost:5001/AppFinData/GetAppFinDataByAppId";
+  public static CreateMaxAllocAmtRsvFund = "http://localhost:5001/AppFinData/CreateMaxAllocAmtRsvFund";
 }

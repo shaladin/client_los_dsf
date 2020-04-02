@@ -48,6 +48,9 @@ import { CustLegalDocComponent } from "./nap-tab/customer-data/component/legal-d
 import { UcinputnumberModule } from "@adins/ucinputnumber";
 import { UcinputnumberComponent } from "./nap-tab/customer-data/component/ucinputnumber/ucinputnumber.component";
 import { InsuranceDataComponent } from "./nap-tab/insurance-data/insurance-data.component";
+import { AssetDataComponent } from "./nap-tab/asset-data/asset-data.component";
+import { RsvFundPagingComponent } from "./reserved-fund/reserved-fund-paging/reserved-fund-paging.component";
+import { RsvFundViewComponent } from "./reserved-fund/reserved-fund-view/reserved-fund-view.component";
 
 
 
@@ -86,7 +89,10 @@ import { InsuranceDataComponent } from "./nap-tab/insurance-data/insurance-data.
         CustShareholderComponent,
         CustLegalDocComponent,
         UcinputnumberComponent,
-        InsuranceDataComponent
+        InsuranceDataComponent,
+        AssetDataComponent,
+        RsvFundPagingComponent,
+        RsvFundViewComponent
         ],
     imports: [ 
         NapRoutingModule,

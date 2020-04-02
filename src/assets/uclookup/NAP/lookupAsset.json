@@ -3,37 +3,37 @@
   "component": [
     {
       "type": "textbox",
-      "name": "ASSET_CODE",
+      "name": "FULL_ASSET_CODE",
       "id": "assetCode",
       "value": "",
-      "label": "Asset Code",
+      "label": "A.Full Asset Code",
       "placeholder": "Asset Code"
     },
     {
       "type": "textbox",
-      "name": "ASSET_NAME",
+      "name": "FULL_ASSET_NAME",
       "id": "assetName",
       "value": "",
-      "label": "Asset Name",
+      "label": "A.Full Asset Name",
       "placeholder": "Asset Name"
     }
   ],
   "querystring": {
-    "select": "SELECT ASSET_CODE AS AssetCode, ASSET_NAME AS AssetName",
-    "from": "FROM dbo.ASSET_MASTER WITH(NOLOCK)"
+    "select": "SELECT A.FULL_ASSET_CODE AS FullAssetCode, A.FULL_ASSET_NAME AS FullAssetName, B.ASSET_TYPE_CODE AS AssetTypeCode, C.ASSET_CATEGORY_CODE AS AssetCategoryCode",
+    "from": "FROM dbo.ASSET_MASTER A WITH(NOLOCK) LEFT JOIN dbo.ASSET_TYPE B WITH(NOLOCK) ON A.ASSET_TYPE_ID = B.ASSET_TYPE_ID LEFT JOIN dbo.ASSET_CATEGORY C WITH (NOLOCK) ON A.ASSET_CATEGORY_ID = C.ASSET_CATEGORY_ID"
   },
   "headerList": [
     {
       "type": "sort",
       "position": "center",
-      "label": "Asset Code",
-      "name": "AssetCode"
+      "label": "Full Asset Code",
+      "name": "FullAssetCode"
     },
     {
       "type": "sort",
       "position": "left",
-      "label": "Asset Name",
-      "name": "AssetName"
+      "label": "Full Asset Name",
+      "name": "FullAssetName"
     },
     {
       "type": "label",
@@ -45,12 +45,12 @@
     {
       "type": "text",
       "position": "center",
-      "property": "AssetCode"
+      "property": "FullAssetCode"
     },
     {
       "type": "text",
       "position": "center",
-      "property": "AssetName"
+      "property": "FullAssetName"
     },
     {
       "type": "action",
@@ -58,11 +58,11 @@
       "action": [
         {
           "type": "select",
-          "property": "AssetCode"
+          "property": "FullAssetCode"
         }
       ]
     }
   ],
-  "propertyId": "AssetCode",
-  "propertyName": "AssetName"
+  "propertyId": "FullAssetCode",
+  "propertyName": "FullAssetName"
 }
