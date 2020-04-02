@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
-import { AppCustPersonalObj } from 'app/shared/model/AppCustPersonalObj.Model';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 
 @Component({
   selector: 'app-applicant-existing-data-company',
@@ -20,14 +20,15 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
   GetAppShareholderDuplicateCheckUrl = this.LOSUrl + AdInsConstant.GetAppShareholderDuplicateCheck;
   GetCustDataByAppId = AdInsConstant.GetCustDataByAppId;
   AppCustObj : AppCustObj;
-  AppCustPersonalObj : AppCustPersonalObj;
+  AppCustCompanyObj : AppCustCompanyObj;
   ListAppGuarantorDuplicate : any;
   ListSpouseDuplicate : any;
   ListAppShareholderDuplicate : any;
   listSelectedIdGuarantor: any;
-  checkboxAllGuarantor: false;
+  checkboxAllGuarantor = false;
   listSelectedIdShareholder: any;
-  checkboxAllShareholder: false;
+  checkboxAllShareholder = false;
+  RowVersion: any;
 
   constructor(
     private http: HttpClient,
@@ -35,7 +36,21 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
     private router: Router,
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.bindData();
+    await this.processData();
+  }
+
+  bindData(){
+  
+    this.AppCustObj = new AppCustObj();
+    this.AppCustCompanyObj = new AppCustCompanyObj();
+    this.listSelectedIdGuarantor = new Array();
+    this.listSelectedIdShareholder = new Array();
+  }
+
+  processData(){
+
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
         this.AppId = params['AppId'];
@@ -45,29 +60,27 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
     var appObj = { "AppId": this.AppId };
     this.http.post(this.GetCustDataByAppId, appObj).subscribe(
       response => {
-        this.AppCustObj = response['AppCustObj'];
-        this.AppCustPersonalObj = response['AppCustPersonalObj'];
-      },
-      error => {
-        this.router.navigateByUrl('Error');
-      }
-    )
-    var requestDupCheck = {    "CustName": this.AppCustObj.CustName,
-    "MrCustTypeCode" : this.AppCustObj.MrCustTypeCode,
-    "MrCustModelCode" : this.AppCustObj.CustModelCode,
-    "MrIdTypeCode" : this.AppCustObj.MrIdTypeCode,
-    "IdNo" : this.AppCustObj.IdNo,
-    "TaxIdNo" : this.AppCustObj.TaxIdNo,
-    "BirthDt" : this.AppCustPersonalObj.BirthDt,
-    "MotherMaidenName" : this.AppCustPersonalObj.MotherMaidenName,
-    "MobilePhnNo1" : this.AppCustPersonalObj.MobilePhnNo1}
+        this.AppCustObj = response['AppCustObj'];        
+        this.RowVersion = response['AppCustObj'].RowVersion;
+        this.AppCustCompanyObj = response['AppCustCompanyObj'];
+
+        var requestDupCheck = {    "CustName": this.AppCustObj.CustName,
+        "MrCustTypeCode": this.AppCustObj.MrCustTypeCode,
+        "MrCustModelCode": this.AppCustObj.CustModelCode,
+        "MrIdTypeCode": this.AppCustObj.MrIdTypeCode,
+        "IdNo": this.AppCustObj.IdNo,
+        "TaxIdNo": this.AppCustObj.TaxIdNo,
+        "BirthDt" : this.AppCustCompanyObj.EstablishmentDt,
+        "MotherMaidenName" : "-",
+        "MobilePhnNo1" : "-",      
+        "RowVersion": this.RowVersion}
     //List App guarantor Checking
     this.http.post(this.GetAppGuarantorDuplicateCheckUrl, requestDupCheck).subscribe(
       response => {
         this.ListAppGuarantorDuplicate = response['ReturnObject'];
       },
       error => {
-        this.router.navigateByUrl('Error');
+        console.log("error")
       }
     );
 
@@ -75,11 +88,18 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
     this.http.post(this.GetAppShareholderDuplicateCheckUrl, requestDupCheck).subscribe(
       response => {
         this.ListAppShareholderDuplicate = response['ReturnObject'];
+        console.log(this.ListAppShareholderDuplicate[0]);
       },
       error => {
-        this.router.navigateByUrl('Error');
+        console.log("error")
       }
     );
+      },
+      error => {
+        console.log("error")
+      }
+    )
+    
   }
 
   SelectAllGuarantor(condition) {

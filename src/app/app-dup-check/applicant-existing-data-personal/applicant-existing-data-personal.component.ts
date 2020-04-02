@@ -39,6 +39,13 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.AppCustObj = new AppCustObj();
+    this.AppCustPersonalObj = new AppCustPersonalObj();
+    this.listSelectedIdGuarantor = new Array();
+    this.listSelectedIdSpouse = new Array();
+    this.listSelectedIdShareholder = new Array();
+
+
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
         this.AppId = params['AppId'];
@@ -50,12 +57,8 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
       response => {
         this.AppCustObj = response['AppCustObj'];
         this.AppCustPersonalObj = response['AppCustPersonalObj'];
-      },
-      error => {
-        this.router.navigateByUrl('Error');
-      }
-    )
-    var requestDupCheck = {    "CustName": this.AppCustObj.CustName,
+
+        var requestDupCheck = {    "CustName": this.AppCustObj.CustName,
     "MrCustTypeCode" : this.AppCustObj.MrCustTypeCode,
     "MrCustModelCode" : this.AppCustObj.CustModelCode,
     "MrIdTypeCode" : this.AppCustObj.MrIdTypeCode,
@@ -70,7 +73,7 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
         this.ListAppGuarantorDuplicate = response['ReturnObject'];
       },
       error => {
-        this.router.navigateByUrl('Error');
+        console.log("error")
       }
     );
     //List Spouse Duplicate Checking
@@ -79,7 +82,7 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
         this.ListSpouseDuplicate = response['ReturnObject'];
       },
       error => {
-        this.router.navigateByUrl('Error');
+        console.log("error")
       }
     );
 
@@ -89,9 +92,15 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
         this.ListAppShareholderDuplicate = response['ReturnObject'];
       },
       error => {
-        this.router.navigateByUrl('Error');
+        console.log("error")
       }
     );
+      },
+      error => {
+        console.log("error")
+      }
+    )
+    
   }
 
   Submit(){

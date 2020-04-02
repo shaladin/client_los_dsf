@@ -70,11 +70,11 @@
               <tbody>
                 <tr *ngFor="let item of ListAppGuarantorDuplicate">
                   <td>
-                    <div *ngIf="listSelectedIdGuarantor.indexOf(item.AppGuarantorId) >- 1">
+                    <div *ngIf="listSelectedIdGuarantor?.indexOf(item.AppGuarantorId) >- 1">
                       <input type="checkbox" id="checkSameGuarantor" name="itemSameGuarantor"
                         (change)="CheckedGuarantor(item.AppGuarantorId,  $event.target.checked)" [checked]="true">
                     </div>
-                    <div *ngIf="listSelectedId.indexOf(item.RefOfficeId) < 0">
+                    <div *ngIf="listSelectedIdGuarantor?.indexOf(item.AppGuarantorId) < 0">
                       <input type="checkbox" id="checkDiffGuarantor" name="itemDiffGuarantor"
                         (change)="CheckedGuarantor(item.AppGuarantorId,  $event.target.checked)" [checked]=false>
                     </div>
@@ -122,11 +122,11 @@
               <tbody>
                 <tr *ngFor="let item of ListSpouseDuplicate">
                   <td>
-                    <div *ngIf="listSelectedId.indexOf(item.RefOfficeId) >- 1">
+                    <div *ngIf="listSelectedIdSpouse?.indexOf(item.AppCustPersonalConstactPersonId) >- 1">
                       <input type="checkbox" id="checkSameSpouse" name="itemSameSpouse"
                         (change)="CheckedSpouse(item.AppCustPersonalConstactPersonId,  $event.target.checked)" [checked]="true">
                     </div>
-                    <div *ngIf="listSelectedId.indexOf(item.RefOfficeId) < 0">
+                    <div *ngIf="listSelectedIdSpouse?.indexOf(item.AppCustPersonalConstactPersonId) < 0">
                       <input type="checkbox" id="checkDiffSpouse" name="itemDiffSpouse"
                         (change)="CheckedSpouse(item.AppCustPersonalConstactPersonId,  $event.target.checked)" [checked]=false>
                     </div>
@@ -173,11 +173,11 @@
               <tbody>
                 <tr *ngFor="let item of ListAppShareholderDuplicate">
                   <td>
-                    <div *ngIf="listSelectedIdShareholder.indexOf(item.RefOfficeId) >- 1">
+                    <div *ngIf="listSelectedIdShareholder?.indexOf(item.AppCustCompanyMgmntShrholderId) >- 1">
                       <input type="checkbox" id="checkSameShareholder" name="itemSameShareholder"
                         (change)="CheckedShareholder(item.AppCustCompanyMgmntShrholderId,  $event.target.checked)" [checked]="true">
                     </div>
-                    <div *ngIf="listSelectedId.indexOf(item.RefOfficeId) < 0">
+                    <div *ngIf="listSelectedIdShareholder?.indexOf(item.AppCustCompanyMgmntShrholderId) < 0">
                       <input type="checkbox" id="checkDiffSpouse" name="itemDiffSpouse"
                         (change)="CheckedShareholder(item.AppCustCompanyMgmntShrholderId,  $event.target.checked)" [checked]=false>
                     </div>

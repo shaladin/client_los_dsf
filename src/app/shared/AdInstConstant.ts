@@ -44,13 +44,13 @@ export class AdInsConstant {
     public static GetAppById = "/Application/GetAppById";  
     
     //App Duplicate Checking
-    public static GetCustomerDuplicateCheck = "CustDuplicateCheck/GetCustomerDuplicateCheck";
-    public static GetNegativeCustomerDuplicateCheck = "CustDuplicateCheck/GetNegativeCustomerDuplicateCheck";
-    public static GetAppCustDuplicateCheck = "AppDupCheck/GetAppCustDuplicateCheck";
-    public static GetAppGuarantorDuplicateCheck = "AppDupCheck/GetAppGuarantorDuplicateCheck";
-    public static GetSpouseDuplicateCheck = "AppDupCheck/GetSpouseDuplicateCheck";
-    public static GetAppShareholderDuplicateCheck = "AppDupCheck/GetAppShareholderDuplicateCheck";
-    public static AddAppDupCheckCust = "AppDupCheck/AddAppDupCheckCust";  
+    public static GetCustomerDuplicateCheck = "/CustDuplicateCheck/GetCustomerDuplicateCheck";
+    public static GetNegativeCustomerDuplicateCheck = "/CustDuplicateCheck/GetNegativeCustomerDuplicateCheck";
+    public static GetAppCustDuplicateCheck = "/AppDupCheck/GetAppCustDuplicateCheck";
+    public static GetAppGuarantorDuplicateCheck = "/AppDupCheck/GetAppGuarantorDuplicateCheck";
+    public static GetSpouseDuplicateCheck = "/AppDupCheck/GetSpouseDuplicateCheck";
+    public static GetAppShareholderDuplicateCheck = "/AppDupCheck/GetAppShareholderDuplicateCheck";
+    public static AddAppDupCheckCust = "/AppDupCheck/AddAppDupCheckCust";  
 
     // App Referantor
     public static AddAppReferantor = "/AppReferantor/AddAppReferantor";

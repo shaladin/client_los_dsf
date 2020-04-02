@@ -46,29 +46,29 @@
 
             <div class="form-group row">
               <label class="col-md-3 adInsLabel">Address</label>
-              <label class="col-md-3 adInsLabel">{{AppCustAddrObj.Address}} </label>
+              <label class="col-md-3 adInsLabel">{{AppCustAddrObj.Addr}} </label>
             </div>
 
             <div class="form-group row">
               <label class="col-md-3 adInsLabel">RT / RW</label>
-              <label class="col-md-2 adInsLabel">{{AppCustAddrObj.TaxIdAreaCode4}} </label>
+              <label class="col-md-2 adInsLabel">{{AppCustAddrObj.AreaCode4}} </label>
               <label class="col-md-1 adInsLabel">/ </label>
-              <label class="col-md-2 adInsLabel">{{AppCustAddrObj.TaxIdAreaCode3}} </label>
+              <label class="col-md-2 adInsLabel">{{AppCustAddrObj.AreaCode3}} </label>
             </div>
 
             <div class="form-group row">
               <label class="col-md-3 adInsLabel">Kelurahan</label>
-              <label class="col-md-3 adInsLabel">{{AppCustAddrObj.TaxIdAreaCode2}} </label>
+              <label class="col-md-3 adInsLabel">{{AppCustAddrObj.AreaCode2}} </label>
             </div>
 
             <div class="form-group row">
               <label class="col-md-3 adInsLabel">Kecamatan</label>
-              <label class="col-md-3 adInsLabel">{{AppCustAddrObj.TaxIdAreaCode1}} </label>
+              <label class="col-md-3 adInsLabel">{{AppCustAddrObj.AreaCode1}} </label>
             </div>
 
             <div class="form-group row">
               <label class="col-md-3 adInsLabel">City </label>
-              <label class="col-md-3 adInsLabel">{{AppCustAddrObj.TaxIdCity}} </label>
+              <label class="col-md-3 adInsLabel">{{AppCustAddrObj.City}} </label>
             </div>
 
           </div>
@@ -81,7 +81,7 @@
 
           <div class="form-body">
             <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Match / Similiar Data </h4>
-            <table class="table table-responsive-md text-center table-hover">
+            <table *ngIf="ListCustDuplicate?.length > 0" class="table table-responsive-md text-center table-hover">
               <thead>
                 <tr class="table-header">
                   <th><span class="thead-header" (click)="searchSort($event)" name='custNo' translate>Customer No</span>
@@ -119,7 +119,7 @@
                   <td>{{item.DuplicateItem}}</td>
                   <td>
                     <a class="danger p-0" data-original-title="" title="" (click)="delete(item.custGrpId)">
-                      <i class="ft-trash-2 font-medium-3 mr-2"></i>
+                      Select
                     </a>
                   </td>
                 </tr>
@@ -129,7 +129,7 @@
 
           <div class="form-body">
             <h4 class="form-section card-title" translate><i class="ft-file-text"></i>Negative Customer</h4>
-            <table class="table table-responsive-md text-center table-hover">
+            <table *ngIf="ListNegativeCust?.length > 0" class="table table-responsive-md text-center table-hover">
               <thead>
                 <tr class="table-header">
                   <th><span class="thead-header" (click)="searchSort($event)" name='custNo' translate>Customer No</span>
@@ -173,7 +173,7 @@
                   <td>{{item.DuplicateItem}}</td>
                   <td>
                     <a class="danger p-0" data-original-title="" title="" (click)="delete(item.custGrpId)">
-                      <i class="ft-trash-2 font-medium-3 mr-2"></i>
+                      Select
                     </a>
                   </td>
                 </tr>
@@ -183,7 +183,7 @@
 
           <div class="form-body">
             <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Match / Similiar App Cust Data </h4>
-            <table class="table table-responsive-md text-center table-hover">
+            <table *ngIf="ListAppCustDuplicate?.length > 0" class="table table-responsive-md text-center table-hover">
               <thead>
                 <tr class="table-header">
                   <th><span class="thead-header" (click)="searchSort($event)" name='custNo' translate>Customer No</span>
@@ -221,7 +221,7 @@
                   <td>{{item.DuplicateItem}}</td>
                   <td>
                     <a class="danger p-0" data-original-title="" title="" (click)="delete(item.custGrpId)">
-                      <i class="ft-trash-2 font-medium-3 mr-2"></i>
+                        Select
                     </a>
                   </td>
                 </tr>

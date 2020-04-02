@@ -22,13 +22,13 @@ export class ListPersonalComponent implements OnInit {
   GetAppCustDuplicateCheckUrl = this.LOSUrl + AdInsConstant.GetAppCustDuplicateCheck;
   AddAppDupCheckCustUrl = this.LOSUrl + AdInsConstant.AddAppDupCheckCust;
   GetCustDataByAppId = AdInsConstant.GetCustDataByAppId;
-  AppCustObj : AppCustObj;
-  AppCustPersonalObj : AppCustPersonalObj;
-  AppCustAddrObj : AppCustAddrObj;
-  ListCustomerDuplicate : any;
-  ListNegativeCust : any;
-  ListAppCustDuplicate : any;
-  
+  AppCustObj: AppCustObj;
+  AppCustPersonalObj: AppCustPersonalObj;
+  AppCustAddrObj: AppCustAddrObj;
+  ListCustomerDuplicate: any;
+  ListNegativeCust: any;
+  ListAppCustDuplicate: any;
+
 
   constructor(
     private http: HttpClient,
@@ -42,65 +42,74 @@ export class ListPersonalComponent implements OnInit {
         this.AppId = params['AppId'];
       }
     });
+
+    this.AppCustObj = new AppCustObj();
+    this.AppCustPersonalObj = new AppCustPersonalObj();
+    this.AppCustAddrObj = new AppCustAddrObj();
+
     //Get App Cust Data
     var appObj = { "AppId": this.AppId };
     this.http.post(this.GetCustDataByAppId, appObj).subscribe(
       response => {
         this.AppCustObj = response['AppCustObj'];
         this.AppCustPersonalObj = response['AppCustPersonalObj'];
-        this.AppCustAddrObj = response['AppCustAddrObj'];
+        this.AppCustAddrObj = response['AppCustAddrLegalObj'];
+
+        var requestDupCheck = {
+          "CustName": this.AppCustObj.CustName,
+          "MrCustTypeCode": this.AppCustObj.MrCustTypeCode,
+          "MrCustModelCode": this.AppCustObj.CustModelCode,
+          "MrIdTypeCode": this.AppCustObj.MrIdTypeCode,
+          "IdNo": this.AppCustObj.IdNo,
+          "TaxIdNo": this.AppCustObj.TaxIdNo,
+          "BirthDt": this.AppCustPersonalObj.BirthDt,
+          "MotherMaidenName": this.AppCustPersonalObj.MotherMaidenName,
+          "MobilePhnNo1": this.AppCustPersonalObj.MobilePhnNo1
+        }
+        //List Cust Duplicate Checking
+        this.http.post(this.GetCustomerDuplicateCheckUrl, requestDupCheck).subscribe(
+          response => {
+            this.ListCustomerDuplicate = response['ReturnObject'];
+          },
+          error => {
+            console.log("error");
+          }
+        );
+        //List Negative Cust Duplicate Checking
+        this.http.post(this.GetNegativeCustomerDuplicateCheckUrl, requestDupCheck).subscribe(
+          response => {
+            this.ListNegativeCust = response['ReturnObject'];
+          },
+          error => {
+            console.log("error");
+          }
+        );
+
+        //List App Cust Duplicate Checking
+        this.http.post(this.GetAppCustDuplicateCheckUrl, requestDupCheck).subscribe(
+          response => {
+            this.ListAppCustDuplicate = response['ReturnObject'];
+          },
+          error => {
+            console.log("error");
+          }
+        );
       },
       error => {
-        this.router.navigateByUrl('Error');
+        console.log("error");
       }
     )
-    var requestDupCheck = {    "CustName": this.AppCustObj.CustName,
-    "MrCustTypeCode" : this.AppCustObj.MrCustTypeCode,
-    "MrCustModelCode" : this.AppCustObj.CustModelCode,
-    "MrIdTypeCode" : this.AppCustObj.MrIdTypeCode,
-    "IdNo" : this.AppCustObj.IdNo,
-    "TaxIdNo" : this.AppCustObj.TaxIdNo,
-    "BirthDt" : this.AppCustPersonalObj.BirthDt,
-    "MotherMaidenName" : this.AppCustPersonalObj.MotherMaidenName,
-    "MobilePhnNo1" : this.AppCustPersonalObj.MobilePhnNo1}
-    //List Cust Duplicate Checking
-    this.http.post(this.GetCustomerDuplicateCheckUrl, requestDupCheck).subscribe(
-      response => {
-        this.ListCustomerDuplicate = response['ReturnObject'];
-      },
-      error => {
-        this.router.navigateByUrl('Error');
-      }
-    );
-    //List Negative Cust Duplicate Checking
-    this.http.post(this.GetNegativeCustomerDuplicateCheckUrl, requestDupCheck).subscribe(
-      response => {
-        this.ListNegativeCust = response['ReturnObject'];
-      },
-      error => {
-        this.router.navigateByUrl('Error');
-      }
-    );
 
-    //List App Cust Duplicate Checking
-    this.http.post(this.GetAppCustDuplicateCheckUrl, requestDupCheck).subscribe(
-      response => {
-        this.ListAppCustDuplicate = response['ReturnObject'];
-      },
-      error => {
-        this.router.navigateByUrl('Error');
-      }
-    );
   }
 
-  SelectCust(item){
+  SelectCust(item) {
     this.http.post(this.AddAppDupCheckCustUrl, item).subscribe(
       response => {
         this.router.navigate(["AppDupCheck/ApplicantExistingDataPersonal"], { queryParams: { "AppId": this.AppId } });
       },
       error => {
-        this.router.navigateByUrl('Error');
+        console.log("error");
       });
-    }
+  }
 
 }

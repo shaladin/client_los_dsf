@@ -16,7 +16,7 @@ export class PagingComponent implements OnInit {
   ngOnInit() {
     this.inputPagingObj=new UcpagingModule();
     this.inputPagingObj._url="./assets/ucpaging/searchAppDupCheck.json";
-    this.inputPagingObj.enviromentUrl = environment.FoundationR3Url;
+    this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppDupCheck.json";
   }

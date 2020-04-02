@@ -24,7 +24,7 @@
 
           <div class="form-body">
             <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Applicant As Guarantor </h4>
-            <table class="table table-responsive-md text-center table-hover">
+            <table *ngIf="ListAppGuarantorDuplicate?.length > 0" class="table table-responsive-md text-center table-hover">
               <thead>
                 <tr class="table-header">
                   <th><input type="checkbox" [checked]="checkboxAllGuarantor"
@@ -39,15 +39,15 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of ListAppGuarantorDuplicate">
+                <tr *ngFor="let item of ListAppGuarantorDuplicate; let i = index">
                   <td>
-                    <div *ngIf="listSelectedIdGuarantor.indexOf(item.AppGuarantorId) >- 1">
+                    <div *ngIf="listSelectedIdGuarantor?.indexOf(item.AppGuarantorId) >- 1">
                       <input type="checkbox" id="checkSameGuarantor" name="itemSameGuarantor"
-                        (change)="Checked(item.AppGuarantorId,  $event.target.checked)" [checked]="true">
+                        (change)="CheckedGuarantor(item.AppGuarantorId,  $event.target.checked)" [checked]="true">
                     </div>
-                    <div *ngIf="listSelectedId.indexOf(item.RefOfficeId) < 0">
+                    <div *ngIf="listSelectedId?.indexOf(item.AppGuarantorId) < 0">
                       <input type="checkbox" id="checkDiffGuarantor" name="itemDiffGuarantor"
-                        (change)="Checked(item.AppGuarantorId,  $event.target.checked)" [checked]=false>
+                        (change)="CheckedGuarantor(item.AppGuarantorId,  $event.target.checked)" [checked]=false>
                     </div>
                   </td>
                   <td>{{item.CustNo}}</td>
@@ -60,8 +60,8 @@
           </div>
 
           <div class="form-body">
-            <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Applicant As Guarantor </h4>
-            <table class="table table-responsive-md text-center table-hover">
+            <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Applicant As Shareholder </h4>
+            <table *ngIf="ListAppShareholderDuplicate?.length > 0" class="table table-responsive-md text-center table-hover">
               <thead>
                 <tr class="table-header">
                   <th><input type="checkbox" [checked]="checkboxAllShareholder"
@@ -76,16 +76,16 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of ListAppShareholderDuplicate">
+                <tr *ngFor="let item of ListAppShareholderDuplicate; let i = index">
                   <td>
-                    <div *ngIf="listSelectedIdShareholder.indexOf(item.AppCustCompanyMgmntShrholderId) >- 1">
+                    <div *ngIf="listSelectedIdShareholder?.indexOf(item.AppCustCompanyMgmntShrholderId) >- 1">
                       <input type="checkbox" id="checkSameShareholder" name="itemSameShareholder"
-                        (change)="Checked(item.AppCustCompanyMgmntShrholderId,  $event.target.checked)"
+                        (change)="CheckedShareholder(item.AppCustCompanyMgmntShrholderId,  $event.target.checked)"
                         [checked]="true">
                     </div>
-                    <div *ngIf="listSelectedId.indexOf(item.RefOfficeId) < 0">
+                    <div *ngIf="listSelectedIdShareholder?.indexOf(item.AppCustCompanyMgmntShrholderId) < 0">
                       <input type="checkbox" id="checkDiffShareholder" name="itemDiffShareholder"
-                        (change)="Checked(item.AppCustCompanyMgmntShrholderId,  $event.target.checked)" [checked]=false>
+                        (change)="CheckedShareholder(item.AppCustCompanyMgmntShrholderId,  $event.target.checked)" [checked]=false>
                     </div>
                   </td>
                   <td>{{item.CustNo}}</td>
@@ -95,6 +95,10 @@
                 </tr>
               </tbody>
             </table>
+          </div>
+          <div class="pull-right">
+            <button type="button" class="btn btn-raised btn-primary mr-1" (click)="Submit()" translate> Submit
+            </button>
           </div>
         </div>
       </div>

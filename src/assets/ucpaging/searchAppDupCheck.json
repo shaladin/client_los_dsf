@@ -72,7 +72,7 @@
         }
     ],
     "querystring": {
-        "select": "SELECT a.ORI_OFFICE_NAME AS OfficeName, a.APP_NO AS AppNo, ac.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.APP_ID AS AppId",
+        "select": "SELECT ac.MR_CUST_TYPE_CODE as CustTypeCode, a.ORI_OFFICE_NAME AS OfficeName, a.APP_NO AS AppNo, ac.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.APP_ID AS AppId",
         "from": "FROM dbo.APP a WITH(NOLOCK) JOIN dbo.APP_CUST ac WITH(NOLOCK) ON a.APP_ID = ac.APP_ID"
     },
     "bodyList": [
@@ -101,16 +101,49 @@
             "position": "center",
             "action": [
                 {
-                    "type": "edit",
-                    "path": "/Nap/appAdd",
-                    "param": [
+                    "type": "switch",
+                    "case": [
                         {
-                            "type": "AppId",
-                            "property": "AppId"
+                            "conditions": [
+                                {
+                                    "property": "CustTypeCode",
+                                    "value": "PERSONAL",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "/AppDupCheck/AppDupCheckPersonal",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "AppId",
+                                        "property": "AppId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
                         },
                         {
-                            "type": "mode",
-                            "property": "edit"
+                            "conditions": [
+                                {
+                                    "property": "CustTypeCode",
+                                    "value": "COMPANY",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "/AppDupCheck/AppDupCheckCompany",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "AppId",
+                                        "property": "AppId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
                         }
                     ]
                 }
@@ -118,3 +151,6 @@
         }
     ]
 }
+
+        
+        
