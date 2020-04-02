@@ -6,12 +6,12 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 
 @Component({
-  selector: 'app-mou-review-factoring',
-  templateUrl: './mou-review-factoring.component.html',
-  styleUrls: ['./mou-review-factoring.component.scss'],
+  selector: 'app-mou-approval-factoring',
+  templateUrl: './mou-approval-factoring.component.html',
+  styleUrls: ['./mou-approval-factoring.component.scss'],
   providers: [NGXToastrService]
 })
-export class MouReviewFactoringComponent implements OnInit {
+export class MouApprovalFactoringComponent implements OnInit {
   mouCustObj: MouCustObj;
   MouCustId : any;
   MouType : string = "FACTORING";
@@ -25,6 +25,6 @@ export class MouReviewFactoringComponent implements OnInit {
   ngOnInit() {
   }
 
-  MouReviewDataForm = this.fb.group({
+  MouApprovalDataForm = this.fb.group({
   })
 }
