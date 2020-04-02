@@ -41,7 +41,8 @@ export class AdInsConstant {
     // App
     public static AddApp = "/Application/AddApp";
     public static EditApp = "/Application/EditApp";
-    public static GetAppById = "/Application/GetAppById";   
+    public static GetAppById = "/Application/GetAppById";
+    public static GetAppByIds = environment.losUrl + "/Application/GetAppById";     
     public static EditAppAddAppCross = "/Application/EditAppAddAppCross";   
 
     // App Referantor
@@ -468,7 +469,16 @@ export class AdInsConstant {
     //APP TC
     public static GetListTCbyAppId = environment.losUrl + "/AppTc/GetListTCbyAppId";
     
+    //AGRMNT
+    public static GetAgrmntByAgrmntId = environment.losUrl + "/Agrmnt/GetAgrmntByAgrmntId";
+    
     //PURCHASE ORDER
     public static SubmitPurchaseOrder = environment.losUrl + "/PurchaseOrderH/SubmitPurchaseOrder";
     
+    // VERF RESULT
+    public static GetVerfResultById = "http://localhost:5000" + "/VerfResult/GetVerfResultById";
+    public static GetVerfResultHById = "http://localhost:5000" + "/VerfResultH/GetVerfResultHById";
+    public static GetVerfResultHsByTrxRefNo = "http://localhost:5000" + "/VerfResultH/GetVerfResultHsByTrxRefNo";
+    public static GetVerfResultHsByVerfResultIdAndSubjRelationCode = "http://localhost:5000" + "/VerfResultH/GetVerfResultHsByVerfResultIdAndSubjRelationCode";
+    public static GetListVerfResultDInQuestionGrp = "http://localhost:5000" + "/VerfResultH/GetListVerfResultDInQuestionGrp";
 }
