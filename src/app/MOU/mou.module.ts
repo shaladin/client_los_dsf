@@ -4,11 +4,16 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
 import { UCSearchModule } from "@adins/ucsearch";
 import { UcpagingModule } from "@adins/ucpaging";
+import { UcShowErrorsModule } from '@adins/uc-show-errors';
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { RouterModule } from "@angular/router";
 import { SharingModule } from 'app/shared/sharing.module';
 import { ArchwizardModule } from 'angular-archwizard';
 import { UcSubsectionModule } from "@adins/uc-subsection";
+import { UclookupgenericModule } from '@adins/uclookupgeneric';
+import { UcviewgenericModule } from '@adins/ucviewgeneric';
+import { UcaddressModule } from "@adins/ucaddress";
+import { UCSearchComponent } from '@adins/ucsearch';
 import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
 import { UcgridfooterModule, UcgridfooterComponent } from "@adins/ucgridfooter";
 import { MainInfoComponent } from 'app/view/main-info/main-info.component';
@@ -16,7 +21,6 @@ import { MouRoutingModule } from "./mou-routing.module";
 import { DocSignerComponent } from "./doc-signer/doc-signer.component";
 import { MouCustomerRequestComponent } from './mou-customer-request/mou-customer-request.component';
 import { MouCustomerRequestDetailComponent } from './mou-customer-request/mou-customer-request-detail/mou-customer-request-detail.component';
-import { UclookupgenericModule } from "@adins/uclookupgeneric";
 import { MouCustomerDetailComponent } from "./mou-customer-request/mou-customer-detail/mou-customer-detail.component";
 import { MouReviewPagingComponent } from './mou-customer/mou-review/mou-review-paging/mou-review-paging.component';
 import { MouReviewGeneralComponent } from './mou-customer/mou-review/mou-review-general/mou-review-general.component';
@@ -32,6 +36,11 @@ import { MouDetailGeneralComponent } from './mou-customer-request/mou-detail-gen
 import { MouDetailFactoringComponent } from './mou-customer-request/mou-detail-factoring/mou-detail-factoring.component';
 import { MouCustAssetComponent } from './mou-customer-request/mou-detail-general/mou-cust-asset/mou-cust-asset.component';
 import { MouCustAssetDetailComponent } from './mou-customer-request/mou-detail-general/mou-cust-asset/mou-cust-asset-detail/mou-cust-asset-detail.component';
+import { MouCustomerApprovalComponent } from './mou-customer/mou-customer-approval/mou-customer-approval.component';
+import { MouApprovalGeneralComponent } from './mou-customer/mou-customer-approval/mou-approval-general/mou-approval-general.component';
+import { MouApprovalFactoringComponent } from './mou-customer/mou-customer-approval/mou-approval-factoring/mou-approval-factoring.component';
+import { MouRequestAddcollComponent } from './mou-customer/mou-request/mou-request-addcoll/mou-request-addcoll.component';
+import { MouRequestAddcollAddeditComponent } from './mou-customer/mou-request/mou-request-addcoll-addedit/mou-request-addcoll-addedit.component';
 // import { ShowErrorsComponent } from "./app/test-new/show-errors.component";
 
 @NgModule({
@@ -47,9 +56,14 @@ import { MouCustAssetDetailComponent } from './mou-customer-request/mou-detail-g
     SharingModule,
     ArchwizardModule,
     ReactiveFormsModule,
+    UcaddressModule,
     UcSubsectionModule,
     SharingComponentModule,
-    UclookupgenericModule
+    UclookupgenericModule,
+    UcShowErrorsModule,
+    UclookupgenericModule,
+    UcviewgenericModule,
+    SharingComponentModule
   ],
   declarations: [
     DocSignerComponent,
@@ -73,6 +87,13 @@ import { MouCustAssetDetailComponent } from './mou-customer-request/mou-detail-g
     MouCustAssetComponent,
     MouCustAssetDetailComponent,
   ],
-  entryComponents: [MouCustAssetDetailComponent]
+  entryComponents: [
+    MouCustAssetDetailComponent,
+    MouCustomerApprovalComponent,
+    MouApprovalGeneralComponent,
+    MouApprovalFactoringComponent,
+    MouRequestAddcollComponent,
+    MouRequestAddcollAddeditComponent,
+  ]
 })
 export class MouModule { }
