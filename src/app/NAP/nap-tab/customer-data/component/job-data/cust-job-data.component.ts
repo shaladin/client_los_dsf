@@ -200,7 +200,7 @@ export class CustJobDataComponent implements OnInit {
       this.parentForm.controls[this.identifier].patchValue({
         CustModelCode: this.custModelCode,
         ProfessionalNo: this.appCustPersonalJobDataObj.ProfessionalNo,
-        EstablishmentDt: formatDate(this.appCustPersonalJobDataObj.EstablishmentDt, 'yyyy-MM-dd', 'en-US'),
+        EstablishmentDt: this.appCustPersonalJobDataObj.EstablishmentDt != undefined ? formatDate(this.appCustPersonalJobDataObj.EstablishmentDt, 'yyyy-MM-dd', 'en-US') : '',
         JobTitleName: this.appCustPersonalJobDataObj.MrJobTitleCode,
         IsMfEmp: this.appCustPersonalJobDataObj.IsMfEmp,
         CompanyName: this.appCustPersonalJobDataObj.CompanyName,

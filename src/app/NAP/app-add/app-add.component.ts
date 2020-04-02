@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
@@ -12,7 +12,6 @@ import { NapAppModel } from 'app/shared/model/NapApp.Model';
 @Component({
   selector: 'app-app-add',
   templateUrl: './app-add.component.html',
-  styleUrls: ['./app-add.component.scss'],
   providers: [NGXToastrService]
 })
 export class AppAddComponent implements OnInit {
@@ -24,7 +23,6 @@ export class AppAddComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private http: HttpClient,
-    private route: ActivatedRoute,
     private toastr: NGXToastrService
   ) { }
 
