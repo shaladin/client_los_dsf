@@ -19,6 +19,7 @@ import { UcgridfooterModule, UcgridfooterComponent } from "@adins/ucgridfooter";
 import { MainInfoComponent } from 'app/view/main-info/main-info.component';
 import { LeadRoutingModule } from "./lead-routing.module";
 import { LeadVerifComponent } from './lead-verif/lead-verif.component';
+import { LeadInputComponent } from "./lead-input/lead-input.component";
 
 @NgModule({
   imports: [
@@ -38,7 +39,9 @@ import { LeadVerifComponent } from './lead-verif/lead-verif.component';
     SharingComponentModule
   ],
   declarations: [
-    LeadVerifComponent
+    LeadVerifComponent,
+    LeadInputComponent
   ]
 })
+
 export class LeadModule { }

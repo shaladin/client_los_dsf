@@ -123,7 +123,9 @@ export class AdInsConstant {
     public static GetListOfficeCenterGrp = "/RefOffice/GetListOfficeCenterGrp";
     public static AddCenterGroupOfficeMember = "RefOffice/AddCenterGroupOfficeMember";
     public static DeleteCenterGroupOfficeMember= "/RefOffice/DeleteCenterGroupOfficeMember"; 
-    public static GetListKvpActiveRefOffice= "/RefOffice/GetListKvpActiveRefOffice"; 
+    public static GetListKvpActiveRefOffice= "/RefOffice/GetListKvpActiveRefOffice";
+    public static GetListRefOffice = "/RefOffice/GetListRefOffice";
+    public static GetListActiveRefOffice = environment.FoundationR3Url + "/RefOffice/GetListKeyValueActiveByCode";
 
     //REF OFFICE AREA
     public static GetAllListArea = "/RefOfficeArea/GetAllListArea";
@@ -447,6 +449,10 @@ export class AdInsConstant {
     //REF CUST MODEL
     public static GetListKeyValueByMrCustTypeCode = environment.FoundationR3Url + "/RefCustModel/GetListKeyValueByMrCustTypeCode";
 
+    // REF LOB
+    public static GetListActiveLob = environment.FoundationR3Url + "/RefLob/GetListKeyValueActiveByCode";
+    
+    
     //CUST
     public static GetCustByCustNo = "http://localhost:5000/Cust/GetCustByCustNo";
 
