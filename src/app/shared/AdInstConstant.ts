@@ -480,4 +480,10 @@ export class AdInsConstant {
     //PURCHASE ORDER
     public static SubmitPurchaseOrder = environment.losUrl + "/PurchaseOrderH/SubmitPurchaseOrder";
     
+    //LEAD
+    //public static GetListLeadForLeadVerf =  "/Lead/GetListLeadForLeadVerf";
+
+    //LEAD VERF
+    public static AddRangeLeadVerf = environment.losUrl + "/LeadVerf/AddRangeLeadVerf";
+    public static GetListLeadVerf = environment.losUrl + "/LeadVerf/GetListLeadVerf";
 }
