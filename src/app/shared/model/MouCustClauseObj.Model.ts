@@ -10,6 +10,7 @@ export class MouCustClauseObj {
     DownPaymentToPrcnt: any;
     TenorFrom: any;
     TenorTo: any;
+    CurrCode: any;
     RowVersion: any;
     constructor(){ this.MouCustClauseId = 0; this.RowVersion = '' }
 }

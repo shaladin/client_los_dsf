@@ -407,6 +407,7 @@ export class AdInsConstant {
     public static GetMouCustAssetByMouCustId = environment.losUrl + "/MouCustAsset/GetMouCustAssetByMouCustId";
     public static AddMouCustAsset = environment.losUrl + "/MouCustAsset/AddMouCustAsset";
     public static DeleteMouCustAsset = environment.losUrl + "/MouCustAsset/DeleteMouCustAsset";
+    public static GetAssetTypeKeyValueCode = environment.FoundationR3Url + "/AssetType/GetListKeyValueByCode";
 
     // MOU CUST ASSET
     public static GetMouCustFeeByMouCustId = environment.losUrl + "/MouCustFee/GetMouCustFeeByMouCustId";

@@ -27,19 +27,19 @@
           <div class="col-md-12">
             <aw-wizard #wizard navBarLayout="large-empty-symbols" [disableNavigationBar]=true [awNavigationMode]
               navigateBackward="allow" navigateForward="allow">
-              <aw-wizard-step [stepTitle]="'MOU Detail'" [navigationSymbol]="{ symbol: '1', fontFamily: 'FontAwesome', fontWeight: 'bold' }" (stepEnter)="enterTab()">
-                MOU Detail
+              <aw-wizard-step [stepTitle]="'MOU Detail'" [navigationSymbol]="{ symbol: '1', fontFamily: 'FontAwesome', fontWeight: 'bold' }">
+                <app-mou-detail-general *ngIf="mouType == 'GENERAL'" [MouCustId]="mouCustId" (ResponseMouDetailGeneral)="mouDetailGeneral($event)"></app-mou-detail-general>
               </aw-wizard-step>
-              <aw-wizard-step [stepTitle]="'Fee'" [navigationSymbol]="{ symbol: '2', fontFamily: 'FontAwesome' }" (stepEnter)="enterTab()">
+              <aw-wizard-step [stepTitle]="'Fee'" [navigationSymbol]="{ symbol: '2', fontFamily: 'FontAwesome' }">
                 Fee
               </aw-wizard-step>
-              <aw-wizard-step [stepTitle]="'Collateral'" [navigationSymbol]="{ symbol: '3', fontFamily: 'FontAwesome' }" (stepEnter)="enterTab()">
+              <aw-wizard-step [stepTitle]="'Collateral'" [navigationSymbol]="{ symbol: '3', fontFamily: 'FontAwesome' }">
                 Collateral
               </aw-wizard-step>
-              <aw-wizard-step [stepTitle]="'Term and Condition'" [navigationSymbol]="{ symbol: '4', fontFamily: 'FontAwesome' }" (stepEnter)="enterTab()">
+              <aw-wizard-step [stepTitle]="'Term and Condition'" [navigationSymbol]="{ symbol: '4', fontFamily: 'FontAwesome' }">
                 Term and Condition
               </aw-wizard-step>
-              <aw-wizard-step [stepTitle]="'Document'" [navigationSymbol]="{ symbol: '5', fontFamily: 'FontAwesome' }" (stepEnter)="enterTab()">
+              <aw-wizard-step [stepTitle]="'Document'" [navigationSymbol]="{ symbol: '5', fontFamily: 'FontAwesome' }">
                 Document
               </aw-wizard-step>
             </aw-wizard>

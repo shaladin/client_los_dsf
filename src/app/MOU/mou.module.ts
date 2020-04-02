@@ -13,6 +13,7 @@ import { UcSubsectionModule } from "@adins/uc-subsection";
 import { UclookupgenericModule } from '@adins/uclookupgeneric';
 import { UcviewgenericModule } from '@adins/ucviewgeneric';
 import { UcaddressModule } from "@adins/ucaddress";
+import { UcinputnumberModule } from "@adins/ucinputnumber";
 import { UCSearchComponent } from '@adins/ucsearch';
 import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
 import { UcgridfooterModule, UcgridfooterComponent } from "@adins/ucgridfooter";
@@ -36,11 +37,11 @@ import { MouDetailGeneralComponent } from './mou-customer-request/mou-detail-gen
 import { MouDetailFactoringComponent } from './mou-customer-request/mou-detail-factoring/mou-detail-factoring.component';
 import { MouCustAssetComponent } from './mou-customer-request/mou-detail-general/mou-cust-asset/mou-cust-asset.component';
 import { MouCustAssetDetailComponent } from './mou-customer-request/mou-detail-general/mou-cust-asset/mou-cust-asset-detail/mou-cust-asset-detail.component';
-import { MouCustomerApprovalComponent } from './mou-customer/mou-customer-approval/mou-customer-approval.component';
-import { MouApprovalGeneralComponent } from './mou-customer/mou-customer-approval/mou-approval-general/mou-approval-general.component';
-import { MouApprovalFactoringComponent } from './mou-customer/mou-customer-approval/mou-approval-factoring/mou-approval-factoring.component';
-import { MouRequestAddcollComponent } from './mou-customer/mou-request/mou-request-addcoll/mou-request-addcoll.component';
-import { MouRequestAddcollAddeditComponent } from './mou-customer/mou-request/mou-request-addcoll-addedit/mou-request-addcoll-addedit.component';
+// import { MouCustomerApprovalComponent } from './mou-customer/mou-customer-approval/mou-customer-approval.component';
+// import { MouApprovalGeneralComponent } from './mou-customer/mou-customer-approval/mou-approval-general/mou-approval-general.component';
+// import { MouApprovalFactoringComponent } from './mou-customer/mou-customer-approval/mou-approval-factoring/mou-approval-factoring.component';
+// import { MouRequestAddcollComponent } from './mou-customer/mou-request/mou-request-addcoll/mou-request-addcoll.component';
+// import { MouRequestAddcollAddeditComponent } from './mou-customer/mou-request/mou-request-addcoll-addedit/mou-request-addcoll-addedit.component';
 // import { ShowErrorsComponent } from "./app/test-new/show-errors.component";
 
 @NgModule({
@@ -63,7 +64,8 @@ import { MouRequestAddcollAddeditComponent } from './mou-customer/mou-request/mo
     UcShowErrorsModule,
     UclookupgenericModule,
     UcviewgenericModule,
-    SharingComponentModule
+    SharingComponentModule,
+    UcinputnumberModule
   ],
   declarations: [
     DocSignerComponent,
@@ -89,11 +91,11 @@ import { MouRequestAddcollAddeditComponent } from './mou-customer/mou-request/mo
   ],
   entryComponents: [
     MouCustAssetDetailComponent,
-    MouCustomerApprovalComponent,
-    MouApprovalGeneralComponent,
-    MouApprovalFactoringComponent,
-    MouRequestAddcollComponent,
-    MouRequestAddcollAddeditComponent,
+    // MouCustomerApprovalComponent,
+    // MouApprovalGeneralComponent,
+    // MouApprovalFactoringComponent,
+    // MouRequestAddcollComponent,
+    // MouRequestAddcollAddeditComponent,
   ]
 })
 export class MouModule { }

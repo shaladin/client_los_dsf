@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { WizardComponent } from 'angular-archwizard';
@@ -14,7 +14,6 @@ import { Location } from '@angular/common';
 })
 export class MouCustomerDetailComponent implements OnInit {
   @ViewChild(WizardComponent) public wizard: WizardComponent;
-  currentWizardIdx: number;
   mouType: string;
   mouCustId: number;
 
@@ -26,11 +25,12 @@ export class MouCustomerDetailComponent implements OnInit {
     private fb: FormBuilder,
     private toastr: NGXToastrService
   ) {
-    this.currentWizardIdx = 0;
-    this.route.queryParams.subscribe(params => {
-      if (params['MOUType'] != null) {
-        this.mouType = params['MOUType'];
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      if (params.get('MOUType') != null) {
+        this.mouType = params.get('MOUType');
       }
+    });
+    this.route.queryParams.subscribe(params => {
       if (params['mouCustId'] != null) {
         this.mouCustId = params['mouCustId'];
       }
@@ -40,13 +40,14 @@ export class MouCustomerDetailComponent implements OnInit {
   ngOnInit() {
   }
 
-  enterTab(){
-
+  mouDetailGeneral(e){
+    if(e["StatusCode"] == 200){
+      this.nextStep();
+    }
   }
 
   nextStep(){
     this.wizard.goToNextStep();
-    this.currentWizardIdx++;
   }
 
 }

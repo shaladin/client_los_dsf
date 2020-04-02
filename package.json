@@ -17,6 +17,7 @@
     "@adins/ucaddress": "^1.0.10",
     "@adins/ucgridfooter": "^1.0.1",
     "@adins/ucgridview": "^2.0.10",
+    "@adins/ucinputnumber": "^1.0.1",
     "@adins/uclookupgeneric": "^2.0.12",
     "@adins/ucpaging": "^2.0.12",
     "@adins/ucviewgeneric": "^2.0.8",

@@ -15,13 +15,13 @@ import { MouCustClauseObj } from 'app/shared/model/MouCustClauseObj.Model';
 })
 export class MouDetailGeneralComponent implements OnInit {
   @Input() MouCustId: number;
-  @Input() Mode: string;
   @Output() ResponseMouDetailGeneral: EventEmitter<any> = new EventEmitter();
   currencyList: any;
   intrstTypeList: any;
   instSchmList: any;
   payFreqList: any;
   firstInstList: any;
+  mode: any;
 
   MouDetailGeneralForm = this.fb.group({
     MouCustClauseId: [0, [Validators.required]],
@@ -72,9 +72,9 @@ export class MouDetailGeneralComponent implements OnInit {
           MrInstSchmCode: this.instSchmList.ReturnObject[0].Key,
           PayFreqCode: this.payFreqList.ReturnObject[0].Key
         });
+        console.log(this.MouDetailGeneralForm.value)
       },
       (error) => {
-        console.log("ERROR");
         console.log(error);
       }
     );
@@ -86,31 +86,32 @@ export class MouDetailGeneralComponent implements OnInit {
       MouCustId: this.MouCustId
     });
 
-    if(this.Mode == "edit"){
-      var mouCustClause = new MouCustClauseObj();
-      mouCustClause.MouCustId = this.MouCustId;
-      this.httpClient.post(AdInsConstant.GetMouCustClauseByMouCustId, mouCustClause).subscribe(
-        (response) => {
-          this.MouDetailGeneralForm.patchValue({
-            ...response
-          });
-        },
-        (error) => {
-          console.log("ERROR");
-          console.log(error);
+    var mouCustClause = new MouCustClauseObj();
+    mouCustClause.MouCustId = this.MouCustId;
+    this.httpClient.post(AdInsConstant.GetMouCustClauseByMouCustId, mouCustClause).subscribe(
+      (response: MouCustClauseObj) => {
+        console.log(response);
+        if(response.MouCustClauseId != 0){
+          this.mode = "edit";
         }
-      );
-    }
+        this.MouDetailGeneralForm.patchValue({
+          ...response
+        });
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   Save(enjiForm){
     var mouCustClauseData = this.MouDetailGeneralForm.value;
     var url = "";
 
-    if(this.Mode == "add"){
+    if(this.mode == "add"){
       url = AdInsConstant.AddMouCustClause;
     }
-    else if(this.Mode == "edit"){
+    else if(this.mode == "edit"){
       url = AdInsConstant.EditMouCustClause;
     }
 
@@ -120,10 +121,8 @@ export class MouDetailGeneralComponent implements OnInit {
         this.ResponseMouDetailGeneral.emit(response);
       },
       (error) => {
-        console.log("ERROR");
         console.log(error);
       }
     );
   }
-
 }

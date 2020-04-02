@@ -6,6 +6,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { MouCustAssetObj } from 'app/shared/model/MouCustAssetObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { MouCustAssetDetailComponent } from './mou-cust-asset-detail/mou-cust-asset-detail.component';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-mou-cust-asset',
@@ -16,16 +17,33 @@ export class MouCustAssetComponent implements OnInit {
   @Input() MouCustId: number;
   isAssetSelected: boolean;
   mouAssetList: any;
+  assetTypeList: any;
   listExclude: Array<string>;
+
+  MouCustClauseAssetForm = this.fb.group({
+    AssetTypeCode: ['']
+  });
 
   constructor(
     private httpClient: HttpClient,
     private modalService: NgbModal,
     private toastr: NGXToastrService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private fb: FormBuilder
   ) { 
     this.isAssetSelected = false;
     this.listExclude = new Array<string>();
+    this.httpClient.post(AdInsConstant.GetAssetTypeKeyValueCode, null).subscribe(
+      (response: any) => {
+        this.assetTypeList = response;
+        this.MouCustClauseAssetForm.patchValue({
+          AssetTypeCode: response.ReturnObject[0].Key
+        });
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   ngOnInit() {

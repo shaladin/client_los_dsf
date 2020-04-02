@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Location } from '@angular/common';
+import { Location, DatePipe } from '@angular/common';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
@@ -36,7 +36,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     EndDt: ['', [Validators.required]],
     RefNo: [''],
     IsRevolving: [false],
-    CurrCode: ['IDR'],
+    CurrCode: [''],
     PlafondAmt: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
     RealisationAmt: [0],
     MouStat: ['NEW', [Validators.required]],
@@ -68,6 +68,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
    }
 
   ngOnInit() {
+    var datePipe = new DatePipe("en-US");
     var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
     console.log(currentUserContext);
     this.inputLookupCust = new InputLookupObj();
@@ -94,12 +95,14 @@ export class MouCustomerRequestDetailComponent implements OnInit {
       mouCust.MouCustId = this.mouCustId;
       this.httpClient.post(AdInsConstant.GetMouCustById, mouCust).subscribe(
         (response: any) => {
+          response["MouCustDt"] = datePipe.transform(response["MouCustDt"], "yyyy-MM-dd");
+          response["StartDt"] = datePipe.transform(response["StartDt"], "yyyy-MM-dd");
+          response["EndDt"] = datePipe.transform(response["EndDt"], "yyyy-MM-dd");
           this.MOUMainInfoForm.patchValue({
             ...response
           });
         },
         (error) => {
-          console.log("ERROR");
           console.log(error);
         }
       );
@@ -131,7 +134,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
         (response: any) => {
           this.toastr.successMessage(response["Message"]);
           var mouCustId = response["MouCustId"];
-          this.router.navigate(["/Mou/Detail", this.mouType], { queryParams: { mouCustId: mouCustFormData.MouCustId }});
+          this.router.navigate(["/Mou/Detail", this.mouType], { queryParams: { mouCustId: mouCustId }});
         },
         (error) => {
           console.log("ERROR");

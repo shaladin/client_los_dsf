@@ -25,7 +25,7 @@
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-md-3 adInsLabel" for="MrInstSchmCode" translate>Installment Scheme</label>
+          <label class="col-md-3 adInsLabel adins-required-label" for="MrInstSchmCode" translate>Installment Scheme</label>
           <div class="col-md-9">
             <select class="form-control adInsInput" formControlName="MrInstSchmCode" 
               [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailGeneralForm.controls.MrInstSchmCode.invalid }">
@@ -35,7 +35,7 @@
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-md-3 adInsLabel" for="PayFreqCode" translate>Payment Frequency</label>
+          <label class="col-md-3 adInsLabel adins-required-label" for="PayFreqCode" translate>Payment Frequency</label>
           <div class="col-md-9">
             <select class="form-control adInsInput" formControlName="PayFreqCode" 
               [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailGeneralForm.controls.PayFreqCode.invalid }">
@@ -95,3 +95,4 @@
     </form>
   </div>
 </div>
+<app-mou-cust-asset [MouCustId]="MouCustId"></app-mou-cust-asset>
