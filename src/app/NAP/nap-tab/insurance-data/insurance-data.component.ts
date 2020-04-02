@@ -128,7 +128,7 @@ export class InsuranceDataComponent implements OnInit {
   async bindInscoBranchObj(){
     console.log("bind insco branch");
     var inscoBranchObj = { MrVendorCategory: AdInsConstant.VendorCategoryAssetInscoBranch, OfficeCode: this.appObj.OriOfficeCode};
-    await this.http.post(AdInsConstant.GetListKeyValueByCategoryCodeAndOfficeCode, inscoBranchObj).toPromise().then(
+    await this.http.post("", inscoBranchObj).toPromise().then(
       (response) => {
         this.inscoBranchObj = response["ReturnObject"];
         if(this.inscoBranchObj.length > 0){

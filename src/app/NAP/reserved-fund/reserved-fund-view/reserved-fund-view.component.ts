@@ -22,6 +22,7 @@ export class RsvFundViewComponent implements OnInit {
   getAppFeeUrl: any;
   getAppRsvFundUrl: any;
   getAppRsvFundRuleUrl: any;
+  getMaxAllocAmtRsvFundUrl: any;
   addEditRsvFundUrl: any;
 
   RsvForm = this.fb.group({
@@ -29,9 +30,9 @@ export class RsvFundViewComponent implements OnInit {
   });
   viewObj: any;
 
-  appId : any;
-  appObj= {
-    AppId : 0,
+  appId: any;
+  appObj = {
+    AppId: 0,
   };
 
   appReservedFundObjs: Array<AppReservedFundObj>;
@@ -60,6 +61,7 @@ export class RsvFundViewComponent implements OnInit {
     this.getAppRsvFundUrl = AdInsConstant.GetListAppReservedFundByAppId;
     this.addEditRsvFundUrl = AdInsConstant.AddEditAppReservedFund;
     this.getAppRsvFundRuleUrl = AdInsConstant.CreateRsvFundRule;
+    this.getMaxAllocAmtRsvFundUrl = AdInsConstant.CreateMaxAllocAmtRsvFund;
   }
 
   ngOnInit() {
@@ -67,20 +69,33 @@ export class RsvFundViewComponent implements OnInit {
     this.appObj.AppId = this.appId;
     this.viewObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
     this.GetAppRsvFundRule(this.appObj);
-
+    this.GetAppFinData(this.appObj);
+    this.GetMaxAllocAmt(this.appObj);
+    this.GetAppFee(this.appObj);
   }
 
   SaveForm() {
-    this.setAppReservedFundData();
-    this.http.post(this.addEditRsvFundUrl, this.allAppReservedFundObj).subscribe(
-      (response) => {
-        console.log(response);
-        this.toastr.successMessage(response["message"]);
-      },
-      (error) => {
-        console.log(error);
+    if (this.isCalculated == false) {
+      this.toastr.errorMessage("Please Calculate First");
+    }
+    else {
+      this.calculating()
+      if (this.maxAllocatedAmt < this.totalRsvFundAmt) {
+        this.toastr.errorMessage("Total Reserved Fund Amount Must be Less Than Remaining Allocated Amount");
       }
-    );
+      else {
+        this.setAppReservedFundData();
+        this.http.post(this.addEditRsvFundUrl, this.allAppReservedFundObj).subscribe(
+          (response) => {
+            console.log(response);
+            this.toastr.successMessage(response["message"]);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      }
+    }
   }
 
   setAppReservedFundData() {
@@ -92,7 +107,7 @@ export class RsvFundViewComponent implements OnInit {
       appReservedFundObj.AppId = this.appId;
       appReservedFundObj.MrReservedFundSourceCode = this.RsvForm.controls["ReservedFundObjs"].value[i].MrReservedFundSourceCode;
       appReservedFundObj.MrReservedFundCode = this.RsvForm.controls["ReservedFundObjs"].value[i].MrReservedFundCode;
-      appReservedFundObj.ReservedFundAmt = this.RsvForm.controls["ReservedFundObjs"].value[i].ReservedFundAmt;
+      appReservedFundObj.ReservedFundAmt = this.RsvForm.controls["ReservedFundAmt" + i].value.replace(/\D/g, "");
       appReservedFundObj.StdReservedFundAmt = this.RsvForm.controls["ReservedFundObjs"].value[i].StdReservedFundAmt;
       appReservedFundObj.Behaviour = this.RsvForm.controls["ReservedFundObjs"].value[i].Behaviour;
       this.allAppReservedFundObj.RequestAppReservedFundObjs.push(appReservedFundObj);
@@ -102,10 +117,10 @@ export class RsvFundViewComponent implements OnInit {
   GetAppFinData(appObj) {
     this.http.post(this.getAppFinDataUrl, this.appObj).subscribe(
       (response) => {
+        console.log(response);
         this.uppingRate = response["DiffRateAmt"];
         this.insuranceIncome = response["TotalInsCustAmt"] - response["TotalInsInscoAmt"];
         this.lifeInsuranceIncome = response["TotalLifeInsCustAmt"] - response["TotalLifeInsInscoAmt"];
-        this.maxAllocatedAmt = response["MaxAllocatedRefundAmt"];
         this.remainingAllocatedAmt = response["MaxAllocatedRefundAmt"] - response["CommissionAllocatedAmt"] - response["ReservedFundAllocatedAmt"];
       }
     );
@@ -124,6 +139,15 @@ export class RsvFundViewComponent implements OnInit {
 
   }
 
+  GetMaxAllocAmt(appObj) {
+    this.http.post(this.getMaxAllocAmtRsvFundUrl, this.appObj).subscribe(
+      (response) => {
+        console.log(response);
+        this.maxAllocatedAmt = response["MaxRefundAmount"];
+      }
+    );
+  }
+
   GetAppRsvFundRule(appObj) {
     this.http.post(this.getAppRsvFundRuleUrl, this.appObj).subscribe(
       (response) => {
@@ -136,33 +160,50 @@ export class RsvFundViewComponent implements OnInit {
           appReservedFundObj.MrReservedFundSourceCode = this.ruleObj[i].AllocationFrom;
           appReservedFundObj.MrReservedFundCode = this.ruleObj[i].AllocationTo;
           appReservedFundObj.ReservedFundAmt = this.ruleObj[i].AllocationAmount;
-          appReservedFundObj.StdReservedFundAmt = this.ruleObj[i].AllocationAmount;
+          appReservedFundObj.StdReservedFundAmt = this.ruleObj[i].AllocationStdAmount;
           appReservedFundObj.Behaviour = this.ruleObj[i].AllocationBehaviour;
           this.appReservedFundObjs.push(appReservedFundObj);
+          //this.RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].ReservedFundAmt = this.ruleObj[i].AllocationAmount;
+
         }
         for (let j = 0; j < this.appReservedFundObjs.length; j++) {
           var listAppRsvFunds = this.RsvForm.controls["ReservedFundObjs"] as FormArray;
           listAppRsvFunds.push(this.addGroup(this.appReservedFundObjs[j], j));
         }
       }
-      
+
     );
   }
 
   addGroup(appReservedFundObjs, i) {
-      return this.fb.group({
-        No: [i],
-        MrReservedFundSourceCode: [appReservedFundObjs.MrReservedFundSourceCode],
-        MrReservedFundCode: [appReservedFundObjs.MrReservedFundCode],
-        ReservedFundAmt: [appReservedFundObjs.ReservedFundAmt, Validators.required],
-        StdReservedFundAmt: [appReservedFundObjs.StdReservedFundAmt],
-        Behaviour: [appReservedFundObjs.Behaviour]
-      })
-    
+    return this.fb.group({
+      No: [i],
+      MrReservedFundSourceCode: [appReservedFundObjs.MrReservedFundSourceCode],
+      MrReservedFundCode: [appReservedFundObjs.MrReservedFundCode],
+      ReservedFundAmt: [appReservedFundObjs.ReservedFundAmt, Validators.required],
+      StdReservedFundAmt: [appReservedFundObjs.StdReservedFundAmt],
+      Behaviour: [appReservedFundObjs.Behaviour]
+    })
+
   }
 
-  calculate() {
+  calculated() {
+    this.totalRsvFundAmt = 0;
+    for (let i = 0; i < this.RsvForm.controls["ReservedFundObjs"].value.length; i++) {
+      var temp: number = +this.RsvForm.controls["ReservedFundAmt" + i].value.replace(/\D/g, "");
+      //temp = this.RsvForm.controls["ReservedFundAmt" + i].value.replace(/\D/g, "");
+      this.totalRsvFundAmt = this.totalRsvFundAmt + temp;
+    }
+    this.isCalculated = true;
+  }
 
+  calculating() {
+    this.totalRsvFundAmt = 0;
+    for (let i = 0; i < this.RsvForm.controls["ReservedFundObjs"].value.length; i++) {
+      var temp: number = +this.RsvForm.controls["ReservedFundAmt" + i].value.replace(/\D/g, "");
+      //temp = this.RsvForm.controls["ReservedFundAmt" + i].value.replace(/\D/g, "");
+      this.totalRsvFundAmt = this.totalRsvFundAmt + temp;
+    }
   }
 
   test() {
