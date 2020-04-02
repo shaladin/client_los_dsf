@@ -112,6 +112,12 @@ export class AdInsConstant {
     //INS PAID BY
     public static InsPaidByCustomer = "CU";
 
+    //COVER PERIOD
+    public static CoverPeriodAnnually = "AN";
+    public static CoverPeriodFullTenor = "FT";
+    public static CoverPeriodPartialTenor = "PT";
+    public static CoverPeriodOverTenor = "OT";
+
     //GENERAL SETTING
     public static GetBusinessDt = "/GeneralSetting/GetBusinessDate";
     public static AddGeneralSetting = "/GeneralSetting/AddGeneralSetting";
@@ -494,5 +500,6 @@ export class AdInsConstant {
     //APP INSURANCE
     public static GetInsuranceDataByAppId = environment.losUrl + "/AppIns/GetInsDataByAppId";
     public static AddEditInsuranceData = environment.losUrl + "/AppIns/AddEditInsuranceData";
+    public static ExecuteInsRateRule = environment.losUrl + "/AppIns/ExecuteInsRateRule";
     
 }
