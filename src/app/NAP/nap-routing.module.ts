@@ -13,6 +13,7 @@ import { GuarantorPersonalComponent } from "./nap-tab/app-guarantor/guarantor-pe
 import { AppLifeInsComponent } from "./nap-tab/app-life-ins/app-life-ins.component";
 import { CommissionPagingComponent } from "./commission-paging/commission-paging.component";
 import { CommissionAddComponent } from "./commission-add/commission-add.component";
+import { AppFinDataComponent } from "./nap-tab/app-fin-data/app-fin-data.component";
 import { InsuranceDataComponent } from "./nap-tab/insurance-data/insurance-data.component";
 import { AssetDataComponent } from "./nap-tab/asset-data/asset-data.component";
 import { RsvFundPagingComponent } from "./reserved-fund/reserved-fund-paging/reserved-fund-paging.component";
@@ -141,7 +142,14 @@ const routes: Routes = [
           data: {
               title: 'Reserved Fund View'
           }
-      }
+      },
+      {
+          path: 'AppFinData',
+          component: AppFinDataComponent,
+          data: {
+              title: 'Commission Add'
+          }
+      },
     ]
   }
 ]

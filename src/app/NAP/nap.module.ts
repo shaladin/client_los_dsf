@@ -51,6 +51,7 @@ import { InsuranceDataComponent } from "./nap-tab/insurance-data/insurance-data.
 import { AssetDataComponent } from "./nap-tab/asset-data/asset-data.component";
 import { RsvFundPagingComponent } from "./reserved-fund/reserved-fund-paging/reserved-fund-paging.component";
 import { RsvFundViewComponent } from "./reserved-fund/reserved-fund-view/reserved-fund-view.component";
+import { AppFinDataComponent } from './nap-tab/app-fin-data/app-fin-data.component';
 
 
 
@@ -92,7 +93,8 @@ import { RsvFundViewComponent } from "./reserved-fund/reserved-fund-view/reserve
         InsuranceDataComponent,
         AssetDataComponent,
         RsvFundPagingComponent,
-        RsvFundViewComponent
+        RsvFundViewComponent,
+        AppFinDataComponent
         ],
     imports: [ 
         NapRoutingModule,
