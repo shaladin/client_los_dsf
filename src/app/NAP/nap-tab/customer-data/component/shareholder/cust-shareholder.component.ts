@@ -65,7 +65,12 @@ export class CustShareholderComponent implements OnInit {
   defaultJobPosition: any;
   CompanyTypeObj: any;
   defaultCompanyType: any;
-
+  industryTypeName: any;
+  isCust: boolean = false;
+  selectedCustTypeName: any;
+  selectedJobPositionName: any;
+  defaultCustTypeName: any;
+  defaultJobPositionName: any;
 
 
 
@@ -119,9 +124,45 @@ export class CustShareholderComponent implements OnInit {
     this.clearForm();
   }
 
+  CustTypeChanged(event){
+    this.setCriteriaLookupCustomer(event.value);
+    this.selectedCustTypeName = this.CustTypeObj.find(x => x.Key == event.value).Value;
+    this.CustShareholderForm.controls.MrGenderCode.enable();
+    this.CustShareholderForm.controls.MrIdTypeCode.enable();
+    this.CustShareholderForm.controls.IdExpiredDt.enable();
+    this.CustShareholderForm.controls.IdNo.enable();
+    this.CustShareholderForm.controls.BirthPlace.enable();
+    this.CustShareholderForm.controls.BirthDt.enable();
+    this.CustShareholderForm.controls.MrGenderCode.enable();
+    this.CustShareholderForm.controls.TaxIdNo.enable();
+    this.CustShareholderForm.controls.IdExpiredDt.enable();
+    this.CustShareholderForm.controls.MrCompanyTypeCode.enable();
+    this.CustShareholderForm.controls.EstablishmentDt.enable();
+    this.CustShareholderForm.controls.TaxIdNo.enable();
+    this.isCust = false;
+
+  }
+
+  JobPositionChanged(event){
+    this.selectedJobPositionName = event.target.options[event.target.options.selectedIndex].text;
+  }
+
+  setCriteriaLookupCustomer(custTypeCode){
+    this.initLookup();
+    var arrCrit = new Array();
+    var critObj = new CriteriaObj();
+    critObj.DataType = 'text';
+    critObj.restriction = AdInsConstant.RestrictionEq;
+    critObj.propName = 'MR_CUST_TYPE_CODE';
+    critObj.value = custTypeCode;
+    arrCrit.push(critObj);
+    this.InputLookupCustomerObj.addCritInput = arrCrit;
+  }
+
   add(content){
     this.mode = "add";
     this.clearForm();
+    this.setCriteriaLookupCustomer(this.defaultCustType);
     this.open(content);
   }
 
@@ -136,31 +177,56 @@ export class CustShareholderComponent implements OnInit {
         MrGenderCode: this.listShareholder[i].MrGenderCode,
         MrIdTypeCode: this.listShareholder[i].MrIdTypeCode,
         BirthPlace: this.listShareholder[i].BirthPlace,
-        BirthDt: this.listShareholder[i].BirthDt,
+        BirthDt: this.listShareholder[i].BirthDt != undefined && this.listShareholder[i].BirthDt != "" ? formatDate(this.listShareholder[i].BirthDt, 'yyyy-MM-dd', 'en-US') : '',
         IdNo: this.listShareholder[i].IdNo,
         TaxIdNo: this.listShareholder[i].TaxIdNo,
-        IdExpiredDt: this.listShareholder[i].IdExpiredDt,
+        IdExpiredDt: this.listShareholder[i].IdExpiredDt != undefined && this.listShareholder[i].IdExpiredDt != "" ? formatDate(this.listShareholder[i].IdExpiredDt, 'yyyy-MM-dd', 'en-US') : '',
         MobilePhnNo: this.listShareholder[i].MobilePhnNo,
         Email: this.listShareholder[i].Email,
         SharePrcnt: this.listShareholder[i].SharePrcnt,
         MrJobPositionCode: this.listShareholder[i].MrJobPositionCode,
         IsSigner: this.listShareholder[i].IsSigner
       });
+      if(this.listShareholder[i].CustNo != undefined && this.listShareholder[i].CustNo != ""){
+        this.InputLookupCustomerObj.isReadonly = true;
+        this.CustShareholderForm.controls.MrGenderCode.disable();
+        this.CustShareholderForm.controls.MrIdTypeCode.disable();
+        this.CustShareholderForm.controls.IdExpiredDt.disable();
+        this.CustShareholderForm.controls.IdNo.disable();
+        this.CustShareholderForm.controls.BirthPlace.disable();
+        this.CustShareholderForm.controls.BirthDt.disable();
+        this.CustShareholderForm.controls.MrGenderCode.disable();
+        this.CustShareholderForm.controls.TaxIdNo.disable();
+        this.CustShareholderForm.controls.IdExpiredDt.disable();
+      }
+      this.selectedJobPositionName = this.listShareholder[i].JobPositionName;
+      this.selectedCustTypeName = this.listShareholder[i].CustTypeName;
+      this.setCriteriaLookupCustomer(this.listShareholder[i].MrCustTypeCode);
     }
 
     if(this.listShareholder[i].MrCustTypeCode == AdInsConstant.CustTypeCompany){
       this.CustShareholderForm.patchValue({
         MrCustTypeCode: this.listShareholder[i].MrCustTypeCode,
         MrCompanyTypeCode: this.listShareholder[i].MrCompanyTypeCode,
-        EstablishmentDt: formatDate(this.listShareholder[i].EstablishmentDt, 'yyyy-MM-dd', 'en-US'),
+        EstablishmentDt: this.listShareholder[i].EstablishmentDt != undefined && this.listShareholder[i].EstablishmentDt != "" ? formatDate(this.listShareholder[i].EstablishmentDt, 'yyyy-MM-dd', 'en-US') : '',
         TaxIdNo: this.listShareholder[i].TaxIdNo,
         SharePrcnt: this.listShareholder[i].SharePrcnt,
         IsSigner: this.listShareholder[i].IsSigner
       });
-
+      this.selectedCustTypeName = this.listShareholder[i].CustTypeName;
+      this.selectedJobPositionName = "";
       this.selectedIndustryTypeCode = this.listShareholder[i].IndustryTypeCode;
       this.setIndustryTypeName(this.listShareholder[i].IndustryTypeCode);
+      this.setCriteriaLookupCustomer(this.listShareholder[i].MrCustTypeCode);
+      if(this.listShareholder[i].CustNo != undefined && this.listShareholder[i].CustNo != ""){
+        this.InputLookupCustomerObj.isReadonly = true;
+        this.CustShareholderForm.controls.MrCompanyTypeCode.disable();
+        this.CustShareholderForm.controls.EstablishmentDt.disable();
+        this.CustShareholderForm.controls.TaxIdNo.disable();
+        this.isCust = true;
+      }
     }
+
     this.InputLookupCustomerObj.nameSelect = this.listShareholder[i].MgmntShrholderName;
     this.InputLookupCustomerObj.jsonSelect = {CustName: this.listShareholder[i].MgmntShrholderName};
     this.selectedCustNo = this.listShareholder[i].CustNo;
@@ -193,17 +259,104 @@ export class CustShareholderComponent implements OnInit {
       EstablishmentDt: ['']
     });
     this.selectedCustNo = "";
+    this.selectedJobPositionName = this.defaultJobPositionName;
+    this.selectedCustTypeName = this.defaultCustTypeName;
     this.initLookup();
+    this.isCust = false;
   }
 
   CopyCustomer(event) {
     this.selectedCustNo = event.CustNo;
     this.InputLookupCustomerObj.isReadonly = true;
+
+    var custObj = {CustId: event.CustId};
+    var url;
+
+    if(event.MrCustTypeCode == AdInsConstant.CustTypePersonal){
+      url = AdInsConstant.GetCustPersonalForCopyMgmntShrholderByCustId;
+    }
+    if(event.MrCustTypeCode == AdInsConstant.CustTypeCompany){
+      url = AdInsConstant.GetCustCompanyForCopyMgmntShrholderByCustId;
+    }
+
+    this.http.post(url, custObj).subscribe(
+      (response) => {
+        console.log(response);
+
+        if(event.MrCustTypeCode == AdInsConstant.CustTypePersonal){
+          if(response["CustObj"] != undefined){
+            this.CustShareholderForm.patchValue({
+              MrCustTypeCode: response["CustObj"].MrCustTypeCode,
+              MrIdTypeCode: response["CustObj"].MrIdTypeCode,
+              IdNo: response["CustObj"].IdNo,
+              TaxIdNo: response["CustObj"].TaxIdNo,
+              IdExpiredDt: response["CustObj"].IdExpiredDt != undefined ? formatDate(response["CustObj"].IdExpiredDt, 'yyyy-MM-dd', 'en-US') : ''
+            });
+            this.selectedCustTypeName = this.CustTypeObj.find(x => x.Key == response["CustObj"].MrCustTypeCode).Value;
+          }
+
+          if(response["CustPersonalObj"] != undefined){
+            this.CustShareholderForm.patchValue({
+              MrGenderCode: response["CustPersonalObj"].MrGenderCode,
+              BirthPlace: response["CustPersonalObj"].BirthPlace,
+              BirthDt: response["CustPersonalObj"].BirthDt != undefined ? formatDate(response["CustPersonalObj"].BirthDt, 'yyyy-MM-dd', 'en-US') : '',
+              MobilePhnNo: response["CustPersonalObj"].MobilePhnNo1,
+              Email: response["CustPersonalObj"].Email1
+            });
+          }
+
+          if(response["CustPersonalJobDataObj"] != undefined){
+            this.CustShareholderForm.patchValue({
+              MrJobPositionCode: response["CustPersonalJobDataObj"].MrJobPositionCode,
+            });
+            this.selectedJobPositionName = this.JobPositionObj.find(x => x.Key == response["CustPersonalJobDataObj"].MrJobPositionCode).Value;
+          }
+
+          this.CustShareholderForm.controls.MrGenderCode.disable();
+          this.CustShareholderForm.controls.MrIdTypeCode.disable();
+          this.CustShareholderForm.controls.IdExpiredDt.disable();
+          this.CustShareholderForm.controls.IdNo.disable();
+          this.CustShareholderForm.controls.BirthPlace.disable();
+          this.CustShareholderForm.controls.BirthDt.disable();
+          this.CustShareholderForm.controls.MrGenderCode.disable();
+          this.CustShareholderForm.controls.TaxIdNo.disable();
+
+        }
+
+        if(event.MrCustTypeCode == AdInsConstant.CustTypeCompany){
+          if(response["CustObj"] != undefined){
+            this.CustShareholderForm.patchValue({
+              MrCustTypeCode: response["CustObj"].MrCustTypeCode,
+              TaxIdNo: response["CustObj"].TaxIdNo
+            });
+            this.selectedCustTypeName = this.CustTypeObj.find(x => x.Key == response["CustObj"].MrCustTypeCode).Value;
+
+          }
+          if(response["CustCompanyObj"] != undefined){
+            this.CustShareholderForm.patchValue({
+              MrCompanyTypeCode: response["CustCompanyObj"].MrCompanyTypeCode,
+              EstablishmentDt: formatDate(response["CustCompanyObj"].EstablishmentDt, 'yyyy-MM-dd', 'en-US'),
+            });
+          }
+          this.selectedJobPositionName = "";
+          this.selectedIndustryTypeCode = response["CustCompanyObj"].IndustryTypeCode;
+          this.setIndustryTypeName(response["CustCompanyObj"].IndustryTypeCode); 
+          this.CustShareholderForm.controls.MrCompanyTypeCode.disable();
+          this.CustShareholderForm.controls.EstablishmentDt.disable();
+          this.CustShareholderForm.controls.TaxIdNo.disable();
+          this.isCust = true;
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   setAppCustCompanyMgmntShrholder(){
     if(this.CustShareholderForm.controls.MrCustTypeCode.value == AdInsConstant.CustTypePersonal){
       this.appCustCompanyMgmntShrholderObj.MrCustTypeCode = this.CustShareholderForm.controls.MrCustTypeCode.value;
+      this.appCustCompanyMgmntShrholderObj.CustTypeName = this.selectedCustTypeName;
       this.appCustCompanyMgmntShrholderObj.MrGenderCode = this.CustShareholderForm.controls.MrGenderCode.value;
       this.appCustCompanyMgmntShrholderObj.MgmntShrholderName = this.CustShareholderForm.controls.lookupCustomerShareholder.value.value;
       this.appCustCompanyMgmntShrholderObj.CustNo = this.selectedCustNo;
@@ -217,6 +370,7 @@ export class CustShareholderComponent implements OnInit {
       this.appCustCompanyMgmntShrholderObj.Email = this.CustShareholderForm.controls.Email.value;
       this.appCustCompanyMgmntShrholderObj.SharePrcnt = this.CustShareholderForm.controls.SharePrcnt.value;
       this.appCustCompanyMgmntShrholderObj.MrJobPositionCode = this.CustShareholderForm.controls.MrJobPositionCode.value;
+      this.appCustCompanyMgmntShrholderObj.JobPositionName = this.selectedJobPositionName;
       this.appCustCompanyMgmntShrholderObj.IsSigner = this.CustShareholderForm.controls.IsSigner.value;
     }
 
@@ -242,6 +396,7 @@ export class CustShareholderComponent implements OnInit {
       (response) => {
         console.log(response);
         this.InputLookupIndustryTypeObj.nameSelect = response["IndustryTypeName"];
+        this.industryTypeName = response["IndustryTypeName"];
         this.InputLookupIndustryTypeObj.jsonSelect = response;     
       },
       (error) => {
@@ -265,6 +420,7 @@ export class CustShareholderComponent implements OnInit {
     this.InputLookupIndustryTypeObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupIndustryTypeObj.pagingJson = "./assets/uclookup/lookupIndustryType.json";
     this.InputLookupIndustryTypeObj.genericJson = "./assets/uclookup/lookupIndustryType.json";
+    this.InputLookupIndustryTypeObj.isRequired = false;
 
   }
 
@@ -285,6 +441,7 @@ export class CustShareholderComponent implements OnInit {
         console.log(this.CustTypeObj);
         if(this.CustTypeObj.length > 0){
           this.defaultCustType = this.CustTypeObj[0].Key;
+          this.defaultCustTypeName = this.CustTypeObj[0].Value;
         }
       }
     );
@@ -320,7 +477,8 @@ export class CustShareholderComponent implements OnInit {
       (response) => {
         this.JobPositionObj = response["ReturnObject"];
         if(this.JobPositionObj.length > 0){
-          this.defaultJobPosition = this.JobPositionObj[0].Key
+          this.defaultJobPosition = this.JobPositionObj[0].Key;
+          this.defaultJobPositionName = this.JobPositionObj[0].Value;
         }
       }
     );
