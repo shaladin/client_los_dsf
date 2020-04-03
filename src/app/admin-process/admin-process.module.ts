@@ -14,6 +14,8 @@ import { PurchaseOrderDetailComponent } from './purchase-order/purchase-order-de
 import { SharingComponentModule } from "app/shared/sharingcomponent.module";
 import { PurchaseOrderComponent } from './purchase-order/purchase-order/purchase-order.component';
 import { PurchaseOrderInfoComponent } from './purchase-order/purchase-order-detail/purchase-order-info/purchase-order-info.component';
+import { AgrmntActivationPagingComponent } from './agrmnt-activation/agrmnt-activation-paging/agrmnt-activation-paging.component';
+import { AgrmntActivationDetailComponent } from './agrmnt-activation/agrmnt-activation-detail/agrmnt-activation-detail.component';
 
 @NgModule({
   imports: [
@@ -34,7 +36,9 @@ import { PurchaseOrderInfoComponent } from './purchase-order/purchase-order-deta
     PurchaseOrderPagingComponent,
     PurchaseOrderDetailComponent,
     PurchaseOrderComponent,
-    PurchaseOrderInfoComponent
+    PurchaseOrderInfoComponent,
+    AgrmntActivationPagingComponent,
+    AgrmntActivationDetailComponent
   ]
 })
 export class AdminProcessModule { }
