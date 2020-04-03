@@ -490,5 +490,9 @@ export class AdInsConstant {
     
     //PURCHASE ORDER
     public static SubmitPurchaseOrder = environment.losUrl + "/PurchaseOrderH/SubmitPurchaseOrder";
+
+    //REF TC
+    public static GetRefTcByCode = environment.FoundationR3Url + "/RefTc/GetRefTcByCode";
+    public static GetListRefTcByTcCode = environment.FoundationR3Url + "/RefTc/GetListRefTcByTcCode";
     
 }

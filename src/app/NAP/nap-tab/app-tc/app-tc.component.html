@@ -12,36 +12,62 @@
       </div>
       <div class="card-body">
         <div class="px-3">
-          <div id="appTc" [hidden]="result?.length < 1">
-            <table class="table table-responsive-md text-center table-hover">
-              <thead>
-                <tr class="table-header">
-                  <th><span translate class="thead-header">No</span></th>
-                  <th><span translate class="thead-header" name='DocName'>Document Name</span></th>
-                  <th><span translate class="thead-header" name='PriorTo'>Prior To</span>
-                  </th>
-                  <th><span translate class="thead-header" name='Required'>Required</span>
-                  </th>
-                  <th><span translate class="thead-header" name='Check'>Check</span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item of result; let i = index">
-                  <td>{{i}}</td>
-                  <td>{{item.TCCode}}</td>
-                  <td>{{item.TCPriorTo}}</td>
-                  <td>{{item.TcMandatory}}</td>
-                  <td><input type="checkbox" class="form-check-input" (change)="ObjSelected($event,i)"></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="form-actions right">
-            <button type="submit" class="btn btn-raised btn-primary" (click)="Save()">
-              <i class="fa fa-check-square-o"></i> Save
-            </button>
-          </div>
+          <form class="form form-horizontal" [formGroup]="AppTcForm" #enjiForm="ngForm">
+            <div class="form-body">
+              <ng-container formArrayName="AppTc">
+                  <table class="table table-responsive-md text-center table-hover">
+                    <thead>
+                      <tr class="table-header">
+                        <th><span translate class="thead-header">No</span></th>
+                        <th><span translate class="thead-header" name='DocName'>Document Name</span></th>
+                        <th><span translate class="thead-header" name='PriorTo'>Prior To</span>
+                        </th>
+                        <th><span translate class="thead-header" name='Required'>Required</span>
+                        </th>
+                        <th><span translate class="thead-header" name='Check'>Check</span>
+                        </th>
+                        <th><span translate class="thead-header" name='PromisedDt'>Promise Date</span>
+                        </th>
+                        <th><span translate class="thead-header" name='ExpiredDt'>Expired Date</span>
+                        </th>
+                        <th><span translate class="thead-header" name='Notes'>Notes</span>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let apptc of AppTcForm['controls']['AppTc']['controls']; let i = index">
+                        <td [formGroupName]="i" class="text-center">
+                          {{i + 1}}
+                        </td>
+                        <td [formGroupName]="i" class="text-center">
+                          <label>{{DocName[i]}}</label>
+                        </td>
+                        <td [formGroupName]="i" class="text-center">
+                          <label>{{AppTcForm.controls['AppTc'].value[i].PriorTo}}</label>
+                        </td>
+                        <td [formGroupName]="i" class="text-center">
+                          <label>{{AppTcForm.controls['AppTc'].value[i].IsMandatory}}</label>
+                        </td>
+                        <td [formGroupName]="i" class="text-center"><input type="checkbox" class="form-check-input" (change)="ObjSelected()" formControlName="IsChecked"></td>
+                        <td [formGroupName]="i" class="text-center">
+                          <input type="date" class="form-control adInsInput width-100-per" formControlName="PromisedDt">
+                        </td>
+                        <td [formGroupName]="i" class="text-center">
+                          <input type="date" class="form-control adInsInput width-100-per" formControlName="ExpiredDt">
+                        </td>
+                        <td [formGroupName]="i" class="text-center">
+                          <input type="text" class="form-control adInsInput width-100-per" formControlName="Notes"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+              </ng-container>
+              <div class="form-actions right">
+                <button type="submit" class="btn btn-raised btn-primary" (click)="Save()">
+                  <i class="fa fa-check-square-o"></i> Save
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
