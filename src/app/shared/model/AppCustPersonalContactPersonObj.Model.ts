@@ -7,14 +7,16 @@ export class AppCustPersonalContactPersonObj {
     BirthPlace: any; 
     BirthDt: any; 
     MotherMaidenName: any; 
-    MrGenderCode: any; 
+    MrGenderCode: any;
+    GenderName: any;
     MrReligionCode: any; 
     MrEducationCode: any; 
     MrJobProfessionCode: any; 
     MrMaritalStatCode: any; 
     MrNationalityCode: any; 
     NationalityCountryCode: any; 
-    MrCustRelationshipCode: any; 
+    MrCustRelationshipCode: any;
+    RelationshipName: any; 
     ContactPersonCustNo: any; 
     IsEmergencyContact: any; 
     IsFamily: any; 
