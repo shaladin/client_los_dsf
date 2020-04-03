@@ -1,0 +1,128 @@
+<div formGroupName="{{identifier}}">
+  <lib-ucSubsection [id]="'financialDataId'" [title]="'Financial Data'" [panel]="'financialDataCompany'">
+  </lib-ucSubsection>
+  <div id="financialDataCompany">
+    <div class="form-group row">
+      <label class="col-md-2" for="monthlyIncome" translate>Monthly Income </label>
+      <div class="col-md-4">
+        <lib-ucinputnumber [parentForm]="parentForm" [enjiForm]="enjiForm" [identifier]="'CompanyFinGrossMonthlyIncomeAmt'" [ucNumber]="appCustCompanyFinDataObj.GrossMonthlyIncomeAmt" [isRequired]="false"></lib-ucinputnumber>
+      </div>
+      <label class="col-md-2" for="monthlyExpense" translate>Monthly Expense </label>
+      <div class="col-md-4">
+        <lib-ucinputnumber [parentForm]="parentForm" [enjiForm]="enjiForm" [identifier]="'CompanyFinGrossMonthlyExpenseAmt'" [ucNumber]="appCustCompanyFinDataObj.GrossMonthlyExpenseAmt" [isRequired]="false"></lib-ucinputnumber>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-2" for="returnInvest" translate>Return of Investment (%) </label>
+      <div class="col-md-4">
+        <lib-ucinputnumber [parentForm]="parentForm" [enjiForm]="enjiForm" [identifier]="'CompanyFinReturnOfInvestmentPrcnt'" [ucNumber]="appCustCompanyFinDataObj.ReturnOfInvestmentPrcnt" [isRequired]="false"></lib-ucinputnumber>
+      </div>
+      <label class="col-md-2" for="returnInvest" translate>Return of Equity (%) </label>
+      <div class="col-md-4">
+        <lib-ucinputnumber [parentForm]="parentForm" [enjiForm]="enjiForm" [identifier]="'CompanyFinReturnOfEquityPrcnt'" [ucNumber]="appCustCompanyFinDataObj.ReturnOfEquityPrcnt" [isRequired]="false"></lib-ucinputnumber>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-2" for="returnAsset" translate>Return of Asset (%) </label>
+      <div class="col-md-4">
+        <lib-ucinputnumber [parentForm]="parentForm" [enjiForm]="enjiForm" [identifier]="'CompanyFinReturnOfAssetPrcnt'" [ucNumber]="appCustCompanyFinDataObj.ReturnOfAssetPrcnt" [isRequired]="false"></lib-ucinputnumber>
+      </div>
+      <label class="col-md-2" for="profitMarginPrcnt" translate>Profit Margin (%) </label>
+      <div class="col-md-4">
+        <lib-ucinputnumber [parentForm]="parentForm" [enjiForm]="enjiForm" [identifier]="'CompanyFinProfitMarginPrcnt'" [ucNumber]="appCustCompanyFinDataObj.ProfitMarginPrcnt" [isRequired]="false"></lib-ucinputnumber>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-2" for="currentRatioPrcnt" translate>Current Ratio (%) </label>
+      <div class="col-md-4">
+        <lib-ucinputnumber [parentForm]="parentForm" [enjiForm]="enjiForm" [identifier]="'CompanyFinCurrentRatioPrcnt'" [ucNumber]="appCustCompanyFinDataObj.CurrentRatioPrcnt" [isRequired]="false"></lib-ucinputnumber>
+      </div>
+      <label class="col-md-2" for="debtEquityRatioPrcnt" translate>Debt Equity Ratio (%) </label>
+      <div class="col-md-4">
+        <lib-ucinputnumber [parentForm]="parentForm" [enjiForm]="enjiForm" [identifier]="'CompanyFinDebtEquityRatioPrcnt'" [ucNumber]="appCustCompanyFinDataObj.DebtEquityRatioPrcnt" [isRequired]="false"></lib-ucinputnumber>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-2" for="invTurnOverPrcnt" translate>Inventory Turn Over (%) </label>
+      <div class="col-md-4">
+        <lib-ucinputnumber [parentForm]="parentForm" [enjiForm]="enjiForm" [identifier]="'CompanyFinInvTurnOverPrcnt'" [ucNumber]="appCustCompanyFinDataObj.InvTurnOverPrcnt" [isRequired]="false"></lib-ucinputnumber>
+      </div>
+      <label class="col-md-2" for="arTurnOverPrcnt" translate>AR Turn Over (%) </label>
+      <div class="col-md-4">
+        <lib-ucinputnumber [parentForm]="parentForm" [enjiForm]="enjiForm" [identifier]="'CompanyFinArTurnOverPrcnt'" [ucNumber]="appCustCompanyFinDataObj.ArTurnOverPrcnt" [isRequired]="false"></lib-ucinputnumber>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-2" for="growthPrcnt" translate>Growth (%) </label>
+      <div class="col-md-4">
+        <lib-ucinputnumber [parentForm]="parentForm" [enjiForm]="enjiForm" [identifier]="'CompanyFinGrowthPrcnt'" [ucNumber]="appCustCompanyFinDataObj.GrowthPrcnt" [isRequired]="false"></lib-ucinputnumber>
+      </div>
+      <label class="col-md-2" for="workingCapitalAmt" translate>Working Capital (Amt)</label>
+      <div class="col-md-4">
+        <lib-ucinputnumber [parentForm]="parentForm" [enjiForm]="enjiForm" [identifier]="'CompanyFinWorkingCapitalAmt'" [ucNumber]="appCustCompanyFinDataObj.WorkingCapitalAmt" [isRequired]="false"></lib-ucinputnumber>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-2" for="othMonthlyInstAmt" translate>Other Monthly Installment </label>
+      <div class="col-md-4">
+        <lib-ucinputnumber [parentForm]="parentForm" [enjiForm]="enjiForm" [identifier]="'CompanyFinOthMonthlyInstAmt'" [ucNumber]="appCustCompanyFinDataObj.OthMonthlyInstAmt" [isRequired]="false"></lib-ucinputnumber>
+      </div>
+      <label class="col-md-2" for="dateAsOf" translate>Date As Of</label>
+      <div class="col-md-4">
+        <input type="date" class="form-control" id="dateAsOf" formControlName="DateAsOf" [(ngModel)]="appCustCompanyFinDataObj.DateAsOf"
+        [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].DateAsOf.invalid }">
+        <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].DateAsOf" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-2" for="revenue" translate>Revenue </label>
+      <div class="col-md-4">
+        <lib-ucinputnumber [parentForm]="parentForm" [enjiForm]="enjiForm" [identifier]="'CompanyFinRevenue'" [ucNumber]="appCustCompanyFinDataObj.Revenue" [isRequired]="false"></lib-ucinputnumber>
+      </div>
+      <label class="col-md-2" for="oprCost" translate>Opr Cost</label>
+      <div class="col-md-4">
+        <lib-ucinputnumber [parentForm]="parentForm" [enjiForm]="enjiForm" [identifier]="'CompanyFinOprCost'" [ucNumber]="appCustCompanyFinDataObj.OprCost" [isRequired]="false"></lib-ucinputnumber>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-2" for="profitBeforeTax" translate>Profit Before Tax</label>
+      <div class="col-md-4">
+        <lib-ucinputnumber [parentForm]="parentForm" [enjiForm]="enjiForm" [identifier]="'CompanyFinProfitBeforeTax'" [ucNumber]="appCustCompanyFinDataObj.ProfitBeforeTax" [isRequired]="false"></lib-ucinputnumber>
+      </div>
+      <label class="col-md-2" for="currAsset" translate>Current Asset </label>
+      <div class="col-md-4">
+        <lib-ucinputnumber [parentForm]="parentForm" [enjiForm]="enjiForm" [identifier]="'CompanyFinCurrAsset'" [ucNumber]="appCustCompanyFinDataObj.CurrAsset" [isRequired]="false"></lib-ucinputnumber>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-2" for="netFixedAsset" translate>Net Fixed Asset</label>
+      <div class="col-md-4">
+        <lib-ucinputnumber [parentForm]="parentForm" [enjiForm]="enjiForm" [identifier]="'CompanyFinNetFixedAsset'" [ucNumber]="appCustCompanyFinDataObj.NetFixedAsset" [isRequired]="false"></lib-ucinputnumber>
+      </div>
+      <label class="col-md-2" for="totalAsset" translate>Total Asset </label>
+      <div class="col-md-4">
+        <lib-ucinputnumber [parentForm]="parentForm" [enjiForm]="enjiForm" [identifier]="'CompanyFinTotalAsset'" [ucNumber]="appCustCompanyFinDataObj.TotalAsset" [isRequired]="false"></lib-ucinputnumber>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-2" for="currLiablts" translate>Current Liabilities</label>
+      <div class="col-md-4">
+        <lib-ucinputnumber [parentForm]="parentForm" [enjiForm]="enjiForm" [identifier]="'CompanyFinCurrLiablts'" [ucNumber]="appCustCompanyFinDataObj.CurrLiablts" [isRequired]="false"></lib-ucinputnumber>
+      </div>
+      <label class="col-md-2" for="longTemrLiablts" translate>Long Term Liabilities </label>
+      <div class="col-md-4">
+        <lib-ucinputnumber [parentForm]="parentForm" [enjiForm]="enjiForm" [identifier]="'CompanyFinLongTemrLiablts'" [ucNumber]="appCustCompanyFinDataObj.LongTemrLiablts" [isRequired]="false"></lib-ucinputnumber>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-2" for="shareholderEquity" translate>Shareholder Equity</label>
+      <div class="col-md-4">
+        <lib-ucinputnumber [parentForm]="parentForm" [enjiForm]="enjiForm" [identifier]="'CompanyFinShareholderEquity'" [ucNumber]="appCustCompanyFinDataObj.ShareholderEquity" [isRequired]="false"></lib-ucinputnumber>
+      </div>
+      <label class="col-md-2" for="currRatio" translate>Current Ratio</label>
+      <div class="col-md-4">
+        <lib-ucinputnumber [parentForm]="parentForm" [enjiForm]="enjiForm" [identifier]="'CompanyFinCurrRatio'" [ucNumber]="appCustCompanyFinDataObj.CurrRatio" [isRequired]="false"></lib-ucinputnumber>
+      </div>
+    </div>
+  </div>
+</div>
