@@ -402,6 +402,9 @@ export class AdInsConstant {
     public static GetMouCustClauseByMouCustId = environment.losUrl + "/MouCustClause/GetMouCustClauseByMouCustId";
     public static AddMouCustClause = environment.losUrl + "/MouCustClause/AddMouCustClause";
     public static EditMouCustClause = environment.losUrl + "/MouCustClause/EditMouCustClause";
+    public static AddMouCustFctr = environment.losUrl + "/MouCustFctr/AddMouCustFctr";
+    public static EditMouCustFctr = environment.losUrl + "/MouCustFctr/EditMouCustFctr";
+    public static GetMouCustFctrByMouCustId = environment.losUrl + "/MouCustFctr/GetMouCustFctrByMouCustId";
 
     // MOU CUST ASSET
     public static GetMouCustAssetByMouCustId = environment.losUrl + "/MouCustAsset/GetMouCustAssetByMouCustId";

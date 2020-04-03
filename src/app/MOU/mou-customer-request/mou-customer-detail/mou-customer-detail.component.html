@@ -29,6 +29,7 @@
               navigateBackward="allow" navigateForward="allow">
               <aw-wizard-step [stepTitle]="'MOU Detail'" [navigationSymbol]="{ symbol: '1', fontFamily: 'FontAwesome', fontWeight: 'bold' }">
                 <app-mou-detail-general *ngIf="mouType == 'GENERAL'" [MouCustId]="mouCustId" (ResponseMouDetailGeneral)="mouDetailGeneral($event)"></app-mou-detail-general>
+                <app-mou-detail-factoring *ngIf="mouType == 'FACTORING'" [MouCustId]="mouCustId" (ResponseMouCustFactoring)="mouDetailFactoring($event)"></app-mou-detail-factoring>
               </aw-wizard-step>
               <aw-wizard-step [stepTitle]="'Fee'" [navigationSymbol]="{ symbol: '2', fontFamily: 'FontAwesome' }">
                 Fee

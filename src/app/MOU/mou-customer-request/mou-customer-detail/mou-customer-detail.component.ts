@@ -46,6 +46,12 @@ export class MouCustomerDetailComponent implements OnInit {
     }
   }
 
+  mouDetailFactoring(e){
+    if(e["StatusCode"] == 200){
+      this.nextStep();
+    }
+  }
+
   nextStep(){
     this.wizard.goToNextStep();
   }
