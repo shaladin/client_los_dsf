@@ -20,20 +20,16 @@ import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 
 @Component({
-  selector: 'app-cust-contact-information',
-  templateUrl: './cust-contact-information.component.html',
-  styleUrls: ['./cust-contact-information.component.scss'],
+  selector: 'app-cust-personal-contact-information',
+  templateUrl: './cust-personal-contact-information.component.html',
+  styleUrls: ['./cust-personal-contact-information.component.scss'],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 
 })
 
-export class CustContactInformationComponent implements OnInit {
+export class CustPersonalContactInformationComponent implements OnInit {
+  @Input() listContactPersonPersonal: any = new Array<AppCustPersonalContactPersonObj>();
 
-  @Input() appCustPersonalId: any;
-  @Input() custType: any;
-  @Input() enjiForm: NgForm;
-  @Input() parentForm: FormGroup;
-  @Input() identifier: any;
 
   @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
   @Output() callbackCopyAddr: EventEmitter<any> = new EventEmitter();
@@ -42,7 +38,6 @@ export class CustContactInformationComponent implements OnInit {
   currentEditedIndex: any;
   closeResult: any;
   selectedProfessionCode: any;
-  listContactPersonPersonal: any;
   getCustContactPersonPersonalUrl: any;
   getRefMasterUrl: any;
   getRefProfessionUrl: any;
@@ -74,6 +69,13 @@ export class CustContactInformationComponent implements OnInit {
   IdTypeObj: any;
   CustRelationshipObj: any;
   InputLookupProfessionObj: any;
+  defaultGender: any;
+  defaultIdType: any;
+  defaultCustRelationship: any;
+  selectedGenderName: any;
+  selectedRelationshipName: any;
+  defaultGenderName: any;
+  defaultRelationshipName: any;
 
 
   ContactInfoPersonalForm = this.fb.group({
@@ -108,24 +110,23 @@ export class CustContactInformationComponent implements OnInit {
     this.initUrl();
     this.bindAllRefMasterObj();
     this.initContactPersonAddrObj();
-    this.getListContactPersonForPaging();
   }
 
   SaveForm(){
-    console.log(this.ContactInfoPersonalForm);
-    if(this.custType == AdInsConstant.CustTypePersonal){
-      this.appCustPersonalContactPersonObj = new AppCustPersonalContactPersonObj();
-      this.setAppCustPersonalContactPerson();
-      if(this.mode == "add"){
-        this.listContactPersonPersonal.push(this.appCustPersonalContactPersonObj);
-      }
-      if(this.mode == "edit"){
-        this.listContactPersonPersonal[this.currentEditedIndex] = this.appCustPersonalContactPersonObj;
-      }
-      this.callbackSubmit.emit(this.listContactPersonPersonal);
-      this.modalService.dismissAll();
-      this.clearForm();
+    this.appCustPersonalContactPersonObj = new AppCustPersonalContactPersonObj();
+    if(this.listContactPersonPersonal == undefined){
+      this.listContactPersonPersonal = new Array<AppCustPersonalContactPersonObj>();
     }
+    this.setAppCustPersonalContactPerson();
+    if(this.mode == "add"){
+      this.listContactPersonPersonal.push(this.appCustPersonalContactPersonObj);
+    }
+    if(this.mode == "edit"){
+      this.listContactPersonPersonal[this.currentEditedIndex] = this.appCustPersonalContactPersonObj;
+    }
+    this.callbackSubmit.emit(this.listContactPersonPersonal);
+    this.modalService.dismissAll();
+    this.clearForm();
   }
 
   add(content){
@@ -169,16 +170,16 @@ export class CustContactInformationComponent implements OnInit {
 
   clearForm(){
     this.ContactInfoPersonalForm = this.fb.group({
-      ContactPersonName: ['', [Validators.required, Validators.maxLength(1000)]],
-      MrGenderCode: ['', [Validators.required, Validators.maxLength(50)]],
-      MrIdTypeCode: ['', Validators.maxLength(50)],
-      MrCustRelationshipCode: ['', Validators.maxLength(50)],
+      ContactPersonName: ['', [Validators.required, Validators.maxLength(500)]],
+      MrGenderCode: [this.defaultGender, [Validators.required, Validators.maxLength(50)]],
+      MrIdTypeCode: [this.defaultIdType, Validators.maxLength(50)],
+      MrCustRelationshipCode: [this.defaultCustRelationship, Validators.maxLength(50)],
       IdNo: ['', Validators.maxLength(100)],
       BirthPlace: ['', Validators.maxLength(100)],
       BirthDt: [''],
       IsEmergencyContact: [false],
       MobilePhnNo1: ['', [Validators.required, Validators.maxLength(100)]],
-      MobilePhnNo2: ['', [Validators.required, Validators.maxLength(100)]],
+      MobilePhnNo2: ['', Validators.maxLength(100)],
       IsFamily: [false],
       Email: ['', Validators.maxLength(100)],
       CopyFromContactPerson: ['']
@@ -186,6 +187,9 @@ export class CustContactInformationComponent implements OnInit {
 
     this.copyFromContactPerson = "";
     this.contactPersonAddrObj = new AddrObj();
+    this.selectedGenderName = this.defaultGenderName;
+    this.selectedRelationshipName = this.defaultRelationshipName;
+
     this.initLookup();
     this.initContactPersonAddrObj();
   }
@@ -204,7 +208,6 @@ export class CustContactInformationComponent implements OnInit {
     this.appCustPersonalContactPersonObj.MobilePhnNo1 = this.ContactInfoPersonalForm.controls.MobilePhnNo1.value;
     this.appCustPersonalContactPersonObj.MobilePhnNo2 = this.ContactInfoPersonalForm.controls.MobilePhnNo2.value;
     this.appCustPersonalContactPersonObj.Email = this.ContactInfoPersonalForm.controls.Email.value;
-    this.appCustPersonalContactPersonObj.AppCustPersonalId = this.appCustPersonalId;
     this.appCustPersonalContactPersonObj.Zipcode = this.ContactInfoPersonalForm.controls["contactPersonAddrZipcode"]["controls"].value.value;
     this.appCustPersonalContactPersonObj.Addr = this.ContactInfoPersonalForm.controls["contactPersonAddr"]["controls"].Addr.value;
     this.appCustPersonalContactPersonObj.AreaCode1 = this.ContactInfoPersonalForm.controls["contactPersonAddr"]["controls"].AreaCode1.value;
@@ -212,14 +215,20 @@ export class CustContactInformationComponent implements OnInit {
     this.appCustPersonalContactPersonObj.AreaCode3 = this.ContactInfoPersonalForm.controls["contactPersonAddr"]["controls"].AreaCode3.value;
     this.appCustPersonalContactPersonObj.AreaCode4 = this.ContactInfoPersonalForm.controls["contactPersonAddr"]["controls"].AreaCode4.value;
     this.appCustPersonalContactPersonObj.City = this.ContactInfoPersonalForm.controls["contactPersonAddr"]["controls"].City.value;
+    this.appCustPersonalContactPersonObj.GenderName = this.selectedGenderName;
+    this.appCustPersonalContactPersonObj.RelationshipName = this.selectedRelationshipName;
   }
 
   GetProfession(event){
     this.selectedProfessionCode = event.ProfessionCode;
   }
 
-  copyToContactPerson(){
+  GenderChanged(event){
+    this.selectedGenderName = this.GenderObj.find(x => x.Key == event.value).Value;
+  }
 
+  RelationshipChanged(event){
+    this.selectedRelationshipName = event.target.options[event.target.options.selectedIndex].text;
   }
 
   copyFromChanged(){
@@ -274,29 +283,13 @@ export class CustContactInformationComponent implements OnInit {
     this.InputLookupProfessionObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupProfessionObj.pagingJson = "./assets/uclookup/lookupProfession.json";
     this.InputLookupProfessionObj.genericJson = "./assets/uclookup/lookupProfession.json";
+    this.InputLookupProfessionObj.isRequired = false;
   }
 
   initUrl(){
     this.getCustContactPersonPersonalUrl = AdInsConstant.GetAppCustPersonalContactPersonsByAppCustPersonalId;
     this.getRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
     this.getRefProfessionUrl = AdInsConstant.GetRefProfessionByCode;
-  }
-
-  getListContactPersonForPaging(){
-    this.appCustPersonalContactPersonObj = new AppCustPersonalContactPersonObj();
-    this.appCustPersonalContactPersonObj.AppCustPersonalId = this.appCustPersonalId;
-    if(this.custType == AdInsConstant.CustTypePersonal){
-      this.http.post(this.getCustContactPersonPersonalUrl, this.appCustPersonalContactPersonObj).subscribe(
-        (response) => {
-          console.log(response);
-          this.listContactPersonPersonal = response["ReturnObject"];
-          this.callbackSubmit.emit(this.listContactPersonPersonal);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    }
   }
 
   bindCopyFrom(){
@@ -317,9 +310,8 @@ export class CustContactInformationComponent implements OnInit {
       (response) => {
         this.GenderObj = response["ReturnObject"];
         if(this.GenderObj.length > 0){
-          this.ContactInfoPersonalForm.patchValue({
-            MrGenderCode: this.GenderObj[0].Key
-          });
+          this.defaultGender = this.GenderObj[0].Key;
+          this.defaultGenderName = this.GenderObj[0].Value;
         }
       }
     );
@@ -331,25 +323,20 @@ export class CustContactInformationComponent implements OnInit {
       (response) => {
         this.IdTypeObj = response["ReturnObject"];
         if(this.IdTypeObj.length > 0){
-          this.ContactInfoPersonalForm.patchValue({
-            MrIdTypeCode: this.IdTypeObj[0].Key
-          });
+          this.defaultIdType = this.IdTypeObj[0].Key;
         }
       }
     );
   }
 
   bindCustRelationshipObj(){
-    if(this.custType == AdInsConstant.CustTypePersonal){
-      this.refMasterObj.RefMasterTypeCode = "CUST_PERSONAL_RELATIONSHIP";
-    }
+    this.refMasterObj.RefMasterTypeCode = "CUST_RELATIONSHIP";  
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
         this.CustRelationshipObj = response["ReturnObject"];
         if(this.CustRelationshipObj.length > 0){
-          this.ContactInfoPersonalForm.patchValue({
-            MrCustRelationshipCode: this.CustRelationshipObj[0].Key
-          });
+          this.defaultCustRelationship = this.CustRelationshipObj[0].Key;
+          this.defaultRelationshipName = this.CustRelationshipObj[0].Value;
         }
       }
     );

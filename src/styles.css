@@ -287,6 +287,11 @@ aw-wizard-navigation-bar.horizontal ul.steps-indicator li a .label {
     font-size: smaller;
 }
 
+.pull-right {
+    float: right !important;
+  }
+
+
 /* 
 .adInsReqMsg {
     
