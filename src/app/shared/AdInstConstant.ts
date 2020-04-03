@@ -477,8 +477,23 @@ export class AdInsConstant {
     
     // VERF RESULT
     public static GetVerfResultById = "http://localhost:5000" + "/VerfResult/GetVerfResultById";
+    public static AddVerfResultAndVerfResultH = "http://localhost:5000" + "/VerfResult/AddVerfResultAndVerfResultH";
     public static GetVerfResultHById = "http://localhost:5000" + "/VerfResultH/GetVerfResultHById";
     public static GetVerfResultHsByTrxRefNo = "http://localhost:5000" + "/VerfResultH/GetVerfResultHsByTrxRefNo";
     public static GetVerfResultHsByVerfResultIdAndSubjRelationCode = "http://localhost:5000" + "/VerfResultH/GetVerfResultHsByVerfResultIdAndSubjRelationCode";
     public static GetListVerfResultDInQuestionGrp = "http://localhost:5000" + "/VerfResultH/GetListVerfResultDInQuestionGrp";
+    
+    //VERF QUESTION ANSWER
+    public static GetVerfQuestionAnswerListByAppIdAndSubject = "http://localhost:5001" + "/CustCnfrm/GetVerfQuestionAnswerListByAppIdAndSubject";
+
+    //REF STATUS
+    public static GetListActiveRefStatusByStatusGrpCode = "http://localhost:5000" + "/RefStatus/GetListKeyValueActiveGrpCodeByCode";
+
+
+
+
+
+
+
+
 }
