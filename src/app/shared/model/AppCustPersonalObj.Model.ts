@@ -28,7 +28,6 @@ constructor() {
         this.CustFullName = "";
         this.NickName = "";
         this.BirthPlace = "";
-        this.BirthDt = "";
         this.MotherMaidenName = "";
         this.MrGenderCode = "";
         this.MrReligionCode = "";
