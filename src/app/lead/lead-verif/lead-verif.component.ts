@@ -71,6 +71,7 @@ export class LeadVerifComponent implements OnInit {
     private adInsService: AdInsService) { }
 
   ngOnInit() {
+    console.log('inii');
     this.arrCrit = new Array();
     this.inputObj = new InputSearchObj();
     this.inputObj._url = './assets/search/searchLeadVerf.json';
@@ -81,7 +82,7 @@ export class LeadVerifComponent implements OnInit {
     this.pageSize = 10;
     this.apiUrl = environment.losUrl + AdInsConstant.GetPagingObjectBySQL;
 
-    var GetListLeadVerfUrl = environment.losUrl + AdInsConstant.GetListLeadVerf;
+    var GetListLeadVerfUrl = AdInsConstant.GetListLeadVerf;
     var obj = {};
     var arr = [0];
     var temp;
@@ -94,6 +95,14 @@ export class LeadVerifComponent implements OnInit {
         for (var i = 0; i < temp.length; i++) {     //ini pake yg sebelumnya
           arr.push(temp[i]['LeadId']);
         }
+
+        const addCritAssetMasterId = new CriteriaObj();
+        addCritAssetMasterId.DataType = 'numeric';
+        addCritAssetMasterId.propName = 'L.LEAD_ID';
+        addCritAssetMasterId.restriction = AdInsConstant.RestrictionNotIn;
+        addCritAssetMasterId.listValue = arr;
+        this.arrCrit.push(addCritAssetMasterId);
+        this.inputObj.addCritInput.push(addCritAssetMasterId);
       },
       error => {
         console.log('ga jalan');
@@ -177,12 +186,14 @@ export class LeadVerifComponent implements OnInit {
       response => {
         console.log('success');
         this.toastr.successMessage(response['message']);
-        this.router.navigate(["/test/test"]);
       },
       error => {
         console.log(error);
       }
     );
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['/Lead/Verif']);
+  }); 
   }
 
   addToTemp() {

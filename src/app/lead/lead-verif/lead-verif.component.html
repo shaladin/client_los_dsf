@@ -11,11 +11,11 @@
               </div>
               <div class="col-md-4" style="text-align-last: right">
                 <!-- [queryParams]="{AssetSchmHId: this.AssetSchmHId}"   -->
-                <button type="submit" (click)="formValidate(AssetSchmForm,'REJECT')" class="btn btn-raised btn-warning mr-1" [routerLink]="['/']" translate>
+                <button type="submit" (click)="formValidate(AssetSchmForm,'REJECT')" class="btn btn-raised btn-warning mr-1" translate>
                   <i class="ft-x"></i> Reject
                 </button>
-                <button type="submit" (click)="formValidate(AssetSchmForm,'VERIFY')"class="btn btn-raised btn-primary mr-1" [routerLink]="['/']" translate>
-                  <i class="ft-v"></i> Verify
+                <button type="submit" (click)="formValidate(AssetSchmForm,'VERIFY')"class="btn btn-raised btn-primary mr-1"  translate>
+                  <i class="ft-check"></i> Verify
                 </button>
               </div>
             </div>
@@ -86,7 +86,7 @@
         </button>
       </div>
     </div>
-    <table class="table table-responsive-md text-center table-hover">
+    <table *ngIf="tempData.length > 0" class="table table-responsive-md text-center table-hover">
       <thead>
         <tr class="table-header">
 
@@ -99,9 +99,6 @@
               NAME</span>
           </th>
           <th class="text-left"><span class="thead-header" name='orderNo' translate>ORDER NO</span>
-          </th>
-          <th class="text-left"><span class="thead-header" name='custName' translate>CUST
-              NAME</span>
           </th>
           <th class="text-left"><span class="thead-header" name='leadSource' translate>LEAD SOURCE</span>
           </th>
