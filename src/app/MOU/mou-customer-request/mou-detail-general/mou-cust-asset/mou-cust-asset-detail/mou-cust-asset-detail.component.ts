@@ -30,21 +30,21 @@ export class MouCustAssetDetailComponent implements OnInit {
     private httpClient: HttpClient,
     private fb: FormBuilder,
     public activeModal: NgbActiveModal
-  ) { 
+  ) { }
+
+  ngOnInit() {
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = "./assets/uclookup/MOU/lookupMOUCustAsset.json";
     this.inputLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
     this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupObj.pagingJson = "./assets/uclookup/MOU/lookupMOUCustAsset.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/MOU/lookupMOUCustAsset.json";
-  }
 
-  ngOnChanges(changes: SimpleChanges) {
     var criteriaList = new Array<CriteriaObj>();
     var criteriaObj = new CriteriaObj();
     criteriaObj.restriction = AdInsConstant.RestrictionEq;
     criteriaObj.propName = 'AT.ASSET_TYPE_CODE';
-    criteriaObj.value = changes["AssetTypeCode"].toString();
+    criteriaObj.value = this.AssetTypeCode.toString();
     criteriaList.push(criteriaObj);
 
     criteriaObj = new CriteriaObj();
@@ -56,15 +56,20 @@ export class MouCustAssetDetailComponent implements OnInit {
     criteriaObj = new CriteriaObj();
     criteriaObj.restriction = AdInsConstant.RestrictionNotIn;
     criteriaObj.propName = 'AM.FULL_ASSET_CODE';
-    criteriaObj.value = JSON.stringify(changes["ListExcludeFullAssetCode"]);
+    criteriaObj.listValue = this.ListExcludeFullAssetCode;
     criteriaList.push(criteriaObj);
 
     this.inputLookupObj.addCritInput = criteriaList;
-  }
 
-  ngOnInit() {
     this.MOUCustAssetForm.patchValue({
       MouCustId: this.MouCustId
+    });
+  }
+
+  getLookupResponse(e){
+    this.MOUCustAssetForm.patchValue({
+      FullAssetCode: e.fullAssetCode,
+      FullAssetName: e.fullAssetName,
     });
   }
 

@@ -15,7 +15,7 @@ import { FormBuilder } from '@angular/forms';
 })
 export class MouCustAssetComponent implements OnInit {
   @Input() MouCustId: number;
-  isAssetSelected: boolean;
+  @Input() IsAssetSelected: boolean;
   mouAssetList: any;
   assetTypeList: any;
   listExclude: Array<string>;
@@ -31,7 +31,6 @@ export class MouCustAssetComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private fb: FormBuilder
   ) { 
-    this.isAssetSelected = false;
     this.listExclude = new Array<string>();
     this.httpClient.post(AdInsConstant.GetAssetTypeKeyValueCode, null).subscribe(
       (response: any) => {
@@ -51,13 +50,14 @@ export class MouCustAssetComponent implements OnInit {
     mouAsset.MouCustId = this.MouCustId;
     this.httpClient.post(AdInsConstant.GetMouCustAssetByMouCustId, mouAsset).subscribe(
       (response: any) => {
-        if(response.ReturnObject != null || response.ReturnObject != "undefined" || response.ReturnObject.length > 0){
-          this.isAssetSelected = true;
+        if(response.ReturnObject != null && response.ReturnObject.length > 0){
+          this.IsAssetSelected = true;
           this.mouAssetList = [...response.ReturnObject];
 
-          for(const item in this.mouAssetList){
+          for(const item of this.mouAssetList){
             this.listExclude.push(item["FullAssetCode"]);
           }
+          console.log(this.IsAssetSelected);
         }
       }
     );
@@ -65,28 +65,36 @@ export class MouCustAssetComponent implements OnInit {
 
   openModalAddMouAsset(){
     const modalMouAsset = this.modalService.open(MouCustAssetDetailComponent);
+    if(this.listExclude.length == 0){
+      this.listExclude.push("");
+    }
     modalMouAsset.componentInstance.ListExcludeFullAssetCode = this.listExclude;
+    modalMouAsset.componentInstance.MouCustId = this.MouCustId;
+    modalMouAsset.componentInstance.AssetTypeCode = this.MouCustClauseAssetForm.controls["AssetTypeCode"].value;
     modalMouAsset.result.then(
       (response) => {
         this.spinner.show();
+        this.IsAssetSelected = true;
         var mouAsset = new MouCustAssetObj();
         mouAsset.MouCustId = this.MouCustId;
         this.httpClient.post(AdInsConstant.GetMouCustAssetByMouCustId, mouAsset).subscribe(
           (response: any) => {
-            if(response.ReturnObject != null || response.ReturnObject != "undefined" || response.ReturnObject.length > 0){
-              this.isAssetSelected = true;
-              this.mouAssetList = [...response.ReturnObject];
-              this.listExclude = new Array<string>();
-              for(const item in this.mouAssetList){
-                this.listExclude.push(item["FullAssetCode"]);
-              }
+            this.IsAssetSelected = true;
+            this.mouAssetList = [...response.ReturnObject];
+            this.listExclude = new Array<string>();
+            for(const item in this.mouAssetList){
+              this.listExclude.push(item["FullAssetCode"]);
             }
           }
         );
         this.spinner.hide();
         this.toastr.successMessage(response["message"]);
       }
-    );
+    ).catch((error) => {
+      if(error != 0){
+        console.log(error);
+      }
+    });
   }
 
   deleteMouAsset(mouCustAssetId, idx){
@@ -94,6 +102,13 @@ export class MouCustAssetComponent implements OnInit {
     mouAsset.MouCustAssetId = mouCustAssetId;
     this.httpClient.post(AdInsConstant.DeleteMouCustAsset, mouAsset).subscribe(
       (response: any) => {
+        for(const value of this.mouAssetList){
+          if(value["MouCustAssetId"] == mouCustAssetId){
+            var idxExclude = this.listExclude.indexOf(value["FullAssetCode"]);
+            this.listExclude.splice(idxExclude, 1);
+            break;
+          }
+        }
         this.mouAssetList.splice(idx, 1);
         this.toastr.successMessage(response["message"]);
       },

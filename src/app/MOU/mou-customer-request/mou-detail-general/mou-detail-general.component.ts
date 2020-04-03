@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -7,6 +7,7 @@ import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { forkJoin } from 'rxjs';
 import { MouCustClauseObj } from 'app/shared/model/MouCustClauseObj.Model';
+import { MouCustAssetComponent } from './mou-cust-asset/mou-cust-asset.component';
 
 @Component({
   selector: 'app-mou-detail-general',
@@ -16,6 +17,7 @@ import { MouCustClauseObj } from 'app/shared/model/MouCustClauseObj.Model';
 export class MouDetailGeneralComponent implements OnInit {
   @Input() MouCustId: number;
   @Output() ResponseMouDetailGeneral: EventEmitter<any> = new EventEmitter();
+  @ViewChild(MouCustAssetComponent) mouCustAssetComp: MouCustAssetComponent;
   currencyList: any;
   intrstTypeList: any;
   instSchmList: any;
@@ -72,7 +74,6 @@ export class MouDetailGeneralComponent implements OnInit {
           MrInstSchmCode: this.instSchmList.ReturnObject[0].Key,
           PayFreqCode: this.payFreqList.ReturnObject[0].Key
         });
-        console.log(this.MouDetailGeneralForm.value)
       },
       (error) => {
         console.log(error);
@@ -90,13 +91,12 @@ export class MouDetailGeneralComponent implements OnInit {
     mouCustClause.MouCustId = this.MouCustId;
     this.httpClient.post(AdInsConstant.GetMouCustClauseByMouCustId, mouCustClause).subscribe(
       (response: MouCustClauseObj) => {
-        console.log(response);
         if(response.MouCustClauseId != 0){
           this.mode = "edit";
+          this.MouDetailGeneralForm.patchValue({
+            ...response
+          });
         }
-        this.MouDetailGeneralForm.patchValue({
-          ...response
-        });
       },
       (error) => {
         console.log(error);
@@ -106,6 +106,7 @@ export class MouDetailGeneralComponent implements OnInit {
 
   Save(enjiForm){
     var mouCustClauseData = this.MouDetailGeneralForm.value;
+    mouCustClauseData["AssetTypeCode"] = this.mouCustAssetComp.MouCustClauseAssetForm.controls["AssetTypeCode"].value;
     var url = "";
 
     if(this.mode == "add"){
