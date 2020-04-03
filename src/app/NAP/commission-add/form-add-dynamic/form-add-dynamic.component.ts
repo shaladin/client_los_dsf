@@ -12,7 +12,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
   styleUrls: ['./form-add-dynamic.component.scss'],
   providers: [NGXToastrService]
 })
-@Injectable()
+
 export class FormAddDynamicComponent implements OnInit {
 
   @Output('update') DataEmit: EventEmitter<any> = new EventEmitter<any>();
@@ -32,10 +32,15 @@ export class FormAddDynamicComponent implements OnInit {
   arr;
   DDLContentName = new Array();
   DDLBankAccount = new Array();
+  UserAccess;
   ngOnInit() {
+    console.log("User Access");
+    console.log(JSON.parse(localStorage.getItem("UserAccess")));
+    this.UserAccess = JSON.parse(localStorage.getItem("UserAccess"));
     this.arr = this.FormObj.get('arr') as FormArray;
     // console.log(this.FormInputObj);
     this.GetDDLContentName();
+    console.log(this.FormInputObj["ruleObj"]);
   }
 
   lenDDLContentName = 0;
@@ -72,7 +77,7 @@ export class FormAddDynamicComponent implements OnInit {
             }) as FormGroup;
             this.FormObj.controls.arr["controls"][idx].controls.DropDownList.push(eachDDLDetail);
           }
-          console.log(this.FormObj);
+          // console.log(this.FormObj);
         },
         (error) => {
           console.log(error);
@@ -97,7 +102,7 @@ export class FormAddDynamicComponent implements OnInit {
             }) as FormGroup;
             this.FormObj.controls.arr["controls"][idx].controls.DropDownList.push(eachDDLDetail);
           }
-          console.log(this.FormObj);
+          // console.log(this.FormObj);
         },
         (error) => {
           console.log(error);
@@ -111,7 +116,7 @@ export class FormAddDynamicComponent implements OnInit {
         BankBranch: this.FormInputObj["BankData"].BankBranch
       }) as FormGroup;
       this.FormObj.controls.arr["controls"][idx].controls.DropDownList.push(eachDDLDetail);
-      console.log(this.FormObj);
+      // console.log(this.FormObj);
     }
   }
 
@@ -126,11 +131,7 @@ export class FormAddDynamicComponent implements OnInit {
       TaxAmount: [0, Validators.pattern("^[0-9]+$")],
       TotalCommisionAmount: [0, Validators.pattern("^[0-9]+$")],
       VATAmount: [0, Validators.pattern("^[0-9]+$")],
-      AllocateFromUppingRate: [0, Validators.pattern("^[0-9]+$")],
-      AllocateFromFeeOrUppingFee: [0, Validators.pattern("^[0-9]+$")],
-      AllocateFromInsuranceIncome: [0, Validators.pattern("^[0-9]+$")],
-      AllocateFromLifeInsuranceIncome: [0, Validators.pattern("^[0-9]+$")],
-      AllocateFromOther: [0, Validators.pattern("^[0-9]+$")],
+      ListAllocated: this.fb.array([]),
       DropDownList: this.fb.array([])
     }) as FormGroup;
     this.arr.push(NewDataForm);
@@ -157,7 +158,31 @@ export class FormAddDynamicComponent implements OnInit {
   }
 
   CheckData(){
+    console.log("User Access");
+    console.log(JSON.parse(localStorage.getItem("UserAccess")));
     console.log(this.FormObj);
+  }
+
+  CalculateTax(CurrCode, AppNo){
+    for(var i = 0; i < this.arr.length; i++){
+      var obj = {
+        UserName: this.UserAccess.UserName,
+        Office: this.UserAccess.MrOfficeTypeCode,
+        TaxpayerNo: '',
+        TrxDt: this.UserAccess.BusinessDt,
+        TrxAmt: 0,
+        RefNo: AppNo,
+        TrxTypeCode: AdInsConstant.AppCom,
+        CurrCode: CurrCode,
+        OfficeCode: this.UserAccess.OfficeCode,
+        ExchangeRateAmt: AdInsConstant.ExchangeRateAmt, 
+        TaxSchmCode: "",
+        IsSave: true,
+      };
+      this.FormObj.controls.arr["controls"][i].patchValue({
+        
+      });
+    }
   }
 
   PassData(){
@@ -165,10 +190,10 @@ export class FormAddDynamicComponent implements OnInit {
     this.DataEmit.emit(this.FormObj);
   }
   
-  ChooseContentName(ev, i){
+  ChooseContentName(ev, indexFormObj){
     // console.log(ev);
     var idx = ev.target.selectedIndex - 1;
-    this.FormObj.controls.arr["controls"][i].patchValue({
+    this.FormObj.controls.arr["controls"][indexFormObj].patchValue({
       ContentName: ev.target.selectedOptions[0].value,
       ContentNameValue: ev.target.selectedOptions[0].text
     });
@@ -180,20 +205,52 @@ export class FormAddDynamicComponent implements OnInit {
     this.DDLContentName.splice(idx,1);
     // console.log(this.tempDDLContentName);
     // console.log(this.DDLContentName);
-    this.GetDDLBankAccount(this.FormObj.controls.arr["controls"][i].controls.ContentName.value, idx);
+    this.GetDDLBankAccount(this.FormObj.controls.arr["controls"][indexFormObj].controls.ContentName.value, idx);
+    this.SetRule(indexFormObj, this.FormObj.controls.arr["controls"][indexFormObj].controls.ContentName.value, idx);
     this.PassData();
   }
 
-  ChangeDataLabel(idx){
+  TotalCommisionAmount;
+  SetRule(indexFormObj, code, idx){
+    if (this.FormInputObj["content"] == "Supplier") {
+      var temp = this.FormInputObj["ruleObj"][code];
+      console.log("Rule Suppl");   
+    } else if (this.FormInputObj["content"] == "Supplier Employee") {
+      var behaviour = this.FormInputObj["contentObj"][idx].MrSupplEmpPositionCode;
+      var temp = this.FormInputObj["ruleObj"][code][behaviour];
+      console.log("Rule Suppl Emp");
+    } else if (this.FormInputObj["content"] == "Referantor") {
+      var temp = this.FormInputObj["ruleObj"][0];
+      console.log("Rule Referantor");
+    }
+    this.TotalCommisionAmount = 0;
+    for(var i=0;i<temp.length;i++){
+      var eachDDLDetail = this.fb.group({
+        AllocationFrom: temp[i].AllocationFrom,
+        MaxAllocationAmount: temp[i].MaxAllocationAmount,
+        AllocationAmount: temp[i].AllocationAmount,
+        AllocationBehaviour: temp[i].AllocationBehaviour,
+        TotalListAllocatedDivided: Math.ceil(temp.length / 2)
+      }) as FormGroup;
+      this.TotalCommisionAmount += temp[i].AllocationAmount;
+      this.FormObj.controls.arr["controls"][indexFormObj].controls.ListAllocated.push(eachDDLDetail);
+      // this.FormObj.controls.arr["controls"][indexFormObj].controls.ListAllocated.controls[idx].controls.AllocationFrom.value;
+    }
+    this.FormObj.controls.arr["controls"][indexFormObj].patchValue({
+      TotalCommisionAmount: this.TotalCommisionAmount,
+    });
+    console.log(this.FormObj);
+  }
+
+  ChangeDataLabel(indexFormObj){
     // console.log(idx);
-    var tempUppRate: number = +this.FormObj.controls.arr["controls"][idx].controls.AllocateFromUppingRate.value;
-    var tempInsuranceIncome: number = +this.FormObj.controls.arr["controls"][idx].controls.AllocateFromInsuranceIncome.value;
-    var tempLifeInsuranceIncome: number = +this.FormObj.controls.arr["controls"][idx].controls.AllocateFromLifeInsuranceIncome.value;
-    var tempOther: number = +this.FormObj.controls.arr["controls"][idx].controls.AllocateFromOther.value;
-    var tempFeeOrUppFee: number = +this.FormObj.controls.arr["controls"][idx].controls.AllocateFromFeeOrUppingFee.value;
-    var tempTotal = tempFeeOrUppFee + tempUppRate + tempInsuranceIncome + tempLifeInsuranceIncome + tempOther;
-    
-    this.FormObj.controls.arr["controls"][idx].patchValue({
+    var len = this.FormObj.controls.arr["controls"][indexFormObj].controls.ListAllocated.controls.length;
+    var tempTotal = 0;
+    for(var i = 0; i < len; i++){
+      var t: number = +this.FormObj.controls.arr["controls"][indexFormObj].controls.ListAllocated.controls[i].controls.AllocationAmount.value;
+      tempTotal += t;
+    }
+    this.FormObj.controls.arr["controls"][indexFormObj].patchValue({
       TotalCommisionAmount: tempTotal
     });
     this.PassData();

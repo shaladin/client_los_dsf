@@ -6,8 +6,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppCommissionHObj } from 'app/shared/model/AppCommissionHObj.Model';
-import { FormAddDynamicComponent } from '../form-add-dynamic/form-add-dynamic.component';
-import { appInitializerFactory } from '@angular/platform-browser/src/browser/server-transition';
+import { FormAddDynamicComponent } from './form-add-dynamic/form-add-dynamic.component';
+import { NapAppModel } from 'app/shared/model/NapApp.Model';
 
 @Component({
   selector: 'app-commission-add',
@@ -16,7 +16,9 @@ import { appInitializerFactory } from '@angular/platform-browser/src/browser/ser
 })
 export class CommissionAddComponent implements OnInit {
 
-  @ViewChild("FormAdd") FormAdd: FormAddDynamicComponent;
+  @ViewChild('Form1') FormAdd1: FormAddDynamicComponent;
+  @ViewChild('Form2') FormAdd2: FormAddDynamicComponent;
+  @ViewChild('Form3') FormAdd3: FormAddDynamicComponent;
   AppId;
   constructor(
     private route: ActivatedRoute,
@@ -44,6 +46,9 @@ export class CommissionAddComponent implements OnInit {
     this.OnForm1 = false;
     this.OnForm2 = false;
     this.OnForm3 = false;
+    this.isFinishGetAppReferantorData = false;
+    this.isFinishGetAppFeeData = false;
+    this.isFinishGetAppData = false;
 
     this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
 
@@ -55,18 +60,19 @@ export class CommissionAddComponent implements OnInit {
       RemainingAllocatedAmount: 0,
       Other: []
     };
-    // console.log("View Income Info");
-    // console.log(this.viewIncomeInfoObj);
+
     this.GetAppData();
-    this.GetIncomeInfoObj();
+    // this.GetIncomeInfoObj();
+    this.GetAppFeeData();
     this.GetContentName("Supplier");
     this.GetContentName("Referantor");
-
-    // this.GetRuleData();
   }
 
+  isFinishGetAppReferantorData;
+  isFinishGetAppFeeData;
+  isFinishGetAppData;
   ResultAppData;
-  GetAppData(){
+  GetAppData() {
     var url = environment.losUrl + AdInsConstant.GetAppById;
     var obj = {
       // AppId: this.AppId,
@@ -75,10 +81,12 @@ export class CommissionAddComponent implements OnInit {
     };
     this.http.post(url, obj).subscribe(
       (response) => {
-        console.log(response);
+        // console.log(response);
         this.ResultAppData = response;
+        this.isFinishGetAppData = true;
         console.log("Result app data");
         console.log(this.ResultAppData);
+        this.GetRuleSetName();
       },
       (error) => {
         console.log(error);
@@ -87,25 +95,29 @@ export class CommissionAddComponent implements OnInit {
   }
 
   GetIncomeInfoObj() {
-    var url = environment.losUrl + AdInsConstant.GetAppFinDataByAppId;
+    var url = environment.losUrl + AdInsConstant.GetAppFinDataWithRuleByAppId;
+    var app = new NapAppModel();
+    app = this.ResultAppData;
     var obj = {
-      // AppId: this.AppId,
-      AppId: 31,
-      RowVersion: ""
+      AppId: this.AppId,
+      LobCode: this.ResultAppData.LobCode,
+      AdminFee: this.AdminFee,
+      ProvisionFee: this.ProvisionFee,
+      UppingAdminFee: this.UppingAdminFee,
+      UppingProvisionFee: this.UppingProvisionFee,
+      appObj: app
     };
     this.http.post(url, obj).subscribe(
       (response) => {
         console.log(response);
-        this.viewIncomeInfoObj = {
-          UppingRate: response["DiffRateAmt"],
-          InsuranceIncome: response["TotalInsCustAmt"] - response["TotalInsInscoAmt"],
-          LifeInsuranceIncome: response["TotalLifeInsCustAmt"] - response["TotalLifeInsInscoAmt"],
-          MaxAllocatedAmount: response["MaxAllocatedRefundAmt"],
-          RemainingAllocatedAmount: response["MaxAllocatedRefundAmt"] - response["CommissionAllocatedAmt"] - response["ReservedFundAllocatedAmt"],
-          TotalInterestAmount: response["TotalInterestAmt"],
-          Other: []
-        };
-        this.GetAppFeeData();
+        this.viewIncomeInfoObj.UppingRate = response["DiffRateAmt"],
+        this.viewIncomeInfoObj.InsuranceIncome = response["TotalInsCustAmt"] - response["TotalInsInscoAmt"],
+        this.viewIncomeInfoObj.LifeInsuranceIncome = response["TotalLifeInsCustAmt"] - response["TotalLifeInsInscoAmt"],
+        this.viewIncomeInfoObj.MaxAllocatedAmount = response["MaxAllocatedRefundAmt"],
+        this.viewIncomeInfoObj.RemainingAllocatedAmount = response["MaxAllocatedRefundAmt"] - response["CommissionAllocatedAmt"] - response["ReservedFundAllocatedAmt"],
+        this.viewIncomeInfoObj.TotalInterestAmount = response["TotalInterestAmt"];
+        
+        // this.GetAppFeeData();
       },
       (error) => {
         console.log(error);
@@ -115,11 +127,13 @@ export class CommissionAddComponent implements OnInit {
 
   AdminFee;
   ProvisionFee;
+  UppingAdminFee;
+  UppingProvisionFee;
   GetAppFeeData() {
     var url = environment.losUrl + AdInsConstant.GetListAppFeeByAppId;
     var obj = {
       // AppId: this.AppId,
-      AppId: 31,
+      AppId: this.AppId,
       RowVersion: ""
     };
     this.http.post(url, obj).subscribe(
@@ -128,12 +142,22 @@ export class CommissionAddComponent implements OnInit {
         var listData = response["ReturnObject"];
         for (var i = 0; i < listData.length; i++) {
           this.viewIncomeInfoObj.Other.push(listData[i].AppFeeAmt);
-          if(listData[i].MrFeeTypeCode == "ADMIN"){
+          if (listData[i].MrFeeTypeCode == "ADMIN") {
             this.AdminFee = listData[i].AppFeeAmt;
-          }else if(listData[i].MrFeeTypeCode == "PROVISION"){
+            this.UppingAdminFee = listData[i].SellFeeAmt-listData[i].AppFeeAmt;
+            console.log("admin fee");
+            console.log(this.AdminFee);
+            console.log(this.UppingProvisionFee);
+          } else if (listData[i].MrFeeTypeCode == "PROVISION") {
             this.ProvisionFee = listData[i].AppFeeAmt;
+            this.UppingProvisionFee = listData[i].SellFeeAmt-listData[i].AppFeeAmt;
+            console.log("provision fee");
+            console.log(this.ProvisionFee);
+            console.log(this.UppingProvisionFee);
           }
         }
+        this.isFinishGetAppFeeData = true;
+        this.GetRuleSetName();
       },
       (error) => {
         console.log(error);
@@ -141,54 +165,149 @@ export class CommissionAddComponent implements OnInit {
     );
   }
 
-  GetRuleData() {
-    var url = AdInsConstant.Rule;
-    var obj = {
-      "RequestObject": {
-        "RuleSetName": this.ResultAppData.ProdOfferingCode,
-        "RuleDataObjects": {
-          "AppIncentiveScheme": {
-            "LobCode": this.ResultAppData.LobCode,
-            "SupplBranchCode": "SUPPL",
-            "ReferantorCode": this.ResultAppReferantor.ReferantorCode,
-            "InterestIncome": this.viewIncomeInfoObj.TotalInterestAmount,
-            "UppingRate": this.viewIncomeInfoObj.UppingRate,
-            "InsuranceIncome": this.viewIncomeInfoObj.InsuranceIncome,
-            "LifeInsuranceIncome": this.viewIncomeInfoObj.LifeInsuranceIncome,
-            "AdminFee": this.AdminFee,
-            "ProvisionFee": this.ProvisionFee
-          },
-          "ResultSupplier": {
-            "AllocationFrom": [],
-            "MaxAllocationAmount": [],
-            "AllocationAmount": [],
-            "AllocationBehaviour": []
-          },
-          "ResultSupplierEmp": {
-            "JobPositionCode": [],
-            "AllocationFrom": [],
-            "MaxAllocationAmount": [],
-            "AllocationAmount": [],
-            "AllocationBehaviour": []
-          },
-          "ResultReferantor": {
-            "AllocationFrom": [],
-            "MaxAllocationAmount": [],
-            "AllocationAmount": [],
-            "AllocationBehaviour": []
-          }
+  GetRuleSetName() {
+    if (this.isFinishGetAppReferantorData && this.isFinishGetAppFeeData && this.isFinishGetAppData) {
+      var url = environment.FoundationR3Url + AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode;
+      var obj = {
+        ProdOfferingCode: this.ResultAppData.ProdOfferingCode,
+        RefProdCompntCode: "COMMISSION_SCHM",
+        ProdOfferingVersion: this.ResultAppData.ProdOfferingVersion
+      }
+      this.http.post(url, obj).subscribe(
+        (response) => {
+          // console.log("Response Prod Offering D");
+          // console.log(response);
+          this.GetIncomeInfoObj();
+          this.GetRuleDataForForm(response["CompntValue"]);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
+  GetRuleDataForForm(ruleSetName) {
+    var url = environment.losUrl + AdInsConstant.GetAppCommissionRule;
+    var listTemp = new Array();
+    for (var i = 0; i < this.ContentObjSupplier.length; i++) {
+      var temp = {
+        "AppIncentiveScheme": {
+          "LobCode": this.ResultAppData.LobCode,
+          "SupplBranchCode": this.ContentObjSupplier[i].Key,
+          "ReferantorCode": this.ResultAppReferantor.ReferantorCode,
+          "InterestIncome": this.viewIncomeInfoObj.TotalInterestAmount,
+          "UppingRate": this.viewIncomeInfoObj.UppingRate,
+          "InsuranceIncome": this.viewIncomeInfoObj.InsuranceIncome,
+          "LifeInsuranceIncome": this.viewIncomeInfoObj.LifeInsuranceIncome,
+          "AdminFee": this.AdminFee,
+          "ProvisionFee": this.ProvisionFee
+        },
+        "ResultSupplier": {
+          "AllocationFrom": [],
+          "MaxAllocationAmount": [],
+          "AllocationAmount": [],
+          "AllocationBehaviour": []
+        },
+        "ResultSupplierEmp": {
+          "JobPositionCode": [],
+          "AllocationFrom": [],
+          "MaxAllocationAmount": [],
+          "AllocationAmount": [],
+          "AllocationBehaviour": []
+        },
+        "ResultReferantor": {
+          "AllocationFrom": [],
+          "MaxAllocationAmount": [],
+          "AllocationAmount": [],
+          "AllocationBehaviour": []
         }
       }
+      listTemp.push(temp);
+    }
+    console.log("LIst temp");
+    console.log(listTemp);
+    var obj = {
+      "RuleSetName": ruleSetName,
+      "ListRequestAppCommissionRuleObjs": listTemp
     };
+    console.log(obj);
     this.http.post(url, obj).subscribe(
       (response) => {
         console.log("Cek Rule");
         console.log(response);
+        console.log(response["length"]);
+
+        for(var i=0;i<response["length"];i++){
+          var temp = response[i]["ReturnObject"].RuleDataObjects;
+          console.log(temp);
+          this.SaveRuleData(temp["ResultSupplier"], "Supplier", this.ContentObjSupplier[i].Key);
+          this.SaveRuleData(temp["ResultSupplierEmp"], "Supplier Employee", this.ContentObjSupplier[i].Key);
+        }
+        this.SaveRuleData(response[0]["ReturnObject"].RuleDataObjects["ResultReferantor"], "Referantor", "");
+        
+        this.GetFormAddDynamicObj("Supplier");
+        this.GetFormAddDynamicObj("Supplier Employee");
+        this.GetFormAddDynamicObj("Referantor");
+
       },
       (error) => {
         console.log(error);
       }
     );
+  }
+
+  RuleSupplierData: any = {};
+  RuleSupplierEmpData: any = {};
+  RuleReferantorData = new Array();
+  private SaveRuleData(obj, dataTo, content){
+    console.log(dataTo);
+    console.log(obj);
+    var len = obj.AllocationFrom.length;
+    var tempObj;
+    var tempJobPosition = "";
+    var listTempObj = new Array();
+    var tempSuppEmpData: any = {};
+    if (dataTo == "Supplier") {
+      for(var i = 0; i < len; i++){
+        tempObj = {
+          AllocationFrom: obj.AllocationFrom[i],
+          MaxAllocationAmount: obj.MaxAllocationAmount[i],
+          AllocationAmount: obj.AllocationAmount[i],
+          AllocationBehaviour: obj.AllocationBehaviour[i]
+        };
+        listTempObj.push(tempObj);
+        this.RuleSupplierData[content]=listTempObj;
+      }
+    } else if (dataTo == "Supplier Employee") {
+      for(var i = 0; i < len; i++){
+        if(tempJobPosition != obj.JobPositionCode[i]){
+          listTempObj = new Array();
+          tempJobPosition = obj.JobPositionCode[i];
+        }
+        tempObj = {
+          AllocationFrom: obj.AllocationFrom[i],
+          MaxAllocationAmount: obj.MaxAllocationAmount[i],
+          AllocationAmount: obj.AllocationAmount[i],
+          AllocationBehaviour: obj.AllocationBehaviour[i]
+        };
+        listTempObj.push(tempObj);
+        tempSuppEmpData[obj.JobPositionCode[i]]=listTempObj;
+        this.RuleSupplierEmpData[content]=tempSuppEmpData;
+      }
+    } else if (dataTo == "Referantor") {
+      for(var i = 0; i < len; i++){
+        tempObj = {
+          AllocationFrom: obj.AllocationFrom[i],
+          MaxAllocationAmount: obj.MaxAllocationAmount[i],
+          AllocationAmount: obj.AllocationAmount[i],
+          AllocationBehaviour: obj.AllocationBehaviour[i]
+        };
+        listTempObj.push(tempObj);
+      }
+      this.RuleReferantorData.push(listTempObj);
+    }
+
   }
 
   ContentObjSupplier = new Array();
@@ -239,6 +358,7 @@ export class CommissionAddComponent implements OnInit {
         (response) => {
           console.log(response);
           this.ResultAppReferantor = response;
+          this.isFinishGetAppReferantorData = true;
           console.log("Result app ref");
           console.log(this.ResultAppReferantor);
           this.GetDDLContent(response, "Referantor");
@@ -265,6 +385,7 @@ export class CommissionAddComponent implements OnInit {
         BankAccName: ReturnObject.BankAccName,
         BankBranch: ReturnObject.BankBranch,
       };
+      this.GetRuleSetName();
     } else {
       for (var i = 0; i < ReturnObject.length; i++) {
         var KVPObj;
@@ -278,7 +399,9 @@ export class CommissionAddComponent implements OnInit {
         } else if (content == "Supplier Employee") {
           KVPObj = {
             Key: ReturnObject[i].SupplEmpNo,
-            Value: ReturnObject[i].SupplEmpName
+            Value: ReturnObject[i].SupplEmpName,
+            MrSupplEmpPositionCode: ReturnObject[i].MrSupplEmpPositionCode,
+            SupplCode: ReturnObject[i].SupplCode
           };
           this.ContentObjSupplierEmp.push(KVPObj);
         }
@@ -288,7 +411,7 @@ export class CommissionAddComponent implements OnInit {
     // console.log(this.ContentObjSupplier);
     // console.log(this.ContentObjSupplierEmp);
     // console.log(this.ContentObjReferantor);
-    this.GetFormAddDynamicObj(content);
+    // this.GetFormAddDynamicObj(content);
   }
 
   GetFormAddDynamicObj(content) {
@@ -297,31 +420,38 @@ export class CommissionAddComponent implements OnInit {
       this.FormInputObjSupplier["content"] = "Supplier";
       this.FormInputObjSupplier["AppId"] = this.AppId;
       this.FormInputObjSupplier["contentObj"] = this.ContentObjSupplier;
+      this.FormInputObjSupplier["ruleObj"] = this.RuleSupplierData;
       this.OnForm1 = true;
+      console.log(this.FormInputObjSupplier);
     } else if (content == "Supplier Employee") {
       this.FormInputObjSupplierEmpl["title"] = "List Supplier Employee Commission Data";
       this.FormInputObjSupplierEmpl["content"] = "Supplier Employee";
       this.FormInputObjSupplierEmpl["AppId"] = this.AppId;
       this.FormInputObjSupplierEmpl["contentObj"] = this.ContentObjSupplierEmp;
+      this.FormInputObjSupplierEmpl["ruleObj"] = this.RuleSupplierEmpData;
       this.OnForm2 = true;
+      console.log(this.FormInputObjSupplierEmpl);
     } else if (content == "Referantor") {
       this.FormInputObjReferantor["title"] = "List Referantor Commission Data";
       this.FormInputObjReferantor["content"] = "Referantor";
       this.FormInputObjReferantor["AppId"] = this.AppId;
       this.FormInputObjReferantor["contentObj"] = this.ContentObjReferantor;
+      this.FormInputObjReferantor["ruleObj"] = this.RuleReferantorData;
       this.OnForm3 = true;
+      console.log(this.FormInputObjReferantor);
     }
   }
 
   GetData(ev, data) {
-    console.log(ev);
-    console.log(data);
     this.FormGetObj[data] = ev;
     console.log(this.FormGetObj);
   }
 
   CalculateTotal() {
-
+    this.FormAdd1.CheckData();
+    this.FormAdd2.CheckData();
+    this.FormAdd3.CheckData();
+    this.FormAdd1.CalculateTax(this.ResultAppData.CurrCode, this.ResultAppData.AppNo);
   }
 
   listAppCommissionHObj;

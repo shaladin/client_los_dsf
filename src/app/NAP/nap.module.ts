@@ -28,7 +28,7 @@ import { SearchCrossAppComponent } from './nap-tab/app-model/search-cross-app/se
 import { UCSearchModule } from '@adins/ucsearch';
 import { CommissionPagingComponent } from './commission-paging/commission-paging.component';
 import { CommissionAddComponent } from './commission-add/commission-add.component';
-import { FormAddDynamicComponent } from './form-add-dynamic/form-add-dynamic.component';
+import { FormAddDynamicComponent } from "./commission-add/form-add-dynamic/form-add-dynamic.component";
 import { CustFinancialDataComponent } from "./nap-tab/customer-data/component/financial-data/cust-financial-data.component";
 import { CustBankAccountComponent } from "./nap-tab/customer-data/component/bank-account/cust-bank-account.component";
 import { CustJobDataComponent } from "./nap-tab/customer-data/component/job-data/cust-job-data.component";

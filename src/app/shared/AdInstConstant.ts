@@ -5,6 +5,10 @@ export class AdInsConstant {
     // Rule
     public static Rule = "http://r3app-server/RULE_FINAL/RuleService/ExecuteRuleSet"; 
 
+    // Tax
+    public static AppCom = "APP_COM";
+    public static ExchangeRateAmt = "1";
+
     //App Step
     public static AppStepNew = "NEW";
     public static AppStepCust = "CUST";
@@ -55,12 +59,14 @@ export class AdInsConstant {
     
     // App Commission
     public static AddAppCommissionData = "/AppCommission/AddAppCommissionData";
+    public static GetAppCommissionRule = "/AppCommission/GetAppCommissionRule";
 
     // App Fee Data
     public static GetListAppFeeByAppId = "/AppFee/GetListAppFeeByAppId";
 
     // App Fin Data
     public static GetAppFinDataByAppId = "/AppFinData/GetAppFinDataByAppId";
+    public static GetAppFinDataWithRuleByAppId = "/AppFinData/GetAppFinDataWithRuleByAppId";
 
     // App Referantor
     public static AddAppReferantor = "/AppReferantor/AddAppReferantor";
@@ -488,6 +494,7 @@ export class AdInsConstant {
     
     // Product Offering
     public static GetListProdOfferingDByProdOfferingCode = "/ProductOffering/GetListProdOfferingDByProdOfferingCode";
+    public static GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode = "/ProductOffering/GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode";
     
     //DELIVERY ORDER
     public static SubmitDeliveryOrderData = environment.losUrl + "/DeliveryOrder/SubmitDeliveryOrderData";

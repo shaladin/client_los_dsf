@@ -1,0 +1,152 @@
+<div class="card-body">
+  <div class="px-3">
+    <lib-ucSubsection [id]="'formInformationId'" [title]="FormInputObj['title']" [panel]="'formInformation'">
+    </lib-ucSubsection>
+    <div class="form-body" [id]="formInformation">
+
+      <div class="form-actions row">
+        <div class="col-md-10"></div>
+        <div class="col-md-2">
+          <button type="button" (click)="AddNewDataForm()" class="btn btn-raised btn-primary "
+            [hidden]="lenDDLContentName == 0" translate>
+            <i class="fa fa-check-square-o"></i> Add new
+          </button>
+        </div>
+      </div>
+
+
+      <form class="form form-horizontal" [formGroup]="FormObj" #enjiForm="ngForm">
+
+        <!-- <div class="form-actions ucSearch-Button-Right">
+          <button type="button" (click)="AddNewDataForm()" class="btn btn-raised btn-primary" translate>
+            <i class="fa fa-check-square-o"></i> Add
+          </button>
+          <button type="button" (click)="CheckData()" class="btn btn-raised btn-primary" translate>
+            <i class="fa fa-check-square-o"></i> Check Data
+          </button>
+        </div> -->
+
+        <div class="form-body">
+          <div formArrayName="arr">
+            <div *ngFor="let item of FormObj.controls.arr.controls; let i = index;">
+              <div [formGroupName]="i">
+
+                <div class="form-group row">
+                  <!-- Content Name -->
+                  <div class="form-group col-md-2">
+                    <label class="adInsLabel">{{FormInputObj['content']}} Name</label>
+                  </div>
+                  <div class="col-md-4">
+                    <select *ngIf="item.controls.ContentName.value == ''" class="form-control adInsInput"
+                      style="width: auto" formControlName="ContentName" (change)="ChooseContentName($event, i)">
+                      <option value="">-Select One-</option>
+                      <option *ngFor="let it of DDLContentName" value="{{it.Key}}">
+                        {{it.Value}} </option>
+                    </select>
+
+                    <label class="adInsLabel"
+                      *ngIf="item.controls.ContentName.value != ''">{{item.controls.ContentNameValue.value}}</label>
+                  </div>
+                  <div class="col-md-4">
+                    <button type="button" (click)="DeleteDataForm(i)" class="btn btn-raised" translate>
+                      <i class="ft-trash-2 font-medium-2"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <div [hidden]="item.controls.ContentName.value == ''">
+                  <div class="form-group row">
+                    <!-- Bank Account -->
+                    <div class="col-md-2">
+                      <label class="adInsLabel">Bank Account</label>
+                    </div>
+                    <div class="col-md-4">
+                      <select class="form-control adInsInput" style="width: auto; border-right: 1px solid grey" formControlName="BankAccountNo"
+                        (change)="ChangeBankAcc($event, i)">
+                        <option value="">-Select One-</option>
+                        <option *ngFor="let it of item.controls.DropDownList.controls" value="{{it.value.Key}}"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && item.controls.BankAccount.value == null }">
+                          {{it.value.Value}} </option>
+                        <show-errors [control]="item.controls.BankAccount" [submit]="enjiForm.submitted"></show-errors>
+                      </select>
+                    </div>
+
+                    <!-- Tax Amount -->
+                    <label class="col-md-2 adInsLabel">Tax Amount </label>
+                    <div class="col-md-4">
+                      <label class="adInsLabel" *ngIf="item.controls.TaxAmount.value != ''">
+                        {{item.controls.TaxAmount.value}} </label>
+                      <label class="adInsLabel" *ngIf="item.controls.TaxAmount.value == ''"> --- </label>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <!-- Total Commission Amount -->
+                    <div class="col-md-2">
+                      <label class="adInsLabel">Total Commission Amount</label>
+                    </div>
+                    <div class="col-md-4">
+                      <label class="adInsLabel" *ngIf="item.controls.TotalCommisionAmount.value != ''">
+                        {{item.controls.TotalCommisionAmount.value}} </label>
+                      <label class="adInsLabel" *ngIf="item.controls.TotalCommisionAmount.value == ''"> --- </label>
+                    </div>
+
+                    <!-- VAT Amount -->
+                    <label class="col-md-2 adInsLabel">VAT Amount </label>
+                    <div class="col-md-4">
+                      <label class="adInsLabel" *ngIf="item.controls.VATAmount.value != ''">
+                        {{item.controls.VATAmount.value}} </label>
+                      <label class="adInsLabel" *ngIf="item.controls.VATAmount.value == ''"> --- </label>
+                    </div>
+                  </div>
+
+                  <div formArrayName="ListAllocated">
+                    <div class="form-group">
+                      <div class="row">
+
+                        <div class="col-md-6">
+                          <div *ngFor="let ruleItem of item.controls.ListAllocated.controls; let idx = index">
+                            <div class="row" [formGroupName]="idx"
+                              *ngIf="ruleItem.controls.TotalListAllocatedDivided.value > idx">
+                              <label class="col-md-4 adInsLabel"> {{ruleItem.controls.AllocationFrom.value}} </label>
+                              <div class="col-md-8" [ngSwitch]="ruleItem.controls.AllocationBehaviour.value">
+                                <label class="adInsLabel" *ngSwitchCase="'LOCK'">
+                                  {{ruleItem.controls.AllocationAmount.value}} </label>
+                                <input type="text" *ngSwitchCase="'DEF'"
+                                  class="form-control adInsInput width-100-per text-left"
+                                  formControlName="AllocationAmount" (change)="ChangeDataLabel(i)">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">
+                          <div *ngFor="let ruleItem of item.controls.ListAllocated.controls; let idx = index">
+                            <div class="row" [formGroupName]="idx"
+                              *ngIf="ruleItem.controls.TotalListAllocatedDivided.value <= idx">
+                              <label class="col-md-4 adInsLabel"> {{ruleItem.controls.AllocationFrom.value}} </label>
+                              <div class="col-md-8" [ngSwitch]="ruleItem.controls.AllocationBehaviour.value">
+                                <label class="adInsLabel" *ngSwitchCase="'LOCK'">
+                                  {{ruleItem.controls.AllocationAmount.value}} </label>
+                                <input type="text" *ngSwitchCase="'DEF'"
+                                  class="form-control adInsInput width-100-per text-left"
+                                  formControlName="AllocationAmount" (change)="ChangeDataLabel(i)">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
