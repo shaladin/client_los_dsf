@@ -19,6 +19,8 @@ import { UcgridfooterModule, UcgridfooterComponent } from "@adins/ucgridfooter";
 import { MainInfoComponent } from 'app/view/main-info/main-info.component';
 import { LeadRoutingModule } from "./lead-routing.module";
 import { LeadVerifComponent } from './lead-verif/lead-verif.component';
+import { LeadCancelComponent } from './lead-cancel/lead-cancel/lead-cancel.component';
+import { LeadCancelConfirmComponent } from './lead-cancel/lead-cancel-confirm/lead-cancel-confirm.component';
 
 @NgModule({
   imports: [
@@ -38,7 +40,9 @@ import { LeadVerifComponent } from './lead-verif/lead-verif.component';
     SharingComponentModule
   ],
   declarations: [
-    LeadVerifComponent
+    LeadVerifComponent,
+    LeadCancelComponent,
+    LeadCancelConfirmComponent
   ]
 })
 export class LeadModule { }
