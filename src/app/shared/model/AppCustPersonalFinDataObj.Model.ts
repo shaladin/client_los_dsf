@@ -1,7 +1,7 @@
 export class AppCustPersonalFinDataObj {
     AppCustPersonalFinDataId: any;
     AppCustPersonalId: any;
-    MonthlyIncomeAmt: any;
+    MonthlyIncomeAmt: string;
     MonthlyExpenseAmt: any;
     MonthlyInstallmentAmt: any;
     MrSourceOfIncomeTypeCode: any;
@@ -11,7 +11,6 @@ export class AppCustPersonalFinDataObj {
 constructor() { 
         this.AppCustPersonalFinDataId = 0;
         this.AppCustPersonalId = 0;
-        this.MonthlyIncomeAmt = 0;
         this.MonthlyExpenseAmt = 0;
         this.MonthlyInstallmentAmt = 0;
         this.MrSourceOfIncomeTypeCode = "";

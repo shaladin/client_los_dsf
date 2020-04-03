@@ -8,28 +8,28 @@
       <div class="form-group row">
         <div class="col-md-6">
           <div class="form-group row">
-            <label class="col-md-4 adins-required-label" translate>Address </label>
+            <label class="col-md-4" [ngClass]="{'adins-required-label': isRequired == true}" translate>Address </label>
             <div class="col-md-8">
-              <textarea rows="5" class="form-control" formControlName="Addr" [(ngModel)]="default.Addr"
+              <textarea rows="5" class="form-control" formControlName="Addr" [(ngModel)]="default.Addr" [required]="isRequired"
                 [ngClass]="{ 'is-invalid':(enjiForm.submitted || UCAddrForm.controls[identifier]['controls'].Addr.touched || UCAddrForm.controls[identifier]['controls'].Addr.dirty) && !UCAddrForm.controls[identifier]['controls'].Addr.valid }"></textarea>
               <show-errors [control]="UCAddrForm.controls[identifier]['controls'].Addr" [submit]="enjiForm.submitted">
               </show-errors>
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-md-4 adins-required-label" translate>Rt / Rw </label>
+            <label class="col-md-4" [ngClass]="{'adins-required-label': isRequired == true}" translate>Rt / Rw </label>
             <div class="col-md-8">
               <div class="form-group row">
                 <div class="col-md-6" style="border-right: 1px solid grey">
                   <input type="text" class="form-control adInsInput" formControlName="AreaCode4" maxlength="3"
-                    [(ngModel)]="default.AreaCode4"
+                    [(ngModel)]="default.AreaCode4" [required]="isRequired"
                     [ngClass]="{ 'is-invalid':(enjiForm.submitted || UCAddrForm.controls[identifier]['controls'].AreaCode4.touched || UCAddrForm.controls[identifier]['controls'].AreaCode4.dirty) && !UCAddrForm.controls[identifier]['controls'].AreaCode4.valid }">
                   <show-errors [control]="UCAddrForm.controls[identifier]['controls'].AreaCode4" [submit]="enjiForm.submitted">
                   </show-errors>
                 </div>
                 <div class="col-md-6">
                   <input type="text" class="form-control adInsInput" formControlName="AreaCode3" maxlength="3"
-                    [(ngModel)]="default.AreaCode3"
+                    [(ngModel)]="default.AreaCode3" [required]="isRequired"
                     [ngClass]="{ 'is-invalid':(enjiForm.submitted || UCAddrForm.controls[identifier]['controls'].AreaCode3.touched || UCAddrForm.controls[identifier]['controls'].AreaCode3.dirty) && !UCAddrForm.controls[identifier]['controls'].AreaCode3.valid }">
                   <show-errors [control]="UCAddrForm.controls[identifier]['controls'].AreaCode3" [submit]="enjiForm.submitted">
                   </show-errors>
@@ -38,34 +38,34 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-md-4 adins-required-label" for="zipcode" translate>Zipcode </label>
+            <label class="col-md-4" [ngClass]="{'adins-required-label': isRequired == true}" for="zipcode" translate>Zipcode </label>
             <div class="col-md-8">
               <lib-uclookupgeneric [lookupInput]="inputField?.inputLookupObj" [parentForm]='UCAddrForm' [enjiForm]='enjiForm' [identifier]="identifierZipcode"
                 (lookup)="getLookup($event)"></lib-uclookupgeneric>
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-md-4 adins-required-label" translate>Kelurahan </label>
+            <label class="col-md-4" [ngClass]="{'adins-required-label': isRequired == true}" translate>Kelurahan </label>
             <div class="col-md-8">
-              <input type="text" class="form-control adInsInput" formControlName="AreaCode2" [(ngModel)]="default.AreaCode2" readonly
+              <input type="text" class="form-control adInsInput" formControlName="AreaCode2" [(ngModel)]="default.AreaCode2" readonly [required]="isRequired"
                 [ngClass]="{ 'is-invalid':(enjiForm.submitted || UCAddrForm.controls[identifier]['controls'].AreaCode2.touched || UCAddrForm.controls[identifier]['controls'].AreaCode2.dirty) && !UCAddrForm.controls[identifier]['controls'].AreaCode2.valid }">
               <show-errors [control]="UCAddrForm.controls[identifier]['controls'].AreaCode2" [submit]="enjiForm.submitted">
               </show-errors>
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-md-4 adins-required-label" translate>Kecamatan </label>
+            <label class="col-md-4" [ngClass]="{'adins-required-label': isRequired == true}" translate>Kecamatan </label>
             <div class="col-md-8">
-              <input type="text" class="form-control adInsInput" formControlName="AreaCode1" [(ngModel)]="default.AreaCode1" readonly
+              <input type="text" class="form-control adInsInput" formControlName="AreaCode1" [(ngModel)]="default.AreaCode1" readonly [required]="isRequired"
                 [ngClass]="{ 'is-invalid':(enjiForm.submitted || UCAddrForm.controls[identifier]['controls'].AreaCode1.touched || UCAddrForm.controls[identifier]['controls'].AreaCode1.dirty) && !UCAddrForm.controls[identifier]['controls'].AreaCode1.valid }">
               <show-errors [control]="UCAddrForm.controls[identifier]['controls'].AreaCode1" [submit]="enjiForm.submitted">
               </show-errors>
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-md-4 adins-required-label" translate>City </label>
+            <label class="col-md-4" [ngClass]="{'adins-required-label': isRequired == true}" translate>City </label>
             <div class="col-md-8">
-              <input type="text" class="form-control adInsInput" formControlName="City" [(ngModel)]="default.City" readonly
+              <input type="text" class="form-control adInsInput" formControlName="City" [(ngModel)]="default.City" readonly [required]="isRequired"
                 [ngClass]="{ 'is-invalid':(enjiForm.submitted || UCAddrForm.controls[identifier]['controls'].City.touched || UCAddrForm.controls[identifier]['controls'].City.dirty) && !UCAddrForm.controls[identifier]['controls'].City.valid }">
               <show-errors [control]="UCAddrForm.controls[identifier]['controls'].City" [submit]="enjiForm.submitted">
               </show-errors>
