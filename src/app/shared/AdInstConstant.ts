@@ -390,6 +390,16 @@ export class AdInsConstant {
     // GENERIC
     public static GetPagingObjectBySQL = "/Generic/GetPagingObjectBySQL";
 
+    // Lead
+
+    public static AddLead = environment.losUrl + "/Lead/AddLead";
+    public static EditLead = environment.losUrl + "/Lead/EditLead";
+    public static DeleteLead = environment.losUrl + "/Lead/DeleteLead";
+    public static GetLeadByLeadId = environment.losUrl + "/Lead/GetLeadByLeadId";
+    public static GetLeadByLeadNo = environment.losUrl + "/Lead/GetLeadByLeadNo";
+    public static GetLeadForUpdateByLeadId = environment.losUrl + "/Lead/GetLeadForUpdateByLeadId";
+    public static GetLeadForUpdateByLeadNo = environment.losUrl + "/Lead/GetLeadForUpdateByLeadNo";
+
     // Vendor
     public static GetListVendorBankAccByVendorId= "/VendorBankAcc/GetListVendorBankAccByVendorId";
     public static GetListVendorBankAccByVendorCode= "/VendorBankAcc/GetListVendorBankAccByVendorCode";
