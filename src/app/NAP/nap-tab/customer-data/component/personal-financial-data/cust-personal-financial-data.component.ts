@@ -13,16 +13,15 @@ import { ActivatedRoute } from '@angular/router';
 import { AppCustPersonalFinDataObj } from 'app/shared/model/AppCustPersonalFinDataObj.Model';
 
 @Component({
-  selector: 'app-cust-financial-data',
-  templateUrl: './cust-financial-data.component.html',
-  styleUrls: ['./cust-financial-data.component.scss'],
+  selector: 'app-cust-personal-financial-data',
+  templateUrl: './cust-personal-financial-data.component.html',
+  styleUrls: ['./cust-personal-financial-data.component.scss'],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 
 })
 
-export class CustFinancialDataComponent implements OnInit {
+export class CustPersonalFinancialDataComponent implements OnInit {
 
-  @Input() custType;
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
   @Input() identifier: any;
@@ -52,12 +51,8 @@ export class CustFinancialDataComponent implements OnInit {
 
     this.parentForm.removeControl(this.identifier);
     this.parentForm.addControl(this.identifier, this.fb.group({
-      MonthlyIncomeAmt: ['0', Validators.required],
-      MonthlyExpenseAmt: ['0', Validators.required],
       MrSourceOfIncomeTypeCode: [''],
-      MonthlyInstallmentAmt: ['0', Validators.required],
-      IsJoinIncome: [false],
-      SpouseMonthlyIncomeAmt: ['0', Validators.required],
+      IsJoinIncome: [false]
     }));
 
     this.initUrl();
@@ -67,21 +62,15 @@ export class CustFinancialDataComponent implements OnInit {
 
   setSpouseMonthlyIncome(){
     if(this.parentForm.controls[this.identifier]["controls"].IsJoinIncome.value == false){
-      this.parentForm.controls[this.identifier].patchValue({
-        SpouseMonthlyIncomeAmt: 0
-      });
+      this.appCustPersonalFinDataObj.SpouseMonthlyIncomeAmt = 0;
     }
   }
 
   bindAppCustPersonalFinData(){
     if(this.appCustPersonalFinDataObj != undefined){
       this.parentForm.controls[this.identifier].patchValue({
-        MonthlyIncomeAmt: this.appCustPersonalFinDataObj.MonthlyIncomeAmt,
-        MonthlyExpenseAmt: this.appCustPersonalFinDataObj.MonthlyExpenseAmt,
         MrSourceOfIncomeTypeCode: this.appCustPersonalFinDataObj.MrSourceOfIncomeTypeCode,
-        MonthlyInstallmentAmt: this.appCustPersonalFinDataObj.MonthlyInstallmentAmt,
         IsJoinIncome: this.appCustPersonalFinDataObj.IsJoinIncome,
-        SpouseMonthlyIncomeAmt: this.appCustPersonalFinDataObj.SpouseMonthlyIncomeAmt,
       });
     }
   }

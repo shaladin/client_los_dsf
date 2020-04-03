@@ -1,0 +1,44 @@
+<div formGroupName="{{identifier}}">
+  <lib-ucSubsection [id]="'financialDataId'" [title]="'Financial Data'" [panel]="'financialData'">
+  </lib-ucSubsection>
+  <div id="financialData">
+    <div id="financialDataPersonal">
+      <div class="form-group row">
+        <label class="col-md-2 adins-required-label" for="monthlyIncome" translate>Monthly Income </label>
+        <div class="col-md-4">
+          <lib-ucinputnumber [parentForm]="parentForm" [enjiForm]="enjiForm" [identifier]="'PersonalFinMonthlyIncomeAmt'" [ucNumber]="appCustPersonalFinDataObj.MonthlyIncomeAmt"></lib-ucinputnumber>
+        </div>
+        <label class="col-md-2" for="monthlyExpense" translate>Monthly Expense </label>
+        <div class="col-md-4">
+          <ucinputnumber [parentForm]="parentForm" [enjiForm]="enjiForm" [identifier]="'PersonalFinMonthlyExpenseAmt'" [ucNumber]="appCustPersonalFinDataObj.MonthlyExpenseAmt" [isRequired]="false"></ucinputnumber>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-2" for="sourceOfIncome" translate>Source of Income </label>
+        <div class="col-md-4">
+          <select class="form-control" id="sourceOfIncome" formControlName="MrSourceOfIncomeTypeCode" [(ngModel)]="appCustPersonalFinDataObj.MrSourceOfIncomeTypeCode">
+            <option *ngFor="let item of SourceOfIncomeObj" [value]="item.Key">
+              {{item.Value}}
+            </option>
+          </select>
+        </div>
+        <label class="col-md-2" for="monthlyInstallment" translate>Monthly Installment </label>
+        <div class="col-md-4">
+          <lib-ucinputnumber [parentForm]="parentForm" [enjiForm]="enjiForm" [identifier]="'PersonalFinMonthlyInstallmentAmt'" [ucNumber]="appCustPersonalFinDataObj.MonthlyInstallmentAmt" [isRequired]="false"></lib-ucinputnumber>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-2" translate>Join Income </label>
+        <div class="col-md-4">
+          <input class="border-primary" type="checkbox" data-md-icheck formControlName="IsJoinIncome" (change)="setSpouseMonthlyIncome()" [(ngModel)]="appCustPersonalFinDataObj.IsJoinIncome" />
+        </div>
+      </div>
+      <div class="form-group row" *ngIf="parentForm.controls[identifier]['controls'].IsJoinIncome.value == true">
+        <label class="col-md-2" for="spouseMonthlyIncome" translate>Spouse Monthly Income </label>
+        <div class="col-md-4">
+          <lib-ucinputnumber [parentForm]="parentForm" [enjiForm]="enjiForm" [identifier]="'PersonalFinSpouseMonthlyIncomeAmt'" [ucNumber]="appCustPersonalFinDataObj.SpouseMonthlyIncomeAmt" [isRequired]="false"></lib-ucinputnumber>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
