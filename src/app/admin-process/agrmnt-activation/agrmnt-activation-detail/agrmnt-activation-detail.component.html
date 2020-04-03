@@ -44,7 +44,14 @@
               </thead>
               <tbody>
                 <tr *ngFor="let item of AssetObj?.AppAssetListObj">
-                  <td><input type="checkbox" (change)=""></td>
+                  <td><div *ngIf="listSelectedId.indexOf(item.AppAssetId) >- 1">
+                    <input type="checkbox" id="checkSame" name="itemSame"
+                      (change)="Checked(item.AppAssetId, $event.target.checked)" [checked]="true">
+                  </div>
+                  <div *ngIf="listSelectedId.indexOf(item.AppAssetId) < 0">
+                    <input type="checkbox" id="checkDiff" name="itemDiff"
+                      (change)="Checked(item.AppAssetId, $event.target.checked)" [checked]=false>
+                  </div></td>
                   <td class="text-left">{{item.FullAssetName}}</td>
                   <td class="text-right">{{item.AssetPriceAmt | number}}</td>
                   <td class="text-right">{{item.DownPaymentAmt | number}}</td>
