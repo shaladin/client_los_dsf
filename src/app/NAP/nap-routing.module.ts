@@ -95,7 +95,7 @@ const routes: Routes = [
         },
       },
       {
-        path: 'AppAddDetail/Guarantor/Main',
+        path: 'Guarantor/Main',
         component: AppGuarantorComponent,
         data: {
           title: 'Main'
