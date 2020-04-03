@@ -50,7 +50,7 @@ export class MouViewComponent implements OnInit {
   isDocument: any;
   isSurvey: any;
   isApprovalHistory: any;
-  isMainData: any;
+  isLegalReview: any;
   EnterTab(type) {
     if (type == "detail") {
       this.isDetail = true;
@@ -60,7 +60,7 @@ export class MouViewComponent implements OnInit {
       this.isDocument = false;
       this.isSurvey = false;
       this.isApprovalHistory = false;
-      this.isMainData = false;
+      this.isLegalReview = false;
     }
     else if (type == "fee") {
       this.isDetail =false;
@@ -70,7 +70,7 @@ export class MouViewComponent implements OnInit {
       this.isDocument = false;
       this.isSurvey = false;
       this.isApprovalHistory = false;
-      this.isMainData = false;
+      this.isLegalReview = false;
     }
     else if (type == "collateral") {
       this.isDetail = false;
@@ -80,7 +80,7 @@ export class MouViewComponent implements OnInit {
       this.isDocument = false;
       this.isSurvey = false;
       this.isApprovalHistory = false;
-      this.isMainData = false;
+      this.isLegalReview = false;
     }
     else if (type == "TC") {
       this.isDetail = true;
@@ -90,7 +90,7 @@ export class MouViewComponent implements OnInit {
       this.isDocument = false;
       this.isSurvey = false;
       this.isApprovalHistory = false;
-      this.isMainData = false;
+      this.isLegalReview = false;
     }
     else if (type == "document") {
       this.isDetail = false;
@@ -100,7 +100,7 @@ export class MouViewComponent implements OnInit {
       this.isDocument = true;
       this.isSurvey = false;
       this.isApprovalHistory = false;
-      this.isMainData = false;
+      this.isLegalReview = false;
     }
     else if (type == "survey") {
       this.isDetail = false;
@@ -110,7 +110,7 @@ export class MouViewComponent implements OnInit {
       this.isDocument = false;
       this.isSurvey = true;
       this.isApprovalHistory = false;
-      this.isMainData = false;
+      this.isLegalReview = false;
     }
     else if (type == "approvalHistory") {
       this.isDetail = false;
@@ -120,9 +120,9 @@ export class MouViewComponent implements OnInit {
       this.isDocument = false;
       this.isSurvey = false;
       this.isApprovalHistory = true;
-      this.isMainData = false;
+      this.isLegalReview = false;
     }
-    else if (type == "mainData") {
+    else if (type == "legalReview") {
       this.isDetail = false;
       this.isFee = false;
       this.isCollateral = false;
@@ -130,7 +130,7 @@ export class MouViewComponent implements OnInit {
       this.isDocument = false;
       this.isSurvey = false;
       this.isApprovalHistory = false;
-      this.isMainData = true;
+      this.isLegalReview = true;
     }
   }
 }

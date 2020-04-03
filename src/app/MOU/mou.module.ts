@@ -35,6 +35,7 @@ import { MouRequestAddcollComponent } from './mou-customer/mou-request/mou-reque
 import { MouRequestAddcollAddeditComponent } from './mou-customer/mou-request/mou-request-addcoll-addedit/mou-request-addcoll-addedit.component';
 import { MouReviewFactoringComponent } from "./mou-customer/mou-review/mou-review-factoring/mou-review-factoring.component";
 import { MouReviewGeneralComponent } from "./mou-customer/mou-review/mou-review-general/mou-review-general.component";
+import { MouViewApprovalHistoryComponent } from './mou-customer/mou-view-approval-history/mou-view-approval-history.component';
 // import { ShowErrorsComponent } from "./app/test-new/show-errors.component";
 
 @NgModule({
@@ -79,6 +80,7 @@ import { MouReviewGeneralComponent } from "./mou-customer/mou-review/mou-review-
     MouApprovalFactoringComponent,
     MouRequestAddcollComponent,
     MouRequestAddcollAddeditComponent,
+    MouViewApprovalHistoryComponent,
   ]
 })
 export class MouModule { }
