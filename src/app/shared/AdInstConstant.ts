@@ -318,7 +318,10 @@ export class AdInsConstant {
     
     
 
+     
 
+    public static GetRefMasterByRefMasterTypeCode = environment.FoundationR3Url + "/RefMaster/GetRefMasterByRefMasterTypeCode"
+    // public static GetRefMasterByRefMasterTypeCode  = environment.FoundationR3Url + "/RefMaster/GetRefMasterByRefMasterTypeCode";
     //REF PROV DISTRICT
     public static GetRefProvDistrictPaging = "/RefProvDistrict/GetRefProvDistrictPaging";
     public static GetRefProvDistrictByProvDistrictCode = "http://localhost:5000/RefProvDistrict/GetRefProvDistrictByProvDistrictCode";
@@ -474,9 +477,15 @@ export class AdInsConstant {
     public static GetListMouCustRvwD =   environment.losUrl + "/MouCustRvwD/GetListMouCustRvwD"
     // MOU CUST LEGAL REVIEW
     public static GetMouCustLglReviewByMouCustId = environment.losUrl + "/MouCustLglReview/GetMouCustLglReviewByMouCustId";
+    public static AddRangeMouCustLglReview = environment.losUrl + "/MouCustLglReview/AddRangeMouCustLglReview";
 
     // MOU CUST TC
     public static GetCustMouTcByCustMouId = environment.losUrl + "/MouCustTc/GetCustMouTcByCustMouId";
+    public static GetMouCustTcForMouLglByCustMouId = environment.losUrl+ "/MouCustTc/GetMouCustTcForMouLglByCustMouId";
+    public static EditListMouCustTc = environment.losUrl+ "/MouCustTc/EditListMouCustTc";
+    // MOU CUST DOC PRINT
+    public static GetListMouCustDocPrintForViewByMouCustId = environment.losUrl + "/MouCustDocPrint/GetListMouCustDocPrintForViewByMouCustId";
+    public static EditMouCustDocPrintSequenceNo = environment.losUrl + "/MouCustDocPrint/EditMouCustDocPrintSequenceNo";
     
     // REF COUNTRY
     public static GetRefCountryByCountryCode = environment.FoundationR3Url + "/RefCountry/GetRefCountryByCountryCode";
@@ -520,9 +529,13 @@ export class AdInsConstant {
   public static GetAllAssetDataByAppId = "http://localhost:5001/AppAsset/GetAllAssetDataByAppId";
   public static AddEditAllAssetData = "http://localhost:5001/AppAsset/AddEditAllAssetData";
     
+ 
+  
+    
     //Asset Doc List
     public static GetListAssetDocListByAssetTypeCode = environment.FoundationR3Url + "/AssetDocList/GetListAssetDocListByAssetTypeCode";
-    
+
+  
     //DELIVERY ORDER
     public static SubmitDeliveryOrderData = environment.losUrl + "/DeliveryOrder/SubmitDeliveryOrderData";
     public static GetRefAssetDocList = environment.losUrl + "/DeliveryOrder/GetRefAssetDocList";

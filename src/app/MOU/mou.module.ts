@@ -19,6 +19,8 @@ import { UcgridfooterModule, UcgridfooterComponent } from "@adins/ucgridfooter";
 import { MainInfoComponent } from 'app/view/main-info/main-info.component';
 import { MouRoutingModule } from "./mou-routing.module";
 import { DocSignerComponent } from "./doc-signer/doc-signer.component";
+import { CustomerDocPrintingDetailComponent } from "./customer-doc-printing/customer-doc-printing-detail/customer-doc-printing-detail.component";
+import { CustomerDocPrintingPagingComponent } from "./customer-doc-printing/customer-doc-printing-paging/customer-doc-printing-paging.component";
 import { MouReviewPagingComponent } from './mou-customer/mou-review/mou-review-paging/mou-review-paging.component';
 import { MouViewDetailComponent } from './mou-customer/mou-view/mou-view-detail/mou-view-detail.component';
 import { MouViewFeeComponent } from './mou-customer/mou-view/mou-view-fee/mou-view-fee.component';
@@ -37,7 +39,8 @@ import { MouReviewFactoringComponent } from "./mou-customer/mou-review/mou-revie
 import { MouReviewGeneralComponent } from "./mou-customer/mou-review/mou-review-general/mou-review-general.component";
 import { MouViewApprovalHistoryComponent } from './mou-customer/mou-view-approval-history/mou-view-approval-history.component';
 // import { ShowErrorsComponent } from "./app/test-new/show-errors.component";
-
+import { LegalReviewPagingComponent } from './legal-review/legal-review-paging/legal-review-paging.component';
+import { LegalReviewDetailComponent } from './legal-review/legal-review-detail/legal-review-detail.component';
 @NgModule({
   imports: [
     MouRoutingModule,
@@ -61,6 +64,9 @@ import { MouViewApprovalHistoryComponent } from './mou-customer/mou-view-approva
     SharingComponentModule
   ],
   declarations: [
+    DocSignerComponent,
+    CustomerDocPrintingDetailComponent,
+    CustomerDocPrintingPagingComponent,
     MainInfoComponent,
     DocSignerComponent,
     MouReviewPagingComponent, 
@@ -75,6 +81,8 @@ import { MouViewApprovalHistoryComponent } from './mou-customer/mou-view-approva
     MouViewLegalComponent,
     MouReviewFactoringComponent,
     MouReviewGeneralComponent,
+    LegalReviewPagingComponent,
+    LegalReviewDetailComponent,
     MouCustomerApprovalComponent,
     MouApprovalGeneralComponent,
     MouApprovalFactoringComponent,
