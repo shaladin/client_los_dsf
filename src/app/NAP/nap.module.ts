@@ -23,6 +23,11 @@ import { SharingComponentModule } from "app/shared/sharingcomponent.module";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { CustPersonalMainDataComponent } from "./nap-tab/customer-data/component/personal-main-data/cust-personal-main-data.component";
 import { CustUcaddressComponent } from "./nap-tab/customer-data/component/address/ucaddress.component";
+import { AppGuarantorComponent } from "./nap-tab/app-guarantor/app-guarantor.component";
+import { GuarantorCompanyComponent } from "./nap-tab/app-guarantor/guarantor-company/guarantor-company.component";
+import { GuarantorPagingComponent } from "./nap-tab/app-guarantor/guarantor-paging/guarantor-paging.component";
+import { GuarantorPersonalComponent } from "./nap-tab/app-guarantor/guarantor-personal/guarantor-personal.component";
+import { AppLifeInsComponent } from './nap-tab/app-life-ins/app-life-ins.component';
 import { CustPersonalContactInformationComponent } from "./nap-tab/customer-data/component/personal-contact-information/cust-personal-contact-information.component";
 import { CustPersonalFinancialDataComponent } from "./nap-tab/customer-data/component/personal-financial-data/cust-personal-financial-data.component";
 import { SearchCrossAppComponent } from './nap-tab/app-model/search-cross-app/search-cross-app.component';
@@ -43,6 +48,10 @@ import { CustLegalDocComponent } from "./nap-tab/customer-data/component/legal-d
 import { UcinputnumberModule } from "@adins/ucinputnumber";
 import { UcinputnumberComponent } from "./nap-tab/customer-data/component/ucinputnumber/ucinputnumber.component";
 import { InsuranceDataComponent } from "./nap-tab/insurance-data/insurance-data.component";
+import { AssetDataComponent } from "./nap-tab/asset-data/asset-data.component";
+import { RsvFundPagingComponent } from "./reserved-fund/reserved-fund-paging/reserved-fund-paging.component";
+import { RsvFundViewComponent } from "./reserved-fund/reserved-fund-view/reserved-fund-view.component";
+import { AppFinDataComponent } from './nap-tab/app-fin-data/app-fin-data.component';
 
 
 
@@ -58,6 +67,12 @@ import { InsuranceDataComponent } from "./nap-tab/insurance-data/insurance-data.
         CustomerDataComponent,
         CustPersonalMainDataComponent,
         CustUcaddressComponent,
+        GuarantorPagingComponent,
+        GuarantorPersonalComponent,
+        GuarantorCompanyComponent,
+        CustUcaddressComponent,
+        AppGuarantorComponent,
+        AppLifeInsComponent,
         CustPersonalContactInformationComponent,
         CustPersonalFinancialDataComponent,
         CustBankAccountComponent,
@@ -75,7 +90,11 @@ import { InsuranceDataComponent } from "./nap-tab/insurance-data/insurance-data.
         CustShareholderComponent,
         CustLegalDocComponent,
         UcinputnumberComponent,
-        InsuranceDataComponent
+        InsuranceDataComponent,
+        AssetDataComponent,
+        RsvFundPagingComponent,
+        RsvFundViewComponent,
+        AppFinDataComponent
         ],
     imports: [ 
         NapRoutingModule,
