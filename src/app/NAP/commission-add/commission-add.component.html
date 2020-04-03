@@ -44,10 +44,10 @@
             </div>
         </div>
         
-        <app-form-add-dynamic [FormInputObj]="FormInputObjSupplier" (update)="GetData($event)"></app-form-add-dynamic>
-        <app-form-add-dynamic [FormInputObj]="FormInputObjSupplierEmpl" (update)="GetData($event)">
+        <app-form-add-dynamic *ngIf="OnForm1" [FormInputObj]="FormInputObjSupplier" (update)="GetData($event)"></app-form-add-dynamic>
+        <app-form-add-dynamic *ngIf="OnForm2" [FormInputObj]="FormInputObjSupplierEmpl" (update)="GetData($event)">
         </app-form-add-dynamic>
-        <app-form-add-dynamic [FormInputObj]="FormInputObjReferantor" (update)="GetData($event)"></app-form-add-dynamic>
+        <app-form-add-dynamic *ngIf="OnForm3" [FormInputObj]="FormInputObjReferantor" (update)="GetData($event)"></app-form-add-dynamic>
         
         
 
