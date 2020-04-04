@@ -5,18 +5,16 @@
         {
             "type": "dropdown",
             "datatype": "text",
-            "name": "L.CRT_OFFICE_NAME",
+            "name": "L.ORI_OFFICE_NAME",
             "id": "OfficeNameId",
             "value": "",
             "placeholder": "Placeholder",
             "isFromURL": true,
             "isSelectOne": false,
-            "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
+            "url": "http://r3app-server/foundation_r3/RefOffice/GetListKvpActiveRefOfficeForPaging",
             "label": "OFFICE NAME",
             "items": [],
-            "itemsUrl": [],
-            "criteriaPropName": "RefMasterTypeCode",
-            "criteriaPropValue": "MOU_TYPE"
+            "itemsUrl": []
         },
         {
             "type": "dropdown",
@@ -27,12 +25,12 @@
             "placeholder": "Placeholder",
             "isFromURL": true,
             "isSelectOne": false,
-            "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
+            "url": "http://r3app-server/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
             "label": "LEAD SOURCE",
             "items": [],
             "itemsUrl": [],
             "criteriaPropName": "RefMasterTypeCode",
-            "criteriaPropValue": "MOU_TYPE"
+            "criteriaPropValue": "LEAD_SOURCE"
         },
         {
             "type": "textbox",
@@ -82,7 +80,7 @@
             "type": "sort",
             "position": "left",
             "label": "Office Name",
-            "name": "L.CRT_OFFICE_NAME"
+            "name": "L.ORI_OFFICE_NAME"
         },
         {
             "type": "sort",
@@ -123,7 +121,7 @@
         {
             "type": "text",
             "position": "left",
-            "property": "CrtOfficeName"
+            "property": "OriOfficeName"
         },
         {
             "type": "text",
@@ -151,7 +149,7 @@
             "action": [
                 {
                     "type": "edit",
-                    "path": "/Mou/ReviewDetail",
+                    "path": "/Lead/LeadInput/MainInfo",
                     "param": [
                         {
                             "type": "LeadId",

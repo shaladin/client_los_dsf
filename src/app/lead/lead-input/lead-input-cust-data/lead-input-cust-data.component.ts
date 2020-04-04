@@ -30,12 +30,10 @@ export class LeadInputCustDataComponent implements OnInit {
   getCustById: any;
   jobAddressObj: any;
   otherAddressObj: any;
-  inputJobAddressObj: InputFieldObj;
-  inputOtherAddressObj: InputFieldObj;
+  inputLegalAddressObj: InputFieldObj;
+  inputResidenceAddressObj: InputFieldObj;
   jobStatus: any;
   listJobStatus: any;
-  jobPosition: any;
-  listJobPosition: any;
   companyScale: any;
   listCompanyScale: any;
   tempProfession: any;
@@ -62,33 +60,37 @@ export class LeadInputCustDataComponent implements OnInit {
   getOthBizAddr: any;
   addressObj: any;
   otherAddrObj: any;
+  idTypeCode: any;
+  tempIdType: any;
+  maritalStatCode: any;
+  tempMrMaritalStatCode: any;
+  getListActiveRefMasterUrl: string;
+  getRefMasterWithReserveField: any;
+  custModel: any;
+  listCustModel: any;
   CustomerDataForm = this.fb.group({
-    JobDataType: [''],
-    ProfessionName: [''],
-    JobPosition: [''],
-    JobTitleName: [''],
-    JobStatus: [''],
-    IndustryName: [''],
-    InternalEmployee: [false],
-    IndustryTypeName: [''],
-    CompanyScale: [''],
-    EmpEstablishmentDate: [''],
-    NotesJob: [''],
-    LocationClass: [''],
-    PriceEstimates: [''],
-    StayLength: [''],
-    OtherBusinessName: [''],
-    OtherBusinessType: [''],
-    OtherBusinessIndustry: [''],
-    OtherJobPosition: [''],
-    EstablishmentDate: [''],
-    NotesOther: [''],
-    OtherLocationClass: [''],
-    OtherPriceEstimates: [''],
-    OtherStayLength: ['']
+    CustType: [''],
+    CustName: [''],
+    BirthPlace: [''],
+    BirthDate: [''],
+    MrIdTypeCode: [''],
+    MotherName: [''],
+    IdNo: [''],
+    MrMaritalStatCode: [''],
+    Npwp: [''],
+    Email: [''],
+    MobilePhone1: [''],
+    MobilePhone2: [''],
+    Facebook: [''],
+    Instagram: [''],
+    Twitter: [''],
+    CustModel: [''],
+    CompanyName: [''],
+    MonthlyIncome: [''],
+    MonthlyExpense: ['']
   });
 
-  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder,private wizard: WizardComponent) { 
+  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) { 
     // this.getCustById = AdInsConstant.GetCustByCustId;
     // this.getListActiveRefMaster = AdInsConstant.GetListActiveRefMaster;
     // this.addJobData = AdInsConstant.AddCustPersonalJobData;
@@ -97,6 +99,8 @@ export class LeadInputCustDataComponent implements OnInit {
     // this.getCustAddr = AdInsConstant.GetCustAddr;
     // this.getRefProfession = AdInsConstant.GetRefProfessionById;
     // this.getRefIndustryType = AdInsConstant.GetRefIndustryTypeById;
+    this.getListActiveRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
+    this.getRefMasterWithReserveField = AdInsConstant.GetListActiveRefMasterWithReserveFieldAll;
 
     this.route.queryParams.subscribe(params => {
         if (params["IdCust"] != null) {
@@ -109,30 +113,57 @@ export class LeadInputCustDataComponent implements OnInit {
   }
 
   getLookUpProfession(event) {
-    this.tempProfession = event.RefProfessionId;
+    this.tempProfession = event.ProfessionCode;
   }
 
   ngOnInit() {
-    this.inputJobAddressObj = new InputFieldObj();
-    this.inputJobAddressObj.inputLookupObj = new InputLookupObj();
-    this.inputOtherAddressObj = new InputFieldObj();
-    this.inputOtherAddressObj.inputLookupObj = new InputLookupObj();
+    this.inputLegalAddressObj = new InputFieldObj();
+    this.inputLegalAddressObj.inputLookupObj = new InputLookupObj();
+    this.inputResidenceAddressObj = new InputFieldObj();
+    this.inputResidenceAddressObj.inputLookupObj = new InputLookupObj();
 
     this.professionLookUpObj = new InputLookupObj();
     this.professionLookUpObj.isRequired = false;
-    this.professionLookUpObj.urlJson = "./assets/lookup/lookupCustomerProfession.json";
+    this.professionLookUpObj.urlJson = "./assets/uclookup/lookupProfession.json";
     this.professionLookUpObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
     this.professionLookUpObj.urlEnviPaging = environment.FoundationR3Url;
-    this.professionLookUpObj.pagingJson = "./assets/lookup/lookupCustomerProfession.json";
-    this.professionLookUpObj.genericJson = "./assets/lookup/lookupCustomerProfession.json";
+    this.professionLookUpObj.pagingJson = "./assets/uclookup/lookupProfession.json";
+    this.professionLookUpObj.genericJson = "./assets/uclookup/lookupProfession.json";
 
-    this.jobPosition = new RefMasterObj();
-    this.jobPosition.RefMasterTypeCode = "JOB_POSITION";
-    this.http.post(this.getListActiveRefMaster, this.jobPosition).subscribe(
+    this.idTypeCode = new RefMasterObj();
+    this.idTypeCode.RefMasterTypeCode = "ID_TYPE";
+    this.http.post(this.getListActiveRefMasterUrl, this.idTypeCode).subscribe(
     (response) => {
-        this.listJobPosition = response['ReturnObject'];
-        this.CustomerDataForm.patchValue({ JobPosition: response['ReturnObject'][0]['Key'] });
+        this.tempIdType = response['ReturnObject'];
+        this.CustomerDataForm.patchValue({ MrIdTypeCode: response['ReturnObject'][0]['Key'] });
     });
+
+    this.maritalStatCode = new RefMasterObj();
+    this.maritalStatCode.RefMasterTypeCode = "MARITAL_STAT";
+    this.http.post(this.getListActiveRefMasterUrl, this.maritalStatCode).subscribe(
+      (response) => {
+          this.tempMrMaritalStatCode = response["ReturnObject"];
+          this.CustomerDataForm.patchValue({ MrMaritalStatCode: response['ReturnObject'][0]['Key'] });
+        // if (this.tempCustPersonalObj.MrMaritalStatCode != null) {
+        //   this.CustomerDataForm.patchValue({
+        //     MrMaritalStatCode: this.tempCustPersonalObj.MrMaritalStatCode
+        //   });
+        // } else {
+        //   this.CustomerDataForm.patchValue({
+        //     MrMaritalStatCode: response['ReturnObject'][0]['Key']
+        //   });
+        // }
+      }
+    );
+
+    this.custModel = new RefMasterObj();
+    this.custModel.RefMasterTypeCode = "CUST_MODEL";
+    this.custModel.ReserveField1 = "PERSONAL";
+    this.http.post(this.getRefMasterWithReserveField, this.custModel).subscribe(
+      (response) => {
+          this.listCustModel = response['ReturnObject'];
+          this.CustomerDataForm.patchValue({ CustModel: response['ReturnObject'][0]['Key'] });
+      });
 
   }
 
@@ -206,9 +237,9 @@ export class LeadInputCustDataComponent implements OnInit {
     // this.custPersonalJobDataObj.OthBizEstablishmentDt = this.JobDataEmpForm.controls["EstablishmentDate"].value;
   }
 
-  back(){
-    this.wizard.goToPreviousStep();
-  }
+  // back(){
+  //   this.wizard.goToPreviousStep();
+  // }
 
   SaveForm(){
   //   if(this.typePage == "edit") {

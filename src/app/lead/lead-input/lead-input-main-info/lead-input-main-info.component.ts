@@ -12,80 +12,72 @@ import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { MouCustSignerObj } from 'app/shared/model/MouCustSignerObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
+import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
+import { LeadObj } from 'app/shared/model/Lead.Model';
+import { RefOfficeObj } from 'app/shared/model/RefOfficeObj.model';
+import { RefLobObj } from 'app/shared/model/RefLobObj.Model';
 
 
 @Component({
   selector: 'app-lead-input-main-info',
   templateUrl: './lead-input-main-info.component.html',
-  styleUrls: ['./lead-input-main-info.component.scss'],
-  providers: [DecimalPipe]
+  providers: [DecimalPipe, NGXToastrService]
 })
-export class DocSignerDetailComponent implements OnInit {
+export class LeadInputMainInfoComponent implements OnInit {
   inputPagingObj: any;
-  MouCustId: any;
+  LeadId: any;
   MouType: any;
-  mouCustObj: any;
-  mouCustSignerObj: any;
-  returnMouCust: any;
-  returnMouCustSigner: any;
-  getMouCustById:any;
-  addMouCustSigner: any;
-  getMouCustSignerByMouCustId: any;
-  getCustSignerObj: any;
+  addLead: any;
+  leadObj: any;
+  setLeadObj: any;
   cmoNameLookUpObj: any;
   surveyorNameLookUpObj: any;
   salesNameLookUpObj:any;
+  agencyLookUpObj: any;
   tempCmoName: any;
   tempSurveyorName: any;
   tempSalesName: any;
+  tempAgency: any;
   getListRefOffice: any;
   getListActiveLob: any;
+  getListActiveRefMasterUrl: any;
   listRefOffice: any;
+  refOfficeObj: any;
   listRefLob:any;
-  pageType: any;
+  refLobObj: any;
+  leadSource: any;
+  listLeadSource: any;
+  pageType: string = "add";
   page:any;
-  MouCustSignerForm = this.fb.group({
-    MfSigner1: [''],
-    MfSignerPosition1: [''],
-    MfSigner2: [''],
-    MfSignerPosition2: [''],
-    CustSigner1: [''],
-    CustSignerPosition1: [''],
-    CustSigner2: [''],
-    CustSignerPosition2: [''],
+  custShareholderLookUpObj1: any;
+  MainInfoForm = this.fb.group({
+    OfficeCode: [''],
+    OfficeName: [''],
+    OrderNo:[''],
+    LobCode: [''],
+    LobName: [''],
+    LeadSource: [''],
   });
   
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
-    this.getMouCustById = AdInsConstant.GetMouCustById;
-    this.addMouCustSigner = AdInsConstant.AddMouCustSigner;
-    this.getMouCustSignerByMouCustId = AdInsConstant.GetMouCustSignerByMouCustId;
-    this.getListRefOffice = AdInsConstant.GetListActiveRefOffice;
+    this.addLead = AdInsConstant.AddLead;
+    this.getListRefOffice = AdInsConstant.GetListKvpActiveRefOfficeForPaging;
     this.getListActiveLob = AdInsConstant.GetListActiveLob;
+    this.getListActiveRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
 
     this.route.queryParams.subscribe(params => {
-        if (params["MouCustId"] != null) {
-            this.MouCustId = params["MouCustId"];
+        if (params["LeadId"] != null) {
+            this.pageType = params["LeadId"];
         }
+        if (params["mode"] != null) {
+          this.LeadId = params["mode"];
+      }
     });
   }
 
-//   getLookUpShareholder1(event) {
-//     this.tempShareholder1 = event.ShareholderName;
-//     this.tempShareholderPosition1 = event.Descr;
-
-//     this.MouCustSignerForm.patchValue({
-//       MfSignerPosition1: this.tempShareholderPosition1
-//     });
-//   }
-
-//   getLookUpShareholder2(event) {
-//     this.tempShareholder2 = event.ShareholderName;
-//     this.tempShareholderPosition2 = event.Descr;
-
-//     this.MouCustSignerForm.patchValue({
-//       MfSignerPosition2: this.tempShareholderPosition2
-//     });
-//   }
+getLookUpAgency(event) {
+  this.tempAgency = event.EmpName;
+}
 
 getLookUpCmoName(event) {
     this.tempCmoName = event.EmpName;
@@ -100,38 +92,22 @@ getLookUpSalesName(event) {
 }
 
   ngOnInit() {
-    // this.custShareholderLookUpObj1 = new InputLookupObj();
-    // this.custShareholderLookUpObj1.isRequired = false;
-    // this.custShareholderLookUpObj1.urlJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
-    // this.custShareholderLookUpObj1.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    // this.custShareholderLookUpObj1.urlEnviPaging = environment.FoundationR3Url;
-    // this.custShareholderLookUpObj1.pagingJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
-    // this.custShareholderLookUpObj1.genericJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
+    this.custShareholderLookUpObj1 = new InputLookupObj();
+    this.custShareholderLookUpObj1.isRequired = false;
+    this.custShareholderLookUpObj1.urlJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
+    this.custShareholderLookUpObj1.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.custShareholderLookUpObj1.urlEnviPaging = environment.FoundationR3Url;
+    this.custShareholderLookUpObj1.pagingJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
+    this.custShareholderLookUpObj1.genericJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
 
-    // this.custShareholderLookUpObj2 = new InputLookupObj();
-    // this.custShareholderLookUpObj2.isRequired = false;
-    // this.custShareholderLookUpObj2.urlJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
-    // this.custShareholderLookUpObj2.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    // this.custShareholderLookUpObj2.urlEnviPaging = environment.FoundationR3Url;
-    // this.custShareholderLookUpObj2.pagingJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
-    // this.custShareholderLookUpObj2.genericJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
+    this.agencyLookUpObj = new InputLookupObj();
+    this.agencyLookUpObj.isRequired = false;
+    this.agencyLookUpObj.urlJson = "./assets/uclookup/lookupAgency.json";
+    this.agencyLookUpObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.agencyLookUpObj.urlEnviPaging = environment.FoundationR3Url;
+    this.agencyLookUpObj.pagingJson = "./assets/uclookup/lookupAgency.json";
+    this.agencyLookUpObj.genericJson = "./assets/uclookup/lookupAgency.json";
 
-    this.http.post(this.getListRefOffice, null).subscribe(
-        (response) => {
-          this.listRefOffice = response['returnObject']
-        },
-        (error) => {
-          console.log(error);
-        });
-
-    this.http.post(this.getListActiveLob, null).subscribe(
-        (response) => {
-            this.listRefLob = response['returnObject']
-        },
-        (error) => {
-            console.log(error);
-        });
-    
     this.cmoNameLookUpObj = new InputLookupObj();
     this.cmoNameLookUpObj.isRequired = false;
     this.cmoNameLookUpObj.urlJson = "./assets/uclookup/lookupEmployee.json";
@@ -156,36 +132,66 @@ getLookUpSalesName(event) {
     this.salesNameLookUpObj.pagingJson = "./assets/uclookup/lookupEmployee.json";
     this.salesNameLookUpObj.genericJson = "./assets/uclookup/lookupEmployee.json";
 
-    this.mouCustObj = new MouCustObj();
-    this.mouCustObj.MouCustId = this.MouCustId;
-    this.http.post(this.getMouCustById, this.mouCustObj).subscribe(
+    this.refOfficeObj = new RefOfficeObj();
+    this.http.post(this.getListRefOffice, this.refOfficeObj).subscribe(
       (response) => {
-          this.returnMouCust = response;
+        this.listRefOffice = response['ReturnObject']
+        console.log("aaa")
+        console.log(this.listRefOffice)
+        this.MainInfoForm.patchValue({ 
+          OfficeCode: response['ReturnObject'][0]['Key'],
+          OfficeName: response['ReturnObject'][0]['Value'] 
+        });
+      },
+      (error) => {
+        console.log(error);
       });
+
+    this.refLobObj = new RefLobObj();
+    this.refLobObj.RefLobId = "-"
+    this.http.post(this.getListActiveLob, this.refLobObj).subscribe(
+      (response) => {
+          this.listRefLob = response['ReturnObject'];
+          console.log("bbb")
+          console.log(this.listRefLob)
+          this.MainInfoForm.patchValue({ 
+            LobCode: response['ReturnObject'][0]['Key'],
+            LobName: response['ReturnObject'][0]['Value'] 
+          });
+      },
+      (error) => {
+          console.log(error);
+      });
+
+    this.leadSource = new RefMasterObj();
+    this.leadSource.RefMasterTypeCode = "LEAD_SOURCE";
+    this.http.post(this.getListActiveRefMasterUrl, this.leadSource).subscribe(
+    (response) => {
+        this.listLeadSource = response['ReturnObject'];
+        this.MainInfoForm.patchValue({ LeadSource: response['ReturnObject'][0]['Key'] });
+    });
   }
 
-  setMouCustSigner(){
-    // this.mouCustSignerObj.MouCustId = this.MouCustId;
-    // this.mouCustSignerObj.MfSignerName1 = this.tempShareholder1;
-    // this.mouCustSignerObj.MfSignerJobPosition1 = this.tempShareholderPosition1;
-    // this.mouCustSignerObj.MfSignerName2 = this.tempShareholder2;
-    // this.mouCustSignerObj.MfSignerJobPosition2 = this.tempShareholderPosition2;
-    // this.mouCustSignerObj.CustSignerName1 = this.tempEmployee1;
-    // this.mouCustSignerObj.CustSignerJobPosition1 = this.tempEmployeePosition1;
-    // this.mouCustSignerObj.CustSignerName2 = this.tempEmployee2;
-    // this.mouCustSignerObj.CustSignerJobPosition2 = this.tempEmployeePosition2;
+  setLead(){
+    this.leadObj.OriOfficeCode = this.MainInfoForm.controls["OfficeCode"].value;
+    this.leadObj.OriOfficeName = this.MainInfoForm.controls["OfficeName"].value;
+    this.leadObj.MfSignerJobPosition1 = this.MainInfoForm.controls["NickName"].value;;
+    this.leadObj.MfSignerName2 = this.MainInfoForm.controls["NickName"].value;;
+    this.leadObj.MfSignerJobPosition2 = this.MainInfoForm.controls["NickName"].value;;
+    this.leadObj.CustSignerName1 = this.MainInfoForm.controls["NickName"].value;;
+    this.leadObj.CustSignerJobPosition1 = this.MainInfoForm.controls["NickName"].value;;
+    this.leadObj.CustSignerName2 = this.MainInfoForm.controls["NickName"].value;;
+    this.leadObj.CustSignerJobPosition2 = this.MainInfoForm.controls["NickName"].value;;
   }
 
   SaveForm(){
-    this.mouCustSignerObj = new MouCustSignerObj();
-    this.setMouCustSigner();
-    console.log("aaa")
-    console.log(this.mouCustSignerObj)
-    this.http.post(this.addMouCustSigner, this.mouCustSignerObj).subscribe(
+    this.leadObj = new LeadObj();
+    this.setLead();
+    this.http.post(this.addLead, this.leadObj).subscribe(
       (response) => {
         console.log(response);
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["/Mou/DocSigner/Paging"]);
+        this.router.navigate(["/Lead/Page"]);
         console.log(response)
       },
       (error) => {

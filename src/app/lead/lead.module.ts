@@ -20,6 +20,9 @@ import { MainInfoComponent } from 'app/view/main-info/main-info.component';
 import { LeadRoutingModule } from "./lead-routing.module";
 import { LeadVerifComponent } from './lead-verif/lead-verif.component';
 import { LeadInputComponent } from "./lead-input/lead-input.component";
+import { LeadInputCustDataComponent } from "./lead-input/lead-input-cust-data/lead-input-cust-data.component";
+import { LeadInputPageComponent } from "./lead-input/lead-input-page/lead-input-page.component";
+import { LeadInputMainInfoComponent } from "./lead-input/lead-input-main-info/lead-input-main-info.component";
 
 @NgModule({
   imports: [
@@ -36,11 +39,15 @@ import { LeadInputComponent } from "./lead-input/lead-input.component";
     UcShowErrorsModule,
     UclookupgenericModule,
     UcviewgenericModule,
-    SharingComponentModule
+    SharingComponentModule,
+    ArchwizardModule,
   ],
   declarations: [
     LeadVerifComponent,
-    LeadInputComponent
+    LeadInputComponent,
+    LeadInputCustDataComponent,
+    LeadInputPageComponent,
+    LeadInputMainInfoComponent
   ]
 })
 

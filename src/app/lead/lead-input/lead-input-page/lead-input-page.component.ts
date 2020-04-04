@@ -9,7 +9,6 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 @Component({
   selector: 'app-lead-input-page',
   templateUrl: './lead-input-page.component.html',
-  styleUrls: ['./lead-input-page.component.scss'],
   providers: [NGXToastrService],
 })
 export class LeadInputPageComponent implements OnInit {

@@ -10,7 +10,6 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 @Component({
   selector: 'app-lead-input',
   templateUrl: './lead-input.component.html',
-  styleUrls: ['./lead-input.component.scss'],
   providers: [NGXToastrService]
 })
 export class LeadInputComponent implements OnInit {

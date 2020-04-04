@@ -148,6 +148,7 @@ export class AdInsConstant {
     public static GetListKvpActiveRefOffice= "/RefOffice/GetListKvpActiveRefOffice";
     public static GetListRefOffice = "/RefOffice/GetListRefOffice";
     public static GetListActiveRefOffice = environment.FoundationR3Url + "/RefOffice/GetListKeyValueActiveByCode";
+    public static GetListKvpActiveRefOfficeForPaging = environment.FoundationR3Url + "/RefOffice/GetListKvpActiveRefOfficeForPaging";
 
     //REF OFFICE AREA
     public static GetAllListArea = "/RefOfficeArea/GetAllListArea";
@@ -318,6 +319,7 @@ export class AdInsConstant {
     public static GetRefMasterByMasterCode = "/RefMaster/GetRefMasterByMasterCode";
     public static GetRefMasterListKeyValueActiveByCode = environment.FoundationR3Url + "/RefMaster/GetListKeyValueActiveByCode";
     public static GetListActiveRefMaster = environment.FoundationR3Url + "/RefMaster/GetListActiveRefMaster";
+    public static GetListActiveRefMasterWithReserveFieldAll = environment.FoundationR3Url + "/RefMaster/GetListActiveRefMasterWithReserveFieldAll";
     
     
 
@@ -574,4 +576,7 @@ export class AdInsConstant {
   //App Fin Data
   public static GetAppFinDataByAppId = "http://localhost:5001/AppFinData/GetAppFinDataByAppId";
   public static CreateMaxAllocAmtRsvFund = "http://localhost:5001/AppFinData/CreateMaxAllocAmtRsvFund";
+
+  // LEAD
+  public static AddLead = environment.losUrl + "/Lead/AddLead";
 }

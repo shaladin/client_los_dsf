@@ -45,19 +45,19 @@
                         <div class="form-group row">
                             <label class="col-md-3 adInsLabel adins-required" translate>Line Of Business </label>
                             <div class="col-md-4">
-                                <select class="form-control adInsInput" formControlName="LineOfBusiness">
+                                <select class="form-control adInsInput" formControlName="LobName">
                                 <option *ngFor="let ram of listRefLob" [value]="ram.Key">
                                     {{ram.Value}}
                                 </option>
                                 </select>
-                                <show-errors [control]="MainInfoForm.controls.LineOfBusiness" [submit]="enjiForm.submitted"></show-errors>
+                                <show-errors [control]="MainInfoForm.controls.LobName" [submit]="enjiForm.submitted"></show-errors>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 adInsLabel adins-required" translate>Lead Source </label>
                             <div class="col-md-4">
                                 <select class="form-control adInsInput" formControlName="LeadSource">
-                                <option *ngFor="let ram of listJobType" [value]="ram.Key">
+                                <option *ngFor="let ram of listLeadSource" [value]="ram.Key">
                                     {{ram.Value}}
                                 </option>
                                 </select>
@@ -67,7 +67,7 @@
                         <div class="form-group row">
                             <label class="col-md-3 adInsLabel adins-required" translate>Agency </label>
                             <div class="col-md-4">
-                                <lib-uclookupgeneric [lookupInput]="agencyLookUpObj1" [parentForm]="MainInfoForm"
+                                <lib-uclookupgeneric [lookupInput]="agencyLookUpObj" [parentForm]="MainInfoForm"
                                     [enjiForm]="enjiForm" [identifier]="'Agency'" (lookup)=getLookUpAgency($event)>
                                 </lib-uclookupgeneric>
                             </div>
@@ -98,15 +98,15 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="form-actions right" style="text-align: right;">
-                    <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['/Mou/DocSigner/Paging']"
+                <div class="form-actions right" style="text-align: right;">
+                    <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['/Lead/Lead/Paging']"
                       translate>
                       <i class="ft-x"></i> Back
                     </button>
                     <button type="submit" class="btn btn-raised btn-primary" translate>
                       <i class="fa fa-check-square-o"></i> Submit
                     </button>
-                  </div> -->
+                </div>
                 </form>
             </div>
         </div>
