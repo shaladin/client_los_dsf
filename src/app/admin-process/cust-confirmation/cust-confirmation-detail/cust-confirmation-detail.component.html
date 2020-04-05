@@ -26,19 +26,19 @@
           <tbody>
             <tr *ngFor="let item of VerfResultList; let i = index">
               <td>{{i + 1}}</td>
-              <td>{{item.MrVerfSubjectRelationCode}}</td>
+              <td>{{item.MrVerfSubjectRelationName}}</td>
               <td>{{item.Phn}}</td>
-              <td>{{item.VerfDt}}</td>
-              <td>{{item.VerfDt}}</td>
+              <td>{{item.VerfDt | date}}</td>
+              <td>{{item.VerfDt | date:'mediumTime'}}</td>
               <td>{{item.MrVerfResultHStatCode}}</td>
               <td>{{item.Notes}}</td>
               <td>
                 <a [routerLink]="['/AdminProcess/CustConfirmation/Subj/View']"
-                  [queryParams]="{VerfResultHId:VerfResultHId, AgrmntId:AgrmntId}">View</a>
+                  [queryParams]="{VerfResultHId:item.VerfResultHId, AgrmntId:AgrmntId}">View</a>
               </td>
               <td>
                 <a class="success p-0" [routerLink]="['/AdminProcess/CustConfirmation/Subj/Detail']"
-                  [queryParams]="{VerfResultHId:VerfResultHId, AgrmntId:AgrmntId}">
+                  [queryParams]="{VerfResultHId:item.VerfResultHId, AgrmntId:AgrmntId, AppId:AppId, Subject:'CUST'}">
                   <i class="ft-edit-2 font-medium-3 mr-2"></i>
                 </a>
               </td>
@@ -49,17 +49,18 @@
 
       <div class="row">
         <div class="col-md-12">
-          <input type="checkbox" class="border-primary" [(ngModel)]="IsSkip" name="IsSkip"><label> Skip</label>
+          <input type="checkbox" class="border-primary" [(ngModel)]="CustCnfrmObj.IsSkip" name="IsSkip"><label>
+            Skip</label>
         </div>
       </div>
-      <div class="row" *ngIf="IsSkip">
-        <label class="col-md-3 adins-required-label" translate>Skip Reason</label>
+      <div class="row" *ngIf="CustCnfrmObj.IsSkip">
+        <label class="col-md-3" translate>Skip Reason</label>
         <div class="col-md-9">
-          <input type="text" class="form-control">
+          <input type="text" class="form-control" [(ngModel)]="CustCnfrmObj.SkipReason" name="SkipReason">
         </div>
       </div>
 
-      <form>
+      <form  (ngSubmit)="SaveForm()">
         <div class="form-actions right">
           <button type="button" class="btn btn-raised btn-warning mr-1"
             [routerLink]="['/AdminProcess/CustConfirmation/paging']" translate>

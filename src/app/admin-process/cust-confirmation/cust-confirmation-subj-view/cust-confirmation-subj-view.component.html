@@ -50,7 +50,7 @@
             </div>
             <div class="row">
               <label class="label-control col-md-6">Date</label>
-              <label class="label-control col-md-6">{{ VerfResultObj?.VerfDt }}</label>
+              <label class="label-control col-md-6">{{ VerfResultObj?.VerfDt | date}}</label>
             </div>
             <div class="row">
               <label class="label-control col-md-6">Verification By</label>
@@ -87,7 +87,7 @@
           <div class="col-md-6">
             <div class="row">
               <label class="label-control col-md-6">Time</label>
-              <label class="label-control col-md-6">{{ VerfResultHObj?.VerfDt }}</label>
+              <label class="label-control col-md-6">{{ VerfResultHObj?.VerfDt | date:'mediumTime'}}</label>
             </div>
             <div class="row">
               <label class="label-control col-md-6">Score</label>
@@ -110,40 +110,61 @@
               <td class="text-left">{{item.MrVerfResultHStatName}}</td>
               <td class="text-left">{{item.Notes}}</td>
               <td>
-                <a [routerLink]="['/AdminProcess/CustConfirmation/Subj/View']"
-                  [queryParams]="{VerfResultHId:item.VerfResultHId, AgrmntId:AgrmntId}">View</a>
+                <a (click)="GetDetailVerf(item.VerfResultHId)">View</a>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
+      <br>
 
-      <div>
+      <div *ngIf="IsVerfDetail">
+        <div class="ucSearch-Button-Right">
+          <span class="mr-1">
+            <button type="button" class="backButton" (click)="BackVerfDetail()" translate>
+              <i class="ft-plus-circle"></i> Back
+            </button>
+          </span>
+        </div>
+
         <lib-ucSubsection [id]="'DetailVerfId'" [title]="'Detail Verification'" [panel]="'DetailVerf'">
         </lib-ucSubsection>
-        <div class="form-body" id="DetailVerf">
-          <div class="row">
-            <div class="col-md-6">
-              <div class="row">
-                <label class="label-control col-md-6">Phone Type</label>
-                <label class="label-control col-md-6">{{ VerfResultHObjDetail?.PhnType }}</label>
-              </div>
-              <div class="row">
-                <label class="label-control col-md-6">Status</label>
-                <label class="label-control col-md-6">{{ VerfResultHObjDetail?.MrVerfResultHStatName }}</label>
-              </div>
+        <div id="DetailVerf" class="row">
+          <div class="col-md-6">
+            <div class="row">
+              <label class="label-control col-md-6">Phone Type</label>
+              <label class="label-control col-md-6">{{ VerfResultHObjDetail?.PhnType }}</label>
             </div>
-            <div class="col-md-6">
-              <div class="row">
-                <label class="label-control col-md-6">Phone Number</label>
-                <label class="label-control col-md-6">{{ VerfResultHObjDetail?.Phn }}</label>
-              </div>
+            <div class="row">
+              <label class="label-control col-md-6">Status</label>
+              <label class="label-control col-md-6">{{ VerfResultHObjDetail?.MrVerfResultHStatName }}</label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="row">
+              <label class="label-control col-md-6">Phone Number</label>
+              <label class="label-control col-md-6">{{ VerfResultHObjDetail?.Phn }}</label>
             </div>
           </div>
         </div>
-
       </div>
-      
     </div>
+    <br>
+
+    <!-- Question Answer -->
+    <div *ngIf="IsVerfDetail">
+      <form>
+        <div class="form-body" *ngFor="let QuestionGrpList of VerfResultDListObj; let i = index">
+          <h4 class="form-section card-title" translate><i
+              class="ft-file-text"></i>{{QuestionGrpList.VerfQuestionGrpName}}</h4>
+          <div class="form-group row" *ngFor="let QRList of QuestionGrpList.VerResultList; let j = index">
+            <label class="col-md-3" translate>{{QRList.VerfQuestionText}} </label>
+            <label class="col-md-5" translate>{{QRList.Answer}} </label>
+            <label class="col-md-4" translate>{{QRList.Notes}} </label>
+          </div>
+        </div>
+      </form>
+    </div>
+
   </div>
 </div>

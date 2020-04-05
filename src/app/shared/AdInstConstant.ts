@@ -538,11 +538,13 @@ export class AdInsConstant {
     public static GetVerfResultHById = "http://localhost:5000" + "/VerfResultH/GetVerfResultHById";
     public static GetVerfResultHsByTrxRefNo = "http://localhost:5000" + "/VerfResultH/GetVerfResultHsByTrxRefNo";
     public static GetVerfResultHsByVerfResultIdAndSubjRelationCode = "http://localhost:5000" + "/VerfResultH/GetVerfResultHsByVerfResultIdAndSubjRelationCode";
-    public static GetListVerfResultDInQuestionGrp = "http://localhost:5000" + "/VerfResultH/GetListVerfResultDInQuestionGrp";
+    public static GetListVerfResultDInQuestionGrp = "http://localhost:5000" + "/VerfResultD/GetListVerfResultDInQuestionGrp";
+    public static AddVerfResultHeaderAndVerfResultDetail = "http://localhost:5000" + "/VerfResultH/AddVerfResultHeaderAndVerfResultDetail";
 
-    //VERF QUESTION ANSWER
+    //CUST CONFIRM
     public static GetVerfQuestionAnswerListByAppIdAndSubject = "http://localhost:5001" + "/CustCnfrm/GetVerfQuestionAnswerListByAppIdAndSubject";
-
+    public static AddCustCnfrm = "http://localhost:5001" + "/CustCnfrm/AddCustCnfrm";
+    
     //REF STATUS
     public static GetListActiveRefStatusByStatusGrpCode = "http://localhost:5000" + "/RefStatus/GetListKeyValueActiveGrpCodeByCode";
 
@@ -550,6 +552,7 @@ export class AdInsConstant {
     public static GetAppAssetByAppIdAndCriteria = environment.losUrl + "/AgrmntActivation/GetAppAssetByAppIdAndCriteria";
     public static GetAppFinDataAndFeeByAppIdAndListAppAssetId = environment.losUrl + "/AgrmntActivation/GetAppFinDataAndFeeByAppIdAndListAppAssetId";
     public static SubmitAgrmntActivationByHuman = environment.losUrl + "/AgrmntActivation/SubmitAgrmntActivationByHuman";
+    
     //AppCustAddr
     public static GetListAppCustAddrByAppId = "http://localhost:5001/AppCustAddr/GetListAppCustAddrByAppId";
 
