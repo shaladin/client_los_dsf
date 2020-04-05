@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { error } from 'protractor';
 
 @Component({
   selector: 'app-form-add-dynamic',
@@ -122,9 +123,9 @@ export class FormAddDynamicComponent implements OnInit {
 
   AddNewDataForm(){
     var NewDataForm = this.fb.group({
-      ContentName: [''],
+      ContentName: ['', Validators.required],
       ContentNameValue: [''],
-      BankAccountNo: [''],
+      BankAccountNo: ['', Validators.required],
       BankAccountName: [''],
       BankBranch: [''],
       BankCode: [''],
@@ -163,25 +164,66 @@ export class FormAddDynamicComponent implements OnInit {
     console.log(this.FormObj);
   }
 
-  CalculateTax(CurrCode, AppNo){
-    for(var i = 0; i < this.arr.length; i++){
+  CalculateTax(CurrCode, AppNo, OriOfficeCode){
+    var len = this.arr.controls.length;
+    var vendorCode = new Array();
+    var trxAmt = new Array();
+    for(var i = len-1; i >= 0; i--){
+      if(this.arr.controls[i].controls.ContentName.value != ""){
+        vendorCode.push(this.arr.controls[i].controls.ContentName.value);
+        trxAmt.push(this.arr.controls[i].controls.TotalCommisionAmount.value);
+      }else{
+        this.DeleteDataForm(i);
+        len--;
+      }
+    }
+    if(vendorCode.length > 0){
       var obj = {
         UserName: this.UserAccess.UserName,
         Office: this.UserAccess.MrOfficeTypeCode,
-        TaxpayerNo: '',
+        VendorCode: vendorCode,
         TrxDt: this.UserAccess.BusinessDt,
-        TrxAmt: 0,
+        TrxAmt: trxAmt,
         RefNo: AppNo,
         TrxTypeCode: AdInsConstant.AppCom,
         CurrCode: CurrCode,
-        OfficeCode: this.UserAccess.OfficeCode,
+        OfficeCode: OriOfficeCode,
         ExchangeRateAmt: AdInsConstant.ExchangeRateAmt, 
-        TaxSchmCode: "",
         IsSave: true,
+        Content: this.FormInputObj["content"],
       };
-      this.FormObj.controls.arr["controls"][i].patchValue({
-        
-      });
+      var url = environment.losUrl + AdInsConstant.GetAppCommissionTax;
+      this.http.post(url, obj).subscribe(
+        (response) => {
+          console.log("response Tax");
+          console.log(response);
+          var temp = response["ReturnObject"];
+          len = this.arr.controls.length;
+          if(temp.length == len){
+            for(var i=0;i<temp.length;i++){
+              console.log(len - i - 1);
+              var data = temp[i]["ReturnObject"];
+              var taxAmount = 0;
+              var vATAmount = 0;
+              for(var j=0;j<data.length;j++){
+                if(data[j].TaxTypeCode == AdInsConstant.TaxTypeCode){
+                  taxAmount = data[j].TaxAmt;
+                }else if(data[j].TaxTypeCode == AdInsConstant.VATTypeCode){
+                  vATAmount = data[j].TaxAmt;
+                }
+                this.FormObj.controls.arr["controls"][len - 1 - i].patchValue({
+                  TaxAmount: taxAmount,
+                  VATAmount: vATAmount
+                });
+              }
+            }
+          }
+          this.CheckData();
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     }
   }
 

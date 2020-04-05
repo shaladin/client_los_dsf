@@ -130,7 +130,7 @@ export class CommissionAddComponent implements OnInit {
   UppingAdminFee;
   UppingProvisionFee;
   GetAppFeeData() {
-    var url = environment.losUrl + AdInsConstant.GetListAppFeeByAppId;
+    var url = AdInsConstant.GetListAppFeeByAppId;
     var obj = {
       // AppId: this.AppId,
       AppId: this.AppId,
@@ -451,7 +451,7 @@ export class CommissionAddComponent implements OnInit {
     this.FormAdd1.CheckData();
     this.FormAdd2.CheckData();
     this.FormAdd3.CheckData();
-    this.FormAdd1.CalculateTax(this.ResultAppData.CurrCode, this.ResultAppData.AppNo);
+    this.FormAdd1.CalculateTax(this.ResultAppData.CurrCode, this.ResultAppData.AppNo, this.ResultAppData.OriOfficeCode);
   }
 
   listAppCommissionHObj;

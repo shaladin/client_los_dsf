@@ -42,6 +42,9 @@ export class AdInsConstant {
     public static AppStepPGLV = "PGLV";
     public static AppStepCSR = "CSR";
 
+    public static TaxTypeCode = "WHT";
+    public static VATTypeCode = "VAT";
+    
     // ASSET
     public static GetListKeyValueByCode = environment.FoundationR3Url + "/AssetType/GetListKeyValueByCode";
 
@@ -60,6 +63,7 @@ export class AdInsConstant {
     // App Commission
     public static AddAppCommissionData = "/AppCommission/AddAppCommissionData";
     public static GetAppCommissionRule = "/AppCommission/GetAppCommissionRule";
+    public static GetAppCommissionTax = "/AppCommission/GetAppCommissionTax";
 
     // App Referantor
     public static AddAppReferantor = "/AppReferantor/AddAppReferantor";

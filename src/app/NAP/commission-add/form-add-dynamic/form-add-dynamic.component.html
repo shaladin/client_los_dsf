@@ -34,7 +34,7 @@
                 <div class="form-group row">
                   <!-- Content Name -->
                   <div class="form-group col-md-2">
-                    <label class="adInsLabel">{{FormInputObj['content']}} Name</label>
+                    <label class="adInsLabel-required">{{FormInputObj['content']}} Name</label>
                   </div>
                   <div class="col-md-4">
                     <select *ngIf="item.controls.ContentName.value == ''" class="form-control adInsInput"
@@ -43,7 +43,7 @@
                       <option *ngFor="let it of DDLContentName" value="{{it.Key}}">
                         {{it.Value}} </option>
                     </select>
-
+                    <show-errors [control]="item.controls.ContentName" [submit]="enjiForm.submitted"></show-errors>
                     <label class="adInsLabel"
                       *ngIf="item.controls.ContentName.value != ''">{{item.controls.ContentNameValue.value}}</label>
                   </div>
@@ -58,7 +58,7 @@
                   <div class="form-group row">
                     <!-- Bank Account -->
                     <div class="col-md-2">
-                      <label class="adInsLabel">Bank Account</label>
+                      <label class="adInsLabel-required">Bank Account</label>
                     </div>
                     <div class="col-md-4">
                       <select class="form-control adInsInput" style="width: auto; border-right: 1px solid grey" formControlName="BankAccountNo"
@@ -110,8 +110,9 @@
                               *ngIf="ruleItem.controls.TotalListAllocatedDivided.value > idx">
                               <label class="col-md-4 adInsLabel"> {{ruleItem.controls.AllocationFrom.value}} </label>
                               <div class="col-md-8" [ngSwitch]="ruleItem.controls.AllocationBehaviour.value">
-                                <label class="adInsLabel" *ngSwitchCase="'LOCK'">
-                                  {{ruleItem.controls.AllocationAmount.value}} </label>
+                                <input type="text" *ngSwitchCase="'LOCK'" readonly
+                                  class="form-control adInsInput width-100-per text-left"
+                                  formControlName="AllocationAmount" (change)="ChangeDataLabel(i)">
                                 <input type="text" *ngSwitchCase="'DEF'"
                                   class="form-control adInsInput width-100-per text-left"
                                   formControlName="AllocationAmount" (change)="ChangeDataLabel(i)">
@@ -126,8 +127,9 @@
                               *ngIf="ruleItem.controls.TotalListAllocatedDivided.value <= idx">
                               <label class="col-md-4 adInsLabel"> {{ruleItem.controls.AllocationFrom.value}} </label>
                               <div class="col-md-8" [ngSwitch]="ruleItem.controls.AllocationBehaviour.value">
-                                <label class="adInsLabel" *ngSwitchCase="'LOCK'">
-                                  {{ruleItem.controls.AllocationAmount.value}} </label>
+                                <input type="text" *ngSwitchCase="'LOCK'" readonly
+                                  class="form-control adInsInput width-100-per text-left"
+                                  formControlName="AllocationAmount" (change)="ChangeDataLabel(i)">
                                 <input type="text" *ngSwitchCase="'DEF'"
                                   class="form-control adInsInput width-100-per text-left"
                                   formControlName="AllocationAmount" (change)="ChangeDataLabel(i)">
