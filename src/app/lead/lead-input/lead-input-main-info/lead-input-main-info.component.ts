@@ -16,6 +16,7 @@ import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { LeadObj } from 'app/shared/model/Lead.Model';
 import { RefOfficeObj } from 'app/shared/model/RefOfficeObj.model';
 import { RefLobObj } from 'app/shared/model/RefLobObj.Model';
+import { VendorObj } from 'app/shared/model/Vendor.Model';
 
 
 @Component({
@@ -28,25 +29,37 @@ export class LeadInputMainInfoComponent implements OnInit {
   LeadId: any;
   MouType: any;
   addLead: any;
+  getLeadByLeadId: any;
+  returnLead: any;
   leadObj: any;
   setLeadObj: any;
+  getLeadObj: LeadObj;
   cmoNameLookUpObj: any;
   surveyorNameLookUpObj: any;
   salesNameLookUpObj:any;
   agencyLookUpObj: any;
   tempCmoName: any;
+  tempCmoCode: any;
   tempSurveyorName: any;
+  tempSurveyorCode: any;
   tempSalesName: any;
-  tempAgency: any;
+  tempSalesCode: any;
+  tempAgencyName: any;
+  tempAgencyCode: any;
   getListRefOffice: any;
   getListActiveLob: any;
   getListActiveRefMasterUrl: any;
+  getVendorByVendorCode: any;
   listRefOffice: any;
   refOfficeObj: any;
   listRefLob:any;
   refLobObj: any;
   leadSource: any;
   listLeadSource: any;
+  vendorObj: any;
+  returnVendorObj: any;
+  OfficeName: any;
+  LobName: any;
   pageType: string = "add";
   page:any;
   custShareholderLookUpObj1: any;
@@ -55,40 +68,46 @@ export class LeadInputMainInfoComponent implements OnInit {
     OfficeName: [''],
     OrderNo:[''],
     LobCode: [''],
-    LobName: [''],
+    LobName:[''],
     LeadSource: [''],
   });
   
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.addLead = AdInsConstant.AddLead;
+    this.getLeadByLeadId = AdInsConstant.GetLeadByLeadId;
     this.getListRefOffice = AdInsConstant.GetListKvpActiveRefOfficeForPaging;
     this.getListActiveLob = AdInsConstant.GetListActiveLob;
     this.getListActiveRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
+    this.getVendorByVendorCode = AdInsConstant.GetVendorByVendorCode;
 
     this.route.queryParams.subscribe(params => {
-        if (params["LeadId"] != null) {
-            this.pageType = params["LeadId"];
-        }
         if (params["mode"] != null) {
-          this.LeadId = params["mode"];
+            this.pageType = params["mode"];
+        }
+        if (params["LeadId"] != null) {
+          this.LeadId = params["LeadId"];
       }
     });
   }
 
 getLookUpAgency(event) {
-  this.tempAgency = event.EmpName;
+  this.tempAgencyName = event.VendorName;
+  this.tempAgencyCode = event.VendorCode;
 }
 
 getLookUpCmoName(event) {
     this.tempCmoName = event.EmpName;
+    this.tempCmoCode = event.RoleCode;
 }
 
 getLookUpSurveyorName(event) {
     this.tempSurveyorName = event.EmpName;
+    this.tempSurveyorCode = event.RoleCode;
 }
 
 getLookUpSalesName(event) {
     this.tempSalesName = event.EmpName;
+    this.tempSalesCode = event.RoleCode;
 }
 
   ngOnInit() {
@@ -138,10 +157,7 @@ getLookUpSalesName(event) {
         this.listRefOffice = response['ReturnObject']
         console.log("aaa")
         console.log(this.listRefOffice)
-        this.MainInfoForm.patchValue({ 
-          OfficeCode: response['ReturnObject'][0]['Key'],
-          OfficeName: response['ReturnObject'][0]['Value'] 
-        });
+        this.MainInfoForm.patchValue({  OfficeCode: response['ReturnObject'][0]['Key'] });
       },
       (error) => {
         console.log(error);
@@ -154,10 +170,7 @@ getLookUpSalesName(event) {
           this.listRefLob = response['ReturnObject'];
           console.log("bbb")
           console.log(this.listRefLob)
-          this.MainInfoForm.patchValue({ 
-            LobCode: response['ReturnObject'][0]['Key'],
-            LobName: response['ReturnObject'][0]['Value'] 
-          });
+          this.MainInfoForm.patchValue({ LobCode: response['ReturnObject'][0]['Key'] });
       },
       (error) => {
           console.log(error);
@@ -170,28 +183,88 @@ getLookUpSalesName(event) {
         this.listLeadSource = response['ReturnObject'];
         this.MainInfoForm.patchValue({ LeadSource: response['ReturnObject'][0]['Key'] });
     });
+
+    if(this.pageType == "edit")
+    {
+      this.getLeadObj = new LeadObj();
+      this.getLeadObj.LeadId = this.LeadId;
+      this.http.post(this.getLeadByLeadId, this.getLeadObj).subscribe(
+        (response) => {
+            this.returnLead = response;
+            this.MainInfoForm.patchValue({ 
+              OfficeCode: this.returnLead.OriOfficeCode,
+              OfficeName: this.returnLead.OriOfficeName,
+              OrderNo: this.returnLead.OrderNo,
+              LobCode: this.returnLead.LobCode,
+              LobName: this.returnLead.LobName,
+              LeadSource: this.returnLead.MrLeadSourceCode,
+            });
+
+            this.vendorObj = new VendorObj();
+            this.vendorObj.VendorCode = this.returnLead.AgencyCode;
+            this.http.post(this.getVendorByVendorCode, this.vendorObj).subscribe(
+              (response) => {
+                  this.returnVendorObj = response;
+                  this.agencyLookUpObj.nameSelect = this.returnVendorObj.VendorName;
+                  this.agencyLookUpObj.jsonSelect = this.returnVendorObj;
+                  this.tempAgencyCode = this.returnVendorObj.VendorCode;
+              });
+
+            this.cmoNameLookUpObj.nameSelect = this.returnLead.CmoName;
+            this.cmoNameLookUpObj.jsonSelect = this.returnLead;
+            this.tempCmoCode = this.returnLead.CmoCode;
+
+            this.surveyorNameLookUpObj.nameSelect = this.returnLead.SurveyorName;
+            this.surveyorNameLookUpObj.jsonSelect = this.returnLead;
+            this.tempSurveyorCode = this.returnLead.SurveyorCode;
+
+            this.salesNameLookUpObj.nameSelect = this.returnLead.TeleMarketingName;
+            this.salesNameLookUpObj.jsonSelect = this.returnLead;
+            this.tempSalesCode = this.returnLead.TeleMarketingCode;
+        });
+    }
+  }
+
+  OfficeChanged(event){
+    this.MainInfoForm.patchValue({
+      OfficeName: this.listRefOffice.find(x => x.Key == event.target.value).Value
+    });
+  }
+
+  LobChanged(event){
+    this.MainInfoForm.patchValue({
+      LobName: this.listRefLob.find(x => x.Key == event.target.value).Value
+    });
   }
 
   setLead(){
     this.leadObj.OriOfficeCode = this.MainInfoForm.controls["OfficeCode"].value;
     this.leadObj.OriOfficeName = this.MainInfoForm.controls["OfficeName"].value;
-    this.leadObj.MfSignerJobPosition1 = this.MainInfoForm.controls["NickName"].value;;
-    this.leadObj.MfSignerName2 = this.MainInfoForm.controls["NickName"].value;;
-    this.leadObj.MfSignerJobPosition2 = this.MainInfoForm.controls["NickName"].value;;
-    this.leadObj.CustSignerName1 = this.MainInfoForm.controls["NickName"].value;;
-    this.leadObj.CustSignerJobPosition1 = this.MainInfoForm.controls["NickName"].value;;
-    this.leadObj.CustSignerName2 = this.MainInfoForm.controls["NickName"].value;;
-    this.leadObj.CustSignerJobPosition2 = this.MainInfoForm.controls["NickName"].value;;
+    this.leadObj.LeadDt = new Date();
+    this.leadObj.OrderNo = this.MainInfoForm.controls["OrderNo"].value;
+    this.leadObj.LobCode = this.MainInfoForm.controls["LobCode"].value;
+    this.leadObj.LobName = this.MainInfoForm.controls["LobName"].value;
+    this.leadObj.MrLeadSourceCode = this.MainInfoForm.controls["LeadSource"].value;
+    this.leadObj.AgencyCode = this.tempAgencyCode;
+    this.leadObj.AgencyName = this.tempAgencyName;
+    this.leadObj.CmoCode = this.tempCmoCode;
+    this.leadObj.CmoName = this.tempCmoName;
+    this.leadObj.SurveyorCode = this.tempSurveyorCode;
+    this.leadObj.SurveyorName = this.tempSurveyorName;
+    this.leadObj.TeleMarketingCode = this.tempSalesCode;
+    this.leadObj.TeleMarketingName = this.tempSalesName;
   }
 
   SaveForm(){
     this.leadObj = new LeadObj();
     this.setLead();
+    console.log("sss");
+    console.log(this.leadObj)
     this.http.post(this.addLead, this.leadObj).subscribe(
       (response) => {
         console.log(response);
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["/Lead/Page"]);
+        this.router.navigate(["/Lead/Lead/Page"]);
         console.log(response)
       },
       (error) => {
