@@ -1,0 +1,146 @@
+<div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="px-3">
+            <div class="customerData">
+                <form class="form form-horizontal" [formGroup]="MouCustSignerForm" (ngSubmit)="MouCustSignerForm.valid && SaveForm()"
+                    #enjiForm="ngForm">
+                <div class="form-body">
+                    <lib-ucSubsection [id]="'mainInfoId'" [title]="'Main Info'" [panel]="'mainInfo'">
+                    </lib-ucSubsection>
+                    <div id="mainInfo">
+                        <div class="form-group row">
+                            <label class="col-md-3 adInsLabel adins-required" translate>MOU No </label>
+                            <div class="col-md-3">
+                                <label class="adInsLabel" translate>{{returnMouCust?.MouCustNo}}</label>
+                            </div>
+                            <label class="col-md-3 adInsLabel adins-required" translate>MOU Date </label>
+                            <div class="col-md-3">
+                                <label class="adInsLabel" translate>{{returnMouCust?.StartDt | date:'dd/MM/yyyy'}}</label>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 adInsLabel adins-required" translate>Customer Name </label>
+                            <div class="col-md-3">
+                                <label class="adInsLabel" translate>{{returnMouCust?.CustName}}</label>
+                            </div>
+                            <label class="col-md-3 adInsLabel adins-required" translate>MOU Type </label>
+                            <div class="col-md-3">
+                                <label class="adInsLabel" translate>{{returnMouCust?.MrMouTypeCode}}</label>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 adInsLabel adins-required" translate>Start Date </label>
+                            <div class="col-md-3">
+                                <label class="adInsLabel" translate>{{returnMouCust?.StartDt | date:'dd/MM/yyyy'}}</label>
+                            </div>
+                            <label class="col-md-3 adInsLabel adins-required" translate>Plafond Amount </label>
+                            <div class="col-md-3">
+                                <label class="adInsLabel" translate>{{returnMouCust?.PlafondAmt | number:'':'en-US'}}</label>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 adInsLabel adins-required" translate>Expired Date </label>
+                            <div class="col-md-3">
+                                <label class="adInsLabel" translate>{{returnMouCust?.StartDt | date:'dd/MM/yyyy'}}</label>
+                            </div>
+                            <label class="col-md-3 adInsLabel adins-required" translate>Reff No </label>
+                            <div class="col-md-3">
+                                <label class="adInsLabel" translate>{{returnMouCust?.RefNo}}</label>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 adInsLabel adins-required" translate>Status </label>
+                            <div class="col-md-4">
+                                <label class="adInsLabel" translate>{{returnMouCust?.MouStat}}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <lib-ucSubsection [id]="'mfSignerId'" [title]="'MF Signer'" [panel]="'mfSigner'">
+                    </lib-ucSubsection>
+                    <div id="mfSigner">
+                        <div class="form-group row">
+                            <label class="col-md-3 adInsLabel adins-required" translate>MF Signer 1 </label>
+                            <div class="col-md-4">
+                                <lib-uclookupgeneric [lookupInput]="custShareholderLookUpObj1" [parentForm]="MouCustSignerForm"
+                                    [enjiForm]="enjiForm" [identifier]="'ShareholderName1'" (lookup)=getLookUpShareholder1($event)>
+                                </lib-uclookupgeneric>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 adInsLabel adins-required" translate>MF Signer Position 1 </label>
+                            <div class="col-md-4">
+                            <input type="text" class="form-control adInsInput" formControlName="MfSignerPosition1"
+                                    [ngClass]="{ 'is-invalid': enjiForm.submitted && MouCustSignerForm.controls.MfSignerPosition1.invalid }" disabled>
+                            <show-errors [control]="MouCustSignerForm.controls.MfSignerPosition1" [submit]="enjiForm.submitted"></show-errors>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 adInsLabel adins-required" translate>MF Signer 2 </label>
+                            <div class="col-md-4">
+                                <lib-uclookupgeneric [lookupInput]="custShareholderLookUpObj2" [parentForm]="MouCustSignerForm"
+                                    [enjiForm]="enjiForm" [identifier]="'ShareholderName2'" (lookup)=getLookUpShareholder2($event)>
+                                </lib-uclookupgeneric>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 adInsLabel adins-required" translate>MF Signer Position 2 </label>
+                            <div class="col-md-4">
+                            <input type="text" class="form-control adInsInput" formControlName="MfSignerPosition2"
+                                    [ngClass]="{ 'is-invalid': enjiForm.submitted && MouCustSignerForm.controls.MfSignerPosition2.invalid }" disabled>
+                            <show-errors [control]="MouCustSignerForm.controls.MfSignerPosition2" [submit]="enjiForm.submitted"></show-errors>
+                            </div>
+                        </div>
+                    </div>
+                    <lib-ucSubsection [id]="'custSignerId'" [title]="'Customer Signer'" [panel]="'custSigner'">
+                    </lib-ucSubsection>
+                    <div id="custSigner">
+                        <div class="form-group row">
+                            <label class="col-md-3 adInsLabel adins-required" translate>Customer Signer 1 </label>
+                            <div class="col-md-4">
+                                <lib-uclookupgeneric [lookupInput]="employeeLookUpObj1" [parentForm]="MouCustSignerForm"
+                                [enjiForm]="enjiForm" [identifier]="'EmpName1'" (lookup)=getLookUpEmployee1($event)>
+                                </lib-uclookupgeneric>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 adInsLabel adins-required" translate>Customer Signer Position 1 </label>
+                            <div class="col-md-4">
+                            <input type="text" class="form-control adInsInput" formControlName="CustSignerPosition1"
+                                    [ngClass]="{ 'is-invalid': enjiForm.submitted && MouCustSignerForm.controls.CustSignerPosition1.invalid }" disabled>
+                            <show-errors [control]="MouCustSignerForm.controls.CustSignerPosition1" [submit]="enjiForm.submitted"></show-errors>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 adInsLabel adins-required" translate>Customer Signer 2 </label>
+                            <div class="col-md-4">
+                                <lib-uclookupgeneric [lookupInput]="employeeLookUpObj2" [parentForm]="MouCustSignerForm"
+                                [enjiForm]="enjiForm" [identifier]="'EmpName2'" (lookup)=getLookUpEmployee2($event)>
+                                </lib-uclookupgeneric>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 adInsLabel adins-required" translate>Customer Signer Position 2 </label>
+                            <div class="col-md-4">
+                            <input type="text" class="form-control adInsInput" formControlName="CustSignerPosition2"
+                                    [ngClass]="{ 'is-invalid': enjiForm.submitted && MouCustSignerForm.controls.CustSignerPosition2.invalid }" disabled>
+                            <show-errors [control]="MouCustSignerForm.controls.CustSignerPosition2" [submit]="enjiForm.submitted"></show-errors>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions right" style="text-align: right;">
+                    <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['/Mou/DocSigner/Paging']"
+                      translate>
+                      <i class="ft-x"></i> Back
+                    </button>
+                    <button type="submit" class="btn btn-raised btn-primary" translate>
+                      <i class="fa fa-check-square-o"></i> Submit
+                    </button>
+                  </div>
+                </form>
+            </div>
+        </div>
+      </div>
+    </div>
+</div>

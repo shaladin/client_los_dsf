@@ -77,7 +77,16 @@ export class AgrmntActivationDetailComponent implements OnInit {
       this.toastr.typeErrorCustom("Please select at least one Asset");
     }
   }
-
+  Checked(AppAssetId: any, isChecked: any): void {
+    if (isChecked) {
+      this.listSelectedId.push(AppAssetId);
+    } else {
+      const index = this.listSelectedId.indexOf(AppAssetId)
+      console.log(index);
+      if (index > -1) { this.listSelectedId.splice(index, 1); }
+    }
+    console.log('Sel', this.listSelectedId);
+  }
   Submit() {
     var Obj = {
       CreateDt: this.CreateDt,
