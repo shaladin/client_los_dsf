@@ -585,11 +585,13 @@ export class AdInsConstant {
   // Lead Cust
   public static GetLeadCustByLeadId = environment.losUrl +"/LeadCust/GetLeadCustByLeadId"
     
-
     // LEAD
     public static AddLead = environment.losUrl + "/Lead/AddLead";
     public static GetLeadByLeadId = environment.losUrl + "/Lead/GetLeadByLeadId";
 
+    //LEAD CANCEL
+    public static GetListLeadForLeadCancelByListLeadId = environment.losUrl + "/Lead/GetListLeadForLeadCancelByListLeadId";
+    public static EditListLeadForCancelByListLeadId = environment.losUrl + "/Lead/EditListLeadForCancelByListLeadId";
     //App Reserved Fund
     public static AddEditAppReservedFund = "http://localhost:5001/AppReservedFund/AddEditAppReservedFund";
     public static GetListAppReservedFundByAppId = "http://localhost:5001/AppReservedFund/GetListAppReservedFundByAppId";

@@ -58,7 +58,7 @@ import { ViewCustomerDataComponent } from './lead-view/view-customer-data/view-c
     LeadPagingComponent,
     LeadViewComponent,
     ViewCustomerDataComponent,
-    ArchwizardModule,
+    // ArchwizardModule,
   ],
 })
 

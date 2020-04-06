@@ -17,7 +17,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UCSearchComponent } from '@adins/ucsearch';
 import { environment } from 'environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UcgridfooterComponent } from '@adins/ucgridfooter';
@@ -27,6 +27,7 @@ import { NgbPaginationConfig } from '@ng-bootstrap/ng-bootstrap';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsService } from 'app/shared/services/adIns.service';
 import { LeadCancelObj } from 'app/shared/model/LeadCancelObj.Model';
+import { LeadCancelConfirmComponent } from '../lead-cancel-confirm/lead-cancel-confirm.component';
 
 @Component({
   selector: 'app-lead-cancel',
@@ -64,6 +65,7 @@ export class LeadCancelComponent implements OnInit {
   AddRangeLeadVerfUrl = AdInsConstant.AddRangeLeadVerf;
   verifyStatus: any;
   confirmUrl = "/Lead/ConfirmCancel";
+  allowedStat = ['INP','NEW'];
   constructor(
     private http: HttpClient,
     private toastr: NGXToastrService,
@@ -83,6 +85,13 @@ export class LeadCancelComponent implements OnInit {
     this.pageSize = 10;
     this.apiUrl = environment.losUrl + AdInsConstant.GetPagingObjectBySQL;
 
+    var addCrit = new CriteriaObj();
+    addCrit.DataType = "text";
+    addCrit.propName = "L.LEAD_STAT";
+    addCrit.restriction = AdInsConstant.RestrictionIn;
+    addCrit.listValue = this.allowedStat;
+    this.arrAddCrit.push(addCrit);
+    this.inputObj.addCritInput.push(addCrit);
     var GetListLeadVerfUrl = AdInsConstant.GetListLeadVerf;
     var obj = {};
     var arr = [0];
@@ -136,8 +145,6 @@ export class LeadCancelComponent implements OnInit {
     this.UCSearchComponent.search(this.apiUrl, this.pageNow, this.pageSize, order)
   }
   getResult(event) {
-    console.log('diget');
-    console.log(event);
     this.resultData = event.response.Data;
     this.totalData = event.response.Count;
     this.ucgridFooter.pageNow = event.pageNow;
@@ -157,23 +164,20 @@ export class LeadCancelComponent implements OnInit {
   }
 
   SaveLeadCancel(leadVerfForm: any) { 
-    // this.leadVerfObj = new LeadVerfObj();
+    var tempLeadCancelObj = new LeadCancelObj();
     for (let index = 0; index < this.tempData.length; index++) {
-      var tempLeadCancelObj = new LeadCancelObj();
-      tempLeadCancelObj.LeadIds = this.tempData[index].LeadId;
-      // this.arrLeadVerf.push(tempLeadCancelObj);
+      tempLeadCancelObj.LeadIds.push(this.tempData[index].LeadId);
     }
-    if (this.arrLeadVerf.length == 0) {
+    if (tempLeadCancelObj.LeadIds.length == 0) {
       this.toastr.typeErrorCustom('Please Add At Least One Data');
       return;
     }
-    else if(this.arrLeadVerf.length > 50){
+    else if(tempLeadCancelObj.LeadIds.length > 50){
       this.toastr.typeErrorCustom('Maximum 50 Data');
       return;
     }
-    // var params = new HttpParams();
-    // params = params.append('leadIds', tempLeadCancelObj.LeadIds.join(', '));
-    // this.http.get(this.confirmUrl, { params: params });
+    var params = tempLeadCancelObj.LeadIds.join(',')
+    this.router.navigate([this.confirmUrl], { queryParams: { "leadIds": params } });
   }
 
   addToTemp() {
@@ -196,6 +200,14 @@ export class LeadCancelComponent implements OnInit {
       addCrit.propName = "L.LEAD_ID";
       addCrit.restriction = AdInsConstant.RestrictionNotIn;
       addCrit.listValue = this.tempListId;
+
+      var allowedCrit = new CriteriaObj();
+      allowedCrit.DataType = "text";
+      allowedCrit.propName = "L.LEAD_STAT";
+      allowedCrit.restriction = AdInsConstant.RestrictionIn;
+      allowedCrit.listValue = this.allowedStat;
+      this.arrAddCrit.push(allowedCrit);
+
       this.arrAddCrit.push(addCrit);
       var order = null;
       if (this.orderByKey != null) {
@@ -250,6 +262,15 @@ export class LeadCancelComponent implements OnInit {
       addCrit.propName = "L.LEAD_ID";
       addCrit.restriction = AdInsConstant.RestrictionNotIn;
       addCrit.listValue = this.tempListId;
+
+      var allowedCrit = new CriteriaObj();
+      allowedCrit.DataType = "text";
+      allowedCrit.propName = "L.LEAD_STAT";
+      allowedCrit.restriction = AdInsConstant.RestrictionIn;
+      allowedCrit.listValue = this.allowedStat;
+      this.arrAddCrit.push(allowedCrit);
+
+
       if (this.tempListId.length != 0) {
         this.arrAddCrit.push(addCrit);
       }

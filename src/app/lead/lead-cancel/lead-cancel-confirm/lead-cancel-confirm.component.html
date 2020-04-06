@@ -1,7 +1,7 @@
-<lib-ucSubsection [id]="'AssetType'" [title]="'List Lead Cancel'" [panel]="'LeadCancelPanel'">
+<lib-ucSubsection [id]="'LeadCancel'" [title]="'List Lead Cancel'" [panel]="'LeadCancelPanel'">
 </lib-ucSubsection>
 
-<table *ngIf="tempData.length > 0" class="table table-responsive-md text-center table-hover" id="LeadCancelPanel">
+<table *ngIf="responseObj.length > 0" class="table table-responsive-md text-center table-hover" id="LeadCancelPanel">
   <thead>
     <tr class="table-header">
       <th class="text-left"><span class="thead-header" name='leadNo' translate>LEAD NO</span>
@@ -24,22 +24,43 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of tempData">
-      <td class="text-left">{{item.LeadNo}}</td>
-      <td class="text-left">{{item.OfficeName}}</td>
-      <td class="text-left">{{item.OrderNo}}</td>
-      <td class="text-left">{{item.CustName}}</td>
-      <td class="text-left">{{item.LeadSource}}</td>
-      <td class="text-left">{{item.FullAssetName}}</td>
-      <td class="text-left">{{item.LeadStep}}</td>
-      <td class="text-left">{{item.LeadStatus}}</td>
-      <td *ngIf="item.IsActive === true">Yes</td>
-      <td *ngIf="item.IsActive === false">No</td>
-      <td>
-        <a class="danger p-0" data-original-title="" title="" (click)="deleteFromTemp(item.LeadId)">
-          <i class="ft-trash-2 font-medium-3 mr-2"></i>
-        </a>
-      </td>
+    <tr *ngFor="let item of responseObj">
+      <ng-container *ngIf="deletedArr.includes(item.LeadId) == false">
+        <td class="text-left">{{item.LeadNo}}</td>
+        <td class="text-left">{{item.OfficeName}}</td>
+        <td class="text-left">{{item.OrderNo}}</td>
+        <td class="text-left">{{item.CustName}}</td>
+        <td class="text-left">{{item.LeadSource}}</td>
+        <td class="text-left">{{item.FullAssetName}}</td>
+        <td class="text-left">{{item.LeadStep}}</td>
+        <td class="text-left">{{item.LeadStatus}}</td>
+        <td>
+          <a class="danger p-0" data-original-title="" title="" (click)="deleteFromTemp(item.LeadId)">
+            <i class="ft-trash-2 font-medium-3 mr-2"></i>
+          </a>
+        </td>
+      </ng-container>
     </tr>
   </tbody>
 </table>
+
+<form class="form form-horizontal" [formGroup]="LeadConfirmCancelForm" name="LeadConfirmCancelForm" #enjiForm="ngForm" novalidate
+  (ngSubmit)="SaveLeadConfirmCancel(LeadConfirmCancelForm)">
+
+  <div class="form-group row adins-required">
+    <label class="col-md-4  adInsLabel" translate>Cancel Reason</label>
+    <div class="col-md-7">
+      <select class="form-control adInsInput" style="width: auto" formControlName="CancelReason">
+        <option *ngFor="let it of ItemCancelReason; let i = index" value="{{i}}">{{it.Value}}</option>
+      </select>
+      <show-errors [control]="LeadConfirmCancelForm.controls.MaxHierarchyLevel" [submit]="enjiForm.submitted">
+      </show-errors>
+    </div>
+  </div>
+  <div class="form-group row adins-required">
+    <label class="col-md-4 adInsLabel" translate>Notes</label>
+    <textarea formControlName="Notes" cols="30" rows="10"></textarea>
+  </div>
+  <button type="submit" class="btn btn-raised btn-primary mr-1" translate>Submit
+  </button>
+</form>
