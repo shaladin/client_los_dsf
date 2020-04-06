@@ -35,7 +35,15 @@ export class ViewCustomerDataComponent implements OnInit {
       });
     this.viewLeadCustomerPersonalMaindata = "./assets/ucviewgeneric/viewLeadCustomerPersonal.json";
     // this.viewLeadCustomerCompanyMaindata = "./assets/ucviewgeneric/viewLeadCustomerCompany.json";
-    this.viewLeadCustSocmed = "./assets/ucviewgeneric/viewLeadCustSocmed.json";
+    
+    this.http.post(this.GetLeadCustByLeadIdUrl, this.LeadCustObj).subscribe(
+      response => {
+        this.MrCustTypeCode = response["MrCustTypeCode"]; 
+      });
+
+
+
+
 
   }
 
