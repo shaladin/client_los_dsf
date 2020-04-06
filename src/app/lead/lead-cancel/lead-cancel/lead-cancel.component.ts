@@ -1,3 +1,19 @@
+// import { Component, OnInit } from '@angular/core';
+
+// @Component({
+//   selector: 'app-lead-cancel',
+//   templateUrl: './lead-cancel.component.html',
+//   styleUrls: ['./lead-cancel.component.scss']
+// })
+// export class LeadCancelComponent implements OnInit {
+
+//   constructor() { }
+
+//   ngOnInit() {
+//   }
+
+// }
+
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UCSearchComponent } from '@adins/ucsearch';
 import { environment } from 'environments/environment';
@@ -13,13 +29,13 @@ import { AdInsService } from 'app/shared/services/adIns.service';
 import { LeadVerfObj } from 'app/shared/model/LeadVerfObj.Model';
 
 @Component({
-  selector: 'app-lead-verif',
-  templateUrl: './lead-verif.component.html',
-  styleUrls: ['./lead-verif.component.scss'],
+  selector: 'app-lead-cancel',
+  templateUrl: './lead-cancel.component.html',
+  styleUrls: ['./lead-cancel.component.scss'],
   providers: [NGXToastrService]
 })
 
-export class LeadVerifComponent implements OnInit {
+export class LeadCancelComponent implements OnInit {
   @ViewChild(UcgridfooterComponent) ucgridFooter;
   @ViewChild(UCSearchComponent) UCSearchComponent;
   resultData: any;
@@ -55,9 +71,10 @@ export class LeadVerifComponent implements OnInit {
     private adInsService: AdInsService) { }
 
   ngOnInit() {
+    console.log('inii');
     this.arrCrit = new Array();
     this.inputObj = new InputSearchObj();
-    this.inputObj._url = './assets/search/searchLeadVerf.json';
+    this.inputObj._url = './assets/search/searchLeadCancel.json';
     this.inputObj.enviromentUrl = environment.losUrl;
     this.inputObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputObj.addCritInput = new Array();
@@ -85,6 +102,7 @@ export class LeadVerifComponent implements OnInit {
         this.inputObj.addCritInput.push(addCritAssetMasterId);
       },
       error => {
+        console.log('ga jalan');
         this.router.navigateByUrl('Error');
       }
     );
@@ -125,6 +143,8 @@ export class LeadVerifComponent implements OnInit {
     this.UCSearchComponent.search(this.apiUrl, this.pageNow, this.pageSize, order)
   }
   getResult(event) {
+    console.log('diget');
+    console.log(event);
     this.resultData = event.response.Data;
     this.totalData = event.response.Count;
     this.ucgridFooter.pageNow = event.pageNow;
@@ -143,7 +163,7 @@ export class LeadVerifComponent implements OnInit {
     this.verifyStatus = verifyStatus;
   }
 
-  SaveLeadVerf(leadVerfForm: any) {
+  SaveLeadCancel(leadVerfForm: any) {
     // this.leadVerfObj = new LeadVerfObj();
     for (let index = 0; index < this.tempData.length; index++) {
       var tempLeadVerfObj = new LeadVerfObj();
@@ -155,12 +175,17 @@ export class LeadVerifComponent implements OnInit {
       this.toastr.typeErrorCustom('Please Add At Least One Data');
       return;
     }
+    else if(this.arrLeadVerf.length > 50){
+      this.toastr.typeErrorCustom('Maximum 50 Data');
+      return;
+    }
 
     var LeadVerf = {
       LeadVerfObjs: this.arrLeadVerf
     }
     this.http.post(this.AddRangeLeadVerfUrl, LeadVerf).subscribe(
       response => {
+        console.log('success');
         this.toastr.successMessage(response['message']);
       },
       error => {
@@ -205,6 +230,7 @@ export class LeadVerifComponent implements OnInit {
       this.listSelectedId = [];
     } 
     else {
+      // console.log('Please select at least one Available Lead');
       this.toastr.typeErrorCustom('Please select at least one Available Lead');
     }
   }
