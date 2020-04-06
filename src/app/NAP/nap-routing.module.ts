@@ -13,6 +13,7 @@ import { GuarantorPersonalComponent } from "./nap-tab/app-guarantor/guarantor-pe
 import { AppLifeInsComponent } from "./nap-tab/app-life-ins/app-life-ins.component";
 import { CommissionPagingComponent } from "./commission-paging/commission-paging.component";
 import { CommissionAddComponent } from "./commission-add/commission-add.component";
+import { AppTcComponent } from "./nap-tab/app-tc/app-tc.component";
 import { AppFinDataComponent } from "./nap-tab/app-fin-data/app-fin-data.component";
 import { InsuranceDataComponent } from "./nap-tab/insurance-data/insurance-data.component";
 import { AssetDataComponent } from "./nap-tab/asset-data/asset-data.component";
@@ -123,11 +124,18 @@ const routes: Routes = [
         }
       },
       {
-          path: 'AssetData',
-          component: AssetDataComponent,
-          data: {
-              title: 'Asset Data'
-          }
+        path: 'AppTC',
+        component: AppTcComponent,
+        data: {
+          title: 'APP TC'
+        },
+      },
+      {
+      path: 'AssetData',
+      component: AssetDataComponent,
+      data: {
+          title: 'Asset Data'
+        },
       },
       {
           path: 'ReservedFund',

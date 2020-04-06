@@ -41,6 +41,7 @@ import { CustSocmedComponent } from "./nap-tab/customer-data/component/socmed/cu
 import { CustGrpMemberComponent } from "./nap-tab/customer-data/component/cust-grp-member/cust-grp-member.component";
 import { CustCompanyMainDataComponent } from "./nap-tab/customer-data/component/company-main-data/cust-company-main-data.component";
 import { CustShareholderComponent } from "./nap-tab/customer-data/component/shareholder/cust-shareholder.component";
+import { AppTcComponent } from './nap-tab/app-tc/app-tc.component';
 import { CustCompanyContactInformationComponent } from "./nap-tab/customer-data/component/company-contact-information/cust-company-contact-information.component";
 import { UcShowErrorsModule } from "@adins/uc-show-errors";
 import { CustCompanyFinancialDataComponent } from "./nap-tab/customer-data/component/company-financial-data/cust-company-financial-data.component";
@@ -88,6 +89,7 @@ import { AppFinDataComponent } from './nap-tab/app-fin-data/app-fin-data.compone
         CommissionAddComponent,
         FormAddDynamicComponent,
         CustShareholderComponent,
+        AppTcComponent,
         CustLegalDocComponent,
         UcinputnumberComponent,
         InsuranceDataComponent,

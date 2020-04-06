@@ -529,6 +529,11 @@ export class AdInsConstant {
 
   //APP TC
   public static GetListTCbyAppId = environment.losUrl + "/AppTc/GetListTCbyAppId";
+  public static CreateTCRule = environment.losUrl + "/AppTc/CreateTCRule";
+  
+  //REF TC
+  public static GetRefTcByCode = environment.FoundationR3Url + "/RefTc/GetRefTcByCode";
+  public static GetListRefTcByTcCode = environment.FoundationR3Url + "/RefTc/GetListRefTcByTcCode";
 
   //PURCHASE ORDER
   public static SubmitPurchaseOrder = environment.losUrl + "/PurchaseOrderH/SubmitPurchaseOrder";
