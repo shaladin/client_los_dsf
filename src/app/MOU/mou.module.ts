@@ -13,6 +13,7 @@ import { UcSubsectionModule } from "@adins/uc-subsection";
 import { UclookupgenericModule } from '@adins/uclookupgeneric';
 import { UcviewgenericModule } from '@adins/ucviewgeneric';
 import { UcaddressModule } from "@adins/ucaddress";
+// import { UcinputnumberModule } from "@adins/ucinputnumber";
 import { UCSearchComponent } from '@adins/ucsearch';
 import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
 import { UcgridfooterModule, UcgridfooterComponent } from "@adins/ucgridfooter";
@@ -63,7 +64,8 @@ import { LegalReviewDetailComponent } from './legal-review/legal-review-detail/l
     UcShowErrorsModule,
     UclookupgenericModule,
     UcviewgenericModule,
-    SharingComponentModule
+    SharingComponentModule,
+    // UcinputnumberModule
   ],
   declarations: [
     DocSignerComponent,
@@ -94,8 +96,16 @@ import { LegalReviewDetailComponent } from './legal-review/legal-review-detail/l
     MouRequestAddcollComponent,
     MouRequestAddcollAddeditComponent
   ],
-    exports: [],
-    providers: [NGXToastrService]
+  exports: [],
+  providers: [NGXToastrService],
+  entryComponents: [
+    // MouCustAssetDetailComponent,
+    // MouCustomerApprovalComponent,
+    // MouApprovalGeneralComponent,
+    // MouApprovalFactoringComponent,
+    // MouRequestAddcollComponent,
+    // MouRequestAddcollAddeditComponent,
+  ]
 })
 
 export class MouModule { }

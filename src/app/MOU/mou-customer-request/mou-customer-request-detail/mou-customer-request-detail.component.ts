@@ -3,17 +3,20 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Location } from '@angular/common';
+import { Location, DatePipe } from '@angular/common';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { RefOfficeObj } from 'app/shared/model/RefOfficeObj.model';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { link } from 'fs';
 
 @Component({
   selector: 'app-mou-customer-request-detail',
   templateUrl: './mou-customer-request-detail.component.html',
-  styleUrls: ['./mou-customer-request-detail.component.scss']
+  styleUrls: ['./mou-customer-request-detail.component.scss'],
+  providers: [NGXToastrService]
 })
 export class MouCustomerRequestDetailComponent implements OnInit {
   mouType: string;
@@ -24,7 +27,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
 
   MOUMainInfoForm = this.fb.group({
     MouCustId: [0, [Validators.required]],
-    MouCustNo: ['DUMMYNO'],
+    MouCustNo: [''],
     MouCustDt: ['', [Validators.required]],
     TopupMouCustId: [],
     CustNo: ['', [Validators.required]],
@@ -33,7 +36,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     EndDt: ['', [Validators.required]],
     RefNo: [''],
     IsRevolving: [false],
-    CurrCode: ['IDR'],
+    CurrCode: [''],
     PlafondAmt: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
     RealisationAmt: [0],
     MouStat: ['NEW', [Validators.required]],
@@ -48,7 +51,8 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location,
     private httpClient: HttpClient,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toastr: NGXToastrService
   ) {
     this.route.queryParams.subscribe(params => {
       if (params['mode'] != null) {
@@ -64,6 +68,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
    }
 
   ngOnInit() {
+    var datePipe = new DatePipe("en-US");
     var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
     console.log(currentUserContext);
     this.inputLookupCust = new InputLookupObj();
@@ -90,12 +95,14 @@ export class MouCustomerRequestDetailComponent implements OnInit {
       mouCust.MouCustId = this.mouCustId;
       this.httpClient.post(AdInsConstant.GetMouCustById, mouCust).subscribe(
         (response: any) => {
+          response["MouCustDt"] = datePipe.transform(response["MouCustDt"], "yyyy-MM-dd");
+          response["StartDt"] = datePipe.transform(response["StartDt"], "yyyy-MM-dd");
+          response["EndDt"] = datePipe.transform(response["EndDt"], "yyyy-MM-dd");
           this.MOUMainInfoForm.patchValue({
             ...response
           });
         },
         (error) => {
-          console.log("ERROR");
           console.log(error);
         }
       );
@@ -125,7 +132,9 @@ export class MouCustomerRequestDetailComponent implements OnInit {
       mouCustFormData["RefOfficeId"] = this.refOfficeId;
       this.httpClient.post(AdInsConstant.AddMouCust, mouCustFormData).subscribe(
         (response: any) => {
-          alert(response["message"]);
+          this.toastr.successMessage(response["Message"]);
+          var mouCustId = response["MouCustId"];
+          this.router.navigate(["/Mou/Detail", this.mouType], { queryParams: { mouCustId: mouCustId }});
         },
         (error) => {
           console.log("ERROR");
@@ -136,7 +145,8 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     else if(this.pageType == "edit"){
       this.httpClient.post(AdInsConstant.EditMouCust, mouCustFormData).subscribe(
         (response: any) => {
-          alert(response["message"]);
+          this.toastr.successMessage(response["Message"]);
+          this.router.navigate(['/Mou/Detail', this.mouType], { queryParams: { mouCustId: mouCustFormData.MouCustId }});
         },
         (error) => {
           console.log("ERROR");
