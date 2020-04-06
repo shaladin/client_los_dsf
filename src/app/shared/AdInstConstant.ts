@@ -538,6 +538,11 @@ export class AdInsConstant {
   public static AddEditInsuranceData = environment.losUrl + "/AppIns/AddEditInsuranceData";
   public static ExecuteInsRateRule = environment.losUrl + "/AppIns/ExecuteInsRateRule";
 
+  //AGRMNT ACTIVATION
+  public static GetAppAssetByAppIdAndCriteria = environment.losUrl + "/AgrmntActivation/GetAppAssetByAppIdAndCriteria";
+  public static GetAppFinDataAndFeeByAppIdAndListAppAssetId = environment.losUrl + "/AgrmntActivation/GetAppFinDataAndFeeByAppIdAndListAppAssetId";
+  public static SubmitAgrmntActivationByHuman = environment.losUrl + "/AgrmntActivation/SubmitAgrmntActivationByHuman";
+
   //AppCustAddr
   public static GetListAppCustAddrByAppId = environment.losUrl + "/AppCustAddr/GetListAppCustAddrByAppId";
 
