@@ -16,7 +16,7 @@
                                     <lib-uclookupgeneric [lookupInput]="inputLookupBranchEmpObj"
                                         [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
                                         [identifier]="'lookupBranchEmp'" (lookup)="getLookupBranchEmp($event)"
-                                        *ngIf="AppAssetObj != undefined">
+                                        *ngIf="inputLookupBranchEmpObj != undefined">
                                     </lib-uclookupgeneric>
                                 </div>
                             </div>
@@ -24,9 +24,9 @@
                                 <label class="col-md-5 adInsLabel">Supplier Employee Position 2</label>
                                 <div class="col-md-5">
                                     <input type="text" class="form-control adInsInput width-75-per"
-                                        formControlName="MrJobPositionSupplBranchEmpCode">
+                                        formControlName="MrJobPositionSupplBranchEmpName">
                                     <lib-uc-show-errors
-                                        [control]="DocSignerForm.controls.MrJobPositionSupplBranchEmpCode"
+                                        [control]="DocSignerForm.controls.MrJobPositionSupplBranchEmpName"
                                         [submit]="enjiForm.submitted">
                                     </lib-uc-show-errors>
                                 </div>
@@ -41,7 +41,7 @@
                                     <lib-uclookupgeneric [lookupInput]="inputLookupOfficeEmp1Obj"
                                         [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
                                         [identifier]="'lookupOfficeEmp1'" (lookup)="getLookupOfficeEmp1($event)"
-                                        *ngIf="result2 != undefined">
+                                        *ngIf="inputLookupOfficeEmp1Obj != undefined">
                                     </lib-uclookupgeneric>
                                 </div>
                             </div>
@@ -49,8 +49,8 @@
                                 <label class="col-md-5 adInsLabel">Company Position 1</label>
                                 <div class="col-md-5">
                                     <input type="text" class="form-control adInsInput width-75-per"
-                                        formControlName="MrJobPositionMfEmpNo1Code">
-                                    <lib-uc-show-errors [control]="DocSignerForm.controls.MfEmpNo1Code"
+                                        formControlName="MrJobPositionMfEmpNo1Name">
+                                    <lib-uc-show-errors [control]="DocSignerForm.controls.MrJobPositionMfEmpNo1Name"
                                         [submit]="enjiForm.submitted">
                                     </lib-uc-show-errors>
                                 </div>
@@ -61,7 +61,7 @@
                                     <lib-uclookupgeneric [lookupInput]="inputLookupOfficeEmp2Obj"
                                         [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
                                         [identifier]="'lookupOfficeEmp2'" (lookup)="getLookupOfficeEmp2($event)"
-                                        *ngIf="result2 != undefined">
+                                        *ngIf="inputLookupOfficeEmp2Obj != undefined">
                                     </lib-uclookupgeneric>
                                 </div>
                             </div>
@@ -69,8 +69,8 @@
                                 <label class="col-md-5 adInsLabel">Company Position 2</label>
                                 <div class="col-md-5">
                                     <input type="text" class="form-control adInsInput width-75-per"
-                                        formControlName="MrJobPositionMfEmpNo2Code">
-                                    <lib-uc-show-errors [control]="DocSignerForm.controls.MrJobPositionMfEmpNo2Code"
+                                        formControlName="MrJobPositionMfEmpNo2Name">
+                                    <lib-uc-show-errors [control]="DocSignerForm.controls.MrJobPositionMfEmpNo2Name"
                                         [submit]="enjiForm.submitted">
                                     </lib-uc-show-errors>
                                 </div>
@@ -86,7 +86,7 @@
                                     <lib-uclookupgeneric [lookupInput]="inputLookupCustCoyShareHolder1Obj"
                                         [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
                                         [identifier]="'lookupCustCoyShareHolder1'"
-                                        (lookup)="getLookupCustCoyShareHolder($event)" *ngIf="result2 != undefined">
+                                        (lookup)="getLookupCustCoyShareHolder($event)" *ngIf="inputLookupCustCoyShareHolder1Obj != undefined">
                                     </lib-uclookupgeneric>
                                 </div>
                             </div>
@@ -112,7 +112,7 @@
                                     <lib-uclookupgeneric [lookupInput]="inputLookupCustCoyShareHolder2Obj"
                                         [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
                                         [identifier]="'lookupCustCoyShareHolder2'"
-                                        (lookup)="getLookupCustCoyShareHolder2($event)" *ngIf="result2 != undefined">
+                                        (lookup)="getLookupCustCoyShareHolder2($event)" *ngIf="inputLookupCustCoyShareHolder2Obj != undefined">
                                     </lib-uclookupgeneric>
                                 </div>
                             </div>
@@ -133,7 +133,7 @@
                                     <lib-uclookupgeneric [lookupInput]="inputLookupCustCoyShareHolder3Obj"
                                         [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
                                         [identifier]="'lookupCustCoyShareHolder3'"
-                                        (lookup)="getLookupCustCoyShareHolder3($event)" *ngIf="result2 != undefined">
+                                        (lookup)="getLookupCustCoyShareHolder3($event)" *ngIf="inputLookupCustCoyShareHolder3Obj != undefined">
                                     </lib-uclookupgeneric>
                                 </div>
                             </div>
