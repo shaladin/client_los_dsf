@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LeadVerifComponent } from './lead-verif/lead-verif.component';
+import { LeadPagingComponent } from './lead-paging/lead-paging.component';
+import { LeadViewComponent } from './lead-view/lead-view.component';
 
 const routes: Routes = [
   {
@@ -11,6 +13,20 @@ const routes: Routes = [
         component : LeadVerifComponent,
         data: {
           title : 'Verif Paging'
+        }
+      },
+      {
+        path: 'Paging',
+        component : LeadPagingComponent,
+        data: {
+          title : 'Lead Paging'
+        }
+      },
+      {
+        path: 'View',
+        component : LeadViewComponent,
+        data: {
+          title : 'Lead View'
         }
       }
     ]

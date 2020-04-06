@@ -3,50 +3,41 @@
     <div class="card-body">
       <div class="px-3">
         <div class="form-body">
-
           <h4 class="form-section card-title" translate>MOU VIEW</h4>
-
-          <lib-ucviewgeneric [viewInput]="viewMouGeneralHeader"></lib-ucviewgeneric>
-
+          <lib-ucviewgeneric [viewInput]="viewMouHeader"></lib-ucviewgeneric>
+        
           <aw-wizard #wizard navBarLayout="large-empty-symbols" [awNavigationMode] navigateBackward="allow"
             navigateForward="allow" [defaultStepIndex]="0">
-
             <aw-wizard-step [stepTitle]="'MOU Detail'" (stepEnter)="EnterTab('detail')"
               [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
               <app-mou-view-detail *ngIf="isDetail == true" [MouCustId]="MouCustId" [MouType]="MrMouTypeCode">
               </app-mou-view-detail>
             </aw-wizard-step>
-
             <aw-wizard-step [stepTitle]="'Fee'" (stepEnter)="EnterTab('fee')"
               [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
               <app-mou-view-fee *ngIf="isFee == true" [MouCustId]="MouCustId">
               </app-mou-view-fee>
             </aw-wizard-step>
-
             <aw-wizard-step [stepTitle]="'Additional Collateral'" (stepEnter)="EnterTab('collateral')"
               [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
               <app-mou-view-addcoll *ngIf="isCollateral == true" [MouCustId]="MouCustId">
               </app-mou-view-addcoll>
             </aw-wizard-step>
-
             <aw-wizard-step [stepTitle]="'Term and Condition'" (stepEnter)="EnterTab('TC')"
               [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
               <app-mou-view-tc *ngIf="isTC == true" [MouCustId]="MouCustId">
               </app-mou-view-tc>
             </aw-wizard-step>
-
             <aw-wizard-step [stepTitle]="'Document'" (stepEnter)="EnterTab('document')"
               [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
               <app-mou-view-doc *ngIf="isDocument == true">
               </app-mou-view-doc>
             </aw-wizard-step>
-
             <!-- <aw-wizard-step [stepTitle]="'Survey'" (stepEnter)="EnterTab('survey')"
                 [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
                 <app-mou-view-fee *ngIf="isSurvey == true">
                 </app-mou-view-fee>
               </aw-wizard-step> -->
-
             <aw-wizard-step [stepTitle]="'Approval History'" (stepEnter)="EnterTab('approvalHistory')"
               [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
               <app-mou-view-approval-history *ngIf="isApprovalHistory == true" [MouCustId]="MouCustId">
@@ -58,7 +49,6 @@
               </app-mou-view-legal>
             </aw-wizard-step>
           </aw-wizard>
-
         </div>
       </div>
     </div>

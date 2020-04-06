@@ -24,9 +24,9 @@ export class MouViewComponent implements OnInit {
     });
    
   }
-  viewMouGeneralHeader: any;
+  viewMouHeader: any;
   ngOnInit() {
-    this.viewMouGeneralHeader = "./assets/ucviewgeneric/viewMouGeneralHeader.json";
+    this.viewMouHeader = "./assets/ucviewgeneric/viewMouHeader.json";
     this.mouCustObj = new MouCustObj();
     this.mouCustObj.MouCustId = this.MouCustId;
      
