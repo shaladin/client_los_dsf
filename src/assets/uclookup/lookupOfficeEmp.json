@@ -1,45 +1,45 @@
 {
-    "title": "Branch Employee",
+    "title": "Office Employee",
     "component": [
         {
             "type": "textbox",
-            "name": "VE.VENDOR_EMP_NO",
-            "id": "VendorEmpNoId",
+            "name": "RE.EMP_NO",
+            "id": "OfficeEmpNoId",
             "value": "",
-            "label": "Vendor Employee No",
+            "label": "Office Employee No",
             "placeholder": "Placeholder"
         },
         {
             "type": "textbox",
-            "name": "VE.VENDOR_EMP_NAME",
-            "id": "VendorEmpNameId",
+            "name": "RE.EMP_NAME",
+            "id": "OfficeEmpNameId",
             "value": "",
-            "label": "Vendor Employee Name",
+            "label": "Office Employee Name",
             "placeholder": "Placeholder"
         }
     ],
     "querystring": {
-        "select": "SELECT VE.VENDOR_EMP_NO AS VendorEmpNo, VE.VENDOR_EMP_NAME AS VendorEmpName, VE.MR_VENDOR_EMP_POSITION_CODE AS MrVendorEmpPositionCode, RM.DESCR AS Descr, RM.REF_MASTER_TYPE_CODE, V.VENDOR_CODE AS VendorCode",
-        "from": "FROM dbo.VENDOR_EMP VE WITH(NOLOCK) JOIN dbo.REF_MASTER RM ON RM.MASTER_CODE = VE.MR_VENDOR_EMP_POSITION_CODE JOIN dbo.VENDOR V ON V.VENDOR_ID = VE.VENDOR_ID"
+        "select": "SELECT RE.EMP_NO AS OfficeEmpNo, RE.EMP_NAME AS OfficeEmpName, RJT.JOB_TITLE_CODE AS JobTitleCode, RJT.JOB_TITLE_NAME AS JobTitleName, RO.OFFICE_CODE AS OfficeCode",
+        "from": "FROM dbo.REF_EMP RE WITH(NOLOCK) JOIN dbo.REF_USER RU WITH(NOLOCK) ON RE.REF_EMP_ID = RU.REF_EMP_ID JOIN dbo.REF_USER_ROLE RUR WITH(NOLOCK) ON RUR.REF_USER_ID = RU.REF_USER_ID JOIN dbo.REF_JOB_TITLE RJT WITH(NOLOCK) ON RJT.REF_JOB_TITLE_ID = rur.REF_JOB_TITLE_ID JOIN dbo.REF_OFFICE RO WITH(NOLOCK) ON RO.REF_OFFICE_ID = RUR.REF_OFFICE_ID"
     },
     "headerList": [
         {
             "type": "sort",
             "position": "center",
             "label": "Employee No",
-            "name": "VE.VENDOR_EMP_NO"
+            "name": "RE.EMP_NO"
         },
         {
             "type": "sort",
             "position": "left",
             "label": "Employee Name",
-            "name": "VE.VENDOR_EMP_NAME"
+            "name": "RE.EMP_NAME"
         },
         {
             "type": "sort",
             "position": "left",
             "label": "Employee Position",
-            "name": "RM.DESCR"
+            "name": "RJT.JOB_TITLE_NAME"
         },
         {
             "type": "label",
@@ -51,18 +51,17 @@
         {
             "type": "text",
             "position": "center",
-            "property": "VendorEmpNo"
+            "property": "OfficeEmpNo"
         },
         {
             "type": "text",
             "position": "left",
-            "property": "VendorEmpName"
+            "property": "OfficeEmpName"
         },
         {
-            "type": "sort",
+            "type": "text",
             "position": "left",
-            "label": "Employee Position",
-            "name": "Descr"
+            "property": "JobTitleName"
         },
         {
             "type": "action",
@@ -70,11 +69,11 @@
             "action": [
                 {
                     "type": "select",
-                    "property": "VendorEmpNo"
+                    "property": "OfficeEmpNo"
                 }
             ]
         }
     ],
-    "propertyId": "VendorEmpNo",
-    "propertyName": "VendorEmpName"
+    "propertyId": "OfficeEmpNo",
+    "propertyName": "OfficeEmpName"
 }

@@ -15,7 +15,8 @@
                                 <div class="col-md-5">
                                     <lib-uclookupgeneric [lookupInput]="inputLookupBranchEmpObj"
                                         [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
-                                        [identifier]="'lookupBranchEmp'" (lookup)="getLookupBranchEmp($event)">
+                                        [identifier]="'lookupBranchEmp'" (lookup)="getLookupBranchEmp($event)"
+                                        *ngIf="AppAssetObj != undefined">
                                     </lib-uclookupgeneric>
                                 </div>
                             </div>
@@ -23,8 +24,9 @@
                                 <label class="col-md-5 adInsLabel">Supplier Employee Position 2</label>
                                 <div class="col-md-5">
                                     <input type="text" class="form-control adInsInput width-75-per"
-                                        formControlName="SerialNo3">
-                                    <lib-uc-show-errors [control]="DocSignerForm.controls.SerialNo3"
+                                        formControlName="MrJobPositionSupplBranchEmpCode">
+                                    <lib-uc-show-errors
+                                        [control]="DocSignerForm.controls.MrJobPositionSupplBranchEmpCode"
                                         [submit]="enjiForm.submitted">
                                     </lib-uc-show-errors>
                                 </div>
@@ -36,9 +38,10 @@
                             <div class="form-group row">
                                 <label class="col-md-5 adInsLabel">Company Officer Name 1</label>
                                 <div class="col-md-5">
-                                    <lib-uclookupgeneric [lookupInput]="inputLookupOfficeEmp2Obj"
+                                    <lib-uclookupgeneric [lookupInput]="inputLookupOfficeEmp1Obj"
                                         [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
-                                        [identifier]="'lookupOfficeEmp'" (lookup)="getLookupOfficeEmp($event)">
+                                        [identifier]="'lookupOfficeEmp1'" (lookup)="getLookupOfficeEmp1($event)"
+                                        *ngIf="result2 != undefined">
                                     </lib-uclookupgeneric>
                                 </div>
                             </div>
@@ -46,8 +49,8 @@
                                 <label class="col-md-5 adInsLabel">Company Position 1</label>
                                 <div class="col-md-5">
                                     <input type="text" class="form-control adInsInput width-75-per"
-                                        formControlName="SerialNo3">
-                                    <lib-uc-show-errors [control]="DocSignerForm.controls.SerialNo3"
+                                        formControlName="MrJobPositionMfEmpNo1Code">
+                                    <lib-uc-show-errors [control]="DocSignerForm.controls.MfEmpNo1Code"
                                         [submit]="enjiForm.submitted">
                                     </lib-uc-show-errors>
                                 </div>
@@ -57,7 +60,8 @@
                                 <div class="col-md-5">
                                     <lib-uclookupgeneric [lookupInput]="inputLookupOfficeEmp2Obj"
                                         [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
-                                        [identifier]="'lookupOfficeEmp'" (lookup)="getLookupOfficeEmp($event)">
+                                        [identifier]="'lookupOfficeEmp2'" (lookup)="getLookupOfficeEmp2($event)"
+                                        *ngIf="result2 != undefined">
                                     </lib-uclookupgeneric>
                                 </div>
                             </div>
@@ -65,8 +69,8 @@
                                 <label class="col-md-5 adInsLabel">Company Position 2</label>
                                 <div class="col-md-5">
                                     <input type="text" class="form-control adInsInput width-75-per"
-                                        formControlName="SerialNo3">
-                                    <lib-uc-show-errors [control]="DocSignerForm.controls.SerialNo3"
+                                        formControlName="MrJobPositionMfEmpNo2Code">
+                                    <lib-uc-show-errors [control]="DocSignerForm.controls.MrJobPositionMfEmpNo2Code"
                                         [submit]="enjiForm.submitted">
                                     </lib-uc-show-errors>
                                 </div>
@@ -79,10 +83,10 @@
                             <div class="form-group row">
                                 <label class="col-md-5 adInsLabel">Management / Shareholder</label>
                                 <div class="col-md-5">
-                                    <lib-uclookupgeneric [lookupInput]="inputLookupCustCoyShareHolderObj"
+                                    <lib-uclookupgeneric [lookupInput]="inputLookupCustCoyShareHolder1Obj"
                                         [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
-                                        [identifier]="'lookupCustCoyShareHolder'"
-                                        (lookup)="getLookupCustCoyShareHolder($event)">
+                                        [identifier]="'lookupCustCoyShareHolder1'"
+                                        (lookup)="getLookupCustCoyShareHolder($event)" *ngIf="result2 != undefined">
                                     </lib-uclookupgeneric>
                                 </div>
                             </div>
@@ -90,8 +94,9 @@
                                 <label class="col-md-5 adInsLabel">Management / Shareholder Position</label>
                                 <div class="col-md-5">
                                     <input type="text" class="form-control adInsInput width-75-per"
-                                        formControlName="SerialNo3">
-                                    <lib-uc-show-errors [control]="DocSignerForm.controls.SerialNo3"
+                                        formControlName="MrJobPositionMgmntShrholder1Code">
+                                    <lib-uc-show-errors
+                                        [control]="DocSignerForm.controls.MrJobPositionMgmntShrholder1Code"
                                         [submit]="enjiForm.submitted">
                                     </lib-uc-show-errors>
                                 </div>
@@ -106,8 +111,8 @@
                                 <div class="col-md-5">
                                     <lib-uclookupgeneric [lookupInput]="inputLookupCustCoyShareHolder2Obj"
                                         [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
-                                        [identifier]="'lookupCustCoyShareHolder'"
-                                        (lookup)="getCustCoyShareHolder($event)">
+                                        [identifier]="'lookupCustCoyShareHolder2'"
+                                        (lookup)="getLookupCustCoyShareHolder2($event)" *ngIf="result2 != undefined">
                                     </lib-uclookupgeneric>
                                 </div>
                             </div>
@@ -115,8 +120,9 @@
                                 <label class="col-md-5 adInsLabel">Customer Commisioner Position Approver 1</label>
                                 <div class="col-md-5">
                                     <input type="text" class="form-control adInsInput width-75-per"
-                                        formControlName="SerialNo3">
-                                    <lib-uc-show-errors [control]="DocSignerForm.controls.SerialNo3"
+                                        formControlName="MrJobPositionMgmntShrholder2Code">
+                                    <lib-uc-show-errors
+                                        [control]="DocSignerForm.controls.MrJobPositionMgmntShrholder2Code"
                                         [submit]="enjiForm.submitted">
                                     </lib-uc-show-errors>
                                 </div>
@@ -126,8 +132,8 @@
                                 <div class="col-md-5">
                                     <lib-uclookupgeneric [lookupInput]="inputLookupCustCoyShareHolder3Obj"
                                         [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
-                                        [identifier]="'lookupCustCoyShareHolder'"
-                                        (lookup)="getCustCoyShareHolder($event)">
+                                        [identifier]="'lookupCustCoyShareHolder3'"
+                                        (lookup)="getLookupCustCoyShareHolder3($event)" *ngIf="result2 != undefined">
                                     </lib-uclookupgeneric>
                                 </div>
                             </div>
@@ -135,8 +141,9 @@
                                 <label class="col-md-5 adInsLabel">Customer Commisioner Position Approver 2</label>
                                 <div class="col-md-5">
                                     <input type="text" class="form-control adInsInput width-75-per"
-                                        formControlName="SerialNo3">
-                                    <lib-uc-show-errors [control]="DocSignerForm.controls.SerialNo3"
+                                        formControlName="MrJobPositionMgmntShrholder3Code">
+                                    <lib-uc-show-errors
+                                        [control]="DocSignerForm.controls.MrJobPositionMgmntShrholder3Code"
                                         [submit]="enjiForm.submitted">
                                     </lib-uc-show-errors>
                                 </div>
@@ -144,12 +151,12 @@
                         </div>
                         <div class="form-actions right">
                             <button type="button" class="btn btn-raised btn-warning mr-1" translate>
-                              <i class="fa fa-arrow-circle-left"></i> Back
+                                <i class="fa fa-arrow-circle-left"></i> Back
                             </button>
                             <button type="submit" class="btn btn-raised btn-primary">
-                              <i class="far"></i> Submit
+                                <i class="far"></i> Submit
                             </button>
-                          </div>
+                        </div>
                     </form>
                 </div>
             </div>

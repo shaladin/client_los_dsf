@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DocSingerDetailComponent } from './doc-singer-detail.component';
+import { DocSignerDetailComponent } from './doc-signer-detail.component';
 
-describe('DocSingerDetailComponent', () => {
-  let component: DocSingerDetailComponent;
-  let fixture: ComponentFixture<DocSingerDetailComponent>;
+describe('DocSignerDetailComponent', () => {
+  let component: DocSignerDetailComponent;
+  let fixture: ComponentFixture<DocSignerDetailComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DocSingerDetailComponent ]
+      declarations: [ DocSignerDetailComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DocSingerDetailComponent);
+    fixture = TestBed.createComponent(DocSignerDetailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

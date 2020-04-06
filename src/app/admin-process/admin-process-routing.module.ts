@@ -8,8 +8,8 @@ import { PurchaseOrderDetailComponent } from './purchase-order/purchase-order-de
 import { CustConfirmationPagingComponent } from './cust-confirmation/cust-confirmation-paging/cust-confirmation-paging.component';
 import { CustConfirmationDetailComponent } from './cust-confirmation/cust-confirmation-detail/cust-confirmation-detail.component';
 import { CustConfirmationSubjViewComponent } from './cust-confirmation/cust-confirmation-subj-view/cust-confirmation-subj-view.component';
-import { DocSingerPagingComponent } from './doc-signer/doc-singer-paging/doc-singer-paging.component';
-import { DocSingerDetailComponent } from './doc-signer/doc-singer-detail/doc-singer-detail.component';
+import { DocSignerDetailComponent } from './doc-signer/doc-signer-detail/doc-signer-detail.component';
+import { DocSignerPagingComponent } from './doc-signer/doc-signer-paging/doc-signer-paging.component';
 
 const routes: Routes = [
   {
@@ -73,14 +73,14 @@ const routes: Routes = [
       },
       {
         path: 'DocumentSigner/Paging',
-        component: DocSingerPagingComponent,
+        component: DocSignerPagingComponent,
         data: {
           title: 'Document Signer Paging'
         }
       },
       {
         path: 'DocumentSigner/Detail',
-        component: DocSingerDetailComponent,
+        component: DocSignerDetailComponent,
         data: {
           title: 'Document Signer Detail'
         }

@@ -4,11 +4,11 @@ import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 
 @Component({
-  selector: 'app-doc-singer-paging',
-  templateUrl: './doc-singer-paging.component.html',
-  styleUrls: ['./doc-singer-paging.component.scss']
+  selector: 'app-doc-signer-paging',
+  templateUrl: './doc-signer-paging.component.html',
+  styleUrls: ['./doc-signer-paging.component.scss']
 })
-export class DocSingerPagingComponent implements OnInit {
+export class DocSignerPagingComponent implements OnInit {
   inputPagingObj: any;
   
   constructor() { }

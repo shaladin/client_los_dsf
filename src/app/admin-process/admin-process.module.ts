@@ -22,10 +22,10 @@ import { CustConfirmationDetailComponent } from './cust-confirmation/cust-confir
 import { CustConfirmationSubjDetailComponent } from './cust-confirmation/cust-confirmation-subj-detail/cust-confirmation-subj-detail.component';
 import { CustConfirmationSubjViewComponent } from './cust-confirmation/cust-confirmation-subj-view/cust-confirmation-subj-view.component';
 import { CustConfirmationVerfViewComponent } from './cust-confirmation/cust-confirmation-verf-view/cust-confirmation-verf-view.component';
-import { DocSingerPagingComponent } from './doc-signer/doc-singer-paging/doc-singer-paging.component';
-import { DocSingerDetailComponent } from './doc-signer/doc-singer-detail/doc-singer-detail.component';
 import { UcviewgenericModule } from "@adins/ucviewgeneric";
 import { UclookupgenericModule } from "@adins/uclookupgeneric";
+import { DocSignerDetailComponent } from "./doc-signer/doc-signer-detail/doc-signer-detail.component";
+import { DocSignerPagingComponent } from "./doc-signer/doc-signer-paging/doc-signer-paging.component";
 
 @NgModule({
   imports: [
@@ -56,8 +56,8 @@ import { UclookupgenericModule } from "@adins/uclookupgeneric";
     CustConfirmationSubjDetailComponent,
     CustConfirmationSubjViewComponent,
     CustConfirmationVerfViewComponent,
-    DocSingerPagingComponent,
-    DocSingerDetailComponent
+    DocSignerDetailComponent,
+    DocSignerPagingComponent
   ],
   providers: [
     NGXToastrService

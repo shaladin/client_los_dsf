@@ -35,7 +35,7 @@
         }
     ],
     "querystring": {
-        "select": "SELECT AP.APP_NO AS AppNo, AG.AGRMNT_NO AS AgrmntNo, AG.PROD_OFFERING_NAME AS ProdOfferingName, AG.CUST_NAME AS CustName, AG.APP_ID AS AppId",
+        "select": "SELECT AP.APP_NO AS AppNo, AG.AGRMNT_NO AS AgrmntNo, AG.PROD_OFFERING_NAME AS ProdOfferingName, AG.CUST_NAME AS CustName, AG.APP_ID AS AppId, AG.AGRMNT_ID AS AgrmntId",
         "from": "FROM dbo.APP AP WITH(NOLOCK) JOIN dbo.AGRMNT AG WITH(NOLOCK) ON AP.APP_ID = AG.APP_ID"
     },
     "headerList": [
@@ -117,6 +117,10 @@
                         {
                             "type": "AppId",
                             "property": "AppId"
+                        },
+                        {
+                            "type": "AgrmntId",
+                            "property": "AgrmntId"
                         }
                     ]
                 }
