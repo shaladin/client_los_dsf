@@ -7,7 +7,6 @@ export const environment = {
   production: true,
   navbarColor: 'transparent',
   losUrl : 'http://localhost:5001',
-<<<<<<< HEAD
   foundationUrl: 'http://r3app.ad-ins.com/foundation', //'https://localhost:5000', //
   settingUrl: 'http://r3app.ad-ins.com/setting', //'https://localhost:4999',
   localHostUrl: 'http://R2AppServer/CONFINS',
@@ -15,10 +14,6 @@ export const environment = {
   // losUrl : 'http://r3web.ad-ins.com/LOSR3/pages/login',
   FoundationR3Url: 'http://r3app-server.ad-ins.com/FOUNDATION_R3'
   //FoundationR3Url: 'http://localhost:5000'
-=======
-  //FoundationR3Url: 'http://localhost:5000',
-   FoundationR3Url: 'http://r3app-server.ad-ins.com/FOUNDATION_R3'
->>>>>>> 3dcb564e9567798a47be6e093f0136ccdf8a8ad7
 };
 
 
