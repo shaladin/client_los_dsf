@@ -1,3 +1,3 @@
 export class LeadCancelObj{
-    LeadId : any;
+    LeadIds  = new Array();
 }

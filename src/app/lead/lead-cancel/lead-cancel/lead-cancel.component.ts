@@ -26,7 +26,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { NgbPaginationConfig } from '@ng-bootstrap/ng-bootstrap';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsService } from 'app/shared/services/adIns.service';
-import { LeadVerfObj } from 'app/shared/model/LeadVerfObj.Model';
+import { LeadCancelObj } from 'app/shared/model/LeadCancelObj.Model';
 
 @Component({
   selector: 'app-lead-cancel',
@@ -63,6 +63,7 @@ export class LeadCancelComponent implements OnInit {
   viewObj: string;
   AddRangeLeadVerfUrl = AdInsConstant.AddRangeLeadVerf;
   verifyStatus: any;
+  confirmUrl = "/Lead/ConfirmCancel";
   constructor(
     private http: HttpClient,
     private toastr: NGXToastrService,
@@ -155,12 +156,12 @@ export class LeadCancelComponent implements OnInit {
     this.verifyStatus = verifyStatus;
   }
 
-  SaveLeadCancel(leadVerfForm: any) {
+  SaveLeadCancel(leadVerfForm: any) { 
     // this.leadVerfObj = new LeadVerfObj();
     for (let index = 0; index < this.tempData.length; index++) {
-      var tempLeadVerfObj = new LeadVerfObj();
-      tempLeadVerfObj.LeadId = this.tempData[index].LeadId;
-      this.arrLeadVerf.push(tempLeadVerfObj);
+      var tempLeadCancelObj = new LeadCancelObj();
+      tempLeadCancelObj.LeadIds = this.tempData[index].LeadId;
+      // this.arrLeadVerf.push(tempLeadCancelObj);
     }
     if (this.arrLeadVerf.length == 0) {
       this.toastr.typeErrorCustom('Please Add At Least One Data');
@@ -170,22 +171,9 @@ export class LeadCancelComponent implements OnInit {
       this.toastr.typeErrorCustom('Maximum 50 Data');
       return;
     }
-
-    var LeadVerf = {
-      LeadVerfObjs: this.arrLeadVerf
-    }
-    this.http.post(this.AddRangeLeadVerfUrl, LeadVerf).subscribe(
-      response => {
-        console.log('success');
-        this.toastr.successMessage(response['message']);
-      },
-      error => {
-        console.log(error);
-      }
-    );
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      this.router.navigate(['/Lead/Verif']);
-  }); 
+    // var params = new HttpParams();
+    // params = params.append('leadIds', tempLeadCancelObj.LeadIds.join(', '));
+    // this.http.get(this.confirmUrl, { params: params });
   }
 
   addToTemp() {
@@ -255,7 +243,7 @@ export class LeadCancelComponent implements OnInit {
       var index = this.tempListId.indexOf(LeadId);
       if (index > -1) {
         this.tempListId.splice(index, 1);
-        this.tempData.splice(index, 1);
+        this.tempData.splice(index, 1); 
       }
       var addCrit = new CriteriaObj();
       addCrit.DataType = "numeric";
