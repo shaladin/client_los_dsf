@@ -46,5 +46,9 @@ export const Full_ROUTES: Routes = [
   {
     path: 'AddProcess',
     loadChildren: './add-process/add-process.module#AddProcessModule'
-  }
+  },
+  {
+    path: 'Lead',
+    loadChildren: './lead/lead.module#LeadModule'
+  },
 ];

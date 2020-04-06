@@ -89,6 +89,7 @@ export class AdInsConstant {
     public static LoginByRole = "/Authenticate/LoginByRole";
     public static LoginByToken = "/Authenticate/LoginByToken";
     public static UpdateToken = "/Authenticate/UpdateRole";
+    public static GetRefOfficeByOfficeCode = environment.FoundationR3Url + "/RefOffice/GetRefOfficeByOfficeCode";
 
     //CUST TYPE
     public static CustTypePersonal = "PERSONAL";
@@ -145,6 +146,9 @@ export class AdInsConstant {
     public static AddCenterGroupOfficeMember = "RefOffice/AddCenterGroupOfficeMember";
     public static DeleteCenterGroupOfficeMember = "/RefOffice/DeleteCenterGroupOfficeMember";
     public static GetListKvpActiveRefOffice = "/RefOffice/GetListKvpActiveRefOffice";
+    public static GetListRefOffice = "/RefOffice/GetListRefOffice";
+    public static GetListActiveRefOffice = environment.FoundationR3Url + "/RefOffice/GetListKeyValueActiveByCode";
+    public static GetListKvpActiveRefOfficeForPaging = environment.FoundationR3Url + "/RefOffice/GetListKvpActiveRefOfficeForPaging";
 
     //REF OFFICE AREA
     public static GetAllListArea = "/RefOfficeArea/GetAllListArea";
@@ -313,12 +317,11 @@ export class AdInsConstant {
     public static GetRefMasterPaging = "/RefMaster/GetRefMasterPaging";
     public static GetRefMasterListDesc = "/RefMaster/GetRefMasterListDesc";
     public static GetRefMasterByMasterCode = "/RefMaster/GetRefMasterByMasterCode";
-    public static GetRefMasterListKeyValueActiveByCode = environment.FoundationR3Url + "/RefMaster/GetListKeyValueActiveByCode"
-    public static GetListActiveRefMaster = environment.FoundationR3Url + "/RefMaster/GetListActiveRefMaster"
-
-
-
-
+    public static GetRefMasterListKeyValueActiveByCode = environment.FoundationR3Url + "/RefMaster/GetListKeyValueActiveByCode";
+    public static GetListActiveRefMaster = environment.FoundationR3Url + "/RefMaster/GetListActiveRefMaster";
+    public static GetListActiveRefMasterWithReserveFieldAll = environment.FoundationR3Url + "/RefMaster/GetListActiveRefMasterWithReserveFieldAll";
+    public static GetRefMasterByRefMasterTypeCode = environment.FoundationR3Url + "/RefMaster/GetRefMasterByRefMasterTypeCode"
+   
     //REF PROV DISTRICT
     public static GetRefProvDistrictPaging = "/RefProvDistrict/GetRefProvDistrictPaging";
     public static GetRefProvDistrictByProvDistrictCode = "http://localhost:5000/RefProvDistrict/GetRefProvDistrictByProvDistrictCode";
@@ -446,12 +449,24 @@ export class AdInsConstant {
     public static InitAppLifeInsH = environment.losUrl + "/AppLifeIns/InitAppLifeInsH";
     // MOU CUST
     public static GetMouCustById = environment.losUrl + "/MouCust/GetMouCustById";
+    public static AddMouCust = environment.losUrl + "/MouCust/AddMouCust";
+    public static EditMouCust = environment.losUrl + "/MouCust/EditMouCust";
+    public static GetMouCustClauseByMouCustId = environment.losUrl + "/MouCustClause/GetMouCustClauseByMouCustId";
+    public static AddMouCustClause = environment.losUrl + "/MouCustClause/AddMouCustClause";
+    public static EditMouCustClause = environment.losUrl + "/MouCustClause/EditMouCustClause";
+    public static AddMouCustFctr = environment.losUrl + "/MouCustFctr/AddMouCustFctr";
+    public static EditMouCustFctr = environment.losUrl + "/MouCustFctr/EditMouCustFctr";
+    public static GetMouCustFctrByMouCustId = environment.losUrl + "/MouCustFctr/GetMouCustFctrByMouCustId";
 
     // MOU CUST ASSET
     public static GetMouCustAssetByMouCustId = environment.losUrl + "/MouCustAsset/GetMouCustAssetByMouCustId";
+    public static AddMouCustAsset = environment.losUrl + "/MouCustAsset/AddMouCustAsset";
+    public static DeleteMouCustAsset = environment.losUrl + "/MouCustAsset/DeleteMouCustAsset";
+    public static GetAssetTypeKeyValueCode = environment.FoundationR3Url + "/AssetType/GetListKeyValueByCode";
 
     // MOU CUST ASSET
     public static GetMouCustFeeByMouCustId = environment.losUrl + "/MouCustFee/GetMouCustFeeByMouCustId";
+    public static GetListMouCustFeeByMouCustId = environment.losUrl +"/MouCustFee/GetListMouCustFeeByMouCustId";
 
     // MOU CUST CLAUSE
     public static GetMouCustDataByMouCustId = environment.losUrl + "/MouCustClause/GetMouCustDataByMouCustId";
@@ -467,11 +482,26 @@ export class AdInsConstant {
 
     // MOU CUST COLLATERAL DOC
 
+    // MOU CUST RVW H
+    public static GetMouCustRvwHByMouCustId = environment.losUrl + "/MouCustRvwH/GetMouCustRvwHByMouCustId"
+
+    public static GetListMouCustRvwD =   environment.losUrl + "/MouCustRvwD/GetListMouCustRvwD"
     // MOU CUST LEGAL REVIEW
     public static GetMouCustLglReviewByMouCustId = environment.losUrl + "/MouCustLglReview/GetMouCustLglReviewByMouCustId";
+    public static AddRangeMouCustLglReview = environment.losUrl + "/MouCustLglReview/AddRangeMouCustLglReview";
 
     // MOU CUST TC
     public static GetCustMouTcByCustMouId = environment.losUrl + "/MouCustTc/GetCustMouTcByCustMouId";
+    public static GetMouCustTcForMouLglByCustMouId = environment.losUrl + "/MouCustTc/GetMouCustTcForMouLglByCustMouId";
+    public static EditListMouCustTc = environment.losUrl + "/MouCustTc/EditListMouCustTc";
+    
+    // MOU DOC SIGNER
+    public static AddMouCustSigner = environment.losUrl + "/MouCustSigner/AddMouCustSigner";
+    public static GetMouCustSignerByMouCustId = environment.losUrl + "/MouCustSigner/GetMouCustSignerByMouCustId";
+
+    // MOU CUST DOC PRINT
+    public static GetListMouCustDocPrintForViewByMouCustId = environment.losUrl + "/MouCustDocPrint/GetListMouCustDocPrintForViewByMouCustId";
+    public static EditMouCustDocPrintSequenceNo = environment.losUrl + "/MouCustDocPrint/EditMouCustDocPrintSequenceNo";
 
     // REF COUNTRY
     public static GetRefCountryByCountryCode = environment.FoundationR3Url + "/RefCountry/GetRefCountryByCountryCode";
@@ -484,6 +514,10 @@ export class AdInsConstant {
 
     //REF CUST MODEL
     public static GetListKeyValueByMrCustTypeCode = environment.FoundationR3Url + "/RefCustModel/GetListKeyValueByMrCustTypeCode";
+
+    // REF LOB
+    public static GetListActiveLob = environment.FoundationR3Url + "/RefLob/GetListKeyValueActiveByCode";
+
 
     //CUST
     public static GetCustByCustNo = environment.FoundationR3Url + "/Cust/GetCustByCustNo";
@@ -512,6 +546,7 @@ export class AdInsConstant {
     public static AddEditAllAssetData = "http://localhost:5001/AppAsset/AddEditAllAssetData";
     public static GetAppAssetDataByAppId = environment.losUrl + "/AppAsset/GetAppAssetDataByAppId";
     
+
     //Asset Doc List
     public static GetListAssetDocListByAssetTypeCode = environment.FoundationR3Url + "/AssetDocList/GetListAssetDocListByAssetTypeCode";
 
@@ -525,6 +560,9 @@ export class AdInsConstant {
     //PURCHASE ORDER
     public static SubmitPurchaseOrder = environment.losUrl + "/PurchaseOrderH/SubmitPurchaseOrder";
 
+    //LEAD VERF
+    public static AddRangeLeadVerf = environment.losUrl + "/LeadVerf/AddRangeLeadVerf";
+    public static GetListLeadVerf = environment.losUrl + "/LeadVerf/GetListLeadVerf";
     //APP INSURANCE
     public static GetInsuranceDataByAppId = environment.losUrl + "/AppIns/GetInsDataByAppId";
     public static AddEditInsuranceData = environment.losUrl + "/AppIns/AddEditInsuranceData";
@@ -555,12 +593,17 @@ export class AdInsConstant {
     //App Fee
     public static GetListAppFeeByAppId = "http://localhost:5001/AppFee/GetListAppFeeByAppId";
 
+    //App Fin Data
+    public static GetAppFinDataByAppId = "http://localhost:5001/AppFinData/GetAppFinDataByAppId";
+    public static CreateMaxAllocAmtRsvFund = "http://localhost:5001/AppFinData/CreateMaxAllocAmtRsvFund";
+
+    // LEAD
+    public static AddLead = environment.losUrl + "/Lead/AddLead";
+    public static GetLeadByLeadId = environment.losUrl + "/Lead/GetLeadByLeadId";
+
     //App Reserved Fund
     public static AddEditAppReservedFund = "http://localhost:5001/AppReservedFund/AddEditAppReservedFund";
     public static GetListAppReservedFundByAppId = "http://localhost:5001/AppReservedFund/GetListAppReservedFundByAppId";
     public static CreateRsvFundRule = "http://localhost:5001/AppReservedFund/CreateRsvFundRule";
 
-    //App Fin Data
-    public static GetAppFinDataByAppId = "http://localhost:5001/AppFinData/GetAppFinDataByAppId";
-    public static CreateMaxAllocAmtRsvFund = "http://localhost:5001/AppFinData/CreateMaxAllocAmtRsvFund";
 }
