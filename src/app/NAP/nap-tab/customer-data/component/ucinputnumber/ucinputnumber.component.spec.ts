@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AppAddDetailComponent } from './app-add-detail.component';
+import { UcinputnumberComponent } from './ucinputnumber.component';
 
-describe('AppAddDetailComponent', () => {
-  let component: AppAddDetailComponent;
-  let fixture: ComponentFixture<AppAddDetailComponent>;
+describe('UcinputnumberComponent', () => {
+  let component: UcinputnumberComponent;
+  let fixture: ComponentFixture<UcinputnumberComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AppAddDetailComponent ]
+      declarations: [ UcinputnumberComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AppAddDetailComponent);
+    fixture = TestBed.createComponent(UcinputnumberComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

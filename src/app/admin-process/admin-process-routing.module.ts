@@ -5,6 +5,8 @@ import { PurchaseOrderComponent } from './purchase-order/purchase-order/purchase
 import { DeliveryOrderDetailComponent } from './delivery-order/delivery-order-detail/delivery-order-detail.component';
 import { DeliveryOrderPagingComponent } from './delivery-order/delivery-order-paging/delivery-order-paging.component';
 import { PurchaseOrderDetailComponent } from './purchase-order/purchase-order-detail/purchase-order-detail.component';
+import { AgrmntActivationPagingComponent } from './agrmnt-activation/agrmnt-activation-paging/agrmnt-activation-paging.component';
+import { AgrmntActivationDetailComponent } from './agrmnt-activation/agrmnt-activation-detail/agrmnt-activation-detail.component';
 import { CustConfirmationPagingComponent } from './cust-confirmation/cust-confirmation-paging/cust-confirmation-paging.component';
 import { CustConfirmationDetailComponent } from './cust-confirmation/cust-confirmation-detail/cust-confirmation-detail.component';
 import { CustConfirmationSubjViewComponent } from './cust-confirmation/cust-confirmation-subj-view/cust-confirmation-subj-view.component';
@@ -34,6 +36,20 @@ const routes: Routes = [
         component: PurchaseOrderDetailComponent,
         data: {
           title: 'Purchase Order Detail'
+        }
+      },
+      {
+        path: 'AgrmntActivation/Paging',
+        component: AgrmntActivationPagingComponent,
+        data: {
+          title: 'Agreement Activation Paging'
+        }
+      },
+      {
+        path: 'AgrmntActivation/Detail',
+        component: AgrmntActivationDetailComponent,
+        data: {
+          title: 'Agreement Activation Detail'
         }
       },
       {

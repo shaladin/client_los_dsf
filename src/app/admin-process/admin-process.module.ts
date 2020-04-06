@@ -16,6 +16,8 @@ import { PurchaseOrderComponent } from './purchase-order/purchase-order/purchase
 import { DeliveryOrderDetailComponent } from "./delivery-order/delivery-order-detail/delivery-order-detail.component";
 import { DeliveryOrderPagingComponent } from "./delivery-order/delivery-order-paging/delivery-order-paging.component";
 import { PurchaseOrderInfoComponent } from './purchase-order/purchase-order-detail/purchase-order-info/purchase-order-info.component';
+import { AgrmntActivationPagingComponent } from './agrmnt-activation/agrmnt-activation-paging/agrmnt-activation-paging.component';
+import { AgrmntActivationDetailComponent } from './agrmnt-activation/agrmnt-activation-detail/agrmnt-activation-detail.component';
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { CustConfirmationPagingComponent } from './cust-confirmation/cust-confirmation-paging/cust-confirmation-paging.component';
 import { CustConfirmationDetailComponent } from './cust-confirmation/cust-confirmation-detail/cust-confirmation-detail.component';
@@ -48,6 +50,9 @@ import { DocSignerPagingComponent } from "./doc-signer/doc-signer-paging/doc-sig
     PurchaseOrderPagingComponent,
     PurchaseOrderDetailComponent,
     PurchaseOrderComponent,
+    PurchaseOrderInfoComponent,
+    AgrmntActivationPagingComponent,
+    AgrmntActivationDetailComponent,
     DeliveryOrderDetailComponent,
     DeliveryOrderPagingComponent,
     PurchaseOrderInfoComponent,

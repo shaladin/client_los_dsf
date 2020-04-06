@@ -23,7 +23,6 @@ constructor() {
         this.CustModelCode = "";
         this.MrIdTypeCode = "";
         this.IdNo = "";
-        this.IdExpiredDt = "";
         this.TaxIdNo = "";
         this.IsVip = false;
         this.IsAppCustChecked = false;
