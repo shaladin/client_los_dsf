@@ -163,7 +163,7 @@ export class LeadCancelComponent implements OnInit {
     this.verifyStatus = verifyStatus;
   }
 
-  SaveLeadVerf(leadVerfForm: any) {
+  SaveLeadCancel(leadVerfForm: any) {
     // this.leadVerfObj = new LeadVerfObj();
     for (let index = 0; index < this.tempData.length; index++) {
       var tempLeadVerfObj = new LeadVerfObj();
@@ -173,6 +173,10 @@ export class LeadCancelComponent implements OnInit {
     }
     if (this.arrLeadVerf.length == 0) {
       this.toastr.typeErrorCustom('Please Add At Least One Data');
+      return;
+    }
+    else if(this.arrLeadVerf.length > 50){
+      this.toastr.typeErrorCustom('Maximum 50 Data');
       return;
     }
 
