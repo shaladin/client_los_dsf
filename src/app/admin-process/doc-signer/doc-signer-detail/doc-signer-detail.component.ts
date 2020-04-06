@@ -28,9 +28,9 @@ export class DocSignerDetailComponent implements OnInit {
   inputLookupBranchEmpObj: any;
   inputLookupOfficeEmp1Obj: any;
   inputLookupOfficeEmp2Obj: any;
-  inputLookupCustCoyShareHolder1Obj: any;
-  inputLookupCustCoyShareHolder2Obj: any;
-  inputLookupCustCoyShareHolder3Obj: any;
+  inputLookupAppCustCompanyShareHolder1Obj: any;
+  inputLookupAppCustCompanyShareHolder2Obj: any;
+  inputLookupAppCustCompanyShareHolder3Obj: any;
   arrCrit: any = new Array();
   agrmntSignerObj: AgrmntSignerObj = new AgrmntSignerObj();
   mode: string;
@@ -156,54 +156,46 @@ export class DocSignerDetailComponent implements OnInit {
     this.inputLookupOfficeEmp1Obj.addCritInput.push(crit3Obj);
     this.inputLookupOfficeEmp2Obj.addCritInput.push(crit3Obj);
 
-    this.inputLookupCustCoyShareHolder1Obj = new InputLookupObj();
-    this.inputLookupCustCoyShareHolder1Obj.urlJson = "./assets/uclookup/lookupCustCoyShareHolder.json";
-    this.inputLookupCustCoyShareHolder1Obj.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
-    this.inputLookupCustCoyShareHolder1Obj.urlEnviPaging = environment.losUrl;
-    this.inputLookupCustCoyShareHolder1Obj.pagingJson = "./assets/uclookup/lookupCustCoyShareHolder.json";
-    this.inputLookupCustCoyShareHolder1Obj.genericJson = "./assets/uclookup/lookupCustCoyShareHolder.json";
-    this.inputLookupCustCoyShareHolder1Obj.addCritInput = new Array();
+    this.inputLookupAppCustCompanyShareHolder1Obj = new InputLookupObj();
+    this.inputLookupAppCustCompanyShareHolder1Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
+    this.inputLookupAppCustCompanyShareHolder1Obj.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputLookupAppCustCompanyShareHolder1Obj.urlEnviPaging = environment.losUrl;
+    this.inputLookupAppCustCompanyShareHolder1Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
+    this.inputLookupAppCustCompanyShareHolder1Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
+    this.inputLookupAppCustCompanyShareHolder1Obj.addCritInput = new Array();
 
-    this.inputLookupCustCoyShareHolder2Obj = new InputLookupObj();
-    this.inputLookupCustCoyShareHolder2Obj.urlJson = "./assets/uclookup/lookupCustCoyShareHolder.json";
-    this.inputLookupCustCoyShareHolder2Obj.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
-    this.inputLookupCustCoyShareHolder2Obj.urlEnviPaging = environment.losUrl;
-    this.inputLookupCustCoyShareHolder2Obj.pagingJson = "./assets/uclookup/lookupCustCoyShareHolder.json";
-    this.inputLookupCustCoyShareHolder2Obj.genericJson = "./assets/uclookup/lookupCustCoyShareHolder.json";
-    this.inputLookupCustCoyShareHolder2Obj.addCritInput = new Array();
+    this.inputLookupAppCustCompanyShareHolder2Obj = new InputLookupObj();
+    this.inputLookupAppCustCompanyShareHolder2Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
+    this.inputLookupAppCustCompanyShareHolder2Obj.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputLookupAppCustCompanyShareHolder2Obj.urlEnviPaging = environment.losUrl;
+    this.inputLookupAppCustCompanyShareHolder2Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
+    this.inputLookupAppCustCompanyShareHolder2Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
+    this.inputLookupAppCustCompanyShareHolder2Obj.addCritInput = new Array();
 
-    this.inputLookupCustCoyShareHolder3Obj = new InputLookupObj();
-    this.inputLookupCustCoyShareHolder3Obj.urlJson = "./assets/uclookup/lookupCustCoyShareHolder.json";
-    this.inputLookupCustCoyShareHolder3Obj.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
-    this.inputLookupCustCoyShareHolder3Obj.urlEnviPaging = environment.losUrl;
-    this.inputLookupCustCoyShareHolder3Obj.pagingJson = "./assets/uclookup/lookupCustCoyShareHolder.json";
-    this.inputLookupCustCoyShareHolder3Obj.genericJson = "./assets/uclookup/lookupCustCoyShareHolder.json";
-    this.inputLookupCustCoyShareHolder3Obj.addCritInput = new Array();
+    this.inputLookupAppCustCompanyShareHolder3Obj = new InputLookupObj();
+    this.inputLookupAppCustCompanyShareHolder3Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
+    this.inputLookupAppCustCompanyShareHolder3Obj.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputLookupAppCustCompanyShareHolder3Obj.urlEnviPaging = environment.losUrl;
+    this.inputLookupAppCustCompanyShareHolder3Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
+    this.inputLookupAppCustCompanyShareHolder3Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
+    this.inputLookupAppCustCompanyShareHolder3Obj.addCritInput = new Array();
 
     var crit4Obj = new CriteriaObj();
-    crit4Obj.propName = 'CCMS.SHAREHOLDER_CUST_NO';
+    crit4Obj.propName = 'ACCMS.CUST_NO';
     crit4Obj.restriction = AdInsConstant.RestrictionEq;
     crit4Obj.value = this.CustNo;
 
-    var crit5Obj = new CriteriaObj();
-    crit5Obj.propName = 'RM.REF_MASTER_TYPE_CODE';
-    crit5Obj.restriction = AdInsConstant.RestrictionEq;
-    crit5Obj.value = 'JOB_POSITION';
-
-    this.inputLookupCustCoyShareHolder1Obj.addCritInput.push(crit4Obj);
-    this.inputLookupCustCoyShareHolder1Obj.addCritInput.push(crit5Obj);
-    this.inputLookupCustCoyShareHolder2Obj.addCritInput.push(crit4Obj);
-    this.inputLookupCustCoyShareHolder2Obj.addCritInput.push(crit5Obj);
-    this.inputLookupCustCoyShareHolder3Obj.addCritInput.push(crit4Obj);
-    this.inputLookupCustCoyShareHolder3Obj.addCritInput.push(crit5Obj);
+    this.inputLookupAppCustCompanyShareHolder1Obj.addCritInput.push(crit4Obj);
+    this.inputLookupAppCustCompanyShareHolder2Obj.addCritInput.push(crit4Obj);
+    this.inputLookupAppCustCompanyShareHolder3Obj.addCritInput.push(crit4Obj);
 
     if (this.ResponseAgrmntSignerObj != null) {
       this.inputLookupBranchEmpObj.jsonSelect = { VendorEmpName: this.ResponseAgrmntSignerObj.SupplBranchEmpName };
       this.inputLookupOfficeEmp1Obj.jsonSelect = { OfficeEmpName: this.ResponseAgrmntSignerObj.MfEmpName1 };
       this.inputLookupOfficeEmp2Obj.jsonSelect = { OfficeEmpName: this.ResponseAgrmntSignerObj.MfEmpName2 };
-      this.inputLookupCustCoyShareHolder1Obj.jsonSelect = { MgmntShrholderName: this.ResponseAgrmntSignerObj.AppCustCompanyMgmntShrholder1Name };
-      this.inputLookupCustCoyShareHolder2Obj.jsonSelect = { MgmntShrholderName: this.ResponseAgrmntSignerObj.AppCustCompanyMgmntShrholder2Name };
-      this.inputLookupCustCoyShareHolder3Obj.jsonSelect = { MgmntShrholderName: this.ResponseAgrmntSignerObj.AppCustCompanyMgmntShrholder3Name };
+      this.inputLookupAppCustCompanyShareHolder1Obj.jsonSelect = { MgmntShrholderName: this.ResponseAgrmntSignerObj.AppCustCompanyMgmntShrholder1Name };
+      this.inputLookupAppCustCompanyShareHolder2Obj.jsonSelect = { MgmntShrholderName: this.ResponseAgrmntSignerObj.AppCustCompanyMgmntShrholder2Name };
+      this.inputLookupAppCustCompanyShareHolder3Obj.jsonSelect = { MgmntShrholderName: this.ResponseAgrmntSignerObj.AppCustCompanyMgmntShrholder3Name };
     }
   }
 
@@ -231,21 +223,21 @@ export class DocSignerDetailComponent implements OnInit {
     })
   }
 
-  getLookupCustCoyShareHolder(event) {
+  getLookupAppCustCompanyShareHolder1(event) {
     this.agrmntSignerObj.AppCustCompanyMgmntShrholder1Id = event.AppCustCompanyMgmntShrholderId;
     this.DocSignerForm.patchValue({
       MrJobPositionMgmntShrholder1Code: event.MrJobPositionCode,
     })
   }
 
-  getLookupCustCoyShareHolder2(event) {
+  getLookupAppCustCompanyShareHolder2(event) {
     this.agrmntSignerObj.AppCustCompanyMgmntShrholder2Id = event.AppCustCompanyMgmntShrholderId;
     this.DocSignerForm.patchValue({
       MrJobPositionMgmntShrholder2Code: event.MrJobPositionCode,
     })
   }
 
-  getLookupCustCoyShareHolder3(event) {
+  getLookupAppCustCompanyShareHolder3(event) {
     this.agrmntSignerObj.AppCustCompanyMgmntShrholder3Id = event.AppCustCompanyMgmntShrholderId;
     this.DocSignerForm.patchValue({
       MrJobPositionMgmntShrholder3Code: event.MrJobPositionCode,

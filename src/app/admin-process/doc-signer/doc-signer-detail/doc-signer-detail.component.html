@@ -83,10 +83,10 @@
                             <div class="form-group row">
                                 <label class="col-md-5 adInsLabel">Management / Shareholder</label>
                                 <div class="col-md-5">
-                                    <lib-uclookupgeneric [lookupInput]="inputLookupCustCoyShareHolder1Obj"
+                                    <lib-uclookupgeneric [lookupInput]="inputLookupAppCustCompanyShareHolder1Obj"
                                         [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
-                                        [identifier]="'lookupCustCoyShareHolder1'"
-                                        (lookup)="getLookupCustCoyShareHolder($event)" *ngIf="inputLookupCustCoyShareHolder1Obj != undefined">
+                                        [identifier]="'lookupAppCustCompanyShareHolder1'"
+                                        (lookup)="getLookupAppCustCompanyShareHolder1($event)" *ngIf="inputLookupAppCustCompanyShareHolder1Obj != undefined">
                                     </lib-uclookupgeneric>
                                 </div>
                             </div>
@@ -109,10 +109,10 @@
                             <div class="form-group row">
                                 <label class="col-md-5 adInsLabel">Customer Commisioner Approver 1</label>
                                 <div class="col-md-5">
-                                    <lib-uclookupgeneric [lookupInput]="inputLookupCustCoyShareHolder2Obj"
+                                    <lib-uclookupgeneric [lookupInput]="inputLookupAppCustCompanyShareHolder2Obj"
                                         [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
-                                        [identifier]="'lookupCustCoyShareHolder2'"
-                                        (lookup)="getLookupCustCoyShareHolder2($event)" *ngIf="inputLookupCustCoyShareHolder2Obj != undefined">
+                                        [identifier]="'lookupAppCustCompanyShareHolder2'"
+                                        (lookup)="getLookupAppCustCompanyShareHolder2($event)" *ngIf="inputLookupAppCustCompanyShareHolder2Obj != undefined">
                                     </lib-uclookupgeneric>
                                 </div>
                             </div>
@@ -130,10 +130,10 @@
                             <div class="form-group row">
                                 <label class="col-md-5 adInsLabel">Customer Commisioner Approver 2</label>
                                 <div class="col-md-5">
-                                    <lib-uclookupgeneric [lookupInput]="inputLookupCustCoyShareHolder3Obj"
+                                    <lib-uclookupgeneric [lookupInput]="inputLookupAppCustCompanyShareHolder3Obj"
                                         [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
-                                        [identifier]="'lookupCustCoyShareHolder3'"
-                                        (lookup)="getLookupCustCoyShareHolder3($event)" *ngIf="inputLookupCustCoyShareHolder3Obj != undefined">
+                                        [identifier]="'lookupAppCustCompanyShareHolder3'"
+                                        (lookup)="getLookupAppCustCompanyShareHolder3($event)" *ngIf="inputLookupAppCustCompanyShareHolder3Obj != undefined">
                                     </lib-uclookupgeneric>
                                 </div>
                             </div>
@@ -150,7 +150,8 @@
                             </div>
                         </div>
                         <div class="form-actions right">
-                            <button type="button" class="btn btn-raised btn-warning mr-1" translate>
+                            <button type="button" class="btn btn-raised btn-warning mr-1" 
+                            [routerLink]="['/AdminProcess/DocumentSigner/Paging']" translate>
                                 <i class="fa fa-arrow-circle-left"></i> Back
                             </button>
                             <button type="submit" class="btn btn-raised btn-primary">

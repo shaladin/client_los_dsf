@@ -1,5 +1,5 @@
 {
-    "title": "Office Employee",
+    "title": "MANAGEMENT / SHAREHOLDER SIGNER",
     "component": [
         {
             "type": "textbox",
@@ -19,7 +19,7 @@
         }
     ],
     "querystring": {
-        "select": "SELECT ACCMS.MGMNT_SHRHOLDER_NAME AS MgmntShrholderName, ACCMS.APP_CUST_COMPANY_MGMNT_SHRHOLDER_ID AS AppCustCompanyMgmntShrholderId, ACCMS.MR_JOB_POSITION_CODE AS MrJobPositionCode",
+        "select": "SELECT ACCMS.MGMNT_SHRHOLDER_NAME AS MgmntShrholderName, ACCMS.APP_CUST_COMPANY_MGMNT_SHRHOLDER_ID AS AppCustCompanyMgmntShrholderId, ACCMS.MR_JOB_POSITION_CODE AS MrJobPositionCode, ACCMS.CUST_NO",
         "from": "FROM DBO.APP_CUST_COMPANY_MGMNT_SHRHOLDER ACCMS WITH(NOLOCK)"
     },
     "headerList": [

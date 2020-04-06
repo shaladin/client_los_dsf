@@ -59,10 +59,9 @@
             "property": "VendorEmpName"
         },
         {
-            "type": "sort",
+            "type": "text",
             "position": "left",
-            "label": "Employee Position",
-            "name": "JobTitleName"
+            "property": "JobTitleName"
         },
         {
             "type": "action",
