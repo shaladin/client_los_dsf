@@ -1,0 +1,58 @@
+<lib-ucSubsection [id]="'ApprovalRecomendation'" [title]="'Approval Recomendation'" [panel]="'ApprovalRecomendationId'">
+</lib-ucSubsection>
+<div id="ApprovalRecomendationId">
+  <table>
+    <tbody>
+      <ng-container *ngFor="let item of listMouCustRvwDObj">
+        <tr>
+          <td class="text-left w-25 p-3">{{item.MrAnalysisItemDescr}} </td>
+          <td class="text-center w-25 p-3">:</td>
+          <td class="text-left-25 p-3">{{item.AnalysisResult}} </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>
+<lib-ucSubsection [id]="'ApprovalHistory'" [title]="'Approval History'" [panel]="'ApprovalHistoryId'">
+</lib-ucSubsection>
+<div id="ApprovalHistoryId">
+<table class="table table-responsive-md text-center table-hover">
+  <thead>
+    <tr class="table-header">
+      <th class="text-left"><span class="thead-header" name='Status' translate>Status</span></th>
+      <th class="text-left"><span class="thead-header" name='CustNo' translate>Customer No</span></th>
+      <th class="text-left"><span class="thead-header" name='Name' translate>Name</span></th>
+      <th class="text-left"><span class="thead-header" name='Gender' translate>Gender</span></th>
+      <th class="text-left"><span class="thead-header" name='CustomerRelationship' translate>Customer
+          Relationship</span></th>
+      <th class="text-left"><span class="thead-header" name='IdType' translate>ID Type</span></th>
+      <th class="text-left"><span class="thead-header" name='IdNo' translate>ID No</span></th>
+      <th class="text-left"><span class="thead-header" name='BirthDate' translate>Birth Date</span></th>
+      <th translate>Edit</th>
+      <th translate>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of tempCustomerPersonalContactPerson">
+      <td class="text-left">{{item.MrNegCustTypeCode}}</td>
+      <td class="text-left">{{item.ContactPersonCustNo}}</td>
+      <td class="text-left">{{item.ContactPersonName}}</td>
+      <td class="text-left">{{item.MrGenderCode}}</td>
+      <td class="text-left">{{item.MrCustRelationshipCode}}</td>
+      <td class="text-left">{{item.MrIdTypeCode}}</td>
+      <td class="text-left">{{item.IdNo}}</td>
+      <td class="text-left">{{item.BirthDt  | date: 'dd-MMM-yyyy' }}</td>
+
+      <td>
+        <a class="success p-0" data-original-title="" title="" (click)="editItem(item.CustPersonalContactPersonId)">
+          <i class="ft-edit-2 font-medium-3 mr-2"></i>
+        </a>
+      </td>
+      <td>
+        <a class="danger p-0" data-original-title="" title="" (click)="deleteItem(item.CustPersonalContactPersonId)">
+          <i class="ft-trash-2 font-medium-3 mr-2"></i>
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table></div>

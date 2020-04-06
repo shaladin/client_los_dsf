@@ -26,8 +26,6 @@ import { MouCustomerDetailComponent } from "./mou-customer-request/mou-customer-
 import { CustomerDocPrintingDetailComponent } from "./customer-doc-printing/customer-doc-printing-detail/customer-doc-printing-detail.component";
 import { CustomerDocPrintingPagingComponent } from "./customer-doc-printing/customer-doc-printing-paging/customer-doc-printing-paging.component";
 import { MouReviewPagingComponent } from './mou-customer/mou-review/mou-review-paging/mou-review-paging.component';
-import { MouReviewGeneralComponent } from './mou-customer/mou-review/mou-review-general/mou-review-general.component';
-import { MouReviewFactoringComponent } from './mou-customer/mou-review/mou-review-factoring/mou-review-factoring.component';
 import { MouViewDetailComponent } from './mou-customer/mou-view/mou-view-detail/mou-view-detail.component';
 import { MouViewFeeComponent } from './mou-customer/mou-view/mou-view-fee/mou-view-fee.component';
 import { MouViewAddcollComponent } from './mou-customer/mou-view/mou-view-addcoll/mou-view-addcoll.component';
@@ -38,11 +36,15 @@ import { MouViewLegalComponent } from './mou-customer/mou-view/mou-view-legal/mo
 import { DocSignerDetailComponent } from "./doc-signer/doc-signer-detail/doc-signer-detail.component";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { EditMouCustomerComponent } from "./mou-customer/edit-mou-customer/edit-mou-customer.component";
+import { MouViewComponent } from "./mou-customer/mou-view/mou-view.component"; 
 import { MouCustomerApprovalComponent } from './mou-customer/mou-customer-approval/mou-customer-approval.component';
 import { MouApprovalGeneralComponent } from './mou-customer/mou-customer-approval/mou-approval-general/mou-approval-general.component';
 import { MouApprovalFactoringComponent } from './mou-customer/mou-customer-approval/mou-approval-factoring/mou-approval-factoring.component';
 import { MouRequestAddcollComponent } from './mou-customer/mou-request/mou-request-addcoll/mou-request-addcoll.component';
 import { MouRequestAddcollAddeditComponent } from './mou-customer/mou-request/mou-request-addcoll-addedit/mou-request-addcoll-addedit.component';
+import { MouReviewFactoringComponent } from "./mou-customer/mou-review/mou-review-factoring/mou-review-factoring.component";
+import { MouReviewGeneralComponent } from "./mou-customer/mou-review/mou-review-general/mou-review-general.component";
+import { MouViewApprovalHistoryComponent } from './mou-customer/mou-view-approval-history/mou-view-approval-history.component';
 // import { ShowErrorsComponent } from "./app/test-new/show-errors.component";
 import { LegalReviewPagingComponent } from './legal-review/legal-review-paging/legal-review-paging.component';
 import { LegalReviewDetailComponent } from './legal-review/legal-review-detail/legal-review-detail.component';
@@ -61,6 +63,8 @@ import { LegalReviewDetailComponent } from './legal-review/legal-review-detail/l
     ReactiveFormsModule,
     UcaddressModule,
     UcSubsectionModule,
+    SharingComponentModule, 
+    UcviewgenericModule,
     UcShowErrorsModule,
     UclookupgenericModule,
     UcviewgenericModule,
@@ -76,14 +80,15 @@ import { LegalReviewDetailComponent } from './legal-review/legal-review-detail/l
     CustomerDocPrintingPagingComponent,
     MainInfoComponent,
     DocSignerComponent,
-    MouReviewPagingComponent,
-    MouReviewGeneralComponent,
+    MouReviewPagingComponent, 
     MouViewDetailComponent,
     MouViewFeeComponent,
     MouViewAddcollComponent,
     MouViewTcComponent,
     MouViewDocComponent,
     MouViewSurveyComponent,
+    MouViewLegalComponent, 
+    MouViewComponent, 
     MouViewLegalComponent,
     MouReviewFactoringComponent,
     DocSignerDetailComponent,
