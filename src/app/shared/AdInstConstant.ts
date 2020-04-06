@@ -585,6 +585,8 @@ export class AdInsConstant {
   // Lead Cust
   public static GetLeadCustByLeadId = environment.losUrl +"/LeadCust/GetLeadCustByLeadId"
     
+  // Lead Cust Socmed
+  public static GetListLeadCustSocmedByLeadCustId = environment.losUrl + "/LeadCustSocmed/GetListLeadCustSocmedByLeadCustId"
 
     // LEAD
     public static AddLead = environment.losUrl + "/Lead/AddLead";
