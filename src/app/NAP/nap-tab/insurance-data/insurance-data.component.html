@@ -315,6 +315,42 @@
                     </table>
                   </div>
                 </div>
+                <lib-ucSubsection [id]="'totalPremiId'" [title]="'Total Premi'" [panel]="'totalPremi'">
+                </lib-ucSubsection>
+                <div id="totalPremi">
+                  <div class="form-group row">
+                    <label class="col-md-2" translate>Total Main Premi</label>
+                    <label class="col-md-4" translate>{{InsuranceDataForm.controls.TotalCustMainPremiAmt.value | number:'.2':'en-US'}}</label>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-2" translate>Total Additional Premi</label>
+                    <label class="col-md-4" translate>{{InsuranceDataForm.controls.TotalCustAddPremiAmt.value | number:'.2':'en-US'}}</label>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-2" translate>Total Fee</label>
+                    <label class="col-md-4" translate>{{getCustAdminFeeAmt() | number:'.2':'en-US'}}</label>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-2" translate>Total Premi to Customer</label>
+                    <label class="col-md-4" translate>{{InsuranceDataForm.controls.TotalCustMainPremiAmt.value + InsuranceDataForm.controls.TotalCustAddPremiAmt.value + getCustAdminFeeAmt() | number:'.2':'en-US'}}</label>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-2" translate>Discount</label>
+                    <div class="col-md-4">
+                      <lib-ucinputnumber [parentForm]="InsuranceDataForm" [enjiForm]="enjiForm" [identifier]="'TotalCustDiscAmt'" [ucNumber]="totalCustDiscAmt" [isRequired]="false"></lib-ucinputnumber>
+                    </div>                  
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-2" translate>Total Premi to Customer after Discount</label>
+                    <label class="col-md-4" translate>{{InsuranceDataForm.controls.TotalCustMainPremiAmt.value + InsuranceDataForm.controls.TotalCustAddPremiAmt.value + getCustAdminFeeAmt() - getTotalCustDiscountAmt() | number:'.2':'en-US'}}</label>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-2" translate>Capitalize Amount</label>
+                    <div class="col-md-4">
+                      <lib-ucinputnumber [parentForm]="InsuranceDataForm" [enjiForm]="enjiForm" [identifier]="'InsCpltzAmt'" [ucNumber]="insCpltzAmt" [isRequired]="false"></lib-ucinputnumber>
+                    </div>                  
+                  </div>
+                </div>
               </div>
             </div>
             <div class="form-actions right">

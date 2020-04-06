@@ -1,12 +1,14 @@
 import { CalcInsMainCvgObj } from "./CalcInsMainCvgObj.Model";
 import { CalcInsAddCvgObj } from "./CalcInsAddCvgObj.Model";
 
-export class InsuranceDataCalcInsObj {
+export class RequestCalcInsObj {
     InsCoverage: Array<CalcInsMainCvgObj>;
-    RowVersion: string;
+    StampDutyFee: number;
+    AdminFee: number;
 
 constructor() {
     this.InsCoverage = new Array<CalcInsMainCvgObj>();
-    this.RowVersion = "";
+    this.StampDutyFee = 0;
+    this.AdminFee = 0;
     }
 }

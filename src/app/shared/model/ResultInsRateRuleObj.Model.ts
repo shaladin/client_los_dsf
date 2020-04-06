@@ -10,6 +10,7 @@ export class ResultInsRateRuleObj {
     PremiumType: Array<string>;
     RateToInsco: Array<number>;
     RateToCust: Array<number>;
+    BaseRate: Array<number>;
     SumInsuredAmt: Array<number>;
     PremiToInsco: Array<number>;
     PremiToCust: Array<number>;
