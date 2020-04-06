@@ -26,6 +26,13 @@ import { LeadMainInfoComponent } from 'app/view/lead-main-info/lead-main-info.co
 import { CustJobDataComponent } from "app/NAP/nap-tab/customer-data/component/job-data/cust-job-data.component";
 import { CustSocmedComponent } from "app/NAP/nap-tab/customer-data/component/socmed/cust-socmed.component";
 // import { ShowErrorsComponent } from "./app/test-new/show-errors.component";
+import { LeadVerifComponent } from './lead-verif/lead-verif.component';
+import { LeadInputComponent } from "./lead-input/lead-input.component";
+import { LeadInputCustDataComponent } from "./lead-input/lead-input-cust-data/lead-input-cust-data.component";
+import { LeadInputPageComponent } from "./lead-input/lead-input-page/lead-input-page.component";
+import { LeadInputMainInfoComponent } from "./lead-input/lead-input-main-info/lead-input-main-info.component";
+import { LeadCancelComponent } from './lead-cancel/lead-cancel/lead-cancel.component';
+import { LeadCancelConfirmComponent } from './lead-cancel/lead-cancel-confirm/lead-cancel-confirm.component';
 
 @NgModule({
   imports: [
@@ -55,7 +62,16 @@ import { CustSocmedComponent } from "app/NAP/nap-tab/customer-data/component/soc
     LeadMainInfoComponent,
     CustomerSelfVerificationComponent,
     CustomerDataComponent,
-    LeadDataComponent
+    LeadDataComponent,
+    ArchwizardModule,
+    LeadVerifComponent,
+    LeadInputComponent,
+    LeadInputCustDataComponent,
+    LeadInputPageComponent,
+    LeadInputMainInfoComponent,
+    LeadCancelComponent,
+    LeadCancelConfirmComponent
   ]
 })
+
 export class LeadModule { }
