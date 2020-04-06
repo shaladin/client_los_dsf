@@ -20,7 +20,7 @@
       }
     ],
     "querystring": {
-      "select": "SELECT PROFESSION_CODE AS ProfessionCode, PROFESSION_NAME AS ProfessionName",
+      "select": "SELECT PROFESSION_CODE AS ProfessionCode, PROFESSION_NAME AS ProfessionName, REF_PROFESSION_ID as RefProfessionId",
       "from": "FROM dbo.REF_PROFESSION WITH(NOLOCK)"
     },
     "headerList": [

@@ -1,13 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DocSignerComponent } from './doc-signer/doc-signer.component';
+import { MouCustomerRequestComponent } from './mou-customer-request/mou-customer-request.component';
+import { MouCustomerRequestDetailComponent } from './mou-customer-request/mou-customer-request-detail/mou-customer-request-detail.component';
 import { MouReviewPagingComponent } from './mou-customer/mou-review/mou-review-paging/mou-review-paging.component';
 import { MouReviewGeneralComponent } from './mou-customer/mou-review/mou-review-general/mou-review-general.component';
+import { DocSignerDetailComponent } from './doc-signer/doc-signer-detail/doc-signer-detail.component';
+import { MouReviewFactoringComponent } from './mou-customer/mou-review/mou-review-factoring/mou-review-factoring.component';
+import { EditMouCustomerComponent } from './mou-customer/edit-mou-customer/edit-mou-customer.component';
 import { CustomerDocPrintingPagingComponent } from './customer-doc-printing/customer-doc-printing-paging/customer-doc-printing-paging.component';
 import { CustomerDocPrintingDetailComponent } from './customer-doc-printing/customer-doc-printing-detail/customer-doc-printing-detail.component';
-import { MouReviewFactoringComponent } from './mou-customer/mou-review/mou-review-factoring/mou-review-factoring.component';
 import { MouViewComponent } from './mou-customer/mou-view/mou-view.component';
-
 import { LegalReviewDetailComponent } from './legal-review/legal-review-detail/legal-review-detail.component';
 import { LegalReviewPagingComponent } from './legal-review/legal-review-paging/legal-review-paging.component';
 import { MouCustomerApprovalComponent } from './mou-customer/mou-customer-approval/mou-customer-approval.component';
@@ -24,6 +27,20 @@ const routes: Routes = [
         component: DocSignerComponent,
         data: {
           title: 'Document Signer Paging'
+        }
+      },
+      {
+        path: 'Request/Paging',
+        component: MouCustomerRequestComponent,
+        data: {
+          title: 'MOU Customer Request Paging'
+        }
+      },
+      {
+        path: 'Request/Detail',
+        component: MouCustomerRequestDetailComponent,
+        data: {
+          title: 'MOU Customer Request Detail'
         }
       },
       {
@@ -69,10 +86,24 @@ const routes: Routes = [
         }
       },
       {
+        path: 'DocSigner/Detail',
+        component: DocSignerDetailComponent,
+        data: {
+          title: 'Document Signer Detail'
+        }
+      },
+      {
         path: 'Cust/ReviewFactoring',
         component: MouReviewFactoringComponent,
         data: {
           title: 'MOU Review Factoring'
+        }
+      },
+      {
+        path: 'EditMouCustomer/Paging',
+        component: EditMouCustomerComponent,
+        data: {
+          title: 'Edit MOU Customer Paging'
         }
       },
       {
@@ -82,7 +113,6 @@ const routes: Routes = [
           title: 'MOU View Factoring'
         }
       },
-      
       {
         path: 'Cust/Approval',
         component: MouCustomerApprovalComponent,

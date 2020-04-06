@@ -13,12 +13,16 @@ import { UcSubsectionModule } from "@adins/uc-subsection";
 import { UclookupgenericModule } from '@adins/uclookupgeneric';
 import { UcviewgenericModule } from '@adins/ucviewgeneric';
 import { UcaddressModule } from "@adins/ucaddress";
+// import { UcinputnumberModule } from "@adins/ucinputnumber";
 import { UCSearchComponent } from '@adins/ucsearch';
 import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
 import { UcgridfooterModule, UcgridfooterComponent } from "@adins/ucgridfooter";
 import { MainInfoComponent } from 'app/view/main-info/main-info.component';
 import { MouRoutingModule } from "./mou-routing.module";
 import { DocSignerComponent } from "./doc-signer/doc-signer.component";
+import { MouCustomerRequestComponent } from './mou-customer-request/mou-customer-request.component';
+import { MouCustomerRequestDetailComponent } from './mou-customer-request/mou-customer-request-detail/mou-customer-request-detail.component';
+import { MouCustomerDetailComponent } from "./mou-customer-request/mou-customer-detail/mou-customer-detail.component";
 import { CustomerDocPrintingDetailComponent } from "./customer-doc-printing/customer-doc-printing-detail/customer-doc-printing-detail.component";
 import { CustomerDocPrintingPagingComponent } from "./customer-doc-printing/customer-doc-printing-paging/customer-doc-printing-paging.component";
 import { MouReviewPagingComponent } from './mou-customer/mou-review/mou-review-paging/mou-review-paging.component';
@@ -28,7 +32,10 @@ import { MouViewAddcollComponent } from './mou-customer/mou-view/mou-view-addcol
 import { MouViewTcComponent } from './mou-customer/mou-view/mou-view-tc/mou-view-tc.component';
 import { MouViewDocComponent } from './mou-customer/mou-view/mou-view-doc/mou-view-doc.component';
 import { MouViewSurveyComponent } from './mou-customer/mou-view/mou-view-survey/mou-view-survey.component';
-import { MouViewLegalComponent } from './mou-customer/mou-view/mou-view-legal/mou-view-legal.component';   
+import { MouViewLegalComponent } from './mou-customer/mou-view/mou-view-legal/mou-view-legal.component';
+import { DocSignerDetailComponent } from "./doc-signer/doc-signer-detail/doc-signer-detail.component";
+import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
+import { EditMouCustomerComponent } from "./mou-customer/edit-mou-customer/edit-mou-customer.component";
 import { MouViewComponent } from "./mou-customer/mou-view/mou-view.component"; 
 import { MouCustomerApprovalComponent } from './mou-customer/mou-customer-approval/mou-customer-approval.component';
 import { MouApprovalGeneralComponent } from './mou-customer/mou-customer-approval/mou-approval-general/mou-approval-general.component';
@@ -61,10 +68,14 @@ import { LegalReviewDetailComponent } from './legal-review/legal-review-detail/l
     UcShowErrorsModule,
     UclookupgenericModule,
     UcviewgenericModule,
-    SharingComponentModule
+    SharingComponentModule,
+    // UcinputnumberModule
   ],
   declarations: [
     DocSignerComponent,
+    MouCustomerRequestComponent,
+    MouCustomerRequestDetailComponent,
+    MouCustomerDetailComponent,
     CustomerDocPrintingDetailComponent,
     CustomerDocPrintingPagingComponent,
     MainInfoComponent,
@@ -80,15 +91,26 @@ import { LegalReviewDetailComponent } from './legal-review/legal-review-detail/l
     MouViewComponent, 
     MouViewLegalComponent,
     MouReviewFactoringComponent,
-    MouReviewGeneralComponent,
+    DocSignerDetailComponent,
+    EditMouCustomerComponent,
     LegalReviewPagingComponent,
     LegalReviewDetailComponent,
     MouCustomerApprovalComponent,
     MouApprovalGeneralComponent,
     MouApprovalFactoringComponent,
     MouRequestAddcollComponent,
-    MouRequestAddcollAddeditComponent,
-    MouViewApprovalHistoryComponent,
+    MouRequestAddcollAddeditComponent
+  ],
+  exports: [],
+  providers: [NGXToastrService],
+  entryComponents: [
+    // MouCustAssetDetailComponent,
+    // MouCustomerApprovalComponent,
+    // MouApprovalGeneralComponent,
+    // MouApprovalFactoringComponent,
+    // MouRequestAddcollComponent,
+    // MouRequestAddcollAddeditComponent,
   ]
 })
+
 export class MouModule { }
