@@ -9,7 +9,8 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 @Component({
   selector: 'app-legal-review-detail',
   templateUrl: './legal-review-detail.component.html',
-  styleUrls: ['./legal-review-detail.component.scss']
+  styleUrls: ['./legal-review-detail.component.scss'],
+  providers: [NGXToastrService]
 })
 export class LegalReviewDetailComponent implements OnInit {
   viewObj: string;
@@ -36,7 +37,7 @@ export class LegalReviewDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,
-    // private toastr: NGXToastrService
+    private toastr: NGXToastrService
   ) { }
 
   ngOnInit() {
@@ -150,8 +151,8 @@ export class LegalReviewDetailComponent implements OnInit {
     this.http.post(this.EditListMouCustTc, mouTcObjs).subscribe(
       response => {
         console.log('success');
-        // this.toastr.successMessage(response['message']);
-        // this.router.navigate(["/Mou/CustomerLegalReview"], { queryParams: { "MouCustId": this.MouCustId } });
+        this.toastr.successMessage(response['message']);
+        this.router.navigate(["/Mou/CustomerLegalReview"], { queryParams: { "MouCustId": this.MouCustId } });
       },
       error => {
         console.log(error);

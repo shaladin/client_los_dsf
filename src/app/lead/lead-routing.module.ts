@@ -5,46 +5,71 @@ import { LeadInputComponent } from './lead-input/lead-input.component';
 import { LeadInputCustDataComponent } from './lead-input/lead-input-cust-data/lead-input-cust-data.component';
 import { LeadInputPageComponent } from './lead-input/lead-input-page/lead-input-page.component';
 import { LeadInputMainInfoComponent } from './lead-input/lead-input-main-info/lead-input-main-info.component';
+import { LeadCancelComponent } from './lead-cancel/lead-cancel/lead-cancel.component';
+import { LeadCancelConfirmComponent } from './lead-cancel/lead-cancel-confirm/lead-cancel-confirm.component';
+import { LeadPagingComponent } from './lead-paging/lead-paging.component';
+import { LeadViewComponent } from './lead-view/lead-view.component';
 
 const routes: Routes = [
   {
-    path:'',
+    path: '',
     children: [
       {
         path: 'Verif',
-        component : LeadVerifComponent,
+        component: LeadVerifComponent,
         data: {
-          title : 'Verif Paging'
+          title: 'Lead Verif Paging'
+        }
+      },
+      {
+        path: 'Cancel',
+        component: LeadCancelComponent,
+        data: {
+          title: 'Lead Cancel'
+        }
+      },
+      {
+        path: 'ConfirmCancel',
+        component: LeadCancelConfirmComponent,
+        data: {
+          title: 'Lead Cancel Confirm'
         }
       },
       {
         path: 'Lead/Paging',
-        component : LeadInputComponent,
+        component: LeadInputComponent,
         data: {
-          title : 'Lead Paging'
+          title: 'Lead Paging'
         }
       },
       {
         path: 'LeadInput/CustData',
-        component : LeadInputCustDataComponent,
+        component: LeadInputCustDataComponent,
         data: {
-          title : 'Lead Paging'
+          title: 'Lead Paging'
         }
       },
       {
         path: 'LeadInput/Page',
-        component : LeadInputPageComponent,
+        component: LeadInputPageComponent,
         data: {
-          title : 'Lead Page'
+          title: 'Lead Page'
         }
       },
       {
         path: 'LeadInput/MainInfo',
-        component : LeadInputMainInfoComponent,
+        component: LeadInputMainInfoComponent,
         data: {
-          title : 'Lead Main Info'
+          title: 'Lead Main Info'
         }
       },
+      {
+        path: 'View',
+        component: LeadViewComponent,
+        data: {
+          title: 'Lead View'
+        }
+      }
     ]
   }
 ];

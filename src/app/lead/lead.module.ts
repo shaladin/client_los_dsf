@@ -24,6 +24,11 @@ import { LeadInputCustDataComponent } from "./lead-input/lead-input-cust-data/le
 import { LeadInputPageComponent } from "./lead-input/lead-input-page/lead-input-page.component";
 import { LeadInputMainInfoComponent } from "./lead-input/lead-input-main-info/lead-input-main-info.component";
 import { LeadViewHeaderComponent } from "./lead-input/lead-view-header/lead-view-header.component";
+import { LeadCancelComponent } from './lead-cancel/lead-cancel/lead-cancel.component';
+import { LeadCancelConfirmComponent } from './lead-cancel/lead-cancel-confirm/lead-cancel-confirm.component';
+import { LeadPagingComponent } from './lead-paging/lead-paging.component';
+import { LeadViewComponent } from './lead-view/lead-view.component';
+import { ViewCustomerDataComponent } from './lead-view/view-customer-data/view-customer-data.component';
 
 @NgModule({
   imports: [
@@ -45,12 +50,18 @@ import { LeadViewHeaderComponent } from "./lead-input/lead-view-header/lead-view
   ],
   declarations: [
     LeadVerifComponent,
+    LeadCancelComponent,
+    LeadCancelConfirmComponent,
+    LeadPagingComponent,
+    LeadViewComponent,
+    ViewCustomerDataComponent,
+    ArchwizardModule,
     LeadInputComponent,
     LeadInputCustDataComponent,
     LeadInputPageComponent,
     LeadInputMainInfoComponent,
-    LeadViewHeaderComponent
-  ]
+    LeadViewHeaderComponent,
+  ],
 })
 
 export class LeadModule { }

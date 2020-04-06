@@ -63,7 +63,7 @@
     ],
     "querystring": {
         "select": "SELECT MOU_CUST_NO AS mouCustNo, CUST_NAME AS custName, MOU_CUST_DT AS mouCustDt, REF_NO AS refNo, MR_MOU_TYPE_CODE AS mrMouTypeCode, MOU_CUST_ID AS mouCustId",
-        "from": "FROM MOU_CUST WITH(NOLOCK)"
+        "from": "FROM dbo.MOU_CUST WITH(NOLOCK)"
     },
     "headerList": [
         {

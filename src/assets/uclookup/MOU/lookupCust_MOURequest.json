@@ -3,7 +3,7 @@
     "component": [
         {
             "type": "textbox",
-            "name": "CUST_NO",
+            "name": "A.CUST_NO",
             "id": "CustNo",
             "value": "",
             "label": "Customer No",
@@ -11,7 +11,7 @@
         },
         {
             "type": "textbox",
-            "name": "CUST_NAME",
+            "name": "A.CUST_NAME",
             "id": "CustName",
             "value": "",
             "label": "Customer Name",
@@ -43,19 +43,19 @@
             "type": "sort",
             "position": "left",
             "label": "Customer No",
-            "name": "custNo"
+            "name": "A.CUST_NO"
         },
         {
             "type": "sort",
             "position": "left",
             "label": "Customer Name",
-            "name": "custName"
+            "name": "A.CUST_NAME"
         },
         {
             "type": "sort",
             "position": "left",
             "label": "Customer Type",
-            "name": "idTypeView"
+            "name": "A.MR_ID_TYPE_CODE"
         },
         {
             "type": "label",
