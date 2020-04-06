@@ -81,13 +81,13 @@ export class MouDetailFactoringComponent implements OnInit {
         this.payFreqList = response[5];
         this.instSchmList = response[6];
         this.MouDetailFactoringForm.patchValue({
-          MrRecourseTypeCode: this.recourseTypeList?.ReturnObject[0]?.Key,
-          WopCode: this.wopList?.ReturnObject[0]?.Key,
-          MrPaidByCode: this.paidByList?.ReturnObject[0]?.Key,
-          MrInstTypeCode: this.instTypeList?.ReturnObject[0]?.Key,
-          SingleInstCalcMthd: this.singleInstCalcMthdList?.ReturnObject[0]?.Key,
-          PayFreqCode: this.payFreqList?.ReturnObject[0]?.Key,
-          MrInstSchmCode: this.instSchmList?.ReturnObject[0]?.Key
+          MrRecourseTypeCode: this.recourseTypeList.ReturnObject[0].Key,
+          WopCode: this.wopList.ReturnObject[0].Key,
+          MrPaidByCode: this.paidByList.ReturnObject[0].Key,
+          MrInstTypeCode: this.instTypeList.ReturnObject[0].Key,
+          SingleInstCalcMthd: this.singleInstCalcMthdList.ReturnObject[0].Key,
+          PayFreqCode: this.payFreqList.ReturnObject[0].Key,
+          MrInstSchmCode: this.instSchmList.ReturnObject[0].Key
         });
       },
       (error) => {
