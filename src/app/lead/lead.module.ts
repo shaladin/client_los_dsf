@@ -19,8 +19,15 @@ import { UcgridfooterModule, UcgridfooterComponent } from "@adins/ucgridfooter";
 import { MainInfoComponent } from 'app/view/main-info/main-info.component';
 import { LeadRoutingModule } from "./lead-routing.module";
 import { LeadVerifComponent } from './lead-verif/lead-verif.component';
+import { LeadInputComponent } from "./lead-input/lead-input.component";
+import { LeadInputCustDataComponent } from "./lead-input/lead-input-cust-data/lead-input-cust-data.component";
+import { LeadInputPageComponent } from "./lead-input/lead-input-page/lead-input-page.component";
+import { LeadInputMainInfoComponent } from "./lead-input/lead-input-main-info/lead-input-main-info.component";
 import { LeadCancelComponent } from './lead-cancel/lead-cancel/lead-cancel.component';
 import { LeadCancelConfirmComponent } from './lead-cancel/lead-cancel-confirm/lead-cancel-confirm.component';
+import { LeadPagingComponent } from './lead-paging/lead-paging.component';
+import { LeadViewComponent } from './lead-view/lead-view.component';
+import { ViewCustomerDataComponent } from './lead-view/view-customer-data/view-customer-data.component';
 
 @NgModule({
   imports: [
@@ -37,12 +44,22 @@ import { LeadCancelConfirmComponent } from './lead-cancel/lead-cancel-confirm/le
     UcShowErrorsModule,
     UclookupgenericModule,
     UcviewgenericModule,
-    SharingComponentModule
+    SharingComponentModule,
+    ArchwizardModule,
   ],
   declarations: [
     LeadVerifComponent,
+    LeadInputComponent,
+    LeadInputCustDataComponent,
+    LeadInputPageComponent,
+    LeadInputMainInfoComponent,
     LeadCancelComponent,
-    LeadCancelConfirmComponent
-  ]
+    LeadCancelConfirmComponent,
+    LeadPagingComponent,
+    LeadViewComponent,
+    ViewCustomerDataComponent,
+    ArchwizardModule,
+  ],
 })
+
 export class LeadModule { }
