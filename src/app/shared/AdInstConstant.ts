@@ -466,6 +466,7 @@ export class AdInsConstant {
 
     // MOU CUST ASSET
     public static GetMouCustFeeByMouCustId = environment.losUrl + "/MouCustFee/GetMouCustFeeByMouCustId";
+    public static GetListMouCustFeeByMouCustId = environment.losUrl +"/MouCustFee/GetListMouCustFeeByMouCustId";
 
     // MOU CUST CLAUSE
     public static GetMouCustDataByMouCustId = environment.losUrl + "/MouCustClause/GetMouCustDataByMouCustId";
@@ -481,6 +482,10 @@ export class AdInsConstant {
 
     // MOU CUST COLLATERAL DOC
 
+    // MOU CUST RVW H
+    public static GetMouCustRvwHByMouCustId = environment.losUrl + "/MouCustRvwH/GetMouCustRvwHByMouCustId"
+
+    public static GetListMouCustRvwD =   environment.losUrl + "/MouCustRvwD/GetListMouCustRvwD"
     // MOU CUST LEGAL REVIEW
     public static GetMouCustLglReviewByMouCustId = environment.losUrl + "/MouCustLglReview/GetMouCustLglReviewByMouCustId";
     public static AddRangeMouCustLglReview = environment.losUrl + "/MouCustLglReview/AddRangeMouCustLglReview";

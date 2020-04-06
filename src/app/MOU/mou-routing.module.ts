@@ -10,6 +10,7 @@ import { MouReviewFactoringComponent } from './mou-customer/mou-review/mou-revie
 import { EditMouCustomerComponent } from './mou-customer/edit-mou-customer/edit-mou-customer.component';
 import { CustomerDocPrintingPagingComponent } from './customer-doc-printing/customer-doc-printing-paging/customer-doc-printing-paging.component';
 import { CustomerDocPrintingDetailComponent } from './customer-doc-printing/customer-doc-printing-detail/customer-doc-printing-detail.component';
+import { MouViewComponent } from './mou-customer/mou-view/mou-view.component';
 import { LegalReviewDetailComponent } from './legal-review/legal-review-detail/legal-review-detail.component';
 import { LegalReviewPagingComponent } from './legal-review/legal-review-paging/legal-review-paging.component';
 import { MouCustomerApprovalComponent } from './mou-customer/mou-customer-approval/mou-customer-approval.component';
@@ -103,6 +104,13 @@ const routes: Routes = [
         component: EditMouCustomerComponent,
         data: {
           title: 'Edit MOU Customer Paging'
+        }
+      },
+      {
+        path: 'Cust/Paging',
+        component: MouViewComponent,
+        data: {
+          title: 'MOU View Factoring'
         }
       },
       {
