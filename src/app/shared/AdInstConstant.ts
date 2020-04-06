@@ -578,9 +578,13 @@ export class AdInsConstant {
     //App Fee
     public static GetListAppFeeByAppId = "http://localhost:5001/AppFee/GetListAppFeeByAppId";
 
-    //App Fin Data
-    public static GetAppFinDataByAppId = "http://localhost:5001/AppFinData/GetAppFinDataByAppId";
-    public static CreateMaxAllocAmtRsvFund = "http://localhost:5001/AppFinData/CreateMaxAllocAmtRsvFund";
+  //App Fin Data
+  public static GetAppFinDataByAppId = "http://localhost:5001/AppFinData/GetAppFinDataByAppId";
+  public static CreateMaxAllocAmtRsvFund = "http://localhost:5001/AppFinData/CreateMaxAllocAmtRsvFund";
+
+  // Lead Cust
+  public static GetLeadCustByLeadId = environment.losUrl +"/LeadCust/GetLeadCustByLeadId"
+    
 
     // LEAD
     public static AddLead = environment.losUrl + "/Lead/AddLead";
