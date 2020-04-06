@@ -23,6 +23,7 @@ import { LeadInputComponent } from "./lead-input/lead-input.component";
 import { LeadInputCustDataComponent } from "./lead-input/lead-input-cust-data/lead-input-cust-data.component";
 import { LeadInputPageComponent } from "./lead-input/lead-input-page/lead-input-page.component";
 import { LeadInputMainInfoComponent } from "./lead-input/lead-input-main-info/lead-input-main-info.component";
+import { LeadViewHeaderComponent } from "./lead-input/lead-view-header/lead-view-header.component";
 
 @NgModule({
   imports: [
@@ -47,7 +48,8 @@ import { LeadInputMainInfoComponent } from "./lead-input/lead-input-main-info/le
     LeadInputComponent,
     LeadInputCustDataComponent,
     LeadInputPageComponent,
-    LeadInputMainInfoComponent
+    LeadInputMainInfoComponent,
+    LeadViewHeaderComponent
   ]
 })
 

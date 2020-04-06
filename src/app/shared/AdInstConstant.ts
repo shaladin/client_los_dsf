@@ -399,6 +399,9 @@ export class AdInsConstant {
     //REF MODULE
     public static GetListRefModuleKeyValue = "/RefModule/GetListRefModuleKeyValue";
 
+    //REF EMP
+    public static GetRefEmpForLookupEmployee = "http://localhost:5000" + "/RefEmp/GetRefEmpForLookupEmployee"
+
     //REF EMP LEAVE MANAGEMENT
     public static GetRefEmpLeaveMngmntPaging = "/RefEmpLeaveManagement/GetRefEmpLeaveMngmntPaging";
     public static DeleteRefEmpLeaveMngmnt= "/RefEmpLeaveManagement/DeleteRefEmpLeaveMngmnt";
@@ -579,6 +582,7 @@ export class AdInsConstant {
 
   // LEAD
   public static AddLead = environment.losUrl + "/Lead/AddLead";
+  public static EditLead = environment.losUrl + "/Lead/EditLead";
   public static GetLeadByLeadId = environment.losUrl + "/Lead/GetLeadByLeadId";
   
     //App Reserved Fund

@@ -1,0 +1,62 @@
+<div class="card">
+    <div class="card-body">
+      <div class="px-3">
+        <lib-ucSubsection [id]="'MainInfo'" [title]="'Main Info'" [panel]="'MainInfoId'">
+        </lib-ucSubsection>
+        <form class="form form-horizontal" id="MainInfoId">
+          <div class="form-body">
+            <div class="form-group row ">
+              <label class="col-md-2 adInsLabel" translate>Lead No</label>
+              <div class="col-md-4">
+                <label>{{this.returnLead?.LeadNo}}</label>
+              </div>
+              <label class="col-md-2 adInsLabel" translate>Order No </label>
+              <div class="col-md-4">
+                <label>{{this.returnLead?.OrderNo}}</label>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2  adInsLabel" translate>Office Name </label>
+              <div class="col-md-4">
+                <label>{{this.returnLead?.OriOfficeName}} </label>
+              </div>
+              <label class="col-md-2 adInsLabel" translate>Line Of Business</label>
+              <div class="col-md-4">
+                <label>{{this.returnLead?.LobName}} </label>
+              </div>
+            </div>
+            <div class="form-group row ">
+              <label class="col-md-2 adInsLabel" translate>Lead Source </label>
+              <div class="col-md-4">
+                <label>{{this.returnLead?.MrLeadSourceCode}} </label>
+              </div>
+              <label class="col-md-2 adInsLabel" translate>Agency </label>
+              <div class="col-md-4">
+                <label>{{this.returnLead?.AgencyName}} </label>
+              </div>
+            </div>
+            <div class="form-group row ">
+              <label class="col-md-2 adInsLabel" translate>CMO Name</label>
+              <div class="col-md-4">
+                <label>{{this.returnLead?.CmoName}}</label>
+              </div>
+              <label class="col-md-2 adInsLabel" translate>Surveyor Name</label>
+              <div class="col-md-4">
+                <label>{{this.returnLead?.SurveyorName}}</label>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 adInsLabel" translate>Lead Date </label>
+              <div class="col-md-4">
+                 <label>{{this.returnLead?.LeadDt| date: 'dd-MMM-yyyy' }} </label>
+              </div>
+              <label class="col-md-2 adInsLabel" translate>Tele Sales Name</label>
+              <div class="col-md-4">
+                <label>{{this.returnLead?.TeleMarketingName}}</label>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
