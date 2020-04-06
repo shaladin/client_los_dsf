@@ -1,5 +1,5 @@
 {
-    "title": "LEAD VERIFICATION",
+    "title": "LEAD CANCEL",
     "component": [
         {
             "type": "dropdown",
@@ -67,7 +67,6 @@
             "placeholder": "Placeholder",
             "datatype": "text"
         },
-
         {
             "type": "dropdown",
             "name": "L.LEAD_STEP",

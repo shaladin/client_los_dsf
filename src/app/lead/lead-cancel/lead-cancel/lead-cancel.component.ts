@@ -92,14 +92,6 @@ export class LeadCancelComponent implements OnInit {
         for (var i = 0; i < temp.length; i++) {
           arr.push(temp[i]['LeadId']);
         }
-
-        const addCritAssetMasterId = new CriteriaObj();
-        addCritAssetMasterId.DataType = 'numeric';
-        addCritAssetMasterId.propName = 'L.LEAD_ID';
-        addCritAssetMasterId.restriction = AdInsConstant.RestrictionNotIn;
-        addCritAssetMasterId.listValue = arr;
-        this.arrCrit.push(addCritAssetMasterId);
-        this.inputObj.addCritInput.push(addCritAssetMasterId);
       },
       error => {
         console.log('ga jalan');
@@ -167,7 +159,6 @@ export class LeadCancelComponent implements OnInit {
     // this.leadVerfObj = new LeadVerfObj();
     for (let index = 0; index < this.tempData.length; index++) {
       var tempLeadVerfObj = new LeadVerfObj();
-      tempLeadVerfObj.VerifyStat = this.verifyStatus;
       tempLeadVerfObj.LeadId = this.tempData[index].LeadId;
       this.arrLeadVerf.push(tempLeadVerfObj);
     }
