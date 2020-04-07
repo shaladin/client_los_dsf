@@ -1,5 +1,5 @@
 {
-    "title": "Purchase Order Paging",
+    "title": "Customer Confirmation Paging",
     "exportExcel": false,
     "component": [
         {
@@ -20,10 +20,10 @@
         },
         {
             "type" : "textbox",
-            "name" : "AGR.PROD_OFFERING_NAME",
-            "id" : "ProdOfferingNameId",
+            "name" : "AGR.CUST_NO",
+            "id" : "CustNoId",
             "value" : "",
-            "label" : "Prod Offering Name",
+            "label" : "Customer No",
             "placeholder": "Placeholder"
         },
         {
@@ -44,7 +44,7 @@
         }
     ],
     "querystring": {
-        "select": "SELECT WF.USERNAME AS Username, AGR.AGRMNT_NO AS AgrmntNo, A.APP_NO AS AppNo, AGR.CUST_NAME AS CustName, A.PROD_OFFERING_NAME AS ProdOfferingName, CASE WHEN WF.USERNAME = NULL OR WF.USERNAME = '' THEN 'UNCLAIMED' ELSE 'CLAIMED' END AS ClaimStatus, A.APP_ID AS AppId, AGR.AGRMNT_ID AS AgrmntId",
+        "select": "SELECT WF.USERNAME AS Username, AGR.AGRMNT_NO AS AgrmntNo, A.APP_NO AS AppNo, AGR.CUST_NO AS CustNo, AGR.CUST_NAME AS CustName, A.PROD_OFFERING_NAME AS ProdOfferingName, CASE WHEN WF.USERNAME = NULL OR WF.USERNAME = '' THEN 'UNCLAIMED' ELSE 'CLAIMED' END AS ClaimStatus, A.APP_ID AS AppId, AGR.AGRMNT_ID AS AgrmntId",
         "from": "FROM dbo.APP A WITH(NOLOCK) JOIN dbo.AGRMNT AGR WITH(NOLOCK) ON AGR.APP_ID = A.APP_ID JOIN dbo.V_WF_TASK_LIST WF WITH(NOLOCK) ON WF.TRANSACTION_CODE = A.APP_NO"
     },
     "headerList": [
@@ -69,14 +69,14 @@
         {
             "type": "sort",
             "position": "left",
-            "label": "Customer Name",
-            "name": "AGR.CUST_NAME"
+            "label": "Customer No",
+            "name": "AGR.CUST_NO"
         },
         {
             "type": "sort",
             "position": "left",
-            "label": "Prod Offering Name",
-            "name": "AGR.PROD_OFFERING_NAME"
+            "label": "Customer Name",
+            "name": "AGR.CUST_NAME"
         },
         {
             "type": "label",
@@ -103,12 +103,12 @@
         {
             "type": "text",
             "position": "left",
-            "property": "CustName"
+            "property": "CustNo"
         },
         {
             "type": "text",
             "position": "left",
-            "property": "ProdOfferingName"
+            "property": "CustName"
         },
         {
             "type": "action",
@@ -116,11 +116,15 @@
             "action": [
                 {
                     "type": "edit",
-                    "path": "/AdminProcess/PurchaseOrder/PO",
+                    "path": "/AdminProcess/CustConfirmation/Detail",
                     "param": [
                         {
                             "type": "AgrmntId",
                             "property": "AgrmntId"
+                        },
+                        {
+                            "type": "AgrmntNo",
+                            "property": "AgrmntNo"
                         }
                     ]
                 }

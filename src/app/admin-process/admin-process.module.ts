@@ -33,6 +33,7 @@ import { CustConfirmationVerfViewComponent } from './cust-confirmation/cust-conf
 import { OfferingValidityCheckingApprovalPagingComponent } from './offering-validity-checking-approval/offering-validity-checking-approval-paging/offering-validity-checking-approval-paging.component';
 import { OfferingValidityCheckingApprovalDetailComponent } from './offering-validity-checking-approval/offering-validity-checking-approval-detail/offering-validity-checking-approval-detail.component';
 
+
 @NgModule({
   imports: [
     CommonModule,
@@ -48,7 +49,8 @@ import { OfferingValidityCheckingApprovalDetailComponent } from './offering-vali
     UcSubsectionModule,
     UcShowErrorsModule,
     AdminProcessRoutingModule,
-    SharingComponentModule
+    SharingComponentModule,
+    UcviewgenericModule
   ],
   declarations: [
     PurchaseOrderPagingComponent,

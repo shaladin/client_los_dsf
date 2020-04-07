@@ -42,6 +42,7 @@ export class AdInsConstant {
   public static AddApp = "/Application/AddApp";
   public static EditApp = "/Application/EditApp";
   public static GetAppById = "/Application/GetAppById";
+  public static GetAppByIds = environment.losUrl + "/Application/GetAppById";
   public static EditAppAddAppCross = "/Application/EditAppAddAppCross";
 
   // App Asset
@@ -591,18 +592,38 @@ export class AdInsConstant {
   public static GetListTCbyAppId = environment.losUrl + "/AppTc/GetListTCbyAppId";
   public static CreateTCRule = environment.losUrl + "/AppTc/CreateTCRule";
 
+  //AGRMNT
+  public static GetAgrmntByAgrmntId = environment.losUrl + "/Agrmnt/GetAgrmntByAgrmntId";
+
   //REF TC
   public static GetRefTcByCode = environment.FoundationR3Url + "/RefTc/GetRefTcByCode";
   public static GetListRefTcByTcCode = environment.FoundationR3Url + "/RefTc/GetListRefTcByTcCode";
 
   //PURCHASE ORDER
   public static SubmitPurchaseOrder = environment.losUrl + "/PurchaseOrderH/SubmitPurchaseOrder";
+  public static ResumeWorkflowPurchaseOrder = environment.losUrl + "/PurchaseOrderH/ResumeWorkflowPurchaseOrder";
 
   //APP INSURANCE
   public static GetInsuranceDataByAppId = environment.losUrl + "/AppIns/GetInsDataByAppId";
   public static AddEditInsuranceData = environment.losUrl + "/AppIns/AddEditInsuranceData";
   public static ExecuteInsRateRule = environment.losUrl + "/AppIns/ExecuteInsRateRule";
   public static CalculateInsurance = environment.losUrl + "/AppIns/CalculateInsurance";
+
+  // VERF RESULT
+  public static GetVerfResultById = "http://localhost:5000" + "/VerfResult/GetVerfResultById";
+  public static AddVerfResultAndVerfResultH = "http://localhost:5000" + "/VerfResult/AddVerfResultAndVerfResultH";
+  public static GetVerfResultHById = "http://localhost:5000" + "/VerfResultH/GetVerfResultHById";
+  public static GetVerfResultHsByTrxRefNo = "http://localhost:5000" + "/VerfResultH/GetVerfResultHsByTrxRefNo";
+  public static GetVerfResultHsByVerfResultIdAndSubjRelationCode = "http://localhost:5000" + "/VerfResultH/GetVerfResultHsByVerfResultIdAndSubjRelationCode";
+  public static GetListVerfResultDInQuestionGrp = "http://localhost:5000" + "/VerfResultD/GetListVerfResultDInQuestionGrp";
+  public static AddVerfResultHeaderAndVerfResultDetail = "http://localhost:5000" + "/VerfResultH/AddVerfResultHeaderAndVerfResultDetail";
+
+  //CUST CONFIRM
+  public static GetVerfQuestionAnswerListByAppIdAndSubject = "http://localhost:5001" + "/CustCnfrm/GetVerfQuestionAnswerListByAppIdAndSubject";
+  public static AddCustCnfrm = "http://localhost:5001" + "/CustCnfrm/AddCustCnfrm";
+
+  //REF STATUS
+  public static GetListActiveRefStatusByStatusGrpCode = "http://localhost:5000" + "/RefStatus/GetListKeyValueActiveGrpCodeByCode";
 
   //AGRMNT ACTIVATION
   public static GetAppAssetByAppIdAndCriteria = environment.losUrl + "/AgrmntActivation/GetAppAssetByAppIdAndCriteria";

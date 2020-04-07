@@ -16,6 +16,7 @@ import { CustConfirmationDetailComponent } from './cust-confirmation/cust-confir
 import { CustConfirmationSubjViewComponent } from './cust-confirmation/cust-confirmation-subj-view/cust-confirmation-subj-view.component';
 import { OfferingValidityCheckingApprovalPagingComponent } from './offering-validity-checking-approval/offering-validity-checking-approval-paging/offering-validity-checking-approval-paging.component';
 import { OfferingValidityCheckingApprovalDetailComponent } from './offering-validity-checking-approval/offering-validity-checking-approval-detail/offering-validity-checking-approval-detail.component';
+import { CustConfirmationSubjDetailComponent } from './cust-confirmation/cust-confirmation-subj-detail/cust-confirmation-subj-detail.component';
 
 const routes: Routes = [
   {
@@ -132,7 +133,14 @@ const routes: Routes = [
         data: {
           title: 'Offering Validity Checking And Approval Detail'
         }
-      }
+      },
+      {
+        path: 'CustConfirmation/Subj/Detail',
+        component: CustConfirmationSubjDetailComponent,
+        data: {
+          title: 'Customer Confirmation Subject Detail'
+        }
+      },
     ]
   }
 ];
