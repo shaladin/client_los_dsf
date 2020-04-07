@@ -12,6 +12,6 @@ export class LeadInputObj{
     LeadCustResidenceAddrObj: LeadCustAddrObj;
     LeadCustPersonalFinDataObj: LeadCustPersonalFinDataObj;
     LeadCustPersonalJobDataObj: LeadCustPersonalJobDataObj;
-    LeadCustSocmedObj: LeadCustSocmedObj;
+    LeadCustSocmedObj: any;
     RowVersion: any;
 }
