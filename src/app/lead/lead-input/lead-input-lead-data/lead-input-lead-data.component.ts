@@ -67,6 +67,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   downPaymentObj: any;
   returnDownPaymentObj: any;
   InputLookupAssetObj: any;
+  getListActiveRefMasterUrl: any;
   LeadDataForm = this.fb.group({
     FullAssetCode: [''],
     FullAssetName: [''],
@@ -87,13 +88,14 @@ export class LeadInputLeadDataComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) { 
     // this.getCustById = AdInsConstant.GetCustByCustId;
-    this.getListActiveRefMaster = AdInsConstant.GetListActiveRefMaster;
+    //this.getListActiveRefMaster = AdInsConstant.GetListActiveRefMaster;
     // this.addJobData = AdInsConstant.AddCustPersonalJobData;
     // this.editJobData = AdInsConstant.EditCustPersonalJobData;
     // this.getJobDataByCustId = AdInsConstant.GetCustPersonalJobDataByCustId;
     // this.getCustAddr = AdInsConstant.GetCustAddr;
     // this.getRefProfession = AdInsConstant.GetRefProfessionById;
     // this.getRefIndustryType = AdInsConstant.GetRefIndustryTypeById;
+    this.getListActiveRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
 
     this.route.queryParams.subscribe(params => {
         if (params["LeadId"] != null) {
@@ -123,7 +125,7 @@ export class LeadInputLeadDataComponent implements OnInit {
 
     this.assetConditionObj = new RefMasterObj();
     this.assetConditionObj.RefMasterTypeCode = "ASSET_CONDITION";
-    this.http.post(this.getListActiveRefMaster, this.assetConditionObj).subscribe(
+    this.http.post(this.getListActiveRefMasterUrl, this.assetConditionObj).subscribe(
       (response) => {
         this.returnAssetConditionObj = response["ReturnObject"];
         console.log("aaa")
@@ -139,7 +141,7 @@ export class LeadInputLeadDataComponent implements OnInit {
 
     this.downPaymentObj = new RefMasterObj();
     this.downPaymentObj.RefMasterTypeCode = "DOWN_PAYMENT_TYPE";
-    this.http.post(this.getListActiveRefMaster, this.downPaymentObj).subscribe(
+    this.http.post(this.getListActiveRefMasterUrl, this.downPaymentObj).subscribe(
       (response) => {
         this.returnDownPaymentObj = response["ReturnObject"];
         console.log("bbb")
