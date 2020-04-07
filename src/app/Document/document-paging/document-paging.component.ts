@@ -19,7 +19,6 @@ export class DocumentPagingComponent implements OnInit {
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchDocument.json";
-   // this.inputPagingObj.deleteUrl = AdInsConstant.DeleteVendorGrp;
   }
 
 }

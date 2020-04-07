@@ -1,0 +1,106 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="card-header header-title">
+          <div class="row">
+            <div class="col-md-8">
+              <h4 class="card-title" id="horz-layout-colored-controls" translate> {{pageType}} INVOICE DATA </h4>
+            </div>
+          </div>
+        </div>
+        <div class="px-3">
+          <form class="form form-horizontal" [formGroup]="InvoiceForm" (ngSubmit)="InvoiceForm.valid && SaveForm()"
+            #enjiForm="ngForm">
+            <lib-ucSubsection [id]="'InvoiceDataId'" [title]="title" [panel]="'InvoiceData'">
+            </lib-ucSubsection>
+
+            <div class="form-body" id="InvoiceData">
+              <div class="form-group row adins-required">
+                <label class="col-md-3  adInsLabel" translate>Invoice No</label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control adInsInput width-75-per" formControlName="InvoiceNo">
+                  <show-errors [control]="InvoiceForm.controls.InvoiceNo" [submit]="enjiForm.submitted">
+                  </show-errors>
+                </div>
+              </div>
+              <div class="form-group row adins-required">
+                <label class="col-md-3  adInsLabel" translate>Customer Factoring </label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control adInsInput width-75-per"
+                    formControlName="CustomerFactoringName">
+                  <show-errors [control]="InvoiceForm.controls.CustomerFactoringName" [submit]="enjiForm.submitted">
+                  </show-errors>
+                </div>
+              </div>
+              <div class="form-group row adins-required">
+                <label class="col-md-3  adInsLabel" translate>Invoice Amount</label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control adInsInput width-75-per" formControlName="InvoiceAmt">
+                  <show-errors [control]="InvoiceForm.controls.InvoiceAmt" [submit]="enjiForm.submitted">
+                  </show-errors>
+                </div>
+              </div>
+              <div class="form-group row adins-required">
+                <label class="col-md-3  adInsLabel" translate>Due Date</label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control adInsInput width-75-per" formControlName="InvoiceDueDt">
+                  <show-errors [control]="InvoiceForm.controls.InvoiceDueDt" [submit]="enjiForm.submitted">
+                  </show-errors>
+                </div>
+              </div>
+            </div>
+            <div class="form-actions right">
+              <!-- <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['/Office/OfficeArea']"
+                translate>
+                <i class="fa fa-arrow-circle-left"></i> Cancel
+              </button> -->
+              <button type="submit" class="btn btn-raised btn-primary" translate>
+                <i class="fa fa-check-square-o"></i> Add
+              </button>
+            </div>
+
+            <div>
+              <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                  <tr class="table-header">
+
+                    <th class="text-left"><span translate class="thead-header" name='InvoiceNo'>Invoice No</span></th>
+                    <th class="text-left"><span translate class="thead-header" name='CustomerFactoringName'>Customer
+                        Factoring</span></th>
+                    <th class="text-left"><span translate class="thead-header" name='InvoiceAmt'>Invoice Amount</span>
+                    </th>
+                    <th class="text-left"><span translate class="thead-header" name='InvoiceDueDt'>Due Date</span></th>
+                    <th class="text-left"><span translate class="thead-header" name='Print'>Action</span></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of dataobj?.AppInvoiceFctrList">
+                    <td class="text-left">{{item?.InvoiceNo}}</td>
+                    <td class="text-left">{{item?.CustomerFactoringName}}</td>
+                    <td class="text-left">{{item?.InvoiceAmt}}</td>
+                    <td class="text-left">{{item?.InvoiceDueDt}}</td>
+                    <td>
+                      <button type="button" (click)="DeleteInvoice(item.AppInvoiceFctrId)"
+                        class="btn btn-raised btn-primary" translate>
+                        <i class="font-medium-3 mr-2 ft-trash-2"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="form-actions right">
+              <button type="button" [routerLink]="['/Office/OfficeArea']" class="btn btn-raised btn-primary" translate>
+                <i class="far"></i> Save & Continue
+              </button>
+            </div>
+            <div>
+              Total Amount  = {{dataobj?.TotalInvoiceAmt}}
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

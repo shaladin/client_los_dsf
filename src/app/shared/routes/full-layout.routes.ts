@@ -46,5 +46,9 @@ export const Full_ROUTES: Routes = [
   {
     path:'Document',
     loadChildren:'./Document/document.module#DocumentModule'
+  },
+  {
+    path:'Invoice',
+    loadChildren:'./InvoiceData/invoice.module#InvoiceModule'
   }
 ];
