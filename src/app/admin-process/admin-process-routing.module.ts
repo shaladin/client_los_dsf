@@ -10,6 +10,7 @@ import { AgrmntActivationDetailComponent } from './agrmnt-activation/agrmnt-acti
 import { CustConfirmationPagingComponent } from './cust-confirmation/cust-confirmation-paging/cust-confirmation-paging.component';
 import { CustConfirmationDetailComponent } from './cust-confirmation/cust-confirmation-detail/cust-confirmation-detail.component';
 import { CustConfirmationSubjViewComponent } from './cust-confirmation/cust-confirmation-subj-view/cust-confirmation-subj-view.component';
+import { CustConfirmationSubjDetailComponent } from './cust-confirmation/cust-confirmation-subj-detail/cust-confirmation-subj-detail.component';
 
 const routes: Routes = [
   {
@@ -83,6 +84,13 @@ const routes: Routes = [
         component: CustConfirmationSubjViewComponent,
         data: {
           title: 'Customer Confirmation Subject View'
+        }
+      },
+      {
+        path: 'CustConfirmation/Subj/Detail',
+        component: CustConfirmationSubjDetailComponent,
+        data: {
+          title: 'Customer Confirmation Subject Detail'
         }
       },
     ]

@@ -43,7 +43,8 @@ export function createTranslateLoader(http: HttpClient) {
         ContentLayoutComponent,
         ErrorDialogComponent,
         RolepickComponent
-    ],
+        ],
+    
     imports: [
         HttpModule,
         BrowserAnimationsModule,

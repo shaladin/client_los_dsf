@@ -4,7 +4,7 @@ export class AppTCObj{
     TcCode: any;
     PriorTo: any;
     IsChecked: any;
-    IsMandatory: any;
+    IsMandatory: boolean;
     PromisedDt: any;
     CheckedDt: any;
     Notes: any;

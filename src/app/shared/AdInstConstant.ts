@@ -442,14 +442,6 @@ export class AdInsConstant {
     public static GetVendorEmpSupervisorByVendorEmpId = "http://localhost:5000/VendorEmp/GetVendorEmpSupervisorByVendorEmpId";
     public static GetVendorEmpByVendorIdVendorEmpNo = "http://localhost:5000/VendorEmp/GetVendorEmpByVendorIdVendorEmpNo";
 
-    // VendorEmp
-    public static GetListVendorBankByVendorEmpNo = "/VendorEmp​/GetListVendorBankByVendorEmpNo";
-    public static GetVendorByCategoryCodeAndOfficeCode = environment.FoundationR3Url + "/Vendor/GetVendorByCategoryCodeAndOfficeCode";
-
-    //Life Ins
-    public static AddAppLifeInsH = environment.losUrl + "/AppLifeIns/AddAppLifeInsH";
-    public static EditAppLifeInsH = environment.losUrl + "/AppLifeIns/EditAppLifeInsH";
-    public static InitAppLifeInsH = environment.losUrl + "/AppLifeIns/InitAppLifeInsH";
     // MOU CUST
     public static GetMouCustById = environment.losUrl + "/MouCust/GetMouCustById";
     public static AddMouCust = environment.losUrl + "/MouCust/AddMouCust";
@@ -559,18 +551,13 @@ export class AdInsConstant {
     public static SubmitDeliveryOrderData = environment.losUrl + "/DeliveryOrder/SubmitDeliveryOrderData";
     public static GetRefAssetDocList = environment.losUrl + "/DeliveryOrder/GetRefAssetDocList";
 
-    //APP TC
-    public static GetListTCbyAppId = environment.losUrl + "/AppTc/GetListTCbyAppId";
-
     //PURCHASE ORDER
     public static SubmitPurchaseOrder = environment.losUrl + "/PurchaseOrderH/SubmitPurchaseOrder";
+    public static ResumeWorkflowPurchaseOrder = environment.losUrl + "/PurchaseOrderH/ResumeWorkflowPurchaseOrder";
 
     //LEAD VERF
     public static AddRangeLeadVerf = environment.losUrl + "/LeadVerf/AddRangeLeadVerf";
     public static GetListLeadVerf = environment.losUrl + "/LeadVerf/GetListLeadVerf";
-    //APP INSURANCE
-    public static GetInsuranceDataByAppId = environment.losUrl + "/AppIns/GetInsDataByAppId";
-    public static AddEditInsuranceData = environment.losUrl + "/AppIns/AddEditInsuranceData";
 
     //AppCustAddr
     public static GetListAppCustAddrByAppId = "http://localhost:5001/AppCustAddr/GetListAppCustAddrByAppId";
@@ -602,4 +589,87 @@ export class AdInsConstant {
     public static GetAppFinDataAndFeeByAppIdAndListAppAssetId = environment.losUrl + "/AgrmntActivation/GetAppFinDataAndFeeByAppIdAndListAppAssetId";
     public static SubmitAgrmntActivationByHuman = environment.losUrl + "/AgrmntActivation/SubmitAgrmntActivationByHuman";
   
+  //COVER PERIOD
+  public static CoverPeriodAnnually = "AN";
+  public static CoverPeriodFullTenor = "FT";
+  public static CoverPeriodPartialTenor = "PT";
+  public static CoverPeriodOverTenor = "OT";
+
+  //PREMIUM TYPE
+  public static PremiumTypeAmt = "AMT";
+  public static PremiumTypePrcnt = "PRCNT";
+
+  // VendorEmp
+  public static GetListVendorBankByVendorEmpNo = "/VendorEmp​/GetListVendorBankByVendorEmpNo";
+  public static GetVendorByCategoryCodeAndOfficeCode = environment.FoundationR3Url + "/Vendor/GetVendorByCategoryCodeAndOfficeCode";
+  public static GetListVendorBankAccByListVendorEmpNo = "/VendorEmp/GetListVendorBankAccByListVendorEmpNo";
+  public static GetVendorEmpByVendorEmpNo = "/VendorEmp/GetVendorEmpByVendorEmpNo";
+
+  //Life Ins
+  public static AddAppLifeInsH = environment.losUrl + "/AppLifeIns/AddAppLifeInsH";
+  public static EditAppLifeInsH = environment.losUrl + "/AppLifeIns/EditAppLifeInsH";
+  public static InitAppLifeInsH = environment.losUrl + "/AppLifeIns/InitAppLifeInsH";
+  public static GetAppLifeInsHByAppId = environment.losUrl + "/AppLifeIns/GetAppLifeInsHByAppId";
+
+  // App Asset
+  // Rule
+  public static Rule = "http://r3app-server/RULE_FINAL/RuleService/ExecuteRuleSet";
+
+  // Tax
+  public static AppCom = "APP_COM";
+  public static ExchangeRateAmt = "1";
+  public static TaxTypeCode = "WHT";
+  public static VATTypeCode = "VAT";
+
+
+  // App Commission
+  public static AddAppCommissionData = "/AppCommission/AddAppCommissionData";
+  public static GetAppCommissionRule = "/AppCommission/GetAppCommissionRule";
+  public static GetAppCommissionTax = "/AppCommission/GetAppCommissionTax";
+
+  //APP TC
+  public static GetListTCbyAppId = environment.losUrl + "/AppTc/GetListTCbyAppId";
+  public static CreateTCRule = environment.losUrl + "/AppTc/CreateTCRule";
+
+  //AGRMNT
+  public static GetAgrmntByAgrmntId = environment.losUrl + "/Agrmnt/GetAgrmntByAgrmntId";
+
+  //REF TC
+  public static GetRefTcByCode = environment.FoundationR3Url + "/RefTc/GetRefTcByCode";
+  public static GetListRefTcByTcCode = environment.FoundationR3Url + "/RefTc/GetListRefTcByTcCode";
+
+  //APP INSURANCE
+  public static GetInsuranceDataByAppId = environment.losUrl + "/AppIns/GetInsDataByAppId";
+  public static AddEditInsuranceData = environment.losUrl + "/AppIns/AddEditInsuranceData";
+  public static ExecuteInsRateRule = environment.losUrl + "/AppIns/ExecuteInsRateRule";
+  public static CalculateInsurance = environment.losUrl + "/AppIns/CalculateInsurance";
+
+  // VERF RESULT
+  public static GetVerfResultById = "http://localhost:5000" + "/VerfResult/GetVerfResultById";
+  public static AddVerfResultAndVerfResultH = "http://localhost:5000" + "/VerfResult/AddVerfResultAndVerfResultH";
+  public static GetVerfResultHById = "http://localhost:5000" + "/VerfResultH/GetVerfResultHById";
+  public static GetVerfResultHsByTrxRefNo = "http://localhost:5000" + "/VerfResultH/GetVerfResultHsByTrxRefNo";
+  public static GetVerfResultHsByVerfResultIdAndSubjRelationCode = "http://localhost:5000" + "/VerfResultH/GetVerfResultHsByVerfResultIdAndSubjRelationCode";
+  public static GetListVerfResultDInQuestionGrp = "http://localhost:5000" + "/VerfResultD/GetListVerfResultDInQuestionGrp";
+  public static AddVerfResultHeaderAndVerfResultDetail = "http://localhost:5000" + "/VerfResultH/AddVerfResultHeaderAndVerfResultDetail";
+
+  //CUST CONFIRM
+  public static GetVerfQuestionAnswerListByAppIdAndSubject = "http://localhost:5001" + "/CustCnfrm/GetVerfQuestionAnswerListByAppIdAndSubject";
+  public static AddCustCnfrm = "http://localhost:5001" + "/CustCnfrm/AddCustCnfrm";
+
+  //REF STATUS
+  public static GetListActiveRefStatusByStatusGrpCode = "http://localhost:5000" + "/RefStatus/GetListKeyValueActiveGrpCodeByCode";
+
+  //App Duplicate Checking
+  public static GetCustomerDuplicateCheck = "/CustDuplicateCheck/GetCustomerDuplicateCheck";
+  public static GetNegativeCustomerDuplicateCheck = "/CustDuplicateCheck/GetNegativeCustomerDuplicateCheck";
+  public static GetAppCustDuplicateCheck = "/AppDupCheck/GetAppCustDuplicateCheck";
+  public static GetAppGuarantorDuplicateCheck = "/AppDupCheck/GetAppGuarantorDuplicateCheck";
+  public static GetSpouseDuplicateCheck = "/AppDupCheck/GetSpouseDuplicateCheck";
+  public static GetAppShareholderDuplicateCheck = "/AppDupCheck/GetAppShareholderDuplicateCheck";
+  public static AddAppDupCheckCust = "/AppDupCheck/AddAppDupCheckCust";
+
+  // Product Offering
+  public static GetListProdOfferingDByProdOfferingCode = "/ProductOffering/GetListProdOfferingDByProdOfferingCode";
+  public static GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode = "/ProductOffering/GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode";
 }
