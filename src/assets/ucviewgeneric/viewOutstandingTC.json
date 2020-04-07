@@ -1,0 +1,27 @@
+{
+  "title": "",
+  "subsection": [
+    {
+      "subSectionId": "MainInfoId",
+      "subSectionTitle": "Main Information",
+      "mainInfoUrl": "http://localhost:5001/Generic/GetDataViewBySQL",
+      "mainInfo": [
+        {
+          "type": "text",
+          "label": "Application No",
+          "property": "AppNo"
+        },
+        {
+          "type": "text",
+          "label": "Customer Name",
+          "property": "CustName"
+        }
+      ],
+      "querystring": {
+        "select": "SELECT A.APP_NO AS AppNo, AG.CUST_NAME AS CustName",
+        "from": "FROM dbo.APP A WITH(NOLOCK) JOIN dbo.AGRMNT AG WITH(NOLOCK) ON A.APP_ID = AG.APP_ID",
+        "where": "WHERE A.APP_ID = {0}"
+      }
+    }
+  ]
+}

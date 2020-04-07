@@ -57,7 +57,7 @@ export class RsvFundViewComponent implements OnInit {
 
   initUrl() {
     this.getAppFinDataUrl = AdInsConstant.GetAppFinDataByAppId;
-    this.getAppFeeUrl = AdInsConstant.GetListAppFeeByAppId;
+    this.getAppFeeUrl = environment.losUrl + AdInsConstant.GetListAppFeeByAppId;
     this.getAppRsvFundUrl = AdInsConstant.GetListAppReservedFundByAppId;
     this.addEditRsvFundUrl = AdInsConstant.AddEditAppReservedFund;
     this.getAppRsvFundRuleUrl = AdInsConstant.CreateRsvFundRule;
