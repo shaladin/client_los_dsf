@@ -19,16 +19,16 @@
             <aw-wizard-step [stepTitle]="'Customer Data'"
               [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }" 
               (stepEnter)="EnterTab('Customer')">
-              <app-lead-input-cust-data *ngIf="isCustomer == true" (outputValue)="terimaValue($event)">
+              <app-lead-input-cust-data *ngIf="isCustomer == true" [LeadId]="LeadId">
               </app-lead-input-cust-data>
             </aw-wizard-step>
 
-            <!-- <aw-wizard-step [stepTitle]="'Lead Data'" 
+            <aw-wizard-step [stepTitle]="'Lead Data'" 
             [navigationSymbol]="{ symbol: '&#xf0b1;', fontFamily: 'FontAwesome' }"
               (stepEnter)="EnterTab('Lead')">
-              <app-customer-personal-address >
-              </app-customer-personal-address>
-            </aw-wizard-step> -->
+              <app-lead-input-lead-data *ngIf="isLead == true">
+              </app-lead-input-lead-data>
+            </aw-wizard-step>
 
           </aw-wizard>
         </div>

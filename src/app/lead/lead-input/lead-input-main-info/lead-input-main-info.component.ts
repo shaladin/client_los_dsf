@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { DecimalPipe } from '@angular/common';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
@@ -294,7 +294,7 @@ getLookUpSalesName(event) {
   }
 
   setLead(){
-    this.leadObj.LeadNo = "125";
+    this.leadObj.LeadNo = "129";
     this.leadObj.OriOfficeCode = this.MainInfoForm.controls["OfficeCode"].value;
     this.leadObj.OriOfficeName = this.MainInfoForm.controls["OfficeName"].value;
     this.leadObj.CrtOfficeCode = this.MainInfoForm.controls["CrtOfficeCode"].value;

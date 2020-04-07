@@ -29,6 +29,8 @@ import { LeadCancelConfirmComponent } from './lead-cancel/lead-cancel-confirm/le
 import { LeadPagingComponent } from './lead-paging/lead-paging.component';
 import { LeadViewComponent } from './lead-view/lead-view.component';
 import { ViewCustomerDataComponent } from './lead-view/view-customer-data/view-customer-data.component';
+import { LeadInputLeadDataComponent } from "./lead-input/lead-input-lead-data/lead-input-lead-data.component";
+import { MatRadioModule } from "@angular/material";
 
 @NgModule({
   imports: [
@@ -47,6 +49,7 @@ import { ViewCustomerDataComponent } from './lead-view/view-customer-data/view-c
     UcviewgenericModule,
     SharingComponentModule,
     ArchwizardModule,
+    MatRadioModule,
   ],
   declarations: [
     LeadVerifComponent,
@@ -55,12 +58,13 @@ import { ViewCustomerDataComponent } from './lead-view/view-customer-data/view-c
     LeadPagingComponent,
     LeadViewComponent,
     ViewCustomerDataComponent,
-    ArchwizardModule,
+    //ArchwizardModule,
     LeadInputComponent,
     LeadInputCustDataComponent,
     LeadInputPageComponent,
     LeadInputMainInfoComponent,
     LeadViewHeaderComponent,
+    LeadInputLeadDataComponent
   ],
 })
 

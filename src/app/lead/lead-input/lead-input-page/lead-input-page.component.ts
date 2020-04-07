@@ -40,9 +40,4 @@ export class LeadInputPageComponent implements OnInit {
     }
   }
 
-  terimaValue(ev: any) {
-    console.log(ev);
-    this.CustPersonalId = ev.CustPersonalId;
-  }
-
 }

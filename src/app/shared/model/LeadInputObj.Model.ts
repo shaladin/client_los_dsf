@@ -14,4 +14,15 @@ export class LeadInputObj{
     LeadCustPersonalJobDataObj: LeadCustPersonalJobDataObj;
     LeadCustSocmedObj: any;
     RowVersion: any;
+
+    constructor() { 
+        this.LeadCustObj = new LeadCustObj(); 
+        this.LeadCustPersonalObj = new LeadCustPersonalObj();
+        this.LeadCustLegalAddrObj = new LeadCustAddrObj();
+        this.LeadCustResidenceAddrObj = new LeadCustAddrObj();
+        this.LeadCustPersonalFinDataObj = new LeadCustPersonalFinDataObj();
+        this.LeadCustPersonalJobDataObj = new LeadCustPersonalJobDataObj();
+        this.LeadCustSocmedObj = new Array();
+        this.RowVersion = ""; 
+    }
 }
