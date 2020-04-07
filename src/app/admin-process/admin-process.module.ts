@@ -25,6 +25,9 @@ import { CustConfirmationSubjDetailComponent } from './cust-confirmation/cust-co
 import { CustConfirmationSubjViewComponent } from './cust-confirmation/cust-confirmation-subj-view/cust-confirmation-subj-view.component';
 import { CustConfirmationVerfViewComponent } from './cust-confirmation/cust-confirmation-verf-view/cust-confirmation-verf-view.component';
 import { UcviewgenericModule } from "@adins/ucviewgeneric";
+import { UclookupgenericModule } from "@adins/uclookupgeneric";
+import { DocSignerDetailComponent } from "./doc-signer/doc-signer-detail/doc-signer-detail.component";
+import { DocSignerPagingComponent } from "./doc-signer/doc-signer-paging/doc-signer-paging.component";
 
 @NgModule({
   imports: [
@@ -40,7 +43,8 @@ import { UcviewgenericModule } from "@adins/ucviewgeneric";
     UcShowErrorsModule,
     AdminProcessRoutingModule,
     SharingComponentModule,
-    UcviewgenericModule
+    UcviewgenericModule,
+    UclookupgenericModule
   ],
   declarations: [
     PurchaseOrderPagingComponent,
@@ -56,7 +60,9 @@ import { UcviewgenericModule } from "@adins/ucviewgeneric";
     CustConfirmationDetailComponent,
     CustConfirmationSubjDetailComponent,
     CustConfirmationSubjViewComponent,
-    CustConfirmationVerfViewComponent
+    CustConfirmationVerfViewComponent,
+    DocSignerDetailComponent,
+    DocSignerPagingComponent
   ],
   providers: [
     NGXToastrService

@@ -1,14 +1,6 @@
 {
-    "title": "DELIVERY ORDER PAGING",
+    "title": "DOCUMENT SIGNER",
     "component": [
-        {
-            "type": "textbox",
-            "name": "AG.AGRMNT_NO",
-            "id": "AgrmntNoId",
-            "value": "",
-            "label": "AGREEMENT NO",
-            "placeholder": "Placeholder"
-        },
         {
             "type": "textbox",
             "name": "AP.APP_NO",
@@ -19,10 +11,10 @@
         },
         {
             "type": "textbox",
-            "name": "AG.PROD_OFFERING_NAME",
-            "id": "ProdOfferingNameId",
+            "name": "AG.AGRMNT_NO",
+            "id": "AgrmntNoId",
             "value": "",
-            "label": "PROD OFFERING NAME",
+            "label": "AGREEMENT NO",
             "placeholder": "Placeholder"
         },
         {
@@ -34,36 +26,30 @@
             "placeholder": "Placeholder"
         },
         {
-            "type" : "textbox",
-            "name" : "WF.USERNAME",
-            "id" : "TaskClaimById",
-            "value" : "",
-            "label" : "Task Claim By",
+            "type": "textbox",
+            "name": "AG.PROD_OFFERING_NAME",
+            "id": "ProdOfferingNameId",
+            "value": "",
+            "label": "PROD OFFERING NAME",
             "placeholder": "Placeholder"
         }
     ],
     "querystring": {
-        "select": "SELECT WF.USERNAME AS UserName, CASE WHEN WF.USERNAME = NULL OR WF.USERNAME = '' THEN 'UNCLAIMED' ELSE 'CLAIMED' END AS ClaimStatus, AG.AGRMNT_NO AS AgrmntNo, AP.APP_NO AS AppNo, AG.PROD_OFFERING_NAME AS ProdOfferingName, AG.CUST_NAME AS CustName, AG.APP_ID AS AppId, AG.AGRMNT_CURR_STEP AS AgrmntCurrStep",
-        "from": "FROM dbo.APP AP WITH(NOLOCK) JOIN dbo.AGRMNT AG WITH(NOLOCK) ON AP.APP_ID = AG.APP_ID JOIN dbo.V_WF_TASK_LIST WF WITH(NOLOCK) ON WF.TRANSACTION_CODE = AP.APP_NO"
+        "select": "SELECT AP.APP_NO AS AppNo, AG.AGRMNT_NO AS AgrmntNo, AG.PROD_OFFERING_NAME AS ProdOfferingName, AG.CUST_NAME AS CustName, AG.APP_ID AS AppId, AG.AGRMNT_ID AS AgrmntId",
+        "from": "FROM dbo.APP AP WITH(NOLOCK) JOIN dbo.AGRMNT AG WITH(NOLOCK) ON AP.APP_ID = AG.APP_ID"
     },
     "headerList": [
         {
             "type": "sort",
-            "position": "left",
-            "label": "Claim By",
-            "name": "WF.USERNAME"
+            "position": "center",
+            "label": "APPLICATION NO",
+            "name": "AP.APP_NO"
         },
         {
             "type": "sort",
             "position": "center",
             "label": "AGREEMENT NO",
             "name": "AG.AGRMNT_NO"
-        },
-        {
-            "type": "sort",
-            "position": "center",
-            "label": "APPLICATION NO",
-            "name": "AP.APP_NO"
         },
         {
             "type": "sort",
@@ -80,24 +66,35 @@
         {
             "type": "label",
             "position": "center",
-            "label": "Action"
+            "label": "Entry"
         }
     ],
     "bodyList": [
         {
-            "type": "text",
-            "position": "left",
-            "property": "Username"
+            "type": "link",
+            "position": "center",
+            "property": "AppNo",
+            "target" : "_blank",
+            "path" : "//",
+            "param" : [
+                {
+                    "type" : "",
+                    "property" : ""
+                }
+            ]
         },
         {
-            "type": "text",
+            "type": "link",
             "position": "center",
-            "property": "AgrmntNo"
-        },
-        {
-            "type": "text",
-            "position": "center",
-            "property": "AppNo"
+            "property": "AgrmntNo",
+            "target" : "_blank",
+            "path" : "//",
+            "param" : [
+                {
+                    "type" : "",
+                    "property" : ""
+                }
+            ]
         },
         {
             "type": "text",
@@ -115,7 +112,7 @@
             "action": [
                 {
                     "type": "edit",
-                    "path": "/AdminProcess/DeliveryOrder/Detail",
+                    "path": "/AdminProcess/DocumentSigner/Detail",
                     "param": [
                         {
                             "type": "AppId",

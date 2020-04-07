@@ -99,19 +99,19 @@
                       </td>
                       <td>
                         <input type="text" class="form-control adInsInput width-100-per" formControlName="DocNo">
-                        <!-- <lib-uc-show-errors [control]="DeliveryOrderForm.controls.DocNo" [submit]="enjiForm.submitted">
-                            </lib-uc-show-errors> -->
+                        <lib-uc-show-errors [control]="DeliveryOrderForm.controls.DocNo" [submit]="enjiForm.submitted">
+                            </lib-uc-show-errors>
                       </td>
                       <td>
                         <input type="date" class="form-control adInsInput width-100-per" formControlName="ACDExpiredDt">
-                        <!-- <lib-uc-show-errors [control]="DeliveryOrderForm.controls.ACDExpiredDt"
+                        <lib-uc-show-errors [control]="DeliveryOrderForm.controls.ACDExpiredDt"
                               [submit]="enjiForm.submitted">
-                            </lib-uc-show-errors> -->
+                            </lib-uc-show-errors>
                       </td>
                       <td>
                         <input type="text" class="form-control adInsInput width-100-per" formControlName="DocNotes">
-                        <!-- <lib-uc-show-errors [control]="DeliveryOrderForm.controls.DocNotes" [submit]="enjiForm.submitted">
-                            </lib-uc-show-errors> -->
+                        <lib-uc-show-errors [control]="DeliveryOrderForm.controls.DocNotes" [submit]="enjiForm.submitted">
+                            </lib-uc-show-errors>
                       </td>
                   </tr>
                 </tbody>
@@ -161,50 +161,7 @@
                 </div>
               </div>
             </div>
-            <div class="form-body">
-              <table class="table table-responsive-md text-center table-hover">
-                <thead>
-                  <tr class="table-header">
-                    <th><span translate class="thead-header">No</span></th>
-                    <th><span translate class="thead-header">Document Name</span></th>
-                    <th><span translate class="thead-header">Prior To</span></th>
-                    <th><span translate class="thead-header">Required</span></th>
-                    <th><span translate class="thead-header">Check</span></th>
-                    <th><span translate class="thead-header">Promise Date</span></th>
-                    <th><span translate class="thead-header">Expired Date</span></th>
-                    <th><span translate class="thead-header">Notes</span></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                      <input type="checkbox" class="border-primary" formControlName="IsChecked">
-                    </td>
-                    <td>
-                      <input type="date" class="form-control adInsInput width-100-per" formControlName="PromisedDt">
-                      <lib-uc-show-errors [control]="DeliveryOrderForm.controls.PromisedDt"
-                        [submit]="enjiForm.submitted">
-                      </lib-uc-show-errors>
-                    </td>
-                    <td>
-                      <input type="date" class="form-control adInsInput width-100-per" formControlName="ATExpiredDt">
-                      <lib-uc-show-errors [control]="DeliveryOrderForm.controls.ATExpiredDt"
-                        [submit]="enjiForm.submitted">
-                      </lib-uc-show-errors>
-                    </td>
-                    <td>
-                      <input type="text" class="form-control adInsInput width-100-per" formControlName="Notes">
-                      <lib-uc-show-errors [control]="DeliveryOrderForm.controls.Notes" [submit]="enjiForm.submitted">
-                      </lib-uc-show-errors>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            <app-term-conditions [AppId]="AppId" [parentForm]="DeliveryOrderForm" [enjiForm]="enjiForm"></app-term-conditions>
             <div class="form-actions right">
               <button type="button" class="btn btn-raised btn-warning mr-1"
                 [routerLink]="['/AdminProcess/DeliveryOrder/Paging']" translate>

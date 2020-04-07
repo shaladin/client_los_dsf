@@ -583,6 +583,7 @@ export class AdInsConstant {
   //APP TC
   public static GetListTCbyAppId = environment.losUrl + "/AppTc/GetListTCbyAppId";
   public static CreateTCRule = environment.losUrl + "/AppTc/CreateTCRule";
+  public static SubmitOutstandingTc = environment.losUrl + "/AppTc/SubmitOutstandingTc";
 
   //AGRMNT
   public static GetAgrmntByAgrmntId = environment.losUrl + "/Agrmnt/GetAgrmntByAgrmntId";
