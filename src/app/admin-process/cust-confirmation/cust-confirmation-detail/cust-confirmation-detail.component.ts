@@ -19,6 +19,7 @@ export class CustConfirmationDetailComponent implements OnInit {
   arrValue = [];
   AgrmntId: number;
   AppId: number;
+  TaskListId: number;
   AgrmntNo: string;
   VerfResultList = new Array<VerfResultHObj>();
   IsSkip: boolean = false;
@@ -26,7 +27,7 @@ export class CustConfirmationDetailComponent implements OnInit {
   verfResultObj: VerfResultObj = new VerfResultObj();
   CustCnfrmObj: CustCnfrmObj = new CustCnfrmObj();
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, 
+  constructor(private route: ActivatedRoute, private http: HttpClient,
     private router: Router, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       if (params["AgrmntId"] != null) {
@@ -37,6 +38,9 @@ export class CustConfirmationDetailComponent implements OnInit {
       }
       if (params["AgrmntNo"] != null) {
         this.AgrmntNo = params["AgrmntNo"];
+      }
+      if (params["TaskListId"] != null) {
+        this.TaskListId = params["TaskListId"];
       }
     });
   }
@@ -55,11 +59,16 @@ export class CustConfirmationDetailComponent implements OnInit {
     this.http.post(AdInsConstant.GetVerfResultHsByTrxRefNo, verfResultHObj).subscribe(
       (response) => {
         this.VerfResultList = response["responseVerfResultHCustomObjs"];
+        this.CustCnfrmObj.Phone = "-";
+        this.CustCnfrmObj.MrCustCnfrmResultCode = "-";
+        this.CustCnfrmObj.CnfmrNotes = "-";
+        if (this.VerfResultList.length != 0) {
+          this.CustCnfrmObj.Phone = this.VerfResultList[0].Phn;
+          this.CustCnfrmObj.MrCustCnfrmResultCode = this.VerfResultList[0].MrVerfResultHStatCode;
+          this.CustCnfrmObj.CnfmrNotes = this.VerfResultList[0].Notes;
+        }
         this.CustCnfrmObj.AppId = this.AppId;
         this.CustCnfrmObj.AgrmntId = this.AgrmntId;
-        this.CustCnfrmObj.Phone = this.VerfResultList[0].Phn;
-        this.CustCnfrmObj.MrCustCnfrmResultCode = this.VerfResultList[0].MrVerfResultHStatCode;
-        this.CustCnfrmObj.CnfmrNotes = this.VerfResultList[0].Notes;
         if (this.VerfResultList.length == 0) {
           this.AddNewVerfResult();
         }
@@ -101,7 +110,11 @@ export class CustConfirmationDetailComponent implements OnInit {
   }
 
   SaveForm() {
-    this.http.post(AdInsConstant.AddCustCnfrm, this.CustCnfrmObj).subscribe(
+    var CustCnfrmWFObj = {
+      RequestCustCnfrmObj: this.CustCnfrmObj,
+      wfTaskListId: this.TaskListId
+    };
+    this.http.post(AdInsConstant.AddCustCnfrm, CustCnfrmWFObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         this.router.navigate(["/AdminProcess/CustConfirmation/Paging"]);
