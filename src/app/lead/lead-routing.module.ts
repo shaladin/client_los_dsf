@@ -9,6 +9,8 @@ import { LeadCancelComponent } from './lead-cancel/lead-cancel/lead-cancel.compo
 import { LeadCancelConfirmComponent } from './lead-cancel/lead-cancel-confirm/lead-cancel-confirm.component';
 import { LeadPagingComponent } from './lead-paging/lead-paging.component';
 import { LeadViewComponent } from './lead-view/lead-view.component';
+import { TeleVerifPagingComponent } from './tele-verif/tele-verif-paging/tele-verif-paging.component';
+import { TeleVerifDetailComponent } from './tele-verif/tele-verif-detail/tele-verif-detail.component';
 
 const routes: Routes = [
   {
@@ -68,6 +70,20 @@ const routes: Routes = [
         component: LeadViewComponent,
         data: {
           title: 'Lead View'
+        }
+      },
+      {
+        path: 'TeleVerif/Paging',
+        component: TeleVerifPagingComponent,
+        data: {
+          title: 'Tele Verif Paging'
+        }
+      },
+      {
+        path: 'TeleVerif/Detail',
+        component: TeleVerifDetailComponent,
+        data: {
+          title: 'Tele Verif Detail'
         }
       }
     ]

@@ -28,6 +28,9 @@ import { LeadCancelConfirmComponent } from './lead-cancel/lead-cancel-confirm/le
 import { LeadPagingComponent } from './lead-paging/lead-paging.component';
 import { LeadViewComponent } from './lead-view/lead-view.component';
 import { ViewCustomerDataComponent } from './lead-view/view-customer-data/view-customer-data.component';
+import { TeleVerifPagingComponent } from './tele-verif/tele-verif-paging/tele-verif-paging.component';
+import { TeleVerifDetailComponent } from './tele-verif/tele-verif-detail/tele-verif-detail.component';
+import { LeadInputLeadDataComponent } from "./lead-input/lead-input-lead-data/lead-input-lead-data.component";
 
 @NgModule({
   imports: [
@@ -58,6 +61,9 @@ import { ViewCustomerDataComponent } from './lead-view/view-customer-data/view-c
     LeadPagingComponent,
     LeadViewComponent,
     ViewCustomerDataComponent,
+    TeleVerifPagingComponent,
+    TeleVerifDetailComponent,
+    LeadInputLeadDataComponent
     // ArchwizardModule,
   ],
 })

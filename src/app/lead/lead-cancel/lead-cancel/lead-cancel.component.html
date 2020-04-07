@@ -11,7 +11,7 @@
               </div>
               <div class="col-md-4" style="text-align-last: right">
                 <button type="submit" (click)="formValidate(LeadCancelForm)"
-                  class="btn btn-raised btn-primary mr-1" translate>Cancel Lead
+                  class="btn btn-raised btn-warning mr-1" translate>Cancel Lead
                 </button>
               </div>
             </div>
@@ -29,13 +29,13 @@
           <th><input type="checkbox" [checked]="checkboxAll" (change)="SelectAll($event.target.checked)" id="checkAll"
               name="CheckAll">
           </th>
-          <th class="text-left"><span class="thead-header" (click)="searchSort($event)" name='leadNo' translate>LEAD
+          <th class="text-center"><span class="thead-header" (click)="searchSort($event)" name='leadNo' translate>LEAD
               NO</span>
           </th>
           <th class="text-left"><span class="thead-header" (click)="searchSort($event)" name='officeName'
               translate>OFFICE NAME</span>
           </th>
-          <th class="text-left"><span class="thead-header" (click)="searchSort($event)" name='orderNo' translate>ORDER
+          <th class="text-right"><span class="thead-header" (click)="searchSort($event)" name='orderNo' translate>ORDER
               NO</span>
           </th>
           <th class="text-left"><span class="thead-header" (click)="searchSort($event)" name='custName' translate>CUST
@@ -67,9 +67,9 @@
                 (change)="Checked(item.LeadId,  $event.target.checked)" [checked]=false>
             </div>
           </td>
-          <td class="text-left">{{item.LeadNo}}</td>
+          <td class="text-center">{{item.LeadNo}}</td>
           <td class="text-left">{{item.OfficeName}}</td>
-          <td class="text-left">{{item.OrderNo}}</td>
+          <td class="text-right">{{item.OrderNo}}</td>
           <td class="text-left">{{item.CustName}}</td>
           <td class="text-left">{{item.LeadSource}}</td>
           <td class="text-left">{{item.FullAssetName}}</td>
@@ -89,12 +89,12 @@
     <table *ngIf="tempData.length > 0" class="table table-responsive-md text-center table-hover">
       <thead>
         <tr class="table-header">
-          <th class="text-left"><span class="thead-header" name='leadNo' translate>LEAD
+          <th class="text-center"><span class="thead-header" name='leadNo' translate>LEAD
               NO</span>
           </th>
           <th class="text-left"><span class="thead-header" name='officeName' translate>OFFICE NAME</span>
           </th>
-          <th class="text-left"><span class="thead-header" name='orderNo' translate>ORDER NO</span>
+          <th class="text-right"><span class="thead-header" name='orderNo' translate>ORDER NO</span>
           </th>
           <th class="text-left"><span class="thead-header" name='custName' translate>CUSTOMER NAME</span>
           </th>
@@ -111,16 +111,14 @@
       </thead>
       <tbody>
         <tr *ngFor="let item of tempData">
-          <td class="text-left">{{item.LeadNo}}</td>
+          <td class="text-center">{{item.LeadNo}}</td>
           <td class="text-left">{{item.OfficeName}}</td>
-          <td class="text-left">{{item.OrderNo}}</td>
+          <td class="text-right">{{item.OrderNo}}</td>
           <td class="text-left">{{item.CustName}}</td>
           <td class="text-left">{{item.LeadSource}}</td>
           <td class="text-left">{{item.FullAssetName}}</td>
           <td class="text-left">{{item.LeadStep}}</td>
           <td class="text-left">{{item.LeadStatus}}</td>
-          <td *ngIf="item.IsActive === true">Yes</td>
-          <td *ngIf="item.IsActive === false">No</td>
           <td>
             <a class="danger p-0" data-original-title="" title="" (click)="deleteFromTemp(item.LeadId)">
               <i class="ft-trash-2 font-medium-3 mr-2"></i>

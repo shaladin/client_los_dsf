@@ -12,6 +12,7 @@
             "isSelectOne": false,
             "url": "http://r3app-server/FOUNDATION_R3/RefOffice/GetListKvpActiveRefOfficeForPaging",
             "label": "Office Name",
+            "isQueryIn": true,
             "items": [],
             "itemsUrl": []
         },

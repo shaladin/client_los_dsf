@@ -38,8 +38,8 @@ export class LeadCancelConfirmComponent implements OnInit {
     var tempLeadIds;
     var tempLeadArr;
     this.route.queryParams.subscribe(params => {
-      if (params['leadIds'] != null) {
-        tempLeadIds = params['leadIds'];
+      if (params['LeadIds'] != null) {
+        tempLeadIds = params['LeadIds'];
       }
       tempLeadArr = tempLeadIds.split(',');
     });
@@ -53,6 +53,12 @@ export class LeadCancelConfirmComponent implements OnInit {
     this.http.post(this.GetListKeyValueActiveByCode, tempDdlObj).subscribe(
       response => {
         this.ItemCancelReason = response['ReturnObject'];
+        console.log('item cance');
+        console.log(this.ItemCancelReason);
+        this.LeadConfirmCancelForm.patchValue({
+          CancelReason : this.ItemCancelReason[0].Key
+        });
+        console.log('sele') ;
       }
     );
     
@@ -77,9 +83,6 @@ export class LeadCancelConfirmComponent implements OnInit {
       }
     }
     leadObj.ListLeadId = tempId;
-    console.log('isi array');
-    console.log(leadObj);
-
     this.http.post(this.EditListLeadForCancelByListLeadId, leadObj).subscribe(
       response => {
         this.toastr.successMessage(response["Message"]);

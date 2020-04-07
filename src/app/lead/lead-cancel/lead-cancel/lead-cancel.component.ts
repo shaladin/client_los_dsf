@@ -1,19 +1,3 @@
-// import { Component, OnInit } from '@angular/core';
-
-// @Component({
-//   selector: 'app-lead-cancel',
-//   templateUrl: './lead-cancel.component.html',
-//   styleUrls: ['./lead-cancel.component.scss']
-// })
-// export class LeadCancelComponent implements OnInit {
-
-//   constructor() { }
-
-//   ngOnInit() {
-//   }
-
-// }
-
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UCSearchComponent } from '@adins/ucsearch';
 import { environment } from 'environments/environment';
@@ -74,7 +58,6 @@ export class LeadCancelComponent implements OnInit {
     private adInsService: AdInsService) { }
 
   ngOnInit() {
-    console.log('inii');
     this.arrCrit = new Array();
     this.inputObj = new InputSearchObj();
     this.inputObj._url = './assets/search/searchLeadCancel.json';
@@ -104,7 +87,6 @@ export class LeadCancelComponent implements OnInit {
         }
       },
       error => {
-        console.log('ga jalan');
         this.router.navigateByUrl('Error');
       }
     );
@@ -177,7 +159,7 @@ export class LeadCancelComponent implements OnInit {
       return;
     }
     var params = tempLeadCancelObj.LeadIds.join(',')
-    this.router.navigate([this.confirmUrl], { queryParams: { "leadIds": params } });
+    this.router.navigate([this.confirmUrl], { queryParams: { "LeadIds": params } });
   }
 
   addToTemp() {
@@ -221,7 +203,6 @@ export class LeadCancelComponent implements OnInit {
       this.listSelectedId = [];
     } 
     else {
-      // console.log('Please select at least one Available Lead');
       this.toastr.typeErrorCustom('Please select at least one Available Lead');
     }
   }
