@@ -607,4 +607,6 @@ export class AdInsConstant {
     public static GetListAppReservedFundByAppId = "http://localhost:5001/AppReservedFund/GetListAppReservedFundByAppId";
     public static CreateRsvFundRule = "http://localhost:5001/AppReservedFund/CreateRsvFundRule";
 
+    //OutstandingTc
+    public static SubmitOutstandingTc = environment.losUrl + "/AppTc/SubmitOutstandingTc";
 }

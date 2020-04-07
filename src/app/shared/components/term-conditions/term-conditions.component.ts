@@ -36,7 +36,7 @@ export class TermConditionsComponent implements OnInit {
               TcName: response[i].TcName,
               PriorTo: response[i].PriorTo,
               IsChecked: response[i].IsChecked,
-              ExpiredDt: response[i].ExpiredDt,
+              ExpiredDt: formatDate(response[i].ExpiredDt, 'yyyy-MM-dd', 'en-US'),
               IsMandatory: response[i].IsMandatory,
               PromisedDt: formatDate(response[i].PromisedDt, 'yyyy-MM-dd', 'en-US'),
               CheckedDt: formatDate(response[i].CheckedDt, 'yyyy-MM-dd', 'en-US'),
