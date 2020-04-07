@@ -73,7 +73,6 @@ export class MouViewDetailComponent implements OnInit {
         this.MrRecourseTypeCode = this.mouCustClause.MrRecourseTypeCode;
         this.Notes - this.mouCustClause.Notes;
       })
-
     this.http.post(AdInsConstant.GetMouCustAssetByMouCustId, mouCustObj).subscribe(
       (response) => {
         this.listAssetData = response['ReturnObject'];

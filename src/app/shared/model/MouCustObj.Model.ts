@@ -1,4 +1,4 @@
-export class MouCustObj{
+export class MouCustObj {
     MouCustId: any;
     MouCustNo: any;
     MouCustDt: any;
@@ -17,4 +17,5 @@ export class MouCustObj{
     Notes: any;
     SrvyOrderNo: any;
     RowVersion: any;
+    constructor(){ this.MouCustId = 0; this.RowVersion = ''}
 }

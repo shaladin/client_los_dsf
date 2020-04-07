@@ -1,0 +1,37 @@
+<!-- <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="px-3">
+          <div class="addEdit">
+            <form class="form form-horizontal">
+              <div class="form-body">
+                <h4 class="form-section card-title" translate> Customer Personal
+                </h4>
+              </div>
+            </form>
+            
+             <app-customer-view-header-personal> </app-customer-view-header-personal>
+         
+          </div>
+          <aw-wizard #wizard navBarLayout="large-empty-symbols" [disableNavigationBar]=true [awNavigationMode]
+            navigateBackward="allow" navigateForward="allow">
+
+            <aw-wizard-step [stepTitle]="'Customer Data'"
+              [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }" 
+              (stepEnter)="EnterTab('Customer')">
+              <app-customer-personal-detail *ngIf="isDetail == true" (outputValue)="terimaValue($event)">
+              </app-customer-personal-detail>
+            </aw-wizard-step>
+
+            <aw-wizard-step [stepTitle]="'Lead Data'" 
+            [navigationSymbol]="{ symbol: '&#xf0b1;', fontFamily: 'FontAwesome' }"
+              (stepEnter)="EnterTab('Lead')">
+              <app-customer-personal-address >
+              </app-customer-personal-address>
+            </aw-wizard-step>
+
+          </aw-wizard>
+        </div>
+      </div>
+    </div>
+  </div> -->
