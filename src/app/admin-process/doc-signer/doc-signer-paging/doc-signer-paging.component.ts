@@ -1,24 +1,24 @@
 import { Component, OnInit } from '@angular/core';
+import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 
 @Component({
-  selector: 'app-paging',
-  templateUrl: './paging.component.html',
-  styleUrls: ['./paging.component.scss']
+  selector: 'app-doc-signer-paging',
+  templateUrl: './doc-signer-paging.component.html',
+  styleUrls: ['./doc-signer-paging.component.scss']
 })
-export class PagingComponent implements OnInit {
-
+export class DocSignerPagingComponent implements OnInit {
   inputPagingObj: any;
+  
   constructor() { }
 
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
-    this.inputPagingObj._url="./assets/ucpaging/searchAppDupCheck.json";
+    this.inputPagingObj._url = "./assets/ucpaging/searchDocSigner.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
-    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppDupCheck.json";
+    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchDocSigner.json";
   }
 
 }

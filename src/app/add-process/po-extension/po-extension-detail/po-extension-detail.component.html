@@ -1,0 +1,32 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="px-3">
+          <lib-ucviewgeneric [viewInput]="viewObj"></lib-ucviewgeneric>
+          <form class="form form-horizontal" [formGroup]="POExtForm"
+            (ngSubmit)="POExtForm.valid && SaveForm()" #enjiForm="ngForm">
+            <div class="form-body">
+              <div class="form-group row">
+                <label class="col-md-3  adInsLabel" translate>New PO Expired Date</label>
+                <div class="col-md-9">
+                  <input type="date" class="form-control adInsInput width-25-per" formControlName="PurchaseOrderExpiredDt">
+                  <lib-uc-show-errors [control]="POExtForm.controls.PurchaseOrderExpiredDt" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+            </div>
+            <div class="form-actions right">
+              <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['/AddProcess/POExtension/Paging']" translate>
+                <i class="fa fa-arrow-circle-left"></i> Back
+              </button>
+              <button type="submit" class="btn btn-raised btn-primary">
+                <i class="far"></i> Submit
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

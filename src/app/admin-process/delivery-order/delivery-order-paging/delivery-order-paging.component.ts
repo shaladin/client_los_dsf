@@ -11,7 +11,6 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 })
 export class DeliveryOrderPagingComponent implements OnInit {
   inputPagingObj: any;
-  arrCrit: any = new Array();
   
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
@@ -19,14 +18,12 @@ export class DeliveryOrderPagingComponent implements OnInit {
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchDeliveryOrder.json";
+    this.inputPagingObj.addCritInput = new Array();
 
-    this.arrCrit = new Array();
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.propName = 'AG.AGRMNT_CURR_STEP';
     critObj.value = "DELIVERY_ORDER";
-    this.arrCrit.push(critObj);
-    this.inputPagingObj.addCritInput = this.arrCrit;
-
+    this.inputPagingObj.addCritInput.push(critObj);
   }
 }
