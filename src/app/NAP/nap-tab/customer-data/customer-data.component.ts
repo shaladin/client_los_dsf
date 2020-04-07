@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -43,7 +43,7 @@ export class CustomerDataComponent implements OnInit {
     CopyFromMailing: ['']
   });
 
-  appId: any;
+  @Input() appId: any;
   refMasterObj = {
     RefMasterTypeCode: "",
   };
@@ -116,9 +116,9 @@ export class CustomerDataComponent implements OnInit {
     private http: HttpClient,
     private toastr: NGXToastrService,
     private route: ActivatedRoute) {
-      this.route.queryParams.subscribe(params => {
-        this.appId = params["AppId"];
-      })
+      // this.route.queryParams.subscribe(params => {
+      //   this.appId = params["AppId"];
+      // })
      }
 
   async ngOnInit() : Promise<void> {

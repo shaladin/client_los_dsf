@@ -12,6 +12,7 @@ import { CustConfirmationDetailComponent } from './cust-confirmation/cust-confir
 import { CustConfirmationSubjViewComponent } from './cust-confirmation/cust-confirmation-subj-view/cust-confirmation-subj-view.component';
 import { DocSignerDetailComponent } from './doc-signer/doc-signer-detail/doc-signer-detail.component';
 import { DocSignerPagingComponent } from './doc-signer/doc-signer-paging/doc-signer-paging.component';
+import { CustConfirmationSubjDetailComponent } from './cust-confirmation/cust-confirmation-subj-detail/cust-confirmation-subj-detail.component';
 
 const routes: Routes = [
   {
@@ -101,6 +102,13 @@ const routes: Routes = [
           title: 'Document Signer Detail'
         }
       },
+      {
+        path: 'CustConfirmation/Subj/Detail',
+        component: CustConfirmationSubjDetailComponent,
+        data: {
+          title: 'Customer Confirmation Subject Detail'
+        }
+      }
     ]
   }
 ];
