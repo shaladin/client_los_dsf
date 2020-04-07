@@ -1,0 +1,25 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-body">
+      <div class="px-3">
+        <div class="form-body">
+          <h4 class="form-section card-title" translate>LEAD VIEW</h4>
+          <lib-ucviewgeneric [viewInput]="leadViewHeader"></lib-ucviewgeneric>
+          <aw-wizard #wizard navBarLayout="large-empty-symbols" [awNavigationMode] navigateBackward="allow"
+            navigateForward="allow" [defaultStepIndex]="0">
+            <aw-wizard-step [stepTitle]="'CUSTOMER DATA'" (stepEnter)="EnterTab('customerData')"
+              [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
+              <app-view-customer-data *ngIf="isCustomerData == true">
+              </app-view-customer-data>
+            </aw-wizard-step>
+            <aw-wizard-step [stepTitle]="'LEAD DATA'" (stepEnter)="EnterTab('leadData')"
+              [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
+              <!-- <app-mou-view-fee *ngIf="isLeadData == true">
+              </app-mou-view-fee> -->
+            </aw-wizard-step> 
+          </aw-wizard>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
