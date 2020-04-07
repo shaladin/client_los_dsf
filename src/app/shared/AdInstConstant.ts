@@ -405,6 +405,8 @@ export class AdInsConstant {
     public static AddMouCustFctr = environment.losUrl + "/MouCustFctr/AddMouCustFctr";
     public static EditMouCustFctr = environment.losUrl + "/MouCustFctr/EditMouCustFctr";
     public static GetMouCustFctrByMouCustId = environment.losUrl + "/MouCustFctr/GetMouCustFctrByMouCustId";
+    public static GetMouCustTcFromRule = environment.losUrl + "/MouCustTc/GetMouCustTcFromRule";
+    public static EditListMouCustTc = environment.losUrl + "/MouCustTc/EditListMouCustTc";
 
     // MOU CUST ASSET
     public static GetMouCustAssetByMouCustId = environment.losUrl + "/MouCustAsset/GetMouCustAssetByMouCustId";
@@ -414,6 +416,10 @@ export class AdInsConstant {
 
     // MOU CUST ASSET
     public static GetMouCustFeeByMouCustId = environment.losUrl + "/MouCustFee/GetMouCustFeeByMouCustId";
+    public static GetMouCustFeeForMouRequestByMouCustId = environment.losUrl + "/MouCustFee/GetMouCustFeeForMouRequestByMouCustId";
+    public static GetRefFeeList = environment.losUrl + "/RefFee/GetRefFeeList";
+    public static AddMouCustFee = environment.losUrl + "/MouCustFee/AddMouCustFee";
+    public static DeleteMouCustFee = environment.losUrl + "/MouCustFee/DeleteMouCustFee";
 
     // MOU CUST CLAUSE
     public static GetMouCustDataByMouCustId = environment.losUrl + "/MouCustClause/GetMouCustDataByMouCustId";

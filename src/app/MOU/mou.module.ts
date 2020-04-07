@@ -37,6 +37,8 @@ import { MouDetailGeneralComponent } from './mou-customer-request/mou-detail-gen
 import { MouDetailFactoringComponent } from './mou-customer-request/mou-detail-factoring/mou-detail-factoring.component';
 import { MouCustAssetComponent } from './mou-customer-request/mou-detail-general/mou-cust-asset/mou-cust-asset.component';
 import { MouCustAssetDetailComponent } from './mou-customer-request/mou-detail-general/mou-cust-asset/mou-cust-asset-detail/mou-cust-asset-detail.component';
+import { MouCustFeeComponent } from './mou-customer-request/mou-cust-fee/mou-cust-fee.component';
+import { MouCustFeeDetailComponent } from './mou-customer-request/mou-cust-fee/mou-cust-fee-detail/mou-cust-fee-detail.component';
 // import { MouCustomerApprovalComponent } from './mou-customer/mou-customer-approval/mou-customer-approval.component';
 // import { MouApprovalGeneralComponent } from './mou-customer/mou-customer-approval/mou-approval-general/mou-approval-general.component';
 // import { MouApprovalFactoringComponent } from './mou-customer/mou-customer-approval/mou-approval-factoring/mou-approval-factoring.component';
@@ -88,9 +90,12 @@ import { MouCustAssetDetailComponent } from './mou-customer-request/mou-detail-g
     MouDetailFactoringComponent,
     MouCustAssetComponent,
     MouCustAssetDetailComponent,
+    MouCustFeeComponent,
+    MouCustFeeDetailComponent,
   ],
   entryComponents: [
     MouCustAssetDetailComponent,
+    MouCustFeeDetailComponent
     // MouCustomerApprovalComponent,
     // MouApprovalGeneralComponent,
     // MouApprovalFactoringComponent,

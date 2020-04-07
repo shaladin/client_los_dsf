@@ -126,4 +126,8 @@ export class MouDetailGeneralComponent implements OnInit {
       }
     );
   }
+
+  back(){
+    this.ResponseMouDetailGeneral.emit({StatusCode: -2});
+  }
 }

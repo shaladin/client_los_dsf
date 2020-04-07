@@ -32,15 +32,15 @@
                 <app-mou-detail-factoring *ngIf="mouType == 'FACTORING'" [MouCustId]="mouCustId" (ResponseMouCustFactoring)="mouDetailFactoring($event)"></app-mou-detail-factoring>
               </aw-wizard-step>
               <aw-wizard-step [stepTitle]="'Fee'" [navigationSymbol]="{ symbol: '2', fontFamily: 'FontAwesome' }">
-                Fee
+                <app-mou-cust-fee [MouCustId]="mouCustId" (ResponseMouCustFee)="mouCustFee($event)"></app-mou-cust-fee>
               </aw-wizard-step>
-              <aw-wizard-step [stepTitle]="'Collateral'" [navigationSymbol]="{ symbol: '3', fontFamily: 'FontAwesome' }">
-                Collateral
+              <aw-wizard-step [stepTitle]="'Additional Collateral'" [navigationSymbol]="{ symbol: '3', fontFamily: 'FontAwesome' }">
+                <app-mou-request-addcoll [MouCustId]="mouCustId" (ResponseMouAddColl)="mouAddColl($event)"></app-mou-request-addcoll>
               </aw-wizard-step>
-              <aw-wizard-step [stepTitle]="'Term and Condition'" [navigationSymbol]="{ symbol: '4', fontFamily: 'FontAwesome' }">
-                Term and Condition
+              <aw-wizard-step [stepTitle]="'Approval Recommendation'" [navigationSymbol]="{ symbol: '4', fontFamily: 'FontAwesome' }">
+                Approval Recommendation Section Goes Here
               </aw-wizard-step>
-              <aw-wizard-step [stepTitle]="'Document'" [navigationSymbol]="{ symbol: '5', fontFamily: 'FontAwesome' }">
+              <aw-wizard-step [stepTitle]="'Term And Condition'" [navigationSymbol]="{ symbol: '5', fontFamily: 'FontAwesome' }">
                 Document
               </aw-wizard-step>
             </aw-wizard>

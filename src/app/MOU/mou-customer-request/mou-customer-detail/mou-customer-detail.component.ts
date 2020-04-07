@@ -41,19 +41,36 @@ export class MouCustomerDetailComponent implements OnInit {
   }
 
   mouDetailGeneral(e){
-    if(e["StatusCode"] == 200){
-      this.nextStep();
-    }
+    this.stepHandler(e);
   }
 
   mouDetailFactoring(e){
-    if(e["StatusCode"] == 200){
-      this.nextStep();
-    }
+    this.stepHandler(e);
   }
 
-  nextStep(){
-    this.wizard.goToNextStep();
+  mouCustFee(e){
+    this.stepHandler(e);
+  }
+
+  mouAddColl(e){
+    this.stepHandler(e);
+  }
+
+  stepHandler(response){
+    switch (response["StatusCode"]) {
+      case 200:
+        this.wizard.goToNextStep();
+        break;
+
+      case -1:
+        this.wizard.goToPreviousStep();
+
+      case -2:
+        this.location.back();
+    
+      default:
+        break;
+    }
   }
 
 }
