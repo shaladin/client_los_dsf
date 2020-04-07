@@ -7,6 +7,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { LifeInsObj } from 'app/shared/model/LifeInsObj.Model';
 import { LifeInsDObj } from 'app/shared/model/LifeInsDObj.Model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-app-life-ins',

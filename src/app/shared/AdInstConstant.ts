@@ -453,6 +453,8 @@ export class AdInsConstant {
   // VendorEmp
   public static GetListVendorBankByVendorEmpNo = "/VendorEmp​/GetListVendorBankByVendorEmpNo";
   public static GetVendorByCategoryCodeAndOfficeCode = environment.FoundationR3Url + "/Vendor/GetVendorByCategoryCodeAndOfficeCode";
+  public static GetListVendorBankAccByListVendorEmpNo = "/VendorEmp/GetListVendorBankAccByListVendorEmpNo";
+  public static GetVendorEmpByVendorEmpNo = "/VendorEmp/GetVendorEmpByVendorEmpNo";
 
   //Life Ins
   public static AddAppLifeInsH = environment.losUrl + "/AppLifeIns/AddAppLifeInsH";
@@ -546,6 +548,22 @@ export class AdInsConstant {
   public static AddEditCustDataCompany = environment.losUrl + "/AppCust/AddEditCustDataCompany";
 
   // App Asset
+  // Rule
+  public static Rule = "http://r3app-server/RULE_FINAL/RuleService/ExecuteRuleSet";
+
+  // Tax
+  public static AppCom = "APP_COM";
+  public static ExchangeRateAmt = "1";
+  public static TaxTypeCode = "WHT";
+  public static VATTypeCode = "VAT";
+
+
+  // App Commission
+  public static AddAppCommissionData = "/AppCommission/AddAppCommissionData";
+  public static GetAppCommissionRule = "/AppCommission/GetAppCommissionRule";
+  public static GetAppCommissionTax = "/AppCommission/GetAppCommissionTax";
+
+  // App Asset
   public static GetAppAssetListByAgrmntId = environment.losUrl + "/AppAsset/GetAppAssetListByAgrmntId";
   public static GetAppAssetByAppId = environment.losUrl + "/AppAsset/GetAppAssetByAppId";
   public static GetAppAssetListByAppId = environment.losUrl + "/AppAsset/GetAppAssetListByAppId";
@@ -600,6 +618,7 @@ export class AdInsConstant {
   //App Fin Data
   public static GetAppFinDataByAppId = environment.losUrl + "/AppFinData/GetAppFinDataByAppId";
   public static CreateMaxAllocAmtRsvFund = environment.losUrl + "/AppFinData/CreateMaxAllocAmtRsvFund";
+  public static GetAppFinDataWithRuleByAppId = "/AppFinData/GetAppFinDataWithRuleByAppId";
 
   // LEAD
   public static AddLead = environment.losUrl + "/Lead/AddLead";
@@ -617,4 +636,8 @@ export class AdInsConstant {
   public static GetSpouseDuplicateCheck = "/AppDupCheck/GetSpouseDuplicateCheck";
   public static GetAppShareholderDuplicateCheck = "/AppDupCheck/GetAppShareholderDuplicateCheck";
   public static AddAppDupCheckCust = "/AppDupCheck/AddAppDupCheckCust";
+
+  // Product Offering
+  public static GetListProdOfferingDByProdOfferingCode = "/ProductOffering/GetListProdOfferingDByProdOfferingCode";
+  public static GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode = "/ProductOffering/GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode";
 }
