@@ -27,7 +27,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
         console.log(request);
         var asdasd = new RequestCriteriaObj();
         console.log(asdasd);
-        if (request.method == "POST" && (request.body == null || request.body.isLoading == true)) {
+        if (request.method == "POST" && (request.body == null || request.body.isLoading == undefined || request.body.isLoading == true)) {
             this.spinner.show();
         }
         this.count++;

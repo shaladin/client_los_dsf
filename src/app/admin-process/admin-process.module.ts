@@ -24,6 +24,7 @@ import { CustConfirmationDetailComponent } from './cust-confirmation/cust-confir
 import { CustConfirmationSubjDetailComponent } from './cust-confirmation/cust-confirmation-subj-detail/cust-confirmation-subj-detail.component';
 import { CustConfirmationSubjViewComponent } from './cust-confirmation/cust-confirmation-subj-view/cust-confirmation-subj-view.component';
 import { CustConfirmationVerfViewComponent } from './cust-confirmation/cust-confirmation-verf-view/cust-confirmation-verf-view.component';
+import { UcviewgenericModule } from "@adins/ucviewgeneric";
 
 @NgModule({
   imports: [
@@ -38,7 +39,8 @@ import { CustConfirmationVerfViewComponent } from './cust-confirmation/cust-conf
     UcSubsectionModule,
     UcShowErrorsModule,
     AdminProcessRoutingModule,
-    SharingComponentModule
+    SharingComponentModule,
+    UcviewgenericModule
   ],
   declarations: [
     PurchaseOrderPagingComponent,
