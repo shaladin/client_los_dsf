@@ -294,6 +294,9 @@ aw-wizard-navigation-bar.horizontal ul.steps-indicator li a .label {
 {
     margin-bottom:5px;
 }
+.pull-right {
+    float: right !important;
+  }
 
 
 /* 

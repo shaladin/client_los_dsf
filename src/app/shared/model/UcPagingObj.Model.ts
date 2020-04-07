@@ -4,8 +4,9 @@ export class UcPagingObj{
     apiQryPaging: any
     deleteUrl: any
     pagingJson: any
+    ddlEnvironments: any
 
-    constructor()
-    {
+    constructor() {
+        this.ddlEnvironments = [];
     }
 }

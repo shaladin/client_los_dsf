@@ -8,6 +8,7 @@ export const environment = {
   navbarColor: 'transparent',
   losUrl : 'http://localhost:5001',
   FoundationR3Url: 'http://r3app-server.ad-ins.com/FOUNDATION_R3'
+  //FoundationR3Url: 'http://localhost:5000'
 };
 
 

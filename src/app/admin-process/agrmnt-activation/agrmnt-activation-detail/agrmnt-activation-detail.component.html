@@ -1,0 +1,161 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <app-app-main-info [arrValue]="arrValue"></app-app-main-info>
+        <div class="px-3">
+          <div class="form-body">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="row">
+                  <label class="col-md-6" translate>Overwrite Agreement No</label>
+                  <div class="col-md-6"><input type="checkbox" [(ngModel)]="isOverwrite"></div>
+                </div>
+                <div class="row">
+                  <label class="col-md-6" translate>Agreement No</label>
+                  <div class="col-md-6" translate><input type="text" [(ngModel)]="AgrmntNo"></div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-6"></div>
+                </div>
+                <div class="row">
+                  <label class="col-md-6" translate>Agreement Date</label>
+                  <div class="col-md-6"><input type="date" [(ngModel)]="CreateDt"> </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <lib-ucSubsection [id]="'AssetInfoId'" [title]="'Asset List'" [panel]="'AssetInfo'">
+          </lib-ucSubsection>
+          <div class="form-body" id="AssetInfo">
+            <table class="table table-responsive-md text-center table-hover">
+              <thead>
+                <tr class="table-header">
+                  <th></th>
+                  <th><span translate class="thead-header text-left">Asset Name</span></th>
+                  <th><span translate class="thead-header text-right">Asset Price</span></th>
+                  <th><span translate class="thead-header text-right">Down Payment</span></th>
+                  <th><span translate class="thead-header">Serial No 1</span></th>
+                  <th><span translate class="thead-header">Serial No 2</span></th>
+                  <th><span translate class="thead-header">License Plate</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of AssetObj?.AppAssetListObj">
+                  <td><div *ngIf="listSelectedId.indexOf(item.AppAssetId) >- 1">
+                    <input type="checkbox" id="checkSame" name="itemSame"
+                      (change)="Checked(item.AppAssetId, $event.target.checked)" [checked]="true">
+                  </div>
+                  <div *ngIf="listSelectedId.indexOf(item.AppAssetId) < 0">
+                    <input type="checkbox" id="checkDiff" name="itemDiff"
+                      (change)="Checked(item.AppAssetId, $event.target.checked)" [checked]=false>
+                  </div></td>
+                  <td class="text-left">{{item.FullAssetName}}</td>
+                  <td class="text-right">{{item.AssetPriceAmt | number}}</td>
+                  <td class="text-right">{{item.DownPaymentAmt | number}}</td>
+                  <td>{{item.SerialNo1}}</td>
+                  <td>{{item.SerialNo2}}</td>
+                  <td>{{item.SerialNo3}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="card-header">
+              <div class="text-right">
+                <button type="button" (click)="addToTemp()" class="btn btn-raised btn-warning mr-1">
+                  <i class="fa ft-plus"></i> Add To Temp
+                </button>
+              </div>
+            </div>
+            <table class="table table-responsive-md text-center table-hover">
+              <thead>
+                <tr class="table-header">
+                  <th><span translate class="thead-header text-left">Asset Name</span></th>
+                  <th><span translate class="thead-header text-right">Asset Price</span></th>
+                  <th><span translate class="thead-header text-right">Down Payment</span></th>
+                  <th><span translate class="thead-header">Serial No 1</span></th>
+                  <th><span translate class="thead-header">Serial No 2</span></th>
+                  <th><span translate class="thead-header">License Plate</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of AssetObj?.AppAssetListObj">
+                  <td class="text-left">{{item.FullAssetName}}</td>
+                  <td class="text-right">{{item.AssetPriceAmt | number}}</td>
+                  <td class="text-right">{{item.DownPaymentAmt | number}}</td>
+                  <td>{{item.SerialNo1}}</td>
+                  <td>{{item.SerialNo2}}</td>
+                  <td>{{item.SerialNo3}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <lib-ucSubsection [id]="'AppFinId'" [title]="'Financial Information'" [panel]="'AppFin'">
+          </lib-ucSubsection>
+          <div class="form-body" id="AppFin">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="row">
+                  <label class="col-md-6" translate>Total Asset Price</label>
+                  <label class="col-md-6">{{AppFinData.TotalAssetPriceAmt}}</label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6" translate>Total Down Payment</label>
+                  <label class="col-md-6">{{AppFinData.TotalDownPaymentNettAmt}}</label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6" translate>NTF</label>
+                  <label class="col-md-6">{{AppFinData.NtfAmt}}</label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="row">
+                  <label class="col-md-6" translate>Total Insurance To Customer</label>
+                  <label class="col-md-6">{{AppFinData.TotalInsCustAmt}}</label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6" translate>Insurance Capitalized Amount</label>
+                  <label class="col-md-6">{{AppFinData.InsCptlzAmt}}</label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6" translate>Installment Amount</label>
+                  <label class="col-md-6">{{AppFinData.InstAmt}}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <lib-ucSubsection [id]="'AppFeeId'" [title]="'Fees'" [panel]="'AppFee'">
+          </lib-ucSubsection>
+          <div class="form-body" id="AppFee">
+            <div class="row col-md-6" *ngFor="let item of AppFees">
+              <div class="row">
+                <div class="col-md-6">
+                  <label>{{item.FeeName}}</label>
+                </div>
+                <div class="col-md-6">
+                  <label>{{item.AppFeeAmt}}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <form>
+            <div class="form-actions right">
+                <button type="button" class="btn btn-raised btn-warning mr-1"
+                    [routerLink]="['/AdminProcess/PurchaseOrder/PO']" [queryParams]="{AgrmntId:AgrmntId}"
+                    translate>
+                    <i class="fa fa-arrow-circle-left"></i> Cancel
+                </button>
+                <button type="button" class="btn btn-raised btn-primary" (click)="Submit()">
+                    <i class="fa fa-check-square-o"></i> Submit
+                </button>
+            </div>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

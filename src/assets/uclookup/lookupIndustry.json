@@ -1,0 +1,51 @@
+{
+    "title": "Search Industry",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "textbox",
+            "name": "INDUSTRY_TYPE_NAME",
+            "id": "IndustryTypeNameId",
+            "value": "",
+            "label": "Industry Type",
+            "placeholder": "Placeholder"
+        }
+    ],
+    "querystring": {
+        "select": " SELECT INDUSTRY_TYPE_NAME AS IndustryTypeName",
+        "from": "FROM REF_INDUSTRY_TYPE A WITH(NOLOCK)"
+    },
+        "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Industry Type",
+            "name": "IndustryTypeName"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Action",
+            "name": "Action"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "IndustryTypeName"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "select",
+                    "property": "IndustryTypeName"
+                }
+            ]
+        }
+    ],
+    "propertyId": "IndustryTypeName", 
+    "propertyName": "IndustryTypeName" 
+}

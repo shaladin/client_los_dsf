@@ -1,0 +1,31 @@
+export class LeadObj{
+    LeadId : any;
+    LeadNo : any;
+    LeadCopyId : any;
+    OriOfficeCode : any;
+    OriOfficeName : any;
+    CrtOfficeCode : any;
+    CrtOfficeName : any;
+    LeadDt : any;
+    OrderNo : any;
+    LobCode : any;
+    LobName : any;
+    MrLeadSourceCode : any;
+    LeadStat : any;
+    LeadStep : any;
+    TeleMarketingCode : any;
+    TeleMarketingName : any;
+    CmoCode : any;
+    CmoName : any;
+    SurveyorCode : any;
+    SurveyorName : any;
+    AgencyCode : any;
+    AgencyName : any;
+    CancelDt : any;
+    CancelByCode : any;
+    CancelByName : any;
+    MrCancelReasonCode : any;
+    CancelNotes : any;
+    DuplicateLeadId: any;
+    RowVersion: any;
+}
