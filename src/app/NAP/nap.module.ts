@@ -37,8 +37,23 @@ import { CustGrpMemberComponent } from "./nap-tab/customer-data/component/cust-g
 import { CustCompanyMainDataComponent } from "./nap-tab/customer-data/component/company-main-data/cust-company-main-data.component";
 import { CustShareholderComponent } from "./nap-tab/customer-data/component/shareholder/cust-shareholder.component";
 import { AppFinDataComponent } from './nap-tab/app-fin-data/app-fin-data.component';
-
-
+import { AppSubsidyComponent } from './nap-tab/app-fin-data/component/app-subsidy/app-subsidy.component';
+import { UcShowErrorsModule } from "@adins/uc-show-errors";
+import { AppSubsidyAddEditComponent } from './nap-tab/app-fin-data/component/app-subsidy-add-edit/app-subsidy-add-edit.component';
+import { NgbModule, NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { AppFeeComponent } from './nap-tab/app-fin-data/component/app-fee/app-fee.component';
+import { NgxCurrencyModule } from 'ngx-currency'
+export const customCurrencyMaskConfig = {
+    align: "left",
+    allowNegative: true,
+    allowZero: true,
+    decimal: ".",
+    precision: 2,
+    prefix: "",
+    suffix: "",
+    thousands: ",",
+    nullable: false
+};
 
 @NgModule({
     declarations: [
@@ -64,7 +79,10 @@ import { AppFinDataComponent } from './nap-tab/app-fin-data/app-fin-data.compone
         CommissionAddComponent,
         FormAddDynamicComponent,
         CustShareholderComponent,
-        AppFinDataComponent
+        AppFinDataComponent,
+        AppSubsidyComponent,
+        AppSubsidyAddEditComponent,
+        AppFeeComponent,
         ],
     imports: [ 
         NapRoutingModule,
@@ -85,10 +103,14 @@ import { AppFinDataComponent } from './nap-tab/app-fin-data/app-fin-data.compone
         SharingComponentModule,
         UcaddressModule,
         UcgridviewModule,
-        UCSearchModule
+        UCSearchModule,
+        UcShowErrorsModule,
+        NgbModule,
+        NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
     ],
     exports: [],
-    providers: [NGXToastrService],
+    entryComponents: [AppSubsidyAddEditComponent],
+    providers: [NGXToastrService,NgbActiveModal],
 })
 
 export class NapModule { }
