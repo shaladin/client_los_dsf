@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AppLifeInsComponent } from './app-life-ins.component';
+import { PoExtensionDetailComponent } from './po-extension-detail.component';
 
-describe('AppLifeInsComponent', () => {
-  let component: AppLifeInsComponent;
-  let fixture: ComponentFixture<AppLifeInsComponent>;
+describe('PoExtensionDetailComponent', () => {
+  let component: PoExtensionDetailComponent;
+  let fixture: ComponentFixture<PoExtensionDetailComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AppLifeInsComponent ]
+      declarations: [ PoExtensionDetailComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AppLifeInsComponent);
+    fixture = TestBed.createComponent(PoExtensionDetailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

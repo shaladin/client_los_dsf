@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { PurchaseOrderHObj } from 'app/shared/model/PurchaseOrderHObj.Model';
@@ -13,7 +13,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 })
 export class PurchaseOrderDetailComponent implements OnInit {
 
-  arrValue = [];
+  arrValue: Array<number>;
   AgrmntId: number;
   AppId: number;
   AppAssetId: number;
@@ -30,7 +30,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
   purchaseOrderHObj: PurchaseOrderHObj;
   purchaseOrderDObj: PurchaseOrderDObj;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       if (params["AgrmntId"] != null) {
         this.AgrmntId = params["AgrmntId"];
@@ -93,7 +93,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
     this.purchaseOrderDObj.MrPoItemCode = "TOTAL_ASSET_PRICE";
     this.purchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFinDataObj"].TotalAssetPriceAmt;
     listPurchaseOrderD.push(this.purchaseOrderDObj);
-    
+
     this.purchaseOrderDObj = new PurchaseOrderDObj();
     this.purchaseOrderDObj.MrPoItemCode = "DP_NETT";
     this.purchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFinDataObj"].TotalDownPaymentNettAmt ? this.AssetObj["AgrmntFinDataObj"].TotalDownPaymentNettAmt : 0;
@@ -148,6 +148,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
     this.http.post(AdInsConstant.SubmitPurchaseOrder, POObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
+        this.router.navigate(["/AdminProcess/PurchaseOrder/Paging"]);
       },
       (error) => {
         console.log(error);
