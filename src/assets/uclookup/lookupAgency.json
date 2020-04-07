@@ -1,0 +1,68 @@
+{
+    "title": "Lookup Agency",
+    "component": [
+    {
+        "type": "textbox",
+        "name": "V.VENDOR_CODE",
+        "id": "VendorCodeId",
+        "value": "",
+        "label": "Agency Code",
+        "placeholder": "Placeholder"
+    },
+    {
+        "type": "textbox",
+        "name": "V.VENDOR_NAME",
+        "id": "VendorNameId",
+        "value": "",
+        "label": "Agency Name",
+        "placeholder": "Placeholder"
+    }
+    ],
+    "querystring": {
+      "select": "SELECT V.VENDOR_CODE AS VendorCode, V.VENDOR_ID AS VendorId, V.VENDOR_NAME AS VendorName",
+      "from": "FROM dbo.VENDOR V WITH(NOLOCK) WHERE V.MR_VENDOR_CATEGORY_CODE = 'AGENCY_COMPANY'"
+    },
+    "headerList": [
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Agency Code",
+        "name": "V.VENDOR_CODE"
+      },
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Agency Name",
+        "name": "V.VENDOR_NAME"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Action"
+      }
+    ],
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "left",
+        "property": "VendorCode"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "VendorName"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "select",
+            "property": "VendorId"
+          }
+        ]
+      }
+    ],
+    "propertyId": "VendorId",
+    "propertyName": "VendorName"  
+  }
