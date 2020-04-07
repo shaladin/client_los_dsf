@@ -9,6 +9,8 @@ import { PreGoLivePagingComponent } from './pre-go-live/pre-go-live-paging/pre-g
 import { PreGoLiveComponent } from './pre-go-live/pre-go-live/pre-go-live.component';
 import { ApplicationAgreementCancellationPagingComponent } from './application-agreement-cancellation/application-agreement-cancellation-paging/application-agreement-cancellation-paging.component';
 import { ApplicationAgreementCancellationDetailComponent } from './application-agreement-cancellation/application-agreement-cancellation-detail/application-agreement-cancellation-detail.component';
+import { AgrmntActivationPagingComponent } from './agrmnt-activation/agrmnt-activation-paging/agrmnt-activation-paging.component';
+import { AgrmntActivationDetailComponent } from './agrmnt-activation/agrmnt-activation-detail/agrmnt-activation-detail.component';
 import { CustConfirmationPagingComponent } from './cust-confirmation/cust-confirmation-paging/cust-confirmation-paging.component';
 import { CustConfirmationDetailComponent } from './cust-confirmation/cust-confirmation-detail/cust-confirmation-detail.component';
 import { CustConfirmationSubjViewComponent } from './cust-confirmation/cust-confirmation-subj-view/cust-confirmation-subj-view.component';
@@ -53,21 +55,33 @@ const routes: Routes = [
         data: {
           title: 'PreGoLive Detail'
         }
-      }
-      ,
+      },
       {
         path: 'AgreementCancellation/Paging',
         component: ApplicationAgreementCancellationPagingComponent,
         data: {
           title: 'Agreement Cancellation Paging'
         }
-      }
-      ,
+      },
       {
         path: 'AgreementCancellation/Detail',
         component: ApplicationAgreementCancellationDetailComponent,
         data: {
           title: 'Agreement Cancellation Detail'
+        }
+      },
+      {
+        path: 'AgrmntActivation/Paging',
+        component: AgrmntActivationPagingComponent,
+        data: {
+          title: 'Agreement Activation Paging'
+        }
+      },
+      {
+        path: 'AgrmntActivation/Detail',
+        component: AgrmntActivationDetailComponent,
+        data: {
+          title: 'Agreement Activation Detail'
         }
       },
       {

@@ -20,6 +20,8 @@ import { PreGoLivePagingComponent } from './pre-go-live/pre-go-live-paging/pre-g
 import { PreGoLiveComponent } from './pre-go-live/pre-go-live/pre-go-live.component';
 import { UcgridviewModule } from "@adins/ucgridview";
 import { UcviewgenericModule } from "@adins/ucviewgeneric";
+import { AgrmntActivationPagingComponent } from './agrmnt-activation/agrmnt-activation-paging/agrmnt-activation-paging.component';
+import { AgrmntActivationDetailComponent } from './agrmnt-activation/agrmnt-activation-detail/agrmnt-activation-detail.component';
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { ApplicationAgreementCancellationPagingComponent } from './application-agreement-cancellation/application-agreement-cancellation-paging/application-agreement-cancellation-paging.component';
 import { ApplicationAgreementCancellationDetailComponent } from './application-agreement-cancellation/application-agreement-cancellation-detail/application-agreement-cancellation-detail.component';
@@ -58,6 +60,8 @@ import { OfferingValidityCheckingApprovalDetailComponent } from './offering-vali
     PurchaseOrderInfoComponent,
     ApplicationAgreementCancellationPagingComponent,
     ApplicationAgreementCancellationDetailComponent,
+    AgrmntActivationPagingComponent,
+    AgrmntActivationDetailComponent,
     DeliveryOrderDetailComponent,
     DeliveryOrderPagingComponent,
     PurchaseOrderInfoComponent,

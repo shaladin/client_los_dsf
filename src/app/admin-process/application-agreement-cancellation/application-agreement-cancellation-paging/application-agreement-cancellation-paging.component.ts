@@ -23,7 +23,7 @@ export class ApplicationAgreementCancellationPagingComponent implements OnInit {
 
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchApplicationAgreementCancellation.json";
-    this.inputPagingObj.enviromentUrl = environment.localhost;
+    this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchApplicationAgreementCancellation.json";
     this.inputPagingObj.addCritInput = new Array();

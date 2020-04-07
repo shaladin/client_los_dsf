@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AppLifeInsComponent } from './app-life-ins.component';
+import { ViewCustomerDataComponent } from './view-customer-data.component';
 
-describe('AppLifeInsComponent', () => {
-  let component: AppLifeInsComponent;
-  let fixture: ComponentFixture<AppLifeInsComponent>;
+describe('ViewCustomerDataComponent', () => {
+  let component: ViewCustomerDataComponent;
+  let fixture: ComponentFixture<ViewCustomerDataComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AppLifeInsComponent ]
+      declarations: [ ViewCustomerDataComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AppLifeInsComponent);
+    fixture = TestBed.createComponent(ViewCustomerDataComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
