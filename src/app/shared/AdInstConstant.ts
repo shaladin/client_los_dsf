@@ -577,6 +577,7 @@ export class AdInsConstant {
   public static AddLead = environment.losUrl + "/Lead/AddLead";
   public static EditLead = environment.losUrl + "/Lead/EditLead";
   public static GetLeadByLeadId = environment.losUrl + "/Lead/GetLeadByLeadId";
+  public static AddEditLeadCustPersonal = environment.losUrl + "/LeadCust/AddEditLeadCustPersonal"
   
     //App Reserved Fund
     public static AddEditAppReservedFund = "http://localhost:5001/AppReservedFund/AddEditAppReservedFund";

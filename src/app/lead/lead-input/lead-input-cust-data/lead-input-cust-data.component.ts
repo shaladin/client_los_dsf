@@ -28,39 +28,13 @@ export class LeadInputCustDataComponent implements OnInit {
   typePage: string;
   LeadId: any;
   IdCustPersonal: any;
-  custObj: any;
-  getListActiveRefMaster: any;
-  getCustById: any;
+  addEditLeadCustPersonal: any;
   jobAddressObj: any;
   otherAddressObj: any;
   inputLegalAddressObj: InputFieldObj;
   inputResidenceAddressObj: InputFieldObj;
-  jobStatus: any;
-  listJobStatus: any;
-  companyScale: any;
-  listCompanyScale: any;
   tempProfession: any;
-  tempRefIndustryType: any;
   professionLookUpObj: any;
-  industryLookUpObj: any;
-  custPersonalJobDataObj: any;
-  custJobDataObj: any;
-  returnCustJobDataObj: any;
-  addJobData: any;
-  editJobData: any;
-  getJobDataByCustId: any;
-  getCustAddr: any;
-  getRefProfession: any;
-  getRefIndustryType: any;
-  refProfessionObj: any;
-  returnRefProfessionObj: any;
-  reqCustPersonalJobDataObj: any;
-  refIndustryTypeObj: any;
-  returnIndustryTypeObj: any;
-  custJobAddrObj: any;
-  custOthBizAddrObj;
-  getJobAddr: any;
-  getOthBizAddr: any;
   legalAddressObj: any;
   residenceAddressObj: any;
   otherAddrObj: any;
@@ -113,6 +87,7 @@ export class LeadInputCustDataComponent implements OnInit {
     // this.getRefIndustryType = AdInsConstant.GetRefIndustryTypeById;
     this.getListActiveRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
     this.getRefMasterWithReserveField = AdInsConstant.GetListActiveRefMasterWithReserveFieldAll;
+    this.addEditLeadCustPersonal = AdInsConstant.AddEditLeadCustPersonal;
 
     this.route.queryParams.subscribe(params => {
         if (params["LeadId"] != null) {
@@ -248,6 +223,7 @@ export class LeadInputCustDataComponent implements OnInit {
     this.leadInputObj.LeadCustObj.LeadId = this.LeadId;
     this.leadInputObj.LeadCustObj.CustName = this.CustomerDataForm.controls["CustName"].value;
     this.leadInputObj.LeadCustObj.MrIdTypeCode = this.CustomerDataForm.controls["MrIdTypeCode"].value;
+    this.leadInputObj.LeadCustObj.MrCustModelCode = this.CustomerDataForm.controls["CustModel"].value;
     this.leadInputObj.LeadCustObj.IdNo = this.CustomerDataForm.controls["IdNo"].value;
     this.leadInputObj.LeadCustObj.TaxIdNo = this.CustomerDataForm.controls["Npwp"].value;
   }
@@ -264,8 +240,6 @@ export class LeadInputCustDataComponent implements OnInit {
     this.leadInputObj.LeadCustPersonalObj.MobilePhnNo1 = this.CustomerDataForm.controls["MobilePhone1"].value;
     this.leadInputObj.LeadCustPersonalObj.MobilePhnNo2 = this.CustomerDataForm.controls["MobilePhone2"].value;
   }
-
-  //   CustModel: [''],
 
   setLeadCustSocmed(){
     //this.leadInputObj.LeadCustSocmedObj = new LeadInputObj();
@@ -327,7 +301,7 @@ export class LeadInputCustDataComponent implements OnInit {
     console.log("ccc");
     console.log(this.leadInputObj)
 
-    // this.http.post(this.addJobData, this.reqCustPersonalJobDataObj).subscribe(
+    // this.http.post(this.addEditLeadCustPersonal, this.leadInputObj).subscribe(
     //   (response) => {
     //     console.log(response);
     //     this.toastr.successMessage(response["message"]);
