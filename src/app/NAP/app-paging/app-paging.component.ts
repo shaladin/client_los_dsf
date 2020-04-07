@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { UcpagingModule } from '@adins/ucpaging';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 
 @Component({
   selector: 'app-app-paging',
@@ -14,7 +14,7 @@ export class AppPagingComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.inputPagingObj=new UcpagingModule();
+    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url="./assets/ucpaging/searchApp.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;

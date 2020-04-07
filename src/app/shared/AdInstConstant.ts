@@ -336,7 +336,7 @@ export class AdInsConstant {
 
   //REF PROV DISTRICT
   public static GetRefProvDistrictPaging = "/RefProvDistrict/GetRefProvDistrictPaging";
-  public static GetRefProvDistrictByProvDistrictCode = "http://localhost:5000/RefProvDistrict/GetRefProvDistrictByProvDistrictCode";
+  public static GetRefProvDistrictByProvDistrictCode = environment.FoundationR3Url + "/RefProvDistrict/GetRefProvDistrictByProvDistrictCode";
 
   //MENU
   public static GetRefFormPaging = "/MenuManagement/GetRefFormPaging";
@@ -444,12 +444,12 @@ export class AdInsConstant {
   // Vendor
   public static GetListVendorBankAccByVendorId = "/VendorBankAcc/GetListVendorBankAccByVendorId";
   public static GetListVendorBankAccByVendorCode = "/VendorBankAcc/GetListVendorBankAccByVendorCode";
-  public static GetListKeyValueByCategoryCodeAndOfficeCode = "http://localhost:5000/Vendor/GetListKeyValueByCategoryCodeAndOfficeCode";
+  public static GetListKeyValueByCategoryCodeAndOfficeCode = environment.FoundationR3Url + "/Vendor/GetListKeyValueByCategoryCodeAndOfficeCode";
   public static GetVendorByVendorCode = environment.FoundationR3Url + "/Vendor/GetVendorByVendorCode";
   public static GetListVendorEmpByVendorId = environment.FoundationR3Url + "/VendorEmp/GetListVendorEmpByVendorId";
-  public static GetListVendorEmpByVendorIdAndPositionCodes = "http://localhost:5000/VendorEmp/GetListVendorEmpByVendorIdAndPositionCodes";
-  public static GetVendorEmpSupervisorByVendorEmpId = "http://localhost:5000/VendorEmp/GetVendorEmpSupervisorByVendorEmpId";
-  public static GetVendorEmpByVendorIdVendorEmpNo = "http://localhost:5000/VendorEmp/GetVendorEmpByVendorIdVendorEmpNo";
+  public static GetListVendorEmpByVendorIdAndPositionCodes = environment.FoundationR3Url + "/VendorEmp/GetListVendorEmpByVendorIdAndPositionCodes";
+  public static GetVendorEmpSupervisorByVendorEmpId = environment.FoundationR3Url + "/VendorEmp/GetVendorEmpSupervisorByVendorEmpId";
+  public static GetVendorEmpByVendorIdVendorEmpNo = environment.FoundationR3Url + "/VendorEmp/GetVendorEmpByVendorIdVendorEmpNo";
 
   // VendorEmp
   public static GetListVendorBankByVendorEmpNo = "/VendorEmp​/GetListVendorBankByVendorEmpNo";
@@ -602,20 +602,20 @@ export class AdInsConstant {
   public static CalculateInsurance = environment.losUrl + "/AppIns/CalculateInsurance";
 
   // VERF RESULT
-  public static GetVerfResultById = "http://localhost:5000" + "/VerfResult/GetVerfResultById";
-  public static AddVerfResultAndVerfResultH = "http://localhost:5000" + "/VerfResult/AddVerfResultAndVerfResultH";
-  public static GetVerfResultHById = "http://localhost:5000" + "/VerfResultH/GetVerfResultHById";
-  public static GetVerfResultHsByTrxRefNo = "http://localhost:5000" + "/VerfResultH/GetVerfResultHsByTrxRefNo";
-  public static GetVerfResultHsByVerfResultIdAndSubjRelationCode = "http://localhost:5000" + "/VerfResultH/GetVerfResultHsByVerfResultIdAndSubjRelationCode";
-  public static GetListVerfResultDInQuestionGrp = "http://localhost:5000" + "/VerfResultD/GetListVerfResultDInQuestionGrp";
-  public static AddVerfResultHeaderAndVerfResultDetail = "http://localhost:5000" + "/VerfResultH/AddVerfResultHeaderAndVerfResultDetail";
+  public static GetVerfResultById = environment.FoundationR3Url + "/VerfResult/GetVerfResultById";
+  public static AddVerfResultAndVerfResultH = environment.FoundationR3Url + "/VerfResult/AddVerfResultAndVerfResultH";
+  public static GetVerfResultHById = environment.FoundationR3Url + "/VerfResultH/GetVerfResultHById";
+  public static GetVerfResultHsByTrxRefNo = environment.FoundationR3Url + "/VerfResultH/GetVerfResultHsByTrxRefNo";
+  public static GetVerfResultHsByVerfResultIdAndSubjRelationCode = environment.FoundationR3Url + "/VerfResultH/GetVerfResultHsByVerfResultIdAndSubjRelationCode";
+  public static GetListVerfResultDInQuestionGrp = environment.FoundationR3Url + "/VerfResultD/GetListVerfResultDInQuestionGrp";
+  public static AddVerfResultHeaderAndVerfResultDetail = environment.FoundationR3Url + "/VerfResultH/AddVerfResultHeaderAndVerfResultDetail";
 
   //CUST CONFIRM
-  public static GetVerfQuestionAnswerListByAppIdAndSubject = "http://localhost:5001" + "/CustCnfrm/GetVerfQuestionAnswerListByAppIdAndSubject";
-  public static AddCustCnfrm = "http://localhost:5001" + "/CustCnfrm/AddCustCnfrm";
+  public static GetVerfQuestionAnswerListByAppIdAndSubject = environment.losUrl + "/CustCnfrm/GetVerfQuestionAnswerListByAppIdAndSubject";
+  public static AddCustCnfrm = environment.losUrl + "/CustCnfrm/AddCustCnfrm";
 
   //REF STATUS
-  public static GetListActiveRefStatusByStatusGrpCode = "http://localhost:5000" + "/RefStatus/GetListKeyValueActiveGrpCodeByCode";
+  public static GetListActiveRefStatusByStatusGrpCode = environment.FoundationR3Url + "/RefStatus/GetListKeyValueActiveGrpCodeByCode";
 
   //AGRMNT ACTIVATION
   public static GetAppAssetByAppIdAndCriteria = environment.losUrl + "/AgrmntActivation/GetAppAssetByAppIdAndCriteria";
