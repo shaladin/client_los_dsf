@@ -28,6 +28,7 @@ import { LeadCancelConfirmComponent } from './lead-cancel/lead-cancel-confirm/le
 import { LeadPagingComponent } from './lead-paging/lead-paging.component';
 import { LeadViewComponent } from './lead-view/lead-view.component';
 import { ViewCustomerDataComponent } from './lead-view/view-customer-data/view-customer-data.component';
+import { ViewLeadDataComponent } from './lead-view/view-lead-data/view-lead-data.component';
 
 @NgModule({
   imports: [
@@ -58,6 +59,7 @@ import { ViewCustomerDataComponent } from './lead-view/view-customer-data/view-c
     LeadPagingComponent,
     LeadViewComponent,
     ViewCustomerDataComponent,
+    ViewLeadDataComponent,
     
   ],
 })

@@ -1,32 +1,53 @@
 <lib-ucviewgeneric [viewInput]="viewLeadCustomerPersonalMaindata" *ngIf="MrCustTypeCode == 'PERSONAL'">
 </lib-ucviewgeneric>
 <!-- <lib-ucviewgeneric [viewInput]="viewLeadCustomerPersonalMaindata" *ngIf="MrCustTypeCode == 'COMPANY'"></lib-ucviewgeneric> -->
+ 
+<!-- 
+<div class="card">
+  <div class="card-body">
+    <div class="px-3">
+ 
+    </div>
+  </div>
+</div>
 
+<div id="LeadCustSocmed">
+  <table>
+    <tbody>
+      <ng-container *ngFor="let item of listLeadCustSocmed">
+        <tr>
+          
+          <td class="text-left w-25 p-3">{{item.MrSocmedName}} </td> 
+          <td class="text-left-25 p-3">{{item.SocmedId}} </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div> -->
 
-<div class="col-md-12">
+<div class="card-body">
+  <div class="px-3">
     <lib-ucSubsection [id]="'LeadCustSocmedId'" [title]="'Social Media'" [panel]="'LeadCustSocmed'">
     </lib-ucSubsection>
-</div>
-
-<div class="card" id="LeadCustSocmed">
-
-    <div class="card-body">
-         
-            <table>
-                <tbody>
-                  <ng-container *ngFor="let item of listLeadCustSocmed">
-                    <tr>
-                      <td class="text-left w-25 p-3">{{item.MrSocmedName}} </td>
-                      <td class="text-center w-25 p-3">:</td>
-                      <td class="text-left-25 p-3">{{item.SocmedId}} </td>
-                    </tr>
-                  </ng-container>
-                </tbody>
-              </table>
-     
+    <div class="form-body" id="LeadCustSocmed">
+      <div class="form-group row">
+        <div class="col-md-12" *ngFor="let item of listLeadCustSocmed">
+          <div class="row">
+            <div class="col-md-3">
+              <label class="label-control" translate=""> {{item.MrSocmedName}} </label>
+            </div>
+            <div class="col-md-3">
+              <label class="label-control" translate=""> {{item.SocmedId}} </label>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
 
+ 
 <lib-ucviewgeneric [viewInput]="viewLeadAddressLegal"></lib-ucviewgeneric>
-
 <lib-ucviewgeneric [viewInput]="viewLeadAddressResidence"></lib-ucviewgeneric>
+ <lib-ucviewgeneric [viewInput]="viewLeadCustPersonalJobData"></lib-ucviewgeneric>  
+<lib-ucviewgeneric [viewInput]="viewLeadCustPersonalFinData"></lib-ucviewgeneric>

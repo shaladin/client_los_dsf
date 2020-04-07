@@ -562,6 +562,9 @@ export class AdInsConstant {
     //PURCHASE ORDER
     public static SubmitPurchaseOrder = environment.losUrl + "/PurchaseOrderH/SubmitPurchaseOrder";
 
+    // LEAD ASSET
+    public static GetLeadAssetByLeadId = environment.losUrl +"/LeadAsset/GetLeadAssetByLeadId";
+
     //LEAD VERF
     public static AddRangeLeadVerf = environment.losUrl + "/LeadVerf/AddRangeLeadVerf";
     public static GetListLeadVerf = environment.losUrl + "/LeadVerf/GetListLeadVerf";
