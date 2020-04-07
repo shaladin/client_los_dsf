@@ -6,6 +6,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppIdObj } from 'app/shared/model/AppIdObj.Model';
 import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-app-tc',
@@ -78,8 +79,11 @@ export class AppTcComponent implements OnInit {
       var isMandatory : Boolean = item.get("IsMandatory").value;
       if(isMandatory){
         this.EnablePromiseDt(i);
+        item.get("PromisedDt").setValidators([Validators.required]);
       }
     }
+    console.log(this.listAppTcObj);
+
       },
       (error) => {
         console.log(error);
@@ -91,9 +95,9 @@ export class AppTcComponent implements OnInit {
     return this.fb.group({
        TcCode: obj.TcCode,
        PriorTo: obj.PriorTo,
-       IsChecked: [''],
+       IsChecked: [false],
        IsMandatory: obj.IsMandatory,
-       PromisedDt: ['',Validators.required],
+       PromisedDt: [''],
        ExpiredDt: [''],
        Notes: [''],
     })
@@ -124,12 +128,18 @@ export class AppTcComponent implements OnInit {
       {
         item.get("PromisedDt").disable();
         item.get("ExpiredDt").enable();
-        item.get("IsChecked").disable();
+        // item.get("IsChecked").disable();
       }
       else if(isChecked)
       {
         item.get("ExpiredDt").enable();
-        item.get("IsChecked").disable();
+        // item.get("IsChecked").disable();
+      }
+      else{
+        item.get("ExpiredDt").disable();
+        if(isMandatory){
+        item.get("PromisedDt").enable();
+        }
       }
     }
   }
@@ -138,20 +148,29 @@ export class AppTcComponent implements OnInit {
     var fa_AppTc = this.AppTcForm.get("AppTc") as FormArray
     for (let i = 0; i < fa_AppTc.length ; i++) {
       var item = fa_AppTc.at(i);
-      console.log(item);
     }
   }
 
-  // ObjSelected(event, i) {
-  //   // if (event.target.checked) {
-  //   //   console.log("event checked");
-  //   //   console.log(i+1);
-  //   //   console.log(this.AppTc[i+1]);
-  //   //   if(this.AppTc[i+1].IsMandatory== true){
-  //   //   }
-  //   // } else {
-  //   //   console.log("event unchecked");
-  //   //   console.log(i);
-  //   // }
-  // }
+  SaveData(){
+    var fa_AppTc = this.AppTcForm.get("AppTc") as FormArray
+    for (let i = 0; i < fa_AppTc.length; i++) {
+      var appTcObj =  new AppTCObj();
+      var item = fa_AppTc.at(i);
+      this.listAppTcObj[i].IsChecked = item.get("IsChecked").value;
+      this.listAppTcObj[i].PromisedDt = item.get("PromisedDt").value;
+      this.listAppTcObj[i].ExpiredDt = item.get("ExpiredDt").value;
+      this.listAppTcObj[i].Notes = item.get("Notes").value;
+      // this.listAppTcObj.push(appTcObj);
+    }
+    this.http.post(AdInsConstant.AddAppTc,this.listAppTcObj).subscribe(
+      (response)=> {
+        console.log(response);
+        this.toastr.successMessage(response["message"]);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );  
+  }
+
 }
