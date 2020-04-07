@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormBuilder, Validators, NgForm, FormGroup, ControlContainer, FormGroupDirective } from '@angular/forms';
@@ -27,6 +27,9 @@ export class CustPersonalMainDataComponent implements OnInit {
   @Input() identifier: any;
   @Input() custDataPersonalObj: CustDataPersonalObj = new CustDataPersonalObj();
   @Input() custType: any;
+
+  @Output() callbackCopyCust: EventEmitter<any> = new EventEmitter();
+
 
   refMasterObj = {
     RefMasterTypeCode: "",
@@ -84,9 +87,9 @@ export class CustPersonalMainDataComponent implements OnInit {
       Email1: ['', Validators.maxLength(100)],
       FamilyCardNo: ['', Validators.maxLength(50)],
       Email2: ['', Validators.maxLength(50)],
-      NoOfResidence: ['', Validators.maxLength(4)],
+      NoOfResidence: ['', [Validators.pattern("^[0-9]+$"), Validators.maxLength(4)]],
       Email3: ['', Validators.maxLength(50)],
-      NoOfDependents: ['', Validators.maxLength(4)],
+      NoOfDependents: ['', [Validators.pattern("^[0-9]+$"), Validators.maxLength(4)]],
     }));
 
     this.initUrl();
@@ -95,16 +98,69 @@ export class CustPersonalMainDataComponent implements OnInit {
     this.bindCustData();
   }
 
-  CopyCustomer(event) {
+  CopyCustomerEvent(event) {
     this.selectedCustNo = event.CustNo;
     this.InputLookupCustomerObj.isReadonly = true;
+
+    var custObj = {CustId: event.CustId};
+    this.http.post(AdInsConstant.GetCustPersonalForCopyByCustId, custObj).subscribe(
+      (response) => {
+        console.log(response);
+        this.CopyCustomer(response);
+        this.callbackCopyCust.emit(response);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+  }
+
+  CopyCustomer(response){
+    if(response["CustObj"] != undefined){
+      this.parentForm.controls[this.identifier].patchValue({
+        MrIdTypeCode: response["CustObj"].MrIdTypeCode,
+        IdNo: response["CustObj"].IdNo,
+        IdExpiredDt: formatDate(response["CustObj"].IdExpiredDt, 'yyyy-MM-dd', 'en-US'),
+        TaxIdNo: response["CustObj"].TaxIdNo,
+        IsVip: response["CustObj"].IsVip,
+      });
+      this.InputLookupCustomerObj.nameSelect = response["CustObj"].CustName;
+      this.InputLookupCustomerObj.jsonSelect = {CustName: response["CustObj"].CustName};
+      this.selectedCustNo = response["CustObj"].CustNo;
+    }
+    
+    if(response["CustPersonalObj"] != undefined){
+      this.parentForm.controls[this.identifier].patchValue({
+        CustFullName: response["CustPersonalObj"].CustFullName,
+        MrGenderCode: response["CustPersonalObj"].MrGenderCode,		
+        MotherMaidenName: response["CustPersonalObj"].MotherMaidenName,
+        MrMaritalStatCode: response["CustPersonalObj"].MrMaritalStatCode,
+        BirthPlace: response["CustPersonalObj"].BirthPlace,
+        BirthDt: formatDate(response["CustPersonalObj"].BirthDt, 'yyyy-MM-dd', 'en-US'),
+        MrNationalityCode: response["CustPersonalObj"].MrNationalityCode,
+        MobilePhnNo1: response["CustPersonalObj"].MobilePhnNo1,
+        MrEducationCode: response["CustPersonalObj"].MrEducationCode,
+        MobilePhnNo2: response["CustPersonalObj"].MobilePhnNo2,
+        MrReligionCode: response["CustPersonalObj"].MrReligionCode,
+        MobilePhnNo3: response["CustPersonalObj"].MobilePhnNo3,
+        Email1: response["CustPersonalObj"].Email1,
+        FamilyCardNo: response["CustPersonalObj"].FamilyCardNo,
+        Email2: response["CustPersonalObj"].Email2,
+        NoOfResidence: response["CustPersonalObj"].NoOfResidence,
+        Email3: response["CustPersonalObj"].Email3,
+        NoOfDependents: response["CustPersonalObj"].NoOfDependents
+      });
+      
+      this.selectedNationalityCountryCode = response["CustPersonalObj"].NationalityCountryCode;
+      this.setCountryName(response["CustPersonalObj"].NationalityCountryCode);
+    }
   }
 
   
   GetCountry(event){
     this.selectedNationalityCountryCode = event.CountryCode;
   }
-
 
   setCriteriaLookupCustomer(custTypeCode){
     var arrCrit = new Array();
@@ -138,13 +194,16 @@ export class CustPersonalMainDataComponent implements OnInit {
       this.parentForm.controls[this.identifier].patchValue({
         MrIdTypeCode: this.custDataPersonalObj.AppCustObj.MrIdTypeCode,
         IdNo: this.custDataPersonalObj.AppCustObj.IdNo,
-        IdExpiredDt: formatDate(this.custDataPersonalObj.AppCustObj.IdExpiredDt, 'yyyy-MM-dd', 'en-US'),
+        IdExpiredDt: this.custDataPersonalObj.AppCustObj.IdExpiredDt != undefined ? formatDate(this.custDataPersonalObj.AppCustObj.IdExpiredDt, 'yyyy-MM-dd', 'en-US') : '',
         TaxIdNo: this.custDataPersonalObj.AppCustObj.TaxIdNo,
         IsVip: this.custDataPersonalObj.AppCustObj.IsVip,
       });
       this.InputLookupCustomerObj.nameSelect = this.custDataPersonalObj.AppCustObj.CustName;
       this.InputLookupCustomerObj.jsonSelect = {CustName: this.custDataPersonalObj.AppCustObj.CustName};
       this.selectedCustNo = this.custDataPersonalObj.AppCustObj.CustNo;
+      if(this.custDataPersonalObj.AppCustObj.CustNo != undefined && this.custDataPersonalObj.AppCustObj.CustNo != ""){
+        this.InputLookupCustomerObj.isReadonly = true;
+      }
     }
     
     if(this.custDataPersonalObj.AppCustPersonalObj != undefined){
@@ -154,7 +213,7 @@ export class CustPersonalMainDataComponent implements OnInit {
         MotherMaidenName: this.custDataPersonalObj.AppCustPersonalObj.MotherMaidenName,
         MrMaritalStatCode: this.custDataPersonalObj.AppCustPersonalObj.MrMaritalStatCode,
         BirthPlace: this.custDataPersonalObj.AppCustPersonalObj.BirthPlace,
-        BirthDt: formatDate(this.custDataPersonalObj.AppCustPersonalObj.BirthDt, 'yyyy-MM-dd', 'en-US'),
+        BirthDt: this.custDataPersonalObj.AppCustPersonalObj.BirthDt != undefined ? formatDate(this.custDataPersonalObj.AppCustPersonalObj.BirthDt, 'yyyy-MM-dd', 'en-US') : '',
         MrNationalityCode: this.custDataPersonalObj.AppCustPersonalObj.MrNationalityCode,
         MobilePhnNo1: this.custDataPersonalObj.AppCustPersonalObj.MobilePhnNo1,
         MrEducationCode: this.custDataPersonalObj.AppCustPersonalObj.MrEducationCode,
@@ -195,6 +254,7 @@ export class CustPersonalMainDataComponent implements OnInit {
     this.InputLookupCountryObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupCountryObj.pagingJson = "./assets/uclookup/lookupCountry.json";
     this.InputLookupCountryObj.genericJson = "./assets/uclookup/lookupCountry.json";
+    this.InputLookupCountryObj.isRequired = false;
 
   }
 

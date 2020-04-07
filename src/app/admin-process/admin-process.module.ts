@@ -28,6 +28,8 @@ import { CustConfirmationDetailComponent } from './cust-confirmation/cust-confir
 import { CustConfirmationSubjDetailComponent } from './cust-confirmation/cust-confirmation-subj-detail/cust-confirmation-subj-detail.component';
 import { CustConfirmationSubjViewComponent } from './cust-confirmation/cust-confirmation-subj-view/cust-confirmation-subj-view.component';
 import { CustConfirmationVerfViewComponent } from './cust-confirmation/cust-confirmation-verf-view/cust-confirmation-verf-view.component';
+import { OfferingValidityCheckingApprovalPagingComponent } from './offering-validity-checking-approval/offering-validity-checking-approval-paging/offering-validity-checking-approval-paging.component';
+import { OfferingValidityCheckingApprovalDetailComponent } from './offering-validity-checking-approval/offering-validity-checking-approval-detail/offering-validity-checking-approval-detail.component';
 
 @NgModule({
   imports: [
@@ -63,7 +65,9 @@ import { CustConfirmationVerfViewComponent } from './cust-confirmation/cust-conf
     CustConfirmationDetailComponent,
     CustConfirmationSubjDetailComponent,
     CustConfirmationSubjViewComponent,
-    CustConfirmationVerfViewComponent
+    CustConfirmationVerfViewComponent,
+    OfferingValidityCheckingApprovalPagingComponent,
+    OfferingValidityCheckingApprovalDetailComponent
   ],
   providers: [
     NGXToastrService

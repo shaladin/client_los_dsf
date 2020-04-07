@@ -12,6 +12,8 @@ import { ApplicationAgreementCancellationDetailComponent } from './application-a
 import { CustConfirmationPagingComponent } from './cust-confirmation/cust-confirmation-paging/cust-confirmation-paging.component';
 import { CustConfirmationDetailComponent } from './cust-confirmation/cust-confirmation-detail/cust-confirmation-detail.component';
 import { CustConfirmationSubjViewComponent } from './cust-confirmation/cust-confirmation-subj-view/cust-confirmation-subj-view.component';
+import { OfferingValidityCheckingApprovalPagingComponent } from './offering-validity-checking-approval/offering-validity-checking-approval-paging/offering-validity-checking-approval-paging.component';
+import { OfferingValidityCheckingApprovalDetailComponent } from './offering-validity-checking-approval/offering-validity-checking-approval-detail/offering-validity-checking-approval-detail.component';
 
 const routes: Routes = [
   {
@@ -103,6 +105,20 @@ const routes: Routes = [
           title: 'Customer Confirmation Subject View'
         }
       },
+      {
+        path: 'OfferingValidityApproval/Paging',
+        component: OfferingValidityCheckingApprovalPagingComponent,
+        data: {
+          title: 'Offering Validity Checking And Approval Paging'
+        }
+      },
+      {
+        path: 'OfferingValidityApproval/Detail',
+        component: OfferingValidityCheckingApprovalDetailComponent,
+        data: {
+          title: 'Offering Validity Checking And Approval Detail'
+        }
+      }
     ]
   }
 ];
