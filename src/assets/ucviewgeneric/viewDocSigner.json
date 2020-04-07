@@ -7,9 +7,15 @@
         "mainInfoUrl": "http://localhost:5001/Generic/GetDataViewBySQL",
         "mainInfo": [
           {
-            "type": "text",
+            "type": "link",
             "label": "Application No",
-            "property": "AppNo"
+            "property": "AppNo",
+            "path": "",
+            "param": [
+              {
+                "property": ""
+              }
+            ]
           },
           {
             "type": "text",
@@ -17,9 +23,15 @@
             "property": "NumOfAsset"
           },
           {
-            "type": "text",
+            "type": "link",
             "label": "Agreement No",
-            "property": "AgrmntNo"
+            "property": "AgrmntNo",
+            "path": "",
+            "param": [
+              {
+                "property": ""
+              }
+            ]
           },
           {
             "type": "text",
