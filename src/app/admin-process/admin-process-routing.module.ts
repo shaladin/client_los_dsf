@@ -10,6 +10,8 @@ import { AgrmntActivationDetailComponent } from './agrmnt-activation/agrmnt-acti
 import { CustConfirmationPagingComponent } from './cust-confirmation/cust-confirmation-paging/cust-confirmation-paging.component';
 import { CustConfirmationDetailComponent } from './cust-confirmation/cust-confirmation-detail/cust-confirmation-detail.component';
 import { CustConfirmationSubjViewComponent } from './cust-confirmation/cust-confirmation-subj-view/cust-confirmation-subj-view.component';
+import { DocSignerDetailComponent } from './doc-signer/doc-signer-detail/doc-signer-detail.component';
+import { DocSignerPagingComponent } from './doc-signer/doc-signer-paging/doc-signer-paging.component';
 import { CustConfirmationSubjDetailComponent } from './cust-confirmation/cust-confirmation-subj-detail/cust-confirmation-subj-detail.component';
 
 const routes: Routes = [
@@ -87,12 +89,26 @@ const routes: Routes = [
         }
       },
       {
+        path: 'DocumentSigner/Paging',
+        component: DocSignerPagingComponent,
+        data: {
+          title: 'Document Signer Paging'
+        }
+      },
+      {
+        path: 'DocumentSigner/Detail',
+        component: DocSignerDetailComponent,
+        data: {
+          title: 'Document Signer Detail'
+        }
+      },
+      {
         path: 'CustConfirmation/Subj/Detail',
         component: CustConfirmationSubjDetailComponent,
         data: {
           title: 'Customer Confirmation Subject Detail'
         }
-      },
+      }
     ]
   }
 ];
