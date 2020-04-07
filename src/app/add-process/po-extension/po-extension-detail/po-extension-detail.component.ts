@@ -8,8 +8,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 @Component({
   selector: 'app-po-extension-detail',
   templateUrl: './po-extension-detail.component.html',
-  styleUrls: ['./po-extension-detail.component.scss'],
-  providers: [NGXToastrService]
+  styleUrls: ['./po-extension-detail.component.scss']
 })
 export class PoExtensionDetailComponent implements OnInit {
   AppId: number;

@@ -17,33 +17,33 @@
             </lib-ucSubsection>
             <div class="form-body" id="AssetInformation">
               <div class="form-group row">
-                <label class="col-md-2  adInsLabel adins-required-label" for="SerialNo1Model" translate>Serial No
+                <label class="col-md-2 adins-required-label" for="SerialNo1Model" translate>Serial No
                   1</label>
                 <div class="col-md-4">
-                  <input type="text" class="form-control adInsInput width-75-per" formControlName="SerialNo1">
+                  <input type="text" class="form-control width-75-per" formControlName="SerialNo1">
                   <lib-uc-show-errors [control]="DeliveryOrderForm.controls.SerialNo1" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
-                <label class="col-md-2  adInsLabel adins-required-label" for="SerialNo3Model" translate>License Plate
+                <label class="col-md-2 adins-required-label" for="SerialNo3Model" translate>License Plate
                   No</label>
                 <div class="col-md-4">
-                  <input type="text" class="form-control adInsInput width-75-per" formControlName="SerialNo3">
+                  <input type="text" class="form-control width-75-per" formControlName="SerialNo3">
                   <lib-uc-show-errors [control]="DeliveryOrderForm.controls.SerialNo3" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-md-2  adInsLabel adins-required-label" for="SerialNo2Model" translate>Serial No
+                <label class="col-md-2 adins-required-label" for="SerialNo2Model" translate>Serial No
                   2</label>
                 <div class="col-md-4">
-                  <input type="text" class="form-control adInsInput width-75-per" formControlName="SerialNo2">
+                  <input type="text" class="form-control width-75-per" formControlName="SerialNo2">
                   <lib-uc-show-errors [control]="DeliveryOrderForm.controls.SerialNo2" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
-                <label class="col-md-2  adInsLabel adins-required-label" for="ManufacturingYearModel"
-                  translate>Manufacturing Year</label>
+                <label class="col-md-2 adins-required-label" for="ManufacturingYearModel" translate>Manufacturing
+                  Year</label>
                 <div class="col-md-4">
-                  <input type="text" class="form-control adInsInput width-75-per" formControlName="ManufacturingYear">
+                  <input type="text" class="form-control width-75-per" formControlName="ManufacturingYear">
                   <lib-uc-show-errors [control]="DeliveryOrderForm.controls.ManufacturingYear"
                     [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
@@ -52,26 +52,26 @@
             </div>
             <div *ngIf="this.MrAssetConditionCode != 'USED'">
               <lib-ucSubsection [id]="'MainDocumentLetterId'" [title]="'Main Document Letter'"
-              [panel]="'MainDocumentLetter'">
-            </lib-ucSubsection>
-            <div class="form-body" id="MainDocumentLetter">
-              <div class="form-group row">
-                <label class="col-md-2  adInsLabel" translate>Temporary Registration Letter No</label>
-                <div class="col-md-4">
-                  <input type="text" class="form-control adInsInput width-75-per" formControlName="TempRegisLettNo">
-                  <lib-uc-show-errors [control]="DeliveryOrderForm.controls.TempRegisLettNo"
-                    [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
-                </div>
-                <label class="col-md-2  adInsLabel" translate>Temporary Registration Letter Date</label>
-                <div class="col-md-4">
-                  <input type="date" class="form-control adInsInput width-75-per" formControlName="TempRegisLettDt">
-                  <lib-uc-show-errors [control]="DeliveryOrderForm.controls.TempRegisLettDt"
-                    [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
+                [panel]="'MainDocumentLetter'">
+              </lib-ucSubsection>
+              <div class="form-body" id="MainDocumentLetter">
+                <div class="form-group row">
+                  <label class="col-md-2" translate>Temporary Registration Letter No</label>
+                  <div class="col-md-4">
+                    <input type="text" class="form-control width-75-per" formControlName="TempRegisLettNo">
+                    <lib-uc-show-errors [control]="DeliveryOrderForm.controls.TempRegisLettNo"
+                      [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                  <label class="col-md-2" translate>Temporary Registration Letter Date</label>
+                  <div class="col-md-4">
+                    <input type="date" class="form-control width-75-per" formControlName="TempRegisLettDt">
+                    <lib-uc-show-errors [control]="DeliveryOrderForm.controls.TempRegisLettDt"
+                      [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
                 </div>
               </div>
-            </div>
             </div>
             <lib-ucSubsection [id]="'AssetDocumentId'" [title]="'Asset Document'" [panel]="'AssetDocument'">
             </lib-ucSubsection>
@@ -90,29 +90,29 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let item of DeliveryOrderForm.controls.items.controls; let i = index" [formGroupName]="i">
-                      <td>{{item.controls.AssetDocName.value}}</td>
-                      <td>{{item.controls.IsValueNeeded.value}}</td>
-                      <td *ngIf="this.MrAssetConditionCode=='NEW'">{{item.controls.IsMandatoryNew.value}}</td>
-                      <td *ngIf="this.MrAssetConditionCode=='USED'">{{item.controls.IsMandatoryUsed.value}}</td>
-                      <td>
-                        <input type="checkbox" class="border-primary" formControlName="IsReceived">
-                      </td>
-                      <td>
-                        <input type="text" class="form-control adInsInput width-100-per" formControlName="DocNo">
-                        <lib-uc-show-errors [control]="DeliveryOrderForm.controls.DocNo" [submit]="enjiForm.submitted">
-                            </lib-uc-show-errors>
-                      </td>
-                      <td>
-                        <input type="date" class="form-control adInsInput width-100-per" formControlName="ACDExpiredDt">
-                        <lib-uc-show-errors [control]="DeliveryOrderForm.controls.ACDExpiredDt"
-                              [submit]="enjiForm.submitted">
-                            </lib-uc-show-errors>
-                      </td>
-                      <td>
-                        <input type="text" class="form-control adInsInput width-100-per" formControlName="DocNotes">
-                        <lib-uc-show-errors [control]="DeliveryOrderForm.controls.DocNotes" [submit]="enjiForm.submitted">
-                            </lib-uc-show-errors>
-                      </td>
+                    <td>{{item.controls.AssetDocName.value}}</td>
+                    <td>{{item.controls.IsValueNeeded.value}}</td>
+                    <td *ngIf="this.MrAssetConditionCode=='NEW'">{{item.controls.IsMandatoryNew.value}}</td>
+                    <td *ngIf="this.MrAssetConditionCode=='USED'">{{item.controls.IsMandatoryUsed.value}}</td>
+                    <td>
+                      <input type="checkbox" class="border-primary" formControlName="IsReceived">
+                    </td>
+                    <td>
+                      <input type="text" class="form-control width-100-per" formControlName="DocNo">
+                      <lib-uc-show-errors [control]="DeliveryOrderForm.controls.DocNo" [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors>
+                    </td>
+                    <td>
+                      <input type="date" class="form-control width-100-per" formControlName="ACDExpiredDt">
+                      <lib-uc-show-errors [control]="DeliveryOrderForm.controls.ACDExpiredDt"
+                        [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors>
+                    </td>
+                    <td>
+                      <input type="text" class="form-control width-100-per" formControlName="DocNotes">
+                      <lib-uc-show-errors [control]="DeliveryOrderForm.controls.DocNotes" [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors>
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -121,39 +121,39 @@
             </lib-ucSubsection>
             <div class="form-body" id="RecipientInfo">
               <div class="form-group row">
-                <label class="col-md-2  adInsLabel" translate>Delivery Order No</label>
+                <label class="col-md-2" translate>Delivery Order No</label>
                 <div class="col-md-4">
-                  <input type="text" class="form-control adInsInput width-75-per" formControlName="DeliveryNo">
+                  <input type="text" class="form-control width-75-per" formControlName="DeliveryNo">
                 </div>
-                <label class="col-md-2  adInsLabel" translate>Recipient Name</label>
+                <label class="col-md-2" translate>Recipient Name</label>
                 <div class="col-md-4">
-                  <input type="text" class="form-control adInsInput width-75-per" formControlName="RecipientName">
+                  <input type="text" class="form-control width-75-per" formControlName="RecipientName">
                   <lib-uc-show-errors [control]="DeliveryOrderForm.controls.RecipientName"
                     [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-md-2  adInsLabel" translate>Delivery Date</label>
+                <label class="col-md-2" translate>Delivery Date</label>
                 <div class="col-md-4">
-                  <input type="date" class="form-control adInsInput width-75-per" formControlName="DeliveryDt">
+                  <input type="date" class="form-control width-75-per" formControlName="DeliveryDt">
                   <lib-uc-show-errors [control]="DeliveryOrderForm.controls.DeliveryDt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
-                <label class="col-md-2  adInsLabel" translate>Recipient Address</label>
+                <label class="col-md-2" translate>Recipient Address</label>
                 <div class="col-md-4">
-                  <input type="text" class="form-control adInsInput width-75-per" formControlName="DeliveryAddr">
+                  <input type="text" class="form-control width-75-per" formControlName="DeliveryAddr">
                   <lib-uc-show-errors [control]="DeliveryOrderForm.controls.DeliveryAddr" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-md-2  adInsLabel" translate>Customer Relationship</label>
+                <label class="col-md-2" translate>Customer Relationship</label>
                 <div class="col-md-4">
-                  <select class="form-control adInsInput" style="width: auto" formControlName="MrCustRelationshipCode"
+                  <select class="form-control" style="width: auto" formControlName="MrCustRelationshipCode"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && DeliveryOrderForm.controls.MrCustRelationshipCode.invalid }">
-                      <option *ngFor="let it of itemType" value="{{it.Key}}">
-                        {{it.Value}}</option>
+                    <option *ngFor="let it of itemType" value="{{it.Key}}">
+                      {{it.Value}}</option>
                   </select>
                   <show-errors [control]="DeliveryOrderForm.controls.MrCustRelationshipCode"
                     [submit]="enjiForm.submitted">
@@ -161,7 +161,8 @@
                 </div>
               </div>
             </div>
-            <app-term-conditions [AppId]="AppId" [parentForm]="DeliveryOrderForm" [enjiForm]="enjiForm"></app-term-conditions>
+            <app-term-conditions [AppId]="AppId" [parentForm]="DeliveryOrderForm" [enjiForm]="enjiForm">
+            </app-term-conditions>
             <div class="form-actions right">
               <button type="button" class="btn btn-raised btn-warning mr-1"
                 [routerLink]="['/AdminProcess/DeliveryOrder/Paging']" translate>
