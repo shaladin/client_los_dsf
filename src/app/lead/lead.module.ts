@@ -23,6 +23,7 @@ import { LeadInputComponent } from "./lead-input/lead-input.component";
 import { LeadInputCustDataComponent } from "./lead-input/lead-input-cust-data/lead-input-cust-data.component";
 import { LeadInputPageComponent } from "./lead-input/lead-input-page/lead-input-page.component";
 import { LeadInputMainInfoComponent } from "./lead-input/lead-input-main-info/lead-input-main-info.component";
+import { LeadViewHeaderComponent } from "./lead-input/lead-view-header/lead-view-header.component";
 import { LeadCancelComponent } from './lead-cancel/lead-cancel/lead-cancel.component';
 import { LeadCancelConfirmComponent } from './lead-cancel/lead-cancel-confirm/lead-cancel-confirm.component';
 import { LeadPagingComponent } from './lead-paging/lead-paging.component';
@@ -52,18 +53,21 @@ import { LeadInputLeadDataComponent } from "./lead-input/lead-input-lead-data/le
   ],
   declarations: [
     LeadVerifComponent,
-    LeadInputComponent,
-    LeadInputCustDataComponent,
-    LeadInputPageComponent,
-    LeadInputMainInfoComponent,
     LeadCancelComponent,
     LeadCancelConfirmComponent,
     LeadPagingComponent,
     LeadViewComponent,
     ViewCustomerDataComponent,
+    // ArchwizardModule,
+    LeadInputComponent,
+    LeadInputCustDataComponent,
+    LeadInputPageComponent,
+    LeadInputMainInfoComponent,
+    LeadViewHeaderComponent,
     TeleVerifPagingComponent,
     TeleVerifDetailComponent,
-    LeadInputLeadDataComponent
+    LeadInputLeadDataComponent,
+    LeadViewHeaderComponent
     // ArchwizardModule,
   ],
 })

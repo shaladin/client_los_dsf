@@ -36,6 +36,10 @@ export const Full_ROUTES: Routes = [
     loadChildren: './inquiry/inquiry.module#InquiryModule'
   },
   {
+    path: 'AppDupCheck',
+    loadChildren: './app-dup-check/app-dup-check.module#AppDupCheckModule'
+  },
+  {
     path: 'AdminProcess',
     loadChildren: './admin-process/admin-process.module#AdminProcessModule'
   },
@@ -47,4 +51,5 @@ export const Full_ROUTES: Routes = [
     path: 'Lead',
     loadChildren: './lead/lead.module#LeadModule'
   }
+    
 ];
