@@ -100,6 +100,10 @@ export class AdInsConstant {
   public static CoverPeriodPartialTenor = "PT";
   public static CoverPeriodOverTenor = "OT";
 
+  //PREMIUM TYPE
+  public static PremiumTypeAmt = "AMT";
+  public static PremiumTypePrcnt = "PRCNT";
+
   //Asset Master
   public static GetAssetMasterTypeByFullAssetCode = environment.FoundationR3Url + "/AssetMaster/GetAssetMasterTypeByFullAssetCode";
 
@@ -455,6 +459,7 @@ export class AdInsConstant {
   public static EditAppLifeInsH = environment.losUrl + "/AppLifeIns/EditAppLifeInsH";
   public static InitAppLifeInsH = environment.losUrl + "/AppLifeIns/InitAppLifeInsH";
   public static GetAppLifeInsHByAppId = environment.losUrl + "/AppLifeIns/GetAppLifeInsHByAppId";
+
   // MOU CUST
   public static GetMouCustById = environment.losUrl + "/MouCust/GetMouCustById";
   public static AddMouCust = environment.losUrl + "/MouCust/AddMouCust";
@@ -494,6 +499,10 @@ export class AdInsConstant {
   public static GetCustMouTcByCustMouId = environment.losUrl + "/MouCustTc/GetCustMouTcByCustMouId";
   public static GetMouCustTcForMouLglByCustMouId = environment.losUrl + "/MouCustTc/GetMouCustTcForMouLglByCustMouId";
   public static EditListMouCustTc = environment.losUrl + "/MouCustTc/EditListMouCustTc";
+
+  // MOU CUST RVW H
+  public static GetMouCustRvwHByMouCustId = environment.losUrl + "/MouCustRvwH/GetMouCustRvwHByMouCustId"
+  public static GetListMouCustRvwD = environment.losUrl + "/MouCustRvwD/GetListMouCustRvwD"
 
   // MOU DOC SIGNER
   public static AddMouCustSigner = environment.losUrl + "/MouCustSigner/AddMouCustSigner";
@@ -567,6 +576,7 @@ export class AdInsConstant {
   public static GetInsuranceDataByAppId = environment.losUrl + "/AppIns/GetInsDataByAppId";
   public static AddEditInsuranceData = environment.losUrl + "/AppIns/AddEditInsuranceData";
   public static ExecuteInsRateRule = environment.losUrl + "/AppIns/ExecuteInsRateRule";
+  public static CalculateInsurance = environment.losUrl + "/AppIns/CalculateInsurance";
 
   //AGRMNT ACTIVATION
   public static GetAppAssetByAppIdAndCriteria = environment.losUrl + "/AgrmntActivation/GetAppAssetByAppIdAndCriteria";
@@ -598,5 +608,4 @@ export class AdInsConstant {
   //LEAD VERF
   public static AddRangeLeadVerf = environment.losUrl + "/LeadVerf/AddRangeLeadVerf";
   public static GetListLeadVerf = environment.losUrl + "/LeadVerf/GetListLeadVerf";
-
 }
