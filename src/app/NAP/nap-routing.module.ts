@@ -12,103 +12,111 @@ import { InsuranceDataComponent } from "./nap-tab/insurance-data/insurance-data.
 import { AssetDataComponent } from "./nap-tab/asset-data/asset-data.component";
 import { RsvFundPagingComponent } from "./reserved-fund/reserved-fund-paging/reserved-fund-paging.component";
 import { RsvFundViewComponent } from "./reserved-fund/reserved-fund-view/reserved-fund-view.component";
+import { PhnVerifPagingComponent } from "./phone-verif/phone-verif-paging/phone-verif-paging.component";
 
 
 const routes: Routes = [
-    {
-        path: '',
-        children: [
-            {
-                path: 'AppPaging',
-                component: AppPagingComponent,
-                data: {
-                    title: 'Paging'
-                }
-            },
-            {
-                path: 'AppAdd',
-                component: AppAddComponent,
-                data: {
-                    title: 'Add'
-                }
-            },
-            {
-                path: 'AppAddDetail',
-                component: AppAddDetailComponent,
-                data: {
-                    title: 'AddDetail'
-                }
-            },
-            {
-                path: 'AppReferantor',
-                component: AppReferantorComponent,
-                data: {
-                    title: 'Referantor'
-                }
-            },
-            {
-                path: 'AppModel',
-                component: AppModelComponent,
-                data: {
-                    title: 'Model'
-                }
-            },
-            {
-                path: 'CustData',
-                component: CustomerDataComponent,
-                data: {
-                    title: 'Customer Data'
-                }
-            },
-            {
-                path: 'InsuranceData',
-                component: InsuranceDataComponent,
-                data: {
-                    title: 'Insurance Data'
-                }
-            },
-            {
-                path: 'CommissionPaging',
-                component: CommissionPagingComponent,
-                data: {
-                    title: 'Commission Paging'
-                }
-            },
-            {
-                path: 'CommissionAdd',
-                component: CommissionAddComponent,
-                data: {
-                    title: 'Commission Add'
-                }
-            },
-            {
-                path: 'AssetData',
-                component: AssetDataComponent,
-                data: {
-                    title: 'Asset Data'
-                }
-            },
-            {
-                path: 'ReservedFund',
-                component: RsvFundPagingComponent,
-                data: {
-                    title: 'Reserved Fund Paging'
-                }
-            },
-            {
-                path: 'ReservedFund/View',
-                component: RsvFundViewComponent,
-                data: {
-                    title: 'Reserved Fund View'
-                }
-            }
-        ]
-    }
+  {
+    path: '',
+    children: [
+      {
+        path: 'AppPaging',
+        component: AppPagingComponent,
+        data: {
+          title: 'Paging'
+        }
+      },
+      {
+        path: 'AppAdd',
+        component: AppAddComponent,
+        data: {
+          title: 'Add'
+        }
+      },
+      {
+        path: 'AppAddDetail',
+        component: AppAddDetailComponent,
+        data: {
+          title: 'AddDetail'
+        }
+      },
+      {
+        path: 'AppReferantor',
+        component: AppReferantorComponent,
+        data: {
+          title: 'Referantor'
+        }
+      },
+      {
+        path: 'AppModel',
+        component: AppModelComponent,
+        data: {
+          title: 'Model'
+        }
+      },
+      {
+        path: 'CustData',
+        component: CustomerDataComponent,
+        data: {
+          title: 'Customer Data'
+        }
+      },
+      {
+        path: 'InsuranceData',
+        component: InsuranceDataComponent,
+        data: {
+          title: 'Insurance Data'
+        }
+      },
+      {
+        path: 'CommissionPaging',
+        component: CommissionPagingComponent,
+        data: {
+          title: 'Commission Paging'
+        }
+      },
+      {
+        path: 'CommissionAdd',
+        component: CommissionAddComponent,
+        data: {
+          title: 'Commission Add'
+        }
+      },
+      {
+        path: 'AssetData',
+        component: AssetDataComponent,
+        data: {
+          title: 'Asset Data'
+        }
+      },
+      {
+        path: 'ReservedFund',
+        component: RsvFundPagingComponent,
+        data: {
+          title: 'Reserved Fund Paging'
+        }
+      },
+      {
+        path: 'ReservedFund/View',
+        component: RsvFundViewComponent,
+        data: {
+          title: 'Reserved Fund View'
+        }
+      },
+      {
+        path: 'PhoneVerif',
+        component: PhnVerifPagingComponent,
+        data: {
+          title: 'Phone Verif Paging'
+        }
+      }
+    ]
+  }
 ]
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 
 export class NapRoutingModule { }

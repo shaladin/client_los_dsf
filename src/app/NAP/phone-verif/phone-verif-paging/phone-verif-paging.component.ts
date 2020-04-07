@@ -6,27 +6,27 @@ import { UcPagingObj } from "app/shared/model/UcPagingObj.Model";
 import { CriteriaObj } from "../../../shared/model/CriteriaObj.model";
 
 @Component({
-  selector: "reserved-fund-paging",
-  templateUrl: "./reserved-fund-paging.component.html",
+  selector: "phone-verif-paging",
+  templateUrl: "./phone-verif-paging.component.html",
   providers: [DecimalPipe]
 })
-export class RsvFundPagingComponent implements OnInit {
+export class PhnVerifPagingComponent implements OnInit {
   inputPagingObj: any;
   arrCrit: any;
   constructor() { }
 
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
-    this.inputPagingObj._url = "./assets/ucpaging/searchAppReservedFund.json";
+    this.inputPagingObj._url = "./assets/ucpaging/searchAppPhoneVerif.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
-    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppReservedFund.json";
+    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppPhoneVerif.json";
 
     this.arrCrit = new Array();
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'a.APP_CURR_STEP';
-    critObj.value = AdInsConstant.AppStepRSVFund;
+    critObj.value = AdInsConstant.AppStepPhnVerif;
     this.arrCrit.push(critObj);
     this.inputPagingObj.addCritInput = this.arrCrit;
   }
