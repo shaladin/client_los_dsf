@@ -12,7 +12,7 @@ import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 export class PurchaseOrderPagingComponent implements OnInit {
 
   inputPagingObj: UcPagingObj;
-  arrCrit = [];
+  arrCrit: Array<CriteriaObj>;
 
   constructor() { }
 

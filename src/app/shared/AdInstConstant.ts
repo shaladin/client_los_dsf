@@ -544,7 +544,8 @@ export class AdInsConstant {
   public static GetAppCustPersonalContactPersonsByAppCustPersonalId = environment.losUrl + "/AppCustPersonalContactPerson/GetAppCustPersonalContactPersonsByAppCustPersonalId";
   public static DeleteAppCustPersonalContactPerson = environment.losUrl + "/AppCustPersonalContactPerson/DeleteAppCustPersonalContactPerson";
   public static GetAppCustBankAccsByAppCustId = environment.losUrl + "/AppCustBankAcc/GetAppCustBankAccsByAppCustId";
-
+  public static GetAppCustPersonalDataAndSpouseByAppId = environment.losUrl + "/AppCust/GetAppCustPersonalDataAndSpouseByAppCustId";
+    
   //CUST DATA COMPANY
   public static AddEditCustDataCompany = environment.losUrl + "/AppCust/AddEditCustDataCompany";
 
@@ -572,7 +573,8 @@ export class AdInsConstant {
   public static GetAppAssetByAgrmntId = environment.losUrl + "/AppAsset/GetAppAssetByAgrmntId";
   public static GetAllAssetDataByAppId = environment.losUrl + "/AppAsset/GetAllAssetDataByAppId";
   public static AddEditAllAssetData = environment.losUrl + "/AppAsset/AddEditAllAssetData";
-
+  public static GetAppAssetDataByAppId = environment.losUrl + "/AppAsset/GetAppAssetDataByAppId";
+  
 
   //Asset Doc List
   public static GetListAssetDocListByAssetTypeCode = environment.FoundationR3Url + "/AssetDocList/GetListAssetDocListByAssetTypeCode";
@@ -588,6 +590,11 @@ export class AdInsConstant {
   //AGRMNT
   public static GetAgrmntByAgrmntId = environment.losUrl + "/Agrmnt/GetAgrmntByAgrmntId";
 
+  //AGRMNT SIGNER
+  public static SubmitAgrmntSignerData = environment.losUrl + "/AgrmntSigner/SubmitAgrmntSignerData";
+  public static EditAgrmntSignerData = environment.losUrl + "/AgrmntSigner/EditAgrmntSignerData";
+  public static GetAgrmntSignerByAgrmntId = environment.losUrl + "/AgrmntSigner/GetAgrmntSignerByAgrmntId";
+
   //REF TC
   public static GetRefTcByCode = environment.FoundationR3Url + "/RefTc/GetRefTcByCode";
   public static GetListRefTcByTcCode = environment.FoundationR3Url + "/RefTc/GetListRefTcByTcCode";
@@ -601,6 +608,9 @@ export class AdInsConstant {
   public static AddEditInsuranceData = environment.losUrl + "/AppIns/AddEditInsuranceData";
   public static ExecuteInsRateRule = environment.losUrl + "/AppIns/ExecuteInsRateRule";
   public static CalculateInsurance = environment.losUrl + "/AppIns/CalculateInsurance";
+
+  //PURCHASE ORDER EXTENSION
+  public static SubmitNewExpDate = environment.losUrl + "/PurchaseOrderH/SubmitNewExpDate";
 
   // VERF RESULT
   public static GetVerfResultById = environment.FoundationR3Url + "/VerfResult/GetVerfResultById";

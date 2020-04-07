@@ -13,7 +13,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 })
 export class PurchaseOrderDetailComponent implements OnInit {
 
-  arrValue = [];
+  arrValue: Array<number>;
   AgrmntId: number;
   AppId: number;
   AppAssetId: number;
