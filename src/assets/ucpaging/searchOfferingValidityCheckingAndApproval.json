@@ -130,10 +130,19 @@
             "name": "RequestDate"
         },
         {
-            "type": "sort",
+            "type": "label",
             "position": "center",
-            "label": "Action",
-            "name": "edit"
+            "label": "Process"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Hold"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Take Back"
         }
     ],
     "bodyList": [
@@ -193,12 +202,56 @@
             "type": "action",
             "position": "center",
             "action": [
-                
-                    {
-                        "type" : "callback", 
-                        "property" : "AgrmntNo"
-                    }
-                
+                {
+                    "type": "edit",
+                    "path": "/AdminProcess/OfferingValidityApproval/Detail",
+                    "param": [
+                        {
+                            "type": "TrxNo",
+                            "property": "TrxNo"
+                        },
+                        {
+                            "type": "InstanceId",
+                            "property": "InstanceId"
+                        },
+                        {
+                            "type": "TaskId",
+                            "property": "TaskId"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "edit",
+                    "path": "/AdminProcess/OfferingValidityApproval/Detail",
+                    "param": [
+                        {
+                            "type" : "callback",
+                            "property" : "TrxNo"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "edit",
+                    "path": "/AdminProcess/OfferingValidityApproval/Detail",
+                    "param": [
+                        {
+                            "type" : "callback",
+                            "property" : "TrxNo"
+                        }
+                    ]
+                }
             ]
         }
     ]

@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
 import { UCSearchModule } from "@adins/ucsearch";
 import { UcpagingModule } from "@adins/ucpaging";
+import { UcapprovalModule } from "@adins/ucapproval";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { UcSubsectionModule } from "@adins/uc-subsection";
 import { UcgridfooterModule } from "@adins/ucgridfooter";
@@ -50,7 +51,8 @@ import { OfferingValidityCheckingApprovalDetailComponent } from './offering-vali
     UcShowErrorsModule,
     AdminProcessRoutingModule,
     SharingComponentModule,
-    UcviewgenericModule
+    UcviewgenericModule,
+    UcapprovalModule
   ],
   declarations: [
     PurchaseOrderPagingComponent,
