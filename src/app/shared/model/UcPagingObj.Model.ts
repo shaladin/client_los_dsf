@@ -1,11 +1,13 @@
 export class UcPagingObj{
-    _url: any
-    enviromentUrl: any
-    apiQryPaging: any
-    deleteUrl: any
-    pagingJson: any
+    _url: string;
+    enviromentUrl: string;
+    apiQryPaging: string;
+    deleteUrl: string;
+    pagingJson: string;
+    ddlEnvironments: any;
+    addCritInput: any;
 
-    constructor()
-    {
+    constructor() {
+        this.ddlEnvironments = [];
     }
 }

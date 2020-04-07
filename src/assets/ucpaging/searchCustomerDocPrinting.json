@@ -1,0 +1,143 @@
+{
+    "title": "Mou Document Printing",
+    "exportExcel": false,
+    "component": [
+      {
+        "type": "textbox",
+        "name": "MC.MOU_CUST_NO",
+        "id": "MouCustNoId",
+        "value": "",
+        "label": "MOU No",
+        "placeholder": "Placeholder",
+        "datatype": "text"
+      },
+      {
+        "type": "textbox",
+        "name": "MC.CUST_NAME",
+        "id": "CustNameId",
+        "value": "",
+        "label": "CUST NAME",
+        "placeholder": "Placeholder",
+        "datatype": "text"
+      }
+
+    ],	
+    "headerList": [
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "MOU NO",
+        "name": "MC.MOU_CUST_NO"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "CUSTOMER NAME",
+        "name": "MC.CUST_NAME"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "MOU DATE",
+        "name": "MC.MOU_CUST_DT"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "END DATE",
+        "name": "MC.END_DT"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "PLAFOND AMOUNT",
+        "name": "MC.PLAFOND_AMT"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "REVOLVING",
+        "name": "MC.IS_REVOLVING"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "REFERENCE NO",
+        "name": "MC.REF_NO"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "MOU TYPE",
+        "name": "MC.MR_MOU_TYPE_CODE"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "EDIT"
+      }
+    ],
+    "querystring": {
+      "select": "SELECT MC.MOU_CUST_NO AS MouCustNo , MC.CUST_NAME AS CustName, MC.MOU_CUST_ID AS MouCustId, MC.MOU_CUST_DT AS MouCustDt, MC.END_DT AS EndDate, MC.PLAFOND_AMT AS PlafondAmt, MC.IS_REVOLVING AS IsRevolving, MC.REF_NO AS RefNo, MC.MR_MOU_TYPE_CODE AS MrMouTypeCode",
+      "from": "FROM dbo.MOU_CUST MC WITH(NOLOCK)"
+    },
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "left",
+        "property": "MouCustNo"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "CustName"
+      },
+      {
+        "type": "date",
+        "position": "center",
+        "property": "MouCustDt"
+      },
+      {
+        "type": "date",
+        "position": "center",
+        "property": "EndDate"
+      },
+      {
+        "type": "text",
+        "position": "right",
+        "property": "PlafondAmt"
+      },
+      {
+        "type": "boolean",
+        "position": "center",
+        "property": "IsRevolving"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "RefNo"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "MrMouTypeCode"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "edit",
+            "path": "/Mou/CustomerDoc/Detail",
+            "param": [
+              {
+                "type": "MouCustId",
+                "property": "MouCustId"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+  

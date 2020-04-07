@@ -1,0 +1,200 @@
+{
+    "title": "OUTSTANDING TERM AND CONDITION",
+    "component": [
+        {
+            "type": "textbox",
+            "name": "A.APP_NO",
+            "id": "AppNoId",
+            "value": "",
+            "label": "Application No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "AG.AGRMNT_NO",
+            "id": "AgrmntNoId",
+            "value": "",
+            "label": "Agreement No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "AG.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "AG.PROD_OFFERING_NAME",
+            "id": "ProdOfferingNameId",
+            "value": "",
+            "label": "Product Offering Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type" : "datepicker",
+            "datatype": "date",
+            "name" : "AG.GO_LIVE_DT",
+            "id" : "GoLiveId",
+            "value" : "",
+            "restriction": "gte",
+            "label" : "Go Live Date <=",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "name": "AG.OFFICE_NAME", 
+            "id": "OfficeNameId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "datatype": "text",
+            "isFromURL": true,
+            "isSelectOne": false,
+            "url": "http://r3app-server/foundation_r3/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "label": "Office Name",
+            "criteriaPropName" : "",
+            "criteriaPropValue" : "",
+            "items": [],
+            "itemsUrl": []
+        },
+        {
+            "type" : "datepicker",
+            "datatype": "date",
+            "name" : "AG.GO_LIVE_DT",
+            "id" : "GoLiveGTId",
+            "value" : "",
+            "restriction": "lte",
+            "label" : "Go Live Date >=",
+            "placeholder": "Placeholder"
+        }
+    ],
+    "querystring": {
+        "select": "SELECT A.APP_NO AS AppNo, AG.AGRMNT_NO AS AgrmntNo, AG.CUST_NAME AS CustName, AG.PROD_OFFERING_NAME AS ProdOfferingName, AG.GO_LIVE_DT AS GoLiveDt, AG.OFFICE_NAME AS OfficeName, A.APP_ID AS AppId",
+        "from": "FROM dbo.APP A WITH(NOLOCK) JOIN dbo.AGRMNT AG WITH(NOLOCK) ON A.APP_ID = AG.APP_ID"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "APPLICATION NO",
+            "name": "A.APP_NO"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "AGREEMENT NO",
+            "name": "AG.AGRMNT_NO"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "CUSTOMER NAME",
+            "name": "AG.CUST_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Product Offering Name",
+            "name": "AG.PROD_OFFERING_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Office Name",
+            "name": "AG.OFFICE_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Go Live Date",
+            "name": "AG.GO_LIVE_DT"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Action"
+        }
+    ],
+    "bodyList": [
+        {
+            "type" : "link",
+            "position" : "center",
+            "property" : "AppNo",
+            "target" : "_blank",
+            "path" : "//",
+            "param" : [
+                {
+                    "type" : "",
+                    "property" : ""
+                }
+            ]
+        },
+        {
+            "type" : "link",
+            "position": "center",
+            "property": "AgrmntNo",
+            "target" : "_blank",
+            "path" : "//",
+            "param" : [
+                {
+                    "type" : "",
+                    "property" : ""
+                }
+            ]
+        },
+        {
+            "type" : "link",
+            "position": "center",
+            "property": "CustName",
+            "target" : "_blank",
+            "path" : "//",
+            "param" : [
+                {
+                    "type" : "",
+                    "property" : ""
+                }
+            ]
+        },
+        {
+            "type" : "link",
+            "position": "center",
+            "property": "ProdOfferingName",
+            "target" : "_blank",
+            "path" : "//",
+            "param" : [
+                {
+                    "type" : "",
+                    "property" : ""
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "OfficeName"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "GoLiveDt"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "edit",
+                    "path": "/AddProcess/OutstandingTC/Detail",
+                    "param": [
+                        {
+                            "type": "AppId",
+                            "property": "AppId"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

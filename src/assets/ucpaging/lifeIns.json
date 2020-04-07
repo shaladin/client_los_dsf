@@ -1,0 +1,58 @@
+{
+    "isSeq": true,
+    "headerList": [
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Name",
+        "name": "sortId1",
+        "width": "width-50-per"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Age",
+        "name": "sortId2",
+        "width": "width-50-per"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Object Type",
+        "name": "sortId3",
+        "width": "width-50-per"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Check"
+      }
+    ],
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "center",
+        "property": "InsuredName"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "Age"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "MrCustTypeCode"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "checkbox",
+            "property": "AppLifeInsDId"
+          }
+        ]
+      }
+    ]
+  }

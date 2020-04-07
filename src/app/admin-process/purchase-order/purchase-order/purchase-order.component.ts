@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { FormArray, FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
   selector: 'app-purchase-order',
@@ -13,12 +14,13 @@ export class PurchaseOrderComponent implements OnInit {
 
   AppId: number;
   AgrmntId: number;
-  arrValue = [];
+  TaskListId: number;
+  arrValue: Array<number>;
   AppAssetList = [];
   tcForm: FormGroup = this.fb.group({
   });
-  
-  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder) { 
+
+  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.AppId = params["AppId"];
@@ -26,7 +28,11 @@ export class PurchaseOrderComponent implements OnInit {
       if (params["AgrmntId"] != null) {
         this.AgrmntId = params["AgrmntId"];
       }
-    });}
+      if (params["TaskListId"] != null) {
+        this.TaskListId = params["TaskListId"];
+      }
+    });
+  }
 
   ngOnInit() {
     this.arrValue.push(this.AgrmntId);
@@ -35,7 +41,7 @@ export class PurchaseOrderComponent implements OnInit {
     }
     this.http.post(AdInsConstant.GetAppAssetListByAgrmntId, appAssetObj).subscribe(
       (response) => {
-        console.log(response);  
+        this.AppAssetList = response["ReturnObject"];
       },
       (error) => {
         console.log(error);
@@ -43,7 +49,35 @@ export class PurchaseOrderComponent implements OnInit {
     );
   }
 
-  SaveForm(){
-    console.log(this.tcForm);
+  SaveForm() {
+    var IsSave = false;
+    if (this.AppAssetList.length != 0) {
+      for (let i = 0; i < this.AppAssetList.length; i++) {
+        if (this.AppAssetList[i].PurchaseOrderNo == "") {
+          IsSave = false;
+          this.toastr.typeErrorCustom("Please submit purchase order first!");
+          break;
+        } else {
+          IsSave = true;
+        }
+      }
+    } else {
+      this.toastr.typeErrorCustom("Please submit purchase order first!");
+    }
+
+    if (IsSave) {
+      var workflowModel = {
+        TaskListId: this.TaskListId
+      }
+      this.http.post(AdInsConstant.ResumeWorkflowPurchaseOrder, workflowModel).subscribe(
+        (response) => {
+          this.AppAssetList = response["ReturnObject"];
+          this.toastr.successMessage(response["message"]);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
   }
 }
