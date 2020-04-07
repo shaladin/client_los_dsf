@@ -99,7 +99,9 @@ import { LegalReviewDetailComponent } from './legal-review/legal-review-detail/l
     MouApprovalGeneralComponent,
     MouApprovalFactoringComponent,
     MouRequestAddcollComponent,
-    MouRequestAddcollAddeditComponent
+    MouRequestAddcollAddeditComponent,
+    MouReviewGeneralComponent,
+    MouViewApprovalHistoryComponent
   ],
   exports: [],
   providers: [NGXToastrService],
