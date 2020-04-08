@@ -55,6 +55,8 @@ import { RsvFundPagingComponent } from "./reserved-fund/reserved-fund-paging/res
 import { RsvFundViewComponent } from "./reserved-fund/reserved-fund-view/reserved-fund-view.component";
 import { AppFinDataComponent } from './nap-tab/app-fin-data/app-fin-data.component';
 import { NgxCurrencyModule } from "ngx-currency";
+import { CreditInvestigationDetailComponent } from "./credit-investigation/credit-investigation-detail/credit-investigation-detail.component";
+import { ViewAppCustDataComponent } from "./credit-investigation/component/view-app-cust-data.component";
 export const customCurrencyMaskConfig = {     
     align: "left",     
     allowNegative: true,     
@@ -107,7 +109,9 @@ export const customCurrencyMaskConfig = {
         AssetDataComponent,
         RsvFundPagingComponent,
         RsvFundViewComponent,
-        AppFinDataComponent
+        AppFinDataComponent,
+        CreditInvestigationDetailComponent,
+        ViewAppCustDataComponent
         ],
     imports: [ 
         NapRoutingModule,

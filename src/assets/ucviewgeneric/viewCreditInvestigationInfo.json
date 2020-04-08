@@ -1,0 +1,76 @@
+{
+  "title": "",
+  "subsection": [
+    {
+      "subSectionId": "CreditInvestigationMainInfoId",
+      "subSectionTitle": "Main Information",
+      "mainInfoUrl": "http://localhost:5001/Generic/GetDataViewBySQL",
+      "mainInfo": [
+        {
+          "type": "link",
+          "label": "Application No",
+          "property": "AppNo",
+          "path": "/test/paging",
+          "target" : "_blank",
+          "param": [
+            {
+              "property": "AppId"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "label": "Original Office",
+          "property": "OriOfficeName"
+        },
+        {
+          "type": "text",
+          "label": "Customer Name",
+          "property": "CustName"
+        },
+        {
+          "type": "text",
+          "label": "Product Offering Name",
+          "property": "ProdOfferingName"
+        },
+        {
+          "type": "text",
+          "label": "Tenor",
+          "property": "Tenor"
+        },
+        {
+          "type": "text",
+          "label": "Currency",
+          "property": "CurrCode"
+        },
+        {
+          "type": "text",
+          "label": "Order Information",
+          "property": "OrderInfoName"
+        },        
+        {
+          "type": "text",
+          "label": "Asset Name",
+          "property": "FullAssetName"
+        },
+        {
+          "type": "link",
+          "label": "Lead No",
+          "property": "LeadNo",
+          "path": "/test/paging",
+          "target" : "_blank",
+          "param": [
+            {
+              "property": "LeadId"
+            }
+          ]
+        }
+      ],
+      "querystring": {
+        "select": "SELECT A.APP_NO AS AppNo, A.APP_ID AS AppId, AC.CUST_NAME AS CustName, L.LEAD_NO AS LeadNo, L.LEAD_ID AS LeadId, AA.FULL_ASSET_NAME AS FullAssetName, A.TENOR AS Tenor, A.CURR_CODE AS CurrCode, A.ORI_OFFICE_NAME AS OriOfficeName, A.PROD_OFFERING_NAME AS ProdOfferingName, RM.DESCR AS OrderInfoName",
+          "from": "FROM dbo.APP A WITH(NOLOCK) JOIN dbo.APP_CUST AC WITH(NOLOCK) ON A.APP_ID = AC.APP_ID JOIN dbo.APP_ASSET AA WITH(NOLOCK) ON A.APP_ID = AA.APP_ID LEFT JOIN dbo.LEAD L WITH(NOLOCK) ON A.LEAD_ID = L.LEAD_ID LEFT JOIN V_REF_MASTER RM WITH(NOLOCK) ON A.MR_ORDER_INFO_CODE = RM.MASTER_CODE AND RM.REF_MASTER_TYPE_CODE = 'ORDER_INFO'",
+          "where": "WHERE A.APP_ID = {0}"
+      }
+    }
+  ]
+}
