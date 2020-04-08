@@ -48,6 +48,10 @@ import { MouViewApprovalHistoryComponent } from './mou-customer/mou-view-approva
 // import { ShowErrorsComponent } from "./app/test-new/show-errors.component";
 import { LegalReviewPagingComponent } from './legal-review/legal-review-paging/legal-review-paging.component';
 import { LegalReviewDetailComponent } from './legal-review/legal-review-detail/legal-review-detail.component';
+import { MouDetailGeneralComponent } from "./mou-customer-request/mou-detail-general/mou-detail-general.component";
+import { MouDetailFactoringComponent } from "./mou-customer-request/mou-detail-factoring/mou-detail-factoring.component";
+import { MouCustAssetComponent } from "./mou-customer-request/mou-detail-general/mou-cust-asset/mou-cust-asset.component";
+import { MouCustAssetDetailComponent } from "./mou-customer-request/mou-detail-general/mou-cust-asset/mou-cust-asset-detail/mou-cust-asset-detail.component";
 @NgModule({
   imports: [
     MouRoutingModule,
@@ -99,7 +103,13 @@ import { LegalReviewDetailComponent } from './legal-review/legal-review-detail/l
     MouApprovalGeneralComponent,
     MouApprovalFactoringComponent,
     MouRequestAddcollComponent,
-    MouRequestAddcollAddeditComponent
+    MouRequestAddcollAddeditComponent,
+    MouReviewGeneralComponent,
+    MouDetailGeneralComponent,
+    MouDetailFactoringComponent,
+    MouCustAssetComponent,
+    MouCustAssetDetailComponent,
+    MouViewApprovalHistoryComponent
   ],
   exports: [],
   providers: [NGXToastrService],
