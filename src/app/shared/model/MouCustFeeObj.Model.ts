@@ -8,3 +8,4 @@ export class MouCustFeeObj {
     RowVersion: any;
     constructor(){ this.MouCustFeeId = 0; this.RowVersion = "" }
 }
+  

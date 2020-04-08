@@ -1,0 +1,168 @@
+{
+    "title": "Purchase Order Paging",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "textbox",
+            "name": "A.APP_NO",
+            "id": "ApplicationNoId",
+            "value": "",
+            "label": "Application No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "AC.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type" : "textbox",
+            "name" : "PROD_OFFERING_NAME",
+            "id" : "ProdOfferingNameId",
+            "value" : "",
+            "label" : "Prod Offering Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "DISTRIBUTION_STAT",
+            "id": "DistributionStatusId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "isSelectOne": true,
+            "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
+            "label": "Distribution Status",
+            "criteriaPropName": "RefMasterTypeCode",
+            "criteriaPropValue": "DISTRIBUTION_STAT",
+            "items": [],
+            "itemsUrl": []
+        },
+        {
+            "type" : "textbox",
+            "name" : "WF.USERNAME",
+            "id" : "TaskClaimById",
+            "value" : "",
+            "label" : "Task Claim By",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "TASK_CLAIM_STAT",
+            "id": "TaskClaimStatId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "isSelectOne": true,
+            "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
+            "label": "Task Claim Status",
+            "criteriaPropName": "RefMasterTypeCode",
+            "criteriaPropValue": "OFFICE_CLASS",
+            "items": [],
+            "itemsUrl": []
+          }
+    ],
+    "querystring": {
+        "select": "SELECT A.APP_NO,AC.CUST_NAME as CustName, A.PROD_OFFERING_NAME as ProdOfferingName, WF.USERNAME as ClaimBy, WF.WF_TASK_LIST_ID as WFTaskListId, WF.TRANSACTION_CODE as TrxNo",
+        "from": "FROM APP A WITH(NOLOCK) JOIN APP_CUST AC ON A.APP_ID = AC.APP_ID JOIN V_WF_TASK_LIST WF WITH(NOLOCK) ON A.APP_NO = WF.TRANSACTION_CODE"
+    },
+    "headerList": [
+        {
+            "type": "text",
+            "position": "center",
+            "label": "SLA",
+            "name": "SLA"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Claim By",
+            "name": "WF.USERNAME"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Application No",
+            "name": "A.APP_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Customer Name",
+            "name": "AC.CUST_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Prod Offering Name",
+            "name": "A.PROD_OFFERING_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Distribution Status",
+            "name": ""
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Action"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "Center ",
+            "property": "Sla"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "ClaimBy"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "AppNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "ProdOfferingName"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "edit",
+                    "path": "/AdminProcess/PurchaseOrder/PO",
+                    "param": [
+                        {
+                            "type": "AgrmntId",
+                            "property": "AgrmntId"
+                        },
+                        {
+                            "type" : "WFTaskListId",
+                            "property" : "WFTaskListId"
+                        },
+                        {
+                            "type" : "TrxNo",
+                            "property" : "TrxNo"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -25,6 +25,7 @@ export class CustUcaddressComponent implements OnInit {
   @Input() showFax: boolean = true;
   @Input() showOwnership: boolean = false;
   @Input() showSubsection: boolean = true;
+  @Input() isRequired: boolean = true;
 
   houseOwnershipObj: any;
   inputLookupObj: any;
@@ -58,17 +59,16 @@ export class CustUcaddressComponent implements OnInit {
         FaxArea: '',
         Fax: '',
         MrHouseOwnershipCode: '',
+        SubZipcode:''
       };
     }
-    
-    
     this.UCAddrForm.addControl(this.identifier, this.fb.group({
-      Addr: ['', Validators.required],
-      AreaCode4: ['', [Validators.required, Validators.pattern("^[0-9]+$"), Validators.maxLength(3)]],
-      AreaCode3: ['', [Validators.required, Validators.pattern("^[0-9]+$"), Validators.maxLength(3)]],
-      AreaCode2: ['', Validators.required],
-      AreaCode1: ['', Validators.required],
-      City: ['', Validators.required],
+      Addr: [''],
+      AreaCode4: ['', [Validators.pattern("^[0-9]+$"), Validators.maxLength(3)]],
+      AreaCode3: ['', [Validators.pattern("^[0-9]+$"), Validators.maxLength(3)]],
+      AreaCode2: [''],
+      AreaCode1: [''],
+      City: [''],
       PhnArea1: ['', [Validators.pattern("^[0-9]+$")]],
       Phn1: ['', [ Validators.pattern("^[0-9]+$")]],
       PhnExt1: ['', Validators.pattern("^[0-9]+$")],
@@ -80,7 +80,8 @@ export class CustUcaddressComponent implements OnInit {
       PhnExt3: ['', Validators.pattern("^[0-9]+$")],
       FaxArea: ['', Validators.pattern("^[0-9]+$")],
       Fax: ['', Validators.pattern("^[0-9]+$")],
-      MrHouseOwnershipCode: ['']
+      MrHouseOwnershipCode: [''],
+      SubZipcode:['']
     }));
 
     if(this.inputField.inputLookupObj == undefined){
@@ -93,6 +94,7 @@ export class CustUcaddressComponent implements OnInit {
     this.inputField.inputLookupObj.urlEnviPaging = "http://r3app-server.ad-ins.com/FOUNDATION_R3";
     this.inputField.inputLookupObj.pagingJson = "./assets/uclookup/zipcode/lookupZipcode.json";
     this.inputField.inputLookupObj.genericJson = "./assets/uclookup/zipcode/lookupZipcode.json";
+    this.inputField.inputLookupObj.isRequired = this.isRequired;
 
     if(this.showOwnership == true){
       this.bindHouseOwnershipObj();
@@ -106,7 +108,8 @@ export class CustUcaddressComponent implements OnInit {
         AreaCode2: event.AreaCode2,
         AreaCode1: event.AreaCode1,
         PhnArea1: event.PhnArea,
-        City: event.City
+        City: event.City,
+        SubZipcode: event.SubZipcode
       });
       this.inputField.inputLookupObj.nameSelect = event.Zipcode;
       this.inputField.inputLookupObj.idSelect = event.Zipcode;
@@ -117,7 +120,6 @@ export class CustUcaddressComponent implements OnInit {
     refMasterObj.RefMasterTypeCode = "BUILDING_OWNERSHIP";
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
-        console.log(response);
         this.houseOwnershipObj = response["ReturnObject"];
         if(this.houseOwnershipObj.length > 0 
           && (this.UCAddrForm.controls[this.identifier]["controls"]["MrHouseOwnershipCode"].value == ""

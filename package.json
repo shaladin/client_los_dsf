@@ -12,7 +12,7 @@
   },
   "private": true,
   "dependencies": {
-    "@adins/uc-show-errors": "0.0.1",
+    "@adins/uc-show-errors": "^0.0.5",
     "@adins/uc-subsection": "^1.0.4",
     "@adins/ucaddress": "^1.0.10",
     "@adins/ucgridfooter": "^1.0.1",
@@ -90,6 +90,7 @@
     "rxjs": "6.3.3",
     "screenfull": "3.3.3",
     "sweetalert2": "7.28.8",
+    "uc-input": "^2.0.0",
     "ucaddress": "^1.0.5",
     "videogular2": "6.3.0",
     "web-animations-js": "2.2.5",
@@ -97,8 +98,8 @@
     "zone.js": "0.8.26"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.13.9",
-    "@angular/cli": "^7.3.9",
+    "@angular-devkit/build-angular": "^0.13.10",
+    "@angular/cli": "^7.3.10",
     "@angular/compiler-cli": "^7.2.16",
     "@angular/language-service": "7.0.0",
     "@fortawesome/fontawesome-free": "^5.13.0",
