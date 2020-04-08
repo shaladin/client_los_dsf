@@ -309,16 +309,11 @@ export class LeadInputLeadDataComponent implements OnInit {
       this.setLeadAsset();
       this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
       this.setLeadApp();
-      console.log('isi leadinput');
-      console.log(this.leadInputLeadDataObj);
       this.http.post(this.editLeadData, this.leadInputLeadDataObj).subscribe(
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
-          // this.router.navigate(
-          //   ["/Customer/CustomerPersonal/Address"], 
-          //   { queryParams: { "IdCust": this.IdCust }}
-          //   );
+          this.router.navigate(["/Lead/Lead/Paging"]);
           // console.log(response);
           // this.wizard.goToNextStep();
         },
@@ -330,16 +325,11 @@ export class LeadInputLeadDataComponent implements OnInit {
       this.leadInputLeadDataObj = new LeadInputLeadDataObj();
       this.setLeadAsset();
       this.setLeadApp();
-      console.log('isi leadinput');
-      console.log(this.leadInputLeadDataObj);
       this.http.post(this.editLeadData, this.leadInputLeadDataObj).subscribe(
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
-          // this.router.navigate(
-          //   ["/Customer/CustomerPersonal/Address"], 
-          //   { queryParams: { "IdCust": this.IdCust }}
-          //   );
+          this.router.navigate(["/Lead/Lead/Paging"]);
           // console.log(response);
           // this.wizard.goToNextStep();
         },
