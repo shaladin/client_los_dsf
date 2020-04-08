@@ -15,7 +15,7 @@ export class PurchaseOrderComponent implements OnInit {
   AppId: number;
   AgrmntId: number;
   TaskListId: number;
-  arrValue = [];
+  arrValue: Array<number>;
   AppAssetList = [];
   tcForm: FormGroup = this.fb.group({
   });
@@ -66,14 +66,13 @@ export class PurchaseOrderComponent implements OnInit {
     }
 
     if (IsSave) {
-      return false;
-
       var workflowModel = {
         TaskListId: this.TaskListId
       }
       this.http.post(AdInsConstant.ResumeWorkflowPurchaseOrder, workflowModel).subscribe(
         (response) => {
           this.AppAssetList = response["ReturnObject"];
+          this.toastr.successMessage(response["message"]);
         },
         (error) => {
           console.log(error);

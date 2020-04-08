@@ -7,7 +7,7 @@ export const Full_ROUTES: Routes = [
     path: 'dashboard',
     loadChildren: './dashboard/dashboard.module#DashboardModule'
   },
-   {
+  {
     path: 'forms',
     loadChildren: './forms/forms.module#FormModule'
   },
@@ -48,8 +48,11 @@ export const Full_ROUTES: Routes = [
     loadChildren: './view/view.module#ViewModule'
   },
   {
+    path: 'AddProcess',
+    loadChildren: './add-process/add-process.module#AddProcessModule'
+  },
+  {
     path: 'Lead',
     loadChildren: './lead/lead.module#LeadModule'
-  }
-    
+  }    
 ];

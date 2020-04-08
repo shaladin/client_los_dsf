@@ -1,10 +1,13 @@
+import { CriteriaObj } from "./CriteriaObj.model";
+
 export class UcPagingObj{
-    _url: any
-    enviromentUrl: any
-    apiQryPaging: any
-    deleteUrl: any
-    pagingJson: any
-    ddlEnvironments: any
+    _url: string;
+    enviromentUrl: string;
+    apiQryPaging: string;
+    deleteUrl: string;
+    pagingJson: string;
+    ddlEnvironments: any;
+    addCritInput: Array<CriteriaObj>;
 
     constructor() {
         this.ddlEnvironments = [];
