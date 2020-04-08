@@ -133,6 +133,7 @@ import { UcinputnumberModule } from "@adins/ucinputnumber";
     MouApprovalFactoringComponent,
     MouRequestAddcollComponent,
     MouRequestAddcollAddeditComponent,
+    MouCustListedCustFctrDetailComponent
   ]
 })
 
