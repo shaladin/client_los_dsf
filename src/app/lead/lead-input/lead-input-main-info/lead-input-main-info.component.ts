@@ -294,7 +294,7 @@ getLookUpSalesName(event) {
   }
 
   setLead(){
-    this.leadObj.LeadNo = "129";
+    this.leadObj.LeadNo = "1";
     this.leadObj.OriOfficeCode = this.MainInfoForm.controls["OfficeCode"].value;
     this.leadObj.OriOfficeName = this.MainInfoForm.controls["OfficeName"].value;
     this.leadObj.CrtOfficeCode = this.MainInfoForm.controls["CrtOfficeCode"].value;
@@ -317,12 +317,11 @@ getLookUpSalesName(event) {
   }
 
   SaveForm(){
+    console.log("aaaa")
     if(this.pageType == "edit") {
       this.leadObj = new LeadObj();
       this.setLead();
       this.leadObj.LeadId = this.LeadId;
-      console.log("sss");
-      console.log(this.leadObj)
       this.http.post(this.editLead, this.leadObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
@@ -336,8 +335,6 @@ getLookUpSalesName(event) {
     } else {
       this.leadObj = new LeadObj();
       this.setLead();
-      console.log("sss");
-      console.log(this.leadObj)
       this.http.post(this.addLead, this.leadObj).subscribe(
         (response) => {
           this.responseLead = response;
