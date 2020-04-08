@@ -54,7 +54,17 @@ import { AssetDataComponent } from "./nap-tab/asset-data/asset-data.component";
 import { RsvFundPagingComponent } from "./reserved-fund/reserved-fund-paging/reserved-fund-paging.component";
 import { RsvFundViewComponent } from "./reserved-fund/reserved-fund-view/reserved-fund-view.component";
 import { AppFinDataComponent } from './nap-tab/app-fin-data/app-fin-data.component';
-
+import { NgxCurrencyModule } from "ngx-currency";
+export const customCurrencyMaskConfig = {     
+    align: "left",     
+    allowNegative: true,     
+    allowZero: true,     
+    decimal: ".",     
+    precision: 2,     
+    prefix: "",     
+    suffix: "",     
+    thousands: ",",     
+    nullable: false };
 
 
 @NgModule({
@@ -120,7 +130,8 @@ import { AppFinDataComponent } from './nap-tab/app-fin-data/app-fin-data.compone
         UcgridviewModule,
         UcShowErrorsModule,
         UCSearchModule,
-        UcinputnumberModule
+        UcinputnumberModule,
+        NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
     ],
     exports: [],
     providers: [NGXToastrService],
