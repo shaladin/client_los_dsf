@@ -101,8 +101,11 @@ export class DocSignerDetailComponent implements OnInit {
 
           this.agrmntSignerObj.AgrmntSignerId = this.ResponseAgrmntSignerObj.AgrmntSignerId;
           this.agrmntSignerObj.SupplBranchEmpNo = this.ResponseAgrmntSignerObj.SupplBranchEmpNo;
+          this.agrmntSignerObj.SupplBranchEmpName = this.ResponseAgrmntSignerObj.SupplBranchEmpName;
           this.agrmntSignerObj.MfEmpNo1 = this.ResponseAgrmntSignerObj.MfEmpNo1;
+          this.agrmntSignerObj.MfEmpName1 = this.ResponseAgrmntSignerObj.MfEmpName1;
           this.agrmntSignerObj.MfEmpNo2 = this.ResponseAgrmntSignerObj.MfEmpNo2;
+          this.agrmntSignerObj.MfEmpName2 = this.ResponseAgrmntSignerObj.MfEmpName2;
           this.agrmntSignerObj.AppCustCompanyMgmntShrholder1Id = this.ResponseAgrmntSignerObj.AppCustCompanyMgmntShrholder1Id;
           this.agrmntSignerObj.AppCustCompanyMgmntShrholder2Id = this.ResponseAgrmntSignerObj.AppCustCompanyMgmntShrholder2Id;
           this.agrmntSignerObj.AppCustCompanyMgmntShrholder3Id = this.ResponseAgrmntSignerObj.AppCustCompanyMgmntShrholder3Id;
@@ -213,7 +216,9 @@ export class DocSignerDetailComponent implements OnInit {
 
   getLookupBranchEmp(event) {
     this.agrmntSignerObj.SupplBranchEmpNo = event.VendorEmpNo;
+    this.agrmntSignerObj.SupplBranchEmpName = event.VerndorEmpName;
     this.agrmntSignerObj.MrJobPositionSupplBranchEmpCode = event.MrVendorEmpPositionCode;
+    
     this.DocSignerForm.patchValue({
       MrJobPositionSupplBranchEmpName: event.JobTitleName
     })
@@ -221,6 +226,7 @@ export class DocSignerDetailComponent implements OnInit {
 
   getLookupOfficeEmp1(event) {
     this.agrmntSignerObj.MfEmpNo1 = event.OfficeEmpNo;
+    this.agrmntSignerObj.MfEmpName1  = event.OfficeEmpName;
     this.agrmntSignerObj.MrJobPositionMfEmpNo1Code = event.JobTitleCode;
     this.DocSignerForm.patchValue({
       MrJobPositionMfEmpNo1Name: event.JobTitleName
@@ -229,6 +235,7 @@ export class DocSignerDetailComponent implements OnInit {
 
   getLookupOfficeEmp2(event) {
     this.agrmntSignerObj.MfEmpNo2 = event.OfficeEmpNo;
+    this.agrmntSignerObj.MfEmpName2  = event.OfficeEmpName;
     this.agrmntSignerObj.MrJobPositionMfEmpNo2Code = event.JobTitleCode;
     this.DocSignerForm.patchValue({
       MrJobPositionMfEmpNo2Name: event.JobTitleName
@@ -258,11 +265,8 @@ export class DocSignerDetailComponent implements OnInit {
 
   SaveForm() {
     this.agrmntSignerObj.AgrmntId = this.AgrmntId;
-    this.agrmntSignerObj.SupplBranchEmpName = this.DocSignerForm.controls["lookupBranchEmp"]["controls"].value.value;
     this.agrmntSignerObj.MrJobPositionSupplBranchEmpName = this.DocSignerForm.controls.MrJobPositionSupplBranchEmpName.value;
-    this.agrmntSignerObj.MfEmpName1 = this.DocSignerForm.controls["lookupOfficeEmp1"]["controls"].value.value;
     this.agrmntSignerObj.MrJobPositionMfEmpNo1Name = this.DocSignerForm.controls.MrJobPositionMfEmpNo1Name.value;
-    this.agrmntSignerObj.MfEmpName2 = this.DocSignerForm.controls["lookupOfficeEmp2"]["controls"].value.value;
     this.agrmntSignerObj.MrJobPositionMfEmpNo2Name = this.DocSignerForm.controls.MrJobPositionMfEmpNo2Name.value;
     
   if(this.MrCustTypeCode == "COMPANY"){
