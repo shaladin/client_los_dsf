@@ -9,7 +9,9 @@ export const ROUTES: RouteInfo[] = [
     path: '', title: 'MOU', icon: 'fas fa-user-plus', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false,
     submenu: [
       { path: '/Mou/Cust/ReviewPaging', title: 'MOU Review', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
-      { path: '/Mou/Cust/Approval', title: 'MOU Customer Approval', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] }
+      { path: '/Mou/Cust/Approval', title: 'MOU Customer Approval', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+      { path: '/Mou/CustomerDoc/Paging', title: 'MOU Customer Document', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+      { path: '/Mou/CustomerLegalReview/Paging', title: 'MOU Customer Legal Review', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] }      
     ]
   },
   {

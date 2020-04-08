@@ -1,0 +1,68 @@
+{
+    "title": "Lookup - Customer",
+    "component": [
+        {
+            "type": "textbox",
+            "name": "AM.FULL_ASSET_CODE",
+            "id": "FullAssetCode",
+            "value": "",
+            "label": "Full Asset Code",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "AM.FULL_ASSET_NAME",
+            "id": "FullAssetName",
+            "value": "",
+            "label": "Full Asset Name",
+            "placeholder": "Placeholder"
+        }
+    ],
+    "querystring": {
+        "select": "SELECT AM.FULL_ASSET_CODE AS fullAssetCode, AM.FULL_ASSET_NAME AS fullAssetName, AM.ASSET_MASTER_ID AS assetMasterId",
+        "from": "FROM dbo.ASSET_MASTER AS AM WITH(NOLOCK) INNER JOIN dbo.ASSET_TYPE AS AT WITH(NOLOCK) ON AM.ASSET_TYPE_ID = AT.ASSET_TYPE_ID"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Full Asset Code",
+            "name": "AM.FULL_ASSET_CODE"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Full Asset Name",
+            "name": "AM.FULL_ASSET_NAME"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Action"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "fullAssetCode"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "fullAssetName"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "select",
+                    "property": "assetMasterId"
+                }
+            ]
+        }
+    ],
+    "propertyId": "assetMasterId",
+    "propertyName": "fullAssetName"
+}

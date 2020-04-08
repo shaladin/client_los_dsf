@@ -1,0 +1,58 @@
+{
+  "title": "",
+  "subsection": [
+    {
+      "subSectionId": "CustConfirmMainInformationId",
+      "subSectionTitle": "Customer Information",
+      "mainInfoUrl": "http://localhost:5001/Generic/GetDataViewBySQL",
+      "mainInfo": [
+        {
+          "type": "link",
+          "label": "Application No",
+          "property": "AppNo",
+          "path": "/test/paging",
+          "target" : "_blank",
+          "param": [
+            {
+              "property": "AppId"
+            }
+          ]
+        },
+        {
+          "type": "link",
+          "label": "Customer No",
+          "property": "CustNo",
+          "path": "/test/paging",
+          "target" : "_blank",
+          "param": [
+            {
+              "property": "CustNo"
+            }
+          ]
+        },
+        {
+          "type": "link",
+          "label": "Agreement No",
+          "property": "AgrmntNo",
+          "path": "/test/paging",
+          "target" : "_blank",
+          "param": [
+            {
+              "property": "AgrmntId"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "label": "Customer Name",
+          "property": "CustName"
+        }
+      ],
+      "querystring": {
+        "select": "SELECT A.APP_NO AS AppNo, AGR.CUST_NO AS CustNo, AGR.CUST_NAME AS CustName, AGR.AGRMNT_NO AS AgrmntNo, AGR.AGRMNT_ID AS AgrmntId, A.APP_ID AS AppId",
+        "from": "FROM dbo.AGRMNT AGR WITH(NOLOCK) JOIN dbo.APP A WITH(NOLOCK) ON A.APP_ID = AGR.APP_ID",
+        "where": "WHERE AGR.AGRMNT_ID = {0}"
+      }
+    }
+  ]
+}

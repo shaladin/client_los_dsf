@@ -7,7 +7,7 @@ export const Full_ROUTES: Routes = [
     path: 'dashboard',
     loadChildren: './dashboard/dashboard.module#DashboardModule'
   },
-   {
+  {
     path: 'forms',
     loadChildren: './forms/forms.module#FormModule'
   },
@@ -36,11 +36,23 @@ export const Full_ROUTES: Routes = [
     loadChildren: './inquiry/inquiry.module#InquiryModule'
   },
   {
+    path: 'AppDupCheck',
+    loadChildren: './app-dup-check/app-dup-check.module#AppDupCheckModule'
+  },
+  {
     path: 'AdminProcess',
     loadChildren: './admin-process/admin-process.module#AdminProcessModule'
   },
   {
     path: 'View',
     loadChildren: './view/view.module#ViewModule'
-  }
+  },
+  {
+    path: 'AddProcess',
+    loadChildren: './add-process/add-process.module#AddProcessModule'
+  },
+  {
+    path: 'Lead',
+    loadChildren: './lead/lead.module#LeadModule'
+  }    
 ];
