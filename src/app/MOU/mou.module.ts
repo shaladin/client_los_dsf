@@ -55,6 +55,7 @@ import { MouReviewGeneralComponent } from "./mou-customer/mou-review/mou-review-
 import { MouViewApprovalHistoryComponent } from './mou-customer/mou-view-approval-history/mou-view-approval-history.component';
 import { LegalReviewPagingComponent } from './legal-review/legal-review-paging/legal-review-paging.component';
 import { LegalReviewDetailComponent } from './legal-review/legal-review-detail/legal-review-detail.component';
+import { UcinputnumberModule } from "@adins/ucinputnumber";
 @NgModule({
   imports: [
     MouRoutingModule,
@@ -75,7 +76,8 @@ import { LegalReviewDetailComponent } from './legal-review/legal-review-detail/l
     UcShowErrorsModule,
     UclookupgenericModule,
     UcviewgenericModule,
-    SharingComponentModule
+    SharingComponentModule,
+    UcinputnumberModule
   ],
   declarations: [
     DocSignerComponent,
@@ -116,7 +118,9 @@ import { LegalReviewDetailComponent } from './legal-review/legal-review-detail/l
     MouApprovalGeneralComponent,
     MouApprovalFactoringComponent,
     MouRequestAddcollComponent,
-    MouRequestAddcollAddeditComponent
+    MouRequestAddcollAddeditComponent,
+    MouReviewGeneralComponent,
+    MouViewApprovalHistoryComponent
   ],
   exports: [],
   providers: [NGXToastrService],
