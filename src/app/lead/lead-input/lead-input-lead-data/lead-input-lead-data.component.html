@@ -43,7 +43,7 @@
                   <div class="form-group row">
                     <label class="col-md-3 adInsLabel" translate>Down Payment Type</label>
                     <div class="col-md-3">
-                      <mat-radio-group formControlName="MrDownPaymentTypeCode">
+                      <mat-radio-group formControlName="MrDownPaymentTypeCode" (change)="downPaymentChange($event)">
                         <mat-radio-button class="custom-control custom-radio display-inline-block" *ngFor="let item of returnDownPaymentObj" [value]="item.Key">
                           {{item.Value}}
                         </mat-radio-button>

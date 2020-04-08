@@ -14,6 +14,7 @@ import { AssetTypeObj } from 'app/shared/model/AssetTypeObj.Model';
 import { LeadInputLeadDataObj } from 'app/shared/model/LeadInputLeadDataObj.Model';
 import { LeadAppObj } from 'app/shared/model/LeadAppObj.Model';
 import { LeadAssetObj } from 'app/shared/model/LeadAssetObj.Model';
+import { AssetMasterObj } from 'app/shared/model/AssetMasterObj.Model';
 
  
 @Component({
@@ -23,50 +24,8 @@ import { LeadAssetObj } from 'app/shared/model/LeadAssetObj.Model';
 })
 
 export class LeadInputLeadDataComponent implements OnInit {
-  jobAddrId: any;
-  othBizAddrId: any;
-  jobDataId: any;
-  rowVersion: any;
   typePage: string;
   LeadId: any;
-  IdCustPersonal: any;
-  custObj: any;
-  getListActiveRefMaster: any;
-  getCustById: any;
-  jobAddressObj: any;
-  otherAddressObj: any;
-  inputJobAddressObj: InputFieldObj;
-  inputOtherAddressObj: InputFieldObj;
-  jobStatus: any;
-  listJobStatus: any;
-  jobPosition: any;
-  listJobPosition: any;
-  companyScale: any;
-  listCompanyScale: any;
-  tempProfession: any;
-  tempRefIndustryType: any;
-  professionLookUpObj: any;
-  industryLookUpObj: any;
-  custPersonalJobDataObj: any;
-  custJobDataObj: any;
-  returnCustJobDataObj: any;
-  addJobData: any;
-  editJobData: any;
-  getJobDataByCustId: any;
-  getCustAddr: any;
-  getRefProfession: any;
-  getRefIndustryType: any;
-  refProfessionObj: any;
-  returnRefProfessionObj: any;
-  reqCustPersonalJobDataObj: any;
-  refIndustryTypeObj: any;
-  returnIndustryTypeObj: any;
-  custJobAddrObj: any;
-  custOthBizAddrObj;
-  getJobAddr: any;
-  getOthBizAddr: any;
-  addressObj: any;
-  otherAddrObj: any;
   assetConditionObj: any;
   returnAssetConditionObj: any;
   downPaymentObj: any;
@@ -76,6 +35,11 @@ export class LeadInputLeadDataComponent implements OnInit {
   InputLookupAssetObj: any;
   getListActiveRefMasterUrl: any;
   assetTypeId: number;
+  leadInputLeadDataObj: any;
+  editLeadData: any;
+  getLeadAssetByLeadId: any;
+  getLeadAppByLeadId: any;
+  getAssetMasterForLookupEmployee: any;
   serial1Disabled: boolean = false;
   serial2Disabled: boolean = false;
   serial3Disabled: boolean = false;
@@ -86,6 +50,12 @@ export class LeadInputLeadDataComponent implements OnInit {
   serial3Mandatory: boolean = false;
   serial4Mandatory: boolean = false;
   serial5Mandatory: boolean = false;
+  reqLeadAssetObj: any;
+  resLeadAssetObj: any;
+  reqLeadAppObj: any;
+  resLeadAppObj: any;
+  reqAssetMasterObj: any;
+  resAssetMasterObj: any;
   LeadDataForm = this.fb.group({
     FullAssetCode: [''],
     FullAssetName: [''],
@@ -105,34 +75,24 @@ export class LeadInputLeadDataComponent implements OnInit {
     NTFAmt: [''],
     TotalDownPayment: [''],
     InstallmentAmt:['',Validators.required]
-
   });
-  leadInputLeadDataObj: any;
-  editLeadData = AdInsConstant.AddEditLeadData;
-  leadAppObj: any;
-  leadAssetObj: any;
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) { 
-    // this.getCustById = AdInsConstant.GetCustByCustId;
-    //this.getListActiveRefMaster = AdInsConstant.GetListActiveRefMaster;
-    // this.addJobData = AdInsConstant.AddCustPersonalJobData;
-    // this.editJobData = AdInsConstant.EditCustPersonalJobData;
-    // this.getJobDataByCustId = AdInsConstant.GetCustPersonalJobDataByCustId;
-    // this.getCustAddr = AdInsConstant.GetCustAddr;
-    // this.getRefProfession = AdInsConstant.GetRefProfessionById;
-    // this.getRefIndustryType = AdInsConstant.GetRefIndustryTypeById;
     this.getListActiveRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
+    this.editLeadData = AdInsConstant.AddEditLeadData;
+    this.getLeadAssetByLeadId = AdInsConstant.GetLeadAssetByLeadId;
+    this.getLeadAppByLeadId = AdInsConstant.GetLeadAppByLeadId;
+    this.getAssetMasterForLookupEmployee = AdInsConstant.GetAssetMasterForLookupEmployee;
 
     this.route.queryParams.subscribe(params => {
         if (params["LeadId"] != null) {
             this.LeadId = params["LeadId"];
         }
+        if (params["mode"] != null) {
+          this.typePage = params["mode"];
+      }
     });
   }
-
-  // getLookUpProfession(event) {
-  //   this.tempProfession = event.RefProfessionId;
-  // }
 
   SetAsset(event) {
     this.LeadDataForm.patchValue({
@@ -142,7 +102,17 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.assetTypeId = event.AssetTypeId;
   }
 
+  downPaymentChange(event)
+  {
+    this.LeadDataForm.patchValue({
+      MrDownPaymentTypeCode: event.value,
+    });
+  }
+
   radioChange(event){
+    this.LeadDataForm.patchValue({
+      MrAssetConditionCode: event.value,
+    });
 
     this.serial2Mandatory = false;
     this.serial3Mandatory = false;
@@ -230,8 +200,6 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.http.post(this.getListActiveRefMasterUrl, this.assetConditionObj).subscribe(
       (response) => {
         this.returnAssetConditionObj = response["ReturnObject"];
-        console.log("aaa")
-        console.log(this.returnAssetConditionObj)
         this.LeadDataForm.patchValue({ MrAssetConditionCode: response['ReturnObject'][0]['Key'] });
       }
     );
@@ -241,8 +209,6 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.http.post(this.getListActiveRefMasterUrl, this.downPaymentObj).subscribe(
       (response) => {
         this.returnDownPaymentObj = response["ReturnObject"];
-        console.log("bbb")
-        console.log(this.returnDownPaymentObj)
         this.LeadDataForm.patchValue({ MrDownPaymentTypeCode: response['ReturnObject'][0]['Key'] });
       }
     );
@@ -252,31 +218,83 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.http.post(this.getListActiveRefMasterUrl, this.firstInstObj).subscribe(
       (response) => {
         this.returnFirstInstObj = response["ReturnObject"];
-        console.log("aaa")
-        console.log(this.returnFirstInstObj)
         this.LeadDataForm.patchValue({ MrFirstInstTypeCode: response['ReturnObject'][0]['Key'] });
       }
     );
 
+    if(this.typePage == "edit"){
+      this.reqLeadAssetObj = new LeadAssetObj();
+      this.reqLeadAssetObj.LeadId = this.LeadId;
+      this.http.post(this.getLeadAssetByLeadId, this.reqLeadAssetObj).subscribe(
+        (response) => {
+            this.resLeadAssetObj = response;
+            this.LeadDataForm.patchValue({ 
+              MrDownPaymentTypeCode: this.resLeadAssetObj.MrDownPaymentTypeCode,
+              MrAssetConditionCode: this.resLeadAssetObj.MrAssetConditionCode,
+              ManufacturingYear: this.resLeadAssetObj.ManufacturingYear,
+              AssetPrice: this.resLeadAssetObj.AssetPriceAmt,
+              DownPayment: this.resLeadAssetObj.DownPaymentAmt,
+              SerialNo1: this.resLeadAssetObj.SerialNo1,
+              SerialNo2: this.resLeadAssetObj.SerialNo2,
+              SerialNo3: this.resLeadAssetObj.SerialNo3,
+              SerialNo4: this.resLeadAssetObj.SerialNo4,
+              SerialNo5: this.resLeadAssetObj.SerialNo5,
+            });
+
+            this.reqAssetMasterObj = new AssetMasterObj();
+            this.reqAssetMasterObj.FullAssetCode = this.resLeadAssetObj.FullAssetCode;
+            this.http.post(this.getAssetMasterForLookupEmployee, this.reqAssetMasterObj).subscribe(
+              (response) => {
+                  this.resAssetMasterObj = response;
+                  this.InputLookupAssetObj.nameSelect = this.resAssetMasterObj.FullAssetName;
+                  this.InputLookupAssetObj.jsonSelect = this.resAssetMasterObj;
+                  this.LeadDataForm.patchValue({
+                    FullAssetCode: this.resAssetMasterObj.FullAssetCode,
+                    FullAssetName: this.resAssetMasterObj.FullAssetName,
+                  });
+              });
+        });
+
+      this.reqLeadAppObj = new LeadAppObj();
+      this.reqLeadAppObj.LeadId = this.LeadId;
+      this.http.post(this.getLeadAppByLeadId, this.reqLeadAppObj).subscribe(
+        (response) => {
+            this.resLeadAppObj = response;
+            this.LeadDataForm.patchValue({ 
+              Tenor: this.resLeadAppObj.Tenor,
+              MrFirstInstTypeCode: this.resLeadAppObj.MrFirstInstTypeCode,
+              NTFAmt: this.resLeadAppObj.NtfAmt,
+              TotalDownPayment: this.resLeadAppObj.TotalDownPaymentAmt,
+              InstallmentAmt: this.resLeadAppObj.InstAmt,
+            });
+        });
+    }
   }
-  
-  // setCustJobData(){
-  //   this.custPersonalJobDataObj.CustId = this.IdCust;
-  //   this.custPersonalJobDataObj.RefProfessionId = this.tempProfession;
-  //   this.custPersonalJobDataObj.MrJobPositionCode = this.JobDataEmpForm.controls["JobPosition"].value;
-  //   this.custPersonalJobDataObj.JobTitleName = this.JobDataEmpForm.controls["JobTitleName"].value;
-  //   this.custPersonalJobDataObj.MrJobStatCode = this.JobDataEmpForm.controls["JobStatus"].value;
-  //   this.custPersonalJobDataObj.CoyName = this.JobDataEmpForm.controls["IndustryName"].value;
-  //   this.custPersonalJobDataObj.IsMfEmp = this.JobDataEmpForm.controls["InternalEmployee"].value;
-  //   this.custPersonalJobDataObj.RefIndustryTypeId = this.tempRefIndustryType;
-  //   this.custPersonalJobDataObj.MrCoyScaleCode = this.JobDataEmpForm.controls["CompanyScale"].value;
-  //   this.custPersonalJobDataObj.EmploymentEstablishmentDt = this.JobDataEmpForm.controls["EmpEstablishmentDate"].value;
-  //   this.custPersonalJobDataObj.OthBizName = this.JobDataEmpForm.controls["OtherBusinessName"].value;
-  //   this.custPersonalJobDataObj.OthBizType = this.JobDataEmpForm.controls["OtherBusinessType"].value;
-  //   this.custPersonalJobDataObj.OthBizIndustryTypeCode = this.JobDataEmpForm.controls["OtherBusinessIndustry"].value;
-  //   this.custPersonalJobDataObj.OthBizJobPosition = this.JobDataEmpForm.controls["OtherJobPosition"].value;
-  //   this.custPersonalJobDataObj.OthBizEstablishmentDt = this.JobDataEmpForm.controls["EstablishmentDate"].value;
-  // }
+
+  setLeadAsset(){
+    this.leadInputLeadDataObj.LeadAssetObj.LeadId = this.LeadId;
+    this.leadInputLeadDataObj.LeadAssetObj.FullAssetCode = this.LeadDataForm.controls["FullAssetCode"].value;
+    this.leadInputLeadDataObj.LeadAssetObj.FullAssetName = this.LeadDataForm.controls["FullAssetName"].value;
+    this.leadInputLeadDataObj.LeadAssetObj.MrDownPaymentTypeCode = this.LeadDataForm.controls["MrDownPaymentTypeCode"].value;
+    this.leadInputLeadDataObj.LeadAssetObj.MrAssetConditionCode = this.LeadDataForm.controls["MrAssetConditionCode"].value;
+    this.leadInputLeadDataObj.LeadAssetObj.ManufacturingYear = this.LeadDataForm.controls["ManufacturingYear"].value;
+    this.leadInputLeadDataObj.LeadAssetObj.AssetPriceAmt = this.LeadDataForm.controls["AssetPrice"].value;
+    this.leadInputLeadDataObj.LeadAssetObj.DownPaymentAmt = this.LeadDataForm.controls["DownPayment"].value;
+    this.leadInputLeadDataObj.LeadAssetObj.SerialNo1 = this.LeadDataForm.controls["SerialNo1"].value;
+    this.leadInputLeadDataObj.LeadAssetObj.SerialNo2 = this.LeadDataForm.controls["SerialNo2"].value;
+    this.leadInputLeadDataObj.LeadAssetObj.SerialNo3 = this.LeadDataForm.controls["SerialNo3"].value;
+    this.leadInputLeadDataObj.LeadAssetObj.SerialNo4 = this.LeadDataForm.controls["SerialNo4"].value;
+    this.leadInputLeadDataObj.LeadAssetObj.SerialNo5 = this.LeadDataForm.controls["SerialNo5"].value;
+  }
+
+  setLeadApp(){
+    this.leadInputLeadDataObj.LeadAppObj.LeadId = this.LeadId;
+    this.leadInputLeadDataObj.LeadAppObj.Tenor = this.LeadDataForm.controls["Tenor"].value;
+    this.leadInputLeadDataObj.LeadAppObj.MrFirstInstTypeCode = this.LeadDataForm.controls["MrFirstInstTypeCode"].value;
+    this.leadInputLeadDataObj.LeadAppObj.NtfAmt = this.LeadDataForm.controls["NTFAmt"].value;
+    this.leadInputLeadDataObj.LeadAppObj.TotalDownPaymentAmt = this.LeadDataForm.controls["TotalDownPayment"].value;
+    this.leadInputLeadDataObj.LeadAppObj.InstAmt = this.LeadDataForm.controls["InstallmentAmt"].value;
+  }
 
   // back(){
   //   this.wizard.goToPreviousStep();
@@ -285,22 +303,12 @@ export class LeadInputLeadDataComponent implements OnInit {
   SaveForm(){
     console.log('saveform');
     console.log(this.LeadDataForm);
-    // if(this.typePage == "edit") {
+    if(this.typePage == "edit") {
       this.leadInputLeadDataObj = new LeadInputLeadDataObj();
-      this.leadAppObj = new LeadAppObj();
-      this.leadAssetObj = new LeadAssetObj();
-
-
-
-
-      this.leadAppObj = this.LeadDataForm.value;
-      this.leadAssetObj = this.LeadDataForm.value;
-      this.leadAppObj.LeadId = this.LeadId;
-      this.leadAssetObj.LeadId = this.LeadId;
-
-      this.leadInputLeadDataObj.LeadAppObj = this.leadAppObj;
-      this.leadInputLeadDataObj.LeadAssetObj = this.leadAssetObj;
-      
+      this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
+      this.setLeadAsset();
+      this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
+      this.setLeadApp();
       console.log('isi leadinput');
       console.log(this.leadInputLeadDataObj);
       this.http.post(this.editLeadData, this.leadInputLeadDataObj).subscribe(
@@ -318,36 +326,27 @@ export class LeadInputLeadDataComponent implements OnInit {
           console.log(error);
         }
       );
-    // } else {
-    //   this.reqCustPersonalJobDataObj = new RequestCustPersonalJobDataObj;
-    //   this.custPersonalJobDataObj = new CustPersonalJobDataObj();
-    //   this.setCustJobData();
-    //   this.jobAddressObj = new CustAddrObj;
-    //   this.setJobAddr();
-    //   this.otherAddressObj = new CustAddrObj;
-    //   this.setOthBizAddr();
-    //   this.reqCustPersonalJobDataObj.CustPersonalJobData = this.custPersonalJobDataObj;
-    //   this.reqCustPersonalJobDataObj.JobAddr = this.jobAddressObj;
-    //   this.reqCustPersonalJobDataObj.OthBizAddr = this.otherAddressObj;
-
-    //   console.log("ccc");
-    //   console.log(this.reqCustPersonalJobDataObj)
-
-    //   this.http.post(this.addJobData, this.reqCustPersonalJobDataObj).subscribe(
-    //     (response) => {
-    //       console.log(response);
-    //       this.toastr.successMessage(response["message"]);
-    //       // this.router.navigate(
-    //       //   ["/Customer/CustomerPersonal/Address"], 
-    //       //   { queryParams: { "IdCust": this.IdCust }}
-    //       //   );
-    //       // console.log(response);
-    //       this.wizard.goToNextStep();
-    //     },
-    //     (error) => {
-    //       console.log(error);
-    //     }
-    //   );
-    // }
-   }
+    } else {
+      this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+      this.setLeadAsset();
+      this.setLeadApp();
+      console.log('isi leadinput');
+      console.log(this.leadInputLeadDataObj);
+      this.http.post(this.editLeadData, this.leadInputLeadDataObj).subscribe(
+        (response) => {
+          console.log(response);
+          this.toastr.successMessage(response["message"]);
+          // this.router.navigate(
+          //   ["/Customer/CustomerPersonal/Address"], 
+          //   { queryParams: { "IdCust": this.IdCust }}
+          //   );
+          // console.log(response);
+          // this.wizard.goToNextStep();
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+  }
 }

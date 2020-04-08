@@ -109,6 +109,7 @@ export class AdInsConstant {
 
   //Asset Master
   public static GetAssetMasterTypeByFullAssetCode = "http://localhost:5000/AssetMaster/GetAssetMasterTypeByFullAssetCode";
+  public static GetAssetMasterForLookupEmployee = "http://localhost:5000/AssetMaster/GetAssetMasterForLookupEmployee";
 
   //ADDR TYPE
   public static AddrTypeLegal = "LEGAL";
