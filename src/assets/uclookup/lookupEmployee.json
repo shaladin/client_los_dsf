@@ -1,0 +1,69 @@
+{
+    "url": "",
+    "title":"Lookup Employee",
+    "component": [
+      {
+        "type": "textbox",
+        "name": "RE.EMP_NAME",
+        "id": "empNameId",
+        "value": "",
+        "label": "Employee Name",
+        "placeholder": ""
+      },
+      {
+        "type": "textbox",
+        "name": "RR.ROLE_NAME",
+        "id": "roleNameId",
+        "value": "",
+        "label": "Employee Position",
+        "placeholder": ""
+      }
+    ],
+    "querystring": {
+      "select": "SELECT RE.EMP_NAME AS EmpName, RE.REF_EMP_ID AS EmpId, RE.EMP_NO AS EmpNo, RR.ROLE_CODE AS RoleCode, RR.ROLE_NAME AS RoleName",
+      "from": "FROM dbo.REF_EMP RE WITH(NOLOCK) JOIN dbo.REF_USER RU WITH(NOLOCK) ON RU.REF_EMP_ID = RE.REF_EMP_ID JOIN dbo.REF_USER_ROLE RUR WITH(NOLOCK) ON RUR.REF_USER_ID = RU.REF_USER_ID JOIN dbo.REF_ROLE RR WITH(NOLOCK) ON RR.REF_ROLE_ID = RUR.REF_ROLE_ID"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Employee Name",
+            "name": "RE.EMP_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Employee Position",
+            "name": "RR.ROLE_NAME"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Select"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "EmpName"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "RoleName"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "select",
+                    "property": "EmpId"
+                }
+            ]
+        }
+    ],
+    "propertyId": "EmpName",
+    "propertyName": "EmpName"
+}

@@ -1,0 +1,79 @@
+{
+    "title": "Branch Employee",
+    "component": [
+        {
+            "type": "textbox",
+            "name": "VE.VENDOR_EMP_NO",
+            "id": "VendorEmpNoId",
+            "value": "",
+            "label": "Vendor Employee No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "VE.VENDOR_EMP_NAME",
+            "id": "VendorEmpNameId",
+            "value": "",
+            "label": "Vendor Employee Name",
+            "placeholder": "Placeholder"
+        }
+    ],
+    "querystring": {
+        "select": "SELECT VE.VENDOR_EMP_NO AS VendorEmpNo, VE.VENDOR_EMP_NAME AS VendorEmpName, VE.MR_VENDOR_EMP_POSITION_CODE AS MrVendorEmpPositionCode, RM.DESCR AS JobTitleName, RM.REF_MASTER_TYPE_CODE, V.VENDOR_CODE AS VendorCode",
+        "from": "FROM dbo.VENDOR_EMP VE WITH(NOLOCK) JOIN dbo.REF_MASTER RM ON RM.MASTER_CODE = VE.MR_VENDOR_EMP_POSITION_CODE JOIN dbo.VENDOR V ON V.VENDOR_ID = VE.VENDOR_ID"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Employee No",
+            "name": "VE.VENDOR_EMP_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Employee Name",
+            "name": "VE.VENDOR_EMP_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Employee Position",
+            "name": "RM.DESCR"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Select"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "VendorEmpNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "VendorEmpName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "JobTitleName"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "select",
+                    "property": "VendorEmpNo"
+                }
+            ]
+        }
+    ],
+    "propertyId": "VendorEmpNo",
+    "propertyName": "VendorEmpName"
+}

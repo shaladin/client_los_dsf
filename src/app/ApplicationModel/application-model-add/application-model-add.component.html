@@ -1,0 +1,302 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-header header-title">
+      <div class="row">
+        <div class="col-md-8">
+          <h4 class="card-title" id="horz-layout-colored-controls" translate>OFFICE </h4>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row text-left">
+      <div class="card-body">
+        <div class="px-3">
+          <form class="form form-horizontal" [formGroup]="SalesAppInfoForm" (ngSubmit)="SalesAppInfoForm.valid && SaveForm()"
+            #enjiForm="ngForm">
+            <div class="form-body">
+              <h4 class="form-section card-title" translate><i class="ft-file-text"></i> [-] Main Info</h4>
+              <div class="row text-left">
+                <div class="card-body">
+                  <div class="px-3">
+                    <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Sales Information</h4>
+                    
+                    <div class="form-group row adins-required">
+                      <label class="col-md-3  adInsLabel" translate>Survey No </label>
+                      <div class="col-md-9">
+                        <input type="text" class="form-control adInsInput width-30-per" formControlName="SrvyOrderNo">
+                        <lib-uc-show-errors [control]="SalesAppInfoForm.controls.SrvyOrderNo" [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
+                      </div>
+                    </div>
+
+                    <div class="form-group row adins-required">
+                      <label class="col-md-3  adInsLabel" translate>Sales Recommendation </label>
+                      <div class="col-md-9">
+                        <select class="form-control adInsInput" style="width: auto" formControlName="MRSalesRecommendCode"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.MRSalesRecommendCode.invalid }">
+                          <option *ngFor="let sr of allSlsRecom" value="{{sr.Key}}">
+                            {{sr.Value}}</option>
+                        </select>
+                        <lib-uc-show-errors [control]="SalesAppInfoForm.controls.MRSalesRecommendCode" [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
+                      </div>
+                    </div>
+
+                    <div class="form-group row adins-required">
+                      <label class="col-md-3  adInsLabel" translate>Survey Notes </label>
+                      <div class="col-md-9">
+                        <input type="text" class="form-control adInsInput width-30-per" formControlName="SalesNotes">
+                        <lib-uc-show-errors [control]="SalesAppInfoForm.controls.SalesNotes" [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
+                      </div>
+                    </div>
+
+                    <!-- <div class="form-group row adins-required">
+                      <label class="col-md-3  adInsLabel" translate>Sales Officer</label>
+                      <div class="col-md-9">
+                        <select class="form-control adInsInput" style="width: auto" formControlName="MRSalesRecommendCode"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfo.controls.MRSalesRecommendCode.invalid }">
+                          <option *ngFor="let sr of allSlsRecom" value="{{sr.Key}}">
+                            {{sr.Value}}</option>
+                        </select>
+                        <lib-uc-show-errors [control]="SalesAppInfo.controls.MRSalesRecommendCode" [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
+                      </div>
+                    </div> -->
+
+                    <div class="form-group row adins-required">
+                      <label class="col-md-3  adInsLabel" translate>Sales Head Officer </label>
+                      <div class="col-md-9">
+                        <input type="text" class="form-control adInsInput width-30-per" formControlName="SalesHeadNo">
+                        <lib-uc-show-errors [control]="SalesAppInfoForm.controls.SalesHeadNo" [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
+                      </div>
+                    </div>
+
+                    <div class="form-group row adins-required">
+                      <label class="col-md-3  adInsLabel" translate>Installment Type</label>
+                      <div class="col-md-9">
+                        <select class="form-control adInsInput" style="width: auto" formControlName="MRInstTypeCode"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.MRInstTypeCode.invalid }">
+                          <option *ngFor="let it of allInType" value="{{it.Key}}">
+                            {{it.Value}}</option>
+                        </select>
+                        <lib-uc-show-errors [control]="SalesAppInfoForm.controls.MRInstTypeCode" [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
+                      </div>
+                    </div>
+
+                    
+                    <div class="form-group row adins-required">
+                      <label class="col-md-3  adInsLabel" translate>Installment Type</label>
+                      <div class="col-md-9">
+                        <select class="form-control adInsInput" style="width: auto" formControlName="MRSingleInstCalcMthdCode"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.MRSingleInstCalcMthdCode.invalid }">
+                          <option *ngFor="let cm of allCalcMethod" value="{{cm.Key}}">
+                            {{cm.Value}}</option>
+                        </select>
+                        <lib-uc-show-errors [control]="SalesAppInfoForm.controls.MRSingleInstCalcMthdCode" [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
+                      </div>
+                    </div>
+
+                    
+                    <div class="form-group row adins-required">
+                      <label class="col-md-3  adInsLabel" translate>Term Of Payment</label>
+                      <div class="col-md-9">
+                        <input type="text" class="form-control adInsInput width-30-per" formControlName="TOPDays">
+                        <lib-uc-show-errors [control]="SalesAppInfoForm.controls.TOPDays" [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
+                      </div>
+                    </div>
+
+                    <div class="form-group row adins-required">
+                      <label class="col-md-3  adInsLabel" translate>Tenor</label>
+                      <div class="col-md-9">
+                        <input type="text" class="form-control adInsInput width-30-per" formControlName="Tenor">
+                        <lib-uc-show-errors [control]="SalesAppInfoForm.controls.Tenor" [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
+                      </div>
+                    </div>
+                    
+                    <div class="form-group row adins-required">
+                      <label class="col-md-3  adInsLabel" translate>Num Of Installment</label>
+                      <div class="col-md-9">
+                        <input type="text" class="form-control adInsInput width-30-per" formControlName="NumOfInst">
+                        <lib-uc-show-errors [control]="SalesAppInfoForm.controls.NumOfInst" [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
+                      </div>
+                    </div>
+
+                    <div class="form-group row adins-required">
+                      <label class="col-md-3  adInsLabel" translate>Installment Scheme</label>
+                      <div class="col-md-9">
+                        <select class="form-control adInsInput" style="width: auto" formControlName="MRInstSchemeCode"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.MRInstSchemeCode.invalid }">
+                          <option *ngFor="let is of allInScheme" value="{{is.Key}}">
+                            {{is.Value}}</option>
+                        </select>
+                        <lib-uc-show-errors [control]="SalesAppInfoForm.controls.MRInstSchemeCode" [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
+                      </div>
+                    </div>
+
+                    <div class="form-group row adins-required">
+                      <label class="col-md-3  adInsLabel" translate>Is Disclosed</label>
+                      <div class="col-md-9">
+                        <input type="text" class="form-control adInsInput width-30-per" formControlName="IsDisclosed">
+                        <lib-uc-show-errors [control]="SalesAppInfoForm.controls.IsDisclosed" [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
+                      </div>
+                    </div>
+
+                    <div class="form-group row adins-required">
+                      <label class="col-md-3  adInsLabel" translate>Installment Scheme</label>
+                      <div class="col-md-9">
+                        <select class="form-control adInsInput" style="width: auto" formControlName="MRInstSchemeCode"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.MRInstSchemeCode.invalid }">
+                          <option *ngFor="let is of allInScheme" value="{{is.Key}}">
+                            {{is.Value}}</option>
+                        </select>
+                        <lib-uc-show-errors [control]="SalesAppInfoForm.controls.MRInstSchemeCode" [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label class="col-md-3 adInsLabel">Is Disclosed</label>
+                      <div class="col-md-9">
+                        <input type="checkbox" class="border-primary" formControlName="IsDisclosed">
+                      </div>
+                    </div>
+
+                    <div class="form-group row adins-required">
+                      <label class="col-md-3  adInsLabel" translate>Paid By</label>
+                      <div class="col-md-9">
+                        <select class="form-control adInsInput" style="width: auto" formControlName="PaidBy"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.PaidBy.invalid }">
+                          <option *ngFor="let pb of allPaidby" value="{{pb.Key}}">
+                            {{pb.Value}}</option>
+                        </select>
+                        <lib-uc-show-errors [control]="SalesAppInfoForm.controls.PaidBy" [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
+                      </div>
+                    </div>
+
+
+                    <div class="form-group row adins-required">
+                      <label class="col-md-3  adInsLabel" translate>Way of Payment</label>
+                      <div class="col-md-9">
+                        <select class="form-control adInsInput" style="width: auto" formControlName="MRWOPCode"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.MRWOPCode.invalid }">
+                          <option *ngFor="let wp of allWOP" value="{{wp.Key}}">
+                            {{wp.Value}}</option>
+                        </select>
+                        <lib-uc-show-errors [control]="SalesAppInfoForm.controls.MRWOPCode" [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
+                      </div>
+                    </div>
+
+                    <div class="form-group row adins-required">
+                      <label class="col-md-3  adInsLabel" translate>Way of Payment</label>
+                      <div class="col-md-9">
+                        <select class="form-control adInsInput" style="width: auto" formControlName="MRWOPCode"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.MRWOPCode.invalid }">
+                          <option *ngFor="let wp of allWOP" value="{{wp.Key}}">
+                            {{wp.Value}}</option>
+                        </select>
+                        <lib-uc-show-errors [control]="SalesAppInfoForm.controls.MRWOPCode" [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
+                      </div>
+                    </div>
+
+                    <div class="form-group row adins-required">
+                      <label class="col-md-3  adInsLabel" translate>Recourse Type</label>
+                      <div class="col-md-9">
+                        <select class="form-control adInsInput" style="width: auto" formControlName="RecourseType"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.RecourseType.invalid }">
+                          <option *ngFor="let rt of allRecourseType" value="{{rt.Key}}">
+                            {{rt.Value}}</option>
+                        </select>
+                        <lib-uc-show-errors [control]="SalesAppInfoForm.controls.RecourseType" [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
+                      </div>
+                    </div>
+
+                    <div class="form-group row adins-required">
+                      <label class="col-md-3  adInsLabel" translate>Application Source</label>
+                      <div class="col-md-9">
+                        <select class="form-control adInsInput" style="width: auto" formControlName="MRAppSourceCode"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.MRAppSourceCode.invalid }">
+                          <option *ngFor="let as of allAppSource" value="{{as.Key}}">
+                            {{as.Value}}</option>
+                        </select>
+                        <lib-uc-show-errors [control]="SalesAppInfoForm.controls.MRAppSourceCode" [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
+                      </div>
+                    </div>
+
+                   
+                    <!-- <app-ucAddress #ucAddress [parentForm]='OfficeReqForm'></app-ucAddress> -->
+                    <!-- <app-ucContactInfo #ucContactInfo [parentForm]='OfficeReqForm'></app-ucContactInfo> -->
+
+
+                    <!-- <div class="form-body">
+                      <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Contact Information
+                      </h4>
+                      <div class="form-group row adins-required">
+                        <label class="col-md-3  adInsLabel" translate>Email 1 </label>
+                        <div class="col-md-9">
+                          <input type="text" class="form-control adInsInput width-30-per" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+                            formControlName="CntctPersonEmail1">
+                          <lib-uc-show-errors [control]="OfficeForm.controls.CntctPersonEmail1" [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-md-3  adInsLabel" translate>Email 2 </label>
+                        <div class="col-md-9">
+                          <input type="text" class="form-control adInsInput width-30-per" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+                            formControlName="CntctPersonEmail2">
+                          <lib-uc-show-errors [control]="OfficeForm.controls.CntctPersonEmail2" [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors>
+                        </div>
+                      </div>
+                      <div class="form-group row adins-required">
+                        <label class="col-md-3  adInsLabel" translate>Mobile Phone 1 </label>
+                        <div class="col-md-9">
+                          <input type="text" class="form-control adInsInput width-30-per"
+                            formControlName="CntctPersonMobilePhnNo1">
+                          <lib-uc-show-errors [control]="OfficeForm.controls.CntctPersonMobilePhnNo1"
+                            [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-md-3  adInsLabel" translate>Mobile Phone 2 </label>
+                        <div class="col-md-9">
+                          <input type="text" class="form-control adInsInput width-30-per"
+                            formControlName="CntctPersonMobilePhnNo2">
+                          <lib-uc-show-errors [control]="OfficeForm.controls.CntctPersonMobilePhnNo2"
+                            [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors>
+                        </div>
+                      </div>
+                    </div> -->
+
+                    <div class="form-actions right">
+                      <button type="submit" class="btn btn-raised btn-primary" translate>
+                        <i class="fa fa-check-square-o"></i> Save
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

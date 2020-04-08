@@ -1,0 +1,69 @@
+{
+    "url": "",
+    "title":"Lookup - MF Signer",
+    "component": [
+      {
+        "type": "textbox",
+        "name": "CC.MGMNT_SHRHOLDER_NAME",
+        "id": "shareholderNameId",
+        "value": "",
+        "label": "Shareholder Name",
+        "placeholder": ""
+      },
+      {
+        "type": "textbox",
+        "name": "RM.DESCR",
+        "id": "descrId",
+        "value": "",
+        "label": "Shareholder Position",
+        "placeholder": ""
+      }
+    ],
+    "querystring": {
+      "select": "SELECT CC.MGMNT_SHRHOLDER_NAME AS ShareholderName, CC.CUST_COMPANY_MGMNT_SHRHOLDER_ID AS ShareholderId, RM.MASTER_CODE AS MasterCode, RM.DESCR AS Descr",
+      "from": "FROM dbo.CUST_COMPANY_MGMNT_SHRHOLDER CC WITH(NOLOCK) JOIN dbo.REF_MASTER RM WITH(NOLOCK) ON CC.MR_JOB_POSITION_CODE = RM.MASTER_CODE and RM.REF_MASTER_TYPE_CODE = 'JOB_POSITION'"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Shareholder Name",
+            "name": "CC.MGMNT_SHRHOLDER_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Shareholder Position",
+            "name": "RM.DESCR"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Select"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "ShareholderName"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "Descr"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "select",
+                    "property": "ShareholderId"
+                }
+            ]
+        }
+    ],
+    "propertyId": "ShareholderName",
+    "propertyName": "ShareholderName"
+}

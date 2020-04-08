@@ -199,7 +199,7 @@ export class CustBankAccountComponent implements OnInit {
 
   setBankName(bankCode){
     this.bankObj.BankCode = bankCode;
-    this.http.post(AdInsConstant.GetRefBankByBankCodeAsync, this.bankObj).subscribe(
+    this.http.post(environment.FoundationR3Url+AdInsConstant.GetRefBankByBankCodeAsync, this.bankObj).subscribe(
       (response) => {
         console.log(response);
         this.InputLookupBankObj.nameSelect = response["BankName"];
