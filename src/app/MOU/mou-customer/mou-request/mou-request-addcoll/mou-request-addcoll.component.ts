@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -23,8 +23,8 @@ import { InputSearchObj } from 'app/shared/model/InputSearchObj.Model';
   providers: [NGXToastrService]
 })
 export class MouRequestAddcollComponent implements OnInit {
-  @Input() MouCustId: any = 3;
-
+  @Input() MouCustId: number;
+  @Output() ResponseMouAddColl: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild(UcgridfooterComponent) UCGridFooter;
   @ViewChild(UCSearchComponent) UCSearchComponent;
 
@@ -603,5 +603,13 @@ export class MouRequestAddcollComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  next(){
+    this.ResponseMouAddColl.emit({StatusCode: "200"});
+  }
+
+  back(){
+    this.ResponseMouAddColl.emit({StatusCode: "-1"});
   }
 }
