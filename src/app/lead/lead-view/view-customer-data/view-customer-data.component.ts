@@ -7,8 +7,7 @@ import { LeadCustSocmedObj } from 'app/shared/model/LeadCustSucmedObj.model';
 
 @Component({
   selector: 'app-view-customer-data',
-  templateUrl: './view-customer-data.component.html',
-  styleUrls: ['./view-customer-data.component.scss']
+  templateUrl: './view-customer-data.component.html' 
 })
 export class ViewCustomerDataComponent implements OnInit {
 

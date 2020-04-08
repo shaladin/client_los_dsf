@@ -645,6 +645,10 @@ export class AdInsConstant {
   public static AddLead = environment.losUrl + "/Lead/AddLead";
   public static GetLeadByLeadId = environment.losUrl + "/Lead/GetLeadByLeadId";
 
+  //CUSTOMER DUPLICATE CHECKING
+  public static GetCustomerAndNegativeCustDuplicateCheck = environment.FoundationR3Url + "/CustDuplicateCheck/GetCustomerAndNegativeCustDuplicateCheck";
+  // ASSET NEGATIVE DUPLICATE CHECK
+  public static GetAssetNegativeDuplicateCheck = environment.FoundationR3Url + "/AssetNegative/GetAssetNegativeDuplicateCheck";
   //LEAD VERF
   public static AddRangeLeadVerf = environment.losUrl + "/LeadVerf/AddRangeLeadVerf";
   public static GetListLeadVerf = environment.losUrl + "/LeadVerf/GetListLeadVerf";
@@ -652,7 +656,8 @@ export class AdInsConstant {
   public static GetLeadAssetByLeadId = environment.losUrl +"/LeadAsset/GetLeadAssetByLeadId";
   // Lead Cust
   public static GetLeadCustByLeadId = environment.losUrl +"/LeadCust/GetLeadCustByLeadId"
-    
+  // LEAD CUST PERSONAL
+  public static GetLeadCustPersonalByLeadCustId = environment.losUrl +"/LeadCustPersonal/GetLeadCustPersonalByLeadCustId"
   //LEAD CUST SOCMED
   public static GetListLeadCustSocmedByLeadCustId = environment.losUrl +"/LeadCustSocmed/GetListLeadCustSocmedByLeadCustId";
   //App Duplicate Checking

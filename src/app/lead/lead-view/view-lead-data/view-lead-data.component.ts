@@ -7,8 +7,7 @@ import { LeadObj } from 'app/shared/model/Lead.Model';
 
 @Component({
   selector: 'app-view-lead-data',
-  templateUrl: './view-lead-data.component.html',
-  styleUrls: ['./view-lead-data.component.scss']
+  templateUrl: './view-lead-data.component.html' 
 })
 export class ViewLeadDataComponent implements OnInit {
 

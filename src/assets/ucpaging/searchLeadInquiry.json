@@ -1,0 +1,192 @@
+{
+    "title": "Lead Inquiry",
+    "exportExcel": false,
+    "component": [ 
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": " l.MR_LEAD_SOURCE_CODE",
+            "id": "MrLeadSourceCodeId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "isSelectOne": false,
+            "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
+            "label": "Lead Source",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "RefMasterTypeCode",
+            "criteriaPropValue": "LEAD_SOURCE"
+        },
+        {
+            "type": "textbox",
+            "name": "l.LEAD_NO",
+            "id": "LeadNoId",
+            "value": "",
+            "label": "Lead No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "l.ORDER_NO",
+            "id": "OrderNoId",
+            "value": "",
+            "label": "Order No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "la.FULL_ASSET_NAME",
+            "id": "FullAssetNameId",
+            "value": "",
+            "label": "Full Asset Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "lc.CUST_NAME",
+            "id": "CustName",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder"
+        }, 
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "l.LEAD_STEP",
+            "id": "LeadStepId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "isSelectOne": false,
+            "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+            "label": "Lead Step",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "StatusGrpCode",
+            "criteriaPropValue": "LEAD_STEP"
+        },   {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "l.LEAD_STAT",
+            "id": "LeadStat",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "isSelectOne": false,
+            "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+            "label": "Lead Stat",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "StatusGrpCode",
+            "criteriaPropValue": "LEAD_STAT"
+        }
+     
+    ],
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Lead No",
+            "name": "l.LEAD_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Office Name",
+            "name": "l.ORI_OFFICE_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Order No",
+            "name": "l.ORDER_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Lead Source",
+            "name": "l.MR_LEAD_SOURCE_CODE"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Full Asset Name",
+            "name": "la.FULL_ASSET_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Customer Name",
+            "name": "lc.CUST_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Lead Step",
+            "name": "l.LEAD_STEP"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Lead Stat",
+            "name": "l.LEAD_STAT"
+        } 
+       
+    ],
+    "querystring": {
+        "select": "SELECT l.LEAD_NO AS LeadNo, l.ORI_OFFICE_NAME AS OriOfficeName, l.ORDER_NO AS OrderNo, lc.CUST_NAME as CustName,  l.MR_LEAD_SOURCE_CODE AS MrLeadSourceCode, la.FULL_ASSET_NAME AS FullAssetName, l.LEAD_STEP AS LeadStep, l.LEAD_STAT as LeadStat, l.lEAD_ID as LeadId",
+        "from": "FROM dbo.LEAD l WITH(NOLOCK) JOIN dbo.LEAD_CUST lc WITH(NOLOCK) ON l.LEAD_ID = lc.LEAD_ID JOIN dbo.LEAD_ASSET la on l.LEAD_ID = la.LEAD_ID"
+    },
+    "bodyList": [
+        {
+            "type": "link",
+            "position": "left",
+            "property": "LeadNo",
+            "path": "../View/",
+            "target": "_blank",
+            "param": [
+                {
+                    "type": "LeadId",
+                    "property": "LeadId"
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "OriOfficeName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "OrderNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "MrLeadSourceCode"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "FullAssetName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "LeadStep"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "LeadStat"
+        } 
+        
+    ]
+}
