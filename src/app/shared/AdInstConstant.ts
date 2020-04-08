@@ -6,7 +6,7 @@ export class AdInsConstant {
     public static Rule = "http://r3app-server/RULE_FINAL/RuleService/ExecuteRuleSet"; 
 
     // Tax
-    public static AppCom = "APP_COM";
+    public static TrxTypeCode = "APP_COM";
     public static ExchangeRateAmt = "1";
 
     //App Step
@@ -44,6 +44,14 @@ export class AdInsConstant {
 
     public static TaxTypeCode = "WHT";
     public static VATTypeCode = "VAT";
+    public static ContentSupplier = "Supplier";
+    public static ContentSupplierEmp = "Supplier Employee";
+    public static ContentReferantor = "Referantor";
+    public static TitleSupplier = "List Supplier Commission Data";
+    public static TitleSupplierEmp = "List Supplier Employee Commission Data";
+    public static TitleReferantor = "List Referantor Commission Data";
+    public static ReturnObj = "ReturnObject";
+
     
     // ASSET
     public static GetListKeyValueByCode = environment.FoundationR3Url + "/AssetType/GetListKeyValueByCode";
@@ -62,6 +70,8 @@ export class AdInsConstant {
     
     // App Commission
     public static AddAppCommissionData = "/AppCommission/AddAppCommissionData";
+    public static GetAppCommissionDataForEditByAppId = environment.losUrl + "/AppCommission/GetAppCommissionDataForEditByAppId";
+    public static DeleteAppCommissionData = environment.losUrl + "/AppCommission/DeleteAppCommissionData";
     public static GetAppCommissionRule = "/AppCommission/GetAppCommissionRule";
     public static GetAppCommissionTax = "/AppCommission/GetAppCommissionTax";
 

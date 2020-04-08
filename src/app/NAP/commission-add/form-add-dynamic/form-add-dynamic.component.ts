@@ -35,19 +35,38 @@ export class FormAddDynamicComponent implements OnInit {
   DDLBankAccount = new Array();
   UserAccess;
   ngOnInit() {
-    console.log("User Access");
-    console.log(JSON.parse(localStorage.getItem("UserAccess")));
+    // console.log("User Access");
+    // console.log(JSON.parse(localStorage.getItem("UserAccess")));
     this.UserAccess = JSON.parse(localStorage.getItem("UserAccess"));
     this.arr = this.FormObj.get('arr') as FormArray;
     // console.log(this.FormInputObj);
     this.GetDDLContentName();
-    console.log(this.FormInputObj["ruleObj"]);
+    // console.log(this.FormInputObj["ruleObj"]);
+    this.GenerateAutoAtStart();
+  }
+
+  GenerateAutoAtStart(){
+    if(this.FormInputObj["isAutoGenerate"]){
+      console.log("Auto Genereate");
+      var len = this.DDLContentName.length;
+      for(var i=len-1;i>=0;i--){
+        console.log("Genereate");
+        var j = len - i -1;
+        this.AddNewDataForm();
+        this.GenerateContentName(i, j);
+
+      }
+      // while(this.DDLContentName.length > 0){
+      // }
+      this.PassData();
+    }
   }
 
   lenDDLContentName = 0;
   tempDDLContentName;
   GetDDLContentName(){
     this.DDLContentName = this.FormInputObj["contentObj"];
+    // console.log("DDL Content " + this.FormInputObj["content"]);
     // console.log(this.DDLContentName);
     this.tempDDLContentName = new Array();
     this.lenDDLContentName = this.DDLContentName.length;
@@ -59,7 +78,7 @@ export class FormAddDynamicComponent implements OnInit {
     // console.log(code);
     var url;
     var obj;
-    if(content == "Supplier"){
+    if(content == AdInsConstant.ContentSupplier){
       url = environment.FoundationR3Url + AdInsConstant.GetListVendorBankAccByVendorCode;
       obj = {
         VendorCode: code,
@@ -67,6 +86,7 @@ export class FormAddDynamicComponent implements OnInit {
       };
       this.http.post(url, obj).subscribe(
         (response) =>{
+          console.log("response bank");
           console.log(response);
           var len = response["ReturnObject"].length;
           for(var i=0;i<len;i++){
@@ -84,7 +104,7 @@ export class FormAddDynamicComponent implements OnInit {
           console.log(error);
         }
       );
-    }else if(content == "Supplier Employee"){
+    }else if(content == AdInsConstant.ContentSupplierEmp){
       url = environment.FoundationR3Url + AdInsConstant.GetListVendorBankAccByListVendorEmpNo;
       obj = {
         VendorEmpNo: code,
@@ -92,6 +112,7 @@ export class FormAddDynamicComponent implements OnInit {
       };
       this.http.post(url, obj).subscribe(
         (response) =>{
+          console.log("response bank");
           console.log(response);
           var len = response["ReturnObject"].length;
           for(var i=0;i<len;i++){
@@ -109,7 +130,7 @@ export class FormAddDynamicComponent implements OnInit {
           console.log(error);
         }
       );
-    }else if(content == "Referantor"){
+    }else if(content == AdInsConstant.ContentReferantor){
       var eachDDLDetail = this.fb.group({
         Key: this.FormInputObj["BankData"].BankAccNo,
         Value: this.FormInputObj["BankData"].BankAccName,
@@ -123,26 +144,51 @@ export class FormAddDynamicComponent implements OnInit {
 
   AddNewDataForm(){
     var NewDataForm = this.fb.group({
+      AppCommissionHId: [0],
       ContentName: ['', Validators.required],
       ContentNameValue: [''],
       BankAccountNo: ['', Validators.required],
       BankAccountName: [''],
       BankBranch: [''],
       BankCode: [''],
-      TaxAmount: [0, Validators.pattern("^[0-9]+$")],
+      MrIdTypeCode: [''],
+      MrTaxCalcMethodCode: [''],
+      TaxpayerNo: [''],
       TotalCommisionAmount: [0, Validators.pattern("^[0-9]+$")],
-      VATAmount: [0, Validators.pattern("^[0-9]+$")],
+      TotalTaxAmount: [0, Validators.pattern("^[0-9]+$")],
+      TotalVATAmount: [0, Validators.pattern("^[0-9]+$")],
+      TotalPenaltyAmount: [0, Validators.pattern("^[0-9]+$")],
       ListAllocated: this.fb.array([]),
       DropDownList: this.fb.array([])
     }) as FormGroup;
     this.arr.push(NewDataForm);
     // console.log(this.FormObj);
     this.lenDDLContentName--;
+    // if(this.FormInputObj["isAutoGenerate"]){
+    // }
+  }
+
+  DeleteFromDatabase(AppCommissionHId){
+    var url = AdInsConstant.DeleteAppCommissionData;
+    var obj = {
+      AppCommissionHId: AppCommissionHId,
+      RowVersion: ""
+    };
+    this.http.post(url, obj).subscribe(
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   DeleteDataForm(idx){
     // console.log(idx);
     if (confirm('Are you sure to delete this record?')) {
+      if(this.FormObj.controls.arr["controls"][idx].controls.AppCommissionHId.value != 0)
+        this.DeleteFromDatabase(this.FormObj.controls.arr["controls"][idx].controls.AppCommissionHId.value);
       var tempContentName = this.FormObj.controls.arr["controls"][idx].controls.ContentName.value;
       if(tempContentName != ""){
         var i = this.tempDDLContentName.indexOf(this.tempDDLContentName.find(x => x.Key == tempContentName));
@@ -150,8 +196,8 @@ export class FormAddDynamicComponent implements OnInit {
         this.tempDDLContentName.splice(i,1);
       }
       this.lenDDLContentName++;
-      // console.log(this.tempDDLContentName);
-      // console.log(this.DDLContentName);
+      console.log(this.tempDDLContentName);
+      console.log(this.DDLContentName);
       this.arr.removeAt(idx);
       this.PassData();
 
@@ -166,12 +212,25 @@ export class FormAddDynamicComponent implements OnInit {
 
   CalculateTax(CurrCode, AppNo, OriOfficeCode){
     var len = this.arr.controls.length;
+    if(len == 0) return;
     var vendorCode = new Array();
+    var vendorEmpNo = new Array();
     var trxAmt = new Array();
     for(var i = len-1; i >= 0; i--){
       if(this.arr.controls[i].controls.ContentName.value != ""){
-        vendorCode.push(this.arr.controls[i].controls.ContentName.value);
-        trxAmt.push(this.arr.controls[i].controls.TotalCommisionAmount.value);
+        if(this.FormInputObj["content"] == AdInsConstant.ContentSupplierEmp){
+          vendorCode.push(this.tempDDLContentName[i].SupplCode);
+          vendorEmpNo.push(this.arr.controls[i].controls.ContentName.value);
+        }else{
+          vendorCode.push(this.arr.controls[i].controls.ContentName.value);
+        }
+        var lenAllocated = this.arr.controls[i].controls.ListAllocated.controls.length;
+        var tempTrxAmt = new Array();
+        for(var j=0;j<lenAllocated;j++){
+          tempTrxAmt.push(this.arr.controls[i].controls.ListAllocated.controls[j].controls.AllocationAmount.value);
+        }
+        trxAmt.push(tempTrxAmt);
+        
       }else{
         this.DeleteDataForm(i);
         len--;
@@ -182,10 +241,11 @@ export class FormAddDynamicComponent implements OnInit {
         UserName: this.UserAccess.UserName,
         Office: this.UserAccess.MrOfficeTypeCode,
         VendorCode: vendorCode,
+        VendorEmpNo: vendorEmpNo,
         TrxDt: this.UserAccess.BusinessDt,
         TrxAmt: trxAmt,
         RefNo: AppNo,
-        TrxTypeCode: AdInsConstant.AppCom,
+        TrxTypeCode: AdInsConstant.TrxTypeCode,
         CurrCode: CurrCode,
         OfficeCode: OriOfficeCode,
         ExchangeRateAmt: AdInsConstant.ExchangeRateAmt, 
@@ -196,29 +256,51 @@ export class FormAddDynamicComponent implements OnInit {
       this.http.post(url, obj).subscribe(
         (response) => {
           console.log("response Tax");
+          console.log(this.FormInputObj["content"]);
           console.log(response);
           var temp = response["ReturnObject"];
           len = this.arr.controls.length;
           if(temp.length == len){
             for(var i=0;i<temp.length;i++){
-              console.log(len - i - 1);
+              // console.log(len - i - 1);
               var data = temp[i]["ReturnObject"];
-              var taxAmount = 0;
-              var vATAmount = 0;
+              var totalTaxAmount = 0;
+              var totalVATAmount = 0;
+              var grandTotalPenalty = 0;
               for(var j=0;j<data.length;j++){
-                if(data[j].TaxTypeCode == AdInsConstant.TaxTypeCode){
-                  taxAmount = data[j].TaxAmt;
-                }else if(data[j].TaxTypeCode == AdInsConstant.VATTypeCode){
-                  vATAmount = data[j].TaxAmt;
+                var taxAmt=0;
+                var vatAmt=0;
+                var totalPenaltyAmount = 0;
+                for(var k=0;k<data[j].length;k++){
+                  if(data[j][k].TaxTypeCode == AdInsConstant.TaxTypeCode){
+                    totalTaxAmount += data[j][k].TaxAmt;
+                    totalPenaltyAmount += data[j][k].PenaltyAmt;
+                    taxAmt = data[j][k].TaxAmt;          
+                  }else if(data[j][k].TaxTypeCode == AdInsConstant.VATTypeCode){
+                    totalVATAmount += data[j][k].TaxAmt;
+                    totalPenaltyAmount += data[j][k].PenaltyAmt;
+                    vatAmt = data[j][k].TaxAmt;
+                  }
                 }
-                this.FormObj.controls.arr["controls"][len - 1 - i].patchValue({
-                  TaxAmount: taxAmount,
-                  VATAmount: vATAmount
+                grandTotalPenalty += totalPenaltyAmount;
+                this.FormObj.controls.arr["controls"][len -1 - i].controls.ListAllocated.controls[j].patchValue({
+                  TaxAmt: taxAmt,
+                  VatAmt: vatAmt,
+                  PenaltyAmt: totalPenaltyAmount,
                 });
               }
+              this.FormObj.controls.arr["controls"][len - 1 - i].patchValue({
+                MrIdTypeCode: temp[i].MrIdTypeCode,
+                MrTaxCalcMethodCode: temp[i].MrTaxCalcMethodCode,
+                TaxpayerNo: temp[i].TaxpayerNo,
+                TotalTaxAmount: totalTaxAmount,
+                TotalVATAmount: totalVATAmount,
+                TotalPenaltyAmount: grandTotalPenalty,
+              });
             }
           }
           this.CheckData();
+          this.PassData();
         },
         (error) => {
           console.log(error);
@@ -239,47 +321,183 @@ export class FormAddDynamicComponent implements OnInit {
       ContentName: ev.target.selectedOptions[0].value,
       ContentNameValue: ev.target.selectedOptions[0].text
     });
-    var obj = {
-      Key: ev.target.selectedOptions[0].value,
-      Value: ev.target.selectedOptions[0].text
-    };
+    var obj;
+    var code;
+    if(this.FormInputObj["content"] == AdInsConstant.ContentSupplierEmp){
+      obj = {
+        Key: ev.target.selectedOptions[0].value,
+        Value: ev.target.selectedOptions[0].text,
+        MrSupplEmpPositionCode: this.DDLContentName[idx].MrSupplEmpPositionCode,
+        SupplCode: this.DDLContentName[idx].SupplCode,
+      };
+      code = this.DDLContentName[idx].SupplCode;
+    }else{
+      obj = {
+        Key: ev.target.selectedOptions[0].value,
+        Value: ev.target.selectedOptions[0].text
+      };
+      code = this.DDLContentName[idx].Key;
+      
+    }
+    this.GetDDLBankAccount(this.FormObj.controls.arr["controls"][indexFormObj].controls.ContentName.value, indexFormObj);
+    this.SetRule(indexFormObj, code, idx);
     this.tempDDLContentName.push(obj);
     this.DDLContentName.splice(idx,1);
-    // console.log(this.tempDDLContentName);
-    // console.log(this.DDLContentName);
-    this.GetDDLBankAccount(this.FormObj.controls.arr["controls"][indexFormObj].controls.ContentName.value, idx);
-    this.SetRule(indexFormObj, this.FormObj.controls.arr["controls"][indexFormObj].controls.ContentName.value, idx);
+    console.log(this.tempDDLContentName);
+    console.log(this.DDLContentName);
     this.PassData();
   }
 
-  TotalCommisionAmount;
-  SetRule(indexFormObj, code, idx){
-    if (this.FormInputObj["content"] == "Supplier") {
-      var temp = this.FormInputObj["ruleObj"][code];
+  GenerateContentName(indexFormObj,idx){
+    console.log(idx);
+    this.FormObj.controls.arr["controls"][idx].patchValue({
+      ContentName: this.DDLContentName[indexFormObj].Key,
+      ContentNameValue: this.DDLContentName[indexFormObj].Value
+    });
+    var obj;
+    var code;
+    if(this.FormInputObj["content"] == AdInsConstant.ContentSupplierEmp){
+      obj = {
+        Key: this.DDLContentName[indexFormObj].Key,
+        Value: this.DDLContentName[indexFormObj].Value,
+        MrSupplEmpPositionCode: this.DDLContentName[indexFormObj].MrSupplEmpPositionCode,
+        SupplCode: this.DDLContentName[indexFormObj].SupplCode,
+      };
+      code = this.DDLContentName[indexFormObj].SupplCode;
+    }else{
+      obj = {
+        Key: this.DDLContentName[indexFormObj].Key,
+        Value: this.DDLContentName[indexFormObj].Value,
+      };
+      code = this.DDLContentName[indexFormObj].Key;
+    }
+    this.GetDDLBankAccount(this.FormObj.controls.arr["controls"][idx].controls.ContentName.value, idx);
+    this.SetRule(idx, code, indexFormObj);
+    this.tempDDLContentName.push(obj);
+    this.DDLContentName.splice(indexFormObj,1);
+    console.log(this.tempDDLContentName);
+    console.log(this.DDLContentName);
+    // this.PassData();
+  }
+
+  GenerateExistingContentName(objExist, idx){
+    // console.log(objExist);
+    var idxDDLContent = this.DDLContentName.indexOf(this.DDLContentName.find(x => x.Key == objExist.CommissionRecipientRefNo));
+         
+    this.FormObj.controls.arr["controls"][idx].patchValue({
+      AppCommissionHId: objExist.AppCommissionHId,
+      ContentName: this.DDLContentName[idxDDLContent].Key,
+      ContentNameValue: this.DDLContentName[idxDDLContent].Value,
+      BankAccountNo: objExist.BankAccNo,
+      BankAccountName: objExist.BankAccName,
+      BankBranch: objExist.BankBranch,
+      BankCode: objExist.BankCode,
+      MrIdTypeCode: objExist.MrTaxKindCode,
+      MrTaxCalcMethodCode: objExist.MrTaxCalcMethodCode,
+      TaxpayerNo: objExist.TaxpayerNo,
+      TotalCommisionAmount: objExist.TotalCommissionAmt,
+      TotalTaxAmount: objExist.TaxAmt,
+      TotalVATAmount: objExist.VatAmt,
+      TotalPenaltyAmount: objExist.PenaltyAmt
+    });
+
+    var obj;
+    var code;
+    if(this.FormInputObj["content"] == AdInsConstant.ContentSupplierEmp){
+      obj = {
+        Key: this.DDLContentName[idxDDLContent].Key,
+        Value: this.DDLContentName[idxDDLContent].Value,
+        MrSupplEmpPositionCode: this.DDLContentName[idxDDLContent].MrSupplEmpPositionCode,
+        SupplCode: this.DDLContentName[idxDDLContent].SupplCode,
+      };
+      code = this.DDLContentName[idxDDLContent].SupplCode;
+    }else{
+      obj = {
+        Key: this.DDLContentName[idxDDLContent].Key,
+        Value: this.DDLContentName[idxDDLContent].Value,
+      };
+      code = this.DDLContentName[idxDDLContent].Key;
+    }
+
+    var tempRuleObj = this.GetTempRuleObj(code, idx);
+    // console.log(tempRuleObj);
+    this.GetDDLBankAccount(this.FormObj.controls.arr["controls"][idx].controls.ContentName.value, idx);
+
+    for(var i=0;i<objExist.AppCommissionD.length;i++){
+      var idxRuleObj = tempRuleObj.indexOf(tempRuleObj.find(x => x.AllocationFrom == objExist.AppCommissionD[i].MrCommissionSourceCode));
+      // console.log(tempRuleObj[idxRuleObj]);
+      var eachAllocationDetail = this.fb.group({
+        AllocationFromSeq: tempRuleObj[idxRuleObj].AllocationFromSeq,
+        AllocationFrom: objExist.AppCommissionD[i].MrCommissionSourceCode,
+        AllocationFromDesc: tempRuleObj[idxRuleObj].AllocationFromDesc,
+        MaxAllocationAmount: tempRuleObj[idxRuleObj].MaxAllocationAmount,
+        AllocationAmount: objExist.AppCommissionD[i].CommissionAmt,
+        AllocationBehaviour: tempRuleObj[idxRuleObj].AllocationBehaviour,
+        TaxAmt: objExist.AppCommissionD[i].TaxAmt,
+        VatAmt: objExist.AppCommissionD[i].VaxAmt,
+        PenaltyAmt: objExist.AppCommissionD[i].PenaltyAmt,
+        TotalListAllocatedDivided: Math.ceil(objExist.AppCommissionD.length / 2)
+      }) as FormGroup;
+      this.FormObj.controls.arr["controls"][idx].controls.ListAllocated.push(eachAllocationDetail);
+    }
+    this.SortDataAllocation(idx);
+    
+    this.tempDDLContentName.push(obj);
+    this.DDLContentName.splice(idxDDLContent,1);
+    this.PassData();
+  }
+
+  SortDataAllocation(indexFormObj){
+    // sort
+    var arrListAllocated = this.FormObj.controls.arr["controls"][indexFormObj].controls.ListAllocated.value;
+    arrListAllocated.sort((a, b) => a.AllocationFromSeq - b.AllocationFromSeq);
+    this.FormObj.controls.arr["controls"][indexFormObj].controls.ListAllocated.patchValue(arrListAllocated);
+  }
+
+  GetTempRuleObj(code, idx){
+    var temp;
+    if (this.FormInputObj["content"] == AdInsConstant.ContentSupplier) {
+      temp = this.FormInputObj["ruleObj"][code];
       console.log("Rule Suppl");   
-    } else if (this.FormInputObj["content"] == "Supplier Employee") {
+    } else if (this.FormInputObj["content"] == AdInsConstant.ContentSupplierEmp) {
+      console.log(idx);
       var behaviour = this.FormInputObj["contentObj"][idx].MrSupplEmpPositionCode;
-      var temp = this.FormInputObj["ruleObj"][code][behaviour];
+      console.log("behaviour");
+      console.log(behaviour);
+      console.log(code);
+      temp = this.FormInputObj["ruleObj"][code][behaviour];
       console.log("Rule Suppl Emp");
-    } else if (this.FormInputObj["content"] == "Referantor") {
-      var temp = this.FormInputObj["ruleObj"][0];
+    } else if (this.FormInputObj["content"] == AdInsConstant.ContentReferantor) {
+      temp = this.FormInputObj["ruleObj"][0];
       console.log("Rule Referantor");
     }
-    this.TotalCommisionAmount = 0;
+    return temp;
+  }
+
+  SetRule(indexFormObj, code, idx){
+    var temp =this.GetTempRuleObj(code, idx);
+    var TotalCommisionAmount = 0;
     for(var i=0;i<temp.length;i++){
-      var eachDDLDetail = this.fb.group({
+      var eachAllocationDetail = this.fb.group({
+        AllocationFromSeq: temp[i].AllocationFromSeq,
         AllocationFrom: temp[i].AllocationFrom,
+        AllocationFromDesc: temp[i].AllocationFromDesc,
         MaxAllocationAmount: temp[i].MaxAllocationAmount,
         AllocationAmount: temp[i].AllocationAmount,
         AllocationBehaviour: temp[i].AllocationBehaviour,
+        TaxAmt: 0,
+        VatAmt: 0,
+        PenaltyAmt: 0,
         TotalListAllocatedDivided: Math.ceil(temp.length / 2)
       }) as FormGroup;
-      this.TotalCommisionAmount += temp[i].AllocationAmount;
-      this.FormObj.controls.arr["controls"][indexFormObj].controls.ListAllocated.push(eachDDLDetail);
-      // this.FormObj.controls.arr["controls"][indexFormObj].controls.ListAllocated.controls[idx].controls.AllocationFrom.value;
+      TotalCommisionAmount += temp[i].AllocationAmount;
+      this.FormObj.controls.arr["controls"][indexFormObj].controls.ListAllocated.push(eachAllocationDetail);
     }
+    this.SortDataAllocation(indexFormObj);
+    
+    // patch total
     this.FormObj.controls.arr["controls"][indexFormObj].patchValue({
-      TotalCommisionAmount: this.TotalCommisionAmount,
+      TotalCommisionAmount: TotalCommisionAmount,
     });
     console.log(this.FormObj);
   }
@@ -299,6 +517,7 @@ export class FormAddDynamicComponent implements OnInit {
   }
 
   ChangeBankAcc(ev, i){
+    if(ev.target.selectedIndex == 0) return;
     // console.log(ev);
     var idxDDL = ev.target.selectedIndex - 1;
     var ddlObj = this.FormObj.controls.arr["controls"][i].controls.DropDownList.value[idxDDL];

@@ -33,8 +33,8 @@
 
                 <div class="form-group row">
                   <!-- Content Name -->
-                  <div class="form-group col-md-2">
-                    <label class="adInsLabel-required">{{FormInputObj['content']}} Name</label>
+                  <div class="form-group col-md-2 adins-required">
+                    <label class="adInsLabel">{{FormInputObj['content']}} Name</label>
                   </div>
                   <div class="col-md-4">
                     <select *ngIf="item.controls.ContentName.value == ''" class="form-control adInsInput"
@@ -57,26 +57,25 @@
                 <div [hidden]="item.controls.ContentName.value == ''">
                   <div class="form-group row">
                     <!-- Bank Account -->
-                    <div class="col-md-2">
-                      <label class="adInsLabel-required">Bank Account</label>
+                    <div class="col-md-2 adins-required">
+                      <label class="adInsLabel">Bank Account</label>
                     </div>
                     <div class="col-md-4">
-                      <select class="form-control adInsInput" style="width: auto; border-right: 1px solid grey" formControlName="BankAccountNo"
+                      <select class="form-control width-75-per adInsInput" formControlName="BankAccountNo"
                         (change)="ChangeBankAcc($event, i)">
                         <option value="">-Select One-</option>
-                        <option *ngFor="let it of item.controls.DropDownList.controls" value="{{it.value.Key}}"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && item.controls.BankAccount.value == null }">
+                        <option *ngFor="let it of item.controls.DropDownList.controls" value="{{it.value.Key}}">
                           {{it.value.Value}} </option>
-                        <show-errors [control]="item.controls.BankAccount" [submit]="enjiForm.submitted"></show-errors>
-                      </select>
+                        </select>
+                        <show-errors [control]="item.controls.BankAccountNo" [submit]="enjiForm.submitted"></show-errors>
                     </div>
 
                     <!-- Tax Amount -->
                     <label class="col-md-2 adInsLabel">Tax Amount </label>
                     <div class="col-md-4">
-                      <label class="adInsLabel" *ngIf="item.controls.TaxAmount.value != ''">
-                        {{item.controls.TaxAmount.value}} </label>
-                      <label class="adInsLabel" *ngIf="item.controls.TaxAmount.value == ''"> --- </label>
+                      <label class="adInsLabel" *ngIf="item.controls.TotalTaxAmount.value != ''">
+                        {{item.controls.TotalTaxAmount.value}} </label>
+                      <label class="adInsLabel" *ngIf="item.controls.TotalTaxAmount.value == ''"> --- </label>
                     </div>
                   </div>
 
@@ -94,9 +93,9 @@
                     <!-- VAT Amount -->
                     <label class="col-md-2 adInsLabel">VAT Amount </label>
                     <div class="col-md-4">
-                      <label class="adInsLabel" *ngIf="item.controls.VATAmount.value != ''">
-                        {{item.controls.VATAmount.value}} </label>
-                      <label class="adInsLabel" *ngIf="item.controls.VATAmount.value == ''"> --- </label>
+                      <label class="adInsLabel" *ngIf="item.controls.TotalVATAmount.value != ''">
+                        {{item.controls.TotalVATAmount.value}} </label>
+                      <label class="adInsLabel" *ngIf="item.controls.TotalVATAmount.value == ''"> --- </label>
                     </div>
                   </div>
 
@@ -106,9 +105,9 @@
 
                         <div class="col-md-6">
                           <div *ngFor="let ruleItem of item.controls.ListAllocated.controls; let idx = index">
-                            <div class="row" [formGroupName]="idx"
+                            <div class="form-group row" [formGroupName]="idx"
                               *ngIf="ruleItem.controls.TotalListAllocatedDivided.value > idx">
-                              <label class="col-md-4 adInsLabel"> {{ruleItem.controls.AllocationFrom.value}} </label>
+                              <label class="col-md-4 adInsLabel"> {{ruleItem.controls.AllocationFromDesc.value}} </label>
                               <div class="col-md-8" [ngSwitch]="ruleItem.controls.AllocationBehaviour.value">
                                 <input type="text" *ngSwitchCase="'LOCK'" readonly
                                   class="form-control adInsInput width-100-per text-left"
@@ -123,9 +122,9 @@
 
                         <div class="col-md-6">
                           <div *ngFor="let ruleItem of item.controls.ListAllocated.controls; let idx = index">
-                            <div class="row" [formGroupName]="idx"
+                            <div class="form-group row" [formGroupName]="idx"
                               *ngIf="ruleItem.controls.TotalListAllocatedDivided.value <= idx">
-                              <label class="col-md-4 adInsLabel"> {{ruleItem.controls.AllocationFrom.value}} </label>
+                              <label class="col-md-4 adInsLabel"> {{ruleItem.controls.AllocationFromDesc.value}} </label>
                               <div class="col-md-8" [ngSwitch]="ruleItem.controls.AllocationBehaviour.value">
                                 <input type="text" *ngSwitchCase="'LOCK'" readonly
                                   class="form-control adInsInput width-100-per text-left"
@@ -139,6 +138,12 @@
                         </div>
 
                       </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-md-12">
+                      <h1 style="color: white">_</h1>
                     </div>
                   </div>
                 </div>
