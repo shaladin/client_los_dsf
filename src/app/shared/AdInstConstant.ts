@@ -558,4 +558,12 @@ export class AdInsConstant {
   //App Fin Data
   public static GetAppFinDataByAppId = "http://localhost:5001/AppFinData/GetAppFinDataByAppId";
   public static CreateMaxAllocAmtRsvFund = "http://localhost:5001/AppFinData/CreateMaxAllocAmtRsvFund";
+
+  //Fraud Detection
+  public static GetAppDupCheckCustByAppId = environment.losUrl + "/FraudDetection/GetAppDupCheckCustByAppId";
+  public static GetFraudDukcapilByIdNo =  environment.losUrl + "/FraudDetection/GetFraudDukcapilByIdNo";
+  public static AddAppFraudVerf =  environment.losUrl + "/FraudDetection/AddAppFraudVerf";
+
+  //Lead
+  public static GetLeadByLeadId = environment.losUrl + "/Lead/GetLeadByLeadId"
 }
