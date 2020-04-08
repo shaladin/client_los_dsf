@@ -420,7 +420,7 @@ export class AdInsConstant {
   public static GetListRefModuleKeyValue = "/RefModule/GetListRefModuleKeyValue";
 
   //REF EMP
-  public static GetRefEmpForLookupEmployee = "http://localhost:5000" + "/RefEmp/GetRefEmpForLookupEmployee"
+  public static GetRefEmpForLookupEmployee = environment.FoundationR3Url + "/RefEmp/GetRefEmpForLookupEmployee"
 
   //REF EMP LEAVE MANAGEMENT
   public static GetRefEmpLeaveMngmntPaging = "/RefEmpLeaveManagement/GetRefEmpLeaveMngmntPaging";

@@ -24,7 +24,6 @@ import { RefEmpForLookupObj } from 'app/shared/model/RefEmpForLookupObj.Model';
   providers: [DecimalPipe, NGXToastrService]
 })
 export class LeadInputMainInfoComponent implements OnInit {
-  inputPagingObj: any;
   user: any;
   LeadId: any;
   addLead: any;
@@ -33,7 +32,6 @@ export class LeadInputMainInfoComponent implements OnInit {
   returnLead: any;
   responseLead: any;
   leadObj: any;
-  setLeadObj: any;
   getLeadObj: LeadObj;
   cmoNameLookUpObj: any;
   surveyorNameLookUpObj: any;
@@ -63,14 +61,24 @@ export class LeadInputMainInfoComponent implements OnInit {
   OfficeName: any;
   LobName: any;
   pageType: string = "add";
-  page:any;
-  custShareholderLookUpObj1: any;
+  leadPersonalLookUpObj: any;
   cmoObj: any;
   returnCmoObj: any;
   surveyorObj: any;
   returnSurveyorObj: any;
   salesObj: any;
   returnSalesObj: any;
+  leadIdExist: any;
+  getExistLeadObj: any;
+  returnExistLead: any;
+  vendorExistObj: any;
+  returnVendorExistObj: any;
+  cmoExistObj: any;
+  returnCmoExistObj: any;
+  surveyorExistObj: any;
+  returnSurveyorExistObj: any;
+  salesExistObj: any;
+  returnSalesExistObj: any;
   MainInfoForm = this.fb.group({
     OfficeCode: [''],
     OfficeName: [''],
@@ -122,6 +130,74 @@ getLookUpSalesName(event) {
     this.tempSalesCode = event.RoleCode;
 }
 
+getLookUpLead(event) {
+    this.leadIdExist = event.LeadId;
+}
+
+copyLead(){
+  this.getExistLeadObj = new LeadObj();
+  this.getExistLeadObj.LeadId = this.leadIdExist;
+  this.http.post(this.getLeadByLeadId, this.getExistLeadObj).subscribe(
+    (response) => {
+        this.returnExistLead = response;
+        this.MainInfoForm.patchValue({ 
+          OfficeCode: this.returnExistLead.OriOfficeCode,
+          OfficeName: this.returnExistLead.OriOfficeName,
+          OrderNo: this.returnExistLead.OrderNo,
+          LobCode: this.returnExistLead.LobCode,
+          LobName: this.returnExistLead.LobName,
+          LeadSource: this.returnExistLead.MrLeadSourceCode,
+        });
+
+        this.vendorExistObj = new VendorObj();
+        this.vendorExistObj.VendorCode = this.returnExistLead.AgencyCode;
+        this.http.post(this.getVendorByVendorCode, this.vendorExistObj).subscribe(
+          (response) => {
+              this.returnVendorExistObj = response;
+              this.agencyLookUpObj.nameSelect = this.returnVendorExistObj.VendorName;
+              this.agencyLookUpObj.jsonSelect = this.returnVendorExistObj;
+              this.tempAgencyName = this.returnVendorExistObj.VendorName;
+              this.tempAgencyCode = this.returnVendorExistObj.VendorCode;
+          });
+        
+          this.cmoExistObj = new RefEmpForLookupObj();
+          this.cmoExistObj.EmpName = this.returnExistLead.CmoName;
+          this.cmoExistObj.RoleCode = this.returnExistLead.CmoCode;
+          this.http.post(this.getRefEmpForLookupEmployee, this.cmoExistObj).subscribe(
+            (response) => {
+                this.returnCmoExistObj = response;
+                this.cmoNameLookUpObj.nameSelect = this.returnCmoExistObj.EmpName;
+                this.cmoNameLookUpObj.jsonSelect = this.returnCmoExistObj;
+                this.tempCmoName = this.returnCmoExistObj.EmpName;
+                this.tempCmoCode = this.returnCmoExistObj.RoleCode;
+            });
+          
+          this.surveyorExistObj = new RefEmpForLookupObj();
+          this.surveyorExistObj.EmpName = this.returnExistLead.SurveyorName;
+          this.surveyorExistObj.RoleCode = this.returnExistLead.SurveyorCode;
+          this.http.post(this.getRefEmpForLookupEmployee, this.surveyorExistObj).subscribe(
+            (response) => {
+                this.returnSurveyorExistObj = response;
+                this.surveyorNameLookUpObj.nameSelect = this.returnSurveyorExistObj.EmpName;
+                this.surveyorNameLookUpObj.jsonSelect = this.returnSurveyorExistObj;
+                this.tempSurveyorName = this.returnSurveyorExistObj.EmpName;
+                this.tempSurveyorCode = this.returnSurveyorExistObj.RoleCode;
+            });
+
+          this.salesExistObj = new RefEmpForLookupObj();
+          this.salesExistObj.EmpName = this.returnExistLead.TeleMarketingName;
+          this.salesExistObj.RoleCode = this.returnExistLead.TeleMarketingCode;
+          this.http.post(this.getRefEmpForLookupEmployee, this.salesExistObj).subscribe(
+            (response) => {
+                this.returnSalesExistObj = response;
+                this.salesNameLookUpObj.nameSelect = this.returnSalesExistObj.EmpName;
+                this.salesNameLookUpObj.jsonSelect = this.returnSalesExistObj;
+                this.tempSalesName = this.returnSalesExistObj.EmpName;
+                this.tempSalesCode = this.returnSalesExistObj.RoleCode;
+            });
+    });
+}
+
   ngOnInit() {
     console.log("ccc")
     console.log(JSON.parse(localStorage.getItem("UserAccess")));
@@ -139,13 +215,13 @@ getLookUpSalesName(event) {
       });
     }
 
-    this.custShareholderLookUpObj1 = new InputLookupObj();
-    this.custShareholderLookUpObj1.isRequired = false;
-    this.custShareholderLookUpObj1.urlJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
-    this.custShareholderLookUpObj1.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.custShareholderLookUpObj1.urlEnviPaging = environment.FoundationR3Url;
-    this.custShareholderLookUpObj1.pagingJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
-    this.custShareholderLookUpObj1.genericJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
+    this.leadPersonalLookUpObj = new InputLookupObj();
+    this.leadPersonalLookUpObj.isRequired = false;
+    this.leadPersonalLookUpObj.urlJson = "./assets/uclookup/lookupLeadPersonal.json";
+    this.leadPersonalLookUpObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.leadPersonalLookUpObj.urlEnviPaging = environment.losUrl;
+    this.leadPersonalLookUpObj.pagingJson = "./assets/uclookup/lookupLeadPersonal.json";
+    this.leadPersonalLookUpObj.genericJson = "./assets/uclookup/lookupLeadPersonal.json";
 
     this.agencyLookUpObj = new InputLookupObj();
     this.agencyLookUpObj.isRequired = false;
