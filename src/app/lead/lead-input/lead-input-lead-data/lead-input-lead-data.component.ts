@@ -11,6 +11,10 @@ import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { WizardComponent } from 'angular-archwizard';
 import { formatDate } from '@angular/common';
 import { AssetTypeObj } from 'app/shared/model/AssetTypeObj.Model';
+import { LeadInputLeadDataObj } from 'app/shared/model/LeadInputLeadDataObj.Model';
+import { LeadAppObj } from 'app/shared/model/LeadAppObj.Model';
+import { LeadAssetObj } from 'app/shared/model/LeadAssetObj.Model';
+
  
 @Component({
   selector: 'app-lead-input-lead-data',
@@ -88,21 +92,25 @@ export class LeadInputLeadDataComponent implements OnInit {
     MrAssetConditionCode: [''],
     MrDownPaymentTypeCode: [''],
     ManufacturingYear: [''],
-    AssetPrice: [''],
-    DownPayment: [''],
+    AssetPrice: ['',Validators.required],
+    DownPayment: ['',Validators.required],
     SerialNo1: [''],
     SerialNo2: [''],
     SerialNo3: [''],
     SerialNo4: [''],
     SerialNo5: [''],
 
-    Tenor:[''],
-    MrFirstInstTypeCode: [''],
+    Tenor:['',Validators.required],
+    MrFirstInstTypeCode: ['',Validators.required],
     NTFAmt: [''],
     TotalDownPayment: [''],
-    InstallmentAmt:['']
+    InstallmentAmt:['',Validators.required]
 
   });
+  leadInputLeadDataObj: any;
+  editLeadData = AdInsConstant.AddEditLeadData;
+  leadAppObj: any;
+  leadAssetObj: any;
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) { 
     // this.getCustById = AdInsConstant.GetCustByCustId;
@@ -275,70 +283,71 @@ export class LeadInputLeadDataComponent implements OnInit {
   // }
 
   SaveForm(){
-  //   if(this.typePage == "edit") {
-  //     this.reqCustPersonalJobDataObj = new RequestCustPersonalJobDataObj;
-  //     this.custPersonalJobDataObj = new CustPersonalJobDataObj();
-  //     this.jobAddressObj = new CustAddrObj;
-  //     this.otherAddressObj = new CustAddrObj;
-  //     this.setCustJobData();
-  //     this.custPersonalJobDataObj.OthBizAddrId = this.othBizAddrId
-  //     this.custPersonalJobDataObj.JobAddrId = this.jobAddrId;
-  //     this.custPersonalJobDataObj.CustPersonalJobDataId = this.jobDataId;
-  //     this.custPersonalJobDataObj.RowVersion = this.rowVersion;
-  //     this.jobAddressObj.MrCustAddrTypeCode = 'JOB';
-  //     this.otherAddressObj.MrCustAddrTypeCode = 'OTH_BIZ';
-  //     this.reqCustPersonalJobDataObj.CustPersonalJobData = this.custPersonalJobDataObj;
-  //     this.reqCustPersonalJobDataObj.JobAddr = this.jobAddressObj;
-  //     this.reqCustPersonalJobDataObj.OthBizAddr = this.otherAddressObj;
+    console.log('saveform');
+    console.log(this.LeadDataForm);
+    // if(this.typePage == "edit") {
+      this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+      this.leadAppObj = new LeadAppObj();
+      this.leadAssetObj = new LeadAssetObj();
 
-  //     console.log("ccc");
-  //     console.log(this.reqCustPersonalJobDataObj)
 
-  //     this.http.post(this.editJobData, this.reqCustPersonalJobDataObj).subscribe(
-  //       (response) => {
-  //         console.log(response);
-  //         this.toastr.successMessage(response["message"]);
-  //         // this.router.navigate(
-  //         //   ["/Customer/CustomerPersonal/Address"], 
-  //         //   { queryParams: { "IdCust": this.IdCust }}
-  //         //   );
-  //         // console.log(response);
-  //         this.wizard.goToNextStep();
-  //       },
-  //       (error) => {
-  //         console.log(error);
-  //       }
-  //     );
-  //   } else {
-  //     this.reqCustPersonalJobDataObj = new RequestCustPersonalJobDataObj;
-  //     this.custPersonalJobDataObj = new CustPersonalJobDataObj();
-  //     this.setCustJobData();
-  //     this.jobAddressObj = new CustAddrObj;
-  //     this.setJobAddr();
-  //     this.otherAddressObj = new CustAddrObj;
-  //     this.setOthBizAddr();
-  //     this.reqCustPersonalJobDataObj.CustPersonalJobData = this.custPersonalJobDataObj;
-  //     this.reqCustPersonalJobDataObj.JobAddr = this.jobAddressObj;
-  //     this.reqCustPersonalJobDataObj.OthBizAddr = this.otherAddressObj;
 
-  //     console.log("ccc");
-  //     console.log(this.reqCustPersonalJobDataObj)
 
-  //     this.http.post(this.addJobData, this.reqCustPersonalJobDataObj).subscribe(
-  //       (response) => {
-  //         console.log(response);
-  //         this.toastr.successMessage(response["message"]);
-  //         // this.router.navigate(
-  //         //   ["/Customer/CustomerPersonal/Address"], 
-  //         //   { queryParams: { "IdCust": this.IdCust }}
-  //         //   );
-  //         // console.log(response);
-  //         this.wizard.goToNextStep();
-  //       },
-  //       (error) => {
-  //         console.log(error);
-  //       }
-  //     );
-  //   }
+      this.leadAppObj = this.LeadDataForm.value;
+      this.leadAssetObj = this.LeadDataForm.value;
+      this.leadAppObj.LeadId = this.LeadId;
+      this.leadAssetObj.LeadId = this.LeadId;
+
+      this.leadInputLeadDataObj.LeadAppObj = this.leadAppObj;
+      this.leadInputLeadDataObj.LeadAssetObj = this.leadAssetObj;
+      
+      console.log('isi leadinput');
+      console.log(this.leadInputLeadDataObj);
+      this.http.post(this.editLeadData, this.leadInputLeadDataObj).subscribe(
+        (response) => {
+          console.log(response);
+          this.toastr.successMessage(response["message"]);
+          // this.router.navigate(
+          //   ["/Customer/CustomerPersonal/Address"], 
+          //   { queryParams: { "IdCust": this.IdCust }}
+          //   );
+          // console.log(response);
+          // this.wizard.goToNextStep();
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    // } else {
+    //   this.reqCustPersonalJobDataObj = new RequestCustPersonalJobDataObj;
+    //   this.custPersonalJobDataObj = new CustPersonalJobDataObj();
+    //   this.setCustJobData();
+    //   this.jobAddressObj = new CustAddrObj;
+    //   this.setJobAddr();
+    //   this.otherAddressObj = new CustAddrObj;
+    //   this.setOthBizAddr();
+    //   this.reqCustPersonalJobDataObj.CustPersonalJobData = this.custPersonalJobDataObj;
+    //   this.reqCustPersonalJobDataObj.JobAddr = this.jobAddressObj;
+    //   this.reqCustPersonalJobDataObj.OthBizAddr = this.otherAddressObj;
+
+    //   console.log("ccc");
+    //   console.log(this.reqCustPersonalJobDataObj)
+
+    //   this.http.post(this.addJobData, this.reqCustPersonalJobDataObj).subscribe(
+    //     (response) => {
+    //       console.log(response);
+    //       this.toastr.successMessage(response["message"]);
+    //       // this.router.navigate(
+    //       //   ["/Customer/CustomerPersonal/Address"], 
+    //       //   { queryParams: { "IdCust": this.IdCust }}
+    //       //   );
+    //       // console.log(response);
+    //       this.wizard.goToNextStep();
+    //     },
+    //     (error) => {
+    //       console.log(error);
+    //     }
+    //   );
+    // }
    }
 }
