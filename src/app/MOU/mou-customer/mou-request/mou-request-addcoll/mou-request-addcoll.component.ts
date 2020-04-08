@@ -606,10 +606,10 @@ export class MouRequestAddcollComponent implements OnInit {
   }
 
   next(){
-    this.ResponseMouAddColl.emit({StatusCode: 200});
+    this.ResponseMouAddColl.emit({StatusCode: "200"});
   }
 
   back(){
-    this.ResponseMouAddColl.emit({StatusCode: -1});
+    this.ResponseMouAddColl.emit({StatusCode: "-1"});
   }
 }

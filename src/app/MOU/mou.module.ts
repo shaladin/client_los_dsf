@@ -39,11 +39,14 @@ import { MouCustAssetComponent } from './mou-customer-request/mou-detail-general
 import { MouCustAssetDetailComponent } from './mou-customer-request/mou-detail-general/mou-cust-asset/mou-cust-asset-detail/mou-cust-asset-detail.component';
 import { MouCustFeeComponent } from './mou-customer-request/mou-cust-fee/mou-cust-fee.component';
 import { MouCustFeeDetailComponent } from './mou-customer-request/mou-cust-fee/mou-cust-fee-detail/mou-cust-fee-detail.component';
+import { MouCustTcComponent } from './mou-customer-request/mou-cust-tc/mou-cust-tc.component';
+import { MouCustListedCustFctrComponent } from './mou-customer-request/mou-cust-listed-cust-fctr/mou-cust-listed-cust-fctr.component';
+import { MouCustListedCustFctrDetailComponent } from './mou-customer-request/mou-cust-listed-cust-fctr/mou-cust-listed-cust-fctr-detail/mou-cust-listed-cust-fctr-detail.component';
 // import { MouCustomerApprovalComponent } from './mou-customer/mou-customer-approval/mou-customer-approval.component';
 // import { MouApprovalGeneralComponent } from './mou-customer/mou-customer-approval/mou-approval-general/mou-approval-general.component';
 // import { MouApprovalFactoringComponent } from './mou-customer/mou-customer-approval/mou-approval-factoring/mou-approval-factoring.component';
-// import { MouRequestAddcollComponent } from './mou-customer/mou-request/mou-request-addcoll/mou-request-addcoll.component';
-// import { MouRequestAddcollAddeditComponent } from './mou-customer/mou-request/mou-request-addcoll-addedit/mou-request-addcoll-addedit.component';
+import { MouRequestAddcollComponent } from './mou-customer/mou-request/mou-request-addcoll/mou-request-addcoll.component';
+import { MouRequestAddcollAddeditComponent } from './mou-customer/mou-request/mou-request-addcoll-addedit/mou-request-addcoll-addedit.component';
 // import { ShowErrorsComponent } from "./app/test-new/show-errors.component";
 
 @NgModule({
@@ -92,15 +95,20 @@ import { MouCustFeeDetailComponent } from './mou-customer-request/mou-cust-fee/m
     MouCustAssetDetailComponent,
     MouCustFeeComponent,
     MouCustFeeDetailComponent,
+    MouCustTcComponent,
+    MouCustListedCustFctrComponent,
+    MouCustListedCustFctrDetailComponent,
+    MouRequestAddcollComponent,
+    MouRequestAddcollAddeditComponent,
   ],
   entryComponents: [
     MouCustAssetDetailComponent,
-    MouCustFeeDetailComponent
+    MouCustFeeDetailComponent,
     // MouCustomerApprovalComponent,
     // MouApprovalGeneralComponent,
     // MouApprovalFactoringComponent,
-    // MouRequestAddcollComponent,
-    // MouRequestAddcollAddeditComponent,
+    MouRequestAddcollComponent,
+    MouRequestAddcollAddeditComponent,
   ]
 })
 export class MouModule { }

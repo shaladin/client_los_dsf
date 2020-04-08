@@ -23,12 +23,12 @@ export class MouDetailGeneralComponent implements OnInit {
   instSchmList: any;
   payFreqList: any;
   firstInstList: any;
-  mode: any;
+  mode: any = "add";
 
   MouDetailGeneralForm = this.fb.group({
     MouCustClauseId: [0, [Validators.required]],
     MouCustId: [0, [Validators.required]],
-    AssetTypeCode: ['', [Validators.required]],
+    AssetTypeCode: [''],
     MrInterestTypeCode: ['', [Validators.required]],
     MrInstSchmCode: ['', [Validators.required]],
     MrFirstInstTypeCode: [''],
@@ -111,13 +111,16 @@ export class MouDetailGeneralComponent implements OnInit {
 
     if(this.mode == "add"){
       url = AdInsConstant.AddMouCustClause;
+      console.log(url);
     }
     else if(this.mode == "edit"){
       url = AdInsConstant.EditMouCustClause;
+      console.log(url);
     }
 
     this.httpClient.post(url, mouCustClauseData).subscribe(
       (response) => {
+        console.log(response);
         this.toastr.successMessage(response["Message"]);
         this.ResponseMouDetailGeneral.emit(response);
       },
@@ -128,6 +131,6 @@ export class MouDetailGeneralComponent implements OnInit {
   }
 
   back(){
-    this.ResponseMouDetailGeneral.emit({StatusCode: -2});
+    this.ResponseMouDetailGeneral.emit({StatusCode: "-2"});
   }
 }

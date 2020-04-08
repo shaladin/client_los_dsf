@@ -29,7 +29,7 @@ export class MouCustFeeComponent implements OnInit {
     mouCustFee.MouCustId = this.MouCustId;
     this.httpClient.post(AdInsConstant.GetMouCustFeeForMouRequestByMouCustId, mouCustFee).subscribe(
       (response) => { 
-        this.mouCustFeeList = response["ReturnObject"];
+        this.mouCustFeeList = response;
       },
       (error) => {
         console.log(error);
@@ -47,7 +47,7 @@ export class MouCustFeeComponent implements OnInit {
         mouCustFee.MouCustId = this.MouCustId;
         this.httpClient.post(AdInsConstant.GetMouCustFeeForMouRequestByMouCustId, mouCustFee).subscribe(
           (response) => { 
-            this.mouCustFeeList = response["ReturnObject"];
+            this.mouCustFeeList = response;
           },
           (error) => {
             console.log(error);
@@ -80,11 +80,11 @@ export class MouCustFeeComponent implements OnInit {
   }
 
   next(){
-    this.ResponseMouCustFee.emit({StatusCode: 200});
+    this.ResponseMouCustFee.emit({StatusCode: "200"});
   }
 
   back(){
-    this.ResponseMouCustFee.emit({StatusCode: -1});
+    this.ResponseMouCustFee.emit({StatusCode: "-1"});
   }
 
 }
