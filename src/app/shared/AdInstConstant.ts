@@ -42,6 +42,7 @@ export class AdInsConstant {
     public static AddApp = "/Application/AddApp";
     public static EditApp = "/Application/EditApp";
     public static GetAppById = "/Application/GetAppById";
+    public static GetAppByIds = environment.losUrl + "/Application/GetAppById";
     public static EditAppAddAppCross = "/Application/EditAppAddAppCross";
 
     // App Asset
@@ -123,6 +124,16 @@ export class AdInsConstant {
 
     //INS PAID BY
     public static InsPaidByCustomer = "CU";
+
+    //COVER PERIOD
+    public static CoverPeriodAnnually = "AN";
+    public static CoverPeriodFullTenor = "FT";
+    public static CoverPeriodPartialTenor = "PT";
+    public static CoverPeriodOverTenor = "OT";
+
+    //PREMIUM TYPE
+    public static PremiumTypeAmt = "AMT";
+    public static PremiumTypePrcnt = "PRCNT";
 
     //GENERAL SETTING
     public static GetBusinessDt = "/GeneralSetting/GetBusinessDate";
@@ -452,11 +463,15 @@ export class AdInsConstant {
     // VendorEmp
     public static GetListVendorBankByVendorEmpNo = "/VendorEmp​/GetListVendorBankByVendorEmpNo";
     public static GetVendorByCategoryCodeAndOfficeCode = environment.FoundationR3Url + "/Vendor/GetVendorByCategoryCodeAndOfficeCode";
+    public static GetListVendorBankAccByListVendorEmpNo = "/VendorEmp/GetListVendorBankAccByListVendorEmpNo";
+    public static GetVendorEmpByVendorEmpNo = "/VendorEmp/GetVendorEmpByVendorEmpNo";
 
     //Life Ins
     public static AddAppLifeInsH = environment.losUrl + "/AppLifeIns/AddAppLifeInsH";
     public static EditAppLifeInsH = environment.losUrl + "/AppLifeIns/EditAppLifeInsH";
     public static InitAppLifeInsH = environment.losUrl + "/AppLifeIns/InitAppLifeInsH";
+    public static GetAppLifeInsHByAppId = environment.losUrl + "/AppLifeIns/GetAppLifeInsHByAppId";
+    
     // MOU CUST
     public static GetMouCustById = environment.losUrl + "/MouCust/GetMouCustById";
     public static AddMouCust = environment.losUrl + "/MouCust/AddMouCust";
@@ -536,19 +551,30 @@ export class AdInsConstant {
     public static GetCustPersonalForCopyMgmntShrholderByCustId = environment.FoundationR3Url + "/Cust/GetCustPersonalForCopyMgmntShrholderByCustId";
     public static GetCustCompanyForCopyMgmntShrholderByCustId = environment.FoundationR3Url + "/Cust/GetCustCompanyForCopyMgmntShrholderByCustId";
 
-
-
-
-
     //CUST DATA PERSONAL
     public static AddEditCustDataPersonal = environment.losUrl + "/AppCust/AddEditCustDataPersonal";
     public static GetCustDataByAppId = environment.losUrl + "/AppCust/GetCustDataByAppId";
     public static GetAppCustPersonalContactPersonsByAppCustPersonalId = environment.losUrl + "/AppCustPersonalContactPerson/GetAppCustPersonalContactPersonsByAppCustPersonalId";
     public static DeleteAppCustPersonalContactPerson = environment.losUrl + "/AppCustPersonalContactPerson/DeleteAppCustPersonalContactPerson";
     public static GetAppCustBankAccsByAppCustId = environment.losUrl + "/AppCustBankAcc/GetAppCustBankAccsByAppCustId";
+    public static GetAppCustPersonalDataAndSpouseByAppId = environment.losUrl + "/AppCust/GetAppCustPersonalDataAndSpouseByAppCustId";
 
     //CUST DATA COMPANY
     public static AddEditCustDataCompany = environment.losUrl + "/AppCust/AddEditCustDataCompany";
+
+    // Rule
+    public static Rule = "http://r3app-server/RULE_FINAL/RuleService/ExecuteRuleSet";
+
+    // Tax
+    public static AppCom = "APP_COM";
+    public static ExchangeRateAmt = "1";
+    public static TaxTypeCode = "WHT";
+    public static VATTypeCode = "VAT";
+
+    // App Commission
+    public static AddAppCommissionData = "/AppCommission/AddAppCommissionData";
+    public static GetAppCommissionRule = "/AppCommission/GetAppCommissionRule";
+    public static GetAppCommissionTax = "/AppCommission/GetAppCommissionTax";
 
     // App Asset
     public static GetAppAssetListByAgrmntId = environment.losUrl + "/AppAsset/GetAppAssetListByAgrmntId";
@@ -558,6 +584,7 @@ export class AdInsConstant {
     public static GetAppAssetByAgrmntId = environment.losUrl + "/AppAsset/GetAppAssetByAgrmntId";
     public static GetAllAssetDataByAppId = environment.losUrl + "/AppAsset/GetAllAssetDataByAppId";
     public static AddEditAllAssetData = environment.losUrl + "/AppAsset/AddEditAllAssetData";
+    public static GetAppAssetDataByAppId = environment.losUrl + "/AppAsset/GetAppAssetDataByAppId";
 
     //LEAD VERF
     public static AddRangeLeadVerf = environment.losUrl + "/LeadVerf/AddRangeLeadVerf";
