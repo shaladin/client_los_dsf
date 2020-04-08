@@ -9,7 +9,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
   styleUrls: ['./doc-signer-paging.component.scss']
 })
 export class DocSignerPagingComponent implements OnInit {
-  inputPagingObj: any;
+  inputPagingObj: UcPagingObj;
   
   constructor() { }
 

@@ -9,34 +9,33 @@ import { AppCollateralDocObj } from 'app/shared/model/AppCollateralDocObj.Model'
 import { ListAppCollateralDocObj } from 'app/shared/model/ListAppCollateralDocObj.Model';
 import { ListAppTCObj } from 'app/shared/model/ListAppTCObj.Model';
 import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueModel';
 
 @Component({
   selector: 'app-delivery-order-detail',
   templateUrl: './delivery-order-detail.component.html',
-  styleUrls: ['./delivery-order-detail.component.scss'],
-  providers: [NGXToastrService]
+  styleUrls: ['./delivery-order-detail.component.scss']
 })
 
 export class DeliveryOrderDetailComponent implements OnInit {
-  result: any;
-  resultData: any;
+  appAssetObj: any;
   items: any;
   deliveryOrderObj: any = new DeliveryOrderObj();
   appCollateralDoc: any;
   listAppCollateralDocObj: ListAppCollateralDocObj;
   appTC: any;
   listAppTCObj: ListAppTCObj;
-  itemType: any;
+  itemType: Array<KeyValueObj>;
 
   AppAssetId: number;
   AppId: number;
   AgrmntId: number;
   MrAssetConditionCode: string;
   AssetStat: string;
-  AssetTypeCode:  string;
+  AssetTypeCode: string;
   FullAssetCode: string;
   FullAssetName: string;
-  MrAssetUsageCode:  string;
+  MrAssetUsageCode: string;
   AssetCategoryCode: string;
 
   arrValue = [];
@@ -69,9 +68,8 @@ export class DeliveryOrderDetailComponent implements OnInit {
   })
 
   ngOnInit() {
-    console.log("debug")
     this.arrValue.push(this.AgrmntId);
-    
+
     var refMasterTypeObj = {
       RefMasterTypeCode: "CUST_RELATIONSHIP",
     }
@@ -87,29 +85,27 @@ export class DeliveryOrderDetailComponent implements OnInit {
     var appAssetobj = {
       AgrmntId: this.AgrmntId
     }
-
     this.items = this.DeliveryOrderForm.get('items') as FormArray;
 
     this.http.post(AdInsConstant.GetAppAssetByAgrmntId, appAssetobj).subscribe(
       (response) => {
-        this.result = response;
-        this.AppAssetId= this.result.AppAssetId;
-        this.MrAssetConditionCode = this.result.MrAssetConditionCode;
-        this.AssetStat = this.result.AssetStat;
-        this.AssetTypeCode = this.result.AssetTypeCode;
-        this.FullAssetCode = this.result.FullAssetCode;
-        this.FullAssetName = this.result.FullAssetName;        
-        this.MrAssetUsageCode = this.result.MrAssetUsageCode;
-        this.AssetCategoryCode = this.result.AssetCategoryCode;        
+        this.appAssetObj = response;
+        this.AppAssetId = this.appAssetObj.AppAssetId;
+        this.MrAssetConditionCode = this.appAssetObj.MrAssetConditionCode;
+        this.AssetStat = this.appAssetObj.AssetStat;
+        this.AssetTypeCode = this.appAssetObj.AssetTypeCode;
+        this.FullAssetCode = this.appAssetObj.FullAssetCode;
+        this.FullAssetName = this.appAssetObj.FullAssetName;
+        this.MrAssetUsageCode = this.appAssetObj.MrAssetUsageCode;
+        this.AssetCategoryCode = this.appAssetObj.AssetCategoryCode;
 
         this.DeliveryOrderForm.patchValue({
-          ManufacturingYear: this.result.ManufacturingYear
+          ManufacturingYear: this.appAssetObj.ManufacturingYear
         });
 
         var assetDocListobj = {
-          AssetTypeCode: this.result.AssetTypeCode
+          AssetTypeCode: this.appAssetObj.AssetTypeCode
         }
-
         this.http.post(AdInsConstant.GetRefAssetDocList, assetDocListobj).subscribe(
           (response) => {
             if (response["ReturnObject"].length > 0) {
@@ -148,7 +144,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
       AssetStat: this.AssetStat,
       AssetTypeCode: this.AssetTypeCode,
       FullAssetCode: this.FullAssetCode,
-      FullAssetName: this.FullAssetName,        
+      FullAssetName: this.FullAssetName,
       MrAssetUsageCode: this.MrAssetUsageCode,
       AssetCategoryCode: this.AssetCategoryCode
     }

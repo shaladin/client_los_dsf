@@ -31,10 +31,10 @@ import { SharingComponentModule } from "app/shared/sharingcomponent.module";
     SharingComponentModule
   ],
   declarations: [
-  PoExtensionPagingComponent,
-  PoExtensionDetailComponent,
-  OutstandingTcPagingComponent,
-  OutstandingTcDetailComponent],
+    PoExtensionPagingComponent,
+    PoExtensionDetailComponent,
+    OutstandingTcPagingComponent,
+    OutstandingTcDetailComponent],
   providers: [
     NGXToastrService
   ]

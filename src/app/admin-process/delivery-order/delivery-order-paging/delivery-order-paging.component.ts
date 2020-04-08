@@ -10,7 +10,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
   styleUrls: ['./delivery-order-paging.component.scss']
 })
 export class DeliveryOrderPagingComponent implements OnInit {
-  inputPagingObj: any;
+  inputPagingObj: UcPagingObj;
   
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
