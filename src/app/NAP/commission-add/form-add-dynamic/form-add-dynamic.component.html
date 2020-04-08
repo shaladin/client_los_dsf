@@ -1,31 +1,15 @@
 <div class="card-body">
   <div class="px-3">
-    <lib-ucSubsection [id]="'formInformationId'" [title]="FormInputObj['title']" [panel]="'formInformation'">
+    <lib-ucSubsection [id]="'formInformation' + FormInputObj['content'] + 'id'" [title]="FormInputObj['title']" [panel]="'formInformation' + FormInputObj['content']">
     </lib-ucSubsection>
-    <div class="form-body" [id]="formInformation">
-
-      <div class="form-actions row">
-        <div class="col-md-10"></div>
-        <div class="col-md-2">
-          <button type="button" (click)="AddNewDataForm()" class="btn btn-raised btn-primary "
-            [hidden]="lenDDLContentName == 0" translate>
-            <i class="fa fa-check-square-o"></i> Add new
-          </button>
-        </div>
+    <div class="form-body" [id]="'formInformation' + FormInputObj['content']">
+      <div class="form-actions right">
+        <button type="button" (click)="AddNewDataForm()" class="btn btn-raised btn-primary" [hidden]="lenDDLContentName == 0" translate>
+          <i class="fa fa-check-square-o"></i> Add new
+        </button>
       </div>
 
-
       <form class="form form-horizontal" [formGroup]="FormObj" #enjiForm="ngForm">
-
-        <!-- <div class="form-actions ucSearch-Button-Right">
-          <button type="button" (click)="AddNewDataForm()" class="btn btn-raised btn-primary" translate>
-            <i class="fa fa-check-square-o"></i> Add
-          </button>
-          <button type="button" (click)="CheckData()" class="btn btn-raised btn-primary" translate>
-            <i class="fa fa-check-square-o"></i> Check Data
-          </button>
-        </div> -->
-
         <div class="form-body">
           <div formArrayName="arr">
             <div *ngFor="let item of FormObj.controls.arr.controls; let i = index;">
@@ -43,7 +27,7 @@
                       <option *ngFor="let it of DDLContentName" value="{{it.Key}}">
                         {{it.Value}} </option>
                     </select>
-                    <show-errors [control]="item.controls.ContentName" [submit]="enjiForm.submitted"></show-errors>
+                    <lib-uc-show-errors [control]="item.controls.ContentName" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                     <label class="adInsLabel"
                       *ngIf="item.controls.ContentName.value != ''">{{item.controls.ContentNameValue.value}}</label>
                   </div>
@@ -67,7 +51,7 @@
                         <option *ngFor="let it of item.controls.DropDownList.controls" value="{{it.value.Key}}">
                           {{it.value.Value}} </option>
                         </select>
-                        <show-errors [control]="item.controls.BankAccountNo" [submit]="enjiForm.submitted"></show-errors>
+                        <lib-uc-show-errors [control]="item.controls.BankAccountNo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                     </div>
 
                     <!-- Tax Amount -->
@@ -112,9 +96,11 @@
                                 <input type="text" *ngSwitchCase="'LOCK'" readonly
                                   class="form-control adInsInput width-100-per text-left"
                                   formControlName="AllocationAmount" (change)="ChangeDataLabel(i)">
-                                <input type="text" *ngSwitchCase="'DEF'"
+                                <input type="text" max="FormObj.controls.arr['controls'][i].controls.ListAllocated.controls[idx].controls.MaxAllocationAmount.value" *ngSwitchCase="'DEF'"
                                   class="form-control adInsInput width-100-per text-left"
+                                  [ngClass]="{ 'is-invalid': enjiForm.submitted && ruleItem.controls.AllocationAmount.invalid }"
                                   formControlName="AllocationAmount" (change)="ChangeDataLabel(i)">
+                                <lib-uc-show-errors [control]="ruleItem.controls.AllocationAmount" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                               </div>
                             </div>
                           </div>
@@ -129,9 +115,11 @@
                                 <input type="text" *ngSwitchCase="'LOCK'" readonly
                                   class="form-control adInsInput width-100-per text-left"
                                   formControlName="AllocationAmount" (change)="ChangeDataLabel(i)">
-                                <input type="text" *ngSwitchCase="'DEF'"
-                                  class="form-control adInsInput width-100-per text-left"
-                                  formControlName="AllocationAmount" (change)="ChangeDataLabel(i)">
+                                  <input type="text" max="ruleItem.controls.MaxAllocationAmount.value" *ngSwitchCase="'DEF'"
+                                    class="form-control adInsInput width-100-per text-left"
+                                    [ngClass]="{ 'is-invalid': enjiForm.submitted && ruleItem.controls.AllocationAmount.invalid }"
+                                    formControlName="AllocationAmount" (change)="ChangeDataLabel(i)">
+                                  <lib-uc-show-errors [control]="ruleItem.controls.AllocationAmount" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                               </div>
                             </div>
                           </div>

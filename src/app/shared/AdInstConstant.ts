@@ -34,7 +34,7 @@ export class AdInsConstant {
     public static AppStepCNFR = "CNFR";
     public static AppStepPGLV = "PGLV";
     public static AppStepCSR = "CSR";
-        
+     
     // ASSET
     public static GetListKeyValueByCode = environment.FoundationR3Url + "/AssetType/GetListKeyValueByCode";
 
@@ -43,6 +43,7 @@ export class AdInsConstant {
     public static EditApp = "/Application/EditApp";
     public static GetAppById = "/Application/GetAppById";   
     public static EditAppAddAppCross = "/Application/EditAppAddAppCross";   
+    public static GetAppByIds = environment.losUrl + "/Application/GetAppById";
 
     // App Asset
     public static GetAppAssetListByAppIdForCommision = "/AppAsset/GetAppAssetListByAppIdForCommision";
@@ -101,7 +102,7 @@ export class AdInsConstant {
     public static CustTypePersonal = "PERSONAL";
     public static CustTypeCompany = "COMPANY";
 
-  
+
   //COVER PERIOD
   public static CoverPeriodAnnually = "AN";
   public static CoverPeriodFullTenor = "FT";
@@ -565,9 +566,14 @@ export class AdInsConstant {
   public static ExchangeRateAmt = "1";
   public static TaxTypeCode = "WHT";
   public static VATTypeCode = "VAT";
+  public static TrxTypeCode = "APP_COM";
   public static ContentSupplier = "Supplier";
-  public static ContentSupplierEmp = "Supplier Employee";
+  public static ContentSupplierEmp = "SupplierEmployee";
   public static ContentReferantor = "Referantor";
+  public static CommissionReceipientTypeCodeSupplier = "SUPPL";
+  public static CommissionReceipientTypeCodeSupplierEmp = "SUPPL_EMP";
+  public static CommissionReceipientTypeCodeReferantor = "REFERANTOR";
+
   public static TitleSupplier = "List Supplier Commission Data";
   public static TitleSupplierEmp = "List Supplier Employee Commission Data";
   public static TitleReferantor = "List Referantor Commission Data";

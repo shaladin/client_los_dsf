@@ -9,6 +9,7 @@ import { AppCommissionHObj } from 'app/shared/model/AppCommissionHObj.Model';
 import { FormAddDynamicComponent } from './form-add-dynamic/form-add-dynamic.component';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { AppCommissionDObj } from 'app/shared/model/AppCommissionDObj.Model';
+import { template } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-commission-add',
@@ -104,17 +105,20 @@ export class CommissionAddComponent implements OnInit {
             var FormAdd3Idx = 0;
             for(var i=0;i<tempObj.length;i++){
               var obj = tempObj[i];
-              if(obj.MrCommissionRecipientTypeCode == AdInsConstant.ContentSupplier){
+              if(obj.MrCommissionRecipientTypeCode == AdInsConstant.CommissionReceipientTypeCodeSupplier){
                 this.FormAdd1.AddNewDataForm();
                 this.FormAdd1.GenerateExistingContentName(obj, FormAdd1Idx);
+                this.FormInputObjSupplier["isDataInputed"] = true;
                 FormAdd1Idx++;
-              }else if(obj.MrCommissionRecipientTypeCode == AdInsConstant.ContentSupplierEmp){
+              }else if(obj.MrCommissionRecipientTypeCode == AdInsConstant.CommissionReceipientTypeCodeSupplierEmp){
                 this.FormAdd2.AddNewDataForm();
                 this.FormAdd2.GenerateExistingContentName(obj, FormAdd2Idx);
+                this.FormInputObjSupplierEmpl["isDataInputed"] = true;
                 FormAdd2Idx++;
-              }else if(obj.MrCommissionRecipientTypeCode == AdInsConstant.ContentReferantor){
+              }else if(obj.MrCommissionRecipientTypeCode == AdInsConstant.CommissionReceipientTypeCodeReferantor){
                 this.FormAdd3.AddNewDataForm();
                 this.FormAdd3.GenerateExistingContentName(obj, FormAdd3Idx);
+                this.FormInputObjReferantor["isDataInputed"] = true;
                 FormAdd3Idx++;
               }
             }
@@ -486,7 +490,8 @@ export class CommissionAddComponent implements OnInit {
       this.FormInputObjSupplier["contentObj"] = this.ContentObjSupplier;
       this.FormInputObjSupplier["ruleObj"] = this.RuleSupplierData;
       this.FormInputObjSupplier["isAutoGenerate"] = this.isAutoGenerate;
-      
+      this.FormInputObjSupplier["isCalculated"] = false;
+      this.FormInputObjSupplier["isDataInputed"] = false;
       this.OnForm1 = true;
       console.log(this.FormInputObjSupplier);
     } else if (content == AdInsConstant.ContentSupplierEmp) {
@@ -496,6 +501,8 @@ export class CommissionAddComponent implements OnInit {
       this.FormInputObjSupplierEmpl["contentObj"] = this.ContentObjSupplierEmp;
       this.FormInputObjSupplierEmpl["ruleObj"] = this.RuleSupplierEmpData;
       this.FormInputObjSupplierEmpl["isAutoGenerate"] = this.isAutoGenerate;
+      this.FormInputObjSupplierEmpl["isCalculated"] = false;
+      this.FormInputObjSupplierEmpl["isDataInputed"] = false;
       this.OnForm2 = true;
       console.log(this.FormInputObjSupplierEmpl);
     } else if (content == AdInsConstant.ContentReferantor) {
@@ -505,6 +512,8 @@ export class CommissionAddComponent implements OnInit {
       this.FormInputObjReferantor["contentObj"] = this.ContentObjReferantor;
       this.FormInputObjReferantor["ruleObj"] = this.RuleReferantorData;
       this.FormInputObjReferantor["isAutoGenerate"] = this.isAutoGenerate;
+      this.FormInputObjReferantor["isCalculated"] = false;
+      this.FormInputObjReferantor["isDataInputed"] = false;
       this.OnForm3 = true;
       console.log(this.FormInputObjReferantor);
     }
@@ -543,12 +552,6 @@ export class CommissionAddComponent implements OnInit {
     if (this.FormGetObj[AdInsConstant.ContentReferantor]) {
       this.FormAdd3.CalculateTax(this.ResultAppData.CurrCode, this.ResultAppData.AppNo, this.ResultAppData.OriOfficeCode);
     }
-
-    if(this.Summary.TotalCommisionAmount > this.viewIncomeInfoObj.MaxAllocatedAmount){
-      document.getElementById("totalCommAmt").style.color = "red"; 
-    }else{
-      document.getElementById("totalCommAmt").style.color = "initial"; 
-    }
   }
 
   CalculateEachData(FormObj){
@@ -571,16 +574,17 @@ export class CommissionAddComponent implements OnInit {
 
   listAppCommissionHObj;
   private DataFilterAppCommH(FormObj, CommReceipientTypeCode) {
-    console.log(FormObj);
+    // console.log(FormObj);
     var arr = FormObj.get('arr') as FormArray;
     var len = arr["controls"].length;
-    console.log(arr);
-    console.log(len);
+    // console.log(arr);
+    // console.log(len);
     for (var i = 0; i < len; i++) {
       var tempAppCommHObj = new AppCommissionHObj();
       var temp = arr["controls"][i].value;
       console.log("Data at " + i);
       console.log(temp);
+      if(temp.ContentName == "") continue;
       tempAppCommHObj = this.PatchTempDataValue(temp, CommReceipientTypeCode);
 
 
@@ -591,6 +595,7 @@ export class CommissionAddComponent implements OnInit {
 
   private PatchTempDataValue(obj, CommReceipientTypeCode) {
     var temp = new AppCommissionHObj();
+    if(obj.AppCommissionHId != 0) temp.AppCommissionHId = obj.AppCommissionHId;
     temp.AppId = this.AppId;
     temp.BankAccNo = obj.BankAccountNo;
     temp.BankAccName = obj.BankAccountName;
@@ -606,6 +611,7 @@ export class CommissionAddComponent implements OnInit {
     temp.MrTaxKindCode = obj.MrIdTypeCode;
     temp.MrTaxCalcMethodCode = obj.MrTaxCalcMethodCode;
     temp.TaxpayerNo = obj.TaxpayerNo;
+    temp.RowVersion = obj.RowVersion;
     temp.ListappCommissionDObj = this.DataFilterAppCommD(obj);
     return temp;
   }
@@ -617,28 +623,48 @@ export class CommissionAddComponent implements OnInit {
     for(var i=0;i<temp.length;i++){
       var tempObj = temp[i];
       var tempAppCommissionDObj = new AppCommissionDObj();
+      if(tempObj.AppCommissionDId != 0){
+        tempAppCommissionDObj.AppCommissionHId = tempObj.AppCommissionHId;
+        tempAppCommissionDObj.AppCommissionDId = tempObj.AppCommissionDId;
+      }
       tempAppCommissionDObj.MrCommissionSourceCode = tempObj.AllocationFrom;
       tempAppCommissionDObj.CommissionAmt = tempObj.AllocationAmount;
       tempAppCommissionDObj.TaxAmt = tempObj.TaxAmt;
       tempAppCommissionDObj.VatAmt = tempObj.VatAmt;
       tempAppCommissionDObj.PenaltyAmt = tempObj.PenaltyAmt;
       tempAppCommissionDObj.CommissionAmtAfterTax = tempObj.AllocationAmount - (tempObj.TaxAmt + tempObj.VatAmt);
+      tempAppCommissionDObj.RowVersion = tempObj.RowVersion;
       listAppCommissionDObj.push(tempAppCommissionDObj);
     }
     return listAppCommissionDObj;
   }
 
+  isCalculated;
   SaveData() {
+    console.log(this.FormInputObjSupplier["isCalculated"]);
+    console.log(this.FormInputObjSupplierEmpl["isCalculated"]);
+    console.log(this.FormInputObjReferantor["isCalculated"]);
+    console.log(this.FormInputObjSupplier["isDataInputed"]);
+    console.log(this.FormInputObjSupplierEmpl["isDataInputed"]);
+    console.log(this.FormInputObjReferantor["isDataInputed"]);
+    if( (!this.FormInputObjSupplier["isCalculated"] && this.FormInputObjSupplier["isDataInputed"]) || (!this.FormInputObjSupplierEmpl["isCalculated"] && this.FormInputObjSupplierEmpl["isDataInputed"]) || (!this.FormInputObjReferantor["isCalculated"] && this.FormInputObjReferantor["isDataInputed"]) ){
+      this.toastr.errorMessage("Must Calculate First");
+      return ;
+    }
+    // if(this.Summary.TotalCommisionAmount > this.viewIncomeInfoObj.MaxAllocatedAmount){
+    //   this.toastr.errorMessage("Total Commision Amount cannot more than Max Allocated Amount");
+    //   return;
+    // }
     this.listAppCommissionHObj = new Array();
     if (this.FormGetObj != null) {
-      if (this.FormGetObj[AdInsConstant.ContentSupplier].value.arr.length > 0) {
-        this.DataFilterAppCommH(this.FormGetObj[AdInsConstant.ContentSupplier], AdInsConstant.ContentSupplier);
+      if (this.FormGetObj[AdInsConstant.ContentSupplier] && this.FormGetObj[AdInsConstant.ContentSupplier].value.arr.length > 0) {
+        this.DataFilterAppCommH(this.FormGetObj[AdInsConstant.ContentSupplier], AdInsConstant.CommissionReceipientTypeCodeSupplier);
       }
-      if (this.FormGetObj[AdInsConstant.ContentSupplierEmp].value.arr.length > 0) {
-        this.DataFilterAppCommH(this.FormGetObj[AdInsConstant.ContentSupplierEmp], AdInsConstant.ContentSupplierEmp);
+      if (this.FormGetObj[AdInsConstant.ContentSupplierEmp] && this.FormGetObj[AdInsConstant.ContentSupplierEmp].value.arr.length > 0) {
+        this.DataFilterAppCommH(this.FormGetObj[AdInsConstant.ContentSupplierEmp], AdInsConstant.CommissionReceipientTypeCodeSupplierEmp);
       }
-      if (this.FormGetObj[AdInsConstant.ContentReferantor].value.arr.length > 0) {
-        this.DataFilterAppCommH(this.FormGetObj[AdInsConstant.ContentReferantor], AdInsConstant.ContentReferantor);
+      if (this.FormGetObj[AdInsConstant.ContentReferantor] && this.FormGetObj[AdInsConstant.ContentReferantor].value.arr.length > 0) {
+        this.DataFilterAppCommH(this.FormGetObj[AdInsConstant.ContentReferantor], AdInsConstant.CommissionReceipientTypeCodeReferantor);
       }
 
       console.log(this.listAppCommissionHObj);
@@ -651,6 +677,8 @@ export class CommissionAddComponent implements OnInit {
       this.http.post(url, obj).subscribe(
         (response) => {
           console.log(response);
+          // Goto
+          // Belom Tau kemana
         },
         (error) => {
           console.log(error);
@@ -659,5 +687,7 @@ export class CommissionAddComponent implements OnInit {
     }
   }
 
-
+  Cancel(){
+    // belom tau kemana
+  }
 }
