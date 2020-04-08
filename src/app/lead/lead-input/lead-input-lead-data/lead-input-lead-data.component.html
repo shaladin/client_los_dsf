@@ -1,133 +1,175 @@
-<div class="customerData">
-    <form class="form form-horizontal" [formGroup]="LeadDataForm" (ngSubmit)="LeadDataForm.valid && SaveForm()"
-        #enjiForm="ngForm">
-      <div class="form-body">
-        <div id="leadData">
-          <lib-ucSubsection [id]="'assetDataId'" [title]="'Asset Data'" [panel]="'assetData'">
-          </lib-ucSubsection>
-          <div id="assetData">
-            <div class="form-group row">
-              <label class="col-md-3 adInsLabel" translate>Full Asset Name</label>
-              <div class="col-md-4">
-                <input type="text" class="form-control adInsInput" formControlName="FullAssetName"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.FullAssetName.invalid}">
-                <show-errors [control]="LeadDataForm.controls.FullAssetName" [submit]="enjiForm.submitted">
-                </show-errors>
-              </div>
-              <label class="col-md-3 adInsLabel" translate>Asset Condition</label>
-              <div class="col-md-3">
-                <div class="custom-control custom-radio m-0">
-                  <input type="radio" #work required id="customRadioInline1" name="work" class="custom-control-input" value="New">
-                  <label class="custom-control-label" for="customRadioInline1">New</label>
+<div class="card">
+  <div class="card-body">
+    <div class="px-3">
+      <div class="customerData">
+          <form class="form form-horizontal" [formGroup]="LeadDataForm" (ngSubmit)="LeadDataForm.valid && SaveForm()"
+              #enjiForm="ngForm">
+            <div class="form-body">
+              <div id="leadData">
+                <lib-ucSubsection [id]="'assetDataId'" [title]="'Asset Data'" [panel]="'assetData'">
+                </lib-ucSubsection>
+                <div id="assetData">
+                  <div class="form-group row">
+                    <label class="col-md-3 adInsLabel" translate>Full Asset Name</label>
+                    <div class="col-md-3">
+                      <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupAssetObj" [identifier]="'lookupAsset'" [enjiForm]='enjiForm' [parentForm]='LeadDataForm' (lookup)="SetAsset($event)">
+                      </lib-uclookupgeneric>
+                    </div>
+                    <label class="col-md-3 adInsLabel" translate>Asset Condition</label>
+                    <div class="col-md-3">
+                      <mat-radio-group formControlName="MrAssetConditionCode" (change)="radioChange($event)">
+                        <mat-radio-button class="custom-control custom-radio display-inline-block" *ngFor="let item of returnAssetConditionObj" [value]="item.Key">
+                          {{item.Value}}
+                        </mat-radio-button>
+                      </mat-radio-group>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-3 adInsLabel" translate>Manufacturing Year</label>
+                    <div class="col-md-3">
+                      <input type="number" class="form-control adInsInput" formControlName="ManufacturingYear"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.ManufacturingYear.invalid}">
+                      <show-errors [control]="LeadDataForm.controls.ManufacturingYear" [submit]="enjiForm.submitted">
+                      </show-errors>
+                    </div>
+                    <label class="col-md-2 adInsLabel" translate>Asset Price</label>
+                    <div class="col-md-3">
+                      <input type="number" class="form-control adInsInput" formControlName="AssetPrice"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.AssetPrice.invalid}">
+                      <show-errors [control]="LeadDataForm.controls.AssetPrice" [submit]="enjiForm.submitted">
+                      </show-errors>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-3 adInsLabel" translate>Down Payment Type</label>
+                    <div class="col-md-3">
+                      <mat-radio-group formControlName="MrDownPaymentTypeCode">
+                        <mat-radio-button class="custom-control custom-radio display-inline-block" *ngFor="let item of returnDownPaymentObj" [value]="item.Key">
+                          {{item.Value}}
+                        </mat-radio-button>
+                      </mat-radio-group>
+                    </div>
+                    <label class="col-md-2 adInsLabel" translate>Down Payment</label>
+                    <div class="col-md-3">
+                      <input type="number" class="form-control adInsInput" formControlName="DownPayment"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.DownPayment.invalid}">
+                      <show-errors [control]="LeadDataForm.controls.DownPayment" [submit]="enjiForm.submitted">
+                      </show-errors>
+                    </div>
+                  </div>
+                  <div class="form-group row {{serial1Mandatory ? 'adins-required' : ''}}">
+                    <label class="col-md-3 adInsLabel" for="SerialNo1" translate>Serial No 1</label>
+                    <div class="col-md-3">
+                      <input type="text" class="form-control adInsInput" formControlName="SerialNo1"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.SerialNo1.invalid}"
+                        [attr.disabled]="pageType == 'edit' || serial1Disabled ? true : null">
+                      <show-errors [control]="LeadDataForm.controls.SerialNo1" [submit]="enjiForm.submitted">
+                      </show-errors>
+                    </div>
+                  </div>
+                  <div class="form-group row {{serial2Mandatory ? 'adins-required' : ''}}">
+                    <label class="col-md-3 adInsLabel" for="SerialNo2" translate>Serial No 2</label>
+                    <div class="col-md-3">
+                      <input type="text" class="form-control adInsInput" formControlName="SerialNo2"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.SerialNo2.invalid}"
+                        [attr.disabled]="pageType == 'edit' || serial2Disabled ? true : null">
+                      <show-errors [control]="LeadDataForm.controls.SerialNo2" [submit]="enjiForm.submitted">
+                      </show-errors>
+                    </div>
+                  </div>
+                  <div class="form-group row {{serial3Mandatory ? 'adins-required' : ''}}">
+                    <label class="col-md-3 adInsLabel" for="SerialNo3" translate>Serial No 3</label>
+                    <div class="col-md-3">
+                      <input type="text" class="form-control adInsInput" formControlName="SerialNo3"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.SerialNo3.invalid}"
+                        [attr.disabled]="pageType == 'edit' || serial3Disabled ? true : null">
+                      <show-errors [control]="LeadDataForm.controls.SerialNo3" [submit]="enjiForm.submitted">
+                      </show-errors>
+                    </div>
+                  </div>
+                  <div class="form-group row {{serial4Mandatory ? 'adins-required' : ''}}">
+                    <label class="col-md-3 adInsLabel" for="SerialNo4" translate>Serial No 4</label>
+                    <div class="col-md-3">
+                      <input type="text" class="form-control adInsInput" formControlName="SerialNo4"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.SerialNo4.invalid}"
+                        [attr.disabled]="pageType == 'edit' || serial4Disabled ? true : null">
+                      <show-errors [control]="LeadDataForm.controls.SerialNo4" [submit]="enjiForm.submitted">
+                      </show-errors>
+                    </div>
+                  </div>
+                  <div class="form-group row {{serial5Mandatory ? 'adins-required' : ''}}">
+                    <label class="col-md-3 adInsLabel" for="SerialNo5" translate>Serial No 5</label>
+                    <div class="col-md-3">
+                      <input type="text" class="form-control adInsInput" formControlName="SerialNo5"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.SerialNo5.invalid}"
+                        [attr.disabled]="pageType == 'edit' || serial5Disabled ? true : null">
+                      <show-errors [control]="LeadDataForm.controls.SerialNo5" [submit]="enjiForm.submitted">
+                      </show-errors>
+                    </div>
+                  </div>
                 </div>
-                <div class="custom-control custom-radio m-0">
-                    <input type="radio" #work required id="customRadioInline2"  name="work" class="custom-control-input" value="Used">
-                    <label class="custom-control-label" for="customRadioInline2">Used</label>
+                <lib-ucSubsection [id]="'financialDataId'" [title]="'Financial Data'" [panel]="'financialData'">
+                </lib-ucSubsection>
+                <div id="financialData">
+                  <div class="form-group row">
+                    <label class="col-md-3 adInsLabel" translate>Tenor</label>
+                    <div class="col-md-4">
+                      <input type="number" class="form-control adInsInput" formControlName="Tenor"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.Tenor.invalid}">
+                      <show-errors [control]="LeadDataForm.controls.Tenor" [submit]="enjiForm.submitted">
+                      </show-errors>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-3 adInsLabel" translate>First Installment Type</label>
+                    <div class="col-md-4">
+                      <select class="form-control adInsInput" style="width: auto" formControlName="MrFirstInstTypeCode" required
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.MrFirstInstTypeCode.invalid }">
+                          <option *ngFor="let it of returnFirstInstObj " [value]="it.Key" >
+                            {{it.Value}}</option>
+                        </select>
+                      <show-errors [control]="LeadDataForm.controls.MrFirstInstTypeCode" [submit]="enjiForm.submitted">
+                      </show-errors>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-3 adInsLabel" translate>NTF Amount</label>
+                    <div class="col-md-4">
+                      <input type="text" class="form-control adInsInput" formControlName="NTFAmt"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.NTFAmt.invalid}">
+                      <show-errors [control]="LeadDataForm.controls.NTFAmt" [submit]="enjiForm.submitted">
+                      </show-errors>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                      <label class="col-md-3 adInsLabel" translate>Total Down Payment Amount</label>
+                      <div class="col-md-4">
+                        <input type="text" class="form-control adInsInput" formControlName="TotalDownPayment"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.TotalDownPayment.invalid}">
+                        <show-errors [control]="LeadDataForm.controls.TotalDownPayment" [submit]="enjiForm.submitted">
+                        </show-errors>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-3 adInsLabel" translate>Installment Amount</label>
+                      <div class="col-md-4">
+                        <input type="text" class="form-control adInsInput" formControlName="InstallmentAmt"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.InstallmentAmt.invalid}">
+                        <show-errors [control]="LeadDataForm.controls.InstallmentAmt" [submit]="enjiForm.submitted">
+                        </show-errors>
+                      </div>
+                    </div>
                 </div>
               </div>
             </div>
-            <div class="form-group row">
-              <label class="col-md-3 adInsLabel" translate>Manufacturing Year</label>
-              <div class="col-md-4">
-                <input type="number" class="form-control adInsInput" formControlName="ManufacturingYear"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.ManufacturingYear.invalid}">
-                <show-errors [control]="LeadDataForm.controls.ManufacturingYear" [submit]="enjiForm.submitted">
-                </show-errors>
-              </div>
-              <label class="col-md-3 adInsLabel" translate>Asset Price</label>
-              <div class="col-md-4">
-                <input type="number" class="form-control adInsInput" formControlName="AssetPrice"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.AssetPrice.invalid}">
-                <show-errors [control]="LeadDataForm.controls.AssetPrice" [submit]="enjiForm.submitted">
-                </show-errors>
-              </div>
+            <div class="form-actions right" style="text-align: right;" >
+              <button type="submit" class="btn btn-raised btn-primary" translate>
+                <i class="fa fa-check-square-o"></i> Submit
+              </button>
             </div>
-            <div class="form-group row">
-              <label class="col-md-3 adInsLabel" translate>Down Payment Type</label>
-              <div class="col-md-4">
-                <div class="custom-control custom-radio m-0">
-                  <input type="radio" #work required id="customRadioInline1" name="work" class="custom-control-input" value="Percentage">
-                  <label class="custom-control-label" for="customRadioInline1">Percentage</label>
-                </div>
-                <div class="custom-control custom-radio m-0">
-                    <input type="radio" #work required id="customRadioInline2"  name="work" class="custom-control-input" value="Amount">
-                    <label class="custom-control-label" for="customRadioInline2">Amount</label>
-                </div>
-              </div>
-              <label class="col-md-3 adInsLabel" translate>Down Payment</label>
-              <div class="col-md-4">
-                <input type="number" class="form-control adInsInput" formControlName="DownPayment"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.DownPayment.invalid}">
-                <show-errors [control]="LeadDataForm.controls.DownPayment" [submit]="enjiForm.submitted">
-                </show-errors>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label class="col-md-3 adInsLabel" translate>License Plate No</label>
-              <div class="col-md-4">
-                <input type="text" class="form-control adInsInput" formControlName="LicensePlate"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.LicensePlate.invalid}">
-                <show-errors [control]="LeadDataForm.controls.LicensePlate" [submit]="enjiForm.submitted">
-                </show-errors>
-              </div>
-            </div>
-          </div>
-          <lib-ucSubsection [id]="'financialDataId'" [title]="'Financial Data'" [panel]="'financialData'">
-          </lib-ucSubsection>
-          <div id="financialData">
-            <div class="form-group row">
-              <label class="col-md-3 adInsLabel" translate>Tenor</label>
-              <div class="col-md-4">
-                <input type="number" class="form-control adInsInput" formControlName="Tenor"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.Tenor.invalid}">
-                <show-errors [control]="LeadDataForm.controls.Tenor" [submit]="enjiForm.submitted">
-                </show-errors>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label class="col-md-3 adInsLabel" translate>First Installment Type</label>
-              <div class="col-md-4">
-                <input type="text" class="form-control adInsInput" formControlName="FirstInstallment"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.FirstInstallment.invalid}">
-                <show-errors [control]="LeadDataForm.controls.FirstInstallment" [submit]="enjiForm.submitted">
-                </show-errors>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label class="col-md-3 adInsLabel" translate>NTF Amount</label>
-              <div class="col-md-4">
-                <input type="text" class="form-control adInsInput" formControlName="NTFAmt"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.NTFAmt.invalid}">
-                <show-errors [control]="LeadDataForm.controls.NTFAmt" [submit]="enjiForm.submitted">
-                </show-errors>
-              </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-md-3 adInsLabel" translate>Total Down Payment Amount</label>
-                <div class="col-md-4">
-                  <input type="text" class="form-control adInsInput" formControlName="TotalDownPayment"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.TotalDownPayment.invalid}">
-                  <show-errors [control]="LeadDataForm.controls.TotalDownPayment" [submit]="enjiForm.submitted">
-                  </show-errors>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-md-3 adInsLabel" translate>Installment Amount</label>
-                <div class="col-md-4">
-                  <input type="text" class="form-control adInsInput" formControlName="InstallmentAmt"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.InstallmentAmt.invalid}">
-                  <show-errors [control]="LeadDataForm.controls.InstallmentAmt" [submit]="enjiForm.submitted">
-                  </show-errors>
-                </div>
-              </div>
-          </div>
-        </div>
+          </form>
       </div>
-      <div class="form-actions right" style="text-align: right;" >
-        <button type="submit" class="btn btn-raised btn-primary" translate>
-          <i class="fa fa-check-square-o"></i> Save and Continue
-        </button>
-      </div>
-    </form>
+    </div>
   </div>
+</div>
   

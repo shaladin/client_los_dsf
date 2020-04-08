@@ -10,6 +10,11 @@ import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { WizardComponent } from 'angular-archwizard';
 import { formatDate } from '@angular/common';
+import { AssetTypeObj } from 'app/shared/model/AssetTypeObj.Model';
+import { LeadInputLeadDataObj } from 'app/shared/model/LeadInputLeadDataObj.Model';
+import { LeadAppObj } from 'app/shared/model/LeadAppObj.Model';
+import { LeadAssetObj } from 'app/shared/model/LeadAssetObj.Model';
+
  
 @Component({
   selector: 'app-lead-input-lead-data',
@@ -23,7 +28,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   jobDataId: any;
   rowVersion: any;
   typePage: string;
-  IdCust: any;
+  LeadId: any;
   IdCustPersonal: any;
   custObj: any;
   getListActiveRefMaster: any;
@@ -62,219 +67,287 @@ export class LeadInputLeadDataComponent implements OnInit {
   getOthBizAddr: any;
   addressObj: any;
   otherAddrObj: any;
-  CustomerDataForm = this.fb.group({
-    JobDataType: [''],
-    ProfessionName: [''],
-    JobPosition: [''],
-    JobTitleName: [''],
-    JobStatus: [''],
-    IndustryName: [''],
-    InternalEmployee: [false],
-    IndustryTypeName: [''],
-    CompanyScale: [''],
-    EmpEstablishmentDate: [''],
-    NotesJob: [''],
-    LocationClass: [''],
-    PriceEstimates: [''],
-    StayLength: [''],
-    OtherBusinessName: [''],
-    OtherBusinessType: [''],
-    OtherBusinessIndustry: [''],
-    OtherJobPosition: [''],
-    EstablishmentDate: [''],
-    NotesOther: [''],
-    OtherLocationClass: [''],
-    OtherPriceEstimates: [''],
-    OtherStayLength: ['']
-  });
+  assetConditionObj: any;
+  returnAssetConditionObj: any;
+  downPaymentObj: any;
+  returnDownPaymentObj: any;
+  firstInstObj: any;
+  returnFirstInstObj: any;
+  InputLookupAssetObj: any;
+  getListActiveRefMasterUrl: any;
+  assetTypeId: number;
+  serial1Disabled: boolean = false;
+  serial2Disabled: boolean = false;
+  serial3Disabled: boolean = false;
+  serial4Disabled: boolean = false;
+  serial5Disabled: boolean = false;
+  serial1Mandatory: boolean = false;
+  serial2Mandatory: boolean = false;
+  serial3Mandatory: boolean = false;
+  serial4Mandatory: boolean = false;
+  serial5Mandatory: boolean = false;
+  LeadDataForm = this.fb.group({
+    FullAssetCode: [''],
+    FullAssetName: [''],
+    MrAssetConditionCode: [''],
+    MrDownPaymentTypeCode: [''],
+    ManufacturingYear: [''],
+    AssetPrice: ['',Validators.required],
+    DownPayment: ['',Validators.required],
+    SerialNo1: [''],
+    SerialNo2: [''],
+    SerialNo3: [''],
+    SerialNo4: [''],
+    SerialNo5: [''],
 
-  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder,private wizard: WizardComponent) { 
+    Tenor:['',Validators.required],
+    MrFirstInstTypeCode: ['',Validators.required],
+    NTFAmt: [''],
+    TotalDownPayment: [''],
+    InstallmentAmt:['',Validators.required]
+
+  });
+  leadInputLeadDataObj: any;
+  editLeadData = AdInsConstant.AddEditLeadData;
+  leadAppObj: any;
+  leadAssetObj: any;
+
+  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) { 
     // this.getCustById = AdInsConstant.GetCustByCustId;
-    // this.getListActiveRefMaster = AdInsConstant.GetListActiveRefMaster;
+    //this.getListActiveRefMaster = AdInsConstant.GetListActiveRefMaster;
     // this.addJobData = AdInsConstant.AddCustPersonalJobData;
     // this.editJobData = AdInsConstant.EditCustPersonalJobData;
     // this.getJobDataByCustId = AdInsConstant.GetCustPersonalJobDataByCustId;
     // this.getCustAddr = AdInsConstant.GetCustAddr;
     // this.getRefProfession = AdInsConstant.GetRefProfessionById;
     // this.getRefIndustryType = AdInsConstant.GetRefIndustryTypeById;
+    this.getListActiveRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
 
     this.route.queryParams.subscribe(params => {
-        if (params["IdCust"] != null) {
-            this.IdCust = params["IdCust"];
-        }
-        if (params["IdCustPersonal"] != null) {
-            this.IdCustPersonal = params["IdCustPersonal"];
+        if (params["LeadId"] != null) {
+            this.LeadId = params["LeadId"];
         }
     });
   }
 
-  getLookUpProfession(event) {
-    this.tempProfession = event.RefProfessionId;
+  // getLookUpProfession(event) {
+  //   this.tempProfession = event.RefProfessionId;
+  // }
+
+  SetAsset(event) {
+    this.LeadDataForm.patchValue({
+      FullAssetCode: event.FullAssetCode,
+      FullAssetName: event.FullAssetName
+    });
+    this.assetTypeId = event.AssetTypeId;
+  }
+
+  radioChange(event){
+
+    this.serial2Mandatory = false;
+    this.serial3Mandatory = false;
+    this.serial4Mandatory = false;
+    this.serial5Mandatory = false;
+
+    var assetType = new AssetTypeObj();
+    assetType.AssetTypeId = this.assetTypeId;
+    this.http.post(AdInsConstant.GetAssetTypeById, assetType).subscribe(
+      (response: any) => {
+        if (response.IsMndtrySerialNo1 == "1" && event.value == "USED") {
+          this.LeadDataForm.controls['SerialNo1'].setValidators([Validators.required]);
+          this.LeadDataForm.controls['SerialNo1'].updateValueAndValidity();
+          this.serial1Mandatory = true;
+        }
+        else {
+          this.LeadDataForm.controls['SerialNo1'].clearValidators();
+          this.LeadDataForm.controls['SerialNo1'].updateValueAndValidity();
+          this.serial1Mandatory = false;
+        }
+
+        if (response.IsMndtrySerialNo2 == "1" && event.value == "USED") {
+          this.LeadDataForm.controls['SerialNo2'].setValidators([Validators.required]);
+          this.LeadDataForm.controls['SerialNo2'].updateValueAndValidity();
+          this.serial2Mandatory = true;
+        }
+        else {
+          this.LeadDataForm.controls['SerialNo2'].clearValidators();
+          this.LeadDataForm.controls['SerialNo2'].updateValueAndValidity();
+          this.serial2Mandatory = false;
+        }
+
+        if (response.IsMndtrySerialNo3 == "1" && event.value == "USED") {
+          this.LeadDataForm.controls['SerialNo3'].setValidators([Validators.required]);
+          this.LeadDataForm.controls['SerialNo3'].updateValueAndValidity();
+          this.serial3Mandatory = true;
+        }
+        else {
+          this.LeadDataForm.controls['SerialNo3'].clearValidators();
+          this.LeadDataForm.controls['SerialNo3'].updateValueAndValidity();
+          this.serial3Mandatory = false;
+        }
+
+        if (response.IsMndtrySerialNo4 == "1" && event.value == "USED") {
+          this.LeadDataForm.controls['SerialNo4'].setValidators([Validators.required]);
+          this.LeadDataForm.controls['SerialNo4'].updateValueAndValidity();
+          this.serial4Mandatory = true;
+        }
+        else {
+          this.LeadDataForm.controls['SerialNo4'].clearValidators();
+          this.LeadDataForm.controls['SerialNo4'].updateValueAndValidity();
+          this.serial4Mandatory = false;
+        }
+
+        if (response.IsMndtrySerialNo5 == "1" && event.value == "USED") {
+          this.LeadDataForm.controls['SerialNo5'].setValidators([Validators.required]);
+          this.LeadDataForm.controls['SerialNo5'].updateValueAndValidity();
+          this.serial5Mandatory = true;
+        }
+        else {
+          this.LeadDataForm.controls['SerialNo5'].clearValidators();
+          this.LeadDataForm.controls['SerialNo5'].updateValueAndValidity();
+          this.serial5Mandatory = false;
+        }
+
+        this.serial1Disabled = response.SerialNo1Label == "" ? true : false;
+        this.serial2Disabled = response.SerialNo2Label == "" ? true : false;
+        this.serial3Disabled = response.SerialNo3Label == "" ? true : false;
+        this.serial4Disabled = response.SerialNo4Label == "" ? true : false;
+        this.serial5Disabled = response.SerialNo5Label == "" ? true : false;
+      }
+    );
   }
 
   ngOnInit() {
-    this.inputJobAddressObj = new InputFieldObj();
-    this.inputJobAddressObj.inputLookupObj = new InputLookupObj();
-    this.inputOtherAddressObj = new InputFieldObj();
-    this.inputOtherAddressObj.inputLookupObj = new InputLookupObj();
+    this.InputLookupAssetObj = new InputLookupObj();
+    this.InputLookupAssetObj.urlJson = "./assets/uclookup/NAP/lookupAsset.json";
+    this.InputLookupAssetObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.InputLookupAssetObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupAssetObj.pagingJson = "./assets/uclookup/NAP/lookupAsset.json";
+    this.InputLookupAssetObj.genericJson = "./assets/uclookup/NAP/lookupAsset.json";
 
-    this.professionLookUpObj = new InputLookupObj();
-    this.professionLookUpObj.isRequired = false;
-    this.professionLookUpObj.urlJson = "./assets/lookup/lookupCustomerProfession.json";
-    this.professionLookUpObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.professionLookUpObj.urlEnviPaging = environment.FoundationR3Url;
-    this.professionLookUpObj.pagingJson = "./assets/lookup/lookupCustomerProfession.json";
-    this.professionLookUpObj.genericJson = "./assets/lookup/lookupCustomerProfession.json";
+    this.assetConditionObj = new RefMasterObj();
+    this.assetConditionObj.RefMasterTypeCode = "ASSET_CONDITION";
+    this.http.post(this.getListActiveRefMasterUrl, this.assetConditionObj).subscribe(
+      (response) => {
+        this.returnAssetConditionObj = response["ReturnObject"];
+        console.log("aaa")
+        console.log(this.returnAssetConditionObj)
+        this.LeadDataForm.patchValue({ MrAssetConditionCode: response['ReturnObject'][0]['Key'] });
+      }
+    );
 
-    this.jobPosition = new RefMasterObj();
-    this.jobPosition.RefMasterTypeCode = "JOB_POSITION";
-    this.http.post(this.getListActiveRefMaster, this.jobPosition).subscribe(
-    (response) => {
-        this.listJobPosition = response['ReturnObject'];
-        this.CustomerDataForm.patchValue({ JobPosition: response['ReturnObject'][0]['Key'] });
-    });
+    this.downPaymentObj = new RefMasterObj();
+    this.downPaymentObj.RefMasterTypeCode = "DOWN_PAYMENT_TYPE";
+    this.http.post(this.getListActiveRefMasterUrl, this.downPaymentObj).subscribe(
+      (response) => {
+        this.returnDownPaymentObj = response["ReturnObject"];
+        console.log("bbb")
+        console.log(this.returnDownPaymentObj)
+        this.LeadDataForm.patchValue({ MrDownPaymentTypeCode: response['ReturnObject'][0]['Key'] });
+      }
+    );
 
-  }
+    this.firstInstObj = new RefMasterObj();
+    this.firstInstObj.RefMasterTypeCode = "FIRSTINSTTYPE";
+    this.http.post(this.getListActiveRefMasterUrl, this.firstInstObj).subscribe(
+      (response) => {
+        this.returnFirstInstObj = response["ReturnObject"];
+        console.log("aaa")
+        console.log(this.returnFirstInstObj)
+        this.LeadDataForm.patchValue({ MrFirstInstTypeCode: response['ReturnObject'][0]['Key'] });
+      }
+    );
 
-  setJobAddr(){
-    // this.jobAddressObj.CustId = this.IdCust;
-    // this.jobAddressObj.MrCustAddrTypeCode = 'JOB';
-    // this.jobAddressObj.Addr = this.JobDataEmpForm.controls["jobAddress"]["controls"].Addr.value;
-    // this.jobAddressObj.FullAddr = this.JobDataEmpForm.controls["jobAddress"]["controls"].Addr.value;
-    // this.jobAddressObj.AreaCode3 = this.JobDataEmpForm.controls["jobAddress"]["controls"].AreaCode3.value;
-    // this.jobAddressObj.AreaCode4 = this.JobDataEmpForm.controls["jobAddress"]["controls"].AreaCode4.value;
-    // this.jobAddressObj.Zipcode = this.JobDataEmpForm.controls["jobAddressZipcode"]["controls"].value.value;
-    // this.jobAddressObj.AreaCode1 = this.JobDataEmpForm.controls["jobAddress"]["controls"].AreaCode1.value;
-    // this.jobAddressObj.AreaCode2 = this.JobDataEmpForm.controls["jobAddress"]["controls"].AreaCode2.value;
-    // this.jobAddressObj.City = this.JobDataEmpForm.controls["jobAddress"]["controls"].City.value;
-    // this.jobAddressObj.PhnArea1 = this.JobDataEmpForm.controls["jobAddress"]["controls"].PhnArea1.value;
-    // this.jobAddressObj.Phn1 = this.JobDataEmpForm.controls["jobAddress"]["controls"].Phn1.value;
-    // this.jobAddressObj.PhnExt1 = this.JobDataEmpForm.controls["jobAddress"]["controls"].PhnExt1.value;
-    // this.jobAddressObj.PhnArea2 = this.JobDataEmpForm.controls["jobAddress"]["controls"].PhnArea2.value;
-    // this.jobAddressObj.Phn2 = this.JobDataEmpForm.controls["jobAddress"]["controls"].Phn2.value;
-    // this.jobAddressObj.PhnExt2 = this.JobDataEmpForm.controls["jobAddress"]["controls"].PhnExt2.value;
-    // this.jobAddressObj.PhnArea3 = this.JobDataEmpForm.controls["jobAddress"]["controls"].PhnArea3.value;
-    // this.jobAddressObj.Phn3 = this.JobDataEmpForm.controls["jobAddress"]["controls"].Phn3.value;
-    // this.jobAddressObj.PhnExt3 = this.JobDataEmpForm.controls["jobAddress"]["controls"].PhnExt3.value;
-    // this.jobAddressObj.FaxArea = this.JobDataEmpForm.controls["jobAddress"]["controls"].FaxArea.value;
-    // this.jobAddressObj.Fax = this.JobDataEmpForm.controls["jobAddress"]["controls"].Fax.value;
-    // this.jobAddressObj.MrBuildingOwnershipCode = this.JobDataEmpForm.controls["jobAddress"]["controls"].MrHouseOwnershipCode.value;
-    // this.jobAddressObj.Notes = this.JobDataEmpForm.controls["NotesJob"].value;
-  }
-
-  setOthBizAddr(){
-    // this.otherAddressObj.CustId = this.IdCust;
-    // this.otherAddressObj.MrCustAddrTypeCode = 'OTH_BIZ';
-    // this.otherAddressObj.Addr = this.JobDataEmpForm.controls["otherBusinessAddress"]["controls"].Addr.value;
-    // this.otherAddressObj.FullAddr = this.JobDataEmpForm.controls["otherBusinessAddress"]["controls"].Addr.value;
-    // this.otherAddressObj.AreaCode3 = this.JobDataEmpForm.controls["otherBusinessAddress"]["controls"].AreaCode3.value;
-    // this.otherAddressObj.AreaCode4 = this.JobDataEmpForm.controls["otherBusinessAddress"]["controls"].AreaCode4.value;
-    // this.otherAddressObj.Zipcode = this.JobDataEmpForm.controls["otherBusinessAddressZipcode"]["controls"].value.value;
-    // this.otherAddressObj.AreaCode1 = this.JobDataEmpForm.controls["otherBusinessAddress"]["controls"].AreaCode1.value;
-    // this.otherAddressObj.AreaCode2 = this.JobDataEmpForm.controls["otherBusinessAddress"]["controls"].AreaCode2.value;
-    // this.otherAddressObj.City = this.JobDataEmpForm.controls["otherBusinessAddress"]["controls"].City.value;
-    // this.otherAddressObj.PhnArea1 = this.JobDataEmpForm.controls["otherBusinessAddress"]["controls"].PhnArea1.value;
-    // this.otherAddressObj.Phn1 = this.JobDataEmpForm.controls["otherBusinessAddress"]["controls"].Phn1.value;
-    // this.otherAddressObj.PhnExt1 = this.JobDataEmpForm.controls["otherBusinessAddress"]["controls"].PhnExt1.value;
-    // this.otherAddressObj.PhnArea2 = this.JobDataEmpForm.controls["otherBusinessAddress"]["controls"].PhnArea2.value;
-    // this.otherAddressObj.Phn2 = this.JobDataEmpForm.controls["otherBusinessAddress"]["controls"].Phn2.value;
-    // this.otherAddressObj.PhnExt2 = this.JobDataEmpForm.controls["otherBusinessAddress"]["controls"].PhnExt2.value;
-    // this.otherAddressObj.PhnArea3 = this.JobDataEmpForm.controls["otherBusinessAddress"]["controls"].PhnArea3.value;
-    // this.otherAddressObj.Phn3 = this.JobDataEmpForm.controls["otherBusinessAddress"]["controls"].Phn3.value;
-    // this.otherAddressObj.PhnExt3 = this.JobDataEmpForm.controls["otherBusinessAddress"]["controls"].PhnExt3.value;
-    // this.otherAddressObj.FaxArea = this.JobDataEmpForm.controls["otherBusinessAddress"]["controls"].FaxArea.value;
-    // this.otherAddressObj.Fax = this.JobDataEmpForm.controls["otherBusinessAddress"]["controls"].Fax.value;
-    // this.otherAddressObj.MrBuildingOwnershipCode = this.JobDataEmpForm.controls["otherBusinessAddress"]["controls"].MrHouseOwnershipCode.value;
-    // this.otherAddressObj.Notes = this.JobDataEmpForm.controls["NotesOther"].value;
   }
   
-  setCustJobData(){
-    // this.custPersonalJobDataObj.CustId = this.IdCust;
-    // this.custPersonalJobDataObj.RefProfessionId = this.tempProfession;
-    // this.custPersonalJobDataObj.MrJobPositionCode = this.JobDataEmpForm.controls["JobPosition"].value;
-    // this.custPersonalJobDataObj.JobTitleName = this.JobDataEmpForm.controls["JobTitleName"].value;
-    // this.custPersonalJobDataObj.MrJobStatCode = this.JobDataEmpForm.controls["JobStatus"].value;
-    // this.custPersonalJobDataObj.CoyName = this.JobDataEmpForm.controls["IndustryName"].value;
-    // this.custPersonalJobDataObj.IsMfEmp = this.JobDataEmpForm.controls["InternalEmployee"].value;
-    // this.custPersonalJobDataObj.RefIndustryTypeId = this.tempRefIndustryType;
-    // this.custPersonalJobDataObj.MrCoyScaleCode = this.JobDataEmpForm.controls["CompanyScale"].value;
-    // this.custPersonalJobDataObj.EmploymentEstablishmentDt = this.JobDataEmpForm.controls["EmpEstablishmentDate"].value;
-    // this.custPersonalJobDataObj.OthBizName = this.JobDataEmpForm.controls["OtherBusinessName"].value;
-    // this.custPersonalJobDataObj.OthBizType = this.JobDataEmpForm.controls["OtherBusinessType"].value;
-    // this.custPersonalJobDataObj.OthBizIndustryTypeCode = this.JobDataEmpForm.controls["OtherBusinessIndustry"].value;
-    // this.custPersonalJobDataObj.OthBizJobPosition = this.JobDataEmpForm.controls["OtherJobPosition"].value;
-    // this.custPersonalJobDataObj.OthBizEstablishmentDt = this.JobDataEmpForm.controls["EstablishmentDate"].value;
-  }
+  // setCustJobData(){
+  //   this.custPersonalJobDataObj.CustId = this.IdCust;
+  //   this.custPersonalJobDataObj.RefProfessionId = this.tempProfession;
+  //   this.custPersonalJobDataObj.MrJobPositionCode = this.JobDataEmpForm.controls["JobPosition"].value;
+  //   this.custPersonalJobDataObj.JobTitleName = this.JobDataEmpForm.controls["JobTitleName"].value;
+  //   this.custPersonalJobDataObj.MrJobStatCode = this.JobDataEmpForm.controls["JobStatus"].value;
+  //   this.custPersonalJobDataObj.CoyName = this.JobDataEmpForm.controls["IndustryName"].value;
+  //   this.custPersonalJobDataObj.IsMfEmp = this.JobDataEmpForm.controls["InternalEmployee"].value;
+  //   this.custPersonalJobDataObj.RefIndustryTypeId = this.tempRefIndustryType;
+  //   this.custPersonalJobDataObj.MrCoyScaleCode = this.JobDataEmpForm.controls["CompanyScale"].value;
+  //   this.custPersonalJobDataObj.EmploymentEstablishmentDt = this.JobDataEmpForm.controls["EmpEstablishmentDate"].value;
+  //   this.custPersonalJobDataObj.OthBizName = this.JobDataEmpForm.controls["OtherBusinessName"].value;
+  //   this.custPersonalJobDataObj.OthBizType = this.JobDataEmpForm.controls["OtherBusinessType"].value;
+  //   this.custPersonalJobDataObj.OthBizIndustryTypeCode = this.JobDataEmpForm.controls["OtherBusinessIndustry"].value;
+  //   this.custPersonalJobDataObj.OthBizJobPosition = this.JobDataEmpForm.controls["OtherJobPosition"].value;
+  //   this.custPersonalJobDataObj.OthBizEstablishmentDt = this.JobDataEmpForm.controls["EstablishmentDate"].value;
+  // }
 
-  back(){
-    this.wizard.goToPreviousStep();
-  }
+  // back(){
+  //   this.wizard.goToPreviousStep();
+  // }
 
   SaveForm(){
-  //   if(this.typePage == "edit") {
-  //     this.reqCustPersonalJobDataObj = new RequestCustPersonalJobDataObj;
-  //     this.custPersonalJobDataObj = new CustPersonalJobDataObj();
-  //     this.jobAddressObj = new CustAddrObj;
-  //     this.otherAddressObj = new CustAddrObj;
-  //     this.setCustJobData();
-  //     this.custPersonalJobDataObj.OthBizAddrId = this.othBizAddrId
-  //     this.custPersonalJobDataObj.JobAddrId = this.jobAddrId;
-  //     this.custPersonalJobDataObj.CustPersonalJobDataId = this.jobDataId;
-  //     this.custPersonalJobDataObj.RowVersion = this.rowVersion;
-  //     this.jobAddressObj.MrCustAddrTypeCode = 'JOB';
-  //     this.otherAddressObj.MrCustAddrTypeCode = 'OTH_BIZ';
-  //     this.reqCustPersonalJobDataObj.CustPersonalJobData = this.custPersonalJobDataObj;
-  //     this.reqCustPersonalJobDataObj.JobAddr = this.jobAddressObj;
-  //     this.reqCustPersonalJobDataObj.OthBizAddr = this.otherAddressObj;
+    console.log('saveform');
+    console.log(this.LeadDataForm);
+    // if(this.typePage == "edit") {
+      this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+      this.leadAppObj = new LeadAppObj();
+      this.leadAssetObj = new LeadAssetObj();
 
-  //     console.log("ccc");
-  //     console.log(this.reqCustPersonalJobDataObj)
 
-  //     this.http.post(this.editJobData, this.reqCustPersonalJobDataObj).subscribe(
-  //       (response) => {
-  //         console.log(response);
-  //         this.toastr.successMessage(response["message"]);
-  //         // this.router.navigate(
-  //         //   ["/Customer/CustomerPersonal/Address"], 
-  //         //   { queryParams: { "IdCust": this.IdCust }}
-  //         //   );
-  //         // console.log(response);
-  //         this.wizard.goToNextStep();
-  //       },
-  //       (error) => {
-  //         console.log(error);
-  //       }
-  //     );
-  //   } else {
-  //     this.reqCustPersonalJobDataObj = new RequestCustPersonalJobDataObj;
-  //     this.custPersonalJobDataObj = new CustPersonalJobDataObj();
-  //     this.setCustJobData();
-  //     this.jobAddressObj = new CustAddrObj;
-  //     this.setJobAddr();
-  //     this.otherAddressObj = new CustAddrObj;
-  //     this.setOthBizAddr();
-  //     this.reqCustPersonalJobDataObj.CustPersonalJobData = this.custPersonalJobDataObj;
-  //     this.reqCustPersonalJobDataObj.JobAddr = this.jobAddressObj;
-  //     this.reqCustPersonalJobDataObj.OthBizAddr = this.otherAddressObj;
 
-  //     console.log("ccc");
-  //     console.log(this.reqCustPersonalJobDataObj)
 
-  //     this.http.post(this.addJobData, this.reqCustPersonalJobDataObj).subscribe(
-  //       (response) => {
-  //         console.log(response);
-  //         this.toastr.successMessage(response["message"]);
-  //         // this.router.navigate(
-  //         //   ["/Customer/CustomerPersonal/Address"], 
-  //         //   { queryParams: { "IdCust": this.IdCust }}
-  //         //   );
-  //         // console.log(response);
-  //         this.wizard.goToNextStep();
-  //       },
-  //       (error) => {
-  //         console.log(error);
-  //       }
-  //     );
-  //   }
+      this.leadAppObj = this.LeadDataForm.value;
+      this.leadAssetObj = this.LeadDataForm.value;
+      this.leadAppObj.LeadId = this.LeadId;
+      this.leadAssetObj.LeadId = this.LeadId;
+
+      this.leadInputLeadDataObj.LeadAppObj = this.leadAppObj;
+      this.leadInputLeadDataObj.LeadAssetObj = this.leadAssetObj;
+      
+      console.log('isi leadinput');
+      console.log(this.leadInputLeadDataObj);
+      this.http.post(this.editLeadData, this.leadInputLeadDataObj).subscribe(
+        (response) => {
+          console.log(response);
+          this.toastr.successMessage(response["message"]);
+          // this.router.navigate(
+          //   ["/Customer/CustomerPersonal/Address"], 
+          //   { queryParams: { "IdCust": this.IdCust }}
+          //   );
+          // console.log(response);
+          // this.wizard.goToNextStep();
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    // } else {
+    //   this.reqCustPersonalJobDataObj = new RequestCustPersonalJobDataObj;
+    //   this.custPersonalJobDataObj = new CustPersonalJobDataObj();
+    //   this.setCustJobData();
+    //   this.jobAddressObj = new CustAddrObj;
+    //   this.setJobAddr();
+    //   this.otherAddressObj = new CustAddrObj;
+    //   this.setOthBizAddr();
+    //   this.reqCustPersonalJobDataObj.CustPersonalJobData = this.custPersonalJobDataObj;
+    //   this.reqCustPersonalJobDataObj.JobAddr = this.jobAddressObj;
+    //   this.reqCustPersonalJobDataObj.OthBizAddr = this.otherAddressObj;
+
+    //   console.log("ccc");
+    //   console.log(this.reqCustPersonalJobDataObj)
+
+    //   this.http.post(this.addJobData, this.reqCustPersonalJobDataObj).subscribe(
+    //     (response) => {
+    //       console.log(response);
+    //       this.toastr.successMessage(response["message"]);
+    //       // this.router.navigate(
+    //       //   ["/Customer/CustomerPersonal/Address"], 
+    //       //   { queryParams: { "IdCust": this.IdCust }}
+    //       //   );
+    //       // console.log(response);
+    //       this.wizard.goToNextStep();
+    //     },
+    //     (error) => {
+    //       console.log(error);
+    //     }
+    //   );
+    // }
    }
 }

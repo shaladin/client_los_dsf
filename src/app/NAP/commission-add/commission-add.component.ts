@@ -95,7 +95,7 @@ export class CommissionAddComponent implements OnInit {
   }
 
   GetIncomeInfoObj() {
-    var url = environment.losUrl + AdInsConstant.GetAppFinDataWithRuleByAppId;
+    var url = environment.losUrl //+ AdInsConstant.GetAppFinDataWithRuleByAppId;
     var app = new NapAppModel();
     app = this.ResultAppData;
     var obj = {
