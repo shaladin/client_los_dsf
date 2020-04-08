@@ -21,11 +21,12 @@
 
       <aw-wizard-step [stepTitle]="'Life Insurance'" (stepEnter)="EnterTab('tab4')"
         [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
-        <app-app-life-ins *ngIf="isTab1 == true" [AppId]=param></app-app-life-ins>
+        <app-app-life-ins *ngIf="isTab4 == true" [AppId]=param></app-app-life-ins>
       </aw-wizard-step>
 
-      <aw-wizard-step [stepTitle]="'Tab 5'" (stepEnter)="EnterTab('tab5')"
+      <aw-wizard-step [stepTitle]="'Terms and Conditions'" (stepEnter)="EnterTab('tab5')"
         [navigationSymbol]="{ symbol: '5' }">
+        <app-app-tc *ngIf="isTab5 == true" [AppId]=param></app-app-tc>
       </aw-wizard-step>
     </aw-wizard>
   </div>

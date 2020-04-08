@@ -1,11 +1,5 @@
-import { AppTCObj } from "./AppTCObj.Model";
-
-export class ListAppTCObj{
-    AppTcObj : AppTCObj;
+export class ListAppTCObj {
+    AppTCObj: any[];
     RowVersion: any;
-
-    constructor() { 
-        this.AppTcObj = new AppTCObj(); 
-        this.RowVersion = ""; 
-    }
+    constructor() { this.RowVersion = "" }
 }

@@ -43,6 +43,7 @@ export class AdInsConstant {
   public static EditApp = "/Application/EditApp";
   public static GetAppById = "/Application/GetAppById";
   public static EditAppAddAppCross = "/Application/EditAppAddAppCross";
+  public static GetAppByIds = "/Application/GetAppByIds";
 
   // App Asset
   public static GetAppAssetListByAppIdForCommision = "/AppAsset/GetAppAssetListByAppIdForCommision";
@@ -438,6 +439,8 @@ export class AdInsConstant {
   public static GetListVendorEmpByVendorIdAndPositionCodes = "http://localhost:5000/VendorEmp/GetListVendorEmpByVendorIdAndPositionCodes";
   public static GetVendorEmpSupervisorByVendorEmpId = "http://localhost:5000/VendorEmp/GetVendorEmpSupervisorByVendorEmpId";
   public static GetVendorEmpByVendorIdVendorEmpNo = "http://localhost:5000/VendorEmp/GetVendorEmpByVendorIdVendorEmpNo";
+  public static GetVendorEmpByVendorEmpNo = "/AppCommission/GetVendorEmpByVendorEmpNo";
+  public static GetListVendorBankAccByListVendorEmpNo = "/AppCommission/GetListVendorBankAccByListVendorEmpNo";
 
   // VendorEmp
   public static GetListVendorBankByVendorEmpNo = "/VendorEmp​/GetListVendorBankByVendorEmpNo";
@@ -537,6 +540,7 @@ export class AdInsConstant {
   public static GetAppCustPersonalContactPersonsByAppCustPersonalId = environment.losUrl + "/AppCustPersonalContactPerson/GetAppCustPersonalContactPersonsByAppCustPersonalId";
   public static DeleteAppCustPersonalContactPerson = environment.losUrl + "/AppCustPersonalContactPerson/DeleteAppCustPersonalContactPerson";
   public static GetAppCustBankAccsByAppCustId = environment.losUrl + "/AppCustBankAcc/GetAppCustBankAccsByAppCustId";
+  public static GetAppCustPersonalDataAndSpouseByAppId = environment.losUrl + "/AppCustBankAcc/GetAppCustPersonalDataAndSpouseByAppId";
 
   //CUST DATA COMPANY
   public static AddEditCustDataCompany = environment.losUrl + "/AppCust/AddEditCustDataCompany";
@@ -547,8 +551,9 @@ export class AdInsConstant {
   public static GetAppAssetListByAppId = environment.losUrl + "/AppAsset/GetAppAssetListByAppId";
   public static GetAllAssetDataForPOByAsset = environment.losUrl + "/AppAsset/GetAllAssetDataForPOByAsset";
   public static GetAppAssetByAgrmntId = environment.losUrl + "/AppAsset/GetAppAssetByAgrmntId";
-  public static GetAllAssetDataByAppId = "http://localhost:5001/AppAsset/GetAllAssetDataByAppId";
-  public static AddEditAllAssetData = "http://localhost:5001/AppAsset/AddEditAllAssetData";
+  public static GetAllAssetDataByAppId = "/AppAsset/GetAllAssetDataByAppId";
+  public static AddEditAllAssetData = "/AppAsset/AddEditAllAssetData";
+  public static GetAppAssetDataByAppId = "/AppAsset/GetAppAssetDataByAppId";
 
   //Asset Doc List
   public static GetListAssetDocListByAssetTypeCode = environment.FoundationR3Url + "/AssetDocList/GetListAssetDocListByAssetTypeCode";
@@ -562,6 +567,7 @@ export class AdInsConstant {
   public static CreateTCRule = environment.losUrl + "/AppTc/CreateTCRule";
   public static AddAppTc = environment.losUrl + "/AppTc/AddAppTc";
   public static EditAppTc = environment.losUrl + "/AppTc/EditAppTc";
+  public static SubmitOutstandingTc = environment.losUrl + "/AppTc/SubmitOutstandingTc";
 
   //PURCHASE ORDER
   public static SubmitPurchaseOrder = environment.losUrl + "/PurchaseOrderH/SubmitPurchaseOrder";
@@ -580,6 +586,12 @@ export class AdInsConstant {
   public static AddEditInsuranceData = environment.losUrl + "/AppIns/AddEditInsuranceData";
   public static ExecuteInsRateRule = environment.losUrl + "/AppIns/ExecuteInsRateRule";
   public static CalculateInsurance = environment.losUrl + "/AppIns/CalculateInsurance";
+  public static PremiumTypeAmt = environment.losUrl + "/AppIns/PremiumTypeAmt";
+  public static PremiumTypePrcnt = environment.losUrl + "/AppIns/PremiumTypePrcnt";
+  public static CoverPeriodAnnually = environment.losUrl + "/AppIns/CoverPeriodAnnually";
+  public static CoverPeriodFullTenor = environment.losUrl + "/AppIns/CoverPeriodFullTenor";
+  public static CoverPeriodOverTenor = environment.losUrl + "/AppIns/CoverPeriodOverTenor";
+  public static CoverPeriodPartialTenor = environment.losUrl + "/AppIns/CoverPeriodPartialTenor";
 
   //AppCustAddr
   public static GetListAppCustAddrByAppId = "http://localhost:5001/AppCustAddr/GetListAppCustAddrByAppId";
@@ -593,6 +605,7 @@ export class AdInsConstant {
   //App Fin Data
   public static GetAppFinDataByAppId = "http://localhost:5001/AppFinData/GetAppFinDataByAppId";
   public static CreateMaxAllocAmtRsvFund = "http://localhost:5001/AppFinData/CreateMaxAllocAmtRsvFund";
+  public static GetAppFinDataWithRuleByAppId = "http://localhost:5001/AppFinData/GetAppFinDataWithRuleByAppId";
 
   // LEAD
   public static AddLead = environment.losUrl + "/Lead/AddLead";
@@ -608,7 +621,6 @@ export class AdInsConstant {
   public static GetAppAssetByAppIdAndCriteria = environment.losUrl + "/AgrmntActivation/GetAppAssetByAppIdAndCriteria";
   public static GetAppFinDataAndFeeByAppIdAndListAppAssetId = environment.losUrl + "/AgrmntActivation/GetAppFinDataAndFeeByAppIdAndListAppAssetId";
   public static SubmitAgrmntActivationByHuman = environment.losUrl + "/AgrmntActivation/SubmitAgrmntActivationByHuman";
-
 
 
   //AGRMNT
@@ -650,4 +662,14 @@ export class AdInsConstant {
   // Product Offering
   public static GetListProdOfferingDByProdOfferingCode = "/ProductOffering/GetListProdOfferingDByProdOfferingCode";
   public static GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode = "/ProductOffering/GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode";
+
+  //App Commission
+  public static GetAppCommissionRule = "/AppCommission/GetAppCommissionRule";
+  public static AddAppCommissionData = "/AppCommission/AddAppCommissionData";
+  public static AppCom = "/AppCommission/AppCom";
+  public static GetAppCommissionTax = "/AppCommission/GetAppCommissionTax";
+  public static ExchangeRateAmt = "/AppCommission/ExchangeRateAmt";
+  public static TaxTypeCode = "/AppCommission/TaxTypeCode";
+  public static VATTypeCode = "/AppCommission/VATTypeCode";
+
 }
