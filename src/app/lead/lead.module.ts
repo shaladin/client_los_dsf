@@ -18,6 +18,13 @@ import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
 import { UcgridfooterModule, UcgridfooterComponent } from "@adins/ucgridfooter";
 import { MainInfoComponent } from 'app/view/main-info/main-info.component';
 import { LeadRoutingModule } from "./lead-routing.module";
+import { CustomerSelfVerificationComponent } from './verification/customer-self-verification/customer-self-verification.component';
+import { CustomerDataComponent } from './verification/customer-self-verification/customer-data/customer-data.component';
+import { LeadDataComponent } from './verification/customer-self-verification/lead-data/lead-data.component';
+import { LeadMainInfoComponent } from 'app/view/lead-main-info/lead-main-info.component';
+import { CustJobDataComponent } from "app/NAP/nap-tab/customer-data/component/job-data/cust-job-data.component";
+import { CustSocmedComponent } from "app/NAP/nap-tab/customer-data/component/socmed/cust-socmed.component";
+// import { ShowErrorsComponent } from "./app/test-new/show-errors.component";
 import { LeadVerifComponent } from './lead-verif/lead-verif.component';
 import { LeadInputComponent } from "./lead-input/lead-input.component";
 import { LeadInputCustDataComponent } from "./lead-input/lead-input-cust-data/lead-input-cust-data.component";
@@ -43,6 +50,9 @@ import { MatRadioModule } from "@angular/material";
     UCSearchModule,
     UcgridfooterModule,
     UcpagingModule,
+    NgbModule,
+    SharingModule,
+    ArchwizardModule,
     ReactiveFormsModule,
     UcaddressModule,
     UcSubsectionModule,
@@ -54,6 +64,14 @@ import { MatRadioModule } from "@angular/material";
     MatRadioModule,
   ],
   declarations: [
+    MainInfoComponent,
+    CustJobDataComponent,
+    CustSocmedComponent,
+    LeadMainInfoComponent,
+    CustomerSelfVerificationComponent,
+    CustomerDataComponent,
+    LeadDataComponent,
+    ArchwizardModule,
     LeadVerifComponent,
     LeadCancelComponent,
     LeadCancelConfirmComponent,

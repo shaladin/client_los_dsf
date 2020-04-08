@@ -43,6 +43,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     MrMouTypeCode: ['', [Validators.required]],
     Notes: [''],
     SrvyOrderNo: [''],
+    MrCustTypeCode: [''],
     RowVersion: ['']
   });
 
@@ -85,7 +86,6 @@ export class MouCustomerRequestDetailComponent implements OnInit {
         this.refOfficeId = response.RefOfficeId;
       },
       (error) => {
-        console.log("ERROR");
         console.log(error);
       }
     );
@@ -121,7 +121,8 @@ export class MouCustomerRequestDetailComponent implements OnInit {
   getCustLookupResponse(e){
     this.MOUMainInfoForm.patchValue({
       CustNo: e.custNo,
-      CustName: e.custName
+      CustName: e.custName,
+      MrCustTypeCode: e.mrCustTypeCode
     });
   }
 
@@ -137,7 +138,6 @@ export class MouCustomerRequestDetailComponent implements OnInit {
           this.router.navigate(["/Mou/Detail", this.mouType], { queryParams: { mouCustId: mouCustId }});
         },
         (error) => {
-          console.log("ERROR");
           console.log(error);
         }
       );
@@ -149,7 +149,6 @@ export class MouCustomerRequestDetailComponent implements OnInit {
           this.router.navigate(['/Mou/Detail', this.mouType], { queryParams: { mouCustId: mouCustFormData.MouCustId }});
         },
         (error) => {
-          console.log("ERROR");
           console.log(error);
         }
       );

@@ -55,7 +55,7 @@
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-md-3 adInsLabel" for="DownPaymentFromToPrcnt" translate>Down Payment (%)</label>
+        <label class="col-md-3 adInsLabel adins-required-label" for="DownPaymentFromToPrcnt" translate>Down Payment (%)</label>
         <div class="col-md-2">
           <input type="number" class="form-control adInsInput" formControlName="DownPaymentFromPrcnt" 
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailGeneralForm.controls.DownPaymentFromPrcnt.invalid }" />
@@ -71,7 +71,7 @@
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-md-3 adInsLabel" for="TenorFromTo" translate>Tenor</label>
+        <label class="col-md-3 adInsLabel adins-required-label" for="TenorFromTo" translate>Tenor</label>
         <div class="col-md-2">
           <input type="number" class="form-control adInsInput" formControlName="TenorFrom" 
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailGeneralForm.controls.TenorFrom.invalid }" />
@@ -92,6 +92,9 @@
 <app-mou-cust-asset [MouCustId]="MouCustId" [IsAssetSelected]="MouDetailGeneralForm.controls.AssetTypeCode.value != ''"></app-mou-cust-asset>
 <div class="col-md-12" style="padding: 0; text-align: right;">
   <div class="form-actions right">
+    <button type="button" class="btn btn-raised btn-warning mr-1" (click)="back()" translate>
+      <i class="ft-x"></i> Back
+    </button>
     <button type="submit" class="btn btn-raised btn-primary">
       <i class="fa fa-check-square-o"></i> Continue
     </button>

@@ -4,7 +4,7 @@
     "component": [
         {
             "type": "textbox",
-            "name": "A.MOU_CUST_NO",
+            "name": "MOU.MOU_CUST_NO",
             "id": "MouCustNoId",
             "value": "",
             "label": "MOU NO",
@@ -28,7 +28,7 @@
         },
         {
             "type": "textbox",
-            "name": "A.CUST_NAME",
+            "name": "MOU.CUST_NAME",
             "id": "CustNameId",
             "value": "",
             "label": "CUSTOMER NAME",
@@ -36,7 +36,7 @@
         },
         {
             "type": "textbox",
-            "name": "A.CUST_NAME",
+            "name": "MOU.CUST_NAME",
             "id": "CustNameId",
             "value": "",
             "label": "",
@@ -65,16 +65,16 @@
         },
         {
             "type": "textbox",
-            "name": "A.CUST_NAME",
-            "id": "CustNameId",
+            "name": "WTL.USERNAME",
+            "id": "ClaimById",
             "value": "",
             "label": "CLAIM BY",
             "placeholder": "Placeholder"
         }
     ],
     "querystring": {
-        "select": "SELECT A.MOU_CUST_ID AS MouCustId, A.MOU_CUST_NO AS MouCustNo, A.MOU_CUST_ID AS MouCustId, A.CUST_NAME AS CustName, A.MOU_CUST_DT AS MouCustDt, A.END_DT AS EndDt, A.PLAFOND_AMT AS PlafondAmt, A.IS_REVOLVING AS IsRevolving, A.MR_MOU_TYPE_CODE AS MouType, A.REF_NO AS RefNo",
-        "from": "FROM dbo.MOU_CUST A WITH(NOLOCK)"
+        "select": "SELECT WTL.WF_TASK_LIST_ID AS WfTaskListId, WTL.USERNAME AS ClaimBy, WTL.OFFICE_CODE AS OfficeCode, MOU.MOU_CUST_ID AS MouCustId, MOU.MOU_CUST_NO AS MouCustNo, MOU.CUST_NAME AS CustName, MOU.MOU_CUST_DT AS MouCustDt, MOU.START_DT AS StartDt, MOU.END_DT AS EndDt, MOU.PLAFOND_AMT PlafondAmt, MOU.IS_REVOLVING AS IsRevolving, MOU.REF_NO AS RefNo, MOU.MR_MOU_TYPE_CODE AS MrMouTypeCode",
+        "from": "FROM dbo.MOU_CUST MOU WITH(NOLOCK) JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON MOU.MOU_CUST_NO = WTL.TRANSACTION_CODE AND WTL.ACT_CODE = 'MOU_REVIEW' WHERE MOU.MOU_STAT = 'MOU_RVW' AND WTL.OFFICE_CODE = 'HO'"
     },
     "headerList": [
         {
@@ -117,7 +117,7 @@
             "type": "label",
             "position": "center",
             "label": "Mou Type",
-            "name": "MouType"
+            "name": "MrMouTypeCode"
         },
         {
             "type": "label",
@@ -159,7 +159,7 @@
         {
             "type": "text",
             "position": "center",
-            "property": "MouType"
+            "property": "MrMouTypeCode"
         },
         {
             "type": "action",

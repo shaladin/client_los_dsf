@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { CustomerSelfVerificationComponent } from './verification/customer-self-verification/customer-self-verification.component';
 import { LeadVerifComponent } from './lead-verif/lead-verif.component';
 import { LeadInputComponent } from './lead-input/lead-input.component';
 import { LeadInputCustDataComponent } from './lead-input/lead-input-cust-data/lead-input-cust-data.component';
@@ -17,6 +18,13 @@ const routes: Routes = [
   {
     path: '',
     children: [
+      {
+        path: 'SelfVerification',
+        component: CustomerSelfVerificationComponent,
+        data: {
+          title: 'Lead Customer Self Verification'
+        }
+      },
       {
         path: 'Verif',
         component: LeadVerifComponent,

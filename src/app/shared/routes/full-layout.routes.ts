@@ -32,6 +32,10 @@ export const Full_ROUTES: Routes = [
     loadChildren: './NAP/nap.module#NapModule'
   },
   {
+    path: 'Lead',
+    loadChildren: './lead/lead.module#LeadModule'
+  },
+  {
     path: 'Inquiry',
     loadChildren: './inquiry/inquiry.module#InquiryModule'
   },
