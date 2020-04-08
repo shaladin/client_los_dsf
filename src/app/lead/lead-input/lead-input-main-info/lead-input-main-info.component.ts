@@ -326,7 +326,7 @@ getLookUpSalesName(event) {
       this.http.post(this.editLead, this.leadObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["/Lead/LeadInput/Page"], { queryParams: { "LeadId": this.LeadId } });
+          this.router.navigate(["/Lead/LeadInput/Page"], { queryParams: { "LeadId": this.LeadId, "mode": "edit" } });
           console.log(response)
         },
         (error) => {

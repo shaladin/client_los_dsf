@@ -13,6 +13,8 @@ import { formatDate } from '@angular/common';
 import { LeadCustAddrObj } from 'app/shared/model/LeadCustAddrObj.Model';
 import { LeadCustSocmedObj } from 'app/shared/model/LeadCustSocmedObj.Model';
 import { LeadInputObj } from 'app/shared/model/LeadInputObj.Model';
+import { LeadCustObj } from 'app/shared/model/LeadCustObj.Model';
+import { LeadCustPersonalObj } from 'app/shared/model/LeadCustPersonalObj.Model';
  
 @Component({
   selector: 'app-lead-input-cust-data',
@@ -57,6 +59,16 @@ export class LeadInputCustDataComponent implements OnInit {
   leadCustTwitterObj: any;
   genderType: any;
   tempGender: any;
+  getLeadByLeadId: any;
+  getLeadCustByLeadId: any;
+  getLeadCustAddr: any;
+  getLeadCustPersonal: any;
+  getLeadCustPersonalFinData: any;
+  getLeadCustPersonalJobData: any;
+  reqLeadCustObj: any;
+  resLeadCustObj: any;
+  reqLeadCustPersonalObj: any;
+  resLeadCustPersonalObj: any
   CustomerDataForm = this.fb.group({
     CustType: [''],
     Gender: [''],
@@ -84,11 +96,20 @@ export class LeadInputCustDataComponent implements OnInit {
     this.getListActiveRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
     this.getRefMasterWithReserveField = AdInsConstant.GetListActiveRefMasterWithReserveFieldAll;
     this.addEditLeadCustPersonal = AdInsConstant.AddEditLeadCustPersonal;
+    this.getLeadByLeadId = AdInsConstant.GetLeadByLeadId;
+    this.getLeadCustByLeadId = AdInsConstant.GetLeadCustByLeadId;
+    this.getLeadCustAddr = AdInsConstant.GetLeadCustAddrByLeadCustIdAndAddrTypeCode;
+    this.getLeadCustPersonal = AdInsConstant.GetLeadCustPersonalByLeadCustId;
+    this.getLeadCustPersonalFinData = AdInsConstant.GetLeadCustPersonalFinDataByLeadCustPersonalId;
+    this.getLeadCustPersonalJobData = AdInsConstant.GetLeadCustPersonalJobDataByLeadCustPersonalId;
 
     this.route.queryParams.subscribe(params => {
         if (params["LeadId"] != null) {
-            this.LeadId = params["LeadId"];
+          this.LeadId = params["LeadId"];
         }
+        if (params["mode"] != null) {
+          this.typePage = params["mode"];
+      }
     });
   }
 
@@ -153,6 +174,40 @@ export class LeadInputCustDataComponent implements OnInit {
           this.listCustModel = response['ReturnObject'];
           this.CustomerDataForm.patchValue({ CustModel: response['ReturnObject'][0]['Key'] });
       });
+
+
+    if(this.typePage == "edit"){
+      this.reqLeadCustObj = new LeadCustObj();
+      this.reqLeadCustObj.LeadId = this.LeadId;
+      this.http.post(this.getLeadCustByLeadId, this.reqLeadCustObj).subscribe(
+        (response) => {
+            this.resLeadCustObj = response['ReturnObject'];
+            this.CustomerDataForm.patchValue({ 
+              CustName: this.resLeadCustObj.CustName,
+              MrIdTypeCode: this.resLeadCustObj.MrIdTypeCode,
+              CustModel: this.resLeadCustObj.MrCustModelCode,
+              IdNo: this.resLeadCustObj.IdNo,
+              Npwp: this.resLeadCustObj.TaxIdNo,
+            });
+
+          this.reqLeadCustPersonalObj = new LeadCustPersonalObj();
+          this.reqLeadCustPersonalObj.LeadId = this.resLeadCustObj.LeadId;
+          this.http.post(this.getLeadCustByLeadId, this.reqLeadCustPersonalObj).subscribe(
+            (response) => {
+                this.resLeadCustPersonalObj = response['ReturnObject'];
+                this.CustomerDataForm.patchValue({ 
+                  Gender: this.resLeadCustObj.MrGenderCode,
+                  BirthPlace: this.resLeadCustObj.BirthPlace,
+                  BirthDate: this.resLeadCustObj.BirthDt,
+                  MotherName: this.resLeadCustObj.MotherMaidenName,
+                  MrMaritalStatCode: this.resLeadCustObj.MrMaritalStatCode,
+                  Email: this.resLeadCustObj.Email1,
+                  MobilePhone1: this.resLeadCustObj.MobilePhnNo1,
+                  MobilePhone2: this.resLeadCustObj.MobilePhnNo2,
+                });
+            });
+        });
+    }
 
   }
 

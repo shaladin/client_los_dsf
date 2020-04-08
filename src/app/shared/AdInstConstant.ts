@@ -553,11 +553,33 @@ export class AdInsConstant {
     public static CreateMaxAllocAmtRsvFund = "http://localhost:5001/AppFinData/CreateMaxAllocAmtRsvFund";
 
 
-  // LEAD
-  public static AddLead = environment.losUrl + "/Lead/AddLead";
-  public static EditLead = environment.losUrl + "/Lead/EditLead";
-  public static GetLeadByLeadId = environment.losUrl + "/Lead/GetLeadByLeadId";
-  public static AddEditLeadCustPersonal = environment.losUrl + "/LeadCust/AddEditLeadCustPersonal"
+    // LEAD
+    public static AddLead = environment.losUrl + "/Lead/AddLead";
+    public static EditLead = environment.losUrl + "/Lead/EditLead";
+    public static GetLeadByLeadId = environment.losUrl + "/Lead/GetLeadByLeadId";
+    public static AddEditLeadCustPersonal = environment.losUrl + "/LeadCust/AddEditLeadCustPersonal";
+
+    // LEAD APP
+    public static GetLeadAppByLeadId = environment.losUrl + "/LeadApp/GetLeadAppByLeadId";
+
+    // LEAD ASSET
+    public static GetLeadAssetByLeadId = environment.losUrl + "/LeadAsset/GetLeadAssetByLeadId";
+    
+    // LEAD CUST
+    public static GetLeadCustByLeadId = environment.losUrl + "/LeadCust/GetLeadCustByLeadId";
+
+    // LEAD CUST ADDR
+    public static GetLeadCustAddrByLeadCustIdAndAddrTypeCode = environment.losUrl + "/LeadCustAddr/GetLeadCustAddrByLeadCustIdAndAddrTypeCode"
+
+    // LEAD CUST PERSONAL
+    public static GetLeadCustPersonalByLeadCustId = environment.losUrl + "/LeadCustPersonal/GetLeadCustPersonalByLeadCustId";
+
+    // LEAD CUST PERSONAL FIN DATA
+    public static GetLeadCustPersonalFinDataByLeadCustPersonalId = environment.losUrl + "/LeadCustPersonalFinData/GetLeadCustPersonalFinDataByLeadCustPersonalId";
+
+    // LEAD CUST PERSONAL JOB DATA
+    public static GetLeadCustPersonalJobDataByLeadCustPersonalId = environment.losUrl + "/LeadCustPersonalJobData/GetLeadCustPersonalJobDataByLeadCustPersonalId";
+
   
     //App Reserved Fund
     public static AddEditAppReservedFund = "http://localhost:5001/AppReservedFund/AddEditAppReservedFund";
@@ -680,4 +702,7 @@ export class AdInsConstant {
   // Product Offering
   public static GetListProdOfferingDByProdOfferingCode = "/ProductOffering/GetListProdOfferingDByProdOfferingCode";
   public static GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode = "/ProductOffering/GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode";
+
+  // ASSET TYPE
+  public static GetAssetTypeById = environment.FoundationR3Url + "/AssetType/GetAssetTypeById"
 }

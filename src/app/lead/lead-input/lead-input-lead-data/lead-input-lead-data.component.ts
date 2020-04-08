@@ -10,6 +10,7 @@ import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { WizardComponent } from 'angular-archwizard';
 import { formatDate } from '@angular/common';
+import { AssetTypeObj } from 'app/shared/model/AssetTypeObj.Model';
  
 @Component({
   selector: 'app-lead-input-lead-data',
@@ -66,8 +67,21 @@ export class LeadInputLeadDataComponent implements OnInit {
   returnAssetConditionObj: any;
   downPaymentObj: any;
   returnDownPaymentObj: any;
+  firstInstObj: any;
+  returnFirstInstObj: any;
   InputLookupAssetObj: any;
   getListActiveRefMasterUrl: any;
+  assetTypeId: number;
+  serial1Disabled: boolean = false;
+  serial2Disabled: boolean = false;
+  serial3Disabled: boolean = false;
+  serial4Disabled: boolean = false;
+  serial5Disabled: boolean = false;
+  serial1Mandatory: boolean = false;
+  serial2Mandatory: boolean = false;
+  serial3Mandatory: boolean = false;
+  serial4Mandatory: boolean = false;
+  serial5Mandatory: boolean = false;
   LeadDataForm = this.fb.group({
     FullAssetCode: [''],
     FullAssetName: [''],
@@ -76,10 +90,14 @@ export class LeadInputLeadDataComponent implements OnInit {
     ManufacturingYear: [''],
     AssetPrice: [''],
     DownPayment: [''],
-    LicensePlate: [''],
+    SerialNo1: [''],
+    SerialNo2: [''],
+    SerialNo3: [''],
+    SerialNo4: [''],
+    SerialNo5: [''],
 
     Tenor:[''],
-    FirstInstallment: [''],
+    MrFirstInstTypeCode: [''],
     NTFAmt: [''],
     TotalDownPayment: [''],
     InstallmentAmt:['']
@@ -113,6 +131,82 @@ export class LeadInputLeadDataComponent implements OnInit {
       FullAssetCode: event.FullAssetCode,
       FullAssetName: event.FullAssetName
     });
+    this.assetTypeId = event.AssetTypeId;
+  }
+
+  radioChange(event){
+
+    this.serial2Mandatory = false;
+    this.serial3Mandatory = false;
+    this.serial4Mandatory = false;
+    this.serial5Mandatory = false;
+
+    var assetType = new AssetTypeObj();
+    assetType.AssetTypeId = this.assetTypeId;
+    this.http.post(AdInsConstant.GetAssetTypeById, assetType).subscribe(
+      (response: any) => {
+        if (response.IsMndtrySerialNo1 == "1" && event.value == "USED") {
+          this.LeadDataForm.controls['SerialNo1'].setValidators([Validators.required]);
+          this.LeadDataForm.controls['SerialNo1'].updateValueAndValidity();
+          this.serial1Mandatory = true;
+        }
+        else {
+          this.LeadDataForm.controls['SerialNo1'].clearValidators();
+          this.LeadDataForm.controls['SerialNo1'].updateValueAndValidity();
+          this.serial1Mandatory = false;
+        }
+
+        if (response.IsMndtrySerialNo2 == "1" && event.value == "USED") {
+          this.LeadDataForm.controls['SerialNo2'].setValidators([Validators.required]);
+          this.LeadDataForm.controls['SerialNo2'].updateValueAndValidity();
+          this.serial2Mandatory = true;
+        }
+        else {
+          this.LeadDataForm.controls['SerialNo2'].clearValidators();
+          this.LeadDataForm.controls['SerialNo2'].updateValueAndValidity();
+          this.serial2Mandatory = false;
+        }
+
+        if (response.IsMndtrySerialNo3 == "1" && event.value == "USED") {
+          this.LeadDataForm.controls['SerialNo3'].setValidators([Validators.required]);
+          this.LeadDataForm.controls['SerialNo3'].updateValueAndValidity();
+          this.serial3Mandatory = true;
+        }
+        else {
+          this.LeadDataForm.controls['SerialNo3'].clearValidators();
+          this.LeadDataForm.controls['SerialNo3'].updateValueAndValidity();
+          this.serial3Mandatory = false;
+        }
+
+        if (response.IsMndtrySerialNo4 == "1" && event.value == "USED") {
+          this.LeadDataForm.controls['SerialNo4'].setValidators([Validators.required]);
+          this.LeadDataForm.controls['SerialNo4'].updateValueAndValidity();
+          this.serial4Mandatory = true;
+        }
+        else {
+          this.LeadDataForm.controls['SerialNo4'].clearValidators();
+          this.LeadDataForm.controls['SerialNo4'].updateValueAndValidity();
+          this.serial4Mandatory = false;
+        }
+
+        if (response.IsMndtrySerialNo5 == "1" && event.value == "USED") {
+          this.LeadDataForm.controls['SerialNo5'].setValidators([Validators.required]);
+          this.LeadDataForm.controls['SerialNo5'].updateValueAndValidity();
+          this.serial5Mandatory = true;
+        }
+        else {
+          this.LeadDataForm.controls['SerialNo5'].clearValidators();
+          this.LeadDataForm.controls['SerialNo5'].updateValueAndValidity();
+          this.serial5Mandatory = false;
+        }
+
+        this.serial1Disabled = response.SerialNo1Label == "" ? true : false;
+        this.serial2Disabled = response.SerialNo2Label == "" ? true : false;
+        this.serial3Disabled = response.SerialNo3Label == "" ? true : false;
+        this.serial4Disabled = response.SerialNo4Label == "" ? true : false;
+        this.serial5Disabled = response.SerialNo5Label == "" ? true : false;
+      }
+    );
   }
 
   ngOnInit() {
@@ -130,12 +224,7 @@ export class LeadInputLeadDataComponent implements OnInit {
         this.returnAssetConditionObj = response["ReturnObject"];
         console.log("aaa")
         console.log(this.returnAssetConditionObj)
-        if(this.returnAssetConditionObj.length > 0){
-          this.LeadDataForm.patchValue({
-            MrAssetConditionCode: this.returnAssetConditionObj[0].Key
-          });
-        }
-        //this.LeadDataForm.patchValue({ MrAssetConditionCode: response['ReturnObject'][0]['Key'] });
+        this.LeadDataForm.patchValue({ MrAssetConditionCode: response['ReturnObject'][0]['Key'] });
       }
     );
 
@@ -147,6 +236,17 @@ export class LeadInputLeadDataComponent implements OnInit {
         console.log("bbb")
         console.log(this.returnDownPaymentObj)
         this.LeadDataForm.patchValue({ MrDownPaymentTypeCode: response['ReturnObject'][0]['Key'] });
+      }
+    );
+
+    this.firstInstObj = new RefMasterObj();
+    this.firstInstObj.RefMasterTypeCode = "FIRSTINSTTYPE";
+    this.http.post(this.getListActiveRefMasterUrl, this.firstInstObj).subscribe(
+      (response) => {
+        this.returnFirstInstObj = response["ReturnObject"];
+        console.log("aaa")
+        console.log(this.returnFirstInstObj)
+        this.LeadDataForm.patchValue({ MrFirstInstTypeCode: response['ReturnObject'][0]['Key'] });
       }
     );
 
