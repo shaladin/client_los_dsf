@@ -40,6 +40,11 @@ import { TeleVerifPagingComponent } from './tele-verif/tele-verif-paging/tele-ve
 import { TeleVerifDetailComponent } from './tele-verif/tele-verif-detail/tele-verif-detail.component';
 import { LeadInputLeadDataComponent } from "./lead-input/lead-input-lead-data/lead-input-lead-data.component";
 import { MatRadioModule } from "@angular/material";
+import { LeadUpdateComponent } from "./lead-update/lead-update.component";
+import { LeadUpdatePageComponent } from "./lead-update/lead-update-page/lead-update-page.component";
+import { LeadUpdateMainInfoComponent } from "./lead-update/lead-update-main-info/lead-update-main-info.component";
+import { LeadUpdateCustDataComponent } from "./lead-update/lead-update-cust-data/lead-update-cust-data.component";
+import { LeadUpdateLeadDataComponent } from "./lead-update/lead-update-lead-data/lead-update-lead-data.component";
 
 @NgModule({
   imports: [
@@ -85,7 +90,12 @@ import { MatRadioModule } from "@angular/material";
     TeleVerifPagingComponent,
     TeleVerifDetailComponent,
     LeadInputLeadDataComponent,
-    LeadViewHeaderComponent
+    LeadViewHeaderComponent,
+    LeadUpdateComponent,
+    LeadUpdatePageComponent,
+    LeadUpdateMainInfoComponent,
+    LeadUpdateCustDataComponent,
+    LeadUpdateLeadDataComponent
     // ArchwizardModule,
   ],
 })

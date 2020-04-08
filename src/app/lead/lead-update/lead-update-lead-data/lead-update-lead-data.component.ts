@@ -18,12 +18,12 @@ import { AssetMasterObj } from 'app/shared/model/AssetMasterObj.Model';
 
  
 @Component({
-  selector: 'app-lead-input-lead-data',
-  templateUrl: './lead-input-lead-data.component.html',
+  selector: 'app-lead-update-lead-data',
+  templateUrl: './lead-update-lead-data.component.html',
   providers: [NGXToastrService]
 })
 
-export class LeadInputLeadDataComponent implements OnInit {
+export class LeadUpdateLeadDataComponent implements OnInit {
   typePage: string;
   LeadId: any;
   assetConditionObj: any;

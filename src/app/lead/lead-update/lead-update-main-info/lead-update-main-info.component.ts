@@ -19,11 +19,11 @@ import { RefEmpForLookupObj } from 'app/shared/model/RefEmpForLookupObj.Model';
 
 
 @Component({
-  selector: 'app-lead-input-main-info',
-  templateUrl: './lead-input-main-info.component.html',
+  selector: 'app-lead-update-main-info',
+  templateUrl: './lead-update-main-info.component.html',
   providers: [DecimalPipe, NGXToastrService]
 })
-export class LeadInputMainInfoComponent implements OnInit {
+export class LeadUpdateMainInfoComponent implements OnInit {
   user: any;
   LeadId: any;
   addLead: any;
@@ -399,10 +399,12 @@ copyLead(){
       this.leadObj.LeadId = this.LeadId;
       this.leadObj.RowVersion = this.returnLead.RowVersion;
       this.setLead();
+      this.leadObj.LeadStat = "APP";
+      this.leadObj.LeadStep = "APP";
       this.http.post(this.editLead, this.leadObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["/Lead/LeadInput/Page"], { queryParams: { "LeadId": this.LeadId, "mode": "edit" } });
+          this.router.navigate(["/Lead/LeadUpdate/Page"], { queryParams: { "LeadId": this.LeadId, "mode": "edit" } });
           console.log(response)
         },
         (error) => {
@@ -417,7 +419,7 @@ copyLead(){
           this.responseLead = response;
           this.LeadId = this.responseLead.LeadId;
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["/Lead/LeadInput/Page"], { queryParams: { "LeadId": this.LeadId } });
+          this.router.navigate(["/Lead/LeadUpdate/Page"], { queryParams: { "LeadId": this.LeadId } });
           console.log(response)
         },
         (error) => {

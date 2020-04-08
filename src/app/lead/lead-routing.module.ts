@@ -13,6 +13,9 @@ import { LeadViewComponent } from './lead-view/lead-view.component';
 import { TeleVerifPagingComponent } from './tele-verif/tele-verif-paging/tele-verif-paging.component';
 import { TeleVerifDetailComponent } from './tele-verif/tele-verif-detail/tele-verif-detail.component';
 import { LeadInputLeadDataComponent } from './lead-input/lead-input-lead-data/lead-input-lead-data.component';
+import { LeadUpdateComponent } from './lead-update/lead-update.component';
+import { LeadUpdatePageComponent } from './lead-update/lead-update-page/lead-update-page.component';
+import { LeadUpdateMainInfoComponent } from './lead-update/lead-update-main-info/lead-update-main-info.component';
 
 const routes: Routes = [
   {
@@ -50,7 +53,7 @@ const routes: Routes = [
         path: 'Lead/Paging',
         component: LeadInputComponent,
         data: {
-          title: 'Lead Paging'
+          title: 'Lead Input Paging'
         }
       },
       {
@@ -64,14 +67,14 @@ const routes: Routes = [
         path: 'LeadInput/Page',
         component: LeadInputPageComponent,
         data: {
-          title: 'Lead Page'
+          title: 'Lead Input Page'
         }
       },
       {
         path: 'LeadInput/MainInfo',
         component: LeadInputMainInfoComponent,
         data: {
-          title: 'Lead Main Info'
+          title: 'Lead Input Main Info'
         }
       },
       {
@@ -99,9 +102,30 @@ const routes: Routes = [
         path: 'LeadInput/LeadData',
         component: LeadInputLeadDataComponent,
         data: {
-          title: 'Lead Main Info'
+          title: 'Lead Input Main Info'
         }
-      }
+      },
+      {
+        path: 'LeadUpdate/Paging',
+        component: LeadUpdateComponent,
+        data: {
+          title: 'Lead Update Paging'
+        }
+      },
+      {
+        path: 'LeadUpdate/Page',
+        component: LeadUpdatePageComponent,
+        data: {
+          title: 'Lead Update Page'
+        }
+      },
+      {
+        path: 'LeadUpdate/MainInfo',
+        component: LeadUpdateMainInfoComponent,
+        data: {
+          title: 'Lead Update Main Info'
+        }
+      },
     ]
   }
 ];
