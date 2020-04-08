@@ -9,7 +9,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
   styleUrls: ['./po-extension-paging.component.scss']
 })
 export class PoExtensionPagingComponent implements OnInit {
-  inputPagingObj: any;
+  inputPagingObj: UcPagingObj;
   
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
