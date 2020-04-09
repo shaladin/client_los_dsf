@@ -47,7 +47,6 @@ import { CustCompanyContactInformationComponent } from "./nap-tab/customer-data/
 import { UcShowErrorsModule } from "@adins/uc-show-errors";
 import { CustCompanyFinancialDataComponent } from "./nap-tab/customer-data/component/company-financial-data/cust-company-financial-data.component";
 import { CustLegalDocComponent } from "./nap-tab/customer-data/component/legal-doc/cust-legal-doc.component";
-import { UcinputnumberModule } from "@adins/ucinputnumber";
 import { UcinputnumberComponent } from "./nap-tab/customer-data/component/ucinputnumber/ucinputnumber.component";
 import { InsuranceDataComponent } from "./nap-tab/insurance-data/insurance-data.component";
 import { AssetDataComponent } from "./nap-tab/asset-data/asset-data.component";
@@ -119,8 +118,7 @@ import { AppFinDataComponent } from './nap-tab/app-fin-data/app-fin-data.compone
         UcaddressModule,
         UcgridviewModule,
         UcShowErrorsModule,
-        UCSearchModule,
-        UcinputnumberModule
+        UCSearchModule
     ],
     exports: [],
     providers: [NGXToastrService],

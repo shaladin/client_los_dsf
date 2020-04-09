@@ -1,0 +1,58 @@
+{
+    "title": "",
+    "subsection": [
+      {
+        "subSectionId": "Offering Validity Main Info",
+        "subSectionTitle": "Main Information",
+        "mainInfoUrl": "http://localhost:5001/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {
+            "type": "text",
+            "label": "Application No",
+            "property": "AppNo"
+          },
+          {
+            "type": "text",
+            "label": "Product Offering Name",
+            "property": "ProdOfferingName"
+          },
+          {
+            "type": "text",
+            "label": "Agreement No",
+            "property": "AgrmntNo"
+          },
+          {
+            "type": "text",
+            "label": "Product Offering Code",
+            "property": "ProdOfferingCode"
+          },
+         
+          {
+            "type": "text",
+            "label": "Customer Name",
+            "property": "CustName"
+          },
+          {
+            "type": "text",
+            "label": "Current Version",
+            "property": "ProdOfferingVersion"
+          },
+          {
+            "type": "text",
+            "label": "Office Name",
+            "property": "OfficeName"
+          },
+          {
+            "type": "text",
+            "label": "Expired Date",
+            "property": "AppNo"
+          }
+        ],
+        "querystring": {
+          "select": "SELECT ap.APP_NO AS AppNo, agr.PROD_OFFERING_NAME AS ProdOfferingName, agr.AGRMNT_NO AS AgrmntNo, agr.PROD_OFFERING_CODE AS ProdOfferingCode, agr.CUST_NAME AS CustName, agr.PROD_OFFERING_VERSION AS ProdOfferingVersion, agr.OFFICE_NAME AS OfficeName, vApv.TRX_NO AS TrxNo",
+          "from": "FROM dbo.V_APV_TASK_LIST vApv WITH(NOLOCK) LEFT JOIN dbo.AGRMNT agr WITH(NOLOCK) ON vApv.TRX_NO = agr.AGRMNT_NO LEFT JOIN dbo.APP ap WITH(NOLOCK) ON agr.APP_ID = ap.APP_ID",
+          "where": "WHERE vApv.TRX_NO = '{0}'"
+        }
+      }
+    ]
+  }
