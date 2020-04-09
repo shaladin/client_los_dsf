@@ -25,6 +25,26 @@ const routes: Routes = [
     path: '',
     children: [
       {
+        path: 'CF4W',
+        loadChildren: './CF4W/cf4w.module#CF4WModule'
+      },
+      {
+        path: 'FL4W',
+        loadChildren: './FL4W/fl4w.module#FL4WModule'
+      },
+      {
+        path: 'RFN4W',
+        loadChildren: './RFN4W/rfn4w.module#RFN4WModule'
+      },
+      {
+        path: 'FCTR',
+        loadChildren: './FCTR/fctr.module#FCTRModule'
+      },
+      {
+        path: 'AdminProcess',
+        loadChildren: './AdminProcess/admin-process.module#AdminProcessModule'
+      },
+      {
         path: 'AppPaging',
         component: AppPagingComponent,
         data: {
