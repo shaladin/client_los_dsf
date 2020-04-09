@@ -6,43 +6,47 @@
         <div class="px-3">
           <form class="form form-horizontal" [formGroup]="MainInfoForm" #MainInfoReqForm="ngForm"
             (ngSubmit)="MainInfoForm.valid && SaveForm()">
-            <lib-ucSubsection [id]="'MainInfoFormId'" [title]="'Pre Go Live Information'" [panel]="'MainInfoForm'"></lib-ucSubsection>
+            <lib-ucSubsection [id]="'MainInfoFormId'" [title]="'Pre Go Live Information'" [panel]="'MainInfoForm'">
+            </lib-ucSubsection>
             <div class="form-body" id="MainInfoForm">
               <div class="form-group row adins-required">
-                <label class="col-md-2 adInsLabel" for="AgrmntDt" translate>Agreement Date</label>
+                <label class="col-md-2 adInsLabel" for="AgrmntDt" translate>Reason</label>
                 <div class="col-md-4">
-                  <input type="text" id="AgrmntDt" class="form-control adInsInput code"
-                    formControlName="HolidaySchmCode">
-                  <show-errors [control]="MainInfoForm.controls.AgrmntDt" [submit]="MainInfoReqForm.submitted"></show-errors>
+                  <input type="date" id="AgrmntDt" class="form-control adInsInput code"
+                    formControlName="AgrmntCreatedDt">
+                  <show-errors [control]="MainInfoForm.controls.AgrmntDt" [submit]="MainInfoReqForm.submitted">
+                  </show-errors>
                 </div>
                 <label class="col-md-2 adInsLabel" for="EffectiveDt" translate>Effective Date</label>
                 <div class="col-md-4">
-                  <input type="text" id="EffectiveDt" class="form-control adInsInput name"
+                  <input type="date" id="EffectiveDt" class="form-control adInsInput name"
                     formControlName="EffectiveDt">
-                  <show-errors [control]="MainInfoForm.controls.EffectiveDt" [submit]="MainInfoReqForm.submitted"></show-errors>
+                  <show-errors [control]="MainInfoForm.controls.EffectiveDt" [submit]="MainInfoReqForm.submitted">
+                  </show-errors>
                 </div>
               </div>
 
 
               <div class="form-group row">
-                <label class="col-md-2 adInsLabel" for="Notes" translate>Notes</label>
+                <label class="col-md-2 adInsLabel" for="Note" translate>Notes</label>
                 <div class="col-md-4">
-                  <input type="text" id="Notes" class="form-control adInsInput name"
-                    formControlName="Notes">
+                  <input type="text" id="Note" class="form-control adInsInput name" formControlName="Notes">
                 </div>
               </div>
             </div>
 
 
 
-            <lib-ucSubsection [id]="'MainInfoFormId2'" [title]="'Approval Pre Go Live Information'" [panel]="'MainInfoForm2'"></lib-ucSubsection>
+            <lib-ucSubsection [id]="'MainInfoFormId2'" [title]="'Approval Pre Go Live Information'"
+              [panel]="'MainInfoForm2'"></lib-ucSubsection>
             <div class="form-body" id="MainInfoForm2">
-              <div class="form-group row adins-required">
+              <div class="form-group row">
                 <label class="col-md-2 adInsLabel" for="ApprovalStatus" translate>Approval Status</label>
                 <div class="col-md-4">
-                  <input type="text" id="ApprovalStatus" class="form-control adInsInput code"
-                    formControlName="HolidaySchmCode">
-                  <show-errors [control]="MainInfoForm.controls.ApprovalStatus" [submit]="MainInfoReqForm.submitted"></show-errors>
+                  <!-- <label id="ApprovalStatus" class="col-md-2 adInsLabel"
+                    formControlName="ApprovalStatus"></label> -->
+                  <show-errors [control]="MainInfoForm.controls.ApprovalStatus" [submit]="MainInfoReqForm.submitted">
+                  </show-errors>
                 </div>
               </div>
 
@@ -50,25 +54,31 @@
               <div class="form-group row">
                 <label class="col-md-2 adInsLabel" for="Notes" translate>Notes</label>
                 <div class="col-md-4">
-                  <input type="text" id="Notes" class="form-control adInsInput name"
-                    formControlName="Notes">
+                  <input type="text" id="Notes" class="form-control adInsInput name" formControlName="Notes">
                 </div>
               </div>
             </div>
-
-
-
+            <app-term-conditions [AppId]="AppId" [parentForm]="MainInfoForm" [enjiForm]="MainInfoReqForm">
+            </app-term-conditions>
             <div class="form-actions right">
-              <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['/CommonSetting/Holiday']" translate>
-                <i class=""></i> Cancel
+
+              <button type="button" class="btn btn-raised btn-primary mr-1" translate>
+                <i class="fa fa-check-square-o"></i> Request For Approval 
               </button>
 
-              <button type="submit" class="btn btn-raised btn-primary" translate>
-                <i class="fa fa-check-square-o"></i> Save
+              <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['/CommonSetting/Holiday']"
+                translate>
+                <i class=""></i> Back
+              </button>
+
+              <button type="submit" class="btn btn-raised btn-primary mr-1" translate>
+                <i class="fa fa-check-square-o"></i> Submit
               </button>
             </div>
+
           </form>
         </div>
+
       </div>
     </div>
   </div>
