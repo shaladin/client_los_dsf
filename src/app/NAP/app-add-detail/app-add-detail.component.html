@@ -28,6 +28,12 @@
       [navigationSymbol]="{ symbol: '5' }">
         <app-app-life-ins *ngIf="isTab1 == true" [AppId]=appId></app-app-life-ins>
       </aw-wizard-step>
+
+      
+      <aw-wizard-step [stepTitle]="'Terms and Conditions'" (stepEnter)="EnterTab('tab6')"
+        [navigationSymbol]="{ symbol: '6' }">
+        <app-app-tc *ngIf="isTab5 == true" [AppId]=appId></app-app-tc>
+        </aw-wizard-step>
     </aw-wizard>
   </div>
 </div>

@@ -122,16 +122,6 @@ export class AdInsConstant {
   
   //INS PAID BY
   public static InsPaidByCustomer = "CU";
-  
-  //COVER PERIOD
-  public static CoverPeriodAnnually = "AN";
-  public static CoverPeriodFullTenor = "FT";
-  public static CoverPeriodPartialTenor = "PT";
-  public static CoverPeriodOverTenor = "OT";
-  
-  //PREMIUM TYPE
-  public static PremiumTypeAmt = "AMT";
-  public static PremiumTypePrcnt = "PRCNT";
 
   //GENERAL SETTING
   public static GetBusinessDt = "/GeneralSetting/GetBusinessDate";
@@ -563,26 +553,12 @@ export class AdInsConstant {
   
   // APP TC
   public static GetListTCbyAppId = environment.losUrl + "/AppTc/GetListTCbyAppId";
-  
-  // PURCHASE ORDER
-  public static SubmitPurchaseOrder = environment.losUrl + "/PurchaseOrderH/SubmitPurchaseOrder";
 
   // REF LOB
   public static GetListActiveLob = environment.FoundationR3Url + "/RefLob/GetListKeyValueActiveByCode";
   
   // Rule
   public static Rule = "http://r3app-server/RULE_FINAL/RuleService/ExecuteRuleSet";
-
-  // Tax
-  public static AppCom = "APP_COM";
-  public static ExchangeRateAmt = "1";
-  public static TaxTypeCode = "WHT";
-  public static VATTypeCode = "VAT";
-
-  // App Commission
-  public static AddAppCommissionData = "/AppCommission/AddAppCommissionData";
-  public static GetAppCommissionRule = "/AppCommission/GetAppCommissionRule";
-  public static GetAppCommissionTax = "/AppCommission/GetAppCommissionTax";
 
   // App Asset
   public static GetAppAssetListByAgrmntId = environment.losUrl + "/AppAsset/GetAppAssetListByAgrmntId";
@@ -607,7 +583,29 @@ export class AdInsConstant {
   
   //APP TC
   public static CreateTCRule = environment.losUrl + "/AppTc/CreateTCRule";
+  public static AddAppTc = environment.losUrl + "/AppTc/AddAppTc";
+  public static EditAppTc = environment.losUrl + "/AppTc/EditAppTc";
   public static SubmitOutstandingTc = environment.losUrl + "/AppTc/SubmitOutstandingTc";
+
+  //PURCHASE ORDER
+  public static SubmitPurchaseOrder = environment.losUrl + "/PurchaseOrderH/SubmitPurchaseOrder";
+  public static ResumeWorkflowPurchaseOrder = environment.losUrl + "/PurchaseOrderH/ResumeWorkflowPurchaseOrder";
+
+  //REF TC
+  public static GetRefTcByCode = environment.FoundationR3Url + "/RefTc/GetRefTcByCode";
+  public static GetListRefTcByTcCode = environment.FoundationR3Url + "/RefTc/GetListRefTcByTcCode";
+
+  //APP INSURANCE
+  public static GetInsuranceDataByAppId = environment.losUrl + "/AppIns/GetInsDataByAppId";
+  public static AddEditInsuranceData = environment.losUrl + "/AppIns/AddEditInsuranceData";
+  public static ExecuteInsRateRule = environment.losUrl + "/AppIns/ExecuteInsRateRule";
+  public static CalculateInsurance = environment.losUrl + "/AppIns/CalculateInsurance";
+  public static PremiumTypeAmt = environment.losUrl + "/AppIns/PremiumTypeAmt";
+  public static PremiumTypePrcnt = environment.losUrl + "/AppIns/PremiumTypePrcnt";
+  public static CoverPeriodAnnually = environment.losUrl + "/AppIns/CoverPeriodAnnually";
+  public static CoverPeriodFullTenor = environment.losUrl + "/AppIns/CoverPeriodFullTenor";
+  public static CoverPeriodOverTenor = environment.losUrl + "/AppIns/CoverPeriodOverTenor";
+  public static CoverPeriodPartialTenor = environment.losUrl + "/AppIns/CoverPeriodPartialTenor";
 
   //AGRMNT
   public static GetAgrmntByAgrmntId = environment.losUrl + "/Agrmnt/GetAgrmntByAgrmntId";
@@ -616,19 +614,6 @@ export class AdInsConstant {
   public static SubmitAgrmntSignerData = environment.losUrl + "/AgrmntSigner/SubmitAgrmntSignerData";
   public static EditAgrmntSignerData = environment.losUrl + "/AgrmntSigner/EditAgrmntSignerData";
   public static GetAgrmntSignerByAgrmntId = environment.losUrl + "/AgrmntSigner/GetAgrmntSignerByAgrmntId";
-
-  //REF TC
-  public static GetRefTcByCode = environment.FoundationR3Url + "/RefTc/GetRefTcByCode";
-  public static GetListRefTcByTcCode = environment.FoundationR3Url + "/RefTc/GetListRefTcByTcCode";
-
-  //PURCHASE ORDER
-  public static ResumeWorkflowPurchaseOrder = environment.losUrl + "/PurchaseOrderH/ResumeWorkflowPurchaseOrder";
-
-  //APP INSURANCE
-  public static GetInsuranceDataByAppId = environment.losUrl + "/AppIns/GetInsDataByAppId";
-  public static AddEditInsuranceData = environment.losUrl + "/AppIns/AddEditInsuranceData";
-  public static ExecuteInsRateRule = environment.losUrl + "/AppIns/ExecuteInsRateRule";
-  public static CalculateInsurance = environment.losUrl + "/AppIns/CalculateInsurance";
 
   //PURCHASE ORDER EXTENSION
   public static SubmitNewExpDate = environment.losUrl + "/PurchaseOrderH/SubmitNewExpDate";
@@ -688,5 +673,13 @@ export class AdInsConstant {
 
   //App Crd Invstg
   public static AddAppCrdInvstg = environment.losUrl + "/AppCrdInvstgH/AddAppCrdInvstg";
+  //App Commission
+  public static GetAppCommissionRule = "/AppCommission/GetAppCommissionRule";
+  public static AddAppCommissionData = "/AppCommission/AddAppCommissionData";
+  public static AppCom = "/AppCommission/AppCom";
+  public static GetAppCommissionTax = "/AppCommission/GetAppCommissionTax";
+  public static ExchangeRateAmt = "/AppCommission/ExchangeRateAmt";
+  public static TaxTypeCode = "/AppCommission/TaxTypeCode";
+  public static VATTypeCode = "/AppCommission/VATTypeCode";
 
 }
