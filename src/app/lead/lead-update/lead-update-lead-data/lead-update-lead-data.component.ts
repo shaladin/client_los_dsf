@@ -15,17 +15,15 @@ import { LeadInputLeadDataObj } from 'app/shared/model/LeadInputLeadDataObj.Mode
 import { LeadAppObj } from 'app/shared/model/LeadAppObj.Model';
 import { LeadAssetObj } from 'app/shared/model/LeadAssetObj.Model';
 import { AssetMasterObj } from 'app/shared/model/AssetMasterObj.Model';
-import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
-import { LeadObj } from 'app/shared/model/Lead.Model';
 
  
 @Component({
-  selector: 'app-lead-input-lead-data',
-  templateUrl: './lead-input-lead-data.component.html',
+  selector: 'app-lead-update-lead-data',
+  templateUrl: './lead-update-lead-data.component.html',
   providers: [NGXToastrService]
 })
 
-export class LeadInputLeadDataComponent implements OnInit {
+export class LeadUpdateLeadDataComponent implements OnInit {
   typePage: string;
   LeadId: any;
   assetConditionObj: any;
@@ -78,14 +76,6 @@ export class LeadInputLeadDataComponent implements OnInit {
     TotalDownPayment: [''],
     InstallmentAmt:['',Validators.required]
   });
-  getGeneralSettingByCode: string;
-  getLeadByLeadId : string;
-  generalSettingObj: any;
-  returnGeneralSettingObj: any;
-  lobKta = new Array();
-  leadObj: LeadObj;
-  returnLeadObj: any;
-  returnLobCode: string;
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) { 
     this.getListActiveRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
@@ -93,8 +83,7 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.getLeadAssetByLeadId = AdInsConstant.GetLeadAssetByLeadId;
     this.getLeadAppByLeadId = AdInsConstant.GetLeadAppByLeadId;
     this.getAssetMasterForLookupEmployee = AdInsConstant.GetAssetMasterForLookupEmployee;
-    this.getGeneralSettingByCode = AdInsConstant.GetGeneralSettingByCode;
-    this.getLeadByLeadId = AdInsConstant.GetLeadByLeadId;
+
     this.route.queryParams.subscribe(params => {
         if (params["LeadId"] != null) {
             this.LeadId = params["LeadId"];
@@ -205,34 +194,6 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.InputLookupAssetObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupAssetObj.pagingJson = "./assets/uclookup/NAP/lookupAsset.json";
     this.InputLookupAssetObj.genericJson = "./assets/uclookup/NAP/lookupAsset.json";
-
-
-    this.generalSettingObj = new GeneralSettingObj(); 
-    this.generalSettingObj.gsCode = "LOB_KTA";
-    this.http.post(this.getGeneralSettingByCode, this.generalSettingObj).subscribe(
-      (response) => {
-        this.returnGeneralSettingObj = response;
-        this.lobKta = this.returnGeneralSettingObj.GsValue.split(',');
-        console.log('kta');
-        console.log(this.lobKta);
-
-        this.leadObj = new LeadObj();
-        this.leadObj.LeadId = this.LeadId;
-        this.http.post(this.getLeadByLeadId, this.leadObj).subscribe(
-          (response) => {
-            this.returnLeadObj = response;
-            this.returnLobCode = response['LobCode'];
-            console.log('returnlob');
-            console.log(this.returnLobCode);
-
-            if(this.lobKta.includes(this.returnLobCode) == true){
-              this.LeadDataForm.controls['NTFAmt'].setValidators([Validators.required]);
-            }
-          }
-        );
-    
-      }
-    );
 
     this.assetConditionObj = new RefMasterObj();
     this.assetConditionObj.RefMasterTypeCode = "ASSET_CONDITION";
@@ -415,13 +376,11 @@ export class LeadInputLeadDataComponent implements OnInit {
       this.setLeadAsset();
       this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
       this.setLeadApp();
-      console.log('leadinputleaddata');
-      console.log(this.leadInputLeadDataObj);
       this.http.post(this.editLeadData, this.leadInputLeadDataObj).subscribe(
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["/Lead/Lead/Paging"]);
+          this.router.navigate(["/Lead/LeadUpdate/Paging"]);
           // console.log(response);
           // this.wizard.goToNextStep();
         },
@@ -437,7 +396,7 @@ export class LeadInputLeadDataComponent implements OnInit {
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["/Lead/Lead/Paging"]);
+          this.router.navigate(["/Lead/LeadUpdate/Paging"]);
           // console.log(response);
           // this.wizard.goToNextStep();
         },

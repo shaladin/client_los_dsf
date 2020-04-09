@@ -14,7 +14,6 @@ import { UclookupgenericModule } from '@adins/uclookupgeneric';
 import { UcviewgenericModule } from '@adins/ucviewgeneric';
 import { UcaddressModule } from "@adins/ucaddress";
 import { UCSearchComponent } from '@adins/ucsearch';
-import { MatRadioModule } from "@angular/material";
 import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
 import { UcgridfooterModule, UcgridfooterComponent } from "@adins/ucgridfooter";
 import { MainInfoComponent } from 'app/view/main-info/main-info.component';
@@ -40,6 +39,12 @@ import { ViewCustomerDataComponent } from './lead-view/view-customer-data/view-c
 import { TeleVerifPagingComponent } from './tele-verif/tele-verif-paging/tele-verif-paging.component';
 import { TeleVerifDetailComponent } from './tele-verif/tele-verif-detail/tele-verif-detail.component';
 import { LeadInputLeadDataComponent } from "./lead-input/lead-input-lead-data/lead-input-lead-data.component";
+import { MatRadioModule } from "@angular/material";
+import { LeadUpdateComponent } from "./lead-update/lead-update.component";
+import { LeadUpdatePageComponent } from "./lead-update/lead-update-page/lead-update-page.component";
+import { LeadUpdateMainInfoComponent } from "./lead-update/lead-update-main-info/lead-update-main-info.component";
+import { LeadUpdateCustDataComponent } from "./lead-update/lead-update-cust-data/lead-update-cust-data.component";
+import { LeadUpdateLeadDataComponent } from "./lead-update/lead-update-lead-data/lead-update-lead-data.component";
 
 @NgModule({
   imports: [
@@ -85,7 +90,13 @@ import { LeadInputLeadDataComponent } from "./lead-input/lead-input-lead-data/le
     TeleVerifPagingComponent,
     TeleVerifDetailComponent,
     LeadInputLeadDataComponent,
-    LeadViewHeaderComponent
+    LeadViewHeaderComponent,
+    LeadUpdateComponent,
+    LeadUpdatePageComponent,
+    LeadUpdateMainInfoComponent,
+    LeadUpdateCustDataComponent,
+    LeadUpdateLeadDataComponent
+    // ArchwizardModule,
   ],
 })
 

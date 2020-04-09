@@ -1,5 +1,5 @@
 {
-    "title": "LEAD INPUT",
+    "title": "LEAD UPDATE",
     "exportExcel": false,
     "component": [
         {
@@ -149,7 +149,7 @@
             "action": [
                 {
                     "type": "edit",
-                    "path": "/Lead/LeadInput/MainInfo",
+                    "path": "/Lead/LeadUpdate/MainInfo",
                     "param": [
                         {
                             "type": "LeadId",

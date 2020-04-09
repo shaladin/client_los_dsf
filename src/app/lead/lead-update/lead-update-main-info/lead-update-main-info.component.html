@@ -18,15 +18,8 @@
                         <div class="form-group row">
                             <label class="col-md-3 adInsLabel adins-required" translate>Copy From </label>
                             <div class="col-md-4">
-                                <lib-uclookupgeneric [lookupInput]="leadPersonalLookUpObj" [parentForm]="MainInfoForm"
-                                    [enjiForm]="enjiForm" [identifier]="'CustomerName'" (lookup)=getLookUpLead($event)>
-                                </lib-uclookupgeneric>
+                                <label class="adInsLabel" style="font-size: 12px;" translate> - </label>
                             </div>
-                            <div class="col-md-3">
-                                <button type="button" class="btn btn-raised btn-primary" (click)="copyLead()">
-                                  <i class="fa fa-check-square-o"></i> Copy
-                                </button>
-                              </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 adInsLabel adins-required" translate>Office Name </label>
@@ -104,7 +97,7 @@
                     </div>
                 </div>
                 <div class="form-actions right" style="text-align: right;">
-                    <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['/Lead/Lead/Paging']"
+                    <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['/Lead/LeadUpdate/Paging']"
                       translate>
                       <i class="ft-x"></i> Back
                     </button>
