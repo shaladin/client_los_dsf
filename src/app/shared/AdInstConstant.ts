@@ -481,6 +481,7 @@ export class AdInsConstant {
   public static EditMouCustFctr = environment.losUrl + "/MouCustFctr/EditMouCustFctr";
   public static GetMouCustFctrByMouCustId = environment.losUrl + "/MouCustFctr/GetMouCustFctrByMouCustId";
   public static GetMouCustTcFromRule = environment.losUrl + "/MouCustTc/GetMouCustTcFromRule";
+  public static SubmitWorkflowMouRequest = environment.losUrl + "/MouCust/SubmitWorkflowMouRequest";
 
   // MOU CUST ASSET
   public static GetMouCustAssetByMouCustId = environment.losUrl + "/MouCustAsset/GetMouCustAssetByMouCustId";
