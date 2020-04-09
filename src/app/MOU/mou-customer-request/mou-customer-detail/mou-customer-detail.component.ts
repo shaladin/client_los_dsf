@@ -13,7 +13,7 @@ import { Location } from '@angular/common';
   providers: [NGXToastrService]
 })
 export class MouCustomerDetailComponent implements OnInit {
-  @ViewChild(WizardComponent) public wizard: WizardComponent;
+  @ViewChild("WizardMouDetail") public wizard: WizardComponent;
   mouType: string;
   mouCustId: number;
 
@@ -41,19 +41,64 @@ export class MouCustomerDetailComponent implements OnInit {
   }
 
   mouDetailGeneral(e){
-    if(e["StatusCode"] == 200){
-      this.nextStep();
-    }
+    this.stepHandler(e);
   }
 
   mouDetailFactoring(e){
-    if(e["StatusCode"] == 200){
-      this.nextStep();
+    this.stepHandler(e);
+  }
+
+  mouCustFee(e){
+    this.stepHandler(e);
+  }
+
+  mouAddColl(e){
+    this.stepHandler(e);
+  }
+
+  mouCustTc(e){
+    this.stepHandler(e);
+  }
+
+  mouDocumentBack(){
+    this.wizard.goToPreviousStep();
+  }
+
+  editMainInfoHandler(){
+    this.router.navigate(["/Mou/Request/Detail"], { queryParams: { mouCustId: this.mouCustId, mode: "edit", mrMouTypeCode: this.mouType }});
+  }
+
+  cancelHandler(){
+    this.router.navigate(['/Mou/Request/Paging']);
+  }
+
+  submitHandler(){
+    if(this.wizard.isLastStep()){
+      this.toastr.successMessage("Success");
+      this.router.navigate(['/Mou/Request/Paging']);
+    }
+    else{
+      this.toastr.errorMessage("Please follow the steps first");
     }
   }
 
-  nextStep(){
-    this.wizard.goToNextStep();
+  stepHandler(response){
+    switch (response["StatusCode"].toString()) {
+      case "200":
+        this.wizard.goToNextStep();
+        break;
+
+      case "-1":
+        this.wizard.goToPreviousStep();
+        break;
+
+      case "-2":
+        this.router.navigate(['/Mou/Request/Paging']);
+        break;
+    
+      default:
+        break;
+    }
   }
 
 }

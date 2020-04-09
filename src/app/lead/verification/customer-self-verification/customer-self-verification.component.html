@@ -1,0 +1,34 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="card-header header-title">
+          <div class="row">
+            <div class="col-md-8">
+              <h4 class="card-title" id="horz-layout-colored-controls" translate> Customer Self Verification
+              </h4>
+            </div>
+          </div>
+        </div>
+        <div class="px-3">
+          <app-lead-main-info [LeadId]="LeadId"></app-lead-main-info>
+
+          <aw-wizard #wizard navBarLayout="large-empty-symbols" [defaultStepIndex]="0">
+
+            <aw-wizard-step [stepTitle]="'Customer Data'" (stepEnter)="EnterTab('Cust')"
+              [navigationSymbol]="{ symbol: '1', fontFamily: 'FontAwesome' }">
+              <app-customer-data [LeadId]="LeadId"></app-customer-data>
+            </aw-wizard-step>
+
+            <aw-wizard-step [stepTitle]="'Lead Data'" (stepEnter)="EnterTab('Lead')"
+              [navigationSymbol]="{ symbol: '2', fontFamily: 'FontAwesome' }">
+              <app-lead-data [LeadId]="LeadId" [LobCode]="LobCode"></app-lead-data>
+            </aw-wizard-step>
+
+          </aw-wizard>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
