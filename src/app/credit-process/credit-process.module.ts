@@ -21,7 +21,7 @@ import { NgxCurrencyModule } from "ngx-currency";
 import { SharingComponentModule } from "../shared/sharingcomponent.module";
 import { NGXToastrService } from "../components/extra/toastr/toastr.service";
 import { CreditInvestigationDetailComponent } from "./credit-investigation/credit-investigation-detail/credit-investigation-detail.component";
-import { ViewAppCustDataComponent } from "./credit-investigation/component/view-app-cust-data.component";
+import { ViewAppCustDataComponent } from "./credit-investigation/component/view-app-cust-data/view-app-cust-data.component";
 export const customCurrencyMaskConfig = {     
     align: "left",     
     allowNegative: true,     
