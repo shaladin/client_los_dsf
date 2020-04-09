@@ -13,6 +13,7 @@ import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
 import { UcgridfooterModule, UcgridfooterComponent } from "@adins/ucgridfooter";
 import { ViewRoutingModule } from "./view-routing.module";
 import { MainInfoComponent } from './main-info/main-info.component';
+import { LeadMainInfoComponent } from './lead-main-info/lead-main-info.component';
 // import { ShowErrorsComponent } from "./app/test-new/show-errors.component";
 
 @NgModule({
@@ -32,7 +33,8 @@ import { MainInfoComponent } from './main-info/main-info.component';
     SharingComponentModule
   ],
   declarations: [
-    MainInfoComponent
+    MainInfoComponent,
+    LeadMainInfoComponent
   ]
 })
 export class ViewModule { }
