@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule, FormGroupDirective } from "@angular/forms";
 import { HttpModule } from "@angular/http";
 import { UCSearchModule } from "@adins/ucsearch";
 import { UcpagingModule } from "@adins/ucpaging";
@@ -33,6 +33,7 @@ import { CustConfirmationSubjViewComponent } from './cust-confirmation/cust-conf
 import { CustConfirmationVerfViewComponent } from './cust-confirmation/cust-confirmation-verf-view/cust-confirmation-verf-view.component';
 import { OfferingValidityCheckingApprovalPagingComponent } from './offering-validity-checking-approval/offering-validity-checking-approval-paging/offering-validity-checking-approval-paging.component';
 import { OfferingValidityCheckingApprovalDetailComponent } from './offering-validity-checking-approval/offering-validity-checking-approval-detail/offering-validity-checking-approval-detail.component';
+import { PreGoLiveRequestForApprovalComponent } from './pre-go-live/pre-go-live-request-for-approval/pre-go-live-request-for-approval.component';
 
 
 @NgModule({
@@ -61,6 +62,7 @@ import { OfferingValidityCheckingApprovalDetailComponent } from './offering-vali
     PurchaseOrderInfoComponent,
     PreGoLivePagingComponent,
     PreGoLiveComponent,
+    PreGoLiveRequestForApprovalComponent,
     PurchaseOrderInfoComponent,
     ApplicationAgreementCancellationPagingComponent,
     ApplicationAgreementCancellationDetailComponent,

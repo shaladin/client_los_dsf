@@ -17,6 +17,7 @@ import { CustConfirmationSubjViewComponent } from './cust-confirmation/cust-conf
 import { OfferingValidityCheckingApprovalPagingComponent } from './offering-validity-checking-approval/offering-validity-checking-approval-paging/offering-validity-checking-approval-paging.component';
 import { OfferingValidityCheckingApprovalDetailComponent } from './offering-validity-checking-approval/offering-validity-checking-approval-detail/offering-validity-checking-approval-detail.component';
 import { CustConfirmationSubjDetailComponent } from './cust-confirmation/cust-confirmation-subj-detail/cust-confirmation-subj-detail.component';
+import { PreGoLiveRequestForApprovalComponent } from './pre-go-live/pre-go-live-request-for-approval/pre-go-live-request-for-approval.component';
 
 const routes: Routes = [
   {
@@ -44,7 +45,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'PreGoLive',
+        path: 'PreGoLive/Paging',
         component: PreGoLivePagingComponent,
         data: {
           title: 'PreGoLive Paging'
@@ -55,6 +56,13 @@ const routes: Routes = [
         component: PreGoLiveComponent,
         data: {
           title: 'PreGoLive Detail'
+        }
+      },
+      {
+        path: 'PreGoLive/RequestApproval',
+        component: PreGoLiveRequestForApprovalComponent,
+        data: {
+          title: 'PreGoLive Request For Approval'
         }
       },
       {

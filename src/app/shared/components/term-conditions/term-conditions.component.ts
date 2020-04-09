@@ -11,7 +11,7 @@ import { formatDate } from '@angular/common';
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
 export class TermConditionsComponent implements OnInit {
-
+  result : any;
   @Input() AppId: number;
   @Input() parentForm: FormGroup;
   @Input() enjiForm: NgForm;
@@ -27,26 +27,27 @@ export class TermConditionsComponent implements OnInit {
     }
     this.http.post(AdInsConstant.GetListTCbyAppId, appTcObj).subscribe(
       (response) => {
-        if (response != null && response["length"] != 0) {
-          for (let i = 0; i < response["length"]; i++) {
+        this.result = response["AppTcs"];
+        if (this.result != null && this.result["length"] != 0) {
+          for (let i = 0; i < this.result["length"]; i++) {
             var TCDetail = this.fb.group({
-              AppTcId: response[i].AppTcId,
-              AppId: response[i].AppId,
-              TcCode: response[i].TcCode,
-              TcName: response[i].TcName,
-              PriorTo: response[i].PriorTo,
-              IsChecked: response[i].IsChecked,
-              ExpiredDt: response[i].ExpiredDt,
-              IsMandatory: response[i].IsMandatory,
-              PromisedDt: formatDate(response[i].PromisedDt, 'yyyy-MM-dd', 'en-US'),
-              CheckedDt: formatDate(response[i].CheckedDt, 'yyyy-MM-dd', 'en-US'),
-              Notes: response[i].Notes,
+              AppTcId: this.result[i].AppTcId,
+              AppId: this.result[i].AppId,
+              TcCode: this.result[i].TcCode,
+              TcName: this.result[i].TcName,
+              PriorTo: this.result[i].PriorTo,
+              IsChecked: this.result[i].IsChecked,
+              ExpiredDt: this.result[i].ExpiredDt,
+              IsMandatory: this.result[i].IsMandatory,
+              PromisedDt: formatDate(this.result[i].PromisedDt, 'yyyy-MM-dd', 'en-US'),
+              CheckedDt: formatDate(this.result[i].CheckedDt, 'yyyy-MM-dd', 'en-US'),
+              Notes: this.result[i].Notes,
             }) as FormGroup;
 
-            if (response[i].IsMandatory == true) {
+            if (this.result[i].IsMandatory == true) {
               TCDetail.controls.PromisedDt.setValidators([Validators.required]);
             }
-            if (response[i].IsChecked == false) {
+            if (this.result[i].IsChecked == false) {
               TCDetail.controls.ExpiredDt.disable();
             } else {
               TCDetail.controls.PromisedDt.disable();
