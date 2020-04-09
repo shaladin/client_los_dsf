@@ -53,7 +53,20 @@ import { AssetDataComponent } from "./nap-tab/asset-data/asset-data.component";
 import { RsvFundPagingComponent } from "./reserved-fund/reserved-fund-paging/reserved-fund-paging.component";
 import { RsvFundViewComponent } from "./reserved-fund/reserved-fund-view/reserved-fund-view.component";
 import { AppFinDataComponent } from './nap-tab/app-fin-data/app-fin-data.component';
-
+import { NgxCurrencyModule } from "ngx-currency";
+import { CreditInvestigationDetailComponent } from "./credit-investigation/credit-investigation-detail/credit-investigation-detail.component";
+import { ViewAppCustDataComponent } from "./credit-investigation/component/view-app-cust-data.component";
+import { UcinputnumberModule } from "@adins/ucinputnumber";
+export const customCurrencyMaskConfig = {     
+    align: "left",     
+    allowNegative: true,     
+    allowZero: true,     
+    decimal: ".",     
+    precision: 2,     
+    prefix: "",     
+    suffix: "",     
+    thousands: ",",     
+    nullable: false };
 
 
 @NgModule({
@@ -96,7 +109,9 @@ import { AppFinDataComponent } from './nap-tab/app-fin-data/app-fin-data.compone
         AssetDataComponent,
         RsvFundPagingComponent,
         RsvFundViewComponent,
-        AppFinDataComponent
+        AppFinDataComponent,
+        CreditInvestigationDetailComponent,
+        ViewAppCustDataComponent
         ],
     imports: [ 
         NapRoutingModule,
@@ -118,7 +133,9 @@ import { AppFinDataComponent } from './nap-tab/app-fin-data/app-fin-data.compone
         UcaddressModule,
         UcgridviewModule,
         UcShowErrorsModule,
-        UCSearchModule
+        UCSearchModule,
+        UcinputnumberModule,
+        NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
     ],
     exports: [],
     providers: [NGXToastrService],

@@ -19,6 +19,7 @@ import { InsuranceDataComponent } from "./nap-tab/insurance-data/insurance-data.
 import { AssetDataComponent } from "./nap-tab/asset-data/asset-data.component";
 import { RsvFundPagingComponent } from "./reserved-fund/reserved-fund-paging/reserved-fund-paging.component";
 import { RsvFundViewComponent } from "./reserved-fund/reserved-fund-view/reserved-fund-view.component";
+import { CreditInvestigationDetailComponent } from "./credit-investigation/credit-investigation-detail/credit-investigation-detail.component";
 
 
 const routes: Routes = [
@@ -158,6 +159,13 @@ const routes: Routes = [
               title: 'Commission Add'
           }
       },
+      {
+        path: 'CreditInvestigation/Detail',
+        component: CreditInvestigationDetailComponent,
+        data: {
+            title: 'Credit Investigation'
+        }
+    },
     ]
   }
 ]
