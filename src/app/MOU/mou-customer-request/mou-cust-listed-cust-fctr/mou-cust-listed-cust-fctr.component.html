@@ -1,0 +1,56 @@
+<lib-ucSubsection [id]="'MouCustListedCustFctrId'" [title]="'Listed Customer Factoring'" [panel]="'MouCustListedCustFctrSection'"></lib-ucSubsection>
+<div id="MouCustListedCustFctrSection">
+  <div class="col-md-12">
+    
+  </div>
+  <div class="col-md-12" style="padding: 0; text-align: right;">
+    <span class="mr-1">
+      <button type="button" class="addButton" (click)="openModalAddCustFctr()" translate>
+        <i class="ft-plus-circle"></i> Add
+      </button>
+    </span>
+  </div>
+  <div class="col-md-12" style="padding: 0; text-align: right;">
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+        <tr class="table-header">
+          <th style="text-align: left;">
+            <span class="thead-header" name='custNo' translate>Customer No</span>
+          </th>
+          <th style="text-align: left;">
+            <span class="thead-header" name='custName' translate>Customer Name</span>
+          </th>
+          <th style="text-align: left;">
+            <span class="thead-header" name='relationship' translate>Relationship</span>
+          </th>
+          <th style="text-align: center;">
+            <span class="thead-header" name='action' translate>Action</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of CustGrpList; let i = index">
+          <td style="text-align: left;">{{item.CustNo}}</td>
+          <td style="text-align: left;">{{item.CustName}}</td>
+          <td style="text-align: left;">{{item.Relationship}}</td>
+          <td style="text-align: center;">
+            <a (click)="deleteCustGrp(item.CustGrpId, i)">
+              <i class="fas fa-trash"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<br>
+<br>
+<br>
+<div class="form-actions right" style="text-align: right;">
+  <button type="button" class="btn btn-raised btn-warning mr-1" (click)="back()" translate>
+    <i class="ft-x"></i> Back
+  </button>
+  <button type="submit" class="btn btn-raised btn-primary" (click)="next()" translate>
+    <i class="fa fa-check-square-o"></i> Save and Continue
+  </button>
+</div>

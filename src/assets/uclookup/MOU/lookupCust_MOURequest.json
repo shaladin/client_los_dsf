@@ -35,7 +35,7 @@
         }
     ],
     "querystring": {
-        "select": "SELECT A.CUST_NO AS custNo, A.CUST_NAME AS custName, A.MR_ID_TYPE_CODE AS idType, B.DESCR AS idTypeView, A.CUST_ID AS custId",
+        "select": "SELECT A.CUST_NO AS custNo, A.CUST_NAME AS custName, A.MR_CUST_TYPE_CODE AS mrCustTypeCode, B.DESCR AS custTypeView, A.CUST_ID AS custId",
         "from": "FROM CUST AS A WITH(NOLOCK) INNER JOIN REF_MASTER AS B ON A.MR_CUST_TYPE_CODE = B.MASTER_CODE AND B.REF_MASTER_TYPE_CODE = 'CUST_TYPE'"
     },
     "headerList": [
@@ -55,7 +55,7 @@
             "type": "sort",
             "position": "left",
             "label": "Customer Type",
-            "name": "A.MR_ID_TYPE_CODE"
+            "name": "A.MR_CUST_TYPE_CODE"
         },
         {
             "type": "label",
@@ -77,7 +77,7 @@
         {
             "type": "text",
             "position": "left",
-            "property": "idTypeView"
+            "property": "custTypeView"
         },
         {
             "type": "action",
