@@ -58,5 +58,9 @@ export const Full_ROUTES: Routes = [
   {
     path: 'Lead',
     loadChildren: './lead/lead.module#LeadModule'
-  }    
+  },
+  {
+    path: 'CreditProcess',
+    loadChildren: './credit-process/credit-process.module#CreditProcessModule'
+  },    
 ];
