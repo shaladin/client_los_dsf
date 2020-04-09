@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { LeadCustPersonalObj } from 'app/shared/model/LeadCustPersonalObj.Model';
 import { DuplicateCustObj } from 'app/shared/model/DuplicateCustObj.Model';
+import { LeadAssetObj } from 'app/shared/model/LeadAssetObj.Model';
 
 @Component({
   selector: 'app-fraud-verif-page',
@@ -19,14 +20,17 @@ export class FraudVerifPageComponent implements OnInit {
     this.GetLeadCustByLeadIdUrl = AdInsConstant.GetLeadCustByLeadId;
     this.GetLeadCustPersonalByLeadCustIdUrl = AdInsConstant.GetLeadCustPersonalByLeadCustId;
     this.GetCustomerAndNegativeCustDuplicateCheckUrl = AdInsConstant.GetCustomerAndNegativeCustDuplicateCheck;
+    this.GetLeadAssetForCheckUrl = AdInsConstant.GetLeadAssetForCheck;
   }
   viewFraudVerification: any;
   DuplicateCustObj: any;
   leadCustObj: any;
+  leadAssetObj : any;
   LeadId: any;
   GetLeadCustByLeadIdUrl: string;
   GetLeadCustPersonalByLeadCustIdUrl: any;
   GetCustomerAndNegativeCustDuplicateCheckUrl: string;
+  GetLeadAssetForCheckUrl : string;
   tempLeadCustObj: any;
   tempLeadCustPersonalObj: any;
   leadCustPersonalObj: any;
@@ -59,11 +63,17 @@ export class FraudVerifPageComponent implements OnInit {
                 this.DuplicateStatus = response["Status"];
                 if (this.DuplicateStatus != null && this.DuplicateStatus != undefined) {
                   this.ResultDuplicate = response["ReturnObject"]["CustDuplicate"]; 
-                  this.ResultDuplicateNegative = response["ReturnObject"]["NegativeCustDuplicate"];
-                  console.log(this.ResultDuplicate);
-                  // this.ResultDuplicateNegative = response["ReturnObject"]["NegativeCustDuplicate"];
+                  this.ResultDuplicateNegative = response["ReturnObject"]["NegativeCustDuplicate"]; 
                 } 
               }); 
+
+              this.leadAssetObj = new LeadAssetObj();
+              this.leadAssetObj.LeadId = this.LeadId;
+              this.http.post(this.GetLeadAssetForCheckUrl, this.leadAssetObj).subscribe(
+                (response) => {
+                  console.log(response);
+                }); 
+              
           });
       });
  
