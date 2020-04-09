@@ -155,6 +155,7 @@ export class FormAddDynamicComponent implements OnInit {
       MrIdTypeCode: [''],
       MrTaxCalcMethodCode: [''],
       TaxpayerNo: [''],
+      GrossYield: [0],
       TotalCommisionAmount: [0, Validators.pattern("^[0-9]+$")],
       TotalTaxAmount: [0, Validators.pattern("^[0-9]+$")],
       TotalVATAmount: [0, Validators.pattern("^[0-9]+$")],
@@ -215,7 +216,7 @@ export class FormAddDynamicComponent implements OnInit {
     console.log(this.FormObj);
   }
 
-  CalculateTax(CurrCode, AppNo, OriOfficeCode){
+  CalculateTax(CurrCode, AppNo, OriOfficeCode, AppId){
     this.FormInputObj["isCalculated"] = true;
     var len = this.arr.controls.length;
     if(len == 0) return;
@@ -244,6 +245,7 @@ export class FormAddDynamicComponent implements OnInit {
     }
     if(vendorCode.length > 0){
       var obj = {
+        AppId: AppId,
         UserName: this.UserAccess.UserName,
         Office: this.UserAccess.MrOfficeTypeCode,
         VendorCode: vendorCode,
@@ -302,6 +304,7 @@ export class FormAddDynamicComponent implements OnInit {
                 TotalTaxAmount: totalTaxAmount,
                 TotalVATAmount: totalVATAmount,
                 TotalPenaltyAmount: grandTotalPenalty,
+                GrossYield: temp[0].GrossYield,
               });
             }
           }

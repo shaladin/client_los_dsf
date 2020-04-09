@@ -1,5 +1,5 @@
 {
-    "title": "Application Paging",
+    "title": "Application Commission/Reserve-Fund Paging",
     "exportExcel": false,
     "component": [
         {
@@ -78,7 +78,7 @@
             "action": [
                 {
                     "type": "edit",
-                    "path": "/Nap/CommissionAdd",
+                    "path": "/CreditProcess/CommissionReserveFund",
                     "param": [
                         {
                             "type": "AppId",

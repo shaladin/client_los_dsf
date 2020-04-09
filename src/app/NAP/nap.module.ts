@@ -32,9 +32,7 @@ import { CustPersonalContactInformationComponent } from "./nap-tab/customer-data
 import { CustPersonalFinancialDataComponent } from "./nap-tab/customer-data/component/personal-financial-data/cust-personal-financial-data.component";
 import { SearchCrossAppComponent } from './nap-tab/app-model/search-cross-app/search-cross-app.component';
 import { UCSearchModule } from '@adins/ucsearch';
-import { CommissionPagingComponent } from './commission-paging/commission-paging.component';
-import { CommissionAddComponent } from './commission-add/commission-add.component';
-import { FormAddDynamicComponent } from "./commission-add/form-add-dynamic/form-add-dynamic.component";
+import { CommissionPagingComponent } from '../credit-process/commission-paging/commission-paging.component';
 // import { CustFinancialDataComponent } from "./nap-tab/customer-data/component/financial-data/cust-financial-data.component";
 import { CustBankAccountComponent } from "./nap-tab/customer-data/component/bank-account/cust-bank-account.component";
 import { CustJobDataComponent } from "./nap-tab/customer-data/component/job-data/cust-job-data.component";
@@ -50,8 +48,6 @@ import { CustLegalDocComponent } from "./nap-tab/customer-data/component/legal-d
 import { UcinputnumberComponent } from "./nap-tab/customer-data/component/ucinputnumber/ucinputnumber.component";
 import { InsuranceDataComponent } from "./nap-tab/insurance-data/insurance-data.component";
 import { AssetDataComponent } from "./nap-tab/asset-data/asset-data.component";
-import { RsvFundPagingComponent } from "./reserved-fund/reserved-fund-paging/reserved-fund-paging.component";
-import { RsvFundViewComponent } from "./reserved-fund/reserved-fund-view/reserved-fund-view.component";
 import { AppFinDataComponent } from './nap-tab/app-fin-data/app-fin-data.component';
 import { NgxCurrencyModule } from "ngx-currency";
 import { CreditInvestigationDetailComponent } from "./credit-investigation/credit-investigation-detail/credit-investigation-detail.component";
@@ -99,16 +95,12 @@ export const customCurrencyMaskConfig = {
         CustCompanyFinancialDataComponent,
         SearchCrossAppComponent,
         CommissionPagingComponent,
-        CommissionAddComponent,
-        FormAddDynamicComponent,
         CustShareholderComponent,
         AppTcComponent,
         CustLegalDocComponent,
         UcinputnumberComponent,
         InsuranceDataComponent,
         AssetDataComponent,
-        RsvFundPagingComponent,
-        RsvFundViewComponent,
         AppFinDataComponent,
         CreditInvestigationDetailComponent,
         ViewAppCustDataComponent

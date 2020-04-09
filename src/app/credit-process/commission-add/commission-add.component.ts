@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder, FormArray } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -21,7 +21,7 @@ export class CommissionAddComponent implements OnInit {
   @ViewChild('Form1') FormAdd1: FormAddDynamicComponent;
   @ViewChild('Form2') FormAdd2: FormAddDynamicComponent;
   @ViewChild('Form3') FormAdd3: FormAddDynamicComponent;
-  AppId;
+  @Input() AppId;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -29,12 +29,11 @@ export class CommissionAddComponent implements OnInit {
     private fb: FormBuilder,
     private toastr: NGXToastrService,
   ) {
-    this.route.queryParams.subscribe(params => {
-      this.AppId = params["AppId"];
-    });
+    // this.route.queryParams.subscribe(params => {
+    //   this.AppId = params["AppId"];
+    // });
   }
 
-  viewProdMainInfoObj;
   viewIncomeInfoObj;
   tempViewIncomeInfoObj;
   FormGetObj: any = {};
@@ -56,8 +55,6 @@ export class CommissionAddComponent implements OnInit {
     this.isFinishGetAppData = false;
     this.isCalculateData = false;
     this.isAutoGenerate = true;
-
-    this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
 
     this.viewIncomeInfoObj = {
       UppingRate: 0,
@@ -206,6 +203,7 @@ export class CommissionAddComponent implements OnInit {
     };
     this.http.post(url, obj).subscribe(
       (response) => {
+        // console.log("response app fee data");
         // console.log(response);
         var listData = response[AdInsConstant.ReturnObj];
         for (var i = 0; i < listData.length; i++) {
@@ -544,13 +542,13 @@ export class CommissionAddComponent implements OnInit {
       GrossYield: 0
     }
     if (this.FormGetObj[AdInsConstant.ContentSupplier]) {
-      this.FormAdd1.CalculateTax(this.ResultAppData.CurrCode, this.ResultAppData.AppNo, this.ResultAppData.OriOfficeCode);
+      this.FormAdd1.CalculateTax(this.ResultAppData.CurrCode, this.ResultAppData.AppNo, this.ResultAppData.OriOfficeCode, this.AppId);
     }
     if (this.FormGetObj[AdInsConstant.ContentSupplierEmp]) {    
-      this.FormAdd2.CalculateTax(this.ResultAppData.CurrCode, this.ResultAppData.AppNo, this.ResultAppData.OriOfficeCode);
+      this.FormAdd2.CalculateTax(this.ResultAppData.CurrCode, this.ResultAppData.AppNo, this.ResultAppData.OriOfficeCode, this.AppId);
     }
     if (this.FormGetObj[AdInsConstant.ContentReferantor]) {
-      this.FormAdd3.CalculateTax(this.ResultAppData.CurrCode, this.ResultAppData.AppNo, this.ResultAppData.OriOfficeCode);
+      this.FormAdd3.CalculateTax(this.ResultAppData.CurrCode, this.ResultAppData.AppNo, this.ResultAppData.OriOfficeCode, this.AppId);
     }
   }
 
@@ -570,6 +568,7 @@ export class CommissionAddComponent implements OnInit {
     this.Summary.TotalCommisionAmount += tempTotalCommisionAmount;
     this.Summary.TotalTaxAmmount += tempTotalTaxAmmount;
     this.Summary.TotalVATAmount += tempTotalVATAmount;
+    this.Summary.GrossYield +=arr["controls"][0].value.GrossYield;
   }
 
   listAppCommissionHObj;
@@ -664,12 +663,14 @@ export class CommissionAddComponent implements OnInit {
       var url = environment.losUrl + AdInsConstant.AddOrEditAppCommissionData;
       var obj = {
         AppId: this.AppId,
+        GrossYield: this.Summary.GrossYield,
         ListAppCommissionHObj: this.listAppCommissionHObj,
         RowVersion: ""
       };
       this.http.post(url, obj).subscribe(
         (response) => {
           console.log(response);
+          this.toastr.successMessage(response["message"]);
           // Goto
           // Belom Tau kemana
         },

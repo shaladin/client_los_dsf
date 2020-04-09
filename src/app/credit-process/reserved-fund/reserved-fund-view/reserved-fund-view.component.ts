@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
@@ -28,9 +28,8 @@ export class RsvFundViewComponent implements OnInit {
   RsvForm = this.fb.group({
     ReservedFundObjs: this.fb.array([])
   });
-  viewObj: any;
 
-  appId: any;
+  @Input() appId: any;
   appObj = {
     AppId: 0,
   };
@@ -50,9 +49,9 @@ export class RsvFundViewComponent implements OnInit {
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
 
-    this.route.queryParams.subscribe(params => {
-      this.appId = params["AppId"];
-    });
+    // this.route.queryParams.subscribe(params => {
+    //   this.appId = params["AppId"];
+    // });
   }
 
   initUrl() {
@@ -67,7 +66,6 @@ export class RsvFundViewComponent implements OnInit {
   ngOnInit() {
     this.initUrl();
     this.appObj.AppId = this.appId;
-    this.viewObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
     this.GetAppRsvFundRule(this.appObj);
     this.GetAppFinData(this.appObj);
     this.GetMaxAllocAmt(this.appObj);
