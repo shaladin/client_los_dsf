@@ -47,19 +47,19 @@
               <input type="date" class="form-control adInsInput" formControlName="ExpiredDt"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && MouCustTcForm.get('MouCustTcList').at(i).controls.ExpiredDt.invalid }"
                 [attr.disabled]="MouCustTcForm.get('MouCustTcList').at(i).controls.IsChecked.value == true ? null : ''" />
-              <show-errors [control]="MouCustTcForm.get('MouCustTcList').at(i).controls.ExpiredDt" [submit]="enjiForm.submitted"></show-errors>
+              <lib-uc-show-errors [control]="MouCustTcForm.get('MouCustTcList').at(i).controls.ExpiredDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
             </td>
             <td style="text-align: left;">
               <input type="date" class="form-control adInsInput" formControlName="PromisedDt"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && MouCustTcForm.get('MouCustTcList').at(i).controls.PromisedDt.invalid }"
                 [attr.disabled]="MouCustTcForm.get('MouCustTcList').at(i).controls.IsChecked.value == true ? '' : null" />
-              <show-errors [control]="MouCustTcForm.get('MouCustTcList').at(i).controls.PromisedDt" [submit]="enjiForm.submitted"></show-errors>
+              <lib-uc-show-errors [control]="MouCustTcForm.get('MouCustTcList').at(i).controls.PromisedDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
             </td>
             <td style="text-align: left;">
               <textarea class="form-control adInsInput" formControlName="Notes"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && MouCustTcForm.get('MouCustTcList').at(i).controls.Notes.invalid }">
               </textarea>
-              <show-errors [control]="MouCustTcForm.get('MouCustTcList').at(i).controls.Notes" [submit]="enjiForm.submitted"></show-errors>
+              <lib-uc-show-errors [control]="MouCustTcForm.get('MouCustTcList').at(i).controls.Notes" [submit]="enjiForm.submitted"></lib-uc-show-errors>
             </td>
           </tr>
         </tbody>

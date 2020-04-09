@@ -2,59 +2,59 @@
     "title": "Application Commission/Reserve-Fund Paging",
     "exportExcel": false,
     "component": [
-        {
-            "type": "textbox",
-            "name": "AppNo",
-            "id": "AppNoId",
-            "value": "",
-            "label": "Application No",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type": "textbox",
-            "name": "CustName",
-            "id": "CustNameId",
-            "value": "",
-            "label": "Customer Name",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type": "textbox",
-            "name": "ProdOfferingName",
-            "id": "ProdOfferingNameId",
-            "value": "",
-            "label": "Product Offering Name",
-            "placeholder": "Placeholder"
-        }
+      {
+        "type": "textbox",
+        "name": "A.APP_NO",
+        "id": "AppNoId",
+        "value": "",
+        "label": "Application No",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "AC.CUST_NAME",
+        "id": "CustNameId",
+        "value": "",
+        "label": "Customer Name",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "A.PROD_OFFERING_NAME",
+        "id": "ProdOfferingNameId",
+        "value": "",
+        "label": "Product Offering Name",
+        "placeholder": "Placeholder"
+      }
     ],
     "headerList": [
-        {
-            "type": "sort",
-            "position": "center",
-            "label": "Application No",
-            "name": "AppNo"
-        },
-        {
-            "type": "sort",
-            "position": "center",
-            "label": "Customer Name",
-            "name": "CustName"
-        },
-        {
-            "type": "sort",
-            "position": "center",
-            "label": "Product Offering Name",
-            "name": "ProdOfferingName"
-        },
-        {
-            "type": "label",
-            "position": "center",
-            "label": "Action"
-        }
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Application No",
+        "name": "A.APP_NO"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Customer Name",
+        "name": "AC.CUST_NAME"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Product Offering Name",
+        "name": "A.PROD_OFFERING_NAME"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Action"
+      }
     ],
     "querystring": {
-        "select": "SELECT a.APP_NO AS AppNo, ac.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.APP_ID AS AppId",
-        "from": "FROM dbo.APP a WITH(NOLOCK) JOIN dbo.APP_CUST ac WITH(NOLOCK) ON a.APP_ID = ac.APP_ID"
+      "select": "SELECT A.APP_NO AS AppNo, AC.CUST_NAME AS CustName, A.PROD_OFFERING_NAME AS ProdOfferingName, A.APP_CURR_STEP AS AppCurrStep, A.LOB_CODE AS LobCode, A.APP_ID AS AppId",
+      "from": "FROM dbo.APP A WITH(NOLOCK) LEFT JOIN dbo.APP_CUST AC WITH(NOLOCK) ON A.APP_ID = AC.APP_ID"
     },
     "bodyList": [
         {
@@ -87,6 +87,7 @@
                     ]
                 }
             ]
-        }
-    ]
+          }
+    ]    
 }
+  

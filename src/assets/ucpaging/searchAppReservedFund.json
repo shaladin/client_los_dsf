@@ -4,7 +4,7 @@
   "component": [
     {
       "type": "textbox",
-      "name": "a.APP_NO",
+      "name": "A.APP_NO",
       "id": "AppNoId",
       "value": "",
       "label": "Application No",
@@ -12,7 +12,7 @@
     },
     {
       "type": "textbox",
-      "name": "ac.CUST_NAME",
+      "name": "AC.CUST_NAME",
       "id": "CustNameId",
       "value": "",
       "label": "Customer Name",
@@ -20,7 +20,7 @@
     },
     {
       "type": "textbox",
-      "name": "a.PROD_OFFERING_NAME",
+      "name": "A.PROD_OFFERING_NAME",
       "id": "ProdOfferingNameId",
       "value": "",
       "label": "Product Offering Name",
@@ -32,19 +32,19 @@
       "type": "sort",
       "position": "center",
       "label": "Application No",
-      "name": "a.APP_NO"
+      "name": "A.APP_NO"
     },
     {
       "type": "sort",
       "position": "center",
       "label": "Customer Name",
-      "name": "ac.CUST_NAME"
+      "name": "AC.CUST_NAME"
     },
     {
       "type": "sort",
       "position": "center",
       "label": "Product Offering Name",
-      "name": "a.PROD_OFFERING_NAME"
+      "name": "A.PROD_OFFERING_NAME"
     },
     {
       "type": "label",
@@ -53,8 +53,8 @@
     }
   ],
   "querystring": {
-    "select": "SELECT a.APP_NO AS AppNo, ac.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.APP_ID AS AppId",
-    "from": "FROM dbo.APP a WITH(NOLOCK) LEFT JOIN dbo.APP_CUST ac WITH(NOLOCK) ON a.APP_ID = ac.APP_ID"
+    "select": "SELECT A.APP_NO AS AppNo, AC.CUST_NAME AS CustName, A.PROD_OFFERING_NAME AS ProdOfferingName, A.APP_CURR_STEP AS AppCurrStep, A.LOB_CODE AS LobCode, A.APP_ID AS AppId",
+    "from": "FROM dbo.APP A WITH(NOLOCK) LEFT JOIN dbo.APP_CUST AC WITH(NOLOCK) ON A.APP_ID = AC.APP_ID"
   },
   "bodyList": [
     {
@@ -78,7 +78,7 @@
       "action": [
         {
           "type": "edit",
-          "path": "./View",
+          "path": "/Nap/AdminProcess/Commission/Detail",
           "param": [
             {
               "type": "AppId",

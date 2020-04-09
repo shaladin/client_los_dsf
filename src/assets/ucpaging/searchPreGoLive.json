@@ -4,7 +4,7 @@
     "component": [
         {
             "type": "textbox",
-            "name": "AGRMNT_NO",
+            "name": "agr.AGRMNT_NO",
             "id": "AgrmntNo",
             "value": "",
             "label": "AGREEMENT NO",
@@ -12,7 +12,7 @@
         },
         {
             "type": "textbox",
-            "name": "APP_NO",
+            "name": "app.APP_NO",
             "id": "AppNoId",
             "value": "",
             "label": "APPLICATION NO",
@@ -20,7 +20,7 @@
         },
         {
             "type": "textbox",
-            "name": "PROD_OFFERING_NAME",
+            "name": "agr.PROD_OFFERING_NAME",
             "id": "ProdOfferingNameId",
             "value": "",
             "label": "PROD OFFERING NAME",
@@ -28,7 +28,7 @@
         },
         {
             "type": "textbox",
-            "name": "CUST_NAME",
+            "name": "agr.CUST_NAME",
             "id": "CustNameId",
             "value": "",
             "label": "CUSTOMER NAME",
@@ -36,41 +36,32 @@
         },
         {
             "type": "datepicker",
-            "name": "DELIVERY_DT",
+            "name": "doh.DELIVERY_DT",
             "id": "DeliveryDt",
             "value": "",
             "label": "DELIVERY DATE",
             "placeholder": "Placeholder"
         },
         {
-            "type": "dropdown",
-            "label": "TASK CLAIM STATUS",
-            "name": "MR_VENDOR_CATEGORY_CODE",
-            "id": "VendorCategoryId",
-            "value": "",
-            "datatype": "text",
-            "isSelectOne": false,
-            "items": [],
-            "isFromURL": true,
-            "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
-            "itemsUrl": [],
-            "criteriaPropName": "RefMasterTypeCode",
-            "criteriaPropValue": "VENDOR_CATEGORY"
-        },
-        {
             "type": "textbox",
-            "name": "DELIVERY_DT",
-            "id": "DeliveryDt",
+            "name": "wFht.USERNAME",
+            "id": "UsernameId",
             "value": "",
             "label": "TASK CLAIM BY",
             "placeholder": "Placeholder"
         }
     ],
     "querystring": {
-        "select": "SELECT arg.AGRMNT_NO AS AgrmntNo, app.APP_NO AS AppNo, arg.CUST_NAME AS CustName, arg.PROD_OFFERING_NAME AS ProdOfferingName, doh.DELIVERY_DT AS DeliveryDt, arg.AGRMNT_ID AS AgrmntId ",
-        "from": "FROM dbo.AGRMNT arg WITH(NOLOCK) JOIN dbo.DELIVERY_ORDER_H doh WITH(NOLOCK) ON arg.AGRMNT_ID = doh.AGRMNT_ID JOIN dbo.APP app WITH(NOLOCK) ON app.APP_ID = arg.APP_ID"
+        "select": "SELECT wFht.USERNAME AS Username, agr.AGRMNT_NO AS AgrmntNo, app.APP_NO AS AppNo, agr.CUST_NAME AS CustName, agr.PROD_OFFERING_NAME AS ProdOfferingName, doh.DELIVERY_DT AS DeliveryDt, agr.AGRMNT_ID AS AgrmntId",
+        "from": "FROM dbo.AGRMNT agr WITH(NOLOCK) JOIN dbo.DELIVERY_ORDER_H doh WITH(NOLOCK) ON agr.AGRMNT_ID = doh.AGRMNT_ID JOIN dbo.APP app WITH(NOLOCK) ON app.APP_ID = agr.APP_ID JOIN dbo.V_WF_TASK_LIST wFht WITH(NOLOCK) ON agr.AGRMNT_NO = wFht.TRANSACTION_CODE"
     },
     "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "CLAIM BY",
+            "name": "Username"
+        },
         {
             "type": "sort",
             "position": "center",
@@ -111,6 +102,11 @@
         {
             "type": "text",
             "position": "center",
+            "property": "Username"
+        },
+        {
+            "type": "text",
+            "position": "center",
             "property": "AgrmntNo"
         },
         {
@@ -139,7 +135,7 @@
             "action": [
                 {
                     "type": "edit",
-                    "path": "/Nap/AppAddDetail",
+                    "path": "/PreGoLive/Detail",
                     "param": [
                         {
                             "type": "AppId",
