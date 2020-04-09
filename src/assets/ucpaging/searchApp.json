@@ -34,7 +34,7 @@
             "placeholder": "Placeholder",
             "isFromURL": true,
             "isSelectOne": false,
-            "url": "http://localhost:5000/RefOffice/GetListKvpActiveRefOffice",
+            "url": "http://r3app-server/foundation_r3/RefOffice/GetListKvpActiveRefOfficeForPaging",
             "label": "Office",
             "items": [],
             "itemsUrl": []

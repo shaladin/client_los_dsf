@@ -2,30 +2,31 @@
 
 <div class="card-body">
   <div class="px-3">
-    <aw-wizard #wizard navBarLayout="large-empty-symbols" [defaultStepIndex]="2">
+    <aw-wizard #wizard navBarLayout="large-empty-symbols" [defaultStepIndex]="1">
 
-      <aw-wizard-step [stepTitle]="'Referantor'" (stepEnter)="EnterTab('tab1')"
+      <aw-wizard-step [stepTitle]="'Customer'" (stepEnter)="EnterTab('tab1')"
         [navigationSymbol]="{ symbol: '1' }">
+        <app-customer-data *ngIf="isTab1 == true" [appId]=appId></app-customer-data>
+      </aw-wizard-step>
+
+      <aw-wizard-step [stepTitle]="'Guarantor'" (stepEnter)="EnterTab('tab2')"
+        [navigationSymbol]="{ symbol: '2' }">
+        <app-guarantor-paging *ngIf="isTab3 == true" [AppId]=appId></app-guarantor-paging>
+      </aw-wizard-step>
+      
+      <aw-wizard-step [stepTitle]="'Referantor'" (stepEnter)="EnterTab('tab3')"
+        [navigationSymbol]="{ symbol: '3' }">
         <app-app-referantor *ngIf="isTab1 == true" [appId]=appId></app-app-referantor>
       </aw-wizard-step>
 
-      <aw-wizard-step [stepTitle]="'Model'" (stepEnter)="EnterTab('tab2')"
-        [navigationSymbol]="{ symbol: '2' }">
+      <aw-wizard-step [stepTitle]="'Model'" (stepEnter)="EnterTab('tab4')"
+      [navigationSymbol]="{ symbol: '4' }">
         <app-app-model *ngIf="isTab2 == true" [appId]=appId></app-app-model>
       </aw-wizard-step>
-      
-      <aw-wizard-step [stepTitle]="'Guarantor'" (stepEnter)="EnterTab('tab3')"
-        [navigationSymbol]="{ symbol: '3' }">
-        <app-guarantor-paging *ngIf="isTab3 == true" [AppId]=appId></app-guarantor-paging>
-      </aw-wizard-step>
 
-      <aw-wizard-step [stepTitle]="'Life Insurance'" (stepEnter)="EnterTab('tab4')"
-        [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
-        <app-app-life-ins *ngIf="isTab1 == true" [AppId]=param></app-app-life-ins>
-      </aw-wizard-step>
-
-      <aw-wizard-step [stepTitle]="'Tab 5'" (stepEnter)="EnterTab('tab5')"
-        [navigationSymbol]="{ symbol: '5' }">
+      <aw-wizard-step [stepTitle]="'Life Insurance'" (stepEnter)="EnterTab('tab5')"
+      [navigationSymbol]="{ symbol: '5' }">
+        <app-app-life-ins *ngIf="isTab1 == true" [AppId]=appId></app-app-life-ins>
       </aw-wizard-step>
     </aw-wizard>
   </div>
