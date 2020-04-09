@@ -14,6 +14,7 @@ import { UclookupgenericModule } from '@adins/uclookupgeneric';
 import { UcviewgenericModule } from '@adins/ucviewgeneric';
 import { UcaddressModule } from "@adins/ucaddress";
 import { UCSearchComponent } from '@adins/ucsearch';
+import { UcinputnumberModule } from '@adins/ucinputnumber';
 import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
 import { UcgridfooterModule, UcgridfooterComponent } from "@adins/ucgridfooter";
 import { MainInfoComponent } from 'app/view/main-info/main-info.component';
@@ -75,7 +76,8 @@ import { LegalReviewDetailComponent } from './legal-review/legal-review-detail/l
     UcShowErrorsModule,
     UclookupgenericModule,
     UcviewgenericModule,
-    SharingComponentModule
+    SharingComponentModule,
+    UcinputnumberModule
   ],
   declarations: [
     DocSignerComponent,

@@ -35,6 +35,9 @@ export class AdInsConstant {
   public static AppStepPGLV = "PGLV";
   public static AppStepCSR = "CSR";
 
+  //LOB CODE
+  public static LobCodeRFN4W = "RFN4W";
+
   // ASSET
   public static GetListKeyValueByCode = environment.FoundationR3Url + "/AssetType/GetListKeyValueByCode";
 
@@ -503,6 +506,7 @@ export class AdInsConstant {
   public static EditMouCustFctr = environment.losUrl + "/MouCustFctr/EditMouCustFctr";
   public static GetMouCustFctrByMouCustId = environment.losUrl + "/MouCustFctr/GetMouCustFctrByMouCustId";
   public static GetMouCustTcFromRule = environment.losUrl + "/MouCustTc/GetMouCustTcFromRule";
+  public static SubmitWorkflowMouRequest = environment.losUrl + "/MouCust/SubmitWorkflowMouRequest";
 
   // MOU CUST ASSET
   public static GetMouCustAssetByMouCustId = environment.losUrl + "/MouCustAsset/GetMouCustAssetByMouCustId";
@@ -688,7 +692,7 @@ export class AdInsConstant {
 
   //AGRMNT
   public static GetAgrmntByAgrmntId = environment.losUrl + "/Agrmnt/GetAgrmntByAgrmntId";
-
+  public static GetAgrmntByAppId = environment.losUrl + "/Agrmnt/GetAgrmntByAppId";
   //REF TC
   public static GetRefTcByCode = environment.FoundationR3Url + "/RefTc/GetRefTcByCode";
   public static GetListRefTcByTcCode = environment.FoundationR3Url + "/RefTc/GetListRefTcByTcCode";
@@ -763,4 +767,6 @@ export class AdInsConstant {
 
   // ASSET TYPE
   public static GetAssetTypeById = environment.FoundationR3Url + "/AssetType/GetAssetTypeById"
+  // PreGoLive
+  public static GetListApprovedByForPreGoLive = environment.losUrl + "/PreGoLive/GetListApprovedByForPreGoLive";
 }
