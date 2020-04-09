@@ -1,17 +1,35 @@
+<section id="horizontal-form-layouts">
+    <div class="row text-left">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h4 class="card-title" id="horz-layout-colored-controls" translate>TELE VERIFICATION</h4>
+                        </div>
+                        <div class="col-md-4" style="text-align-last: right">
+                            <button type="button" class="backButton" [routerLink]="['/Lead/TeleVerif/Paging']"
+                                [queryParams]="{AssetSchmHId: this.AssetSchmHId}" translate>
+                                <i class="ft-arrow-left"></i> Back
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 <lib-ucviewgeneric [viewInput]="viewTeleVerifMainInfo"></lib-ucviewgeneric>
-
-<!-- <aw-wizard #wizard navBarLayout="large-empty-symbols" [awNavigationMode] navigateBackward="allow"
-    navigateForward="allow" [defaultStepIndex]="0"> -->
-    <!-- <aw-wizard-step [stepTitle]="'CUSTOMER DATA'" (stepEnter)="EnterTab('custData')"
+<aw-wizard #wizard navBarLayout="large-empty-symbols" [awNavigationMode] navigateBackward="allow"
+    navigateForward="allow" [defaultStepIndex]="0">
+    <aw-wizard-step [stepTitle]="'CUSTOMER DATA'" (stepEnter)="EnterTab('custData')"
         [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
         <app-lead-input-cust-data *ngIf="isCustData == true">
         </app-lead-input-cust-data>
-    </aw-wizard-step> -->
-
-    <!-- <aw-wizard-step [stepTitle]="'LEAD DATA'" (stepEnter)="EnterTab('leadData')"
-    [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
-    <app-lead-input-lead-data *ngIf="isLeadData == true">
-    </app-lead-input-lead-data>
-    </aw-wizard-step> -->
-
-<!-- </aw-wizard> -->
+    </aw-wizard-step>
+    <aw-wizard-step [stepTitle]="'LEAD DATA'" (stepEnter)="EnterTab('leadData')"
+        [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
+        <app-lead-input-lead-data *ngIf="isLeadData == true">
+        </app-lead-input-lead-data>
+    </aw-wizard-step>
+</aw-wizard>

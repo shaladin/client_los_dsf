@@ -213,24 +213,17 @@ export class LeadInputLeadDataComponent implements OnInit {
       (response) => {
         this.returnGeneralSettingObj = response;
         this.lobKta = this.returnGeneralSettingObj.GsValue.split(',');
-        console.log('kta');
-        console.log(this.lobKta);
-
         this.leadObj = new LeadObj();
         this.leadObj.LeadId = this.LeadId;
         this.http.post(this.getLeadByLeadId, this.leadObj).subscribe(
           (response) => {
             this.returnLeadObj = response;
             this.returnLobCode = response['LobCode'];
-            console.log('returnlob');
-            console.log(this.returnLobCode);
-
             if(this.lobKta.includes(this.returnLobCode) == true){
               this.LeadDataForm.controls['NTFAmt'].setValidators([Validators.required]);
             }
           }
         );
-    
       }
     );
 
@@ -282,8 +275,6 @@ export class LeadInputLeadDataComponent implements OnInit {
 
             this.reqAssetMasterObj = new AssetMasterObj();
             this.reqAssetMasterObj.FullAssetCode = this.resLeadAssetObj.FullAssetCode;
-            console.log("vvv")
-            console.log(this.reqAssetMasterObj)
             this.http.post(this.getAssetMasterForLookupEmployee, this.reqAssetMasterObj).subscribe(
               (response) => {
                   this.resAssetMasterObj = response;
@@ -294,7 +285,7 @@ export class LeadInputLeadDataComponent implements OnInit {
                     FullAssetCode: this.resAssetMasterObj.FullAssetCode,
                     FullAssetName: this.resAssetMasterObj.FullAssetName,
                   });
-
+                  this.assetTypeId = this.resAssetMasterObj.AssetTypeId;
                   var assetType = new AssetTypeObj();
                   assetType.AssetTypeId = this.resAssetMasterObj.AssetTypeId;
                   this.http.post(AdInsConstant.GetAssetTypeById, assetType).subscribe(
@@ -415,8 +406,6 @@ export class LeadInputLeadDataComponent implements OnInit {
       this.setLeadAsset();
       this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
       this.setLeadApp();
-      console.log('leadinputleaddata');
-      console.log(this.leadInputLeadDataObj);
       this.http.post(this.editLeadData, this.leadInputLeadDataObj).subscribe(
         (response) => {
           console.log(response);
