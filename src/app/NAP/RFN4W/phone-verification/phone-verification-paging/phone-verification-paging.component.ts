@@ -1,14 +1,15 @@
-import { environment } from "environments/environment";
-import { Component, OnInit } from "@angular/core";
-import { AdInsConstant } from "app/shared/AdInstConstant";
-import { UcPagingObj } from "app/shared/model/UcPagingObj.Model";
-import { CriteriaObj } from "app/shared/model/CriteriaObj.model";
+import { Component, OnInit } from '@angular/core';
+import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
+import { environment } from 'environments/environment';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 
 @Component({
-  selector: "reserved-fund-paging",
-  templateUrl: "./reserved-fund-paging.component.html",
+  selector: 'app-phone-verification-paging',
+  templateUrl: './phone-verification-paging.component.html',
+  styleUrls: ['./phone-verification-paging.component.scss']
 })
-export class RsvFundPagingComponent implements OnInit {
+export class PhoneVerificationPagingComponent implements OnInit {
 
   inputPagingObj: UcPagingObj;
   constructor() { }
@@ -23,7 +24,7 @@ export class RsvFundPagingComponent implements OnInit {
     var critInput = new CriteriaObj();
     critInput.propName = "A.APP_CURR_STEP";
     critInput.restriction = AdInsConstant.RestrictionEq;
-    critInput.value = AdInsConstant.AppStepRSVFund;
+    critInput.value = AdInsConstant.AppStepPhnVerif;
     this.inputPagingObj.addCritInput.push(critInput);
 
     var critInput = new CriteriaObj();
@@ -32,4 +33,5 @@ export class RsvFundPagingComponent implements OnInit {
     critInput.value = AdInsConstant.LobCodeRFN4W;
     this.inputPagingObj.addCritInput.push(critInput);
   }
+
 }
