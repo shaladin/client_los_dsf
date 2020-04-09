@@ -22,6 +22,12 @@ import { SharingComponentModule } from "../shared/sharingcomponent.module";
 import { NGXToastrService } from "../components/extra/toastr/toastr.service";
 import { CreditInvestigationDetailComponent } from "./credit-investigation/credit-investigation-detail/credit-investigation-detail.component";
 import { ViewAppCustDataComponent } from "./credit-investigation/component/view-app-cust-data/view-app-cust-data.component";
+import { CommissionAddComponent } from "./commission-add/commission-add.component";
+import { CommissionPagingComponent } from "./commission-paging/commission-paging.component";
+import { RsvFundPagingComponent } from "./reserved-fund/reserved-fund-paging/reserved-fund-paging.component";
+import { RsvFundViewComponent } from "./reserved-fund/reserved-fund-view/reserved-fund-view.component";
+import { CommissionReservedFundComponent } from './commission-reserved-fund/commission-reserved-fund.component';
+import { FormAddDynamicComponent } from "./commission-add/form-add-dynamic/form-add-dynamic.component";
 export const customCurrencyMaskConfig = {     
     align: "left",     
     allowNegative: true,     
@@ -37,7 +43,13 @@ export const customCurrencyMaskConfig = {
 @NgModule({
     declarations: [
         CreditInvestigationDetailComponent,
-        ViewAppCustDataComponent
+        ViewAppCustDataComponent,
+        CommissionAddComponent,
+        CommissionPagingComponent,
+        RsvFundPagingComponent,
+        RsvFundViewComponent,
+        CommissionReservedFundComponent,
+        FormAddDynamicComponent
         ],
     imports: [ 
         CreditProcessRoutingModule,

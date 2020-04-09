@@ -1,8 +1,14 @@
-<h4 class="form-section card-title" translate><i class="ft-file-text"></i> Application Reserved Fund</h4>
-<lib-ucviewgeneric [viewInput]="viewObj"> </lib-ucviewgeneric>
+<!-- <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Application Reserved Fund</h4> -->
 <div class="card">
   <div class="card-body">
     <div class="px-3">
+      <div class="ucSearch-Button-Right">
+        <span class="mr-1">
+          <button type="button" class="backButton" [routerLink]="['/CreditProcess/CommissionPaging']" translate>
+            <i class="ft-arrow-left"></i> Back to Paging
+          </button>
+        </span>
+      </div>
       <lib-ucSubsection [id]="'incomeInformationId'" [title]="'Income Information'" [panel]="'incomeInfo'">
       </lib-ucSubsection>
       <div id="incomeInfo">
@@ -33,14 +39,14 @@
         <div class="form-body">
           <div formArrayName="ReservedFundObjs">
             <div *ngFor="let item of RsvForm.controls['ReservedFundObjs'].controls;let i = index">
-              <lib-ucSubsection [id]="'reservedFundDataId[i]'" [title]="RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].MrReservedFundSourceCode.value" [panel]="'reservedFundData'">
+              <lib-ucSubsection [id]="'reservedFundDataId' + i + 'id'" [title]="RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].MrReservedFundSourceCode.value" [panel]="'reservedFundDataId' + i">
               </lib-ucSubsection>
-              <div id="reservedFundData[i]">
+              <div [id]="'reservedFundDataId' + i">
 
                 <div [formGroupName]="i">
                   <label class="col-md-2  adins-required-label" translate>Reserved Fund</label>
                   <div class="col-md-4">
-                    <ucinputnumber [parentForm]="RsvForm" [enjiForm]="enjiForm" [identifier]="'ReservedFundAmt'+i" [ucNumber]="RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].ReservedFundAmt.value" [isRequired]="true"></ucinputnumber>
+                    <lib-ucinputnumber [parentForm]="RsvForm" [enjiForm]="enjiForm" [identifier]="'ReservedFundAmt'+i" [ucNumber]="RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].ReservedFundAmt.value" [isRequired]="true"></lib-ucinputnumber>
                   </div>
                 </div>
               </div>
@@ -64,7 +70,7 @@
             </div>
             <div class="form-actions right">
               <button type="submit" class="btn btn-raised btn-primary">
-                <i class="fa fa-check-square-o"></i> Save And Continue
+                <i class="fa fa-check-square-o"></i> Save
               </button>
               <button type="button" class="btn btn-raised btn-primary" (click)="test()">
                 <i class="fa fa-check-square-o"></i> Check Value

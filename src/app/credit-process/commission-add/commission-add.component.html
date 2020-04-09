@@ -1,7 +1,12 @@
 <div class="col-md-12 text-left">
     <div class="card">
-        <lib-ucviewgeneric [viewInput]="viewProdMainInfoObj"> </lib-ucviewgeneric>
-
+        <div class="ucSearch-Button-Right">
+            <span class="mr-1">
+              <button type="button" class="backButton" [routerLink]="['/CreditProcess/CommissionPaging']" translate>
+                <i class="ft-arrow-left"></i> Back to Paging
+              </button>
+            </span>
+        </div>
         <!-- Income Information -->
         <div class="card-body">
             <div class="px-3">
@@ -43,11 +48,12 @@
                 </div>
             </div>
         </div>
-        
-        <app-form-add-dynamic #Form1 *ngIf="OnForm1" [FormInputObj]="FormInputObjSupplier" (update)="GetData($event, 'supplier')"></app-form-add-dynamic>
-        <app-form-add-dynamic #Form2 *ngIf="OnForm2" [FormInputObj]="FormInputObjSupplierEmpl" (update)="GetData($event, 'supplierEmp')">
-        </app-form-add-dynamic>
-        <app-form-add-dynamic #Form3 *ngIf="OnForm3" [FormInputObj]="FormInputObjReferantor" (update)="GetData($event, 'referantor')"></app-form-add-dynamic>
+        <form action="">            
+            <app-form-add-dynamic #Form1 *ngIf="OnForm1" [FormInputObj]="FormInputObjSupplier" (update)="GetData($event, 'Supplier')"></app-form-add-dynamic>
+            <app-form-add-dynamic #Form2 *ngIf="OnForm2" [FormInputObj]="FormInputObjSupplierEmpl" (update)="GetData($event, 'SupplierEmployee')">
+            </app-form-add-dynamic>
+            <app-form-add-dynamic #Form3 *ngIf="OnForm3" [FormInputObj]="FormInputObjReferantor" (update)="GetData($event, 'Referantor')"></app-form-add-dynamic>
+        </form>
         
         <!-- Summary -->
         <div class="card-body">
@@ -64,30 +70,31 @@
                 </lib-ucSubsection>
                 <div class="form-body" id="viewSummary">
                     <div class="row">
-                        <label class="col-md-2 adInsLabel"> Total Commision Amount </label>
-                        <label class="col-md-4 adInsLabel"> {{viewIncomeInfoObj.UppingRate}} </label>
+                        <label id="totalCommAmt" class="col-md-2 adInsLabel"> Total Commision Amount </label>
+                        <label *ngIf="Summary.TotalCommisionAmount <= viewIncomeInfoObj.MaxAllocatedAmount" class="col-md-4 adInsLabel"> {{Summary.TotalCommisionAmount}} </label>
+                        <label *ngIf="Summary.TotalCommisionAmount > viewIncomeInfoObj.MaxAllocatedAmount" style="color: red;" class="col-md-4 adInsLabel"> {{Summary.TotalCommisionAmount}} </label>
                     </div>
                     <div class="row">
                         <label class="col-md-2 adInsLabel"> Total TAX </label>
-                        <label class="col-md-4 adInsLabel"> {{viewIncomeInfoObj.UppingRate}} </label>
+                        <label class="col-md-4 adInsLabel"> {{Summary.TotalTaxAmmount}} </label>
                     </div>
                     <div class="row">
                         <label class="col-md-2 adInsLabel"> Total VAT </label>
-                        <label class="col-md-4 adInsLabel"> {{viewIncomeInfoObj.UppingRate}} </label>
+                        <label class="col-md-4 adInsLabel"> {{Summary.TotalVATAmount}} </label>
                     </div>
                     <div class="row">
                         <label class="col-md-2 adInsLabel"> Gross Yield </label>
-                        <label class="col-md-4 adInsLabel"> {{viewIncomeInfoObj.UppingRate}} </label>
+                        <label class="col-md-4 adInsLabel"> {{Summary.GrossYield}} </label>
                     </div>
                 </div>
-                <div class="row">
+                <div class="form-actions row">
                     <div class="col-md-10"></div>
-                    <div class="form-actions Button-Right col-md-2">
-                      <button type="button" (click)="Cancel()" class="btn btn-raised btn-warning" translate>
+                    <div class="col-md-2">
+                      <!-- <button type="button" (click)="Cancel()" class="btn btn-raised btn-warning" translate>
                         <i class="fa fa-check-square-o"></i> Cancel
-                      </button>
+                      </button> -->
                       <button type="button" (click)="SaveData()" class="btn btn-raised btn-primary" translate>
-                        <i class="fa fa-check-square-o"></i> Submit
+                        <i class="fa fa-check-square-o"></i> Save
                       </button>
                     </div>
                 </div>

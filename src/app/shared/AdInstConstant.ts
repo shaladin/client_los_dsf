@@ -2,102 +2,121 @@ import { environment } from "environments/environment";
 
 export class AdInsConstant {
 
-  //App Step
-  public static AppStepNew = "NEW";
-  public static AppStepCust = "CUST";
-  public static AppStepGuar = "GUAR";
-  public static AppStepRef = "REF";
-  public static AppStepApp = "APP";
-  public static AppStepAsset = "ASSET";
-  public static AppStepIns = "INS";
-  public static AppStepLIns = "LFI";
-  public static AppStepFin = "FIN";
-  public static AppStepTC = "TC";
-  public static AppStepOther = "OTH";
-  public static AppStepCrdIns = "CRI";
-  public static AppStepComm = "COM";
-  public static AppStepRSVFund = "RSV";
-  public static AppStepPhnVerif = "PHN";
-  public static AppStepSurvey = "SRVY";
-  public static AppStepFraud = "FRD";
-  public static AppStepCrdInv = "CINV";
-  public static AppStepScoring = "SCOR";
-  public static AppStepDev = "DEVC";
-  public static AppStepRvw = "RVW";
-  public static AppStepApv = "APV";
-  public static AppStepRtn = "RTN";
-  public static AppStepAgr = "AGR";
-  public static AppStepPO = "PO";
-  public static AppStepOFVC = "OFVC";
-  public static AppStepOFVA = "OFVA";
-  public static AppStepDO = "DO";
-  public static AppStepCNFR = "CNFR";
-  public static AppStepPGLV = "PGLV";
-  public static AppStepCSR = "CSR";
+    //App Step
+    public static AppStepNew = "NEW";
+    public static AppStepCust = "CUST";
+    public static AppStepGuar = "GUAR";
+    public static AppStepRef = "REF";
+    public static AppStepApp = "APP";
+    public static AppStepAsset = "ASSET";
+    public static AppStepIns = "INS";
+    public static AppStepLIns = "LFI";
+    public static AppStepFin = "FIN";
+    public static AppStepTC = "TC";
+    public static AppStepOther = "OTH";
+    public static AppStepCrdIns = "CRI";
+    public static AppStepComm = "COM";
+    public static AppStepRSVFund = "RSV";
+    public static AppStepPhnVerif = "PHN";
+    public static AppStepSurvey = "SRVY";
+    public static AppStepFraud = "FRD";
+    public static AppStepCrdInv = "CINV";
+    public static AppStepScoring = "SCOR";
+    public static AppStepDev = "DEVC";
+    public static AppStepRvw = "RVW";
+    public static AppStepApv = "APV";
+    public static AppStepRtn = "RTN";
+    public static AppStepAgr = "AGR";
+    public static AppStepPO = "PO";
+    public static AppStepOFVC = "OFVC";
+    public static AppStepOFVA = "OFVA";
+    public static AppStepDO = "DO";
+    public static AppStepCNFR = "CNFR";
+    public static AppStepPGLV = "PGLV";
+    public static AppStepCSR = "CSR";
+     
+    // ASSET
+    public static GetListKeyValueByCode = environment.FoundationR3Url + "/AssetType/GetListKeyValueByCode";
+
+    // App
+    public static AddApp = "/Application/AddApp";
+    public static EditApp = "/Application/EditApp";
+    public static GetAppById = "/Application/GetAppById";   
+    public static EditAppAddAppCross = "/Application/EditAppAddAppCross";   
+    public static GetAppByIds = environment.losUrl + "/Application/GetAppById";
+
+    // App Asset
+    public static GetAppAssetListByAppIdForCommision = "/AppAsset/GetAppAssetListByAppIdForCommision";
+    
+    // App Asset
+    public static GetListAppAssetSupplEmpByListAppAssetId = "/AppAssetSupplEmp/GetListAppAssetSupplEmpByListAppAssetId";
+    
+    // App Commission
+    public static AddOrEditAppCommissionData = "/AppCommission/AddOrEditAppCommissionData";
+    public static GetAppCommissionDataForEditByAppId = environment.losUrl + "/AppCommission/GetAppCommissionDataForEditByAppId";
+    public static DeleteAppCommissionData = environment.losUrl + "/AppCommission/DeleteAppCommissionData";
+    public static GetAppCommissionRule = "/AppCommission/GetAppCommissionRule";
+    public static GetAppCommissionTax = "/AppCommission/GetAppCommissionTax";
+
+    // App Referantor
+    public static AddAppReferantor = "/AppReferantor/AddAppReferantor";
+    public static EditAppReferantor = "/AppReferantor/EditAppReferantor";
+    public static DeleteAppReferantor = "/AppReferantor/DeleteAppReferantor";
+    public static GetAppReferantorByAppReferantorId = "/AppReferantor/GetAppReferantorByAppReferantorId";
+    public static GetAppReferantorByAppId = "/AppReferantor/GetAppReferantorByAppId";
+    
+    // App Cross
+    public static GetAppCrossByCrossAgrmntNo = "/AppCross/GetAppCrossByCrossAgrmntNo";
+    public static DeleteAppCross = "/AppCross/DeleteAppCross";
+    public static GetListAppCross = "/AppCross/GetListAppCross";
+    public static AddListAppCross = "/AppCross/AddListAppCross";
+    
+    // Ref App Src
+    public static GetListKvpActiveRefAppSrc = "/RefAppSrc/GetListKvpActiveRefAppSrc";
+
+
+    public static RestrictionLike = "Like";
+    public static RestrictionEq = "Eq";
+    public static RestrictionIn = "IN";
+    public static RestrictionNotIn = "NotIn";
+    public static RestrictionIsNull = "isnull";
+    public static RestrictionIsNotNull = "isnotnull";
+    public static showData = "10,50,100";
+    public static TimeoutSession = 6000000;
+    public static GetListProduct = "http://creator_websvr:7272/NEW_FINANCING/api/Catalog/getPopularViewByCriteria";
+    public static Login = "/Authenticate/Login";
+    public static LoginToken = "/UserManagement/HTML6Login";
+    public static Logout = "/UserManagement/LogOut"
+    public static GetListOffice = "/RefOffice/GetRefOfficePaging";
+    public static GetProvince = "/los/v1/get_provinsi";
+    public static GetCityByProvince = "/los/v1/get_kota";
+    public static getProspectByProspectNo = "/api/MobileProspectTask/GetProspectByProspectNo";
+    public static submitNCProspect = "/api/MobileProspectTask/submitNCProspect";
+    public static addCustPersonal = "";
+    public static FormDefault = "dashboard/dash-board";
+    public static LoginByRole = "/Authenticate/LoginByRole";
+    public static LoginByToken = "/Authenticate/LoginByToken";
+    public static UpdateToken = "/Authenticate/UpdateRole";
+    public static GetRefOfficeByOfficeCode = environment.FoundationR3Url + "/RefOffice/GetRefOfficeByOfficeCode";
+
+    //CUST TYPE
+    public static CustTypePersonal = "PERSONAL";
+    public static CustTypeCompany = "COMPANY";
+
+
+  //COVER PERIOD
+  public static CoverPeriodAnnually = "AN";
+  public static CoverPeriodFullTenor = "FT";
+  public static CoverPeriodPartialTenor = "PT";
+  public static CoverPeriodOverTenor = "OT";
+
+  //PREMIUM TYPE
+  public static PremiumTypeAmt = "AMT";
+  public static PremiumTypePrcnt = "PRCNT";
 
   //LOB CODE
   public static LobCodeRFN4W = "RFN4W";
 
-  // ASSET
-  public static GetListKeyValueByCode = environment.FoundationR3Url + "/AssetType/GetListKeyValueByCode";
-
-  // App
-  public static AddApp = "/Application/AddApp";
-  public static EditApp = "/Application/EditApp";
-  public static GetAppById = "/Application/GetAppById";  
-  public static GetAppByIds = environment.losUrl + "/Application/GetAppById"; 
-  public static EditAppAddAppCross = "/Application/EditAppAddAppCross";  
-  
-  // App Asset
-  public static GetAppAssetListByAppIdForCommision = "/AppAsset/GetAppAssetListByAppIdForCommision";
-  public static GetListAppAssetSupplEmpByListAppAssetId = "/AppAssetSupplEmp/GetListAppAssetSupplEmpByListAppAssetId";
-
-  // App Referantor
-  public static AddAppReferantor = "/AppReferantor/AddAppReferantor";
-  public static EditAppReferantor = "/AppReferantor/EditAppReferantor";
-  public static DeleteAppReferantor = "/AppReferantor/DeleteAppReferantor";
-  public static GetAppReferantorByAppReferantorId = "/AppReferantor/GetAppReferantorByAppReferantorId";
-  public static GetAppReferantorByAppId = "/AppReferantor/GetAppReferantorByAppId";
-  
-  // App Cross
-  public static GetAppCrossByCrossAgrmntNo = "/AppCross/GetAppCrossByCrossAgrmntNo";
-  public static DeleteAppCross = "/AppCross/DeleteAppCross";
-  public static GetListAppCross = "/AppCross/GetListAppCross";
-  public static AddListAppCross = "/AppCross/AddListAppCross";
-  
-  // Ref App Src
-  public static GetListKvpActiveRefAppSrc = "/RefAppSrc/GetListKvpActiveRefAppSrc";
-
-
-  public static RestrictionLike = "Like";
-  public static RestrictionEq = "Eq";
-  public static RestrictionNeq = "NEQ";
-  public static RestrictionIn = "IN";
-  public static RestrictionNotIn = "NotIn";
-  public static RestrictionIsNull = "isnull";
-  public static RestrictionIsNotNull = "isnotnull";
-  public static showData = "10,50,100";
-  public static TimeoutSession = 6000000;
-  public static GetListProduct = "http://creator_websvr:7272/NEW_FINANCING/api/Catalog/getPopularViewByCriteria";
-  public static Login = "/Authenticate/Login";
-  public static LoginToken = "/UserManagement/HTML6Login";
-  public static Logout = "/UserManagement/LogOut"
-  public static GetListOffice = "/RefOffice/GetRefOfficePaging";
-  public static GetProvince = "/los/v1/get_provinsi";
-  public static GetCityByProvince = "/los/v1/get_kota";
-  public static getProspectByProspectNo = "/api/MobileProspectTask/GetProspectByProspectNo";
-  public static submitNCProspect = "/api/MobileProspectTask/submitNCProspect";
-  public static addCustPersonal = "";
-  public static FormDefault = "dashboard/dash-board";
-  public static LoginByRole = "/Authenticate/LoginByRole";
-  public static LoginByToken = "/Authenticate/LoginByToken";
-  public static UpdateToken = "/Authenticate/UpdateRole";
-  public static GetRefOfficeByOfficeCode = environment.FoundationR3Url + "/RefOffice/GetRefOfficeByOfficeCode";
-
-  //CUST TYPE
-  public static CustTypePersonal = "PERSONAL";
-  public static CustTypeCompany = "COMPANY";
-  
   //Asset Master
   public static GetAssetMasterTypeByFullAssetCode = "http://localhost:5000/AssetMaster/GetAssetMasterTypeByFullAssetCode";
   
@@ -124,7 +143,6 @@ export class AdInsConstant {
   
   //INS PAID BY
   public static InsPaidByCustomer = "CU";
-
   //GENERAL SETTING
   public static GetBusinessDt = "/GeneralSetting/GetBusinessDate";
   public static AddGeneralSetting = "/GeneralSetting/AddGeneralSetting";
@@ -573,6 +591,24 @@ export class AdInsConstant {
   // Rule
   public static Rule = "http://r3app-server/RULE_FINAL/RuleService/ExecuteRuleSet";
 
+  // Tax
+  public static AppCom = "APP_COM";
+  public static ExchangeRateAmt = "1";
+  public static TaxTypeCode = "WHT";
+  public static VATTypeCode = "VAT";
+  public static TrxTypeCode = "APP_COM";
+  public static ContentSupplier = "Supplier";
+  public static ContentSupplierEmp = "SupplierEmployee";
+  public static ContentReferantor = "Referantor";
+  public static CommissionReceipientTypeCodeSupplier = "SUPPL";
+  public static CommissionReceipientTypeCodeSupplierEmp = "SUPPL_EMP";
+  public static CommissionReceipientTypeCodeReferantor = "REFERANTOR";
+
+  public static TitleSupplier = "List Supplier Commission Data";
+  public static TitleSupplierEmp = "List Supplier Employee Commission Data";
+  public static TitleReferantor = "List Referantor Commission Data";
+  public static ReturnObj = "ReturnObject";
+  
   // App Asset
   public static GetAppAssetListByAgrmntId = environment.losUrl + "/AppAsset/GetAppAssetListByAgrmntId";
   public static GetAppAssetByAppId = environment.losUrl + "/AppAsset/GetAppAssetByAppId";
@@ -622,12 +658,6 @@ export class AdInsConstant {
   public static AddEditInsuranceData = environment.losUrl + "/AppIns/AddEditInsuranceData";
   public static ExecuteInsRateRule = environment.losUrl + "/AppIns/ExecuteInsRateRule";
   public static CalculateInsurance = environment.losUrl + "/AppIns/CalculateInsurance";
-  public static PremiumTypeAmt = environment.losUrl + "/AppIns/PremiumTypeAmt";
-  public static PremiumTypePrcnt = environment.losUrl + "/AppIns/PremiumTypePrcnt";
-  public static CoverPeriodAnnually = environment.losUrl + "/AppIns/CoverPeriodAnnually";
-  public static CoverPeriodFullTenor = environment.losUrl + "/AppIns/CoverPeriodFullTenor";
-  public static CoverPeriodOverTenor = environment.losUrl + "/AppIns/CoverPeriodOverTenor";
-  public static CoverPeriodPartialTenor = environment.losUrl + "/AppIns/CoverPeriodPartialTenor";
 
 
   //AGREEMENT DOC
@@ -692,6 +722,9 @@ export class AdInsConstant {
 
   //App Fee
   public static GetListAppFeeByAppId = environment.losUrl + "/AppFee/GetListAppFeeByAppId";
+  public static MrFeeTypeCodeAdmin = "ADMIN";
+  public static MrFeeTypeCodeProvision = "PROVISION";
+
 
   //App Reserved Fund
   public static AddEditAppReservedFund = environment.losUrl + "/AppReservedFund/AddEditAppReservedFund";
@@ -718,14 +751,6 @@ export class AdInsConstant {
 
   //App Crd Invstg
   public static AddAppCrdInvstg = environment.losUrl + "/AppCrdInvstgH/AddAppCrdInvstg";
-  //App Commission
-  public static GetAppCommissionRule = "/AppCommission/GetAppCommissionRule";
-  public static AddAppCommissionData = "/AppCommission/AddAppCommissionData";
-  public static AppCom = "/AppCommission/AppCom";
-  public static GetAppCommissionTax = "/AppCommission/GetAppCommissionTax";
-  public static ExchangeRateAmt = "/AppCommission/ExchangeRateAmt";
-  public static TaxTypeCode = "/AppCommission/TaxTypeCode";
-  public static VATTypeCode = "/AppCommission/VATTypeCode";
 
   // PreGoLive
   public static GetListApprovedByForPreGoLive = environment.losUrl + "/PreGoLive/GetListApprovedByForPreGoLive";

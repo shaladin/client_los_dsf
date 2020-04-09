@@ -11,14 +11,11 @@ import { GuarantorCompanyComponent } from "./nap-tab/app-guarantor/guarantor-com
 import { GuarantorPagingComponent } from "./nap-tab/app-guarantor/guarantor-paging/guarantor-paging.component";
 import { GuarantorPersonalComponent } from "./nap-tab/app-guarantor/guarantor-personal/guarantor-personal.component";
 import { AppLifeInsComponent } from "./nap-tab/app-life-ins/app-life-ins.component";
-import { CommissionPagingComponent } from "./commission-paging/commission-paging.component";
-import { CommissionAddComponent } from "./commission-add/commission-add.component";
 import { AppTcComponent } from "./nap-tab/app-tc/app-tc.component";
 import { AppFinDataComponent } from "./nap-tab/app-fin-data/app-fin-data.component";
 import { InsuranceDataComponent } from "./nap-tab/insurance-data/insurance-data.component";
 import { AssetDataComponent } from "./nap-tab/asset-data/asset-data.component";
-import { RsvFundPagingComponent } from "./reserved-fund/reserved-fund-paging/reserved-fund-paging.component";
-import { RsvFundViewComponent } from "./reserved-fund/reserved-fund-view/reserved-fund-view.component";
+
 
 const routes: Routes = [
   {
@@ -129,20 +126,6 @@ const routes: Routes = [
         },
       },
       {
-        path: 'CommissionPaging',
-        component: CommissionPagingComponent,
-        data: {
-          title: 'Commission Paging'
-        }
-      },
-      {
-        path: 'CommissionAdd',
-        component: CommissionAddComponent,
-        data: {
-          title: 'Commission Add'
-        }
-      },
-      {
         path: 'AppTC',
         component: AppTcComponent,
         data: {
@@ -155,20 +138,6 @@ const routes: Routes = [
       data: {
           title: 'Asset Data'
         },
-      },
-      {
-          path: 'ReservedFund',
-          component: RsvFundPagingComponent,
-          data: {
-              title: 'Reserved Fund Paging'
-          }
-      },
-      {
-          path: 'ReservedFund/View',
-          component: RsvFundViewComponent,
-          data: {
-              title: 'Reserved Fund View'
-          }
       },
       {
           path: 'AppFinData',
