@@ -16,7 +16,6 @@ import { SharingComponentModule } from "app/shared/sharingcomponent.module";
 import { PurchaseOrderComponent } from './purchase-order/purchase-order/purchase-order.component';
 import { DeliveryOrderDetailComponent } from "./delivery-order/delivery-order-detail/delivery-order-detail.component";
 import { DeliveryOrderPagingComponent } from "./delivery-order/delivery-order-paging/delivery-order-paging.component";
-import { PurchaseOrderInfoComponent } from './purchase-order/purchase-order-detail/purchase-order-info/purchase-order-info.component';
 import { PreGoLivePagingComponent } from './pre-go-live/pre-go-live-paging/pre-go-live-paging.component';
 import { PreGoLiveComponent } from './pre-go-live/pre-go-live/pre-go-live.component';
 import { UcgridviewModule } from "@adins/ucgridview";
@@ -35,6 +34,9 @@ import { OfferingValidityCheckingApprovalPagingComponent } from './offering-vali
 import { OfferingValidityCheckingApprovalDetailComponent } from './offering-validity-checking-approval/offering-validity-checking-approval-detail/offering-validity-checking-approval-detail.component';
 import { PreGoLiveRequestForApprovalComponent } from './pre-go-live/pre-go-live-request-for-approval/pre-go-live-request-for-approval.component';
 
+import { UclookupgenericModule } from "@adins/uclookupgeneric";
+import { DocSignerDetailComponent } from "./doc-signer/doc-signer-detail/doc-signer-detail.component";
+import { DocSignerPagingComponent } from "./doc-signer/doc-signer-paging/doc-signer-paging.component";
 
 @NgModule({
   imports: [
@@ -53,31 +55,31 @@ import { PreGoLiveRequestForApprovalComponent } from './pre-go-live/pre-go-live-
     AdminProcessRoutingModule,
     SharingComponentModule,
     UcviewgenericModule,
-    UcapprovalModule
+    UcapprovalModule,
+    UclookupgenericModule
   ],
   declarations: [
     PurchaseOrderPagingComponent,
     PurchaseOrderDetailComponent,
     PurchaseOrderComponent,
-    PurchaseOrderInfoComponent,
     PreGoLivePagingComponent,
     PreGoLiveComponent,
     PreGoLiveRequestForApprovalComponent,
-    PurchaseOrderInfoComponent,
     ApplicationAgreementCancellationPagingComponent,
     ApplicationAgreementCancellationDetailComponent,
     AgrmntActivationPagingComponent,
     AgrmntActivationDetailComponent,
     DeliveryOrderDetailComponent,
     DeliveryOrderPagingComponent,
-    PurchaseOrderInfoComponent,
     CustConfirmationPagingComponent,
     CustConfirmationDetailComponent,
     CustConfirmationSubjDetailComponent,
     CustConfirmationSubjViewComponent,
     CustConfirmationVerfViewComponent,
     OfferingValidityCheckingApprovalPagingComponent,
-    OfferingValidityCheckingApprovalDetailComponent
+    OfferingValidityCheckingApprovalDetailComponent,
+    DocSignerDetailComponent,
+    DocSignerPagingComponent
   ],
   providers: [
     NGXToastrService

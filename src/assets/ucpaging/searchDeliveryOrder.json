@@ -118,6 +118,10 @@
                     "path": "/AdminProcess/DeliveryOrder/Detail",
                     "param": [
                         {
+                            "type": "AppId",
+                            "property": "AppId"
+                        },
+                        {
                             "type": "AgrmntId",
                             "property": "AgrmntId"
                         }

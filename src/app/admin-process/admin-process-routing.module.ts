@@ -16,6 +16,8 @@ import { CustConfirmationDetailComponent } from './cust-confirmation/cust-confir
 import { CustConfirmationSubjViewComponent } from './cust-confirmation/cust-confirmation-subj-view/cust-confirmation-subj-view.component';
 import { OfferingValidityCheckingApprovalPagingComponent } from './offering-validity-checking-approval/offering-validity-checking-approval-paging/offering-validity-checking-approval-paging.component';
 import { OfferingValidityCheckingApprovalDetailComponent } from './offering-validity-checking-approval/offering-validity-checking-approval-detail/offering-validity-checking-approval-detail.component';
+import { DocSignerDetailComponent } from './doc-signer/doc-signer-detail/doc-signer-detail.component';
+import { DocSignerPagingComponent } from './doc-signer/doc-signer-paging/doc-signer-paging.component';
 import { CustConfirmationSubjDetailComponent } from './cust-confirmation/cust-confirmation-subj-detail/cust-confirmation-subj-detail.component';
 import { PreGoLiveRequestForApprovalComponent } from './pre-go-live/pre-go-live-request-for-approval/pre-go-live-request-for-approval.component';
 
@@ -143,12 +145,26 @@ const routes: Routes = [
         }
       },
       {
+        path: 'DocumentSigner/Paging',
+        component: DocSignerPagingComponent,
+        data: {
+          title: 'Document Signer Paging'
+        }
+      },
+      {
+        path: 'DocumentSigner/Detail',
+        component: DocSignerDetailComponent,
+        data: {
+          title: 'Document Signer Detail'
+        }
+      },
+      {
         path: 'CustConfirmation/Subj/Detail',
         component: CustConfirmationSubjDetailComponent,
         data: {
           title: 'Customer Confirmation Subject Detail'
         }
-      },
+      }
     ]
   }
 ];

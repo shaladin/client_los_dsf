@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { UcpagingModule } from '@adins/ucpaging';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 
 @Component({
   selector: 'app-purchase-order-paging',
@@ -11,13 +11,13 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 })
 export class PurchaseOrderPagingComponent implements OnInit {
 
-  inputPagingObj: any;
-  arrCrit = [];
+  inputPagingObj: UcPagingObj;
+  arrCrit: Array<CriteriaObj>;
 
   constructor() { }
 
   ngOnInit() {
-    this.inputPagingObj = new UcpagingModule();
+    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchPurchaseOrder.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
