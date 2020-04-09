@@ -61,6 +61,8 @@ export const customCurrencyMaskConfig = {
     suffix: "",     
     thousands: ",",     
     nullable: false };
+import { PhnVerifPagingComponent } from "./phone-verif/phone-verif-paging/phone-verif-paging.component";
+
 
 
 @NgModule({
@@ -99,7 +101,8 @@ export const customCurrencyMaskConfig = {
         UcinputnumberComponent,
         InsuranceDataComponent,
         AssetDataComponent,
-        AppFinDataComponent
+        AppFinDataComponent,
+        PhnVerifPagingComponent
         ],
     imports: [ 
         NapRoutingModule,

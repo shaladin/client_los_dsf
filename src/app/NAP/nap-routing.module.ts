@@ -15,6 +15,7 @@ import { AppTcComponent } from "./nap-tab/app-tc/app-tc.component";
 import { AppFinDataComponent } from "./nap-tab/app-fin-data/app-fin-data.component";
 import { InsuranceDataComponent } from "./nap-tab/insurance-data/insurance-data.component";
 import { AssetDataComponent } from "./nap-tab/asset-data/asset-data.component";
+import { PhnVerifPagingComponent } from "./phone-verif/phone-verif-paging/phone-verif-paging.component";
 
 
 const routes: Routes = [
@@ -145,14 +146,21 @@ const routes: Routes = [
           data: {
               title: 'Commission Add'
           }
+      },
+      {
+          path: 'PhoneVerif',
+          component: PhnVerifPagingComponent,
+          data: {
+              title: 'Phone Verif Paging'
+          }
       }
     ]
   }
 ]
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule]
 })
 
 export class NapRoutingModule { }
