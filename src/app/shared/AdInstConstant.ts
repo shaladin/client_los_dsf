@@ -114,58 +114,6 @@ export class AdInsConstant {
   public static PremiumTypeAmt = "AMT";
   public static PremiumTypePrcnt = "PRCNT";
 
-<<<<<<< HEAD
-=======
-  // App Asset
-  public static GetListAppAssetSupplEmpByListAppAssetId = "/AppAssetSupplEmp/GetListAppAssetSupplEmpByListAppAssetId";
-
-  // App Referantor
-  public static AddAppReferantor = "/AppReferantor/AddAppReferantor";
-  public static EditAppReferantor = "/AppReferantor/EditAppReferantor";
-  public static DeleteAppReferantor = "/AppReferantor/DeleteAppReferantor";
-  public static GetAppReferantorByAppReferantorId = "/AppReferantor/GetAppReferantorByAppReferantorId";
-  public static GetAppReferantorByAppId = "/AppReferantor/GetAppReferantorByAppId";
-  
-  // App Cross
-  public static GetAppCrossByCrossAgrmntNo = "/AppCross/GetAppCrossByCrossAgrmntNo";
-  public static DeleteAppCross = "/AppCross/DeleteAppCross";
-  public static GetListAppCross = "/AppCross/GetListAppCross";
-  public static AddListAppCross = "/AppCross/AddListAppCross";
-  
-  // Ref App Src
-  public static GetListKvpActiveRefAppSrc = "/RefAppSrc/GetListKvpActiveRefAppSrc";
-
-
-  public static RestrictionLike = "Like";
-  public static RestrictionEq = "Eq";
-  public static RestrictionNeq = "NEQ";
-  public static RestrictionIn = "IN";
-  public static RestrictionNotIn = "NotIn";
-  public static RestrictionIsNull = "isnull";
-  public static RestrictionIsNotNull = "isnotnull";
-  public static showData = "10,50,100";
-  public static TimeoutSession = 6000000;
-  public static GetListProduct = "http://creator_websvr:7272/NEW_FINANCING/api/Catalog/getPopularViewByCriteria";
-  public static Login = "/Authenticate/Login";
-  public static LoginToken = "/UserManagement/HTML6Login";
-  public static Logout = "/UserManagement/LogOut"
-  public static GetListOffice = "/RefOffice/GetRefOfficePaging";
-  public static GetProvince = "/los/v1/get_provinsi";
-  public static GetCityByProvince = "/los/v1/get_kota";
-  public static getProspectByProspectNo = "/api/MobileProspectTask/GetProspectByProspectNo";
-  public static submitNCProspect = "/api/MobileProspectTask/submitNCProspect";
-  public static addCustPersonal = "";
-  public static FormDefault = "dashboard/dash-board";
-  public static LoginByRole = "/Authenticate/LoginByRole";
-  public static LoginByToken = "/Authenticate/LoginByToken";
-  public static UpdateToken = "/Authenticate/UpdateRole";
-  public static GetRefOfficeByOfficeCode = environment.FoundationR3Url + "/RefOffice/GetRefOfficeByOfficeCode";
-
-  //CUST TYPE
-  public static CustTypePersonal = "PERSONAL";
-  public static CustTypeCompany = "COMPANY";
-  
->>>>>>> cf942f57e4486447ace22594fe3b479bf1d6ab77
   //Asset Master
   public static GetAssetMasterTypeByFullAssetCode = "http://localhost:5000/AssetMaster/GetAssetMasterTypeByFullAssetCode";
   
