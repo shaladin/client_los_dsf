@@ -3,13 +3,11 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { error } from 'protractor';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { environment } from 'environments/environment';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { UcpagingModule } from '@adins/ucpaging';
 import { NapAppCrossObj } from 'app/shared/model/NapAppCrossObj.Model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 
@@ -25,10 +23,7 @@ export class AppModelComponent implements OnInit {
   ListCrossAppObj: any = {};
   constructor(
     private fb: FormBuilder,
-    private router: Router,
     private http: HttpClient,
-    private route: ActivatedRoute,
-    private toastr: NGXToastrService,
     private modalService: NgbModal
   ) { }
 

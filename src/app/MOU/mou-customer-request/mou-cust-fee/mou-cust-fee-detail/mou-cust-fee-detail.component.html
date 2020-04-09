@@ -1,0 +1,64 @@
+<form class="form form-horizontal" [formGroup]="MouCustFeeForm" #enjiForm="ngForm" novalidate
+  (ngSubmit)="enjiForm.form.valid && Save(enjiForm)">
+  <div class="modal-header">
+    <h4 class="modal-title">Add MOU Customer Fee</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('0')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="col-md-12">
+      <div class="">
+        <div class="">
+          <div class="px-3">
+            <div class="form-body">
+              <div id="MouCustFeeSection">
+                <div class="form-group row adins-required">
+                  <label class="col-md-3 adInsLabel" for="RefFeeId" translate>MOU Fee</label>
+                  <div class="col-md-9">
+                    <select class="form-control adInsInput" formControlName="RefFeeId"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && MouCustFeeForm.controls.RefFeeId.invalid }">
+                      <option *ngFor="let item of refFeeList" [value]="item.RefFeeId">{{item.FeeName}}</option>
+                    </select>
+                    <show-errors [control]="MouCustFeeForm.controls.RefFeeId" [submit]="enjiForm.submitted"></show-errors>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 adInsLabel" for="MrFeeTypeCode" translate>Fee Type</label>
+                  <div class="col-md-9">
+                    <select class="form-control adInsInput" formControlName="MrFeeTypeCode" (change)="feeTypeHandler($event)"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && MouCustFeeForm.controls.MrFeeTypeCode.invalid }">
+                      <option *ngFor="let item of feeTypeList" [value]="item.Key">{{item.Value}}</option>
+                    </select>
+                    <show-errors [control]="MouCustFeeForm.controls.MrFeeTypeCode" [submit]="enjiForm.submitted"></show-errors>
+                  </div>
+                </div>
+                <div class="form-group row" *ngIf="MouCustFeeForm.controls.MrFeeTypeCode.value == 'AMT'">
+                  <label class="col-md-3 adInsLabel" for="FeeAmt" translate>Fee Amount</label>
+                  <div class="col-md-9">
+                    <lib-ucinputnumber [parentForm]="MouCustFeeForm" [identifier]="'FeeAmt'" [enjiForm]="enjiForm" [isRequired]="false" ucNumber="MouCustFeeForm.controls.FeeAmt.value"></lib-ucinputnumber>
+                  </div>
+                </div>
+                <div class="form-group row" *ngIf="MouCustFeeForm.controls.MrFeeTypeCode.value == 'PRCNT'">
+                  <label class="col-md-3 adInsLabel" for="FeePrcnt" translate>Fee Percentage</label>
+                  <div class="col-md-9">
+                    <input type="number" class="form-control adInsInput" formControlName="FeePrcnt" 
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && MouCustFeeForm.controls.FeePrcnt.invalid }" />
+                    <show-errors [control]="MouCustFeeForm.controls.FeePrcnt" [submit]="enjiForm.submitted"></show-errors>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-raised btn-primary">
+      <i class="fa fa-check-square-o"></i> Save
+    </button>
+    <button type="button" class="btn btn-warning btn-raised" (click)="activeModal.dismiss('0')">Cancel</button>
+  </div>
+</form>
+

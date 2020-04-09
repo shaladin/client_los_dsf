@@ -1,0 +1,58 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-body">
+      <div class="px-3">
+        <div class="row" style="border-bottom: 1px solid black; margin-bottom: 15px;">
+          <div class="col-md-8" style="padding-left: 0px;">
+            <h4 class="form-section card-title" translate><i class="ft-file-text"></i>Negative Asset Information</h4>
+          </div>
+          <div class="col-md-4" style="text-align: right; padding-right: 0px;">
+            <button type="button" class="btn btn-raised btn-success mr-1" (click)="editMainInfoHandler()" translate>
+              Edit Main Info
+            </button>
+            <button type="button" class="btn btn-raised btn-warning mr-1" (click)="cancelHandler()" translate>
+              Cancel
+            </button>
+            <button type="button" class="btn btn-raised btn-primary" (click)="submitHandler()" translate>
+              Submit
+            </button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <app-main-info [MouCustId]="mouCustId"></app-main-info>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <aw-wizard #WizardMouDetail navBarLayout="large-empty-symbols" [disableNavigationBar]=true [awNavigationMode]
+              navigateBackward="allow" navigateForward="allow">
+              <aw-wizard-step [stepTitle]="'MOU Detail'" [navigationSymbol]="{ symbol: '1', fontFamily: 'FontAwesome', fontWeight: 'bold' }">
+                <app-mou-detail-general *ngIf="mouType == 'GENERAL' && wizard.currentStepIndex == '0'" [MouCustId]="mouCustId" (ResponseMouDetailGeneral)="mouDetailGeneral($event)"></app-mou-detail-general>
+                <app-mou-detail-factoring *ngIf="mouType == 'FACTORING' && wizard.currentStepIndex == '0'" [MouCustId]="mouCustId" (ResponseMouCustFactoring)="mouDetailFactoring($event)"></app-mou-detail-factoring>
+              </aw-wizard-step>
+              <aw-wizard-step [stepTitle]="'Fee'" *ngIf="mouType == 'FACTORING'" [navigationSymbol]="{ symbol: '2', fontFamily: 'FontAwesome' }">
+                <app-mou-cust-fee *ngIf="mouType == 'FACTORING' && wizard.currentStepIndex == '1'" [MouCustId]="mouCustId" (ResponseMouCustFee)="mouCustFee($event)"></app-mou-cust-fee>
+              </aw-wizard-step>
+              <aw-wizard-step [stepTitle]="'Collateral'" [navigationSymbol]="{ symbol: mouType == 'FACTORING' ? '3' : '2', fontFamily: 'FontAwesome' }">
+                <app-mou-request-addcoll *ngIf="mouType == 'GENERAL' && wizard.currentStepIndex == '1'" [MouCustId]="mouCustId" (ResponseMouAddColl)="mouAddColl($event)"></app-mou-request-addcoll>
+                <app-mou-request-addcoll *ngIf="mouType == 'FACTORING' && wizard.currentStepIndex == '2'" [MouCustId]="mouCustId" (ResponseMouAddColl)="mouAddColl($event)"></app-mou-request-addcoll>
+              </aw-wizard-step>
+              <aw-wizard-step [stepTitle]="'Term and Condition'" [navigationSymbol]="{ symbol: mouType == 'FACTORING' ? '4' : '3', fontFamily: 'FontAwesome' }">
+                <app-mou-cust-tc *ngIf="mouType == 'GENERAL' && wizard.currentStepIndex == '2'" [MouCustId]="mouCustId" (ResponseMouCustTc)="mouCustTc($event)"></app-mou-cust-tc>
+                <app-mou-cust-tc *ngIf="mouType == 'FACTORING' && wizard.currentStepIndex == '3'" [MouCustId]="mouCustId" (ResponseMouCustTc)="mouCustTc($event)"></app-mou-cust-tc>
+              </aw-wizard-step>
+              <aw-wizard-step [stepTitle]="'Document'" [navigationSymbol]="{ symbol: mouType == 'FACTORING' ? '5' : '4', fontFamily: 'FontAwesome' }">
+                <div class="col-md-12" style="padding: 0; text-align: right;">
+                  <button type="button" class="btn btn-raised btn-warning mr-1" (click)="mouDocumentBack()" translate>
+                    <i class="ft-x"></i> Back
+                  </button>
+                </div>
+              </aw-wizard-step>
+            </aw-wizard>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

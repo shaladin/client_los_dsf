@@ -1,0 +1,68 @@
+{
+    "title": "MANAGEMENT / SHAREHOLDER SIGNER",
+    "component": [
+        {
+            "type": "textbox",
+            "name": "ACCMS.MGMNT_SHRHOLDER_NAME",
+            "id": "MgmntShrholderNameId",
+            "value": "",
+            "label": "Management/Shareholder Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "ACCMS.MR_JOB_POSITION_CODE",
+            "id": "MrJobPositionCodeId",
+            "value": "",
+            "label": "Management/Shareholder Position",
+            "placeholder": "Placeholder"
+        }
+    ],
+    "querystring": {
+        "select": "SELECT ACCMS.MGMNT_SHRHOLDER_NAME AS MgmntShrholderName, ACCMS.APP_CUST_COMPANY_MGMNT_SHRHOLDER_ID AS AppCustCompanyMgmntShrholderId, ACCMS.MR_JOB_POSITION_CODE AS MrJobPositionCode, ACCMS.CUST_NO",
+        "from": "FROM DBO.APP_CUST_COMPANY_MGMNT_SHRHOLDER ACCMS WITH(NOLOCK)"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Name",
+            "name": "ACCMS.MGMNT_SHRHOLDER_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Position",
+            "name": "ACCMS.MR_JOB_POSITION_CODE"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Select"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "MgmntShrholderName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "MrJobPositionCode"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "select",
+                    "property": "AppCustCompanyMgmntShrholderId"
+                }
+            ]
+        }
+    ],
+    "propertyId": "AppCustCompanyMgmntShrholderId",
+    "propertyName": "MgmntShrholderName"
+}

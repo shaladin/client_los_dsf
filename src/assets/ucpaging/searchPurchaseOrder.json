@@ -4,18 +4,18 @@
     "component": [
         {
             "type": "textbox",
-            "name": "AGR.AGREEMENT_NO",
-            "id": "AgreementNoId",
-            "value": "",
-            "label": "Agreement No",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type": "textbox",
             "name": "A.APP_NO",
             "id": "AppNoId",
             "value": "",
             "label": "Application No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "AGR.AGREEMENT_NO",
+            "id": "AgreementNoId",
+            "value": "",
+            "label": "Agreement No",
             "placeholder": "Placeholder"
         },
         {
@@ -57,14 +57,14 @@
         {
             "type": "sort",
             "position": "left",
-            "label": "Agreement No",
-            "name": "AGR.AGREEMENT_NO"
+            "label": "Application No",
+            "name": "A.APP_NO"
         },
         {
             "type": "sort",
             "position": "left",
-            "label": "Application No",
-            "name": "A.APP_NO"
+            "label": "Agreement No",
+            "name": "AGR.AGREEMENT_NO"
         },
         {
             "type": "sort",
@@ -93,12 +93,12 @@
         {
             "type": "text",
             "position": "left",
-            "property": "AgreementNo"
+            "property": "AppNo"
         },
         {
             "type": "text",
             "position": "left",
-            "property": "AppNo"
+            "property": "AgreementNo"
         },
         {
             "type": "text",

@@ -34,13 +34,15 @@ import { SearchCrossAppComponent } from './nap-tab/app-model/search-cross-app/se
 import { UCSearchModule } from '@adins/ucsearch';
 import { CommissionPagingComponent } from './commission-paging/commission-paging.component';
 import { CommissionAddComponent } from './commission-add/commission-add.component';
-import { FormAddDynamicComponent } from './form-add-dynamic/form-add-dynamic.component';
+import { FormAddDynamicComponent } from "./commission-add/form-add-dynamic/form-add-dynamic.component";
+// import { CustFinancialDataComponent } from "./nap-tab/customer-data/component/financial-data/cust-financial-data.component";
 import { CustBankAccountComponent } from "./nap-tab/customer-data/component/bank-account/cust-bank-account.component";
 import { CustJobDataComponent } from "./nap-tab/customer-data/component/job-data/cust-job-data.component";
 import { CustSocmedComponent } from "./nap-tab/customer-data/component/socmed/cust-socmed.component";
 import { CustGrpMemberComponent } from "./nap-tab/customer-data/component/cust-grp-member/cust-grp-member.component";
 import { CustCompanyMainDataComponent } from "./nap-tab/customer-data/component/company-main-data/cust-company-main-data.component";
 import { CustShareholderComponent } from "./nap-tab/customer-data/component/shareholder/cust-shareholder.component";
+import { AppTcComponent } from './nap-tab/app-tc/app-tc.component';
 import { CustCompanyContactInformationComponent } from "./nap-tab/customer-data/component/company-contact-information/cust-company-contact-information.component";
 import { UcShowErrorsModule } from "@adins/uc-show-errors";
 import { CustCompanyFinancialDataComponent } from "./nap-tab/customer-data/component/company-financial-data/cust-company-financial-data.component";
@@ -87,6 +89,7 @@ import { AppFinDataComponent } from './nap-tab/app-fin-data/app-fin-data.compone
         CommissionAddComponent,
         FormAddDynamicComponent,
         CustShareholderComponent,
+        AppTcComponent,
         CustLegalDocComponent,
         UcinputnumberComponent,
         InsuranceDataComponent,
