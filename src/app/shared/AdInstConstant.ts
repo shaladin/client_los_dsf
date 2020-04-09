@@ -108,12 +108,10 @@ export class AdInsConstant {
   public static GetAssetAccessoryByCode = "http://localhost:5000/AssetAccessory/GetAssetAccessoryByCode";
 
   //Asset Master
-  public static GetAssetMasterTypeByFullAssetCode = "http://localhost:5000/AssetMaster/GetAssetMasterTypeByFullAssetCode";
-  public static GetAssetMasterForLookupEmployee = "http://localhost:5000/AssetMaster/GetAssetMasterForLookupEmployee";
+  public static GetAssetMasterTypeByFullAssetCode = environment.FoundationR3Url + "/AssetMaster/GetAssetMasterTypeByFullAssetCode";
+  public static GetAssetMasterForLookupEmployee = environment.FoundationR3Url + "/AssetMaster/GetAssetMasterForLookupEmployee";
 
   //ADDR TYPE
-  
-    //ADDR TYPE
   public static AddrTypeLegal = "LEGAL";
   public static AddrTypeResidence = "RESIDENCE";
   public static AddrTypeMailing = "MAILING";

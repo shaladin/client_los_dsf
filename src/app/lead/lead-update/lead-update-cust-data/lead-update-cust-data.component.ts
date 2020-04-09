@@ -26,14 +26,14 @@ import { RefProfessionObj } from 'app/shared/model/RefProfessionObj.Model';
 })
 
 export class LeadUpdateCustDataComponent implements OnInit {
-  //@Input() LeadId: number;
+  @Input() LeadId: number;
 
   jobAddrId: any;
   othBizAddrId: any;
   jobDataId: any;
   rowVersion: any;
   typePage: string;
-  LeadId: any;
+  //LeadId: any;
   addEditLeadCustPersonal: any;
   jobAddressObj: any;
   otherAddressObj: any;
