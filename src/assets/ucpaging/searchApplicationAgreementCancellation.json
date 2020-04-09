@@ -1,0 +1,160 @@
+{
+    "title": "Application/Agreement Cancellation Paging",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "textbox",
+            "name": "APP_NO",
+            "id": "AppNoId",
+            "value": "",
+            "label": "Application No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "AGRMNT_NO",
+            "id": "AgrmntNoId",
+            "value": "",
+            "label": "Agreement No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "PROD_OFFERING_NAME",
+            "id": "ProdOfferingNameId",
+            "value": "",
+            "label": "Product Offering Name",
+            "placeholder": "Placeholder"
+        }
+    ],
+    "querystring": {
+        "select": "SELECT ap.APP_NO AS AppNo, agr.AGRMNT_NO AS AgrmntNo, apcust.CUST_NAME AS CustName, ap.PROD_OFFERING_NAME AS ProdOfferingName, ap.APP_ID AS AppId, agr.AGRMNT_ID AS AgrmntId, apcust.APP_CUST_ID AS AppCustId, agr.AGRMNT_STAT AS AgrmntStat",
+        "from": "FROM dbo.APP ap WITH(NOLOCK) LEFT JOIN dbo.APP_CUST apcust WITH(NOLOCK) ON ap.APP_ID = apcust.APP_ID LEFT JOIN dbo.AGRMNT agr WITH(NOLOCK) ON agr.APP_ID = ap.APP_ID"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "APPLICATION NO",
+            "name": "AppNo"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "AGREEMENT NO",
+            "name": "AgrmntNo"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "CUSTOMER NAME",
+            "name": "CustName"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "PRODUCT OFFERING NAME",
+            "name": "ProdOfferingName"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Action",
+            "name": "edit"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "link",
+            "position": "center",
+            "property": "AppNo",
+            "path": "",
+            "param": [
+                {
+                    "type": "AppId",
+                    "property": "AppId"
+                }
+            ]
+        },
+        {
+            "type": "link",
+            "position": "center",
+            "property": "AgrmntNo",
+            "path": "",
+            "param": [
+                {
+                    "type": "AgrmntId",
+                    "property": "AgrmntId"
+                }
+            ]
+        },
+        {
+            "type": "link",
+            "position": "center",
+            "property": "CustName",
+            "path": "",
+            "param": [
+                {
+                    "type": "AppCustId",
+                    "property": "AppCustId"
+                }
+            ]
+        },
+        {
+            "type": "link",
+            "position": "center",
+            "property": "ProdOfferingName",
+            "path": "",
+            "param": [
+                {
+                    "type": "AppId",
+                    "property": "AppId"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "switch",
+                    "case": [
+                        {
+                            "conditions": [
+                                {
+                                    "property": "AgrmntStat",
+                                    "value": "CANCEL",
+                                    "restriction": "NEQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "/AdminProcess/AgreementCancellation/Detail",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "AppId",
+                                        "property": "AppId"
+                                    },
+                                    {
+                                        "type": "AgrmntId",
+                                        "property": "AgrmntId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
