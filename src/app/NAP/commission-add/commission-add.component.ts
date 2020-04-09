@@ -89,8 +89,8 @@ export class CommissionAddComponent implements OnInit {
     };
     this.http.post(url,objApi).subscribe(
       (response) => {
-        console.log("response edit comm");
-        console.log(response);
+        // console.log("response edit comm");
+        // console.log(response);
         var tempObj = response[AdInsConstant.ReturnObj];
         if(tempObj != null){
           this.isAutoGenerate=false;
@@ -99,7 +99,7 @@ export class CommissionAddComponent implements OnInit {
           this.GetFormAddDynamicObj(AdInsConstant.ContentReferantor);
 
           setTimeout(() => {
-            console.log("TimeOut");
+            // console.log("TimeOut");
             var FormAdd1Idx = 0;
             var FormAdd2Idx = 0;
             var FormAdd3Idx = 0;
@@ -152,8 +152,8 @@ export class CommissionAddComponent implements OnInit {
         // console.log(response);
         this.ResultAppData = response;
         this.isFinishGetAppData = true;
-        console.log("Result app data");
-        console.log(this.ResultAppData);
+        // console.log("Result app data");
+        // console.log(this.ResultAppData);
         this.GetRuleSetName();
       },
       (error) => {
@@ -177,7 +177,7 @@ export class CommissionAddComponent implements OnInit {
     };
     this.http.post(url, obj).subscribe(
       (response) => {
-        console.log(response);
+        // console.log(response);
         this.viewIncomeInfoObj.UppingRate = response["DiffRateAmt"],
         this.viewIncomeInfoObj.InsuranceIncome = response["TotalInsCustAmt"] - response["TotalInsInscoAmt"],
         this.viewIncomeInfoObj.LifeInsuranceIncome = response["TotalLifeInsCustAmt"] - response["TotalLifeInsInscoAmt"],
@@ -206,22 +206,22 @@ export class CommissionAddComponent implements OnInit {
     };
     this.http.post(url, obj).subscribe(
       (response) => {
-        console.log(response);
+        // console.log(response);
         var listData = response[AdInsConstant.ReturnObj];
         for (var i = 0; i < listData.length; i++) {
           this.viewIncomeInfoObj.Other.push(listData[i].AppFeeAmt);
-          if (listData[i].MrFeeTypeCode == "ADMIN") {
+          if (listData[i].MrFeeTypeCode == AdInsConstant.MrFeeTypeCodeAdmin) {
             this.AdminFee = listData[i].AppFeeAmt;
             this.UppingAdminFee = listData[i].SellFeeAmt-listData[i].AppFeeAmt;
-            console.log("admin fee");
-            console.log(this.AdminFee);
-            console.log(this.UppingProvisionFee);
-          } else if (listData[i].MrFeeTypeCode == "PROVISION") {
+            // console.log("admin fee");
+            // console.log(this.AdminFee);
+            // console.log(this.UppingProvisionFee);
+          } else if (listData[i].MrFeeTypeCode == AdInsConstant.MrFeeTypeCodeProvision) {
             this.ProvisionFee = listData[i].AppFeeAmt;
             this.UppingProvisionFee = listData[i].SellFeeAmt-listData[i].AppFeeAmt;
-            console.log("provision fee");
-            console.log(this.ProvisionFee);
-            console.log(this.UppingProvisionFee);
+            // console.log("provision fee");
+            // console.log(this.ProvisionFee);
+            // console.log(this.UppingProvisionFee);
           }
         }
         this.isFinishGetAppFeeData = true;
@@ -293,22 +293,22 @@ export class CommissionAddComponent implements OnInit {
       }
       listTemp.push(temp);
     }
-    console.log("LIst temp");
-    console.log(listTemp);
+    // console.log("LIst temp");
+    // console.log(listTemp);
     var obj = {
       "RuleSetName": ruleSetName,
       "ListRequestAppCommissionRuleObjs": listTemp
     };
-    console.log(obj);
+    // console.log(obj);
     this.http.post(url, obj).subscribe(
       (response) => {
-        console.log("Cek Rule");
-        console.log(response);
-        console.log(response["length"]);
+        // console.log("Cek Rule");
+        // console.log(response);
+        // console.log(response["length"]);
 
         for(var i=0;i<response["length"];i++){
           var temp = response[i][AdInsConstant.ReturnObj].RuleDataObjects;
-          console.log(temp);
+          // console.log(temp);
           this.SaveRuleData(temp["ResultSupplier"], AdInsConstant.ContentSupplier, this.ContentObjSupplier[i].Key);
           this.SaveRuleData(temp["ResultSupplierEmp"], AdInsConstant.ContentSupplierEmp, this.ContentObjSupplier[i].Key);
         }
@@ -328,8 +328,8 @@ export class CommissionAddComponent implements OnInit {
   RuleSupplierEmpData: any = {};
   RuleReferantorData = new Array();
   private async SaveRuleData(obj, dataTo, content){
-    console.log(dataTo);
-    console.log(obj);
+    // console.log(dataTo);
+    // console.log(obj);
     var len = obj.AllocationFrom.length;
     var tempObj;
     var tempJobPosition = "";
@@ -398,7 +398,7 @@ export class CommissionAddComponent implements OnInit {
       };
       this.http.post(url, obj).subscribe(
         (response) => {
-          console.log(response);
+          // console.log(response);
           this.GetDDLContent(response[AdInsConstant.ReturnObj], AdInsConstant.ContentSupplier);
           this.GetContentName(AdInsConstant.ContentSupplierEmp);
         },
@@ -414,7 +414,7 @@ export class CommissionAddComponent implements OnInit {
       };
       this.http.post(url, obj).subscribe(
         (response) => {
-          console.log(response);
+          // console.log(response);
           this.GetDDLContent(response[AdInsConstant.ReturnObj], AdInsConstant.ContentSupplierEmp);
         },
         (error) => {
@@ -429,11 +429,11 @@ export class CommissionAddComponent implements OnInit {
       };
       this.http.post(url, obj).subscribe(
         (response) => {
-          console.log(response);
+          // console.log(response);
           this.ResultAppReferantor = response;
           this.isFinishGetAppReferantorData = true;
-          console.log("Result app ref");
-          console.log(this.ResultAppReferantor);
+          // console.log("Result app ref");
+          // console.log(this.ResultAppReferantor);
           this.GetDDLContent(response, AdInsConstant.ContentReferantor);
         },
         (error) => {
@@ -493,7 +493,7 @@ export class CommissionAddComponent implements OnInit {
       this.FormInputObjSupplier["isCalculated"] = false;
       this.FormInputObjSupplier["isDataInputed"] = false;
       this.OnForm1 = true;
-      console.log(this.FormInputObjSupplier);
+      // console.log(this.FormInputObjSupplier);
     } else if (content == AdInsConstant.ContentSupplierEmp) {
       this.FormInputObjSupplierEmpl["title"] = AdInsConstant.TitleSupplierEmp;
       this.FormInputObjSupplierEmpl["content"] = AdInsConstant.ContentSupplierEmp;
@@ -504,7 +504,7 @@ export class CommissionAddComponent implements OnInit {
       this.FormInputObjSupplierEmpl["isCalculated"] = false;
       this.FormInputObjSupplierEmpl["isDataInputed"] = false;
       this.OnForm2 = true;
-      console.log(this.FormInputObjSupplierEmpl);
+      // console.log(this.FormInputObjSupplierEmpl);
     } else if (content == AdInsConstant.ContentReferantor) {
       this.FormInputObjReferantor["title"] = AdInsConstant.TitleReferantor;
       this.FormInputObjReferantor["content"] = AdInsConstant.ContentReferantor;
@@ -515,13 +515,13 @@ export class CommissionAddComponent implements OnInit {
       this.FormInputObjReferantor["isCalculated"] = false;
       this.FormInputObjReferantor["isDataInputed"] = false;
       this.OnForm3 = true;
-      console.log(this.FormInputObjReferantor);
+      // console.log(this.FormInputObjReferantor);
     }
   }
 
   GetData(ev, data) {
     this.FormGetObj[data] = ev;
-    console.log(this.FormGetObj);
+    // console.log(this.FormGetObj);
     if(this.isCalculateData){
       if (this.FormGetObj[AdInsConstant.ContentSupplier] && data == AdInsConstant.ContentSupplier) {
         this.CalculateEachData(this.FormGetObj[AdInsConstant.ContentSupplier]);
@@ -555,7 +555,7 @@ export class CommissionAddComponent implements OnInit {
   }
 
   CalculateEachData(FormObj){
-    console.log(FormObj);
+    // console.log(FormObj);
     var arr = FormObj.get('arr') as FormArray;
     var len = arr["controls"].length;
     var tempTotalCommisionAmount=0;
@@ -582,13 +582,12 @@ export class CommissionAddComponent implements OnInit {
     for (var i = 0; i < len; i++) {
       var tempAppCommHObj = new AppCommissionHObj();
       var temp = arr["controls"][i].value;
-      console.log("Data at " + i);
-      console.log(temp);
+      // console.log("Data at " + i);
+      // console.log(temp);
       if(temp.ContentName == "") continue;
       tempAppCommHObj = this.PatchTempDataValue(temp, CommReceipientTypeCode);
 
-
-      console.log(tempAppCommHObj);
+      // console.log(tempAppCommHObj);
       this.listAppCommissionHObj.push(tempAppCommHObj);
     }
   }
@@ -641,20 +640,14 @@ export class CommissionAddComponent implements OnInit {
 
   isCalculated;
   SaveData() {
-    console.log(this.FormInputObjSupplier["isCalculated"]);
-    console.log(this.FormInputObjSupplierEmpl["isCalculated"]);
-    console.log(this.FormInputObjReferantor["isCalculated"]);
-    console.log(this.FormInputObjSupplier["isDataInputed"]);
-    console.log(this.FormInputObjSupplierEmpl["isDataInputed"]);
-    console.log(this.FormInputObjReferantor["isDataInputed"]);
     if( (!this.FormInputObjSupplier["isCalculated"] && this.FormInputObjSupplier["isDataInputed"]) || (!this.FormInputObjSupplierEmpl["isCalculated"] && this.FormInputObjSupplierEmpl["isDataInputed"]) || (!this.FormInputObjReferantor["isCalculated"] && this.FormInputObjReferantor["isDataInputed"]) ){
       this.toastr.errorMessage("Must Calculate First");
       return ;
     }
-    // if(this.Summary.TotalCommisionAmount > this.viewIncomeInfoObj.MaxAllocatedAmount){
-    //   this.toastr.errorMessage("Total Commision Amount cannot more than Max Allocated Amount");
-    //   return;
-    // }
+    if(this.Summary.TotalCommisionAmount > this.viewIncomeInfoObj.MaxAllocatedAmount){
+      this.toastr.errorMessage("Total Commision Amount cannot more than Max Allocated Amount");
+      return;
+    }
     this.listAppCommissionHObj = new Array();
     if (this.FormGetObj != null) {
       if (this.FormGetObj[AdInsConstant.ContentSupplier] && this.FormGetObj[AdInsConstant.ContentSupplier].value.arr.length > 0) {
@@ -667,8 +660,8 @@ export class CommissionAddComponent implements OnInit {
         this.DataFilterAppCommH(this.FormGetObj[AdInsConstant.ContentReferantor], AdInsConstant.CommissionReceipientTypeCodeReferantor);
       }
 
-      console.log(this.listAppCommissionHObj);
-      var url = environment.losUrl + AdInsConstant.AddAppCommissionData;
+      // console.log(this.listAppCommissionHObj);
+      var url = environment.losUrl + AdInsConstant.AddOrEditAppCommissionData;
       var obj = {
         AppId: this.AppId,
         ListAppCommissionHObj: this.listAppCommissionHObj,
@@ -688,6 +681,6 @@ export class CommissionAddComponent implements OnInit {
   }
 
   Cancel(){
-    // belom tau kemana
+    this.router.navigate(["/Nap/CommissionPaging"]);
   }
 }

@@ -52,7 +52,7 @@ export class AdInsConstant {
     public static GetListAppAssetSupplEmpByListAppAssetId = "/AppAssetSupplEmp/GetListAppAssetSupplEmpByListAppAssetId";
     
     // App Commission
-    public static AddAppCommissionData = "/AppCommission/AddAppCommissionData";
+    public static AddOrEditAppCommissionData = "/AppCommission/AddOrEditAppCommissionData";
     public static GetAppCommissionDataForEditByAppId = environment.losUrl + "/AppCommission/GetAppCommissionDataForEditByAppId";
     public static DeleteAppCommissionData = environment.losUrl + "/AppCommission/DeleteAppCommissionData";
     public static GetAppCommissionRule = "/AppCommission/GetAppCommissionRule";
@@ -677,6 +677,9 @@ export class AdInsConstant {
 
   //App Fee
   public static GetListAppFeeByAppId = environment.losUrl + "/AppFee/GetListAppFeeByAppId";
+  public static MrFeeTypeCodeAdmin = "ADMIN";
+  public static MrFeeTypeCodeProvision = "PROVISION";
+
 
   //App Reserved Fund
   public static AddEditAppReservedFund = environment.losUrl + "/AppReservedFund/AddEditAppReservedFund";
