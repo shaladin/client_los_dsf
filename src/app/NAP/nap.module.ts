@@ -32,9 +32,7 @@ import { CustPersonalContactInformationComponent } from "./nap-tab/customer-data
 import { CustPersonalFinancialDataComponent } from "./nap-tab/customer-data/component/personal-financial-data/cust-personal-financial-data.component";
 import { SearchCrossAppComponent } from './nap-tab/app-model/search-cross-app/search-cross-app.component';
 import { UCSearchModule } from '@adins/ucsearch';
-import { CommissionPagingComponent } from './commission-paging/commission-paging.component';
-import { CommissionAddComponent } from './commission-add/commission-add.component';
-import { FormAddDynamicComponent } from "./commission-add/form-add-dynamic/form-add-dynamic.component";
+import { CommissionPagingComponent } from '../credit-process/commission-paging/commission-paging.component';
 // import { CustFinancialDataComponent } from "./nap-tab/customer-data/component/financial-data/cust-financial-data.component";
 import { CustBankAccountComponent } from "./nap-tab/customer-data/component/bank-account/cust-bank-account.component";
 import { CustJobDataComponent } from "./nap-tab/customer-data/component/job-data/cust-job-data.component";
@@ -49,8 +47,6 @@ import { CustLegalDocComponent } from "./nap-tab/customer-data/component/legal-d
 import { UcinputnumberComponent } from "./nap-tab/customer-data/component/ucinputnumber/ucinputnumber.component";
 import { InsuranceDataComponent } from "./nap-tab/insurance-data/insurance-data.component";
 import { AssetDataComponent } from "./nap-tab/asset-data/asset-data.component";
-import { RsvFundPagingComponent } from "./reserved-fund/reserved-fund-paging/reserved-fund-paging.component";
-import { RsvFundViewComponent } from "./reserved-fund/reserved-fund-view/reserved-fund-view.component";
 import { AppFinDataComponent } from './nap-tab/app-fin-data/app-fin-data.component';
 import { AppSubsidyComponent } from './nap-tab/app-fin-data/component/app-subsidy/app-subsidy.component';
 import { UcShowErrorsModule } from "@adins/uc-show-errors";
@@ -59,6 +55,9 @@ import { AppSubsidyAddEditComponent } from './nap-tab/app-fin-data/component/app
 import { NgbModule, NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { AppFeeComponent } from './nap-tab/app-fin-data/component/app-fee/app-fee.component';
 import { NgxCurrencyModule } from 'ngx-currency';
+import { PhnVerifPagingComponent } from "./phone-verif/phone-verif-paging/phone-verif-paging.component";
+import { RsvFundPagingComponent } from "./RFN4W/reserved-fund/reserved-fund-paging/reserved-fund-paging.component";
+import { RsvFundViewComponent } from "app/credit-process/reserved-fund/reserved-fund-view/reserved-fund-view.component";
 export const customCurrencyMaskConfig = {
     align: "left",
     allowNegative: true,
@@ -70,6 +69,8 @@ export const customCurrencyMaskConfig = {
     thousands: ",",
     nullable: false
 };
+
+
 
 @NgModule({
     declarations: [
@@ -101,8 +102,6 @@ export const customCurrencyMaskConfig = {
         CustCompanyFinancialDataComponent,
         SearchCrossAppComponent,
         CommissionPagingComponent,
-        CommissionAddComponent,
-        FormAddDynamicComponent,
         CustShareholderComponent,
         AppFinDataComponent,
         AppSubsidyComponent,
@@ -116,6 +115,8 @@ export const customCurrencyMaskConfig = {
         RsvFundPagingComponent,
         RsvFundViewComponent,
         AppFinDataComponent,
+        AppFinDataComponent,
+        PhnVerifPagingComponent
         ],
     imports: [ 
         NapRoutingModule,

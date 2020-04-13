@@ -1,40 +1,56 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { PurchaseOrderPagingComponent } from './purchase-order/purchase-order-paging/purchase-order-paging.component';
-import { PurchaseOrderComponent } from './purchase-order/purchase-order/purchase-order.component';
 import { DeliveryOrderDetailComponent } from './delivery-order/delivery-order-detail/delivery-order-detail.component';
 import { DeliveryOrderPagingComponent } from './delivery-order/delivery-order-paging/delivery-order-paging.component';
-import { PurchaseOrderDetailComponent } from './purchase-order/purchase-order-detail/purchase-order-detail.component';
+import { PreGoLivePagingComponent } from './pre-go-live/pre-go-live-paging/pre-go-live-paging.component';
+import { PreGoLiveComponent } from './pre-go-live/pre-go-live/pre-go-live.component';
+import { ApplicationAgreementCancellationPagingComponent } from './application-agreement-cancellation/application-agreement-cancellation-paging/application-agreement-cancellation-paging.component';
+import { ApplicationAgreementCancellationDetailComponent } from './application-agreement-cancellation/application-agreement-cancellation-detail/application-agreement-cancellation-detail.component';
 import { AgrmntActivationPagingComponent } from './agrmnt-activation/agrmnt-activation-paging/agrmnt-activation-paging.component';
 import { AgrmntActivationDetailComponent } from './agrmnt-activation/agrmnt-activation-detail/agrmnt-activation-detail.component';
-import { CustConfirmationPagingComponent } from './cust-confirmation/cust-confirmation-paging/cust-confirmation-paging.component';
-import { CustConfirmationDetailComponent } from './cust-confirmation/cust-confirmation-detail/cust-confirmation-detail.component';
-import { CustConfirmationSubjViewComponent } from './cust-confirmation/cust-confirmation-subj-view/cust-confirmation-subj-view.component';
-import { CustConfirmationSubjDetailComponent } from './cust-confirmation/cust-confirmation-subj-detail/cust-confirmation-subj-detail.component';
+import { OfferingValidityCheckingApprovalPagingComponent } from './offering-validity-checking-approval/offering-validity-checking-approval-paging/offering-validity-checking-approval-paging.component';
+import { OfferingValidityCheckingApprovalDetailComponent } from './offering-validity-checking-approval/offering-validity-checking-approval-detail/offering-validity-checking-approval-detail.component';
+import { DocSignerDetailComponent } from './doc-signer/doc-signer-detail/doc-signer-detail.component';
+import { DocSignerPagingComponent } from './doc-signer/doc-signer-paging/doc-signer-paging.component';
+import { PreGoLiveRequestForApprovalComponent } from './pre-go-live/pre-go-live-request-for-approval/pre-go-live-request-for-approval.component';
 
 const routes: Routes = [
   {
     path: '',
     children: [
       {
-        path: 'PurchaseOrder/Paging',
-        component: PurchaseOrderPagingComponent,
+        path: 'PreGoLive/Paging',
+        component: PreGoLivePagingComponent,
         data: {
-          title: 'Purchase Order Paging'
+          title: 'PreGoLive Paging'
         }
       },
       {
-        path: 'PurchaseOrder/PO',
-        component: PurchaseOrderComponent,
+        path: 'PreGoLive/Detail',
+        component: PreGoLiveComponent,
         data: {
-          title: 'Purchase Order'
+          title: 'PreGoLive Detail'
         }
       },
       {
-        path: 'PurchaseOrder/PO/Detail',
-        component: PurchaseOrderDetailComponent,
+        path: 'PreGoLive/RequestApproval',
+        component: PreGoLiveRequestForApprovalComponent,
         data: {
-          title: 'Purchase Order Detail'
+          title: 'PreGoLive Request For Approval'
+        }
+      },
+      {
+        path: 'AgreementCancellation/Paging',
+        component: ApplicationAgreementCancellationPagingComponent,
+        data: {
+          title: 'Agreement Cancellation Paging'
+        }
+      },
+      {
+        path: 'AgreementCancellation/Detail',
+        component: ApplicationAgreementCancellationDetailComponent,
+        data: {
+          title: 'Agreement Cancellation Detail'
         }
       },
       {
@@ -66,33 +82,33 @@ const routes: Routes = [
         }
       },
       {
-        path: 'CustConfirmation/Paging',
-        component: CustConfirmationPagingComponent,
+        path: 'OfferingValidityApproval/Paging',
+        component: OfferingValidityCheckingApprovalPagingComponent,
         data: {
-          title: 'Customer Confirmation Paging'
+          title: 'Offering Validity Checking And Approval Paging'
         }
       },
       {
-        path: 'CustConfirmation/Detail',
-        component: CustConfirmationDetailComponent,
+        path: 'OfferingValidityApproval/Detail',
+        component: OfferingValidityCheckingApprovalDetailComponent,
         data: {
-          title: 'Customer Confirmation Detail'
+          title: 'Offering Validity Checking And Approval Detail'
         }
       },
       {
-        path: 'CustConfirmation/Subj/View',
-        component: CustConfirmationSubjViewComponent,
+        path: 'DocumentSigner/Paging',
+        component: DocSignerPagingComponent,
         data: {
-          title: 'Customer Confirmation Subject View'
+          title: 'Document Signer Paging'
         }
       },
       {
-        path: 'CustConfirmation/Subj/Detail',
-        component: CustConfirmationSubjDetailComponent,
+        path: 'DocumentSigner/Detail',
+        component: DocSignerDetailComponent,
         data: {
-          title: 'Customer Confirmation Subject Detail'
+          title: 'Document Signer Detail'
         }
-      },
+      }
     ]
   }
 ];

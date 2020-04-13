@@ -40,7 +40,5 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
-src/environments/environment.ts
-src/environments/environment.prod.ts
 /.vs/LOSR3FrontEnd/v16
 /.vs

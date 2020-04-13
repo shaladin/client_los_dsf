@@ -1,0 +1,130 @@
+{
+    "title": "Document",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "textbox",
+            "name": "A.APP_NO",
+            "id": "ApplicationNoId",
+            "value": "",
+            "label": "Application Number",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "B.AGRMNT_NO",
+            "id": "AggrementNoId",
+            "value": "",
+            "label": "Aggrement No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "B.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "B.PROD_OFFERING_NAME",
+            "id": "ProdNameId",
+            "value": "",
+            "label": "Product Offering Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "B.AGRMNT_STAT",
+            "id": "StatusId",
+            "value": "",
+            "label": "Status Of Need Doc Print",
+            "placeholder": "Placeholder"
+        }
+    ],
+    "querystring": {
+        "select":"SELECT A.APP_NO AS ApplicationNo,B.AGRMNT_NO AS AggrementNo,B.CUST_NAME AS CustName,B.PROD_OFFERING_NAME AS ProdName,B.AGRMNT_STAT AS Status, B.AGRMNT_ID AS AgrmntId",
+        "from":"FROM dbo.APP A WITH (NOLOCK) JOIN dbo.AGRMNT B ON A.APP_ID = B.APP_ID"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Application No",
+            "name": "ApplicationNo"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Aggrement No",
+            "name": "AggrementNo"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Customer Name",
+            "name": "CustName"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Product  Offering Name",
+            "name": "ProdName"
+        },
+        {
+            "type": "sort",
+            "position": "right",
+            "label": "Status of Need Doc Print",
+            "name": "Status"
+        },
+        {
+            "type": "Print",
+            "position": "center",
+            "label": "Action"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "ApplicationNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "AggrementNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "ProdName"
+        },
+        {
+            "type": "text",
+            "position": "right",
+            "property": "Status"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "edit",
+                    "path": "/Document/DocPrint/View",
+                    "param": [
+                        {
+                            "type": "AgrmntId",
+                            "property": "AgrmntId"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

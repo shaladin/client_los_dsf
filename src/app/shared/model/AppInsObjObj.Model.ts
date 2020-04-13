@@ -36,6 +36,9 @@ export class AppInsObjObj {
     TotalInscoDiscAmt: number;
     TotalInsCustAmt: number;
     TotalInsInscoAmt: number;
+    CustInscoBranchName: string;
+    CustCvgAmt: number;
+    CustNotes: string;
     RowVersion: string;
 
 constructor() { 
@@ -76,6 +79,9 @@ constructor() {
     this.TotalInscoDiscAmt = 0;
     this.TotalInsCustAmt = 0;
     this.TotalInsInscoAmt = 0;
+    this.CustCvgAmt = 0;
+    this.CustInscoBranchName = "";
+    this.CustNotes = "";
     this.RowVersion = "";
     }
 }

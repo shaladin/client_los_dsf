@@ -3,7 +3,7 @@
     <div class="card">
       <div class="card-header header-title">
         <div class="row">
-          <div class="col-md-4" style="text-align-last: right">
+          <div class="col-md-12" style="text-align-last: right">
             <button type="button" class="backButton" [routerLink]="[]" translate>
               <i class="ft-arrow-left"></i> Back
             </button>
@@ -40,7 +40,7 @@
                           {{i + 1}}
                         </td>
                         <td [formGroupName]="i" class="text-center">
-                          <label>{{DocName[i]}}</label>
+                          <label>{{AppTcForm.controls['AppTc'].value[i].TcName}}</label>
                         </td>
                         <td [formGroupName]="i" class="text-center">
                           <label>{{AppTcForm.controls['AppTc'].value[i].PriorTo}}</label>
@@ -62,7 +62,7 @@
                   </table>
               </ng-container>
               <div class="form-actions right">
-                <button type="submit" class="btn btn-raised btn-primary" (click)="Save()">
+                <button type="submit" class="btn btn-raised btn-primary" (click)="SaveData()">
                   <i class="fa fa-check-square-o"></i> Save
                 </button>
               </div>
