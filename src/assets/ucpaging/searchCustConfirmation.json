@@ -116,7 +116,7 @@
             "action": [
                 {
                     "type": "edit",
-                    "path": "/AdminProcess/CustConfirmation/Detail",
+                    "path": "/Nap/AdminProcess/CustConfirmation/Detail",
                     "param": [
                         {
                             "type": "AgrmntId",

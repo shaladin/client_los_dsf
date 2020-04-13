@@ -2,7 +2,7 @@
   "title": "",
   "subsection": [
     {
-      "subSectionId": "New Application",
+      "subSectionId": "NewApplication",
       "subSectionTitle": "Main Information",
       "mainInfoUrl": "http://localhost:5001/Generic/GetDataViewBySQL",
       "mainInfo": [

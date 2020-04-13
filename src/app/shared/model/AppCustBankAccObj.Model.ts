@@ -1,15 +1,16 @@
 export class AppCustBankAccObj {
-    AppCustBankAccId: any;
-    AppCustId: any;
-    BankCode: any;
-    BankName: any;
-    BankBranch: any;
-    BankAccNo: any;
-    BankAccName: any;
-    IsBankStmnt: any;
-    BankBranchRegRptCode: any;
-    BalanceAmt: any;
-    IsDefault: any;
+    AppCustBankAccId: number;
+    AppCustId: number;
+    BankCode: string;
+    BankName: string;
+    BankBranch: string;
+    BankAccNo: string;
+    BankAccName: string;
+    IsBankStmnt: boolean;
+    BankBranchRegRptCode: string;
+    BalanceAmt: number;
+    IsDefault: boolean;
+    BankInfo: string;
     AppCustBankStmntObjs: any;
 
 constructor() { 
