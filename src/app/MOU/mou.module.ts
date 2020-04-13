@@ -14,7 +14,6 @@ import { UclookupgenericModule } from '@adins/uclookupgeneric';
 import { UcviewgenericModule } from '@adins/ucviewgeneric';
 import { UcaddressModule } from "@adins/ucaddress";
 import { UCSearchComponent } from '@adins/ucsearch';
-import { UcinputnumberModule } from '@adins/ucinputnumber';
 import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
 import { UcgridfooterModule, UcgridfooterComponent } from "@adins/ucgridfooter";
 import { MainInfoComponent } from 'app/view/main-info/main-info.component';
@@ -56,6 +55,8 @@ import { MouReviewGeneralComponent } from "./mou-customer/mou-review/mou-review-
 import { MouViewApprovalHistoryComponent } from './mou-customer/mou-view-approval-history/mou-view-approval-history.component';
 import { LegalReviewPagingComponent } from './legal-review/legal-review-paging/legal-review-paging.component';
 import { LegalReviewDetailComponent } from './legal-review/legal-review-detail/legal-review-detail.component';
+import { UcinputnumberModule } from "@adins/ucinputnumber";
+import { MouCustomerInquiryComponent } from './mou-customer/mou-customer-inquiry/mou-customer-inquiry.component';
 @NgModule({
   imports: [
     MouRoutingModule,
@@ -124,7 +125,8 @@ import { LegalReviewDetailComponent } from './legal-review/legal-review-detail/l
     MouDetailFactoringComponent,
     MouCustAssetComponent,
     MouCustAssetDetailComponent,
-    MouViewApprovalHistoryComponent
+    MouViewApprovalHistoryComponent,
+    MouCustomerInquiryComponent
   ],
   exports: [],
   providers: [NGXToastrService],
@@ -137,6 +139,7 @@ import { LegalReviewDetailComponent } from './legal-review/legal-review-detail/l
     MouApprovalFactoringComponent,
     MouRequestAddcollComponent,
     MouRequestAddcollAddeditComponent,
+    MouCustListedCustFctrDetailComponent
   ]
 })
 

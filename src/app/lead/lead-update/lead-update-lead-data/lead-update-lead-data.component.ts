@@ -369,6 +369,44 @@ export class LeadUpdateLeadDataComponent implements OnInit {
   //   this.wizard.goToPreviousStep();
   // }
 
+  save(){
+    if(this.typePage == "edit") {
+      this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+      this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
+      this.setLeadAsset();
+      this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
+      this.setLeadApp();
+      this.http.post(this.editLeadData, this.leadInputLeadDataObj).subscribe(
+        (response) => {
+          console.log(response);
+          this.toastr.successMessage(response["message"]);
+          this.router.navigate(["/Lead/LeadUpdate/Paging"]);
+          // console.log(response);
+          // this.wizard.goToNextStep();
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    } else {
+      this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+      this.setLeadAsset();
+      this.setLeadApp();
+      this.http.post(this.editLeadData, this.leadInputLeadDataObj).subscribe(
+        (response) => {
+          console.log(response);
+          this.toastr.successMessage(response["message"]);
+          this.router.navigate(["/Lead/LeadUpdate/Paging"]);
+          // console.log(response);
+          // this.wizard.goToNextStep();
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
   SaveForm(){
     if(this.typePage == "edit") {
       this.leadInputLeadDataObj = new LeadInputLeadDataObj();

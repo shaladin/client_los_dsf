@@ -39,14 +39,9 @@ export class MouCustTcComponent implements OnInit {
         return response;
       }),
       mergeMap((response) => {
-        if(response['MrMouTypeCode'] == "GENERAL"){
-          var mouCustClause = new MouCustClauseObj();
-          mouCustClause.MouCustId = this.MouCustId;
-          return this.httpClient.post(AdInsConstant.GetMouCustClauseByMouCustId, mouCustClause);
-        }
-        else{
-          return null;
-        }
+        var mouCustClause = new MouCustClauseObj();
+        mouCustClause.MouCustId = this.MouCustId;
+        return this.httpClient.post(AdInsConstant.GetMouCustClauseByMouCustId, mouCustClause);
       }),
       mergeMap((response) => {
         var mouCustClause = response;

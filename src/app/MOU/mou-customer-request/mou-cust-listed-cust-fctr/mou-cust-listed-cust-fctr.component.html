@@ -1,11 +1,17 @@
 <lib-ucSubsection [id]="'MouCustListedCustFctrId'" [title]="'Listed Customer Factoring'" [panel]="'MouCustListedCustFctrSection'"></lib-ucSubsection>
 <div id="MouCustListedCustFctrSection">
   <div class="col-md-12">
-    
+    <form class="form form-horizontal" [formGroup]="MouCustIsListedForm" #enjiForm="ngForm" novalidate
+      (ngSubmit)="enjiForm.form.valid && Save(enjiForm)">
+      <label class="col-md-3 adInsLabel adins-required-label" for="IsListedCust" style="padding-left: 0;" translate>Listed Customer Factoring</label>
+      <div class="col-md-9" style="display: inline-block;">
+        <input type="checkbox" formControlName="IsListedCust" />
+      </div>
+    </form>
   </div>
   <div class="col-md-12" style="padding: 0; text-align: right;">
     <span class="mr-1">
-      <button type="button" class="addButton" (click)="openModalAddCustFctr()" translate>
+      <button type="button" class="addButton" (click)="openModalAddCustFctr()" [disabled]="MouCustIsListedForm.controls.IsListedCust.value == false" translate>
         <i class="ft-plus-circle"></i> Add
       </button>
     </span>
@@ -15,26 +21,26 @@
       <thead>
         <tr class="table-header">
           <th style="text-align: left;">
-            <span class="thead-header" name='custNo' translate>Customer No</span>
+            <span class="thead-header" name='custNo' translate>Customer No.</span>
           </th>
           <th style="text-align: left;">
             <span class="thead-header" name='custName' translate>Customer Name</span>
           </th>
           <th style="text-align: left;">
-            <span class="thead-header" name='relationship' translate>Relationship</span>
+            <span class="thead-header" name='custType' translate>Customer Type</span>
           </th>
           <th style="text-align: center;">
-            <span class="thead-header" name='action' translate>Action</span>
+            <span class="thead-header" name='action' translate>Delete</span>
           </th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of CustGrpList; let i = index">
+        <tr *ngFor="let item of listedCusts; let i = index">
           <td style="text-align: left;">{{item.CustNo}}</td>
           <td style="text-align: left;">{{item.CustName}}</td>
-          <td style="text-align: left;">{{item.Relationship}}</td>
+          <td style="text-align: left;">{{item.MrCustTypeCode}}</td>
           <td style="text-align: center;">
-            <a (click)="deleteCustGrp(item.CustGrpId, i)">
+            <a (click)="deleteCustFctr(item.MouListedCustFctrId, i)">
               <i class="fas fa-trash"></i>
             </a>
           </td>
@@ -42,15 +48,4 @@
       </tbody>
     </table>
   </div>
-</div>
-<br>
-<br>
-<br>
-<div class="form-actions right" style="text-align: right;">
-  <button type="button" class="btn btn-raised btn-warning mr-1" (click)="back()" translate>
-    <i class="ft-x"></i> Back
-  </button>
-  <button type="submit" class="btn btn-raised btn-primary" (click)="next()" translate>
-    <i class="fa fa-check-square-o"></i> Save and Continue
-  </button>
 </div>
