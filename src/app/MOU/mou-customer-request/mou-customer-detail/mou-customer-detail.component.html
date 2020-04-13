@@ -39,8 +39,21 @@
                 <app-mou-request-addcoll *ngIf="mouType == 'FACTORING' && wizard.currentStepIndex == '2'" [MouCustId]="mouCustId" (ResponseMouAddColl)="mouAddColl($event)"></app-mou-request-addcoll>
               </aw-wizard-step>
               <aw-wizard-step [stepTitle]="'Term and Condition'" [navigationSymbol]="{ symbol: mouType == 'FACTORING' ? '4' : '3', fontFamily: 'FontAwesome' }">
-                <app-mou-cust-tc *ngIf="mouType == 'GENERAL' && wizard.currentStepIndex == '2'" [MouCustId]="mouCustId" (ResponseMouCustTc)="mouCustTc($event)"></app-mou-cust-tc>
-                <app-mou-cust-tc *ngIf="mouType == 'FACTORING' && wizard.currentStepIndex == '3'" [MouCustId]="mouCustId" (ResponseMouCustTc)="mouCustTc($event)"></app-mou-cust-tc>
+                <app-mou-cust-tc #MouTcGeneral *ngIf="mouType == 'GENERAL' && wizard.currentStepIndex == '2'" [MouCustId]="mouCustId" (ResponseMouCustTc)="mouCustTc($event)"></app-mou-cust-tc>
+                <app-mou-cust-tc #MouTcFactoring *ngIf="mouType == 'FACTORING' && wizard.currentStepIndex == '3'" [MouCustId]="mouCustId" (ResponseMouCustTc)="mouCustTc($event)"></app-mou-cust-tc>
+                <br>
+                <br>
+                <br>
+                <div class="col-md-12" style="padding: 0;">
+                  <div class="form-actions right" style="text-align: right;">
+                    <button type="button" class="btn btn-raised btn-warning mr-1" (click)="backFromMouTc()" translate>
+                      <i class="ft-x"></i> Back
+                    </button>
+                    <button type="button" class="btn btn-raised btn-primary" (click)="saveMouTc()" translate>
+                      <i class="fa fa-check-square-o"></i> Save and Continue
+                    </button>
+                  </div>
+                </div>
               </aw-wizard-step>
               <aw-wizard-step [stepTitle]="'Document'" [navigationSymbol]="{ symbol: mouType == 'FACTORING' ? '5' : '4', fontFamily: 'FontAwesome' }">
                 <div class="col-md-12" style="padding: 0; text-align: right;">
