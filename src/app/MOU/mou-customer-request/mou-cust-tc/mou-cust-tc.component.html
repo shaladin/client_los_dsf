@@ -1,5 +1,5 @@
 <form class="form form-horizontal" [formGroup]="MouCustTcForm" #enjiForm="ngForm" novalidate
-  (ngSubmit)="enjiForm.form.valid && Save(enjiForm)">
+  (ngSubmit)="Save()">
   <lib-ucSubsection [id]="'MouCustTcFieldId'" [title]="'Term and Condition'" [panel]="'MouCustTcSection'"></lib-ucSubsection>
   <div id="MouCustTcSection">
     <div class="col-md-12" style="padding: 0; text-align: right;">
@@ -45,28 +45,28 @@
             </td>
             <td style="text-align: left;">
               <input type="date" class="form-control adInsInput" formControlName="ExpiredDt"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && MouCustTcForm.get('MouCustTcList').at(i).controls.ExpiredDt.invalid }"
+                [ngClass]="{ 'is-invalid': formSubmitted && MouCustTcForm.get('MouCustTcList').at(i).controls.ExpiredDt.invalid }"
                 [attr.disabled]="MouCustTcForm.get('MouCustTcList').at(i).controls.IsChecked.value == true ? null : ''" />
-              <lib-uc-show-errors [control]="MouCustTcForm.get('MouCustTcList').at(i).controls.ExpiredDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+              <lib-uc-show-errors [control]="MouCustTcForm.get('MouCustTcList').at(i).controls.ExpiredDt" [submit]="formSubmitted"></lib-uc-show-errors>
             </td>
             <td style="text-align: left;">
               <input type="date" class="form-control adInsInput" formControlName="PromisedDt"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && MouCustTcForm.get('MouCustTcList').at(i).controls.PromisedDt.invalid }"
+                [ngClass]="{ 'is-invalid': formSubmitted && MouCustTcForm.get('MouCustTcList').at(i).controls.PromisedDt.invalid }"
                 [attr.disabled]="MouCustTcForm.get('MouCustTcList').at(i).controls.IsChecked.value == true ? '' : null" />
-              <lib-uc-show-errors [control]="MouCustTcForm.get('MouCustTcList').at(i).controls.PromisedDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+              <lib-uc-show-errors [control]="MouCustTcForm.get('MouCustTcList').at(i).controls.PromisedDt" [submit]="formSubmitted"></lib-uc-show-errors>
             </td>
             <td style="text-align: left;">
               <textarea class="form-control adInsInput" formControlName="Notes"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && MouCustTcForm.get('MouCustTcList').at(i).controls.Notes.invalid }">
+                [ngClass]="{ 'is-invalid': formSubmitted && MouCustTcForm.get('MouCustTcList').at(i).controls.Notes.invalid }">
               </textarea>
-              <lib-uc-show-errors [control]="MouCustTcForm.get('MouCustTcList').at(i).controls.Notes" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+              <lib-uc-show-errors [control]="MouCustTcForm.get('MouCustTcList').at(i).controls.Notes" [submit]="formSubmitted"></lib-uc-show-errors>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
-  <br>
+  <!-- <br>
   <br>
   <br>
   <div class="form-actions right" style="text-align: right;">
@@ -76,5 +76,5 @@
     <button type="submit" class="btn btn-raised btn-primary" translate>
       <i class="fa fa-check-square-o"></i> Save and Continue
     </button>
-  </div>
+  </div> -->
 </form>
