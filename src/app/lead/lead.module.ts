@@ -48,6 +48,7 @@ import { LeadUpdatePageComponent } from "./lead-update/lead-update-page/lead-upd
 import { LeadUpdateMainInfoComponent } from "./lead-update/lead-update-main-info/lead-update-main-info.component";
 import { LeadUpdateCustDataComponent } from "./lead-update/lead-update-cust-data/lead-update-cust-data.component";
 import { LeadUpdateLeadDataComponent } from "./lead-update/lead-update-lead-data/lead-update-lead-data.component";
+ 
 
 @NgModule({
   imports: [
@@ -100,8 +101,12 @@ import { LeadUpdateLeadDataComponent } from "./lead-update/lead-update-lead-data
     LeadUpdatePageComponent,
     LeadUpdateMainInfoComponent,
     LeadUpdateCustDataComponent,
-    LeadUpdateLeadDataComponent
-    // ArchwizardModule,
+    LeadUpdateLeadDataComponent,
+    // ArchwizardModule, 
+    ViewLeadDataComponent, 
+    FraudVerifPagingComponent, 
+    FraudVerifPageComponent, 
+    LeadInquiryComponent, 
   ],
 })
 

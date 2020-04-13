@@ -18,6 +18,7 @@ import { LeadInputLeadDataComponent } from './lead-input/lead-input-lead-data/le
 import { LeadUpdateComponent } from './lead-update/lead-update.component';
 import { LeadUpdatePageComponent } from './lead-update/lead-update-page/lead-update-page.component';
 import { LeadUpdateMainInfoComponent } from './lead-update/lead-update-main-info/lead-update-main-info.component';
+ 
 
 const routes: Routes = [
   {

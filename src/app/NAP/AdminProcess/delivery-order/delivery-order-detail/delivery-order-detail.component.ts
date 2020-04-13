@@ -198,7 +198,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
     this.http.post(AdInsConstant.SubmitDeliveryOrderData, this.deliveryOrderObj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["/AdminProcess/DeliveryOrder/Paging"]);
+        this.router.navigate(["/Nap/AdminProcess/DeliveryOrder/Paging"]);
       },
       error => {
         console.log(error);

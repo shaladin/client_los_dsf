@@ -1,16 +1,40 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { DummyComponent } from './dummy/dummy.component';
+import { NapPagingComponent } from './new-application/nap-paging/nap-paging.component';
+import { NapAddComponent } from './new-application/nap-add/nap-add.component';
+import { NapAddDetailComponent } from './new-application/nap-add-detail/nap-add-detail.component';
+import { PreGoLivePagingComponent } from './pre-go-live-paging/pre-go-live-paging.component';
 
 const routes: Routes = [
   {
     path: '',
     children: [
       {
-        path: 'dummy',
-        component: DummyComponent,
+        path: 'Paging',
+        component: NapPagingComponent,
         data: {
-          title: 'dummy'
+          title: 'New Application Paging'
+        }
+      },
+      {
+        path: 'Add',
+        component: NapAddComponent,
+        data: {
+          title: 'New Application Add'
+        }
+      },
+      {
+        path: 'Add/Detail',
+        component: NapAddDetailComponent,
+        data: {
+          title: 'New Application Add Detail'
+        }
+      },
+      {
+        path: 'PreGoLive/Paging',
+        component: PreGoLivePagingComponent,
+        data: {
+          title: 'PreGoLive Paging'
         }
       },
     ]

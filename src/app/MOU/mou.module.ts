@@ -14,6 +14,7 @@ import { UclookupgenericModule } from '@adins/uclookupgeneric';
 import { UcviewgenericModule } from '@adins/ucviewgeneric';
 import { UcaddressModule } from "@adins/ucaddress";
 import { UCSearchComponent } from '@adins/ucsearch';
+import { UcapprovalModule } from '@adins/ucapproval';
 import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
 import { UcgridfooterModule, UcgridfooterComponent } from "@adins/ucgridfooter";
 import { MainInfoComponent } from 'app/view/main-info/main-info.component';
@@ -78,7 +79,8 @@ import { MouCustomerInquiryComponent } from './mou-customer/mou-customer-inquiry
     UclookupgenericModule,
     UcviewgenericModule,
     SharingComponentModule,
-    UcinputnumberModule
+    UcinputnumberModule,
+    UcapprovalModule
   ],
   declarations: [
     DocSignerComponent,
@@ -127,7 +129,10 @@ import { MouCustomerInquiryComponent } from './mou-customer/mou-customer-inquiry
     MouDetailFactoringComponent,
     MouCustAssetComponent,
     MouCustAssetDetailComponent,
-    MouViewApprovalHistoryComponent
+    MouViewApprovalHistoryComponent,
+    MouCustAssetComponent,
+    MouCustAssetDetailComponent,
+    MouDetailGeneralComponent
   ],
   exports: [],
   providers: [NGXToastrService],
@@ -140,7 +145,8 @@ import { MouCustomerInquiryComponent } from './mou-customer/mou-customer-inquiry
     MouApprovalFactoringComponent,
     MouRequestAddcollComponent,
     MouRequestAddcollAddeditComponent,
-    MouCustListedCustFctrDetailComponent
+    MouCustListedCustFctrDetailComponent,
+    
   ]
 })
 
