@@ -614,6 +614,14 @@ export class AdInsConstant {
   public static AddRangeLeadVerf = environment.losUrl + "/LeadVerf/AddRangeLeadVerf";
   public static GetListLeadVerf = environment.losUrl + "/LeadVerf/GetListLeadVerf";
 
+  // LEAD FRAUD VERF
+  public static AddLeadFraudVerf = environment.losUrl +"/LeadFraudVerf/AddLeadFraudVerf"
+  // VERIFY STAT
+  public static Reject = "REJECT";
+  public static Verify = "VERIFY";
+  
+
+
   //DELIVERY ORDER
   public static SubmitDeliveryOrderData = environment.losUrl + "/DeliveryOrder/SubmitDeliveryOrderData";
   public static GetRefAssetDocList = environment.losUrl + "/DeliveryOrder/GetRefAssetDocList";
@@ -720,7 +728,7 @@ export class AdInsConstant {
  
   // LEAD ASSET
   public static GetLeadAssetByLeadId = environment.losUrl +"/LeadAsset/GetLeadAssetByLeadId";
-  public static GetLeadAssetForCheck = environment.losUrl ="/LeadAsset/GetLeadAssetForCheck"
+  public static GetLeadAssetForCheck = environment.losUrl +"/LeadAsset/GetLeadAssetForCheck"
   // Lead Cust
   public static GetLeadCustByLeadId = environment.losUrl + "/LeadCust/GetLeadCustByLeadId"
   // LEAD CUST PERSONAL

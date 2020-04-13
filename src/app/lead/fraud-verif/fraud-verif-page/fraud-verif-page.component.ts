@@ -6,6 +6,9 @@ import { HttpClient } from '@angular/common/http';
 import { LeadCustPersonalObj } from 'app/shared/model/LeadCustPersonalObj.Model';
 import { DuplicateCustObj } from 'app/shared/model/DuplicateCustObj.Model';
 import { LeadAssetObj } from 'app/shared/model/LeadAssetObj.Model';
+import { NegativeAssetCheckObj } from 'app/shared/model/NegativeAssetCheckObj.Model';
+import { LeadFraudVerfObj } from 'app/shared/model/LeadFraudVerfObj.model';
+import { _ } from 'core-js';
 
 @Component({
   selector: 'app-fraud-verif-page',
@@ -21,6 +24,9 @@ export class FraudVerifPageComponent implements OnInit {
     this.GetLeadCustPersonalByLeadCustIdUrl = AdInsConstant.GetLeadCustPersonalByLeadCustId;
     this.GetCustomerAndNegativeCustDuplicateCheckUrl = AdInsConstant.GetCustomerAndNegativeCustDuplicateCheck;
     this.GetLeadAssetForCheckUrl = AdInsConstant.GetLeadAssetForCheck;
+    this.GetLeadAssetByLeadIdUrl = AdInsConstant.GetLeadAssetByLeadId;
+    this.GetAssetNegativeDuplicateCheckUrl = AdInsConstant.GetAssetNegativeDuplicateCheck;
+    this.AddLeadFraudVerfUrl = AdInsConstant.AddLeadFraudVerf;
   }
   viewFraudVerification: any;
   DuplicateCustObj: any;
@@ -37,15 +43,24 @@ export class FraudVerifPageComponent implements OnInit {
   DuplicateStatus: string;
   ResultDuplicate: any;
   ResultDuplicateNegative: any;
+  negativeAssetCheckObj : any;
+  tempAssetCategoryTypeCode : any;
+  GetLeadAssetByLeadIdUrl : string;
+  tempLeadAsset : any;
+  GetAssetNegativeDuplicateCheckUrl : string;
+  ResultDuplicateAssetNegative : any;
+  leadFraudVerfObj : any;
+  AddLeadFraudVerfUrl : string ;
   ngOnInit() {
     this.viewFraudVerification = "./assets/ucviewgeneric/viewFraudVerification.json";
 
     this.leadCustObj = new LeadCustObj();
     this.leadCustObj.LeadId = this.LeadId;
     this.leadCustPersonalObj = new LeadCustPersonalObj();
-
+    
     this.http.post(this.GetLeadCustByLeadIdUrl, this.leadCustObj).subscribe(
       (response) => {
+       
         this.tempLeadCustObj = response;
         this.leadCustPersonalObj.LeadCustId = this.tempLeadCustObj.LeadCustId;
         this.http.post(this.GetLeadCustPersonalByLeadCustIdUrl, this.leadCustPersonalObj).subscribe(
@@ -65,18 +80,57 @@ export class FraudVerifPageComponent implements OnInit {
                   this.ResultDuplicate = response["ReturnObject"]["CustDuplicate"]; 
                   this.ResultDuplicateNegative = response["ReturnObject"]["NegativeCustDuplicate"]; 
                 } 
-              }); 
-
-              this.leadAssetObj = new LeadAssetObj();
-              this.leadAssetObj.LeadId = this.LeadId;
-              this.http.post(this.GetLeadAssetForCheckUrl, this.leadAssetObj).subscribe(
-                (response) => {
-                  console.log(response);
-                }); 
-              
+              });  
           });
       });
- 
+      this.leadAssetObj = new LeadAssetObj();
+              this.leadAssetObj.LeadId = this.LeadId; 
+              this.http.post(this.GetLeadAssetByLeadIdUrl, this.leadAssetObj).subscribe(
+                (response) => {
+                  console.log(response);
+                  this.tempLeadAsset =  response; 
+                  this.leadAssetObj.FullAssetCode = this.tempLeadAsset.FullAssetCode;
+                  this.http.post(this.GetLeadAssetForCheckUrl, this.leadAssetObj).subscribe(
+                    (response) => {
+                      this.tempAssetCategoryTypeCode = response;
+                     this.negativeAssetCheckObj = new NegativeAssetCheckObj();
+                     this.negativeAssetCheckObj.AssetCategoryCode = this.tempAssetCategoryTypeCode.AssetCategoryCode;
+                     this.negativeAssetCheckObj.AssetTypeCode = this.tempAssetCategoryTypeCode.AssetTypeCode;
+                     this.negativeAssetCheckObj.FullAssetCode = this.tempLeadAsset.FullAssetCode;
+                     this.negativeAssetCheckObj.SerialNo1 = this.tempLeadAsset.SerialNo1;
+                     this.negativeAssetCheckObj.SerialNo2 = this.tempLeadAsset.SerialNo2;
+                     this.negativeAssetCheckObj.SerialNo3 = this.tempLeadAsset.SerialNo3;
+                     this.negativeAssetCheckObj.SerialNo4 = this.tempLeadAsset.SerialNo4;
+                     this.negativeAssetCheckObj.SerialNo5 = this.tempLeadAsset.SerialNo5;
+                     this.http.post(this.GetAssetNegativeDuplicateCheckUrl, this.negativeAssetCheckObj).subscribe(
+                      (response) => { 
+                        this.ResultDuplicateAssetNegative = response["ReturnObject"]; 
+                        console.log(response);
+                      });
+                    }); 
+                });
+
+            
   }
+
+reject(){ 
+  this.leadFraudVerfObj = new LeadFraudVerfObj();
+  this.leadFraudVerfObj.LeadId = this.LeadId;
+  this.leadFraudVerfObj.VerifyStat = AdInsConstant.Reject;
+  // this.leadFraudVerfObj.Notes = ;
+  this.http.post(this.AddLeadFraudVerfUrl, this.leadFraudVerfObj).subscribe(
+    (response) => {
+    });
+}
+
+verify(){
+  this.leadFraudVerfObj = new LeadFraudVerfObj();
+  this.leadFraudVerfObj.LeadId = this.LeadId;
+  this.leadFraudVerfObj.VerifyStat = AdInsConstant.Verify;
+  // this.leadFraudVerfObj.Notes = ;
+  this.http.post(this.AddLeadFraudVerfUrl, this.leadFraudVerfObj).subscribe(
+    (response) => {
+    });
+}
 
 }
