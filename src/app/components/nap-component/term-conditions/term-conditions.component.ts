@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormBuilder, FormGroup, FormArray, Validators, ControlContainer, FormGroupDirective, NgForm } from '@angular/forms';
@@ -14,6 +14,7 @@ export class TermConditionsComponent implements OnInit {
   AppTcList: any = [];
   listTempTCList: any = [];
 
+  @Output() OutputValueIsCheckAll : EventEmitter<any> = new EventEmitter();
   @Input() IsCheckedAll : boolean = true;
   @Input() AppId: number;
   @Input() parentForm: FormGroup;
@@ -23,7 +24,7 @@ export class TermConditionsComponent implements OnInit {
   constructor(private http: HttpClient, private fb: FormBuilder) { }
 
   ngOnInit() {
-
+    console.log(this.IsCheckedAll);
     this.parentForm.addControl(this.identifier, this.fb.array([]));
     var listTC = this.parentForm.get(this.identifier) as FormArray;
     var appTcObj = {
@@ -53,13 +54,14 @@ export class TermConditionsComponent implements OnInit {
             }
             if (this.AppTcList[i].IsChecked == false || this.AppTcList[i].IsMandatory == true) {
               this.IsCheckedAll = false;
-            } 
+            }
             if (this.AppTcList[i].IsChecked == false) {
               TCDetail.controls.ExpiredDt.disable();
             } else {
               TCDetail.controls.PromisedDt.disable();
             }
             listTC.push(TCDetail);
+            this.OutputValueIsCheckAll.emit(this.IsCheckedAll);
           }
         }
       },
@@ -74,26 +76,30 @@ export class TermConditionsComponent implements OnInit {
       this.parentForm.controls[this.identifier]["controls"][arr]["controls"].PromisedDt.setValidators([Validators.required]);
     }
     if (this.parentForm.controls[this.identifier]["controls"][arr]["controls"].IsChecked.value == false) {
-      if(this.parentForm.controls[this.identifier]["controls"][arr]["controls"].IsMandatory.value == true){
+      if (this.parentForm.controls[this.identifier]["controls"][arr]["controls"].IsMandatory.value == true) {
         this.IsCheckedAll = false;
       }
       this.parentForm.controls[this.identifier]["controls"][arr]["controls"].ExpiredDt.disable();
       this.parentForm.controls[this.identifier]["controls"][arr]["controls"].PromisedDt.enable();
+      console.log(this.IsCheckedAll);
+      this.OutputValueIsCheckAll.emit(this.IsCheckedAll);
     } else {
       this.IsCheckedAll = true;
       this.listTempTCList = this.parentForm.controls[this.identifier].value;
-      
+
       this.parentForm.controls[this.identifier]["controls"][arr]["controls"].ExpiredDt.enable();
       this.parentForm.controls[this.identifier]["controls"][arr]["controls"].PromisedDt.disable();
 
       for (let i = 0; i < this.listTempTCList.length; i++) {
-        if(this.listTempTCList[i].IsChecked == false && this.listTempTCList[i].IsMandatory == true){
+        if (this.listTempTCList[i].IsChecked == false && this.listTempTCList[i].IsMandatory == true) {
           this.IsCheckedAll = false;
           break;
         }
       }
+      this.OutputValueIsCheckAll.emit(this.IsCheckedAll);
+      console.log(this.IsCheckedAll);
     }
-    
+
     this.parentForm.controls[this.identifier]["controls"][arr]["controls"].PromisedDt.updateValueAndValidity();
     this.parentForm.controls[this.identifier]["controls"][arr]["controls"].ExpiredDt.updateValueAndValidity();
   }

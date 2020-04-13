@@ -58,12 +58,13 @@
                 </div>
               </div>
             </div>
-            <app-term-conditions [AppId]="AppId" [parentForm]="MainInfoForm" [enjiForm]="MainInfoReqForm">
+            <app-term-conditions [AppId]="AppId" [parentForm]="MainInfoForm" [enjiForm]="MainInfoReqForm"
+              (OutputValueIsCheckAll)="ReceiveIsChecked($event)">
             </app-term-conditions>
             <div class="form-actions right">
 
               <button type="button" class="btn btn-raised btn-primary mr-1" translate>
-                <i class="fa fa-check-square-o"></i> Request For Approval 
+                <i class="fa fa-check-square-o"></i> Request For Approval
               </button>
 
               <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['/CommonSetting/Holiday']"
@@ -71,14 +72,13 @@
                 <i class=""></i> Back
               </button>
 
-              <button type="submit" class="btn btn-raised btn-primary mr-1" translate>
+              <button *ngIf="IsCheckedAll" type="submit" class="btn btn-raised btn-primary mr-1" translate>
                 <i class="fa fa-check-square-o"></i> Submit
               </button>
+              
             </div>
-
           </form>
         </div>
-
       </div>
     </div>
   </div>

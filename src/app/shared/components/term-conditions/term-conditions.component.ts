@@ -11,7 +11,9 @@ import { formatDate } from '@angular/common';
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
 export class TermConditionsComponent implements OnInit {
-  AppTcList: any = [];
+  result : any;
+
+  @Input() IsCheckedAll : boolean = true;
   @Input() AppId: number;
   @Input() parentForm: FormGroup;
   @Input() enjiForm: NgForm;
@@ -27,27 +29,28 @@ export class TermConditionsComponent implements OnInit {
     }
     this.http.post(AdInsConstant.GetListTCbyAppId, appTcObj).subscribe(
       (response) => {
-        this.AppTcList = response["AppTcs"];
-        if (this.AppTcList != null && this.AppTcList["length"] != 0) {
-          for (let i = 0; i < this.AppTcList["length"]; i++) {
+        this.result = response["AppTcs"];
+        if (this.result != null && this.result["length"] != 0) {
+          for (let i = 0; i < this.result["length"]; i++) {
             var TCDetail = this.fb.group({
-              AppTcId: this.AppTcList[i].AppTcId,
-              AppId: this.AppTcList[i].AppId,
-              TcCode: this.AppTcList[i].TcCode,
-              TcName: this.AppTcList[i].TcName,
-              PriorTo: this.AppTcList[i].PriorTo,
-              IsChecked: this.AppTcList[i].IsChecked,
-              ExpiredDt: this.AppTcList[i].ExpiredDt,
-              IsMandatory: this.AppTcList[i].IsMandatory,
-              PromisedDt: formatDate(this.AppTcList[i].PromisedDt, 'yyyy-MM-dd', 'en-US'),
-              CheckedDt: formatDate(this.AppTcList[i].CheckedDt, 'yyyy-MM-dd', 'en-US'),
-              Notes: this.AppTcList[i].Notes,
+              AppTcId: this.result[i].AppTcId,
+              AppId: this.result[i].AppId,
+              TcCode: this.result[i].TcCode,
+              TcName: this.result[i].TcName,
+              PriorTo: this.result[i].PriorTo,
+              IsChecked: this.result[i].IsChecked,
+              ExpiredDt: this.result[i].ExpiredDt,
+              IsMandatory: this.result[i].IsMandatory,
+              PromisedDt: formatDate(this.result[i].PromisedDt, 'yyyy-MM-dd', 'en-US'),
+              CheckedDt: formatDate(this.result[i].CheckedDt, 'yyyy-MM-dd', 'en-US'),
+              Notes: this.result[i].Notes,
+              RowVerson : this.result[i].RowVerson
             }) as FormGroup;
 
-            if (this.AppTcList[i].IsMandatory == true) {
+            if (this.result[i].IsMandatory == true) {
               TCDetail.controls.PromisedDt.setValidators([Validators.required]);
             }
-            if (this.AppTcList[i].IsChecked == false) {
+            if (this.result[i].IsChecked == false) {
               TCDetail.controls.ExpiredDt.disable();
             } else {
               TCDetail.controls.PromisedDt.disable();
@@ -69,9 +72,25 @@ export class TermConditionsComponent implements OnInit {
     if (this.parentForm.controls[this.identifier]["controls"][arr]["controls"].IsChecked.value == false) {
       this.parentForm.controls[this.identifier]["controls"][arr]["controls"].ExpiredDt.disable();
       this.parentForm.controls[this.identifier]["controls"][arr]["controls"].PromisedDt.enable();
+      var tempListTc =  this.parentForm.controls[this.identifier].value;
+      console.log("isi temp list tc");
+      console.log(tempListTc);
+      for (let index = 0; index < tempListTc.length; index++) {
+        if(tempListTc[index].IsChecked == false){
+          this.IsCheckedAll = false;
+          console.log(this.IsCheckedAll);
+        }
+      }
     } else {
+      this.IsCheckedAll = true;
       this.parentForm.controls[this.identifier]["controls"][arr]["controls"].ExpiredDt.enable();
-      this.parentForm.controls[this.identifier]["controls"][arr]["controls"].PromisedDt.disable();
+      this.parentForm.controls[this.identifier]["controls"][arr]["controls"].PromisedDt.disable()
+      for (let index = 0; index < tempListTc.length; index++) {
+        if(tempListTc[index].IsChecked == false){
+          this.IsCheckedAll = false;
+          console.log(this.IsCheckedAll);
+        }
+      }
     }
     
     this.parentForm.controls[this.identifier]["controls"][arr]["controls"].PromisedDt.updateValueAndValidity();
