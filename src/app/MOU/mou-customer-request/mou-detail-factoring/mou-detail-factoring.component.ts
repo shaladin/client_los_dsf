@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -6,6 +6,7 @@ import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { forkJoin } from 'rxjs';
 import { MouCustFctrObj } from 'app/shared/model/MouCustFctrObj.Model';
+import { MouCustListedCustFctrComponent } from '../mou-cust-listed-cust-fctr/mou-cust-listed-cust-fctr.component';
 
 @Component({
   selector: 'app-mou-detail-factoring',
@@ -15,6 +16,7 @@ import { MouCustFctrObj } from 'app/shared/model/MouCustFctrObj.Model';
 export class MouDetailFactoringComponent implements OnInit {
   @Input() MouCustId: number;
   @Output() ResponseMouCustFactoring: EventEmitter<any> = new EventEmitter();
+  @ViewChild(MouCustListedCustFctrComponent) MouListedFctrComp: MouCustListedCustFctrComponent;
   recourseTypeList: any;
   wopList: any;
   paidByList: any;
@@ -22,6 +24,9 @@ export class MouDetailFactoringComponent implements OnInit {
   singleInstCalcMthdList: any;
   payFreqList: any;
   instSchmList: any;
+  currencyList: any;
+  isListedFctr: boolean;
+  shouldComponentLoad: boolean;
   private mode: string = "add";
 
   MouDetailFactoringForm = this.fb.group({
@@ -42,6 +47,7 @@ export class MouDetailFactoringComponent implements OnInit {
     RetentionPrcnt: [''],
     IsListedCust: [false],
     Notes: [''],
+    CurrCode: ['', [Validators.required]],
     RowVersion: ['']
   });
   
@@ -50,6 +56,8 @@ export class MouDetailFactoringComponent implements OnInit {
     private toastr: NGXToastrService,
     private fb: FormBuilder
   ) { 
+    this.isListedFctr = false;
+    this.shouldComponentLoad = false;
     var rmRecourseType = new RefMasterObj();
     rmRecourseType.RefMasterTypeCode = "RECOURSE_TYPE";
     let getRecourseType = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, rmRecourseType);
@@ -71,7 +79,10 @@ export class MouDetailFactoringComponent implements OnInit {
     var rmInstSchm = new RefMasterObj();
     rmInstSchm.RefMasterTypeCode = "INST_SCHM";
     let getInstSchm = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, rmInstSchm);
-    forkJoin([getRecourseType, getWop, getPaidBy, getInstType, getSingleInstCalcMethod, getPayFreq, getInstSchm]).subscribe(
+    var refMasterCurrency = new RefMasterObj();
+    refMasterCurrency.RefMasterTypeCode = "CURRENCY";
+    let getCurrency = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterCurrency);
+    forkJoin([getRecourseType, getWop, getPaidBy, getInstType, getSingleInstCalcMethod, getPayFreq, getInstSchm, getCurrency]).subscribe(
       (response) => {
         this.recourseTypeList = response[0];
         this.wopList = response[1];
@@ -80,6 +91,7 @@ export class MouDetailFactoringComponent implements OnInit {
         this.singleInstCalcMthdList = response[4];
         this.payFreqList = response[5];
         this.instSchmList = response[6];
+        this.currencyList = response[7];
         this.MouDetailFactoringForm.patchValue({
           MrRecourseTypeCode: this.recourseTypeList.ReturnObject[0].Key,
           WopCode: this.wopList.ReturnObject[0].Key,
@@ -87,7 +99,8 @@ export class MouDetailFactoringComponent implements OnInit {
           MrInstTypeCode: this.instTypeList.ReturnObject[0].Key,
           SingleInstCalcMthd: this.singleInstCalcMthdList.ReturnObject[0].Key,
           PayFreqCode: this.payFreqList.ReturnObject[0].Key,
-          MrInstSchmCode: this.instSchmList.ReturnObject[0].Key
+          MrInstSchmCode: this.instSchmList.ReturnObject[0].Key,
+          CurrCode: this.currencyList.ReturnObject[0].Key
         });
       },
       (error) => {
@@ -101,12 +114,19 @@ export class MouDetailFactoringComponent implements OnInit {
     mouCustFctr.MouCustId = this.MouCustId;
     this.httpClient.post(AdInsConstant.GetMouCustFctrByMouCustId, mouCustFctr).subscribe(
       (response: MouCustFctrObj) => {
+        this.isListedFctr = response.IsListedCust;
         if(response.MouCustFctrId != 0){
           this.mode = "edit";
           this.MouDetailFactoringForm.patchValue({
             ...response
           });
         }
+        else{
+          this.MouDetailFactoringForm.patchValue({
+            MouCustId: this.MouCustId
+          });
+        }
+        this.shouldComponentLoad = true;
       },
       (error) => {
         console.log(error);
@@ -117,6 +137,8 @@ export class MouDetailFactoringComponent implements OnInit {
   Save(enjiForm){
     var formData = this.MouDetailFactoringForm.value;
     var url;
+
+    formData.IsListedCust = this.MouListedFctrComp.MouCustIsListedForm.controls["IsListedCust"].value;
 
     if(this.mode == "add"){
       url = AdInsConstant.AddMouCustFctr;
@@ -136,7 +158,7 @@ export class MouDetailFactoringComponent implements OnInit {
   }
 
   back(){
-    this.ResponseMouCustFactoring.emit({StatusCode: -2});
+    this.ResponseMouCustFactoring.emit({StatusCode: "-2"});
   }
 
 }
