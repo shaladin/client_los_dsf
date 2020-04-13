@@ -91,7 +91,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
         var appObj = {
           AppId: this.agrmntObj.AppId
         };
-        this.http.post<AppObj>(AdInsConstant.GetAppByIds, appObj).subscribe(
+        this.http.post<AppObj>(AdInsConstant.GetAppById, appObj).subscribe(
           (response) => {
             this.appObj = response;
           },

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -10,6 +10,14 @@ import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { WizardComponent } from 'angular-archwizard';
 import { formatDate } from '@angular/common';
+import { LeadCustAddrObj } from 'app/shared/model/LeadCustAddrObj.Model';
+import { LeadCustSocmedObj } from 'app/shared/model/LeadCustSocmedObj.Model';
+import { LeadInputObj } from 'app/shared/model/LeadInputObj.Model';
+import { LeadCustObj } from 'app/shared/model/LeadCustObj.Model';
+import { LeadCustPersonalObj } from 'app/shared/model/LeadCustPersonalObj.Model';
+import { LeadCustPersonalFinDataObj } from 'app/shared/model/LeadCustPersonalFinDataObj.Model';
+import { LeadCustPersonalJobDataObj } from 'app/shared/model/LeadCustPersonalJobDataObj.Model';
+import { RefProfessionObj } from 'app/shared/model/RefProfessionObj.Model';
  
 @Component({
   selector: 'app-lead-input-cust-data',
@@ -18,47 +26,23 @@ import { formatDate } from '@angular/common';
 })
 
 export class LeadInputCustDataComponent implements OnInit {
+  @Input() LeadId: number;
+
   jobAddrId: any;
   othBizAddrId: any;
   jobDataId: any;
   rowVersion: any;
   typePage: string;
-  IdCust: any;
-  IdCustPersonal: any;
-  custObj: any;
-  getListActiveRefMaster: any;
-  getCustById: any;
+  //LeadId: any;
+  addEditLeadCustPersonal: any;
   jobAddressObj: any;
   otherAddressObj: any;
   inputLegalAddressObj: InputFieldObj;
   inputResidenceAddressObj: InputFieldObj;
-  jobStatus: any;
-  listJobStatus: any;
-  companyScale: any;
-  listCompanyScale: any;
   tempProfession: any;
-  tempRefIndustryType: any;
   professionLookUpObj: any;
-  industryLookUpObj: any;
-  custPersonalJobDataObj: any;
-  custJobDataObj: any;
-  returnCustJobDataObj: any;
-  addJobData: any;
-  editJobData: any;
-  getJobDataByCustId: any;
-  getCustAddr: any;
-  getRefProfession: any;
-  getRefIndustryType: any;
-  refProfessionObj: any;
-  returnRefProfessionObj: any;
-  reqCustPersonalJobDataObj: any;
-  refIndustryTypeObj: any;
-  returnIndustryTypeObj: any;
-  custJobAddrObj: any;
-  custOthBizAddrObj;
-  getJobAddr: any;
-  getOthBizAddr: any;
-  addressObj: any;
+  legalAddressObj: any;
+  residenceAddressObj: any;
   otherAddrObj: any;
   idTypeCode: any;
   tempIdType: any;
@@ -68,8 +52,43 @@ export class LeadInputCustDataComponent implements OnInit {
   getRefMasterWithReserveField: any;
   custModel: any;
   listCustModel: any;
+  leadInputObj: LeadInputObj = new LeadInputObj();
+  leadCustObj: any;
+  leadCustPersonalObj: any;
+  leadCustPersonalJobDataObj: any;
+  leadCustPersonalFinDataObj: any;
+  leadCustFacebookObj: any;
+  leadCustInstagramObj: any;
+  leadCustTwitterObj: any;
+  genderType: any;
+  tempGender: any;
+  getLeadByLeadId: any;
+  getLeadCustByLeadId: any;
+  getLeadCustAddr: any;
+  getLeadCustPersonal: any;
+  getLeadCustPersonalFinData: any;
+  getLeadCustPersonalJobData: any;
+  getRefProfessionByCode: any;
+  getListLeadCustSocmed: any;
+  reqLeadCustObj: any;
+  resLeadCustObj: any;
+  reqLeadCustPersonalObj: any;
+  resLeadCustPersonalObj: any;
+  reqLeadCustPersonalJobDataObj: any;
+  resLeadCustPersonalJobDataObj: any;
+  reqLeadCustPersonalFinDataObj: any;
+  resLeadCustPersonalFinDataObj: any;
+  reqLeadCustAddrLegalObj: any;
+  resLeadCustAddrLegalObj: any;
+  reqLeadCustAddrResObj: any;
+  resLeadCustAddrResObj: any;
+  refProfessionObj: any;
+  returnRefProfessionObj: any;
+  reqLeadCustSocmedObj: any;
+  resLeadCustSocmedObj: any;
   CustomerDataForm = this.fb.group({
     CustType: [''],
+    Gender: [''],
     CustName: [''],
     BirthPlace: [''],
     BirthDate: [''],
@@ -90,25 +109,26 @@ export class LeadInputCustDataComponent implements OnInit {
     MonthlyExpense: ['']
   });
 
-  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) { 
-    // this.getCustById = AdInsConstant.GetCustByCustId;
-    // this.getListActiveRefMaster = AdInsConstant.GetListActiveRefMaster;
-    // this.addJobData = AdInsConstant.AddCustPersonalJobData;
-    // this.editJobData = AdInsConstant.EditCustPersonalJobData;
-    // this.getJobDataByCustId = AdInsConstant.GetCustPersonalJobDataByCustId;
-    // this.getCustAddr = AdInsConstant.GetCustAddr;
-    // this.getRefProfession = AdInsConstant.GetRefProfessionById;
-    // this.getRefIndustryType = AdInsConstant.GetRefIndustryTypeById;
+  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private wizard: WizardComponent) { 
     this.getListActiveRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
     this.getRefMasterWithReserveField = AdInsConstant.GetListActiveRefMasterWithReserveFieldAll;
+    this.addEditLeadCustPersonal = AdInsConstant.AddEditLeadCustPersonal;
+    this.getLeadByLeadId = AdInsConstant.GetLeadByLeadId;
+    this.getLeadCustByLeadId = AdInsConstant.GetLeadCustByLeadId;
+    this.getLeadCustAddr = AdInsConstant.GetLeadCustAddrByLeadCustIdAndAddrTypeCode;
+    this.getLeadCustPersonal = AdInsConstant.GetLeadCustPersonalByLeadCustId;
+    this.getLeadCustPersonalFinData = AdInsConstant.GetLeadCustPersonalFinDataByLeadCustPersonalId;
+    this.getLeadCustPersonalJobData = AdInsConstant.GetLeadCustPersonalJobDataByLeadCustPersonalId;
+    this.getRefProfessionByCode = AdInsConstant.GetRefProfessionByCode;
+    this.getListLeadCustSocmed = AdInsConstant.GetListLeadCustSocmedByLeadCustId;
 
     this.route.queryParams.subscribe(params => {
-        if (params["IdCust"] != null) {
-            this.IdCust = params["IdCust"];
+        if (params["LeadId"] != null) {
+          this.LeadId = params["LeadId"];
         }
-        if (params["IdCustPersonal"] != null) {
-            this.IdCustPersonal = params["IdCustPersonal"];
-        }
+        if (params["mode"] != null) {
+          this.typePage = params["mode"];
+      }
     });
   }
 
@@ -129,6 +149,15 @@ export class LeadInputCustDataComponent implements OnInit {
     this.professionLookUpObj.urlEnviPaging = environment.FoundationR3Url;
     this.professionLookUpObj.pagingJson = "./assets/uclookup/lookupProfession.json";
     this.professionLookUpObj.genericJson = "./assets/uclookup/lookupProfession.json";
+
+    this.genderType = new RefMasterObj();
+    this.genderType.RefMasterTypeCode = "GENDER";
+    this.http.post(this.getListActiveRefMasterUrl, this.genderType).subscribe(
+      (response) => {
+        this.tempGender = response["ReturnObject"];
+        this.CustomerDataForm.patchValue({ Gender: this.tempGender[0].Key });
+      }
+    );
 
     this.idTypeCode = new RefMasterObj();
     this.idTypeCode.RefMasterTypeCode = "ID_TYPE";
@@ -165,76 +194,273 @@ export class LeadInputCustDataComponent implements OnInit {
           this.CustomerDataForm.patchValue({ CustModel: response['ReturnObject'][0]['Key'] });
       });
 
+
+    if(this.typePage == "edit"){
+      this.reqLeadCustObj = new LeadCustObj();
+      this.reqLeadCustObj.LeadId = this.LeadId;
+      this.http.post(this.getLeadCustByLeadId, this.reqLeadCustObj).subscribe(
+        (response) => {
+            this.resLeadCustObj = response;
+            this.CustomerDataForm.patchValue({ 
+              CustName: this.resLeadCustObj.CustName,
+              MrIdTypeCode: this.resLeadCustObj.MrIdTypeCode,
+              CustModel: this.resLeadCustObj.MrCustModelCode,
+              IdNo: this.resLeadCustObj.IdNo,
+              Npwp: this.resLeadCustObj.TaxIdNo,
+            });
+
+        this.reqLeadCustSocmedObj = new LeadCustSocmedObj();
+        this.reqLeadCustSocmedObj.LeadCustId = this.resLeadCustObj.LeadCustId;
+        this.http.post(this.getListLeadCustSocmed, this.reqLeadCustSocmedObj).subscribe(
+          (response) => {
+              this.resLeadCustSocmedObj = response["ReturnObject"];
+              console.log("aaa")
+              console.log(this.resLeadCustSocmedObj)
+              this.CustomerDataForm.patchValue({
+                Facebook: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "FB") == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "FB").SocmedId,
+                Instagram: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "IG") == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "IG").SocmedId,
+                Twitter: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "TW") == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "TW").SocmedId,
+              });
+          });
+
+        this.reqLeadCustAddrLegalObj = new LeadCustAddrObj();
+        this.reqLeadCustAddrLegalObj.LeadCustId = this.resLeadCustObj.LeadCustId;
+        this.reqLeadCustAddrLegalObj.MrCustAddrTypeCode = "LEGAL";
+        this.http.post(this.getLeadCustAddr, this.reqLeadCustAddrLegalObj).subscribe(
+          (response) => {
+              this.resLeadCustAddrLegalObj = response;
+
+              this.legalAddressObj = new LeadCustAddrObj();
+              this.legalAddressObj.Addr = this.resLeadCustAddrLegalObj.Addr;
+              this.legalAddressObj.AreaCode3 = this.resLeadCustAddrLegalObj.AreaCode3;
+              this.legalAddressObj.AreaCode4 = this.resLeadCustAddrLegalObj.AreaCode4;
+              this.legalAddressObj.AreaCode1 = this.resLeadCustAddrLegalObj.AreaCode1;
+              this.legalAddressObj.AreaCode2 = this.resLeadCustAddrLegalObj.AreaCode2;
+              this.legalAddressObj.City = this.resLeadCustAddrLegalObj.City;
+              this.legalAddressObj.PhnArea1 = this.resLeadCustAddrLegalObj.PhnArea1;
+              this.legalAddressObj.Phn1 = this.resLeadCustAddrLegalObj.Phn1;
+              this.legalAddressObj.PhnExt1 = this.resLeadCustAddrLegalObj.PhnExt1;
+              this.legalAddressObj.PhnArea2 = this.resLeadCustAddrLegalObj.PhnArea2;
+              this.legalAddressObj.Phn2 = this.resLeadCustAddrLegalObj.Phn2;
+              this.legalAddressObj.PhnExt2 = this.resLeadCustAddrLegalObj.PhnExt2;
+              this.legalAddressObj.FaxArea = this.resLeadCustAddrLegalObj.FaxArea;
+              this.legalAddressObj.Fax = this.resLeadCustAddrLegalObj.Fax;
+              this.legalAddressObj.MrHouseOwnershipCode = this.resLeadCustAddrLegalObj.MrBuildingOwnershipCode;
+
+              this.inputLegalAddressObj = new InputFieldObj();
+              this.inputLegalAddressObj.inputLookupObj = new InputLookupObj();
+              this.inputLegalAddressObj.inputLookupObj.nameSelect = this.resLeadCustAddrLegalObj.Zipcode;
+              this.inputLegalAddressObj.inputLookupObj.jsonSelect = {Zipcode: this.resLeadCustAddrLegalObj.Zipcode};
+              
+          });
+
+          this.reqLeadCustAddrResObj = new LeadCustAddrObj();
+          this.reqLeadCustAddrResObj.LeadCustId = this.resLeadCustObj.LeadCustId;
+          this.reqLeadCustAddrResObj.MrCustAddrTypeCode = "RESIDENCE";
+          this.http.post(this.getLeadCustAddr, this.reqLeadCustAddrResObj).subscribe(
+            (response) => {
+                this.resLeadCustAddrResObj = response;
+
+                this.residenceAddressObj = new LeadCustAddrObj();
+                this.residenceAddressObj.Addr = this.resLeadCustAddrResObj.Addr;
+                this.residenceAddressObj.AreaCode3 = this.resLeadCustAddrResObj.AreaCode3;
+                this.residenceAddressObj.AreaCode4 = this.resLeadCustAddrResObj.AreaCode4;
+                this.residenceAddressObj.AreaCode1 = this.resLeadCustAddrResObj.AreaCode1;
+                this.residenceAddressObj.AreaCode2 = this.resLeadCustAddrResObj.AreaCode2;
+                this.residenceAddressObj.City = this.resLeadCustAddrResObj.City;
+                this.residenceAddressObj.PhnArea1 = this.resLeadCustAddrResObj.PhnArea1;
+                this.residenceAddressObj.Phn1 = this.resLeadCustAddrResObj.Phn1;
+                this.residenceAddressObj.PhnExt1 = this.resLeadCustAddrResObj.PhnExt1;
+                this.residenceAddressObj.PhnArea2 = this.resLeadCustAddrResObj.PhnArea2;
+                this.residenceAddressObj.Phn2 = this.resLeadCustAddrResObj.Phn2;
+                this.residenceAddressObj.PhnExt2 = this.resLeadCustAddrResObj.PhnExt2;
+                this.residenceAddressObj.FaxArea = this.resLeadCustAddrResObj.FaxArea;
+                this.residenceAddressObj.Fax = this.resLeadCustAddrResObj.Fax;
+                this.residenceAddressObj.MrHouseOwnershipCode = this.resLeadCustAddrResObj.MrBuildingOwnershipCode;
+
+                this.inputResidenceAddressObj = new InputFieldObj();
+                this.inputResidenceAddressObj.inputLookupObj = new InputLookupObj();
+                this.inputResidenceAddressObj.inputLookupObj.nameSelect = this.resLeadCustAddrResObj.Zipcode;
+                this.inputResidenceAddressObj.inputLookupObj.jsonSelect = {Zipcode: this.resLeadCustAddrResObj.Zipcode};
+                
+            });
+
+          this.reqLeadCustPersonalObj = new LeadCustPersonalObj();
+          this.reqLeadCustPersonalObj.LeadCustId = this.resLeadCustObj.LeadCustId;
+          this.http.post(this.getLeadCustPersonal, this.reqLeadCustPersonalObj).subscribe(
+            (response) => {
+                this.resLeadCustPersonalObj = response;
+                this.CustomerDataForm.patchValue({ 
+                  Gender: this.resLeadCustPersonalObj.MrGenderCode,
+                  BirthPlace: this.resLeadCustPersonalObj.BirthPlace,
+                  BirthDate: formatDate(this.resLeadCustPersonalObj.BirthDt, 'yyyy-MM-dd', 'en-US'),
+                  MotherName: this.resLeadCustPersonalObj.MotherMaidenName,
+                  MrMaritalStatCode: this.resLeadCustPersonalObj.MrMaritalStatCode,
+                  Email: this.resLeadCustPersonalObj.Email1,
+                  MobilePhone1: this.resLeadCustPersonalObj.MobilePhnNo1,
+                  MobilePhone2: this.resLeadCustPersonalObj.MobilePhnNo2,
+                });
+
+              this.reqLeadCustPersonalJobDataObj = new LeadCustPersonalJobDataObj();
+              this.reqLeadCustPersonalJobDataObj.LeadCustPersonalId = this.resLeadCustPersonalObj.LeadCustPersonalId;
+              this.http.post(this.getLeadCustPersonalJobData, this.reqLeadCustPersonalJobDataObj).subscribe(
+                (response) => {
+                    this.resLeadCustPersonalJobDataObj = response;
+                    this.CustomerDataForm.patchValue({ 
+                      CompanyName: this.resLeadCustPersonalJobDataObj.CompanyName,
+                    });
+
+                    this.refProfessionObj = new RefProfessionObj();
+                    this.refProfessionObj.ProfessionCode = this.resLeadCustPersonalJobDataObj.MrProfessionCode;
+                    this.http.post(this.getRefProfessionByCode, this.refProfessionObj).subscribe(
+                      (response) => {
+                          this.returnRefProfessionObj = response;
+                          this.professionLookUpObj.nameSelect = this.returnRefProfessionObj.ProfessionName;
+                          this.professionLookUpObj.jsonSelect = this.returnRefProfessionObj;
+                          this.tempProfession = this.returnRefProfessionObj.ProfessionCode;
+                      });
+                });
+
+              this.reqLeadCustPersonalFinDataObj = new LeadCustPersonalFinDataObj();
+              this.reqLeadCustPersonalFinDataObj.LeadCustPersonalId = this.resLeadCustPersonalObj.LeadCustPersonalId;
+              this.http.post(this.getLeadCustPersonalFinData, this.reqLeadCustPersonalFinDataObj).subscribe(
+                (response) => {
+                    this.resLeadCustPersonalFinDataObj = response;
+                    this.CustomerDataForm.patchValue({ 
+                      MonthlyIncome: this.resLeadCustPersonalFinDataObj.MonthlyIncomeAmt,
+                      MonthlyExpense: this.resLeadCustPersonalFinDataObj.MonthlyExpenseAmt,
+                    });
+                });
+            });
+        });
+    }
   }
 
-  setJobAddr(){
-    // this.jobAddressObj.CustId = this.IdCust;
-    // this.jobAddressObj.MrCustAddrTypeCode = 'JOB';
-    // this.jobAddressObj.Addr = this.JobDataEmpForm.controls["jobAddress"]["controls"].Addr.value;
-    // this.jobAddressObj.FullAddr = this.JobDataEmpForm.controls["jobAddress"]["controls"].Addr.value;
-    // this.jobAddressObj.AreaCode3 = this.JobDataEmpForm.controls["jobAddress"]["controls"].AreaCode3.value;
-    // this.jobAddressObj.AreaCode4 = this.JobDataEmpForm.controls["jobAddress"]["controls"].AreaCode4.value;
-    // this.jobAddressObj.Zipcode = this.JobDataEmpForm.controls["jobAddressZipcode"]["controls"].value.value;
-    // this.jobAddressObj.AreaCode1 = this.JobDataEmpForm.controls["jobAddress"]["controls"].AreaCode1.value;
-    // this.jobAddressObj.AreaCode2 = this.JobDataEmpForm.controls["jobAddress"]["controls"].AreaCode2.value;
-    // this.jobAddressObj.City = this.JobDataEmpForm.controls["jobAddress"]["controls"].City.value;
-    // this.jobAddressObj.PhnArea1 = this.JobDataEmpForm.controls["jobAddress"]["controls"].PhnArea1.value;
-    // this.jobAddressObj.Phn1 = this.JobDataEmpForm.controls["jobAddress"]["controls"].Phn1.value;
-    // this.jobAddressObj.PhnExt1 = this.JobDataEmpForm.controls["jobAddress"]["controls"].PhnExt1.value;
-    // this.jobAddressObj.PhnArea2 = this.JobDataEmpForm.controls["jobAddress"]["controls"].PhnArea2.value;
-    // this.jobAddressObj.Phn2 = this.JobDataEmpForm.controls["jobAddress"]["controls"].Phn2.value;
-    // this.jobAddressObj.PhnExt2 = this.JobDataEmpForm.controls["jobAddress"]["controls"].PhnExt2.value;
-    // this.jobAddressObj.PhnArea3 = this.JobDataEmpForm.controls["jobAddress"]["controls"].PhnArea3.value;
-    // this.jobAddressObj.Phn3 = this.JobDataEmpForm.controls["jobAddress"]["controls"].Phn3.value;
-    // this.jobAddressObj.PhnExt3 = this.JobDataEmpForm.controls["jobAddress"]["controls"].PhnExt3.value;
-    // this.jobAddressObj.FaxArea = this.JobDataEmpForm.controls["jobAddress"]["controls"].FaxArea.value;
-    // this.jobAddressObj.Fax = this.JobDataEmpForm.controls["jobAddress"]["controls"].Fax.value;
-    // this.jobAddressObj.MrBuildingOwnershipCode = this.JobDataEmpForm.controls["jobAddress"]["controls"].MrHouseOwnershipCode.value;
-    // this.jobAddressObj.Notes = this.JobDataEmpForm.controls["NotesJob"].value;
+  copyAddress(){
+    this.residenceAddressObj = new LeadCustAddrObj();
+    this.residenceAddressObj.Addr = this.CustomerDataForm.controls["legalAddress"]["controls"].Addr.value;
+    this.residenceAddressObj.AreaCode3 = this.CustomerDataForm.controls["legalAddress"]["controls"].AreaCode3.value;
+    this.residenceAddressObj.AreaCode4 = this.CustomerDataForm.controls["legalAddress"]["controls"].AreaCode4.value;
+    this.residenceAddressObj.AreaCode1 = this.CustomerDataForm.controls["legalAddress"]["controls"].AreaCode1.value;
+    this.residenceAddressObj.AreaCode2 = this.CustomerDataForm.controls["legalAddress"]["controls"].AreaCode2.value;
+    this.residenceAddressObj.City = this.CustomerDataForm.controls["legalAddress"]["controls"].City.value;
+    this.residenceAddressObj.PhnArea1 = this.CustomerDataForm.controls["legalAddress"]["controls"].PhnArea1.value;
+    this.residenceAddressObj.Phn1 = this.CustomerDataForm.controls["legalAddress"]["controls"].Phn1.value;
+    this.residenceAddressObj.PhnExt1 = this.CustomerDataForm.controls["legalAddress"]["controls"].PhnExt1.value;
+    this.residenceAddressObj.PhnArea2 = this.CustomerDataForm.controls["legalAddress"]["controls"].PhnArea2.value;
+    this.residenceAddressObj.Phn2 = this.CustomerDataForm.controls["legalAddress"]["controls"].Phn2.value;
+    this.residenceAddressObj.PhnExt2 = this.CustomerDataForm.controls["legalAddress"]["controls"].PhnExt2.value;
+    this.residenceAddressObj.FaxArea = this.CustomerDataForm.controls["legalAddress"]["controls"].FaxArea.value;
+    this.residenceAddressObj.Fax = this.CustomerDataForm.controls["legalAddress"]["controls"].Fax.value;
+    this.residenceAddressObj.MrHouseOwnershipCode = this.CustomerDataForm.controls["legalAddress"]["controls"].MrHouseOwnershipCode.value;
+
+    this.inputResidenceAddressObj.inputLookupObj.nameSelect = this.CustomerDataForm.controls["legalAddressZipcode"]["controls"].value.value;
+    this.inputResidenceAddressObj.inputLookupObj.jsonSelect = {Zipcode: this.CustomerDataForm.controls["legalAddressZipcode"]["controls"].value.value};
+ 
   }
 
-  setOthBizAddr(){
-    // this.otherAddressObj.CustId = this.IdCust;
-    // this.otherAddressObj.MrCustAddrTypeCode = 'OTH_BIZ';
-    // this.otherAddressObj.Addr = this.JobDataEmpForm.controls["otherBusinessAddress"]["controls"].Addr.value;
-    // this.otherAddressObj.FullAddr = this.JobDataEmpForm.controls["otherBusinessAddress"]["controls"].Addr.value;
-    // this.otherAddressObj.AreaCode3 = this.JobDataEmpForm.controls["otherBusinessAddress"]["controls"].AreaCode3.value;
-    // this.otherAddressObj.AreaCode4 = this.JobDataEmpForm.controls["otherBusinessAddress"]["controls"].AreaCode4.value;
-    // this.otherAddressObj.Zipcode = this.JobDataEmpForm.controls["otherBusinessAddressZipcode"]["controls"].value.value;
-    // this.otherAddressObj.AreaCode1 = this.JobDataEmpForm.controls["otherBusinessAddress"]["controls"].AreaCode1.value;
-    // this.otherAddressObj.AreaCode2 = this.JobDataEmpForm.controls["otherBusinessAddress"]["controls"].AreaCode2.value;
-    // this.otherAddressObj.City = this.JobDataEmpForm.controls["otherBusinessAddress"]["controls"].City.value;
-    // this.otherAddressObj.PhnArea1 = this.JobDataEmpForm.controls["otherBusinessAddress"]["controls"].PhnArea1.value;
-    // this.otherAddressObj.Phn1 = this.JobDataEmpForm.controls["otherBusinessAddress"]["controls"].Phn1.value;
-    // this.otherAddressObj.PhnExt1 = this.JobDataEmpForm.controls["otherBusinessAddress"]["controls"].PhnExt1.value;
-    // this.otherAddressObj.PhnArea2 = this.JobDataEmpForm.controls["otherBusinessAddress"]["controls"].PhnArea2.value;
-    // this.otherAddressObj.Phn2 = this.JobDataEmpForm.controls["otherBusinessAddress"]["controls"].Phn2.value;
-    // this.otherAddressObj.PhnExt2 = this.JobDataEmpForm.controls["otherBusinessAddress"]["controls"].PhnExt2.value;
-    // this.otherAddressObj.PhnArea3 = this.JobDataEmpForm.controls["otherBusinessAddress"]["controls"].PhnArea3.value;
-    // this.otherAddressObj.Phn3 = this.JobDataEmpForm.controls["otherBusinessAddress"]["controls"].Phn3.value;
-    // this.otherAddressObj.PhnExt3 = this.JobDataEmpForm.controls["otherBusinessAddress"]["controls"].PhnExt3.value;
-    // this.otherAddressObj.FaxArea = this.JobDataEmpForm.controls["otherBusinessAddress"]["controls"].FaxArea.value;
-    // this.otherAddressObj.Fax = this.JobDataEmpForm.controls["otherBusinessAddress"]["controls"].Fax.value;
-    // this.otherAddressObj.MrBuildingOwnershipCode = this.JobDataEmpForm.controls["otherBusinessAddress"]["controls"].MrHouseOwnershipCode.value;
-    // this.otherAddressObj.Notes = this.JobDataEmpForm.controls["NotesOther"].value;
+  setLegalAddr(){
+    //this.legalAddressObj = new LeadCustAddrObj();
+    this.leadInputObj.LeadCustLegalAddrObj.MrCustAddrTypeCode = "LEGAL"
+    this.leadInputObj.LeadCustLegalAddrObj.Addr = this.CustomerDataForm.controls["legalAddress"]["controls"].Addr.value;
+    this.leadInputObj.LeadCustLegalAddrObj.AreaCode3 = this.CustomerDataForm.controls["legalAddress"]["controls"].AreaCode3.value;
+    this.leadInputObj.LeadCustLegalAddrObj.AreaCode4 = this.CustomerDataForm.controls["legalAddress"]["controls"].AreaCode4.value;
+    this.leadInputObj.LeadCustLegalAddrObj.Zipcode = this.CustomerDataForm.controls["legalAddressZipcode"]["controls"].value.value;
+    this.leadInputObj.LeadCustLegalAddrObj.AreaCode1 = this.CustomerDataForm.controls["legalAddress"]["controls"].AreaCode1.value;
+    this.leadInputObj.LeadCustLegalAddrObj.AreaCode2 = this.CustomerDataForm.controls["legalAddress"]["controls"].AreaCode2.value;
+    this.leadInputObj.LeadCustLegalAddrObj.City = this.CustomerDataForm.controls["legalAddress"]["controls"].City.value;
+    this.leadInputObj.LeadCustLegalAddrObj.PhnArea1 = this.CustomerDataForm.controls["legalAddress"]["controls"].PhnArea1.value;
+    this.leadInputObj.LeadCustLegalAddrObj.Phn1 = this.CustomerDataForm.controls["legalAddress"]["controls"].Phn1.value;
+    this.leadInputObj.LeadCustLegalAddrObj.PhnExt1 = this.CustomerDataForm.controls["legalAddress"]["controls"].PhnExt1.value;
+    this.leadInputObj.LeadCustLegalAddrObj.PhnArea2 = this.CustomerDataForm.controls["legalAddress"]["controls"].PhnArea2.value;
+    this.leadInputObj.LeadCustLegalAddrObj.Phn2 = this.CustomerDataForm.controls["legalAddress"]["controls"].Phn2.value;
+    this.leadInputObj.LeadCustLegalAddrObj.PhnExt2 = this.CustomerDataForm.controls["legalAddress"]["controls"].PhnExt2.value;
+    this.leadInputObj.LeadCustLegalAddrObj.FaxArea = this.CustomerDataForm.controls["legalAddress"]["controls"].FaxArea.value;
+    this.leadInputObj.LeadCustLegalAddrObj.Fax = this.CustomerDataForm.controls["legalAddress"]["controls"].Fax.value;
+    this.leadInputObj.LeadCustLegalAddrObj.MrHouseOwnershipCode = this.CustomerDataForm.controls["legalAddress"]["controls"].MrHouseOwnershipCode.value;
   }
-  
-  setCustJobData(){
-    // this.custPersonalJobDataObj.CustId = this.IdCust;
-    // this.custPersonalJobDataObj.RefProfessionId = this.tempProfession;
-    // this.custPersonalJobDataObj.MrJobPositionCode = this.JobDataEmpForm.controls["JobPosition"].value;
-    // this.custPersonalJobDataObj.JobTitleName = this.JobDataEmpForm.controls["JobTitleName"].value;
-    // this.custPersonalJobDataObj.MrJobStatCode = this.JobDataEmpForm.controls["JobStatus"].value;
-    // this.custPersonalJobDataObj.CoyName = this.JobDataEmpForm.controls["IndustryName"].value;
-    // this.custPersonalJobDataObj.IsMfEmp = this.JobDataEmpForm.controls["InternalEmployee"].value;
-    // this.custPersonalJobDataObj.RefIndustryTypeId = this.tempRefIndustryType;
-    // this.custPersonalJobDataObj.MrCoyScaleCode = this.JobDataEmpForm.controls["CompanyScale"].value;
-    // this.custPersonalJobDataObj.EmploymentEstablishmentDt = this.JobDataEmpForm.controls["EmpEstablishmentDate"].value;
-    // this.custPersonalJobDataObj.OthBizName = this.JobDataEmpForm.controls["OtherBusinessName"].value;
-    // this.custPersonalJobDataObj.OthBizType = this.JobDataEmpForm.controls["OtherBusinessType"].value;
-    // this.custPersonalJobDataObj.OthBizIndustryTypeCode = this.JobDataEmpForm.controls["OtherBusinessIndustry"].value;
-    // this.custPersonalJobDataObj.OthBizJobPosition = this.JobDataEmpForm.controls["OtherJobPosition"].value;
-    // this.custPersonalJobDataObj.OthBizEstablishmentDt = this.JobDataEmpForm.controls["EstablishmentDate"].value;
+
+  setResidenceAddr(){
+    //this.residenceAddressObj = new LeadCustAddrObj();
+    this.leadInputObj.LeadCustResidenceAddrObj.MrCustAddrTypeCode = "RESIDENCE"
+    this.leadInputObj.LeadCustResidenceAddrObj.Addr = this.CustomerDataForm.controls["residenceAddress"]["controls"].Addr.value;
+    this.leadInputObj.LeadCustResidenceAddrObj.AreaCode3 = this.CustomerDataForm.controls["residenceAddress"]["controls"].AreaCode3.value;
+    this.leadInputObj.LeadCustResidenceAddrObj.AreaCode4 = this.CustomerDataForm.controls["residenceAddress"]["controls"].AreaCode4.value;
+    this.leadInputObj.LeadCustResidenceAddrObj.Zipcode = this.CustomerDataForm.controls["residenceAddressZipcode"]["controls"].value.value;
+    this.leadInputObj.LeadCustResidenceAddrObj.AreaCode1 = this.CustomerDataForm.controls["residenceAddress"]["controls"].AreaCode1.value;
+    this.leadInputObj.LeadCustResidenceAddrObj.AreaCode2 = this.CustomerDataForm.controls["residenceAddress"]["controls"].AreaCode2.value;
+    this.leadInputObj.LeadCustResidenceAddrObj.City = this.CustomerDataForm.controls["residenceAddress"]["controls"].City.value;
+    this.leadInputObj.LeadCustResidenceAddrObj.PhnArea1 = this.CustomerDataForm.controls["residenceAddress"]["controls"].PhnArea1.value;
+    this.leadInputObj.LeadCustResidenceAddrObj.Phn1 = this.CustomerDataForm.controls["residenceAddress"]["controls"].Phn1.value;
+    this.leadInputObj.LeadCustResidenceAddrObj.PhnExt1 = this.CustomerDataForm.controls["residenceAddress"]["controls"].PhnExt1.value;
+    this.leadInputObj.LeadCustResidenceAddrObj.PhnArea2 = this.CustomerDataForm.controls["residenceAddress"]["controls"].PhnArea2.value;
+    this.leadInputObj.LeadCustResidenceAddrObj.Phn2 = this.CustomerDataForm.controls["residenceAddress"]["controls"].Phn2.value;
+    this.leadInputObj.LeadCustResidenceAddrObj.PhnExt2 = this.CustomerDataForm.controls["residenceAddress"]["controls"].PhnExt2.value;
+    this.leadInputObj.LeadCustResidenceAddrObj.FaxArea = this.CustomerDataForm.controls["residenceAddress"]["controls"].FaxArea.value;
+    this.leadInputObj.LeadCustResidenceAddrObj.Fax = this.CustomerDataForm.controls["residenceAddress"]["controls"].Fax.value;
+    this.leadInputObj.LeadCustResidenceAddrObj.MrHouseOwnershipCode = this.CustomerDataForm.controls["residenceAddress"]["controls"].MrHouseOwnershipCode.value;
+  }
+
+  setLeadCust(){
+    this.leadInputObj.LeadCustObj.MrCustTypeCode = "PERSONAL";
+    this.leadInputObj.LeadCustObj.LeadId = this.LeadId;
+    this.leadInputObj.LeadCustObj.CustName = this.CustomerDataForm.controls["CustName"].value;
+    this.leadInputObj.LeadCustObj.MrIdTypeCode = this.CustomerDataForm.controls["MrIdTypeCode"].value;
+    this.leadInputObj.LeadCustObj.MrCustModelCode = this.CustomerDataForm.controls["CustModel"].value;
+    this.leadInputObj.LeadCustObj.IdNo = this.CustomerDataForm.controls["IdNo"].value;
+    this.leadInputObj.LeadCustObj.TaxIdNo = this.CustomerDataForm.controls["Npwp"].value;
+  }
+
+  setLeadCustPersonal(){
+    this.leadInputObj.LeadCustPersonalObj.CustFullName = this.CustomerDataForm.controls["CustName"].value;
+    this.leadInputObj.LeadCustPersonalObj.MrGenderCode = this.CustomerDataForm.controls["Gender"].value;
+    this.leadInputObj.LeadCustPersonalObj.BirthPlace = this.CustomerDataForm.controls["BirthPlace"].value;
+    this.leadInputObj.LeadCustPersonalObj.BirthDt = this.CustomerDataForm.controls["BirthDate"].value;
+    this.leadInputObj.LeadCustPersonalObj.MotherMaidenName = this.CustomerDataForm.controls["MotherName"].value;
+    this.leadInputObj.LeadCustPersonalObj.MrMaritalStatCode = this.CustomerDataForm.controls["MrMaritalStatCode"].value;
+    this.leadInputObj.LeadCustPersonalObj.Email1 = this.CustomerDataForm.controls["Email"].value;
+    this.leadInputObj.LeadCustPersonalObj.MobilePhnNo1 = this.CustomerDataForm.controls["MobilePhone1"].value;
+    this.leadInputObj.LeadCustPersonalObj.MobilePhnNo2 = this.CustomerDataForm.controls["MobilePhone2"].value;
+  }
+
+  setLeadCustSocmed(){
+    this.leadCustFacebookObj = new LeadCustSocmedObj();
+    this.leadCustFacebookObj.MrSocmedCode = "FB";
+    this.leadCustFacebookObj.MrSocmedName = "Facebook";
+    this.leadCustFacebookObj.SocmedId = this.CustomerDataForm.controls["Facebook"].value;
+
+    this.leadCustInstagramObj = new LeadCustSocmedObj();
+    this.leadCustInstagramObj.MrSocmedCode = "IG";
+    this.leadCustInstagramObj.MrSocmedName = "Instagram";
+    this.leadCustInstagramObj.SocmedId = this.CustomerDataForm.controls["Instagram"].value;
+
+    this.leadCustTwitterObj = new LeadCustSocmedObj();
+    this.leadCustTwitterObj.MrSocmedCode = "TW";
+    this.leadCustTwitterObj.MrSocmedName = "Twitter";
+    this.leadCustTwitterObj.SocmedId = this.CustomerDataForm.controls["Twitter"].value;
+
+    if(this.CustomerDataForm.controls["Facebook"].value != "")
+    {
+      this.leadInputObj.LeadCustSocmedObj.push(this.leadCustFacebookObj);
+    } 
+    if(this.CustomerDataForm.controls["Instagram"].value != "")
+    {
+      this.leadInputObj.LeadCustSocmedObj.push(this.leadCustInstagramObj);
+    }
+    if(this.CustomerDataForm.controls["Twitter"].value != "")
+    {
+      this.leadInputObj.LeadCustSocmedObj.push(this.leadCustTwitterObj);
+    }
+  }
+
+  setLeadCustPersonalJobData(){
+    this.leadInputObj.LeadCustPersonalJobDataObj.MrProfessionCode = this.tempProfession;
+    this.leadInputObj.LeadCustPersonalJobDataObj.CompanyName = this.CustomerDataForm.controls["CompanyName"].value;
+  }
+
+  setLeadCustPersonalFinData(){
+    this.leadInputObj.LeadCustPersonalFinDataObj.MonthlyIncomeAmt = this.CustomerDataForm.controls["MonthlyIncome"].value;
+    this.leadInputObj.LeadCustPersonalFinDataObj.MonthlyExpenseAmt = this.CustomerDataForm.controls["MonthlyExpense"].value;
   }
 
   // back(){
@@ -242,70 +468,70 @@ export class LeadInputCustDataComponent implements OnInit {
   // }
 
   SaveForm(){
-  //   if(this.typePage == "edit") {
-  //     this.reqCustPersonalJobDataObj = new RequestCustPersonalJobDataObj;
-  //     this.custPersonalJobDataObj = new CustPersonalJobDataObj();
-  //     this.jobAddressObj = new CustAddrObj;
-  //     this.otherAddressObj = new CustAddrObj;
-  //     this.setCustJobData();
-  //     this.custPersonalJobDataObj.OthBizAddrId = this.othBizAddrId
-  //     this.custPersonalJobDataObj.JobAddrId = this.jobAddrId;
-  //     this.custPersonalJobDataObj.CustPersonalJobDataId = this.jobDataId;
-  //     this.custPersonalJobDataObj.RowVersion = this.rowVersion;
-  //     this.jobAddressObj.MrCustAddrTypeCode = 'JOB';
-  //     this.otherAddressObj.MrCustAddrTypeCode = 'OTH_BIZ';
-  //     this.reqCustPersonalJobDataObj.CustPersonalJobData = this.custPersonalJobDataObj;
-  //     this.reqCustPersonalJobDataObj.JobAddr = this.jobAddressObj;
-  //     this.reqCustPersonalJobDataObj.OthBizAddr = this.otherAddressObj;
+    if(this.typePage == "edit") {
+      this.leadInputObj = new LeadInputObj();
+      this.leadInputObj.LeadCustObj.LeadCustId = this.resLeadCustObj.LeadCustId;
+      this.leadInputObj.LeadCustObj.RowVersion = this.resLeadCustObj.RowVersion;
+      this.setLeadCust();
+      this.leadInputObj.LeadCustPersonalObj.RowVersion = this.resLeadCustPersonalObj.RowVersion;
+      this.setLeadCustPersonal();
+      this.setLeadCustSocmed();
+      this.leadInputObj.LeadCustLegalAddrObj.RowVersion = this.resLeadCustAddrLegalObj.RowVersion;
+      this.setLegalAddr();
+      this.leadInputObj.LeadCustResidenceAddrObj.RowVersion = this.resLeadCustAddrResObj.RowVersion;
+      this.setResidenceAddr();
+      this.leadInputObj.LeadCustPersonalJobDataObj.RowVersion = this.resLeadCustPersonalJobDataObj.RowVersion;
+      this.setLeadCustPersonalJobData();
+      this.leadInputObj.LeadCustPersonalFinDataObj.RowVersion = this.resLeadCustPersonalFinDataObj.RowVersion;
+      this.setLeadCustPersonalFinData();
 
-  //     console.log("ccc");
-  //     console.log(this.reqCustPersonalJobDataObj)
+      console.log("ccc");
+      console.log(this.leadInputObj)
 
-  //     this.http.post(this.editJobData, this.reqCustPersonalJobDataObj).subscribe(
-  //       (response) => {
-  //         console.log(response);
-  //         this.toastr.successMessage(response["message"]);
-  //         // this.router.navigate(
-  //         //   ["/Customer/CustomerPersonal/Address"], 
-  //         //   { queryParams: { "IdCust": this.IdCust }}
-  //         //   );
-  //         // console.log(response);
-  //         this.wizard.goToNextStep();
-  //       },
-  //       (error) => {
-  //         console.log(error);
-  //       }
-  //     );
-  //   } else {
-  //     this.reqCustPersonalJobDataObj = new RequestCustPersonalJobDataObj;
-  //     this.custPersonalJobDataObj = new CustPersonalJobDataObj();
-  //     this.setCustJobData();
-  //     this.jobAddressObj = new CustAddrObj;
-  //     this.setJobAddr();
-  //     this.otherAddressObj = new CustAddrObj;
-  //     this.setOthBizAddr();
-  //     this.reqCustPersonalJobDataObj.CustPersonalJobData = this.custPersonalJobDataObj;
-  //     this.reqCustPersonalJobDataObj.JobAddr = this.jobAddressObj;
-  //     this.reqCustPersonalJobDataObj.OthBizAddr = this.otherAddressObj;
+      this.http.post(this.addEditLeadCustPersonal, this.leadInputObj).subscribe(
+        (response) => {
+          console.log(response);
+          this.toastr.successMessage(response["message"]);
+          // this.router.navigate(
+          //   ["/Customer/CustomerPersonal/Address"], 
+          //   { queryParams: { "IdCust": this.IdCust }}
+          //   );
+          // console.log(response);
+          this.wizard.goToNextStep();
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+    else {
+      this.leadInputObj = new LeadInputObj();
+      this.setLeadCust();
+      this.setLeadCustPersonal();
+      this.setLeadCustSocmed();
+      this.setLegalAddr();
+      this.setResidenceAddr();
+      this.setLeadCustPersonalJobData();
+      this.setLeadCustPersonalFinData();
 
-  //     console.log("ccc");
-  //     console.log(this.reqCustPersonalJobDataObj)
+      console.log("ccc");
+      console.log(this.leadInputObj)
 
-  //     this.http.post(this.addJobData, this.reqCustPersonalJobDataObj).subscribe(
-  //       (response) => {
-  //         console.log(response);
-  //         this.toastr.successMessage(response["message"]);
-  //         // this.router.navigate(
-  //         //   ["/Customer/CustomerPersonal/Address"], 
-  //         //   { queryParams: { "IdCust": this.IdCust }}
-  //         //   );
-  //         // console.log(response);
-  //         this.wizard.goToNextStep();
-  //       },
-  //       (error) => {
-  //         console.log(error);
-  //       }
-  //     );
-  //   }
-   }
+      this.http.post(this.addEditLeadCustPersonal, this.leadInputObj).subscribe(
+        (response) => {
+          console.log(response);
+          this.toastr.successMessage(response["message"]);
+          // this.router.navigate(
+          //   ["/Customer/CustomerPersonal/Address"], 
+          //   { queryParams: { "IdCust": this.IdCust }}
+          //   );
+          // console.log(response);
+          this.wizard.goToNextStep();
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+  }
 }
