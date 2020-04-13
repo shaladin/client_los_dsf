@@ -31,6 +31,5 @@ export class RsvFundPagingComponent implements OnInit {
     critInput.restriction = AdInsConstant.RestrictionEq;
     critInput.value = AdInsConstant.LobCodeRFN4W;
     this.inputPagingObj.addCritInput.push(critInput);
-    
   }
 }

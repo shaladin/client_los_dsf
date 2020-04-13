@@ -1,0 +1,62 @@
+{
+  "title": "",
+  "subsection": [
+    {
+      "subSectionId": "CustPersonalFinDataId",
+      "subSectionTitle": "Financial",
+      "mainInfoUrl": "http://localhost:5001/Generic/GetDataViewBySQL",
+      "mainInfo": [
+        {
+          "type": "currency",
+          "label": "Monthly Income",
+          "property": "MonthlyIncomeAmt"
+        },
+        {
+          "type": "currency",
+          "label": "Monthly Expense",
+          "property": "MonthlyExpenseAmt"
+        },
+        {
+          "type": "text",
+          "label": "Source Of Income",
+          "property": "SourceOfIncomeName"
+        },
+        {
+          "type": "currency",
+          "label": "Monthly Installment",
+          "property": "MonthlyInstallmentAmt"
+        },
+        {
+          "type": "currency",
+          "label": "Spouse Monthly Income",
+          "property": "SpouseMonthlyIncomeAmt"
+        },
+        {
+          "type": "boolean",
+          "label": "Join Income",
+          "property": "IsJoinIncome"
+        },
+        {
+          "type": "currency",
+          "label": "Total Monthly Income",
+          "property": "TotalMonthlyIncomeAmt"
+        },
+        {
+          "type": "currency",
+          "label": "Total Monthly Expense",
+          "property": "TotalMonthlyExpenseAmt"
+        },
+        {
+          "type": "currency",
+          "label": "Nett Monthly Income",
+          "property": "NettMonthlyIncomeAmt"
+        }
+      ],
+      "querystring": {
+        "select": "SELECT ACPFD.MONTHLY_INCOME_AMT AS MonthlyIncomeAmt, ACPFD.MONTHLY_EXPENSE_AMT AS MonthlyExpenseAmt, RMIT.DESCR AS SourceOfIncomeName, ACPFD.MONTHLY_INSTALLMENT_AMT AS MonthlyInstallmentAmt, ACPFD.SPOUSE_MONTHLY_INCOME_AMT AS SpouseMonthlyIncomeAmt, ACPFD.IS_JOIN_INCOME AS IsJoinIncome, ACPFD.MONTHLY_INCOME_AMT + ACPFD.SPOUSE_MONTHLY_INCOME_AMT AS TotalMonthlyIncomeAmt, ACPFD.MONTHLY_EXPENSE_AMT + ACPFD.MONTHLY_INSTALLMENT_AMT AS TotalMonthlyExpenseAmt, (ACPFD.MONTHLY_INCOME_AMT + ACPFD.SPOUSE_MONTHLY_INCOME_AMT) - (ACPFD.MONTHLY_EXPENSE_AMT + ACPFD.MONTHLY_INSTALLMENT_AMT) AS NettMonthlyIncomeAmt",
+        "from": "FROM dbo.APP_CUST AC WITH(NOLOCK) JOIN dbo.APP_CUST_PERSONAL ACP WITH(NOLOCK) ON AC.APP_CUST_ID = ACP.APP_CUST_ID JOIN dbo.APP_CUST_PERSONAL_FIN_DATA ACPFD WITH(NOLOCK) ON ACP.APP_CUST_PERSONAL_ID = ACPFD.APP_CUST_PERSONAL_ID LEFT JOIN dbo.V_REF_MASTER RMIT WITH(NOLOCK) ON ACPFD.MR_SOURCE_OF_INCOME_TYPE_CODE = RMIT.MASTER_CODE AND RMIT.REF_MASTER_TYPE_CODE = 'SOURCE_OF_INCOME'",
+        "where": "WHERE APP_ID = {0}"
+      }
+    }
+  ]
+}

@@ -13,7 +13,7 @@ import { UcviewgenericModule } from "@adins/ucviewgeneric";
 import { UcShowErrorsModule } from "@adins/uc-show-errors";
 import { OutstandingTcPagingComponent } from './outstanding-tc/outstanding-tc-paging/outstanding-tc-paging.component';
 import { OutstandingTcDetailComponent } from './outstanding-tc/outstanding-tc-detail/outstanding-tc-detail.component';
-import { NapComponentModule } from "app/components/nap-component/nap-component.module";
+import { NapComponentModule } from "app/NAP/nap-component/nap-component.module";
 
 @NgModule({
   imports: [
