@@ -115,6 +115,7 @@ export class AdInsConstant {
   public static PremiumTypePrcnt = "PRCNT";
 
   //LOB CODE
+  public static LobCodeFCTR = "FCTR";
   public static LobCodeRFN4W = "RFN4W";
 
   //Asset Master
