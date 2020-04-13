@@ -30,7 +30,7 @@ import { AppInsAddCvgObj } from 'app/shared/model/AppInsAddCvgObj.Model';
 
 export class InsuranceDataComponent implements OnInit {
 
-  @Input() appId: number;
+  @Input() AppId: number;
   appAssetId: number;
 
   appObj: NapAppModel;
@@ -103,7 +103,7 @@ export class InsuranceDataComponent implements OnInit {
     private toastr: NGXToastrService,
     private route: ActivatedRoute){
       this.route.queryParams.subscribe(params => {
-        this.appId = params["AppId"];
+        this.AppId = params["AppId"] ? params["AppId"] : this.AppId;
       })
   }
   async ngOnInit() : Promise<void>{
@@ -147,9 +147,9 @@ export class InsuranceDataComponent implements OnInit {
 
   setSaveObj(insuredBy){
     this.saveObj = new InsuranceDataObj();
-    this.saveObj.AppId = this.appId;
-    this.saveObj.AppInsuranceObj.AppId = this.appId;
-    this.saveObj.AppInsObjObj.AppId = this.appId;
+    this.saveObj.AppId = this.AppId;
+    this.saveObj.AppInsuranceObj.AppId = this.AppId;
+    this.saveObj.AppInsObjObj.AppId = this.AppId;
     this.saveObj.AppInsObjObj.AppAssetId = this.appAssetId;
     this.saveObj.AppInsObjObj.InsAssetCoveredBy = insuredBy;
     this.saveObj.AppInsObjObj.InsSeqNo = 1;
@@ -897,7 +897,7 @@ export class InsuranceDataComponent implements OnInit {
   }
 
   async getInsuranceData(){
-    var reqObj = {AppId: this.appId}
+    var reqObj = {AppId: this.AppId}
     await this.http.post(AdInsConstant.GetInsuranceDataByAppId, reqObj).toPromise().then(
       (response) => {
         console.log(response);
