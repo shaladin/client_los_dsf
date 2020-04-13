@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'environments/environment';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { AppObj } from 'app/shared/model/App/App.Model';
 
 @Component({
   selector: 'app-app-add-detail',
@@ -9,16 +13,27 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 })
 export class AppAddDetailComponent implements OnInit {
 
-  appId : number;
-  viewProdMainInfoObj : string;
-  isTab1: boolean = false;
-  isTab2: boolean = false;
-  isTab3: boolean = true;
-  isTab4: boolean = false;
-  isTab5: boolean = false;
+  appId: number;
+  viewProdMainInfoObj: string;
+  NapObj: AppObj;
+  AppStepIndex: number;
+
+  AppStep = {
+    "NEW": 0,
+    "CUST": 0,
+    "GUAR": 1,
+    "REF": 2,
+    "APP": 3,
+    "ASSET": 4,
+    "INS": 5,
+    "LFI": 6,
+    "FIN": 7,
+    "TC": 8,
+  };
 
   constructor(
-    private route: ActivatedRoute, ) {
+    private route: ActivatedRoute,
+    private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -27,47 +42,54 @@ export class AppAddDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("this")
     this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
-
-
-
+    this.NapObj = new AppObj();
+    this.NapObj.AppId = this.appId;
+    this.http.post(environment.losUrl + AdInsConstant.GetAppById, this.NapObj).subscribe(
+      (response: AppObj) => {
+        if (response) {
+          this.AppStepIndex = this.AppStep[response.AppCurrStep];
+        }else{
+          this.AppStepIndex = 0;
+        }
+      }
+    )
   }
 
-  EnterTab(type) {
-    if (type == "tab1") {
-      this.isTab1 = true;
-      this.isTab2 = false;
-      this.isTab3 = false;
-      this.isTab4 = false;
-      this.isTab5 = false;
-    }
-    if (type == "tab2") {
-      this.isTab1 = false;
-      this.isTab2 = true;
-      this.isTab3 = false;
-      this.isTab4 = false;
-      this.isTab5 = false;
-    }
-    if (type == "tab3") {
-      this.isTab1 = false;
-      this.isTab2 = false;
-      this.isTab3 = true;
-      this.isTab4 = false;
-      this.isTab5 = false;
-    }
-    if (type == "tab4") {
-      this.isTab1 = false;
-      this.isTab2 = false;
-      this.isTab3 = false;
-      this.isTab4 = true;
-      this.isTab5 = false;
-    }
-    if (type == "tab5") {
-      this.isTab1 = false;
-      this.isTab2 = false;
-      this.isTab3 = false;
-      this.isTab4 = false;
-      this.isTab5 = true;
+  EnterTab(AppStep) {
+    console.log(AppStep);
+    switch (AppStep) {
+      case AdInsConstant.AppStepCust:
+        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepCust];
+        break;
+      case AdInsConstant.AppStepGuar:
+        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepGuar];
+        break;
+      case AdInsConstant.AppStepRef:
+        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepRef];
+        break;
+      case AdInsConstant.AppStepApp:
+        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepApp];
+        break;
+      case AdInsConstant.AppStepAsset:
+        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepAsset];
+        break;
+      case AdInsConstant.AppStepIns:
+        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepIns];
+        break;
+      case AdInsConstant.AppStepLIns:
+        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepLIns];
+        break;
+      case AdInsConstant.AppStepFin:
+        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepFin];
+        break;
+      case AdInsConstant.AppStepTC:
+        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepTC];
+        break;
+
+      default:
+        break;
     }
   }
 }

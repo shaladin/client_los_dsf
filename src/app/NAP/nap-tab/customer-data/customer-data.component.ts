@@ -116,9 +116,9 @@ export class CustomerDataComponent implements OnInit {
     private http: HttpClient,
     private toastr: NGXToastrService,
     private route: ActivatedRoute) {
-      // this.route.queryParams.subscribe(params => {
-      //   this.appId = params["AppId"];
-      // })
+      this.route.queryParams.subscribe(params => {
+        this.appId = params["AppId"];
+      })
      }
 
   async ngOnInit() : Promise<void> {

@@ -1,6 +1,7 @@
 export class AppTCObj{
     AppTcId: any;
     AppId: any;
+    TcName : any;
     TcCode: any;
     PriorTo: any;
     IsChecked: any;

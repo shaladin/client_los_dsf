@@ -6,6 +6,8 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppIdObj } from 'app/shared/model/AppIdObj.Model';
 import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
+import { formatDate } from '@angular/common';
+import { ReqTCObj } from 'app/shared/model/ReqTCObj.Model';
 
 @Component({
   selector: 'app-app-tc',
@@ -19,139 +21,195 @@ export class AppTcComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
     })
-   }
-
-   AppTcForm = this.fb.group({
-     AppTc: this.fb.array([])
-   });
-
-
-  AppIdObj : any = new AppIdObj();
-  AppTcCodeObj ={
-    TcCode : new Array(),
-    RowVersion:""
   }
-  result : any;
+
+  AppTcForm = this.fb.group({
+    AppTc: this.fb.array([])
+  });
+
+
+  AppIdObj: any = new AppIdObj();
+  AppTcCodeObj = {
+    TcCode: new Array(),
+    RowVersion: ""
+  }
+  result: any;
   DocName = new Array();
-  listAppTcObj : Array<AppTCObj> = new Array<AppTCObj>();
+  listAppTcObj: Array<AppTCObj> = new Array<AppTCObj>();
+  mode: any = "add";
+  ReqTCObj = new ReqTCObj();
 
   ngOnInit() {
     this.AppIdObj.AppId = this.AppId;
     console.log(this.AppIdObj);
-    this.http.post(AdInsConstant.CreateTCRule, this.AppIdObj).subscribe(
+    this.http.post(AdInsConstant.GetListTCbyAppId, this.AppIdObj).subscribe(
       (response) => {
-        console.log("CHek Hasil :");
+        console.log("check");
         console.log(response);
-        this.result=response;
-        console.log(this.result);
-        // this.listAppTcObj = this.result;
-        for(let i =0; i <Object.keys(this.result).length ;i++){
-          // this.listAppTcObj[i].TcCode = this.result[i]["TCCode"];
-          // this.listAppTcObj[i].IsMandatory = this.result[i]["TCMandatory"];
-          // this.listAppTcObj[i].PriorTo = this.result[i]["TCPriorTo"];
-          var appTcObj =  new AppTCObj();
-          appTcObj.IsMandatory = this.result[i].TCMandatory;
-          appTcObj.PriorTo = this.result[i].TCPriorTo;
-          appTcObj.TcCode = this.result[i].TCCode;
-          this.listAppTcObj.push(appTcObj);
-          var fa_apptc = this.AppTcForm.get("AppTc") as FormArray;
-          fa_apptc.push(this.AddTcControl(this.listAppTcObj[i]))
-          this.DocName.push(this.result[i].TCCode);
-          this.AppTcCodeObj.TcCode[i]=this.DocName[i]; 
-        }
-        console.log(this.listAppTcObj);
-        this.http.post(AdInsConstant.GetListRefTcByTcCode, this.AppTcCodeObj).subscribe(
-          (response) => {
-            console.log(response);
-            for(var i =0;i<Object.keys(response).length;i++){
-              this.DocName[i] = response[i]["TcName"];
-            }
+        this.listAppTcObj = response["AppTcs"];
+        if (this.listAppTcObj.length > 0) {
+          this.mode = "edit";
+          for (let j = 0; j < this.listAppTcObj.length; j++) {
+            var fa_apptc = this.AppTcForm.get("AppTc") as FormArray;
+            fa_apptc.push(this.AddTcControl(this.listAppTcObj[j]))
           }
-        );
-        
-    this.Check();
-    this.DisableDate();
-    
-    var fa_AppTc = this.AppTcForm.get("AppTc") as FormArray
-    for (let i = 0; i < fa_AppTc.length ; i++) {
-      var item = fa_AppTc.at(i);
-      var isMandatory : Boolean = item.get("IsMandatory").value;
-      if(isMandatory){
-        this.EnablePromiseDt(i);
-      }
-    }
-      },
-      (error) => {
-        console.log(error);
+          this.ReconstructForm();
+        }
+        else {
+          this.http.post(AdInsConstant.CreateTCRule, this.AppIdObj).subscribe(
+            (response) => {
+              this.listAppTcObj = response["AppTcs"];
+              console.log(this.result);
+              // this.listAppTcObj = this.result;
+              for (let i = 0; i < this.listAppTcObj.length; i++) {
+                var fa_apptc = this.AppTcForm.get("AppTc") as FormArray;
+                fa_apptc.push(this.AddTcControl(this.listAppTcObj[i]))
+              }
+
+              this.ReconstructForm();
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+        }
       }
     );
   }
 
-  AddTcControl(obj : AppTCObj){
+  AddTcControl(obj: AppTCObj) {
     return this.fb.group({
-       TcCode: obj.TcCode,
-       PriorTo: obj.PriorTo,
-       IsChecked: [''],
-       IsMandatory: obj.IsMandatory,
-       PromisedDt: ['',Validators.required],
-       ExpiredDt: [''],
-       Notes: [''],
+      TcName: obj.TcName,
+      TcCode: obj.TcCode,
+      PriorTo: obj.PriorTo,
+      IsChecked: obj.IsChecked,
+      IsMandatory: obj.IsMandatory,
+      PromisedDt:(obj.PromisedDt==null) ? null : formatDate(obj.PromisedDt, 'yyyy-MM-dd', 'en-US'),
+      ExpiredDt: (obj.ExpiredDt==null) ? null : formatDate(obj.ExpiredDt, 'yyyy-MM-dd', 'en-US'),
+      Notes: obj.Notes,
     })
   }
 
-  DisableDate(){
+  EnablePromiseDt(i) {
     var fa_AppTc = this.AppTcForm.get("AppTc") as FormArray
-    for (let i = 0; i < fa_AppTc.length ; i++) {
-      var item = fa_AppTc.at(i);
-      item.get("ExpiredDt").disable();
-      item.get("PromisedDt").disable();
-    }
+    var item = fa_AppTc.at(i);
+    item.get("PromisedDt").enable();
   }
 
-  EnablePromiseDt(i){
+  ObjSelected() {
     var fa_AppTc = this.AppTcForm.get("AppTc") as FormArray
-      var item = fa_AppTc.at(i);
-      item.get("PromisedDt").enable();
-  }
-
-  ObjSelected(){
-    var fa_AppTc = this.AppTcForm.get("AppTc") as FormArray
-    for (let i = 0; i < fa_AppTc.length ; i++) {
+    for (let i = 0; i < fa_AppTc.length; i++) {
       var item = fa_AppTc.at(i);
       var isChecked: Boolean = item.get("IsChecked").value;
-      var isMandatory : Boolean = item.get("IsMandatory").value;
-      if(isChecked && isMandatory)
-      {
+      var isMandatory: Boolean = item.get("IsMandatory").value;
+      if (isChecked && isMandatory) {
         item.get("PromisedDt").disable();
+        item.patchValue({
+          PromisedDt : null
+        });
         item.get("ExpiredDt").enable();
-        item.get("IsChecked").disable();
       }
-      else if(isChecked)
-      {
+      else if (isChecked && !isMandatory) {
         item.get("ExpiredDt").enable();
-        item.get("IsChecked").disable();
+      }
+      else {
+        item.get("ExpiredDt").disable();
+        item.patchValue({
+          ExpiredDt : null
+        });
+        if (isMandatory) {
+          item.get("PromisedDt").enable();
+        }
       }
     }
   }
 
   Check(){
-    var fa_AppTc = this.AppTcForm.get("AppTc") as FormArray
-    for (let i = 0; i < fa_AppTc.length ; i++) {
-      var item = fa_AppTc.at(i);
-      console.log(item);
+    // console.log(this.AppTcForm.value);
+    // var fa_AppTc = this.AppTcForm.get("AppTc") as FormArray
+    // for (let i = 0; i < fa_AppTc.length; i++) {
+    //   var item = fa_AppTc.at(i);
+    //   item.patchValue({
+    //     PromisedDt : null
+    //   });
+    //   item.get("Notes").disable();
+    //   console.log("TEST");
+    //   console.log(item.get("PromisedDt").value);
+    // }
+  }
+
+  ReconstructForm(){          
+  var fa_AppTc = this.AppTcForm.get("AppTc") as FormArray
+  for (let a = 0; a < fa_AppTc.length; a++) {
+    var item = fa_AppTc.at(a);
+    var isMandatory: Boolean = item.get("IsMandatory").value;
+    var isChecked : Boolean = item.get("IsChecked").value;
+    if (isMandatory && !isChecked) {
+      item.get("PromisedDt").enable();
+      item.get("PromisedDt").setValidators([Validators.required]);
+      item.get("ExpiredDt").disable();
+      item.patchValue({
+        ExpiredDt : null
+      });
+    }
+    else if(isChecked && isMandatory){
+      item.get("PromisedDt").disable();
+      item.patchValue({
+        PromisedDt : null
+      });
+      item.get("ExpiredDt").enable();
+    }else if(isChecked && !isMandatory){
+      item.get("PromisedDt").enable();
+      item.get("ExpiredDt").enable();
+    }
+    else{
+      item.get("PromisedDt").disable();
+      item.patchValue({
+        PromisedDt : null
+      });
+      item.get("PromisedDt").clearValidators();
+      item.get("ExpiredDt").disable();
+      item.patchValue({
+        ExpiredDt : null
+      });
     }
   }
 
-  // ObjSelected(event, i) {
-  //   // if (event.target.checked) {
-  //   //   console.log("event checked");
-  //   //   console.log(i+1);
-  //   //   console.log(this.AppTc[i+1]);
-  //   //   if(this.AppTc[i+1].IsMandatory== true){
-  //   //   }
-  //   // } else {
-  //   //   console.log("event unchecked");
-  //   //   console.log(i);
-  //   // }
-  // }
+  }
+
+  SaveData() {
+    var fa_AppTc = this.AppTcForm.get("AppTc") as FormArray
+    for (let i = 0; i < fa_AppTc.length; i++) {
+      var item = fa_AppTc.at(i);
+      this.listAppTcObj[i].AppId = this.AppId;
+      this.listAppTcObj[i].IsChecked = item.get("IsChecked").value;
+      this.listAppTcObj[i].PromisedDt = item.get("PromisedDt").value;
+      this.listAppTcObj[i].ExpiredDt = item.get("ExpiredDt").value;
+      this.listAppTcObj[i].Notes = item.get("Notes").value;
+    }
+    this.ReqTCObj.ListAppTcObj = this.listAppTcObj;
+    if (this.mode == "edit") {
+      this.http.post(AdInsConstant.EditAppTc, this.ReqTCObj).subscribe(
+        (response) => {
+          console.log(response);
+          this.toastr.successMessage(response["message"]);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    } else {
+      this.http.post(AdInsConstant.AddAppTc, this.ReqTCObj).subscribe(
+        (response) => {
+          console.log(response);
+          this.toastr.successMessage(response["message"]);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+
+    }
+  }
+
 }

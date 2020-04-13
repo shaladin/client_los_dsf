@@ -159,6 +159,10 @@
               {
                 "type": "LeadId",
                 "property": "LeadId"
+              },
+              {
+                "type": "mode",
+                "property": "edit"
               }
             ]
           }
