@@ -8,14 +8,23 @@
       navigateForward="allow" [defaultStepIndex]="0">
       <aw-wizard-step [stepTitle]="'CUSTOMER DATA'" (stepEnter)="EnterTab('customerData')"
         [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
-        <app-view-app-cust-data *ngIf="type == 'customerData'" [appId]="appId">
-        </app-view-app-cust-data>
+        <app-view-app-cust-data-personal *ngIf="type == 'customerData' && mrCustTypeCode == 'PERSONAL'" [appId]="appId">
+        </app-view-app-cust-data-personal>
+        <app-view-app-cust-data-company *ngIf="type == 'customerData' && mrCustTypeCode == 'COMPANY'" [appId]="appId">
+        </app-view-app-cust-data-company>
       </aw-wizard-step>
-      <aw-wizard-step [stepTitle]="'LEAD DATA'" (stepEnter)="EnterTab('leadData')"
+      <aw-wizard-step [stepTitle]="'APPLICATION DATA'" (stepEnter)="EnterTab('appData')"
         [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
-        <!-- <app-mou-view-fee *ngIf="isLeadData == true">
-        </app-mou-view-fee> -->
-      </aw-wizard-step> 
+
+      </aw-wizard-step>
+      <aw-wizard-step [stepTitle]="'FRAUD DETECTION RESULT'" (stepEnter)="EnterTab('fraudDetection')"
+      [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
+
+    </aw-wizard-step>
+    <aw-wizard-step [stepTitle]="'APPROVAL HISTORY'" (stepEnter)="EnterTab('apvHist')"
+    [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
+
+  </aw-wizard-step> 
     </aw-wizard>
     <div class="px-3">
       <lib-ucSubsection [id]="'creditRiskAnalysisId'" [title]="'Credit Risk Analysis'" [panel]="'creditRiskAnalysis'">

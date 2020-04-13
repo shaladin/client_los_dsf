@@ -19,6 +19,7 @@ import { AppCrdInvstgDObj } from 'app/shared/model/AppCrdInvstg/AppCrdInvstgDObj
 export class CreditInvestigationDetailComponent implements OnInit {
 
   appId: number;
+  mrCustTypeCode: string;
   viewObj: string;
   arrValue = [];
   analysisItemObj: Array<KeyValueObj>;
@@ -35,6 +36,9 @@ export class CreditInvestigationDetailComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
+      }
+      if (params["MrCustTypeCode"] != null) {
+        this.mrCustTypeCode = params["MrCustTypeCode"];
       }
     });
   }
