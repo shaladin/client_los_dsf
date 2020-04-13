@@ -347,6 +347,13 @@ export class AdInsConstant {
   public static GetListActiveRefMaster = environment.FoundationR3Url + "/RefMaster/GetListActiveRefMaster";
   public static GetListActiveRefMasterWithReserveFieldAll = environment.FoundationR3Url + "/RefMaster/GetListActiveRefMasterWithReserveFieldAll";
   public static GetRefMasterByRefMasterTypeCode = environment.FoundationR3Url + "/RefMaster/GetRefMasterByRefMasterTypeCode"
+  public static RefMasterTypeCodeCustType = "CUST_TYPE";
+  public static RefMasterTypeCodeSlsRecom = "SLS_RECOM";
+  public static RefMasterTypeCodeWOP = "WOP";
+  public static RefMasterTypeCodeInstSchm = "INST_SCHM";
+  public static RefMasterTypeCodeCustNotifyOpt = "CUST_NOTIF_OPT";
+  public static RefMasterTypeCodeFirstInstType = "FIRST_INST_TYPE";
+  public static RefMasterTypeCodeInterestType = "INTRSTTYPE";
 
   //REF PROV DISTRICT
   public static GetRefProvDistrictPaging = "/RefProvDistrict/GetRefProvDistrictPaging";

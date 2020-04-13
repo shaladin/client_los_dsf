@@ -45,16 +45,16 @@ export class AppModelComponent implements OnInit {
     CurrCode: [''],
     LobCode: [''],
     RefProdTypeCode: [''],
-    Tenor: ['', Validators.pattern("^[0-9]+$")],
+    Tenor: ["", [Validators.pattern("^[0-9]+$"), Validators.required]],
     NumOfInst: [''],
-    PayFreqCode: [''],
-    MrFirstInstTypeCode: [''],
+    PayFreqCode: ['', Validators.required],
+    MrFirstInstTypeCode: ["", Validators.required],
     NumOfAsset: [''],
-    MrLcCalcMethodCode: [''],
+    MrLcCalcMethodCode: ["", Validators.required],
     LcInstRatePrml: [''],
     LcInsRatePrml: [''],
-    MrAppSourceCode: [''],
-    MrWopCode: [''],
+    MrAppSourceCode: ["", Validators.required],
+    MrWopCode: ["", Validators.required],
     SrvyOrderNo: [''],
     ApvDt: [''],
     SalesHeadNo: [''],
@@ -66,8 +66,8 @@ export class AppModelComponent implements OnInit {
     CreditAnalystNo: [''],
     CreditRiskNo: [''],
     DataEntryNo: [''],
-    MrSalesRecommendCode: [''],
-    MrCustNotifyOptCode: [''],
+    MrSalesRecommendCode: ["", Validators.required],
+    MrCustNotifyOptCode: ["", Validators.required],
     PreviousAppId: [''],
     IsAppInitDone: [''],
     MrOrderInfoCode: [''],
@@ -77,8 +77,8 @@ export class AppModelComponent implements OnInit {
     RsvField3: [''],
     RsvField4: [''],
     RsvField5: [''],
-    MrInstSchemeCode: [''],
-    InterestType: ['']
+    MrInstSchemeCode: ["", Validators.required],
+    InterestType: ['', Validators.required]
   });
 
   inputPagingObj;
@@ -86,37 +86,28 @@ export class AppModelComponent implements OnInit {
   arrAddCrit;
   employeeIdentifier;
   salesRecommendationItems = [];
+  isInputLookupObj;
   ngOnInit() {
-    this.makeNewLookupCriteria();
-
     this.ListCrossAppObj["appId"]=this.appId;
     this.ListCrossAppObj["result"] = [];
+    this.isInputLookupObj = false;
 
-    // Lookup obj
-    this.inputLookupObj = new InputLookupObj();
-    this.inputLookupObj.urlJson = "./assets/uclookup/NAP/lookupEmp.json";
-    this.inputLookupObj.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
-    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
-    this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupEmp.json";
-    this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupEmp.json";
-    this.inputLookupObj.nameSelect = this.NapAppModelForm.controls.SalesOfficerName.value;
-    this.inputLookupObj.addCritInput = this.arrAddCrit;
-    
+    // this.makeLookUpObj();
     this.getAppModelInfo();
+    
 
     this.applicationDDLitems = [];
     // data dummy test
-    this.getRefMasterTypeCode("CUST_TYPE");
     // data real
-    this.getRefMasterTypeCode("SLS_RECOM");
-    this.getRefMasterTypeCode("WOP");
-    this.getRefMasterTypeCode("INST_SCHM");
-    this.getRefMasterTypeCode("INTEREST_TYPE");
-    this.getRefMasterTypeCode("CUST_NOTIFY_OPT");
-    this.getRefMasterTypeCode("FIRST_INST_TYPE");
-    this.getRefMasterTypeCode("INTRSTTYPE");
+    this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeCustType);
+    this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeSlsRecom);
+    this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeWOP);
+    this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeInstSchm);
+    this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeCustNotifyOpt);
+    this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeFirstInstType);
+    this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeInterestType);
     this.getPayFregData();
-
+    this.getAppSrcData();
     this.GetCrossInfoData();
   }
 
@@ -207,6 +198,7 @@ export class AppModelComponent implements OnInit {
           RsvField5: this.resultResponse.RsvField5,
         });
         console.log(this.NapAppModelForm);
+        this.makeNewLookupCriteria();
       },
       (error) => {
         console.log(error);
@@ -223,8 +215,7 @@ export class AppModelComponent implements OnInit {
     this.http.post(url, obj).subscribe(
       (response) => {
         // console.log(response);
-        var objTemp = response["ReturnObject"];
-        this.applicationDDLitems["APP_SOURCE"] = objTemp;
+        this.applicationDDLitems["APP_SOURCE"] = response["ReturnObject"];
         console.log(this.applicationDDLitems);
       },
       (error) => {
@@ -261,7 +252,7 @@ export class AppModelComponent implements OnInit {
 
     this.http.post(url, obj).subscribe(
       (response) => {
-        // console.log(response);
+        console.log(response);
         var objTemp = response["ReturnObject"];
         this.applicationDDLitems[code] = objTemp;
       },
@@ -283,6 +274,19 @@ export class AppModelComponent implements OnInit {
     console.log(this.NapAppModelForm);
   }
 
+  makeLookUpObj(){
+    // Lookup obj
+    this.inputLookupObj = new InputLookupObj();
+    this.inputLookupObj.urlJson = "./assets/uclookup/NAP/lookupEmp.json";
+    this.inputLookupObj.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupEmp.json";
+    this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupEmp.json";
+    this.inputLookupObj.nameSelect = this.NapAppModelForm.controls.SalesOfficerName.value;
+    this.inputLookupObj.addCritInput = this.arrAddCrit;
+    this.isInputLookupObj = true;
+  }
+
   makeNewLookupCriteria() {
     this.arrAddCrit = new Array();
 
@@ -299,7 +303,24 @@ export class AppModelComponent implements OnInit {
     addCrit2.restriction = AdInsConstant.RestrictionEq;
     addCrit2.value = "1";
     this.arrAddCrit.push(addCrit2);
+    
+    var addCrit3 = new CriteriaObj();
+    addCrit3.DataType = "text";
+    addCrit3.propName = "rbt.JOB_TITLE_CODE";
+    addCrit3.restriction = AdInsConstant.RestrictionIn;
+    addCrit3.listValue = ["SALES_PERSON"];
+    this.arrAddCrit.push(addCrit3);
+
+    var addCrit4 = new CriteriaObj();
+    addCrit4.DataType = "text";
+    addCrit4.propName = "ro.OFFICE_CODE";
+    addCrit4.restriction = AdInsConstant.RestrictionIn;
+    addCrit4.listValue = [this.resultResponse.OriOfficeCode];
+    this.arrAddCrit.push(addCrit4);
+    
     // console.log(this.arrAddCrit);
+    // this.inputLookupObj.addCritInput = this.arrAddCrit;
+    this.makeLookUpObj();
   }
 
   ChangeRecommendation(ev) {
@@ -314,7 +335,7 @@ export class AppModelComponent implements OnInit {
     var temp = this.NapAppModelForm.controls.Tenor.value;
     if(!isNaN(temp)){
       console.log("isNUM");
-      var total = ((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
+      var total = Math.floor((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
       this.PatchNumOfInstallment(total);      
     }
   }
@@ -322,14 +343,15 @@ export class AppModelComponent implements OnInit {
   ChangeNumOfInstallmentPayFreq(ev){
     console.log(ev);
     console.log("Change Num from pay freq");
-    var idx = ev.target.selectedIndex;
+    if(ev.target.selectedIndex == 0) return;
+    var idx = ev.target.selectedIndex - 1;
     console.log(idx);
     var temp = this.NapAppModelForm.controls.Tenor.value;
     if(!isNaN(temp)){
       console.log("isNUM");
       this.PayFreqVal = this.applicationDDLitems["Pay_Freq"][idx].PayFreqVal;
       this.PayFreqTimeOfYear = this.applicationDDLitems["Pay_Freq"][idx].TimeOfYear;
-      var total = ((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
+      var total = Math.floor((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
       this.PatchNumOfInstallment(total);      
     }
   } 
@@ -478,8 +500,8 @@ export class AppModelComponent implements OnInit {
       this.resultCrossApp.push(i);
       this.ListCrossAppObj["result"].push(i.AgrmntNo);
     }
-    // console.log("result cross app");
-    // console.log(this.resultCrossApp);
+    console.log("result cross app");
+    console.log(this.resultCrossApp);
   }
 
   DeleteCrossApp(idx){
@@ -500,5 +522,6 @@ export class AppModelComponent implements OnInit {
       )
     }
     this.resultCrossApp.splice(idx, 1);
+    this.ListCrossAppObj["result"].splice(idx, 1);
   }
 }
