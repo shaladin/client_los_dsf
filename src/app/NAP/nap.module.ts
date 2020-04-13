@@ -58,7 +58,7 @@ import { UcinputnumberModule } from "@adins/ucinputnumber";
 import { AppSubsidyAddEditComponent } from './nap-tab/app-fin-data/component/app-subsidy-add-edit/app-subsidy-add-edit.component';
 import { NgbModule, NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { AppFeeComponent } from './nap-tab/app-fin-data/component/app-fee/app-fee.component';
-import { NgxCurrencyModule } from 'ngx-currency'
+import { NgxCurrencyModule } from 'ngx-currency';
 export const customCurrencyMaskConfig = {
     align: "left",
     allowNegative: true,
@@ -115,7 +115,7 @@ export const customCurrencyMaskConfig = {
         AssetDataComponent,
         RsvFundPagingComponent,
         RsvFundViewComponent,
-        AppFinDataComponent
+        AppFinDataComponent,
         ],
     imports: [ 
         NapRoutingModule,

@@ -70,8 +70,9 @@
       <div class="form-group row" *ngIf="FormAppSubsidy.controls.valueType.value== 'PRCNT'">
         <label class="col-md-4 adInsLabel">Subsidy Value Percentage</label>
         <div class="col-md-8">
-          <input type="number" class="form-control full-width" formControlName="subsidyPrcnt" min="1" max="100" step="0.01"
-            [ngClass]="{ 'is-invalid': isSubmitted && FormAppSubsidy.controls.subsidyPrcnt.invalid}" >
+          <input type="" class="form-control full-width"
+            formControlName="subsidyPrcnt" 
+            [ngClass]="{ 'is-invalid': isSubmitted && FormAppSubsidy.controls.subsidyPrcnt.invalid}" currencyMask>
           <lib-uc-show-errors [control]="FormAppSubsidy.controls.subsidyPrcnt" [submit]="isSubmitted">
           </lib-uc-show-errors>
         </div>
@@ -79,7 +80,7 @@
       <div class="form-group row" *ngIf="FormAppSubsidy.controls.valueType.value== 'AMT'">
         <label class="col-md-4 adInsLabel">Subsidy Value Amount</label>
         <div class="col-md-8">
-          <input type="" class="form-control full-width" ormControlName="subsidyAmt"
+          <input type="" class="form-control full-width" formControlName="subsidyAmt"
             [ngClass]="{ 'is-invalid': isSubmitted && FormAppSubsidy.controls.subsidyAmt.invalid}" currencyMask>
           <lib-uc-show-errors [control]="FormAppSubsidy.controls.subsidyAmt" [submit]="isSubmitted">
           </lib-uc-show-errors>

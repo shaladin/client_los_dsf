@@ -12,6 +12,7 @@ export class AppFeeComponent implements OnInit {
 
   @Input() AppId : number;
   @Input() ParentForm : FormGroup;
+  @Input() identifier : string;
 
   AppFeeForm = new FormArray([]);
   
@@ -41,7 +42,7 @@ export class AppFeeComponent implements OnInit {
       (response) => {
         this.listAppFeeObj = response["ReturnObject"];
         for (let i = 0; i < this.listAppFeeObj.length ; i++) {
-          var fa_AppFee = this.ParentForm.get("AppFee") as FormArray
+          var fa_AppFee = this.ParentForm.get(this.identifier) as FormArray
           fa_AppFee.push(this.addFeeControl(this.listAppFeeObj[i]));
           // this.AppFeeForm.push(this.addFeeControl(this.listAppFeeObj[i]));
         }
@@ -50,7 +51,7 @@ export class AppFeeComponent implements OnInit {
   }
 
   IsCapitalize_CheckedChange(){
-    var fa_AppFee = this.ParentForm.get("AppFee") as FormArray
+    var fa_AppFee = this.ParentForm.get(this.identifier) as FormArray
     for (let i = 0; i < fa_AppFee.length ; i++) {
       var item = fa_AppFee.at(i);
       var isCapitalize : Boolean = item.get("IsCptlz").value;
@@ -74,7 +75,7 @@ export class AppFeeComponent implements OnInit {
 
   ConstructProvision(calcBase: string,calculateBaseAmt:number)
   {
-    var fa_AppFee = this.ParentForm.get("AppFee") as FormArray
+    var fa_AppFee = this.ParentForm.get(this.identifier) as FormArray
     for (let i = 0; i < fa_AppFee.length ; i++) {
       var item = fa_AppFee.at(i);
       var feeTypeCode = item.get("MrFeeTypeCode").value;
@@ -96,7 +97,7 @@ export class AppFeeComponent implements OnInit {
 
   GetProvisionFormGroup()
   {
-    var fa_AppFee = this.ParentForm.get("AppFee") as FormArray
+    var fa_AppFee = this.ParentForm.get(this.identifier) as FormArray
     for (let i = 0; i < fa_AppFee.length ; i++) {
       var item = fa_AppFee.at(i);
       var feeTypeCode = item.get("MrFeeTypeCode").value;
@@ -146,7 +147,7 @@ export class AppFeeComponent implements OnInit {
 
   CalculateTotalFeeAndCaptlzAmt()
   {
-    var fa_AppFee = this.ParentForm.get("AppFee") as FormArray
+    var fa_AppFee = this.ParentForm.get(this.identifier) as FormArray
     var totalFeeAmt : number = 0;
     var totalCaptlz : number = 0;
     for (let i = 0; i < fa_AppFee.length ; i++) {

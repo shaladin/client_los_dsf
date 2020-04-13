@@ -7,6 +7,7 @@ import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { environment } from 'environments/environment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppSubsidyAddEditComponent } from '../app-subsidy-add-edit/app-subsidy-add-edit.component';
+import { AppFeeObj } from 'app/shared/model/AppFeeObj.Model';
 
 @Component({
   selector: 'app-app-subsidy',
@@ -14,8 +15,10 @@ import { AppSubsidyAddEditComponent } from '../app-subsidy-add-edit/app-subsidy-
 })
 export class AppSubsidyComponent implements OnInit {
   @Input() AppId: number;
-  
+  @Input() ParentForm : FormGroup;
+
   listSubsidy: Array<AppSubsidyObj> = new Array<AppSubsidyObj>();
+  listAppFeeObj : Array<AppFeeObj> = new Array<AppFeeObj>();
 
   constructor(
     private http: HttpClient,
@@ -28,9 +31,11 @@ export class AppSubsidyComponent implements OnInit {
 
   AddReason()
   {
+    this.listAppFeeObj = this.ParentForm.get("AppFee").value;
     const modalRef = this.modalService.open(AppSubsidyAddEditComponent, { size:'sm' });
     modalRef.componentInstance.mode = "add";
     modalRef.componentInstance.AppId = this.AppId;
+    modalRef.componentInstance.listAppFeeObj = this.listAppFeeObj;
     modalRef.componentInstance.emitData.subscribe(($e) => {
       // this.RefreshData($e);
     })

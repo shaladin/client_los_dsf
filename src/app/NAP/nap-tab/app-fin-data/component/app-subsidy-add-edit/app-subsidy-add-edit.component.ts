@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { environment } from 'environments/environment';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { AppFeeObj } from 'app/shared/model/AppFeeObj.Model';
 
 @Component({
   selector: 'app-app-subsidy-add-edit',
@@ -13,10 +14,10 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class AppSubsidyAddEditComponent implements OnInit {
     @Input() AppId: number;
+    @Input() listAppFeeObj : Array<AppFeeObj>;
     @Output() emitData = new EventEmitter();
 
     FormAppSubsidy: FormGroup;
-    listSubsidy: Array<AppSubsidyObj> = new Array<AppSubsidyObj>();
     isSubmitted: boolean = false;
     FromTypeCodeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
     FromValueOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
@@ -46,20 +47,12 @@ export class AppSubsidyAddEditComponent implements OnInit {
           allocCode: ['', Validators.required],
           sourceCode: ['', Validators.required],
           valueType: [''],
-          subsidyPrcnt: [0],
+          subsidyPrcnt: [0,[Validators.min(0),Validators.max(100)]],
           subsidyAmt: [0],
         }
       );
       this.isSubmitted = false;
     }
-  
-    delete(i) {
-      if (confirm("Are you sure to delete this record?")) {
-        this.listSubsidy.splice(i, 1);
-      }
-    }
-  
-    
   
     setSubmitted() {
       this.isSubmitted = true;
@@ -67,6 +60,9 @@ export class AppSubsidyAddEditComponent implements OnInit {
     }
   
     SaveSubsidy() {
+
+      console.log(this.listAppFeeObj);
+
       var subdObj: AppSubsidyObj = new AppSubsidyObj();
       subdObj.AppId = this.FormAppSubsidy.get("appId").value
       subdObj.MrSubsidyFromTypeCode = this.FormAppSubsidy.get("fromTypeCode").value;
@@ -74,16 +70,25 @@ export class AppSubsidyAddEditComponent implements OnInit {
       subdObj.MrSubsidyFromValueCode = this.FormAppSubsidy.get("fromValueCode").value;
       subdObj.MrSubsidyFromValueName = (this.FormAppSubsidy.get("fromValueCode").value == "") ? "" : this.FromValueOptions.find(f => f.Key == this.FormAppSubsidy.get("fromValueCode").value).Value;
       subdObj.MrSubsidyAllocCode = this.FormAppSubsidy.get("allocCode").value;
-      subdObj.MrSubsidyAllocName = this.FormAppSubsidy.get("allocCode").value;
+      subdObj.MrSubsidyAllocName = (this.FormAppSubsidy.get("allocCode").value == "") ? "" : this.AllocCodeOptions.find(f => f.Key == this.FormAppSubsidy.get("allocCode").value).Value;
       subdObj.MrSubsidySourceCode = this.FormAppSubsidy.get("sourceCode").value;
-      subdObj.MrSubsidySourceName = this.FormAppSubsidy.get("sourceCode").value;
+      subdObj.MrSubsidySourceName = (this.FormAppSubsidy.get("sourceCode").value == "") ? "" : this.SourceCodeOptions.find(f => f.Key == this.FormAppSubsidy.get("sourceCode").value).Value;
       subdObj.MrSubsidyValueTypeCode = this.FormAppSubsidy.get("valueType").value;
-      subdObj.MrSubsidyValueTypeName = this.FormAppSubsidy.get("valueType").value;
+      subdObj.MrSubsidyValueTypeName = (this.FormAppSubsidy.get("valueType").value == "") ? "" : this.ValueTypeOptions.find(f => f.Key == this.FormAppSubsidy.get("valueType").value).Value;
       subdObj.SubsidyAmt = this.FormAppSubsidy.get("subsidyAmt").value;
       subdObj.SubsidyPrcnt = this.FormAppSubsidy.get("subsidyPrcnt").value;
-      // this.listSubsidy.push(subdObj);
-      // this.InitForm();
-      this.activeModal.close();
+      subdObj.AppFees = this.listAppFeeObj;
+
+      this.http.post(environment.losUrl + "/AppSubsidy/AddSubsidy", subdObj ).subscribe(
+        (response) => {
+          var x = response["ReturnObject"];
+          console.log(x);
+        }
+      );
+      
+      // this.activeModal.close();
+
+      console.log(subdObj);
     }
   
     LoadDDLFromTypeCode() {
@@ -163,6 +168,12 @@ export class AppSubsidyAddEditComponent implements OnInit {
     DDLAllocCode_OnChange(e) {
       var fromTypeCode = this.FormAppSubsidy.get("fromTypeCode").value;
       var allocCode = e.target.value;
+
+      this.FormAppSubsidy.patchValue({
+        sourceCode: '',
+        valueType: '',
+      })
+
       this.LoadDDLSubsidySource(fromTypeCode, allocCode);
     }
   
@@ -170,10 +181,18 @@ export class AppSubsidyAddEditComponent implements OnInit {
       var fromTypeCode = this.FormAppSubsidy.get("fromTypeCode").value;
       var allocCode = this.FormAppSubsidy.get("allocCode").value;
       var sourceCode = e.target.value;
+
+      this.FormAppSubsidy.patchValue({
+        valueType: ''
+      })
+
       this.LoadDDLSubsidyValueType(fromTypeCode,allocCode,sourceCode);
     }
 
     DDLValueType_OnChange(e){
-
+      this.FormAppSubsidy.patchValue({
+        subsidyPrcnt: 0,
+        subsidyAmt: 0,
+      })
     }
   }

@@ -2,13 +2,9 @@
   app-fin-data works!
 </p>
 
-<app-app-subsidy [AppId]="'11'"></app-app-subsidy>
-
-
-
-
 <form class="form-horizontal" [formGroup]="FinDataForm" (ngSubmit)="FinDataForm.valid && Submit()" #enjiForm="ngForm">
-  <app-app-fee [AppId]="'57'" [ParentForm]="FinDataForm"></app-app-fee>
+  <app-app-subsidy [AppId]="'57'" [ParentForm]="FinDataForm"></app-app-subsidy>
+  <app-app-fee [AppId]="'57'" [ParentForm]="FinDataForm" [identifier]="AppFee" ></app-app-fee>
   <br/>
   <div class="col-md-12">
     <div class="row">

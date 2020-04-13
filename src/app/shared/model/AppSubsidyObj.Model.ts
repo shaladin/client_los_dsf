@@ -1,3 +1,5 @@
+import { AppFeeObj } from "./AppFeeObj.Model";
+
 export class AppSubsidyObj {
     AppId: number;
     AppSubsidyId: number;
@@ -13,6 +15,7 @@ export class AppSubsidyObj {
     MrSubsidyValueTypeName: string;
     SubsidyPrcnt: number;
     SubsidyAmt: number;
+    AppFees : Array<AppFeeObj>
 
     constructor() { }
 }
