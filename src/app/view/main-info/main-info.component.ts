@@ -6,6 +6,9 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { DatePipe } from '@angular/common';
+import { map, mergeMap } from 'rxjs/operators';
+import { forkJoin } from 'rxjs';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-main-info',
@@ -26,27 +29,46 @@ export class MainInfoComponent implements OnInit {
   startDt: any;
   endDt: any;
   refNo: any;
-  isRevolving: boolean;
+  isRevolving: any;
   plafondAmt: any;
   mrMouTypeCode : any;
+  custId: any;
+  custUrl: string;
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, public datepipe: DatePipe) { }
 
   ngOnInit() {
     var mouCustObj = { MouCustId: this.MouCustId }
     console.log(mouCustObj);
-    this.http.post(AdInsConstant.GetMouCustById, mouCustObj).subscribe(
-      (response) => {
-        this.mouCustNo = response['MouCustNo'];
-        this.custName = response['CustName'];
-        this.mouCustDt = this.datepipe.transform(response['MouCustDt'], 'dd-MM-yyyy');
-        this.startDt = this.datepipe.transform(response['StartDt'], 'dd-MM-yyyy');
-        this.endDt = this.datepipe.transform(response['EndDt'], 'dd-MM-yyyy');
-        this.refNo = response['RefNo'];
-        this.plafondAmt = response['PlafondAmt'];
-        this.mouStat = response['MouStat'];
-        this.mrMouTypeCode = response['MrMouTypeCode'];
+    this.http.post(AdInsConstant.GetMouCustById, mouCustObj).pipe(
+      map((response) => {
+        return response;
+      }),
+      mergeMap((response) => {
+        var custObj = { CustNo: response['CustNo'] };
+        let getCustData = this.http.post(AdInsConstant.GetCustByCustNo, custObj);
+        var tempResponse = [response];
+        return forkJoin([tempResponse, getCustData]);
       })
+    ).subscribe(
+      (response) => {
+        var mouData = response[0];
+        var custData = response[1];
+
+        this.mouCustNo = mouData['MouCustNo'];
+        this.custName = mouData['CustName'];
+        this.mouCustDt = this.datepipe.transform(mouData['MouCustDt'], 'dd-MM-yyyy');
+        this.startDt = this.datepipe.transform(mouData['StartDt'], 'dd-MM-yyyy');
+        this.endDt = this.datepipe.transform(mouData['EndDt'], 'dd-MM-yyyy');
+        this.refNo = mouData['RefNo'];
+        this.plafondAmt = mouData['PlafondAmt'];
+        this.mouStat = mouData['MouCustStatView'];
+        this.mrMouTypeCode = mouData['MrMouTypeCode'];
+        this.isRevolving = mouData['IsRevolving'] == 1 ? "Yes" : "No";
+        this.custId = custData['CustId'];
+        this.custUrl = environment.FoundationR3Web + '/CustomerView/Page?CustId=' + this.custId;
+      }
+    );
   }
 
   MainInfoForm = this.fb.group({

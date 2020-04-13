@@ -27,7 +27,7 @@
             "isFromURL": true,
             "isSelectOne": false,
             "url": "http://r3app-server/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
-            "label": "Type",
+            "label": "Customer Type",
             "criteriaPropName" : "RefMasterTypeCode",
             "criteriaPropValue" : "CUST_TYPE",
             "items": [],
@@ -36,7 +36,7 @@
     ],
     "querystring": {
         "select": "SELECT A.CUST_NO AS custNo, A.CUST_NAME AS custName, A.MR_CUST_TYPE_CODE AS mrCustTypeCode, B.DESCR AS custTypeView, A.CUST_ID AS custId",
-        "from": "FROM CUST AS A WITH(NOLOCK) INNER JOIN REF_MASTER AS B ON A.MR_CUST_TYPE_CODE = B.MASTER_CODE AND B.REF_MASTER_TYPE_CODE = 'CUST_TYPE'"
+        "from": "FROM CUST AS A WITH(NOLOCK) INNER JOIN REF_MASTER AS B WITH(NOLOCK) ON A.MR_CUST_TYPE_CODE = B.MASTER_CODE AND B.REF_MASTER_TYPE_CODE = 'CUST_TYPE'"
     },
     "headerList": [
         {

@@ -19,13 +19,11 @@ export class LeadViewComponent implements OnInit {
   EnterTab(type) {
     if (type == "customerData") {
       this.isCustomerData = true;
-      this.isLeadData = false;
-   
+      this.isLeadData = false; 
     }
-    else if (type == "fee") {
+    else if (type == "leadData") {
       this.isCustomerData =false;
-      this.isLeadData = true;
- 
+      this.isLeadData = true; 
     }
   }
 }

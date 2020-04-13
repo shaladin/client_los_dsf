@@ -1,3 +1,37 @@
-<p>
-  mou-cust-listed-cust-fctr-detail works!
-</p>
+<form class="form form-horizontal" [formGroup]="MouListedCustFctrForm" #enjiForm="ngForm" novalidate
+  (ngSubmit)="enjiForm.form.valid && Save(enjiForm)">
+  <div class="modal-header">
+    <h4 class="modal-title">Add Listed Customer Factoring</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('0')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="col-md-12">
+      <div class="">
+        <div class="">
+          <div class="px-3">
+            <div class="form-body">
+              <div id="MouListedCustFctrSection">
+                <div class="form-group row adins-required">
+                  <label class="col-md-3 adInsLabel" for="CustNo" translate>Customer No.</label>
+                  <div class="col-md-9">
+                    <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]='MouListedCustFctrForm' [enjiForm]='enjiForm' [identifier]="'CustPersonalLookup'"
+                      (lookup)="getLookupResponse($event)"></lib-uclookupgeneric>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-raised btn-primary">
+      <i class="fa fa-check-square-o"></i> Save
+    </button>
+    <button type="button" class="btn btn-warning btn-raised" (click)="activeModal.dismiss('0')">Cancel</button>
+  </div>
+</form>
+
