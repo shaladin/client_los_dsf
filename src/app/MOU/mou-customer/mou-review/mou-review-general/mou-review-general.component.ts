@@ -14,11 +14,13 @@ import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 export class MouReviewGeneralComponent implements OnInit {
   mouCustObj: MouCustObj;
   MouCustId : any;
+  WfTaskListId: any;
   MouType : string = "GENERAL";
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       this.MouCustId = params["MouCustId"];
+      this.WfTaskListId = params["WfTaskListId"];
     })
   }
 

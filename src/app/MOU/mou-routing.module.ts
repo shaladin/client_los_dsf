@@ -17,6 +17,7 @@ import { MouCustomerApprovalComponent } from './mou-customer/mou-customer-approv
 import { MouApprovalGeneralComponent } from './mou-customer/mou-customer-approval/mou-approval-general/mou-approval-general.component';
 import { MouApprovalFactoringComponent } from './mou-customer/mou-customer-approval/mou-approval-factoring/mou-approval-factoring.component';
 import { MouRequestAddcollComponent } from './mou-customer/mou-request/mou-request-addcoll/mou-request-addcoll.component';
+import { MouCustomerDetailComponent } from './mou-customer-request/mou-customer-detail/mou-customer-detail.component';
 
 const routes: Routes = [
   {
@@ -41,6 +42,13 @@ const routes: Routes = [
         component: MouCustomerRequestDetailComponent,
         data: {
           title: 'MOU Customer Request Detail'
+        }
+      },
+      {
+        path: 'Detail/:MOUType',
+        component: MouCustomerDetailComponent,
+        data: {
+          title: 'MOU Customer Detail'
         }
       },
       {

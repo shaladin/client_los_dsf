@@ -32,6 +32,10 @@ export const Full_ROUTES: Routes = [
     loadChildren: './NAP/nap.module#NapModule'
   },
   {
+    path: 'Lead',
+    loadChildren: './lead/lead.module#LeadModule'
+  },
+  {
     path: 'Inquiry',
     loadChildren: './inquiry/inquiry.module#InquiryModule'
   },
@@ -48,6 +52,14 @@ export const Full_ROUTES: Routes = [
     loadChildren: './view/view.module#ViewModule'
   },
   {
+    path:'Document',
+    loadChildren:'./Document/document.module#DocumentModule'
+  },
+  {
+    path:'Invoice',
+    loadChildren:'./InvoiceData/invoice.module#InvoiceModule'
+  },
+  {
     path: 'AddProcess',
     loadChildren: './add-process/add-process.module#AddProcessModule'
   },
@@ -58,6 +70,10 @@ export const Full_ROUTES: Routes = [
   {
     path: 'FraudDetection',
     loadChildren: './fraud-detection/fraud-detection.module#FraudDetectionModule'
-  } 
+  },
+  { 
   
+    path: 'CreditProcess',
+    loadChildren: './credit-process/credit-process.module#CreditProcessModule'
+  } 
 ];

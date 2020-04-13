@@ -7,6 +7,7 @@ export class AppCommissionDObj{
     VatAmt: any;
     PenaltyAmt: any;
     CommissionAmtAfterTax: any;
-
+    RowVersion: any;
+    
     constructor(){}
 }
