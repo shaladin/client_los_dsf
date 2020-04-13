@@ -25,6 +25,7 @@ import { AssetMasterObj } from 'app/shared/model/AssetMasterObj.Model';
 
 export class LeadUpdateLeadDataComponent implements OnInit {
   typePage: string;
+  WfTaskListId: any;
   LeadId: any;
   assetConditionObj: any;
   returnAssetConditionObj: any;
@@ -414,6 +415,7 @@ export class LeadUpdateLeadDataComponent implements OnInit {
       this.setLeadAsset();
       this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
       this.setLeadApp();
+      this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
       this.http.post(this.editLeadData, this.leadInputLeadDataObj).subscribe(
         (response) => {
           console.log(response);
@@ -430,6 +432,7 @@ export class LeadUpdateLeadDataComponent implements OnInit {
       this.leadInputLeadDataObj = new LeadInputLeadDataObj();
       this.setLeadAsset();
       this.setLeadApp();
+      this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
       this.http.post(this.editLeadData, this.leadInputLeadDataObj).subscribe(
         (response) => {
           console.log(response);

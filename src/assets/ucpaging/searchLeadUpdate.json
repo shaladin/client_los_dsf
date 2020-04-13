@@ -156,6 +156,10 @@
                             "property": "LeadId"
                         },
                         {
+                            "type": "WfTaskListId",
+                            "property": "WfTaskListId"
+                        },
+                        {
                             "type": "mode",
                             "property": "edit"
                         }
