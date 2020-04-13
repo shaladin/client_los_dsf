@@ -20,159 +20,175 @@ import { AssetDataComponent } from "./nap-tab/asset-data/asset-data.component";
 import { RsvFundPagingComponent } from "./reserved-fund/reserved-fund-paging/reserved-fund-paging.component";
 import { RsvFundViewComponent } from "./reserved-fund/reserved-fund-view/reserved-fund-view.component";
 import { PhnVerifPagingComponent } from "./phone-verif/phone-verif-paging/phone-verif-paging.component";
+import { PhnVerifSubjectComponent } from "./phone-verif/phone-verif-subject/phone-verif-subject.component";
+import { PhnVerifSubjectViewComponent } from "./phone-verif/phone-verif-subject-view/phone-verif-subject-view.component";
 
 
 const routes: Routes = [
-    {
-        path: '',
-        children: [
-            {
-                path: 'AppPaging',
-                component: AppPagingComponent,
-                data: {
-                    title: 'Paging'
-                }
-            },
-            {
-                path: 'AppAdd',
-                component: AppAddComponent,
-                data: {
-                    title: 'Add'
-                }
-            },
-            {
-                path: 'AppAddDetail',
-                component: AppAddDetailComponent,
-                data: {
-                    title: 'AddDetail'
-                }
-            },
-            {
-                path: 'AppReferantor',
-                component: AppReferantorComponent,
-                data: {
-                    title: 'Referantor'
-                }
-            },
-            {
-                path: 'AppModel',
-                component: AppModelComponent,
-                data: {
-                    title: 'Model'
-                }
-            },
-            {
-                path: 'CustData',
-                component: CustomerDataComponent,
-                data: {
-                    title: 'Customer Data'
-                }
-            },
-            {
-                path: 'InsuranceData',
-                component: InsuranceDataComponent,
-                data: {
-                    title: 'Insurance Data'
-                }
-            },
-            {
-                path: 'Guarantor/paging',
-                component: GuarantorPagingComponent,
-                data: {
-                    title: 'Paging'
-                },
-            },
-            {
-                path: 'Guarantor/personal',
-                component: GuarantorPersonalComponent,
-                data: {
-                    title: 'Personal'
-                },
-            },
-            {
-                path: 'Guarantor/company',
-                component: GuarantorCompanyComponent,
-                data: {
-                    title: 'Company'
-                },
-            },
-            {
-                path: 'Guarantor/Main',
-                component: AppGuarantorComponent,
-                data: {
-                    title: 'Main'
-                },
-            },
-            {
-                path: 'LifeIns',
-                component: AppLifeInsComponent,
-                data: {
-                    title: 'Life Insurance'
-                },
-            },
-            {
-                path: 'CommissionPaging',
-                component: CommissionPagingComponent,
-                data: {
-                    title: 'Commission Paging'
-                }
-            },
-            {
-                path: 'CommissionAdd',
-                component: CommissionAddComponent,
-                data: {
-                    title: 'Commission Add'
-                }
-            },
-            {
-                path: 'AppTC',
-                component: AppTcComponent,
-                data: {
-                    title: 'APP TC'
-                },
-            },
-            {
-                path: 'AssetData',
-                component: AssetDataComponent,
-                data: {
-                    title: 'Asset Data'
-                },
-            },
-            {
-                path: 'ReservedFund',
-                component: RsvFundPagingComponent,
-                data: {
-                    title: 'Reserved Fund Paging'
-                }
-            },
-            {
-                path: 'ReservedFund/View',
-                component: RsvFundViewComponent,
-                data: {
-                    title: 'Reserved Fund View'
-                }
-            },
-            {
-                path: 'AppFinData',
-                component: AppFinDataComponent,
-                data: {
-                    title: 'Commission Add'
-                }
-            },
-            {
-                path: 'PhoneVerif',
-                component: PhnVerifPagingComponent,
-                data: {
-                    title: 'Phone Verif Paging'
-                }
-            }
-        ]
-    }
+  {
+    path: '',
+    children: [
+      {
+        path: 'AppPaging',
+        component: AppPagingComponent,
+        data: {
+          title: 'Paging'
+        }
+      },
+      {
+        path: 'AppAdd',
+        component: AppAddComponent,
+        data: {
+          title: 'Add'
+        }
+      },
+      {
+        path: 'AppAddDetail',
+        component: AppAddDetailComponent,
+        data: {
+          title: 'AddDetail'
+        }
+      },
+      {
+        path: 'AppReferantor',
+        component: AppReferantorComponent,
+        data: {
+          title: 'Referantor'
+        }
+      },
+      {
+        path: 'AppModel',
+        component: AppModelComponent,
+        data: {
+          title: 'Model'
+        }
+      },
+      {
+        path: 'CustData',
+        component: CustomerDataComponent,
+        data: {
+          title: 'Customer Data'
+        }
+      },
+      {
+        path: 'InsuranceData',
+        component: InsuranceDataComponent,
+        data: {
+          title: 'Insurance Data'
+        }
+      },
+      {
+        path: 'Guarantor/paging',
+        component: GuarantorPagingComponent,
+        data: {
+          title: 'Paging'
+        },
+      },
+      {
+        path: 'Guarantor/personal',
+        component: GuarantorPersonalComponent,
+        data: {
+          title: 'Personal'
+        },
+      },
+      {
+        path: 'Guarantor/company',
+        component: GuarantorCompanyComponent,
+        data: {
+          title: 'Company'
+        },
+      },
+      {
+        path: 'Guarantor/Main',
+        component: AppGuarantorComponent,
+        data: {
+          title: 'Main'
+        },
+      },
+      {
+        path: 'LifeIns',
+        component: AppLifeInsComponent,
+        data: {
+          title: 'Life Insurance'
+        },
+      },
+      {
+        path: 'CommissionPaging',
+        component: CommissionPagingComponent,
+        data: {
+          title: 'Commission Paging'
+        }
+      },
+      {
+        path: 'CommissionAdd',
+        component: CommissionAddComponent,
+        data: {
+          title: 'Commission Add'
+        }
+      },
+      {
+        path: 'AppTC',
+        component: AppTcComponent,
+        data: {
+          title: 'APP TC'
+        },
+      },
+      {
+        path: 'AssetData',
+        component: AssetDataComponent,
+        data: {
+          title: 'Asset Data'
+        },
+      },
+      {
+        path: 'ReservedFund',
+        component: RsvFundPagingComponent,
+        data: {
+          title: 'Reserved Fund Paging'
+        }
+      },
+      {
+        path: 'ReservedFund/View',
+        component: RsvFundViewComponent,
+        data: {
+          title: 'Reserved Fund View'
+        }
+      },
+      {
+        path: 'AppFinData',
+        component: AppFinDataComponent,
+        data: {
+          title: 'Commission Add'
+        }
+      },
+      {
+        path: 'PhoneVerif',
+        component: PhnVerifPagingComponent,
+        data: {
+          title: 'Phone Verif Paging'
+        }
+      },
+      {
+        path: 'PhoneVerif/Subject',
+        component: PhnVerifSubjectComponent,
+        data: {
+          title: 'Phone Verif Subject View'
+        }
+      },
+      {
+        path: 'PhoneVerif/Subject/View',
+        component: PhnVerifSubjectViewComponent,
+        data: {
+          title: 'Phone Verif Subject View Detail'
+        }
+      }
+    ]
+  }
 ]
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 
 export class NapRoutingModule { }

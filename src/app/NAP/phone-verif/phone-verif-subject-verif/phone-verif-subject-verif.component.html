@@ -1,0 +1,130 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-body">
+      <div class="px-3">
+        <form class="form form-horizontal" [formGroup]="PhoneDataForm" (ngSubmit)="PhoneDataForm.valid && SaveForm()"
+              #enjiForm="ngForm">
+          <div class="form-body">
+            <lib-ucSubsection [id]="'custInfoId'" [title]="'Customer Information'" [panel]="'custInfo'">
+            </lib-ucSubsection>
+            <div id="custInfo">
+              <div class="form-group row">
+                <label class="col-md-2  adInsLabel" translate>Application No</label>
+                <label class="col-md-4  adins-required-label" translate *ngIf="this.AppObj?.AppNo">{{this.AppObj.AppNo}}</label>
+                <label class="col-md-2  adInsLabel" translate>Subject</label>
+                <label class="col-md-4  adins-required-label" translate>{{subjectType}}</label>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2  adInsLabel" translate>Customer No</label>
+                <label class="col-md-4  adins-required-label" translate *ngIf="this.AppCustObj?.CustNo">{{this.AppCustObj.CustNo}}</label>
+                <label class="col-md-2  adInsLabel" translate>Subject Name</label>
+                <label class="col-md-4  adins-required-label" translate>{{subjectName}}</label>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2  adInsLabel" translate>Customer Name</label>
+                <label class="col-md-4  adins-required-label" translate *ngIf="this.AppCustObj?.CustName">{{this.AppCustObj.CustName}}</label>
+                <label class="col-md-2  adins-required-label" translate>Subject Relation</label>
+                <div class="col-md-4">
+                  <select *ngIf="SubjectRelationObj" class="form-control" id="subjectRelationId" formControlName="MrVerfSubjectRelationCode"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && PhoneDataForm.controls.MrVerfSubjectRelationCode.invalid }">
+                    <option *ngFor="let item of SubjectRelationObj" [value]="item.Key">
+                      {{item.Value}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2  adins-required-label" translate>Phone</label>
+                <div class="col-md-4">
+                  <select *ngIf="PhoneNumberObj" class="form-control" id="phoneNumberId" formControlName="Phn" (change)="PhoneChange(item.PhoneNumber,item.PhoneType)"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && PhoneDataForm.controls.Phn.invalid }">
+                    <option *ngFor="let item of PhoneNumberObj" [value]="item.PhoneNumber">
+                      {{item.PhoneType}}: {{item.PhoneNumber}}
+                    </option>
+                  </select>
+                </div>
+                <label class="col-md-2  adins-required-label" translate>Result</label>
+                <div class="col-md-4">
+                  <select *ngIf="ResultObj" class="form-control" id="subjectResultId" formControlName="MrVerfResultHStatCode"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && PhoneDataForm.controls.MrVerfResultHStatCode.invalid }">
+                    <option *ngFor="let item of ResultObj" [value]="item.Key">
+                      {{item.Value}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2  adins-required-label" translate>Notes</label>
+                <div class="col-md-4">
+                  <textarea type="text" class="form-control adInsInput" formControlName="Notes"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && PhoneDataForm.controls.Notes.invalid }"></textarea>
+                  <show-errors [control]="PhoneDataForm.controls.Notes" [submit]="enjiForm.submitted"></show-errors>
+                </div>
+              </div>
+            </div>
+            <div formArrayName="AssetAccessoriesObjs">
+              <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                  <tr class="table-header">
+                    <th><span translate class="thead-header">No</span></th>
+                    <th><span translate class="thead-header">Supplier Name</span></th>
+                    <th><span translate class="thead-header">Accessories Name</span></th>
+                    <th><span translate class="thead-header">Accessories Price</span></th>
+                    <th><span translate class="thead-header">Down Payment</span></th>
+                    <th><span translate class="thead-header">Notes</span></th>
+                    <th><span translate class="thead-header">Delete</span></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of AssetDataForm.controls['AssetAccessoriesObjs'].controls;let i = index">
+                    <td [formGroupName]="i" class="text-center">
+                      {{i + 1}}
+                    </td>
+                    <td [formGroupName]="i" class="text-center">
+                      <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="dictSuppLookup[AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].No.value]" [parentForm]="AssetDataForm" [identifier]="'lookupSupplierObj' + AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].No.value" (lookup)="SetSupplierAccessory(i,$event)"></lib-uclookupgeneric>
+                    </td>
+                    <td [formGroupName]="i" class="text-center">
+
+                      <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="dictAccLookup[AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].No.value]" [parentForm]="AssetDataForm" [identifier]="'lookupAccObj' + AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].No.value" (lookup)="SetAccessory(i,$event)"></lib-uclookupgeneric>
+                    </td>
+                    <td [formGroupName]="i">
+                      <input type="number" class="form-control" formControlName="AccessoryPriceAmt"
+                             [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryPriceAmt.invalid }">
+                      <show-errors [control]="AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryPriceAmt" [submit]="enjiForm.submitted"></show-errors>
+                    </td>
+                    <td [formGroupName]="i">
+                      <input type="number" class="form-control" formControlName="AccessoryDownPaymentAmt"
+                             [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryDownPaymentAmt.invalid }">
+                      <show-errors [control]="AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryDownPaymentAmt" [submit]="enjiForm.submitted"></show-errors>
+                    </td>
+                    <td [formGroupName]="i">
+                      <input type="text" class="form-control" formControlName="AccessoryNotes"
+                             [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryNotes.invalid }">
+                      <show-errors [control]="AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryNotes" [submit]="enjiForm.submitted"></show-errors>
+                    </td>
+                    <td [formGroupName]="i">
+                      <a class="danger p-0" data-original-title="" title="" (click)="deleteAccessory(i)">
+                        <i class="ft-trash-2 font-medium-3 mr-2"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="form-actions right">
+              <button type="submit" class="btn btn-raised btn-primary" (click)="SaveForm()">
+                <i class="fa fa-check-square-o"></i> Save And Continue
+              </button>
+              <button type="button" class="btn btn-raised btn-primary" (click)="test()">
+                <i class="fa fa-check-square-o"></i> Check Value
+              </button>
+            </div>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
