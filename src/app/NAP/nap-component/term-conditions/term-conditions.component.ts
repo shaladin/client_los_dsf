@@ -12,6 +12,9 @@ import { formatDate } from '@angular/common';
 })
 export class TermConditionsComponent implements OnInit {
   AppTcList: any = [];
+  listTempTCList: any = [];
+
+  @Input() IsCheckedAll : boolean = true;
   @Input() AppId: number;
   @Input() parentForm: FormGroup;
   @Input() enjiForm: NgForm;
@@ -20,6 +23,7 @@ export class TermConditionsComponent implements OnInit {
   constructor(private http: HttpClient, private fb: FormBuilder) { }
 
   ngOnInit() {
+
     this.parentForm.addControl(this.identifier, this.fb.array([]));
     var listTC = this.parentForm.get(this.identifier) as FormArray;
     var appTcObj = {
@@ -47,6 +51,9 @@ export class TermConditionsComponent implements OnInit {
             if (this.AppTcList[i].IsMandatory == true) {
               TCDetail.controls.PromisedDt.setValidators([Validators.required]);
             }
+            if (this.AppTcList[i].IsChecked == false || this.AppTcList[i].IsMandatory == true) {
+              this.IsCheckedAll = false;
+            } 
             if (this.AppTcList[i].IsChecked == false) {
               TCDetail.controls.ExpiredDt.disable();
             } else {
@@ -67,11 +74,24 @@ export class TermConditionsComponent implements OnInit {
       this.parentForm.controls[this.identifier]["controls"][arr]["controls"].PromisedDt.setValidators([Validators.required]);
     }
     if (this.parentForm.controls[this.identifier]["controls"][arr]["controls"].IsChecked.value == false) {
+      if(this.parentForm.controls[this.identifier]["controls"][arr]["controls"].IsMandatory.value == true){
+        this.IsCheckedAll = false;
+      }
       this.parentForm.controls[this.identifier]["controls"][arr]["controls"].ExpiredDt.disable();
       this.parentForm.controls[this.identifier]["controls"][arr]["controls"].PromisedDt.enable();
     } else {
+      this.IsCheckedAll = true;
+      this.listTempTCList = this.parentForm.controls[this.identifier].value;
+      
       this.parentForm.controls[this.identifier]["controls"][arr]["controls"].ExpiredDt.enable();
       this.parentForm.controls[this.identifier]["controls"][arr]["controls"].PromisedDt.disable();
+
+      for (let i = 0; i < this.listTempTCList.length; i++) {
+        if(this.listTempTCList[i].IsChecked == false && this.listTempTCList[i].IsMandatory == true){
+          this.IsCheckedAll = false;
+          break;
+        }
+      }
     }
     
     this.parentForm.controls[this.identifier]["controls"][arr]["controls"].PromisedDt.updateValueAndValidity();

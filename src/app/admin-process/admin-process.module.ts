@@ -27,7 +27,7 @@ import { PreGoLiveRequestForApprovalComponent } from './pre-go-live/pre-go-live-
 import { UclookupgenericModule } from "@adins/uclookupgeneric";
 import { DocSignerDetailComponent } from "./doc-signer/doc-signer-detail/doc-signer-detail.component";
 import { DocSignerPagingComponent } from "./doc-signer/doc-signer-paging/doc-signer-paging.component";
-import { NapComponentModule } from "app/components/nap-component/nap-component.module";
+import { NapComponentModule } from "app/NAP/nap-component/nap-component.module";
 
 @NgModule({
   imports: [
