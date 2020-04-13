@@ -1,1 +1,4 @@
-<lib-ucviewgeneric [viewInput]="viewLeadCustomerPersonalMaindata"></lib-ucviewgeneric>
+<lib-ucviewgeneric [viewInput]="viewLeadCustomerPersonalMaindata" *ngIf="MrCustTypeCode == 'PERSONAL'"></lib-ucviewgeneric>
+<!-- <lib-ucviewgeneric [viewInput]="viewLeadCustomerPersonalMaindata" *ngIf="MrCustTypeCode == 'COMPANY'"></lib-ucviewgeneric> -->
+<lib-ucviewgeneric [viewInput]="viewLeadCustomerPersonalMaindata" *ngIf="MrCustTypeCode == 'PERSONAL'"></lib-ucviewgeneric>
+

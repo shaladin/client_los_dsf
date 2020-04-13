@@ -1,0 +1,168 @@
+{
+    "title": "TELE VERIFICATION",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "dropdown",
+            "name": "L.ORI_OFFICE_CODE",
+            "id": "OriOfficeNameId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "datatype": "text",
+            "isFromURL": true,
+            "isSelectOne": false,
+            "url": "http://r3app-server/FOUNDATION_R3/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "label": "Office Name",
+            "isQueryIn": true,
+            "items": [],
+            "itemsUrl": []
+        },
+        {
+            "type": "dropdown",
+            "name": "L.MR_LEAD_SOURCE_CODE",
+            "id": "LeadSourceCodeId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "datatype": "text",
+            "isFromURL": true,
+            "isSelectOne": false,
+            "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
+            "label": "Lead Source",
+            "criteriaPropName": "RefMasterTypeCode",
+            "criteriaPropValue": "LEAD_SOURCE",
+            "items": [],
+            "itemsUrl": []
+        },
+        {
+            "type": "textbox",
+            "name": "L.LEAD_NO",
+            "id": "LeadNoId",
+            "value": "",
+            "label": "Lead No.",
+            "placeholder": "Placeholder",
+            "datatype": "text"
+        },
+        {
+            "type": "textbox",
+            "name": "L.ORDER_NO",
+            "id": "OrderNoId",
+            "value": "",
+            "label": "Order No.",
+            "placeholder": "Placeholder",
+            "datatype": "text"
+        },
+        {
+            "type": "textbox",
+            "name": "LA.FULL_ASSET_NAME",
+            "id": "FullAssetNameId",
+            "value": "",
+            "label": "Full Asset Name",
+            "placeholder": "Placeholder",
+            "datatype": "text"
+        },
+        {
+            "type": "textbox",
+            "name": "LC.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder",
+            "datatype": "text"
+        }
+    ],
+    "headerList": [
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "LEAD NO",
+        "name": "L.LEAD_NO"
+      },
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "OFFICE NAME",
+        "name": "L.ORI_OFFICE_NAME"
+      },
+      {
+        "type": "sort",
+        "position": "right",
+        "label": "ORDER NO",
+        "name": "L.ORDER_NO"
+      },
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "CUSTOMER NAME",
+        "name": "LC.CUST_NAME"
+      },
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "LEAD SOURCE",
+        "name": "RM.DESCR"
+      },
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "FULL ASSET NAME",
+        "name": "LA.FULL_ASSET_NAME"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "ACTION"
+      }
+    ],
+    "querystring": {
+        "select": "SELECT L.LEAD_NO AS LeadNo, L.ORI_OFFICE_NAME AS OfficeName,L.ORI_OFFICE_CODE AS OfficeCode, LC.CUST_NAME AS CustName,  LA.FULL_ASSET_NAME AS FullAssetName, L.ORDER_NO AS OrderNo, L.LEAD_ID AS LeadId, L.MR_LEAD_SOURCE_CODE as MrLeadSourceCode ,RM.DESCR AS LeadSource",
+        "from": "FROM  dbo.LEAD L WITH(NOLOCK) LEFT JOIN dbo.LEAD_CUST LC WITH(NOLOCK) ON LC.LEAD_ID = L.LEAD_ID LEFT JOIN dbo.LEAD_ASSET LA WITH(NOLOCK) ON LA.LEAD_ID = LC.LEAD_ID LEFT JOIN [V_REF_MASTER] RM ON RM.MASTER_CODE = L.MR_LEAD_SOURCE_CODE AND RM.REF_MASTER_TYPE_CODE = 'LEAD_SOURCE'"
+    },
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "center",
+        "property": "LeadNo"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "OfficeName"
+      },
+      {
+        "type": "text",
+        "position": "right",
+        "property": "OrderNo"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "CustName"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "LeadSource"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "FullAssetName"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "edit",
+            "path": "/Lead/TeleVerif/Detail",
+            "param": [
+              {
+                "type": "LeadId",
+                "property": "LeadId"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }

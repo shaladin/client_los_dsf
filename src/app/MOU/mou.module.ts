@@ -122,7 +122,10 @@ import { MouCustomerInquiryComponent } from './mou-customer/mou-customer-inquiry
     MouRequestAddcollAddeditComponent,
     MouReviewGeneralComponent,
     MouViewApprovalHistoryComponent,
-    MouCustomerInquiryComponent
+    MouCustomerInquiryComponent,
+    MouDetailFactoringComponent,
+    MouCustAssetComponent,
+    MouCustAssetDetailComponent,
   ],
   exports: [],
   providers: [NGXToastrService],
