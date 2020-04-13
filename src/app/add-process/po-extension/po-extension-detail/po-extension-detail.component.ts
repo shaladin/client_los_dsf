@@ -39,7 +39,7 @@ export class PoExtensionDetailComponent implements OnInit {
     this.http.post(AdInsConstant.SubmitNewExpDate, obj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["/AdminProcess/DeliveryOrder/Paging"]);
+        this.router.navigate(["/Nap/AdminProcess/DeliveryOrder/Paging"]);
       },
       error => {
         console.log(error);
