@@ -117,69 +117,6 @@ export class AdInsConstant {
   //LOB CODE
   public static LobCodeRFN4W = "RFN4W";
 
-  // ASSET
-  public static GetListKeyValueByCode = environment.FoundationR3Url + "/AssetType/GetListKeyValueByCode";
-
-  // App
-  public static AddApp = "/Application/AddApp";
-  public static EditApp = "/Application/EditApp";
-  public static GetAppById = "/Application/GetAppById";
-  public static GetAppByIds = environment.losUrl + "/Application/GetAppById";
-  public static EditAppAddAppCross = "/Application/EditAppAddAppCross";
-
-  //App Fee
-  public static GetListAppFeeByAppId = "http://localhost:5001/AppFee/GetListAppFeeByAppId";
-
-  // App Asset
-  public static GetAppAssetListByAppIdForCommision = "/AppAsset/GetAppAssetListByAppIdForCommision";
-  public static GetListAppAssetSupplEmpByListAppAssetId = "/AppAssetSupplEmp/GetListAppAssetSupplEmpByListAppAssetId";
-
-  // App Referantor
-  public static AddAppReferantor = "/AppReferantor/AddAppReferantor";
-  public static EditAppReferantor = "/AppReferantor/EditAppReferantor";
-  public static DeleteAppReferantor = "/AppReferantor/DeleteAppReferantor";
-  public static GetAppReferantorByAppReferantorId = "/AppReferantor/GetAppReferantorByAppReferantorId";
-  public static GetAppReferantorByAppId = "/AppReferantor/GetAppReferantorByAppId";
-  
-  // App Cross
-  public static GetAppCrossByCrossAgrmntNo = "/AppCross/GetAppCrossByCrossAgrmntNo";
-  public static DeleteAppCross = "/AppCross/DeleteAppCross";
-  public static GetListAppCross = "/AppCross/GetListAppCross";
-  public static AddListAppCross = "/AppCross/AddListAppCross";
-  
-  // Ref App Src
-  public static GetListKvpActiveRefAppSrc = "/RefAppSrc/GetListKvpActiveRefAppSrc";
-
-
-  public static RestrictionLike = "Like";
-  public static RestrictionEq = "Eq";
-  public static RestrictionNeq = "NEQ";
-  public static RestrictionIn = "IN";
-  public static RestrictionNotIn = "NotIn";
-  public static RestrictionIsNull = "isnull";
-  public static RestrictionIsNotNull = "isnotnull";
-  public static showData = "10,50,100";
-  public static TimeoutSession = 6000000;
-  public static GetListProduct = "http://creator_websvr:7272/NEW_FINANCING/api/Catalog/getPopularViewByCriteria";
-  public static Login = "/Authenticate/Login";
-  public static LoginToken = "/UserManagement/HTML6Login";
-  public static Logout = "/UserManagement/LogOut"
-  public static GetListOffice = "/RefOffice/GetRefOfficePaging";
-  public static GetProvince = "/los/v1/get_provinsi";
-  public static GetCityByProvince = "/los/v1/get_kota";
-  public static getProspectByProspectNo = "/api/MobileProspectTask/GetProspectByProspectNo";
-  public static submitNCProspect = "/api/MobileProspectTask/submitNCProspect";
-  public static addCustPersonal = "";
-  public static FormDefault = "dashboard/dash-board";
-  public static LoginByRole = "/Authenticate/LoginByRole";
-  public static LoginByToken = "/Authenticate/LoginByToken";
-  public static UpdateToken = "/Authenticate/UpdateRole";
-  public static GetRefOfficeByOfficeCode = environment.FoundationR3Url + "/RefOffice/GetRefOfficeByOfficeCode";
-
-  //CUST TYPE
-  public static CustTypePersonal = "PERSONAL";
-  public static CustTypeCompany = "COMPANY";
-
   //Asset Master
   public static GetAssetMasterTypeByFullAssetCode = environment.FoundationR3Url + "/AssetMaster/GetAssetMasterTypeByFullAssetCode";
   public static GetAssetMasterForLookupEmployee = environment.FoundationR3Url + "/AssetMaster/GetAssetMasterForLookupEmployee";
@@ -695,9 +632,6 @@ export class AdInsConstant {
   // APP TC
   public static GetListTCbyAppId = environment.losUrl + "/AppTc/GetListTCbyAppId";
 
-  // REF LOB
-  public static GetListActiveLob = environment.FoundationR3Url + "/RefLob/GetListKeyValueActiveByCode";
-  
   // Rule
   public static Rule = "http://r3app-server/RULE_FINAL/RuleService/ExecuteRuleSet";
 
@@ -749,10 +683,6 @@ export class AdInsConstant {
   public static AddAppTc = environment.losUrl + "/AppTc/AddAppTc";
   public static EditAppTc = environment.losUrl + "/AppTc/EditAppTc";
   public static SubmitOutstandingTc = environment.losUrl + "/AppTc/SubmitOutstandingTc";
-
-  //PURCHASE ORDER
-  public static SubmitPurchaseOrder = environment.losUrl + "/PurchaseOrderH/SubmitPurchaseOrder";
-  public static ResumeWorkflowPurchaseOrder = environment.losUrl + "/PurchaseOrderH/ResumeWorkflowPurchaseOrder";
 
   //AGRMNT
   public static GetAgrmntByAgrmntId = environment.losUrl + "/Agrmnt/GetAgrmntByAgrmntId";
@@ -859,7 +789,7 @@ export class AdInsConstant {
 
   // ASSET TYPE
   public static GetAssetTypeById = environment.FoundationR3Url + "/AssetType/GetAssetTypeById";
-  
+
   //App Crd Invstg
   public static AddAppCrdInvstg = environment.losUrl + "/AppCrdInvstgH/AddAppCrdInvstg";
 
