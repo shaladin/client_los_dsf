@@ -120,6 +120,10 @@ import { LegalReviewDetailComponent } from './legal-review/legal-review-detail/l
     MouRequestAddcollComponent,
     MouRequestAddcollAddeditComponent,
     MouReviewGeneralComponent,
+    MouDetailGeneralComponent,
+    MouDetailFactoringComponent,
+    MouCustAssetComponent,
+    MouCustAssetDetailComponent,
     MouViewApprovalHistoryComponent
   ],
   exports: [],

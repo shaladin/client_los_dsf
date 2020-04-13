@@ -15,6 +15,8 @@ import { LeadInputLeadDataObj } from 'app/shared/model/LeadInputLeadDataObj.Mode
 import { LeadAppObj } from 'app/shared/model/LeadAppObj.Model';
 import { LeadAssetObj } from 'app/shared/model/LeadAssetObj.Model';
 import { AssetMasterObj } from 'app/shared/model/AssetMasterObj.Model';
+import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
+import { LeadObj } from 'app/shared/model/Lead.Model';
 
  
 @Component({
@@ -76,6 +78,14 @@ export class LeadInputLeadDataComponent implements OnInit {
     TotalDownPayment: [''],
     InstallmentAmt:['',Validators.required]
   });
+  getGeneralSettingByCode: string;
+  getLeadByLeadId : string;
+  generalSettingObj: any;
+  returnGeneralSettingObj: any;
+  lobKta = new Array();
+  leadObj: LeadObj;
+  returnLeadObj: any;
+  returnLobCode: string;
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) { 
     this.getListActiveRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
@@ -83,7 +93,8 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.getLeadAssetByLeadId = AdInsConstant.GetLeadAssetByLeadId;
     this.getLeadAppByLeadId = AdInsConstant.GetLeadAppByLeadId;
     this.getAssetMasterForLookupEmployee = AdInsConstant.GetAssetMasterForLookupEmployee;
-
+    this.getGeneralSettingByCode = AdInsConstant.GetGeneralSettingByCode;
+    this.getLeadByLeadId = AdInsConstant.GetLeadByLeadId;
     this.route.queryParams.subscribe(params => {
         if (params["LeadId"] != null) {
             this.LeadId = params["LeadId"];
@@ -195,6 +206,27 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.InputLookupAssetObj.pagingJson = "./assets/uclookup/NAP/lookupAsset.json";
     this.InputLookupAssetObj.genericJson = "./assets/uclookup/NAP/lookupAsset.json";
 
+
+    this.generalSettingObj = new GeneralSettingObj(); 
+    this.generalSettingObj.gsCode = "LOB_KTA";
+    this.http.post(this.getGeneralSettingByCode, this.generalSettingObj).subscribe(
+      (response) => {
+        this.returnGeneralSettingObj = response;
+        this.lobKta = this.returnGeneralSettingObj.GsValue.split(',');
+        this.leadObj = new LeadObj();
+        this.leadObj.LeadId = this.LeadId;
+        this.http.post(this.getLeadByLeadId, this.leadObj).subscribe(
+          (response) => {
+            this.returnLeadObj = response;
+            this.returnLobCode = response['LobCode'];
+            if(this.lobKta.includes(this.returnLobCode) == true){
+              this.LeadDataForm.controls['NTFAmt'].setValidators([Validators.required]);
+            }
+          }
+        );
+      }
+    );
+
     this.assetConditionObj = new RefMasterObj();
     this.assetConditionObj.RefMasterTypeCode = "ASSET_CONDITION";
     this.http.post(this.getListActiveRefMasterUrl, this.assetConditionObj).subscribe(
@@ -243,8 +275,6 @@ export class LeadInputLeadDataComponent implements OnInit {
 
             this.reqAssetMasterObj = new AssetMasterObj();
             this.reqAssetMasterObj.FullAssetCode = this.resLeadAssetObj.FullAssetCode;
-            console.log("vvv")
-            console.log(this.reqAssetMasterObj)
             this.http.post(this.getAssetMasterForLookupEmployee, this.reqAssetMasterObj).subscribe(
               (response) => {
                   this.resAssetMasterObj = response;
@@ -255,7 +285,7 @@ export class LeadInputLeadDataComponent implements OnInit {
                     FullAssetCode: this.resAssetMasterObj.FullAssetCode,
                     FullAssetName: this.resAssetMasterObj.FullAssetName,
                   });
-
+                  this.assetTypeId = this.resAssetMasterObj.AssetTypeId;
                   var assetType = new AssetTypeObj();
                   assetType.AssetTypeId = this.resAssetMasterObj.AssetTypeId;
                   this.http.post(AdInsConstant.GetAssetTypeById, assetType).subscribe(
