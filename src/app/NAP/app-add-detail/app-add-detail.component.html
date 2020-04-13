@@ -1,33 +1,53 @@
 <lib-ucviewgeneric [viewInput]="viewProdMainInfoObj"> </lib-ucviewgeneric>
 
-<div class="card-body">
+<div class="card-body" *ngIf="AppStepIndex > -1">
   <div class="px-3">
-    <aw-wizard #wizard navBarLayout="large-empty-symbols" [defaultStepIndex]="2">
+    <aw-wizard #wizard navBarLayout="large-empty-symbols" [defaultStepIndex]="AppStepIndex">
 
-      <aw-wizard-step [stepTitle]="'Referantor'" (stepEnter)="EnterTab('tab1')"
+      <aw-wizard-step [stepTitle]="'Customer Data'" (stepEnter)="EnterTab('CUST')"
         [navigationSymbol]="{ symbol: '1' }">
-        <app-app-referantor *ngIf="isTab1 == true" [appId]=appId></app-app-referantor>
+        <app-customer-data *ngIf="AppStepIndex == 0" [appId]=appId></app-customer-data>
       </aw-wizard-step>
 
-      <aw-wizard-step [stepTitle]="'Model'" (stepEnter)="EnterTab('tab2')"
+      <aw-wizard-step [stepTitle]="'Guarantor Data'" (stepEnter)="EnterTab('GUAR')"
         [navigationSymbol]="{ symbol: '2' }">
-        <app-app-model *ngIf="isTab2 == true" [appId]=appId></app-app-model>
+        <app-guarantor-paging *ngIf="AppStepIndex == 1" [AppId]=appId></app-guarantor-paging>
       </aw-wizard-step>
       
-      <aw-wizard-step [stepTitle]="'Guarantor'" (stepEnter)="EnterTab('tab3')"
+      <aw-wizard-step [stepTitle]="'Referantor Data'" (stepEnter)="EnterTab('REF')"
         [navigationSymbol]="{ symbol: '3' }">
-        <app-guarantor-paging *ngIf="isTab3 == true" [AppId]=appId></app-guarantor-paging>
+        <app-app-referantor *ngIf="AppStepIndex == 2" [appId]=appId></app-app-referantor>
       </aw-wizard-step>
 
-      <aw-wizard-step [stepTitle]="'Life Insurance'" (stepEnter)="EnterTab('tab4')"
-        [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
-        <app-app-life-ins *ngIf="isTab4 == true" [AppId]=param></app-app-life-ins>
+      <aw-wizard-step [stepTitle]="'Application Data'" (stepEnter)="EnterTab('APP')"
+      [navigationSymbol]="{ symbol: '4' }">
+        <app-app-model *ngIf="AppStepIndex == 3" [appId]=appId></app-app-model>
       </aw-wizard-step>
 
-      <aw-wizard-step [stepTitle]="'Terms and Conditions'" (stepEnter)="EnterTab('tab5')"
-        [navigationSymbol]="{ symbol: '5' }">
-        <app-app-tc *ngIf="isTab5 == true" [AppId]=param></app-app-tc>
+      <aw-wizard-step [stepTitle]="'Asset Data'" (stepEnter)="EnterTab('ASSET')"
+      [navigationSymbol]="{ symbol: '5' }">
+        <app-app-life-ins *ngIf="AppStepIndex == 4" [AppId]=appId></app-app-life-ins>
       </aw-wizard-step>
+
+      <aw-wizard-step [stepTitle]="'Insurance Data'" (stepEnter)="EnterTab('INS')"
+      [navigationSymbol]="{ symbol: '6' }">
+        <app-app-life-ins *ngIf="AppStepIndex == 5" [AppId]=appId></app-app-life-ins>
+      </aw-wizard-step>
+
+      <aw-wizard-step [stepTitle]="'Life Insurance Data'" (stepEnter)="EnterTab('LFI')"
+      [navigationSymbol]="{ symbol: '7' }">
+        <app-app-life-ins *ngIf="AppStepIndex == 6" [AppId]=appId></app-app-life-ins>
+      </aw-wizard-step>
+
+      <aw-wizard-step [stepTitle]="'Financial Data'" (stepEnter)="EnterTab('FIN')"
+      [navigationSymbol]="{ symbol: '8' }">
+        <app-app-life-ins *ngIf="AppStepIndex == 7" [AppId]=appId></app-app-life-ins>
+      </aw-wizard-step>
+
+      <aw-wizard-step [stepTitle]="'Terms and Conditions'" (stepEnter)="EnterTab('TC')"
+        [navigationSymbol]="{ symbol: '9' }">
+        <app-app-tc *ngIf="AppStepIndex == 8" [AppId]=appId></app-app-tc>
+        </aw-wizard-step>
     </aw-wizard>
   </div>
 </div>

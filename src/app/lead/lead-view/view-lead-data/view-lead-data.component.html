@@ -1,0 +1,11 @@
+<div *ngIf="tempLeadObj?.LobCode != 'CFNA'">
+    <lib-ucviewgeneric *ngIf="tempLeadAssetObj?.MrAssetConditionCode == 'USED'" [viewInput]="viewLeadAssetDataUsed">
+    </lib-ucviewgeneric>
+    <lib-ucviewgeneric *ngIf="tempLeadAssetObj?.MrAssetConditionCode != 'USED'" [viewInput]="viewLeadAssetDataNew">
+    </lib-ucviewgeneric> 
+    <lib-ucviewgeneric [viewInput]="viewLeadAppData"></lib-ucviewgeneric>
+</div>
+
+<div *ngIf="tempLeadObj?.LobCode == 'CFNA'">
+    <lib-ucviewgeneric [viewInput]="viewLeadAppDataKta"></lib-ucviewgeneric>
+</div>

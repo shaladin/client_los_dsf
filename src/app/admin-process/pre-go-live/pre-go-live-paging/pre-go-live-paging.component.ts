@@ -18,7 +18,7 @@ export class PreGoLivePagingComponent implements OnInit {
     
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchPreGoLive.json";
-    this.inputPagingObj.enviromentUrl = environment.FoundationR3Url;
+    this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchPreGoLive.json";
 

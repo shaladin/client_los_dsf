@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
-import { FormsModule, ReactiveFormsModule, FormGroupDirective } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
 import { UCSearchModule } from "@adins/ucsearch";
 import { UcpagingModule } from "@adins/ucpaging";
@@ -13,8 +13,7 @@ import { UcviewgenericModule } from "@adins/ucviewgeneric";
 import { UcShowErrorsModule } from "@adins/uc-show-errors";
 import { OutstandingTcPagingComponent } from './outstanding-tc/outstanding-tc-paging/outstanding-tc-paging.component';
 import { OutstandingTcDetailComponent } from './outstanding-tc/outstanding-tc-detail/outstanding-tc-detail.component';
-import { TermConditionsComponent } from "app/shared/components/term-conditions/term-conditions.component";
-import { SharingComponentModule } from "app/shared/sharingcomponent.module";
+import { NapComponentModule } from "app/NAP/nap-component/nap-component.module";
 
 @NgModule({
   imports: [
@@ -28,7 +27,7 @@ import { SharingComponentModule } from "app/shared/sharingcomponent.module";
     AddProcessRoutingModule,
     UcviewgenericModule,
     UcShowErrorsModule,
-    SharingComponentModule
+    NapComponentModule
   ],
   declarations: [
     PoExtensionPagingComponent,

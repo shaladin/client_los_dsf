@@ -7,6 +7,8 @@ import { ControlContainer, FormGroupDirective, FormGroup, NgForm, FormBuilder, V
   styles: [],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
+
+//JANGAN DIPAKE, BUAT TEST DOANG
 export class UcinputnumberComponent implements OnInit {
 
   @Input() parentForm: FormGroup;
