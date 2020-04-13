@@ -20,7 +20,6 @@ import { AssetDataComponent } from "./nap-tab/asset-data/asset-data.component";
 import { RsvFundPagingComponent } from "./reserved-fund/reserved-fund-paging/reserved-fund-paging.component";
 import { RsvFundViewComponent } from "./reserved-fund/reserved-fund-view/reserved-fund-view.component";
 
-
 const routes: Routes = [
   {
     path: '',
@@ -157,7 +156,7 @@ const routes: Routes = [
           data: {
               title: 'Commission Add'
           }
-      },
+      }
     ]
   }
 ]

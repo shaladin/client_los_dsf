@@ -45,6 +45,7 @@ import { CustShareholderComponent } from "./nap-tab/customer-data/component/shar
 import { AppTcComponent } from './nap-tab/app-tc/app-tc.component';
 import { CustCompanyContactInformationComponent } from "./nap-tab/customer-data/component/company-contact-information/cust-company-contact-information.component";
 import { UcShowErrorsModule } from "@adins/uc-show-errors";
+import { UcinputnumberModule } from "@adins/ucinputnumber";
 import { CustCompanyFinancialDataComponent } from "./nap-tab/customer-data/component/company-financial-data/cust-company-financial-data.component";
 import { CustLegalDocComponent } from "./nap-tab/customer-data/component/legal-doc/cust-legal-doc.component";
 import { UcinputnumberComponent } from "./nap-tab/customer-data/component/ucinputnumber/ucinputnumber.component";
@@ -53,7 +54,17 @@ import { AssetDataComponent } from "./nap-tab/asset-data/asset-data.component";
 import { RsvFundPagingComponent } from "./reserved-fund/reserved-fund-paging/reserved-fund-paging.component";
 import { RsvFundViewComponent } from "./reserved-fund/reserved-fund-view/reserved-fund-view.component";
 import { AppFinDataComponent } from './nap-tab/app-fin-data/app-fin-data.component';
-
+// import { NgxCurrencyModule } from "ngx-currency";
+export const customCurrencyMaskConfig = {     
+    align: "left",     
+    allowNegative: true,     
+    allowZero: true,     
+    decimal: ".",     
+    precision: 2,     
+    prefix: "",     
+    suffix: "",     
+    thousands: ",",     
+    nullable: false };
 
 
 @NgModule({
@@ -118,7 +129,9 @@ import { AppFinDataComponent } from './nap-tab/app-fin-data/app-fin-data.compone
         UcaddressModule,
         UcgridviewModule,
         UcShowErrorsModule,
-        UCSearchModule
+        UCSearchModule,
+        UcinputnumberModule,
+        // NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
     ],
     exports: [],
     providers: [NGXToastrService],

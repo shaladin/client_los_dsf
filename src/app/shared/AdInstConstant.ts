@@ -716,5 +716,7 @@ export class AdInsConstant {
   public static ExchangeRateAmt = "/AppCommission/ExchangeRateAmt";
   public static TaxTypeCode = "/AppCommission/TaxTypeCode";
   public static VATTypeCode = "/AppCommission/VATTypeCode";
+  //App Crd Invstg
+  public static AddAppCrdInvstg = environment.losUrl + "/AppCrdInvstgH/AddAppCrdInvstg";
 
 }
