@@ -10,7 +10,7 @@ export const environment = {
   ApprovalR3Url: 'http://r3app-server/approval',
   FoundationR3Url: 'http://r3app-server.ad-ins.com/FOUNDATION_R3',
   FoundationR3Web: 'http://r3web-server/Foundation',
-  losUrl : 'http://r3app-server.ad-ins.com/LOS',
+  losUrl : 'http://r3app-server.ad-ins.com/LOS', 
 };
 
 
