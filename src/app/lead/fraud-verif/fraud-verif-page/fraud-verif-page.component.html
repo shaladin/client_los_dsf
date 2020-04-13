@@ -201,7 +201,9 @@
 
 <div class="form-body" id="3RdPartychecking">
     <div class="px-3">
-        <div class="form-group row">
+        <form class="form form-horizontal" [formGroup]="FraudVerfForm"
+        (ngSubmit)="FraudVerfForm.valid" #enjiForm="ngForm">
+        <div class="form-group row"> 
             <label class="col-md-2  adInsLabel" translate>Pefindo</label>
             <div class="col-md-4">
               <label> Pefindo </label>
@@ -214,9 +216,11 @@
           <div class="form-group row">
             <label class="col-md-2  adInsLabel" translate>Notes</label>
             <div class="col-md-4">
-              <label>Notes </label>
+                <textarea class="form-control adInsInput" formControlName="Notes"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && FraudVerfForm.controls.Notes.invalid }"></textarea>
             </div> 
           </div> 
+          </form>
     </div>
 </div>
 
