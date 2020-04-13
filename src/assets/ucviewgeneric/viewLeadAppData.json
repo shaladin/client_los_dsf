@@ -1,0 +1,62 @@
+{
+    "title": "",
+    "subsection": [
+        {
+            "subSectionId": "FinancialDataId",
+            "subSectionTitle": "Financial Data",
+            "mainInfoUrl": "http://localhost:5001/Generic/GetDataViewBySQL",
+            "mainInfo": [
+                {
+                    "type": "text",
+                    "label": "Tenor",
+                    "property": "Tenor"
+                },
+                {
+                    "type": "",
+                    "label": "",
+                    "property": ""
+                },
+                {
+                    "type": "text",
+                    "label": "First Installment Type",
+                    "property": "FirstInstallmentType"
+                },
+                {
+                    "type": "",
+                    "label": "",
+                    "property": ""
+                },
+                {
+                    "type": "text",
+                    "label": "NTF Amount",
+                    "property": "NtfAmt"
+                },
+                {
+                    "type": "",
+                    "label": "",
+                    "property": ""
+                },
+                {
+                    "type": "text",
+                    "label": "Total Down Payment Amount",
+                    "property": "TotalDownPaymentAmt"
+                },
+                {
+                    "type": "",
+                    "label": "",
+                    "property": ""
+                },
+                {
+                    "type": "text",
+                    "label": "Installment Amount",
+                    "property": "InstAmt"
+                }
+            ],
+            "querystring": {
+                "select": "SELECT la.TENOR AS Tenor, vrm.DESCR AS FirstInstallmentType, la.NTF_AMT AS NtfAmt, la.TOTAL_DOWN_PAYMENT_AMT AS TotalDownPaymentAmt, la.INST_AMT AS InstAmt",
+                "from": "From dbo.LEAD_APP la WITH(NOLOCK) LEFT JOIN V_REF_MASTER vrm WITH(NOLOCK) ON vrm.MASTER_CODE = la.MR_FIRST_INST_TYPE_CODE AND vrm.REF_MASTER_TYPE_CODE = 'FIRSTINSTTYPE'",
+                "where": "WHERE la.LEAD_ID = {0}"
+            }
+        }
+    ]
+}
