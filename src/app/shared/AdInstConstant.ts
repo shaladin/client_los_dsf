@@ -678,4 +678,7 @@ export class AdInsConstant {
   // Product Offering
   public static GetListProdOfferingDByProdOfferingCode = "/ProductOffering/GetListProdOfferingDByProdOfferingCode";
   public static GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode = "/ProductOffering/GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode";
+
+  //Asset Negative
+  public static GetAssetNegativeDuplicateCheck = "/AssetNegative/GetAssetNegativeDuplicateCheck";
 }

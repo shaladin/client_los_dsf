@@ -5,6 +5,10 @@ import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { LeadObj } from 'app/shared/model/Lead.Model';
+import { AppObj } from 'app/shared/model/App/App.Model';
+import { FraudDukcapilObj } from 'app/shared/model/FraudDukcapilObj.Model';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-fraud-detection-verif',
@@ -14,28 +18,50 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 export class FraudDetectionVerifComponent implements OnInit {
 
   losUrl = environment.losUrl;
+  getAppById = this.losUrl + AdInsConstant.GetAppById;
   getCustDataByAppId = AdInsConstant.GetCustDataByAppId;
   getAppDupCheckCustByAppId = AdInsConstant.GetAppDupCheckCustByAppId;
   getFraudDukcapilByIdNo = AdInsConstant.GetFraudDukcapilByIdNo;
   addAppFraudVerf = AdInsConstant.AddAppFraudVerf;
   getLeadByLeadId = AdInsConstant.GetLeadByLeadId;
+  getAppAssetByAppId = AdInsConstant.GetAppAssetByAppId;
+  getAssetNegativeDuplicateCheck = this.losUrl + AdInsConstant.GetAssetNegativeDuplicateCheck;
+  bussinessDt: any;
   appId: any;
   appCustObj: any;
   appCustCompanyObj: any;
   appAssetObj: any;
   leadObj: any;
+  appObj: AppObj;
+  leadId: any;
+  dukcapilObj: any;
+  assetNegativeObj: any;
+  listCustDuplicate: any;
+  closeResult: string;
+  idNo: any;
+  verfUser: any;
+  verfDt: any;
+  verfNotes: any;
+  verfCode: any;
+
 
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
     private router: Router,
+    private modalService: NgbModal
   ) { }
 
   ngOnInit() {
+    var context = JSON.parse(localStorage.getItem("UserAccess"));
+    this.verfUser = context["UserName"];
+    this.verfDt = context["BusinessDt"];
+    this.verfCode = context["EmpNo"];
+    this.getApp();
     
   }
 
-  GetApp(){
+  getApp(){
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
         this.appId = params['AppId'];
@@ -44,12 +70,59 @@ export class FraudDetectionVerifComponent implements OnInit {
     //Get App Cust Data
     this.appCustObj = new AppCustObj();
     this.appAssetObj = new AppAssetObj();
-    //this.leadObj = new LeadObj();
+    this.appObj = new AppObj();
+    this.dukcapilObj = new FraudDukcapilObj();
+    this.leadObj = new LeadObj();
 
-    var appObj = { "AppId": this.appId };
-    this.http.post(this.getCustDataByAppId, appObj).subscribe(
+    var appReqObj = { "AppId": this.appId };
+    this.http.post<AppObj>(this.getAppById, appReqObj).subscribe(
+      response => {
+        this.appObj = response;
+        console.log(this.appObj);
+        this.leadId = this.appObj.LeadId;
+        if(this.leadId != null){
+        var leadReqObj = { "LeadId" : this.leadId}
+          this.getLead(leadReqObj);
+        }
+    },
+    error => {
+        console.log("error")
+    }
+
+    );
+    this.http.post(this.getCustDataByAppId, appReqObj).subscribe(
       response => {
           this.appCustObj = response["AppCustObj"];
+          this.idNo = this.appCustObj.IdNo;
+          var fraudDukcapilReqObj = {"IdNo" : this.idNo};
+          this.getFraudDukcapil(fraudDukcapilReqObj);
+      },
+      error => {
+          console.log("error")
+      }
+    );
+
+    this.getAppAsset(appReqObj);
+    this.getAppDupCheckCust(appReqObj)
+  }
+
+  getLead(leadId){
+    this.http.post<LeadObj>(this.getLeadByLeadId, leadId).subscribe(
+      response => {
+          this.leadObj = response;
+
+      },
+      error => {
+          console.log("error")
+      }
+    );
+
+  }
+  
+  getAppDupCheckCust(appId){
+    this.http.post(this.getAppDupCheckCustByAppId, appId).subscribe(
+      response => {
+          this.listCustDuplicate = response;
 
       },
       error => {
@@ -58,9 +131,82 @@ export class FraudDetectionVerifComponent implements OnInit {
     );
   }
 
-  GetLead(){
+  getAppAsset(appId){
+    this.http.post<AppAssetObj>(this.getAppAssetByAppId, appId).subscribe(
+      response => {
+          this.appAssetObj = response;
 
+      },
+      error => {
+          console.log("error")
+      }
+    );
+    }
+
+    getFraudDukcapil(idNo){
+    this.http.post(this.getFraudDukcapilByIdNo, idNo).subscribe(
+      response => {
+          this.dukcapilObj = response;
+
+      },
+      error => {
+          console.log("error")
+      }
+    );
+    }
+
+   getNegativeAsset(){
+    var negativeAssetObj = {"assetCategoryCode": this.appAssetObj.assetCategoryCode,
+    "assetTypeCode": this.appAssetObj.assetTypeCode,
+    "fullAssetCode": this.appAssetObj.fullAssetCode,
+    "serialNo1": this.appAssetObj.serialNo1,
+    "serialNo2": this.appAssetObj.serialNo2,
+    "serialNo3": this.appAssetObj.serialNo3,
+    "serialNo4": this.appAssetObj.serialNo4,
+    "serialNo5": this.appAssetObj.serialNo5,
+   }
+    this.http.post(this.getAssetNegativeDuplicateCheck, negativeAssetObj).subscribe(
+      response => {
+          this.assetNegativeObj = response["AssetNegativeObj"];
+
+      },
+      error => {
+          console.log("error")
+      }
+    );
+    }
+
+    open(content) {
+      //this.type = "Add";
+      this.modalService.open(content).result.then((result) => {
+        this.closeResult = `Closed with: ${result}`;
+      }, (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      });
+    }
+
+    private getDismissReason(reason: any): string {
+      if (reason === ModalDismissReasons.ESC) {
+        return 'by pressing ESC';
+      } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+        return 'by clicking on a backdrop';
+      } else {
+        return `with: ${reason}`;
+      }
+    }
+
+    submit(){
+      var verfObj = {"AppId": this.appId, "VerifyByName": this.verfUser, 
+      "VerifyDt": this.verfDt, "Notes": this.verfNotes, "VerifyByCode": this.verfCode, "VerifyStat" : "Verified"}
+      this.http.post(this.addAppFraudVerf, verfObj).subscribe(
+        response => {
+          console.log("Success");
+          this.router.navigate(["/FraudDetection/FraudDetectionPaging"]);
+        },
+        error => {
+          console.log("error");
+        }
+      )
+    }
   }
 
-
-}

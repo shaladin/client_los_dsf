@@ -103,7 +103,7 @@
             "action": [
                 {
                     "type": "edit",
-                    "path": "/Nap/AppAddDetail",
+                    "path": "/FraudDetection/FraudDetection",
                     "param": [
                         {
                             "type": "AppId",

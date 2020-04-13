@@ -54,5 +54,10 @@ export const Full_ROUTES: Routes = [
   {
     path: 'Lead',
     loadChildren: './lead/lead.module#LeadModule'
-  }    
+  },
+  {
+    path: 'FraudDetection',
+    loadChildren: './fraud-detection/fraud-detection.module#FraudDetectionModule'
+  } 
+  
 ];

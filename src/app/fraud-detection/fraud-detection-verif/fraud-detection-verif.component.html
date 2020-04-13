@@ -1,58 +1,60 @@
 <div class="row text-left">
   <div class="col-md-12">
     <div class="card">
-
+      <h2 class="form-section card-title" translate>Fraud Detection </h2>
       <div class="card-body">
         <div class="px-3">
 
           <!-- Main Info -->
-          <div class="form-body">
-            <h4 class="form-section card-title" translate><i class="ft-file-text"></i>Main Info </h4>
+          <lib-ucSubsection [id]="'MainInfoId'" [title]="'Main Info'" [panel]="'MainInfo'">
+          </lib-ucSubsection>
+          <div class="form-body" id="MainInfo">
 
             <div class="form-group row">
               <label class="col-md-3 adInsLabel">Application No</label>
-              <label class="col-md-3 adInsLabel">{{AppCustObj.CustNo}} </label>
+              <label class="col-md-3 adInsLabel">{{appObj.AppNo}} </label>
               <label class="col-md-3 adInsLabel">Original Office</label>
-              <label class="col-md-3 adInsLabel">{{AppCustObj.OfficeName}} </label>
+              <label class="col-md-3 adInsLabel">{{appObj.OfficeName}} </label>
             </div>
 
             <div class="form-group row">
               <label class="col-md-3 adInsLabel">Customer Name</label>
-              <label class="col-md-3 adInsLabel">{{AppCustObj.CustName}} </label>
+              <label class="col-md-3 adInsLabel">{{appCustObj.CustName}} </label>
               <label class="col-md-3 adInsLabel">Product Offering</label>
-              <label class="col-md-3 adInsLabel">{{AppCustObj.ProdOfferingName}} </label>
+              <label class="col-md-3 adInsLabel">{{appObj.ProdOfferingName}} </label>
             </div>
 
             <div class="form-group row">
               <label class="col-md-3 adInsLabel">Tenor </label>
-              <label class="col-md-3 adInsLabel">{{AppCustObj.Tenor}} </label>
+              <label class="col-md-3 adInsLabel">{{appObj.Tenor}} </label>
               <label class="col-md-3 adInsLabel">Currency</label>
-              <label class="col-md-3 adInsLabel">{{AppCustObj.CurrCode}} </label>
+              <label class="col-md-3 adInsLabel">{{appObj.CurrCode}} </label>
             </div>
 
             <div class="form-group row">
               <label class="col-md-3 adInsLabel">Order Information</label>
-              <label class="col-md-3 adInsLabel">{{AppCustObj.MrOrderInfo}} </label>
+              <label class="col-md-3 adInsLabel">{{appObj.MrOrderInfo}} </label>
               <label class="col-md-3 adInsLabel">Asset Name</label>
-              <label class="col-md-3 adInsLabel">{{AppCustObj.FullAssetName}} </label>
+              <label class="col-md-3 adInsLabel">{{appAssetObj.FullAssetName}} </label>
             </div>
 
             <div class="form-group row">
               <label class="col-md-3 adInsLabel">Lead No</label>
-              <label class="col-md-3 adInsLabel">{{AppCustObj.LeadNo}} </label>
+              <label class="col-md-3 adInsLabel">{{leadObj.LeadNo}} </label>
             </div>
           </div>
 
-          <div class="form-body">
-            <h4 class="form-section card-title" translate><i class="ft-file-text"></i>Customer Duplicate Checking </h4>
-            <div class="form-group row">
+          <lib-ucSubsection [id]="'CustDupCheckId'" [title]="'Customer Duplicate Checking'" [panel]="'CustDupCheck'">
+          </lib-ucSubsection>
+          <div class="form-body" id="CustDupCheckId">
+            <div *ngIf="listCustDuplicate?.length > 0"class="form-group row">
               <label class="col-md-3 adInsLabel">Customer No</label>
-              <label *ngIf="ListCustDuplicate?.find(e => e.CustNo === AppCustObj.CustNo)"
-                class="col-md-3 adInsLabel">{{AppCustObj.CustNo}} (Existing)</label>
-              <label *ngIf="ListCustDuplicate?.find(e => e.CustNo !== AppCustObj.CustNo)"
-                class="col-md-3 adInsLabel">{{AppCustObj.CustNo}} (New)</label>
+              <!-- <label *ngIf="listCustDuplicate?.find(e => e.CustNo === appCustObj.CustNo)"
+                class="col-md-3 adInsLabel">{{appCustObj.CustNo}} (Existing)</label>
+              <label *ngIf="listCustDuplicate?.find(e => e.CustNo !== appCustObj.CustNo)"
+                class="col-md-3 adInsLabel">{{appCustObj.CustNo}} (New)</label> -->
             </div>
-            <table *ngIf="ListCustDuplicate?.length > 0" class="table table-responsive-md text-center table-hover">
+            <table *ngIf="listCustDuplicate?.length > 0" class="table table-responsive-md text-center table-hover">
               <thead>
                 <tr class="table-header">
                   <th><span class="thead-header" (click)="searchSort($event)" name='custNo' translate>Customer No</span>
@@ -79,7 +81,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of ListCustDuplicate">
+                <tr *ngFor="let item of listCustDuplicate">
                   <td>{{item.CustNo}}</td>
                   <td>{{item.CustName}}</td>
                   <td>{{item.IdType}}</td>
@@ -96,8 +98,9 @@
             </table>
           </div>
 
-          <div class="form-body">
-            <h4 class="form-section card-title" translate><i class="ft-file-text"></i>Negative Customer</h4>
+          <lib-ucSubsection [id]="'NegCustId'" [title]="'Negative Customer'" [panel]="'NegCust'">
+          </lib-ucSubsection>
+          <div class="form-body" id="NegCust">
             <table *ngIf="ListNegativeCust?.length > 0" class="table table-responsive-md text-center table-hover">
               <thead>
                 <tr class="table-header">
@@ -148,31 +151,38 @@
             </table>
           </div>
 
-          <div class="form-body">
-            <h4 class="form-section card-title" translate><i class="ft-file-text"></i>Dukcapil </h4>
+          <lib-ucSubsection [id]="'DukId'" [title]="'Dukcapil'" [panel]="'Duk'">
+          </lib-ucSubsection>
+          <div class="form-body" id="Duk">
 
             <div class="form-group row">
               <label class="col-md-3 adInsLabel">Name</label>
-              <label class="col-md-3 adInsLabel">{{Dukcapil.CustName}} </label>
+              <label class="col-md-3 adInsLabel">{{dukcapilObj.CustName}} </label>
               <label class="col-md-3 adInsLabel">Status Data</label>
-              <label class="col-md-3 adInsLabel">{{AppCustObj.OfficeName}} </label>
+              <label class="col-md-3 adInsLabel">{{dukcapilObj.DukcapilDataStatus}} </label>
             </div>
 
             <div class="form-group row">
               <label class="col-md-3 adInsLabel">NIK</label>
-              <label class="col-md-3 adInsLabel">{{AppCustObj.CustName}} </label>
+              <label class="col-md-3 adInsLabel">{{dukcapilObj.IdNo}} </label>
               <label class="col-md-3 adInsLabel">Check Dukcapil Date</label>
-              <label class="col-md-3 adInsLabel">{{AppCustObj.ProdOfferingName}} </label>
+              <label class="col-md-3 adInsLabel">{{dukcapilObj.CekDukcapilDt}} </label>
             </div>
 
             <div class="form-group row">
               <label class="col-md-3 adInsLabel">No KK</label>
-              <label class="col-md-3 adInsLabel">{{AppCustObj.Tenor}} </label>
-              <label class="col-md-3 adInsLabel">Birth Place / Birth Date</label>
-              <label class="col-md-3 adInsLabel">{{AppCustObj.CurrCode}} / {{AppCustObj.CurrCode}}</label>
-            </div>
+              <label class="col-md-3 adInsLabel">{{dukcapilObj.FamilyCardNo}} </label>
+              <label class="col-md-3 adInsLabel">
+                <a class="success p-0" data-original-title="" title="" (click)="open(content)">Detail</a> 
+              </label>
+              </div>
 
             <div class="form-group row">
+              <label class="col-md-3 adInsLabel">Birth Place / Birth Date</label>
+              <label class="col-md-3 adInsLabel">{{dukcapilObj.BirthPlace}} / {{dukcapilObj.BirthDt}}</label>
+            </div>
+          </div>
+
               <ng-template #content let-c="close" let-d="dismiss">
                 <div class="modal-header">
                   <h4 class="modal-title">View Dukcapil</h4>
@@ -183,229 +193,251 @@
                 <div class="modal-body">
                   <div class="px-3">
                     <div class="form-body">
-                      <h4 class="form-section card-title" translate><i class="ft-file-text"></i>Customer Data </h4>
+                      <h4 class="form-section card-title" translate>Customer Data </h4>
                       <div class="form-group row">
                         <label class="col-md-3 adInsLabel">Customer Name</label>
-                        <label class="col-md-3 adInsLabel">{{Dukcapil.CustName}} </label>
+                        <label class="col-md-3 adInsLabel">{{dukcapilObj.CustName}} </label>
                         <label class="col-md-3 adInsLabel">Birth Place / Birth Date</label>
-                        <label class="col-md-3 adInsLabel">{{Dukcapil.BirthPlace}} / {{Dukcapil.BirthDt}}</label>
+                        <label class="col-md-3 adInsLabel">{{dukcapilObj.BirthPlace}} / {{dukcapilObj.BirthDt}}</label>
                       </div>
 
                       <div class="form-group row">
                         <label class="col-md-3 adInsLabel">NIK</label>
-                        <label class="col-md-3 adInsLabel">{{Dukcapil.IdNo}} </label>
+                        <label class="col-md-3 adInsLabel">{{dukcapilObj.IdNo}} </label>
                         <label class="col-md-3 adInsLabel">Gender</label>
-                        <label class="col-md-3 adInsLabel">{{Dukcapil.Gender}}</label>
+                        <label class="col-md-3 adInsLabel">{{dukcapilObj.Gender}}</label>
                       </div>
 
                       <div class="form-group row">
                         <label class="col-md-3 adInsLabel">No KK</label>
-                        <label class="col-md-3 adInsLabel">{{Dukcapil.FamilyCardNo}} </label>
+                        <label class="col-md-3 adInsLabel">{{dukcapilObj.FamilyCardNo}} </label>
                         <label class="col-md-3 adInsLabel">Religion</label>
-                        <label class="col-md-3 adInsLabel">{{Dukcapil.Gender}}</label>
+                        <label class="col-md-3 adInsLabel">{{dukcapilObj.Religion}}</label>
                       </div>
 
                       <div class="form-group row">
                         <label class="col-md-3 adInsLabel">NIK</label>
-                        <label class="col-md-3 adInsLabel">{{Dukcapil.IdNo}} </label>
+                        <label class="col-md-3 adInsLabel">{{dukcapilObj.IdNo}} </label>
                         <label class="col-md-3 adInsLabel">Gender</label>
-                        <label class="col-md-3 adInsLabel">{{Dukcapil.Gender}}</label>
+                        <label class="col-md-3 adInsLabel">{{dukcapilObj.Gender}}</label>
                       </div>
 
                       <div class="form-group row">
                         <label class="col-md-3 adInsLabel">NIK Mother</label>
-                        <label class="col-md-3 adInsLabel">{{Dukcapil.IdNo}} </label>
+                        <label class="col-md-3 adInsLabel">{{dukcapilObj.MotherIdNo}} </label>
                         <label class="col-md-3 adInsLabel">Marital Status</label>
-                        <label class="col-md-3 adInsLabel">{{Dukcapil.Gender}}</label>
+                        <label class="col-md-3 adInsLabel">{{dukcapilObj.MaritalStatus}}</label>
                       </div>
 
                       <div class="form-group row">
                         <label class="col-md-3 adInsLabel">Mother Maiden Name</label>
-                        <label class="col-md-3 adInsLabel">{{Dukcapil.IdNo}} </label>
+                        <label class="col-md-3 adInsLabel">{{dukcapilObj.MotherMaidenName}} </label>
                         <label class="col-md-3 adInsLabel">Relationship</label>
-                        <label class="col-md-3 adInsLabel">{{Dukcapil.Gender}}</label>
+                        <label class="col-md-3 adInsLabel">{{dukcapilObj.Relationship}}</label>
                       </div>
 
                       <div class="form-group row">
                         <label class="col-md-3 adInsLabel">NIK Father</label>
-                        <label class="col-md-3 adInsLabel">{{Dukcapil.IdNo}} </label>
+                        <label class="col-md-3 adInsLabel">{{dukcapilObj.FatherIdNo}} </label>
                         <label class="col-md-3 adInsLabel">Education</label>
-                        <label class="col-md-3 adInsLabel">{{Dukcapil.Gender}}</label>
+                        <label class="col-md-3 adInsLabel">{{dukcapilObj.Education}}</label>
                       </div>
 
                       <div class="form-group row">
                         <label class="col-md-3 adInsLabel">Father Name</label>
-                        <label class="col-md-3 adInsLabel">{{Dukcapil.IdNo}} </label>
+                        <label class="col-md-3 adInsLabel">{{dukcapilObj.FatherName}} </label>
                         <label class="col-md-3 adInsLabel">Profession</label>
-                        <label class="col-md-3 adInsLabel">{{Dukcapil.Gender}}</label>
+                        <label class="col-md-3 adInsLabel">{{dukcapilObj.Proffession}}</label>
                       </div>
                     </div>
 
                     <div class="form-body">
-                      <h4 class="form-section card-title" translate><i class="ft-file-text"></i>Address Data </h4>
+                      <h4 class="form-section card-title" translate>Address Data </h4>
                       <div class="form-group row">
                         <label class="col-md-3 adInsLabel">Address</label>
-                        <label class="col-md-3 adInsLabel">{{Dukcapil.CustName}} </label>
+                        <label class="col-md-3 adInsLabel">{{dukcapilObj.Addr}} </label>
                       </div>
 
                       <div class="form-group row">
                         <label class="col-md-3 adInsLabel">RT / RW</label>
-                        <label class="col-md-3 adInsLabel">{{Dukcapil.CustName}} </label>
+                        <label class="col-md-3 adInsLabel">{{dukcapilObj.AreaCode3}} / {{dukcapilObj.AreaCode4}}</label>
                       </div>
 
                       <div class="form-group row">
                         <label class="col-md-3 adInsLabel">Kelurahan</label>
-                        <label class="col-md-3 adInsLabel">{{Dukcapil.CustName}} </label>
+                        <label class="col-md-3 adInsLabel">{{dukcapilObj.AreaCode1}} </label>
                       </div>
 
                       <div class="form-group row">
                         <label class="col-md-3 adInsLabel">Kecamatan</label>
-                        <label class="col-md-3 adInsLabel">{{Dukcapil.CustName}} </label>
+                        <label class="col-md-3 adInsLabel">{{dukcapilObj.AreaCode2}} </label>
                       </div>
 
                       <div class="form-group row">
                         <label class="col-md-3 adInsLabel">City</label>
-                        <label class="col-md-3 adInsLabel">{{Dukcapil.CustName}} </label>
+                        <label class="col-md-3 adInsLabel">{{dukcapilObj.City}} </label>
                       </div>
 
                       <div class="form-group row">
                         <label class="col-md-3 adInsLabel">Zipcode</label>
-                        <label class="col-md-3 adInsLabel">{{Dukcapil.CustName}} </label>
+                        <label class="col-md-3 adInsLabel">{{dukcapilObj.Zipcode}} </label>
                       </div>
                     </div>
 
                     <div class="form-body">
-                      <h4 class="form-section card-title" translate><i class="ft-file-text"></i>Marriage Data </h4>
+                      <h4 class="form-section card-title" translate>Marriage Data </h4>
                       <div class="form-group row">
                         <label class="col-md-3 adInsLabel">Marriage Deed No</label>
-                        <label class="col-md-3 adInsLabel">{{Dukcapil.CustName}} </label>
+                        <label class="col-md-3 adInsLabel">{{dukcapilObj.MarriageDeedNo}} </label>
                         <label class="col-md-3 adInsLabel">Divorce Deed No</label>
-                        <label class="col-md-3 adInsLabel">{{Dukcapil.CustName}} </label>
+                        <label class="col-md-3 adInsLabel">{{dukcapilObj.DivorceDeedNo}} </label>
                       </div>
 
                       <div class="form-group row">
                         <label class="col-md-3 adInsLabel">Marriage Date</label>
-                        <label class="col-md-3 adInsLabel">{{Dukcapil.CustName}} </label>
+                        <label class="col-md-3 adInsLabel">{{dukcapilObj.MarriageDt}} </label>
                         <label class="col-md-3 adInsLabel">Divorce Date</label>
-                        <label class="col-md-3 adInsLabel">{{Dukcapil.CustName}} </label>
+                        <label class="col-md-3 adInsLabel">{{dukcapilObj.DivorceDt}} </label>
                       </div>
                     </div>
 
                     <div class="form-body">
-                      <h4 class="form-section card-title" translate><i class="ft-file-text"></i>Status Cek Dukcapil Data
+                      <h4 class="form-section card-title" translate>Status Cek Dukcapil Data
                       </h4>
                       <div class="form-group row">
                         <label class="col-md-3 adInsLabel">Name</label>
-                        <label class="col-md-3 adInsLabel">{{Dukcapil.CustName}} </label>
+                        <label class="col-md-3 adInsLabel">{{dukcapilObj.CustName}} </label>
                         <label class="col-md-3 adInsLabel">Status Data</label>
-                        <label class="col-md-3 adInsLabel">{{Dukcapil.CustName}} </label>
+                        <label class="col-md-3 adInsLabel">{{dukcapilObj.DukcapilDataStatus}} </label>
                       </div>
 
                       <div class="form-group row">
                         <label class="col-md-3 adInsLabel">NIK</label>
-                        <label class="col-md-3 adInsLabel">{{Dukcapil.CustName}} </label>
+                        <label class="col-md-3 adInsLabel">{{dukcapilObj.IdNo}} </label>
                         <label class="col-md-3 adInsLabel">Check Dukcapil Date</label>
-                        <label class="col-md-3 adInsLabel">{{Dukcapil.CustName}} </label>
+                        <label class="col-md-3 adInsLabel">{{dukcapilObj.CekDukcapilDt}} </label>
                       </div>
 
                       <div class="form-group row">
                         <label class="col-md-3 adInsLabel">No KK</label>
-                        <label class="col-md-3 adInsLabel">{{Dukcapil.CustName}} </label>
+                        <label class="col-md-3 adInsLabel">{{dukcapilObj.FamilyCardNo}} </label>
                         <label class="col-md-3 adInsLabel">Birth Place / Birth Date</label>
-                        <label class="col-md-3 adInsLabel">{{Dukcapil.CustName}} </label>
+                        <label class="col-md-3 adInsLabel">{{dukcapilObj.BirthPlace}} / {{dukcapilObj.BirthDt}}</label>
                       </div>
                     </div>
                   </div>
                 </div>
               </ng-template>
-
+            
+              <lib-ucSubsection [id]="'PefId'" [title]="'Pefindo'" [panel]="'Pef'">
+              </lib-ucSubsection>
               <div class="form-body">
-                <h4 class="form-section card-title" translate><i class="ft-file-text"></i>Pefindo </h4>
-                <div class="form-group row">
+                <!-- <div class="form-group row">
                   <label class="col-md-3 adInsLabel">Grade</label>
-                  <label class="col-md-3 adInsLabel">{{Dukcapil.CustName}} </label>
+                  <label class="col-md-3 adInsLabel">{{dukcapilObj.CustName}} </label>
                   <label class="col-md-3 adInsLabel">Trend</label>
-                  <label class="col-md-3 adInsLabel">{{Dukcapil.CustName}} </label>
+                  <label class="col-md-3 adInsLabel">{{dukcapilObj.CustName}} </label>
                 </div>
 
                 <div class="form-group row">
                   <label class="col-md-3 adInsLabel">Checked Date</label>
-                  <label class="col-md-3 adInsLabel">{{Dukcapil.CustName}} </label>
+                  <label class="col-md-3 adInsLabel">{{dukcapilObj.CustName}} </label>
                   <label class="col-md-3 adInsLabel">Worst Grade</label>
-                  <label class="col-md-3 adInsLabel">{{Dukcapil.CustName}} </label>
+                  <label class="col-md-3 adInsLabel">{{dukcapilObj.CustName}} </label>
                 </div>
 
                 <div class="form-group row">
                   <label class="col-md-3 adInsLabel">Creditor Count</label>
-                  <label class="col-md-3 adInsLabel">{{Dukcapil.CustName}} </label>
+                  <label class="col-md-3 adInsLabel">{{dukcapilObj.CustName}} </label>
                   <label class="col-md-3 adInsLabel">Worst Grade Period</label>
-                  <label class="col-md-3 adInsLabel">{{Dukcapil.CustName}} </label>
+                  <label class="col-md-3 adInsLabel">{{dukcapilObj.CustName}} </label>
                 </div>
 
                 <div class="form-group row">
                   <label class="col-md-3 adInsLabel">Probability of Default</label>
-                  <label class="col-md-3 adInsLabel">{{Dukcapil.CustName}} </label>
-                </div>
+                  <label class="col-md-3 adInsLabel">{{dukcapilObj.CustName}} </label>
+                </div> -->
               </div>
 
-              <div class="form-body">
-                <h4 class="form-section card-title" translate><i class="ft-file-text"></i>Slik </h4>
-
-              </div>
-
-              <div class="form-body">
-                <h4 class="form-section card-title" translate><i class="ft-file-text"></i>Profind </h4>
+              <lib-ucSubsection [id]="'SlikId'" [title]="'Slik'" [panel]="'Slik'">
+              </lib-ucSubsection>
+              <div class="form-body" id="Slik">
 
               </div>
 
-              <div class="form-body">
-                <h4 class="form-section card-title" translate><i class="ft-file-text"></i>Negative Asset </h4>
-                <div class="form-group row">
-                  <label class="col-md-3 adInsLabel">Asset Name</label>
-                  <label class="col-md-3 adInsLabel">{{Dukcapil.CustName}} </label>
-                  <label class="col-md-3 adInsLabel">Serial No 1</label>
-                  <label class="col-md-3 adInsLabel">{{Dukcapil.CustName}} </label>
-                </div>
+              <lib-ucSubsection [id]="'ProfId'" [title]="'Prof'" [panel]="'Prof'">
+              </lib-ucSubsection>
+              <div class="form-body" id="Prof">
 
-                <div class="form-group row">
-                  <label class="col-md-3 adInsLabel">Source Type</label>
-                  <label class="col-md-3 adInsLabel">{{Dukcapil.CustName}} </label>
-                  <label class="col-md-3 adInsLabel">Serial No 2</label>
-                  <label class="col-md-3 adInsLabel">{{Dukcapil.CustName}} </label>
-                </div>
+              </div>
 
-                <div class="form-group row">
-                  <label class="col-md-3 adInsLabel">Notes</label>
-                  <label class="col-md-3 adInsLabel">{{Dukcapil.CustName}} </label>
-                  <label class="col-md-3 adInsLabel">Serial No 3</label>
-                  <label class="col-md-3 adInsLabel">{{Dukcapil.CustName}} </label>
-                </div>
+              <lib-ucSubsection [id]="'NegAssetId'" [title]="'Negative Asset'" [panel]="'NegAsset'">
+              </lib-ucSubsection>
+              <div class="form-body" id="NegAsset">
+                <table *ngIf="ListAssetNegative?.length > 0" class="table table-responsive-md text-center table-hover">
+                  <thead>
+                    <tr class="table-header">
+                      <th><span class="thead-header" (click)="searchSort($event)" name='fullAssetName' translate>Asset Name</span>
+                      </th>
+                      <th><span class="thead-header" (click)="searchSort($event)" name='sourceType' translate>Source Type
+                          </span>
+                      </th>
+                      <th><span class="thead-header" (click)="searchSort($event)" name='serialNo1' translate>Serial No 1</span>
+                      </th>
+                      <th><span class="thead-header" (click)="searchSort($event)" name='serialNo2' translate>Serial No 2</span>
+                      </th>
+                      <th><span class="thead-header" (click)="searchSort($event)" name='serialNo3' translate>Serial No 3</span>
+                      </th>
+                      <th><span class="thead-header" (click)="searchSort($event)" name='mobilePhoneNo' translate>Notes                          
+                          </span></th>                      
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of ListAssetNegative">
+                      <td>{{item.FullAssetName}}</td>
+                      <td>{{item.SourceType}</td>
+                      <td>{{item.SerialNo1}}</td>
+                      <td>{{item.SerialNo2}}</td>
+                      <td>{{item.SerialNo3}}</td>
+                      <td>{{item.Notes}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+    
               </div>
 
               <div class="form-body">
-                <h4 class="form-section card-title" translate><i class="ft-file-text"></i>Verification Notes </h4>
+                <h4 class="form-section card-title" translate>Verification Notes </h4>
                 <div class="form-group row">
                   <label class="col-md-3 adInsLabel">Verify By</label>
-                  <label class="col-md-3 adInsLabel">{{Dukcapil.CustName}} </label>
+                  <label class="col-md-3 adInsLabel">{{verfUser}} </label>
                 </div>
 
                 <div class="form-group row">
                   <label class="col-md-3 adInsLabel">Verify Date</label>
-                  <label class="col-md-3 adInsLabel">{{Dukcapil.CustName}} </label>
+                  <label class="col-md-3 adInsLabel">{{verfDt}} </label>
                 </div>
 
                 <div class="form-group row">
                   <label class="col-md-3 adInsLabel">Verify Notes</label>
                   <div class="col-md-3">
-                    <textarea class="form-control adInsInput width-75-per" id="basicTextarea"
-                      formControlName="SalesNotes" rows="3"></textarea>
-                  </div>
+                    <textarea class="form-control adInsInput width-75-per" [(ngModel)]="verfNotes"
+                      rows="3"></textarea>
+                  </div>                  
+                </div>
+                <div class="button-right">
+                  <button type="button" class="btn btn-raised btn-warning mr-1"
+                  [routerLink]="['/FraudDetection/FraudDetectionPaging']" translate>
+                  <i class="fa fa-arrow-circle-left"></i> Cancel
+                </button>
+                  <button type="button" (click)="submit()"class="btn btn-raised btn-primary" translate>
+                    <i class="fa fa-check-square-o"></i> Save
+                  </button>
                 </div>
               </div>
-            </div>
+            
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
