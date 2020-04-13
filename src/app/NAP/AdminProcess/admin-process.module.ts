@@ -11,6 +11,8 @@ import { CustConfirmationPagingComponent } from './cust-confirmation/cust-confir
 import { CustConfirmationDetailComponent } from './cust-confirmation/cust-confirmation-detail/cust-confirmation-detail.component';
 import { CustConfirmationSubjDetailComponent } from './cust-confirmation/cust-confirmation-subj-detail/cust-confirmation-subj-detail.component';
 import { CustConfirmationSubjViewComponent } from './cust-confirmation/cust-confirmation-subj-view/cust-confirmation-subj-view.component';
+import { DeliveryOrderDetailComponent } from "./delivery-order/delivery-order-detail/delivery-order-detail.component";
+import { DeliveryOrderPagingComponent } from "./delivery-order/delivery-order-paging/delivery-order-paging.component";
 
 @NgModule({
   imports: [
@@ -27,6 +29,8 @@ import { CustConfirmationSubjViewComponent } from './cust-confirmation/cust-conf
     CustConfirmationDetailComponent,
     CustConfirmationSubjDetailComponent,
     CustConfirmationSubjViewComponent,
+    DeliveryOrderDetailComponent,
+    DeliveryOrderPagingComponent,
   ],
   providers: [
     NGXToastrService
