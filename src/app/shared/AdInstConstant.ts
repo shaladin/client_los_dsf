@@ -758,5 +758,6 @@ export class AdInsConstant {
 
   // PreGoLive
   public static GetListApprovedByForPreGoLive = environment.losUrl + "/PreGoLive/GetListApprovedByForPreGoLive";
-  public static AddPreGoLive = environment.losUrl + "/PreGoLive/AddPreGoLive"
+  public static AddPreGoLive = environment.losUrl + "/PreGoLive/AddPreGoLive";
+  public static CreateRFAPreGoLive = environment.losUrl + "/PreGoLive/CreateRFAPreGoLive";
 }

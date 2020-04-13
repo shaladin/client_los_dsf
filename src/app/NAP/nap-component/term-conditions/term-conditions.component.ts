@@ -47,12 +47,13 @@ export class TermConditionsComponent implements OnInit {
               PromisedDt: formatDate(this.AppTcList[i].PromisedDt, 'yyyy-MM-dd', 'en-US'),
               CheckedDt: formatDate(this.AppTcList[i].CheckedDt, 'yyyy-MM-dd', 'en-US'),
               Notes: this.AppTcList[i].Notes,
+              RowVersion : this.AppTcList[i].RowVersion
             }) as FormGroup;
 
             if (this.AppTcList[i].IsMandatory == true) {
               TCDetail.controls.PromisedDt.setValidators([Validators.required]);
             }
-            if (this.AppTcList[i].IsChecked == false || this.AppTcList[i].IsMandatory == true) {
+            if (this.AppTcList[i].IsChecked == false && this.AppTcList[i].IsMandatory == true) {
               this.IsCheckedAll = false;
             }
             if (this.AppTcList[i].IsChecked == false) {

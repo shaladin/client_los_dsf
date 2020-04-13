@@ -20,6 +20,7 @@ export class PreGoLiveComponent implements OnInit {
 
   AppId: any;
   AgrmntId: any;
+  AgrmntNo : any;
   result: any;
   viewObj: string;
   appTC: any;
@@ -59,6 +60,7 @@ export class PreGoLiveComponent implements OnInit {
           EffectiveDt: formatDate(this.result.EffectiveDt, 'yyyy-MM-dd', 'en-US'),
         })
         this.AgrmntId = this.result.AgrmntId;
+        this.AgrmntNo = this.result.AgrmntNo;
         console.log(this.AgrmntId);
       },
       (error) => {
@@ -68,6 +70,10 @@ export class PreGoLiveComponent implements OnInit {
   }
   ReceiveIsChecked(ev) {
     this.IsCheckedAll = ev;
+  }
+
+  RFA(){
+    this.router.navigate(["/AdminProcess/PreGoLive/RequestApproval"], { queryParams: { "AppId": this.AppId, "AgrmntNo" : this.AgrmntNo} });
   }
 
   SaveForm() {
@@ -88,9 +94,12 @@ export class PreGoLiveComponent implements OnInit {
       this.appTC.PromisedDt = this.MainInfoForm.value.TCList[i].PromisedDt;
       this.appTC.CheckedDt = this.MainInfoForm.value.TCList[i].CheckedDt;
       this.appTC.Notes = this.MainInfoForm.value.TCList[i].Notes;
+      this.appTC.RowVersion = this.MainInfoForm.value.TCList[i].RowVersion;
       this.listAppTCObj.AppTCObj.push(this.appTC);
+      
     }
-
+      console.log("isi nya gan");
+    console.log(this.listAppTCObj);
     this.AgrmntObj = new AgrmntObj();
     this.AgrmntObj.AgrmntId = this.AgrmntId;
     this.AgrmntObj.EffectiveDt = this.MainInfoForm.controls.EffectiveDt.value;
@@ -99,16 +108,17 @@ export class PreGoLiveComponent implements OnInit {
     this.PreGoLiveMainObj.AgrmntId = this.AgrmntId;
     this.PreGoLiveMainObj.AgrmntDt = this.MainInfoForm.controls.AgrmntCreatedDt.value;
     this.PreGoLiveMainObj.EffectiveDt = this.MainInfoForm.controls.EffectiveDt.value;
+    this.PreGoLiveMainObj.Notes = this.MainInfoForm.controls.Notes.value;
 
     this.PreGoLiveObj.rAgrmntTC = this.AgrmntObj;
     this.PreGoLiveObj.rAppTcObj = this.listAppTCObj.AppTCObj;
     this.PreGoLiveObj.preGoLiveObj = this.PreGoLiveMainObj;
-    
+
     console.log(this.PreGoLiveObj);
 
     this.http.post(AdInsConstant.AddPreGoLive, this.PreGoLiveObj).subscribe(
       (response) => {
-        this.router.navigateByUrl('/bank/paging');
+        this.router.navigateByUrl('/AdminProcess/PreGoLive/Paging');
         this.toastr.successMessage(response['message']);
       },
       (error) => {

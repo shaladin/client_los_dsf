@@ -1,0 +1,36 @@
+<div formArrayName="{{identifier}}">
+  <table class="table table-responsive-md text-center table-hover">
+    <thead>
+      <tr class="table-header">
+        <th><span translate class="thead-header text-left">Document Name</span></th>
+        <th><span translate class="thead-header text-left">Prior To</span></th>
+        <th><span translate class="thead-header text-left">Required</span></th>
+        <th><span translate class="thead-header text-left">Check</span></th>
+        <th><span translate class="thead-header">Promise Date</span></th>
+        <th><span translate class="thead-header">Expired Date</span></th>
+        <th><span translate class="thead-header">Notes</span></th>
+        
+      </tr>
+    </thead>
+    <tbody>
+      <tr [formGroupName]="i" *ngFor="let item of parentForm.controls[identifier].controls; let i = index">
+        <td class="text-left">{{parentForm.controls[identifier].controls[i].controls.TcName.value}}</td>
+        <td class="text-left">{{parentForm.controls[identifier].controls[i].controls.PriorTo.value}}</td>
+        <td class="text-left">{{parentForm.controls[identifier].controls[i].controls.IsMandatory.value}}</td>
+        <td class="text-left"><input type="checkbox" class="border-primary" (change)="changeValidation(i)"
+            formControlName="IsChecked"></td>
+        <td><input type="date" class="form-control" formControlName="PromisedDt"
+            [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier].controls[i].controls.PromisedDt.invalid}">
+          <lib-uc-show-errors [control]="parentForm.controls[identifier].controls[i].controls.PromisedDt" [submit]="enjiForm.submitted">
+          </lib-uc-show-errors>
+        </td>
+        <td><input type="date" class="form-control" formControlName="ExpiredDt"
+            [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier].controls[i].controls.ExpiredDt.invalid}">
+          <lib-uc-show-errors [control]="parentForm.controls[identifier].controls[i].controls.ExpiredDt" [submit]="enjiForm.submitted">
+          </lib-uc-show-errors>
+        </td>
+        <td><textarea class="form-control" formControlName="Notes"></textarea></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
