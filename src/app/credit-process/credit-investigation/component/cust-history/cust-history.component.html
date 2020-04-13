@@ -1,0 +1,98 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header header-title">
+        <div class="row">
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="px-3">
+          <h4 class="form-section card-title" translate><i class="ft-file-text"></i>Existing Agreement</h4>
+          <table class="table table-responsive-md text-center table-hover">
+            <thead>
+              <tr class="table-header">
+                <th><span translate class="thead-header">No</span></th>
+                <th><span translate class="thead-header" name='AgrmntNo'>Agreement No</span>
+                </th>
+                <th><span translate class="thead-header" name='ProdOffering'>Product Offering</span>
+                </th>
+                <th><span translate class="thead-header" name='GoLiveDt'>Go Live Date</span>
+                <th><span translate class="thead-header" name='InstallmentAmt'>Installment Amount</span>
+                </th>
+                <th><span translate class="thead-header" name='OSAR'>OS AR</span>
+                </th>
+                <th><span translate class="thead-header" name='Sales'>Sales</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of ExstAgrmnt; let i = index">
+                <td>{{i+1}}</td>
+                <td>{{item.AgrmntNo}}</td>
+                <td>{{item.ProdOfferingName}}</td>
+                <td>{{item.GoLiveDt}}</td>
+                <td>{{item.InstAmt}}</td>
+                <td>{{item.TotalInsCustAmt}}</td>
+                <td>{{item.SalesName}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <h4 class="form-section card-title" translate><i class="ft-file-text"></i>Application Reject</h4>
+          <table class="table table-responsive-md text-center table-hover">
+            <thead>
+              <tr class="table-header">
+                <th><span translate class="thead-header">No</span></th>
+                <th><span translate class="thead-header" name='AgrmntNo'>Application No</span>
+                </th>
+                <th><span translate class="thead-header" name='ProdOffering'>Product Offering</span>
+                </th>
+                <th><span translate class="thead-header" name='GoLiveDt'>Sales</span>
+                <th><span translate class="thead-header" name='InstallmentAmt'>Total NTF</span>
+                </th>
+                <th><span translate class="thead-header" name='OSAR'>View Approval</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of AppRjct; let i = index">
+                <td>{{i+1}}</td>
+                <td>{{item.AppNo}}</td>
+                <td>{{item.ProdOfferingName}}</td>
+                <td>{{item.SalesName}}</td>
+                <td>{{item.TotalNTF}}</td>
+                <td>View</td>
+              </tr>
+            </tbody>
+          </table>
+          <h4 class="form-section card-title" translate><i class="ft-file-text"></i>Application In Process</h4>
+          <table class="table table-responsive-md text-center table-hover">
+            <thead>
+              <tr class="table-header">
+                <th><span translate class="thead-header">No</span></th>
+                <th><span translate class="thead-header" name='AgrmntNo'>Application No</span>
+                </th>
+                <th><span translate class="thead-header" name='ProdOffering'>Product Offering</span>
+                </th>
+                <th><span translate class="thead-header" name='GoLiveDt'>Sales</span>
+                <th><span translate class="thead-header" name='InstallmentAmt'>Total NTF</span>
+                </th>
+                <th><span translate class="thead-header" name='OSAR'>Application Step</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of AppPrcs; let i = index">
+                <td>{{i+1}}</td>
+                <td>{{item.AppNo}}</td>
+                <td>{{item.ProdOfferingName}}</td>
+                <td>{{item.SalesName}}</td>
+                <td>{{item.TotalNTF}}</td>
+                <td>{{item.AppCurrStep}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

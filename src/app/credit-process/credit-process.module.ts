@@ -22,6 +22,8 @@ import { SharingComponentModule } from "../shared/sharingcomponent.module";
 import { NGXToastrService } from "../components/extra/toastr/toastr.service";
 import { CreditInvestigationDetailComponent } from "./credit-investigation/credit-investigation-detail/credit-investigation-detail.component";
 import { ViewAppCustDataComponent } from "./credit-investigation/component/view-app-cust-data/view-app-cust-data.component";
+import { CustHistoryComponent } from './credit-investigation/component/cust-history/cust-history.component';
+import { ViewApprovalComponent } from './credit-investigation/component/cust-history/view-approval/view-approval.component';
 export const customCurrencyMaskConfig = {     
     align: "left",     
     allowNegative: true,     
@@ -37,7 +39,9 @@ export const customCurrencyMaskConfig = {
 @NgModule({
     declarations: [
         CreditInvestigationDetailComponent,
-        ViewAppCustDataComponent
+        ViewAppCustDataComponent,
+        CustHistoryComponent,
+        ViewApprovalComponent
         ],
     imports: [ 
         CreditProcessRoutingModule,

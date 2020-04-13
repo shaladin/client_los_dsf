@@ -41,7 +41,9 @@ export class AdInsConstant {
   // App
   public static AddApp = "/Application/AddApp";
   public static EditApp = "/Application/EditApp";
-  public static GetAppById = "/Application/GetAppById";  
+  public static GetAppById = "/Application/GetAppById";
+  public static GetAppByCustNoAndIsAppInitDone =environment.losUrl +  "/Application/GetAppByCustNoAndIsAppInitDone"; 
+  public static GetAppByCustNoAndAppStat = environment.losUrl + "/Application/GetAppByCustNoAndAppStat"; 
   public static GetAppByIds = environment.losUrl + "/Application/GetAppById"; 
   public static EditAppAddAppCross = "/Application/EditAppAddAppCross";  
   
@@ -605,6 +607,7 @@ export class AdInsConstant {
   public static ResumeWorkflowPurchaseOrder = environment.losUrl + "/PurchaseOrderH/ResumeWorkflowPurchaseOrder";
   //AGRMNT
   public static GetAgrmntByAgrmntId = environment.losUrl + "/Agrmnt/GetAgrmntByAgrmntId";
+  public static GetAgrmntByCustNo = environment.losUrl + "/Agrmnt/GetAgrmntByCustNo";
 
   //REF TC
   public static GetRefTcByCode = environment.FoundationR3Url + "/RefTc/GetRefTcByCode";
