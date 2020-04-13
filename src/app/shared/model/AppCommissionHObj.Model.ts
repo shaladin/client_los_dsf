@@ -16,6 +16,9 @@ export class AppCommissionHObj{
     PenaltyAmt: any;
     TaxpayerNo: any;
     ListappCommissionDObj: Array<any>;
+    RowVersion: any;
 
-    constructor(){}
+    constructor(){
+        this.AppCommissionHId = 0;
+    }
 }
