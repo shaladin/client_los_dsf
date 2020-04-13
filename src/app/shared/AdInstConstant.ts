@@ -116,7 +116,7 @@ export class AdInsConstant {
 
   //LOB CODE
   public static LobCodeRFN4W = "RFN4W";
-
+  
   //Asset Master
   public static GetAssetMasterTypeByFullAssetCode = environment.FoundationR3Url + "/AssetMaster/GetAssetMasterTypeByFullAssetCode";
   public static GetAssetMasterForLookupEmployee = environment.FoundationR3Url + "/AssetMaster/GetAssetMasterForLookupEmployee";
@@ -649,7 +649,7 @@ export class AdInsConstant {
   public static GetAllAssetDataByAppId = "http://localhost:5001/AppAsset/GetAllAssetDataByAppId";
   public static AddEditAllAssetData = "http://localhost:5001/AppAsset/AddEditAllAssetData";
   // Tax
-  public static AppCom = "APP_COM";
+  public static AppCom = "APP_COM"; 
   public static ExchangeRateAmt = "1";
   public static TaxTypeCode = "WHT";
   public static VATTypeCode = "VAT";
@@ -767,7 +767,6 @@ export class AdInsConstant {
   public static MrFeeTypeCodeAdmin = "ADMIN";
   public static MrFeeTypeCodeProvision = "PROVISION";
 
-
   //App Reserved Fund
   public static AddEditAppReservedFund = environment.losUrl + "/AppReservedFund/AddEditAppReservedFund";
   public static GetListAppReservedFundByAppId = environment.losUrl + "/AppReservedFund/GetListAppReservedFundByAppId";
@@ -797,8 +796,7 @@ export class AdInsConstant {
   public static GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode = "/ProductOffering/GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode";
 
   // ASSET TYPE
-  public static GetAssetTypeById = environment.FoundationR3Url + "/AssetType/GetAssetTypeById";
-
+  public static GetAssetTypeById = environment.FoundationR3Url + "/AssetType/GetAssetTypeById"
   //App Crd Invstg
   public static AddAppCrdInvstg = environment.losUrl + "/AppCrdInvstgH/AddAppCrdInvstg";
 
