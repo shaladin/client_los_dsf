@@ -472,7 +472,7 @@ export class AdInsConstant {
   // Vendor
   public static GetListVendorBankAccByVendorId = "/VendorBankAcc/GetListVendorBankAccByVendorId";
   public static GetListVendorBankAccByVendorCode = "/VendorBankAcc/GetListVendorBankAccByVendorCode";
-  public static GetListKeyValueByCategoryCodeAndOfficeCode = environment.losUrl + "/Vendor/GetListKeyValueByCategoryCodeAndOfficeCode";
+  public static GetListKeyValueByCategoryCodeAndOfficeCode = environment.FoundationR3Url + "/Vendor/GetListKeyValueByCategoryCodeAndOfficeCode";
   public static GetVendorByVendorCode = environment.FoundationR3Url + "/Vendor/GetVendorByVendorCode";
   public static GetListVendorEmpByVendorId = environment.FoundationR3Url + "/VendorEmp/GetListVendorEmpByVendorId";
   public static GetListVendorEmpByVendorIdAndPositionCodes = environment.losUrl + "/VendorEmp/GetListVendorEmpByVendorIdAndPositionCodes";

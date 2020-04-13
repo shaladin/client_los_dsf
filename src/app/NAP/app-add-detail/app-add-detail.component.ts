@@ -5,11 +5,12 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { WizardComponent } from 'angular-archwizard';
 
 @Component({
   selector: 'app-app-add-detail',
   templateUrl: './app-add-detail.component.html',
-  providers: [NGXToastrService]
+  providers: [NGXToastrService, WizardComponent]
 })
 export class AppAddDetailComponent implements OnInit {
 
@@ -33,7 +34,8 @@ export class AppAddDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private http: HttpClient) {
+    private http: HttpClient,
+    private wizard: WizardComponent) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -91,5 +93,10 @@ export class AppAddDetailComponent implements OnInit {
       default:
         break;
     }
+  }
+
+  NextTab(){
+    console.log(this.wizard);
+    this.wizard.goToNextStep();
   }
 }
