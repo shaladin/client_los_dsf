@@ -6,6 +6,8 @@ export class LeadFraudVerfObj{
     VerifyDt:any;
     VerifyStat:any;
     Notes : any; 
+    RowVersion: any;
+    constructor() { this.LeadFraudVerfId = 0, this.RowVersion = "" }
 }      
  
  

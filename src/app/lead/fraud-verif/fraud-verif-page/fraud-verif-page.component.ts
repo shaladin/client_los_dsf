@@ -9,14 +9,16 @@ import { LeadAssetObj } from 'app/shared/model/LeadAssetObj.Model';
 import { NegativeAssetCheckObj } from 'app/shared/model/NegativeAssetCheckObj.Model';
 import { LeadFraudVerfObj } from 'app/shared/model/LeadFraudVerfObj.model';
 import { _ } from 'core-js';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
   selector: 'app-fraud-verif-page',
-  templateUrl: './fraud-verif-page.component.html'
+  templateUrl: './fraud-verif-page.component.html',
+  providers: [NGXToastrService]
 })
 export class FraudVerifPageComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {
+  constructor(private route: ActivatedRoute, private http: HttpClient,private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       this.LeadId = params['LeadId'];
     });
@@ -120,6 +122,8 @@ reject(){
   // this.leadFraudVerfObj.Notes = ;
   this.http.post(this.AddLeadFraudVerfUrl, this.leadFraudVerfObj).subscribe(
     (response) => {
+      
+      this.toastr.successMessage(response["message"]);
     });
 }
 
@@ -130,6 +134,8 @@ verify(){
   // this.leadFraudVerfObj.Notes = ;
   this.http.post(this.AddLeadFraudVerfUrl, this.leadFraudVerfObj).subscribe(
     (response) => {
+      
+      this.toastr.successMessage(response["message"]);
     });
 }
 
