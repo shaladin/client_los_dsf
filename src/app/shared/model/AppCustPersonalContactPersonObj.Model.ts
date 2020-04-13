@@ -31,6 +31,7 @@ export class AppCustPersonalContactPersonObj {
     City: any; 
     Zipcode: any; 
     SubZipcode: any;
+    FullAddr: string;
 
 constructor() { this.AppCustPersonalContactPersonId = 0; }
 }

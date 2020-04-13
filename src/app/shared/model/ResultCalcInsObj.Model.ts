@@ -4,6 +4,8 @@ export class ResultCalcInsObj {
     InsCoverage: Array<ResultCalcInsMainCvgObj>;
     TotalMainPremiAmt: number;
     TotalAdditionalPremiAmt: number;
+    TotalMainPremiToInscoAmt: number;
+    TotalAdditionalPremiToInscoAmt: number;
     TotalFeeAmt: number;
 
 constructor() {
