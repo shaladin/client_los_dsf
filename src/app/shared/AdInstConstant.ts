@@ -458,6 +458,7 @@ export class AdInsConstant {
   public static GetLeadByLeadNo = environment.losUrl + "/Lead/GetLeadByLeadNo";
   public static GetLeadForUpdateByLeadId = environment.losUrl + "/Lead/GetLeadForUpdateByLeadId";
   public static GetLeadForUpdateByLeadNo = environment.losUrl + "/Lead/GetLeadForUpdateByLeadNo";
+  public static SubmitWorkflowLeadInput = "http://localhost:5001" + "/Lead/SubmitWorkflowLeadInput";
  
   //GUARANTOR
   public static GetListAppGuarantor = environment.losUrl + "/AppGuarantor/GetListAppGuarantor"
@@ -591,8 +592,8 @@ export class AdInsConstant {
   public static ResumeWorkflowPurchaseOrder = environment.losUrl + "/PurchaseOrderH/ResumeWorkflowPurchaseOrder";
 
   // LEAD
-  public static AddEditLeadCustPersonal = environment.losUrl + "/LeadCust/AddEditLeadCustPersonal";
-  public static AddEditLeadData = environment.losUrl + "/Lead/AddEditLeadData";
+  public static AddEditLeadCustPersonal = "http://localhost:5001" + "/LeadCust/AddEditLeadCustPersonal";
+  public static AddEditLeadData = "http://localhost:5001" + "/Lead/AddEditLeadData";
   
   //LEAD CANCEL
   public static GetListLeadForLeadCancelByListLeadId = environment.losUrl + "/Lead/GetListLeadForLeadCancelByListLeadId";
