@@ -25,7 +25,7 @@ import { AssetMasterObj } from 'app/shared/model/AssetMasterObj.Model';
 
 export class LeadUpdateLeadDataComponent implements OnInit {
   typePage: string;
-  WfTaskListId: any;
+  //WfTaskListId: any;
   LeadId: any;
   assetConditionObj: any;
   returnAssetConditionObj: any;
@@ -91,7 +91,10 @@ export class LeadUpdateLeadDataComponent implements OnInit {
         }
         if (params["mode"] != null) {
           this.typePage = params["mode"];
-      }
+        }
+        // if (params["WfTaskListId"] != null) {
+        //   this.WfTaskListId = params["WfTaskListId"];
+        // }
     });
   }
 
@@ -415,7 +418,7 @@ export class LeadUpdateLeadDataComponent implements OnInit {
       this.setLeadAsset();
       this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
       this.setLeadApp();
-      this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
+      //this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
       this.http.post(this.editLeadData, this.leadInputLeadDataObj).subscribe(
         (response) => {
           console.log(response);
@@ -432,7 +435,7 @@ export class LeadUpdateLeadDataComponent implements OnInit {
       this.leadInputLeadDataObj = new LeadInputLeadDataObj();
       this.setLeadAsset();
       this.setLeadApp();
-      this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
+      //this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
       this.http.post(this.editLeadData, this.leadInputLeadDataObj).subscribe(
         (response) => {
           console.log(response);

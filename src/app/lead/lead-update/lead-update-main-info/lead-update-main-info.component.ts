@@ -108,9 +108,9 @@ export class LeadUpdateMainInfoComponent implements OnInit {
         if (params["LeadId"] != null) {
           this.LeadId = params["LeadId"];
         }
-        if (params["WfTaskListId"] != null) {
-          this.WfTaskListId = params["WfTaskListId"];
-        }
+        // if (params["WfTaskListId"] != null) {
+        //   this.WfTaskListId = params["WfTaskListId"];
+        // }
     });
   }
 
@@ -408,7 +408,7 @@ copyLead(){
       this.http.post(this.editLead, this.leadObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["/Lead/LeadUpdate/Page"], { queryParams: { "LeadId": this.LeadId, "WfTaskListId": this.WfTaskListId, "mode": "edit" } });
+          this.router.navigate(["/Lead/LeadUpdate/Page"], { queryParams: { "LeadId": this.LeadId, "mode": "edit" } });
           console.log(response)
         },
         (error) => {

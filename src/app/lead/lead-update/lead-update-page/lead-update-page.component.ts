@@ -23,9 +23,9 @@ export class LeadUpdatePageComponent implements OnInit {
       if (params["LeadId"] != null) {
         this.LeadId = params["LeadId"];
       }
-      if (params["WfTaskListId"] != null) {
-        this.WfTaskListId = params["WfTaskListId"];
-      }
+      // if (params["WfTaskListId"] != null) {
+      //   this.WfTaskListId = params["WfTaskListId"];
+      // }
     });
   }
 

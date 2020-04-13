@@ -130,9 +130,9 @@ export class LeadUpdateCustDataComponent implements OnInit {
         if (params["mode"] != null) {
           this.typePage = params["mode"];
         }
-        if (params["WfTaskListId"] != null) {
-          this.WfTaskListId = params["WfTaskListId"];
-        }
+        // if (params["WfTaskListId"] != null) {
+        //   this.WfTaskListId = params["WfTaskListId"];
+        // }
     });
   }
 
@@ -484,7 +484,7 @@ export class LeadUpdateCustDataComponent implements OnInit {
       this.setLeadCustPersonalJobData();
       this.leadInputObj.LeadCustPersonalFinDataObj.RowVersion = this.resLeadCustPersonalFinDataObj.RowVersion;
       this.setLeadCustPersonalFinData();
-      this.leadInputObj.WfTaskListId = this.WfTaskListId;
+      //this.leadInputObj.WfTaskListId = this.WfTaskListId;
 
       // console.log("ccc");
       // console.log(this.leadInputObj)
@@ -514,7 +514,7 @@ export class LeadUpdateCustDataComponent implements OnInit {
       this.setResidenceAddr();
       this.setLeadCustPersonalJobData();
       this.setLeadCustPersonalFinData();
-      this.leadInputObj.WfTaskListId = this.WfTaskListId;
+      //this.leadInputObj.WfTaskListId = this.WfTaskListId;
 
       // console.log("ccc");
       // console.log(this.leadInputObj)

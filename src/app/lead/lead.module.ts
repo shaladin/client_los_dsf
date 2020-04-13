@@ -32,8 +32,7 @@ import { LeadInputPageComponent } from "./lead-input/lead-input-page/lead-input-
 import { LeadInputMainInfoComponent } from "./lead-input/lead-input-main-info/lead-input-main-info.component";
 import { LeadViewHeaderComponent } from "./lead-input/lead-view-header/lead-view-header.component";
 import { LeadCancelComponent } from './lead-cancel/lead-cancel/lead-cancel.component';
-import { LeadCancelConfirmComponent } from './lead-cancel/lead-cancel-confirm/lead-cancel-confirm.component';
-import { LeadPagingComponent } from './lead-paging/lead-paging.component';
+import { LeadCancelConfirmComponent } from './lead-cancel/lead-cancel-confirm/lead-cancel-confirm.component'; 
 import { LeadViewComponent } from './lead-view/lead-view.component';
 import { ViewCustomerDataComponent } from './lead-view/view-customer-data/view-customer-data.component';
 import { TeleVerifPagingComponent } from './tele-verif/tele-verif-paging/tele-verif-paging.component';
@@ -45,6 +44,10 @@ import { LeadUpdatePageComponent } from "./lead-update/lead-update-page/lead-upd
 import { LeadUpdateMainInfoComponent } from "./lead-update/lead-update-main-info/lead-update-main-info.component";
 import { LeadUpdateCustDataComponent } from "./lead-update/lead-update-cust-data/lead-update-cust-data.component";
 import { LeadUpdateLeadDataComponent } from "./lead-update/lead-update-lead-data/lead-update-lead-data.component";
+import { ViewLeadDataComponent } from './lead-view/view-lead-data/view-lead-data.component'; 
+import { FraudVerifPagingComponent } from './fraud-verif/fraud-verif-paging/fraud-verif-paging.component';
+import { FraudVerifPageComponent } from './fraud-verif/fraud-verif-page/fraud-verif-page.component';
+import { LeadInquiryComponent } from './lead-inquiry/lead-inquiry.component';
 
 @NgModule({
   imports: [
@@ -78,8 +81,7 @@ import { LeadUpdateLeadDataComponent } from "./lead-update/lead-update-lead-data
     LeadDataComponent,
     LeadVerifComponent,
     LeadCancelComponent,
-    LeadCancelConfirmComponent,
-    LeadPagingComponent,
+    LeadCancelConfirmComponent, 
     LeadViewComponent,
     ViewCustomerDataComponent,
     LeadInputComponent,
@@ -95,8 +97,12 @@ import { LeadUpdateLeadDataComponent } from "./lead-update/lead-update-lead-data
     LeadUpdatePageComponent,
     LeadUpdateMainInfoComponent,
     LeadUpdateCustDataComponent,
-    LeadUpdateLeadDataComponent
-    // ArchwizardModule,
+    LeadUpdateLeadDataComponent,
+    ViewLeadDataComponent, 
+    FraudVerifPagingComponent, 
+    FraudVerifPageComponent, 
+    LeadInquiryComponent,
+    
   ],
 })
 
