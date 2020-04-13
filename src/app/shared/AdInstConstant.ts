@@ -796,7 +796,7 @@ export class AdInsConstant {
   public static GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode = "/ProductOffering/GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode";
 
   // ASSET TYPE
-  public static GetAssetTypeById = environment.FoundationR3Url + "/AssetType/GetAssetTypeById"
+  public static GetAssetTypeById = environment.FoundationR3Url + "/AssetType/GetAssetTypeById";
   //App Crd Invstg
   public static AddAppCrdInvstg = environment.losUrl + "/AppCrdInvstgH/AddAppCrdInvstg";
 
