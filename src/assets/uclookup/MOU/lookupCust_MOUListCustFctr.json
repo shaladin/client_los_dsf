@@ -1,0 +1,95 @@
+{
+    "title": "Lookup - Customer",
+    "component": [
+        {
+            "type": "textbox",
+            "name": "A.CUST_NO",
+            "id": "CustNo",
+            "value": "",
+            "label": "Customer No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "A.CUST_NAME",
+            "id": "CustName",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "name": "A.MR_CUST_TYPE_CODE", 
+            "id": "CustTypeCodeId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "datatype": "text",
+            "isFromURL": true,
+            "isSelectOne": false,
+            "url": "http://r3app-server/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
+            "label": "Type",
+            "criteriaPropName" : "RefMasterTypeCode",
+            "criteriaPropValue" : "CUST_TYPE",
+            "items": [],
+            "itemsUrl": []
+        }
+    ],
+    "querystring": {
+        "select": "SELECT A.CUST_NO AS custNo, A.CUST_NAME AS custName, A.MR_CUST_TYPE_CODE AS mrCustTypeCode, B.DESCR AS custTypeView, A.CUST_ID AS custId",
+        "from": "FROM CUST AS A WITH(NOLOCK) INNER JOIN REF_MASTER AS B WITH(NOLOCK) ON A.MR_CUST_TYPE_CODE = B.MASTER_CODE AND B.REF_MASTER_TYPE_CODE = 'CUST_TYPE'"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Customer No",
+            "name": "A.CUST_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Customer Name",
+            "name": "A.CUST_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Customer Type",
+            "name": "A.MR_CUST_TYPE_CODE"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Action"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "custNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "custName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "custTypeView"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "select",
+                    "property": "custId"
+                }
+            ]
+        }
+    ],
+    "propertyId": "custId",
+    "propertyName": "custName"
+}

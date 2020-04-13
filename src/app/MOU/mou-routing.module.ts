@@ -18,6 +18,7 @@ import { MouApprovalGeneralComponent } from './mou-customer/mou-customer-approva
 import { MouApprovalFactoringComponent } from './mou-customer/mou-customer-approval/mou-approval-factoring/mou-approval-factoring.component';
 import { MouRequestAddcollComponent } from './mou-customer/mou-request/mou-request-addcoll/mou-request-addcoll.component';
 import { MouCustomerDetailComponent } from './mou-customer-request/mou-customer-detail/mou-customer-detail.component';
+import { MouCustomerInquiryComponent } from './mou-customer/mou-customer-inquiry/mou-customer-inquiry.component';
 
 const routes: Routes = [
   {
@@ -149,6 +150,13 @@ const routes: Routes = [
           title: 'MOU Additional Collateral'
         }
       },
+      {
+        path: "Cust/Inquiry",
+        component: MouCustomerInquiryComponent,
+        data: {
+          title: "MOU Inquiry"
+        }
+      }
     ]
   }
 ];

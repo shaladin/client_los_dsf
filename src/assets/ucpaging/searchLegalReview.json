@@ -56,13 +56,48 @@
       "datatype": "text",
       "isFromURL": true,
       "isSelectOne": false,
-      "url": "http://localhost:5001/MouCust/GetListKeyValueMouType",
+      "url": "http://r3app-server.ad-ins.com/LOS/MouCust/GetListKeyValueMouType",
       "label": "Mou Type",
       "items": [],
       "itemsUrl": []
+    },
+    {
+      "type": "dropdown",
+      "name": "WTL.CLAIM_STAT",
+      "id": "ActiveStatusId",
+      "label": "TASK CLAIM STATUS",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": false,
+      "isSelectOne": false,
+      "items": [
+        {
+          "key": "CLAIMED",
+          "value": "CLAIMED"
+        },
+        {
+          "key": "UNCLAIMED",
+          "value": "UNCLAIMED"
+        }
+      ],
+      "itemsUrl": []
+    },
+    {
+      "type": "textbox",
+      "name": "WTL.USERNAME",
+      "id": "ClaimById",
+      "value": "",
+      "label": "CLAIM BY",
+      "placeholder": "Placeholder"
     }
   ],
   "headerList": [
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Claim By",
+      "name": "ClaimBy"
+    },
     {
       "type": "sort",
       "position": "center",
@@ -147,7 +182,7 @@
     }
   ],
   "querystring": {
-    "select": "SELECT SELECT WTL.WF_TASK_LIST_ID AS WfTaskListId, WTL.CLAIM_STAT AS ClaimStat, WTL.USERNAME AS ClaimBy, WTL.OFFICE_CODE AS OfficeCode, MC.MOU_CUST_NO AS MouCustNo, MC.CUST_NAME AS CustName, MC.MOU_CUST_DT AS MouCustDt,MC.END_DT AS EndDt, MC.PLAFOND_AMT AS PlafondAmt, MC.IS_REVOLVING AS IsRevolving, MC.REF_NO AS RefNo, MC.MR_MOU_TYPE_CODE AS MrMouTypeCode, MC.MOU_CUST_ID AS MouCustId",
+    "select": "SELECT WTL.WF_TASK_LIST_ID AS WfTaskListId, WTL.CLAIM_STAT AS ClaimStat, WTL.USERNAME AS ClaimBy, WTL.OFFICE_CODE AS OfficeCode, MC.MOU_CUST_NO AS MouCustNo, MC.CUST_NAME AS CustName, MC.MOU_CUST_DT AS MouCustDt,MC.END_DT AS EndDt, MC.PLAFOND_AMT AS PlafondAmt, MC.IS_REVOLVING AS IsRevolving, MC.REF_NO AS RefNo, MC.MR_MOU_TYPE_CODE AS MrMouTypeCode, MC.MOU_CUST_ID AS MouCustId",
     "from": "FROM dbo.MOU_CUST MC WITH(NOLOCK) JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON MC.MOU_CUST_NO = WTL.TRANSACTION_CODE AND WTL.ACT_CODE = 'LEGAL_RVW'"
   },
   "bodyList": [
@@ -156,6 +191,11 @@
       "position": "left",
       "label": "Claim By",
       "name": "ClaimBy"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "ClaimBy"
     },
     {
       "type": "text",
