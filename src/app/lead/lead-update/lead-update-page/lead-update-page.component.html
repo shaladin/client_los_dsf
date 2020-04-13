@@ -1,0 +1,37 @@
+<div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="px-3">
+          <div class="addEdit">
+            <form class="form form-horizontal">
+              <div class="form-body">
+                <h4 class="form-section card-title" translate> Lead Update
+                </h4>
+              </div>
+            </form>
+            
+             <app-lead-view-header> </app-lead-view-header>
+         
+          </div>
+          <aw-wizard #wizard navBarLayout="large-empty-symbols" [disableNavigationBar]=true [awNavigationMode]
+            navigateBackward="allow" navigateForward="allow">
+
+            <aw-wizard-step [stepTitle]="'Customer Data'"
+              [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }" 
+              (stepEnter)="EnterTab('Customer')">
+              <app-lead-update-cust-data *ngIf="isCustomer == true" [LeadId]="LeadId">
+              </app-lead-update-cust-data>
+            </aw-wizard-step>
+
+            <aw-wizard-step [stepTitle]="'Lead Data'" 
+            [navigationSymbol]="{ symbol: '&#xf0b1;', fontFamily: 'FontAwesome' }"
+              (stepEnter)="EnterTab('Lead')">
+              <app-lead-update-lead-data *ngIf="isLead == true">
+              </app-lead-update-lead-data>
+            </aw-wizard-step>
+
+          </aw-wizard>
+        </div>
+      </div>
+    </div>
+  </div>

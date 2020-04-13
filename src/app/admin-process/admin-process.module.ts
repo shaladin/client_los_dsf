@@ -10,8 +10,6 @@ import { UcSubsectionModule } from "@adins/uc-subsection";
 import { UcgridfooterModule } from "@adins/ucgridfooter";
 import { UcShowErrorsModule } from "@adins/uc-show-errors";
 import { AdminProcessRoutingModule } from "./admin-process-routing.module";
-import { DeliveryOrderDetailComponent } from "./delivery-order/delivery-order-detail/delivery-order-detail.component";
-import { DeliveryOrderPagingComponent } from "./delivery-order/delivery-order-paging/delivery-order-paging.component";
 import { PreGoLivePagingComponent } from './pre-go-live/pre-go-live-paging/pre-go-live-paging.component';
 import { PreGoLiveComponent } from './pre-go-live/pre-go-live/pre-go-live.component';
 import { UcgridviewModule } from "@adins/ucgridview";
@@ -57,8 +55,6 @@ import { NapComponentModule } from "app/NAP/nap-component/nap-component.module";
     ApplicationAgreementCancellationDetailComponent,
     AgrmntActivationPagingComponent,
     AgrmntActivationDetailComponent,
-    DeliveryOrderDetailComponent,
-    DeliveryOrderPagingComponent,
     OfferingValidityCheckingApprovalPagingComponent,
     OfferingValidityCheckingApprovalDetailComponent,
     DocSignerDetailComponent,
