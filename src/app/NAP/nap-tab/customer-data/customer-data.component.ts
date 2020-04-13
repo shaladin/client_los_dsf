@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -44,6 +44,8 @@ export class CustomerDataComponent implements OnInit {
   });
 
   @Input() appId: any;
+  @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
+  
   refMasterObj = {
     RefMasterTypeCode: "",
   };
@@ -137,6 +139,7 @@ export class CustomerDataComponent implements OnInit {
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
+          this.callbackSubmit.emit();
         },
         (error) => {
           console.log(error);
@@ -152,6 +155,7 @@ export class CustomerDataComponent implements OnInit {
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
+          this.callbackSubmit.emit();
         },
         (error) => {
           console.log(error);

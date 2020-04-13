@@ -12,14 +12,16 @@ import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
 import { AppCustSocmedObj } from 'app/shared/model/AppCustSocmedObj.Model';
 import { AppCustGrpObj } from 'app/shared/model/AppCustGrpObj.Model';
 import { AppCustPersonalContactPersonObj } from 'app/shared/model/AppCustPersonalContactPersonObj.Model';
+import { AppCustCompanyMgmntShrholderObj } from 'app/shared/model/AppCustCompanyMgmntShrholderObj.Model';
+import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalDocObj.Model';
 
 
 @Component({
-  selector: 'app-view-app-cust-data',
-  templateUrl: './view-app-cust-data.component.html',
+  selector: 'app-view-app-cust-data-company',
+  templateUrl: './view-app-cust-data-company.component.html',
   styleUrls: []
 })
-export class ViewAppCustDataComponent implements OnInit {
+export class ViewAppCustDataCompanyComponent implements OnInit {
 
   @Input() appId: number;
   viewMainDataObj: string;
@@ -32,12 +34,12 @@ export class ViewAppCustDataComponent implements OnInit {
   arrValue = [];
   isDataAlreadyLoaded: boolean = false;
 
-  custModelCode: string;
   appCustAddrForViewObjs: Array<AppCustAddrForViewObj>;
   appCustBankAccObjs: Array<AppCustBankAccObj>;
   appCustSocmedObjs: Array<AppCustSocmedObj>;
   appCustGrpObjs: Array<AppCustGrpObj>;
-  appCustPersonalContactPersonObjs: Array<AppCustPersonalContactPersonObj>;
+  appCustCompanyMgmntShrholderObjs: Array<AppCustCompanyMgmntShrholderObj>;
+  appCustCompanyLegalDocObjs: Array<AppCustCompanyLegalDocObj>;
 
   constructor(private fb: FormBuilder, 
     private http: HttpClient,
@@ -48,27 +50,23 @@ export class ViewAppCustDataComponent implements OnInit {
   async ngOnInit() : Promise<void>{
     await this.getCustData();
     this.arrValue.push(this.appId);
-    this.viewMainDataObj = "./assets/ucviewgeneric/viewAppCustPersonalMainData.json";
-    this.viewJobDataProfObj = "./assets/ucviewgeneric/viewAppCustPersonalJobDataProf.json";
-    this.viewJobDataEmpObj = "./assets/ucviewgeneric/viewAppCustPersonalJobDataEmp.json";
-    this.viewJobDataSmeObj = "./assets/ucviewgeneric/viewAppCustPersonalJobDataSme.json";
-    this.viewJobDataNonProfObj = "./assets/ucviewgeneric/viewAppCustPersonalJobDataNonProf.json";
-    this.viewFinDataObj = "./assets/ucviewgeneric/viewAppCustPersonalFinData.json";
+    this.viewMainDataObj = "./assets/ucviewgeneric/viewAppCustCompanyMainData.json";
+    this.viewFinDataObj = "./assets/ucviewgeneric/viewAppCustCompanyFinData.json";
 
     this.isDataAlreadyLoaded = true;
   }
 
   async getCustData(){
     var reqObj = {AppId: this.appId}
-    await this.http.post(AdInsConstant.GetCustDataForViewByAppId, reqObj).toPromise().then(
+    await this.http.post(AdInsConstant.GetCustDataCompanyForViewByAppId, reqObj).toPromise().then(
       (response) => {
         console.log(response);
-        this.custModelCode = response["CustModelCode"];
-        this.appCustAddrForViewObjs = response["AppCustAddrForViewObjs"];
+        this.appCustAddrForViewObjs = response["AppCustAddrObjs"];
+        this.appCustCompanyMgmntShrholderObjs = response["AppCustCompanyMgmntShrholderObjs"];
         this.appCustBankAccObjs = response["AppCustBankAccObjs"];
+        this.appCustCompanyLegalDocObjs = response["AppCustCompanyLegalDocObjs"];
         this.appCustSocmedObjs = response["AppCustSocmedObjs"];
         this.appCustGrpObjs = response["AppCustGrpObjs"];
-        this.appCustPersonalContactPersonObjs = response["AppCustPersonalContactPersonObjs"];
       },
       (error) => {
         console.log(error);

@@ -7,6 +7,7 @@ import { CommissionAddComponent } from "./commission-add/commission-add.componen
 import { RsvFundPagingComponent } from "./reserved-fund/reserved-fund-paging/reserved-fund-paging.component";
 import { RsvFundViewComponent } from "./reserved-fund/reserved-fund-view/reserved-fund-view.component";
 import { CommissionReservedFundComponent } from "./commission-reserved-fund/commission-reserved-fund.component";
+import { CreditInvestigationPagingComponent } from "./credit-investigation/credit-investigation-paging/credit-investigation-paging.component";
 
 
 const routes: Routes = [
@@ -14,13 +15,19 @@ const routes: Routes = [
     path: '',
     children: [
       {
+        path: 'CreditInvestigation/Paging',
+        component: CreditInvestigationPagingComponent,
+        data: {
+            title: 'Credit Investigation'
+        }
+      },
+      {
         path: 'CreditInvestigation/Detail',
         component: CreditInvestigationDetailComponent,
         data: {
             title: 'Credit Investigation'
         }
       },
-      
       {
         path: 'CommissionPaging',
         component: CommissionPagingComponent,
