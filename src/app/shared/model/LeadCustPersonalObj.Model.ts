@@ -21,4 +21,6 @@ export class LeadCustPersonalObj {
     Email1: any;
     Email2: any;
     Email3: any;
-}   
+    RowVersion: any;
+    constructor() { this.LeadCustPersonalId = 0, this.RowVersion = "" }
+}

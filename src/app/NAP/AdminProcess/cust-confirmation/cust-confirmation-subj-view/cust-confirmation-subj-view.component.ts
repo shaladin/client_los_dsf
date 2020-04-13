@@ -52,9 +52,9 @@ export class CustConfirmationSubjViewComponent implements OnInit {
         var appObj = {
           AppId: this.AgrmntObj.AppId
         };
-        this.http.post<AppObj>(AdInsConstant.GetAppByIds, appObj).subscribe(
+        this.http.post<AppObj>(AdInsConstant.GetAppById, appObj).subscribe(
           (response) => {
-            this.AppObj = response;
+            this.AppObj = response; 
           },
           (error) => {
             console.log(error);

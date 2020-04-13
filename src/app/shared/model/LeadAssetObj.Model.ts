@@ -1,4 +1,4 @@
-export class LeadAssetObj {
+export class LeadAssetObj{
     LeadAssetId: any;
     LeadId: any;
     AssetSeqNo: any;
@@ -10,11 +10,11 @@ export class LeadAssetObj {
     DownPaymentPrcnt: any;
     MrAssetConditionCode: any;
     ManufacturingYear: any;
-    SerialNo1 : any;
-    SerialNo2 : any;
-    SerialNo3 : any;
-    SerialNo4 : any;
-    SerialNo5 : any;
+    SerialNo1: any;
+    SerialNo2: any;
+    SerialNo3: any;
+    SerialNo4: any;
+    SerialNo5: any;
+    RowVersion: any;
+    constructor() { this.LeadAssetId = 0, this.RowVersion = "" }
 }
-
- 
