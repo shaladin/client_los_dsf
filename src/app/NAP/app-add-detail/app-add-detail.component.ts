@@ -10,7 +10,7 @@ import { WizardComponent } from 'angular-archwizard';
 @Component({
   selector: 'app-app-add-detail',
   templateUrl: './app-add-detail.component.html',
-  providers: [NGXToastrService, WizardComponent]
+  providers: [NGXToastrService]
 })
 export class AppAddDetailComponent implements OnInit {
 
@@ -34,8 +34,7 @@ export class AppAddDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private http: HttpClient,
-    private wizard: WizardComponent) {
+    private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -95,8 +94,8 @@ export class AppAddDetailComponent implements OnInit {
     }
   }
 
-  NextTab(){
-    console.log(this.wizard);
-    this.wizard.goToNextStep();
-  }
+  // NextTab(){
+  //   console.log(this.wizard);
+  //   this.wizard.goToNextStep();
+  // }
 }

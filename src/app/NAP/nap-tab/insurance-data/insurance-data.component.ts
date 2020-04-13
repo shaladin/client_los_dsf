@@ -21,6 +21,7 @@ import { CalcInsAddCvgObj } from 'app/shared/model/CalcInsAddCvgObj.Model';
 import { ResultCalcInsObj } from 'app/shared/model/ResultCalcInsObj.Model';
 import { AppInsMainCvgObj } from 'app/shared/model/AppInsMainCvgObj.Model';
 import { AppInsAddCvgObj } from 'app/shared/model/AppInsAddCvgObj.Model';
+import { WizardComponent } from 'angular-archwizard';
 
 @Component({
   selector: 'app-insurance-data',
@@ -105,7 +106,8 @@ export class InsuranceDataComponent implements OnInit {
   constructor(private fb: FormBuilder, 
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private route: ActivatedRoute){
+    private route: ActivatedRoute,
+    private wizard: WizardComponent){
       this.route.queryParams.subscribe(params => {
         this.AppId = params["AppId"] ? params["AppId"] : this.AppId;
       })
@@ -125,29 +127,32 @@ export class InsuranceDataComponent implements OnInit {
   }
 
   SaveForm(){
-    var insuredBy = this.InsuranceDataForm.controls.InsAssetCoveredBy.value;
+    // this.callbackSubmit.emit();
+    
+    this.wizard.goToNextStep();
+    // var insuredBy = this.InsuranceDataForm.controls.InsAssetCoveredBy.value;
 
-    if(insuredBy == AdInsConstant.InsuredByCompany || insuredBy == AdInsConstant.InsuredByCustomerCompany){
-      if(this.isGenerate == false){
-        this.toastr.errorMessage("Please click Generate Insurance");
-        return;
-      }
-      if(this.isCalculate == false){
-        this.toastr.errorMessage("Please click Calculate Insurance");
-        return;
-      }
-    }
-    this.setSaveObj(insuredBy);
-    this.http.post(AdInsConstant.AddEditInsuranceData, this.saveObj).subscribe(
-      (response) => {
-        console.log(response);
-        this.toastr.successMessage(response["message"]);
-        this.callbackSubmit.emit();
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    // if(insuredBy == AdInsConstant.InsuredByCompany || insuredBy == AdInsConstant.InsuredByCustomerCompany){
+    //   if(this.isGenerate == false){
+    //     this.toastr.errorMessage("Please click Generate Insurance");
+    //     return;
+    //   }
+    //   if(this.isCalculate == false){
+    //     this.toastr.errorMessage("Please click Calculate Insurance");
+    //     return;
+    //   }
+    // }
+    // this.setSaveObj(insuredBy);
+    // this.http.post(AdInsConstant.AddEditInsuranceData, this.saveObj).subscribe(
+    //   (response) => {
+    //     console.log(response);
+    //     this.toastr.successMessage(response["message"]);
+    //     this.callbackSubmit.emit();
+    //   },
+    //   (error) => {
+    //     console.log(error);
+    //   }
+    // );
 
   }
 
