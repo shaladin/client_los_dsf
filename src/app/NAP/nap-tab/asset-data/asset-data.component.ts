@@ -293,7 +293,7 @@ export class AssetDataComponent implements OnInit {
   initUrl() {
     this.getRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
     this.GetAllAssetDataUrl = AdInsConstant.GetAllAssetDataByAppId;
-    this.getAppUrl = environment.losUrl + AdInsConstant.GetAppById;
+    this.getAppUrl = AdInsConstant.GetAppById;
     this.getVendorUrl = AdInsConstant.GetVendorByVendorCode;
     this.getVendorEmpUrl = AdInsConstant.GetListVendorEmpByVendorIdAndPositionCodes;
     this.getAssetMasterTypeUrl = AdInsConstant.GetAssetMasterTypeByFullAssetCode;

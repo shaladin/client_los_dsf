@@ -150,7 +150,7 @@ export class AppModelComponent implements OnInit {
       AppId: this.appId,
       RowVersion: ""
     };
-    var url = environment.losUrl + AdInsConstant.GetAppById;
+    var url = AdInsConstant.GetAppById;
 
     this.http.post(url, obj).subscribe(
       (response) => {
