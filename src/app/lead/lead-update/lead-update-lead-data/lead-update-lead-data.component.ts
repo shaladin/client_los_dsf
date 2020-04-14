@@ -25,6 +25,7 @@ import { AssetMasterObj } from 'app/shared/model/AssetMasterObj.Model';
 
 export class LeadUpdateLeadDataComponent implements OnInit {
   typePage: string;
+  //WfTaskListId: any;
   LeadId: any;
   assetConditionObj: any;
   returnAssetConditionObj: any;
@@ -90,7 +91,10 @@ export class LeadUpdateLeadDataComponent implements OnInit {
         }
         if (params["mode"] != null) {
           this.typePage = params["mode"];
-      }
+        }
+        // if (params["WfTaskListId"] != null) {
+        //   this.WfTaskListId = params["WfTaskListId"];
+        // }
     });
   }
 
@@ -369,7 +373,7 @@ export class LeadUpdateLeadDataComponent implements OnInit {
   //   this.wizard.goToPreviousStep();
   // }
 
-  SaveForm(){
+  save(){
     if(this.typePage == "edit") {
       this.leadInputLeadDataObj = new LeadInputLeadDataObj();
       this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
@@ -392,6 +396,46 @@ export class LeadUpdateLeadDataComponent implements OnInit {
       this.leadInputLeadDataObj = new LeadInputLeadDataObj();
       this.setLeadAsset();
       this.setLeadApp();
+      this.http.post(this.editLeadData, this.leadInputLeadDataObj).subscribe(
+        (response) => {
+          console.log(response);
+          this.toastr.successMessage(response["message"]);
+          this.router.navigate(["/Lead/LeadUpdate/Paging"]);
+          // console.log(response);
+          // this.wizard.goToNextStep();
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
+  SaveForm(){
+    if(this.typePage == "edit") {
+      this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+      this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
+      this.setLeadAsset();
+      this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
+      this.setLeadApp();
+      //this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
+      this.http.post(this.editLeadData, this.leadInputLeadDataObj).subscribe(
+        (response) => {
+          console.log(response);
+          this.toastr.successMessage(response["message"]);
+          this.router.navigate(["/Lead/LeadUpdate/Paging"]);
+          // console.log(response);
+          // this.wizard.goToNextStep();
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    } else {
+      this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+      this.setLeadAsset();
+      this.setLeadApp();
+      //this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
       this.http.post(this.editLeadData, this.leadInputLeadDataObj).subscribe(
         (response) => {
           console.log(response);

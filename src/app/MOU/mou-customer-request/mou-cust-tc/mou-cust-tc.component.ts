@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { FormBuilder, FormArray, Validators } from '@angular/forms';
+import { FormBuilder, FormArray, Validators, NgForm } from '@angular/forms';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { map, mergeMap } from 'rxjs/operators';
@@ -17,6 +17,7 @@ import { DatePipe } from '@angular/common';
 export class MouCustTcComponent implements OnInit {
   @Input() MouCustId: number;
   @Output() ResponseMouCustTc: EventEmitter<any> = new EventEmitter<any>();
+  formSubmitted: boolean;
 
   MouCustTcForm = this.fb.group({
     MouCustTcList: this.fb.array([])
@@ -26,7 +27,9 @@ export class MouCustTcComponent implements OnInit {
     private httpClient: HttpClient,
     private toastr: NGXToastrService,
     private fb: FormBuilder
-  ) { }
+  ) { 
+    this.formSubmitted = false;
+  }
 
   ngOnInit() {
     var datePipe = new DatePipe("en-US");
@@ -141,20 +144,23 @@ export class MouCustTcComponent implements OnInit {
     }
   }
 
-  Save(enjiForm){
-    var formArray = this.MouCustTcForm.get('MouCustTcList') as FormArray;
-    var formData = formArray.value;
-    var formFinal = {MouCustTcObjs: formData};
-
-    this.httpClient.post(AdInsConstant.EditListMouCustTc, formFinal).subscribe(
-      (response) => {
-        this.toastr.successMessage(response["Message"]);
-        this.ResponseMouCustTc.emit(response);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+  Save(){
+    this.formSubmitted = true;
+    if(this.MouCustTcForm.valid){
+      var formArray = this.MouCustTcForm.get('MouCustTcList') as FormArray;
+      var formData = formArray.value;
+      var formFinal = {MouCustTcObjs: formData};
+  
+      this.httpClient.post(AdInsConstant.EditListMouCustTc, formFinal).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["Message"]);
+          this.ResponseMouCustTc.emit(response);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
   }
 
   back(){

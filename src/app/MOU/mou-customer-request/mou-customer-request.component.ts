@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 
 @Component({
   selector: 'app-mou-customer-request',
@@ -25,6 +26,13 @@ export class MouCustomerRequestComponent implements OnInit {
     this.inputPagingObj.apiQryPaging = "/Generic/GetPagingObjectBySQL";
     this.inputPagingObj.deleteUrl = "";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchMouCustomerRequest.json";
+    var criteriaList = new Array<CriteriaObj>();
+    var criteriaObj = new CriteriaObj();
+    criteriaObj.restriction = AdInsConstant.RestrictionEq;
+    criteriaObj.propName = 'MOU_STAT';
+    criteriaObj.value = 'NEW';
+    criteriaList.push(criteriaObj);
+    this.inputPagingObj.addCritInput = criteriaList;
   }
 
 }

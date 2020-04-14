@@ -74,8 +74,8 @@
         }
     ],
     "querystring": {
-        "select": "SELECT L.LEAD_NO AS LeadNo, L.LEAD_ID AS LeadId, L.ORI_OFFICE_NAME AS OriOfficeName, LC.CUST_NO AS CustNo, LC.CUST_NAME AS CustName, L.MR_LEAD_SOURCE_CODE AS SourceCode, LC.MR_CUST_TYPE_CODE AS MrCustTypeCode",
-        "from": "FROM LEAD L WITH(NOLOCK) JOIN LEAD_CUST LC WITH(NOLOCK) ON L.LEAD_ID = LC.LEAD_ID"
+        "select": "SELECT L.LEAD_NO AS LeadNo,WTL.WF_TASK_LIST_ID AS WfTaskListId, L.LEAD_ID AS LeadId, L.ORI_OFFICE_NAME AS OriOfficeName, LC.CUST_NO AS CustNo, LC.CUST_NAME AS CustName, L.MR_LEAD_SOURCE_CODE AS SourceCode, LC.MR_CUST_TYPE_CODE AS MrCustTypeCode",
+        "from": "FROM LEAD L WITH(NOLOCK) JOIN LEAD_CUST LC WITH(NOLOCK) ON L.LEAD_ID = LC.LEAD_ID JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON l.LEAD_NO = WTL.TRANSACTION_CODE AND WTL.ACT_CODE = 'FRAUD_VERIFICATION'"
     },
     "headerList": [
         {
@@ -125,12 +125,16 @@
             "type": "link",
             "position": "center",
             "property": "LeadNo",
-            "path": "../View/",
+            "path": "../../View/",
             "target": "_blank",
             "param": [
                 {
                     "type": "LeadId",
                     "property": "LeadId"
+                },
+                {
+                    "type": "WfTaskListId",
+                    "property": "WfTaskListId"
                 }
             ]
         },
@@ -171,6 +175,10 @@
                         {
                             "type": "LeadId",
                             "property": "LeadId"
+                        },
+                        {
+                            "type": "WfTaskListId",
+                            "property": "WfTaskListId"
                         },
                         {
                             "type": "mode",
