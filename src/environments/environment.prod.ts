@@ -9,8 +9,8 @@ export const environment = {
     losUrl : 'http://r3app-server.ad-ins.com/LOS',
     ApprovalR3Url: 'http://r3app-server/approval',
     FoundationR3Url: 'http://r3app-server.ad-ins.com/FOUNDATION_R3',
-    FoundationR3Web: 'http://r3web-server/Foundation'
-    // losUrl : 'http://r3app-server.ad-ins.com/LOS',
+    FoundationR3Web: 'http://r3web-server/Foundation',
+    WorkflowR3Url: 'http://R3App-Server.ad-ins.com/WORKFLOW_R3'
   };
   
   
