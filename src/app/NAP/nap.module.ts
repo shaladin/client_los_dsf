@@ -48,8 +48,7 @@ import { CustLegalDocComponent } from "./nap-tab/customer-data/component/legal-d
 import { UcinputnumberComponent } from "./nap-tab/customer-data/component/ucinputnumber/ucinputnumber.component";
 import { InsuranceDataComponent } from "./nap-tab/insurance-data/insurance-data.component";
 import { AssetDataComponent } from "./nap-tab/asset-data/asset-data.component";
-import { AppFinDataComponent } from './nap-tab/app-fin-data/app-fin-data.component';
-import { NgxCurrencyModule } from "ngx-currency";
+import { AppFinDataComponent } from './nap-tab/app-fin-data/app-fin-data.component'; 
 import { UcinputnumberModule } from "@adins/ucinputnumber";
 export const customCurrencyMaskConfig = {     
     align: "left",     
@@ -126,7 +125,7 @@ import { PhnVerifPagingComponent } from "./phone-verif/phone-verif-paging/phone-
         UcShowErrorsModule,
         UCSearchModule,
         UcinputnumberModule,
-        NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
+        // NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
     ],
     exports: [],
     providers: [NGXToastrService],
