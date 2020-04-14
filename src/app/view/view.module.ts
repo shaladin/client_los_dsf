@@ -14,6 +14,7 @@ import { UcgridfooterModule, UcgridfooterComponent } from "@adins/ucgridfooter";
 import { ViewRoutingModule } from "./view-routing.module";
 import { MainInfoComponent } from './main-info/main-info.component';
 import { LeadMainInfoComponent } from './lead-main-info/lead-main-info.component';
+import { AppViewComponent } from './app-view/app-view.component';
 // import { ShowErrorsComponent } from "./app/test-new/show-errors.component";
 
 @NgModule({
@@ -34,7 +35,8 @@ import { LeadMainInfoComponent } from './lead-main-info/lead-main-info.component
   ],
   declarations: [
     MainInfoComponent,
-    LeadMainInfoComponent
+    LeadMainInfoComponent,
+    AppViewComponent
   ]
 })
 export class ViewModule { }
