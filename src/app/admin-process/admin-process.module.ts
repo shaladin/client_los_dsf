@@ -10,8 +10,6 @@ import { UcSubsectionModule } from "@adins/uc-subsection";
 import { UcgridfooterModule } from "@adins/ucgridfooter";
 import { UcShowErrorsModule } from "@adins/uc-show-errors";
 import { AdminProcessRoutingModule } from "./admin-process-routing.module";
-import { DeliveryOrderDetailComponent } from "./delivery-order/delivery-order-detail/delivery-order-detail.component";
-import { DeliveryOrderPagingComponent } from "./delivery-order/delivery-order-paging/delivery-order-paging.component";
 import { PreGoLivePagingComponent } from './pre-go-live/pre-go-live-paging/pre-go-live-paging.component';
 import { PreGoLiveComponent } from './pre-go-live/pre-go-live/pre-go-live.component';
 import { UcgridviewModule } from "@adins/ucgridview";
@@ -27,7 +25,7 @@ import { PreGoLiveRequestForApprovalComponent } from './pre-go-live/pre-go-live-
 import { UclookupgenericModule } from "@adins/uclookupgeneric";
 import { DocSignerDetailComponent } from "./doc-signer/doc-signer-detail/doc-signer-detail.component";
 import { DocSignerPagingComponent } from "./doc-signer/doc-signer-paging/doc-signer-paging.component";
-import { NapComponentModule } from "app/components/nap-component/nap-component.module";
+import { NapComponentModule } from "app/NAP/nap-component/nap-component.module";
 
 @NgModule({
   imports: [
@@ -57,8 +55,6 @@ import { NapComponentModule } from "app/components/nap-component/nap-component.m
     ApplicationAgreementCancellationDetailComponent,
     AgrmntActivationPagingComponent,
     AgrmntActivationDetailComponent,
-    DeliveryOrderDetailComponent,
-    DeliveryOrderPagingComponent,
     OfferingValidityCheckingApprovalPagingComponent,
     OfferingValidityCheckingApprovalDetailComponent,
     DocSignerDetailComponent,

@@ -65,23 +65,15 @@ export class ListCompanyComponent implements OnInit {
           "TaxIdNo": this.AppCustObj.TaxIdNo,
           "BirthDt" : this.AppCustCompanyObj.EstablishmentDt,
           "MotherMaidenName" : "-",
-          "MobilePhnNo1" : "-",      
+          "MobilePhnNo1" : "-",
+          "RowVersion"  : this.RowVersion     
         }
         console.log(requestDupCheck);
-        //List Cust Duplicate Checking
+        //List Cust And Negative Cust Dup Check
         this.http.post(this.GetCustomerDuplicateCheckUrl, requestDupCheck).subscribe(
           response => {
-            this.ListCustomerDuplicate = response['ReturnObject'];
-            
-          },
-          error => {
-            console.log("error");
-          }
-        );
-        //List Negative Cust Duplicate Checking
-        this.http.post(this.GetNegativeCustomerDuplicateCheckUrl, requestDupCheck).subscribe(
-          response => {
-            this.ListNegativeCust = response['ReturnObject'];
+            this.ListCustomerDuplicate = response['ReturnObject'].CustDuplicate;
+            this.ListNegativeCust = response['ReturnObject'].NegativeCustDuplicate;
           },
           error => {
             console.log("error");

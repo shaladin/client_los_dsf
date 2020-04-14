@@ -120,7 +120,7 @@ import { PhnVerifPagingComponent } from "./phone-verif/phone-verif-paging/phone-
         MatRadioModule,
         MatSelectModule,
         UcSubsectionModule,
-        SharingComponentModule,
+        SharingComponentModule, 
         UcaddressModule,
         UcgridviewModule,
         UcShowErrorsModule,

@@ -12,15 +12,15 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
   providers: [NGXToastrService],
 })
 export class LeadInputPageComponent implements OnInit {
-  IdCust: any;
+  LeadId: any;
   isCustomer: any;
   isLead: any;
   CustPersonalId: any;
 
   constructor(private route: ActivatedRoute, private http: HttpClient) { 
     this.route.queryParams.subscribe(params => {
-      if (params["IdCust"] != null) {
-        this.IdCust = params["IdCust"];
+      if (params["LeadId"] != null) {
+        this.LeadId = params["LeadId"];
       }
     });
   }
@@ -38,11 +38,6 @@ export class LeadInputPageComponent implements OnInit {
       this.isCustomer = false;
       this.isLead = true;
     }
-  }
-
-  terimaValue(ev: any) {
-    console.log(ev);
-    this.CustPersonalId = ev.CustPersonalId;
   }
 
 }

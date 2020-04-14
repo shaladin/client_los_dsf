@@ -1,0 +1,69 @@
+{
+    "url": "",
+    "title":"Lookup - Lead Personal",
+    "component": [
+      {
+        "type": "textbox",
+        "name": "L.LEAD_NO",
+        "id": "leadNoId",
+        "value": "",
+        "label": "Lead No",
+        "placeholder": ""
+      },
+      {
+        "type": "textbox",
+        "name": "LC.CUST_NAME",
+        "id": "custNameId",
+        "value": "",
+        "label": "Customer Name",
+        "placeholder": ""
+      }
+    ],
+    "querystring": {
+      "select": "SELECT L.LEAD_NO AS LeadNo, L.LEAD_ID AS LeadId, LC.CUST_NAME AS CustName",
+      "from": "FROM LEAD L WITH(NOLOCK) JOIN LEAD_CUST LC WITH(NOLOCK) on L.LEAD_ID = LC.LEAD_ID WHERE LC.MR_CUST_TYPE_CODE = 'PERSONAL'"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Lead No",
+            "name": "L.LEAD_NO"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Customer Name",
+            "name": "LC.CUST_NAME"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Select"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "LeadNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "select",
+                    "property": "LeadId"
+                }
+            ]
+        }
+    ],
+    "propertyId": "LeadId",
+    "propertyName": "CustName"
+}

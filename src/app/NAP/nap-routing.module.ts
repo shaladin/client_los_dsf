@@ -23,19 +23,19 @@ const routes: Routes = [
     path: '',
     children: [
       {
-        path: 'CF4W',
+        path: 'ConsumerFinance',
         loadChildren: './CF4W/cf4w.module#CF4WModule'
       },
       {
-        path: 'FL4W',
+        path: 'FinanceLeasing',
         loadChildren: './FL4W/fl4w.module#FL4WModule'
       },
       {
-        path: 'RFN4W',
+        path: 'CFRefinancing',
         loadChildren: './RFN4W/rfn4w.module#RFN4WModule'
       },
       {
-        path: 'FCTR',
+        path: 'Factoring',
         loadChildren: './FCTR/fctr.module#FCTRModule'
       },
       {

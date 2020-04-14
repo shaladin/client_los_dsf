@@ -115,7 +115,7 @@
             "action": [
                 {
                     "type": "edit",
-                    "path": "/AdminProcess/DeliveryOrder/Detail",
+                    "path": "/Nap/AdminProcess/DeliveryOrder/Detail",
                     "param": [
                         {
                             "type": "AppId",

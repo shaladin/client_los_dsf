@@ -69,24 +69,17 @@ export class ListPersonalComponent implements OnInit {
           "MobilePhnNo1": this.AppCustPersonalObj.MobilePhnNo1,          
           "RowVersion": this.RowVersion
         }
-        //List Cust Duplicate Checking
+        //List Cust Duplicate And List Negative Cust Duplicate Checking
         this.http.post(this.GetCustomerDuplicateCheckUrl, requestDupCheck).subscribe(
           response => {
-            this.ListCustomerDuplicate = response['ReturnObject'];
+            this.ListCustomerDuplicate = response['ReturnObject'].CustDuplicate;
+            this.ListNegativeCust = response['ReturnObject'].NegativeCustDuplicate;
           },
           error => {
             console.log("error");
           }
         );
-        //List Negative Cust Duplicate Checking
-        this.http.post(this.GetNegativeCustomerDuplicateCheckUrl, requestDupCheck).subscribe(
-          response => {
-            this.ListNegativeCust = response['ReturnObject'];
-          },
-          error => {
-            console.log("error");
-          }
-        );
+            
 
         //List App Cust Duplicate Checking
         this.http.post(this.GetAppCustDuplicateCheckUrl, requestDupCheck).subscribe(
