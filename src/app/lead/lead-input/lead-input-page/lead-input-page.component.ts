@@ -13,6 +13,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 })
 export class LeadInputPageComponent implements OnInit {
   LeadId: any;
+  CopyFrom: any;
   isCustomer: any;
   isLead: any;
   CustPersonalId: any;
@@ -21,6 +22,9 @@ export class LeadInputPageComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       if (params["LeadId"] != null) {
         this.LeadId = params["LeadId"];
+      }
+      if (params["CopyFrom"] != null) {
+        this.CopyFrom = params["CopyFrom"];
       }
     });
   }

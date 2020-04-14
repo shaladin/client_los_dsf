@@ -51,6 +51,7 @@ export class LeadUpdateMainInfoComponent implements OnInit {
   getListActiveRefMasterUrl: any;
   getVendorByVendorCode: any;
   getRefEmpForLookupEmployee: any;
+  getLeadPersonalForLookup: any;
   listRefOffice: any;
   refOfficeObj: any;
   listRefLob:any;
@@ -80,6 +81,8 @@ export class LeadUpdateMainInfoComponent implements OnInit {
   returnSurveyorExistObj: any;
   salesExistObj: any;
   returnSalesExistObj: any;
+  leadExistObj: any;
+  returnLeadExistObj: any;
   MainInfoForm = this.fb.group({
     OfficeCode: [''],
     OfficeName: [''],
@@ -100,6 +103,7 @@ export class LeadUpdateMainInfoComponent implements OnInit {
     this.getListActiveRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
     this.getVendorByVendorCode = AdInsConstant.GetVendorByVendorCode;
     this.getRefEmpForLookupEmployee = AdInsConstant.GetRefEmpForLookupEmployee;
+    this.getLeadPersonalForLookup = AdInsConstant.GetLeadPersonalForLookupCopy;
 
     this.route.queryParams.subscribe(params => {
         if (params["mode"] != null) {
@@ -310,6 +314,15 @@ copyLead(){
               LobName: this.returnLead.LobName,
               LeadSource: this.returnLead.MrLeadSourceCode,
             });
+
+            if(this.returnLead.LeadCopyId != null){
+              this.leadExistObj = new LeadObj();
+              this.leadExistObj.LeadId = this.returnLead.LeadCopyId;
+              this.http.post(this.getLeadPersonalForLookup, this.leadExistObj).subscribe(
+                (response) => {
+                    this.returnLeadExistObj = response;
+                });
+            }
 
             this.vendorObj = new VendorObj();
             this.vendorObj.VendorCode = this.returnLead.AgencyCode;

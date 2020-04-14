@@ -48,6 +48,18 @@ import { ViewLeadDataComponent } from './lead-view/view-lead-data/view-lead-data
 import { FraudVerifPagingComponent } from './fraud-verif/fraud-verif-paging/fraud-verif-paging.component';
 import { FraudVerifPageComponent } from './fraud-verif/fraud-verif-page/fraud-verif-page.component';
 import { LeadInquiryComponent } from './lead-inquiry/lead-inquiry.component';
+import { NgxCurrencyModule } from "ngx-currency";
+export const customCurrencyMaskConfig = {     
+  align: "left",     
+  allowNegative: true,     
+  allowZero: true,     
+  decimal: ".",     
+  precision: 2,     
+  prefix: "",     
+  suffix: "",     
+  thousands: ",",     
+  nullable: false };
+
 
 @NgModule({
   imports: [
@@ -70,6 +82,7 @@ import { LeadInquiryComponent } from './lead-inquiry/lead-inquiry.component';
     SharingComponentModule,
     ArchwizardModule,
     MatRadioModule,
+    NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
   ],
   declarations: [
     MainInfoComponent,

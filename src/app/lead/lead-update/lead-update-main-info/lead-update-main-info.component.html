@@ -11,14 +11,14 @@
                     <div id="mainInfo">
                         <div class="form-group row">
                             <label class="col-md-3 adInsLabel adins-required" translate>Lead No. </label>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <label class="adInsLabel" style="font-size: 12px;" translate>{{this.returnLead?.LeadNo}}</label>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 adInsLabel adins-required" translate>Copy From </label>
                             <div class="col-md-4">
-                                <label class="adInsLabel" style="font-size: 12px;" translate> - </label>
+                                <label class="adInsLabel" style="font-size: 12px;" translate>{{this.returnLeadExistObj?.CustName == null ? '-' : this.returnLeadExistObj?.CustName}}</label>
                             </div>
                         </div>
                         <div class="form-group row">
