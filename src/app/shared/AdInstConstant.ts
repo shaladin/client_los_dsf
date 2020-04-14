@@ -809,4 +809,7 @@ export class AdInsConstant {
 
   // PreGoLive
   public static GetListApprovedByForPreGoLive = environment.losUrl + "/PreGoLive/GetListApprovedByForPreGoLive";
+
+  // Workflow Engine
+  public static ClaimTask = environment.FoundationR3Url + "/Workflow/ClaimTask";
 }
