@@ -80,6 +80,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   });
   getGeneralSettingByCode: string;
   getLeadByLeadId : string;
+  submitWorkflowLeadInput: any;
   generalSettingObj: any;
   returnGeneralSettingObj: any;
   lobKta = new Array();
@@ -95,6 +96,9 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.getAssetMasterForLookupEmployee = AdInsConstant.GetAssetMasterForLookupEmployee;
     this.getGeneralSettingByCode = AdInsConstant.GetGeneralSettingByCode;
     this.getLeadByLeadId = AdInsConstant.GetLeadByLeadId;
+    this.submitWorkflowLeadInput = AdInsConstant.SubmitWorkflowLeadInput;
+
+
     this.route.queryParams.subscribe(params => {
         if (params["LeadId"] != null) {
             this.LeadId = params["LeadId"];
@@ -399,7 +403,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   //   this.wizard.goToPreviousStep();
   // }
 
-  SaveForm(){
+  save(){
     if(this.typePage == "edit") {
       this.leadInputLeadDataObj = new LeadInputLeadDataObj();
       this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
@@ -423,6 +427,46 @@ export class LeadInputLeadDataComponent implements OnInit {
       this.setLeadAsset();
       this.setLeadApp();
       this.http.post(this.editLeadData, this.leadInputLeadDataObj).subscribe(
+        (response) => {
+          console.log(response);
+          this.toastr.successMessage(response["message"]);
+          this.router.navigate(["/Lead/Lead/Paging"]);
+          // console.log(response);
+          // this.wizard.goToNextStep();
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
+  SaveForm(){
+    if(this.typePage == "edit") {
+      this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+      this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
+      this.setLeadAsset();
+      this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
+      this.setLeadApp();
+      //this.leadInputLeadDataObj.WfTaskListId = "0";
+      this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
+        (response) => {
+          console.log(response);
+          this.toastr.successMessage(response["message"]);
+          this.router.navigate(["/Lead/Lead/Paging"]);
+          // console.log(response);
+          // this.wizard.goToNextStep();
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    } else {
+      this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+      this.setLeadAsset();
+      this.setLeadApp();
+      //this.leadInputLeadDataObj.WfTaskListId = "0";
+      this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
