@@ -1,0 +1,168 @@
+<form class="form form-horizontal" [formGroup]="CustMainDataForm" (ngSubmit)="CustMainDataForm.valid && SaveLead()"
+  #enjiForm="ngForm">
+  <lib-ucSubsection [id]="'CustMainDataId'" [title]="'Customer Main Data'" [panel]="'CustMainData'">
+  </lib-ucSubsection>
+  <div class="form-body" id="CustMainData">
+    <div class="form-group row">
+      <label class="col-md-2" translate>Customer Type</label>
+      <label class="col-md-2" translate>{{MrCustTypeCode}}</label>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-md-2 adins-required-label" for="CustName" translate>Customer Name </label>
+      <div class="col-md-4">
+        <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]='CustMainDataForm' [enjiForm]='enjiForm'
+          [identifier]="'CustName'" (lookup)="getLookupCustomerResponse($event)"></lib-uclookupgeneric>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-md-2 adins-required-label" translate>ID Type</label>
+      <div class="col-md-2">
+        <select class="form-control" formControlName="MrIdType" (change)="onItemChange($event.target.value)"
+          [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.MrIdType.invalid }">
+          <option *ngFor="let item of IdTypeList" [value]="item.Key">{{item.Value}}</option>
+        </select>
+        <lib-uc-show-errors [control]="CustMainDataForm.controls.MrIdType" [submit]="enjiForm.submitted">
+        </lib-uc-show-errors>
+      </div>
+
+      <label class="col-md-2"></label>
+      <label class="col-md-2 adins-required-label" translate>Birth Place / Date</label>
+      <div class="col-md-2" style="border-right: 1px solid grey">
+        <input type="text" class="form-control" formControlName="BirthPlace" id="birthPlace"
+          [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.BirthPlace.invalid}">
+        <show-errors [control]="CustMainDataForm.controls.BirthPlace" [submit]="enjiForm.submitted"></show-errors>
+      </div>
+      <div class="col-md-2">
+        <input type="date" class="form-control" formControlName="BirthDt" id="birthDt"
+          [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.BirthDt.invalid}">
+        <show-errors [control]="CustMainDataForm.controls.BirthDt" [submit]="enjiForm.submitted"></show-errors>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-md-2 adins-required-label" translate>ID No</label>
+      <div class="col-md-2">
+        <input type="text" class="form-control" formControlName="IdNo"
+          [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.IdNo.invalid }">
+        <lib-uc-show-errors [control]="CustMainDataForm.controls.IdNo" [submit]="enjiForm.submitted">
+        </lib-uc-show-errors>
+      </div>
+
+      <label class="col-md-2"></label>
+      <label class="col-md-2 adins-required-label" translate>Mother Maiden Name</label>
+      <div class="col-md-2">
+        <input type="text" class="form-control" formControlName="MotherMaidenName"
+          [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.MotherMaidenName.invalid}">
+        <show-errors [control]="CustMainDataForm.controls.MotherMaidenName" [submit]="enjiForm.submitted"></show-errors>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-md-2" translate>NPWP</label>
+      <div class="col-md-2">
+        <input type="text" class="form-control" formControlName="TaxIdNo">
+      </div>
+      <label class="col-md-2"></label>
+      <label class="col-md-2" translate>Marital Status</label>
+      <div class="col-md-2">
+        <select class="form-control adInsInput" formControlName="MrMaritalStatCode">
+          <option *ngFor="let item of MaritalStatObj" [value]="item.Key">
+            {{item.Value}}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-md-2 adins-required-label" for="mobilePhone1" translate>Mobile Phone 1</label>
+      <div class="col-md-2">
+        <input type="number" class="form-control" id="mobilePhone1" formControlName="MobilePhnNo1"
+          [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.MobilePhnNo1.invalid}">
+        <show-errors [control]="CustMainDataForm.controls.MobilePhnNo1" [submit]="enjiForm.submitted">
+        </show-errors>
+      </div>
+      <label class="col-md-2"></label>
+      <label class="col-md-2" translate>Email</label>
+      <div class="col-md-2">
+        <input type="text" class="form-control" formControlName="Email">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-md-2 adins-label" translate>Mobile Phone 2</label>
+      <div class="col-md-2">
+        <input type="number" class="form-control" formControlName="MobilePhnNo2"
+          [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.MobilePhnNo2.invalid}">
+      </div>
+    </div>
+  </div>
+
+  <lib-ucSubsection [id]="'SocialMediaId'" [title]="'Social Media'" [panel]="'SocialMedia'">
+  </lib-ucSubsection>
+  <div id="SocialMedia">
+    <div class="form-group row">
+      <label class="col-md-2 adins-label" translate>Facebook</label>
+      <div class="col-md-2">
+        <input type="text" class="form-control" formControlName="Facebook"
+          [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.Facebook.invalid}">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-md-2 adins-label" translate>Instagram</label>
+      <div class="col-md-2">
+        <input type="text" class="form-control" formControlName="Instagram"
+          [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.Instagram.invalid}">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-md-2 adins-label" translate>Twitter</label>
+      <div class="col-md-2">
+        <input type="text" class="form-control" formControlName="Twitter"
+          [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.Twitter.invalid}">
+      </div>
+    </div>
+  </div>
+
+  <lib-ucaddress [title]="'Legal Address'" [UCAddrForm]="CustMainDataForm" [enjiForm]="enjiForm"
+    [identifier]="'legalAddr'" [default]="legalAddrObj" [inputField]="inputFieldLegalObj" [showPhn3]="false">
+  </lib-ucaddress>
+
+  <lib-ucSubsection [id]="'residenceAddrId'" [title]="'Residence Address'" [panel]="'residenceAddr'">
+  </lib-ucSubsection>
+  <div id="residenceAddr">
+    <div class="form-group row">
+      <label class="col-md-2" translate>Copy Address From</label>
+      <div class="col-md-4">
+        <div class="input-group">
+          <select class="form-control" formControlName="CopyFromResidence" [(ngModel)]="copyFromResidence">
+            <option *ngFor="let item of copyToResidenceTypeObj" [value]="item.Key">
+              {{item.Value}}
+            </option>
+          </select>
+          <div class="input-group-append">
+            <span class="input-group-btn">
+              <button class="btn btn-raised btn-primary" type="button" (click)="copyToResidence()">
+                <i class="fa fa-check"></i> Copy
+              </button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <lib-ucaddress [showSubsection]="false" [UCAddrForm]="CustMainDataForm" [enjiForm]="enjiForm"
+      [identifier]="'residenceAddr'" [default]="residenceAddrObj" [inputField]="inputFieldResidenceObj"
+      [showPhn3]="false"></lib-ucaddress>
+  </div>
+
+  <app-cust-job-data [custModelCode]="defCustModelCode" [appCustPersonalJobDataObj]="custDataPersonalObj.AppCustPersonalJobDataObj" [enjiForm]="enjiForm" [parentForm]="CustMainDataForm" [identifier]="'jobData'"></app-cust-job-data>
+
+  <div class="form-actions right">
+    <button type="button" (click)="SaveLead()" class="btn btn-raised btn-primary">
+      <i class="fa fa-check"></i> Save And Continue
+    </button>
+  </div>
+</form>

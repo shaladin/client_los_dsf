@@ -9,10 +9,10 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
   styleUrls: ['./outstanding-tc-paging.component.scss']
 })
 export class OutstandingTcPagingComponent implements OnInit {
-  inputPagingObj: any;
-  
-  constructor(){}
-  
+  inputPagingObj: UcPagingObj;
+
+  constructor() { }
+
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchOutstandingTC.json";

@@ -11,7 +11,7 @@
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailGeneralForm.controls.CurrCode.invalid }">
             <option *ngFor="let item of currencyList?.ReturnObject" [value]="item.Key">{{item.Value}}</option>
           </select>
-          <show-errors [control]="MouDetailGeneralForm.controls.CurrCode" [submit]="enjiForm.submitted"></show-errors>
+          <lib-uc-show-errors [control]="MouDetailGeneralForm.controls.CurrCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
         </div>
       </div>
       <div class="form-group row">
@@ -21,7 +21,7 @@
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailGeneralForm.controls.MrInterestTypeCode.invalid }">
             <option *ngFor="let item of intrstTypeList?.ReturnObject" [value]="item.Key">{{item.Value}}</option>
           </select>
-          <show-errors [control]="MouDetailGeneralForm.controls.MrInterestTypeCode" [submit]="enjiForm.submitted"></show-errors>
+          <lib-uc-show-errors [control]="MouDetailGeneralForm.controls.MrInterestTypeCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
         </div>
       </div>
       <div class="form-group row">
@@ -31,7 +31,7 @@
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailGeneralForm.controls.MrInstSchmCode.invalid }">
             <option *ngFor="let item of instSchmList?.ReturnObject" [value]="item.Key">{{item.Value}}</option>
           </select>
-          <show-errors [control]="MouDetailGeneralForm.controls.MrInstSchmCode" [submit]="enjiForm.submitted"></show-errors>
+          <lib-uc-show-errors [control]="MouDetailGeneralForm.controls.MrInstSchmCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
         </div>
       </div>
       <div class="form-group row">
@@ -41,7 +41,7 @@
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailGeneralForm.controls.PayFreqCode.invalid }">
             <option *ngFor="let item of payFreqList?.ReturnObject" [value]="item.Key">{{item.Value}}</option>
           </select>
-          <show-errors [control]="MouDetailGeneralForm.controls.PayFreqCode" [submit]="enjiForm.submitted"></show-errors>
+          <lib-uc-show-errors [control]="MouDetailGeneralForm.controls.PayFreqCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
         </div>
       </div>
       <div class="form-group row">
@@ -51,15 +51,15 @@
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailGeneralForm.controls.MrFirstInstTypeCode.invalid }">
             <option *ngFor="let item of firstInstList?.ReturnObject" [value]="item.Key">{{item.Value}}</option>
           </select>
-          <show-errors [control]="MouDetailGeneralForm.controls.MrFirstInstTypeCode" [submit]="enjiForm.submitted"></show-errors>
+          <lib-uc-show-errors [control]="MouDetailGeneralForm.controls.MrFirstInstTypeCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-md-3 adInsLabel" for="DownPaymentFromToPrcnt" translate>Down Payment (%)</label>
+        <label class="col-md-3 adInsLabel adins-required-label" for="DownPaymentFromToPrcnt" translate>Down Payment (%)</label>
         <div class="col-md-2">
           <input type="number" class="form-control adInsInput" formControlName="DownPaymentFromPrcnt" 
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailGeneralForm.controls.DownPaymentFromPrcnt.invalid }" />
-          <show-errors [control]="MouDetailGeneralForm.controls.DownPaymentFromPrcnt" [submit]="enjiForm.submitted"></show-errors>
+          <lib-uc-show-errors [control]="MouDetailGeneralForm.controls.DownPaymentFromPrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
         </div>
         <div class="col-md-1" style="padding: 0; text-align: center;">
           To
@@ -67,15 +67,18 @@
         <div class="col-md-2">
           <input type="number" class="form-control adInsInput" formControlName="DownPaymentToPrcnt" 
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailGeneralForm.controls.DownPaymentToPrcnt.invalid }" />
-          <show-errors [control]="MouDetailGeneralForm.controls.DownPaymentToPrcnt" [submit]="enjiForm.submitted"></show-errors>
+          <lib-uc-show-errors [control]="MouDetailGeneralForm.controls.DownPaymentToPrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+        </div>
+        <div *ngIf="isDPInvalid" class="invalid-feedback d-block col-md-12 offset-md-3">
+          <div translate>{{dpInvalidMsg}}</div>
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-md-3 adInsLabel" for="TenorFromTo" translate>Tenor</label>
+        <label class="col-md-3 adInsLabel adins-required-label" for="TenorFromTo" translate>Tenor</label>
         <div class="col-md-2">
           <input type="number" class="form-control adInsInput" formControlName="TenorFrom" 
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailGeneralForm.controls.TenorFrom.invalid }" />
-          <show-errors [control]="MouDetailGeneralForm.controls.TenorFrom" [submit]="enjiForm.submitted"></show-errors>
+          <lib-uc-show-errors [control]="MouDetailGeneralForm.controls.TenorFrom" [submit]="enjiForm.submitted"></lib-uc-show-errors>
         </div>
         <div class="col-md-1" style="padding: 0; text-align: center;">
           To
@@ -83,7 +86,10 @@
         <div class="col-md-2">
           <input type="number" class="form-control adInsInput" formControlName="TenorTo" 
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailGeneralForm.controls.TenorTo.invalid }" />
-          <show-errors [control]="MouDetailGeneralForm.controls.TenorTo" [submit]="enjiForm.submitted"></show-errors>
+          <lib-uc-show-errors [control]="MouDetailGeneralForm.controls.TenorTo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+        </div>
+        <div *ngIf="isTenorInvalid" class="invalid-feedback d-block col-md-12 offset-md-3">
+          <div translate>{{tenorInvalidMsg}}</div>
         </div>
       </div>
     </div>
@@ -92,6 +98,9 @@
 <app-mou-cust-asset [MouCustId]="MouCustId" [IsAssetSelected]="MouDetailGeneralForm.controls.AssetTypeCode.value != ''"></app-mou-cust-asset>
 <div class="col-md-12" style="padding: 0; text-align: right;">
   <div class="form-actions right">
+    <button type="button" class="btn btn-raised btn-warning mr-1" (click)="back()" translate>
+      <i class="ft-x"></i> Back
+    </button>
     <button type="submit" class="btn btn-raised btn-primary">
       <i class="fa fa-check-square-o"></i> Continue
     </button>

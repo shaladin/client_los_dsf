@@ -1,0 +1,149 @@
+{
+    "title": "Pre Go Live Paging",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "textbox",
+            "name": "agr.AGRMNT_NO",
+            "id": "AgrmntNo",
+            "value": "",
+            "label": "AGREEMENT NO",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "app.APP_NO",
+            "id": "AppNoId",
+            "value": "",
+            "label": "APPLICATION NO",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "agr.PROD_OFFERING_NAME",
+            "id": "ProdOfferingNameId",
+            "value": "",
+            "label": "PROD OFFERING NAME",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "agr.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "CUSTOMER NAME",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "datepicker",
+            "name": "doh.DELIVERY_DT",
+            "id": "DeliveryDt",
+            "value": "",
+            "label": "DELIVERY DATE",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "wFht.USERNAME",
+            "id": "UsernameId",
+            "value": "",
+            "label": "TASK CLAIM BY",
+            "placeholder": "Placeholder"
+        }
+    ],
+    "querystring": {
+        "select": "SELECT wFht.USERNAME AS Username, agr.AGRMNT_NO AS AgrmntNo, app.APP_NO AS AppNo, agr.CUST_NAME AS CustName, agr.PROD_OFFERING_NAME AS ProdOfferingName, doh.DELIVERY_DT AS DeliveryDt, , app.LOB_CODE AS LobCode agr.AGRMNT_ID AS AgrmntId",
+        "from": "FROM dbo.AGRMNT agr WITH(NOLOCK) JOIN dbo.DELIVERY_ORDER_H doh WITH(NOLOCK) ON agr.AGRMNT_ID = doh.AGRMNT_ID JOIN dbo.APP app WITH(NOLOCK) ON app.APP_ID = agr.APP_ID JOIN dbo.V_WF_TASK_LIST wFht WITH(NOLOCK) ON agr.AGRMNT_NO = wFht.TRANSACTION_CODE"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "CLAIM BY",
+            "name": "Username"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "AGREEMENT NO",
+            "name": "AgrmntNo"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "APPLICATION NO",
+            "name": "AppNo"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "CUSTOMER NAME",
+            "name": "CustName"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "PRODUCT OFFERING NAME",
+            "name": "ProdOfferingName"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "DELIVERY DATE",
+            "name": "DeliveryDt"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Action"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "Username"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "AgrmntNo"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "AppNo"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "CustName"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "ProdOfferingName"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "DeliveryDt"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "edit",
+                    "path": "/PreGoLive/Detail",
+                    "param": [
+                        {
+                            "type": "AppId",
+                            "property": "AppId"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

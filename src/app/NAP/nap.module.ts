@@ -32,9 +32,7 @@ import { CustPersonalContactInformationComponent } from "./nap-tab/customer-data
 import { CustPersonalFinancialDataComponent } from "./nap-tab/customer-data/component/personal-financial-data/cust-personal-financial-data.component";
 import { SearchCrossAppComponent } from './nap-tab/app-model/search-cross-app/search-cross-app.component';
 import { UCSearchModule } from '@adins/ucsearch';
-import { CommissionPagingComponent } from './commission-paging/commission-paging.component';
-import { CommissionAddComponent } from './commission-add/commission-add.component';
-import { FormAddDynamicComponent } from "./commission-add/form-add-dynamic/form-add-dynamic.component";
+import { CommissionPagingComponent } from '../credit-process/commission-paging/commission-paging.component';
 // import { CustFinancialDataComponent } from "./nap-tab/customer-data/component/financial-data/cust-financial-data.component";
 import { CustBankAccountComponent } from "./nap-tab/customer-data/component/bank-account/cust-bank-account.component";
 import { CustJobDataComponent } from "./nap-tab/customer-data/component/job-data/cust-job-data.component";
@@ -47,13 +45,21 @@ import { CustCompanyContactInformationComponent } from "./nap-tab/customer-data/
 import { UcShowErrorsModule } from "@adins/uc-show-errors";
 import { CustCompanyFinancialDataComponent } from "./nap-tab/customer-data/component/company-financial-data/cust-company-financial-data.component";
 import { CustLegalDocComponent } from "./nap-tab/customer-data/component/legal-doc/cust-legal-doc.component";
-import { UcinputnumberModule } from "@adins/ucinputnumber";
 import { UcinputnumberComponent } from "./nap-tab/customer-data/component/ucinputnumber/ucinputnumber.component";
 import { InsuranceDataComponent } from "./nap-tab/insurance-data/insurance-data.component";
 import { AssetDataComponent } from "./nap-tab/asset-data/asset-data.component";
-import { RsvFundPagingComponent } from "./reserved-fund/reserved-fund-paging/reserved-fund-paging.component";
-import { RsvFundViewComponent } from "./reserved-fund/reserved-fund-view/reserved-fund-view.component";
-import { AppFinDataComponent } from './nap-tab/app-fin-data/app-fin-data.component';
+import { AppFinDataComponent } from './nap-tab/app-fin-data/app-fin-data.component'; 
+import { UcinputnumberModule } from "@adins/ucinputnumber";
+export const customCurrencyMaskConfig = {     
+    align: "left",     
+    allowNegative: true,     
+    allowZero: true,     
+    decimal: ".",     
+    precision: 2,     
+    prefix: "",     
+    suffix: "",     
+    thousands: ",",     
+    nullable: false };
 import { PhnVerifPagingComponent } from "./phone-verif/phone-verif-paging/phone-verif-paging.component";
 import { PhnVerifSubjectComponent } from "./phone-verif/phone-verif-subject/phone-verif-subject.component";
 import { PhnVerifSubjectViewComponent } from "./phone-verif/phone-verif-subject-view/phone-verif-subject-view.component";
@@ -62,76 +68,73 @@ import { PhnVerifSubjectVerifComponent } from "./phone-verif/phone-verif-subject
 
 
 @NgModule({
-  declarations: [
-    AppAddComponent,
-    AppPagingComponent,
-    AppAddDetailComponent,
-    AppReferantorComponent,
-    CustomerDataComponent,
-    CustUcaddressComponent,
-    AppModelComponent,
-    CustomerDataComponent,
-    CustPersonalMainDataComponent,
-    CustUcaddressComponent,
-    GuarantorPagingComponent,
-    GuarantorPersonalComponent,
-    GuarantorCompanyComponent,
-    CustUcaddressComponent,
-    AppGuarantorComponent,
-    AppLifeInsComponent,
-    CustPersonalContactInformationComponent,
-    CustPersonalFinancialDataComponent,
-    CustBankAccountComponent,
-    CustJobDataComponent,
-    CustSocmedComponent,
-    CustGrpMemberComponent,
-    CustCompanyMainDataComponent,
-    CustShareholderComponent,
-    CustCompanyContactInformationComponent,
-    CustCompanyFinancialDataComponent,
-    SearchCrossAppComponent,
-    CommissionPagingComponent,
-    CommissionAddComponent,
-    FormAddDynamicComponent,
-    CustShareholderComponent,
-    AppTcComponent,
-    CustLegalDocComponent,
-    UcinputnumberComponent,
-    InsuranceDataComponent,
-    AssetDataComponent,
-    RsvFundPagingComponent,
-    RsvFundViewComponent,
-    AppFinDataComponent,
-    PhnVerifPagingComponent,
-    PhnVerifSubjectComponent,
-    PhnVerifSubjectViewComponent,
-    PhnVerifSubjectVerifComponent
-  ],
-  imports: [
-    NapRoutingModule,
-    CommonModule,
-    ArchwizardModule,
-    UcpagingModule,
-    UcviewgenericModule,
-    UclookupgenericModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpModule,
-    CommonModule,
-    RouterModule,
-    MatCheckboxModule,
-    MatRadioModule,
-    MatSelectModule,
-    UcSubsectionModule,
-    SharingComponentModule,
-    UcaddressModule,
-    UcgridviewModule,
-    UcShowErrorsModule,
-    UCSearchModule,
-    UcinputnumberModule
-  ],
-  exports: [],
-  providers: [NGXToastrService],
+    declarations: [
+        AppAddComponent,
+        AppPagingComponent,
+        AppAddDetailComponent,
+        AppReferantorComponent,
+        CustomerDataComponent,
+        CustUcaddressComponent,
+        AppModelComponent,
+        CustomerDataComponent,
+        CustPersonalMainDataComponent,
+        CustUcaddressComponent,
+        GuarantorPagingComponent,
+        GuarantorPersonalComponent,
+        GuarantorCompanyComponent,
+        CustUcaddressComponent,
+        AppGuarantorComponent,
+        AppLifeInsComponent,
+        CustPersonalContactInformationComponent,
+        CustPersonalFinancialDataComponent,
+        CustBankAccountComponent,
+        CustJobDataComponent,
+        CustSocmedComponent,
+        CustGrpMemberComponent,
+        CustCompanyMainDataComponent,
+        CustShareholderComponent,
+        CustCompanyContactInformationComponent,
+        CustCompanyFinancialDataComponent,
+        SearchCrossAppComponent,
+        CommissionPagingComponent,
+        CustShareholderComponent,
+        AppTcComponent,
+        CustLegalDocComponent,
+        UcinputnumberComponent,
+        InsuranceDataComponent,
+        AssetDataComponent,
+        AppFinDataComponent,
+        PhnVerifPagingComponent,
+        PhnVerifSubjectComponent,
+        PhnVerifSubjectViewComponent,
+        PhnVerifSubjectVerifComponent
+        ],
+    imports: [ 
+        NapRoutingModule,
+        CommonModule,
+        ArchwizardModule,
+        UcpagingModule,
+        UcviewgenericModule,
+        UclookupgenericModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpModule,
+        CommonModule,
+        RouterModule,
+        MatCheckboxModule,
+        MatRadioModule,
+        MatSelectModule,
+        UcSubsectionModule,
+        SharingComponentModule, 
+        UcaddressModule,
+        UcgridviewModule,
+        UcShowErrorsModule,
+        UCSearchModule,
+        UcinputnumberModule,
+        // NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
+    ],
+    exports: [],
+    providers: [NGXToastrService],
 })
 
 export class NapModule { }

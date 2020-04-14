@@ -52,6 +52,14 @@
       </tbody>
     </table>
   </div>
+  <div class="col-md-12" style="padding: 0; text-align: right;">
+    <button type="button" class="btn btn-raised btn-warning mr-1" (click)="back()" translate>
+      <i class="ft-x"></i> Back
+    </button>
+    <button type="submit" class="btn btn-raised btn-primary" (click)="next()" translate>
+      <i class="fa fa-check-square-o"></i> Save and Continue
+    </button>
+  </div>
 </form>
 
 <ng-template #AdditionalCollateralContent let-c="close" let-d="dismiss">
@@ -178,7 +186,7 @@
               </lib-uc-show-errors>
             </div>
           </div>
-          <div class="form-group row">
+          <!-- <div class="form-group row">
             <label class="col-md-2" translate>Copy Address From</label>
             <div class="col-md-4">
               <div class="input-group">
@@ -196,7 +204,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
           <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="AddCollForm" [enjiForm]="enjiForm"
             [identifier]="'legalAddr'" [default]="legalAddrObj" [inputField]="inputFieldLegalObj" [showPhn3]="false">
           </lib-ucaddress>
@@ -209,14 +217,14 @@
             <label class="col-md-2" translate>Copy Address From</label>
             <div class="col-md-4">
               <div class="input-group">
-                <select class="form-control" formControlName="CopyFromResidence" [(ngModel)]="copyFromResidence">
+                <select class="form-control" formControlName="CopyFromLegal" [(ngModel)]="copyFromLegal">
                   <option *ngFor="let item of copyToLocationObj" [value]="item.Key">
                     {{item.Value}}
                   </option>
                 </select>
                 <div class="input-group-append">
                   <span class="input-group-btn">
-                    <button class="btn btn-raised btn-primary" type="button" (click)="copyToResidence()">
+                    <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocation()">
                       <i class="fa fa-check-square-o"></i>Copy
                     </button>
                   </span>
