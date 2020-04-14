@@ -250,7 +250,7 @@ export class LeadInputLeadDataComponent implements OnInit {
     );
 
     this.firstInstObj = new RefMasterObj();
-    this.firstInstObj.RefMasterTypeCode = "FIRSTINSTTYPE";
+    this.firstInstObj.RefMasterTypeCode = "FIRST_INST_TYPE";
     this.http.post(this.getListActiveRefMasterUrl, this.firstInstObj).subscribe(
       (response) => {
         this.returnFirstInstObj = response["ReturnObject"];
