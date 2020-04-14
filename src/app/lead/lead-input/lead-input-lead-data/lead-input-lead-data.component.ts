@@ -261,7 +261,7 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.http.post(this.getListActiveRefMasterUrl, this.firstInstObj).subscribe(
       (response) => {
         this.returnFirstInstObj = response["ReturnObject"];
-        this.LeadDataForm.patchValue({ MrFirstInstTypeCode: response['ReturnObject'][0]['Key'] });
+        this.LeadDataForm.patchValue({ MrFirstInstTypeCode: response['ReturnObject'][0][' '] });
       }
     );
 
