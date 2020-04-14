@@ -62,57 +62,86 @@
                 </div>
               </div>
             </div>
-            <div formArrayName="AssetAccessoriesObjs">
-              <table class="table table-responsive-md text-center table-hover">
-                <thead>
-                  <tr class="table-header">
-                    <th><span translate class="thead-header">No</span></th>
-                    <th><span translate class="thead-header">Supplier Name</span></th>
-                    <th><span translate class="thead-header">Accessories Name</span></th>
-                    <th><span translate class="thead-header">Accessories Price</span></th>
-                    <th><span translate class="thead-header">Down Payment</span></th>
-                    <th><span translate class="thead-header">Notes</span></th>
-                    <th><span translate class="thead-header">Delete</span></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let item of AssetDataForm.controls['AssetAccessoriesObjs'].controls;let i = index">
-                    <td [formGroupName]="i" class="text-center">
-                      {{i + 1}}
-                    </td>
-                    <td [formGroupName]="i" class="text-center">
-                      <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="dictSuppLookup[AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].No.value]" [parentForm]="AssetDataForm" [identifier]="'lookupSupplierObj' + AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].No.value" (lookup)="SetSupplierAccessory(i,$event)"></lib-uclookupgeneric>
-                    </td>
-                    <td [formGroupName]="i" class="text-center">
+            <div formArrayName="QuestionObjs">
+              <div class="form-body" [formGroupName]="i"
+                   *ngFor="let QuestionGrpList of PhoneDataForm.controls.QuestionObjs.controls; let i = index">
+                <h4 class="form-section card-title" translate>
+                  <i class="ft-file-text"></i>{{QuestionGrpList.value.VerfQuestionGrpName}}
+                </h4>
+                <span formArrayName="VerfQuestionAnswerList">
+                  <div class="form-group row" [formGroupName]="j"
+                       *ngFor="let QRList of QuestionGrpList.controls.VerfQuestionAnswerList.controls; let j = index">
+                    <label class="col-md-3" translate>{{QRList.value.QuestionGrp.VerfQuestionText}} </label>
+                    <div class="col-md-5" formGroupName="ResultGrp">
+                      <span *ngIf="QRList.value.QuestionGrp.VerfAnswerTypeCode == 'DDL' || QRList.value.QuestionGrp.VerfAnswerTypeCode == 'RBL'">
+                        <select class="form-control" formControlName="Answer"
+                                [ngClass]="{ 'is-invalid': enjiForm.submitted && QRList.controls.ResultGrp.controls.Answer.invalid }">
+                          <lib-uc-show-errors [control]="QRList.controls.ResultGrp.controls.Answer"
+                                              [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors>
+                          <option *ngFor="let item of ListVerfAnswer[i][j]" value="{{item}}">
+                            {{item}}
+                          </option>
+                        </select>
+                      </span>
+                      <span *ngIf="QRList.value.QuestionGrp.VerfAnswerTypeCode == 'TXT'">
+                        <input type="text" class="form-control" formControlName="Answer"
+                               [ngClass]="{ 'is-invalid': enjiForm.submitted && QRList.controls.ResultGrp.controls.Answer.invalid }">
+                        <lib-uc-show-errors [control]="QRList.controls.ResultGrp.controls.Answer"
+                                            [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
+                      </span>
+                      <span *ngIf="QRList.value.QuestionGrp.VerfAnswerTypeCode == 'DT_PICKER'">
+                        <input type="date" class="form-control" formControlName="Answer"
+                               [ngClass]="{ 'is-invalid': enjiForm.submitted && QRList.controls.ResultGrp.controls.Answer.invalid }">
+                        <lib-uc-show-errors [control]="QRList.controls.ResultGrp.controls.Answer"
+                                            [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
+                      </span>
+                      <span *ngIf="QRList.value.QuestionGrp.VerfAnswerTypeCode == 'UC_INPUT_NUMBER'">
+                        <input type="text" class="form-control" formControlName="Answer"
+                               [ngClass]="{ 'is-invalid': enjiForm.submitted && QRList.controls.ResultGrp.controls.Answer.invalid }">
+                        <lib-uc-show-errors [control]="QRList.controls.ResultGrp.controls.Answer"
+                                            [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
+                      </span>
+                    </div>
+                    <div class="col-md-4" formGroupName="ResultGrp">
+                      <textarea class="form-control" formControlName="Notes"></textarea>
+                    </div>
+                  </div>
+                </span>
+              </div>
+            </div>
+            <div *ngIf="listVerifResultHObj">
+              <lib-ucSubsection [id]="'historylistId'" [title]="'History List'" [panel]="'historylist'">
+              </lib-ucSubsection>
+              <div id="incomehistorylistInfo">
+                <table class="table table-responsive-md text-center table-hover">
+                  <thead>
+                    <tr class="table-header">
+                      <th class="text-left">Subject</th>
+                      <th class="text-left">Phone</th>
+                      <th class="text-left">Result</th>
+                      <th class="text-left">Subject Relation</th>
+                      <th class="text-left">Notes</th>
 
-                      <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="dictAccLookup[AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].No.value]" [parentForm]="AssetDataForm" [identifier]="'lookupAccObj' + AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].No.value" (lookup)="SetAccessory(i,$event)"></lib-uclookupgeneric>
-                    </td>
-                    <td [formGroupName]="i">
-                      <input type="number" class="form-control" formControlName="AccessoryPriceAmt"
-                             [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryPriceAmt.invalid }">
-                      <show-errors [control]="AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryPriceAmt" [submit]="enjiForm.submitted"></show-errors>
-                    </td>
-                    <td [formGroupName]="i">
-                      <input type="number" class="form-control" formControlName="AccessoryDownPaymentAmt"
-                             [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryDownPaymentAmt.invalid }">
-                      <show-errors [control]="AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryDownPaymentAmt" [submit]="enjiForm.submitted"></show-errors>
-                    </td>
-                    <td [formGroupName]="i">
-                      <input type="text" class="form-control" formControlName="AccessoryNotes"
-                             [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryNotes.invalid }">
-                      <show-errors [control]="AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryNotes" [submit]="enjiForm.submitted"></show-errors>
-                    </td>
-                    <td [formGroupName]="i">
-                      <a class="danger p-0" data-original-title="" title="" (click)="deleteAccessory(i)">
-                        <i class="ft-trash-2 font-medium-3 mr-2"></i>
-                      </a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of listVerifResultHObj">
+                      <td class="text-left">{{item.MrVerfObjectCode}}</td>
+                      <td class="text-left">{{item.Phn}}</td>
+                      <td class="text-left">{{item.MrVerfResultHStatName}}</td>
+                      <td class="text-left">{{item.MrVerfSubjectRelationName}}</td>
+                      <td class="text-left">{{item.Notes}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
             <div class="form-actions right">
-              <button type="submit" class="btn btn-raised btn-primary" (click)="SaveForm()">
+              <button type="submit" class="btn btn-raised btn-primary">
                 <i class="fa fa-check-square-o"></i> Save And Continue
               </button>
               <button type="button" class="btn btn-raised btn-primary" (click)="test()">
@@ -120,9 +149,7 @@
               </button>
             </div>
           </div>
-
         </form>
-
       </div>
     </div>
   </div>

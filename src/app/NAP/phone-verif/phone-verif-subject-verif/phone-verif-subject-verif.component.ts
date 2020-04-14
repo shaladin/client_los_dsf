@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, Validators, FormArray, FormGroup } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 import { environment } from '../../../../environments/environment';
@@ -32,26 +32,27 @@ export class PhnVerifSubjectVerifComponent implements OnInit {
     Subject: [''],
     SubjectName: [''],
     MrVerfSubjectRelationCode: ['', [Validators.required, Validators.maxLength(50)]],
-    VerfDt: ['', Validators.required],
     MrVerfResultHStatCode: ['', [Validators.required, Validators.maxLength(50)]],
     Phn: ['', [Validators.required, Validators.maxLength(50)]],
     PhnType: ['', [Validators.required, Validators.maxLength(100)]],
     Notes: ['', Validators.maxLength(4000)],
     Score: [''],
-    QuestionObjs: this.fb.array([])
+    QuestionObjs: new FormArray([])
   });
 
   PhoneDataObj: VerifResulHDetailObj;
 
-
+  ListVerfAnswer = [];
   getVerfResultUrl: any;
   getAppUrl: any;
   getListVerfResulHtUrl: any;
   getVerfResulHtUrl: any;
   getAppCustUrl: any;
   getRefMasterUrl: any;
+  getRefStatusUrl: any;
   getQuestionUrl: any;
   saveVerfResultHDetailUrl: any;
+  getPhnNumberUrl: any;
 
   viewObj: any;
 
@@ -81,15 +82,15 @@ export class PhnVerifSubjectVerifComponent implements OnInit {
     RefMasterTypeCode: "",
   };
 
+  refStatusObj = {
+    StatusGrpCode: ""
+  };
+
   phnObj = {
     IdSource: 0,
     AppId: 0,
     Source: "",
   };
-
-  verfSchemeObj = {
-    VerfSchemeCode : "CF4W_PHONEVERIF",
-  }
 
   AppObj: any;
   AppCustObj: any;
@@ -122,21 +123,26 @@ export class PhnVerifSubjectVerifComponent implements OnInit {
     this.getVerfResulHtUrl = AdInsConstant.GetVerfResultHById;
     this.getAppCustUrl = AdInsConstant.GetAppCustByAppId;
     this.getRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
-    this.getQuestionUrl = AdInsConstant.GetVerfQuestionAnswerListByVerfSchemeCode;
+    this.getRefStatusUrl = AdInsConstant.GetListActiveRefStatusByStatusGrpCode;
+    this.getPhnNumberUrl = AdInsConstant.GetPhoneNumberByIdSourceAppIdAndSubject;
+    this.getQuestionUrl = AdInsConstant.GetVerfQuestionListByAppIdAndSubjectForPhoneVerif;
     this.saveVerfResultHDetailUrl = AdInsConstant.AddVerfResultHeaderAndVerfResultDetail;
   }
 
   async ngOnInit(): Promise<void> {
-    //this.PhoneDataForm.patchValue({
-    //  Subject: this.subjectType,
-    //  SubjectName: this.subjectName
-    //});
+    var VerfQAObj = {
+      AppId: this.appId,
+      Subject: this.subjectType
+    };
     this.initUrl();
     this.setPhnObj();
     this.appObj.AppId = this.appId;
-    this.GetQuestionList(this.verfSchemeObj);
     this.verfResHObj.VerfResultHId = this.verfResultHId;
     this.viewObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
+    this.bindResultObj();
+    this.bindSubjectRelationObj();
+    this.GetPhoneNumber(this.phnObj);
+    this.GetQuestionList(VerfQAObj);
     await this.GetAppData(this.appObj);
     await this.GetAppCust(this.appObj);
     await this.GetVerfResultData(this.verfResObj);
@@ -169,6 +175,7 @@ export class PhnVerifSubjectVerifComponent implements OnInit {
     var businessDt = new Date(value);
 
     this.PhoneDataObj = new VerifResulHDetailObj();
+    this.PhoneDataObj.VerfResultDListObj = new Array<VerfResultDObj>();
     this.PhoneDataObj.VerfResultHObj.VerfResultId = this.verifResultObj.VerfResultId;
     this.PhoneDataObj.VerfResultHObj.VerfSchemeHId = this.verfSchemeHId;
     this.PhoneDataObj.VerfResultHObj.MrVerfObjectCode = this.subjectType;
@@ -181,13 +188,18 @@ export class PhnVerifSubjectVerifComponent implements OnInit {
     this.PhoneDataObj.VerfResultHObj.Notes = this.PhoneDataForm.controls["Notes"].value;
 
     for (let i = 0; i < this.PhoneDataForm.controls["QuestionObjs"].value.length; i++) {
-      var question = new VerfResultDObj();
-      question.VerfQuestionAnswerId = this.PhoneDataForm.controls["QuestionObjs"].value[i].VerfQuestionAnswerId;
-      question.VerfQuestionText = this.PhoneDataForm.controls["ReservedFundObjs"].value[i].VerfQuestionText;
-      question.Answer = this.PhoneDataForm.controls["ReservedFundObjs"].value[i].Answer;
-      question.Notes = this.PhoneDataForm.controls["ReservedFundObjs"].value[i].Notes;
-      question.VerfQuestionGroupCode = this.PhoneDataForm.controls["ReservedFundObjs"].value[i].VerfQuestionGroupCode;
-      this.PhoneDataObj.VerfResultDListObj.push(question);
+      var currGrp = this.PhoneDataForm.controls["QuestionObjs"].value[i].VerfQuestionAnswerList;
+      for (let j = 0; j < currGrp.length; j++) {
+        var currAnswer = currGrp[j].ResultGrp;
+        var question = new VerfResultDObj();
+        question.VerfQuestionAnswerId = currAnswer.VerfQuestionAnswerId;
+        question.VerfQuestionText = currAnswer.VerfQuestionText;
+        question.Answer = currAnswer.Answer;
+        question.Notes = currAnswer.Notes;
+        question.SeqNo = currAnswer.SeqNo;
+        question.VerfQuestionGroupCode = currAnswer.VerfQuestionGroupCode;
+        this.PhoneDataObj.VerfResultDListObj.push(question);
+      }
     }
   }
 
@@ -223,49 +235,88 @@ export class PhnVerifSubjectVerifComponent implements OnInit {
     );
   }
 
-  async GetQuestionList(appObj) {
-    await this.http.post(this.getQuestionUrl, this.appObj).toPromise().then(
+  async GetQuestionList(VerfQAObj) {
+    await this.http.post(this.getQuestionUrl, VerfQAObj).toPromise().then(
       (response) => {
         console.log(response);
         this.QuestionObj = response["ReturnObject"];
-        this.verfResultDListObjs = new Array<VerfResultDObj>();
-        for (let i = 0; i < this.QuestionObj.VerfQuestionAnswerListObj.length; i++) {
-          for (let j = 0; j < this.QuestionObj.VerfQuestionAnswerListObj[i].verfQuestionAnswerList.length; j++) {
-            var verfResultD = new VerfResultDObj();
-            //verfResultD.VerfResultHId = this.verfResultHId;
-            verfResultD.VerfQuestionAnswerId = this.QuestionObj.VerfQuestionAnswerListObj[i].verfQuestionAnswerList[j].VerfQuestionAnswerId;
-            verfResultD.VerfQuestionText = this.QuestionObj.VerfQuestionAnswerListObj[i].verfQuestionAnswerList[j].VerfQuestionText;
-            verfResultD.Answer = this.QuestionObj.VerfQuestionAnswerListObj[i].verfQuestionAnswerList[j].VerfAnswer;
-            verfResultD.Notes = this.QuestionObj.VerfQuestionAnswerListObj[i].verfQuestionAnswerList[j].VerfAnswerTypeDescr;
-            verfResultD.VerfQuestionGroupCode = this.QuestionObj.VerfQuestionAnswerListObj[i].VerfQuestionGrpCode;
-            this.verfResultDListObjs.push(verfResultD);
-          }
-        }
-        this.verfSchemeHId = verfResultD.VerfQuestionAnswerId = this.QuestionObj.VerfQuestionAnswerListObj[0].verfQuestionAnswerList[0].VerfSchemeHId;
-        for (let k = 0; k < this.verfResultDListObjs.length; k++) {
-          var listquestions = this.PhoneDataForm.controls["QuestionObjs"] as FormArray;
-          listquestions.push(this.addGroup(this.verfResultDListObjs[k], k));
+        if (this.QuestionObj != null && this.QuestionObj.VerfQuestionAnswerListObj.length != 0) {
+          this.verfSchemeHId = this.QuestionObj.VerfSchemeHId
+          this.GenerateFormVerfQuestion(this.QuestionObj);
+
         }
 
       }
     );
   }
 
-  addGroup(verfResultDListObjs, k) {
-    return this.fb.group({
-      No: [k],
-      //VerfResultHId: [verfResultDListObjs.VerfResultHId],
-      VerfQuestionAnswerId: [verfResultDListObjs.VerfQuestionAnswerId],
-      VerfQuestionText: [verfResultDListObjs.VerfQuestionText],
-      Answer: [verfResultDListObjs.Answer],
-      Notes: [verfResultDListObjs.Notes],
-      VerfQuestionGroupCode: [verfResultDListObjs.VerfQuestionGroupCode]
-    })
+  GenerateFormVerfQuestion(obj) {
+    this.QuestionObj.VerfQuestionAnswerListObj[0].VerfQuestionGrpName
+    var grpListObj = this.QuestionObj.VerfQuestionAnswerListObj;
 
+    for (let i = 0; i < grpListObj.length; i++) {
+      var QuestionGrp = this.fb.group({
+        VerfQuestionGrpCode: grpListObj[i].VerfQuestionGrpCode,
+        VerfQuestionGrpName: grpListObj[i].VerfQuestionGrpName,
+        VerfQuestionAnswerList: this.fb.array([])
+      }) as FormGroup;
+      (this.PhoneDataForm.controls["QuestionObjs"] as FormArray).push(QuestionGrp);
+      var ResultGrp = this.PhoneDataForm.controls["QuestionObjs"]["controls"][i]["controls"]["VerfQuestionAnswerList"] as FormArray;
+      var QuestionList = grpListObj[i].verfQuestionAnswerList;
+
+      this.ListVerfAnswer.push([]);
+      if (QuestionList.length != 0) {
+        for (let j = 0; j < QuestionList.length; j++) {
+          var QuestionResultGrp = this.fb.group({
+            QuestionGrp: this.fb.group({
+              VerfQuestionAnswerId: QuestionList[j].VerfQuestionAnswerId,
+              RefVerfAnswerTypeId: QuestionList[j].RefVerfAnswerTypeId,
+              VerfQuestionCode: QuestionList[j].VerfQuestionCode,
+              VerfQuestionText: QuestionList[j].VerfQuestionText,
+              VerfAnswer: QuestionList[j].VerfAnswer,
+              IsActive: QuestionList[j].IsActive,
+              VerfSchemeHId: QuestionList[j].VerfSchemeHId,
+              VerfQuestionGrpCode: QuestionList[j].VerfQuestionGrpCode,
+              VerfQuestionGrpName: QuestionList[j].VerfQuestionGrpName,
+              VerfAnswerTypeCode: QuestionList[j].VerfAnswerTypeCode,
+              VerfAnswerTypeDescr: QuestionList[j].VerfAnswerTypeDescr
+            }),
+            ResultGrp: this.fb.group({
+              VerfResultDId: 0,
+              VerfResultHId: 0,
+              VerfQuestionAnswerId: QuestionList[j].VerfQuestionAnswerId,
+              VerfQuestionText: QuestionList[j].VerfQuestionText,
+              Answer: "",
+              Notes: "",
+              SeqNo: j + 1,
+              Score: 0,
+              VerfQuestionGroupCode: grpListObj[i].VerfQuestionGrpCode
+            })
+          }) as FormGroup;
+          if (QuestionList[j].VerfAnswerTypeCode == "DDL") {
+            if (QuestionList[j].VerfAnswer != "") {
+              var ddlList = QuestionList[j].VerfAnswer.split(";");
+              this.ListVerfAnswer[i].push(ddlList);
+              QuestionResultGrp.controls.ResultGrp.patchValue({
+                Answer: this.ListVerfAnswer[i][j][0]
+              })
+            } else {
+              this.ListVerfAnswer[i].push("");
+            }
+          } else if (QuestionList[j].VerfAnswerTypeCode == "UC_INPUT_NUMBER") {
+            QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
+            this.ListVerfAnswer[i].push("");
+          } else {
+            this.ListVerfAnswer[i].push("");
+          }
+          ResultGrp.push(QuestionResultGrp);
+        }
+      }
+    }
   }
 
-  async GetPhoneNumber(verfSchemeObj) {
-    await this.http.post(this.getVerfResulHtUrl, this.verfSchemeObj).toPromise().then(
+  async GetPhoneNumber(phnObj) {
+    await this.http.post(this.getPhnNumberUrl, phnObj).toPromise().then(
       (response) => {
         console.log(response);
         this.PhoneNumberObj = response["ReturnObject"];
@@ -300,17 +351,17 @@ export class PhnVerifSubjectVerifComponent implements OnInit {
   }
 
   async GetListVerfResulHtData(verfResHObj) {
-    await this.http.post(this.getListVerfResulHtUrl, this.verfResObj).toPromise().then(
+    await this.http.post(this.getListVerfResulHtUrl, verfResHObj).toPromise().then(
       (response) => {
         console.log(response);
-        this.listVerifResultHObj = response;
+        this.listVerifResultHObj = response["responseVerfResultHCustomObjs"];
       }
     );
   }
 
   bindResultObj() {
-    this.refMasterObj.RefMasterTypeCode = "CUSTCONF_RESULT";
-    this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
+    this.refStatusObj.StatusGrpCode = "VERF_RESULT_STAT";
+    this.http.post(this.getRefStatusUrl, this.refStatusObj).subscribe(
       (response) => {
         this.ResultObj = response["ReturnObject"];
         if (this.ResultObj.length > 0) {
@@ -343,4 +394,52 @@ export class PhnVerifSubjectVerifComponent implements OnInit {
       PhnType: phnType
     });
   }
+
+  test() {
+    this.setPhoneVerifData();
+    console.log(this.PhoneDataForm);
+    console.log(this.PhoneDataObj);
+  }
 }
+
+
+//async GetQuestionList(VerfQAObj) {
+//  await this.http.post(this.getQuestionUrl, VerfQAObj).toPromise().then(
+//    (response) => {
+//      console.log(response);
+//      this.QuestionObj = response["ReturnObject"];
+//      this.verfResultDListObjs = new Array<VerfResultDObj>();
+//      for (let i = 0; i < this.QuestionObj.VerfQuestionAnswerListObj.length; i++) {
+//        for (let j = 0; j < this.QuestionObj.VerfQuestionAnswerListObj[i].verfQuestionAnswerList.length; j++) {
+//          var verfResultD = new VerfResultDObj();
+//          //verfResultD.VerfResultHId = this.verfResultHId;
+//          verfResultD.VerfQuestionAnswerId = this.QuestionObj.VerfQuestionAnswerListObj[i].verfQuestionAnswerList[j].VerfQuestionAnswerId;
+//          verfResultD.VerfQuestionText = this.QuestionObj.VerfQuestionAnswerListObj[i].verfQuestionAnswerList[j].VerfQuestionText;
+//          verfResultD.Answer = this.QuestionObj.VerfQuestionAnswerListObj[i].verfQuestionAnswerList[j].VerfAnswer;
+//          verfResultD.Notes = this.QuestionObj.VerfQuestionAnswerListObj[i].verfQuestionAnswerList[j].VerfAnswerTypeDescr;
+//          verfResultD.VerfQuestionGroupCode = this.QuestionObj.VerfQuestionAnswerListObj[i].VerfQuestionGrpCode;
+//          this.verfResultDListObjs.push(verfResultD);
+//        }
+//      }
+//      this.verfSchemeHId = verfResultD.VerfQuestionAnswerId = this.QuestionObj.VerfQuestionAnswerListObj[0].verfQuestionAnswerList[0].VerfSchemeHId;
+//      for (let k = 0; k < this.verfResultDListObjs.length; k++) {
+//        var listquestions = this.PhoneDataForm.controls["QuestionObjs"] as FormArray;
+//        listquestions.push(this.addGroup(this.verfResultDListObjs[k], k));
+//      }
+
+//    }
+//  );
+//}
+
+//addGroup(verfResultDListObjs, k) {
+//  return this.fb.group({
+//    No: [k],
+//    //VerfResultHId: [verfResultDListObjs.VerfResultHId],
+//    VerfQuestionAnswerId: [verfResultDListObjs.VerfQuestionAnswerId],
+//    VerfQuestionText: [verfResultDListObjs.VerfQuestionText],
+//    Answer: [verfResultDListObjs.Answer],
+//    Notes: [verfResultDListObjs.Notes],
+//    VerfQuestionGroupCode: [verfResultDListObjs.VerfQuestionGroupCode]
+//  })
+
+//}

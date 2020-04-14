@@ -146,12 +146,12 @@ export class PhnVerifSubjectComponent implements OnInit {
     }
   }
 
-
-
-
-
-  test() {
+  View(VerifResultHid, SubjectName) {
     console.log(this.phoneVerifObj);
-    window.open("http://localhost:4200", "_blank");
+    window.open("/Nap/PhoneVerif/Subject/View?AppId=" + this.appId + "&VerfResultHId=" + VerifResultHid + "&Name=" + SubjectName, "_blank");
+  }
+
+  Verif(VerifResultHid, SubjectName, SubjectType, IdSource) {
+    window.open("/Nap/PhoneVerif/Subject/Verif?AppId=" + this.appId + "&VerfResultHId=" + VerifResultHid + "&Name=" + SubjectName + "&Type=" + SubjectType + "&Source=" + IdSource, "_blank");
   }
 }

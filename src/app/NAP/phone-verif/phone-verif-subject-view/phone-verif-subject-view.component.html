@@ -64,11 +64,34 @@
           <div id="detailVerifSubj">
             <div>
               <label class="col-md-3">Phone Number</label>
-              <label class="col-md-3">{{verifResultHDetailObj.Phn}}</label>
+              <label class="col-md-3">{{verifResultHDetailObj[0].Phn}}</label>
             </div>
             <div>
               <label class="col-md-3">Status</label>
-              <label class="col-md-3">{{verifResultHDetailObj.MrVerfResultHStatName}}</label>
+              <label class="col-md-3">{{verifResultHDetailObj[0].MrVerfResultHStatName}}</label>
+            </div>
+            <div *ngIf="listVerifResultDObj">
+              <div *ngFor="let item of listVerifResultDObj">
+                <br />
+                <h5 class="col-md-12">{{item.VerfQuestionGrpName}}</h5>
+                <table class="table table-responsive-md text-center table-hover">
+                  <thead>
+                    <tr class="table-header">
+                      <th class="text-left">Question</th>
+                      <th class="text-left">Answer</th>
+                      <th class="text-left">Notes</th>
+
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="item.VerResultList">
+                    <tr *ngFor="let value of item.VerResultList">
+                      <td class="text-left">{{value.VerfQuestionText}}</td>
+                      <td class="text-left">{{value.Answer}}</td>
+                      <td class="text-left">{{value.Notes}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>

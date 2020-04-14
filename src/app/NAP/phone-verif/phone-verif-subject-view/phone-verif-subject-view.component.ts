@@ -23,6 +23,7 @@ export class PhnVerifSubjectViewComponent implements OnInit {
   getAppUrl: any;
   getListVerfResulHtUrl: any;
   getVerfResulHtUrl: any;
+  getVerfResultDUrl: any;
 
   viewObj: any;
 
@@ -44,6 +45,10 @@ export class PhnVerifSubjectViewComponent implements OnInit {
     MrVerfObjectCode: "",
   };
 
+  verfResDObj = {
+    VerfResultHId: 0,
+  };
+
 
   phoneVerifObj: any;
   AppObj: any;
@@ -51,7 +56,7 @@ export class PhnVerifSubjectViewComponent implements OnInit {
   verifResultHObj: any;
   verifResultHDetailObj: any;
   listVerifResultHObj: any;
-
+  listVerifResultDObj: any;
   subjectName: string;
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
@@ -68,6 +73,7 @@ export class PhnVerifSubjectViewComponent implements OnInit {
     this.getVerfResultUrl = AdInsConstant.GetVerfResultByTrxRefNoAndVerfTrxTypeCode;
     this.getListVerfResulHtUrl = AdInsConstant.GetVerfResultHsByVerfResultIdAndObjectCode;
     this.getVerfResulHtUrl = AdInsConstant.GetVerfResultHById;
+    this.getVerfResultDUrl = AdInsConstant.GetListVerfResultDInQuestionGrp;
   }
 
   async ngOnInit(): Promise<void> {
@@ -78,7 +84,7 @@ export class PhnVerifSubjectViewComponent implements OnInit {
     await this.GetAppData(this.appObj);
     await this.GetVerfResultData(this.verfResObj);
     await this.GetVerfResultHData(this.verfResHObj);
-
+    await this.GetListVerfResulHtData(this.verfResHObj);
   }
 
   async GetAppData(appObj) {
@@ -113,10 +119,10 @@ export class PhnVerifSubjectViewComponent implements OnInit {
   }
 
   async GetListVerfResulHtData(verfResHObj) {
-    await this.http.post(this.getListVerfResulHtUrl, this.verfResObj).toPromise().then(
+    await this.http.post(this.getListVerfResulHtUrl, verfResHObj).toPromise().then(
       (response) => {
         console.log(response);
-        this.listVerifResultHObj = response;
+        this.listVerifResultHObj = response["responseVerfResultHCustomObjs"];
       }
     );
   }
@@ -124,10 +130,22 @@ export class PhnVerifSubjectViewComponent implements OnInit {
   ViewSubjDetail(VerfResultHId) {
     this.verifResultHDetailObj = this.listVerifResultHObj.filter(
       vrh => vrh.VerfResultHId === VerfResultHId);
-    this.isViewSubDetail == true;
+    this.isViewSubDetail = true;
+    this.verfResDObj.VerfResultHId = VerfResultHId;
+    this.http.post(this.getVerfResultDUrl, this.verfResDObj).subscribe(
+      (response) => {
+        console.log(response);
+        this.listVerifResultDObj = response["ReturnObject"];
+        console.log(this.listVerifResultDObj);
+      }
+    );
   }
 
   BackSubj() {
-    this.isViewSubDetail == false;
+    this.isViewSubDetail = false;
+  }
+
+  test(item) {
+    console.log(item);
   }
 }

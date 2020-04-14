@@ -57,6 +57,7 @@ import { AppFinDataComponent } from './nap-tab/app-fin-data/app-fin-data.compone
 import { PhnVerifPagingComponent } from "./phone-verif/phone-verif-paging/phone-verif-paging.component";
 import { PhnVerifSubjectComponent } from "./phone-verif/phone-verif-subject/phone-verif-subject.component";
 import { PhnVerifSubjectViewComponent } from "./phone-verif/phone-verif-subject-view/phone-verif-subject-view.component";
+import { PhnVerifSubjectVerifComponent } from "./phone-verif/phone-verif-subject-verif/phone-verif-subject-verif.component";
 
 
 
@@ -103,7 +104,8 @@ import { PhnVerifSubjectViewComponent } from "./phone-verif/phone-verif-subject-
     AppFinDataComponent,
     PhnVerifPagingComponent,
     PhnVerifSubjectComponent,
-    PhnVerifSubjectViewComponent
+    PhnVerifSubjectViewComponent,
+    PhnVerifSubjectVerifComponent
   ],
   imports: [
     NapRoutingModule,

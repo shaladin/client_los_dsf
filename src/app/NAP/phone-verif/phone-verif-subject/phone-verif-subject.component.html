@@ -31,10 +31,10 @@
               <td class="text-left">{{item.Result}}</td>
               <td class="text-left">{{item.SubjectRelation}}</td>
               <td class="text-left">{{item.Notes}}</td>
-              <td class="text-left" *ngIf="item.PhoneNumber != null"><a (click)="test()">View</a></td>
+              <td class="text-left" *ngIf="item.PhoneNumber != null"><a (click)="View(item.VerfResultHId, item.SubjectName)">View</a></td>
               <td class="text-left" *ngIf="item.PhoneNumber == null"></td>
               <td class="text-left">
-                <a class="success p-0" data-original-title="" title="" (click)="test()">
+                <a class="success p-0" data-original-title="" title="" (click)="Verif(item.VerfResultHId, item.SubjectName, item.Subject, item.IdSource)">
                   <i class="ft-edit-2 font-medium-3 mr-2 px-2"></i>
                 </a>
               </td>
