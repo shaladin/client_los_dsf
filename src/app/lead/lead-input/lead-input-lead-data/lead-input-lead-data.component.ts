@@ -87,6 +87,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   leadObj: LeadObj;
   returnLeadObj: any;
   returnLobCode: string;
+  TaskListId: any;
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) { 
     this.getListActiveRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
@@ -105,7 +106,13 @@ export class LeadInputLeadDataComponent implements OnInit {
         }
         if (params["mode"] != null) {
           this.typePage = params["mode"];
-      }
+        }
+        if (params["TaskListId"] == null || params["TaskListId"] =="TaskListId") {
+          this.TaskListId = 0;
+        }
+        else{
+          this.TaskListId = params["TaskListId"];
+        }
     });
   }
 
@@ -253,8 +260,6 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.firstInstObj.RefMasterTypeCode = "FIRST_INST_TYPE";
     this.http.post(this.getListActiveRefMasterUrl, this.firstInstObj).subscribe(
       (response) => {
-        console.log('isi getlist');
-        console.log(response);
         this.returnFirstInstObj = response["ReturnObject"];
         this.LeadDataForm.patchValue({ MrFirstInstTypeCode: response['ReturnObject'][0]['Key'] });
       }
@@ -414,7 +419,6 @@ export class LeadInputLeadDataComponent implements OnInit {
       this.setLeadApp();
       this.http.post(this.editLeadData, this.leadInputLeadDataObj).subscribe(
         (response) => {
-          console.log(response);
           this.toastr.successMessage(response["message"]);
           this.router.navigate(["/Lead/Lead/Paging"]);
           // console.log(response);
@@ -430,7 +434,6 @@ export class LeadInputLeadDataComponent implements OnInit {
       this.setLeadApp();
       this.http.post(this.editLeadData, this.leadInputLeadDataObj).subscribe(
         (response) => {
-          console.log(response);
           this.toastr.successMessage(response["message"]);
           this.router.navigate(["/Lead/Lead/Paging"]);
           // console.log(response);
@@ -450,10 +453,10 @@ export class LeadInputLeadDataComponent implements OnInit {
       this.setLeadAsset();
       this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
       this.setLeadApp();
-      //this.leadInputLeadDataObj.WfTaskListId = "0";
+      this.leadInputLeadDataObj.WfTaskListId = this.TaskListId;
+
       this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
         (response) => {
-          console.log(response);
           this.toastr.successMessage(response["message"]);
           this.router.navigate(["/Lead/Lead/Paging"]);
           // console.log(response);
@@ -467,10 +470,10 @@ export class LeadInputLeadDataComponent implements OnInit {
       this.leadInputLeadDataObj = new LeadInputLeadDataObj();
       this.setLeadAsset();
       this.setLeadApp();
-      //this.leadInputLeadDataObj.WfTaskListId = "0";
+      this.leadInputLeadDataObj.WfTaskListId = this.TaskListId;
+
       this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
         (response) => {
-          console.log(response);
           this.toastr.successMessage(response["message"]);
           this.router.navigate(["/Lead/Lead/Paging"]);
           // console.log(response);
