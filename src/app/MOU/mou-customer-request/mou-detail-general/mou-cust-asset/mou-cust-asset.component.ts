@@ -82,7 +82,7 @@ export class MouCustAssetComponent implements OnInit {
             this.IsAssetSelected = true;
             this.mouAssetList = [...response.ReturnObject];
             this.listExclude = new Array<string>();
-            for(const item in this.mouAssetList){
+            for(const item of this.mouAssetList){
               this.listExclude.push(item["FullAssetCode"]);
             }
           }
