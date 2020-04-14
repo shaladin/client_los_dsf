@@ -51,6 +51,10 @@
             </mat-tab>
           </mat-tab-group>
 
+          <lib-ucapproval [inputObj]="inputObj" (nextTask)="onAvailableNextTask($event)" (result)="onApprovalSubmited($event)" ></lib-ucapproval>
+          <br/>
+          <app-mou-view [inputMouCustId]="MouCustId"></app-mou-view>
+
           <form class="form form-horizontal" [formGroup]="MouApprovalDataForm" (ngSubmit)="MouApprovalDataForm.valid"
             #enjiForm="ngForm">
             <div class="form-actions right">

@@ -7,6 +7,8 @@ import { CustConfirmationPagingComponent } from './cust-confirmation/cust-confir
 import { CustConfirmationDetailComponent } from './cust-confirmation/cust-confirmation-detail/cust-confirmation-detail.component';
 import { CustConfirmationSubjViewComponent } from './cust-confirmation/cust-confirmation-subj-view/cust-confirmation-subj-view.component';
 import { CustConfirmationSubjDetailComponent } from './cust-confirmation/cust-confirmation-subj-detail/cust-confirmation-subj-detail.component';
+import { DeliveryOrderPagingComponent } from './delivery-order/delivery-order-paging/delivery-order-paging.component';
+import { DeliveryOrderDetailComponent } from './delivery-order/delivery-order-detail/delivery-order-detail.component';
 
 const routes: Routes = [
   {
@@ -60,7 +62,21 @@ const routes: Routes = [
         data: {
           title: 'Customer Confirmation Subject Detail'
         }
-      }
+      },
+      {
+        path: 'DeliveryOrder/Paging',
+        component: DeliveryOrderPagingComponent,
+        data: {
+          title: 'Delivery Order'
+        }
+      },
+      {
+        path: 'DeliveryOrder/Detail',
+        component: DeliveryOrderDetailComponent,
+        data: {
+          title: 'Delivery Order'
+        }
+      },
     ]
   }
 ];
