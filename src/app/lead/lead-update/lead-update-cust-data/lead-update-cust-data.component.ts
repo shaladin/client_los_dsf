@@ -28,6 +28,7 @@ import { RefProfessionObj } from 'app/shared/model/RefProfessionObj.Model';
 export class LeadUpdateCustDataComponent implements OnInit {
   @Input() LeadId: number;
 
+  WfTaskListId: any;
   jobAddrId: any;
   othBizAddrId: any;
   jobDataId: any;
@@ -128,7 +129,10 @@ export class LeadUpdateCustDataComponent implements OnInit {
         }
         if (params["mode"] != null) {
           this.typePage = params["mode"];
-      }
+        }
+        // if (params["WfTaskListId"] != null) {
+        //   this.WfTaskListId = params["WfTaskListId"];
+        // }
     });
   }
 
@@ -463,10 +467,6 @@ export class LeadUpdateCustDataComponent implements OnInit {
     this.leadInputObj.LeadCustPersonalFinDataObj.MonthlyExpenseAmt = this.CustomerDataForm.controls["MonthlyExpense"].value;
   }
 
-  // back(){
-  //   this.wizard.goToPreviousStep();
-  // }
-
   SaveForm(){
     if(this.typePage == "edit") {
       this.leadInputObj = new LeadInputObj();
@@ -484,9 +484,10 @@ export class LeadUpdateCustDataComponent implements OnInit {
       this.setLeadCustPersonalJobData();
       this.leadInputObj.LeadCustPersonalFinDataObj.RowVersion = this.resLeadCustPersonalFinDataObj.RowVersion;
       this.setLeadCustPersonalFinData();
+      //this.leadInputObj.WfTaskListId = this.WfTaskListId;
 
-      console.log("ccc");
-      console.log(this.leadInputObj)
+      // console.log("ccc");
+      // console.log(this.leadInputObj)
 
       this.http.post(this.addEditLeadCustPersonal, this.leadInputObj).subscribe(
         (response) => {
@@ -513,9 +514,10 @@ export class LeadUpdateCustDataComponent implements OnInit {
       this.setResidenceAddr();
       this.setLeadCustPersonalJobData();
       this.setLeadCustPersonalFinData();
+      //this.leadInputObj.WfTaskListId = this.WfTaskListId;
 
-      console.log("ccc");
-      console.log(this.leadInputObj)
+      // console.log("ccc");
+      // console.log(this.leadInputObj)
 
       this.http.post(this.addEditLeadCustPersonal, this.leadInputObj).subscribe(
         (response) => {

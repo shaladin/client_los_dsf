@@ -460,7 +460,14 @@ export class LeadInputCustDataComponent implements OnInit {
 
   setLeadCustPersonalFinData(){
     this.leadInputObj.LeadCustPersonalFinDataObj.MonthlyIncomeAmt = this.CustomerDataForm.controls["MonthlyIncome"].value;
-    this.leadInputObj.LeadCustPersonalFinDataObj.MonthlyExpenseAmt = this.CustomerDataForm.controls["MonthlyExpense"].value;
+    var monthlyExpense = this.CustomerDataForm.controls["MonthlyExpense"].value;
+    if(monthlyExpense == ''){
+      this.leadInputObj.LeadCustPersonalFinDataObj.MonthlyExpenseAmt = 0;
+    }
+    else{
+      this.leadInputObj.LeadCustPersonalFinDataObj.MonthlyExpenseAmt = monthlyExpense;
+    }
+    
   }
 
   // back(){
