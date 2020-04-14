@@ -11,12 +11,49 @@
             "placeholder": "Placeholder"
         },
         {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "MOU.MR_MOU_TYPE_CODE",
+            "id": "MouTypeId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "isSelectOne": false,
+            "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
+            "label": "MOU TYPE",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "RefMasterTypeCode",
+            "criteriaPropValue": "MOU_TYPE"
+        },
+        {
             "type": "textbox",
             "name": "MOU.CUST_NAME",
             "id": "CustNameId",
             "value": "",
             "label": "CUSTOMER NAME",
             "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "name": "MOU.IS_REVOLVING",
+            "id": "IsRevolvingId",
+            "label": "REVOLVING",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": false,
+            "isSelectOne": false,
+            "items": [
+                {
+                    "key": true,
+                    "value": "Yes"
+                },
+                {
+                    "key": false,
+                    "value": "No"
+                }
+            ],
+            "itemsUrl": []
         },
         {
             "type" : "datepicker",
@@ -33,26 +70,31 @@
             "id" : "EndDtId",
             "value" : "",
             "label" : "MOU DATE <=",
-            "restriction" : "gte",
+            "restriction" : "lte",
             "datatype" : "date"
         },
         {
             "type": "dropdown",
-            "datatype": "text",
-            "name": "MOU.MR_MOU_TYPE_CODE",
-            "id": "MouTypeId",
+            "name": "WTL.CLAIM_STAT",
+            "id": "ActiveStatusId",
+            "label": "TASK CLAIM STATUS",
             "value": "",
             "placeholder": "Placeholder",
-            "isFromURL": true,
+            "isFromURL": false,
             "isSelectOne": false,
-            "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
-            "label": "MOU TYPE",
-            "items": [],
-            "itemsUrl": [],
-            "criteriaPropName": "RefMasterTypeCode",
-            "criteriaPropValue": "MOU_TYPE"
-          },
-          {
+            "items": [
+                {
+                    "key": "CLAIMED",
+                    "value": "CLAIMED"
+                },
+                {
+                    "key": "UNCLAIMED",
+                    "value": "UNCLAIMED"
+                }
+            ],
+            "itemsUrl": []
+        },
+        {
             "type": "textbox",
             "name": "WTL.USERNAME",
             "id": "claimById",
@@ -88,7 +130,7 @@
             "value": "",
             "label": "OFFICE CODE",
             "placeholder": "Placeholder"
-          }
+        }
     ],
     "querystring": {
         "select": "SELECT WTL.WF_TASK_LIST_ID AS WfTaskListId, WTL.USERNAME AS ClaimBy, WTL.CLAIM_STAT AS ClaimStat, WTL.OFFICE_CODE AS OfficeCode, MOU.MOU_CUST_NO AS MouCustNo, MOU.MOU_CUST_ID AS MouCustId, MOU.CUST_NAME AS CustName, MOU.MOU_CUST_DT AS MouCustDt, MOU.END_DT AS EndDt, MOU.PLAFOND_AMT AS PlafondAmt, MOU.IS_REVOLVING AS IsRevolving, MOU.REF_NO AS RefNo, MOU.MR_MOU_TYPE_CODE AS MouTypeCode",

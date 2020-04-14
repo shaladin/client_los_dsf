@@ -96,7 +96,7 @@
       "type": "sort",
       "position": "left",
       "label": "Claim By",
-      "name": "ClaimBy"
+      "name": "WTL.USERNAME"
     },
     {
       "type": "sort",
@@ -147,35 +147,6 @@
       "name": "MC.MR_MOU_TYPE_CODE"
     },
     {
-      "type": "dropdown",
-      "name": "WTL.CLAIM_STAT",
-      "id": "ActiveStatusId",
-      "label": "TASK CLAIM STATUS",
-      "value": "",
-      "placeholder": "Placeholder",
-      "isFromURL": false,
-      "isSelectOne": false,
-      "items": [
-          {
-              "key": "CLAIMED",
-              "value": "CLAIMED"
-          },
-          {
-              "key": "UNCLAIMED",
-              "value": "UNCLAIMED"
-          }
-      ],
-      "itemsUrl": []
-    },
-    {
-        "type": "textbox",
-        "name": "WTL.USERNAME",
-        "id": "ClaimById",
-        "value": "",
-        "label": "CLAIM BY",
-        "placeholder": "Placeholder"
-    },
-    {
       "type": "label",
       "position": "center",
       "label": "REVIEW"
@@ -186,12 +157,6 @@
     "from": "FROM dbo.MOU_CUST MC WITH(NOLOCK) JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON MC.MOU_CUST_NO = WTL.TRANSACTION_CODE AND WTL.ACT_CODE = 'LEGAL_RVW'"
   },
   "bodyList": [
-    {
-      "type": "sort",
-      "position": "left",
-      "label": "Claim By",
-      "name": "ClaimBy"
-    },
     {
       "type": "text",
       "position": "left",
