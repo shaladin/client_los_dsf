@@ -34,7 +34,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     CustName: ['', [Validators.required]],
     StartDt: ['', [Validators.required]],
     EndDt: ['', [Validators.required]],
-    RefNo: [''],
+    RefNo: ['', [Validators.required]],
     IsRevolving: [false],
     CurrCode: [''],
     PlafondAmt: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
