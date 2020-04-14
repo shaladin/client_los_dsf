@@ -16,8 +16,7 @@ import { UcaddressModule } from "@adins/ucaddress";
 import { UcgridviewModule } from "@adins/ucgridview";
 import { UCSearchModule } from '@adins/ucsearch';
 import { UcShowErrorsModule } from "@adins/uc-show-errors";
-import { UcinputnumberModule } from "@adins/ucinputnumber";
-import { NgxCurrencyModule } from "ngx-currency";
+import { UcinputnumberModule } from "@adins/ucinputnumber"; 
 import { SharingComponentModule } from "../shared/sharingcomponent.module";
 import { NGXToastrService } from "../components/extra/toastr/toastr.service";
 import { CreditInvestigationDetailComponent } from "./credit-investigation/credit-investigation-detail/credit-investigation-detail.component";
@@ -73,7 +72,7 @@ export const customCurrencyMaskConfig = {
         UcShowErrorsModule,
         UCSearchModule,
         UcinputnumberModule,
-        NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
+        // NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
     ],
     exports: [],
     providers: [NGXToastrService],

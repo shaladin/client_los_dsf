@@ -43,6 +43,8 @@ export class MouReviewFactoringComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.claimTask();
+
     var apvObj = { SchemeCode: 'MOUC_FCTR_APV' }
     this.http.post(AdInsConstant.GetApprovedBy, apvObj).subscribe(
       (response) => {
@@ -67,6 +69,16 @@ export class MouReviewFactoringComponent implements OnInit {
     Reason: [''],
     Notes: ['']
   })
+
+  claimTask()
+  {
+    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"]};
+    console.log(wfClaimObj);
+    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+      (response) => {
+      });
+  }
 
   Submit() {
     var mouObj = {
