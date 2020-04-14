@@ -1,4 +1,4 @@
-<div class="row text-left">
+<!-- <div class="row text-left">
   <div class="col-md-12">
     <div class="card">
       <div class="card-body">
@@ -49,13 +49,13 @@
                 <app-mou-view-legal [MouCustId]="MouCustId"></app-mou-view-legal>
               </ng-template>
             </mat-tab>
-          </mat-tab-group>
+          </mat-tab-group> -->
 
-          <lib-ucapproval [inputObj]="inputObj" (nextTask)="onAvailableNextTask($event)" (result)="onApprovalSubmited($event)" ></lib-ucapproval>
-          <br/>
           <app-mou-view [inputMouCustId]="MouCustId"></app-mou-view>
+          <br/>
+          <lib-ucapproval [inputObj]="inputObj" (nextTask)="onAvailableNextTask($event)" (result)="onApprovalSubmited($event)" ></lib-ucapproval>
 
-          <form class="form form-horizontal" [formGroup]="MouApprovalDataForm" (ngSubmit)="MouApprovalDataForm.valid"
+          <!-- <form class="form form-horizontal" [formGroup]="MouApprovalDataForm" (ngSubmit)="MouApprovalDataForm.valid"
             #enjiForm="ngForm">
             <div class="form-actions right">
               <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['/Mou/Cust/ApprovalPaging']"
@@ -71,4 +71,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
