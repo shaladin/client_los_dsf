@@ -43,7 +43,7 @@ export class MouReviewFactoringComponent implements OnInit {
   }
 
   ngOnInit() {
-    var apvObj = { SchemeCode: 'MOUC_GEN_APV' }
+    var apvObj = { SchemeCode: 'MOUC_FCTR_APV' }
     this.http.post(AdInsConstant.GetApprovedBy, apvObj).subscribe(
       (response) => {
         console.log(apvObj);
