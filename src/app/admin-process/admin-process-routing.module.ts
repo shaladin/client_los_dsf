@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { DeliveryOrderDetailComponent } from './delivery-order/delivery-order-detail/delivery-order-detail.component';
-import { DeliveryOrderPagingComponent } from './delivery-order/delivery-order-paging/delivery-order-paging.component';
 import { PreGoLivePagingComponent } from './pre-go-live/pre-go-live-paging/pre-go-live-paging.component';
 import { PreGoLiveComponent } from './pre-go-live/pre-go-live/pre-go-live.component';
 import { ApplicationAgreementCancellationPagingComponent } from './application-agreement-cancellation/application-agreement-cancellation-paging/application-agreement-cancellation-paging.component';
@@ -65,20 +63,6 @@ const routes: Routes = [
         component: AgrmntActivationDetailComponent,
         data: {
           title: 'Agreement Activation Detail'
-        }
-      },
-      {
-        path: 'DeliveryOrder/Paging',
-        component: DeliveryOrderPagingComponent,
-        data: {
-          title: 'Delivery Order'
-        }
-      },
-      {
-        path: 'DeliveryOrder/Detail',
-        component: DeliveryOrderDetailComponent,
-        data: {
-          title: 'Delivery Order'
         }
       },
       {

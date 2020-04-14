@@ -4,18 +4,18 @@
     "component": [
         {
             "type": "textbox",
-            "name": "CUST_NAME",
-            "id": "CustNameId",
-            "value": "",
-            "label": "CUSTOMER NAME",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type": "textbox",
             "name": "TRX_NO",
             "id": "TrxNoId",
             "value": "",
             "label": "TRANSACTION NO",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "CUSTOMER NAME",
             "placeholder": "Placeholder"
         },
         {
@@ -28,7 +28,7 @@
         },
         {
             "type": "textbox",
-            "name": "A.REQUEST_BY",
+            "name": "TL.REQUEST_BY",
             "id": "ReqById",
             "value": "",
             "label": "REQUEST BY",
@@ -36,7 +36,7 @@
         },
         {
             "type": "textbox",
-            "name": "MAIN_USERNAME",
+            "name": "TL.CURRENT_USER_ID",
             "id": "TaskOwnerId",
             "value": "",
             "label": "TASK OWNER",
@@ -44,7 +44,7 @@
         },
         {
             "type": "textbox",
-            "name": "USERNAME",
+            "name": "TL.CURRENT_USER_ID",
             "id": "CurrentUserId",
             "value": "",
             "label": "CURRENT USER",
@@ -52,7 +52,7 @@
         },
         {
             "type": "datepicker",
-            "name": "A.REQUEST_DATE",
+            "name": "TL.REQUEST_DATE",
             "id": "ReqDtId",
             "value": "",
             "label": "REQUEST DATE",
