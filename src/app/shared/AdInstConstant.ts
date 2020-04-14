@@ -44,6 +44,8 @@ export class AdInsConstant {
     public static GetAppById = "/Application/GetAppById";   
     public static EditAppAddAppCross = "/Application/EditAppAddAppCross";   
     public static GetAppByIds = environment.losUrl + "/Application/GetAppById";
+    public static AddAppFromLead = environment.losUrl + "/Application/AddAppFromLead";
+
 
     // App Asset
     public static GetAppAssetListByAppIdForCommision = "/AppAsset/GetAppAssetListByAppIdForCommision";

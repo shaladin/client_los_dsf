@@ -16,6 +16,8 @@ import { AppFinDataComponent } from "./nap-tab/app-fin-data/app-fin-data.compone
 import { InsuranceDataComponent } from "./nap-tab/insurance-data/insurance-data.component";
 import { AssetDataComponent } from "./nap-tab/asset-data/asset-data.component";
 import { PhnVerifPagingComponent } from "./phone-verif/phone-verif-paging/phone-verif-paging.component";
+import { AppFromLeadPagingComponent } from "./app-from-lead/paging/app-from-lead-paging.component";
+import { AppFromLeadDetailComponent } from "./app-from-lead/detail/app-from-lead-detail.component";
 
 
 const routes: Routes = [
@@ -153,7 +155,21 @@ const routes: Routes = [
           data: {
               title: 'Phone Verif Paging'
           }
-      }
+      },
+      {
+        path: 'AppFromLead/Paging',
+        component: AppFromLeadPagingComponent,
+        data: {
+          title: 'Paging'
+        }
+      },
+      {
+        path: 'AppFromLead/Detail',
+        component: AppFromLeadDetailComponent,
+        data: {
+          title: 'Detail'
+        }
+      },
     ]
   }
 ]

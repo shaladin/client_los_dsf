@@ -62,6 +62,8 @@ export const customCurrencyMaskConfig = {
     thousands: ",",     
     nullable: false };
 import { PhnVerifPagingComponent } from "./phone-verif/phone-verif-paging/phone-verif-paging.component";
+import { AppFromLeadPagingComponent } from "./app-from-lead/paging/app-from-lead-paging.component";
+import { AppFromLeadDetailComponent } from "./app-from-lead/detail/app-from-lead-detail.component";
 
 
 
@@ -102,7 +104,9 @@ import { PhnVerifPagingComponent } from "./phone-verif/phone-verif-paging/phone-
         InsuranceDataComponent,
         AssetDataComponent,
         AppFinDataComponent,
-        PhnVerifPagingComponent
+        PhnVerifPagingComponent,
+        AppFromLeadPagingComponent,
+        AppFromLeadDetailComponent
         ],
     imports: [ 
         NapRoutingModule,
