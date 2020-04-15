@@ -5,8 +5,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 
 @Component({
   selector: 'app-tele-verif-paging',
-  templateUrl: './tele-verif-paging.component.html',
-  styleUrls: ['./tele-verif-paging.component.scss']
+  templateUrl: './tele-verif-paging.component.html'
 })
 export class TeleVerifPagingComponent implements OnInit {
   inputPagingObj: any;

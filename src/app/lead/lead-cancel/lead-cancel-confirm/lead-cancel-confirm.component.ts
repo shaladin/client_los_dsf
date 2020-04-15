@@ -4,7 +4,7 @@ import { AdInsService } from 'app/shared/services/adIns.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { FormBuilder,Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { LeadConfirmCancelObj } from 'app/shared/model/LeadConfirmCancelObj.Model';
 
 @Component({
@@ -17,8 +17,8 @@ export class LeadCancelConfirmComponent implements OnInit {
   GetListLeadForLeadCancelByListLeadId = AdInsConstant.GetListLeadForLeadCancelByListLeadId;
   responseObj = new Array();
   LeadConfirmCancelForm = this.fb.group({
-    CancelReason :['',Validators.required],
-    Notes :['',Validators.required]
+    CancelReason: ['', Validators.required],
+    Notes: ['', Validators.required]
   });
   GetListKeyValueActiveByCode = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
   ItemCancelReason: any;
@@ -32,7 +32,7 @@ export class LeadCancelConfirmComponent implements OnInit {
     private router: Router,
     private adInsService: AdInsService,
     private fb: FormBuilder
-    ) { }
+  ) { }
 
   ngOnInit() {
     var tempLeadIds;
@@ -43,33 +43,30 @@ export class LeadCancelConfirmComponent implements OnInit {
       }
       tempLeadArr = tempLeadIds.split(',');
     });
-    var tempObj = {'ListLeadId' : tempLeadArr};
+    var tempObj = { 'ListLeadId': tempLeadArr };
     this.http.post(this.GetListLeadForLeadCancelByListLeadId, tempObj).subscribe(
       response => {
         this.responseObj = response['ReturnObject'];
       }
     );
-    var tempDdlObj = {"RefMasterTypeCode" : "LEAD_CANCEL_REASON"};
+    var tempDdlObj = { "RefMasterTypeCode": "LEAD_CANCEL_REASON" };
     this.http.post(this.GetListKeyValueActiveByCode, tempDdlObj).subscribe(
       response => {
         this.ItemCancelReason = response['ReturnObject'];
-        console.log('item cance');
-        console.log(this.ItemCancelReason);
         this.LeadConfirmCancelForm.patchValue({
-          CancelReason : this.ItemCancelReason[0].Key
+          CancelReason: this.ItemCancelReason[0].Key
         });
-        console.log('sele') ;
       }
     );
-    
+
   }
-  deleteFromTemp(leadId){
+  deleteFromTemp(leadId) {
     if (confirm('Are you sure to delete this record?')) {
       this.deletedArr.push(leadId);
     }
   }
 
-  SaveLeadConfirmCancel(){
+  SaveLeadConfirmCancel() {
     var leadObj = new LeadConfirmCancelObj();
     leadObj.LeadStat = "CAN";
     leadObj.Notes = this.LeadConfirmCancelForm.controls.CancelReason.value;
@@ -77,8 +74,8 @@ export class LeadCancelConfirmComponent implements OnInit {
     leadObj.MrCancelReasonCode = this.ItemCancelReason[ddlIndex]['Key'];
     leadObj.Notes = this.LeadConfirmCancelForm.controls.Notes.value;
     var tempId = new Array();
-    for(var i=0;i<this.responseObj.length;i++){
-      if(this.deletedArr.includes(this.responseObj[i]['LeadId']) == false){
+    for (var i = 0; i < this.responseObj.length; i++) {
+      if (this.deletedArr.includes(this.responseObj[i]['LeadId']) == false) {
         tempId.push(this.responseObj[i]['LeadId']);
       }
     }

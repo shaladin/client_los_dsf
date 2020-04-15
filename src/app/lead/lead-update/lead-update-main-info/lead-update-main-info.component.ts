@@ -267,8 +267,6 @@ copyLead(){
     this.http.post(this.getListRefOffice, this.refOfficeObj).subscribe(
       (response) => {
         this.listRefOffice = response['ReturnObject']
-        console.log("aaa")
-        console.log(this.listRefOffice)
         this.MainInfoForm.patchValue({  OfficeCode: response['ReturnObject'][0]['Key'] });
       },
       (error) => {
@@ -280,8 +278,6 @@ copyLead(){
     this.http.post(this.getListActiveLob, this.refLobObj).subscribe(
       (response) => {
           this.listRefLob = response['ReturnObject'];
-          console.log("bbb")
-          console.log(this.listRefLob)
           this.MainInfoForm.patchValue({ 
             LobCode: response['ReturnObject'][0]['Key'],
             LobName: response['ReturnObject'][0]['Value']
@@ -387,7 +383,7 @@ copyLead(){
   }
 
   setLead(){
-    this.leadObj.LeadNo = "1";
+    this.leadObj.LeadNo = "";
     this.leadObj.OriOfficeCode = this.MainInfoForm.controls["OfficeCode"].value;
     this.leadObj.OriOfficeName = this.MainInfoForm.controls["OfficeName"].value;
     this.leadObj.CrtOfficeCode = this.MainInfoForm.controls["CrtOfficeCode"].value;
@@ -410,7 +406,6 @@ copyLead(){
   }
 
   SaveForm(){
-    console.log("aaaa")
     if(this.pageType == "edit") {
       this.leadObj = new LeadObj();
       this.leadObj.LeadId = this.LeadId;
@@ -422,7 +417,6 @@ copyLead(){
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.router.navigate(["/Lead/LeadUpdate/Page"], { queryParams: { "LeadId": this.LeadId, "mode": "edit" } });
-          console.log(response)
         },
         (error) => {
           console.log(error);
@@ -437,7 +431,6 @@ copyLead(){
           this.LeadId = this.responseLead.LeadId;
           this.toastr.successMessage(response["message"]);
           this.router.navigate(["/Lead/LeadUpdate/Page"], { queryParams: { "LeadId": this.LeadId } });
-          console.log(response)
         },
         (error) => {
           console.log(error);

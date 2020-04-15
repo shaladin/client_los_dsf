@@ -525,10 +525,6 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.leadInputLeadDataObj.LeadAppObj.InstAmt = this.LeadDataForm.controls["InstallmentAmt"].value;
   }
 
-  // back(){
-  //   this.wizard.goToPreviousStep();
-  // }
-
   save() {
     if (this.typePage == "edit") {
       this.leadInputLeadDataObj = new LeadInputLeadDataObj();
@@ -540,8 +536,6 @@ export class LeadInputLeadDataComponent implements OnInit {
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.router.navigate(["/Lead/Lead/Paging"]);
-          // console.log(response);
-          // this.wizard.goToNextStep();
         },
         (error) => {
           console.log(error);
@@ -555,8 +549,6 @@ export class LeadInputLeadDataComponent implements OnInit {
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.router.navigate(["/Lead/Lead/Paging"]);
-          // console.log(response);
-          // this.wizard.goToNextStep();
         },
         (error) => {
           console.log(error);
@@ -578,8 +570,6 @@ export class LeadInputLeadDataComponent implements OnInit {
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.router.navigate(["/Lead/Lead/Paging"]);
-          // console.log(response);
-          // this.wizard.goToNextStep();
         },
         (error) => {
           console.log(error);
@@ -595,8 +585,6 @@ export class LeadInputLeadDataComponent implements OnInit {
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.router.navigate(["/Lead/Lead/Paging"]);
-          // console.log(response);
-          // this.wizard.goToNextStep();
         },
         (error) => {
           console.log(error);

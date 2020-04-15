@@ -144,7 +144,6 @@ export class LeadVerifComponent implements OnInit {
   }
 
   SaveLeadVerf(leadVerfForm: any) {
-    // this.leadVerfObj = new LeadVerfObj();
     for (let index = 0; index < this.tempData.length; index++) {
       var tempLeadVerfObj = new LeadVerfObj();
       tempLeadVerfObj.VerifyStat = this.verifyStatus;
@@ -159,7 +158,7 @@ export class LeadVerifComponent implements OnInit {
     var LeadVerf = {
       LeadVerfObjs: this.arrLeadVerf
     }
-    this.http.post(this.AddRangeLeadVerfUrl, LeadVerf).subscribe(  /// di join task list, dapet id dari parameter
+    this.http.post(this.AddRangeLeadVerfUrl, LeadVerf).subscribe(
       response => {
         this.toastr.successMessage(response['message']);
       },
@@ -169,7 +168,7 @@ export class LeadVerifComponent implements OnInit {
     );
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate(['/Lead/Verif']);
-  }); 
+    });
   }
 
   addToTemp() {
@@ -203,7 +202,7 @@ export class LeadVerifComponent implements OnInit {
       this.inputObj.addCritInput = this.arrAddCrit;
       this.UCSearchComponent.search(this.apiUrl, this.pageNow, this.pageSize, order, this.arrAddCrit);
       this.listSelectedId = [];
-    } 
+    }
     else {
       this.toastr.typeErrorCustom('Please select at least one Available Lead');
     }
