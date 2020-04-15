@@ -4,8 +4,7 @@ import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-mou-customer-inquiry',
-  templateUrl: './mou-customer-inquiry.component.html',
-  styleUrls: ['./mou-customer-inquiry.component.scss']
+  templateUrl: './mou-customer-inquiry.component.html'
 })
 export class MouCustomerInquiryComponent implements OnInit {
   inputPagingObj: UcPagingObj;

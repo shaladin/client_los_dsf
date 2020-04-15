@@ -48,6 +48,18 @@ import { LeadUpdatePageComponent } from "./lead-update/lead-update-page/lead-upd
 import { LeadUpdateMainInfoComponent } from "./lead-update/lead-update-main-info/lead-update-main-info.component";
 import { LeadUpdateCustDataComponent } from "./lead-update/lead-update-cust-data/lead-update-cust-data.component";
 import { LeadUpdateLeadDataComponent } from "./lead-update/lead-update-lead-data/lead-update-lead-data.component";
+import { NgxCurrencyModule } from "ngx-currency";
+export const customCurrencyMaskConfig = {     
+  align: "left",     
+  allowNegative: true,     
+  allowZero: true,     
+  decimal: ".",     
+  precision: 2,     
+  prefix: "",     
+  suffix: "",     
+  thousands: ",",     
+  nullable: false };
+
  
 
 @NgModule({
@@ -71,6 +83,7 @@ import { LeadUpdateLeadDataComponent } from "./lead-update/lead-update-lead-data
     SharingComponentModule,
     ArchwizardModule,
     MatRadioModule,
+    NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
   ],
   declarations: [
     MainInfoComponent,

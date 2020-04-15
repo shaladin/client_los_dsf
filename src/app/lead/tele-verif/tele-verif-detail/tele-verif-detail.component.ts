@@ -6,7 +6,6 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-tele-verif-detail',
   templateUrl: './tele-verif-detail.component.html',
-  styleUrls: ['./tele-verif-detail.component.scss']
 })
 export class TeleVerifDetailComponent implements OnInit {
   viewTeleVerifMainInfo: any;

@@ -17,16 +17,19 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 adInsLabel adins-required" translate>Copy From </label>
-                            <div class="col-md-4">
+                            <div class="col-md-4" *ngIf="this.pageType == 'add'">
                                 <lib-uclookupgeneric [lookupInput]="leadPersonalLookUpObj" [parentForm]="MainInfoForm"
                                     [enjiForm]="enjiForm" [identifier]="'CustomerName'" (lookup)=getLookUpLead($event)>
                                 </lib-uclookupgeneric>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4" *ngIf="this.pageType == 'edit'">
+                                <label class="adInsLabel" style="font-size: 12px;" translate>{{this.returnLeadExistObj?.CustName == null ? '-' : this.returnLeadExistObj?.CustName}}</label>
+                            </div>
+                            <div class="col-md-3" *ngIf="this.pageType == 'add'">
                                 <button type="button" class="btn btn-raised btn-primary" (click)="copyLead()">
                                   <i class="fa fa-check-square-o"></i> Copy
                                 </button>
-                              </div>
+                            </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 adInsLabel adins-required" translate>Office Name </label>

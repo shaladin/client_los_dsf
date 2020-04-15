@@ -8,7 +8,6 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 @Component({
   selector: 'app-mou-view-detail',
   templateUrl: './mou-view-detail.component.html',
-  styleUrls: ['./mou-view-detail.component.scss'],
   providers: [NGXToastrService]
 })
 export class MouViewDetailComponent implements OnInit {

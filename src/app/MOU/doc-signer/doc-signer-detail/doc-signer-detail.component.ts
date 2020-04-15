@@ -17,7 +17,6 @@ import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 @Component({
   selector: 'app-doc-signer-detail',
   templateUrl: './doc-signer-detail.component.html',
-  styleUrls: ['./doc-signer-detail.component.scss'],
   providers: [DecimalPipe]
 })
 export class DocSignerDetailComponent implements OnInit {
