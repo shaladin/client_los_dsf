@@ -23,6 +23,10 @@ import { UclookupgenericModule } from "@adins/uclookupgeneric";
 import { DocSignerDetailComponent } from "./doc-signer/doc-signer-detail/doc-signer-detail.component";
 import { DocSignerPagingComponent } from "./doc-signer/doc-signer-paging/doc-signer-paging.component";
 import { NapComponentModule } from "app/NAP/nap-component/nap-component.module";
+import { InvoiceViewComponent } from './invoice/invoice-view/invoice-view.component';
+import { InvoiceDetailComponent } from './invoice/invoice-detail/invoice-detail.component';
+import { AgreementViewContainerComponent } from './agreement-view-container/agreement-view-container.component';
+import { SharingModule } from "app/shared/sharing.module";
 
 @NgModule({
   imports: [
@@ -35,6 +39,7 @@ import { NapComponentModule } from "app/NAP/nap-component/nap-component.module";
     UcgridviewModule,
     UcviewgenericModule,
     NgbModule,
+    SharingModule,
     ReactiveFormsModule,
     UcSubsectionModule,
     UcShowErrorsModule,
@@ -52,7 +57,10 @@ import { NapComponentModule } from "app/NAP/nap-component/nap-component.module";
     OfferingValidityCheckingApprovalPagingComponent,
     OfferingValidityCheckingApprovalDetailComponent,
     DocSignerDetailComponent,
-    DocSignerPagingComponent
+    DocSignerPagingComponent,
+    InvoiceViewComponent,
+    InvoiceDetailComponent,
+    AgreementViewContainerComponent
   ],
   providers: [
     NGXToastrService

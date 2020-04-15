@@ -10,7 +10,7 @@
             </lib-ucSubsection>
             <div class="form-body" id="MainInfoForm">
               <div class="form-group row adins-required">
-                <label class="col-md-2 adInsLabel" for="AgrmntDt" translate>Reason</label>
+                <label class="col-md-2 adInsLabel" for="AgrmntDt" translate>Agreement Date</label>
                 <div class="col-md-4">
                   <input type="date" id="AgrmntDt" class="form-control adInsInput code"
                     formControlName="AgrmntCreatedDt">
@@ -58,27 +58,27 @@
                 </div>
               </div>
             </div>
-            <app-term-conditions [AppId]="AppId" [parentForm]="MainInfoForm" [enjiForm]="MainInfoReqForm">
+            <app-term-conditions [AppId]="AppId" [parentForm]="MainInfoForm" [enjiForm]="MainInfoReqForm"
+              (OutputValueIsCheckAll)="ReceiveIsChecked($event)">
             </app-term-conditions>
             <div class="form-actions right">
 
-              <button type="button" class="btn btn-raised btn-primary mr-1" translate>
-                <i class="fa fa-check-square-o"></i> Request For Approval 
+              <button *ngIf="!IsCheckedAll" type="button" class="btn btn-raised btn-primary mr-1" (click)="RFA()" translate>
+                <i class="fa fa-check-square-o"></i> Request For Approval
               </button>
 
-              <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['/CommonSetting/Holiday']"
+              <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['/AdminProcess/PreGoLive/Paging']"
                 translate>
                 <i class=""></i> Back
               </button>
 
-              <button type="submit" class="btn btn-raised btn-primary mr-1" translate>
+              <button *ngIf="IsCheckedAll" type="submit" class="btn btn-raised btn-primary mr-1" translate>
                 <i class="fa fa-check-square-o"></i> Submit
               </button>
+              
             </div>
-
           </form>
         </div>
-
       </div>
     </div>
   </div>
