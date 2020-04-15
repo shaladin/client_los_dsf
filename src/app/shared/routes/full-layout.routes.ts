@@ -52,14 +52,6 @@ export const Full_ROUTES: Routes = [
     loadChildren: './view/view.module#ViewModule'
   },
   {
-    path:'Document',
-    loadChildren:'./Document/document.module#DocumentModule'
-  },
-  {
-    path:'Invoice',
-    loadChildren:'./InvoiceData/invoice.module#InvoiceModule'
-  },
-  {
     path: 'Lead',
     loadChildren: './lead/lead.module#LeadModule'
   },

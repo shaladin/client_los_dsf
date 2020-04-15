@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AdminProcessService } from 'app/admin-process/admin-process.service';
+import { AdminProcessService } from 'app/NEW-NAP/business-process/admin-process/admin-process.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({

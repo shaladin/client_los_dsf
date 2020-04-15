@@ -14,6 +14,20 @@ import { DeliveryOrderPagingComponent } from "./delivery-order/delivery-order-pa
 import { PreGoLiveComponent } from "./pre-go-live/pre-go-live-sharing/pre-go-live.component";
 import { PreGoLiveRequestForApprovalComponent } from "./pre-go-live/pre-go-live-request-for-approval-sharing/pre-go-live-request-for-approval.component";
 import { TcSharingComponentModule } from "app/NEW-NAP/sharing-component/input-nap-component/tc-sharing-component.module";
+import { ApplicationAgreementCancellationPagingComponent } from "./application-agreement-cancellation/application-agreement-cancellation-paging/application-agreement-cancellation-paging.component";
+import { ApplicationAgreementCancellationDetailComponent } from "./application-agreement-cancellation/application-agreement-cancellation-detail/application-agreement-cancellation-detail.component";
+import { AgrmntActivationPagingComponent } from "./agrmnt-activation/agrmnt-activation-paging/agrmnt-activation-paging.component";
+import { AgrmntActivationDetailComponent } from "./agrmnt-activation/agrmnt-activation-detail/agrmnt-activation-detail.component";
+import { OfferingValidityCheckingApprovalPagingComponent } from "./offering-validity-checking-approval/offering-validity-checking-approval-paging/offering-validity-checking-approval-paging.component";
+import { OfferingValidityCheckingApprovalDetailComponent } from "./offering-validity-checking-approval/offering-validity-checking-approval-detail/offering-validity-checking-approval-detail.component";
+import { DocSignerPagingComponent } from "./doc-signer/doc-signer-paging/doc-signer-paging.component";
+import { DocSignerDetailComponent } from "./doc-signer/doc-signer-detail/doc-signer-detail.component";
+import { InvoiceViewComponent } from "./invoice/invoice-view/invoice-view.component";
+import { InvoiceDetailComponent } from "./invoice/invoice-detail/invoice-detail.component";
+import { AgreementViewContainerComponent } from "./agreement-view-container/agreement-view-container.component";
+import { DocumentPagingComponent } from "./document-printing/document-paging/document-paging.component";
+import { DocumentViewComponent } from "./document-printing/document-view/document-view.component";
+import { InvoiceDataAddComponent } from "./invoice-data/invoice-data-add/invoice-data-add.component";
 
 @NgModule({
   imports: [
@@ -33,6 +47,20 @@ import { TcSharingComponentModule } from "app/NEW-NAP/sharing-component/input-na
     DeliveryOrderPagingComponent,
     PreGoLiveComponent,
     PreGoLiveRequestForApprovalComponent,
+    ApplicationAgreementCancellationPagingComponent,
+    ApplicationAgreementCancellationDetailComponent,
+    AgrmntActivationPagingComponent,
+    AgrmntActivationDetailComponent,
+    OfferingValidityCheckingApprovalPagingComponent,
+    OfferingValidityCheckingApprovalDetailComponent,
+    DocSignerDetailComponent,
+    DocSignerPagingComponent,
+    InvoiceViewComponent,
+    InvoiceDetailComponent,
+    AgreementViewContainerComponent,
+    DocumentPagingComponent,
+    DocumentViewComponent,
+    InvoiceDataAddComponent
   ],
   providers: [
     NGXToastrService
