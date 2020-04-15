@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
@@ -11,7 +11,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
   styleUrls: ['./purchase-order.component.scss']
 })
 export class PurchaseOrderComponent implements OnInit {
-
+  @Input() PODetailUrl: string;
   AppId: number;
   AgrmntId: number;
   TaskListId: number;
