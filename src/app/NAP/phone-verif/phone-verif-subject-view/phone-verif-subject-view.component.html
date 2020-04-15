@@ -5,7 +5,17 @@
     <div class="px-3">
       <lib-ucSubsection [id]="'verificationModuleId'" [title]="'Verification Module'" [panel]="'verificationModule'">
       </lib-ucSubsection>
-      <div id="verificationModule">
+      <div id="verificationModule" *ngIf="verifResultObj">
+        <div>
+          <label class="col-md-3">Verification No</label>
+          <label class="col-md-3">{{verifResultObj.VerfResultNo}}</label>
+          <label class="col-md-3">Verification By</label>
+          <label class="col-md-3">{{verifResultObj.EmpName}}</label>
+        </div>
+        <div>
+          <label class="col-md-3">Verification Date</label>
+          <label class="col-md-3">{{verifResultObj.VerfDt}}</label>
+        </div>
       </div>
       <lib-ucSubsection [id]="'subjectInformationId'" [title]="'Subject Information'" [panel]="'subjectInformation'">
       </lib-ucSubsection>
