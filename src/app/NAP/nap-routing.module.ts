@@ -16,6 +16,7 @@ import { AppFinDataComponent } from "./nap-tab/app-fin-data/app-fin-data.compone
 import { InsuranceDataComponent } from "./nap-tab/insurance-data/insurance-data.component";
 import { AssetDataComponent } from "./nap-tab/asset-data/asset-data.component";
 import { PhnVerifPagingComponent } from "./phone-verif/phone-verif-paging/phone-verif-paging.component";
+import { VerfQuestionComponent } from "./nap-component/verf-question/verf-question.component";
 
 
 const routes: Routes = [
@@ -132,6 +133,13 @@ const routes: Routes = [
           component: PhnVerifPagingComponent,
           data: {
               title: 'Phone Verif Paging'
+          }
+      },
+      {
+          path: 'VerfQuestion',
+          component: VerfQuestionComponent,
+          data: {
+              title: 'Verification Question'
           }
       }
     ]

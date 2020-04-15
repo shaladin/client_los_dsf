@@ -55,8 +55,8 @@ import { NgbModule, NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { AppFeeComponent } from './nap-tab/app-fin-data/component/app-fee/app-fee.component';
 import { NgxCurrencyModule } from 'ngx-currency';
 import { PhnVerifPagingComponent } from "./phone-verif/phone-verif-paging/phone-verif-paging.component";
-import { RsvFundPagingComponent } from "./RFN4W/reserved-fund/reserved-fund-paging/reserved-fund-paging.component";
 import { RsvFundViewComponent } from "app/credit-process/reserved-fund/reserved-fund-view/reserved-fund-view.component";
+import { VerfQuestionComponent } from "./nap-component/verf-question/verf-question.component";
 export const customCurrencyMaskConfig = {
     align: "left",
     allowNegative: true,
@@ -111,13 +111,13 @@ export const customCurrencyMaskConfig = {
         UcinputnumberComponent,
         InsuranceDataComponent,
         AssetDataComponent,
-        RsvFundPagingComponent,
         RsvFundViewComponent,
         AppFinDataComponent,
         AppFinDataComponent,
-        PhnVerifPagingComponent
+        PhnVerifPagingComponent,
+        VerfQuestionComponent
         ],
-    imports: [ 
+    imports: [
         NapRoutingModule,
         CommonModule,
         ArchwizardModule,
