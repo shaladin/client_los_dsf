@@ -7,7 +7,6 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 @Component({
   selector: 'app-customer-self-verification',
   templateUrl: './customer-self-verification.component.html',
-  styleUrls: ['./customer-self-verification.component.scss'],
   providers: [NGXToastrService]
 })
 export class CustomerSelfVerificationComponent implements OnInit {

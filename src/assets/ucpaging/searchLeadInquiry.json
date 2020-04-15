@@ -1,7 +1,7 @@
 {
     "title": "Lead Inquiry",
     "exportExcel": false,
-    "component": [ 
+    "component": [
         {
             "type": "dropdown",
             "datatype": "text",
@@ -49,7 +49,7 @@
             "value": "",
             "label": "Customer Name",
             "placeholder": "Placeholder"
-        }, 
+        },
         {
             "type": "dropdown",
             "datatype": "text",
@@ -65,7 +65,8 @@
             "itemsUrl": [],
             "criteriaPropName": "StatusGrpCode",
             "criteriaPropValue": "LEAD_STEP"
-        },   {
+        },
+        {
             "type": "dropdown",
             "datatype": "text",
             "name": "l.LEAD_STAT",
@@ -81,7 +82,6 @@
             "criteriaPropName": "StatusGrpCode",
             "criteriaPropValue": "LEAD_STAT"
         }
-     
     ],
     "headerList": [
         {
@@ -131,8 +131,7 @@
             "position": "left",
             "label": "Lead Stat",
             "name": "l.LEAD_STAT"
-        } 
-       
+        }
     ],
     "querystring": {
         "select": "SELECT l.LEAD_NO AS LeadNo, l.ORI_OFFICE_NAME AS OriOfficeName, l.ORDER_NO AS OrderNo, lc.CUST_NAME as CustName,  l.MR_LEAD_SOURCE_CODE AS MrLeadSourceCode, la.FULL_ASSET_NAME AS FullAssetName, l.LEAD_STEP AS LeadStep, l.LEAD_STAT as LeadStat, l.lEAD_ID as LeadId",
@@ -186,7 +185,6 @@
             "type": "text",
             "position": "left",
             "property": "LeadStat"
-        } 
-        
+        }
     ]
 }

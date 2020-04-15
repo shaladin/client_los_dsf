@@ -17,7 +17,6 @@ import { RefLobObj } from 'app/shared/model/RefLobObj.Model';
 import { VendorObj } from 'app/shared/model/Vendor.Model';
 import { RefEmpForLookupObj } from 'app/shared/model/RefEmpForLookupObj.Model';
 
-
 @Component({
   selector: 'app-lead-view-header',
   templateUrl: './lead-view-header.component.html',

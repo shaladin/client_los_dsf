@@ -8,6 +8,7 @@ import { RsvFundPagingComponent } from "./reserved-fund/reserved-fund-paging/res
 import { RsvFundViewComponent } from "./reserved-fund/reserved-fund-view/reserved-fund-view.component";
 import { CommissionReservedFundComponent } from "./commission-reserved-fund/commission-reserved-fund.component";
 import { CreditInvestigationPagingComponent } from "./credit-investigation/credit-investigation-paging/credit-investigation-paging.component";
+import { TabApplicationDataComponent } from "./credit-investigation/component/tab-application-data/tab-application-data.component";
 
 
 const routes: Routes = [
@@ -33,6 +34,13 @@ const routes: Routes = [
         component: CommissionPagingComponent,
         data: {
           title: 'Commission Paging'
+        }
+      },
+      {
+        path: 'TabAppData',
+        component: TabApplicationDataComponent,
+        data: {
+          title: 'Tab AppData'
         }
       },
       // {

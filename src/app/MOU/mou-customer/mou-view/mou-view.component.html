@@ -5,7 +5,7 @@
         <div class="form-body">
           <h4 class="form-section card-title" translate>MOU VIEW</h4>
           <lib-ucviewgeneric [viewInput]="viewMouHeader"></lib-ucviewgeneric>
-        
+
           <aw-wizard #wizard navBarLayout="large-empty-symbols" [awNavigationMode] navigateBackward="allow"
             navigateForward="allow" [defaultStepIndex]="0">
             <aw-wizard-step [stepTitle]="'MOU Detail'" (stepEnter)="EnterTab('detail')"
@@ -33,11 +33,6 @@
               <app-mou-view-doc *ngIf="isDocument == true">
               </app-mou-view-doc>
             </aw-wizard-step>
-            <!-- <aw-wizard-step [stepTitle]="'Survey'" (stepEnter)="EnterTab('survey')"
-                [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
-                <app-mou-view-fee *ngIf="isSurvey == true">
-                </app-mou-view-fee>
-              </aw-wizard-step> -->
             <aw-wizard-step [stepTitle]="'Approval History'" (stepEnter)="EnterTab('approvalHistory')"
               [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
               <app-mou-view-approval-history *ngIf="isApprovalHistory == true" [MouCustId]="MouCustId">

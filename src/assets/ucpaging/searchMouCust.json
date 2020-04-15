@@ -19,22 +19,22 @@
             "placeholder": "Placeholder"
         },
         {
-            "type" : "datepicker",
-            "name" : "A.MOU_CUST_DT",
-            "id" : "MouDtId",
-            "value" : "",
-            "label" : "MOU DATE >=",
-            "restriction" : "gte",
-            "datatype" : "date"
+            "type": "datepicker",
+            "name": "A.MOU_CUST_DT",
+            "id": "MouDtId",
+            "value": "",
+            "label": "MOU DATE >=",
+            "restriction": "gte",
+            "datatype": "date"
         },
         {
-            "type" : "datepicker",
-            "name" : "A.END_DT",
-            "id" : "EndDtId",
-            "value" : "",
-            "label" : "MOU DATE <=",
-            "restriction" : "gte",
-            "datatype" : "date"
+            "type": "datepicker",
+            "name": "A.END_DT",
+            "id": "EndDtId",
+            "value": "",
+            "label": "MOU DATE <=",
+            "restriction": "gte",
+            "datatype": "date"
         },
         {
             "type": "dropdown",
@@ -51,8 +51,8 @@
             "itemsUrl": [],
             "criteriaPropName": "RefMasterTypeCode",
             "criteriaPropValue": "MOU_TYPE"
-          },
-          {
+        },
+        {
             "type": "textbox",
             "name": "A.CUST_NAME",
             "id": "CustNameId",

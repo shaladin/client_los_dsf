@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MouViewComponent } from './mou-view.component';
+import { TabApplicationDataComponent } from './tab-application-data.component';
 
-describe('MouViewComponent', () => {
-  let component: MouViewComponent;
-  let fixture: ComponentFixture<MouViewComponent>;
+describe('TabApplicationDataComponent', () => {
+  let component: TabApplicationDataComponent;
+  let fixture: ComponentFixture<TabApplicationDataComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MouViewComponent ]
+      declarations: [ TabApplicationDataComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MouViewComponent);
+    fixture = TestBed.createComponent(TabApplicationDataComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
