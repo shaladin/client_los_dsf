@@ -1,4 +1,3 @@
-
 {
     "title": "Collateral List",
     "exportExcel": false,
@@ -24,8 +23,6 @@
         "select": "SELECT CL.COLLATERAL_NO AS CollateralNo, CL.COLLATERAL_ID AS CollateralId, CL.FULL_ASSET_CODE AS FullAssetCode, CL.FULL_ASSET_CODE AS FullAssetCode, CL.COLLATERAL_PRICE_AMT AS CollateralValueAmt, CU.CUST_NAME AS CustName",
         "from": "FROM dbo.CUST CU WITH(NOLOCK) JOIN dbo.COLLATERAL CL WITH(NOLOCK) ON CL.CUST_ID = CU.CUST_ID"
     },
-    "headerList": [
-    ],
-    "bodyList": [
-    ]
+    "headerList": [],
+    "bodyList": []
 }

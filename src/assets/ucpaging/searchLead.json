@@ -49,19 +49,19 @@
             "placeholder": "Placeholder"
         },
         {
-            "type" : "textbox",
-            "name" : "LA.FULL_ASSET_NAME",
-            "id" : "FullAssetNameId",
-            "value" : "",
-            "label" : "FULL ASSET NAME",
+            "type": "textbox",
+            "name": "LA.FULL_ASSET_NAME",
+            "id": "FullAssetNameId",
+            "value": "",
+            "label": "FULL ASSET NAME",
             "placeholder": "Placeholder"
         },
         {
-            "type" : "textbox",
-            "name" : "LC.CUST_NAME",
-            "id" : "CustNameId",
-            "value" : "",
-            "label" : "CUSTOMER NAME",
+            "type": "textbox",
+            "name": "LC.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "CUSTOMER NAME",
             "placeholder": "Placeholder"
         }
     ],

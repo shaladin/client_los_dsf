@@ -56,22 +56,22 @@
             "itemsUrl": []
         },
         {
-            "type" : "datepicker",
-            "name" : "MOU.MOU_CUST_DT",
-            "id" : "GreaterMouDtId",
-            "value" : "",
-            "label" : "MOU DATE >=",
-            "restriction" : "gte",
-            "datatype" : "date"
+            "type": "datepicker",
+            "name": "MOU.MOU_CUST_DT",
+            "id": "GreaterMouDtId",
+            "value": "",
+            "label": "MOU DATE >=",
+            "restriction": "gte",
+            "datatype": "date"
         },
         {
-            "type" : "datepicker",
-            "name" : "MOU.MOU_CUST_DT",
-            "id" : "LessMouDtId",
-            "value" : "",
-            "label" : "MOU DATE <=",
-            "restriction" : "lte",
-            "datatype" : "date"
+            "type": "datepicker",
+            "name": "MOU.MOU_CUST_DT",
+            "id": "LessMouDtId",
+            "value": "",
+            "label": "MOU DATE <=",
+            "restriction": "lte",
+            "datatype": "date"
         },
         {
             "type": "dropdown",
