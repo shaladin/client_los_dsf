@@ -9,7 +9,7 @@ import { ListAppTCObj } from 'app/shared/model/ListAppTCObj.Model';
 import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
 
 @Component({
-  selector: 'app-pre-go-live',
+  selector: 'app-sharing-pre-go-live',
   templateUrl: './pre-go-live.component.html',
   styleUrls: ['./pre-go-live.component.scss']
 })

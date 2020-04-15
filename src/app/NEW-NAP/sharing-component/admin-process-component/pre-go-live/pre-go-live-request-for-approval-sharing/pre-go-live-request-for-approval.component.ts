@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 
 @Component({
-  selector: 'app-pre-go-live-request-for-approval',
+  selector: 'app-sharing-pre-go-live-request-for-approval',
   templateUrl: './pre-go-live-request-for-approval.component.html',
   styleUrls: ['./pre-go-live-request-for-approval.component.scss']
 })

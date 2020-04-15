@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { PreGoLivePagingComponent } from './pre-go-live/pre-go-live-paging/pre-go-live-paging.component';
-import { PreGoLiveComponent } from './pre-go-live/pre-go-live/pre-go-live.component';
 import { ApplicationAgreementCancellationPagingComponent } from './application-agreement-cancellation/application-agreement-cancellation-paging/application-agreement-cancellation-paging.component';
 import { ApplicationAgreementCancellationDetailComponent } from './application-agreement-cancellation/application-agreement-cancellation-detail/application-agreement-cancellation-detail.component';
 import { AgrmntActivationPagingComponent } from './agrmnt-activation/agrmnt-activation-paging/agrmnt-activation-paging.component';
@@ -10,33 +8,11 @@ import { OfferingValidityCheckingApprovalPagingComponent } from './offering-vali
 import { OfferingValidityCheckingApprovalDetailComponent } from './offering-validity-checking-approval/offering-validity-checking-approval-detail/offering-validity-checking-approval-detail.component';
 import { DocSignerDetailComponent } from './doc-signer/doc-signer-detail/doc-signer-detail.component';
 import { DocSignerPagingComponent } from './doc-signer/doc-signer-paging/doc-signer-paging.component';
-import { PreGoLiveRequestForApprovalComponent } from './pre-go-live/pre-go-live-request-for-approval/pre-go-live-request-for-approval.component';
 
 const routes: Routes = [
   {
     path: '',
     children: [
-      {
-        path: 'PreGoLive/Paging',
-        component: PreGoLivePagingComponent,
-        data: {
-          title: 'PreGoLive Paging'
-        }
-      },
-      {
-        path: 'PreGoLive/Detail',
-        component: PreGoLiveComponent,
-        data: {
-          title: 'PreGoLive Detail'
-        }
-      },
-      {
-        path: 'PreGoLive/RequestApproval',
-        component: PreGoLiveRequestForApprovalComponent,
-        data: {
-          title: 'PreGoLive Request For Approval'
-        }
-      },
       {
         path: 'AgreementCancellation/Paging',
         component: ApplicationAgreementCancellationPagingComponent,

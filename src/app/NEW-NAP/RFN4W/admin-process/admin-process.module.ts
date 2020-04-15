@@ -5,6 +5,9 @@ import { AdInsModule } from "app/components/adins-module/adins.module";
 import { AdminProcessRFN4WRoutingModule } from "./admin-process-routing.module";
 import { PreGoLivePagingComponent } from "./pre-go-live/pre-go-live-paging/pre-go-live-paging.component";
 import { AdminProcessComponentModule } from "app/NEW-NAP/sharing-component/admin-process-component/admin-process-component.module";
+import { PreGoLiveComponent } from "./pre-go-live/pre-go-live/pre-go-live.component";
+import { PreGoLiveRequestForApprovalComponent } from './pre-go-live/pre-go-live-request-for-approval/pre-go-live-request-for-approval.component';
+import { PurchaseOrderPagingComponent } from "./purchase-order-paging/purchase-order-paging.component";
 
 @NgModule({
   imports: [
@@ -14,7 +17,10 @@ import { AdminProcessComponentModule } from "app/NEW-NAP/sharing-component/admin
     AdminProcessComponentModule
   ],
   declarations: [
-    PreGoLivePagingComponent
+    PreGoLivePagingComponent,
+    PreGoLiveComponent,
+    PreGoLiveRequestForApprovalComponent,
+    PurchaseOrderPagingComponent
   ],
   providers: [
     NGXToastrService

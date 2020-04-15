@@ -18,8 +18,8 @@
                     <option *ngFor="let it of itemReason" value="{{it.Key}}">
                       {{it.Value}}</option>
                   </select>
-                  <show-errors [control]="MainInfoForm.controls.Reason" [submit]="MainInfoReqForm.submitted">
-                  </show-errors>
+                  <lib-uc-show-errors [control]="MainInfoForm.controls.Reason" [submit]="MainInfoReqForm.submitted">
+                  </lib-uc-show-errors>
                 </div>
                 <label class="col-md-2 adInsLabel" for="ApprovedBy" translate>To be Approved By</label>
                 <div class="col-md-4">
@@ -28,8 +28,8 @@
                     <option *ngFor="let it of itemApprovedBy" value="{{it.Key}}">
                       {{it.Value}}</option>
                   </select>
-                  <show-errors [control]="MainInfoForm.controls.ApprovedBy" [submit]="MainInfoReqForm.submitted">
-                  </show-errors>
+                  <lib-uc-show-errors [control]="MainInfoForm.controls.ApprovedBy" [submit]="MainInfoReqForm.submitted">
+                  </lib-uc-show-errors>
                 </div>
               </div>
 
