@@ -10,7 +10,6 @@ import { MouCustTcComponent } from 'app/MOU/mou-customer-request/mou-cust-tc/mou
 @Component({
   selector: 'app-legal-review-detail',
   templateUrl: './legal-review-detail.component.html',
-  styleUrls: ['./legal-review-detail.component.scss'],
   providers: [NGXToastrService]
 })
 export class LegalReviewDetailComponent implements OnInit {

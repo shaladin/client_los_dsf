@@ -3,7 +3,6 @@
   <lib-ucSubsection [id]="'LeadDataId'" [title]="'Lead Data'" [panel]="'LeadData'">
   </lib-ucSubsection>
   <div *ngIf="LobCode == 'KTA'" class="form-body" id="LeadData">
-
     <div class="form-group row">
       <label class="col-md-2 adins-required-label" for="FullAssetName" translate>Full Asset Name </label>
       <div class="col-md-4">
@@ -20,7 +19,6 @@
         </mat-radio-group>
       </div>
     </div>
-
     <div class="form-group row">
       <label class="col-md-2 adins-required-label" translate>Manufacturing Year</label>
       <div class="col-md-2">
@@ -38,7 +36,6 @@
         </show-errors>
       </div>
     </div>
-
     <div class="form-group row">
       <label class="col-md-2 adins-required-label" translate>Down Payment Type</label>
       <div class="col-md-2">
@@ -58,7 +55,6 @@
         </show-errors>
       </div>
     </div>
-
   </div>
 
   <lib-ucSubsection [id]="'FinancialDataId'" [title]="'Financial Data'" [panel]="'FinancialData'">
@@ -73,7 +69,6 @@
         </show-errors>
       </div>
     </div>
-
     <div class="form-group row">
       <label class="col-md-2" translate>First Installment Type</label>
       <div class="col-md-2">
@@ -87,14 +82,11 @@
     <div class="form-group row">
       <label class="col-md-2" translate>NTF Amount</label>
       <label class="col-md-2" translate>{{NTF}}</label>
-
     </div>
-
     <div *ngIf="LobCode == 'KTA'" class="form-group row">
       <label class="col-md-2" translate>Total Down Payment Amount</label>
       <label class="col-md-2" translate>{{TotalDownPaymentAmt}}</label>
     </div>
-
     <div class="form-group row">
       <label class="col-md-2 adins-required-label" translate>Installment Amount</label>
       <div class="col-md-2">
@@ -104,7 +96,6 @@
         </show-errors>
       </div>
     </div>
-
   </div>
   <div class="form-actions right">
     <button type="submit" class="btn btn-raised btn-primary">

@@ -13,11 +13,13 @@ import { DeliveryOrderDetailComponent } from "./delivery-order/delivery-order-de
 import { DeliveryOrderPagingComponent } from "./delivery-order/delivery-order-paging/delivery-order-paging.component";
 import { PreGoLiveComponent } from "./pre-go-live/pre-go-live-sharing/pre-go-live.component";
 import { PreGoLiveRequestForApprovalComponent } from "./pre-go-live/pre-go-live-request-for-approval-sharing/pre-go-live-request-for-approval.component";
+import { TcSharingComponentModule } from "app/NEW-NAP/sharing-component/input-nap-component/tc-sharing-component.module";
 
 @NgModule({
   imports: [
     CommonModule,
     AdminProcessSharingRoutingModule,
+    TcSharingComponentModule,
     AdInsModule,
   ],
   declarations: [

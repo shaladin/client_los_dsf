@@ -12,7 +12,7 @@ import { AdminProcessFL4WRoutingModule } from "./admin-process-routing.module";
     AdInsModule,
   ],
   declarations: [
-    DummyComponent
+    DummyComponent,
   ],
   providers: [
     NGXToastrService

@@ -43,5 +43,4 @@ export class LeadUpdatePageComponent implements OnInit {
       this.isLead = true;
     }
   }
-
 }

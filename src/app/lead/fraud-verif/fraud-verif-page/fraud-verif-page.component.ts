@@ -23,6 +23,9 @@ export class FraudVerifPageComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.LeadId = params['LeadId'];
     });
+    this.route.queryParams.subscribe(params => {
+      this.WfTaskListId = params['WfTaskListId'];
+    });
     this.GetLeadCustByLeadIdUrl = AdInsConstant.GetLeadCustByLeadId;
     this.GetLeadCustPersonalByLeadCustIdUrl = AdInsConstant.GetLeadCustPersonalByLeadCustId;
     this.GetCustomerAndNegativeCustDuplicateCheckUrl = AdInsConstant.GetCustomerAndNegativeCustDuplicateCheck;
@@ -36,6 +39,7 @@ export class FraudVerifPageComponent implements OnInit {
   leadCustObj: any;
   leadAssetObj: any;
   LeadId: any;
+  WfTaskListId : any;
   GetLeadCustByLeadIdUrl: string;
   GetLeadCustPersonalByLeadCustIdUrl: any;
   GetCustomerAndNegativeCustDuplicateCheckUrl: string;
