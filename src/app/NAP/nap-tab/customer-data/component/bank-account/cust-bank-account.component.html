@@ -128,13 +128,19 @@
                       <lib-uc-show-errors [control]="CustBankAccountForm.controls['BankStmntObjs']['controls'][i]['controls'].Year" [submit]="enjiForm.submitted"></lib-uc-show-errors>            
                     </td>
                     <td [formGroupName]="i">
-                      <input type="number" class="form-control" formControlName="DebitAmt">
+                      <input type="" currencyMask class="form-control" formControlName="DebitAmt"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && CustBankAccountForm.controls['BankStmntObjs']['controls'][i]['controls'].DebitAmt.invalid }">
+                      <lib-uc-show-errors [control]="CustBankAccountForm.controls['BankStmntObjs']['controls'][i]['controls'].DebitAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                     </td>
                     <td [formGroupName]="i">
-                      <input type="number" class="form-control" formControlName="CreditAmt">
+                      <input type="" currencyMask class="form-control" formControlName="CreditAmt"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && CustBankAccountForm.controls['BankStmntObjs']['controls'][i]['controls'].CreditAmt.invalid }">
+                      <lib-uc-show-errors [control]="CustBankAccountForm.controls['BankStmntObjs']['controls'][i]['controls'].CreditAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                     </td>
                     <td [formGroupName]="i">
-                      <input type="number" class="form-control" formControlName="BalanceAmt">
+                      <input type="" currencyMask class="form-control" formControlName="BalanceAmt"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && CustBankAccountForm.controls['BankStmntObjs']['controls'][i]['controls'].BalanceAmt.invalid }">
+                      <lib-uc-show-errors [control]="CustBankAccountForm.controls['BankStmntObjs']['controls'][i]['controls'].BalanceAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                     </td>
                     <td [formGroupName]="i">
                       <a class="danger p-0" data-original-title="" title="" (click)="deleteBankStmnt(i)">

@@ -127,7 +127,7 @@ export class CustCompanyMainDataComponent implements OnInit {
 
   
   GetIndustryType(event){
-    this.parentForm[this.identifier].patchValue({
+    this.parentForm.controls[this.identifier].patchValue({
       IndustryTypeCode: event.IndustryTypeCode
     });
   }

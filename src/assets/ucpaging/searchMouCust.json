@@ -19,22 +19,22 @@
             "placeholder": "Placeholder"
         },
         {
-            "type" : "datepicker",
-            "name" : "A.MOU_CUST_DT",
-            "id" : "MouDtId",
-            "value" : "",
-            "label" : "MOU DATE >=",
-            "restriction" : "gte",
-            "datatype" : "date"
+            "type": "datepicker",
+            "name": "A.MOU_CUST_DT",
+            "id": "MouDtId",
+            "value": "",
+            "label": "MOU DATE >=",
+            "restriction": "gte",
+            "datatype": "date"
         },
         {
-            "type" : "datepicker",
-            "name" : "A.END_DT",
-            "id" : "EndDtId",
-            "value" : "",
-            "label" : "MOU DATE <=",
-            "restriction" : "gte",
-            "datatype" : "date"
+            "type": "datepicker",
+            "name": "A.END_DT",
+            "id": "EndDtId",
+            "value": "",
+            "label": "MOU DATE <=",
+            "restriction": "gte",
+            "datatype": "date"
         },
         {
             "type": "dropdown",
@@ -51,8 +51,8 @@
             "itemsUrl": [],
             "criteriaPropName": "RefMasterTypeCode",
             "criteriaPropValue": "MOU_TYPE"
-          },
-          {
+        },
+        {
             "type": "textbox",
             "name": "A.CUST_NAME",
             "id": "CustNameId",
@@ -62,7 +62,7 @@
         }
     ],
     "querystring": {
-        "select": "SELECT A.MOU_CUST_ID AS MouCustId, A.MOU_CUST_NO AS MouCustNo, A.MOU_CUST_ID AS MouCustId, A.CUST_NAME AS CustName, A.MOU_CUST_DT AS MouCustDt, A.END_DT AS EndDt, A.PLAFOND_AMT AS PlafondAmt, A.IS_REVOLVING AS IsRevolving, A.MR_MOU_TYPE AS MouType, A.REF_NO AS RefNo",
+        "select": "SELECT A.MOU_CUST_NO AS MouCustNo, A.MOU_CUST_ID AS MouCustId, A.MOU_CUST_ID AS MouCustId, A.CUST_NAME AS CustName, A.MOU_CUST_DT AS MouCustDt, A.END_DT AS EndDt, A.PLAFOND_AMT AS PlafondAmt, A.IS_REVOLVING AS IsRevolving, A.MR_MOU_TYPE AS MouType, A.REF_NO AS RefNo",
         "from": "FROM dbo.MOU_CUST A WITH(NOLOCK)"
     },
     "headerList": [

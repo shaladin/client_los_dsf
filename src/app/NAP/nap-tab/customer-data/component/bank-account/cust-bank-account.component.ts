@@ -228,7 +228,7 @@ export class CustBankAccountComponent implements OnInit {
     if(bankStmntObj == undefined){
       return this.fb.group({
         Month: [this.defaultMonth, [Validators.required, Validators.maxLength(2)]],
-        Year: ['', [Validators.required, Validators.maxLength(10)]],
+        Year: ['', [Validators.required, Validators.maxLength(10), Validators.pattern("^[0-9]+$")]],
         DebitAmt: [0, Validators.required],
         CreditAmt: [0, Validators.required],
         BalanceAmt: [0, Validators.required]
@@ -236,7 +236,7 @@ export class CustBankAccountComponent implements OnInit {
     }else{
       return this.fb.group({
         Month: [bankStmntObj.Month, [Validators.required, Validators.maxLength(2)]],
-        Year: [bankStmntObj.Year, [Validators.required, Validators.maxLength(10)]],
+        Year: [bankStmntObj.Year, [Validators.required, Validators.maxLength(10), Validators.pattern("^[0-9]+$")]],
         DebitAmt: [bankStmntObj.DebitAmt, Validators.required],
         CreditAmt: [bankStmntObj.CreditAmt, Validators.required],
         BalanceAmt: [bankStmntObj.BalanceAmt, Validators.required]

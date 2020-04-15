@@ -15,7 +15,6 @@ import { LeadVerfObj } from 'app/shared/model/LeadVerfObj.Model';
 @Component({
   selector: 'app-lead-verif',
   templateUrl: './lead-verif.component.html',
-  styleUrls: ['./lead-verif.component.scss'],
   providers: [NGXToastrService]
 })
 
@@ -144,7 +143,6 @@ export class LeadVerifComponent implements OnInit {
   }
 
   SaveLeadVerf(leadVerfForm: any) {
-    // this.leadVerfObj = new LeadVerfObj();
     for (let index = 0; index < this.tempData.length; index++) {
       var tempLeadVerfObj = new LeadVerfObj();
       tempLeadVerfObj.VerifyStat = this.verifyStatus;
@@ -169,7 +167,7 @@ export class LeadVerifComponent implements OnInit {
     );
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate(['/Lead/Verif']);
-  }); 
+    });
   }
 
   addToTemp() {
@@ -203,7 +201,7 @@ export class LeadVerifComponent implements OnInit {
       this.inputObj.addCritInput = this.arrAddCrit;
       this.UCSearchComponent.search(this.apiUrl, this.pageNow, this.pageSize, order, this.arrAddCrit);
       this.listSelectedId = [];
-    } 
+    }
     else {
       this.toastr.typeErrorCustom('Please select at least one Available Lead');
     }

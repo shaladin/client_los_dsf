@@ -19,22 +19,22 @@
             "placeholder": "Placeholder"
         },
         {
-            "type" : "datepicker",
-            "name" : "MOU.MOU_CUST_DT",
-            "id" : "GreaterMouDtId",
-            "value" : "",
-            "label" : "MOU DATE >=",
-            "restriction" : "gte",
-            "datatype" : "date"
+            "type": "datepicker",
+            "name": "MOU.MOU_CUST_DT",
+            "id": "GreaterMouDtId",
+            "value": "",
+            "label": "MOU DATE >=",
+            "restriction": "gte",
+            "datatype": "date"
         },
         {
-            "type" : "datepicker",
-            "name" : "MOU.MOU_CUST_DT",
-            "id" : "LessMouDtId",
-            "value" : "",
-            "label" : "MOU DATE <=",
-            "restriction" : "lte",
-            "datatype" : "date"
+            "type": "datepicker",
+            "name": "MOU.MOU_CUST_DT",
+            "id": "LessMouDtId",
+            "value": "",
+            "label": "MOU DATE <=",
+            "restriction": "lte",
+            "datatype": "date"
         },
         {
             "type": "textbox",
@@ -57,9 +57,9 @@
             "label": "MOU TYPE",
             "items": [],
             "itemsUrl": [],
-            "criteriaPropName" : "RefMasterTypeCode",
-            "criteriaPropValue" : "MOU_TYPE"
-          }
+            "criteriaPropName": "RefMasterTypeCode",
+            "criteriaPropValue": "MOU_TYPE"
+        }
     ],
     "querystring": {
         "select": "SELECT MOU.MOU_CUST_NO AS mouCustNo, MOU.CUST_NAME AS custName, MOU.MOU_CUST_DT AS mouCustDt, MOU.REF_NO AS refNo, MOU.MR_MOU_TYPE_CODE AS mrMouTypeCode, MOU.MOU_CUST_ID AS mouCustId, MOU.MOU_STAT AS MouStat",

@@ -1,9 +1,5 @@
 <lib-ucviewgeneric [viewInput]="viewLeadCustomerPersonalMaindata" *ngIf="MrCustTypeCode == 'PERSONAL'">
 </lib-ucviewgeneric>
-<!-- <lib-ucviewgeneric [viewInput]="viewLeadCustomerPersonalMaindata" *ngIf="MrCustTypeCode == 'COMPANY'"></lib-ucviewgeneric> -->
- 
- 
-
 <div class="card-body">
   <div class="px-3">
     <lib-ucSubsection [id]="'LeadCustSocmedId'" [title]="'Social Media'" [panel]="'LeadCustSocmed'">
@@ -25,8 +21,7 @@
   </div>
 </div>
 
- 
 <lib-ucviewgeneric [viewInput]="viewLeadAddressLegal"></lib-ucviewgeneric>
 <lib-ucviewgeneric [viewInput]="viewLeadAddressResidence"></lib-ucviewgeneric>
- <lib-ucviewgeneric [viewInput]="viewLeadCustPersonalJobData"></lib-ucviewgeneric>  
+<lib-ucviewgeneric [viewInput]="viewLeadCustPersonalJobData"></lib-ucviewgeneric>
 <lib-ucviewgeneric [viewInput]="viewLeadCustPersonalFinData"></lib-ucviewgeneric>

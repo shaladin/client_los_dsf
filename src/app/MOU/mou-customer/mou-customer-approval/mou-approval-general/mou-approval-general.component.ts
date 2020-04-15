@@ -9,7 +9,6 @@ import { environment } from 'environments/environment';
 @Component({
   selector: 'app-mou-approval-general',
   templateUrl: './mou-approval-general.component.html',
-  styleUrls: ['./mou-approval-general.component.scss'],
   providers: [NGXToastrService]
 })
 export class MouApprovalGeneralComponent implements OnInit {

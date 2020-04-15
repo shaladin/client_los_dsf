@@ -16,35 +16,18 @@ import { AppFinDataComponent } from "./nap-tab/app-fin-data/app-fin-data.compone
 import { InsuranceDataComponent } from "./nap-tab/insurance-data/insurance-data.component";
 import { AssetDataComponent } from "./nap-tab/asset-data/asset-data.component";
 import { PhnVerifPagingComponent } from "./phone-verif/phone-verif-paging/phone-verif-paging.component";
+import { VerfQuestionComponent } from "./nap-component/verf-question/verf-question.component";
 import { PhnVerifSubjectComponent } from "./phone-verif/phone-verif-subject/phone-verif-subject.component";
 import { PhnVerifSubjectViewComponent } from "./phone-verif/phone-verif-subject-view/phone-verif-subject-view.component";
 import { PhnVerifSubjectVerifComponent } from "./phone-verif/phone-verif-subject-verif/phone-verif-subject-verif.component";
+import { AppFromLeadPagingComponent } from "./app-from-lead/paging/app-from-lead-paging.component";
+import { AppFromLeadDetailComponent } from "./app-from-lead/detail/app-from-lead-detail.component";
 
 
 const routes: Routes = [
     {
         path: '',
         children: [
-            {
-                path: 'ConsumerFinance',
-                loadChildren: './CF4W/cf4w.module#CF4WModule'
-            },
-            {
-                path: 'FinanceLeasing',
-                loadChildren: './FL4W/fl4w.module#FL4WModule'
-            },
-            {
-                path: 'CFRefinancing',
-                loadChildren: './RFN4W/rfn4w.module#RFN4WModule'
-            },
-            {
-                path: 'Factoring',
-                loadChildren: './FCTR/fctr.module#FCTRModule'
-            },
-            {
-                path: 'AdminProcess',
-                loadChildren: './AdminProcess/admin-process.module#AdminProcessModule'
-            },
             {
                 path: 'AppPaging',
                 component: AppPagingComponent,
@@ -102,27 +85,6 @@ const routes: Routes = [
                 },
             },
             {
-                path: 'Guarantor/personal',
-                component: GuarantorPersonalComponent,
-                data: {
-                    title: 'Personal'
-                },
-            },
-            {
-                path: 'Guarantor/company',
-                component: GuarantorCompanyComponent,
-                data: {
-                    title: 'Company'
-                },
-            },
-            {
-                path: 'Guarantor/Main',
-                component: AppGuarantorComponent,
-                data: {
-                    title: 'Main'
-                },
-            },
-            {
                 path: 'LifeIns',
                 component: AppLifeInsComponent,
                 data: {
@@ -158,6 +120,14 @@ const routes: Routes = [
                 }
             },
             {
+                path: 'VerfQuestion',
+                component: VerfQuestionComponent,
+                data: {
+                    title: 'Verification Question'
+                }
+            },
+
+            {
                 path: 'PhoneVerif/Subject',
                 component: PhnVerifSubjectComponent,
                 data: {
@@ -177,7 +147,21 @@ const routes: Routes = [
                 data: {
                     title: 'Phone Verif Subject Verif Detail'
                 }
-            }
+            },
+            {
+                path: 'AppFromLead/Paging',
+                component: AppFromLeadPagingComponent,
+                data: {
+                    title: 'Paging'
+                }
+            },
+            {
+                path: 'AppFromLead/Detail',
+                component: AppFromLeadDetailComponent,
+                data: {
+                    title: 'Detail'
+                }
+            },
         ]
     }
 ]

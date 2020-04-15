@@ -11,7 +11,6 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 @Component({
   selector: 'app-lead-data',
   templateUrl: './lead-data.component.html',
-  styleUrls: ['./lead-data.component.scss'],
   providers: [NGXToastrService]
 })
 export class LeadDataComponent implements OnInit {
@@ -27,8 +26,6 @@ export class LeadDataComponent implements OnInit {
     private http: HttpClient, private toastr: NGXToastrService, private wizard: WizardComponent) { }
 
   ngOnInit() {
-    console.log(this.LeadId);
-    console.log(this.LobCode);
     this.bindUcLookup();
     this.bindDropDown();
   }

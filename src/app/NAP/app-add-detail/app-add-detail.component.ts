@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { WizardComponent } from 'angular-archwizard';
 
 @Component({
   selector: 'app-app-add-detail',
@@ -46,7 +47,7 @@ export class AppAddDetailComponent implements OnInit {
     this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
-    this.http.post(environment.losUrl + AdInsConstant.GetAppById, this.NapObj).subscribe(
+    this.http.post(AdInsConstant.GetAppById, this.NapObj).subscribe(
       (response: AppObj) => {
         if (response) {
           this.AppStepIndex = this.AppStep[response.AppCurrStep];
@@ -92,4 +93,9 @@ export class AppAddDetailComponent implements OnInit {
         break;
     }
   }
+
+  // NextTab(){
+  //   console.log(this.wizard);
+  //   this.wizard.goToNextStep();
+  // }
 }
