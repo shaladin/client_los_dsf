@@ -1,5 +1,6 @@
 export class LeadAssetObj{
     LeadAssetId: any;
+    TaskListId : any;
     LeadId: any;
     AssetSeqNo: any;
     FullAssetCode: any;

@@ -9,7 +9,6 @@ import { environment } from 'environments/environment';
 @Component({
   selector: 'app-mou-approval-factoring',
   templateUrl: './mou-approval-factoring.component.html',
-  styleUrls: ['./mou-approval-factoring.component.scss'],
   providers: [NGXToastrService]
 })
 export class MouApprovalFactoringComponent implements OnInit {

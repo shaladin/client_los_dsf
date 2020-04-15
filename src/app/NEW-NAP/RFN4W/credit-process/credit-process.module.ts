@@ -1,18 +1,24 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
-import { DummyComponent } from './dummy/dummy.component';
 import { AdInsModule } from "app/components/adins-module/adins.module";
 import { CreditProcessRFN4WRoutingModule } from "./credit-process-routing.module";
+import { RsvFundPagingComponent } from "./reserved-fund/reserved-fund-paging/reserved-fund-paging.component";
+import { CommissionPagingComponent } from "./commission/commission-paging/commission-paging.component";
+import { PhoneVerificationPagingComponent } from "./phone-verification/phone-verification-paging/phone-verification-paging.component";
+import { CreditProcessComponentModule } from "app/NEW-NAP/sharing-component/credit-process-component/credit-process-component.module";
 
 @NgModule({
   imports: [
     CommonModule,
     CreditProcessRFN4WRoutingModule,
-    AdInsModule
+    AdInsModule,
+    CreditProcessComponentModule
   ],
   declarations: [
-    DummyComponent
+    RsvFundPagingComponent,
+    CommissionPagingComponent,
+    PhoneVerificationPagingComponent,
   ],
   providers: [
     NGXToastrService
