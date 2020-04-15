@@ -1,5 +1,6 @@
 export class LeadObj{
     LeadId : any;
+    TaskListId : any;
     LeadNo : any;
     LeadCopyId : any;
     OriOfficeCode : any;

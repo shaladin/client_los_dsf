@@ -159,7 +159,7 @@ export class LeadVerifComponent implements OnInit {
     var LeadVerf = {
       LeadVerfObjs: this.arrLeadVerf
     }
-    this.http.post(this.AddRangeLeadVerfUrl, LeadVerf).subscribe(
+    this.http.post(this.AddRangeLeadVerfUrl, LeadVerf).subscribe(  /// di join task list, dapet id dari parameter
       response => {
         this.toastr.successMessage(response['message']);
       },

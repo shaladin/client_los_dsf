@@ -62,7 +62,7 @@
         }
     ],
     "querystring": {
-        "select": "SELECT A.MOU_CUST_ID AS MouCustId, A.MOU_CUST_NO AS MouCustNo, A.MOU_CUST_ID AS MouCustId, A.CUST_NAME AS CustName, A.MOU_CUST_DT AS MouCustDt, A.END_DT AS EndDt, A.PLAFOND_AMT AS PlafondAmt, A.IS_REVOLVING AS IsRevolving, A.MR_MOU_TYPE AS MouType, A.REF_NO AS RefNo",
+        "select": "SELECT A.MOU_CUST_NO AS MouCustNo, A.MOU_CUST_ID AS MouCustId, A.MOU_CUST_ID AS MouCustId, A.CUST_NAME AS CustName, A.MOU_CUST_DT AS MouCustDt, A.END_DT AS EndDt, A.PLAFOND_AMT AS PlafondAmt, A.IS_REVOLVING AS IsRevolving, A.MR_MOU_TYPE AS MouType, A.REF_NO AS RefNo",
         "from": "FROM dbo.MOU_CUST A WITH(NOLOCK)"
     },
     "headerList": [

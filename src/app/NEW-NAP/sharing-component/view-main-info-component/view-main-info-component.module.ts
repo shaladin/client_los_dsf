@@ -1,21 +1,25 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
-import { FL4WRoutingModule } from "./fl4w-routing.module";
-import { DummyComponent } from './dummy/dummy.component';
 import { AdInsModule } from "app/components/adins-module/adins.module";
+import { AgrMainInfoComponent } from "./agr-main-info/agr-main-info.component";
+import { AppMainInfoComponent } from "./app-main-info/app-main-info.component";
 
 @NgModule({
+  exports: [
+    AgrMainInfoComponent,
+    AppMainInfoComponent,
+  ],
   imports: [
     CommonModule,
-    FL4WRoutingModule,
     AdInsModule
   ],
   declarations: [
-    DummyComponent
+    AgrMainInfoComponent,
+    AppMainInfoComponent,
   ],
   providers: [
     NGXToastrService
   ]
 })
-export class FL4WModule { }
+export class ViewMainInfoComponentModule { }
