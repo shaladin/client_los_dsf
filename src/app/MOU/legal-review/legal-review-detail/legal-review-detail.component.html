@@ -1,4 +1,4 @@
-<form class="form form-horizontal" [formGroup]="LegalForm" #enjiForm="ngForm" (ngSubmit)="SaveData(LegalForm)">
+<form class="form form-horizontal" [formGroup]="LegalForm" #enjiForm="ngForm">
   <lib-ucviewgeneric [viewInput]="viewObj"></lib-ucviewgeneric>
   <app-mou-cust-tc #MouTc [MouCustId]="MouCustId"></app-mou-cust-tc> 
   <lib-ucSubsection [id]="'Review'" [title]="'Review Result'" [panel]="'ReviewId'"></lib-ucSubsection>
@@ -21,11 +21,11 @@
       translate>
       <i class="ft-x"></i> Back
     </button>
-    <button type="submit" class="btn btn-raised btn-primary mr-1" translate>
-      <i class="fa fa-check-square-o"></i> Save
+    <button type="submit" class="btn btn-raised btn-primary mr-1" (click)="SaveData(LegalForm, false)" translate>
+      <i class="fa fa-check-square-o" ></i> Save
     </button>
-    <button type="submit" class="btn btn-raised btn-primary mr-1" translate>
-      <i class="fa fa-check-square-o"></i> Submit
+    <button type="submit" class="btn btn-raised btn-primary mr-1" (click)="SaveData(LegalForm, true)" translate>
+      <i class="fa fa-check-square-o" ></i> Submit
     </button>
   </div>
 </form>

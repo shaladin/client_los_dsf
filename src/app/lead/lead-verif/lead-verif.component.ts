@@ -47,6 +47,7 @@ export class LeadVerifComponent implements OnInit {
   viewObj: string;
   AddRangeLeadVerfUrl = AdInsConstant.AddRangeLeadVerf;
   verifyStatus: any;
+  ClaimListTaskUrl = AdInsConstant.ClaimListTask;
   constructor(
     private http: HttpClient,
     private toastr: NGXToastrService,
@@ -55,6 +56,7 @@ export class LeadVerifComponent implements OnInit {
     private adInsService: AdInsService) { }
 
   ngOnInit() {
+    console.log('disini');
     this.arrCrit = new Array();
     this.inputObj = new InputSearchObj();
     this.inputObj._url = './assets/search/searchLeadVerf.json';
@@ -140,15 +142,22 @@ export class LeadVerifComponent implements OnInit {
 
   formValidate(form: any, verifyStatus) {
     this.adInsService.scrollIfFormHasErrors(form);
-    this.verifyStatus = verifyStatus;
+    this.verifyStatus = verifyStatus; 
   }
-
+  getListWfTaskListId(){
+    var tempArr = new Array();
+    for (let index = 0; index < this.tempData.length; index++) {
+      tempArr.push(this.tempData[index]['WfTaskListId']);
+    }
+    return tempArr;
+  }
   SaveLeadVerf(leadVerfForm: any) {
-    // this.leadVerfObj = new LeadVerfObj();
+  
     for (let index = 0; index < this.tempData.length; index++) {
       var tempLeadVerfObj = new LeadVerfObj();
       tempLeadVerfObj.VerifyStat = this.verifyStatus;
       tempLeadVerfObj.LeadId = this.tempData[index].LeadId;
+      tempLeadVerfObj.WfTaskListId = this.tempData[index].WfTaskListId
       this.arrLeadVerf.push(tempLeadVerfObj);
     }
     if (this.arrLeadVerf.length == 0) {

@@ -94,8 +94,9 @@ export class LegalReviewDetailComponent implements OnInit {
     }
     return '';
   }
-
-  SaveData(formObj: any) {
+  
+  SaveData(formObj: any, isSubmit : boolean) {
+    console.log('masuk save');
     var mouObj = new MouCustLglReviewObj();
     for (let index = 0; index < this.responseRefMasterObj.length; index++) {
       var tempMouObj = {
@@ -103,9 +104,10 @@ export class LegalReviewDetailComponent implements OnInit {
         MrLglReviewCode: formObj.value.items[index].ReviewComponentValue,
         LglReviewResult: formObj.value.items[index].values
       }
-      mouObj.WfTaskListId = this.WfTaskListId;
       mouObj.MouCustLglReviewObjs.push(tempMouObj);
     }
+    mouObj.WfTaskListId = this.WfTaskListId;
+    mouObj.IsSubmit = isSubmit;
     this.http.post(this.AddEditRangeMouCustLglReview, mouObj).subscribe(
       response => {
         this.toastr.successMessage(response['message']);
