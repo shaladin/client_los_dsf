@@ -1,0 +1,215 @@
+{
+    "title": "LEAD UPDATE",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "L.ORI_OFFICE_NAME",
+            "id": "OfficeNameId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "isSelectOne": false,
+            "url": "http://r3app-server/foundation_r3/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "label": "OFFICE NAME",
+            "items": [],
+            "itemsUrl": []
+        },
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "L.MR_LEAD_SOURCE_CODE",
+            "id": "LeadSourceId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "isSelectOne": false,
+            "url": "http://r3app-server/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
+            "label": "LEAD SOURCE",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "RefMasterTypeCode",
+            "criteriaPropValue": "LEAD_SOURCE"
+        },
+        {
+            "type": "textbox",
+            "name": "L.LEAD_NO",
+            "id": "LeadNoId",
+            "value": "",
+            "label": "LEAD NO",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "L.ORDER_NO",
+            "id": "OrderNoId",
+            "value": "",
+            "label": "ORDER NO",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type" : "textbox",
+            "name" : "LA.FULL_ASSET_NAME",
+            "id" : "FullAssetNameId",
+            "value" : "",
+            "label" : "FULL ASSET NAME",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type" : "textbox",
+            "name" : "LC.CUST_NAME",
+            "id" : "CustNameId",
+            "value" : "",
+            "label" : "CUSTOMER NAME",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "name": "WTL.CLAIM_STAT",
+            "id": "ActiveStatusId",
+            "label": "TASK CLAIM STATUS",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": false,
+            "isSelectOne": false,
+            "items": [
+                {
+                    "key": "CLAIMED",
+                    "value": "CLAIMED"
+                },
+                {
+                    "key": "UNCLAIMED",
+                    "value": "UNCLAIMED"
+                }
+            ],
+            "itemsUrl": []
+        },
+        {
+            "type": "textbox",
+            "name": "WTL.USERNAME",
+            "id": "ClaimById",
+            "value": "",
+            "label": "CLAIM BY",
+            "placeholder": "Placeholder"
+        }
+    ],
+    "querystring": {
+        "select": "SELECT L.LEAD_NO AS LeadNo, WTL.WF_TASK_LIST_ID AS WfTaskListId, WTL.CLAIM_STAT AS ClaimStat, WTL.USERNAME AS ClaimBy, WTL.OFFICE_CODE AS OfficeCode, L.LEAD_ID AS LeadId, L.CRT_OFFICE_NAME AS CrtOfficeName, L.ORI_OFFICE_NAME AS OriOfficeName, L.ORDER_NO AS OrderNo, LC.CUST_NAME AS CustName, L.MR_LEAD_SOURCE_CODE AS SourceCode, LA.FULL_ASSET_NAME AS FullAssetName",
+        "from": "FROM dbo.LEAD L WITH(NOLOCK) JOIN dbo.LEAD_ASSET LA WITH(NOLOCK) ON L.LEAD_ID = LA.LEAD_ID JOIN LEAD_CUST LC WITH(NOLOCK) ON L.LEAD_ID = LC.LEAD_ID JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON L.LEAD_NO = WTL.TRANSACTION_CODE AND WTL.ACT_CODE = ''"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Claim By",
+            "name": "WTL.USERNAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Lead No",
+            "name": "L.LEAD_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Office Name",
+            "name": "L.ORI_OFFICE_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Order No",
+            "name": "L.ORDER_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Customer Name",
+            "name": "LC.CUST_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Lead Source",
+            "name": "L.MR_LEAD_SOURCE_CODE"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Full Asset Name",
+            "name": "LA.FULL_ASSET_NAME"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Action"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "ClaimBy"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "LeadNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "OriOfficeName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "OrderNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "SourceCode"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "FullAssetName"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "edit",
+                    "path": "/Lead/LeadInput/Page",
+                    "param": [
+                        {
+                            "type": "TaskListId",
+                            "property": "TaskListId"
+                        },
+                        {
+                            "type": "LeadId",
+                            "property": "LeadId"
+                        },
+                        {
+                            "type": "WfTaskListId",
+                            "property": "WfTaskListId"
+                        },
+                        {
+                            "type": "mode",
+                            "property": "edit"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

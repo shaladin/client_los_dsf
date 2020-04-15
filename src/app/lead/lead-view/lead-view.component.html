@@ -14,9 +14,9 @@
             </aw-wizard-step>
             <aw-wizard-step [stepTitle]="'LEAD DATA'" (stepEnter)="EnterTab('leadData')"
               [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
-              <!-- <app-mou-view-fee *ngIf="isLeadData == true">
-              </app-mou-view-fee> -->
-            </aw-wizard-step> 
+              <app-view-lead-data *ngIf="isLeadData == true">
+              </app-view-lead-data>
+            </aw-wizard-step>
           </aw-wizard>
         </div>
       </div>

@@ -1,0 +1,192 @@
+{
+    "title": "MOU Inquiry",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "textbox",
+            "name": "MC.MOU_CUST_NO",
+            "id": "MouCustNoId",
+            "value": "",
+            "label": "MOU NO",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "MC.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "CUSTOMER NAME",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "MC.MR_MOU_TYPE_CODE",
+            "id": "MouTypeId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "isSelectOne": false,
+            "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
+            "label": "MOU TYPE",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "RefMasterTypeCode",
+            "criteriaPropValue": "MOU_TYPE"
+        },
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "MC.MOU_STAT",
+            "id": "MouStatId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "isSelectOne": false,
+            "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
+            "label": "MOU STATUS",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "RefMasterTypeCode",
+            "criteriaPropValue": "MOU_STAT"
+        },
+        {
+            "type": "textbox",
+            "name": "MC.PLAFOND_AMT",
+            "id": "GreaterPlafondAmt",
+            "value": "",
+            "label": "PLAFOND AMOUNT >=",
+            "restriction": "gte",
+            "datatype": "numeric"
+        },
+        {
+            "type": "textbox",
+            "name": "MC.PLAFOND_AMT",
+            "id": "LessPlafondAmt",
+            "value": "",
+            "label": "PLAFOND AMOUNT <=",
+            "restriction": "lte",
+            "datatype": "numeric"
+        },
+        {
+            "type": "dropdown",
+            "label": "REVOLVING",
+            "name": "MC.IS_REVOLVING",
+            "id": "revolvingId",
+            "value": "",
+            "datatype": "text",
+            "isSelectOne": false,
+            "items": [
+                {
+                    "key": "1",
+                    "value": "Yes"
+                },
+                {
+                    "key": "0",
+                    "value": "No"
+                }
+            ],
+            "isFromURL": false,
+            "url": "",
+            "itemsUrl": [],
+            "criteriaPropName": "",
+            "criteriaPropValue": ""
+        }
+    ],
+    "querystring": {
+        "select": "SELECT MC.MOU_CUST_NO AS mouCustNo, MC.CUST_NAME AS custName, MC.MOU_CUST_DT AS mouCustDt, MC.END_DT AS endDt, MC.PLAFOND_AMT AS plafondAmt, MC.IS_REVOLVING AS isRevolving, RM_TYPE.DESCR AS mrMouTypeCode, RM_STAT.DESCR AS mouStat, MC.MOU_CUST_ID AS mouCustId",
+        "from": "FROM dbo.MOU_CUST AS MC WITH(NOLOCK) LEFT JOIN dbo.V_REF_MASTER AS RM_TYPE WITH(NOLOCK) ON MC.MR_MOU_TYPE_CODE = RM_TYPE.MASTER_CODE AND RM_TYPE.REF_MASTER_TYPE_CODE = 'MOU_STAT' LEFT JOIN dbo.V_REF_MASTER AS RM_STAT WITH(NOLOCK) ON MC.MOU_STAT = RM_STAT.MASTER_CODE AND RM_STAT.REF_MASTER_TYPE_CODE = 'MOU_STAT'"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "MOU No.",
+            "name": "MC.MOU_CUST_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Customer Name",
+            "name": "MC.CUST_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "MOU Date",
+            "name": "MC.MOU_CUST_DT"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Expired Date",
+            "name": "MC.END_DT"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Plafond Amount",
+            "name": "MC.PLAFOND_AMT"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Revolving",
+            "name": "MC.IS_REVOLVING"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "MOU Type",
+            "name": "MC.MR_MOU_TYPE_CODE"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "MOU Status",
+            "name": "MC.MOU_STAT"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "mouCustNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "custName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "mouCustDt"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "endDt"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "plafondAmt"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "isRevolving"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "mrMouTypeCode"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "mouStat"
+        }
+    ]
+}

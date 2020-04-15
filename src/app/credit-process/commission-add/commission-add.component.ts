@@ -138,7 +138,7 @@ export class CommissionAddComponent implements OnInit {
   isFinishGetAppData;
   ResultAppData;
   GetAppData() {
-    var url = environment.losUrl + AdInsConstant.GetAppById;
+    var url = AdInsConstant.GetAppById;
     var obj = {
       // AppId: this.AppId,
       AppId: this.AppId,
@@ -160,7 +160,7 @@ export class CommissionAddComponent implements OnInit {
   }
 
   GetIncomeInfoObj() {
-    var url = environment.losUrl + AdInsConstant.GetAppFinDataWithRuleByAppId;
+    var url = environment.losUrl //+ AdInsConstant.GetAppFinDataWithRuleByAppId;
     var app = new NapAppModel();
     app = this.ResultAppData;
     var obj = {

@@ -1,1 +1,27 @@
-<lib-ucviewgeneric [viewInput]="viewLeadCustomerPersonalMaindata"></lib-ucviewgeneric>
+<lib-ucviewgeneric [viewInput]="viewLeadCustomerPersonalMaindata" *ngIf="MrCustTypeCode == 'PERSONAL'">
+</lib-ucviewgeneric>
+<div class="card-body">
+  <div class="px-3">
+    <lib-ucSubsection [id]="'LeadCustSocmedId'" [title]="'Social Media'" [panel]="'LeadCustSocmed'">
+    </lib-ucSubsection>
+    <div class="form-body" id="LeadCustSocmed">
+      <div class="form-group row">
+        <div class="col-md-12" *ngFor="let item of listLeadCustSocmed">
+          <div class="row">
+            <div class="col-md-3">
+              <label class="label-control" translate=""> {{item.MrSocmedName}} </label>
+            </div>
+            <div class="col-md-3">
+              <label class="label-control" translate=""> {{item.SocmedId}} </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<lib-ucviewgeneric [viewInput]="viewLeadAddressLegal"></lib-ucviewgeneric>
+<lib-ucviewgeneric [viewInput]="viewLeadAddressResidence"></lib-ucviewgeneric>
+<lib-ucviewgeneric [viewInput]="viewLeadCustPersonalJobData"></lib-ucviewgeneric>
+<lib-ucviewgeneric [viewInput]="viewLeadCustPersonalFinData"></lib-ucviewgeneric>

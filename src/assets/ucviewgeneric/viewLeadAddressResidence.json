@@ -1,0 +1,62 @@
+{
+  "title": "",
+  "subsection": [
+    {
+      "subSectionId": "AddressId",
+      "subSectionTitle": "Legal Address",
+      "mainInfoUrl": "http://localhost:5001/Generic/GetDataViewBySQL",
+      "mainInfo": [
+        {
+          "type": "text",
+          "label": "Address",
+          "property": "Addr"
+        },
+        {
+          "type": "text",
+          "label": "Zip Code",
+          "property": "ZipCode"
+        },
+        {
+          "type": "text",
+          "label": "RT/RW",
+          "property": "RtRw"
+        },
+        {
+          "type": "text",
+          "label": "Kelurahan",
+          "property": "Kelurahan"
+        },
+        {
+          "type": "text",
+          "label": "Phone 1",
+          "property": "Phone1"
+        },
+        {
+          "type": "text",
+          "label": "Kecamatan",
+          "property": "Kecamatan"
+        },
+        {
+          "type": "text",
+          "label": "Phone 2",
+          "property": "Phone2"
+        },
+        {
+          "type": "text",
+          "label": "City",
+          "property": "City"
+        },
+        {
+          "type": "text",
+          "label": "Fax",
+          "property": "Fax"
+        }
+      ],
+      "querystring": {
+        "select": "SELECT lca.ADDR AS Addr, lca.ZIPCODE AS ZipCode, CONCAT(lca.AREA_CODE_4, '/', lca.AREA_CODE_3) AS RtRw, lca.AREA_CODE_2 AS Kelurahan, lca.AREA_CODE_1 AS Kecamatan, lca.CITY AS City, CONCAT(lca.PHN_AREA_1,' ',lca.PHN_1, '-',lca.PHN_EXT_1) AS Phone1, CONCAT(lca.PHN_AREA_2,' ',lca.PHN_2, '-',lca.PHN_EXT_2) AS Phone2, CONCAT(lca.FAX_AREA,'-', lca.FAX) AS Fax",
+        "from": "FROM dbo.LEAD_CUST_ADDR lca WITH(NOLOCK) JOIN dbo.LEAD_CUST lc WITH(NOLOCK) on lca.LEAD_CUST_ID = lc.LEAD_CUST_ID",
+        "where": "WHERE lca.MR_CUST_ADDR_TYPE_CODE = 'RESIDENCE' AND lc.LEAD_ID={0}"
+      }
+    }
+  ]
+}

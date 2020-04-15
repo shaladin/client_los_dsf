@@ -1,23 +1,7 @@
-// import { Component, OnInit } from '@angular/core';
-
-// @Component({
-//   selector: 'app-lead-cancel',
-//   templateUrl: './lead-cancel.component.html',
-//   styleUrls: ['./lead-cancel.component.scss']
-// })
-// export class LeadCancelComponent implements OnInit {
-
-//   constructor() { }
-
-//   ngOnInit() {
-//   }
-
-// }
-
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UCSearchComponent } from '@adins/ucsearch';
 import { environment } from 'environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UcgridfooterComponent } from '@adins/ucgridfooter';
@@ -26,12 +10,12 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { NgbPaginationConfig } from '@ng-bootstrap/ng-bootstrap';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsService } from 'app/shared/services/adIns.service';
-import { LeadVerfObj } from 'app/shared/model/LeadVerfObj.Model';
+import { LeadCancelObj } from 'app/shared/model/LeadCancelObj.Model';
+import { LeadCancelConfirmComponent } from '../lead-cancel-confirm/lead-cancel-confirm.component';
 
 @Component({
   selector: 'app-lead-cancel',
   templateUrl: './lead-cancel.component.html',
-  styleUrls: ['./lead-cancel.component.scss'],
   providers: [NGXToastrService]
 })
 
@@ -63,6 +47,8 @@ export class LeadCancelComponent implements OnInit {
   viewObj: string;
   AddRangeLeadVerfUrl = AdInsConstant.AddRangeLeadVerf;
   verifyStatus: any;
+  confirmUrl = "/Lead/ConfirmCancel";
+  allowedStat = ['INP','NEW'];
   constructor(
     private http: HttpClient,
     private toastr: NGXToastrService,
@@ -71,7 +57,6 @@ export class LeadCancelComponent implements OnInit {
     private adInsService: AdInsService) { }
 
   ngOnInit() {
-    console.log('inii');
     this.arrCrit = new Array();
     this.inputObj = new InputSearchObj();
     this.inputObj._url = './assets/search/searchLeadCancel.json';
@@ -82,6 +67,13 @@ export class LeadCancelComponent implements OnInit {
     this.pageSize = 10;
     this.apiUrl = environment.losUrl + AdInsConstant.GetPagingObjectBySQL;
 
+    var addCrit = new CriteriaObj();
+    addCrit.DataType = "text";
+    addCrit.propName = "L.LEAD_STAT";
+    addCrit.restriction = AdInsConstant.RestrictionIn;
+    addCrit.listValue = this.allowedStat;
+    this.arrAddCrit.push(addCrit);
+    this.inputObj.addCritInput.push(addCrit);
     var GetListLeadVerfUrl = AdInsConstant.GetListLeadVerf;
     var obj = {};
     var arr = [0];
@@ -92,17 +84,8 @@ export class LeadCancelComponent implements OnInit {
         for (var i = 0; i < temp.length; i++) {
           arr.push(temp[i]['LeadId']);
         }
-
-        const addCritAssetMasterId = new CriteriaObj();
-        addCritAssetMasterId.DataType = 'numeric';
-        addCritAssetMasterId.propName = 'L.LEAD_ID';
-        addCritAssetMasterId.restriction = AdInsConstant.RestrictionNotIn;
-        addCritAssetMasterId.listValue = arr;
-        this.arrCrit.push(addCritAssetMasterId);
-        this.inputObj.addCritInput.push(addCritAssetMasterId);
       },
       error => {
-        console.log('ga jalan');
         this.router.navigateByUrl('Error');
       }
     );
@@ -143,8 +126,6 @@ export class LeadCancelComponent implements OnInit {
     this.UCSearchComponent.search(this.apiUrl, this.pageNow, this.pageSize, order)
   }
   getResult(event) {
-    console.log('diget');
-    console.log(event);
     this.resultData = event.response.Data;
     this.totalData = event.response.Count;
     this.ucgridFooter.pageNow = event.pageNow;
@@ -163,38 +144,21 @@ export class LeadCancelComponent implements OnInit {
     this.verifyStatus = verifyStatus;
   }
 
-  SaveLeadCancel(leadVerfForm: any) {
-    // this.leadVerfObj = new LeadVerfObj();
+  SaveLeadCancel(leadVerfForm: any) { 
+    var tempLeadCancelObj = new LeadCancelObj();
     for (let index = 0; index < this.tempData.length; index++) {
-      var tempLeadVerfObj = new LeadVerfObj();
-      tempLeadVerfObj.VerifyStat = this.verifyStatus;
-      tempLeadVerfObj.LeadId = this.tempData[index].LeadId;
-      this.arrLeadVerf.push(tempLeadVerfObj);
+      tempLeadCancelObj.LeadIds.push(this.tempData[index].LeadId);
     }
-    if (this.arrLeadVerf.length == 0) {
+    if (tempLeadCancelObj.LeadIds.length == 0) {
       this.toastr.typeErrorCustom('Please Add At Least One Data');
       return;
     }
-    else if(this.arrLeadVerf.length > 50){
+    else if(tempLeadCancelObj.LeadIds.length > 50){
       this.toastr.typeErrorCustom('Maximum 50 Data');
       return;
     }
-
-    var LeadVerf = {
-      LeadVerfObjs: this.arrLeadVerf
-    }
-    this.http.post(this.AddRangeLeadVerfUrl, LeadVerf).subscribe(
-      response => {
-        console.log('success');
-        this.toastr.successMessage(response['message']);
-      },
-      error => {
-        console.log(error);
-      }
-    );
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      this.router.navigate(['/Lead/Verif']);
-  }); 
+    var params = tempLeadCancelObj.LeadIds.join(',')
+    this.router.navigate([this.confirmUrl], { queryParams: { "LeadIds": params } });
   }
 
   addToTemp() {
@@ -217,6 +181,14 @@ export class LeadCancelComponent implements OnInit {
       addCrit.propName = "L.LEAD_ID";
       addCrit.restriction = AdInsConstant.RestrictionNotIn;
       addCrit.listValue = this.tempListId;
+
+      var allowedCrit = new CriteriaObj();
+      allowedCrit.DataType = "text";
+      allowedCrit.propName = "L.LEAD_STAT";
+      allowedCrit.restriction = AdInsConstant.RestrictionIn;
+      allowedCrit.listValue = this.allowedStat;
+      this.arrAddCrit.push(allowedCrit);
+
       this.arrAddCrit.push(addCrit);
       var order = null;
       if (this.orderByKey != null) {
@@ -230,7 +202,6 @@ export class LeadCancelComponent implements OnInit {
       this.listSelectedId = [];
     } 
     else {
-      // console.log('Please select at least one Available Lead');
       this.toastr.typeErrorCustom('Please select at least one Available Lead');
     }
   }
@@ -264,13 +235,22 @@ export class LeadCancelComponent implements OnInit {
       var index = this.tempListId.indexOf(LeadId);
       if (index > -1) {
         this.tempListId.splice(index, 1);
-        this.tempData.splice(index, 1);
+        this.tempData.splice(index, 1); 
       }
       var addCrit = new CriteriaObj();
       addCrit.DataType = "numeric";
       addCrit.propName = "L.LEAD_ID";
       addCrit.restriction = AdInsConstant.RestrictionNotIn;
       addCrit.listValue = this.tempListId;
+
+      var allowedCrit = new CriteriaObj();
+      allowedCrit.DataType = "text";
+      allowedCrit.propName = "L.LEAD_STAT";
+      allowedCrit.restriction = AdInsConstant.RestrictionIn;
+      allowedCrit.listValue = this.allowedStat;
+      this.arrAddCrit.push(allowedCrit);
+
+
       if (this.tempListId.length != 0) {
         this.arrAddCrit.push(addCrit);
       }

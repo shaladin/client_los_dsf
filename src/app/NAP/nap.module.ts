@@ -33,7 +33,6 @@ import { CustPersonalFinancialDataComponent } from "./nap-tab/customer-data/comp
 import { SearchCrossAppComponent } from './nap-tab/app-model/search-cross-app/search-cross-app.component';
 import { UCSearchModule } from '@adins/ucsearch';
 import { CommissionPagingComponent } from '../credit-process/commission-paging/commission-paging.component';
-// import { CustFinancialDataComponent } from "./nap-tab/customer-data/component/financial-data/cust-financial-data.component";
 import { CustBankAccountComponent } from "./nap-tab/customer-data/component/bank-account/cust-bank-account.component";
 import { CustJobDataComponent } from "./nap-tab/customer-data/component/job-data/cust-job-data.component";
 import { CustSocmedComponent } from "./nap-tab/customer-data/component/socmed/cust-socmed.component";
@@ -56,8 +55,8 @@ import { NgbModule, NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { AppFeeComponent } from './nap-tab/app-fin-data/component/app-fee/app-fee.component';
 import { NgxCurrencyModule } from 'ngx-currency';
 import { PhnVerifPagingComponent } from "./phone-verif/phone-verif-paging/phone-verif-paging.component";
-import { RsvFundPagingComponent } from "./RFN4W/reserved-fund/reserved-fund-paging/reserved-fund-paging.component";
 import { RsvFundViewComponent } from "app/credit-process/reserved-fund/reserved-fund-view/reserved-fund-view.component";
+import { VerfQuestionComponent } from "./nap-component/verf-question/verf-question.component";
 export const customCurrencyMaskConfig = {
     align: "right",
     allowNegative: true,
@@ -69,6 +68,11 @@ export const customCurrencyMaskConfig = {
     thousands: ",",
     nullable: false
 };
+import { PhnVerifSubjectComponent } from "./phone-verif/phone-verif-subject/phone-verif-subject.component";
+import { PhnVerifSubjectViewComponent } from "./phone-verif/phone-verif-subject-view/phone-verif-subject-view.component";
+import { PhnVerifSubjectVerifComponent } from "./phone-verif/phone-verif-subject-verif/phone-verif-subject-verif.component";
+import { AppFromLeadPagingComponent } from "./app-from-lead/paging/app-from-lead-paging.component";
+import { AppFromLeadDetailComponent } from "./app-from-lead/detail/app-from-lead-detail.component";
 
 
 
@@ -112,13 +116,20 @@ export const customCurrencyMaskConfig = {
         UcinputnumberComponent,
         InsuranceDataComponent,
         AssetDataComponent,
-        RsvFundPagingComponent,
         RsvFundViewComponent,
         AppFinDataComponent,
         AppFinDataComponent,
-        PhnVerifPagingComponent
+        PhnVerifPagingComponent,
+        VerfQuestionComponent,
+        PhnVerifPagingComponent,
+        PhnVerifSubjectComponent,
+        PhnVerifSubjectViewComponent,
+        PhnVerifSubjectVerifComponent,
+        PhnVerifPagingComponent,
+        AppFromLeadPagingComponent,
+        AppFromLeadDetailComponent
         ],
-    imports: [ 
+    imports: [
         NapRoutingModule,
         CommonModule,
         ArchwizardModule,
@@ -134,7 +145,7 @@ export const customCurrencyMaskConfig = {
         MatRadioModule,
         MatSelectModule,
         UcSubsectionModule,
-        SharingComponentModule,
+        SharingComponentModule, 
         UcaddressModule,
         UcgridviewModule,
         UCSearchModule,

@@ -3,12 +3,18 @@
     <div class="card-body">
       <div class="px-3">
         <span class="mr-1">
-          <button type="button" class="addButton pull-right" [routerLink]="['Guarantor/Main']" translate>
+          <button type="button" class="addButton pull-right" (click)="add(content)" translate>
             <i class="ft-plus-circle"></i> Add Guarantor
           </button>
         </span>
-        <lib-ucgridview [gridInput]="inputGridObj"></lib-ucgridview>
+        <lib-ucgridview [gridInput]="inputGridObj" (callback)="event(content,$event)"></lib-ucgridview>
       </div>
     </div>
   </div>
 </div>
+<ng-template #content let-c="close" let-d="dismiss">
+  <app-app-guarantor [AppGuarantorId]=AppGuarantorId [MrGuarantorTypeCode]=MrGuarantorTypeCode [mode]=mode></app-app-guarantor>
+  <button type="button" class="btn btn-raised btn-warning mr-1" (click)="cancel()" translate>
+    <i class="ft-x"></i> Cancel
+  </button>
+</ng-template>

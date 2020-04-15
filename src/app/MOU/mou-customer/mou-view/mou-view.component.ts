@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -7,9 +7,10 @@ import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 @Component({
   selector: 'app-mou-view',
   templateUrl: './mou-view.component.html',
-  styleUrls: ['./mou-view.component.scss']
 })
 export class MouViewComponent implements OnInit {
+ @Input() inputMouCustId;
+  
   getMouCustByIdUrl : any;
   MouCustId : any;
   mouCustObj : any;
@@ -18,9 +19,10 @@ export class MouViewComponent implements OnInit {
   constructor(private http: HttpClient, private route: ActivatedRoute) { 
     this.getMouCustByIdUrl = AdInsConstant.GetMouCustById;
     this.route.queryParams.subscribe(params => {
-      if (params["MouCustId"] != null) {
+      if (params["MouCustId"] != null)
         this.MouCustId = params["MouCustId"];
-      }
+      else
+       this.MouCustId = this.inputMouCustId;
     });
    
   }
@@ -34,11 +36,8 @@ export class MouViewComponent implements OnInit {
       (response) => {
         this.resultData = response;
         this.MrMouTypeCode = this.resultData['MrMouTypeCode']; 
-        console.log( this.MrMouTypeCode);
       },
       (error) =>{
-        // this.custModel = "";
-        // this.custType = "";
         console.log(error);
       }
     );

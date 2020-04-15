@@ -21,6 +21,7 @@ export class AppCustPersonalJobDataObj {
 constructor() { 
         this.AppCustPersonalJobDataId = 0;
         this.AppCustPersonalId = 0;
+        this.IsMfEmp = false;
         // this.MrProfessionCode = "";
         // this.CompanyName = "";
         // this.MrJobPositionCode = "";
