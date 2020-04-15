@@ -34,6 +34,8 @@
           <th><input type="checkbox" [checked]="checkboxAll" (change)="SelectAll($event.target.checked)" id="checkAll"
               name="CheckAll">
           </th>
+          <th class="text-left"><span class="thead-header" (click)="searchSort($event)" name='leadNo' translate>CLAIM BY</span>
+          </th>
           <th class="text-left"><span class="thead-header" (click)="searchSort($event)" name='leadNo' translate>LEAD
               NO</span>
           </th>
@@ -69,6 +71,7 @@
                 (change)="Checked(item.LeadId,  $event.target.checked)" [checked]=false>
             </div>
           </td>
+          <td class="text-left">{{item.ClaimBy}}</td>
           <td class="text-left">{{item.LeadNo}}</td>
           <td class="text-left">{{item.OfficeName}}</td>
           <td class="text-left">{{item.CustName}}</td>

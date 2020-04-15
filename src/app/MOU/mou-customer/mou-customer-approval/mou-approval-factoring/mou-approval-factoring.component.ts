@@ -23,7 +23,7 @@ export class MouApprovalFactoringComponent implements OnInit {
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
 
-      if (params["ProdHId"] != null) {
+      if (params["MouCustId"] != null) {
         this.MouCustId = params["MouCustId"];
       }
 

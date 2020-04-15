@@ -6,6 +6,7 @@ import { WizardComponent } from 'angular-archwizard';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { Location } from '@angular/common';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { MouCustTcComponent } from '../mou-cust-tc/mou-cust-tc.component';
 
 @Component({
   selector: 'app-mou-customer-detail',
@@ -15,6 +16,8 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 })
 export class MouCustomerDetailComponent implements OnInit {
   @ViewChild("WizardMouDetail") public wizard: WizardComponent;
+  @ViewChild("MouTcGeneral") public mouTcGeneral: MouCustTcComponent;
+  @ViewChild("MouTcFactoring") public mouTcFactoring: MouCustTcComponent;
   mouType: string;
   mouCustId: number;
 
@@ -59,6 +62,19 @@ export class MouCustomerDetailComponent implements OnInit {
 
   mouCustTc(e){
     this.stepHandler(e);
+  }
+
+  saveMouTc(){
+    if(this.mouType == "GENERAL"){
+      this.mouTcGeneral.Save();
+    }
+    else if(this.mouType == "FACTORING"){
+      this.mouTcFactoring.Save();
+    }
+  }
+
+  backFromMouTc(){
+    this.stepHandler({StatusCode: "-1"});
   }
 
   mouDocumentBack(){
