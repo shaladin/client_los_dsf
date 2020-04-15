@@ -1,45 +1,6 @@
 <form class="form form-horizontal" [formGroup]="LegalForm" #enjiForm="ngForm" (ngSubmit)="SaveData(LegalForm)">
   <lib-ucviewgeneric [viewInput]="viewObj"></lib-ucviewgeneric>
-  <lib-ucSubsection [id]="'Hierarchy'" [title]="'Term And Condition'" [panel]="'TermId'"></lib-ucSubsection>
-  <div id="TermId" formArrayName="termConditions">
-    <table class="table table-responsive-md text-center table-hover">
-      <thead>
-        <tr class="table-header">
-          <th class="text-center"><span class="thead-header" name='no' translate>NO</span>
-          </th>
-          <th class="text-center"><span class="thead-header" name='docName' translate>DOCUMENT NAME</span>
-          </th>
-          <th class="text-center"><span class="thead-header" name='checked' translate>CHECKED</span>
-          </th>
-          <th class="text-center"><span class="thead-header" name='mandatory' translate>MANDATORY</span>
-          </th>
-          <th class="text-center"><span class="thead-header" name='exp' translate>EXPIRED DATE</span>
-          </th>
-          <th class="text-center"><span class="thead-header" name='promise' translate>PROMISE DATE</span>
-          </th>
-          <th class="text-center"><span class="thead-header" name='notes' translate>NOTES</span>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr [formGroupName]="i" *ngFor="let item of LegalForm.controls.termConditions.controls; let i = index">
-          <td class="text-center">{{i+1}}</td>
-          <td class="text-left">{{item.controls.DocumentName.value}}</td>
-          <td class="text-center">
-            <input class="border-primary" [checked]="item.controls.IsChecked.value" type="checkbox"
-              formControlName="IsChecked" />
-          </td>
-          <td class="text-center">
-            <input class="border-primary" [checked]="item.controls.IsMandatory.value" type="checkbox"
-              formControlName="IsMandatory" />
-          </td>
-          <td class="text-center">{{item.controls.ExpiredDt.value | date: 'dd-MM-yyyy'}}</td>
-          <td class="text-center">{{item.controls.PromisedDt.value | date: 'dd-MM-yyyy'}}</td>
-          <td class="text-left">{{item.controls.Notes.value}}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <app-mou-cust-tc #MouTc [MouCustId]="MouCustId"></app-mou-cust-tc> 
   <lib-ucSubsection [id]="'Review'" [title]="'Review Result'" [panel]="'ReviewId'"></lib-ucSubsection>
   <div id="ReviewId">
     <div formArrayName="items">
@@ -68,6 +29,3 @@
     </button>
   </div>
 </form>
-
-
-<!-- <app-mou-cust-tc [MouCustId]="MouCustId"></app-mou-cust-tc>  -->

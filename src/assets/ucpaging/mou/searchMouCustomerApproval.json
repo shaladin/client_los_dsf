@@ -129,11 +129,6 @@
             "property": "MouCustNo"
         },
         {
-            "type": "date",
-            "position": "left",
-            "property": "MouCustDt"
-        },
-        {
             "type": "text",
             "position": "center",
             "property": "RequestBy"

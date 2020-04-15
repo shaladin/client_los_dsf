@@ -49,25 +49,25 @@
             "placeholder": "Placeholder"
         },
         {
-            "type" : "textbox",
-            "name" : "LA.FULL_ASSET_NAME",
-            "id" : "FullAssetNameId",
-            "value" : "",
-            "label" : "FULL ASSET NAME",
+            "type": "textbox",
+            "name": "LA.FULL_ASSET_NAME",
+            "id": "FullAssetNameId",
+            "value": "",
+            "label": "FULL ASSET NAME",
             "placeholder": "Placeholder"
         },
         {
-            "type" : "textbox",
-            "name" : "LC.CUST_NAME",
-            "id" : "CustNameId",
-            "value" : "",
-            "label" : "CUSTOMER NAME",
+            "type": "textbox",
+            "name": "LC.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "CUSTOMER NAME",
             "placeholder": "Placeholder"
         }
     ],
     "querystring": {
         "select": "SELECT L.LEAD_NO AS LeadNo, L.LEAD_ID AS LeadId, L.CRT_OFFICE_NAME AS CrtOfficeName, L.ORI_OFFICE_NAME AS OriOfficeName, L.ORDER_NO AS OrderNo, LC.CUST_NAME AS CustName, L.MR_LEAD_SOURCE_CODE AS SourceCode, LA.FULL_ASSET_NAME AS FullAssetName",
-        "from": "FROM LEAD L WITH(NOLOCK) JOIN LEAD_ASSET LA WITH(NOLOCK) ON L.LEAD_ID = LA.LEAD_ID JOIN LEAD_CUST LC WITH(NOLOCK) ON L.LEAD_ID = LC.LEAD_ID"
+        "from": "FROM dbo.LEAD L WITH(NOLOCK) JOIN dbo.LEAD_ASSET LA WITH(NOLOCK) ON L.LEAD_ID = LA.LEAD_ID JOIN dbo.LEAD_CUST LC WITH(NOLOCK) ON L.LEAD_ID = LC.LEAD_ID"
     },
     "headerList": [
         {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -23,8 +23,9 @@ import { formatDate } from '@angular/common';
 
 export class GuarantorCompanyComponent implements OnInit {
 
-  param: string;
-  mode: string = "add";
+  @Input() AppGuarantorId : any;
+  @Input() mode : any;
+  param:any;
   key: any;
   criteria: CriteriaObj[] = [];
   resultData : any;
@@ -37,6 +38,7 @@ export class GuarantorCompanyComponent implements OnInit {
   AddrObj: AddrObj;
   appGuarantorCompanyObj : AppGuarantorCompanyObj;
   guarantorCompanyObj : GuarantorCompanyObj ;
+  AppGuarantorCompanyId : any;
   
   CompanyForm = this.fb.group({
     GuarantorName:[''],
@@ -68,25 +70,21 @@ export class GuarantorCompanyComponent implements OnInit {
   });
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient,private fb:FormBuilder, private toastr: NGXToastrService) { 
-    this.route.queryParams.subscribe(params => {
-      this.mode = params["mode"];
-      this.param = params["AppGuarantorId"];
-    })
   }
 
   ngOnInit() {
-
-    this.inputFieldObj = new InputFieldObj();
-    this.inputFieldObj.inputLookupObj = new InputLookupObj();
+    this.initLookup();
+    this.initAddr();
 
     if (this.mode == "edit") {
       var guarantorCompanyObj = new GuarantorCompanyObj();
-      guarantorCompanyObj.AppGuarantorObj.AppGuarantorId = this.param;
+      guarantorCompanyObj.AppGuarantorObj.AppGuarantorId = this.AppGuarantorId;
       this.http.post(AdInsConstant.GetAppGuarantorCompanyByAppGuarantorId, guarantorCompanyObj).subscribe(
         (response) => {
           console.log("response: ");
           console.log(response);
           this.resultData=response;
+          this.AppGuarantorCompanyId = this.resultData.appGuarantorCompanyObj.AppGuarantorCompanyId;
           this.inputLookupObj.nameSelect = this.resultData.appGuarantorObj.GuarantorName;
           this.inputLookupObj1.nameSelect = this.resultData.appGuarantorCompanyObj.IndustryTypeCode;
           this.CompanyForm.patchValue({
@@ -114,21 +112,10 @@ export class GuarantorCompanyComponent implements OnInit {
           console.log(error);
         }
       );;
+    }else{
+      this.ClearForm();
     }
 
-    this.inputLookupObj = new InputLookupObj();
-    this.inputLookupObj.urlJson = "./assets/uclookup/lookupGuarantorCompany.json";
-    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
-    this.inputLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.inputLookupObj.pagingJson = "./assets/uclookup/lookupGuarantorCompany.json";
-    this.inputLookupObj.genericJson = "./assets/uclookup/lookupGuarantorCompany.json";
-
-    this.inputLookupObj1 = new InputLookupObj();
-    this.inputLookupObj1.urlJson = "./assets/uclookup/lookupIndustry.json";
-    this.inputLookupObj1.urlEnviPaging = environment.FoundationR3Url;
-    this.inputLookupObj1.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.inputLookupObj1.pagingJson = "./assets/uclookup/lookupIndustry.json";
-    this.inputLookupObj1.genericJson = "./assets/uclookup/lookupIndustry.json";
 
     var refCompObj ={
       RefMasterTypeCode:"COMPANY_TYPE",
@@ -166,6 +153,30 @@ export class GuarantorCompanyComponent implements OnInit {
           });
       }
     );
+  }
+
+  initLookup(){
+    this.inputLookupObj = new InputLookupObj();
+    this.inputLookupObj.urlJson = "./assets/uclookup/lookupGuarantorCompany.json";
+    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.inputLookupObj.pagingJson = "./assets/uclookup/lookupGuarantorCompany.json";
+    this.inputLookupObj.genericJson = "./assets/uclookup/lookupGuarantorCompany.json";
+
+    this.inputLookupObj1 = new InputLookupObj();
+    this.inputLookupObj1.urlJson = "./assets/uclookup/lookupIndustry.json";
+    this.inputLookupObj1.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupObj1.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.inputLookupObj1.pagingJson = "./assets/uclookup/lookupIndustry.json";
+    this.inputLookupObj1.genericJson = "./assets/uclookup/lookupIndustry.json";
+
+  }
+
+  initAddr(){
+
+    this.inputFieldObj = new InputFieldObj();
+    this.inputFieldObj.inputLookupObj = new InputLookupObj();
+
   }
 
   // GuarantorName="";
@@ -250,11 +261,11 @@ export class GuarantorCompanyComponent implements OnInit {
     this.Add();
     if (this.mode == "edit") {
       this.guarantorCompanyObj.RowVersion = this.resultData.RowVersion;
-      this.guarantorCompanyObj.AppGuarantorObj.AppGuarantorId = this.param;
+      this.guarantorCompanyObj.AppGuarantorObj.AppGuarantorId = this.AppGuarantorId;
+      this.guarantorCompanyObj.AppGuarantorCompanyObj.AppGuarantorCompanyId = this.AppGuarantorCompanyId;
       this.http.post(AdInsConstant.EditAppGuarantorCompany, this.guarantorCompanyObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["/Guarantor/paging"]);
         },
         error => {
           console.log(error);
@@ -265,13 +276,36 @@ export class GuarantorCompanyComponent implements OnInit {
       (response) => {
         console.log(response);
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["/Guarantor/paging"]);
       },
       (error) => {
         console.log(error);
       }
     );
   }
+}
+
+ClearForm(){
+  this.CompanyForm = this.fb.group({
+    MrCustRelationshipCode : [''],
+    TaxIdNo : [''],
+    MrCompanyTypeCode : [''],
+    IndustryTypeCode : [''],
+    ContactName : [''],
+    MrJobPositionCode : [''],
+    MobilePhnNo1 : [''],
+    ContactEmail : [''],
+    MobilePhnNo2 : [''],
+    FaxArea : [''],
+    Fax : [''],
+    PhnArea1 : [''],
+    Phn1 : [''],
+    PhnExt1 : [''],
+    PhnArea2 : [''],
+    Phn2 : [''],
+    PhnExt2 : ['']
+  });
+  this.initLookup();
+  this.initAddr();
 }
 
 }

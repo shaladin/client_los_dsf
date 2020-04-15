@@ -41,6 +41,29 @@ export class CustCompanyFinancialDataComponent implements OnInit {
   ngOnInit() {
     this.parentForm.removeControl(this.identifier);
     this.parentForm.addControl(this.identifier, this.fb.group({
+      GrossMonthlyIncomeAmt: [0],
+      GrossMonthlyExpenseAmt: [0],
+      ReturnOfInvestmentPrcnt: [0, Validators.min(0)],
+      ReturnOfEquityPrcnt: [0, Validators.min(0)],
+      ReturnOfAssetPrcnt: [0, Validators.min(0)],
+      ProfitMarginPrcnt: [0, Validators.min(0)],
+      CurrentRatioPrcnt: [0, Validators.min(0)],
+      DebtEquityRatioPrcnt: [0, Validators.min(0)],
+      InvTurnOverPrcnt: [0, Validators.min(0)],
+      ArTurnOverPrcnt: [0, Validators.min(0)],
+      GrowthPrcnt: [0, Validators.min(0)],
+      WorkingCapitalAmt: [0],
+      OthMonthlyInstAmt: [0],
+      Revenue: [0],
+      OprCost: [0],
+      ProfitBeforeTax: [0],
+      CurrAsset: [0],
+      NetFixedAsset: [0],
+      TotalAsset: [0],
+      CurrLiablts: [0],
+      LongTemrLiablts: [0],
+      ShareholderEquity: [0],
+      CurrRatio: [0],
       DateAsOf: ['']
     }));
 

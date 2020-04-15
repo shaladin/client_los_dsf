@@ -32,6 +32,10 @@ export const Full_ROUTES: Routes = [
     loadChildren: './NAP/nap.module#NapModule'
   },
   {
+    path: 'Nap',
+    loadChildren: './NEW-NAP/nap.module#NapModule'
+  },
+  {
     path: 'Lead',
     loadChildren: './lead/lead.module#LeadModule'
   },

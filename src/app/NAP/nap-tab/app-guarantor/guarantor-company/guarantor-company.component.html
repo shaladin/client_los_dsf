@@ -6,11 +6,6 @@
           <div class="col-md-8">
             <h4 class="card-title" translate>{{mode}} </h4>
           </div>
-          <div class="col-md-4" style="text-align-last: right">
-            <button type="button" class="backButton" [routerLink]="['/Nap/Guarantor/paging']" translate>
-              <i class="ft-arrow-left"></i> Back
-            </button>
-          </div>
         </div>
       </div>
       <div class="card-body">
@@ -149,10 +144,7 @@
                 [identifier]="'AddrObj'" [default]="AddrObj" [inputField]="inputFieldObj" [showPhn3]="false">
               </lib-ucaddress>
               <div class="form-actions right">
-                <button type="submit" class="btn btn-raised btn-primary" [routerLink]="['Guarantor/paging']">
-                  <i class="fa fa-check-square-o"></i> Cancel
-                </button>
-                <button type="submit" class="btn btn-raised btn-primary" (click)="SaveForm()" [routerLink]="['Guarantor/paging']">
+                <button type="submit" class="btn btn-raised btn-primary" (click)="SaveForm()" >
                   <i class="fa fa-check-square-o"></i> Save
                 </button>
               </div>

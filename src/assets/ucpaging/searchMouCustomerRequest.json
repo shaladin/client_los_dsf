@@ -19,22 +19,22 @@
             "placeholder": "Placeholder"
         },
         {
-            "type" : "datepicker",
-            "name" : "MOU_CUST_DT",
-            "id" : "GreaterMouDtId",
-            "value" : "",
-            "label" : "MOU DATE >=",
-            "restriction" : "gte",
-            "datatype" : "date"
+            "type": "datepicker",
+            "name": "MOU_CUST_DT",
+            "id": "GreaterMouDtId",
+            "value": "",
+            "label": "MOU DATE >=",
+            "restriction": "gte",
+            "datatype": "date"
         },
         {
-            "type" : "datepicker",
-            "name" : "MOU_CUST_DT",
-            "id" : "LessMouDtId",
-            "value" : "",
-            "label" : "MOU DATE <=",
-            "restriction" : "lte",
-            "datatype" : "date"
+            "type": "datepicker",
+            "name": "MOU_CUST_DT",
+            "id": "LessMouDtId",
+            "value": "",
+            "label": "MOU DATE <=",
+            "restriction": "lte",
+            "datatype": "date"
         },
         {
             "type": "textbox",
@@ -52,14 +52,14 @@
             "value": "",
             "placeholder": "Placeholder",
             "isFromURL": true,
-            "isSelectOne": true,
+            "isSelectOne": false,
             "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
             "label": "MOU TYPE",
             "items": [],
             "itemsUrl": [],
-            "criteriaPropName" : "RefMasterTypeCode",
-            "criteriaPropValue" : "MOU_TYPE"
-          }
+            "criteriaPropName": "RefMasterTypeCode",
+            "criteriaPropValue": "MOU_TYPE"
+        }
     ],
     "querystring": {
         "select": "SELECT MOU_CUST_NO AS mouCustNo, CUST_NAME AS custName, MOU_CUST_DT AS mouCustDt, REF_NO AS refNo, MR_MOU_TYPE_CODE AS mrMouTypeCode, MOU_CUST_ID AS mouCustId",

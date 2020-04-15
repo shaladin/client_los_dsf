@@ -21,6 +21,7 @@ import { FraudDukcapilObj } from 'app/shared/model/FraudDukcapilObj.Model';
 export class ViewFraudDetectionResultComponent implements OnInit {
   
   @Input() appId: number;
+  @Input() mrCustTypeCode : string;
   viewDukcapilMainDataObj : string;
   losUrl = environment.losUrl;
   foundationUrl = environment.FoundationR3Url;
@@ -83,7 +84,7 @@ export class ViewFraudDetectionResultComponent implements OnInit {
         var fraudDukcapilReqObj = {"IdNo" : this.idNo};
         this.getFraudDukcapil(fraudDukcapilReqObj);      
         
-        if(this.appCustObj.MrCustTypeCode == "PERSONAL"){
+        if(this.mrCustTypeCode == "PERSONAL"){
           this.requestDupCheck = {
             "CustName": this.appCustObj.CustName,
             "MrCustTypeCode": this.appCustObj.MrCustTypeCode,
@@ -96,7 +97,7 @@ export class ViewFraudDetectionResultComponent implements OnInit {
             "MobilePhnNo1": this.appCustPersonalObj.MobilePhnNo1,          
             "RowVersion": this.RowVersion
           };
-        }else if(this.appCustObj.MrCustTypeCode == "COMPANY"){
+        }else if(this.mrCustTypeCode == "COMPANY"){
           this.requestDupCheck = {
             "CustName": this.appCustObj.CustName,
             "MrCustTypeCode": this.appCustObj.MrCustTypeCode,

@@ -51,8 +51,12 @@ export class CustPersonalFinancialDataComponent implements OnInit {
 
     this.parentForm.removeControl(this.identifier);
     this.parentForm.addControl(this.identifier, this.fb.group({
+      MonthlyIncomeAmt: [0, Validators.required],
+      MonthlyExpenseAmt: [0],
+      MonthlyInstallmentAmt: [0],
       MrSourceOfIncomeTypeCode: [''],
-      IsJoinIncome: [false]
+      IsJoinIncome: [false],
+      SpouseMonthlyIncomeAmt: [0]
     }));
 
     this.initUrl();

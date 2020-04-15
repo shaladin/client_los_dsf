@@ -17,11 +17,11 @@ import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 @Component({
   selector: 'app-doc-signer-detail',
   templateUrl: './doc-signer-detail.component.html',
-  styleUrls: ['./doc-signer-detail.component.scss'],
   providers: [DecimalPipe]
 })
 export class DocSignerDetailComponent implements OnInit {
   inputPagingObj: any;
+  WfTaskListId: any;
   MouCustId: any;
   MouType: any;
   mouCustObj: any;
@@ -63,9 +63,8 @@ export class DocSignerDetailComponent implements OnInit {
     this.getMouCustSignerByMouCustId = AdInsConstant.GetMouCustSignerByMouCustId;
 
     this.route.queryParams.subscribe(params => {
-        if (params["MouCustId"] != null) {
-            this.MouCustId = params["MouCustId"];
-        }
+        if (params["MouCustId"] != null) this.MouCustId = params["MouCustId"];
+        if (params["WfTaskListId"] != null) this.WfTaskListId = params["WfTaskListId"];
     });
   }
 
@@ -105,7 +104,18 @@ export class DocSignerDetailComponent implements OnInit {
     });
   }
 
+  claimTask()
+  {
+    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"]};
+    console.log(wfClaimObj);
+    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+      (response) => {
+      });
+  }
+
   ngOnInit() {
+    this.claimTask();
     this.custShareholderLookUpObj1 = new InputLookupObj();
     this.custShareholderLookUpObj1.isRequired = false;
     this.custShareholderLookUpObj1.urlJson = "./assets/uclookup/lookupCustCompanyShareholder.json";

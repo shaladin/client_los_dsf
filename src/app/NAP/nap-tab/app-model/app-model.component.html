@@ -5,7 +5,7 @@
       <div class="card-body">
         <div class="px-3">
 
-          <form class="form form-horizontal" [formGroup]="NapAppModelForm" (ngSubmit)="NapAppModelForm.valid"
+          <form class="form form-horizontal" [formGroup]="NapAppModelForm" (ngSubmit)="NapAppModelForm.valid && ClickSave()"
             #enjiForm="ngForm">
             <!-- Sales Info -->
             <lib-ucSubsection [id]="'salesInfomationId'" [title]="'Sales Information'" [panel]="'salesInfomation'">
@@ -17,7 +17,7 @@
                 <div class="form-group col-md-2 adins-required">
                   <label class="adInsLabel">Sales Officer </label>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4" *ngIf="isInputLookupObj">
                   <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]='NapAppModelForm'
                     [enjiForm]='enjiForm' [identifier]="'employeeIdentifier'"
                     (lookup)="getLookupEmployeeResponse($event)">
@@ -34,10 +34,10 @@
                 <div class="form-group col-md-2 adins-required">
                   <label class="adInsLabel">Sales Recommendation </label>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4" *ngIf="applicationDDLitems['SLS_RECOM']">
                   <mat-radio-group formControlName="MrSalesRecommendCode">
                     <mat-radio-button class="custom-control custom-radio" color="primary"
-                      *ngFor="let item of applicationDDLitems['SLS_RECOM']" [value]="item.Key" >
+                      *ngFor="let item of applicationDDLitems['SLS_RECOM']" [value]="item.Key">
                       {{item.Value}}
                     </mat-radio-button>
                   </mat-radio-group>
@@ -66,6 +66,7 @@
                 <div class="col-md-4">
                   <select class="form-control adInsInput" style="width: auto" formControlName="MrAppSourceCode"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrAppSourceCode.invalid }">
+                    <option value="">-Select One-</option>
                     <option *ngFor="let it of applicationDDLitems['APP_SOURCE']" value="{{it.Key}}">
                       {{it.Value}} </option>
                   </select>
@@ -107,6 +108,7 @@
                 <div class="col-md-4">
                   <select class="form-control adInsInput" style="width: auto" formControlName="PayFreqCode"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.PayFreqCode.invalid }" (change) = "ChangeNumOfInstallmentPayFreq($event)">
+                    <option value="">-Select One-</option>
                     <option *ngFor="let it of applicationDDLitems['Pay_Freq']" value="{{it.PayFreqCode}}">
                       {{it.Descr}} </option>
                   </select>
@@ -115,12 +117,13 @@
                 <!-- Interest Type -->
                 <label class="col-md-2 adInsLabel"> Interest Type </label>
                 <div class="col-md-4">
-                  <select class="form-control adInsInput" style="width: auto" formControlName="MrFirstInstTypeCode"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrFirstInstTypeCode.invalid }">
+                  <select class="form-control adInsInput" style="width: auto" formControlName="InterestType"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.InterestType.invalid }">
+                    <option value="">-Select One-</option>                    
                     <option *ngFor="let it of applicationDDLitems['INTRSTTYPE']" value="{{it.Key}}">
                       {{it.Value}} </option>
                   </select>
-                  <show-errors [control]="NapAppModelForm.controls.MrFirstInstTypeCode" [submit]="enjiForm.submitted"></show-errors>
+                  <show-errors [control]="NapAppModelForm.controls.InterestType" [submit]="enjiForm.submitted"></show-errors>
                 </div>
               </div>
 
@@ -136,6 +139,7 @@
                 <div class="col-md-4">
                   <select class="form-control adInsInput" style="width: auto" formControlName="MrInstSchemeCode"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrInstSchemeCode.invalid }">
+                    <option value="">-Select One-</option>
                     <option *ngFor="let it of applicationDDLitems['INST_SCHM']" value="{{it.Key}}">
                       {{it.Value}} </option>
                   </select>
@@ -149,7 +153,8 @@
                 <div class="col-md-4">
                   <select class="form-control adInsInput" style="width: auto" formControlName="MrCustNotifyOptCode"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrCustNotifyOptCode.invalid }">
-                    <option *ngFor="let it of applicationDDLitems['CUST_NOTIFY_OPT']" value="{{it.Key}}">
+                    <option value="">-Select One-</option>
+                    <option *ngFor="let it of applicationDDLitems['CUST_NOTIF_OPT']" value="{{it.Key}}">
                       {{it.Value}} </option>
                   </select>
                   <show-errors [control]="NapAppModelForm.controls.MrCustNotifyOptCode" [submit]="enjiForm.submitted"></show-errors>
@@ -160,6 +165,7 @@
                 <div class="col-md-4">
                   <select class="form-control adInsInput" style="width: auto" formControlName="MrWopCode"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrWopCode.invalid }">
+                    <option value="">-Select One-</option>
                     <option *ngFor="let it of applicationDDLitems['WOP']" value="{{it.Key}}">
                       {{it.Value}} </option>
                   </select>
@@ -218,7 +224,7 @@
             </div>
 
             <div class="form-actions right">
-              <button type="button" (click)="ClickSave()" class="btn btn-raised btn-primary">
+              <button type="submit" class="btn btn-raised btn-primary">
                 <i class="fa fa-check-square-o"></i> Save and Continue
               </button>
               <!-- <button type="submit" (click)="ClickSave('next')" class="btn btn-raised btn-primary">

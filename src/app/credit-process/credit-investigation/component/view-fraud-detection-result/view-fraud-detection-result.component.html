@@ -108,7 +108,7 @@
 
 <app-view-survey-task-list *ngIf="isDataAlreadyLoaded" [trxRefNo]="trxRefNo" [mrSrvySourceCode]="mrSrvySourceCode"></app-view-survey-task-list>
 
-<div class="px-3">
+<div class="px-3" *ngIf="mrCustTypeCode == 'PERSONAL'">
 <lib-ucSubsection [id]="'DukId'" [title]="'Dukcapil'" [panel]="'Duk'">
 </lib-ucSubsection>
 <div class="form-body" id="Duk">
