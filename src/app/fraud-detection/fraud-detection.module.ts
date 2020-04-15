@@ -11,6 +11,7 @@ import { UcgridfooterModule } from "@adins/ucgridfooter";
 import { FraudDetectionRoutingComponent } from "./fraud-detection-routing.module";
 import { FraudDetectionPagingComponent } from './fraud-detection-paging/fraud-detection-paging.component';
 import { FraudDetectionVerifComponent } from './fraud-detection-verif/fraud-detection-verif.component';
+import { UcviewgenericModule } from "@adins/ucviewgeneric";
 
 @NgModule({
     imports: [
@@ -24,7 +25,8 @@ import { FraudDetectionVerifComponent } from './fraud-detection-verif/fraud-dete
         NgbModule,
         ReactiveFormsModule,
         UcSubsectionModule,
-        SharingComponentModule
+        SharingComponentModule,
+        UcviewgenericModule
     ],
     declarations: [
 

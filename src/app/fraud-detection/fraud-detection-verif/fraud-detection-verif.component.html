@@ -6,7 +6,7 @@
         <div class="px-3">
 
           <!-- Main Info -->
-          <lib-ucSubsection [id]="'MainInfoId'" [title]="'Main Info'" [panel]="'MainInfo'">
+          <!-- <lib-ucSubsection [id]="'MainInfoId'" [title]="'Main Info'" [panel]="'MainInfo'">
           </lib-ucSubsection>
           <div class="form-body" id="MainInfo">
 
@@ -42,8 +42,9 @@
               <label class="col-md-3 adInsLabel">Lead No</label>
               <label class="col-md-3 adInsLabel">{{leadObj.LeadNo}} </label>
             </div>
-          </div>
-
+          </div> -->
+          <lib-ucviewgeneric [viewInput]="viewObj" [whereValue]="arrValue"></lib-ucviewgeneric>
+          
           <lib-ucSubsection [id]="'CustDupCheckId'" [title]="'Customer Duplicate Checking'" [panel]="'CustDupCheck'">
           </lib-ucSubsection>
           <div class="form-body" id="CustDupCheckId">
@@ -87,8 +88,8 @@
                   <td>{{item.IdType}}</td>
                   <td>{{item.IdNo}}</td>
                   <td>{{item.BirthDt}}</td>
-                  <td>{{item.MobilePhoneNo1}}</td>
-                  <td>{{item.MotherMaidenName}</td>
+                  <td>{{item.MobilePhnNo1}}</td>
+                  <td>{{item.MotherMaidenName}}</td>
                     <td>{{item.TaxIdNo}}</td>
                   <td>{{item.DuplicateItem}}</td>
                   <td *ngIf="item.IsSelected == '1'">Selected</td>
@@ -138,8 +139,8 @@
                   <td>{{item.IdType}}</td>
                   <td>{{item.IdNo}}</td>
                   <td>{{item.BirthDt}}</td>
-                  <td>{{item.MobilePhoneNo1}}</td>
-                  <td>{{item.MotherMaidenName}</td>
+                  <td>{{item.MobilePhnNo1}}</td>
+                  <td>{{item.MotherMaidenName}}</td>
                     <td>{{item.TaxIdNo}}</td>
                   <td>{{item.NegativeStat}}</td>
                   <td>{{item.NegativeSrc}}</td>

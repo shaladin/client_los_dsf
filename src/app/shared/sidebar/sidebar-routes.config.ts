@@ -54,5 +54,10 @@ export const ROUTES: RouteInfo[] = [
     submenu: [
       { path: '/Inquiry/AppInquiry', title: 'App Inquiry', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] }
     ]
+  },{
+    path: '', title: 'Fraud Detection', icon: 'ft-home', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false,
+    submenu: [
+      { path: '/FraudDetection/FraudDetectionPaging', title: 'Fraud Detection', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] }
+    ]
   },
 ];

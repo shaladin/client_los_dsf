@@ -50,6 +50,8 @@ export class FraudDetectionVerifComponent implements OnInit {
   RowVersion: any;
   GetNegativeCustomerDuplicateCheckUrl = this.foundationUrl + AdInsConstant.GetNegativeCustomerDuplicateCheck;
   ListNegativeCust: any;
+  viewObj : string;
+  arrValue = [];
 
 
   constructor(
@@ -57,9 +59,17 @@ export class FraudDetectionVerifComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private modalService: NgbModal
-  ) { }
+  ) { 
+    this.route.queryParams.subscribe(params => {
+      if (params['AppId'] != null) {
+        this.appId = params['AppId'];
+      }
+    });
+  }
 
   ngOnInit() {
+    this.arrValue.push(this.appId);
+    this.viewObj = "./assets/ucviewgeneric/viewCreditInvestigationInfo.json";
     var context = JSON.parse(localStorage.getItem("UserAccess"));
     this.verfUser = context["UserName"];
     this.verfDt = context["BusinessDt"];
@@ -69,11 +79,7 @@ export class FraudDetectionVerifComponent implements OnInit {
   }
 
   getApp(){
-    this.route.queryParams.subscribe(params => {
-      if (params['AppId'] != null) {
-        this.appId = params['AppId'];
-      }
-    });
+    
     //Get App Cust Data
     this.appCustObj = new AppCustObj();
     this.appCustPersonalObj = new AppCustPersonalObj();
