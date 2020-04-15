@@ -9,7 +9,6 @@ import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-mou-view-tc',
   templateUrl: './mou-view-tc.component.html',
-  styleUrls: ['./mou-view-tc.component.scss'],
   providers: [NGXToastrService, DatePipe]
 })
 export class MouViewTcComponent implements OnInit {

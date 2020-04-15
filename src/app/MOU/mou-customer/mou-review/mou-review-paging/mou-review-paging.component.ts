@@ -7,7 +7,6 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 @Component({
   selector: 'app-mou-review-paging',
   templateUrl: './mou-review-paging.component.html',
-  styleUrls: ['./mou-review-paging.component.scss']
 })
 export class MouReviewPagingComponent implements OnInit {
   inputPagingObj: any;

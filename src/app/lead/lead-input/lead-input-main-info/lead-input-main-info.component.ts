@@ -17,7 +17,6 @@ import { RefLobObj } from 'app/shared/model/RefLobObj.Model';
 import { VendorObj } from 'app/shared/model/Vendor.Model';
 import { RefEmpForLookupObj } from 'app/shared/model/RefEmpForLookupObj.Model';
 
-
 @Component({
   selector: 'app-lead-input-main-info',
   templateUrl: './lead-input-main-info.component.html',
@@ -50,6 +49,7 @@ export class LeadInputMainInfoComponent implements OnInit {
   getListActiveRefMasterUrl: any;
   getVendorByVendorCode: any;
   getRefEmpForLookupEmployee: any;
+  getLeadPersonalForLookup: any;
   listRefOffice: any;
   refOfficeObj: any;
   listRefLob:any;
@@ -79,6 +79,8 @@ export class LeadInputMainInfoComponent implements OnInit {
   returnSurveyorExistObj: any;
   salesExistObj: any;
   returnSalesExistObj: any;
+  leadExistObj: any;
+  returnLeadExistObj: any;
   MainInfoForm = this.fb.group({
     OfficeCode: [''],
     OfficeName: [''],
@@ -99,6 +101,7 @@ export class LeadInputMainInfoComponent implements OnInit {
     this.getListActiveRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
     this.getVendorByVendorCode = AdInsConstant.GetVendorByVendorCode;
     this.getRefEmpForLookupEmployee = AdInsConstant.GetRefEmpForLookupEmployee;
+    this.getLeadPersonalForLookup = AdInsConstant.GetLeadPersonalForLookupCopy;
 
     this.route.queryParams.subscribe(params => {
         if (params["mode"] != null) {
@@ -199,8 +202,8 @@ copyLead(){
 }
 
   ngOnInit() {
-    console.log("ccc")
-    console.log(JSON.parse(localStorage.getItem("UserAccess")));
+    // console.log("ccc")
+    // console.log(JSON.parse(localStorage.getItem("UserAccess")));
     this.user = JSON.parse(localStorage.getItem("UserAccess"));
 
     if (this.user.MrOfficeTypeCode == "HO") {
@@ -259,8 +262,8 @@ copyLead(){
     this.http.post(this.getListRefOffice, this.refOfficeObj).subscribe(
       (response) => {
         this.listRefOffice = response['ReturnObject']
-        console.log("aaa")
-        console.log(this.listRefOffice)
+        // console.log("aaa")
+        // console.log(this.listRefOffice)
         this.MainInfoForm.patchValue({  OfficeCode: response['ReturnObject'][0]['Key'] });
       },
       (error) => {
@@ -272,8 +275,8 @@ copyLead(){
     this.http.post(this.getListActiveLob, this.refLobObj).subscribe(
       (response) => {
           this.listRefLob = response['ReturnObject'];
-          console.log("bbb")
-          console.log(this.listRefLob)
+          // console.log("bbb")
+          // console.log(this.listRefLob)
           this.MainInfoForm.patchValue({ 
             LobCode: response['ReturnObject'][0]['Key'],
             LobName: response['ReturnObject'][0]['Value']
@@ -306,6 +309,17 @@ copyLead(){
               LobName: this.returnLead.LobName,
               LeadSource: this.returnLead.MrLeadSourceCode,
             });
+
+            this.leadIdExist = this.returnLead.LeadCopyId;
+
+            if(this.returnLead.LeadCopyId != null){
+              this.leadExistObj = new LeadObj();
+              this.leadExistObj.LeadId = this.returnLead.LeadCopyId;
+              this.http.post(this.getLeadPersonalForLookup, this.leadExistObj).subscribe(
+                (response) => {
+                    this.returnLeadExistObj = response;
+                });
+            }
 
             this.vendorObj = new VendorObj();
             this.vendorObj.VendorCode = this.returnLead.AgencyCode;
@@ -370,7 +384,8 @@ copyLead(){
   }
 
   setLead(){
-    this.leadObj.LeadNo = "1";
+    this.leadObj.LeadNo = "";
+    this.leadObj.LeadCopyId = this.leadIdExist;
     this.leadObj.OriOfficeCode = this.MainInfoForm.controls["OfficeCode"].value;
     this.leadObj.OriOfficeName = this.MainInfoForm.controls["OfficeName"].value;
     this.leadObj.CrtOfficeCode = this.MainInfoForm.controls["CrtOfficeCode"].value;
@@ -393,7 +408,7 @@ copyLead(){
   }
 
   SaveForm(){
-    console.log("aaaa")
+    // console.log("aaaa")
     if(this.pageType == "edit") {
       this.leadObj = new LeadObj();
       this.leadObj.LeadId = this.LeadId;
@@ -403,7 +418,7 @@ copyLead(){
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.router.navigate(["/Lead/LeadInput/Page"], { queryParams: { "LeadId": this.LeadId, "mode": "edit" } });
-          console.log(response)
+          // console.log(response)
         },
         (error) => {
           console.log(error);
@@ -417,8 +432,8 @@ copyLead(){
           this.responseLead = response;
           this.LeadId = this.responseLead.LeadId;
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["/Lead/LeadInput/Page"], { queryParams: { "LeadId": this.LeadId } });
-          console.log(response)
+          this.router.navigate(["/Lead/LeadInput/Page"], { queryParams: { "LeadId": this.LeadId, "CopyFrom": this.leadIdExist } });
+          // console.log(response)
         },
         (error) => {
           console.log(error);

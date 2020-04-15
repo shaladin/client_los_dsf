@@ -16,7 +16,6 @@ import { LeadCancelConfirmComponent } from '../lead-cancel-confirm/lead-cancel-c
 @Component({
   selector: 'app-lead-cancel',
   templateUrl: './lead-cancel.component.html',
-  styleUrls: ['./lead-cancel.component.scss'],
   providers: [NGXToastrService]
 })
 
