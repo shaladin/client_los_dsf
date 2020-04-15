@@ -44,9 +44,11 @@ export class AdInsConstant {
     public static GetAppById = "/Application/GetAppById";   
     public static EditAppAddAppCross = "/Application/EditAppAddAppCross";   
     public static GetAppByIds = environment.losUrl + "/Application/GetAppById";
+    public static GetAppDetailForAppTabById = environment.losUrl + "/Application/GetAppDetailForAppTabById";
 
     // App Asset
     public static GetAppAssetListByAppIdForCommision = "/AppAsset/GetAppAssetListByAppIdForCommision";
+    public static GetAppAssetForDealerDataByAppId = environment.losUrl + "/AppAsset/GetAppAssetForDealerDataByAppId";
     
     // App Asset
     public static GetListAppAssetSupplEmpByListAppAssetId = "/AppAssetSupplEmp/GetListAppAssetSupplEmpByListAppAssetId";
@@ -57,6 +59,7 @@ export class AdInsConstant {
     public static DeleteAppCommissionData = environment.losUrl + "/AppCommission/DeleteAppCommissionData";
     public static GetAppCommissionRule = "/AppCommission/GetAppCommissionRule";
     public static GetAppCommissionTax = "/AppCommission/GetAppCommissionTax";
+    public static GetAppCommissionDataDetailByAppId = environment.losUrl + "/AppCommission/GetAppCommissionDataDetailByAppId";
 
     // App Referantor
     public static AddAppReferantor = "/AppReferantor/AddAppReferantor";
@@ -64,6 +67,7 @@ export class AdInsConstant {
     public static DeleteAppReferantor = "/AppReferantor/DeleteAppReferantor";
     public static GetAppReferantorByAppReferantorId = "/AppReferantor/GetAppReferantorByAppReferantorId";
     public static GetAppReferantorByAppId = "/AppReferantor/GetAppReferantorByAppId";
+    public static GetAppReferantorForAppsData = "/AppReferantor/GetAppReferantorForAppsData";
     
     // App Cross
     public static GetAppCrossByCrossAgrmntNo = "/AppCross/GetAppCrossByCrossAgrmntNo";
@@ -469,6 +473,7 @@ export class AdInsConstant {
  
   //GUARANTOR
   public static GetListAppGuarantor = environment.losUrl + "/AppGuarantor/GetListAppGuarantor"
+  public static GetListAppGuarantorDetail = environment.losUrl + "/AppGuarantor/GetListAppGuarantorDetail"
   public static AddAppGuarantorPersonal = environment.losUrl + "/AppGuarantor/AddAppGuarantorPersonal"
   public static AddAppGuarantorCompany = environment.losUrl + "/AppGuarantor/AddAppGuarantorCompany"
   public static GetAppGuarantorPersonalByAppGuarantorId = environment.losUrl + "/AppGuarantor/GetAppGuarantorPersonalByAppGuarantorId"
@@ -476,6 +481,8 @@ export class AdInsConstant {
   public static EditAppGuarantorPersonal = environment.losUrl + "/AppGuarantor/EditAppGuarantorPersonal"
   public static EditAppGuarantorCompany = environment.losUrl + "/AppGuarantor/EditAppGuarantorCompany"
   public static DeleteAppGuarantor = environment.losUrl + "/AppGuarantor/DeleteAppGuarantor"
+  public static GuarantorTypeCodePersonal = "PERSONAL";
+  public static GuarantorTypeCodeCompany = "COMPANY";
  
   // Vendor
   public static GetListVendorBankAccByVendorId = "/VendorBankAcc/GetListVendorBankAccByVendorId";
