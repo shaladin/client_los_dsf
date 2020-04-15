@@ -36,6 +36,7 @@ export class LegalReviewDetailComponent implements OnInit {
   EditListMouCustTc = AdInsConstant.EditListMouCustTc;
   @ViewChild("MouTc") public mouTc: MouCustTcComponent;
   responseMouObj = new Array();
+  WfTaskListId: any;
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
@@ -52,6 +53,10 @@ export class LegalReviewDetailComponent implements OnInit {
       if (params['MouCustId'] != null) {
         this.MouCustId = params['MouCustId'];
       }
+      if (params['WfTaskListId'] != null) {
+        this.WfTaskListId = params['WfTaskListId'];
+      }
+      
     });
     var mouObj = { "MouCustId": this.MouCustId };
     this.http.post(this.GetMouCustLglReviewByMouCustIdUrl, mouObj).subscribe(
@@ -98,6 +103,7 @@ export class LegalReviewDetailComponent implements OnInit {
         MrLglReviewCode: formObj.value.items[index].ReviewComponentValue,
         LglReviewResult: formObj.value.items[index].values
       }
+      mouObj.WfTaskListId = this.WfTaskListId;
       mouObj.MouCustLglReviewObjs.push(tempMouObj);
     }
     this.http.post(this.AddEditRangeMouCustLglReview, mouObj).subscribe(
