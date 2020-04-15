@@ -2,11 +2,13 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 
 import { CreditInvestigationDetailComponent } from "./credit-investigation/credit-investigation-detail/credit-investigation-detail.component";
+import { CustHistoryComponent } from "./credit-investigation/component/cust-history/cust-history.component";
 import { CommissionPagingComponent } from "./commission-paging/commission-paging.component";
 import { CommissionAddComponent } from "./commission-add/commission-add.component";
 import { RsvFundPagingComponent } from "./reserved-fund/reserved-fund-paging/reserved-fund-paging.component";
 import { RsvFundViewComponent } from "./reserved-fund/reserved-fund-view/reserved-fund-view.component";
 import { CommissionReservedFundComponent } from "./commission-reserved-fund/commission-reserved-fund.component";
+import { CreditInvestigationPagingComponent } from "./credit-investigation/credit-investigation-paging/credit-investigation-paging.component";
 import { TabApplicationDataComponent } from "./credit-investigation/component/tab-application-data/tab-application-data.component";
 import { CreditReviewPagingComponent } from "./credit-review/credit-review-paging/credit-review-paging.component";
 import { CreditReviewMainComponent } from "./credit-review/credit-review-main/credit-review-main.component";
@@ -17,10 +19,24 @@ const routes: Routes = [
     path: '',
     children: [
       {
+        path: 'CreditInvestigation/Paging',
+        component: CreditInvestigationPagingComponent,
+        data: {
+            title: 'Credit Investigation'
+        }
+      },
+      {
         path: 'CreditInvestigation/Detail',
         component: CreditInvestigationDetailComponent,
         data: {
             title: 'Credit Investigation'
+        }
+      },
+      {
+        path: 'CreditInvestigation/Component/CustHistory',
+        component: CustHistoryComponent,
+        data: {
+            title: 'Customer History'
         }
       },
       

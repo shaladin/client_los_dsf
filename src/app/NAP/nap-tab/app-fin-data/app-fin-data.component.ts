@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-app-fin-data',
@@ -6,9 +8,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppFinDataComponent implements OnInit {
 
-  constructor() { }
+  FinDataForm : FormGroup;
+  constructor(
+    private fb: FormBuilder,
+    private http: HttpClient,
+  ) { }
 
   ngOnInit() {
+    this.FinDataForm = this.fb.group(
+      {
+        TotalFeeAmt : [0],
+        TotalFeeCapitalizeAmt : [0],
+        AppFee : this.fb.array([])
+      }
+    );
   }
 
+  test()
+  {
+    console.log(this.FinDataForm)
+    console.log(this.FinDataForm.value);
+  }
 }

@@ -138,7 +138,7 @@ export class CommissionAddComponent implements OnInit {
   isFinishGetAppData;
   ResultAppData;
   GetAppData() {
-    var url = environment.losUrl + AdInsConstant.GetAppById;
+    var url = AdInsConstant.GetAppById;
     var obj = {
       // AppId: this.AppId,
       AppId: this.AppId,

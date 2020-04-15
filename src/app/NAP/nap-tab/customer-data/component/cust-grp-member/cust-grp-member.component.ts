@@ -73,7 +73,7 @@ export class CustGrpMemberComponent implements OnInit {
 
     await this.bindCustRelationshipPersonalObj();
     await this.bindCustRelationshipCompanyObj();
-    this.bindAppGrp();
+    await this.bindAppGrp();
   }
 
   addCustGrp(){
@@ -137,7 +137,7 @@ export class CustGrpMemberComponent implements OnInit {
     console.log(this.CustRelationshipObjs);
   }
 
-  bindAppGrp(){
+  async bindAppGrp(){
     if(this.appCustGrpObjs != undefined){
       for(let i = 0; i < this.appCustGrpObjs.length; i++){
         var listCustGrp = this.parentForm.controls[this.identifier] as FormArray;
@@ -146,7 +146,7 @@ export class CustGrpMemberComponent implements OnInit {
         var InputLookupCustomerObj = this.initLookup();
         this.dictLookup[i] = InputLookupCustomerObj;
         this.InputLookupCustomerObjs.push(InputLookupCustomerObj);
-        this.setCustNameAndCustRelationship(i, this.appCustGrpObjs[i].CustNo);
+        await this.setCustNameAndCustRelationship(i, this.appCustGrpObjs[i].CustNo);
       }
     }
   }
@@ -182,9 +182,9 @@ export class CustGrpMemberComponent implements OnInit {
     } 
   }
 
-  setCustNameAndCustRelationship(i, custNo){
+  async setCustNameAndCustRelationship(i, custNo){
     this.custObj.CustNo = custNo;
-    this.http.post(AdInsConstant.GetCustByCustNo, this.custObj).subscribe(
+    await this.http.post(AdInsConstant.GetCustByCustNo, this.custObj).toPromise().then(
       (response) => {
         console.log(response);
         this.custMasterObj = response;
@@ -214,7 +214,7 @@ export class CustGrpMemberComponent implements OnInit {
 
   async bindCustRelationshipPersonalObj(){
     this.refMasterObj.RefMasterTypeCode = "CUST_PERSONAL_RELATIONSHIP";
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).toPromise().then(
+    await this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).toPromise().then(
       (response) => {
         this.CustRelationshipPersonalObj = response["ReturnObject"];
         if(this.CustRelationshipPersonalObj.length > 0){
@@ -226,7 +226,7 @@ export class CustGrpMemberComponent implements OnInit {
 
   async bindCustRelationshipCompanyObj(){
     this.refMasterObj.RefMasterTypeCode = "CUST_COMPANY_RELATIONSHIP";
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).toPromise().then(
+    await this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).toPromise().then(
       (response) => {
         this.CustRelationshipCompanyObj = response["ReturnObject"];
         if(this.CustRelationshipCompanyObj.length > 0){

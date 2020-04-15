@@ -148,25 +148,25 @@
             </tr>
             </thead>
             <tbody>
-            <ng-container *ngFor="let item of appCustPersonalContactPersonObjs; let i=index">
-                <tr>
-                    <td class="text-center">{{i + 1}}</td>
-                    <td class="text-center">{{item.ContactPersonName}}</td>
-                    <td class="text-center">{{item.IdNo}}</td>
-                    <td class="text-center">{{item.RelationshipName}}</td>
-                    <td class="text-center">{{item.MobilePhnNo1}}</td>
-                    <td class="text-center">{{item.MrJobProfessionCode}}</td>
-                    <td class="text-center">{{item.FullAddr}}</td>
-                    <td class="text-center">
-                        <span *ngIf="item.IsEmergencyContact == true">Yes</span>
-                        <span *ngIf="item.IsEmergencyContact == false">No</span>
-                    </td>
-                    <td class="text-center">
-                        <span *ngIf="item.IsFamily == true">Yes</span>
-                        <span *ngIf="item.IsFamily == false">No</span>
-                    </td>
-                </tr>
-            </ng-container>
+                <ng-container *ngFor="let item of appCustPersonalContactPersonObjs; let i=index">
+                    <tr>
+                        <td class="text-center">{{i + 1}}</td>
+                        <td class="text-center">{{item.ContactPersonName}}</td>
+                        <td class="text-center">{{item.IdNo}}</td>
+                        <td class="text-center">{{item.RelationshipName}}</td>
+                        <td class="text-center">{{item.MobilePhnNo1}}</td>
+                        <td class="text-center">{{item.JobProfessionName}}</td>
+                        <td class="text-center">{{item.FullAddr}}</td>
+                        <td class="text-center">
+                            <span *ngIf="item.IsEmergencyContact == true">Yes</span>
+                            <span *ngIf="item.IsEmergencyContact == false">No</span>
+                        </td>
+                        <td class="text-center">
+                            <span *ngIf="item.IsFamily == true">Yes</span>
+                            <span *ngIf="item.IsFamily == false">No</span>
+                        </td>
+                    </tr>
+                </ng-container>
             </tbody>
         </table>
     </div>
