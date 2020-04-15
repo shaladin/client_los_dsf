@@ -69,6 +69,10 @@ const routes: Routes = [
                 path: 'Factoring/AddProcess',
                 loadChildren: './FCTR/additional-process/additional-process.module#AdditionalProcessFCTRModule'
             },
+            {
+                path: 'FinanceLeasing/AssetData',
+                loadChildren: './FL4W/asset-data/asset-data.module#AssetDataFL4WModule'
+            },
         ]
     }
 ]
