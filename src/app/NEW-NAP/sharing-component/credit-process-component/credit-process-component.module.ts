@@ -4,6 +4,9 @@ import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { AdInsModule } from "app/components/adins-module/adins.module";
 
 @NgModule({
+  exports: [
+      
+  ],
   imports: [
     CommonModule,
     AdInsModule
