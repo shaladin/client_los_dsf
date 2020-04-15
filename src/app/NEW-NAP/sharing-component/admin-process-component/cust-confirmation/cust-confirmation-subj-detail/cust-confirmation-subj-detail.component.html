@@ -58,7 +58,7 @@
           </div>
         </form>
       </div>
-
+      <app-verf-question [ParentForm] = "VerfResultDForm"></app-verf-question>
       <!-- Verification Question -->
       <form class="form form-horizontal" [formGroup]="VerfResultDForm" (ngSubmit)="VerfResultDForm.valid && SaveForm()"
         #enjiForm="ngForm">

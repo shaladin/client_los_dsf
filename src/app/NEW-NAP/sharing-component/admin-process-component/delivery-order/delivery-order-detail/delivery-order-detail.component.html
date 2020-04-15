@@ -155,9 +155,9 @@
                     <option *ngFor="let it of itemType" value="{{it.Key}}">
                       {{it.Value}}</option>
                   </select>
-                  <show-errors [control]="DeliveryOrderForm.controls.MrCustRelationshipCode"
+                  <lib-uc-show-errors [control]="DeliveryOrderForm.controls.MrCustRelationshipCode"
                     [submit]="enjiForm.submitted">
-                  </show-errors>
+                  </lib-uc-show-errors>
                 </div>
               </div>
             </div>

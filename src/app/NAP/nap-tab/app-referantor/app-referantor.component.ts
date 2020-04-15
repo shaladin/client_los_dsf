@@ -45,6 +45,12 @@ export class AppReferantorComponent implements OnInit {
     this.appReferantorObj = new NapAppReferantorModel();
     this.ExistedData = false;
 
+    this.GetInputLookupObj();
+    this.getAppReferantorData();
+    console.log(this.bankItems);
+  }
+
+  GetInputLookupObj(){
     this.arrAddCrit = new Array();
 
     var addCrit = new CriteriaObj();
@@ -54,6 +60,13 @@ export class AppReferantorComponent implements OnInit {
     addCrit.listValue = ["AGENCY_COMPANY", "AGENCY_PERSONAL"];
     this.arrAddCrit.push(addCrit);
 
+    var addCrit1 = new CriteriaObj(); 
+    addCrit1.DataType = "bool";
+    addCrit1.propName = "vba.IS_DEFAULT";
+    addCrit1.restriction = AdInsConstant.RestrictionIn;
+    addCrit1.listValue = [1];
+    this.arrAddCrit.push(addCrit1);
+
     //Look Up Obj
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = "./assets/uclookup/NAP/lookupVendor.json";
@@ -62,13 +75,10 @@ export class AppReferantorComponent implements OnInit {
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupVendor.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupVendor.json";
     this.inputLookupObj.addCritInput = this.arrAddCrit;
-
+    this.inputLookupObj.nameSelect = this.appReferantorObj.ReferantorName;
     this.NapAppReferantorForm.controls.AccountBank.disable();
-
-    this.getAppReferantorData();
-    console.log(this.bankItems);
   }
-
+  
   getAppReferantorData() {
     // data dummy test
     // var tempId = 11;
@@ -84,18 +94,21 @@ export class AppReferantorComponent implements OnInit {
     this.http.post(url, obj).subscribe(
       (response) => {
         console.log(response);
-        this.ReferantorOn = true;
-        this.ExistedData = true;
-        this.appReferantorObj = response;
-        this.inputLookupObj.nameSelect = response["ReferantorName"];
-        this.NapAppReferantorForm.controls.AccountBank.enable();
-        this.NpwpOn = true;
-        this.NapAppReferantorForm.patchValue({
-          CheckBoxAppReferantor: true,
-          AccountBank: this.appReferantorObj.ReferantorCode
-        });
-        console.log(this.NapAppReferantorForm);
-        this.getDDLBank(this.appReferantorObj.ReferantorCode);
+        if(response["AppReferantorId"]!=0){
+          this.ReferantorOn = true;
+          this.ExistedData = true;
+          this.appReferantorObj = response;    
+          this.inputLookupObj.nameSelect = this.appReferantorObj.ReferantorName;
+          this.inputLookupObj.jsonSelect = response;
+          this.NapAppReferantorForm.controls.AccountBank.enable();
+          this.NpwpOn = true;
+          this.NapAppReferantorForm.patchValue({
+            CheckBoxAppReferantor: true,
+            AccountBank: this.appReferantorObj.BankAccNo
+          });
+          console.log(this.NapAppReferantorForm);
+          this.getDDLBank(this.appReferantorObj.ReferantorCode);
+        }
       },
       (error) => {
         console.log(error);
@@ -163,6 +176,11 @@ export class AppReferantorComponent implements OnInit {
     this.appReferantorObj.ReferantorCode = ev.ReferantorCode;
     this.appReferantorObj.ReferantorName = ev.ReferantorName;
     this.appReferantorObj.MrReferantorType = ev.ReferantorType;
+    this.appReferantorObj.RefBankCode = ev.BankCode;
+    this.appReferantorObj.BankAccNo = ev.BankAccNo;
+    this.appReferantorObj.BankAccName = ev.BankAccName;
+    this.appReferantorObj.BankBranch;
+
     this.appReferantorObj.TaxpayerNo = ev.TaxPayerNo;
     this.appReferantorObj.TaxIdNo = ev.TaxIdNo;
     this.appReferantorObj.TaxIdName = ev.TaxPayerName;
@@ -177,7 +195,7 @@ export class AppReferantorComponent implements OnInit {
     console.log(this.appReferantorObj);
 
     this.NapAppReferantorForm.patchValue({
-      AccountBank: ev.ReferantorCode
+      AccountBank: ev.BankAccNo
     });
     
     // this.NpwpOn = ev.IsNPWPExist;
@@ -216,7 +234,7 @@ export class AppReferantorComponent implements OnInit {
     this.appReferantorObj.BankAccNo = this.bankItems[idx].BankAccountNo;
     this.appReferantorObj.BankAccName = this.bankItems[idx].BankAccountName;
     this.NapAppReferantorForm.patchValue({
-      AccountBank: this.bankItems[idx].BankCode
+      AccountBank: this.bankItems[idx].BankAccNo
     });
     // console.log(this.appReferantorObj);
   }
