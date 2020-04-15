@@ -52,7 +52,7 @@
             "value": "",
             "placeholder": "Placeholder",
             "isFromURL": true,
-            "isSelectOne": true,
+            "isSelectOne": false,
             "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
             "label": "MOU TYPE",
             "items": [],

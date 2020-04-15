@@ -1,4 +1,4 @@
-export class LeadCustPersonalObj{
+export class LeadCustPersonalObj {
     LeadCustPersonalId: any;
     LeadCustId: any;
     CustFullName: any;

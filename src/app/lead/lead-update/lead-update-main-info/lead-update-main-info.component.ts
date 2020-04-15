@@ -25,6 +25,7 @@ import { RefEmpForLookupObj } from 'app/shared/model/RefEmpForLookupObj.Model';
 })
 export class LeadUpdateMainInfoComponent implements OnInit {
   user: any;
+  WfTaskListId: any;
   LeadId: any;
   addLead: any;
   editLead: any;
@@ -106,7 +107,10 @@ export class LeadUpdateMainInfoComponent implements OnInit {
         }
         if (params["LeadId"] != null) {
           this.LeadId = params["LeadId"];
-      }
+        }
+        // if (params["WfTaskListId"] != null) {
+        //   this.WfTaskListId = params["WfTaskListId"];
+        // }
     });
   }
 

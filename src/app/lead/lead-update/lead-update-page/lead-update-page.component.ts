@@ -13,6 +13,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 })
 export class LeadUpdatePageComponent implements OnInit {
   LeadId: any;
+  WfTaskListId: any;
   isCustomer: any;
   isLead: any;
   CustPersonalId: any;
@@ -22,6 +23,9 @@ export class LeadUpdatePageComponent implements OnInit {
       if (params["LeadId"] != null) {
         this.LeadId = params["LeadId"];
       }
+      // if (params["WfTaskListId"] != null) {
+      //   this.WfTaskListId = params["WfTaskListId"];
+      // }
     });
   }
 
