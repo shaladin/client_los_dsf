@@ -68,6 +68,9 @@ export const customCurrencyMaskConfig = {
     thousands: ",",
     nullable: false
 };
+import { PhnVerifSubjectComponent } from "./phone-verif/phone-verif-subject/phone-verif-subject.component";
+import { PhnVerifSubjectViewComponent } from "./phone-verif/phone-verif-subject-view/phone-verif-subject-view.component";
+import { PhnVerifSubjectVerifComponent } from "./phone-verif/phone-verif-subject-verif/phone-verif-subject-verif.component";
 
 
 
@@ -115,7 +118,11 @@ export const customCurrencyMaskConfig = {
         AppFinDataComponent,
         AppFinDataComponent,
         PhnVerifPagingComponent,
-        VerfQuestionComponent
+        VerfQuestionComponent,
+        PhnVerifPagingComponent,
+        PhnVerifSubjectComponent,
+        PhnVerifSubjectViewComponent,
+        PhnVerifSubjectVerifComponent
         ],
     imports: [
         NapRoutingModule,
