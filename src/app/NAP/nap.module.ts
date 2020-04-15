@@ -63,6 +63,7 @@ export const customCurrencyMaskConfig = {
 import { PhnVerifPagingComponent } from "./phone-verif/phone-verif-paging/phone-verif-paging.component";
 import { AppFromLeadPagingComponent } from "./app-from-lead/paging/app-from-lead-paging.component";
 import { AppFromLeadDetailComponent } from "./app-from-lead/detail/app-from-lead-detail.component";
+import { NgxCurrencyModule } from "ngx-currency";
 
 
 
@@ -129,7 +130,7 @@ import { AppFromLeadDetailComponent } from "./app-from-lead/detail/app-from-lead
         UcShowErrorsModule,
         UCSearchModule,
         UcinputnumberModule,
-        // NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
+        NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
     ],
     exports: [],
     providers: [NGXToastrService],

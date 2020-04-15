@@ -62,7 +62,7 @@ export class CustPersonalMainDataComponent implements OnInit {
 
      }
 
-  ngOnInit() {
+  async ngOnInit() : Promise<void> {
     console.log(this.identifier);
     console.log(this.parentForm);
 
@@ -94,7 +94,7 @@ export class CustPersonalMainDataComponent implements OnInit {
 
     this.initUrl();
     this.initLookup();
-    this.bindAllRefMasterObj();
+    await this.bindAllRefMasterObj();
     this.bindCustData();
   }
 
@@ -258,18 +258,18 @@ export class CustPersonalMainDataComponent implements OnInit {
 
   }
 
-  bindAllRefMasterObj(){
-    this.bindIdTypeObj();
-    this.bindGenderObj();
-    this.bindMaritalStatObj();
-    this.bindNationalityObj();
-    this.bindEducationObj();
-    this.bindReligionObj();
+  async bindAllRefMasterObj(){
+    await this.bindIdTypeObj();
+    await this.bindGenderObj();
+    await this.bindMaritalStatObj();
+    await this.bindNationalityObj();
+    await this.bindEducationObj();
+    await this.bindReligionObj();
   }
 
-  bindIdTypeObj(){
+  async bindIdTypeObj(){
     this.refMasterObj.RefMasterTypeCode = "ID_TYPE";
-    this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
+    await this.http.post(this.getRefMasterUrl, this.refMasterObj).toPromise().then(
       (response) => {
         this.IdTypeObj = response["ReturnObject"];
         if(this.IdTypeObj.length > 0){
@@ -281,9 +281,9 @@ export class CustPersonalMainDataComponent implements OnInit {
     );
   }
 
-  bindGenderObj(){
+  async bindGenderObj(){
     this.refMasterObj.RefMasterTypeCode = "GENDER";
-    this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
+    await this.http.post(this.getRefMasterUrl, this.refMasterObj).toPromise().then(
       (response) => {
         this.GenderObj = response["ReturnObject"];
         if(this.GenderObj.length > 0){
@@ -295,9 +295,9 @@ export class CustPersonalMainDataComponent implements OnInit {
     );
   }
 
-  bindMaritalStatObj(){
+  async bindMaritalStatObj(){
     this.refMasterObj.RefMasterTypeCode = "MARITAL_STAT";
-    this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
+    await this.http.post(this.getRefMasterUrl, this.refMasterObj).toPromise().then(
       (response) => {
         this.MaritalStatObj = response["ReturnObject"];
         if(this.MaritalStatObj.length > 0){
@@ -309,9 +309,9 @@ export class CustPersonalMainDataComponent implements OnInit {
     );
   }
 
-  bindNationalityObj(){
+  async bindNationalityObj(){
     this.refMasterObj.RefMasterTypeCode = "NATIONALITY";
-    this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
+    await this.http.post(this.getRefMasterUrl, this.refMasterObj).toPromise().then(
       (response) => {
         this.NationalityObj = response["ReturnObject"];
         if(this.NationalityObj.length > 0){
@@ -323,9 +323,9 @@ export class CustPersonalMainDataComponent implements OnInit {
     );
   }
 
-  bindEducationObj(){
+  async bindEducationObj(){
     this.refMasterObj.RefMasterTypeCode = "EDUCATION";
-    this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
+    await this.http.post(this.getRefMasterUrl, this.refMasterObj).toPromise().then(
       (response) => {
         this.EducationObj = response["ReturnObject"];
         if(this.EducationObj.length > 0){
@@ -337,9 +337,9 @@ export class CustPersonalMainDataComponent implements OnInit {
     );
   }
 
-  bindReligionObj(){
+  async bindReligionObj(){
     this.refMasterObj.RefMasterTypeCode = "RELIGION";
-    this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
+    await this.http.post(this.getRefMasterUrl, this.refMasterObj).toPromise().then(
       (response) => {
         this.ReligionObj = response["ReturnObject"];
         if(this.ReligionObj.length > 0){
