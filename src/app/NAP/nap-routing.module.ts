@@ -23,26 +23,6 @@ const routes: Routes = [
     path: '',
     children: [
       {
-        path: 'ConsumerFinance',
-        loadChildren: './CF4W/cf4w.module#CF4WModule'
-      },
-      {
-        path: 'FinanceLeasing',
-        loadChildren: './FL4W/fl4w.module#FL4WModule'
-      },
-      {
-        path: 'CFRefinancing',
-        loadChildren: './RFN4W/rfn4w.module#RFN4WModule'
-      },
-      {
-        path: 'Factoring',
-        loadChildren: './FCTR/fctr.module#FCTRModule'
-      },
-      {
-        path: 'AdminProcess',
-        loadChildren: './AdminProcess/admin-process.module#AdminProcessModule'
-      },
-      {
         path: 'AppPaging',
         component: AppPagingComponent,
         data: {

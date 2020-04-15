@@ -19,7 +19,6 @@ import { InputSearchObj } from 'app/shared/model/InputSearchObj.Model';
 @Component({
   selector: 'app-mou-request-addcoll',
   templateUrl: './mou-request-addcoll.component.html',
-  styleUrls: ['./mou-request-addcoll.component.scss'],
   providers: [NGXToastrService]
 })
 export class MouRequestAddcollComponent implements OnInit {

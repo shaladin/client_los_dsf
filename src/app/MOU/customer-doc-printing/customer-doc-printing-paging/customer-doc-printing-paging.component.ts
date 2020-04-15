@@ -6,7 +6,6 @@ import { environment } from 'environments/environment';
 @Component({
   selector: 'app-customer-doc-printing-paging',
   templateUrl: './customer-doc-printing-paging.component.html',
-  styleUrls: ['./customer-doc-printing-paging.component.css']
 })
 export class CustomerDocPrintingPagingComponent implements OnInit {
   inputPagingObj: any;

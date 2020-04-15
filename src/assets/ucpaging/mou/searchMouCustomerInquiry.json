@@ -31,8 +31,8 @@
             "label": "MOU TYPE",
             "items": [],
             "itemsUrl": [],
-            "criteriaPropName" : "RefMasterTypeCode",
-            "criteriaPropValue" : "MOU_TYPE"
+            "criteriaPropName": "RefMasterTypeCode",
+            "criteriaPropValue": "MOU_TYPE"
         },
         {
             "type": "dropdown",
@@ -47,50 +47,50 @@
             "label": "MOU STATUS",
             "items": [],
             "itemsUrl": [],
-            "criteriaPropName" : "RefMasterTypeCode",
-            "criteriaPropValue" : "MOU_STAT"
+            "criteriaPropName": "RefMasterTypeCode",
+            "criteriaPropValue": "MOU_STAT"
         },
         {
-            "type" : "textbox",
-            "name" : "MC.PLAFOND_AMT",
-            "id" : "GreaterPlafondAmt",
-            "value" : "",
-            "label" : "PLAFOND AMOUNT >=",
-            "restriction" : "gte",
-            "datatype" : "numeric"
+            "type": "textbox",
+            "name": "MC.PLAFOND_AMT",
+            "id": "GreaterPlafondAmt",
+            "value": "",
+            "label": "PLAFOND AMOUNT >=",
+            "restriction": "gte",
+            "datatype": "numeric"
         },
         {
-            "type" : "textbox",
-            "name" : "MC.PLAFOND_AMT",
-            "id" : "LessPlafondAmt",
-            "value" : "",
-            "label" : "PLAFOND AMOUNT <=",
-            "restriction" : "lte",
-            "datatype" : "numeric"
+            "type": "textbox",
+            "name": "MC.PLAFOND_AMT",
+            "id": "LessPlafondAmt",
+            "value": "",
+            "label": "PLAFOND AMOUNT <=",
+            "restriction": "lte",
+            "datatype": "numeric"
         },
         {
-            "type" : "dropdown",
-            "label" : "REVOLVING",
-            "name" : "MC.IS_REVOLVING",
-            "id" : "revolvingId",
-            "value" : "",
-            "datatype" : "text",
-            "isSelectOne" : false, 
-            "items" : [ 
+            "type": "dropdown",
+            "label": "REVOLVING",
+            "name": "MC.IS_REVOLVING",
+            "id": "revolvingId",
+            "value": "",
+            "datatype": "text",
+            "isSelectOne": false,
+            "items": [
                 {
-                    "key" : "1",
-                    "value" : "Yes"
+                    "key": "1",
+                    "value": "Yes"
                 },
                 {
-                    "key" : "0",
-                    "value" : "No"
+                    "key": "0",
+                    "value": "No"
                 }
             ],
-            "isFromURL" : false, 
-            "url" : "", 
-            "itemsUrl" : [], 
-            "criteriaPropName" : "", 
-            "criteriaPropValue" : "" 
+            "isFromURL": false,
+            "url": "",
+            "itemsUrl": [],
+            "criteriaPropName": "",
+            "criteriaPropValue": ""
         }
     ],
     "querystring": {

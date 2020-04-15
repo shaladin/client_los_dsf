@@ -9,7 +9,6 @@ import { environment } from 'environments/environment';
 @Component({
   selector: 'app-mou-approval-factoring',
   templateUrl: './mou-approval-factoring.component.html',
-  styleUrls: ['./mou-approval-factoring.component.scss'],
   providers: [NGXToastrService]
 })
 export class MouApprovalFactoringComponent implements OnInit {
@@ -23,7 +22,7 @@ export class MouApprovalFactoringComponent implements OnInit {
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
 
-      if (params["ProdHId"] != null) {
+      if (params["MouCustId"] != null) {
         this.MouCustId = params["MouCustId"];
       }
 

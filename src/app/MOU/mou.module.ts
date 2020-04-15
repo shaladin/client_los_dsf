@@ -58,6 +58,20 @@ import { LegalReviewPagingComponent } from './legal-review/legal-review-paging/l
 import { LegalReviewDetailComponent } from './legal-review/legal-review-detail/legal-review-detail.component';
 import { UcinputnumberModule } from "@adins/ucinputnumber";
 import { MouCustomerInquiryComponent } from './mou-customer/mou-customer-inquiry/mou-customer-inquiry.component';
+import { NgxCurrencyModule } from "ngx-currency";
+
+export const customCurrencyMaskConfig = {     
+  align: "left",     
+  allowNegative: true,     
+  allowZero: true,     
+  decimal: ".",     
+  precision: 2,     
+  prefix: "",     
+  suffix: "",     
+  thousands: ",",     
+  nullable: false 
+};
+
 @NgModule({
   imports: [
     MouRoutingModule,
@@ -80,7 +94,8 @@ import { MouCustomerInquiryComponent } from './mou-customer/mou-customer-inquiry
     UcviewgenericModule,
     SharingComponentModule,
     UcinputnumberModule,
-    UcapprovalModule
+    UcapprovalModule,
+    NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
   ],
   declarations: [
     DocSignerComponent,
@@ -120,12 +135,15 @@ import { MouCustomerInquiryComponent } from './mou-customer/mou-customer-inquiry
     MouCustomerApprovalComponent,
     MouApprovalGeneralComponent,
     MouApprovalFactoringComponent,
-    MouRequestAddcollComponent,
-    MouRequestAddcollAddeditComponent,
     MouReviewGeneralComponent,
+    MouDetailFactoringComponent,
     MouViewApprovalHistoryComponent,
     MouCustomerInquiryComponent,
+    MouDetailGeneralComponent,
     MouDetailFactoringComponent,
+    MouCustAssetComponent,
+    MouCustAssetDetailComponent,
+    MouViewApprovalHistoryComponent,
     MouCustAssetComponent,
     MouCustAssetDetailComponent,
     MouDetailGeneralComponent

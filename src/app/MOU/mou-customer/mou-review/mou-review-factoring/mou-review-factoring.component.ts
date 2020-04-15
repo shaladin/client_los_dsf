@@ -9,7 +9,6 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 @Component({
   selector: 'app-mou-review-factoring',
   templateUrl: './mou-review-factoring.component.html',
-  styleUrls: ['./mou-review-factoring.component.scss'],
   providers: [NGXToastrService]
 })
 export class MouReviewFactoringComponent implements OnInit {
@@ -43,7 +42,9 @@ export class MouReviewFactoringComponent implements OnInit {
   }
 
   ngOnInit() {
-    var apvObj = { SchemeCode: 'MOUC_GEN_APV' }
+    this.claimTask();
+
+    var apvObj = { SchemeCode: 'MOUC_FCTR_APV' }
     this.http.post(AdInsConstant.GetApprovedBy, apvObj).subscribe(
       (response) => {
         console.log(apvObj);
@@ -67,6 +68,16 @@ export class MouReviewFactoringComponent implements OnInit {
     Reason: [''],
     Notes: ['']
   })
+
+  claimTask()
+  {
+    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"]};
+    console.log(wfClaimObj);
+    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+      (response) => {
+      });
+  }
 
   Submit() {
     var mouObj = {

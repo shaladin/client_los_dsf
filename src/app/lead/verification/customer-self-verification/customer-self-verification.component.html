@@ -12,7 +12,6 @@
         </div>
         <div class="px-3">
           <app-lead-main-info [LeadId]="LeadId"></app-lead-main-info>
-
           <aw-wizard #wizard navBarLayout="large-empty-symbols" [defaultStepIndex]="0">
 
             <aw-wizard-step [stepTitle]="'Customer Data'" (stepEnter)="EnterTab('Cust')"
@@ -26,7 +25,6 @@
             </aw-wizard-step>
 
           </aw-wizard>
-
         </div>
       </div>
     </div>
