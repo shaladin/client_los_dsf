@@ -20,10 +20,10 @@ export const ROUTES: RouteInfo[] = [
   {
     path: '', title: 'New Application', icon: 'ft-file-plus', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false,
     submenu: [
-      { path: '/Nap/ConsumerFinance/Paging', title: 'CF4W', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
-      { path: '/Nap/FinanceLeasing/Paging', title: 'FL4W', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
-      { path: '/Nap/CFRefinancing/Paging', title: 'Refinancing', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
-      { path: '/Nap/Factoring/Paging', title: 'Factoring', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] }
+      { path: '/Nap/ConsumerFinance/InputNap/Paging', title: 'Consumer Finance', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+      { path: '/Nap/FinanceLeasing/InputNap/Paging', title: 'Finance Leasing', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+      { path: '/Nap/CFRefinancing/InputNap/Paging', title: 'Refinancing', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+      { path: '/Nap/Factoring/InputNap/Paging', title: 'Factoring', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] }
 
     ]
   },
