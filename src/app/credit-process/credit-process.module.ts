@@ -21,6 +21,8 @@ import { SharingComponentModule } from "../shared/sharingcomponent.module";
 import { NGXToastrService } from "../components/extra/toastr/toastr.service";
 import { CreditInvestigationDetailComponent } from "./credit-investigation/credit-investigation-detail/credit-investigation-detail.component";
 import { ViewAppCustDataPersonalComponent } from "./credit-investigation/component/view-app-cust-data-personal/view-app-cust-data-personal.component";
+import { CustHistoryComponent } from './credit-investigation/component/cust-history/cust-history.component';
+import { ViewApprovalComponent } from './credit-investigation/component/cust-history/view-approval/view-approval.component';
 import { CommissionAddComponent } from "./commission-add/commission-add.component";
 import { CommissionPagingComponent } from "./commission-paging/commission-paging.component";
 import { RsvFundPagingComponent } from "./reserved-fund/reserved-fund-paging/reserved-fund-paging.component";
@@ -46,6 +48,8 @@ export const customCurrencyMaskConfig = {
     declarations: [
         CreditInvestigationDetailComponent,
         ViewAppCustDataPersonalComponent,
+        CustHistoryComponent,
+        ViewApprovalComponent,
         CommissionAddComponent,
         CommissionPagingComponent,
         RsvFundPagingComponent,

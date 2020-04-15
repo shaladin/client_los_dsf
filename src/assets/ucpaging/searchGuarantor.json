@@ -49,9 +49,8 @@
       "position": "center",
       "action": [
         {
-          "type": "edit",
-          "path": "Guarantor/Main",
-          "param": [
+          "type": "callback",
+          "property": [
             {
               "type": "AppGuarantorId",
               "property": "AppGuarantorId"
