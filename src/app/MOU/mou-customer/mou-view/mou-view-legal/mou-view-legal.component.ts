@@ -8,7 +8,6 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 @Component({
   selector: 'app-mou-view-legal',
   templateUrl: './mou-view-legal.component.html',
-  styleUrls: ['./mou-view-legal.component.scss'],
   providers: [NGXToastrService]
 })
 export class MouViewLegalComponent implements OnInit {

@@ -7,7 +7,6 @@ import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 @Component({
   selector: 'app-mou-customer-approval',
   templateUrl: './mou-customer-approval.component.html',
-  styleUrls: ['./mou-customer-approval.component.scss']
 })
 export class MouCustomerApprovalComponent implements OnInit {
   inputPagingObj: any;
