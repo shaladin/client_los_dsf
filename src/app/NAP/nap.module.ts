@@ -71,6 +71,8 @@ export const customCurrencyMaskConfig = {
 import { PhnVerifSubjectComponent } from "./phone-verif/phone-verif-subject/phone-verif-subject.component";
 import { PhnVerifSubjectViewComponent } from "./phone-verif/phone-verif-subject-view/phone-verif-subject-view.component";
 import { PhnVerifSubjectVerifComponent } from "./phone-verif/phone-verif-subject-verif/phone-verif-subject-verif.component";
+import { AppFromLeadPagingComponent } from "./app-from-lead/paging/app-from-lead-paging.component";
+import { AppFromLeadDetailComponent } from "./app-from-lead/detail/app-from-lead-detail.component";
 
 
 
@@ -122,7 +124,10 @@ import { PhnVerifSubjectVerifComponent } from "./phone-verif/phone-verif-subject
         PhnVerifPagingComponent,
         PhnVerifSubjectComponent,
         PhnVerifSubjectViewComponent,
-        PhnVerifSubjectVerifComponent
+        PhnVerifSubjectVerifComponent,
+        PhnVerifPagingComponent,
+        AppFromLeadPagingComponent,
+        AppFromLeadDetailComponent
         ],
     imports: [
         NapRoutingModule,
@@ -147,7 +152,7 @@ import { PhnVerifSubjectVerifComponent } from "./phone-verif/phone-verif-subject
         UcShowErrorsModule,
         NgbModule,
         UcinputnumberModule,
-        // NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
+        NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
     ],
     exports: [],
     entryComponents: [AppSubsidyAddEditComponent],

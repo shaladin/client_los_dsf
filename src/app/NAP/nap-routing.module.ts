@@ -20,6 +20,8 @@ import { VerfQuestionComponent } from "./nap-component/verf-question/verf-questi
 import { PhnVerifSubjectComponent } from "./phone-verif/phone-verif-subject/phone-verif-subject.component";
 import { PhnVerifSubjectViewComponent } from "./phone-verif/phone-verif-subject-view/phone-verif-subject-view.component";
 import { PhnVerifSubjectVerifComponent } from "./phone-verif/phone-verif-subject-verif/phone-verif-subject-verif.component";
+import { AppFromLeadPagingComponent } from "./app-from-lead/paging/app-from-lead-paging.component";
+import { AppFromLeadDetailComponent } from "./app-from-lead/detail/app-from-lead-detail.component";
 
 
 const routes: Routes = [
@@ -145,7 +147,21 @@ const routes: Routes = [
                 data: {
                     title: 'Phone Verif Subject Verif Detail'
                 }
-            }
+            },
+            {
+                path: 'AppFromLead/Paging',
+                component: AppFromLeadPagingComponent,
+                data: {
+                    title: 'Paging'
+                }
+            },
+            {
+                path: 'AppFromLead/Detail',
+                component: AppFromLeadDetailComponent,
+                data: {
+                    title: 'Detail'
+                }
+            },
         ]
     }
 ]

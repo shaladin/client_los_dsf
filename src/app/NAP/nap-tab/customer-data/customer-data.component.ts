@@ -19,6 +19,7 @@ import { AppCustGrpObj } from 'app/shared/model/AppCustGrpObj.Model';
 import { CustDataCompanyObj } from 'app/shared/model/CustDataCompanyObj.Model';
 import { CustGrpMemberComponent } from './component/cust-grp-member/cust-grp-member.component';
 import { formatDate } from '@angular/common';
+import { WizardComponent } from 'angular-archwizard';
 
 @Component({
   selector: 'app-customer-data',
@@ -117,7 +118,8 @@ export class CustomerDataComponent implements OnInit {
     private fb: FormBuilder, 
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private wizard: WizardComponent) {
       this.route.queryParams.subscribe(params => {
         this.appId = params["AppId"];
       })
@@ -139,7 +141,7 @@ export class CustomerDataComponent implements OnInit {
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
-          this.callbackSubmit.emit();
+          this.wizard.goToNextStep();
         },
         (error) => {
           console.log(error);
@@ -155,7 +157,7 @@ export class CustomerDataComponent implements OnInit {
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
-          this.callbackSubmit.emit();
+          this.wizard.goToNextStep();
         },
         (error) => {
           console.log(error);
@@ -374,41 +376,40 @@ export class CustomerDataComponent implements OnInit {
   }
 
   setAppCustPersonalFinData(){
-    this.custDataPersonalObj.AppCustPersonalFinDataObj.MonthlyIncomeAmt = this.CustDataForm.controls["PersonalFinMonthlyIncomeAmt"].value.replace(/\D/g, "");
-    this.custDataPersonalObj.AppCustPersonalFinDataObj.MonthlyExpenseAmt = this.CustDataForm.controls["PersonalFinMonthlyExpenseAmt"].value != "" ? this.CustDataForm.controls["PersonalFinMonthlyExpenseAmt"].value.replace(/\D/g, "") : 0;
+    this.custDataPersonalObj.AppCustPersonalFinDataObj.MonthlyIncomeAmt = this.CustDataForm.controls["financialData"]["controls"].MonthlyIncomeAmt.value;
+    this.custDataPersonalObj.AppCustPersonalFinDataObj.MonthlyExpenseAmt = this.CustDataForm.controls["financialData"]["controls"].MonthlyExpenseAmt.value;
     this.custDataPersonalObj.AppCustPersonalFinDataObj.MrSourceOfIncomeTypeCode = this.CustDataForm.controls["financialData"]["controls"].MrSourceOfIncomeTypeCode.value;
-    this.custDataPersonalObj.AppCustPersonalFinDataObj.MonthlyInstallmentAmt = this.CustDataForm.controls["PersonalFinMonthlyInstallmentAmt"].value != "" ? this.CustDataForm.controls["PersonalFinMonthlyInstallmentAmt"].value.replace(/\D/g, "") : 0;
+    this.custDataPersonalObj.AppCustPersonalFinDataObj.MonthlyInstallmentAmt = this.CustDataForm.controls["financialData"]["controls"].MonthlyInstallmentAmt.value;
     this.custDataPersonalObj.AppCustPersonalFinDataObj.IsJoinIncome = this.CustDataForm.controls["financialData"]["controls"].IsJoinIncome.value;
-    this.custDataPersonalObj.AppCustPersonalFinDataObj.SpouseMonthlyIncomeAmt = this.CustDataForm.controls["PersonalFinSpouseMonthlyIncomeAmt"].value != "" ? this.CustDataForm.controls["PersonalFinSpouseMonthlyIncomeAmt"].value.replace(/\D/g, "") : 0;
+    this.custDataPersonalObj.AppCustPersonalFinDataObj.SpouseMonthlyIncomeAmt = this.CustDataForm.controls["financialData"]["controls"].SpouseMonthlyIncomeAmt.value;
   }
 
   setAppCustCompanyFinData(){
-
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.GrossMonthlyIncomeAmt = this.CustDataCompanyForm.controls["CompanyFinGrossMonthlyIncomeAmt"].value != "" ? this.CustDataCompanyForm.controls["CompanyFinGrossMonthlyIncomeAmt"].value.replace(/\D/g, "") : 0;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.GrossMonthlyExpenseAmt = this.CustDataCompanyForm.controls["CompanyFinGrossMonthlyExpenseAmt"].value != "" ? this.CustDataCompanyForm.controls["CompanyFinGrossMonthlyExpenseAmt"].value.replace(/\D/g, "")  : 0;
+    this.custDataCompanyObj.AppCustCompanyFinDataObj.GrossMonthlyIncomeAmt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].GrossMonthlyIncomeAmt.value;
+    this.custDataCompanyObj.AppCustCompanyFinDataObj.GrossMonthlyExpenseAmt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].GrossMonthlyExpenseAmt.value;
     this.custDataCompanyObj.AppCustCompanyFinDataObj.GrossProfitAmt = this.custDataCompanyObj.AppCustCompanyFinDataObj.GrossMonthlyIncomeAmt - this.custDataCompanyObj.AppCustCompanyFinDataObj.GrossMonthlyExpenseAmt;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.ReturnOfInvestmentPrcnt = this.CustDataCompanyForm.controls["CompanyFinReturnOfInvestmentPrcnt"].value != "" ? this.CustDataCompanyForm.controls["CompanyFinReturnOfInvestmentPrcnt"].value : 0;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.ProfitMarginPrcnt = this.CustDataCompanyForm.controls["CompanyFinProfitMarginPrcnt"].value != "" ? this.CustDataCompanyForm.controls["CompanyFinProfitMarginPrcnt"].value.replace(/\D/g, "") : 0;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.ReturnOfAssetPrcnt = this.CustDataCompanyForm.controls["CompanyFinReturnOfAssetPrcnt"].value != "" ? this.CustDataCompanyForm.controls["CompanyFinReturnOfAssetPrcnt"].value.replace(/\D/g, "") : 0;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.ReturnOfEquityPrcnt = this.CustDataCompanyForm.controls["CompanyFinReturnOfEquityPrcnt"].value != "" ? this.CustDataCompanyForm.controls["CompanyFinReturnOfEquityPrcnt"].value.replace(/\D/g, "") : 0;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.DebtEquityRatioPrcnt = this.CustDataCompanyForm.controls["CompanyFinDebtEquityRatioPrcnt"].value != "" ? this.CustDataCompanyForm.controls["CompanyFinDebtEquityRatioPrcnt"].value.replace(/\D/g, "") : 0;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.CurrentRatioPrcnt = this.CustDataCompanyForm.controls["CompanyFinCurrentRatioPrcnt"].value != "" ? this.CustDataCompanyForm.controls["CompanyFinCurrentRatioPrcnt"].value.replace(/\D/g, "") : 0;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.InvTurnOverPrcnt = this.CustDataCompanyForm.controls["CompanyFinInvTurnOverPrcnt"].value != "" ? this.CustDataCompanyForm.controls["CompanyFinInvTurnOverPrcnt"].value.replace(/\D/g, "") : 0;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.GrowthPrcnt = this.CustDataCompanyForm.controls["CompanyFinGrowthPrcnt"].value != "" ? this.CustDataCompanyForm.controls["CompanyFinGrowthPrcnt"].value.replace(/\D/g, "") : 0;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.ArTurnOverPrcnt = this.CustDataCompanyForm.controls["CompanyFinArTurnOverPrcnt"].value != "" ? this.CustDataCompanyForm.controls["CompanyFinArTurnOverPrcnt"].value.replace(/\D/g, "") : 0;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.WorkingCapitalAmt = this.CustDataCompanyForm.controls["CompanyFinWorkingCapitalAmt"].value != "" ? this.CustDataCompanyForm.controls["CompanyFinWorkingCapitalAmt"].value.replace(/\D/g, "") : 0;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.OthMonthlyInstAmt = this.CustDataCompanyForm.controls["CompanyFinOthMonthlyInstAmt"].value != "" ? this.CustDataCompanyForm.controls["CompanyFinOthMonthlyInstAmt"].value.replace(/\D/g, "") : 0;
+    this.custDataCompanyObj.AppCustCompanyFinDataObj.ReturnOfInvestmentPrcnt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].ReturnOfInvestmentPrcnt.value;
+    this.custDataCompanyObj.AppCustCompanyFinDataObj.ProfitMarginPrcnt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].ProfitMarginPrcnt.value;
+    this.custDataCompanyObj.AppCustCompanyFinDataObj.ReturnOfAssetPrcnt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].ReturnOfAssetPrcnt.value;
+    this.custDataCompanyObj.AppCustCompanyFinDataObj.ReturnOfEquityPrcnt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].ReturnOfEquityPrcnt.value;
+    this.custDataCompanyObj.AppCustCompanyFinDataObj.DebtEquityRatioPrcnt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].DebtEquityRatioPrcnt.value;
+    this.custDataCompanyObj.AppCustCompanyFinDataObj.CurrentRatioPrcnt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].CurrentRatioPrcnt.value;
+    this.custDataCompanyObj.AppCustCompanyFinDataObj.InvTurnOverPrcnt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].InvTurnOverPrcnt.value;
+    this.custDataCompanyObj.AppCustCompanyFinDataObj.GrowthPrcnt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].GrowthPrcnt.value;
+    this.custDataCompanyObj.AppCustCompanyFinDataObj.ArTurnOverPrcnt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].ArTurnOverPrcnt.value;
+    this.custDataCompanyObj.AppCustCompanyFinDataObj.WorkingCapitalAmt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].WorkingCapitalAmt.value;
+    this.custDataCompanyObj.AppCustCompanyFinDataObj.OthMonthlyInstAmt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].OthMonthlyInstAmt.value;
     this.custDataCompanyObj.AppCustCompanyFinDataObj.DateAsOf = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].DateAsOf.value;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.Revenue = this.CustDataCompanyForm.controls["CompanyFinRevenue"].value != "" ? this.CustDataCompanyForm.controls["CompanyFinRevenue"].value.replace(/\D/g, "") : 0;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.OprCost = this.CustDataCompanyForm.controls["CompanyFinOprCost"].value != "" ? this.CustDataCompanyForm.controls["CompanyFinOprCost"].value.replace(/\D/g, "") : 0;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.ProfitBeforeTax = this.CustDataCompanyForm.controls["CompanyFinProfitBeforeTax"].value != "" ? this.CustDataCompanyForm.controls["CompanyFinProfitBeforeTax"].value.replace(/\D/g, "") : 0;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.CurrAsset = this.CustDataCompanyForm.controls["CompanyFinCurrAsset"].value != "" ? this.CustDataCompanyForm.controls["CompanyFinCurrAsset"].value.replace(/\D/g, "") : 0;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.NetFixedAsset = this.CustDataCompanyForm.controls["CompanyFinNetFixedAsset"].value != "" ? this.CustDataCompanyForm.controls["CompanyFinNetFixedAsset"].value.replace(/\D/g, "") : 0;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.TotalAsset = this.CustDataCompanyForm.controls["CompanyFinTotalAsset"].value != "" ? this.CustDataCompanyForm.controls["CompanyFinTotalAsset"].value.replace(/\D/g, "") : 0;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.CurrLiablts = this.CustDataCompanyForm.controls["CompanyFinCurrLiablts"].value != "" ? this.CustDataCompanyForm.controls["CompanyFinCurrLiablts"].value.replace(/\D/g, "") : 0;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.LongTemrLiablts = this.CustDataCompanyForm.controls["CompanyFinLongTemrLiablts"].value != "" ? this.CustDataCompanyForm.controls["CompanyFinLongTemrLiablts"].value.replace(/\D/g, "") : 0;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.ShareholderEquity = this.CustDataCompanyForm.controls["CompanyFinShareholderEquity"].value != "" ? this.CustDataCompanyForm.controls["CompanyFinShareholderEquity"].value.replace(/\D/g, "") : 0;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.CurrRatio = this.CustDataCompanyForm.controls["CompanyFinCurrRatio"].value != "" ? this.CustDataCompanyForm.controls["CompanyFinCurrRatio"].value.replace(/\D/g, "") : 0;;
+    this.custDataCompanyObj.AppCustCompanyFinDataObj.Revenue = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].Revenue.value;
+    this.custDataCompanyObj.AppCustCompanyFinDataObj.OprCost = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].OprCost.value;
+    this.custDataCompanyObj.AppCustCompanyFinDataObj.ProfitBeforeTax = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].ProfitBeforeTax.value;
+    this.custDataCompanyObj.AppCustCompanyFinDataObj.CurrAsset = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].CurrAsset.value;
+    this.custDataCompanyObj.AppCustCompanyFinDataObj.NetFixedAsset = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].NetFixedAsset.value;
+    this.custDataCompanyObj.AppCustCompanyFinDataObj.TotalAsset = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].TotalAsset.value;
+    this.custDataCompanyObj.AppCustCompanyFinDataObj.CurrLiablts = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].CurrLiablts.value;
+    this.custDataCompanyObj.AppCustCompanyFinDataObj.LongTemrLiablts = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].LongTemrLiablts.value;
+    this.custDataCompanyObj.AppCustCompanyFinDataObj.ShareholderEquity = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].ShareholderEquity.value;
+    this.custDataCompanyObj.AppCustCompanyFinDataObj.CurrRatio = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].CurrRatio.value;
   }
 
   setAppCustPersonalJobData(){
@@ -682,7 +683,7 @@ setAppCustSocmedObj(){
   async getCustData(){
     this.custDataObj = new CustDataObj();
     this.custDataObj.AppId = this.appId;
-    this.http.post(this.getCustDataUrl, this.custDataObj).toPromise().then(
+    await this.http.post(this.getCustDataUrl, this.custDataObj).toPromise().then(
       (response) => {
         if(response != ""){
           if(response["AppCustObj"]["MrCustTypeCode"] == AdInsConstant.CustTypePersonal){

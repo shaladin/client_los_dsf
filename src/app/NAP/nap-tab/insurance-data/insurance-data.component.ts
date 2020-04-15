@@ -31,7 +31,7 @@ import { WizardComponent } from 'angular-archwizard';
 
 export class InsuranceDataComponent implements OnInit {
 
-  @Input() AppId: number;
+  @Input() appId: number;
   @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
 
 
@@ -109,7 +109,7 @@ export class InsuranceDataComponent implements OnInit {
     private route: ActivatedRoute,
     private wizard: WizardComponent){
       this.route.queryParams.subscribe(params => {
-        this.AppId = params["AppId"] ? params["AppId"] : this.AppId;
+        this.appId = params["AppId"];
       })
   }
   async ngOnInit() : Promise<void>{
@@ -127,40 +127,37 @@ export class InsuranceDataComponent implements OnInit {
   }
 
   SaveForm(){
-    // this.callbackSubmit.emit();
-    
-    this.wizard.goToNextStep();
-    // var insuredBy = this.InsuranceDataForm.controls.InsAssetCoveredBy.value;
+    var insuredBy = this.InsuranceDataForm.controls.InsAssetCoveredBy.value;
 
-    // if(insuredBy == AdInsConstant.InsuredByCompany || insuredBy == AdInsConstant.InsuredByCustomerCompany){
-    //   if(this.isGenerate == false){
-    //     this.toastr.errorMessage("Please click Generate Insurance");
-    //     return;
-    //   }
-    //   if(this.isCalculate == false){
-    //     this.toastr.errorMessage("Please click Calculate Insurance");
-    //     return;
-    //   }
-    // }
-    // this.setSaveObj(insuredBy);
-    // this.http.post(AdInsConstant.AddEditInsuranceData, this.saveObj).subscribe(
-    //   (response) => {
-    //     console.log(response);
-    //     this.toastr.successMessage(response["message"]);
-    //     this.callbackSubmit.emit();
-    //   },
-    //   (error) => {
-    //     console.log(error);
-    //   }
-    // );
+    if(insuredBy == AdInsConstant.InsuredByCompany || insuredBy == AdInsConstant.InsuredByCustomerCompany){
+      if(this.isGenerate == false){
+        this.toastr.errorMessage("Please click Generate Insurance");
+        return;
+      }
+      if(this.isCalculate == false){
+        this.toastr.errorMessage("Please click Calculate Insurance");
+        return;
+      }
+    }
+    this.setSaveObj(insuredBy);
+    this.http.post(AdInsConstant.AddEditInsuranceData, this.saveObj).subscribe(
+      (response) => {
+        console.log(response);
+        this.toastr.successMessage(response["message"]);
+        this.wizard.goToNextStep();
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
 
   }
 
   setSaveObj(insuredBy){
     this.saveObj = new InsuranceDataObj();
-    this.saveObj.AppId = this.AppId;
-    this.saveObj.AppInsuranceObj.AppId = this.AppId;
-    this.saveObj.AppInsObjObj.AppId = this.AppId;
+    this.saveObj.AppId = this.appId;
+    this.saveObj.AppInsuranceObj.AppId = this.appId;
+    this.saveObj.AppInsObjObj.AppId = this.appId;
     this.saveObj.AppInsObjObj.AppAssetId = this.appAssetId;
     this.saveObj.AppInsObjObj.InsAssetCoveredBy = insuredBy;
     this.saveObj.AppInsObjObj.InsSeqNo = 1;
@@ -908,7 +905,7 @@ export class InsuranceDataComponent implements OnInit {
   }
 
   async getInsuranceData(){
-    var reqObj = {AppId: this.AppId}
+    var reqObj = {AppId: this.appId}
     await this.http.post(AdInsConstant.GetInsuranceDataByAppId, reqObj).toPromise().then(
       (response) => {
         console.log(response);

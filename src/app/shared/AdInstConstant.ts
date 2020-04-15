@@ -45,64 +45,66 @@ export class AdInsConstant {
   public static EditAppAddAppCross = "/Application/EditAppAddAppCross";
   public static GetAppByIds = environment.losUrl + "/Application/GetAppById";
   public static GetAppDetailForAppTabById = environment.losUrl + "/Application/GetAppDetailForAppTabById";
-
-    // App Asset
-    public static GetAppAssetListByAppIdForCommision = "/AppAsset/GetAppAssetListByAppIdForCommision";
-    
-    // App Asset
-    public static GetListAppAssetSupplEmpByListAppAssetId = "/AppAssetSupplEmp/GetListAppAssetSupplEmpByListAppAssetId";
-    
-    // App Commission
-    public static AddOrEditAppCommissionData = "/AppCommission/AddOrEditAppCommissionData";
-    public static GetAppCommissionDataForEditByAppId = environment.losUrl + "/AppCommission/GetAppCommissionDataForEditByAppId";
-    public static DeleteAppCommissionData = environment.losUrl + "/AppCommission/DeleteAppCommissionData";
-    public static GetAppCommissionRule = "/AppCommission/GetAppCommissionRule";
-    public static GetAppCommissionTax = "/AppCommission/GetAppCommissionTax";
-
-    // App Referantor
-    public static AddAppReferantor = "/AppReferantor/AddAppReferantor";
-    public static EditAppReferantor = "/AppReferantor/EditAppReferantor";
-    public static DeleteAppReferantor = "/AppReferantor/DeleteAppReferantor";
-    public static GetAppReferantorByAppReferantorId = "/AppReferantor/GetAppReferantorByAppReferantorId";
-    public static GetAppReferantorByAppId = "/AppReferantor/GetAppReferantorByAppId";
-    
-    // App Cross
-    public static GetAppCrossByCrossAgrmntNo = "/AppCross/GetAppCrossByCrossAgrmntNo";
-    public static DeleteAppCross = "/AppCross/DeleteAppCross";
-    public static GetListAppCross = "/AppCross/GetListAppCross";
-    public static AddListAppCross = "/AppCross/AddListAppCross";
-    
-    // Ref App Src
-    public static GetListKvpActiveRefAppSrc = "/RefAppSrc/GetListKvpActiveRefAppSrc";
+  public static AddAppFromLead = environment.losUrl + "/Application/AddAppFromLead";
 
 
-    public static RestrictionLike = "Like";
-    public static RestrictionEq = "Eq";
-    public static RestrictionIn = "IN";
-    public static RestrictionNotIn = "NotIn";
-    public static RestrictionIsNull = "isnull";
-    public static RestrictionIsNotNull = "isnotnull";
-    public static showData = "10,50,100";
-    public static TimeoutSession = 6000000;
-    public static GetListProduct = "http://creator_websvr:7272/NEW_FINANCING/api/Catalog/getPopularViewByCriteria";
-    public static Login = "/Authenticate/Login";
-    public static LoginToken = "/UserManagement/HTML6Login";
-    public static Logout = "/UserManagement/LogOut"
-    public static GetListOffice = "/RefOffice/GetRefOfficePaging";
-    public static GetProvince = "/los/v1/get_provinsi";
-    public static GetCityByProvince = "/los/v1/get_kota";
-    public static getProspectByProspectNo = "/api/MobileProspectTask/GetProspectByProspectNo";
-    public static submitNCProspect = "/api/MobileProspectTask/submitNCProspect";
-    public static addCustPersonal = "";
-    public static FormDefault = "dashboard/dash-board";
-    public static LoginByRole = "/Authenticate/LoginByRole";
-    public static LoginByToken = "/Authenticate/LoginByToken";
-    public static UpdateToken = "/Authenticate/UpdateRole";
-    public static GetRefOfficeByOfficeCode = environment.FoundationR3Url + "/RefOffice/GetRefOfficeByOfficeCode";
+  // App Asset
+  public static GetAppAssetListByAppIdForCommision = "/AppAsset/GetAppAssetListByAppIdForCommision";
 
-    //CUST TYPE
-    public static CustTypePersonal = "PERSONAL";
-    public static CustTypeCompany = "COMPANY";
+  // App Asset
+  public static GetListAppAssetSupplEmpByListAppAssetId = "/AppAssetSupplEmp/GetListAppAssetSupplEmpByListAppAssetId";
+
+  // App Commission
+  public static AddOrEditAppCommissionData = "/AppCommission/AddOrEditAppCommissionData";
+  public static GetAppCommissionDataForEditByAppId = environment.losUrl + "/AppCommission/GetAppCommissionDataForEditByAppId";
+  public static DeleteAppCommissionData = environment.losUrl + "/AppCommission/DeleteAppCommissionData";
+  public static GetAppCommissionRule = "/AppCommission/GetAppCommissionRule";
+  public static GetAppCommissionTax = "/AppCommission/GetAppCommissionTax";
+
+  // App Referantor
+  public static AddAppReferantor = "/AppReferantor/AddAppReferantor";
+  public static EditAppReferantor = "/AppReferantor/EditAppReferantor";
+  public static DeleteAppReferantor = "/AppReferantor/DeleteAppReferantor";
+  public static GetAppReferantorByAppReferantorId = "/AppReferantor/GetAppReferantorByAppReferantorId";
+  public static GetAppReferantorByAppId = "/AppReferantor/GetAppReferantorByAppId";
+
+  // App Cross
+  public static GetAppCrossByCrossAgrmntNo = "/AppCross/GetAppCrossByCrossAgrmntNo";
+  public static DeleteAppCross = "/AppCross/DeleteAppCross";
+  public static GetListAppCross = "/AppCross/GetListAppCross";
+  public static AddListAppCross = "/AppCross/AddListAppCross";
+
+  // Ref App Src
+  public static GetListKvpActiveRefAppSrc = "/RefAppSrc/GetListKvpActiveRefAppSrc";
+
+
+  public static RestrictionLike = "Like";
+  public static RestrictionEq = "Eq";
+  public static RestrictionIn = "IN";
+  public static RestrictionNotIn = "NotIn";
+  public static RestrictionIsNull = "isnull";
+  public static RestrictionIsNotNull = "isnotnull";
+  public static showData = "10,50,100";
+  public static TimeoutSession = 6000000;
+  public static GetListProduct = "http://creator_websvr:7272/NEW_FINANCING/api/Catalog/getPopularViewByCriteria";
+  public static Login = "/Authenticate/Login";
+  public static LoginToken = "/UserManagement/HTML6Login";
+  public static Logout = "/UserManagement/LogOut"
+  public static GetListOffice = "/RefOffice/GetRefOfficePaging";
+  public static GetProvince = "/los/v1/get_provinsi";
+  public static GetCityByProvince = "/los/v1/get_kota";
+  public static getProspectByProspectNo = "/api/MobileProspectTask/GetProspectByProspectNo";
+  public static submitNCProspect = "/api/MobileProspectTask/submitNCProspect";
+  public static addCustPersonal = "";
+  public static FormDefault = "dashboard/dash-board";
+  public static LoginByRole = "/Authenticate/LoginByRole";
+  public static LoginByToken = "/Authenticate/LoginByToken";
+  public static UpdateToken = "/Authenticate/UpdateRole";
+  public static GetRefOfficeByOfficeCode = environment.FoundationR3Url + "/RefOffice/GetRefOfficeByOfficeCode";
+
+  //CUST TYPE
+  public static CustTypePersonal = "PERSONAL";
+  public static CustTypeCompany = "COMPANY";
 
   // App Asset
   public static GetAppAssetForDealerDataByAppId = environment.losUrl + "/AppAsset/GetAppAssetForDealerDataByAppId";
@@ -695,7 +697,7 @@ export class AdInsConstant {
   public static GetAllAssetDataByAppId = "http://localhost:5001/AppAsset/GetAllAssetDataByAppId";
   public static AddEditAllAssetData = "http://localhost:5001/AppAsset/AddEditAllAssetData";
 
- 
+
   // Tax
   public static AppCom = "APP_COM";
   public static ExchangeRateAmt = "1";
@@ -716,7 +718,7 @@ export class AdInsConstant {
 
   // App Asset
   public static GetAppAssetDataByAppId = environment.losUrl + "/AppAsset/GetAppAssetDataByAppId";
- 
+
   //AGRMNT SIGNER
   public static SubmitAgrmntSignerData = environment.losUrl + "/AgrmntSigner/SubmitAgrmntSignerData";
   public static EditAgrmntSignerData = environment.losUrl + "/AgrmntSigner/EditAgrmntSignerData";
@@ -876,7 +878,7 @@ export class AdInsConstant {
   public static GetPhoneNumberByIdSourceAppIdAndSubject = environment.losUrl + "/PhoneVerif/GetPhoneNumberByIdSourceAppIdAndSubject";
   public static GetVerfQuestionListByAppIdAndSubjectForPhoneVerif = environment.losUrl + "/PhoneVerif/GetVerfQuestionListByAppIdAndSubjectForPhoneVerif";
   // App Cust
-    public static GetAppCustByAppId = environment.losUrl + "/AppCust/GetAppCustByAppId";
+  public static GetAppCustByAppId = environment.losUrl + "/AppCust/GetAppCustByAppId";
 
   //Verf Question Answer
   public static GetVerfQuestionAnswerListByVerfSchemeCode = environment.FoundationR3Url + "/VerfQuestionAnswer/GetVerfQuestionAnswerListByVerfSchemeCode"
