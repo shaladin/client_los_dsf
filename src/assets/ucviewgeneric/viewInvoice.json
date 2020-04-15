@@ -2,8 +2,8 @@
     "title": "",
     "subsection": [
       {
-        "subSectionId": "DocumentId",
-        "subSectionTitle": "Main Info",
+        "subSectionId": "InvoiceInfo",
+        "subSectionTitle": "Invoice Info",
         "mainInfoUrl": "http://localhost:5001/Generic/GetDataViewBySQL",
         "mainInfo": [
           {
@@ -13,8 +13,8 @@
           },
           {
             "type": "text",
-            "label": "Aggrement No",
-            "property": "AggrementNo"
+            "label": "",
+            "property": ""
           },
           {
             "type": "text",

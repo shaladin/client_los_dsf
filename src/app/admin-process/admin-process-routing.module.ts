@@ -11,6 +11,9 @@ import { OfferingValidityCheckingApprovalDetailComponent } from './offering-vali
 import { DocSignerDetailComponent } from './doc-signer/doc-signer-detail/doc-signer-detail.component';
 import { DocSignerPagingComponent } from './doc-signer/doc-signer-paging/doc-signer-paging.component';
 import { PreGoLiveRequestForApprovalComponent } from './pre-go-live/pre-go-live-request-for-approval/pre-go-live-request-for-approval.component';
+import { InvoiceViewComponent } from './invoice/invoice-view/invoice-view.component';
+import { InvoiceDetailComponent } from './invoice/invoice-detail/invoice-detail.component';
+import { AgreementViewContainerComponent } from './agreement-view-container/agreement-view-container.component';
 
 const routes: Routes = [
   {
@@ -91,6 +94,27 @@ const routes: Routes = [
         component: DocSignerDetailComponent,
         data: {
           title: 'Document Signer Detail'
+        }
+      },
+      {
+        path: 'Invoice/View',
+        component: InvoiceViewComponent,
+        data: {
+          title: 'Invoice View'
+        }
+      },
+      {
+        path: 'Invoice/Detail',
+        component: InvoiceDetailComponent,
+        data: {
+          title: 'Invoice Detail'
+        }
+      },
+      {
+        path: 'View',
+        component: AgreementViewContainerComponent,
+        data: {
+          title: 'Agreement View Container'
         }
       }
     ]

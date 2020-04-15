@@ -28,7 +28,6 @@ export class OfferingValidityCheckingApprovalPagingComponent implements OnInit {
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchOfferingValidityCheckingAndApproval.json";
     this.inputPagingObj.addCritInput = new Array();
     this.inputPagingObj.addCritInput.push(critInputOnlyOffering);
-
     
   }
 
