@@ -28,6 +28,8 @@ import { RsvFundViewComponent } from "./reserved-fund/reserved-fund-view/reserve
 import { CommissionReservedFundComponent } from './commission-reserved-fund/commission-reserved-fund.component';
 import { FormAddDynamicComponent } from "./commission-add/form-add-dynamic/form-add-dynamic.component";
 import { TabApplicationDataComponent } from './credit-investigation/component/tab-application-data/tab-application-data.component';
+import { CreditReviewPagingComponent } from './credit-review/credit-review-paging/credit-review-paging.component';
+import { CreditReviewMainComponent } from './credit-review/credit-review-main/credit-review-main.component';
 export const customCurrencyMaskConfig = {     
     align: "left",     
     allowNegative: true,     
@@ -50,7 +52,9 @@ export const customCurrencyMaskConfig = {
         RsvFundViewComponent,
         CommissionReservedFundComponent,
         FormAddDynamicComponent,
-        TabApplicationDataComponent
+        TabApplicationDataComponent,
+        CreditReviewPagingComponent,
+        CreditReviewMainComponent
         ],
     imports: [ 
         CreditProcessRoutingModule,
