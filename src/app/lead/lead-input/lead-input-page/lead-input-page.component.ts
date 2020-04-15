@@ -16,12 +16,24 @@ export class LeadInputPageComponent implements OnInit {
   isCustomer: any;
   isLead: any;
   CustPersonalId: any;
+  TaskListId: any;
+  pageType: any;
 
   constructor(private route: ActivatedRoute, private http: HttpClient) { 
     this.route.queryParams.subscribe(params => {
       if (params["LeadId"] != null) {
         this.LeadId = params["LeadId"];
       }
+      if (params["TaskListId"] != null) {
+        this.TaskListId = params["TaskListId"];
+      }
+      if (params["mode"] == "edit") {
+        this.pageType = "UPDATE";
+      }
+      else{
+        this.pageType = "INPUT";
+      }
+      
     });
   }
 
