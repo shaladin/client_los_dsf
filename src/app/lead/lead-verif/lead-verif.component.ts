@@ -15,7 +15,6 @@ import { LeadVerfObj } from 'app/shared/model/LeadVerfObj.Model';
 @Component({
   selector: 'app-lead-verif',
   templateUrl: './lead-verif.component.html',
-  styleUrls: ['./lead-verif.component.scss'],
   providers: [NGXToastrService]
 })
 

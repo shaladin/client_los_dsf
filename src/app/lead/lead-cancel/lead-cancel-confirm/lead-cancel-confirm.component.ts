@@ -10,7 +10,6 @@ import { LeadConfirmCancelObj } from 'app/shared/model/LeadConfirmCancelObj.Mode
 @Component({
   selector: 'app-lead-cancel-confirm',
   templateUrl: './lead-cancel-confirm.component.html',
-  styleUrls: ['./lead-cancel-confirm.component.scss'],
   providers: [NGXToastrService]
 })
 export class LeadCancelConfirmComponent implements OnInit {
