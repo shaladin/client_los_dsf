@@ -19,7 +19,6 @@ export class PurchaseOrderPagingComponent implements OnInit {
 
   ngOnInit() {
     // "./assets/ucpaging/searchPurchaseOrder.json"
-    console.log(this.PagingJSONLocation);
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = this.PagingJSONLocation;
     this.inputPagingObj.enviromentUrl = environment.losUrl;

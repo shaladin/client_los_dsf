@@ -13,6 +13,7 @@ import { DeliveryOrderDetailComponent } from "./delivery-order/delivery-order-de
 import { DeliveryOrderPagingComponent } from "./delivery-order/delivery-order-paging/delivery-order-paging.component";
 import { TcSharingComponentModule } from "../input-nap-component/tc-sharing-component.module";
 import { ViewMainInfoComponentModule } from "../view-main-info-component/view-main-info-component.module";
+import { RouterModule } from "@angular/router";
 
 @NgModule({
   exports: [
@@ -30,7 +31,8 @@ import { ViewMainInfoComponentModule } from "../view-main-info-component/view-ma
     CommonModule,
     AdInsModule,
     TcSharingComponentModule,
-    ViewMainInfoComponentModule
+    ViewMainInfoComponentModule,
+    RouterModule
   ],
   declarations: [
     PurchaseOrderPagingComponent,
@@ -41,7 +43,7 @@ import { ViewMainInfoComponentModule } from "../view-main-info-component/view-ma
     CustConfirmationSubjDetailComponent,
     CustConfirmationSubjViewComponent,
     DeliveryOrderDetailComponent,
-    DeliveryOrderPagingComponent,
+    DeliveryOrderPagingComponent
   ],
   providers: [
     NGXToastrService
