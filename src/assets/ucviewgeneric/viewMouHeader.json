@@ -66,7 +66,6 @@
           "label": "Available Amount",
           "property": "AvailableAmt"
         }
-       
       ],
       "querystring": {
         "select": "SELECT MOU_CUST_NO AS MouCustNo, MOU_CUST_DT AS MouCustDt, CUST_NAME AS CustName, MR_MOU_TYPE_CODE AS MrMouTypeCode, START_DT as StartDt, PLAFOND_AMT AS PlafondAmt, END_DT as EndDt, REF_NO AS RefNo, MOU_STAT AS MouStat, REALISATION_AMT AS RealisationAmt, IN_PROCESS_AMT AS InProcessAmt, AVAILABLE_AMT as AvailableAmt",
