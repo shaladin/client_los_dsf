@@ -5,12 +5,14 @@ import { DummyComponent } from './dummy/dummy.component';
 import { AdInsModule } from "app/components/adins-module/adins.module";
 import { AdminProcessFL4WRoutingModule } from "./admin-process-routing.module";
 import { PurchaseOrderPagingComponent } from './purchase-order/purchase-order-paging/purchase-order-paging.component';
+import { AdminProcessComponentModule } from "app/NEW-NAP/sharing-component/admin-process-component/admin-process-component.module";
 
 @NgModule({
   imports: [
     CommonModule,
     AdminProcessFL4WRoutingModule,
-    AdInsModule
+    AdInsModule,
+    AdminProcessComponentModule
   ],
   declarations: [
     DummyComponent,

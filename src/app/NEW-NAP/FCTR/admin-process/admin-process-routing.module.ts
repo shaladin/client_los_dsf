@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { DummyComponent } from './dummy/dummy.component';
+import { PreGoLivePagingComponent } from './pre-go-live-paging/pre-go-live-paging.component';
 
 const routes: Routes = [
   {
     path: '',
     children: [
       {
-        path: 'dummy',
-        component: DummyComponent,
+        path: 'PreGoLive/Paging',
+        component: PreGoLivePagingComponent,
         data: {
-          title: 'dummy'
+          title: 'PreGoLive Paging'
         }
-      },
+      }
     ]
   }
 ];
