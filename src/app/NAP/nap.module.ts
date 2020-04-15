@@ -59,7 +59,7 @@ import { PhnVerifPagingComponent } from "./phone-verif/phone-verif-paging/phone-
 import { RsvFundPagingComponent } from "./RFN4W/reserved-fund/reserved-fund-paging/reserved-fund-paging.component";
 import { RsvFundViewComponent } from "app/credit-process/reserved-fund/reserved-fund-view/reserved-fund-view.component";
 export const customCurrencyMaskConfig = {
-    align: "left",
+    align: "right",
     allowNegative: true,
     allowZero: true,
     decimal: ".",
