@@ -2,7 +2,7 @@ import { environment } from "environments/environment";
 
 export class AdInsConstant {
 
-    //App Step
+    //tep
     public static AppStepNew = "NEW";
     public static AppStepCust = "CUST";
     public static AppStepGuar = "GUAR";
@@ -820,6 +820,9 @@ export class AdInsConstant {
 
   //App Crd Invstg
   public static AddAppCrdInvstg = environment.losUrl + "/AppCrdInvstgH/AddAppCrdInvstg";
+
+  // APP SUBSIDY
+  public static GetListAppSubsidyByAppId = environment.losUrl + "/AppSubsidy/GetListAppSubsidyByAppId";
 
   // ASSET TYPE
   public static GetAssetTypeById = environment.FoundationR3Url + "/AssetType/GetAssetTypeById"
