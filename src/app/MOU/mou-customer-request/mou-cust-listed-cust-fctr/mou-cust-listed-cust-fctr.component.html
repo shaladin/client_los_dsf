@@ -1,0 +1,51 @@
+<lib-ucSubsection [id]="'MouCustListedCustFctrId'" [title]="'Listed Customer Factoring'" [panel]="'MouCustListedCustFctrSection'"></lib-ucSubsection>
+<div id="MouCustListedCustFctrSection">
+  <div class="col-md-12">
+    <form class="form form-horizontal" [formGroup]="MouCustIsListedForm" #enjiForm="ngForm" novalidate
+      (ngSubmit)="enjiForm.form.valid && Save(enjiForm)">
+      <label class="col-md-3 adInsLabel adins-required-label" for="IsListedCust" style="padding-left: 0;" translate>Listed Customer Factoring</label>
+      <div class="col-md-9" style="display: inline-block;">
+        <input type="checkbox" formControlName="IsListedCust" />
+      </div>
+    </form>
+  </div>
+  <div class="col-md-12" style="padding: 0; text-align: right;">
+    <span class="mr-1">
+      <button type="button" class="addButton" (click)="openModalAddCustFctr()" [disabled]="MouCustIsListedForm.controls.IsListedCust.value == false" translate>
+        <i class="ft-plus-circle"></i> Add
+      </button>
+    </span>
+  </div>
+  <div class="col-md-12" style="padding: 0; text-align: right;">
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+        <tr class="table-header">
+          <th style="text-align: left;">
+            <span class="thead-header" name='custNo' translate>Customer No.</span>
+          </th>
+          <th style="text-align: left;">
+            <span class="thead-header" name='custName' translate>Customer Name</span>
+          </th>
+          <th style="text-align: left;">
+            <span class="thead-header" name='custType' translate>Customer Type</span>
+          </th>
+          <th style="text-align: center;">
+            <span class="thead-header" name='action' translate>Delete</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of listedCusts; let i = index">
+          <td style="text-align: left;">{{item.CustNo}}</td>
+          <td style="text-align: left;">{{item.CustName}}</td>
+          <td style="text-align: left;">{{item.MrCustTypeCode}}</td>
+          <td style="text-align: center;">
+            <a (click)="deleteCustFctr(item.MouListedCustFctrId, i)">
+              <i class="fas fa-trash"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

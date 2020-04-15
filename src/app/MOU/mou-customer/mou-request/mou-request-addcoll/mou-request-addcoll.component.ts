@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -23,8 +23,8 @@ import { InputSearchObj } from 'app/shared/model/InputSearchObj.Model';
   providers: [NGXToastrService]
 })
 export class MouRequestAddcollComponent implements OnInit {
-  @Input() MouCustId: any = 3;
-
+  @Input() MouCustId: number;
+  @Output() ResponseMouAddColl: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild(UcgridfooterComponent) UCGridFooter;
   @ViewChild(UCSearchComponent) UCSearchComponent;
 
@@ -60,7 +60,7 @@ export class MouRequestAddcollComponent implements OnInit {
 
   locationAddrObj: AddrObj;
   inputFieldLocationObj: InputFieldObj;
-  copyFromResidence: any;
+  copyFromLegal: any;
 
   collateralObj: any;
   collateralRegistrationObj: any;
@@ -95,7 +95,8 @@ export class MouRequestAddcollComponent implements OnInit {
         this.OwnerRelationshipObj = response["ReturnObject"];
         if (this.OwnerRelationshipObj.length > 0) {
           this.AddCollForm.patchValue({
-            OwnerRelationship: this.OwnerRelationshipObj[0].Key
+            OwnerRelationship: this.OwnerRelationshipObj[0].Key,
+            CopyFromLegal : this.copyToLocationObj[0].Key
           });
         }
       }
@@ -341,6 +342,7 @@ export class MouRequestAddcollComponent implements OnInit {
   AddCollForm = this.fb.group({
     MouCustCollateralId: [''],
     MouCustCollateralRegistrationId: [''],
+    CopyFromLegal: [''],
     AssetTypeCode: ['', [Validators.required]],
     CollateralValueAmt: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
     FullAssetCode: [''],
@@ -432,6 +434,7 @@ export class MouRequestAddcollComponent implements OnInit {
         }
       );
     }
+    this.bindMouData();
   }
 
   setCollateralObjForSave() {
@@ -484,6 +487,28 @@ export class MouRequestAddcollComponent implements OnInit {
       this.mouCustCollateralObj.RowVersion = this.AddCollForm.controls.RowVersionCollateral;
       this.mouCustCollateralRegistrationObj.RowVersion = this.AddCollForm.controls.RowVersionCollateralRegistration;
     }
+  }
+
+  copyToLocation()
+  {
+    this.locationAddrObj.Addr = this.AddCollForm.controls["legalAddr"]["controls"].Addr.value;
+    this.locationAddrObj.AreaCode1 = this.AddCollForm.controls["legalAddr"]["controls"].AreaCode1.value;
+    this.locationAddrObj.AreaCode2 = this.AddCollForm.controls["legalAddr"]["controls"].AreaCode2.value;
+    this.locationAddrObj.AreaCode3 = this.AddCollForm.controls["legalAddr"]["controls"].AreaCode3.value;
+    this.locationAddrObj.AreaCode4 = this.AddCollForm.controls["legalAddr"]["controls"].AreaCode4.value;
+    this.locationAddrObj.City = this.AddCollForm.controls["legalAddr"]["controls"].City.value;
+    this.locationAddrObj.Fax = this.AddCollForm.controls["legalAddr"]["controls"].Fax.value;
+    this.locationAddrObj.FaxArea = this.AddCollForm.controls["legalAddr"]["controls"].FaxArea.value;
+    this.locationAddrObj.Phn1 = this.AddCollForm.controls["legalAddr"]["controls"].Phn1.value;
+    this.locationAddrObj.Phn2 = this.AddCollForm.controls["legalAddr"]["controls"].Phn2.value;
+    this.locationAddrObj.PhnArea1 = this.AddCollForm.controls["legalAddr"]["controls"].PhnArea1.value;
+    this.locationAddrObj.PhnArea2 = this.AddCollForm.controls["legalAddr"]["controls"].PhnArea2.value;
+    this.locationAddrObj.PhnExt1 = this.AddCollForm.controls["legalAddr"]["controls"].PhnExt1.value;
+    this.locationAddrObj.PhnExt2 = this.AddCollForm.controls["legalAddr"]["controls"].PhnExt2.value;
+    this.locationAddrObj.SubZipcode = this.AddCollForm.controls["legalAddr"]["controls"].SubZipcode.value;
+
+    this.inputFieldLocationObj.inputLookupObj.nameSelect = this.AddCollForm.controls["legalAddrZipcode"]["controls"].value.value;
+    this.inputFieldLocationObj.inputLookupObj.jsonSelect = {Zipcode: this.AddCollForm.controls["legalAddrZipcode"]["controls"].value.value};
   }
 
   editData(content, MouCustCollId) {
@@ -603,5 +628,13 @@ export class MouRequestAddcollComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  next(){
+    this.ResponseMouAddColl.emit({StatusCode: "200"});
+  }
+
+  back(){
+    this.ResponseMouAddColl.emit({StatusCode: "-1"});
   }
 }

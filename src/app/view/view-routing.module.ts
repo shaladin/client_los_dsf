@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AppViewComponent } from './app-view/app-view.component';
 const routes: Routes = [
   {
     path: '',
@@ -7,6 +8,13 @@ const routes: Routes = [
       {
         path: 'Dummy',
         // component: DocSignerComponent,
+        data: {
+          title: 'Document'
+        }
+      },
+      {
+        path: 'AppView',
+        component: AppViewComponent,
         data: {
           title: 'Document'
         }

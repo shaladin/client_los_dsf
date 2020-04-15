@@ -1,0 +1,192 @@
+{
+    "title": "LEAD",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "L.ORI_OFFICE_NAME",
+            "id": "OfficeNameId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "isSelectOne": false,
+            "url": "http://r3app-server/foundation_r3/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "label": "OFFICE NAME",
+            "items": [],
+            "itemsUrl": []
+        },
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "L.MR_LEAD_SOURCE_CODE",
+            "id": "LeadSourceId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "isSelectOne": false,
+            "url": "http://r3app-server/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
+            "label": "LEAD SOURCE",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "RefMasterTypeCode",
+            "criteriaPropValue": "LEAD_SOURCE"
+        },
+        {
+            "type": "textbox",
+            "name": "L.LEAD_NO",
+            "id": "LeadNoId",
+            "value": "",
+            "label": "LEAD NO",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "L.MR_CUST_TYPE_CODE",
+            "id": "CustTypeId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "isSelectOne": false,
+            "url": "http://r3app-server/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
+            "label": "Customer Type",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "RefMasterTypeCode",
+            "criteriaPropValue": "CUST_TYPE"
+        }, 
+        {
+            "type" : "textbox",
+            "name" : "LC.CUST_NO",
+            "id" : "CustNoId",
+            "value" : "",
+            "label" : "CUSTOMER No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type" : "textbox",
+            "name" : "LC.CUST_NAME",
+            "id" : "CustNameId",
+            "value" : "",
+            "label" : "CUSTOMER NAME",
+            "placeholder": "Placeholder"
+        }
+    ],
+    "querystring": {
+        "select": "SELECT L.LEAD_NO AS LeadNo,WTL.WF_TASK_LIST_ID AS WfTaskListId, L.LEAD_ID AS LeadId, L.ORI_OFFICE_NAME AS OriOfficeName, LC.CUST_NO AS CustNo, LC.CUST_NAME AS CustName, L.MR_LEAD_SOURCE_CODE AS SourceCode, LC.MR_CUST_TYPE_CODE AS MrCustTypeCode",
+        "from": "FROM LEAD L WITH(NOLOCK) JOIN LEAD_CUST LC WITH(NOLOCK) ON L.LEAD_ID = LC.LEAD_ID JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON l.LEAD_NO = WTL.TRANSACTION_CODE AND WTL.ACT_CODE = 'FRAUD_VERIFICATION'"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Lead No",
+            "name": "L.LEAD_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Office Name",
+            "name": "L.ORI_OFFICE_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Cust No",
+            "name": "LC.CustNo"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Cust Name",
+            "name": "LC.CUST_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Customer Type",
+            "name": "L.MR_CUST_TYPE_CODE"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Lead Source",
+            "name": "L.MR_LEAD_SOURCE_CODE"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Action"
+        }
+    ],
+    "bodyList": [ 
+        {
+            "type": "link",
+            "position": "center",
+            "property": "LeadNo",
+            "path": "../../View/",
+            "target": "_blank",
+            "param": [
+                {
+                    "type": "LeadId",
+                    "property": "LeadId"
+                },
+                {
+                    "type": "WfTaskListId",
+                    "property": "WfTaskListId"
+                }
+            ]
+        },
+        
+        {
+            "type": "text",
+            "position": "left",
+            "property": "OriOfficeName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "MrCustTypeCode"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "SourceCode"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "edit",
+                    "path": "/Lead/LeadInput/MainInfo",
+                    "param": [
+                        {
+                            "type": "LeadId",
+                            "property": "LeadId"
+                        },
+                        {
+                            "type": "WfTaskListId",
+                            "property": "WfTaskListId"
+                        },
+                        {
+                            "type": "mode",
+                            "property": "edit"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

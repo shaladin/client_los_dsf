@@ -23,20 +23,24 @@ export class MouDetailGeneralComponent implements OnInit {
   instSchmList: any;
   payFreqList: any;
   firstInstList: any;
-  mode: any;
+  mode: any = "add";
+  isDPInvalid: boolean;
+  dpInvalidMsg: string;
+  isTenorInvalid: boolean;
+  tenorInvalidMsg: string;
 
   MouDetailGeneralForm = this.fb.group({
     MouCustClauseId: [0, [Validators.required]],
     MouCustId: [0, [Validators.required]],
-    AssetTypeCode: ['', [Validators.required]],
+    AssetTypeCode: [''],
     MrInterestTypeCode: ['', [Validators.required]],
     MrInstSchmCode: ['', [Validators.required]],
     MrFirstInstTypeCode: [''],
     PayFreqCode: ['', [Validators.required]],
-    DownPaymentFromPrcnt: ['', [Validators.required]],
-    DownPaymentToPrcnt: ['', [Validators.required]],
-    TenorFrom: ['', [Validators.required]],
-    TenorTo: ['', [Validators.required]],
+    DownPaymentFromPrcnt: ['', [Validators.required, Validators.pattern("^[0-9]+$"), Validators.min(0), Validators.max(100)]],
+    DownPaymentToPrcnt: ['', [Validators.required, Validators.pattern("^[0-9]+$"), Validators.min(0), Validators.max(100)]],
+    TenorFrom: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
+    TenorTo: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
     RowVersion: [''],
     CurrCode: ['', [Validators.required]]
   });
@@ -46,6 +50,8 @@ export class MouDetailGeneralComponent implements OnInit {
     private toastr: NGXToastrService,
     private fb: FormBuilder
   ) { 
+    this.isDPInvalid = false;
+    this.isTenorInvalid = false;
     var refMasterCurrency = new RefMasterObj();
     refMasterCurrency.RefMasterTypeCode = "CURRENCY";
     let reqCurrency = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterCurrency);
@@ -109,15 +115,44 @@ export class MouDetailGeneralComponent implements OnInit {
     mouCustClauseData["AssetTypeCode"] = this.mouCustAssetComp.MouCustClauseAssetForm.controls["AssetTypeCode"].value;
     var url = "";
 
+    if(mouCustClauseData.DownPaymentFromPrcnt >= mouCustClauseData.DownPaymentToPrcnt){
+      console.log("DP Invalid");
+      this.isDPInvalid = true;
+      this.dpInvalidMsg = "Invalid Down Payment Range";
+      return false;
+    }
+    else{
+      console.log("DP Valid");
+      this.isDPInvalid = false;
+      this.dpInvalidMsg = "";
+    }
+
+    if(mouCustClauseData.TenorFrom >= mouCustClauseData.TenorTo){
+      console.log("Tenor Invalid");
+      this.isTenorInvalid = true;
+      this.tenorInvalidMsg = "Invalid Tenor Range";
+      return false;
+    }
+    else{
+      console.log("Tenor Valid");
+      this.isTenorInvalid = false;
+      this.tenorInvalidMsg = "";
+    }
+
+    console.log("Continue Submit...");
+
     if(this.mode == "add"){
       url = AdInsConstant.AddMouCustClause;
+      // console.log(url);
     }
     else if(this.mode == "edit"){
       url = AdInsConstant.EditMouCustClause;
+      // console.log(url);
     }
 
     this.httpClient.post(url, mouCustClauseData).subscribe(
       (response) => {
+        // console.log(response);
         this.toastr.successMessage(response["Message"]);
         this.ResponseMouDetailGeneral.emit(response);
       },
@@ -125,5 +160,9 @@ export class MouDetailGeneralComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  back(){
+    this.ResponseMouDetailGeneral.emit({StatusCode: "-2"});
   }
 }

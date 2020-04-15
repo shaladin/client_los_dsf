@@ -16,6 +16,7 @@ export class MouCustFctrObj {
     RetentionPrcnt: any;
     IsListedCust: any;
     Notes: any;
+    CurrCode: any;
     RowVersion: any;
     constructor(){ this.MouCustFctrId = 0; this.RowVersion = '' }
 }

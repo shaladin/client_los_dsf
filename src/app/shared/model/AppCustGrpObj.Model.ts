@@ -1,10 +1,12 @@
 
 export class AppCustGrpObj {
-    AppCustGrpId: any;
-    AppCustId: any;
-    CustNo: any;
-    MrCustRelationshipCode: any;
-    CustGrpNotes: any;
+    AppCustGrpId: number;
+    AppCustId: number;
+    CustNo: string;
+    CustName: string;
+    MrCustRelationshipCode: string;
+    RelationshipName: string;
+    CustGrpNotes: string;
     
 
 

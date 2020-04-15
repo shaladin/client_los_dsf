@@ -1,0 +1,80 @@
+<form class="form form-horizontal" [formGroup]="MouCustTcForm" #enjiForm="ngForm" novalidate
+  (ngSubmit)="Save()">
+  <lib-ucSubsection [id]="'MouCustTcFieldId'" [title]="'Term and Condition'" [panel]="'MouCustTcSection'"></lib-ucSubsection>
+  <div id="MouCustTcSection">
+    <div class="col-md-12" style="padding: 0; overflow-x: auto;">
+      <table class="table table-responsive-md text-center table-hover" style="width: 110%;">
+        <thead>
+          <tr class="table-header">
+            <th style="text-align: left; width: 5%;">
+              <span class="thead-header" name='no' translate>NO.</span>
+            </th>
+            <th style="text-align: left; width: 20%;">
+              <span class="thead-header" name='documentName' translate>DOCUMENT NAME</span>
+            </th>
+            <th style="text-align: center; width: 10%;">
+              <span class="thead-header" name='checked' translate>CHECKED</span>
+            </th>
+            <th style="text-align: center; width: 10%;">
+              <span class="thead-header" name='mandatory' translate>MANDATORY</span>
+            </th>
+            <th style="text-align: left; width: 15%;">
+              <span class="thead-header" name='expiredDate' translate>EXPIRED DATE</span>
+            </th>
+            <th style="text-align: left; width: 15%;">
+              <span class="thead-header" name='promiseDate' translate>PROMISE DATE</span>
+            </th>
+            <th style="text-align: left; width: 30%;">
+              <span class="thead-header" name='notes' translate>NOTES</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody formArrayName="MouCustTcList">
+          <tr *ngFor="let item of MouCustTcForm.get('MouCustTcList').controls; index as i" [formGroupName]="i">
+            <td style="text-align: left;">
+              {{i+1}}
+            </td>
+            <td style="text-align: left;">
+              {{MouCustTcForm.get('MouCustTcList').at(i).controls.TcName.value}}
+            </td>
+            <td style="text-align: center;">
+              <input type="checkbox" formControlName="IsChecked" (change)="checkedHandler($event, i)"/>
+            </td>
+            <td style="text-align: center;">
+              <input type="checkbox" formControlName="IsMandatory" (change)="mandatoryHandler($event, i)"/>
+            </td>
+            <td style="text-align: left;">
+              <input type="date" class="form-control adInsInput" formControlName="ExpiredDt"
+                [ngClass]="{ 'is-invalid': formSubmitted && MouCustTcForm.get('MouCustTcList').at(i).controls.ExpiredDt.invalid }"
+                [attr.disabled]="MouCustTcForm.get('MouCustTcList').at(i).controls.IsChecked.value == true ? null : ''" />
+              <lib-uc-show-errors [control]="MouCustTcForm.get('MouCustTcList').at(i).controls.ExpiredDt" [submit]="formSubmitted"></lib-uc-show-errors>
+            </td>
+            <td style="text-align: left;">
+              <input type="date" class="form-control adInsInput" formControlName="PromisedDt"
+                [ngClass]="{ 'is-invalid': formSubmitted && MouCustTcForm.get('MouCustTcList').at(i).controls.PromisedDt.invalid }"
+                [attr.disabled]="MouCustTcForm.get('MouCustTcList').at(i).controls.IsChecked.value == true ? '' : null" />
+              <lib-uc-show-errors [control]="MouCustTcForm.get('MouCustTcList').at(i).controls.PromisedDt" [submit]="formSubmitted"></lib-uc-show-errors>
+            </td>
+            <td style="text-align: left;">
+              <textarea class="form-control adInsInput" formControlName="Notes"
+                [ngClass]="{ 'is-invalid': formSubmitted && MouCustTcForm.get('MouCustTcList').at(i).controls.Notes.invalid }">
+              </textarea>
+              <lib-uc-show-errors [control]="MouCustTcForm.get('MouCustTcList').at(i).controls.Notes" [submit]="formSubmitted"></lib-uc-show-errors>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- <br>
+  <br>
+  <br>
+  <div class="form-actions right" style="text-align: right;">
+    <button type="button" class="btn btn-raised btn-warning mr-1" (click)="back()" translate>
+      <i class="ft-x"></i> Back
+    </button>
+    <button type="submit" class="btn btn-raised btn-primary" translate>
+      <i class="fa fa-check-square-o"></i> Save and Continue
+    </button>
+  </div> -->
+</form>

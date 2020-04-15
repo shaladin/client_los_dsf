@@ -116,7 +116,7 @@
             "action": [
                 {
                     "type": "edit",
-                    "path": "/AdminProcess/PurchaseOrder/PO",
+                    "path": "/Nap/AdminProcess/PurchaseOrder/PO",
                     "param": [
                         {
                             "type": "AgrmntId",
