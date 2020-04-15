@@ -13,13 +13,14 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 })
 export class LeadInputPageComponent implements OnInit {
   LeadId: any;
+  CopyFrom: any;
   isCustomer: any;
   isLead: any;
   CustPersonalId: any;
   TaskListId: any;
   pageType: any;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) { 
+  constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
       if (params["LeadId"] != null) {
         this.LeadId = params["LeadId"];
@@ -30,14 +31,17 @@ export class LeadInputPageComponent implements OnInit {
       if (params["mode"] == "edit") {
         this.pageType = "UPDATE";
       }
-      else{
+      else {
         this.pageType = "INPUT";
       }
-      
+
+      if (params["CopyFrom"] != null) {
+        this.CopyFrom = params["CopyFrom"];
+      }
     });
   }
 
-  ngOnInit() { 
+  ngOnInit() {
   }
 
   EnterTab(type) {

@@ -50,6 +50,7 @@ export class LeadInputMainInfoComponent implements OnInit {
   getListActiveRefMasterUrl: any;
   getVendorByVendorCode: any;
   getRefEmpForLookupEmployee: any;
+  getLeadPersonalForLookup: any;
   listRefOffice: any;
   refOfficeObj: any;
   listRefLob:any;
@@ -79,6 +80,8 @@ export class LeadInputMainInfoComponent implements OnInit {
   returnSurveyorExistObj: any;
   salesExistObj: any;
   returnSalesExistObj: any;
+  leadExistObj: any;
+  returnLeadExistObj: any;
   MainInfoForm = this.fb.group({
     OfficeCode: [''],
     OfficeName: [''],
@@ -99,6 +102,7 @@ export class LeadInputMainInfoComponent implements OnInit {
     this.getListActiveRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
     this.getVendorByVendorCode = AdInsConstant.GetVendorByVendorCode;
     this.getRefEmpForLookupEmployee = AdInsConstant.GetRefEmpForLookupEmployee;
+    this.getLeadPersonalForLookup = AdInsConstant.GetLeadPersonalForLookupCopy;
 
     this.route.queryParams.subscribe(params => {
         if (params["mode"] != null) {
@@ -307,6 +311,17 @@ copyLead(){
               LeadSource: this.returnLead.MrLeadSourceCode,
             });
 
+            this.leadIdExist = this.returnLead.LeadCopyId;
+
+            if(this.returnLead.LeadCopyId != null){
+              this.leadExistObj = new LeadObj();
+              this.leadExistObj.LeadId = this.returnLead.LeadCopyId;
+              this.http.post(this.getLeadPersonalForLookup, this.leadExistObj).subscribe(
+                (response) => {
+                    this.returnLeadExistObj = response;
+                });
+            }
+
             this.vendorObj = new VendorObj();
             this.vendorObj.VendorCode = this.returnLead.AgencyCode;
             this.http.post(this.getVendorByVendorCode, this.vendorObj).subscribe(
@@ -371,6 +386,7 @@ copyLead(){
 
   setLead(){
     this.leadObj.LeadNo = "1";
+    this.leadObj.LeadCopyId = this.leadIdExist;
     this.leadObj.OriOfficeCode = this.MainInfoForm.controls["OfficeCode"].value;
     this.leadObj.OriOfficeName = this.MainInfoForm.controls["OfficeName"].value;
     this.leadObj.CrtOfficeCode = this.MainInfoForm.controls["CrtOfficeCode"].value;
@@ -417,7 +433,7 @@ copyLead(){
           this.responseLead = response;
           this.LeadId = this.responseLead.LeadId;
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["/Lead/LeadInput/Page"], { queryParams: { "LeadId": this.LeadId } });
+          this.router.navigate(["/Lead/LeadInput/Page"], { queryParams: { "LeadId": this.LeadId, "CopyFrom": this.leadIdExist } });
           console.log(response)
         },
         (error) => {
