@@ -741,6 +741,9 @@ export class AdInsConstant {
   //PURCHASE ORDER EXTENSION
   public static SubmitNewExpDate = environment.losUrl + "/PurchaseOrderH/SubmitNewExpDate";
 
+  //VERF
+  public static GetVerfQuestionAnswerListBySchemeCode = environment.FoundationR3Url + "/VerfQuestionAnswer/GetVerfQuestionAnswerListByVerfSchemeCode"
+
   // VERF RESULT
   public static GetVerfResultById = environment.FoundationR3Url + "/VerfResult/GetVerfResultById";
   public static AddVerfResultAndVerfResultH = environment.FoundationR3Url + "/VerfResult/AddVerfResultAndVerfResultH";

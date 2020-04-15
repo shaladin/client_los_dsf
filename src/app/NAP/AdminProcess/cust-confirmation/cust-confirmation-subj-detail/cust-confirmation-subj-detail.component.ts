@@ -70,6 +70,8 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
     this.http.post(AdInsConstant.GetVerfQuestionAnswerListByAppIdAndSubject, VerfQAObj).subscribe(
       (response) => {
         this.verfQuestionAnswerObj = response["ReturnObject"];
+        console.log("this is verf question answer");
+        console.log(this.verfQuestionAnswerObj);
         if (this.verfQuestionAnswerObj != null && this.verfQuestionAnswerObj.VerfQuestionAnswerListObj.length != 0) {
           this.GenerateFormVerfQuestion(this.verfQuestionAnswerObj);
         }
@@ -203,6 +205,8 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
 
   SaveForm() {
     var FormValue = this.VerfResultDForm.value;
+    console.log("FormValue : ")
+    console.log(FormValue);
 
     var VerfResultDList = new Array<VerfResultDObj>();
     for (let i = 0; i < FormValue.length; i++) {
@@ -228,14 +232,14 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
     }
 
     console.log(VerfResultHeaderDetail);
-    this.http.post(AdInsConstant.AddVerfResultHeaderAndVerfResultDetail, VerfResultHeaderDetail).subscribe(
-      (response) => {
-        this.toastr.successMessage(response["message"]);
-        this.router.navigate(["/Nap/AdminProcess/CustConfirmation/Paging"]);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    // this.http.post(AdInsConstant.AddVerfResultHeaderAndVerfResultDetail, VerfResultHeaderDetail).subscribe(
+    //   (response) => {
+    //     this.toastr.successMessage(response["message"]);
+    //     this.router.navigate(["/Nap/AdminProcess/CustConfirmation/Paging"]);
+    //   },
+    //   (error) => {
+    //     console.log(error);
+    //   }
+    // );
   }
 }
