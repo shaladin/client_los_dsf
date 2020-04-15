@@ -126,7 +126,7 @@ import { PhnVerifPagingComponent } from "./phone-verif/phone-verif-paging/phone-
         UcShowErrorsModule,
         UCSearchModule,
         UcinputnumberModule,
-        NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
+        // NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
     ],
     exports: [],
     providers: [NGXToastrService],

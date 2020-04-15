@@ -80,6 +80,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   });
   getGeneralSettingByCode: string;
   getLeadByLeadId : string;
+  submitWorkflowLeadInput: any;
   generalSettingObj: any;
   returnGeneralSettingObj: any;
   lobKta = new Array();
@@ -95,6 +96,9 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.getAssetMasterForLookupEmployee = AdInsConstant.GetAssetMasterForLookupEmployee;
     this.getGeneralSettingByCode = AdInsConstant.GetGeneralSettingByCode;
     this.getLeadByLeadId = AdInsConstant.GetLeadByLeadId;
+    this.submitWorkflowLeadInput = AdInsConstant.SubmitWorkflowLeadInput;
+
+
     this.route.queryParams.subscribe(params => {
         if (params["LeadId"] != null) {
             this.LeadId = params["LeadId"];
@@ -246,11 +250,13 @@ export class LeadInputLeadDataComponent implements OnInit {
     );
 
     this.firstInstObj = new RefMasterObj();
-    this.firstInstObj.RefMasterTypeCode = "FIRSTINSTTYPE";
+    this.firstInstObj.RefMasterTypeCode = "FIRST_INST_TYPE";
     this.http.post(this.getListActiveRefMasterUrl, this.firstInstObj).subscribe(
       (response) => {
+        console.log('isi getlist');
+        console.log(response);
         this.returnFirstInstObj = response["ReturnObject"];
-        this.LeadDataForm.patchValue({ MrFirstInstTypeCode: response['ReturnObject'][0]['Key'] });
+        this.LeadDataForm.patchValue({ MrFirstInstTypeCode: response['ReturnObject'][0][' '] });
       }
     );
 
@@ -399,7 +405,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   //   this.wizard.goToPreviousStep();
   // }
 
-  SaveForm(){
+  save(){
     if(this.typePage == "edit") {
       this.leadInputLeadDataObj = new LeadInputLeadDataObj();
       this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
@@ -423,6 +429,46 @@ export class LeadInputLeadDataComponent implements OnInit {
       this.setLeadAsset();
       this.setLeadApp();
       this.http.post(this.editLeadData, this.leadInputLeadDataObj).subscribe(
+        (response) => {
+          console.log(response);
+          this.toastr.successMessage(response["message"]);
+          this.router.navigate(["/Lead/Lead/Paging"]);
+          // console.log(response);
+          // this.wizard.goToNextStep();
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
+  SaveForm(){
+    if(this.typePage == "edit") {
+      this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+      this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
+      this.setLeadAsset();
+      this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
+      this.setLeadApp();
+      //this.leadInputLeadDataObj.WfTaskListId = "0";
+      this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
+        (response) => {
+          console.log(response);
+          this.toastr.successMessage(response["message"]);
+          this.router.navigate(["/Lead/Lead/Paging"]);
+          // console.log(response);
+          // this.wizard.goToNextStep();
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    } else {
+      this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+      this.setLeadAsset();
+      this.setLeadApp();
+      //this.leadInputLeadDataObj.WfTaskListId = "0";
+      this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);

@@ -1,0 +1,83 @@
+{
+    "headerList": [
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Invoice No",
+            "name": "InvoiceNo"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Invoice Date",
+            "name": "InvoiceDueDt"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Customer Factoring Name",
+            "name": "CustomerFactoringName"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Invoice Amount",
+            "name": "InvoiceAmt"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Receive Invoice",
+            "name": "IsApproved"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Verification",
+            "name": "Verification"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Notes",
+            "name": "Notes"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "InvoiceNo"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "InvoiceDueDt"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "CustomerFactoringName"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "InvoiceAmt"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "IsApproved"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "Verification"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "notes"
+        }
+    ]
+}
