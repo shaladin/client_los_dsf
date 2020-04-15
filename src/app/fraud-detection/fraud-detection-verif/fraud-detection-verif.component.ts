@@ -9,6 +9,8 @@ import { LeadObj } from 'app/shared/model/Lead.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { FraudDukcapilObj } from 'app/shared/model/FraudDukcapilObj.Model';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { AppCustPersonalObj } from 'app/shared/model/AppCustPersonalObj.Model';
+import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 
 @Component({
   selector: 'app-fraud-detection-verif',
@@ -18,6 +20,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 export class FraudDetectionVerifComponent implements OnInit {
 
   losUrl = environment.losUrl;
+  foundationUrl = environment.FoundationR3Url;
   getAppById = this.losUrl + AdInsConstant.GetAppById;
   getCustDataByAppId = AdInsConstant.GetCustDataByAppId;
   getAppDupCheckCustByAppId = AdInsConstant.GetAppDupCheckCustByAppId;
@@ -43,6 +46,10 @@ export class FraudDetectionVerifComponent implements OnInit {
   verfDt: any;
   verfNotes: any;
   verfCode: any;
+  appCustPersonalObj: any;
+  RowVersion: any;
+  GetNegativeCustomerDuplicateCheckUrl = this.foundationUrl + AdInsConstant.GetNegativeCustomerDuplicateCheck;
+  ListNegativeCust: any;
 
 
   constructor(
@@ -69,6 +76,8 @@ export class FraudDetectionVerifComponent implements OnInit {
     });
     //Get App Cust Data
     this.appCustObj = new AppCustObj();
+    this.appCustPersonalObj = new AppCustPersonalObj();
+    this.appCustCompanyObj = new AppCustCompanyObj();
     this.appAssetObj = new AppAssetObj();
     this.appObj = new AppObj();
     this.dukcapilObj = new FraudDukcapilObj();
@@ -93,6 +102,8 @@ export class FraudDetectionVerifComponent implements OnInit {
     this.http.post(this.getCustDataByAppId, appReqObj).subscribe(
       response => {
           this.appCustObj = response["AppCustObj"];
+          this.appCustCompanyObj = response["AppCustCompanyObj"];
+          this.appCustPersonalObj  = response["AppCustPersonalObj"];
           this.idNo = this.appCustObj.IdNo;
           var fraudDukcapilReqObj = {"IdNo" : this.idNo};
           this.getFraudDukcapil(fraudDukcapilReqObj);
@@ -102,9 +113,54 @@ export class FraudDetectionVerifComponent implements OnInit {
       }
     );
 
+    var requestDupCheckPersonal = {
+      "CustName": this.appCustObj.CustName,
+      "MrCustTypeCode": this.appCustObj.MrCustTypeCode,
+      "MrCustModelCode": this.appCustObj.CustModelCode,
+      "MrIdTypeCode": this.appCustObj.MrIdTypeCode,
+      "IdNo": this.appCustObj.IdNo,
+      "TaxIdNo": this.appCustObj.TaxIdNo,
+      "BirthDt": this.appCustPersonalObj.BirthDt,
+      "MotherMaidenName": this.appCustPersonalObj.MotherMaidenName,
+      "MobilePhnNo1": this.appCustPersonalObj.MobilePhnNo1,          
+      "RowVersion": this.RowVersion
+    }
+
+    var requestDupCheckCompany = {
+      "CustName": this.appCustObj.CustName,
+      "MrCustTypeCode": this.appCustObj.MrCustTypeCode,
+      "MrCustModelCode": this.appCustObj.CustModelCode,
+      "MrIdTypeCode": this.appCustObj.MrIdTypeCode,
+      "IdNo": this.appCustObj.IdNo,
+      "TaxIdNo": this.appCustObj.TaxIdNo,
+      "BirthDt" : this.appCustCompanyObj.EstablishmentDt,
+      "MotherMaidenName" : "-",
+      "MobilePhnNo1" : "-", 
+      "RowVersion": this.RowVersion     
+    }
+
+    var requestDupCheck;
+    if(this.appCustObj.MrCustTypeCode == "PERSONAL"){
+      requestDupCheck = requestDupCheckPersonal;
+    }else{
+      requestDupCheck = requestDupCheckCompany;
+    }
+    
+    //List Negative Cust Duplicate Checking
+    this.http.post(this.GetNegativeCustomerDuplicateCheckUrl, requestDupCheck).subscribe(
+      response => {        
+        this.ListNegativeCust = response['ReturnObject'].NegativeCustDuplicate;
+      },
+      error => {
+        console.log("error");
+      }
+    );
+    
     this.getAppAsset(appReqObj);
-    this.getAppDupCheckCust(appReqObj)
+    this.getAppDupCheckCust(appReqObj);
   }
+
+  
 
   getLead(leadId){
     this.http.post<LeadObj>(this.getLeadByLeadId, leadId).subscribe(

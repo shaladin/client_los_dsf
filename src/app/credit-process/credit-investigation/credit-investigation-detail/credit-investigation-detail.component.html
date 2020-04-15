@@ -16,6 +16,11 @@
         <!-- <app-mou-view-fee *ngIf="isLeadData == true">
         </app-mou-view-fee> -->
       </aw-wizard-step> 
+      <aw-wizard-step [stepTitle]="'FRAUD DETECTION RESULT'" (stepEnter)="EnterTab('fraudDetectionResult')"
+        [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
+        <app-view-fraud-detection-result [appId]="appId">
+        </app-view-fraud-detection-result>
+      </aw-wizard-step>
     </aw-wizard>
     <div class="px-3">
       <lib-ucSubsection [id]="'creditRiskAnalysisId'" [title]="'Credit Risk Analysis'" [panel]="'creditRiskAnalysis'">
