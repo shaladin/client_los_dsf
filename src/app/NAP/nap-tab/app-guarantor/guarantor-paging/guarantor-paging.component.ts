@@ -6,6 +6,8 @@ import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { AppGuarantorObj } from 'app/shared/model/AppGuarantorObj.Model';
 import { HttpClient } from '@angular/common/http';
 import { GuarantorObj } from 'app/shared/model/GuarantorObj.Model';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
   selector: 'app-guarantor-paging',
@@ -16,8 +18,14 @@ export class GuarantorPagingComponent implements OnInit {
 
   @Input() AppId: any;
   inputGridObj: any;
+  closeResult: any;
+  AppGuarantorId : any;
+  MrGuarantorTypeCode : any;
+  mode: any;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+    private modalService: NgbModal,
+    private toastr: NGXToastrService) {
   }
 
   ngOnInit() {
@@ -43,6 +51,44 @@ export class GuarantorPagingComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  add(content){
+    this.mode = "add";
+    this.open(content);
+    this.AppGuarantorId = null;
+  }
+  open(content) {
+    this.modalService.open(content).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+
+  cancel()
+  {
+    this.modalService.dismissAll();
+  }
+
+  event(content,ev){
+    this.open(content);
+    console.log("CHECK EVENT");
+    console.log(ev);
+    this.AppGuarantorId = ev.AppGuarantorId;
+    this.MrGuarantorTypeCode = ev.MrGuarantorTypeCode;
+    console.log("CHECK EVENT");
+    console.log(this.AppGuarantorId);
   }
 
 }

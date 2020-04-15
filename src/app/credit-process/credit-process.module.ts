@@ -47,7 +47,7 @@ export const customCurrencyMaskConfig = {
         CreditInvestigationDetailComponent,
         ViewAppCustDataComponent,
         CustHistoryComponent,
-        ViewApprovalComponent
+        ViewApprovalComponent,
         CommissionAddComponent,
         CommissionPagingComponent,
         RsvFundPagingComponent,

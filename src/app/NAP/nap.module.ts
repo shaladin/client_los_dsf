@@ -51,7 +51,6 @@ import { InsuranceDataComponent } from "./nap-tab/insurance-data/insurance-data.
 import { AssetDataComponent } from "./nap-tab/asset-data/asset-data.component";
 import { AppFinDataComponent } from './nap-tab/app-fin-data/app-fin-data.component';
 import { NgxCurrencyModule } from "ngx-currency";
-import { UcinputnumberModule } from "@adins/ucinputnumber";
 export const customCurrencyMaskConfig = {     
     align: "left",     
     allowNegative: true,     

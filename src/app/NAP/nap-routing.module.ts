@@ -99,27 +99,6 @@ const routes: Routes = [
         },
       },
       {
-        path: 'Guarantor/personal',
-        component: GuarantorPersonalComponent,
-        data: {
-          title: 'Personal'
-        },
-      },
-      {
-        path: 'Guarantor/company',
-        component: GuarantorCompanyComponent,
-        data: {
-          title: 'Company'
-        },
-      },
-      {
-        path: 'Guarantor/Main',
-        component: AppGuarantorComponent,
-        data: {
-          title: 'Main'
-        },
-      },
-      {
         path: 'LifeIns',
         component: AppLifeInsComponent,
         data: {
