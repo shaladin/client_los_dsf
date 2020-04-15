@@ -125,7 +125,7 @@
               <div class="form-group row">
                 <label class="col-md-2  adins-required-label" translate>Manufacturing Year</label>
                 <div class="col-md-4">
-                  <input type="text" class="form-control" formControlName="ManufacturingYear">
+                  <input type="number" class="form-control" formControlName="ManufacturingYear">
                 </div>
               </div>
               <div class="form-group row">
@@ -234,8 +234,7 @@
               <div class="form-group row">
                 <label class="col-md-2  adInsLabel" translate>User Relationship </label>
                 <div class="col-md-4">
-                  <select class="form-control" id="userRelationship" formControlName="MrUserRelationshipCode"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.MrUserRelationshipCode.invalid }">
+                  <select class="form-control" id="userRelationship" formControlName="MrUserRelationshipCode">
                     <option *ngFor="let item of UserRelationObj" [value]="item.Key">
                       {{item.Value}}
                     </option>
@@ -339,7 +338,7 @@
               </div>
             </div>
             <div class="form-actions right">
-              <button type="submit" class="btn btn-raised btn-primary" (click)="SaveForm()">
+              <button type="submit" class="btn btn-raised btn-primary">
                 <i class="fa fa-check-square-o"></i> Save And Continue
               </button>
               <button type="button" class="btn btn-raised btn-primary" (click)="test()">

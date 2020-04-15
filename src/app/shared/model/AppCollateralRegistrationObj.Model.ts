@@ -27,6 +27,8 @@ export class AppCollateralRegistrationObj {
 
 
   constructor() {
+    this.AppCollateralId = 0;
+    this.AppCollateralRegistrationId = 0;
     this.RowVersion = "";
   }
 }
