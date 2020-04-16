@@ -12,7 +12,6 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class PurchaseOrderPagingComponent implements OnInit {
   lobCode: string;
-  pagingJSONLocation: string;
   inputPagingObj: UcPagingObj;
   arrCrit: Array<CriteriaObj>;
 
@@ -24,26 +23,17 @@ export class PurchaseOrderPagingComponent implements OnInit {
       else{
         this.lobCode = "CF4W";
       }
-      switch (this.lobCode) {
-        case "FL4W":
-          this.pagingJSONLocation = "./assets/ucpaging/FL4W/searchPurchaseOrderFL4W.json";
-          break;
-      
-        default:
-          this.pagingJSONLocation = "./assets/ucpaging/searchPurchaseOrder.json";
-          break;
-      }
     });
   }
 
   ngOnInit() {
     // "./assets/ucpaging/searchPurchaseOrder.json"
     this.inputPagingObj = new UcPagingObj();
-    this.inputPagingObj._url = this.pagingJSONLocation;
+    this.inputPagingObj._url = "./assets/ucpaging/searchPurchaseOrder.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
-    this.inputPagingObj.pagingJson = this.pagingJSONLocation;
-    
+    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchPurchaseOrder.json";
+
     this.arrCrit = new Array();
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
