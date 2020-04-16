@@ -2,37 +2,41 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { NgForm,FormBuilder } from '@angular/forms';
+import { NgForm, FormBuilder, Validators } from '@angular/forms';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { SalesInfoObj } from 'app/shared/model/SalesInfoObj.Model';
+import { PayFreqObj } from 'app/shared/model/PayFreqObj.Model';
 
 
 @Component({
   selector: 'app-application-model-add',
   templateUrl: './application-model-add.component.html',
-  styleUrls: ['./application-model-add.component.scss']
+  styleUrls: ['./application-model-add.component.scss'],
+  providers: [NGXToastrService]
 })
 export class ApplicationModelAddComponent implements OnInit {
 
 
   SalesAppInfoForm = this.fb.group({
-    SrvyOrderNo: [''],
-    MRSalesRecommendCode: [''],
-    SalesNotes: [''],
-    SalesOfficerNo: [''],
-    SalesHeadNo: [''],
-    MRInstTypeCode: [''],
-    MRSingleInstCalcMthdCode: [''],
-    TOPDays: [''],
+    AppId: [''],
+    SrvyOrderNo: ['', Validators.required],
+    MrSalesRecommendCode: ['', Validators.required],
+    SalesNotes: ['', Validators.required],
+    SalesOfficerNo: ['', Validators.required],
+    SalesHeadNo: ['', Validators.required],
+    MrInstTypeCode: ['', Validators.required],
+    TopDays: [''],
     Tenor: [''],
-    NumOfInst: [''],
-    MRInstSchemeCode: [''],
+    NumOfInst: ['', Validators.required],
+    MrInstSchemeCode: ['', Validators.required],
     IsDisclosed: false,
-    PaidBy: [''],
-    RecourseType: [''],
-    MRAppSourceCode: [''],
-    MRWOPCode: ['']
+    PaidBy: ['', Validators.required],
+    RecourseType: ['', Validators.required],
+    MrAppSourceCode: ['', Validators.required],
+    MrWopCode: ['', Validators.required],
+    PayFreqCode: ['', Validators.required],
+    MrSingleInstCalcMthdCode: ['', Validators.required]
   })
   //refMasterObj: RefMasterObj;
   refMasterInterestType: RefMasterObj;
@@ -54,102 +58,161 @@ export class ApplicationModelAddComponent implements OnInit {
   allRecourseType: any;
   allCalcMethod: any;
   salesAppInfoObj: SalesInfoObj;
-  constructor(private router: Router, private route: ActivatedRoute, private httpClient: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) { }
+
+  listMultiple: Array<any> = ['Even Principle', 'Regular Fixed'];
+  listSingle: Array<any> = ['Even Principle'];
+  payfreq: PayFreqObj;
+  AppId: any;
+  resultData: any;
+  allPayFreq: any;
+  allInSalesOffice: any;
+
+  constructor(private router: Router, private route: ActivatedRoute, private httpClient: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
+    this.route.queryParams.subscribe(params => {
+      if (params['AppId'] != null) {
+        this.AppId = params['AppId'];
+      }
+    });
+  }
 
   ngOnInit() {
+
+    this.SalesAppInfoForm.patchValue({
+      AppId: this.AppId
+    })
+    var obj = {
+      AppId: this.AppId
+    }
+    this.httpClient.post(AdInsConstant.GetAppByIds, obj).subscribe(
+      (response) => {
+        this.resultData = response;
+        console.log(this.resultData);
+        this.payfreq = new PayFreqObj();
+        this.payfreq.ProdOfferingCode = this.resultData.ProdOfferingCode;
+        this.payfreq.RefProdCompntCode = "PAYFREQ";
+
+        this.httpClient.post(AdInsConstant.GetPayFreqByProdOfferingCodeandRefProdCompntCode, this.payfreq).subscribe(
+          (response) => {
+            console.log(response);
+            this.allPayFreq = response['ReturnObject'];
+            console.log(this.allPayFreq);
+            this.SalesAppInfoForm.patchValue({
+              PayFreqCode: this.allPayFreq[0].PayFreqCode
+            });
+          },
+          (error) => {
+            console.log(error);
+          });
+
+      })
+
     this.refMasterInterestType = new RefMasterObj();
-    this.refMasterInterestType.refMasterTypeCode = 'INTEREST_TYPE';
+    this.refMasterInterestType.RefMasterTypeCode = 'INTEREST_TYPE';
     this.refMasterInsScheme = new RefMasterObj();
-    this.refMasterInsScheme.refMasterTypeCode = 'INST_SCHM';
+    this.refMasterInsScheme.RefMasterTypeCode = 'INST_SCHM';
     this.refMasterInsType = new RefMasterObj();
-    this.refMasterInsType.refMasterTypeCode = 'INST_TYPE';
+    this.refMasterInsType.RefMasterTypeCode = 'INST_TYPE';
     this.refMasterRecommendation = new RefMasterObj();
     this.refMasterRecommendation.refMasterTypeCode = 'SLS_RECOM';
     this.refMasterWOP = new RefMasterObj();
-    this.refMasterWOP.refMasterTypeCode = 'WOP';
-    this.refMasterAppSource = new RefMasterObj();
-    this.refMasterAppSource.refMasterTypeCode = 'APP_SOURCE';
-    this.refMasterCalcMethod.refMasterTypeCode = 'CALC_METHOD';
+    this.refMasterWOP.RefMasterTypeCode = 'WOP';
+    this.refMasterCalcMethod = new RefMasterObj();
+    this.refMasterCalcMethod.RefMasterTypeCode = 'SINGLE_INST_CALC_METHOD';
     this.refMasterAppPaidBy = new RefMasterObj();
-    this.refMasterAppPaidBy.refMasterTypeCode = 'APP_PAID_BY';
+    this.refMasterAppPaidBy.RefMasterTypeCode = 'APP_PAID_BY';
     this.refMasterRecourseType = new RefMasterObj();
-    this.refMasterRecourseType.refMasterTypeCode = 'RECOURSE_TYPE';
+    this.refMasterRecourseType.RefMasterTypeCode = 'RECOURSE_TYPE';
 
 
 
 
-    this.httpClient.post(AdInsConstant.GetRefMasterByRefMasterTypeCode, this.refMasterInsScheme).subscribe(
+    this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterInsScheme).subscribe(
       (response) => {
         console.log(response);
         this.allInScheme = response['ReturnObject'];
+        console.log(this.allInScheme);
         this.SalesAppInfoForm.patchValue({
-          MRInstSchemeCode: this.allInScheme[0].Key
+          MrInstSchemeCode: this.allInScheme[1].Key
         });
       },
       (error) => {
         console.log(error);
       });
 
-    this.httpClient.post(AdInsConstant.GetRefMasterByRefMasterTypeCode, this.refMasterInsType).subscribe(
+    this.httpClient.post(AdInsConstant.GetListRefEmpByGsValueandOfficeId, null).subscribe(
+      (response) => {
+        console.log(response);
+        this.allInSalesOffice = response['ReturnObject'];
+        console.log(this.allInSalesOffice);
+        this.SalesAppInfoForm.patchValue({
+          SalesOfficerNo: this.allInSalesOffice[0].EmpNo
+        });
+      },
+      (error) => {
+        console.log(error);
+      });
+
+    this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterInsType).subscribe(
       (response) => {
         console.log(response);
         this.allInType = response['ReturnObject'];
         this.SalesAppInfoForm.patchValue({
-          MRInstTypeCode: this.allInType[0].Key
+          MrInstTypeCode: this.allInType[0].Key
         });
       },
       (error) => {
         console.log(error);
       });
 
-    this.httpClient.post(AdInsConstant.GetRefMasterByRefMasterTypeCode, this.refMasterRecommendation).subscribe(
+    this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterRecommendation).subscribe(
       (response) => {
         console.log(response);
         this.allSlsRecom = response['ReturnObject'];
+        console.log(this.allSlsRecom);
         this.SalesAppInfoForm.patchValue({
-          MRSalesRecommendCode: this.allSlsRecom[0].Key
+          MrSalesRecommendCode: this.allSlsRecom[0].Key
         });
       },
       (error) => {
         console.log(error);
-      });
+      })
 
-    this.httpClient.post(AdInsConstant.GetRefMasterByRefMasterTypeCode, this.refMasterWOP).subscribe(
+    this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterWOP).subscribe(
       (response) => {
         console.log(response);
         this.allWOP = response['ReturnObject'];
         this.SalesAppInfoForm.patchValue({
-          MRWOPCode: this.allWOP[0].Key
+          MrWopCode: this.allWOP[0].Key
         });
       },
       (error) => {
         console.log(error);
       });
-    this.httpClient.post(AdInsConstant.GetRefMasterByRefMasterTypeCode, this.refMasterAppSource).subscribe(
+    this.httpClient.post(AdInsConstant.GetListKvpActiveRefAppSrc, null).subscribe(
       (response) => {
         console.log(response);
         this.allAppSource = response['ReturnObject'];
         this.SalesAppInfoForm.patchValue({
-          MRAppSourceCode: this.allAppSource[0].Key
+          MrAppSourceCode: this.allAppSource[0].Key
         });
       },
       (error) => {
         console.log(error);
       });
 
-    this.httpClient.post(AdInsConstant.GetRefMasterByRefMasterTypeCode, this.refMasterCalcMethod).subscribe(
+    this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterCalcMethod).subscribe(
       (response) => {
         console.log(response);
         this.allCalcMethod = response['ReturnObject'];
         this.SalesAppInfoForm.patchValue({
-          MRSingleInstCalcMthdCode: this.allCalcMethod[0].Key
+          MrSingleInstCalcMthdCode: this.allCalcMethod[0].Key
         });
       },
       (error) => {
         console.log(error);
       });
 
-    this.httpClient.post(AdInsConstant.GetRefMasterByRefMasterTypeCode, this.refMasterAppPaidBy).subscribe(
+    this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterAppPaidBy).subscribe(
       (response) => {
         console.log(response);
         this.allPaidby = response['ReturnObject'];
@@ -161,7 +224,7 @@ export class ApplicationModelAddComponent implements OnInit {
         console.log(error);
       });
 
-    this.httpClient.post(AdInsConstant.GetRefMasterByRefMasterTypeCode, this.refMasterRecourseType).subscribe(
+    this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterRecourseType).subscribe(
       (response) => {
         console.log(response);
         this.allRecourseType = response['ReturnObject'];
@@ -172,12 +235,38 @@ export class ApplicationModelAddComponent implements OnInit {
       (error) => {
         console.log(error);
       });
+
+
   }
 
-  SaveForm():void{
+  SaveForm(): void {
+
+    console.log(this.AppId);
+  
     this.salesAppInfoObj = new SalesInfoObj();
+    this.salesAppInfoObj.AppId = this.AppId.value;
     this.salesAppInfoObj = this.SalesAppInfoForm.value;
-    
+
+    console.log(this.salesAppInfoObj);
+    if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == 'SINGLE') {
+      this.salesAppInfoObj.Tenor = 1;
+    }
+    if (this.SalesAppInfoForm.controls.MrInstSchemeCode.value == 'Even Principle') {
+      this.salesAppInfoObj.MrInstSchemeCode = 'EP';
+    }
+    if (this.SalesAppInfoForm.controls.MrInstSchemeCode.value == 'Regular Fixed') {
+      this.salesAppInfoObj.MrInstSchemeCode = 'RF';
+    }
+    console.log(this.salesAppInfoObj);
+
+    this.httpClient.post(AdInsConstant.SaveApp, this.salesAppInfoObj).subscribe(
+      (response) => {
+        this.toastr.successMessage(response["message"]);
+       // this.router.navigateByUrl('/Office/OfficeArea');
+      },
+      (error) => {
+        console.log(error);
+      });
   }
 
 }

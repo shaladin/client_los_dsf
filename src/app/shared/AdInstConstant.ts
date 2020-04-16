@@ -876,4 +876,7 @@ export class AdInsConstant {
 
   // Workflow Engine
   public static ClaimTask = environment.FoundationR3Url + "/Workflow/ClaimTask";
+
+  //Application Data
+  public static SaveApp = environment.losUrl +"/ApplicationData/SaveApp"
 }
