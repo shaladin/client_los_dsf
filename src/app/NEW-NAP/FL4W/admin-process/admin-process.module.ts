@@ -7,14 +7,12 @@ import { AdminProcessFL4WRoutingModule } from "./admin-process-routing.module";
 import { PurchaseOrderPagingFl4wComponent } from './purchase-order/purchase-order-paging-fl4w/purchase-order-paging-fl4w.component';
 import { PurchaseOrderFl4wComponent } from './purchase-order/purchase-order-fl4w/purchase-order-fl4w.component';
 import { PurchaseOrderDetailFl4wComponent } from './purchase-order/purchase-order-detail-fl4w/purchase-order-detail-fl4w.component';
-import { AdminProcessComponentModule } from "app/NEW-NAP/sharing-component/admin-process-component/admin-process-component.module";
 
 @NgModule({
   imports: [
     CommonModule,
     AdminProcessFL4WRoutingModule,
     AdInsModule,
-    AdminProcessComponentModule
   ],
   declarations: [
     DummyComponent,
