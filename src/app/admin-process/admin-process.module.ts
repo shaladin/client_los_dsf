@@ -30,6 +30,8 @@ import { InvoiceViewComponent } from './invoice/invoice-view/invoice-view.compon
 import { InvoiceDetailComponent } from './invoice/invoice-detail/invoice-detail.component';
 import { AgreementViewContainerComponent } from './agreement-view-container/agreement-view-container.component';
 import { SharingModule } from "app/shared/sharing.module";
+import { PreGoLiveApprovalPagingComponent } from './pre-go-live/pre-go-live-approval-paging/pre-go-live-approval-paging.component';
+import { PreGoLiveApprovalDetailComponent } from './pre-go-live/pre-go-live-approval-detail/pre-go-live-approval-detail.component';
 
 @NgModule({
   imports: [
@@ -66,7 +68,9 @@ import { SharingModule } from "app/shared/sharing.module";
     DocSignerPagingComponent,
     InvoiceViewComponent,
     InvoiceDetailComponent,
-    AgreementViewContainerComponent
+    AgreementViewContainerComponent,
+    PreGoLiveApprovalPagingComponent,
+    PreGoLiveApprovalDetailComponent
   ],
   providers: [
     NGXToastrService

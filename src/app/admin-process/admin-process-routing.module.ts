@@ -14,6 +14,8 @@ import { PreGoLiveRequestForApprovalComponent } from './pre-go-live/pre-go-live-
 import { InvoiceViewComponent } from './invoice/invoice-view/invoice-view.component';
 import { InvoiceDetailComponent } from './invoice/invoice-detail/invoice-detail.component';
 import { AgreementViewContainerComponent } from './agreement-view-container/agreement-view-container.component';
+import { PreGoLiveApprovalPagingComponent } from './pre-go-live/pre-go-live-approval-paging/pre-go-live-approval-paging.component';
+import { PreGoLiveApprovalDetailComponent } from './pre-go-live/pre-go-live-approval-detail/pre-go-live-approval-detail.component';
 
 const routes: Routes = [
   {
@@ -38,6 +40,20 @@ const routes: Routes = [
         component: PreGoLiveRequestForApprovalComponent,
         data: {
           title: 'PreGoLive Request For Approval'
+        }
+      },
+      {
+        path: 'PreGoLive/Approval/Paging',
+        component: PreGoLiveApprovalPagingComponent,
+        data: {
+          title: 'PreGoLive Paging For Approval'
+        }
+      },
+      {
+        path: 'PreGoLive/Approval/Detail',
+        component: PreGoLiveApprovalDetailComponent,
+        data: {
+          title: 'PreGoLive Detail For Approval'
         }
       },
       {
