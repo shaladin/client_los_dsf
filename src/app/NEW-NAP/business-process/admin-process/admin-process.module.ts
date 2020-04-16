@@ -33,6 +33,7 @@ import { InvoiceDataAddComponent } from "./invoice-data/invoice-data-add/invoice
 import { PreGoLiveApprovalDetailComponent } from "./pre-go-live/pre-go-live-approval-detail/pre-go-live-approval-detail.component";
 import { PreGoLiveApprovalPagingComponent } from "./pre-go-live/pre-go-live-approval-paging/pre-go-live-approval-paging.component";
 import { ViewMainInfoComponentModule } from "app/NEW-NAP/sharing-component/view-main-info-component/view-main-info-component.module";
+import { ProcessComponentModule } from "app/NEW-NAP/sharing-component/process-component/process-component.module";
 
 @NgModule({
   imports: [
@@ -40,6 +41,7 @@ import { ViewMainInfoComponentModule } from "app/NEW-NAP/sharing-component/view-
     AdminProcessSharingRoutingModule,
     TcSharingComponentModule,
     ViewMainInfoComponentModule,
+    ProcessComponentModule,
     AdInsModule,
   ],
   declarations: [
