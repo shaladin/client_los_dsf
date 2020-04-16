@@ -66,6 +66,7 @@ export const ROUTES: RouteInfo[] = [
       { path: '/Mou/CustomerDoc/Paging', title: 'MOU Document Printing', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
       { path: '/Mou/CustomerLegalReview/Paging', title: 'MOU Legal Review', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
       { path: '/Mou/DocSigner/Paging', title: 'MOU Document Signer', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
+      { path: '/Mou/EditMouCustomer/Paging', title: 'MOU Return', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
       { path: '/Mou/Cust/Inquiry', title: 'MOU Inquiry', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] }
     ], params: []
   },

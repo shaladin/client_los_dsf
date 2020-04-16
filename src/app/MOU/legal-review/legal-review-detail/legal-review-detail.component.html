@@ -9,8 +9,8 @@
           <label class="col-md-4 adInsLabel" translate> {{item.controls.ReviewComponentName.value}} </label>
           <div class="col-md-7">
             <input type="text" class="form-control adInsInput" formControlName="values" required>
-            <show-errors [control]="LegalForm.controls.items['controls'][i]['controls'].values"
-              [submit]="enjiForm.submitted"></show-errors>
+            <lib-uc-show-errors  [control]="LegalForm.controls.items['controls'][i]['controls'].values"
+              [submit]="enjiForm.submitted"></lib-uc-show-errors >
           </div>
         </div>
       </div>

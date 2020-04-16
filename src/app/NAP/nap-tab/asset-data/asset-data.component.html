@@ -64,13 +64,13 @@
                 <div class="col-md-4">
                   <input type="number" class="form-control" formControlName="AssetPriceAmt"
                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.AssetPriceAmt.invalid}">
-                  <show-errors [control]="AssetDataForm.controls.AssetPriceAmt" [submit]="enjiForm.submitted"></show-errors>
+                  <lib-uc-show-errors  [control]="AssetDataForm.controls.AssetPriceAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                 </div>
                 <label class="col-md-2  adins-required-label" translate>Down Payment</label>
                 <div class="col-md-4">
                   <input type="number" class="form-control" formControlName="DownPaymentAmt"
                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.DownPaymentAmt.invalid}">
-                  <show-errors [control]="AssetDataForm.controls.DownPaymentAmt" [submit]="enjiForm.submitted"></show-errors>
+                  <lib-uc-show-errors  [control]="AssetDataForm.controls.DownPaymentAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                 </div>
               </div>
 
@@ -133,13 +133,13 @@
                 <div class="col-md-4">
                   <input type="text" class="form-control" formControlName="Color"
                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.Color.invalid}">
-                  <show-errors [control]="AssetDataForm.controls.Color" [submit]="enjiForm.submitted"></show-errors>
+                  <lib-uc-show-errors  [control]="AssetDataForm.controls.Color" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                 </div>
                 <label class="col-md-2  adins-required-label" translate>BPKB Issue Date</label>
                 <div class="col-md-4">
                   <input type="date" class="form-control adInsInput" formControlName="TaxIssueDt"
                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.TaxIssueDt.invalid }">
-                  <show-errors [control]="AssetDataForm.controls.TaxIssueDt" [submit]="enjiForm.submitted"></show-errors>
+                  <lib-uc-show-errors  [control]="AssetDataForm.controls.TaxIssueDt" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                 </div>
               </div>
               <div class="form-group row">
@@ -147,7 +147,7 @@
                 <div class="col-md-4">
                   <textarea type="text" class="form-control adInsInput" formControlName="AssetNotes"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.AssetNotes.invalid }"></textarea>
-                  <show-errors [control]="AssetDataForm.controls.AssetNotes" [submit]="enjiForm.submitted"></show-errors>
+                  <lib-uc-show-errors  [control]="AssetDataForm.controls.AssetNotes" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                 </div>
                 <label class="col-md-2  adins-required-label" translate>BPKB City Issuer</label>
                 <div class="col-md-4">
@@ -195,17 +195,17 @@
                       <td [formGroupName]="i">
                         <input type="number" class="form-control" formControlName="AccessoryPriceAmt"
                                [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryPriceAmt.invalid }">
-                        <show-errors [control]="AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryPriceAmt" [submit]="enjiForm.submitted"></show-errors>
+                        <lib-uc-show-errors  [control]="AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryPriceAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                       </td>
                       <td [formGroupName]="i">
                         <input type="number" class="form-control" formControlName="AccessoryDownPaymentAmt"
                                [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryDownPaymentAmt.invalid }">
-                        <show-errors [control]="AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryDownPaymentAmt" [submit]="enjiForm.submitted"></show-errors>
+                        <lib-uc-show-errors  [control]="AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryDownPaymentAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                       </td>
                       <td [formGroupName]="i">
                         <input type="text" class="form-control" formControlName="AccessoryNotes"
                                [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryNotes.invalid }">
-                        <show-errors [control]="AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryNotes" [submit]="enjiForm.submitted"></show-errors>
+                        <lib-uc-show-errors  [control]="AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryNotes" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                       </td>
                       <td [formGroupName]="i">
                         <a class="danger p-0" data-original-title="" title="" (click)="deleteAccessory(i)">
