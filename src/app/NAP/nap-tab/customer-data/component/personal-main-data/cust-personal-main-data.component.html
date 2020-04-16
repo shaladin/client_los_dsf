@@ -88,8 +88,8 @@
       <div class="col-md-4">
         <input type="text" class="form-control" id="npwp" formControlName="TaxIdNo">
       </div>
-      <label class="col-md-2" *ngIf="parentForm.controls[identifier]['controls'].MrNationalityCode.value == 'WNA'" for="country" translate>Country</label>
-      <div class="col-md-4" *ngIf="parentForm.controls[identifier]['controls'].MrNationalityCode.value == 'WNA'">
+      <label class="col-md-2" for="country" translate>Country</label>
+      <div class="col-md-4">
         <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupCountryObj" [parentForm]="parentForm" [identifier]="'lookupCountry'" (lookup)="GetCountry($event)"></lib-uclookupgeneric>
       </div>
     </div>

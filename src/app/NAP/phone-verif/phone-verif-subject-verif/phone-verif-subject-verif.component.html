@@ -1,0 +1,157 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-body">
+      <div class="px-3">
+        <form class="form form-horizontal" [formGroup]="PhoneDataForm" (ngSubmit)="PhoneDataForm.valid && SaveForm()"
+              #enjiForm="ngForm">
+          <div class="form-body">
+            <lib-ucSubsection [id]="'custInfoId'" [title]="'Customer Information'" [panel]="'custInfo'">
+            </lib-ucSubsection>
+            <div id="custInfo">
+              <div class="form-group row">
+                <label class="col-md-2  adInsLabel" translate>Application No</label>
+                <label class="col-md-4  adins-required-label" translate *ngIf="this.AppObj?.AppNo">{{this.AppObj.AppNo}}</label>
+                <label class="col-md-2  adInsLabel" translate>Subject</label>
+                <label class="col-md-4  adins-required-label" translate>{{subjectType}}</label>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2  adInsLabel" translate>Customer No</label>
+                <label class="col-md-4  adins-required-label" translate *ngIf="this.AppCustObj?.CustNo">{{this.AppCustObj.CustNo}}</label>
+                <label class="col-md-2  adInsLabel" translate>Subject Name</label>
+                <label class="col-md-4  adins-required-label" translate>{{subjectName}}</label>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2  adInsLabel" translate>Customer Name</label>
+                <label class="col-md-4  adins-required-label" translate *ngIf="this.AppCustObj?.CustName">{{this.AppCustObj.CustName}}</label>
+                <label class="col-md-2  adins-required-label" translate>Subject Relation</label>
+                <div class="col-md-4">
+                  <select *ngIf="SubjectRelationObj" class="form-control" id="subjectRelationId" formControlName="MrVerfSubjectRelationCode"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && PhoneDataForm.controls.MrVerfSubjectRelationCode.invalid }">
+                    <option *ngFor="let item of SubjectRelationObj" [value]="item.Key">
+                      {{item.Value}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2  adins-required-label" translate>Phone</label>
+                <div class="col-md-4">
+                  <select *ngIf="PhoneNumberObj" class="form-control" id="phoneNumberId" formControlName="Phn" (change)="PhoneChange(item.PhoneNumber,item.PhoneType)"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && PhoneDataForm.controls.Phn.invalid }">
+                    <option *ngFor="let item of PhoneNumberObj" [value]="item.PhoneNumber">
+                      {{item.PhoneType}}: {{item.PhoneNumber}}
+                    </option>
+                  </select>
+                </div>
+                <label class="col-md-2  adins-required-label" translate>Result</label>
+                <div class="col-md-4">
+                  <select *ngIf="ResultObj" class="form-control" id="subjectResultId" formControlName="MrVerfResultHStatCode"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && PhoneDataForm.controls.MrVerfResultHStatCode.invalid }">
+                    <option *ngFor="let item of ResultObj" [value]="item.Key">
+                      {{item.Value}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2  adins-required-label" translate>Notes</label>
+                <div class="col-md-4">
+                  <textarea type="text" class="form-control adInsInput" formControlName="Notes"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && PhoneDataForm.controls.Notes.invalid }"></textarea>
+                  <show-errors [control]="PhoneDataForm.controls.Notes" [submit]="enjiForm.submitted"></show-errors>
+                </div>
+              </div>
+            </div>
+            <div formArrayName="QuestionObjs">
+              <div class="form-body" [formGroupName]="i"
+                   *ngFor="let QuestionGrpList of PhoneDataForm.controls.QuestionObjs.controls; let i = index">
+                <h4 class="form-section card-title" translate>
+                  <i class="ft-file-text"></i>{{QuestionGrpList.value.VerfQuestionGrpName}}
+                </h4>
+                <span formArrayName="VerfQuestionAnswerList">
+                  <div class="form-group row" [formGroupName]="j"
+                       *ngFor="let QRList of QuestionGrpList.controls.VerfQuestionAnswerList.controls; let j = index">
+                    <label class="col-md-3" translate>{{QRList.value.QuestionGrp.VerfQuestionText}} </label>
+                    <div class="col-md-5" formGroupName="ResultGrp">
+                      <span *ngIf="QRList.value.QuestionGrp.VerfAnswerTypeCode == 'DDL' || QRList.value.QuestionGrp.VerfAnswerTypeCode == 'RBL'">
+                        <select class="form-control" formControlName="Answer"
+                                [ngClass]="{ 'is-invalid': enjiForm.submitted && QRList.controls.ResultGrp.controls.Answer.invalid }">
+                          <lib-uc-show-errors [control]="QRList.controls.ResultGrp.controls.Answer"
+                                              [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors>
+                          <option *ngFor="let item of ListVerfAnswer[i][j]" value="{{item}}">
+                            {{item}}
+                          </option>
+                        </select>
+                      </span>
+                      <span *ngIf="QRList.value.QuestionGrp.VerfAnswerTypeCode == 'TXT'">
+                        <input type="text" class="form-control" formControlName="Answer"
+                               [ngClass]="{ 'is-invalid': enjiForm.submitted && QRList.controls.ResultGrp.controls.Answer.invalid }">
+                        <lib-uc-show-errors [control]="QRList.controls.ResultGrp.controls.Answer"
+                                            [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
+                      </span>
+                      <span *ngIf="QRList.value.QuestionGrp.VerfAnswerTypeCode == 'DT_PICKER'">
+                        <input type="date" class="form-control" formControlName="Answer"
+                               [ngClass]="{ 'is-invalid': enjiForm.submitted && QRList.controls.ResultGrp.controls.Answer.invalid }">
+                        <lib-uc-show-errors [control]="QRList.controls.ResultGrp.controls.Answer"
+                                            [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
+                      </span>
+                      <span *ngIf="QRList.value.QuestionGrp.VerfAnswerTypeCode == 'UC_INPUT_NUMBER'">
+                        <input type="text" class="form-control" formControlName="Answer"
+                               [ngClass]="{ 'is-invalid': enjiForm.submitted && QRList.controls.ResultGrp.controls.Answer.invalid }">
+                        <lib-uc-show-errors [control]="QRList.controls.ResultGrp.controls.Answer"
+                                            [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
+                      </span>
+                    </div>
+                    <div class="col-md-4" formGroupName="ResultGrp">
+                      <textarea class="form-control" formControlName="Notes"></textarea>
+                    </div>
+                  </div>
+                </span>
+              </div>
+            </div>
+            <div *ngIf="listVerifResultHObj">
+              <lib-ucSubsection [id]="'historylistId'" [title]="'History List'" [panel]="'historylist'">
+              </lib-ucSubsection>
+              <div id="incomehistorylistInfo">
+                <table class="table table-responsive-md text-center table-hover">
+                  <thead>
+                    <tr class="table-header">
+                      <th class="text-left">Subject</th>
+                      <th class="text-left">Phone</th>
+                      <th class="text-left">Result</th>
+                      <th class="text-left">Subject Relation</th>
+                      <th class="text-left">Notes</th>
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of listVerifResultHObj">
+                      <td class="text-left">{{item.MrVerfObjectCode}}</td>
+                      <td class="text-left">{{item.Phn}}</td>
+                      <td class="text-left">{{item.MrVerfResultHStatName}}</td>
+                      <td class="text-left">{{item.MrVerfSubjectRelationName}}</td>
+                      <td class="text-left">{{item.Notes}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="form-actions right">
+              <button type="submit" class="btn btn-raised btn-primary">
+                <i class="fa fa-check-square-o"></i> Save And Continue
+              </button>
+              <button type="button" class="btn btn-raised btn-primary" (click)="test()">
+                <i class="fa fa-check-square-o"></i> Check Value
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
