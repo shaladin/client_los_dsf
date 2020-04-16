@@ -1,32 +1,135 @@
 <div class="col-md-12 text-left">
   <div class="card">
-      <lib-ucviewgeneric [viewInput]="viewProdMainInfoObj"> </lib-ucviewgeneric>
-      <aw-wizard #wizard navBarLayout="large-empty-symbols" [defaultStepIndex]="AppStepIndex">
+    <lib-ucviewgeneric [viewInput]="viewProdMainInfoObj"> </lib-ucviewgeneric>
+    <aw-wizard #wizard navBarLayout="large-empty-symbols" [defaultStepIndex]="AppStepIndex">
 
-        <aw-wizard-step [awNavigationMode] navigateBackward="allow" navigateForward="allow" [stepTitle]="'Customer Data'" (stepEnter)="EnterTab('CUST')"
-          [navigationSymbol]="{ symbol: '1' }">
-          <!-- <app-customer-data *ngIf="AppStepIndex == 0" [appId]=appId></app-customer-data> -->
-        </aw-wizard-step>
-  
-        <aw-wizard-step [awNavigationMode] navigateBackward="allow" navigateForward="allow" [stepTitle]="'Application Data'" (stepEnter)="EnterTab('APP')"
-          [navigationSymbol]="{ symbol: '2' }">
-          <app-tab-application-data *ngIf="AppStepIndex == 1" [AppId]=appId></app-tab-application-data>
-        </aw-wizard-step>
-        
-        <aw-wizard-step [awNavigationMode] navigateBackward="allow" navigateForward="allow" [stepTitle]="'Fraud Detection Result'" (stepEnter)="EnterTab('FRD')"
-          [navigationSymbol]="{ symbol: '3' }">
-          <!-- <app-app-referantor *ngIf="AppStepIndex == 2" [appId]=appId></app-app-referantor> -->
-        </aw-wizard-step>
-  
-        <aw-wizard-step [awNavigationMode] navigateBackward="allow" navigateForward="allow" [stepTitle]="'Deviation'" (stepEnter)="EnterTab('DEVC')"
-        [navigationSymbol]="{ symbol: '4' }">
-          <!-- <app-app-model *ngIf="AppStepIndex == 3" [appId]=appId></app-app-model> -->
-        </aw-wizard-step>
-  
-        <aw-wizard-step [awNavigationMode] navigateBackward="allow" navigateForward="allow" [stepTitle]="'ApprovalHistory'" (stepEnter)="EnterTab('APV')"
-        [navigationSymbol]="{ symbol: '5' }">
-          <app-cust-history *ngIf="AppStepIndex == 4" [AppId]=appId></app-cust-history>
-        </aw-wizard-step>
-      </aw-wizard>
+      <aw-wizard-step [awNavigationMode] navigateBackward="allow" navigateForward="allow" [stepTitle]="'Customer Data'"
+        (stepEnter)="EnterTab('CUST')" [navigationSymbol]="{ symbol: '1' }">
+        <app-view-app-cust-data-company *ngIf="AppStepIndex == 0 && CustTypeCode == 'COMPANY'" [appId]=appId>
+        </app-view-app-cust-data-company>
+        <app-view-app-cust-data-personal *ngIf="AppStepIndex == 0 && CustTypeCode == 'PERSONAL'" [appId]=appId>
+        </app-view-app-cust-data-personal>
+      </aw-wizard-step>
+
+      <aw-wizard-step [awNavigationMode] navigateBackward="allow" navigateForward="allow"
+        [stepTitle]="'Application Data'" (stepEnter)="EnterTab('APP')" [navigationSymbol]="{ symbol: '2' }">
+        <app-tab-application-data *ngIf="AppStepIndex == 1" [AppId]=appId></app-tab-application-data>
+      </aw-wizard-step>
+
+      <aw-wizard-step [awNavigationMode] navigateBackward="allow" navigateForward="allow"
+        [stepTitle]="'Fraud Detection Result'" (stepEnter)="EnterTab('FRD')" [navigationSymbol]="{ symbol: '3' }">
+        <!-- <app-app-referantor *ngIf="AppStepIndex == 2" [appId]=appId></app-app-referantor> -->
+      </aw-wizard-step>
+
+      <aw-wizard-step [awNavigationMode] navigateBackward="allow" navigateForward="allow" [stepTitle]="'Deviation'"
+        (stepEnter)="EnterTab('DEVC')" [navigationSymbol]="{ symbol: '4' }">
+        <!-- <app-app-model *ngIf="AppStepIndex == 3" [appId]=appId></app-app-model> -->
+      </aw-wizard-step>
+
+      <aw-wizard-step [awNavigationMode] navigateBackward="allow" navigateForward="allow"
+        [stepTitle]="'ApprovalHistory'" (stepEnter)="EnterTab('APV')" [navigationSymbol]="{ symbol: '5' }">
+        <app-cust-history *ngIf="AppStepIndex == 4" [AppId]=appId></app-cust-history>
+      </aw-wizard-step>
+    </aw-wizard>
+
+    <div class="card-body">
+      <div class="px-3">
+
+        <form class="form form-horizontal" [formGroup]="FormObj" #enjiForm="ngForm" >
+          <div class="form-body">
+
+            <lib-ucSubsection [id]="'formCreditAnalysisId'" [title]="'Credit Analysis'" [panel]="'formCreditAnalysis'">
+            </lib-ucSubsection>
+            <div class="form-body" [id]="'formCreditAnalysis'" formArrayName="arr">
+              <div *ngFor="let item of FormObj.controls.arr.controls; let i = index;">
+                <div [formGroupName]="i">
+
+                  <div class="form-group row">
+                    <div class="form-group col-md-4">
+                      <label class="adInsLabel">{{item.controls.Question.value}}</label>
+                    </div>
+                    <div class="col-md-8">
+                      <input type="text" class="form-control adInsInput width-50-per" formControlName="Answer">
+                      <lib-uc-show-errors [control]="item.controls.ContentName" [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <lib-ucSubsection [id]="'formRequestForAppvId'" [title]="'Request For Approval'"
+              [panel]="'formRequestForAppv'">
+            </lib-ucSubsection>
+            <div class="form-body" [id]="'formRequestForAppv'">
+
+              <div class="form-group row">
+                <div class="form-group col-md-2">
+                  <label class="adInsLabel">Approval Amount</label>
+                </div>
+                <div class="col-md-4">
+                  <label class="adInsLabel">{{FormObj.controls.AppvAmt.value}}</label>
+                </div>
+
+                <div class="form-group col-md-2">
+                  <label class="adInsLabel">Credit Scoring</label>
+                </div>
+                <div class="col-md-4">
+                  <label class="adInsLabel">{{FormObj.controls.CreditScoring.value}}</label>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="form-group col-md-2">
+                  <label class="adInsLabel">Reason</label>
+                </div>
+                <div class="col-md-4">
+                  <lib-ucapproveby [apvBaseUrl]="apvBaseUrl" [parentForm]="FormObj" [identifier]="'Reason'"
+                    [schemeCode]="'CRD_APV_CF'" [enjiForm]="enjiForm" (onChange)="onChangeReason($event)">
+                  </lib-ucapproveby>
+                  <lib-uc-show-errors [control]="Reason" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                </div>
+
+                <div class="form-group col-md-2">
+                  <label class="adInsLabel">Approver</label>
+                </div>
+                <div class="col-md-4">
+                  <lib-ucapproveby [apvBaseUrl]="apvBaseUrl" [parentForm]="FormObj" [identifier]="'Approver'"
+                    [schemeCode]="'CRD_APV_CF'" [enjiForm]="enjiForm" (onChange)="onChangeApprover($event)">
+                  </lib-ucapproveby>
+                  <lib-uc-show-errors [control]="Approver" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="form-group col-md-2">
+                  <label class="adInsLabel">Notes</label>
+                </div>
+                <div class="col-md-4">
+                  <textarea type="textarea" row="5" class="form-control" formControlName="Notes"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && FormApproval.controls.Notes.invalid}"></textarea>
+                  <lib-uc-show-errors [control]="Notes" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+          <div class="form-actions right">
+            <button type="button" class="btn btn-raised btn-warning mr-1"
+              [routerLink]="['/CreditProcess/CreditReviewPaging']" translate>
+              <i class="ft-x"></i> Cancel
+            </button>
+            <button type="button" (click)="SaveForm()" class="btn btn-raised btn-primary" translate>
+              <i class="fa fa-check-square-o"></i> Submit
+            </button>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
   </div>
 </div>

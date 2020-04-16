@@ -12,6 +12,7 @@ import { RouterModule } from "@angular/router";
 import { MatCheckboxModule, MatSelectModule } from "@angular/material";
 import { MatRadioModule } from "@angular/material";
 import { UcSubsectionModule } from "@adins/uc-subsection";
+import { UcapprovebyModule } from "@adins/ucapproveby";
 import { UcaddressModule } from "@adins/ucaddress";
 import { UcgridviewModule } from "@adins/ucgridview";
 import { UCSearchModule } from '@adins/ucsearch';
@@ -87,6 +88,7 @@ export const customCurrencyMaskConfig = {
         UcShowErrorsModule,
         UCSearchModule,
         UcinputnumberModule,
+        UcapprovebyModule
         // NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
     ],
     exports: [],

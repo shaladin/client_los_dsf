@@ -3,7 +3,10 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
+import { environment } from 'environments/environment';
+import { AppCrdRvwHObj } from 'app/shared/model/AppCrdRvwHObj.Model';
+import { AppCrdRvwDObj } from 'app/shared/model/AppCrdRvwDObj.Model';
 
 @Component({
   selector: 'app-credit-review-main',
@@ -13,6 +16,9 @@ import { FormBuilder } from '@angular/forms';
 export class CreditReviewMainComponent implements OnInit {
 
   appId;
+  apvBaseUrl = environment.ApprovalR3Url;
+  indentifierReason;
+  indentifierApprover;
   constructor(
     private router: Router, 
     private route: ActivatedRoute, 
@@ -23,6 +29,17 @@ export class CreditReviewMainComponent implements OnInit {
         this.appId = params["AppId"];
       });
     }
+  
+  FormObj = this.fb.group({
+    arr: this.fb.array([]),
+    AppvAmt: [''],
+    CreditScoring: [''],
+    Reason: [""],
+    ReasonDesc: [""],
+    Approver: [""],
+    ApproverDesc: [""],
+    Notes: ['']
+  });
 
   InitData(){
     this.AppStep = {
@@ -32,15 +49,119 @@ export class CreditReviewMainComponent implements OnInit {
       "DEVC": 3,
       "APV": 4,
     };
-    this.AppStepIndex = 0;
+    this.AppStepIndex = 1;
+    this.CustTypeCode = "";
+    this.Arr = this.FormObj.get('arr') as FormArray;
+    console.log(this.Arr);
+    this.UserAccess = JSON.parse(localStorage.getItem("UserAccess"));
   }
 
   viewProdMainInfoObj;
   AppStepIndex;
   AppStep;
-  ngOnInit() {
+  CustTypeCode;
+  Arr;
+  UserAccess;
+  ResponseExistCreditReview;
+  async ngOnInit() {    
+    console.log("User Access");
+    console.log(JSON.parse(localStorage.getItem("UserAccess")));
     this.InitData();
     this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
+    await this.GetMouCustData();
+    await this.BindCreditAnalysisItemFormObj();
+    await this.BindAppvAmt();
+    await this.GetExistingCreditReviewData();
+  }
+
+  async GetMouCustData(){
+    var obj = {
+      AppId: this.appId,
+      RowVersion: ""
+    };
+
+    await this.http.post(AdInsConstant.GetAppCustByAppId, obj).toPromise().then(
+      (response) => {
+        console.log(response);
+        this.CustTypeCode = response["MrCustTypeCode"];
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  async BindCreditAnalysisItemFormObj(){
+    var refMasterObj = { RefMasterTypeCode: "CRD_RVW_ANALYSIS_ITEM"};
+    await this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
+      (response) => {
+        console.log(response);
+        var temp = response[AdInsConstant.ReturnObj];
+        for(var i=0;i<temp.length;i++){
+          var NewDataForm = this.fb.group({
+            QuestionCode: temp[i].Key,
+            Question: temp[i].Value,
+            Answer: ""
+          }) as FormGroup;
+          this.Arr.push(NewDataForm);
+        }
+        console.log(this.FormObj);        
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  async BindAppvAmt(){
+    var Obj = { AppId: this.appId};
+    await this.http.post(AdInsConstant.GetAppFinDataByAppId, Obj).toPromise().then(
+      (response) => {
+        console.log(response);
+        this.FormObj.patchValue({
+          AppvAmt: response["ApvAmt"]
+        });
+        console.log(this.FormObj);        
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  async GetExistingCreditReviewData(){
+    var Obj = { appCrdRvwHObj: { AppId: this.appId } };
+    await this.http.post(AdInsConstant.GetAppCrdRvwById, Obj).toPromise().then(
+      (response) => {
+        console.log(response);  
+        this.ResponseExistCreditReview = response["appCrdRvwHObj"];
+        for(var i=0;i<this.ResponseExistCreditReview.appCrdRvwDObjs.length;i++){
+          var idx = this.Arr.value.indexOf(this.Arr.value.find(x => x.QuestionCode == this.ResponseExistCreditReview.appCrdRvwDObjs[i].MrAnalysisItemCode));
+          this.Arr.controls[idx].patchValue({
+            Answer: this.ResponseExistCreditReview.appCrdRvwDObjs[i].AnalysisResult
+          });
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  onChangeReason(ev){
+    // console.log(ev);
+    this.FormObj.patchValue({
+      ReasonDesc: ev.target.selectedOptions[0].text
+    });
+    // console.log(this.FormObj);
+  }
+
+  onChangeApprover(ev){
+    // console.log(ev);
+    this.FormObj.patchValue({
+      ApproverDesc: ev.target.selectedOptions[0].text
+    });
+    // console.log(this.FormObj);
   }
 
   EnterTab(AppStep) {
@@ -65,5 +186,43 @@ export class CreditReviewMainComponent implements OnInit {
       default:
         break;
     }
+  }
+
+  SaveForm(){
+    var temp = this.FormObj.value;
+    // console.log(temp);
+    var tempAppCrdRvwObj = new AppCrdRvwHObj();
+    tempAppCrdRvwObj.AppId = this.appId;
+    tempAppCrdRvwObj.SubmitDt = this.UserAccess.BusinessDt;
+    tempAppCrdRvwObj.CrdRvwStat = "DONE";
+    tempAppCrdRvwObj.ReturnNotes = "";
+    tempAppCrdRvwObj.appCrdRvwDObjs = this.BindAppCrdRvwDObj(temp.arr);
+    console.log(tempAppCrdRvwObj);
+
+    var apiObj = {
+      appCrdRvwHObj: tempAppCrdRvwObj,
+      RowVersion: ""
+    }
+    console.log(apiObj);
+    this.http.post(AdInsConstant.AddOrEditAppCrdRvwData, apiObj).subscribe(
+      (response) => {
+        console.log(response);    
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  BindAppCrdRvwDObj(objArr){
+    var AppCrdRvwDObjs = new Array();
+    // console.log(objArr);
+    for(var i=0;i<objArr.length;i++){
+      var temp = new AppCrdRvwDObj();
+      temp.MrAnalysisItemCode = objArr[i].QuestionCode;
+      temp.AnalysisResult = objArr[i].Answer;
+      AppCrdRvwDObjs.push(temp);
+    }
+    return AppCrdRvwDObjs;
   }
 }
