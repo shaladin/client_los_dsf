@@ -1,0 +1,67 @@
+{
+  "title": "",
+  "subsection": [
+    {
+      "subSectionId": "CustCompanyMainDataId",
+      "subSectionTitle": "Customer Main Data",
+      "mainInfoUrl": "http://localhost:5001/Generic/GetDataViewBySQL",
+      "mainInfo": [
+        {
+          "type": "text",
+          "label": "Customer Name",
+          "property": "CustName"
+        },
+        {
+          "type": "text",
+          "label": "Customer Model",
+          "property": "CustModelName"
+        },
+        {
+          "type": "text",
+          "label": "Company Brand Name",
+          "property": "CompanyBrandName"
+        },
+        {
+          "type": "text",
+          "label": "Industry Type",
+          "property": "IndustryTypeName"
+        },
+        {
+          "type": "text",
+          "label": "CompanyType",
+          "property": "CompanyTypeName"
+        },
+        {
+          "type": "text",
+          "label": "Number Of Employee",
+          "property": "NumOfEmp"
+        },
+        {
+          "type": "text",
+          "label": "NPWP",
+          "property": "TaxIdNo"
+        },
+        {
+          "type": "boolean",
+          "label": "Affiliation MF",
+          "property": "IsAffiliated"
+        },
+        {
+          "type": "date",
+          "label": "Establishment Date",
+          "property": "EstablishmentDt"
+        },
+        {
+          "type": "boolean",
+          "label": "VIP",
+          "property": "IsVip"
+        }
+      ],
+      "querystring": {
+        "select": "SELECT AC.CUST_NAME AS CustName, RCM.CUST_MODEL_NAME AS CustModelName, ACC.COMPANY_BRAND_NAME AS CompanyBrandName, RIT.INDUSTRY_TYPE_NAME AS IndustryTypeName, RCT.DESCR AS CompanyTypeName, ACC.NUM_OF_EMP AS NumOfEmp, AC.TAX_ID_NO AS TaxIdNo, ACC.IS_AFFILIATED AS IsAffiliated, ACC.ESTABLISHMENT_DT AS EstablishmentDt, AC.IS_VIP AS IsVip",
+        "from": "FROM dbo.APP_CUST AC WITH(NOLOCK) JOIN dbo.APP_CUST_COMPANY ACC WITH(NOLOCK) ON AC.APP_CUST_ID = ACC.APP_CUST_ID LEFT JOIN dbo.V_REF_CUST_MODEL RCM WITH(NOLOCK) ON AC.CUST_MODEL_CODE = RCM.CUST_MODEL_CODE LEFT JOIN dbo.V_REF_INDUSTRY_TYPE RIT WITH(NOLOCK) ON ACC.INDUSTRY_TYPE_CODE = RIT.INDUSTRY_TYPE_CODE LEFT JOIN dbo.V_REF_MASTER RCT WITH(NOLOCK) ON ACC.MR_COMPANY_TYPE_CODE = RCT.MASTER_CODE AND RCT.REF_MASTER_TYPE_CODE = 'COMPANY_TYPE'",
+        "where": "WHERE AC.APP_ID = {0}"
+      }
+    }
+  ]
+}

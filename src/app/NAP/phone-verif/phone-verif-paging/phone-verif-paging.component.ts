@@ -28,6 +28,11 @@ export class PhnVerifPagingComponent implements OnInit {
     critObj.propName = 'a.APP_CURR_STEP';
     critObj.value = AdInsConstant.AppStepPhnVerif;
     this.arrCrit.push(critObj);
+    var critTypeObj = new CriteriaObj();
+    critTypeObj.restriction = AdInsConstant.RestrictionLike;
+    critTypeObj.propName = 'ac.MR_CUST_TYPE_CODE';
+    critTypeObj.value = AdInsConstant.CustTypePersonal;
+    this.arrCrit.push(critTypeObj);
     this.inputPagingObj.addCritInput = this.arrCrit;
   }
 }

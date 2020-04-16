@@ -17,7 +17,6 @@
               </lib-ucSubsection>
               <div id="assetAccessories">
                 <div class="form-group row">
-                  <div class="col-md-6">
                     <table class="table table-responsive-md text-center table-hover">
                       <thead>
                         <tr class="table-header">
@@ -40,7 +39,6 @@
                         </tr>
                       </tbody>
                     </table>
-                  </div>
                 </div>
               </div>
               <lib-ucSubsection [id]="'insuranceInfoId'" [title]="'Insurance Information'" [panel]="'insuranceInformation'">
@@ -229,7 +227,7 @@
                     <div class="col-md-4">
                       <label formArrayName="InsAddCvgTypes" *ngFor="let item of InsuranceDataForm.controls.InsAddCvgTypes.controls; let i=index" class="custom-control display-inline-block">
                         <div [formGroupName]="i">
-                          <input type="checkbox" formControlName="Value" data-md-icheck />{{insAddCvgTypeRuleObj[i].Value}}
+                          <mat-checkbox formControlName="Value">{{insAddCvgTypeRuleObj[i].Value}}</mat-checkbox>
                         </div>
                       </label>
                     </div>
@@ -243,26 +241,26 @@
                     <table class="table table-responsive-md text-center table-hover">
                       <thead>
                         <tr>
-                          <th><span translate class="thead-header">Year Num</span></th>
-                          <th><span translate class="thead-header"># of Month</span></th>
-                          <th><span translate class="thead-header">Sum Insured (%)</span></th>
-                          <th><span translate class="thead-header">Main Coverage Type</span></th>
-                          <th><span translate class="thead-header">Rate</span></th>
-                          <th><span translate class="thead-header">Main Premi Amount</span></th>
+                          <th class="text-left"><span translate class="thead-header">Year Num</span></th>
+                          <th class="text-left"><span translate class="thead-header"># of Month</span></th>
+                          <th class="text-left"><span translate class="thead-header">Sum Insured (%)</span></th>
+                          <th class="text-left"><span translate class="thead-header">Main Coverage Type</span></th>
+                          <th class="text-left"><span translate class="thead-header">Rate</span></th>
+                          <th class="text-left"><span translate class="thead-header">Main Premi Amount</span></th>
                         </tr>
                       </thead>
                       <tbody *ngFor="let item of InsuranceDataForm.controls.AppInsMainCvgs.controls;let i = index">
                         <tr [formGroupName]="i">
-                          <td class="text-center">
+                          <td class="text-left">
                             {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.YearNo.value}}
                           </td>
-                          <td class="text-center">
+                          <td class="text-left">
                             {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.Tenor.value}}
                           </td>
-                          <td class="text-center">
+                          <td class="text-left">
                             {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.SumInsuredPrcnt.value}}
                           </td>
-                          <td>
+                          <td class="text-left">
                             <div class="form-group-row">
                               <div class="col-md-12">
                                 <select class="form-control" formControlName="MrMainCvgTypeCode" (change)="MainCvgTypeDetailChanged($event, i)"
@@ -275,10 +273,10 @@
                               </div>
                             </div>
                           </td>
-                          <td class="text-center">
+                          <td class="text-left">
                             {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.CustMainPremiRate.value | number:'.2':'en-US'}} %
                           </td>
-                          <td class="text-center">
+                          <td class="text-left">
                             {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.CustMainPremiAmt.value | number:'.2':'en-US'}}
                           </td>
                         </tr>
@@ -286,7 +284,7 @@
                           <td></td>
                           <td></td>
                           <td></td>
-                          <td class="text-center">
+                          <td class="text-left">
                             <label class="col-md-12" style="font-weight:bold">Additional Coverage Type</label>                 
                           </td>
                           <td></td>
@@ -296,20 +294,20 @@
                           <td></td>
                           <td></td>
                           <td></td>
-                          <td class="text-center">
+                          <td class="text-left">
                             <div formArrayName="AppInsAddCvgs">
                               <div [formGroupName]="j">
-                                <input type="checkbox" formControlName="Value" data-md-icheck (change)="IsAddCvgChanged($event)"/>{{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.AddCvgTypeName.value}}
+                                <mat-checkbox formControlName="Value" (change)="IsAddCvgChanged($event)">{{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.AddCvgTypeName.value}}</mat-checkbox>
                               </div>
                             </div>
                           </td>
-                          <td class="text-center">
+                          <td class="text-left">
                             {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.CustAddPremiRate.value | number:'.2':'en-US'}}
                             <span *ngIf="InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.PremiumType.value == 'PRCNT'">
                               %
                             </span>
                           </td>
-                          <td class="text-center">
+                          <td class="text-left">
                             {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.CustAddPremiAmt.value | number:'.2':'en-US'}}
                           </td>
                         </tr>
