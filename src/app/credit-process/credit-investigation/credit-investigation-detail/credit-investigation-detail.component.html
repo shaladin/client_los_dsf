@@ -15,16 +15,15 @@
       </aw-wizard-step>
       <aw-wizard-step [stepTitle]="'APPLICATION DATA'" (stepEnter)="EnterTab('appData')"
         [navigationSymbol]="{ symbol: '2' }">
-
+        <app-tab-application-data *ngIf="type == 'appData'" [appId]="appId"></app-tab-application-data>
       </aw-wizard-step>
       <aw-wizard-step [stepTitle]="'FRAUD DETECTION RESULT'" (stepEnter)="EnterTab('fraudDetection')"
       [navigationSymbol]="{ symbol: '3' }">
-
-    </aw-wizard-step>
-    <aw-wizard-step [stepTitle]="'APPROVAL HISTORY'" (stepEnter)="EnterTab('apvHist')"
-    [navigationSymbol]="{ symbol: '4' }">
-
-  </aw-wizard-step> 
+      </aw-wizard-step>
+      <aw-wizard-step [stepTitle]="'CUSTOMER HISTORY'" (stepEnter)="EnterTab('custHist')"
+      [navigationSymbol]="{ symbol: '4' }">
+      <app-cust-history *ngIf="type == 'custHist'" [AppId]="appId"></app-cust-history>
+      </aw-wizard-step> 
     </aw-wizard>
     <div class="px-3">
       <lib-ucSubsection [id]="'creditRiskAnalysisId'" [title]="'Credit Risk Analysis'" [panel]="'creditRiskAnalysis'">
