@@ -9,7 +9,6 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 @Component({
   selector: 'app-mou-review-general',
   templateUrl: './mou-review-general.component.html',
-  styleUrls: ['./mou-review-general.component.scss'],
   providers: [NGXToastrService]
 })
 export class MouReviewGeneralComponent implements OnInit {

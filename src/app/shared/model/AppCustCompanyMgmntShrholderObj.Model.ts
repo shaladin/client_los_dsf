@@ -34,8 +34,6 @@ constructor() {
         this.IsSigner = false;
         this.MrIdTypeCode = "";
         this.IdNo = "";
-        this.IdExpiredDt = new Date();
-        this.EstablishmentDt = new Date();
         this.BirthPlace = "";
         this.MrGenderCode = "";
         this.MrNationalityCode = "";

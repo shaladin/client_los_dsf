@@ -18,12 +18,12 @@
                   </div>
                   <label class="col-md-3 adInsLabel" translate>Asset Condition</label>
                   <div class="col-md-3">
-                    <mat-radio-group formControlName="MrAssetConditionCode" (change)="radioChange($event)">
-                      <mat-radio-button class="custom-control custom-radio display-inline-block"
-                        *ngFor="let item of returnAssetConditionObj" [value]="item.Key">
-                        {{item.Value}}
-                      </mat-radio-button>
-                    </mat-radio-group>
+                    <select class="form-control adInsInput" style="width: auto" (change)="radioChange($event)" formControlName="MrAssetConditionCode" required
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.MrAssetConditionCode.invalid }">
+                      <option *ngFor="let it of returnAssetConditionObj" [value]="it.Key">
+                        {{it.Value}}
+                      </option>
+                    </select>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -45,12 +45,12 @@
                 <div class="form-group row">
                   <label class="col-md-3 adInsLabel" translate>Down Payment Type</label>
                   <div class="col-md-3">
-                    <mat-radio-group formControlName="MrDownPaymentTypeCode" (change)="downPaymentChange($event)">
-                      <mat-radio-button class="custom-control custom-radio display-inline-block"
-                        *ngFor="let item of returnDownPaymentObj" [value]="item.Key">
-                        {{item.Value}}
-                      </mat-radio-button>
-                    </mat-radio-group>
+                    <select class="form-control adInsInput" style="width: auto" (change)="downPaymentChange($event)" formControlName="MrDownPaymentTypeCode" required
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.MrDownPaymentTypeCode.invalid }">
+                      <option *ngFor="let it of returnDownPaymentObj " [value]="it.Key">
+                        {{it.Value}}
+                      </option>
+                    </select>
                   </div>
                   <label class="col-md-2 adInsLabel" translate>Down Payment</label>
                   <div class="col-md-3">
@@ -126,11 +126,11 @@
                 <div class="form-group row">
                   <label class="col-md-3 adInsLabel" translate>First Installment Type</label>
                   <div class="col-md-4">
-                    <select class="form-control adInsInput" style="width: auto" formControlName="MrFirstInstTypeCode"
-                      required
+                    <select class="form-control adInsInput" style="width: auto" formControlName="MrFirstInstTypeCode" required
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.MrFirstInstTypeCode.invalid }">
                       <option *ngFor="let it of returnFirstInstObj " [value]="it.Key">
-                        {{it.Value}}</option>
+                        {{it.Value}}
+                      </option>
                     </select>
                     <show-errors [control]="LeadDataForm.controls.MrFirstInstTypeCode" [submit]="enjiForm.submitted">
                     </show-errors>
@@ -164,8 +164,6 @@
                   </div>
                 </div>
               </div>
-
-
               <div *ngIf="lobKta.includes(returnLobCode) == true" id="financialData">
                 <div class="form-group row">
                   <label class="col-md-3 adInsLabel" translate>Tenor</label>
@@ -208,9 +206,6 @@
                   </div>
                 </div>
               </div>
-
-
-
             </div>
           </div>
           <div class="form-actions right" style="text-align: right;">

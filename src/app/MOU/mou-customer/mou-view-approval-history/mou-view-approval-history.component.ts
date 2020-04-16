@@ -8,7 +8,6 @@ import { MouCustRvwDObj } from 'app/shared/model/MouCustRvwDObj.Model';
 @Component({
   selector: 'app-mou-view-approval-history',
   templateUrl: './mou-view-approval-history.component.html',
-  styleUrls: ['./mou-view-approval-history.component.scss']
 })
 export class MouViewApprovalHistoryComponent implements OnInit {
   @Input() MouCustId: any;
