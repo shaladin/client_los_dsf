@@ -23,6 +23,7 @@ export class LeadCancelConfirmComponent implements OnInit {
   ItemCancelReason: any;
   deletedArr = new Array();
   EditListLeadForCancelByListLeadId = AdInsConstant.EditListLeadForCancelByListLeadId;
+  tempWfTaskListArr: any = new Array();
 
   constructor(
     private http: HttpClient,
@@ -36,11 +37,18 @@ export class LeadCancelConfirmComponent implements OnInit {
   ngOnInit() {
     var tempLeadIds;
     var tempLeadArr;
+    var WfTaskListIds;
     this.route.queryParams.subscribe(params => {
       if (params['LeadIds'] != null) {
         tempLeadIds = params['LeadIds'];
       }
       tempLeadArr = tempLeadIds.split(',');
+
+      if (params['WfTaskListIds'] != null && params['WfTaskListIds'] != "") {
+        WfTaskListIds = params['WfTaskListIds'];
+      }
+      this.tempWfTaskListArr = WfTaskListIds.split(',');
+      console.log(this.tempWfTaskListArr);
     });
     var tempObj = { 'ListLeadId': tempLeadArr };
     this.http.post(this.GetListLeadForLeadCancelByListLeadId, tempObj).subscribe(
@@ -79,6 +87,7 @@ export class LeadCancelConfirmComponent implements OnInit {
       }
     }
     leadObj.ListLeadId = tempId;
+    leadObj.ListWfTaskListId = this.tempWfTaskListArr;
     this.http.post(this.EditListLeadForCancelByListLeadId, leadObj).subscribe(
       response => {
         this.toastr.successMessage(response["Message"]);

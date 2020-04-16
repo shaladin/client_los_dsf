@@ -15,6 +15,7 @@ import { MouCustTcComponent } from 'app/MOU/mou-customer-request/mou-cust-tc/mou
 export class LegalReviewDetailComponent implements OnInit {
   viewObj: string;
   MouCustId: any;
+  WfTaskListId: any;
   GetListActiveRefMasterUrl = AdInsConstant.GetListActiveRefMaster;
   AddEditRangeMouCustLglReview = AdInsConstant.AddEditRangeMouCustLglReview;
   responseObj: any;
@@ -44,13 +45,13 @@ export class LegalReviewDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.claimTask();
     this.items = this.LegalForm.get('items') as FormArray;
     this.termConditions = this.LegalForm.get('termConditions') as FormArray;
     this.viewObj = "./assets/ucviewgeneric/viewCustomerDocPrinting.json";
     this.route.queryParams.subscribe(params => {
-      if (params['MouCustId'] != null) {
-        this.MouCustId = params['MouCustId'];
-      }
+      if (params['MouCustId'] != null) this.MouCustId = params['MouCustId'];
+      if (params['WfTaskListId'] != null) this.WfTaskListId = params['WfTaskListId'];
     });
     var mouObj = { "MouCustId": this.MouCustId };
     this.http.post(this.GetMouCustLglReviewByMouCustIdUrl, mouObj).subscribe(
@@ -78,6 +79,17 @@ export class LegalReviewDetailComponent implements OnInit {
       }
     );
   }
+
+  claimTask()
+  {
+    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"]};
+    console.log(wfClaimObj);
+    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+      (response) => {
+      });
+  }
+
   SearchLegalReviewValue(key){
     if(this.responseMouObj.length > 0){
       for(var i=0;i<this.responseMouObj.length;i++){

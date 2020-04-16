@@ -157,6 +157,7 @@ export class DocSignerDetailComponent implements OnInit {
   }
 
   setMouCustSigner(){
+    this.mouCustSignerObj.WfTaskListId = this.WfTaskListId;
     this.mouCustSignerObj.MouCustId = this.MouCustId;
     this.mouCustSignerObj.MfSignerName1 = this.tempShareholder1;
     this.mouCustSignerObj.MfSignerJobPosition1 = this.tempShareholderPosition1;
@@ -171,14 +172,10 @@ export class DocSignerDetailComponent implements OnInit {
   SaveForm(){
     this.mouCustSignerObj = new MouCustSignerObj();
     this.setMouCustSigner();
-    console.log("aaa")
-    console.log(this.mouCustSignerObj)
     this.http.post(this.addMouCustSigner, this.mouCustSignerObj).subscribe(
       (response) => {
-        console.log(response);
         this.toastr.successMessage(response["message"]);
         this.router.navigate(["/Mou/DocSigner/Paging"]);
-        console.log(response)
       },
       (error) => {
         console.log(error);
