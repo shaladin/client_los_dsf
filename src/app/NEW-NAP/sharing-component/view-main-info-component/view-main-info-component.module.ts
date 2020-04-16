@@ -9,7 +9,6 @@ import { UcinputnumberModule } from "@adins/ucinputnumber";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { AgrMainInfoComponent } from "./agr-main-info/agr-main-info.component";
 import { AppMainInfoComponent } from "./app-main-info/app-main-info.component";
-import { DummyComponent } from "app/NEW-NAP/CF4W/additional-process/dummy/dummy.component";
 
 @NgModule({
   exports: [
@@ -28,7 +27,6 @@ import { DummyComponent } from "app/NEW-NAP/CF4W/additional-process/dummy/dummy.
     NgbModule
   ],
   declarations: [
-    DummyComponent,
     AgrMainInfoComponent,
     AppMainInfoComponent,
   ],
