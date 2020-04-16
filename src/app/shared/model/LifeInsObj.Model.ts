@@ -6,6 +6,8 @@ export class LifeInsObj {
     RowVersion: any;
     MrLifeInsPaidMethodCode : any;
     IsCustCover : any;
+    IsSpouseCover : any;
+    IsGuarantorCover: any;
     LifeInscoBranchCode : any;
     LifeInscoBranchName : any;
     TotalLifeInsCptlzAmt : any;

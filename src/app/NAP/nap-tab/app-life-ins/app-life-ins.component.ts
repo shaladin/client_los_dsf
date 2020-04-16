@@ -48,7 +48,6 @@ export class AppLifeInsComponent implements OnInit {
   MrLifeInsPaidMethodCode: any;
 
   ngOnInit() {
-    // this.LifeInsObj = new LifeInsObj();
 
     if (this.mode == "edit") {
       // var LifeInsObj = new LifeInsObj();
@@ -89,6 +88,8 @@ export class AppLifeInsComponent implements OnInit {
           console.log("response :");
           console.log(response);
           this.LifeInscoBranchName = response;
+          this.LifeInsObj.LifeInscoBranchCode = response["VendorCode"];
+          console.log(this.LifeInsObj.LifeInscoBranchCode);
           // this.LifeInsForm.patchValue({
           //   LifeInscoBranchName: this.LifeInscoBranchName[0].MasterCode
           // });
@@ -176,6 +177,7 @@ export class AppLifeInsComponent implements OnInit {
       this.LifeInsObj.LifeInsDObj.InsuredName = this.ListObj[i].InsuredName;
       this.LifeInsObj.LifeInsDObj.Age = this.ListObj[i].Age;
       this.LifeInsObj.LifeInsDObj.MrCustTypeCode = this.ListObj[i].MrCustTypeCode;
+      
     } else {
       console.log("event unchecked");
       console.log(i);
