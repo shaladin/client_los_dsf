@@ -14,7 +14,7 @@ import { environment } from 'environments/environment';
 })
 export class TabApplicationDataComponent implements OnInit {
 
-  @Input() appId;
+  @Input() AppId;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -98,7 +98,7 @@ export class TabApplicationDataComponent implements OnInit {
   async GetGuarantorData(){
     var obj = {
       AppGuarantorObj: {
-        AppID: this.appId
+        AppID: this.AppId
       },
       RowVersion: ""
     };
@@ -136,7 +136,7 @@ export class TabApplicationDataComponent implements OnInit {
 
   async GetReferantorData(){
     var obj = {
-      AppID: this.appId,
+      AppID: this.AppId,
       RowVersion: ""
     };
     await this.http.post(environment.losUrl + AdInsConstant.GetAppReferantorForAppsData, obj).toPromise().then(
@@ -154,7 +154,7 @@ export class TabApplicationDataComponent implements OnInit {
 
   async GetAppDetailData(){
     var obj = {
-      AppID: this.appId,
+      AppID: this.AppId,
       RowVersion: ""
     };
     await this.http.post(AdInsConstant.GetAppDetailForAppTabById, obj).toPromise().then(
@@ -199,7 +199,7 @@ export class TabApplicationDataComponent implements OnInit {
 
   async GetDealerData(){
     var obj = {
-      AppID: this.appId,
+      AppID: this.AppId,
       RowVersion: ""
     };
     await this.http.post(AdInsConstant.GetAppAssetForDealerDataByAppId, obj).toPromise().then(
@@ -231,7 +231,7 @@ export class TabApplicationDataComponent implements OnInit {
 
   async GetCommData(){
     var obj = {
-      AppID: this.appId,
+      AppID: this.AppId,
       RowVersion: ""
     };
     await this.http.post(AdInsConstant.GetAppCommissionDataDetailByAppId, obj).toPromise().then(

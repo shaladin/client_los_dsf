@@ -60,7 +60,7 @@ export const customCurrencyMaskConfig = {
         FormAddDynamicComponent,
         TabApplicationDataComponent,
         CreditReviewPagingComponent,
-        CreditReviewMainComponent
+        CreditReviewMainComponent,
         ViewAppCustDataCompanyComponent,
         CreditInvestigationPagingComponent,
         TabApplicationDataComponent

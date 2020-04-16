@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { Router, ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-credit-review-main',
@@ -8,7 +12,17 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 })
 export class CreditReviewMainComponent implements OnInit {
 
-  constructor() { }
+  appId;
+  constructor(
+    private router: Router, 
+    private route: ActivatedRoute, 
+    private http: HttpClient, 
+    private toastr: NGXToastrService, 
+    private fb: FormBuilder) { 
+      this.route.queryParams.subscribe(params => {
+        this.appId = params["AppId"];
+      });
+    }
 
   InitData(){
     this.AppStep = {
@@ -18,6 +32,7 @@ export class CreditReviewMainComponent implements OnInit {
       "DEVC": 3,
       "APV": 4,
     };
+    this.AppStepIndex = 0;
   }
 
   viewProdMainInfoObj;
@@ -29,7 +44,7 @@ export class CreditReviewMainComponent implements OnInit {
   }
 
   EnterTab(AppStep) {
-    console.log(AppStep);
+    // console.log(AppStep);
     switch (AppStep) {
       case AdInsConstant.AppStepCust:
         this.AppStepIndex = this.AppStep[AdInsConstant.AppStepCust];

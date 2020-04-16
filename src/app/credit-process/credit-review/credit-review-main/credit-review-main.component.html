@@ -3,29 +3,29 @@
       <lib-ucviewgeneric [viewInput]="viewProdMainInfoObj"> </lib-ucviewgeneric>
       <aw-wizard #wizard navBarLayout="large-empty-symbols" [defaultStepIndex]="AppStepIndex">
 
-        <aw-wizard-step [stepTitle]="'Customer Data'" (stepEnter)="EnterTab('CUST')"
+        <aw-wizard-step [awNavigationMode] navigateBackward="allow" navigateForward="allow" [stepTitle]="'Customer Data'" (stepEnter)="EnterTab('CUST')"
           [navigationSymbol]="{ symbol: '1' }">
           <!-- <app-customer-data *ngIf="AppStepIndex == 0" [appId]=appId></app-customer-data> -->
         </aw-wizard-step>
   
-        <aw-wizard-step [stepTitle]="'Application Data'" (stepEnter)="EnterTab('GUAR')"
+        <aw-wizard-step [awNavigationMode] navigateBackward="allow" navigateForward="allow" [stepTitle]="'Application Data'" (stepEnter)="EnterTab('APP')"
           [navigationSymbol]="{ symbol: '2' }">
-          <!-- <app-guarantor-paging *ngIf="AppStepIndex == 1" [AppId]=appId></app-guarantor-paging> -->
+          <app-tab-application-data *ngIf="AppStepIndex == 1" [AppId]=appId></app-tab-application-data>
         </aw-wizard-step>
         
-        <aw-wizard-step [stepTitle]="'Fraud Detection Result'" (stepEnter)="EnterTab('REF')"
+        <aw-wizard-step [awNavigationMode] navigateBackward="allow" navigateForward="allow" [stepTitle]="'Fraud Detection Result'" (stepEnter)="EnterTab('FRD')"
           [navigationSymbol]="{ symbol: '3' }">
           <!-- <app-app-referantor *ngIf="AppStepIndex == 2" [appId]=appId></app-app-referantor> -->
         </aw-wizard-step>
   
-        <aw-wizard-step [stepTitle]="'Deviation'" (stepEnter)="EnterTab('APP')"
+        <aw-wizard-step [awNavigationMode] navigateBackward="allow" navigateForward="allow" [stepTitle]="'Deviation'" (stepEnter)="EnterTab('DEVC')"
         [navigationSymbol]="{ symbol: '4' }">
           <!-- <app-app-model *ngIf="AppStepIndex == 3" [appId]=appId></app-app-model> -->
         </aw-wizard-step>
   
-        <aw-wizard-step [stepTitle]="'ApprovalHistory'" (stepEnter)="EnterTab('ASSET')"
+        <aw-wizard-step [awNavigationMode] navigateBackward="allow" navigateForward="allow" [stepTitle]="'ApprovalHistory'" (stepEnter)="EnterTab('APV')"
         [navigationSymbol]="{ symbol: '5' }">
-          <!-- <app-app-life-ins *ngIf="AppStepIndex == 4" [AppId]=appId></app-app-life-ins> -->
+          <app-cust-history *ngIf="AppStepIndex == 4" [AppId]=appId></app-cust-history>
         </aw-wizard-step>
       </aw-wizard>
   </div>
