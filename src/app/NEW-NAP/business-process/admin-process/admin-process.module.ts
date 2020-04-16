@@ -3,6 +3,7 @@ import { NgModule } from "@angular/core";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { AdInsModule } from "app/components/adins-module/adins.module";
 import { AdminProcessSharingRoutingModule } from "./admin-process-routing.module";
+import { PurchaseOrderPagingComponent } from "./purchase-order/purchase-order-paging/purchase-order-paging.component";
 import { PurchaseOrderComponent } from "./purchase-order/purchase-order/purchase-order.component";
 import { PurchaseOrderDetailComponent } from "./purchase-order/purchase-order-detail/purchase-order-detail.component";
 import { CustConfirmationPagingComponent } from "./cust-confirmation/cust-confirmation-paging/cust-confirmation-paging.component";
@@ -11,8 +12,9 @@ import { CustConfirmationSubjDetailComponent } from "./cust-confirmation/cust-co
 import { CustConfirmationSubjViewComponent } from "./cust-confirmation/cust-confirmation-subj-view/cust-confirmation-subj-view.component";
 import { DeliveryOrderDetailComponent } from "./delivery-order/delivery-order-detail/delivery-order-detail.component";
 import { DeliveryOrderPagingComponent } from "./delivery-order/delivery-order-paging/delivery-order-paging.component";
-import { PreGoLiveComponent } from "./pre-go-live/pre-go-live-sharing/pre-go-live.component";
-import { PreGoLiveRequestForApprovalComponent } from "./pre-go-live/pre-go-live-request-for-approval-sharing/pre-go-live-request-for-approval.component";
+import { PreGoLivePagingComponent } from "./pre-go-live/pre-go-live-paging/pre-go-live-paging.component";
+import { PreGoLiveComponent } from "./pre-go-live/pre-go-live/pre-go-live.component";
+import { PreGoLiveRequestForApprovalComponent } from "./pre-go-live/pre-go-live-request-for-approval/pre-go-live-request-for-approval.component";
 import { TcSharingComponentModule } from "app/NEW-NAP/sharing-component/input-nap-component/tc-sharing-component.module";
 import { ApplicationAgreementCancellationPagingComponent } from "./application-agreement-cancellation/application-agreement-cancellation-paging/application-agreement-cancellation-paging.component";
 import { ApplicationAgreementCancellationDetailComponent } from "./application-agreement-cancellation/application-agreement-cancellation-detail/application-agreement-cancellation-detail.component";
@@ -37,6 +39,7 @@ import { InvoiceDataAddComponent } from "./invoice-data/invoice-data-add/invoice
     AdInsModule,
   ],
   declarations: [
+    PurchaseOrderPagingComponent,
     PurchaseOrderComponent,
     PurchaseOrderDetailComponent,
     CustConfirmationPagingComponent,
@@ -45,6 +48,7 @@ import { InvoiceDataAddComponent } from "./invoice-data/invoice-data-add/invoice
     CustConfirmationSubjViewComponent,
     DeliveryOrderDetailComponent,
     DeliveryOrderPagingComponent,
+    PreGoLivePagingComponent,
     PreGoLiveComponent,
     PreGoLiveRequestForApprovalComponent,
     ApplicationAgreementCancellationPagingComponent,

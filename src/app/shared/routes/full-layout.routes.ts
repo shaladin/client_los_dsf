@@ -58,13 +58,7 @@ export const Full_ROUTES: Routes = [
   {
     path: 'CreditProcess',
     loadChildren: './credit-process/credit-process.module#CreditProcessModule'
-  } ,
-  {
-    path: 'InputNap',
-    loadChildren: './NEW-NAP/FL4W/input-nap/input-nap.module#InputNapFL4WModule'
-    
-    
-    
   } 
+ 
      
 ];
