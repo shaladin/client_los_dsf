@@ -78,7 +78,7 @@
         },
         {
             "type": "sort",
-            "position": "left",
+            "position": "center",
             "label": "Mou No",
             "name": "MouCustNo"
         },
@@ -90,13 +90,13 @@
         },
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "Task Owner",
             "name": "MainUserId"
         },
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "Current User",
             "name": "CurrentUserId"
         },
@@ -125,7 +125,7 @@
         },
         {
             "type": "link",
-            "position": "left",
+            "position": "center",
             "property": "MouCustNo",
             "path": "/Mou/Cust/Paging",
             "param": [
@@ -142,12 +142,12 @@
         },
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "MainUserId"
         },
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "CurrentUserId"
         },
         {

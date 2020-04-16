@@ -62,7 +62,7 @@
         }
     ],
     "querystring": {
-        "select": "SELECT MOU.MOU_CUST_NO AS mouCustNo, MOU.CUST_NAME AS custName, MOU.MOU_CUST_DT AS mouCustDt, MOU.REF_NO AS refNo, MOU.MR_MOU_TYPE_CODE AS mrMouTypeCode, MOU.MOU_CUST_ID AS mouCustId, MOU.MOU_STAT AS MouStat",
+        "select": "SELECT MOU.MOU_CUST_NO AS MouCustNo, MOU.CUST_NAME AS CustName, MOU.MOU_CUST_DT AS MouCustDt, MOU.REF_NO AS RefNo, MOU.MR_MOU_TYPE_CODE AS MrMouTypeCode, MOU.MOU_CUST_ID AS MouCustId, MOU.MOU_STAT AS MouStat",
         "from": "FROM dbo.MOU_CUST MOU WITH(NOLOCK)"
     },
     "headerList": [
@@ -106,34 +106,34 @@
         {
             "type": "link",
             "position": "center",
-            "property": "mouCustNo",
+            "property": "MouCustNo",
             "path": "/Mou/Cust/Paging",
             "param": [
                 {
                     "type": "MouCustId",
-                    "property": "mouCustId"
+                    "property": "MouCustId"
                 }
             ]
         },
         {
             "type": "text",
             "position": "left",
-            "property": "custName"
+            "property": "CustName"
         },
         {
             "type": "text",
             "position": "center",
-            "property": "mouCustDt"
+            "property": "MouCustDt"
         },
         {
             "type": "text",
             "position": "center",
-            "property": "refNo"
+            "property": "RefNo"
         },
         {
             "type": "text",
             "position": "left",
-            "property": "mrMouTypeCode"
+            "property": "MrMouTypeCode"
         },
         {
             "type": "action",
@@ -144,16 +144,16 @@
                     "path": "/Mou/Request/Detail",
                     "param": [
                         {
-                            "type": "mouCustId",
-                            "property": "mouCustId"
+                            "type": "MouCustId",
+                            "property": "MouCustId"
                         },
                         {
                             "type": "mode",
                             "property": "edit"
                         },
                         {
-                            "type": "mrMouTypeCode",
-                            "property": "mrMouTypeCode"
+                            "type": "MrMouTypeCode",
+                            "property": "MrMouTypeCode"
                         }
                     ]
                 }

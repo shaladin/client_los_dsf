@@ -30,7 +30,7 @@
     },
     {
       "type": "sort",
-      "position": "center",
+      "position": "left",
       "label": "CUSTOMER NAME",
       "name": "MC.CUST_NAME"
     },
@@ -48,7 +48,7 @@
     },
     {
       "type": "sort",
-      "position": "center",
+      "position": "right",
       "label": "PLAFOND AMOUNT",
       "name": "MC.PLAFOND_AMT"
     },
@@ -66,7 +66,7 @@
     },
     {
       "type": "sort",
-      "position": "center",
+      "position": "left",
       "label": "MOU TYPE",
       "name": "MC.MR_MOU_TYPE_CODE"
     },
@@ -125,7 +125,7 @@
     },
     {
       "type": "text",
-      "position": "center",
+      "position": "left",
       "property": "MrMouTypeCode"
     },
     {
