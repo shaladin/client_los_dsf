@@ -1,0 +1,181 @@
+<div class="form-body">
+  <div class="px-3">
+    <form class="form form-horizontal">
+      <div class="form-body">
+        <h4 class="form-section card-title" translate>
+          Subsidy
+        </h4>
+      </div>
+    </form>
+  </div>
+
+
+  <div class="px-3" >
+  <form class="form form-horizontal" [formGroup]="AppSubsidyForm"
+  (ngSubmit)="AppSubsidyForm.valid && SaveValue()" #enjiForm="ngForm">
+
+
+  <div class="form-group row adins-required">
+    <label class="col-md-3 adInsLabel"  translate>Subsidy From Type</label>
+    <div class="col-md-9">
+      <select class="form-control adInsInput" formControlName="MrSubsidyFromTypeCode"
+        [ngClass]="{ 'is-invalid': enjiForm.submitted && AppSubsidyForm.controls.MrSubsidyFromTypeCode.invalid }">
+        <option *ngFor="let item of tempSubsidyFromTypeObj" [value]="item.Key">{{item.Value}}</option>
+      </select>
+      <show-errors [control]="AppSubsidyForm.controls.MrSubsidyFromTypeCode" [submit]="enjiForm.submitted"></show-errors>
+    </div>
+  </div>
+
+  <div class="form-group row adins-required">
+    <label class="col-md-3 adInsLabel"  translate>Subsidy From Value</label>
+    <div class="col-md-9">
+      <select class="form-control adInsInput" formControlName="MrSubsidyFromTypeCode"
+        [ngClass]="{ 'is-invalid': enjiForm.submitted && AppSubsidyForm.controls.MrSubsidyFromTypeCode.invalid }">
+        <option *ngFor="let item of tempSubsidyFromTypeObj" [value]="item.Key">{{item.Value}}</option>
+      </select>
+      <show-errors [control]="AppSubsidyForm.controls.MrSubsidyFromTypeCode" [submit]="enjiForm.submitted"></show-errors>
+    </div>
+  </div>
+  <div class="form-group row adins-required">
+    <label class="col-md-3 adInsLabel"  translate>Subsidy Allocation</label>
+    <div class="col-md-9">
+      <select class="form-control adInsInput" formControlName="MrSubsidyAllocCode"
+        [ngClass]="{ 'is-invalid': enjiForm.submitted && AppSubsidyForm.controls.MrSubsidyAllocCode.invalid }">
+        <option *ngFor="let item of tempMrSubsidyAllocCode" [value]="item.Key">{{item.Value}}</option>
+      </select>
+      <show-errors [control]="AppSubsidyForm.controls.MrSubsidyAllocCode" [submit]="enjiForm.submitted"></show-errors>
+    </div>
+  </div>
+  <div class="form-group row adins-required">
+    <label class="col-md-3 adInsLabel"  translate>Subsidy Source</label>
+    <div class="col-md-9">
+      <select class="form-control adInsInput" formControlName="MrSubsidySourceCode"
+        [ngClass]="{ 'is-invalid': enjiForm.submitted && AppSubsidyForm.controls.MrSubsidySourceCode.invalid }">
+        <option *ngFor="let item of tempMrSubsidySourceCode" [value]="item.Key">{{item.Value}}</option>
+      </select>
+      <show-errors [control]="AppSubsidyForm.controls.MrSubsidySourceCode" [submit]="enjiForm.submitted"></show-errors>
+    </div>
+  </div>
+
+  <div class="form-group row adins-required">
+    <label class="col-md-3 adInsLabel"  translate>Subsidy Value Type</label>
+    <div class="col-md-9">
+      <select class="form-control adInsInput" formControlName="MrSubsidyValueTypeCode"
+        [ngClass]="{ 'is-invalid': enjiForm.submitted && AppSubsidyForm.controls.MrSubsidyValueTypeCode.invalid }">
+        <option *ngFor="let item of tempMrSubsidyValueTypeCode" [value]="item.Key">{{item.Value}}</option>
+      </select>
+      <show-errors [control]="AppSubsidyForm.controls.MrSubsidyValueTypeCode" [submit]="enjiForm.submitted"></show-errors>
+    </div>
+  </div>
+
+  <div class="form-group row adins-required">
+    <label class="col-md-3 adInsLabel"  translate>Subsidy Amount</label>
+    <div class="col-md-9">
+      
+  <lib-ucinputnumber [parentForm]="AppSubsidyForm" [enjiForm]="enjiForm" [identifier]="'SubsidyAmt'" [isRequired]="false"></lib-ucinputnumber>
+    </div>
+  </div>
+
+
+ </form>
+ <div class="col-md-12" style="padding: 0; text-align: right;">
+  <span class="mr-1">
+    <button type="button" class="addButton" (click)="openModalAddFee()" translate>
+      <i class="ft-plus-circle"></i> Add
+    </button>
+  </span>
+</div>
+</div>
+ 
+    <div class="px-3 table-responsive">
+      <table class="table table-responsive-md text-center table-hover">
+        <thead>
+          <tr class="table-header">
+            <th><span style="float: left;" class="thead-header" name='No' translate>Subsidy From Type</span>
+            </th>
+            <th><span style="float: left;" class="thead-header" name='CustNo' translate>Subsidy From Value</span>
+            </th>
+            <th><span style="float: left;" class="thead-header" name='CustName' translate>Subsidy Allocation</span>
+            </th>
+            <th><span style="float: left;" class="thead-header" name='IdNo' translate>Subsidy Source</span>
+            </th>
+            <th><span style="float: left;" class="thead-header" name='TaxIdNo' translate>Subsidy Value Type</span>
+            </th>
+            <th><span style="float: left;" class="thead-header" name='TaxIdNo' translate>Subsidy Amount</span>
+            </th>
+            <th translate>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of listAppSubsidy">
+            <td class="text-left">{{item.MrSubsidyFromTypeName}}</td>
+            <td class="text-left">{{item.MrSubsidyFromValueName}}</td>
+            <td class="text-left">{{item.MrSubsidyAllocName}}</td>
+            <td class="text-left">{{item.MrSubsidySourceName}}</td>
+            <td class="text-left">{{item.MrSubsidyValueTypeName}}</td>
+            <td class="text-left" *ngIf="item.MrSubsidyValueTypeName == 'Percentage'">{{item.SubsidyPrcnt}}</td>
+            <td class="text-left" *ngIf="item.MrSubsidyValueTypeName == 'Amount'">{{item.SubsidyAmt}}</td>
+            <td>
+              <a class="danger p-0" data-original-title="" title=""
+                (click)="deleteItem(item.CustCompanyMgmntShrholderId)">
+                <i class="ft-trash-2 font-medium-3 mr-2"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+<!-- fee -->
+    <div class="px-3">
+      <form class="form form-horizontal" [formGroup]="CustomerDetailForm"
+      (ngSubmit)="CustomerDetailForm.valid && SaveValue()" #enjiForm="ngForm">
+      <div class="form-body">
+        <lib-ucSubsection [id]="'MainInfo'" [title]="'Main Info'" [panel]="'MainInfoId'">
+        </lib-ucSubsection>
+        <div id="MainInfoId">
+          <div class="form-group row  ">
+            <label class="col-md-2 adins-required-label" translate>Industry Type Name </label>
+            <div class="col-md-4">
+              <lib-uclookupgeneric [lookupInput]="lookUpObj" [parentForm]="CustomerDetailForm" [enjiForm]="enjiForm"
+                [identifier]="'RefIndustryTypeId'" (lookup)=getLookUp($event)>
+              </lib-uclookupgeneric>
+            </div>
+            <label class="col-md-2 adins-required-label" translate> Number Of Employee</label>
+            <div class="col-md-4">
+              <input type="text" class="form-control adInsInput" formControlName="NumOfEmp"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && CustomerDetailForm.controls.NumOfEmp.invalid}">
+              <show-errors [control]="CustomerDetailForm.controls.NumOfEmp" [submit]="enjiForm.submitted">
+              </show-errors>
+            </div>
+          </div>
+          <div class="form-group row adins">
+          
+          </div>
+          <div class="form-group row  ">
+            <label class="col-md-2 adins-required-label" translate>Establishment Date</label>
+            <div class="col-md-4">
+              <input type="date" class="form-control adInsInput" formControlName="EstablishmentDt"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && CustomerDetailForm.controls.EstablishmentDt.invalid}">
+              <show-errors [control]="CustomerDetailForm.controls.EstablishmentDt" [submit]="enjiForm.submitted">
+              </show-errors>
+            </div> 
+          </div>
+        </div>
+      </div>
+      <div class="form-actions right">
+        <button type="button" class="btn btn-raised btn-warning mr-1" (click)="back()" translate>
+          <i class="ft-x"></i> Cancel
+        </button>
+        <button type="submit" class="btn btn-raised btn-primary" translate>
+          <i class="fa fa-check-square-o"></i> Save & Continue
+        </button>
+   
+      </div>
+    </form>
+
+    </div>
+    
+
+    
+  </div>
