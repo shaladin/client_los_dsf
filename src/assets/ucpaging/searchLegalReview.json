@@ -213,6 +213,10 @@
             {
               "type": "MouCustId",
               "property": "MouCustId"
+            },
+            {
+              "type": "WfTaskListId",
+              "property": "WfTaskListId"
             }
           ]
         }
