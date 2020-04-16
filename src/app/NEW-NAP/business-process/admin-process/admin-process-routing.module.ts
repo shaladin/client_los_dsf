@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { PreGoLiveComponent } from './pre-go-live/pre-go-live-sharing/pre-go-live.component';
-import { PreGoLiveRequestForApprovalComponent } from './pre-go-live/pre-go-live-request-for-approval-sharing/pre-go-live-request-for-approval.component';
+import { PreGoLivePagingComponent } from './pre-go-live/pre-go-live-paging/pre-go-live-paging.component';
+import { PreGoLiveComponent } from './pre-go-live/pre-go-live/pre-go-live.component';
+import { PreGoLiveRequestForApprovalComponent } from './pre-go-live/pre-go-live-request-for-approval/pre-go-live-request-for-approval.component';
+import { PurchaseOrderPagingComponent } from './purchase-order/purchase-order-paging/purchase-order-paging.component';
 import { PurchaseOrderComponent } from './purchase-order/purchase-order/purchase-order.component';
 import { PurchaseOrderDetailComponent } from './purchase-order/purchase-order-detail/purchase-order-detail.component';
 import { DeliveryOrderDetailComponent } from './delivery-order/delivery-order-detail/delivery-order-detail.component';
@@ -26,6 +28,13 @@ const routes: Routes = [
   {
     path: '',
     children: [
+      {
+        path: 'PurchaseOrder/Paging',
+        component: PurchaseOrderPagingComponent,
+        data: {
+          title: 'Purchase Order Paging'
+        }
+      },
       {
         path: 'PurchaseOrder/PO',
         component: PurchaseOrderComponent,
@@ -59,6 +68,13 @@ const routes: Routes = [
         component: CustConfirmationSubjViewComponent,
         data: {
           title: 'Customer Confirmation Subject View'
+        }
+      },
+      {
+        path: 'PreGoLive/Paging',
+        component: PreGoLivePagingComponent,
+        data: {
+          title: 'PreGoLive Paging'
         }
       },
       {
