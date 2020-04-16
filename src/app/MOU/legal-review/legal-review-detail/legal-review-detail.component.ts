@@ -35,6 +35,7 @@ export class LegalReviewDetailComponent implements OnInit {
   EditListMouCustTc = AdInsConstant.EditListMouCustTc;
   @ViewChild("MouTc") public mouTc: MouCustTcComponent;
   responseMouObj = new Array();
+  WfTaskListId: any;
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
@@ -51,6 +52,10 @@ export class LegalReviewDetailComponent implements OnInit {
       if (params['MouCustId'] != null) {
         this.MouCustId = params['MouCustId'];
       }
+      if (params['WfTaskListId'] != null) {
+        this.WfTaskListId = params['WfTaskListId'];
+      }
+      
     });
     var mouObj = { "MouCustId": this.MouCustId };
     this.http.post(this.GetMouCustLglReviewByMouCustIdUrl, mouObj).subscribe(
@@ -88,8 +93,9 @@ export class LegalReviewDetailComponent implements OnInit {
     }
     return '';
   }
-
-  SaveData(formObj: any) {
+  
+  SaveData(formObj: any, isSubmit : boolean) {
+    console.log('masuk save');
     var mouObj = new MouCustLglReviewObj();
     for (let index = 0; index < this.responseRefMasterObj.length; index++) {
       var tempMouObj = {
@@ -99,6 +105,8 @@ export class LegalReviewDetailComponent implements OnInit {
       }
       mouObj.MouCustLglReviewObjs.push(tempMouObj);
     }
+    mouObj.WfTaskListId = this.WfTaskListId;
+    mouObj.IsSubmit = isSubmit;
     this.http.post(this.AddEditRangeMouCustLglReview, mouObj).subscribe(
       response => {
         this.toastr.successMessage(response['message']);

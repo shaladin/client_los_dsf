@@ -70,16 +70,8 @@ const routes: Routes = [
                 loadChildren: './FCTR/additional-process/additional-process.module#AdditionalProcessFCTRModule'
             },
             {
-                path: 'BusinessProcess/CreditProcess',
-                loadChildren: './business-process/additional-process/additional-process.module#AdditionalProcessSharingModule'
-            },
-            {
-                path: 'BusinessProcess/AdminProcess',
-                loadChildren: './business-process/admin-process/admin-process.module#AdminProcessSharingModule'
-            },
-            {
-                path: 'BusinessProcess/AddProcess',
-                loadChildren: './business-process/additional-process/additional-process.module#AdditionalProcessSharingModule'
+                path: 'FinanceLeasing/AssetData',
+                loadChildren: './FL4W/asset-data/asset-data.module#AssetDataFL4WModule'
             },
         ]
     }

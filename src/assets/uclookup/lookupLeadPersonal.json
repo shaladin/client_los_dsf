@@ -21,7 +21,8 @@
     ],
     "querystring": {
       "select": "SELECT L.LEAD_NO AS LeadNo, L.LEAD_ID AS LeadId, LC.CUST_NAME AS CustName",
-      "from": "FROM LEAD L WITH(NOLOCK) JOIN LEAD_CUST LC WITH(NOLOCK) on L.LEAD_ID = LC.LEAD_ID WHERE LC.MR_CUST_TYPE_CODE = 'PERSONAL'"
+      "from": "FROM dbo.LEAD L WITH(NOLOCK) JOIN dbo.LEAD_CUST LC WITH(NOLOCK) on L.LEAD_ID = LC.LEAD_ID",
+      "where" : "WHERE LC.MR_CUST_TYPE_CODE = 'PERSONAL'"
     },
     "headerList": [
         {
