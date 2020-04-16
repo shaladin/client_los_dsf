@@ -21,6 +21,7 @@ import { CalcInsAddCvgObj } from 'app/shared/model/CalcInsAddCvgObj.Model';
 import { ResultCalcInsObj } from 'app/shared/model/ResultCalcInsObj.Model';
 import { AppInsMainCvgObj } from 'app/shared/model/AppInsMainCvgObj.Model';
 import { AppInsAddCvgObj } from 'app/shared/model/AppInsAddCvgObj.Model';
+import { WizardComponent } from 'angular-archwizard';
 
 @Component({
   selector: 'app-insurance-data',
@@ -31,7 +32,11 @@ import { AppInsAddCvgObj } from 'app/shared/model/AppInsAddCvgObj.Model';
 export class InsuranceDataComponent implements OnInit {
 
   @Input() appId: number;
+  @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
+
+
   appAssetId: number;
+  totalAssetPriceAmt: number;
 
   appObj: NapAppModel;
   appAssetObj: AppAssetObj;
@@ -101,7 +106,8 @@ export class InsuranceDataComponent implements OnInit {
   constructor(private fb: FormBuilder, 
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private route: ActivatedRoute){
+    private route: ActivatedRoute,
+    private wizard: WizardComponent){
       this.route.queryParams.subscribe(params => {
         this.appId = params["AppId"];
       })
@@ -115,8 +121,9 @@ export class InsuranceDataComponent implements OnInit {
     await this.bindInsAssetCoverPeriodObj();
     await this.bindInsAssetRegionObj();
     await this.bindInscoBranchObj();
-    await this.bindAppInsAndAppInsObj(this.appInsObjObj.InsAssetCoveredBy);
-    
+    if(this.appInsuranceObj != null){
+      await this.bindAppInsAndAppInsObj(this.appInsObjObj.InsAssetCoveredBy);
+    }    
   }
 
   SaveForm(){
@@ -137,6 +144,7 @@ export class InsuranceDataComponent implements OnInit {
       (response) => {
         console.log(response);
         this.toastr.successMessage(response["message"]);
+        this.wizard.goToNextStep();
       },
       (error) => {
         console.log(error);
@@ -444,7 +452,7 @@ export class InsuranceDataComponent implements OnInit {
     reqObj.InscoCode = this.InsuranceDataForm.controls.InscoBranchCode.value;
     reqObj.AssetCategory = this.appAssetObj.AssetCategoryCode;
     reqObj.AssetCondition = this.appAssetObj.MrAssetConditionCode;
-    reqObj.AssetPriceAmount = this.appFinDataObj.TotalAssetPriceAmt;
+    reqObj.AssetPriceAmount = this.totalAssetPriceAmt;
     reqObj.RegionCode = this.InsuranceDataForm.controls.InsAssetRegion.value;
     reqObj.ProdOfferingCode = this.appObj.ProdOfferingCode;
     reqObj.ProdOfferingVersion = this.appObj.ProdOfferingVersion;
@@ -909,10 +917,18 @@ export class InsuranceDataComponent implements OnInit {
         this.appInsObjObj = response["AppInsObjObj"];
         this.appInsMainCvgObj = response["AppInsMainCvgObjs"];
 
+        var totalAccessoryPriceAmt = 0;
+
+        for(let i=0; i < this.appAssetAccessoryObjs.length; i++){
+          totalAccessoryPriceAmt += this.appAssetAccessoryObjs[i].AccessoryPriceAmt; 
+        }
+
+        this.totalAssetPriceAmt = this.appAssetObj.AssetPriceAmt + totalAccessoryPriceAmt;
+
         if(this.appFinDataObj != undefined){
           this.InsuranceDataForm.patchValue({
-            CvgAmt: this.appFinDataObj.TotalAssetPriceAmt,
-            CustCvgAmt: this.appFinDataObj.TotalAssetPriceAmt
+            CvgAmt: this.totalAssetPriceAmt,
+            CustCvgAmt: this.totalAssetPriceAmt
           });
         }
 
@@ -1014,6 +1030,7 @@ export class InsuranceDataComponent implements OnInit {
           this.InsuranceDataForm.patchValue({
             InsAssetCoveredBy: this.insuredByObj[0].Key
           });
+          this.setValidator(this.insuredByObj[0].Key);
         }
       }
     );
