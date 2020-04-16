@@ -62,13 +62,13 @@
         }
     ],
     "querystring": {
-        "select": "SELECT A.MOU_CUST_NO AS MouCustNo, A.MOU_CUST_ID AS MouCustId, A.MOU_CUST_ID AS MouCustId, A.CUST_NAME AS CustName, A.MOU_CUST_DT AS MouCustDt, A.END_DT AS EndDt, A.PLAFOND_AMT AS PlafondAmt, A.IS_REVOLVING AS IsRevolving, A.MR_MOU_TYPE AS MouType, A.REF_NO AS RefNo",
+        "select": "SELECT A.MOU_CUST_NO AS MouCustNo, A.MOU_CUST_ID AS MouCustId, A.CUST_NAME AS CustName, A.MOU_CUST_DT AS MouCustDt, A.END_DT AS EndDt, A.PLAFOND_AMT AS PlafondAmt, A.IS_REVOLVING AS IsRevolving, A.MR_MOU_TYPE AS MouType, A.REF_NO AS RefNo",
         "from": "FROM dbo.MOU_CUST A WITH(NOLOCK)"
     },
     "headerList": [
         {
             "type": "sort",
-            "position": "left",
+            "position": "center",
             "label": "Mou No",
             "name": "MouCustNo"
         },
@@ -80,25 +80,25 @@
         },
         {
             "type": "sort",
-            "position": "left",
+            "position": "center",
             "label": "Mou Date",
             "name": "MouCustDt"
         },
         {
             "type": "sort",
-            "position": "left",
+            "position": "center",
             "label": "End Date",
             "name": "EndDt"
         },
         {
             "type": "sort",
-            "position": "left",
+            "position": "right",
             "label": "Plafond Amount",
             "name": "PlafondAmt"
         },
         {
             "type": "sort",
-            "position": "left",
+            "position": "center",
             "label": "Revolving",
             "name": "IsRevolving"
         },
@@ -110,7 +110,7 @@
         },
         {
             "type": "label",
-            "position": "left",
+            "position": "center",
             "label": "Ref No",
             "name": "RefNo"
         },
@@ -122,9 +122,16 @@
     ],
     "bodyList": [
         {
-            "type": "text",
-            "position": "left",
-            "property": "MouCustNo"
+            "type": "link",
+            "position": "center",
+            "property": "MouCustNo",
+            "path": "/Mou/Cust/Paging",
+            "param": [
+                {
+                    "type": "MouCustId",
+                    "property": "MouCustId"
+                }
+            ]
         },
         {
             "type": "text",
@@ -133,22 +140,22 @@
         },
         {
             "type": "text",
-            "position": "left",
+            "position": "center",
             "property": "MouCustDt"
         },
         {
             "type": "text",
-            "position": "left",
+            "position": "center",
             "property": "EndDt"
         },
         {
             "type": "text",
-            "position": "left",
+            "position": "right",
             "property": "PlafondAmt"
         },
         {
             "type": "boolean",
-            "position": "left",
+            "position": "center",
             "property": "IsRevolving"
         },
         {
@@ -158,7 +165,7 @@
         },
         {
             "type": "text",
-            "position": "left",
+            "position": "center",
             "property": "RefNo"
         },
         {

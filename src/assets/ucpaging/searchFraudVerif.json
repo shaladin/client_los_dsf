@@ -121,7 +121,7 @@
         },
         {
             "type": "sort",
-            "position": "left",
+            "position": "center",
             "label": "Cust No",
             "name": "LC.CustNo"
         },
@@ -175,7 +175,7 @@
         },
         {
             "type": "text",
-            "position": "left",
+            "position": "center",
             "property": "CustNo"
         },
         {

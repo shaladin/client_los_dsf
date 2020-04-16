@@ -116,37 +116,37 @@
         },
         {
             "type": "sort",
-            "position": "left",
+            "position": "center",
             "label": "Mou No",
             "name": "MOU.MOU_CUST_NO"
         },
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "Customer Name",
             "name": "MOU.CUST_NAME"
         },
         {
             "type": "sort",
-            "position": "left",
+            "position": "center",
             "label": "Mou Date",
             "name": "MOU.MOU_CUST_DT"
         },
         {
             "type": "sort",
-            "position": "left",
+            "position": "center",
             "label": "End Date",
             "name": "MOU.END_DT"
         },
         {
             "type": "sort",
-            "position": "left",
+            "position": "right",
             "label": "Plafond Amount",
             "name": "MOU.PLAFOND_AMT"
         },
         {
             "type": "sort",
-            "position": "left",
+            "position": "center",
             "label": "Revolving",
             "name": "MOU.IS_REVOLVING"
         },
@@ -158,7 +158,7 @@
         },
         {
             "type": "label",
-            "position": "left",
+            "position": "center",
             "label": "Ref No",
             "name": "MOU.REF_NO"
         },
@@ -175,28 +175,35 @@
             "property": "ClaimBy"
         },
         {
-            "type": "text",
-            "position": "left",
-            "property": "MouCustNo"
+            "type": "link",
+            "position": "center",
+            "property": "MouCustNo",
+            "path": "/Mou/Cust/Paging",
+            "param": [
+                {
+                    "type": "MouCustId",
+                    "property": "MouCustId"
+                }
+            ]
         },
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "CustName"
         },
         {
             "type": "date",
-            "position": "left",
+            "position": "center",
             "property": "MouCustDt"
         },
         {
             "type": "date",
-            "position": "left",
+            "position": "center",
             "property": "EndDt"
         },
         {
             "type": "decimal",
-            "position": "left",
+            "position": "right",
             "property": "PlafondAmt"
         },
         {
@@ -211,7 +218,7 @@
         },
         {
             "type": "text",
-            "position": "left",
+            "position": "center",
             "property": "RefNo"
         },
         {

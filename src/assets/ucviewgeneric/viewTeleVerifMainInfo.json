@@ -24,9 +24,16 @@
           "property": ""
         },
         {
-          "type": "text",
+          "type": "link",
           "label": "Copy From",
-          "property": "CopyFrom"
+          "property": "CopyFrom",
+          "path": "/Lead/View",
+          "param": [
+            {
+              "type": "LeadId",
+              "property": "LeadId"
+            }
+          ]
         },
         {
           "type": "",

@@ -169,9 +169,16 @@
             "property": "ClaimBy"
         },
         {
-            "type": "text",
+            "type": "link",
             "position": "left",
-            "property": "MouCustNo"
+            "property": "MouCustNo",
+            "path": "/Mou/Cust/Paging",
+            "param": [
+                {
+                    "type": "MouCustId",
+                    "property": "MouCustId"
+                }
+            ]
         },
         {
             "type": "text",

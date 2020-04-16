@@ -95,7 +95,7 @@
     ],
     "querystring": {
         "select": "SELECT MC.MOU_CUST_NO AS mouCustNo, MC.CUST_NAME AS custName, MC.MOU_CUST_DT AS mouCustDt, MC.END_DT AS endDt, MC.PLAFOND_AMT AS plafondAmt, MC.IS_REVOLVING AS isRevolving, RM_TYPE.DESCR AS mrMouTypeCode, RM_STAT.DESCR AS mouStat, MC.MOU_CUST_ID AS mouCustId",
-        "from": "FROM dbo.MOU_CUST AS MC WITH(NOLOCK) LEFT JOIN dbo.V_REF_MASTER AS RM_TYPE WITH(NOLOCK) ON MC.MR_MOU_TYPE_CODE = RM_TYPE.MASTER_CODE AND RM_TYPE.REF_MASTER_TYPE_CODE = 'MOU_STAT' LEFT JOIN dbo.V_REF_MASTER AS RM_STAT WITH(NOLOCK) ON MC.MOU_STAT = RM_STAT.MASTER_CODE AND RM_STAT.REF_MASTER_TYPE_CODE = 'MOU_STAT'"
+        "from": "FROM dbo.MOU_CUST AS MC WITH(NOLOCK) LEFT JOIN dbo.V_REF_MASTER AS RM_TYPE WITH(NOLOCK) ON MC.MR_MOU_TYPE_CODE = RM_TYPE.MASTER_CODE AND RM_TYPE.REF_MASTER_TYPE_CODE = 'MOU_TYPE' LEFT JOIN dbo.V_REF_STATUS AS RM_STAT WITH(NOLOCK) ON MC.MOU_STAT = RM_STAT.REF_STATUS_CODE AND RM_STAT.STATUS_GRP_CODE = 'MOUC_STAT'"
     },
     "headerList": [
         {
@@ -149,9 +149,16 @@
     ],
     "bodyList": [
         {
-            "type": "text",
+            "type": "link",
             "position": "left",
-            "property": "mouCustNo"
+            "property": "mouCustNo",
+            "path": "/Mou/Cust/Paging",
+            "param": [
+                {
+                    "type": "MouCustId",
+                    "property": "mouCustId"
+                }
+            ]
         },
         {
             "type": "text",

@@ -83,7 +83,7 @@
   "bodyList": [
     {
       "type": "link",
-      "position": "left",
+      "position": "center",
       "property": "MouCustNo",
       "path": "/Mou/Cust/Paging",
       "param": [

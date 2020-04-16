@@ -68,7 +68,7 @@
     "headerList": [
         {
             "type": "sort",
-            "position": "left",
+            "position": "center",
             "label": "MOU No",
             "name": "MOU.MOU_CUST_NO"
         },
@@ -80,13 +80,13 @@
         },
         {
             "type": "sort",
-            "position": "left",
+            "position": "center",
             "label": "Mou Date",
             "name": "MOU_CUST_DT"
         },
         {
             "type": "sort",
-            "position": "left",
+            "position": "center",
             "label": "Reference No.",
             "name": "MOU.REF_NO"
         },
@@ -104,9 +104,16 @@
     ],
     "bodyList": [
         {
-            "type": "text",
-            "position": "left",
-            "property": "mouCustNo"
+            "type": "link",
+            "position": "center",
+            "property": "mouCustNo",
+            "path": "/Mou/Cust/Paging",
+            "param": [
+                {
+                    "type": "MouCustId",
+                    "property": "mouCustId"
+                }
+            ]
         },
         {
             "type": "text",
@@ -115,12 +122,12 @@
         },
         {
             "type": "text",
-            "position": "left",
+            "position": "center",
             "property": "mouCustDt"
         },
         {
             "type": "text",
-            "position": "left",
+            "position": "center",
             "property": "refNo"
         },
         {

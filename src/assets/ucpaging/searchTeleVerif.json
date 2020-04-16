@@ -120,7 +120,7 @@
     },
     {
       "type": "sort",
-      "position": "left",
+      "position": "center",
       "label": "ORDER NO",
       "name": "L.ORDER_NO"
     },
@@ -159,9 +159,16 @@
       "property": "ClaimBy"
     },
     {
-      "type": "text",
+      "type": "link",
       "position": "center",
-      "property": "LeadNo"
+      "property": "LeadNo",
+      "path": "/Lead/View",
+      "param": [
+        {
+          "type": "LeadId",
+          "property": "LeadId"
+        }
+      ]
     },
     {
       "type": "text",
@@ -170,7 +177,7 @@
     },
     {
       "type": "text",
-      "position": "left",
+      "position": "center",
       "property": "OrderNo"
     },
     {

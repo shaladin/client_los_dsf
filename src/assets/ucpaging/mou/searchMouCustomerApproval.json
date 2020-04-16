@@ -84,7 +84,7 @@
         },
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "Request By",
             "name": "RequestBy"
         },
@@ -124,13 +124,20 @@
             "property": "CustName"
         },
         {
-            "type": "text",
+            "type": "link",
             "position": "left",
-            "property": "MouCustNo"
+            "property": "MouCustNo",
+            "path": "/Mou/Cust/Paging",
+            "param": [
+                {
+                    "type": "MouCustId",
+                    "property": "MouCustId"
+                }
+            ]
         },
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "RequestBy"
         },
         {
