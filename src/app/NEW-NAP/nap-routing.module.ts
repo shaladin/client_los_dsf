@@ -69,6 +69,18 @@ const routes: Routes = [
                 path: 'Factoring/AddProcess',
                 loadChildren: './FCTR/additional-process/additional-process.module#AdditionalProcessFCTRModule'
             },
+            {
+                path: 'BusinessProcess/CreditProcess',
+                loadChildren: './business-process/additional-process/additional-process.module#AdditionalProcessSharingModule'
+            },
+            {
+                path: 'BusinessProcess/AdminProcess',
+                loadChildren: './business-process/admin-process/admin-process.module#AdminProcessSharingModule'
+            },
+            {
+                path: 'BusinessProcess/AddProcess',
+                loadChildren: './business-process/additional-process/additional-process.module#AdditionalProcessSharingModule'
+            },
         ]
     }
 ]
