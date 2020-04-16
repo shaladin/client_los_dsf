@@ -24,7 +24,7 @@ import { RefEmpForLookupObj } from 'app/shared/model/RefEmpForLookupObj.Model';
 })
 export class LeadInputMainInfoComponent implements OnInit {
   user: any;
-  LeadId: any;
+  LeadId: number;
   addLead: any;
   editLead: any;
   getLeadByLeadId: any;
@@ -58,8 +58,6 @@ export class LeadInputMainInfoComponent implements OnInit {
   listLeadSource: any;
   vendorObj: any;
   returnVendorObj: any;
-  OfficeName: any;
-  LobName: any;
   pageType: string = "add";
   leadPersonalLookUpObj: any;
   cmoObj: any;
@@ -68,7 +66,7 @@ export class LeadInputMainInfoComponent implements OnInit {
   returnSurveyorObj: any;
   salesObj: any;
   returnSalesObj: any;
-  leadIdExist: any;
+  leadIdExist: number;
   getExistLeadObj: any;
   returnExistLead: any;
   vendorExistObj: any;
