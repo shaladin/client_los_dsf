@@ -4,4 +4,5 @@ export class LeadVerfObj{
     VerifyByName : any;
     VerifyDt : any;
     VerifyStat : any;
+    WfTaskListId : any;
 }
