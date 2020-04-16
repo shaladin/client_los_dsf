@@ -11,7 +11,7 @@ export class CustomerDocPrintingDetailComponent implements OnInit {
   viewObj: string;
   MouCustId: any;
   GetListMouCustDocPrintForViewByMouCustIdUrl  = AdInsConstant.GetListMouCustDocPrintForViewByMouCustId;
-  responseObj: any;
+  responseObj = new Array();
   EditMouCustDocPrintSequenceNoUrl =  AdInsConstant.EditMouCustDocPrintSequenceNo;
 
   constructor(

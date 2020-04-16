@@ -22,7 +22,7 @@ export class AppLifeInsComponent implements OnInit {
   show: any;
   LifeInsObj: LifeInsObj = new LifeInsObj();
   LifeInsDObj: LifeInsDObj;
-  IsCustCover: any;
+  IsChecked: any;
   mode: string = "add";
   ListObj: any = new Array();
   AppLifeInsD: any = new Array();
@@ -36,6 +36,7 @@ export class AppLifeInsComponent implements OnInit {
   }
 
   LifeInsForm = this.fb.group({
+    IsChecked : [false],
     LifeInscoBranchName: [''],
     MrLifeInsPaidMethodCode: [''],
     TotalLifeInsCptlzAmt: [''],
@@ -47,7 +48,6 @@ export class AppLifeInsComponent implements OnInit {
   MrLifeInsPaidMethodCode: any;
 
   ngOnInit() {
-    // this.LifeInsObj = new LifeInsObj();
 
     if (this.mode == "edit") {
       // var LifeInsObj = new LifeInsObj();
@@ -83,14 +83,16 @@ export class AppLifeInsComponent implements OnInit {
         RowVersion: ""
       }
 
-      this.http.post(AdInsConstant.GetVendorByCategoryCodeAndOfficeCode, LifeInscoBranchNameObj).subscribe(
+      this.http.post(AdInsConstant.GetListVendorByCategoryCodeAndOfficeCode, LifeInscoBranchNameObj).subscribe(
         (response) => {
           console.log("response :");
           console.log(response);
-          this.LifeInscoBranchName = response["ReturnObject"];
-          this.LifeInsForm.patchValue({
-            LifeInscoBranchName: this.LifeInscoBranchName[0].MasterCode
-          });
+          this.LifeInscoBranchName = response;
+          this.LifeInsObj.LifeInscoBranchCode = response["VendorCode"];
+          console.log(this.LifeInsObj.LifeInscoBranchCode);
+          // this.LifeInsForm.patchValue({
+          //   LifeInscoBranchName: this.LifeInscoBranchName[0].MasterCode
+          // });
         }
       );
       this.http.post(AdInsConstant.GetListActiveRefMaster, paidMethodObj).subscribe(
@@ -103,10 +105,10 @@ export class AppLifeInsComponent implements OnInit {
       );
   }
 
-  checked(event) {
-    if (event.target.checked) {
+  checked() {
+    this.IsChecked = this.LifeInsForm.controls.IsChecked.value;
+    if (this.IsChecked) {
       this.show =true;
-      this.IsCustCover = true;
       var lifeInsObj = new LifeInsObj();
       lifeInsObj.AppId = this.AppId;
       lifeInsObj.MrLifeInsPaidMethodCode = "PAID_IN_ADV";
@@ -122,14 +124,12 @@ export class AppLifeInsComponent implements OnInit {
       );
     } else {
       this.show = false;
-      this.IsCustCover = false;
     }
   
   }
 
   setValue() {
-    if (this.IsCustCover == true) {
-      this.LifeInsObj.IsCustCover = this.IsCustCover;
+    if (this.IsChecked ) {
       this.LifeInsObj.LifeInscoBranchName = this.LifeInsForm.controls.LifeInscoBranchName.value;
       this.LifeInsObj.MrLifeInsPaidMethodCode = this.LifeInsForm.controls.MrLifeInsPaidMethodCode.value;
       this.LifeInsObj.TotalLifeInsCptlzAmt = this.LifeInsForm.controls.TotalLifeInsCptlzAmt.value;
@@ -137,7 +137,6 @@ export class AppLifeInsComponent implements OnInit {
       this.LifeInsObj.InscoAdminFeeAmt = this.LifeInsForm.controls.InscoAdminFeeAmt.value;
       this.LifeInsObj.AppId = this.AppId;
     } else {
-      this.LifeInsObj.IsCustCover = this.IsCustCover;
     }
   }
 
@@ -178,6 +177,7 @@ export class AppLifeInsComponent implements OnInit {
       this.LifeInsObj.LifeInsDObj.InsuredName = this.ListObj[i].InsuredName;
       this.LifeInsObj.LifeInsDObj.Age = this.ListObj[i].Age;
       this.LifeInsObj.LifeInsDObj.MrCustTypeCode = this.ListObj[i].MrCustTypeCode;
+      
     } else {
       console.log("event unchecked");
       console.log(i);

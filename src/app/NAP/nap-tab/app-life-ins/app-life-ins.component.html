@@ -6,11 +6,6 @@
           <div class="col-md-8">
             <h4 class="card-title" translate>{{mode}} </h4>
           </div>
-          <div class="col-md-4" style="text-align-last: right">
-            <button type="button" class="backButton" [routerLink]="[]" translate>
-              <i class="ft-arrow-left"></i> Back
-            </button>
-          </div>
         </div>
       </div>
       <div class="card-body">
@@ -21,7 +16,8 @@
               <div class="class=form-group row adins-required">
                 <label class="col-md-6 adInsLabel">Is Cover Life Insurance</label>
                 <div class="col-md-6">
-                  <input type="checkbox" class="form-check-input" (change)="checked($event)">
+                  <mat-checkbox color="primary" formControlName="IsChecked" (change)="checked()">
+                  </mat-checkbox>
                 </div>
               </div>
               <span *ngIf='show'>
@@ -29,8 +25,8 @@
                   <label class="col-md-6 adInsLabel">Life Insco Branch Name </label>
                   <div class="col-md-6">
                     <select class="form-control adInsInput" style="width: auto" formControlName="LifeInscoBranchName">
-                      <option *ngFor="let it of LifeInscoBranchName" [value]="it.MasterCode">
-                        {{it.Descr}}</option>
+                      <option *ngFor="let it of LifeInscoBranchName" [value]="it.VendorCode">
+                        {{it.VendorName}}</option>
                     </select>
                   </div>
                 </div>
@@ -46,13 +42,16 @@
                   </div>
                 </div>
                 <br>
-                <div class="class=form-group row adins-required">
+                <div class="class=form-group row adins-required" >
                   <label class="col-md-6 adInsLabel">Capitalized Premi Percentage </label>
-                  <div class="col-md-6">
-                    <p>
-                      <input type="number" class="form-control" formControlName="TotalLifeInsCptlzAmt"> %</p>
+                  <div class="col-md-3">
+                      <input type="number" class="form-control" formControlName="TotalLifeInsCptlzAmt"> 
+                  </div>
+                  <div class="col-md-3">
+                    %
                   </div>
                 </div>
+                <br>
                 <div class="class=form-group row adins-required">
                   <label class="col-md-6 adInsLabel">Notes </label>
                   <div class="col-md-6">
@@ -72,7 +71,7 @@
                             </th>
                             <th><span translate class="thead-header" name='ObjectType'>Object Type</span>
                             </th>
-                            <th><span translate class="thead-header" name='IsDefault'>Default</span>
+                            <th><span translate class="thead-header" name='IsDefault'>Check</span>
                             </th>
                           </tr>
                         </thead>
@@ -89,7 +88,7 @@
                 <h4 class="form-section card-title" translate><i class="ft-file-text"></i>Life Insurance Fee </h4>
                 <div class="class=form-group row adins-required">
                   <label class="col-md-6 adInsLabel">Admin Fee Amount </label>
-                  <div class="col-md-6">
+                  <div class="col-md-4">
                     <input type="number" class="form-control" formControlName="InscoAdminFeeAmt">
                   </div>
                 </div>
