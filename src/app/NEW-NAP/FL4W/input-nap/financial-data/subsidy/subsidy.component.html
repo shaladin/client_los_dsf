@@ -126,56 +126,5 @@
       </table>
     </div>
 
-<!-- fee -->
-    <div class="px-3">
-      <form class="form form-horizontal" [formGroup]="CustomerDetailForm"
-      (ngSubmit)="CustomerDetailForm.valid && SaveValue()" #enjiForm="ngForm">
-      <div class="form-body">
-        <lib-ucSubsection [id]="'MainInfo'" [title]="'Main Info'" [panel]="'MainInfoId'">
-        </lib-ucSubsection>
-        <div id="MainInfoId">
-          <div class="form-group row  ">
-            <label class="col-md-2 adins-required-label" translate>Industry Type Name </label>
-            <div class="col-md-4">
-              <lib-uclookupgeneric [lookupInput]="lookUpObj" [parentForm]="CustomerDetailForm" [enjiForm]="enjiForm"
-                [identifier]="'RefIndustryTypeId'" (lookup)=getLookUp($event)>
-              </lib-uclookupgeneric>
-            </div>
-            <label class="col-md-2 adins-required-label" translate> Number Of Employee</label>
-            <div class="col-md-4">
-              <input type="text" class="form-control adInsInput" formControlName="NumOfEmp"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && CustomerDetailForm.controls.NumOfEmp.invalid}">
-              <show-errors [control]="CustomerDetailForm.controls.NumOfEmp" [submit]="enjiForm.submitted">
-              </show-errors>
-            </div>
-          </div>
-          <div class="form-group row adins">
-          
-          </div>
-          <div class="form-group row  ">
-            <label class="col-md-2 adins-required-label" translate>Establishment Date</label>
-            <div class="col-md-4">
-              <input type="date" class="form-control adInsInput" formControlName="EstablishmentDt"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && CustomerDetailForm.controls.EstablishmentDt.invalid}">
-              <show-errors [control]="CustomerDetailForm.controls.EstablishmentDt" [submit]="enjiForm.submitted">
-              </show-errors>
-            </div> 
-          </div>
-        </div>
-      </div>
-      <div class="form-actions right">
-        <button type="button" class="btn btn-raised btn-warning mr-1" (click)="back()" translate>
-          <i class="ft-x"></i> Cancel
-        </button>
-        <button type="submit" class="btn btn-raised btn-primary" translate>
-          <i class="fa fa-check-square-o"></i> Save & Continue
-        </button>
-   
-      </div>
-    </form>
-
-    </div>
-    
-
-    
+     
   </div>

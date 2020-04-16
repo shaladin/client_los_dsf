@@ -133,12 +133,7 @@ export class AdInsConstant {
   //LOB CODE
   public static LobCodeFCTR = "FCTR";
   public static LobCodeRFN4W = "RFN4W";
-
-
-
-
-
-
+  
   //Asset Accessory
   public static GetAssetAccessoryByCode = "http://localhost:5000/AssetAccessory/GetAssetAccessoryByCode";
 
