@@ -26,7 +26,7 @@
                 [routerLinkActive]="menuItem.submenu.length != 0 ? '' : 'active'"
                 [routerLinkActiveOptions]="{exact: true}">
                 <a [routerLink]="menuItem.class == '' ? [menuItem.path] : null"
-                    [queryParams]="genParam(menuSubItem.params)"
+                    [queryParams]="genParam(menuItem.params)"
                     *ngIf="!menuItem.isExternalLink; else externalLinkBlock" [contextMenu]="basicMenu"
                     [contextMenuSubject]="menuItem">
                     <i [ngClass]="[menuItem.icon]"></i>
@@ -65,7 +65,7 @@
                         <ul class="menu-content" *ngIf="menuSubItem.submenu.length > 0">
                             <li *ngFor="let menuSubsubItem of menuSubItem.submenu" routerLinkActive="active"
                                 [routerLinkActiveOptions]="{exact: true}" [ngClass]="[menuSubsubItem.class]">
-                                <a [routerLink]="[menuSubsubItem.path]" [queryParams]="genParam(menuSubItem.params)"
+                                <a [routerLink]="[menuSubsubItem.path]" [queryParams]="genParam(menuSubsubItem.params)"
                                     *ngIf="!menuSubsubItem.isExternalLink; else externalSubSubLinkBlock">
                                     <i [ngClass]="[menuSubsubItem.icon]"></i>
                                     <span class="menu-title">{{menuSubsubItem.title | translate }}</span>

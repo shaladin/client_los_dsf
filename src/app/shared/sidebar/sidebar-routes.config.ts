@@ -8,56 +8,53 @@ export const ROUTES: RouteInfo[] = [
   {
     path: '', title: 'Consumer Finance', icon: 'ft-file-plus', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false,
     submenu: [
-      { path: '/Nap/ConsumerFinance/Paging', title: 'New Application', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
-      { path: '/Nap/CreditProcess/CommissionData/Paging', title: 'Commission Data', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
-      { path: '/Nap/CreditProcess/ReservedFund/Paging', title: 'Reserved Fund', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
-      { path: '/Nap/CreditProcess/PhoneVerification', title: 'Phone Verification', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
-      { path: '/Nap/CreditProcess/CreditReview', title: 'Credit Review', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
-      { path: '/Nap/CreditProcess/CreditApproval/Paging', title: 'Credit Approval', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
-      { path: '/Nap/AdminProcess/CustomerConfirmation/Paging', title: 'Customer Confirmation', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
-      { path: '/Nap/AdminProcess/PurchaseOrder/Paging', title: 'Purchase Order', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
-      { path: '/Nap/AdminProcess/DeliveryOrder/Paging', title: 'Delivery Order', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
-      { path: '/Nap/AdminProcess/PreGoLive/Paging', title: 'Pre Go Live', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] }
+      { path: '/Nap/ConsumerFinance/Paging', title: 'New Application', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "CF4W" }]},
+      { path: '/Nap/CreditProcess/CommissionData/Paging', title: 'Commission Data', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "CF4W" }]},
+      { path: '/Nap/CreditProcess/ReservedFund/Paging', title: 'Reserved Fund', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "CF4W" }]},
+      { path: '/Nap/CreditProcess/PhoneVerification', title: 'Phone Verification', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "CF4W" }]},
+      { path: '/Nap/CreditProcess/CreditReview', title: 'Credit Review', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "CF4W" }]},
+      { path: '/Nap/CreditProcess/CreditApproval/Paging', title: 'Credit Approval', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "CF4W" }]},
+      { path: '/Nap/AdminProcess/CustomerConfirmation/Paging', title: 'Customer Confirmation', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "CF4W" }]},
+      { path: '/Nap/AdminProcess/PurchaseOrder/Paging', title: 'Purchase Order', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "CF4W" }]},
+      { path: '/Nap/AdminProcess/DeliveryOrder/Paging', title: 'Delivery Order', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "CF4W" }]},
+      { path: '/Nap/AdminProcess/PreGoLive/Paging', title: 'Pre Go Live', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "CF4W" }]}
     ], params: []
   },
   {
     path: '', title: 'Finance Leasing', icon: 'ft-file-plus', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false,
     submenu: [
-      { path: '/Nap/FinanceLeasing/Paging', title: 'New Application', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
-      { path: '/Nap/CreditProcess/CommissionData/Paging', title: 'Commission Data', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
-      { path: '/Nap/CreditProcess/ReservedFund/Paging', title: 'Reserved Fund', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
-      { path: '/Nap/CreditProcess/CreditReview', title: 'Credit Review', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
-      { path: '/Nap/CreditProcess/CreditApproval/Paging', title: 'Credit Approval', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
-      { path: '/Nap/AdminProcess/AgreementActivation/Paging', title: 'Agreement Activation', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
-      { path: '/Nap/AdminProcess/PurchaseOrder/Paging', title: 'Purchase Order', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
-      { path: '/Nap/AdminProcess/DeliveryOrder/Paging', title: 'Delivery Order', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
-      { path: '/Nap/AdminProcess/PreGoLive/Paging', title: 'Pre Go Live', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] }
+      { path: '/Nap/FinanceLeasing/Paging', title: 'New Application', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "FL4W" }]},
+      { path: '/Nap/CreditProcess/CommissionData/Paging', title: 'Commission Data', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "FL4W" }]},
+      { path: '/Nap/CreditProcess/ReservedFund/Paging', title: 'Reserved Fund', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "FL4W" }]},
+      { path: '/Nap/CreditProcess/CreditReview', title: 'Credit Review', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "FL4W" }]},
+      { path: '/Nap/CreditProcess/CreditApproval/Paging', title: 'Credit Approval', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "FL4W" }]},
+      { path: '/Nap/AdminProcess/AgreementActivation/Paging', title: 'Agreement Activation', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "FL4W" }]},
+      { path: '/Nap/AdminProcess/PurchaseOrder/Paging', title: 'Purchase Order', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "FL4W" }]},
+      { path: '/Nap/AdminProcess/DeliveryOrder/Paging', title: 'Delivery Order', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "FL4W" }]},
+      { path: '/Nap/AdminProcess/PreGoLive/Paging', title: 'Pre Go Live', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "FL4W" }]}
     ], params: []
   },
   {
     path: '', title: 'Refinancing', icon: 'ft-bookmark', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false,
     submenu: [
-      { path: '/Nap/CFRefinancing/Paging', title: 'New Application', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
-      { path: '/Nap/CreditProcess/CommissionData/Paging', title: 'Commission Data', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
-      { path: '/Nap/CreditProcess/ReservedFund/Paging', title: 'Reserved Fund', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
-      { path: '/Nap/CreditProcess/PhoneVerification', title: 'Phone Verification', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
-      { path: '/Nap/CreditProcess/CreditReview', title: 'Credit Review', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
-      { path: '/Nap/CreditProcess/CreditApproval/Paging', title: 'Credit Approval', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
-      { path: '/Nap/AdminProcess/PreGoLive/Paging', title: 'Pre Go Live', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] }
+      { path: '/Nap/CFRefinancing/Paging', title: 'New Application', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "FRN4W" }]},
+      { path: '/Nap/CreditProcess/CommissionData/Paging', title: 'Commission Data', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "FRN4W" }]},
+      { path: '/Nap/CreditProcess/ReservedFund/Paging', title: 'Reserved Fund', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "FRN4W" }]},
+      { path: '/Nap/CreditProcess/PhoneVerification', title: 'Phone Verification', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "FRN4W" }]},
+      { path: '/Nap/CreditProcess/CreditReview', title: 'Credit Review', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "FRN4W" }]},
+      { path: '/Nap/CreditProcess/CreditApproval/Paging', title: 'Credit Approval', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "FRN4W" }]},
+      { path: '/Nap/AdminProcess/PreGoLive/Paging', title: 'Pre Go Live', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "FRN4W" }]}
     ], params: []
   },
   {
     path: '', title: 'Factoring', icon: 'ft-package', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false,
     submenu: [
       {
-        path: '/Nap/Factoring/Paging', title: 'New Application', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [],
-        params: [
-          { attr: "LobCode", value: "FCTR" }
-        ]
+        path: '/Nap/Factoring/Paging', title: 'New Application', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "FCTR" }]
       },
-      { path: '/Nap/CreditProcess/CreditReview', title: 'Credit Review', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
-      { path: '/Nap/CreditProcess/CreditApproval/Paging', title: 'Credit Approval', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
-      { path: '/Nap/AdminProcess/PreGoLive/Paging', title: 'Pre Go Live', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] }
+      { path: '/Nap/CreditProcess/CreditReview', title: 'Credit Review', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "FCTR" }]},
+      { path: '/Nap/CreditProcess/CreditApproval/Paging', title: 'Credit Approval', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "FCTR" }]},
+      { path: '/Nap/AdminProcess/PreGoLive/Paging', title: 'Pre Go Live', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "FCTR" }]}
     ], params: []
   },
   {
