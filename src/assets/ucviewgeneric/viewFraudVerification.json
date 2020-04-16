@@ -10,15 +10,14 @@
                     "type": "link",
                     "label": "Lead No",
                     "property": "LeadNo",
-                    "position": "left",
-                    "path": "/test/paging",
+                    "position" : "left",
+                    "path": "/Lead/View",
                     "param": [
-                        {
-                            "type": "LeadId",
-                            "property": "LeadId"
-                        }
+                      {
+                        "property": "LeadId"
+                      }
                     ]
-                },
+                  },
                 {
                     "type": "text",
                     "label": "Office Name",

@@ -57,10 +57,10 @@
           "type": "link",
           "label": "Lead No",
           "property": "LeadNo",
-          "path": "/test/paging",
-          "target" : "_blank",
+          "path": "/Lead/View",
           "param": [
             {
+              "type": "LeadId",
               "property": "LeadId"
             }
           ]

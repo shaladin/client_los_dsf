@@ -43,7 +43,7 @@
         },
         {
           "type": "text",
-          "label": "Asset Name",
+          "label": "Asset Name", 
           "property": "FullAssetName"
         },
         {
