@@ -7,7 +7,6 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 @Component({
   selector: 'app-legal-review-paging',
   templateUrl: './legal-review-paging.component.html',
-  styleUrls: ['./legal-review-paging.component.scss']
 })
 export class LegalReviewPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
@@ -36,5 +35,4 @@ export class LegalReviewPagingComponent implements OnInit {
     addCritOfficeCode.value = 'HO';
     this.arrCrit.push(addCritOfficeCode);
   }
-
 }

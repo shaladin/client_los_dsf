@@ -7,6 +7,7 @@ export class LeadFraudVerfObj{
     VerifyStat:any;
     Notes : any; 
     RowVersion: any;
+    WfTaskListId : any;
     constructor() { this.LeadFraudVerfId = 0, this.RowVersion = "" }
 }      
  

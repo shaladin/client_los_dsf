@@ -12,7 +12,7 @@ import { CreditProcessCF4WRoutingModule } from "./credit-process-routing.module"
     AdInsModule
   ],
   declarations: [
-    DummyComponent
+    DummyComponent,
   ],
   providers: [
     NGXToastrService

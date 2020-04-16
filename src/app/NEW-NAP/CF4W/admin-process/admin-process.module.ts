@@ -9,7 +9,7 @@ import { AdminProcessCF4WRoutingModule } from "./admin-process-routing.module";
   imports: [
     CommonModule,
     AdminProcessCF4WRoutingModule,
-    AdInsModule
+    AdInsModule,
   ],
   declarations: [
     DummyComponent

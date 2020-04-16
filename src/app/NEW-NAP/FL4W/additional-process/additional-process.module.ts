@@ -9,7 +9,7 @@ import { AdditionalProcessFL4WRoutingModule } from "./additional-process-routing
   imports: [
     CommonModule,
     AdditionalProcessFL4WRoutingModule,
-    AdInsModule
+    AdInsModule,
   ],
   declarations: [
     DummyComponent

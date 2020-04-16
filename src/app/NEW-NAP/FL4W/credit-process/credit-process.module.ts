@@ -9,7 +9,7 @@ import { CreditProcessFL4WRoutingModule } from "./credit-process-routing.module"
   imports: [
     CommonModule,
     CreditProcessFL4WRoutingModule,
-    AdInsModule
+    AdInsModule,
   ],
   declarations: [
     DummyComponent

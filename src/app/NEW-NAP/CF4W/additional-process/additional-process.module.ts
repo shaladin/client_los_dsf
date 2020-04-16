@@ -9,7 +9,7 @@ import { AdditionalProcessCF4WRoutingModule } from "./additional-process-routing
   imports: [
     CommonModule,
     AdditionalProcessCF4WRoutingModule,
-    AdInsModule
+    AdInsModule,
   ],
   declarations: [
     DummyComponent

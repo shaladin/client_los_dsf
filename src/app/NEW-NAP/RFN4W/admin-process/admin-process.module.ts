@@ -1,9 +1,10 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
-import { DummyComponent } from './dummy/dummy.component';
 import { AdInsModule } from "app/components/adins-module/adins.module";
 import { AdminProcessRFN4WRoutingModule } from "./admin-process-routing.module";
+import { PreGoLivePagingComponent } from "./pre-go-live-paging/pre-go-live-paging.component";
+import { PurchaseOrderPagingComponent } from "./purchase-order-paging/purchase-order-paging.component";
 
 @NgModule({
   imports: [
@@ -12,7 +13,8 @@ import { AdminProcessRFN4WRoutingModule } from "./admin-process-routing.module";
     AdInsModule
   ],
   declarations: [
-    DummyComponent
+    PreGoLivePagingComponent,
+    PurchaseOrderPagingComponent
   ],
   providers: [
     NGXToastrService

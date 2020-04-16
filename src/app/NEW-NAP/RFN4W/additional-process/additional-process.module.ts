@@ -9,7 +9,7 @@ import { AdditionalProcessRFN4WRoutingModule } from "./additional-process-routin
   imports: [
     CommonModule,
     AdditionalProcessRFN4WRoutingModule,
-    AdInsModule
+    AdInsModule,
   ],
   declarations: [
     DummyComponent

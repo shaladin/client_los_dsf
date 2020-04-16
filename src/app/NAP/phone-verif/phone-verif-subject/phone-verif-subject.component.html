@@ -1,2 +1,47 @@
 <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Phone Verification Subject</h4>
 <lib-ucviewgeneric [viewInput]="viewObj"> </lib-ucviewgeneric>
+<div class="card">
+  <div class="card-body">
+    <div class="px-3">
+      <lib-ucSubsection [id]="'subjectListId'" [title]="'Subject List'" [panel]="'subjectList'">
+      </lib-ucSubsection>
+      <div id="subjectList">
+        <table class="table table-responsive-md text-center table-hover">
+          <thead>
+            <tr class="table-header">
+              <th class="text-left">Subject</th>
+              <th class="text-left">Name</th>
+              <th class="text-left">Phone</th>
+              <th class="text-left">Date</th>
+              <th class="text-left">Time</th>
+              <th class="text-left">Result</th>
+              <th class="text-left">Subject Relation</th>
+              <th class="text-left">Notes</th>
+              <th class="text-left">View</th>
+              <th class="text-left">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of phoneVerifObj">
+              <td class="text-left">{{item.Subject}}</td>
+              <td class="text-left">{{item.SubjectName}}</td>
+              <td class="text-left">{{item.PhoneNumber}}</td>
+              <td class="text-left">{{item.DatetimeVerif}}</td>
+              <td class="text-left">{{item.DatetimeVerif}}</td>
+              <td class="text-left">{{item.Result}}</td>
+              <td class="text-left">{{item.SubjectRelation}}</td>
+              <td class="text-left">{{item.Notes}}</td>
+              <td class="text-left" *ngIf="item.PhoneNumber != null"><a (click)="View(item.VerfResultHId, item.SubjectName)">View</a></td>
+              <td class="text-left" *ngIf="item.PhoneNumber == null"></td>
+              <td class="text-left">
+                <a class="success p-0" data-original-title="" title="" (click)="Verif(item.VerfResultHId, item.SubjectName, item.Subject, item.IdSource)">
+                  <i class="ft-edit-2 font-medium-3 mr-2 px-2"></i>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

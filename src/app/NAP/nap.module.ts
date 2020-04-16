@@ -33,7 +33,6 @@ import { CustPersonalFinancialDataComponent } from "./nap-tab/customer-data/comp
 import { SearchCrossAppComponent } from './nap-tab/app-model/search-cross-app/search-cross-app.component';
 import { UCSearchModule } from '@adins/ucsearch';
 import { CommissionPagingComponent } from '../credit-process/commission-paging/commission-paging.component';
-// import { CustFinancialDataComponent } from "./nap-tab/customer-data/component/financial-data/cust-financial-data.component";
 import { CustBankAccountComponent } from "./nap-tab/customer-data/component/bank-account/cust-bank-account.component";
 import { CustJobDataComponent } from "./nap-tab/customer-data/component/job-data/cust-job-data.component";
 import { CustSocmedComponent } from "./nap-tab/customer-data/component/socmed/cust-socmed.component";
@@ -42,26 +41,38 @@ import { CustCompanyMainDataComponent } from "./nap-tab/customer-data/component/
 import { CustShareholderComponent } from "./nap-tab/customer-data/component/shareholder/cust-shareholder.component";
 import { AppTcComponent } from './nap-tab/app-tc/app-tc.component';
 import { CustCompanyContactInformationComponent } from "./nap-tab/customer-data/component/company-contact-information/cust-company-contact-information.component";
-import { UcShowErrorsModule } from "@adins/uc-show-errors";
-import { UcinputnumberModule } from "@adins/ucinputnumber";
 import { CustCompanyFinancialDataComponent } from "./nap-tab/customer-data/component/company-financial-data/cust-company-financial-data.component";
 import { CustLegalDocComponent } from "./nap-tab/customer-data/component/legal-doc/cust-legal-doc.component";
 import { UcinputnumberComponent } from "./nap-tab/customer-data/component/ucinputnumber/ucinputnumber.component";
 import { InsuranceDataComponent } from "./nap-tab/insurance-data/insurance-data.component";
 import { AssetDataComponent } from "./nap-tab/asset-data/asset-data.component";
 import { AppFinDataComponent } from './nap-tab/app-fin-data/app-fin-data.component';
-import { NgxCurrencyModule } from "ngx-currency";
-export const customCurrencyMaskConfig = {     
-    align: "left",     
-    allowNegative: true,     
-    allowZero: true,     
-    decimal: ".",     
-    precision: 2,     
-    prefix: "",     
-    suffix: "",     
-    thousands: ",",     
-    nullable: false };
+import { AppSubsidyComponent } from './nap-tab/app-fin-data/component/app-subsidy/app-subsidy.component';
+import { UcShowErrorsModule } from "@adins/uc-show-errors";
+import { UcinputnumberModule } from "@adins/ucinputnumber";
+import { AppSubsidyAddEditComponent } from './nap-tab/app-fin-data/component/app-subsidy-add-edit/app-subsidy-add-edit.component';
+import { NgbModule, NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { AppFeeComponent } from './nap-tab/app-fin-data/component/app-fee/app-fee.component';
+import { NgxCurrencyModule } from 'ngx-currency';
 import { PhnVerifPagingComponent } from "./phone-verif/phone-verif-paging/phone-verif-paging.component";
+import { RsvFundViewComponent } from "app/credit-process/reserved-fund/reserved-fund-view/reserved-fund-view.component";
+import { VerfQuestionComponent } from "./nap-component/verf-question/verf-question.component";
+export const customCurrencyMaskConfig = {
+    align: "left",
+    allowNegative: true,
+    allowZero: true,
+    decimal: ".",
+    precision: 2,
+    prefix: "",
+    suffix: "",
+    thousands: ",",
+    nullable: false
+};
+import { PhnVerifSubjectComponent } from "./phone-verif/phone-verif-subject/phone-verif-subject.component";
+import { PhnVerifSubjectViewComponent } from "./phone-verif/phone-verif-subject-view/phone-verif-subject-view.component";
+import { PhnVerifSubjectVerifComponent } from "./phone-verif/phone-verif-subject-verif/phone-verif-subject-verif.component";
+import { AppFromLeadPagingComponent } from "./app-from-lead/paging/app-from-lead-paging.component";
+import { AppFromLeadDetailComponent } from "./app-from-lead/detail/app-from-lead-detail.component";
 
 
 
@@ -96,15 +107,29 @@ import { PhnVerifPagingComponent } from "./phone-verif/phone-verif-paging/phone-
         SearchCrossAppComponent,
         CommissionPagingComponent,
         CustShareholderComponent,
+        AppFinDataComponent,
+        AppSubsidyComponent,
+        AppSubsidyAddEditComponent,
+        AppFeeComponent,
         AppTcComponent,
         CustLegalDocComponent,
         UcinputnumberComponent,
         InsuranceDataComponent,
         AssetDataComponent,
+        RsvFundViewComponent,
         AppFinDataComponent,
-        PhnVerifPagingComponent
+        AppFinDataComponent,
+        PhnVerifPagingComponent,
+        VerfQuestionComponent,
+        PhnVerifPagingComponent,
+        PhnVerifSubjectComponent,
+        PhnVerifSubjectViewComponent,
+        PhnVerifSubjectVerifComponent,
+        PhnVerifPagingComponent,
+        AppFromLeadPagingComponent,
+        AppFromLeadDetailComponent
         ],
-    imports: [ 
+    imports: [
         NapRoutingModule,
         CommonModule,
         ArchwizardModule,
@@ -123,13 +148,15 @@ import { PhnVerifPagingComponent } from "./phone-verif/phone-verif-paging/phone-
         SharingComponentModule, 
         UcaddressModule,
         UcgridviewModule,
-        UcShowErrorsModule,
         UCSearchModule,
+        UcShowErrorsModule,
+        NgbModule,
         UcinputnumberModule,
-        // NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
+        NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
     ],
     exports: [],
-    providers: [NGXToastrService],
+    entryComponents: [AppSubsidyAddEditComponent],
+    providers: [NGXToastrService,NgbActiveModal],
 })
 
 export class NapModule { }

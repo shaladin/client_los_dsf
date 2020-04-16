@@ -9,7 +9,7 @@ import { AdditionalProcessFCTRRoutingModule } from "./additional-process-routing
   imports: [
     CommonModule,
     AdditionalProcessFCTRRoutingModule,
-    AdInsModule
+    AdInsModule,
   ],
   declarations: [
     DummyComponent

@@ -85,7 +85,7 @@ export class CustShareholderComponent implements OnInit {
     IdExpiredDt: [''],
     MobilePhnNo: ['', Validators.maxLength(50)],
     Email: ['', Validators.maxLength(50)],
-    SharePrcnt: [0],
+    SharePrcnt: [0, [Validators.min(0),Validators.max(100)]],
     MrJobPositionCode: ['', Validators.maxLength(50)],
     IsSigner: [false],
     MrCompanyTypeCode: ['', Validators.maxLength(50)],
@@ -114,14 +114,38 @@ export class CustShareholderComponent implements OnInit {
     }
     this.setAppCustCompanyMgmntShrholder();
     if(this.mode == "add"){
+      if(this.checkSharePrcnt(-1) == false){
+        this.toastr.errorMessage("Total Share Percentage cannot be more than 100.");
+        return;
+      }
       this.listShareholder.push(this.appCustCompanyMgmntShrholderObj);
     }
     if(this.mode == "edit"){
+      if(this.checkSharePrcnt(this.currentEditedIndex) == false){
+        this.toastr.errorMessage("Total Share Percentage cannot be more than 100.");
+        return;
+      }
       this.listShareholder[this.currentEditedIndex] = this.appCustCompanyMgmntShrholderObj;
     }
     this.callbackSubmit.emit(this.listShareholder);
     this.modalService.dismissAll();
     this.clearForm();
+  }
+
+  checkSharePrcnt(currentEditedIndex){
+    var sharePrcnt = this.CustShareholderForm.controls.SharePrcnt.value;
+    var totalPrcnt = 0;
+
+    for(let i = 0; i < this.listShareholder.length; i++){
+      if(currentEditedIndex == -1 || currentEditedIndex != i){
+        totalPrcnt += this.listShareholder[i].SharePrcnt;
+      }
+    }
+
+    if(sharePrcnt + totalPrcnt > 100){
+      return false;
+    }
+    return true;
   }
 
   CustTypeChanged(event){
@@ -214,7 +238,7 @@ export class CustShareholderComponent implements OnInit {
         IsSigner: this.listShareholder[i].IsSigner
       });
       this.selectedCustTypeName = this.listShareholder[i].CustTypeName;
-      this.selectedJobPositionName = "";
+      this.selectedJobPositionName = this.defaultJobPositionName;
       this.selectedIndustryTypeCode = this.listShareholder[i].IndustryTypeCode;
       this.setIndustryTypeName(this.listShareholder[i].IndustryTypeCode);
       this.setCriteriaLookupCustomer(this.listShareholder[i].MrCustTypeCode);
@@ -252,7 +276,7 @@ export class CustShareholderComponent implements OnInit {
       IdExpiredDt: [''],
       MobilePhnNo: ['', Validators.maxLength(50)],
       Email: ['', Validators.maxLength(50)],
-      SharePrcnt: [0],
+      SharePrcnt: [0, [Validators.min(0),Validators.max(100)]],
       MrJobPositionCode: [this.defaultJobPosition, Validators.maxLength(50)],
       IsSigner: [false],
       MrCompanyTypeCode: [this.defaultCompanyType, Validators.maxLength(50)],
@@ -376,6 +400,7 @@ export class CustShareholderComponent implements OnInit {
 
     if(this.CustShareholderForm.controls.MrCustTypeCode.value == AdInsConstant.CustTypeCompany){
       this.appCustCompanyMgmntShrholderObj.MrCustTypeCode = this.CustShareholderForm.controls.MrCustTypeCode.value;
+      this.appCustCompanyMgmntShrholderObj.CustTypeName = this.selectedCustTypeName;
       this.appCustCompanyMgmntShrholderObj.MgmntShrholderName = this.CustShareholderForm.controls.lookupCustomerShareholder.value.value;
       this.appCustCompanyMgmntShrholderObj.CustNo = this.selectedCustNo;
       this.appCustCompanyMgmntShrholderObj.IndustryTypeCode = this.selectedIndustryTypeCode;

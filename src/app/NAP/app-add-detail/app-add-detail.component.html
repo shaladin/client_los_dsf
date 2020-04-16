@@ -26,7 +26,7 @@
 
       <aw-wizard-step [stepTitle]="'Asset Data'" (stepEnter)="EnterTab('ASSET')"
       [navigationSymbol]="{ symbol: '5' }">
-        <app-app-life-ins *ngIf="AppStepIndex == 4" [AppId]=appId></app-app-life-ins>
+        <app-asset-data *ngIf="AppStepIndex == 4" [AppId]=appId></app-asset-data>
       </aw-wizard-step>
 
       <aw-wizard-step [stepTitle]="'Insurance Data'" (stepEnter)="EnterTab('INS')"
@@ -41,7 +41,7 @@
 
       <aw-wizard-step [stepTitle]="'Financial Data'" (stepEnter)="EnterTab('FIN')"
       [navigationSymbol]="{ symbol: '8' }">
-        <app-app-life-ins *ngIf="AppStepIndex == 7" [AppId]=appId></app-app-life-ins>
+        <!-- <app-app-fin-data *ngIf="AppStepIndex == 7" [AppId]=appId></app-app-fin-data> -->
       </aw-wizard-step>
 
       <aw-wizard-step [stepTitle]="'Terms and Conditions'" (stepEnter)="EnterTab('TC')"
