@@ -27,10 +27,10 @@ export class PurchaseOrderPagingComponent implements OnInit {
   ngOnInit() {
     // "./assets/ucpaging/searchPurchaseOrder.json"
     this.inputPagingObj = new UcPagingObj();
-    this.inputPagingObj._url = this.PagingJSONLocation;
+    this.inputPagingObj._url = "./assets/ucpaging/searchPurchaseOrder.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
-    this.inputPagingObj.pagingJson = this.PagingJSONLocation;
+    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchPurchaseOrder.json";
 
     this.arrCrit = new Array();
     var critObj = new CriteriaObj();
