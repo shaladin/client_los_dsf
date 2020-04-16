@@ -17,16 +17,16 @@
                     <option *ngFor="let it of itemReasonCode" value="{{it.Key}}">
                       {{it.Value}}</option>
                   </select>
-                  <show-errors [control]="MainInfoForm.controls.ReasonCode" [submit]="MainInfoReqForm.submitted">
-                  </show-errors>
+                  <lib-uc-show-errors  [control]="MainInfoForm.controls.ReasonCode" [submit]="MainInfoReqForm.submitted">
+                  </lib-uc-show-errors >
                 </div>
               </div>
               <div class="form-group row adins-required">
                 <label class="col-md-2 adInsInput" for="Notes" translate>Notes</label>
                 <div class="col-md-4">
                   <textarea id="Notes" class="form-control adInsInput name " formControlName="CancelNotes"></textarea>
-                  <show-errors [control]="MainInfoForm.controls.CancelNotes" [submit]="MainInfoReqForm.submitted">
-                  </show-errors>
+                  <lib-uc-show-errors  [control]="MainInfoForm.controls.CancelNotes" [submit]="MainInfoReqForm.submitted">
+                  </lib-uc-show-errors >
                 </div>
               </div>
             </div>

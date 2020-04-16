@@ -11,7 +11,7 @@ import { VerfQuestionAnswerCustomObj } from 'app/shared/model/VerfQuestionAnswer
 })
 export class VerfQuestionComponent implements OnInit {
 
-  ParentForm: FormGroup;
+  @Input() ParentForm: FormGroup;
   VerfShcemeCode: string;
   ListVerfAnswer = [];
 

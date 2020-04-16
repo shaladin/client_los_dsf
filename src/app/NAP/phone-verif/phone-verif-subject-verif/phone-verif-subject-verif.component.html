@@ -58,7 +58,7 @@
                 <div class="col-md-4">
                   <textarea type="text" class="form-control adInsInput" formControlName="Notes"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && PhoneDataForm.controls.Notes.invalid }"></textarea>
-                  <show-errors [control]="PhoneDataForm.controls.Notes" [submit]="enjiForm.submitted"></show-errors>
+                  <lib-uc-show-errors  [control]="PhoneDataForm.controls.Notes" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                 </div>
               </div>
             </div>

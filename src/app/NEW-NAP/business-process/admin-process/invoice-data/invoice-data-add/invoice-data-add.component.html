@@ -20,8 +20,8 @@
                 <label class="col-md-3  adInsLabel" translate>Invoice No</label>
                 <div class="col-md-9">
                   <input type="text" class="form-control adInsInput width-75-per" formControlName="InvoiceNo">
-                  <show-errors [control]="InvoiceForm.controls.InvoiceNo" [submit]="enjiForm.submitted">
-                  </show-errors>
+                  <lib-uc-show-errors  [control]="InvoiceForm.controls.InvoiceNo" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors >
                 </div>
               </div>
               <div class="form-group row adins-required">
@@ -29,24 +29,24 @@
                 <div class="col-md-9">
                   <input type="text" class="form-control adInsInput width-75-per"
                     formControlName="CustomerFactoringName">
-                  <show-errors [control]="InvoiceForm.controls.CustomerFactoringName" [submit]="enjiForm.submitted">
-                  </show-errors>
+                  <lib-uc-show-errors  [control]="InvoiceForm.controls.CustomerFactoringName" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors >
                 </div>
               </div>
               <div class="form-group row adins-required">
                 <label class="col-md-3  adInsLabel" translate>Invoice Amount</label>
                 <div class="col-md-9">
                   <input type="text" class="form-control adInsInput width-75-per" formControlName="InvoiceAmt">
-                  <show-errors [control]="InvoiceForm.controls.InvoiceAmt" [submit]="enjiForm.submitted">
-                  </show-errors>
+                  <lib-uc-show-errors  [control]="InvoiceForm.controls.InvoiceAmt" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors >
                 </div>
               </div>
               <div class="form-group row adins-required">
                 <label class="col-md-3  adInsLabel" translate>Due Date</label>
                 <div class="col-md-9">
                   <input type="text" class="form-control adInsInput width-75-per" formControlName="InvoiceDueDt">
-                  <show-errors [control]="InvoiceForm.controls.InvoiceDueDt" [submit]="enjiForm.submitted">
-                  </show-errors>
+                  <lib-uc-show-errors  [control]="InvoiceForm.controls.InvoiceDueDt" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors >
                 </div>
               </div>
             </div>
