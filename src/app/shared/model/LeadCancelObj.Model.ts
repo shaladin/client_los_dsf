@@ -1,3 +1,4 @@
 export class LeadCancelObj{
-    LeadIds  = new Array();
+    listWfTaskListId  = new Array();
+    LeadIds = new Array();
 }

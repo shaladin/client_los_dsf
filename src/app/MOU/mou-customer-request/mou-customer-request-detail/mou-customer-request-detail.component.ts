@@ -20,6 +20,7 @@ import { link } from 'fs';
 })
 export class MouCustomerRequestDetailComponent implements OnInit {
   mouType: string;
+  WfTaskListId: any;
   inputLookupCust: InputLookupObj;
   pageType: string = "add";
   mouCustId: number;
@@ -66,10 +67,14 @@ export class MouCustomerRequestDetailComponent implements OnInit {
       if (params['MrMouTypeCode'] != null) {
         this.mouType = params['MrMouTypeCode'];
       }
+      if (params['WfTaskListId'] != null) this.WfTaskListId = params['WfTaskListId'];
     });
    }
 
   ngOnInit() {
+    if (this.WfTaskListId != null || this.WfTaskListId != undefined)
+      this.claimTask();
+
     var datePipe = new DatePipe("en-US");
     var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
     var context = JSON.parse(localStorage.getItem("UserAccess"));
@@ -116,6 +121,16 @@ export class MouCustomerRequestDetailComponent implements OnInit {
         MrMouTypeCode: this.mouType
       });
     }
+  }
+
+  claimTask()
+  {
+    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"]};
+    console.log(wfClaimObj);
+    this.httpClient.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+      (response) => {
+      });
   }
 
   Back(): void {

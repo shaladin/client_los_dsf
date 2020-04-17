@@ -62,8 +62,8 @@
         }
     ],
     "querystring": {
-        "select": "SELECT MOU.MOU_CUST_NO AS MouCustNo, MOU.CUST_NAME AS CustName, MOU.MOU_CUST_DT AS MouCustDt, MOU.REF_NO AS RefNo, MOU.MR_MOU_TYPE_CODE AS MrMouTypeCode, MOU.MOU_CUST_ID AS MouCustId, MOU.MOU_STAT AS MouStat",
-        "from": "FROM dbo.MOU_CUST MOU WITH(NOLOCK)"
+        "select": "SELECT MOU.MOU_CUST_NO AS mouCustNo, WTL.WF_TASK_LIST_ID AS WfTaskListId,MOU.CUST_NAME AS custName, MOU.MOU_CUST_DT AS mouCustDt, MOU.REF_NO AS refNo, MOU.MR_MOU_TYPE_CODE AS mrMouTypeCode, MOU.MOU_CUST_ID AS mouCustId, MOU.MOU_STAT AS MouStat",
+        "from": "FROM dbo.MOU_CUST MOU WITH(NOLOCK) LEFT JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON MC.MOU_CUST_NO"
     },
     "headerList": [
         {
@@ -152,8 +152,12 @@
                             "property": "edit"
                         },
                         {
-                            "type": "MrMouTypeCode",
-                            "property": "MrMouTypeCode"
+                            "type": "mrMouTypeCode",
+                            "property": "mrMouTypeCode"
+                        },
+                        {
+                            "type": "WfTaskListId",
+                            "property": "WfTaskListId"
                         }
                     ]
                 }
