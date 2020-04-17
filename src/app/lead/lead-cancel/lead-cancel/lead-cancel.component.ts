@@ -12,6 +12,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsService } from 'app/shared/services/adIns.service';
 import { LeadCancelObj } from 'app/shared/model/LeadCancelObj.Model';
 import { LeadCancelConfirmComponent } from '../lead-cancel-confirm/lead-cancel-confirm.component';
+import { stringify } from 'querystring';
 
 @Component({
   selector: 'app-lead-cancel',
@@ -126,6 +127,7 @@ export class LeadCancelComponent implements OnInit {
     this.UCSearchComponent.search(this.apiUrl, this.pageNow, this.pageSize, order)
   }
   getResult(event) {
+    console.log(this.resultData);
     this.resultData = event.response.Data;
     this.totalData = event.response.Count;
     this.ucgridFooter.pageNow = event.pageNow;
@@ -148,6 +150,8 @@ export class LeadCancelComponent implements OnInit {
     var tempLeadCancelObj = new LeadCancelObj();
     for (let index = 0; index < this.tempData.length; index++) {
       tempLeadCancelObj.LeadIds.push(this.tempData[index].LeadId);
+      if (this.tempData[index].WfTaskListId != null && this.tempData[index].WfTaskListId != undefined)
+        tempLeadCancelObj.listWfTaskListId.push(this.tempData[index].WfTaskListId)
     }
     if (tempLeadCancelObj.LeadIds.length == 0) {
       this.toastr.typeErrorCustom('Please Add At Least One Data');
@@ -158,7 +162,8 @@ export class LeadCancelComponent implements OnInit {
       return;
     }
     var params = tempLeadCancelObj.LeadIds.join(',')
-    this.router.navigate([this.confirmUrl], { queryParams: { "LeadIds": params } });
+    var taskListId = tempLeadCancelObj.listWfTaskListId.join(',')
+    this.router.navigate([this.confirmUrl], { queryParams: { "LeadIds": params, "WfTaskListIds":taskListId } });
   }
 
   addToTemp() {
