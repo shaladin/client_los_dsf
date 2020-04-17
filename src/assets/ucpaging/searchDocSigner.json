@@ -53,13 +53,13 @@
         },
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "CUSTOMER NAME",
             "name": "AG.CUST_NAME"
         },
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "PROD OFFERING NAME",
             "name": "AG.PROD_OFFERING_NAME"
         },
@@ -98,12 +98,12 @@
         },
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "CustName"
         },
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "ProdOfferingName"
         },
         {

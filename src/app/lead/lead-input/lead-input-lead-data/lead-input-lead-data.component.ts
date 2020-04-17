@@ -108,11 +108,11 @@ export class LeadInputLeadDataComponent implements OnInit {
       if (params["mode"] != null) {
         this.typePage = params["mode"];
       }
-      if (params["TaskListId"] == null || params["TaskListId"] == "TaskListId") {
+      if (params["WfTaskListId"] == null) {
         this.TaskListId = 0;
       }
       else {
-        this.TaskListId = params["TaskListId"];
+        this.TaskListId = params["WfTaskListId"];
       }
 
       if (params["CopyFrom"] != null) {
@@ -543,8 +543,10 @@ export class LeadInputLeadDataComponent implements OnInit {
       );
     } else {
       this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+      this.leadInputLeadDataObj.WfTaskListId = this.TaskListId;
       this.setLeadAsset();
       this.setLeadApp();
+
       this.http.post(this.editLeadData, this.leadInputLeadDataObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
