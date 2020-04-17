@@ -115,8 +115,8 @@ export class AdInsConstant {
 
 
   
-  public static GetAppDetailForAppTabById = environment.losUrl + "/Application/GetAppDetailForAppTabById";
-  public static AddAppFromLead = environment.losUrl + "/Application/AddAppFromLead";
+  // public static GetAppDetailForAppTabById = environment.losUrl + "/Application/GetAppDetailForAppTabById";
+  // public static AddAppFromLead = environment.losUrl + "/Application/AddAppFromLead";
 
   // App Asset
   public static GetAppAssetForDealerDataByAppId = environment.losUrl + "/AppAsset/GetAppAssetForDealerDataByAppId";
