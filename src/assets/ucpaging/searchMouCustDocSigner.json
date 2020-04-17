@@ -60,16 +60,16 @@
             "name": "MOU.MOU_CUST_DT",
             "id": "MouDtId",
             "value": "",
-            "label": "MOU DATE >=",
+            "label": "MOU DATE FROM",
             "restriction": "gte",
             "datatype": "date"
         },
         {
             "type": "datepicker",
-            "name": "MOU.END_DT",
+            "name": "MOU.MOU_CUST_DT",
             "id": "EndDtId",
             "value": "",
-            "label": "MOU DATE <=",
+            "label": "MOU DATE TO",
             "restriction": "lte",
             "datatype": "date"
         },
