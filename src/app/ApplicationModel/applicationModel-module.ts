@@ -5,19 +5,23 @@ import { HttpModule } from "@angular/http";
 import { UCSearchModule } from "@adins/ucsearch";
 import { UcpagingModule } from "@adins/ucpaging";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { RouterModule } from "@angular/router";
 import { SharingModule } from 'app/shared/sharing.module';
 import { ArchwizardModule } from 'angular-archwizard';
 import { UcSubsectionModule } from "@adins/uc-subsection";
 import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
-import { UcgridfooterModule } from "@adins/ucgridfooter";
-import { ViewRoutingModule } from "./view-routing.module";
-import { MainInfoComponent } from './main-info/main-info.component';
-import { LeadMainInfoComponent } from './lead-main-info/lead-main-info.component';
-// import { ShowErrorsComponent } ../NEW-NAP/view/app-view/app-view.componentors.component";
+import { UcgridfooterModule, UcgridfooterComponent } from "@adins/ucgridfooter";
+import { UcviewgenericModule } from "@adins/ucviewgeneric";
+import { ApplicationModelRoutingModule } from "./ApplicationModel-routing.module";
+import { ApplicationModelAddComponent } from "./application-model-add/application-model-add.component";
+
+
+
+// import { ShowErrorsComponent } from "./app/test-new/show-errors.component";
 
 @NgModule({
   imports: [
-    ViewRoutingModule,
+
     CommonModule,
     FormsModule,
     HttpModule,
@@ -29,11 +33,14 @@ import { LeadMainInfoComponent } from './lead-main-info/lead-main-info.component
     ArchwizardModule,
     ReactiveFormsModule,
     UcSubsectionModule,
-    SharingComponentModule
+    SharingComponentModule,
+    RouterModule,
+    UcviewgenericModule,
+    ApplicationModelRoutingModule,
+    FormsModule  
   ],
   declarations: [
-    MainInfoComponent,
-    LeadMainInfoComponent,
+    ApplicationModelAddComponent
   ]
 })
-export class ViewModule { }
+export class ApplicationModelModule { }

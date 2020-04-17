@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { ApplicationModelAddComponent } from './application-model-add/application-model-add.component';
 const routes: Routes = [
   {
     path: '',
     children: [
       {
-        path: 'Dummy',
-        // component: DocSignerComponent,
+        path: 'Save',
+        component: ApplicationModelAddComponent,
         data: {
-          title: 'Document'
+          title: 'App Model Save'
         }
       }
     ]
@@ -19,4 +20,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ViewRoutingModule { }
+export class ApplicationModelRoutingModule { }
