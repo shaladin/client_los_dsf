@@ -78,25 +78,25 @@
         },
         {
             "type": "sort",
-            "position": "left",
+            "position": "center",
             "label": "Mou No",
             "name": "MouCustNo"
         },
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "Request By",
             "name": "RequestBy"
         },
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "Task Owner",
             "name": "MainUserId"
         },
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "Current User",
             "name": "CurrentUserId"
         },
@@ -124,23 +124,30 @@
             "property": "CustName"
         },
         {
-            "type": "text",
-            "position": "left",
-            "property": "MouCustNo"
+            "type": "link",
+            "position": "center",
+            "property": "MouCustNo",
+            "path": "/Mou/Cust/Paging",
+            "param": [
+                {
+                    "type": "MouCustId",
+                    "property": "MouCustId"
+                }
+            ]
         },
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "RequestBy"
         },
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "MainUserId"
         },
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "CurrentUserId"
         },
         {

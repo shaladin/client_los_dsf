@@ -72,7 +72,7 @@
     "headerList": [
         {
             "type": "sort",
-            "position": "left",
+            "position": "center",
             "label": "Lead No",
             "name": "L.LEAD_NO"
         },
@@ -84,7 +84,7 @@
         },
         {
             "type": "sort",
-            "position": "left",
+            "position": "center",
             "label": "Order No",
             "name": "L.ORDER_NO"
         },
@@ -114,9 +114,16 @@
     ],
     "bodyList": [
         {
-            "type": "text",
-            "position": "left",
-            "property": "LeadNo"
+            "type" : "link",
+            "position" : "center",
+            "property" : "LeadNo",
+            "path" : "/Lead/View",
+            "param" : [
+                {
+                    "type" : "LeadId",
+                    "property" : "LeadId"
+                }
+            ]
         },
         {
             "type": "text",
@@ -125,7 +132,7 @@
         },
         {
             "type": "text",
-            "position": "left",
+            "position": "center",
             "property": "OrderNo"
         },
         {

@@ -119,9 +119,16 @@
             "property": "OriOfficeName"
         },
         {
-            "type": "text",
-            "position": "center",
-            "property": "LeadNo"
+            "type" : "link",
+            "position" : "left",
+            "property" : "LeadNo",
+            "path" : "/Lead/View",
+            "param" : [
+                {
+                    "type" : "LeadId",
+                    "property" : "LeadId"
+                }
+            ]
         },
         {
             "type": "text",

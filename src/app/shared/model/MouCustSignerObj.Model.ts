@@ -1,5 +1,6 @@
 export class MouCustSignerObj{
     MouCustSignerId: any;
+    WfTaskListId: any;
     MouCustId: any;
     MfSignerName1: any;
     MfSignerJobPosition1: any;
