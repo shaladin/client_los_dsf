@@ -52,20 +52,8 @@ export const Full_ROUTES: Routes = [
     loadChildren: './view/view.module#ViewModule'
   },
   {
-    path:'Document',
-    loadChildren:'./Document/document.module#DocumentModule'
-  },
-  {
-    path:'Invoice',
-    loadChildren:'./InvoiceData/invoice.module#InvoiceModule'
-  },
-  {
     path:'App',
     loadChildren:'./ApplicationModel/applicationModel.module#ApplicationModelModule'
-  },
-  {
-    path: 'AddProcess',
-    loadChildren: './add-process/add-process.module#AddProcessModule'
   },
   {
     path: 'Lead',
@@ -74,5 +62,5 @@ export const Full_ROUTES: Routes = [
   {
     path: 'CreditProcess',
     loadChildren: './credit-process/credit-process.module#CreditProcessModule'
-  }    
+  }
 ];
