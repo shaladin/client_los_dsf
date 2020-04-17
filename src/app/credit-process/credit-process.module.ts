@@ -29,6 +29,8 @@ import { RsvFundPagingComponent } from "./reserved-fund/reserved-fund-paging/res
 import { RsvFundViewComponent } from "./reserved-fund/reserved-fund-view/reserved-fund-view.component";
 import { CommissionReservedFundComponent } from './commission-reserved-fund/commission-reserved-fund.component';
 import { FormAddDynamicComponent } from "./commission-add/form-add-dynamic/form-add-dynamic.component";
+import { ViewFraudDetectionResultComponent } from './credit-investigation/component/view-fraud-detection-result/view-fraud-detection-result.component';
+import { ViewSurveyTaskListComponent } from './credit-investigation/component/view-survey-task-list/view-survey-task-list.component';
 import { ViewAppCustDataCompanyComponent } from "./credit-investigation/component/view-app-cust-data-company/view-app-cust-data-company.component";
 import { CreditInvestigationPagingComponent } from "./credit-investigation/credit-investigation-paging/credit-investigation-paging.component";
 import { TabApplicationDataComponent } from './credit-investigation/component/tab-application-data/tab-application-data.component';
@@ -56,6 +58,8 @@ export const customCurrencyMaskConfig = {
         RsvFundViewComponent,
         CommissionReservedFundComponent,
         FormAddDynamicComponent,
+        ViewFraudDetectionResultComponent,
+        ViewSurveyTaskListComponent,
         ViewAppCustDataCompanyComponent,
         CreditInvestigationPagingComponent,
         TabApplicationDataComponent

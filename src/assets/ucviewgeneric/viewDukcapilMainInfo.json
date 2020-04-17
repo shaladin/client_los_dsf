@@ -1,0 +1,224 @@
+{
+    "title": "",
+    "subsection": [
+      {
+        "subSectionId": "DukcapilCustDataId",
+        "subSectionTitle": "Customer Data",
+        "mainInfoUrl": "http://localhost:5001/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {
+            "type": "text",
+            "label": "Customer Name",
+            "property": "CustName"
+          },
+          {
+            "type": "text",
+            "label": "Birth Place",
+            "property": "BirthPlace"
+          },
+          {
+            "type": "date",
+            "label": "Birth Date",
+            "property": "BirthDt"
+          },
+          {
+            "type": "text",
+            "label": "NIK",
+            "property": "IdNo"
+          },
+          {
+            "type": "text",
+            "label": "Gender",
+            "property": "Gender"
+          },
+          {
+            "type": "text",
+            "label": "No KK",
+            "property": "FamilyCardNo"
+          },
+          {
+            "type": "text",
+            "label": "Religion",
+            "property": "Religion"
+          },
+          {
+            "type": "text",
+            "label": "NIK Mother",
+            "property": "MotherIdNo"
+          },
+          {
+            "type": "text",
+            "label": "Marital Status",
+            "property": "MaritalStatus"
+          },
+          {
+            "type": "text",
+            "label": "Mother Maiden Name",
+            "property": "Mother Maiden Name"
+          },
+          {
+            "type": "text",
+            "label": "Relationship",
+            "property": "Relationship"
+          },
+          {
+            "type": "text",
+            "label": "NIK Father",
+            "property": "FatherIdNo"
+          },
+          {
+            "type": "text",
+            "label": "Education",
+            "property": "Education"
+          },
+          {
+            "type": "text",
+            "label": "Father Name",
+            "property": "FatherName"
+          },
+          {
+            "type": "text",
+            "label": "Proffession",
+            "property": "Proffession"
+          }
+        ],
+        "querystring": {
+          "select": "SELECT ID_NO AS IdNo, FAMILY_CARD_NO AS FamilyCardNo, CUST_NAME AS CustName, BIRTH_PLACE AS BirthPlace,BIRTH_DT AS BirthDt, GENDER AS Gender, RELIGION AS Religion, MARITAL_STATUS AS MaritalStatus,RELATIONSHIP AS Relationship, EDUCATION AS Education, PROFFESSION AS Proffession, MOTHER_ID_NO AS MotherIdNo,MOTHER_MAIDEN_NAME AS MotherMaidenName, FATHER_ID_NO AS FatherIdNo, FATHER_NAME AS FatherName",
+           "from":" FROM dbo.FRAUD_DUKCAPIL WITH(NOLOCK)",
+            "where":"WHERE ID_NO = {0}"
+            
+        }
+      },
+      {
+        "subSectionId": "DukcapilAddressDataId",
+        "subSectionTitle": "Address Data",
+        "mainInfoUrl": "http://localhost:5001/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {
+            "type": "text",
+            "label": "Address",
+            "property": "Addr"
+          },
+          {
+            "type": "text",
+            "label": "RT",
+            "property": "AreaCode4"
+          },
+          {
+            "type": "text",
+            "label": "RW",
+            "property": "AreaCode3"
+          },
+          {
+            "type": "text",
+            "label": "Kelurahan",
+            "property": "AreaCode2"
+          },
+          {
+            "type": "text",
+            "label": "Kecamatan",
+            "property": "AreaCode1"
+          },
+          {
+            "type": "text",
+            "label": "City",
+            "property": "City"
+          },
+          {
+            "type": "text",
+            "label": "Zipcode",
+            "property": "Zipcode"
+          }
+        ],
+        "querystring": {
+          "select": "SELECT ADDR AS Addr, AREA_CODE_1 AS AreaCode1, AREA_CODE_2 AS AreaCode2, AREA_CODE_3 AS AreaCode3, AREA_CODE_4 AS AreaCode4,CITY AS City, ZIPCODE AS Zipcode          ",
+           "from":" FROM dbo.FRAUD_DUKCAPIL WITH(NOLOCK)",
+            "where":"WHERE ID_NO = {0}"            
+        }
+      },
+      {
+        "subSectionId": "DukcapilMarriageDataId",
+        "subSectionTitle": "Marriage Data",
+        "mainInfoUrl": "http://localhost:5001/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {
+            "type": "text",
+            "label": "Marriage Deed No",
+            "property": "MarriageDeedNo"
+          },
+          {
+            "type": "text",
+            "label": "Divorce Deed No",
+            "property": "DivorceDeedNo"
+          },
+          {
+            "type": "date",
+            "label": "Marriage Date",
+            "property": "MarriageDt"
+          },
+          {
+            "type": "date",
+            "label": "Divorce Date",
+            "property": "DivorceDt"
+          }
+        ],
+        "querystring": {
+          "select": "SELECT MARRIAGE_DEED_NO AS MarriageDeedNo, MARRIAGE_DT AS MarriageDt, DIVORCE_DEED_NO AS DivorceDeedNo, DIVORCE_DT AS DivorceDt          ",
+           "from":" FROM dbo.FRAUD_DUKCAPIL WITH(NOLOCK)",
+            "where":"WHERE ID_NO = {0}"            
+        }
+      },
+      {
+        "subSectionId": "DukcapilStatusCekDataId",
+        "subSectionTitle": "Status Cek Dukcapil Data",
+        "mainInfoUrl": "http://localhost:5001/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {
+            "type": "text",
+            "label": "Name",
+            "property": "CustName"
+          },
+          {
+            "type": "text",
+            "label": "Status Data",
+            "property": "DukcapilDataStatus"
+          },
+          {
+            "type": "text",
+            "label": "NIK",
+            "property": "IdNo"
+          },
+          {
+            "type": "text",
+            "label": "Kelurahan",
+            "property": "AreaCode2"
+          },
+          {
+            "type": "text",
+            "label": "Check Dukcapil Date",
+            "property": "CekDukcapilDt"
+          },
+          {
+            "type": "text",
+            "label": "No KK",
+            "property": "FamilyCardNo"
+          },
+          {
+            "type": "text",
+            "label": "Birth Place",
+            "property": "BirthPlace"
+          },
+          {
+            "type": "date",
+            "label": "Birth Date",
+            "property": "BirthDt"
+          }
+        ],
+        "querystring": {
+          "select": "SELECT CUST_NAME AS CustName, DUKCAPIL_DATA_STATUS AS DukcapilDataStatus, ID_NO AS IdNo, CEK_DUKCAPIL_DT AS CekDukcapilDt,FAMILY_CARD_NO AS FamilyCardNo, BIRTH_PLACE AS BirthPlace, BIRTH_DT AS BirthDt          ",
+           "from":" FROM dbo.FRAUD_DUKCAPIL WITH(NOLOCK)",
+            "where":"WHERE ID_NO = {0}"            
+        }
+      }
+    ]
+  }

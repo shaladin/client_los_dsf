@@ -94,7 +94,13 @@ export const ROUTES: RouteInfo[] = [
   {
     path: '', title: 'Inquiry', icon: 'ft-home', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false,
     submenu: [
-      { path: '/Inquiry/AppInquiry', title: 'App Inquiry', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] }
+      { path: '/Inquiry/AppInquiry', title: 'App Inquiry', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
+    ],params: []
+  },
+  {
+    path: '', title: 'Fraud Detection', icon: 'ft-home', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false,
+    submenu: [
+      { path: '/FraudDetection/FraudDetectionPaging', title: 'Fraud Detection', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [],params: [] },
     ], params: []
   },
 ];

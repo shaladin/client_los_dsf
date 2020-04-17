@@ -31,6 +31,7 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
   checkboxAllSpouse: false;
   listSelectedIdShareholder: any;
   checkboxAllShareholder: false;
+  RowVersion: any;
 
   constructor(
     private http: HttpClient,
@@ -56,17 +57,21 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
     this.http.post(this.GetCustDataByAppId, appObj).subscribe(
       response => {
         this.AppCustObj = response['AppCustObj'];
+        this.RowVersion = response['AppCustObj'].RowVersion;
         this.AppCustPersonalObj = response['AppCustPersonalObj'];
 
-        var requestDupCheck = {    "CustName": this.AppCustObj.CustName,
-    "MrCustTypeCode" : this.AppCustObj.MrCustTypeCode,
-    "MrCustModelCode" : this.AppCustObj.CustModelCode,
-    "MrIdTypeCode" : this.AppCustObj.MrIdTypeCode,
-    "IdNo" : this.AppCustObj.IdNo,
-    "TaxIdNo" : this.AppCustObj.TaxIdNo,
-    "BirthDt" : this.AppCustPersonalObj.BirthDt,
-    "MotherMaidenName" : this.AppCustPersonalObj.MotherMaidenName,
-    "MobilePhnNo1" : this.AppCustPersonalObj.MobilePhnNo1}
+        var requestDupCheck = {
+          "CustName": this.AppCustObj.CustName,
+          "MrCustTypeCode": this.AppCustObj.MrCustTypeCode,
+          "MrCustModelCode": this.AppCustObj.CustModelCode,
+          "MrIdTypeCode": this.AppCustObj.MrIdTypeCode,
+          "IdNo": this.AppCustObj.IdNo,
+          "TaxIdNo": this.AppCustObj.TaxIdNo,
+          "BirthDt": this.AppCustPersonalObj.BirthDt,
+          "MotherMaidenName": this.AppCustPersonalObj.MotherMaidenName,
+          "MobilePhnNo1": this.AppCustPersonalObj.MobilePhnNo1,          
+          "RowVersion": this.RowVersion
+        }
     //List App guarantor Checking
     this.http.post(this.GetAppGuarantorDuplicateCheckUrl, requestDupCheck).subscribe(
       response => {

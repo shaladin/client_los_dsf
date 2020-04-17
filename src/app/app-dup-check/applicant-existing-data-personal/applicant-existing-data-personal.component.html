@@ -31,19 +31,19 @@
 
             <div class="form-group row">
               <label class="col-md-3 adInsLabel">Gender</label>
-              <label class="col-md-3 adInsLabel">{{AppCustObj.Gender}} </label>
+              <label class="col-md-3 adInsLabel">{{AppCustPersonalObj.MrGenderCode}} </label>
             </div>
 
             <div class="form-group row">
               <label class="col-md-3 adInsLabel">Birth Place / Date</label>
-              <label class="col-md-3 adInsLabel">{{AppCustObj.BirthPlace}} / {{AppCustObj.BirthDt}} </label>
+              <label class="col-md-3 adInsLabel">{{AppCustPersonalObj.BirthPlace}} / {{AppCustPersonalObj.BirthDt}} </label>
             </div>
 
           </div>
 
           <div class="form-body">
             <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Applicant As Guarantor </h4>
-            <table class="table table-responsive-md text-center table-hover">
+            <table *ngIf = "ListAppGuarantorDuplicate?.length > 0" class="table table-responsive-md text-center table-hover">
               <thead>
                 <tr class="table-header">
                   <th><input type="checkbox" [checked]="checkboxAllGuarantor" (change)="SelectAllGuarantor($event.target.checked)" id="checkAll"
@@ -68,7 +68,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of ListAppGuarantorDuplicate">
+                <tr *ngFor="let item of ListAppGuarantorDuplicate; let i = index">
                   <td>
                     <div *ngIf="listSelectedIdGuarantor?.indexOf(item.AppGuarantorId) >- 1">
                       <input type="checkbox" id="checkSameGuarantor" name="itemSameGuarantor"
@@ -84,7 +84,7 @@
                   <td>{{item.IdType}}</td>
                   <td>{{item.IdNo}}</td>
                   <td>{{item.BirthDt}}</td>
-                  <td>{{item.MobilePhoneNo1}}</td>
+                  <td>{{item.MobilePhnNo1}}</td>
                   <td>{{item.TaxIdNo}}</td>
                   <td>{{item.DuplicateItem}}</td>
                   
@@ -95,7 +95,7 @@
 
           <div class="form-body">
             <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Applicant As Spouse </h4>
-            <table class="table table-responsive-md text-center table-hover">
+            <table *ngIf="ListSpouseDuplicate?.length > 0" class="table table-responsive-md text-center table-hover">
               <thead>
                 <tr class="table-header">
                   <th><input type="checkbox" [checked]="checkboxAllSpouse" (change)="SelectAllSpouse($event.target.checked)" id="checkAll"
@@ -120,7 +120,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of ListSpouseDuplicate">
+                <tr *ngFor="let item of ListSpouseDuplicate; let i = index">
                   <td>
                     <div *ngIf="listSelectedIdSpouse?.indexOf(item.AppCustPersonalConstactPersonId) >- 1">
                       <input type="checkbox" id="checkSameSpouse" name="itemSameSpouse"
@@ -136,7 +136,7 @@
                   <td>{{item.IdType}}</td>
                   <td>{{item.IdNo}}</td>
                   <td>{{item.BirthDt}}</td>
-                  <td>{{item.MobilePhoneNo1}}</td>
+                  <td>{{item.MobilePhnNo1}}</td>
                   <td>{{item.DuplicateItem}}</td>
                   
                 </tr>
@@ -146,7 +146,7 @@
 
           <div class="form-body">
             <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Applicant As Management / Shareholder </h4>
-            <table class="table table-responsive-md text-center table-hover">
+            <table *ngIf="ListAppShareholderDuplicate?.length > 0"class="table table-responsive-md text-center table-hover">
               <thead>
                 <tr class="table-header">
                   <th><input type="checkbox" [checked]="checkboxAllShareholder" (change)="SelectAllShareholder($event.target.checked)" id="checkAll"
@@ -171,7 +171,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of ListAppShareholderDuplicate">
+                <tr *ngFor="let item of ListAppShareholderDuplicate;let i = index">
                   <td>
                     <div *ngIf="listSelectedIdShareholder?.indexOf(item.AppCustCompanyMgmntShrholderId) >- 1">
                       <input type="checkbox" id="checkSameShareholder" name="itemSameShareholder"
@@ -187,7 +187,7 @@
                   <td>{{item.IdType}}</td>
                   <td>{{item.IdNo}}</td>
                   <td>{{item.BirthDt}}</td>
-                  <td>{{item.MobilePhoneNo1}}</td>
+                  <td>{{item.MobilePhnNo1}}</td>
                   <td>{{item.TaxIdNo}}</td>
                   <td>{{item.DuplicateItem}}</td>
                   
