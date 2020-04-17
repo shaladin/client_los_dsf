@@ -42,6 +42,8 @@ export class AppFeeComponent implements OnInit {
       (response) => {
         this.listAppFeeObj = response["ReturnObject"];
         for (let i = 0; i < this.listAppFeeObj.length ; i++) {
+
+          console.log(this.identifier);
           var fa_AppFee = this.ParentForm.get(this.identifier) as FormArray
           fa_AppFee.push(this.addFeeControl(this.listAppFeeObj[i]));
           // this.AppFeeForm.push(this.addFeeControl(this.listAppFeeObj[i]));
@@ -163,7 +165,7 @@ export class AppFeeComponent implements OnInit {
 
     this.ParentForm.patchValue({
       TotalFeeAmt : totalFeeAmt,
-      TotalFeeCapitalizeAmt : totalCaptlz
+      TotalFeeCptlzAmt : totalCaptlz
     })
 
     console.log(this.ParentForm.value);

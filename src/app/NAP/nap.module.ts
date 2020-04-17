@@ -51,7 +51,7 @@ import { PhnVerifPagingComponent } from "./phone-verif/phone-verif-paging/phone-
 import { RsvFundViewComponent } from "app/credit-process/reserved-fund/reserved-fund-view/reserved-fund-view.component";
 import { VerfQuestionComponent } from "./nap-component/verf-question/verf-question.component";
 export const customCurrencyMaskConfig = {
-    align: "left",
+    align: "right",
     allowNegative: true,
     allowZero: true,
     decimal: ".",
