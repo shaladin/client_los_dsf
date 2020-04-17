@@ -26,16 +26,22 @@ import { DocSignerPagingComponent } from "./doc-signer/doc-signer-paging/doc-sig
 import { DocSignerDetailComponent } from "./doc-signer/doc-signer-detail/doc-signer-detail.component";
 import { InvoiceViewComponent } from "./invoice/invoice-view/invoice-view.component";
 import { InvoiceDetailComponent } from "./invoice/invoice-detail/invoice-detail.component";
-import { AgreementViewContainerComponent } from "./agreement-view-container/agreement-view-container.component";
 import { DocumentPagingComponent } from "./document-printing/document-paging/document-paging.component";
 import { DocumentViewComponent } from "./document-printing/document-view/document-view.component";
 import { InvoiceDataAddComponent } from "./invoice-data/invoice-data-add/invoice-data-add.component";
+import { PreGoLiveApprovalDetailComponent } from "./pre-go-live/pre-go-live-approval-detail/pre-go-live-approval-detail.component";
+import { PreGoLiveApprovalPagingComponent } from "./pre-go-live/pre-go-live-approval-paging/pre-go-live-approval-paging.component";
+import { ViewMainInfoComponentModule } from "app/NEW-NAP/sharing-component/view-main-info-component/view-main-info-component.module";
+import { ProcessComponentModule } from "app/NEW-NAP/sharing-component/process-component/process-component.module";
+
 
 @NgModule({
   imports: [
     CommonModule,
     AdminProcessSharingRoutingModule,
     TcSharingComponentModule,
+    ViewMainInfoComponentModule,
+    ProcessComponentModule,
     AdInsModule,
   ],
   declarations: [
@@ -51,6 +57,8 @@ import { InvoiceDataAddComponent } from "./invoice-data/invoice-data-add/invoice
     PreGoLivePagingComponent,
     PreGoLiveComponent,
     PreGoLiveRequestForApprovalComponent,
+    PreGoLiveApprovalDetailComponent,
+    PreGoLiveApprovalPagingComponent,
     ApplicationAgreementCancellationPagingComponent,
     ApplicationAgreementCancellationDetailComponent,
     AgrmntActivationPagingComponent,
@@ -61,7 +69,6 @@ import { InvoiceDataAddComponent } from "./invoice-data/invoice-data-add/invoice
     DocSignerPagingComponent,
     InvoiceViewComponent,
     InvoiceDetailComponent,
-    AgreementViewContainerComponent,
     DocumentPagingComponent,
     DocumentViewComponent,
     InvoiceDataAddComponent
