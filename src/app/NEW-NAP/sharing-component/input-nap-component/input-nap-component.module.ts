@@ -3,10 +3,12 @@ import { NgModule } from "@angular/core";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { AdInsModule } from "app/components/adins-module/adins.module";
 import { TcSharingComponentModule } from "./tc-sharing-component.module";
+import { GuarantorComponent } from "./guarantor/guarantor.component";
 
 @NgModule({
   exports: [
-    TcSharingComponentModule
+    TcSharingComponentModule,
+    GuarantorComponent
   ],
   imports: [
     CommonModule,
@@ -14,6 +16,7 @@ import { TcSharingComponentModule } from "./tc-sharing-component.module";
     TcSharingComponentModule
   ],
   declarations: [
+    GuarantorComponent
   ],
   providers: [
     NGXToastrService

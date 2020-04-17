@@ -13,7 +13,7 @@
   </div>
 </div>
 <ng-template #content let-c="close" let-d="dismiss">
-  <app-app-guarantor [AppGuarantorId]=AppGuarantorId [MrGuarantorTypeCode]=MrGuarantorTypeCode [mode]=mode></app-app-guarantor>
+  <app-guarantor [AppGuarantorId]=AppGuarantorId [MrGuarantorTypeCode]=MrGuarantorTypeCode [mode]=mode></app-guarantor>
   <button type="button" class="btn btn-raised btn-warning mr-1" (click)="cancel()" translate>
     <i class="ft-x"></i> Cancel
   </button>

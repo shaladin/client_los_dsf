@@ -1,17 +1,33 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { DummyComponent } from './dummy/dummy.component';
+import { NapPagingComponent } from './nap-paging/nap-paging.component';
+import { NapAddComponent } from './nap-add/nap-add.component';
+import { NapAddDetailComponent } from './nap-add-detail/nap-add-detail.component';
 
 const routes: Routes = [
   {
     path: '',
     children: [
       {
-        path: 'dummy',
-        component: DummyComponent,
-        data: {
-          title: 'dummy'
-        }
+          path: 'Paging',
+          component: NapPagingComponent,
+          data: {
+              title: 'Paging'
+          }
+      },
+      {
+          path: 'Add',
+          component: NapAddComponent,
+          data: {
+              title: 'Add'
+          }
+      },
+      {
+          path: 'Add/Detail',
+          component: NapAddDetailComponent,
+          data: {
+              title: 'AddDetail'
+          }
       },
     ]
   }

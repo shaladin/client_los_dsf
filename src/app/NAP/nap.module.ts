@@ -1,5 +1,3 @@
-import { AppAddComponent } from "./app-add/app-add.component";
-import { AppPagingComponent } from "./app-paging/app-paging.component";
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ArchwizardModule } from "angular-archwizard";
@@ -10,7 +8,6 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
 import { NapRoutingModule } from "./nap-routing.module";
 import { RouterModule } from "@angular/router";
-import { AppAddDetailComponent } from './app-add-detail/app-add-detail.component';
 import { MatCheckboxModule, MatSelectModule } from "@angular/material";
 import { AppReferantorComponent } from "./nap-tab/app-referantor/app-referantor.component";
 import { AppModelComponent } from './nap-tab/app-model/app-model.component';
@@ -23,10 +20,6 @@ import { SharingComponentModule } from "app/shared/sharingcomponent.module";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { CustPersonalMainDataComponent } from "./nap-tab/customer-data/component/personal-main-data/cust-personal-main-data.component";
 import { CustUcaddressComponent } from "./nap-tab/customer-data/component/address/ucaddress.component";
-import { AppGuarantorComponent } from "./nap-tab/app-guarantor/app-guarantor.component";
-import { GuarantorCompanyComponent } from "./nap-tab/app-guarantor/guarantor-company/guarantor-company.component";
-import { GuarantorPagingComponent } from "./nap-tab/app-guarantor/guarantor-paging/guarantor-paging.component";
-import { GuarantorPersonalComponent } from "./nap-tab/app-guarantor/guarantor-personal/guarantor-personal.component";
 import { AppLifeInsComponent } from './nap-tab/app-life-ins/app-life-ins.component';
 import { CustPersonalContactInformationComponent } from "./nap-tab/customer-data/component/personal-contact-information/cust-personal-contact-information.component";
 import { CustPersonalFinancialDataComponent } from "./nap-tab/customer-data/component/personal-financial-data/cust-personal-financial-data.component";
@@ -78,9 +71,6 @@ import { AppFromLeadDetailComponent } from "./app-from-lead/detail/app-from-lead
 
 @NgModule({
     declarations: [
-        AppAddComponent,
-        AppPagingComponent,
-        AppAddDetailComponent,
         AppReferantorComponent,
         CustomerDataComponent,
         CustUcaddressComponent,
@@ -88,11 +78,7 @@ import { AppFromLeadDetailComponent } from "./app-from-lead/detail/app-from-lead
         CustomerDataComponent,
         CustPersonalMainDataComponent,
         CustUcaddressComponent,
-        GuarantorPagingComponent,
-        GuarantorPersonalComponent,
-        GuarantorCompanyComponent,
         CustUcaddressComponent,
-        AppGuarantorComponent,
         AppLifeInsComponent,
         CustPersonalContactInformationComponent,
         CustPersonalFinancialDataComponent,

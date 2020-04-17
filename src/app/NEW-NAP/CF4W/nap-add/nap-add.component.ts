@@ -10,11 +10,11 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 
 @Component({
-  selector: 'app-app-add',
-  templateUrl: './app-add.component.html',
+  selector: 'app-nap-add',
+  templateUrl: './nap-add.component.html',
   providers: [NGXToastrService]
 })
-export class AppAddComponent implements OnInit {
+export class NapAddComponent implements OnInit {
 
   param;
   ProductOfferingIdentifier;
@@ -203,7 +203,7 @@ export class AppAddComponent implements OnInit {
       (response) => {
         console.log(response);
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["Nap/AppAddDetail"], { queryParams: { "AppId": response["AppId"] } });
+        this.router.navigate(["ConsumerFinance/AppAddDetail"], { queryParams: { "AppId": response["AppId"] } });
       },
       (error) => {
         console.log(error);

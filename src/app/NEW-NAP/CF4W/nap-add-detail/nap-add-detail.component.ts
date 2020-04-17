@@ -8,11 +8,11 @@ import { AppObj } from 'app/shared/model/App/App.Model';
 import { WizardComponent } from 'angular-archwizard';
 
 @Component({
-  selector: 'app-app-add-detail',
-  templateUrl: './app-add-detail.component.html',
+  selector: 'app-nap-add-detail',
+  templateUrl: './nap-add-detail.component.html',
   providers: [NGXToastrService]
 })
-export class AppAddDetailComponent implements OnInit {
+export class NapAddDetailComponent implements OnInit {
 
   appId: number;
   viewProdMainInfoObj: string;

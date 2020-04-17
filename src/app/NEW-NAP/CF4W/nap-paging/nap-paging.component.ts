@@ -4,11 +4,11 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 
 @Component({
-  selector: 'app-app-paging',
-  templateUrl: './app-paging.component.html',
-  styleUrls: ['./app-paging.component.scss']
+  selector: 'app-nap-paging',
+  templateUrl: './nap-paging.component.html',
+  styleUrls: ['./nap-paging.component.scss']
 })
-export class AppPagingComponent implements OnInit {
+export class NapPagingComponent implements OnInit {
 
   inputPagingObj: any;
   constructor() { }
