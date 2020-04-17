@@ -104,7 +104,9 @@
     ],
     "querystring": {
         "select": "SELECT L.LEAD_NO AS LeadNo,WTL.WF_TASK_LIST_ID AS WfTaskListId,WTL.CLAIM_STAT AS ClaimStat, WTL.USERNAME AS ClaimBy, L.LEAD_ID AS LeadId, L.ORI_OFFICE_NAME AS OriOfficeName, LC.CUST_NO AS CustNo, LC.CUST_NAME AS CustName, L.MR_LEAD_SOURCE_CODE AS SourceCode, LC.MR_CUST_TYPE_CODE AS MrCustTypeCode",
-        "from": "FROM dbo.LEAD L WITH(NOLOCK) JOIN dbo.LEAD_CUST LC WITH(NOLOCK) ON L.LEAD_ID = LC.LEAD_ID JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON l.LEAD_NO = WTL.TRANSACTION_CODE AND WTL.ACT_CODE = 'FRAUD_VERIFICATION'"
+        "from": "FROM dbo.LEAD L WITH(NOLOCK) JOIN dbo.LEAD_CUST LC WITH(NOLOCK) ON L.LEAD_ID = LC.LEAD_ID JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON l.LEAD_NO = WTL.TRANSACTION_CODE AND WTL.ACT_CODE = 'FRAUD_VERIFICATION'",
+        "where" : "WHERE WTL.END_EXECUTING_DATE IS NULL"
+
     },
     "headerList": [
         {
@@ -121,7 +123,7 @@
         },
         {
             "type": "sort",
-            "position": "left",
+            "position": "center",
             "label": "Cust No",
             "name": "LC.CustNo"
         },
@@ -175,7 +177,7 @@
         },
         {
             "type": "text",
-            "position": "left",
+            "position": "center",
             "property": "CustNo"
         },
         {

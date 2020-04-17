@@ -3,4 +3,5 @@ export class LeadConfirmCancelObj{
     LeadStat : any;
     MrCancelReasonCode : any;
     ListLeadId = new Array();
+    ListWfTaskListId = new Array();
 }
