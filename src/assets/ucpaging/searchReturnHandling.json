@@ -90,7 +90,7 @@
         },
         {
             "type": "sort",
-            "position": "left",
+            "position": "center",
             "label": "Application No",
             "name": "A.APP_NO"
         },
