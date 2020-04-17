@@ -6,6 +6,8 @@ import { CreditProcessSharingRoutingModule } from "./credit-process-routing.modu
 import { RsvFundPagingComponent } from "./reserved-fund/reserved-fund-paging/reserved-fund-paging.component";
 import { PhoneVerificationPagingComponent } from "./phone-verification/phone-verification-paging/phone-verification-paging.component";
 import { CommissionPagingComponent } from "./commission/commission-paging/commission-paging.component";
+import { CreditReviewPagingComponent } from './credit-review/credit-review-paging/credit-review-paging.component';
+import { CreditApprovalPagingComponent } from './credit-approval/credit-approval-paging/credit-approval-paging.component';
 
 @NgModule({
   imports: [
@@ -17,6 +19,8 @@ import { CommissionPagingComponent } from "./commission/commission-paging/commis
     RsvFundPagingComponent,
     CommissionPagingComponent,
     PhoneVerificationPagingComponent,
+    CreditReviewPagingComponent,
+    CreditApprovalPagingComponent,
   ],
   providers: [
     NGXToastrService
