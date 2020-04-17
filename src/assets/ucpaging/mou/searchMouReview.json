@@ -188,7 +188,7 @@
         },
         {
             "type": "date",
-            "position": "left",
+            "position": "center",
             "property": "MouCustDt"
         },
         {
