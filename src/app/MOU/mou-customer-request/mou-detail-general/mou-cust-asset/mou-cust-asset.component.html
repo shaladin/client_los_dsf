@@ -11,7 +11,7 @@
             [attr.disabled]="IsAssetSelected ? '' : null">
             <option *ngFor="let item of assetTypeList?.ReturnObject" [value]="item.Key">{{item.Value}}</option>
           </select>
-          <show-errors [control]="MouCustClauseAssetForm.controls.AssetTypeCode" [submit]="enjiForm.submitted"></show-errors>
+          <lib-uc-show-errors  [control]="MouCustClauseAssetForm.controls.AssetTypeCode" [submit]="enjiForm.submitted"></lib-uc-show-errors >
         </div>
       </form>
     </div>
