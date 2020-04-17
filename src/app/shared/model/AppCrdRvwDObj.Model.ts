@@ -6,5 +6,6 @@ export class AppCrdRvwDObj{
     RowVersion: any;
 
     constructor(){
+        this.RowVersion = "";
     }
 }

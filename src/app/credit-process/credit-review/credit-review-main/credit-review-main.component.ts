@@ -196,6 +196,9 @@ export class CreditReviewMainComponent implements OnInit {
     tempAppCrdRvwObj.SubmitDt = this.UserAccess.BusinessDt;
     tempAppCrdRvwObj.CrdRvwStat = "DONE";
     tempAppCrdRvwObj.ReturnNotes = "";
+    if(this.ResponseExistCreditReview != null){
+      tempAppCrdRvwObj.RowVersion = this.ResponseExistCreditReview.RowVersion;
+    }
     tempAppCrdRvwObj.appCrdRvwDObjs = this.BindAppCrdRvwDObj(temp.arr);
     console.log(tempAppCrdRvwObj);
 
@@ -221,6 +224,10 @@ export class CreditReviewMainComponent implements OnInit {
       var temp = new AppCrdRvwDObj();
       temp.MrAnalysisItemCode = objArr[i].QuestionCode;
       temp.AnalysisResult = objArr[i].Answer;
+      if(this.ResponseExistCreditReview != null){
+        var idx = this.ResponseExistCreditReview.appCrdRvwDObjs.indexOf(this.ResponseExistCreditReview.appCrdRvwDObjs.find(x => x.MrAnalysisItemCode == objArr[i].QuestionCode));
+        temp.RowVersion = this.ResponseExistCreditReview.appCrdRvwDObjs[idx].RowVersion;
+      }
       AppCrdRvwDObjs.push(temp);
     }
     return AppCrdRvwDObjs;
