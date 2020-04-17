@@ -78,13 +78,20 @@
   ],
   "querystring": {
     "select": "SELECT MC.MOU_CUST_NO AS MouCustNo , MC.CUST_NAME AS CustName, MC.MOU_CUST_ID AS MouCustId, MC.MOU_CUST_DT AS MouCustDt, MC.END_DT AS EndDate, MC.PLAFOND_AMT AS PlafondAmt, MC.IS_REVOLVING AS IsRevolving, MC.REF_NO AS RefNo, MC.MR_MOU_TYPE_CODE AS MrMouTypeCode",
-    "from": "FROM dbo.MOU_CUST MC WITH(NOLOCK)"
+    "from": "FROM dbo.MOU_CUST MC WITH(NOLOCK) JOIN dbo.MOU_CUST_SIGNER MCS WITH(NOLOCK) ON MCS.MOU_CUST_ID = MC.MOU_CUST_ID"
   },
   "bodyList": [
     {
-      "type": "text",
+      "type": "link",
       "position": "left",
-      "property": "MouCustNo"
+      "property": "MouCustNo",
+      "path": "/Mou/Cust/Paging",
+      "param": [
+        {
+          "type": "MouCustId",
+          "property": "MouCustId"
+        }
+      ]
     },
     {
       "type": "text",

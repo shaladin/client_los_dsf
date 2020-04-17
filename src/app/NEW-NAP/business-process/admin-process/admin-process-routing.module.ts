@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { PreGoLiveComponent } from './pre-go-live/pre-go-live-sharing/pre-go-live.component';
-import { PreGoLiveRequestForApprovalComponent } from './pre-go-live/pre-go-live-request-for-approval-sharing/pre-go-live-request-for-approval.component';
+import { PreGoLivePagingComponent } from './pre-go-live/pre-go-live-paging/pre-go-live-paging.component';
+import { PreGoLiveComponent } from './pre-go-live/pre-go-live/pre-go-live.component';
+import { PreGoLiveRequestForApprovalComponent } from './pre-go-live/pre-go-live-request-for-approval/pre-go-live-request-for-approval.component';
+import { PurchaseOrderPagingComponent } from './purchase-order/purchase-order-paging/purchase-order-paging.component';
 import { PurchaseOrderComponent } from './purchase-order/purchase-order/purchase-order.component';
 import { PurchaseOrderDetailComponent } from './purchase-order/purchase-order-detail/purchase-order-detail.component';
 import { DeliveryOrderDetailComponent } from './delivery-order/delivery-order-detail/delivery-order-detail.component';
@@ -17,7 +19,9 @@ import { DocSignerPagingComponent } from './doc-signer/doc-signer-paging/doc-sig
 import { DocSignerDetailComponent } from './doc-signer/doc-signer-detail/doc-signer-detail.component';
 import { InvoiceViewComponent } from './invoice/invoice-view/invoice-view.component';
 import { InvoiceDetailComponent } from './invoice/invoice-detail/invoice-detail.component';
-import { AgreementViewContainerComponent } from './agreement-view-container/agreement-view-container.component';
+import { AgreementViewContainerComponent } from '../../view/agreement-view-container/agreement-view-container.component';
+import { PreGoLiveApprovalPagingComponent } from './pre-go-live/pre-go-live-approval-paging/pre-go-live-approval-paging.component';
+import { PreGoLiveApprovalDetailComponent } from './pre-go-live/pre-go-live-approval-detail/pre-go-live-approval-detail.component';
 import { DocumentPagingComponent } from './document-printing/document-paging/document-paging.component';
 import { DocumentViewComponent } from './document-printing/document-view/document-view.component';
 import { InvoiceDataAddComponent } from './invoice-data/invoice-data-add/invoice-data-add.component';
@@ -26,6 +30,13 @@ const routes: Routes = [
   {
     path: '',
     children: [
+      {
+        path: 'PurchaseOrder/Paging',
+        component: PurchaseOrderPagingComponent,
+        data: {
+          title: 'Purchase Order Paging'
+        }
+      },
       {
         path: 'PurchaseOrder/PO',
         component: PurchaseOrderComponent,
@@ -62,6 +73,13 @@ const routes: Routes = [
         }
       },
       {
+        path: 'PreGoLive/Paging',
+        component: PreGoLivePagingComponent,
+        data: {
+          title: 'PreGoLive Paging'
+        }
+      },
+      {
         path: 'PreGoLive/Detail',
         component: PreGoLiveComponent,
         data: {
@@ -73,6 +91,20 @@ const routes: Routes = [
         component: PreGoLiveRequestForApprovalComponent,
         data: {
           title: 'PreGoLive Request For Approval'
+        }
+      },
+      {
+        path: 'PreGoLive/Approval/Paging',
+        component: PreGoLiveApprovalPagingComponent,
+        data: {
+          title: 'PreGoLive Paging For Approval'
+        }
+      },
+      {
+        path: 'PreGoLive/Approval/Detail',
+        component: PreGoLiveApprovalDetailComponent,
+        data: {
+          title: 'PreGoLive Detail For Approval'
         }
       },
       {
@@ -143,13 +175,6 @@ const routes: Routes = [
         component: InvoiceDetailComponent,
         data: {
           title: 'Invoice Detail'
-        }
-      },
-      {
-        path: 'View',
-        component: AgreementViewContainerComponent,
-        data: {
-          title: 'Agreement View Container'
         }
       },
       {

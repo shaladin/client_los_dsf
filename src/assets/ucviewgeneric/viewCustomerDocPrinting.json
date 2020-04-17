@@ -4,13 +4,9 @@
       {
         "subSectionId": "MainId",
         "subSectionTitle": "Main Info",
-        "mainInfoUrl": "http://localhost:5001/Generic/GetDataViewBySQL",
+        "mainInfoUrl": "http://r3app-server.ad-ins.com/LOS/Generic/GetDataViewBySQL",
         "mainInfo": [
-          {
-            "type": "text",
-            "label": "MOU No",
-            "property": "MouCustNo"
-          },
+
           {
             "type": "text",
             "label": "Customer Name",
@@ -59,7 +55,7 @@
           
         ],
         "querystring": {
-          "select": "SELECT MC.MOU_CUST_NO AS MouCustNo, MC.CUST_NAME AS CustName, MC.START_DT AS StartDt, MC.END_DT AS EndDt, MC.MOU_STAT AS MouStat, MC.MOU_CUST_DT AS MouCustDt, MC.MR_MOU_TYPE_CODE AS MrMouTypeCode, MC.PLAFOND_AMT AS PlafondAmt, MC.REF_NO AS RefNo",
+          "select": "SELECT MC.MOU_CUST_NO AS MouCustNo, MC.CUST_NAME AS CustName, MC.START_DT AS StartDt, MC.END_DT AS EndDt, MC.MOU_STAT AS MouStat, MC.MOU_CUST_DT AS MouCustDt, MC.MR_MOU_TYPE_CODE AS MrMouTypeCode, MC.PLAFOND_AMT AS PlafondAmt, MC.REF_NO AS RefNo, MC.MOU_CUST_ID AS MouCustId",
           "from": " FROM dbo.MOU_CUST_DOC_PRINT MCDP WITH(NOLOCK) JOIN dbo.MOU_CUST MC WITH(NOLOCK) ON MCDP.MOU_CUST_ID = MC.MOU_CUST_ID ",
           "where": "WHERE MC.MOU_CUST_ID = {0}"
         }
