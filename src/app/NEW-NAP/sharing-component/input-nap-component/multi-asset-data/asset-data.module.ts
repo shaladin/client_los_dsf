@@ -10,6 +10,8 @@ import { UcaddressModule } from "@adins/ucaddress";
 import { UcShowErrorsModule } from "@adins/uc-show-errors";
 import { UclookupgenericModule } from "@adins/uclookupgeneric";
 import { UcviewgenericModule } from "@adins/ucviewgeneric";
+import { UcgridviewModule } from "@adins/ucgridview";
+import { CollateralAddEditComponent } from "./collateral-add-edit/collateral-add-edit.component";
 
 @NgModule({
   imports: [
@@ -21,11 +23,13 @@ import { UcviewgenericModule } from "@adins/ucviewgeneric";
     UcShowErrorsModule,
     UclookupgenericModule,
     UcviewgenericModule,
+    UcgridviewModule
     
   ],
   declarations: [
     AssetDataPagingComponent,
-    AssetDataAddEditComponent
+    AssetDataAddEditComponent,
+    CollateralAddEditComponent
   ],
   providers: [
     NGXToastrService

@@ -722,8 +722,10 @@ export class AdInsConstant {
   // App Asset
   public static GetAppAssetDataByAppId = environment.losUrl + "/AppAsset/GetAppAssetDataByAppId";
   public static GetListAppAssetData = environment.losUrl + "/AppAsset/GetListAppAssetData";
- 
 
+  // App Collateral
+  public static GetListAppCollateral = "http://localhost:5001" + "/AppCollateral/GetListAppCollateral"
+ 
   //AGRMNT SIGNER
   public static SubmitAgrmntSignerData = environment.losUrl + "/AgrmntSigner/SubmitAgrmntSignerData";
   public static EditAgrmntSignerData = environment.losUrl + "/AgrmntSigner/EditAgrmntSignerData";

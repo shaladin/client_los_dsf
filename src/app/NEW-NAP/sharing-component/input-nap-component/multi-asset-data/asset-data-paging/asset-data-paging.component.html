@@ -1,17 +1,14 @@
-<div class="ucSearch-Button-Right">
+  <div class="ucSearch-Button-Right">
     <span class="mr-1">
       <button type="button" class="addButton" [routerLink]="['/Nap/FinanceLeasing/AssetData/Detail']" translate>
         <i class="ft-plus-circle"></i> Add Asset
       </button>
     </span>
   </div>
-  <br>
-  <br>
-  <br>
   <lib-ucSubsection [id]="'assetListId'" [title]="'Asset List'" [panel]="'assetList'">
   </lib-ucSubsection>
-  <div id="assetList">
-    <table class="table table-responsive-md text-center table-hover">
+   <div id="assetList">
+    <!-- <table class="table table-responsive-md text-center table-hover">
       <thead>
         <tr class="table-header">
           <th style="text-align: left;"><span class="thead-header" name='assetName' translate>Asset Name
@@ -50,15 +47,31 @@
             <a (click)="editItem(item)">
               <i class="fa fa-pen"></i>
             </a>
-            <!-- &nbsp;&nbsp;&nbsp;
+             &nbsp;&nbsp;&nbsp;
             <a *ngIf="item.MrCustAddrTypeCode != 'Legal Address'"
               (click)="deleteItem(item)">
               <i class="fa fa-trash"></i>
-            </a> -->
+            </a>
           </td>
         </tr>
       </tbody>
-    </table>
+    </table>-->
+    <lib-ucgridview [gridInput]="gridAssetDataObj"></lib-ucgridview>
+  </div>
+  <br>
+  <br>
+  <br>
+  <div class="ucSearch-Button-Right">
+    <span class="mr-1">
+      <button type="button" class="addButton" [routerLink]="['/Nap/FinanceLeasing/Collateral/Detail']" translate>
+        <i class="ft-plus-circle"></i> Add Additional Collateral
+      </button>
+    </span>
+  </div>
+  <lib-ucSubsection [id]="'collateralId'" [title]="'Additional Collateral'" [panel]="'collateral'">
+  </lib-ucSubsection>
+  <div id="collateral">
+    <lib-ucgridview [gridInput]="gridAppCollateralObj"></lib-ucgridview>
   </div>
   <br>
   <br>

@@ -17,7 +17,8 @@ import { VendorEmpObj } from 'app/shared/model/VendorEmp.Model';
 export class AssetDataAddEditComponent implements OnInit {
 
   @Output() outputValue: EventEmitter<object> = new EventEmitter();
-  IdCust: any;
+  pageType: string = "add";
+  AppAssetId: any;
   branchObj : any;
   listBranchObj: any;
   getListAppAssetData: any;
@@ -43,10 +44,13 @@ export class AssetDataAddEditComponent implements OnInit {
     this.getListVendorEmp = AdInsConstant.GetListVendorEmpByVendorIdAndPosition;
 
     this.route.queryParams.subscribe(params => {
-      if (params["IdCust"] != null) {
-         this.IdCust = params["IdCust"];
+      if (params["AppAssetId"] != null) {
+         this.AppAssetId = params["AppAssetId"];
        }
-     });
+       if (params["mode"] != null) {
+        this.pageType = params["mode"];
+      } 
+    });
   }
 
 //   SetAsset(event) {
