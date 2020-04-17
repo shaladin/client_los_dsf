@@ -28,7 +28,6 @@ import { DummyComponent } from "app/NEW-NAP/CF4W/dummy/dummy.component";
     NgbModule
   ],
   declarations: [
-    DummyComponent,
     AgrMainInfoComponent,
     AppMainInfoComponent,
   ],
