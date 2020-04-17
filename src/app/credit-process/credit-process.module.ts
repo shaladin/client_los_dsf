@@ -32,6 +32,7 @@ import { FormAddDynamicComponent } from "./commission-add/form-add-dynamic/form-
 import { ViewAppCustDataCompanyComponent } from "./credit-investigation/component/view-app-cust-data-company/view-app-cust-data-company.component";
 import { CreditInvestigationPagingComponent } from "./credit-investigation/credit-investigation-paging/credit-investigation-paging.component";
 import { TabApplicationDataComponent } from './credit-investigation/component/tab-application-data/tab-application-data.component';
+import { ReturnHandlingComponent } from './return-handling/return-handling.component';
 export const customCurrencyMaskConfig = {     
     align: "left",     
     allowNegative: true,     
@@ -58,7 +59,8 @@ export const customCurrencyMaskConfig = {
         FormAddDynamicComponent,
         ViewAppCustDataCompanyComponent,
         CreditInvestigationPagingComponent,
-        TabApplicationDataComponent
+        TabApplicationDataComponent,
+        ReturnHandlingComponent
         ],
     imports: [ 
         CreditProcessRoutingModule,
