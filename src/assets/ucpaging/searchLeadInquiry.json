@@ -98,7 +98,7 @@
         },
         {
             "type": "sort",
-            "position": "left",
+            "position": "center",
             "label": "Order No",
             "name": "l.ORDER_NO"
         },
@@ -140,7 +140,7 @@
     "bodyList": [
         {
             "type": "link",
-            "position": "left",
+            "position": "center",
             "property": "LeadNo",
             "path": "../View/",
             "target": "_blank",
@@ -158,7 +158,7 @@
         },
         {
             "type": "text",
-            "position": "left",
+            "position": "center",
             "property": "OrderNo"
         },
         {

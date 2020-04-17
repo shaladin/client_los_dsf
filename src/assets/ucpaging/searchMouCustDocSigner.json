@@ -105,7 +105,8 @@
     ],
     "querystring": {
         "select": "SELECT MOU.MOU_CUST_NO AS MouCustNo, WTL.WF_TASK_LIST_ID AS WfTaskListId, WTL.USERNAME AS ClaimBy, WTL.CLAIM_STAT AS ClaimStat, WTL.OFFICE_CODE AS OfficeCode, MOU.MOU_CUST_ID AS MouCustId, MOU.CUST_NAME AS CustName, MOU.MOU_CUST_DT AS MouCustDt, MOU.END_DT AS EndDt, MOU.PLAFOND_AMT AS PlafondAmt, MOU.IS_REVOLVING AS IsRevolving, MOU.REF_NO AS RefNo, MOU.MR_MOU_TYPE_CODE AS MouTypeCode",
-        "from": "FROM dbo.MOU_CUST MOU WITH(NOLOCK) JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON MOU.MOU_CUST_NO = WTL.TRANSACTION_CODE AND WTL.ACT_CODE = 'MOU_DOC_SIGNER' WHERE MOU.MOU_STAT = 'MOU_DOC_SIGN' AND WTL.OFFICE_CODE = 'HO'"
+        "from": "FROM dbo.MOU_CUST MOU WITH(NOLOCK) JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON MOU.MOU_CUST_NO = WTL.TRANSACTION_CODE AND WTL.ACT_CODE = 'MOU_DOC_SIGNER'",
+        "where" : "WHERE WTL.END_EXECUTING_DATE IS NULL"
     },
     "headerList": [
         {
@@ -116,37 +117,37 @@
         },
         {
             "type": "sort",
-            "position": "left",
+            "position": "center",
             "label": "Mou No",
             "name": "MOU.MOU_CUST_NO"
         },
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "Customer Name",
             "name": "MOU.CUST_NAME"
         },
         {
             "type": "sort",
-            "position": "left",
+            "position": "center",
             "label": "Mou Date",
             "name": "MOU.MOU_CUST_DT"
         },
         {
             "type": "sort",
-            "position": "left",
+            "position": "center",
             "label": "End Date",
             "name": "MOU.END_DT"
         },
         {
             "type": "sort",
-            "position": "left",
+            "position": "right",
             "label": "Plafond Amount",
             "name": "MOU.PLAFOND_AMT"
         },
         {
             "type": "sort",
-            "position": "left",
+            "position": "center",
             "label": "Revolving",
             "name": "MOU.IS_REVOLVING"
         },
@@ -158,7 +159,7 @@
         },
         {
             "type": "label",
-            "position": "left",
+            "position": "center",
             "label": "Ref No",
             "name": "MOU.REF_NO"
         },
@@ -175,28 +176,35 @@
             "property": "ClaimBy"
         },
         {
-            "type": "text",
-            "position": "left",
-            "property": "MouCustNo"
+            "type": "link",
+            "position": "center",
+            "property": "MouCustNo",
+            "path": "/Mou/Cust/Paging",
+            "param": [
+                {
+                    "type": "MouCustId",
+                    "property": "MouCustId"
+                }
+            ]
         },
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "CustName"
         },
         {
             "type": "date",
-            "position": "left",
+            "position": "center",
             "property": "MouCustDt"
         },
         {
             "type": "date",
-            "position": "left",
+            "position": "center",
             "property": "EndDt"
         },
         {
             "type": "decimal",
-            "position": "left",
+            "position": "right",
             "property": "PlafondAmt"
         },
         {
@@ -211,7 +219,7 @@
         },
         {
             "type": "text",
-            "position": "left",
+            "position": "center",
             "property": "RefNo"
         },
         {

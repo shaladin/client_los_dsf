@@ -4,21 +4,20 @@
         {
             "subSectionId": "MainInformationId",
             "subSectionTitle": "Main Information",
-            "mainInfoUrl": "http://localhost:5001/Generic/GetDataViewBySQL",
+            "mainInfoUrl": "http://r3app-server.ad-ins.com/LOS/Generic/GetDataViewBySQL",
             "mainInfo": [
                 {
                     "type": "link",
                     "label": "Lead No",
                     "property": "LeadNo",
-                    "position": "left",
-                    "path": "/test/paging",
+                    "position" : "left",
+                    "path": "/Lead/View",
                     "param": [
-                        {
-                            "type": "LeadId",
-                            "property": "LeadId"
-                        }
+                      {
+                        "property": "LeadId"
+                      }
                     ]
-                },
+                  },
                 {
                     "type": "text",
                     "label": "Office Name",

@@ -54,13 +54,13 @@
         },
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "CUSTOMER NAME",
             "name": "CustName"
         },
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "PRODUCT OFFERING NAME",
             "name": "ProdOfferingName"
         },
@@ -98,7 +98,7 @@
         },
         {
             "type": "link",
-            "position": "center",
+            "position": "left",
             "property": "CustName",
             "path": "",
             "param": [
@@ -110,7 +110,7 @@
         },
         {
             "type": "link",
-            "position": "center",
+            "position": "left",
             "property": "ProdOfferingName",
             "path": "",
             "param": [

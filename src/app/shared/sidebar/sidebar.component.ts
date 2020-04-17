@@ -15,8 +15,8 @@ declare var $: any;
 
 export class SidebarComponent implements OnInit {
     public menuItems: any[];
-    public menu:any[];
-    private url:string;
+    public menu: any[];
+    private url: string;
     @ViewChild(ContextMenuComponent) public basicMenu: ContextMenuComponent;
 
     constructor(private router: Router,
@@ -45,5 +45,14 @@ export class SidebarComponent implements OnInit {
     ngxWizardFunction(path: string) {
         if (path.indexOf('forms/ngx') != -1)
             this.router.navigate(['forms/ngx/wizard'], { skipLocationChange: false });
+    }
+
+    genParam(params: [{ 'attr': string, 'value': string }]) {
+        var arrList = {};
+
+        for (var i = 0; i < params.length; i++) {
+            arrList[params[i].attr] = params[i].value;
+        }
+        return arrList;
     }
 }

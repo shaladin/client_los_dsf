@@ -13,7 +13,7 @@
     ],
     "querystring": {
         "select": " SELECT INDUSTRY_TYPE_NAME AS IndustryTypeName",
-        "from": "FROM REF_INDUSTRY_TYPE A WITH(NOLOCK)"
+        "from": "FROM REF_INDUSTRY_TYPE WITH(NOLOCK)"
     },
         "headerList": [
         {

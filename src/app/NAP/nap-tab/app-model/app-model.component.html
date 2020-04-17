@@ -22,7 +22,7 @@
                     [enjiForm]='enjiForm' [identifier]="'employeeIdentifier'"
                     (lookup)="getLookupEmployeeResponse($event)">
                   </lib-uclookupgeneric>
-                  <show-errors [control]="NapAppModelForm.controls.SalesOfficerName" [submit]="enjiForm.submitted"></show-errors>
+                  <lib-uc-show-errors  [control]="NapAppModelForm.controls.SalesOfficerName" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                 </div>
                 <!-- Sales Supervisor -->
                 <label class="col-md-2 adInsLabel">Sales Supervisor </label>
@@ -41,7 +41,7 @@
                       {{item.Value}}
                     </mat-radio-button>
                   </mat-radio-group>
-                  <show-errors [control]="NapAppModelForm.controls.MrSalesRecommendCode" [submit]="enjiForm.submitted"></show-errors>
+                  <lib-uc-show-errors  [control]="NapAppModelForm.controls.MrSalesRecommendCode" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                 </div>
                 <!-- Sales Notes -->
                 <label class="col-md-2 adInsLabel">Sales Notes </label>
@@ -70,7 +70,7 @@
                     <option *ngFor="let it of applicationDDLitems['APP_SOURCE']" value="{{it.Key}}">
                       {{it.Value}} </option>
                   </select>
-                  <show-errors [control]="NapAppModelForm.controls.MrAppSourceCode" [submit]="enjiForm.submitted"></show-errors>
+                  <lib-uc-show-errors  [control]="NapAppModelForm.controls.MrAppSourceCode" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                 </div>
                 <!-- Survey No -->
                 <label class="col-md-2 adInsLabel">Survey No </label>
@@ -87,7 +87,7 @@
                 <div class="col-md-4">
                   <input type="text" class="form-control adInsInput width-100-per" formControlName="Tenor"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.Tenor.invalid }" (change) = "ChangeNumOfInstallmentTenor()">
-                  <show-errors [control]="NapAppModelForm.controls.Tenor" [submit]="enjiForm.submitted"></show-errors>
+                  <lib-uc-show-errors  [control]="NapAppModelForm.controls.Tenor" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                 </div>
                 <!-- First Installment Type -->
                 <label class="col-md-2 adInsLabel"> First Installment Type </label>
@@ -98,7 +98,7 @@
                       {{item.Value}}
                     </mat-radio-button>
                   </mat-radio-group>
-                  <show-errors [control]="NapAppModelForm.controls.MrFirstInstTypeCode" [submit]="enjiForm.submitted"></show-errors>
+                  <lib-uc-show-errors  [control]="NapAppModelForm.controls.MrFirstInstTypeCode" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                 </div>
               </div>
               
@@ -112,7 +112,7 @@
                     <option *ngFor="let it of applicationDDLitems['Pay_Freq']" value="{{it.PayFreqCode}}">
                       {{it.Descr}} </option>
                   </select>
-                  <show-errors [control]="NapAppModelForm.controls.PayFreqCode" [submit]="enjiForm.submitted"></show-errors>
+                  <lib-uc-show-errors  [control]="NapAppModelForm.controls.PayFreqCode" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                 </div>
                 <!-- Interest Type -->
                 <label class="col-md-2 adInsLabel"> Interest Type </label>
@@ -123,7 +123,7 @@
                     <option *ngFor="let it of applicationDDLitems['INTRSTTYPE']" value="{{it.Key}}">
                       {{it.Value}} </option>
                   </select>
-                  <show-errors [control]="NapAppModelForm.controls.InterestType" [submit]="enjiForm.submitted"></show-errors>
+                  <lib-uc-show-errors  [control]="NapAppModelForm.controls.InterestType" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                 </div>
               </div>
 
@@ -143,7 +143,7 @@
                     <option *ngFor="let it of applicationDDLitems['INST_SCHM']" value="{{it.Key}}">
                       {{it.Value}} </option>
                   </select>
-                  <show-errors [control]="NapAppModelForm.controls.MrInstSchemeCode" [submit]="enjiForm.submitted"></show-errors>
+                  <lib-uc-show-errors  [control]="NapAppModelForm.controls.MrInstSchemeCode" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                 </div>
               </div>
 
@@ -157,7 +157,7 @@
                     <option *ngFor="let it of applicationDDLitems['CUST_NOTIF_OPT']" value="{{it.Key}}">
                       {{it.Value}} </option>
                   </select>
-                  <show-errors [control]="NapAppModelForm.controls.MrCustNotifyOptCode" [submit]="enjiForm.submitted"></show-errors>
+                  <lib-uc-show-errors  [control]="NapAppModelForm.controls.MrCustNotifyOptCode" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                 </div>
 
                 <!-- Way of Payment -->
@@ -169,7 +169,7 @@
                     <option *ngFor="let it of applicationDDLitems['WOP']" value="{{it.Key}}">
                       {{it.Value}} </option>
                   </select>
-                  <show-errors [control]="NapAppModelForm.controls.MrWopCode" [submit]="enjiForm.submitted"></show-errors>
+                  <lib-uc-show-errors  [control]="NapAppModelForm.controls.MrWopCode" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                 </div>
               </div>
 

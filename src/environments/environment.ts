@@ -7,11 +7,10 @@ export const environment = {
   production: true,
   navbarColor: 'transparent',
   losUrl : 'http://localhost:5001',
+  FoundationR3Url: 'http://r3app-server.ad-ins.com/FOUNDATION_R3',
+  FoundationR3Web: 'http://r3web-server.ad-ins.com/Foundation',
   // losUrl : 'http://r3app-server.ad-ins.com/LOS',
-  // FoundationR3Url: 'http://r3app-server.ad-ins.com/FOUNDATION_R3',
-  FoundationR3Url: 'http://localhost:5000',
-  ApprovalR3Url: 'http://r3app-server/approval',
-  FoundationR3Web: 'http://r3web-server/Foundation',
+  ApprovalR3Url: 'http://r3app-server.ad-ins.com/approval',
   WorkflowR3Url: 'http://R3App-Server.ad-ins.com/WORKFLOW_R3'
 };
 

@@ -48,31 +48,19 @@ export const Full_ROUTES: Routes = [
     loadChildren: './app-dup-check/app-dup-check.module#AppDupCheckModule'
   },
   {
-    path: 'AdminProcess',
-    loadChildren: './admin-process/admin-process.module#AdminProcessModule'
-  },
-  {
     path: 'View',
     loadChildren: './view/view.module#ViewModule'
   },
   {
-    path:'Document',
-    loadChildren:'./Document/document.module#DocumentModule'
-  },
-  {
-    path:'Invoice',
-    loadChildren:'./InvoiceData/invoice.module#InvoiceModule'
-  },
-  {
-    path: 'AddProcess',
-    loadChildren: './add-process/add-process.module#AddProcessModule'
+    path:'App',
+    loadChildren:'./ApplicationModel/applicationModel.module#ApplicationModelModule'
   },
   {
     path: 'Lead',
     loadChildren: './lead/lead.module#LeadModule'
-  },
+  }, 
   {
     path: 'CreditProcess',
     loadChildren: './credit-process/credit-process.module#CreditProcessModule'
-  },    
+  }
 ];

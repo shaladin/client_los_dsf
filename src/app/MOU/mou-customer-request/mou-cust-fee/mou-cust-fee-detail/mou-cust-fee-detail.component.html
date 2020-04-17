@@ -20,7 +20,7 @@
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && MouCustFeeForm.controls.RefFeeId.invalid }">
                       <option *ngFor="let item of refFeeList" [value]="item.RefFeeId">{{item.FeeName}}</option>
                     </select>
-                    <show-errors [control]="MouCustFeeForm.controls.RefFeeId" [submit]="enjiForm.submitted"></show-errors>
+                    <lib-uc-show-errors  [control]="MouCustFeeForm.controls.RefFeeId" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                   </div>
                 </div>
                 <div class="form-group row">
@@ -30,7 +30,7 @@
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && MouCustFeeForm.controls.MrFeeTypeCode.invalid }">
                       <option *ngFor="let item of feeTypeList" [value]="item.Key">{{item.Value}}</option>
                     </select>
-                    <show-errors [control]="MouCustFeeForm.controls.MrFeeTypeCode" [submit]="enjiForm.submitted"></show-errors>
+                    <lib-uc-show-errors  [control]="MouCustFeeForm.controls.MrFeeTypeCode" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                   </div>
                 </div>
                 <div class="form-group row" *ngIf="MouCustFeeForm.controls.MrFeeTypeCode.value == 'AMT'">
@@ -44,7 +44,7 @@
                   <div class="col-md-9">
                     <input type="number" class="form-control adInsInput" formControlName="FeePrcnt" 
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && MouCustFeeForm.controls.FeePrcnt.invalid }" />
-                    <show-errors [control]="MouCustFeeForm.controls.FeePrcnt" [submit]="enjiForm.submitted"></show-errors>
+                    <lib-uc-show-errors  [control]="MouCustFeeForm.controls.FeePrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                   </div>
                 </div>
               </div>
