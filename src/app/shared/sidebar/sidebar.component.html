@@ -22,9 +22,13 @@
     <div class="nav-container">
         <ul class="navigation">
             <!-- First level menu -->
-             <li *ngFor="let menuItem of menuItems" [ngClass]="[menuItem.class]" [routerLinkActive]="menuItem.submenu.length != 0 ? '' : 'active'"
+            <li *ngFor="let menuItem of menuItems" [ngClass]="[menuItem.class]"
+                [routerLinkActive]="menuItem.submenu.length != 0 ? '' : 'active'"
                 [routerLinkActiveOptions]="{exact: true}">
-                <a [routerLink]="menuItem.class == '' ? [menuItem.path] : null" *ngIf="!menuItem.isExternalLink; else externalLinkBlock" [contextMenu]="basicMenu" [contextMenuSubject]="menuItem">
+                <a [routerLink]="menuItem.class == '' ? [menuItem.path] : null"
+                    [queryParams]="genParam(menuItem.params)"
+                    *ngIf="!menuItem.isExternalLink; else externalLinkBlock" [contextMenu]="basicMenu"
+                    [contextMenuSubject]="menuItem">
                     <i [ngClass]="[menuItem.icon]"></i>
                     <span class="menu-title">{{menuItem.title | translate }}</span>
                     <span *ngIf="menuItem.badge != '' " [ngClass]="[menuItem.badgeClass]">{{menuItem.badge}}</span>
@@ -38,33 +42,42 @@
                 </ng-template>
                 <!-- Second level menu -->
                 <ul class="menu-content" *ngIf="menuItem.submenu.length > 0">
-                    <li *ngFor="let menuSubItem of menuItem.submenu" [routerLinkActive]="menuSubItem.submenu.length > 0 ? '' : 'active'" [ngClass]="[menuSubItem.class]">
-                        <a [routerLink]="menuSubItem.submenu.length > 0 ? null : [menuSubItem.path]" *ngIf="!menuSubItem.isExternalLink; else externalSubLinkBlock">
+                    <li *ngFor="let menuSubItem of menuItem.submenu"
+                        [routerLinkActive]="menuSubItem.submenu.length > 0 ? '' : 'active'"
+                        [ngClass]="[menuSubItem.class]">
+                        <a [routerLink]="menuSubItem.submenu.length > 0 ? null : [menuSubItem.path]"
+                            [queryParams]="genParam(menuSubItem.params)"
+                            *ngIf="!menuSubItem.isExternalLink; else externalSubLinkBlock">
                             <i [ngClass]="[menuSubItem.icon]"></i>
                             <span class="menu-title">{{menuSubItem.title | translate }}</span>
-                            <span *ngIf="menuSubItem.badge != '' " [ngClass]="[menuSubItem.badgeClass]">{{menuSubItem.badge}}</span>
+                            <span *ngIf="menuSubItem.badge != '' "
+                                [ngClass]="[menuSubItem.badgeClass]">{{menuSubItem.badge}}</span>
                         </a>
                         <ng-template #externalSubLinkBlock>
                             <a [href]="[menuSubItem.path]">
                                 <i [ngClass]="[menuSubItem.icon]"></i>
                                 <span class="menu-title">{{menuSubItem.title | translate }}</span>
-                                <span *ngIf="menuSubItem.badge != '' " [ngClass]="[menuSubItem.badgeClass]">{{menuSubItem.badge}}</span>
+                                <span *ngIf="menuSubItem.badge != '' "
+                                    [ngClass]="[menuSubItem.badgeClass]">{{menuSubItem.badge}}</span>
                             </a>
                         </ng-template>
                         <!-- Third level menu -->
                         <ul class="menu-content" *ngIf="menuSubItem.submenu.length > 0">
-                            <li *ngFor="let menuSubsubItem of menuSubItem.submenu" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
-                                [ngClass]="[menuSubsubItem.class]">
-                                <a [routerLink]="[menuSubsubItem.path]" *ngIf="!menuSubsubItem.isExternalLink; else externalSubSubLinkBlock">
+                            <li *ngFor="let menuSubsubItem of menuSubItem.submenu" routerLinkActive="active"
+                                [routerLinkActiveOptions]="{exact: true}" [ngClass]="[menuSubsubItem.class]">
+                                <a [routerLink]="[menuSubsubItem.path]" [queryParams]="genParam(menuSubsubItem.params)"
+                                    *ngIf="!menuSubsubItem.isExternalLink; else externalSubSubLinkBlock">
                                     <i [ngClass]="[menuSubsubItem.icon]"></i>
                                     <span class="menu-title">{{menuSubsubItem.title | translate }}</span>
-                                    <span *ngIf="menuSubsubItem.badge != '' " [ngClass]="[menuSubsubItem.badgeClass]">{{menuSubsubItem.badge}}</span>
+                                    <span *ngIf="menuSubsubItem.badge != '' "
+                                        [ngClass]="[menuSubsubItem.badgeClass]">{{menuSubsubItem.badge}}</span>
                                 </a>
                                 <ng-template #externalSubSubLinkBlock>
                                     <a [href]="[menuSubsubItem.path]">
                                         <i [ngClass]="[menuSubsubItem.icon]"></i>
                                         <span class="menu-title">{{menuSubsubItem.title | translate }}</span>
-                                        <span *ngIf="menuSubsubItem.badge != '' " [ngClass]="[menuSubsubItem.badgeClass]">{{menuSubsubItem.badge}}</span>
+                                        <span *ngIf="menuSubsubItem.badge != '' "
+                                            [ngClass]="[menuSubsubItem.badgeClass]">{{menuSubsubItem.badge}}</span>
                                     </a>
                                 </ng-template>
                             </li>
@@ -74,10 +87,10 @@
             </li>
         </ul>
         <context-menu>
-          <ng-template contextMenuItem>
-            Add to Favorites!
-          </ng-template>
-          <!-- <ng-template contextMenuItem passive="true">
+            <ng-template contextMenuItem>
+                Add to Favorites!
+            </ng-template>
+            <!-- <ng-template contextMenuItem passive="true">
             Input something: <input type="text">
           </ng-template> -->
         </context-menu>

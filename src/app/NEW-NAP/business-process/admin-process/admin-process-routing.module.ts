@@ -19,7 +19,9 @@ import { DocSignerPagingComponent } from './doc-signer/doc-signer-paging/doc-sig
 import { DocSignerDetailComponent } from './doc-signer/doc-signer-detail/doc-signer-detail.component';
 import { InvoiceViewComponent } from './invoice/invoice-view/invoice-view.component';
 import { InvoiceDetailComponent } from './invoice/invoice-detail/invoice-detail.component';
-import { AgreementViewContainerComponent } from './agreement-view-container/agreement-view-container.component';
+import { AgreementViewContainerComponent } from '../../view/agreement-view-container/agreement-view-container.component';
+import { PreGoLiveApprovalPagingComponent } from './pre-go-live/pre-go-live-approval-paging/pre-go-live-approval-paging.component';
+import { PreGoLiveApprovalDetailComponent } from './pre-go-live/pre-go-live-approval-detail/pre-go-live-approval-detail.component';
 import { DocumentPagingComponent } from './document-printing/document-paging/document-paging.component';
 import { DocumentViewComponent } from './document-printing/document-view/document-view.component';
 import { InvoiceDataAddComponent } from './invoice-data/invoice-data-add/invoice-data-add.component';
@@ -92,6 +94,20 @@ const routes: Routes = [
         }
       },
       {
+        path: 'PreGoLive/Approval/Paging',
+        component: PreGoLiveApprovalPagingComponent,
+        data: {
+          title: 'PreGoLive Paging For Approval'
+        }
+      },
+      {
+        path: 'PreGoLive/Approval/Detail',
+        component: PreGoLiveApprovalDetailComponent,
+        data: {
+          title: 'PreGoLive Detail For Approval'
+        }
+      },
+      {
         path: 'AgreementCancellation/Paging',
         component: ApplicationAgreementCancellationPagingComponent,
         data: {
@@ -159,13 +175,6 @@ const routes: Routes = [
         component: InvoiceDetailComponent,
         data: {
           title: 'Invoice Detail'
-        }
-      },
-      {
-        path: 'View',
-        component: AgreementViewContainerComponent,
-        data: {
-          title: 'Agreement View Container'
         }
       },
       {
