@@ -25,7 +25,7 @@ import { UcapprovalModule } from '@adins/ucapproval';
         UclookupgenericModule,
         UcviewgenericModule,
         UcShowErrorsModule,
-        UcapprovalModule
+      //  UcapprovalModule
     ],
     imports: [
         CommonModule,

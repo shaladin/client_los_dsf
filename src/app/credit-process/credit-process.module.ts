@@ -70,7 +70,7 @@ export const customCurrencyMaskConfig = {
         UcaddressModule,
         UcgridviewModule,
         UcShowErrorsModule,
-        UCSearchModule,
+        UCSearchModule
         UcinputnumberModule,
         // NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
     ],
