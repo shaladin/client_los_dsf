@@ -52,12 +52,15 @@ export const Full_ROUTES: Routes = [
     loadChildren: './view/view.module#ViewModule'
   },
   {
+    path:'App',
+    loadChildren:'./ApplicationModel/applicationModel.module#ApplicationModelModule'
+  },
+  {
     path: 'Lead',
     loadChildren: './lead/lead.module#LeadModule'
-  },
+  }, 
   {
     path: 'CreditProcess',
     loadChildren: './credit-process/credit-process.module#CreditProcessModule'
   }
-     
 ];
