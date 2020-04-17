@@ -9,8 +9,8 @@
 
             <div class="form-group row">
               <label class="col-md-2 adInsLabel" translate>Application No</label>
-              <div class="col-md-4">
-                <label id="AgrmntDt" translate>{{AppNo}}</label>
+              <div class="col-md-4 blue">
+                <label id="AgrmntDt" translate><a (click)="ToApp()">{{AppNo}}</a></label>
               </div>
               <label class="col-md-2 adInsLabel" translate>Num Of Asset</label>
               <div class="col-md-4">
@@ -20,8 +20,8 @@
 
             <div class="form-group row">
               <label class="col-md-2 adInsLabel" translate>Agreement No</label>
-              <div class="col-md-4">
-                <label id="AgrmntDt" translate>{{AgrmntNo}}</label>
+              <div class="col-md-4 blue">
+                <label id="AgrmntDt" translate><a (click)="ToAgrmnt()">{{AgrmntNo}}</a></label>
               </div>
               <label class="col-md-2 adInsLabel" translate>Tenor</label>
               <div class="col-md-4">
@@ -31,8 +31,8 @@
 
             <div class="form-group row">
               <label class="col-md-2 adInsLabel" translate>Customer No</label>
-              <div class="col-md-4">
-                <label id="AgrmntDt" translate>{{CustNo}}</label>
+              <div class="col-md-4 blue">
+                <label id="AgrmntDt" translate><a (click)="ToCust()">{{CustNo}}</a></label>
               </div>
               <label class="col-md-2 adInsLabel" translate>Installment Amount</label>
               <div class="col-md-4">
@@ -76,10 +76,50 @@
 
           <lib-ucSubsection [id]="'DataTableId'" [title]="'Term and Condition'" [panel]="'DataTable'">
           </lib-ucSubsection>
-          <div id="DataTable">
-         
-        </div>
 
+          <form class="form form-horizontal" [formGroup]="MainInfoForm" #MainInfoReqForm="ngForm"
+            (ngSubmit)="MainInfoForm.valid && SaveForm()">
+          <div id="DataTable">
+
+
+            <div formArrayName="{{identifier}}">
+              <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                  <tr class="table-header">
+                    <th><span translate class="thead-header text-left">No</span></th>
+                    <th><span translate class="thead-header text-left">Document Name</span></th>
+                    <th><span translate class="thead-header">Required</span></th>
+                    <th><span translate class="thead-header">Check</span></th>
+                    <th><span translate class="thead-header">Promise Date</span></th>
+                    <th><span translate class="thead-header">Expired Date</span></th>
+                    <th><span translate class="thead-header">Notes</span></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr [formGroupName]="i" *ngFor="let item of MainInfoForm.controls[identifier].controls; let i = index">
+                    <td class="text-left">{{i+1}}</td>
+                    <td class="text-left">{{MainInfoForm.controls[identifier].controls[i].controls.TcName.value}}</td>
+                    <td class="text-left">{{MainInfoForm.controls[identifier].controls[i].controls.IsMandatory.value}}</td>
+                    <td class="text-left"><input type="checkbox" class="border-primary" (change)="changeValidation(i)"
+                        formControlName="IsChecked"></td>
+                        <td><input type="date" class="form-control" formControlName="PromisedDt"
+                          [ngClass]="{ 'is-invalid': MainInfoReqForm.submitted && MainInfoForm.controls[identifier].controls[i].controls.PromisedDt.invalid}">
+                        <lib-uc-show-errors [control]="MainInfoForm.controls[identifier].controls[i].controls.PromisedDt" [submit]="MainInfoReqForm.submitted">
+                        </lib-uc-show-errors>
+                      </td>
+                      <td><input type="date" class="form-control" formControlName="ExpiredDt"
+                          [ngClass]="{ 'is-invalid': MainInfoReqForm.submitted && MainInfoForm.controls[identifier].controls[i].controls.ExpiredDt.invalid}">
+                        <lib-uc-show-errors [control]="MainInfoForm.controls[identifier].controls[i].controls.ExpiredDt" [submit]="MainInfoReqForm.submitted">
+                        </lib-uc-show-errors>
+                      </td>
+                      <td><textarea class="form-control" formControlName="Notes"></textarea></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+  </form>
         </div>
       </div>
     </div>
