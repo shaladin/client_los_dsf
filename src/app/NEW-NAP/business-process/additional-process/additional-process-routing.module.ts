@@ -4,6 +4,8 @@ import { PoExtensionPagingComponent } from './po-extension/po-extension-paging/p
 import { PoExtensionDetailComponent } from './po-extension/po-extension-detail/po-extension-detail.component';
 import { OutstandingTcPagingComponent } from './outstanding-tc/outstanding-tc-paging/outstanding-tc-paging.component';
 import { OutstandingTcDetailComponent } from './outstanding-tc/outstanding-tc-detail/outstanding-tc-detail.component';
+import { ReturnHandlingPagingComponent } from './return-handling/return-handling-paging/return-handling-paging.component';
+import { ReturnHandlingDetailComponent } from './return-handling/return-handling-detail/return-handling-detail.component';
 
 const routes: Routes = [
   {
@@ -35,6 +37,20 @@ const routes: Routes = [
         component: OutstandingTcDetailComponent,
         data: {
           title: 'Outstanding TC Paging'
+        }
+      },
+      {
+        path: 'ReturnHandling/Paging',
+        component: ReturnHandlingPagingComponent,
+        data: {
+          title: 'Return Handling Paging'
+        }
+      },
+      {
+        path: 'ReturnHandling/Detail',
+        component: ReturnHandlingDetailComponent,
+        data: {
+          title: 'Return Handling Detail'
         }
       }
     ]

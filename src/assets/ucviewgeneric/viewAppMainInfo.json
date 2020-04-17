@@ -48,7 +48,7 @@
           }
         ],
         "querystring": {
-          "select": "SELECT A.APP_NO AS AppNo, AC.CUST_NAME AS CustName, A.TENOR AS Tenor, A.CURR_CODE AS CurrCode, A.NUM_OF_ASSET AS NumOfAsset, A.OFFICE_NAME AS OfficeName, A.PROD_OFFERING_NAME AS ProdOfferingName, A.MR_ORDER_INFO_CODE AS MrOrderInfoCode",
+          "select": "SELECT A.APP_NO AS AppNo, AC.CUST_NAME AS CustName, A.TENOR AS Tenor, A.CURR_CODE AS CurrCode, A.NUM_OF_ASSET AS NumOfAsset, A.ORI_OFFICE_NAME AS OfficeName, A.PROD_OFFERING_NAME AS ProdOfferingName, A.MR_ORDER_INFO_CODE AS MrOrderInfoCode",
           "from": "FROM APP A WITH(NOLOCK) JOIN APP_CUST AC WITH(NOLOCK) ON A.APP_ID = AC.APP_ID",
           "where": "WHERE A.APP_ID = {0}"
         }

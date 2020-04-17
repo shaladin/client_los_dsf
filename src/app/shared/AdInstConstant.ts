@@ -893,4 +893,10 @@ export class AdInsConstant {
   //Verf Question Answer
   public static GetVerfQuestionAnswerListByVerfSchemeCode = environment.FoundationR3Url + "/VerfQuestionAnswer/GetVerfQuestionAnswerListByVerfSchemeCode"
 
+  //RETURN HANDLING
+  public static GetReturnHandlingWithDetailByReturnHandlingHId = environment.losUrl + "/ReturnHandlingH/GetReturnHandlingWithDetailByReturnHandlingHId";
+  public static AddReturnHandlingD = environment.losUrl + "/ReturnHandlingD/AddReturnHandlingD";
+  public static UpdateReturnStatByReturnHandlingDId = environment.losUrl + "/ReturnHandlingD/UpdateReturnStatByReturnHandlingDId";
+  public static DeleteReturnHandlingD = environment.losUrl + "/ReturnHandlingD/DeleteReturnHandlingD";
+
 }

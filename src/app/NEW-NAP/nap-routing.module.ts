@@ -73,6 +73,10 @@ const routes: Routes = [
                 path: 'FinanceLeasing/AssetData',
                 loadChildren: './FL4W/asset-data/asset-data.module#AssetDataFL4WModule'
             },
+            {
+                path: 'BusinessProcess/AddProcess',
+                loadChildren: './business-process/additional-process/additional-process.module#AdditionalProcessSharingModule'
+            },
         ]
     }
 ]
