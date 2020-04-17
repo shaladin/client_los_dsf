@@ -7,13 +7,14 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 @Component({
   selector: 'app-customer-self-verification',
   templateUrl: './customer-self-verification.component.html',
-  styleUrls: ['./customer-self-verification.component.scss'],
   providers: [NGXToastrService]
 })
 export class CustomerSelfVerificationComponent implements OnInit {
-  LeadId : any;
+  LeadId: any;
   LobCode: string;
-  
+  isCustData: boolean;
+  isLeadData: boolean;
+
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       this.LeadId = params["LeadId"];
@@ -28,9 +29,7 @@ export class CustomerSelfVerificationComponent implements OnInit {
   }
 
   EnterTab(type) {
-    if (type == "Cust") {
-    }
-    if (type == "Lead") {
-    }
+    this.isCustData = true;
+    this.isLeadData = true;
   }
 }

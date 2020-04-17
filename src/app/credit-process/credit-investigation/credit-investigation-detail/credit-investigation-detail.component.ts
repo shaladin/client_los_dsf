@@ -4,7 +4,7 @@ import { environment } from 'environments/environment';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { HttpClient } from '@angular/common/http';
 import { GuarantorObj } from 'app/shared/model/GuarantorObj.Model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueModel';
@@ -19,6 +19,7 @@ import { AppCrdInvstgDObj } from 'app/shared/model/AppCrdInvstg/AppCrdInvstgDObj
 export class CreditInvestigationDetailComponent implements OnInit {
 
   appId: number;
+  mrCustTypeCode: string;
   viewObj: string;
   arrValue = [];
   analysisItemObj: Array<KeyValueObj>;
@@ -31,10 +32,14 @@ export class CreditInvestigationDetailComponent implements OnInit {
   constructor(private fb: FormBuilder, 
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private router: Router) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
+      }
+      if (params["MrCustTypeCode"] != null) {
+        this.mrCustTypeCode = params["MrCustTypeCode"];
       }
     });
   }
@@ -69,6 +74,7 @@ export class CreditInvestigationDetailComponent implements OnInit {
       (response) => {
         console.log(response);
         this.toastr.successMessage(response["message"]);
+        this.router.navigate(["/CreditProcess/CreditInvestigation/Paging"]);
       },
       (error) => {
         console.log(error);

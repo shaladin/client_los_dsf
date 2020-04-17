@@ -20,10 +20,12 @@ import { link } from 'fs';
 })
 export class MouCustomerRequestDetailComponent implements OnInit {
   mouType: string;
+  WfTaskListId: any;
   inputLookupCust: InputLookupObj;
   pageType: string = "add";
   mouCustId: number;
   refOfficeId: number;
+  businessDtMin: any;
 
   MOUMainInfoForm = this.fb.group({
     MouCustId: [0, [Validators.required]],
@@ -34,10 +36,10 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     CustName: ['', [Validators.required]],
     StartDt: ['', [Validators.required]],
     EndDt: ['', [Validators.required]],
-    RefNo: ['', [Validators.required]],
+    RefNo: [''],
     IsRevolving: [false],
     CurrCode: [''],
-    PlafondAmt: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
+    PlafondAmt: ['', [Validators.required]],
     RealisationAmt: [0],
     MouStat: ['NEW', [Validators.required]],
     MrMouTypeCode: ['', [Validators.required]],
@@ -59,19 +61,26 @@ export class MouCustomerRequestDetailComponent implements OnInit {
       if (params['mode'] != null) {
         this.pageType = params['mode'];
       }
-      if (params['mouCustId'] != null) {
-        this.mouCustId = params['mouCustId'];
+      if (params['MouCustId'] != null) {
+        this.mouCustId = params['MouCustId'];
       }
-      if (params['mrMouTypeCode'] != null) {
-        this.mouType = params['mrMouTypeCode'];
+      if (params['MrMouTypeCode'] != null) {
+        this.mouType = params['MrMouTypeCode'];
       }
+      if (params['WfTaskListId'] != null) this.WfTaskListId = params['WfTaskListId'];
     });
    }
 
   ngOnInit() {
+    if (this.WfTaskListId != null || this.WfTaskListId != undefined)
+      this.claimTask();
+
     var datePipe = new DatePipe("en-US");
     var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
-    console.log(currentUserContext);
+    var context = JSON.parse(localStorage.getItem("UserAccess"));
+    this.businessDtMin = new Date(context["BusinessDt"]);
+    this.businessDtMin.setDate(this.businessDtMin.getDate() - 1);
+    
     this.inputLookupCust = new InputLookupObj();
     this.inputLookupCust.urlJson = "./assets/uclookup/MOU/lookupCust_MOURequest.json";
     this.inputLookupCust.urlQryPaging = "/Generic/GetPagingObjectBySQL";
@@ -112,6 +121,16 @@ export class MouCustomerRequestDetailComponent implements OnInit {
         MrMouTypeCode: this.mouType
       });
     }
+  }
+
+  claimTask()
+  {
+    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"]};
+    console.log(wfClaimObj);
+    this.httpClient.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+      (response) => {
+      });
   }
 
   Back(): void {

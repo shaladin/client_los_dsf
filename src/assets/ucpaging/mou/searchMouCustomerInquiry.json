@@ -31,8 +31,8 @@
             "label": "MOU TYPE",
             "items": [],
             "itemsUrl": [],
-            "criteriaPropName" : "RefMasterTypeCode",
-            "criteriaPropValue" : "MOU_TYPE"
+            "criteriaPropName": "RefMasterTypeCode",
+            "criteriaPropValue": "MOU_TYPE"
         },
         {
             "type": "dropdown",
@@ -47,60 +47,60 @@
             "label": "MOU STATUS",
             "items": [],
             "itemsUrl": [],
-            "criteriaPropName" : "RefMasterTypeCode",
-            "criteriaPropValue" : "MOU_STAT"
+            "criteriaPropName": "RefMasterTypeCode",
+            "criteriaPropValue": "MOU_STAT"
         },
         {
-            "type" : "textbox",
-            "name" : "MC.PLAFOND_AMT",
-            "id" : "GreaterPlafondAmt",
-            "value" : "",
-            "label" : "PLAFOND AMOUNT >=",
-            "restriction" : "gte",
-            "datatype" : "numeric"
+            "type": "textbox",
+            "name": "MC.PLAFOND_AMT",
+            "id": "GreaterPlafondAmt",
+            "value": "",
+            "label": "PLAFOND AMOUNT >=",
+            "restriction": "gte",
+            "datatype": "numeric"
         },
         {
-            "type" : "textbox",
-            "name" : "MC.PLAFOND_AMT",
-            "id" : "LessPlafondAmt",
-            "value" : "",
-            "label" : "PLAFOND AMOUNT <=",
-            "restriction" : "lte",
-            "datatype" : "numeric"
+            "type": "textbox",
+            "name": "MC.PLAFOND_AMT",
+            "id": "LessPlafondAmt",
+            "value": "",
+            "label": "PLAFOND AMOUNT <=",
+            "restriction": "lte",
+            "datatype": "numeric"
         },
         {
-            "type" : "dropdown",
-            "label" : "REVOLVING",
-            "name" : "MC.IS_REVOLVING",
-            "id" : "revolvingId",
-            "value" : "",
-            "datatype" : "text",
-            "isSelectOne" : false, 
-            "items" : [ 
+            "type": "dropdown",
+            "label": "REVOLVING",
+            "name": "MC.IS_REVOLVING",
+            "id": "revolvingId",
+            "value": "",
+            "datatype": "text",
+            "isSelectOne": false,
+            "items": [
                 {
-                    "key" : "1",
-                    "value" : "Yes"
+                    "key": "1",
+                    "value": "Yes"
                 },
                 {
-                    "key" : "0",
-                    "value" : "No"
+                    "key": "0",
+                    "value": "No"
                 }
             ],
-            "isFromURL" : false, 
-            "url" : "", 
-            "itemsUrl" : [], 
-            "criteriaPropName" : "", 
-            "criteriaPropValue" : "" 
+            "isFromURL": false,
+            "url": "",
+            "itemsUrl": [],
+            "criteriaPropName": "",
+            "criteriaPropValue": ""
         }
     ],
     "querystring": {
-        "select": "SELECT MC.MOU_CUST_NO AS mouCustNo, MC.CUST_NAME AS custName, MC.MOU_CUST_DT AS mouCustDt, MC.END_DT AS endDt, MC.PLAFOND_AMT AS plafondAmt, MC.IS_REVOLVING AS isRevolving, RM_TYPE.DESCR AS mrMouTypeCode, RM_STAT.DESCR AS mouStat, MC.MOU_CUST_ID AS mouCustId",
-        "from": "FROM dbo.MOU_CUST AS MC WITH(NOLOCK) LEFT JOIN dbo.V_REF_MASTER AS RM_TYPE WITH(NOLOCK) ON MC.MR_MOU_TYPE_CODE = RM_TYPE.MASTER_CODE AND RM_TYPE.REF_MASTER_TYPE_CODE = 'MOU_STAT' LEFT JOIN dbo.V_REF_MASTER AS RM_STAT WITH(NOLOCK) ON MC.MOU_STAT = RM_STAT.MASTER_CODE AND RM_STAT.REF_MASTER_TYPE_CODE = 'MOU_STAT'"
+        "select": "SELECT MC.MOU_CUST_NO AS mouCustNo, MC.CUST_NAME AS custName, MC.MOU_CUST_DT AS mouCustDt, MC.END_DT AS endDt, MC.PLAFOND_AMT AS plafondAmt, MC.IS_REVOLVING AS isRevolving, RM_TYPE.DESCR AS mrMouTypeCode, RM_STAT.DESCR AS mouStat, MC.MOU_CUST_ID AS MouCustId",
+        "from": "FROM dbo.MOU_CUST AS MC WITH(NOLOCK) LEFT JOIN dbo.V_REF_MASTER AS RM_TYPE WITH(NOLOCK) ON MC.MR_MOU_TYPE_CODE = RM_TYPE.MASTER_CODE AND RM_TYPE.REF_MASTER_TYPE_CODE = 'MOU_TYPE' LEFT JOIN dbo.V_REF_STATUS AS RM_STAT WITH(NOLOCK) ON MC.MOU_STAT = RM_STAT.REF_STATUS_CODE AND RM_STAT.STATUS_GRP_CODE = 'MOUC_STAT'"
     },
     "headerList": [
         {
             "type": "sort",
-            "position": "left",
+            "position": "center",
             "label": "MOU No.",
             "name": "MC.MOU_CUST_NO"
         },
@@ -112,25 +112,25 @@
         },
         {
             "type": "sort",
-            "position": "left",
+            "position": "center",
             "label": "MOU Date",
             "name": "MC.MOU_CUST_DT"
         },
         {
             "type": "sort",
-            "position": "left",
+            "position": "center",
             "label": "Expired Date",
             "name": "MC.END_DT"
         },
         {
             "type": "sort",
-            "position": "left",
+            "position": "right",
             "label": "Plafond Amount",
             "name": "MC.PLAFOND_AMT"
         },
         {
             "type": "sort",
-            "position": "left",
+            "position": "center",
             "label": "Revolving",
             "name": "MC.IS_REVOLVING"
         },
@@ -149,9 +149,16 @@
     ],
     "bodyList": [
         {
-            "type": "text",
-            "position": "left",
-            "property": "mouCustNo"
+            "type": "link",
+            "position": "center",
+            "property": "mouCustNo",
+            "path": "/Mou/Cust/Paging",
+            "param": [
+                {
+                    "type": "MouCustId",
+                    "property": "MouCustId"
+                }
+            ]
         },
         {
             "type": "text",
@@ -160,22 +167,22 @@
         },
         {
             "type": "text",
-            "position": "left",
+            "position": "center",
             "property": "mouCustDt"
         },
         {
             "type": "text",
-            "position": "left",
+            "position": "center",
             "property": "endDt"
         },
         {
             "type": "text",
-            "position": "left",
+            "position": "right",
             "property": "plafondAmt"
         },
         {
-            "type": "text",
-            "position": "left",
+            "type": "boolean",
+            "position": "center",
             "property": "isRevolving"
         },
         {

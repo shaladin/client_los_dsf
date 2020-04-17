@@ -52,8 +52,9 @@
         }
     ],
     "querystring": {
-        "select": "SELECT wFht.USERNAME AS Username, agr.AGRMNT_NO AS AgrmntNo, app.APP_NO AS AppNo, agr.CUST_NAME AS CustName, agr.PROD_OFFERING_NAME AS ProdOfferingName, doh.DELIVERY_DT AS DeliveryDt, , app.LOB_CODE AS LobCode agr.AGRMNT_ID AS AgrmntId",
-        "from": "FROM dbo.AGRMNT agr WITH(NOLOCK) JOIN dbo.DELIVERY_ORDER_H doh WITH(NOLOCK) ON agr.AGRMNT_ID = doh.AGRMNT_ID JOIN dbo.APP app WITH(NOLOCK) ON app.APP_ID = agr.APP_ID JOIN dbo.V_WF_TASK_LIST wFht WITH(NOLOCK) ON agr.AGRMNT_NO = wFht.TRANSACTION_CODE"
+        "select": "SELECT wFht.USERNAME AS Username, agr.AGRMNT_NO AS AgrmntNo, app.APP_NO AS AppNo, agr.CUST_NAME AS CustName, agr.PROD_OFFERING_NAME AS ProdOfferingName, doh.DELIVERY_DT AS DeliveryDt, app.LOB_CODE AS LobCode, agr.AGRMNT_ID AS AgrmntId",
+        "from": "FROM dbo.AGRMNT agr WITH(NOLOCK) JOIN dbo.DELIVERY_ORDER_H doh WITH(NOLOCK) ON agr.AGRMNT_ID = doh.AGRMNT_ID JOIN dbo.APP app WITH(NOLOCK) ON app.APP_ID = agr.APP_ID JOIN dbo.V_WF_TASK_LIST wFht WITH(NOLOCK) ON agr.AGRMNT_NO = wFht.TRANSACTION_CODE",
+        "where" : "WHERE wFht.END_EXECUTING_DATE IS NULL"
     },
     "headerList": [
         {

@@ -41,6 +41,7 @@ export class LeadUpdateLeadDataComponent implements OnInit {
   getLeadAssetByLeadId: any;
   getLeadAppByLeadId: any;
   getAssetMasterForLookupEmployee: any;
+  submitWorkflowLeadInput: any;
   serial1Disabled: boolean = false;
   serial2Disabled: boolean = false;
   serial3Disabled: boolean = false;
@@ -84,6 +85,7 @@ export class LeadUpdateLeadDataComponent implements OnInit {
     this.getLeadAssetByLeadId = AdInsConstant.GetLeadAssetByLeadId;
     this.getLeadAppByLeadId = AdInsConstant.GetLeadAppByLeadId;
     this.getAssetMasterForLookupEmployee = AdInsConstant.GetAssetMasterForLookupEmployee;
+    this.submitWorkflowLeadInput = AdInsConstant.SubmitWorkflowLeadInput;
 
     this.route.queryParams.subscribe(params => {
         if (params["LeadId"] != null) {
@@ -419,7 +421,7 @@ export class LeadUpdateLeadDataComponent implements OnInit {
       this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
       this.setLeadApp();
       //this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
-      this.http.post(this.editLeadData, this.leadInputLeadDataObj).subscribe(
+      this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
@@ -436,7 +438,7 @@ export class LeadUpdateLeadDataComponent implements OnInit {
       this.setLeadAsset();
       this.setLeadApp();
       //this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
-      this.http.post(this.editLeadData, this.leadInputLeadDataObj).subscribe(
+      this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);

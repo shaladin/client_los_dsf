@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -14,51 +14,42 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 })
 export class AppGuarantorComponent implements OnInit {
 
+  @Input() AppGuarantorId : any;
+  @Input() MrGuarantorTypeCode : any;
+  @Input() mode : any;
+
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
     private route: ActivatedRoute) {
-    this.route.queryParams.subscribe(params => {
-      this.param = params["AppGuarantorId"];
-      this.param1 = params["MrGuarantorTypeCode"]
-      console.log(params);
-      this.mode = params["mode"];
-      if (this.mode == "edit") {
-        var tempCrit = new CriteriaObj();
-        tempCrit.propName = this.key;
-        tempCrit.restriction = "Eq";
-        tempCrit.value = this.param;
-        this.criteria.push(tempCrit);
-      }
-    })
   }
 
   param : string;
-  param1 : string;
   key: any;
   criteria: CriteriaObj[] = [];
   CustTypeObj: any;
   refMasterObj = {
     RefMasterTypeCode: "",
   };
-  mode: string;
   getRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
 
   CustDataForm = this.fb.group({
     MrCustTypeCode: ['', [Validators.required, Validators.maxLength(50)]]
   });
 
-  AppGuarantorId:any;
+  // AppGuarantorId:any;
   MrCustTypeCode:any;
   ngOnInit() {
-    if (this.mode == "edit") {
-      this.MrCustTypeCode = this.param1.toUpperCase();
+    if(this.AppGuarantorId != null){
+      this.mode = "edit";
+      this.MrCustTypeCode = this.MrGuarantorTypeCode.toUpperCase();
       this.bindCustTypeObj(this.MrCustTypeCode);
       this.CustDataForm.controls.MrCustTypeCode.disable();
-    }
-    else {
+    }else{
+      this.mode="add";
       this.bindCustTypeObj();
+      this.ClearForm();
     }
   }
 
@@ -83,6 +74,11 @@ export class AppGuarantorComponent implements OnInit {
         }
       }
     );
+  }
+  ClearForm() {
+    this.CustDataForm = this.fb.group({
+      MrCustTypeCode: ['', [Validators.required, Validators.maxLength(50)]]
+    });
   }
 
 }

@@ -18,6 +18,7 @@ import { UcapprovalModule } from '@adins/ucapproval';
     exports: [
         FormsModule,
         ReactiveFormsModule,
+        RouterModule,
         UcSubsectionModule,
         UcpagingModule,
         UCSearchModule,

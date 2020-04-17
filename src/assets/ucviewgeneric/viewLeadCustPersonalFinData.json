@@ -1,27 +1,27 @@
 {
-    "title": "",
-    "subsection": [
-      {
-        "subSectionId": "FinancialDataId",
-        "subSectionTitle": "Customer Financial Data",
-        "mainInfoUrl": "http://localhost:5001/Generic/GetDataViewBySQL",
-        "mainInfo": [
-          {
-            "type": "text",
-            "label": "Monthly Income",
-            "property": "MonthlyIncomeAmt"
-          }, 
-          {
-            "type": "text",
-            "label": "Monthly Expense",
-            "property": "MonthlyExpenseAmt"
-          } 
-        ],
-        "querystring": {
-          "select": "SELECT lcpf.MONTHLY_INCOME_AMT AS MonthlyIncomeAmt, lcpf.MONTHLY_EXPENSE_AMT AS MonthlyExpenseAmt" ,
-          "from": "FROM dbo.LEAD_CUST_PERSONAL_FIN_DATA lcpf WITH(NOLOCK)  JOIN dbo.LEAD_CUST_PERSONAL lcp WITH(NOLOCK) on lcpf.LEAD_CUST_PERSONAL_ID = lcp.LEAD_CUST_PERSONAL_ID JOIN dbo.LEAD_CUST lc WITH(NOLOCK) on lc.LEAD_CUST_ID = lcp.LEAD_CUST_ID",
-          "where": "WHERE lc.LEAD_ID = {0}"
+  "title": "",
+  "subsection": [
+    {
+      "subSectionId": "FinancialDataId",
+      "subSectionTitle": "Customer Financial Data",
+      "mainInfoUrl": "http://r3app-server.ad-ins.com/LOS/Generic/GetDataViewBySQL",
+      "mainInfo": [
+        {
+          "type": "text",
+          "label": "Monthly Income",
+          "property": "MonthlyIncomeAmt"
+        },
+        {
+          "type": "text",
+          "label": "Monthly Expense",
+          "property": "MonthlyExpenseAmt"
         }
+      ],
+      "querystring": {
+        "select": "SELECT lcpf.MONTHLY_INCOME_AMT AS MonthlyIncomeAmt, lcpf.MONTHLY_EXPENSE_AMT AS MonthlyExpenseAmt",
+        "from": "FROM dbo.LEAD_CUST_PERSONAL_FIN_DATA lcpf WITH(NOLOCK)  JOIN dbo.LEAD_CUST_PERSONAL lcp WITH(NOLOCK) on lcpf.LEAD_CUST_PERSONAL_ID = lcp.LEAD_CUST_PERSONAL_ID JOIN dbo.LEAD_CUST lc WITH(NOLOCK) on lc.LEAD_CUST_ID = lcp.LEAD_CUST_ID",
+        "where": "WHERE lc.LEAD_ID = {0}"
       }
-    ]
-  }
+    }
+  ]
+}

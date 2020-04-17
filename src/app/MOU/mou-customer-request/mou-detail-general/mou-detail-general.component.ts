@@ -65,7 +65,7 @@ export class MouDetailGeneralComponent implements OnInit {
     refMasterPayFreq.RefMasterTypeCode = "PAY_FREQ";
     let reqPayFreq = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterPayFreq);
     var refMasterFirstInst = new RefMasterObj();
-    refMasterFirstInst.RefMasterTypeCode = "FIRSTINSTTYPE";
+    refMasterFirstInst.RefMasterTypeCode = "FIRST_INST_TYPE";
     let reqFirstInst = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterFirstInst);
     forkJoin([reqCurrency, reqIntrstType, reqInstSchm, reqPayFreq, reqFirstInst]).subscribe(
       (response) => {

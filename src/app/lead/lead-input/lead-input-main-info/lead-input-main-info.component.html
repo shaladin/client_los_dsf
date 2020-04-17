@@ -17,16 +17,19 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 adInsLabel adins-required" translate>Copy From </label>
-                            <div class="col-md-4">
+                            <div class="col-md-4" *ngIf="this.pageType == 'add'">
                                 <lib-uclookupgeneric [lookupInput]="leadPersonalLookUpObj" [parentForm]="MainInfoForm"
                                     [enjiForm]="enjiForm" [identifier]="'CustomerName'" (lookup)=getLookUpLead($event)>
                                 </lib-uclookupgeneric>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4" *ngIf="this.pageType == 'edit'">
+                                <label class="adInsLabel" style="font-size: 12px;" translate>{{this.returnLeadExistObj?.CustName == null ? '-' : this.returnLeadExistObj?.CustName}}</label>
+                            </div>
+                            <div class="col-md-3" *ngIf="this.pageType == 'add'">
                                 <button type="button" class="btn btn-raised btn-primary" (click)="copyLead()">
                                   <i class="fa fa-check-square-o"></i> Copy
                                 </button>
-                              </div>
+                            </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 adInsLabel adins-required" translate>Office Name </label>
@@ -36,7 +39,7 @@
                                     {{ram.Value}}
                                 </option>
                                 </select>
-                                <show-errors [control]="MainInfoForm.controls.OfficeCode" [submit]="enjiForm.submitted"></show-errors>
+                                <lib-uc-show-errors  [control]="MainInfoForm.controls.OfficeCode" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                             </div>
                         </div>
                         <div class="form-group row">
@@ -44,7 +47,7 @@
                             <div class="col-md-4">
                             <input type="text" class="form-control adInsInput" formControlName="OrderNo"
                                     [ngClass]="{ 'is-invalid': enjiForm.submitted && MainInfoForm.controls.OrderNo.invalid }">
-                            <show-errors [control]="MainInfoForm.controls.OrderNo" [submit]="enjiForm.submitted"></show-errors>
+                            <lib-uc-show-errors  [control]="MainInfoForm.controls.OrderNo" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                             </div>
                         </div>
                         <div class="form-group row">
@@ -55,7 +58,7 @@
                                     {{ram.Value}}
                                 </option>
                                 </select>
-                                <show-errors [control]="MainInfoForm.controls.LobName" [submit]="enjiForm.submitted"></show-errors>
+                                <lib-uc-show-errors  [control]="MainInfoForm.controls.LobName" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                             </div>
                         </div>
                         <div class="form-group row">
@@ -66,7 +69,7 @@
                                     {{ram.Value}}
                                 </option>
                                 </select>
-                                <show-errors [control]="MainInfoForm.controls.LeadSource" [submit]="enjiForm.submitted"></show-errors>
+                                <lib-uc-show-errors  [control]="MainInfoForm.controls.LeadSource" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                             </div>
                         </div>
                         <div class="form-group row">

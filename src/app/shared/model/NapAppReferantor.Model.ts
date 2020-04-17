@@ -21,6 +21,7 @@ export class NapAppReferantorModel{
     MrTaxCalcMethod: any;
     RowVersion: any;
     constructor () {
+        // this.ReferantorName = "";
         this.RowVersion = "";
     }
 }

@@ -6,11 +6,6 @@
           <div class="col-md-8">
             <h4 class="card-title" translate>{{mode}} </h4>
           </div>
-          <div class="col-md-4" style="text-align-last: right">
-            <button type="button" class="backButton" [routerLink]="['/Nap/Guarantor/paging']" translate>
-              <i class="ft-arrow-left"></i> Back
-            </button>
-          </div>
         </div>
       </div>
       <div class="card-body">
@@ -80,18 +75,18 @@
                   <div class="class=form-group row adins-required">
                     <div class="col-md-4">
                       <input type="text" class="form-control adInsInput width-100-per" formControlName="PhnArea1">
-                      <show-errors [control]="CompanyForm.controls.PhnArea1" [submit]="enjiForm.submitted">
-                      </show-errors>
+                      <lib-uc-show-errors  [control]="CompanyForm.controls.PhnArea1" [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors >
                     </div>
                     <div class="col-md-4">
                       <input type="text" class="form-control adInsInput width-100-per" formControlName="Phn1">
-                      <show-errors [control]="CompanyForm.controls.Phn1" [submit]="enjiForm.submitted">
-                      </show-errors>
+                      <lib-uc-show-errors  [control]="CompanyForm.controls.Phn1" [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors >
                     </div>
                     <div class="col-md-4">
                       <input type="text" class="form-control adInsInput width-100-per" formControlName="PhnExt1">
-                      <show-errors [control]="CompanyForm.controls.PhnExt1" [submit]="enjiForm.submitted">
-                      </show-errors>
+                      <lib-uc-show-errors  [control]="CompanyForm.controls.PhnExt1" [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors >
                     </div>
                   </div>
                 </div>
@@ -107,18 +102,18 @@
                   <div class="class=form-group row adins-required">
                     <div class="col-md-4">
                       <input type="text" class="form-control adInsInput width-100-per" formControlName="PhnArea2">
-                      <show-errors [control]="CompanyForm.controls.PhnArea2" [submit]="enjiForm.submitted">
-                      </show-errors>
+                      <lib-uc-show-errors  [control]="CompanyForm.controls.PhnArea2" [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors >
                     </div>
                     <div class="col-md-4">
                       <input type="text" class="form-control adInsInput width-100-per" formControlName="Phn2">
-                      <show-errors [control]="CompanyForm.controls.Phn2" [submit]="enjiForm.submitted">
-                      </show-errors>
+                      <lib-uc-show-errors  [control]="CompanyForm.controls.Phn2" [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors >
                     </div>
                     <div class="col-md-4">
                       <input type="text" class="form-control adInsInput width-100-per" formControlName="PhnExt2">
-                      <show-errors [control]="CompanyForm.controls.PhnExt2" [submit]="enjiForm.submitted">
-                      </show-errors>
+                      <lib-uc-show-errors  [control]="CompanyForm.controls.PhnExt2" [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors >
                     </div>
                   </div>
                 </div>
@@ -134,13 +129,13 @@
                   <div class="class=form-group row adins-required">
                     <div class="col-md-6">
                       <input type="text" class="form-control adInsInput width-100-per" formControlName="FaxArea">
-                      <show-errors [control]="CompanyForm.controls.FaxArea" [submit]="enjiForm.submitted">
-                      </show-errors>
+                      <lib-uc-show-errors  [control]="CompanyForm.controls.FaxArea" [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors >
                     </div>
                     <div class="col-md-6">
                       <input type="text" class="form-control adInsInput width-100-per" formControlName="Fax">
-                      <show-errors [control]="CompanyForm.controls.Fax" [submit]="enjiForm.submitted">
-                      </show-errors>
+                      <lib-uc-show-errors  [control]="CompanyForm.controls.Fax" [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors >
                     </div>
                   </div>
                 </div>
@@ -149,10 +144,7 @@
                 [identifier]="'AddrObj'" [default]="AddrObj" [inputField]="inputFieldObj" [showPhn3]="false">
               </lib-ucaddress>
               <div class="form-actions right">
-                <button type="submit" class="btn btn-raised btn-primary" [routerLink]="['Guarantor/paging']">
-                  <i class="fa fa-check-square-o"></i> Cancel
-                </button>
-                <button type="submit" class="btn btn-raised btn-primary" (click)="SaveForm()" [routerLink]="['Guarantor/paging']">
+                <button type="submit" class="btn btn-raised btn-primary" (click)="SaveForm()" >
                   <i class="fa fa-check-square-o"></i> Save
                 </button>
               </div>

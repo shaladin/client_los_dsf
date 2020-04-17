@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormBuilder, Validators, NgForm, FormGroup, ControlContainer, FormGroupDirective, FormArray } from '@angular/forms';
@@ -24,7 +24,7 @@ import { AppDataObj } from '../../../shared/model/AppDataObj.model';
 
 export class AssetDataComponent implements OnInit {
 
-  appId: any;
+  @Input() AppId: any;
   BranchManagerName: any;
   inputFieldOwnerAddrObj: InputFieldObj;
   ownerAddrObj: AddrObj;
@@ -264,7 +264,7 @@ export class AssetDataComponent implements OnInit {
     private toastr: NGXToastrService,
     private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
-      this.appId = params["AppId"];
+      this.AppId = params["AppId"] ? params["AppId"] : this.AppId;
     })
   }
 
@@ -276,7 +276,6 @@ export class AssetDataComponent implements OnInit {
     this.initUrl();
     this.initLookup();
     this.bindAllRefMasterObj();
-    this.appId = 11;
     this.GetAppData();
     this.GetListAddr();
     this.assetMasterObj.FullAssetCode = 'CAR';
@@ -295,7 +294,7 @@ export class AssetDataComponent implements OnInit {
     this.getRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
     this.GetAllAssetDataUrl = AdInsConstant.GetAllAssetDataByAppId;
     this.getAppUrl = AdInsConstant.GetAppById;
-    this.getVendorUrl = environment.FoundationR3Url + AdInsConstant.GetVendorByVendorCode;
+    this.getVendorUrl = AdInsConstant.GetVendorByVendorCode;
     this.getVendorEmpUrl = AdInsConstant.GetListVendorEmpByVendorIdAndPositionCodes;
     this.getAssetMasterTypeUrl = AdInsConstant.GetAssetMasterTypeByFullAssetCode;
     this.AddEditAllAssetDataUrl = AdInsConstant.AddEditAllAssetData;
@@ -322,7 +321,7 @@ export class AssetDataComponent implements OnInit {
   }
 
   setAllAssetObj() {
-    this.allAssetDataObj.AppAssetObj.AppId = this.appId;
+    this.allAssetDataObj.AppAssetObj.AppId = this.AppId;
     this.allAssetDataObj.AppAssetObj.FullAssetName = this.AssetDataForm.controls.FullAssetName.value;
     this.allAssetDataObj.AppAssetObj.MrAssetConditionCode = this.AssetDataForm.controls.MrAssetConditionCode.value;
     this.allAssetDataObj.AppAssetObj.MrAssetUsageCode = this.AssetDataForm.controls.MrAssetUsageCode.value;
@@ -371,7 +370,7 @@ export class AssetDataComponent implements OnInit {
     this.allAssetDataObj.AppAssetObj.TaxIssueDt = this.AssetDataForm.controls.TaxIssueDt.value;
     this.allAssetDataObj.AppAssetObj.ManufacturingYear = this.AssetDataForm.controls.ManufacturingYear.value;
 
-    this.allAssetDataObj.AppCollateralObj.AppId = this.appId;
+    this.allAssetDataObj.AppCollateralObj.AppId = this.AppId;
     this.allAssetDataObj.AppCollateralObj.CollateralSeqNo = this.AssetDataForm.controls.AssetSeqNo.value;
     this.allAssetDataObj.AppCollateralObj.FullAssetCode = this.AssetDataForm.controls.FullAssetCode.value;
     this.allAssetDataObj.AppCollateralObj.FullAssetName = this.AssetDataForm.controls.FullAssetName.value;
@@ -512,7 +511,7 @@ export class AssetDataComponent implements OnInit {
 
   getAllAssetData() {
     this.appData = new AppDataObj();
-    this.appData.AppId = this.appId;
+    this.appData.AppId = this.AppId;
     console.log(this.appData);
     this.http.post(this.GetAllAssetDataUrl, this.appData).subscribe(
       (response) => {
@@ -751,7 +750,7 @@ export class AssetDataComponent implements OnInit {
   }
 
   GetAppData() {
-    this.appObj.AppId = this.appId;
+    this.appObj.AppId = this.AppId;
     this.http.post(this.getAppUrl, this.appObj).subscribe(
       (response) => {
         console.log(response);
@@ -1086,7 +1085,7 @@ export class AssetDataComponent implements OnInit {
   }
 
   GetListAddr() {
-    this.appObj.AppId = this.appId;
+    this.appObj.AppId = this.AppId;
     this.http.post(this.getAppCustAddrUrl, this.appObj).subscribe(
       (response) => {
         this.AppCustAddrObj = response["ReturnObject"];

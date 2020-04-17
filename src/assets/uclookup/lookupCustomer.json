@@ -4,7 +4,7 @@
     "component": [
       {
         "type": "textbox",
-        "name": "CUST_NO",
+        "name": "C.CUST_NO",
         "id": "custNoId",
         "value": "",
         "label": "Customer No",
@@ -12,7 +12,7 @@
       },
       {
         "type": "textbox",
-        "name": "CUST_NAME",
+        "name": "C.CUST_NAME",
         "id": "custNameId",
         "value": "",
         "label": "Customer Name",
@@ -20,27 +20,27 @@
       }
     ],
     "querystring": {
-      "select": "SELECT CUST_NO AS CustNo, CUST_NAME AS CustName, FULL_ADDR AS FullAddr, MR_CUST_TYPE_CODE AS MrCustTypeCode, C.CUST_ID AS CustId",
-      "from": "FROM CUST C WITH(NOLOCK) JOIN CUST_ADDR CA WITH(NOLOCK) ON C.CUST_ID = CA.CUST_ID AND CA.MR_CUST_ADDR_TYPE_CODE = 'LEGAL'"
+      "select": "SELECT C.CUST_NO AS CustNo, C.CUST_NAME AS CustName, CA.FULL_ADDR AS FullAddr, C.MR_CUST_TYPE_CODE AS MrCustTypeCode, C.CUST_ID AS CustId",
+      "from": "FROM dbo.CUST C WITH(NOLOCK) JOIN dbo.CUST_ADDR CA WITH(NOLOCK) ON C.CUST_ID = CA.CUST_ID AND CA.MR_CUST_ADDR_TYPE_CODE = 'LEGAL'"
     },
     "headerList": [
         {
             "type": "sort",
             "position": "center",
             "label": "Customer No",
-            "name": "CUST_NO"
+            "name": "C.CUST_NO"
         },
         {
             "type": "sort",
             "position": "center",
             "label": "Customer Name",
-            "name": "CUST_NAME"
+            "name": "C.CUST_NAME"
         },
         {
             "type": "sort",
             "position": "center",
             "label": "Address",
-            "name": "FULL_ADDR"
+            "name": "CA.FULL_ADDR"
         },
         {
             "type": "label",

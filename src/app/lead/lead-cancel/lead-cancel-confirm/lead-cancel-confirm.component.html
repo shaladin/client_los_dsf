@@ -14,7 +14,6 @@
             </div>
           </div>
         </div>
-
         <div class="card">
           <div class="card-body">
             <div class="px-3">
@@ -34,8 +33,7 @@
                     </th>
                     <th class="text-left"><span class="thead-header" name='leadSource' translate>LEAD SOURCE</span>
                     </th>
-                    <th class="text-left"><span class="thead-header" name='fullAssetName' translate>FULL ASSET
-                        NAME</span>
+                    <th class="text-left"><span class="thead-header" name='fullAssetName' translate>FULL ASSET NAME</span>
                     </th>
                     <th class="text-left"><span class="thead-header" name='duplicateLeadNo' translate>LEAD STEP</span>
                     </th>
@@ -76,9 +74,9 @@
                     <select class="form-control adInsInput" style="width: auto" formControlName="CancelReason" [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadConfirmCancelForm.controls.CancelReason.invalid }">
                       <option *ngFor="let it of ItemCancelReason" value="{{it.Key}}">{{it.Value}}</option>
                     </select>
-                    <show-errors [control]="LeadConfirmCancelForm.controls.CancelReason"
+                    <lib-uc-show-errors  [control]="LeadConfirmCancelForm.controls.CancelReason"
                       [submit]="enjiForm.submitted">
-                    </show-errors>
+                    </lib-uc-show-errors >
                   </div>
                 </div>
                 <div class="form-group row">

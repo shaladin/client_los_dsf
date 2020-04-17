@@ -1,0 +1,277 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="px-3">
+
+          <lib-ucSubsection *ngIf="GuarantorData.length > 0" [id]="'viewGuarantorInfoId'" [title]="'Guarantor'" [panel]="'viewGuarantorInfo'">
+          </lib-ucSubsection>
+          <div class="form-body" id="viewGuarantorInfo" *ngIf="GuarantorData.length > 0">
+            <table class="table table-responsive-md text-center table-hover" matSort (matSortChange)="sortGuarantorData($event)">
+              <thead>
+                <tr class="table-header">
+                  <th><span translate class="thead-header" mat-sort-header="GuarantorName">Guarantor Name</span>
+                  </th>
+                  <th><span translate class="thead-header" mat-sort-header="GuarantorType">Guarantor Type</span>
+                  </th>
+                  <th><span translate class="thead-header" mat-sort-header="Relationship">Relationship</span>
+                  </th>
+                  <th><span translate class="thead-header" mat-sort-header="IdNo">ID no</span>
+                  </th>
+                  <th><span translate class="thead-header" mat-sort-header="Address">Address</span>
+                  </th>
+                  <th><span translate class="thead-header" mat-sort-header="MobilePhone">Mobile Phone</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of GuarantorData">
+                  <td>{{item.GuarantorName}}</td>
+                  <td>{{item.GuarantorType}}</td>
+                  <td>{{item.Relationship}}</td>
+                  <td>{{item.IdNo}}</td>
+                  <td>{{item.Address}}</td>
+                  <td>{{item.MobilePhone}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <lib-ucSubsection [id]="'viewReferantorInfoId'" [title]="'Referantor'" [panel]="'viewReferantorInfo'">
+          </lib-ucSubsection>
+          <div class="form-body" id="viewReferantorInfo">
+            <div class="row">
+              <div class="col-md-6 ">
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Referantor Name </label>
+                  <label class="col-md-6 adInsLabel"> {{ReferantorData.ReferantorName}} </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Num Of Sales </label>
+                  <label class="col-md-6 adInsLabel"> {{ReferantorData.NumOfSales}} </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Total Sales Amount </label>
+                  <label class="col-md-6 adInsLabel"> {{ReferantorData.TotalSalesAmount}} </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Total Profit </label>
+                  <label class="col-md-6 adInsLabel"> {{ReferantorData.TotalProfit}} </label>
+                </div>
+              </div>
+              <div class="col-md-6 ">
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Cooperation Date </label>
+                  <label class="col-md-6 adInsLabel"> {{ReferantorData.CooperationDate | date: 'shortDate'}} </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> F12PD (Num Of Application) </label>
+                  <label class="col-md-6 adInsLabel"> {{ReferantorData.NumOfApplication}} </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> F12PD (In Amount) </label>
+                  <label class="col-md-6 adInsLabel"> {{ReferantorData.InAmount}} </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Totol Loss </label>
+                  <label class="col-md-6 adInsLabel"> {{ReferantorData.TotolLoss}} </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <lib-ucSubsection [id]="'viewSalesInfoId'" [title]="'Sales'" [panel]="'viewSalesInfo'">
+          </lib-ucSubsection>
+          <div class="form-body" id="viewSalesInfo">
+            <div class="row">
+              <div class="col-md-6 ">
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Sales Name </label>
+                  <label class="col-md-6 adInsLabel"> {{AppDetailAssetData.SalesName}} </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Join Date </label>
+                  <label class="col-md-6 adInsLabel"> {{AppDetailAssetData.JoinDt | date: 'shortDate'}} </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> F12PD (Num of Application) </label>
+                  <label class="col-md-6 adInsLabel"> {{AppDetailAssetData.NumOfApplication}} </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> F12PD (In Amount) </label>
+                  <label class="col-md-6 adInsLabel"> {{AppDetailAssetData.InAmount}} </label>
+                </div>
+              </div>
+              <div class="col-md-6 ">
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Supervisor Name </label>
+                  <label class="col-md-6 adInsLabel"> {{AppDetailAssetData.SpvName}} </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Total Profit </label>
+                  <label class="col-md-6 adInsLabel"> {{AppDetailAssetData.TotalProfit}} </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Total Loss </label>
+                  <label class="col-md-6 adInsLabel"> {{AppDetailAssetData.TotalLoss}} </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <lib-ucSubsection [id]="'viewDealerInfoId'" [title]="'Dealer'" [panel]="'viewDealerInfo'">
+          </lib-ucSubsection>
+          <div class="form-body" id="viewDealerInfo">
+            <div class="row">
+              <div class="col-md-6 ">
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Dealer Name </label>
+                  <label class="col-md-6 adInsLabel"> {{DealerData.DealerName}} </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> {{DealerData.SalesDealerPositionCode}} </label>
+                  <label class="col-md-6 adInsLabel"> {{DealerData.SalesDealerName}} </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> {{DealerData.AdminPositionCode}} </label>
+                  <label class="col-md-6 adInsLabel"> {{DealerData.AdminName}} </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> F12PD (Num of Application) </label>
+                  <label class="col-md-6 adInsLabel"> {{DealerData.NumOfApplication}} </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> F12PD (In Amount) </label>
+                  <label class="col-md-6 adInsLabel"> {{DealerData.InAmount}} </label>
+                </div>
+              </div>
+              <div class="col-md-6 ">
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Address </label>
+                  <label class="col-md-6 adInsLabel"> {{DealerData.Address}} </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> {{DealerData.SpvPositionCode}} </label>
+                  <label class="col-md-6 adInsLabel"> {{DealerData.SpvName}} </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> {{DealerData.BMPositionCode}} </label>
+                  <label class="col-md-6 adInsLabel"> {{DealerData.BMName}} </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Cooperation Date </label>
+                  <label class="col-md-6 adInsLabel"> {{DealerData.CooperationDate | date: 'shortDate'}} </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Total Profit </label>
+                  <label class="col-md-6 adInsLabel"> {{DealerData.TotalProfit}} </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Total Loss </label>
+                  <label class="col-md-6 adInsLabel"> {{DealerData.TotalLoss}} </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <lib-ucSubsection [id]="'viewAppsFinInfoId'" [title]="'Application'" [panel]="'viewAppsFinInfo'">
+          </lib-ucSubsection>
+          <div class="form-body" id="viewAppsFinInfo">
+            <div class="row">
+              <div class="col-md-6 ">
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Installment Scheme </label>
+                  <label class="col-md-6 adInsLabel"> {{AppDetailFinData.InstScheme}} </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Num Of Installment </label>
+                  <label class="col-md-6 adInsLabel"> {{AppDetailFinData.NumOfInst}} </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Installment Amount </label>
+                  <label class="col-md-6 adInsLabel"> {{AppDetailFinData.InstAmt}} </label>
+                </div>
+              </div>
+              <div class="col-md-6 ">
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Payment Frequency </label>
+                  <label class="col-md-6 adInsLabel"> {{AppDetailFinData.PayFreqDesc}} </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Interest Type </label>
+                  <label class="col-md-6 adInsLabel"> {{AppDetailFinData.InterestTypeDesc}} </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Asset Name </label>
+                  <label class="col-md-6 adInsLabel"> {{AppDetailFinData.AssetName}} </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <lib-ucSubsection [id]="'viewInsuranceInfoId'" [title]="'Asset Insurance & Life Insurance'" [panel]="'viewInsuranceInfo'">
+          </lib-ucSubsection>
+          <div class="form-body" id="viewInsuranceInfo">
+            <div class="row">
+              <div class="col-md-6 ">
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Cover By </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AssetInsuranceAndLifeInsuranceData.CoverBy == 'CU'"> Customer </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AssetInsuranceAndLifeInsuranceData.CoverBy == 'CO'"> Company </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AssetInsuranceAndLifeInsuranceData.CoverBy == 'CUCO' "> Customer/Company </label>
+                </div>
+                <div class="row" *ngIf="AssetInsuranceAndLifeInsuranceData.CoverBy == 'CU' || AssetInsuranceAndLifeInsuranceData.CoverBy == 'CUCO'">
+                  <label class="col-md-6 adInsLabel"> Asset Insurance Company (Customer) </label>
+                  <label class="col-md-6 adInsLabel"> {{AssetInsuranceAndLifeInsuranceData.AssetInsuranceCustomer}} </label>
+                </div>
+                <div class="row" *ngIf="AssetInsuranceAndLifeInsuranceData.CoverBy == 'CO' || AssetInsuranceAndLifeInsuranceData.CoverBy == 'CUCO'">
+                  <label class="col-md-6 adInsLabel"> Asset Insurance Company </label>
+                  <label class="col-md-6 adInsLabel"> {{AssetInsuranceAndLifeInsuranceData.AssetInsuranceCompany}} </label>
+                </div>
+              </div>
+              <div class="col-md-6 ">
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Cover Life Insurance </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AssetInsuranceAndLifeInsuranceData.IsLifeInsurance"> Yes </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="!AssetInsuranceAndLifeInsuranceData.IsLifeInsurance"> No </label>
+                </div>
+                <div class="row" *ngIf="AssetInsuranceAndLifeInsuranceData.IsLifeInsurance">
+                  <label class="col-md-6 adInsLabel"> Life Insurance Company </label>
+                  <label class="col-md-6 adInsLabel"> {{AssetInsuranceAndLifeInsuranceData.InterestTypeDesc}} </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <lib-ucSubsection *ngIf="CommData.length > 0" [id]="'viewCommissionInfoId'" [title]="'Commission'" [panel]="'viewCommissionInfo'">
+          </lib-ucSubsection>
+          <div class="form-body" id="viewCommissionInfo" *ngIf="CommData.length > 0">
+            <table class="table table-responsive-md text-center table-hover" matSort (matSortChange)="sortCommData($event)">
+              <thead>
+                <tr class="table-header">
+                  <th><span translate class="thead-header" > No </span>
+                  </th>
+                  <th><span translate class="thead-header" mat-sort-header="Subject">Subject</span>
+                  </th>
+                  <th><span translate class="thead-header" mat-sort-header="Name" style="text-align: left;">Name</span>
+                  </th>
+                  <th><span translate class="thead-header" mat-sort-header="TotalCommAmt">Total Commission</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of CommData; let idx = index">
+                  <td>{{idx + 1}}</td>
+                  <td>{{item.Subject}}</td>
+                  <td style="text-align: left;">{{item.Name}}</td>
+                  <td>{{item.TotalCommAmt}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
