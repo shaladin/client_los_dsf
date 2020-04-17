@@ -12,6 +12,7 @@ import { RouterModule } from "@angular/router";
 import { MatCheckboxModule, MatSelectModule } from "@angular/material";
 import { MatRadioModule } from "@angular/material";
 import { UcSubsectionModule } from "@adins/uc-subsection";
+import { UcapprovebyModule } from "@adins/ucapproveby";
 import { UcaddressModule } from "@adins/ucaddress";
 import { UcgridviewModule } from "@adins/ucgridview";
 import { UCSearchModule } from '@adins/ucsearch';
@@ -32,6 +33,8 @@ import { FormAddDynamicComponent } from "./commission-add/form-add-dynamic/form-
 import { ViewAppCustDataCompanyComponent } from "./credit-investigation/component/view-app-cust-data-company/view-app-cust-data-company.component";
 import { CreditInvestigationPagingComponent } from "./credit-investigation/credit-investigation-paging/credit-investigation-paging.component";
 import { TabApplicationDataComponent } from './credit-investigation/component/tab-application-data/tab-application-data.component';
+import { CreditReviewPagingComponent } from './credit-review/credit-review-paging/credit-review-paging.component';
+import { CreditReviewMainComponent } from './credit-review/credit-review-main/credit-review-main.component';
 export const customCurrencyMaskConfig = {     
     align: "left",     
     allowNegative: true,     
@@ -56,6 +59,9 @@ export const customCurrencyMaskConfig = {
         RsvFundViewComponent,
         CommissionReservedFundComponent,
         FormAddDynamicComponent,
+        TabApplicationDataComponent,
+        CreditReviewPagingComponent,
+        CreditReviewMainComponent,
         ViewAppCustDataCompanyComponent,
         CreditInvestigationPagingComponent,
         TabApplicationDataComponent
@@ -82,6 +88,7 @@ export const customCurrencyMaskConfig = {
         UcShowErrorsModule,
         UCSearchModule,
         UcinputnumberModule,
+        UcapprovebyModule
         // NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
     ],
     exports: [],

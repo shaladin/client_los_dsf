@@ -10,6 +10,8 @@ import { RsvFundViewComponent } from "./reserved-fund/reserved-fund-view/reserve
 import { CommissionReservedFundComponent } from "./commission-reserved-fund/commission-reserved-fund.component";
 import { CreditInvestigationPagingComponent } from "./credit-investigation/credit-investigation-paging/credit-investigation-paging.component";
 import { TabApplicationDataComponent } from "./credit-investigation/component/tab-application-data/tab-application-data.component";
+import { CreditReviewPagingComponent } from "./credit-review/credit-review-paging/credit-review-paging.component";
+import { CreditReviewMainComponent } from "./credit-review/credit-review-main/credit-review-main.component";
 
 
 const routes: Routes = [
@@ -46,10 +48,17 @@ const routes: Routes = [
         }
       },
       {
-        path: 'TabAppData',
-        component: TabApplicationDataComponent,
+        path: 'CreditReviewPaging',
+        component: CreditReviewPagingComponent,
         data: {
-          title: 'Tab AppData'
+          title: 'Credit Review Paging'
+        }
+      },
+      {
+        path: 'CreditReviewMain',
+        component: CreditReviewMainComponent,
+        data: {
+          title: 'Credit Review Main'
         }
       },
       // {
