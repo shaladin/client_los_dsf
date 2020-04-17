@@ -117,7 +117,7 @@
         },
         {
             "type": "sort",
-            "position": "left",
+            "position": "center",
             "label": "Mou No",
             "name": "MouCustNo"
         },
@@ -129,7 +129,7 @@
         },
         {
             "type": "sort",
-            "position": "left",
+            "position": "center",
             "label": "Mou Date",
             "name": "MouCustDt"
         },
@@ -170,9 +170,16 @@
             "property": "ClaimBy"
         },
         {
-            "type": "text",
-            "position": "left",
-            "property": "MouCustNo"
+            "type": "link",
+            "position": "center",
+            "property": "MouCustNo",
+            "path": "/Mou/Cust/Paging",
+            "param": [
+                {
+                    "type": "MouCustId",
+                    "property": "MouCustId"
+                }
+            ]
         },
         {
             "type": "text",

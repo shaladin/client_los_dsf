@@ -60,11 +60,11 @@ export class MouCustomerRequestDetailComponent implements OnInit {
       if (params['mode'] != null) {
         this.pageType = params['mode'];
       }
-      if (params['mouCustId'] != null) {
-        this.mouCustId = params['mouCustId'];
+      if (params['MouCustId'] != null) {
+        this.mouCustId = params['MouCustId'];
       }
-      if (params['mrMouTypeCode'] != null) {
-        this.mouType = params['mrMouTypeCode'];
+      if (params['MrMouTypeCode'] != null) {
+        this.mouType = params['MrMouTypeCode'];
       }
     });
    }

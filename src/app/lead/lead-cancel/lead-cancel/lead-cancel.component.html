@@ -1,25 +1,11 @@
 <form class="form form-horizontal" name="LeadCancelForm" #LeadCancelForm="ngForm" novalidate
   (ngSubmit)="SaveLeadCancel(LeadCancelForm)">
-  <section id="horizontal-form-layouts">
-    <div class="row text-left">
-      <div class="col-md-12">
-        <div class="card">
-          <div class="card-header">
-            <div class="row">
-              <div class="col-md-8">
-                <h4 class="card-title" id="horz-layout-colored-controls" translate>LEAD CANCEL</h4>
-              </div>
-              <div class="col-md-4" style="text-align-last: right">
-                <button type="submit" (click)="formValidate(LeadCancelForm)"
-                  class="btn btn-raised btn-warning mr-1" translate>Cancel Lead
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+    <div class="ucSearch-Button-Right">
+      <span class="mr-1">
+        <button type="submit" class="backButton" (click)="formValidate(LeadCancelForm)" translate>Cancel Lead
+      </button>
+      </span>
+  </div>
   <lib-UCSearch id="ucSearch" style="width:100%;" [searchInput]='inputObj' (result)="getResult($event)">
   </lib-UCSearch>
   <div [hidden]="resultData == null">
