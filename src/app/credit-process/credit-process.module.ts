@@ -80,8 +80,8 @@ export const customCurrencyMaskConfig = {
         UcaddressModule,
         UcgridviewModule,
         UcShowErrorsModule,
-        UCSearchModule
-        UcinputnumberModule,
+        UCSearchModule,
+        UcinputnumberModule
         // NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
     ],
     exports: [],
