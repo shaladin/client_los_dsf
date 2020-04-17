@@ -28,6 +28,7 @@ export class ListPersonalComponent implements OnInit {
   ListCustomerDuplicate: any;
   ListNegativeCust: any;
   ListAppCustDuplicate: any;
+  RowVersion: any;
 
 
   constructor(
@@ -52,6 +53,7 @@ export class ListPersonalComponent implements OnInit {
     this.http.post(this.GetCustDataByAppId, appObj).subscribe(
       response => {
         this.AppCustObj = response['AppCustObj'];
+        this.RowVersion = response['AppCustObj'].RowVersion;
         this.AppCustPersonalObj = response['AppCustPersonalObj'];
         this.AppCustAddrObj = response['AppCustAddrLegalObj'];
 
@@ -64,26 +66,20 @@ export class ListPersonalComponent implements OnInit {
           "TaxIdNo": this.AppCustObj.TaxIdNo,
           "BirthDt": this.AppCustPersonalObj.BirthDt,
           "MotherMaidenName": this.AppCustPersonalObj.MotherMaidenName,
-          "MobilePhnNo1": this.AppCustPersonalObj.MobilePhnNo1
+          "MobilePhnNo1": this.AppCustPersonalObj.MobilePhnNo1,          
+          "RowVersion": this.RowVersion
         }
-        //List Cust Duplicate Checking
+        //List Cust Duplicate And List Negative Cust Duplicate Checking
         this.http.post(this.GetCustomerDuplicateCheckUrl, requestDupCheck).subscribe(
           response => {
-            this.ListCustomerDuplicate = response['ReturnObject'];
+            this.ListCustomerDuplicate = response['ReturnObject'].CustDuplicate;
+            this.ListNegativeCust = response['ReturnObject'].NegativeCustDuplicate;
           },
           error => {
             console.log("error");
           }
         );
-        //List Negative Cust Duplicate Checking
-        this.http.post(this.GetNegativeCustomerDuplicateCheckUrl, requestDupCheck).subscribe(
-          response => {
-            this.ListNegativeCust = response['ReturnObject'];
-          },
-          error => {
-            console.log("error");
-          }
-        );
+            
 
         //List App Cust Duplicate Checking
         this.http.post(this.GetAppCustDuplicateCheckUrl, requestDupCheck).subscribe(
@@ -103,9 +99,15 @@ export class ListPersonalComponent implements OnInit {
   }
 
   SelectCust(item) {
-    this.http.post(this.AddAppDupCheckCustUrl, item).subscribe(
+    var AppDupCheckObj = {"AppId": this.AppId, 
+    "CustNo":item.CustNo, "CustName" : item.CustName,
+    "Npwp":item.TaxIdNo, "MrIdType" : item.MrIdTypeCode, 
+    "IdNo":item.IdNo, "BirthDt":item.BirthDt, "MobilePhnNo":item.MobilePhnNo1,
+     "MotherMaidenName":item.MotherMaidenName, "DuplicateItem":item.DuplicateItem,
+     "IsSelected":true}
+    this.http.post(this.AddAppDupCheckCustUrl, AppDupCheckObj).subscribe(
       response => {
-        this.router.navigate(["AppDupCheck/ApplicantExistingDataPersonal"], { queryParams: { "AppId": this.AppId } });
+        this.router.navigate(["/AppDupCheck/ApplicantExistingDataPersonal"], { queryParams: { "AppId": this.AppId } });
       },
       error => {
         console.log("error");

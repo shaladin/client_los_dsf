@@ -60,6 +60,11 @@ export const Full_ROUTES: Routes = [
     loadChildren: './lead/lead.module#LeadModule'
   }, 
   {
+    path: 'FraudDetection',
+    loadChildren: './fraud-detection/fraud-detection.module#FraudDetectionModule'
+  },
+  { 
+  
     path: 'CreditProcess',
     loadChildren: './credit-process/credit-process.module#CreditProcessModule'
   }

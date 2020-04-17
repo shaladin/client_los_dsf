@@ -19,7 +19,8 @@
       </aw-wizard-step>
       <aw-wizard-step [stepTitle]="'FRAUD DETECTION RESULT'" (stepEnter)="EnterTab('fraudDetection')"
       [navigationSymbol]="{ symbol: '3' }">
-
+      <app-view-fraud-detection-result [appId]="appId" [mrCustTypeCode]="mrCustTypeCode">
+      </app-view-fraud-detection-result>
     </aw-wizard-step>
     <aw-wizard-step [stepTitle]="'APPROVAL HISTORY'" (stepEnter)="EnterTab('apvHist')"
     [navigationSymbol]="{ symbol: '4' }">
