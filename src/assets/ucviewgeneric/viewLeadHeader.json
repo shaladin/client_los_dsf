@@ -1,63 +1,69 @@
 {
-    "title": "",
-    "subsection": [
-      {
-        "subSectionId": "MainInformationId",
-        "subSectionTitle": "Main Information",
-        "mainInfoUrl": "http://localhost:5001/Generic/GetDataViewBySQL",
-        "mainInfo": [
-          {
-            "type": "text",
-            "label": "Lead No",
-            "property": "LeadNo"
-          },
-          {
-            "type": "text",
-            "label": "Copy From",
-            "property": "LeadCopyId"
-          },
-          {
-            "type": "text",
-            "label": "Office Name",
-            "property": "OriOfficeName"
-          },
-          {
-            "type": "text",
-            "label": "Order No",
-            "property": "OrderNo"
-          },
-        
-          {
-            "type": "text",
-            "label": "Lead Source",
-            "property": "MrLeadSourceCode"
-          },
-          {
-            "type": "text",
-            "label": "Agency",
-            "property": "AgencyName"
-          },
-          {
-            "type": "text",
-            "label": "Nama CMO",
-            "property": "CmoName"
-          },
-          {
-            "type": "text",
-            "label": "Surveyor Name",
-            "property": "SurveyorName"
-          },
-          {
-            "type": "text",
-            "label": "Tele Sales Name",
-            "property": "TeleMarketingName"
-          }  
-        ],
-        "querystring": {
-          "select": "SELECT LEAD_NO AS LeadNo, LEAD_COPY_ID AS LeadCopyId, ORI_OFFICE_NAME AS OriOfficeName, ORDER_NO AS OrderNo, MR_LEAD_SOURCE_CODE AS MrLeadSourceCode, AGENCY_NAME AS AgencyName, CMO_NAME AS CmoName, SURVEYOR_NAME AS SurveyorName, TELE_MARKETING_NAME AS TeleMarketingName",
-          "from": "FROM dbo.LEAD WITH(NOLOCK)",
-          "where": "WHERE LEAD_ID = {0}"
+  "title": "",
+  "subsection": [
+    {
+      "subSectionId": "MainInformationId",
+      "subSectionTitle": "Main Information",
+      "mainInfoUrl": "http://r3app-server.ad-ins.com/LOS/Generic/GetDataViewBySQL",
+      "mainInfo": [
+        {
+          "type": "link",
+          "label": "Lead No",
+          "property": "LeadNo",
+          "path": "/Lead/View",
+          "param": [
+            {
+              "type": "LeadId",
+              "property": "LeadId"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "label": "Copy From",
+          "property": "LeadCopyId"
+        },
+        {
+          "type": "text",
+          "label": "Office Name",
+          "property": "OriOfficeName"
+        },
+        {
+          "type": "text",
+          "label": "Order No",
+          "property": "OrderNo"
+        },
+        {
+          "type": "text",
+          "label": "Lead Source",
+          "property": "MrLeadSourceCode"
+        },
+        {
+          "type": "text",
+          "label": "Agency",
+          "property": "AgencyName"
+        },
+        {
+          "type": "text",
+          "label": "Nama CMO",
+          "property": "CmoName"
+        },
+        {
+          "type": "text",
+          "label": "Surveyor Name",
+          "property": "SurveyorName"
+        },
+        {
+          "type": "text",
+          "label": "Tele Sales Name",
+          "property": "TeleMarketingName"
         }
+      ],
+      "querystring": {
+        "select": "SELECT LEAD_NO AS LeadNo, LEAD_COPY_ID AS LeadCopyId, ORI_OFFICE_NAME AS OriOfficeName, ORDER_NO AS OrderNo, MR_LEAD_SOURCE_CODE AS MrLeadSourceCode, AGENCY_NAME AS AgencyName, CMO_NAME AS CmoName, SURVEYOR_NAME AS SurveyorName, TELE_MARKETING_NAME AS TeleMarketingName",
+        "from": "FROM dbo.LEAD WITH(NOLOCK)",
+        "where": "WHERE LEAD_ID = {0}"
       }
-    ]
-  }
+    }
+  ]
+}

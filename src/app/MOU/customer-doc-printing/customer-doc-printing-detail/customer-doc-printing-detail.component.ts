@@ -6,13 +6,12 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 @Component({
   selector: 'app-customer-doc-printing-detail',
   templateUrl: './customer-doc-printing-detail.component.html',
-  styleUrls: ['./customer-doc-printing-detail.component.css']
 })
 export class CustomerDocPrintingDetailComponent implements OnInit {
   viewObj: string;
   MouCustId: any;
   GetListMouCustDocPrintForViewByMouCustIdUrl  = AdInsConstant.GetListMouCustDocPrintForViewByMouCustId;
-  responseObj: any;
+  responseObj = new Array();
   EditMouCustDocPrintSequenceNoUrl =  AdInsConstant.EditMouCustDocPrintSequenceNo;
 
   constructor(

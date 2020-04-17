@@ -10,7 +10,6 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 @Component({
   selector: 'app-edit-mou-customer',
   templateUrl: './edit-mou-customer.component.html',
-  styleUrls: ['./edit-mou-customer.component.scss'],
   providers: [NGXToastrService]
 })
 export class EditMouCustomerComponent implements OnInit {

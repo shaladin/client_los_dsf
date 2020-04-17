@@ -43,8 +43,8 @@
                     <select class="form-control adInsInput" style="width: auto" formControlName="AccountBank"
                       ng-disabled="!ReferantorOn" (change)="ChangeValueBank($event)"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppReferantorForm.controls.AccountBank.invalid }">
-                      <option *ngFor="let it of bankItems" value="{{it.BankCode}}">
-                        {{it.BankName}} </option>
+                      <option *ngFor="let it of bankItems" value="{{it.BankAccountNo}}">
+                        {{it.BankAccountName}} </option>
                     </select>
                   </div>
                 </div>

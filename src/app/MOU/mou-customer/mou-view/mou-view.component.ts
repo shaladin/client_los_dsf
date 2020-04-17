@@ -7,7 +7,6 @@ import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 @Component({
   selector: 'app-mou-view',
   templateUrl: './mou-view.component.html',
-  styleUrls: ['./mou-view.component.scss']
 })
 export class MouViewComponent implements OnInit {
  @Input() inputMouCustId;
@@ -37,11 +36,8 @@ export class MouViewComponent implements OnInit {
       (response) => {
         this.resultData = response;
         this.MrMouTypeCode = this.resultData['MrMouTypeCode']; 
-        console.log( this.MrMouTypeCode);
       },
       (error) =>{
-        // this.custModel = "";
-        // this.custType = "";
         console.log(error);
       }
     );

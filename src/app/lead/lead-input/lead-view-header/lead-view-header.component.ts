@@ -17,58 +17,16 @@ import { RefLobObj } from 'app/shared/model/RefLobObj.Model';
 import { VendorObj } from 'app/shared/model/Vendor.Model';
 import { RefEmpForLookupObj } from 'app/shared/model/RefEmpForLookupObj.Model';
 
-
 @Component({
   selector: 'app-lead-view-header',
   templateUrl: './lead-view-header.component.html',
   providers: [DecimalPipe, NGXToastrService]
 })
 export class LeadViewHeaderComponent implements OnInit {
-  inputPagingObj: any;
-  user: any;
   LeadId: any;
-  addLead: any;
   getLeadByLeadId: any;
   returnLead: any;
-  leadObj: any;
-  setLeadObj: any;
   getLeadObj: LeadObj;
-  cmoNameLookUpObj: any;
-  surveyorNameLookUpObj: any;
-  salesNameLookUpObj:any;
-  agencyLookUpObj: any;
-  tempCmoName: any;
-  tempCmoCode: any;
-  tempSurveyorName: any;
-  tempSurveyorCode: any;
-  tempSalesName: any;
-  tempSalesCode: any;
-  tempAgencyName: any;
-  tempAgencyCode: any;
-  getListRefOffice: any;
-  getListActiveLob: any;
-  getListActiveRefMasterUrl: any;
-  getVendorByVendorCode: any;
-  getRefEmpForLookupEmployee: any;
-  listRefOffice: any;
-  refOfficeObj: any;
-  listRefLob:any;
-  refLobObj: any;
-  leadSource: any;
-  listLeadSource: any;
-  vendorObj: any;
-  returnVendorObj: any;
-  OfficeName: any;
-  LobName: any;
-  pageType: string = "add";
-  page:any;
-  custShareholderLookUpObj1: any;
-  cmoObj: any;
-  returnCmoObj: any;
-  surveyorObj: any;
-  returnSurveyorObj: any;
-  salesObj: any;
-  returnSalesObj: any;
   MainInfoForm = this.fb.group({
     OfficeCode: [''],
     OfficeName: [''],

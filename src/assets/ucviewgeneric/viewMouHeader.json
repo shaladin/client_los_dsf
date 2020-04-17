@@ -4,12 +4,19 @@
     {
       "subSectionId": "CustMainInfoHeaderId",
       "subSectionTitle": "Main Info",
-      "mainInfoUrl": "http://localhost:5001/Generic/GetDataViewBySQL",
+      "mainInfoUrl": "http://r3app-server.ad-ins.com/LOS/Generic/GetDataViewBySQL",
       "mainInfo": [
         {
-          "type": "text",
+          "type": "link",
           "label": "MOU No",
-          "property": "MouCustNo"
+          "property": "MouCustNo",
+          "path": "/Mou/Cust/Paging",
+          "param": [
+            {
+              "type": "MouCustId",
+              "property": "MouCustId"
+            }
+          ]
         },
         {
           "type": "date",
@@ -66,10 +73,9 @@
           "label": "Available Amount",
           "property": "AvailableAmt"
         }
-       
       ],
       "querystring": {
-        "select": "SELECT MOU_CUST_NO AS MouCustNo, MOU_CUST_DT AS MouCustDt, CUST_NAME AS CustName, MR_MOU_TYPE_CODE AS MrMouTypeCode, START_DT as StartDt, PLAFOND_AMT AS PlafondAmt, END_DT as EndDt, REF_NO AS RefNo, MOU_STAT AS MouStat, REALISATION_AMT AS RealisationAmt, IN_PROCESS_AMT AS InProcessAmt, AVAILABLE_AMT as AvailableAmt",
+        "select": "SELECT MOU_CUST_NO AS MouCustNo, MOU_CUST_DT AS MouCustDt, CUST_NAME AS CustName, MR_MOU_TYPE_CODE AS MrMouTypeCode, START_DT as StartDt, PLAFOND_AMT AS PlafondAmt, END_DT as EndDt, REF_NO AS RefNo, MOU_STAT AS MouStat, REALISATION_AMT AS RealisationAmt, IN_PROCESS_AMT AS InProcessAmt, AVAILABLE_AMT as AvailableAmt, MOU_CUST_ID AS MouCustId",
         "from": "FROM dbo.MOU_CUST WITH(NOLOCK)",
         "where": "WHERE MOU_CUST_ID = {0}"
       }

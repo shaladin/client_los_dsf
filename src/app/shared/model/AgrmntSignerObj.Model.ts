@@ -1,4 +1,5 @@
 export class AgrmntSignerObj{
+    WfTaskListId: any;
     AgrmntSignerId: any;
     AgrmntId: any;
     SupplBranchEmpNo: any;
