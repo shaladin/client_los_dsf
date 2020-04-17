@@ -6,7 +6,7 @@
 
       <aw-wizard-step [stepTitle]="'Customer Data'" (stepEnter)="EnterTab('CUST')"
         [navigationSymbol]="{ symbol: '1' }">
-        <app-app-life-ins *ngIf="AppStepIndex == 0" [AppId]=appId></app-app-life-ins>
+        <app-customer-data *ngIf="AppStepIndex == 0" [appId]=appId></app-customer-data>
       </aw-wizard-step>
 
       <aw-wizard-step [stepTitle]="'Guarantor Data'" (stepEnter)="EnterTab('GUAR')"
@@ -31,7 +31,7 @@
 
       <aw-wizard-step [stepTitle]="'Insurance Data'" (stepEnter)="EnterTab('INS')"
       [navigationSymbol]="{ symbol: '6' }">
-      <app-customer-data *ngIf="AppStepIndex == 5" [appId]=appId></app-customer-data>
+      <app-app-life-ins *ngIf="AppStepIndex == 5" [AppId]=appId></app-app-life-ins>
       </aw-wizard-step>
 
       <aw-wizard-step [stepTitle]="'Life Insurance Data'" (stepEnter)="EnterTab('LFI')"
