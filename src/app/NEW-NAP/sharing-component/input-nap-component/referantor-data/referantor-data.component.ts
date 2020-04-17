@@ -11,12 +11,12 @@ import { NapAppReferantorModel } from 'app/shared/model/NapAppReferantor.Model';
 import { WizardComponent } from 'angular-archwizard';
 
 @Component({
-  selector: 'app-app-referantor',
-  templateUrl: './app-referantor.component.html',
-  styleUrls: ['./app-referantor.component.scss'],
+  selector: 'app-referantor-data',
+  templateUrl: './referantor-data.component.html',
+  styleUrls: [],
   providers: [NGXToastrService]
 })
-export class AppReferantorComponent implements OnInit {
+export class ReferantorDataComponent implements OnInit {
 
   @Input() appId: any;
   inputLookupObj;

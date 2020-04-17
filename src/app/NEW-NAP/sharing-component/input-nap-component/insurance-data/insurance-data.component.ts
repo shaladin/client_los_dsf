@@ -1,12 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { FormBuilder, Validators, NgForm, FormGroup, ControlContainer, FormGroupDirective, FormArray, FormControl } from '@angular/forms';
+import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { formatDate } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
 import { AppAssetAccessoryObj } from 'app/shared/model/AppAssetAccessoryObj.model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
@@ -516,7 +514,7 @@ export class InsuranceDataComponent implements OnInit {
   bindInsAddCvgTypeRuleObj(){
     (this.InsuranceDataForm.controls.InsAddCvgTypes as FormArray) = this.fb.array([]);
     this.insAddCvgTypeRuleObj = [{Key: "", Value: ""}];
-    this.ruleObj.AdditionalCoverageType.forEach((o, i) => {
+    this.ruleObj.AdditionalCoverageType.forEach((o) => {
       var item = this.insAddCvgTypeObj.find(x => x.Key == o);
       this.insAddCvgTypeRuleObj.push(item);
     });
@@ -557,7 +555,7 @@ export class InsuranceDataComponent implements OnInit {
       AppInsAddCvgs: new FormArray([])
     });
 
-    this.insAddCvgTypeRuleObj.forEach((o, i) => {
+    this.insAddCvgTypeRuleObj.forEach((o) => {
       var index = this.ruleObj.AdditionalCoverageType.findIndex(x => x == o.Key);
       var premiumType = this.ruleObj.PremiumType[index];
       var custAddPremiRate = 0;
@@ -609,7 +607,7 @@ export class InsuranceDataComponent implements OnInit {
       AppInsAddCvgs: new FormArray([])
     });
 
-    this.insAddCvgTypeRuleObj.forEach((o, i) => {
+    this.insAddCvgTypeRuleObj.forEach((o) => {
       var check;
       if(insMainCvg.AppInsAddCvgObjs == undefined){
         check = undefined;
@@ -655,7 +653,7 @@ export class InsuranceDataComponent implements OnInit {
     this.isCalculate = false;
   }
 
-  IsAddCvgChanged(event){
+  IsAddCvgChanged(){
     this.isCalculate = false;
   }
 
@@ -693,11 +691,11 @@ export class InsuranceDataComponent implements OnInit {
     this.isCalculate = false;
   }
 
-  CvgAmtChanged(event){
+  CvgAmtChanged(){
     this.isGenerate = false;
   }
 
-  CustAdminFeeAmtChanged(event){
+  CustAdminFeeAmtChanged(){
     this.isCalculate = false;
   }
 
@@ -706,11 +704,11 @@ export class InsuranceDataComponent implements OnInit {
     this.isGenerate = false;
   }
 
-  AssetRegionChanged(event){
+  AssetRegionChanged(){
     this.isGenerate = false;
   }
 
-  InsLengthChanged(event){
+  InsLengthChanged(){
     this.isGenerate = false;
   }
 
@@ -1075,7 +1073,7 @@ export class InsuranceDataComponent implements OnInit {
   }
 
   addCheckbox(){
-    this.insAddCvgTypeRuleObj.forEach((o, i) => {
+    this.insAddCvgTypeRuleObj.forEach((o) => {
       const control = this.fb.group({
         Key: o.Value,
         Value: false

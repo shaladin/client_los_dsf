@@ -4,11 +4,51 @@ import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { AdInsModule } from "app/components/adins-module/adins.module";
 import { TcSharingComponentModule } from "./tc-sharing-component.module";
 import { GuarantorComponent } from "./guarantor/guarantor.component";
+import { LifeInsuranceDataComponent } from "./life-insurance-data/life-insurance-data.component";
+import { ApplicationDataComponent } from "./application-data/application-data.component";
+import { SearchCrossAppComponent } from "./application-data/search-cross-app/search-cross-app.component";
+import { ReferantorDataComponent } from "./referantor-data/referantor-data.component";
+import { AssetDataComponent } from "./asset-data/asset-data.component";
+import { CustomerDataComponent } from "./customer-data/customer-data.component";
+import { CustUcaddressComponent } from "./customer-data/component/address/ucaddress.component";
+import { CustPersonalMainDataComponent } from "./customer-data/component/personal-main-data/cust-personal-main-data.component";
+import { CustPersonalContactInformationComponent } from "./customer-data/component/personal-contact-information/cust-personal-contact-information.component";
+import { CustPersonalFinancialDataComponent } from "./customer-data/component/personal-financial-data/cust-personal-financial-data.component";
+import { CustBankAccountComponent } from "./customer-data/component/bank-account/cust-bank-account.component";
+import { CustJobDataComponent } from "./customer-data/component/job-data/cust-job-data.component";
+import { CustSocmedComponent } from "./customer-data/component/socmed/cust-socmed.component";
+import { CustGrpMemberComponent } from "./customer-data/component/cust-grp-member/cust-grp-member.component";
+import { CustCompanyMainDataComponent } from "./customer-data/component/company-main-data/cust-company-main-data.component";
+import { CustShareholderComponent } from "./customer-data/component/shareholder/cust-shareholder.component";
+import { CustCompanyContactInformationComponent } from "./customer-data/component/company-contact-information/cust-company-contact-information.component";
+import { CustCompanyFinancialDataComponent } from "./customer-data/component/company-financial-data/cust-company-financial-data.component";
+import { CustLegalDocComponent } from "./customer-data/component/legal-doc/cust-legal-doc.component";
+import { InsuranceDataComponent } from "./insurance-data/insurance-data.component";
 
 @NgModule({
   exports: [
+    CustomerDataComponent,
+    CustUcaddressComponent,
+    CustPersonalMainDataComponent,
+    CustPersonalContactInformationComponent,
+    CustPersonalFinancialDataComponent,
+    CustBankAccountComponent,
+    CustJobDataComponent,
+    CustSocmedComponent,
+    CustGrpMemberComponent,
+    CustCompanyMainDataComponent,
+    CustShareholderComponent,
+    CustCompanyContactInformationComponent,
+    CustCompanyFinancialDataComponent,
+    CustLegalDocComponent,
     TcSharingComponentModule,
-    GuarantorComponent
+    GuarantorComponent,
+    LifeInsuranceDataComponent,
+    ApplicationDataComponent,
+    SearchCrossAppComponent,
+    ReferantorDataComponent,
+    AssetDataComponent,
+    InsuranceDataComponent
   ],
   imports: [
     CommonModule,
@@ -16,7 +56,27 @@ import { GuarantorComponent } from "./guarantor/guarantor.component";
     TcSharingComponentModule
   ],
   declarations: [
-    GuarantorComponent
+    CustomerDataComponent,
+    CustUcaddressComponent,
+    CustPersonalMainDataComponent,
+    CustPersonalContactInformationComponent,
+    CustPersonalFinancialDataComponent,
+    CustBankAccountComponent,
+    CustJobDataComponent,
+    CustSocmedComponent,
+    CustGrpMemberComponent,
+    CustCompanyMainDataComponent,
+    CustShareholderComponent,
+    CustCompanyContactInformationComponent,
+    CustCompanyFinancialDataComponent,
+    CustLegalDocComponent,
+    GuarantorComponent,
+    LifeInsuranceDataComponent,
+    ApplicationDataComponent,
+    SearchCrossAppComponent,
+    ReferantorDataComponent,
+    AssetDataComponent,
+    InsuranceDataComponent
   ],
   providers: [
     NGXToastrService

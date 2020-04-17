@@ -1,13 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { AppReferantorComponent } from "./nap-tab/app-referantor/app-referantor.component";
-import { AppModelComponent } from "./nap-tab/app-model/app-model.component";
-import { CustomerDataComponent } from "./nap-tab/customer-data/customer-data.component";
-import { AppLifeInsComponent } from "./nap-tab/app-life-ins/app-life-ins.component";
 import { AppTcComponent } from "./nap-tab/app-tc/app-tc.component";
 import { AppFinDataComponent } from "./nap-tab/app-fin-data/app-fin-data.component";
-import { InsuranceDataComponent } from "./nap-tab/insurance-data/insurance-data.component";
-import { AssetDataComponent } from "./nap-tab/asset-data/asset-data.component";
 import { PhnVerifPagingComponent } from "./phone-verif/phone-verif-paging/phone-verif-paging.component";
 import { VerfQuestionComponent } from "./nap-component/verf-question/verf-question.component";
 import { PhnVerifSubjectComponent } from "./phone-verif/phone-verif-subject/phone-verif-subject.component";
@@ -22,52 +16,10 @@ const routes: Routes = [
         path: '',
         children: [
             {
-                path: 'AppReferantor',
-                component: AppReferantorComponent,
-                data: {
-                    title: 'Referantor'
-                }
-            },
-            {
-                path: 'AppModel',
-                component: AppModelComponent,
-                data: {
-                    title: 'Model'
-                }
-            },
-            {
-                path: 'CustData',
-                component: CustomerDataComponent,
-                data: {
-                    title: 'Customer Data'
-                }
-            },
-            {
-                path: 'InsuranceData',
-                component: InsuranceDataComponent,
-                data: {
-                    title: 'Insurance Data'
-                }
-            },
-            {
-                path: 'LifeIns',
-                component: AppLifeInsComponent,
-                data: {
-                    title: 'Life Insurance'
-                },
-            },
-            {
                 path: 'AppTC',
                 component: AppTcComponent,
                 data: {
                     title: 'APP TC'
-                },
-            },
-            {
-                path: 'AssetData',
-                component: AssetDataComponent,
-                data: {
-                    title: 'Asset Data'
                 },
             },
             {

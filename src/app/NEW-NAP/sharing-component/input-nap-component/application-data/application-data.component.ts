@@ -12,12 +12,12 @@ import { NapAppCrossObj } from 'app/shared/model/NapAppCrossObj.Model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 
 @Component({
-  selector: 'app-app-model',
-  templateUrl: './app-model.component.html',
-  styleUrls: ['./app-model.component.scss'],
+  selector: 'app-application-data-model',
+  templateUrl: './application-data.component.html',
+  styleUrls: [],
   providers: [NGXToastrService]
 })
-export class AppModelComponent implements OnInit {
+export class ApplicationDataComponent implements OnInit {
 
   @Input() appId: any;
   ListCrossAppObj: any = {};

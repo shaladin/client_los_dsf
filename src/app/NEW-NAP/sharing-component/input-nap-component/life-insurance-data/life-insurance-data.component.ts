@@ -10,12 +10,12 @@ import { LifeInsDObj } from 'app/shared/model/LifeInsDObj.Model';
 import { environment } from 'environments/environment';
 
 @Component({
-  selector: 'app-app-life-ins',
-  templateUrl: './app-life-ins.component.html',
+  selector: 'app-life-insurance-data',
+  templateUrl: './life-insurance-data.component.html',
   styleUrls: [],
   providers: [NGXToastrService]
 })
-export class AppLifeInsComponent implements OnInit {
+export class LifeInsuranceDataComponent implements OnInit {
 
   @Input() AppId: any;
   inputGridObj: any;

@@ -1,20 +1,18 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { FormBuilder, Validators, NgForm, FormGroup, ControlContainer, FormGroupDirective, FormArray } from '@angular/forms';
+import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { CustDataPersonalObj } from 'app/shared/model/CustDataPersonalObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { formatDate } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { AllAssetDataObj } from '../../../shared/model/AllAssetDataObj.Model';
-import { InputFieldObj } from '../../../shared/model/InputFieldObj.Model';
-import { AddrObj } from '../../../shared/model/AddrObj.Model';
-import { AppAssetAccessoryObj } from '../../../shared/model/AppAssetAccessoryObj.model';
-import { AppDataObj } from '../../../shared/model/AppDataObj.model';
+import { AllAssetDataObj } from 'app/shared/model/AllAssetDataObj.Model';
+import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
+import { AddrObj } from 'app/shared/model/AddrObj.Model';
+import { AppAssetAccessoryObj } from 'app/shared/model/AppAssetAccessoryObj.model';
+import { AppDataObj } from 'app/shared/model/AppDataObj.model';
 
 
 @Component({
@@ -437,8 +435,8 @@ export class AssetDataComponent implements OnInit {
     this.SalesPersonObj = null;
     this.vendorObj.VendorCode = event.VendorCode;
     this.vendorObj.VendorId = event.VendorId;
-    await this.GetVendor(this.vendorObj);
-    await this.GetVendorEmpList(this.vendorObj);
+    await this.GetVendor();
+    await this.GetVendorEmpList();
     console.log(this.GetVendorEmpList);
   }
 
@@ -463,7 +461,7 @@ export class AssetDataComponent implements OnInit {
 
   SalesPersonChanged(event) {
     this.vendorEmpObj.VendorEmpId = event.target.value;
-    this.GetVendorEmpSupervisi(this.vendorEmpObj);
+    this.GetVendorEmpSupervisi();
 
     console.log(event);
     var temp: any;
@@ -633,9 +631,9 @@ export class AssetDataComponent implements OnInit {
           this.assetMasterObj.FullAssetCode = this.appAssetObj.ResponseAppAssetObj.FullAssetCode;
           this.GetAssetMaster(this.assetMasterObj);
           this.vendorObj.VendorCode = this.appAssetObj.ResponseAppAssetObj.SupplCode;
-          this.GetVendorForView(this.vendorObj);
+          this.GetVendorForView();
           this.districtObj.ProvDistrictCode = this.appAssetObj.ResponseAppAssetObj.TaxCityIssuer;
-          this.GetProvDistrict(this.districtObj);
+          this.GetProvDistrict();
           this.bindAccessories();
         }
 
@@ -804,7 +802,7 @@ export class AssetDataComponent implements OnInit {
     );
   }
 
-  async GetVendor(vendorObj) {
+  async GetVendor() {
     this.http.post(this.getVendorUrl, this.vendorObj).subscribe(
       (response) => {
         this.VendorObj = response;
@@ -820,7 +818,7 @@ export class AssetDataComponent implements OnInit {
     );
   }
 
-  GetVendorForView(vendorObj) {
+  GetVendorForView() {
     this.http.post(this.getVendorUrl, this.vendorObj).subscribe(
       (response) => {
         this.VendorObj = response;
@@ -832,11 +830,11 @@ export class AssetDataComponent implements OnInit {
         this.vendorEmpAdminObj.VendorId = this.VendorObj.VendorId;
         this.vendorEmpAdminObj.VendorEmpNo = this.appAssetObj.ResponseAdminHeadSupp.SupplEmpNo;
         this.vendorEmpSalesObj.VendorEmpNo = this.appAssetObj.ResponseSalesPersonSupp.SupplEmpNo;
-        this.GetVendorEmpSalesPerson(this.vendorEmpSalesObj);
-        this.GetVendorEmpAdminHead(this.vendorEmpAdminObj);
+        this.GetVendorEmpSalesPerson();
+        this.GetVendorEmpAdminHead();
 
         this.vendorObj.VendorId = this.VendorObj.VendorId;
-        this.GetVendorEmpList(this.vendorObj);
+        this.GetVendorEmpList();
         this.InputLookupSupplierObj.jsonSelect = this.VendorObj;
         this.InputLookupSupplierObj.nameSelect = this.VendorObj.VendorName;
 
@@ -844,7 +842,7 @@ export class AssetDataComponent implements OnInit {
     );
   }
 
-  GetProvDistrict(districtObj) {
+  GetProvDistrict() {
     this.http.post(this.getProvDistrictUrl, this.districtObj).subscribe(
       (response) => {
         this.DistrictObj = response;
@@ -857,7 +855,7 @@ export class AssetDataComponent implements OnInit {
     );
   }
 
-  GetVendorEmpSalesPerson(vendorEmpSalesObj) {
+  GetVendorEmpSalesPerson() {
     this.http.post(this.getVendorEmpforGetUrl, this.vendorEmpSalesObj).subscribe(
       (response) => {
         console.log(response);
@@ -866,12 +864,12 @@ export class AssetDataComponent implements OnInit {
           SalesPersonId: this.VendorEmpSalesObj.VendorEmpId
         });
         this.vendorEmpObj.VendorEmpId = this.VendorEmpSalesObj.VendorEmpId;
-        this.GetVendorEmpSupervisi(this.vendorEmpObj);
+        this.GetVendorEmpSupervisi();
       }
     );
   }
 
-  GetVendorEmpAdminHead(vendorEmpAdminObj) {
+  GetVendorEmpAdminHead() {
     this.http.post(this.getVendorEmpforGetUrl, this.vendorEmpAdminObj).subscribe(
       (response) => {
         console.log(response);
@@ -883,7 +881,7 @@ export class AssetDataComponent implements OnInit {
     );
   }
 
-  async GetVendorEmpList(vendorObj) {
+  async GetVendorEmpList() {
     this.http.post(this.getVendorEmpUrl, this.vendorObj).subscribe(
       (response) => {
         console.log(response);
@@ -1254,7 +1252,7 @@ export class AssetDataComponent implements OnInit {
   //  });
   //}
 
-  GetVendorAccessories(vendorObj) {
+  GetVendorAccessories() {
     this.http.post(this.getVendorUrl, this.vendorObj).subscribe(
       (response) => {
         this.VendorObj = response;
@@ -1266,7 +1264,7 @@ export class AssetDataComponent implements OnInit {
     );
   }
 
-  GetVendorEmpSupervisi(vendorEmpObj) {
+  GetVendorEmpSupervisi() {
     this.http.post(this.getVendorEmpSupervisiUrl, this.vendorEmpObj).subscribe(
       (response) => {
         this.BranchManagerObj = response;

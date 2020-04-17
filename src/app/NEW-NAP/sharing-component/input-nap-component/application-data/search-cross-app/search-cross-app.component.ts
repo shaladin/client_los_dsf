@@ -11,7 +11,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-search-cross-app',
   templateUrl: './search-cross-app.component.html',
-  styleUrls: ['./search-cross-app.component.scss'],
+  styleUrls: [],
   providers: [NGXToastrService]
 })
 export class SearchCrossAppComponent implements OnInit {
