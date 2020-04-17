@@ -12,7 +12,7 @@
         </div>
         <div class="px-3">
           <app-lead-main-info [LeadId]="LeadId"></app-lead-main-info>
-          <aw-wizard #wizard navBarLayout="large-empty-symbols" [defaultStepIndex]="0">
+          <!-- <aw-wizard #wizard navBarLayout="large-empty-symbols" [defaultStepIndex]="0">
 
             <aw-wizard-step [stepTitle]="'Customer Data'" (stepEnter)="EnterTab('Cust')"
               [navigationSymbol]="{ symbol: '1', fontFamily: 'FontAwesome' }">
@@ -24,6 +24,19 @@
               <app-lead-data [LeadId]="LeadId" [LobCode]="LobCode"></app-lead-data>
             </aw-wizard-step>
 
+          </aw-wizard> -->
+          <aw-wizard #wizard navBarLayout="large-empty-symbols" [awNavigationMode] navigateBackward="allow"
+            navigateForward="allow" [defaultStepIndex]="0">
+            <aw-wizard-step [stepTitle]="'CUSTOMER DATA'" (stepEnter)="EnterTab('custData')"
+              [navigationSymbol]="{ symbol: '1', fontFamily: 'FontAwesome' }">
+              <app-lead-input-cust-data *ngIf="isCustData == true">
+              </app-lead-input-cust-data>
+            </aw-wizard-step>
+            <aw-wizard-step [stepTitle]="'LEAD DATA'" (stepEnter)="EnterTab('leadData')"
+              [navigationSymbol]="{ symbol: '2', fontFamily: 'FontAwesome' }">
+              <app-lead-input-lead-data *ngIf="isLeadData == true">
+              </app-lead-input-lead-data>
+            </aw-wizard-step>
           </aw-wizard>
         </div>
       </div>
