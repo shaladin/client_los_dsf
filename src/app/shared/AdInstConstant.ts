@@ -810,7 +810,7 @@ export class AdInsConstant {
   public static GetVerfResultHsByVerfResultIdAndSubjRelationCode = environment.FoundationR3Url + "/VerfResultH/GetVerfResultHsByVerfResultIdAndSubjRelationCode";
   public static GetListVerfResultDInQuestionGrp = environment.FoundationR3Url + "/VerfResultD/GetListVerfResultDInQuestionGrp";
   public static AddVerfResultHeaderAndVerfResultDetail = environment.FoundationR3Url + "/AddVerfResultHeaderAndVerfResultDetail";
-  public static GetVerfResultByTrxRefNoAndVerfTrxTypeCode = environment.FoundationR3Url + "/GetVerfResultByTrxRefNoAndVerfTrxTypeCode";
+    public static GetVerfResultByTrxRefNoAndVerfTrxTypeCode = environment.FoundationR3Url + "/VerfResult/GetVerfResultByTrxRefNoAndVerfTrxTypeCode";
   public static AddVerfResult = environment.FoundationR3Url + "/VerfResult/AddVerfResult";
   public static GetVerfResultHsByVerfResultIdAndObjectCode = environment.FoundationR3Url + "/VerfResultH/GetVerfResultHsByVerfResultIdAndObjectCode";
 

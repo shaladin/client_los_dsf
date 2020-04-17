@@ -32,7 +32,7 @@ export class AssetDataComponent implements OnInit {
   locationAddrObj: AddrObj;
   appAssetAccessoriesObjs: Array<AppAssetAccessoryObj>;
   SocmedObj: any;
-  appAssetId: 0;
+  appAssetId: number = 0;
 
   AssetDataForm = this.fb.group({
     /* AppAsset Value that in form*/
@@ -41,10 +41,15 @@ export class AssetDataComponent implements OnInit {
     MrAssetConditionCode: ['', [Validators.required, Validators.maxLength(50)]],
     MrAssetUsageCode: ['', [Validators.required, Validators.maxLength(50)]],
     SerialNo1: [''],
+    IsSerialNo1: [false],
     SerialNo2: [''],
+    IsSerialNo2: [false],
     SerialNo3: [''],
+    IsSerialNo3: [false],
     SerialNo4: [''],
+    IsSerialNo4: [false],
     SerialNo5: [''],
+    IsSerialNo5: [false],
     SupplName: ['', Validators.maxLength(500)],
     AssetPriceAmt: ['', Validators.required],
     DownPaymentAmt: ['', Validators.required],
@@ -203,6 +208,7 @@ export class AssetDataComponent implements OnInit {
   DistrictObj: any;
   VendorEmpSalesObj: any;
   VendorAdminHeadObj: any;
+  AppCustObj: any;
 
   getRefMasterUrl: any;
   AddEditAllAssetDataUrl: any;
@@ -216,6 +222,7 @@ export class AssetDataComponent implements OnInit {
   getProvDistrictUrl: any;
   getVendorEmpforGetUrl: any;
   getAssetAccessoryUrl: any;
+  getAppCustUrl: any;
 
   OfficeCode: any;
 
@@ -268,7 +275,7 @@ export class AssetDataComponent implements OnInit {
     })
   }
 
-  ngOnInit() {
+  async ngOnInit(): Promise<void> {
     this.inputFieldOwnerAddrObj = new InputFieldObj();
     this.inputFieldOwnerAddrObj.inputLookupObj = new InputLookupObj();
     this.inputFieldLocationAddrObj = new InputFieldObj();
@@ -277,8 +284,8 @@ export class AssetDataComponent implements OnInit {
     this.initLookup();
     this.bindAllRefMasterObj();
     this.GetAppData();
-    this.GetListAddr();
-    this.assetMasterObj.FullAssetCode = 'CAR';
+    await this.GetListAddr();
+    //this.assetMasterObj.FullAssetCode = 'CAR';
     this.GetAssetMaster(this.assetMasterObj);
 
     this.AssetDataForm.removeControl("AssetAccessoriesObjs");
@@ -303,6 +310,7 @@ export class AssetDataComponent implements OnInit {
     this.getProvDistrictUrl = AdInsConstant.GetRefProvDistrictByProvDistrictCode;
     this.getVendorEmpforGetUrl = AdInsConstant.GetVendorEmpByVendorIdVendorEmpNo;
     this.getAssetAccessoryUrl = AdInsConstant.GetAssetAccessoryByCode;
+    this.getAppCustUrl = AdInsConstant.GetAppCustByAppId;
   }
 
   SaveForm() {
@@ -343,9 +351,11 @@ export class AssetDataComponent implements OnInit {
     this.allAssetDataObj.AppAssetObj.FullAssetCode = this.AssetDataForm.controls.FullAssetCode.value;
     if (this.appAssetId == 0) {
       this.allAssetDataObj.AppAssetObj.AssetStat = "NEW";
+      this.allAssetDataObj.AppCollateralObj.CollateralStat = "NEW";
     }
     else {
       this.allAssetDataObj.AppAssetObj.AssetStat = this.AssetDataForm.controls.AssetStat.value;
+      this.allAssetDataObj.AppCollateralObj.CollateralStat = this.AssetDataForm.controls.AssetStat.value;
     }
     this.allAssetDataObj.AppAssetObj.AssetTypeCode = this.AssetDataForm.controls.AssetTypeCode.value;
     this.allAssetDataObj.AppAssetObj.AssetCategoryCode = this.AssetDataForm.controls.AssetCategoryCode.value;
@@ -376,7 +386,6 @@ export class AssetDataComponent implements OnInit {
     this.allAssetDataObj.AppCollateralObj.FullAssetName = this.AssetDataForm.controls.FullAssetName.value;
     this.allAssetDataObj.AppCollateralObj.MrCollateralConditionCode = this.AssetDataForm.controls.MrAssetConditionCode.value;
     this.allAssetDataObj.AppCollateralObj.MrCollateralUsageCode = this.AssetDataForm.controls.MrAssetUsageCode.value;
-    this.allAssetDataObj.AppCollateralObj.CollateralStat = this.AssetDataForm.controls.AssetStat.value;
     this.allAssetDataObj.AppCollateralObj.SerialNo1 = this.AssetDataForm.controls.SerialNo1.value;
     this.allAssetDataObj.AppCollateralObj.SerialNo2 = this.AssetDataForm.controls.SerialNo2.value;
     this.allAssetDataObj.AppCollateralObj.SerialNo3 = this.AssetDataForm.controls.SerialNo3.value;
@@ -385,6 +394,7 @@ export class AssetDataComponent implements OnInit {
     this.allAssetDataObj.AppCollateralObj.CollateralValueAmt = this.AssetDataForm.controls.AssetPriceAmt.value;
     this.allAssetDataObj.AppCollateralObj.AssetTypeCode = this.AssetDataForm.controls.AssetTypeCode.value;
     this.allAssetDataObj.AppCollateralObj.AssetCategoryCode = this.AssetDataForm.controls.AssetCategoryCode.value;
+    this.allAssetDataObj.AppCollateralObj.ManufacturingYear = this.AssetDataForm.controls.ManufacturingYear.value;
 
     this.allAssetDataObj.AppCollateralRegistrationObj.UserName = this.AssetDataForm.controls.UserName.value;
     this.allAssetDataObj.AppCollateralRegistrationObj.MrUserRelationshipCode = this.AssetDataForm.controls.MrUserRelationshipCode.value;
@@ -441,6 +451,7 @@ export class AssetDataComponent implements OnInit {
 
   SetAsset(event) {
     this.assetMasterObj.FullAssetCode = event.FullAssetCode;
+    this.GetAssetMaster(this.assetMasterObj);
     this.AssetDataForm.patchValue({
       FullAssetCode: event.FullAssetCode,
       FullAssetName: event.FullAssetName,
@@ -495,15 +506,47 @@ export class AssetDataComponent implements OnInit {
 
   }
 
-  SelfUsageChange(event) {
+  async SelfUsageChange(event) {
     console.log(event);
-    if (event.value == true) {
-      this.AssetDataForm.controls.UserName.setValidators(null);
-      this.AssetDataForm.controls.MrUserRelationshipCode.setValidators(null);
+    if (event.checked == true) {
+      await this.GetAppCust();
+      this.AssetDataForm.patchValue({
+        OwnerAddr: this.AddrLegalObj[0].Addr,
+        OwnerAreaCode1: this.AddrLegalObj[0].AreaCode1,
+        OwnerAreaCode2: this.AddrLegalObj[0].AreaCode2,
+        OwnerAreaCode3: this.AddrLegalObj[0].AreaCode3,
+        OwnerAreaCode4: this.AddrLegalObj[0].AreaCode4,
+        OwnerCity: this.AddrLegalObj[0].City,
+        OwnerZipcode: this.AddrLegalObj[0].Zipcode
+      });
+
+      this.inputFieldOwnerAddrObj = new InputFieldObj();
+      this.inputFieldOwnerAddrObj.inputLookupObj = new InputLookupObj();
+      this.ownerAddrObj = new AddrObj();
+      this.ownerAddrObj.Addr = this.AddrLegalObj[0].Addr;
+      this.ownerAddrObj.AreaCode1 = this.AddrLegalObj[0].AreaCode1;
+      this.ownerAddrObj.AreaCode2 = this.AddrLegalObj[0].AreaCode2;
+      this.ownerAddrObj.AreaCode3 = this.AddrLegalObj[0].AreaCode3;
+      this.ownerAddrObj.AreaCode4 = this.AddrLegalObj[0].AreaCode4;
+      this.ownerAddrObj.City = this.AddrLegalObj[0].City;
+      this.inputFieldOwnerAddrObj.inputLookupObj.nameSelect = this.AddrLegalObj[0].Zipcode;
+      this.inputFieldOwnerAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.AddrLegalObj[0].Zipcode };
+
+
+      this.AssetDataForm.controls.UserName.clearValidators();
+      this.AssetDataForm.controls.UserName.updateValueAndValidity();
+      this.AssetDataForm.controls.MrUserRelationshipCode.clearValidators();
+      this.AssetDataForm.controls.MrUserRelationshipCode.updateValueAndValidity();
+      this.AssetDataForm.controls["UserName"].disable();
+      this.AssetDataForm.controls["MrUserRelationshipCode"].disable();
     };
-    if (event.value == false) {
-      this.AssetDataForm.controls.UserName.setValidators(null);
-      this.AssetDataForm.controls.MrUserRelationshipCode.setValidators(null);
+    if (event.checked == false) {
+      this.AssetDataForm.controls.UserName.setValidators([Validators.required, Validators.maxLength(100)]);
+      this.AssetDataForm.controls.UserName.updateValueAndValidity();
+      this.AssetDataForm.controls.MrUserRelationshipCode.setValidators([Validators.required, Validators.maxLength(50)]);
+      this.AssetDataForm.controls.MrUserRelationshipCode.updateValueAndValidity();
+      this.AssetDataForm.controls["UserName"].enable();
+      this.AssetDataForm.controls["MrUserRelationshipCode"].enable();
     };
 
   }
@@ -520,7 +563,7 @@ export class AssetDataComponent implements OnInit {
         console.log(response);
         if (this.appAssetObj != "") {
           this.AssetDataForm.patchValue({
-            
+
             FullAssetCode: this.appAssetObj.ResponseAppAssetObj.FullAssetCode,
             FullAssetName: this.appAssetObj.ResponseAppAssetObj.FullAssetName,
             MrAssetConditionCode: this.appAssetObj.ResponseAppAssetObj.MrAssetConditionCode,
@@ -595,7 +638,7 @@ export class AssetDataComponent implements OnInit {
           this.GetProvDistrict(this.districtObj);
           this.bindAccessories();
         }
-        
+
       },
       (error) => {
         console.log(error);
@@ -871,7 +914,7 @@ export class AssetDataComponent implements OnInit {
   }
 
   GetAssetMaster(assetMasterObj) {
-    this.http.post(this.getAssetMasterTypeUrl, this.assetMasterObj).subscribe(
+    this.http.post(this.getAssetMasterTypeUrl, assetMasterObj).subscribe(
       (response) => {
         this.AssetMasterObj = response;
         this.AssetDataForm.patchValue({
@@ -881,8 +924,161 @@ export class AssetDataComponent implements OnInit {
         });
         this.InputLookupAssetObj.jsonSelect = this.AssetMasterObj;
         this.InputLookupAssetObj.nameSelect = this.AssetMasterObj.FullAssetName;
+        if (this.AssetDataForm.controls.MrAssetConditionCode.value == 'NEW') {
+          if (this.AssetMasterObj.SerialNo1Label != "" && this.AssetMasterObj.SerialNo1Label != null) {
+            if (this.AssetMasterObj.IsMndtrySerialNo1 == true) {
+              this.AssetDataForm.controls.SerialNo1.setValidators([Validators.required, Validators.maxLength(50)]);
+              this.AssetDataForm.controls.SerialNo1.updateValueAndValidity();
+            }
+            else {
+              this.AssetDataForm.controls.SerialNo1.clearValidators;
+              this.AssetDataForm.controls.SerialNo1.updateValueAndValidity();
+            }
+          }
+          if (this.AssetMasterObj.SerialNo2Label != "" && this.AssetMasterObj.SerialNo2Label != null) {
+            if (this.AssetMasterObj.IsMndtrySerialNo2 == true) {
+              this.AssetDataForm.controls.SerialNo2.setValidators([Validators.required, Validators.maxLength(50)]);
+              this.AssetDataForm.controls.SerialNo2.updateValueAndValidity();
+            }
+            else {
+              this.AssetDataForm.controls.SerialNo2.clearValidators;
+              this.AssetDataForm.controls.SerialNo2.updateValueAndValidity();
+            }
+          }
+          if (this.AssetMasterObj.SerialNo3Label != "" && this.AssetMasterObj.SerialNo3Label != null) {
+            if (this.AssetMasterObj.IsMndtrySerialNo3 == true) {
+              this.AssetDataForm.controls.SerialNo3.setValidators([Validators.required, Validators.maxLength(50)]);
+              this.AssetDataForm.controls.SerialNo3.updateValueAndValidity();
+            }
+            else {
+              this.AssetDataForm.controls.SerialNo3.clearValidators;
+              this.AssetDataForm.controls.SerialNo3.updateValueAndValidity();
+            }
+          }
+          if (this.AssetMasterObj.SerialNo4Label != "" && this.AssetMasterObj.SerialNo4Label != null) {
+            if (this.AssetMasterObj.IsMndtrySerialNo4 == true) {
+              this.AssetDataForm.controls.SerialNo4.setValidators([Validators.required, Validators.maxLength(50)]);
+              this.AssetDataForm.controls.SerialNo4.updateValueAndValidity();
+            }
+            else {
+              this.AssetDataForm.controls.SerialNo4.clearValidators;
+              this.AssetDataForm.controls.SerialNo4.updateValueAndValidity();
+            }
+          }
+          if (this.AssetMasterObj.SerialNo5Label != "" && this.AssetMasterObj.SerialNo5Label != null) {
+            if (this.AssetMasterObj.IsMndtrySerialNo5 == true) {
+              this.AssetDataForm.controls.SerialNo5.setValidators([Validators.required, Validators.maxLength(50)]);
+              this.AssetDataForm.controls.SerialNo5.updateValueAndValidity();
+            }
+            else {
+              this.AssetDataForm.controls.SerialNo5.clearValidators;
+              this.AssetDataForm.controls.SerialNo5.updateValueAndValidity();
+            }
+          }
+        }
+        if (this.AssetDataForm.controls.MrAssetConditionCode.value == 'USED') {
+          if (this.AssetMasterObj.SerialNo1Label != "" && this.AssetMasterObj.SerialNo1Label != null) {
+            this.AssetDataForm.controls.SerialNo1.setValidators([Validators.required, Validators.maxLength(50)]);
+            this.AssetDataForm.controls.SerialNo1.updateValueAndValidity();
+          }
+          if (this.AssetMasterObj.SerialNo2Label != "" && this.AssetMasterObj.SerialNo2Label != null) {
+            this.AssetDataForm.controls.SerialNo2.setValidators([Validators.required, Validators.maxLength(50)]);
+            this.AssetDataForm.controls.SerialNo2.updateValueAndValidity();
+          }
+          if (this.AssetMasterObj.SerialNo3Label != "" && this.AssetMasterObj.SerialNo3Label != null) {
+            this.AssetDataForm.controls.SerialNo3.setValidators([Validators.required, Validators.maxLength(50)]);
+            this.AssetDataForm.controls.SerialNo3.updateValueAndValidity();
+          }
+          if (this.AssetMasterObj.SerialNo4Label != "" && this.AssetMasterObj.SerialNo4Label != null) {
+            this.AssetDataForm.controls.SerialNo4.setValidators([Validators.required, Validators.maxLength(50)]);
+            this.AssetDataForm.controls.SerialNo4.updateValueAndValidity();
+          }
+          if (this.AssetMasterObj.SerialNo5Label != "" && this.AssetMasterObj.SerialNo5Label != null) {
+            this.AssetDataForm.controls.SerialNo5.setValidators([Validators.required, Validators.maxLength(50)]);
+            this.AssetDataForm.controls.SerialNo5.updateValueAndValidity();
+          }
+        }
       }
     );
+  }
+
+  AssetConditionChanged() {
+    if (this.AssetMasterObj != null) {
+      if (this.AssetDataForm.controls.MrAssetConditionCode.value == 'NEW') {
+        if (this.AssetMasterObj.SerialNo1Label != "" && this.AssetMasterObj.SerialNo1Label != null) {
+          if (this.AssetMasterObj.IsMndtrySerialNo1 == true) {
+            this.AssetDataForm.controls.SerialNo1.setValidators([Validators.required, Validators.maxLength(50)]);
+            this.AssetDataForm.controls.SerialNo1.updateValueAndValidity();
+          }
+          else {
+            this.AssetDataForm.controls.SerialNo1.clearValidators;
+            this.AssetDataForm.controls.SerialNo1.updateValueAndValidity();
+          }
+        }
+        if (this.AssetMasterObj.SerialNo2Label != "" && this.AssetMasterObj.SerialNo2Label != null) {
+          if (this.AssetMasterObj.IsMndtrySerialNo2 == true) {
+            this.AssetDataForm.controls.SerialNo2.setValidators([Validators.required, Validators.maxLength(50)]);
+            this.AssetDataForm.controls.SerialNo2.updateValueAndValidity();
+          }
+          else {
+            this.AssetDataForm.controls.SerialNo2.clearValidators;
+            this.AssetDataForm.controls.SerialNo2.updateValueAndValidity();
+          }
+        }
+        if (this.AssetMasterObj.SerialNo3Label != "" && this.AssetMasterObj.SerialNo3Label != null) {
+          if (this.AssetMasterObj.IsMndtrySerialNo3 == true) {
+            this.AssetDataForm.controls.SerialNo3.setValidators([Validators.required, Validators.maxLength(50)]);
+            this.AssetDataForm.controls.SerialNo3.updateValueAndValidity();
+          }
+          else {
+            this.AssetDataForm.controls.SerialNo3.clearValidators;
+            this.AssetDataForm.controls.SerialNo3.updateValueAndValidity();
+          }
+        }
+        if (this.AssetMasterObj.SerialNo4Label != "" && this.AssetMasterObj.SerialNo4Label != null) {
+          if (this.AssetMasterObj.IsMndtrySerialNo4 == true) {
+            this.AssetDataForm.controls.SerialNo4.setValidators([Validators.required, Validators.maxLength(50)]);
+            this.AssetDataForm.controls.SerialNo4.updateValueAndValidity();
+          }
+          else {
+            this.AssetDataForm.controls.SerialNo4.clearValidators;
+            this.AssetDataForm.controls.SerialNo4.updateValueAndValidity();
+          }
+        }
+        if (this.AssetMasterObj.SerialNo5Label != "" && this.AssetMasterObj.SerialNo5Label != null) {
+          if (this.AssetMasterObj.IsMndtrySerialNo5 == true) {
+            this.AssetDataForm.controls.SerialNo5.setValidators([Validators.required, Validators.maxLength(50)]);
+            this.AssetDataForm.controls.SerialNo5.updateValueAndValidity();
+          }
+          else {
+            this.AssetDataForm.controls.SerialNo5.clearValidators;
+            this.AssetDataForm.controls.SerialNo5.updateValueAndValidity();
+          }
+        }
+      }
+      if (this.AssetDataForm.controls.MrAssetConditionCode.value == 'USED') {
+        if (this.AssetMasterObj.SerialNo1Label != "" && this.AssetMasterObj.SerialNo1Label != null) {
+          this.AssetDataForm.controls.SerialNo1.setValidators([Validators.required, Validators.maxLength(50)]);
+          this.AssetDataForm.controls.SerialNo1.updateValueAndValidity();
+        }
+        if (this.AssetMasterObj.SerialNo2Label != "" && this.AssetMasterObj.SerialNo2Label != null) {
+          this.AssetDataForm.controls.SerialNo2.setValidators([Validators.required, Validators.maxLength(50)]);
+          this.AssetDataForm.controls.SerialNo2.updateValueAndValidity();
+        }
+        if (this.AssetMasterObj.SerialNo3Label != "" && this.AssetMasterObj.SerialNo3Label != null) {
+          this.AssetDataForm.controls.SerialNo3.setValidators([Validators.required, Validators.maxLength(50)]);
+          this.AssetDataForm.controls.SerialNo3.updateValueAndValidity();
+        }
+        if (this.AssetMasterObj.SerialNo4Label != "" && this.AssetMasterObj.SerialNo4Label != null) {
+          this.AssetDataForm.controls.SerialNo4.setValidators([Validators.required, Validators.maxLength(50)]);
+          this.AssetDataForm.controls.SerialNo4.updateValueAndValidity();
+        }
+        if (this.AssetMasterObj.SerialNo5Label != "" && this.AssetMasterObj.SerialNo5Label != null) {
+          this.AssetDataForm.controls.SerialNo5.setValidators([Validators.required, Validators.maxLength(50)]);
+          this.AssetDataForm.controls.SerialNo5.updateValueAndValidity();
+        }
+      }
+    }
   }
 
   setAddrOwnerObj() {
@@ -1084,9 +1280,9 @@ export class AssetDataComponent implements OnInit {
     );
   }
 
-  GetListAddr() {
+  async GetListAddr() {
     this.appObj.AppId = this.AppId;
-    this.http.post(this.getAppCustAddrUrl, this.appObj).subscribe(
+    this.http.post(this.getAppCustAddrUrl, this.appObj).toPromise().then(
       (response) => {
         this.AppCustAddrObj = response["ReturnObject"];
         this.AddrLegalObj = this.AppCustAddrObj.filter(
@@ -1095,6 +1291,7 @@ export class AssetDataComponent implements OnInit {
           emp => emp.MrCustAddrTypeCode === AdInsConstant.AddrTypeResidence);
         this.AddrMailingObj = this.AppCustAddrObj.filter(
           emp => emp.MrCustAddrTypeCode === AdInsConstant.AddrTypeMailing);
+
       }
     );
   }
@@ -1245,6 +1442,8 @@ export class AssetDataComponent implements OnInit {
     this.allAssetDataObj = new AllAssetDataObj();
     this.setAllAssetObj();
     console.log(this.allAssetDataObj);
+    console.log(this.AssetDataForm);
+    console.log(this.appAssetId);
   }
   SetLocationAddrType(event) {
     this.copyFromAppCustAddrForLocation = event;
@@ -1252,5 +1451,26 @@ export class AssetDataComponent implements OnInit {
 
   SetOwnerAddrType(event) {
     this.copyFromAppCustAddrForOwner = event;
+  }
+
+  async GetAppCust() {
+    var appObj = {
+      AppId: this.AppId,
+    };
+    this.http.post(this.getAppCustUrl, appObj).toPromise().then(
+      (response) => {
+        this.AppCustObj = response;
+        console.log(response);
+        this.AssetDataForm.patchValue({
+
+          UserName: this.AppCustObj.CustName,
+          MrUserRelationshipCode: "SELF",
+          OwnerName: this.AppCustObj.CustName,
+          MrIdTypeCode: this.AppCustObj.MrIdTypeCode,
+          OwnerIdNo: this.AppCustObj.IdNo,
+          MrOwnerRelationshipCode: "SELF"
+        });
+      }
+    );
   }
 }

@@ -62,13 +62,13 @@
               <div class="form-group row">
                 <label class="col-md-2  adins-required-label" translate>Asset Price</label>
                 <div class="col-md-4">
-                  <input type="number" class="form-control" formControlName="AssetPriceAmt"
+                  <input type="" currencyMask id="assetPriceAmt" class="form-control" formControlName="AssetPriceAmt"
                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.AssetPriceAmt.invalid}">
                   <lib-uc-show-errors  [control]="AssetDataForm.controls.AssetPriceAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                 </div>
                 <label class="col-md-2  adins-required-label" translate>Down Payment</label>
                 <div class="col-md-4">
-                  <input type="number" class="form-control" formControlName="DownPaymentAmt"
+                  <input type="" currencyMask id="downPaymentAmt"  class="form-control" formControlName="DownPaymentAmt"
                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.DownPaymentAmt.invalid}">
                   <lib-uc-show-errors  [control]="AssetDataForm.controls.DownPaymentAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                 </div>
@@ -77,7 +77,7 @@
               <div class="form-group row">
                 <label class="col-md-2  adins-required-label" translate>Asset Condition</label>
                 <div class="col-md-4">
-                  <mat-radio-group formControlName="MrAssetConditionCode">
+                  <mat-radio-group formControlName="MrAssetConditionCode" (change)="AssetConditionChanged()">
                     <mat-radio-button class="custom-control custom-radio display-inline-block" *ngFor="let item of AssetConditionObj" [value]="item.Key">
                       {{item.Value}}
                     </mat-radio-button>
@@ -95,27 +95,27 @@
               </div>
               <div *ngIf="this.AssetMasterObj">
                 <div class="form-group row">
-                    <label class="col-md-2  adins-required-label" translate *ngIf="this.AssetMasterObj?.SerialNo1Label">{{this.AssetMasterObj.SerialNo1Label}}</label>
+                    <label class="col-md-2" translate *ngIf="this.AssetMasterObj?.SerialNo1Label">{{this.AssetMasterObj.SerialNo1Label}}</label>
                     <div class="col-md-4" *ngIf="this.AssetMasterObj?.SerialNo1Label">
                       <input type="text" class="form-control" formControlName="SerialNo1">
                     </div>
-                    <label class="col-md-2  adins-required-label" translate *ngIf="this.AssetMasterObj?.SerialNo2Label">{{this.AssetMasterObj.SerialNo2Label}}</label>
+                    <label class="col-md-2" translate *ngIf="this.AssetMasterObj?.SerialNo2Label">{{this.AssetMasterObj.SerialNo2Label}}</label>
                     <div class="col-md-4" *ngIf="this.AssetMasterObj?.SerialNo2Label">
                       <input type="text" class="form-control" formControlName="SerialNo2">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-md-2  adins-required-label" translate *ngIf="this.AssetMasterObj?.SerialNo3Label">{{this.AssetMasterObj.SerialNo3Label}}</label>
+                    <label class="col-md-2" translate *ngIf="this.AssetMasterObj?.SerialNo3Label">{{this.AssetMasterObj.SerialNo3Label}}</label>
                     <div class="col-md-4" *ngIf="this.AssetMasterObj?.SerialNo3Label">
                       <input type="text" class="form-control" formControlName="SerialNo3">
                     </div>
-                    <label class="col-md-2  adins-required-label" translate *ngIf="this.AssetMasterObj?.SerialNo4Label">{{this.AssetMasterObj.SerialNo4Label}}</label>
+                    <label class="col-md-2" translate *ngIf="this.AssetMasterObj?.SerialNo4Label">{{this.AssetMasterObj.SerialNo4Label}}</label>
                     <div class="col-md-4" *ngIf="this.AssetMasterObj?.SerialNo4Label">
                       <input type="text" class="form-control" formControlName="SerialNo4">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-md-2  adins-required-label" translate *ngIf="this.AssetMasterObj?.SerialNo5Label">{{this.AssetMasterObj.SerialNo5Label}}</label>
+                    <label class="col-md-2" translate *ngIf="this.AssetMasterObj?.SerialNo5Label">{{this.AssetMasterObj.SerialNo5Label}}</label>
                     <div class="col-md-4" *ngIf="this.AssetMasterObj?.SerialNo5Label">
                       <input type="text" class="form-control" formControlName="SerialNo5">
                     </div>
@@ -125,7 +125,7 @@
               <div class="form-group row">
                 <label class="col-md-2  adins-required-label" translate>Manufacturing Year</label>
                 <div class="col-md-4">
-                  <input type="text" class="form-control" formControlName="ManufacturingYear">
+                  <input type="number" class="form-control" formControlName="ManufacturingYear">
                 </div>
               </div>
               <div class="form-group row">
@@ -135,11 +135,9 @@
                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.Color.invalid}">
                   <lib-uc-show-errors  [control]="AssetDataForm.controls.Color" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                 </div>
-                <label class="col-md-2  adins-required-label" translate>BPKB Issue Date</label>
+                <label class="col-md-2" translate>BPKB Issue Date</label>
                 <div class="col-md-4">
-                  <input type="date" class="form-control adInsInput" formControlName="TaxIssueDt"
-                         [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.TaxIssueDt.invalid }">
-                  <lib-uc-show-errors  [control]="AssetDataForm.controls.TaxIssueDt" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                  <input type="date" class="form-control adInsInput" formControlName="TaxIssueDt">
                 </div>
               </div>
               <div class="form-group row">
@@ -149,7 +147,7 @@
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.AssetNotes.invalid }"></textarea>
                   <lib-uc-show-errors  [control]="AssetDataForm.controls.AssetNotes" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                 </div>
-                <label class="col-md-2  adins-required-label" translate>BPKB City Issuer</label>
+                <label class="col-md-2" translate>BPKB City Issuer</label>
                 <div class="col-md-4">
                   <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupCityIssuerObj" [identifier]="'DistrictCode'" [enjiForm]='enjiForm' [parentForm]='AssetDataForm' (lookup)="SetBpkbCity($event)">
                   </lib-uclookupgeneric>
@@ -193,12 +191,12 @@
                         <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="dictAccLookup[AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].No.value]" [parentForm]="AssetDataForm" [identifier]="'lookupAccObj' + AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].No.value" (lookup)="SetAccessory(i,$event)"></lib-uclookupgeneric>
                       </td>
                       <td [formGroupName]="i">
-                        <input type="number" class="form-control" formControlName="AccessoryPriceAmt"
+                        <input type="" currencyMask id="accessoryPriceAmt" class="form-control" formControlName="AccessoryPriceAmt"
                                [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryPriceAmt.invalid }">
                         <lib-uc-show-errors  [control]="AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryPriceAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                       </td>
                       <td [formGroupName]="i">
-                        <input type="number" class="form-control" formControlName="AccessoryDownPaymentAmt"
+                        <input type="" currencyMask id="accessoryDownPaymentAmt" class="form-control" formControlName="AccessoryDownPaymentAmt"
                                [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryDownPaymentAmt.invalid }">
                         <lib-uc-show-errors  [control]="AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryDownPaymentAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                       </td>
@@ -221,9 +219,10 @@
             </lib-ucSubsection>
             <div id="userData">
               <div class="form-group row">
-                <label class="col-md-2" for="selfUsage" translate>Self Usage Name </label>
+                <label class="col-md-2" for="selfUsage" translate>Self Usage</label>
                 <div class="col-md-4">
-                  <input class="border-primary" type="checkbox" data-md-icheck id="selfUsage" formControlName="SelfUsage">
+                  <mat-checkbox formControlName="SelfUsage" (change)="SelfUsageChange($event)"></mat-checkbox>
+                  <!--<input class="border-primary" type="checkbox" data-md-icheck id="selfUsage" formControlName="SelfUsage">-->
                 </div>
               </div>
               <div class="form-group row">
@@ -235,8 +234,7 @@
               <div class="form-group row">
                 <label class="col-md-2  adInsLabel" translate>User Relationship </label>
                 <div class="col-md-4">
-                  <select class="form-control" id="userRelationship" formControlName="MrUserRelationshipCode"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.MrUserRelationshipCode.invalid }">
+                  <select class="form-control" id="userRelationship" formControlName="MrUserRelationshipCode">
                     <option *ngFor="let item of UserRelationObj" [value]="item.Key">
                       {{item.Value}}
                     </option>
@@ -340,7 +338,7 @@
               </div>
             </div>
             <div class="form-actions right">
-              <button type="submit" class="btn btn-raised btn-primary" (click)="SaveForm()">
+              <button type="submit" class="btn btn-raised btn-primary">
                 <i class="fa fa-check-square-o"></i> Save And Continue
               </button>
               <button type="button" class="btn btn-raised btn-primary" (click)="test()">
