@@ -11,32 +11,6 @@
             "placeholder": "Placeholder"
         },
         {
-            "type": "textbox",
-            "name": "A.CUST_NAME",
-            "id": "CustNameId",
-            "value": "",
-            "label": "CUSTOMER NAME",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type": "datepicker",
-            "name": "A.MOU_CUST_DT",
-            "id": "MouDtId",
-            "value": "",
-            "label": "MOU DATE >=",
-            "restriction": "gte",
-            "datatype": "date"
-        },
-        {
-            "type": "datepicker",
-            "name": "A.END_DT",
-            "id": "EndDtId",
-            "value": "",
-            "label": "MOU DATE <=",
-            "restriction": "gte",
-            "datatype": "date"
-        },
-        {
             "type": "dropdown",
             "datatype": "text",
             "name": "MR_MOU_TYPE",
@@ -51,6 +25,53 @@
             "itemsUrl": [],
             "criteriaPropName": "RefMasterTypeCode",
             "criteriaPropValue": "MOU_TYPE"
+        },
+        {
+            "type": "textbox",
+            "name": "A.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "CUSTOMER NAME",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "name": "A.IS_REVOLVING",
+            "id": "IsRevolvingId",
+            "label": "REVOLVING",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": false,
+            "isSelectOne": false,
+            "items": [
+                {
+                    "key": true,
+                    "value": "Yes"
+                },
+                {
+                    "key": false,
+                    "value": "No"
+                }
+            ],
+            "itemsUrl": []
+        },
+        {
+            "type": "datepicker",
+            "name": "A.MOU_CUST_DT",
+            "id": "MouDtId",
+            "value": "",
+            "label": "MOU DATE FROM",
+            "restriction": "gte",
+            "datatype": "date"
+        },
+        {
+            "type": "datepicker",
+            "name": "A.MOU_CUST_DT",
+            "id": "EndDtId",
+            "value": "",
+            "label": "MOU DATE TO",
+            "restriction": "lte",
+            "datatype": "date"
         },
         {
             "type": "textbox",

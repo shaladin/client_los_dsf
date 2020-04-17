@@ -11,14 +11,6 @@
             "placeholder": "Placeholder"
         },
         {
-            "type": "textbox",
-            "name": "MC.CUST_NAME",
-            "id": "CustNameId",
-            "value": "",
-            "label": "CUSTOMER NAME",
-            "placeholder": "Placeholder"
-        },
-        {
             "type": "dropdown",
             "datatype": "text",
             "name": "MC.MR_MOU_TYPE_CODE",
@@ -35,38 +27,12 @@
             "criteriaPropValue": "MOU_TYPE"
         },
         {
-            "type": "dropdown",
-            "datatype": "text",
-            "name": "MC.MOU_STAT",
-            "id": "MouStatId",
-            "value": "",
-            "placeholder": "Placeholder",
-            "isFromURL": true,
-            "isSelectOne": false,
-            "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
-            "label": "MOU STATUS",
-            "items": [],
-            "itemsUrl": [],
-            "criteriaPropName": "RefMasterTypeCode",
-            "criteriaPropValue": "MOU_STAT"
-        },
-        {
             "type": "textbox",
-            "name": "MC.PLAFOND_AMT",
-            "id": "GreaterPlafondAmt",
+            "name": "MC.CUST_NAME",
+            "id": "CustNameId",
             "value": "",
-            "label": "PLAFOND AMOUNT >=",
-            "restriction": "gte",
-            "datatype": "numeric"
-        },
-        {
-            "type": "textbox",
-            "name": "MC.PLAFOND_AMT",
-            "id": "LessPlafondAmt",
-            "value": "",
-            "label": "PLAFOND AMOUNT <=",
-            "restriction": "lte",
-            "datatype": "numeric"
+            "label": "CUSTOMER NAME",
+            "placeholder": "Placeholder"
         },
         {
             "type": "dropdown",
@@ -91,6 +57,58 @@
             "itemsUrl": [],
             "criteriaPropName": "",
             "criteriaPropValue": ""
+        },
+        {
+            "type": "datepicker",
+            "name": "MC.MOU_CUST_DT",
+            "id": "GreaterMouDtId",
+            "value": "",
+            "label": "MOU DATE FROM",
+            "restriction": "gte",
+            "datatype": "date"
+        },
+        {
+            "type": "datepicker",
+            "name": "MC.MOU_CUST_DT",
+            "id": "LessMouDtId",
+            "value": "",
+            "label": "MOU DATE TO",
+            "restriction": "lte",
+            "datatype": "date"
+        },
+        {
+            "type": "textbox",
+            "name": "MC.PLAFOND_AMT",
+            "id": "GreaterPlafondAmt",
+            "value": "",
+            "label": "PLAFOND AMOUNT >=",
+            "restriction": "gte",
+            "datatype": "numeric"
+        },
+        {
+            "type": "textbox",
+            "name": "MC.PLAFOND_AMT",
+            "id": "LessPlafondAmt",
+            "value": "",
+            "label": "PLAFOND AMOUNT <=",
+            "restriction": "lte",
+            "datatype": "numeric"
+        },
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "MC.MOU_STAT",
+            "id": "MouStatId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "isSelectOne": false,
+            "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
+            "label": "MOU STATUS",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "RefMasterTypeCode",
+            "criteriaPropValue": "MOU_STAT"
         }
     ],
     "querystring": {
