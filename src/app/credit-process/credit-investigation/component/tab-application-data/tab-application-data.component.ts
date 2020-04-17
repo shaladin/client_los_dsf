@@ -31,6 +31,7 @@ export class TabApplicationDataComponent implements OnInit {
   AppDetailFinData;
   AssetInsuranceAndLifeInsuranceData;
   InitData(){
+    // this.appId = 31;
     this.GuarantorData = new Array();
     this.CommData = new Array();
     this.ReferantorData = {

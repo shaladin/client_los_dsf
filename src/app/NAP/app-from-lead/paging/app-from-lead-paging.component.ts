@@ -26,7 +26,7 @@ export class AppFromLeadPagingComponent implements OnInit {
     critObj.DataType = 'text';
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.propName = 'LEAD_STAT';
-    critObj.value = 'APP';
+    critObj.value = 'RAPP';
     this.arrCrit.push(critObj);
     this.inputPagingObj.addCritInput = this.arrCrit;
   }
