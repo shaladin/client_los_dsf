@@ -71,12 +71,12 @@
                                   <td style="text-align: center;">{{item.ReturnHandlingNotes}}</td>
                                   <td style="text-align: center;">{{item.ReturnStatName}}</td>
                                   <td>
-                                    <a class="success p-0" (click)="Submit(item, i)" [hidden]="item.ReturnStat == 'REQ'">
+                                    <a class="success p-0" (click)="Submit(item, i)" [hidden]="item.ReturnStat == 'REQ' || item.ReturnStat == 'DONE'">
                                         <i class="font-medium-3 ft-edit-2 mr-2"></i>
                                       </a>
                                   </td>
                                   <td>
-                                    <a class="danger p-0" (click)="Delete(item, i)" [hidden]="item.ReturnStat == 'REQ'">
+                                    <a class="danger p-0" (click)="Delete(item, i)" [hidden]="item.ReturnStat == 'REQ' || item.ReturnStat == 'DONE'">
                                         <i class="font-medium-3 ft-trash-2 mr-2"></i>
                                       </a>
                                   </td>
@@ -85,7 +85,7 @@
                             </table>
                         </div>
                         <div class="form-actions right">
-                            <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['/Nap/BusinessProcess/AddProcess/ReturnHandling/Paging']">
+                            <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['/Nap/AddProcess/ReturnHandling/Paging']">
                                 <i class="ft-x"></i> Back
                             </button>            
                             <button type="button" class="btn btn-raised btn-primary" (click)="SubmitAll()">

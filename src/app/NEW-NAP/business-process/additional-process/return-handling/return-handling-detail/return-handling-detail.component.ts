@@ -55,7 +55,20 @@ export class ReturnHandlingDetailComponent implements OnInit {
   }
 
   SubmitAll(){
-    
+    var reqObj = new ReturnHandlingHObj();
+    reqObj.WfTaskListId = this.wfTaskListId;
+    reqObj.ReturnHandlingHId = this.returnHandlingHId;
+
+    this.http.post(AdInsConstant.ResumeReturnHandling, reqObj).subscribe(
+      (response) => {
+        console.log(response);
+        this.toastr.successMessage(response["message"]);
+        this.router.navigate(["/Nap/AddProcess/ReturnHandling/Paging"]);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   AddTask(){
@@ -83,9 +96,11 @@ export class ReturnHandlingDetailComponent implements OnInit {
       reqObj.ReturnHandlingDId = item.ReturnHandlingDId;
       reqObj.ReturnHandlingHId = this.returnHandlingHId;
       reqObj.ReturnStat = "REQ";
+      reqObj.MrReturnTaskCode = item.MrReturnTaskCode;
+      reqObj.AppId = this.appId;
       reqObj.RowVersion = item.RowVersion;
 
-      this.http.post(AdInsConstant.UpdateReturnStatByReturnHandlingDId, reqObj).subscribe(
+      this.http.post(AdInsConstant.RequestReturnTask, reqObj).subscribe(
         (response) => {
           console.log(response);
           this.returnHandlingDObjs = response["ReturnHandlingDObjs"];

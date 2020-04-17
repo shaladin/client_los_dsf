@@ -6,6 +6,7 @@ export class ReturnHandlingHObj {
     ReturnDt: Date;
     ReturnNotes: string;
     ReturnFromTrxType: string;
+    WfTaskListId: number;
     RowVersion: any;
 
     constructor() {
