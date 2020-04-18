@@ -64,7 +64,7 @@
     },
     {
       "type": "text",
-      "position": "center",
+      "position": "left",
       "property": "CustName"
     },
     {

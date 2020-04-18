@@ -12,7 +12,7 @@ export const ROUTES: RouteInfo[] = [
       { path: '/Nap/CreditProcess/CommissionData/Paging', title: 'Commission Data', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "CF4W" }]},
       { path: '/Nap/CreditProcess/ReservedFund/Paging', title: 'Reserved Fund', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "CF4W" }]},
       { path: '/Nap/CreditProcess/PhoneVerification', title: 'Phone Verification', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "CF4W" }]},
-      { path: '/Nap/CreditProcess/CreditReview', title: 'Credit Review', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "CF4W" }]},
+      { path: '/Nap/CreditProcess/CreditReview/Paging', title: 'Credit Review', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "CF4W" }]},
       { path: '/Nap/CreditProcess/CreditApproval/Paging', title: 'Credit Approval', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "CF4W" }]},
       { path: '/Nap/AdminProcess/CustomerConfirmation/Paging', title: 'Customer Confirmation', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "CF4W" }]},
       { path: '/Nap/AdminProcess/PurchaseOrder/Paging', title: 'Purchase Order', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "CF4W" }]},
@@ -26,7 +26,7 @@ export const ROUTES: RouteInfo[] = [
       { path: '/Nap/FinanceLeasing/Paging', title: 'New Application', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "FL4W" }]},
       { path: '/Nap/CreditProcess/CommissionData/Paging', title: 'Commission Data', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "FL4W" }]},
       { path: '/Nap/CreditProcess/ReservedFund/Paging', title: 'Reserved Fund', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "FL4W" }]},
-      { path: '/Nap/CreditProcess/CreditReview', title: 'Credit Review', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "FL4W" }]},
+      { path: '/Nap/CreditProcess/CreditReview/Paging', title: 'Credit Review', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "FL4W" }]},
       { path: '/Nap/CreditProcess/CreditApproval/Paging', title: 'Credit Approval', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "FL4W" }]},
       { path: '/Nap/AdminProcess/AgreementActivation/Paging', title: 'Agreement Activation', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "FL4W" }]},
       { path: '/Nap/AdminProcess/PurchaseOrder/Paging', title: 'Purchase Order', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "FL4W" }]},
@@ -41,7 +41,7 @@ export const ROUTES: RouteInfo[] = [
       { path: '/Nap/CreditProcess/CommissionData/Paging', title: 'Commission Data', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "FRN4W" }]},
       { path: '/Nap/CreditProcess/ReservedFund/Paging', title: 'Reserved Fund', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "FRN4W" }]},
       { path: '/Nap/CreditProcess/PhoneVerification', title: 'Phone Verification', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "FRN4W" }]},
-      { path: '/Nap/CreditProcess/CreditReview', title: 'Credit Review', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "FRN4W" }]},
+      { path: '/Nap/CreditProcess/CreditReview/Paging', title: 'Credit Review', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "FRN4W" }]},
       { path: '/Nap/CreditProcess/CreditApproval/Paging', title: 'Credit Approval', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "FRN4W" }]},
       { path: '/Nap/AdminProcess/PreGoLive/Paging', title: 'Pre Go Live', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "FRN4W" }]}
     ], params: []
@@ -52,7 +52,7 @@ export const ROUTES: RouteInfo[] = [
       {
         path: '/Nap/Factoring/Paging', title: 'New Application', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "FCTR" }]
       },
-      { path: '/Nap/CreditProcess/CreditReview', title: 'Credit Review', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "FCTR" }]},
+      { path: '/Nap/CreditProcess/CreditReview/Paging', title: 'Credit Review', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "FCTR" }]},
       { path: '/Nap/CreditProcess/CreditApproval/Paging', title: 'Credit Approval', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "FCTR" }]},
       { path: '/Nap/AdminProcess/PreGoLive/Paging', title: 'Pre Go Live', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "FCTR" }]}
     ], params: []

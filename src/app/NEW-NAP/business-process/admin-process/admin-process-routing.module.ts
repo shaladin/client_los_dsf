@@ -6,6 +6,7 @@ import { PreGoLiveRequestForApprovalComponent } from './pre-go-live/pre-go-live-
 import { PurchaseOrderPagingComponent } from './purchase-order/purchase-order-paging/purchase-order-paging.component';
 import { PurchaseOrderComponent } from './purchase-order/purchase-order/purchase-order.component';
 import { PurchaseOrderDetailComponent } from './purchase-order/purchase-order-detail/purchase-order-detail.component';
+import { DeliveryOrderPagingComponent } from './delivery-order/delivery-order-paging/delivery-order-paging.component';
 import { DeliveryOrderDetailComponent } from './delivery-order/delivery-order-detail/delivery-order-detail.component';
 import { CustConfirmationDetailComponent } from './cust-confirmation/cust-confirmation-detail/cust-confirmation-detail.component';
 import { CustConfirmationSubjViewComponent } from './cust-confirmation/cust-confirmation-subj-view/cust-confirmation-subj-view.component';
@@ -19,7 +20,6 @@ import { DocSignerPagingComponent } from './doc-signer/doc-signer-paging/doc-sig
 import { DocSignerDetailComponent } from './doc-signer/doc-signer-detail/doc-signer-detail.component';
 import { InvoiceViewComponent } from './invoice/invoice-view/invoice-view.component';
 import { InvoiceDetailComponent } from './invoice/invoice-detail/invoice-detail.component';
-import { AgreementViewContainerComponent } from '../../view/agreement-view-container/agreement-view-container.component';
 import { PreGoLiveApprovalPagingComponent } from './pre-go-live/pre-go-live-approval-paging/pre-go-live-approval-paging.component';
 import { PreGoLiveApprovalDetailComponent } from './pre-go-live/pre-go-live-approval-detail/pre-go-live-approval-detail.component';
 import { DocumentPagingComponent } from './document-printing/document-paging/document-paging.component';
@@ -49,6 +49,13 @@ const routes: Routes = [
         component: PurchaseOrderDetailComponent,
         data: {
           title: 'Purchase Order Detail'
+        }
+      },
+      {
+        path: 'DeliveryOrder/paging',
+        component: DeliveryOrderPagingComponent,
+        data: {
+          title: 'Delivery Order Paging'
         }
       },
       {
