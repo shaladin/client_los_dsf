@@ -35,6 +35,7 @@ import { CreditInvestigationPagingComponent } from "./credit-investigation/credi
 import { TabApplicationDataComponent } from './credit-investigation/component/tab-application-data/tab-application-data.component';
 import { CreditReviewPagingComponent } from './credit-review/credit-review-paging/credit-review-paging.component';
 import { CreditReviewMainComponent } from './credit-review/credit-review-main/credit-review-main.component';
+import { TabDeviationComponent } from './credit-investigation/component/tab-deviation/tab-deviation.component';
 export const customCurrencyMaskConfig = {     
     align: "left",     
     allowNegative: true,     
@@ -64,7 +65,8 @@ export const customCurrencyMaskConfig = {
         CreditReviewMainComponent,
         ViewAppCustDataCompanyComponent,
         CreditInvestigationPagingComponent,
-        TabApplicationDataComponent
+        TabApplicationDataComponent,
+        TabDeviationComponent
         ],
     imports: [ 
         CreditProcessRoutingModule,
