@@ -11,6 +11,11 @@ import { OutstandingTcDetailComponent } from "./outstanding-tc/outstanding-tc-de
 import { ReturnHandlingPagingComponent } from "./return-handling/return-handling-paging/return-handling-paging.component";
 import { ReturnHandlingDetailComponent } from "./return-handling/return-handling-detail/return-handling-detail.component";
 import { ViewMainInfoComponentModule } from "app/NEW-NAP/sharing-component/view-main-info-component/view-main-info-component.module"
+import { PagingComponent } from "./app-dup-check/paging/paging.component";
+import { ListPersonalComponent } from "./app-dup-check/list-personal/list-personal.component";
+import { ListCompanyComponent } from "./app-dup-check/list-company/list-company.component";
+import { ApplicantExistingDataPersonalComponent } from "./app-dup-check/applicant-existing-data-personal/applicant-existing-data-personal.component";
+import { ApplicantExistingDataCompanyComponent } from "./app-dup-check/applicant-existing-data-company/applicant-existing-data-company.component";
 
 @NgModule({
   imports: [
@@ -26,7 +31,12 @@ import { ViewMainInfoComponentModule } from "app/NEW-NAP/sharing-component/view-
     OutstandingTcPagingComponent,
     OutstandingTcDetailComponent,
     ReturnHandlingPagingComponent,
-    ReturnHandlingDetailComponent
+    ReturnHandlingDetailComponent,
+    PagingComponent,
+    ListPersonalComponent,
+    ListCompanyComponent,
+    ApplicantExistingDataPersonalComponent,
+    ApplicantExistingDataCompanyComponent
   ],
   providers: [
     NGXToastrService

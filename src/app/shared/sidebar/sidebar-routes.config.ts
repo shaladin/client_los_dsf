@@ -8,7 +8,7 @@ export const ROUTES: RouteInfo[] = [
   {
     path: '', title: 'Consumer Finance', icon: 'ft-file-plus', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false,
     submenu: [
-      { path: '/Nap/ConsumerFinance/Paging', title: 'New Application', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "CF4W" }]},
+      { path: '/Nap/ConsumerFinance/InputNap/Paging', title: 'New Application', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "CF4W" }]},
       { path: '/Nap/CreditProcess/CommissionData/Paging', title: 'Commission Data', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "CF4W" }]},
       { path: '/Nap/CreditProcess/ReservedFund/Paging', title: 'Reserved Fund', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "CF4W" }]},
       { path: '/Nap/CreditProcess/PhoneVerification', title: 'Phone Verification', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "CF4W" }]},

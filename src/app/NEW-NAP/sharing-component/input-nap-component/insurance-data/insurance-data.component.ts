@@ -24,7 +24,7 @@ import { WizardComponent } from 'angular-archwizard';
 @Component({
   selector: 'app-insurance-data',
   templateUrl: './insurance-data.component.html',
-  styleUrls: ['./insurance-data.component.scss']
+  styleUrls: []
 })
 
 export class InsuranceDataComponent implements OnInit {

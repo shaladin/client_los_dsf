@@ -8,7 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-credit-approval-paging',
   templateUrl: './credit-approval-paging.component.html',
-  styleUrls: ['./credit-approval-paging.component.scss']
+  styleUrls: []
 })
 export class CreditApprovalPagingComponent implements OnInit {
   LobCode: string = "";

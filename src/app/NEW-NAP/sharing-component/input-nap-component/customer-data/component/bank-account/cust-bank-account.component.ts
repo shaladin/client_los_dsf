@@ -1,30 +1,19 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { FormBuilder, Validators, NgForm, FormGroup, ControlContainer, FormGroupDirective, FormArray } from '@angular/forms';
+import { FormBuilder, Validators, ControlContainer, FormGroupDirective, FormArray } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
-import { AppCustPersonalContactPersonObj } from 'app/shared/model/AppCustPersonalContactPersonObj.Model';
 
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { formatDate } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
-import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { RequestCriteriaObj } from 'app/shared/model/RequestCriteriaObj.model';
-import { Observable } from 'rxjs';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { AddrObj } from 'app/shared/model/AddrObj.Model';
-import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
 import { AppCustBankStmntObj } from 'app/shared/model/AppCustBankStmntObj.Model';
 
 @Component({
   selector: 'app-cust-bank-account',
   templateUrl: './cust-bank-account.component.html',
-  styleUrls: ['./cust-bank-account.component.scss'],
+  styleUrls: [],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 
 })
@@ -69,7 +58,6 @@ export class CustBankAccountComponent implements OnInit {
     private fb: FormBuilder, 
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private route: ActivatedRoute,
     private modalService: NgbModal,) {
 
      }

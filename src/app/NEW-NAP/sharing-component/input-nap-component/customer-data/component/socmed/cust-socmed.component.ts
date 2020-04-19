@@ -1,22 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormBuilder, Validators, NgForm, FormGroup, ControlContainer, FormGroupDirective, FormArray } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { CustDataPersonalObj } from 'app/shared/model/CustDataPersonalObj.Model';
 import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { formatDate } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
-import { AppCustPersonalFinDataObj } from 'app/shared/model/AppCustPersonalFinDataObj.Model';
 import { AppCustSocmedObj } from 'app/shared/model/AppCustSocmedObj.Model';
 
 @Component({
   selector: 'app-cust-socmed',
   templateUrl: './cust-socmed.component.html',
-  styleUrls: ['./cust-socmed.component.scss'],
+  styleUrls: [],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 
 })
@@ -41,9 +33,7 @@ export class CustSocmedComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder, 
-    private http: HttpClient,
-    private toastr: NGXToastrService,
-    private route: ActivatedRoute) {
+    private http: HttpClient) {
 
      }
 

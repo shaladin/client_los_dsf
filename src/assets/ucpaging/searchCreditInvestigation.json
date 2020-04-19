@@ -102,7 +102,7 @@
             "action": [
                 {
                     "type": "edit",
-                    "path": "/CreditProcess/CreditInvestigation/Detail",
+                    "path": "../CreditInvestigation/Paging",
                     "param": [
                         {
                             "type": "AppId",

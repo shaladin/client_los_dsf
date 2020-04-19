@@ -103,7 +103,7 @@
             "action": [
                 {
                     "type": "edit",
-                    "path": "/CreditProcess/CreditReviewMain",
+                    "path": "../CreditReview/Main",
                     "param": [
                         {
                             "type": "AppId",

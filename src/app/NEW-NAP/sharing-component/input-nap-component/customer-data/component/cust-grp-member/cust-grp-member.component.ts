@@ -4,20 +4,13 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormBuilder, Validators, NgForm, FormGroup, ControlContainer, FormGroupDirective, FormArray } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { CustDataPersonalObj } from 'app/shared/model/CustDataPersonalObj.Model';
 import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { formatDate } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
-import { AppCustPersonalFinDataObj } from 'app/shared/model/AppCustPersonalFinDataObj.Model';
-import { AppCustSocmedObj } from 'app/shared/model/AppCustSocmedObj.Model';
 import { AppCustGrpObj } from 'app/shared/model/AppCustGrpObj.Model';
 
 @Component({
   selector: 'app-cust-grp-member',
   templateUrl: './cust-grp-member.component.html',
-  styleUrls: ['./cust-grp-member.component.scss'],
+  styleUrls: [],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 
 })
@@ -57,9 +50,7 @@ export class CustGrpMemberComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder, 
-    private http: HttpClient,
-    private toastr: NGXToastrService,
-    private route: ActivatedRoute) {
+    private http: HttpClient) {
 
      }
 

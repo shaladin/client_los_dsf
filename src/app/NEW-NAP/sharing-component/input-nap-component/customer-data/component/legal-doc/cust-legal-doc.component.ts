@@ -1,30 +1,16 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { FormBuilder, Validators, NgForm, FormGroup, ControlContainer, FormGroupDirective } from '@angular/forms';
+import { FormBuilder, Validators, ControlContainer, FormGroupDirective } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
-import { AppCustPersonalContactPersonObj } from 'app/shared/model/AppCustPersonalContactPersonObj.Model';
 
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { formatDate } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
-import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { RequestCriteriaObj } from 'app/shared/model/RequestCriteriaObj.model';
-import { Observable } from 'rxjs';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { AddrObj } from 'app/shared/model/AddrObj.Model';
-import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
-import { AppCustCompanyContactPersonObj } from 'app/shared/model/AppCustCompanyContactPersonObj.Model';
 import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalDocObj.Model';
 
 @Component({
   selector: 'app-cust-legal-doc',
   templateUrl: './cust-legal-doc.component.html',
-  styleUrls: ['./cust-legal-doc.component.scss'],
+  styleUrls: [],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 
 })
@@ -62,8 +48,6 @@ export class CustLegalDocComponent implements OnInit {
   constructor(
     private fb: FormBuilder, 
     private http: HttpClient,
-    private toastr: NGXToastrService,
-    private route: ActivatedRoute,
     private modalService: NgbModal,) {
 
      }

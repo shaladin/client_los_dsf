@@ -3,7 +3,7 @@ import { NgModule } from "@angular/core";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { AdInsModule } from "app/components/adins-module/adins.module";
 import { TcSharingComponentModule } from "./tc-sharing-component.module";
-import { GuarantorComponent } from "./guarantor/guarantor.component";
+import { GuarantorComponent } from "./guarantor-data/guarantor.component";
 import { LifeInsuranceDataComponent } from "./life-insurance-data/life-insurance-data.component";
 import { ApplicationDataComponent } from "./application-data/application-data.component";
 import { SearchCrossAppComponent } from "./application-data/search-cross-app/search-cross-app.component";
@@ -24,6 +24,15 @@ import { CustCompanyContactInformationComponent } from "./customer-data/componen
 import { CustCompanyFinancialDataComponent } from "./customer-data/component/company-financial-data/cust-company-financial-data.component";
 import { CustLegalDocComponent } from "./customer-data/component/legal-doc/cust-legal-doc.component";
 import { InsuranceDataComponent } from "./insurance-data/insurance-data.component";
+import { FinancialDataComponent } from "./financial-data/financial-data.component";
+import { SubsidyComponent } from "./financial-data/component/subsidy/subsidy.component";
+import { SubsidyAddEditComponent } from "./financial-data/component/subsidy-add-edit/subsidy-add-edit.component";
+import { FeeComponent } from "./financial-data/component/fee/fee.component";
+import { TcDataComponent } from "./tc-data/tc-data.component";
+import { MatCheckboxModule, MatRadioModule, MatSelectModule } from "@angular/material";
+import { GuarantorPersonalComponent } from "./guarantor-data/guarantor-personal/guarantor-personal.component";
+import { GuarantorCompanyComponent } from "./guarantor-data/guarantor-company/guarantor-company.component";
+import { GuarantorPagingComponent } from "./guarantor-data/guarantor-paging/guarantor-paging.component";
 
 @NgModule({
   exports: [
@@ -43,17 +52,28 @@ import { InsuranceDataComponent } from "./insurance-data/insurance-data.componen
     CustLegalDocComponent,
     TcSharingComponentModule,
     GuarantorComponent,
+    GuarantorPagingComponent,
+    GuarantorPersonalComponent,
+    GuarantorCompanyComponent,
     LifeInsuranceDataComponent,
     ApplicationDataComponent,
     SearchCrossAppComponent,
     ReferantorDataComponent,
     AssetDataComponent,
-    InsuranceDataComponent
+    InsuranceDataComponent,
+    FinancialDataComponent,
+    SubsidyComponent,
+    SubsidyAddEditComponent,
+    FeeComponent,
+    TcDataComponent, // sementara nanti dicross check sama term-conditions
   ],
   imports: [
     CommonModule,
     AdInsModule,
-    TcSharingComponentModule
+    TcSharingComponentModule,
+    MatCheckboxModule,
+    MatRadioModule,
+    MatSelectModule,
   ],
   declarations: [
     CustomerDataComponent,
@@ -71,13 +91,22 @@ import { InsuranceDataComponent } from "./insurance-data/insurance-data.componen
     CustCompanyFinancialDataComponent,
     CustLegalDocComponent,
     GuarantorComponent,
+    GuarantorPagingComponent,
+    GuarantorPersonalComponent,
+    GuarantorCompanyComponent,
     LifeInsuranceDataComponent,
     ApplicationDataComponent,
     SearchCrossAppComponent,
     ReferantorDataComponent,
     AssetDataComponent,
-    InsuranceDataComponent
+    InsuranceDataComponent,
+    FinancialDataComponent,
+    SubsidyComponent,
+    SubsidyAddEditComponent,
+    FeeComponent,
+    TcDataComponent, // sementara nanti dicross check sama term-conditions
   ],
+  entryComponents: [SubsidyAddEditComponent],
   providers: [
     NGXToastrService
   ]

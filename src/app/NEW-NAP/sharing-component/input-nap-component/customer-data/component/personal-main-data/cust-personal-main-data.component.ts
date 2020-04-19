@@ -14,7 +14,7 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-cust-personal-main-data',
   templateUrl: './cust-personal-main-data.component.html',
-  styleUrls: ['./cust-personal-main-data.component.scss'],
+  styleUrls: [],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 
 })

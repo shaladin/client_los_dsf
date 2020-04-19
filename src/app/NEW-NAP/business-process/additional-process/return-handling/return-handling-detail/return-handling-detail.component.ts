@@ -63,7 +63,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
       (response) => {
         console.log(response);
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["/Nap/AddProcess/ReturnHandling/Paging"]);
+        this.router.navigate(["../ReturnHandling/Paging"]);
       },
       (error) => {
         console.log(error);

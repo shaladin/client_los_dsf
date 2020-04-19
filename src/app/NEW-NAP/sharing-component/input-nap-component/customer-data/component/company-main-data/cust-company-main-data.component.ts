@@ -14,7 +14,7 @@ import { CustDataCompanyObj } from 'app/shared/model/CustDataCompanyObj.Model';
 @Component({
   selector: 'app-cust-company-main-data',
   templateUrl: './cust-company-main-data.component.html',
-  styleUrls: ['./cust-company-main-data.component.scss'],
+  styleUrls: [],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 
 })

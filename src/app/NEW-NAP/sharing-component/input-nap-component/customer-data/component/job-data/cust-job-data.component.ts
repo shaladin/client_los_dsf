@@ -14,7 +14,7 @@ import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 @Component({
   selector: 'app-cust-job-data',
   templateUrl: './cust-job-data.component.html',
-  styleUrls: ['./cust-job-data.component.scss'],
+  styleUrls: [],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 
 })

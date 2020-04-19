@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { CustDataPersonalObj } from 'app/shared/model/CustDataPersonalObj.Model';
 import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
@@ -24,7 +23,7 @@ import { WizardComponent } from 'angular-archwizard';
 @Component({
   selector: 'app-customer-data',
   templateUrl: './customer-data.component.html',
-  styleUrls: ['./customer-data.component.scss']
+  styleUrls: []
 })
 
 export class CustomerDataComponent implements OnInit {

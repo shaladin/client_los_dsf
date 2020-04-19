@@ -144,7 +144,7 @@
             "action": [
                 {
                     "type": "edit",
-                    "path": "/ReturnHandling/Detail",
+                    "path": "../ReturnHandling/Detail",
                     "param": [
                         {
                             "type": "AppId",

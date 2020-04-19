@@ -203,7 +203,7 @@ export class NapAddComponent implements OnInit {
       (response) => {
         console.log(response);
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["ConsumerFinance/AppAddDetail"], { queryParams: { "AppId": response["AppId"] } });
+        this.router.navigate(["../Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
       },
       (error) => {
         console.log(error);

@@ -6,7 +6,7 @@ import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 @Component({
   selector: 'app-nap-paging',
   templateUrl: './nap-paging.component.html',
-  styleUrls: ['./nap-paging.component.scss']
+  styleUrls: []
 })
 export class NapPagingComponent implements OnInit {
 
