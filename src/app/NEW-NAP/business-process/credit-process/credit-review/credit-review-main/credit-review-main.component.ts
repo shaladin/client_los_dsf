@@ -15,6 +15,8 @@ import { AppCrdRvwDObj } from 'app/shared/model/AppCrdRvwDObj.Model';
 export class CreditReviewMainComponent implements OnInit {
 
   appId;
+  ManualDeviationData;
+  isExistedManualDeviationData;
   apvBaseUrl = environment.ApprovalR3Url;
   indentifierReason;
   indentifierApprover;
@@ -31,14 +33,16 @@ export class CreditReviewMainComponent implements OnInit {
     arr: this.fb.array([]),
     AppvAmt: [''],
     CreditScoring: [''],
-    Reason: [""],
+    Reason: ['', Validators.required],
     ReasonDesc: [""],
-    Approver: [""],
+    Approver: ['', Validators.required],
     ApproverDesc: [""],
-    Notes: ['']
+    Notes: ['', Validators.required]
   });
+  
 
   InitData(){
+    this.DDLReason = new Array();
     this.AppStep = {
       "CUST": 0,
       "APP": 1,
@@ -46,11 +50,13 @@ export class CreditReviewMainComponent implements OnInit {
       "DEVC": 3,
       "APV": 4,
     };
-    this.AppStepIndex = 1;
+    this.AppStepIndex = 3;
     this.CustTypeCode = "";
     this.Arr = this.FormObj.get('arr') as FormArray;
     console.log(this.Arr);
     this.UserAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    this.ManualDeviationData = new Array();
+    this.isExistedManualDeviationData = false;
   }
 
   viewProdMainInfoObj;
@@ -60,12 +66,14 @@ export class CreditReviewMainComponent implements OnInit {
   Arr;
   UserAccess;
   ResponseExistCreditReview;
+  DDLReason;
   async ngOnInit() {    
     console.log("User Access");
     console.log(JSON.parse(localStorage.getItem("UserAccess")));
     this.InitData();
     this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
     await this.GetMouCustData();
+    await this.BindDDLReason();
     await this.BindCreditAnalysisItemFormObj();
     await this.BindAppvAmt();
     await this.GetExistingCreditReviewData();
@@ -145,20 +153,34 @@ export class CreditReviewMainComponent implements OnInit {
     );
   }
 
+  async BindDDLReason(){
+    var Obj = { RefReasonTypeCode: "CRD_REVIEW" };
+    await this.http.post(AdInsConstant.GetListActiveRefReason, Obj).toPromise().then(
+      (response) => {
+        console.log(response);   
+        this.DDLReason = response[AdInsConstant.ReturnObj];   
+        // console.log(this.DDLReason);   
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
   onChangeReason(ev){
     // console.log(ev);
     this.FormObj.patchValue({
       ReasonDesc: ev.target.selectedOptions[0].text
     });
-    // console.log(this.FormObj);
+    console.log(this.FormObj);
   }
 
   onChangeApprover(ev){
-    // console.log(ev);
+    console.log(ev);
     this.FormObj.patchValue({
       ApproverDesc: ev.target.selectedOptions[0].text
     });
-    // console.log(this.FormObj);
+    console.log(this.FormObj);
   }
 
   EnterTab(AppStep) {
@@ -201,6 +223,9 @@ export class CreditReviewMainComponent implements OnInit {
 
     var apiObj = {
       appCrdRvwHObj: tempAppCrdRvwObj,
+      ApprovedById: temp.Approver,
+      Reason: temp.Reason,
+      Notes: temp.Notes,
       RowVersion: ""
     }
     console.log(apiObj);
@@ -212,6 +237,26 @@ export class CreditReviewMainComponent implements OnInit {
         console.log(error);
       }
     );
+
+    this.SaveManualDeviationData();
+  }
+  
+  SaveManualDeviationData(){
+    if(this.isExistedManualDeviationData){
+      var obj = {
+        AppId: this.appId,
+        ListDeviationResultObjs: this.ManualDeviationData
+      }
+  
+      this.http.post(AdInsConstant.AddListManualDeviationResultByAppId, obj).subscribe(
+        (response) => {
+          console.log(response);    
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
   }
 
   BindAppCrdRvwDObj(objArr){
@@ -228,5 +273,15 @@ export class CreditReviewMainComponent implements OnInit {
       AppCrdRvwDObjs.push(temp);
     }
     return AppCrdRvwDObjs;
+  }
+
+  CheckDeviationData(){
+    console.log(this.ManualDeviationData);
+  }
+
+  BindManualDeviationData(ev){
+    // console.log(ev);
+    this.ManualDeviationData = ev;
+    this.isExistedManualDeviationData = true;
   }
 }

@@ -736,6 +736,7 @@ export class AdInsConstant {
   public static TitleReferantor = "List Referantor Commission Data";
   public static ReturnObj = "ReturnObject";
   
+
   //Asset Doc List
   public static GetListAssetDocListByAssetTypeCode = environment.FoundationR3Url + "/AssetDocList/GetListAssetDocListByAssetTypeCode";
   public static GetListAppAssetData = environment.losUrl + "/AppAsset/GetListAppAssetData";
@@ -949,4 +950,8 @@ export class AdInsConstant {
   public static ResumeReturnHandling = environment.losUrl + "/ReturnHandlingH/ResumeReturnHandling";
 
 
+  
+  // Deviation Result
+  public static GetListDeviationResultForDeviationDataByAppId = environment.losUrl + "/DeviationResult/GetListDeviationResultForDeviationDataByAppId";
+  public static AddListManualDeviationResultByAppId = environment.losUrl + "/DeviationResult/AddListManualDeviationResultByAppId";
 }
