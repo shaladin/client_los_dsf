@@ -29,6 +29,7 @@ import { ReservedFundComponent } from "./commission-reserved-fund/component/rese
 import { CommissionReservedFundDetailComponent } from "./commission-reserved-fund/comission-reserved-fund-detail/commission-reserved-fund-detail.component";
 import { FraudDetectionPagingComponent } from "./fraud-detection/fraud-detection-paging/fraud-detection-paging.component";
 import { FraudDetectionVerifComponent } from "./fraud-detection/fraud-detection-verif/fraud-detection-verif.component";
+import { TabDeviationComponent } from "./credit-investigation/component/tab-deviation/tab-deviation.component";
 
 @NgModule({
   imports: [
@@ -55,6 +56,7 @@ import { FraudDetectionVerifComponent } from "./fraud-detection/fraud-detection-
     ViewAppCustDataPersonalComponent,
     ViewAppCustDataCompanyComponent,
     TabApplicationDataComponent,
+    TabDeviationComponent,
     ViewFraudDetectionResultComponent,
     ViewSurveyTaskListComponent,
     CustHistoryComponent,

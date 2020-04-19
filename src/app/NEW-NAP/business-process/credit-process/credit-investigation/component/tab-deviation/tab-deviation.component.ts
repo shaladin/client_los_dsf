@@ -10,7 +10,7 @@ import { DeviationResultObj } from 'app/shared/model/DeviationResultObj.Model';
 @Component({
   selector: 'app-tab-deviation',
   templateUrl: './tab-deviation.component.html',
-  styleUrls: ['./tab-deviation.component.scss']
+  styleUrls: []
 })
 export class TabDeviationComponent implements OnInit {
 
