@@ -79,7 +79,7 @@
       "action": [
         {
           "type": "edit",
-          "path": "./View",
+          "path": "../PhoneVerification/View",
           "param": [
             {
               "type": "AppId",

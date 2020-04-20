@@ -44,28 +44,15 @@ export const Full_ROUTES: Routes = [
     loadChildren: './inquiry/inquiry.module#InquiryModule'
   },
   {
-    path: 'AppDupCheck',
-    loadChildren: './app-dup-check/app-dup-check.module#AppDupCheckModule'
-  },
-  {
     path: 'View',
     loadChildren: './view/view.module#ViewModule'
   },
   {
-    path:'App',
-    loadChildren:'./ApplicationModel/applicationModel.module#ApplicationModelModule'
+    path: 'App',
+    loadChildren: './ApplicationModel/applicationModel.module#ApplicationModelModule'
   },
   {
     path: 'Lead',
     loadChildren: './lead/lead.module#LeadModule'
-  }, 
-  {
-    path: 'FraudDetection',
-    loadChildren: './fraud-detection/fraud-detection.module#FraudDetectionModule'
-  },
-  { 
-  
-    path: 'CreditProcess',
-    loadChildren: './credit-process/credit-process.module#CreditProcessModule'
-  } 
+  }
 ];
