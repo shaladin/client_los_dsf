@@ -53,10 +53,20 @@
         {
             "type": "datepicker",
             "name": "TL.REQUEST_DATE",
-            "id": "ReqDtId",
+            "id": "ReqDtFromId",
             "value": "",
-            "label": "REQUEST DATE",
-            "placeholder": "Placeholder"
+            "label": "REQUEST DATE FROM",
+            "restriction": "gte",
+            "datatype": "date"
+        },
+        {
+            "type": "datepicker",
+            "name": "TL.REQUEST_DATE",
+            "id": "ReqDtFromId",
+            "value": "",
+            "label": "REQUEST DATE TO",
+            "restriction": "lte",
+            "datatype": "date"
         }
     ],
     "querystring": {

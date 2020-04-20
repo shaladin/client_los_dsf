@@ -81,7 +81,7 @@
             "name": "MC.PLAFOND_AMT",
             "id": "GreaterPlafondAmt",
             "value": "",
-            "label": "PLAFOND AMOUNT >=",
+            "label": "PLAFOND AMOUNT FROM",
             "restriction": "gte",
             "datatype": "numeric"
         },
@@ -90,7 +90,7 @@
             "name": "MC.PLAFOND_AMT",
             "id": "LessPlafondAmt",
             "value": "",
-            "label": "PLAFOND AMOUNT <=",
+            "label": "PLAFOND AMOUNT TO",
             "restriction": "lte",
             "datatype": "numeric"
         },
