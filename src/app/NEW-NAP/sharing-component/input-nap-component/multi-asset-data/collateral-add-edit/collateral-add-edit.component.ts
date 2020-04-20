@@ -28,6 +28,7 @@ export class CollateralAddEditComponent implements OnInit {
   inputLookupCollNameObj: any;
   inputFieldLegalObj: any;
   inputFieldLocationObj: any;
+  inputLookupObj: any;
   AddCollForm = this.fb.group({
     AssetTypeCode: [''],
     SerialNo1: [''],
@@ -51,7 +52,8 @@ export class CollateralAddEditComponent implements OnInit {
     CollPercentage:[''],
 
     FullAssetCode: [''],
-    FullAssetName:[''],
+
+    CopyFromLegal:[''],
 
     BranchManagerName: [''],
     BranchManagerNo: [''],
@@ -80,24 +82,31 @@ export class CollateralAddEditComponent implements OnInit {
 //     this.assetTypeId = event.AssetTypeId;
 //   }
 
-  SetSupplier(event){
-    this.branchObj = new VendorEmpObj();
-    this.branchObj.VendorId = event.VendorId;
-    this.branchObj.MrVendorEmpPositionCode = 'BRANCH_MANAGER';
-    this.http.post(this.getListVendorEmp, this.branchObj).subscribe(
-    (response) => {
-        this.listBranchObj = response["ReturnObject"];
-        this.AddCollForm.patchValue({
-            BranchManagerName: this.listBranchObj.find(x => x.Key == event.target.value).Value
-          });
-    });
-  }
+  // SetSupplier(event){
+  //   this.branchObj = new VendorEmpObj();
+  //   this.branchObj.VendorId = event.VendorId;
+  //   this.branchObj.MrVendorEmpPositionCode = 'BRANCH_MANAGER';
+  //   this.http.post(this.getListVendorEmp, this.branchObj).subscribe(
+  //   (response) => {
+  //       this.listBranchObj = response["ReturnObject"];
+  //       this.AddCollForm.patchValue({
+  //           BranchManagerName: this.listBranchObj.find(x => x.Key == event.target.value).Value
+  //         });
+  //   });
+  // }
 
   // BranchChanged(event){
   //   this.AddCollForm.patchValue({
   //     OfficeName: this.listBranchObj.find(x => x.Key == event.target.value).Value
   //   });
   // }
+
+  getLookupCollateralTypeResponse(e) {
+    this.AddCollForm.patchValue({
+      FullAssetCode: e.AssetTypeCode,
+      FullAssetName: e.FullAssetName
+    });
+  }
 
   getLookupCollateralName(event) {
     this.AddCollForm.patchValue({
@@ -112,19 +121,26 @@ export class CollateralAddEditComponent implements OnInit {
     this.inputFieldLocationObj = new InputFieldObj();
     this.inputFieldLocationObj.inputLookupObj = new InputLookupObj();
 
-    this.InputLookupSupplierObj = new InputLookupObj();
-    this.InputLookupSupplierObj.urlJson = "./assets/uclookup/NAP/lookupSupplier.json";
-    this.InputLookupSupplierObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupSupplierObj.urlEnviPaging = environment.FoundationR3Url;
-    this.InputLookupSupplierObj.pagingJson = "./assets/uclookup/NAP/lookupSupplier.json";
-    this.InputLookupSupplierObj.genericJson = "./assets/uclookup/NAP/lookupSupplier.json";
+    // this.InputLookupSupplierObj = new InputLookupObj();
+    // this.InputLookupSupplierObj.urlJson = "./assets/uclookup/NAP/lookupSupplier.json";
+    // this.InputLookupSupplierObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    // this.InputLookupSupplierObj.urlEnviPaging = environment.FoundationR3Url;
+    // this.InputLookupSupplierObj.pagingJson = "./assets/uclookup/NAP/lookupSupplier.json";
+    // this.InputLookupSupplierObj.genericJson = "./assets/uclookup/NAP/lookupSupplier.json";
 
-    this.inputLookupCollNameObj = new InputLookupObj();
-    this.inputLookupCollNameObj.urlJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
-    this.inputLookupCollNameObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.inputLookupCollNameObj.urlEnviPaging = environment.FoundationR3Url;
-    this.inputLookupCollNameObj.pagingJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
-    this.inputLookupCollNameObj.genericJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
+    this.inputLookupObj = new InputLookupObj();
+    this.inputLookupObj.urlJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
+    this.inputLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupObj.pagingJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
+    this.inputLookupObj.genericJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
+
+    // this.inputLookupCollNameObj = new InputLookupObj();
+    // this.inputLookupCollNameObj.urlJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
+    // this.inputLookupCollNameObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    // this.inputLookupCollNameObj.urlEnviPaging = environment.FoundationR3Url;
+    // this.inputLookupCollNameObj.pagingJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
+    // this.inputLookupCollNameObj.genericJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
   }
 
   editItem(custAddrObj: any) {

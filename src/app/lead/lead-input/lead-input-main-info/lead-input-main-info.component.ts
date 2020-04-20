@@ -382,7 +382,7 @@ copyLead(){
   }
 
   setLead(){
-    this.leadObj.LeadNo = "";
+    this.leadObj.LeadNo = "0";
     this.leadObj.LeadCopyId = this.leadIdExist;
     this.leadObj.OriOfficeCode = this.MainInfoForm.controls["OfficeCode"].value;
     this.leadObj.OriOfficeName = this.MainInfoForm.controls["OfficeName"].value;
@@ -406,7 +406,7 @@ copyLead(){
   }
 
   SaveForm(){
-    // console.log("aaaa")
+    console.log("aaaa")
     if(this.pageType == "edit") {
       this.leadObj = new LeadObj();
       this.leadObj.LeadId = this.LeadId;

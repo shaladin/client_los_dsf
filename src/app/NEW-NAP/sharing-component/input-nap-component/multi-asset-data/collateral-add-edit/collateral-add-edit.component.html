@@ -30,11 +30,11 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-2 adins-required-label" for="FullAssetName" translate>Collateral Name </label>
-                        <div class="col-md-3">
-                            <lib-uclookupgeneric [lookupInput]="inputLookupCollNameObj" [parentForm]='AddCollForm' [enjiForm]='enjiForm'
-                            [identifier]="'FullAssetName'" (lookup)="getLookupCollateralName($event)"></lib-uclookupgeneric>
-                        </div>
+                      <label class="col-md-2 adins-required-label" for="FullAssetName" translate>Collateral Name </label>
+                      <div class="col-md-3">
+                        <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]="AddCollForm" [enjiForm]='enjiForm'
+                          [identifier]="'FullAssetName'" (lookup)="getLookupCollateralTypeResponse($event)"></lib-uclookupgeneric>
+                      </div>
                         <label class="col-md-1"></label>
                         <label class="col-md-2 adins-required-label" translate>Serial No 2</label>
                         <div class="col-md-2">
