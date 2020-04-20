@@ -166,12 +166,12 @@
             "property": "custName"
         },
         {
-            "type": "text",
+            "type": "date",
             "position": "center",
             "property": "mouCustDt"
         },
         {
-            "type": "text",
+            "type": "date",
             "position": "center",
             "property": "endDt"
         },
