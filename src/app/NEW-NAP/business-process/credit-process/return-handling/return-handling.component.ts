@@ -15,10 +15,10 @@ export class ReturnHandlingComponent implements OnInit {
   inputPagingObj;
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
-    this.inputPagingObj._url="./assets/ucpaging/searchReturnHandling.json";
+    this.inputPagingObj._url="./assets/ucpaging/searchReturnHandlingCommission.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
-    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReturnHandling.json";
+    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReturnHandlingCommission.json";
   }
 
 }

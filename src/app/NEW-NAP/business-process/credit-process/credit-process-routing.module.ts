@@ -10,6 +10,7 @@ import { CommissionReservedFundDetailComponent } from './commission-reserved-fun
 import { CommissionReservedFundPagingComponent } from './commission-reserved-fund/comission-reserved-fund-paging/commission-reserved-fund-paging.component';
 import { FraudDetectionVerifComponent } from './fraud-detection/fraud-detection-verif/fraud-detection-verif.component';
 import { FraudDetectionPagingComponent } from './fraud-detection/fraud-detection-paging/fraud-detection-paging.component';
+import { ReturnHandlingComponent } from './return-handling/return-handling.component';
 
 const routes: Routes = [
   {
@@ -90,6 +91,13 @@ const routes: Routes = [
         component: FraudDetectionPagingComponent,
         data: {
           title: 'Fraud Detection Paging'
+        }
+      },
+      {
+        path: 'ReturnHandling',
+        component: ReturnHandlingComponent,
+        data: {
+          title: 'Return Handling'
         }
       }
     ]
