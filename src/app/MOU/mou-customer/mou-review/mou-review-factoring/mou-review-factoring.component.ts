@@ -5,6 +5,8 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { RFAInfoObj } from 'app/shared/model/Approval/RFAInfoObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 
 @Component({
   selector: 'app-mou-review-factoring',
@@ -12,7 +14,9 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
   providers: [NGXToastrService]
 })
 export class MouReviewFactoringComponent implements OnInit {
-  mouCustObj: MouCustObj;
+  rfaInfoObj: RFAInfoObj = new RFAInfoObj();
+  mouCustObj: MouCustObj = new MouCustObj();
+  keyValueObj: KeyValueObj;
   MouCustId : any;
   WfTaskListId: any;
   MouType : string = "FACTORING";
@@ -66,7 +70,14 @@ export class MouReviewFactoringComponent implements OnInit {
   MouReviewDataForm = this.fb.group({
     ListApprover: [''],
     Reason: [''],
-    Notes: ['']
+    Notes: [''],
+    LatarBelakang: [''],
+    FaktorMendukung: [''],
+    FaktorTidakMendukung: [''],
+    Syarat: [''],
+    Dispensasi: [''],
+    SWOT: [''],
+    SixC: ['']
   })
 
   claimTask()
@@ -80,19 +91,79 @@ export class MouReviewFactoringComponent implements OnInit {
   }
 
   Submit() {
-    var mouObj = {
-      MouCustId: this.MouCustId, WfTaskListId: this.WfTaskListId,
-      RfaApproverId: this.MouReviewDataForm.controls.ListApprover.value,
-      RfaReason: this.MouReviewDataForm.controls.Reason.value,
-      RfaNotes: this.MouReviewDataForm.controls.Notes.value,
-      PlafondAmt: this.PlafondAmt
+    this.mouCustObj.MouCustId = this.MouCustId;
+    this.PlafondAmt = this.PlafondAmt;
+
+    this.rfaInfoObj.ApprovedById = this.MouReviewDataForm.controls.ListApprover.value;
+    this.rfaInfoObj.Reason = this.MouReviewDataForm.controls.Reason.value;
+    this.rfaInfoObj.Notes = this.MouReviewDataForm.controls.Notes.value;
+
+    if (this.MouReviewDataForm.controls.LatarBelakang.value != null || this.MouReviewDataForm.controls.LatarBelakang.value != undefined)
+    {  
+      this.keyValueObj = new KeyValueObj()
+      this.keyValueObj.Key = "LatarBelakang",
+      this.keyValueObj.Value = this.MouReviewDataForm.controls.LatarBelakang.value
+      this.rfaInfoObj.RecommendationObj.push(this.keyValueObj);
     }
-    this.http.post(AdInsConstant.SubmitMouReview, mouObj).subscribe(
+
+    if (this.MouReviewDataForm.controls.FaktorMendukung.value != null || this.MouReviewDataForm.controls.FaktorMendukung.value != undefined)
+    {  
+      this.keyValueObj = new KeyValueObj()
+      this.keyValueObj.Key = "FaktorMendukung",
+      this.keyValueObj.Value = this.MouReviewDataForm.controls.FaktorMendukung.value
+      this.rfaInfoObj.RecommendationObj.push(this.keyValueObj);
+    }
+
+    if (this.MouReviewDataForm.controls.FaktorTidakMendukung.value != null || this.MouReviewDataForm.controls.FaktorTidakMendukung.value != undefined)
+    {  
+      this.keyValueObj = new KeyValueObj()
+      this.keyValueObj.Key = "FaktorTidakMendukung",
+      this.keyValueObj.Value = this.MouReviewDataForm.controls.FaktorTidakMendukung.value
+      this.rfaInfoObj.RecommendationObj.push(this.keyValueObj);
+    }
+
+    if (this.MouReviewDataForm.controls.Syarat.value != null || this.MouReviewDataForm.controls.Syarat.value != undefined)
+    {  
+      this.keyValueObj = new KeyValueObj()
+      this.keyValueObj.Key = "Syarat",
+      this.keyValueObj.Value = this.MouReviewDataForm.controls.Syarat.value
+      this.rfaInfoObj.RecommendationObj.push(this.keyValueObj);
+    }
+
+    if (this.MouReviewDataForm.controls.Dispensasi.value != null || this.MouReviewDataForm.controls.Dispensasi.value != undefined)
+    {  
+      this.keyValueObj = new KeyValueObj()
+      this.keyValueObj.Key = "Dispensasi",
+      this.keyValueObj.Value = this.MouReviewDataForm.controls.Dispensasi.value
+      this.rfaInfoObj.RecommendationObj.push(this.keyValueObj);
+    }
+
+    if (this.MouReviewDataForm.controls.SWOT.value != null || this.MouReviewDataForm.controls.SWOT.value != undefined)
+    {  
+      this.keyValueObj = new KeyValueObj()
+      this.keyValueObj.Key = "SWOT",
+      this.keyValueObj.Value = this.MouReviewDataForm.controls.SWOT.value
+      this.rfaInfoObj.RecommendationObj.push(this.keyValueObj);
+    }
+
+    if (this.MouReviewDataForm.controls.SixC.value != null || this.MouReviewDataForm.controls.SixC.value != undefined)
+    {  
+      this.keyValueObj = new KeyValueObj()
+      this.keyValueObj.Key = "6C",
+      this.keyValueObj.Value = this.MouReviewDataForm.controls.SixC.value
+      this.rfaInfoObj.RecommendationObj.push(this.keyValueObj);
+    }
+
+    var submitMouReviewObj = {
+      WfTaskListId: this.WfTaskListId,
+      MouCust: this.mouCustObj, Rfa: this.rfaInfoObj
+    }
+    this.http.post(AdInsConstant.SubmitMouReview, submitMouReviewObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         this.router.navigate(["/Mou/Cust/ReviewPaging"]);
       })
-  }
+  } 
 
   Return() {
     var mouObj = { MouCustId: this.MouCustId, WfTaskListId: this.WfTaskListId }
