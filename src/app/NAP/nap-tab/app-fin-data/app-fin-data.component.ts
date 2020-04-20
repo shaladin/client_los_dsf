@@ -7,6 +7,8 @@ import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { AppFinDataObj } from 'app/shared/model/AppFinData/AppFinData.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj.Model';
+import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
+import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
 
 @Component({
   selector: 'app-app-fin-data',
@@ -21,7 +23,9 @@ export class AppFinDataComponent implements OnInit {
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   appFinDataObj : AppFinDataObj = new AppFinDataObj();
   calcRegFixObj : CalcRegularFixObj = new CalcRegularFixObj();
-
+  listInstallment : any;
+  responseCalc : any;
+  
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -133,15 +137,29 @@ export class AppFinDataComponent implements OnInit {
   CalcBaseOnRate()
   {
     this.calcRegFixObj = this.FinDataForm.value;
-
-    this.http.post(environment.losUrl + "/AppFinData/CalculateInstallmentRegularFix", this.calcRegFixObj).subscribe(
+    this.calcRegFixObj["IsRecalculate"] = true;
+    this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateInstallmentRegularFix", this.calcRegFixObj).subscribe(
       (response) => {
-        
+        this.listInstallment = response.InstallmentTable;
+        this.FinDataForm.patchValue({
+          TotalDownPaymentNettAmt : response.TotalDownPaymentNettAmt, //muncul di layar
+          TotalDownPaymentGrossAmt : response.TotalDownPaymentGrossAmt, //inmemory
+
+          EffectiveRatePrcnt : response.EffectiveRatePrcnt,
+          FlatRatePrcnt : response.FlatRatePrcnt,
+          InstAmt : response.InstAmt,
+
+          GrossYieldPrcnt : response.GrossYieldPrcnt,
+
+          TotalInterestAmt: response.TotalInterestAmt,
+          TotalAR : response.TotalARAmt,
+
+          NtfAmt : response.NtfAmt,
+
+        })
+
       }
     );
-
-    console.log(this.FinDataForm.value);
-    console.log(this.calcRegFixObj);
   }
 
   CalcBaseOnInst()
