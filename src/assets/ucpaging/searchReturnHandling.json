@@ -19,18 +19,18 @@
             "placeholder": "Placeholder"
         },
         {
-          "type": "dropdown",
-          "datatype": "text",
-          "name": "A.ORI_OFFICE_CODE",
-          "id": "oriOfficeCodeId",
-          "value": "",
-          "placeholder": "Placeholder",
-          "isFromURL": true,
-          "isSelectOne": true,
-          "url": "http://r3app-server/FOUNDATION_R3/RefOffice/GetListKvpActiveRefOfficeForPaging,",
-          "label": "Original Office Name",
-          "items": [],
-          "itemsUrl": []
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "A.ORI_OFFICE_CODE",
+            "id": "OfficeNameId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "isSelectOne": false,
+            "url": "http://r3app-server/foundation_r3/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "label": "OFFICE NAME",
+            "items": [],
+            "itemsUrl": []
         },
         {
             "type": "textbox",
@@ -50,18 +50,23 @@
         },
         {
             "type": "dropdown",
-            "datatype": "text",
-            "name": "TASK_CLAIM_STAT",
-            "id": "TaskClaimStatId",
+            "name": "WTL.CLAIM_STAT",
+            "id": "ActiveStatusId",
+            "label": "TASK CLAIM STATUS",
             "value": "",
             "placeholder": "Placeholder",
-            "isFromURL": true,
-            "isSelectOne": true,
-            "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
-            "label": "Task Claim Status",
-            "criteriaPropName": "RefMasterTypeCode",
-            "criteriaPropValue": "OFFICE_CLASS",
-            "items": [],
+            "isFromURL": false,
+            "isSelectOne": false,
+            "items": [
+                {
+                    "key": "CLAIMED",
+                    "value": "CLAIMED"
+                },
+                {
+                    "key": "UNCLAIMED",
+                    "value": "UNCLAIMED"
+                }
+            ],
             "itemsUrl": []
         }
     ],
@@ -115,9 +120,9 @@
         }
     ],
     "querystring": {
-        "select": "SELECT A.APP_NO AS AppNo, AC.CUST_NAME AS CustName, A.PROD_OFFERING_NAME AS ProdOfferingName, A.APP_CURR_STEP AS AppCurrStep, A.LOB_CODE AS LobCode, A.APP_ID AS AppId,A.APP_STAT AS appStat, WF.USERNAME as ClaimBy, A.ORI_OFFICE_CODE as OriOfficeCode",
-        "from": "FROM dbo.APP A WITH(NOLOCK) LEFT JOIN dbo.APP_CUST AC WITH(NOLOCK) ON A.APP_ID = AC.APP_ID JOIN V_WF_TASK_LIST WF WITH(NOLOCK) ON A.APP_NO = WF.TRANSACTION_CODE",
-        "where":"WHERE APP_CURR_STAT == 'COMM'"
+        "select": "SELECT A.APP_NO AS AppNo, AC.CUST_NAME AS CustName, A.PROD_OFFERING_NAME AS ProdOfferingName, A.APP_CURR_STEP AS AppCurrStep, A.LOB_CODE AS LobCode, A.APP_ID AS AppId,A.APP_STAT AS appStat, WF.USERNAME as ClaimBy, A.ORI_OFFICE_CODE as OriOfficeCode,WTL.CLAIM_STAT AS ClaimStat",
+        "from": "FROM dbo.APP A WITH(NOLOCK) LEFT JOIN dbo.APP_CUST AC WITH(NOLOCK) ON A.APP_ID = AC.APP_ID JOIN V_WF_TASK_LIST WF WITH(NOLOCK) ON A.APP_NO = WF.TRANSACTION_CODE JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON A.APP_NO = WTL.TRANSACTION_CODE",
+        "where":"WHERE A.APP_CURR_STEP = 'COMM'"
     },
     "bodyList": [
         {
@@ -161,7 +166,7 @@
             "action": [
                 {
                     "type": "edit",
-                    "path": "/CreditProcess/CommissionReserveFund",
+                    "path": "/CreditProcess/CommissionReserveFund/comission-reserved-fund-detail",
                     "param": [
                         {
                             "type": "AppId",
