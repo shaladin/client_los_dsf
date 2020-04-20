@@ -14,6 +14,8 @@ import { environment } from 'environments/environment';
 export class MouApprovalGeneralComponent implements OnInit {
   mouCustObj: MouCustObj;
   MouCustId : any;
+  taskId: number;
+  instanceId: number;
   MouType : string = "GENERAL";
   inputObj: any;
 
