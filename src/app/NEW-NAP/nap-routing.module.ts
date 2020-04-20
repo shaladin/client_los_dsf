@@ -26,7 +26,7 @@ const routes: Routes = [
             },
             {
                 path: 'CreditProcess',
-                loadChildren: './business-process/additional-process/additional-process.module#AdditionalProcessSharingModule'
+                loadChildren: './business-process/credit-process/credit-process.module#CreditProcessSharingModule'
             },
             {
                 path: 'AdminProcess',
