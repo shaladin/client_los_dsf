@@ -98,6 +98,8 @@ export class MouReviewFactoringComponent implements OnInit {
     var mouObj = { MouCustId: this.MouCustId, WfTaskListId: this.WfTaskListId }
     this.http.post(AdInsConstant.ReturnMouReview, mouObj).subscribe(
       (response) => {
+        this.toastr.successMessage(response["message"]);
+        this.router.navigate(["/Mou/Cust/ReviewPaging"]);
       })
   }
 }

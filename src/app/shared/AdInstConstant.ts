@@ -35,6 +35,9 @@ export class AdInsConstant {
   public static AppStepPGLV = "PGLV";
   public static AppStepCSR = "CSR";
 
+  public static GENERAL = "GENERAL";
+  public static FACTORING = "FACTORING";
+
   // ASSET
   public static GetListKeyValueByCode = environment.FoundationR3Url + "/AssetType/GetListKeyValueByCode";
 
