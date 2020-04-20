@@ -7,43 +7,7 @@
       "name": "MC.MOU_CUST_NO",
       "id": "MouCustNoId",
       "value": "",
-      "label": "MOU No",
-      "placeholder": "Placeholder",
-      "datatype": "text"
-    },
-    {
-      "type": "textbox",
-      "name": "MC.CUST_NAME",
-      "id": "CustNameId",
-      "value": "",
-      "label": "Customer Name",
-      "placeholder": "Placeholder",
-      "datatype": "text"
-    },
-    {
-      "type": "datepicker",
-      "name": "MC.MOU_CUST_DT",
-      "id": "CustDtIdGte",
-      "value": "",
-      "label": "MOU Date From",
-      "restriction": "gte",
-      "datatype": "date"
-    },
-    {
-      "type": "datepicker",
-      "name": "MC.MOU_CUST_DT",
-      "id": "CustDtIdLte",
-      "value": "",
-      "label": "MOU Date To",
-      "restriction": "lte",
-      "datatype": "date"
-    },
-    {
-      "type": "textbox",
-      "name": "MC.REF_NO",
-      "id": "RefNoId",
-      "value": "",
-      "label": "Reference No",
+      "label": "MOU NO",
       "placeholder": "Placeholder",
       "datatype": "text"
     },
@@ -57,9 +21,57 @@
       "isFromURL": true,
       "isSelectOne": false,
       "url": "http://r3app-server.ad-ins.com/LOS/MouCust/GetListKeyValueMouType",
-      "label": "Mou Type",
+      "label": "MOU TYPE",
       "items": [],
       "itemsUrl": []
+    },
+    {
+      "type": "textbox",
+      "name": "MC.CUST_NAME",
+      "id": "CustNameId",
+      "value": "",
+      "label": "CUSTOMER NAME",
+      "placeholder": "Placeholder",
+      "datatype": "text"
+    },
+    {
+      "type": "dropdown",
+      "name": "MC.IS_REVOLVING",
+      "id": "IsRevolvingId",
+      "label": "REVOLVING",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": false,
+      "isSelectOne": false,
+      "items": [
+        {
+          "key": true,
+          "value": "Yes"
+        },
+        {
+          "key": false,
+          "value": "No"
+        }
+      ],
+      "itemsUrl": []
+    },
+    {
+      "type": "datepicker",
+      "name": "MC.MOU_CUST_DT",
+      "id": "CustDtIdGte",
+      "value": "",
+      "label": "MOU DATE FROM",
+      "restriction": "gte",
+      "datatype": "date"
+    },
+    {
+      "type": "datepicker",
+      "name": "MC.MOU_CUST_DT",
+      "id": "CustDtIdLte",
+      "value": "",
+      "label": "MOU DATE TO",
+      "restriction": "lte",
+      "datatype": "date"
     },
     {
       "type": "dropdown",
@@ -155,7 +167,7 @@
   "querystring": {
     "select": "SELECT MC.MOU_CUST_NO AS MouCustNo, WTL.WF_TASK_LIST_ID AS WfTaskListId, WTL.CLAIM_STAT AS ClaimStat, WTL.USERNAME AS ClaimBy, WTL.OFFICE_CODE AS OfficeCode, MC.CUST_NAME AS CustName, MC.MOU_CUST_DT AS MouCustDt,MC.END_DT AS EndDt, MC.PLAFOND_AMT AS PlafondAmt, MC.IS_REVOLVING AS IsRevolving, MC.REF_NO AS RefNo, MC.MR_MOU_TYPE_CODE AS MrMouTypeCode, MC.MOU_CUST_ID AS MouCustId",
     "from": "FROM dbo.MOU_CUST MC WITH(NOLOCK) JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON MC.MOU_CUST_NO = WTL.TRANSACTION_CODE AND WTL.ACT_CODE = 'LEGAL_RVW'",
-    "where" : "WHERE WTL.END_EXECUTING_DATE IS NULL"
+    "where": "WHERE WTL.END_EXECUTING_DATE IS NULL"
   },
   "bodyList": [
     {
@@ -169,10 +181,10 @@
       "property": "MouCustNo",
       "path": "/Mou/Cust/Paging",
       "param": [
-          {
-              "type": "MouCustId",
-              "property": "MouCustId"
-          }
+        {
+          "type": "MouCustId",
+          "property": "MouCustId"
+        }
       ]
     },
     {
