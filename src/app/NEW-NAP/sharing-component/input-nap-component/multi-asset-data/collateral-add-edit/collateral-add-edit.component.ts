@@ -9,6 +9,7 @@ import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
 import { VendorEmpObj } from 'app/shared/model/VendorEmp.Model';
+import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 
 @Component({
   selector: 'app-collateral-add-edit',
@@ -24,15 +25,33 @@ export class CollateralAddEditComponent implements OnInit {
   getListAppAssetData: any;
   getListVendorEmp: any;
   InputLookupSupplierObj: any;
-  AssetDataForm = this.fb.group({
-    OfficeCode: [''],
-    OfficeName: [''],
-    CrtOfficeCode: [''],
-    CrtOfficeName: [''],
-    OrderNo:[''],
-    LobCode: [''],
-    LobName:[''],
-    LeadSource: [''],
+  inputLookupCollNameObj: any;
+  inputFieldLegalObj: any;
+  inputFieldLocationObj: any;
+  AddCollForm = this.fb.group({
+    AssetTypeCode: [''],
+    SerialNo1: [''],
+    SerialNo2: [''],
+    CollateralValueAmt: [''],
+    SerialNo3: [''],
+    Notes: [''],
+    SerialNo4:[''],
+
+    OwnerName:[''],
+    MrIdType:[''],
+    OwnerRelationship:[''],
+    OwnerIdNo:[''],
+
+    AssetRegion:[''],
+    Transmition:[''],
+    BpkpIssuer:[''],
+    Category:[''],
+    BpkpIssueDate:[''],
+
+    CollPercentage:[''],
+
+    FullAssetCode: [''],
+    FullAssetName:[''],
 
     BranchManagerName: [''],
     BranchManagerNo: [''],
@@ -68,25 +87,44 @@ export class CollateralAddEditComponent implements OnInit {
     this.http.post(this.getListVendorEmp, this.branchObj).subscribe(
     (response) => {
         this.listBranchObj = response["ReturnObject"];
-        this.AssetDataForm.patchValue({
+        this.AddCollForm.patchValue({
             BranchManagerName: this.listBranchObj.find(x => x.Key == event.target.value).Value
           });
     });
   }
 
-  BranchChanged(event){
-    this.AssetDataForm.patchValue({
-      OfficeName: this.listBranchObj.find(x => x.Key == event.target.value).Value
+  // BranchChanged(event){
+  //   this.AddCollForm.patchValue({
+  //     OfficeName: this.listBranchObj.find(x => x.Key == event.target.value).Value
+  //   });
+  // }
+
+  getLookupCollateralName(event) {
+    this.AddCollForm.patchValue({
+      FullAssetCode: event.AssetTypeCode,
+      //FullAssetName: event.FullAssetName
     });
   }
 
   ngOnInit() {
+    this.inputFieldLegalObj = new InputFieldObj();
+    this.inputFieldLegalObj.inputLookupObj = new InputLookupObj();
+    this.inputFieldLocationObj = new InputFieldObj();
+    this.inputFieldLocationObj.inputLookupObj = new InputLookupObj();
+
     this.InputLookupSupplierObj = new InputLookupObj();
     this.InputLookupSupplierObj.urlJson = "./assets/uclookup/NAP/lookupSupplier.json";
     this.InputLookupSupplierObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
     this.InputLookupSupplierObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupSupplierObj.pagingJson = "./assets/uclookup/NAP/lookupSupplier.json";
     this.InputLookupSupplierObj.genericJson = "./assets/uclookup/NAP/lookupSupplier.json";
+
+    this.inputLookupCollNameObj = new InputLookupObj();
+    this.inputLookupCollNameObj.urlJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
+    this.inputLookupCollNameObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.inputLookupCollNameObj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupCollNameObj.pagingJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
+    this.inputLookupCollNameObj.genericJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
   }
 
   editItem(custAddrObj: any) {
