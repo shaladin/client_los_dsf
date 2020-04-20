@@ -52,6 +52,24 @@
       "datatype": "text"
     },
     {
+      "type": "textbox",
+      "name": "LA.FULL_ASSET_NAME",
+      "id": "FullAssetNameId",
+      "value": "",
+      "label": "Full Asset Name",
+      "placeholder": "Placeholder",
+      "datatype": "text"
+    },
+    {
+      "type": "textbox",
+      "name": "LC.CUST_NAME",
+      "id": "CustNameId",
+      "value": "",
+      "label": "Customer Name",
+      "placeholder": "Placeholder",
+      "datatype": "text"
+    },
+    {
       "type": "dropdown",
       "name": "WTL.CLAIM_STAT",
       "id": "ActiveStatusId",
@@ -79,24 +97,6 @@
       "value": "",
       "label": "CLAIM BY",
       "placeholder": "Placeholder"
-    },
-    {
-      "type": "textbox",
-      "name": "LA.FULL_ASSET_NAME",
-      "id": "FullAssetNameId",
-      "value": "",
-      "label": "Full Asset Name",
-      "placeholder": "Placeholder",
-      "datatype": "text"
-    },
-    {
-      "type": "textbox",
-      "name": "LC.CUST_NAME",
-      "id": "CustNameId",
-      "value": "",
-      "label": "Customer Name",
-      "placeholder": "Placeholder",
-      "datatype": "text"
     }
   ],
   "headerList": [

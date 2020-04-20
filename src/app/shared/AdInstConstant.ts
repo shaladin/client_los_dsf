@@ -98,7 +98,7 @@ export class AdInsConstant {
 
 
   //Asset Master
-  public static GetAssetMasterTypeByFullAssetCode = "http://localhost:5000/AssetMaster/GetAssetMasterTypeByFullAssetCode";
+  public static GetAssetMasterTypeByFullAssetCode = environment.FoundationR3Url + "AssetMaster/GetAssetMasterTypeByFullAssetCode";
    
     // App Commission
     public static AddOrEditAppCommissionData = "/AppCommission/AddOrEditAppCommissionData";
@@ -144,7 +144,7 @@ export class AdInsConstant {
   public static LobCodeRFN4W = "RFN4W";
   
   //Asset Accessory
-  public static GetAssetAccessoryByCode = "http://localhost:5000/AssetAccessory/GetAssetAccessoryByCode";
+  public static GetAssetAccessoryByCode = environment.FoundationR3Url + "/AssetAccessory/GetAssetAccessoryByCode";
 
   //Asset Master
 
@@ -390,7 +390,7 @@ export class AdInsConstant {
 
   //REF PROV DISTRICT
   public static GetRefProvDistrictPaging = "/RefProvDistrict/GetRefProvDistrictPaging";
-  public static GetRefProvDistrictByProvDistrictCode = "http://localhost:5000/RefProvDistrict/GetRefProvDistrictByProvDistrictCode";
+  public static GetRefProvDistrictByProvDistrictCode = environment.FoundationR3Url +"/RefProvDistrict/GetRefProvDistrictByProvDistrictCode";
 
   //MENU
   public static GetRefFormPaging = "/MenuManagement/GetRefFormPaging";
@@ -711,8 +711,8 @@ export class AdInsConstant {
   public static GetAppAssetListByAppId = environment.losUrl + "/AppAsset/GetAppAssetListByAppId";
   public static GetAllAssetDataForPOByAsset = environment.losUrl + "/AppAsset/GetAllAssetDataForPOByAsset";
   public static GetAppAssetByAgrmntId = environment.losUrl + "/AppAsset/GetAppAssetByAgrmntId";
-  public static GetAllAssetDataByAppId = "http://localhost:5001/AppAsset/GetAllAssetDataByAppId";
-  public static AddEditAllAssetData = "http://localhost:5001/AppAsset/AddEditAllAssetData";
+  public static GetAllAssetDataByAppId = environment.losUrl + "/AppAsset/GetAllAssetDataByAppId";
+  public static AddEditAllAssetData = environment.losUrl + "AppAsset/AddEditAllAssetData";
 
   //Asset Doc List
   public static GetAppAssetDataByAppId = environment.losUrl + "/AppAsset/GetAppAssetDataByAppId";
