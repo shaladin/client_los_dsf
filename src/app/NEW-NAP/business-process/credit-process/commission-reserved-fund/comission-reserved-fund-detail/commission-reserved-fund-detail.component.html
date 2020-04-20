@@ -1,0 +1,19 @@
+<div class="col-md-12 text-left">
+  <div class="card">
+      <lib-ucviewgeneric [viewInput]="viewProdMainInfoObj"> </lib-ucviewgeneric>
+
+      <aw-wizard #wizard navBarLayout="large-empty-symbols" [defaultStepIndex]="0">
+
+        <aw-wizard-step [awNavigationMode] navigateBackward="allow" navigateForward="allow" [stepTitle]="'Commission'" (stepEnter)="EnterTab('tab1')"
+          [navigationSymbol]="{ symbol: '1' }">
+          <app-commission *ngIf="isTab1 == true" [AppId]=appId></app-commission>
+        </aw-wizard-step>
+  
+        <aw-wizard-step [awNavigationMode] navigateBackward="allow" navigateForward="allow" [stepTitle]="'Reserved Fund'" (stepEnter)="EnterTab('tab2')"
+          [navigationSymbol]="{ symbol: '2' }">
+          <reserved-fund *ngIf="isTab2 == true" [appId]=appId></reserved-fund>
+        </aw-wizard-step>
+        
+      </aw-wizard>
+  </div>
+</div>

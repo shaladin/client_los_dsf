@@ -113,7 +113,7 @@
                             ],
                             "result": {
                                 "type": "url",
-                                "path": "/AppDupCheck/AppDupCheckPersonal",
+                                "path": "../AppDupCheck/AppDupCheckPersonal",
                                 "icon": "ft-edit-2",
                                 "param": [
                                     {
@@ -134,7 +134,7 @@
                             ],
                             "result": {
                                 "type": "url",
-                                "path": "/AppDupCheck/AppDupCheckCompany",
+                                "path": "../AppDupCheck/AppDupCheckCompany",
                                 "icon": "ft-edit-2",
                                 "param": [
                                     {
