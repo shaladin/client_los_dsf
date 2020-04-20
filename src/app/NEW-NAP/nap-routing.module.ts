@@ -22,8 +22,12 @@ const routes: Routes = [
                 loadChildren: './FCTR/input-nap.module#InputNapFCTRModule'
             },
             {
-                path: 'CreditProcess',
+                path: 'AdditionalProcess',
                 loadChildren: './business-process/additional-process/additional-process.module#AdditionalProcessSharingModule'
+            },
+            {
+                path: 'CreditProcess',
+                loadChildren: './business-process/credit-process/credit-process.module#CreditProcessSharingModule'
             },
             {
                 path: 'AdminProcess',

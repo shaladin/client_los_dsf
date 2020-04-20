@@ -10,7 +10,7 @@ import { AppCrdRvwDObj } from 'app/shared/model/AppCrdRvwDObj.Model';
 @Component({
   selector: 'app-credit-review-main',
   templateUrl: './credit-review-main.component.html',
-  styleUrls: ['./credit-review-main.component.scss']
+  // styleUrls: ['./credit-review-main.component.scss']
 })
 export class CreditReviewMainComponent implements OnInit {
 
@@ -50,7 +50,7 @@ export class CreditReviewMainComponent implements OnInit {
       "DEVC": 3,
       "APV": 4,
     };
-    this.AppStepIndex = 3;
+    this.AppStepIndex = 0;
     this.CustTypeCode = "";
     this.Arr = this.FormObj.get('arr') as FormArray;
     console.log(this.Arr);
