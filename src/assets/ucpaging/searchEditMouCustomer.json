@@ -11,6 +11,22 @@
             "placeholder": "Placeholder"
         },
         {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "MOU.MR_MOU_TYPE_CODE",
+            "id": "MrMouTypeCode",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "isSelectOne": false,
+            "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
+            "label": "MOU TYPE",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "RefMasterTypeCode",
+            "criteriaPropValue": "MOU_TYPE"
+        },
+        {
             "type": "textbox",
             "name": "MOU.CUST_NAME",
             "id": "CustNameId",
@@ -19,11 +35,32 @@
             "placeholder": "Placeholder"
         },
         {
+            "type": "dropdown",
+            "name": "MOU.IS_REVOLVING",
+            "id": "IsRevolvingId",
+            "label": "REVOLVING",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": false,
+            "isSelectOne": false,
+            "items": [
+                {
+                    "key": true,
+                    "value": "Yes"
+                },
+                {
+                    "key": false,
+                    "value": "No"
+                }
+            ],
+            "itemsUrl": []
+        },
+        {
             "type": "datepicker",
             "name": "MOU.MOU_CUST_DT",
             "id": "GreaterMouDtId",
             "value": "",
-            "label": "MOU DATE >=",
+            "label": "MOU DATE FROM",
             "restriction": "gte",
             "datatype": "date"
         },
@@ -32,38 +69,44 @@
             "name": "MOU.MOU_CUST_DT",
             "id": "LessMouDtId",
             "value": "",
-            "label": "MOU DATE <=",
+            "label": "MOU DATE TO",
             "restriction": "lte",
             "datatype": "date"
         },
         {
-            "type": "textbox",
-            "name": "MOU.REF_NO",
-            "id": "RefNoId",
-            "value": "",
-            "label": "Reference No.",
-            "placeholder": "Placeholder"
-        },
-        {
             "type": "dropdown",
-            "datatype": "text",
-            "name": "MOU.MR_MOU_TYPE_CODE",
-            "id": "MouTypeId",
+            "name": "WTL.CLAIM_STAT",
+            "id": "ActiveStatusId",
+            "label": "TASK CLAIM STATUS",
             "value": "",
             "placeholder": "Placeholder",
-            "isFromURL": true,
-            "isSelectOne": true,
-            "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
-            "label": "MOU TYPE",
-            "items": [],
-            "itemsUrl": [],
-            "criteriaPropName": "RefMasterTypeCode",
-            "criteriaPropValue": "MOU_TYPE"
+            "isFromURL": false,
+            "isSelectOne": false,
+            "items": [
+                {
+                    "key": "CLAIMED",
+                    "value": "CLAIMED"
+                },
+                {
+                    "key": "UNCLAIMED",
+                    "value": "UNCLAIMED"
+                }
+            ],
+            "itemsUrl": []
+        },
+        {
+            "type": "textbox",
+            "name": "WTL.USERNAME",
+            "id": "ClaimById",
+            "value": "",
+            "label": "CLAIM BY",
+            "placeholder": "Placeholder"
         }
     ],
     "querystring": {
-        "select": "SELECT MOU.MOU_CUST_NO AS mouCustNo, WTL.WF_TASK_LIST_ID AS WfTaskListId,MOU.CUST_NAME AS custName, MOU.MOU_CUST_DT AS mouCustDt, MOU.REF_NO AS refNo, MOU.MR_MOU_TYPE_CODE AS mrMouTypeCode, MOU.MOU_CUST_ID AS mouCustId, MOU.MOU_STAT AS MouStat",
-        "from": "FROM dbo.MOU_CUST MOU WITH(NOLOCK) LEFT JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON MC.MOU_CUST_NO"
+        "select": "SELECT MOU.MOU_CUST_NO AS MouCustNo, WTL.WF_TASK_LIST_ID AS WfTaskListId,MOU.CUST_NAME AS CustName, MOU.MOU_CUST_DT AS MouCustDt, MOU.REF_NO AS RefNo, MOU.MR_MOU_TYPE_CODE AS MrMouTypeCode, MOU.MOU_CUST_ID AS MouCustId, MOU.MOU_STAT AS MouStat",
+        "from": "FROM dbo.MOU_CUST MOU WITH(NOLOCK) JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON MOU.MOU_CUST_NO = WTL.TRANSACTION_CODE AND WTL.ACT_CODE = 'MOU_RETURN'",
+        "where" : "WHERE WTL.END_EXECUTING_DATE IS NULL"
     },
     "headerList": [
         {
@@ -107,7 +150,8 @@
             "type": "link",
             "position": "center",
             "property": "MouCustNo",
-            "path": "/Mou/Cust/Paging",
+            "path": "/Mou/Cust/View",
+            "target": "_blank",
             "param": [
                 {
                     "type": "MouCustId",
@@ -152,8 +196,8 @@
                             "property": "edit"
                         },
                         {
-                            "type": "mrMouTypeCode",
-                            "property": "mrMouTypeCode"
+                            "type": "MrMouTypeCode",
+                            "property": "MrMouTypeCode"
                         },
                         {
                             "type": "WfTaskListId",
