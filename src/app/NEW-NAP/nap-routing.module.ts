@@ -32,7 +32,7 @@ const routes: Routes = [
             {
                 path: 'AddProcess',
                 loadChildren: './business-process/additional-process/additional-process.module#AdditionalProcessSharingModule'
-            },
+            }
         ]
     }
 ]

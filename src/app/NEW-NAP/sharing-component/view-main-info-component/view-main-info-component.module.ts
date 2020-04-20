@@ -17,7 +17,6 @@ import { AppMainInfoComponent } from "./app-main-info/app-main-info.component";
   ],
   imports: [
     CommonModule,
-
     AdInsModule,
     ReactiveFormsModule,
     UcShowErrorsModule,
