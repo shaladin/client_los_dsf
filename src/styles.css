@@ -298,6 +298,14 @@ aw-wizard-navigation-bar.horizontal ul.steps-indicator li a .label {
     float: right !important;
   }
 
+.form-inline-right{
+    display: flex; 
+    justify-content: flex-end
+}
+
+.form-inline{
+    margin-bottom: 5px;
+}
 
 /* 
 .adInsReqMsg {
