@@ -6,6 +6,8 @@ import { FormBuilder } from '@angular/forms';
 import { WizardComponent } from 'angular-archwizard';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
+import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
+import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 
 @Component({
   selector: 'app-asset-data-paging',
@@ -17,10 +19,16 @@ export class AssetDataPagingComponent implements OnInit {
   IdCust: any;
   appAssetObj : any;
   listAppAssetObj: any;
+  appCollateralObj: any;
+  listAppCollateralObj: any;
   getListAppAssetData: any;
+  gridAssetDataObj: any;
+  gridAppCollateralObj: any;
+  getListAppCollateral: any;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) { 
     this.getListAppAssetData = AdInsConstant.GetListAppAssetData;
+    this.getListAppCollateral = AdInsConstant.GetListAppCollateral;
 
     this.route.queryParams.subscribe(params => {
       if (params["IdCust"] != null) {
@@ -30,12 +38,47 @@ export class AssetDataPagingComponent implements OnInit {
   }
 
   ngOnInit() {
-      this.appAssetObj = new AppAssetObj();
-      this.appAssetObj.AppAssetId = "-";
-      this.http.post(this.getListAppAssetData, this.appAssetObj).subscribe(
-        (response) => {
-            this.listAppAssetObj = response["ReturnObject"];
-        });
+    this.gridAssetDataObj = new InputGridObj();
+    this.gridAssetDataObj.pagingJson = "./assets/ucgridview/gridAssetData.json";
+    
+    this.appAssetObj = new AppAssetObj();
+    this.appAssetObj.AppAssetId = "-";
+    this.http.post(this.getListAppAssetData, this.appAssetObj).subscribe(
+      (response) => {
+          this.listAppAssetObj = response["ReturnObject"];
+
+          var DetailForGridAsset ={
+            Data: response["ReturnObject"],
+            Count: "0"
+          }
+
+        this.gridAssetDataObj.resultData = DetailForGridAsset;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+    this.gridAppCollateralObj = new InputGridObj();
+    this.gridAppCollateralObj.pagingJson = "./assets/ucgridview/gridAppCollateral.json";
+    
+    this.appCollateralObj = new AppCollateralObj();
+    this.appCollateralObj.AppCollateralId = "-";
+    this.http.post(this.getListAppCollateral, this.appCollateralObj).subscribe(
+      (response) => {
+          this.listAppCollateralObj = response["ReturnObject"];
+
+          var DetailForGridCollateral ={
+            Data: response["ReturnObject"],
+            Count: "0"
+          }
+
+        this.gridAppCollateralObj.resultData = DetailForGridCollateral;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   editItem(custAddrObj: any) {

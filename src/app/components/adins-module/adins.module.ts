@@ -13,8 +13,8 @@ import { UclookupgenericModule } from '@adins/uclookupgeneric';
 import { UcviewgenericModule } from '@adins/ucviewgeneric';
 import { UcShowErrorsModule } from '@adins/uc-show-errors';
 import { UcapprovalModule } from '@adins/ucapproval';
-import { UcaddressModule } from '@adins/ucaddress';
 import { UcgridviewModule } from '@adins/ucgridview';
+import { UcaddressModule } from '@adins/ucaddress';
 
 @NgModule({
     exports: [
@@ -29,8 +29,8 @@ import { UcgridviewModule } from '@adins/ucgridview';
         UcviewgenericModule,
         UcShowErrorsModule,
         UcapprovalModule,
-        UcaddressModule,
-        UcgridviewModule
+        UcgridviewModule,
+        UcaddressModule
     ],
     imports: [
         CommonModule,
@@ -47,8 +47,8 @@ import { UcgridviewModule } from '@adins/ucgridview';
         UcviewgenericModule,
         UcShowErrorsModule,
         UcapprovalModule,
-        UcaddressModule,
-        UcgridviewModule
+        UcgridviewModule,
+        UcaddressModule
     ],
     declarations: [
     ]
