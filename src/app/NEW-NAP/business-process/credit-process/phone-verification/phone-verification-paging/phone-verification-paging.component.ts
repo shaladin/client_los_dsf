@@ -1,37 +1,38 @@
-import { Component, OnInit } from '@angular/core';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { environment } from 'environments/environment';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { environment } from "environments/environment";
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { AdInsConstant } from "app/shared/AdInstConstant";
+import { DecimalPipe } from "@angular/common";
+import { UcPagingObj } from "app/shared/model/UcPagingObj.Model";
+import { CriteriaObj } from "app/shared/model/CriteriaObj.model";
 
 @Component({
-  selector: 'app-phone-verification-paging',
-  templateUrl: './phone-verification-paging.component.html',
-  styleUrls: ['./phone-verification-paging.component.scss']
+  selector: "phone-verification-paging",
+  templateUrl: "./phone-verification-paging.component.html",
+  providers: [DecimalPipe]
 })
 export class PhoneVerificationPagingComponent implements OnInit {
-
-  inputPagingObj: UcPagingObj;
+  inputPagingObj: any;
+  arrCrit: any;
   constructor() { }
 
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
-    this.inputPagingObj._url = "./assets/ucpaging/searchAppReservedFund.json";
+    this.inputPagingObj._url = "./assets/ucpaging/searchAppPhoneVerif.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
-    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppReservedFund.json";
+    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppPhoneVerif.json";
 
-    var critInput = new CriteriaObj();
-    critInput.propName = "A.APP_CURR_STEP";
-    critInput.restriction = AdInsConstant.RestrictionEq;
-    critInput.value = AdInsConstant.AppStepPhnVerif;
-    this.inputPagingObj.addCritInput.push(critInput);
-
-    var critInput = new CriteriaObj();
-    critInput.propName = "A.LOB_CODE";
-    critInput.restriction = AdInsConstant.RestrictionEq;
-    critInput.value = AdInsConstant.LobCodeRFN4W;
-    this.inputPagingObj.addCritInput.push(critInput);
+    this.arrCrit = new Array();
+    var critObj = new CriteriaObj();
+    critObj.restriction = AdInsConstant.RestrictionLike;
+    critObj.propName = 'a.APP_CURR_STEP';
+    critObj.value = AdInsConstant.AppStepPhnVerif;
+    this.arrCrit.push(critObj);
+    var critTypeObj = new CriteriaObj();
+    critTypeObj.restriction = AdInsConstant.RestrictionLike;
+    critTypeObj.propName = 'ac.MR_CUST_TYPE_CODE';
+    critTypeObj.value = AdInsConstant.CustTypePersonal;
+    this.arrCrit.push(critTypeObj);
+    this.inputPagingObj.addCritInput = this.arrCrit;
   }
-
 }

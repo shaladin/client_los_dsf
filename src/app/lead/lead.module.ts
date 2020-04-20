@@ -22,8 +22,6 @@ import { CustomerSelfVerificationComponent } from './verification/customer-self-
 import { CustomerDataComponent } from './verification/customer-self-verification/customer-data/customer-data.component';
 import { LeadDataComponent } from './verification/customer-self-verification/lead-data/lead-data.component';
 import { LeadMainInfoComponent } from 'app/view/lead-main-info/lead-main-info.component';
-import { CustJobDataComponent } from "app/NAP/nap-tab/customer-data/component/job-data/cust-job-data.component";
-import { CustSocmedComponent } from "app/NAP/nap-tab/customer-data/component/socmed/cust-socmed.component";
 // import { ShowErrorsComponent } from "./app/test-new/show-errors.component";
 import { LeadVerifComponent } from './lead-verif/lead-verif.component';
 import { LeadInputComponent } from "./lead-input/lead-input.component";
@@ -49,6 +47,8 @@ import { LeadUpdateMainInfoComponent } from "./lead-update/lead-update-main-info
 import { LeadUpdateCustDataComponent } from "./lead-update/lead-update-cust-data/lead-update-cust-data.component";
 import { LeadUpdateLeadDataComponent } from "./lead-update/lead-update-lead-data/lead-update-lead-data.component";
 import { NgxCurrencyModule } from "ngx-currency";
+import { CustJobDataComponent } from "app/NEW-NAP/sharing-component/input-nap-component/customer-data/component/job-data/cust-job-data.component";
+import { CustSocmedComponent } from "app/NEW-NAP/sharing-component/input-nap-component/customer-data/component/socmed/cust-socmed.component";
 export const customCurrencyMaskConfig = {     
   align: "left",     
   allowNegative: true,     

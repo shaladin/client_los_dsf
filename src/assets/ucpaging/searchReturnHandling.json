@@ -1,5 +1,5 @@
 {
-    "title": "Return Handling - Edit Commission & Reserved Fund",
+    "title": "Return Handling",
     "exportExcel": false,
     "component": [
         {
@@ -7,7 +7,7 @@
             "name": "A.APP_NO",
             "id": "AppNoId",
             "value": "",
-            "label": "Application No",
+            "label": "APPLICATION NO",
             "placeholder": "Placeholder"
         },
         {
@@ -15,13 +15,13 @@
             "name": "AC.CUST_NAME",
             "id": "CustNameId",
             "value": "",
-            "label": "Customer Name",
+            "label": "CUSTOMER NAME",
             "placeholder": "Placeholder"
         },
         {
             "type": "dropdown",
             "datatype": "text",
-            "name": "A.ORI_OFFICE_CODE",
+            "name": "A.ORI_OFFICE_NAME",
             "id": "OfficeNameId",
             "value": "",
             "placeholder": "Placeholder",
@@ -37,15 +37,15 @@
             "name": "A.PROD_OFFERING_NAME",
             "id": "ProdOfferingNameId",
             "value": "",
-            "label": "Product Offering Name",
+            "label": "PROD OFFERING NAME",
             "placeholder": "Placeholder"
         },
         {
             "type": "textbox",
-            "name": "WF.USERNAME",
-            "id": "TaskClaimById",
+            "name": "WTL.USERNAME",
+            "id": "claimById",
             "value": "",
-            "label": "Task Claim By",
+            "label": "CLAIM BY",
             "placeholder": "Placeholder"
         },
         {
@@ -70,24 +70,23 @@
             "itemsUrl": []
         }
     ],
+    "querystring": {
+        "select": "SELECT WTL.USERNAME AS ClaimBy, A.ORI_OFFICE_NAME AS OriOfficeName, A.APP_NO AS AppNo, AC.CUST_NAME AS CustName, A.PROD_OFFERING_NAME AS ProdOfferingName, RHH.RETURN_HANDLING_H_ID AS ReturnHandlingHId, WTL.WF_TASK_LIST_ID AS WfTaskListId, A.APP_ID AS AppId",
+        "from": "FROM dbo.APP A WITH(NOLOCK) JOIN dbo.V_WF_TASK_LIST WTL WITH(NOLOCK) ON A.APP_NO = WTL.TRANSACTION_CODE AND WTL.ACT_CODE = 'RETURN_HANDLING' JOIN dbo.RETURN_HANDLING_H RHH WITH(NOLOCK) ON A.APP_ID = RHH.APP_ID JOIN dbo.APP_CUST AC WITH(NOLOCK) ON A.APP_ID = AC.APP_ID",
+        "where" : "WHERE WTL.END_EXECUTING_DATE IS NULL"
+    },
     "headerList": [
         {
-            "type": "text",
+            "type": "sort",
             "position": "center",
-            "label": "SLA",
-            "name": "SLA"
-        },
-        {
-            "type": "sort",
-            "position": "left",
             "label": "Claim By",
-            "name": "WF.USERNAME"
+            "name": "WTL.USERNAME"
         },
         {
             "type": "sort",
-            "position": "left",
-            "label": "Office Name",
-            "name": "A.ORI_OFFICE_CODE"
+            "position": "center",
+            "label": "Office",
+            "name": "A.ORI_OFFICE_NAME"
         },
         {
             "type": "sort",
@@ -109,36 +108,20 @@
         },
         {
             "type": "label",
-            "position": "left",
-            "label": "Status",
-            "name": "A.APP_STAT"
-        },
-        {
-            "type": "label",
             "position": "center",
             "label": "Action"
         }
     ],
-    "querystring": {
-        "select": "SELECT A.APP_NO AS AppNo, AC.CUST_NAME AS CustName, A.PROD_OFFERING_NAME AS ProdOfferingName, A.APP_CURR_STEP AS AppCurrStep, A.LOB_CODE AS LobCode, A.APP_ID AS AppId,A.APP_STAT AS appStat, WF.USERNAME as ClaimBy, A.ORI_OFFICE_CODE as OriOfficeCode,WTL.CLAIM_STAT AS ClaimStat",
-        "from": "FROM dbo.APP A WITH(NOLOCK) LEFT JOIN dbo.APP_CUST AC WITH(NOLOCK) ON A.APP_ID = AC.APP_ID JOIN V_WF_TASK_LIST WF WITH(NOLOCK) ON A.APP_NO = WF.TRANSACTION_CODE JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON A.APP_NO = WTL.TRANSACTION_CODE",
-        "where":"WHERE A.APP_CURR_STEP = 'COMM'"
-    },
     "bodyList": [
         {
             "type": "text",
-            "position": "Center",
-            "property": "Sla"
-        },
-        {
-            "type": "text",
-            "position": "left",
+            "position": "center",
             "property": "ClaimBy"
         },
         {
             "type": "text",
-            "position": "left",
-            "property": "OriOfficeCode"
+            "position": "center",
+            "property": "OriOfficeName"
         },
         {
             "type": "text",
@@ -156,21 +139,24 @@
             "property": "ProdOfferingName"
         },
         {
-          "type": "text",
-          "position": "center",
-          "property": "appStat"
-        },
-        {
             "type": "action",
             "position": "center",
             "action": [
                 {
                     "type": "edit",
-                    "path": "/CreditProcess/CommissionReserveFund/comission-reserved-fund-detail",
+                    "path": "../ReturnHandling/Detail",
                     "param": [
                         {
                             "type": "AppId",
                             "property": "AppId"
+                        },
+                        {
+                            "type": "ReturnHandlingHId",
+                            "property": "ReturnHandlingHId"
+                        },
+                        {
+                            "type": "WfTaskListId",
+                            "property": "WfTaskListId"
                         }
                     ]
                 }

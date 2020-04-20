@@ -6,7 +6,7 @@
       "name": "FULL_ASSET_CODE",
       "id": "assetCode",
       "value": "",
-      "label": "A.Full Asset Code",
+      "label": "Full Asset Code",
       "placeholder": "Asset Code"
     },
     {
@@ -14,7 +14,7 @@
       "name": "FULL_ASSET_NAME",
       "id": "assetName",
       "value": "",
-      "label": "A.Full Asset Name",
+      "label": "Full Asset Name",
       "placeholder": "Asset Name"
     }
   ],
@@ -31,7 +31,7 @@
     },
     {
       "type": "sort",
-      "position": "left",
+      "position": "center",
       "label": "Full Asset Name",
       "name": "FullAssetName"
     },

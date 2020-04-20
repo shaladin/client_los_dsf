@@ -156,7 +156,7 @@
             "action": [
                 {
                     "type": "edit",
-                    "path": "/Nap/AppFromLead/Detail",
+                    "path": "/Nap/ConsumerFinance/InputNap/NapFromLead/Detail",
                     "param": [
                         {
                             "type": "LeadId",
