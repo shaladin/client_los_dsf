@@ -179,7 +179,7 @@
             "type": "link",
             "position": "center",
             "property": "MouCustNo",
-            "path": "/Mou/Cust/Paging",
+            "path": "/Mou/Cust/View",
             "param": [
                 {
                     "type": "MouCustId",
