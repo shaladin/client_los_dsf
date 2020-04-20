@@ -60,7 +60,7 @@
             "name": "MOU.MOU_CUST_DT",
             "id": "GreaterMouDtId",
             "value": "",
-            "label": "MOU DATE >=",
+            "label": "MOU DATE FROM",
             "restriction": "gte",
             "datatype": "date"
         },
@@ -69,7 +69,7 @@
             "name": "MOU.MOU_CUST_DT",
             "id": "LessMouDtId",
             "value": "",
-            "label": "MOU DATE <=",
+            "label": "MOU DATE TO",
             "restriction": "lte",
             "datatype": "date"
         },
@@ -188,7 +188,7 @@
         },
         {
             "type": "date",
-            "position": "left",
+            "position": "center",
             "property": "MouCustDt"
         },
         {
