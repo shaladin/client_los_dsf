@@ -9,11 +9,8 @@ const routes: Routes = [
     path: '',
     children: [
       {
-        path: 'dummy',
-        component: DummyComponent,
-        data: {
-          title: 'dummy'
-        }
+        path: 'AdminProcess',
+        loadChildren: './admin-process/admin-process.module#AdminProcessFL4WModule'
       },
       {
         path: 'AppInquiry',

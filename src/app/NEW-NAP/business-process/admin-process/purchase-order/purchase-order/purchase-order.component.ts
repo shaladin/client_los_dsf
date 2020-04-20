@@ -11,7 +11,8 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
   styleUrls: ['./purchase-order.component.scss']
 })
 export class PurchaseOrderComponent implements OnInit {
-  @Input() PODetailUrl: string;
+  urlDetail: string;
+  lobCode: string;
   AppId: number;
   AgrmntId: number;
   TaskListId: number;
@@ -30,6 +31,18 @@ export class PurchaseOrderComponent implements OnInit {
       }
       if (params["TaskListId"] != null) {
         this.TaskListId = params["TaskListId"];
+      }
+      if (params["LobCode"] != null){
+        this.lobCode = params["LobCode"];
+      }
+      switch (this.lobCode) {
+        case "FL4W":
+          this.urlDetail = "/Nap/FinanceLeasing/AdminProcess/PurchaseOrder/Detail";
+          break;
+      
+        default:
+          this.urlDetail = "/Nap/AdminProcess/PurchaseOrder/PO/Detail";
+          break;
       }
     });
   }
