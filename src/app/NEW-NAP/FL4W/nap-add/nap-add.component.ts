@@ -10,11 +10,12 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 
 @Component({
-  selector: 'app-app-add',
-  templateUrl: './app-add.component.html',
-  styleUrls: ['./app-add.component.scss']
+  selector: 'app-nap-add',
+  templateUrl: './nap-add.component.html' 
 })
-export class AppAddComponent implements OnInit { 
+export class NapAddComponent implements OnInit {
+
+ 
   param;
   ProductOfferingIdentifier;
   ProductOfferingNameIdentifier;
@@ -120,11 +121,11 @@ export class AppAddComponent implements OnInit {
     this.inputLookupObjCopyProduct.isRequired = false;
     
     this.inputLookupObjName = new InputLookupObj();
-    this.inputLookupObjName.urlJson = "./assets/uclookup/NAP/lookupAppNameFl4W.json";
+    this.inputLookupObjName.urlJson = "./assets/uclookup/NAP/lookupAppNameFL4W.json";
     this.inputLookupObjName.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputLookupObjName.urlEnviPaging = environment.FoundationR3Url;
-    this.inputLookupObjName.pagingJson = "./assets/uclookup/NAP/lookupAppNameFl4W.json";
-    this.inputLookupObjName.genericJson = "./assets/uclookup/NAP/lookupAppNameFl4W.json";
+    this.inputLookupObjName.pagingJson = "./assets/uclookup/NAP/lookupAppNameFL4W.json";
+    this.inputLookupObjName.genericJson = "./assets/uclookup/NAP/lookupAppNameFL4W.json";
     this.inputLookupObjName.nameSelect = this.NapAppForm.controls.ProdOfferingName.value;
  
 
@@ -303,5 +304,6 @@ export class AppAddComponent implements OnInit {
     });
     // console.log(this.NapAppForm);
   }
+
 
 }
