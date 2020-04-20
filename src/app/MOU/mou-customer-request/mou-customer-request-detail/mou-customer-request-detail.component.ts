@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Location, DatePipe } from '@angular/common';
@@ -10,7 +9,6 @@ import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { RefOfficeObj } from 'app/shared/model/RefOfficeObj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { link } from 'fs';
 
 @Component({
   selector: 'app-mou-customer-request-detail',
@@ -129,7 +127,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"]};
     console.log(wfClaimObj);
     this.httpClient.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
+      () => {
       });
   }
 
@@ -145,7 +143,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     });
   }
 
-  Save(enjiForm){
+  Save(){
     var mouCustFormData = this.MOUMainInfoForm.value;
 
     if(this.pageType == "add"){

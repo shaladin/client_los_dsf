@@ -102,7 +102,7 @@
             "action": [
                 {
                     "type": "edit",
-                    "path": "/Nap/AppAddDetail",
+                    "path": "../Add/Detail",
                     "param": [
                         {
                             "type": "AppId",

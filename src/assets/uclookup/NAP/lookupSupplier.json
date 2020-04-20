@@ -31,7 +31,7 @@
     },
     {
       "type": "sort",
-      "position": "left",
+      "position": "center",
       "label": "Supplier Name",
       "name": "VendorName"
     },

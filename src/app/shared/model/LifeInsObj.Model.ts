@@ -6,10 +6,13 @@ export class LifeInsObj {
     RowVersion: any;
     MrLifeInsPaidMethodCode : any;
     IsCustCover : any;
+    IsSpouseCover : any;
+    IsGuarantorCover: any;
+    LifeInscoBranchCode : any;
     LifeInscoBranchName : any;
     TotalLifeInsCptlzAmt : any;
     NewCoverNotes : any;
     InscoAdminFeeAmt: any;
-    LifeInsDObj : LifeInsDObj;
-  constructor() { this.AppLifeInsHId = 0; this.RowVersion = "" ; this.LifeInsDObj = new LifeInsDObj();}
+    ListAppLifeInsD : Array<LifeInsDObj>;
+  constructor() { this.AppLifeInsHId = 0; this.RowVersion = "" ; this.ListAppLifeInsD = new Array<LifeInsDObj>();}
 }
