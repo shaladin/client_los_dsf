@@ -180,6 +180,7 @@
       "position": "left",
       "property": "MouCustNo",
       "path": "/Mou/Cust/View",
+      "target": "_blank",
       "param": [
         {
           "type": "MouCustId",

@@ -129,6 +129,7 @@
             "position": "center",
             "property": "mouCustNo",
             "path": "/Mou/Cust/View",
+            "target": "_blank",
             "param": [
                 {
                     "type": "MouCustId",

@@ -28,7 +28,7 @@ export class DocSignerComponent implements OnInit {
     addCritMouStat.DataType = 'text';
     addCritMouStat.propName = 'MOU.MOU_STAT';
     addCritMouStat.restriction = AdInsConstant.RestrictionEq;
-    addCritMouStat.value = 'MOU_DOC_SIGN';
+    addCritMouStat.value = 'DSG';
     this.arrCrit.push(addCritMouStat);
 
     const addCritOfficeCode = new CriteriaObj();
