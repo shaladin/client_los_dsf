@@ -27,6 +27,8 @@ export class MouDetailFactoringComponent implements OnInit {
   currencyList: any;
   isListedFctr: boolean;
   shouldComponentLoad: boolean;
+  isTenorInvalid: boolean;
+  tenorInvalidMsg: string;
   private mode: string = "add";
 
   MouDetailFactoringForm = this.fb.group({
@@ -38,13 +40,13 @@ export class MouDetailFactoringComponent implements OnInit {
     MrPaidByCode: [''],
     MrInstTypeCode: [''],
     SingleInstCalcMthd: [''],
-    TopDays: [''],
-    TenorFrom: [''],
-    TenorTo: [''],
+    TopDays: ['', [Validators.min(0)]],
+    TenorFrom: ['', [Validators.min(0)]],
+    TenorTo: ['', [Validators.min(0)]],
     PayFreqCode: [''],
     MrInstSchmCode: [''],
-    InterestRatePrcnt: [''],
-    RetentionPrcnt: [''],
+    InterestRatePrcnt: ['', [Validators.min(0), Validators.max(100)]],
+    RetentionPrcnt: ['', [Validators.min(0), Validators.max(100)]],
     IsListedCust: [false],
     Notes: [''],
     CurrCode: ['', [Validators.required]],
@@ -139,6 +141,24 @@ export class MouDetailFactoringComponent implements OnInit {
     var url;
 
     formData.IsListedCust = this.MouListedFctrComp.MouCustIsListedForm.controls["IsListedCust"].value;
+
+    if((formData.TenorFrom != "" || formData.TenorTo != "") && formData.TenorFrom > formData.TenorTo){
+      console.log("Tenor Invalid");
+      this.isTenorInvalid = true;
+      this.tenorInvalidMsg = "Invalid Tenor Range";
+      return false;
+    }
+    else{
+      if(formData.TenorFrom == ""){
+        formData.TenorFrom = 0;
+      }
+      if(formData.TenorTo == ""){
+        formData.TenorTo = 0;
+      }
+      console.log("Tenor Valid");
+      this.isTenorInvalid = false;
+      this.tenorInvalidMsg = "";
+    }
 
     if(this.mode == "add"){
       url = AdInsConstant.AddMouCustFctr;
