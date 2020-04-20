@@ -53,6 +53,7 @@ export class AdInsConstant {
   public static GetAppDetailForAppTabById = environment.losUrl + "/Application/GetAppDetailForAppTabById";
   public static AddAppFromLead = environment.losUrl + "/Application/AddAppFromLead";
 
+ 
 
   // App Asset
   public static GetAppAssetListByAppIdForCommision = "/AppAsset/GetAppAssetListByAppIdForCommision";
@@ -116,9 +117,16 @@ export class AdInsConstant {
   public static GetAppCommissionTax = "/AppCommission/GetAppCommissionTax";
 
 
+<<<<<<< HEAD
   public static GetRefOfficeByOfficeCode = environment.FoundationR3Url + "/RefOffice/GetRefOfficeByOfficeCode";
  
  
+=======
+  
+  // public static GetAppDetailForAppTabById = environment.losUrl + "/Application/GetAppDetailForAppTabById";
+  // public static AddAppFromLead = environment.losUrl + "/Application/AddAppFromLead";
+
+>>>>>>> 0edd02c7c2a0fa8156b2b2e462cea04ca0df0320
   // App Asset
   public static GetAppAssetForDealerDataByAppId = environment.losUrl + "/AppAsset/GetAppAssetForDealerDataByAppId";
 
