@@ -2,6 +2,9 @@ import { environment } from "environments/environment";
 
 export class AdInsConstant {
 
+  
+ 
+
   //App Step
   public static AppStepNew = "NEW";
   public static AppStepCust = "CUST";
@@ -34,23 +37,30 @@ export class AdInsConstant {
   public static AppStepCNFR = "CNFR";
   public static AppStepPGLV = "PGLV";
   public static AppStepCSR = "CSR";
+  public static FL4W = "FL4W";
 
   // ASSET
   public static GetListKeyValueByCode = environment.FoundationR3Url + "/AssetType/GetListKeyValueByCode";
 
+
+
   // App
   public static AddApp = "/Application/AddApp";
   public static EditApp = "/Application/EditApp";
-  public static GetAppById = environment.losUrl + "/Application/GetAppById";
+  public static GetAppById = "/Application/GetAppById"; 
   public static GetAppByIds = environment.losUrl + "/Application/GetAppById";
-  public static EditAppAddAppCross = "/Application/EditAppAddAppCross";
+  public static EditAppAddAppCross = "/Application/EditAppAddAppCross"; 
+  public static GetAppDetailForAppTabById = environment.losUrl + "/Application/GetAppDetailForAppTabById";
+  public static AddAppFromLead = environment.losUrl + "/Application/AddAppFromLead";
+
+ 
 
   // App Asset
   public static GetAppAssetListByAppIdForCommision = "/AppAsset/GetAppAssetListByAppIdForCommision";
 
   // App Asset
   public static GetListAppAssetSupplEmpByListAppAssetId = "/AppAssetSupplEmp/GetListAppAssetSupplEmpByListAppAssetId";
-
+  
   // App Referantor
   public static AddAppReferantor = "/AppReferantor/AddAppReferantor";
   public static EditAppReferantor = "/AppReferantor/EditAppReferantor";
@@ -66,8 +76,7 @@ export class AdInsConstant {
 
   // Ref App Src
   public static GetListKvpActiveRefAppSrc = environment.losUrl + "/RefAppSrc/GetListKvpActiveRefAppSrc";
-
-
+ 
   public static RestrictionLike = "Like";
   public static RestrictionEq = "Eq";
   public static RestrictionIn = "IN";
@@ -109,11 +118,10 @@ export class AdInsConstant {
 
 
   public static GetRefOfficeByOfficeCode = environment.FoundationR3Url + "/RefOffice/GetRefOfficeByOfficeCode";
-
-
-
-  public static GetAppDetailForAppTabById = environment.losUrl + "/Application/GetAppDetailForAppTabById";
-  public static AddAppFromLead = environment.losUrl + "/Application/AddAppFromLead";
+ 
+  
+  // public static GetAppDetailForAppTabById = environment.losUrl + "/Application/GetAppDetailForAppTabById";
+  // public static AddAppFromLead = environment.losUrl + "/Application/AddAppFromLead";
 
   // App Asset
   public static GetAppAssetForDealerDataByAppId = environment.losUrl + "/AppAsset/GetAppAssetForDealerDataByAppId";
@@ -143,6 +151,7 @@ export class AdInsConstant {
   public static LobCodeFCTR = "FCTR";
   public static LobCodeRFN4W = "RFN4W";
 
+  
   //Asset Accessory
   public static GetAssetAccessoryByCode = "http://localhost:5000/AssetAccessory/GetAssetAccessoryByCode";
 
@@ -749,7 +758,8 @@ export class AdInsConstant {
 
   //AGRMNT FIN DATA
   public static GetAgrmntFinDataByAgrmntId = environment.losUrl + "/AgrmntFinData/GetAgrmntFinDataByAgrmntId";
-
+ 
+ 
   // LEAD FRAUD VERF
   public static AddLeadFraudVerf = environment.losUrl + "/LeadFraudVerf/AddLeadFraudVerf"
 
