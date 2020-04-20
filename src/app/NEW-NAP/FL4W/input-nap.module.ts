@@ -13,6 +13,8 @@ import { SharingComponentModule } from "app/shared/sharingcomponent.module";
 import { UcinputnumberModule } from "@adins/ucinputnumber";
 import { AppInquiryComponent } from './additional-process/app-inquiry/app-inquiry.component';
 import { CreditProcessInquiryComponent } from './additional-process/credit-process-inquiry/credit-process-inquiry.component';
+import { NapAddComponent } from './nap-add/nap-add.component';
+import { NapPagingComponent } from './nap-paging/nap-paging.component';
 
 @NgModule({
   imports: [
@@ -32,6 +34,8 @@ import { CreditProcessInquiryComponent } from './additional-process/credit-proce
     DummyComponent,
     AppInquiryComponent,
     CreditProcessInquiryComponent,
+    NapAddComponent,
+    NapPagingComponent,
   
   ],
   providers: [

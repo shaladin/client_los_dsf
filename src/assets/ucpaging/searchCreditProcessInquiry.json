@@ -1,5 +1,5 @@
 {
-    "title": "Application Inquiry",
+    "title": "Credit Prcess Inquiry",
     "exportExcel": false,
     "component": [
       {
@@ -98,7 +98,6 @@
         "criteriaPropName": "StatusGrpCode",
         "criteriaPropValue": "APP_STEP"
       }
-        
     ],
     "querystring": {
       "select": "select A.APP_ID AS AppId, A.APP_NO AS AppNo, AGR.AGRMNT_NO AS AgrmntNo, AC.CUST_NAME AS CustName, AGR.AGRMNT_STAT AS AgrmntStat, AC.CUST_NAME AS CustName, A.APP_CREATED_DT AS AppCreatedDt, A.IS_APP_INIT_DONE AS isNapSub,   A.APP_LAST_STEP AS AppLastStep, A.APP_CURR_STEP AS AppCurrStep, DATEDIFF(SECOND, A.DTM_CRT, A.DTM_UPD) AS TotalTimeNap , CONVERT(VARCHAR(12), DATEDIFF(SECOND,A.DTM_CRT,A.DTM_UPD) / 60 / 60 / 24) + ' Day(s) ' +  CONVERT(VARCHAR(12), DATEDIFF(SECOND,A.DTM_CRT,A.DTM_UPD) / 60 / 60 % 24) + ' Hour(s) ' +  CONVERT(VARCHAR(2), DATEDIFF(SECOND,A.DTM_CRT,A.DTM_UPD) / 60 % 60) + ' Minute(s) ' +  CONVERT(VARCHAR(2), DATEDIFF(SECOND,A.DTM_CRT,A.DTM_UPD) % 60) + ' Second(s) ' AS 'DateDiff'",
