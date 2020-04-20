@@ -6,6 +6,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { AppFinDataObj } from 'app/shared/model/AppFinData/AppFinData.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj.Model';
 
 @Component({
   selector: 'app-app-fin-data',
@@ -19,6 +20,7 @@ export class AppFinDataComponent implements OnInit {
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   appFinDataObj : AppFinDataObj = new AppFinDataObj();
+  calcRegFixObj : CalcRegularFixObj = new CalcRegularFixObj();
 
   constructor(
     private fb: FormBuilder,
@@ -30,6 +32,7 @@ export class AppFinDataComponent implements OnInit {
     this.AppId = 57;
     this.FinDataForm = this.fb.group(
       {
+        AppId : this.AppId,
         TotalAssetPriceAmt : [0],
         TotalFeeAmt : [0],
         TotalFeeCptlzAmt : [0],
@@ -127,13 +130,52 @@ export class AppFinDataComponent implements OnInit {
     );
   }
 
+  CalcBaseOnRate()
+  {
+    this.calcRegFixObj = this.FinDataForm.value;
+
+    this.http.post(environment.losUrl + "/AppFinData/CalculateInstallmentRegularFix", this.calcRegFixObj).subscribe(
+      (response) => {
+        
+      }
+    );
+
+    console.log(this.FinDataForm.value);
+    console.log(this.calcRegFixObj);
+  }
+
+  CalcBaseOnInst()
+  {
+    
+  }
+
   SaveAndContinue()
   {
     var isValidGrossYield = this.ValidateGrossYield();
-    if(isValidGrossYield)
+    var isValidGracePeriod = this.ValidateGracePeriode();
+
+    if(isValidGrossYield && isValidGracePeriod)
     {
       console.log("GROSSSS");
     }
+  }
+
+  ValidateGracePeriode()
+  {
+    var valid : boolean = true;
+    var gracePeriodType = this.FinDataForm.get("MrGracePeriodTypeCode").value
+    var gracePeriod = this.FinDataForm.get("GracePeriod").value
+    
+    if(gracePeriodType != "")
+    {
+      if(gracePeriod == 0)
+      {
+        valid = false;
+        this.toastr.errorMessage("Grace Period must be set");
+      }
+    }
+
+    return valid;
   }
 
   ValidateGrossYield()
@@ -172,8 +214,6 @@ export class AppFinDataComponent implements OnInit {
     var DiffRateAmtStd= +StdEffectiveRatePrcnt - +SupplEffectiveRatePrcnt
 
     var diffRate = +EffectiveRatePrcnt - +SupplEffectiveRatePrcnt;
-    console.log("AAAAAA")
-    console.log(diffRate)
     if(diffRate < DiffRateAmtStd)
     {
       this.FinDataForm.patchValue({

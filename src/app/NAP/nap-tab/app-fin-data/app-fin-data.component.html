@@ -77,24 +77,6 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label>NTF</label>
-            </div>
-            <div class="col-md-3 form-inline form-inline-right">
-              <label>{{FinDataForm.controls.NtfAmt.value | number : '1.2-2'}}</label>
-            </div>
-            <div class="col-md-3 form-inline">
-              <label>Num of Inst</label>
-            </div>
-            <div class="col-md-3 form-inline form-inline-right">
-              <label>{{FinDataForm.controls.NumOfInst.value | number}}</label>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="row">
-            <div class="col-md-3 form-inline">
               <label>DP Asset</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
@@ -216,7 +198,7 @@
             <div class="col-md-3 form-inline form-inline-right">
               <input type="" class="form-control full-width" formControlName="FlatRatePrcnt"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && FinDataForm.controls.FlatRatePrcnt.invalid}"
-                [readonly]="FinDataForm.controls.RateType.value != 'FLAT_RATE'"
+                [readonly]="FinDataForm.controls.RateType.value != 'FLT'"
                 currencyMask>
               <lib-uc-show-errors [control]="FinDataForm.controls.FlatRatePrcnt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
