@@ -33,6 +33,7 @@ import { MatCheckboxModule, MatRadioModule, MatSelectModule } from "@angular/mat
 import { GuarantorPersonalComponent } from "./guarantor-data/guarantor-personal/guarantor-personal.component";
 import { GuarantorCompanyComponent } from "./guarantor-data/guarantor-company/guarantor-company.component";
 import { GuarantorPagingComponent } from "./guarantor-data/guarantor-paging/guarantor-paging.component";
+import { SchmRegulerFixComponent } from "./financial-data/component/schm-reguler-fix/schm-reguler-fix.component";
 
 @NgModule({
   exports: [
@@ -65,7 +66,8 @@ import { GuarantorPagingComponent } from "./guarantor-data/guarantor-paging/guar
     SubsidyComponent,
     SubsidyAddEditComponent,
     FeeComponent,
-    TcDataComponent, // sementara nanti dicross check sama term-conditions
+    TcDataComponent,
+    SchmRegulerFixComponent // sementara nanti dicross check sama term-conditions
   ],
   imports: [
     CommonModule,
@@ -104,7 +106,8 @@ import { GuarantorPagingComponent } from "./guarantor-data/guarantor-paging/guar
     SubsidyComponent,
     SubsidyAddEditComponent,
     FeeComponent,
-    TcDataComponent, // sementara nanti dicross check sama term-conditions
+    TcDataComponent,
+    SchmRegulerFixComponent // sementara nanti dicross check sama term-conditions
   ],
   entryComponents: [SubsidyAddEditComponent],
   providers: [

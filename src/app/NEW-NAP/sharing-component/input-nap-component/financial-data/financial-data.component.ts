@@ -76,8 +76,8 @@ ngOnInit() {
     }
   );
   this.LoadAppFinData();
-  this.LoadDDLRateType();
-  this.LoadDDLGracePeriodType();
+  // this.LoadDDLRateType();
+  // this.LoadDDLGracePeriodType();
 }
 
 LoadAppFinData()
@@ -117,54 +117,54 @@ LoadAppFinData()
   );
 }
 
-LoadDDLRateType() {
-  this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "RATE_TYPE" }).subscribe(
-    (response) => {
-      this.RateTypeOptions = response["ReturnObject"];
-    }
-  );
-}
+// LoadDDLRateType() {
+//   this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "RATE_TYPE" }).subscribe(
+//     (response) => {
+//       this.RateTypeOptions = response["ReturnObject"];
+//     }
+//   );
+// }
 
-LoadDDLGracePeriodType() {
-  this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "GRACE_PERIOD_TYPE" }).subscribe(
-    (response) => {
-      this.GracePeriodeTypeOptions = response["ReturnObject"];
-    }
-  );
-}
+// LoadDDLGracePeriodType() {
+//   this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "GRACE_PERIOD_TYPE" }).subscribe(
+//     (response) => {
+//       this.GracePeriodeTypeOptions = response["ReturnObject"];
+//     }
+//   );
+// }
 
-CalcBaseOnRate()
-{
-  this.calcRegFixObj = this.FinDataForm.value;
-  this.calcRegFixObj["IsRecalculate"] = true;
-  this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateInstallmentRegularFix", this.calcRegFixObj).subscribe(
-    (response) => {
-      this.listInstallment = response.InstallmentTable;
-      this.FinDataForm.patchValue({
-        TotalDownPaymentNettAmt : response.TotalDownPaymentNettAmt, //muncul di layar
-        TotalDownPaymentGrossAmt : response.TotalDownPaymentGrossAmt, //inmemory
+// CalcBaseOnRate()
+// {
+//   this.calcRegFixObj = this.FinDataForm.value;
+//   this.calcRegFixObj["IsRecalculate"] = true;
+//   this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateInstallmentRegularFix", this.calcRegFixObj).subscribe(
+//     (response) => {
+//       this.listInstallment = response.InstallmentTable;
+//       this.FinDataForm.patchValue({
+//         TotalDownPaymentNettAmt : response.TotalDownPaymentNettAmt, //muncul di layar
+//         TotalDownPaymentGrossAmt : response.TotalDownPaymentGrossAmt, //inmemory
 
-        EffectiveRatePrcnt : response.EffectiveRatePrcnt,
-        FlatRatePrcnt : response.FlatRatePrcnt,
-        InstAmt : response.InstAmt,
+//         EffectiveRatePrcnt : response.EffectiveRatePrcnt,
+//         FlatRatePrcnt : response.FlatRatePrcnt,
+//         InstAmt : response.InstAmt,
 
-        GrossYieldPrcnt : response.GrossYieldPrcnt,
+//         GrossYieldPrcnt : response.GrossYieldPrcnt,
 
-        TotalInterestAmt: response.TotalInterestAmt,
-        TotalAR : response.TotalARAmt,
+//         TotalInterestAmt: response.TotalInterestAmt,
+//         TotalAR : response.TotalARAmt,
 
-        NtfAmt : response.NtfAmt,
+//         NtfAmt : response.NtfAmt,
 
-      })
+//       })
 
-    }
-  );
-}
+//     }
+//   );
+// }
 
-CalcBaseOnInst()
-{
+// CalcBaseOnInst()
+// {
   
-}
+//}
 
 SaveAndContinue()
 {
@@ -174,6 +174,7 @@ SaveAndContinue()
   if(isValidGrossYield && isValidGracePeriod)
   {
     console.log("GROSSSS");
+    this.FinDataForm.value;
   }
 }
 
@@ -224,30 +225,30 @@ ValidateGrossYield()
   return valid;
 }
 
-EffectiveRatePrcntInput_FocusOut(){
-  var EffectiveRatePrcnt = this.FinDataForm.get("EffectiveRatePrcnt").value
-  var SupplEffectiveRatePrcnt = this.FinDataForm.get("SupplEffectiveRatePrcnt").value
-  var StdEffectiveRatePrcnt = this.FinDataForm.get("StdEffectiveRatePrcnt").value
-  var DiffRateAmtStd= +StdEffectiveRatePrcnt - +SupplEffectiveRatePrcnt
+// EffectiveRatePrcntInput_FocusOut(){
+//   var EffectiveRatePrcnt = this.FinDataForm.get("EffectiveRatePrcnt").value
+//   var SupplEffectiveRatePrcnt = this.FinDataForm.get("SupplEffectiveRatePrcnt").value
+//   var StdEffectiveRatePrcnt = this.FinDataForm.get("StdEffectiveRatePrcnt").value
+//   var DiffRateAmtStd= +StdEffectiveRatePrcnt - +SupplEffectiveRatePrcnt
 
-  var diffRate = +EffectiveRatePrcnt - +SupplEffectiveRatePrcnt;
-  if(diffRate < DiffRateAmtStd)
-  {
-    this.FinDataForm.patchValue({
-      DiffRateAmt : 0
-    });
-  }
-  else
-  {
-    this.FinDataForm.patchValue({
-      DiffRateAmt : DiffRateAmtStd
-    });
-  }
-}
+//   var diffRate = +EffectiveRatePrcnt - +SupplEffectiveRatePrcnt;
+//   if(diffRate < DiffRateAmtStd)
+//   {
+//     this.FinDataForm.patchValue({
+//       DiffRateAmt : 0
+//     });
+//   }
+//   else
+//   {
+//     this.FinDataForm.patchValue({
+//       DiffRateAmt : DiffRateAmtStd
+//     });
+//   }
+// }
 
-test()
-{
-  console.log(this.FinDataForm)
-  console.log(this.FinDataForm.value);
-}
+// test()
+// {
+//   console.log(this.FinDataForm)
+//   console.log(this.FinDataForm.value);
+// }
 }
