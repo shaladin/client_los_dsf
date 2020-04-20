@@ -5,17 +5,15 @@ import { HttpModule } from "@angular/http";
 import { UCSearchModule } from "@adins/ucsearch";
 import { UcpagingModule } from "@adins/ucpaging";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
-import { RouterModule } from "@angular/router";
 import { SharingModule } from 'app/shared/sharing.module';
 import { ArchwizardModule } from 'angular-archwizard';
 import { UcSubsectionModule } from "@adins/uc-subsection";
 import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
-import { UcgridfooterModule, UcgridfooterComponent } from "@adins/ucgridfooter";
+import { UcgridfooterModule } from "@adins/ucgridfooter";
 import { ViewRoutingModule } from "./view-routing.module";
 import { MainInfoComponent } from './main-info/main-info.component';
 import { LeadMainInfoComponent } from './lead-main-info/lead-main-info.component';
-import { AppViewComponent } from './app-view/app-view.component';
-// import { ShowErrorsComponent } from "./app/test-new/show-errors.component";
+// import { ShowErrorsComponent } ../NEW-NAP/view/app-view/app-view.componentors.component";
 
 @NgModule({
   imports: [
@@ -36,7 +34,6 @@ import { AppViewComponent } from './app-view/app-view.component';
   declarations: [
     MainInfoComponent,
     LeadMainInfoComponent,
-    AppViewComponent
   ]
 })
 export class ViewModule { }

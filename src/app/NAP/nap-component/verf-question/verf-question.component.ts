@@ -3,17 +3,20 @@ import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { VerfQuestionAnswerCustomObj } from 'app/shared/model/VerfQuestionAnswer/VerfQuestionAnswerCustom.Model';
+import { VerfResultHObj } from 'app/shared/model/VerfResultH/VerfResultH.Model';
 
 @Component({
-  selector: 'app-verf-question',
+  selector: 'app-verf-question[ParentForm][VerfSchemeCode]',
   templateUrl: './verf-question.component.html',
   styleUrls: ['./verf-question.component.scss']
 })
 export class VerfQuestionComponent implements OnInit {
 
-  ParentForm: FormGroup;
-  VerfShcemeCode: string;
+  @Input() ParentForm: FormGroup;
+  @Input() VerfSchemeCode: string;
+  @Input() VerfResultHId: number;
   ListVerfAnswer = [];
+  VerfResultHList = new Array<VerfResultHObj>();
 
   VerfQuestionAnswerCustomObj: VerfQuestionAnswerCustomObj;
 
@@ -22,22 +25,20 @@ export class VerfQuestionComponent implements OnInit {
     private fb: FormBuilder) { }
 
   ngOnInit() {
-    this.ParentForm = this.fb.group({
-      VerfResultDForm: this.fb.array([])
-    }) as FormGroup;
     this.InitFormVerfQuestion();
-
+    if(this.VerfResultHId !=0){
+      this.GetHistoryList();
+    }
   }
 
 
   InitFormVerfQuestion() {
-    this.http.post(AdInsConstant.GetVerfQuestionAnswerListBySchemeCode, { VerfSchemeCode: "CF4W_PHONEVERIF" }).subscribe(
+    this.http.post(AdInsConstant.GetVerfQuestionAnswerListBySchemeCode, { VerfSchemeCode: this.VerfSchemeCode }).subscribe(
       (response) => {
         this.VerfQuestionAnswerCustomObj = response["ReturnObject"];
-        this.GenerateFormVerfQuestion();
-      },
-      (error) => {
-
+        if (this.VerfQuestionAnswerCustomObj != null && this.VerfQuestionAnswerCustomObj.VerfQuestionAnswerListObj.length != 0) {
+          this.GenerateFormVerfQuestion();
+        }
       }
     )
 
@@ -52,7 +53,7 @@ export class VerfQuestionComponent implements OnInit {
         VerfQuestionGrpName: grpListObj[i].VerfQuestionGrpName,
         VerfQuestionAnswerList: this.fb.array([])
       }) as FormGroup;
-      var VerfResultDForm = this.ParentForm.get("VerfResultDForm") as FormArray;
+      var VerfResultDForm =  this.ParentForm.get("VerfResultDForm") as FormArray; 
       VerfResultDForm.push(QuestionGrp);
       var ResultGrp = VerfResultDForm.controls[i].get("VerfQuestionAnswerList") as FormArray;
       var QuestionList = grpListObj[i].verfQuestionAnswerList;
@@ -106,7 +107,32 @@ export class VerfQuestionComponent implements OnInit {
         }
       }
     }
-    console.log(this.ParentForm);
+    console.log(this.ParentForm.get("VerfResultDForm"));
+  }
+
+  GetHistoryList(){
+    var VerfResultHObj = {
+      VerfResultHId: this.VerfResultHId
+    };
+    this.http.post<VerfResultHObj>(AdInsConstant.GetVerfResultHById, VerfResultHObj).subscribe(
+      (response) => {
+        var verfResultHObj = {
+          VerfResultId: response.VerfResultId,
+          MrVerfSubjectRelationCode: response.MrVerfSubjectRelationCode
+        };
+        this.http.post(AdInsConstant.GetVerfResultHsByVerfResultIdAndSubjRelationCode, verfResultHObj).subscribe(
+          (response) => {
+            this.VerfResultHList = response["responseVerfResultHCustomObjs"];
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   CheckValue() {

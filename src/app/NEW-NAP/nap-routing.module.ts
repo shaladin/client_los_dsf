@@ -42,21 +42,22 @@ const routes: Routes = [
                 data: {
                   title: 'Asset Registration Summary'
                 }
-              },
-              {
-                path: 'AssetData/Detail',
-                component: AssetDataAddEditComponent,
-                data: {
-                  title: 'Asset Registration Form'
-                }
-              },
-              {
-                path: 'Collateral/Detail',
-                component: CollateralAddEditComponent,
-                data: {
-                  title: 'Collateral Registration Form'
-                }
-              },
+            },
+            {
+              path: 'AssetData/Detail',
+              component: AssetDataAddEditComponent,
+              data: {
+                title: 'Asset Registration Form'
+              }
+            },
+            {
+              path: 'Collateral/Detail',
+              component: CollateralAddEditComponent,
+              data: {
+                title: 'Collateral Registration Form'
+              }
+            }
+          
         ]
     }
 ]
