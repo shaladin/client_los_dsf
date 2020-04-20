@@ -120,22 +120,37 @@ export class AppAddComponent implements OnInit {
     this.inputLookupObjCopyProduct.isRequired = false;
     
     this.inputLookupObjName = new InputLookupObj();
-    this.inputLookupObjName.urlJson = "./assets/uclookup/NAP/lookupAppName.json";
+    this.inputLookupObjName.urlJson = "./assets/uclookup/NAP/lookupAppNameFl4W.json";
     this.inputLookupObjName.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputLookupObjName.urlEnviPaging = environment.FoundationR3Url;
-    this.inputLookupObjName.pagingJson = "./assets/uclookup/NAP/lookupAppName.json";
-    this.inputLookupObjName.genericJson = "./assets/uclookup/NAP/lookupAppName.json";
+    this.inputLookupObjName.pagingJson = "./assets/uclookup/NAP/lookupAppNameFl4W.json";
+    this.inputLookupObjName.genericJson = "./assets/uclookup/NAP/lookupAppNameFl4W.json";
     this.inputLookupObjName.nameSelect = this.NapAppForm.controls.ProdOfferingName.value;
-    
-    this.arrAddCrit = new Array();
+ 
 
+    this.arrAddCrit = new Array(); 
+    var critObj = new CriteriaObj();
+    critObj.restriction = AdInsConstant.RestrictionLike;
+    critObj.propName = 'a.LOB_CODE';
+    critObj.value = AdInsConstant.FL4W;
+    this.arrAddCrit.push(critObj);
+    
+    this.inputLookupObjCopyProduct.addCritInput = this.arrAddCrit;
+ 
+    this.arrAddCrit = new Array(); 
     var addCrit = new CriteriaObj();
     addCrit.DataType = "text";
     addCrit.propName = "ro.OFFICE_CODE";
     addCrit.restriction = AdInsConstant.RestrictionIn;
     addCrit.listValue = [this.user.MrOfficeTypeCode];
     this.arrAddCrit.push(addCrit);
-
+ 
+    var critObj = new CriteriaObj();
+    critObj.restriction = AdInsConstant.RestrictionLike;
+    critObj.propName = 'POD.COMPNT_VALUE';
+    critObj.value = AdInsConstant.FL4W;
+    this.arrAddCrit.push(critObj);
+    
     this.inputLookupObjName.addCritInput = this.arrAddCrit;
   }
 

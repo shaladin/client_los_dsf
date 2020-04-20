@@ -37,6 +37,7 @@ export class AdInsConstant {
   public static AppStepCNFR = "CNFR";
   public static AppStepPGLV = "PGLV";
   public static AppStepCSR = "CSR";
+  public static FL4W = "FL4W";
 
   // ASSET
   public static GetListKeyValueByCode = environment.FoundationR3Url + "/AssetType/GetListKeyValueByCode";
