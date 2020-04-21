@@ -98,17 +98,17 @@
             "type": "dropdown",
             "datatype": "text",
             "name": "MC.MOU_STAT",
-            "id": "MouStatId",
+            "id": "StatusCode",
             "value": "",
             "placeholder": "Placeholder",
             "isFromURL": true,
             "isSelectOne": false,
-            "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
+            "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefStatus/GetListKeyValueActiveGrpCodeByCode",
             "label": "MOU STATUS",
             "items": [],
             "itemsUrl": [],
-            "criteriaPropName": "RefMasterTypeCode",
-            "criteriaPropValue": "MOU_STAT"
+            "criteriaPropName": "StatusGrpCode",
+            "criteriaPropValue": "MOUC_STAT"
         }
     ],
     "querystring": {
@@ -162,7 +162,7 @@
             "type": "sort",
             "position": "left",
             "label": "MOU Status",
-            "name": "MC.MOU_STAT"
+            "name": "RM_STAT.DESCR"
         }
     ],
     "bodyList": [
@@ -170,7 +170,8 @@
             "type": "link",
             "position": "center",
             "property": "mouCustNo",
-            "path": "/Mou/Cust/Paging",
+            "path": "/Mou/Cust/View",
+            "target": "_blank",
             "param": [
                 {
                     "type": "MouCustId",
@@ -194,7 +195,7 @@
             "property": "endDt"
         },
         {
-            "type": "text",
+            "type": "decimal",
             "position": "right",
             "property": "plafondAmt"
         },
