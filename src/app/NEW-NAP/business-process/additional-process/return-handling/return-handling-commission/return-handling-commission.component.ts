@@ -4,11 +4,11 @@ import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 
 @Component({
-  selector: 'app-return-handling',
-  templateUrl: './return-handling.component.html',
+  selector: 'app-return-handling-commission',
+  templateUrl: './return-handling-commission.component.html',
   styleUrls: []
 })
-export class ReturnHandlingComponent implements OnInit {
+export class ReturnHandlingCommissionComponent implements OnInit {
 
   constructor() { }
 

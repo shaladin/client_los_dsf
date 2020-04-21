@@ -6,6 +6,7 @@ import { OutstandingTcPagingComponent } from './outstanding-tc/outstanding-tc-pa
 import { OutstandingTcDetailComponent } from './outstanding-tc/outstanding-tc-detail/outstanding-tc-detail.component';
 import { ReturnHandlingPagingComponent } from './return-handling/return-handling-paging/return-handling-paging.component';
 import { ReturnHandlingDetailComponent } from './return-handling/return-handling-detail/return-handling-detail.component';
+import { ReturnHandlingCommissionComponent } from './return-handling/return-handling-commission/return-handling-commission.component';
 import { PagingComponent } from './app-dup-check/paging/paging.component';
 import { ListPersonalComponent } from './app-dup-check/list-personal/list-personal.component';
 import { ListCompanyComponent } from './app-dup-check/list-company/list-company.component';
@@ -91,6 +92,13 @@ const routes: Routes = [
         component: ApplicantExistingDataCompanyComponent,
         data: {
           title: 'Applicant Existing Data Company'
+        }        
+      },
+      {
+        path: 'ReturnHandling/Commission',
+        component: ReturnHandlingCommissionComponent,
+        data: {
+          title: 'Return Handling Commission'
         }        
       }
     ]

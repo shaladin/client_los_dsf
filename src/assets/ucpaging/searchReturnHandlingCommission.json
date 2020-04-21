@@ -120,9 +120,9 @@
             }
         ],
         "querystring": {
-            "select": "SELECT A.APP_NO AS AppNo, AC.CUST_NAME AS CustName, A.PROD_OFFERING_NAME AS ProdOfferingName, A.APP_CURR_STEP AS AppCurrStep, A.LOB_CODE AS LobCode, A.APP_ID AS AppId,A.APP_STAT AS appStat, WF.USERNAME as ClaimBy, A.ORI_OFFICE_CODE as OriOfficeCode,WTL.CLAIM_STAT AS ClaimStat, WTL.WF_TASK_LIST_ID AS TaskId",
-            "from": "FROM dbo.APP A WITH(NOLOCK) LEFT JOIN dbo.APP_CUST AC WITH(NOLOCK) ON A.APP_ID = AC.APP_ID JOIN V_WF_TASK_LIST WF WITH(NOLOCK) ON A.APP_NO = WF.TRANSACTION_CODE JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON A.APP_NO = WTL.TRANSACTION_CODE",
-            "where":"WHERE A.APP_CURR_STEP = 'COMM' AND WTL.WF_CODE = 'RTN_EDIT_COM_RSV_FND'"
+            "select": "SELECT A.APP_NO AS AppNo, AC.CUST_NAME AS CustName, A.PROD_OFFERING_NAME AS ProdOfferingName, A.APP_CURR_STEP AS AppCurrStep, A.LOB_CODE AS LobCode, A.APP_ID AS AppId,A.APP_STAT AS appStat, WF.USERNAME as ClaimBy, A.ORI_OFFICE_CODE as OriOfficeCode,WTL.CLAIM_STAT AS ClaimStat, WTL.WF_TASK_LIST_ID AS TaskId, RH.RETURN_HANDLING_H_ID AS ReturnHandlingHId, RD.RETURN_HANDLING_D_ID AS ReturnHandlingDId",
+            "from": "FROM dbo.APP A WITH(NOLOCK) LEFT JOIN dbo.APP_CUST AC WITH(NOLOCK) ON A.APP_ID = AC.APP_ID JOIN V_WF_TASK_LIST WF WITH(NOLOCK) ON A.APP_NO = WF.TRANSACTION_CODE JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON A.APP_NO = WTL.TRANSACTION_CODE JOIN dbo.RETURN_HANDLING_H RH WITH(NOLOCK) ON A.APP_ID = RH.APP_ID JOIN dbo.RETURN_HANDLING_D RD ON RH.RETURN_HANDLING_H_ID = RD.RETURN_HANDLING_H_ID AND RD.MR_RETURN_TASK_CODE = 'RTN_EDIT_COM_RSV_FND' AND RD.RETURN_STAT = 'REQ'",
+            "where":"WHERE WTL.WF_CODE = 'RTN_EDIT_COM_RSV_FND'"
         },
         "bodyList": [
             {
@@ -166,7 +166,7 @@
                 "action": [
                     {
                         "type": "edit",
-                        "path": "/CreditProcess/CommissionReserveFund/Detail",
+                        "path": "/Nap/CreditProcess/CommissionReservedFund/Detail",
                         "param": [
                             {
                                 "type": "AppId",
@@ -175,6 +175,14 @@
                             {
                                 "type": "TaskId",
                                 "property": "TaskId"
+                            },
+                            {
+                                "type": "ReturnHandlingHId",
+                                "property": "ReturnHandlingHId"
+                            },
+                            {
+                                "type": "ReturnHandlingDId",
+                                "property": "ReturnHandlingDId"
                             }
                         ]
                     }
