@@ -72,7 +72,10 @@ ngOnInit() {
       GrossYieldPrcnt : [0],
       GrossYieldBhv : [""],
 
-      AppFee : this.fb.array([])
+      NumOfStep : [0],
+
+      AppFee : this.fb.array([]),
+      EntryInst: this.fb.array([])
     }
   );
   this.LoadAppFinData();
