@@ -25,7 +25,7 @@ export class LegalReviewPagingComponent implements OnInit {
     addCritMouStat.DataType = 'text';
     addCritMouStat.propName = 'MOU.MOU_STAT';
     addCritMouStat.restriction = AdInsConstant.RestrictionNotIn;
-    addCritMouStat.value = 'LGL_RVW';
+    addCritMouStat.value = 'LRV';
     this.arrCrit.push(addCritMouStat);
 
     const addCritOfficeCode = new CriteriaObj();

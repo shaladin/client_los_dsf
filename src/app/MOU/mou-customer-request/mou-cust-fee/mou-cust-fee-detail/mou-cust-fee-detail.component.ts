@@ -21,8 +21,8 @@ export class MouCustFeeDetailComponent implements OnInit {
     MouCustFeeId: [0, [Validators.required]],
     MouCustId: [0, [Validators.required]],
     RefFeeId: [0, [Validators.required]],
-    FeePrcnt: [0, [Validators.required]],
-    FeeAmt: [0, [Validators.required]],
+    FeePrcnt: [0, [Validators.required, Validators.min(0), Validators.max(100)]],
+    FeeAmt: [0, [Validators.required, Validators.min(0)]],
     MrFeeTypeCode: ['', [Validators.required]],
     RowVersion: ['']
   });

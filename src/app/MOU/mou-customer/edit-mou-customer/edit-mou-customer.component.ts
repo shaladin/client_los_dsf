@@ -30,7 +30,7 @@ export class EditMouCustomerComponent implements OnInit {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.propName = 'MOU.MOU_STAT';
-    critObj.value = 'MOU_RTN';
+    critObj.value = 'RTN';
     this.arrCrit.push(critObj);
     this.inputPagingObj.addCritInput = this.arrCrit;
   }

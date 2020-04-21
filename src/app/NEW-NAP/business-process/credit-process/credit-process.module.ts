@@ -30,7 +30,8 @@ import { CommissionReservedFundDetailComponent } from "./commission-reserved-fun
 import { FraudDetectionPagingComponent } from "./fraud-detection/fraud-detection-paging/fraud-detection-paging.component";
 import { FraudDetectionVerifComponent } from "./fraud-detection/fraud-detection-verif/fraud-detection-verif.component";
 import { TabDeviationComponent } from "./credit-investigation/component/tab-deviation/tab-deviation.component";
-import { ReturnHandlingComponent } from "./return-handling/return-handling.component";
+import { CreditReviewPagingComponent } from "./credit-review/credit-review-paging/credit-review-paging.component";
+import { CreditReviewMainComponent } from "./credit-review/credit-review-main/credit-review-main.component";
 
 @NgModule({
   imports: [
@@ -69,7 +70,8 @@ import { ReturnHandlingComponent } from "./return-handling/return-handling.compo
     FormAddDynamicComponent,
     FraudDetectionPagingComponent,
     FraudDetectionVerifComponent,
-    ReturnHandlingComponent
+    CreditReviewPagingComponent,
+    CreditReviewMainComponent
   ],
   providers: [
     NGXToastrService

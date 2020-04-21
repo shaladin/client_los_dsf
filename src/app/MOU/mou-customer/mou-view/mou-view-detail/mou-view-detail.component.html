@@ -20,8 +20,8 @@
 
     <div *ngIf="MouType == 'FACTORING'" class="form-group">
       <label class="col-md-2 adInsLabel" translate>Recourse Type</label>
-      <label *ngIf="MrRecourseTypeCode == 'IS_RECOURSE'" class="col-md-2 adInsLabel" translate>With Recourse </label>
-      <label *ngIf="MrRecourseTypeCode == 'IS_NOT_RECOURSE'" class="col-md-2 adInsLabel" translate>Without Recourse </label>
+      <label *ngIf="MrRecourseTypeCode == 'WITH_RECOURSE'" class="col-md-2 adInsLabel" translate>With Recourse </label>
+      <label *ngIf="MrRecourseTypeCode == 'WITHOUT_RECOURSE'" class="col-md-2 adInsLabel" translate>Without Recourse </label>
     </div>
     <div *ngIf="MouType == 'FACTORING'" class="form-group">
       <label class="col-md-2 adInsLabel" translate>Is Disclosed</label>
@@ -50,35 +50,16 @@
 
     <div *ngIf="MouType == 'FACTORING'" class="form-group">
       <label class="col-md-2 adInsLabel" translate>Payment Frequency </label>
-      <label *ngIf="PayFreqCode == 'MONTHLY'" class="col-md-2 adInsLabel" translate>Monthly </label>
-      <label *ngIf="PayFreqCode == 'BIMONTHLY'" class="col-md-2 adInsLabel" translate>BiMonthly </label>
-      <label *ngIf="PayFreqCode == 'QUATERLY'" class="col-md-2 adInsLabel" translate>Quarterly </label>
-      <label *ngIf="PayFreqCode == 'TRIMESTER'" class="col-md-2 adInsLabel" translate>Trisemester </label>
-      <label *ngIf="PayFreqCode == 'SEMI_ANNUALY'" class="col-md-2 adInsLabel" translate>Semi Annualy</label>
-      <label *ngIf="PayFreqCode == 'ANNUALY'" class="col-md-2 adInsLabel" translate>Annualy</label>
-      <label *ngIf="PayFreqCode == 'WEEKLY'" class="col-md-2 adInsLabel" translate>Weekly </label>
-      <label *ngIf="PayFreqCode == 'BIWEEKLY'" class="col-md-2 adInsLabel" translate>Biweekly </label>
-      <label *ngIf="PayFreqCode == 'DAILY'" class="col-md-2 adInsLabel" translate>Daily </label>
-      <label *ngIf="PayFreqCode == 'BIDAILY'" class="col-md-2 adInsLabel" translate>Bidaily </label>
+      <label class="col-md-2 adInsLabel" translate>{{PayFreqCode}}</label>
     </div>
 
     <div *ngIf="MouType == 'GENERAL'" class="form-group">
       <label class="col-md-2 adInsLabel" translate>Interest type </label>
-      <label *ngIf="MrInterestTypeCode == 'FIXED'" class="col-md-2 adInsLabel" translate>Fixed Rate </label>
-      <label *ngIf="MrInterestTypeCode == 'FLOAT'" class="col-md-2 adInsLabel" translate>Float Rate </label>
+      <label class="col-md-2 adInsLabel" translate>{{MrInterestTypeCode}}</label>
     </div>
     <div *ngIf="MouType == 'FACTORING'" class="form-group">
       <label class="col-md-2 adInsLabel" translate>Payment Frequency </label>
-      <label *ngIf="PayFreqCode == 'MONTHLY'" class="col-md-2 adInsLabel" translate>Monthly </label>
-      <label *ngIf="PayFreqCode == 'BIMONTHLY'" class="col-md-2 adInsLabel" translate>BiMonthly </label>
-      <label *ngIf="PayFreqCode == 'QUATERLY'" class="col-md-2 adInsLabel" translate>Quarterly </label>
-      <label *ngIf="PayFreqCode == 'TRIMESTER'" class="col-md-2 adInsLabel" translate>Trisemester </label>
-      <label *ngIf="PayFreqCode == 'SEMI_ANNUALY'" class="col-md-2 adInsLabel" translate>Semi Annualy</label>
-      <label *ngIf="PayFreqCode == 'ANNUALY'" class="col-md-2 adInsLabel" translate>Annualy</label>
-      <label *ngIf="PayFreqCode == 'WEEKLY'" class="col-md-2 adInsLabel" translate>Weekly </label>
-      <label *ngIf="PayFreqCode == 'BIWEEKLY'" class="col-md-2 adInsLabel" translate>Biweekly </label>
-      <label *ngIf="PayFreqCode == 'DAILY'" class="col-md-2 adInsLabel" translate>Daily </label>
-      <label *ngIf="PayFreqCode == 'BIDAILY'" class="col-md-2 adInsLabel" translate>Bidaily </label>
+      <label class="col-md-2 adInsLabel" translate>{{PayFreqCode}} </label>
     </div>
     <div class="form-group">
       <label class="col-md-2 adInsLabel" translate>Installment Scheme </label>
@@ -93,16 +74,7 @@
     </div>
     <div *ngIf="MouType == 'GENERAL'" class="form-group">
       <label class="col-md-2 adInsLabel" translate>Payment Frequency </label>
-      <label *ngIf="PayFreqCode == 'MONTHLY'" class="col-md-2 adInsLabel" translate>Monthly </label>
-      <label *ngIf="PayFreqCode == 'BIMONTHLY'" class="col-md-2 adInsLabel" translate>BiMonthly </label>
-      <label *ngIf="PayFreqCode == 'QUATERLY'" class="col-md-2 adInsLabel" translate>Quarterly </label>
-      <label *ngIf="PayFreqCode == 'TRIMESTER'" class="col-md-2 adInsLabel" translate>Trisemester </label>
-      <label *ngIf="PayFreqCode == 'SEMI_ANNUALY'" class="col-md-2 adInsLabel" translate>Semi Annualy</label>
-      <label *ngIf="PayFreqCode == 'ANNUALY'" class="col-md-2 adInsLabel" translate>Annualy</label>
-      <label *ngIf="PayFreqCode == 'WEEKLY'" class="col-md-2 adInsLabel" translate>Weekly </label>
-      <label *ngIf="PayFreqCode == 'BIWEEKLY'" class="col-md-2 adInsLabel" translate>Biweekly </label>
-      <label *ngIf="PayFreqCode == 'DAILY'" class="col-md-2 adInsLabel" translate>Daily </label>
-      <label *ngIf="PayFreqCode == 'BIDAILY'" class="col-md-2 adInsLabel" translate>Bidaily </label>
+      <label class="col-md-2 adInsLabel" translate>{{PayFreqCode}} </label>
     </div>
     <div *ngIf="MouType == 'GENERAL'" class="form-group">
       <label class="col-md-2 adInsLabel" translate>First Installment Type</label>
@@ -127,10 +99,10 @@
       <label *ngIf="Notes == '' || Notes == null" class="col-md-2 adInsLabel" translate>-</label>
       <label *ngIf="Notes != '' && Notes != null" class="col-md-2 adInsLabel" translate>{{Notes}}</label>
     </div>
-    <div *ngIf="MouType == 'GENERAL'" class="form-group">
-      <label class="col-md-2 adInsLabel" translate>Insure By</label>
+    <!-- <div *ngIf="MouType == 'GENERAL'" class="form-group">
+      <label class="col-md-2 adInsLabel" translate>Insured By</label>
       <label class="col-md-2 adInsLabel" translate>Company</label>
-    </div>
+    </div> -->
     <div *ngIf="MouType == 'GENERAL'" class="form-group">
       <label class="col-md-2 adInsLabel" translate>Down Payment (%)</label>
       <label class="col-md-1 adInsLabel" translate>{{DownPaymentFromPrcnt}}% </label>

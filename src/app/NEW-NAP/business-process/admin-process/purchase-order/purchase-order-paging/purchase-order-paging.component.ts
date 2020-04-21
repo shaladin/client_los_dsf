@@ -11,15 +11,17 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./purchase-order-paging.component.scss']
 })
 export class PurchaseOrderPagingComponent implements OnInit {
-  LobCode: string = "";
-  @Input() PagingJSONLocation: string;
+  lobCode: string;
   inputPagingObj: UcPagingObj;
   arrCrit: Array<CriteriaObj>;
 
   constructor(private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
       if (params["LobCode"] != null) {
-        this.LobCode = params["LobCode"];
+        this.lobCode = params["LobCode"];
+      }
+      else{
+        this.lobCode = "CF4W";
       }
     });
   }
@@ -42,7 +44,7 @@ export class PurchaseOrderPagingComponent implements OnInit {
     critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.propName = 'A.LOB_CODE';
-    critObj.value = this.LobCode;
+    critObj.value = this.lobCode;
     this.arrCrit.push(critObj);
     this.inputPagingObj.addCritInput = this.arrCrit;
   }

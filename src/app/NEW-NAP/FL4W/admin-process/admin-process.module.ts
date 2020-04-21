@@ -7,18 +7,21 @@ import { AdminProcessFL4WRoutingModule } from "./admin-process-routing.module";
 import { PurchaseOrderPagingFl4wComponent } from './purchase-order/purchase-order-paging-fl4w/purchase-order-paging-fl4w.component';
 import { PurchaseOrderFl4wComponent } from './purchase-order/purchase-order-fl4w/purchase-order-fl4w.component';
 import { PurchaseOrderDetailFl4wComponent } from './purchase-order/purchase-order-detail-fl4w/purchase-order-detail-fl4w.component';
+ 
 
 @NgModule({
   imports: [
     CommonModule,
     AdminProcessFL4WRoutingModule,
     AdInsModule,
+   // AdminProcessSharingModule,
   ],
   declarations: [
     DummyComponent,
     PurchaseOrderPagingFl4wComponent,
     PurchaseOrderFl4wComponent,
-    PurchaseOrderDetailFl4wComponent
+    PurchaseOrderDetailFl4wComponent,
+   
   ],
   providers: [
     NGXToastrService
