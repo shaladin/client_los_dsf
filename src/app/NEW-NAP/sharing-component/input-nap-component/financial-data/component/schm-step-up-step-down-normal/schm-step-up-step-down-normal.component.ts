@@ -70,20 +70,22 @@ export class SchmStepUpStepDownNormalComponent implements OnInit {
 
 
   CalculateAmortization() {
-    var totalNumOfInst = 0;
-    for(let i = 0; i < this.ParentForm.controls.ListEntryInst["controls"].length; i++){
-      totalNumOfInst += this.ParentForm.controls.ListEntryInst["controls"][i].controls.NumOfInst.value;
-    }
+    // var totalNumOfInst = 0;
+    // for(let i = 0; i < this.ParentForm.controls.ListEntryInst["controls"].length; i++){
+    //   totalNumOfInst += this.ParentForm.controls.ListEntryInst["controls"][i].controls.NumOfInst.value;
+    // }
 
-    if(totalNumOfInst > this.ParentForm.controls.NumOfInst.value){
-      this.toastr.errorMessage("Total Number of Installment can't be higher than " + this.ParentForm.controls.NumOfInst.value);
-      return;
-    }
+    // if(totalNumOfInst > this.ParentForm.controls.NumOfInst.value){
+    //   this.toastr.errorMessage("Total Number of Installment can't be higher than " + this.ParentForm.controls.NumOfInst.value);
+    //   return;
+    // }
 
     this.calcStepUpStepDownObj = this.ParentForm.value;
     this.calcStepUpStepDownObj["IsRecalculate"] = false;
     this.calcStepUpStepDownObj["StepUpStepDownType"] = this.ParentForm.value.MrInstSchemeCode;
-    this.calcStepUpStepDownObj["StepUpStepNormalInputType"] = "A";
+    this.calcStepUpStepDownObj["StepUpNormalInputType"] = "A";
+    this.calcStepUpStepDownObj["InstAmt"] = 0;
+
 
     this.http.post<ResponseCalculateObj>(AdInsConstant.CalculateInstallmentStepUpStepDown, this.calcStepUpStepDownObj).subscribe(
       (response) => {
