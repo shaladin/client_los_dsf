@@ -26,6 +26,7 @@ export class AppCollateralObj {
   RsvField3: any;
   RsvField4: any;
   RsvField5: any;
+  ListCollateralId: any[];
   RowVersion: any;
 
   constructor() {
