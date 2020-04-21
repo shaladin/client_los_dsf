@@ -179,7 +179,8 @@
             "type": "link",
             "position": "center",
             "property": "MouCustNo",
-            "path": "/Mou/Cust/Paging",
+            "path": "/Mou/Cust/View",
+            "target": "_blank",
             "param": [
                 {
                     "type": "MouCustId",

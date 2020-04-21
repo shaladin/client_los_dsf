@@ -752,7 +752,9 @@ export class AdInsConstant {
   public static GetListAssetDocListByAssetTypeCode = environment.FoundationR3Url + "/AssetDocList/GetListAssetDocListByAssetTypeCode";
   public static GetListAppAssetData = environment.losUrl + "/AppAsset/GetListAppAssetData";
 
-
+  // App Collateral
+  public static GetListAppCollateral = environment.losUrl + "/AppCollateral/GetListAppCollateral"
+ 
   //AGRMNT SIGNER
   public static SubmitAgrmntSignerData = environment.losUrl + "/AgrmntSigner/SubmitAgrmntSignerData";
   public static EditAgrmntSignerData = environment.losUrl + "/AgrmntSigner/EditAgrmntSignerData";

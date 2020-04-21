@@ -110,6 +110,12 @@
     },
     "headerList": [
         {
+          "type": "sort",
+          "position": "left",
+          "label": "Claim By",
+          "name": "WTL.USERNAME"
+        },
+        {
             "type": "sort",
             "position": "center",
             "label": "MOU No",
@@ -147,10 +153,16 @@
     ],
     "bodyList": [
         {
+            "type": "text",
+            "position": "left",
+            "property": "ClaimBy"
+        },
+        {
             "type": "link",
             "position": "center",
             "property": "MouCustNo",
-            "path": "/Mou/Cust/Paging",
+            "path": "/Mou/Cust/View",
+            "target": "_blank",
             "param": [
                 {
                     "type": "MouCustId",

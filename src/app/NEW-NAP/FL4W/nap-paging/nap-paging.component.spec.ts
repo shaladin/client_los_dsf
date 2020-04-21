@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AppAddComponent } from './app-add.component';
+import { NapPagingComponent } from './nap-paging.component';
 
-describe('AppAddComponent', () => {
-  let component: AppAddComponent;
-  let fixture: ComponentFixture<AppAddComponent>;
+describe('NapPagingComponent', () => {
+  let component: NapPagingComponent;
+  let fixture: ComponentFixture<NapPagingComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AppAddComponent ]
+      declarations: [ NapPagingComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AppAddComponent);
+    fixture = TestBed.createComponent(NapPagingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

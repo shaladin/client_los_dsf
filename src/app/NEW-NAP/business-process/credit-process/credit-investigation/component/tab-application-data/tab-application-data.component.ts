@@ -1,8 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder } from '@angular/forms';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { Sort } from '@angular/material';
 import { environment } from 'environments/environment';
@@ -10,17 +7,13 @@ import { environment } from 'environments/environment';
 @Component({
   selector: 'app-tab-application-data',
   templateUrl: './tab-application-data.component.html',
-  styleUrls: ['./tab-application-data.component.scss']
+  styleUrls: []
 })
 export class TabApplicationDataComponent implements OnInit {
 
   @Input() AppId;
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
     private http: HttpClient,
-    private fb: FormBuilder,
-    private toastr: NGXToastrService,
   ) { }
   
   GuarantorData;
