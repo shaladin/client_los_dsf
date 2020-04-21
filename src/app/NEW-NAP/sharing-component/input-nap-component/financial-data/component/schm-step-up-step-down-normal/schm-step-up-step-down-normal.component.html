@@ -214,7 +214,7 @@
         </div>
       </div>
 
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
@@ -234,7 +234,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <div class="row">
         <div class="col-md-12">
@@ -308,8 +308,8 @@
         Entry Installment
       </button>
     </div>
-    <div formArrayName="EntryInst">
-      <table class="table table-responsive-md text-center table-hover">
+    <div formArrayName="ListEntryInst">
+      <table *ngIf="ParentForm.controls.ListEntryInst.controls.length > 0" class="table table-responsive-md text-center table-hover">
         <thead>
           <tr class="table-header">
             <th style="text-align: center;"><span class="thead-header" name="No" translate>
@@ -326,27 +326,27 @@
             </th>
           </tr>
         </thead>
-        <tbody *ngFor="let item of ParentForm.controls.EntryInst.controls;let i = index">
-          <tr [formGroupName]="i">
-            <td class="text-center">
-              {{ParentForm.controls.EntryInst.controls[i].controls.InstSeqNo.value}}
+        <tbody *ngFor="let item of ParentForm.controls.ListEntryInst.controls;let i = index">
+          <tr>
+            <td [formGroupName]="i" class="text-center">
+              {{ParentForm.controls.ListEntryInst.controls[i].controls.InstSeqNo.value}}
             </td>
-            <td class="text-left">
+            <td [formGroupName]="i" class="text-left">
               <div class="form-group-row">
                 <div class="col-md-12">
                   <input type="number" class="form-control full-width" formControlName="NumOfInst"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.EntryInst.controls[i].controls.NumOfInst.invalid}">
-                  <lib-uc-show-errors [control]="ParentForm.controls.EntryInst.controls[i].controls.NumOfInst" [submit]="enjiForm.submitted">
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.ListEntryInst.controls[i].controls.NumOfInst.invalid}">
+                  <lib-uc-show-errors [control]="ParentForm.controls.ListEntryInst.controls[i].controls.NumOfInst" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
               </div>            
             </td>
-            <td class="text-left">
+            <td [formGroupName]="i" class="text-left">
               <div class="form-group-row">
                 <div class="col-md-12">
                   <input type="" class="form-control full-width" formControlName="InstAmt"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.EntryInst.controls[i].controls.InstAmt.invalid}" currencyMask>
-                  <lib-uc-show-errors [control]="ParentForm.controls.EntryInst.controls[i].controls.InstAmt" [submit]="enjiForm.submitted">
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.ListEntryInst.controls[i].controls.InstAmt.invalid}" currencyMask>
+                  <lib-uc-show-errors [control]="ParentForm.controls.ListEntryInst.controls[i].controls.InstAmt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>             
                 </div>
               </div>
@@ -354,6 +354,12 @@
           </tr>
         </tbody>
       </table>
+    </div>     
+    <div *ngIf="ParentForm.controls.ListEntryInst.controls.length > 0" class="form-inline-right">
+      <button class="btn btn-raised btn-primary margin-r-5" translate type="button" tabindex="0"
+        (click)="CalculateAmortization()">
+        Calculate Amortization
+      </button>
     </div>
     <div *ngIf="listInstallment">
       <table class="table table-responsive-md text-center table-hover">

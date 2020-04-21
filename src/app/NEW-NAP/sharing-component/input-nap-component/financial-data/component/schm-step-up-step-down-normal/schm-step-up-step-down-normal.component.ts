@@ -9,6 +9,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj.Model';
 import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
 import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
+import { CalcStepUpStepDownObj } from 'app/shared/model/AppFinData/CalcStepUpStepDownObj.Model';
 
 @Component({
   selector: 'app-schm-step-up-step-down-normal',
@@ -21,7 +22,7 @@ export class SchmStepUpStepDownNormalComponent implements OnInit {
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
-  calcRegFixObj: CalcRegularFixObj = new CalcRegularFixObj();
+  calcStepUpStepDownObj: CalcStepUpStepDownObj = new CalcStepUpStepDownObj();
   listInstallment: any;
   responseCalc: any;
 
@@ -53,22 +54,38 @@ export class SchmStepUpStepDownNormalComponent implements OnInit {
   }
 
   SetEntryInstallment(){
+    while ((this.ParentForm.controls.ListEntryInst as FormArray).length) {
+      (this.ParentForm.controls.ListEntryInst as FormArray).removeAt(0);
+    }
     for(let i = 0 ; i < this.ParentForm.controls.NumOfStep.value ; i++){
-      var group = this.fb.group({
-        InstSeqNo: i+1,
+      const group = this.fb.group({
+        InstSeqNo: i + 1,
         NumOfInst: [0],
         InstAmt: [0]
       });
-      (this.ParentForm.controls.EntryInst as FormArray).push(group);
+      (this.ParentForm.controls.ListEntryInst as FormArray).push(group);
     }
 
   }
 
 
-  CalcBaseOnRate() {
-    this.calcRegFixObj = this.ParentForm.value;
-    this.calcRegFixObj["IsRecalculate"] = true;
-    this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateInstallmentRegularFix", this.calcRegFixObj).subscribe(
+  CalculateAmortization() {
+    var totalNumOfInst = 0;
+    for(let i = 0; i < this.ParentForm.controls.ListEntryInst["controls"].length; i++){
+      totalNumOfInst += this.ParentForm.controls.ListEntryInst["controls"][i].controls.NumOfInst.value;
+    }
+
+    if(totalNumOfInst > this.ParentForm.controls.NumOfInst.value){
+      this.toastr.errorMessage("Total Number of Installment can't be higher than " + this.ParentForm.controls.NumOfInst.value);
+      return;
+    }
+
+    this.calcStepUpStepDownObj = this.ParentForm.value;
+    this.calcStepUpStepDownObj["IsRecalculate"] = false;
+    this.calcStepUpStepDownObj["StepUpStepDownType"] = this.ParentForm.value.MrInstSchemeCode;
+    this.calcStepUpStepDownObj["StepUpStepNormalInputType"] = "A";
+
+    this.http.post<ResponseCalculateObj>(AdInsConstant.CalculateInstallmentStepUpStepDown, this.calcStepUpStepDownObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
         this.ParentForm.patchValue({

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
@@ -72,10 +72,12 @@ ngOnInit() {
       GrossYieldPrcnt : [0],
       GrossYieldBhv : [""],
 
-      NumOfStep : [0],
+      NumOfStep : [0],    
+      MrInstSchemeCode: [""],
+      CumulativeTenor: [0],
 
       AppFee : this.fb.array([]),
-      EntryInst: this.fb.array([])
+      ListEntryInst: new FormArray([])
     }
   );
   this.LoadAppFinData();
@@ -112,6 +114,8 @@ LoadAppFinData()
         StdGrossYieldPrcnt : this.appFinDataObj.StdGrossYieldPrcnt,
         GrossYieldPrcnt : this.appFinDataObj.GrossYieldPrcnt,
         GrossYieldBhv : this.appFinDataObj.GrossYieldBhv,
+
+        MrInstSchemeCode: this.appFinDataObj.MrInstSchemeCode
 
       });
 
@@ -249,9 +253,9 @@ ValidateGrossYield()
 //   }
 // }
 
-// test()
-// {
-//   console.log(this.FinDataForm)
-//   console.log(this.FinDataForm.value);
-// }
+test()
+{
+  console.log(this.FinDataForm)
+  console.log(this.FinDataForm.value);
+}
 }
