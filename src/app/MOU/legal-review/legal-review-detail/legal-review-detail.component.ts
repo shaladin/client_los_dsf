@@ -45,14 +45,13 @@ export class LegalReviewDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log('bee');
-    this.claimTask();
     this.items = this.LegalForm.get('items') as FormArray;
     this.termConditions = this.LegalForm.get('termConditions') as FormArray;
     this.viewObj = "./assets/ucviewgeneric/viewCustomerDocPrinting.json";
     this.route.queryParams.subscribe(params => {
       if (params['MouCustId'] != null) this.MouCustId = params['MouCustId'];
       if (params['WfTaskListId'] != null) this.WfTaskListId = params['WfTaskListId'];
+      this.claimTask();
     });
     var mouObj = { "MouCustId": this.MouCustId };
     this.http.post(this.GetMouCustLglReviewByMouCustIdUrl, mouObj).subscribe(
