@@ -203,7 +203,7 @@
       "property": "EndDt"
     },
     {
-      "type": "text",
+      "type": "currency",
       "position": "right",
       "property": "PlafondAmt"
     },

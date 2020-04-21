@@ -39,7 +39,7 @@
           "property": "StartDt"
         },
         {
-          "type": "text",
+          "type": "decimal",
           "label": "Plafond Amount",
           "property": "PlafondAmt"
         },
@@ -59,17 +59,17 @@
           "property": "MouStat"
         },
         {
-          "type": "text",
+          "type": "decimal",
           "label": "Realisation Amount",
           "property": "RealisationAmt"
         },
         {
-          "type": "text",
+          "type": "decimal",
           "label": "In Process Amount",
           "property": "InProcessAmt"
         },
         {
-          "type": "text",
+          "type": "decimal",
           "label": "Available Amount",
           "property": "AvailableAmt"
         }

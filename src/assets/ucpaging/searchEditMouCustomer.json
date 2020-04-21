@@ -164,7 +164,7 @@
             "property": "CustName"
         },
         {
-            "type": "text",
+            "type": "date",
             "position": "center",
             "property": "MouCustDt"
         },
