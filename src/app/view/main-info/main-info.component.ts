@@ -58,9 +58,9 @@ export class MainInfoComponent implements OnInit {
 
         this.mouCustNo = mouData['MouCustNo'];
         this.custName = mouData['CustName'];
-        this.mouCustDt = this.datepipe.transform(mouData['MouCustDt'], 'dd-MM-yyyy');
-        this.startDt = this.datepipe.transform(mouData['StartDt'], 'dd-MM-yyyy');
-        this.endDt = this.datepipe.transform(mouData['EndDt'], 'dd-MM-yyyy');
+        this.mouCustDt = this.datepipe.transform(mouData['MouCustDt'], 'dd-MMM-yyyy');
+        this.startDt = this.datepipe.transform(mouData['StartDt'], 'dd-MMM-yyyy');
+        this.endDt = this.datepipe.transform(mouData['EndDt'], 'dd-MMM-yyyy');
         this.refNo = mouData['RefNo'];
         this.plafondAmt = mouData['PlafondAmt'];
         this.mouStat = mouData['MouCustStatView'];

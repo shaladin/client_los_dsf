@@ -24,11 +24,13 @@ export class DocSignerComponent implements OnInit {
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchMouCustDocSigner.json";
 
+    this.arrCrit = new Array();
+    
     const addCritMouStat = new CriteriaObj();
     addCritMouStat.DataType = 'text';
     addCritMouStat.propName = 'MOU.MOU_STAT';
     addCritMouStat.restriction = AdInsConstant.RestrictionEq;
-    addCritMouStat.value = 'MOU_DOC_SIGN';
+    addCritMouStat.value = 'DSG';
     this.arrCrit.push(addCritMouStat);
 
     const addCritOfficeCode = new CriteriaObj();
@@ -37,5 +39,7 @@ export class DocSignerComponent implements OnInit {
     addCritOfficeCode.restriction = AdInsConstant.RestrictionEq;
     addCritOfficeCode.value = 'HO';
     this.arrCrit.push(addCritOfficeCode);
+
+    this.inputPagingObj.addCritInput = this.arrCrit;
   }
 }

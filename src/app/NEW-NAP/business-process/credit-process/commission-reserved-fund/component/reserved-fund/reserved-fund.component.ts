@@ -11,8 +11,8 @@ import { environment } from 'environments/environment';
 
 
 @Component({
-  selector: "reserved-fund-view",
-  templateUrl: "./reserved-fund-view.component.html",
+  selector: "reserved-fund",
+  templateUrl: "./reserved-fund.component.html",
   providers: [NGXToastrService]
 })
 export class ReservedFundComponent implements OnInit {
