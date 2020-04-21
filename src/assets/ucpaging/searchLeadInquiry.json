@@ -156,7 +156,7 @@
             "type": "link",
             "position": "center",
             "property": "LeadNo",
-            "path": "../View/",
+            "path": "/Lead/View",
             "target": "_blank",
             "param": [
                 {
