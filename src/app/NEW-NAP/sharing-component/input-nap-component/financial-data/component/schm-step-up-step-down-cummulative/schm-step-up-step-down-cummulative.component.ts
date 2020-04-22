@@ -53,29 +53,15 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
     );
   }
 
-  SetEntryInstallment(){
-    while ((this.ParentForm.controls.ListEntryInst as FormArray).length) {
-      (this.ParentForm.controls.ListEntryInst as FormArray).removeAt(0);
+  CalcBaseOnRate() {
+    if(this.ParentForm.controls.CummulativeTenor.value <= 0){
+      this.toastr.errorMessage("Cummulative Tenor must be higher than 0.");
+      return;
     }
-    for(let i = 0 ; i < this.ParentForm.controls.NumOfStep.value ; i++){
-      const group = this.fb.group({
-        InstSeqNo: i + 1,
-        NumOfInst: [0],
-        InstAmt: [0]
-      });
-      (this.ParentForm.controls.ListEntryInst as FormArray).push(group);
-    }
-
-  }
-
-
-  CalculateAmortization() {
 
     this.calcStepUpStepDownObj = this.ParentForm.value;
     this.calcStepUpStepDownObj["IsRecalculate"] = false;
     this.calcStepUpStepDownObj["StepUpStepDownType"] = this.ParentForm.value.MrInstSchemeCode;
-    this.calcStepUpStepDownObj["InstAmt"] = 0;
-
 
     this.http.post<ResponseCalculateObj>(AdInsConstant.CalculateInstallmentStepUpStepDown, this.calcStepUpStepDownObj).subscribe(
       (response) => {
@@ -96,13 +82,40 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
           NtfAmt: response.NtfAmt,
 
         })
-
       }
     );
   }
 
   CalcBaseOnInst() {
+    if(this.ParentForm.controls.CummulativeTenor.value <= 0){
+      this.toastr.errorMessage("Cummulative Tenor must be higher than 0.");
+      return;
+    }
+    this.calcStepUpStepDownObj = this.ParentForm.value;
+    this.calcStepUpStepDownObj["IsRecalculate"] = true;
+    this.calcStepUpStepDownObj["StepUpStepDownType"] = this.ParentForm.value.MrInstSchemeCode;
 
+    this.http.post<ResponseCalculateObj>(AdInsConstant.CalculateInstallmentStepUpStepDown, this.calcStepUpStepDownObj).subscribe(
+      (response) => {
+        this.listInstallment = response.InstallmentTable;
+        this.ParentForm.patchValue({
+          TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
+          TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
+
+          EffectiveRatePrcnt: response.EffectiveRatePrcnt,
+          FlatRatePrcnt: response.FlatRatePrcnt,
+          InstAmt: response.InstAmt,
+
+          GrossYieldPrcnt: response.GrossYieldPrcnt,
+
+          TotalInterestAmt: response.TotalInterestAmt,
+          TotalAR: response.TotalARAmt,
+
+          NtfAmt: response.NtfAmt,
+
+        })
+      }
+    );
   }
 
   SaveAndContinue() {

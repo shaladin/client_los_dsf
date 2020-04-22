@@ -1,11 +1,11 @@
 <form class="form-horizontal" [formGroup]="FinDataForm" (ngSubmit)="FinDataForm.valid && Submit()" #enjiForm="ngForm">
   <app-subsidy *ngIf="IsParentLoaded" [AppId]="AppId" [ParentForm]="FinDataForm"></app-subsidy>
   <app-fee *ngIf="IsParentLoaded" [AppId]="AppId" [ParentForm]="FinDataForm" [identifier]="'AppFee'"></app-fee>
-  <!-- <app-schm-reguler-fix *ngIf="IsParentLoaded && && FinDataForm.controls.MrInstSchemeCode.value == 'RF'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-reguler-fix> -->
+  <app-schm-reguler-fix *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'RF'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-reguler-fix>
   <app-schm-irregular *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'IR'" [AppId]="AppId" [ParentForm]="FinDataForm" [NumOfInst]="NumOfInst"> </app-schm-irregular>
-  <app-schm-step-up-step-down-normal *ngIf="FinDataForm.controls.MrInstSchemeCode.value == 'STNM'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-step-up-step-down-normal>
-  <app-schm-step-up-step-down-leasing *ngIf="FinDataForm.controls.MrInstSchemeCode.value == 'STLS'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-step-up-step-down-leasing>
-  <app-schm-step-up-step-down-cummulative *ngIf="FinDataForm.controls.MrInstSchemeCode.value == 'STCM'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-step-up-step-down-cummulative>
+  <app-schm-step-up-step-down-normal *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'STNM'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-step-up-step-down-normal>
+  <app-schm-step-up-step-down-leasing *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'STLS'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-step-up-step-down-leasing>
+  <app-schm-step-up-step-down-cummulative *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'STCM'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-step-up-step-down-cummulative>
 
   <!-- <lib-ucSubsection [id]="'FinData_FinDataId'" [title]="'Financial Data'" [panel]="'FinData_FinData'">
   </lib-ucSubsection> -->
