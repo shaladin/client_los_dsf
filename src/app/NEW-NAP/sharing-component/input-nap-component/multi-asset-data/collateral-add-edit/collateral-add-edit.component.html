@@ -29,7 +29,7 @@
                         </div>
                         <label class="col-md-1"></label>
                         <label class="col-md-2 adins-required-label" translate>Serial No 1</label>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <input type="text" class="form-control" formControlName="SerialNo1"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.SerialNo1.invalid }">
                             <lib-uc-show-errors [control]="AddCollForm.controls.SerialNo1" [submit]="enjiForm.submitted">
@@ -44,7 +44,7 @@
                       </div>
                         <label class="col-md-1"></label>
                         <label class="col-md-2 adins-required-label" translate>Serial No 2</label>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <input type="text" class="form-control" formControlName="SerialNo2"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.SerialNo2.invalid }">
                             <lib-uc-show-errors [control]="AddCollForm.controls.SerialNo2" [submit]="enjiForm.submitted">
@@ -61,7 +61,7 @@
                         </div>
                         <label class="col-md-1"></label>
                         <label class="col-md-2 adins-required-label" translate>Serial No 3</label>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <input type="text" class="form-control" formControlName="SerialNo3"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.SerialNo3.invalid }">
                             <lib-uc-show-errors [control]="AddCollForm.controls.SerialNo3" [submit]="enjiForm.submitted">
@@ -76,7 +76,7 @@
                         </div>
                         <label class="col-md-1"></label>
                         <label class="col-md-2 adins-required-label" translate>Serial No 4</label>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <input type="text" class="form-control" formControlName="SerialNo4"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.SerialNo4.invalid }">
                             <lib-uc-show-errors [control]="AddCollForm.controls.SerialNo4" [submit]="enjiForm.submitted">
@@ -98,7 +98,7 @@
                     </div>
                     <label class="col-md-1"></label>
                     <label class="col-md-2 adins-required-label" translate>ID Type</label>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                       <select class="form-control adInsInput" style="width: auto" formControlName="MrIdTypeCode" required
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.MrIdTypeCode.invalid }">
                         <option *ngFor="let it of tempIdType " [value]="it.Key" >
@@ -112,46 +112,43 @@
                     <div class="form-group row">
                     <label class="col-md-2 adins-required-label" translate>Owner Relationship</label>
                     <div class="col-md-3">
-                        <select class="form-control" formControlName="OwnerRelationship"
-                        (change)="onItemChange($event.target.value)"
-                        [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerRelationship.invalid }">
-                        <option *ngFor="let item of OwnerRelationshipObj" [value]="item.Key">{{item.Value}}</option>
-                        </select>
+                        <select class="form-control adInsInput" style="width: auto" formControlName="OwnerRelationship"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerRelationship.invalid }">
+                          <option *ngFor="let it of returnOwnerRelationshipObj" [value]="it.Key">
+                              {{it.Value}}
+                          </option>
+                          </select>
                         <lib-uc-show-errors [control]="AddCollForm.controls.OwnerRelationship" [submit]="enjiForm.submitted">
                         </lib-uc-show-errors>
                     </div>
                     <label class="col-md-1"></label>
                     <label class="col-md-2 adins-required-label" translate>Owner Id No</label>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <input type="text" class="form-control" formControlName="OwnerIdNo"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerIdNo.invalid }">
                         <lib-uc-show-errors [control]="AddCollForm.controls.OwnerIdNo" [submit]="enjiForm.submitted">
                         </lib-uc-show-errors>
                     </div>
                     </div>
-                    <!-- <div class="form-group row">
-                    <label class="col-md-2" translate>Copy Address From</label>
-                    <div class="col-md-4">
-                        <div class="input-group">
-                        <select class="form-control" formControlName="CopyFromResidence" [(ngModel)]="copyFromResidence">
-                            <option *ngFor="let item of copyToLocationObj" [value]="item.Key">
-                            {{item.Value}}
-                            </option>
+                    <div class="form-group row">
+                      <label class="col-md-2" translate>Copy Address From</label>
+                      <div class="col-md-2">
+                        <select class="form-control adInsInput" formControlName="CollateralOwnerAddr">
+                          <option *ngFor="let ram of AppCustAddrObj" [value]="ram.AppCustAddrId">
+                            {{ram.MrCustAddrTypeCode}}
+                          </option>
                         </select>
-                        <div class="input-group-append">
-                            <span class="input-group-btn">
-                            <button class="btn btn-raised btn-primary" type="button" (click)="copyToResidence()">
-                                <i class="fa fa-check-square-o"></i>Copy
-                            </button>
-                            </span>
-                        </div>
-                        </div>
+                      </div>
+                      <div class="input-group-append">
+                        <span class="input-group-btn">
+                          <button class="btn btn-raised btn-primary" type="button" (click)="copyToCollateralOwnerAddr()">
+                            <i class="fa fa-check-square-o"></i>Copy
+                          </button>
+                        </span>
+                      </div>
                     </div>
-                    </div> -->
-                    <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="AddCollForm" [enjiForm]="enjiForm"
-                      [identifier]="'legalAddr'" [default]="legalAddrObj" [inputField]="inputFieldLegalObj"
-                      [showPhn3]="false" [showPhn2]="false" [showFax]="false">
-                    </lib-ucaddress>
+                    <lib-ucaddress #UcAddrGrp [showSubsection]="false" [isRequired]="false" [title]="'Collateral Owner'" [UCAddrForm]="AddCollForm" 
+                    [enjiForm]="enjiForm" [identifier]="'collOwnerAddress'" [default]="collOwnerAddrObj" [inputField]="inputFieldCollOwnerObj" [showAllPhn]="false" [showOwnership]="false"></lib-ucaddress>
                 </div>
 
                 <lib-ucSubsection [id]="'assetAttrId'" [title]="'Asset Attribute'" [panel]="'assetAttr'">
@@ -185,10 +182,10 @@
                             </lib-uc-show-errors>
                         </div>
                         <label class="col-md-1"></label>
-                        <label class="col-md-2 adins-required-label" translate>BPKP City Issuer</label>
+                        <label class="col-md-2 adins-required-label" translate>BPKB City Issuer</label>
                         <div class="col-md-3">
-                            <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]='AddCollForm' [enjiForm]='enjiForm'
-                            [identifier]="'BbkpCityIssuer'" (lookup)="getLookupCollateralTypeResponse($event)"></lib-uclookupgeneric>
+                          <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupCityIssuerObj" [identifier]="'DistrictCode'" [enjiForm]='enjiForm' [parentForm]='AddCollForm' (lookup)="SetBpkbCity($event)">
+                          </lib-uclookupgeneric>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -214,23 +211,21 @@
                 </lib-ucSubsection>
                 <div id="assetLoc">
                     <div class="form-group row">
-                    <label class="col-md-2" translate>Copy Address From</label>
-                    <div class="col-md-4">
-                        <div class="input-group">
-                        <select class="form-control" formControlName="CopyFromLegal" [(ngModel)]="copyFromLegal">
-                            <option *ngFor="let item of copyToLocationObj" [value]="item.Key">
-                            {{item.Value}}
-                            </option>
+                      <label class="col-md-2" translate>Copy Address From</label>
+                      <div class="col-md-2">
+                        <select class="form-control adInsInput" formControlName="LocationAddrType" [(ngModel)]="copyFromAppCustAddrForLocation">
+                          <option *ngFor="let ram of AppCustAddrObj" [value]="ram.AppCustAddrId">
+                            {{ram.MrCustAddrTypeCode}}
+                          </option>
                         </select>
-                        <div class="input-group-append">
-                            <span class="input-group-btn">
-                            <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocation()">
-                                <i class="fa fa-check-square-o"></i>Copy
-                            </button>
-                            </span>
-                        </div>
-                        </div>
-                    </div>
+                      </div>
+                      <div class="input-group-append">
+                        <span class="input-group-btn">
+                          <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocationAddr()">
+                            <i class="fa fa-check-square-o"></i>Copy
+                          </button>
+                        </span>
+                      </div>
                     </div>
                     <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="AddCollForm" [enjiForm]="enjiForm"
                     [identifier]="'locationAddr'" [default]="locationAddrObj" [inputField]="inputFieldLocationObj"
