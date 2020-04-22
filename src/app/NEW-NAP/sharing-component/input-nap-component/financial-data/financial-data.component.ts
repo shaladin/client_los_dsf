@@ -74,7 +74,7 @@ ngOnInit() {
 
       NumOfStep : [0],    
       MrInstSchemeCode: [""],
-      CumulativeTenor: [0],
+      CummulativeTenor: [0],
 
       AppFee : this.fb.array([]),
       ListEntryInst: new FormArray([])
@@ -115,7 +115,8 @@ LoadAppFinData()
         GrossYieldPrcnt : this.appFinDataObj.GrossYieldPrcnt,
         GrossYieldBhv : this.appFinDataObj.GrossYieldBhv,
 
-        MrInstSchemeCode: this.appFinDataObj.MrInstSchemeCode
+        MrInstSchemeCode: this.appFinDataObj.MrInstSchemeCode,
+        CummulativeTenor: this.appFinDataObj.CummulativeTenor
 
       });
 
