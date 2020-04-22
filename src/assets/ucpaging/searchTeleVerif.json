@@ -164,6 +164,7 @@
       "position": "center",
       "property": "LeadNo",
       "path": "/Lead/View",
+      "target": "_blank",
       "param": [
         {
           "type": "LeadId",

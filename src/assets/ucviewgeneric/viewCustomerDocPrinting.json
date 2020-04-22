@@ -14,12 +14,12 @@
           } 
           ,
           {
-            "type": "text",
+            "type": "date",
             "label": "Start Date",
             "property": "StartDt"
           },
           {
-            "type": "text",
+            "type": "date",
             "label": "End Date",
             "property": "EndDt"
           },
@@ -30,7 +30,7 @@
           }
           ,
           {
-            "type": "text",
+            "type": "date",
             "label": "MOU Date",
             "property": "MouCustDt"
           }

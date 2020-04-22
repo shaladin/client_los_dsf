@@ -1,5 +1,5 @@
 {
-    "title": "LEAD",
+    "title": "FRAUD VERIFICATION",
     "exportExcel": false,
     "component": [
         {
@@ -41,35 +41,11 @@
             "placeholder": "Placeholder"
         },
         {
-            "type": "dropdown",
-            "datatype": "text",
-            "name": "L.MR_CUST_TYPE_CODE",
-            "id": "CustTypeId",
+            "type": "textbox",
+            "name": "L.ORDER_NO",
+            "id": "OrderNoId",
             "value": "",
-            "placeholder": "Placeholder",
-            "isFromURL": true,
-            "isSelectOne": false,
-            "url": "http://r3app-server/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
-            "label": "Customer Type",
-            "items": [],
-            "itemsUrl": [],
-            "criteriaPropName": "RefMasterTypeCode",
-            "criteriaPropValue": "CUST_TYPE"
-        }, 
-        {
-            "type" : "textbox",
-            "name" : "LC.CUST_NO",
-            "id" : "CustNoId",
-            "value" : "",
-            "label" : "CUSTOMER No",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type" : "textbox",
-            "name" : "LC.CUST_NAME",
-            "id" : "CustNameId",
-            "value" : "",
-            "label" : "CUSTOMER NAME",
+            "label": "ORDER NO",
             "placeholder": "Placeholder"
         },
         {
@@ -100,15 +76,52 @@
             "value": "",
             "label": "CLAIM BY",
             "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "L.MR_CUST_TYPE_CODE",
+            "id": "CustTypeId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "isSelectOne": false,
+            "url": "http://r3app-server/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
+            "label": "Customer Type",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "RefMasterTypeCode",
+            "criteriaPropValue": "CUST_TYPE"
+        },
+        {
+            "type": "textbox",
+            "name": "LC.CUST_NO",
+            "id": "CustNoId",
+            "value": "",
+            "label": "CUSTOMER NO",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "LC.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "CUSTOMER NAME",
+            "placeholder": "Placeholder"
         }
     ],
     "querystring": {
-        "select": "SELECT L.LEAD_NO AS LeadNo,WTL.WF_TASK_LIST_ID AS WfTaskListId,WTL.CLAIM_STAT AS ClaimStat, WTL.USERNAME AS ClaimBy, L.LEAD_ID AS LeadId, L.ORI_OFFICE_NAME AS OriOfficeName, LC.CUST_NO AS CustNo, LC.CUST_NAME AS CustName, L.MR_LEAD_SOURCE_CODE AS SourceCode, LC.MR_CUST_TYPE_CODE AS MrCustTypeCode",
+        "select": "SELECT L.LEAD_NO AS LeadNo,WTL.WF_TASK_LIST_ID AS WfTaskListId,WTL.CLAIM_STAT AS ClaimStat, WTL.USERNAME AS ClaimBy, L.ORDER_NO AS OrderNo , L.LEAD_ID AS LeadId, L.ORI_OFFICE_NAME AS OriOfficeName, LC.CUST_NO AS CustNo, LC.CUST_NAME AS CustName, L.MR_LEAD_SOURCE_CODE AS SourceCode, LC.MR_CUST_TYPE_CODE AS MrCustTypeCode",
         "from": "FROM dbo.LEAD L WITH(NOLOCK) JOIN dbo.LEAD_CUST LC WITH(NOLOCK) ON L.LEAD_ID = LC.LEAD_ID JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON l.LEAD_NO = WTL.TRANSACTION_CODE AND WTL.ACT_CODE = 'FRAUD_VERIFICATION'",
-        "where" : "WHERE WTL.END_EXECUTING_DATE IS NULL"
-
+        "where": "WHERE WTL.END_EXECUTING_DATE IS NULL"
     },
     "headerList": [
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Claim By",
+            "name": "WTL.USERNAME"
+        },
         {
             "type": "sort",
             "position": "center",
@@ -124,13 +137,19 @@
         {
             "type": "sort",
             "position": "center",
-            "label": "Cust No",
+            "label": "ORDER NO",
+            "name": "L.ORDER_NO"
+          },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Customer No",
             "name": "LC.CustNo"
         },
         {
             "type": "sort",
             "position": "left",
-            "label": "Cust Name",
+            "label": "Customer Name",
             "name": "LC.CUST_NAME"
         },
         {
@@ -151,7 +170,12 @@
             "label": "Action"
         }
     ],
-    "bodyList": [ 
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "ClaimBy"
+        },
         {
             "type": "link",
             "position": "center",
@@ -169,12 +193,16 @@
                 }
             ]
         },
-        
         {
             "type": "text",
             "position": "left",
             "property": "OriOfficeName"
         },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "OrderNo"
+          },
         {
             "type": "text",
             "position": "center",

@@ -5,6 +5,20 @@
         {
             "type": "dropdown",
             "datatype": "text",
+            "name": "l.ORI_OFFICE_NAME",
+            "id": "OfficeNameId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "isSelectOne": false,
+            "url": "http://r3app-server/foundation_r3/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "label": "OFFICE NAME",
+            "items": [],
+            "itemsUrl": []
+        },
+        {
+            "type": "dropdown",
+            "datatype": "text",
             "name": " l.MR_LEAD_SOURCE_CODE",
             "id": "MrLeadSourceCodeId",
             "value": "",
@@ -76,7 +90,7 @@
             "isFromURL": true,
             "isSelectOne": false,
             "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefStatus/GetListKeyValueActiveGrpCodeByCode",
-            "label": "Lead Stat",
+            "label": "Lead Status",
             "items": [],
             "itemsUrl": [],
             "criteriaPropName": "StatusGrpCode",
@@ -129,7 +143,7 @@
         {
             "type": "sort",
             "position": "left",
-            "label": "Lead Stat",
+            "label": "Lead Status",
             "name": "l.LEAD_STAT"
         }
     ],
@@ -142,7 +156,7 @@
             "type": "link",
             "position": "center",
             "property": "LeadNo",
-            "path": "../View/",
+            "path": "/Lead/View",
             "target": "_blank",
             "param": [
                 {
