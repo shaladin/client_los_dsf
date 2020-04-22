@@ -1,0 +1,224 @@
+{
+    "title": "Credit Prcess Inquiry",
+    "exportExcel": false,
+    "component": [
+      {
+        "type": "dropdown",
+        "datatype": "text",
+        "name": "A.ORI_OFFICE_CODE",
+        "id": "oriOfficeCodeId",
+        "value": "",
+        "placeholder": "Placeholder",
+        "isFromURL": true,
+        "isSelectOne": false,
+        "url": "http://r3app-server/FOUNDATION_R3/RefOffice/GetListKvpActiveRefOfficeForPaging",
+        "label": "Original Office Name",
+        "items": [],
+        "itemsUrl": []
+      }, 
+      {
+        "type": "textbox",
+        "name": "A.APP_NO",
+        "id": "appNoId",
+        "value": "",
+        "label": "Application No",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "A.AGRMNT_NO",
+        "id": "agrmntNoId",
+        "value": "",
+        "label": "Agreement No",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "AC.CUST_NAME",
+        "id": "custNameId",
+        "value": "",
+        "label": "Customer Name",
+        "placeholder": "Placeholder"
+      },  
+      {
+        "type": "datepicker",
+        "name": "A.APP_CREATED_DT",
+        "id": "appDtgte",
+        "value": "",
+        "label": "Application Date >=",
+        "restriction": "gte",
+        "datatype": "date"
+      },
+      {
+        "type": "datepicker",
+        "name": "A.APP_CREATED_DT",
+        "id": "appDtlte",
+        "value": "",
+        "label": "Application Date <=",
+        "restriction": "lte",
+        "datatype": "date"
+      },
+      {
+        "type": "textbox",
+        "name": "A.IS_APP_INIT_DONE",
+        "id": "isAppInitDone",
+        "value": "",
+        "label": "Customer Name",
+        "placeholder": "Placeholder"
+      },  
+      {
+        "type": "dropdown",
+        "datatype": "text",
+        "name": "A.APP_CURR_STEP",
+        "id": "appCurrStepId",
+        "value": "",
+        "placeholder": "Placeholder",
+        "isFromURL": true,
+        "isSelectOne": false,
+        "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+        "label": "Current Application Step",
+        "items": [],
+        "itemsUrl": [],
+        "criteriaPropName": "StatusGrpCode",
+        "criteriaPropValue": "APP_STEP"
+      },
+      {
+        "type": "dropdown",
+        "datatype": "text",
+        "name": "A.APP_LAST_STEP",
+        "id": "appLastStepId",
+        "value": "",
+        "placeholder": "Placeholder",
+        "isFromURL": true,
+        "isSelectOne": false,
+        "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+        "label": "Last Application Step",
+        "items": [],
+        "itemsUrl": [],
+        "criteriaPropName": "StatusGrpCode",
+        "criteriaPropValue": "APP_STEP"
+      }
+    ],
+    "querystring": {
+      "select": "select A.APP_ID AS AppId, A.APP_NO AS AppNo, AGR.AGRMNT_NO AS AgrmntNo, AC.CUST_NAME AS CustName, AGR.AGRMNT_STAT AS AgrmntStat, AC.CUST_NAME AS CustName, A.APP_CREATED_DT AS AppCreatedDt, A.IS_APP_INIT_DONE AS isNapSub,   A.APP_LAST_STEP AS AppLastStep, A.APP_CURR_STEP AS AppCurrStep, DATEDIFF(SECOND, A.DTM_CRT, A.DTM_UPD) AS TotalTimeNap , CONVERT(VARCHAR(12), DATEDIFF(SECOND,A.DTM_CRT,A.DTM_UPD) / 60 / 60 / 24) + ' Day(s) ' +  CONVERT(VARCHAR(12), DATEDIFF(SECOND,A.DTM_CRT,A.DTM_UPD) / 60 / 60 % 24) + ' Hour(s) ' +  CONVERT(VARCHAR(2), DATEDIFF(SECOND,A.DTM_CRT,A.DTM_UPD) / 60 % 60) + ' Minute(s) ' +  CONVERT(VARCHAR(2), DATEDIFF(SECOND,A.DTM_CRT,A.DTM_UPD) % 60) + ' Second(s) ' AS 'DateDiff'",
+      "from": "FROM dbo.APP A WITH(NOLOCK) JOIN dbo.AGRMNT AGR WITH(NOLOCK) ON A.APP_ID = AGR.APP_ID JOIN dbo.APP_CUST AC WITH(NOLOCK) ON AC.APP_ID = A.APP_ID JOIN dbo.APP_FIN_DATA FD ON FD.APP_ID = A.APP_ID " 
+    },
+    "headerList": [
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Application No",
+        "name": "A.APP_NO"
+      },
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Agreement No",
+        "name": "B.AGRMNT_NO"
+      }, 
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Customer Name",
+        "name": "AC.CUST_NAME"
+      }, 
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Contract Status",
+        "name": "AGR.AGRMNT_STAT"
+      }, 
+      {
+        "type": "label",
+        "position": "left",
+        "label": "NAP Submitted",
+        "name": "A.IS_APP_INIT_DONE"
+      },
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Application Date",
+        "name": "A.APP_CREATED_DT"
+      }, 
+      {
+        "type": "label",
+        "position": "left",
+        "label": "Last Application Step",
+        "name": "A.APP_LAST_STEP"
+      },
+      {
+        "type": "label",
+        "position": "left",
+        "label": "Current Application Step",
+        "name": "A.APP_STAT"
+      },
+      {
+        "type": "label",
+        "position": "left",
+        "label": "Total Time NAP",
+        "name": "DateDiff"
+      }
+    ],
+    "bodyList": [
+      {
+        "type": "link",
+        "position": "left",
+        "property": "AppNo",
+        "path": "",
+        "param": [
+          {
+            "type": "appId",
+            "property": "appId"
+          }
+        ]
+      },
+      {
+        "type": "link",
+        "position": "left",
+        "property": "AgrmntNo",
+        "path": "",
+        "param": [
+          {
+            "type": "agrmntId",
+            "property": "agrmntId"
+          }
+        ]
+      }, 
+      {
+        "type": "text",
+        "position": "left",
+        "property": "CustName"
+      }, 
+      {
+        "type": "text",
+        "position": "left",
+        "property": "AgrmntStat"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "isNapSub"
+      }, 
+      {
+        "type": "date",
+        "position": "left",
+        "property": "AppCreatedDt"
+      },
+     
+      {
+        "type": "text",
+        "position": "left",
+        "property": "AppLastStep"
+      }, 
+      {
+        "type": "text",
+        "position": "left",
+        "property": "AppCurrStep"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "DateDiff"
+      }
+    ]
+  }

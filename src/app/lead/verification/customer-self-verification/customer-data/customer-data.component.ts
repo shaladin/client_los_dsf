@@ -12,8 +12,8 @@ import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { CustDataPersonalObj } from 'app/shared/model/CustDataPersonalObj.Model';
 import { CustDataCompanyObj } from 'app/shared/model/CustDataCompanyObj.Model';
-import { CustJobDataComponent } from 'app/NAP/nap-tab/customer-data/component/job-data/cust-job-data.component';
 import { WizardComponent } from 'angular-archwizard';
+import { CustJobDataComponent } from 'app/NEW-NAP/sharing-component/input-nap-component/customer-data/component/job-data/cust-job-data.component';
 
 @Component({
   selector: 'app-customer-data',

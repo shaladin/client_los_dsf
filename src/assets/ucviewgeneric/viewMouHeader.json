@@ -10,7 +10,7 @@
           "type": "link",
           "label": "MOU No",
           "property": "MouCustNo",
-          "path": "/Mou/Cust/Paging",
+          "path": "/Mou/Cust/View",
           "param": [
             {
               "type": "MouCustId",

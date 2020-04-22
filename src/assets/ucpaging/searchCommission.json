@@ -78,7 +78,7 @@
             "action": [
                 {
                     "type": "edit",
-                    "path": "/CreditProcess/CommissionReserveFund",
+                    "path": "../CommissionReservedFund/Detail",
                     "param": [
                         {
                             "type": "AppId",
