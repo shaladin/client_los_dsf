@@ -80,7 +80,9 @@ ngOnInit() {
       CummulativeTenor: 0,
 
       AppFee : this.fb.array([]),
-      ListEntryInst: this.fb.array([])
+      ListEntryInst: this.fb.array([]),
+
+      NeedReCalculate: true
     }
   );
   this.LoadAppFinData();

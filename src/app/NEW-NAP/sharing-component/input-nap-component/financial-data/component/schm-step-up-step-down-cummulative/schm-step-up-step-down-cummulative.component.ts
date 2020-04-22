@@ -53,6 +53,12 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
     );
   }
 
+  SetNeedReCalculate(value) {
+    this.ParentForm.patchValue({
+      NeedReCalculate: value
+    });
+  }
+
   CalcBaseOnRate() {
     if(this.ParentForm.controls.CummulativeTenor.value <= 0){
       this.toastr.errorMessage("Cummulative Tenor must be higher than 0.");
@@ -82,6 +88,7 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
           NtfAmt: response.NtfAmt,
 
         })
+        this.SetNeedReCalculate(false);
       }
     );
   }
@@ -114,6 +121,8 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
           NtfAmt: response.NtfAmt,
 
         })
+
+        this.SetNeedReCalculate(false);
       }
     );
   }
@@ -183,6 +192,8 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
         DiffRateAmt: DiffRateAmtStd
       });
     }
+
+    this.SetNeedReCalculate(true);
   }
 
   test() {

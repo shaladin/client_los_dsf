@@ -53,6 +53,12 @@ export class SchmStepUpStepDownNormalComponent implements OnInit {
     );
   }
 
+  SetNeedReCalculate(value) {
+    this.ParentForm.patchValue({
+      NeedReCalculate: value
+    });
+  }
+
   SetEntryInstallment(){
     while ((this.ParentForm.controls.ListEntryInst as FormArray).length) {
       (this.ParentForm.controls.ListEntryInst as FormArray).removeAt(0);
@@ -66,6 +72,7 @@ export class SchmStepUpStepDownNormalComponent implements OnInit {
       (this.ParentForm.controls.ListEntryInst as FormArray).push(group);
     }
 
+    this.SetNeedReCalculate(true);
   }
 
 
@@ -106,13 +113,9 @@ export class SchmStepUpStepDownNormalComponent implements OnInit {
           NtfAmt: response.NtfAmt,
 
         })
-
+        this.SetNeedReCalculate(false);
       }
     );
-  }
-
-  CalcBaseOnInst() {
-
   }
 
   SaveAndContinue() {
@@ -180,6 +183,8 @@ export class SchmStepUpStepDownNormalComponent implements OnInit {
         DiffRateAmt: DiffRateAmtStd
       });
     }
+
+    this.SetNeedReCalculate(true);
   }
 
   test() {

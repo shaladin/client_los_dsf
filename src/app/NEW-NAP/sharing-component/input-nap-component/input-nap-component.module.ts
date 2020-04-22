@@ -39,7 +39,7 @@ import { SchmStepUpStepDownLeasingComponent } from "./financial-data/component/s
 import { SchmStepUpStepDownCummulativeComponent } from "./financial-data/component/schm-step-up-step-down-cummulative/schm-step-up-step-down-cummulative.component";
 import { NgxCurrencyModule } from "ngx-currency";
 import { SchmIrregularComponent } from "./financial-data/component/schm-irregular/schm-irregular.component";
-
+import { SchmEvenPrincipleComponent } from "./financial-data/component/schm-even-principle/schm-even-principle.component";
 export const customCurrencyMaskConfig = {     
   align: "right",     
   allowNegative: true,     
@@ -131,7 +131,8 @@ export const customCurrencyMaskConfig = {
     SchmStepUpStepDownNormalComponent,
     SchmStepUpStepDownLeasingComponent,
     SchmStepUpStepDownCummulativeComponent,
-    SchmIrregularComponent 
+    SchmIrregularComponent,
+    SchmEvenPrincipleComponent
   ],
   entryComponents: [SubsidyAddEditComponent],
   providers: [
