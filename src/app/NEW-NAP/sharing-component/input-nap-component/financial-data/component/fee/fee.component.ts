@@ -3,6 +3,7 @@ import { FormBuilder, FormArray, Validators, Form, FormGroup } from '@angular/fo
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { AppFeeObj } from 'app/shared/model/AppFeeObj.Model';
+import { CalcProvisionFee } from 'app/shared/model/AppFee/CalcProvisionFee.Model';
 
 @Component({
   selector: 'app-fee',
@@ -13,8 +14,6 @@ export class FeeComponent implements OnInit {
   @Input() AppId : number;
   @Input() ParentForm : FormGroup;
   @Input() identifier : string;
-
-  AppFeeForm = new FormArray([]);
   
   appFeeObj : AppFeeObj = new AppFeeObj();
   listAppFeeObj : Array<AppFeeObj> = new Array<AppFeeObj>();
@@ -60,14 +59,14 @@ export class FeeComponent implements OnInit {
       if(isCapitalize)
       {
         item.patchValue({
-          FeeCapitalizeAmt : [item.get("AppFeeAmt").value]
+          FeeCapitalizeAmt : item.get("AppFeeAmt").value
         });
         // item.get("AppId").enable();
       }
       else
       {
         item.patchValue({
-          FeeCapitalizeAmt : [0]
+          FeeCapitalizeAmt : 0
         });
         // item.get("AppId").disable();
       }
@@ -110,32 +109,32 @@ export class FeeComponent implements OnInit {
     }
   }
 
-  AppFeePrcnt_OnChange(e)
-  {
-    var fb_provision = this.GetProvisionFormGroup();
-    var calculateBaseAmt = fb_provision.get("CalculateBaseAmt").value;
-    var appFeePrcnt = fb_provision.get("AppFeePrcnt").value;
+  // AppFeePrcnt_OnChange(e)
+  // {
+  //   var fb_provision = this.GetProvisionFormGroup();
+  //   var calculateBaseAmt = fb_provision.get("CalculateBaseAmt").value;
+  //   var appFeePrcnt = fb_provision.get("AppFeePrcnt").value;
 
-    fb_provision.patchValue({
-      AppFeeAmt : appFeePrcnt * calculateBaseAmt
-    });
+  //   fb_provision.patchValue({
+  //     AppFeeAmt : appFeePrcnt * calculateBaseAmt
+  //   });
 
-    this.IsCapitalize_CheckedChange();
-  }
+  //   this.IsCapitalize_CheckedChange();
+  // }
   
-  AppFeeAmt_OnChange()
-  {
-    var fb_provision = this.GetProvisionFormGroup();
-    var feeType = fb_provision.get("FeeType").value;
-    var calculateBaseAmt : number = fb_provision.get("CalculateBaseAmt").value;
-    var appFeeAmt : number = fb_provision.get("AppFeeAmt").value;
+  // AppFeeAmt_OnChange()
+  // {
+  //   var fb_provision = this.GetProvisionFormGroup();
+  //   var feeType = fb_provision.get("FeeType").value;
+  //   var calculateBaseAmt : number = fb_provision.get("CalculateBaseAmt").value;
+  //   var appFeeAmt : number = fb_provision.get("AppFeeAmt").value;
     
-    fb_provision.patchValue({
-      AppFeePrcnt : +appFeeAmt / +calculateBaseAmt
-    });
+  //   fb_provision.patchValue({
+  //     AppFeePrcnt : +appFeeAmt / +calculateBaseAmt
+  //   });
 
-    this.CalculateTotalFeeAndCaptlzAmt();
-  }
+  //   this.CalculateTotalFeeAndCaptlzAmt();
+  // }
 
   FeeCapitalizeAmt_OnChange()
   {
@@ -175,8 +174,14 @@ export class FeeComponent implements OnInit {
 
 
   addFeeControl(obj : AppFeeObj) {
+    var feeSource = "";
+    if(obj.MrFeeTypeCode == 'PROVISION')
+    {
+      feeSource = "NTF_CAP"
+    }
+
     return this.fb.group({
-      AppFeeId : [obj.AppFeeId],
+      AppFeeId : obj.AppFeeId,
       AppId: [obj.AppId,Validators.required],
       MrFeeTypeCode : obj.MrFeeTypeCode,
       FeeTypeName : obj.FeeTypeName,
@@ -187,13 +192,14 @@ export class FeeComponent implements OnInit {
       SellFeePrcnt : obj.SellFeePrcnt,
       AppFeePrcnt : obj.AppFeePrcnt,
       IsCptlz : obj.IsCptlz,
-      CptlzAmt : obj.CptlzAmt,
+      // CptlzAmt : obj.CptlzAmt,
       FeeCapitalizeType : obj.FeeCapitalizeType,
       FeeCapitalizeAmt : obj.FeeCapitalizeAmt,
       FeeCapitalizePrcntg : obj.FeeCapitalizePrcntg,
-      CalculateBaseAmt : [0],
-      CalculateBase : [''],
-      FeeType : obj.FeeType
+      CalculateBaseAmt : 0,
+      CalculateBase : '',
+      FeeType : obj.FeeType,
+      FeeSource : feeSource,
     })
   }
 
@@ -202,23 +208,43 @@ export class FeeComponent implements OnInit {
 
     var fb_provision = this.GetProvisionFormGroup();
 
-    var feeType = fb_provision.get("FeeType").value;
+    var calcObj : CalcProvisionFee = new CalcProvisionFee();
+    calcObj.ProvisionFeeSource = fb_provision.get("FeeSource").value;
+    calcObj.ProvisionFeeType = fb_provision.get("FeeType").value;
+    calcObj.AppId = this.AppId;
+    calcObj.DownPaymentGrossAmt = this.ParentForm.get("DownPaymentGrossAmt").value;
+    calcObj.InsCapitalizedAmt = this.ParentForm.get("InsCptlzAmt").value;
+    calcObj.TotalAssetPrice = this.ParentForm.get("TotalAssetPriceAmt").value;
+    calcObj.Fee = this.ParentForm.get(this.identifier).value;
 
-    if(feeType == 'PRCNT')
-    {
-      var calculateBaseAmt = fb_provision.get("CalculateBaseAmt").value;
-      var appFeePrcnt = fb_provision.get("AppFeePrcnt").value;
+
+    this.http.post(environment.losUrl + "/AppFee/CalculateProvisionFee", calcObj).subscribe(
+      (response) => {
+        response["ProvisionFeePercentage"];
+        var fb_provision = this.GetProvisionFormGroup();
+ 
+          fb_provision.patchValue({
+            AppFeeAmt : response["ProvisionFeeAmt"],
+            AppFeePrcnt : response["ProvisionFeePercentage"]
+          });
+      }
+    );
+
+    // if(feeType == 'PRCNT')
+    // {
+    //   var calculateBaseAmt = fb_provision.get("CalculateBaseAmt").value;
+    //   var appFeePrcnt = fb_provision.get("AppFeePrcnt").value;
   
-      fb_provision.patchValue({
-        AppFeeAmt : appFeePrcnt * calculateBaseAmt
-      });
+    //   fb_provision.patchValue({
+    //     AppFeeAmt : appFeePrcnt * calculateBaseAmt
+    //   });
   
-      // this.IsCapitalize_CheckedChange();
-    }
-    else
-    {
-      this.AppFeeAmt_OnChange();
-    }
+    //   // this.IsCapitalize_CheckedChange();
+    // }
+    // else
+    // {
+    //   this.AppFeeAmt_OnChange();
+    // }
   }
 
 

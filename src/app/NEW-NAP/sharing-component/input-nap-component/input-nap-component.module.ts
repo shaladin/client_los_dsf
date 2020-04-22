@@ -34,6 +34,19 @@ import { GuarantorPersonalComponent } from "./guarantor-data/guarantor-personal/
 import { GuarantorCompanyComponent } from "./guarantor-data/guarantor-company/guarantor-company.component";
 import { GuarantorPagingComponent } from "./guarantor-data/guarantor-paging/guarantor-paging.component";
 import { SchmRegulerFixComponent } from "./financial-data/component/schm-reguler-fix/schm-reguler-fix.component";
+import { NgxCurrencyModule } from "ngx-currency";
+import { SchmIrregularComponent } from "./financial-data/component/schm-irregular/schm-irregular.component";
+
+export const customCurrencyMaskConfig = {     
+  align: "right",     
+  allowNegative: true,     
+  allowZero: true,     
+  decimal: ".",     
+  precision: 2,     
+  prefix: "",     
+  suffix: "",     
+  thousands: ",",     
+  nullable: false };
 
 @NgModule({
   exports: [
@@ -67,7 +80,8 @@ import { SchmRegulerFixComponent } from "./financial-data/component/schm-reguler
     SubsidyAddEditComponent,
     FeeComponent,
     TcDataComponent,
-    SchmRegulerFixComponent // sementara nanti dicross check sama term-conditions
+    SchmRegulerFixComponent,
+    SchmIrregularComponent // sementara nanti dicross check sama term-conditions
   ],
   imports: [
     CommonModule,
@@ -76,6 +90,7 @@ import { SchmRegulerFixComponent } from "./financial-data/component/schm-reguler
     MatCheckboxModule,
     MatRadioModule,
     MatSelectModule,
+    NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
   ],
   declarations: [
     CustomerDataComponent,
@@ -107,7 +122,8 @@ import { SchmRegulerFixComponent } from "./financial-data/component/schm-reguler
     SubsidyAddEditComponent,
     FeeComponent,
     TcDataComponent,
-    SchmRegulerFixComponent // sementara nanti dicross check sama term-conditions
+    SchmRegulerFixComponent,
+    SchmIrregularComponent // sementara nanti dicross check sama term-conditions
   ],
   entryComponents: [SubsidyAddEditComponent],
   providers: [

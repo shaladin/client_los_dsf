@@ -24,6 +24,8 @@ appFinDataObj : AppFinDataObj = new AppFinDataObj();
 calcRegFixObj : CalcRegularFixObj = new CalcRegularFixObj();
 listInstallment : any;
 responseCalc : any;
+NumOfInst : number;
+IsParentLoaded : boolean = false;
 
 constructor(
   private fb: FormBuilder,
@@ -36,43 +38,44 @@ ngOnInit() {
   this.FinDataForm = this.fb.group(
     {
       AppId : this.AppId,
-      TotalAssetPriceAmt : [0],
-      TotalFeeAmt : [0],
-      TotalFeeCptlzAmt : [0],
-      TotalInsCustAmt : [0],
-      InsCptlzAmt : [0],
-      TotalLifeInsCustAmt : [0],
-      LifeInsCptlzAmt : [0],
-      DownPaymentGrossAmt : [0],
-      DownPaymentNettAmt : [0],
+      TotalAssetPriceAmt : 0,
+      TotalFeeAmt :0,
+      TotalFeeCptlzAmt :0,
+      TotalInsCustAmt : 0,
+      InsCptlzAmt : 0,
+      TotalLifeInsCustAmt : 0,
+      LifeInsCptlzAmt : 0,
+      DownPaymentGrossAmt : 0,
+      DownPaymentNettAmt : 0,
 
-      TotalDownPaymentNettAmt : [0], //muncul di layar
-      TotalDownPaymentGrossAmt : [0], //inmemory
-      TdpPaidCoyAmt : [0], // input layar
+      TotalDownPaymentNettAmt : 0, //muncul di layar
+      TotalDownPaymentGrossAmt : 0, //inmemory
+      TdpPaidCoyAmt : 0, // input layar
 
-      NtfAmt : [0],
-      RateType : ["EFCTV"],
-      EffectiveRatePrcnt : [0], //eff rate to cust
-      StdEffectiveRatePrcnt : [0], //base eff rate to cust
-      FlatRatePrcnt : [0], //flat rate to cust
-      InstAmt : [0],
-      GracePeriod : [0],
-      MrGracePeriodTypeCode : [""],
+      NtfAmt : 0,
+      RateType : "EFCTV",
+      EffectiveRatePrcnt : 0, //eff rate to cust
+      StdEffectiveRatePrcnt : 0, //base eff rate to cust
+      FlatRatePrcnt : 0, //flat rate to cust
+      InstAmt : 0,
+      GracePeriod : 0,
+      MrGracePeriodTypeCode : "",
 
-      NumOfInst : [0],
-      RoundingAmt : [0],
-      SupplEffectiveRatePrcnt : [0],
-      SupplFlatRatePrcnt : [0],
-      DiffRateAmt : [0],
+      NumOfInst : 0,
+      RoundingAmt : 0,
+      SupplEffectiveRatePrcnt : 0,
+      SupplFlatRatePrcnt : 0,
+      DiffRateAmt : 0,
 
-      TotalInterestAmt: [0],
-      TotalAR : [0],
+      TotalInterestAmt: 0,
+      TotalAR : 0,
 
-      StdGrossYieldPrcnt : [0],
-      GrossYieldPrcnt : [0],
-      GrossYieldBhv : [""],
+      StdGrossYieldPrcnt : 0,
+      GrossYieldPrcnt : 0,
+      GrossYieldBhv : "",
 
-      AppFee : this.fb.array([])
+      AppFee : this.fb.array([]),
+      ListEntryInst: this.fb.array([])
     }
   );
   this.LoadAppFinData();
@@ -112,7 +115,7 @@ LoadAppFinData()
 
       });
 
-
+      this.IsParentLoaded = true;
     }
   );
 }
@@ -168,13 +171,13 @@ LoadAppFinData()
 
 SaveAndContinue()
 {
-  var isValidGrossYield = this.ValidateGrossYield();
+  var isValidGrossYield = true;//this.ValidateGrossYield();
   var isValidGracePeriod = this.ValidateGracePeriode();
 
   if(isValidGrossYield && isValidGracePeriod)
   {
     console.log("GROSSSS");
-    this.FinDataForm.value;
+    console.log(this.FinDataForm.value);
   }
 }
 
@@ -198,9 +201,6 @@ ValidateGracePeriode()
 
 ValidateGrossYield()
 {
-  this.FinDataForm.patchValue({
-    GrossYieldPrcnt :10
-  });
   var GrossYieldBhv = this.FinDataForm.get("GrossYieldBhv").value
   var StdGrossYieldPrcnt = this.FinDataForm.get("StdGrossYieldPrcnt").value
   var GrossYieldPrcnt = this.FinDataForm.get("GrossYieldPrcnt").value

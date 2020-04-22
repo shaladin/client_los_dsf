@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
@@ -7,19 +7,21 @@ import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj.Model';
 import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
 import { environment } from 'environments/environment';
+import { CalcIrregularObj } from 'app/shared/model/AppFinData/CalcIrregularObj.Model';
 
 @Component({
-  selector: 'app-schm-reguler-fix',
-  templateUrl: './schm-reguler-fix.component.html',
+  selector: 'app-schm-irregular',
+  templateUrl: './schm-irregular.component.html',
 })
-export class SchmRegulerFixComponent implements OnInit {
+export class SchmIrregularComponent implements OnInit {
 
   @Input() AppId: number;
   @Input() ParentForm: FormGroup;
+  @Input() NumOfInst:number;
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
-  calcRegFixObj: CalcRegularFixObj = new CalcRegularFixObj();
+  calcIrregularObj: CalcIrregularObj = new CalcIrregularObj();
   listInstallment: any;
   responseCalc: any;
 
@@ -32,6 +34,10 @@ export class SchmRegulerFixComponent implements OnInit {
   ngOnInit() {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
+    this.SetEntryInstallment();
+
+    console.log("PRT FORM")
+    console.log(this.ParentForm.value);
   }
 
   LoadDDLRateType() {
@@ -49,37 +55,31 @@ export class SchmRegulerFixComponent implements OnInit {
       }
     );
   }
+  
+  SetEntryInstallment(){
 
-  CalcBaseOnRate() {
-    this.calcRegFixObj = this.ParentForm.value;
-    this.calcRegFixObj["IsRecalculate"] = false;
-    this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateInstallmentRegularFix", this.calcRegFixObj).subscribe(
-      (response) => {
-        this.listInstallment = response.InstallmentTable;
-        this.ParentForm.patchValue({
-          TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
-          TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
+    var numOfStep =  +this.ParentForm.get("NumOfInst").value - 1
+    console.log("STEP");
+    console.log(numOfStep);
 
-          EffectiveRatePrcnt: response.EffectiveRatePrcnt,
-          FlatRatePrcnt: response.FlatRatePrcnt,
-          InstAmt: response.InstAmt,
+    while ((this.ParentForm.controls.ListEntryInst as FormArray).length) {
+      (this.ParentForm.controls.ListEntryInst as FormArray).removeAt(0);
+    }
+    for(let i = 0 ; i < numOfStep ; i++){
+      const group = this.fb.group({
+        InstSeqNo: i + 1,
+        NumOfInst: [0],
+        InstAmt: [0]
+      });
+      (this.ParentForm.controls.ListEntryInst as FormArray).push(group);
+    }
 
-          GrossYieldPrcnt: response.GrossYieldPrcnt,
-
-          TotalInterestAmt: response.TotalInterestAmt,
-          TotalAR: response.TotalARAmt,
-
-          NtfAmt: response.NtfAmt,
-
-        })
-      }
-    );
   }
-
-  CalcBaseOnInst() {
-    this.calcRegFixObj = this.ParentForm.value;
-    this.calcRegFixObj["IsRecalculate"] = true;
-    this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateInstallmentRegularFix", this.calcRegFixObj).subscribe(
+  
+  CalculateAmortization() {
+    this.calcIrregularObj = this.ParentForm.value;
+    this.calcIrregularObj["IsRecalculate"] = false;
+    this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateIrregular", this.calcIrregularObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
         this.ParentForm.patchValue({
