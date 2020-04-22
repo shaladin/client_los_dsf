@@ -1,0 +1,653 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-body">
+      <div class="px-3">
+        <div class="CF2W">
+          <form class="form form-horizontal" [formGroup]="appForm" (ngSubmit)="appForm.valid && SaveForm()"
+            #enjiForm="ngForm">
+            <div class="form-body">
+              <lib-ucSubsection [id]="'salesInformmationId'" [title]="'Sales Information'"
+                [panel]="'salesInformmation'">
+              </lib-ucSubsection>
+              <div id="salesInformmation">
+                <div class="form-group row">
+                  <label class="col-md-2  adInsLabel" translate>Sales Officer</label>
+                  <div class="col-md-4">
+                    <select class="form-control adInsInput" style="width: auto" formControlName="SalesOfficerNo"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.SalesOfficerNo.invalid }">
+                      <option *ngFor="let it of tempSalesOfficerNo" [value]="it.Key">
+                        {{it.Value}}</option>
+                    </select>
+                    <lib-uc-show-errors [control]="appForm.controls.SalesOfficerNo" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                  <label class="col-md-2  adInsLabel" translate>Sales Supervisor</label>
+                  <div class="col-md-4">
+                    <input type="text" class="form-control adInsInput" formControlName="SalesHeadNo"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.SalesHeadNo.invalid}">
+                    <lib-uc-show-errors [control]="appForm.controls.SalesHeadNo" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2  adInsLabel" translate>Sales Recommendation</label>
+                  <div class="col-md-4">
+                    <select class="form-control adInsInput" style="width: auto" formControlName="MrSalesRecommendCode"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.MrSalesRecommendCode.invalid }">
+                      <option *ngFor="let it of tempMrSalesRecommendCode" [value]="it.Key">
+                        {{it.Value}}</option>
+                    </select>
+                    <lib-uc-show-errors [control]="appForm.controls.MrSalesRecommendCode" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                  <label class="col-md-2  adInsLabel" translate>Sales Notes</label>
+                  <div class="col-md-4">
+                    <textarea type="text" class="form-control adInsInput" formControlName="SalesNotes"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.SalesNotes.invalid }"></textarea>
+                    <lib-uc-show-errors [control]="appForm.controls.SalesNotes" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+              </div>
+
+              <lib-ucSubsection [id]="'applicationInformationId'" [title]="'Application Information'"
+                [panel]="'applicationInformation'">
+              </lib-ucSubsection>
+              <div id="applicationInformation">
+                <div class="form-group row">
+                  <label class="col-md-2  adInsLabel" translate>Application Source</label>
+                  <div class="col-md-4">
+                    <select class="form-control adInsInput" style="width: auto" formControlName="MrAppSourceCode"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.MrAppSourceCode.invalid }">
+                      <option *ngFor="let it of tempMrAppSourceCode" [value]="it.Key">
+                        {{it.Value}}</option>
+                    </select>
+                    <lib-uc-show-errors [control]="appForm.controls.MrAppSourceCode" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                  <label class="col-md-2  adInsLabel" translate>Survey No</label>
+                  <div class="col-md-4">
+                    <input type="text" class="form-control adInsInput" formControlName="SalesHeadNo"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.SalesHeadNo.invalid}">
+                    <lib-uc-show-errors [control]="appForm.controls.SalesHeadNo" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2  adInsLabel" translate>Tenor</label>
+                  <div class="col-md-4">
+                    <input type="text" class="form-control adInsInput" formControlName="Tenor"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.Tenor.invalid}">
+                    <lib-uc-show-errors [control]="appForm.controls.Tenor" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                  <label class="col-md-2  adInsLabel" translate>First Installment Type</label>
+                  <div class="col-md-4">
+                    <select class="form-control adInsInput" style="width: auto" formControlName="MrFirstInstTypeCode"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.MrFirstInstTypeCode.invalid }">
+                      <option *ngFor="let it of tempMrFirstInstTypeCode" [value]="it.Key">
+                        {{it.Value}}</option>
+                    </select>
+                    <lib-uc-show-errors [control]="appForm.controls.MrFirstInstTypeCode" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2  adInsLabel" translate>Payment Frequency</label>
+                  <div class="col-md-4">
+                    <select class="form-control adInsInput" style="width: auto" formControlName="PayFreqCode"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.PayFreqCode.invalid }">
+                      <option *ngFor="let it of tempPayFreqCode" [value]="it.Key">
+                        {{it.Value}}</option>
+                    </select>
+                    <lib-uc-show-errors [control]="appForm.controls.PayFreqCode" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                  <label class="col-md-2  adInsLabel" translate>Interest Type</label>
+                  <div class="col-md-4">
+                    <textarea type="text" class="form-control adInsInput" formControlName="SalesNotes"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.SalesNotes.invalid }"></textarea>
+                    <lib-uc-show-errors [control]="appForm.controls.SalesNotes" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2  adInsLabel" translate>Num of Installment</label>
+                  <div class="col-md-4">
+                    <select class="form-control adInsInput" style="width: auto" formControlName="MrSalesRecommendCode"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.MrSalesRecommendCode.invalid }">
+                      <option *ngFor="let it of tempMrSalesRecommendCode" [value]="it.Key">
+                        {{it.Value}}</option>
+                    </select>
+                    <lib-uc-show-errors [control]="appForm.controls.MrSalesRecommendCode" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                  <label class="col-md-2  adInsLabel" translate>Installment Scheme</label>
+                  <div class="col-md-4">
+                    <select class="form-control adInsInput" style="width: auto" formControlName="MrSalesRecommendCode"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.MrSalesRecommendCode.invalid }">
+                      <option *ngFor="let it of tempMrSalesRecommendCode" [value]="it.Key">
+                        {{it.Value}}</option>
+                    </select>
+                    <lib-uc-show-errors [control]="appForm.controls.MrSalesRecommendCode" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+
+
+                <div class="form-group row">
+                  <label class="col-md-2  adInsLabel" translate>Customer Notification By</label>
+                  <div class="col-md-4">
+                    <select class="form-control adInsInput" style="width: auto" formControlName="MrCustNotifyOptCode"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.MrCustNotifyOptCode.invalid }">
+                      <option *ngFor="let it of tempMrCustNotifyOptCode" [value]="it.Key">
+                        {{it.Value}}</option>
+                    </select>
+                    <lib-uc-show-errors [control]="appForm.controls.MrCustNotifyOptCode" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                  <label class="col-md-2  adInsLabel" translate>Way of Payment</label>
+                  <div class="col-md-4">
+                    <select class="form-control adInsInput" style="width: auto" formControlName="MrWopCode"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.MrWopCode.invalid }">
+                      <option *ngFor="let it of tempMrWopCode" [value]="it.Key">
+                        {{it.Value}}</option>
+                    </select>
+                    <lib-uc-show-errors [control]="appForm.controls.MrWopCode" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+
+              </div>
+
+
+              <lib-ucSubsection [id]="'assetId'" [title]="'Asset'" [panel]="'asset'">
+              </lib-ucSubsection>
+              <div id="asset">
+                <div class="form-group row">
+                  <label class="col-md-2  adInsLabel" translate>Asset Name</label>
+                  <div class="col-md-4">
+                  </div>
+                  <label class="col-md-2  adInsLabel" translate>Asset Condition</label>
+                  <div class="col-md-4">
+                    <select class="form-control adInsInput" style="width: auto" formControlName="MrFirstInstTypeCode"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.MrFirstInstTypeCode.invalid }">
+                      <option *ngFor="let it of tempMrFirstInstTypeCode" [value]="it.Key">
+                        {{it.Value}}</option>
+                    </select>
+                    <lib-uc-show-errors [control]="appForm.controls.MrFirstInstTypeCode" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2  adInsLabel" translate>Serial No 1</label>
+                  <div class="col-md-4">
+                    <input type="text" class="form-control adInsInput" formControlName="Tenor"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.Tenor.invalid}">
+                    <lib-uc-show-errors [control]="appForm.controls.Tenor" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                  <label class="col-md-2  adInsLabel" translate>Asset Usage</label>
+                  <div class="col-md-4">
+                    <select class="form-control adInsInput" style="width: auto" formControlName="MrFirstInstTypeCode"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.MrFirstInstTypeCode.invalid }">
+                      <option *ngFor="let it of tempMrFirstInstTypeCode" [value]="it.Key">
+                        {{it.Value}}</option>
+                    </select>
+                    <lib-uc-show-errors [control]="appForm.controls.MrFirstInstTypeCode" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2  adInsLabel" translate>Serial No 2</label>
+                  <div class="col-md-4">
+                    <input type="text" class="form-control adInsInput" formControlName="Tenor"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.Tenor.invalid}">
+                    <lib-uc-show-errors [control]="appForm.controls.Tenor" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                  <label class="col-md-2  adInsLabel" translate>BPKB Issuer City</label>
+                  <div class="col-md-4">
+                    <textarea type="text" class="form-control adInsInput" formControlName="SalesNotes"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.SalesNotes.invalid }"></textarea>
+                    <lib-uc-show-errors [control]="appForm.controls.SalesNotes" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2  adInsLabel" translate>License Plate</label>
+                  <div class="col-md-4">
+
+                    <lib-uc-show-errors [control]="appForm.controls.MrSalesRecommendCode" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                  <label class="col-md-2  adInsLabel" translate>BPKB Issue Date</label>
+                  <div class="col-md-4">
+                    <select class="form-control adInsInput" style="width: auto" formControlName="MrSalesRecommendCode"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.MrSalesRecommendCode.invalid }">
+                      <option *ngFor="let it of tempMrSalesRecommendCode" [value]="it.Key">
+                        {{it.Value}}</option>
+                    </select>
+                    <lib-uc-show-errors [control]="appForm.controls.MrSalesRecommendCode" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2  adInsLabel" translate>Manufacturing Year</label>
+                  <div class="col-md-4">
+                    <select class="form-control adInsInput" style="width: auto" formControlName="MrCustNotifyOptCode"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.MrCustNotifyOptCode.invalid }">
+                      <option *ngFor="let it of tempMrCustNotifyOptCode" [value]="it.Key">
+                        {{it.Value}}</option>
+                    </select>
+                    <lib-uc-show-errors [control]="appForm.controls.MrCustNotifyOptCode" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                  <label class="col-md-2  adInsLabel" translate>Asset Tax Date</label>
+                  <div class="col-md-4">
+                    <select class="form-control adInsInput" style="width: auto" formControlName="MrWopCode"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.MrWopCode.invalid }">
+                      <option *ngFor="let it of tempMrWopCode" [value]="it.Key">
+                        {{it.Value}}</option>
+                    </select>
+                    <lib-uc-show-errors [control]="appForm.controls.MrWopCode" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <lib-ucSubsection [id]="'assetOwnerAndUserId'" [title]="'Asset Owner and User'"
+                [panel]="'assetOwnerAndUser'">
+              </lib-ucSubsection>
+              <div id="assetOwnerAndUser">
+                <div class="form-group row">
+                  <label class="col-md-2  adInsLabel" translate>Self Usage</label>
+                  <div class="col-md-4">
+                    <input type="checkbox" class="border-primary" formControlName="Tenor">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2  adInsLabel" translate>User Name</label>
+                  <div class="col-md-4">
+                    <input type="text" class="form-control adInsInput" formControlName="Tenor"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.Tenor.invalid}">
+                    <lib-uc-show-errors [control]="appForm.controls.Tenor" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                  <label class="col-md-2  adInsLabel" translate>User Relationship</label>
+                  <div class="col-md-4">
+                    <select class="form-control adInsInput" style="width: auto" formControlName="MrFirstInstTypeCode"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.MrFirstInstTypeCode.invalid }">
+                      <option *ngFor="let it of tempMrFirstInstTypeCode" [value]="it.Key">
+                        {{it.Value}}</option>
+                    </select>
+                    <lib-uc-show-errors [control]="appForm.controls.MrFirstInstTypeCode" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2  adInsLabel" translate>Owner Name</label>
+                  <div class="col-md-4">
+                    <input type="text" class="form-control adInsInput" formControlName="Tenor"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.Tenor.invalid}">
+                    <lib-uc-show-errors [control]="appForm.controls.PayFreqCode" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                  <label class="col-md-2  adInsLabel" translate>Owner ID Type</label>
+                  <div class="col-md-4">
+                    <select class="form-control adInsInput" style="width: auto" formControlName="MrFirstInstTypeCode"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.MrFirstInstTypeCode.invalid }">
+                      <option *ngFor="let it of tempMrFirstInstTypeCode" [value]="it.Key">
+                        {{it.Value}}</option>
+                    </select>
+                    <lib-uc-show-errors [control]="appForm.controls.SalesNotes" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2  adInsLabel" translate>Owner Relationship</label>
+                  <div class="col-md-4">
+                    <input type="text" class="form-control adInsInput" formControlName="Tenor"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.Tenor.invalid}">
+                    <lib-uc-show-errors [control]="appForm.controls.PayFreqCode" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                  <label class="col-md-2  adInsLabel" translate>Owner ID No</label>
+                  <div class="col-md-4">
+                    <input type="text" class="form-control adInsInput" formControlName="Tenor"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.Tenor.invalid}">
+                    <lib-uc-show-errors [control]="appForm.controls.SalesNotes" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2  adInsLabel" translate>Copy Address From </label>
+                  <div class="col-md-3">
+                    <select class="form-control adInsInput" formControlName="CopyAddrFrom">
+                      <option *ngFor="let ram of listCustAddr" [value]="ram.CustAddrId">
+                        {{ram.MrCustAddrTypeCode}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col-md-2">
+                    <button type="button" class="btn btn-raised btn-primary" (click)="copyAddress()">
+                      <i class="fa fa-check-square-o"></i> Copy
+                    </button>
+                  </div>
+                </div>
+
+
+                <lib-ucaddress #UcAddrGrp [showSubsection]="false" [title]="'Customer Address'" [UCAddrForm]="appForm"
+                  [enjiForm]="enjiForm" [identifier]="'custAddress'" [default]="addressObj"
+                  [inputField]="inputFieldAddressObj" [showPhn2]="false" [showFax]="false" [showPhn3]="false">
+                </lib-ucaddress>
+                <div class="form-group row">
+                  <label class="col-md-2  adInsLabel" translate>Mobile Phone</label>
+                  <div class="col-md-4">
+                    <input type="text" class="form-control adInsInput" formControlName="Tenor"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.Tenor.invalid}">
+                    <lib-uc-show-errors [control]="appForm.controls.Tenor" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2  adInsLabel" translate>Notes</label>
+                  <div class="col-md-4">
+                    <input type="text" class="form-control adInsInput" formControlName="Tenor"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.Tenor.invalid}">
+                    <lib-uc-show-errors [control]="appForm.controls.MrFirstInstTypeCode" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+              </div>
+
+
+              <lib-ucSubsection [id]="'assetLocationId'" [title]="'Asset Location'" [panel]="'assetLocation'">
+              </lib-ucSubsection>
+              <div id="assetLocation">
+                <div class="form-group row">
+                  <label class="col-md-2  adInsLabel" translate>Copy Address From </label>
+                  <div class="col-md-3">
+                    <select class="form-control adInsInput" formControlName="CopyAddrFrom">
+                      <option *ngFor="let ram of listCustAddr" [value]="ram.CustAddrId">
+                        {{ram.MrCustAddrTypeCode}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col-md-2">
+                    <button type="button" class="btn btn-raised btn-primary" (click)="copyAddress()">
+                      <i class="fa fa-check-square-o"></i> Copy
+                    </button>
+                  </div>
+                </div>
+                <lib-ucaddress #UcAddrGrp [showSubsection]="false" [title]="'Customer Address'" [UCAddrForm]="appForm"
+                  [enjiForm]="enjiForm" [identifier]="'custAddress'" [default]="addressObj"
+                  [inputField]="inputFieldAddressObj" [showFax]="false" [showAllPhn]="false"></lib-ucaddress>
+              </div>
+
+              <lib-ucSubsection [id]="'insuranceId'" [title]="'Insurance'" [panel]="'insurance'">
+              </lib-ucSubsection>
+              <div id="insurance">
+                <div class="form-group row">
+                  <label class="col-md-2  adInsLabel" translate>Insurance Amount</label>
+                  <div class="col-md-4">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2  adInsLabel" translate>Insurance Capitalized Amount</label>
+                  <div class="col-md-4">
+                    <lib-ucinputnumber [parentForm]="appForm" [identifier]="'InsuranceCapitalizedAmount'"
+                      [enjiForm]="enjiForm" [isRequired]="false"
+                      ucNumber="appForm.controls.InsuranceCapitalizedAmount.value"></lib-ucinputnumber>
+                  </div>
+                </div>
+              </div>
+
+
+              <lib-ucSubsection [id]="'lifeInsuranceId'" [title]="'Life Insurance'" [panel]="'lifeInsurance'">
+              </lib-ucSubsection>
+              <div id="lifeInsurance">
+                <div class="form-group row">
+                  <label class="col-md-2  adInsLabel" translate>Use Life Insurance ?</label>
+                  <div class="col-md-4">
+                    <input type="checkbox" class="border-primary" formControlName="Tenor">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2  adInsLabel" translate>Life Insurance Amount</label>
+                  <div class="col-md-4">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2  adInsLabel" translate>Life Insurance Capitalized Amount</label>
+                  <div class="col-md-4">
+                    <lib-ucinputnumber [parentForm]="appForm" [identifier]="'InsuranceCapitalizedAmount'"
+                      [enjiForm]="enjiForm" [isRequired]="false"
+                      ucNumber="appForm.controls.InsuranceCapitalizedAmount.value"></lib-ucinputnumber>
+                  </div>
+                </div>
+              </div>
+
+
+ 
+              <lib-ucSubsection [id]="'feesId'" [title]="'Fees'" [panel]="'fees'">
+              </lib-ucSubsection>
+              <div id="fees">
+                <div class="form-group row">
+                  <label class="col-md-2  adInsLabel" translate>Admin Fee</label>
+                  <div class="col-md-2">
+                    <input type="text" class="form-control adInsInput" formControlName="Tenor"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.Tenor.invalid}">
+                    <lib-uc-show-errors [control]="appForm.controls.Tenor" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors> 
+                  </div>
+                  <div class="col-md-1">
+                    <label class="adInsLabel" translate>Capitalize</label>
+                  </div>
+                  <div class="col-md-1">
+                    <input type="checkbox" class="border-primary" formControlName="Tenor">
+                  </div>  
+                  <label class="col-md-2  adInsLabel" translate>Survey Fee</label>
+                  <div class="col-md-2">
+                    <input type="text" class="form-control adInsInput" formControlName="Tenor"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.Tenor.invalid}">
+                    <lib-uc-show-errors [control]="appForm.controls.Tenor" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors> 
+                  </div>
+                  <div class="col-md-1">
+                    <label class="adInsLabel" translate>Capitalize</label>
+                  </div>
+                  <div class="col-md-1">
+                    <input type="checkbox" class="border-primary" formControlName="Tenor">
+                  </div> 
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2  adInsLabel" translate>Notary Fee</label>
+                  <div class="col-md-2">
+                    <input type="text" class="form-control adInsInput" formControlName="Tenor"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.Tenor.invalid}">
+                    <lib-uc-show-errors [control]="appForm.controls.Tenor" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors> 
+                  </div>
+                  <div class="col-md-1">
+                    <label class="adInsLabel" translate>Capitalize</label>
+                  </div>
+                  <div class="col-md-1">
+                    <input type="checkbox" class="border-primary" formControlName="Tenor">
+                  </div>  
+                  <label class="col-md-2  adInsLabel" translate>Fiducia Fee</label>
+                  <div class="col-md-2">
+                    <input type="text" class="form-control adInsInput" formControlName="Tenor"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.Tenor.invalid}">
+                    <lib-uc-show-errors [control]="appForm.controls.Tenor" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors> 
+                  </div>
+                  <div class="col-md-1">
+                    <label class="adInsLabel" translate>Capitalize</label>
+                  </div>
+                  <div class="col-md-1">
+                    <input type="checkbox" class="border-primary" formControlName="Tenor">
+                  </div> 
+                </div>
+              
+                <div class="form-group row"> 
+                  <label class="col-md-2  adInsLabel" translate>Other Fee</label>
+                  <div class="col-md-2">
+                    <input type="text" class="form-control adInsInput" formControlName="Tenor"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.Tenor.invalid}">
+                    <lib-uc-show-errors [control]="appForm.controls.Tenor" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors> 
+                  </div>
+                  <div class="col-md-1">
+                    <label class="adInsLabel" translate>Capitalize</label>
+                  </div>
+                  <div class="col-md-1">
+                    <input type="checkbox" class="border-primary" formControlName="Tenor">
+                  </div>  
+                  </div> 
+              </div>
+
+              <lib-ucSubsection [id]="'financialDataId'" [title]="titleFinancialData" [panel]="'financialData'">
+              </lib-ucSubsection>
+              <div id="financialData">
+                <div class="form-group row">
+                  <label class="col-md-2  adInsLabel" translate>Total Asset Price</label>
+                  <div class="col-md-4">
+                    <label class="adInsLabel" translate></label>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2  adInsLabel" translate>Total Fee</label>
+                  <div class="col-md-4">
+                    <label class="adInsLabel" translate></label>
+                  </div>
+                  <label class="col-md-2  adInsLabel" translate>Total Fee On Loan </label>
+                  <div class="col-md-4">
+                    <label class="adInsLabel" translate></label>
+                  </div> 
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2  adInsLabel" translate>Total Insurance</label>
+                  <div class="col-md-4">
+                    <label class="adInsLabel" translate></label>
+                  </div>
+                  <label class="col-md-2  adInsLabel" translate>Total Insurance on Loan</label>
+                  <div class="col-md-4">
+                    <label class="adInsLabel" translate></label>
+                  </div> 
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2  adInsLabel" translate>Total Life Insurance</label>
+                  <div class="col-md-4">
+                    <label class="adInsLabel" translate></label>
+                  </div>
+                  <label class="col-md-2  adInsLabel" translate>Total Life Insurance on Loan</label>
+                  <div class="col-md-4">
+                    <label class="adInsLabel" translate></label>
+                  </div> 
+                </div>
+             
+                <div class="form-group row">
+                <label class="col-md-2  adInsLabel" translate>DP Asset</label>
+                <div class="col-md-4">
+                  <input type="text" class="form-control adInsInput" formControlName="Tenor"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.Tenor.invalid}">
+                  <lib-uc-show-errors [control]="appForm.controls.Tenor" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors> 
+                </div>
+                <label class="col-md-2  adInsLabel" translate>TDP</label>
+                  <div class="col-md-4">
+                    <label class="adInsLabel" translate></label>
+                  </div>
+                </div>
+                <div class="form-group row"> 
+                  <label class="col-md-2 offset-md-6  adInsLabel" translate>TDP Paid At Company</label>
+                    <div class="col-md-4">
+                      <label class="adInsLabel" translate></label>
+                    </div>
+                  </div> 
+                
+                  <div class="form-group row">
+                    <label class="col-md-2  adInsLabel" translate>NTF</label>
+                    <div class="col-md-4">
+                      <label class="adInsLabel" translate></label>
+                    </div>
+                    <label class="col-md-2  adInsLabel" translate>Num of Inst</label>
+                      <div class="col-md-4">
+                        <label class="adInsLabel" translate></label>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label class="col-md-2  adInsLabel" translate>Rate Type</label>
+                      <div class="col-md-4">
+                        <select class="form-control adInsInput" style="width: auto" formControlName="SalesOfficerNo"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.SalesOfficerNo.invalid }">
+                        <option *ngFor="let it of tempSalesOfficerNo" [value]="it.Key">
+                          {{it.Value}}</option>
+                      </select>
+                      <lib-uc-show-errors [control]="appForm.controls.SalesOfficerNo" [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors>
+                      </div>
+                      <label class="col-md-2  adInsLabel" translate>Rounding</label>
+                        <div class="col-md-4">
+                          <input type="text" class="form-control adInsInput" formControlName="SalesHeadNo"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.SalesHeadNo.invalid}">
+                        <lib-uc-show-errors [control]="appForm.controls.SalesHeadNo" [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
+                        </div>
+                      </div>
+
+
+              </div>
+
+
+
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <!-- <div class="form-actions right" style="text-align: right;">
+                          <button type="button" class="btn btn-raised btn-warning mr-1"
+                              [routerLink]="['/Lead/LeadUpdate/Paging']" translate>
+                              <i class="ft-x"></i> Back
+                          </button>
+                          <button type="submit" class="btn btn-raised btn-primary" translate>
+                              <i class="fa fa-check-square-o"></i> Submit
+                          </button>
+                      </div> -->
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
