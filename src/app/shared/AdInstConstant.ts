@@ -926,16 +926,19 @@ export class AdInsConstant {
   // ASSET TYPE
   // public static GetAssetTypeById = environment.FoundationR3Url + "/AssetType/GetAssetTypeById"
 
-
   // List Approver
   public static GetApprovedBy = environment.ApprovalR3Url + "/api/RFAWeb/GetApprovedBy/";
+  public static GetRecommendations = environment.ApprovalR3Url + "/api/RFAWeb/GetRecommendations/";
 
   // PreGoLive
   public static GetListApprovedByForPreGoLive = environment.losUrl + "/PreGoLive/GetListApprovedByForPreGoLive";
   public static AddPreGoLive = environment.losUrl + "/PreGoLive/AddPreGoLive";
   public static CreateRFAPreGoLive = environment.losUrl + "/PreGoLive/CreateRFAPreGoLive";
 
+  // Survey or Srvy
   public static GetListSrvyTaskAndOrderByTrxNoAndMrSurveySourceCode = environment.FoundationR3Url + "/SrvyTask/GetListSrvyTaskAndOrderByTrxNoAndMrSurveySourceCode";
+  public static GetSrvyResultDataByTrxRefNo = environment.losUrl + "/MouCustSrvyOrder/GetSrvyResultDataByTrxRefNo";
+
   // Workflow Engine
   public static ClaimTask = environment.FoundationR3Url + "/Workflow/ClaimTask";
 

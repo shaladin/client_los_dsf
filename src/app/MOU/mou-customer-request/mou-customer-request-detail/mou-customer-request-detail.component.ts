@@ -127,7 +127,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"]};
     console.log(wfClaimObj);
     this.httpClient.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
-      () => {
+      (response) => {
       });
   }
 

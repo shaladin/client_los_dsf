@@ -42,17 +42,18 @@ export class LegalReviewDetailComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private toastr: NGXToastrService
-  ) { }
-
-  ngOnInit() {
-    this.items = this.LegalForm.get('items') as FormArray;
-    this.termConditions = this.LegalForm.get('termConditions') as FormArray;
-    this.viewObj = "./assets/ucviewgeneric/viewCustomerDocPrinting.json";
+  ) {
     this.route.queryParams.subscribe(params => {
       if (params['MouCustId'] != null) this.MouCustId = params['MouCustId'];
       if (params['WfTaskListId'] != null) this.WfTaskListId = params['WfTaskListId'];
-      this.claimTask();
     });
+  }
+
+  ngOnInit() {
+    this.claimTask();
+    this.items = this.LegalForm.get('items') as FormArray;
+    this.termConditions = this.LegalForm.get('termConditions') as FormArray;
+    this.viewObj = "./assets/ucviewgeneric/viewCustomerDocPrinting.json";
     var mouObj = { "MouCustId": this.MouCustId };
     this.http.post(this.GetMouCustLglReviewByMouCustIdUrl, mouObj).subscribe(
       response =>{
