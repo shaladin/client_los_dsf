@@ -17,7 +17,7 @@ export class SchmIrregularComponent implements OnInit {
 
   @Input() AppId: number;
   @Input() ParentForm: FormGroup;
-  @Input() NumOfInst:number;
+  @Input() NumOfInst: number;
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
@@ -55,17 +55,17 @@ export class SchmIrregularComponent implements OnInit {
       }
     );
   }
-  
-  SetEntryInstallment(){
 
-    var numOfStep =  +this.ParentForm.get("NumOfInst").value - 1
+  SetEntryInstallment() {
+
+    var numOfStep = +this.ParentForm.get("NumOfInst").value - 1
     console.log("STEP");
     console.log(numOfStep);
 
     while ((this.ParentForm.controls.ListEntryInst as FormArray).length) {
       (this.ParentForm.controls.ListEntryInst as FormArray).removeAt(0);
     }
-    for(let i = 0 ; i < numOfStep ; i++){
+    for (let i = 0; i < numOfStep; i++) {
       const group = this.fb.group({
         InstSeqNo: i + 1,
         NumOfInst: [0],
@@ -75,13 +75,37 @@ export class SchmIrregularComponent implements OnInit {
     }
 
   }
-  
+
+  SetInstallmentTable() {
+    var ctrInstallment = this.ParentForm.get("InstallmentTable");
+    if (!ctrInstallment) {
+      this.ParentForm.addControl("InstallmentTable", this.fb.array([]))
+    }
+
+    while ((this.ParentForm.controls.InstallmentTable as FormArray).length) {
+      (this.ParentForm.controls.InstallmentTable as FormArray).removeAt(0);
+    }
+
+    for (let i = 0; i < this.listInstallment.length; i++) {
+      const group = this.fb.group({
+        InstSeqNo: this.listInstallment[i].InstSeqNo,
+        InstAmt: this.listInstallment[i].InstAmt,
+        PrincipalAmt: this.listInstallment[i].PrincipalAmt,
+        InterestAmt: this.listInstallment[i].InterestAmt,
+        OsPrincipalAmt: this.listInstallment[i].OsPrincipalAmt,
+        OsInterestAmt: this.listInstallment[i].OsInterestAmt
+      });
+      (this.ParentForm.controls.InstallmentTable as FormArray).push(group);
+    }
+  }
+
   CalculateAmortization() {
     this.calcIrregularObj = this.ParentForm.value;
     this.calcIrregularObj["IsRecalculate"] = false;
     this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateIrregular", this.calcIrregularObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
+
         this.ParentForm.patchValue({
           TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
           TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
@@ -98,6 +122,9 @@ export class SchmIrregularComponent implements OnInit {
           NtfAmt: response.NtfAmt,
 
         })
+
+        this.SetInstallmentTable();
+        
       }
     );
   }

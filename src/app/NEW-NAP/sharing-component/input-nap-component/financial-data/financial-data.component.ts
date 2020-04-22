@@ -82,7 +82,11 @@ ngOnInit() {
       AppFee : this.fb.array([]),
       ListEntryInst: this.fb.array([]),
 
+      MrProvisionFeeTypeCode : '',
+      MrProvisionFeeCalcMethodCode : '',
+
       NeedReCalculate: true
+      
     }
   );
   this.LoadAppFinData();
@@ -121,7 +125,7 @@ LoadAppFinData()
         GrossYieldBhv : this.appFinDataObj.GrossYieldBhv,
 
         MrInstSchemeCode: this.appFinDataObj.MrInstSchemeCode,
-        CummulativeTenor: this.appFinDataObj.CummulativeTenor
+        CummulativeTenor: this.appFinDataObj.CummulativeTenor,
 
       });
 
@@ -188,6 +192,12 @@ SaveAndContinue()
   {
     console.log("GROSSSS");
     console.log(this.FinDataForm.value);
+
+    this.http.post(environment.losUrl + "/AppFinData/SaveAppFinData", this.FinDataForm.value).subscribe(
+      (response) => {
+       console.log(response);
+      }
+    );
   }
 }
 

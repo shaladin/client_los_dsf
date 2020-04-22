@@ -37,7 +37,11 @@ export class SubsidyComponent implements OnInit {
     modalRef.componentInstance.AppId = this.AppId;
     modalRef.componentInstance.listAppFeeObj = this.listAppFeeObj;
     modalRef.componentInstance.emitData.subscribe(($e) => {
-      // this.RefreshData($e);
+      this.LoadSubsidyData();
+      this.ParentForm.patchValue({
+        NeedReCalculate : true,
+      })
+      console.log(this.ParentForm.value)
     })
   }
 
