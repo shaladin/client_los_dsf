@@ -11,6 +11,7 @@ import { ListPersonalComponent } from './app-dup-check/list-personal/list-person
 import { ListCompanyComponent } from './app-dup-check/list-company/list-company.component';
 import { ApplicantExistingDataPersonalComponent } from './app-dup-check/applicant-existing-data-personal/applicant-existing-data-personal.component';
 import { ApplicantExistingDataCompanyComponent } from './app-dup-check/applicant-existing-data-company/applicant-existing-data-company.component';
+import { ReturnHandlingEditAppPagingComponent } from './return-handling/return-handling-edit-app-paging/return-handling-edit-app-paging.component';
 
 const routes: Routes = [
   {
@@ -59,6 +60,13 @@ const routes: Routes = [
         }
       },
       {
+        path: 'ReturnHandling/EditAppPaging',
+        component: ReturnHandlingEditAppPagingComponent,
+        data: {
+          title: 'Return Handling Edit App Paging'
+        }        
+      },
+      {
         path: 'AppDupCheck/Paging',
         component: PagingComponent,
         data: {
@@ -92,7 +100,7 @@ const routes: Routes = [
         data: {
           title: 'Applicant Existing Data Company'
         }        
-      }
+      },
     ]
   }
 ];
