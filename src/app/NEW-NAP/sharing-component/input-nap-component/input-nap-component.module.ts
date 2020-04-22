@@ -37,6 +37,19 @@ import { SchmStepUpStepDownNormalComponent } from "./financial-data/component/sc
 import { SchmRegulerFixComponent } from "./financial-data/component/schm-reguler-fix/schm-reguler-fix.component";
 import { SchmStepUpStepDownLeasingComponent } from "./financial-data/component/schm-step-up-step-down-leasing/schm-step-up-step-down-leasing.component";
 import { SchmStepUpStepDownCummulativeComponent } from "./financial-data/component/schm-step-up-step-down-cummulative/schm-step-up-step-down-cummulative.component";
+import { NgxCurrencyModule } from "ngx-currency";
+import { SchmIrregularComponent } from "./financial-data/component/schm-irregular/schm-irregular.component";
+
+export const customCurrencyMaskConfig = {     
+  align: "right",     
+  allowNegative: true,     
+  allowZero: true,     
+  decimal: ".",     
+  precision: 2,     
+  prefix: "",     
+  suffix: "",     
+  thousands: ",",     
+  nullable: false };
 
 @NgModule({
   exports: [
@@ -72,7 +85,8 @@ import { SchmStepUpStepDownCummulativeComponent } from "./financial-data/compone
     TcDataComponent, // sementara nanti dicross check sama term-conditions
     SchmRegulerFixComponent,
     SchmStepUpStepDownNormalComponent,
-    SchmStepUpStepDownLeasingComponent 
+    SchmStepUpStepDownLeasingComponent,
+    SchmIrregularComponent
   ],
   imports: [
     CommonModule,
@@ -81,6 +95,7 @@ import { SchmStepUpStepDownCummulativeComponent } from "./financial-data/compone
     MatCheckboxModule,
     MatRadioModule,
     MatSelectModule,
+    NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
   ],
   declarations: [
     CustomerDataComponent,
@@ -115,7 +130,8 @@ import { SchmStepUpStepDownCummulativeComponent } from "./financial-data/compone
     SchmRegulerFixComponent, 
     SchmStepUpStepDownNormalComponent,
     SchmStepUpStepDownLeasingComponent,
-    SchmStepUpStepDownCummulativeComponent
+    SchmStepUpStepDownCummulativeComponent,
+    SchmIrregularComponent 
   ],
   entryComponents: [SubsidyAddEditComponent],
   providers: [

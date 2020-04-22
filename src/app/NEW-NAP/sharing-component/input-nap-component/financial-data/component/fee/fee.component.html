@@ -62,8 +62,8 @@
                     <label>{{ParentForm.controls[identifier].value[i].FeeTypeName}} Calculation Base</label>
                   </div>
                   <div class="col-md-3 margin-b-5">
-                    <select class="form-control" (change)="CalcBase_OnChange($event);">
-                      <option value="NTF_MURNI" >NTF MURNI</option>
+                    <select class="form-control" formControlName="FeeSource" (change)="CalcBase_OnChange($event);">
+                      <option value="NTF_CAP" >NTF MURNI</option>
                     </select>
                   </div>
                   <div class="col-md-6"></div>
