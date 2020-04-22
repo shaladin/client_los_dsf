@@ -64,6 +64,9 @@ export class CustPersonalFinancialDataComponent implements OnInit {
   bindAppCustPersonalFinData(){
     if(this.appCustPersonalFinDataObj != undefined){
       this.parentForm.controls[this.identifier].patchValue({
+        MonthlyIncomeAmt: this.appCustPersonalFinDataObj.MonthlyIncomeAmt,
+        MonthlyExpenseAmt: this.appCustPersonalFinDataObj.MonthlyExpenseAmt,
+        MonthlyInstallmentAmt: this.appCustPersonalFinDataObj.MonthlyInstallmentAmt,
         MrSourceOfIncomeTypeCode: this.appCustPersonalFinDataObj.MrSourceOfIncomeTypeCode,
         IsJoinIncome: this.appCustPersonalFinDataObj.IsJoinIncome,
       });
