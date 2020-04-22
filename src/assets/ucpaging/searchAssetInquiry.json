@@ -36,7 +36,7 @@
         },
         {
             "type": "textbox",
-            "name": "",
+            "name": "vat.LicensePlateNo",
             "id": "LicensePlateId",
             "value": "",
             "label": "License Plate No",
@@ -44,7 +44,7 @@
         },
         {
             "type": "textbox",
-            "name": "",
+            "name": "vat.ChassisNo",
             "id": "ChassisId",
             "value": "",
             "label": "Chassis NO",
@@ -52,7 +52,7 @@
         },
         {
             "type": "textbox",
-            "name": "",
+            "name": "vat.EngineNo",
             "id": "EngineId",
             "value": "",
             "label": "Engine NO",
