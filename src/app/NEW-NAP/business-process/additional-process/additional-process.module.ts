@@ -16,6 +16,7 @@ import { ListPersonalComponent } from "./app-dup-check/list-personal/list-person
 import { ListCompanyComponent } from "./app-dup-check/list-company/list-company.component";
 import { ApplicantExistingDataPersonalComponent } from "./app-dup-check/applicant-existing-data-personal/applicant-existing-data-personal.component";
 import { ApplicantExistingDataCompanyComponent } from "./app-dup-check/applicant-existing-data-company/applicant-existing-data-company.component";
+import { ReturnHandlingPhoneVerifPagingComponent } from "./return-handling/return-handling-phone-verif-paging/return-handling-phone-verif-paging.component";
 
 @NgModule({
   imports: [
@@ -36,7 +37,8 @@ import { ApplicantExistingDataCompanyComponent } from "./app-dup-check/applicant
     ListPersonalComponent,
     ListCompanyComponent,
     ApplicantExistingDataPersonalComponent,
-    ApplicantExistingDataCompanyComponent
+    ApplicantExistingDataCompanyComponent,
+    ReturnHandlingPhoneVerifPagingComponent
   ],
   providers: [
     NGXToastrService

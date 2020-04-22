@@ -11,6 +11,7 @@ import { ListPersonalComponent } from './app-dup-check/list-personal/list-person
 import { ListCompanyComponent } from './app-dup-check/list-company/list-company.component';
 import { ApplicantExistingDataPersonalComponent } from './app-dup-check/applicant-existing-data-personal/applicant-existing-data-personal.component';
 import { ApplicantExistingDataCompanyComponent } from './app-dup-check/applicant-existing-data-company/applicant-existing-data-company.component';
+import { ReturnHandlingPhoneVerifPagingComponent } from './return-handling/return-handling-phone-verif-paging/return-handling-phone-verif-paging.component';
 
 const routes: Routes = [
   {
@@ -92,6 +93,13 @@ const routes: Routes = [
         data: {
           title: 'Applicant Existing Data Company'
         }        
+      },
+      {
+        path: 'ReturnHandlingPhoneVerif/Paging',
+        component: ReturnHandlingPhoneVerifPagingComponent,
+        data: {
+          title: 'Return Handling Phone Verification Paging'
+        }
       }
     ]
   }
