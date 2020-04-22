@@ -53,6 +53,29 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
     );
   }
 
+  SetInstallmentTable() {
+    var ctrInstallment = this.ParentForm.get("InstallmentTable");
+    if (!ctrInstallment) {
+      this.ParentForm.addControl("InstallmentTable", this.fb.array([]))
+    }
+
+    while ((this.ParentForm.controls.InstallmentTable as FormArray).length) {
+      (this.ParentForm.controls.InstallmentTable as FormArray).removeAt(0);
+    }
+
+    for (let i = 0; i < this.listInstallment.length; i++) {
+      const group = this.fb.group({
+        InstSeqNo: this.listInstallment[i].InstSeqNo,
+        InstAmt: this.listInstallment[i].InstAmt,
+        PrincipalAmt: this.listInstallment[i].PrincipalAmt,
+        InterestAmt: this.listInstallment[i].InterestAmt,
+        OsPrincipalAmt: this.listInstallment[i].OsPrincipalAmt,
+        OsInterestAmt: this.listInstallment[i].OsInterestAmt
+      });
+      (this.ParentForm.controls.InstallmentTable as FormArray).push(group);
+    }
+  }
+
   SetNeedReCalculate(value) {
     this.ParentForm.patchValue({
       NeedReCalculate: value
@@ -88,6 +111,7 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
           NtfAmt: response.NtfAmt,
 
         })
+        this.SetInstallmentTable();
         this.SetNeedReCalculate(false);
       }
     );

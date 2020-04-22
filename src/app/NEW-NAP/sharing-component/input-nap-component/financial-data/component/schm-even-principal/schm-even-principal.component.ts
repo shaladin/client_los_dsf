@@ -13,11 +13,11 @@ import { CalcStepUpStepDownObj } from 'app/shared/model/AppFinData/CalcStepUpSte
 import { CalcEvenPrincipleObj } from 'app/shared/model/AppFinData/CalcEvenPrincipleObj.Model';
 
 @Component({
-  selector: 'app-schm-even-principle',
-  templateUrl: './schm-even-principle.component.html',
+  selector: 'app-schm-even-principal',
+  templateUrl: './schm-even-principal.component.html',
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
-export class SchmEvenPrincipleComponent implements OnInit {
+export class SchmEvenPrincipalComponent implements OnInit {
   @Input() AppId: number;
   @Input() ParentForm: FormGroup;
 
@@ -54,6 +54,29 @@ export class SchmEvenPrincipleComponent implements OnInit {
     );
   }
 
+  SetInstallmentTable() {
+    var ctrInstallment = this.ParentForm.get("InstallmentTable");
+    if (!ctrInstallment) {
+      this.ParentForm.addControl("InstallmentTable", this.fb.array([]))
+    }
+
+    while ((this.ParentForm.controls.InstallmentTable as FormArray).length) {
+      (this.ParentForm.controls.InstallmentTable as FormArray).removeAt(0);
+    }
+
+    for (let i = 0; i < this.listInstallment.length; i++) {
+      const group = this.fb.group({
+        InstSeqNo: this.listInstallment[i].InstSeqNo,
+        InstAmt: this.listInstallment[i].InstAmt,
+        PrincipalAmt: this.listInstallment[i].PrincipalAmt,
+        InterestAmt: this.listInstallment[i].InterestAmt,
+        OsPrincipalAmt: this.listInstallment[i].OsPrincipalAmt,
+        OsInterestAmt: this.listInstallment[i].OsInterestAmt
+      });
+      (this.ParentForm.controls.InstallmentTable as FormArray).push(group);
+    }
+  }
+
 
   CalculateInstallment() {
 
@@ -79,7 +102,7 @@ export class SchmEvenPrincipleComponent implements OnInit {
           NtfAmt: response.NtfAmt,
 
         })
-
+        this.SetInstallmentTable();
         this.SetNeedReCalculate(false);
 
       }
