@@ -26,14 +26,14 @@ export class FeeComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     await this.LoadAppFeeData(this.AppId);
-    this.LoadCalcBaseDDL();
+    // this.LoadCalcBaseDDL();
     this.CalculateTotalFeeAndCaptlzAmt()
   }
 
-  LoadCalcBaseDDL()
-  {
-    this.ConstructProvision("NTF_MURNI",1000000);
-  }
+  // LoadCalcBaseDDL()
+  // {
+  //   this.ConstructProvision("NTF_MURNI",1000000);
+  // }
 
   async LoadAppFeeData(AppId : number)
   {
@@ -42,11 +42,12 @@ export class FeeComponent implements OnInit {
         this.listAppFeeObj = response["ReturnObject"];
         for (let i = 0; i < this.listAppFeeObj.length ; i++) {
 
-          console.log(this.identifier);
           var fa_AppFee = this.ParentForm.get(this.identifier) as FormArray
           fa_AppFee.push(this.addFeeControl(this.listAppFeeObj[i]));
           // this.AppFeeForm.push(this.addFeeControl(this.listAppFeeObj[i]));
         }
+
+        this.PatchProvisionFeeValue();
       }
     );
   }
@@ -74,27 +75,32 @@ export class FeeComponent implements OnInit {
     this.CalculateTotalFeeAndCaptlzAmt();
   }
 
-  ConstructProvision(calcBase: string,calculateBaseAmt:number)
+  CalcBase_OnChange(event)
   {
-    var fa_AppFee = this.ParentForm.get(this.identifier) as FormArray
-    for (let i = 0; i < fa_AppFee.length ; i++) {
-      var item = fa_AppFee.at(i);
-      var feeTypeCode = item.get("MrFeeTypeCode").value;
-      if(feeTypeCode == 'PROVISION')
-      {
-        var appFeePrcnt : number = item.get("AppFeePrcnt").value;
-        var feeType = item.get("FeeType").value;
-        if(feeType == 'PRCNT')
-        {
-          item.patchValue({
-            CalculateBase : calcBase,
-            CalculateBaseAmt : calculateBaseAmt,
-            AppFeeAmt : appFeePrcnt * calculateBaseAmt
-          });
-        }
-      }
-    }
+    this.PatchProvisionFeeValue();
   }
+
+  // ConstructProvision(calcBase: string,calculateBaseAmt:number)
+  // {
+  //   var fa_AppFee = this.ParentForm.get(this.identifier) as FormArray
+  //   for (let i = 0; i < fa_AppFee.length ; i++) {
+  //     var item = fa_AppFee.at(i);
+  //     var feeTypeCode = item.get("MrFeeTypeCode").value;
+  //     if(feeTypeCode == 'PROVISION')
+  //     {
+  //       var appFeePrcnt : number = item.get("AppFeePrcnt").value;
+  //       var feeType = item.get("FeeType").value;
+  //       if(feeType == 'PRCNT')
+  //       {
+  //         item.patchValue({
+  //           CalculateBase : calcBase,
+  //           CalculateBaseAmt : calculateBaseAmt,
+  //           AppFeeAmt : appFeePrcnt * calculateBaseAmt
+  //         });
+  //       }
+  //     }
+  //   }
+  // }
 
   GetProvisionFormGroup()
   {
@@ -122,19 +128,10 @@ export class FeeComponent implements OnInit {
   //   this.IsCapitalize_CheckedChange();
   // }
   
-  // AppFeeAmt_OnChange()
-  // {
-  //   var fb_provision = this.GetProvisionFormGroup();
-  //   var feeType = fb_provision.get("FeeType").value;
-  //   var calculateBaseAmt : number = fb_provision.get("CalculateBaseAmt").value;
-  //   var appFeeAmt : number = fb_provision.get("AppFeeAmt").value;
-    
-  //   fb_provision.patchValue({
-  //     AppFeePrcnt : +appFeeAmt / +calculateBaseAmt
-  //   });
-
-  //   this.CalculateTotalFeeAndCaptlzAmt();
-  // }
+  AppFeeAmt_OnChange()
+  {
+    this.CalculateTotalFeeAndCaptlzAmt();
+  }
 
   FeeCapitalizeAmt_OnChange()
   {
@@ -143,7 +140,7 @@ export class FeeComponent implements OnInit {
 
   FeeCapitalizeType_CheckedChange()
   {
-    
+    this.PatchProvisionFeeValue();
   }
 
   CalculateTotalFeeAndCaptlzAmt()
@@ -151,20 +148,33 @@ export class FeeComponent implements OnInit {
     var fa_AppFee = this.ParentForm.get(this.identifier) as FormArray
     var totalFeeAmt : number = 0;
     var totalCaptlz : number = 0;
+
     for (let i = 0; i < fa_AppFee.length ; i++) {
       var item = fa_AppFee.at(i);
       var appFeeAmt = item.get("AppFeeAmt").value;
 
       var feeCapitalizeAmt = item.get("FeeCapitalizeAmt").value;
       
-      console.log(appFeeAmt);
       totalFeeAmt += +appFeeAmt;
       totalCaptlz += +feeCapitalizeAmt;
     }
 
     this.ParentForm.patchValue({
+      NeedReCalculate : true,
       TotalFeeAmt : totalFeeAmt,
       TotalFeeCptlzAmt : totalCaptlz
+    })
+
+    this.PatchProvisionFeeValue();
+  }
+
+  PatchProvisionFeeValue()
+  {
+    var fb_provision = this.GetProvisionFormGroup();
+
+    this.ParentForm.patchValue({
+      MrProvisionFeeTypeCode : fb_provision.get("FeeType").value,
+      MrProvisionFeeCalcMethodCode : fb_provision.get("FeeSource").value
     })
 
     console.log(this.ParentForm.value);
@@ -175,8 +185,16 @@ export class FeeComponent implements OnInit {
 
   addFeeControl(obj : AppFeeObj) {
     var feeSource = "";
+    var feeType = obj.FeeType;
+
+    console.log("FEE TYPE " + feeType)
     if(obj.MrFeeTypeCode == 'PROVISION')
     {
+      if(feeType == "" || feeType == null)
+      {
+        feeType = "PRCNT"
+        console.log("PROVISION FEE TYPE")
+      }
       feeSource = "NTF_CAP"
     }
 
@@ -198,7 +216,7 @@ export class FeeComponent implements OnInit {
       FeeCapitalizePrcntg : obj.FeeCapitalizePrcntg,
       CalculateBaseAmt : 0,
       CalculateBase : '',
-      FeeType : obj.FeeType,
+      FeeType : feeType,
       FeeSource : feeSource,
     })
   }
@@ -227,6 +245,8 @@ export class FeeComponent implements OnInit {
             AppFeeAmt : response["ProvisionFeeAmt"],
             AppFeePrcnt : response["ProvisionFeePercentage"]
           });
+
+          this.CalculateTotalFeeAndCaptlzAmt();
       }
     );
 

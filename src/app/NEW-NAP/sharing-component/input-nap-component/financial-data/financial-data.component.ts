@@ -34,7 +34,7 @@ constructor(
 ) { }
 
 ngOnInit() {
-  this.AppId = 85;
+  this.AppId = 57;
   this.FinDataForm = this.fb.group(
     {
       AppId : this.AppId,
@@ -80,7 +80,11 @@ ngOnInit() {
       CummulativeTenor: 0,
 
       AppFee : this.fb.array([]),
-      ListEntryInst: this.fb.array([])
+      ListEntryInst: this.fb.array([]),
+
+      MrProvisionFeeTypeCode : '',
+      MrProvisionFeeCalcMethodCode : '',
+      
     }
   );
   this.LoadAppFinData();
@@ -119,7 +123,7 @@ LoadAppFinData()
         GrossYieldBhv : this.appFinDataObj.GrossYieldBhv,
 
         MrInstSchemeCode: this.appFinDataObj.MrInstSchemeCode,
-        CummulativeTenor: this.appFinDataObj.CummulativeTenor
+        CummulativeTenor: this.appFinDataObj.CummulativeTenor,
 
       });
 
@@ -186,6 +190,12 @@ SaveAndContinue()
   {
     console.log("GROSSSS");
     console.log(this.FinDataForm.value);
+
+    this.http.post(environment.losUrl + "/AppFinData/SaveAppFinData", this.FinDataForm.value).subscribe(
+      (response) => {
+       console.log(response);
+      }
+    );
   }
 }
 
