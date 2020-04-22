@@ -77,7 +77,7 @@ ngOnInit() {
       CummulativeTenor: [0],
 
       AppFee : this.fb.array([]),
-      ListEntryInst: new FormArray([])
+      ListEntryInst: this.fb.array([])
     }
   );
   this.LoadAppFinData();

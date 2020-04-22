@@ -36,6 +36,7 @@ import { GuarantorPagingComponent } from "./guarantor-data/guarantor-paging/guar
 import { SchmStepUpStepDownNormalComponent } from "./financial-data/component/schm-step-up-step-down-normal/schm-step-up-step-down-normal.component";
 import { SchmRegulerFixComponent } from "./financial-data/component/schm-reguler-fix/schm-reguler-fix.component";
 import { SchmStepUpStepDownLeasingComponent } from "./financial-data/component/schm-step-up-step-down-leasing/schm-step-up-step-down-leasing.component";
+import { SchmStepUpStepDownCummulativeComponent } from "./financial-data/component/schm-step-up-step-down-cummulative/schm-step-up-step-down-cummulative.component";
 
 @NgModule({
   exports: [
@@ -113,7 +114,8 @@ import { SchmStepUpStepDownLeasingComponent } from "./financial-data/component/s
     TcDataComponent, // sementara nanti dicross check sama term-conditions
     SchmRegulerFixComponent, 
     SchmStepUpStepDownNormalComponent,
-    SchmStepUpStepDownLeasingComponent
+    SchmStepUpStepDownLeasingComponent,
+    SchmStepUpStepDownCummulativeComponent
   ],
   entryComponents: [SubsidyAddEditComponent],
   providers: [

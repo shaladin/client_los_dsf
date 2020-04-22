@@ -3,6 +3,7 @@
   <app-fee [AppId]="AppId" [ParentForm]="FinDataForm" [identifier]="'AppFee'"></app-fee>
   <app-schm-step-up-step-down-normal *ngIf="FinDataForm.controls.MrInstSchemeCode.value == 'STNM'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-step-up-step-down-normal>
   <app-schm-step-up-step-down-leasing *ngIf="FinDataForm.controls.MrInstSchemeCode.value == 'STLS'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-step-up-step-down-leasing>
+  <app-schm-step-up-step-down-cummulative *ngIf="FinDataForm.controls.MrInstSchemeCode.value == 'STCM'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-step-up-step-down-cummulative>
 
   <!-- <lib-ucSubsection [id]="'FinData_FinDataId'" [title]="'Financial Data'" [panel]="'FinData_FinData'">
   </lib-ucSubsection> -->
