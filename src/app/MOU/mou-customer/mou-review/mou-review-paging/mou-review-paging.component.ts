@@ -26,7 +26,7 @@ export class MouReviewPagingComponent implements OnInit {
     addCritMouStat.DataType = 'text';
     addCritMouStat.propName = 'MOU.MOU_STAT';
     addCritMouStat.restriction = AdInsConstant.RestrictionNotIn;
-    addCritMouStat.value = 'MOU_RVW';
+    addCritMouStat.value = 'MRV';
     this.arrCrit.push(addCritMouStat);
 
     const addCritOfficeCode = new CriteriaObj();

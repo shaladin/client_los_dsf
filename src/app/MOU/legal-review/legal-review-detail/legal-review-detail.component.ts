@@ -45,13 +45,13 @@ export class LegalReviewDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.claimTask();
     this.items = this.LegalForm.get('items') as FormArray;
     this.termConditions = this.LegalForm.get('termConditions') as FormArray;
     this.viewObj = "./assets/ucviewgeneric/viewCustomerDocPrinting.json";
     this.route.queryParams.subscribe(params => {
       if (params['MouCustId'] != null) this.MouCustId = params['MouCustId'];
       if (params['WfTaskListId'] != null) this.WfTaskListId = params['WfTaskListId'];
+      this.claimTask();
     });
     var mouObj = { "MouCustId": this.MouCustId };
     this.http.post(this.GetMouCustLglReviewByMouCustIdUrl, mouObj).subscribe(
@@ -67,6 +67,7 @@ export class LegalReviewDetailComponent implements OnInit {
               var eachDataDetail = this.fb.group({
                 ReviewComponentName: [response["ReturnObject"][i].Descr],
                 ReviewComponentValue: [response["ReturnObject"][i].MasterCode],
+                RowVersion : [response["ReturnObject"][i].RowVersion],
                 values: [this.SearchLegalReviewValue(response["ReturnObject"][i].MasterCode)]
               }) as FormGroup;
               this.items.push(eachDataDetail);
@@ -108,7 +109,8 @@ export class LegalReviewDetailComponent implements OnInit {
       var tempMouObj = {
         MouCustId: this.MouCustId,
         MrLglReviewCode: formObj.value.items[index].ReviewComponentValue,
-        LglReviewResult: formObj.value.items[index].values
+        LglReviewResult: formObj.value.items[index].values,
+        RowVersion: formObj.value.items[index].RowVersion
       }
       mouObj.MouCustLglReviewObjs.push(tempMouObj);
     }

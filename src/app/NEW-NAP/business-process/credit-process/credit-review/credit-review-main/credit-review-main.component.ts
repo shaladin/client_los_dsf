@@ -10,7 +10,7 @@ import { AppCrdRvwDObj } from 'app/shared/model/AppCrdRvwDObj.Model';
 @Component({
   selector: 'app-credit-review-main',
   templateUrl: './credit-review-main.component.html',
-  // styleUrls: ['./credit-review-main.component.scss']
+  styleUrls: []
 })
 export class CreditReviewMainComponent implements OnInit {
 

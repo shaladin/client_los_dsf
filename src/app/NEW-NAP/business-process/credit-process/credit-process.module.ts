@@ -78,7 +78,6 @@ import { UcapprovebyModule } from "@adins/ucapproveby";
     ViewFraudDetectionResultComponent,
     ViewSurveyTaskListComponent,
     ViewApprovalComponent,
-
   ],
   providers: [
     NGXToastrService

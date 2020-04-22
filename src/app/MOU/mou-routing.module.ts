@@ -116,7 +116,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'Cust/Paging',
+        path: 'Cust/View',
         component: MouViewComponent,
         data: {
           title: 'MOU View Factoring'

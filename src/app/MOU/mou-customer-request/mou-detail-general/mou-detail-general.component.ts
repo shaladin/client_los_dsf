@@ -139,7 +139,7 @@ export class MouDetailGeneralComponent implements OnInit {
       this.tenorInvalidMsg = "";
     }
 
-    console.log("Continue Submit...");
+    // console.log("Continue Submit...");
 
     if(this.mode == "add"){
       url = AdInsConstant.AddMouCustClause;
