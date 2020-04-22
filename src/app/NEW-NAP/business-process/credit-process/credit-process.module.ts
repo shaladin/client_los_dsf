@@ -32,6 +32,7 @@ import { FraudDetectionVerifComponent } from "./fraud-detection/fraud-detection-
 import { TabDeviationComponent } from "./credit-investigation/component/tab-deviation/tab-deviation.component";
 import { CreditReviewPagingComponent } from "./credit-review/credit-review-paging/credit-review-paging.component";
 import { CreditReviewMainComponent } from "./credit-review/credit-review-main/credit-review-main.component";
+import { CreditInquiryComponent } from './credit-inquiry/credit-inquiry.component';
 
 @NgModule({
   imports: [
@@ -71,7 +72,8 @@ import { CreditReviewMainComponent } from "./credit-review/credit-review-main/cr
     FraudDetectionPagingComponent,
     FraudDetectionVerifComponent,
     CreditReviewPagingComponent,
-    CreditReviewMainComponent
+    CreditReviewMainComponent,
+    CreditInquiryComponent
   ],
   providers: [
     NGXToastrService
