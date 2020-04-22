@@ -53,16 +53,15 @@
 
           <form class="form form-horizontal" [formGroup]="MouReviewDataForm" (ngSubmit)="MouReviewDataForm.valid"
             #enjiForm="ngForm">
-            <lib-ucSubsection [id]="'ApvReccomendationId'" [title]="'Approval Reccomendation'" [panel]="'ApvReccomendation'">
+            <lib-ucSubsection [id]="'ApvRecommendationId'" [title]="'Approval Recommendation'"
+              [panel]="'ApvRecommendation'">
             </lib-ucSubsection>
-            <div class="form-body" id="ApvReccomendation">
-
-              <div class="form-group row">
-                <label class="col-md-2 adInsLabel">Latar Belakang Debitur</label>
-                <label class="col-md-1 adInsLabel">:</label>
+            <div class="form-body" id="ApvRecommendation" formArrayName="ApvRecommendation">
+              <div [formGroupName]="i" *ngFor="let item of MouReviewDataForm.controls.ApvRecommendation.controls; let i = index" class="form-group row">
+                <label class="col-md-2 adInsLabel">{{MouReviewDataForm.value.ApvRecommendation[i].RecommendationName}}</label>
                 <div class="col-md-2">
-                  <input type="text" class="form-control" formControlName="LatarBelakang"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.LatarBelakang.invalid }">
+                  <input type="text" class="form-control" formControlName="RecommendationValue"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && MouReviewDataForm.controls.ApvRecommendation.controls[i].controls.RecommendationValue.invalid }">
                 </div>
               </div>
             </div>
