@@ -19,6 +19,7 @@ export class AppCustAddrObj {
     PhnExt2: any;
     FaxArea: any;
     Fax: any;
+    RowVersion: any;
 
-constructor() { this.AppCustAddrId = 0; }
+    constructor() { this.AppCustAddrId = 0; }
 }
