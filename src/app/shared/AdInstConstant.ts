@@ -885,6 +885,8 @@ export class AdInsConstant {
   //App Fin Data
   public static GetAppFinDataByAppId = environment.losUrl + "/AppFinData/GetAppFinDataByAppId";
   public static CreateMaxAllocAmtRsvFund = environment.losUrl + "/AppFinData/CreateMaxAllocAmtRsvFund";
+  public static CalculateInstallmentStepUpStepDown = environment.losUrl + "/AppFinData/CalculateInstallmentStepUpStepDown";
+  public static CalculateInstallmentEvenPrinciple = environment.losUrl + "/AppFinData/CalculateInstallmentEvenPrinciple";
 
 
   //Fraud Detection
@@ -974,4 +976,7 @@ export class AdInsConstant {
   // Deviation Result
   public static GetListDeviationResultForDeviationDataByAppId = environment.losUrl + "/DeviationResult/GetListDeviationResultForDeviationDataByAppId";
   public static AddListManualDeviationResultByAppId = environment.losUrl + "/DeviationResult/AddListManualDeviationResultByAppId";
+
+  // Upload
+  public static UploadFile = environment.FoundationR3Url + "/Upload/UploadFile";
 }

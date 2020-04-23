@@ -60,9 +60,6 @@ export class SubsidyAddEditComponent implements OnInit {
     }
   
     SaveSubsidy() {
-
-      console.log(this.listAppFeeObj);
-
       var subdObj: AppSubsidyObj = new AppSubsidyObj();
       subdObj.AppId = this.FormAppSubsidy.get("appId").value
       subdObj.MrSubsidyFromTypeCode = this.FormAppSubsidy.get("fromTypeCode").value;
@@ -82,13 +79,11 @@ export class SubsidyAddEditComponent implements OnInit {
       this.http.post(environment.losUrl + "/AppSubsidy/AddSubsidy", subdObj ).subscribe(
         (response) => {
           var x = response["ReturnObject"];
-          console.log(x);
+          this.emitData.emit(x);
         }
       );
       
-      // this.activeModal.close();
-
-      console.log(subdObj);
+      this.activeModal.close();
     }
   
     LoadDDLFromTypeCode() {
@@ -100,7 +95,7 @@ export class SubsidyAddEditComponent implements OnInit {
     }
 
     LoadDDLFromValue(fromTypeCode: string) {
-      this.http.post(environment.losUrl + "/AppSubsidy/GetListSubsidyFromValue", { AppId: this.AppId }).subscribe(
+      this.http.post(environment.losUrl + "/AppSubsidy/GetListSubsidyFromValue", { AppId: this.AppId, SubsidyFromType : fromTypeCode  }).subscribe(
         (response) => {
           this.FromValueOptions = response["ReturnObject"];
         }
