@@ -19,6 +19,7 @@
       </aw-wizard-step>
       <aw-wizard-step [stepTitle]="'FRAUD DETECTION RESULT'" (stepEnter)="EnterTab('fraudDetection')"
       [navigationSymbol]="{ symbol: '3' }">
+      <app-view-fraud-detection-result *ngIf="type == 'fraudDetection'" [appId]="appId" [mrCustTypeCode]="mrCustTypeCode"></app-view-fraud-detection-result>
       </aw-wizard-step>
       <aw-wizard-step [stepTitle]="'CUSTOMER HISTORY'" (stepEnter)="EnterTab('custHist')"
       [navigationSymbol]="{ symbol: '4' }">

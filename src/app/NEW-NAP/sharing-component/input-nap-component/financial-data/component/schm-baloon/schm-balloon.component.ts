@@ -4,22 +4,22 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
-import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj.Model';
 import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
 import { environment } from 'environments/environment';
+import { CalcBalloonObj } from 'app/shared/model/AppFinData/CalcBalloonObj.Model';
 
 @Component({
-  selector: 'app-schm-reguler-fix',
-  templateUrl: './schm-reguler-fix.component.html',
+  selector: 'app-schm-balloon',
+  templateUrl: './schm-balloon.component.html',
 })
-export class SchmRegulerFixComponent implements OnInit {
+export class SchmBalloonComponent implements OnInit {
 
   @Input() AppId: number;
   @Input() ParentForm: FormGroup;
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
-  calcRegFixObj: CalcRegularFixObj = new CalcRegularFixObj();
+  calcBalloonObj : CalcBalloonObj = new CalcBalloonObj();
   listInstallment: any;
   responseCalc: any;
 
@@ -51,9 +51,9 @@ export class SchmRegulerFixComponent implements OnInit {
   }
 
   CalcBaseOnRate() {
-    this.calcRegFixObj = this.ParentForm.value;
-    this.calcRegFixObj["IsRecalculate"] = false;
-    this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateInstallmentRegularFix", this.calcRegFixObj).subscribe(
+    this.calcBalloonObj = this.ParentForm.value;
+    this.calcBalloonObj["IsRecalculate"] = false;
+    this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateInstallmentBalloon", this.calcBalloonObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
         this.ParentForm.patchValue({
@@ -80,9 +80,9 @@ export class SchmRegulerFixComponent implements OnInit {
   }
 
   CalcBaseOnInst() {
-    this.calcRegFixObj = this.ParentForm.value;
-    this.calcRegFixObj["IsRecalculate"] = true;
-    this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateInstallmentRegularFix", this.calcRegFixObj).subscribe(
+    this.calcBalloonObj = this.ParentForm.value;
+    this.calcBalloonObj["IsRecalculate"] = true;
+    this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateInstallmentBalloon", this.calcBalloonObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
         this.ParentForm.patchValue({
@@ -99,8 +99,7 @@ export class SchmRegulerFixComponent implements OnInit {
           TotalAR: response.TotalARAmt,
 
           NtfAmt: response.NtfAmt,
-
-        })
+        });
 
         this.SetInstallmentTable();
         this.SetNeedReCalculate(false);
@@ -148,7 +147,6 @@ export class SchmRegulerFixComponent implements OnInit {
         DiffRateAmt: DiffRateAmtStd
       });
     }
-
     this.SetNeedReCalculate(true);
   }
 
@@ -157,4 +155,5 @@ export class SchmRegulerFixComponent implements OnInit {
       NeedReCalculate: value
     });
   }
+
 }
