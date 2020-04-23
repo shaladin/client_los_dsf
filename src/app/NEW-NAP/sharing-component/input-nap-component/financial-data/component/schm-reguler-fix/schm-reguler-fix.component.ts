@@ -74,6 +74,36 @@ export class SchmRegulerFixComponent implements OnInit {
         })
 
         this.SetInstallmentTable();
+        this.SetNeedReCalculate(false);
+      }
+    );
+  }
+
+  CalcBaseOnInst() {
+    this.calcRegFixObj = this.ParentForm.value;
+    this.calcRegFixObj["IsRecalculate"] = true;
+    this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateInstallmentRegularFix", this.calcRegFixObj).subscribe(
+      (response) => {
+        this.listInstallment = response.InstallmentTable;
+        this.ParentForm.patchValue({
+          TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
+          TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
+
+          EffectiveRatePrcnt: response.EffectiveRatePrcnt,
+          FlatRatePrcnt: response.FlatRatePrcnt,
+          InstAmt: response.InstAmt,
+
+          GrossYieldPrcnt: response.GrossYieldPrcnt,
+
+          TotalInterestAmt: response.TotalInterestAmt,
+          TotalAR: response.TotalARAmt,
+
+          NtfAmt: response.NtfAmt,
+
+        })
+
+        this.SetInstallmentTable();
+        this.SetNeedReCalculate(false);
       }
     );
   }
@@ -101,32 +131,6 @@ export class SchmRegulerFixComponent implements OnInit {
     }
   }
 
-  CalcBaseOnInst() {
-    this.calcRegFixObj = this.ParentForm.value;
-    this.calcRegFixObj["IsRecalculate"] = true;
-    this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateInstallmentRegularFix", this.calcRegFixObj).subscribe(
-      (response) => {
-        this.listInstallment = response.InstallmentTable;
-        this.ParentForm.patchValue({
-          TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
-          TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
-
-          EffectiveRatePrcnt: response.EffectiveRatePrcnt,
-          FlatRatePrcnt: response.FlatRatePrcnt,
-          InstAmt: response.InstAmt,
-
-          GrossYieldPrcnt: response.GrossYieldPrcnt,
-
-          TotalInterestAmt: response.TotalInterestAmt,
-          TotalAR: response.TotalARAmt,
-
-          NtfAmt: response.NtfAmt,
-
-        })
-      }
-    );
-  }
-
   EffectiveRatePrcntInput_FocusOut() {
     var EffectiveRatePrcnt = this.ParentForm.get("EffectiveRatePrcnt").value
     var SupplEffectiveRatePrcnt = this.ParentForm.get("SupplEffectiveRatePrcnt").value
@@ -144,11 +148,13 @@ export class SchmRegulerFixComponent implements OnInit {
         DiffRateAmt: DiffRateAmtStd
       });
     }
+
+    this.SetNeedReCalculate(true);
   }
 
-  test() {
-    console.log(this.ParentForm)
-    console.log(this.ParentForm.value);
+  SetNeedReCalculate(value) {
+    this.ParentForm.patchValue({
+      NeedReCalculate: value
+    });
   }
-
 }

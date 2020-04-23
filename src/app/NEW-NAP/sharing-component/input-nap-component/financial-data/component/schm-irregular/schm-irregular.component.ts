@@ -34,9 +34,6 @@ export class SchmIrregularComponent implements OnInit {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
     this.SetEntryInstallment();
-
-    console.log("PRT FORM")
-    console.log(this.ParentForm.value);
   }
 
   LoadDDLRateType() {
@@ -56,11 +53,7 @@ export class SchmIrregularComponent implements OnInit {
   }
 
   SetEntryInstallment() {
-
     var numOfStep = +this.ParentForm.get("NumOfInst").value - 1
-    console.log("STEP");
-    console.log(numOfStep);
-
     while ((this.ParentForm.controls.ListEntryInst as FormArray).length) {
       (this.ParentForm.controls.ListEntryInst as FormArray).removeAt(0);
     }
@@ -123,7 +116,7 @@ export class SchmIrregularComponent implements OnInit {
         })
 
         this.SetInstallmentTable();
-
+        this.SetNeedReCalculate(false);
       }
     );
   }
@@ -145,11 +138,14 @@ export class SchmIrregularComponent implements OnInit {
         DiffRateAmt: DiffRateAmtStd
       });
     }
+
+    this.SetNeedReCalculate(true);
   }
 
-  test() {
-    console.log(this.ParentForm)
-    console.log(this.ParentForm.value);
+  SetNeedReCalculate(value) {
+    this.ParentForm.patchValue({
+      NeedReCalculate: value
+    });
   }
 
 }

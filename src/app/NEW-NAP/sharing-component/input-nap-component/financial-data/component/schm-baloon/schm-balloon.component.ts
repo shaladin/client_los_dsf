@@ -78,6 +78,33 @@ export class SchmBalloonComponent implements OnInit {
     );
   }
 
+  CalcBaseOnInst() {
+    this.calcBalloonObj = this.ParentForm.value;
+    this.calcBalloonObj["IsRecalculate"] = true;
+    this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateInstallmentBalloon", this.calcBalloonObj).subscribe(
+      (response) => {
+        this.listInstallment = response.InstallmentTable;
+        this.ParentForm.patchValue({
+          TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
+          TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
+
+          EffectiveRatePrcnt: response.EffectiveRatePrcnt,
+          FlatRatePrcnt: response.FlatRatePrcnt,
+          InstAmt: response.InstAmt,
+
+          GrossYieldPrcnt: response.GrossYieldPrcnt,
+
+          TotalInterestAmt: response.TotalInterestAmt,
+          TotalAR: response.TotalARAmt,
+
+          NtfAmt: response.NtfAmt,
+        });
+
+        this.SetInstallmentTable();
+      }
+    );
+  }
+
   SetInstallmentTable() {
     var ctrInstallment = this.ParentForm.get("InstallmentTable");
     if (!ctrInstallment) {
@@ -101,32 +128,6 @@ export class SchmBalloonComponent implements OnInit {
     }
   }
 
-  CalcBaseOnInst() {
-    this.calcBalloonObj = this.ParentForm.value;
-    this.calcBalloonObj["IsRecalculate"] = true;
-    this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateInstallmentBalloon", this.calcBalloonObj).subscribe(
-      (response) => {
-        this.listInstallment = response.InstallmentTable;
-        this.ParentForm.patchValue({
-          TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
-          TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
-
-          EffectiveRatePrcnt: response.EffectiveRatePrcnt,
-          FlatRatePrcnt: response.FlatRatePrcnt,
-          InstAmt: response.InstAmt,
-
-          GrossYieldPrcnt: response.GrossYieldPrcnt,
-
-          TotalInterestAmt: response.TotalInterestAmt,
-          TotalAR: response.TotalARAmt,
-
-          NtfAmt: response.NtfAmt,
-
-        })
-      }
-    );
-  }
-
   EffectiveRatePrcntInput_FocusOut() {
     var EffectiveRatePrcnt = this.ParentForm.get("EffectiveRatePrcnt").value
     var SupplEffectiveRatePrcnt = this.ParentForm.get("SupplEffectiveRatePrcnt").value
@@ -144,11 +145,13 @@ export class SchmBalloonComponent implements OnInit {
         DiffRateAmt: DiffRateAmtStd
       });
     }
+    this.SetNeedReCalculate(true);
   }
 
-  test() {
-    console.log(this.ParentForm)
-    console.log(this.ParentForm.value);
+  SetNeedReCalculate(value) {
+    this.ParentForm.patchValue({
+      NeedReCalculate: value
+    });
   }
 
 }
