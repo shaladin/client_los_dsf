@@ -6,21 +6,20 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
 import { environment } from 'environments/environment';
-import { CalcIrregularObj } from 'app/shared/model/AppFinData/CalcIrregularObj.Model';
+import { CalcBalloonObj } from 'app/shared/model/AppFinData/CalcBalloonObj.Model';
 
 @Component({
-  selector: 'app-schm-irregular',
-  templateUrl: './schm-irregular.component.html',
+  selector: 'app-schm-balloon',
+  templateUrl: './schm-balloon.component.html',
 })
-export class SchmIrregularComponent implements OnInit {
+export class SchmBalloonComponent implements OnInit {
 
   @Input() AppId: number;
   @Input() ParentForm: FormGroup;
-  @Input() NumOfInst: number;
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
-  calcIrregularObj: CalcIrregularObj = new CalcIrregularObj();
+  calcBalloonObj : CalcBalloonObj = new CalcBalloonObj();
   listInstallment: any;
   responseCalc: any;
 
@@ -33,7 +32,6 @@ export class SchmIrregularComponent implements OnInit {
   ngOnInit() {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
-    this.SetEntryInstallment();
   }
 
   LoadDDLRateType() {
@@ -52,20 +50,61 @@ export class SchmIrregularComponent implements OnInit {
     );
   }
 
-  SetEntryInstallment() {
-    var numOfStep = +this.ParentForm.get("NumOfInst").value - 1
-    while ((this.ParentForm.controls.ListEntryInst as FormArray).length) {
-      (this.ParentForm.controls.ListEntryInst as FormArray).removeAt(0);
-    }
-    for (let i = 0; i < numOfStep; i++) {
-      const group = this.fb.group({
-        InstSeqNo: i + 1,
-        NumOfInst: [0],
-        InstAmt: [0]
-      });
-      (this.ParentForm.controls.ListEntryInst as FormArray).push(group);
-    }
+  CalcBaseOnRate() {
+    this.calcBalloonObj = this.ParentForm.value;
+    this.calcBalloonObj["IsRecalculate"] = false;
+    this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateInstallmentBalloon", this.calcBalloonObj).subscribe(
+      (response) => {
+        this.listInstallment = response.InstallmentTable;
+        this.ParentForm.patchValue({
+          TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
+          TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
 
+          EffectiveRatePrcnt: response.EffectiveRatePrcnt,
+          FlatRatePrcnt: response.FlatRatePrcnt,
+          InstAmt: response.InstAmt,
+
+          GrossYieldPrcnt: response.GrossYieldPrcnt,
+
+          TotalInterestAmt: response.TotalInterestAmt,
+          TotalAR: response.TotalARAmt,
+
+          NtfAmt: response.NtfAmt,
+
+        })
+
+        this.SetInstallmentTable();
+        this.SetNeedReCalculate(false);
+      }
+    );
+  }
+
+  CalcBaseOnInst() {
+    this.calcBalloonObj = this.ParentForm.value;
+    this.calcBalloonObj["IsRecalculate"] = true;
+    this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateInstallmentBalloon", this.calcBalloonObj).subscribe(
+      (response) => {
+        this.listInstallment = response.InstallmentTable;
+        this.ParentForm.patchValue({
+          TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
+          TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
+
+          EffectiveRatePrcnt: response.EffectiveRatePrcnt,
+          FlatRatePrcnt: response.FlatRatePrcnt,
+          InstAmt: response.InstAmt,
+
+          GrossYieldPrcnt: response.GrossYieldPrcnt,
+
+          TotalInterestAmt: response.TotalInterestAmt,
+          TotalAR: response.TotalARAmt,
+
+          NtfAmt: response.NtfAmt,
+        });
+
+        this.SetInstallmentTable();
+        this.SetNeedReCalculate(false);
+      }
+    );
   }
 
   SetInstallmentTable() {
@@ -91,36 +130,6 @@ export class SchmIrregularComponent implements OnInit {
     }
   }
 
-  CalculateAmortization() {
-    this.calcIrregularObj = this.ParentForm.value;
-    this.calcIrregularObj["IsRecalculate"] = false;
-    this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateIrregular", this.calcIrregularObj).subscribe(
-      (response) => {
-        this.listInstallment = response.InstallmentTable;
-
-        this.ParentForm.patchValue({
-          TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
-          TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
-
-          EffectiveRatePrcnt: response.EffectiveRatePrcnt,
-          FlatRatePrcnt: response.FlatRatePrcnt,
-          InstAmt: response.InstAmt,
-
-          GrossYieldPrcnt: response.GrossYieldPrcnt,
-
-          TotalInterestAmt: response.TotalInterestAmt,
-          TotalAR: response.TotalARAmt,
-
-          NtfAmt: response.NtfAmt,
-
-        })
-
-        this.SetInstallmentTable();
-        this.SetNeedReCalculate(false);
-      }
-    );
-  }
-
   EffectiveRatePrcntInput_FocusOut() {
     var EffectiveRatePrcnt = this.ParentForm.get("EffectiveRatePrcnt").value
     var SupplEffectiveRatePrcnt = this.ParentForm.get("SupplEffectiveRatePrcnt").value
@@ -138,7 +147,6 @@ export class SchmIrregularComponent implements OnInit {
         DiffRateAmt: DiffRateAmtStd
       });
     }
-
     this.SetNeedReCalculate(true);
   }
 

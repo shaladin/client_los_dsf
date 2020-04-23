@@ -249,22 +249,6 @@ export class FeeComponent implements OnInit {
           this.CalculateTotalFeeAndCaptlzAmt();
       }
     );
-
-    // if(feeType == 'PRCNT')
-    // {
-    //   var calculateBaseAmt = fb_provision.get("CalculateBaseAmt").value;
-    //   var appFeePrcnt = fb_provision.get("AppFeePrcnt").value;
-  
-    //   fb_provision.patchValue({
-    //     AppFeeAmt : appFeePrcnt * calculateBaseAmt
-    //   });
-  
-    //   // this.IsCapitalize_CheckedChange();
-    // }
-    // else
-    // {
-    //   this.AppFeeAmt_OnChange();
-    // }
   }
 
 

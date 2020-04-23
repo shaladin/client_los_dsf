@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
@@ -72,6 +72,9 @@ export class SchmRegulerFixComponent implements OnInit {
           NtfAmt: response.NtfAmt,
 
         })
+
+        this.SetInstallmentTable();
+        this.SetNeedReCalculate(false);
       }
     );
   }
@@ -98,56 +101,34 @@ export class SchmRegulerFixComponent implements OnInit {
           NtfAmt: response.NtfAmt,
 
         })
+
+        this.SetInstallmentTable();
+        this.SetNeedReCalculate(false);
       }
     );
   }
 
-  SaveAndContinue() {
-    var isValidGrossYield = this.ValidateGrossYield();
-    var isValidGracePeriod = this.ValidateGracePeriode();
-
-    if (isValidGrossYield && isValidGracePeriod) {
-      console.log("GROSSSS");
-    }
-  }
-
-  ValidateGracePeriode() {
-    var valid: boolean = true;
-    var gracePeriodType = this.ParentForm.get("MrGracePeriodTypeCode").value
-    var gracePeriod = this.ParentForm.get("GracePeriod").value
-
-    if (gracePeriodType != "") {
-      if (gracePeriod == 0) {
-        valid = false;
-        this.toastr.errorMessage("Grace Period must be set");
-      }
+  SetInstallmentTable() {
+    var ctrInstallment = this.ParentForm.get("InstallmentTable");
+    if (!ctrInstallment) {
+      this.ParentForm.addControl("InstallmentTable", this.fb.array([]))
     }
 
-    return valid;
-  }
-
-  ValidateGrossYield() {
-    this.ParentForm.patchValue({
-      GrossYieldPrcnt: 10
-    });
-    var GrossYieldBhv = this.ParentForm.get("GrossYieldBhv").value
-    var StdGrossYieldPrcnt = this.ParentForm.get("StdGrossYieldPrcnt").value
-    var GrossYieldPrcnt = this.ParentForm.get("GrossYieldPrcnt").value
-    var valid: boolean = true;
-
-    if (GrossYieldBhv == 'MIN') {
-      if (GrossYieldPrcnt < StdGrossYieldPrcnt) {
-        this.toastr.errorMessage("Gross Yield cannot be less than " + StdGrossYieldPrcnt + "%");
-        valid = false;
-      }
+    while ((this.ParentForm.controls.InstallmentTable as FormArray).length) {
+      (this.ParentForm.controls.InstallmentTable as FormArray).removeAt(0);
     }
-    else {
-      if (GrossYieldPrcnt > StdGrossYieldPrcnt) {
-        this.toastr.errorMessage("Gross Yield cannot be greater than " + StdGrossYieldPrcnt + "%");
-        valid = false;
-      }
+
+    for (let i = 0; i < this.listInstallment.length; i++) {
+      const group = this.fb.group({
+        InstSeqNo: this.listInstallment[i].InstSeqNo,
+        InstAmt: this.listInstallment[i].InstAmt,
+        PrincipalAmt: this.listInstallment[i].PrincipalAmt,
+        InterestAmt: this.listInstallment[i].InterestAmt,
+        OsPrincipalAmt: this.listInstallment[i].OsPrincipalAmt,
+        OsInterestAmt: this.listInstallment[i].OsInterestAmt
+      });
+      (this.ParentForm.controls.InstallmentTable as FormArray).push(group);
     }
-    return valid;
   }
 
   EffectiveRatePrcntInput_FocusOut() {
@@ -167,11 +148,13 @@ export class SchmRegulerFixComponent implements OnInit {
         DiffRateAmt: DiffRateAmtStd
       });
     }
+
+    this.SetNeedReCalculate(true);
   }
 
-  test() {
-    console.log(this.ParentForm)
-    console.log(this.ParentForm.value);
+  SetNeedReCalculate(value) {
+    this.ParentForm.patchValue({
+      NeedReCalculate: value
+    });
   }
-
 }

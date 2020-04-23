@@ -95,7 +95,7 @@ export class SubsidyAddEditComponent implements OnInit {
     }
 
     LoadDDLFromValue(fromTypeCode: string) {
-      this.http.post(environment.losUrl + "/AppSubsidy/GetListSubsidyFromValue", { AppId: this.AppId }).subscribe(
+      this.http.post(environment.losUrl + "/AppSubsidy/GetListSubsidyFromValue", { AppId: this.AppId, SubsidyFromType : fromTypeCode  }).subscribe(
         (response) => {
           this.FromValueOptions = response["ReturnObject"];
         }
