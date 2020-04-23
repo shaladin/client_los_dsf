@@ -40,7 +40,7 @@ import { CreditProcessInquiryComponent } from './credit-process-inquiry/credit-p
     ListCompanyComponent,
     ApplicantExistingDataPersonalComponent,
     ApplicantExistingDataCompanyComponent,
-    ReturnHandlingCommissionComponent
+    ReturnHandlingCommissionComponent,
     AppInquiryComponent,
     CreditProcessInquiryComponent
   ],
