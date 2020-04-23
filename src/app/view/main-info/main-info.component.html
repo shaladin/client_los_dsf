@@ -4,37 +4,34 @@
   <div class="form-body" id="MainInfo">
     <div class="form-group">
       <label class="col-md-2 adInsLabel" translate>MOU No: </label>
-      <label class="col-md-2 adInsLabel" translate>{{mouCustNo}} </label>
+      <a href="{{mouUrl}}"><label class="col-md-2 adInsLabel" style="color: blue; cursor: pointer;" translate>{{mouCustNo}}</label></a>
       <label class="col-md-2"></label>
-      <label class="col-md-2 adInsLabel" translate>MOU Date: </label>
+      <label class="col-md-2 adInsLabel" translate>MOU Date </label>
       <label class="col-md-2 adInsLabel" translate>{{mouCustDt}} </label>
     </div>
     <div class="form-group">
-      <label class="col-md-2 adInsLabel" translate>Customer Name: </label>
+      <label class="col-md-2 adInsLabel" translate>Customer Name </label>
       <a href="{{custUrl}}" target="_blank"><label class="col-md-2 adInsLabel" style="color: blue; cursor: pointer;" translate>{{custName}} </label></a>
       <label class="col-md-2"></label>
       <label class="col-md-2 adInsLabel" translate>Plafond Amount: </label>
       <label class="col-md-2 adInsLabel" translate>{{plafondAmt | number}} </label>
     </div>
     <div class="form-group">
-      <label class="col-md-2 adInsLabel" translate>Start Date: </label>
-      <label class="col-md-2 adInsLabel" translate>{{startDt}}</label>
-      <label class="col-md-2"></label>
-      <label class="col-md-2 adInsLabel" translate>MOU Type: </label>
+      <label class="col-md-2 adInsLabel" translate style="padding-right: 0; width: 16.6%;">Start Date - End Date: </label>
+      <label class="col-md-3 adInsLabel" translate>{{startDt}} - {{endDt}}</label>
+      <label class="col-md-1"></label>
+      <label class="col-md-2 adInsLabel" translate>MOU Type </label>
       <label class="col-md-2 adInsLabel" translate>{{mrMouTypeCode}} </label>
     </div>
     <div class="form-group">
-      <label class="col-md-2 adInsLabel" translate>End Date: </label>
-      <label class="col-md-2 adInsLabel" translate>{{endDt}}</label>
-      <label class="col-md-2"></label>
-      <label class="col-md-2 adInsLabel" translate>Reference No.: </label>
+      <label class="col-md-2 adInsLabel" translate>Reference No. </label>
       <label class="col-md-2 adInsLabel" translate>{{refNo}} </label>
+      <label class="col-md-2"></label>
+      <label class="col-md-2 adInsLabel" translate>Revolving </label>
+      <label class="col-md-2 adInsLabel" translate>{{isRevolving}}</label>
     </div>
     <div class="form-group">
-      <label class="col-md-2 adInsLabel" translate>Revolving: </label>
-      <label class="col-md-2 adInsLabel" translate>{{isRevolving}}</label>
-      <label class="col-md-2"></label>
-      <label class="col-md-2 adInsLabel" translate>Status: </label>
+      <label class="col-md-2 adInsLabel" translate>Status </label>
       <label class="col-md-2 adInsLabel" translate>{{mouCustStatView}}</label>
     </div>
   </div>

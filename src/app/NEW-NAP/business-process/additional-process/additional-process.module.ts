@@ -18,6 +18,8 @@ import { ApplicantExistingDataPersonalComponent } from "./app-dup-check/applican
 import { ApplicantExistingDataCompanyComponent } from "./app-dup-check/applicant-existing-data-company/applicant-existing-data-company.component";
 import { ReturnHandlingEditAppPagingComponent } from './return-handling/return-handling-edit-app-paging/return-handling-edit-app-paging.component';
 import { AssetInquiryComponent } from './po-extension/asset-inquiry/asset-inquiry.component';
+import { AppInquiryComponent } from './app-inquiry/app-inquiry.component';
+import { CreditProcessInquiryComponent } from './credit-process-inquiry/credit-process-inquiry.component';
 
 @NgModule({
   imports: [
@@ -41,6 +43,8 @@ import { AssetInquiryComponent } from './po-extension/asset-inquiry/asset-inquir
     ApplicantExistingDataCompanyComponent,
     ReturnHandlingEditAppPagingComponent,
     AssetInquiryComponent
+    AppInquiryComponent,
+    CreditProcessInquiryComponent
   ],
   providers: [
     NGXToastrService

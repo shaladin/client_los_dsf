@@ -29,18 +29,18 @@
                   <div class="form-group row">
                     <label class="col-md-2 adInsLabel" translate>Sales Person Name</label>
                     <div class="col-md-3">
-                      <select class="form-control adInsInput" style="width: auto" formControlName="BranchManager" required
-                        [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.BranchManager.invalid }">
-                        <option *ngFor="let it of returnAssetConditionObj " [value]="it.Key">
+                      <select class="form-control adInsInput" style="width: auto" formControlName="SalesPersonName" required
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.SalesPersonName.invalid }">
+                        <option *ngFor="let it of listSalesObj " [value]="it.Key">
                           {{it.Value}}
                         </option>
                       </select>
                     </div>
                     <label class="col-md-2 adInsLabel" translate>Admin Head</label>
                     <div class="col-md-3">
-                      <select class="form-control adInsInput" style="width: auto" formControlName="BranchManager" required
-                        [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.BranchManager.invalid }">
-                        <option *ngFor="let it of returnAssetConditionObj " [value]="it.Key">
+                      <select class="form-control adInsInput" style="width: auto" formControlName="AdminHead" required
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.AdminHead.invalid }">
+                        <option *ngFor="let it of listAdminHeadObj " [value]="it.Key">
                           {{it.Value}}
                         </option>
                       </select>
@@ -53,8 +53,7 @@
                     <div class="form-group row">
                       <label class="col-md-2 adInsLabel" translate>Asset Name</label>
                       <div class="col-md-3">
-                        <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupSupplierObj" [identifier]="'lookupSupplier'"
-                          [enjiForm]='enjiForm' [parentForm]='AssetDataForm' (lookup)="SetSupplier($event)">
+                        <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupAssetObj" [identifier]="'lookupAsset'" [enjiForm]='enjiForm' [parentForm]='AssetDataForm' (lookup)="SetAsset($event)">
                         </lib-uclookupgeneric>
                       </div>
                       <label class="col-md-2 adInsLabel" translate>Down Payment Type</label>
@@ -151,7 +150,7 @@
                     <label class="col-md-2 adInsLabel" translate>Self Usage </label>
                     <div class="col-md-3">
                       <input class="border-primary" type="checkbox" data-md-icheck
-                             formControlName="selfUsage" />
+                             formControlName="SelfUsage" />
                     </div>
                   </div>
                   <div class="form-group row">
@@ -168,7 +167,7 @@
                       <div class="col-md-3">
                           <select class="form-control adInsInput" style="width: auto" formControlName="UserRelationship"
                           [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.UserRelationship.invalid }">
-                          <option *ngFor="let it of returnAssetConditionObj" [value]="it.Key">
+                          <option *ngFor="let it of returnUserRelationshipObj" [value]="it.Key">
                               {{it.Value}}
                           </option>
                           </select>
@@ -181,27 +180,30 @@
                   <div class="form-group row">
                     <label class="col-md-2  adInsLabel" translate>Copy Address </label>
                     <div class="col-md-2">
-                      <select class="form-control adInsInput" formControlName="CopyAddr">
-                        <option *ngFor="let ram of listCustAddr" [value]="ram.CustAddrId">
+                      <select class="form-control adInsInput" formControlName="LocationAddrType">
+                        <option *ngFor="let ram of AppCustAddrObj" [value]="ram.AppCustAddrId">
                           {{ram.MrCustAddrTypeCode}}
                         </option>
                       </select>
                     </div>
-                    <div class="col-md-2">
-                      <button type="button" class="btn btn-raised btn-primary" (click)="copyAddress()">
-                        <i class="fa fa-check-square-o"></i> Copy
-                      </button>
+                    <div class="input-group-append">
+                      <span class="input-group-btn">
+                        <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocationAddr()">
+                          <i class="fa fa-check-square-o"></i>Copy
+                        </button>
+                      </span>
                     </div>
                   </div>
                   <div id="AssetLocation"> 
-                    <lib-ucaddress #UcAddrGrp [showSubsection]="false" [isRequired]="false" [title]="'Asset Location'" [UCAddrForm]="AssetDataForm" [enjiForm]="enjiForm" [identifier]="'assetLocationAddress'" [default]="assetLocAddrObj" [inputField]="inputAssetLocAddressObj" [showAllPhn]="false" [showOwnership]="false"></lib-ucaddress>
+                    <lib-ucaddress #UcAddrGrp [showSubsection]="false" [isRequired]="false" [title]="'Asset Location'" [UCAddrForm]="AssetDataForm" 
+                    [enjiForm]="enjiForm" [identifier]="'assetLocationAddress'" [default]="locationAddrObj" [inputField]="inputFieldLocationAddrObj" [showAllPhn]="false" [showOwnership]="false"></lib-ucaddress>
                   </div>
                 </div>
               </div>
             </div>
             <div class="form-actions right" style="text-align: right;">
               <button type="button" class="btn btn-raised btn-warning mr-1"
-                  [routerLink]="['/Nap/FinanceLeasing/AssetData/Paging']" translate>
+                  [routerLink]="['/Nap/AssetData/Paging']" translate>
                   <i class="ft-x"></i> Cancel
               </button>
               <button type="submit" class="btn btn-raised btn-primary" translate>

@@ -204,7 +204,7 @@
       "property": "EndDt"
     },
     {
-      "type": "text",
+      "type": "currency",
       "position": "right",
       "property": "PlafondAmt"
     },
@@ -228,16 +228,59 @@
       "position": "center",
       "action": [
         {
-          "type": "edit",
-          "path": "/Mou/CustomerLegalReview/Detail",
-          "param": [
+          "type": "switch",
+          "case": [
             {
-              "type": "MouCustId",
-              "property": "MouCustId"
+              "conditions": [
+                {
+                  "isUser": true,
+                  "property": "ClaimBy",
+                  "value": "",
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "url",
+                "path": "/Mou/CustomerLegalReview/Detail",
+                "icon": "ft-edit-2",
+                "param": [
+                  {
+                    "type": "MouCustId",
+                    "property": "MouCustId"
+                  },
+                  {
+                    "type": "WfTaskListId",
+                    "property": "WfTaskListId"
+                  }
+                ]
+              },
+              "isHide": false
             },
             {
-              "type": "WfTaskListId",
-              "property": "WfTaskListId"
+              "conditions": [
+                {
+                  "isUser": false,
+                  "property": "ClaimBy",
+                  "value": "",
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "url",
+                "path": "/Mou/CustomerLegalReview/Detail",
+                "icon": "ft-edit-2",
+                "param": [
+                  {
+                    "type": "MouCustId",
+                    "property": "MouCustId"
+                  },
+                  {
+                    "type": "WfTaskListId",
+                    "property": "WfTaskListId"
+                  }
+                ]
+              },
+              "isHide": false
             }
           ]
         }
