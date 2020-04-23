@@ -89,6 +89,7 @@ export class LeadInputMainInfoComponent implements OnInit {
     LobName:[''],
     LeadSource: [''],
   });
+  leadUrl: string;
   
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.addLead = AdInsConstant.AddLead;
@@ -100,7 +101,6 @@ export class LeadInputMainInfoComponent implements OnInit {
     this.getVendorByVendorCode = AdInsConstant.GetVendorByVendorCode;
     this.getRefEmpForLookupEmployee = AdInsConstant.GetRefEmpForLookupEmployee;
     this.getLeadPersonalForLookup = AdInsConstant.GetLeadPersonalForLookupCopy;
-
     this.route.queryParams.subscribe(params => {
         if (params["mode"] != null) {
             this.pageType = params["mode"];
@@ -109,6 +109,7 @@ export class LeadInputMainInfoComponent implements OnInit {
           this.LeadId = params["LeadId"];
       }
     });
+    this.leadUrl = '/Lead/View?LeadId=' + this.LeadId;
   }
 
 getLookUpAgency(event) {
