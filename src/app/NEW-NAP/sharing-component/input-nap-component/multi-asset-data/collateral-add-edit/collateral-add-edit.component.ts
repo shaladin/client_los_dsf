@@ -46,6 +46,7 @@ export class CollateralAddEditComponent implements OnInit {
     Transmition:[''],
     BpkpIssuer:[''],
     Category:[''],
+    CopyFromLegal:[''],
     BpkpIssueDate:[''],
 
     CollPercentage:[''],
