@@ -38,11 +38,24 @@ export class SubsidyComponent implements OnInit {
     modalRef.componentInstance.listAppFeeObj = this.listAppFeeObj;
     modalRef.componentInstance.emitData.subscribe(($e) => {
       this.LoadSubsidyData();
-      this.ParentForm.patchValue({
-        NeedReCalculate : true,
-      })
-      console.log(this.ParentForm.value)
+      this.SetNeedReCalculate(true);
     })
+  }
+
+  deleteSubsidy(obj)
+  {
+      if (confirm('Are you sure to delete this record?')) {
+        console.log(obj)
+        this.http.post(environment.losUrl + "/AppSubsidy/DeleteSubsidy", { AppSubsidyId : obj.AppSubsidyId }).subscribe(
+          (response) => {
+            this.LoadSubsidyData();
+            this.SetNeedReCalculate(true);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      }
   }
 
   LoadSubsidyData()
@@ -52,5 +65,11 @@ export class SubsidyComponent implements OnInit {
         this.listSubsidy = response["AppSubsidies"];
       }
     );
+  }
+
+  SetNeedReCalculate(value) {
+    this.ParentForm.patchValue({
+      NeedReCalculate: value
+    });
   }
 }

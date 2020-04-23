@@ -74,6 +74,7 @@ export class SchmBalloonComponent implements OnInit {
         })
 
         this.SetInstallmentTable();
+        this.SetNeedReCalculate(false);
       }
     );
   }
@@ -101,6 +102,7 @@ export class SchmBalloonComponent implements OnInit {
         });
 
         this.SetInstallmentTable();
+        this.SetNeedReCalculate(false);
       }
     );
   }

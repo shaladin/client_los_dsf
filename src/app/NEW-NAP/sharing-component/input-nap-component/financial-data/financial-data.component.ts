@@ -138,17 +138,27 @@ SaveAndContinue()
   var isValidGrossYield = true;//this.ValidateGrossYield();
   var isValidGracePeriod = this.ValidateGracePeriode();
 
-  if(isValidGrossYield && isValidGracePeriod)
-  {
-    console.log("GROSSSS");
-    console.log(this.FinDataForm.value);
+  var NeedReCalculate = this.FinDataForm.get("NeedReCalculate").value;
 
-    this.http.post(environment.losUrl + "/AppFinData/SaveAppFinData", this.FinDataForm.value).subscribe(
-      (response) => {
-       console.log(response);
-      }
-    );
+  if(NeedReCalculate)
+  {
+    this.toastr.errorMessage("Please Calculate Again");
+    return ;
   }
+
+  this.toastr.successMessage("Calc Ok");
+
+  // if(isValidGrossYield && isValidGracePeriod)
+  // {
+  //   console.log("GROSSSS");
+  //   console.log(this.FinDataForm.value);
+
+  //   this.http.post(environment.losUrl + "/AppFinData/SaveAppFinData", this.FinDataForm.value).subscribe(
+  //     (response) => {
+  //      console.log(response);
+  //     }
+  //   );
+  // }
 }
 
 ValidateGracePeriode()
