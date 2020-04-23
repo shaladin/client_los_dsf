@@ -106,7 +106,7 @@
     "querystring": {
         "select": "SELECT MOU.MOU_CUST_NO AS MouCustNo,WTL.WF_TASK_LIST_ID AS WfTaskListId, WTL.CLAIM_STAT AS ClaimStat, WTL.USERNAME AS ClaimBy, WTL.OFFICE_CODE AS OfficeCode, MOU.MOU_CUST_ID AS MouCustId, MOU.CUST_NAME AS CustName, MOU.MOU_CUST_DT AS MouCustDt, MOU.START_DT AS StartDt, MOU.END_DT AS EndDt, MOU.PLAFOND_AMT PlafondAmt, MOU.IS_REVOLVING AS IsRevolving, MOU.REF_NO AS RefNo, MOU.MR_MOU_TYPE_CODE AS MrMouTypeCode",
         "from": "FROM dbo.MOU_CUST MOU WITH(NOLOCK) JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON MOU.MOU_CUST_NO = WTL.TRANSACTION_CODE AND WTL.ACT_CODE = 'MOU_REVIEW'",
-        "where" : "WHERE WTL.END_EXECUTING_DATE IS NULL"
+        "where" : "WHERE WTL.END_EXECUTING_DATE IS NULL AND MOU.MOU_STAT = 'MRV' AND WTL.OFFICE_CODE = 'HO'"
     },
     "headerList": [
         {
@@ -222,6 +222,12 @@
                         {
                             "conditions": [
                                 {
+                                    "isUser": true,
+                                    "property" : "ClaimBy",
+                                    "value" : "",
+                                    "restriction" : "EQ"
+                                },
+                                {
                                     "property": "MrMouTypeCode",
                                     "value": "FACTORING",
                                     "restriction": "EQ"
@@ -244,8 +250,79 @@
                             },
                             "isHide": false
                         },
+
                         {
                             "conditions": [
+                                {
+                                    "isUser": false,
+                                    "property" : "ClaimBy",
+                                    "value" : "",
+                                    "restriction" : "EQ"
+                                },
+                                {
+                                    "property": "MrMouTypeCode",
+                                    "value": "FACTORING",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "/Mou/Cust/ReviewFactoring",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "MouCustId",
+                                        "property": "MouCustId"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "WfTaskListId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        },
+
+                        {
+                            "conditions": [
+                                {
+                                    "isUser": true,
+                                    "property" : "ClaimBy",
+                                    "value" : "",
+                                    "restriction" : "EQ"
+                                },
+                                {
+                                    "property": "MrMouTypeCode",
+                                    "value": "GENERAL",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "/Mou/Cust/ReviewGeneral",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "MouCustId",
+                                        "property": "MouCustId"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "WfTaskListId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        },
+
+                        {
+                            "conditions": [
+                                {
+                                    "isUser": false,
+                                    "property" : "ClaimBy",
+                                    "value" : "",
+                                    "restriction" : "EQ"
+                                },
                                 {
                                     "property": "MrMouTypeCode",
                                     "value": "GENERAL",
