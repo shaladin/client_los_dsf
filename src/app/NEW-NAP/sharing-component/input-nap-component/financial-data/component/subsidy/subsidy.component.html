@@ -25,9 +25,6 @@
             Value Type
           </span>
         </th>
-        <th style="text-align: center;"><span class="thead-header" name="SubsidyPrcnt" translate>Subsidy Value
-          </span>
-        </th>
         <th style="text-align: center;"><span class="thead-header" name="SubsidyAmt" translate>Subsidy Value
           </span>
         </th>
@@ -45,8 +42,7 @@
         <td style="text-align: center;">{{item.MrSubsidyFromValueName}}</td>
         <td style="text-align: center;">{{item.MrSubsidyAllocName}}</td>
         <td style="text-align: center;">{{item.MrSubsidyValueTypeName}}</td>
-        <td style="text-align: center;">{{item.SubsidyPrcnt}}</td>
-        <td style="text-align: center;">{{item.SubsidyAmt}}</td>
+        <td style="text-align: center;">{{item.SubsidyAmt | number : '1.2-2' }}</td>
         <td>
           <a class="warning p-0" data-original-title="" title="" (click)="delete(i)">
             <i class="ft-trash-2 font-medium-3 mr-2"></i>

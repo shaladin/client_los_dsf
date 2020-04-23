@@ -2,13 +2,10 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { AppFinDataObj } from 'app/shared/model/AppFinData/AppFinData.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj.Model';
-import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
-import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
 
 @Component({
   selector: 'app-financial-data',
@@ -84,6 +81,8 @@ ngOnInit() {
 
       MrProvisionFeeTypeCode : '',
       MrProvisionFeeCalcMethodCode : '',
+
+      BalloonValueAmt: 0,
       
     }
   );
