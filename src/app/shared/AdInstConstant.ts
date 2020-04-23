@@ -973,4 +973,7 @@ export class AdInsConstant {
   // Deviation Result
   public static GetListDeviationResultForDeviationDataByAppId = environment.losUrl + "/DeviationResult/GetListDeviationResultForDeviationDataByAppId";
   public static AddListManualDeviationResultByAppId = environment.losUrl + "/DeviationResult/AddListManualDeviationResultByAppId";
+
+  // Upload
+  public static UploadFile = environment.FoundationR3Url + "/Upload/UploadFile";
 }

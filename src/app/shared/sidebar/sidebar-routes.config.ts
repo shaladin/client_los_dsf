@@ -60,6 +60,7 @@ export const ROUTES: RouteInfo[] = [
   {
     path: '', title: 'MOU', icon: 'fas fa-user-plus', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false,
     submenu: [
+      { path: '/Mou/TestUpload', title: 'Test Upload', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
       { path: '/Mou/Request/Paging', title: 'MOU Request', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
       { path: '/Mou/Cust/ReviewPaging', title: 'MOU Review', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
       { path: '/Mou/Cust/Approval', title: 'MOU Approval', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
