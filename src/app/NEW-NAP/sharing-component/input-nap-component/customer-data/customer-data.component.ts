@@ -135,7 +135,6 @@ export class CustomerDataComponent implements OnInit {
     if(this.MrCustTypeCode == AdInsConstant.CustTypePersonal){
       this.custDataPersonalObj = new CustDataPersonalObj();
       this.setCustPersonalObjForSave();
-      console.log(this.custDataPersonalObj);
       this.http.post(this.addEditCustDataPersonalUrl, this.custDataPersonalObj).subscribe(
         (response) => {
           console.log(response);
@@ -149,9 +148,20 @@ export class CustomerDataComponent implements OnInit {
     }
 
     if(this.MrCustTypeCode == AdInsConstant.CustTypeCompany){
+      var totalSharePrcnt = 0;
+
+      if(this.listShareholder != undefined){
+        for(let i = 0; i < this.listShareholder.length; i++){
+          totalSharePrcnt += this.listShareholder[i].SharePrcnt;
+        }
+      }
+
+      if(totalSharePrcnt != 100){
+        this.toastr.errorMessage("Total Share (%) must be 100.");
+        return;
+      }
       this.custDataCompanyObj = new CustDataCompanyObj();
       this.setCustCompanyObjForSave();
-      console.log(this.custDataCompanyObj);
       this.http.post(AdInsConstant.AddEditCustDataCompany, this.custDataCompanyObj).subscribe(
         (response) => {
           console.log(response);
@@ -203,6 +213,12 @@ export class CustomerDataComponent implements OnInit {
       this.custDataPersonalObj.AppCustObj.TaxIdNo = this.CustDataForm.controls["personalMainData"]["controls"].TaxIdNo.value;
       this.custDataPersonalObj.AppCustObj.IsVip = this.CustDataForm.controls["personalMainData"]["controls"].IsVip.value;
       this.custDataPersonalObj.AppCustObj.AppId = this.appId;
+
+      if(this.custDataPersonalObj.AppCustObj.CustNo != "" && this.custDataPersonalObj.AppCustObj.CustNo != undefined){
+        this.custDataPersonalObj.AppCustObj.IsExistingCust = true;
+      }else{
+        this.custDataPersonalObj.AppCustObj.IsExistingCust = false;
+      }
     }
 
     if(this.MrCustTypeCode == AdInsConstant.CustTypeCompany){
@@ -215,6 +231,12 @@ export class CustomerDataComponent implements OnInit {
       this.custDataCompanyObj.AppCustObj.TaxIdNo = this.CustDataCompanyForm.controls["companyMainData"]["controls"].TaxIdNo.value;
       this.custDataCompanyObj.AppCustObj.IsVip = this.CustDataCompanyForm.controls["companyMainData"]["controls"].IsVip.value;
       this.custDataCompanyObj.AppCustObj.AppId = this.appId;
+
+      if(this.custDataCompanyObj.AppCustObj.CustNo != "" && this.custDataCompanyObj.AppCustObj.CustNo != undefined){
+        this.custDataCompanyObj.AppCustObj.IsExistingCust = true;
+      }else{
+        this.custDataCompanyObj.AppCustObj.IsExistingCust = false;
+      }
     }
   }
 
