@@ -79,11 +79,15 @@
             "action": [
                 {
                     "type": "edit",
-                    "path": "/Nap/FinanceLeasing/AssetData/Detail",
+                    "path": "/Nap/AssetData/Detail",
                     "param": [
                         {
                             "type": "AppAssetId",
                             "property": "AppAssetId"
+                        },
+                        {
+                            "type": "AppId",
+                            "property": "AppId"
                         },
                         {
                             "type": "mode",

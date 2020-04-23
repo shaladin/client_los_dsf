@@ -74,6 +74,7 @@ export class CollateralAddEditComponent implements OnInit {
   inputFieldCollOwnerObj: any;
   ownerRelationshipObj: any;
   returnOwnerRelationshipObj: any;
+  addEditAllCollateralData: any;
 
   appObj = {
     AppId: 0,
@@ -119,6 +120,7 @@ export class CollateralAddEditComponent implements OnInit {
     this.getListActiveRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
     this.getAppCustAddrByAppCustAddrId = AdInsConstant.GetAppCustAddrByAppCustAddrId;
     this.getAppCustAddrUrl = AdInsConstant.GetListAppCustAddrByAppId;
+    this.addEditAllCollateralData = AdInsConstant.AddEditAllCollateralData;
 
     this.route.queryParams.subscribe(params => {
       if (params["AppAssetId"] != null) {

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
@@ -12,6 +12,8 @@ import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
+import { AllAssetDataObj } from 'app/shared/model/AllAssetDataObj.Model';
+import { RefCoyObj } from 'app/shared/model/RefCoyObj.Model';
 
 @Component({
   selector: 'app-asset-data-add-edit',
@@ -20,9 +22,9 @@ import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 export class AssetDataAddEditComponent implements OnInit {
   @Input() AppId: any;
   @Output() outputValue: EventEmitter<object> = new EventEmitter();
+  LobCode: string;
   pageType: string = "add";
   custType: string;
-  AppAssetId: any;
   branchObj : any;
   listBranchObj: any;
   salesObj: any;
@@ -51,12 +53,37 @@ export class AssetDataAddEditComponent implements OnInit {
   getAppCustAddrByAppCustAddrId: any;
   appCustAddrObj: any;
   returnAppCustAddrObj: any;
+  allAssetDataObj : AllAssetDataObj;
+  addEditAllAssetDataUrl: any;
+  getRefCoy: any;
+  refCoyObj: any;
+  returnRefCoyObj: any;
+  getAppCustUrl: any;
+  appCustObj: any;
+  assetUsageObj: any
+  returnAssetUsageObj: any;
+  appAssetId: number = 0;
 
   AssetDataForm = this.fb.group({
-    BranchManagerName:[''],
-    SalesPersonName:[''],
-    AdminHead:[''],
+    SupplName:[''],
+    SupplCode:[''],
 
+    BranchManagerName:[''],
+    BranchManagerNo:[''],
+    BranchManagerCode:[''],
+
+    SalesPersonName:[''],
+    SalesPersonNo:[''],
+    SalesPersonCode:[''],
+
+    AdminHeadName:[''],
+    AdminHeadNo:[''],
+    AdminHeadCode:[''],
+
+    FullAssetCode:[''],
+    FullAssetName:[''],
+    AssetCategoryCode:[''],
+    AssetTypeCode:[''],
     MrDownPaymentTypeCode:[''],
     AssetPrice:[''],
     DownPayment:[''],
@@ -68,40 +95,40 @@ export class AssetDataAddEditComponent implements OnInit {
     EngineNo:[''],
     Notes:[''],
 
-    SelfUsage: false,
+    SelfUsage: [false],
     Username:[''],
     UserRelationship:[''],
-
-    CopyAddr:[''],
-    LocationAddr: ['', Validators.maxLength(50)],
-    LocationAreaCode1: ['', Validators.maxLength(50)],
-    LocationAreaCode2: ['', Validators.maxLength(50)],
-    LocationAreaCode3: ['', Validators.maxLength(50)],
-    LocationAreaCode4: ['', Validators.maxLength(50)],
-    LocationCity: ['', Validators.maxLength(50)],
-    LocationZipcode: ['', Validators.maxLength(50)],
+    OwnerName:[''],
+    OwnerIdType:[''],
+    OwnerIdNo:[''],
+    OwnerAddr:[''],
+    OwnerAreaCode1:[''],
+    OwnerAreaCode2:[''],
+    OwnerAreaCode3:[''],
+    OwnerAreaCode4:[''],
+    OwnerZipcode:[''],
+    OwnerMobilePhn:[''],
 
     LocationAddrType: [''],
-
-    //BranchManagerName: [''],
-    BranchManagerNo: [''],
-    BranchManagerPosition: ['']
   });
 
   appObj = {
     AppId: 0,
   };
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) { 
+  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) { 
     this.getListAppAssetData = AdInsConstant.GetListAppAssetData;
     this.getListVendorEmp = AdInsConstant.GetListKeyValueVendorEmpByVendorIdAndPosition;
     this.getListActiveRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
     this.getAppCustAddrUrl = AdInsConstant.GetListAppCustAddrByAppId;
     this.getAppCustAddrByAppCustAddrId = AdInsConstant.GetAppCustAddrByAppCustAddrId;
+    this.addEditAllAssetDataUrl = AdInsConstant.AddEditAllAssetData;
+    this.getRefCoy = AdInsConstant.GetRefCoy;
+    this.getAppCustUrl = AdInsConstant.GetAppCustByAppId;
 
     this.route.queryParams.subscribe(params => {
       if (params["AppAssetId"] != null) {
-         this.AppAssetId = params["AppAssetId"];
+         this.appAssetId = params["AppAssetId"];
        }
        if (params["mode"] != null) {
         this.pageType = params["mode"];
@@ -109,17 +136,21 @@ export class AssetDataAddEditComponent implements OnInit {
        if (params["AppId"] != null) {
         this.AppId = params["AppId"];
        }
+       if (params["LobCode"] != null) {
+        this.LobCode = params["LobCode"];
+       }
     });
   }
 
-  SetAsset(event) {
-    this.AssetDataForm.patchValue({
-      FullAssetCode: event.FullAssetCode,
-      FullAssetName: event.FullAssetName,
-      AssetCategoryCode: event.AssetCategoryCode
-    });
-    console.log(event);
-  }
+SetAsset(event) {
+  this.AssetDataForm.patchValue({
+    FullAssetCode: event.FullAssetCode,
+    FullAssetName: event.FullAssetName,
+    AssetCategoryCode: event.AssetCategoryCode,
+    AssetTypeCode: event.AssetTypeCode
+  });
+  console.log(event);
+}
 
 GetListAddr() {
   this.appObj.AppId = this.AppId;
@@ -155,13 +186,21 @@ copyToLocationAddr() {
 }
 
   SetSupplier(event){
+    this.AssetDataForm.patchValue({ 
+      SupplName: event.VendorName,
+      SupplCode: event.VendorCode
+    });
+
     this.branchObj = new VendorEmpObj();
     this.branchObj.VendorId = event.VendorId;
     this.branchObj.MrVendorEmpPositionCode = 'BRANCH_MANAGER';
     this.http.post(this.getListVendorEmp, this.branchObj).subscribe(
     (response) => {
         this.listBranchObj = response["ReturnObject"];
-        this.AssetDataForm.patchValue({ BranchManagerName: response['ReturnObject'][0]['Key'] });
+        this.AssetDataForm.patchValue({ 
+          BranchManagerNo: response['ReturnObject'][0]['Key'],
+          BranchManagerName: response['ReturnObject'][0]['Value'] 
+        });
       
     });
 
@@ -171,7 +210,10 @@ copyToLocationAddr() {
     this.http.post(this.getListVendorEmp, this.salesObj).subscribe(
     (response) => {
         this.listSalesObj = response["ReturnObject"];
-        this.AssetDataForm.patchValue({ SalesPersonName: response['ReturnObject'][0]['Key'] });
+        this.AssetDataForm.patchValue({ 
+          SalesPersonNo: response['ReturnObject'][0]['Key'],
+          SalesPersonName: response['ReturnObject'][0]['Value']
+        });
       
     });
 
@@ -181,14 +223,67 @@ copyToLocationAddr() {
     this.http.post(this.getListVendorEmp, this.adminHeadObj).subscribe(
     (response) => {
         this.listAdminHeadObj = response["ReturnObject"];
-        this.AssetDataForm.patchValue({ AdminHead: response['ReturnObject'][0]['Key'] });
+        this.AssetDataForm.patchValue({ 
+          AdminHeadNo: response['ReturnObject'][0]['Key'],
+          AdminHeadName: response['ReturnObject'][0]['Value'] 
+        });
       
     });
   }
 
+  GetAppCust() {
+    var appObj = {
+      AppId: this.AppId,
+    };
+    this.http.post(this.getAppCustUrl, appObj).subscribe(
+      (response) => {
+        this.appCustObj = response;
+        console.log(response);
+        this.AssetDataForm.patchValue({
+          Username: this.appCustObj.CustName,
+          UserRelationship: "SELF",
+        });
+      }
+    );
+  }
+
+  SelfUsageChange(event) {
+    console.log(event);
+    if (event.checked == true) {
+      this.GetAppCust();
+      this.AssetDataForm.controls.Username.clearValidators();
+      this.AssetDataForm.controls.Username.updateValueAndValidity();
+      this.AssetDataForm.controls.UserRelationship.clearValidators();
+      this.AssetDataForm.controls.UserRelationship.updateValueAndValidity();
+      this.AssetDataForm.controls["Username"].disable();
+      this.AssetDataForm.controls["UserRelationship"].disable();
+    };
+
+    if (event.checked == false) {
+      this.AssetDataForm.controls.Username.setValidators([Validators.required, Validators.maxLength(100)]);
+      this.AssetDataForm.controls.Username.updateValueAndValidity();
+      this.AssetDataForm.controls.UserRelationship.setValidators([Validators.required, Validators.maxLength(50)]);
+      this.AssetDataForm.controls.UserRelationship.updateValueAndValidity();
+      this.AssetDataForm.controls["Username"].enable();
+      this.AssetDataForm.controls["UserRelationship"].enable();
+    };
+  }
+
   BranchChanged(event){
     this.AssetDataForm.patchValue({
-      OfficeName: this.listBranchObj.find(x => x.Key == event.target.value).Value
+      BranchManagerName: this.listBranchObj.find(x => x.Key == event.target.value).Value
+    });
+  }
+
+  SalesChanged(event){
+    this.AssetDataForm.patchValue({
+      SalesPersonName: this.listSalesObj.find(x => x.Key == event.target.value).Value
+    });
+  }
+
+  AdminChanged(event){
+    this.AssetDataForm.patchValue({
+      AdminHeadName: this.listAdminHeadObj.find(x => x.Key == event.target.value).Value
     });
   }
 
@@ -238,11 +333,151 @@ copyToLocationAddr() {
         this.AssetDataForm.patchValue({ UserRelationship: response['ReturnObject'][0]['Key'] });
       }
     );
+
+    this.assetUsageObj = new RefMasterObj();
+    this.assetUsageObj.RefMasterTypeCode = "ASSET_USAGE";
+    this.http.post(this.getListActiveRefMasterUrl, this.assetUsageObj).subscribe(
+      (response) => {
+        this.returnAssetUsageObj = response["ReturnObject"];
+        this.AssetDataForm.patchValue({
+          AssetUsage: response['ReturnObject'][0]['Key']
+        });
+      }
+    );
+
+    this.refCoyObj = new RefCoyObj();
+    this.http.post(this.getRefCoy, this.refCoyObj).subscribe(
+      (response) => {
+        this.returnRefCoyObj = response;
+        console.log("aaa");
+        console.log(this.returnRefCoyObj);
+        this.AssetDataForm.patchValue({ 
+          OwnerName: this.returnRefCoyObj.FullName,
+          OwnerIdType: "NPWP",
+          OwnerIdNo: this.returnRefCoyObj.TaxIdNo,
+          OwnerAddr: this.returnRefCoyObj.Addr,
+          OwnerAreaCode1: this.returnRefCoyObj.AreaCode1,
+          OwnerAreaCode2: this.returnRefCoyObj.AreaCode2,
+          OwnerAreaCode3: this.returnRefCoyObj.AreaCode3,
+          OwnerAreaCode4: this.returnRefCoyObj.AreaCode4,
+          OwnerZipcode: this.returnRefCoyObj.Zipcode,
+          OwnerMobilePhn: this.returnRefCoyObj.Phn1
+        });
+      }
+    );
   }
 
-  editItem(custAddrObj: any) {
-    this.outputValue.emit({ mode: 'edit', AddrId: custAddrObj.CustAddrId });
+  setSupplierInfo(){
+    this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpName = this.AssetDataForm.controls["AdminHeadName"].value;
+    this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpNo = this.AssetDataForm.controls["AdminHeadNo"].value;
+    this.allAssetDataObj.AppAssetSupplEmpAdminObj.MrSupplEmpPositionCode = "ADMIN_HEAD";
+
+    this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpName = this.AssetDataForm.controls["SalesPersonName"].value;
+    this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpNo = this.AssetDataForm.controls["SalesPersonNo"].value;
+    this.allAssetDataObj.AppAssetSupplEmpSalesObj.MrSupplEmpPositionCode = "SALES_PERSON";
+
+    this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpName = this.AssetDataForm.controls["BranchManagerName"].value;
+    this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpNo = this.AssetDataForm.controls["BranchManagerNo"].value;
+    this.allAssetDataObj.AppAssetSupplEmpManagerObj.MrSupplEmpPositionCode = "BRANCH_MANAGER";
   }
+
+  // MrDownPaymentTypeCode:[''],
+  
+  setAssetInfo(){
+    this.allAssetDataObj.AppAssetObj.AppId = this.AppId;
+    this.allAssetDataObj.AppAssetObj.FullAssetName = this.AssetDataForm.controls["FullAssetName"].value;
+    this.allAssetDataObj.AppAssetObj.MrAssetConditionCode = this.AssetDataForm.controls["MrAssetConditionCode"].value;
+    this.allAssetDataObj.AppAssetObj.MrAssetUsageCode = this.AssetDataForm.controls["AssetUsage"].value;
+    this.allAssetDataObj.AppAssetObj.SerialNo1 = this.AssetDataForm.controls["ChassisNo"].value;
+    this.allAssetDataObj.AppAssetObj.SerialNo2 = this.AssetDataForm.controls["EngineNo"].value;
+    this.allAssetDataObj.AppAssetObj.SerialNo5 = this.AssetDataForm.controls["LicensePlate"].value;
+    this.allAssetDataObj.AppAssetObj.SupplName = this.AssetDataForm.controls["SupplName"].value;
+    this.allAssetDataObj.AppAssetObj.SupplCode = this.AssetDataForm.controls["SupplCode"].value;
+    this.allAssetDataObj.AppAssetObj.AssetPriceAmt = this.AssetDataForm.controls["AssetPrice"].value;
+    this.allAssetDataObj.AppAssetObj.DownPaymentAmt = this.AssetDataForm.controls["DownPayment"].value;
+    this.allAssetDataObj.AppAssetObj.AssetNotes = this.AssetDataForm.controls["Notes"].value;
+    this.allAssetDataObj.AppAssetObj.ManufacturingYear = this.AssetDataForm.controls["ManufacturingYear"].value;
+
+    this.allAssetDataObj.AppAssetObj.AssetSeqNo = "1";
+    this.allAssetDataObj.AppAssetObj.FullAssetCode = this.AssetDataForm.controls["FullAssetCode"].value;
+    
+    if (this.appAssetId == 0) {
+      this.allAssetDataObj.AppAssetObj.AssetStat = "NEW";
+      this.allAssetDataObj.AppCollateralObj.CollateralStat = "NEW";
+    }
+    else {
+      this.allAssetDataObj.AppAssetObj.AssetStat = "NEW";
+      this.allAssetDataObj.AppCollateralObj.CollateralStat = "NEW";
+    }
+
+    this.allAssetDataObj.AppAssetObj.AssetTypeCode = this.AssetDataForm.controls["AssetTypeCode"].value;
+    this.allAssetDataObj.AppAssetObj.AssetCategoryCode = this.AssetDataForm.controls["AssetCategoryCode"].value;
+    this.allAssetDataObj.AppAssetObj.IsCollateral = true;
+    this.allAssetDataObj.AppAssetObj.IsInsurance = true;
+
+    this.allAssetDataObj.AppCollateralObj.AppId = this.AppId;
+    this.allAssetDataObj.AppCollateralObj.CollateralSeqNo = "1";
+    this.allAssetDataObj.AppCollateralObj.FullAssetCode = this.AssetDataForm.controls["FullAssetCode"].value;
+    this.allAssetDataObj.AppCollateralObj.FullAssetName = this.AssetDataForm.controls["FullAssetName"].value;
+    this.allAssetDataObj.AppCollateralObj.MrCollateralConditionCode = this.AssetDataForm.controls["MrAssetConditionCode"].value;
+    this.allAssetDataObj.AppCollateralObj.MrCollateralUsageCode = this.AssetDataForm.controls["AssetUsage"].value;
+    this.allAssetDataObj.AppCollateralObj.SerialNo1 = this.AssetDataForm.controls["ChassisNo"].value;
+    this.allAssetDataObj.AppCollateralObj.SerialNo2 = this.AssetDataForm.controls["EngineNo"].value;
+    this.allAssetDataObj.AppCollateralObj.SerialNo5 = this.AssetDataForm.controls["LicensePlate"].value;
+    this.allAssetDataObj.AppCollateralObj.CollateralValueAmt = this.AssetDataForm.controls["AssetPrice"].value;
+    this.allAssetDataObj.AppCollateralObj.AssetTypeCode = this.AssetDataForm.controls["AssetTypeCode"].value;
+    this.allAssetDataObj.AppCollateralObj.AssetCategoryCode = this.AssetDataForm.controls["AssetCategoryCode"].value;
+    this.allAssetDataObj.AppCollateralObj.ManufacturingYear = this.AssetDataForm.controls["ManufacturingYear"].value;
+
+  }
+
+  setAssetUser(){
+    this.allAssetDataObj.AppCollateralRegistrationObj.UserName = this.AssetDataForm.controls["Username"].value;
+    this.allAssetDataObj.AppCollateralRegistrationObj.MrUserRelationshipCode = this.AssetDataForm.controls["UserRelationship"].value;
+    this.allAssetDataObj.AppCollateralRegistrationObj.OwnerName = this.AssetDataForm.controls["OwnerName"].value;
+    this.allAssetDataObj.AppCollateralRegistrationObj.MrIdTypeCode = this.AssetDataForm.controls["OwnerIdType"].value;
+    this.allAssetDataObj.AppCollateralRegistrationObj.OwnerIdNo = this.AssetDataForm.controls["OwnerIdNo"].value;
+    this.allAssetDataObj.AppCollateralRegistrationObj.OwnerAddr = this.AssetDataForm.controls["OwnerAddr"].value;
+    this.allAssetDataObj.AppCollateralRegistrationObj.OwnerAreaCode1 = this.AssetDataForm.controls["OwnerAreaCode1"].value;
+    this.allAssetDataObj.AppCollateralRegistrationObj.OwnerAreaCode2 = this.AssetDataForm.controls["OwnerAreaCode2"].value;
+    this.allAssetDataObj.AppCollateralRegistrationObj.OwnerAreaCode3 = this.AssetDataForm.controls["OwnerAreaCode3"].value;
+    this.allAssetDataObj.AppCollateralRegistrationObj.OwnerAreaCode4 = this.AssetDataForm.controls["OwnerAreaCode4"].value;
+    this.allAssetDataObj.AppCollateralRegistrationObj.OwnerZipcode = this.AssetDataForm.controls["OwnerZipcode"].value;
+    this.allAssetDataObj.AppCollateralRegistrationObj.OwnerMobilePhnNo = this.AssetDataForm.controls["OwnerMobilePhn"].value;
+    
+  }
+
+  setAssetLocation(){
+    this.allAssetDataObj.AppCollateralRegistrationObj.LocationAddr = this.AssetDataForm.controls["assetLocationAddress"]["controls"].Addr.value;
+    this.allAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode1 = this.AssetDataForm.controls["assetLocationAddress"]["controls"].AreaCode1.value;
+    this.allAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode2 = this.AssetDataForm.controls["assetLocationAddress"]["controls"].AreaCode2.value;
+    this.allAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode3 = this.AssetDataForm.controls["assetLocationAddress"]["controls"].AreaCode3.value;
+    this.allAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode4 = this.AssetDataForm.controls["assetLocationAddress"]["controls"].AreaCode4.value;
+    this.allAssetDataObj.AppCollateralRegistrationObj.LocationCity = this.AssetDataForm.controls["assetLocationAddress"]["controls"].City.value;
+    this.allAssetDataObj.AppCollateralRegistrationObj.LocationZipcode = this.AssetDataForm.controls["assetLocationAddressZipcode"]["controls"].value.value;
+  }
+
+  SaveForm() {
+    this.allAssetDataObj = new AllAssetDataObj();
+    this.setSupplierInfo();
+    this.setAssetInfo();
+    this.setAssetUser();
+    this.setAssetLocation();
+    this.http.post(this.addEditAllAssetDataUrl, this.allAssetDataObj).subscribe(
+      (response) => {
+        console.log(response);
+        this.toastr.successMessage(response["message"]);
+        this.router.navigate(["/Nap/AssetData/Paging"]);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  // editItem(custAddrObj: any) {
+  //   this.outputValue.emit({ mode: 'edit', AddrId: custAddrObj.CustAddrId });
+  // }
 
   // deleteItem(custAddrObj: any) {
   //   var custAddr = new CustAddrObj();

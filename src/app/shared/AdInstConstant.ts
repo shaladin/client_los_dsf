@@ -356,7 +356,7 @@ export class AdInsConstant {
 
   //REF COY
   public static GetRefCoyPaging = "/RefCoy/GetRefCoyPaging";
-  public static GetRefCoy = "/RefCoy/GetRefCoy";
+  public static GetRefCoy = "http://localhost:5000" + "/RefCoy/GetRefCoy";
   public static EditRefCoy = "/RefCoy/EditRefCoy";
   public static GetCoyBodPaging = "/CoyBod/GetCoyBodPaging";
   public static AddCoyBod = "/CoyBod/AddCoyBOD";
@@ -724,7 +724,7 @@ export class AdInsConstant {
   public static GetAllAssetDataForPOByAsset = environment.losUrl + "/AppAsset/GetAllAssetDataForPOByAsset";
   public static GetAppAssetByAgrmntId = environment.losUrl + "/AppAsset/GetAppAssetByAgrmntId";
   public static GetAllAssetDataByAppId = environment.losUrl + "/AppAsset/GetAllAssetDataByAppId";
-  public static AddEditAllAssetData = environment.losUrl + "AppAsset/AddEditAllAssetData";
+  public static AddEditAllAssetData = "http://localhost:5001" + "/AppAsset/AddEditAllAssetData";
 
   //Asset Doc List
   public static GetAppAssetDataByAppId = environment.losUrl + "/AppAsset/GetAppAssetDataByAppId";
@@ -755,6 +755,7 @@ export class AdInsConstant {
 
   // App Collateral
   public static GetListAppCollateral = environment.losUrl + "/AppCollateral/GetListAppCollateral"
+  public static AddEditAllCollateralData = environment.losUrl + "/AppCollateral/AddEditAllCollateralData"
  
   //AGRMNT SIGNER
   public static SubmitAgrmntSignerData = environment.losUrl + "/AgrmntSigner/SubmitAgrmntSignerData";
