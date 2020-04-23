@@ -18,6 +18,7 @@ import { UcinputnumberModule } from '@adins/ucinputnumber';
 import { UcapprovebyModule } from '@adins/ucapproveby';
 import { UcaddressModule } from '@adins/ucaddress';
 import { MatCheckboxModule } from '@angular/material';
+import { UcuploadModule } from '@adins/ucupload';
 
 @NgModule({
     exports: [
@@ -37,6 +38,7 @@ import { MatCheckboxModule } from '@angular/material';
         UcinputnumberModule,
         UcapprovebyModule,
         MatCheckboxModule,
+        UcuploadModule
       //  UcapprovalModule
     ],
     imports: [
@@ -59,6 +61,7 @@ import { MatCheckboxModule } from '@angular/material';
         UcinputnumberModule,
         UcapprovebyModule,
         MatCheckboxModule,
+        UcuploadModule
     ],
     declarations: [
     ]

@@ -1,30 +1,15 @@
 <form class="form form-horizontal" name="LeadVerfForm" #LeadVerfForm="ngForm" novalidate
   (ngSubmit)="SaveLeadVerf(LeadVerfForm)">
-  <section id="horizontal-form-layouts">
-    <div class="row text-left">
-      <div class="col-md-12">
-        <div class="card">
-          <div class="card-header">
-            <div class="row">
-              <div class="col-md-8">
-                <h4 class="card-title" id="horz-layout-colored-controls" translate>LEAD VERIFICATION</h4>
-              </div>
-              <div class="col-md-4" style="text-align-last: right">
-                <button type="submit" (click)="formValidate(LeadVerfForm,'REJECT')"
-                  class="btn btn-raised btn-warning mr-1" translate>
-                  <i class="ft-x"></i> Reject
-                </button>
-                <button type="submit" (click)="formValidate(LeadVerfForm,'VERIFY')"
-                  class="btn btn-raised btn-primary mr-1" translate>
-                  <i class="ft-check"></i> Verify
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  <div class="ucSearch-Button-Right">
+    <span class="mr-1">
+      <button type="submit" (click)="formValidate(LeadVerfForm,'REJECT')" class="backButton" translate>
+        <i class="ft-x"></i> Reject
+      </button>
+      <button type="submit" (click)="formValidate(LeadVerfForm,'VERIFY')" class="addButton" translate>
+        <i class="ft-check"></i> Verify
+      </button>
+    </span>
+  </div>
   <lib-UCSearch id="ucSearch" style="width:100%;" [searchInput]='inputObj' (result)="getResult($event)">
   </lib-UCSearch>
   <div [hidden]="resultData == null">
@@ -73,13 +58,15 @@
             </div>
           </td>
           <td class="text-left">{{item.ClaimBy}}</td>
-          <td class="text-left">{{item.LeadNo}}</td>
+          <td class="text-left"><a href="{{leadUrl + item.LeadId}}"><label class="adInsLabel"
+                style="color: blue; cursor: pointer;" translate>{{item.LeadNo}}</label></a></td>
           <td class="text-left">{{item.OfficeName}}</td>
           <td class="text-left">{{item.CustName}}</td>
           <td class="text-left">{{item.OrderNo}}</td>
           <td class="text-left">{{item.LeadSource}}</td>
           <td class="text-left">{{item.FullAssetName}}</td>
-          <td class="text-left">{{item.DuplicateLeadNo}}</td>
+          <td class="text-left"><a href="{{leadUrl + item.DuplicateLeadId}}"><label class="adInsLabel"
+            style="color: blue; cursor: pointer;" translate>{{item.DuplicateLeadNo}}</label></a></td>
         </tr>
       </tbody>
     </table>
@@ -114,13 +101,15 @@
       </thead>
       <tbody>
         <tr *ngFor="let item of tempData">
-          <td class="text-left">{{item.LeadNo}}</td>
+          <td class="text-left"><a href="{{leadUrl + item.LeadId}}"><label class="adInsLabel"
+                style="color: blue; cursor: pointer;" translate>{{item.LeadNo}}</label></a></td>
           <td class="text-left">{{item.OfficeName}}</td>
           <td class="text-left">{{item.CustName}}</td>
           <td class="text-left">{{item.OrderNo}}</td>
           <td class="text-left">{{item.LeadSource}}</td>
           <td class="text-left">{{item.FullAssetName}}</td>
-          <td class="text-left">{{item.DuplicateLeadNo}}</td>
+          <td class="text-left"><a href="{{leadUrl + item.DuplicateLeadId}}"><label class="adInsLabel"
+            style="color: blue; cursor: pointer;" translate>{{item.DuplicateLeadNo}}</label></a></td>
           <td *ngIf="item.IsActive === true">Yes</td>
           <td *ngIf="item.IsActive === false">No</td>
           <td>

@@ -5,16 +5,16 @@
   <div class="col-md-12">
     <div class="row">
       <div class="col-md-12">
-        <ng-container formArrayName="AppFee"
-          *ngFor="let appfees of ParentForm['controls']['AppFee']['controls']; let i = index">
+        <ng-container [formArrayName]="identifier"
+          *ngFor="let appfees of ParentForm['controls'][identifier]['controls']; let i = index">
           <div class="form-group" [formGroupName]="i">
-            <div class="row" *ngIf="ParentForm.controls['AppFee'].value[i].MrFeeTypeCode != 'PROVISION'">
+            <div class="row" *ngIf="ParentForm.controls[identifier].value[i].MrFeeTypeCode != 'PROVISION'">
               <div class="col-md-3 form-inline">
-                <label>{{ParentForm.controls['AppFee'].value[i].FeeTypeName}}</label>
+                <label>{{ParentForm.controls[identifier].value[i].FeeTypeName}}</label>
               </div>
               <div class="col-md-3">
                 <input class="form-control" formControlName="AppFeeAmt"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && AppFeeForm.controls['AppFee'].controls.AppFeeAmt.invalid}"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && AppFeeForm.controls[identifier].controls.AppFeeAmt.invalid}"
                   (keyup)="AppFeeAmt_OnChange()" currencyMask>
                 <lib-uc-show-errors [control]="appfees.controls.AppFeeAmt" [submit]="enjiForm.submitted">
                 </lib-uc-show-errors>
@@ -26,8 +26,8 @@
               </div>
               <div class="col-md-3">
                 <input type="text" class="form-control" formControlName="FeeCapitalizeAmt"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && AppFeeForm.controls['AppFee'].controls.FeeCapitalizeAmt.invalid}"
-                  [readonly]="!ParentForm.controls['AppFee'].value[i].IsCptlz"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && AppFeeForm.controls[identifier].controls.FeeCapitalizeAmt.invalid}"
+                  [readonly]="!ParentForm.controls[identifier].value[i].IsCptlz"
                   (keyup)="FeeCapitalizeAmt_OnChange()" currencyMask>
                 <lib-uc-show-errors [control]="appfees.controls.FeeCapitalizeAmt" [submit]="enjiForm.submitted">
                 </lib-uc-show-errors>
@@ -37,14 +37,14 @@
         </ng-container>
       </div>
       <div class="col-md-12">
-        <ng-container formArrayName="AppFee"
-          *ngFor="let appfees of ParentForm['controls']['AppFee']['controls']; let i = index">
+        <ng-container [formArrayName]="identifier"
+          *ngFor="let appfees of ParentForm['controls'][identifier]['controls']; let i = index">
           <div [formGroupName]="i">
-            <ng-container *ngIf="ParentForm.controls['AppFee'].value[i].MrFeeTypeCode == 'PROVISION'">
+            <ng-container *ngIf="ParentForm.controls[identifier].value[i].MrFeeTypeCode == 'PROVISION'">
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-3 form-inline margin-b-5">
-                    <label>{{ParentForm.controls['AppFee'].value[i].FeeTypeName}} Type</label>
+                    <label>{{ParentForm.controls[identifier].value[i].FeeTypeName}} Type</label>
                   </div>
                   <div class="col-md-9 margin-b-5">
                     <mat-radio-group formControlName="FeeType"
@@ -59,23 +59,23 @@
                   </div>
                   <!-- <ng-container *ngIf="ParentForm.controls['AppFee'].value[i].FeeCapitalizeType == 'PRCNT'"> -->
                   <div class="col-md-3 form-inline margin-b-5">
-                    <label>{{ParentForm.controls['AppFee'].value[i].FeeTypeName}} Calculation Base</label>
+                    <label>{{ParentForm.controls[identifier].value[i].FeeTypeName}} Calculation Base</label>
                   </div>
                   <div class="col-md-3 margin-b-5">
-                    <select class="form-control" (change)="CalcBase_OnChange($event);">
-                      <option value="NTF_MURNI" >NTF MURNI</option>
+                    <select class="form-control" formControlName="FeeSource" (change)="CalcBase_OnChange($event);">
+                      <option value="NTF_CAP" >NTF MURNI</option>
                     </select>
                   </div>
                   <div class="col-md-6"></div>
                 <!-- </ng-container> -->
                   <div class="col-md-3 form-inline margin-b-5">
-                    <label>{{ParentForm.controls['AppFee'].value[i].FeeTypeName}} Percentage</label>
+                    <label>{{ParentForm.controls[identifier].value[i].FeeTypeName}} Percentage</label>
                   </div>
                     <div class="col-md-3 margin-b-5">
                       <input type="text" class="form-control" formControlName="AppFeePrcnt"
-                        [ngClass]="{ 'is-invalid': enjiForm.submitted && AppFeeForm.controls['AppFee'].controls.AppFeePrcnt.invalid}"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && AppFeeForm.controls[identifier].controls.AppFeePrcnt.invalid}"
                         (focusout)="ProvisionFeeInput_FocusOut()"
-                        [readonly]="ParentForm.controls['AppFee'].value[i].FeeType == 'AMT'"
+                        [readonly]="ParentForm.controls[identifier].value[i].FeeType == 'AMT'"
                         currencyMask>
                         <!-- (keyup)="AppFeePrcnt_OnChange(ParentForm.controls['AppFee'].value[i].MrFeeTypeCode)" -->
                       <lib-uc-show-errors [control]="appfees.controls.AppFeePrcnt" [submit]="enjiForm.submitted">
@@ -83,13 +83,13 @@
                     </div>
                     <div class="col-md-6"></div>
                   <div class="col-md-3 form-inline margin-b-5">
-                    <label>{{ParentForm.controls['AppFee'].value[i].FeeTypeName}} Amount</label>
+                    <label>{{ParentForm.controls[identifier].value[i].FeeTypeName}} Amount</label>
                   </div>
                   <div class="col-md-3 margin-b-5">
                     <input type="text" class="form-control" formControlName="AppFeeAmt"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AppFeeForm.controls['AppFee'].controls.AppFeeAmt.invalid}"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AppFeeForm.controls[identifier].controls.AppFeeAmt.invalid}"
                       (focusout)="ProvisionFeeInput_FocusOut()"
-                      [readonly]="ParentForm.controls['AppFee'].value[i].FeeType != 'AMT'"
+                      [readonly]="ParentForm.controls[identifier].value[i].FeeType != 'AMT'"
                       currencyMask>
                       <!-- (keyup)="AppFeeAmt_OnChange()" -->
                     <lib-uc-show-errors [control]="appfees.controls.AppFeeAmt" [submit]="enjiForm.submitted">
@@ -102,8 +102,8 @@
                   </div>
                   <div class="col-md-3 margin-b-5">
                     <input class="form-control" formControlName="FeeCapitalizeAmt"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AppFeeForm.controls['AppFee'].controls.FeeCapitalizeAmt.invalid}"
-                      [readonly]="!ParentForm.controls['AppFee'].value[i].IsCptlz" currencyMask>
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AppFeeForm.controls[identifier].controls.FeeCapitalizeAmt.invalid}"
+                      [readonly]="!ParentForm.controls[identifier].value[i].IsCptlz" currencyMask>
                     <lib-uc-show-errors [control]="appfees.controls.FeeCapitalizeAmt" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>

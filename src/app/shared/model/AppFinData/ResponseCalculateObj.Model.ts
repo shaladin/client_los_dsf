@@ -1,0 +1,22 @@
+import { InstallmentObj } from "./InstallmentObj.Model";
+
+export class ResponseCalculateObj {
+    AppId : number
+    TotalInterestAmt : number
+    GrossYieldPrcnt : number
+    NtfAmt : number
+    InstAmt : number
+    TotalDownPaymentNettAmt : number
+    TotalDownPaymentGrossAmt : number
+    RoundingAmt : number
+    CummulativeTenor : number
+    EffectiveRatePrcnt : number
+    FlatRatePrcnt : number
+    EffectiveRatePerInst : number
+    TotalARAmt : number
+    TotalPrincipalAmt : number
+    InstallmentTable : Array<InstallmentObj> = new Array<InstallmentObj>()
+
+    constructor() {
+    }
+}

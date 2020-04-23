@@ -165,7 +165,7 @@
       "property": "EndDate"
     },
     {
-      "type": "text",
+      "type": "decimal",
       "position": "right",
       "property": "PlafondAmt"
     },
