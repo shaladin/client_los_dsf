@@ -18,7 +18,8 @@ export class TestUploadComponent implements OnInit {
       title: 'Test Upload File',
       subsectionId: 'UcUploadFile',
       formatsAllowed: '.txt, .xls, .xlsx, .csv',
-
+      UploadTypeCode: 'UPL_ASM',
+      
       enviromentUrl: environment.FoundationR3Url,
       apiQryPaging: AdInsConstant.GetPagingObjectBySQL,
       searchUploadName: 'searchTestUpload',
