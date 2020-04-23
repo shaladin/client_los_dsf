@@ -10,19 +10,20 @@ import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj
 import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
 import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
 import { CalcStepUpStepDownObj } from 'app/shared/model/AppFinData/CalcStepUpStepDownObj.Model';
+import { CalcEvenPrincipleObj } from 'app/shared/model/AppFinData/CalcEvenPrincipleObj.Model';
 
 @Component({
-  selector: 'app-schm-step-up-step-down-leasing',
-  templateUrl: './schm-step-up-step-down-leasing.component.html',
+  selector: 'app-schm-even-principal',
+  templateUrl: './schm-even-principal.component.html',
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
-export class SchmStepUpStepDownLeasingComponent implements OnInit {
+export class SchmEvenPrincipalComponent implements OnInit {
   @Input() AppId: number;
   @Input() ParentForm: FormGroup;
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
-  calcStepUpStepDownObj: CalcStepUpStepDownObj = new CalcStepUpStepDownObj();
+  calcEvenPrincipleObj: CalcEvenPrincipleObj = new CalcEvenPrincipleObj();
   listInstallment: any;
   responseCalc: any;
 
@@ -76,38 +77,13 @@ export class SchmStepUpStepDownLeasingComponent implements OnInit {
     }
   }
 
-  SetNeedReCalculate(value) {
-    this.ParentForm.patchValue({
-      NeedReCalculate: value
-    });
-  }
 
-  SetEntryInstallment(){
-    while ((this.ParentForm.controls.ListEntryInst as FormArray).length) {
-      (this.ParentForm.controls.ListEntryInst as FormArray).removeAt(0);
-    }
-    for(let i = 0 ; i < this.ParentForm.controls.NumOfStep.value ; i++){
-      const group = this.fb.group({
-        InstSeqNo: i + 1,
-        NumOfInst: [0],
-        InstAmt: [0]
-      });
-      (this.ParentForm.controls.ListEntryInst as FormArray).push(group);
-    }
+  CalculateInstallment() {
 
-    this.SetNeedReCalculate(true);
-  }
+    this.calcEvenPrincipleObj = this.ParentForm.value;
 
 
-  CalculateAmortization() {
-
-    this.calcStepUpStepDownObj = this.ParentForm.value;
-    this.calcStepUpStepDownObj["IsRecalculate"] = false;
-    this.calcStepUpStepDownObj["StepUpStepDownType"] = this.ParentForm.value.MrInstSchemeCode;
-    this.calcStepUpStepDownObj["InstAmt"] = 0;
-
-
-    this.http.post<ResponseCalculateObj>(AdInsConstant.CalculateInstallmentStepUpStepDown, this.calcStepUpStepDownObj).subscribe(
+    this.http.post<ResponseCalculateObj>(AdInsConstant.CalculateInstallmentEvenPrinciple, this.calcEvenPrincipleObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
         this.ParentForm.patchValue({
@@ -128,8 +104,15 @@ export class SchmStepUpStepDownLeasingComponent implements OnInit {
         })
         this.SetInstallmentTable();
         this.SetNeedReCalculate(false);
+
       }
     );
+  }
+
+  SetNeedReCalculate(value) {
+    this.ParentForm.patchValue({
+      NeedReCalculate: value
+    });
   }
 
   SaveAndContinue() {

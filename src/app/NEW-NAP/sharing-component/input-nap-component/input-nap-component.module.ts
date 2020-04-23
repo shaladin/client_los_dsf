@@ -41,6 +41,7 @@ import { NgxCurrencyModule } from "ngx-currency";
 import { SchmIrregularComponent } from "./financial-data/component/schm-irregular/schm-irregular.component";
 import { SchmBalloonComponent } from "./financial-data/component/schm-baloon/schm-balloon.component";
 
+import { SchmEvenPrincipalComponent } from "./financial-data/component/schm-even-principal/schm-even-principal.component";
 export const customCurrencyMaskConfig = {     
   align: "right",     
   allowNegative: true,     
@@ -88,7 +89,10 @@ export const customCurrencyMaskConfig = {
     SchmStepUpStepDownNormalComponent,
     SchmStepUpStepDownLeasingComponent,
     SchmIrregularComponent,
-    SchmBalloonComponent
+    SchmBalloonComponent,
+    SchmStepUpStepDownCummulativeComponent,
+    SchmIrregularComponent,
+    SchmEvenPrincipalComponent
   ],
   imports: [
     CommonModule,
@@ -134,7 +138,8 @@ export const customCurrencyMaskConfig = {
     SchmStepUpStepDownLeasingComponent,
     SchmStepUpStepDownCummulativeComponent,
     SchmIrregularComponent ,
-    SchmBalloonComponent
+    SchmBalloonComponent,
+    SchmEvenPrincipalComponent
   ],
   entryComponents: [SubsidyAddEditComponent],
   providers: [

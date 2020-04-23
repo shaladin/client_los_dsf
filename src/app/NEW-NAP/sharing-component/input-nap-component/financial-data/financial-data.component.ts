@@ -31,7 +31,7 @@ constructor(
 ) { }
 
 ngOnInit() {
-  this.AppId = 57;
+  this.AppId = 85;
   this.FinDataForm = this.fb.group(
     {
       AppId : this.AppId,
@@ -81,9 +81,8 @@ ngOnInit() {
 
       MrProvisionFeeTypeCode : '',
       MrProvisionFeeCalcMethodCode : '',
-
       BalloonValueAmt: 0,
-      
+      NeedReCalculate: true
     }
   );
   this.LoadAppFinData();
