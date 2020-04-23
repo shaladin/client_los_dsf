@@ -70,7 +70,7 @@
                   <label class="col-md-2  adInsLabel" translate>Tenor</label>
                   <div class="col-md-4">
                     <input type="text" class="form-control adInsInput" formControlName="Tenor"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.Tenor.invalid}">
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.Tenor.invalid}"  (change) = "ChangeNumOfInstallmentTenor()">
                     <lib-uc-show-errors [control]="appForm.controls.Tenor" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
@@ -90,7 +90,7 @@
                   <label class="col-md-2  adInsLabel" translate>Payment Frequency</label>
                   <div class="col-md-4">
                     <select class="form-control adInsInput" style="width: auto" formControlName="PayFreqCode"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.PayFreqCode.invalid }">
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.PayFreqCode.invalid }" (change) = "ChangeNumOfInstallmentPayFreq($event)">
                       <option *ngFor="let it of tempPayFreqCode" [value]="it.PayFreqCode">
                         {{it.Descr}}</option>
                     </select>
@@ -99,10 +99,13 @@
                   </div>
                   <label class="col-md-2  adInsLabel" translate>Interest Type</label>
                   <div class="col-md-4">
-                    <textarea type="text" class="form-control adInsInput" formControlName="SalesNotes"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.SalesNotes.invalid }"></textarea>
-                    <lib-uc-show-errors [control]="appForm.controls.SalesNotes" [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors>
+                    <select class="form-control adInsInput" style="width: auto" formControlName="InterestType"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.InterestType.invalid }">
+                    <option *ngFor="let it of tempInterestType" [value]="it.Key">
+                      {{it.Value}}</option>
+                  </select>
+                  <lib-uc-show-errors [control]="appForm.controls.InterestType" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
                   </div>
                 </div>
 
@@ -158,31 +161,31 @@
                   </div>
                   <label class="col-md-2  adInsLabel" translate>Asset Condition</label>
                   <div class="col-md-4">
-                    <select class="form-control adInsInput" style="width: auto" formControlName="MrFirstInstTypeCode"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.MrFirstInstTypeCode.invalid }">
-                      <option *ngFor="let it of tempMrFirstInstTypeCode" [value]="it.Key">
+                    <select class="form-control adInsInput" style="width: auto" formControlName="MrAssetConditionCode"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.MrAssetConditionCode.invalid }">
+                      <option *ngFor="let it of tempMrAssetConditionCode" [value]="it.Key">
                         {{it.Value}}</option>
                     </select>
-                    <lib-uc-show-errors [control]="appForm.controls.MrFirstInstTypeCode" [submit]="enjiForm.submitted">
+                    <lib-uc-show-errors [control]="appForm.controls.MrAssetConditionCode" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-2  adInsLabel" translate>Serial No 1</label>
                   <div class="col-md-4">
-                    <input type="text" class="form-control adInsInput" formControlName="Tenor"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.Tenor.invalid}">
-                    <lib-uc-show-errors [control]="appForm.controls.Tenor" [submit]="enjiForm.submitted">
+                    <input type="text" class="form-control adInsInput" formControlName="SerialNo1"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.SerialNo1.invalid}">
+                    <lib-uc-show-errors [control]="appForm.controls.SerialNo1" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
                   <label class="col-md-2  adInsLabel" translate>Asset Usage</label>
                   <div class="col-md-4">
-                    <select class="form-control adInsInput" style="width: auto" formControlName="MrFirstInstTypeCode"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.MrFirstInstTypeCode.invalid }">
-                      <option *ngFor="let it of tempMrFirstInstTypeCode" [value]="it.Key">
+                    <select class="form-control adInsInput" style="width: auto" formControlName="MrAssetUsageCode"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.MrAssetUsageCode.invalid }">
+                      <option *ngFor="let it of tempMrAssetUsageCode" [value]="it.Key">
                         {{it.Value}}</option>
                     </select>
-                    <lib-uc-show-errors [control]="appForm.controls.MrFirstInstTypeCode" [submit]="enjiForm.submitted">
+                    <lib-uc-show-errors [control]="appForm.controls.MrAssetUsageCode" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
                 </div>
@@ -190,64 +193,55 @@
                 <div class="form-group row">
                   <label class="col-md-2  adInsLabel" translate>Serial No 2</label>
                   <div class="col-md-4">
-                    <input type="text" class="form-control adInsInput" formControlName="Tenor"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.Tenor.invalid}">
-                    <lib-uc-show-errors [control]="appForm.controls.Tenor" [submit]="enjiForm.submitted">
+                    <input type="text" class="form-control adInsInput" formControlName="SerialNo2"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.SerialNo2.invalid}">
+                    <lib-uc-show-errors [control]="appForm.controls.SerialNo2" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
                   <label class="col-md-2  adInsLabel" translate>BPKB Issuer City</label>
                   <div class="col-md-4">
-                    <textarea type="text" class="form-control adInsInput" formControlName="SalesNotes"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.SalesNotes.invalid }"></textarea>
-                    <lib-uc-show-errors [control]="appForm.controls.SalesNotes" [submit]="enjiForm.submitted">
+                    <textarea type="text" class="form-control adInsInput" formControlName="TaxCityIssuer"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.TaxCityIssuer.invalid }"></textarea>
+                    <lib-uc-show-errors [control]="appForm.controls.TaxCityIssuer" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
                 </div>
 
                 <div class="form-group row">
-                  <label class="col-md-2  adInsLabel" translate>License Plate</label>
-                  <div class="col-md-4">
-
-                    <lib-uc-show-errors [control]="appForm.controls.MrSalesRecommendCode" [submit]="enjiForm.submitted">
+                  <label class="col-md-2  adInsLabel" translate>License Plate</label> 
+                    <div class="col-md-4">
+                      <input type="text" class="form-control adInsInput" formControlName="SerialNo3"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.SerialNo3.invalid}">
+                    <lib-uc-show-errors [control]="appForm.controls.SerialNo3" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
                   <label class="col-md-2  adInsLabel" translate>BPKB Issue Date</label>
                   <div class="col-md-4">
-                    <select class="form-control adInsInput" style="width: auto" formControlName="MrSalesRecommendCode"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.MrSalesRecommendCode.invalid }">
-                      <option *ngFor="let it of tempMrSalesRecommendCode" [value]="it.Key">
-                        {{it.Value}}</option>
-                    </select>
-                    <lib-uc-show-errors [control]="appForm.controls.MrSalesRecommendCode" [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors>
+                    <input type="date" class="form-control adInsInput" formControlName="TaxCityDt"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.TaxCityDt.invalid}">
+                  <lib-uc-show-errors [control]="appForm.controls.TaxCityDt" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-2  adInsLabel" translate>Manufacturing Year</label>
                   <div class="col-md-4">
-                    <select class="form-control adInsInput" style="width: auto" formControlName="MrCustNotifyOptCode"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.MrCustNotifyOptCode.invalid }">
-                      <option *ngFor="let it of tempMrCustNotifyOptCode" [value]="it.Key">
-                        {{it.Value}}</option>
-                    </select>
-                    <lib-uc-show-errors [control]="appForm.controls.MrCustNotifyOptCode" [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors>
+                    <input type="text" class="form-control adInsInput" formControlName="ManufacturingYear"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.ManufacturingYear.invalid}">
+                  <lib-uc-show-errors [control]="appForm.controls.ManufacturingYear" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
                   </div>
                   <label class="col-md-2  adInsLabel" translate>Asset Tax Date</label>
                   <div class="col-md-4">
-                    <select class="form-control adInsInput" style="width: auto" formControlName="MrWopCode"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.MrWopCode.invalid }">
-                      <option *ngFor="let it of tempMrWopCode" [value]="it.Key">
-                        {{it.Value}}</option>
-                    </select>
-                    <lib-uc-show-errors [control]="appForm.controls.MrWopCode" [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors>
+                    <input type="date" class="form-control adInsInput" formControlName="AssetTaxDt"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.AssetTaxDt.invalid}">
+                  <lib-uc-show-errors [control]="appForm.controls.AssetTaxDt" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
                   </div>
                 </div>
               </div>
 
-
-
+ 
               <lib-ucSubsection [id]="'assetOwnerAndUserId'" [title]="'Asset Owner and User'"
                 [panel]="'assetOwnerAndUser'">
               </lib-ucSubsection>
@@ -261,54 +255,57 @@
                 <div class="form-group row">
                   <label class="col-md-2  adInsLabel" translate>User Name</label>
                   <div class="col-md-4">
-                    <input type="text" class="form-control adInsInput" formControlName="Tenor"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.Tenor.invalid}">
-                    <lib-uc-show-errors [control]="appForm.controls.Tenor" [submit]="enjiForm.submitted">
+                    <input type="text" class="form-control adInsInput" formControlName="UserName"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.UserName.invalid}">
+                    <lib-uc-show-errors [control]="appForm.controls.UserName" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
                   <label class="col-md-2  adInsLabel" translate>User Relationship</label>
                   <div class="col-md-4">
-                    <select class="form-control adInsInput" style="width: auto" formControlName="MrFirstInstTypeCode"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.MrFirstInstTypeCode.invalid }">
-                      <option *ngFor="let it of tempMrFirstInstTypeCode" [value]="it.Key">
+                    <select class="form-control adInsInput" style="width: auto" formControlName="MrUserRelationshipCode"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.MrUserRelationshipCode.invalid }">
+                      <option *ngFor="let it of tempMrUserRelationshipCode" [value]="it.Key">
                         {{it.Value}}</option>
                     </select>
-                    <lib-uc-show-errors [control]="appForm.controls.MrFirstInstTypeCode" [submit]="enjiForm.submitted">
+                    <lib-uc-show-errors [control]="appForm.controls.MrUserRelationshipCode" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-2  adInsLabel" translate>Owner Name</label>
                   <div class="col-md-4">
-                    <input type="text" class="form-control adInsInput" formControlName="Tenor"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.Tenor.invalid}">
+                    <input type="text" class="form-control adInsInput" formControlName="OwnerName"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.OwnerName.invalid}">
                     <lib-uc-show-errors [control]="appForm.controls.PayFreqCode" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
                   <label class="col-md-2  adInsLabel" translate>Owner ID Type</label>
                   <div class="col-md-4">
-                    <select class="form-control adInsInput" style="width: auto" formControlName="MrFirstInstTypeCode"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.MrFirstInstTypeCode.invalid }">
-                      <option *ngFor="let it of tempMrFirstInstTypeCode" [value]="it.Key">
+                    <select class="form-control adInsInput" style="width: auto" formControlName="MrIdTypeCode"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.MrIdTypeCode.invalid }">
+                      <option *ngFor="let it of tempMrIdTypeCode" [value]="it.Key">
                         {{it.Value}}</option>
                     </select>
-                    <lib-uc-show-errors [control]="appForm.controls.SalesNotes" [submit]="enjiForm.submitted">
+                    <lib-uc-show-errors [control]="appForm.controls.MrIdTypeCode" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-2  adInsLabel" translate>Owner Relationship</label>
                   <div class="col-md-4">
-                    <input type="text" class="form-control adInsInput" formControlName="Tenor"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.Tenor.invalid}">
-                    <lib-uc-show-errors [control]="appForm.controls.PayFreqCode" [submit]="enjiForm.submitted">
+                    <select class="form-control adInsInput" style="width: auto" formControlName="MrOwnerRelationshipCode"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.MrOwnerRelationshipCode.invalid }">
+                      <option *ngFor="let it of tempMrOwnerRelationshipCode" [value]="it.Key">
+                        {{it.Value}}</option>
+                    </select> 
+                    <lib-uc-show-errors [control]="appForm.controls.MrOwnerRelationshipCode" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
                   <label class="col-md-2  adInsLabel" translate>Owner ID No</label>
                   <div class="col-md-4">
-                    <input type="text" class="form-control adInsInput" formControlName="Tenor"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.Tenor.invalid}">
-                    <lib-uc-show-errors [control]="appForm.controls.SalesNotes" [submit]="enjiForm.submitted">
+                    <input type="text" class="form-control adInsInput" formControlName="OwnerIdNo"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.OwnerIdNo.invalid}">
+                    <lib-uc-show-errors [control]="appForm.controls.OwnerIdNo" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
                 </div>
@@ -330,23 +327,23 @@
 
 
                 <lib-ucaddress #UcAddrGrp [showSubsection]="false" [title]="'Customer Address'" [UCAddrForm]="appForm"
-                  [enjiForm]="enjiForm" [identifier]="'custAddress'" [default]="addressObj"
-                  [inputField]="inputFieldAddressObj" [showPhn2]="false" [showFax]="false" [showPhn3]="false">
+                  [enjiForm]="enjiForm" [identifier]="'custAddress'" [default]="ownerAddressObj"
+                  [inputField]="inputFieldOwnerAddressObj" [showAllPhn]="false"[showFax]="false"  >
                 </lib-ucaddress>
                 <div class="form-group row">
                   <label class="col-md-2  adInsLabel" translate>Mobile Phone</label>
                   <div class="col-md-4">
-                    <input type="text" class="form-control adInsInput" formControlName="Tenor"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.Tenor.invalid}">
-                    <lib-uc-show-errors [control]="appForm.controls.Tenor" [submit]="enjiForm.submitted">
+                    <input type="text" class="form-control adInsInput" formControlName="OwnerMobilePhnNo"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.OwnerMobilePhnNo.invalid}">
+                    <lib-uc-show-errors [control]="appForm.controls.OwnerMobilePhnNo" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-2  adInsLabel" translate>Notes</label>
                   <div class="col-md-4">
-                    <input type="text" class="form-control adInsInput" formControlName="Tenor"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.Tenor.invalid}">
+                    <input type="text" class="form-control adInsInput" formControlName="Notes"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.Notes.invalid}">
                     <lib-uc-show-errors [control]="appForm.controls.MrFirstInstTypeCode" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
@@ -373,8 +370,8 @@
                   </div>
                 </div>
                 <lib-ucaddress #UcAddrGrp [showSubsection]="false" [title]="'Customer Address'" [UCAddrForm]="appForm"
-                  [enjiForm]="enjiForm" [identifier]="'custAddress'" [default]="addressObj"
-                  [inputField]="inputFieldAddressObj" [showFax]="false" [showAllPhn]="false"></lib-ucaddress>
+                  [enjiForm]="enjiForm" [identifier]="'custAddress'" [default]="ownerAddressObj"
+                  [inputField]="inputFieldOwnerAddressObj" [showFax]="false" [showAllPhn]="false"></lib-ucaddress>
               </div>
 
               <lib-ucSubsection [id]="'insuranceId'" [title]="'Insurance'" [panel]="'insurance'">
