@@ -401,6 +401,8 @@ export class AdInsConstant {
   public static RefMasterTypeCodeAssetCondition = "ASSET_CONDITION";
   public static RefMasterTypeCodeAssetUsage = "ASSET_USAGE";
   public static RefMasterTypeCodeCustPersonalRelationship = "CUST_PERSONAL_RELATIONSHIP";
+  public static RefMasterTypeCodeIdType = "ID_TYPE"; 
+  
   //REF PROV DISTRICT
   public static GetRefProvDistrictPaging = "/RefProvDistrict/GetRefProvDistrictPaging";
   public static GetRefProvDistrictByProvDistrictCode = environment.FoundationR3Url + "/RefProvDistrict/GetRefProvDistrictByProvDistrictCode";

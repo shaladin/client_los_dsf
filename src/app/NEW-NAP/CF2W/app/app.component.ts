@@ -29,6 +29,7 @@ export class AppComponent implements OnInit {
   copyCustomerAddr: any;
   inputFieldOwnerAddressObj: any;
   inputLookupObj: any;
+  InputLookupCityIssuerObj : any;
   tempMrSalesRecommendCode: any;
   tempMrAppSourceCode: any;
   tempPayFreqCode: any;
@@ -40,6 +41,7 @@ export class AppComponent implements OnInit {
   tempMrAssetUsageCode : any;
   tempMrUserRelationshipCode : any;
   tempMrOwnerRelationshipCode : any;
+  tempMrIdTypeCode : any;
   appForm = this.fb.group({
     SalesOfficerNo: [''],
     SalesOfficerName: [''],
@@ -105,6 +107,13 @@ export class AppComponent implements OnInit {
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.nameSelect = this.appForm.controls.SalesOfficerName.value;
 
+    
+    this.InputLookupCityIssuerObj = new InputLookupObj();
+    this.InputLookupCityIssuerObj.urlJson = "./assets/uclookup/NAP/lookupDistrict.json";
+    this.InputLookupCityIssuerObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.InputLookupCityIssuerObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupCityIssuerObj.pagingJson = "./assets/uclookup/NAP/lookupDistrict.json";
+    this.InputLookupCityIssuerObj.genericJson = "./assets/uclookup/NAP/lookupDistrict.json";
 
     //DDL Var Type Code
     var refMasterSalesRecommendation = new RefMasterObj();
@@ -131,6 +140,10 @@ export class AppComponent implements OnInit {
     refMasterCodeAssetUsage.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeAssetUsage;
     var refMasterCodeCustPersonalRelationship=new RefMasterObj();
     refMasterCodeCustPersonalRelationship.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeCustPersonalRelationship;
+    var refMasterCodeIdType=new RefMasterObj();
+    refMasterCodeIdType.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeIdType;
+
+
     this.http.post(this.getRefMasterListKeyValueActiveByCodeUrl, refMasterSalesRecommendation).subscribe(
       (response) => {
         this.tempMrSalesRecommendCode = response["ReturnObject"];
@@ -246,8 +259,7 @@ export class AppComponent implements OnInit {
           });;
         }
       }
-    );
- 
+    ); 
     this.http.post(this.getRefMasterListKeyValueActiveByCodeUrl, refMasterCodeCustPersonalRelationship).subscribe(
       (response) => {
         this.tempMrUserRelationshipCode = response["ReturnObject"];
@@ -260,7 +272,18 @@ export class AppComponent implements OnInit {
         }
       }
     );
-    
+    this.http.post(this.getRefMasterListKeyValueActiveByCodeUrl, refMasterCodeIdType).subscribe(
+      (response) => {
+        console.log(response);
+        this.tempMrIdTypeCode = response["ReturnObject"]; 
+        if (this.tempMrIdTypeCode.length > 0) {
+          this.appForm.patchValue({
+            MrIdTypeCode: this.tempMrIdTypeCode[0].Key,
+            
+          });
+        }
+      }
+    );
   }
   copyAddress() {
     this.appCustAddrObj = new AppCustAddrObj();
@@ -332,6 +355,12 @@ export class AppComponent implements OnInit {
   PatchNumOfInstallment(num) {
     this.appForm.patchValue({
       NumOfInst: num
+    });
+  }
+  SetBpkbCity(event) {
+    this.appForm.patchValue({
+      TaxCityIssuer: event.DistrictCode,
+
     });
   }
 }

@@ -200,10 +200,9 @@
                   </div>
                   <label class="col-md-2  adInsLabel" translate>BPKB Issuer City</label>
                   <div class="col-md-4">
-                    <textarea type="text" class="form-control adInsInput" formControlName="TaxCityIssuer"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.TaxCityIssuer.invalid }"></textarea>
-                    <lib-uc-show-errors [control]="appForm.controls.TaxCityIssuer" [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors>
+                    <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupCityIssuerObj" [identifier]="'DistrictCode'" [enjiForm]='enjiForm' [parentForm]='appForm' (lookup)="SetBpkbCity($event)">
+                    </lib-uclookupgeneric>
+             
                   </div>
                 </div>
 
