@@ -78,6 +78,7 @@ ngOnInit() {
       NumOfStep : 0,    
       MrInstSchemeCode: "",
       CummulativeTenor: 0,
+      StepUpStepDownInputType: "",
 
       AppFee : this.fb.array([]),
       ListEntryInst: this.fb.array([]),
