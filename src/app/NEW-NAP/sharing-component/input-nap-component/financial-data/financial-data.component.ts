@@ -6,6 +6,7 @@ import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { AppFinDataObj } from 'app/shared/model/AppFinData/AppFinData.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj.Model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-financial-data',
@@ -28,10 +29,14 @@ constructor(
   private fb: FormBuilder,
   private http: HttpClient,
   private toastr: NGXToastrService,
-) { }
+  private route: ActivatedRoute,
+) { 
+  this.route.queryParams.subscribe(params => {
+    this.AppId = params["AppId"];
+  });
+}
 
 ngOnInit() {
-  this.AppId = 85;
   this.FinDataForm = this.fb.group(
     {
       AppId : this.AppId,
@@ -86,8 +91,6 @@ ngOnInit() {
     }
   );
   this.LoadAppFinData();
-  // this.LoadDDLRateType();
-  // this.LoadDDLGracePeriodType();
 }
 
 LoadAppFinData()
@@ -129,55 +132,6 @@ LoadAppFinData()
     }
   );
 }
-
-// LoadDDLRateType() {
-//   this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "RATE_TYPE" }).subscribe(
-//     (response) => {
-//       this.RateTypeOptions = response["ReturnObject"];
-//     }
-//   );
-// }
-
-// LoadDDLGracePeriodType() {
-//   this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "GRACE_PERIOD_TYPE" }).subscribe(
-//     (response) => {
-//       this.GracePeriodeTypeOptions = response["ReturnObject"];
-//     }
-//   );
-// }
-
-// CalcBaseOnRate()
-// {
-//   this.calcRegFixObj = this.FinDataForm.value;
-//   this.calcRegFixObj["IsRecalculate"] = true;
-//   this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateInstallmentRegularFix", this.calcRegFixObj).subscribe(
-//     (response) => {
-//       this.listInstallment = response.InstallmentTable;
-//       this.FinDataForm.patchValue({
-//         TotalDownPaymentNettAmt : response.TotalDownPaymentNettAmt, //muncul di layar
-//         TotalDownPaymentGrossAmt : response.TotalDownPaymentGrossAmt, //inmemory
-
-//         EffectiveRatePrcnt : response.EffectiveRatePrcnt,
-//         FlatRatePrcnt : response.FlatRatePrcnt,
-//         InstAmt : response.InstAmt,
-
-//         GrossYieldPrcnt : response.GrossYieldPrcnt,
-
-//         TotalInterestAmt: response.TotalInterestAmt,
-//         TotalAR : response.TotalARAmt,
-
-//         NtfAmt : response.NtfAmt,
-
-//       })
-
-//     }
-//   );
-// }
-
-// CalcBaseOnInst()
-// {
-  
-//}
 
 SaveAndContinue()
 {
