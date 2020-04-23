@@ -93,6 +93,7 @@ export class LeadUpdateMainInfoComponent implements OnInit {
     LobName:[''],
     LeadSource: [''],
   });
+  leadUrl: any;
   
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.addLead = AdInsConstant.AddLead;
@@ -116,6 +117,7 @@ export class LeadUpdateMainInfoComponent implements OnInit {
         //   this.WfTaskListId = params["WfTaskListId"];
         // }
     });
+    this.leadUrl = '/Lead/View?LeadId=' + this.LeadId;
   }
 
 getLookUpAgency(event) {

@@ -50,6 +50,7 @@ export class LeadCancelComponent implements OnInit {
   verifyStatus: any;
   confirmUrl = "/Lead/ConfirmCancel";
   allowedStat = ['INP','NEW'];
+  leadUrl: string;
   constructor(
     private http: HttpClient,
     private toastr: NGXToastrService,
@@ -58,6 +59,7 @@ export class LeadCancelComponent implements OnInit {
     private adInsService: AdInsService) { }
 
   ngOnInit() {
+
     this.arrCrit = new Array();
     this.inputObj = new InputSearchObj();
     this.inputObj._url = './assets/search/searchLeadCancel.json';
@@ -67,6 +69,7 @@ export class LeadCancelComponent implements OnInit {
     this.pageNow = 1;
     this.pageSize = 10;
     this.apiUrl = environment.losUrl + AdInsConstant.GetPagingObjectBySQL;
+    this.leadUrl = '/Lead/View?LeadId=';
 
     var addCrit = new CriteriaObj();
     addCrit.DataType = "text";
