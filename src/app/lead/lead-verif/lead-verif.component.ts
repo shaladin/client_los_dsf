@@ -47,6 +47,7 @@ export class LeadVerifComponent implements OnInit {
   AddRangeLeadVerfUrl = AdInsConstant.AddRangeLeadVerf;
   verifyStatus: any;
   ClaimListTaskUrl = AdInsConstant.ClaimListTask;
+  leadUrl: any;
   constructor(
     private http: HttpClient,
     private toastr: NGXToastrService,
@@ -89,6 +90,7 @@ export class LeadVerifComponent implements OnInit {
         this.router.navigateByUrl('Error');
       }
     );
+    this.leadUrl = '/Lead/View?LeadId=';
   }
 
   searchSort(event: any) {
