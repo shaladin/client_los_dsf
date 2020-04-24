@@ -53,7 +53,7 @@ export class LegalReviewDetailComponent implements OnInit {
     this.claimTask();
     this.items = this.LegalForm.get('items') as FormArray;
     this.termConditions = this.LegalForm.get('termConditions') as FormArray;
-    this.viewObj = "./assets/ucviewgeneric/viewCustomerDocPrinting.json";
+    this.viewObj = "./assets/ucviewgeneric/viewMouHeader.json";
     var mouObj = { "MouCustId": this.MouCustId };
     this.http.post(this.GetMouCustLglReviewByMouCustIdUrl, mouObj).subscribe(
       response =>{

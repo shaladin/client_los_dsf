@@ -32,7 +32,7 @@
           "property": "DownPaymentType"
         },
         {
-          "type": "decimal",
+          "type": "currency",
           "label": "Down Payment",
           "property": "DownPaymentAmt"
         },
