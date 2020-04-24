@@ -70,6 +70,7 @@ export class MainInfoComponent implements OnInit {
         this.custId = custData['CustId'];
         this.mouCustStatView = custData['MouCustStatView'];
         this.custUrl = environment.FoundationR3Web + '/Customer/CustomerView/Page?CustId=' + this.custId;
+        // this.custUrl = environment.FoundationR3Web + '/CustomerView/Page?CustId=' + this.custId;
         this.mouUrl = '/Mou/Cust/Paging?MouCustId=' + this.MouCustId;
       }
     );
