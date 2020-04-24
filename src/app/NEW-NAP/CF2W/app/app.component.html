@@ -318,14 +318,14 @@
                 <div class="form-group row">
                   <label class="col-md-2  adInsLabel" translate>Copy Address From </label>
                   <div class="col-md-3">
-                    <select class="form-control adInsInput" formControlName="CopyAddrOwnerFrom">
+                    <select class="form-control adInsInput" formControlName="CopyAddrOwnerFrom" (change)="SetOwnerAddrType($event.target.value)">
                       <option *ngFor="let it of tempCopyAddrOwnerFrom" [value]="it.Key">
                         {{it.Value}}
                       </option>
                     </select>
                   </div>
                   <div class="col-md-2">
-                    <button type="button" class="btn btn-raised btn-primary" (click)="copyAddress()">
+                    <button type="button" class="btn btn-raised btn-primary" (click)="copyToOwnerAddr()">
                       <i class="fa fa-check-square-o"></i> Copy
                     </button>
                   </div>
@@ -333,14 +333,14 @@
 
 
                 <lib-ucaddress #UcAddrGrp [showSubsection]="false" [title]="'Customer Address'" [UCAddrForm]="appForm"
-                  [enjiForm]="enjiForm" [identifier]="'custAddress'" [default]="ownerAddressObj"
-                  [inputField]="inputFieldOwnerAddressObj" [showAllPhn]="false" [showFax]="false">
+                  [enjiForm]="enjiForm" [identifier]="'ownerAddress'" [default]="ownerAddrObj"
+                  [inputField]="inputFieldOwnerAddrObj" [showAllPhn]="false" [showFax]="false">
                 </lib-ucaddress>
                 <div class="form-group row">
                   <label class="col-md-2  adInsLabel" translate>Mobile Phone</label>
                   <div class="col-md-4">
                     <input type="text" class="form-control adInsInput" formControlName="OwnerMobilePhnNo"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.OwnerMobilePhnNo.invalid}">
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.OwnerMobilePhnNo.invalid}" >
                     <lib-uc-show-errors [control]="appForm.controls.OwnerMobilePhnNo" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
@@ -363,21 +363,21 @@
                 <div class="form-group row">
                   <label class="col-md-2  adInsLabel" translate>Copy Address From </label>
                   <div class="col-md-3">
-                    <select class="form-control adInsInput" formControlName="CopyAddrAssetFrom">
-                      <option *ngFor="let it of tempCopyAddrAssetFrom" [value]="it.Key">
+                    <select class="form-control adInsInput" formControlName="CopyAddrLocationFrom" (change)="SetLocationAddrType($event.target.value)">
+                      <option *ngFor="let it of tempCopyAddrLocationFrom" [value]="it.Key">
                         {{it.Value}}
                       </option>
                     </select>
                   </div>
                   <div class="col-md-2">
-                    <button type="button" class="btn btn-raised btn-primary" (click)="copyAddress()">
+                    <button type="button" class="btn btn-raised btn-primary" (click)="copyToLocationAddr()">
                       <i class="fa fa-check-square-o"></i> Copy
                     </button>
                   </div>
                 </div>
                 <lib-ucaddress #UcAddrGrp [showSubsection]="false" [title]="'Customer Address'" [UCAddrForm]="appForm"
-                  [enjiForm]="enjiForm" [identifier]="'custAddress'" [default]="ownerAddressObj"
-                  [inputField]="inputFieldOwnerAddressObj" [showFax]="false" [showAllPhn]="false"></lib-ucaddress>
+                  [enjiForm]="enjiForm" [identifier]="'locationAddress'" [default]="locationAddrObj"
+                  [inputField]="inputFieldLocationAddrObj" [showFax]="false" [showAllPhn]="false"></lib-ucaddress>
               </div>
 
               <lib-ucSubsection [id]="'insuranceId'" [title]="'Insurance'" [panel]="'insurance'">
@@ -425,7 +425,7 @@
               </div>
 
 
-            <!-- FEE -->
+            <!-- FEE -> nama form control belum sesuai -->
               <lib-ucSubsection [id]="'feesId'" [title]="'Fees'" [panel]="'fees'">
               </lib-ucSubsection>
               <div id="fees">
@@ -644,10 +644,10 @@
                 <div class="form-group row">
                   <label class="col-md-2  adInsLabel" translate>Effective rate to Customer</label>
                   <div class="col-md-4">
-                    <input type="text" class="form-control adInsInput" formControlName="SalesHeadNo"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.SalesHeadNo.invalid}">
+                    <input type="text" class="form-control adInsInput" formControlName="EffectiveRatePrcnt"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.EffectiveRatePrcnt.invalid}">
 
-                    <lib-uc-show-errors [control]="appForm.controls.SalesOfficerNo" [submit]="enjiForm.submitted">
+                    <lib-uc-show-errors [control]="appForm.controls.EffectiveRatePrcnt" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
                 </div>
@@ -655,10 +655,10 @@
                 <div class="form-group row">
                   <label class="col-md-2  adInsLabel" translate>Flat rate to Customer</label>
                   <div class="col-md-4">
-                    <input type="text" class="form-control adInsInput" formControlName="SalesHeadNo"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.SalesHeadNo.invalid}">
+                    <input type="text" class="form-control adInsInput" formControlName="FlatRatePrcnt"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.FlatRatePrcnt.invalid}">
 
-                    <lib-uc-show-errors [control]="appForm.controls.SalesOfficerNo" [submit]="enjiForm.submitted">
+                    <lib-uc-show-errors [control]="appForm.controls.FlatRatePrcnt" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
                 </div>
@@ -666,11 +666,11 @@
                 <div class="form-group row">
                   <label class="col-md-2  adInsLabel" translate>Installment Amount</label>
                   <div class="col-md-4">
-                    <input type="text" class="form-control adInsInput" formControlName="SalesHeadNo"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.SalesHeadNo.invalid}">
-
-
-                    <lib-uc-show-errors [control]="appForm.controls.SalesOfficerNo" [submit]="enjiForm.submitted">
+                     
+                      <lib-ucinputnumber [parentForm]="appForm" [identifier]="'InstAmt'"
+                      [enjiForm]="enjiForm" [isRequired]="false"
+                      ucNumber="appForm.controls.InsuranceCapitalizedAmount.value"></lib-ucinputnumber>
+                      <lib-uc-show-errors [control]="appForm.controls.InstAmt" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
                 </div>

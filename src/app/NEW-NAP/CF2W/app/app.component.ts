@@ -7,6 +7,8 @@ import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { environment } from 'environments/environment';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
+import { AddrObj } from 'app/shared/model/AddrObj.Model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-app',
@@ -14,38 +16,52 @@ import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private http: HttpClient, private fb: FormBuilder) {
+  constructor(private http: HttpClient, private fb: FormBuilder, private route: ActivatedRoute) {
     this.getRefMasterListKeyValueActiveByCodeUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
     this.getListKvpActiveRefAppSrcUrl = AdInsConstant.GetListKvpActiveRefAppSrc;
     this.getListActiveRefPayFreqUrl = AdInsConstant.GetListActiveRefPayFreq;
+    this.getAppCustAddrUrl = AdInsConstant.GetListAppCustAddrByAppId;
+    this.route.queryParams.subscribe(params => {
+      this.AppId = params["AppId"] ? params["AppId"] : this.AppId;
+    })
   }
   titleFinancialData: string = "Financial Data" + "  Regular Fixed";
   appCustAddrObj: any;
+  AppId: any;
   getCustAddr: string;
   getRefMasterListKeyValueActiveByCodeUrl: string;
   getListKvpActiveRefAppSrcUrl: string;
   getListActiveRefPayFreqUrl: string;
-  ownerAddressObj: any;
+  getAppCustAddrUrl: string;
+  ownerAddrObj: any;
+  locationAddrObj: any;
   copyCustomerAddr: any;
-  inputFieldOwnerAddressObj: any;
+  inputFieldOwnerAddrObj: any;
+  inputFieldLocationAddrObj: any;
   inputLookupObj: any;
-  InputLookupCityIssuerObj : any;
+  InputLookupCityIssuerObj: any;
   tempMrSalesRecommendCode: any;
   tempMrAppSourceCode: any;
   tempPayFreqCode: any;
   tempMrFirstInstTypeCode: any;
   tempMrCustNotifyOptCode: any;
-  tempMrWopCode : any;
-  tempInterestType : any;
-  tempMrAssetConditionCode : any;
-  tempMrAssetUsageCode : any;
-  tempMrUserRelationshipCode : any;
-  tempMrOwnerRelationshipCode : any;
-  tempMrIdTypeCode : any;
-  tempRateType : any;
-  tempCopyAddrOwnerFrom : any;
-  tempCopyAddrAssetFrom : any;
+  tempMrWopCode: any;
+  tempInterestType: any;
+  tempMrAssetConditionCode: any;
+  tempMrAssetUsageCode: any;
+  tempMrUserRelationshipCode: any;
+  tempMrOwnerRelationshipCode: any;
+  tempMrIdTypeCode: any;
+  tempRateType: any;
+  tempCopyAddrOwnerFrom: any;
+  tempCopyAddrLocationFrom: any;
   tempMrGracePeriodTypeCode: any;
+  AddrLegalObj: any;
+  AddrResidenceObj: any;
+  AddrMailingObj: any;
+  AppCustAddrObj: any;
+  CopyAddrOwnerFromType: any;
+  CopyAddrLocationFromType: any;
   appForm = this.fb.group({
     SalesOfficerNo: [''],
     SalesOfficerName: [''],
@@ -71,47 +87,52 @@ export class AppComponent implements OnInit {
     TaxCityIssuer: [''],
     SerialNo3: [''],
     TaxCityDt: [''],
-    ManufacturingYear: ['',[Validators.pattern("^[0-9]+$")]],
+    ManufacturingYear: ['', [Validators.pattern("^[0-9]+$")]],
     AssetTaxDt: [''],
 
     CopyAddrOwnerFrom: [''],
-    CopyAddrAssetFrom:[''],
+    CopyAddrLocationFrom: [''],
     UserName: [''],
     MrUserRelationshipCode: [''],
     OwnerName: [''],
     MrIdTypeCode: [''],
     MrOwnerRelationshipCode: [''],
     OwnerIdNo: [''],
- 
+
     OwnerMobilePhnNo: [''],
     Notes: [''],
-  
+
     TotalInsCptlzAmt: [''],
     TotalInsIncomeAmt: [''],
 
     //Use Life Insurance ? 
     TotalLifeInsCptlzAmt: [''],
     TotalLifeInsIncomeAmt: [''],
- 
-     
-    //Dp asset, Rate Type, Effective rate to customer. FlatRatetoCustomer
+    EffectiveRatePrcnt: [''],
+    FlatRatePrcnt: [''],
+    //Dp asset,  
+    //  rate type tidak masuk db 
+    //  ddl fixed float rate type 
     RateType: [''],
-    TdpPaidCoyAmt: [''],
-   
-
+    InstAmt: [''],
+    TdpPaidCoyAmt: [''], 
     RoundingAmt: [''],
     TotalInsCustAmt: [''],
-    MrGracePeriodTypeCode: [''],
-
+    MrGracePeriodTypeCode: [''], 
     GracePeriod: ['']
 
 
   });
-  ngOnInit() {
+  async ngOnInit(): Promise<void> {
 
     
-    this.inputFieldOwnerAddressObj = new InputFieldObj();
-    this.inputFieldOwnerAddressObj.inputLookupObj = new InputLookupObj();
+    console.log(this.CopyAddrOwnerFromType);
+    console.log(this.CopyAddrLocationFromType);
+    
+    this.inputFieldOwnerAddrObj = new InputFieldObj();
+    this.inputFieldOwnerAddrObj.inputLookupObj = new InputLookupObj();
+    this.inputFieldLocationAddrObj = new InputFieldObj();
+    this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
 
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = "./assets/uclookup/NAP/lookupEmp.json";
@@ -121,14 +142,14 @@ export class AppComponent implements OnInit {
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.nameSelect = this.appForm.controls.SalesOfficerName.value;
 
-    
+
     this.InputLookupCityIssuerObj = new InputLookupObj();
     this.InputLookupCityIssuerObj.urlJson = "./assets/uclookup/NAP/lookupDistrict.json";
     this.InputLookupCityIssuerObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
     this.InputLookupCityIssuerObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupCityIssuerObj.pagingJson = "./assets/uclookup/NAP/lookupDistrict.json";
     this.InputLookupCityIssuerObj.genericJson = "./assets/uclookup/NAP/lookupDistrict.json";
-
+    await this.GetListAddr();
     //DDL Var Type Code
     var refMasterSalesRecommendation = new RefMasterObj();
     refMasterSalesRecommendation.RefMasterTypeCode = 'SLS_RECOM';
@@ -144,29 +165,28 @@ export class AppComponent implements OnInit {
     refMasterInterestType.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeInterestType;
     var refMasterCustNotifyOpt = new RefMasterObj();
     refMasterCustNotifyOpt.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeCustNotifyOpt;
-    var refMasterWop =new RefMasterObj();
+    var refMasterWop = new RefMasterObj();
     refMasterWop.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeWOP;
-    var refMasterCodeInterestType =new RefMasterObj();
+    var refMasterCodeInterestType = new RefMasterObj();
     refMasterCodeInterestType.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeInterestType;
-    var refMasterCodeAssetCondition =new RefMasterObj();
+    var refMasterCodeAssetCondition = new RefMasterObj();
     refMasterCodeAssetCondition.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeAssetCondition;
-    var refMasterCodeAssetUsage=new RefMasterObj();
+    var refMasterCodeAssetUsage = new RefMasterObj();
     refMasterCodeAssetUsage.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeAssetUsage;
-    var refMasterCodeCustPersonalRelationship=new RefMasterObj();
+    var refMasterCodeCustPersonalRelationship = new RefMasterObj();
     refMasterCodeCustPersonalRelationship.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeCustPersonalRelationship;
-    var refMasterCodeIdType=new RefMasterObj();
+    var refMasterCodeIdType = new RefMasterObj();
     refMasterCodeIdType.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeIdType;
-    var refMasterCodeRateType=new RefMasterObj();
+    var refMasterCodeRateType = new RefMasterObj();
     refMasterCodeRateType.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeRateType;
-    var refMasterTypeCodeAddrType=new RefMasterObj();
+    var refMasterTypeCodeAddrType = new RefMasterObj();
     refMasterTypeCodeAddrType.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeAddrType;
-    var refMasterTypeCodeGracePeriodType=new RefMasterObj();
+    var refMasterTypeCodeGracePeriodType = new RefMasterObj();
     refMasterTypeCodeGracePeriodType.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeGracePeriodType;
 
     this.http.post(this.getRefMasterListKeyValueActiveByCodeUrl, refMasterSalesRecommendation).subscribe(
       (response) => {
         this.tempMrSalesRecommendCode = response["ReturnObject"];
-        console.log(this.tempMrSalesRecommendCode);
 
         if (this.tempMrSalesRecommendCode.length > 0) {
           this.appForm.patchValue({
@@ -187,7 +207,6 @@ export class AppComponent implements OnInit {
     );
     this.http.post(this.getListActiveRefPayFreqUrl, PayFreqCodeObj).subscribe(
       (response) => {
-        console.log(response);
         this.tempPayFreqCode = response["ReturnObject"];
         if (this.tempPayFreqCode.length > 0) {
           this.appForm.patchValue({
@@ -195,12 +214,10 @@ export class AppComponent implements OnInit {
           });;
         }
       }
-    ); 
+    );
     this.http.post(this.getRefMasterListKeyValueActiveByCodeUrl, refMasterFirstInstType).subscribe(
-      (response) => { 
+      (response) => {
         this.tempMrFirstInstTypeCode = response["ReturnObject"];
-        console.log(this.tempMrFirstInstTypeCode);
-
         if (this.tempMrFirstInstTypeCode.length > 0) {
           this.appForm.patchValue({
             MrFirstInstTypeCode: this.tempMrFirstInstTypeCode[0].Key
@@ -210,9 +227,8 @@ export class AppComponent implements OnInit {
     );
 
     this.http.post(this.getRefMasterListKeyValueActiveByCodeUrl, refMasterFirstInstType).subscribe(
-      (response) => { 
+      (response) => {
         this.tempMrFirstInstTypeCode = response["ReturnObject"];
-        console.log(this.tempMrFirstInstTypeCode);
 
         if (this.tempMrFirstInstTypeCode.length > 0) {
           this.appForm.patchValue({
@@ -223,9 +239,8 @@ export class AppComponent implements OnInit {
     );
 
     this.http.post(this.getRefMasterListKeyValueActiveByCodeUrl, refMasterCustNotifyOpt).subscribe(
-      (response) => { 
+      (response) => {
         this.tempMrCustNotifyOptCode = response["ReturnObject"];
-        console.log(this.tempMrCustNotifyOptCode);
 
         if (this.tempMrCustNotifyOptCode.length > 0) {
           this.appForm.patchValue({
@@ -236,32 +251,28 @@ export class AppComponent implements OnInit {
     );
 
     this.http.post(this.getRefMasterListKeyValueActiveByCodeUrl, refMasterWop).subscribe(
-      (response) => { 
+      (response) => {
         this.tempMrWopCode = response["ReturnObject"];
-        console.log(this.tempMrWopCode); 
         if (this.tempMrWopCode.length > 0) {
           this.appForm.patchValue({
-          MrWopCode: this.tempMrWopCode[0].Key
+            MrWopCode: this.tempMrWopCode[0].Key
           });;
         }
       }
     );
     this.http.post(this.getRefMasterListKeyValueActiveByCodeUrl, refMasterCodeInterestType).subscribe(
-      (response) => { 
+      (response) => {
         this.tempInterestType = response["ReturnObject"];
-        console.log(this.tempInterestType); 
         if (this.tempInterestType.length > 0) {
           this.appForm.patchValue({
-          InterestType: this.tempInterestType[0].Key
+            InterestType: this.tempInterestType[0].Key
           });;
         }
       }
-    ); 
+    );
     this.http.post(this.getRefMasterListKeyValueActiveByCodeUrl, refMasterCodeAssetCondition).subscribe(
-      (response) => { 
+      (response) => {
         this.tempMrAssetConditionCode = response["ReturnObject"];
-         
-        console.log(this.tempMrAssetConditionCode); 
         if (this.tempMrAssetConditionCode.length > 0) {
           this.appForm.patchValue({
             MrAssetConditionCode: this.tempMrAssetConditionCode[0].Key
@@ -270,15 +281,15 @@ export class AppComponent implements OnInit {
       }
     );
     this.http.post(this.getRefMasterListKeyValueActiveByCodeUrl, refMasterCodeAssetUsage).subscribe(
-      (response) => { 
-        this.tempMrAssetUsageCode = response["ReturnObject"]; 
+      (response) => {
+        this.tempMrAssetUsageCode = response["ReturnObject"];
         if (this.tempMrAssetUsageCode.length > 0) {
           this.appForm.patchValue({
             MrAssetUsageCode: this.tempMrAssetUsageCode[0].Key
           });;
         }
       }
-    ); 
+    );
     this.http.post(this.getRefMasterListKeyValueActiveByCodeUrl, refMasterCodeCustPersonalRelationship).subscribe(
       (response) => {
         this.tempMrUserRelationshipCode = response["ReturnObject"];
@@ -293,80 +304,52 @@ export class AppComponent implements OnInit {
     );
     this.http.post(this.getRefMasterListKeyValueActiveByCodeUrl, refMasterCodeIdType).subscribe(
       (response) => {
-        console.log(response);
-        this.tempMrIdTypeCode = response["ReturnObject"]; 
+        this.tempMrIdTypeCode = response["ReturnObject"];
         if (this.tempMrIdTypeCode.length > 0) {
           this.appForm.patchValue({
             MrIdTypeCode: this.tempMrIdTypeCode[0].Key,
-            
+
           });
         }
       }
     );
     this.http.post(this.getRefMasterListKeyValueActiveByCodeUrl, refMasterCodeRateType).subscribe(
       (response) => {
-        console.log(response);
-        this.tempRateType = response["ReturnObject"]; 
+        this.tempRateType = response["ReturnObject"];
         if (this.tempRateType.length > 0) {
           this.appForm.patchValue({
             RateType: this.tempRateType[0].Key,
-            
+
           });
         }
       }
     );
     this.http.post(this.getRefMasterListKeyValueActiveByCodeUrl, refMasterTypeCodeAddrType).subscribe(
       (response) => {
-        console.log(response);
-        this.tempCopyAddrOwnerFrom = response["ReturnObject"]; 
-        this.tempCopyAddrAssetFrom = response["ReturnObject"]; 
-       
+        this.tempCopyAddrOwnerFrom = response["ReturnObject"];
+        this.tempCopyAddrLocationFrom = response["ReturnObject"]; 
         if (this.tempRateType.length > 0) {
           this.appForm.patchValue({
             CopyAddrOwnerFrom: this.tempCopyAddrOwnerFrom[0].Key,
-            CopyAddrAssetFrom: this.tempCopyAddrAssetFrom[0].Key,
+            CopyAddrLocationFrom: this.tempCopyAddrLocationFrom[0].Key,
           });
+          this.CopyAddrOwnerFromType = this.appForm.controls.CopyAddrOwnerFrom.value;
+          this.CopyAddrLocationFromType = this.appForm.controls.CopyAddrLocationFrom.value;
         }
       }
     );
     this.http.post(this.getRefMasterListKeyValueActiveByCodeUrl, refMasterTypeCodeGracePeriodType).subscribe(
       (response) => {
-        console.log(response);
-        this.tempMrGracePeriodTypeCode = response["ReturnObject"]; 
+        this.tempMrGracePeriodTypeCode = response["ReturnObject"];
         if (this.tempMrGracePeriodTypeCode.length > 0) {
           this.appForm.patchValue({
             MrGracePeriodTypeCode: this.tempMrGracePeriodTypeCode[0].Key,
-            
+
           });
         }
       }
-    ); 
+    );
 
-  }
-  copyAddress() {
-    this.appCustAddrObj = new AppCustAddrObj();
-    this.appCustAddrObj.CustAddrId = this.appForm.controls["CopyAddrFrom"].value;
-    this.http.post(this.getCustAddr, this.appCustAddrObj).subscribe(
-      (response) => {
-        this.copyCustomerAddr = response;
-        this.appForm.patchValue({
-          Notes: this.copyCustomerAddr.Notes
-        });
-        this.ownerAddressObj = new AppCustAddrObj();
-        this.ownerAddressObj.Addr = this.copyCustomerAddr.Addr;
-        this.ownerAddressObj.AreaCode3 = this.copyCustomerAddr.AreaCode3;
-        this.ownerAddressObj.AreaCode4 = this.copyCustomerAddr.AreaCode4;
-        this.ownerAddressObj.AreaCode1 = this.copyCustomerAddr.AreaCode1;
-        this.ownerAddressObj.AreaCode2 = this.copyCustomerAddr.AreaCode2;
-        this.ownerAddressObj.City = this.copyCustomerAddr.City;
-  
-
-        this.inputFieldOwnerAddressObj = new InputFieldObj();
-        this.inputFieldOwnerAddressObj.inputLookupObj = new InputLookupObj();
-        this.inputFieldOwnerAddressObj.inputLookupObj.nameSelect = this.copyCustomerAddr.Zipcode;
-        this.inputFieldOwnerAddressObj.inputLookupObj.jsonSelect = { Zipcode: this.copyCustomerAddr.Zipcode };
-
-      });
   }
   getLookupEmployeeResponse(ev) {
     console.log(ev);
@@ -397,7 +380,6 @@ export class AppComponent implements OnInit {
 
   ChangeNumOfInstallmentPayFreq(ev) {
     console.log(ev);
-    console.log("Change Num from pay freq");
 
     var idx = ev.target.selectedIndex;
     console.log(idx);
@@ -420,5 +402,169 @@ export class AppComponent implements OnInit {
       TaxCityIssuer: event.DistrictCode,
 
     });
+  }
+
+  async GetListAddr() {
+    this.appCustAddrObj = new AppCustAddrObj();
+    this.appCustAddrObj.AppId = this.AppId;
+    console.log(this.AppId);
+    this.http.post(this.getAppCustAddrUrl, this.appCustAddrObj).toPromise().then(
+      (response) => {
+        console.log(response);
+        this.AppCustAddrObj = response["ReturnObject"];
+        this.AddrLegalObj = this.AppCustAddrObj.filter(
+          emp => emp.MrCustAddrTypeCode === AdInsConstant.AddrTypeLegal);
+        this.AddrResidenceObj = this.AppCustAddrObj.filter(
+          emp => emp.MrCustAddrTypeCode === AdInsConstant.AddrTypeResidence);
+        this.AddrMailingObj = this.AppCustAddrObj.filter(
+          emp => emp.MrCustAddrTypeCode === AdInsConstant.AddrTypeMailing);
+      }
+    );
+  }
+
+  copyToOwnerAddr() {
+    console.log(this.appForm.controls.CopyAddrLocationFrom.value);
+    if (this.CopyAddrOwnerFromType == AdInsConstant.AddrTypeLegal) {
+
+      this.ownerAddrObj = new AddrObj();
+      this.ownerAddrObj.Addr = this.AddrLegalObj[0].Addr;
+      this.ownerAddrObj.AreaCode1 = this.AddrLegalObj[0].AreaCode1;
+      this.ownerAddrObj.AreaCode2 = this.AddrLegalObj[0].AreaCode2;
+      this.ownerAddrObj.AreaCode3 = this.AddrLegalObj[0].AreaCode3;
+      this.ownerAddrObj.AreaCode4 = this.AddrLegalObj[0].AreaCode4;
+      this.ownerAddrObj.City = this.AddrLegalObj[0].City;
+      this.inputFieldOwnerAddrObj.inputLookupObj.nameSelect = this.AddrLegalObj[0].Zipcode;
+      this.inputFieldOwnerAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.AddrLegalObj[0].Zipcode };
+
+    }
+
+    if (this.CopyAddrOwnerFromType == AdInsConstant.AddrTypeResidence) {
+
+      this.appForm.patchValue({
+        OwnerAddr: this.AddrResidenceObj[0].Addr,
+        OwnerAreaCode1: this.AddrResidenceObj[0].AreaCode1,
+        OwnerAreaCode2: this.AddrResidenceObj[0].AreaCode2,
+        OwnerAreaCode3: this.AddrResidenceObj[0].AreaCode3,
+        OwnerAreaCode4: this.AddrResidenceObj[0].AreaCode4,
+        OwnerCity: this.AddrResidenceObj[0].City,
+        OwnerZipcode: this.AddrResidenceObj[0].Zipcode
+      });
+      this.ownerAddrObj = new AddrObj();
+      this.ownerAddrObj.Addr = this.AddrResidenceObj[0].Addr;
+      this.ownerAddrObj.AreaCode1 = this.AddrResidenceObj[0].AreaCode1;
+      this.ownerAddrObj.AreaCode2 = this.AddrResidenceObj[0].AreaCode2;
+      this.ownerAddrObj.AreaCode3 = this.AddrResidenceObj[0].AreaCode3;
+      this.ownerAddrObj.AreaCode4 = this.AddrResidenceObj[0].AreaCode4;
+      this.ownerAddrObj.City = this.AddrResidenceObj[0].City;
+
+      this.inputFieldOwnerAddrObj.inputLookupObj.nameSelect = this.AddrResidenceObj[0].Zipcode;
+      this.inputFieldOwnerAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.AddrResidenceObj[0].Zipcode };
+    }
+
+    if (this.CopyAddrOwnerFromType == AdInsConstant.AddrTypeMailing) {
+
+      this.appForm.patchValue({
+        OwnerAddr: this.AddrMailingObj[0].Addr,
+        OwnerAreaCode1: this.AddrMailingObj[0].AreaCode1,
+        OwnerAreaCode2: this.AddrMailingObj[0].AreaCode2,
+        OwnerAreaCode3: this.AddrMailingObj[0].AreaCode3,
+        OwnerAreaCode4: this.AddrMailingObj[0].AreaCode4,
+        OwnerCity: this.AddrMailingObj[0].City,
+        OwnerZipcode: this.AddrMailingObj[0].Zipcode
+      });
+      this.ownerAddrObj = new AddrObj();
+      this.ownerAddrObj.Addr = this.AddrMailingObj[0].Addr;
+      this.ownerAddrObj.AreaCode1 = this.AddrMailingObj[0].AreaCode1;
+      this.ownerAddrObj.AreaCode2 = this.AddrMailingObj[0].AreaCode2;
+      this.ownerAddrObj.AreaCode3 = this.AddrMailingObj[0].AreaCode3;
+      this.ownerAddrObj.AreaCode4 = this.AddrMailingObj[0].AreaCode4;
+      this.ownerAddrObj.City = this.AddrMailingObj[0].City;
+
+      this.inputFieldOwnerAddrObj.inputLookupObj.nameSelect = this.AddrMailingObj[0].Zipcode;
+      this.inputFieldOwnerAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.AddrMailingObj[0].Zipcode };
+    }
+  }
+
+  copyToLocationAddr() {
+
+    if (this.CopyAddrLocationFromType == AdInsConstant.AddrTypeLegal) {
+
+      this.appForm.patchValue({
+        LocationAddr: this.AddrLegalObj[0].Addr,
+        LocationAreaCode1: this.AddrLegalObj[0].AreaCode1,
+        LocationAreaCode2: this.AddrLegalObj[0].AreaCode2,
+        LocationAreaCode3: this.AddrLegalObj[0].AreaCode3,
+        LocationAreaCode4: this.AddrLegalObj[0].AreaCode4,
+        LocationCity: this.AddrLegalObj[0].City,
+        LocationZipcode: this.AddrLegalObj[0].Zipcode
+      });
+      this.locationAddrObj = new AddrObj();
+      this.locationAddrObj.Addr = this.AddrLegalObj[0].Addr;
+      this.locationAddrObj.AreaCode1 = this.AddrLegalObj[0].AreaCode1;
+      this.locationAddrObj.AreaCode2 = this.AddrLegalObj[0].AreaCode2;
+      this.locationAddrObj.AreaCode3 = this.AddrLegalObj[0].AreaCode3;
+      this.locationAddrObj.AreaCode4 = this.AddrLegalObj[0].AreaCode4;
+      this.locationAddrObj.City = this.AddrLegalObj[0].City;
+
+      this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.AddrLegalObj[0].Zipcode;
+      this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.AddrLegalObj[0].Zipcode };
+
+    }
+
+    if (this.CopyAddrLocationFromType == AdInsConstant.AddrTypeResidence) {
+
+      this.appForm.patchValue({
+        LocationAddr: this.AddrResidenceObj[0].Addr,
+        LocationAreaCode1: this.AddrResidenceObj[0].AreaCode1,
+        LocationAreaCode2: this.AddrResidenceObj[0].AreaCode2,
+        LocationAreaCode3: this.AddrResidenceObj[0].AreaCode3,
+        LocationAreaCode4: this.AddrResidenceObj[0].AreaCode4,
+        LocationCity: this.AddrResidenceObj[0].City,
+        LocationZipcode: this.AddrResidenceObj[0].Zipcode
+      });
+      this.locationAddrObj = new AddrObj();
+      this.locationAddrObj.Addr = this.AddrResidenceObj[0].Addr;
+      this.locationAddrObj.AreaCode1 = this.AddrResidenceObj[0].AreaCode1;
+      this.locationAddrObj.AreaCode2 = this.AddrResidenceObj[0].AreaCode2;
+      this.locationAddrObj.AreaCode3 = this.AddrResidenceObj[0].AreaCode3;
+      this.locationAddrObj.AreaCode4 = this.AddrResidenceObj[0].AreaCode4;
+      this.locationAddrObj.City = this.AddrResidenceObj[0].City;
+
+      this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.AddrResidenceObj[0].Zipcode;
+      this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.AddrResidenceObj[0].Zipcode };
+    }
+
+    if (this.CopyAddrLocationFromType == AdInsConstant.AddrTypeMailing) {
+      this.appForm.patchValue({
+        LocationAddr: this.AddrMailingObj[0].Addr,
+        LocationAreaCode1: this.AddrMailingObj[0].AreaCode1,
+        LocationAreaCode2: this.AddrMailingObj[0].AreaCode2,
+        LocationAreaCode3: this.AddrMailingObj[0].AreaCode3,
+        LocationAreaCode4: this.AddrMailingObj[0].AreaCode4,
+        LocationCity: this.AddrMailingObj[0].City,
+        LocationZipcode: this.AddrMailingObj[0].Zipcode
+      });
+      this.locationAddrObj = new AddrObj();
+      this.locationAddrObj.Addr = this.AddrMailingObj[0].Addr;
+      this.locationAddrObj.AreaCode1 = this.AddrMailingObj[0].AreaCode1;
+      this.locationAddrObj.AreaCode2 = this.AddrMailingObj[0].AreaCode2;
+      this.locationAddrObj.AreaCode3 = this.AddrMailingObj[0].AreaCode3;
+      this.locationAddrObj.AreaCode4 = this.AddrMailingObj[0].AreaCode4;
+      this.locationAddrObj.City = this.AddrMailingObj[0].City;
+
+      this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.AddrMailingObj[0].Zipcode;
+      this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.AddrMailingObj[0].Zipcode };
+    }
+  }
+  SetLocationAddrType(event) {
+    this.CopyAddrLocationFromType = event;
+    
+    console.log(this.CopyAddrLocationFromType);
+
+  }
+
+  SetOwnerAddrType(event) {
+    this.CopyAddrOwnerFromType = event;
+
   }
 }
