@@ -42,7 +42,7 @@ import { CreditProcessInquiryComponent } from './credit-process-inquiry/credit-p
     ApplicantExistingDataPersonalComponent,
     ApplicantExistingDataCompanyComponent,
     ReturnHandlingEditAppPagingComponent,
-    AssetInquiryComponent
+    AssetInquiryComponent,
     AppInquiryComponent,
     CreditProcessInquiryComponent
   ],
