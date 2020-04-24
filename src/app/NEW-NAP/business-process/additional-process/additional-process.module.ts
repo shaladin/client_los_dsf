@@ -16,6 +16,8 @@ import { ListPersonalComponent } from "./app-dup-check/list-personal/list-person
 import { ListCompanyComponent } from "./app-dup-check/list-company/list-company.component";
 import { ApplicantExistingDataPersonalComponent } from "./app-dup-check/applicant-existing-data-personal/applicant-existing-data-personal.component";
 import { ApplicantExistingDataCompanyComponent } from "./app-dup-check/applicant-existing-data-company/applicant-existing-data-company.component";
+import { AppInquiryComponent } from './app-inquiry/app-inquiry.component';
+import { CreditProcessInquiryComponent } from './credit-process-inquiry/credit-process-inquiry.component';
 import { ReturnHandlingPhoneVerifPagingComponent } from "./return-handling/return-handling-phone-verif-paging/return-handling-phone-verif-paging.component";
 
 @NgModule({
@@ -38,7 +40,9 @@ import { ReturnHandlingPhoneVerifPagingComponent } from "./return-handling/retur
     ListCompanyComponent,
     ApplicantExistingDataPersonalComponent,
     ApplicantExistingDataCompanyComponent,
-    ReturnHandlingPhoneVerifPagingComponent
+    AppInquiryComponent,
+      CreditProcessInquiryComponent,
+      ReturnHandlingPhoneVerifPagingComponent
   ],
   providers: [
     NGXToastrService

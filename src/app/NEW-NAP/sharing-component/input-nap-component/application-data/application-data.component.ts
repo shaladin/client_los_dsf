@@ -225,7 +225,7 @@ export class ApplicationDataComponent implements OnInit {
   }
 
   getPayFregData(){
-    var url = environment.FoundationR3Url + AdInsConstant.GetListActiveRefPayFreq;
+    var url = AdInsConstant.GetListActiveRefPayFreq;
     var obj = {
       RowVersion: ""
     };

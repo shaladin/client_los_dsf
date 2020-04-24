@@ -20,8 +20,7 @@ import { PurchaseOrderDetailFl4wComponent } from './purchase-order/purchase-orde
     DummyComponent,
     PurchaseOrderPagingFl4wComponent,
     PurchaseOrderFl4wComponent,
-    PurchaseOrderDetailFl4wComponent,
-   
+    PurchaseOrderDetailFl4wComponent, 
   ],
   providers: [
     NGXToastrService
