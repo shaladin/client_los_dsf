@@ -19,6 +19,7 @@ import { CustDataCompanyObj } from 'app/shared/model/CustDataCompanyObj.Model';
 import { CustGrpMemberComponent } from './component/cust-grp-member/cust-grp-member.component';
 import { formatDate } from '@angular/common';
 import { WizardComponent } from 'angular-archwizard';
+import { AppWizardObj } from 'app/shared/model/App/AppWizard.Model';
 
 @Component({
   selector: 'app-customer-data',
@@ -44,7 +45,7 @@ export class CustomerDataComponent implements OnInit {
   });
 
   @Input() appId: any;
-  @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
+  @Output() callbackSubmit: EventEmitter<AppWizardObj> = new EventEmitter();
   
   refMasterObj = {
     RefMasterTypeCode: "",
@@ -77,6 +78,7 @@ export class CustomerDataComponent implements OnInit {
   listLegalDoc: any;
 
   isBindDataDone: boolean = false;
+  appWizardObj: AppWizardObj;
 
 
 
@@ -122,6 +124,7 @@ export class CustomerDataComponent implements OnInit {
       this.route.queryParams.subscribe(params => {
         this.appId = params["AppId"];
       })
+      this.appWizardObj = new AppWizardObj(this.wizard, AdInsConstant.AppStepGuar);
      }
 
   async ngOnInit() : Promise<void> {
@@ -140,7 +143,8 @@ export class CustomerDataComponent implements OnInit {
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
-          this.wizard.goToNextStep();
+          this.callbackSubmit.emit(this.appWizardObj);
+          // this.wizard.goToNextStep();
         },
         (error) => {
           console.log(error);
@@ -156,7 +160,8 @@ export class CustomerDataComponent implements OnInit {
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
-          this.wizard.goToNextStep();
+          this.callbackSubmit.emit(this.appWizardObj);
+          // this.wizard.goToNextStep();
         },
         (error) => {
           console.log(error);

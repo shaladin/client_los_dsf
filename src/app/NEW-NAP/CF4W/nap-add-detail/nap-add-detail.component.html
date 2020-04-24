@@ -6,7 +6,7 @@
 
       <aw-wizard-step [stepTitle]="'Customer Data'" (stepEnter)="EnterTab('CUST')"
         [navigationSymbol]="{ symbol: '1' }">
-        <app-customer-data *ngIf="AppStepIndex == 0" [appId]=appId></app-customer-data>
+        <app-customer-data *ngIf="AppStepIndex == 0" [appId]=appId (callbackSubmit)="WizardNavigation($event)"></app-customer-data>
       </aw-wizard-step>
 
       <aw-wizard-step [stepTitle]="'Guarantor Data'" (stepEnter)="EnterTab('GUAR')"
@@ -53,13 +53,10 @@
 </div>
 
 <div class="form-actions ucSearch-Button-Right">
-  <button type="button" class="btn btn-raised btn_cancel" [routerLink]="['../Paging']" [queryParams]="{LobCode:'CF4W'}" translate>
-    <i class="fa fa-check-square-o"></i> Cancel
+  <button type="button" class="btn btn-raised btn-cancel" [routerLink]="['../Paging']" [queryParams]="{LobCode:'CF4W'}" translate>
+    <i class="fa fa-check-square-o"></i> Back
   </button>
   <button type="button" class="btn btn-raised btn-primary">
-    <i class="fa fa-check-square-o"></i> Save
-  </button>
-  <button type="button" class="btn btn-raised btn-primary">
-    <i class="fa fa-check-square-o"></i> Submit
+    <i class="fa fa-check-square-o"></i> Save and Continue
   </button>
 </div>

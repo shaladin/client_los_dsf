@@ -6,6 +6,7 @@ import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { WizardComponent } from 'angular-archwizard';
+import { AppWizardObj } from 'app/shared/model/App/AppWizard.Model';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -59,7 +60,7 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   EnterTab(AppStep) {
-    console.log(AppStep);
+    // console.log(AppStep);
     switch (AppStep) {
       case AdInsConstant.AppStepCust:
         this.AppStepIndex = this.AppStep[AdInsConstant.AppStepCust];
@@ -94,8 +95,8 @@ export class NapAddDetailComponent implements OnInit {
     }
   }
 
-  // NextTab(){
-  //   console.log(this.wizard);
-  //   this.wizard.goToNextStep();
-  // }
+  WizardNavigation(AppWizard : AppWizardObj){
+    this.AppStepIndex = this.AppStep[AppWizard.AppStep];
+    AppWizard.Wizard.goToNextStep();
+  }
 }
