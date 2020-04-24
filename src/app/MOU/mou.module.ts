@@ -17,6 +17,7 @@ import { UCSearchComponent } from '@adins/ucsearch';
 import { UcapprovalModule } from '@adins/ucapproval';
 import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
 import { UcgridfooterModule, UcgridfooterComponent } from "@adins/ucgridfooter";
+import { UcuploadModule } from '@adins/ucupload';
 import { MainInfoComponent } from 'app/view/main-info/main-info.component';
 import { MouRoutingModule } from "./mou-routing.module";
 import { DocSignerComponent } from "./doc-signer/doc-signer.component";
@@ -59,6 +60,7 @@ import { LegalReviewDetailComponent } from './legal-review/legal-review-detail/l
 import { UcinputnumberModule } from "@adins/ucinputnumber";
 import { MouCustomerInquiryComponent } from './mou-customer/mou-customer-inquiry/mou-customer-inquiry.component';
 import { NgxCurrencyModule } from "ngx-currency";
+import { TestUploadComponent } from './test-upload/test-upload.component';
 
 export const customCurrencyMaskConfig = {     
   align: "left",     
@@ -95,6 +97,7 @@ export const customCurrencyMaskConfig = {
     SharingComponentModule,
     UcinputnumberModule,
     UcapprovalModule,
+    UcuploadModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
   ],
   declarations: [
@@ -146,7 +149,8 @@ export const customCurrencyMaskConfig = {
     MouViewApprovalHistoryComponent,
     MouCustAssetComponent,
     MouCustAssetDetailComponent,
-    MouDetailGeneralComponent
+    MouDetailGeneralComponent,
+    TestUploadComponent
   ],
   exports: [],
   providers: [NGXToastrService],

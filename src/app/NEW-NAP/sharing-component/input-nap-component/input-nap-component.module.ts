@@ -33,6 +33,25 @@ import { MatCheckboxModule, MatRadioModule, MatSelectModule } from "@angular/mat
 import { GuarantorPersonalComponent } from "./guarantor-data/guarantor-personal/guarantor-personal.component";
 import { GuarantorCompanyComponent } from "./guarantor-data/guarantor-company/guarantor-company.component";
 import { GuarantorPagingComponent } from "./guarantor-data/guarantor-paging/guarantor-paging.component";
+import { SchmStepUpStepDownNormalComponent } from "./financial-data/component/schm-step-up-step-down-normal/schm-step-up-step-down-normal.component";
+import { SchmRegulerFixComponent } from "./financial-data/component/schm-reguler-fix/schm-reguler-fix.component";
+import { SchmStepUpStepDownLeasingComponent } from "./financial-data/component/schm-step-up-step-down-leasing/schm-step-up-step-down-leasing.component";
+import { SchmStepUpStepDownCummulativeComponent } from "./financial-data/component/schm-step-up-step-down-cummulative/schm-step-up-step-down-cummulative.component";
+import { NgxCurrencyModule } from "ngx-currency";
+import { SchmIrregularComponent } from "./financial-data/component/schm-irregular/schm-irregular.component";
+import { SchmBalloonComponent } from "./financial-data/component/schm-baloon/schm-balloon.component";
+
+import { SchmEvenPrincipalComponent } from "./financial-data/component/schm-even-principal/schm-even-principal.component";
+export const customCurrencyMaskConfig = {     
+  align: "right",     
+  allowNegative: true,     
+  allowZero: true,     
+  decimal: ".",     
+  precision: 2,     
+  prefix: "",     
+  suffix: "",     
+  thousands: ",",     
+  nullable: false };
 
 @NgModule({
   exports: [
@@ -66,6 +85,14 @@ import { GuarantorPagingComponent } from "./guarantor-data/guarantor-paging/guar
     SubsidyAddEditComponent,
     FeeComponent,
     TcDataComponent, // sementara nanti dicross check sama term-conditions
+    SchmRegulerFixComponent,
+    SchmStepUpStepDownNormalComponent,
+    SchmStepUpStepDownLeasingComponent,
+    SchmIrregularComponent,
+    SchmBalloonComponent,
+    SchmStepUpStepDownCummulativeComponent,
+    SchmIrregularComponent,
+    SchmEvenPrincipalComponent
   ],
   imports: [
     CommonModule,
@@ -74,6 +101,7 @@ import { GuarantorPagingComponent } from "./guarantor-data/guarantor-paging/guar
     MatCheckboxModule,
     MatRadioModule,
     MatSelectModule,
+    NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
   ],
   declarations: [
     CustomerDataComponent,
@@ -105,6 +133,13 @@ import { GuarantorPagingComponent } from "./guarantor-data/guarantor-paging/guar
     SubsidyAddEditComponent,
     FeeComponent,
     TcDataComponent, // sementara nanti dicross check sama term-conditions
+    SchmRegulerFixComponent, 
+    SchmStepUpStepDownNormalComponent,
+    SchmStepUpStepDownLeasingComponent,
+    SchmStepUpStepDownCummulativeComponent,
+    SchmIrregularComponent ,
+    SchmBalloonComponent,
+    SchmEvenPrincipalComponent
   ],
   entryComponents: [SubsidyAddEditComponent],
   providers: [

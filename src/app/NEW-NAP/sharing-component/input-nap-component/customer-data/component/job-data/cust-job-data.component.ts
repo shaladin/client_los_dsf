@@ -210,13 +210,13 @@ export class CustJobDataComponent implements OnInit {
         MrJobStatCode: this.appCustPersonalJobDataObj.MrJobStatCode,
         MrInvestmentTypeCode: this.appCustPersonalJobDataObj.MrInvestmentTypeCode
       });
+      this.selectedProfessionCode = this.appCustPersonalJobDataObj.MrProfessionCode;
+      this.setProfessionName(this.appCustPersonalJobDataObj.MrProfessionCode);
+      this.selectedIndustryTypeCode = this.appCustPersonalJobDataObj.IndustryTypeCode;
+      this.setIndustryTypeName(this.appCustPersonalJobDataObj.IndustryTypeCode);
+      this.CustModelChanged();
+      this.setAddrJobDataObj();
     }
-    this.selectedProfessionCode = this.appCustPersonalJobDataObj.MrProfessionCode;
-    this.setProfessionName(this.appCustPersonalJobDataObj.MrProfessionCode);
-    this.selectedIndustryTypeCode = this.appCustPersonalJobDataObj.IndustryTypeCode;
-    this.setIndustryTypeName(this.appCustPersonalJobDataObj.IndustryTypeCode);
-    this.CustModelChanged();
-    this.setAddrJobDataObj();
   }
 
   bindAllRefMasterObj(){

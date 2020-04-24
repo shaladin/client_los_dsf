@@ -10,9 +10,7 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms"; 
 import { UcShowErrorsModule } from "@adins/uc-show-errors";
 import { SharingComponentModule } from "app/shared/sharingcomponent.module";
-import { UcinputnumberModule } from "@adins/ucinputnumber";
-import { AppInquiryComponent } from './additional-process/app-inquiry/app-inquiry.component';
-import { CreditProcessInquiryComponent } from './additional-process/credit-process-inquiry/credit-process-inquiry.component';
+import { UcinputnumberModule } from "@adins/ucinputnumber"; 
 import { NapAddComponent } from './nap-add/nap-add.component';
 import { NapPagingComponent } from './nap-paging/nap-paging.component';
 
@@ -31,9 +29,7 @@ import { NapPagingComponent } from './nap-paging/nap-paging.component';
     UcinputnumberModule
   ],
   declarations: [
-    DummyComponent,
-    AppInquiryComponent,
-    CreditProcessInquiryComponent,
+    DummyComponent, 
     NapAddComponent,
     NapPagingComponent,
   
