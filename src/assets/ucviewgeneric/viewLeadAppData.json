@@ -27,7 +27,7 @@
                     "property": ""
                 },
                 {
-                    "type": "text",
+                    "type": "decimal",
                     "label": "NTF Amount",
                     "property": "NtfAmt"
                 },
@@ -37,7 +37,7 @@
                     "property": ""
                 },
                 {
-                    "type": "text",
+                    "type": "decimal",
                     "label": "Total Down Payment Amount",
                     "property": "TotalDownPaymentAmt"
                 },
@@ -47,7 +47,7 @@
                     "property": ""
                 },
                 {
-                    "type": "text",
+                    "type": "decimal",
                     "label": "Installment Amount",
                     "property": "InstAmt"
                 }

@@ -1,0 +1,57 @@
+{
+    "title": "Test Upload",
+    "exportExcel": true,
+    "component": [
+        {
+            "type": "textbox",
+            "name": "FILE_NAME",
+            "id": "FileNameId",
+            "value": "",
+            "label": "File Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "UPLOAD_MONITORING_NO",
+            "id": "UploadMonitoringNoId",
+            "value": "",
+            "label": "Upload No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "MR_UPLOAD_STATUS_CODE",
+            "id": "MrUploadStatusId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "isSelectOne": false,
+            "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefStatus/GetRefStatusByTrxTypeCode",
+            "label": "UPLOAD STATUS",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "TrxTypeCode",
+            "criteriaPropValue": "UPLOAD"
+        }
+    ],
+    "querystring": {
+        "select": "SELECT UPLOAD_MONITORING_NO AS UploadMonitoringNo, OFFICE_CODE AS OfficeCode, [FILE_NAME] AS [FileName], TOTAL_RECORD AS TotalRecord, TOTAL_RECORD_PROCESSED AS TotalRecordProcessed, TOTAL_RECORD_ERROR AS TotalRecordError, MR_UPLOAD_STATUS_CODE AS MrUploadStatusCode, IS_EXECUTED AS IsExecuted, IS_ALREADY_CREATE_WF AS IsAlreadyCreateWf, [ERROR_MESSAGE] AS ErrorMessage",
+        "from": "FROM dbo.UPLOAD_MONITORING_H WITH(NOLOCK)"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "UPLOAD MONITORING NO",
+            "name": "UPLOAD_MONITORING_NO"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "UploadMonitoringNo"
+        }
+    ]
+}

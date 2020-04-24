@@ -21,6 +21,7 @@ export class LeadMainInfoComponent implements OnInit {
   LobCode: any;
   MrLeadSourceCode: any;
   AgencyName: any;
+  leadUrl: string;
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, public datepipe: DatePipe) { }
 
@@ -37,6 +38,7 @@ export class LeadMainInfoComponent implements OnInit {
         this.MrLeadSourceCode = response['MrLeadSourceCode'];
         this.AgencyName = response['AgencyName'];
       })
+      this.leadUrl = '/Lead/View?LeadId=' + this.LeadId;
   }
 
   MainInfoForm = this.fb.group({

@@ -42,7 +42,7 @@
           }
           ,
           {
-            "type": "text",
+            "type": "currency",
             "label": "Plafond Ammount",
             "property": "PlafondAmt"
           }
