@@ -11,7 +11,7 @@ export class AppFeeObj {
     SellFeePrcnt : number;
     AppFeePrcnt : number;
     IsCptlz : number;
-    CptlzAmt : number;
+    // CptlzAmt : number;
     FeeCapitalizeType : string;
     FeeCapitalizeAmt : number;
     FeeCapitalizePrcntg : number;

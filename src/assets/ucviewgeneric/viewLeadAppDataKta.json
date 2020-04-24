@@ -27,7 +27,7 @@
                     "property": ""
                 },
                 {
-                    "type": "text",
+                    "type": "decimal",
                     "label": "NTF Amount",
                     "property": "NtfAmt"
                 },
@@ -37,7 +37,7 @@
                     "property": ""
                 },
                 {
-                    "type": "text",
+                    "type": "decimal",
                     "label": "Installment Amount",
                     "property": "InstAmt"
                 }
