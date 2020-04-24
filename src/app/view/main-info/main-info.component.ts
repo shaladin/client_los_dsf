@@ -34,6 +34,7 @@ export class MainInfoComponent implements OnInit {
   mrMouTypeCode : any;
   custId: any;
   custUrl: string;
+  mouUrl: string;
   mouCustStatView: string;
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, public datepipe: DatePipe) { }
@@ -68,7 +69,8 @@ export class MainInfoComponent implements OnInit {
         this.isRevolving = mouData['IsRevolving'] == 1 ? "Yes" : "No";
         this.custId = custData['CustId'];
         this.mouCustStatView = custData['MouCustStatView'];
-        this.custUrl = environment.FoundationR3Web + '/Customer/CustomerView/Page?CustId=' + this.custId;
+        this.custUrl = environment.FoundationR3Web + '/CustomerView/Page?CustId=' + this.custId;
+        this.mouUrl = '/Mou/Cust/Paging?MouCustId=' + this.MouCustId;
       }
     );
   }

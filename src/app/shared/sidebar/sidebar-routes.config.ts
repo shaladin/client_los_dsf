@@ -90,6 +90,7 @@ export const ROUTES: RouteInfo[] = [
       { path: '/Lead/Cancel', title: 'Lead Cancel', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
       { path: '/Lead/FraudVerif/Paging', title: 'Fraud Verification', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
       { path: '/Lead/LeadInquiry', title: 'Lead Inquiry', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
+      { path: '/Lead/Verif', title: 'Lead Verification', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
     ], params: []
   },
   {
