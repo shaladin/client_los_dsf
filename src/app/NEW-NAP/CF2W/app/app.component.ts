@@ -42,6 +42,10 @@ export class AppComponent implements OnInit {
   tempMrUserRelationshipCode : any;
   tempMrOwnerRelationshipCode : any;
   tempMrIdTypeCode : any;
+  tempRateType : any;
+  tempCopyAddrOwnerFrom : any;
+  tempCopyAddrAssetFrom : any;
+  tempMrGracePeriodTypeCode: any;
   appForm = this.fb.group({
     SalesOfficerNo: [''],
     SalesOfficerName: [''],
@@ -70,26 +74,36 @@ export class AppComponent implements OnInit {
     ManufacturingYear: ['',[Validators.pattern("^[0-9]+$")]],
     AssetTaxDt: [''],
 
-    CopyAddrFrom: [''],
+    CopyAddrOwnerFrom: [''],
+    CopyAddrAssetFrom:[''],
     UserName: [''],
     MrUserRelationshipCode: [''],
     OwnerName: [''],
     MrIdTypeCode: [''],
     MrOwnerRelationshipCode: [''],
     OwnerIdNo: [''],
-    // OwnerAddr: [''],
-    // OwnerAreaCode1: [''],
-    // OwnerAreaCode2: [''],
-    // OwnerAreaCode3: [''],
-    // OwnerAreaCode4: [''],
-    // OwnerCity: [''],
-    // OwnerZipcode: [''],
+ 
     OwnerMobilePhnNo: [''],
     Notes: [''],
+  
+    TotalInsCptlzAmt: [''],
+    TotalInsIncomeAmt: [''],
 
+    //Use Life Insurance ? 
+    TotalLifeInsCptlzAmt: [''],
+    TotalLifeInsIncomeAmt: [''],
+ 
+     
+    //Dp asset, Rate Type, Effective rate to customer. FlatRatetoCustomer
+    RateType: [''],
+    TdpPaidCoyAmt: [''],
+   
 
-    //Inurance ...
-    InsuranceCapitalizedAmount: [''],
+    RoundingAmt: [''],
+    TotalInsCustAmt: [''],
+    MrGracePeriodTypeCode: [''],
+
+    GracePeriod: ['']
 
 
   });
@@ -142,7 +156,12 @@ export class AppComponent implements OnInit {
     refMasterCodeCustPersonalRelationship.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeCustPersonalRelationship;
     var refMasterCodeIdType=new RefMasterObj();
     refMasterCodeIdType.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeIdType;
-
+    var refMasterCodeRateType=new RefMasterObj();
+    refMasterCodeRateType.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeRateType;
+    var refMasterTypeCodeAddrType=new RefMasterObj();
+    refMasterTypeCodeAddrType.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeAddrType;
+    var refMasterTypeCodeGracePeriodType=new RefMasterObj();
+    refMasterTypeCodeGracePeriodType.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeGracePeriodType;
 
     this.http.post(this.getRefMasterListKeyValueActiveByCodeUrl, refMasterSalesRecommendation).subscribe(
       (response) => {
@@ -284,6 +303,45 @@ export class AppComponent implements OnInit {
         }
       }
     );
+    this.http.post(this.getRefMasterListKeyValueActiveByCodeUrl, refMasterCodeRateType).subscribe(
+      (response) => {
+        console.log(response);
+        this.tempRateType = response["ReturnObject"]; 
+        if (this.tempRateType.length > 0) {
+          this.appForm.patchValue({
+            RateType: this.tempRateType[0].Key,
+            
+          });
+        }
+      }
+    );
+    this.http.post(this.getRefMasterListKeyValueActiveByCodeUrl, refMasterTypeCodeAddrType).subscribe(
+      (response) => {
+        console.log(response);
+        this.tempCopyAddrOwnerFrom = response["ReturnObject"]; 
+        this.tempCopyAddrAssetFrom = response["ReturnObject"]; 
+       
+        if (this.tempRateType.length > 0) {
+          this.appForm.patchValue({
+            CopyAddrOwnerFrom: this.tempCopyAddrOwnerFrom[0].Key,
+            CopyAddrAssetFrom: this.tempCopyAddrAssetFrom[0].Key,
+          });
+        }
+      }
+    );
+    this.http.post(this.getRefMasterListKeyValueActiveByCodeUrl, refMasterTypeCodeGracePeriodType).subscribe(
+      (response) => {
+        console.log(response);
+        this.tempMrGracePeriodTypeCode = response["ReturnObject"]; 
+        if (this.tempMrGracePeriodTypeCode.length > 0) {
+          this.appForm.patchValue({
+            MrGracePeriodTypeCode: this.tempMrGracePeriodTypeCode[0].Key,
+            
+          });
+        }
+      }
+    ); 
+
   }
   copyAddress() {
     this.appCustAddrObj = new AppCustAddrObj();
