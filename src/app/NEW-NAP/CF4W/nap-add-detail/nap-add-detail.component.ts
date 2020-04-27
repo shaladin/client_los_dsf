@@ -96,6 +96,7 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   WizardNavigation(AppWizard : AppWizardObj){
+    console.log("WIZNAV")
     this.AppStepIndex = this.AppStep[AppWizard.AppStep];
     AppWizard.Wizard.goToNextStep();
   }

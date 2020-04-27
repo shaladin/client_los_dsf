@@ -11,7 +11,7 @@
 
       <aw-wizard-step [stepTitle]="'Guarantor Data'" (stepEnter)="EnterTab('GUAR')"
         [navigationSymbol]="{ symbol: '2' }">
-        <app-guarantor-paging *ngIf="AppStepIndex == 1" [AppId]=appId></app-guarantor-paging>
+        <app-guarantor-paging *ngIf="AppStepIndex == 1" [AppId]=appId (callbackSubmit)="WizardNavigation($event)"></app-guarantor-paging>
       </aw-wizard-step>
       
       <aw-wizard-step [stepTitle]="'Referantor Data'" (stepEnter)="EnterTab('REF')"
