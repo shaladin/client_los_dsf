@@ -29,6 +29,10 @@ const routes: Routes = [
                 loadChildren: './FCTR/input-nap.module#InputNapFCTRModule'
             },
             {
+                path: 'AdditionalProcess',
+                loadChildren: './business-process/additional-process/additional-process.module#AdditionalProcessSharingModule'
+            },
+            {
                 path: 'CreditProcess',
                 loadChildren: './business-process/credit-process/credit-process.module#CreditProcessSharingModule'
             },
@@ -39,6 +43,10 @@ const routes: Routes = [
             {
                 path: 'AddProcess',
                 loadChildren: './business-process/additional-process/additional-process.module#AdditionalProcessSharingModule'
+            },
+            {
+                path: 'View',
+                loadChildren: './view/nap-view.module#NapViewModule'
             },
             {
                 path: 'AssetData/Paging',

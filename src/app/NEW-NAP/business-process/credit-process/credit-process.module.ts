@@ -30,8 +30,11 @@ import { CommissionReservedFundDetailComponent } from "./commission-reserved-fun
 import { FraudDetectionPagingComponent } from "./fraud-detection/fraud-detection-paging/fraud-detection-paging.component";
 import { FraudDetectionVerifComponent } from "./fraud-detection/fraud-detection-verif/fraud-detection-verif.component";
 import { TabDeviationComponent } from "./credit-investigation/component/tab-deviation/tab-deviation.component";
-import { CreditReviewPagingComponent } from "./credit-review/credit-review-paging/credit-review-paging.component";
 import { CreditReviewMainComponent } from "./credit-review/credit-review-main/credit-review-main.component";
+import { CreditReviewPagingComponent } from "./credit-review/credit-review-paging/credit-review-paging.component";
+import { UcinputnumberModule } from "@adins/ucinputnumber";
+import { UcapprovalModule } from "@adins/ucapproval";
+import { UcapprovebyModule } from "@adins/ucapproveby";
 
 @NgModule({
   imports: [
@@ -46,6 +49,9 @@ import { CreditReviewMainComponent } from "./credit-review/credit-review-main/cr
     MatCheckboxModule,
     MatRadioModule,
     MatSelectModule,
+    UcinputnumberModule,
+    UcapprovalModule,
+    UcapprovebyModule
   ],
   declarations: [
     CreditApprovalPagingComponent,
@@ -55,14 +61,9 @@ import { CreditReviewMainComponent } from "./credit-review/credit-review-main/cr
     PhoneVerificationSubjectVerifComponent,
     CreditInvestigationDetailComponent,
     CreditInvestigationPagingComponent,
-    ViewAppCustDataPersonalComponent,
-    ViewAppCustDataCompanyComponent,
     TabApplicationDataComponent,
     TabDeviationComponent,
-    ViewFraudDetectionResultComponent,
-    ViewSurveyTaskListComponent,
     CustHistoryComponent,
-    ViewApprovalComponent,
     CommissionReservedFundPagingComponent,
     CommissionReservedFundDetailComponent,
     CommissionComponent,
@@ -70,8 +71,13 @@ import { CreditReviewMainComponent } from "./credit-review/credit-review-main/cr
     FormAddDynamicComponent,
     FraudDetectionPagingComponent,
     FraudDetectionVerifComponent,
+    CreditReviewMainComponent,
     CreditReviewPagingComponent,
-    CreditReviewMainComponent
+    ViewAppCustDataPersonalComponent,
+    ViewAppCustDataCompanyComponent,
+    ViewFraudDetectionResultComponent,
+    ViewSurveyTaskListComponent,
+    ViewApprovalComponent,
   ],
   providers: [
     NGXToastrService

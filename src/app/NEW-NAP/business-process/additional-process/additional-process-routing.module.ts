@@ -11,6 +11,8 @@ import { ListPersonalComponent } from './app-dup-check/list-personal/list-person
 import { ListCompanyComponent } from './app-dup-check/list-company/list-company.component';
 import { ApplicantExistingDataPersonalComponent } from './app-dup-check/applicant-existing-data-personal/applicant-existing-data-personal.component';
 import { ApplicantExistingDataCompanyComponent } from './app-dup-check/applicant-existing-data-company/applicant-existing-data-company.component';
+import { ReturnHandlingEditAppPagingComponent } from './return-handling/return-handling-edit-app-paging/return-handling-edit-app-paging.component';
+import { AssetInquiryComponent } from './po-extension/asset-inquiry/asset-inquiry.component';
 import { ReturnHandlingPhoneVerifPagingComponent } from './return-handling/return-handling-phone-verif-paging/return-handling-phone-verif-paging.component';
 
 const routes: Routes = [
@@ -29,6 +31,13 @@ const routes: Routes = [
         component: PoExtensionDetailComponent,
         data: {
           title: 'PO Extension Detail'
+        }
+      },
+      {
+        path: 'POExtension/AssetInquiry',
+        component: AssetInquiryComponent,
+        data: {
+          title: 'PO Extension Asset Inquiry'
         }
       },
       {
@@ -58,6 +67,13 @@ const routes: Routes = [
         data: {
           title: 'Return Handling Detail'
         }
+      },
+      {
+        path: 'ReturnHandling/EditAppPaging',
+        component: ReturnHandlingEditAppPagingComponent,
+        data: {
+          title: 'Return Handling Edit App Paging'
+        }        
       },
       {
         path: 'AppDupCheck/Paging',
