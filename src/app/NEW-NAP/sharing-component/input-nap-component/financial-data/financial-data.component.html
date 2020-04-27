@@ -1,10 +1,17 @@
 <form class="form-horizontal" [formGroup]="FinDataForm" (ngSubmit)="FinDataForm.valid && Submit()" #enjiForm="ngForm">
-  <app-subsidy [AppId]="AppId" [ParentForm]="FinDataForm"></app-subsidy>
-  <app-fee [AppId]="AppId" [ParentForm]="FinDataForm" [identifier]="'AppFee'"></app-fee>
+  <app-subsidy *ngIf="IsParentLoaded" [AppId]="AppId" [ParentForm]="FinDataForm"></app-subsidy>
+  <app-fee *ngIf="IsParentLoaded" [AppId]="AppId" [ParentForm]="FinDataForm" [identifier]="'AppFee'"></app-fee>
+  <app-schm-reguler-fix *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'RF'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-reguler-fix>
+  <app-schm-irregular *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'IR'" [AppId]="AppId" [ParentForm]="FinDataForm" [NumOfInst]="NumOfInst"> </app-schm-irregular>
+  <app-schm-step-up-step-down-normal *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'STNM'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-step-up-step-down-normal>
+  <app-schm-step-up-step-down-leasing *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'STLS'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-step-up-step-down-leasing>
+  <app-schm-step-up-step-down-cummulative *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'STCM'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-step-up-step-down-cummulative>
+  <app-schm-balloon *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'BL'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-balloon>
+  <app-schm-even-principal *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'EP'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-even-principal>
 
-  <lib-ucSubsection [id]="'FinData_FinDataId'" [title]="'Financial Data'" [panel]="'FinData_FinData'">
-  </lib-ucSubsection>
-  <div id="FinData_FinData">
+  <!-- <lib-ucSubsection [id]="'FinData_FinDataId'" [title]="'Financial Data'" [panel]="'FinData_FinData'">
+  </lib-ucSubsection> -->
+  <!-- <div id="FinData_FinData">
     <div class="col-md-12">
       <div class="row">
         <div class="col-md-6">
@@ -73,24 +80,6 @@
         </div>
       </div>
       <br />
-      <div class="row">
-        <div class="col-md-12">
-          <div class="row">
-            <div class="col-md-3 form-inline">
-              <label>NTF</label>
-            </div>
-            <div class="col-md-3 form-inline form-inline-right">
-              <label>{{FinDataForm.controls.NtfAmt.value | number : '1.2-2'}}</label>
-            </div>
-            <div class="col-md-3 form-inline">
-              <label>Num of Inst</label>
-            </div>
-            <div class="col-md-3 form-inline form-inline-right">
-              <label>{{FinDataForm.controls.NumOfInst.value | number}}</label>
-            </div>
-          </div>
-        </div>
-      </div>
       <div class="row">
         <div class="col-md-12">
           <div class="row">
@@ -216,7 +205,7 @@
             <div class="col-md-3 form-inline form-inline-right">
               <input type="" class="form-control full-width" formControlName="FlatRatePrcnt"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && FinDataForm.controls.FlatRatePrcnt.invalid}"
-                [readonly]="FinDataForm.controls.RateType.value != 'FLAT_RATE'"
+                [readonly]="FinDataForm.controls.RateType.value != 'FLT'"
                 currencyMask>
               <lib-uc-show-errors [control]="FinDataForm.controls.FlatRatePrcnt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
@@ -314,16 +303,8 @@
       </div>
       <br />
     </div>
-  </div>
-  <div class="form-inline-right">
-    <button class="btn btn-raised btn-primary margin-r-5" translate type="button" tabindex="0"
-      (click)="CalcBaseOnRate()">
-      Calculate based on Rate
-    </button>
-    <button class="btn btn-raised btn-primary" translate type="button" tabindex="0" (click)="CalcBaseOnInst()">
-      Calculate based on Inst Amt
-    </button>
-  </div>
+  </div> -->
+
   <div class="form-inline-right">
     <button type="submit" class="btn btn-raised btn-primary" translate type="button" tabindex="0"
       (click)="SaveAndContinue()">

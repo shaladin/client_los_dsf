@@ -47,6 +47,7 @@ export class LeadVerifComponent implements OnInit {
   AddRangeLeadVerfUrl = AdInsConstant.AddRangeLeadVerf;
   verifyStatus: any;
   ClaimListTaskUrl = AdInsConstant.ClaimListTask;
+  leadUrl: any;
   constructor(
     private http: HttpClient,
     private toastr: NGXToastrService,
@@ -55,7 +56,6 @@ export class LeadVerifComponent implements OnInit {
     private adInsService: AdInsService) { }
 
   ngOnInit() {
-    console.log('disini');
     this.arrCrit = new Array();
     this.inputObj = new InputSearchObj();
     this.inputObj._url = './assets/search/searchLeadVerf.json';
@@ -89,6 +89,7 @@ export class LeadVerifComponent implements OnInit {
         this.router.navigateByUrl('Error');
       }
     );
+    this.leadUrl = '/Lead/View?LeadId=';
   }
 
   searchSort(event: any) {

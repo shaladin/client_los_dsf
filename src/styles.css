@@ -290,6 +290,11 @@ aw-wizard-navigation-bar.horizontal ul.steps-indicator li a .label {
 .margin-r-5{
     margin-right: 5px;
 }
+
+.margin-15{
+    margin: 15px;
+}
+
 .margin-b-5
 {
     margin-bottom:5px;

@@ -1,18 +1,19 @@
 export class AppCustObj {
-    AppCustId: any;
-    AppId: any;
-    CustNo: any;
-    CustName: any;
-    MrCustTypeCode: any;
-    CustModelCode: any;
-    MrIdTypeCode: any;
-    IdNo: any;
-    IdExpiredDt: any;
-    TaxIdNo: any;
-    IsVip: any;
-    IsAppCustChecked: any;
-    IsAffiliateWithMf: any;
-    CustNotes: any;
+    AppCustId: number;
+    AppId: number;
+    CustNo: string;
+    CustName: string;
+    MrCustTypeCode: string;
+    CustModelCode: string;
+    MrIdTypeCode: string;
+    IdNo: string;
+    IdExpiredDt: Date;
+    TaxIdNo: string;
+    IsVip: boolean;
+    IsAppCustChecked: boolean;
+    IsAffiliateWithMf: boolean;
+    CustNotes: string;
+    IsExistingCust: boolean;
 
 constructor() { 
         this.AppCustId = 0; 

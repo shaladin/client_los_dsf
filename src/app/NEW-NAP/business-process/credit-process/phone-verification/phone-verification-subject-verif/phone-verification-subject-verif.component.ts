@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators, FormArray, FormGroup } from '@angular/forms';
@@ -17,6 +17,8 @@ import { VerifResulHDetailObj } from 'app/shared/model/VerfResultH/VerifResulHDe
   providers: [NGXToastrService]
 })
 export class PhoneVerificationSubjectVerifComponent implements OnInit {
+
+  isReturnHandling: boolean = false;
 
   PhoneDataForm = this.fb.group({
 
@@ -54,6 +56,8 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   viewObj: any;
 
   appId: any;
+  returnHandlingDId: any;
+  wfTaskListId: any;
   verfResultHId: any;
   subjectName: string;
   subjectType: string;
@@ -102,7 +106,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   PhoneNumberObj: any;
   QuestionObj: any;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
 
     this.route.queryParams.subscribe(params => {
       this.appId = params["AppId"];
@@ -110,6 +114,13 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
       this.subjectName = params["Name"];
       this.subjectType = params["Type"];
       this.idSource = params["Source"];
+      if (params['ReturnHandlingDId'] != null) {
+        this.returnHandlingDId = params['ReturnHandlingDId'];
+        this.isReturnHandling = true;
+      }
+      if (params['WfTaskListId'] != null) {
+        this.wfTaskListId = params['WfTaskListId'];
+      }
     });
   }
 
@@ -158,6 +169,12 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
       (response) => {
         console.log(response);
         this.toastr.successMessage(response["message"]);
+        if (this.isReturnHandling == false) {
+          this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId);
+        }
+        if (this.isReturnHandling == true) {
+          this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId + "&ReturnHandlingDId=" + this.returnHandlingDId + "&WfTaskListId=" + this.wfTaskListId);
+        }
       },
       (error) => {
         console.log(error);
@@ -396,6 +413,12 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
     this.setPhoneVerifData();
     console.log(this.PhoneDataForm);
     console.log(this.PhoneDataObj);
+    //if (this.isReturnHandling == false) {
+    //  this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId);
+    //}
+    //if (this.isReturnHandling == true) {
+    //  this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId + "&ReturnHandlingDId=" + this.returnHandlingDId + "&WfTaskListId=" + this.wfTaskListId);
+    //}
   }
 }
 
