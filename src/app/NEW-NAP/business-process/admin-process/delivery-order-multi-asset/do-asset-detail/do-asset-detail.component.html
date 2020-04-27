@@ -1,0 +1,161 @@
+<form class="form form-horizontal" [formGroup]="DOAssetDetail" #enjiForm="ngForm" novalidate
+  (ngSubmit)="enjiForm.form.valid && Save()">
+  <div class="modal-header">
+    <h4 class="modal-title">Asset Detail</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('0')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="col-md-12">
+      <div class="px-3">
+        <lib-ucSubsection [id]="'DOAssetInformationId'" [title]="'ASSET INFORMATION'" [panel]="'DOAssetInformationSection'"></lib-ucSubsection>
+        <div id="DOAssetInformationSection" class="form-body">
+          <div class="col-md-6">
+            <div class="form-group row" *ngIf="ShowSerialNo1">
+              <label class="col-md-3 adInsLabel {{serial1Mandatory ? 'adins-required-label' : ''}}" for="SerialNo1" translate>Serial No. 1</label>
+              <div class="col-md-9">
+                <input type="text" class="form-control adInsInput" formControlName="SerialNo1" 
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls.SerialNo1.invalid }" />
+                <show-errors [control]="DOAssetDetail.controls.SerialNo1" [submit]="enjiForm.submitted"></show-errors>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="ShowSerialNo2">
+              <label class="col-md-3 adInsLabel {{serial2Mandatory ? 'adins-required-label' : ''}}" for="SerialNo2" translate>Serial No. 2</label>
+              <div class="col-md-9">
+                <input type="text" class="form-control adInsInput" formControlName="SerialNo2" 
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls.SerialNo2.invalid }" />
+                <show-errors [control]="DOAssetDetail.controls.SerialNo2" [submit]="enjiForm.submitted"></show-errors>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="ShowSerialNo3">
+              <label class="col-md-3 adInsLabel {{serial3Mandatory ? 'adins-required-label' : ''}}" for="SerialNo3" translate>Serial No. 3</label>
+              <div class="col-md-9">
+                <input type="text" class="form-control adInsInput" formControlName="SerialNo3" 
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls.SerialNo3.invalid }" />
+                <show-errors [control]="DOAssetDetail.controls.SerialNo3" [submit]="enjiForm.submitted"></show-errors>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="ShowSerialNo4">
+              <label class="col-md-3 adInsLabel {{serial4Mandatory ? 'adins-required-label' : ''}}" for="SerialNo4" translate>Serial No. 4</label>
+              <div class="col-md-9">
+                <input type="text" class="form-control adInsInput" formControlName="SerialNo4" 
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls.SerialNo4.invalid }" />
+                <show-errors [control]="DOAssetDetail.controls.SerialNo4" [submit]="enjiForm.submitted"></show-errors>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="ShowSerialNo5">
+              <label class="col-md-3 adInsLabel {{serial5Mandatory ? 'adins-required-label' : ''}}" for="SerialNo5" translate>Serial No. 5</label>
+              <div class="col-md-9">
+                <input type="text" class="form-control adInsInput" formControlName="SerialNo5" 
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls.SerialNo5.invalid }" />
+                <show-errors [control]="DOAssetDetail.controls.SerialNo5" [submit]="enjiForm.submitted"></show-errors>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-md-3 adInsLabel" for="LicensePlateNo" translate>License Plate No</label>
+              <div class="col-md-9">
+                <input type="text" class="form-control adInsInput" formControlName="LicensePlateNo" 
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls.LicensePlateNo.invalid }" />
+                <show-errors [control]="DOAssetDetail.controls.LicensePlateNo" [submit]="enjiForm.submitted"></show-errors>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 adInsLabel" for="ManufacturingYear" translate>Manufacturing Year</label>
+              <div class="col-md-9">
+                <input type="number" class="form-control adInsInput" formControlName="ManufacturingYear" 
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls.ManufacturingYear.invalid }" />
+                <show-errors [control]="DOAssetDetail.controls.ManufacturingYear" [submit]="enjiForm.submitted"></show-errors>
+              </div>
+            </div>
+          </div>
+        </div>
+        <lib-ucSubsection [id]="'MainDocLetterId'" [title]="'MAIN DOCUMENT LETTER'" [panel]="'MainDocLetterSection'"></lib-ucSubsection>
+        <div id="MainDocLetterSection" class="form-body">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-md-3 adInsLabel" for="TempRegisLettNo" translate>Temporary Registration Letter No</label>
+              <div class="col-md-9">
+                <input type="text" class="form-control adInsInput" formControlName="TempRegisLettNo" 
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls.TempRegisLettNo.invalid }" />
+                <show-errors [control]="DOAssetDetail.controls.TempRegisLettNo" [submit]="enjiForm.submitted"></show-errors>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-md-3 adInsLabel" for="TempRegisLettDt" translate>Temporary Registration Letter Date</label>
+              <div class="col-md-9">
+                <input type="date" class="form-control adInsInput" formControlName="TempRegisLettDt" onkeypress="return false;"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls.TempRegisLettDt.invalid }" />
+                <show-errors [control]="DOAssetDetail.controls.TempRegisLettDt" [submit]="enjiForm.submitted"></show-errors>
+              </div>
+            </div>
+          </div>
+        </div>
+        <lib-ucSubsection [id]="'DOAssetDocId'" [title]="'ASSET DOCUMENT'" [panel]="'DOAssetDocSection'"></lib-ucSubsection>
+        <div id="DOAssetDocSection" class="form-body">
+          <table class="table table-responsive-md text-center table-hover">
+            <thead>
+              <tr class="table-header">
+                <th style="text-align: left;">
+                  <span class="thead-header" name='docName' translate>Document Name</span>
+                </th>
+                <th style="text-align: left;">
+                  <span class="thead-header" name='valueNeeded' translate>Value Needed</span>
+                </th>
+                <th style="text-align: center;">
+                  <span class="thead-header" name='mandatory' translate>Mandatory</span>
+                </th>
+                <th style="text-align: center;">
+                  <span class="thead-header" name='checked' translate>Checked</span>
+                </th>
+                <th style="text-align: left;">
+                  <span class="thead-header" name='docNo' translate>Document No</span>
+                </th>
+                <th style="text-align: left;">
+                  <span class="thead-header" name='notes' translate>Notes</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody formArrayName="DOAssetDocList">
+              <tr *ngFor="let item of DOAssetDetail.get('DOAssetDocList').controls; index as i" [formGroupName]="i">
+                <td style="text-align: left;">
+                  {{DOAssetDetail.get('DOAssetDocList').at(i).controls.DocName.value}}
+                </td>
+                <td style="text-align: left;">
+                  {{DOAssetDetail.get('DOAssetDocList').at(i).controls.IsValueNeeded.value}}
+                </td>
+                <td style="text-align: left;">
+                  {{DOAssetDetail.get('DOAssetDocList').at(i).controls.IsMandatory.value}}
+                </td>
+                <td style="text-align: left;">
+                  <input type="checkbox" formControlName="IsReceived" />
+                </td>
+                <td style="text-align: left;">
+                  <input type="text" class="form-control adInsInput" formControlName="DocNo"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls.DocNo.invalid }" />
+                  <show-errors [control]="DOAssetDetail.controls.DocNo" [submit]="enjiForm.submitted"></show-errors>
+                </td>
+                <td style="text-align: left;">
+                  <textarea class="form-control adInsInput" formControlName="DocNotes"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls.DocNotes.invalid }"></textarea>
+                  <show-errors [control]="DOAssetDetail.controls.DocNotes" [submit]="enjiForm.submitted"></show-errors>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-raised btn-primary">
+      <i class="fa fa-check-square-o"></i> Save
+    </button>
+    <button type="button" class="btn btn-warning btn-raised" (click)="activeModal.dismiss('0')">Cancel</button>
+  </div>
+</form>
+
