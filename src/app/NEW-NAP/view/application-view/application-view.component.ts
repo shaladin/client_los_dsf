@@ -9,7 +9,9 @@ export class applicationViewComponent implements OnInit {
 
   constructor() { }
 
+  AppId;
   ngOnInit() {
+    this.AppId = 31;
   }
 
 }
