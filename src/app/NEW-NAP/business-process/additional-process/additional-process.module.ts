@@ -10,6 +10,7 @@ import { OutstandingTcPagingComponent } from "./outstanding-tc/outstanding-tc-pa
 import { OutstandingTcDetailComponent } from "./outstanding-tc/outstanding-tc-detail/outstanding-tc-detail.component";
 import { ReturnHandlingPagingComponent } from "./return-handling/return-handling-paging/return-handling-paging.component";
 import { ReturnHandlingDetailComponent } from "./return-handling/return-handling-detail/return-handling-detail.component";
+import { ReturnHandlingCommissionComponent } from "./return-handling/return-handling-commission/return-handling-commission.component";
 import { ViewMainInfoComponentModule } from "app/NEW-NAP/sharing-component/view-main-info-component/view-main-info-component.module"
 import { PagingComponent } from "./app-dup-check/paging/paging.component";
 import { ListPersonalComponent } from "./app-dup-check/list-personal/list-personal.component";
@@ -43,10 +44,11 @@ import { ReturnHandlingPhoneVerifPagingComponent } from "./return-handling/retur
     ApplicantExistingDataPersonalComponent,
     ApplicantExistingDataCompanyComponent,
     ReturnHandlingEditAppPagingComponent,
-    AssetInquiryComponent
+    AssetInquiryComponent,
+    ReturnHandlingCommissionComponent,
     AppInquiryComponent,
-      CreditProcessInquiryComponent,
-      ReturnHandlingPhoneVerifPagingComponent
+    CreditProcessInquiryComponent,
+    ReturnHandlingPhoneVerifPagingComponent
   ],
   providers: [
     NGXToastrService

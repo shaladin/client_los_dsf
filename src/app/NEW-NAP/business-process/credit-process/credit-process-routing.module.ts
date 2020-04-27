@@ -13,6 +13,7 @@ import { FraudDetectionPagingComponent } from './fraud-detection/fraud-detection
 import { PhoneVerificationSubjectComponent } from './phone-verification/phone-verification-subject/phone-verification-subject.component';
 import { PhoneVerificationSubjectVerifComponent } from './phone-verification/phone-verification-subject-verif/phone-verification-subject-verif.component';
 import { PhoneVerificationSubjectViewComponent } from './phone-verification/phone-verification-subject-view/phone-verification-subject-view.component';
+import { CreditInquiryComponent } from './credit-inquiry/credit-inquiry.component';
 
 const routes: Routes = [
   {
@@ -107,6 +108,13 @@ const routes: Routes = [
         component: FraudDetectionPagingComponent,
         data: {
           title: 'Fraud Detection Paging'
+        }
+      },
+      {
+        path: 'CreditInquiry/Paging',
+        component: CreditInquiryComponent,
+        data: {
+          title: 'Credit Process Inquiry'
         }
       }
     ]

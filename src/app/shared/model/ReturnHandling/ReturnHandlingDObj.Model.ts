@@ -6,6 +6,7 @@ export class ReturnHandlingDObj {
     ReturnStat: string;
     ReturnStatName: string;
     ReturnHandlingNotes: string;
+    ReturnHandlingExecNotes : string;
     WfTaskListId: number;
     AppId: number;
   RowVersion: any;

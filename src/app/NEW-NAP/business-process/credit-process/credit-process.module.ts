@@ -35,6 +35,7 @@ import { CreditReviewPagingComponent } from "./credit-review/credit-review-pagin
 import { UcinputnumberModule } from "@adins/ucinputnumber";
 import { UcapprovalModule } from "@adins/ucapproval";
 import { UcapprovebyModule } from "@adins/ucapproveby";
+import { CreditInquiryComponent } from './credit-inquiry/credit-inquiry.component';
 
 @NgModule({
   imports: [
@@ -78,6 +79,8 @@ import { UcapprovebyModule } from "@adins/ucapproveby";
     ViewFraudDetectionResultComponent,
     ViewSurveyTaskListComponent,
     ViewApprovalComponent,
+    CreditReviewMainComponent,
+    CreditInquiryComponent
   ],
   providers: [
     NGXToastrService
