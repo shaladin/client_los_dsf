@@ -979,4 +979,7 @@ export class AdInsConstant {
 
   // Upload
   public static UploadFile = environment.FoundationR3Url + "/Upload/UploadFile";
+
+  // Download
+  public static DownloadTemplate = environment.FoundationR3Url + '/Download/DownloadTemplate';
 }

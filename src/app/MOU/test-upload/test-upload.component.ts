@@ -4,8 +4,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 
 @Component({
   selector: 'app-test-upload',
-  templateUrl: './test-upload.component.html',
-  styleUrls: ['./test-upload.component.scss']
+  templateUrl: './test-upload.component.html'
 })
 export class TestUploadComponent implements OnInit {
   uploadObj: any;
@@ -19,10 +18,11 @@ export class TestUploadComponent implements OnInit {
       subsectionId: 'UcUploadFile',
       formatsAllowed: '.txt, .xls, .xlsx, .csv',
       UploadTypeCode: 'UPL_ASM',
-      
-      enviromentUrl: environment.FoundationR3Url,
+      TemplateUrl: AdInsConstant.DownloadTemplate,
+      FileName: 'TestTemplateUrl',
+
+      environmentUrl: environment.FoundationR3Url,
       apiQryPaging: AdInsConstant.GetPagingObjectBySQL,
-      searchUploadName: 'searchTestUpload',
       pagingJson: "./assets/search/searchTestUpload.json",
       url: this.uploadUrl
     }
