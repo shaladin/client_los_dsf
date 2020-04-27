@@ -44,7 +44,7 @@
                     "property": "FullAssetName"
                 },
                 {
-                    "type": "text",
+                    "type": "currency",
                     "label": "NTF Amount",
                     "property": "NtfAmt"
                 }
