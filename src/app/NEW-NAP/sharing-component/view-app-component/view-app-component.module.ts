@@ -7,24 +7,28 @@ import { TabReferantorComponent } from './tab-referantor/tab-referantor.componen
 import { TabCommissionComponent } from './tab-commission/tab-commission.component';
 import { ListDataCommissionComponent } from './tab-commission/list-data-commission/list-data-commission.component';
 import { ViewReservedFundComponent } from "./view-reserved-fund/view-reserved-fund.component";
+import { ViewPhoneVerifComponent } from "./view-phone-verif/view-phone-verif.component";
+import { ViewAssetDataComponent } from "./view-asset-data/view-asset-data.component";
 
 @NgModule({
-    exports: [
+  exports: [
 
-    ],
-    imports: [
-        CommonModule,
-        AdInsModule,
-    ],
-    declarations: [
-        InvoiceDataFctrComponent,
-        TabReferantorComponent,
-        TabCommissionComponent,
-        ListDataCommissionComponent,
-        ViewReservedFundComponent
-    ],
-    providers: [
-        NGXToastrService
-    ]
+  ],
+  imports: [
+    CommonModule,
+    AdInsModule,
+  ],
+  declarations: [
+    InvoiceDataFctrComponent,
+    TabReferantorComponent,
+    TabCommissionComponent,
+    ListDataCommissionComponent,
+    ViewReservedFundComponent,
+    ViewPhoneVerifComponent,
+    ViewAssetDataComponent
+  ],
+  providers: [
+    NGXToastrService
+  ]
 })
 export class ViewAppComponentModule { }

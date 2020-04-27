@@ -58,19 +58,19 @@
 
               </ng-template>
             </mat-tab>
-            <mat-tab label="Term and Condition">
+            <mat-tab label="Phone Verif">
               <ng-template matTabContent>
-
+                <view-phone-verif [appId]="AppId"></view-phone-verif>
               </ng-template>
             </mat-tab>
-            <mat-tab label="Document">
+            <mat-tab label="Asset">
               <ng-template matTabContent>
-
+                <view-asset-data [appId]="AppId"></view-asset-data>
               </ng-template>
             </mat-tab>
-            <mat-tab label="Pefindo & Silk Result">
+            <mat-tab label="Reserved Fund">
               <ng-template matTabContent>
-
+                <view-reserved-fund [appId]="AppId"></view-reserved-fund>
               </ng-template>
             </mat-tab>
           </mat-tab-group>

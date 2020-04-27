@@ -9,6 +9,9 @@ import { MatTabsModule } from "@angular/material";
 import { InvoiceViewComponent } from "../business-process/admin-process/invoice/invoice-view/invoice-view.component";
 import { UcSubsectionModule } from "@adins/uc-subsection";
 import { ListDataCommissionComponent } from "../sharing-component/view-app-component/tab-commission/list-data-commission/list-data-commission.component";
+import { ViewReservedFundComponent } from "../sharing-component/view-app-component/view-reserved-fund/view-reserved-fund.component";
+import { ViewPhoneVerifComponent } from "../sharing-component/view-app-component/view-phone-verif/view-phone-verif.component";
+import { ViewAssetDataComponent } from "../sharing-component/view-app-component/view-asset-data/view-asset-data.component";
 
 @NgModule({
   imports: [
@@ -23,7 +26,10 @@ import { ListDataCommissionComponent } from "../sharing-component/view-app-compo
     TabReferantorComponent,
     InvoiceViewComponent,
     TabCommissionComponent,
-    ListDataCommissionComponent
+    ListDataCommissionComponent,
+    ViewReservedFundComponent,
+    ViewPhoneVerifComponent,
+    ViewAssetDataComponent
   ]
 })
 export class NapViewModule { }
