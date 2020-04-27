@@ -625,7 +625,7 @@
                   <label class="col-md-2  adInsLabel" translate>Rate Type</label>
                   <div class="col-md-4">
                     <select class="form-control adInsInput" style="width: auto" formControlName="RateType"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.RateType.invalid }">
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.RateType.invalid }" (change)="SetEffectiveRateType($event.target.value)">
                       <option *ngFor="let it of tempRateType" [value]="it.Key">
                         {{it.Value}}</option>
                     </select>

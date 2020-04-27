@@ -61,6 +61,7 @@ export class AppComponent implements OnInit {
   AddrMailingObj: any;
   AppCustAddrObj: any;
   CopyAddrOwnerFromType: any;
+  EffectiveRateType : any;
   CopyAddrLocationFromType: any;
   appForm = this.fb.group({
     SalesOfficerNo: [''],
@@ -108,11 +109,11 @@ export class AppComponent implements OnInit {
     //Use Life Insurance ? 
     TotalLifeInsCptlzAmt: [''],
     TotalLifeInsIncomeAmt: [''],
-    EffectiveRatePrcnt: [''],
-    FlatRatePrcnt: [''],
+    
     //Dp asset,  
     //  rate type tidak masuk db 
-    //  ddl fixed float rate type 
+    EffectiveRatePrcnt: [''],
+    FlatRatePrcnt: [''],
     RateType: [''],
     InstAmt: [''],
     TdpPaidCoyAmt: [''], 
@@ -318,9 +319,15 @@ export class AppComponent implements OnInit {
         this.tempRateType = response["ReturnObject"];
         if (this.tempRateType.length > 0) {
           this.appForm.patchValue({
-            RateType: this.tempRateType[0].Key,
-
+            RateType: this.tempRateType[0].Key, 
           });
+          if(this.tempRateType[0].Key == "FLT"){
+            this.appForm.controls.EffectiveRatePrcnt.disable();
+            this.appForm.controls.FlatRatePrcnt.enable(); 
+          }else if(this.tempRateType[0].Key == "EFCTV"){
+            this.appForm.controls.EffectiveRatePrcnt.enable();
+            this.appForm.controls.FlatRatePrcnt.disable(); 
+          } 
         }
       }
     );
@@ -557,14 +564,23 @@ export class AppComponent implements OnInit {
     }
   }
   SetLocationAddrType(event) {
-    this.CopyAddrLocationFromType = event;
-    
-    console.log(this.CopyAddrLocationFromType);
-
+    this.CopyAddrLocationFromType = event; 
   }
+  SetEffectiveRateType(event){
+    this.EffectiveRateType = event; 
+    console.log(this.EffectiveRateType);
 
+    if(this.EffectiveRateType == "FLT"){
+      this.appForm.controls.EffectiveRatePrcnt.disable();
+      this.appForm.controls.FlatRatePrcnt.enable(); 
+    }else if(this.EffectiveRateType == "EFCTV"){
+      this.appForm.controls.EffectiveRatePrcnt.enable();
+      this.appForm.controls.FlatRatePrcnt.disable(); 
+    }
+
+ 
+  }
   SetOwnerAddrType(event) {
-    this.CopyAddrOwnerFromType = event;
-
+    this.CopyAddrOwnerFromType = event; 
   }
 }
