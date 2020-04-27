@@ -7,6 +7,8 @@ import { TabReferantorComponent } from './tab-referantor/tab-referantor.componen
 import { TabCommissionComponent } from './tab-commission/tab-commission.component';
 import { ListDataCommissionComponent } from './tab-commission/list-data-commission/list-data-commission.component';
 import { ViewReservedFundComponent } from "./view-reserved-fund/view-reserved-fund.component";
+import { LifeInsuranceComponent } from './life-insurance/life-insurance.component';
+import { AppTcComponent } from './app-tc/app-tc.component';
 import { ViewPhoneVerifComponent } from "./view-phone-verif/view-phone-verif.component";
 import { ViewAssetDataComponent } from "./view-asset-data/view-asset-data.component";
 
@@ -25,7 +27,9 @@ import { ViewAssetDataComponent } from "./view-asset-data/view-asset-data.compon
     ListDataCommissionComponent,
     ViewReservedFundComponent,
     ViewPhoneVerifComponent,
-    ViewAssetDataComponent
+      ViewAssetDataComponent,
+      LifeInsuranceComponent,
+      AppTcComponent
   ],
   providers: [
     NGXToastrService

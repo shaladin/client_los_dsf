@@ -10,6 +10,7 @@ import { LeadObj } from 'app/shared/model/Lead.Model';
   templateUrl: './view-lead-data.component.html' 
 })
 export class ViewLeadDataComponent implements OnInit {
+  viewLeadAssetData: string;
 
   constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
@@ -19,10 +20,7 @@ export class ViewLeadDataComponent implements OnInit {
     this.GetLeadByLeadIdUrl = AdInsConstant.GetLeadByLeadId;
   }
   LeadId: any;
-  viewLeadAssetDataUsed: any;
-  viewLeadAssetDataNew : any;
   viewLeadAppData : any;
-  viewLeadAppDataKta :any;
   GetLeadAssetByLeadIdUrl : string;
   GetLeadByLeadIdUrl : string;
   leadAssetObj : any;
@@ -30,10 +28,8 @@ export class ViewLeadDataComponent implements OnInit {
   tempLeadAssetObj : any;
   tempLeadObj : any;
   ngOnInit() {
-    this.viewLeadAssetDataUsed = "./assets/ucviewgeneric/viewLeadAssetDataUsed.json";
-    this.viewLeadAssetDataNew = "./assets/ucviewgeneric/viewLeadAssetDataNew.json";
-    this.viewLeadAppData="./assets/ucviewgeneric/viewLeadAppData.json";
-    this.viewLeadAppDataKta="./assets/ucviewgeneric/viewLeadAppDataKta.json";
+    this.viewLeadAssetData = "./assets/ucviewgeneric/viewLeadAssetData.json";
+    this.viewLeadAppData = "./assets/ucviewgeneric/viewLeadAppData.json";
      
     this.leadAssetObj = new LeadAssetObj();
     this.leadAssetObj.LeadId = this.LeadId;

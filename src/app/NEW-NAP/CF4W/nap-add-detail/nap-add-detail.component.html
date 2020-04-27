@@ -1,13 +1,14 @@
-
 <div class="col-md-12 text-left">
   <div class="card">
     <lib-ucviewgeneric [viewInput]="viewProdMainInfoObj"> </lib-ucviewgeneric>
     <div class="card-body">
       <div class="px-3">
-        <lib-ucSubsection *ngIf="mode == 'ReturnHandling'" [id]="'formReturnInfoId'" [title]="'Credit Analysis'" [panel]="'formReturnInfo'">
+        <lib-ucSubsection *ngIf="mode == 'ReturnHandling'" [id]="'formReturnInfoId'" [title]="'Credit Analysis'"
+          [panel]="'formReturnInfo'">
         </lib-ucSubsection>
-        <div class="form-body" *ngIf="mode == 'ReturnHandling' && OnFormReturnInfo" [id]="'formReturnInfo'">  
-          <form class="form form-horizontal" [formGroup]="FormReturnObj" (ngSubmit)="FormReturnObj.valid" #enjiForm="ngForm">
+        <div class="form-body" *ngIf="mode == 'ReturnHandling' && OnFormReturnInfo" [id]="'formReturnInfo'">
+          <form class="form form-horizontal" [formGroup]="FormReturnObj" (ngSubmit)="FormReturnObj.valid"
+            #enjiForm="ngForm">
             <div class="form-body">
 
               <div class="form-group row">
@@ -25,12 +26,12 @@
                   <textarea type="textarea" row="5" class="form-control" formControlName="ReturnExecNotes"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && FormReturnObj.controls.ReturnExecNotes.invalid}"></textarea>
                   <lib-uc-show-errors [control]="ReturnExecNotes" [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>              
+                  </lib-uc-show-errors>
                 </div>
               </div>
 
             </div>
-          </form>            
+          </form>
         </div>
       </div>
     </div>
@@ -38,70 +39,70 @@
     <div class="card-body" *ngIf="AppStepIndex > -1">
       <div class="px-3">
         <aw-wizard #wizard navBarLayout="large-empty-symbols" [defaultStepIndex]="AppStepIndex">
-    
+
           <aw-wizard-step [stepTitle]="'Customer Data'" (stepEnter)="EnterTab('CUST')"
             [navigationSymbol]="{ symbol: '1' }">
             <app-customer-data *ngIf="AppStepIndex == 0" [appId]=appId></app-customer-data>
           </aw-wizard-step>
-    
+
           <aw-wizard-step [stepTitle]="'Guarantor Data'" (stepEnter)="EnterTab('GUAR')"
             [navigationSymbol]="{ symbol: '2' }">
             <app-guarantor-paging *ngIf="AppStepIndex == 1" [AppId]=appId></app-guarantor-paging>
           </aw-wizard-step>
-          
+
           <aw-wizard-step [stepTitle]="'Referantor Data'" (stepEnter)="EnterTab('REF')"
             [navigationSymbol]="{ symbol: '3' }">
             <app-referantor-data *ngIf="AppStepIndex == 2" [appId]=appId></app-referantor-data>
           </aw-wizard-step>
-    
+
           <aw-wizard-step [stepTitle]="'Application Data'" (stepEnter)="EnterTab('APP')"
-          [navigationSymbol]="{ symbol: '4' }">
+            [navigationSymbol]="{ symbol: '4' }">
             <app-application-data-model *ngIf="AppStepIndex == 3" [appId]=appId></app-application-data-model>
           </aw-wizard-step>
-    
+
           <aw-wizard-step [stepTitle]="'Asset Data'" (stepEnter)="EnterTab('ASSET')"
-          [navigationSymbol]="{ symbol: '5' }">
+            [navigationSymbol]="{ symbol: '5' }">
             <app-asset-data *ngIf="AppStepIndex == 4" [AppId]=appId></app-asset-data>
           </aw-wizard-step>
-    
+
           <aw-wizard-step [stepTitle]="'Insurance Data'" (stepEnter)="EnterTab('INS')"
-          [navigationSymbol]="{ symbol: '6' }">
-          <app-insurance-data *ngIf="AppStepIndex == 5" [appId]=appId></app-insurance-data>
+            [navigationSymbol]="{ symbol: '6' }">
+            <app-insurance-data *ngIf="AppStepIndex == 5" [appId]=appId></app-insurance-data>
           </aw-wizard-step>
-    
+
           <aw-wizard-step [stepTitle]="'Life Insurance Data'" (stepEnter)="EnterTab('LFI')"
-          [navigationSymbol]="{ symbol: '7' }">
+            [navigationSymbol]="{ symbol: '7' }">
             <app-life-insurance-data *ngIf="AppStepIndex == 6" [AppId]=appId></app-life-insurance-data>
           </aw-wizard-step>
-    
+
           <aw-wizard-step [stepTitle]="'Financial Data'" (stepEnter)="EnterTab('FIN')"
-          [navigationSymbol]="{ symbol: '8' }">
+            [navigationSymbol]="{ symbol: '8' }">
             <!-- <app-financial-data *ngIf="AppStepIndex == 7" [AppId]=appId></app-financial-data> -->
           </aw-wizard-step>
-    
+
           <aw-wizard-step [stepTitle]="'Terms and Conditions'" (stepEnter)="EnterTab('TC')"
             [navigationSymbol]="{ symbol: '9' }">
             <app-tc-data *ngIf="AppStepIndex == 8" [AppId]=appId></app-tc-data>
-            </aw-wizard-step>
+          </aw-wizard-step>
         </aw-wizard>
       </div>
     </div>
-    
-    
   </div>
 </div>
 
 <div class="form-actions ucSearch-Button-Right">
-  <button *ngIf="mode != 'ReturnHandling'" type="button" class="btn btn-raised btn_cancel" [routerLink]="['../../Paging']" [queryParams]="{LobCode:'CF4W'}" translate>
-    <i class="fa fa-check-square-o"></i> Cancel
+  <button type="button" class="btn btn-raised btn-cancel" [routerLink]="['../Paging']" [queryParams]="{LobCode:'CF4W'}"
+    translate>
+    <i class="fa fa-check-square-o"></i> Back
   </button>
-  <button *ngIf="mode == 'ReturnHandling'" type="button" class="btn btn-raised btn_cancel" [routerLink]="['../../../../AdditionalProcess/ReturnHandling/EditAppPaging']" translate>
+  <button *ngIf="mode == 'ReturnHandling'" type="button" class="btn btn-raised btn_cancel"
+    [routerLink]="['Nap/AdditionalProcess/ReturnHandling/EditAppPaging']" translate>
     <i class="fa fa-check-square-o"></i> Cancel
   </button>
   <button type="button" class="btn btn-raised btn-primary">
-    <i class="fa fa-check-square-o"></i> Save
+    <i class="fa fa-check-square-o"></i> Save and Continue
   </button>
-  <button type="button" (click)="Submit()" class="btn btn-raised btn-primary">
+  <button *ngIf="mode == 'ReturnHandling'" type="button" (click)="Submit()" class="btn btn-raised btn-primary">
     <i class="fa fa-check-square-o"></i> Submit
   </button>
 </div>

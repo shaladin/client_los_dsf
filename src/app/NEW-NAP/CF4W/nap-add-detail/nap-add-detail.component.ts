@@ -6,6 +6,7 @@ import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { WizardComponent } from 'angular-archwizard';
+import { AppWizardObj } from 'app/shared/model/App/AppWizard.Model';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 import { FormBuilder } from '@angular/forms';
 
@@ -93,7 +94,7 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   EnterTab(AppStep) {
-    console.log(AppStep);
+    // console.log(AppStep);
     switch (AppStep) {
       case AdInsConstant.AppStepCust:
         this.AppStepIndex = this.AppStep[AdInsConstant.AppStepCust];
@@ -128,10 +129,11 @@ export class NapAddDetailComponent implements OnInit {
     }
   }
 
-  // NextTab(){
-  //   console.log(this.wizard);
-  //   this.wizard.goToNextStep();
-  // }
+  WizardNavigation(AppWizard : AppWizardObj){
+    console.log("WIZNAV")
+    this.AppStepIndex = this.AppStep[AppWizard.AppStep];
+    AppWizard.Wizard.goToNextStep();
+  }
 
   Submit(){
     if(this.mode == AdInsConstant.ModeResultHandling){
@@ -151,13 +153,5 @@ export class NapAddDetailComponent implements OnInit {
         }
       )
     }
-  }
-
-  GoBack(){
-    // if(this.mode == AdInsConstant.ModeResultHandling){
-    //   this.router.navigate(["../CommissionReservedFund/Paging"]);
-    // }else{
-    //   this.router.navigate(["../Paging"]);
-    // }
   }
 }
