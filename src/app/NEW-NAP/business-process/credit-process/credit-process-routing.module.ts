@@ -10,6 +10,10 @@ import { CommissionReservedFundDetailComponent } from './commission-reserved-fun
 import { CommissionReservedFundPagingComponent } from './commission-reserved-fund/comission-reserved-fund-paging/commission-reserved-fund-paging.component';
 import { FraudDetectionVerifComponent } from './fraud-detection/fraud-detection-verif/fraud-detection-verif.component';
 import { FraudDetectionPagingComponent } from './fraud-detection/fraud-detection-paging/fraud-detection-paging.component';
+import { PhoneVerificationSubjectComponent } from './phone-verification/phone-verification-subject/phone-verification-subject.component';
+import { PhoneVerificationSubjectVerifComponent } from './phone-verification/phone-verification-subject-verif/phone-verification-subject-verif.component';
+import { PhoneVerificationSubjectViewComponent } from './phone-verification/phone-verification-subject-view/phone-verification-subject-view.component';
+import { CreditInquiryComponent } from './credit-inquiry/credit-inquiry.component';
 
 const routes: Routes = [
   {
@@ -37,10 +41,24 @@ const routes: Routes = [
         }
       },
       {
-        path: 'PhoneVerification/View',
-        component: PhoneVerificationPagingComponent,
+        path: 'PhoneVerification/Subject',
+        component: PhoneVerificationSubjectComponent,
         data: {
-          title: 'Phone Verification View'
+          title: 'Phone Verification Subject View'
+        }
+      },
+      {
+        path: 'PhoneVerification/Subject/View',
+        component: PhoneVerificationSubjectViewComponent,
+        data: {
+          title: 'Phone Verification Subject View Detail'
+        }
+      },
+      {
+        path: 'PhoneVerification/Subject/Verif',
+        component: PhoneVerificationSubjectVerifComponent,
+        data: {
+          title: 'Phone Verification Subject Verif'
         }
       },
       {
@@ -90,6 +108,13 @@ const routes: Routes = [
         component: FraudDetectionPagingComponent,
         data: {
           title: 'Fraud Detection Paging'
+        }
+      },
+      {
+        path: 'CreditInquiry/Paging',
+        component: CreditInquiryComponent,
+        data: {
+          title: 'Credit Process Inquiry'
         }
       }
     ]

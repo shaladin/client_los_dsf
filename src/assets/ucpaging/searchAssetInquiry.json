@@ -1,0 +1,166 @@
+{
+    "title": "Asset Inquiry",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "textbox",
+            "name": "ac.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "A.APP_NO",
+            "id": "AppNoId",
+            "value": "",
+            "label": "Application Number",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "agr.AGRMNT_NO",
+            "id": "AgrmntNoId",
+            "value": "",
+            "label": "Agreement NO",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "aa.FULL_ASSET_NAME",
+            "id": "AssetDescId",
+            "value": "",
+            "label": "Asset Description",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "vat.SERIAL_NO_5_LABEL",
+            "id": "LicensePlateId",
+            "value": "",
+            "label": "License Plate No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "vat.SERIAL_NO_1_LABEL",
+            "id": "ChassisId",
+            "value": "",
+            "label": "Chassis NO",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "vat.SERIAL_NO_2_LABEL",
+            "id": "EngineId",
+            "value": "",
+            "label": "Engine NO",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "aa.ASSET_STAT",
+            "id": "AssetStatId",
+            "value": "",
+            "label": "Asset Status",
+            "placeholder": "Placeholder"
+        }
+    ],
+    "querystring": {
+        "select": "SELECT ac.CUST_NAME AS CustName, a.APP_NO AS AppNo, agr.AGRMNT_NO as AgrmntNo, aa.FULL_ASSET_NAME AS FullAssetName, vat.SERIAL_NO_1_LABEL AS ChassisNo, vat.SERIAL_NO_2_LABEL AS EngineNo, vat.SERIAL_NO_5_LABEL AS LicensePlate, aa.ASSET_STAT AS AssetStat",
+        "from": "FROM dbo.APP a WITH(NOLOCK) LEFT JOIN dbo.APP_CUST ac WITH(NOLOCK) ON a.APP_ID = ac.APP_ID JOIN dbo.APP_ASSET aa WITH(NOLOCK) ON a.APP_ID = aa.APP_ID JOIN dbo.AGRMNT agr WITH(NOLOCK) ON a.APP_ID = agr.APP_ID and aa.AGRMNT_ID = agr.AGRMNT_ID JOIN dbo.V_ASSET_TYPE vat WITH(NOLOCK) ON aa.ASSET_TYPE_CODE = vat.ASSET_TYPE_CODE"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Customer Name",
+            "name": "ac.CUST_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Application No",
+            "name": "a.APP_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Agreement No",
+            "name": "agr.AGRMNT_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Asset Description",
+            "name": "aa.FULL_ASSET_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "License Plate No",
+            "name": "vat.SERIAL_NO_5_LABEL"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Chassis No",
+            "name": "vat.SERIAL_NO_1_LABEL"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Engine No",
+            "name": "vat.SERIAL_NO_2_LABEL"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Asset Status",
+            "name": "aa.ASSET_STAT"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "AppNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "AgrmntNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "FullAssetName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "LicensePlate"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "ChassisNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "EngineNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "AssetStat"
+        }
+    ]
+}

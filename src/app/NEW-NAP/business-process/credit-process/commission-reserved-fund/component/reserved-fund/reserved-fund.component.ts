@@ -29,6 +29,7 @@ export class ReservedFundComponent implements OnInit {
   });
 
   @Input() appId: any;
+  @Input() ReturnHandlingDId;
   appObj = {
     AppId: 0,
   };
@@ -45,6 +46,7 @@ export class ReservedFundComponent implements OnInit {
   remainingAllocatedAmt: any;
   totalRsvFundAmt: any;
   grossYield: any;
+  show : boolean = false;
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
 
@@ -63,6 +65,13 @@ export class ReservedFundComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    
+    if(this.ReturnHandlingDId!=0){
+      this.show = true;
+    }
+
+
     this.initUrl();
     this.appObj.AppId = this.appId;
     this.GetAppRsvFundRule(this.appObj);
