@@ -45,7 +45,7 @@
         "name": "A.APP_CREATED_DT",
         "id": "appDtgte",
         "value": "",
-        "label": "Application Date >=",
+        "label": "Application Created Date From >=",
         "restriction": "gte",
         "datatype": "date"
       },
@@ -54,33 +54,25 @@
         "name": "A.APP_CREATED_DT",
         "id": "appDtlte",
         "value": "",
-        "label": "Application Date <=",
+        "label": "Application Created Date To <=",
         "restriction": "lte",
         "datatype": "date"
       },
       {
         "type": "textbox",
-        "name": "A.IS_APP_INIT_DONE",
-        "id": "isAppInitDone",
+        "name": "RE.EMP_NAME",
+        "id": "salesOfficerName",
         "value": "",
-        "label": "Customer Name",
+        "label": "Sales Person Name",
         "placeholder": "Placeholder"
       },  
       {
-        "type": "dropdown",
-        "datatype": "text",
-        "name": "A.APP_CURR_STEP",
-        "id": "appCurrStepId",
+        "type": "textbox",
+        "name": "A.IS_APP_INIT_DONE",
+        "id": "isAppInitDone",
         "value": "",
-        "placeholder": "Placeholder",
-        "isFromURL": true,
-        "isSelectOne": false,
-        "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefStatus/GetListKeyValueActiveGrpCodeByCode",
-        "label": "Current Application Step",
-        "items": [],
-        "itemsUrl": [],
-        "criteriaPropName": "StatusGrpCode",
-        "criteriaPropValue": "APP_STEP"
+        "label": "Nap Submitted",
+        "placeholder": "Placeholder"
       },
       {
         "type": "dropdown",
@@ -97,11 +89,27 @@
         "itemsUrl": [],
         "criteriaPropName": "StatusGrpCode",
         "criteriaPropValue": "APP_STEP"
+      },  
+      {
+        "type": "dropdown",
+        "datatype": "text",
+        "name": "A.APP_CURR_STEP",
+        "id": "appCurrStepId",
+        "value": "",
+        "placeholder": "Placeholder",
+        "isFromURL": true,
+        "isSelectOne": false,
+        "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+        "label": "Current Application Step",
+        "items": [],
+        "itemsUrl": [],
+        "criteriaPropName": "StatusGrpCode",
+        "criteriaPropValue": "APP_STEP"
       }
     ],
     "querystring": {
-      "select": "select A.APP_ID AS AppId, A.APP_NO AS AppNo, AGR.AGRMNT_NO AS AgrmntNo, AC.CUST_NAME AS CustName, AGR.AGRMNT_STAT AS AgrmntStat, AC.CUST_NAME AS CustName, A.APP_CREATED_DT AS AppCreatedDt, A.IS_APP_INIT_DONE AS isNapSub,   A.APP_LAST_STEP AS AppLastStep, A.APP_CURR_STEP AS AppCurrStep, DATEDIFF(SECOND, A.DTM_CRT, A.DTM_UPD) AS TotalTimeNap , CONVERT(VARCHAR(12), DATEDIFF(SECOND,A.DTM_CRT,A.DTM_UPD) / 60 / 60 / 24) + ' Day(s) ' +  CONVERT(VARCHAR(12), DATEDIFF(SECOND,A.DTM_CRT,A.DTM_UPD) / 60 / 60 % 24) + ' Hour(s) ' +  CONVERT(VARCHAR(2), DATEDIFF(SECOND,A.DTM_CRT,A.DTM_UPD) / 60 % 60) + ' Minute(s) ' +  CONVERT(VARCHAR(2), DATEDIFF(SECOND,A.DTM_CRT,A.DTM_UPD) % 60) + ' Second(s) ' AS 'DateDiff'",
-      "from": "FROM dbo.APP A WITH(NOLOCK) JOIN dbo.AGRMNT AGR WITH(NOLOCK) ON A.APP_ID = AGR.APP_ID JOIN dbo.APP_CUST AC WITH(NOLOCK) ON AC.APP_ID = A.APP_ID JOIN dbo.APP_FIN_DATA FD ON FD.APP_ID = A.APP_ID " 
+      "select": "select A.APP_ID AS AppId, A.APP_NO AS AppNo, AGR.AGRMNT_NO AS AgrmntNo,AGR.AGRMNT_ID AS agrmntId, AC.CUST_NAME AS CustName, AGR.AGRMNT_STAT AS AgrmntStat, AC.CUST_NAME AS CustName, A.APP_CREATED_DT AS AppCreatedDt, A.IS_APP_INIT_DONE AS isNapSub,   A.APP_LAST_STEP AS AppLastStep, A.APP_CURR_STEP AS AppCurrStep, DATEDIFF(SECOND, A.DTM_CRT, A.DTM_UPD) AS TotalTimeNap , CONVERT(VARCHAR(12), DATEDIFF(SECOND,A.DTM_CRT,A.DTM_UPD) / 60 / 60 / 24) + ' Day(s) ' +  CONVERT(VARCHAR(12), DATEDIFF(SECOND,A.DTM_CRT,A.DTM_UPD) / 60 / 60 % 24) + ' Hour(s) ' +  CONVERT(VARCHAR(2), DATEDIFF(SECOND,A.DTM_CRT,A.DTM_UPD) / 60 % 60) + ' Minute(s) ' +  CONVERT(VARCHAR(2), DATEDIFF(SECOND,A.DTM_CRT,A.DTM_UPD) % 60) + ' Second(s) ' AS 'DateDiff', RE.EMP_NAME AS SalesOfficerName, AC.APP_CUST_ID AS AppCustId",
+      "from": "FROM dbo.APP A WITH(NOLOCK) JOIN dbo.AGRMNT AGR WITH(NOLOCK) ON A.APP_ID = AGR.APP_ID JOIN dbo.APP_CUST AC WITH(NOLOCK) ON AC.APP_ID = A.APP_ID JOIN dbo.APP_FIN_DATA FD ON FD.APP_ID = A.APP_ID JOIN [dbo].[V_EMP_NAME] RE WITH (NOLOCK) ON AGR.SALES_OFFICER_NO = RE.EMP_NO" 
     },
     "headerList": [
       {
@@ -129,6 +137,12 @@
         "name": "AGR.AGRMNT_STAT"
       }, 
       {
+        "type": "sort",
+        "position": "left",
+        "label": "Sales Person Name",
+        "name": "RE.EMP_NAME"
+      },  
+      {
         "type": "label",
         "position": "left",
         "label": "NAP Submitted",
@@ -137,7 +151,7 @@
       {
         "type": "sort",
         "position": "left",
-        "label": "Application Date",
+        "label": "Application Created Date",
         "name": "A.APP_CREATED_DT"
       }, 
       {
@@ -151,12 +165,6 @@
         "position": "left",
         "label": "Current Application Step",
         "name": "A.APP_STAT"
-      },
-      {
-        "type": "label",
-        "position": "left",
-        "label": "Total Time NAP",
-        "name": "DateDiff"
       }
     ],
     "bodyList": [
@@ -183,16 +191,28 @@
             "property": "agrmntId"
           }
         ]
-      }, 
+      },
       {
-        "type": "text",
+        "type": "link",
         "position": "left",
-        "property": "CustName"
-      }, 
+        "property": "CustName",
+        "path": "",
+        "param": [
+          {
+            "type": "AppCustId",
+            "property": "AppCustId"
+          }
+        ]
+      },
       {
         "type": "text",
         "position": "left",
         "property": "AgrmntStat"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "SalesOfficerName"
       },
       {
         "type": "text",
@@ -214,11 +234,6 @@
         "type": "text",
         "position": "left",
         "property": "AppCurrStep"
-      },
-      {
-        "type": "text",
-        "position": "left",
-        "property": "DateDiff"
       }
     ]
   }

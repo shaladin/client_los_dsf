@@ -1,0 +1,51 @@
+{
+    "isSeq" : true,
+    "headerList": [
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Name",
+            "name": "InsuredName"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Birth Place/Date",
+            "name": "BirthPlaceDate"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Age",
+            "name": "Age"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Object Type",
+            "name": "MrCustTypeCode"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "InsuredName"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "BirthPlaceDate"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "Age"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "MrCustTypeCode"
+        }
+    ]
+}

@@ -1,19 +1,48 @@
 <div class="col-md-12 text-left">
   <div class="card">
-      <lib-ucviewgeneric [viewInput]="viewProdMainInfoObj"> </lib-ucviewgeneric>
+    <lib-ucviewgeneric [viewInput]="viewProdMainInfoObj"> </lib-ucviewgeneric>
 
-      <aw-wizard #wizard navBarLayout="large-empty-symbols" [defaultStepIndex]="0">
+    <span *ngIf='show'>
+      <div class="class=form-group row adins-required">
+        <label class="col-md-3 adInsLabel">Return Notes </label>
+        <div class="col-md-3">
+          <textarea class="form-control adInsInput width-75-per" formControlName="ReturnHandlingNotes">
+              <lib-uc-show-errors  [control]="HandlingForm.controls.ReturnHandlingNotes" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors >
+          </textarea>
+        </div>
+        <label class="col-md-3 adInsLabel">Return Execution Notes </label>
+        <div class="col-md-3">
+          <textarea class="form-control adInsInput width-75-per" formControlName="ReturnHandlingExecNotes">
+              <lib-uc-show-errors  [control]="HandlingForm.controls.ReturnHandlingExecNotes" [submit]="enjiForm.submitted">
+          </textarea>
+        </div>
+      </div>
+    </span>
 
-        <aw-wizard-step [awNavigationMode] navigateBackward="allow" navigateForward="allow" [stepTitle]="'Commission'" (stepEnter)="EnterTab('tab1')"
-          [navigationSymbol]="{ symbol: '1' }">
-          <app-commission *ngIf="isTab1 == true" [AppId]=appId></app-commission>
-        </aw-wizard-step>
-  
-        <aw-wizard-step [awNavigationMode] navigateBackward="allow" navigateForward="allow" [stepTitle]="'Reserved Fund'" (stepEnter)="EnterTab('tab2')"
-          [navigationSymbol]="{ symbol: '2' }">
-          <reserved-fund *ngIf="isTab2 == true" [appId]=appId></reserved-fund>
-        </aw-wizard-step>
-        
-      </aw-wizard>
+    <aw-wizard #wizard navBarLayout="large-empty-symbols" [defaultStepIndex]="0">
+
+      <aw-wizard-step [awNavigationMode] navigateBackward="allow" navigateForward="allow" [stepTitle]="'Commission'"
+        (stepEnter)="EnterTab('tab1')" [navigationSymbol]="{ symbol: '1' }">
+        <app-commission *ngIf="isTab1 == true" [AppId]=appId [ReturnHandlingDId]="ReturnHandlingDId"></app-commission>
+      </aw-wizard-step>
+
+      <aw-wizard-step [awNavigationMode] navigateBackward="allow" navigateForward="allow" [stepTitle]="'Reserved Fund'"
+        (stepEnter)="EnterTab('tab2')" [navigationSymbol]="{ symbol: '2' }">
+        <reserved-fund *ngIf="isTab2 == true" [appId]=appId [ReturnHandlingDId]="ReturnHandlingDId"></reserved-fund>
+      </aw-wizard-step>
+
+    </aw-wizard>
+
+    <div class="form-actions row">
+      <div class="col-md-10"></div>
+      <div class="col-md-2">
+        <span *ngIf='show'>
+          <button type="button" (click)="EditReturnHandling()" class="btn btn-raised btn-primary" translate>
+            <i class="fa fa-check-square-o"></i> Submit
+          </button>
+        </span>
+      </div>
+    </div>
   </div>
 </div>
