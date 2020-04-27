@@ -14,7 +14,6 @@ import { PhoneVerificationSubjectComponent } from './phone-verification/phone-ve
 import { PhoneVerificationSubjectVerifComponent } from './phone-verification/phone-verification-subject-verif/phone-verification-subject-verif.component';
 import { PhoneVerificationSubjectViewComponent } from './phone-verification/phone-verification-subject-view/phone-verification-subject-view.component';
 import { CreditInquiryComponent } from './credit-inquiry/credit-inquiry.component';
-import { TestComponent } from './test/test.component';
 
 const routes: Routes = [
   {
