@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 import { VerfResultObj } from 'app/shared/model/VerfResult/VerfResult.Model';
 import { DatePipe } from '@angular/common';
+import { ReturnHandlingDObj } from '../../../../../shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 
 
 
@@ -17,21 +18,35 @@ import { DatePipe } from '@angular/common';
 })
 export class PhoneVerificationSubjectComponent implements OnInit {
 
+
   getPhoneVerifSubjUrl: any;
   getVerfResultUrl: any;
   getAppUrl: any;
   addVerfResultUrl: any;
+  rtnHandlingDUrl: any;
+  editRtnHandlingDUrl: any;
+
+  isReturnHandling: boolean = false;
 
   ReturnHandlingForm = this.fb.group({
     IsAnyUpdate: [''],
-    UpdateNotes: ['']
+    UpdateNotes: ['', Validators.maxLength(4000)],
+    ExecNotes: ['', Validators.maxLength(4000)],
   });
   viewObj: any;
 
   appId: any;
+  returnHandlingDId: any;
+  wfTaskListId: any;
+
   appObj = {
     AppId: 0,
   };
+
+  rtnHandlingDObj = {
+    ReturnHandlingDId: 0,
+  };
+
   verfResObj =
     {
       TrxRefNo: "",
@@ -41,11 +56,22 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   AppObj: any;
   verifResultObj: any;
   addVerifResultObj: VerfResultObj;
+  returnHandlingDObj: any;
+  ReturnHandlingDData: ReturnHandlingDObj;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
 
     this.route.queryParams.subscribe(params => {
-      this.appId = params["AppId"];
+      if (params['AppId'] != null) {
+        this.appId = params['AppId'];
+      }
+      if (params['ReturnHandlingDId'] != null) {
+        this.returnHandlingDId = params['ReturnHandlingDId'];
+        this.isReturnHandling = true;
+      }
+      if (params['WfTaskListId'] != null) {
+        this.wfTaskListId = params['WfTaskListId'];
+      }
     });
   }
 
@@ -54,6 +80,8 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     this.getAppUrl = AdInsConstant.GetAppById;
     this.getVerfResultUrl = AdInsConstant.GetVerfResultByTrxRefNoAndVerfTrxTypeCode;
     this.addVerfResultUrl = AdInsConstant.AddVerfResult;
+    this.rtnHandlingDUrl = AdInsConstant.GetReturnHandlingDByReturnHandlingDId;
+    this.editRtnHandlingDUrl = AdInsConstant.EditReturnHandlingD;
   }
 
   async ngOnInit(): Promise<void> {
@@ -63,32 +91,41 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     await this.GetAppData();
     await this.GetVerfResultData();
     await this.GetPhnVerfSubjData();
-
+    if (this.isReturnHandling == true) {
+      this.GetReturnHandlingD();
+    }
   }
 
-  //SaveForm() {
-  //  if (this.isCalculated == false) {
-  //    this.toastr.errorMessage("Please Calculate First");
-  //  }
-  //  else {
-  //    this.calculating()
-  //    if (this.maxAllocatedAmt < this.totalRsvFundAmt) {
-  //      this.toastr.errorMessage("Total Reserved Fund Amount Must be Less Than Remaining Allocated Amount");
-  //    }
-  //    else {
-  //      this.setAppReservedFundData();
-  //      this.http.post(this.addEditVerfResultUrl, this.allAppReservedFundObj).subscribe(
-  //        (response) => {
-  //          console.log(response);
-  //          this.toastr.successMessage(response["message"]);
-  //        },
-  //        (error) => {
-  //          console.log(error);
-  //        }
-  //      );
-  //    }
-  //  }
-  //}
+  SaveForm() {
+    if (this.isReturnHandling == false) {
+
+    }
+    if (this.isReturnHandling == true) {
+      this.setReturnHandlingD();
+      this.http.post(this.editRtnHandlingDUrl, this.ReturnHandlingDData).subscribe(
+        (response) => {
+          console.log(response);
+          this.toastr.successMessage(response["message"]);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+
+    }
+  }
+
+  setReturnHandlingD() {
+    this.ReturnHandlingDData = new ReturnHandlingDObj();
+    this.ReturnHandlingDData.ReturnHandlingDId = this.returnHandlingDObj.ReturnHandlingDId;
+    this.ReturnHandlingDData.ReturnHandlingHId = this.returnHandlingDObj.ReturnHandlingHId;
+    this.ReturnHandlingDData.MrReturnTaskCode = this.returnHandlingDObj.MrReturnTaskCode;
+    this.ReturnHandlingDData.ReturnStat = "DONE";
+    this.ReturnHandlingDData.ReturnHandlingNotes = this.returnHandlingDObj.ReturnHandlingNotes;
+    this.ReturnHandlingDData.ReturnHandlingExecNotes = this.ReturnHandlingForm.controls["ExecNotes"].value;
+    this.ReturnHandlingDData.WfTaskListId = this.wfTaskListId;
+    this.ReturnHandlingDData.RowVersion = this.returnHandlingDObj.RowVersion;
+  }
 
   async GetAppData() {
     await this.http.post(this.getAppUrl, this.appObj).toPromise().then(
@@ -137,12 +174,23 @@ export class PhoneVerificationSubjectComponent implements OnInit {
       this.addVerifResultObj.LobName = this.AppObj.LobCode;
       this.addVerifResultObj.Notes = "-";
 
-      this.http.post(this.addVerfResultUrl, this.addVerifResultObj).subscribe(
+     await this.http.post(this.addVerfResultUrl, this.addVerifResultObj).toPromise().then(
         (response) => {
           console.log(response);
         }
       );
     }
+  }
+
+  async GetReturnHandlingD() {
+    this.rtnHandlingDObj.ReturnHandlingDId = this.returnHandlingDId;
+    await this.http.post(this.rtnHandlingDUrl, this.rtnHandlingDObj).toPromise().then(
+      (response) => {
+        console.log(response);
+        this.returnHandlingDObj = response;
+
+      }
+    );
   }
 
   View(VerifResultHid, SubjectName) {
@@ -151,6 +199,11 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   }
 
   Verif(VerifResultHid, SubjectName, SubjectType, IdSource) {
-    window.open("/Nap/PhoneVerif/Subject/Verif?AppId=" + this.appId + "&VerfResultHId=" + VerifResultHid + "&Name=" + SubjectName + "&Type=" + SubjectType + "&Source=" + IdSource, "_blank");
+    if (this.isReturnHandling == false) {
+      this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject/Verif?AppId=" + this.appId + "&VerfResultHId=" + VerifResultHid + "&Name=" + SubjectName + "&Type=" + SubjectType + "&Source=" + IdSource);
+    }
+    if (this.isReturnHandling == true) {
+      this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject/Verif?AppId=" + this.appId + "&VerfResultHId=" + VerifResultHid + "&Name=" + SubjectName + "&Type=" + SubjectType + "&Source=" + IdSource + "&ReturnHandlingDId=" + this.returnHandlingDId + "&WfTaskListId=" + this.wfTaskListId);
+    }
   }
 }

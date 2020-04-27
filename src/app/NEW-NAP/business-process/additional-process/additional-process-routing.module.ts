@@ -13,6 +13,7 @@ import { ApplicantExistingDataPersonalComponent } from './app-dup-check/applican
 import { ApplicantExistingDataCompanyComponent } from './app-dup-check/applicant-existing-data-company/applicant-existing-data-company.component';
 import { ReturnHandlingEditAppPagingComponent } from './return-handling/return-handling-edit-app-paging/return-handling-edit-app-paging.component';
 import { AssetInquiryComponent } from './po-extension/asset-inquiry/asset-inquiry.component';
+import { ReturnHandlingPhoneVerifPagingComponent } from './return-handling/return-handling-phone-verif-paging/return-handling-phone-verif-paging.component';
 
 const routes: Routes = [
   {
@@ -109,6 +110,13 @@ const routes: Routes = [
           title: 'Applicant Existing Data Company'
         }        
       },
+      {
+        path: 'ReturnHandlingPhoneVerif/Paging',
+        component: ReturnHandlingPhoneVerifPagingComponent,
+        data: {
+          title: 'Return Handling Phone Verification Paging'
+        }
+      }
     ]
   }
 ];

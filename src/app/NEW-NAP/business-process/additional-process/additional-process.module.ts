@@ -20,6 +20,7 @@ import { ReturnHandlingEditAppPagingComponent } from './return-handling/return-h
 import { AssetInquiryComponent } from './po-extension/asset-inquiry/asset-inquiry.component';
 import { AppInquiryComponent } from './app-inquiry/app-inquiry.component';
 import { CreditProcessInquiryComponent } from './credit-process-inquiry/credit-process-inquiry.component';
+import { ReturnHandlingPhoneVerifPagingComponent } from "./return-handling/return-handling-phone-verif-paging/return-handling-phone-verif-paging.component";
 
 @NgModule({
   imports: [
@@ -44,7 +45,8 @@ import { CreditProcessInquiryComponent } from './credit-process-inquiry/credit-p
     ReturnHandlingEditAppPagingComponent,
     AssetInquiryComponent
     AppInquiryComponent,
-    CreditProcessInquiryComponent
+      CreditProcessInquiryComponent,
+      ReturnHandlingPhoneVerifPagingComponent
   ],
   providers: [
     NGXToastrService
