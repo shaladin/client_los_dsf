@@ -1,0 +1,52 @@
+{
+    "title": "",
+    "subsection": [
+      {
+        "subSectionId": "AppLifeInsId",
+        "subSectionTitle": "Life Insurance Data",
+        "mainInfoUrl": "http://r3app-server.ad-ins.com/LOS/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {
+            "type": "boolean",
+            "label": "Cover Life Insurance",
+            "property": "1"
+          },
+          {
+            "type": "text",
+            "label": "Life Insurance Company",
+            "property": "LifeInscoBranchName"
+          },
+          {
+            "type": "text",
+            "label": "Total Premi to Customer",
+            "property": "TotalPremiToCust"
+          },
+          {
+            "type": "text",
+            "label": "Total Premi from Insco",
+            "property": "TotalPremiFromInsco"
+          },
+          {
+            "type": "text",
+            "label": "Admin Fee to Customer",
+            "property": "CustAdminFeeAmt"
+          },
+          {
+            "type": "text",
+            "label": "Admin Fee from Insco",
+            "property": "InscoAdminFeeAmt"
+          },
+          {
+            "type": "text",
+            "label": "Capitalized Premi",
+            "property": "TotalLifeInsCptlzAmt"
+          }
+        ],
+        "querystring": {
+          "select": "SELECT A.LIFE_INSCO_BRANCH_NAME AS LifeInscoBranchName, A.TOTAL_PREMI_TO_CUST AS TotalPremiToCust, A.TOTAL_PREMI_FROM_INSCO AS TotalPremiFromInsco, A.CUST_ADMIN_FEE_AMT AS CustAdminFeeAmt, A.INSCO_ADMIN_FEE_AMT AS InscoAdminFeeAmt, A.TOTAL_LIFE_INS_CPTLZ_AMT AS TotalLifeInsCptlzAmt",
+          "from": "FROM APP_LIFE_INS_H A WITH(NOLOCK)",
+          "where": "WHERE A.APP_ID = {0}"
+        }
+      }
+    ]
+  }

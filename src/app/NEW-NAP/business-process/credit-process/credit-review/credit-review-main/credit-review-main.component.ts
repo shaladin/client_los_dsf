@@ -50,7 +50,7 @@ export class CreditReviewMainComponent implements OnInit {
       "DEVC": 3,
       "APV": 4,
     };
-    this.AppStepIndex = 3;
+    this.AppStepIndex = 0;
     this.CustTypeCode = "";
     this.Arr = this.FormObj.get('arr') as FormArray;
     console.log(this.Arr);

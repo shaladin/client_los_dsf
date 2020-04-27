@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { WizardComponent } from 'angular-archwizard';
+import { AppWizardObj } from 'app/shared/model/App/AppWizard.Model';
+import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -15,7 +18,9 @@ import { WizardComponent } from 'angular-archwizard';
 export class NapAddDetailComponent implements OnInit {
 
   appId: number;
+  mode: string;
   viewProdMainInfoObj: string;
+  viewReturnInfoObj: string = "";
   NapObj: AppObj;
   AppStepIndex: number;
 
@@ -32,12 +37,41 @@ export class NapAddDetailComponent implements OnInit {
     "TC": 8,
   };
 
+  ResponseReturnInfoObj;
+  FormReturnObj = this.fb.group({
+    ReturnExecNotes: ['']
+  });
+  OnFormReturnInfo = false;
+  MakeViewReturnInfoObj(){
+    if(this.mode == AdInsConstant.ModeResultHandling){
+      var obj = {
+        AppId: this.appId,
+        MrReturnTaskCode: AdInsConstant.ReturnHandlingEditApp
+      }
+      this.http.post(AdInsConstant.GetReturnHandlingDByAppIdAndMrReturnTaskCode, obj).subscribe(
+        (response) => {
+          this.ResponseReturnInfoObj = response;
+          this.FormReturnObj.patchValue({
+            ReturnExecNotes: this.ResponseReturnInfoObj.ReturnHandlingExecNotes
+          });
+          this.OnFormReturnInfo = true;
+        },
+        (error) => {
+          console.log(error);          
+        }
+      );
+    }    
+  }
+
   constructor(
     private route: ActivatedRoute,
-    private http: HttpClient) {
+    private router: Router,
+    private http: HttpClient,
+    private fb: FormBuilder) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
+        this.mode = params["Mode"];
       }
     });
   }
@@ -55,11 +89,12 @@ export class NapAddDetailComponent implements OnInit {
           this.AppStepIndex = 0;
         }
       }
-    )
+    );
+    this.MakeViewReturnInfoObj();
   }
 
   EnterTab(AppStep) {
-    console.log(AppStep);
+    // console.log(AppStep);
     switch (AppStep) {
       case AdInsConstant.AppStepCust:
         this.AppStepIndex = this.AppStep[AdInsConstant.AppStepCust];
@@ -94,8 +129,29 @@ export class NapAddDetailComponent implements OnInit {
     }
   }
 
-  // NextTab(){
-  //   console.log(this.wizard);
-  //   this.wizard.goToNextStep();
-  // }
+  WizardNavigation(AppWizard : AppWizardObj){
+    console.log("WIZNAV")
+    this.AppStepIndex = this.AppStep[AppWizard.AppStep];
+    AppWizard.Wizard.goToNextStep();
+  }
+
+  Submit(){
+    if(this.mode == AdInsConstant.ModeResultHandling){
+      var obj = {
+        ReturnHandlingDId: this.ResponseReturnInfoObj.ReturnHandlingDId,
+        ReturnHandlingNotes: this.ResponseReturnInfoObj.ReturnHandlingNotes,
+        ReturnHandlingExecNotes: this.FormReturnObj.value.ReturnExecNotes,
+        RowVersion: this.ResponseReturnInfoObj.RowVersion
+      };
+  
+      this.http.post(AdInsConstant.EditReturnHandlingDNotesData, obj).subscribe(
+        (response) => {
+          console.log(response);
+        },
+        (error) => {
+          console.log(error);
+        }
+      )
+    }
+  }
 }
