@@ -7,6 +7,8 @@ import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { DoAssetDetailComponent } from '../do-asset-detail/do-asset-detail.component';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { map, mergeMap } from 'rxjs/operators';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-create-do-multi-asset',
@@ -20,6 +22,8 @@ export class CreateDoMultiAssetComponent implements OnInit {
   @Input() CustType: string;
   @Input() AppId: number;
   @Input() AgrmntId: number;
+  @Input() Mode: string;
+  @Input() DeliveryOrderHId: number;
   relationshipList: any;
 
   DeliveryOrderForm = this.fb.group({
@@ -46,17 +50,44 @@ export class CreateDoMultiAssetComponent implements OnInit {
   ngOnInit() {
     var rmRelation = new RefMasterObj();
     rmRelation.RefMasterTypeCode = this.CustType == 'PERSONAL' ? 'CUST_PERSONAL_RELATIONSHIP' : 'CUST_COMPANY_RELATIONSHIP';
-    this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, rmRelation).subscribe(
-      (response) => {
-        this.relationshipList = response;
-        this.DeliveryOrderForm.patchValue({
-          MrCustRelationshipCode: this.relationshipList.ReturnObject[0].Key
-        });
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    if(this.Mode == "add"){
+      this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, rmRelation).subscribe(
+        (response) => {
+          this.relationshipList = response;
+          this.DeliveryOrderForm.patchValue({
+            MrCustRelationshipCode: this.relationshipList.ReturnObject[0].Key
+          });
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+    else if(this.Mode == "edit"){
+      var reqDeliveryOrderH = { DeliveryOrderHId: this.DeliveryOrderHId };
+      this.httpClient.post(AdInsConstant.GetDeliveryOrderHByDeliveryOrderHId, reqDeliveryOrderH).pipe(
+        map((response) => {
+          return response;
+        }),
+        mergeMap((response) => {
+          let getRelation = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, rmRelation);
+          var tempResponse = [response];
+          return forkJoin([tempResponse, getRelation]);
+        })
+      ).subscribe(
+        (response) => {
+          var deliveryOrderHData = response[0];
+          var relationResponse = response[1];
+          this.relationshipList = relationResponse;
+          this.DeliveryOrderForm.patchValue({
+            ...deliveryOrderHData
+          });
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
     this.DeliveryOrderForm.patchValue({
       AppId: this.AppId,
       AgrmntId: this.AgrmntId
@@ -114,6 +145,7 @@ export class CreateDoMultiAssetComponent implements OnInit {
     var formData = this.DeliveryOrderForm.value;
     var doHeader = { "DeliveryOrderH": {...formData} };
     var doDetails = { "DeliveryOrderDs": [] };
+    var url = "";
     for (const item of this.SelectedDOAssetList) {
       var doDetailObj = {
         DeliveryOrderDId: 0,
@@ -124,7 +156,14 @@ export class CreateDoMultiAssetComponent implements OnInit {
       doDetails["DeliveryOrderDs"].push(doDetailObj);
     }
     var DOData = { doHeader, doDetails };
-    this.httpClient.post(AdInsConstant.AddDeliveryOrderMultiAsset, DOData).subscribe(
+
+    if(this.Mode == "add"){
+      url = AdInsConstant.AddDeliveryOrderMultiAsset;
+    }
+    else if(this.Mode == "edit"){
+      url = AdInsConstant.EditDeliveryOrderMultiAsset;
+    }
+    this.httpClient.post(url, DOData).subscribe(
       (response) => {
         this.activeModal.close(response);
       },

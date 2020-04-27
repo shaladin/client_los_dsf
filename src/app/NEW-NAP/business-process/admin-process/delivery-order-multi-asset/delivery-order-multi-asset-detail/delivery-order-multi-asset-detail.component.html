@@ -3,8 +3,8 @@
     <div class="card">
       <div class="card-body">
         <div class="card-header header-title">
-          <div class="row">
-            <div class="col-md-8">
+          <div class="">
+            <div class="col-md-12" style="border-bottom: 1px solid black; margin-left: -5px; padding: 0;">
               <h4 class="card-title" id="horz-layout-colored-controls" translate> Delivery Order </h4>
             </div>
           </div>
@@ -138,13 +138,16 @@
                   <td style="text-align: left;">
                     {{item.DeliveryAddr}}
                   </td>
-                  <td style="text-align: left;"></td>
+                  <td style="text-align: left;">
+                    <a (click)="editDOHandler(item.DeliveryOrderHId)"><i class="fas fa-pencil-alt"></i></a>
+                    <a (click)="deleteDO(item.DeliveryOrderHId)"><i class="fas fa-trash"></i></a>
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
-        <div class="px-3">
+        <div class="px-3" style="margin-top: 20px;">
           <form class="form form-horizontal" [formGroup]="AppTcForm"
             (ngSubmit)="AppTcForm.valid && SaveForm()" #enjiForm="ngForm">
             <app-term-conditions [AppId]="appId" [parentForm]="AppTcForm" [enjiForm]="enjiForm"></app-term-conditions>
