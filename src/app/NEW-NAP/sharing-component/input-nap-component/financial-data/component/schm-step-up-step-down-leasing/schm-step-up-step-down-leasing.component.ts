@@ -23,6 +23,7 @@ export class SchmStepUpStepDownLeasingComponent implements OnInit {
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
+  StepUpStepDownInputOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   calcStepUpStepDownObj: CalcStepUpStepDownObj = new CalcStepUpStepDownObj();
   listInstallment: any;
   listAppInstStepSchm: Array<AppInstStepSchmObj> = new Array<AppInstStepSchmObj>();
@@ -37,6 +38,7 @@ export class SchmStepUpStepDownLeasingComponent implements OnInit {
   ngOnInit() {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
+    this.LoadDDLStepUpStepDownInputType();
   }
 
   LoadDDLRateType() {
@@ -51,6 +53,14 @@ export class SchmStepUpStepDownLeasingComponent implements OnInit {
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "GRACE_PERIOD_TYPE" }).subscribe(
       (response) => {
         this.GracePeriodeTypeOptions = response["ReturnObject"];
+      }
+    );
+  }
+
+  LoadDDLStepUpStepDownInputType() {
+    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "STEP_UP_STEP_DOWN_INPUT_TYPE" }).subscribe(
+      (response) => {
+        this.StepUpStepDownInputOptions = response["ReturnObject"];
       }
     );
   }
@@ -108,6 +118,16 @@ export class SchmStepUpStepDownLeasingComponent implements OnInit {
     });
   }
 
+  InputTypeChanged(){
+    for(let i = 0; i < (this.ParentForm.controls.ListEntryInst as FormArray).length; i++){
+      this.ParentForm.controls.ListEntryInst["controls"][i].patchValue({
+        InstAmt: 0
+      });
+    }
+
+    this.SetNeedReCalculate(true);
+  }
+
   SetEntryInstallment(){
     while ((this.ParentForm.controls.ListEntryInst as FormArray).length) {
       (this.ParentForm.controls.ListEntryInst as FormArray).removeAt(0);
@@ -130,6 +150,7 @@ export class SchmStepUpStepDownLeasingComponent implements OnInit {
     this.calcStepUpStepDownObj = this.ParentForm.value;
     this.calcStepUpStepDownObj["IsRecalculate"] = false;
     this.calcStepUpStepDownObj["StepUpStepDownType"] = this.ParentForm.value.MrInstSchemeCode;
+    this.calcStepUpStepDownObj["StepUpNormalInputType"] = this.ParentForm.value.StepUpStepDownInputType;
     this.calcStepUpStepDownObj["InstAmt"] = 0;
 
 
