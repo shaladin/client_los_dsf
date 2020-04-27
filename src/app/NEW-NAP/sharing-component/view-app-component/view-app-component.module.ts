@@ -5,6 +5,7 @@ import { AdInsModule } from "app/components/adins-module/adins.module";
 import { InvoiceDataFctrComponent } from './invoice-data-fctr/invoice-data-fctr.component';
 import { LifeInsuranceComponent } from './life-insurance/life-insurance.component';
 import { AppTcComponent } from './app-tc/app-tc.component';
+import { GuarantorComponent } from './guarantor/guarantor.component';
 
 @NgModule({
   exports: [
@@ -17,7 +18,8 @@ import { AppTcComponent } from './app-tc/app-tc.component';
   declarations: [
     InvoiceDataFctrComponent,
     LifeInsuranceComponent,
-    AppTcComponent],
+    AppTcComponent,
+    GuarantorComponent],
   providers: [
     NGXToastrService
   ]

@@ -11,6 +11,7 @@ import { CommissionReservedFundPagingComponent } from './commission-reserved-fun
 import { FraudDetectionVerifComponent } from './fraud-detection/fraud-detection-verif/fraud-detection-verif.component';
 import { FraudDetectionPagingComponent } from './fraud-detection/fraud-detection-paging/fraud-detection-paging.component';
 import { CreditInquiryComponent } from './credit-inquiry/credit-inquiry.component';
+import { TestComponent } from './test/test.component';
 
 const routes: Routes = [
   {
