@@ -755,7 +755,8 @@ export class AdInsConstant {
 
   // App Collateral
   public static GetListAppCollateral = environment.losUrl + "/AppCollateral/GetListAppCollateral"
-  public static AddEditAllCollateralData = environment.losUrl + "/AppCollateral/AddEditAllCollateralData"
+  public static AddEditAllCollateralData = "http://localhost:5001" + "/AppCollateral/AddEditAllCollateralData"
+  public static AddExistingAppCollateralData = "http://localhost:5001" + "/AppCollateral/AddExistingAppCollateralData"
  
   //AGRMNT SIGNER
   public static SubmitAgrmntSignerData = environment.losUrl + "/AgrmntSigner/SubmitAgrmntSignerData";
@@ -922,6 +923,8 @@ export class AdInsConstant {
 
   // ASSET TYPE
   public static GetAssetTypeById = environment.FoundationR3Url + "/AssetType/GetAssetTypeById";
+  public static GetListAssetTypeByCode = environment.FoundationR3Url + "/AssetType/GetListKeyValueActiveByCode";
+
   //App Crd Invstg
   public static AddAppCrdInvstg = environment.losUrl + "/AppCrdInvstgH/AddAppCrdInvstg";
 
@@ -980,4 +983,7 @@ export class AdInsConstant {
 
   // Upload
   public static UploadFile = environment.FoundationR3Url + "/Upload/UploadFile";
+
+  // Asset Category
+  public static GetAssetCategoryById = environment.FoundationR3Url + "/AssetCategory/GetAssetCategoryById";
 }
