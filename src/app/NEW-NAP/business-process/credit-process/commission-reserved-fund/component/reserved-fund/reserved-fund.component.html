@@ -3,10 +3,16 @@
   <div class="card-body">
     <div class="px-3">
       <div class="ucSearch-Button-Right">
-        <span class="mr-1">
-          <button type="button" class="backButton" [routerLink]="['../CommissionReservedFund/Paging']" translate>
-            <i class="ft-arrow-left"></i> Back to Paging
-          </button>
+        <span *ngIf='!show' class="mr-1">
+            <button type="button" class="backButton" [routerLink]="['../CommissionReservedFund/Paging']" translate>
+                <i class="ft-arrow-left"></i> Back to Paging
+            </button>
+        </span>
+        <span *ngIf='show' class="mr-1">
+            <button type="button" class="backButton" [routerLink]="['/Nap/AddProcess/ReturnHandling/Commission']"
+                translate>
+                <i class="ft-arrow-left"></i> Back to Paging
+            </button>
         </span>
       </div>
       <lib-ucSubsection [id]="'incomeInformationId'" [title]="'Income Information'" [panel]="'incomeInfo'">
