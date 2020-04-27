@@ -10,14 +10,18 @@ import { OutstandingTcPagingComponent } from "./outstanding-tc/outstanding-tc-pa
 import { OutstandingTcDetailComponent } from "./outstanding-tc/outstanding-tc-detail/outstanding-tc-detail.component";
 import { ReturnHandlingPagingComponent } from "./return-handling/return-handling-paging/return-handling-paging.component";
 import { ReturnHandlingDetailComponent } from "./return-handling/return-handling-detail/return-handling-detail.component";
+import { ReturnHandlingCommissionComponent } from "./return-handling/return-handling-commission/return-handling-commission.component";
 import { ViewMainInfoComponentModule } from "app/NEW-NAP/sharing-component/view-main-info-component/view-main-info-component.module"
 import { PagingComponent } from "./app-dup-check/paging/paging.component";
 import { ListPersonalComponent } from "./app-dup-check/list-personal/list-personal.component";
 import { ListCompanyComponent } from "./app-dup-check/list-company/list-company.component";
 import { ApplicantExistingDataPersonalComponent } from "./app-dup-check/applicant-existing-data-personal/applicant-existing-data-personal.component";
 import { ApplicantExistingDataCompanyComponent } from "./app-dup-check/applicant-existing-data-company/applicant-existing-data-company.component";
+import { ReturnHandlingEditAppPagingComponent } from './return-handling/return-handling-edit-app-paging/return-handling-edit-app-paging.component';
+import { AssetInquiryComponent } from './po-extension/asset-inquiry/asset-inquiry.component';
 import { AppInquiryComponent } from './app-inquiry/app-inquiry.component';
 import { CreditProcessInquiryComponent } from './credit-process-inquiry/credit-process-inquiry.component';
+import { ReturnHandlingPhoneVerifPagingComponent } from "./return-handling/return-handling-phone-verif-paging/return-handling-phone-verif-paging.component";
 
 @NgModule({
   imports: [
@@ -39,8 +43,12 @@ import { CreditProcessInquiryComponent } from './credit-process-inquiry/credit-p
     ListCompanyComponent,
     ApplicantExistingDataPersonalComponent,
     ApplicantExistingDataCompanyComponent,
+    ReturnHandlingEditAppPagingComponent,
+    AssetInquiryComponent,
+    ReturnHandlingCommissionComponent,
     AppInquiryComponent,
-    CreditProcessInquiryComponent
+    CreditProcessInquiryComponent,
+    ReturnHandlingPhoneVerifPagingComponent
   ],
   providers: [
     NGXToastrService
