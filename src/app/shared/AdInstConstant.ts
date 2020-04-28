@@ -56,10 +56,16 @@ export class AdInsConstant {
   public static GetAppDetailForAppTabById = environment.losUrl + "/Application/GetAppDetailForAppTabById";
   public static AddAppFromLead = environment.losUrl + "/Application/AddAppFromLead";
 
+  // App Collateral
+  public static GetAppCollateralRegistrationByAppId = "/AppCollateralRegistration/GetAppCollateralRegistrationByAppId";
 
+  // App Asset Suppl Emp
+  public static GetListAppAssetSupplEmpByAppAssetId = "/AppAssetSupplEmp/GetListAppAssetSupplEmpByAppAssetId";
 
   // App Asset
   public static GetAppAssetListByAppIdForCommision = "/AppAsset/GetAppAssetListByAppIdForCommision";
+  public static GetAppAssetByAppAssetId = "/AppAsset/GetAppAssetByAppAssetId";
+  public static GetAppAssetByAppAssetIdWithSerialNoDefinition = "/AppAsset/GetAppAssetByAppAssetIdWithSerialNoDefinition";
 
   // App Asset
   public static GetListAppAssetSupplEmpByListAppAssetId = "/AppAssetSupplEmp/GetListAppAssetSupplEmpByListAppAssetId";
@@ -768,7 +774,8 @@ export class AdInsConstant {
   public static GetListAppAssetData = environment.losUrl + "/AppAsset/GetListAppAssetData";
 
   // App Collateral
-  public static GetListAppCollateral = environment.losUrl + "/AppCollateral/GetListAppCollateral"
+  public static GetListAppCollateral = environment.losUrl + "/AppCollateral/GetListAppCollateral";
+  public static GetViewAppCollateralObjByAppId = environment.losUrl + "/AppCollateral/GetViewAppCollateralObjByAppId";
 
   //AGRMNT SIGNER
   public static SubmitAgrmntSignerData = environment.losUrl + "/AgrmntSigner/SubmitAgrmntSignerData";
