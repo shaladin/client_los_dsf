@@ -27,6 +27,7 @@ export class GuarantorPagingComponent implements OnInit {
   MrGuarantorTypeCode : any;
   mode: any;
   appWizardObj: AppWizardObj;
+  closeChk : any;
 
   constructor(private http: HttpClient,
     private modalService: NgbModal,
@@ -96,6 +97,13 @@ export class GuarantorPagingComponent implements OnInit {
     this.MrGuarantorTypeCode = ev.MrGuarantorTypeCode;
     console.log("CHECK EVENT");
     console.log(this.AppGuarantorId);
+  }
+
+  close(event){
+    this.closeChk=event;
+    if(this.closeChk){
+    this.modalService.dismissAll();
+    }
   }
 
 }
