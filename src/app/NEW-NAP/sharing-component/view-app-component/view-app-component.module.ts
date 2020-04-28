@@ -6,6 +6,7 @@ import { InvoiceDataFctrComponent } from './invoice-data-fctr/invoice-data-fctr.
 import { TabReferantorComponent } from './tab-referantor/tab-referantor.component';
 import { TabCommissionComponent } from './tab-commission/tab-commission.component';
 import { ListDataCommissionComponent } from './tab-commission/list-data-commission/list-data-commission.component';
+import { TabApplicationComponent } from './tab-application/tab-application.component';
 
 @NgModule({
   exports: [
@@ -19,7 +20,8 @@ import { ListDataCommissionComponent } from './tab-commission/list-data-commissi
     InvoiceDataFctrComponent,
     TabReferantorComponent,
     TabCommissionComponent,
-    ListDataCommissionComponent
+    ListDataCommissionComponent,
+    TabApplicationComponent
   ],
   providers: [
     NGXToastrService

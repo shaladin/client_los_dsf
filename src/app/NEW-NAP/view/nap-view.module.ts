@@ -9,20 +9,24 @@ import { MatTabsModule } from "@angular/material";
 import { InvoiceViewComponent } from "../business-process/admin-process/invoice/invoice-view/invoice-view.component";
 import { UcSubsectionModule } from "@adins/uc-subsection";
 import { ListDataCommissionComponent } from "../sharing-component/view-app-component/tab-commission/list-data-commission/list-data-commission.component";
+import { TabApplicationComponent } from "../sharing-component/view-app-component/tab-application/tab-application.component";
+import { UcviewgenericModule } from "@adins/ucviewgeneric";
 
 @NgModule({
   imports: [
     NapViewRoutingModule,
     CommonModule,
     MatTabsModule,
-    UcSubsectionModule
+    UcSubsectionModule,
+    UcviewgenericModule
   ],
   declarations: [
     AgreementViewContainerComponent,
     applicationViewComponent,
     TabReferantorComponent,
-    InvoiceViewComponent,
     TabCommissionComponent,
+    TabApplicationComponent,
+    InvoiceViewComponent,
     ListDataCommissionComponent
   ]
 })

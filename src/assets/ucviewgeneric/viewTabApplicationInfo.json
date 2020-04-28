@@ -1,0 +1,99 @@
+{
+    "title": "",
+    "subsection": [
+      {
+        "subSectionId": "SalesInfoId",
+        "subSectionTitle": "Sales Information",
+        "mainInfoUrl": "http://r3app-server.ad-ins.com/LOS/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {
+            "type": "text",
+            "label": "Sales Officer",
+            "property": "SalesOfficerNo"
+          },
+          {
+            "type": "text",
+            "label": "Sales Supervisor",
+            "property": "SalesHeadNo"
+          },
+          {
+            "type": "text",
+            "label": "Sales Recommendation",
+            "property": "SalesRecommendCode"
+          },
+          {
+            "type": "text",
+            "label": "Sales Notes",
+            "property": "SalesNotes"
+          }
+        ],
+        "querystring": {
+          "select": "SELECT a.SALES_OFFICER_NO AS SalesOfficerNo, a.SALES_NOTES AS SalesNotes, a.SALES_HEAD_NO AS SalesHeadNo, a.MR_SALES_RECOMMEND_CODE AS SalesRecommendCode",
+          "from": "FROM dbo.APP a WITH(NOLOCK)",
+          "where": "WHERE a.APP_ID = {0}"
+        }
+      },
+      {
+        "subSectionId": "AppsInfoId",
+        "subSectionTitle": "Application Information",
+        "mainInfoUrl": "http://r3app-server.ad-ins.com/LOS/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {
+            "type": "text",
+            "label": "Application Source",
+            "property": "AppSourceCode"
+          },
+          {
+            "type": "text",
+            "label": "First Installment Type",
+            "property": "FirstInstTypeCode"
+          },
+          {
+            "type": "text",
+            "label": "Tenor",
+            "property": "Tenor"
+          },
+          {
+            "type": "text",
+            "label": "Interest Type",
+            "property": "InterestType"
+          },
+          {
+            "type": "text",
+            "label": "Payment Frequency",
+            "property": "PayFreqCode"
+          },
+          {
+            "type": "text",
+            "label": "Floating Period",
+            "property": "FloatingPeriodCode"
+          },
+          {
+            "type": "text",
+            "label": "Num of Installment",
+            "property": "NumOfInst"
+          },
+          {
+            "type": "text",
+            "label": "Installment Scheme",
+            "property": "InstSchemeCode"
+          },
+          {
+            "type": "text",
+            "label": "Customer Notification By",
+            "property": "CustNotifyOptCode"
+          },
+          {
+            "type": "text",
+            "label": "Way of Payment",
+            "property": "WopCode"
+          }
+        ],
+        "querystring": {
+          "select": "SELECT a.MR_APP_SOURCE_CODE AS AppSourceCode, a.MR_FIRST_INST_TYPE_CODE AS FirstInstTypeCode, a.TENOR AS Tenor, afd.INTEREST_TYPE AS InterestType, PAY_FREQ_CODE AS PayFreqCode, a.NUM_OF_INST AS NumOfInst, afd.MR_INST_SCHEME_CODE AS InstSchemeCode, a.MR_CUST_NOTIFY_OPT_CODE AS CustNotifyOptCode, a.MR_WOP_CODE AS WopCode, a.FLOATING_PERIOD_CODE AS FloatingPeriodCode",
+          "from": "FROM dbo.APP a WITH(NOLOCK) JOIN dbo.APP_FIN_DATA afd WITH(NOLOCK) on a.APP_ID = afd.APP_ID",
+          "where": "WHERE a.APP_ID = {0}"
+        }
+      }
+    ]
+  }
