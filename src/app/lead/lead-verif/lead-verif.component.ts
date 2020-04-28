@@ -91,7 +91,7 @@ export class LeadVerifComponent implements OnInit {
         this.router.navigateByUrl('Error');
       }
     );
-    this.leadUrl = '/Lead/View?LeadId=';
+    this.leadUrl = environment.losR3Web +  '/Lead/View?LeadId=';
   }
 
   searchSort(event: any) {

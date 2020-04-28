@@ -109,7 +109,7 @@ export class LeadInputMainInfoComponent implements OnInit {
           this.LeadId = params["LeadId"];
       }
     });
-    this.leadUrl = '/Lead/View?LeadId=' + this.LeadId;
+    this.leadUrl = environment.losR3Web + '/Lead/View?LeadId=' + this.LeadId;
   }
 
 getLookUpAgency(event) {
@@ -411,6 +411,7 @@ copyLead(){
       this.leadObj = new LeadObj();
       this.leadObj.LeadId = this.LeadId;
       this.leadObj.RowVersion = this.returnLead.RowVersion;
+      this.leadObj.IsSubmit = true;
       this.setLead();
       this.http.post(this.editLead, this.leadObj).subscribe(
         (response) => {
@@ -425,6 +426,43 @@ copyLead(){
     } else {
       this.leadObj = new LeadObj();
       this.setLead();
+      this.leadObj.IsSubmit = true;
+      this.http.post(this.addLead, this.leadObj).subscribe(
+        (response) => {
+          this.responseLead = response;
+          this.LeadId = this.responseLead.LeadId;
+          this.toastr.successMessage(response["message"]);
+          this.router.navigate(["/Lead/LeadInput/Page"], { queryParams: { "LeadId": this.LeadId, "CopyFrom": this.leadIdExist } });
+          // console.log(response)
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
+  save() {
+    if(this.pageType == "edit") {
+      this.leadObj = new LeadObj();
+      this.leadObj.LeadId = this.LeadId;
+      this.leadObj.RowVersion = this.returnLead.RowVersion;
+      this.leadObj.IsSubmit = false;
+      this.setLead();
+      this.http.post(this.editLead, this.leadObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          this.router.navigate(["/Lead/LeadInput/Page"], { queryParams: { "LeadId": this.LeadId, "mode": "edit" } });
+          // console.log(response)
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    } else {
+      this.leadObj = new LeadObj();
+      this.setLead();
+      this.leadObj.IsSubmit = false;
       this.http.post(this.addLead, this.leadObj).subscribe(
         (response) => {
           this.responseLead = response;
