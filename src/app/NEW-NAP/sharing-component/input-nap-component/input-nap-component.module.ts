@@ -33,6 +33,8 @@ import { MatCheckboxModule, MatRadioModule, MatSelectModule } from "@angular/mat
 import { GuarantorPersonalComponent } from "./guarantor-data/guarantor-personal/guarantor-personal.component";
 import { GuarantorCompanyComponent } from "./guarantor-data/guarantor-company/guarantor-company.component";
 import { GuarantorPagingComponent } from "./guarantor-data/guarantor-paging/guarantor-paging.component";
+import { LoanObjectComponent } from "./application-data/loan-object/loan-object.component";
+import { ApplicationDataRefinancingComponent } from "./application-data/application-data-refinancing/application-data-refinancing.component";
 
 @NgModule({
   exports: [
@@ -66,6 +68,7 @@ import { GuarantorPagingComponent } from "./guarantor-data/guarantor-paging/guar
     SubsidyAddEditComponent,
     FeeComponent,
     TcDataComponent, // sementara nanti dicross check sama term-conditions
+    ApplicationDataRefinancingComponent
   ],
   imports: [
     CommonModule,

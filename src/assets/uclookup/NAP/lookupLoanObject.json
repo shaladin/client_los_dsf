@@ -1,0 +1,101 @@
+{
+    "title": "Lookup Loan Object",
+    "component": [
+        {
+            "type": "textbox",
+            "name": "MASTER_CODE",
+            "id": "MasterCodeId",
+            "value": "",
+            "label": "Master Code",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "DESCR",
+            "id": "DescrId",
+            "value": "",
+            "label": "Description",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "name": "IS_ACTIVE",
+            "id": "IsActiveId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": false,
+            "isSelectOne": false,
+            "url": "",
+            "label": "Is Active",
+            "items": [
+                {
+                    "key": "1",
+                    "value": "Yes"
+                },
+                {
+                    "key": "0",
+                    "value": "No"
+                }
+            ],
+            "itemsUrl": []
+        }
+    ],
+    "querystring": {
+        "select": "SELECT MASTER_CODE AS MasterCode, DESCR AS Descr, IS_ACTIVE AS IsActive",
+        "from": "FROM dbo.V_REF_MASTER WITH(NOLOCK)"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Master Code",
+            "name" : "MasterCode"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Description",
+            "name" : "Descr"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Is Active",
+            "name" : "IsActive"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Select"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "MasterCode"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "Descr"
+        },
+        {
+            "type": "boolean",
+            "position": "center",
+            "property": "IsActive"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "select",
+                    "property": "MasterCode"
+                }
+            ]
+        }
+    ],
+    "propertyId": "MasterCode",
+    "propertyName": "MasterCode"
+}
