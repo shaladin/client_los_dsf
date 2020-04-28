@@ -139,7 +139,7 @@
             "position": "center",
             "label": "ORDER NO",
             "name": "L.ORDER_NO"
-          },
+        },
         {
             "type": "sort",
             "position": "center",
@@ -202,7 +202,7 @@
             "type": "text",
             "position": "center",
             "property": "OrderNo"
-          },
+        },
         {
             "type": "text",
             "position": "center",
@@ -228,20 +228,67 @@
             "position": "center",
             "action": [
                 {
-                    "type": "edit",
-                    "path": "/Lead/LeadInput/MainInfo",
-                    "param": [
+                    "type": "switch",
+                    "case": [
                         {
-                            "type": "LeadId",
-                            "property": "LeadId"
+                            "conditions": [
+                                {
+                                    "isUser": true,
+                                    "property": "ClaimBy",
+                                    "value": "",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "/Lead/LeadInput/MainInfo",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "LeadId",
+                                        "property": "LeadId"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "WfTaskListId"
+                                    },
+                                    {
+                                        "type": "mode",
+                                        "property": "edit"
+                                    }
+                                ]
+                            },
+                            "isHide": false
                         },
                         {
-                            "type": "WfTaskListId",
-                            "property": "WfTaskListId"
-                        },
-                        {
-                            "type": "mode",
-                            "property": "edit"
+                            "conditions": [
+                                {
+                                    "isUser": false,
+                                    "property": "ClaimBy",
+                                    "value": "",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "/Lead/LeadInput/MainInfo",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "LeadId",
+                                        "property": "LeadId"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "WfTaskListId"
+                                    },
+                                    {
+                                        "type": "mode",
+                                        "property": "edit"
+                                    }
+                                ]
+                            },
+                            "isHide": false
                         }
                     ]
                 }

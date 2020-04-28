@@ -117,7 +117,7 @@ export class LeadUpdateMainInfoComponent implements OnInit {
         //   this.WfTaskListId = params["WfTaskListId"];
         // }
     });
-    this.leadUrl = '/Lead/View?LeadId=' + this.LeadId;
+    this.leadUrl = environment.losR3Web + '/Lead/View?LeadId=' + this.LeadId;
   }
 
 getLookUpAgency(event) {
