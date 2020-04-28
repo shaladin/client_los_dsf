@@ -5,6 +5,7 @@ import { NapAddComponent } from './nap-add/nap-add.component';
 import { NapAddDetailComponent } from './nap-add-detail/nap-add-detail.component';
 import { NapFromLeadPagingComponent } from './nap-from-lead/paging/nap-from-lead-paging.component';
 import { NapFromLeadDetailComponent } from './nap-from-lead/detail/nap-from-lead-detail.component';
+import { FinancialDataComponent } from '../sharing-component/input-nap-component/financial-data/financial-data.component';
 
 const routes: Routes = [
   {
@@ -41,6 +42,13 @@ const routes: Routes = [
       {
           path: 'NapFromLead/Detail',
           component: NapFromLeadDetailComponent,
+          data: {
+              title: 'Detail'
+          }
+      },
+      {
+          path: 'Nap/TestFinData',
+          component: FinancialDataComponent,
           data: {
               title: 'Detail'
           }

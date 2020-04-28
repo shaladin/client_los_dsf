@@ -33,7 +33,8 @@ import { PreGoLiveApprovalDetailComponent } from "./pre-go-live/pre-go-live-appr
 import { PreGoLiveApprovalPagingComponent } from "./pre-go-live/pre-go-live-approval-paging/pre-go-live-approval-paging.component";
 import { ViewMainInfoComponentModule } from "app/NEW-NAP/sharing-component/view-main-info-component/view-main-info-component.module";
 import { ProcessComponentModule } from "app/NEW-NAP/sharing-component/process-component/process-component.module";
-import { LoanObjectComponent } from "app/NEW-NAP/sharing-component/input-nap-component/application-data/loan-object/loan-object.component";
+import { DeliveryOrderMultiAssetComponent } from './delivery-order-multi-asset/delivery-order-multi-asset.component';
+import { DeliveryOrderMultiAssetDetailComponent } from './delivery-order-multi-asset/delivery-order-multi-asset-detail/delivery-order-multi-asset-detail.component';
 
 
 @NgModule({
@@ -72,7 +73,9 @@ import { LoanObjectComponent } from "app/NEW-NAP/sharing-component/input-nap-com
     InvoiceDetailComponent,
     DocumentPagingComponent,
     DocumentViewComponent,
-    InvoiceDataAddComponent
+    InvoiceDataAddComponent,
+    DeliveryOrderMultiAssetComponent,
+    DeliveryOrderMultiAssetDetailComponent
   ],
   providers: [
     NGXToastrService

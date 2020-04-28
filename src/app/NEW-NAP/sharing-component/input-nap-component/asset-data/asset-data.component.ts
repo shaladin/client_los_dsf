@@ -372,7 +372,7 @@ export class AssetDataComponent implements OnInit {
 
     this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpName = this.AssetDataForm.controls.BranchManagerName.value;
     this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpNo = this.AssetDataForm.controls.BranchManagerNo.value;
-    this.allAssetDataObj.AppAssetSupplEmpManagerObj.MrSupplEmpPositionCode = this.AssetDataForm.controls.BranchManagerPositionCode.value;
+    this.allAssetDataObj.AppAssetSupplEmpManagerObj.MrSupplEmpPositionCode = "BRANCH_MANAGER";
 
     this.allAssetDataObj.AppAssetObj.TaxCityIssuer = this.AssetDataForm.controls.TaxCityIssuer.value;
     this.allAssetDataObj.AppAssetObj.TaxIssueDt = this.AssetDataForm.controls.TaxIssueDt.value;
@@ -594,9 +594,9 @@ export class AssetDataComponent implements OnInit {
             SalesPersonName: this.appAssetObj.ResponseSalesPersonSupp.SupplEmpName,
             SalesPersonNo: this.appAssetObj.ResponseSalesPersonSupp.SupplEmpNo,
             SalesPersonPositionCode: this.appAssetObj.ResponseSalesPersonSupp.MrSupplEmpPositionCode,
-            //BranchManagerName: this.appAssetObj.responseBranchManagerSupp.SupplEmpName,
-            //BranchManagerNo: this.appAssetObj.responseBranchManagerSupp.SupplEmpNo,
-            //BranchManagerPositionCode: this.appAssetObj.responseBranchManagerSupp.MrSupplEmpPositionCode,
+            BranchManagerName: this.appAssetObj.responseBranchManagerSupp.SupplEmpName,
+            BranchManagerNo: this.appAssetObj.responseBranchManagerSupp.SupplEmpNo,
+            BranchManagerPositionCode: this.appAssetObj.responseBranchManagerSupp.MrSupplEmpPositionCode,
 
             UserName: this.appAssetObj.ResponseAppCollateralRegistrationObj.UserName,
             MrUserRelationshipCode: this.appAssetObj.ResponseAppCollateralRegistrationObj.MrUserRelationshipCode,
@@ -624,6 +624,7 @@ export class AssetDataComponent implements OnInit {
 
             selectedDpType: 'AMT'
           });
+          this.BranchManagerName = this.appAssetObj.responseBranchManagerSupp.SupplEmpName,
           this.appAssetAccessoriesObjs = this.appAssetObj.ResponseAppAssetAccessoryObjs
           this.appAssetId = this.appAssetObj.ResponseAppAssetObj.AppAssetId;
           this.setAddrOwnerObj();
@@ -864,7 +865,7 @@ export class AssetDataComponent implements OnInit {
           SalesPersonId: this.VendorEmpSalesObj.VendorEmpId
         });
         this.vendorEmpObj.VendorEmpId = this.VendorEmpSalesObj.VendorEmpId;
-        this.GetVendorEmpSupervisi();
+        //this.GetVendorEmpSupervisi();
       }
     );
   }

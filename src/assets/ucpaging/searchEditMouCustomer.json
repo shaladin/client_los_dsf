@@ -104,8 +104,8 @@
         }
     ],
     "querystring": {
-        "select": "SELECT MOU.MOU_CUST_NO AS MouCustNo, WTL.WF_TASK_LIST_ID AS WfTaskListId,MOU.CUST_NAME AS CustName, MOU.MOU_CUST_DT AS MouCustDt, MOU.REF_NO AS RefNo, MOU.MR_MOU_TYPE_CODE AS MrMouTypeCode, MOU.MOU_CUST_ID AS MouCustId, MOU.MOU_STAT AS MouStat",
-        "from": "FROM dbo.MOU_CUST MOU WITH(NOLOCK) JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON MOU.MOU_CUST_NO = WTL.TRANSACTION_CODE AND WTL.ACT_CODE = 'MOU_RETURN'",
+        "select": "SELECT MOU.MOU_CUST_NO AS MouCustNo, WTL.WF_TASK_LIST_ID AS WfTaskListId, WTL.CLAIM_STAT AS ClaimStat, WTL.USERNAME AS ClaimBy, MOU.CUST_NAME AS CustName, RS.DESCR AS MouStat, RM.DESCR AS MouType, MOU.MOU_CUST_DT AS MouCustDt, MOU.REF_NO AS RefNo, MOU.MR_MOU_TYPE_CODE AS MrMouTypeCode, MOU.MOU_CUST_ID AS MouCustId, MOU.MOU_STAT AS MouStatCode",
+        "from": "FROM dbo.MOU_CUST MOU WITH(NOLOCK) JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON MOU.MOU_CUST_NO = WTL.TRANSACTION_CODE AND WTL.ACT_CODE = 'MOU_RETURN' LEFT JOIN dbo.V_REF_STATUS RS ON RS.STATUS_GRP_CODE='MOUC_STAT' AND RS.REF_STATUS_CODE = MOU.MOU_STAT LEFT JOIN dbo.V_REF_MASTER RM ON RM.REF_MASTER_TYPE_CODE='MOU_TYPE' AND RM.MASTER_CODE = MOU.MR_MOU_TYPE_CODE",
         "where" : "WHERE WTL.END_EXECUTING_DATE IS NULL"
     },
     "headerList": [
@@ -131,7 +131,7 @@
             "type": "sort",
             "position": "center",
             "label": "Mou Date",
-            "name": "MOU_CUST_DT"
+            "name": "MOU.MOU_CUST_DT"
         },
         {
             "type": "sort",
@@ -143,7 +143,7 @@
             "type": "sort",
             "position": "left",
             "label": "MOU Type",
-            "name": "MOU.MR_MOU_TYPE_CODE"
+            "name": "RM.DESCR"
         },
         {
             "type": "label",
@@ -176,7 +176,7 @@
             "property": "CustName"
         },
         {
-            "type": "text",
+            "type": "date",
             "position": "center",
             "property": "MouCustDt"
         },
@@ -188,7 +188,7 @@
         {
             "type": "text",
             "position": "left",
-            "property": "MrMouTypeCode"
+            "property": "MouType"
         },
         {
             "type": "action",

@@ -60,7 +60,7 @@
         }
       ],
       "querystring": {
-        "select": "SELECT LEAD_NO AS LeadNo, LEAD_COPY_ID AS LeadCopyId, ORI_OFFICE_NAME AS OriOfficeName, ORDER_NO AS OrderNo, MR_LEAD_SOURCE_CODE AS MrLeadSourceCode, AGENCY_NAME AS AgencyName, CMO_NAME AS CmoName, SURVEYOR_NAME AS SurveyorName, TELE_MARKETING_NAME AS TeleMarketingName",
+        "select": "SELECT LEAD_NO AS LeadNo, LEAD_ID AS LeadId, LEAD_COPY_ID AS LeadCopyId, ORI_OFFICE_NAME AS OriOfficeName, ORDER_NO AS OrderNo, MR_LEAD_SOURCE_CODE AS MrLeadSourceCode, AGENCY_NAME AS AgencyName, CMO_NAME AS CmoName, SURVEYOR_NAME AS SurveyorName, TELE_MARKETING_NAME AS TeleMarketingName",
         "from": "FROM dbo.LEAD WITH(NOLOCK)",
         "where": "WHERE LEAD_ID = {0}"
       }
