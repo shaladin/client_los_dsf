@@ -263,7 +263,10 @@ copyLead(){
         this.listRefOffice = response['ReturnObject']
         // console.log("aaa")
         // console.log(this.listRefOffice)
-        this.MainInfoForm.patchValue({  OfficeCode: response['ReturnObject'][0]['Key'] });
+        this.MainInfoForm.patchValue({  
+          OfficeCode: response['ReturnObject'][0]['Key'],
+          OfficeName: response['ReturnObject'][0]['Value'] 
+        });
       },
       (error) => {
         console.log(error);
