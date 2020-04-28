@@ -1,0 +1,70 @@
+{
+    "title": "Lookup Supplier Branch",
+    "component": [
+      {
+        "type": "textbox",
+        "name": "VND.VENDOR_CODE",
+        "id": "supplierCode",
+        "value": "",
+        "label": "Supplier Code",
+        "placeholder": "Supplier Code"
+      },
+      {
+        "type": "textbox",
+        "name": "VND.VENDOR_NAME",
+        "id": "supplierName",
+        "value": "",
+        "label": "Supplier Name",
+        "placeholder": "Supplier Name"
+      }
+    ],
+    "querystring": {
+      "select": "SELECT VND.VENDOR_CODE AS VendorCode, VND.VENDOR_NAME AS VendorName, VND.VENDOR_ID as VendorId",
+      "from": "FROM dbo.VENDOR VND WITH(NOLOCK) JOIN dbo.VENDOR_OFFICE_MBR VOM WITH(NOLOCK) ON VOM.VENDOR_ID = VND.VENDOR_ID",
+      "where": "WHERE VND.MR_VENDOR_CATEGORY_CODE = 'SUPPLIER_BRANCH' AND VND.IS_ACTIVE = 1 AND VOM.IS_ACTIVE = 1"
+    },
+    "headerList": [
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Supplier Code",
+        "name": "VendorCode"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Supplier Name",
+        "name": "VendorName"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Select"
+      }
+    ],
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "center",
+        "property": "VendorCode"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "VendorName"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "select",
+            "property": "VendorCode"
+          }
+        ]
+      }
+    ],
+    "propertyId": "VendorCode",
+    "propertyName": "VendorName"
+  }
+  
