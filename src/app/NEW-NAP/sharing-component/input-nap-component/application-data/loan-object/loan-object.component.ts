@@ -19,8 +19,8 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 export class LoanObjectComponent implements OnInit {
 
   @Input() AppId: any;
-  @Input() mode : any;
-  modal : any;
+  @Input() mode: any;
+  modal: any;
   loanObjectInputLookupObj: any;
   AppLoanPurposeId: any;
   supplierInputLookupObj: any;
@@ -63,12 +63,12 @@ export class LoanObjectComponent implements OnInit {
   }
 
 
-  editLoanObject(id){
-    this.AppLoanPurposeId = id; 
+  editLoanObject(id) {
+    this.AppLoanPurposeId = id;
     this.mode = "edit";
   }
 
-  open(content){
+  open(content) {
     this.modal = this.modalService.open(content);
     this.modal.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -113,9 +113,9 @@ export class LoanObjectComponent implements OnInit {
           this.result = response;
           this.MainInfoForm.patchValue({
             IsDisburseToCust: this.result.IsDisburseToCust,
-            BudgetPlanAmount: this.result.BankName,
-            SelfFinancing: this.result.RegRptCode,
-            FinancingAmount: this.result.FinancingAmount
+            BudgetPlanAmount: this.result.BudgetPlanAmt,
+            SelfFinancing: this.result.SelfFinancingAmt,
+            FinancingAmount: this.result.FinancingAmt
           })
           this.supplierInputLookupObj.jsonSelect = { VendorCode: this.result.SupplCode };
           this.loanObjectInputLookupObj.jsonSelect = { MasterCode: this.result.MrLoanPurposeCode };
@@ -148,15 +148,15 @@ export class LoanObjectComponent implements OnInit {
       this.AppLoanPurposeObj.FinancingAmt = this.MainInfoForm.controls.FinancingAmount.value;
       this.AppLoanPurposeObj.IsDisburseToCust = this.MainInfoForm.controls.IsDisburseToCust.value;
       this.AppLoanPurposeObj.SelfFinancingAmt = this.MainInfoForm.controls.SelfFinancing.value;
-      // this.AppLoanPurposeObj.MrLoanPurposeCode = this.MainInfoForm.controls.MrLoanPurposeCode.value;
-      this.AppLoanPurposeObj.MrLoanPurposeCode = "testing";
+      this.AppLoanPurposeObj.MrLoanPurposeCode = this.MainInfoForm.controls.MrLoanPurposeCode.value;
+      // this.AppLoanPurposeObj.MrLoanPurposeCode = "testing";
 
       this.AppLoanPurposeObj.SupplCode = this.MainInfoForm.controls.SupplierCode.value;
-      this.AppLoanPurposeObj.RowVersion
+      this.AppLoanPurposeObj.RowVersion = this.result.RowVersion;
       this.http.post(AdInsConstant.EditAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(['/Nap/LoanObject'], { queryParams: { "AppId": this.AppId } });
+          this.router.navigate(['/Nap/ApplicationDataRefinancing'], { queryParams: { "AppId": this.AppId } });
         },
         (error) => {
           console.log(error);
@@ -180,6 +180,7 @@ export class LoanObjectComponent implements OnInit {
           console.log(error);
         });
     }
+    this.loadDataTable();
   }
 
   loadDataTable() {
