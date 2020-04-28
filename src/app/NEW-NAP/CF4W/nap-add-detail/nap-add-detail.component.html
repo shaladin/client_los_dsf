@@ -38,7 +38,7 @@
 
     <div class="card-body" *ngIf="AppStepIndex > -1">
       <div class="px-3">
-        <aw-wizard #wizard navBarLayout="large-empty-symbols" [defaultStepIndex]="AppStepIndex">
+        <aw-wizard #wizard navBarLayout="large-empty-symbols" [defaultStepIndex]="5">
 
           <aw-wizard-step [stepTitle]="'Customer Data'" (stepEnter)="EnterTab('CUST')"
             [navigationSymbol]="{ symbol: '1' }">

@@ -397,7 +397,10 @@ export class InsuranceDataComponent implements OnInit {
       reqObj.InsCoverage.push(insCoverage);
     }
     reqObj.AdminFee = this.InsuranceDataForm.controls.CustAdminFeeAmt.value;
-
+    reqObj.InscoBranchCode = this.InsuranceDataForm.controls.InscoBranchCode.value;
+    reqObj.ProdOfferingCode = this.appObj.ProdOfferingCode;
+    reqObj.ProdOfferingVersion = this.appObj.ProdOfferingVersion;
+    
     await this.http.post(AdInsConstant.CalculateInsurance, reqObj).toPromise().then(
       (response) => {
         console.log(response);
