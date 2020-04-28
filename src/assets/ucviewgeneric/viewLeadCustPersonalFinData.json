@@ -7,12 +7,12 @@
       "mainInfoUrl": "http://r3app-server.ad-ins.com/LOS/Generic/GetDataViewBySQL",
       "mainInfo": [
         {
-          "type": "decimal",
+          "type": "currency",
           "label": "Monthly Income",
           "property": "MonthlyIncomeAmt"
         },
         {
-          "type": "decimal",
+          "type": "currency",
           "label": "Monthly Expense",
           "property": "MonthlyExpenseAmt"
         }

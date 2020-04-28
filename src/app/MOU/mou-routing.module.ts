@@ -26,8 +26,8 @@ const routes: Routes = [
     path: '',
     children: [
       {
-        path: 'TestUpload',
-        component: TestUploadComponent,
+        path: 'TestUpload', 
+        component: TestUploadComponent, 
         data: {
           title: 'Test Upload'
         }
