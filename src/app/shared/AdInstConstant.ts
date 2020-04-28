@@ -50,7 +50,7 @@ export class AdInsConstant {
   // App
   public static AddApp = "/Application/AddApp";
   public static EditApp = "/Application/EditApp";
-  public static GetAppById = "/Application/GetAppById";
+  public static GetAppById = environment.losUrl + "/Application/GetAppById";
   public static GetAppByIds = environment.losUrl + "/Application/GetAppById";
   public static GetAppDetailForTabAddEditAppById = environment.losUrl + "/Application/GetAppDetailForTabAddEditAppById";
   public static EditAppAddAppCross = "/Application/EditAppAddAppCross";
@@ -399,7 +399,13 @@ export class AdInsConstant {
   public static RefMasterTypeCodeCustNotifyOpt = "CUST_NOTIF_OPT";
   public static RefMasterTypeCodeFirstInstType = "FIRST_INST_TYPE";
   public static RefMasterTypeCodeInterestType = "INTRSTTYPE";
-
+  public static RefMasterTypeCodeAssetCondition = "ASSET_CONDITION";
+  public static RefMasterTypeCodeAssetUsage = "ASSET_USAGE";
+  public static RefMasterTypeCodeCustPersonalRelationship = "CUST_PERSONAL_RELATIONSHIP";
+  public static RefMasterTypeCodeIdType = "ID_TYPE"; 
+  public static RefMasterTypeCodeRateType = "RATE_TYPE";
+  public static RefMasterTypeCodeAddrType = "ADDR_TYPE";
+  public static RefMasterTypeCodeGracePeriodType = "GRACE_PERIOD_TYPE";
   //REF PROV DISTRICT
   public static GetRefProvDistrictPaging = "/RefProvDistrict/GetRefProvDistrictPaging";
   public static GetRefProvDistrictByProvDistrictCode = environment.FoundationR3Url + "/RefProvDistrict/GetRefProvDistrictByProvDistrictCode";
@@ -659,6 +665,8 @@ export class AdInsConstant {
   public static SubmitDeliveryOrderData = environment.losUrl + "/DeliveryOrder/SubmitDeliveryOrderData";
   public static GetRefAssetDocList = environment.losUrl + "/DeliveryOrder/GetRefAssetDocList";
   public static GetDeliveryOrderHByAgrmntId = environment.losUrl + "/DeliveryOrder/GetDeliveryOrderHByAgrmntId";
+  public static GetAssetListForDOMultiAsset = environment.losUrl + "/DeliveryOrder/GetAssetListForDOMultiAsset";
+  public static GetListDeliveryOrderHByAppIdAgrmntId = environment.losUrl + "/DeliveryOrder/GetListDeliveryOrderHByAppIdAgrmntId";
 
   //PURCHASE ORDER
   public static SubmitPurchaseOrder = environment.losUrl + "/PurchaseOrderH/SubmitPurchaseOrder";
@@ -756,7 +764,7 @@ export class AdInsConstant {
 
   // App Collateral
   public static GetListAppCollateral = environment.losUrl + "/AppCollateral/GetListAppCollateral"
- 
+
   //AGRMNT SIGNER
   public static SubmitAgrmntSignerData = environment.losUrl + "/AgrmntSigner/SubmitAgrmntSignerData";
   public static EditAgrmntSignerData = environment.losUrl + "/AgrmntSigner/EditAgrmntSignerData";
@@ -826,7 +834,7 @@ export class AdInsConstant {
   public static GetVerfResultHsByTrxRefNo = environment.FoundationR3Url + "/VerfResultH/GetVerfResultHsByTrxRefNo";
   public static GetVerfResultHsByVerfResultIdAndSubjRelationCode = environment.FoundationR3Url + "/VerfResultH/GetVerfResultHsByVerfResultIdAndSubjRelationCode";
   public static GetListVerfResultDInQuestionGrp = environment.FoundationR3Url + "/VerfResultD/GetListVerfResultDInQuestionGrp";
-  public static AddVerfResultHeaderAndVerfResultDetail = environment.FoundationR3Url + "/AddVerfResultHeaderAndVerfResultDetail";
+    public static AddVerfResultHeaderAndVerfResultDetail = environment.FoundationR3Url + "/VerfResultH/AddVerfResultHeaderAndVerfResultDetail";
   public static GetVerfResultByTrxRefNoAndVerfTrxTypeCode = environment.FoundationR3Url + "/VerfResult/GetVerfResultByTrxRefNoAndVerfTrxTypeCode";
   public static AddVerfResult = environment.FoundationR3Url + "/VerfResult/AddVerfResult";
   public static GetVerfResultHsByVerfResultIdAndObjectCode = environment.FoundationR3Url + "/VerfResultH/GetVerfResultHsByVerfResultIdAndObjectCode";
@@ -952,7 +960,7 @@ export class AdInsConstant {
   public static ClaimListTask = environment.FoundationR3Url + "/Workflow/ClaimListTask";
 
   // Phone Verif
-  public static GetAppPhoneVerifSubjectListByAppId = environment.losUrl + "/PhoneVerif/GetAppPhoneVerifSubjectListByAppId";
+  public static GetAppPhoneVerifSubjectListByAppId = "http://localhost:5001/PhoneVerif/GetAppPhoneVerifSubjectListByAppId";
   public static GetPhoneNumberByIdSourceAppIdAndSubject = environment.losUrl + "/PhoneVerif/GetPhoneNumberByIdSourceAppIdAndSubject";
   public static GetVerfQuestionListByAppIdAndSubjectForPhoneVerif = environment.losUrl + "/PhoneVerif/GetVerfQuestionListByAppIdAndSubjectForPhoneVerif";
   // App Cust
@@ -970,10 +978,13 @@ export class AdInsConstant {
   public static GetReturnHandlingDByAppIdAndMrReturnTaskCode = environment.losUrl + "/ReturnHandlingD/GetReturnHandlingDByAppIdAndMrReturnTaskCode";
   public static AddReturnHandlingD = environment.losUrl + "/ReturnHandlingD/AddReturnHandlingD";
   public static EditReturnHandlingDNotesData = environment.losUrl + "/ReturnHandlingD/EditReturnHandlingDNotesData";
+  public static EditReturnHandlingD = environment.losUrl + "/ReturnHandlingD/EditReturnHandlingD";
   public static RequestReturnTask = environment.losUrl + "/ReturnHandlingD/RequestReturnTask";
   public static DeleteReturnHandlingD = environment.losUrl + "/ReturnHandlingD/DeleteReturnHandlingD";
   public static ResumeReturnHandling = environment.losUrl + "/ReturnHandlingH/ResumeReturnHandling";
   public static ReturnHandlingEditApp = "RTN_EDIT_APP";
+  public static GetReturnHandlingDByReturnHandlingDId = environment.losUrl + "/ReturnHandlingD/GetReturnHandlingDByReturnHandlingDId";
+
 
 
   // Deviation Result

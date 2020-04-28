@@ -7,10 +7,13 @@ import { TabReferantorComponent } from './tab-referantor/tab-referantor.componen
 import { TabCommissionComponent } from './tab-commission/tab-commission.component';
 import { ListDataCommissionComponent } from './tab-commission/list-data-commission/list-data-commission.component';
 import { TabApplicationComponent } from './tab-application/tab-application.component';
+import { ViewReservedFundComponent } from "./view-reserved-fund/view-reserved-fund.component";
+import { LifeInsuranceComponent } from './life-insurance/life-insurance.component';
+import { AppTcComponent } from './app-tc/app-tc.component';
 
 @NgModule({
   exports: [
-
+    ViewReservedFundComponent
   ],
   imports: [
     CommonModule,
@@ -21,7 +24,10 @@ import { TabApplicationComponent } from './tab-application/tab-application.compo
     TabReferantorComponent,
     TabCommissionComponent,
     ListDataCommissionComponent,
-    TabApplicationComponent
+    TabApplicationComponent,
+    ViewReservedFundComponent,
+    LifeInsuranceComponent,
+    AppTcComponent,
   ],
   providers: [
     NGXToastrService

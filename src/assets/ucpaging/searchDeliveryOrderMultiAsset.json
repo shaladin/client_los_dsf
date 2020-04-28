@@ -1,0 +1,139 @@
+{
+    "title": "DELIVERY ORDER PAGING",
+    "component": [
+        {
+            "type": "textbox",
+            "name": "AG.AGRMNT_NO",
+            "id": "AgrmntNoId",
+            "value": "",
+            "label": "AGREEMENT NO",
+            "placeholder": "Placeholder",
+            "datatype": "text"
+        },
+        {
+            "type": "textbox",
+            "name": "AP.APP_NO",
+            "id": "AppNoId",
+            "value": "",
+            "label": "APPLICATION NO",
+            "placeholder": "Placeholder",
+            "datatype": "text"
+        },
+        {
+            "type": "textbox",
+            "name": "AG.PROD_OFFERING_NAME",
+            "id": "ProdOfferingNameId",
+            "value": "",
+            "label": "PROD OFFERING NAME",
+            "placeholder": "Placeholder",
+            "datatype": "text"
+        },
+        {
+            "type": "textbox",
+            "name": "AG.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "CUSTOMER NAME",
+            "placeholder": "Placeholder",
+            "datatype": "text"
+        },
+        {
+            "type" : "textbox",
+            "name" : "WF.USERNAME",
+            "id" : "TaskClaimById",
+            "value" : "",
+            "label" : "Task Claim By",
+            "placeholder": "Placeholder",
+            "datatype": "text"
+        }
+    ],
+    "querystring": {
+        "select": "SELECT WF.USERNAME AS UserName, AG.AGRMNT_NO AS AgrmntNo, AP.APP_NO AS AppNo, AG.CUST_NAME AS CustName, AG.PROD_OFFERING_NAME AS ProdOfferingName, AG.APP_ID AS AppId, AG.AGRMNT_CURR_STEP AS AgrmntCurrStep",
+        "from": "FROM dbo.APP AS AP WITH(NOLOCK) INNER JOIN dbo.AGRMNT AS AG WITH(NOLOCK) ON AP.APP_ID = AG.APP_ID INNER JOIN dbo.V_WF_TASK_LIST AS WF WITH(NOLOCK) ON WF.TRANSACTION_CODE = AP.APP_NO",
+        "where" : "WHERE WF.END_EXECUTING_DATE IS NULL"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Claim By",
+            "name": "WF.USERNAME"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "AGREEMENT NO",
+            "name": "AG.AGRMNT_NO"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "APPLICATION NO",
+            "name": "AP.APP_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "CUSTOMER NAME",
+            "name": "AG.CUST_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "PROD OFFERING NAME",
+            "name": "AG.PROD_OFFERING_NAME"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Action"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "Username"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "AgrmntNo"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "AppNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "ProdOfferingName"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "edit",
+                    "path": "/Nap/AdminProcess/DeliveryOrderMultiAsset/Detail",
+                    "param": [
+                        {
+                            "type": "AppId",
+                            "property": "AppId"
+                        },
+                        {
+                            "type": "AgrmntId",
+                            "property": "AgrmntId"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
