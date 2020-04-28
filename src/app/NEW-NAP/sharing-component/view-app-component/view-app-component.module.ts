@@ -10,6 +10,7 @@ import { TabApplicationComponent } from './tab-application/tab-application.compo
 import { ViewReservedFundComponent } from "./view-reserved-fund/view-reserved-fund.component";
 import { LifeInsuranceComponent } from './life-insurance/life-insurance.component';
 import { AppTcComponent } from './app-tc/app-tc.component';
+import { TabAnalysisResultComponent } from './tab-analysis-result/tab-analysis-result.component';
 
 @NgModule({
   exports: [
@@ -28,6 +29,7 @@ import { AppTcComponent } from './app-tc/app-tc.component';
     ViewReservedFundComponent,
     LifeInsuranceComponent,
     AppTcComponent,
+    TabAnalysisResultComponent,
   ],
   providers: [
     NGXToastrService

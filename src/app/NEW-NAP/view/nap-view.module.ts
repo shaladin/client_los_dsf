@@ -11,6 +11,7 @@ import { UcSubsectionModule } from "@adins/uc-subsection";
 import { ListDataCommissionComponent } from "../sharing-component/view-app-component/tab-commission/list-data-commission/list-data-commission.component";
 import { TabApplicationComponent } from "../sharing-component/view-app-component/tab-application/tab-application.component";
 import { UcviewgenericModule } from "@adins/ucviewgeneric";
+import { TabAnalysisResultComponent } from "../sharing-component/view-app-component/tab-analysis-result/tab-analysis-result.component";
 
 @NgModule({
   imports: [
@@ -26,6 +27,7 @@ import { UcviewgenericModule } from "@adins/ucviewgeneric";
     TabReferantorComponent,
     TabCommissionComponent,
     TabApplicationComponent,
+    TabAnalysisResultComponent,
     InvoiceViewComponent,
     ListDataCommissionComponent
   ]

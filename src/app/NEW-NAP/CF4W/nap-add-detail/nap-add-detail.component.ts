@@ -88,7 +88,6 @@ export class NapAddDetailComponent implements OnInit {
         }else{
           this.AppStepIndex = 0;
         }
-        this.AppStepIndex=3;
       }
     );
     this.MakeViewReturnInfoObj();
