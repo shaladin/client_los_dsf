@@ -1,22 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { forEach } from '@angular/router/src/utils/collection';
 import { NegativeAssetCheckForMultiAssetObj } from 'app/shared/model/NegativeAssetCheckForMultiAssetObj.Model';
+import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
 import { NegativeAssetCheckObj } from 'app/shared/model/NegativeAssetCheckObj.Model';
 
 @Component({
-  selector: 'app-negative-asset-multi-asset',
-  templateUrl: './negative-asset-multi-asset.component.html' 
+  selector: 'app-fraud-verification-multi-asset',
+  templateUrl: './fraud-verification-multi-asset.component.html' 
 })
-export class NegativeAssetMultiAssetComponent implements OnInit {
+export class FraudVerificationMultiAssetComponent implements OnInit {
+
 
   constructor(  private http: HttpClient, private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
         this.AppId = params['AppId'];
+      }
+      if (params["mrCustTypeCode"] != null) {
+        this.mrCustTypeCode = params["mrCustTypeCode"];
       }
     });
     this.getAppAssetListByAppIdUrl = AdInsConstant.GetAppAssetListByAppId;
@@ -30,6 +33,7 @@ export class NegativeAssetMultiAssetComponent implements OnInit {
   negativeAssetCheckForMultiAssetObj : any;
   negativeAssetCheckObj : any;
   listAssetNegative : any;
+  mrCustTypeCode : string;
   ngOnInit() {
   console.log(this.AppId);
   this.appAssetObj = new AppAssetObj();
