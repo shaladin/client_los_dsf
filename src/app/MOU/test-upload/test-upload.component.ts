@@ -8,23 +8,24 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 })
 export class TestUploadComponent implements OnInit {
   uploadObj: any;
-  uploadUrl: any;
   constructor() { }
 
   ngOnInit() {
-    this.uploadUrl = AdInsConstant.UploadFile
     this.uploadObj = {
-      title: 'Test Upload File',
-      subsectionId: 'UcUploadFile',
-      formatsAllowed: '.txt, .xls, .xlsx, .csv',
-      UploadTypeCode: 'UPL_ASM',
-      TemplateUrl: AdInsConstant.DownloadTemplate,
-      FileName: 'TestTemplateUrl',
+      title: 'Test Upload File', // Title Paging dan Upload Page
+      subsectionId: 'UcUploadFile', // Ga perlu diubah
+      formatsAllowed: '.txt, .xls, .xlsx, .csv', // File yang bisa di upload
+      UploadTypeCode: 'UPL_ASM', // UploadTypeCode berdasarkan keperluan
+      ErrorDownloadUrl: AdInsConstant.GetUploadAssetMasterByUploadMonitoringNoAndTrxType, // URL untuk Download Error File
+      TemplateUrl: AdInsConstant.DownloadTemplate, // URL untuk Download Template File
+      TemplateName: 'TestTemplate', // Nama Excel Template File
+      FileErrorName: "ErrorDownload", // Nama Excel Download Error File
+      // SheetName: 'TemplateGan',
 
       environmentUrl: environment.FoundationR3Url,
       apiQryPaging: AdInsConstant.GetPagingObjectBySQL,
       pagingJson: "./assets/search/searchTestUpload.json",
-      url: this.uploadUrl
+      url: AdInsConstant.UploadFile
     }
   }
 
