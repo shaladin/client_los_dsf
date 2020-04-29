@@ -23,9 +23,25 @@
               <ng-template matTabContent>
               </ng-template>
             </mat-tab>
-
+            
             <mat-tab label="Referantor">
               <ng-template matTabContent>
+                <app-tab-referantor [appId]="AppId"></app-tab-referantor>
+              </ng-template>
+            </mat-tab>
+            <mat-tab label="Commission">
+              <ng-template matTabContent>
+                <app-tab-commission [appId]="AppId"></app-tab-commission>
+              </ng-template>
+            </mat-tab>
+            <mat-tab label="Application Data">
+              <ng-template matTabContent>
+                <app-tab-application [appId]="AppId"></app-tab-application>
+              </ng-template>
+            </mat-tab>
+            <mat-tab label="Analysis Result">
+              <ng-template matTabContent>
+                <app-tab-analysis-result [appId]="AppId"></app-tab-analysis-result>
               </ng-template>
             </mat-tab>
 
@@ -36,6 +52,7 @@
 
             <mat-tab label="Asset">
               <ng-template matTabContent>
+                <view-asset-data [appId]="AppId"></view-asset-data>
               </ng-template>
             </mat-tab>
 
@@ -68,11 +85,13 @@
 
             <mat-tab label="Reserved Fund">
               <ng-template matTabContent>
+                <view-reserved-fund [appId]="AppId"></view-reserved-fund>
               </ng-template>
             </mat-tab>
 
             <mat-tab label="Phone Verification">
               <ng-template matTabContent>
+                <view-phone-verif [appId]="AppId"></view-phone-verif>
               </ng-template>
             </mat-tab>
 
