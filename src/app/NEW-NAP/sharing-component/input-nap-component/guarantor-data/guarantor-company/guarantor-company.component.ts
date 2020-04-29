@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -25,6 +25,8 @@ export class GuarantorCompanyComponent implements OnInit {
 
   @Input() AppGuarantorId : any;
   @Input() mode : any;
+  @Input() AppId: any;
+  @Output() close: EventEmitter<any> = new EventEmitter();
   param:any;
   key: any;
   criteria: CriteriaObj[] = [];
@@ -126,7 +128,7 @@ export class GuarantorCompanyComponent implements OnInit {
       RowVersion:""
     }
     var refJobObj ={
-      RefMasterTypeCode:"CUST_COMPANY_RELATIONSHIP",
+      RefMasterTypeCode:"JOB_POSITION",
       RowVersion:""
     }
     this.http.post(AdInsConstant.GetListActiveRefMaster, refCompObj).subscribe(
@@ -162,6 +164,7 @@ export class GuarantorCompanyComponent implements OnInit {
     this.inputLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
     this.inputLookupObj.pagingJson = "./assets/uclookup/lookupGuarantorCompany.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/lookupGuarantorCompany.json";
+    this.inputLookupObj.isReadonly =false;
 
     this.inputLookupObj1 = new InputLookupObj();
     this.inputLookupObj1.urlJson = "./assets/uclookup/lookupIndustry.json";
@@ -182,9 +185,76 @@ export class GuarantorCompanyComponent implements OnInit {
   // GuarantorName="";
   lookupGuarantor(event){
     console.log(event);
-    this.CompanyForm.patchValue(
-      {
-        GuarantorName: event.CustName
+    this.inputLookupObj.isReadonly = true;
+    this.http.post(AdInsConstant.GetCustByCustId, { CustId: event.CustId }).subscribe(
+      (response) => {
+        console.log(response);
+        this.resultData = response;
+        this.CompanyForm.patchValue(
+          {
+            GuarantorName: event.CustName,
+            TaxIdNo: this.resultData.TaxIdNo
+          }
+        );
+        this.http.post(AdInsConstant.GetCustCompanyByCustId, { CustId: event.CustId }).subscribe(
+          (response) => {
+              console.log(response);
+              this.resultData = response;
+              this.CompanyForm.patchValue({
+                MrCompanyTypeCode: this.resultData.MrCompanyTypeCode
+              });
+              this.http.post(AdInsConstant.GetRefIndustryTypeByRefIndustryTypeId, { RefIndustryTypeId: this.resultData.RefIndustryTypeId }).subscribe(
+                (response) => {
+                  this.inputLookupObj1.nameSelect = response["IndustryTypeName"];
+                }
+              );
+              this.http.post(AdInsConstant.GetCustCompanyContactPersonByCustCompanyId, { CustCompanyId: this.resultData.CustCompanyId }).subscribe(
+                (response) => {
+                  this.resultData = response;
+                  this.CompanyForm.patchValue({
+                    ContactName: this.resultData.ContactPersonName,
+                    MrJobPositionCode : this.resultData.MrJobPositionCode,
+                    MobilePhnNo1 : this.resultData.MobilePhnNo1,
+                    MobilePhnNo2 : this.resultData.MobilePhnNo2,
+                    ContactEmail : this.resultData.Email1,
+                    Phn1 : this.resultData.Phn1,
+                    Phn2 : this.resultData.Phn2,
+                    PhnArea1 : this.resultData.PhnArea1,
+                    PhnArea2 : this.resultData.PhnArea2,
+                    PhnExt1 : this.resultData.PhnExt1,
+                    PhnExt2 : this.resultData.PhnExt2
+                  });
+                }
+              );
+          }
+        );
+        this.http.post(AdInsConstant.GetCustAddrByMrCustAddrType, { CustId: event.CustId, MrCustAddrTypeCode: "LEGAL" }).subscribe(
+          (response) => {
+            console.log(response);
+            this.resultData = response;
+            this.CompanyForm.patchValue({
+              FaxArea: this.resultData.FaxArea,
+              Fax : this.resultData.Fax
+            });
+            this.AddrObj = new AddrObj();
+            this.AddrObj.Addr = this.resultData.Addr;
+            this.AddrObj.AreaCode1 = this.resultData.AreaCode1;
+            this.AddrObj.AreaCode2 = this.resultData.AreaCode2;
+            this.AddrObj.AreaCode3 = this.resultData.AreaCode3;
+            this.AddrObj.AreaCode4 = this.resultData.AreaCode4;
+            this.AddrObj.City = this.resultData.City;
+            this.AddrObj.Phn1 = this.resultData.Phn1;
+            this.AddrObj.Phn2 = this.resultData.Phn2;
+            this.AddrObj.PhnArea1 = this.resultData.PhnArea1;
+            this.AddrObj.PhnArea2 = this.resultData.PhnArea2;
+            this.AddrObj.PhnExt1 = this.resultData.PhnExt1;
+            this.AddrObj.PhnExt2 = this.resultData.PhnExt2;
+            this.AddrObj.Fax = this.resultData.Fax;
+            this.AddrObj.FaxArea = this.resultData.FaxArea;
+            this.inputFieldObj.inputLookupObj.nameSelect = this.resultData.Zipcode;
+            this.inputFieldObj.inputLookupObj.jsonSelect = { Zipcode: this.resultData.Zipcode };
+          }
+        );
       }
     );
     console.log(this.CompanyForm);
@@ -225,7 +295,7 @@ export class GuarantorCompanyComponent implements OnInit {
     this.guarantorCompanyObj.AppGuarantorObj.TaxIdNo = this.CompanyForm.controls.TaxIdNo.value;
     this.guarantorCompanyObj.AppGuarantorObj.MrCustRelationshipCode = this.CompanyForm.controls.MrCustRelationshipCode.value;
     this.guarantorCompanyObj.AppGuarantorObj.RowVersion = "";
-    this.guarantorCompanyObj.AppGuarantorObj.AppId = "11";
+    this.guarantorCompanyObj.AppGuarantorObj.AppId = this.AppId;
   }
 
   setAppGuarantorCompany(){
@@ -282,6 +352,7 @@ export class GuarantorCompanyComponent implements OnInit {
       }
     );
   }
+  this.close.emit(1);
 }
 
 ClearForm(){
