@@ -20,10 +20,10 @@
         </div>
       </form>
       <div id="CustMainDataPersonal" *ngIf="CustDataForm.controls.MrCustTypeCode.value == 'PERSONAL'">
-        <app-guarantor-personal [AppGuarantorId]=AppGuarantorId [mode]=mode></app-guarantor-personal>
+        <app-guarantor-personal [AppGuarantorId]=AppGuarantorId [mode]=mode [AppId]="AppId" (close)="close($event)"></app-guarantor-personal>
       </div>
       <div id="CustMainDataPersonal" *ngIf="CustDataForm.controls.MrCustTypeCode.value == 'COMPANY'">
-        <app-guarantor-company [AppGuarantorId]=AppGuarantorId [mode]=mode></app-guarantor-company>
+        <app-guarantor-company [AppGuarantorId]=AppGuarantorId [mode]=mode [AppId]="AppId"(close)="close($event)"></app-guarantor-company>
       </div>
     </div>
   </div>

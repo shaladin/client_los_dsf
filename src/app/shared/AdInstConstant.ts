@@ -52,7 +52,7 @@ export class AdInsConstant {
   public static EditApp = "/Application/EditApp";
   public static GetAppById = environment.losUrl + "/Application/GetAppById";
   public static GetAppByIds = environment.losUrl + "/Application/GetAppById";
-  public static EditAppAddAppCross = "/Application/EditAppAddAppCross";
+  public static GetAppDetailForTabAddEditAppById = environment.losUrl + "/Application/GetAppDetailForTabAddEditAppById";
   public static GetAppDetailForAppTabById = environment.losUrl + "/Application/GetAppDetailForAppTabById";
   public static AddAppFromLead = environment.losUrl + "/Application/AddAppFromLead";
 
@@ -80,9 +80,10 @@ export class AdInsConstant {
   public static GetAppReferantorByAppId = "/AppReferantor/GetAppReferantorByAppId";
 
   // App Cross
+  public static EditAppAddAppCross = environment.losUrl +"/Application/EditAppAddAppCross";
   public static GetAppCrossByCrossAgrmntNo = "/AppCross/GetAppCrossByCrossAgrmntNo";
-  public static DeleteAppCross = "/AppCross/DeleteAppCross";
-  public static GetListAppCross = "/AppCross/GetListAppCross";
+  public static DeleteAppCross = environment.losUrl +"/AppCross/DeleteAppCross";
+  public static GetListAppCross = environment.losUrl + "/AppCross/GetListAppCross";
   public static AddListAppCross = "/AppCross/AddListAppCross";
 
   // Ref App Src
@@ -118,7 +119,7 @@ export class AdInsConstant {
 
 
   //Asset Master
-  public static GetAssetMasterTypeByFullAssetCode = environment.FoundationR3Url + "AssetMaster/GetAssetMasterTypeByFullAssetCode";
+  public static GetAssetMasterTypeByFullAssetCode = environment.FoundationR3Url + "/AssetMaster/GetAssetMasterTypeByFullAssetCode";
 
   // App Commission
   public static AddOrEditAppCommissionData = "/AppCommission/AddOrEditAppCommissionData";
@@ -540,6 +541,7 @@ export class AdInsConstant {
   public static EditAppGuarantorPersonal = environment.losUrl + "/AppGuarantor/EditAppGuarantorPersonal"
   public static EditAppGuarantorCompany = environment.losUrl + "/AppGuarantor/EditAppGuarantorCompany"
   public static DeleteAppGuarantor = environment.losUrl + "/AppGuarantor/DeleteAppGuarantor"
+  public static GetListAppGuarantorCompanyByAppId = environment.losUrl + "/AppGuarantor/GetListAppGuarantorCompanyByAppId"
   public static GuarantorTypeCodePersonal = "PERSONAL";
   public static GuarantorTypeCodeCompany = "COMPANY";
 
@@ -653,6 +655,7 @@ export class AdInsConstant {
 
   //REF INDUSTRY TYPE
   public static GetRefIndustryTypeByCode = environment.FoundationR3Url + "/RefIndustryType/GetRefIndustryTypeByIndustryTypeCode";
+  public static GetRefIndustryTypeByRefIndustryTypeId = environment.FoundationR3Url + "/RefIndustryType/GetRefIndustryTypeByRefIndustryTypeId";
 
   //REF CUST MODEL
   public static GetListKeyValueByMrCustTypeCode = environment.FoundationR3Url + "/RefCustModel/GetListKeyValueByMrCustTypeCode";
@@ -662,6 +665,11 @@ export class AdInsConstant {
 
   //CUST
   public static GetCustByCustNo = environment.FoundationR3Url + "/Cust/GetCustByCustNo";
+  public static GetCustByCustId = environment.FoundationR3Url + "/Cust/GetCustByCustId";
+  public static GetCustPersonalByCustId = environment.FoundationR3Url + "/CustPersonal/GetCustPersonalByCustId";
+  public static GetCustCompanyByCustId = environment.FoundationR3Url + "/CustCompany/GetCustCompanyByCustId";
+  public static GetCustAddrByMrCustAddrType = environment.FoundationR3Url + "/CustAddr/GetCustAddrByMrCustAddrType";
+  public static GetCustCompanyContactPersonByCustCompanyId = environment.FoundationR3Url + "/CustCompanyContactPerson/GetCustCompanyContactPersonByCustCompanyId";
   public static GetCustPersonalForCopyByCustId = environment.FoundationR3Url + "/Cust/GetCustPersonalForCopyByCustId";
   public static GetCustCompanyForCopyByCustId = environment.FoundationR3Url + "/Cust/GetCustCompanyForCopyByCustId";
   public static GetCustPersonalForCopyMgmntShrholderByCustId = environment.FoundationR3Url + "/Cust/GetCustPersonalForCopyMgmntShrholderByCustId";
@@ -961,6 +969,7 @@ export class AdInsConstant {
 
   //App Crd Invstg
   public static AddAppCrdInvstg = environment.losUrl + "/AppCrdInvstgH/AddAppCrdInvstg";
+  public static GetAppCrdInvstgByAppId = environment.losUrl + "/AppCrdInvstgH/GetAppCrdInvstgByAppId";
 
   // APP SUBSIDY
   public static GetListAppSubsidyByAppId = environment.losUrl + "/AppSubsidy/GetListAppSubsidyByAppId";
