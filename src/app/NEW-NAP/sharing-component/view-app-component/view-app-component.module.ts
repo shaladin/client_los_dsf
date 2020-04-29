@@ -14,6 +14,8 @@ import { ViewPhoneVerifComponent } from "./view-phone-verif/view-phone-verif.com
 import { ViewAssetDataComponent } from "./view-asset-data/view-asset-data.component";
 import { TabApplicationComponent } from './tab-application/tab-application.component';
 import { TabAnalysisResultComponent } from './tab-analysis-result/tab-analysis-result.component';
+import { AppAssetDataComponent } from './app-asset-data/app-asset-data.component';
+import { AppAssetDataDetailComponent } from './app-asset-data/app-asset-data-detail/app-asset-data-detail.component';
 
 @NgModule({
   exports: [
@@ -36,6 +38,8 @@ import { TabAnalysisResultComponent } from './tab-analysis-result/tab-analysis-r
     ViewAssetDataComponent,
     TabApplicationComponent,
     TabAnalysisResultComponent,
+    AppAssetDataComponent,
+    AppAssetDataDetailComponent
   ],
   providers: [
     NGXToastrService

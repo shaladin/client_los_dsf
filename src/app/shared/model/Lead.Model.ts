@@ -29,4 +29,5 @@ export class LeadObj{
     CancelNotes : any;
     DuplicateLeadId: any;
     RowVersion: any;
+    IsSubmit : boolean;
 }

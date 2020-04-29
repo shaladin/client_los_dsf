@@ -17,6 +17,7 @@ import { UcgridviewModule } from '@adins/ucgridview';
 import { UcinputnumberModule } from '@adins/ucinputnumber';
 import { UcapprovebyModule } from '@adins/ucapproveby';
 import { UcaddressModule } from '@adins/ucaddress';
+import { MatCheckboxModule } from '@angular/material';
 import { UcuploadModule } from '@adins/ucupload';
 
 @NgModule({
@@ -36,6 +37,7 @@ import { UcuploadModule } from '@adins/ucupload';
         UcgridviewModule,
         UcinputnumberModule,
         UcapprovebyModule,
+        MatCheckboxModule,
         UcuploadModule
       //  UcapprovalModule
     ],
@@ -57,8 +59,9 @@ import { UcuploadModule } from '@adins/ucupload';
         UcaddressModule,
         UcgridviewModule,
         UcinputnumberModule,
-        UcuploadModule,
-        UcapprovebyModule
+        UcapprovebyModule,
+        MatCheckboxModule,
+        UcuploadModule
     ],
     declarations: [
     ]

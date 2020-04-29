@@ -69,7 +69,7 @@ export class LeadCancelComponent implements OnInit {
     this.pageNow = 1;
     this.pageSize = 10;
     this.apiUrl = environment.losUrl + AdInsConstant.GetPagingObjectBySQL;
-    this.leadUrl = '/Lead/View?LeadId=';
+    this.leadUrl = environment.losR3Web + '/Lead/View?LeadId=';
 
     var addCrit = new CriteriaObj();
     addCrit.DataType = "text";

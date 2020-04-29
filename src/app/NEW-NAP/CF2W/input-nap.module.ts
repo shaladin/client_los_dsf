@@ -6,6 +6,9 @@ import { ArchwizardModule } from "angular-archwizard";
 import { InputNapComponentModule } from "app/NEW-NAP/sharing-component/input-nap-component/input-nap-component.module";
 import { InputNapCF2WRoutingModule } from "./input-nap-routing.module";
 import { AppComponent } from './app/app.component';
+import { AppPagingComponent } from "./app-paging/app-paging.component";
+import { AppAddFreeComponent } from "./app-add-free/app-add-free.component";
+import { AppAddFixedComponent } from "./app-add-fixed/app-add-fixed.component";
 
 
 @NgModule({
@@ -17,7 +20,11 @@ import { AppComponent } from './app/app.component';
         ArchwizardModule,
     ],
     declarations: [ 
-        AppComponent],
+        AppComponent,
+        AppPagingComponent,
+        AppAddFreeComponent,
+        AppAddFixedComponent
+    ],
     providers: [
         NGXToastrService
     ]

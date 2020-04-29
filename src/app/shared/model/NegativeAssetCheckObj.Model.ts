@@ -1,8 +1,5 @@
-export class NegativeAssetCheckObj{
- 
-     AssetCategoryCode : any; 
-     AssetTypeCode : any;  
-     FullAssetCode : any;  
+export class NegativeAssetCheckObj{ 
+     AssetTypeCode : any;    
      SerialNo1 : any;  
      SerialNo2 : any; 
      SerialNo3 : any; 
