@@ -9,11 +9,13 @@ import { AppTcComponent } from './app-tc/app-tc.component';
 import { ViewInsuranceComponent } from "./view-insurance/view-insurance.component";
 import { AppAssetDataComponent } from './app-asset-data/app-asset-data.component';
 import { AppAssetDataDetailComponent } from './app-asset-data/app-asset-data-detail/app-asset-data-detail.component';
+import { ViewFinancialComponent } from "./view-financial/view-financial.component";
 
 @NgModule({
   exports: [
     ViewReservedFundComponent,
-    ViewInsuranceComponent
+    ViewInsuranceComponent,
+    ViewFinancialComponent,
   ],
   imports: [
     CommonModule,
@@ -26,7 +28,8 @@ import { AppAssetDataDetailComponent } from './app-asset-data/app-asset-data-det
     AppTcComponent,
     ViewInsuranceComponent,
     AppAssetDataComponent,
-    AppAssetDataDetailComponent
+    AppAssetDataDetailComponent,
+    ViewFinancialComponent,
   ],
   providers: [
     NGXToastrService
