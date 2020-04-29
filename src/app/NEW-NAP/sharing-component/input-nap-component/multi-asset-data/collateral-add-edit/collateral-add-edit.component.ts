@@ -30,13 +30,16 @@ import { AppCollateralRegistrationObj } from 'app/shared/model/AppCollateralRegi
 })
 export class CollateralAddEditComponent implements OnInit {
   @Input() AppId: any;
+  @Input() mode: any;
+  @Input() AppCollateralId: number;
   @Output() outputValue: EventEmitter<object> = new EventEmitter();
+  @Output() collValue: EventEmitter<object> = new EventEmitter();
   @ViewChild(UcgridfooterComponent) UCGridFooter;
   @ViewChild(UCSearchComponent) UCSearchComponent;
 
   pageType: string = "add";
   LobCode: any;
-  AppCollateralId: any;
+  //AppCollateralId: any;
   branchObj : any;
   listBranchObj: any;
   getListAppAssetData: any;
@@ -171,6 +174,10 @@ export class CollateralAddEditComponent implements OnInit {
         this.LobCode = params["LobCode"];
       }
     });
+  }
+
+  back(){
+    this.collValue.emit({mode : 'paging'});
   }
 
   SetBpkbCity(event) {
@@ -424,7 +431,10 @@ export class CollateralAddEditComponent implements OnInit {
   }
   
   ngOnInit() {
-    if(this.pageType == 'edit'){
+    console.log("ccc")
+    console.log(this.mode)
+    console.log(this.AppCollateralId)
+    if(this.mode == 'editColl'){
       this.appCollateralObj = new AppCollateralObj();
       this.appCollateralObj.AppCollateralId = this.AppCollateralId;
       this.http.post(this.getAppCollateralByAppCollateralId, this.appCollateralObj).subscribe(
@@ -688,7 +698,8 @@ export class CollateralAddEditComponent implements OnInit {
       (response) => {
         console.log(response);
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["/Nap/AssetData/Paging"]);
+        //this.router.navigate(["/Nap/AssetData/Paging"]);
+        this.collValue.emit({mode : 'paging'});
       },
       (error) => {
         console.log(error);
@@ -718,7 +729,8 @@ export class CollateralAddEditComponent implements OnInit {
     this.http.post(AdInsConstant.AddExistingAppCollateralData, this.appCollateralObj).subscribe(
       response => {
         this.toastr.successMessage(response['message']);
-        this.router.navigate(["/Nap/AssetData/Paging"]);
+        //this.router.navigate(["/Nap/AssetData/Paging"]);
+        this.collValue.emit({mode : 'paging'});
       },
       error => {
         console.log(error);

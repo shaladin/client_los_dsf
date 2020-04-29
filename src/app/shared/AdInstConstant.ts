@@ -46,8 +46,7 @@ export class AdInsConstant {
   public static GetListKeyValueByCode = environment.FoundationR3Url + "/AssetType/GetListKeyValueByCode";
 
 
-
-  // App
+  // APP Application
   public static AddApp = "/Application/AddApp";
   public static EditApp = "/Application/EditApp";
   public static GetAppById = environment.losUrl + "/Application/GetAppById";
@@ -55,6 +54,7 @@ export class AdInsConstant {
   public static EditAppAddAppCross = "/Application/EditAppAddAppCross";
   public static GetAppDetailForAppTabById = environment.losUrl + "/Application/GetAppDetailForAppTabById";
   public static AddAppFromLead = environment.losUrl + "/Application/AddAppFromLead";
+  public static GetRuleFixedNAP = environment.losUrl + "/Application/GetRuleFixedNAP";
 
   // App Collateral
   public static GetAppCollateralRegistrationByAppId = "/AppCollateralRegistration/GetAppCollateralRegistrationByAppId";
@@ -66,11 +66,11 @@ export class AdInsConstant {
   public static GetAppAssetListByAppIdForCommision = "/AppAsset/GetAppAssetListByAppIdForCommision";
   //public static GetAppAssetByAppAssetId = "/AppAsset/GetAppAssetByAppAssetId";
   public static GetAppAssetByAppAssetIdWithSerialNoDefinition = "/AppAsset/GetAppAssetByAppAssetIdWithSerialNoDefinition";
-  public static GetAppAssetByAppAssetId = "http://localhost:5001" + "/AppAsset/GetAppAssetByAppAssetId"
+  public static GetAppAssetByAppAssetId = environment.losUrl + "/AppAsset/GetAppAssetByAppAssetId"
 
   // App Asset Suppl Emp
-  public static GetListAppAssetSupplEmpByListAppAssetId = "http://localhost:5001" + "/AppAssetSupplEmp/GetListAppAssetSupplEmpByListAppAssetId";
-  public static GetAppAssetSupplEmpByAppAssetIdAndCode = "http://localhost:5001" +"/AppAssetSupplEmp/GetAppAssetSupplEmpByAppAssetIdAndCode";
+  public static GetListAppAssetSupplEmpByListAppAssetId = environment.losUrl + "/AppAssetSupplEmp/GetListAppAssetSupplEmpByListAppAssetId";
+  public static GetAppAssetSupplEmpByAppAssetIdAndCode = environment.losUrl +"/AppAssetSupplEmp/GetAppAssetSupplEmpByAppAssetIdAndCode";
 
   // App Referantor
   public static AddAppReferantor = "/AppReferantor/AddAppReferantor";
@@ -554,7 +554,7 @@ export class AdInsConstant {
   public static GetVendorEmpSupervisorByVendorEmpId = environment.FoundationR3Url + "/VendorEmp/GetVendorEmpSupervisorByVendorEmpId";
   public static GetVendorEmpByVendorIdVendorEmpNo = environment.losUrl + "/VendorEmp/GetVendorEmpByVendorIdVendorEmpNo";
   public static GetListVendorByCategoryCodeAndOfficeCode = environment.FoundationR3Url + "/Vendor/GetListVendorByCategoryCodeAndOfficeCode";
-  public static GetVendorForLookup = "http://localhost:5000" + "/Vendor/GetVendorForLookup";
+  public static GetVendorForLookup = environment.FoundationR3Url + "/Vendor/GetVendorForLookup";
 
 
   // VendorEmp
@@ -780,16 +780,16 @@ export class AdInsConstant {
   // App Collateral
   public static GetListAppCollateral = environment.losUrl + "/AppCollateral/GetListAppCollateral";
   public static GetViewAppCollateralObjByAppId = environment.losUrl + "/AppCollateral/GetViewAppCollateralObjByAppId";
-  public static AddEditAllCollateralData = "http://localhost:5001" + "/AppCollateral/AddEditAllCollateralData";
-  public static AddExistingAppCollateralData = "http://localhost:5001" + "/AppCollateral/AddExistingAppCollateralData";
-  public static GetAppCollateralByAppCollateralId = "http://localhost:5001" + "/AppCollateral/GetAppCollateralByAppCollateralId";
-  public static GetAppCollateralByAppId = "http://localhost:5001" + "/AppCollateral/GetAppCollateralByAppId";
+  public static AddEditAllCollateralData = environment.losUrl + "/AppCollateral/AddEditAllCollateralData";
+  public static AddExistingAppCollateralData = environment.losUrl + "/AppCollateral/AddExistingAppCollateralData";
+  public static GetAppCollateralByAppCollateralId = environment.losUrl + "/AppCollateral/GetAppCollateralByAppCollateralId";
+  public static GetAppCollateralByAppId = environment.losUrl + "/AppCollateral/GetAppCollateralByAppId";
   
   // App Collateral Suppl Emp
-  public static GetListAppAssetSupplEmpByAppAssetId = "http://localhost:5001" + "/AppAssetSupplEmp/GetListAppAssetSupplEmpByAppAssetId";
+  public static GetListAppAssetSupplEmpByAppAssetId = environment.losUrl + "/AppAssetSupplEmp/GetListAppAssetSupplEmpByAppAssetId";
 
   // App Collateral Registration
-  public static GetAppCollateralRegistrationByAppCollateralId = "http://localhost:5001" + "/AppCollateralRegistration/GetAppCollateralRegistrationByAppCollateralId"
+  public static GetAppCollateralRegistrationByAppCollateralId = environment.losUrl + "/AppCollateralRegistration/GetAppCollateralRegistrationByAppCollateralId"
  
 
   //AGRMNT SIGNER

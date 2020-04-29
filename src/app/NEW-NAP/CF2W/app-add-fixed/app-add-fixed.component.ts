@@ -83,6 +83,7 @@ export class AppAddFixedComponent implements OnInit {
   inputLookupSupplierObj;
   officeItems;
   user;
+  listRefOfficeId: Array<any> = [];
 
   ngOnInit() {
     // Lookup Obj
@@ -107,6 +108,19 @@ export class AppAddFixedComponent implements OnInit {
         CrtOfficeName: this.user.OfficeName,
       });
     }
+
+    this.refOfficeObj = new RefOfficeObj();
+    this.http.post(AdInsConstant.GetListKvpActiveRefOfficeIdForPaging, this.refOfficeObj).subscribe(
+      (response) => {
+        this.returnRefOfficeObj = response["ReturnObject"];
+        console.log("bbb");
+        console.log(this.returnRefOfficeObj);
+        for(let i =0;i<this.returnRefOfficeObj.length;i++){
+          this.listRefOfficeId.push(this.returnRefOfficeObj[i].Key)
+        }
+        console.log(this.listRefOfficeId);
+      }
+    );
 
     // Test Data
     console.log(this.user);
@@ -158,21 +172,15 @@ export class AppAddFixedComponent implements OnInit {
     this.inputLookupSupplierObj.pagingJson = "./assets/uclookup/NAP/lookupSupplierBranch.json";
     this.inputLookupSupplierObj.genericJson = "./assets/uclookup/NAP/lookupSupplierBranch.json";
 
-    this.refOfficeObj = new RefOfficeObj();
-    this.http.post(AdInsConstant.GetListKvpActiveRefOfficeIdForPaging, this.refOfficeObj).subscribe(
-      (response) => {
-        this.returnRefOfficeObj = response["ReturnObject"];
-      }
-    );
 
-    // this.critSupplier = new Array();
-    // var addCritSupp = new CriteriaObj();
-    // addCritSupp.DataType = "text";
-    // addCritSupp.propName = "VOM.REF_OFFICE_ID";
-    // addCritSupp.restriction = AdInsConstant.RestrictionIn;
-    // addCritSupp.listValue = [this.user.MrOfficeTypeCode];
-    // this.critSupplier.push(addCritSupp);
-    // this.inputLookupSupplierObj.addCritInput = this.critSupplier;
+    this.critSupplier = new Array();
+    var addCritSupp = new CriteriaObj();
+    addCritSupp.DataType = "number";
+    addCritSupp.propName = "VOM.REF_OFFICE_ID";
+    addCritSupp.restriction = AdInsConstant.RestrictionIn;
+    addCritSupp.listValue = this.listRefOfficeId;
+    this.critSupplier.push(addCritSupp);
+    this.inputLookupSupplierObj.addCritInput = this.critSupplier;
   }
 
   GetOfficeDDL() {
