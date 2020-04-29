@@ -13,6 +13,7 @@ import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { AppAssetAccessoryObj } from 'app/shared/model/AppAssetAccessoryObj.model';
 import { AppDataObj } from 'app/shared/model/AppDataObj.model';
+import { WizardComponent } from 'angular-archwizard';
 
 
 @Component({
@@ -267,7 +268,8 @@ export class AssetDataComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private wizard: WizardComponent) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"] ? params["AppId"] : this.AppId;
     })
@@ -318,6 +320,7 @@ export class AssetDataComponent implements OnInit {
       (response) => {
         console.log(response);
         this.toastr.successMessage(response["message"]);
+        this.wizard.goToNextStep();
       },
       (error) => {
         console.log(error);
