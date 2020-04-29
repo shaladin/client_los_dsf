@@ -543,7 +543,6 @@ export class LeadInputLeadDataComponent implements OnInit {
       );
     } else {
       this.leadInputLeadDataObj = new LeadInputLeadDataObj();
-      this.leadInputLeadDataObj.WfTaskListId = this.TaskListId;
       this.setLeadAsset();
       this.setLeadApp();
 
@@ -582,7 +581,6 @@ export class LeadInputLeadDataComponent implements OnInit {
       this.setLeadAsset();
       this.setLeadApp();
       this.leadInputLeadDataObj.WfTaskListId = this.TaskListId;
-
       this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);

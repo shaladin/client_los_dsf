@@ -106,14 +106,14 @@
     "querystring": {
         "select": "SELECT MOU.MOU_CUST_NO AS MouCustNo, WTL.WF_TASK_LIST_ID AS WfTaskListId, WTL.CLAIM_STAT AS ClaimStat, WTL.USERNAME AS ClaimBy, MOU.CUST_NAME AS CustName, RS.DESCR AS MouStat, RM.DESCR AS MouType, MOU.MOU_CUST_DT AS MouCustDt, MOU.REF_NO AS RefNo, MOU.MR_MOU_TYPE_CODE AS MrMouTypeCode, MOU.MOU_CUST_ID AS MouCustId, MOU.MOU_STAT AS MouStatCode",
         "from": "FROM dbo.MOU_CUST MOU WITH(NOLOCK) JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON MOU.MOU_CUST_NO = WTL.TRANSACTION_CODE AND WTL.ACT_CODE = 'MOU_RETURN' LEFT JOIN dbo.V_REF_STATUS RS ON RS.STATUS_GRP_CODE='MOUC_STAT' AND RS.REF_STATUS_CODE = MOU.MOU_STAT LEFT JOIN dbo.V_REF_MASTER RM ON RM.REF_MASTER_TYPE_CODE='MOU_TYPE' AND RM.MASTER_CODE = MOU.MR_MOU_TYPE_CODE",
-        "where" : "WHERE WTL.END_EXECUTING_DATE IS NULL"
+        "where": "WHERE WTL.END_EXECUTING_DATE IS NULL"
     },
     "headerList": [
         {
-          "type": "sort",
-          "position": "left",
-          "label": "Claim By",
-          "name": "WTL.USERNAME"
+            "type": "sort",
+            "position": "left",
+            "label": "Claim By",
+            "name": "WTL.USERNAME"
         },
         {
             "type": "sort",
@@ -195,24 +195,75 @@
             "position": "center",
             "action": [
                 {
-                    "type": "edit",
-                    "path": "/Mou/Request/Detail",
-                    "param": [
+                    "type": "switch",
+                    "case": [
                         {
-                            "type": "MouCustId",
-                            "property": "MouCustId"
+                            "conditions": [
+                                {
+                                    "isUser": true,
+                                    "property": "ClaimBy",
+                                    "value": "",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "/Mou/Request/Detail",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "MouCustId",
+                                        "property": "MouCustId"
+                                    },
+                                    {
+                                        "type": "mode",
+                                        "property": "edit"
+                                    },
+                                    {
+                                        "type": "MrMouTypeCode",
+                                        "property": "MrMouTypeCode"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "WfTaskListId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
                         },
                         {
-                            "type": "mode",
-                            "property": "edit"
-                        },
-                        {
-                            "type": "MrMouTypeCode",
-                            "property": "MrMouTypeCode"
-                        },
-                        {
-                            "type": "WfTaskListId",
-                            "property": "WfTaskListId"
+                            "conditions": [
+                                {
+                                    "isUser": false,
+                                    "property": "ClaimBy",
+                                    "value": "",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "/Mou/Request/Detail",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "MouCustId",
+                                        "property": "MouCustId"
+                                    },
+                                    {
+                                        "type": "mode",
+                                        "property": "edit"
+                                    },
+                                    {
+                                        "type": "MrMouTypeCode",
+                                        "property": "MrMouTypeCode"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "WfTaskListId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
                         }
                     ]
                 }
