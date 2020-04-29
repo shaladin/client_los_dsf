@@ -10,6 +10,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { NapAppCrossObj } from 'app/shared/model/NapAppCrossObj.Model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
+import { WizardComponent } from 'angular-archwizard';
 
 @Component({
   selector: 'app-application-data-model',
@@ -24,7 +25,8 @@ export class ApplicationDataComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private wizard: WizardComponent
   ) { }
 
   NapAppModelForm = this.fb.group({
@@ -112,7 +114,7 @@ export class ApplicationDataComponent implements OnInit {
   }
 
   GetCrossInfoData(){
-    var url = environment.losUrl + AdInsConstant.GetListAppCross;
+    var url = AdInsConstant.GetListAppCross;
     var obj = {
       AppId: this.appId,
       RowVersion: ""
@@ -207,7 +209,7 @@ export class ApplicationDataComponent implements OnInit {
   }
   
   getAppSrcData(){
-    var url = environment.losUrl + AdInsConstant.GetListKvpActiveRefAppSrc;
+    var url = AdInsConstant.GetListKvpActiveRefAppSrc;
     var obj = {
       RowVersion: ""
     };
@@ -449,7 +451,7 @@ export class ApplicationDataComponent implements OnInit {
     var tempListAppCrossObj = this.GetListAppCrossValue();
     // console.log(tempListAppCrossObj);
     var tempAppFindDataObj = this.GetAppFinDataValue();
-    var url = environment.losUrl + AdInsConstant.EditAppAddAppCross;
+    var url = AdInsConstant.EditAppAddAppCross;
     var obj = {
       appObj: tempAppObj,
       listAppCrossObj: tempListAppCrossObj,
@@ -460,6 +462,7 @@ export class ApplicationDataComponent implements OnInit {
     this.http.post(url, obj).subscribe(
       (response) => {
         console.log(response);
+        this.wizard.goToNextStep();
       },
       (error) => {
         console.log(error);
@@ -509,7 +512,7 @@ export class ApplicationDataComponent implements OnInit {
     console.log(this.resultCrossApp);
     console.log(this.resultCrossApp[idx]);
     if(this.resultCrossApp[idx].AppCrossId!=null){
-      var url = environment.losUrl + AdInsConstant.DeleteAppCross;
+      var url = AdInsConstant.DeleteAppCross;
       var obj = new NapAppCrossObj();
       obj = this.resultCrossApp[idx];
       this.http.post(url, obj).subscribe(

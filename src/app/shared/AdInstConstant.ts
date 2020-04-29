@@ -52,7 +52,6 @@ export class AdInsConstant {
   public static EditApp = "/Application/EditApp";
   public static GetAppById = environment.losUrl + "/Application/GetAppById";
   public static GetAppByIds = environment.losUrl + "/Application/GetAppById";
-  public static EditAppAddAppCross = "/Application/EditAppAddAppCross";
   public static GetAppDetailForAppTabById = environment.losUrl + "/Application/GetAppDetailForAppTabById";
   public static AddAppFromLead = environment.losUrl + "/Application/AddAppFromLead";
 
@@ -72,9 +71,10 @@ export class AdInsConstant {
   public static GetAppReferantorByAppId = "/AppReferantor/GetAppReferantorByAppId";
 
   // App Cross
+  public static EditAppAddAppCross = environment.losUrl +"/Application/EditAppAddAppCross";
   public static GetAppCrossByCrossAgrmntNo = "/AppCross/GetAppCrossByCrossAgrmntNo";
-  public static DeleteAppCross = "/AppCross/DeleteAppCross";
-  public static GetListAppCross = "/AppCross/GetListAppCross";
+  public static DeleteAppCross = environment.losUrl +"/AppCross/DeleteAppCross";
+  public static GetListAppCross = environment.losUrl + "/AppCross/GetListAppCross";
   public static AddListAppCross = "/AppCross/AddListAppCross";
 
   // Ref App Src
