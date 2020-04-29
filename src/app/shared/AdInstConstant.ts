@@ -998,4 +998,5 @@ export class AdInsConstant {
 
   // Download
   public static DownloadTemplate = environment.FoundationR3Url + '/Download/DownloadTemplate';
+  public static GetUploadAssetMasterByUploadMonitoringHNoAndTrxType = environment.FoundationR3Url + '/AssetMaster/GetUploadAssetMasterByUploadMonitoringHNoAndTrxType';
 }
