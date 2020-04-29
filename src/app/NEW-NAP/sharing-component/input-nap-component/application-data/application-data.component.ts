@@ -80,7 +80,8 @@ export class ApplicationDataComponent implements OnInit {
     RsvField4: [''],
     RsvField5: [''],
     MrInstSchemeCode: ["", Validators.required],
-    InterestType: ['', Validators.required]
+    InterestType: ['', Validators.required],
+    FloatingPeriod: ['']
   });
 
   inputPagingObj;
@@ -89,10 +90,12 @@ export class ApplicationDataComponent implements OnInit {
   employeeIdentifier;
   salesRecommendationItems = [];
   isInputLookupObj;
+  isFixedRate;
   ngOnInit() {
     this.ListCrossAppObj["appId"]=this.appId;
     this.ListCrossAppObj["result"] = [];
     this.isInputLookupObj = false;
+    this.isFixedRate = false
 
     // this.makeLookUpObj();
     this.getAppModelInfo();
@@ -143,11 +146,11 @@ export class ApplicationDataComponent implements OnInit {
       AppId: this.appId,
       RowVersion: ""
     };
-    var url = AdInsConstant.GetAppById;
+    var url = AdInsConstant.GetAppDetailForTabAddEditAppById;
 
     this.http.post(url, obj).subscribe(
       (response) => {
-        // console.log(response);
+        console.log(response);
         this.resultResponse = response;
         console.log(this.resultResponse);
         this.NapAppModelForm.patchValue({
@@ -198,9 +201,13 @@ export class ApplicationDataComponent implements OnInit {
           RsvField3: this.resultResponse.RsvField3,
           RsvField4: this.resultResponse.RsvField4,
           RsvField5: this.resultResponse.RsvField5,
+          MrInstSchemeCode: this.resultResponse.MrInstSchemeCode,
+          InterestType: this.resultResponse.InterestType,
+          FloatingPeriod: this.resultResponse.FloatingPeriodCode,
         });
         console.log(this.NapAppModelForm);
         this.makeNewLookupCriteria();
+        this.ChangeInterestType();
       },
       (error) => {
         console.log(error);
@@ -237,6 +244,7 @@ export class ApplicationDataComponent implements OnInit {
         // console.log(response);
         var objTemp = response["ReturnObject"];
         this.applicationDDLitems["Pay_Freq"] = objTemp;
+        this.applicationDDLitems["Floating_Period"] = objTemp;
         console.log(this.applicationDDLitems);
       },
       (error) => {
@@ -415,6 +423,7 @@ export class ApplicationDataComponent implements OnInit {
     temp.RsvField4 = this.NapAppModelForm.controls.RsvField4.value;
     temp.RsvField5 = this.NapAppModelForm.controls.RsvField5.value;
     temp.RowVersion = this.resultResponse.RowVersion;
+    temp.FloatingPeriodCode = this.NapAppModelForm.controls.FloatingPeriod.value;
     return temp;
   }
 
@@ -526,5 +535,18 @@ export class ApplicationDataComponent implements OnInit {
     }
     this.resultCrossApp.splice(idx, 1);
     this.ListCrossAppObj["result"].splice(idx, 1);
+  }
+
+  ChangeInterestType(){
+    console.log(this.NapAppModelForm);
+    if(this.NapAppModelForm.value.InterestType == "FIXED"){
+      this.isFixedRate = true;
+      this.NapAppModelForm.controls.InterestType.setValidators(Validators.required);
+    }
+    else {
+      this.isFixedRate = false;
+      this.NapAppModelForm.controls.InterestType.clearValidators();
+    }
+    this.NapAppModelForm.controls.InterestType.updateValueAndValidity();
   }
 }

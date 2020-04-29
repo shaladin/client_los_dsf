@@ -35,7 +35,12 @@
             </mat-tab>
             <mat-tab label="Application Data">
               <ng-template matTabContent>
-
+                <app-tab-application [appId]="AppId"></app-tab-application>
+              </ng-template>
+            </mat-tab>
+            <mat-tab label="Analysis Result">
+              <ng-template matTabContent>
+                <app-tab-analysis-result [appId]="AppId"></app-tab-analysis-result>
               </ng-template>
             </mat-tab>
             <mat-tab label="Invoice Data">

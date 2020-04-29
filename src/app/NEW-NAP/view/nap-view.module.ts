@@ -12,24 +12,30 @@ import { ListDataCommissionComponent } from "../sharing-component/view-app-compo
 import { ViewReservedFundComponent } from "../sharing-component/view-app-component/view-reserved-fund/view-reserved-fund.component";
 import { ViewPhoneVerifComponent } from "../sharing-component/view-app-component/view-phone-verif/view-phone-verif.component";
 import { ViewAssetDataComponent } from "../sharing-component/view-app-component/view-asset-data/view-asset-data.component";
+import { TabApplicationComponent } from "../sharing-component/view-app-component/tab-application/tab-application.component";
+import { UcviewgenericModule } from "@adins/ucviewgeneric";
+import { TabAnalysisResultComponent } from "../sharing-component/view-app-component/tab-analysis-result/tab-analysis-result.component";
 
 @NgModule({
   imports: [
     NapViewRoutingModule,
     CommonModule,
     MatTabsModule,
-    UcSubsectionModule
+    UcSubsectionModule,
+    UcviewgenericModule
   ],
   declarations: [
     AgreementViewContainerComponent,
     applicationViewComponent,
     TabReferantorComponent,
-    InvoiceViewComponent,
     TabCommissionComponent,
     ListDataCommissionComponent,
     ViewReservedFundComponent,
     ViewPhoneVerifComponent,
-    ViewAssetDataComponent
+    ViewAssetDataComponent,
+    TabApplicationComponent,
+    TabAnalysisResultComponent,
+    InvoiceViewComponent
   ]
 })
 export class NapViewModule { }

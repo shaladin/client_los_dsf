@@ -12,6 +12,8 @@ import { AppTcComponent } from './app-tc/app-tc.component';
 import { GuarantorComponent } from './guarantor/guarantor.component';
 import { ViewPhoneVerifComponent } from "./view-phone-verif/view-phone-verif.component";
 import { ViewAssetDataComponent } from "./view-asset-data/view-asset-data.component";
+import { TabApplicationComponent } from './tab-application/tab-application.component';
+import { TabAnalysisResultComponent } from './tab-analysis-result/tab-analysis-result.component';
 
 @NgModule({
   exports: [
@@ -31,7 +33,9 @@ import { ViewAssetDataComponent } from "./view-asset-data/view-asset-data.compon
     AppTcComponent,
     GuarantorComponent,
     ViewPhoneVerifComponent,
-    ViewAssetDataComponent
+    ViewAssetDataComponent,
+    TabApplicationComponent,
+    TabAnalysisResultComponent,
   ],
   providers: [
     NGXToastrService
