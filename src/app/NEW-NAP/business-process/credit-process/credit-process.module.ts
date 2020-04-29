@@ -36,6 +36,8 @@ import { UcinputnumberModule } from "@adins/ucinputnumber";
 import { UcapprovalModule } from "@adins/ucapproval";
 import { UcapprovebyModule } from "@adins/ucapproveby";
 import { CreditInquiryComponent } from './credit-inquiry/credit-inquiry.component';
+ import { UcSubsectionModule } from "@adins/uc-subsection";
+import { FraudVerificationMultiAssetComponent } from "./fraud-verification-multi-asset/fraud-verification-multi-asset.component";
 
 @NgModule({
   imports: [
@@ -52,7 +54,8 @@ import { CreditInquiryComponent } from './credit-inquiry/credit-inquiry.componen
     MatSelectModule,
     UcinputnumberModule,
     UcapprovalModule,
-    UcapprovebyModule
+    UcapprovebyModule,
+    UcSubsectionModule  
   ],
   declarations: [
     CreditApprovalPagingComponent,
@@ -80,7 +83,8 @@ import { CreditInquiryComponent } from './credit-inquiry/credit-inquiry.componen
     ViewSurveyTaskListComponent,
     ViewApprovalComponent,
     CreditReviewMainComponent,
-    CreditInquiryComponent
+    CreditInquiryComponent, 
+    FraudVerificationMultiAssetComponent
   ],
   providers: [
     NGXToastrService
