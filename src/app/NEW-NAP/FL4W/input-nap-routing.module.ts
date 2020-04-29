@@ -1,18 +1,32 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { DummyComponent } from './dummy/dummy.component';
+import { DummyComponent } from './dummy/dummy.component';  
+import { NapAddComponent } from './nap-add/nap-add.component';
+import { NapPagingComponent } from './nap-paging/nap-paging.component';
 
 const routes: Routes = [
   {
     path: '',
     children: [
       {
-        path: 'dummy',
-        component: DummyComponent,
+        path: 'AdminProcess',
+        loadChildren: './admin-process/admin-process.module#AdminProcessFL4WModule'
+      }, 
+      {
+        path: 'Add',
+        component: NapAddComponent,
         data: {
-          title: 'dummy'
+          title: 'Nap Add'
         }
       },
+      {
+        path: 'Paging',
+        component: NapPagingComponent,
+        data: {
+          title: 'Nap Paging'
+        }
+      } 
+      
     ]
   }
 ];

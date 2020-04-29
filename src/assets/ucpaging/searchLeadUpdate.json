@@ -11,7 +11,7 @@
             "placeholder": "Placeholder",
             "isFromURL": true,
             "isSelectOne": false,
-            "url": "http://r3app-server/FOUNDATION_R3/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "url": "http://r3app-server.ad-ins.com/Foundation_R3/RefOffice/GetListKvpActiveRefOfficeForPaging",
             "label": "OFFICE NAME",
             "items": [],
             "itemsUrl": []
@@ -25,7 +25,7 @@
             "placeholder": "Placeholder",
             "isFromURL": true,
             "isSelectOne": false,
-            "url": "http://r3app-server/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
+            "url": "http://r3app-server.ad-ins.com/Foundation_R3/RefMaster/GetListKeyValueActiveByCode",
             "label": "LEAD SOURCE",
             "items": [],
             "itemsUrl": [],
@@ -49,19 +49,19 @@
             "placeholder": "Placeholder"
         },
         {
-            "type" : "textbox",
-            "name" : "LA.FULL_ASSET_NAME",
-            "id" : "FullAssetNameId",
-            "value" : "",
-            "label" : "FULL ASSET NAME",
+            "type": "textbox",
+            "name": "LA.FULL_ASSET_NAME",
+            "id": "FullAssetNameId",
+            "value": "",
+            "label": "FULL ASSET NAME",
             "placeholder": "Placeholder"
         },
         {
-            "type" : "textbox",
-            "name" : "LC.CUST_NAME",
-            "id" : "CustNameId",
-            "value" : "",
-            "label" : "CUSTOMER NAME",
+            "type": "textbox",
+            "name": "LC.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "CUSTOMER NAME",
             "placeholder": "Placeholder"
         },
         {
@@ -97,7 +97,7 @@
     "querystring": {
         "select": "SELECT L.LEAD_NO AS LeadNo, WTL.WF_TASK_LIST_ID AS WfTaskListId, WTL.CLAIM_STAT AS ClaimStat, WTL.USERNAME AS ClaimBy, WTL.OFFICE_CODE AS OfficeCode, L.LEAD_ID AS LeadId, L.CRT_OFFICE_NAME AS CrtOfficeName, L.ORI_OFFICE_NAME AS OriOfficeName, L.ORDER_NO AS OrderNo, LC.CUST_NAME AS CustName, L.MR_LEAD_SOURCE_CODE AS SourceCode, LA.FULL_ASSET_NAME AS FullAssetName",
         "from": "FROM dbo.LEAD L WITH(NOLOCK) JOIN dbo.LEAD_ASSET LA WITH(NOLOCK) ON L.LEAD_ID = LA.LEAD_ID JOIN LEAD_CUST LC WITH(NOLOCK) ON L.LEAD_ID = LC.LEAD_ID JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON L.LEAD_NO = WTL.TRANSACTION_CODE AND WTL.ACT_CODE = 'LEAD_UPDATE'",
-        "where" : "WHERE WTL.END_EXECUTING_DATE IS NULL"
+        "where": "WHERE WTL.END_EXECUTING_DATE IS NULL"
     },
     "headerList": [
         {
@@ -155,14 +155,15 @@
             "property": "ClaimBy"
         },
         {
-            "type" : "link",
-            "position" : "center",
-            "property" : "LeadNo",
-            "path" : "/Lead/View",
-            "param" : [
+            "type": "link",
+            "position": "center",
+            "property": "LeadNo",
+            "path": "/Lead/View",
+            "target": "_blank",
+            "param": [
                 {
-                    "type" : "LeadId",
-                    "property" : "LeadId"
+                    "type": "LeadId",
+                    "property": "LeadId"
                 }
             ]
         },
@@ -196,24 +197,75 @@
             "position": "center",
             "action": [
                 {
-                    "type": "edit",
-                    "path": "/Lead/LeadInput/Page",
-                    "param": [
+                    "type": "switch",
+                    "case": [
                         {
-                            "type": "TaskListId",
-                            "property": "TaskListId"
+                            "conditions": [
+                                {
+                                    "isUser": true,
+                                    "property": "ClaimBy",
+                                    "value": "",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "/Lead/LeadInput/Page",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "TaskListId",
+                                        "property": "TaskListId"
+                                    },
+                                    {
+                                        "type": "LeadId",
+                                        "property": "LeadId"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "WfTaskListId"
+                                    },
+                                    {
+                                        "type": "mode",
+                                        "property": "edit"
+                                    }
+                                ]
+                            },
+                            "isHide": false
                         },
                         {
-                            "type": "LeadId",
-                            "property": "LeadId"
-                        },
-                        {
-                            "type": "WfTaskListId",
-                            "property": "WfTaskListId"
-                        },
-                        {
-                            "type": "mode",
-                            "property": "edit"
+                            "conditions": [
+                                {
+                                    "isUser": false,
+                                    "property": "ClaimBy",
+                                    "value": "",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "/Lead/LeadInput/Page",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "TaskListId",
+                                        "property": "TaskListId"
+                                    },
+                                    {
+                                        "type": "LeadId",
+                                        "property": "LeadId"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "WfTaskListId"
+                                    },
+                                    {
+                                        "type": "mode",
+                                        "property": "edit"
+                                    }
+                                ]
+                            },
+                            "isHide": false
                         }
                     ]
                 }

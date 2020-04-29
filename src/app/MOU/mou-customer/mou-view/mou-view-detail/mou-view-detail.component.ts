@@ -19,6 +19,7 @@ export class MouViewDetailComponent implements OnInit {
   AssetTypeCode: any;
   MrFirstInstTypeCode: any;
   MrInterestTypeCode: any;
+  MrInstTypeCode: any;
   MrInstSchmCode: any;
   PayFreqCode: any;
   DownPaymentFromPrcnt: any;
@@ -37,40 +38,59 @@ export class MouViewDetailComponent implements OnInit {
   MrRecourseTypeCode: any;
   Notes: any;
 
+  mouCust: any;
   mouCustClause: any;
+  mouCustFctr: any;
   listAssetData: any;
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) { }
 
   ngOnInit() {
-    var mouCustObj = { MouCustId: this.MouCustId }
+    var mouCustObj = { MouCustId: this.MouCustId}
     console.log(mouCustObj);
     this.http.post(AdInsConstant.GetMouCustDataByMouCustId, mouCustObj).subscribe(
       (response) => {
-        this.mouCustClause = response["ReturnObject"];
-        this.MouCustId = this.mouCustClause.MouCustId;
-        this.MouCustClauseId = this.mouCustClause.MouCustClauseId;
-        this.CurrCode = this.mouCustClause.CurrCode;
-        this.AssetTypeCode = this.mouCustClause.AssetTypeCode;
-        this.MrFirstInstTypeCode = this.mouCustClause.MrFirstInstTypeCode;
-        this.MrInterestTypeCode = this.mouCustClause.MrInterestTypeCode;
-        this.MrInstSchmCode = this.mouCustClause.MrInstSchmCode;
-        this.PayFreqCode = this.mouCustClause.PayFreqCode;
-        this.DownPaymentFromPrcnt = this.mouCustClause.DownPaymentFromPrcnt;
-        this.DownPaymentToPrcnt = this.mouCustClause.DownPaymentToPrcnt;
-        this.TenorFrom = this.mouCustClause.TenorFrom;
-        this.TenorTo = this.mouCustClause.TenorTo;
+        this.mouCust = response["MouCustObj"];
+        this.MouCustId = this.mouCust.MouCustId;
+        this.CurrCode = this.mouCust.CurrCode;
+        this.PlafondAmt = this.mouCust.PlafondAmt;
+        this.IsRevolving = this.mouCust.IsRevolving;
 
-        this.WopCode = this.mouCustClause.WopCode;
-        this.PlafondAmt = this.mouCustClause.PlafondAmt;
-        this.IsRevolving = this.mouCustClause.IsRevolving;
-        this.TopDays = this.mouCustClause.TopDays;
-        this.InterestRatePrcnt = this.mouCustClause.InterestRatePrcnt;
-        this.RetentionPrcnt = this.mouCustClause.RetentionPrcnt;
-        this.IsListedCust = this.mouCustClause.IsListedCust;
-        this.IsDisclosed = this.mouCustClause.IsDisclosed;
-        this.MrRecourseTypeCode = this.mouCustClause.MrRecourseTypeCode;
-        this.Notes - this.mouCustClause.Notes;
+        if (this.MouType == AdInsConstant.GENERAL)
+        {
+          this.mouCustClause = response["MouCustClauseObj"];
+          this.AssetTypeCode = this.mouCustClause.AssetTypeCode;
+          this.MrInterestTypeCode = this.mouCustClause.MrInterestTypeCode;
+          this.MrFirstInstTypeCode = this.mouCustClause.MrFirstInstTypeCode;
+          this.MrInstSchmCode = this.mouCustClause.MrInstSchmCode;
+          this.PayFreqCode = this.mouCustClause.PayFreqCode;
+          this.DownPaymentFromPrcnt = this.mouCustClause.DownPaymentFromPrcnt;
+          this.DownPaymentToPrcnt = this.mouCustClause.DownPaymentToPrcnt;
+          this.TenorFrom = this.mouCustClause.TenorFrom;
+          this.TenorTo = this.mouCustClause.TenorTo;
+        }
+        else if (this.MouType == AdInsConstant.FACTORING)
+        {
+          this.mouCustFctr = response["MouCustFctrObj"];
+          this.AssetTypeCode = this.mouCustFctr.AssetTypeCode;
+          this.MrFirstInstTypeCode = this.mouCustFctr.MrFirstInstTypeCode;
+          this.MrInstTypeCode = this.mouCustFctr.MrInstTypeCode;
+          this.MrInstSchmCode = this.mouCustFctr.MrInstSchmCode;
+          this.PayFreqCode = this.mouCustFctr.PayFreqCode;
+          this.DownPaymentFromPrcnt = this.mouCustFctr.DownPaymentFromPrcnt;
+          this.DownPaymentToPrcnt = this.mouCustFctr.DownPaymentToPrcnt;
+          this.TenorFrom = this.mouCustFctr.TenorFrom;
+          this.TenorTo = this.mouCustFctr.TenorTo;
+          
+          this.WopCode = this.mouCustFctr.WopCode;
+          this.TopDays = this.mouCustFctr.TopDays;
+          this.InterestRatePrcnt = this.mouCustFctr.InterestRatePrcnt;
+          this.RetentionPrcnt = this.mouCustFctr.RetentionPrcnt;
+          this.IsListedCust = this.mouCustFctr.IsListedCust;
+          this.IsDisclosed = this.mouCustFctr.IsDisclosed;
+          this.MrRecourseTypeCode = this.mouCustFctr.MrRecourseTypeCode;
+          this.Notes - this.mouCustFctr.Notes;
+        }
       })
     this.http.post(AdInsConstant.GetMouCustAssetByMouCustId, mouCustObj).subscribe(
       (response) => {

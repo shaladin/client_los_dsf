@@ -11,7 +11,7 @@
             "placeholder": "Placeholder",
             "isFromURL": true,
             "isSelectOne": false,
-            "url": "http://r3app-server/foundation_r3/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "url": "http://r3app-server.ad-ins.com/Foundation_R3/RefOffice/GetListKvpActiveRefOfficeForPaging",
             "label": "OFFICE NAME",
             "items": [],
             "itemsUrl": []
@@ -25,7 +25,7 @@
             "placeholder": "Placeholder",
             "isFromURL": true,
             "isSelectOne": false,
-            "url": "http://r3app-server/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
+            "url": "http://r3app-server.ad-ins.com/Foundation_R3/RefMaster/GetListKeyValueActiveByCode",
             "label": "LEAD SOURCE",
             "items": [],
             "itemsUrl": [],
@@ -67,7 +67,8 @@
     ],
     "querystring": {
         "select": "SELECT L.LEAD_NO AS LeadNo, L.LEAD_ID AS LeadId, L.CRT_OFFICE_NAME AS CrtOfficeName, L.ORI_OFFICE_NAME AS OriOfficeName, L.ORDER_NO AS OrderNo, LC.CUST_NAME AS CustName, L.MR_LEAD_SOURCE_CODE AS SourceCode, LA.FULL_ASSET_NAME AS FullAssetName",
-        "from": "FROM dbo.LEAD L WITH(NOLOCK) JOIN dbo.LEAD_ASSET LA WITH(NOLOCK) ON L.LEAD_ID = LA.LEAD_ID JOIN dbo.LEAD_CUST LC WITH(NOLOCK) ON L.LEAD_ID = LC.LEAD_ID"
+        "from": "FROM dbo.LEAD L WITH(NOLOCK) JOIN dbo.LEAD_ASSET LA WITH(NOLOCK) ON L.LEAD_ID = LA.LEAD_ID JOIN dbo.LEAD_CUST LC WITH(NOLOCK) ON L.LEAD_ID = LC.LEAD_ID",
+        "where" : "WHERE L.LEAD_STAT = N'NEW'"
     },
     "headerList": [
         {
@@ -118,6 +119,7 @@
             "position" : "center",
             "property" : "LeadNo",
             "path" : "/Lead/View",
+            "target": "_blank",
             "param" : [
                 {
                     "type" : "LeadId",

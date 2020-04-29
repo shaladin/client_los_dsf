@@ -53,10 +53,20 @@
         {
             "type": "datepicker",
             "name": "TL.REQUEST_DATE",
-            "id": "ReqDtId",
+            "id": "ReqDtFromId",
             "value": "",
-            "label": "REQUEST DATE",
-            "placeholder": "Placeholder"
+            "label": "REQUEST DATE FROM",
+            "restriction": "gte",
+            "datatype": "date"
+        },
+        {
+            "type": "datepicker",
+            "name": "TL.REQUEST_DATE",
+            "id": "ReqDtFromId",
+            "value": "",
+            "label": "REQUEST DATE TO",
+            "restriction": "lte",
+            "datatype": "date"
         }
     ],
     "querystring": {
@@ -128,7 +138,8 @@
             "type": "link",
             "position": "center",
             "property": "MouCustNo",
-            "path": "/Mou/Cust/Paging",
+            "path": "/Mou/Cust/View",
+            "target": "_blank",
             "param": [
                 {
                     "type": "MouCustId",
@@ -175,7 +186,11 @@
                                 "type": "url",
                                 "path": "/Mou/Cust/ApprovalFactoring",
                                 "icon": "ft-edit-2",
-                                "param": [
+                                "param": [                                    
+                                    {
+                                        "type": "MouCustId",
+                                        "property": "MouCustId"
+                                    },
                                     {
                                         "type": "TaskId",
                                         "property": "TaskId"
@@ -183,10 +198,6 @@
                                     {
                                         "type": "InstanceId",
                                         "property": "InstanceId"
-                                    },
-                                    {
-                                        "type": "MouCustId",
-                                        "property": "MouCustId"
                                     }
                                 ]
                             },
@@ -206,16 +217,16 @@
                                 "icon": "ft-edit-2",
                                 "param": [
                                     {
+                                        "type": "MouCustId",
+                                        "property": "MouCustId"
+                                    },
+                                    {
                                         "type": "TaskId",
                                         "property": "TaskId"
                                     },
                                     {
                                         "type": "InstanceId",
                                         "property": "InstanceId"
-                                    },
-                                    {
-                                        "type": "MouCustId",
-                                        "property": "MouCustId"
                                     }
                                 ]
                             },

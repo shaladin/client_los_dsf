@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormBuilder, Validators } from '@angular/forms';
 import { LeadConfirmCancelObj } from 'app/shared/model/LeadConfirmCancelObj.Model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-lead-cancel-confirm',
@@ -24,6 +25,7 @@ export class LeadCancelConfirmComponent implements OnInit {
   deletedArr = new Array();
   EditListLeadForCancelByListLeadId = AdInsConstant.EditListLeadForCancelByListLeadId;
   tempWfTaskListArr: any = new Array();
+  leadUrl: string;
 
   constructor(
     private http: HttpClient,
@@ -41,13 +43,14 @@ export class LeadCancelConfirmComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       if (params['LeadIds'] != null) {
         tempLeadIds = params['LeadIds'];
+        tempLeadArr = tempLeadIds.split(',');
       }
-      tempLeadArr = tempLeadIds.split(',');
-
+      
       if (params['WfTaskListIds'] != null && params['WfTaskListIds'] != "") {
         WfTaskListIds = params['WfTaskListIds'];
+        this.tempWfTaskListArr = WfTaskListIds.split(',');
       }
-      this.tempWfTaskListArr = WfTaskListIds.split(',');
+      
       console.log(this.tempWfTaskListArr);
     });
     var tempObj = { 'ListLeadId': tempLeadArr };
@@ -65,7 +68,7 @@ export class LeadCancelConfirmComponent implements OnInit {
         });
       }
     );
-
+    this.leadUrl = environment.losR3Web + '/Lead/View?LeadId=';
   }
   deleteFromTemp(leadId) {
     if (confirm('Are you sure to delete this record?')) {
@@ -77,8 +80,7 @@ export class LeadCancelConfirmComponent implements OnInit {
     var leadObj = new LeadConfirmCancelObj();
     leadObj.LeadStat = "CAN";
     leadObj.Notes = this.LeadConfirmCancelForm.controls.CancelReason.value;
-    var ddlIndex = this.LeadConfirmCancelForm.controls.CancelReason.value;
-    leadObj.MrCancelReasonCode = this.ItemCancelReason[ddlIndex]['Key'];
+    leadObj.MrCancelReasonCode = this.LeadConfirmCancelForm.controls.CancelReason.value;
     leadObj.Notes = this.LeadConfirmCancelForm.controls.Notes.value;
     var tempId = new Array();
     for (var i = 0; i < this.responseObj.length; i++) {

@@ -30,6 +30,14 @@ import { CommissionReservedFundDetailComponent } from "./commission-reserved-fun
 import { FraudDetectionPagingComponent } from "./fraud-detection/fraud-detection-paging/fraud-detection-paging.component";
 import { FraudDetectionVerifComponent } from "./fraud-detection/fraud-detection-verif/fraud-detection-verif.component";
 import { TabDeviationComponent } from "./credit-investigation/component/tab-deviation/tab-deviation.component";
+import { CreditReviewMainComponent } from "./credit-review/credit-review-main/credit-review-main.component";
+import { CreditReviewPagingComponent } from "./credit-review/credit-review-paging/credit-review-paging.component";
+import { UcinputnumberModule } from "@adins/ucinputnumber";
+import { UcapprovalModule } from "@adins/ucapproval";
+import { UcapprovebyModule } from "@adins/ucapproveby";
+import { CreditInquiryComponent } from './credit-inquiry/credit-inquiry.component';
+ import { UcSubsectionModule } from "@adins/uc-subsection";
+import { FraudVerificationMultiAssetComponent } from "./fraud-verification-multi-asset/fraud-verification-multi-asset.component";
 
 @NgModule({
   imports: [
@@ -44,6 +52,10 @@ import { TabDeviationComponent } from "./credit-investigation/component/tab-devi
     MatCheckboxModule,
     MatRadioModule,
     MatSelectModule,
+    UcinputnumberModule,
+    UcapprovalModule,
+    UcapprovebyModule,
+    UcSubsectionModule  
   ],
   declarations: [
     CreditApprovalPagingComponent,
@@ -53,14 +65,9 @@ import { TabDeviationComponent } from "./credit-investigation/component/tab-devi
     PhoneVerificationSubjectVerifComponent,
     CreditInvestigationDetailComponent,
     CreditInvestigationPagingComponent,
-    ViewAppCustDataPersonalComponent,
-    ViewAppCustDataCompanyComponent,
     TabApplicationDataComponent,
     TabDeviationComponent,
-    ViewFraudDetectionResultComponent,
-    ViewSurveyTaskListComponent,
     CustHistoryComponent,
-    ViewApprovalComponent,
     CommissionReservedFundPagingComponent,
     CommissionReservedFundDetailComponent,
     CommissionComponent,
@@ -68,6 +75,16 @@ import { TabDeviationComponent } from "./credit-investigation/component/tab-devi
     FormAddDynamicComponent,
     FraudDetectionPagingComponent,
     FraudDetectionVerifComponent,
+    CreditReviewMainComponent,
+    CreditReviewPagingComponent,
+    ViewAppCustDataPersonalComponent,
+    ViewAppCustDataCompanyComponent,
+    ViewFraudDetectionResultComponent,
+    ViewSurveyTaskListComponent,
+    ViewApprovalComponent,
+    CreditReviewMainComponent,
+    CreditInquiryComponent, 
+    FraudVerificationMultiAssetComponent
   ],
   providers: [
     NGXToastrService

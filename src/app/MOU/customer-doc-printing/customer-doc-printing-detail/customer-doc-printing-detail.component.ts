@@ -23,7 +23,7 @@ export class CustomerDocPrintingDetailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.viewObj = "./assets/ucviewgeneric/viewCustomerDocPrinting.json";
+    this.viewObj = "./assets/ucviewgeneric/viewMouHeader.json";
     this.route.queryParams.subscribe(params => {
       if (params['MouCustId'] != null) {
         this.MouCustId = params['MouCustId'];
@@ -39,8 +39,18 @@ export class CustomerDocPrintingDetailComponent implements OnInit {
       }
     );
   }
+
+  searchRowVersion(MouCustDocPrintId){
+    for(var i=0;i< this.responseObj.length;i++){
+      if(this.responseObj[i]["MouCustDocPrintId"] == MouCustDocPrintId){
+        return this.responseObj[i]["RowVersion"];
+      }
+    }
+    return null;
+  }
+
   print(MouCustDocPrintId){
-    var mouObj = { "MouCustDocPrintId": MouCustDocPrintId };
+    var mouObj = { "MouCustDocPrintId": MouCustDocPrintId, "RowVersion" : this.searchRowVersion(MouCustDocPrintId) };
     this.http.post(this.EditMouCustDocPrintSequenceNoUrl, mouObj).subscribe(
       response => {
         var message = response['Message'];
@@ -58,7 +68,6 @@ export class CustomerDocPrintingDetailComponent implements OnInit {
         this.router.navigateByUrl('Error');
       }
     );
-    
   }
 }
  

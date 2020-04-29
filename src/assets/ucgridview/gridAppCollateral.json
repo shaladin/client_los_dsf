@@ -1,0 +1,112 @@
+{
+    "headerList": [
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Collateral Name",
+            "name": "FullAssetName"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Collateral Type",
+            "name": "AssetTypeCode"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Collateral Price",
+            "name": "CollateralValueAmt"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "License Plate No",
+            "name": "SerialNo1"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Chassis No",
+            "name": "SerialNo2"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Engine No",
+            "name": "SerialNo4"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Owner Name",
+            "name": "OwnerName"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Edit"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "FullAssetName"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "AssetTypeCode"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "CollateralValueAmt"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "SerialNo1"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "SerialNo2"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "SerialNo4"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "OwnerName"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "edit",
+                    "path": "/Nap/Collateral/Detail",
+                    "param": [
+                        {
+                            "type": "AppId",
+                            "property": "AppId"
+                        },
+                        {
+                            "type": "AppCollateralId",
+                            "property": "AppCollateralId"
+                        },
+                        {
+                            "type": "mode",
+                            "property": "edit"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

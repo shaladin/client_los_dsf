@@ -56,6 +56,7 @@ export class DocSignerDetailComponent implements OnInit {
     CustSigner2: [''],
     CustSignerPosition2: [''],
   });
+  mouUrl: string;
   
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.getMouCustById = AdInsConstant.GetMouCustById;
@@ -154,6 +155,7 @@ export class DocSignerDetailComponent implements OnInit {
       (response) => {
           this.returnMouCust = response;
       });
+    this.mouUrl = environment.losR3Web + '/Mou/Cust/Paging?MouCustId=' + this.MouCustId;
   }
 
   setMouCustSigner(){

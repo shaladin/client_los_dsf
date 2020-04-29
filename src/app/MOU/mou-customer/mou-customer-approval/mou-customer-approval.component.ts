@@ -26,7 +26,7 @@ export class MouCustomerApprovalComponent implements OnInit {
     critObj.DataType = 'text';
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.propName = 'A.MOU_STAT';
-    critObj.value = 'MOU_APV';
+    critObj.value = 'MAP';
     this.arrCrit.push(critObj);
     this.inputPagingObj.addCritInput = this.arrCrit;
   }

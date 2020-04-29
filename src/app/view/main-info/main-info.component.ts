@@ -34,6 +34,8 @@ export class MainInfoComponent implements OnInit {
   mrMouTypeCode : any;
   custId: any;
   custUrl: string;
+  mouUrl: string;
+  mouCustStatView: string;
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, public datepipe: DatePipe) { }
 
@@ -57,16 +59,19 @@ export class MainInfoComponent implements OnInit {
 
         this.mouCustNo = mouData['MouCustNo'];
         this.custName = mouData['CustName'];
-        this.mouCustDt = this.datepipe.transform(mouData['MouCustDt'], 'dd-MM-yyyy');
-        this.startDt = this.datepipe.transform(mouData['StartDt'], 'dd-MM-yyyy');
-        this.endDt = this.datepipe.transform(mouData['EndDt'], 'dd-MM-yyyy');
+        this.mouCustDt = this.datepipe.transform(mouData['MouCustDt'], 'dd-MMM-yyyy');
+        this.startDt = this.datepipe.transform(mouData['StartDt'], 'dd-MMM-yyyy');
+        this.endDt = this.datepipe.transform(mouData['EndDt'], 'dd-MMM-yyyy');
         this.refNo = mouData['RefNo'];
         this.plafondAmt = mouData['PlafondAmt'];
         this.mouStat = mouData['MouCustStatView'];
         this.mrMouTypeCode = mouData['MrMouTypeCode'];
         this.isRevolving = mouData['IsRevolving'] == 1 ? "Yes" : "No";
         this.custId = custData['CustId'];
-        this.custUrl = environment.FoundationR3Web + '/CustomerView/Page?CustId=' + this.custId;
+        this.mouCustStatView = custData['MouCustStatView'];
+        this.custUrl = environment.FoundationR3Web + '/Customer/CustomerView/Page?CustId=' + this.custId;
+        // this.custUrl = environment.FoundationR3Web + '/CustomerView/Page?CustId=' + this.custId;
+        this.mouUrl = '/Mou/Cust/Paging?MouCustId=' + this.MouCustId;
       }
     );
   }

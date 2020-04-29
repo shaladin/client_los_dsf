@@ -1,3 +1,31 @@
-<p>
-  mou-view-survey works!
-</p>
+<form class="form form-horizontal" [formGroup]="SrvyOrderForm" (ngSubmit)="SrvyOrderForm.valid" #enjiForm="ngForm">
+  <lib-ucSubsection [id]="'SrvyOrderId'" [title]="'Survey Result'" [panel]="'SrvyOrder'">
+  </lib-ucSubsection>
+  <div class="form-body" id="SrvyOrder">
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+        <tr class="table-header">
+          <th><span class="thead-header" name='CollNo' translate>Survey No</span>
+          </th>
+          <th><span class="thead-header" name='CollNo' translate>survey Task No</span>
+          </th>
+          <th><span style="float: left;" class="thead-header" name='CollName' translate>Survey Date</span>
+          </th>
+          <th><span style="float: left;" class="thead-header" name='MouCustName' translate>Survey Status</span>
+          </th>
+          <th><span style="float: left;" class="thead-header" name='CollPrice' translate>Surveyor Name</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of listSrvyOrder let i = index">
+          <td>{{item.SrvyOrderNo}}</td>
+          <td>{{item.SrvyTaskNo}}</td>
+          <td>{{item.AssignDt}}</td>
+          <td align="left">{{item.Descr}}</td>
+          <td align="left">{{item.VendorName}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</form>

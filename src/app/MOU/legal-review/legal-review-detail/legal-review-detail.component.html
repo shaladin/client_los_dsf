@@ -6,7 +6,7 @@
     <div formArrayName="items">
       <div *ngFor="let item of items.controls; let i = index;">
         <div class="form-group row" [formGroupName]="i">
-          <label class="col-md-4 adInsLabel" translate> {{item.controls.ReviewComponentName.value}} </label>
+          <label class="col-md-4 adins-required-label" translate> {{item.controls.ReviewComponentName.value}} </label>
           <div class="col-md-7">
             <input type="text" class="form-control adInsInput" formControlName="values" required>
             <lib-uc-show-errors  [control]="LegalForm.controls.items['controls'][i]['controls'].values"

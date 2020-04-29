@@ -19,11 +19,19 @@ import { MouApprovalFactoringComponent } from './mou-customer/mou-customer-appro
 import { MouRequestAddcollComponent } from './mou-customer/mou-request/mou-request-addcoll/mou-request-addcoll.component';
 import { MouCustomerDetailComponent } from './mou-customer-request/mou-customer-detail/mou-customer-detail.component';
 import { MouCustomerInquiryComponent } from './mou-customer/mou-customer-inquiry/mou-customer-inquiry.component';
+import { TestUploadComponent } from './test-upload/test-upload.component';
 
 const routes: Routes = [
   {
     path: '',
     children: [
+      {
+        path: 'TestUpload', 
+        component: TestUploadComponent, 
+        data: {
+          title: 'Test Upload'
+        }
+      },
       {
         path: 'DocSigner/Paging',
         component: DocSignerComponent,
@@ -116,7 +124,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'Cust/Paging',
+        path: 'Cust/View',
         component: MouViewComponent,
         data: {
           title: 'MOU View Factoring'
