@@ -11,58 +11,121 @@
           </div>
         </div>
         <div class="px-3">
+          <app-app-main-info [arrValue]="arrValue"></app-app-main-info>
 
           <mat-tab-group>
-            <mat-tab label="Summary">
-              <ng-template matTabContent>
-
-              </ng-template>
-            </mat-tab>
             <mat-tab label="Customer">
               <ng-template matTabContent>
-
               </ng-template>
             </mat-tab>
-            <mat-tab label="Application Data">
+
+            <mat-tab label="Guarantor">
               <ng-template matTabContent>
-
               </ng-template>
             </mat-tab>
+
+            <mat-tab label="Referantor">
+              <ng-template matTabContent>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab label="Application">
+              <ng-template matTabContent>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab label="Asset">
+              <ng-template matTabContent>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab label="Insurance">
+              <ng-template matTabContent>
+                <view-insurance [AppId]="AppId"></view-insurance>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab label="Life Insurance">
+              <ng-template matTabContent>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab label="Financial">
+              <ng-template matTabContent>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab label="TC">
+              <ng-template matTabContent>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab label="Commission">
+              <ng-template matTabContent>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab label="Reserved Fund">
+              <ng-template matTabContent>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab label="Phone Verification">
+              <ng-template matTabContent>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab label="Fraud Detection Result">
+              <ng-template matTabContent>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab label="Deviation">
+              <ng-template matTabContent>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab label="Analysis Result">
+              <ng-template matTabContent>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab label="Income Recognize">
+              <ng-template matTabContent>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab label="PSAK Amortization">
+              <ng-template matTabContent>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab label="SMS History">
+              <ng-template matTabContent>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab label="Funding">
+              <ng-template matTabContent>
+              </ng-template>
+            </mat-tab>
+
             <mat-tab label="Invoice Data">
               <ng-template matTabContent>
-
+                <!-- <app-invoice-view></app-invoice-view> -->
               </ng-template>
             </mat-tab>
-            <mat-tab label="Collateral Data">
+
+            <mat-tab label="Complain Handling">
               <ng-template matTabContent>
-
               </ng-template>
             </mat-tab>
-            <mat-tab label="Insurance Data">
+
+            <mat-tab label="Additional Service">
               <ng-template matTabContent>
-
               </ng-template>
             </mat-tab>
-            <mat-tab label="Financial Data">
-              <ng-template matTabContent>
 
-              </ng-template>
-            </mat-tab>
-            <mat-tab label="Term and Condition">
-              <ng-template matTabContent>
-
-              </ng-template>
-            </mat-tab>
-            <mat-tab label="Document">
-              <ng-template matTabContent>
-
-              </ng-template>
-            </mat-tab>
-            <mat-tab label="Pefindo & Silk Result">
-              <ng-template matTabContent>
-
-              </ng-template>
-            </mat-tab>
           </mat-tab-group>
         </div>
       </div>

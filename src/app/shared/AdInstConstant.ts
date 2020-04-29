@@ -805,6 +805,7 @@ export class AdInsConstant {
 
   //APP INSURANCE
   public static GetInsuranceDataByAppId = environment.losUrl + "/AppIns/GetInsDataByAppId";
+  public static GetInsuranceDataByAppIdForView = environment.losUrl + "/AppIns/GetInsDataByAppIdForView";
   public static AddEditInsuranceData = environment.losUrl + "/AppIns/AddEditInsuranceData";
   //APP INSURANCE
 
