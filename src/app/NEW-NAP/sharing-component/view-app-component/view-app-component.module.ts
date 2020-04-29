@@ -7,6 +7,8 @@ import { ViewReservedFundComponent } from "./view-reserved-fund/view-reserved-fu
 import { LifeInsuranceComponent } from './life-insurance/life-insurance.component';
 import { AppTcComponent } from './app-tc/app-tc.component';
 import { ViewInsuranceComponent } from "./view-insurance/view-insurance.component";
+import { AppAssetDataComponent } from './app-asset-data/app-asset-data.component';
+import { AppAssetDataDetailComponent } from './app-asset-data/app-asset-data-detail/app-asset-data-detail.component';
 
 @NgModule({
   exports: [
@@ -22,7 +24,9 @@ import { ViewInsuranceComponent } from "./view-insurance/view-insurance.componen
     ViewReservedFundComponent,
     LifeInsuranceComponent,
     AppTcComponent,
-    ViewInsuranceComponent
+    ViewInsuranceComponent,
+    AppAssetDataComponent,
+    AppAssetDataDetailComponent
   ],
   providers: [
     NGXToastrService
