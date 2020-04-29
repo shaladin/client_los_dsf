@@ -6,6 +6,8 @@ import { InvoiceDataFctrComponent } from './invoice-data-fctr/invoice-data-fctr.
 import { ViewReservedFundComponent } from "./view-reserved-fund/view-reserved-fund.component";
 import { LifeInsuranceComponent } from './life-insurance/life-insurance.component';
 import { AppTcComponent } from './app-tc/app-tc.component';
+import { AppAssetDataComponent } from './app-asset-data/app-asset-data.component';
+import { AppAssetDataDetailComponent } from './app-asset-data/app-asset-data-detail/app-asset-data-detail.component';
 
 @NgModule({
   exports: [
@@ -19,7 +21,9 @@ import { AppTcComponent } from './app-tc/app-tc.component';
     InvoiceDataFctrComponent,
     ViewReservedFundComponent,
     LifeInsuranceComponent,
-    AppTcComponent
+    AppTcComponent,
+    AppAssetDataComponent,
+    AppAssetDataDetailComponent
   ],
   providers: [
     NGXToastrService
