@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -17,6 +17,9 @@ export class GuarantorComponent implements OnInit {
   @Input() AppGuarantorId : any;
   @Input() MrGuarantorTypeCode : any;
   @Input() mode : any;
+  @Input() AppId : any;
+  @Output() closeX: EventEmitter<any> = new EventEmitter();
+  closeChk : boolean;
 
   constructor(
     private fb: FormBuilder,
@@ -79,6 +82,11 @@ export class GuarantorComponent implements OnInit {
     this.CustDataForm = this.fb.group({
       MrCustTypeCode: ['', [Validators.required, Validators.maxLength(50)]]
     });
+  }
+
+  close(event){
+    this.closeChk = event;
+    this.closeX.emit(this.closeChk);
   }
 
 }

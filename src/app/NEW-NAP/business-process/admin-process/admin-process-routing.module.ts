@@ -26,6 +26,7 @@ import { DocumentPagingComponent } from './document-printing/document-paging/doc
 import { DocumentViewComponent } from './document-printing/document-view/document-view.component';
 import { InvoiceDataAddComponent } from './invoice-data/invoice-data-add/invoice-data-add.component';
 import { DeliveryOrderMultiAssetDetailComponent } from './delivery-order-multi-asset/delivery-order-multi-asset-detail/delivery-order-multi-asset-detail.component';
+import { DeliveryOrderMultiAssetComponent } from './delivery-order-multi-asset/delivery-order-multi-asset.component';
 
 const routes: Routes = [
   {
@@ -204,6 +205,13 @@ const routes: Routes = [
         component: InvoiceDataAddComponent,
         data: {
           title: 'Invoice Data Add'
+        }
+      },
+      {
+        path: 'DeliveryOrderMultiAsset/Paging',
+        component: DeliveryOrderMultiAssetComponent,
+        data: {
+          title: 'Delivery Order Detail'
         }
       },
       {

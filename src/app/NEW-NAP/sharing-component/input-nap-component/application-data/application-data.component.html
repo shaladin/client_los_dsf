@@ -57,120 +57,157 @@
             <lib-ucSubsection [id]="'applicationInfomationId'" [title]="'Application Information'" [panel]="'applicationInfomation'">
             </lib-ucSubsection>
             <div class="form-body" id="applicationInfomation">
-
-              <div class="form-group row">
-                <!-- Application Source -->
-                <div class="form-group col-md-2 adins-required">
-                  <label class="adInsLabel">Application Source </label>
-                </div>
-                <div class="col-md-4">
-                  <select class="form-control adInsInput" style="width: auto" formControlName="MrAppSourceCode"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrAppSourceCode.invalid }">
-                    <option value="">-Select One-</option>
-                    <option *ngFor="let it of applicationDDLitems['APP_SOURCE']" value="{{it.Key}}">
-                      {{it.Value}} </option>
-                  </select>
-                  <lib-uc-show-errors  [control]="NapAppModelForm.controls.MrAppSourceCode" [submit]="enjiForm.submitted"></lib-uc-show-errors >
-                </div>
-                <!-- Survey No -->
-                <label class="col-md-2 adInsLabel">Survey No </label>
-                <div class="col-md-4">
-                  <label class="adInsLabel" *ngIf="NapAppModelForm.controls.SrvyOrderNo.value != ''">
-                    {{NapAppModelForm.controls.SrvyOrderNo.value}} </label>
-                  <label class="adInsLabel" *ngIf="NapAppModelForm.controls.SrvyOrderNo.value == ''"> --- </label>
-                </div>
-              </div>
               
-              <div class="form-group row adins-required">
-                <!-- Tenor -->
-                <label class="col-md-2 adInsLabel">Tenor </label>
-                <div class="col-md-4">
-                  <input type="text" class="form-control adInsInput width-100-per" formControlName="Tenor"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.Tenor.invalid }" (change) = "ChangeNumOfInstallmentTenor()">
-                  <lib-uc-show-errors  [control]="NapAppModelForm.controls.Tenor" [submit]="enjiForm.submitted"></lib-uc-show-errors >
-                </div>
-                <!-- First Installment Type -->
-                <label class="col-md-2 adInsLabel"> First Installment Type </label>
-                <div class="col-md-4">
-                  <mat-radio-group formControlName="MrFirstInstTypeCode">
-                    <mat-radio-button class="custom-control custom-radio" [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrFirstInstTypeCode.invalid }"
-                      *ngFor="let item of applicationDDLitems['FIRST_INST_TYPE']" [value]="item.Key" color="primary">
-                      {{item.Value}}
-                    </mat-radio-button>
-                  </mat-radio-group>
-                  <lib-uc-show-errors  [control]="NapAppModelForm.controls.MrFirstInstTypeCode" [submit]="enjiForm.submitted"></lib-uc-show-errors >
-                </div>
-              </div>
-              
-              <div class="form-group row adins-required">
-                <!-- Payment Frequency -->
-                <label class="col-md-2 adInsLabel"> Payment Frequency</label>
-                <div class="col-md-4">
-                  <select class="form-control adInsInput" style="width: auto" formControlName="PayFreqCode"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.PayFreqCode.invalid }" (change) = "ChangeNumOfInstallmentPayFreq($event)">
-                    <option value="">-Select One-</option>
-                    <option *ngFor="let it of applicationDDLitems['Pay_Freq']" value="{{it.PayFreqCode}}">
-                      {{it.Descr}} </option>
-                  </select>
-                  <lib-uc-show-errors  [control]="NapAppModelForm.controls.PayFreqCode" [submit]="enjiForm.submitted"></lib-uc-show-errors >
-                </div>
-                <!-- Interest Type -->
-                <label class="col-md-2 adInsLabel"> Interest Type </label>
-                <div class="col-md-4">
-                  <select class="form-control adInsInput" style="width: auto" formControlName="InterestType"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.InterestType.invalid }">
-                    <option value="">-Select One-</option>                    
-                    <option *ngFor="let it of applicationDDLitems['INTRSTTYPE']" value="{{it.Key}}">
-                      {{it.Value}} </option>
-                  </select>
-                  <lib-uc-show-errors  [control]="NapAppModelForm.controls.InterestType" [submit]="enjiForm.submitted"></lib-uc-show-errors >
-                </div>
-              </div>
+              <div class="row">
 
-              <div class="form-group row">
-                <!-- Num of Installment -->
-                <label class="col-md-2 adInsLabel">Num of Installment</label>
-                <label class="col-md-4 adInsLabel">{{NapAppModelForm.controls.NumOfInst.value}} </label>
-                
-                <!-- Installment Scheme -->
-                <div class="form-group col-md-2 adins-required">
-                  <label class="adInsLabel">Installment Scheme</label>
-                </div>
-                <div class="col-md-4">
-                  <select class="form-control adInsInput" style="width: auto" formControlName="MrInstSchemeCode"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrInstSchemeCode.invalid }">
-                    <option value="">-Select One-</option>
-                    <option *ngFor="let it of applicationDDLitems['INST_SCHM']" value="{{it.Key}}">
-                      {{it.Value}} </option>
-                  </select>
-                  <lib-uc-show-errors  [control]="NapAppModelForm.controls.MrInstSchemeCode" [submit]="enjiForm.submitted"></lib-uc-show-errors >
-                </div>
-              </div>
+                <div class="col-md-6">
 
-              <div class="form-group row adins-required">
-                <!-- Customer Notification By -->
-                <label class="col-md-2 adInsLabel"> Customer Notification By </label>
-                <div class="col-md-4">
-                  <select class="form-control adInsInput" style="width: auto" formControlName="MrCustNotifyOptCode"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrCustNotifyOptCode.invalid }">
-                    <option value="">-Select One-</option>
-                    <option *ngFor="let it of applicationDDLitems['CUST_NOTIF_OPT']" value="{{it.Key}}">
-                      {{it.Value}} </option>
-                  </select>
-                  <lib-uc-show-errors  [control]="NapAppModelForm.controls.MrCustNotifyOptCode" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                  <div class="form-group row">
+                    <!-- Application Source -->
+                    <div class="form-group col-md-4 adins-required">
+                      <label class="adInsLabel">Application Source </label>
+                    </div>
+                    <div class="col-md-8">
+                      <select class="form-control adInsInput" style="width: auto" formControlName="MrAppSourceCode"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrAppSourceCode.invalid }">
+                        <option value="">-Select One-</option>
+                        <option *ngFor="let it of applicationDDLitems['APP_SOURCE']" value="{{it.Key}}">
+                          {{it.Value}} </option>
+                      </select>
+                      <lib-uc-show-errors  [control]="NapAppModelForm.controls.MrAppSourceCode" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                    </div>
+                  </div>
+
+                  <div class="form-group row adins-required">
+                    <!-- Tenor -->
+                    <label class="col-md-4 adInsLabel">Tenor </label>
+                    <div class="col-md-8">
+                      <input type="text" class="form-control adInsInput width-100-per" formControlName="Tenor"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.Tenor.invalid }" (change) = "ChangeNumOfInstallmentTenor()">
+                      <lib-uc-show-errors  [control]="NapAppModelForm.controls.Tenor" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                    </div>
+                  </div>
+                  
+                  <div class="form-group row adins-required">
+                    <!-- Payment Frequency -->
+                    <label class="col-md-4 adInsLabel"> Payment Frequency</label>
+                    <div class="col-md-8">
+                      <select class="form-control adInsInput" style="width: auto" formControlName="PayFreqCode"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.PayFreqCode.invalid }" (change) = "ChangeNumOfInstallmentPayFreq($event)">
+                        <option value="">-Select One-</option>
+                        <option *ngFor="let it of applicationDDLitems['Pay_Freq']" value="{{it.PayFreqCode}}">
+                          {{it.Descr}} </option>
+                      </select>
+                      <lib-uc-show-errors  [control]="NapAppModelForm.controls.PayFreqCode" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <!-- Num of Installment -->
+                    <label class="col-md-4 adInsLabel">Num of Installment</label>
+                    <label class="col-md-8 adInsLabel">{{NapAppModelForm.controls.NumOfInst.value}} </label>
+                  </div>    
+
+                  <div class="form-group row adins-required">
+                    <!-- Customer Notification By -->
+                    <label class="col-md-4 adInsLabel"> Customer Notification By </label>
+                    <div class="col-md-8">
+                      <select class="form-control adInsInput" style="width: auto" formControlName="MrCustNotifyOptCode"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrCustNotifyOptCode.invalid }">
+                        <option value="">-Select One-</option>
+                        <option *ngFor="let it of applicationDDLitems['CUST_NOTIF_OPT']" value="{{it.Key}}">
+                          {{it.Value}} </option>
+                      </select>
+                      <lib-uc-show-errors  [control]="NapAppModelForm.controls.MrCustNotifyOptCode" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                    </div>
+                  </div>    
                 </div>
 
-                <!-- Way of Payment -->
-                <label class="col-md-2 adInsLabel"> Way of Payment </label>
-                <div class="col-md-4">
-                  <select class="form-control adInsInput" style="width: auto" formControlName="MrWopCode"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrWopCode.invalid }">
-                    <option value="">-Select One-</option>
-                    <option *ngFor="let it of applicationDDLitems['WOP']" value="{{it.Key}}">
-                      {{it.Value}} </option>
-                  </select>
-                  <lib-uc-show-errors  [control]="NapAppModelForm.controls.MrWopCode" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                <div class="col-md-6">
+                  
+                  <div class="form-group row">
+                    <!-- Survey No -->
+                    <label class="col-md-4 adInsLabel">Survey No </label>
+                    <div class="col-md-8">
+                      <label class="adInsLabel" *ngIf="NapAppModelForm.controls.SrvyOrderNo.value != ''">
+                        {{NapAppModelForm.controls.SrvyOrderNo.value}} </label>
+                      <label class="adInsLabel" *ngIf="NapAppModelForm.controls.SrvyOrderNo.value == ''"> --- </label>
+                    </div>
+                  </div>
+                  
+                  <div class="form-group row adins-required">
+                    <!-- First Installment Type -->
+                    <label class="col-md-4 adInsLabel"> First Installment Type </label>
+                    <div class="col-md-8">
+                      <mat-radio-group formControlName="MrFirstInstTypeCode">
+                        <mat-radio-button class="custom-control custom-radio" [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrFirstInstTypeCode.invalid }"
+                          *ngFor="let item of applicationDDLitems['FIRST_INST_TYPE']" [value]="item.Key" color="primary">
+                          {{item.Value}}
+                        </mat-radio-button>
+                      </mat-radio-group>
+                      <lib-uc-show-errors  [control]="NapAppModelForm.controls.MrFirstInstTypeCode" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                    </div>
+                  </div>
+                  
+                  <div class="form-group row adins-required">
+                    <!-- Interest Type -->
+                    <label class="col-md-4 adInsLabel"> Interest Type </label>
+                    <div class="col-md-8">
+                      <select class="form-control adInsInput" style="width: auto" formControlName="InterestType" (change) = "ChangeInterestType()"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.InterestType.invalid }">
+                        <option value="">-Select One-</option>                    
+                        <option *ngFor="let it of applicationDDLitems['INTRSTTYPE']" value="{{it.Key}}">
+                          {{it.Value}} </option>
+                      </select>
+                      <lib-uc-show-errors  [control]="NapAppModelForm.controls.InterestType" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                    </div>
+                  </div>
+
+                  <div *ngIf="isFixedRate" class="form-group row adins-required">
+                    <!-- Floating Period -->
+                    <label class="col-md-4 adInsLabel"> Floating Period </label>
+                    <div class="col-md-8">
+                      <select class="form-control adInsInput" style="width: auto" formControlName="FloatingPeriod"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.FloatingPeriod.invalid }">
+                        <option value="">-Select One-</option>                    
+                        <option *ngFor="let it of applicationDDLitems['Floating_Period']" value="{{it.PayFreqCode}}">
+                          {{it.Descr}} </option>
+                      </select>
+                      <lib-uc-show-errors  [control]="NapAppModelForm.controls.FloatingPeriod" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <!-- Installment Scheme -->
+                    <div class="form-group col-md-4 adins-required">
+                      <label class="adInsLabel">Installment Scheme</label>
+                    </div>
+                    <div class="col-md-8">
+                      <select class="form-control adInsInput" style="width: auto" formControlName="MrInstSchemeCode"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrInstSchemeCode.invalid }">
+                        <option value="">-Select One-</option>
+                        <option *ngFor="let it of applicationDDLitems['INST_SCHM']" value="{{it.Key}}">
+                          {{it.Value}} </option>
+                      </select>
+                      <lib-uc-show-errors  [control]="NapAppModelForm.controls.MrInstSchemeCode" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                    </div>
+                  </div>
+
+                  <div class="form-group row adins-required">
+                    <!-- Way of Payment -->
+                    <label class="col-md-4 adInsLabel"> Way of Payment </label>
+                    <div class="col-md-8">
+                      <select class="form-control adInsInput" style="width: auto" formControlName="MrWopCode"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrWopCode.invalid }">
+                        <option value="">-Select One-</option>
+                        <option *ngFor="let it of applicationDDLitems['WOP']" value="{{it.Key}}">
+                          {{it.Value}} </option>
+                      </select>
+                      <lib-uc-show-errors  [control]="NapAppModelForm.controls.MrWopCode" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                    </div>
+                  </div>
                 </div>
+
               </div>
 
             </div>
