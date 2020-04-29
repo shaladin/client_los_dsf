@@ -1,0 +1,87 @@
+{
+    "title": "",
+    "subsection": [
+      {
+        "subSectionId": "GuarantorPersonalMainId",
+        "subSectionTitle": "Guarantor Main Data",
+        "mainInfoUrl": "http://r3app-server.ad-ins.com/LOS/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {
+            "type": "text",
+            "label": "Guarantor Name",
+            "property": "GuarantorName"
+          },
+          {
+            "type": "text",
+            "label": "Guarantor Type",
+            "property": "MrGuarantorTypeCode"
+          },
+          {
+            "type": "text",
+            "label": "ID Type",
+            "property": "MrIdTypeCode"
+          },
+          {
+            "type": "text",
+            "label": "Customer Relationship",
+            "property": "MrCustRelationshipCode"
+          },
+          {
+            "type": "text",
+            "label": "ID No",
+            "property": "IdNo"
+          },
+          {
+            "type": "text",
+            "label": "Gender",
+            "property": "MrGenderCode"
+          },
+          {
+            "type": "text",
+            "label": "ID Expired Date",
+            "property": "IdExpDt"
+          },
+          {
+            "type": "text",
+            "label": "Marital Status",
+            "property": "MrMaritalStatCode"
+          },
+          {
+            "type": "text",
+            "label": "Birth Place/Date",
+            "property": "BirthPlaceAndBirthDt"
+          },
+          {
+            "type": "text",
+            "label": "Nationality",
+            "property": "MrNationalityCode"
+          },
+          {
+            "type": "text",
+            "label": "NPWP",
+            "property": "TaxIdNo"
+          },
+          {
+            "type": "text",
+            "label": "Country",
+            "property": "CountryCode"
+          },
+          {
+            "type": "text",
+            "label": "Mobile Phone",
+            "property": "MobilePhnNo"
+          },
+          {
+            "type": "text",
+            "label": "Religion",
+            "property": "MrReligionCode"
+          }
+        ],
+        "querystring": {
+          "select": "SELECT A.GUARANTOR_NAME AS GuarantorName, A.MR_GUARANTOR_TYPE_CODE AS MrGuarantorTypeCode, AP.MR_ID_TYPE_CODE AS MrIdTypeCode, A.MR_CUST_RELATIONSHIP_CODE AS MrCustRelationshipCode, AP.ID_NO AS IdNo, AP.MR_GENDER_CODE AS MrGenderCode, AP.ID_EXP_DT AS IdExpDt, AP.MR_MARITAL_STAT_CODE AS MrMaritalStatCode, AP.BIRTH_PLACE + ', '+ CONVERT(VARCHAR,AP.BIRTH_DT) AS BirthPlaceAndBirthDt, AP.MR_NATIONALITY_CODE AS MrNationalityCode, A.TAX_ID_NO AS TaxIdNo, AP.COUNTRY_CODE AS CountryCode, AP.MOBILE_PHN_NO AS MobilePhnNo, AP.MR_RELIGION_CODE AS MrReligionCode",
+          "from": "FROM APP_GUARANTOR A WITH(NOLOCK) JOIN APP_GUARANTOR_PERSONAL AP WITH(NOLOCK) ON A.APP_GUARANTOR_ID=AP.APP_GUARANTOR_ID",
+          "where": "WHERE A.APP_ID = {0}"
+        }
+      }
+    ]
+  }

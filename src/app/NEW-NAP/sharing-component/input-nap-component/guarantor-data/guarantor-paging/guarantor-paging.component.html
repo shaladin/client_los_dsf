@@ -16,5 +16,5 @@
   </div>
 </div>
 <ng-template #content let-c="close" let-d="dismiss">
-  <app-guarantor [AppGuarantorId]=AppGuarantorId [MrGuarantorTypeCode]=MrGuarantorTypeCode [mode]=mode></app-guarantor>
+  <app-guarantor [AppGuarantorId]=AppGuarantorId [MrGuarantorTypeCode]=MrGuarantorTypeCode [mode]=mode [AppId]="AppId" (closeX)="close($event)"></app-guarantor>
 </ng-template>

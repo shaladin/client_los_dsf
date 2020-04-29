@@ -142,8 +142,8 @@ export class CustomerDataComponent implements OnInit {
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
-          this.callbackSubmit.emit(this.appWizardObj);
-          // this.wizard.goToNextStep();
+          // this.callbackSubmit.emit(this.appWizardObj);
+          this.wizard.goToNextStep();
         },
         (error) => {
           console.log(error);
@@ -170,8 +170,8 @@ export class CustomerDataComponent implements OnInit {
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
-          this.callbackSubmit.emit(this.appWizardObj);
-          // this.wizard.goToNextStep();
+          // this.callbackSubmit.emit(this.appWizardObj);
+          this.wizard.goToNextStep();
         },
         (error) => {
           console.log(error);
