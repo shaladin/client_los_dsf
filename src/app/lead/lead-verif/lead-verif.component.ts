@@ -56,7 +56,7 @@ export class LeadVerifComponent implements OnInit {
     private adInsService: AdInsService) { }
 
   ngOnInit() {
-    console.log('disini');
+    console.log('veriff');
     this.arrCrit = new Array();
     this.inputObj = new InputSearchObj();
     this.inputObj._url = './assets/search/searchLeadVerf.json';
@@ -73,6 +73,7 @@ export class LeadVerifComponent implements OnInit {
     var temp;
     this.http.post(GetListLeadVerfUrl, obj).subscribe(
       response => {
+        console.log(response);
         temp = response['ReturnObject'];
         for (var i = 0; i < temp.length; i++) {
           arr.push(temp[i]['LeadId']);
@@ -90,7 +91,7 @@ export class LeadVerifComponent implements OnInit {
         this.router.navigateByUrl('Error');
       }
     );
-    this.leadUrl = '/Lead/View?LeadId=';
+    this.leadUrl = environment.losR3Web +  '/Lead/View?LeadId=';
   }
 
   searchSort(event: any) {
@@ -153,6 +154,8 @@ export class LeadVerifComponent implements OnInit {
     return tempArr;
   }
   SaveLeadVerf(leadVerfForm: any) {
+    var tempArr = this.getListWfTaskListId();
+    this.claimListTask(tempArr);
     for (let index = 0; index < this.tempData.length; index++) {
       var tempLeadVerfObj = new LeadVerfObj();
       tempLeadVerfObj.VerifyStat = this.verifyStatus;
@@ -170,6 +173,7 @@ export class LeadVerifComponent implements OnInit {
     }
     this.http.post(this.AddRangeLeadVerfUrl, LeadVerf).subscribe(
       response => {
+        console.log(response);
         this.toastr.successMessage(response['message']);
       },
       error => {
@@ -267,5 +271,19 @@ export class LeadVerifComponent implements OnInit {
       this.inputObj.addCritInput = this.arrAddCrit;
       this.UCSearchComponent.search(this.apiUrl, this.pageNow, this.pageSize, order, this.arrAddCrit);
     }
+  }
+
+  claimListTask(listWfTaskListId)
+  {
+    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var wfClaimObj = { listWfTaskListId: listWfTaskListId, pUserID: currentUserContext["UserName"]};
+    console.log(wfClaimObj);
+    this.http.post(AdInsConstant.ClaimListTask, wfClaimObj).subscribe(
+      (response) => {
+        console.log(response);
+      });
+      (error) => {
+        console.log(error);
+      }
   }
 }

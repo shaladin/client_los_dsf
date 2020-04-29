@@ -50,10 +50,11 @@ export class LegalReviewDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('legal');
     this.claimTask();
     this.items = this.LegalForm.get('items') as FormArray;
     this.termConditions = this.LegalForm.get('termConditions') as FormArray;
-    this.viewObj = "./assets/ucviewgeneric/viewCustomerDocPrinting.json";
+    this.viewObj = "./assets/ucviewgeneric/viewMouHeader.json";
     var mouObj = { "MouCustId": this.MouCustId };
     this.http.post(this.GetMouCustLglReviewByMouCustIdUrl, mouObj).subscribe(
       response =>{
@@ -68,8 +69,8 @@ export class LegalReviewDetailComponent implements OnInit {
               var eachDataDetail = this.fb.group({
                 ReviewComponentName: [response["ReturnObject"][i].Descr],
                 ReviewComponentValue: [response["ReturnObject"][i].MasterCode],
-                RowVersion : [response["ReturnObject"][i].RowVersion],
-                values: [this.SearchLegalReviewValue(response["ReturnObject"][i].MasterCode)]
+                RowVersion : [this.SearchLegalReview(response["ReturnObject"][i].MasterCode, true)],
+                values: [this.SearchLegalReview(response["ReturnObject"][i].MasterCode, false)]
               }) as FormGroup;
               this.items.push(eachDataDetail);
             }
@@ -92,11 +93,16 @@ export class LegalReviewDetailComponent implements OnInit {
       });
   }
 
-  SearchLegalReviewValue(key){
+  SearchLegalReview(key, isRowVersion){
     if(this.responseMouObj.length > 0){
       for(var i=0;i<this.responseMouObj.length;i++){
         if(this.responseMouObj[i]['MrLglReviewCode'] == key){
-          return this.responseMouObj[i]['LglReviewResult'];
+          if(isRowVersion){
+            return this.responseMouObj[i]['RowVersion'];
+          }
+          else{
+            return this.responseMouObj[i]['LglReviewResult'];
+          }
         }
       }
     }

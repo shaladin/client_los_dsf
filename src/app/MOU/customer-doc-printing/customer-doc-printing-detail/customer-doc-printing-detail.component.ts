@@ -23,7 +23,7 @@ export class CustomerDocPrintingDetailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.viewObj = "./assets/ucviewgeneric/viewCustomerDocPrinting.json";
+    this.viewObj = "./assets/ucviewgeneric/viewMouHeader.json";
     this.route.queryParams.subscribe(params => {
       if (params['MouCustId'] != null) {
         this.MouCustId = params['MouCustId'];
