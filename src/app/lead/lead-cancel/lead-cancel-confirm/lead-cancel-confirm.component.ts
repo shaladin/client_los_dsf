@@ -79,6 +79,7 @@ export class LeadCancelConfirmComponent implements OnInit {
   SaveLeadConfirmCancel() {
     var leadObj = new LeadConfirmCancelObj();
     leadObj.LeadStat = "CAN";
+    leadObj.LeadStep = "CAN";
     leadObj.Notes = this.LeadConfirmCancelForm.controls.CancelReason.value;
     leadObj.MrCancelReasonCode = this.LeadConfirmCancelForm.controls.CancelReason.value;
     leadObj.Notes = this.LeadConfirmCancelForm.controls.Notes.value;
