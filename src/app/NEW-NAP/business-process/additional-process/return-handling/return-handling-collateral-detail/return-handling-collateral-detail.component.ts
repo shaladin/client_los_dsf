@@ -256,6 +256,9 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     this.allCollateralDataObj.AppCollateralObj.AssetCategoryCode = this.CollateralDataForm.controls.AssetCategoryCode.value;
     this.allCollateralDataObj.AppCollateralObj.ManufacturingYear = this.CollateralDataForm.controls.ManufacturingYear.value;
     this.allCollateralDataObj.AppCollateralObj.AssetTaxDt = this.CollateralDataForm.controls.AssetTaxDt.value;
+    this.allCollateralDataObj.AppCollateralObj.CollateralNotes = this.CollateralDataForm.controls.CollateralNotes.value;
+    this.allCollateralDataObj.AppCollateralObj.CollateralPrcnt = this.CollateralDataForm.controls.CollateralPrcnt.value;
+
 
     this.allCollateralDataObj.AppCollateralRegistrationObj.UserName = this.CollateralDataForm.controls.UserName.value;
     this.allCollateralDataObj.AppCollateralRegistrationObj.MrUserRelationshipCode = this.CollateralDataForm.controls.MrUserRelationshipCode.value;
@@ -586,7 +589,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     var typeCrit = new Array();
     var critTypeObj = new CriteriaObj();
     critTypeObj.restriction = AdInsConstant.RestrictionEq;
-    critTypeObj.propName = 'ASSET_TYPE_ID';
+    critTypeObj.propName = 'A.ASSET_TYPE_ID';
     critTypeObj.value = this.AssetTypeObj.AssetTypeId;
     typeCrit.push(critTypeObj);
     this.InputLookupAssetObj.addCritInput = typeCrit;

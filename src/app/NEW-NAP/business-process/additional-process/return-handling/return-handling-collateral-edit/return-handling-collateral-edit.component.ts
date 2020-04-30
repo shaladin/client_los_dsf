@@ -153,6 +153,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
+          this.GetAppCollateralData();
         },
         (error) => {
           console.log(error);
