@@ -215,7 +215,7 @@ export class ReferantorDataComponent implements OnInit {
       (response) => {
         console.log(response);
         this.bankItems = response["ReturnObject"];
-        // console.log(this.bankItems);
+        console.log(this.bankItems);
       },
       (error) => {
         console.log(error);
@@ -232,7 +232,7 @@ export class ReferantorDataComponent implements OnInit {
     this.appReferantorObj.BankAccNo = this.bankItems[idx].BankAccountNo;
     this.appReferantorObj.BankAccName = this.bankItems[idx].BankAccountName;
     this.NapAppReferantorForm.patchValue({
-      AccountBank: this.bankItems[idx].BankAccNo
+      AccountBank: this.bankItems[idx].BankAccountNo
     });
     // console.log(this.appReferantorObj);
   }
