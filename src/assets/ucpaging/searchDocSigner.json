@@ -112,7 +112,7 @@
             "action": [
                 {
                     "type": "edit",
-                    "path": "/AdminProcess/DocumentSigner/Detail",
+                    "path": "/Nap/AdminProcess/DocumentSigner/Detail",
                     "param": [
                         {
                             "type": "AppId",
