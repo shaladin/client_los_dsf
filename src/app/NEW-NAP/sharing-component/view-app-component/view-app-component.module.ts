@@ -18,6 +18,7 @@ import { TabAnalysisResultComponent } from './tab-analysis-result/tab-analysis-r
 import { AppAssetDataComponent } from './app-asset-data/app-asset-data.component';
 import { AppAssetDataDetailComponent } from './app-asset-data/app-asset-data-detail/app-asset-data-detail.component';
 import { ViewFinancialComponent } from "./view-financial/view-financial.component";
+import { ViewSharingComponentModule } from "./view-sharing-component.module";
 
 @NgModule({
   exports: [
@@ -34,6 +35,7 @@ import { ViewFinancialComponent } from "./view-financial/view-financial.componen
   imports: [
     CommonModule,
     AdInsModule,
+    ViewSharingComponentModule,
   ],
   declarations: [
     InvoiceDataFctrComponent,

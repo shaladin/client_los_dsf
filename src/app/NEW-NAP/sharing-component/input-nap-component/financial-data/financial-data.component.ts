@@ -13,8 +13,8 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './financial-data.component.html',
 })
 export class FinancialDataComponent implements OnInit {
-// @Input() AppId : number;
-AppId : number;
+@Input() AppId : number;
+//AppId : number;
 FinDataForm : FormGroup;
 RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
 GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
