@@ -43,7 +43,6 @@ export class CreditInvestigationDetailComponent implements OnInit {
       }
     });
   }
-
   async ngOnInit() : Promise<void> {
     this.arrValue.push(this.appId);
     this.viewObj = "./assets/ucviewgeneric/viewCreditInvestigationInfo.json";
