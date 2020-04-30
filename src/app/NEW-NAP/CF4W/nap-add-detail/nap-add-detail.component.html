@@ -38,7 +38,7 @@
 
     <div class="card-body" *ngIf="AppStepIndex > -1">
       <div class="px-3">
-        <aw-wizard #wizard navBarLayout="large-empty-symbols" [defaultStepIndex]="AppStepIndex">
+        <aw-wizard #wizard navBarLayout="large-empty-symbols">
 
           <aw-wizard-step [stepTitle]="'Customer Data'" (stepEnter)="EnterTab('CUST')"
             [navigationSymbol]="{ symbol: '1' }">
@@ -58,14 +58,19 @@
           <aw-wizard-step [stepTitle]="'Application Data'" (stepEnter)="EnterTab('APP')"
             [navigationSymbol]="{ symbol: '4' }">
             <app-application-data-model *ngIf="AppStepIndex == 3" [appId]=appId></app-application-data-model>
-          </aw-wizard-step>
+          </aw-wizard-step> -->
 
-          <aw-wizard-step [stepTitle]="'Asset Data'" (stepEnter)="EnterTab('ASSET')"
+          <!-- <aw-wizard-step [stepTitle]="'Asset Data'" (stepEnter)="EnterTab('ASSET')"
             [navigationSymbol]="{ symbol: '5' }">
             <app-asset-data *ngIf="AppStepIndex == 4" [AppId]=appId></app-asset-data>
           </aw-wizard-step>
 
-          <aw-wizard-step [stepTitle]="'Insurance Data'" (stepEnter)="EnterTab('INS')"
+          <aw-wizard-step *ngIf="IsMultiAsset == 'True'" [stepTitle]="'Insurance Multi Asset Data'" (stepEnter)="EnterTab('INS')"
+            [navigationSymbol]="{ symbol: '6' }">
+            <app-insurance-multi-asset-data *ngIf="AppStepIndex == 5" [appId]=appId></app-insurance-multi-asset-data>
+          </aw-wizard-step>
+
+          <aw-wizard-step *ngIf="IsMultiAsset == 'False'" [stepTitle]="'Insurance Data'" (stepEnter)="EnterTab('INS')"
             [navigationSymbol]="{ symbol: '6' }">
             <app-insurance-data *ngIf="AppStepIndex == 5" [appId]=appId></app-insurance-data>
           </aw-wizard-step>
@@ -90,19 +95,16 @@
   </div>
 </div>
 
-<div class="form-actions ucSearch-Button-Right">
-  <button type="button" class="btn btn-raised btn-cancel" [routerLink]="['../Paging']" [queryParams]="{LobCode:'CF4W'}"
+<div class="form-actions pull-right">
+  <button type="button" class="btn btn-raised btn-warning" [routerLink]="['/Nap/ConsumerFinance/InputNap/Paging']" [queryParams]="{LobCode:'CF4W'}"
     translate>
     <i class="fa fa-check-square-o"></i> Back
   </button>
-  <button *ngIf="mode == 'ReturnHandling'" type="button" class="btn btn-raised btn_cancel"
+  <button *ngIf="mode == 'ReturnHandling'" type="button" class="btn btn-raised btn-warning"
     [routerLink]="['Nap/AdditionalProcess/ReturnHandling/EditAppPaging']" translate>
-    <i class="fa fa-check-square-o"></i> Cancel
-  </button>
-  <button type="button" class="btn btn-raised btn-primary">
-    <i class="fa fa-check-square-o"></i> Save and Continue
+    <i class="fa fa-check-square-o"></i> Back
   </button>
   <button *ngIf="mode == 'ReturnHandling'" type="button" (click)="Submit()" class="btn btn-raised btn-primary">
-    <i class="fa fa-check-square-o"></i> Submit
+    <i class="fa fa-check-square-o"></i> Submit Return Handling
   </button>
 </div>
