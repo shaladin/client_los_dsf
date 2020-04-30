@@ -36,73 +36,65 @@
       </div>
     </div>
 
-    <div class="card-body" *ngIf="AppStepIndex > -1">
+    <div class="card-body">
       <div class="px-3">
-        <aw-wizard #wizard navBarLayout="large-empty-symbols" [defaultStepIndex]="AppStepIndex">
-
-          <aw-wizard-step [stepTitle]="'Customer Data'" (stepEnter)="EnterTab('CUST')"
-            [navigationSymbol]="{ symbol: '1' }">
-            <app-customer-data *ngIf="AppStepIndex == 0" (callbackSubmit)=WizardNavigation($event) [appId]=appId></app-customer-data>
-          </aw-wizard-step>
-
-          <aw-wizard-step [stepTitle]="'Guarantor Data'" (stepEnter)="EnterTab('GUAR')"
-            [navigationSymbol]="{ symbol: '2' }">
-            <app-guarantor-paging *ngIf="AppStepIndex == 1" (callbackSubmit)=WizardNavigation($event) [AppId]=appId></app-guarantor-paging>
-          </aw-wizard-step>
-
-          <aw-wizard-step [stepTitle]="'Referantor Data'" (stepEnter)="EnterTab('REF')"
-            [navigationSymbol]="{ symbol: '3' }">
-            <app-referantor-data *ngIf="AppStepIndex == 2" [appId]=appId></app-referantor-data>
-          </aw-wizard-step>
-
-          <aw-wizard-step [stepTitle]="'Application Data'" (stepEnter)="EnterTab('APP')"
-            [navigationSymbol]="{ symbol: '4' }">
-            <app-application-data-model *ngIf="AppStepIndex == 3" [appId]=appId></app-application-data-model>
-          </aw-wizard-step>
-
-          <aw-wizard-step [stepTitle]="'Asset Data'" (stepEnter)="EnterTab('ASSET')"
-            [navigationSymbol]="{ symbol: '5' }">
-            <app-asset-data *ngIf="AppStepIndex == 4" [AppId]=appId></app-asset-data>
-          </aw-wizard-step>
-
-          <aw-wizard-step [stepTitle]="'Insurance Data'" (stepEnter)="EnterTab('INS')"
-            [navigationSymbol]="{ symbol: '6' }">
-            <app-insurance-data *ngIf="AppStepIndex == 5" [appId]=appId></app-insurance-data>
-          </aw-wizard-step>
-
-          <aw-wizard-step [stepTitle]="'Life Insurance Data'" (stepEnter)="EnterTab('LFI')"
-            [navigationSymbol]="{ symbol: '7' }">
-            <app-life-insurance-data *ngIf="AppStepIndex == 6" [AppId]=appId></app-life-insurance-data>
-          </aw-wizard-step>
-
-          <aw-wizard-step [stepTitle]="'Financial Data'" (stepEnter)="EnterTab('FIN')"
-            [navigationSymbol]="{ symbol: '8' }">
-            <!-- <app-financial-data *ngIf="AppStepIndex == 7" [AppId]=appId></app-financial-data> -->
-          </aw-wizard-step>
-
-          <aw-wizard-step [stepTitle]="'Terms and Conditions'" (stepEnter)="EnterTab('TC')"
-            [navigationSymbol]="{ symbol: '9' }">
-            <app-tc-data *ngIf="AppStepIndex == 8" [AppId]=appId></app-tc-data>
-          </aw-wizard-step>
-        </aw-wizard>
+        <div id="stepper1" class="bs-stepper">
+          <div class="bs-stepper-header" role="tablist">
+            <!-- your steps here -->
+            <div class="step" data-target="#customer-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="customer-tab"
+                id="customer-tab-trigger" [disabled]="!(AppStepIndex >= 1)" (click)="ChangeTab('CUST')">
+                <span class="bs-stepper-circle">1</span>
+                <span class="bs-stepper-label">Customer Data</span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#guarantor-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="guarantor-tab"
+                id="guarantor-tab-trigger" [disabled]="!(AppStepIndex >= 2)" (click)="ChangeTab('GUAR')">
+                <span class="bs-stepper-circle">2</span>
+                <span class="bs-stepper-label">Guarantor Data</span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#referantor-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="referantor-tab"
+                id="referantor-tab-trigger" [disabled]="!(AppStepIndex >= 3)" (click)="ChangeTab('REF')">
+                <span class="bs-stepper-circle">3</span>
+                <span class="bs-stepper-label">Referantor Data</span>
+              </button>
+            </div>
+          </div>
+          <div class="bs-stepper-content">
+            <!-- your steps content here -->
+            <div id="customer-tab" class="content" role="tabpanel" aria-labelledby="customer-tab-trigger">
+              <app-customer-data *ngIf="AppStepIndex == 1" [appId]="appId" (outputTab)="NextStep('GUAR')"></app-customer-data>
+            </div>
+            <div id="guarantor-tab" class="content" role="tabpanel" aria-labelledby="guarantor-tab-trigger">
+              <app-guarantor-paging *ngIf="AppStepIndex == 2" [AppId]="appId" (outputTab)="NextStep('REF')">
+              </app-guarantor-paging>
+            </div>
+            <div id="referantor-tab" class="content" role="tabpanel" aria-labelledby="referantor-tab-trigger">
+              <app-referantor-data *ngIf="AppStepIndex == 3" [appId]="appId" (outputTab)="NextStep('APP')">
+              </app-referantor-data>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="form-actions ucSearch-Button-Right">
-  <button type="button" class="btn btn-raised btn-cancel" [routerLink]="['../Paging']" [queryParams]="{LobCode:'CF4W'}"
-    translate>
+<div class="form-actions pull-right">
+  <button type="button" class="btn btn-raised btn-warning" [routerLink]="['../../Paging']"
+    [queryParams]="{LobCode:'FRN4W'}" translate>
     <i class="fa fa-check-square-o"></i> Back
   </button>
-  <button *ngIf="mode == 'ReturnHandling'" type="button" class="btn btn-raised btn_cancel"
+  <button *ngIf="mode == 'ReturnHandling'" type="button" class="btn btn-raised btn-warning"
     [routerLink]="['Nap/AdditionalProcess/ReturnHandling/EditAppPaging']" translate>
-    <i class="fa fa-check-square-o"></i> Cancel
-  </button>
-  <button type="button" class="btn btn-raised btn-primary">
-    <i class="fa fa-check-square-o"></i> Save and Continue
+    <i class="fa fa-check-square-o"></i> Back
   </button>
   <button *ngIf="mode == 'ReturnHandling'" type="button" (click)="Submit()" class="btn btn-raised btn-primary">
-    <i class="fa fa-check-square-o"></i> Submit
+    <i class="fa fa-check-square-o"></i> Submit Return Handling
   </button>
 </div>
