@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, CheckboxControlValueAccessor } from '@angular/forms';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
@@ -9,6 +9,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { RefOfficeObj } from 'app/shared/model/RefOfficeObj.model';
+import { DataTableFixedNAPObj } from 'app/shared/model/DataTableFixedNAPObj.Model';
 
 @Component({
   selector: 'app-app-add-fixed',
@@ -20,12 +21,20 @@ export class AppAddFixedComponent implements OnInit {
   param;
   ProductOfferingIdentifier;
   ProductOfferingNameIdentifier;
+  LobCode;
   constructor(
     private fb: FormBuilder,
     private router: Router,
+    private route: ActivatedRoute,
     private http: HttpClient,
     private toastr: NGXToastrService
-  ) { }
+  ) {
+      this.route.queryParams.subscribe(params => {
+       if (params["LobCode"] != null) {
+        this.LobCode = params["LobCode"];
+       }
+      });
+   }
 
   NapAppForm = this.fb.group({
     MouCustId: [''],
@@ -255,11 +264,66 @@ export class AppAddFixedComponent implements OnInit {
 
   }
 
+  assetName;
+  asset;
+  brand;
+  model;
+  type;
   SetAsset(event) {
-    this.NapAppForm.patchValue({
-    //   FullAssetCode: event.FullAssetCode,
-    //   FullAssetName: event.FullAssetName
-    });
+    this.assetName = event.FullAssetName
+    this.asset = this.assetName.split(' ');
+    for(var i = 0; i < this.asset.length; i++)
+    {
+      this.brand = this.asset[0];
+      this.model = this.asset[1];
+      this.type = this.asset[2];
+    }
+  }
+  
+
+  SupplCode;
+  BrandCode;
+  ModelCode;
+  TypeCode;
+  returnDtFixedNAPObj;
+  generateData(){
+    this.SupplCode = "";
+    this.BrandCode = "";
+    this.ModelCode = "";
+    this.TypeCode = "";
+
+    var dtFixedNAPObj = new DataTableFixedNAPObj();
+    dtFixedNAPObj.SupplCode = this.SupplCode;
+    dtFixedNAPObj.BrandCode = this.BrandCode;
+    dtFixedNAPObj.ModelCode = this.ModelCode;
+    dtFixedNAPObj.TypeCode = this.TypeCode;
+    this.http.post(AdInsConstant.DataTableNAP, dtFixedNAPObj).subscribe(
+      (response) => {
+        this.returnDtFixedNAPObj = response;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  returnFeeAndInsFixedNAP;
+  editItem(item: any) {
+    var feeAndInsFixedNAP = new DataTableFixedNAPObj();
+    feeAndInsFixedNAP.LobCode = this.LobCode;
+    feeAndInsFixedNAP.OfficeCode = this.user.MrOfficeTypeCode;
+    feeAndInsFixedNAP.InsPackage = item.InsPackage;
+    feeAndInsFixedNAP.Tenor = parseInt(item.Tenor, 10);
+    this.http.post(AdInsConstant.GetRuleFeeAndInsFixedNAP, feeAndInsFixedNAP).subscribe(
+      (response) => {
+        this.returnFeeAndInsFixedNAP = response["ReturnObject"];
+        console.log("vvv");
+        console.log(this.returnFeeAndInsFixedNAP);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   getLookupAppResponseCopy(ev: any) {

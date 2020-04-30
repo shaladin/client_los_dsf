@@ -54,7 +54,8 @@ export class AdInsConstant {
   public static GetAppDetailForTabAddEditAppById = environment.losUrl + "/Application/GetAppDetailForTabAddEditAppById";
   public static GetAppDetailForAppTabById = environment.losUrl + "/Application/GetAppDetailForAppTabById";
   public static AddAppFromLead = environment.losUrl + "/Application/AddAppFromLead";
-  public static GetRuleFixedNAP = environment.losUrl + "/Application/GetRuleFixedNAP";
+  public static DataTableNAP = "http://localhost:5001" + "/Application/DataTableNAP";
+  public static GetRuleFeeAndInsFixedNAP = "http://localhost:5001" + "/Application/GetRuleFeeAndInsFixedNAP";
 
   // App Collateral
   public static GetAppCollateralRegistrationByAppId = "/AppCollateralRegistration/GetAppCollateralRegistrationByAppId";
