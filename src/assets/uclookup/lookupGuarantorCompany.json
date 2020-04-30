@@ -12,7 +12,7 @@
         }
     ],
     "querystring": {
-        "select": " SELECT CUST_NAME AS CustName",
+        "select": " SELECT CUST_NAME AS CustName, CUST_ID AS CustId",
         "from": "FROM CUST A WITH(NOLOCK) WHERE MR_CUST_TYPE_CODE='Company'"
     },
         "headerList": [
@@ -41,7 +41,7 @@
             "action": [
                 {
                     "type": "select",
-                    "property": "CustName"
+                    "property": "CustId"
                 }
             ]
         }
