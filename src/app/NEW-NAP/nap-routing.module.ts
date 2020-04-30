@@ -17,12 +17,20 @@ const routes: Routes = [
                 loadChildren: './FL4W/input-nap.module#InputNapFL4WModule'
             },
             {
+                path: 'CF2W',
+                loadChildren: './CF2W/input-nap.module#InputNapCF2WModule'
+            },
+            {
                 path: 'CFRefinancing',
                 loadChildren: './RFN4W/input-nap.module#InputNapRFN4WModule'
             },
             {
                 path: 'Factoring',
                 loadChildren: './FCTR/input-nap.module#InputNapFCTRModule'
+            },
+            {
+                path: 'AdditionalProcess',
+                loadChildren: './business-process/additional-process/additional-process.module#AdditionalProcessSharingModule'
             },
             {
                 path: 'CreditProcess',
@@ -35,6 +43,10 @@ const routes: Routes = [
             {
                 path: 'AddProcess',
                 loadChildren: './business-process/additional-process/additional-process.module#AdditionalProcessSharingModule'
+            },
+            {
+                path: 'View',
+                loadChildren: './view/nap-view.module#NapViewModule'
             },
             {
                 path: 'AssetData/Paging',

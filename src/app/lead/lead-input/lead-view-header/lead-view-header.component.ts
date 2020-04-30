@@ -37,6 +37,7 @@ export class LeadViewHeaderComponent implements OnInit {
     LobName:[''],
     LeadSource: [''],
   });
+  leadUrl: string;
   
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.getLeadByLeadId = AdInsConstant.GetLeadByLeadId;
@@ -57,5 +58,6 @@ export class LeadViewHeaderComponent implements OnInit {
         console.log("aaaa")
         console.log(this.returnLead)
     });
+    this.leadUrl = environment.losR3Web + '/Lead/View?LeadId=' + this.LeadId;
   }
 }

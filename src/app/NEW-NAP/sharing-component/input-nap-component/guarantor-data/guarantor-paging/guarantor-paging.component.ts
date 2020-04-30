@@ -1,13 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { environment } from 'environments/environment';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
-import { AppGuarantorObj } from 'app/shared/model/AppGuarantorObj.Model';
 import { HttpClient } from '@angular/common/http';
 import { GuarantorObj } from 'app/shared/model/GuarantorObj.Model';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { AppWizardObj } from 'app/shared/model/App/AppWizard.Model';
+import { WizardComponent } from 'angular-archwizard';
 
 @Component({
   selector: 'app-guarantor-paging',
@@ -17,15 +15,18 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 export class GuarantorPagingComponent implements OnInit {
 
   @Input() AppId: any;
+
   inputGridObj: any;
   closeResult: any;
   AppGuarantorId : any;
   MrGuarantorTypeCode : any;
   mode: any;
+  appWizardObj: AppWizardObj;
+  closeChk : any;
 
   constructor(private http: HttpClient,
     private modalService: NgbModal,
-    private toastr: NGXToastrService) {
+    private wizard: WizardComponent) {
   }
 
   ngOnInit() {
@@ -76,9 +77,9 @@ export class GuarantorPagingComponent implements OnInit {
     }
   }
 
-  cancel()
+  SaveAndContinue()
   {
-    this.modalService.dismissAll();
+    this.wizard.goToNextStep();
   }
 
   event(content,ev){
@@ -89,6 +90,13 @@ export class GuarantorPagingComponent implements OnInit {
     this.MrGuarantorTypeCode = ev.MrGuarantorTypeCode;
     console.log("CHECK EVENT");
     console.log(this.AppGuarantorId);
+  }
+
+  close(event){
+    this.closeChk=event;
+    if(this.closeChk){
+    this.modalService.dismissAll();
+    }
   }
 
 }

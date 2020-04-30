@@ -46,6 +46,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     MrCustTypeCode: [''],
     RowVersion: ['']
   });
+  mouCustUrl: any;
 
   constructor(
     private router: Router,
@@ -85,7 +86,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     this.inputLookupCust.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupCust.pagingJson = "./assets/uclookup/MOU/lookupCust_MOURequest.json";
     this.inputLookupCust.genericJson = "./assets/uclookup/MOU/lookupCust_MOURequest.json";
-
+    this.mouCustUrl =  environment.losR3Web + '/Mou/Cust/Paging?MouCustId=' + this.mouCustId;
     var refOffice = new RefOfficeObj();
     refOffice.OfficeCode = currentUserContext["Office"];
     this.httpClient.post(AdInsConstant.GetRefOfficeByOfficeCode, refOffice).subscribe(

@@ -6,12 +6,12 @@ import { AssetDataAddEditComponent } from "./sharing-component/input-nap-compone
 import { CollateralAddEditComponent } from "./sharing-component/input-nap-component/multi-asset-data/collateral-add-edit/collateral-add-edit.component";
 import { AdInsModule } from "app/components/adins-module/adins.module";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
-
+ 
 @NgModule({
     declarations: [
         AssetDataPagingComponent,
         AssetDataAddEditComponent,
-        CollateralAddEditComponent
+        CollateralAddEditComponent, 
     ],
     imports: [
         CommonModule,

@@ -21,6 +21,8 @@ export class CommissionComponent implements OnInit {
   @ViewChild('Form2') FormAdd2: FormAddDynamicComponent;
   @ViewChild('Form3') FormAdd3: FormAddDynamicComponent;
   @Input() AppId;
+  @Input() ReturnHandlingDId;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -45,7 +47,13 @@ export class CommissionComponent implements OnInit {
   Summary;
   isCalculateData;
   isAutoGenerate;
+  show : boolean = false;
   ngOnInit() {
+
+    if(this.ReturnHandlingDId!=0){
+      this.show = true;
+    }
+
     this.OnForm1 = false;
     this.OnForm2 = false;
     this.OnForm3 = false;
@@ -388,7 +396,7 @@ export class CommissionComponent implements OnInit {
     var url;
     var obj;
     if (content == AdInsConstant.ContentSupplier) {
-      url = environment.losUrl + AdInsConstant.GetAppAssetListByAppIdForCommision;
+      url = environment.losUrl + AdInsConstant.GetAppAssetListByAppId;
       obj = {
         AppId: this.AppId,
         RowVersion: ""
@@ -679,7 +687,6 @@ export class CommissionComponent implements OnInit {
       );
     }
   }
-
   Cancel(){
     this.router.navigate(["../CommissionReservedFund/Paging"]);
   }
