@@ -80,6 +80,7 @@ ngOnInit() {
       NumOfStep : 0,    
       MrInstSchemeCode: "",
       CummulativeTenor: 0,
+      StepUpStepDownInputType: "",
 
       AppFee : this.fb.array([]),
       ListEntryInst: this.fb.array([]),
@@ -145,20 +146,18 @@ SaveAndContinue()
     this.toastr.errorMessage("Please Calculate Again");
     return ;
   }
+  if(isValidGrossYield && isValidGracePeriod)
+  {
+    console.log("GROSSSS");
+    console.log(this.FinDataForm.value);
 
-  this.toastr.successMessage("Calc Ok");
-
-  // if(isValidGrossYield && isValidGracePeriod)
-  // {
-  //   console.log("GROSSSS");
-  //   console.log(this.FinDataForm.value);
-
-  //   this.http.post(environment.losUrl + "/AppFinData/SaveAppFinData", this.FinDataForm.value).subscribe(
-  //     (response) => {
-  //      console.log(response);
-  //     }
-  //   );
-  // }
+    this.http.post(environment.losUrl + "/AppFinData/SaveAppFinData", this.FinDataForm.value).subscribe(
+      (response) => {
+       console.log(response);
+       this.toastr.successMessage(response["Message"]);
+      }
+    );
+  }
 }
 
 ValidateGracePeriode()
