@@ -33,18 +33,6 @@ import { TabAnalysisResultComponent } from "../sharing-component/view-app-compon
   declarations: [
     AgreementViewContainerComponent,
     ApplicationViewComponent,
-    MatTabsModule,
-    UcSubsectionModule,
-    UcviewgenericModule,
-    TabReferantorComponent,
-    TabCommissionComponent,
-    ListDataCommissionComponent,
-    ViewReservedFundComponent,
-    ViewPhoneVerifComponent,
-    ViewAssetDataComponent,
-    TabApplicationComponent,
-    TabAnalysisResultComponent,
-    InvoiceViewComponent
   ]
 })
 export class NapViewModule { }

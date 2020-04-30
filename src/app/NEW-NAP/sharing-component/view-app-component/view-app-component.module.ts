@@ -24,7 +24,12 @@ import { ViewFinancialComponent } from "./view-financial/view-financial.componen
     ViewReservedFundComponent,
     ViewInsuranceComponent,
     ViewFinancialComponent,
-
+    TabReferantorComponent,
+    TabCommissionComponent,
+    ListDataCommissionComponent,
+    TabAnalysisResultComponent,
+    ViewAssetDataComponent,
+    ViewPhoneVerifComponent,
   ],
   imports: [
     CommonModule,
