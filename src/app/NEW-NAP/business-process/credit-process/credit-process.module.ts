@@ -38,6 +38,7 @@ import { ProcessComponentModule } from "app/NEW-NAP/sharing-component/process-co
 import { UcSubsectionModule } from "@adins/uc-subsection";
 import { FraudVerificationMultiAssetComponent } from "./fraud-verification-multi-asset/fraud-verification-multi-asset.component";
 import { ViewSharingComponentModule } from "app/NEW-NAP/sharing-component/view-app-component/view-sharing-component.module";
+import { UcviewgenericModule } from "@adins/ucviewgeneric";
 
 @NgModule({
   imports: [
@@ -57,7 +58,8 @@ import { ViewSharingComponentModule } from "app/NEW-NAP/sharing-component/view-a
     UcapprovalModule,
     UcapprovebyModule,
     UcSubsectionModule ,
-    ViewSharingComponentModule
+    ViewSharingComponentModule,
+    UcviewgenericModule
   ],
   declarations: [
     CreditApprovalPagingComponent,
