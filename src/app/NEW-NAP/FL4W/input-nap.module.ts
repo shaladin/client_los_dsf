@@ -33,8 +33,7 @@ import { NapViewComponent } from './nap-view/nap-view.component';
     DummyComponent, 
     NapAddComponent,
     NapPagingComponent,
-    NapViewComponent,
-  
+    NapViewComponent
   ],
   providers: [
     NGXToastrService
