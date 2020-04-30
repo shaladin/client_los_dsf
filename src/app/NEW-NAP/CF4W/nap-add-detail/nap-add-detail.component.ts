@@ -20,6 +20,8 @@ export class NapAddDetailComponent implements OnInit {
   viewReturnInfoObj: string = "";
   NapObj: AppObj;
   AppStepIndex: number;
+  IsMultiAsset: string;
+  ListAsset: any;
 
   AppStep = {
     "NEW": 0,
@@ -68,6 +70,7 @@ export class NapAddDetailComponent implements OnInit {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
         this.mode = params["Mode"];
+        this.CheckMultiAsset();
       }
     });
   }
@@ -90,6 +93,28 @@ export class NapAddDetailComponent implements OnInit {
     this.MakeViewReturnInfoObj();
   }
 
+  CheckMultiAsset()
+  {
+    var appObj = { AppId: this.appId}
+    this.http.post(AdInsConstant.GetAppAssetListByAppId, appObj).subscribe(
+      (response) => {
+        this.ListAsset = response['ReturnObject'];
+        if (this.ListAsset != undefined && this.ListAsset != null)
+        {
+          if (this.ListAsset.length > 1)
+            this.IsMultiAsset = 'True';
+          else
+            this.IsMultiAsset = 'False';
+        }
+        else
+          this.IsMultiAsset = 'False';
+      },
+      (error) => {
+        console.log(error);
+      }
+    )
+  }
+
   EnterTab(AppStep) {
     // console.log(AppStep);
     switch (AppStep) {
@@ -109,7 +134,7 @@ export class NapAddDetailComponent implements OnInit {
         this.AppStepIndex = this.AppStep[AdInsConstant.AppStepAsset];
         break;
       case AdInsConstant.AppStepIns:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepIns];
+          this.AppStepIndex = this.AppStep[AdInsConstant.AppStepIns];
         break;
       case AdInsConstant.AppStepLIns:
         this.AppStepIndex = this.AppStep[AdInsConstant.AppStepLIns];
