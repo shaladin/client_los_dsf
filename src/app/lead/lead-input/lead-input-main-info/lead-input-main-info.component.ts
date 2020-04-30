@@ -34,15 +34,11 @@ export class LeadInputMainInfoComponent implements OnInit {
   getLeadObj: LeadObj;
   cmoNameLookUpObj: any;
   surveyorNameLookUpObj: any;
-  salesNameLookUpObj:any;
+  salesNameLookUpObj: any;
   agencyLookUpObj: any;
-  tempCmoName: any;
-  tempCmoCode: any;
-  tempSurveyorName: any;
-  tempSurveyorCode: any;
-  tempSalesName: any;
-  tempSalesCode: any;
-  tempAgencyName: any;
+  tempCmoUsername: any;
+  tempSurveyorUsername: any;
+  tempSalesUsername: any;
   tempAgencyCode: any;
   getListRefOffice: any;
   getListActiveLob: any;
@@ -52,7 +48,7 @@ export class LeadInputMainInfoComponent implements OnInit {
   getLeadPersonalForLookup: any;
   listRefOffice: any;
   refOfficeObj: any;
-  listRefLob:any;
+  listRefLob: any;
   refLobObj: any;
   leadSource: any;
   listLeadSource: any;
@@ -84,13 +80,12 @@ export class LeadInputMainInfoComponent implements OnInit {
     OfficeName: [''],
     CrtOfficeCode: [''],
     CrtOfficeName: [''],
-    OrderNo:[''],
+    OrderNo: [''],
     LobCode: [''],
-    LobName:[''],
     LeadSource: [''],
   });
   leadUrl: string;
-  
+
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.addLead = AdInsConstant.AddLead;
     this.editLead = AdInsConstant.EditLead;
@@ -102,47 +97,44 @@ export class LeadInputMainInfoComponent implements OnInit {
     this.getRefEmpForLookupEmployee = AdInsConstant.GetRefEmpForLookupEmployee;
     this.getLeadPersonalForLookup = AdInsConstant.GetLeadPersonalForLookupCopy;
     this.route.queryParams.subscribe(params => {
-        if (params["mode"] != null) {
-            this.pageType = params["mode"];
-        }
-        if (params["LeadId"] != null) {
-          this.LeadId = params["LeadId"];
+      if (params["mode"] != null) {
+        this.pageType = params["mode"];
+      }
+      if (params["LeadId"] != null) {
+        this.LeadId = params["LeadId"];
       }
     });
     this.leadUrl = environment.losR3Web + '/Lead/View?LeadId=' + this.LeadId;
   }
 
-getLookUpAgency(event) {
-  this.tempAgencyName = event.VendorName;
-  this.tempAgencyCode = event.VendorCode;
-}
+  getLookUpAgency(event) {
+    this.tempAgencyCode = event.VendorCode;
+  }
 
-getLookUpCmoName(event) {
-    this.tempCmoName = event.EmpName;
-    this.tempCmoCode = event.RoleCode;
-}
+  getLookUpCmoName(event) {
+    this.tempCmoUsername = event.Username;
+    console.log(this.tempCmoUsername);
+  }
 
-getLookUpSurveyorName(event) {
-    this.tempSurveyorName = event.EmpName;
-    this.tempSurveyorCode = event.RoleCode;
-}
+  getLookUpSurveyorName(event) {
+    this.tempSurveyorUsername = event.Username;
+  }
 
-getLookUpSalesName(event) {
-    this.tempSalesName = event.EmpName;
-    this.tempSalesCode = event.RoleCode;
-}
+  getLookUpSalesName(event) {
+    this.tempSalesUsername = event.Username;
+  }
 
-getLookUpLead(event) {
+  getLookUpLead(event) {
     this.leadIdExist = event.LeadId;
-}
+  }
 
-copyLead(){
-  this.getExistLeadObj = new LeadObj();
-  this.getExistLeadObj.LeadId = this.leadIdExist;
-  this.http.post(this.getLeadByLeadId, this.getExistLeadObj).subscribe(
-    (response) => {
+  copyLead() {
+    this.getExistLeadObj = new LeadObj();
+    this.getExistLeadObj.LeadId = this.leadIdExist;
+    this.http.post(this.getLeadByLeadId, this.getExistLeadObj).subscribe(
+      (response) => {
         this.returnExistLead = response;
-        this.MainInfoForm.patchValue({ 
+        this.MainInfoForm.patchValue({
           OfficeCode: this.returnExistLead.OriOfficeCode,
           OfficeName: this.returnExistLead.OriOfficeName,
           OrderNo: this.returnExistLead.OrderNo,
@@ -150,55 +142,60 @@ copyLead(){
           LobName: this.returnExistLead.LobName,
           LeadSource: this.returnExistLead.MrLeadSourceCode,
         });
-
+ 
+        
         this.vendorExistObj = new VendorObj();
         this.vendorExistObj.VendorCode = this.returnExistLead.AgencyCode;
         this.http.post(this.getVendorByVendorCode, this.vendorExistObj).subscribe(
           (response) => {
-              this.returnVendorExistObj = response;
-              this.agencyLookUpObj.nameSelect = this.returnVendorExistObj.VendorName;
-              this.agencyLookUpObj.jsonSelect = this.returnVendorExistObj;
-              this.tempAgencyName = this.returnVendorExistObj.VendorName;
-              this.tempAgencyCode = this.returnVendorExistObj.VendorCode;
+            this.returnVendorExistObj = response;
+            this.agencyLookUpObj.nameSelect = this.returnVendorExistObj.VendorName;
+            this.agencyLookUpObj.jsonSelect = this.returnVendorExistObj;
+            this.tempAgencyCode = this.returnVendorExistObj.VendorCode;
           });
-        
-          this.cmoExistObj = new RefEmpForLookupObj();
-          this.cmoExistObj.EmpName = this.returnExistLead.CmoName;
-          this.cmoExistObj.RoleCode = this.returnExistLead.CmoCode;
-          this.http.post(this.getRefEmpForLookupEmployee, this.cmoExistObj).subscribe(
-            (response) => {
-                this.returnCmoExistObj = response;
-                this.cmoNameLookUpObj.nameSelect = this.returnCmoExistObj.EmpName;
-                this.cmoNameLookUpObj.jsonSelect = this.returnCmoExistObj;
-                this.tempCmoName = this.returnCmoExistObj.EmpName;
-                this.tempCmoCode = this.returnCmoExistObj.RoleCode;
-            });
-          
-          this.surveyorExistObj = new RefEmpForLookupObj();
-          this.surveyorExistObj.EmpName = this.returnExistLead.SurveyorName;
-          this.surveyorExistObj.RoleCode = this.returnExistLead.SurveyorCode;
-          this.http.post(this.getRefEmpForLookupEmployee, this.surveyorExistObj).subscribe(
-            (response) => {
-                this.returnSurveyorExistObj = response;
-                this.surveyorNameLookUpObj.nameSelect = this.returnSurveyorExistObj.EmpName;
-                this.surveyorNameLookUpObj.jsonSelect = this.returnSurveyorExistObj;
-                this.tempSurveyorName = this.returnSurveyorExistObj.EmpName;
-                this.tempSurveyorCode = this.returnSurveyorExistObj.RoleCode;
-            });
+        this.cmoNameLookUpObj.nameSelect = this.returnExistLead.CmoUsername;
+        this.cmoNameLookUpObj.jsonSelect = this.returnExistLead;
+        this.surveyorNameLookUpObj.nameSelect = this.returnExistLead.SurveyorUsername;
+        this.surveyorNameLookUpObj.jsonSelect = this.returnExistLead;
+        this.salesNameLookUpObj.nameSelect = this.returnExistLead.TeleMarketingUsername;
+        this.salesNameLookUpObj.jsonSelect = this.returnExistLead;
+        this.tempCmoUsername = this.returnExistLead.CmoUsername;
+        this.tempSurveyorUsername = this.returnExistLead.SurveyorUsername;
+        this.tempSalesUsername = this.returnExistLead.TeleMarketingUsername;
 
-          this.salesExistObj = new RefEmpForLookupObj();
-          this.salesExistObj.EmpName = this.returnExistLead.TeleMarketingName;
-          this.salesExistObj.RoleCode = this.returnExistLead.TeleMarketingCode;
-          this.http.post(this.getRefEmpForLookupEmployee, this.salesExistObj).subscribe(
-            (response) => {
-                this.returnSalesExistObj = response;
-                this.salesNameLookUpObj.nameSelect = this.returnSalesExistObj.EmpName;
-                this.salesNameLookUpObj.jsonSelect = this.returnSalesExistObj;
-                this.tempSalesName = this.returnSalesExistObj.EmpName;
-                this.tempSalesCode = this.returnSalesExistObj.RoleCode;
-            });
-    });
-}
+        // this.cmoExistObj = new RefEmpForLookupObj();
+        // this.cmoExistObj.EmpName = this.returnExistLead.CmoName;
+        // this.cmoExistObj.RoleCode = this.returnExistLead.CmoCode;
+        // this.http.post(this.getRefEmpForLookupEmployee, this.cmoExistObj).subscribe(
+        //   (response) => {
+        //     this.returnCmoExistObj = response;
+        //     this.cmoNameLookUpObj.nameSelect = this.returnCmoExistObj.EmpName;
+        //     this.cmoNameLookUpObj.jsonSelect = this.returnCmoExistObj;
+
+        //   });
+
+        // this.surveyorExistObj = new RefEmpForLookupObj();
+        // this.surveyorExistObj.EmpName = this.returnExistLead.SurveyorName;
+        // this.surveyorExistObj.RoleCode = this.returnExistLead.SurveyorCode;
+        // this.http.post(this.getRefEmpForLookupEmployee, this.surveyorExistObj).subscribe(
+        //   (response) => {
+        //     this.returnSurveyorExistObj = response;
+        //     this.surveyorNameLookUpObj.nameSelect = this.returnSurveyorExistObj.EmpName;
+        //     this.surveyorNameLookUpObj.jsonSelect = this.returnSurveyorExistObj;
+        //   });
+
+        // this.salesExistObj = new RefEmpForLookupObj();
+        // this.salesExistObj.EmpName = this.returnExistLead.TeleMarketingName;
+        // this.salesExistObj.RoleCode = this.returnExistLead.TeleMarketingCode;
+        // this.http.post(this.getRefEmpForLookupEmployee, this.salesExistObj).subscribe(
+        //   (response) => {
+        //     this.returnSalesExistObj = response;
+        //     this.salesNameLookUpObj.nameSelect = this.returnSalesExistObj.EmpName;
+        //     this.salesNameLookUpObj.jsonSelect = this.returnSalesExistObj;
+
+        //   });
+      });
+  }
 
   ngOnInit() {
     // console.log("ccc")
@@ -235,27 +232,27 @@ copyLead(){
 
     this.cmoNameLookUpObj = new InputLookupObj();
     this.cmoNameLookUpObj.isRequired = false;
-    this.cmoNameLookUpObj.urlJson = "./assets/uclookup/lookupEmployee.json";
+    this.cmoNameLookUpObj.urlJson = "./assets/uclookup/lookupCMO.json";
     this.cmoNameLookUpObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
     this.cmoNameLookUpObj.urlEnviPaging = environment.FoundationR3Url;
-    this.cmoNameLookUpObj.pagingJson = "./assets/uclookup/lookupEmployee.json";
-    this.cmoNameLookUpObj.genericJson = "./assets/uclookup/lookupEmployee.json";
+    this.cmoNameLookUpObj.pagingJson = "./assets/uclookup/lookupCMO.json";
+    this.cmoNameLookUpObj.genericJson = "./assets/uclookup/lookupCMO.json";
 
     this.surveyorNameLookUpObj = new InputLookupObj();
     this.surveyorNameLookUpObj.isRequired = false;
-    this.surveyorNameLookUpObj.urlJson = "./assets/uclookup/lookupEmployee.json";
+    this.surveyorNameLookUpObj.urlJson = "./assets/uclookup/lookupSurveyor.json";
     this.surveyorNameLookUpObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
     this.surveyorNameLookUpObj.urlEnviPaging = environment.FoundationR3Url;
-    this.surveyorNameLookUpObj.pagingJson = "./assets/uclookup/lookupEmployee.json";
-    this.surveyorNameLookUpObj.genericJson = "./assets/uclookup/lookupEmployee.json";
+    this.surveyorNameLookUpObj.pagingJson = "./assets/uclookup/lookupSurveyor.json";
+    this.surveyorNameLookUpObj.genericJson = "./assets/uclookup/lookupSurveyor.json";
 
     this.salesNameLookUpObj = new InputLookupObj();
     this.salesNameLookUpObj.isRequired = false;
-    this.salesNameLookUpObj.urlJson = "./assets/uclookup/lookupEmployee.json";
+    this.salesNameLookUpObj.urlJson = "./assets/uclookup/lookupTeleSales.json";
     this.salesNameLookUpObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
     this.salesNameLookUpObj.urlEnviPaging = environment.FoundationR3Url;
-    this.salesNameLookUpObj.pagingJson = "./assets/uclookup/lookupEmployee.json";
-    this.salesNameLookUpObj.genericJson = "./assets/uclookup/lookupEmployee.json";
+    this.salesNameLookUpObj.pagingJson = "./assets/uclookup/lookupTeleSales.json";
+    this.salesNameLookUpObj.genericJson = "./assets/uclookup/lookupTeleSales.json";
 
     this.refOfficeObj = new RefOfficeObj();
     this.http.post(this.getListRefOffice, this.refOfficeObj).subscribe(
@@ -263,9 +260,9 @@ copyLead(){
         this.listRefOffice = response['ReturnObject']
         // console.log("aaa")
         // console.log(this.listRefOffice)
-        this.MainInfoForm.patchValue({  
+        this.MainInfoForm.patchValue({
           OfficeCode: response['ReturnObject'][0]['Key'],
-          OfficeName: response['ReturnObject'][0]['Value'] 
+          OfficeName: response['ReturnObject'][0]['Value']
         });
       },
       (error) => {
@@ -276,116 +273,123 @@ copyLead(){
     this.refLobObj.RefLobId = "-"
     this.http.post(this.getListActiveLob, this.refLobObj).subscribe(
       (response) => {
-          this.listRefLob = response['ReturnObject'];
-          // console.log("bbb")
-          // console.log(this.listRefLob)
-          this.MainInfoForm.patchValue({ 
-            LobCode: response['ReturnObject'][0]['Key'],
-            LobName: response['ReturnObject'][0]['Value']
-          });
+        this.listRefLob = response['ReturnObject'];
+        // console.log("bbb")
+        // console.log(this.listRefLob)
+        this.MainInfoForm.patchValue({
+          LobCode: response['ReturnObject'][0]['Key'],
+          LobName: response['ReturnObject'][0]['Value']
+        });
       },
       (error) => {
-          console.log(error);
+        console.log(error);
       });
 
     this.leadSource = new RefMasterObj();
     this.leadSource.RefMasterTypeCode = "LEAD_SOURCE";
     this.http.post(this.getListActiveRefMasterUrl, this.leadSource).subscribe(
-    (response) => {
+      (response) => {
         this.listLeadSource = response['ReturnObject'];
         this.MainInfoForm.patchValue({ LeadSource: response['ReturnObject'][0]['Key'] });
-    });
+      });
 
-    if(this.pageType == "edit")
-    {
+    if (this.pageType == "edit") {
       this.getLeadObj = new LeadObj();
       this.getLeadObj.LeadId = this.LeadId;
       this.http.post(this.getLeadByLeadId, this.getLeadObj).subscribe(
         (response) => {
-            this.returnLead = response;
-            this.MainInfoForm.patchValue({ 
-              OfficeCode: this.returnLead.OriOfficeCode,
-              OfficeName: this.returnLead.OriOfficeName,
-              OrderNo: this.returnLead.OrderNo,
-              LobCode: this.returnLead.LobCode,
-              LobName: this.returnLead.LobName,
-              LeadSource: this.returnLead.MrLeadSourceCode,
-            });
+          console.log("aaa");
+          this.returnLead = response;
+          this.MainInfoForm.patchValue({
+            OfficeCode: this.returnLead.OriOfficeCode,
+            OfficeName: this.returnLead.OriOfficeName,
+            OrderNo: this.returnLead.OrderNo,
+            LobCode: this.returnLead.LobCode,
+            LobName: this.returnLead.LobName,
+            LeadSource: this.returnLead.MrLeadSourceCode,
+          });
 
-            this.leadIdExist = this.returnLead.LeadCopyId;
+          this.leadIdExist = this.returnLead.LeadCopyId;
 
-            if(this.returnLead.LeadCopyId != null){
-              this.leadExistObj = new LeadObj();
-              this.leadExistObj.LeadId = this.returnLead.LeadCopyId;
-              this.http.post(this.getLeadPersonalForLookup, this.leadExistObj).subscribe(
-                (response) => {
-                    this.returnLeadExistObj = response;
-                });
-            }
-
-            this.vendorObj = new VendorObj();
-            this.vendorObj.VendorCode = this.returnLead.AgencyCode;
-            this.http.post(this.getVendorByVendorCode, this.vendorObj).subscribe(
+          if (this.returnLead.LeadCopyId != null) {
+            this.leadExistObj = new LeadObj();
+            this.leadExistObj.LeadId = this.returnLead.LeadCopyId;
+            this.http.post(this.getLeadPersonalForLookup, this.leadExistObj).subscribe(
               (response) => {
-                  this.returnVendorObj = response;
-                  this.agencyLookUpObj.nameSelect = this.returnVendorObj.VendorName;
-                  this.agencyLookUpObj.jsonSelect = this.returnVendorObj;
-                  this.tempAgencyName = this.returnVendorObj.VendorName;
-                  this.tempAgencyCode = this.returnVendorObj.VendorCode;
+                this.returnLeadExistObj = response;
               });
-            
-              this.cmoObj = new RefEmpForLookupObj();
-              this.cmoObj.EmpName = this.returnLead.CmoName;
-              this.cmoObj.RoleCode = this.returnLead.CmoCode;
-              this.http.post(this.getRefEmpForLookupEmployee, this.cmoObj).subscribe(
-                (response) => {
-                    this.returnCmoObj = response;
-                    this.cmoNameLookUpObj.nameSelect = this.returnCmoObj.EmpName;
-                    this.cmoNameLookUpObj.jsonSelect = this.returnCmoObj;
-                    this.tempCmoName = this.returnCmoObj.EmpName;
-                    this.tempCmoCode = this.returnCmoObj.RoleCode;
-                });
-              
-              this.surveyorObj = new RefEmpForLookupObj();
-              this.surveyorObj.EmpName = this.returnLead.SurveyorName;
-              this.surveyorObj.RoleCode = this.returnLead.SurveyorCode;
-              this.http.post(this.getRefEmpForLookupEmployee, this.surveyorObj).subscribe(
-                (response) => {
-                    this.returnSurveyorObj = response;
-                    this.surveyorNameLookUpObj.nameSelect = this.returnSurveyorObj.EmpName;
-                    this.surveyorNameLookUpObj.jsonSelect = this.returnSurveyorObj;
-                    this.tempSurveyorName = this.returnSurveyorObj.EmpName;
-                    this.tempSurveyorCode = this.returnSurveyorObj.RoleCode;
-                });
+          }
 
-              this.salesObj = new RefEmpForLookupObj();
-              this.salesObj.EmpName = this.returnLead.TeleMarketingName;
-              this.salesObj.RoleCode = this.returnLead.TeleMarketingCode;
-              this.http.post(this.getRefEmpForLookupEmployee, this.salesObj).subscribe(
-                (response) => {
-                    this.returnSalesObj = response;
-                    this.salesNameLookUpObj.nameSelect = this.returnSalesObj.EmpName;
-                    this.salesNameLookUpObj.jsonSelect = this.returnSalesObj;
-                    this.tempSalesName = this.returnSalesObj.EmpName;
-                    this.tempSalesCode = this.returnSalesObj.RoleCode;
-                });
+          this.vendorObj = new VendorObj();
+          this.vendorObj.VendorCode = this.returnLead.AgencyCode;
+          this.http.post(this.getVendorByVendorCode, this.vendorObj).subscribe(
+            (response) => {
+              this.returnVendorObj = response;
+              this.agencyLookUpObj.nameSelect = this.returnVendorObj.VendorName;
+              this.agencyLookUpObj.jsonSelect = this.returnVendorObj;
+              this.tempAgencyCode = this.returnVendorObj.VendorCode;
+            });
+          this.cmoNameLookUpObj.nameSelect = this.returnLead.CmoUsername;
+          this.cmoNameLookUpObj.jsonSelect = this.returnLead;
+          this.surveyorNameLookUpObj.nameSelect = this.returnLead.SurveyorUsername;
+          this.surveyorNameLookUpObj.jsonSelect = this.returnLead;
+          this.salesNameLookUpObj.nameSelect = this.returnLead.TeleMarketingUsername;
+          this.salesNameLookUpObj.jsonSelect = this.returnLead;
+          this.tempCmoUsername = this.returnLead.CmoUsername;
+          this.tempSurveyorUsername = this.returnLead.SurveyorUsername;
+          this.tempSalesUsername = this.returnLead.TeleMarketingUsername;
+          // this.cmoObj = new RefEmpForLookupObj();
+          // this.cmoObj.EmpName = this.returnLead.CmoName;
+          // this.cmoObj.RoleCode = this.returnLead.CmoCode;
+          // console.log("awdawd");
+          // this.http.post(this.getRefEmpForLookupEmployee, this.cmoObj).subscribe(
+          //   (response) => {
+          //       this.returnCmoObj = response;
+
+          //       this.cmoNameLookUpObj.nameSelect = this.returnCmoObj.EmpName;
+          //       this.cmoNameLookUpObj.jsonSelect = this.returnCmoObj;
+          //       this.tempCmoUsername = this.returnCmoObj.EmpName; 
+          //   });
+
+          // this.surveyorObj = new RefEmpForLookupObj();
+          // this.surveyorObj.EmpName = this.returnLead.SurveyorName;
+          // this.surveyorObj.RoleCode = this.returnLead.SurveyorCode;
+          // this.http.post(this.getRefEmpForLookupEmployee, this.surveyorObj).subscribe(
+          //   (response) => {
+          //       this.returnSurveyorObj = response;
+          //       this.surveyorNameLookUpObj.nameSelect = this.returnSurveyorObj.EmpName;
+          //       this.surveyorNameLookUpObj.jsonSelect = this.returnSurveyorObj;
+          //       this.tempSurveyorUsername = this.returnSurveyorObj.EmpName; 
+          //   });
+
+          // this.salesObj = new RefEmpForLookupObj();
+          // this.salesObj.EmpName = this.returnLead.TeleMarketingName;
+          // this.salesObj.RoleCode = this.returnLead.TeleMarketingCode;
+          // this.http.post(this.getRefEmpForLookupEmployee, this.salesObj).subscribe(
+          //   (response) => {
+          //       this.returnSalesObj = response;
+          //       this.salesNameLookUpObj.nameSelect = this.returnSalesObj.EmpName;
+          //       this.salesNameLookUpObj.jsonSelect = this.returnSalesObj;
+          //       this.tempSalesUsername = this.returnSalesObj.EmpName; 
+          //   });
+
         });
     }
   }
 
-  OfficeChanged(event){
+  OfficeChanged(event) {
     this.MainInfoForm.patchValue({
       OfficeName: this.listRefOffice.find(x => x.Key == event.target.value).Value
     });
   }
 
-  LobChanged(event){
+  LobChanged(event) {
     this.MainInfoForm.patchValue({
       LobName: this.listRefLob.find(x => x.Key == event.target.value).Value
     });
   }
 
-  setLead(){
+  setLead() {
     this.leadObj.LeadNo = "0";
     this.leadObj.LeadCopyId = this.leadIdExist;
     this.leadObj.OriOfficeCode = this.MainInfoForm.controls["OfficeCode"].value;
@@ -395,22 +399,17 @@ copyLead(){
     this.leadObj.LeadDt = new Date();
     this.leadObj.OrderNo = this.MainInfoForm.controls["OrderNo"].value;
     this.leadObj.LobCode = this.MainInfoForm.controls["LobCode"].value;
-    this.leadObj.LobName = this.MainInfoForm.controls["LobName"].value;
     this.leadObj.MrLeadSourceCode = this.MainInfoForm.controls["LeadSource"].value;
     this.leadObj.LeadStat = "NEW";
     this.leadObj.LeadStep = "NEW";
     this.leadObj.AgencyCode = this.tempAgencyCode;
-    this.leadObj.AgencyName = this.tempAgencyName;
-    this.leadObj.CmoCode = this.tempCmoCode;
-    this.leadObj.CmoName = this.tempCmoName;
-    this.leadObj.SurveyorCode = this.tempSurveyorCode;
-    this.leadObj.SurveyorName = this.tempSurveyorName;
-    this.leadObj.TeleMarketingCode = this.tempSalesCode;
-    this.leadObj.TeleMarketingName = this.tempSalesName;
+    this.leadObj.CmoUsername = this.tempCmoUsername;
+    this.leadObj.SurveyorUsername = this.tempSurveyorUsername;
+    this.leadObj.TeleMarketingUsername = this.tempSalesUsername;
   }
 
-  SaveForm(){
-    if(this.pageType == "edit") {
+  SaveForm() {
+    if (this.pageType == "edit") {
       this.leadObj = new LeadObj();
       this.leadObj.LeadId = this.LeadId;
       this.leadObj.RowVersion = this.returnLead.RowVersion;
@@ -446,7 +445,7 @@ copyLead(){
   }
 
   save() {
-    if(this.pageType == "edit") {
+    if (this.pageType == "edit") {
       this.leadObj = new LeadObj();
       this.leadObj.LeadId = this.LeadId;
       this.leadObj.RowVersion = this.returnLead.RowVersion;
