@@ -1,0 +1,82 @@
+{
+    "title": "",
+    "subsection": [
+      {
+        "subSectionId": "GuarantorPersonalAddrId",
+        "subSectionTitle": "Guarantor Address",
+        "mainInfoUrl": "http://r3app-server.ad-ins.com/LOS/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {
+            "type": "text",
+            "label": "Address",
+            "property": "Addr"
+          },
+          {
+            "type": "text",
+            "label": "Phone",
+            "property": "Phn1"
+          },
+          {
+            "type": "",
+            "label": "",
+            "property": ""
+          },
+          {
+            "type": "text",
+            "label": "Phone 2",
+            "property": "Phn2"
+          },
+          {
+            "type": "text",
+            "label": "RT/RW",
+            "property": "AreaCode4AndAreaCode3"
+          },
+          {
+            "type": "text",
+            "label": "Fax",
+            "property": "Fax"
+          },
+          {
+            "type": "text",
+            "label": "Kelurahan",
+            "property": "AreaCode2"
+          },
+          {
+            "type": "",
+            "label": "",
+            "property": ""
+          },
+          {
+            "type": "text",
+            "label": "Kecamatan",
+            "property": "AreaCode1"
+          },
+          {
+            "type": "",
+            "label": "",
+            "property": ""
+          },
+          {
+            "type": "text",
+            "label": "City",
+            "property": "City"
+          },
+          {
+            "type": "",
+            "label": "",
+            "property": ""
+          },
+          {
+            "type": "text",
+            "label": "Zipcode",
+            "property": "Zipcode"
+          }
+        ],
+        "querystring": {
+          "select": "SELECT A.ADDR AS Addr, A.PHN_1 AS Phn1, A.PHN_2 AS Phn2, A.AREA_CODE_4 + '/' + A.AREA_CODE_3 AS AreaCode4AndAreaCode3, A.FAX AS Fax, A.AREA_CODE_2 AS AreaCode2, A.AREA_CODE_1 AS AreaCode1, A.CITY AS City, A.ZIPCODE AS Zipcode",
+          "from": "FROM APP_GUARANTOR_COMPANY A WITH(NOLOCK) JOIN APP_GUARANTOR ON APP_GUARANTOR.APP_GUARANTOR_ID=A.APP_GUARANTOR_ID",
+          "where": "WHERE APP_GUARANTOR.APP_ID = {0}"
+        }
+      }
+    ]
+  }

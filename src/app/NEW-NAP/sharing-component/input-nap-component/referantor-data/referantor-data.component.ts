@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -8,7 +8,6 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { NapAppReferantorModel } from 'app/shared/model/NapAppReferantor.Model';
-import { WizardComponent } from 'angular-archwizard';
 
 @Component({
   selector: 'app-referantor-data',
@@ -19,14 +18,14 @@ import { WizardComponent } from 'angular-archwizard';
 export class ReferantorDataComponent implements OnInit {
 
   @Input() appId: any;
+  @Output() outputTab: EventEmitter<any> = new EventEmitter();
   inputLookupObj;
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private http: HttpClient,
     private route: ActivatedRoute,
-    private toastr: NGXToastrService,
-    private wizard: WizardComponent
+    private toastr: NGXToastrService
   ) { }
 
   NapAppReferantorForm = this.fb.group({
@@ -136,13 +135,15 @@ export class ReferantorDataComponent implements OnInit {
         console.log("Save Existed Data");
         url = environment.losUrl + AdInsConstant.EditAppReferantor;
         this.SaveData(url);
-        this.wizard.goToNextStep();
+        // this.wizard.goToNextStep();
+          this.outputTab.emit();
       } else {
         // delete & go to paging
         console.log("Delete Existed Data");
         url = environment.losUrl + AdInsConstant.DeleteAppReferantor;
         this.SaveData(url);    
-        this.wizard.goToNextStep();
+        // this.wizard.goToNextStep();
+          this.outputTab.emit();
       }
     } else {
       if (this.ReferantorOn) {
@@ -151,11 +152,11 @@ export class ReferantorDataComponent implements OnInit {
         url = environment.losUrl + AdInsConstant.AddAppReferantor;
         this.appReferantorObj.AppId = this.appId;
         this.SaveData(url);
-        this.wizard.goToNextStep();
+        // this.wizard.goToNextStep();
+        this.outputTab.emit();
       } else {
-        // Go to paging
-        console.log("Go to paging");
-        this.router.navigate(["/Nap/AppPaging"]);
+        // this.wizard.goToNextStep();
+          this.outputTab.emit();
       }
     }
   }

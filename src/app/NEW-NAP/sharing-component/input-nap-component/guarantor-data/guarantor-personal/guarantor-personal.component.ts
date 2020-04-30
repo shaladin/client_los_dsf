@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output,EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
@@ -13,7 +13,6 @@ import { AppGuarantorPersonalObj } from 'app/shared/model/AppGuarantorPersonalOb
 import { GuarantorPersonalObj } from 'app/shared/model/GuarantorPersonalObj.Model';
 import { formatDate } from '@angular/common';
 import { environment } from 'environments/environment';
-
 @Component({
   selector: 'app-guarantor-personal',
   templateUrl: './guarantor-personal.component.html',
@@ -24,6 +23,8 @@ export class GuarantorPersonalComponent implements OnInit {
 
   @Input() AppGuarantorId: any;
   @Input() mode: any;
+  @Input() AppId: any;
+  @Output() close: EventEmitter<any> = new EventEmitter();
   param: string;
   resultData: any;
   inputLookupObj: any;
@@ -105,7 +106,7 @@ export class GuarantorPersonalComponent implements OnInit {
         }
       );
     }
-    else{
+    else {
       this.ClearForm();
     }
 
@@ -196,13 +197,14 @@ export class GuarantorPersonalComponent implements OnInit {
     this.inputFieldObj.inputLookupObj.jsonSelect = { Zipcode: this.resultData.appGuarantorPersonalObj.Zipcode };
   }
 
-  initLookup(){
+  initLookup() {
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = "./assets/uclookup/lookupGuarantorName.json";
     this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
     this.inputLookupObj.pagingJson = "./assets/uclookup/lookupGuarantorName.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/lookupGuarantorName.json";
+    this.inputLookupObj.isReadonly = false;
 
     this.inputLookupObj1 = new InputLookupObj();
     this.inputLookupObj1.urlJson = "./assets/uclookup/lookupCountry.json";
@@ -213,7 +215,7 @@ export class GuarantorPersonalComponent implements OnInit {
 
   }
 
-  initAddr(){
+  initAddr() {
     this.inputFieldObj = new InputFieldObj();
     this.inputFieldObj.inputLookupObj = new InputLookupObj();
   }
@@ -221,9 +223,60 @@ export class GuarantorPersonalComponent implements OnInit {
   // GuarantorName="";
   lookupGuarantor(event) {
     console.log(event);
-    this.PersonalForm.patchValue(
-      {
-        GuarantorName: event.CustName
+    this.inputLookupObj.isReadonly = true;
+    this.http.post(AdInsConstant.GetCustByCustId, { CustId: event.CustId }).subscribe(
+      (response) => {
+        this.resultData = response;
+        this.PersonalForm.patchValue(
+          {
+            GuarantorName: event.CustName,
+            IdNo: this.resultData.IdNo,
+            IdExpDt: formatDate(this.resultData.IdExpiredDt, 'yyyy-MM-dd', 'en-US'),
+            MrIdTypeCode: this.resultData.MrIdTypeCode,
+            TaxIdNo: this.resultData.TaxIdNo
+          }
+        );
+        this.http.post(AdInsConstant.GetCustPersonalByCustId, { CustId: event.CustId }).subscribe(
+          (response) => {
+            this.resultData = response;
+            this.PersonalForm.patchValue({
+              MobilePhnNo: this.resultData.MobilePhnNo1,
+              MrMaritalStatCode: this.resultData.MrMaritalStatCode,
+              MrNationalityCode: this.resultData.MrNationalityCode,
+              MrReligionCode: this.resultData.MrReligionCode,
+              MrGenderCode: this.resultData.MrGenderCode,
+              BirthPlace: this.resultData.BirthPlace,
+              BirthDt: formatDate(this.resultData.BirthDt, 'yyyy-MM-dd', 'en-US')
+            });
+            this.http.post(AdInsConstant.GetRefCountryByCountryCode, { CountryCode: this.resultData.WnaCountryCode }).subscribe(
+              (response) => {
+                this.inputLookupObj1.nameSelect = response["CountryName"];
+              }
+            );
+          });
+        this.http.post(AdInsConstant.GetCustAddrByMrCustAddrType, { CustId: event.CustId, MrCustAddrTypeCode: "LEGAL" }).subscribe(
+          (response) => {
+            console.log(response);
+            this.resultData = response;
+            this.AddrObj = new AddrObj();
+            this.AddrObj.Addr = this.resultData.Addr;
+            this.AddrObj.AreaCode1 = this.resultData.AreaCode1;
+            this.AddrObj.AreaCode2 = this.resultData.AreaCode2;
+            this.AddrObj.AreaCode3 = this.resultData.AreaCode3;
+            this.AddrObj.AreaCode4 = this.resultData.AreaCode4;
+            this.AddrObj.City = this.resultData.City;
+            this.AddrObj.Phn1 = this.resultData.Phn1;
+            this.AddrObj.Phn2 = this.resultData.Phn2;
+            this.AddrObj.PhnArea1 = this.resultData.PhnArea1;
+            this.AddrObj.PhnArea2 = this.resultData.PhnArea2;
+            this.AddrObj.PhnExt1 = this.resultData.PhnExt1;
+            this.AddrObj.PhnExt2 = this.resultData.PhnExt2;
+            this.AddrObj.Fax = this.resultData.Fax;
+            this.AddrObj.FaxArea = this.resultData.FaxArea;
+            this.inputFieldObj.inputLookupObj.nameSelect = this.resultData.Zipcode;
+            this.inputFieldObj.inputLookupObj.jsonSelect = { Zipcode: this.resultData.Zipcode };
+          }
+        );
       }
     );
     console.log(this.PersonalForm);
@@ -251,6 +304,7 @@ export class GuarantorPersonalComponent implements OnInit {
     this.guarantorPersonalObj.AppGuarantorObj.TaxIdNo = this.PersonalForm.controls.TaxIdNo.value;
     this.guarantorPersonalObj.AppGuarantorObj.MrCustRelationshipCode = this.PersonalForm.controls.MrCustRelationshipCode.value;
     this.guarantorPersonalObj.AppGuarantorObj.RowVersion = "";
+    this.guarantorPersonalObj.AppGuarantorObj.AppId = this.AppId;
   }
 
   setAppGuarantorPersonal() {
@@ -303,14 +357,15 @@ export class GuarantorPersonalComponent implements OnInit {
         }
       );
     }
+    this.close.emit(1);
   }
 
   ClearForm() {
     this.PersonalForm = this.fb.group({
       MrCustRelationshipCode: [''],
       MrIdTypeCode: [''],
-      MrGenderCode:[''],
-      IdNo: ['',Validators.required],
+      MrGenderCode: [''],
+      IdNo: ['', Validators.required],
       MrMaritalStatCode: [''],
       IdExpDt: [''],
       MrNationalityCode: [''],

@@ -396,7 +396,7 @@ export class CommissionComponent implements OnInit {
     var url;
     var obj;
     if (content == AdInsConstant.ContentSupplier) {
-      url = environment.losUrl + AdInsConstant.GetAppAssetListByAppIdForCommision;
+      url = environment.losUrl + AdInsConstant.GetAppAssetListByAppId;
       obj = {
         AppId: this.AppId,
         RowVersion: ""

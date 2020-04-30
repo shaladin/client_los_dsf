@@ -6,7 +6,7 @@ import { VerfQuestionComponent } from "./verf-question/verf-question.component";
 
 @NgModule({
     exports: [
-        VerfQuestionComponent
+        VerfQuestionComponent,
     ],
     imports: [
         CommonModule,

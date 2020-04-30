@@ -90,8 +90,12 @@
             "action": [
                 {
                     "type": "edit",
-                    "path": "/Nap/FinanceLeasing/Collateral/Detail",
+                    "path": "/Nap/Collateral/Detail",
                     "param": [
+                        {
+                            "type": "AppId",
+                            "property": "AppId"
+                        },
                         {
                             "type": "AppCollateralId",
                             "property": "AppCollateralId"
