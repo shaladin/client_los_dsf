@@ -153,9 +153,7 @@ export class ReferantorDataComponent implements OnInit {
         this.SaveData(url);
         this.wizard.goToNextStep();
       } else {
-        // Go to paging
-        console.log("Go to paging");
-        this.router.navigate(["/Nap/AppPaging"]);
+        this.wizard.goToNextStep();
       }
     }
   }

@@ -38,7 +38,7 @@
 
     <div class="card-body" *ngIf="AppStepIndex > -1">
       <div class="px-3">
-        <aw-wizard #wizard navBarLayout="large-empty-symbols" [defaultStepIndex]="AppStepIndex">
+        <aw-wizard #wizard navBarLayout="large-empty-symbols">
 
           <aw-wizard-step [stepTitle]="'Customer Data'" (stepEnter)="EnterTab('CUST')"
             [navigationSymbol]="{ symbol: '1' }">
@@ -90,19 +90,16 @@
   </div>
 </div>
 
-<div class="form-actions ucSearch-Button-Right">
-  <button type="button" class="btn btn-raised btn-cancel" [routerLink]="['../Paging']" [queryParams]="{LobCode:'CF4W'}"
+<div class="form-actions pull-right">
+  <button type="button" class="btn btn-raised btn-warning" [routerLink]="['/Nap/ConsumerFinance/InputNap/Paging']" [queryParams]="{LobCode:'CF4W'}"
     translate>
     <i class="fa fa-check-square-o"></i> Back
   </button>
-  <button *ngIf="mode == 'ReturnHandling'" type="button" class="btn btn-raised btn_cancel"
+  <button *ngIf="mode == 'ReturnHandling'" type="button" class="btn btn-raised btn-warning"
     [routerLink]="['Nap/AdditionalProcess/ReturnHandling/EditAppPaging']" translate>
-    <i class="fa fa-check-square-o"></i> Cancel
-  </button>
-  <button type="button" class="btn btn-raised btn-primary">
-    <i class="fa fa-check-square-o"></i> Save and Continue
+    <i class="fa fa-check-square-o"></i> Back
   </button>
   <button *ngIf="mode == 'ReturnHandling'" type="button" (click)="Submit()" class="btn btn-raised btn-primary">
-    <i class="fa fa-check-square-o"></i> Submit
+    <i class="fa fa-check-square-o"></i> Submit Return Handling
   </button>
 </div>

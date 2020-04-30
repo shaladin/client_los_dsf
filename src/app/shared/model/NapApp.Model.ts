@@ -48,6 +48,7 @@ export class NapAppModel{
     RsvField4 : any;
     RsvField5 : any;
     RowVersion: any;
+    FloatingPeriodCode: any;
 
     constructor () {
         this.RowVersion = "";

@@ -4,10 +4,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { LifeInsObj } from 'app/shared/model/LifeInsObj.Model';
 import { LifeInsDObj } from 'app/shared/model/LifeInsDObj.Model';
-import { environment } from 'environments/environment';
+import { WizardComponent } from 'angular-archwizard';
 
 @Component({
   selector: 'app-life-insurance-data',
@@ -28,7 +27,8 @@ export class LifeInsuranceDataComponent implements OnInit {
   AppLifeInsD: any = new Array();
   result: any;
 
-  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService) {
+  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService,
+    private wizard: WizardComponent) {
     this.route.queryParams.subscribe(params => {
       this.mode = params["mode"];
       this.AppId = params["AppId"];
@@ -166,6 +166,7 @@ export class LifeInsuranceDataComponent implements OnInit {
       this.http.post(AdInsConstant.EditAppLifeInsH, this.LifeInsObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
+          this.wizard.goToNextStep()
         },
         error => {
           console.log(error);
@@ -176,6 +177,7 @@ export class LifeInsuranceDataComponent implements OnInit {
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
+          this.wizard.goToNextStep()
         },
         (error) => {
           console.log(error);
