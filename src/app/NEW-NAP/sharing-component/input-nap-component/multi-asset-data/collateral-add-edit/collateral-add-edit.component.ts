@@ -140,6 +140,7 @@ export class CollateralAddEditComponent implements OnInit {
     Transmition:[''],
     TaxCityIssuer:[''],
     Category:[''],
+    CopyFromLegal:[''],
     BpkpIssueDate:[''],
 
     LocationAddrType:[''],

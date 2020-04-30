@@ -16,6 +16,7 @@ import { TabApplicationComponent } from './tab-application/tab-application.compo
 import { TabAnalysisResultComponent } from './tab-analysis-result/tab-analysis-result.component';
 import { AppAssetDataComponent } from './app-asset-data/app-asset-data.component';
 import { AppAssetDataDetailComponent } from './app-asset-data/app-asset-data-detail/app-asset-data-detail.component';
+import { ViewSharingComponentModule } from "./view-sharing-component.module";
 
 @NgModule({
   exports: [
@@ -24,6 +25,7 @@ import { AppAssetDataDetailComponent } from './app-asset-data/app-asset-data-det
   imports: [
     CommonModule,
     AdInsModule,
+    ViewSharingComponentModule,
   ],
   declarations: [
     InvoiceDataFctrComponent,
@@ -39,7 +41,7 @@ import { AppAssetDataDetailComponent } from './app-asset-data/app-asset-data-det
     TabApplicationComponent,
     TabAnalysisResultComponent,
     AppAssetDataComponent,
-    AppAssetDataDetailComponent
+    AppAssetDataDetailComponent,
   ],
   providers: [
     NGXToastrService
