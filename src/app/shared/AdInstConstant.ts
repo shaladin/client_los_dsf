@@ -842,10 +842,11 @@ export class AdInsConstant {
     //PURCHASE ORDER
 
 
-    //APP INSURANCE
-    public static GetInsuranceDataByAppId = environment.losUrl + "/AppIns/GetInsDataByAppId";
-    public static AddEditInsuranceData = environment.losUrl + "/AppIns/AddEditInsuranceData";
-    //APP INSURANCE
+  //APP INSURANCE
+  public static GetInsuranceDataByAppId = environment.losUrl + "/AppIns/GetInsDataByAppId";
+  public static GetInsDataByAppIdAndAssetId = environment.losUrl + "/AppIns/GetInsDataByAppIdAndAssetId";
+  public static AddEditInsuranceData = environment.losUrl + "/AppIns/AddEditInsuranceData";
+  //APP INSURANCE
 
     public static ExecuteInsRateRule = environment.losUrl + "/AppIns/ExecuteInsRateRule";
     public static CalculateInsurance = environment.losUrl + "/AppIns/CalculateInsurance";
@@ -1038,6 +1039,10 @@ export class AdInsConstant {
     // Upload
     public static UploadFile = environment.FoundationR3Url + "/Upload/UploadFile";
 
-    // Asset Category
-    public static GetAssetCategoryById = environment.FoundationR3Url + "/AssetCategory/GetAssetCategoryById";
+  // Download
+  public static DownloadTemplate = environment.FoundationR3Url + '/Download/DownloadTemplate';
+  public static GetUploadAssetMasterByUploadMonitoringNoAndTrxType = environment.FoundationR3Url + '/AssetMaster/GetUploadAssetMasterByUploadMonitoringNoAndTrxType';
+  
+  // Asset Category
+  public static GetAssetCategoryById = environment.FoundationR3Url + "/AssetCategory/GetAssetCategoryById";
 }
