@@ -1,13 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
+import { Component, OnInit, Input } from '@angular/core';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { environment } from 'environments/environment';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
-import { AppGuarantorObj } from 'app/shared/model/AppGuarantorObj.Model';
 import { HttpClient } from '@angular/common/http';
 import { GuarantorObj } from 'app/shared/model/GuarantorObj.Model';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AppWizardObj } from 'app/shared/model/App/AppWizard.Model';
 import { WizardComponent } from 'angular-archwizard';
 
@@ -19,7 +15,6 @@ import { WizardComponent } from 'angular-archwizard';
 export class GuarantorPagingComponent implements OnInit {
 
   @Input() AppId: any;
-  @Output() callbackSubmit: EventEmitter<AppWizardObj> = new EventEmitter();
 
   inputGridObj: any;
   closeResult: any;
@@ -32,7 +27,6 @@ export class GuarantorPagingComponent implements OnInit {
   constructor(private http: HttpClient,
     private modalService: NgbModal,
     private wizard: WizardComponent) {
-      this.appWizardObj = new AppWizardObj(this.wizard, AdInsConstant.AppStepRef);
   }
 
   ngOnInit() {
@@ -85,8 +79,7 @@ export class GuarantorPagingComponent implements OnInit {
 
   SaveAndContinue()
   {
-    console.log("test")
-    this.callbackSubmit.emit(this.appWizardObj);
+    this.wizard.goToNextStep();
   }
 
   event(content,ev){

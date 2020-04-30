@@ -15,8 +15,6 @@ import { PhoneVerificationSubjectViewComponent } from "./phone-verification/phon
 import { PhoneVerificationSubjectVerifComponent } from "./phone-verification/phone-verification-subject-verif/phone-verification-subject-verif.component";
 import { CreditInvestigationDetailComponent } from "./credit-investigation/credit-investigation-detail/credit-investigation-detail.component";
 import { CreditInvestigationPagingComponent } from "./credit-investigation/credit-investigation-paging/credit-investigation-paging.component";
-import { ViewAppCustDataPersonalComponent } from "./credit-investigation/component/view-app-cust-data-personal/view-app-cust-data-personal.component";
-import { ViewAppCustDataCompanyComponent } from "./credit-investigation/component/view-app-cust-data-company/view-app-cust-data-company.component";
 import { TabApplicationDataComponent } from "./credit-investigation/component/tab-application-data/tab-application-data.component";
 import { ViewFraudDetectionResultComponent } from "./credit-investigation/component/view-fraud-detection-result/view-fraud-detection-result.component";
 import { ViewSurveyTaskListComponent } from "./credit-investigation/component/view-survey-task-list/view-survey-task-list.component";
@@ -36,6 +34,7 @@ import { UcinputnumberModule } from "@adins/ucinputnumber";
 import { UcapprovalModule } from "@adins/ucapproval";
 import { UcapprovebyModule } from "@adins/ucapproveby";
 import { CreditInquiryComponent } from './credit-inquiry/credit-inquiry.component';
+import { ProcessComponentModule } from "app/NEW-NAP/sharing-component/process-component/process-component.module";
  import { UcSubsectionModule } from "@adins/uc-subsection";
 import { FraudVerificationMultiAssetComponent } from "./fraud-verification-multi-asset/fraud-verification-multi-asset.component";
 
@@ -44,6 +43,7 @@ import { FraudVerificationMultiAssetComponent } from "./fraud-verification-multi
     CommonModule,
     CreditProcessSharingRoutingModule,
     AdInsModule,
+    ProcessComponentModule,
     ArchwizardModule,
     FormsModule,
     ReactiveFormsModule,
@@ -77,8 +77,6 @@ import { FraudVerificationMultiAssetComponent } from "./fraud-verification-multi
     FraudDetectionVerifComponent,
     CreditReviewMainComponent,
     CreditReviewPagingComponent,
-    ViewAppCustDataPersonalComponent,
-    ViewAppCustDataCompanyComponent,
     ViewFraudDetectionResultComponent,
     ViewSurveyTaskListComponent,
     ViewApprovalComponent,
