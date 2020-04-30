@@ -11,6 +11,10 @@ import { AppInsuranceObj } from 'app/shared/model/AppInsuranceObj.Model';
 import { AppInsMainCvgObj } from 'app/shared/model/AppInsMainCvgObj.Model';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { AppSubsidyObj } from 'app/shared/model/AppSubsidyObj.Model';
+import { AppFeeObj } from 'app/shared/model/AppFeeObj.Model';
+import { AppFinDataObj } from 'app/shared/model/AppFinData/AppFinData.Model';
+import { NapAppModel } from 'app/shared/model/NapApp.Model';
+import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
 
 @Component({
   selector: "view-financial",
@@ -20,6 +24,11 @@ import { AppSubsidyObj } from 'app/shared/model/AppSubsidyObj.Model';
 export class ViewFinancialComponent implements OnInit {
   @Input() AppId: any;
   listSubsidy: Array<AppSubsidyObj> = new Array<AppSubsidyObj>();
+  listAppFeeObj : Array<AppFeeObj> = new Array<AppFeeObj>();
+  appFinDataObj : AppFinDataObj = new AppFinDataObj();
+  appObj: NapAppModel = new NapAppModel();
+  listInstallment: Array<InstallmentObj> = new Array<InstallmentObj>();
+
 
 
 
@@ -39,6 +48,10 @@ export class ViewFinancialComponent implements OnInit {
       (response) => {
         console.log(response);
         this.listSubsidy = response["AppSubsidyObjs"];
+        this.listAppFeeObj = response["AppFeeObjs"];
+        this.appFinDataObj = response["AppFinDataObj"];
+        this.appObj = response["AppObj"];
+        this.listInstallment = response["InstallmentObjs"];
       },
       (error) => {
         console.log(error);

@@ -1,4 +1,4 @@
-<div *ngIf="appInsObjObj.InsAssetCoveredBy == 'CO'">
+<div *ngIf="appInsObjObj?.InsAssetCoveredBy == 'CO'">
   <lib-ucSubsection [id]="'insuranceObjectId'" [title]="'Insurance Object: ' + appAssetObj.FullAssetName " [panel]="'insuranceObject'">
   </lib-ucSubsection>
   <div id="insuranceObject">
@@ -102,7 +102,7 @@
   </div>
 </div>
 
-<div *ngIf="appInsObjObj.InsAssetCoveredBy == 'CU'">
+<div *ngIf="appInsObjObj?.InsAssetCoveredBy == 'CU'">
   <lib-ucSubsection [id]="'insuranceObjectId'" [title]="'Insurance Object: ' + appAssetObj.FullAssetName " [panel]="'insuranceObject'">
   </lib-ucSubsection>
   <div id="insuranceObject">
@@ -147,7 +147,7 @@
   </div>
 </div>
 
-<div *ngIf="appInsObjObj.InsAssetCoveredBy == 'CUCO'">
+<div *ngIf="appInsObjObj?.InsAssetCoveredBy == 'CUCO'">
   <lib-ucSubsection [id]="'insuranceObjectId'" [title]="'Insurance Object: ' + appAssetObj.FullAssetName " [panel]="'insuranceObject'">
   </lib-ucSubsection>
   <div id="insuranceObject">
@@ -290,7 +290,7 @@
   </div>
 </div>
 
-<div *ngIf="appInsObjObj.InsAssetCoveredBy == 'OFF'">
+<div *ngIf="appInsObjObj?.InsAssetCoveredBy == 'OFF'">
   <lib-ucSubsection [id]="'insuranceObjectId'" [title]="'Insurance Object: ' + appAssetObj.FullAssetName " [panel]="'insuranceObject'">
   </lib-ucSubsection>
   <div id="insuranceObject">
