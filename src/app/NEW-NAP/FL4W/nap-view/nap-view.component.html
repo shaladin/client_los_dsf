@@ -1,0 +1,99 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-body">
+      <div class="px-3">
+        <div class="row" style="border-bottom: 1px solid black; margin-bottom: 15px;">
+          <div class="col-md-12" style="padding-left: 0px;">
+            <h4 class="form-section card-title" translate><i class="ft-file-text"></i>Application View</h4>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <app-app-main-info [arrValue]="arrValue"></app-app-main-info>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <mat-tab-group>
+              <mat-tab label="CUSTOMER">
+                <ng-template matTabContent>
+                  <app-mou-view-detail [MouCustId]="MouCustId" [MouType]="MouType"></app-mou-view-detail>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="GUARANTOR">
+                <ng-template matTabContent>
+                  <app-mou-view-fee [MouCustId]="MouCustId"></app-mou-view-fee>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="REFERANTOR">
+                <ng-template matTabContent>
+                  <app-mou-view-addcoll [MouCustId]="MouCustId"></app-mou-view-addcoll>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="APPLICATION">
+                <ng-template matTabContent>
+                  <app-mou-view-tc [MouCustId]="MouCustId"></app-mou-view-tc>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="ASSET">
+                <ng-template matTabContent>
+                  <app-mou-view-doc></app-mou-view-doc>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="INSURANCE">
+                <ng-template matTabContent>
+                  <app-mou-view-survey [MouCustId]="MouCustId"></app-mou-view-survey>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="LIFE INSURANCE">
+                <ng-template matTabContent>
+                  <app-mou-view-legal [MouCustId]="MouCustId"></app-mou-view-legal>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="FINANCIAL">
+                <ng-template matTabContent>
+                  <app-mou-view-legal [MouCustId]="MouCustId"></app-mou-view-legal>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="TC">
+                <ng-template matTabContent>
+                  <app-mou-view-legal [MouCustId]="MouCustId"></app-mou-view-legal>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="COMMISSION">
+                <ng-template matTabContent>
+                  <app-mou-view-legal [MouCustId]="MouCustId"></app-mou-view-legal>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="RESERVED FUND">
+                <ng-template matTabContent>
+                  <app-mou-view-legal [MouCustId]="MouCustId"></app-mou-view-legal>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="PHONE VERIFICATION">
+                <ng-template matTabContent>
+                  <app-mou-view-legal [MouCustId]="MouCustId"></app-mou-view-legal>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="FRAUD DETECTION RESULT">
+                <ng-template matTabContent>
+                  <app-mou-view-legal [MouCustId]="MouCustId"></app-mou-view-legal>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="DEVIATION">
+                <ng-template matTabContent>
+                  <app-mou-view-legal [MouCustId]="MouCustId"></app-mou-view-legal>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="ANALYSIS RESULT">
+                <ng-template matTabContent>
+                  <app-mou-view-legal [MouCustId]="MouCustId"></app-mou-view-legal>
+                </ng-template>
+              </mat-tab>
+            </mat-tab-group>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

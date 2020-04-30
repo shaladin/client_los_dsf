@@ -8,6 +8,8 @@ import { LifeInsuranceComponent } from './life-insurance/life-insurance.componen
 import { AppTcComponent } from './app-tc/app-tc.component';
 import { AppAssetDataComponent } from './app-asset-data/app-asset-data.component';
 import { AppAssetDataDetailComponent } from './app-asset-data/app-asset-data-detail/app-asset-data-detail.component';
+import { AppInsuranceComponent } from './app-insurance/app-insurance.component';
+import { AppInsuranceDetailComponent } from './app-insurance/app-insurance-detail/app-insurance-detail.component';
 
 @NgModule({
   exports: [
@@ -23,7 +25,9 @@ import { AppAssetDataDetailComponent } from './app-asset-data/app-asset-data-det
     LifeInsuranceComponent,
     AppTcComponent,
     AppAssetDataComponent,
-    AppAssetDataDetailComponent
+    AppAssetDataDetailComponent,
+    AppInsuranceComponent,
+    AppInsuranceDetailComponent
   ],
   providers: [
     NGXToastrService
