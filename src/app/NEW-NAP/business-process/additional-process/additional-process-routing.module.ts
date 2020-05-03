@@ -15,6 +15,7 @@ import { ApplicantExistingDataCompanyComponent } from './app-dup-check/applicant
 import { ReturnHandlingEditAppPagingComponent } from './return-handling/return-handling-edit-app-paging/return-handling-edit-app-paging.component';
 import { AssetInquiryComponent } from './po-extension/asset-inquiry/asset-inquiry.component';
 import { ReturnHandlingPhoneVerifPagingComponent } from './return-handling/return-handling-phone-verif-paging/return-handling-phone-verif-paging.component';
+import { ReturnHandlingSurveyComponent } from './return-handling/return-handling-survey/return-handling-survey.component';
 
 const routes: Routes = [
   {
@@ -123,6 +124,13 @@ const routes: Routes = [
         component: ReturnHandlingCommissionComponent,
         data: {
           title: 'Return Handling Commission'
+        }
+      },
+      {
+        path: 'ReturnHandling/Survey',
+        component: ReturnHandlingSurveyComponent,
+        data: {
+          title: 'Return Handling Survey'
         }
       }
     ]

@@ -11,7 +11,7 @@ import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
     declarations: [
         AssetDataPagingComponent,
         AssetDataAddEditComponent,
-        CollateralAddEditComponent, 
+        CollateralAddEditComponent,
     ],
     imports: [
         CommonModule,
