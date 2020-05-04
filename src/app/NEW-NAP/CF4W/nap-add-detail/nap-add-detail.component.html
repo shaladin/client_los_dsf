@@ -63,7 +63,7 @@
 -->
           <aw-wizard-step [stepTitle]="'Asset Data'" (stepEnter)="EnterTab('ASSET')"
             [navigationSymbol]="{ symbol: '5' }">
-            <app-asset-data *ngIf="AppStepIndex == 0" [AppId]=appId></app-asset-data>
+            <app-asset-data *ngIf="AppStepIndex == 4" [AppId]=appId></app-asset-data>
           </aw-wizard-step>
 
           <aw-wizard-step *ngIf="IsMultiAsset == 'True'" [stepTitle]="'Insurance Multi Asset Data'" (stepEnter)="EnterTab('INS')"
