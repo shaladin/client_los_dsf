@@ -950,6 +950,8 @@ export class AdInsConstant {
   public static GetFraudDukcapilByIdNo = environment.losUrl + "/FraudDetection/GetFraudDukcapilByIdNo";
   public static AddAppFraudVerf = environment.losUrl + "/FraudDetection/AddAppFraudVerf";
 
+  //Dukcapil
+  public static GetFraudDukcapilByTrxNoAndTrxType = environment.losUrl + "/Dukcapil/GetFraudDukcapilByTrxNoAndTrxType"
 
 
   //CUSTOMER DUPLICATE CHECKING

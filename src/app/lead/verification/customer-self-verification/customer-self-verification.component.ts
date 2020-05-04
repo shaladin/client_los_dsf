@@ -14,6 +14,7 @@ export class CustomerSelfVerificationComponent implements OnInit {
   LobCode: string;
   isCustData: boolean;
   isLeadData: boolean;
+  viewLeadHeaderMainInfo : any;
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -26,6 +27,7 @@ export class CustomerSelfVerificationComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.viewLeadHeaderMainInfo = "./assets/ucviewgeneric/viewLeadHeader.json";
   }
 
   EnterTab(type) {
