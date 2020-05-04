@@ -180,7 +180,7 @@
                   <div class="form-group row adins-required">
                     <label class="col-md-3 adInsLabel adins-required-label" translate>Customer Model </label>
                     <div class="col-md-3">
-                      <select class="form-control adInsInput" formControlName="CustModel" required>
+                      <select class="form-control adInsInput" (change)="custModelChange($event)" formControlName="CustModel" required>
                         <option *ngFor="let ram of listCustModel" [value]="ram.Key">
                           {{ram.Value}}
                         </option>
