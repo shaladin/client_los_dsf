@@ -78,9 +78,8 @@
             "position": "center",
             "action": [
                 {
-                    "type": "edit",
-                    "path": "/Nap/AssetData/Detail",
-                    "param": [
+                    "type": "callback",
+                    "property": [
                         {
                             "type": "AppAssetId",
                             "property": "AppAssetId"
@@ -90,8 +89,8 @@
                             "property": "AppId"
                         },
                         {
-                            "type": "mode",
-                            "property": "edit"
+                            "type": "editAsset",
+                            "property": "editAsset"
                         }
                     ]
                 }

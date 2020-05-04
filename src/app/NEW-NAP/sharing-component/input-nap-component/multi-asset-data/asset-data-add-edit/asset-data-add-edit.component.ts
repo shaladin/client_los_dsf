@@ -25,8 +25,14 @@ import { VendorObj } from 'app/shared/model/Vendor.Model';
   templateUrl: './asset-data-add-edit.component.html'
 })
 export class AssetDataAddEditComponent implements OnInit {
-  @Input() AppId: any;
+  //@Input() type: string = "addAsset";
+  @Input() mode: any; 
+  @Input() AppAssetId: number;
   @Output() outputValue: EventEmitter<object> = new EventEmitter();
+  @Output() assetValue: EventEmitter<object> = new EventEmitter();
+  //AppAssetId: number = 0;
+  //type: string = "addAsset";
+  AppId: any;
   LobCode: string;
   pageType: string = "add";
   custType: string;
@@ -67,7 +73,6 @@ export class AssetDataAddEditComponent implements OnInit {
   appCustObj: any;
   assetUsageObj: any
   returnAssetUsageObj: any;
-  AppAssetId: number = 0;
   getAppAssetByAppAssetId: any;
   appAssetObj: any;
   returnAppAssetObj: any;
@@ -180,6 +185,10 @@ export class AssetDataAddEditComponent implements OnInit {
     });
   }
 
+back(){
+  this.assetValue.emit({mode : 'paging'});
+}
+
 SetAsset(event) {
   this.AssetDataForm.patchValue({
     FullAssetCode: event.FullAssetCode,
@@ -191,6 +200,7 @@ SetAsset(event) {
 }
 
 GetListAddr() {
+  console.log("ccc")
   this.appObj.AppId = this.AppId;
   this.http.post(this.getAppCustAddrUrl, this.appObj).toPromise().then(
     (response) => {
@@ -326,7 +336,10 @@ copyToLocationAddr() {
   }
 
   ngOnInit() {
-    if(this.pageType == 'edit'){
+    console.log("ddd")
+    console.log(this.AppAssetId)
+    console.log(this.mode)
+    if(this.mode == 'editAsset'){
       this.appAssetObj = new AppAssetObj();
       this.appAssetObj.AppAssetId = this.AppAssetId;
       this.http.post(this.getAppAssetByAppAssetId, this.appAssetObj).subscribe(
@@ -643,7 +656,8 @@ copyToLocationAddr() {
       (response) => {
         console.log(response);
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["/Nap/AssetData/Paging"]);
+        //this.router.navigate(["/Nap/AssetData/Paging"]);
+        this.assetValue.emit({mode : 'paging'});
       },
       (error) => {
         console.log(error);

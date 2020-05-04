@@ -10,6 +10,7 @@ import { UcgridfooterModule } from '@adins/ucgridfooter';
 import { ShowErrorsComponent } from './show-error/show-errors.component';
 import { UcviewgenericModule } from '@adins/ucviewgeneric';
 import { UcShowErrorsModule } from '@adins/uc-show-errors';
+import { MatTabsModule } from '@angular/material';
 
 @NgModule({
     exports: [
@@ -25,7 +26,8 @@ import { UcShowErrorsModule } from '@adins/uc-show-errors';
         UcSubsectionModule,
         UcgridfooterModule,
         UcviewgenericModule,
-        UcShowErrorsModule
+        UcShowErrorsModule,
+        MatTabsModule
     ],
     declarations: [
         ShowErrorsComponent

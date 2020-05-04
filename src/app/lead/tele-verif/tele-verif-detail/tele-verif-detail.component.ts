@@ -8,7 +8,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './tele-verif-detail.component.html',
 })
 export class TeleVerifDetailComponent implements OnInit {
-  viewTeleVerifMainInfo: any;
+  viewLeadHeaderMainInfo: any;
   isCustData: boolean;
   isLeadData: boolean;
   WfTaskListId: any;
@@ -20,7 +20,7 @@ export class TeleVerifDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.viewTeleVerifMainInfo = "./assets/ucviewgeneric/viewTeleVerifMainInfo.json";
+    this.viewLeadHeaderMainInfo = "./assets/ucviewgeneric/viewLeadHeader.json";
   }
 
   EnterTab(type){
