@@ -88,7 +88,7 @@
 
           <aw-wizard-step [stepTitle]="'Terms and Conditions'" (stepEnter)="EnterTab('TC')"
             [navigationSymbol]="{ symbol: '9' }">
-            <app-tc-data *ngIf="AppStepIndex == 8" [AppId]=appId></app-tc-data>
+            <app-tc-data *ngIf="AppStepIndex == 8" [AppId]=appId (outputTab)="LastStepHandler()"></app-tc-data>
           </aw-wizard-step>
         </aw-wizard>
       </div>
