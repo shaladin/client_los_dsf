@@ -34,6 +34,8 @@ import { MatCheckboxModule, MatRadioModule, MatSelectModule } from "@angular/mat
 import { GuarantorPersonalComponent } from "./guarantor-data/guarantor-personal/guarantor-personal.component";
 import { GuarantorCompanyComponent } from "./guarantor-data/guarantor-company/guarantor-company.component";
 import { GuarantorPagingComponent } from "./guarantor-data/guarantor-paging/guarantor-paging.component";
+import { ApplicationDataRefinancingComponent } from "./application-data/application-data-refinancing/application-data-refinancing.component";
+import { LoanObjectComponent } from "./application-data/loan-object/loan-object.component";
 import { SchmStepUpStepDownNormalComponent } from "./financial-data/component/schm-step-up-step-down-normal/schm-step-up-step-down-normal.component";
 import { SchmRegulerFixComponent } from "./financial-data/component/schm-reguler-fix/schm-reguler-fix.component";
 import { SchmStepUpStepDownLeasingComponent } from "./financial-data/component/schm-step-up-step-down-leasing/schm-step-up-step-down-leasing.component";
@@ -43,6 +45,10 @@ import { SchmIrregularComponent } from "./financial-data/component/schm-irregula
 import { SchmBalloonComponent } from "./financial-data/component/schm-baloon/schm-balloon.component";
 
 import { SchmEvenPrincipalComponent } from "./financial-data/component/schm-even-principal/schm-even-principal.component";
+import { AssetDataPagingComponent } from "./multi-asset-data/asset-data-paging/asset-data-paging.component";
+import { AssetDataAddEditComponent } from "./multi-asset-data/asset-data-add-edit/asset-data-add-edit.component";
+import { CollateralAddEditComponent } from "./multi-asset-data/collateral-add-edit/collateral-add-edit.component";
+import { MultiAssetDataComponent } from "./multi-asset-data/multi-asset-data.component";
 export const customCurrencyMaskConfig = {     
   align: "right",     
   allowNegative: true,     
@@ -77,6 +83,8 @@ export const customCurrencyMaskConfig = {
     GuarantorCompanyComponent,
     LifeInsuranceDataComponent,
     ApplicationDataComponent,
+    ApplicationDataRefinancingComponent,
+    LoanObjectComponent,
     SearchCrossAppComponent,
     ReferantorDataComponent,
     AssetDataComponent,
@@ -94,7 +102,11 @@ export const customCurrencyMaskConfig = {
     SchmBalloonComponent,
     SchmStepUpStepDownCummulativeComponent,
     SchmIrregularComponent,
-    SchmEvenPrincipalComponent
+    SchmEvenPrincipalComponent,
+    AssetDataPagingComponent,
+    AssetDataAddEditComponent,
+    CollateralAddEditComponent,
+    MultiAssetDataComponent
   ],
   imports: [
     CommonModule,
@@ -126,6 +138,8 @@ export const customCurrencyMaskConfig = {
     GuarantorCompanyComponent,
     LifeInsuranceDataComponent,
     ApplicationDataComponent,
+    ApplicationDataRefinancingComponent,
+    LoanObjectComponent,
     SearchCrossAppComponent,
     ReferantorDataComponent,
     AssetDataComponent,
@@ -136,13 +150,17 @@ export const customCurrencyMaskConfig = {
     SubsidyAddEditComponent,
     FeeComponent,
     TcDataComponent, // sementara nanti dicross check sama term-conditions
-    SchmRegulerFixComponent, 
+    SchmRegulerFixComponent,
     SchmStepUpStepDownNormalComponent,
     SchmStepUpStepDownLeasingComponent,
     SchmStepUpStepDownCummulativeComponent,
-    SchmIrregularComponent ,
+    SchmIrregularComponent,
     SchmBalloonComponent,
-    SchmEvenPrincipalComponent
+    SchmEvenPrincipalComponent,
+    AssetDataPagingComponent,
+    AssetDataAddEditComponent,
+    CollateralAddEditComponent,
+    MultiAssetDataComponent
   ],
   entryComponents: [SubsidyAddEditComponent],
   providers: [

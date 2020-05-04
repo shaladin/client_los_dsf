@@ -84,8 +84,8 @@ export const customCurrencyMaskConfig = {
     SharingComponentModule,
     ArchwizardModule,
     MatRadioModule,
-    UcinputnumberModule,
-    NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
+    NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
+    UcinputnumberModule
   ],
   declarations: [
     MainInfoComponent,

@@ -83,7 +83,7 @@ export class SchmEvenPrincipalComponent implements OnInit {
     this.calcEvenPrincipleObj = this.ParentForm.value;
 
 
-    this.http.post<ResponseCalculateObj>(AdInsConstant.CalculateInstallmentEvenPrinciple, this.calcEvenPrincipleObj).subscribe(
+    this.http.post<ResponseCalculateObj>(AdInsConstant.CalculateInstallmentEvenPrincipal, this.calcEvenPrincipleObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
         this.ParentForm.patchValue({

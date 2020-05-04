@@ -77,7 +77,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
           RefProdCompntCode: "WAY_OF_FINANCING",
           RowVersion: ""
         }
-        this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForApproval, Obj2).subscribe(
+        this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeAndACTProdStat, Obj2).subscribe(
           (response) => {
             this.result2 = response;
             this.WayOfFinancing = this.result2.CompntValueDesc;
@@ -89,7 +89,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
           RefProdCompntCode: "PURPOSE_OF_FINANCING",
           RowVersion: ""
         }
-        this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForApproval, Obj3).subscribe(
+        this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeAndACTProdStat, Obj3).subscribe(
           (response) => {
             this.result3 = response;
             this.PurposeOfFinancing = this.result3.CompntValueDesc;

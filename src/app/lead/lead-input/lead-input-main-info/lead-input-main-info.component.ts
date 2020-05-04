@@ -293,7 +293,7 @@ export class LeadInputMainInfoComponent implements OnInit {
         this.MainInfoForm.patchValue({ LeadSource: response['ReturnObject'][0]['Key'] });
       });
 
-    if (this.pageType == "edit") {
+  if (this.pageType == "edit") {
       this.getLeadObj = new LeadObj();
       this.getLeadObj.LeadId = this.LeadId;
       this.http.post(this.getLeadByLeadId, this.getLeadObj).subscribe(
@@ -329,6 +329,7 @@ export class LeadInputMainInfoComponent implements OnInit {
               this.agencyLookUpObj.jsonSelect = this.returnVendorObj;
               this.tempAgencyCode = this.returnVendorObj.VendorCode;
             });
+
           this.cmoNameLookUpObj.nameSelect = this.returnLead.CmoUsername;
           this.cmoNameLookUpObj.jsonSelect = this.returnLead;
           this.surveyorNameLookUpObj.nameSelect = this.returnLead.SurveyorUsername;
@@ -338,6 +339,7 @@ export class LeadInputMainInfoComponent implements OnInit {
           this.tempCmoUsername = this.returnLead.CmoUsername;
           this.tempSurveyorUsername = this.returnLead.SurveyorUsername;
           this.tempSalesUsername = this.returnLead.TeleMarketingUsername;
+
           // this.cmoObj = new RefEmpForLookupObj();
           // this.cmoObj.EmpName = this.returnLead.CmoName;
           // this.cmoObj.RoleCode = this.returnLead.CmoCode;
@@ -454,7 +456,7 @@ export class LeadInputMainInfoComponent implements OnInit {
       this.http.post(this.editLead, this.leadObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["/Lead/LeadInput/Page"], { queryParams: { "LeadId": this.LeadId, "mode": "edit" } });
+          this.router.navigate(["/Lead/Lead/Paging"]);
           // console.log(response)
         },
         (error) => {
@@ -470,7 +472,7 @@ export class LeadInputMainInfoComponent implements OnInit {
           this.responseLead = response;
           this.LeadId = this.responseLead.LeadId;
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["/Lead/LeadInput/Page"], { queryParams: { "LeadId": this.LeadId, "CopyFrom": this.leadIdExist } });
+          this.router.navigate(["/Lead/Lead/Paging"]);
           // console.log(response)
         },
         (error) => {

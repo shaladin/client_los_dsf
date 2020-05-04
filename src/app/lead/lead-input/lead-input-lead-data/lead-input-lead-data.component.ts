@@ -89,7 +89,8 @@ export class LeadInputLeadDataComponent implements OnInit {
   returnLeadObj: any;
   returnLobCode: string;
   TaskListId: any;
-
+  editLead : string;
+  editLeadObj : any;
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.getListActiveRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
     this.editLeadData = AdInsConstant.AddEditLeadData;
@@ -98,6 +99,7 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.getAssetMasterForLookupEmployee = AdInsConstant.GetAssetMasterForLookupEmployee;
     this.getGeneralSettingByCode = AdInsConstant.GetGeneralSettingByCode;
     this.getLeadByLeadId = AdInsConstant.GetLeadByLeadId;
+    this.editLead = AdInsConstant.EditLead;
     this.submitWorkflowLeadInput = AdInsConstant.SubmitWorkflowLeadInput;
 
 
@@ -231,7 +233,7 @@ export class LeadInputLeadDataComponent implements OnInit {
         this.leadObj = new LeadObj();
         this.leadObj.LeadId = this.LeadId;
         this.http.post(this.getLeadByLeadId, this.leadObj).subscribe(
-          (response) => {
+          (response) => { 
             this.returnLeadObj = response;
             this.returnLobCode = response['LobCode'];
             if (this.lobKta.includes(this.returnLobCode) == true) {
@@ -498,7 +500,7 @@ export class LeadInputLeadDataComponent implements OnInit {
           });
         });
     }
-  }
+  } 
 
   setLeadAsset() {
     this.leadInputLeadDataObj.LeadAssetObj.LeadId = this.LeadId;
@@ -527,20 +529,36 @@ export class LeadInputLeadDataComponent implements OnInit {
 
   save() {
     if (this.typePage == "edit") {
-      this.leadInputLeadDataObj = new LeadInputLeadDataObj();
-      this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
-      this.setLeadAsset();
-      this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
-      this.setLeadApp();
-      this.http.post(this.editLeadData, this.leadInputLeadDataObj).subscribe(
-        (response) => {
-          this.toastr.successMessage(response["message"]);
-          this.router.navigate(["/Lead/Lead/Paging"]);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+      if(this.resLeadAssetObj.LeadAssetId != 0) {
+        this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+        this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
+        this.setLeadAsset();
+        this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
+        this.setLeadApp();
+
+        this.http.post(this.editLeadData, this.leadInputLeadDataObj).subscribe(
+          (response) => {
+            this.toastr.successMessage(response["message"]);
+            this.router.navigate(["/Lead/Lead/Paging"]);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      } else {
+        this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+        this.setLeadAsset();
+        this.setLeadApp();
+        this.http.post(this.editLeadData, this.leadInputLeadDataObj).subscribe(
+          (response) => {
+            this.toastr.successMessage(response["message"]);
+            this.router.navigate(["/Lead/Lead/Paging"]);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      }
     } else {
       this.leadInputLeadDataObj = new LeadInputLeadDataObj();
       this.setLeadAsset();
@@ -555,27 +573,54 @@ export class LeadInputLeadDataComponent implements OnInit {
           console.log(error);
         }
       );
-    }
+    } 
+    this.editLeadObj = new LeadObj();
+    this.editLeadObj = this.returnLeadObj;
+    this.editLeadObj.IsSubmit = true;
+    this.http.post(this.editLead, this.leadInputLeadDataObj).subscribe(
+      (response) => {
+         
+      } 
+    );
+
+
   }
 
   SaveForm() {
     if (this.typePage == "edit") {
-      this.leadInputLeadDataObj = new LeadInputLeadDataObj();
-      this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
-      this.setLeadAsset();
-      this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
-      this.setLeadApp();
-      this.leadInputLeadDataObj.WfTaskListId = this.TaskListId;
+      if(this.resLeadAssetObj.LeadAssetId != 0)
+      {
+        this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+        this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
+        this.setLeadAsset();
+        this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
+        this.setLeadApp();
+        this.leadInputLeadDataObj.WfTaskListId = this.TaskListId;
 
-      this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
-        (response) => {
-          this.toastr.successMessage(response["message"]);
-          this.router.navigate(["/Lead/Lead/Paging"]);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
+          (response) => {
+            this.toastr.successMessage(response["message"]);
+            this.router.navigate(["/Lead/Lead/Paging"]);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      } else {
+        this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+        this.setLeadAsset();
+        this.setLeadApp();
+        this.leadInputLeadDataObj.WfTaskListId = this.TaskListId;
+        this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
+          (response) => {
+            this.toastr.successMessage(response["message"]);
+            this.router.navigate(["/Lead/Lead/Paging"]);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      }
     } else {
       this.leadInputLeadDataObj = new LeadInputLeadDataObj();
       this.setLeadAsset();

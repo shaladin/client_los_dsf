@@ -765,40 +765,71 @@ export class LeadInputCustDataComponent implements OnInit {
 
   SaveForm(){
     if(this.typePage == "edit") {
-      this.leadInputObj = new LeadInputObj();
-      this.leadInputObj.LeadCustObj.LeadCustId = this.resLeadCustObj.LeadCustId;
-      this.leadInputObj.LeadCustObj.RowVersion = this.resLeadCustObj.RowVersion;
-      this.setLeadCust();
-      this.leadInputObj.LeadCustPersonalObj.RowVersion = this.resLeadCustPersonalObj.RowVersion;
-      this.setLeadCustPersonal();
-      this.setLeadCustSocmed();
-      this.leadInputObj.LeadCustLegalAddrObj.RowVersion = this.resLeadCustAddrLegalObj.RowVersion;
-      this.setLegalAddr();
-      this.leadInputObj.LeadCustResidenceAddrObj.RowVersion = this.resLeadCustAddrResObj.RowVersion;
-      this.setResidenceAddr();
-      this.leadInputObj.LeadCustPersonalJobDataObj.RowVersion = this.resLeadCustPersonalJobDataObj.RowVersion;
-      this.setLeadCustPersonalJobData();
-      this.leadInputObj.LeadCustPersonalFinDataObj.RowVersion = this.resLeadCustPersonalFinDataObj.RowVersion;
-      this.setLeadCustPersonalFinData();
+      if(this.resLeadCustObj.LeadId != 0 )
+      {
+        this.leadInputObj = new LeadInputObj();
+        this.leadInputObj.LeadCustObj.LeadCustId = this.resLeadCustObj.LeadCustId;
+        this.leadInputObj.LeadCustObj.RowVersion = this.resLeadCustObj.RowVersion;
+        this.setLeadCust();
+        this.leadInputObj.LeadCustPersonalObj.RowVersion = this.resLeadCustPersonalObj.RowVersion;
+        this.setLeadCustPersonal();
+        this.setLeadCustSocmed();
+        this.leadInputObj.LeadCustLegalAddrObj.RowVersion = this.resLeadCustAddrLegalObj.RowVersion;
+        this.setLegalAddr();
+        this.leadInputObj.LeadCustResidenceAddrObj.RowVersion = this.resLeadCustAddrResObj.RowVersion;
+        this.setResidenceAddr();
+        this.leadInputObj.LeadCustPersonalJobDataObj.RowVersion = this.resLeadCustPersonalJobDataObj.RowVersion;
+        this.setLeadCustPersonalJobData();
+        this.leadInputObj.LeadCustPersonalFinDataObj.RowVersion = this.resLeadCustPersonalFinDataObj.RowVersion;
+        this.setLeadCustPersonalFinData();
 
-      console.log("ccc");
-      console.log(this.leadInputObj)
+        console.log("ccc");
+        console.log(this.leadInputObj)
 
-      this.http.post(this.addEditLeadCustPersonal, this.leadInputObj).subscribe(
-        (response) => {
-          console.log(response);
-          this.toastr.successMessage(response["message"]);
-          // this.router.navigate(
-          //   ["/Customer/CustomerPersonal/Address"], 
-          //   { queryParams: { "IdCust": this.IdCust }}
-          //   );
-          // console.log(response);
-          this.wizard.goToNextStep();
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        this.http.post(this.addEditLeadCustPersonal, this.leadInputObj).subscribe(
+          (response) => {
+            console.log(response);
+            this.toastr.successMessage(response["message"]);
+            // this.router.navigate(
+            //   ["/Customer/CustomerPersonal/Address"], 
+            //   { queryParams: { "IdCust": this.IdCust }}
+            //   );
+            // console.log(response);
+            this.wizard.goToNextStep();
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      } else {
+        this.leadInputObj = new LeadInputObj();
+        this.setLeadCust();
+        this.setLeadCustPersonal();
+        this.setLeadCustSocmed();
+        this.setLegalAddr();
+        this.setResidenceAddr();
+        this.setLeadCustPersonalJobData();
+        this.setLeadCustPersonalFinData();
+
+        console.log("ccc");
+        console.log(this.leadInputObj)
+
+        this.http.post(this.addEditLeadCustPersonal, this.leadInputObj).subscribe(
+          (response) => {
+            console.log(response);
+            this.toastr.successMessage(response["message"]);
+            // this.router.navigate(
+            //   ["/Customer/CustomerPersonal/Address"], 
+            //   { queryParams: { "IdCust": this.IdCust }}
+            //   );
+            // console.log(response);
+            this.wizard.goToNextStep();
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      }
     }
     else {
       this.leadInputObj = new LeadInputObj();

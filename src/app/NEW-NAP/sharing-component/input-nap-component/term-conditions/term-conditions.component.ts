@@ -7,7 +7,7 @@ import { formatDate } from '@angular/common';
 @Component({
   selector: 'app-term-conditions',
   templateUrl: './term-conditions.component.html',
-  styleUrls: ['./term-conditions.component.scss'],
+  styleUrls: [],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
 export class TermConditionsComponent implements OnInit {

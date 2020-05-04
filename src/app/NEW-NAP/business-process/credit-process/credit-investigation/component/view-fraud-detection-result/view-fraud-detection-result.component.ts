@@ -32,6 +32,7 @@ export class ViewFraudDetectionResultComponent implements OnInit {
   getNegativeCustomerDuplicateCheckUrl = this.foundationUrl + AdInsConstant.GetNegativeCustomerDuplicateCheck;  
   getAppAssetByAppId = AdInsConstant.GetAppAssetByAppId;
   getAssetNegativeDuplicateCheck = AdInsConstant.GetAssetNegativeDuplicateCheck;
+  viewFraudVerifResultObj : any;
 
   arrValue = [];
   isDataAlreadyLoaded: boolean = false;
@@ -63,7 +64,7 @@ export class ViewFraudDetectionResultComponent implements OnInit {
       await this.getApp();
       this.arrValue.push(this.appId);
       this.viewDukcapilObj = "./assets/ucviewgeneric/viewDukcapilMainInfo.json";
-      
+      this.viewFraudVerifResultObj = "./assets/ucviewgeneric/viewFraudVerifResult.json";
       this.isDataAlreadyLoaded = true;
   }
 
