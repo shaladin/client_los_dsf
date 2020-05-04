@@ -56,7 +56,6 @@ export class LeadVerifComponent implements OnInit {
     private adInsService: AdInsService) { }
 
   ngOnInit() {
-    console.log('veriff');
     this.arrCrit = new Array();
     this.inputObj = new InputSearchObj();
     this.inputObj._url = './assets/search/searchLeadVerf.json';
@@ -78,14 +77,15 @@ export class LeadVerifComponent implements OnInit {
         for (var i = 0; i < temp.length; i++) {
           arr.push(temp[i]['LeadId']);
         }
-
-        const addCritAssetMasterId = new CriteriaObj();
-        addCritAssetMasterId.DataType = 'numeric';
-        addCritAssetMasterId.propName = 'L.LEAD_ID';
-        addCritAssetMasterId.restriction = AdInsConstant.RestrictionNotIn;
-        addCritAssetMasterId.listValue = arr;
-        this.arrCrit.push(addCritAssetMasterId);
-        this.inputObj.addCritInput.push(addCritAssetMasterId);
+        if (this.listSelectedId.length !== 0) {
+          const addCritAssetMasterId = new CriteriaObj();
+          addCritAssetMasterId.DataType = 'numeric';
+          addCritAssetMasterId.propName = 'L.LEAD_ID';
+          addCritAssetMasterId.restriction = AdInsConstant.RestrictionNotIn;
+          addCritAssetMasterId.listValue = this.listSelectedId;
+          this.arrCrit.push(addCritAssetMasterId);
+          this.inputObj.addCritInput.push(addCritAssetMasterId);
+        }
       },
       error => {
         this.router.navigateByUrl('Error');
