@@ -532,6 +532,7 @@ export class LeadInputLeadDataComponent implements OnInit {
       this.setLeadAsset();
       this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
       this.setLeadApp();
+      
       this.http.post(this.editLeadData, this.leadInputLeadDataObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
@@ -543,7 +544,9 @@ export class LeadInputLeadDataComponent implements OnInit {
       );
     } else {
       this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+      this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
       this.setLeadAsset();
+      this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
       this.setLeadApp();
 
       this.http.post(this.editLeadData, this.leadInputLeadDataObj).subscribe(
