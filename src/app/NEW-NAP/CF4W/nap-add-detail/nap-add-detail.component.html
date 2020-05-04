@@ -60,7 +60,7 @@
             [navigationSymbol]="{ symbol: '4' }">
             <app-application-data-model *ngIf="AppStepIndex == 3" [appId]=appId></app-application-data-model>
           </aw-wizard-step>
-
+-->
           <aw-wizard-step [stepTitle]="'Asset Data'" (stepEnter)="EnterTab('ASSET')"
             [navigationSymbol]="{ symbol: '5' }">
             <app-asset-data *ngIf="AppStepIndex == 4" [AppId]=appId></app-asset-data>
@@ -75,7 +75,6 @@
             [navigationSymbol]="{ symbol: '6' }">
             <app-insurance-data *ngIf="AppStepIndex == 5" [appId]=appId></app-insurance-data>
           </aw-wizard-step>
--->
 
           <aw-wizard-step [stepTitle]="'Life Insurance Data'" (stepEnter)="EnterTab('LFI')"
             [navigationSymbol]="{ symbol: '7' }">

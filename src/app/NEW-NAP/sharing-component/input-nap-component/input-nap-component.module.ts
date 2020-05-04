@@ -35,6 +35,7 @@ import { GuarantorPersonalComponent } from "./guarantor-data/guarantor-personal/
 import { GuarantorCompanyComponent } from "./guarantor-data/guarantor-company/guarantor-company.component";
 import { GuarantorPagingComponent } from "./guarantor-data/guarantor-paging/guarantor-paging.component";
 import { ApplicationDataRefinancingComponent } from "./application-data/application-data-refinancing/application-data-refinancing.component";
+import { LoanObjectComponent } from "./application-data/loan-object/loan-object.component";
 import { SchmStepUpStepDownNormalComponent } from "./financial-data/component/schm-step-up-step-down-normal/schm-step-up-step-down-normal.component";
 import { SchmRegulerFixComponent } from "./financial-data/component/schm-reguler-fix/schm-reguler-fix.component";
 import { SchmStepUpStepDownLeasingComponent } from "./financial-data/component/schm-step-up-step-down-leasing/schm-step-up-step-down-leasing.component";
@@ -82,6 +83,8 @@ export const customCurrencyMaskConfig = {
     GuarantorCompanyComponent,
     LifeInsuranceDataComponent,
     ApplicationDataComponent,
+    ApplicationDataRefinancingComponent,
+    LoanObjectComponent,
     SearchCrossAppComponent,
     ReferantorDataComponent,
     AssetDataComponent,
@@ -92,7 +95,6 @@ export const customCurrencyMaskConfig = {
     SubsidyAddEditComponent,
     FeeComponent,
     TcDataComponent, // sementara nanti dicross check sama term-conditions
-    ApplicationDataRefinancingComponent,
     SchmRegulerFixComponent,
     SchmStepUpStepDownNormalComponent,
     SchmStepUpStepDownLeasingComponent,
@@ -136,6 +138,8 @@ export const customCurrencyMaskConfig = {
     GuarantorCompanyComponent,
     LifeInsuranceDataComponent,
     ApplicationDataComponent,
+    ApplicationDataRefinancingComponent,
+    LoanObjectComponent,
     SearchCrossAppComponent,
     ReferantorDataComponent,
     AssetDataComponent,
@@ -146,11 +150,11 @@ export const customCurrencyMaskConfig = {
     SubsidyAddEditComponent,
     FeeComponent,
     TcDataComponent, // sementara nanti dicross check sama term-conditions
-    SchmRegulerFixComponent, 
+    SchmRegulerFixComponent,
     SchmStepUpStepDownNormalComponent,
     SchmStepUpStepDownLeasingComponent,
     SchmStepUpStepDownCummulativeComponent,
-    SchmIrregularComponent ,
+    SchmIrregularComponent,
     SchmBalloonComponent,
     SchmEvenPrincipalComponent,
     AssetDataPagingComponent,
