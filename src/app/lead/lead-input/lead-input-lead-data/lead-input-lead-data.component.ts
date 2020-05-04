@@ -527,20 +527,36 @@ export class LeadInputLeadDataComponent implements OnInit {
 
   save() {
     if (this.typePage == "edit") {
-      this.leadInputLeadDataObj = new LeadInputLeadDataObj();
-      this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
-      this.setLeadAsset();
-      this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
-      this.setLeadApp();
-      this.http.post(this.editLeadData, this.leadInputLeadDataObj).subscribe(
-        (response) => {
-          this.toastr.successMessage(response["message"]);
-          this.router.navigate(["/Lead/Lead/Paging"]);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+      if(this.resLeadAssetObj.LeadAssetId != 0) {
+        this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+        this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
+        this.setLeadAsset();
+        this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
+        this.setLeadApp();
+
+        this.http.post(this.editLeadData, this.leadInputLeadDataObj).subscribe(
+          (response) => {
+            this.toastr.successMessage(response["message"]);
+            this.router.navigate(["/Lead/Lead/Paging"]);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      } else {
+        this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+        this.setLeadAsset();
+        this.setLeadApp();
+        this.http.post(this.editLeadData, this.leadInputLeadDataObj).subscribe(
+          (response) => {
+            this.toastr.successMessage(response["message"]);
+            this.router.navigate(["/Lead/Lead/Paging"]);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      }
     } else {
       this.leadInputLeadDataObj = new LeadInputLeadDataObj();
       this.setLeadAsset();
@@ -560,22 +576,39 @@ export class LeadInputLeadDataComponent implements OnInit {
 
   SaveForm() {
     if (this.typePage == "edit") {
-      this.leadInputLeadDataObj = new LeadInputLeadDataObj();
-      this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
-      this.setLeadAsset();
-      this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
-      this.setLeadApp();
-      this.leadInputLeadDataObj.WfTaskListId = this.TaskListId;
+      if(this.resLeadAssetObj.LeadAssetId != 0)
+      {
+        this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+        this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
+        this.setLeadAsset();
+        this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
+        this.setLeadApp();
+        this.leadInputLeadDataObj.WfTaskListId = this.TaskListId;
 
-      this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
-        (response) => {
-          this.toastr.successMessage(response["message"]);
-          this.router.navigate(["/Lead/Lead/Paging"]);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
+          (response) => {
+            this.toastr.successMessage(response["message"]);
+            this.router.navigate(["/Lead/Lead/Paging"]);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      } else {
+        this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+        this.setLeadAsset();
+        this.setLeadApp();
+        this.leadInputLeadDataObj.WfTaskListId = this.TaskListId;
+        this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
+          (response) => {
+            this.toastr.successMessage(response["message"]);
+            this.router.navigate(["/Lead/Lead/Paging"]);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      }
     } else {
       this.leadInputLeadDataObj = new LeadInputLeadDataObj();
       this.setLeadAsset();
