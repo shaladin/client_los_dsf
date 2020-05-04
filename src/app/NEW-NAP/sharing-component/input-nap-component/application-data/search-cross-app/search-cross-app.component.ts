@@ -53,8 +53,10 @@ export class SearchCrossAppComponent implements OnInit {
     this.addCritAppId.DataType = "numeric";
     this.addCritAppId.propName = "ap.APP_ID";
     this.addCritAppId.restriction = AdInsConstant.RestrictionNotIn;
-    this.addCritAppId.listValue = [this.ListCrossAppObjInput["appId"]];
+    this.addCritAppId.listValue = [this.ListCrossAppObjInput["AppId"]];
+    
     // addCrit.listValue = [11];
+
     this.arrAddCrit.push(this.addCritAppId);
 
     if(this.ListCrossAppObjInput["result"].length){
