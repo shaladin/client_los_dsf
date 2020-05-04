@@ -89,20 +89,19 @@
             "position": "center",
             "action": [
                 {
-                    "type": "edit",
-                    "path": "/Nap/Collateral/Detail",
-                    "param": [
-                        {
-                            "type": "AppId",
-                            "property": "AppId"
-                        },
+                    "type": "callback",
+                    "property": [
                         {
                             "type": "AppCollateralId",
                             "property": "AppCollateralId"
                         },
                         {
-                            "type": "mode",
-                            "property": "edit"
+                            "type": "AppId",
+                            "property": "AppId"
+                        },
+                        {
+                            "type": "editColl",
+                            "property": "editColl"
                         }
                     ]
                 }

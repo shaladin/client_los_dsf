@@ -39,8 +39,8 @@
     <div class="card-body" *ngIf="AppStepIndex > -1">
       <div class="px-3">
         <aw-wizard #wizard navBarLayout="large-empty-symbols">
-<!-- 
-          <aw-wizard-step [stepTitle]="'Customer Data'" (stepEnter)="EnterTab('CUST')"
+
+           <aw-wizard-step [stepTitle]="'Customer Data'" (stepEnter)="EnterTab('CUST')"
             [navigationSymbol]="{ symbol: '1' }">
             <app-customer-data *ngIf="AppStepIndex == 0" [appId]=appId></app-customer-data>
           </aw-wizard-step>
@@ -60,7 +60,7 @@
             [navigationSymbol]="{ symbol: '4' }">
             <app-application-data-model *ngIf="AppStepIndex == 3" [appId]=appId></app-application-data-model>
           </aw-wizard-step>
-
+-->
           <aw-wizard-step [stepTitle]="'Asset Data'" (stepEnter)="EnterTab('ASSET')"
             [navigationSymbol]="{ symbol: '5' }">
             <app-asset-data *ngIf="AppStepIndex == 4" [AppId]=appId></app-asset-data>
@@ -75,7 +75,6 @@
             [navigationSymbol]="{ symbol: '6' }">
             <app-insurance-data *ngIf="AppStepIndex == 5" [appId]=appId></app-insurance-data>
           </aw-wizard-step>
--->
 
           <aw-wizard-step [stepTitle]="'Life Insurance Data'" (stepEnter)="EnterTab('LFI')"
             [navigationSymbol]="{ symbol: '7' }">
@@ -85,7 +84,7 @@
           <aw-wizard-step [stepTitle]="'Financial Data'" (stepEnter)="EnterTab('FIN')"
             [navigationSymbol]="{ symbol: '8' }">
             <app-financial-data *ngIf="AppStepIndex == 7" [AppId]=appId></app-financial-data>
-          </aw-wizard-step>
+          </aw-wizard-step> 
 
           <aw-wizard-step [stepTitle]="'Terms and Conditions'" (stepEnter)="EnterTab('TC')"
             [navigationSymbol]="{ symbol: '9' }">

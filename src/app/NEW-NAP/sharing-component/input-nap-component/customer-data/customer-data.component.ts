@@ -18,6 +18,7 @@ import { AppCustGrpObj } from 'app/shared/model/AppCustGrpObj.Model';
 import { CustDataCompanyObj } from 'app/shared/model/CustDataCompanyObj.Model';
 import { CustGrpMemberComponent } from './component/cust-grp-member/cust-grp-member.component';
 import { formatDate } from '@angular/common';
+import { WizardComponent } from 'angular-archwizard';
 
 @Component({
   selector: 'app-customer-data',
@@ -116,7 +117,8 @@ export class CustomerDataComponent implements OnInit {
     private fb: FormBuilder, 
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private wizard: WizardComponent) {
       this.route.queryParams.subscribe(params => {
         this.appId = params["AppId"];
       })
@@ -139,7 +141,7 @@ export class CustomerDataComponent implements OnInit {
           this.toastr.successMessage(response["message"]);
           this.outputTab.emit();
           // this.callbackSubmit.emit(this.appWizardObj);
-          // this.wizard.goToNextStep();
+          this.wizard.goToNextStep();
         },
         (error) => {
           console.log(error);
@@ -167,8 +169,8 @@ export class CustomerDataComponent implements OnInit {
           console.log(response);
           this.toastr.successMessage(response["message"]);
           // this.callbackSubmit.emit(this.appWizardObj);
-          // this.wizard.goToNextStep();
-          this.outputTab.emit();
+          this.wizard.goToNextStep();
+          // this.outputTab.emit();
         },
         (error) => {
           console.log(error);

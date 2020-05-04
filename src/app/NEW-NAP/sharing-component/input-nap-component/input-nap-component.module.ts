@@ -45,17 +45,20 @@ import { SchmIrregularComponent } from "./financial-data/component/schm-irregula
 import { SchmBalloonComponent } from "./financial-data/component/schm-baloon/schm-balloon.component";
 
 import { SchmEvenPrincipalComponent } from "./financial-data/component/schm-even-principal/schm-even-principal.component";
-export const customCurrencyMaskConfig = {
-  align: "right",
-  allowNegative: true,
-  allowZero: true,
-  decimal: ".",
-  precision: 2,
-  prefix: "",
-  suffix: "",
-  thousands: ",",
-  nullable: false
-};
+import { AssetDataPagingComponent } from "./multi-asset-data/asset-data-paging/asset-data-paging.component";
+import { AssetDataAddEditComponent } from "./multi-asset-data/asset-data-add-edit/asset-data-add-edit.component";
+import { CollateralAddEditComponent } from "./multi-asset-data/collateral-add-edit/collateral-add-edit.component";
+import { MultiAssetDataComponent } from "./multi-asset-data/multi-asset-data.component";
+export const customCurrencyMaskConfig = {     
+  align: "right",     
+  allowNegative: true,     
+  allowZero: true,     
+  decimal: ".",     
+  precision: 2,     
+  prefix: "",     
+  suffix: "",     
+  thousands: ",",     
+  nullable: false };
 
 @NgModule({
   exports: [
@@ -99,7 +102,11 @@ export const customCurrencyMaskConfig = {
     SchmBalloonComponent,
     SchmStepUpStepDownCummulativeComponent,
     SchmIrregularComponent,
-    SchmEvenPrincipalComponent
+    SchmEvenPrincipalComponent,
+    AssetDataPagingComponent,
+    AssetDataAddEditComponent,
+    CollateralAddEditComponent,
+    MultiAssetDataComponent
   ],
   imports: [
     CommonModule,
@@ -149,7 +156,11 @@ export const customCurrencyMaskConfig = {
     SchmStepUpStepDownCummulativeComponent,
     SchmIrregularComponent,
     SchmBalloonComponent,
-    SchmEvenPrincipalComponent
+    SchmEvenPrincipalComponent,
+    AssetDataPagingComponent,
+    AssetDataAddEditComponent,
+    CollateralAddEditComponent,
+    MultiAssetDataComponent
   ],
   entryComponents: [SubsidyAddEditComponent],
   providers: [
