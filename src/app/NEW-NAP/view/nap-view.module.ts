@@ -15,6 +15,9 @@ import { ViewAssetDataComponent } from "../sharing-component/view-app-component/
 import { TabApplicationComponent } from "../sharing-component/view-app-component/tab-application/tab-application.component";
 import { UcviewgenericModule } from "@adins/ucviewgeneric";
 import { TabAnalysisResultComponent } from "../sharing-component/view-app-component/tab-analysis-result/tab-analysis-result.component";
+import { ArchwizardModule } from "angular-archwizard";
+import { ViewAppCustDataCompanyComponent } from "../sharing-component/view-app-component/view-app-cust-data-company/view-app-cust-data-company.component";
+import { ViewAppCustDataPersonalComponent } from "../sharing-component/view-app-component/view-app-cust-data-personal/view-app-cust-data-personal.component";
 
 @NgModule({
   imports: [
@@ -22,7 +25,8 @@ import { TabAnalysisResultComponent } from "../sharing-component/view-app-compon
     CommonModule,
     MatTabsModule,
     UcSubsectionModule,
-    UcviewgenericModule
+    UcviewgenericModule,
+    ArchwizardModule
   ],
   declarations: [
     AgreementViewContainerComponent,
@@ -35,7 +39,10 @@ import { TabAnalysisResultComponent } from "../sharing-component/view-app-compon
     ViewAssetDataComponent,
     TabApplicationComponent,
     TabAnalysisResultComponent,
-    InvoiceViewComponent
+    InvoiceViewComponent,
+    ViewAppCustDataCompanyComponent,
+    ViewAppCustDataPersonalComponent,
+    ViewAssetDataComponent,
   ]
 })
 export class NapViewModule { }
