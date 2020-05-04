@@ -3,9 +3,6 @@ import { RouterModule, Routes } from "@angular/router";
 import { AssetDataPagingComponent } from "./sharing-component/input-nap-component/multi-asset-data/asset-data-paging/asset-data-paging.component";
 import { AssetDataAddEditComponent } from "./sharing-component/input-nap-component/multi-asset-data/asset-data-add-edit/asset-data-add-edit.component";
 import { CollateralAddEditComponent } from "./sharing-component/input-nap-component/multi-asset-data/collateral-add-edit/collateral-add-edit.component";
-import { LoanObjectComponent } from "./sharing-component/input-nap-component/application-data/loan-object/loan-object.component";
-import { ApplicationDataComponent } from "./sharing-component/input-nap-component/application-data/application-data.component";
-import { ApplicationDataRefinancingComponent } from "./sharing-component/input-nap-component/application-data/application-data-refinancing/application-data-refinancing.component";
 
 const routes: Routes = [
     {
@@ -71,21 +68,7 @@ const routes: Routes = [
               data: {
                 title: 'Collateral Registration Form'
               }
-            },
-            {
-                path: 'LoanObject',
-                component: LoanObjectComponent,
-                data: {
-                  title: 'Loan Object'
-                }
-            },
-            {
-                path: 'ApplicationDataRefinancing',
-                component: ApplicationDataRefinancingComponent,
-                data: {
-                  title: 'Loan Object'
-                }
-            },
+            }
         ]
     }
 ]
