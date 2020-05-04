@@ -7,6 +7,7 @@ import { AppFinDataObj } from 'app/shared/model/AppFinData/AppFinData.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj.Model';
 import { ActivatedRoute } from '@angular/router';
+import { WizardComponent } from 'angular-archwizard';
 
 @Component({
   selector: 'app-financial-data',
@@ -30,6 +31,7 @@ export class FinancialDataComponent implements OnInit {
     private http: HttpClient,
     private toastr: NGXToastrService,
     private route: ActivatedRoute,
+    private wizard: WizardComponent
   ) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != undefined || params["AppId"] != null) {
@@ -139,7 +141,7 @@ export class FinancialDataComponent implements OnInit {
   }
 
   SaveAndContinue() {
-    var isValidGrossYield = true;//this.ValidateGrossYield();
+    var isValidGrossYield = this.ValidateGrossYield();
     var isValidGracePeriod = this.ValidateGracePeriode();
 
     var NeedReCalculate = this.FinDataForm.get("NeedReCalculate").value;
@@ -156,6 +158,7 @@ export class FinancialDataComponent implements OnInit {
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["Message"]);
+          this.wizard.goToNextStep();
         }
       );
     }
