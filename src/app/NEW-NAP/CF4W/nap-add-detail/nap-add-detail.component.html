@@ -39,12 +39,11 @@
     <div class="card-body" *ngIf="AppStepIndex > -1">
       <div class="px-3">
         <aw-wizard #wizard navBarLayout="large-empty-symbols">
-<!--
-           <aw-wizard-step [stepTitle]="'Customer Data'" (stepEnter)="EnterTab('CUST')"
+
+          <aw-wizard-step [stepTitle]="'Customer Data'" (stepEnter)="EnterTab('CUST')"
             [navigationSymbol]="{ symbol: '1' }">
             <app-customer-data *ngIf="AppStepIndex == 0" [appId]=appId></app-customer-data>
           </aw-wizard-step>
-
 
           <aw-wizard-step [stepTitle]="'Guarantor Data'" (stepEnter)="EnterTab('GUAR')"
             [navigationSymbol]="{ symbol: '2' }">
@@ -85,11 +84,12 @@
             [navigationSymbol]="{ symbol: '8' }">
             <app-financial-data *ngIf="AppStepIndex == 7" [AppId]=appId></app-financial-data>
           </aw-wizard-step> 
-        -->
+        
           <aw-wizard-step [stepTitle]="'Terms and Conditions'" (stepEnter)="EnterTab('TC')"
             [navigationSymbol]="{ symbol: '9' }">
             <app-tc-data *ngIf="AppStepIndex == 8" [AppId]=appId (outputTab)="LastStepHandler()"></app-tc-data>
           </aw-wizard-step>
+          
         </aw-wizard>
       </div>
     </div>
