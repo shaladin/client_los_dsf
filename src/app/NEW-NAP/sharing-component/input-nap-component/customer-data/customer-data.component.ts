@@ -137,8 +137,10 @@ export class CustomerDataComponent implements OnInit {
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
+          this.outputTab.emit();
           // this.callbackSubmit.emit(this.appWizardObj);
           // this.wizard.goToNextStep();
+          this.outputTab.emit();
         },
         (error) => {
           console.log(error);

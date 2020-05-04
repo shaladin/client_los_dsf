@@ -10,6 +10,7 @@ import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj
 import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
 import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
 import { CalcStepUpStepDownObj } from 'app/shared/model/AppFinData/CalcStepUpStepDownObj.Model';
+import { AppInstStepSchmObj } from 'app/shared/model/AppInstStepSchm/AppInstStepSchmObj.Model';
 
 @Component({
   selector: 'app-schm-step-up-step-down-leasing',
@@ -22,8 +23,10 @@ export class SchmStepUpStepDownLeasingComponent implements OnInit {
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
+  StepUpStepDownInputOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   calcStepUpStepDownObj: CalcStepUpStepDownObj = new CalcStepUpStepDownObj();
   listInstallment: any;
+  listAppInstStepSchm: Array<AppInstStepSchmObj> = new Array<AppInstStepSchmObj>();
   responseCalc: any;
 
   constructor(
@@ -35,6 +38,7 @@ export class SchmStepUpStepDownLeasingComponent implements OnInit {
   ngOnInit() {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
+    this.LoadDDLStepUpStepDownInputType();
   }
 
   LoadDDLRateType() {
@@ -51,6 +55,38 @@ export class SchmStepUpStepDownLeasingComponent implements OnInit {
         this.GracePeriodeTypeOptions = response["ReturnObject"];
       }
     );
+  }
+
+  LoadDDLStepUpStepDownInputType() {
+    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "STEP_UP_STEP_DOWN_INPUT_TYPE" }).subscribe(
+      (response) => {
+        this.StepUpStepDownInputOptions = response["ReturnObject"];
+      }
+    );
+  }
+
+  SetInstStepSchm() {
+    var ctrInstallment = this.ParentForm.get("AppInstStepSchmObjs");
+    if (!ctrInstallment) {
+      this.ParentForm.addControl("AppInstStepSchmObjs", this.fb.array([]))
+    }
+
+    while ((this.ParentForm.controls.AppInstStepSchmObjs as FormArray).length) {
+      (this.ParentForm.controls.AppInstStepSchmObjs as FormArray).removeAt(0);
+    }
+
+    for (let i = 0; i < this.listAppInstStepSchm.length; i++) {
+      const group = this.fb.group({
+        StepPrcnt: this.listAppInstStepSchm[i].StepPrcnt,
+        PresentValueAmt: this.listAppInstStepSchm[i].PresentValueAmt,
+        FutureValueAmt: this.listAppInstStepSchm[i].FutureValueAmt,
+        InstAmt: this.listAppInstStepSchm[i].InstAmt,
+        FirstStepSeqNo: this.listAppInstStepSchm[i].FirstStepSeqNo,
+        LastStepSeqNo: this.listAppInstStepSchm[i].LastStepSeqNo,
+        NumOfInst: this.listAppInstStepSchm[i].NumOfInst
+      });
+      (this.ParentForm.controls.AppInstStepSchmObjs as FormArray).push(group);
+    }
   }
 
   SetInstallmentTable() {
@@ -82,6 +118,16 @@ export class SchmStepUpStepDownLeasingComponent implements OnInit {
     });
   }
 
+  InputTypeChanged(){
+    for(let i = 0; i < (this.ParentForm.controls.ListEntryInst as FormArray).length; i++){
+      this.ParentForm.controls.ListEntryInst["controls"][i].patchValue({
+        InstAmt: 0
+      });
+    }
+
+    this.SetNeedReCalculate(true);
+  }
+
   SetEntryInstallment(){
     while ((this.ParentForm.controls.ListEntryInst as FormArray).length) {
       (this.ParentForm.controls.ListEntryInst as FormArray).removeAt(0);
@@ -104,12 +150,14 @@ export class SchmStepUpStepDownLeasingComponent implements OnInit {
     this.calcStepUpStepDownObj = this.ParentForm.value;
     this.calcStepUpStepDownObj["IsRecalculate"] = false;
     this.calcStepUpStepDownObj["StepUpStepDownType"] = this.ParentForm.value.MrInstSchemeCode;
+    this.calcStepUpStepDownObj["StepUpNormalInputType"] = this.ParentForm.value.StepUpStepDownInputType;
     this.calcStepUpStepDownObj["InstAmt"] = 0;
 
 
     this.http.post<ResponseCalculateObj>(AdInsConstant.CalculateInstallmentStepUpStepDown, this.calcStepUpStepDownObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
+        this.listAppInstStepSchm = response.AppInstStepSchmObjs;
         this.ParentForm.patchValue({
           TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
           TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
@@ -127,6 +175,7 @@ export class SchmStepUpStepDownLeasingComponent implements OnInit {
 
         })
         this.SetInstallmentTable();
+        this.SetInstStepSchm();
         this.SetNeedReCalculate(false);
       }
     );

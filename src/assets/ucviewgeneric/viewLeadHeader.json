@@ -26,12 +26,17 @@
         {
           "type": "text",
           "label": "Office Name",
-          "property": "OriOfficeName"
+          "property": "OfficeName"
         },
         {
           "type": "text",
           "label": "Order No",
           "property": "OrderNo"
+        },
+        {
+          "type": "text",
+          "label": "LOB Code",
+          "property": "LobCode"
         },
         {
           "type": "text",
@@ -45,24 +50,24 @@
         },
         {
           "type": "text",
-          "label": "Nama CMO",
-          "property": "CmoName"
+          "label": "CMO Username",
+          "property": "CmoUsername"
         },
         {
           "type": "text",
-          "label": "Surveyor Name",
-          "property": "SurveyorName"
+          "label": "Surveyor Username",
+          "property": "SurveyorUsername"
         },
         {
           "type": "text",
-          "label": "Tele Sales Name",
-          "property": "TeleMarketingName"
+          "label": "Tele Sales Username",
+          "property": "TeleMarketingUsername"
         }
       ],
       "querystring": {
-        "select": "SELECT LEAD_NO AS LeadNo, LEAD_ID AS LeadId, LEAD_COPY_ID AS LeadCopyId, ORI_OFFICE_NAME AS OriOfficeName, ORDER_NO AS OrderNo, MR_LEAD_SOURCE_CODE AS MrLeadSourceCode, AGENCY_NAME AS AgencyName, CMO_NAME AS CmoName, SURVEYOR_NAME AS SurveyorName, TELE_MARKETING_NAME AS TeleMarketingName",
-        "from": "FROM dbo.LEAD WITH(NOLOCK)",
-        "where": "WHERE LEAD_ID = {0}"
+        "select": "SELECT L.LEAD_NO AS LeadNo, L.LEAD_ID AS LeadId, CL.LEAD_COPY_ID AS LeadCopyId, L.ORI_OFFICE_CODE AS OriOfficeCode, L.ORDER_NO AS OrderNo, RM.DESCR AS MrLeadSourceCode, L.CMO_USERNAME AS CmoUsername, L.SURVEYOR_USERNAME AS SurveyorUsername, L.TELE_MARKETING_USERNAME AS TeleMarketingUsername, RO.OFFICE_NAME AS OfficeName, V.VENDOR_NAME AS AgencyName, L.LOB_CODE AS LobCode",
+        "from": "FROM dbo.LEAD L WITH(NOLOCK) JOIN dbo.V_REF_OFFICE RO WITH(NOLOCK) ON L.ORI_OFFICE_CODE = RO.OFFICE_CODE JOIN V_VENDOR V ON V.VENDOR_CODE = L.AGENCY_CODE AND V.MR_VENDOR_CATEGORY_CODE = 'AGENCY_COMPANY'  LEFT JOIN dbo.LEAD CL WITH(NOLOCK) ON CL.LEAD_ID = L.LEAD_COPY_ID LEFT JOIN [V_REF_MASTER] RM ON RM.MASTER_CODE = L.MR_LEAD_SOURCE_CODE AND RM.REF_MASTER_TYPE_CODE = 'LEAD_SOURCE'",
+        "where": "WHERE L.LEAD_ID = {0}"
       }
     }
   ]

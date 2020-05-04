@@ -10,7 +10,6 @@
           <form class="form form-horizontal" [formGroup]="FormReturnObj" (ngSubmit)="FormReturnObj.valid"
             #enjiForm="ngForm">
             <div class="form-body">
-
               <div class="form-group row">
                 <div class="form-group col-md-2">
                   <label class="adInsLabel">Return Notes</label>
@@ -18,7 +17,6 @@
                 <div class="col-md-4">
                   <label class="adInsLabel">{{ ResponseReturnInfoObj.ReturnHandlingNotes }}</label>
                 </div>
-
                 <div class="form-group col-md-2">
                   <label class="adInsLabel">Return Execution Notes</label>
                 </div>
@@ -29,7 +27,6 @@
                   </lib-uc-show-errors>
                 </div>
               </div>
-
             </div>
           </form>
         </div>
@@ -74,10 +71,10 @@
             </div>
             <div class="line"></div>
             <div class="step" data-target="#asset-tab">
-              <button type="button" class="step-trigger" role="tab" aria-controls="asset-tab"
-                id="asset-tab-trigger" [disabled]="!(AppStepIndex >= 5)" (click)="ChangeTab('ASSET')">
+              <button type="button" class="step-trigger" role="tab" aria-controls="asset-tab" id="asset-tab-trigger"
+                [disabled]="!(AppStepIndex >= 5)" (click)="ChangeTab('ASSET')">
                 <span class="bs-stepper-circle">5</span>
-                <span class="bs-stepper-label">Asset Data</span>
+                <span class="bs-stepper-label">Collateral Data</span>
               </button>
             </div>
             <div class="line"></div>
@@ -106,17 +103,19 @@
             </div>
             <div class="line"></div>
             <div class="step" data-target="#TC-tab">
-              <button type="button" class="step-trigger" role="tab" aria-controls="TC-tab"
-                id="TC-tab-trigger" [disabled]="!(AppStepIndex >= 9)" (click)="ChangeTab('TC')">
+              <button type="button" class="step-trigger" role="tab" aria-controls="TC-tab" id="TC-tab-trigger"
+                [disabled]="!(AppStepIndex >= 9)" (click)="ChangeTab('TC')">
                 <span class="bs-stepper-circle">9</span>
                 <span class="bs-stepper-label">Term & Conditions</span>
               </button>
             </div>
           </div>
+          <br><br>
           <div class="bs-stepper-content">
             <!-- your steps content here -->
             <div id="customer-tab" class="content" role="tabpanel" aria-labelledby="customer-tab-trigger">
-              <app-customer-data *ngIf="AppStepIndex == 1" [appId]="appId" (outputTab)="NextStep('GUAR')"></app-customer-data>
+              <app-customer-data *ngIf="AppStepIndex == 1" [appId]="appId" (outputTab)="NextStep('GUAR')">
+              </app-customer-data>
             </div>
             <div id="guarantor-tab" class="content" role="tabpanel" aria-labelledby="guarantor-tab-trigger">
               <app-guarantor-paging *ngIf="AppStepIndex == 2" [AppId]="appId" (outputTab)="NextStep('REF')">
@@ -127,22 +126,27 @@
               </app-referantor-data>
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
-              Application
+              <app-application-data-refinancing *ngIf="AppStepIndex == 4" [AppId]="appId"
+                (outputTab)="NextStep('ASSET')"></app-application-data-refinancing>
             </div>
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
-              Asset
+              Collateral
             </div>
             <div id="insurance-tab" class="content" role="tabpanel" aria-labelledby="insurance-tab-trigger">
-              Insurance
+              <app-insurance-data *ngIf="!IsMultiAsset && AppStepIndex == 6" [appId]="appId"
+                (outputTab)="NextStep('LFI')"></app-insurance-data>
+              <app-insurance-multi-asset-data *ngIf="IsMultiAsset && AppStepIndex == 6" [appId]="appId"
+                (outputTab)="NextStep('LFI')"></app-insurance-multi-asset-data>
             </div>
             <div id="lifeInsurance-tab" class="content" role="tabpanel" aria-labelledby="lifeInsurance-tab-trigger">
-              Life Insurance
+              <app-life-insurance-data *ngIf="AppStepIndex == 7" [AppId]="appId" (outputTab)="NextStep('FIN')">
+              </app-life-insurance-data>
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
               Financial
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
-              Term & Conditions
+              <app-tc-data *ngIf="AppStepIndex == 9" [AppId]="appId" (outputTab)="NextStep('TC')"></app-tc-data>
             </div>
           </div>
         </div>

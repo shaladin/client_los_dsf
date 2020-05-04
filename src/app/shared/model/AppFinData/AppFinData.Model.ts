@@ -25,6 +25,7 @@ export class AppFinDataObj {
     SupplEffectiveRatePrcnt: number;
     SupplFlatRatePrcnt: number;
     MrGracePeriodTypeCode: string;
+    GracePeriodTypeName: string;
     GracePeriod: number;
     DownPaymentNettAmt: number;
     DownPaymentGrossAmt: number;
@@ -47,6 +48,7 @@ export class AppFinDataObj {
     TotalInsInscoAmt: number;
     TotalLifeInsCustAmt: number;
     TotalLifeInsInscoAmt: number;
+    TotalAr: number;
 
     constructor() {
     }
