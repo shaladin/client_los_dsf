@@ -22,6 +22,11 @@ import { AssetInquiryComponent } from './po-extension/asset-inquiry/asset-inquir
 import { AppInquiryComponent } from './app-inquiry/app-inquiry.component';
 import { CreditProcessInquiryComponent } from './credit-process-inquiry/credit-process-inquiry.component';
 import { ReturnHandlingPhoneVerifPagingComponent } from "./return-handling/return-handling-phone-verif-paging/return-handling-phone-verif-paging.component";
+import { ReturnHandlingSurveyComponent } from './return-handling/return-handling-survey/return-handling-survey.component';
+import { ReturnHandlingCollateralDetailComponent } from "./return-handling/return-handling-collateral-detail/return-handling-collateral-detail.component";
+import { ReturnHandlingCollateralEditComponent } from "./return-handling/return-handling-collateral-edit/return-handling-collateral-edit.component";
+import { ReturnHandlingCollateralPagingComponent } from "./return-handling/return-handling-collateral-paging/return-handling-collateral-paging.component";
+import { MatCheckboxModule } from "@angular/material";
 
 @NgModule({
   imports: [
@@ -29,7 +34,8 @@ import { ReturnHandlingPhoneVerifPagingComponent } from "./return-handling/retur
     AdditionalProcessSharingRoutingModule,
     AdInsModule,
     TcSharingComponentModule,
-    ViewMainInfoComponentModule
+    ViewMainInfoComponentModule,
+    MatCheckboxModule
   ],
   declarations: [
     PoExtensionPagingComponent,
@@ -48,7 +54,11 @@ import { ReturnHandlingPhoneVerifPagingComponent } from "./return-handling/retur
     ReturnHandlingCommissionComponent,
     AppInquiryComponent,
     CreditProcessInquiryComponent,
-    ReturnHandlingPhoneVerifPagingComponent
+    ReturnHandlingPhoneVerifPagingComponent,
+    ReturnHandlingSurveyComponent,
+    ReturnHandlingCollateralPagingComponent,
+    ReturnHandlingCollateralEditComponent,
+    ReturnHandlingCollateralDetailComponent
   ],
   providers: [
     NGXToastrService

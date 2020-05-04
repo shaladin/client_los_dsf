@@ -78,6 +78,7 @@ export class SearchCrossAppComponent implements OnInit {
   resultData;
   getResult(ev) {
     this.resultData=ev["response"];
+    console.log(this.resultData);
   }
 
   checkboxAll;
@@ -161,13 +162,13 @@ export class SearchCrossAppComponent implements OnInit {
       addCrit.restriction = AdInsConstant.RestrictionNotIn;
       var tempList = [];
       for(var i=0;i<this.tempListId.length;i++){
-        var temp = this.resultData.Data.find(x => x.AgrmntId == this.tempListId[i]);
+        var temp = this.tempData.find(x => x.AgrmntId == this.tempListId[i]);
         tempList.push(temp["AgrmntNo"]);
       }
       for(var i=0;i<this.ListCrossAppObjInput["result"].length;i++){
         tempList.push(this.ListCrossAppObjInput["result"][i]);
       }
-      // console.log(tempList);
+      console.log(tempList);
       addCrit.listValue = tempList;
       this.arrAddCrit.push(addCrit);
       this.arrAddCrit.push(this.addCritAppId);
@@ -182,8 +183,8 @@ export class SearchCrossAppComponent implements OnInit {
       this.inputObj.addCritInput = this.arrAddCrit;
       this.UCSearchComponent.search(this.apiUrl, this.pageNow, this.pageSize, order, this.arrAddCrit);
       this.listSelectedId = [];
-      // console.log("temp data");
-      // console.log(this.tempData);
+      console.log("temp data");
+      console.log(this.tempData);
       this.checkboxAll = false;
     }else{
       this.toastr.typeErrorCustom("Please select at least one Aggreement");
@@ -210,17 +211,17 @@ export class SearchCrossAppComponent implements OnInit {
       addCrit.restriction = AdInsConstant.RestrictionNotIn;
       var tempList = [];
       for(var i=0;i<this.tempListId.length;i++){
-        var temp = this.resultData.Data.find(x => x.AgrmntId == this.tempListId[i]);
+        var temp = this.tempData.find(x => x.AgrmntId == this.tempListId[i]);
         tempList.push(temp["AgrmntNo"]);
       }
       for(var i=0;i<this.ListCrossAppObjInput["result"].length;i++){
         tempList.push(this.ListCrossAppObjInput["result"][i]);
       }
-      // console.log(tempList);
+      console.log(tempList);
       addCrit.listValue = tempList;
       this.arrAddCrit.push(this.addCritAppId);
 
-      if (this.tempListId.length != 0) {
+      if (this.tempListId.length != 0 || this.ListCrossAppObjInput["result"].length != 0) {
         this.arrAddCrit.push(addCrit);
       }
       var order = null;

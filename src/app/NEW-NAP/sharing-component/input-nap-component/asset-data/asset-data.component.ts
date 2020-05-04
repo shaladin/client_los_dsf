@@ -286,7 +286,7 @@ export class AssetDataComponent implements OnInit {
     this.GetAppData();
     await this.GetListAddr();
     //this.assetMasterObj.FullAssetCode = 'CAR';
-    this.GetAssetMaster(this.assetMasterObj);
+    //this.GetAssetMaster(this.assetMasterObj);
 
     this.AssetDataForm.removeControl("AssetAccessoriesObjs");
     this.AssetDataForm.addControl("AssetAccessoriesObjs", this.fb.array([]));
@@ -396,6 +396,7 @@ export class AssetDataComponent implements OnInit {
     this.allAssetDataObj.AppCollateralObj.AssetTypeCode = this.AssetDataForm.controls.AssetTypeCode.value;
     this.allAssetDataObj.AppCollateralObj.AssetCategoryCode = this.AssetDataForm.controls.AssetCategoryCode.value;
     this.allAssetDataObj.AppCollateralObj.ManufacturingYear = this.AssetDataForm.controls.ManufacturingYear.value;
+    this.allAssetDataObj.AppCollateralObj.IsMainCollateral = true;
 
     this.allAssetDataObj.AppCollateralRegistrationObj.UserName = this.AssetDataForm.controls.UserName.value;
     this.allAssetDataObj.AppCollateralRegistrationObj.MrUserRelationshipCode = this.AssetDataForm.controls.MrUserRelationshipCode.value;
