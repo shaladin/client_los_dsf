@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, CheckboxControlValueAccessor } from '@angular/forms';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
@@ -19,12 +19,20 @@ export class AppAddFreeComponent implements OnInit {
   param;
   ProductOfferingIdentifier;
   ProductOfferingNameIdentifier;
+  LobCode;
   constructor(
     private fb: FormBuilder,
+    private route: ActivatedRoute,
     private router: Router,
     private http: HttpClient,
     private toastr: NGXToastrService
-  ) { }
+  ) { 
+      this.route.queryParams.subscribe(params => {
+      if (params["LobCode"] != null) {
+        this.LobCode = params["LobCode"];
+      }
+     });
+  }
 
   NapAppForm = this.fb.group({
     MouCustId: [''],
@@ -203,7 +211,7 @@ export class AppAddFreeComponent implements OnInit {
       (response) => {
         console.log(response);
         this.toastr.successMessage(response["message"]);
-        //this.router.navigate(["Nap/ConsumerFinance/InputNap/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
+        this.router.navigate(["Nap/CF2W/Add/Detail"], { queryParams: { "LobCode": this.LobCode, "AppId": response["AppId"] } });
       },
       (error) => {
         console.log(error);

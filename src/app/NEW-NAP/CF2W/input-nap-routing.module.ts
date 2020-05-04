@@ -4,6 +4,7 @@ import { AppComponent } from './app/app.component';
 import { AppPagingComponent } from './app-paging/app-paging.component';
 import { AppAddFreeComponent } from './app-add-free/app-add-free.component';
 import { AppAddFixedComponent } from './app-add-fixed/app-add-fixed.component';
+import { AppAddDetailComponent } from './app-add-detail/app-add-detail.component';
  
 
 const routes: Routes = [
@@ -36,6 +37,13 @@ const routes: Routes = [
           component: AppAddFixedComponent,
           data: {
               title: 'Add Fixed Application'
+          }
+        },
+        {
+          path: 'Add/Detail',
+          component: AppAddDetailComponent,
+          data: {
+              title: 'Add Detail Application'
           }
         },
     ]
