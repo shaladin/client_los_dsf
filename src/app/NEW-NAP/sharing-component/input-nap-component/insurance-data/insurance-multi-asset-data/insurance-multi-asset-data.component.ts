@@ -4,7 +4,6 @@ import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute } from '@angular/router';
-import { WizardComponent } from 'angular-archwizard';
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
@@ -30,7 +29,7 @@ import { AppInsAddCvgObj } from 'app/shared/model/AppInsAddCvgObj.Model';
 })
 export class InsuranceMultiAssetDataComponent implements OnInit {
   @Input() appId: number;
-  @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
+  @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @ViewChild('InsuranceContent') modalIns;
   
   listAppAssetObj: any;
@@ -113,8 +112,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     private modalService: NgbModal,
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private route: ActivatedRoute,
-    private wizard: WizardComponent){
+    private route: ActivatedRoute){
       this.route.queryParams.subscribe(params => {
         this.appId = params["AppId"];
       })
@@ -226,7 +224,8 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       (response) => {
         console.log(response);
         this.toastr.successMessage(response["message"]);
-        this.wizard.goToNextStep();
+        // this.wizard.goToNextStep();
+          this.outputTab.emit();
       },
       (error) => {
         console.log(error);

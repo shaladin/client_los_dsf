@@ -48,27 +48,27 @@ const routes: Routes = [
                 path: 'View',
                 loadChildren: './view/nap-view.module#NapViewModule'
             },
-            {
-                path: 'AssetData/Paging',
-                component: AssetDataPagingComponent,
-                data: {
-                  title: 'Asset Registration Summary'
-                }
-            },
-            {
-              path: 'AssetData/Detail',
-              component: AssetDataAddEditComponent,
-              data: {
-                title: 'Asset Registration Form'
-              }
-            },
-            {
-              path: 'Collateral/Detail',
-              component: CollateralAddEditComponent,
-              data: {
-                title: 'Collateral Registration Form'
-              }
-            }
+            // {
+            //     path: 'AssetData/Paging',
+            //     component: AssetDataPagingComponent,
+            //     data: {
+            //       title: 'Asset Registration Summary'
+            //     }
+            // },
+            // {
+            //   path: 'AssetData/Detail',
+            //   component: AssetDataAddEditComponent,
+            //   data: {
+            //     title: 'Asset Registration Form'
+            //   }
+            // },
+            // {
+            //   path: 'Collateral/Detail',
+            //   component: CollateralAddEditComponent,
+            //   data: {
+            //     title: 'Collateral Registration Form'
+            //   }
+            // }
         ]
     }
 ]
