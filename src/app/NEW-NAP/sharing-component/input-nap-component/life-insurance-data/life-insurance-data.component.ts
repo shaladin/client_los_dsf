@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -6,7 +6,6 @@ import { FormBuilder } from '@angular/forms';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { LifeInsObj } from 'app/shared/model/LifeInsObj.Model';
 import { LifeInsDObj } from 'app/shared/model/LifeInsDObj.Model';
-import { WizardComponent } from 'angular-archwizard';
 
 @Component({
   selector: 'app-life-insurance-data',
@@ -17,6 +16,7 @@ import { WizardComponent } from 'angular-archwizard';
 export class LifeInsuranceDataComponent implements OnInit {
 
   @Input() AppId: any;
+  @Output() outputTab: EventEmitter<any> = new EventEmitter();
   inputGridObj: any;
   show: any;
   LifeInsObj: LifeInsObj = new LifeInsObj();
@@ -27,8 +27,7 @@ export class LifeInsuranceDataComponent implements OnInit {
   AppLifeInsD: any = new Array();
   result: any;
 
-  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService,
-    private wizard: WizardComponent) {
+  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       this.mode = params["mode"];
       this.AppId = params["AppId"];
@@ -172,7 +171,8 @@ export class LifeInsuranceDataComponent implements OnInit {
       this.http.post(AdInsConstant.EditAppLifeInsH, this.LifeInsObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
-          this.wizard.goToNextStep()
+          // this.wizard.goToNextStep()
+          this.outputTab.emit();
         },
         error => {
           console.log(error);
@@ -183,7 +183,8 @@ export class LifeInsuranceDataComponent implements OnInit {
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
-          this.wizard.goToNextStep()
+          // this.wizard.goToNextStep()
+          this.outputTab.emit();
         },
         (error) => {
           console.log(error);
