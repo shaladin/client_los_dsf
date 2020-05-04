@@ -804,7 +804,7 @@ export class AdInsConstant {
   
   // App Collateral Suppl Emp
   public static GetListAppAssetSupplEmpByAppAssetId = environment.losUrl + "/AppAssetSupplEmp/GetListAppAssetSupplEmpByAppAssetId";
-
+  public static AddEditAllCollateralDataByAppCollateraId  = "";
   // App Collateral Registration
   public static GetAppCollateralRegistrationByAppCollateralId = environment.losUrl + "/AppCollateralRegistration/GetAppCollateralRegistrationByAppCollateralId"
  
