@@ -1,6 +1,6 @@
   <div class="ucSearch-Button-Right">
     <span class="mr-1">
-      <button type="button" class="addButton" [routerLink]="['/Nap/AssetData/Detail']" translate>
+      <button type="button" class="addButton" (click)="addAsset()" translate>
         <i class="ft-plus-circle"></i> Add Asset
       </button>
     </span>
@@ -56,14 +56,14 @@
         </tr>
       </tbody>
     </table>-->
-    <lib-ucgridview [gridInput]="gridAssetDataObj"></lib-ucgridview>
+    <lib-ucgridview [gridInput]="gridAssetDataObj" (callback)="event($event)"></lib-ucgridview>
   </div>
   <br>
   <br>
   <br>
   <div class="ucSearch-Button-Right">
     <span class="mr-1">
-      <button type="button" class="addButton" [routerLink]="['/Nap/Collateral/Detail']" translate>
+      <button type="button" class="addButton" (click)="addColl()" translate>
         <i class="ft-plus-circle"></i> Add Additional Collateral
       </button>
     </span>
@@ -71,7 +71,7 @@
   <lib-ucSubsection [id]="'collateralId'" [title]="'Additional Collateral'" [panel]="'collateral'">
   </lib-ucSubsection>
   <div id="collateral">
-    <lib-ucgridview [gridInput]="gridAppCollateralObj"></lib-ucgridview>
+    <lib-ucgridview [gridInput]="gridAppCollateralObj" (callback)="eventColl($event)"></lib-ucgridview>
   </div>
   <br>
   <br>
