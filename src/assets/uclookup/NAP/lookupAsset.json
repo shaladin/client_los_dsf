@@ -32,7 +32,7 @@
     },
     {
       "type": "sort",
-      "position": "center",
+      "position": "left",
       "label": "Full Asset Name",
       "name": "FullAssetName"
     },
@@ -50,7 +50,7 @@
     },
     {
       "type": "text",
-      "position": "center",
+      "position": "left",
       "property": "FullAssetName"
     },
     {
