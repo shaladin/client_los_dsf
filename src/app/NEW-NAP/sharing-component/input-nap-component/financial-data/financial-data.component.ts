@@ -100,6 +100,11 @@ LoadAppFinData()
     (response) => {
       this.appFinDataObj = response;
 
+      if(this.appFinDataObj.MrInstSchemeCode != 'RF')
+      {
+        this.FinDataForm.get("RateType").disable();
+      }
+
       this.FinDataForm.patchValue({
         TotalAssetPriceAmt : this.appFinDataObj.TotalAssetPriceAmt,
         TotalFeeAmt : this.appFinDataObj.TotalFeeAmt,
@@ -126,7 +131,6 @@ LoadAppFinData()
 
         MrInstSchemeCode: this.appFinDataObj.MrInstSchemeCode,
         CummulativeTenor: this.appFinDataObj.CummulativeTenor,
-
       });
 
       this.IsParentLoaded = true;

@@ -1,11 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { HttpClient } from '@angular/common/http';
 import { GuarantorObj } from 'app/shared/model/GuarantorObj.Model';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AppWizardObj } from 'app/shared/model/App/AppWizard.Model';
-import { WizardComponent } from 'angular-archwizard';
 
 @Component({
   selector: 'app-guarantor-paging',
@@ -15,6 +14,7 @@ import { WizardComponent } from 'angular-archwizard';
 export class GuarantorPagingComponent implements OnInit {
 
   @Input() AppId: any;
+  @Output() outputTab: EventEmitter<any> = new EventEmitter();
 
   inputGridObj: any;
   closeResult: any;
@@ -24,9 +24,7 @@ export class GuarantorPagingComponent implements OnInit {
   appWizardObj: AppWizardObj;
   closeChk : any;
 
-  constructor(private http: HttpClient,
-    private modalService: NgbModal,
-    private wizard: WizardComponent) {
+  constructor(private http: HttpClient, private modalService: NgbModal) {
   }
 
   ngOnInit() {
@@ -79,7 +77,7 @@ export class GuarantorPagingComponent implements OnInit {
 
   SaveAndContinue()
   {
-    this.wizard.goToNextStep();
+    this.outputTab.emit();
   }
 
   event(content,ev){
