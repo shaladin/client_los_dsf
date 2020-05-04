@@ -34,6 +34,7 @@ import { MatCheckboxModule, MatRadioModule, MatSelectModule } from "@angular/mat
 import { GuarantorPersonalComponent } from "./guarantor-data/guarantor-personal/guarantor-personal.component";
 import { GuarantorCompanyComponent } from "./guarantor-data/guarantor-company/guarantor-company.component";
 import { GuarantorPagingComponent } from "./guarantor-data/guarantor-paging/guarantor-paging.component";
+import { ApplicationDataRefinancingComponent } from "./application-data/application-data-refinancing/application-data-refinancing.component";
 import { SchmStepUpStepDownNormalComponent } from "./financial-data/component/schm-step-up-step-down-normal/schm-step-up-step-down-normal.component";
 import { SchmRegulerFixComponent } from "./financial-data/component/schm-reguler-fix/schm-reguler-fix.component";
 import { SchmStepUpStepDownLeasingComponent } from "./financial-data/component/schm-step-up-step-down-leasing/schm-step-up-step-down-leasing.component";
@@ -87,6 +88,7 @@ export const customCurrencyMaskConfig = {
     SubsidyAddEditComponent,
     FeeComponent,
     TcDataComponent, // sementara nanti dicross check sama term-conditions
+    ApplicationDataRefinancingComponent,
     SchmRegulerFixComponent,
     SchmStepUpStepDownNormalComponent,
     SchmStepUpStepDownLeasingComponent,
