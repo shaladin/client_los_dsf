@@ -209,7 +209,7 @@
             </div>
           </div>
 
-          <lib-ucSubsection [id]="'viewInsuranceInfoId'" [title]="'Asset Insurance & Life Insurance'" [panel]="'viewInsuranceInfo'">
+          <lib-ucSubsection [id]="'viewInsuranceInfoId'" [title]="InsuranceTitle" [panel]="'viewInsuranceInfo'">
           </lib-ucSubsection>
           <div class="form-body" id="viewInsuranceInfo">
             <div class="row">
@@ -229,7 +229,7 @@
                   <label class="col-md-6 adInsLabel"> {{AssetInsuranceAndLifeInsuranceData.AssetInsuranceCompany}} </label>
                 </div>
               </div>
-              <div class="col-md-6 ">
+              <div class="col-md-6" *ngIf= "AssetInsuranceAndLifeInsuranceData.CoverBy == 'CU'">
                 <div class="row">
                   <label class="col-md-6 adInsLabel"> Cover Life Insurance </label>
                   <label class="col-md-6 adInsLabel" *ngIf="AssetInsuranceAndLifeInsuranceData.IsLifeInsurance"> Yes </label>

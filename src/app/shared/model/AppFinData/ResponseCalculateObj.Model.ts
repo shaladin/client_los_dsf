@@ -1,4 +1,5 @@
 import { InstallmentObj } from "./InstallmentObj.Model";
+import { AppInstStepSchmObj } from "../AppInstStepSchm/AppInstStepSchmObj.Model";
 
 export class ResponseCalculateObj {
     AppId : number
@@ -16,6 +17,7 @@ export class ResponseCalculateObj {
     TotalARAmt : number
     TotalPrincipalAmt : number
     InstallmentTable : Array<InstallmentObj> = new Array<InstallmentObj>()
+    AppInstStepSchmObjs: Array<AppInstStepSchmObj> = new Array<AppInstStepSchmObj>()
 
     constructor() {
     }

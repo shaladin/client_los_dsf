@@ -15,6 +15,10 @@ import { ApplicantExistingDataCompanyComponent } from './app-dup-check/applicant
 import { ReturnHandlingEditAppPagingComponent } from './return-handling/return-handling-edit-app-paging/return-handling-edit-app-paging.component';
 import { AssetInquiryComponent } from './po-extension/asset-inquiry/asset-inquiry.component';
 import { ReturnHandlingPhoneVerifPagingComponent } from './return-handling/return-handling-phone-verif-paging/return-handling-phone-verif-paging.component';
+import { ReturnHandlingSurveyComponent } from './return-handling/return-handling-survey/return-handling-survey.component';
+import { ReturnHandlingCollateralPagingComponent } from './return-handling/return-handling-collateral-paging/return-handling-collateral-paging.component';
+import { ReturnHandlingCollateralEditComponent } from './return-handling/return-handling-collateral-edit/return-handling-collateral-edit.component';
+import { ReturnHandlingCollateralDetailComponent } from './return-handling/return-handling-collateral-detail/return-handling-collateral-detail.component';
 
 const routes: Routes = [
   {
@@ -123,6 +127,34 @@ const routes: Routes = [
         component: ReturnHandlingCommissionComponent,
         data: {
           title: 'Return Handling Commission'
+        }
+      },
+      {
+        path: 'ReturnHandling/Survey',
+        component: ReturnHandlingSurveyComponent,
+        data: {
+          title: 'Return Handling Survey'
+        }
+      },
+      {
+        path: 'ReturnHandlingCollateral/Paging',
+        component: ReturnHandlingCollateralPagingComponent,
+        data: {
+          title: 'Return Handling Collateral'
+        }
+      },
+      {
+        path: 'ReturnHandlingCollateral/Edit',
+        component: ReturnHandlingCollateralEditComponent,
+        data: {
+          title: 'Return Handling Collateral Edit'
+        }
+      },
+      {
+        path: 'ReturnHandlingCollateral/Detail',
+        component: ReturnHandlingCollateralDetailComponent,
+        data: {
+          title: 'Return Handling Collateral Detail'
         }
       }
     ]

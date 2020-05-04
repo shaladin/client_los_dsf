@@ -204,6 +204,8 @@ export class ApplicationDataComponent implements OnInit {
           MrInstSchemeCode: this.resultResponse.MrInstSchemeCode,
           InterestType: this.resultResponse.InterestType,
           FloatingPeriod: this.resultResponse.FloatingPeriodCode,
+          SalesOfficerName: this.resultResponse.SalesName,
+
         });
         console.log(this.NapAppModelForm);
         this.makeNewLookupCriteria();
@@ -292,7 +294,7 @@ export class ApplicationDataComponent implements OnInit {
     this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupEmp.json";
-    this.inputLookupObj.nameSelect = this.NapAppModelForm.controls.SalesOfficerName.value;
+    this.inputLookupObj.nameSelect = this.resultResponse.SalesName;
     this.inputLookupObj.addCritInput = this.arrAddCrit;
     this.isInputLookupObj = true;
   }
@@ -345,7 +347,7 @@ export class ApplicationDataComponent implements OnInit {
     var temp = this.NapAppModelForm.controls.Tenor.value;
     if(!isNaN(temp)){
       console.log("isNUM");
-      var total = Math.floor((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
+      var total = Math.ceil((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
       this.PatchNumOfInstallment(total);      
     }
   }
@@ -361,7 +363,7 @@ export class ApplicationDataComponent implements OnInit {
       console.log("isNUM");
       this.PayFreqVal = this.applicationDDLitems["Pay_Freq"][idx].PayFreqVal;
       this.PayFreqTimeOfYear = this.applicationDDLitems["Pay_Freq"][idx].TimeOfYear;
-      var total = Math.floor((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
+      var total = Math.ceil((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
       this.PatchNumOfInstallment(total);      
     }
   } 
@@ -517,24 +519,26 @@ export class ApplicationDataComponent implements OnInit {
   }
 
   DeleteCrossApp(idx){
-    console.log(idx);
-    console.log(this.resultCrossApp);
-    console.log(this.resultCrossApp[idx]);
-    if(this.resultCrossApp[idx].AppCrossId!=null){
-      var url = AdInsConstant.DeleteAppCross;
-      var obj = new NapAppCrossObj();
-      obj = this.resultCrossApp[idx];
-      this.http.post(url, obj).subscribe(
-        (response) =>{
-          console.log(response);
-        },
-        (error) => {
-          console.log(error);
-        }
-      )
+    if (confirm('Are you sure to delete this record?')) {
+      console.log(idx);
+      console.log(this.resultCrossApp);
+      console.log(this.resultCrossApp[idx]);
+      if(this.resultCrossApp[idx].AppCrossId!=null){
+        var url = AdInsConstant.DeleteAppCross;
+        var obj = new NapAppCrossObj();
+        obj = this.resultCrossApp[idx];
+        this.http.post(url, obj).subscribe(
+          (response) =>{
+            console.log(response);
+          },
+          (error) => {
+            console.log(error);
+          }
+        )
+      }
+      this.resultCrossApp.splice(idx, 1);
+      this.ListCrossAppObj["result"].splice(idx, 1);
     }
-    this.resultCrossApp.splice(idx, 1);
-    this.ListCrossAppObj["result"].splice(idx, 1);
   }
 
   ChangeInterestType(){
