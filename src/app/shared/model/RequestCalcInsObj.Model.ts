@@ -8,6 +8,8 @@ export class RequestCalcInsObj {
     InscoBranchCode: string;
     ProdOfferingCode: string;
     ProdOfferingVersion: string;
+    AppId: number;
+    AppAssetId: number;
 
 constructor() {
     this.InsCoverage = new Array<CalcInsMainCvgObj>();

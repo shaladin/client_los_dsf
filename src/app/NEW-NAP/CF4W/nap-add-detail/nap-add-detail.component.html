@@ -60,7 +60,7 @@
             <app-application-data-model *ngIf="AppStepIndex == 3" [appId]=appId></app-application-data-model>
           </aw-wizard-step> -->
 
-          <!-- <aw-wizard-step [stepTitle]="'Asset Data'" (stepEnter)="EnterTab('ASSET')"
+          <aw-wizard-step [stepTitle]="'Asset Data'" (stepEnter)="EnterTab('ASSET')"
             [navigationSymbol]="{ symbol: '5' }">
             <app-asset-data *ngIf="AppStepIndex == 4" [AppId]=appId></app-asset-data>
           </aw-wizard-step>
@@ -82,7 +82,7 @@
 
           <aw-wizard-step [stepTitle]="'Financial Data'" (stepEnter)="EnterTab('FIN')"
             [navigationSymbol]="{ symbol: '8' }">
-            <!-- <app-financial-data *ngIf="AppStepIndex == 7" [AppId]=appId></app-financial-data> -->
+            <app-financial-data *ngIf="AppStepIndex == 7" [AppId]=appId></app-financial-data>
           </aw-wizard-step>
 
           <aw-wizard-step [stepTitle]="'Terms and Conditions'" (stepEnter)="EnterTab('TC')"
