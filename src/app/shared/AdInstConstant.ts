@@ -842,6 +842,7 @@ export class AdInsConstant {
   //APP INSURANCE
   public static GetInsuranceDataByAppId = environment.losUrl + "/AppIns/GetInsDataByAppId";
   public static GetInsuranceDataByAppIdForView = environment.losUrl + "/AppIns/GetInsDataByAppIdForView";
+  public static GetInsDataByAppIdAndAssetId = environment.losUrl + "/AppIns/GetInsDataByAppIdAndAssetId";
   public static AddEditInsuranceData = environment.losUrl + "/AppIns/AddEditInsuranceData";
   //APP INSURANCE
 
@@ -1038,6 +1039,10 @@ export class AdInsConstant {
   // Upload
   public static UploadFile = environment.FoundationR3Url + "/Upload/UploadFile";
 
+  // Download
+  public static DownloadTemplate = environment.FoundationR3Url + '/Download/DownloadTemplate';
+  public static GetUploadAssetMasterByUploadMonitoringNoAndTrxType = environment.FoundationR3Url + '/AssetMaster/GetUploadAssetMasterByUploadMonitoringNoAndTrxType';
+  
   // Asset Category
   public static GetAssetCategoryById = environment.FoundationR3Url + "/AssetCategory/GetAssetCategoryById";
 }

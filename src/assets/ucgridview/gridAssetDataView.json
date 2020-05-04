@@ -1,0 +1,98 @@
+
+{
+    "headerList": [
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Asset Name",
+            "name": "FullAssetName"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Supplier Branch",
+            "name": "SupplName"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Serial No 1",
+            "name": "SerialNo1"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Serial No 2",
+            "name": "SerialNo2"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Serial No 3",
+            "name": "SerialNo3"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Serial No 4",
+            "name": "SerialNo4"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "View Detail"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "FullAssetName"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "SupplName"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "SerialNo1"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "SerialNo2"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "SerialNo3"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "SerialNo4"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "edit",
+                    "path": "/Nap/AssetData/Detail",
+                    "param": [
+                        {
+                            "type": "AppAssetId",
+                            "property": "AppAssetId"
+                        },
+                        {
+                            "type": "AppId",
+                            "property": "AppId"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
