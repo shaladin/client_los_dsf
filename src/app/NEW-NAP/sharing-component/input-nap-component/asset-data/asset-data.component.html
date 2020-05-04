@@ -2,6 +2,7 @@
   <div class="card">
     <div class="card-body">
       <div class="px-3">
+        <a></a>
         <form class="form form-horizontal" [formGroup]="AssetDataForm" (ngSubmit)="AssetDataForm.valid && SaveForm()"
               #enjiForm="ngForm">
           <div class="form-body">
@@ -10,10 +11,10 @@
             <div id="supplierData">
               <div class="form-group row">
                 <label class="col-md-2  adInsLabel" translate>Supplier Name </label>
-                <div class="col-md-4">
+                <!--<div class="col-md-4" *ngIf="isOnlookup">
                   <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupSupplierObj" [identifier]="'lookupSupplier'" [enjiForm]='enjiForm' [parentForm]='AssetDataForm' (lookup)="SetSupplier($event)">
                   </lib-uclookupgeneric>
-                </div>
+                </div>-->
                 <label class="col-md-2  adins-required-label" translate>Sales Person</label>
                 <div class="col-md-4">
                   <select *ngIf="SalesPersonObj" class="form-control" id="salesPerson" formControlName="SalesPersonId" (change)="SalesPersonChanged($event)"
@@ -46,10 +47,10 @@
             <div id="assetData">
               <div class="form-group row">
                 <label class="col-md-2  adInsLabel" translate>Asset Name </label>
-                <div class="col-md-4">
+                <!--<div class="col-md-4" *ngIf="isOnlookup">
                   <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupAssetObj" [identifier]="'lookupAsset'" [enjiForm]='enjiForm' [parentForm]='AssetDataForm' (lookup)="SetAsset($event)">
                   </lib-uclookupgeneric>
-                </div>
+                </div>-->
                 <label class="col-md-2  adins-required-label" translate>Down Payment Type</label>
                 <div class="col-md-4">
                   <mat-radio-group formControlName="selectedDpType" (change)="DpTypeChange($event)">
@@ -148,10 +149,10 @@
                   <lib-uc-show-errors  [control]="AssetDataForm.controls.AssetNotes" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                 </div>
                 <label class="col-md-2" translate>BPKB City Issuer</label>
-                <div class="col-md-4">
+                <!--<div class="col-md-4" *ngIf="isOnlookup">
                   <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupCityIssuerObj" [identifier]="'DistrictCode'" [enjiForm]='enjiForm' [parentForm]='AssetDataForm' (lookup)="SetBpkbCity($event)">
                   </lib-uclookupgeneric>
-                </div>
+                </div>-->
               </div>
             </div>
             <lib-ucSubsection [id]="'accessoriesDataId'" [title]="'Accessories'" [panel]="'accessoriesData'">

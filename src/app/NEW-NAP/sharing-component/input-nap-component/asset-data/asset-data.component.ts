@@ -261,6 +261,7 @@ export class AssetDataComponent implements OnInit {
   InputLookupSupplObjs: Array<InputLookupObj> = new Array<InputLookupObj>();
   dictAccLookup: { [key: string]: any; } = {};
   dictSuppLookup: { [key: string]: any; } = {};
+  isOnlookup: any;
 
   //AllAssetObjs: [{
   //  list: []
@@ -278,14 +279,16 @@ export class AssetDataComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.inputFieldOwnerAddrObj = new InputFieldObj();
-    this.inputFieldOwnerAddrObj.inputLookupObj = new InputLookupObj();
-    this.inputFieldLocationAddrObj = new InputFieldObj();
-    this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
+    this.isOnlookup = false;
     this.initUrl();
     await this.GetAppData();
     await this.GetRefProdCompt();
     await this.GetAppCust();
+    this.inputFieldOwnerAddrObj = new InputFieldObj();
+    this.inputFieldOwnerAddrObj.inputLookupObj = new InputLookupObj();
+    this.inputFieldLocationAddrObj = new InputFieldObj();
+    this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
+
     if (this.CustType == AdInsConstant.CustTypeCompany) {
       await this.GetAppCustCoy();
     }
@@ -300,7 +303,6 @@ export class AssetDataComponent implements OnInit {
     //this.AllAssetObjs.splice(0, 1);
 
     this.getAllAssetData();
-
 
   }
 
@@ -594,7 +596,7 @@ export class AssetDataComponent implements OnInit {
         console.log("RESPOOOON");
         this.appAssetObj = response;
         console.log(this.appAssetObj);
-        if (this.appAssetObj) {
+        if (this.appAssetObj != "") {
 
           console.log("AAAA");
           console.log(this.appAssetObj.ResponseBranchManagerSupp)
@@ -719,7 +721,7 @@ export class AssetDataComponent implements OnInit {
     
 
     this.InputLookupAccObj = this.initLookupAcc();
-
+    this.isOnlookup = true;
   }
   initLookupAcc() {
     this.InputLookupAccObj = new InputLookupObj();
@@ -853,7 +855,7 @@ export class AssetDataComponent implements OnInit {
   }
 
   async GetVendor() {
-    this.http.post(this.getVendorUrl, this.vendorObj).subscribe(
+    await this.http.post(this.getVendorUrl, this.vendorObj).toPromise().then(
       (response) => {
         this.VendorObj = response;
         this.AssetDataForm.patchValue({
@@ -868,8 +870,8 @@ export class AssetDataComponent implements OnInit {
     );
   }
 
-  GetVendorForView() {
-    this.http.post(this.getVendorUrl, this.vendorObj).subscribe(
+  async GetVendorForView() {
+    await this.http.post(this.getVendorUrl, this.vendorObj).toPromise().then(
       (response) => {
         this.VendorObj = response;
         this.AssetDataForm.patchValue({
@@ -1416,7 +1418,7 @@ export class AssetDataComponent implements OnInit {
 
   async GetListAddr() {
     this.appObj.AppId = this.AppId;
-    this.http.post(this.getAppCustAddrUrl, this.appObj).toPromise().then(
+    await this.http.post(this.getAppCustAddrUrl, this.appObj).toPromise().then(
       (response) => {
         this.AppCustAddrObj = response["ReturnObject"];
         this.AddrLegalObj = this.AppCustAddrObj.filter(
@@ -1609,6 +1611,7 @@ export class AssetDataComponent implements OnInit {
     await this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj).toPromise().then(
       (response) => {
         this.RefProdCmpt = response;
+        console.log("AWWWWWW");
         console.log(response);
       }
     );
