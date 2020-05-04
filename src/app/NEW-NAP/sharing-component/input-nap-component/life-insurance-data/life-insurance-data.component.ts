@@ -57,9 +57,11 @@ export class LifeInsuranceDataComponent implements OnInit {
           console.log(response);
           this.result = response;
           this.AppLifeInsHId = this.result.AppLifeInsHId;
-          for(let i =0; i<this.result.ListAppLifeInsD.length;i++){
-            this.AppLifeInsD[i] = this.result.ListAppLifeInsD[i]["AppLifeInsDId"];
-          }
+          if(this.result.ListAppLifeInsD != null && this.result.ListAppLifeInsD != undefined){
+            for(let i =0; i<this.result.ListAppLifeInsD.length;i++){
+              this.AppLifeInsD[i] = this.result.ListAppLifeInsD[i]["AppLifeInsDId"];
+            }
+          }     
           console.log(this.AppLifeInsD);
           if(this.result.AppLifeInsHId != 0){
             this.mode="edit";
@@ -123,7 +125,8 @@ export class LifeInsuranceDataComponent implements OnInit {
     lifeInsObj.MrLifeInsPaidMethodCode = "PAID_IN_ADV";
     this.http.post(AdInsConstant.InitAppLifeInsH, lifeInsObj).subscribe(
       (response) => {
-        this.ListObj = response["ListAppLifeInsD"]
+        this.ListObj = response["ListAppLifeInsD"];
+        this.LifeInsObj.ListAppLifeInsD = response["ListAppLifeInsD"];
       },
       (error) => {
         console.log(error);
