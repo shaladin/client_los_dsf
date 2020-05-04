@@ -58,14 +58,19 @@
           <aw-wizard-step [stepTitle]="'Application Data'" (stepEnter)="EnterTab('APP')"
             [navigationSymbol]="{ symbol: '4' }">
             <app-application-data-model *ngIf="AppStepIndex == 3" [appId]=appId></app-application-data-model>
-          </aw-wizard-step>
+          </aw-wizard-step> -->
 
-          <aw-wizard-step [stepTitle]="'Asset Data'" (stepEnter)="EnterTab('ASSET')"
+          <!-- <aw-wizard-step [stepTitle]="'Asset Data'" (stepEnter)="EnterTab('ASSET')"
             [navigationSymbol]="{ symbol: '5' }">
             <app-asset-data *ngIf="AppStepIndex == 4" [AppId]=appId></app-asset-data>
           </aw-wizard-step>
 
-          <aw-wizard-step [stepTitle]="'Insurance Data'" (stepEnter)="EnterTab('INS')"
+          <aw-wizard-step *ngIf="IsMultiAsset == 'True'" [stepTitle]="'Insurance Multi Asset Data'" (stepEnter)="EnterTab('INS')"
+            [navigationSymbol]="{ symbol: '6' }">
+            <app-insurance-multi-asset-data *ngIf="AppStepIndex == 5" [appId]=appId></app-insurance-multi-asset-data>
+          </aw-wizard-step>
+
+          <aw-wizard-step *ngIf="IsMultiAsset == 'False'" [stepTitle]="'Insurance Data'" (stepEnter)="EnterTab('INS')"
             [navigationSymbol]="{ symbol: '6' }">
             <app-insurance-data *ngIf="AppStepIndex == 5" [appId]=appId></app-insurance-data>
           </aw-wizard-step>

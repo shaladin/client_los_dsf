@@ -4,8 +4,8 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
-import { AppWizardObj } from 'app/shared/model/App/AppWizard.Model';
 import { FormBuilder } from '@angular/forms';
+import Stepper from 'bs-stepper'
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -14,35 +14,69 @@ import { FormBuilder } from '@angular/forms';
 })
 export class NapAddDetailComponent implements OnInit {
 
+  private stepper: Stepper;
+  AppStepIndex: number = 1;
   appId: number;
   mode: string;
   viewProdMainInfoObj: string;
-  viewReturnInfoObj: string = "";
   NapObj: AppObj;
-  AppStepIndex: number;
-  IsMultiAsset: string;
-  ListAsset: any;
+  ResponseReturnInfoObj: any;
+  OnFormReturnInfo = false;
 
-  AppStep = {
-    "NEW": 0,
-    "CUST": 0,
-    "GUAR": 1,
-    "REF": 2,
-    "APP": 3,
-    "ASSET": 4,
-    "INS": 5,
-    "LFI": 6,
-    "FIN": 7,
-    "TC": 8,
-  };
-
-  ResponseReturnInfoObj;
   FormReturnObj = this.fb.group({
     ReturnExecNotes: ['']
   });
-  OnFormReturnInfo = false;
-  MakeViewReturnInfoObj(){
-    if(this.mode == AdInsConstant.ModeResultHandling){
+
+  AppStep = {
+    "NEW": 1,
+    "CUST": 1,
+    "GUAR": 2,
+    "REF": 3,
+    "APP": 4,
+    "ASSET": 5,
+    "INS": 6,
+    "LFI": 7,
+    "FIN": 8,
+    "TC": 9,
+  };
+
+  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder) {
+    this.route.queryParams.subscribe(params => {
+      if (params["AppId"] != null) {
+        this.appId = params["AppId"];
+        this.mode = params["Mode"];
+      }
+    });
+  }
+
+  ngOnInit() {
+    this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
+    this.NapObj = new AppObj();
+    this.NapObj.AppId = this.appId;
+    this.http.post(AdInsConstant.GetAppById, this.NapObj).subscribe(
+      (response: AppObj) => {
+        if (response) {
+          this.AppStepIndex = this.AppStep[response.AppCurrStep];
+          this.stepper.to(this.AppStepIndex);
+          console.log(this.AppStepIndex);
+        } else {
+          this.AppStepIndex = 0;
+          this.stepper.to(this.AppStepIndex);
+          console.log(this.AppStepIndex);
+        }
+      }
+    );
+    
+    this.stepper = new Stepper(document.querySelector('#stepper1'), {
+      linear: false,
+      animation: true
+    })
+
+    this.MakeViewReturnInfoObj();
+  }
+
+  MakeViewReturnInfoObj() {
+    if (this.mode == AdInsConstant.ModeResultHandling) {
       var obj = {
         AppId: this.appId,
         MrReturnTaskCode: AdInsConstant.ReturnHandlingEditApp
@@ -56,66 +90,18 @@ export class NapAddDetailComponent implements OnInit {
           this.OnFormReturnInfo = true;
         },
         (error) => {
-          console.log(error);          
+          console.log(error);
         }
       );
-    }    
+    }
   }
 
-  constructor(
-    private route: ActivatedRoute,
-    private http: HttpClient,
-    private fb: FormBuilder) {
-    this.route.queryParams.subscribe(params => {
-      if (params["AppId"] != null) {
-        this.appId = params["AppId"];
-        this.mode = params["Mode"];
-        this.CheckMultiAsset();
-      }
-    });
+  NextStep(Step){
+    this.ChangeTab(Step);
+    this.stepper.next();
   }
-
-  ngOnInit() {
-    console.log("this")
-    this.AppStepIndex = 0;
-    this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
-    // this.NapObj = new AppObj();
-    // this.NapObj.AppId = this.appId;
-    // this.http.post(AdInsConstant.GetAppById, this.NapObj).subscribe(
-    //   (response: AppObj) => {
-    //     if (response) {
-    //       this.AppStepIndex = this.AppStep[response.AppCurrStep];
-    //     }else{
-    //       this.AppStepIndex = 0;
-    //     }
-    //   }
-    // );
-    this.MakeViewReturnInfoObj();
-  }
-
-  CheckMultiAsset()
-  {
-    var appObj = { AppId: this.appId}
-    this.http.post(AdInsConstant.GetAppAssetListByAppId, appObj).subscribe(
-      (response) => {
-        this.ListAsset = response['ReturnObject'];
-        if (this.ListAsset != undefined && this.ListAsset != null)
-        {
-          if (this.ListAsset.length > 1)
-            this.IsMultiAsset = 'True';
-          else
-            this.IsMultiAsset = 'False';
-        }
-        else
-          this.IsMultiAsset = 'False';
-      },
-      (error) => {
-        console.log(error);
-      }
-    )
-  }
-
-  EnterTab(AppStep) {
+  
+  ChangeTab(AppStep) {
     // console.log(AppStep);
     switch (AppStep) {
       case AdInsConstant.AppStepCust:
@@ -134,7 +120,7 @@ export class NapAddDetailComponent implements OnInit {
         this.AppStepIndex = this.AppStep[AdInsConstant.AppStepAsset];
         break;
       case AdInsConstant.AppStepIns:
-          this.AppStepIndex = this.AppStep[AdInsConstant.AppStepIns];
+        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepIns];
         break;
       case AdInsConstant.AppStepLIns:
         this.AppStepIndex = this.AppStep[AdInsConstant.AppStepLIns];
@@ -151,21 +137,15 @@ export class NapAddDetailComponent implements OnInit {
     }
   }
 
-  // WizardNavigation(AppWizard : AppWizardObj){
-  //   console.log("WIZNAV")
-  //   this.AppStepIndex = this.AppStep[AppWizard.AppStep];
-  //   AppWizard.Wizard.goToNextStep();
-  // }
-
-  Submit(){
-    if(this.mode == AdInsConstant.ModeResultHandling){
+  Submit() {
+    if (this.mode == AdInsConstant.ModeResultHandling) {
       var obj = {
         ReturnHandlingDId: this.ResponseReturnInfoObj.ReturnHandlingDId,
         ReturnHandlingNotes: this.ResponseReturnInfoObj.ReturnHandlingNotes,
         ReturnHandlingExecNotes: this.FormReturnObj.value.ReturnExecNotes,
         RowVersion: this.ResponseReturnInfoObj.RowVersion
       };
-  
+
       this.http.post(AdInsConstant.EditReturnHandlingDNotesData, obj).subscribe(
         (response) => {
           console.log(response);
