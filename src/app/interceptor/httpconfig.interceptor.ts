@@ -25,8 +25,6 @@ export class HttpConfigInterceptor implements HttpInterceptor {
     constructor(public errorDialogService: ErrorDialogService, private spinner: NgxSpinnerService, private router: Router, public toastr: ToastrService) { }
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         console.log(request);
-        var asdasd = new RequestCriteriaObj();
-        console.log(asdasd);
         if (request.method == "POST" && (request.body == null || request.body.isLoading == undefined || request.body.isLoading == true)) {
             this.spinner.show();
         }
@@ -121,8 +119,9 @@ export class HttpConfigInterceptor implements HttpInterceptor {
             map((event: HttpEvent<any>) => {
                 if (event instanceof HttpResponse) {
                     //Ini Error kalau sudah masuk sampai ke Back End
-                    if(event.body.StatusCode != undefined) {
-                        if (event.body.StatusCode != '200') {
+                    if (event.body.StatusCode != undefined) {
+                        if ((event.body.StatusCode == '200' && event.body.ErrorMessages) &&
+                            event.body.StatusCode != '200' && event.body.StatusCode != '999') {
                             let data = {};
                             data = {
                                 reason: event.body.Message ? event.body.Message : '',
