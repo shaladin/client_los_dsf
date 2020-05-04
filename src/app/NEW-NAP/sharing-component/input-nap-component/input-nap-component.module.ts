@@ -24,6 +24,7 @@ import { CustCompanyContactInformationComponent } from "./customer-data/componen
 import { CustCompanyFinancialDataComponent } from "./customer-data/component/company-financial-data/cust-company-financial-data.component";
 import { CustLegalDocComponent } from "./customer-data/component/legal-doc/cust-legal-doc.component";
 import { InsuranceDataComponent } from "./insurance-data/insurance-data.component";
+import { InsuranceMultiAssetDataComponent } from "./insurance-data/insurance-multi-asset-data/insurance-multi-asset-data.component";
 import { FinancialDataComponent } from "./financial-data/financial-data.component";
 import { SubsidyComponent } from "./financial-data/component/subsidy/subsidy.component";
 import { SubsidyAddEditComponent } from "./financial-data/component/subsidy-add-edit/subsidy-add-edit.component";
@@ -81,6 +82,7 @@ export const customCurrencyMaskConfig = {
     ReferantorDataComponent,
     AssetDataComponent,
     InsuranceDataComponent,
+    InsuranceMultiAssetDataComponent,
     FinancialDataComponent,
     SubsidyComponent,
     SubsidyAddEditComponent,
@@ -130,6 +132,7 @@ export const customCurrencyMaskConfig = {
     ReferantorDataComponent,
     AssetDataComponent,
     InsuranceDataComponent,
+    InsuranceMultiAssetDataComponent,
     FinancialDataComponent,
     SubsidyComponent,
     SubsidyAddEditComponent,

@@ -13,6 +13,7 @@ import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { AppAssetAccessoryObj } from 'app/shared/model/AppAssetAccessoryObj.model';
 import { AppDataObj } from 'app/shared/model/AppDataObj.model';
+import { WizardComponent } from 'angular-archwizard';
 
 
 @Component({
@@ -267,7 +268,8 @@ export class AssetDataComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private wizard: WizardComponent) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"] ? params["AppId"] : this.AppId;
     })
@@ -284,7 +286,7 @@ export class AssetDataComponent implements OnInit {
     this.GetAppData();
     await this.GetListAddr();
     //this.assetMasterObj.FullAssetCode = 'CAR';
-    this.GetAssetMaster(this.assetMasterObj);
+    //this.GetAssetMaster(this.assetMasterObj);
 
     this.AssetDataForm.removeControl("AssetAccessoriesObjs");
     this.AssetDataForm.addControl("AssetAccessoriesObjs", this.fb.array([]));
@@ -318,6 +320,7 @@ export class AssetDataComponent implements OnInit {
       (response) => {
         console.log(response);
         this.toastr.successMessage(response["message"]);
+        this.wizard.goToNextStep();
       },
       (error) => {
         console.log(error);
@@ -393,6 +396,7 @@ export class AssetDataComponent implements OnInit {
     this.allAssetDataObj.AppCollateralObj.AssetTypeCode = this.AssetDataForm.controls.AssetTypeCode.value;
     this.allAssetDataObj.AppCollateralObj.AssetCategoryCode = this.AssetDataForm.controls.AssetCategoryCode.value;
     this.allAssetDataObj.AppCollateralObj.ManufacturingYear = this.AssetDataForm.controls.ManufacturingYear.value;
+    this.allAssetDataObj.AppCollateralObj.IsMainCollateral = true;
 
     this.allAssetDataObj.AppCollateralRegistrationObj.UserName = this.AssetDataForm.controls.UserName.value;
     this.allAssetDataObj.AppCollateralRegistrationObj.MrUserRelationshipCode = this.AssetDataForm.controls.MrUserRelationshipCode.value;

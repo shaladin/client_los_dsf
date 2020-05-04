@@ -6,7 +6,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 @Component({
   selector: 'app-return-handling-edit-app-paging',
   templateUrl: './return-handling-edit-app-paging.component.html',
-  styleUrls: ['./return-handling-edit-app-paging.component.scss']
+  styleUrls: []
 })
 export class ReturnHandlingEditAppPagingComponent implements OnInit {
 

@@ -12,6 +12,7 @@ import { environment } from 'environments/environment';
 export class TabApplicationDataComponent implements OnInit {
 
   @Input() AppId;
+  @Input() MrCustTypeCode;
   constructor(
     private http: HttpClient,
   ) { }
@@ -23,6 +24,7 @@ export class TabApplicationDataComponent implements OnInit {
   DealerData;
   AppDetailFinData;
   AssetInsuranceAndLifeInsuranceData;
+  InsuranceTitle;
   InitData(){
     // this.appId = 31;
     this.GuarantorData = new Array();
@@ -87,6 +89,12 @@ export class TabApplicationDataComponent implements OnInit {
     await this.GetAppDetailData();
     await this.GetDealerData();
     await this.GetCommData();
+    if(this.AssetInsuranceAndLifeInsuranceData.CoverBy=="CO"){
+      this.InsuranceTitle ="Asset Insurance";
+    }else{
+      this.InsuranceTitle ="Asset Insurance & Life Insurance"
+    }
+    console.log(this.AssetInsuranceAndLifeInsuranceData);
   }
 
   async GetGuarantorData(){

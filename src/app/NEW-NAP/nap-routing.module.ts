@@ -48,6 +48,10 @@ const routes: Routes = [
                 loadChildren: './business-process/additional-process/additional-process.module#AdditionalProcessSharingModule'
             },
             {
+                path: 'View',
+                loadChildren: './view/nap-view.module#NapViewModule'
+            },
+            {
                 path: 'AssetData/Paging',
                 component: AssetDataPagingComponent,
                 data: {
