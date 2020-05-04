@@ -20,8 +20,8 @@
                   },
                 {
                     "type": "text",
-                    "label": "Office Name",
-                    "property": "OriOfficeName"
+                    "label": "Ori Office Name",
+                    "property": "OfficeName"
                 },
                 {
                     "type": "text",
@@ -50,8 +50,8 @@
                 }
             ],
             "querystring": {
-                "select": "SELECT l.LEAD_NO AS LeadNo, l.ORI_OFFICE_NAME AS OriOfficeName, lc.CUST_NAME AS CustName, la .TOTAL_DOWN_PAYMENT_AMT AS TotalDownPaymentAmt, la.TENOR AS Tenor, lasset.FULL_ASSET_NAME AS FullAssetName, la.NTF_AMT AS NtfAmt",
-                "from": "From dbo.LEAD_APP la WITH(NOLOCK) JOIN LEAD_CUST lc ON la.LEAD_ID = lc.LEAD_ID  JOIN LEAD l WITH(NOLOCK) ON l.LEAD_ID = lc.LEAD_ID JOIN LEAD_ASSET lasset WITH(NOLOCK) on lasset.LEAD_ID = lc.LEAD_ID ",
+                "select": "SELECT l.LEAD_NO AS LeadNo, l.ORI_OFFICE_CODE AS OriOfficeCode, lc.CUST_NAME AS CustName, la .TOTAL_DOWN_PAYMENT_AMT AS TotalDownPaymentAmt, la.TENOR AS Tenor, lasset.FULL_ASSET_NAME AS FullAssetName, la.NTF_AMT AS NtfAmt, RO.OFFICE_NAME AS OfficeName",
+                "from": "From dbo.LEAD_APP la WITH(NOLOCK) JOIN LEAD_CUST lc ON la.LEAD_ID = lc.LEAD_ID  JOIN LEAD l WITH(NOLOCK) ON l.LEAD_ID = lc.LEAD_ID JOIN LEAD_ASSET lasset WITH(NOLOCK) on lasset.LEAD_ID = lc.LEAD_ID JOIN dbo.V_REF_OFFICE RO WITH(NOLOCK) ON RO.OFFICE_CODE = l.ORI_OFFICE_CODE",
                 "where": "WHERE lc.LEAD_ID = {0}"
             }
         }
