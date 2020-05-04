@@ -60,17 +60,16 @@ export class NapAddDetailComponent implements OnInit {
     console.log("this")
     this.AppStepIndex = 0;
     this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
-    // this.NapObj = new AppObj();
-    // this.NapObj.AppId = this.appId;
-    // this.http.post(AdInsConstant.GetAppById, this.NapObj).subscribe(
-    //   (response: AppObj) => {
-    //     if (response) {
-    //       this.AppStepIndex = this.AppStep[response.AppCurrStep];
-    //     }else{
-    //       this.AppStepIndex = 0;
-    //     }
-    //   }
-    // );
+    this.NapObj = new AppObj();
+    this.NapObj.AppId = this.appId;
+    this.http.post(AdInsConstant.GetAppById, this.NapObj).subscribe(
+      (response: AppObj) => {
+        this.NapObj = response;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
     this.MakeViewReturnInfoObj();
   }
 
@@ -157,11 +156,11 @@ export class NapAddDetailComponent implements OnInit {
   //   AppWizard.Wizard.goToNextStep();
   // }
 
-  HandleLastStep() {
-    this.http.post(AdInsConstant.SubmitNAP, { AppId : this.appId }).subscribe(
+  LastStepHandler() {
+    this.http.post(AdInsConstant.SubmitNAP, this.NapObj).subscribe(
       (response) => {
         console.log(response);
-        this.router.navigate(["/Nap/ConsumerFinance/InputNap/Paging"], { queryParams: { LobCode: "CF4W" }})
+        this.router.navigate(["/Nap/ConsumerFinance/InputNap/Paging"], { queryParams: { LobCode: "CF4W" } })
       },
       (error) => {
         console.log(error);
