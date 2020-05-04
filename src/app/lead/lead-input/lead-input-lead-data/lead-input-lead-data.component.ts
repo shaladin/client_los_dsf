@@ -129,11 +129,11 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.assetTypeId = event.AssetTypeId;
   }
 
-  downPaymentChange(event) {
-    this.LeadDataForm.patchValue({
-      MrDownPaymentTypeCode: event.value,
-    });
-  }
+  // downPaymentChange(event) {
+  //   this.LeadDataForm.patchValue({
+  //     MrDownPaymentTypeCode: event.value,
+  //   });
+  // }
 
   radioChange(event) {
     this.LeadDataForm.patchValue({
@@ -265,7 +265,7 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.http.post(this.getListActiveRefMasterUrl, this.firstInstObj).subscribe(
       (response) => {
         this.returnFirstInstObj = response["ReturnObject"];
-        this.LeadDataForm.patchValue({ MrFirstInstTypeCode: response['ReturnObject'][0][' '] });
+        this.LeadDataForm.patchValue({ MrFirstInstTypeCode: response['ReturnObject'][0]['Key'] });
       }
     );
 

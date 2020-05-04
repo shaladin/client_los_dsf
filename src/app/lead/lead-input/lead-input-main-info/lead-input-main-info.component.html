@@ -3,7 +3,7 @@
       <div class="card-body">
         <div class="px-3">
             <div class="customerData">
-                <form class="form form-horizontal" [formGroup]="MainInfoForm" (ngSubmit)="MainInfoForm.valid && SaveForm()"
+                <form class="form form-horizontal" [formGroup]="MainInfoForm" (ngSubmit)="MainInfoForm.valid"
                     #enjiForm="ngForm">
                 <div class="form-body">
                     <lib-ucSubsection [id]="'mainInfoId'" [title]="'Main Information'" [panel]="'mainInfo'">
@@ -111,10 +111,10 @@
                       translate>
                       <i class="ft-x"></i> Back
                     </button>
-                    <button type="button" class="btn btn-raised btn-primary mr-1" (click)="save()" translate>
+                    <button type="submit" class="btn btn-raised btn-primary mr-1" (click)="save()" translate>
                         <i class="fa fa-check-square-o"></i> Save
                       </button>
-                    <button type="submit" class="btn btn-raised btn-primary" translate>
+                    <button type="submit" class="btn btn-raised btn-primary" (click)="SaveForm()" translate>
                       <i class="fa fa-check-square-o"></i> Next
                     </button>
                 </div>

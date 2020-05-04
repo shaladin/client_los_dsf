@@ -17,6 +17,8 @@ import { TabAnalysisResultComponent } from './tab-analysis-result/tab-analysis-r
 import { AppAssetDataComponent } from './app-asset-data/app-asset-data.component';
 import { AppAssetDataDetailComponent } from './app-asset-data/app-asset-data-detail/app-asset-data-detail.component';
 import { ViewSharingComponentModule } from "./view-sharing-component.module";
+import { UcviewgenericModule } from "@adins/ucviewgeneric";
+import { UcSubsectionModule } from "@adins/uc-subsection";
 
 @NgModule({
   exports: [
@@ -26,6 +28,8 @@ import { ViewSharingComponentModule } from "./view-sharing-component.module";
     CommonModule,
     AdInsModule,
     ViewSharingComponentModule,
+    UcviewgenericModule,
+    UcSubsectionModule
   ],
   declarations: [
     InvoiceDataFctrComponent,

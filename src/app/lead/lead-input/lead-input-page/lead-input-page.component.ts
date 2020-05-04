@@ -19,7 +19,7 @@ export class LeadInputPageComponent implements OnInit {
   CustPersonalId: any;
   TaskListId: any;
   pageType: any;
-
+  viewLeadHeaderMainInfo : any;
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {
     this.route.queryParams.subscribe(params => {
       if (params["LeadId"] != null) {
@@ -42,6 +42,7 @@ export class LeadInputPageComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.viewLeadHeaderMainInfo = "./assets/ucviewgeneric/viewLeadHeader.json";
   }
 
   EnterTab(type) {
