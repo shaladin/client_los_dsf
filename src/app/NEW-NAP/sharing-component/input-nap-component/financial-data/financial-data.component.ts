@@ -13,8 +13,8 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './financial-data.component.html',
 })
 export class FinancialDataComponent implements OnInit {
-// @Input() AppId : number;
-AppId : number;
+ @Input() AppId : number;
+//AppId : number;
 FinDataForm : FormGroup;
 RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
 GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
@@ -80,6 +80,7 @@ ngOnInit() {
       NumOfStep : 0,    
       MrInstSchemeCode: "",
       CummulativeTenor: 0,
+      StepUpStepDownInputType: "",
 
       AppFee : this.fb.array([]),
       ListEntryInst: this.fb.array([]),
@@ -145,20 +146,18 @@ SaveAndContinue()
     this.toastr.errorMessage("Please Calculate Again");
     return ;
   }
+  if(isValidGrossYield && isValidGracePeriod)
+  {
+    console.log("GROSSSS");
+    console.log(this.FinDataForm.value);
 
-  this.toastr.successMessage("Calc Ok");
-
-  // if(isValidGrossYield && isValidGracePeriod)
-  // {
-  //   console.log("GROSSSS");
-  //   console.log(this.FinDataForm.value);
-
-  //   this.http.post(environment.losUrl + "/AppFinData/SaveAppFinData", this.FinDataForm.value).subscribe(
-  //     (response) => {
-  //      console.log(response);
-  //     }
-  //   );
-  // }
+    this.http.post(environment.losUrl + "/AppFinData/SaveAppFinData", this.FinDataForm.value).subscribe(
+      (response) => {
+       console.log(response);
+       this.toastr.successMessage(response["Message"]);
+      }
+    );
+  }
 }
 
 ValidateGracePeriode()

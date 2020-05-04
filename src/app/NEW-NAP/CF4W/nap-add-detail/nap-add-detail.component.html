@@ -84,7 +84,7 @@
 
           <aw-wizard-step [stepTitle]="'Financial Data'" (stepEnter)="EnterTab('FIN')"
             [navigationSymbol]="{ symbol: '8' }">
-            <!-- <app-financial-data *ngIf="AppStepIndex == 7" [AppId]=appId></app-financial-data> -->
+            <app-financial-data *ngIf="AppStepIndex == 7" [AppId]=appId></app-financial-data>
           </aw-wizard-step>
 
           <aw-wizard-step [stepTitle]="'Terms and Conditions'" (stepEnter)="EnterTab('TC')"

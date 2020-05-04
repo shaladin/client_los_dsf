@@ -21,6 +21,7 @@ export class NapAppModel{
     NumOfInst : any;
     PayFreqCode : any;
     MrFirstInstTypeCode : any;
+    FirstInstTypeName: string;
     NumOfAsset : any;
     MrLcCalcMethodCode : any;
     LcInstRatePrml : any;
