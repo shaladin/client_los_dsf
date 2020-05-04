@@ -13,6 +13,7 @@ import { SharingComponentModule } from "app/shared/sharingcomponent.module";
 import { UcinputnumberModule } from "@adins/ucinputnumber"; 
 import { NapAddComponent } from './nap-add/nap-add.component';
 import { NapPagingComponent } from './nap-paging/nap-paging.component';
+import { NapViewComponent } from './nap-view/nap-view.component';
 
 @NgModule({
   imports: [
@@ -32,7 +33,7 @@ import { NapPagingComponent } from './nap-paging/nap-paging.component';
     DummyComponent, 
     NapAddComponent,
     NapPagingComponent,
-  
+    NapViewComponent
   ],
   providers: [
     NGXToastrService

@@ -20,6 +20,9 @@ import { ResultCalcInsObj } from 'app/shared/model/ResultCalcInsObj.Model';
 import { AppInsMainCvgObj } from 'app/shared/model/AppInsMainCvgObj.Model';
 import { AppInsAddCvgObj } from 'app/shared/model/AppInsAddCvgObj.Model';
 import { WizardComponent } from 'angular-archwizard';
+import { ResultSubsidySchmRuleObj } from 'app/shared/model//SubsidySchm/ResultSubsidySchmRuleObj.Model';
+import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
+
 
 @Component({
   selector: 'app-insurance-data',
@@ -34,6 +37,7 @@ export class InsuranceDataComponent implements OnInit {
 
 
   appAssetId: number;
+  appCollateralId: number = 0;
   totalAssetPriceAmt: number;
 
   appObj: NapAppModel;
@@ -43,7 +47,9 @@ export class InsuranceDataComponent implements OnInit {
   appInsuranceObj: AppInsuranceObj;
   appInsObjObj: AppInsObjObj;
   appInsMainCvgObj: Array<AppInsMainCvgObj>;
+  appCollateralObj: AppCollateralObj;
   ruleObj: ResultInsRateRuleObj;
+  subsidyRuleObj: ResultSubsidySchmRuleObj;
   calcInsObj: ResultCalcInsObj;
   saveObj: InsuranceDataObj;
 
@@ -159,6 +165,10 @@ export class InsuranceDataComponent implements OnInit {
     this.saveObj.AppInsObjObj.AppAssetId = this.appAssetId;
     this.saveObj.AppInsObjObj.InsAssetCoveredBy = insuredBy;
     this.saveObj.AppInsObjObj.InsSeqNo = 1;
+
+    if(this.appCollateralId != 0){
+      this.saveObj.AppInsObjObj.AppCollateralId = this.appCollateralId;
+    }
 
     if(insuredBy == AdInsConstant.InsuredByOffSystem){   
       this.saveObj.AppInsObjObj.InsAssetPaidBy = AdInsConstant.InsPaidByCustomer;
@@ -397,11 +407,25 @@ export class InsuranceDataComponent implements OnInit {
       reqObj.InsCoverage.push(insCoverage);
     }
     reqObj.AdminFee = this.InsuranceDataForm.controls.CustAdminFeeAmt.value;
-
+    reqObj.InscoBranchCode = this.InsuranceDataForm.controls.InscoBranchCode.value;
+    reqObj.ProdOfferingCode = this.appObj.ProdOfferingCode;
+    reqObj.ProdOfferingVersion = this.appObj.ProdOfferingVersion;
+    reqObj.AppId = this.appId;
+    reqObj.AppAssetId = this.appAssetId;
+    
     await this.http.post(AdInsConstant.CalculateInsurance, reqObj).toPromise().then(
       (response) => {
         console.log(response);
         this.calcInsObj = response["Result"];
+        this.subsidyRuleObj = response["ResultSubsidy"];
+        var custDiscAmt = 0;
+        if(this.subsidyRuleObj.SubsidyValue != null){
+          for(let i = 0; i < this.subsidyRuleObj.SubsidyValue.length; i++){
+            if(this.subsidyRuleObj.SubsidyFromType[i] == "INSCO"){
+              custDiscAmt += this.subsidyRuleObj.SubsidyValue[i];
+            }
+          }
+        }
 
         this.InsuranceDataForm.patchValue({
           CustAdminFeeAmt: this.calcInsObj.TotalFeeAmt,
@@ -409,6 +433,7 @@ export class InsuranceDataComponent implements OnInit {
           TotalCustAddPremiAmt: this.calcInsObj.TotalAdditionalPremiAmt,
           TotalInscoMainPremiAmt: this.calcInsObj.TotalMainPremiToInscoAmt,
           TotalInscoAddPremiAmt: this.calcInsObj.TotalAdditionalPremiToInscoAmt,
+          TotalCustDiscAmt: custDiscAmt
         });
 
         for(let i = 0; i < this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"].length; i++){
@@ -914,6 +939,7 @@ export class InsuranceDataComponent implements OnInit {
         this.appInsuranceObj = response["AppInsuranceObj"];
         this.appInsObjObj = response["AppInsObjObj"];
         this.appInsMainCvgObj = response["AppInsMainCvgObjs"];
+        this.appCollateralObj = response["AppCollateralObj"];
 
         var totalAccessoryPriceAmt = 0;
 
@@ -931,6 +957,9 @@ export class InsuranceDataComponent implements OnInit {
         }
 
         this.appAssetId = this.appAssetObj.AppAssetId;
+        if(this.appCollateralObj != undefined){
+          this.appCollateralId = this.appCollateralObj.AppCollateralId;
+        }
       },
       (error) => {
         console.log(error);

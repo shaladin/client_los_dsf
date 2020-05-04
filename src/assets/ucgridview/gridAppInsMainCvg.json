@@ -1,0 +1,83 @@
+{
+    "headerList": [
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Year No",
+            "name": "YearNo"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Main Coverage",
+            "name": "MainCvgTypeName"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Additional Coverage",
+            "name": "AddCvgTypeName"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Main Premi To Customer",
+            "name": "CustMainPremiAmt"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Additional Premi To Customer",
+            "name": "TotalCustAddPremiAmt"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Main Premi To Insco",
+            "name": "InscoMainPremiAmt"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Additional Premi To Insco",
+            "name": "TotalInscoAddPremiAmt"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "YearNo"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "MainCvgTypeName"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "AddCvgTypeName"
+        },
+        {
+            "type": "decimal",
+            "position": "center",
+            "property": "CustMainPremiAmt"
+        },
+        {
+            "type": "decimal",
+            "position": "center",
+            "property": "TotalCustAddPremiAmt"
+        },
+        {
+            "type": "decimal",
+            "position": "center",
+            "property": "InscoMainPremiAmt"
+        },
+        {
+            "type": "decimal",
+            "position": "center",
+            "property": "TotalInscoAddPremiAmt"
+        }
+    ]
+}
