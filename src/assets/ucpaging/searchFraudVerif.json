@@ -242,7 +242,7 @@
                             ],
                             "result": {
                                 "type": "url",
-                                "path": "/Lead/LeadInput/MainInfo",
+                                "path": "/Lead/FraudVerif/Page",
                                 "icon": "ft-edit-2",
                                 "param": [
                                     {
@@ -252,10 +252,6 @@
                                     {
                                         "type": "WfTaskListId",
                                         "property": "WfTaskListId"
-                                    },
-                                    {
-                                        "type": "mode",
-                                        "property": "edit"
                                     }
                                 ]
                             },
@@ -272,7 +268,7 @@
                             ],
                             "result": {
                                 "type": "url",
-                                "path": "/Lead/LeadInput/MainInfo",
+                                "path": "/Lead/FraudVerif/Page",
                                 "icon": "ft-edit-2",
                                 "param": [
                                     {
@@ -282,10 +278,6 @@
                                     {
                                         "type": "WfTaskListId",
                                         "property": "WfTaskListId"
-                                    },
-                                    {
-                                        "type": "mode",
-                                        "property": "edit"
                                     }
                                 ]
                             },
