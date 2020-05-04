@@ -1,0 +1,100 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-body">
+      <div class="px-3">
+        <div class="row" style="border-bottom: 1px solid black; margin-bottom: 15px;">
+          <div class="col-md-12" style="padding-left: 0px;">
+            <h4 class="form-section card-title" translate><i class="ft-file-text"></i>Application View</h4>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <app-app-main-info [arrValue]="arrValue"></app-app-main-info>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <mat-tab-group>
+              <mat-tab label="CUSTOMER">
+                <ng-template matTabContent>
+                  <app-view-app-cust-data-personal [appId]="appId" *ngIf="appCustData.MrCustTypeCode == 'PERSONAL'"></app-view-app-cust-data-personal>
+                  <app-view-app-cust-data-company [appId]="appId" *ngIf="appCustData.MrCustTypeCode == 'COMPANY'"></app-view-app-cust-data-company>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="GUARANTOR">
+                <ng-template matTabContent>
+                  <app-guarantor [AppId]="appId" [arrValue]="arrValue"></app-guarantor>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="REFERANTOR">
+                <ng-template matTabContent>
+                  <app-tab-referantor [appId]="appId"></app-tab-referantor>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="APPLICATION">
+                <ng-template matTabContent>
+                  <app-tab-application [appId]="appId"></app-tab-application>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="ASSET">
+                <ng-template matTabContent>
+                  <app-app-asset-data [AppId]="appId"></app-app-asset-data>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="INSURANCE">
+                <ng-template matTabContent>
+                  <app-app-insurance [AppId]="appId"></app-app-insurance>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="LIFE INSURANCE">
+                <ng-template matTabContent>
+                  <app-life-insurance [AppId]="appId" [arrValue]="arrValue"></app-life-insurance>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="FINANCIAL">
+                <ng-template matTabContent>
+                  <!-- FINANCIAL SECTION -->
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="TC">
+                <ng-template matTabContent>
+                  <app-app-tc [AppId]="appId"></app-app-tc>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="COMMISSION">
+                <ng-template matTabContent>
+                  <app-tab-commission [appId]="appId"></app-tab-commission>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="RESERVED FUND">
+                <ng-template matTabContent>
+                  <view-reserved-fund [appId]="appId"></view-reserved-fund>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="PHONE VERIFICATION">
+                <ng-template matTabContent>
+                  <view-phone-verif [appId]="appId"></view-phone-verif>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="FRAUD DETECTION RESULT">
+                <ng-template matTabContent>
+                  <!-- FRAUD DETECTION SECTION -->
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="DEVIATION">
+                <ng-template matTabContent>
+                  <!-- DEVIATION SECTION -->
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="ANALYSIS RESULT">
+                <ng-template matTabContent>
+                  <app-tab-analysis-result [appId]="appId"></app-tab-analysis-result>
+                </ng-template>
+              </mat-tab>
+            </mat-tab-group>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

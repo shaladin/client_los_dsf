@@ -18,6 +18,8 @@ import { TabAnalysisResultComponent } from './tab-analysis-result/tab-analysis-r
 import { AppAssetDataComponent } from './app-asset-data/app-asset-data.component';
 import { AppAssetDataDetailComponent } from './app-asset-data/app-asset-data-detail/app-asset-data-detail.component';
 import { ViewFinancialComponent } from "./view-financial/view-financial.component";
+import { AppInsuranceComponent } from './app-insurance/app-insurance.component';
+import { AppInsuranceDetailComponent } from './app-insurance/app-insurance-detail/app-insurance-detail.component';
 import { ViewSharingComponentModule } from "./view-sharing-component.module";
 
 @NgModule({
@@ -54,6 +56,8 @@ import { ViewSharingComponentModule } from "./view-sharing-component.module";
     AppAssetDataComponent,
     AppAssetDataDetailComponent,
     ViewFinancialComponent,
+    AppInsuranceComponent,
+    AppInsuranceDetailComponent
   ],
   providers: [
     NGXToastrService
