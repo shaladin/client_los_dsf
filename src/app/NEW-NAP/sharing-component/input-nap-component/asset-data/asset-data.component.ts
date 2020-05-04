@@ -62,7 +62,7 @@ export class AssetDataComponent implements OnInit {
     /* AppAsset Value That required but not in form*/
     AssetSeqNo: ['1', Validators.required],
     FullAssetCode: ['', [Validators.required, Validators.maxLength(500)]],
-    AssetStat: ['', [Validators.required, Validators.maxLength(50)]],
+    AssetStat: ['NEW', [Validators.required, Validators.maxLength(50)]],
     AssetTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
     AssetCategoryCode: ['', [Validators.required, Validators.maxLength(50)]],
     SupplCode: ['', Validators.maxLength(50)],
@@ -453,6 +453,7 @@ export class AssetDataComponent implements OnInit {
 
   SetAsset(event) {
     this.assetMasterObj.FullAssetCode = event.FullAssetCode;
+    console.log(event);
     this.GetAssetMaster(this.assetMasterObj);
     this.AssetDataForm.patchValue({
       FullAssetCode: event.FullAssetCode,
@@ -1476,4 +1477,16 @@ export class AssetDataComponent implements OnInit {
       }
     );
   }
+
+  public findInvalidControls() {
+    const invalid = [];
+    const controls = this.AssetDataForm.controls;
+    for (const name in controls) {
+        if (controls[name].invalid) {
+            invalid.push(name);
+        }
+    }
+    console.log(invalid)
+}
+
 }
