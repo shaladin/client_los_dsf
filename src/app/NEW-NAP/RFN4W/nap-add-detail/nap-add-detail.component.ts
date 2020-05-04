@@ -21,7 +21,9 @@ export class NapAddDetailComponent implements OnInit {
   viewProdMainInfoObj: string;
   NapObj: AppObj;
   ResponseReturnInfoObj: any;
-  OnFormReturnInfo = false;
+  OnFormReturnInfo: boolean = false;
+  IsMultiAsset: boolean = false;
+  ListAsset: any;
 
   FormReturnObj = this.fb.group({
     ReturnExecNotes: ['']
@@ -45,6 +47,7 @@ export class NapAddDetailComponent implements OnInit {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
         this.mode = params["Mode"];
+        this.CheckMultiAsset();
       }
     });
   }
@@ -66,7 +69,7 @@ export class NapAddDetailComponent implements OnInit {
         }
       }
     );
-    
+
     this.stepper = new Stepper(document.querySelector('#stepper1'), {
       linear: false,
       animation: true
@@ -96,11 +99,31 @@ export class NapAddDetailComponent implements OnInit {
     }
   }
 
-  NextStep(Step){
+  NextStep(Step) {
     this.ChangeTab(Step);
     this.stepper.next();
   }
-  
+
+  CheckMultiAsset() {
+    var appObj = { AppId: this.appId }
+    this.http.post(AdInsConstant.GetAppAssetListByAppId, appObj).subscribe(
+      (response) => {
+        this.ListAsset = response['ReturnObject'];
+        if (this.ListAsset != undefined && this.ListAsset != null) {
+          if (this.ListAsset.length > 1)
+            this.IsMultiAsset = true;
+          else
+            this.IsMultiAsset = false;
+        }
+        else
+          this.IsMultiAsset = false;
+      },
+      (error) => {
+        console.log(error);
+      }
+    )
+  }
+
   ChangeTab(AppStep) {
     // console.log(AppStep);
     switch (AppStep) {
