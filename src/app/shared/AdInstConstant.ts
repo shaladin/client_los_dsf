@@ -763,7 +763,7 @@ export class AdInsConstant {
   public static GetAllAssetDataForPOByAsset = environment.losUrl + "/AppAsset/GetAllAssetDataForPOByAsset";
   public static GetAppAssetByAgrmntId = environment.losUrl + "/AppAsset/GetAppAssetByAgrmntId";
   public static GetAllAssetDataByAppId = environment.losUrl + "/AppAsset/GetAllAssetDataByAppId";
-  public static AddEditAllAssetData = "http://localhost:5001" + "/AppAsset/AddEditAllAssetData";
+  public static AddEditAllAssetData = environment.losUrl + "/AppAsset/AddEditAllAssetData";
 
   //Asset Doc List
   public static GetAppAssetDataByAppId = environment.losUrl + "/AppAsset/GetAppAssetDataByAppId";
