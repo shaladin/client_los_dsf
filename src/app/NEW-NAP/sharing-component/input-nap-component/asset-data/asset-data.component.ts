@@ -62,7 +62,7 @@ export class AssetDataComponent implements OnInit {
     /* AppAsset Value That required but not in form*/
     AssetSeqNo: ['1', Validators.required],
     FullAssetCode: ['', [Validators.required, Validators.maxLength(500)]],
-    AssetStat: ['', [Validators.required, Validators.maxLength(50)]],
+    AssetStat: ['NEW', [Validators.required, Validators.maxLength(50)]],
     AssetTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
     AssetCategoryCode: ['', [Validators.required, Validators.maxLength(50)]],
     SupplCode: ['', Validators.maxLength(50)],
@@ -286,7 +286,7 @@ export class AssetDataComponent implements OnInit {
     this.GetAppData();
     await this.GetListAddr();
     //this.assetMasterObj.FullAssetCode = 'CAR';
-    this.GetAssetMaster(this.assetMasterObj);
+    //this.GetAssetMaster(this.assetMasterObj);
 
     this.AssetDataForm.removeControl("AssetAccessoriesObjs");
     this.AssetDataForm.addControl("AssetAccessoriesObjs", this.fb.array([]));
@@ -396,6 +396,7 @@ export class AssetDataComponent implements OnInit {
     this.allAssetDataObj.AppCollateralObj.AssetTypeCode = this.AssetDataForm.controls.AssetTypeCode.value;
     this.allAssetDataObj.AppCollateralObj.AssetCategoryCode = this.AssetDataForm.controls.AssetCategoryCode.value;
     this.allAssetDataObj.AppCollateralObj.ManufacturingYear = this.AssetDataForm.controls.ManufacturingYear.value;
+    this.allAssetDataObj.AppCollateralObj.IsMainCollateral = true;
 
     this.allAssetDataObj.AppCollateralRegistrationObj.UserName = this.AssetDataForm.controls.UserName.value;
     this.allAssetDataObj.AppCollateralRegistrationObj.MrUserRelationshipCode = this.AssetDataForm.controls.MrUserRelationshipCode.value;
@@ -452,6 +453,7 @@ export class AssetDataComponent implements OnInit {
 
   SetAsset(event) {
     this.assetMasterObj.FullAssetCode = event.FullAssetCode;
+    console.log(event);
     this.GetAssetMaster(this.assetMasterObj);
     this.AssetDataForm.patchValue({
       FullAssetCode: event.FullAssetCode,
@@ -559,12 +561,15 @@ export class AssetDataComponent implements OnInit {
     console.log(this.appData);
     this.http.post(this.GetAllAssetDataUrl, this.appData).subscribe(
       (response) => {
-        console.log(response);
+        console.log("RESPOOOON");
         this.appAssetObj = response;
-        console.log(response);
-        if (this.appAssetObj != "") {
-          this.AssetDataForm.patchValue({
+        console.log(this.appAssetObj);
+        if (this.appAssetObj) {
 
+          console.log("AAAA");
+          console.log(this.appAssetObj.ResponseBranchManagerSupp)
+          console.log(this.appAssetObj.ResponseBranchManagerSupp.SupplEmpName)
+          this.AssetDataForm.patchValue({
             FullAssetCode: this.appAssetObj.ResponseAppAssetObj.FullAssetCode,
             FullAssetName: this.appAssetObj.ResponseAppAssetObj.FullAssetName,
             MrAssetConditionCode: this.appAssetObj.ResponseAppAssetObj.MrAssetConditionCode,
@@ -597,9 +602,9 @@ export class AssetDataComponent implements OnInit {
             SalesPersonName: this.appAssetObj.ResponseSalesPersonSupp.SupplEmpName,
             SalesPersonNo: this.appAssetObj.ResponseSalesPersonSupp.SupplEmpNo,
             SalesPersonPositionCode: this.appAssetObj.ResponseSalesPersonSupp.MrSupplEmpPositionCode,
-            BranchManagerName: this.appAssetObj.responseBranchManagerSupp.SupplEmpName,
-            BranchManagerNo: this.appAssetObj.responseBranchManagerSupp.SupplEmpNo,
-            BranchManagerPositionCode: this.appAssetObj.responseBranchManagerSupp.MrSupplEmpPositionCode,
+            BranchManagerName: this.appAssetObj.ResponseBranchManagerSupp.SupplEmpName,
+            BranchManagerNo: this.appAssetObj.ResponseBranchManagerSupp.SupplEmpNo,
+            BranchManagerPositionCode: this.appAssetObj.ResponseBranchManagerSupp.MrSupplEmpPositionCode,
 
             UserName: this.appAssetObj.ResponseAppCollateralRegistrationObj.UserName,
             MrUserRelationshipCode: this.appAssetObj.ResponseAppCollateralRegistrationObj.MrUserRelationshipCode,
@@ -622,12 +627,11 @@ export class AssetDataComponent implements OnInit {
             LocationAreaCode4: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationAreaCode4,
             LocationCity: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationCity,
             LocationZipcode: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationZipcode,
-
-
-
             selectedDpType: 'AMT'
           });
-          this.BranchManagerName = this.appAssetObj.responseBranchManagerSupp.SupplEmpName,
+
+          console.log(this.AssetDataForm.value)
+          this.BranchManagerName = this.appAssetObj.ResponseBranchManagerSupp.SupplEmpName,
           this.appAssetAccessoriesObjs = this.appAssetObj.ResponseAppAssetAccessoryObjs
           this.appAssetId = this.appAssetObj.ResponseAppAssetObj.AppAssetId;
           this.setAddrOwnerObj();
@@ -1475,4 +1479,16 @@ export class AssetDataComponent implements OnInit {
       }
     );
   }
+
+  public findInvalidControls() {
+    const invalid = [];
+    const controls = this.AssetDataForm.controls;
+    for (const name in controls) {
+        if (controls[name].invalid) {
+            invalid.push(name);
+        }
+    }
+    console.log(invalid)
+}
+
 }

@@ -2,7 +2,11 @@ import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { NapViewRoutingModule } from "./nap-view-routing.module";
 import { AgreementViewContainerComponent } from "./agreement-view-container/agreement-view-container.component";
-import { applicationViewComponent } from "./application-view/application-view.component";
+import { ApplicationViewComponent } from "./application-view/application-view.component";
+import { ViewMainInfoComponentModule } from "../sharing-component/view-main-info-component/view-main-info-component.module";
+import { ViewAppComponentModule } from "../sharing-component/view-app-component/view-app-component.module";
+import { ArchwizardModule } from "angular-archwizard";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { TabReferantorComponent } from "../sharing-component/view-app-component/tab-referantor/tab-referantor.component";
 import { TabCommissionComponent } from "../sharing-component/view-app-component/tab-commission/tab-commission.component";
 import { MatTabsModule } from "@angular/material";
@@ -15,7 +19,6 @@ import { ViewAssetDataComponent } from "../sharing-component/view-app-component/
 import { TabApplicationComponent } from "../sharing-component/view-app-component/tab-application/tab-application.component";
 import { UcviewgenericModule } from "@adins/ucviewgeneric";
 import { TabAnalysisResultComponent } from "../sharing-component/view-app-component/tab-analysis-result/tab-analysis-result.component";
-import { ArchwizardModule } from "angular-archwizard";
 import { ViewAppCustDataCompanyComponent } from "../sharing-component/view-app-component/view-app-cust-data-company/view-app-cust-data-company.component";
 import { ViewAppCustDataPersonalComponent } from "../sharing-component/view-app-component/view-app-cust-data-personal/view-app-cust-data-personal.component";
 
@@ -23,6 +26,8 @@ import { ViewAppCustDataPersonalComponent } from "../sharing-component/view-app-
   imports: [
     NapViewRoutingModule,
     CommonModule,
+    ViewMainInfoComponentModule,
+    ViewAppComponentModule,
     MatTabsModule,
     UcSubsectionModule,
     UcviewgenericModule,
@@ -30,7 +35,7 @@ import { ViewAppCustDataPersonalComponent } from "../sharing-component/view-app-
   ],
   declarations: [
     AgreementViewContainerComponent,
-    applicationViewComponent,
+    ApplicationViewComponent,
     TabReferantorComponent,
     TabCommissionComponent,
     ListDataCommissionComponent,
@@ -43,6 +48,8 @@ import { ViewAppCustDataPersonalComponent } from "../sharing-component/view-app-
     ViewAppCustDataCompanyComponent,
     ViewAppCustDataPersonalComponent,
     ViewAssetDataComponent,
-  ]
+    ArchwizardModule,
+    NgbModule
+  ],
 })
 export class NapViewModule { }

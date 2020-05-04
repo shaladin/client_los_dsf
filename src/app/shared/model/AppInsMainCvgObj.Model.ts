@@ -4,6 +4,7 @@ export class AppInsMainCvgObj {
     AppInsMainCvgId: number;
     AppInsObjId: number;
     MrMainCvgTypeCode: string;
+    MainCvgTypeName: string;
     YearNo: number;
     Tenor: number;
     StartDt: Date;
@@ -22,6 +23,7 @@ export class AppInsMainCvgObj {
     TotalCustDiscAmt: number;
     TotalInscoDiscAmt: number;
     AppInsAddCvgObjs: Array<AppInsAddCvgObj>;
+    AddCvgTypeName: string;
     
 constructor() { 
     this.AppInsMainCvgId = 0;
