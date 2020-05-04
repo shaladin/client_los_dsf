@@ -19,7 +19,6 @@ import { CalcInsAddCvgObj } from 'app/shared/model/CalcInsAddCvgObj.Model';
 import { ResultCalcInsObj } from 'app/shared/model/ResultCalcInsObj.Model';
 import { AppInsMainCvgObj } from 'app/shared/model/AppInsMainCvgObj.Model';
 import { AppInsAddCvgObj } from 'app/shared/model/AppInsAddCvgObj.Model';
-import { WizardComponent } from 'angular-archwizard';
 import { ResultSubsidySchmRuleObj } from 'app/shared/model//SubsidySchm/ResultSubsidySchmRuleObj.Model';
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 
@@ -33,7 +32,7 @@ import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 export class InsuranceDataComponent implements OnInit {
 
   @Input() appId: number;
-  @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
+  @Output() outputTab: EventEmitter<any> = new EventEmitter();
 
 
   appAssetId: number;
@@ -110,8 +109,7 @@ export class InsuranceDataComponent implements OnInit {
   constructor(private fb: FormBuilder, 
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private route: ActivatedRoute,
-    private wizard: WizardComponent){
+    private route: ActivatedRoute){
       this.route.queryParams.subscribe(params => {
         this.appId = params["AppId"];
       })
@@ -148,7 +146,8 @@ export class InsuranceDataComponent implements OnInit {
       (response) => {
         console.log(response);
         this.toastr.successMessage(response["message"]);
-        this.wizard.goToNextStep();
+        // this.wizard.goToNextStep();
+          this.outputTab.emit();
       },
       (error) => {
         console.log(error);
