@@ -714,6 +714,8 @@ export class AssetDataComponent implements OnInit {
     this.InputLookupAssetObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupAssetObj.pagingJson = "./assets/uclookup/NAP/lookupAsset.json";
     this.InputLookupAssetObj.genericJson = "./assets/uclookup/NAP/lookupAsset.json";
+    this.InputLookupAssetObj.isRequired = false;
+
     var assetCrit = new Array();
     var critAssetObj = new CriteriaObj();
     critAssetObj.DataType = 'text';
