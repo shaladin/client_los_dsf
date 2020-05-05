@@ -44,6 +44,7 @@
               "node_modules/bootstrap/dist/css/bootstrap.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.css",
               "node_modules/angular-archwizard/archwizard.css",
+              "node_modules/bs-stepper/dist/css/bs-stepper.min.css",
               "src/assets/css/demo.css",
               "src/assets/sass/app.scss",
               "src/styles.css",

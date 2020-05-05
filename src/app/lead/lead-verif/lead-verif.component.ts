@@ -72,24 +72,26 @@ export class LeadVerifComponent implements OnInit {
     var temp;
     this.http.post(GetListLeadVerfUrl, obj).subscribe(
       response => {
+        console.log(response);
         temp = response['ReturnObject'];
         for (var i = 0; i < temp.length; i++) {
           arr.push(temp[i]['LeadId']);
         }
-
-        const addCritAssetMasterId = new CriteriaObj();
-        addCritAssetMasterId.DataType = 'numeric';
-        addCritAssetMasterId.propName = 'L.LEAD_ID';
-        addCritAssetMasterId.restriction = AdInsConstant.RestrictionNotIn;
-        addCritAssetMasterId.listValue = arr;
-        this.arrCrit.push(addCritAssetMasterId);
-        this.inputObj.addCritInput.push(addCritAssetMasterId);
+        if (this.listSelectedId.length !== 0) {
+          const addCritAssetMasterId = new CriteriaObj();
+          addCritAssetMasterId.DataType = 'numeric';
+          addCritAssetMasterId.propName = 'L.LEAD_ID';
+          addCritAssetMasterId.restriction = AdInsConstant.RestrictionNotIn;
+          addCritAssetMasterId.listValue = this.listSelectedId;
+          this.arrCrit.push(addCritAssetMasterId);
+          this.inputObj.addCritInput.push(addCritAssetMasterId);
+        }
       },
       error => {
         this.router.navigateByUrl('Error');
       }
     );
-    this.leadUrl = '/Lead/View?LeadId=';
+    this.leadUrl = environment.losR3Web +  '/Lead/View?LeadId=';
   }
 
   searchSort(event: any) {
@@ -152,6 +154,8 @@ export class LeadVerifComponent implements OnInit {
     return tempArr;
   }
   SaveLeadVerf(leadVerfForm: any) {
+    //var tempArr = this.getListWfTaskListId();
+    //this.claimListTask(tempArr);
     for (let index = 0; index < this.tempData.length; index++) {
       var tempLeadVerfObj = new LeadVerfObj();
       tempLeadVerfObj.VerifyStat = this.verifyStatus;
@@ -169,6 +173,7 @@ export class LeadVerifComponent implements OnInit {
     }
     this.http.post(this.AddRangeLeadVerfUrl, LeadVerf).subscribe(
       response => {
+        console.log(response);
         this.toastr.successMessage(response['message']);
       },
       error => {
@@ -266,5 +271,19 @@ export class LeadVerifComponent implements OnInit {
       this.inputObj.addCritInput = this.arrAddCrit;
       this.UCSearchComponent.search(this.apiUrl, this.pageNow, this.pageSize, order, this.arrAddCrit);
     }
+  }
+
+  claimListTask(listWfTaskListId)
+  {
+    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var wfClaimObj = { listWfTaskListId: listWfTaskListId, pUserID: currentUserContext["UserName"]};
+    console.log(wfClaimObj);
+    this.http.post(AdInsConstant.ClaimListTask, wfClaimObj).subscribe(
+      (response) => {
+        console.log(response);
+      });
+      (error) => {
+        console.log(error);
+      }
   }
 }

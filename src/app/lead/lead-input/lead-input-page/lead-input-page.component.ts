@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
@@ -20,15 +20,13 @@ export class LeadInputPageComponent implements OnInit {
   TaskListId: any;
   pageType: any;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {
     this.route.queryParams.subscribe(params => {
       if (params["LeadId"] != null) {
         this.LeadId = params["LeadId"];
       }
       if (params["TaskListId"] != null) {
         this.TaskListId = params["TaskListId"];
-      }
-      if (params["mode"] == "edit") {
         this.pageType = "UPDATE";
       }
       else {
@@ -54,6 +52,14 @@ export class LeadInputPageComponent implements OnInit {
       this.isCustomer = false;
       this.isLead = true;
     }
+  }
+  
+  editMainInfoHandler(){
+    this.router.navigate(["/Lead/LeadInput/MainInfo"], { queryParams: { LeadId: this.LeadId, mode: "edit" }});
+  }
+
+  cancelHandler(){
+    this.router.navigate(['/Lead/Lead/Paging']);
   }
 
 }

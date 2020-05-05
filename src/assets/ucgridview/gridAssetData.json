@@ -78,16 +78,19 @@
             "position": "center",
             "action": [
                 {
-                    "type": "edit",
-                    "path": "/Nap/FinanceLeasing/AssetData/Detail",
-                    "param": [
+                    "type": "callback",
+                    "property": [
                         {
                             "type": "AppAssetId",
                             "property": "AppAssetId"
                         },
                         {
-                            "type": "mode",
-                            "property": "edit"
+                            "type": "AppId",
+                            "property": "AppId"
+                        },
+                        {
+                            "type": "editAsset",
+                            "property": "editAsset"
                         }
                     ]
                 }

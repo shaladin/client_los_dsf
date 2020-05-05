@@ -9,19 +9,14 @@ export class LeadObj{
     CrtOfficeName : any;
     LeadDt : any;
     OrderNo : any;
-    LobCode : any;
-    LobName : any;
+    LobCode : any; 
     MrLeadSourceCode : any;
     LeadStat : any;
-    LeadStep : any;
-    TeleMarketingCode : any;
-    TeleMarketingName : any;
-    CmoCode : any;
-    CmoName : any;
-    SurveyorCode : any;
-    SurveyorName : any;
-    AgencyCode : any;
-    AgencyName : any;
+    LeadStep : any; 
+    TeleMarketingUsername : any; 
+    CmoUsername : any; 
+    SurveyorUsername : any;
+    AgencyCode : any; 
     CancelDt : any;
     CancelByCode : any;
     CancelByName : any;
@@ -29,4 +24,5 @@ export class LeadObj{
     CancelNotes : any;
     DuplicateLeadId: any;
     RowVersion: any;
+    IsSubmit : boolean;
 }

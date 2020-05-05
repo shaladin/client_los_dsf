@@ -5,13 +5,14 @@
         {
             "type": "dropdown",
             "datatype": "text",
-            "name": "L.ORI_OFFICE_NAME",
+            "name": "L.ORI_OFFICE_CODE",
             "id": "OfficeNameId",
             "value": "",
             "placeholder": "Placeholder",
             "isFromURL": true,
             "isSelectOne": false,
-            "url": "http://r3app-server/foundation_r3/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "isQueryIn" : true,
+            "url": "http://r3app-server.ad-ins.com/Foundation_R3/RefOffice/GetListKvpActiveRefOfficeForPaging",
             "label": "OFFICE NAME",
             "items": [],
             "itemsUrl": []
@@ -25,7 +26,7 @@
             "placeholder": "Placeholder",
             "isFromURL": true,
             "isSelectOne": false,
-            "url": "http://r3app-server/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
+            "url": "http://r3app-server.ad-ins.com/Foundation_R3/RefMaster/GetListKeyValueActiveByCode",
             "label": "LEAD SOURCE",
             "items": [],
             "itemsUrl": [],
@@ -86,7 +87,7 @@
             "placeholder": "Placeholder",
             "isFromURL": true,
             "isSelectOne": false,
-            "url": "http://r3app-server/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
+            "url": "http://r3app-server.ad-ins.com/Foundation_R3/RefMaster/GetListKeyValueActiveByCode",
             "label": "Customer Type",
             "items": [],
             "itemsUrl": [],
@@ -111,8 +112,8 @@
         }
     ],
     "querystring": {
-        "select": "SELECT L.LEAD_NO AS LeadNo,WTL.WF_TASK_LIST_ID AS WfTaskListId,WTL.CLAIM_STAT AS ClaimStat, WTL.USERNAME AS ClaimBy, L.ORDER_NO AS OrderNo , L.LEAD_ID AS LeadId, L.ORI_OFFICE_NAME AS OriOfficeName, LC.CUST_NO AS CustNo, LC.CUST_NAME AS CustName, L.MR_LEAD_SOURCE_CODE AS SourceCode, LC.MR_CUST_TYPE_CODE AS MrCustTypeCode",
-        "from": "FROM dbo.LEAD L WITH(NOLOCK) JOIN dbo.LEAD_CUST LC WITH(NOLOCK) ON L.LEAD_ID = LC.LEAD_ID JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON l.LEAD_NO = WTL.TRANSACTION_CODE AND WTL.ACT_CODE = 'FRAUD_VERIFICATION'",
+        "select": "SELECT L.LEAD_NO AS LeadNo,WTL.WF_TASK_LIST_ID AS WfTaskListId,WTL.CLAIM_STAT AS ClaimStat, WTL.USERNAME AS ClaimBy, L.ORDER_NO AS OrderNo , L.LEAD_ID AS LeadId, L.ORI_OFFICE_CODE AS OriOfficeCode, LC.CUST_NO AS CustNo, LC.CUST_NAME AS CustName, L.MR_LEAD_SOURCE_CODE AS SourceCode, LC.MR_CUST_TYPE_CODE AS MrCustTypeCode, RO.OFFICE_NAME AS OfficeName",
+        "from": "FROM dbo.LEAD L WITH(NOLOCK) JOIN dbo.LEAD_CUST LC WITH(NOLOCK) ON L.LEAD_ID = LC.LEAD_ID JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON l.LEAD_NO = WTL.TRANSACTION_CODE AND WTL.ACT_CODE = 'FRAUD_VERIFICATION' JOIN dbo.V_REF_OFFICE RO WITH(NOLOCK) ON L.ORI_OFFICE_CODE = RO.OFFICE_CODE",
         "where": "WHERE WTL.END_EXECUTING_DATE IS NULL"
     },
     "headerList": [
@@ -132,14 +133,14 @@
             "type": "sort",
             "position": "left",
             "label": "Office Name",
-            "name": "L.ORI_OFFICE_NAME"
+            "name": "RO.OFFICE_NAME"
         },
         {
             "type": "sort",
             "position": "center",
             "label": "ORDER NO",
             "name": "L.ORDER_NO"
-          },
+        },
         {
             "type": "sort",
             "position": "center",
@@ -196,13 +197,13 @@
         {
             "type": "text",
             "position": "left",
-            "property": "OriOfficeName"
+            "property": "OfficeName"
         },
         {
             "type": "text",
             "position": "center",
             "property": "OrderNo"
-          },
+        },
         {
             "type": "text",
             "position": "center",
@@ -228,20 +229,59 @@
             "position": "center",
             "action": [
                 {
-                    "type": "edit",
-                    "path": "/Lead/LeadInput/MainInfo",
-                    "param": [
+                    "type": "switch",
+                    "case": [
                         {
-                            "type": "LeadId",
-                            "property": "LeadId"
+                            "conditions": [
+                                {
+                                    "isUser": true,
+                                    "property": "ClaimBy",
+                                    "value": "",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "/Lead/FraudVerif/Page",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "LeadId",
+                                        "property": "LeadId"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "WfTaskListId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
                         },
                         {
-                            "type": "WfTaskListId",
-                            "property": "WfTaskListId"
-                        },
-                        {
-                            "type": "mode",
-                            "property": "edit"
+                            "conditions": [
+                                {
+                                    "isUser": false,
+                                    "property": "ClaimBy",
+                                    "value": "",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "/Lead/FraudVerif/Page",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "LeadId",
+                                        "property": "LeadId"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "WfTaskListId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
                         }
                     ]
                 }

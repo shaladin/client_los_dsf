@@ -58,6 +58,6 @@ export class LeadViewHeaderComponent implements OnInit {
         console.log("aaaa")
         console.log(this.returnLead)
     });
-    this.leadUrl = '/Lead/View?LeadId=' + this.LeadId;
+    this.leadUrl = environment.losR3Web + '/Lead/View?LeadId=' + this.LeadId;
   }
 }

@@ -155,7 +155,7 @@ export class DocSignerDetailComponent implements OnInit {
       (response) => {
           this.returnMouCust = response;
       });
-    this.mouUrl = '/Mou/Cust/Paging?MouCustId=' + this.MouCustId;
+    this.mouUrl = environment.losR3Web + '/Mou/Cust/Paging?MouCustId=' + this.MouCustId;
   }
 
   setMouCustSigner(){

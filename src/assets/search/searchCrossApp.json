@@ -6,7 +6,7 @@
         "name": "ag.AGRMNT_NO",
         "id": "AgrmntNoId",
         "value": "",
-        "label": "Agrement No",
+        "label": "Agreement No",
         "placeholder": "Agrement No"
       },
       {
