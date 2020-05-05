@@ -45,6 +45,7 @@ import { LeadUpdateComponent } from "./lead-update/lead-update.component";
 import { NgxCurrencyModule } from "ngx-currency";
 import { CustJobDataComponent } from "app/NEW-NAP/sharing-component/input-nap-component/customer-data/component/job-data/cust-job-data.component";
 import { CustSocmedComponent } from "app/NEW-NAP/sharing-component/input-nap-component/customer-data/component/socmed/cust-socmed.component";
+import { UcinputnumberModule } from "@adins/ucinputnumber";
 export const customCurrencyMaskConfig = {     
   align: "left",     
   allowNegative: true,     
@@ -79,6 +80,7 @@ export const customCurrencyMaskConfig = {
     SharingComponentModule,
     ArchwizardModule,
     MatRadioModule,
+    UcinputnumberModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
   ],
   declarations: [

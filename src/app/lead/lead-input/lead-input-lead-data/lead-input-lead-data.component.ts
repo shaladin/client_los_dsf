@@ -129,11 +129,11 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.assetTypeId = event.AssetTypeId;
   }
 
-  downPaymentChange(event) {
-    this.LeadDataForm.patchValue({
-      MrDownPaymentTypeCode: event.value,
-    });
-  }
+  // downPaymentChange(event) {
+  //   this.LeadDataForm.patchValue({
+  //     MrDownPaymentTypeCode: event.value,
+  //   });
+  // }
 
   radioChange(event) {
     this.LeadDataForm.patchValue({

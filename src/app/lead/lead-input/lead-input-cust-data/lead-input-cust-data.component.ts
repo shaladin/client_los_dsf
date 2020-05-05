@@ -144,7 +144,7 @@ export class LeadInputCustDataComponent implements OnInit {
     this.reqLeadCustObj = new LeadCustObj();
       this.reqLeadCustObj.LeadId = this.LeadId;
       this.http.post(this.getLeadCustByLeadId, this.reqLeadCustObj).subscribe(
-        (response) => {
+        (response) => { 
             this.resLeadCustObj = response;
             console.log("ccc")
             console.log(this.resLeadCustObj)
@@ -238,6 +238,7 @@ export class LeadInputCustDataComponent implements OnInit {
     
                 this.reqLeadCustPersonalObj = new LeadCustPersonalObj();
                 this.reqLeadCustPersonalObj.LeadCustId = this.resLeadCustObj.LeadCustId;
+                console.log("aaa");
                 this.http.post(this.getLeadCustPersonal, this.reqLeadCustPersonalObj).subscribe(
                   (response) => {
                       this.resLeadCustPersonalObj = response;

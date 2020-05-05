@@ -21,6 +21,8 @@ import { ViewFinancialComponent } from "./view-financial/view-financial.componen
 import { AppInsuranceComponent } from './app-insurance/app-insurance.component';
 import { AppInsuranceDetailComponent } from './app-insurance/app-insurance-detail/app-insurance-detail.component';
 import { ViewSharingComponentModule } from "./view-sharing-component.module";
+import { UcviewgenericModule } from "@adins/ucviewgeneric";
+import { UcSubsectionModule } from "@adins/uc-subsection";
 
 @NgModule({
   exports: [
@@ -38,6 +40,8 @@ import { ViewSharingComponentModule } from "./view-sharing-component.module";
     CommonModule,
     AdInsModule,
     ViewSharingComponentModule,
+    UcviewgenericModule,
+    UcSubsectionModule
   ],
   declarations: [
     InvoiceDataFctrComponent,
