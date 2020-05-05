@@ -167,7 +167,7 @@ export class CommissionComponent implements OnInit {
   }
 
   GetIncomeInfoObj() {
-    var url = environment.losUrl //+ AdInsConstant.GetAppFinDataWithRuleByAppId;
+    var url = AdInsConstant.GetAppFinDataWithRuleByAppId;
     var app = new NapAppModel();
     app = this.ResultAppData;
     var obj = {
@@ -396,7 +396,7 @@ export class CommissionComponent implements OnInit {
     var url;
     var obj;
     if (content == AdInsConstant.ContentSupplier) {
-      url = environment.losUrl + AdInsConstant.GetAppAssetListByAppId;
+      url = AdInsConstant.GetAppAssetListByAppId;
       obj = {
         AppId: this.AppId,
         RowVersion: ""
@@ -412,7 +412,7 @@ export class CommissionComponent implements OnInit {
         }
       );
     } else if (content == AdInsConstant.ContentSupplierEmp) {
-      url = environment.losUrl + AdInsConstant.GetListAppAssetSupplEmpByListAppAssetId;
+      url = AdInsConstant.GetListAppAssetSupplEmpByListAppAssetId;
       obj = {
         AppAssetId: this.AppAssetIdList,
         RowVersion: ""
@@ -479,6 +479,7 @@ export class CommissionComponent implements OnInit {
             Key: ReturnObject[i].SupplEmpNo,
             Value: ReturnObject[i].SupplEmpName,
             MrSupplEmpPositionCode: ReturnObject[i].MrSupplEmpPositionCode,
+            MrSupplEmpPositionCodeDesc: ReturnObject[i].MrSupplEmpPositionCodeDesc,
             SupplCode: ReturnObject[i].SupplCode
           };
           this.ContentObjSupplierEmp.push(KVPObj);
