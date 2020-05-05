@@ -763,7 +763,10 @@ export class AdInsConstant {
 
   // App Collateral
   public static GetListAppCollateral = environment.losUrl + "/AppCollateral/GetListAppCollateral"
-
+  public static GetRefAttrList = environment.losUrl + "/AppCollateral/GetRefAttrList"
+  public static AddEditAllCollateralData = environment.losUrl + "/AppCollateral/AddEditAllCollateralData"
+  public static AddExistingAppCollateralData = environment.losUrl + "/AppCollateral/AddExistingAppCollateralData"
+  public static DeleteAppCollateral = environment.losUrl + "/AppCollateral/DeleteAppCollateral"
   //AGRMNT SIGNER
   public static SubmitAgrmntSignerData = environment.losUrl + "/AgrmntSigner/SubmitAgrmntSignerData";
   public static EditAgrmntSignerData = environment.losUrl + "/AgrmntSigner/EditAgrmntSignerData";
