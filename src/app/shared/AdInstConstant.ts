@@ -2,9 +2,6 @@ import { environment } from "environments/environment";
 
 export class AdInsConstant {
 
-
-
-
   //App Step
   public static AppStepNew = "NEW";
   public static AppStepCust = "CUST";
@@ -57,6 +54,7 @@ export class AdInsConstant {
   public static AddAppFromLead = environment.losUrl + "/Application/AddAppFromLead";
   public static DataTableNAP = environment.losUrl + "/Application/DataTableNAP";
   public static GetRuleFeeAndInsFixedNAP = environment.losUrl + "/Application/GetRuleFeeAndInsFixedNAP";
+  public static SubmitNAP = environment.losUrl + "/Application/SubmitNAP";
 
   //App Loan Purpose
   public static AddAppLoanPurpose = environment.losUrl + "/AppLoanPurpose/AddAppLoanPurpose";
@@ -764,7 +762,7 @@ export class AdInsConstant {
   public static GetAllAssetDataForPOByAsset = environment.losUrl + "/AppAsset/GetAllAssetDataForPOByAsset";
   public static GetAppAssetByAgrmntId = environment.losUrl + "/AppAsset/GetAppAssetByAgrmntId";
   public static GetAllAssetDataByAppId = environment.losUrl + "/AppAsset/GetAllAssetDataByAppId";
-  public static AddEditAllAssetData = "http://localhost:5001" + "/AppAsset/AddEditAllAssetData";
+  public static AddEditAllAssetData = environment.losUrl + "/AppAsset/AddEditAllAssetData";
 
   //Asset Doc List
   public static GetAppAssetDataByAppId = environment.losUrl + "/AppAsset/GetAppAssetDataByAppId";
@@ -831,7 +829,7 @@ export class AdInsConstant {
   public static GetListLeadVerf = environment.losUrl + "/LeadVerf/GetListLeadVerf";
 
   //APP TC
-  public static CreateTCRule = environment.losUrl + "/AppTc/CreateTCRule";
+  public static GetListTCbyAppIdFromRule = environment.losUrl + "/AppTc/GetListTCbyAppIdFromRule";
   public static AddAppTc = environment.losUrl + "/AppTc/AddAppTc";
   public static EditAppTc = environment.losUrl + "/AppTc/EditAppTc";
   public static SubmitOutstandingTc = environment.losUrl + "/AppTc/SubmitOutstandingTc";
@@ -965,7 +963,7 @@ export class AdInsConstant {
   public static GetAssetNegativeDuplicateCheckByListOfAsset = environment.FoundationR3Url + "/AssetNegative/GetAssetNegativeDuplicateCheckByListOfAsset"
   //App Duplicate Checking
   public static GetCustomerDuplicateCheck = "/CustDuplicateCheck/GetCustomerAndNegativeCustDuplicateCheck";
-  public static GetNegativeCustomerDuplicateCheck = "/CustDuplicateCheck/GetNegativeCustomerDuplicateCheck";
+  public static GetNegativeCustomerDuplicateCheck = environment.FoundationR3Url + "/CustDuplicateCheck/GetNegativeCustomerDuplicateCheck";
   public static GetAppCustDuplicateCheck = "/AppDupCheck/GetAppCustDuplicateCheck";
   public static GetAppGuarantorDuplicateCheck = "/AppDupCheck/GetAppGuarantorDuplicateCheck";
   public static GetSpouseDuplicateCheck = "/AppDupCheck/GetSpouseDuplicateCheck";
