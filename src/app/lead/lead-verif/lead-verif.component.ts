@@ -91,7 +91,7 @@ export class LeadVerifComponent implements OnInit {
         this.router.navigateByUrl('Error');
       }
     );
-    this.leadUrl = environment.losR3Web +  '/Lead/View?LeadId=';
+    this.leadUrl = environment.losR3Web + '/Lead/View?LeadId=';
   }
 
   searchSort(event: any) {
@@ -144,9 +144,9 @@ export class LeadVerifComponent implements OnInit {
 
   formValidate(form: any, verifyStatus) {
     this.adInsService.scrollIfFormHasErrors(form);
-    this.verifyStatus = verifyStatus; 
+    this.verifyStatus = verifyStatus;
   }
-  getListWfTaskListId(){
+  getListWfTaskListId() {
     var tempArr = new Array();
     for (let index = 0; index < this.tempData.length; index++) {
       tempArr.push(this.tempData[index]['WfTaskListId']);
@@ -167,7 +167,6 @@ export class LeadVerifComponent implements OnInit {
       this.toastr.typeErrorCustom('Please Add At Least One Data');
       return;
     }
-
     var LeadVerf = {
       LeadVerfObjs: this.arrLeadVerf
     }
@@ -189,11 +188,13 @@ export class LeadVerifComponent implements OnInit {
     if (this.listSelectedId.length !== 0) {
       for (var i = 0; i < this.listSelectedId.length; i++) {
         this.tempListId.push(this.listSelectedId[i]);
-      }
-      for (var i = 0; i < this.listSelectedId.length; i++) {
         var object = this.resultData.find(x => x.LeadId == this.listSelectedId[i]);
         this.tempData.push(object);
       }
+      // for (var i = 0; i < this.listSelectedId.length; i++) {
+      //   var object = this.resultData.find(x => x.LeadId == this.listSelectedId[i]);
+      //   this.tempData.push(object);
+      // }
       this.arrAddCrit = new Array();
       if (this.arrCrit.length != 0) {
         for (var i = 0; i < this.arrCrit.length; i++) {
@@ -273,17 +274,16 @@ export class LeadVerifComponent implements OnInit {
     }
   }
 
-  claimListTask(listWfTaskListId)
-  {
+  claimListTask(listWfTaskListId) {
     var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
-    var wfClaimObj = { listWfTaskListId: listWfTaskListId, pUserID: currentUserContext["UserName"]};
+    var wfClaimObj = { listWfTaskListId: listWfTaskListId, pUserID: currentUserContext["UserName"] };
     console.log(wfClaimObj);
     this.http.post(AdInsConstant.ClaimListTask, wfClaimObj).subscribe(
       (response) => {
         console.log(response);
       });
-      (error) => {
-        console.log(error);
-      }
+    (error) => {
+      console.log(error);
+    }
   }
 }
