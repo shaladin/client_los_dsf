@@ -154,8 +154,8 @@ export class LeadVerifComponent implements OnInit {
     return tempArr;
   }
   SaveLeadVerf(leadVerfForm: any) {
-    var tempArr = this.getListWfTaskListId();
-    this.claimListTask(tempArr);
+    //var tempArr = this.getListWfTaskListId();
+    //this.claimListTask(tempArr);
     for (let index = 0; index < this.tempData.length; index++) {
       var tempLeadVerfObj = new LeadVerfObj();
       tempLeadVerfObj.VerifyStat = this.verifyStatus;
