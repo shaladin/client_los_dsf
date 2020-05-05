@@ -21,6 +21,7 @@ export class NapAppModel{
     NumOfInst : any;
     PayFreqCode : any;
     MrFirstInstTypeCode : any;
+    FirstInstTypeName: string;
     NumOfAsset : any;
     MrLcCalcMethodCode : any;
     LcInstRatePrml : any;
@@ -49,6 +50,7 @@ export class NapAppModel{
     RsvField5 : any;
     RowVersion: any;
     FloatingPeriodCode: any;
+    BlCode: string;
 
     constructor () {
         this.RowVersion = "";

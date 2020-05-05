@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
@@ -9,25 +10,19 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
   templateUrl: './application-view.component.html',
   styleUrls: ['./application-view.component.scss']
 })
-export class applicationViewComponent implements OnInit {
-
-  constructor(
-    private router: Router, 
-    private route: ActivatedRoute, 
-    private httpClient: HttpClient, 
-    private toastr: NGXToastrService, 
-    private fb: FormBuilder
-  ) { 
+export class ApplicationViewComponent implements OnInit {
+  AppId: number;
+  arrValue = [];
+  
+  constructor(private route: ActivatedRoute) { 
     this.route.queryParams.subscribe(params => {
-      if (params['AppId'] != null) {
-        this.AppId = params['AppId'];
-      }
-    });
+      this.AppId = params["AppId"];
+    })
   }
 
-  AppId;
   ngOnInit() {
-    // this.AppId = 31;
+    this.arrValue.push(this.AppId);
   }
+
 
 }

@@ -187,15 +187,13 @@ export class FeeComponent implements OnInit {
     var feeSource = "";
     var feeType = obj.FeeType;
 
-    console.log("FEE TYPE " + feeType)
     if(obj.MrFeeTypeCode == 'PROVISION')
     {
       if(feeType == "" || feeType == null)
       {
         feeType = "PRCNT"
-        console.log("PROVISION FEE TYPE")
       }
-      feeSource = "NTF_CAP"
+      feeSource = "NTF_WITHOUT_CAP"
     }
 
     return this.fb.group({

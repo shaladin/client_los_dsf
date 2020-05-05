@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormArray, Validators } from '@angular/forms';
@@ -18,6 +18,8 @@ import { WizardComponent } from 'angular-archwizard';
 export class TcDataComponent implements OnInit {
 
   @Input() AppId: any;
+  @Output() outputTab: EventEmitter<any> = new EventEmitter();
+
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService, private wizard: WizardComponent) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
@@ -57,7 +59,7 @@ export class TcDataComponent implements OnInit {
           this.ReconstructForm();
         }
         else {
-          this.http.post(AdInsConstant.CreateTCRule, this.AppIdObj).subscribe(
+          this.http.post(AdInsConstant.GetListTCbyAppIdFromRule, this.AppIdObj).subscribe(
             (response) => {
               this.listAppTcObj = response["AppTcs"];
               console.log(this.result);
@@ -194,6 +196,7 @@ export class TcDataComponent implements OnInit {
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
+          this.outputTab.emit();
           this.wizard.goToNextStep();
         },
         (error) => {
@@ -205,6 +208,7 @@ export class TcDataComponent implements OnInit {
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
+          this.outputTab.emit();
           this.wizard.goToNextStep();
         },
         (error) => {

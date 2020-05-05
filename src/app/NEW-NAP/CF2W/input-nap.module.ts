@@ -9,6 +9,7 @@ import { AppComponent } from './app/app.component';
 import { AppPagingComponent } from "./app-paging/app-paging.component";
 import { AppAddFreeComponent } from "./app-add-free/app-add-free.component";
 import { AppAddFixedComponent } from "./app-add-fixed/app-add-fixed.component";
+import { AppAddDetailComponent } from "./app-add-detail/app-add-detail.component";
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { AppAddFixedComponent } from "./app-add-fixed/app-add-fixed.component";
         AppComponent,
         AppPagingComponent,
         AppAddFreeComponent,
-        AppAddFixedComponent
+        AppAddFixedComponent,
+        AppAddDetailComponent
     ],
     providers: [
         NGXToastrService

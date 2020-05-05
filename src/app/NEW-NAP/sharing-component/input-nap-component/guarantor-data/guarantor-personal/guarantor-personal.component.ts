@@ -341,6 +341,7 @@ export class GuarantorPersonalComponent implements OnInit {
       this.http.post(AdInsConstant.EditAppGuarantorPersonal, this.guarantorPersonalObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
+          this.close.emit(1);
         },
         error => {
           console.log(error);
@@ -351,13 +352,13 @@ export class GuarantorPersonalComponent implements OnInit {
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
+          this.close.emit(1);
         },
         (error) => {
           console.log(error);
         }
       );
     }
-    this.close.emit(1);
   }
 
   ClearForm() {

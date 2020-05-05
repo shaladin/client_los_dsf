@@ -77,7 +77,7 @@ export const ROUTES: RouteInfo[] = [
       { path: '/Nap/AdminProcess/PurchaseOrder/Paging', title: 'Purchase Order', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
       { path: '/Nap/AdminProcess/DeliveryOrder/Paging', title: 'Delivery Order', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
       { path: '/Nap/AdminProcess/CustConfirmation/Paging', title: 'Customer Confirmation', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
-      { path: '/Nap/AdminProcess/CustConfirmation/Paging', title: 'Customer Confirmation', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
+      { path: '/Nap/AdditionalProcess/AppDupCheck/Paging', title: 'App Duplicate Checking', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
     ], params: []
   },
   {
@@ -102,7 +102,7 @@ export const ROUTES: RouteInfo[] = [
   {
     path: '', title: 'Fraud Detection', icon: 'ft-home', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false,
     submenu: [
-      { path: '/FraudDetection/FraudDetectionPaging', title: 'Fraud Detection', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] }
+      { path: '/Nap/CreditProcess/FraudDetection/Paging', title: 'Fraud Detection', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] }
     ], params:[]
   }
 ];

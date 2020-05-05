@@ -1,0 +1,90 @@
+{
+    "url": "",
+    "title":"Lookup CMO",
+    "component": [
+      {
+        "type": "textbox",
+        "name": "RU.USERNAME",
+        "id": "usernameId",
+        "value": "",
+        "label": "Username",
+        "placeholder": ""
+      },
+      {
+        "type": "textbox",
+        "name": "RE.EMP_NO",
+        "id": "empNo",
+        "value": "",
+        "label": "Employee NO",
+        "placeholder": ""
+      },
+      {
+        "type": "textbox",
+        "name": "RE.EMP_NAME",
+        "id": "empNae",
+        "value": "",
+        "label": "Employee Name",
+        "placeholder": ""
+      }
+    ],
+    "querystring": {
+      "select": " SELECT RU.USERNAME AS Username, RE.EMP_NO AS EmpNo, RE.EMP_NAME AS EmpName",
+      "from": "FROM dbo.REF_USER RU WITH(NOLOCK)JOIN dbo.REF_USER_ROLE ROR WITH(NOLOCK) ON ROR.REF_USER_ID = RU.REF_USER_ID JOIN dbo.REF_ROLE RR WITH(NOLOCK) ON RR.REF_ROLE_ID = ROR.REF_ROLE_ID JOIN dbo.REF_EMP RE WITH(NOLOCK) ON RE.REF_EMP_ID = RU.REF_EMP_ID",
+      "where" : "WHERE RR.ROLE_CODE IN (SELECT * FROM dbo.fnSplitString((SELECT GS_VALUE FROM GENERAL_SETTING WITH(NOLOCK) WHERE GS_CODE = N'ROLE_FOR_TELE_SLS'),',')) ",
+      "groupby" : "GROUP BY RU.USERNAME, RE.EMP_NO, RE.EMP_NAME"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Username",
+            "name": "RU.USERNAME"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Employee NO",
+            "name": "RE.EMP_NO"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Employee Name",
+            "name": "RE.EMP_NAME"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Select"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "Username"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "EmpNo"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "EmpName"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "select",
+                    "property": "EmpId"
+                }
+            ]
+        }
+    ],
+    "propertyId": "Username",
+    "propertyName": "Username"
+}

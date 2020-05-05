@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -6,7 +6,6 @@ import { FormBuilder } from '@angular/forms';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { LifeInsObj } from 'app/shared/model/LifeInsObj.Model';
 import { LifeInsDObj } from 'app/shared/model/LifeInsDObj.Model';
-import { WizardComponent } from 'angular-archwizard';
 
 @Component({
   selector: 'app-life-insurance-data',
@@ -17,18 +16,18 @@ import { WizardComponent } from 'angular-archwizard';
 export class LifeInsuranceDataComponent implements OnInit {
 
   @Input() AppId: any;
+  @Output() outputTab: EventEmitter<any> = new EventEmitter();
   inputGridObj: any;
   show: any;
   LifeInsObj: LifeInsObj = new LifeInsObj();
   LifeInsDObj: LifeInsDObj;
   IsChecked: any;
   mode: string = "add";
-  ListObj: any = new Array<LifeInsDObj>();
+  ListObj: Array<LifeInsDObj> = new Array<LifeInsDObj>();
   AppLifeInsD: any = new Array();
   result: any;
 
-  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService,
-    private wizard: WizardComponent) {
+  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       this.mode = params["mode"];
       this.AppId = params["AppId"];
@@ -48,7 +47,9 @@ export class LifeInsuranceDataComponent implements OnInit {
   MrLifeInsPaidMethodCode: any;
   AppLifeInsHId: any;
 
-  ngOnInit() {
+  async ngOnInit() : Promise<void> {
+    await this.initPaidMethod();
+    await this.initBranchName();
       this.LifeInsObj.AppId = this.AppId;
       console.log(this.LifeInsObj);
       this.http.post(AdInsConstant.GetAppLifeInsHByAppId, this.LifeInsObj).subscribe(
@@ -57,9 +58,11 @@ export class LifeInsuranceDataComponent implements OnInit {
           console.log(response);
           this.result = response;
           this.AppLifeInsHId = this.result.AppLifeInsHId;
-          for(let i =0; i<this.result.ListAppLifeInsD.length;i++){
-            this.AppLifeInsD[i] = this.result.ListAppLifeInsD[i]["AppLifeInsDId"];
-          }
+          if(this.result.ListAppLifeInsD != null && this.result.ListAppLifeInsD != undefined){
+            for(let i =0; i<this.result.ListAppLifeInsD.length;i++){
+              this.AppLifeInsD[i] = this.result.ListAppLifeInsD[i]["AppLifeInsDId"];
+            }
+          }     
           console.log(this.AppLifeInsD);
           if(this.result.AppLifeInsHId != 0){
             this.mode="edit";
@@ -68,7 +71,7 @@ export class LifeInsuranceDataComponent implements OnInit {
             this.IsChecked = true;
             this.LifeInsForm.patchValue({
               IsChecked: true,
-              LifeInscoBranchName: this.result.LifeInscoBranchName,
+              LifeInscoBranchName: this.result.LifeInscoBranchCode,
               MrLifeInsPaidMethodCode: this.result.MrLifeInsPaidMethodCode,
               TotalLifeInsCptlzAmt: this.result.TotalLifeInsCptlzAmt,
               NewCoverNotes: this.result.NewCoverNotes,
@@ -79,8 +82,7 @@ export class LifeInsuranceDataComponent implements OnInit {
             this.mode="add";
             this.show=false;
           }
-          this.initPaidMethod();
-          this.initBranchName();
+
         },
         (error) => {
           console.log(error);
@@ -88,12 +90,12 @@ export class LifeInsuranceDataComponent implements OnInit {
       );
   }
 
-  initPaidMethod(){
+  async initPaidMethod(){
     var paidMethodObj = {
       RefMasterTypeCode: "LIFE_INS_PAY_METHOD",
       RowVersion: ""
     }
-    this.http.post(AdInsConstant.GetListActiveRefMaster, paidMethodObj).subscribe(
+    await this.http.post(AdInsConstant.GetListActiveRefMaster, paidMethodObj).toPromise().then(
       (response) => {
         this.MrLifeInsPaidMethodCode = response["ReturnObject"];
         this.LifeInsForm.patchValue({
@@ -103,13 +105,13 @@ export class LifeInsuranceDataComponent implements OnInit {
     );
   }
 
-  initBranchName(){
+  async initBranchName(){
     var LifeInscoBranchNameObj = {
       MrVendorCategory: "LIFE_INSCO_BRANCH",
       OfficeCode: "HO",
       RowVersion: ""
     }
-    this.http.post<Array<object>>(AdInsConstant.GetListVendorByCategoryCodeAndOfficeCode, LifeInscoBranchNameObj).subscribe(
+    await this.http.post<Array<object>>(AdInsConstant.GetListVendorByCategoryCodeAndOfficeCode, LifeInscoBranchNameObj).toPromise().then(
       (response) => {
         this.LifeInscoBranchName = response;
       }
@@ -123,7 +125,10 @@ export class LifeInsuranceDataComponent implements OnInit {
     lifeInsObj.MrLifeInsPaidMethodCode = "PAID_IN_ADV";
     this.http.post(AdInsConstant.InitAppLifeInsH, lifeInsObj).subscribe(
       (response) => {
-        this.ListObj = response["ListAppLifeInsD"]
+        this.ListObj = new Array<LifeInsDObj>(); 
+        this.ListObj = response["ListAppLifeInsD"];
+        this.LifeInsObj.ListAppLifeInsD = new Array<LifeInsDObj>();
+        this.LifeInsObj.ListAppLifeInsD = response["ListAppLifeInsD"];
       },
       (error) => {
         console.log(error);
@@ -166,7 +171,8 @@ export class LifeInsuranceDataComponent implements OnInit {
       this.http.post(AdInsConstant.EditAppLifeInsH, this.LifeInsObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
-          this.wizard.goToNextStep()
+          // this.wizard.goToNextStep()
+          this.outputTab.emit();
         },
         error => {
           console.log(error);
@@ -177,7 +183,8 @@ export class LifeInsuranceDataComponent implements OnInit {
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
-          this.wizard.goToNextStep()
+          // this.wizard.goToNextStep()
+          this.outputTab.emit();
         },
         (error) => {
           console.log(error);
@@ -192,7 +199,7 @@ export class LifeInsuranceDataComponent implements OnInit {
       console.log("event checked");
       console.log(i);
       console.log(this.ListObj[i]);
-      this.LifeInsObj.ListAppLifeInsD[i] = new LifeInsDObj();
+      // this.LifeInsObj.ListAppLifeInsD[i] = new LifeInsDObj();
       this.LifeInsObj.ListAppLifeInsD[i].InsuredName = this.ListObj[i]["InsuredName"];
       this.LifeInsObj.ListAppLifeInsD[i].Age = this.ListObj[i]["Age"];
       this.LifeInsObj.ListAppLifeInsD[i].MrCustTypeCode = this.ListObj[i]["MrCustTypeCode"];

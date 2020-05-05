@@ -9,6 +9,7 @@ import { ListDataCommissionComponent } from './tab-commission/list-data-commissi
 import { ViewReservedFundComponent } from "./view-reserved-fund/view-reserved-fund.component";
 import { LifeInsuranceComponent } from './life-insurance/life-insurance.component';
 import { AppTcComponent } from './app-tc/app-tc.component';
+import { ViewInsuranceComponent } from "./view-insurance/view-insurance.component";
 import { GuarantorComponent } from './guarantor/guarantor.component';
 import { ViewPhoneVerifComponent } from "./view-phone-verif/view-phone-verif.component";
 import { ViewAssetDataComponent } from "./view-asset-data/view-asset-data.component";
@@ -16,13 +17,24 @@ import { TabApplicationComponent } from './tab-application/tab-application.compo
 import { TabAnalysisResultComponent } from './tab-analysis-result/tab-analysis-result.component';
 import { AppAssetDataComponent } from './app-asset-data/app-asset-data.component';
 import { AppAssetDataDetailComponent } from './app-asset-data/app-asset-data-detail/app-asset-data-detail.component';
+import { ViewFinancialComponent } from "./view-financial/view-financial.component";
+import { AppInsuranceComponent } from './app-insurance/app-insurance.component';
+import { AppInsuranceDetailComponent } from './app-insurance/app-insurance-detail/app-insurance-detail.component';
 import { ViewSharingComponentModule } from "./view-sharing-component.module";
 import { ApprovalHistComponent } from './approval-hist/approval-hist.component';
 import { UcapprovalhistModule  } from '@adins/ucapprovalhist';
 
 @NgModule({
   exports: [
-
+    ViewReservedFundComponent,
+    ViewInsuranceComponent,
+    ViewFinancialComponent,
+    TabReferantorComponent,
+    TabCommissionComponent,
+    ListDataCommissionComponent,
+    TabAnalysisResultComponent,
+    ViewAssetDataComponent,
+    ViewPhoneVerifComponent,
   ],
   imports: [
     CommonModule,
@@ -38,6 +50,7 @@ import { UcapprovalhistModule  } from '@adins/ucapprovalhist';
     ViewReservedFundComponent,
     LifeInsuranceComponent,
     AppTcComponent,
+    ViewInsuranceComponent,
     GuarantorComponent,
     ViewPhoneVerifComponent,
     ViewAssetDataComponent,
@@ -45,7 +58,10 @@ import { UcapprovalhistModule  } from '@adins/ucapprovalhist';
     TabAnalysisResultComponent,
     AppAssetDataComponent,
     AppAssetDataDetailComponent,
-    ApprovalHistComponent
+    ApprovalHistComponent,
+    ViewFinancialComponent,
+    AppInsuranceComponent,
+    AppInsuranceDetailComponent
   ],
   providers: [
     NGXToastrService

@@ -63,7 +63,7 @@
           </div>
 
           <div class="pull-right">
-            <button type="button" class="btn btn-raised btn-primary mr-1" [routerLink]="['../ApplicantExistingData/Company']" 
+            <button type="button" class="btn btn-raised btn-primary mr-1" [routerLink]="['/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company']" 
             [queryParams]="{AppId:AppId}" translate> New Customer
             </button>
           </div>
@@ -100,7 +100,7 @@
           </div>
 
           <div class="form-body">
-            <h4 class="form-section card-title" translate><i class="ft-file-text"></i>Negative Customer</h4>
+            <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Negative Customer</h4>
             <table *ngIf="ListNegativeCust?.length > 0" class="table table-responsive-md text-center table-hover">
               <thead>
                 <tr class="table-header">
