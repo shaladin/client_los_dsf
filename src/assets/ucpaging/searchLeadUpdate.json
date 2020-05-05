@@ -215,10 +215,6 @@
                                 "icon": "ft-edit-2",
                                 "param": [
                                     {
-                                        "type": "TaskListId",
-                                        "property": "TaskListId"
-                                    },
-                                    {
                                         "type": "LeadId",
                                         "property": "LeadId"
                                     },

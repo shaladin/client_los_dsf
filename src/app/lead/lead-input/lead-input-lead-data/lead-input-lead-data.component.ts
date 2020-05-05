@@ -39,7 +39,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   getListActiveRefMasterUrl: any;
   assetTypeId: number;
   leadInputLeadDataObj: any;
-  editLeadData: any;
+  addEditLeadData: any;
   getLeadAssetByLeadId: any;
   getLeadAppByLeadId: any;
   getAssetMasterForLookupEmployee: any;
@@ -92,7 +92,7 @@ export class LeadInputLeadDataComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.getListActiveRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
-    this.editLeadData = AdInsConstant.AddEditLeadData;
+    this.addEditLeadData = AdInsConstant.AddEditLeadData;
     this.getLeadAssetByLeadId = AdInsConstant.GetLeadAssetByLeadId;
     this.getLeadAppByLeadId = AdInsConstant.GetLeadAppByLeadId;
     this.getAssetMasterForLookupEmployee = AdInsConstant.GetAssetMasterForLookupEmployee;
@@ -533,14 +533,12 @@ export class LeadInputLeadDataComponent implements OnInit {
 
   save() {
     if (this.typePage == "edit") {
-      if(this.resLeadAssetObj.LeadAssetId != 0) {
         this.leadInputLeadDataObj = new LeadInputLeadDataObj();
         this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
         this.setLeadAsset();
         this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
         this.setLeadApp();
-
-        this.http.post(this.editLeadData, this.leadInputLeadDataObj).subscribe(
+        this.http.post(this.addEditLeadData, this.leadInputLeadDataObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
             this.router.navigate(["/Lead/Lead/Paging"]);
@@ -549,26 +547,12 @@ export class LeadInputLeadDataComponent implements OnInit {
             console.log(error);
           }
         );
-      } else {
-        this.leadInputLeadDataObj = new LeadInputLeadDataObj();
-        this.setLeadAsset();
-        this.setLeadApp();
-        this.http.post(this.editLeadData, this.leadInputLeadDataObj).subscribe(
-          (response) => {
-            this.toastr.successMessage(response["message"]);
-            this.router.navigate(["/Lead/Lead/Paging"]);
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
-      }
-    } else {
+    } 
+    else {
       this.leadInputLeadDataObj = new LeadInputLeadDataObj();
       this.setLeadAsset();
       this.setLeadApp();
-
-      this.http.post(this.editLeadData, this.leadInputLeadDataObj).subscribe(
+      this.http.post(this.addEditLeadData, this.leadInputLeadDataObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.router.navigate(["/Lead/Lead/Paging"]);
@@ -582,15 +566,13 @@ export class LeadInputLeadDataComponent implements OnInit {
 
   SaveForm() {
     if (this.typePage == "edit") {
-      if(this.resLeadAssetObj.LeadAssetId != 0)
-      {
         this.leadInputLeadDataObj = new LeadInputLeadDataObj();
         this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
         this.setLeadAsset();
         this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
         this.setLeadApp();
         this.leadInputLeadDataObj.WfTaskListId = this.TaskListId;
-
+        this.leadInputLeadDataObj.IsEdit = true;
         this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
@@ -600,26 +582,13 @@ export class LeadInputLeadDataComponent implements OnInit {
             console.log(error);
           }
         );
-      } else {
-        this.leadInputLeadDataObj = new LeadInputLeadDataObj();
-        this.setLeadAsset();
-        this.setLeadApp();
-        this.leadInputLeadDataObj.WfTaskListId = this.TaskListId;
-        this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
-          (response) => {
-            this.toastr.successMessage(response["message"]);
-            this.router.navigate(["/Lead/Lead/Paging"]);
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
-      }
-    } else {
+    } 
+    else {
       this.leadInputLeadDataObj = new LeadInputLeadDataObj();
       this.setLeadAsset();
       this.setLeadApp();
       this.leadInputLeadDataObj.WfTaskListId = this.TaskListId;
+      this.leadInputLeadDataObj.IsEdit = false;
       this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);

@@ -2,8 +2,6 @@
   <div class="card">
     <div class="card-body">
       <div class="px-3">
-         
-
         <div class="px-3">
           <div class="row" style="border-bottom: 1px solid black; margin-bottom: 15px;">
             <div class="col-md-8" style="padding-left: 0px;">
@@ -18,22 +16,18 @@
               </button> 
             </div>
           </div>
-
         <aw-wizard #wizard navBarLayout="large-empty-symbols" [disableNavigationBar]=true [awNavigationMode]
           navigateBackward="allow" navigateForward="allow">
-          
           <aw-wizard-step [stepTitle]="'Customer Data'"
             [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }" (stepEnter)="EnterTab('Customer')">
             <app-lead-input-cust-data *ngIf="isCustomer == true" [LeadId]="LeadId">
             </app-lead-input-cust-data>
           </aw-wizard-step>
-
           <aw-wizard-step [stepTitle]="'Lead Data'"
             [navigationSymbol]="{ symbol: '&#xf0b1;', fontFamily: 'FontAwesome' }" (stepEnter)="EnterTab('Lead')">
             <app-lead-input-lead-data *ngIf="isLead == true">
             </app-lead-input-lead-data>
           </aw-wizard-step>
-
         </aw-wizard>
       </div>
     </div>
