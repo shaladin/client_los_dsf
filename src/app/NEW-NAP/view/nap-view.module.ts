@@ -21,8 +21,15 @@ import { UcviewgenericModule } from "@adins/ucviewgeneric";
 import { TabAnalysisResultComponent } from "../sharing-component/view-app-component/tab-analysis-result/tab-analysis-result.component";
 import { ViewAppCustDataCompanyComponent } from "../sharing-component/view-app-component/view-app-cust-data-company/view-app-cust-data-company.component";
 import { ViewAppCustDataPersonalComponent } from "../sharing-component/view-app-component/view-app-cust-data-personal/view-app-cust-data-personal.component";
+import { ViewInsuranceComponent } from "../sharing-component/view-app-component/view-insurance/view-insurance.component";
+import { ViewSharingComponentModule } from "../sharing-component/view-app-component/view-sharing-component.module";
 
 @NgModule({
+  exports: [
+    // TabReferantorComponent,
+    // TabCommissionComponent,
+    // ListDataCommissionComponent,
+  ],
   imports: [
     NapViewRoutingModule,
     CommonModule,
@@ -31,25 +38,25 @@ import { ViewAppCustDataPersonalComponent } from "../sharing-component/view-app-
     MatTabsModule,
     UcSubsectionModule,
     UcviewgenericModule,
-    ArchwizardModule
+    ArchwizardModule,
+    ViewSharingComponentModule
   ],
   declarations: [
     AgreementViewContainerComponent,
     ApplicationViewComponent,
-    TabReferantorComponent,
-    TabCommissionComponent,
-    ListDataCommissionComponent,
-    ViewReservedFundComponent,
-    ViewPhoneVerifComponent,
-    ViewAssetDataComponent,
-    TabApplicationComponent,
-    TabAnalysisResultComponent,
-    InvoiceViewComponent,
-    ViewAppCustDataCompanyComponent,
-    ViewAppCustDataPersonalComponent,
-    ViewAssetDataComponent,
-    ArchwizardModule,
-    NgbModule
+    // TabReferantorComponent,
+    // TabCommissionComponent,
+    // ListDataCommissionComponent,
+    // ViewReservedFundComponent,
+    // ViewPhoneVerifComponent,
+    // ViewAssetDataComponent,
+    // TabApplicationComponent,
+    // TabAnalysisResultComponent,
+    // InvoiceViewComponent,
+    // ViewAppCustDataCompanyComponent,
+    // ViewAppCustDataPersonalComponent,
+    // ViewAssetDataComponent,
+    // ViewInsuranceComponent
   ],
 })
 export class NapViewModule { }
