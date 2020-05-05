@@ -27,8 +27,6 @@ export class LeadInputPageComponent implements OnInit {
       }
       if (params["TaskListId"] != null) {
         this.TaskListId = params["TaskListId"];
-      }
-      if (params["mode"] == "edit") {
         this.pageType = "UPDATE";
       }
       else {
