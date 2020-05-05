@@ -17,6 +17,8 @@ import { TabAnalysisResultComponent } from './tab-analysis-result/tab-analysis-r
 import { AppAssetDataComponent } from './app-asset-data/app-asset-data.component';
 import { AppAssetDataDetailComponent } from './app-asset-data/app-asset-data-detail/app-asset-data-detail.component';
 import { ViewSharingComponentModule } from "./view-sharing-component.module";
+import { ApprovalHistComponent } from './approval-hist/approval-hist.component';
+import { UcapprovalhistModule  } from '@adins/ucapprovalhist';
 
 @NgModule({
   exports: [
@@ -26,6 +28,7 @@ import { ViewSharingComponentModule } from "./view-sharing-component.module";
     CommonModule,
     AdInsModule,
     ViewSharingComponentModule,
+    UcapprovalhistModule
   ],
   declarations: [
     InvoiceDataFctrComponent,
@@ -42,6 +45,7 @@ import { ViewSharingComponentModule } from "./view-sharing-component.module";
     TabAnalysisResultComponent,
     AppAssetDataComponent,
     AppAssetDataDetailComponent,
+    ApprovalHistComponent
   ],
   providers: [
     NGXToastrService
