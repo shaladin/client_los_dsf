@@ -11,7 +11,7 @@
             "placeholder": "Placeholder",
             "isFromURL": true,
             "isSelectOne": false,
-            "url": "",
+            "url": "http://r3app-server.ad-ins.com/Foundation_R3/RefOffice/GetListKvpActiveRefOfficeForPaging",
             "label": "Office",
             "items": [],
             "itemsUrl": []
@@ -103,7 +103,7 @@
             "action": [
                 {
                     "type": "edit",
-                    "path": "../FraudDetection/Paging",
+                    "path": "../Detail",
                     "param": [
                         {
                             "type": "AppId",
