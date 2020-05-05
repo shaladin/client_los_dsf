@@ -21,6 +21,8 @@ import { ViewFinancialComponent } from "./view-financial/view-financial.componen
 import { AppInsuranceComponent } from './app-insurance/app-insurance.component';
 import { AppInsuranceDetailComponent } from './app-insurance/app-insurance-detail/app-insurance-detail.component';
 import { ViewSharingComponentModule } from "./view-sharing-component.module";
+import { ViewAppCustDataCompanyComponent } from "./view-app-cust-data-company/view-app-cust-data-company.component";
+import { ViewAppCustDataPersonalComponent } from "./view-app-cust-data-personal/view-app-cust-data-personal.component";
 
 @NgModule({
   exports: [
@@ -33,6 +35,12 @@ import { ViewSharingComponentModule } from "./view-sharing-component.module";
     TabAnalysisResultComponent,
     ViewAssetDataComponent,
     ViewPhoneVerifComponent,
+    GuarantorComponent,
+    TabApplicationComponent,
+    LifeInsuranceComponent,
+    AppTcComponent,
+    //ViewAppCustDataPersonalComponent,
+    //ViewAppCustDataCompanyComponent
   ],
   imports: [
     CommonModule,
@@ -57,7 +65,9 @@ import { ViewSharingComponentModule } from "./view-sharing-component.module";
     AppAssetDataDetailComponent,
     ViewFinancialComponent,
     AppInsuranceComponent,
-    AppInsuranceDetailComponent
+    AppInsuranceDetailComponent,
+    //ViewAppCustDataPersonalComponent,
+    //ViewAppCustDataCompanyComponent
   ],
   providers: [
     NGXToastrService

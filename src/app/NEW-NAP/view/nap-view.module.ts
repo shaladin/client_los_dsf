@@ -19,6 +19,10 @@ import { ViewAssetDataComponent } from "../sharing-component/view-app-component/
 import { TabApplicationComponent } from "../sharing-component/view-app-component/tab-application/tab-application.component";
 import { UcviewgenericModule } from "@adins/ucviewgeneric";
 import { TabAnalysisResultComponent } from "../sharing-component/view-app-component/tab-analysis-result/tab-analysis-result.component";
+import { TabDeviationComponent } from "../business-process/credit-process/credit-investigation/component/tab-deviation/tab-deviation.component";
+import { ViewFraudDetectionResultComponent } from "../business-process/credit-process/credit-investigation/component/view-fraud-detection-result/view-fraud-detection-result.component";
+import { CreditProcessSharingModule } from "../business-process/credit-process/credit-process.module";
+import { ViewSharingComponentModule } from "../sharing-component/view-app-component/view-sharing-component.module";
 
 @NgModule({
   imports: [
@@ -28,7 +32,9 @@ import { TabAnalysisResultComponent } from "../sharing-component/view-app-compon
     ViewAppComponentModule,
     MatTabsModule,
     ArchwizardModule,
-    NgbModule
+    NgbModule,
+    CreditProcessSharingModule,
+    ViewSharingComponentModule
   ],
   declarations: [
     AgreementViewContainerComponent,
