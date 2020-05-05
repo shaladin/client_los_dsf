@@ -74,13 +74,13 @@
           </div>
 
           <div class="form-actions right">
-            <button type="button" class="btn btn-raised btn-primary mr-1" [routerLink]="['../applicantExistingData/Personal']" 
+            <button type="button" class="btn btn-raised btn-primary mr-1" [routerLink]="['/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Personal']" 
             [queryParams]="{custType:'P',appId:AppId}" translate> New Customer
             </button>
           </div>
 
           <div class="form-body">
-            <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Match / Similiar Data </h4>
+            <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Match/Similar Existing Customer </h4>
             <table *ngIf="ListCustDuplicate?.length > 0" class="table table-responsive-md text-center table-hover">
               <thead>
                 <tr class="table-header">
@@ -128,7 +128,7 @@
           </div>
 
           <div class="form-body">
-            <h4 class="form-section card-title" translate><i class="ft-file-text"></i>Negative Customer</h4>
+            <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Match/Similar Negative Customer</h4>
             <table *ngIf="ListNegativeCust?.length > 0" class="table table-responsive-md text-center table-hover">
               <thead>
                 <tr class="table-header">
@@ -182,7 +182,7 @@
           </div>
 
           <div class="form-body">
-            <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Match / Similiar App Cust Data </h4>
+            <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Match/Similar In Progress Application </h4>
             <table *ngIf="ListAppCustDuplicate?.length > 0" class="table table-responsive-md text-center table-hover">
               <thead>
                 <tr class="table-header">

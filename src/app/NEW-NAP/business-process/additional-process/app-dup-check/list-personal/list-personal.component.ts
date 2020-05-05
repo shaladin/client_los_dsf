@@ -107,7 +107,7 @@ export class ListPersonalComponent implements OnInit {
      "IsSelected":true}
     this.http.post(this.AddAppDupCheckCustUrl, AppDupCheckObj).subscribe(
       response => {
-        this.router.navigate(["../AppDupCheck/ApplicantExistingDataPersonal"], { queryParams: { "AppId": this.AppId } });
+        this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Personal"], { queryParams: { "AppId": this.AppId } });
       },
       error => {
         console.log("error");

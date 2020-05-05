@@ -26,7 +26,7 @@ export class GuarantorPagingComponent implements OnInit {
   appWizardObj: AppWizardObj;
   closeChk : any;
 
-  constructor(private http: HttpClient, private modalService: NgbModal, private wizard: WizardComponent, private toastr: NGXToastrService) {
+  constructor(private http: HttpClient, private modalService: NgbModal, private toastr: NGXToastrService) {
   }
 
   ngOnInit() {
@@ -79,7 +79,7 @@ export class GuarantorPagingComponent implements OnInit {
 
   SaveAndContinue()
   {
-    this.wizard.goToNextStep();
+    this.outputTab.emit();
   }
 
   event(content,ev){
