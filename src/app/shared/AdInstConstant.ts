@@ -2,9 +2,6 @@ import { environment } from "environments/environment";
 
 export class AdInsConstant {
 
-
-
-
   //App Step
   public static AppStepNew = "NEW";
   public static AppStepCust = "CUST";
@@ -57,6 +54,7 @@ export class AdInsConstant {
   public static AddAppFromLead = environment.losUrl + "/Application/AddAppFromLead";
   public static DataTableNAP = "http://localhost:5001" + "/Application/DataTableNAP";
   public static GetRuleFeeAndInsFixedNAP = "http://localhost:5001" + "/Application/GetRuleFeeAndInsFixedNAP";
+  public static SubmitNAP = environment.losUrl + "/Application/SubmitNAP";
 
   //App Loan Purpose
   public static AddAppLoanPurpose = environment.losUrl + "/AppLoanPurpose/AddAppLoanPurpose";
@@ -831,7 +829,7 @@ export class AdInsConstant {
   public static GetListLeadVerf = environment.losUrl + "/LeadVerf/GetListLeadVerf";
 
   //APP TC
-  public static CreateTCRule = environment.losUrl + "/AppTc/CreateTCRule";
+  public static GetListTCbyAppIdFromRule = environment.losUrl + "/AppTc/GetListTCbyAppIdFromRule";
   public static AddAppTc = environment.losUrl + "/AppTc/AddAppTc";
   public static EditAppTc = environment.losUrl + "/AppTc/EditAppTc";
   public static SubmitOutstandingTc = environment.losUrl + "/AppTc/SubmitOutstandingTc";

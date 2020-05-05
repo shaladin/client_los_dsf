@@ -34,7 +34,7 @@
             "placeholder": "Placeholder",
             "isFromURL": true,
             "isSelectOne": false,
-            "url": "",
+            "url": "http://r3app-server.ad-ins.com/Foundation_R3/RefOffice/GetListKvpActiveRefOfficeForPaging",
             "label": "Office",
             "items": [],
             "itemsUrl": []
@@ -113,7 +113,7 @@
                             ],
                             "result": {
                                 "type": "url",
-                                "path": "../AppDupCheck/AppDupCheckPersonal",
+                                "path": "../Personal",
                                 "icon": "ft-edit-2",
                                 "param": [
                                     {
@@ -134,7 +134,7 @@
                             ],
                             "result": {
                                 "type": "url",
-                                "path": "../AppDupCheck/AppDupCheckCompany",
+                                "path": "../Company",
                                 "icon": "ft-edit-2",
                                 "param": [
                                     {

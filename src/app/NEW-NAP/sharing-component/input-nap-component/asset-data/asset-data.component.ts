@@ -89,7 +89,7 @@ export class AssetDataComponent implements OnInit {
 
     /*App Collateral Regist*/
     UserName: ['', Validators.maxLength(50)],
-    MrUserRelationshipCode: ['', Validators.maxLength(4)],
+    MrUserRelationshipCode: ['', Validators.maxLength(20)],
     OwnerName: ['', Validators.maxLength(50)],
     MrIdTypeCode: ['', Validators.maxLength(50)],
     OwnerIdNo: ['', Validators.maxLength(50)],
@@ -339,6 +339,8 @@ export class AssetDataComponent implements OnInit {
   }
 
   setAllAssetObj() {
+    console.log(this.AssetDataForm.controls.MrUserRelationshipCode.value)
+
     this.allAssetDataObj.AppAssetObj.AppId = this.AppId;
     this.allAssetDataObj.AppAssetObj.FullAssetName = this.AssetDataForm.controls.FullAssetName.value;
     this.allAssetDataObj.AppAssetObj.MrAssetConditionCode = this.AssetDataForm.controls.MrAssetConditionCode.value;
