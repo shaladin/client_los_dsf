@@ -126,6 +126,7 @@ export class FraudVerifPageComponent implements OnInit {
     this.leadFraudVerfObj.LeadId = this.LeadId;
     this.leadFraudVerfObj.VerifyStat = AdInsConstant.Reject;
     this.leadFraudVerfObj.Notes = this.FraudVerfForm.controls["Notes"].value;
+    this.leadFraudVerfObj.WfTaskListId = this.WfTaskListId;
     this.http.post(this.AddLeadFraudVerfUrl, this.leadFraudVerfObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
@@ -145,7 +146,7 @@ export class FraudVerifPageComponent implements OnInit {
     this.leadFraudVerfObj.LeadId = this.LeadId;
     this.leadFraudVerfObj.VerifyStat = AdInsConstant.Verify;
     this.leadFraudVerfObj.Notes = this.FraudVerfForm.controls["Notes"].value;
-
+    this.leadFraudVerfObj.WfTaskListId = this.WfTaskListId;
     this.http.post(this.AddLeadFraudVerfUrl, this.leadFraudVerfObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
