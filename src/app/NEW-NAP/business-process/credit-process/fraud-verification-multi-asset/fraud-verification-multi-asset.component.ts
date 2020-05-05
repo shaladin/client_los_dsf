@@ -53,7 +53,7 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
   getCustDataByAppId = AdInsConstant.GetCustDataByAppId;
   getAppDupCheckCustByAppId = AdInsConstant.GetAppDupCheckCustByAppId;
   getFraudDukcapilByTrxNoAndTrxType = AdInsConstant.GetFraudDukcapilByTrxNoAndTrxType;
-  getNegativeCustomerDuplicateCheckUrl = this.foundationUrl + AdInsConstant.GetNegativeCustomerDuplicateCheck;  
+  getNegativeCustomerDuplicateCheckUrl = AdInsConstant.GetNegativeCustomerDuplicateCheck;  
   getAppAssetByAppId = AdInsConstant.GetAppAssetByAppId;
   getAssetNegativeDuplicateCheck = AdInsConstant.GetAssetNegativeDuplicateCheck; 
   addAppFraudVerfUrl = AdInsConstant.AddAppFraudVerf;
