@@ -89,6 +89,7 @@ export class LeadInputCustDataComponent implements OnInit {
   reqLeadCustSocmedObj: any;
   resLeadCustSocmedObj: any;
   arrAddCrit: any;
+  CustModelKey: string;
   CustomerDataForm = this.fb.group({
     CustType: [''],
     Gender: [''],
@@ -142,15 +143,12 @@ export class LeadInputCustDataComponent implements OnInit {
     this.tempProfession = event.ProfessionCode;
   }
 
-  CustModelKey;
   custModelChange(event) {
-    this.CustModelKey = event.Value;
-    console.log("ggg");
-    console.log(this.CustModelKey);
+    this.CustModelKey =  this.listCustModel.find(x => x.Key == event.target.value).Key;
   }
 
   ngOnInit() {
-    this.reqLeadCustObj = new LeadCustObj();
+      this.reqLeadCustObj = new LeadCustObj();
       this.reqLeadCustObj.LeadId = this.LeadId;
       this.http.post(this.getLeadCustByLeadId, this.reqLeadCustObj).subscribe(
         (response) => {
@@ -313,7 +311,7 @@ export class LeadInputCustDataComponent implements OnInit {
     // addCrit.DataType = "text";
     // addCrit.propName = "MR_CUST_MODEL_CODE";
     // addCrit.restriction = AdInsConstant.RestrictionEq;
-    // addCrit.value = this.CustomerDataForm.controls["CustModel"].value;
+    // addCrit.listValue = [this.CustModelKey];
     // this.arrAddCrit.push(addCrit);
     // this.professionLookUpObj.addCritInput = this.arrAddCrit;
 
@@ -376,6 +374,8 @@ export class LeadInputCustDataComponent implements OnInit {
               IdNo: this.resLeadCustObj.IdNo,
               Npwp: this.resLeadCustObj.TaxIdNo,
             });
+            
+            this.CustModelKey = this.resLeadCustObj.MrCustModelCode;
 
         this.reqLeadCustSocmedObj = new LeadCustSocmedObj();
         this.reqLeadCustSocmedObj.LeadCustId = this.resLeadCustObj.LeadCustId;
@@ -519,6 +519,10 @@ export class LeadInputCustDataComponent implements OnInit {
                 IdNo: this.resLeadCustObj.IdNo,
                 Npwp: this.resLeadCustObj.TaxIdNo,
               });
+              
+              this.CustModelKey = this.resLeadCustObj.MrCustModelCode;
+              console.log("ggg");
+              console.log(this.CustModelKey);
   
               this.reqLeadCustSocmedObj = new LeadCustSocmedObj();
               this.reqLeadCustSocmedObj.LeadCustId = this.resLeadCustObj.LeadCustId;
@@ -644,6 +648,7 @@ export class LeadInputCustDataComponent implements OnInit {
                       });
               });
             }
+            
         });
     }
   }

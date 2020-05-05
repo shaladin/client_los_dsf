@@ -55,8 +55,8 @@ export class AdInsConstant {
   public static GetAppDetailForTabAddEditAppById = environment.losUrl + "/Application/GetAppDetailForTabAddEditAppById";
   public static GetAppDetailForAppTabById = environment.losUrl + "/Application/GetAppDetailForAppTabById";
   public static AddAppFromLead = environment.losUrl + "/Application/AddAppFromLead";
-  public static DataTableNAP = "http://localhost:5001" + "/Application/DataTableNAP";
-  public static GetRuleFeeAndInsFixedNAP = "http://localhost:5001" + "/Application/GetRuleFeeAndInsFixedNAP";
+  public static DataTableNAP = environment.losUrl + "/Application/DataTableNAP";
+  public static GetRuleFeeAndInsFixedNAP = environment.losUrl + "/Application/GetRuleFeeAndInsFixedNAP";
 
   //App Loan Purpose
   public static AddAppLoanPurpose = environment.losUrl + "/AppLoanPurpose/AddAppLoanPurpose";
@@ -495,7 +495,8 @@ export class AdInsConstant {
   public static GetListRefModuleKeyValue = "/RefModule/GetListRefModuleKeyValue";
 
   //REF EMP
-  public static GetRefEmpForLookupEmployee = environment.FoundationR3Url + "/RefEmp/GetRefEmpForLookupEmployee"
+  public static GetRefEmpForLookupEmployee = environment.FoundationR3Url + "/RefEmp/GetRefEmpForLookupEmployee";
+  public static GetRefEmpForLookupByUsername = "http://localhost:5000" + "/RefEmp/GetRefEmpForLookupByUsername";
 
   //REF EMP LEAVE MANAGEMENT
   public static GetRefEmpLeaveMngmntPaging = "/RefEmpLeaveManagement/GetRefEmpLeaveMngmntPaging";

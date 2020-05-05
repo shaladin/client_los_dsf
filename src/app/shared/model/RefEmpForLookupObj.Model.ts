@@ -4,4 +4,5 @@ export class RefEmpForLookupObj {
     EmpNo: any;
     RoleCode: any;
     RoleName: any;
+    Username: any;
 }
