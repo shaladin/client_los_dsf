@@ -34,7 +34,7 @@ export class FraudVerifPageComponent implements OnInit {
     this.GetAssetNegativeDuplicateCheckUrl = AdInsConstant.GetAssetNegativeDuplicateCheck;
     this.AddLeadFraudVerfUrl = AdInsConstant.AddLeadFraudVerf;
   }
-  viewFraudVerification: any;
+  viewLeadHeaderMainInfo: any;
   DuplicateCustObj: any;
   leadCustObj: any;
   leadAssetObj: any;
@@ -62,7 +62,8 @@ export class FraudVerifPageComponent implements OnInit {
     Notes: ['', [Validators.required]],
   });
   ngOnInit() {
-    this.viewFraudVerification = "./assets/ucviewgeneric/viewFraudVerification.json";
+    
+    this.viewLeadHeaderMainInfo = "./assets/ucviewgeneric/viewLeadHeader.json";
 
     this.leadCustObj = new LeadCustObj();
     this.leadCustObj.LeadId = this.LeadId;

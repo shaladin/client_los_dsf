@@ -574,14 +574,7 @@ export class LeadInputLeadDataComponent implements OnInit {
         }
       );
     } 
-    this.editLeadObj = new LeadObj();
-    this.editLeadObj = this.returnLeadObj;
-    this.editLeadObj.IsSubmit = true;
-    this.http.post(this.editLead, this.leadInputLeadDataObj).subscribe(
-      (response) => {
-         
-      } 
-    );
+   
 
 
   }
@@ -636,5 +629,15 @@ export class LeadInputLeadDataComponent implements OnInit {
         }
       );
     }
+    console.log("aaaaa")
+    this.editLeadObj = new LeadObj();
+    this.editLeadObj = this.returnLeadObj;
+    this.editLeadObj.IsSubmit = true;
+    this.http.post(this.editLead, this.editLeadObj).subscribe(
+      (response) => {
+         
+      } 
+    );
+  
   }
 }

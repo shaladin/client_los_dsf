@@ -414,8 +414,7 @@ export class LeadInputMainInfoComponent implements OnInit {
     if (this.pageType == "edit") {
       this.leadObj = new LeadObj();
       this.leadObj.LeadId = this.LeadId;
-      this.leadObj.RowVersion = this.returnLead.RowVersion;
-      this.leadObj.IsSubmit = true;
+      this.leadObj.RowVersion = this.returnLead.RowVersion; 
       this.setLead();
       this.http.post(this.editLead, this.leadObj).subscribe(
         (response) => {
@@ -429,8 +428,7 @@ export class LeadInputMainInfoComponent implements OnInit {
       );
     } else {
       this.leadObj = new LeadObj();
-      this.setLead();
-      this.leadObj.IsSubmit = true;
+      this.setLead(); 
       this.http.post(this.addLead, this.leadObj).subscribe(
         (response) => {
           this.responseLead = response;
@@ -450,8 +448,7 @@ export class LeadInputMainInfoComponent implements OnInit {
     if (this.pageType == "edit") {
       this.leadObj = new LeadObj();
       this.leadObj.LeadId = this.LeadId;
-      this.leadObj.RowVersion = this.returnLead.RowVersion;
-      this.leadObj.IsSubmit = false;
+      this.leadObj.RowVersion = this.returnLead.RowVersion; 
       this.setLead();
       this.http.post(this.editLead, this.leadObj).subscribe(
         (response) => {
@@ -466,7 +463,6 @@ export class LeadInputMainInfoComponent implements OnInit {
     } else {
       this.leadObj = new LeadObj();
       this.setLead();
-      this.leadObj.IsSubmit = false;
       this.http.post(this.addLead, this.leadObj).subscribe(
         (response) => {
           this.responseLead = response;

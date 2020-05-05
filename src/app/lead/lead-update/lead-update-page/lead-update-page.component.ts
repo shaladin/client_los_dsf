@@ -17,7 +17,7 @@ export class LeadUpdatePageComponent implements OnInit {
   isCustomer: any;
   isLead: any;
   CustPersonalId: any;
-
+  viewLeadHeaderMainInfo : any;
   constructor(private route: ActivatedRoute, private http: HttpClient) { 
     this.route.queryParams.subscribe(params => {
       if (params["LeadId"] != null) {
@@ -30,6 +30,7 @@ export class LeadUpdatePageComponent implements OnInit {
   }
 
   ngOnInit() { 
+    this.viewLeadHeaderMainInfo = "./assets/ucviewgeneric/viewLeadHeader.json";
   }
 
   EnterTab(type) {
