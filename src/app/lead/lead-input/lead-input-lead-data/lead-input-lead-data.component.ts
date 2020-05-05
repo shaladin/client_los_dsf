@@ -138,10 +138,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   // }
 
   radioChange(event) {
-    this.LeadDataForm.patchValue({
-      MrAssetConditionCode: event.value,
-    });
-
+     
     this.serial2Mandatory = false;
     this.serial3Mandatory = false;
     this.serial4Mandatory = false;
@@ -151,7 +148,7 @@ export class LeadInputLeadDataComponent implements OnInit {
     assetType.AssetTypeId = this.assetTypeId;
     this.http.post(AdInsConstant.GetAssetTypeById, assetType).subscribe(
       (response: any) => {
-        if (response.IsMndtrySerialNo1 == "1" && event.value == "USED") {
+        if (response.IsMndtrySerialNo1 == "1" && event.target.value == "USED") {
           this.LeadDataForm.controls['SerialNo1'].setValidators([Validators.required]);
           this.LeadDataForm.controls['SerialNo1'].updateValueAndValidity();
           this.serial1Mandatory = true;
@@ -162,7 +159,7 @@ export class LeadInputLeadDataComponent implements OnInit {
           this.serial1Mandatory = false;
         }
 
-        if (response.IsMndtrySerialNo2 == "1" && event.value == "USED") {
+        if (response.IsMndtrySerialNo2 == "1" && event.target.value == "USED") {
           this.LeadDataForm.controls['SerialNo2'].setValidators([Validators.required]);
           this.LeadDataForm.controls['SerialNo2'].updateValueAndValidity();
           this.serial2Mandatory = true;
@@ -173,7 +170,7 @@ export class LeadInputLeadDataComponent implements OnInit {
           this.serial2Mandatory = false;
         }
 
-        if (response.IsMndtrySerialNo3 == "1" && event.value == "USED") {
+        if (response.IsMndtrySerialNo3 == "1" && event.target.value == "USED") {
           this.LeadDataForm.controls['SerialNo3'].setValidators([Validators.required]);
           this.LeadDataForm.controls['SerialNo3'].updateValueAndValidity();
           this.serial3Mandatory = true;
@@ -184,7 +181,7 @@ export class LeadInputLeadDataComponent implements OnInit {
           this.serial3Mandatory = false;
         }
 
-        if (response.IsMndtrySerialNo4 == "1" && event.value == "USED") {
+        if (response.IsMndtrySerialNo4 == "1" && event.target.value == "USED") {
           this.LeadDataForm.controls['SerialNo4'].setValidators([Validators.required]);
           this.LeadDataForm.controls['SerialNo4'].updateValueAndValidity();
           this.serial4Mandatory = true;
@@ -195,7 +192,7 @@ export class LeadInputLeadDataComponent implements OnInit {
           this.serial4Mandatory = false;
         }
 
-        if (response.IsMndtrySerialNo5 == "1" && event.value == "USED") {
+        if (response.IsMndtrySerialNo5 == "1" && event.target.value == "USED") {
           this.LeadDataForm.controls['SerialNo5'].setValidators([Validators.required]);
           this.LeadDataForm.controls['SerialNo5'].updateValueAndValidity();
           this.serial5Mandatory = true;
@@ -309,6 +306,7 @@ export class LeadInputLeadDataComponent implements OnInit {
               assetType.AssetTypeId = this.resAssetMasterObj.AssetTypeId;
               this.http.post(AdInsConstant.GetAssetTypeById, assetType).subscribe(
                 (response: any) => {
+                  console.log(response);
                   if (response.IsMndtrySerialNo1 == "1" && this.resLeadAssetObj.MrAssetConditionCode == "USED") {
                     this.LeadDataForm.controls['SerialNo1'].setValidators([Validators.required]);
                     this.LeadDataForm.controls['SerialNo1'].updateValueAndValidity();
