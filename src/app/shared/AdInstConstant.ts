@@ -968,6 +968,10 @@ export class AdInsConstant {
   public static GetSpouseDuplicateCheck = "/AppDupCheck/GetSpouseDuplicateCheck";
   public static GetAppShareholderDuplicateCheck = "/AppDupCheck/GetAppShareholderDuplicateCheck";
   public static AddAppDupCheckCust = "/AppDupCheck/AddAppDupCheckCust";
+  public static EditCustNoAppCust = environment.losUrl + "/AppDupCheck/EditCustNoAppCust";
+  public static SubmitAppDupCheck = environment.losUrl + "/AppDupCheck/SubmitAppDupCheck";
+
+
 
   // Product Offering
   public static GetListProdOfferingDByProdOfferingCode = "/ProductOffering/GetListProdOfferingDByProdOfferingCode";
