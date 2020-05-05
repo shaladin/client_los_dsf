@@ -75,6 +75,7 @@ export class GuarantorCompanyComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("company");
     this.initLookup();
     this.initAddr();
 
@@ -336,6 +337,7 @@ export class GuarantorCompanyComponent implements OnInit {
       this.http.post(AdInsConstant.EditAppGuarantorCompany, this.guarantorCompanyObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
+          this.close.emit(1);
         },
         error => {
           console.log(error);
@@ -346,13 +348,13 @@ export class GuarantorCompanyComponent implements OnInit {
       (response) => {
         console.log(response);
         this.toastr.successMessage(response["message"]);
+        this.close.emit(1);
       },
       (error) => {
         console.log(error);
       }
     );
   }
-  this.close.emit(1);
 }
 
 ClearForm(){

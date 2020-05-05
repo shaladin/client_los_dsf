@@ -189,6 +189,7 @@ export class NapAddComponent implements OnInit {
     napAppObj.IsAppInitDone = false;
     napAppObj.AppStat = AdInsConstant.AppStepNew;
     napAppObj.AppCurrStep = AdInsConstant.AppStepNew;
+    napAppObj.BlCode = "CF4W";
 
     napAppObj = this.CheckValue(napAppObj);
     if (this.user.MrOfficeTypeCode == "HO") {
