@@ -46,7 +46,6 @@ export class LeadVerifComponent implements OnInit {
   viewObj: string;
   AddRangeLeadVerfUrl = AdInsConstant.AddRangeLeadVerf;
   verifyStatus: any;
-  ClaimListTaskUrl = AdInsConstant.ClaimListTask;
   leadUrl: any;
   constructor(
     private http: HttpClient,
@@ -155,7 +154,6 @@ export class LeadVerifComponent implements OnInit {
   }
   SaveLeadVerf(leadVerfForm: any) {
     //var tempArr = this.getListWfTaskListId();
-    //this.claimListTask(tempArr);
     for (let index = 0; index < this.tempData.length; index++) {
       var tempLeadVerfObj = new LeadVerfObj();
       tempLeadVerfObj.VerifyStat = this.verifyStatus;
@@ -271,19 +269,6 @@ export class LeadVerifComponent implements OnInit {
       }
       this.inputObj.addCritInput = this.arrAddCrit;
       this.UCSearchComponent.search(this.apiUrl, this.pageNow, this.pageSize, order, this.arrAddCrit);
-    }
-  }
-
-  claimListTask(listWfTaskListId) {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
-    var wfClaimObj = { listWfTaskListId: listWfTaskListId, pUserID: currentUserContext["UserName"] };
-    console.log(wfClaimObj);
-    this.http.post(AdInsConstant.ClaimListTask, wfClaimObj).subscribe(
-      (response) => {
-        console.log(response);
-      });
-    (error) => {
-      console.log(error);
     }
   }
 }

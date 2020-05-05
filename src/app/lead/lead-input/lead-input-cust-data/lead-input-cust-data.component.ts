@@ -141,6 +141,7 @@ export class LeadInputCustDataComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('custdata');
     this.reqLeadCustObj = new LeadCustObj();
       this.reqLeadCustObj.LeadId = this.LeadId;
       this.http.post(this.getLeadCustByLeadId, this.reqLeadCustObj).subscribe(
@@ -157,9 +158,7 @@ export class LeadInputCustDataComponent implements OnInit {
                 IdNo: this.resLeadCustObj.IdNo,
                 Npwp: this.resLeadCustObj.TaxIdNo,
               });
-
-              this.typePage = "edit";
-  
+              // this.typePage = "edit";
               this.reqLeadCustSocmedObj = new LeadCustSocmedObj();
               this.reqLeadCustSocmedObj.LeadCustId = this.resLeadCustObj.LeadCustId;
               this.http.post(this.getListLeadCustSocmed, this.reqLeadCustSocmedObj).subscribe(
@@ -484,7 +483,7 @@ export class LeadInputCustDataComponent implements OnInit {
         });
     }
 
-    if(this.typePage == "edit"){
+    if(this.typePage == "edit" || this.typePage == "update"){
       this.reqLeadCustObj = new LeadCustObj();
       this.reqLeadCustObj.LeadId = this.LeadId;
       this.http.post(this.getLeadCustByLeadId, this.reqLeadCustObj).subscribe(
@@ -764,7 +763,7 @@ export class LeadInputCustDataComponent implements OnInit {
   // }
 
   SaveForm(){
-    if(this.typePage == "edit") {
+    if(this.typePage == "edit" || this.typePage == "update") {
       if(this.resLeadCustObj.LeadId != 0 )
       {
         this.leadInputObj = new LeadInputObj();
@@ -782,10 +781,6 @@ export class LeadInputCustDataComponent implements OnInit {
         this.setLeadCustPersonalJobData();
         this.leadInputObj.LeadCustPersonalFinDataObj.RowVersion = this.resLeadCustPersonalFinDataObj.RowVersion;
         this.setLeadCustPersonalFinData();
-
-        console.log("ccc");
-        console.log(this.leadInputObj)
-
         this.http.post(this.addEditLeadCustPersonal, this.leadInputObj).subscribe(
           (response) => {
             console.log(response);
@@ -810,10 +805,6 @@ export class LeadInputCustDataComponent implements OnInit {
         this.setResidenceAddr();
         this.setLeadCustPersonalJobData();
         this.setLeadCustPersonalFinData();
-
-        console.log("ccc");
-        console.log(this.leadInputObj)
-
         this.http.post(this.addEditLeadCustPersonal, this.leadInputObj).subscribe(
           (response) => {
             console.log(response);
@@ -840,9 +831,6 @@ export class LeadInputCustDataComponent implements OnInit {
       this.setResidenceAddr();
       this.setLeadCustPersonalJobData();
       this.setLeadCustPersonalFinData();
-
-      console.log("ccc");
-      console.log(this.leadInputObj)
 
       this.http.post(this.addEditLeadCustPersonal, this.leadInputObj).subscribe(
         (response) => {

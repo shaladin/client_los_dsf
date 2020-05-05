@@ -6,7 +6,7 @@ export class LeadInputLeadDataObj{
     LeadAssetObj : LeadAssetObj;
     WfTaskListId: any;
     RowVersion: any;
-    IsEdit : boolean;
+    // IsEdit : boolean;
     constructor() { 
         this.LeadAppObj = new LeadAppObj(); 
         this.LeadAssetObj = new LeadAssetObj();

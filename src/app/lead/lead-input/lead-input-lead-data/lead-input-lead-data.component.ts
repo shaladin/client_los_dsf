@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -26,6 +26,7 @@ import { LeadObj } from 'app/shared/model/Lead.Model';
 })
 
 export class LeadInputLeadDataComponent implements OnInit {
+  @Input() originPage :string;
   typePage: string;
   CopyFrom: any;
   LeadId: any;
@@ -213,13 +214,13 @@ export class LeadInputLeadDataComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('leaddata');
     this.InputLookupAssetObj = new InputLookupObj();
     this.InputLookupAssetObj.urlJson = "./assets/uclookup/NAP/lookupAsset.json";
     this.InputLookupAssetObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
     this.InputLookupAssetObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupAssetObj.pagingJson = "./assets/uclookup/NAP/lookupAsset.json";
     this.InputLookupAssetObj.genericJson = "./assets/uclookup/NAP/lookupAsset.json";
-
 
     this.generalSettingObj = new GeneralSettingObj();
     this.generalSettingObj.gsCode = "LOB_KTA";
@@ -387,8 +388,7 @@ export class LeadInputLeadDataComponent implements OnInit {
           }
         });
     }
-
-    if (this.typePage == "edit") {
+    if (this.typePage == "edit" || this.typePage == "update") {
       this.reqLeadAssetObj = new LeadAssetObj();
       this.reqLeadAssetObj.LeadId = this.LeadId;
       this.http.post(this.getLeadAssetByLeadId, this.reqLeadAssetObj).subscribe(
@@ -447,7 +447,6 @@ export class LeadInputLeadDataComponent implements OnInit {
                     this.LeadDataForm.controls['SerialNo2'].updateValueAndValidity();
                     this.serial2Mandatory = false;
                   }
-
                   if (response.IsMndtrySerialNo3 == "1" && this.resLeadAssetObj.MrAssetConditionCode == "USED") {
                     this.LeadDataForm.controls['SerialNo3'].setValidators([Validators.required]);
                     this.LeadDataForm.controls['SerialNo3'].updateValueAndValidity();
@@ -458,7 +457,6 @@ export class LeadInputLeadDataComponent implements OnInit {
                     this.LeadDataForm.controls['SerialNo3'].updateValueAndValidity();
                     this.serial3Mandatory = false;
                   }
-
                   if (response.IsMndtrySerialNo4 == "1" && this.resLeadAssetObj.MrAssetConditionCode == "USED") {
                     this.LeadDataForm.controls['SerialNo4'].setValidators([Validators.required]);
                     this.LeadDataForm.controls['SerialNo4'].updateValueAndValidity();
@@ -532,7 +530,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   }
 
   save() {
-    if (this.typePage == "edit") {
+    if (this.typePage == "edit" || this.typePage == "update") {
         this.leadInputLeadDataObj = new LeadInputLeadDataObj();
         this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
         this.setLeadAsset();
@@ -541,7 +539,15 @@ export class LeadInputLeadDataComponent implements OnInit {
         this.http.post(this.addEditLeadData, this.leadInputLeadDataObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
-            this.router.navigate(["/Lead/Lead/Paging"]);
+            if(this.originPage == "teleVerif"){
+              this.router.navigate(["/Lead/TeleVerif/Paging"]);
+            }
+            else if(this.typePage == "edit"){
+              this.router.navigate(["/Lead/Lead/Paging"]);
+            }
+            else{
+              this.router.navigate(["/Lead/LeadUpdate/Paging"]);
+            }
           },
           (error) => {
             console.log(error);
@@ -562,24 +568,29 @@ export class LeadInputLeadDataComponent implements OnInit {
         }
       );
     } 
-   
-
-
   }
 
   SaveForm() {
-    if (this.typePage == "edit") {
+    if (this.typePage == "edit" || this.typePage == "update" ) {
         this.leadInputLeadDataObj = new LeadInputLeadDataObj();
         this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
         this.setLeadAsset();
         this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
         this.setLeadApp();
         this.leadInputLeadDataObj.WfTaskListId = this.TaskListId;
-        this.leadInputLeadDataObj.IsEdit = true;
+        // this.leadInputLeadDataObj.IsEdit = true;
         this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
-            this.router.navigate(["/Lead/Lead/Paging"]);
+            if(this.originPage == "teleVerif"){
+              this.router.navigate(["/Lead/TeleVerif/Paging"]);
+            }
+            else if(this.typePage == "update"){
+              this.router.navigate(["/Lead/LeadUpdate/Paging"]);
+            }
+            else{
+              this.router.navigate(["/Lead/Lead/Paging"]);
+            }
           },
           (error) => {
             console.log(error);
@@ -591,7 +602,7 @@ export class LeadInputLeadDataComponent implements OnInit {
       this.setLeadAsset();
       this.setLeadApp();
       this.leadInputLeadDataObj.WfTaskListId = this.TaskListId;
-      this.leadInputLeadDataObj.IsEdit = false;
+      // this.leadInputLeadDataObj.IsEdit = false;
       this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
@@ -602,15 +613,12 @@ export class LeadInputLeadDataComponent implements OnInit {
         }
       );
     }
-    console.log("aaaaa")
     this.editLeadObj = new LeadObj();
     this.editLeadObj = this.returnLeadObj;
     this.editLeadObj.IsSubmit = true;
     this.http.post(this.editLead, this.editLeadObj).subscribe(
       (response) => {
-         
       } 
     );
-  
   }
 }
