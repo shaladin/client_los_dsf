@@ -109,7 +109,7 @@ export class ListCompanyComponent implements OnInit {
   }
     this.http.post(this.AddAppDupCheckCustUrl, AppDupCheckObj).subscribe(
       response => {
-        this.router.navigate(["../AppDupCheck/ApplicantExistingDataCompany"], { queryParams: { "AppId": this.AppId } });
+        this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { queryParams: { "AppId": this.AppId } });
       },
       error => {
         console.log("error");

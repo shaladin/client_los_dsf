@@ -265,7 +265,7 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.http.post(this.getListActiveRefMasterUrl, this.firstInstObj).subscribe(
       (response) => {
         this.returnFirstInstObj = response["ReturnObject"];
-        this.LeadDataForm.patchValue({ MrFirstInstTypeCode: response['ReturnObject'][0][' '] });
+        this.LeadDataForm.patchValue({ MrFirstInstTypeCode: response['ReturnObject'][0]['Key'] });
       }
     );
 
@@ -275,18 +275,20 @@ export class LeadInputLeadDataComponent implements OnInit {
       this.http.post(this.getLeadAssetByLeadId, this.reqLeadAssetObj).subscribe(
         (response) => {
           this.resLeadAssetObj = response;
-          this.LeadDataForm.patchValue({
-            MrDownPaymentTypeCode: this.resLeadAssetObj.MrDownPaymentTypeCode,
-            MrAssetConditionCode: this.resLeadAssetObj.MrAssetConditionCode,
-            ManufacturingYear: this.resLeadAssetObj.ManufacturingYear,
-            AssetPrice: this.resLeadAssetObj.AssetPriceAmt,
-            DownPayment: this.resLeadAssetObj.DownPaymentAmt,
-            SerialNo1: this.resLeadAssetObj.SerialNo1,
-            SerialNo2: this.resLeadAssetObj.SerialNo2,
-            SerialNo3: this.resLeadAssetObj.SerialNo3,
-            SerialNo4: this.resLeadAssetObj.SerialNo4,
-            SerialNo5: this.resLeadAssetObj.SerialNo5,
-          });
+          if (this.resLeadAssetObj.LeadAssetId != 0) {
+            this.LeadDataForm.patchValue({
+              MrDownPaymentTypeCode: this.resLeadAssetObj.MrDownPaymentTypeCode,
+              MrAssetConditionCode: this.resLeadAssetObj.MrAssetConditionCode,
+              ManufacturingYear: this.resLeadAssetObj.ManufacturingYear,
+              AssetPrice: this.resLeadAssetObj.AssetPriceAmt,
+              DownPayment: this.resLeadAssetObj.DownPaymentAmt,
+              SerialNo1: this.resLeadAssetObj.SerialNo1,
+              SerialNo2: this.resLeadAssetObj.SerialNo2,
+              SerialNo3: this.resLeadAssetObj.SerialNo3,
+              SerialNo4: this.resLeadAssetObj.SerialNo4,
+              SerialNo5: this.resLeadAssetObj.SerialNo5,
+            });
+          }
 
           this.reqAssetMasterObj = new AssetMasterObj();
           this.reqAssetMasterObj.FullAssetCode = this.resLeadAssetObj.FullAssetCode;
@@ -374,13 +376,15 @@ export class LeadInputLeadDataComponent implements OnInit {
       this.http.post(this.getLeadAppByLeadId, this.reqLeadAppObj).subscribe(
         (response) => {
           this.resLeadAppObj = response;
-          this.LeadDataForm.patchValue({
-            Tenor: this.resLeadAppObj.Tenor,
-            MrFirstInstTypeCode: this.resLeadAppObj.MrFirstInstTypeCode,
-            NTFAmt: this.resLeadAppObj.NtfAmt,
-            TotalDownPayment: this.resLeadAppObj.TotalDownPaymentAmt,
-            InstallmentAmt: this.resLeadAppObj.InstAmt,
-          });
+          if (this.resLeadAppObj.LeadAppId != 0) {
+            this.LeadDataForm.patchValue({
+              Tenor: this.resLeadAppObj.Tenor,
+              MrFirstInstTypeCode: this.resLeadAppObj.MrFirstInstTypeCode,
+              NTFAmt: this.resLeadAppObj.NtfAmt,
+              TotalDownPayment: this.resLeadAppObj.TotalDownPaymentAmt,
+              InstallmentAmt: this.resLeadAppObj.InstAmt,
+            });
+          }
         });
     }
 
@@ -390,18 +394,20 @@ export class LeadInputLeadDataComponent implements OnInit {
       this.http.post(this.getLeadAssetByLeadId, this.reqLeadAssetObj).subscribe(
         (response) => {
           this.resLeadAssetObj = response;
-          this.LeadDataForm.patchValue({
-            MrDownPaymentTypeCode: this.resLeadAssetObj.MrDownPaymentTypeCode,
-            MrAssetConditionCode: this.resLeadAssetObj.MrAssetConditionCode,
-            ManufacturingYear: this.resLeadAssetObj.ManufacturingYear,
-            AssetPrice: this.resLeadAssetObj.AssetPriceAmt,
-            DownPayment: this.resLeadAssetObj.DownPaymentAmt,
-            SerialNo1: this.resLeadAssetObj.SerialNo1,
-            SerialNo2: this.resLeadAssetObj.SerialNo2,
-            SerialNo3: this.resLeadAssetObj.SerialNo3,
-            SerialNo4: this.resLeadAssetObj.SerialNo4,
-            SerialNo5: this.resLeadAssetObj.SerialNo5,
-          });
+          if (this.resLeadAssetObj.LeadAssetId != 0) {
+            this.LeadDataForm.patchValue({
+              MrDownPaymentTypeCode: this.resLeadAssetObj.MrDownPaymentTypeCode,
+              MrAssetConditionCode: this.resLeadAssetObj.MrAssetConditionCode,
+              ManufacturingYear: this.resLeadAssetObj.ManufacturingYear,
+              AssetPrice: this.resLeadAssetObj.AssetPriceAmt,
+              DownPayment: this.resLeadAssetObj.DownPaymentAmt,
+              SerialNo1: this.resLeadAssetObj.SerialNo1,
+              SerialNo2: this.resLeadAssetObj.SerialNo2,
+              SerialNo3: this.resLeadAssetObj.SerialNo3,
+              SerialNo4: this.resLeadAssetObj.SerialNo4,
+              SerialNo5: this.resLeadAssetObj.SerialNo5,
+            });
+          }
 
           this.reqAssetMasterObj = new AssetMasterObj();
           this.reqAssetMasterObj.FullAssetCode = this.resLeadAssetObj.FullAssetCode;

@@ -102,14 +102,14 @@ const routes: Routes = [
         }
       },
       {
-        path: 'ApplicantExistingData/Personal',
+        path: 'AppDupCheck/ApplicantExistingData/Personal',
         component: ApplicantExistingDataPersonalComponent,
         data: {
           title: 'Applicant Existing Data Personal'
         }
       },
       {
-        path: 'ApplicantExistingData/Company',
+        path: 'AppDupCheck/ApplicantExistingData/Company',
         component: ApplicantExistingDataCompanyComponent,
         data: {
           title: 'Applicant Existing Data Company'
