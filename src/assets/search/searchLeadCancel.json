@@ -3,7 +3,7 @@
     "component": [
         {
             "type": "dropdown",
-            "name": "RO.OFFICE_NAME",
+            "name": "L.ORI_OFFICE_CODE",
             "id": "OriOfficeNameId",
             "value": "",
             "placeholder": "Placeholder",
