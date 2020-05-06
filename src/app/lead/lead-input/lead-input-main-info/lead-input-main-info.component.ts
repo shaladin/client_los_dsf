@@ -85,6 +85,7 @@ export class LeadInputMainInfoComponent implements OnInit {
     LeadSource: [''],
   });
   leadUrl: string;
+  WfTaskListId: number;
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.addLead = AdInsConstant.AddLead;
@@ -103,8 +104,21 @@ export class LeadInputMainInfoComponent implements OnInit {
       if (params["LeadId"] != null) {
         this.LeadId = params["LeadId"];
       }
+      if (params["WfTaskListId"] != null) {
+        this.WfTaskListId = params["WfTaskListId"];
+      }
+      
     });
     this.leadUrl = environment.losR3Web + '/Lead/View?LeadId=' + this.LeadId;
+  }
+  backHandler(){
+    if(this.pageType == "update"){
+        this.router.navigate(['/Lead/LeadUpdate/Paging']);  
+      }
+      else{
+        this.router.navigate(['/Lead/Lead/Paging']);  
+      }
+  
   }
 
   getLookUpAgency(event) {
@@ -195,8 +209,9 @@ export class LeadInputMainInfoComponent implements OnInit {
   }
 
   ngOnInit() {
-    // console.log("ccc")
+    console.log("ccc")
     // console.log(JSON.parse(localStorage.getItem("UserAccess")));
+    this.claimTask();
     this.user = JSON.parse(localStorage.getItem("UserAccess"));
 
     if (this.user.MrOfficeTypeCode == "HO") {
@@ -290,7 +305,7 @@ export class LeadInputMainInfoComponent implements OnInit {
         this.MainInfoForm.patchValue({ LeadSource: response['ReturnObject'][0]['Key'] });
       });
 
-  if (this.pageType == "edit") {
+  if (this.pageType == "edit" || this.pageType == "update") {
       this.getLeadObj = new LeadObj();
       this.getLeadObj.LeadId = this.LeadId;
       this.http.post(this.getLeadByLeadId, this.getLeadObj).subscribe(
@@ -304,7 +319,6 @@ export class LeadInputMainInfoComponent implements OnInit {
             LobName: this.returnLead.LobName,
             LeadSource: this.returnLead.MrLeadSourceCode,
           });
-
           this.leadIdExist = this.returnLead.LeadCopyId;
 
           if (this.returnLead.LeadCopyId != null) {
@@ -400,17 +414,21 @@ export class LeadInputMainInfoComponent implements OnInit {
   }
 
   SaveForm() {
-    if (this.pageType == "edit") {
+    if (this.pageType == "edit" || this.pageType == "update" ) {
       this.leadObj = new LeadObj();
       this.leadObj.LeadId = this.LeadId;
-      this.leadObj.RowVersion = this.returnLead.RowVersion;
-      this.leadObj.IsSubmit = true;
+      this.leadObj.RowVersion = this.returnLead.RowVersion; 
       this.setLead();
       this.http.post(this.editLead, this.leadObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["/Lead/LeadInput/Page"], { queryParams: { "LeadId": this.LeadId, "mode": "edit" } });
-          // console.log(response)
+          if (this.pageType == "edit"){
+            this.router.navigate(["/Lead/LeadInput/Page"], { queryParams: { "LeadId": this.LeadId, "mode": this.pageType } });
+          }
+          else{
+          this.router.navigate(["/Lead/LeadInput/Page"], { queryParams: { "LeadId": this.LeadId, "mode": this.pageType, "WfTaskListId": this.WfTaskListId } });
+
+          }
         },
         (error) => {
           console.log(error);
@@ -418,15 +436,13 @@ export class LeadInputMainInfoComponent implements OnInit {
       );
     } else {
       this.leadObj = new LeadObj();
-      this.setLead();
-      this.leadObj.IsSubmit = true;
+      this.setLead(); 
       this.http.post(this.addLead, this.leadObj).subscribe(
         (response) => {
           this.responseLead = response;
           this.LeadId = this.responseLead.LeadId;
           this.toastr.successMessage(response["message"]);
           this.router.navigate(["/Lead/LeadInput/Page"], { queryParams: { "LeadId": this.LeadId, "CopyFrom": this.leadIdExist } });
-          // console.log(response)
         },
         (error) => {
           console.log(error);
@@ -436,16 +452,21 @@ export class LeadInputMainInfoComponent implements OnInit {
   }
 
   save() {
-    if (this.pageType == "edit") {
+    if (this.pageType == "edit" || this.pageType == "update" ) {
       this.leadObj = new LeadObj();
       this.leadObj.LeadId = this.LeadId;
-      this.leadObj.RowVersion = this.returnLead.RowVersion;
-      this.leadObj.IsSubmit = false;
+      this.leadObj.RowVersion = this.returnLead.RowVersion; 
       this.setLead();
       this.http.post(this.editLead, this.leadObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["/Lead/Lead/Paging"]);
+
+          if(this.pageType == "edit"){
+            this.router.navigate(["/Lead/Lead/Paging"]);
+          }
+          else{
+            this.router.navigate(["/Lead/LeadUpdate/Paging"]);
+          }
           // console.log(response)
         },
         (error) => {
@@ -455,14 +476,12 @@ export class LeadInputMainInfoComponent implements OnInit {
     } else {
       this.leadObj = new LeadObj();
       this.setLead();
-      this.leadObj.IsSubmit = false;
       this.http.post(this.addLead, this.leadObj).subscribe(
         (response) => {
           this.responseLead = response;
           this.LeadId = this.responseLead.LeadId;
           this.toastr.successMessage(response["message"]);
           this.router.navigate(["/Lead/Lead/Paging"]);
-          // console.log(response)
         },
         (error) => {
           console.log(error);
@@ -470,4 +489,13 @@ export class LeadInputMainInfoComponent implements OnInit {
       );
     }
   }
+
+  claimTask() {
+    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"] };
+    console.log(wfClaimObj);
+    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+      (response) => {
+      });
+    }	
 }
