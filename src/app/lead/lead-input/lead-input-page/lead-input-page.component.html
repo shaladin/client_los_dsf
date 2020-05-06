@@ -2,12 +2,10 @@
   <div class="card">
     <div class="card-body">
       <div class="px-3">
-         
-
         <div class="px-3">
           <div class="row" style="border-bottom: 1px solid black; margin-bottom: 15px;">
             <div class="col-md-8" style="padding-left: 0px;">
-              <h4 class="form-section card-title" translate>Lead {{this.pageType}}</h4>
+              <h4 class="form-section card-title" translate>Lead {{this.titlePageType}}</h4>
             </div>
             <div class="col-md-4" style="text-align: right; padding-right: 0px;">
               <button type="button" class="btn btn-raised btn-success mr-1" (click)="editMainInfoHandler()" translate>
@@ -15,7 +13,7 @@
               </button>
               <button type="button" class="btn btn-raised btn-warning mr-1" (click)="cancelHandler()" translate>
                 Cancel
-              </button> 
+              </button>
             </div>
           </div>
           <div id="stepper1" class="bs-stepper">
@@ -23,7 +21,7 @@
               <!-- your steps here -->
               <div class="step" data-target="#customer-data-tab">
                 <button type="button" class="step-trigger" role="tab" aria-controls="customer-data-tab"
-                  id="customer-data-tab-trigger" (click)="EnterTab('custData')" >
+                  id="customer-data-tab-trigger" (click)="EnterTab('custData')">
                   <span class="bs-stepper-circle">1</span>
                   <span class="bs-stepper-label">CUSTOMER DATA</span>
                 </button>
@@ -31,7 +29,7 @@
               <div class="line"></div>
               <div class="step" data-target="#lead-data-tab">
                 <button type="button" class="step-trigger" role="tab" aria-controls="lead-data-tab"
-                  id="lead-data-tab-trigger" (click)="EnterTab('leadData')" >
+                  id="lead-data-tab-trigger" (click)="EnterTab('leadData')">
                   <span class="bs-stepper-circle">2</span>
                   <span class="bs-stepper-label">LEAD DATA</span>
                 </button>
@@ -40,8 +38,7 @@
             <br><br>
             <div class="bs-stepper-content">
               <!-- your steps content here -->
-              <div id="customer-data-tab" class="content" role="tabpanel"
-                aria-labelledby="customer-data-tab-trigger">
+              <div id="customer-data-tab" class="content" role="tabpanel" aria-labelledby="customer-data-tab-trigger">
                 <app-lead-input-cust-data *ngIf="isCustData == true" (outputTab)="getValue($event)">
                 </app-lead-input-cust-data>
               </div>
@@ -51,6 +48,7 @@
               </div>
             </div>
           </div>
+        </div>
       </div>
     </div>
   </div>

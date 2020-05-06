@@ -21,6 +21,8 @@ import { ViewFinancialComponent } from "./view-financial/view-financial.componen
 import { AppInsuranceComponent } from './app-insurance/app-insurance.component';
 import { AppInsuranceDetailComponent } from './app-insurance/app-insurance-detail/app-insurance-detail.component';
 import { ViewSharingComponentModule } from "./view-sharing-component.module";
+import { UcviewgenericModule } from "@adins/ucviewgeneric";
+import { UcSubsectionModule } from "@adins/uc-subsection";
 import { ApprovalHistComponent } from './approval-hist/approval-hist.component';
 import { UcapprovalhistModule  } from '@adins/ucapprovalhist';
 
@@ -44,6 +46,8 @@ import { UcapprovalhistModule  } from '@adins/ucapprovalhist';
     CommonModule,
     AdInsModule,
     ViewSharingComponentModule,
+    UcviewgenericModule,
+    UcSubsectionModule,
     UcapprovalhistModule
   ],
   declarations: [

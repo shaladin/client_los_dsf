@@ -18,7 +18,7 @@ export class CustomerSelfVerificationComponent implements OnInit {
   isCustData: boolean;
   isLeadData: boolean;
   viewLeadHeaderMainInfo : any;
-  WfTaskListId: string;
+  WfTaskListId: any;
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -26,6 +26,7 @@ export class CustomerSelfVerificationComponent implements OnInit {
       if (this.LeadId == null || this.LeadId == undefined) this.LeadId = "1";
 
       this.WfTaskListId = params["WfTaskListId"];
+      if (this.WfTaskListId == null || this.WfTaskListId == undefined) this.WfTaskListId = "0";
 
       this.LobCode = params["LobCode"];
       if (this.LobCode == null || this.LobCode == undefined) this.LobCode = "KTA";

@@ -9,6 +9,7 @@
             "placeholder": "Placeholder",
             "datatype": "text",
             "isFromURL": true,
+            "isQueryIn":true,
             "isSelectOne": false,
             "isQueryIn" : true,
             "url": "http://r3app-server.ad-ins.com/Foundation_R3/RefOffice/GetListKvpActiveRefOfficeForPaging",
