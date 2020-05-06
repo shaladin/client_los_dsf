@@ -78,11 +78,10 @@ export class MouReviewGeneralComponent implements OnInit {
             RefRecommendationId: this.listRecommendationObj[i].RefRecommendationId,
             RecommendationCode: this.listRecommendationObj[i].RecommendationCode,
             RecommendationName: this.listRecommendationObj[i].RecommendationName,
-            RecommendationValue: ""
+            RecommendationValue: ['', Validators.required]
           }) as FormGroup;
           listRec.push(ApvRecommendation);
         }
-        // this.ApvRecommendation = ApvRecommendation;
         console.log(this.MouReviewDataForm);
       })
 
