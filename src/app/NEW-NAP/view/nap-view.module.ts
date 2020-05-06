@@ -23,6 +23,7 @@ import { TabDeviationComponent } from "../business-process/credit-process/credit
 import { ViewFraudDetectionResultComponent } from "../business-process/credit-process/credit-investigation/component/view-fraud-detection-result/view-fraud-detection-result.component";
 import { CreditProcessSharingModule } from "../business-process/credit-process/credit-process.module";
 import { ViewSharingComponentModule } from "../sharing-component/view-app-component/view-sharing-component.module";
+import { ViewAgrmntComponentModule } from "../sharing-component/view-agrmnt-component/view-agrmnt-component.module";
 
 @NgModule({
   imports: [
@@ -34,7 +35,8 @@ import { ViewSharingComponentModule } from "../sharing-component/view-app-compon
     ArchwizardModule,
     NgbModule,
     CreditProcessSharingModule,
-    ViewSharingComponentModule
+    ViewSharingComponentModule,
+    ViewAgrmntComponentModule
   ],
   declarations: [
     AgreementViewContainerComponent,

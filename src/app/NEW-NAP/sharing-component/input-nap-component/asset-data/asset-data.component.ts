@@ -30,7 +30,6 @@ export class AssetDataComponent implements OnInit {
   inputFieldLocationAddrObj: InputFieldObj;
   locationAddrObj: AddrObj;
   appAssetAccessoriesObjs: Array<AppAssetAccessoryObj>;
-  SocmedObj: any;
   appAssetId: number = 0;
 
   AssetDataForm = this.fb.group({
@@ -1490,7 +1489,7 @@ export class AssetDataComponent implements OnInit {
 
   }
 
-  test() {
+  CheckValue() {
     this.allAssetDataObj = new AllAssetDataObj();
     this.setAllAssetObj();
     console.log(this.allAssetDataObj);
