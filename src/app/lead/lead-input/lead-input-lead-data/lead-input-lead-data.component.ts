@@ -533,6 +533,7 @@ export class LeadInputLeadDataComponent implements OnInit {
 
   save() {
     if (this.typePage == "edit" || this.typePage == "update") {
+      if (this.resLeadAssetObj.LeadAssetId != 0){ 
         this.leadInputLeadDataObj = new LeadInputLeadDataObj();
         this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
         this.setLeadAsset();
@@ -555,6 +556,7 @@ export class LeadInputLeadDataComponent implements OnInit {
             console.log(error);
           }
         );
+        }
     } 
     else {
       this.leadInputLeadDataObj = new LeadInputLeadDataObj();
@@ -574,6 +576,7 @@ export class LeadInputLeadDataComponent implements OnInit {
 
   SaveForm() {
     if (this.typePage == "edit" || this.typePage == "update" ) {
+      if (this.resLeadAssetObj.LeadAssetId != 0){ 
         this.leadInputLeadDataObj = new LeadInputLeadDataObj();
         this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
         this.setLeadAsset();
@@ -598,6 +601,7 @@ export class LeadInputLeadDataComponent implements OnInit {
             console.log(error);
           }
         );
+      } 
     } 
     else {
       this.leadInputLeadDataObj = new LeadInputLeadDataObj();
