@@ -20,6 +20,8 @@ export class TeleVerifDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('televerif');
+    this.claimTask();
     this.viewLeadHeaderMainInfo = "./assets/ucviewgeneric/viewLeadHeader.json";
   }
 
@@ -35,4 +37,13 @@ export class TeleVerifDetailComponent implements OnInit {
       this.isLeadData = true;
     }
   }
+  claimTask() {
+    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"] };
+    console.log(wfClaimObj);
+    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+      (response) => {
+        console.log(response);
+      });
+    }
 }
