@@ -3,8 +3,10 @@ import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { AppCustPersonalObj } from 'app/shared/model/AppCustPersonalObj.Model';
+import { RequestSubmitAppDupCheckCustObj } from 'app/shared/model/AppDupCheckCust/RequestSubmitAppDupCheckCustObj.Model'
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
   selector: 'app-applicant-existing-data-personal',
@@ -37,6 +39,7 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
     private http: HttpClient,
     private route: ActivatedRoute,
     private router: Router,
+    private toastr: NGXToastrService
   ) { }
 
   ngOnInit() {
@@ -105,10 +108,6 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
         console.log("error")
       }
     )
-    
-  }
-
-  Submit(){
     
   }
 
@@ -194,5 +193,23 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
       const index = this.listSelectedIdShareholder.indexOf(AppCustCompanyMgmntShrholderId)
       if (index > -1) { this.listSelectedIdShareholder.splice(index, 1); }
     }
+  }
+
+  Submit(){
+    var appDupCheckObj = new RequestSubmitAppDupCheckCustObj();
+    appDupCheckObj.AppGuarantorIds = this.listSelectedIdGuarantor;
+    appDupCheckObj.AppCustCompanyMgmntShrholderIds = this.listSelectedIdShareholder;
+    appDupCheckObj.AppCustPersonalContactPersonIds = this.listSelectedIdSpouse;
+    appDupCheckObj.CustNo = this.AppCustObj.CustNo;
+
+    this.http.post(AdInsConstant.SubmitAppDupCheck, appDupCheckObj).subscribe(
+      (response) => {
+        this.toastr.successMessage(response["Message"]);
+        this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/Paging"]);
+      },
+      (error) => {
+        console.log(error);
+      });
+  
   }
 }

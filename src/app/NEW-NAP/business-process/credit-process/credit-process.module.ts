@@ -40,6 +40,10 @@ import { FraudVerificationMultiAssetComponent } from "./fraud-verification-multi
 import { ViewSharingComponentModule } from "app/NEW-NAP/sharing-component/view-app-component/view-sharing-component.module";
 
 @NgModule({
+  exports: [
+    ViewFraudDetectionResultComponent,
+    TabDeviationComponent
+  ],
   imports: [
     CommonModule,
     CreditProcessSharingRoutingModule,
