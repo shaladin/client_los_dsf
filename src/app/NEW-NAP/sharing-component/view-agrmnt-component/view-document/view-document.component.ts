@@ -49,7 +49,7 @@ export class ViewAgrmntDocumentComponent implements OnInit {
   }
 
   GetAgrmntDoc() {
-    this.http.post(AdInsConstant.GetListAgrmntDocByAgrmntId, this.agrmntObj).subscribe(
+    this.http.post(AdInsConstant.GetListAgrmntDocPrintByAgrmntId, this.agrmntObj).subscribe(
       (response) => {
         console.log(response);
         this.AgrmntDocObj = response;
