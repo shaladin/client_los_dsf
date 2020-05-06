@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -8,7 +8,6 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
-import { WizardComponent } from 'angular-archwizard';
 import { formatDate } from '@angular/common';
 import { LeadCustAddrObj } from 'app/shared/model/LeadCustAddrObj.Model';
 import { LeadCustSocmedObj } from 'app/shared/model/LeadCustSocmedObj.Model';
@@ -27,7 +26,8 @@ import { RefProfessionObj } from 'app/shared/model/RefProfessionObj.Model';
 
 export class LeadInputCustDataComponent implements OnInit {
   @Input() LeadId: number;
-
+  @Output() outputTab: EventEmitter<object> = new EventEmitter();
+  
   CopyFrom: any;
   jobAddrId: any;
   othBizAddrId: any;
@@ -110,7 +110,7 @@ export class LeadInputCustDataComponent implements OnInit {
     MonthlyExpense: [0]
   });
 
-  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private wizard: WizardComponent) { 
+  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) { 
     this.getListActiveRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
     this.getRefMasterWithReserveField = AdInsConstant.GetListActiveRefMasterWithReserveFieldAll;
     this.addEditLeadCustPersonal = AdInsConstant.AddEditLeadCustPersonal;
@@ -794,7 +794,7 @@ export class LeadInputCustDataComponent implements OnInit {
             //   { queryParams: { "IdCust": this.IdCust }}
             //   );
             // console.log(response);
-            this.wizard.goToNextStep();
+            this.outputTab.emit({ stepMode: "next"});
           },
           (error) => {
             console.log(error);
@@ -822,7 +822,7 @@ export class LeadInputCustDataComponent implements OnInit {
             //   { queryParams: { "IdCust": this.IdCust }}
             //   );
             // console.log(response);
-            this.wizard.goToNextStep();
+            this.outputTab.emit({ stepMode: "next"});
           },
           (error) => {
             console.log(error);
@@ -840,7 +840,6 @@ export class LeadInputCustDataComponent implements OnInit {
       this.setLeadCustPersonalJobData();
       this.setLeadCustPersonalFinData();
 
-      console.log("ccc");
       console.log(this.leadInputObj)
 
       this.http.post(this.addEditLeadCustPersonal, this.leadInputObj).subscribe(
@@ -852,7 +851,7 @@ export class LeadInputCustDataComponent implements OnInit {
           //   { queryParams: { "IdCust": this.IdCust }}
           //   );
           // console.log(response);
-          this.wizard.goToNextStep();
+          this.outputTab.emit({ stepMode: "next"});
         },
         (error) => {
           console.log(error);
