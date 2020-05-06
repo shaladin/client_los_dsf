@@ -3,7 +3,7 @@
       <div class="card-body">
         <div class="px-3">
             <div class="customerData">
-                <form class="form form-horizontal" [formGroup]="MainInfoForm" (ngSubmit)="MainInfoForm.valid && SaveForm()"
+                <form class="form form-horizontal" [formGroup]="MainInfoForm" (ngSubmit)="MainInfoForm.valid"
                     #enjiForm="ngForm">
                 <div class="form-body">
                     <lib-ucSubsection [id]="'mainInfoId'" [title]="'Main Information'" [panel]="'mainInfo'">
@@ -81,7 +81,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 adInsLabel adins-required" translate>Nama CMO </label>
+                            <label class="col-md-3 adInsLabel adins-required" translate>CMO Username </label>
                             <div class="col-md-4">
                                 <lib-uclookupgeneric [lookupInput]="cmoNameLookUpObj" [parentForm]="MainInfoForm"
                                     [enjiForm]="enjiForm" [identifier]="'CmoName'" (lookup)=getLookUpCmoName($event)>
@@ -89,7 +89,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 adInsLabel adins-required" translate>Surveyor Name </label>
+                            <label class="col-md-3 adInsLabel adins-required" translate>Surveyor Username </label>
                             <div class="col-md-4">
                                 <lib-uclookupgeneric [lookupInput]="surveyorNameLookUpObj" [parentForm]="MainInfoForm"
                                     [enjiForm]="enjiForm" [identifier]="'SurveyorName'" (lookup)=getLookUpSurveyorName($event)>
@@ -97,7 +97,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 adInsLabel adins-required" translate>Tele Sales Name </label>
+                            <label class="col-md-3 adInsLabel adins-required" translate>Tele Sales Username </label>
                             <div class="col-md-4">
                                 <lib-uclookupgeneric [lookupInput]="salesNameLookUpObj" [parentForm]="MainInfoForm"
                                     [enjiForm]="enjiForm" [identifier]="'SalesName'" (lookup)=getLookUpSalesName($event)>
@@ -107,15 +107,15 @@
                     </div>
                 </div>
                 <div class="form-actions right" style="text-align: right;">
-                    <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['/Lead/Lead/Paging']"
+                    <button type="button" class="btn btn-raised btn-warning mr-1" (click)="backHandler()"
                       translate>
                       <i class="ft-x"></i> Back
                     </button>
-                    <button type="button" class="btn btn-raised btn-primary mr-1" (click)="save()" translate>
+                    <button type="submit" class="btn btn-raised btn-primary mr-1" (click)="save()" translate>
                         <i class="fa fa-check-square-o"></i> Save
                       </button>
-                    <button type="submit" class="btn btn-raised btn-primary" translate>
-                      <i class="fa fa-check-square-o"></i> Submit
+                    <button type="submit" class="btn btn-raised btn-primary" (click)="SaveForm()" translate>
+                      <i class="fa fa-check-square-o"></i> Next
                     </button>
                 </div>
                 </form>

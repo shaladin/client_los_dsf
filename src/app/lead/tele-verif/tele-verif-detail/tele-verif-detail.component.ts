@@ -8,7 +8,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './tele-verif-detail.component.html',
 })
 export class TeleVerifDetailComponent implements OnInit {
-  viewTeleVerifMainInfo: any;
+  viewLeadHeaderMainInfo: any;
   isCustData: boolean;
   isLeadData: boolean;
   WfTaskListId: any;
@@ -20,12 +20,11 @@ export class TeleVerifDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.viewTeleVerifMainInfo = "./assets/ucviewgeneric/viewTeleVerifMainInfo.json";
+    this.claimTask();
+    this.viewLeadHeaderMainInfo = "./assets/ucviewgeneric/viewLeadHeader.json";
   }
 
   EnterTab(type){
-      // this.isCustData = true;
-      // this.isLeadData = true;
     if(type == "custData"){
       this.isCustData = true;
       this.isLeadData = false;
@@ -35,4 +34,13 @@ export class TeleVerifDetailComponent implements OnInit {
       this.isLeadData = true;
     }
   }
+  async claimTask() {
+    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"] };
+    console.log(wfClaimObj);
+    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+      (response) => {
+        console.log(response);
+      });
+    }
 }

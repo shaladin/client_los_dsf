@@ -100,18 +100,28 @@ export class ListPersonalComponent implements OnInit {
 
   SelectCust(item) {
     var AppDupCheckObj = {"AppId": this.AppId, 
-    "CustNo":item.CustNo, "CustName" : item.CustName,
-    "Npwp":item.TaxIdNo, "MrIdType" : item.MrIdTypeCode, 
-    "IdNo":item.IdNo, "BirthDt":item.BirthDt, "MobilePhnNo":item.MobilePhnNo1,
-     "MotherMaidenName":item.MotherMaidenName, "DuplicateItem":item.DuplicateItem,
-     "IsSelected":true}
-    this.http.post(this.AddAppDupCheckCustUrl, AppDupCheckObj).subscribe(
+    "CustNo":item.CustNo};
+    this.http.post(AdInsConstant.EditCustNoAppCust, AppDupCheckObj).subscribe(
       response => {
-        this.router.navigate(["../AppDupCheck/ApplicantExistingDataPersonal"], { queryParams: { "AppId": this.AppId } });
+        this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Personal"], { queryParams: { "AppId": this.AppId } });
       },
       error => {
         console.log("error");
       });
+  }
+
+  NewCustomer(){
+    var AppDupCheckObj = {"AppId": this.AppId, 
+    "CustNo":this.AppCustObj.CustNo, RowVersion: ""};
+    this.http.post(AdInsConstant.EditCustNoAppCust, AppDupCheckObj).subscribe(
+      (response) => {
+        this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Personal"], { queryParams: { "AppId": this.AppId } });
+      },
+      (error) => {
+        console.log("error");
+      });
+      this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Personal"], { queryParams: { "AppId": this.AppId } });
+
   }
 
 }

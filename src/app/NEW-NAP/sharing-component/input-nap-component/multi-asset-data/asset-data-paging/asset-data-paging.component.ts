@@ -25,6 +25,11 @@ export class AssetDataPagingComponent implements OnInit {
   gridAssetDataObj: any;
   gridAppCollateralObj: any;
   getListAppCollateral: any;
+  AppAssetId: number;
+  AppCollateralId: number;
+  AppId: number;
+  editAsset: string;
+  editColl: string;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) { 
     this.getListAppAssetData = AdInsConstant.GetListAppAssetData;
@@ -36,6 +41,33 @@ export class AssetDataPagingComponent implements OnInit {
        }
      });
   }
+
+  
+addAsset() {
+  this.outputValue.emit({ mode: 'addAsset' });
+}
+
+addColl() {
+  this.outputValue.emit({ mode: 'addColl' });
+}
+
+event(ev){
+  console.log(ev);
+  this.AppAssetId = ev.AppAssetId;
+  this.AppId = ev.AppId;
+  this.editAsset = ev.editAsset;
+  this.outputValue.emit({ mode: 'editAsset', AppAssetId: this.AppAssetId });
+  console.log("CHECK EVENT");
+}
+
+eventColl(ev){
+  console.log(ev);
+  this.AppCollateralId = ev.AppCollateralId;
+  this.AppId = ev.AppId;
+  this.editColl = ev.editColl;
+  this.outputValue.emit({ mode: 'editColl', AppCollateralId: this.AppCollateralId });
+  console.log("CHECK EVENT");
+}
 
   ngOnInit() {
     this.gridAssetDataObj = new InputGridObj();

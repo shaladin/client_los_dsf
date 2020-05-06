@@ -2,7 +2,7 @@
   <div class="px-3">
     <lib-ucSubsection [id]="'formInformation' + FormInputObj['content'] + 'id'" [title]="FormInputObj['title']" [panel]="'formInformation' + FormInputObj['content']">
     </lib-ucSubsection>
-    <div class="form-body" [id]="'formInformation' + FormInputObj['content']">
+    <div  class="form-body" [id]="'formInformation' + FormInputObj['content']">
       <div class="form-actions right">
         <button type="button" (click)="AddNewDataForm()" class="btn btn-raised btn-primary" [hidden]="lenDDLContentName == 0" translate>
           <i class="fa fa-check-square-o"></i> Add new
@@ -30,6 +30,8 @@
                     <lib-uc-show-errors [control]="item.controls.ContentName" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                     <label class="adInsLabel"
                       *ngIf="item.controls.ContentName.value != ''">{{item.controls.ContentNameValue.value}}</label>
+                    <label class="adInsLabel"
+                      *ngIf="item.controls.ContentName.value != '' && FormInputObj['content'] == 'SupplierEmployee'"> &nbsp; {{" ( "}} {{item.controls.MrSupplEmpPositionCodeDesc.value}} {{" ) "}} </label>
                   </div>
                   <div class="col-md-4">
                     <button type="button" (click)="DeleteDataForm(i)" class="btn btn-raised" translate>
@@ -128,14 +130,10 @@
                       </div>
                     </div>
                   </div>
-
-                  <div class="form-group row">
-                    <div class="col-md-12">
-                      <h1 style="color: white">_</h1>
-                    </div>
-                  </div>
+                  
                 </div>
 
+                <br>
               </div>
             </div>
           </div>

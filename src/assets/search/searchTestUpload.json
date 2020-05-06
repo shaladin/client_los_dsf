@@ -4,7 +4,7 @@
     "component": [
         {
             "type": "textbox",
-            "name": "FILE_NAME",
+            "name": "UMH.FILE_NAME",
             "id": "FileNameId",
             "value": "",
             "label": "File Name",
@@ -12,7 +12,7 @@
         },
         {
             "type": "textbox",
-            "name": "UPLOAD_MONITORING_NO",
+            "name": "UMH.UPLOAD_MONITORING_NO",
             "id": "UploadMonitoringNoId",
             "value": "",
             "label": "Upload No",
@@ -21,8 +21,8 @@
         {
             "type": "dropdown",
             "datatype": "text",
-            "name": "MR_UPLOAD_STATUS_CODE",
-            "id": "MrUploadStatusId",
+            "name": "UMH.UPLOAD_STATUS",
+            "id": "UploadStatusId",
             "value": "",
             "placeholder": "Placeholder",
             "isFromURL": true,
@@ -36,15 +36,33 @@
         }
     ],
     "querystring": {
-        "select": "SELECT UPLOAD_MONITORING_NO AS UploadMonitoringNo, OFFICE_CODE AS OfficeCode, [FILE_NAME] AS [FileName], TOTAL_RECORD AS TotalRecord, TOTAL_RECORD_PROCESSED AS TotalRecordProcessed, TOTAL_RECORD_ERROR AS TotalRecordError, MR_UPLOAD_STATUS_CODE AS MrUploadStatusCode, IS_EXECUTED AS IsExecuted, IS_ALREADY_CREATE_WF AS IsAlreadyCreateWf, [ERROR_MESSAGE] AS ErrorMessage",
-        "from": "FROM dbo.UPLOAD_MONITORING_H WITH(NOLOCK)"
+        "select": "SELECT UMH.UPLOAD_MONITORING_NO AS UploadMonitoringNo, UMH.OFFICE_CODE AS OfficeCode, UMH.UPLOAD_STATUS AS UploadStatus, UMH.[FILE_NAME] AS [FileName], UMH.TOTAL_RECORD AS TotalRecord, UMH.TOTAL_RECORD_PROCESSED AS TotalRecordProcessed, UMH.TOTAL_RECORD_ERROR AS TotalRecordError, UT.UPLOAD_TYPE_CODE AS UploadTypeCode, UMH.IS_EXECUTED AS IsExecuted, UMH.[ERROR_MESSAGE] AS ErrorMessage",
+        "from": "FROM dbo.UPLOAD_MONITORING_H UMH WITH(NOLOCK) JOIN dbo.UPLOAD_TYPE UT ON UT.UPLOAD_TYPE_ID = UMH.UPLOAD_TYPE_ID",
+        "where": "WHERE UT.UPLOAD_TYPE_CODE = 'UPL_ASM'"
     },
     "headerList": [
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "UPLOAD MONITORING NO",
             "name": "UPLOAD_MONITORING_NO"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "OFFICE CODE",
+            "name": "OFFICE_CODE"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "UPLOAD STATUS",
+            "name": "UPLOAD_STATUS"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "DOWNLOAD"
         }
     ],
     "bodyList": [
@@ -52,6 +70,84 @@
             "type": "text",
             "position": "left",
             "property": "UploadMonitoringNo"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "OfficeCode"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "UploadStatus"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "switch",
+                    "case": [
+                        {
+                            "conditions": [
+                                {
+                                    "property": "UploadStatus",
+                                    "value": "CAN",
+                                    "restriction": "EQ"
+                                },
+                                {
+                                    "property": "ErrorMessage",
+                                    "value": "",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "callback",
+                                "property": "UploadMonitoringNo"
+                            },
+                            "isHide": false
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "property": "UploadStatus",
+                                    "value": "ERR",
+                                    "restriction": "EQ"
+                                },
+                                {
+                                    "property": "ErrorMessage",
+                                    "value": "",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "callback",
+                                "property": "UploadMonitoringNo"
+                            },
+                            "isHide": false
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "property": "UploadStatus",
+                                    "value": "RJC",
+                                    "restriction": "EQ"
+                                },
+                                {
+                                    "property": "ErrorMessage",
+                                    "value": "",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "callback",
+                                "property": "UploadMonitoringNo"
+                            },
+                            "isHide": false
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }

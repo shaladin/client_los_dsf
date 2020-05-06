@@ -1,15 +1,12 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { environment } from 'environments/environment';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
-import { AppGuarantorObj } from 'app/shared/model/AppGuarantorObj.Model';
 import { HttpClient } from '@angular/common/http';
 import { GuarantorObj } from 'app/shared/model/GuarantorObj.Model';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AppWizardObj } from 'app/shared/model/App/AppWizard.Model';
 import { WizardComponent } from 'angular-archwizard';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
   selector: 'app-guarantor-paging',
@@ -19,7 +16,7 @@ import { WizardComponent } from 'angular-archwizard';
 export class GuarantorPagingComponent implements OnInit {
 
   @Input() AppId: any;
-  @Output() callbackSubmit: EventEmitter<AppWizardObj> = new EventEmitter();
+  @Output() outputTab: EventEmitter<any> = new EventEmitter();
 
   inputGridObj: any;
   closeResult: any;
@@ -27,11 +24,9 @@ export class GuarantorPagingComponent implements OnInit {
   MrGuarantorTypeCode : any;
   mode: any;
   appWizardObj: AppWizardObj;
+  closeChk : any;
 
-  constructor(private http: HttpClient,
-    private modalService: NgbModal,
-    private wizard: WizardComponent) {
-      this.appWizardObj = new AppWizardObj(this.wizard, AdInsConstant.AppStepRef);
+  constructor(private http: HttpClient, private modalService: NgbModal, private toastr: NGXToastrService) {
   }
 
   ngOnInit() {
@@ -84,18 +79,70 @@ export class GuarantorPagingComponent implements OnInit {
 
   SaveAndContinue()
   {
-    console.log("test")
-    this.callbackSubmit.emit(this.appWizardObj);
+    this.outputTab.emit();
   }
 
   event(content,ev){
-    this.open(content);
     console.log("CHECK EVENT");
     console.log(ev);
-    this.AppGuarantorId = ev.AppGuarantorId;
-    this.MrGuarantorTypeCode = ev.MrGuarantorTypeCode;
-    console.log("CHECK EVENT");
-    console.log(this.AppGuarantorId);
+    if(ev.Key == "edit"){
+      this.AppGuarantorId = ev.RowObj.AppGuarantorId;
+      this.MrGuarantorTypeCode = ev.RowObj.MrGuarantorTypeCode;
+      this.open(content);
+      console.log("CHECK EVENT");
+      console.log(this.AppGuarantorId);
+    }
+
+    if(ev.Key == "delete"){
+      if (confirm("Are you sure to delete this record?")) {
+        var guarantorObj = new GuarantorObj();
+        guarantorObj.AppGuarantorObj.AppGuarantorId = ev.RowObj.AppGuarantorId;
+        guarantorObj.AppGuarantorObj.AppId = this.AppId;
+        this.http.post(AdInsConstant.DeleteAppGuarantor, guarantorObj).subscribe(
+          (response) => {
+            console.log("response: ");
+            console.log(response);
+            console.log(this.inputGridObj);
+            this.toastr.successMessage(response["message"]);
+            this.inputGridObj.resultData = {
+              Data: ""
+            }
+            this.inputGridObj.resultData["Data"] = new Array();
+            this.inputGridObj.resultData.Data = response["ReturnObject"]
+  
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      }   
+    }
+    
+  }
+
+  close(event){
+    this.closeChk=event;
+    if(this.closeChk){
+      var guarantorObj = new GuarantorObj();
+      guarantorObj.AppGuarantorObj.AppId = this.AppId;
+      this.http.post(AdInsConstant.GetListAppGuarantor, guarantorObj).subscribe(
+        (response) => {
+          console.log("response: ");
+          console.log(response);
+          console.log(this.inputGridObj);
+          this.inputGridObj.resultData = {
+            Data: ""
+          }
+          this.inputGridObj.resultData["Data"] = new Array();
+          this.inputGridObj.resultData.Data = response["ReturnObject"]
+
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+      this.modalService.dismissAll();
+    }
   }
 
 }

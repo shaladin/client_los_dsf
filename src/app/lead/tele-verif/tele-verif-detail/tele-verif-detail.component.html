@@ -21,7 +21,7 @@
 </section>
 <div class="card">
     <div class="card-body">
-        <lib-ucviewgeneric [viewInput]="viewTeleVerifMainInfo"></lib-ucviewgeneric>
+        <lib-ucviewgeneric [viewInput]="viewLeadHeaderMainInfo"></lib-ucviewgeneric>
         <aw-wizard #wizard navBarLayout="large-empty-symbols" [awNavigationMode] navigateBackward="allow"
             navigateForward="allow" [defaultStepIndex]="0">
             <aw-wizard-step [stepTitle]="'CUSTOMER DATA'" (stepEnter)="EnterTab('custData')"
@@ -31,7 +31,7 @@
             </aw-wizard-step>
             <aw-wizard-step [stepTitle]="'LEAD DATA'" (stepEnter)="EnterTab('leadData')"
                 [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
-                <app-lead-input-lead-data *ngIf="isLeadData == true">
+                <app-lead-input-lead-data originPage="teleVerif" *ngIf="isLeadData == true">
                 </app-lead-input-lead-data>
             </aw-wizard-step>
         </aw-wizard>

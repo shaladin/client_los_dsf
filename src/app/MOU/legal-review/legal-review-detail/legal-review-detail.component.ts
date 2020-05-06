@@ -50,7 +50,6 @@ export class LegalReviewDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('legal');
     this.claimTask();
     this.items = this.LegalForm.get('items') as FormArray;
     this.termConditions = this.LegalForm.get('termConditions') as FormArray;
@@ -69,8 +68,8 @@ export class LegalReviewDetailComponent implements OnInit {
               var eachDataDetail = this.fb.group({
                 ReviewComponentName: [response["ReturnObject"][i].Descr],
                 ReviewComponentValue: [response["ReturnObject"][i].MasterCode],
-                RowVersion : [response["ReturnObject"][i].RowVersion],
-                values: [this.SearchLegalReviewValue(response["ReturnObject"][i].MasterCode)]
+                RowVersion : [this.SearchLegalReview(response["ReturnObject"][i].MasterCode, true)],
+                values: [this.SearchLegalReview(response["ReturnObject"][i].MasterCode, false)]
               }) as FormGroup;
               this.items.push(eachDataDetail);
             }
@@ -83,7 +82,7 @@ export class LegalReviewDetailComponent implements OnInit {
     );
   }
 
-  claimTask()
+  async claimTask()
   {
     var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"]};
@@ -93,11 +92,16 @@ export class LegalReviewDetailComponent implements OnInit {
       });
   }
 
-  SearchLegalReviewValue(key){
+  SearchLegalReview(key, isRowVersion){
     if(this.responseMouObj.length > 0){
       for(var i=0;i<this.responseMouObj.length;i++){
         if(this.responseMouObj[i]['MrLglReviewCode'] == key){
-          return this.responseMouObj[i]['LglReviewResult'];
+          if(isRowVersion){
+            return this.responseMouObj[i]['RowVersion'];
+          }
+          else{
+            return this.responseMouObj[i]['LglReviewResult'];
+          }
         }
       }
     }
@@ -105,7 +109,6 @@ export class LegalReviewDetailComponent implements OnInit {
   }
   
   SaveData(formObj: any, isSubmit : boolean) {
-    console.log('masuk save');
     var mouObj = new MouCustLglReviewObj();
     for (let index = 0; index < this.responseRefMasterObj.length; index++) {
       var tempMouObj = {

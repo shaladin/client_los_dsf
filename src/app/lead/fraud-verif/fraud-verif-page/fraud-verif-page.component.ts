@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { LeadCustObj } from 'app/shared/model/LeadCustObj.Model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { LeadCustPersonalObj } from 'app/shared/model/LeadCustPersonalObj.Model';
 import { DuplicateCustObj } from 'app/shared/model/DuplicateCustObj.Model';
@@ -19,7 +19,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 })
 export class FraudVerifPageComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder,  private router: Router) {
     this.route.queryParams.subscribe(params => {
       this.LeadId = params['LeadId'];
     });
@@ -34,12 +34,12 @@ export class FraudVerifPageComponent implements OnInit {
     this.GetAssetNegativeDuplicateCheckUrl = AdInsConstant.GetAssetNegativeDuplicateCheck;
     this.AddLeadFraudVerfUrl = AdInsConstant.AddLeadFraudVerf;
   }
-  viewFraudVerification: any;
+  viewLeadHeaderMainInfo: any;
   DuplicateCustObj: any;
   leadCustObj: any;
   leadAssetObj: any;
   LeadId: any;
-  WfTaskListId : any;
+  WfTaskListId: any;
   GetLeadCustByLeadIdUrl: string;
   GetLeadCustPersonalByLeadCustIdUrl: any;
   GetCustomerAndNegativeCustDuplicateCheckUrl: string;
@@ -62,12 +62,12 @@ export class FraudVerifPageComponent implements OnInit {
     Notes: ['', [Validators.required]],
   });
   ngOnInit() {
-    this.viewFraudVerification = "./assets/ucviewgeneric/viewFraudVerification.json";
+    this.claimTask();
+    this.viewLeadHeaderMainInfo = "./assets/ucviewgeneric/viewLeadHeader.json";
 
     this.leadCustObj = new LeadCustObj();
     this.leadCustObj.LeadId = this.LeadId;
     this.leadCustPersonalObj = new LeadCustPersonalObj();
-
     this.http.post(this.GetLeadCustByLeadIdUrl, this.leadCustObj).subscribe(
       (response) => {
         this.tempLeadCustObj = response;
@@ -102,8 +102,8 @@ export class FraudVerifPageComponent implements OnInit {
         this.http.post(this.GetLeadAssetForCheckUrl, this.leadAssetObj).subscribe(
           (response) => {
             this.tempAssetCategoryTypeCode = response;
-            this.negativeAssetCheckObj = new NegativeAssetCheckObj(); 
-            this.negativeAssetCheckObj.AssetTypeCode = this.tempAssetCategoryTypeCode.AssetTypeCode; 
+            this.negativeAssetCheckObj = new NegativeAssetCheckObj();
+            this.negativeAssetCheckObj.AssetTypeCode = this.tempAssetCategoryTypeCode.AssetTypeCode;
             this.negativeAssetCheckObj.SerialNo1 = this.tempLeadAsset.SerialNo1;
             this.negativeAssetCheckObj.SerialNo2 = this.tempLeadAsset.SerialNo2;
             this.negativeAssetCheckObj.SerialNo3 = this.tempLeadAsset.SerialNo3;
@@ -123,24 +123,36 @@ export class FraudVerifPageComponent implements OnInit {
   reject() {
     this.leadFraudVerfObj = new LeadFraudVerfObj();
     this.leadFraudVerfObj.LeadId = this.LeadId;
-    this.leadFraudVerfObj.VerifyStat = AdInsConstant.Reject; 
+    this.leadFraudVerfObj.VerifyStat = AdInsConstant.Reject;
     this.leadFraudVerfObj.Notes = this.FraudVerfForm.controls["Notes"].value;
+    this.leadFraudVerfObj.WfTaskListId = this.WfTaskListId;
     this.http.post(this.AddLeadFraudVerfUrl, this.leadFraudVerfObj).subscribe(
-      (response) => { 
+      (response) => {
         this.toastr.successMessage(response["message"]);
+        this.router.navigate(["/Lead/FraudVerif/Paging"]);
       });
-  }
-
+  } 
   verify() {
+     
     this.leadFraudVerfObj = new LeadFraudVerfObj();
     this.leadFraudVerfObj.LeadId = this.LeadId;
-    this.leadFraudVerfObj.VerifyStat = AdInsConstant.Verify; 
+    this.leadFraudVerfObj.VerifyStat = AdInsConstant.Verify;
     this.leadFraudVerfObj.Notes = this.FraudVerfForm.controls["Notes"].value;
+    this.leadFraudVerfObj.WfTaskListId = this.WfTaskListId;
   
     this.http.post(this.AddLeadFraudVerfUrl, this.leadFraudVerfObj).subscribe(
       (response) => { 
-        this.toastr.successMessage(response["message"]);
+        this.toastr.successMessage(response["message"]); 
+        this.router.navigate(["/Lead/FraudVerif/Paging"]);
       });
   }
 
+  async claimTask(){
+    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"]};
+    console.log(wfClaimObj);
+    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+      (response) => {
+      });
+  }
 }

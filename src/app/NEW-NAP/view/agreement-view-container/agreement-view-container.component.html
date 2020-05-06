@@ -5,7 +5,7 @@
         <div class="card-header header-title">
           <div class="row">
             <div class="col-md-8">
-              <h4 class="card-title" id="horz-layout-colored-controls" translate> Application View
+              <h4 class="card-title" id="horz-layout-colored-controls" translate> View Application
               </h4>
             </div>
           </div>
@@ -13,6 +13,25 @@
         <div class="px-3">
 
           <mat-tab-group>
+            <mat-tab label="Customer">
+              <ng-template matTabContent>
+                <app-view-app-cust-data-company *ngIf="ResponseAppDetailData?.MrCustTypeCode=='COMPANY'" [appId]="ResponseAppDetailData?.AppId"></app-view-app-cust-data-company>
+                <app-view-app-cust-data-personal *ngIf="ResponseAppDetailData?.MrCustTypeCode=='PERSONAL'" [appId]="ResponseAppDetailData?.AppId"></app-view-app-cust-data-personal>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab label="Asset">
+              <ng-template matTabContent>
+                <view-asset-data [appId]="ResponseAppDetailData?.AppId"></view-asset-data>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab label="Insurance">
+              <ng-template matTabContent>
+                <view-insurance [AppId]="ResponseAppDetailData?.AppId"></view-insurance>
+              </ng-template>
+            </mat-tab>
+
             <mat-tab label="Agreement Card">
               <ng-template matTabContent>
               </ng-template>
@@ -110,7 +129,7 @@
 
             <mat-tab label="Invoice Data">
               <ng-template matTabContent>
-                <app-invoice-view></app-invoice-view>
+                <!-- <app-invoice-view></app-invoice-view> -->
               </ng-template>
             </mat-tab>
 

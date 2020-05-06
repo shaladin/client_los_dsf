@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormArray, Validators } from '@angular/forms';
@@ -17,6 +17,8 @@ import { ReqTCObj } from 'app/shared/model/ReqTCObj.Model';
 export class TcDataComponent implements OnInit {
 
   @Input() AppId: any;
+  @Output() outputTab: EventEmitter<any> = new EventEmitter();
+
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
@@ -56,7 +58,7 @@ export class TcDataComponent implements OnInit {
           this.ReconstructForm();
         }
         else {
-          this.http.post(AdInsConstant.CreateTCRule, this.AppIdObj).subscribe(
+          this.http.post(AdInsConstant.GetListTCbyAppIdFromRule, this.AppIdObj).subscribe(
             (response) => {
               this.listAppTcObj = response["AppTcs"];
               console.log(this.result);
@@ -84,8 +86,8 @@ export class TcDataComponent implements OnInit {
       PriorTo: obj.PriorTo,
       IsChecked: obj.IsChecked,
       IsMandatory: obj.IsMandatory,
-      PromisedDt:(obj.PromisedDt==null) ? null : formatDate(obj.PromisedDt, 'yyyy-MM-dd', 'en-US'),
-      ExpiredDt: (obj.ExpiredDt==null) ? null : formatDate(obj.ExpiredDt, 'yyyy-MM-dd', 'en-US'),
+      PromisedDt: (obj.PromisedDt == null) ? null : formatDate(obj.PromisedDt, 'yyyy-MM-dd', 'en-US'),
+      ExpiredDt: (obj.ExpiredDt == null) ? null : formatDate(obj.ExpiredDt, 'yyyy-MM-dd', 'en-US'),
       Notes: obj.Notes,
     })
   }
@@ -105,7 +107,7 @@ export class TcDataComponent implements OnInit {
       if (isChecked && isMandatory) {
         item.get("PromisedDt").disable();
         item.patchValue({
-          PromisedDt : null
+          PromisedDt: null
         });
         item.get("ExpiredDt").enable();
       }
@@ -115,7 +117,7 @@ export class TcDataComponent implements OnInit {
       else {
         item.get("ExpiredDt").disable();
         item.patchValue({
-          ExpiredDt : null
+          ExpiredDt: null
         });
         if (isMandatory) {
           item.get("PromisedDt").enable();
@@ -124,7 +126,7 @@ export class TcDataComponent implements OnInit {
     }
   }
 
-  Check(){
+  Check() {
     // console.log(this.AppTcForm.value);
     // var fa_AppTc = this.AppTcForm.get("AppTc") as FormArray
     // for (let i = 0; i < fa_AppTc.length; i++) {
@@ -138,42 +140,42 @@ export class TcDataComponent implements OnInit {
     // }
   }
 
-  ReconstructForm(){          
-  var fa_AppTc = this.AppTcForm.get("AppTc") as FormArray
-  for (let a = 0; a < fa_AppTc.length; a++) {
-    var item = fa_AppTc.at(a);
-    var isMandatory: Boolean = item.get("IsMandatory").value;
-    var isChecked : Boolean = item.get("IsChecked").value;
-    if (isMandatory && !isChecked) {
-      item.get("PromisedDt").enable();
-      item.get("PromisedDt").setValidators([Validators.required]);
-      item.get("ExpiredDt").disable();
-      item.patchValue({
-        ExpiredDt : null
-      });
+  ReconstructForm() {
+    var fa_AppTc = this.AppTcForm.get("AppTc") as FormArray
+    for (let a = 0; a < fa_AppTc.length; a++) {
+      var item = fa_AppTc.at(a);
+      var isMandatory: Boolean = item.get("IsMandatory").value;
+      var isChecked: Boolean = item.get("IsChecked").value;
+      if (isMandatory && !isChecked) {
+        item.get("PromisedDt").enable();
+        item.get("PromisedDt").setValidators([Validators.required]);
+        item.get("ExpiredDt").disable();
+        item.patchValue({
+          ExpiredDt: null
+        });
+      }
+      else if (isChecked && isMandatory) {
+        item.get("PromisedDt").disable();
+        item.patchValue({
+          PromisedDt: null
+        });
+        item.get("ExpiredDt").enable();
+      } else if (isChecked && !isMandatory) {
+        item.get("PromisedDt").enable();
+        item.get("ExpiredDt").enable();
+      }
+      else {
+        item.get("PromisedDt").disable();
+        item.patchValue({
+          PromisedDt: null
+        });
+        item.get("PromisedDt").clearValidators();
+        item.get("ExpiredDt").disable();
+        item.patchValue({
+          ExpiredDt: null
+        });
+      }
     }
-    else if(isChecked && isMandatory){
-      item.get("PromisedDt").disable();
-      item.patchValue({
-        PromisedDt : null
-      });
-      item.get("ExpiredDt").enable();
-    }else if(isChecked && !isMandatory){
-      item.get("PromisedDt").enable();
-      item.get("ExpiredDt").enable();
-    }
-    else{
-      item.get("PromisedDt").disable();
-      item.patchValue({
-        PromisedDt : null
-      });
-      item.get("PromisedDt").clearValidators();
-      item.get("ExpiredDt").disable();
-      item.patchValue({
-        ExpiredDt : null
-      });
-    }
-  }
 
   }
 
@@ -193,6 +195,7 @@ export class TcDataComponent implements OnInit {
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
+          this.outputTab.emit();
         },
         (error) => {
           console.log(error);
@@ -203,6 +206,7 @@ export class TcDataComponent implements OnInit {
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
+          this.outputTab.emit();
         },
         (error) => {
           console.log(error);

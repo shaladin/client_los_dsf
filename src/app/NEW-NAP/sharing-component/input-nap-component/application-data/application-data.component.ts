@@ -1,6 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
@@ -12,7 +11,7 @@ import { NapAppCrossObj } from 'app/shared/model/NapAppCrossObj.Model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 
 @Component({
-  selector: 'app-application-data-model',
+  selector: 'app-application-data',
   templateUrl: './application-data.component.html',
   styleUrls: [],
   providers: [NGXToastrService]
@@ -20,6 +19,7 @@ import { NapAppModel } from 'app/shared/model/NapApp.Model';
 export class ApplicationDataComponent implements OnInit {
 
   @Input() appId: any;
+  @Output() outputTab: EventEmitter<any> = new EventEmitter();
   ListCrossAppObj: any = {};
   constructor(
     private fb: FormBuilder,
@@ -78,7 +78,8 @@ export class ApplicationDataComponent implements OnInit {
     RsvField4: [''],
     RsvField5: [''],
     MrInstSchemeCode: ["", Validators.required],
-    InterestType: ['', Validators.required]
+    InterestType: ['', Validators.required],
+    FloatingPeriod: ['']
   });
 
   inputPagingObj;
@@ -87,10 +88,12 @@ export class ApplicationDataComponent implements OnInit {
   employeeIdentifier;
   salesRecommendationItems = [];
   isInputLookupObj;
+  isFixedRate;
   ngOnInit() {
     this.ListCrossAppObj["appId"]=this.appId;
     this.ListCrossAppObj["result"] = [];
     this.isInputLookupObj = false;
+    this.isFixedRate = false
 
     // this.makeLookUpObj();
     this.getAppModelInfo();
@@ -112,7 +115,7 @@ export class ApplicationDataComponent implements OnInit {
   }
 
   GetCrossInfoData(){
-    var url = environment.losUrl + AdInsConstant.GetListAppCross;
+    var url = AdInsConstant.GetListAppCross;
     var obj = {
       AppId: this.appId,
       RowVersion: ""
@@ -141,11 +144,11 @@ export class ApplicationDataComponent implements OnInit {
       AppId: this.appId,
       RowVersion: ""
     };
-    var url = AdInsConstant.GetAppById;
+    var url = AdInsConstant.GetAppDetailForTabAddEditAppById;
 
     this.http.post(url, obj).subscribe(
       (response) => {
-        // console.log(response);
+        console.log(response);
         this.resultResponse = response;
         console.log(this.resultResponse);
         this.NapAppModelForm.patchValue({
@@ -196,9 +199,15 @@ export class ApplicationDataComponent implements OnInit {
           RsvField3: this.resultResponse.RsvField3,
           RsvField4: this.resultResponse.RsvField4,
           RsvField5: this.resultResponse.RsvField5,
+          MrInstSchemeCode: this.resultResponse.MrInstSchemeCode,
+          InterestType: this.resultResponse.InterestType,
+          FloatingPeriod: this.resultResponse.FloatingPeriodCode,
+          SalesOfficerName: this.resultResponse.SalesName,
+
         });
         console.log(this.NapAppModelForm);
         this.makeNewLookupCriteria();
+        this.ChangeInterestType();
       },
       (error) => {
         console.log(error);
@@ -207,7 +216,7 @@ export class ApplicationDataComponent implements OnInit {
   }
   
   getAppSrcData(){
-    var url = environment.losUrl + AdInsConstant.GetListKvpActiveRefAppSrc;
+    var url = AdInsConstant.GetListKvpActiveRefAppSrc;
     var obj = {
       RowVersion: ""
     };
@@ -235,6 +244,7 @@ export class ApplicationDataComponent implements OnInit {
         // console.log(response);
         var objTemp = response["ReturnObject"];
         this.applicationDDLitems["Pay_Freq"] = objTemp;
+        this.applicationDDLitems["Floating_Period"] = objTemp;
         console.log(this.applicationDDLitems);
       },
       (error) => {
@@ -282,7 +292,7 @@ export class ApplicationDataComponent implements OnInit {
     this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupEmp.json";
-    this.inputLookupObj.nameSelect = this.NapAppModelForm.controls.SalesOfficerName.value;
+    this.inputLookupObj.nameSelect = this.resultResponse.SalesName;
     this.inputLookupObj.addCritInput = this.arrAddCrit;
     this.isInputLookupObj = true;
   }
@@ -323,7 +333,7 @@ export class ApplicationDataComponent implements OnInit {
     this.makeLookUpObj();
   }
 
-  ChangeRecommendation(ev) {
+  ChangeRecommendation() {
     // console.log(ev);
     // console.log(this.NapAppModelForm);  
   }
@@ -335,7 +345,7 @@ export class ApplicationDataComponent implements OnInit {
     var temp = this.NapAppModelForm.controls.Tenor.value;
     if(!isNaN(temp)){
       console.log("isNUM");
-      var total = Math.floor((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
+      var total = Math.ceil((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
       this.PatchNumOfInstallment(total);      
     }
   }
@@ -351,7 +361,7 @@ export class ApplicationDataComponent implements OnInit {
       console.log("isNUM");
       this.PayFreqVal = this.applicationDDLitems["Pay_Freq"][idx].PayFreqVal;
       this.PayFreqTimeOfYear = this.applicationDDLitems["Pay_Freq"][idx].TimeOfYear;
-      var total = Math.floor((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
+      var total = Math.ceil((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
       this.PatchNumOfInstallment(total);      
     }
   } 
@@ -413,6 +423,7 @@ export class ApplicationDataComponent implements OnInit {
     temp.RsvField4 = this.NapAppModelForm.controls.RsvField4.value;
     temp.RsvField5 = this.NapAppModelForm.controls.RsvField5.value;
     temp.RowVersion = this.resultResponse.RowVersion;
+    temp.FloatingPeriodCode = this.NapAppModelForm.controls.FloatingPeriod.value;
     return temp;
   }
 
@@ -449,7 +460,7 @@ export class ApplicationDataComponent implements OnInit {
     var tempListAppCrossObj = this.GetListAppCrossValue();
     // console.log(tempListAppCrossObj);
     var tempAppFindDataObj = this.GetAppFinDataValue();
-    var url = environment.losUrl + AdInsConstant.EditAppAddAppCross;
+    var url = AdInsConstant.EditAppAddAppCross;
     var obj = {
       appObj: tempAppObj,
       listAppCrossObj: tempListAppCrossObj,
@@ -460,6 +471,7 @@ export class ApplicationDataComponent implements OnInit {
     this.http.post(url, obj).subscribe(
       (response) => {
         console.log(response);
+        this.outputTab.emit();
       },
       (error) => {
         console.log(error);
@@ -505,23 +517,38 @@ export class ApplicationDataComponent implements OnInit {
   }
 
   DeleteCrossApp(idx){
-    console.log(idx);
-    console.log(this.resultCrossApp);
-    console.log(this.resultCrossApp[idx]);
-    if(this.resultCrossApp[idx].AppCrossId!=null){
-      var url = environment.losUrl + AdInsConstant.DeleteAppCross;
-      var obj = new NapAppCrossObj();
-      obj = this.resultCrossApp[idx];
-      this.http.post(url, obj).subscribe(
-        (response) =>{
-          console.log(response);
-        },
-        (error) => {
-          console.log(error);
-        }
-      )
+    if (confirm('Are you sure to delete this record?')) {
+      console.log(idx);
+      console.log(this.resultCrossApp);
+      console.log(this.resultCrossApp[idx]);
+      if(this.resultCrossApp[idx].AppCrossId!=null){
+        var url = AdInsConstant.DeleteAppCross;
+        var obj = new NapAppCrossObj();
+        obj = this.resultCrossApp[idx];
+        this.http.post(url, obj).subscribe(
+          (response) =>{
+            console.log(response);
+          },
+          (error) => {
+            console.log(error);
+          }
+        )
+      }
+      this.resultCrossApp.splice(idx, 1);
+      this.ListCrossAppObj["result"].splice(idx, 1);
     }
-    this.resultCrossApp.splice(idx, 1);
-    this.ListCrossAppObj["result"].splice(idx, 1);
+  }
+
+  ChangeInterestType(){
+    console.log(this.NapAppModelForm);
+    if(this.NapAppModelForm.value.InterestType == "FIXED"){
+      this.isFixedRate = true;
+      this.NapAppModelForm.controls.InterestType.setValidators(Validators.required);
+    }
+    else {
+      this.isFixedRate = false;
+      this.NapAppModelForm.controls.InterestType.clearValidators();
+    }
+    this.NapAppModelForm.controls.InterestType.updateValueAndValidity();
   }
 }

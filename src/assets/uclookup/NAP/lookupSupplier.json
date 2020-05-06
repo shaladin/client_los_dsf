@@ -20,7 +20,8 @@
   ],
   "querystring": {
     "select": "SELECT v.VENDOR_CODE AS VendorCode, v.VENDOR_NAME AS VendorName, v.VENDOR_ID as VendorId",
-    "from": "FROM dbo.VENDOR v WITH(NOLOCK) LEFT JOIN dbo.VENDOR_OFFICE_MBR vom WITH(NOLOCK) ON v.VENDOR_ID = vom.VENDOR_ID LEFT JOIN REF_OFFICE ro WITH(NOLOCK) on vom.REF_OFFICE_ID = ro.REF_OFFICE_ID"
+    "from": "FROM dbo.VENDOR v WITH(NOLOCK) LEFT JOIN dbo.VENDOR_OFFICE_MBR vom WITH(NOLOCK) ON v.VENDOR_ID = vom.VENDOR_ID LEFT JOIN REF_OFFICE ro WITH(NOLOCK) on vom.REF_OFFICE_ID = ro.REF_OFFICE_ID",
+    "where":"WHERE v.IS_ACTIVE = 1"
   },
   "headerList": [
     {
@@ -31,7 +32,7 @@
     },
     {
       "type": "sort",
-      "position": "center",
+      "position": "left",
       "label": "Supplier Name",
       "name": "VendorName"
     },
@@ -49,7 +50,7 @@
     },
     {
       "type": "text",
-      "position": "center",
+      "position": "left",
       "property": "VendorName"
     },
     {

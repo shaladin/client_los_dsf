@@ -50,8 +50,6 @@ export class LeadCancelConfirmComponent implements OnInit {
         WfTaskListIds = params['WfTaskListIds'];
         this.tempWfTaskListArr = WfTaskListIds.split(',');
       }
-      
-      console.log(this.tempWfTaskListArr);
     });
     var tempObj = { 'ListLeadId': tempLeadArr };
     this.http.post(this.GetListLeadForLeadCancelByListLeadId, tempObj).subscribe(
@@ -79,6 +77,7 @@ export class LeadCancelConfirmComponent implements OnInit {
   SaveLeadConfirmCancel() {
     var leadObj = new LeadConfirmCancelObj();
     leadObj.LeadStat = "CAN";
+    leadObj.LeadStep = "CAN";
     leadObj.Notes = this.LeadConfirmCancelForm.controls.CancelReason.value;
     leadObj.MrCancelReasonCode = this.LeadConfirmCancelForm.controls.CancelReason.value;
     leadObj.Notes = this.LeadConfirmCancelForm.controls.Notes.value;

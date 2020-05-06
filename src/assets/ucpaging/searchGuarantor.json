@@ -50,6 +50,7 @@
       "action": [
         {
           "type": "callback",
+          "key": "edit",
           "property": [
             {
               "type": "AppGuarantorId",
@@ -66,8 +67,15 @@
           ]
         },
         {
-          "type": "delete",
-          "property": "AppGuarantorId"
+          "type": "callback",
+          "key": "delete",
+          "property": [
+            {
+              "type": "AppGuarantorId",
+              "property": "AppGuarantorId"
+            }
+          ],
+          "icon" : "ft-trash-2"
         }
       ]
     }

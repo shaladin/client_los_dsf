@@ -45,27 +45,30 @@ const routes: Routes = [
                 loadChildren: './business-process/additional-process/additional-process.module#AdditionalProcessSharingModule'
             },
             {
-                path: 'AssetData/Paging',
-                component: AssetDataPagingComponent,
-                data: {
-                  title: 'Asset Registration Summary'
-                }
+                path: 'View',
+                loadChildren: './view/nap-view.module#NapViewModule'
             },
-            {
-              path: 'AssetData/Detail',
-              component: AssetDataAddEditComponent,
-              data: {
-                title: 'Asset Registration Form'
-              }
-            },
-            {
-              path: 'Collateral/Detail',
-              component: CollateralAddEditComponent,
-              data: {
-                title: 'Collateral Registration Form'
-              }
-            }
-          
+            // {
+            //     path: 'AssetData/Paging',
+            //     component: AssetDataPagingComponent,
+            //     data: {
+            //       title: 'Asset Registration Summary'
+            //     }
+            // },
+            // {
+            //   path: 'AssetData/Detail',
+            //   component: AssetDataAddEditComponent,
+            //   data: {
+            //     title: 'Asset Registration Form'
+            //   }
+            // },
+            // {
+            //   path: 'Collateral/Detail',
+            //   component: CollateralAddEditComponent,
+            //   data: {
+            //     title: 'Collateral Registration Form'
+            //   }
+            // }
         ]
     }
 ]

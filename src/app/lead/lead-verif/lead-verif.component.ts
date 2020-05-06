@@ -46,7 +46,6 @@ export class LeadVerifComponent implements OnInit {
   viewObj: string;
   AddRangeLeadVerfUrl = AdInsConstant.AddRangeLeadVerf;
   verifyStatus: any;
-  ClaimListTaskUrl = AdInsConstant.ClaimListTask;
   leadUrl: any;
   constructor(
     private http: HttpClient,
@@ -56,7 +55,6 @@ export class LeadVerifComponent implements OnInit {
     private adInsService: AdInsService) { }
 
   ngOnInit() {
-    console.log('veriff');
     this.arrCrit = new Array();
     this.inputObj = new InputSearchObj();
     this.inputObj._url = './assets/search/searchLeadVerf.json';
@@ -78,20 +76,21 @@ export class LeadVerifComponent implements OnInit {
         for (var i = 0; i < temp.length; i++) {
           arr.push(temp[i]['LeadId']);
         }
-
-        const addCritAssetMasterId = new CriteriaObj();
-        addCritAssetMasterId.DataType = 'numeric';
-        addCritAssetMasterId.propName = 'L.LEAD_ID';
-        addCritAssetMasterId.restriction = AdInsConstant.RestrictionNotIn;
-        addCritAssetMasterId.listValue = arr;
-        this.arrCrit.push(addCritAssetMasterId);
-        this.inputObj.addCritInput.push(addCritAssetMasterId);
+        if (this.listSelectedId.length !== 0) {
+          const addCritAssetMasterId = new CriteriaObj();
+          addCritAssetMasterId.DataType = 'numeric';
+          addCritAssetMasterId.propName = 'L.LEAD_ID';
+          addCritAssetMasterId.restriction = AdInsConstant.RestrictionNotIn;
+          addCritAssetMasterId.listValue = this.listSelectedId;
+          this.arrCrit.push(addCritAssetMasterId);
+          this.inputObj.addCritInput.push(addCritAssetMasterId);
+        }
       },
       error => {
         this.router.navigateByUrl('Error');
       }
     );
-    this.leadUrl = environment.losR3Web +  '/Lead/View?LeadId=';
+    this.leadUrl = environment.losR3Web + '/Lead/View?LeadId=';
   }
 
   searchSort(event: any) {
@@ -144,9 +143,9 @@ export class LeadVerifComponent implements OnInit {
 
   formValidate(form: any, verifyStatus) {
     this.adInsService.scrollIfFormHasErrors(form);
-    this.verifyStatus = verifyStatus; 
+    this.verifyStatus = verifyStatus;
   }
-  getListWfTaskListId(){
+  getListWfTaskListId() {
     var tempArr = new Array();
     for (let index = 0; index < this.tempData.length; index++) {
       tempArr.push(this.tempData[index]['WfTaskListId']);
@@ -154,8 +153,7 @@ export class LeadVerifComponent implements OnInit {
     return tempArr;
   }
   SaveLeadVerf(leadVerfForm: any) {
-    var tempArr = this.getListWfTaskListId();
-    this.claimListTask(tempArr);
+    //var tempArr = this.getListWfTaskListId();
     for (let index = 0; index < this.tempData.length; index++) {
       var tempLeadVerfObj = new LeadVerfObj();
       tempLeadVerfObj.VerifyStat = this.verifyStatus;
@@ -167,7 +165,6 @@ export class LeadVerifComponent implements OnInit {
       this.toastr.typeErrorCustom('Please Add At Least One Data');
       return;
     }
-
     var LeadVerf = {
       LeadVerfObjs: this.arrLeadVerf
     }
@@ -189,11 +186,13 @@ export class LeadVerifComponent implements OnInit {
     if (this.listSelectedId.length !== 0) {
       for (var i = 0; i < this.listSelectedId.length; i++) {
         this.tempListId.push(this.listSelectedId[i]);
-      }
-      for (var i = 0; i < this.listSelectedId.length; i++) {
         var object = this.resultData.find(x => x.LeadId == this.listSelectedId[i]);
         this.tempData.push(object);
       }
+      // for (var i = 0; i < this.listSelectedId.length; i++) {
+      //   var object = this.resultData.find(x => x.LeadId == this.listSelectedId[i]);
+      //   this.tempData.push(object);
+      // }
       this.arrAddCrit = new Array();
       if (this.arrCrit.length != 0) {
         for (var i = 0; i < this.arrCrit.length; i++) {
@@ -271,19 +270,5 @@ export class LeadVerifComponent implements OnInit {
       this.inputObj.addCritInput = this.arrAddCrit;
       this.UCSearchComponent.search(this.apiUrl, this.pageNow, this.pageSize, order, this.arrAddCrit);
     }
-  }
-
-  claimListTask(listWfTaskListId)
-  {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
-    var wfClaimObj = { listWfTaskListId: listWfTaskListId, pUserID: currentUserContext["UserName"]};
-    console.log(wfClaimObj);
-    this.http.post(AdInsConstant.ClaimListTask, wfClaimObj).subscribe(
-      (response) => {
-        console.log(response);
-      });
-      (error) => {
-        console.log(error);
-      }
   }
 }
