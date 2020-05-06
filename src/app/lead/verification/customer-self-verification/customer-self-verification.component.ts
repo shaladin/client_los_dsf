@@ -39,7 +39,7 @@ export class CustomerSelfVerificationComponent implements OnInit {
     this.isCustData = true;
     this.isLeadData = true;
   }
-  claimTask() {
+  async claimTask() {
     var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"] };
     console.log(wfClaimObj);

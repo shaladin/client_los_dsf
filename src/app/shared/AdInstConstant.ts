@@ -52,8 +52,9 @@ export class AdInsConstant {
   public static GetAppDetailForTabAddEditAppById = environment.losUrl + "/Application/GetAppDetailForTabAddEditAppById";
   public static GetAppDetailForAppTabById = environment.losUrl + "/Application/GetAppDetailForAppTabById";
   public static AddAppFromLead = environment.losUrl + "/Application/AddAppFromLead";
-  public static DataTableNAP = "http://localhost:5001" + "/Application/DataTableNAP";
-  public static GetRuleFeeAndInsFixedNAP = "http://localhost:5001" + "/Application/GetRuleFeeAndInsFixedNAP";
+  public static DataTableNAP = environment.losUrl + "/Application/DataTableNAP";
+  public static GetRuleFeeAndInsFixedNAP = environment.losUrl + "/Application/GetRuleFeeAndInsFixedNAP";
+  public static GetAppAndAppCustDetailByAgrmntId = environment.losUrl + "/Application/GetAppAndAppCustDetailByAgrmntId";
   public static SubmitNAP = environment.losUrl + "/Application/SubmitNAP";
 
   //App Loan Purpose
@@ -75,7 +76,7 @@ export class AdInsConstant {
 
   // App Asset Suppl Emp
   public static GetListAppAssetSupplEmpByListAppAssetId = environment.losUrl + "/AppAssetSupplEmp/GetListAppAssetSupplEmpByListAppAssetId";
-  public static GetAppAssetSupplEmpByAppAssetIdAndCode = environment.losUrl +"/AppAssetSupplEmp/GetAppAssetSupplEmpByAppAssetIdAndCode";
+  public static GetAppAssetSupplEmpByAppAssetIdAndCode = environment.losUrl + "/AppAssetSupplEmp/GetAppAssetSupplEmpByAppAssetIdAndCode";
 
   // App Referantor
   public static AddAppReferantor = "/AppReferantor/AddAppReferantor";
@@ -493,7 +494,8 @@ export class AdInsConstant {
   public static GetListRefModuleKeyValue = "/RefModule/GetListRefModuleKeyValue";
 
   //REF EMP
-  public static GetRefEmpForLookupEmployee = environment.FoundationR3Url + "/RefEmp/GetRefEmpForLookupEmployee"
+  public static GetRefEmpForLookupEmployee = environment.FoundationR3Url + "/RefEmp/GetRefEmpForLookupEmployee";
+  public static GetRefEmpForLookupByUsername = environment.FoundationR3Url +"/RefEmp/GetRefEmpForLookupByUsername";
 
   //REF EMP LEAVE MANAGEMENT
   public static GetRefEmpLeaveMngmntPaging = "/RefEmpLeaveManagement/GetRefEmpLeaveMngmntPaging";
@@ -552,8 +554,8 @@ export class AdInsConstant {
 
 
   // Vendor
-  public static GetListVendorBankAccByVendorId = "/VendorBankAcc/GetListVendorBankAccByVendorId";
-  public static GetListVendorBankAccByVendorCode = "/VendorBankAcc/GetListVendorBankAccByVendorCode";
+  public static GetListVendorBankAccByVendorId = environment.FoundationR3Url + "/VendorBankAcc/GetListVendorBankAccByVendorId";
+  public static GetListVendorBankAccByVendorCode = environment.FoundationR3Url + "/VendorBankAcc/GetListVendorBankAccByVendorCode";
   public static GetListKeyValueByCategoryCodeAndOfficeCode = environment.FoundationR3Url + "/Vendor/GetListKeyValueByCategoryCodeAndOfficeCode";
   public static GetVendorByVendorCode = environment.FoundationR3Url + "/Vendor/GetVendorByVendorCode";
   public static GetListVendorEmpByVendorId = environment.FoundationR3Url + "/VendorEmp/GetListVendorEmpByVendorId";
@@ -744,6 +746,7 @@ export class AdInsConstant {
   public static GetCustDataForViewByAppId = environment.losUrl + "/AppCust/GetCustDataForViewByAppId";
   public static GetCustDataPersonalForViewByAppId = environment.losUrl + "/AppCust/GetCustDataPersonalForViewByAppId";
   public static GetCustDataCompanyForViewByAppId = environment.losUrl + "/AppCust/GetCustDataCompanyForViewByAppId";
+  public static GetAppCustCompanyByAppCustId = environment.losUrl + "/AppCust/GetAppCustCompanyByAppCustId";
 
 
 
@@ -799,13 +802,13 @@ export class AdInsConstant {
   public static AddExistingAppCollateralData = environment.losUrl + "/AppCollateral/AddExistingAppCollateralData";
   public static GetAppCollateralByAppCollateralId = environment.losUrl + "/AppCollateral/GetAppCollateralByAppCollateralId";
   public static GetAppCollateralByAppId = environment.losUrl + "/AppCollateral/GetAppCollateralByAppId";
-  
+
   // App Collateral Suppl Emp
   public static GetListAppAssetSupplEmpByAppAssetId = environment.losUrl + "/AppAssetSupplEmp/GetListAppAssetSupplEmpByAppAssetId";
-  public static AddEditAllCollateralDataByAppCollateraId  = "";
+  public static AddEditAllCollateralDataByAppCollateraId = "";
   // App Collateral Registration
   public static GetAppCollateralRegistrationByAppCollateralId = environment.losUrl + "/AppCollateralRegistration/GetAppCollateralRegistrationByAppCollateralId"
- 
+
 
   //AGRMNT SIGNER
   public static SubmitAgrmntSignerData = environment.losUrl + "/AgrmntSigner/SubmitAgrmntSignerData";
@@ -921,7 +924,7 @@ export class AdInsConstant {
   public static GetListAppInvoiceFctrByAgrmntId = environment.losUrl + "/AppInvoiceFctr/GetListAppInvoiceFctrByAgrmntId";
 
 
-  public static GetAppFinDataWithRuleByAppId = "/AppFinData/GetAppFinDataWithRuleByAppId";
+  public static GetAppFinDataWithRuleByAppId = environment.losUrl + "/AppFinData/GetAppFinDataWithRuleByAppId";
 
   //App Cust Addr
   public static GetListAppCustAddrByAppId = environment.losUrl + "/AppCustAddr/GetListAppCustAddrByAppId";
@@ -968,10 +971,14 @@ export class AdInsConstant {
   public static GetSpouseDuplicateCheck = "/AppDupCheck/GetSpouseDuplicateCheck";
   public static GetAppShareholderDuplicateCheck = "/AppDupCheck/GetAppShareholderDuplicateCheck";
   public static AddAppDupCheckCust = "/AppDupCheck/AddAppDupCheckCust";
+  public static EditCustNoAppCust = environment.losUrl + "/AppDupCheck/EditCustNoAppCust";
+  public static SubmitAppDupCheck = environment.losUrl + "/AppDupCheck/SubmitAppDupCheck";
+
+
 
   // Product Offering
   public static GetListProdOfferingDByProdOfferingCode = "/ProductOffering/GetListProdOfferingDByProdOfferingCode";
-  public static GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode = "/ProductOffering/GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode";
+  public static GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode = environment.FoundationR3Url + "/ProductOffering/GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode";
   public static GetPayFreqByProdOfferingD = environment.FoundationR3Url + "/ProductOffering/GetPayFreqByProdOfferingD";
 
   //Ref Pay Freq
@@ -1013,7 +1020,7 @@ export class AdInsConstant {
   public static ClaimListTask = environment.FoundationR3Url + "/Workflow/ClaimListTask";
 
   // Phone Verif
-  public static GetAppPhoneVerifSubjectListByAppId = "http://localhost:5001/PhoneVerif/GetAppPhoneVerifSubjectListByAppId";
+  public static GetAppPhoneVerifSubjectListByAppId = environment.losUrl + "/PhoneVerif/GetAppPhoneVerifSubjectListByAppId";
   public static GetPhoneNumberByIdSourceAppIdAndSubject = environment.losUrl + "/PhoneVerif/GetPhoneNumberByIdSourceAppIdAndSubject";
   public static GetVerfQuestionListByAppIdAndSubjectForPhoneVerif = environment.losUrl + "/PhoneVerif/GetVerfQuestionListByAppIdAndSubjectForPhoneVerif";
   // App Cust
@@ -1055,5 +1062,15 @@ export class AdInsConstant {
   public static GetUploadAssetMasterByUploadMonitoringNoAndTrxType = environment.FoundationR3Url + '/AssetMaster/GetUploadAssetMasterByUploadMonitoringNoAndTrxType';
 
   // Asset Category
-  public static GetAssetCategoryById = environment.FoundationR3Url + "/AssetCategory/GetAssetCategoryById";
+    public static GetAssetCategoryById = environment.FoundationR3Url + "/AssetCategory/GetAssetCategoryById";
+    
+  //Agrmnt Rsv Fund
+  public static GetListAgrmntReservedFundByAgrmntId = environment.losUrl + "/AgrmntReservedFund/GetListAgrmntReservedFundByAgrmntId";
+
+  //Agrmnt Life Ins
+  public static GetAgrmntLifeInsDataByAgrmntId = environment.losUrl + "/AgrmntLifeIns/GetAgrmntLifeInsDataByAgrmntId";
+
+  //RfaLog
+  public static GetRfaLogByTrxNo  = environment.FoundationR3Url + "/RfaLog/GetRfaLogByTrxNo";
+
 }

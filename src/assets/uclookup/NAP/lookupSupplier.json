@@ -32,7 +32,7 @@
     },
     {
       "type": "sort",
-      "position": "center",
+      "position": "left",
       "label": "Supplier Name",
       "name": "VendorName"
     },
@@ -50,7 +50,7 @@
     },
     {
       "type": "text",
-      "position": "center",
+      "position": "left",
       "property": "VendorName"
     },
     {

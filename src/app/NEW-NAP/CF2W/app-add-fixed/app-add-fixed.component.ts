@@ -10,6 +10,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { RefOfficeObj } from 'app/shared/model/RefOfficeObj.model';
 import { DataTableFixedNAPObj } from 'app/shared/model/DataTableFixedNAPObj.Model';
+import { SaveAppDataCF2WObj } from 'app/shared/model/SaveAppDataCF2WObj.Model';
 
 @Component({
   selector: 'app-app-add-fixed',
@@ -93,6 +94,7 @@ export class AppAddFixedComponent implements OnInit {
   officeItems;
   user;
   listRefOfficeId: Array<any> = [];
+  allAppDataObj : SaveAppDataCF2WObj;
 
   ngOnInit() {
     // Lookup Obj
@@ -233,6 +235,39 @@ export class AppAddFixedComponent implements OnInit {
     return obj;
   }
 
+  setAppAsset()
+  {
+    this.allAppDataObj.AppAssetObj.FullAssetName = this.assetName;
+    this.allAppDataObj.AppAssetObj.MrAssetConditionCode = this.NapAppForm.controls["MrAssetConditionCode"].value;
+    this.allAppDataObj.AppAssetObj.MrAssetUsageCode = this.NapAppForm.controls["AssetUsage"].value;
+    this.allAppDataObj.AppAssetObj.SupplName = this.supplierName;
+    this.allAppDataObj.AppAssetObj.SupplCode = this.supplierCode;
+    this.allAppDataObj.AppAssetObj.AssetPriceAmt = this.NapAppForm.controls["AssetPrice"].value;
+    this.allAppDataObj.AppAssetObj.DownPaymentAmt = this.NapAppForm.controls["DownPayment"].value;
+    this.allAppDataObj.AppAssetObj.AssetNotes = this.NapAppForm.controls["Notes"].value;
+
+    this.allAppDataObj.AppAssetObj.AssetSeqNo = "1";
+    this.allAppDataObj.AppAssetObj.FullAssetCode = this.assetCode;
+    
+    this.allAppDataObj.AppAssetObj.AssetStat = "NEW";
+    this.allAppDataObj.AppCollateralObj.CollateralStat = "NEW";
+    
+    this.allAppDataObj.AppAssetObj.AssetTypeCode = this.assetTypeCode;
+    this.allAppDataObj.AppAssetObj.AssetCategoryCode = this.assetCategoryCode;
+    this.allAppDataObj.AppAssetObj.IsCollateral = true;
+    this.allAppDataObj.AppAssetObj.IsInsurance = true;
+
+    this.allAppDataObj.AppCollateralObj.CollateralSeqNo = "1";
+    this.allAppDataObj.AppCollateralObj.FullAssetCode = this.assetCode;
+    this.allAppDataObj.AppCollateralObj.FullAssetName = this.assetName;
+    this.allAppDataObj.AppCollateralObj.MrCollateralConditionCode = this.NapAppForm.controls["MrAssetConditionCode"].value;
+    this.allAppDataObj.AppCollateralObj.MrCollateralUsageCode = this.NapAppForm.controls["AssetUsage"].value;
+    this.allAppDataObj.AppCollateralObj.CollateralValueAmt = this.NapAppForm.controls["AssetPrice"].value;
+    this.allAppDataObj.AppCollateralObj.AssetTypeCode = this.assetTypeCode;
+    this.allAppDataObj.AppCollateralObj.AssetCategoryCode = this.assetCategoryCode;
+
+  }
+
   SaveForm() {
     // this.router.navigate(["Nap/AppAddDetail"], { queryParams: { "AppId": response["AppId"] } });
     var napAppObj = new NapAppModel();
@@ -264,13 +299,26 @@ export class AppAddFixedComponent implements OnInit {
 
   }
 
+  supplierCode;
+  supplierName;
+  SetSupplierBranch(event){
+    this.supplierCode = event.VendorCode;
+    this.supplierName = event.VendorName;
+  }
+
+  assetCode;
   assetName;
+  assetTypeCode;
+  assetCategoryCode;
   asset;
   brand;
   model;
   type;
   SetAsset(event) {
-    this.assetName = event.FullAssetName
+    this.assetCode = event.FullAssetCode;
+    this.assetName = event.FullAssetName;
+    this.assetTypeCode = event.AssetTypeCode;
+    this.assetCategoryCode = event.AssetCategoryCode
     this.asset = this.assetName.split(' ');
     for(var i = 0; i < this.asset.length; i++)
     {
@@ -308,7 +356,13 @@ export class AppAddFixedComponent implements OnInit {
   }
 
   returnFeeAndInsFixedNAP;
+  downPayment;
+  assetPrice;
   editItem(item: any) {
+    console.log("abc");
+    console.log(item);
+    this.downPayment = item.DP;
+    this.assetPrice = item.OTR;
     var feeAndInsFixedNAP = new DataTableFixedNAPObj();
     feeAndInsFixedNAP.LobCode = this.LobCode;
     feeAndInsFixedNAP.OfficeCode = this.user.MrOfficeTypeCode;
@@ -352,6 +406,7 @@ export class AppAddFixedComponent implements OnInit {
     this.inputLookupObjName.nameSelect = ev.ProdOfferingName;
   }
 
+  productOffering;
   getLookupAppResponseName(ev: any) {
     console.log(ev);
     var url = environment.FoundationR3Url + AdInsConstant.GetListProdOfferingDByProdOfferingCode;
@@ -388,6 +443,9 @@ export class AppAddFixedComponent implements OnInit {
           PayFreqCode: tempPayFreqCode,
           RefProdTypeCode: tempRefProdTypeCode
         });
+        this.productOffering = ev.ProdOfferingName;
+        console.log("vvv")
+        console.log(ev)
       },
       (error) => {
         console.log(error);
