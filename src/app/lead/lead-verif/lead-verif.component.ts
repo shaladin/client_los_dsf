@@ -46,7 +46,7 @@ export class LeadVerifComponent implements OnInit {
   viewObj: string;
   AddRangeLeadVerfUrl = AdInsConstant.AddRangeLeadVerf;
   verifyStatus: any;
-  leadUrl: any;
+  leadUrl: any; 
   constructor(
     private http: HttpClient,
     private toastr: NGXToastrService,
