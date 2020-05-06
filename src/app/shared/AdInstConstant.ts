@@ -1063,9 +1063,14 @@ export class AdInsConstant {
 
   // Asset Category
     public static GetAssetCategoryById = environment.FoundationR3Url + "/AssetCategory/GetAssetCategoryById";
+    
   //Agrmnt Rsv Fund
   public static GetListAgrmntReservedFundByAgrmntId = environment.losUrl + "/AgrmntReservedFund/GetListAgrmntReservedFundByAgrmntId";
 
   //Agrmnt Life Ins
   public static GetAgrmntLifeInsDataByAgrmntId = environment.losUrl + "/AgrmntLifeIns/GetAgrmntLifeInsDataByAgrmntId";
+
+  //RfaLog
+  public static GetRfaLogByTrxNo  = environment.FoundationR3Url + "/RfaLog/GetRfaLogByTrxNo";
+
 }

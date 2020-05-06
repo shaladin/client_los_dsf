@@ -1,0 +1,36 @@
+<div *ngIf="result">
+<div *ngIf="count1>0">
+  <lib-ucSubsection [id]="'CreditApprovalHistoryId'" [title]="'Credit Approval History'"
+    [panel]="'CreditApprovalHistory'">
+  </lib-ucSubsection>
+  <div id="CreditApprovalHistory">
+    <div *ngFor="let item of listCreditApprvObj; let i = index">
+      <lib-ucapprovalhist [inputObj]="listCreditApprvObj[i]">
+      </lib-ucapprovalhist>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="count2>0">
+  <lib-ucSubsection [id]="'PackageValidityId'" [title]="'Package Validity Checking Approval History'"
+    [panel]="'PackageValidity'">
+  </lib-ucSubsection>
+  <div id="PackageValidity">
+    <div *ngFor="let item of listPckgValObj; let i = index">
+      <lib-ucapprovalhist [inputObj]="listPckgValObj[i]">
+      </lib-ucapprovalhist>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="count3>0">
+  <lib-ucSubsection [id]="'PreGoId'" [title]="'Pre Go Live Approval'" [panel]="'PreGo'">
+  </lib-ucSubsection>
+  <div id="PreGo">
+    <div *ngFor="let item of listPreGoObj; let i = index">
+      <lib-ucapprovalhist [inputObj]="listPreGoObj[i]">
+      </lib-ucapprovalhist>
+    </div>
+  </div>
+</div>
+</div>
