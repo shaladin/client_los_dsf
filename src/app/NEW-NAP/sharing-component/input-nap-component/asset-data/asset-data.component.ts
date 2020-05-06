@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
@@ -13,7 +13,6 @@ import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { AppAssetAccessoryObj } from 'app/shared/model/AppAssetAccessoryObj.model';
 import { AppDataObj } from 'app/shared/model/AppDataObj.model';
-import { WizardComponent } from 'angular-archwizard';
 
 
 @Component({
@@ -24,6 +23,7 @@ import { WizardComponent } from 'angular-archwizard';
 export class AssetDataComponent implements OnInit {
 
   @Input() AppId: any;
+  @Output() outputTab: EventEmitter<any> = new EventEmitter();
   BranchManagerName: string = "-";
   inputFieldOwnerAddrObj: InputFieldObj;
   ownerAddrObj: AddrObj;
@@ -270,8 +270,7 @@ export class AssetDataComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private route: ActivatedRoute,
-    private wizard: WizardComponent) {
+    private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"] ? params["AppId"] : this.AppId;
     })
@@ -328,7 +327,7 @@ export class AssetDataComponent implements OnInit {
       (response) => {
         console.log(response);
         this.toastr.successMessage(response["message"]);
-        //this.wizard.goToNextStep();
+        this.outputTab.emit();
       },
       (error) => {
         console.log(error);
