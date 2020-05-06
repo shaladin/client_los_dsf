@@ -146,7 +146,7 @@ export class FraudVerifPageComponent implements OnInit {
         this.toastr.successMessage(response["message"]); 
         this.router.navigate(["/Lead/FraudVerif/Paging"]);
       });
-  }
+  } 
 
   async claimTask(){
     var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
