@@ -20,14 +20,11 @@ export class TeleVerifDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('televerif');
     this.claimTask();
     this.viewLeadHeaderMainInfo = "./assets/ucviewgeneric/viewLeadHeader.json";
   }
 
   EnterTab(type){
-      // this.isCustData = true;
-      // this.isLeadData = true;
     if(type == "custData"){
       this.isCustData = true;
       this.isLeadData = false;

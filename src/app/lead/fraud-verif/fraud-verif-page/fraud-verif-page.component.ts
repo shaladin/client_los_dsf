@@ -62,6 +62,7 @@ export class FraudVerifPageComponent implements OnInit {
     Notes: ['', [Validators.required]],
   });
   ngOnInit() {
+    console.log('fraud');
     this.claimTask();
     this.viewLeadHeaderMainInfo = "./assets/ucviewgeneric/viewLeadHeader.json";
 
