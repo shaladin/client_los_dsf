@@ -133,15 +133,6 @@ export class FraudVerifPageComponent implements OnInit {
       });
   }
 
-  claimTask() {
-    console.log("awd");
-    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
-    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"] };
-    console.log(wfClaimObj);
-    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
-      });
-  }
   verify() {
      
     this.leadFraudVerfObj = new LeadFraudVerfObj();
