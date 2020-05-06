@@ -22,6 +22,10 @@ import { AppInsuranceComponent } from './app-insurance/app-insurance.component';
 import { AppInsuranceDetailComponent } from './app-insurance/app-insurance-detail/app-insurance-detail.component';
 import { ViewSharingComponentModule } from "./view-sharing-component.module";
 import { ViewAppFraudVerificationComponent } from './view-app-fraud-verification/view-app-fraud-verification.component';
+import { UcviewgenericModule } from "@adins/ucviewgeneric";
+import { UcSubsectionModule } from "@adins/uc-subsection";
+import { ApprovalHistComponent } from './approval-hist/approval-hist.component';
+import { UcapprovalhistModule  } from '@adins/ucapprovalhist';
 
 @NgModule({
   exports: [
@@ -34,11 +38,18 @@ import { ViewAppFraudVerificationComponent } from './view-app-fraud-verification
     TabAnalysisResultComponent,
     ViewAssetDataComponent,
     ViewPhoneVerifComponent,
+    GuarantorComponent,
+    TabApplicationComponent,
+    LifeInsuranceComponent,
+    AppTcComponent,
   ],
   imports: [
     CommonModule,
     AdInsModule,
     ViewSharingComponentModule,
+    UcviewgenericModule,
+    UcSubsectionModule,
+    UcapprovalhistModule
   ],
   declarations: [
     InvoiceDataFctrComponent,
@@ -56,6 +67,7 @@ import { ViewAppFraudVerificationComponent } from './view-app-fraud-verification
     TabAnalysisResultComponent,
     AppAssetDataComponent,
     AppAssetDataDetailComponent,
+    ApprovalHistComponent,
     ViewFinancialComponent,
     AppInsuranceComponent,
     AppInsuranceDetailComponent,

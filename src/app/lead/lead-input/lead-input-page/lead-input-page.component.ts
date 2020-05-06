@@ -18,8 +18,9 @@ export class LeadInputPageComponent implements OnInit {
   isLead: any;
   CustPersonalId: any;
   TaskListId: any;
+  titlePageType: string;
+  viewLeadHeaderMainInfo : any;
   pageType: any;
-
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {
     this.route.queryParams.subscribe(params => {
       if (params["LeadId"] != null) {
@@ -28,11 +29,13 @@ export class LeadInputPageComponent implements OnInit {
       if (params["TaskListId"] != null) {
         this.TaskListId = params["TaskListId"];
       }
-      if (params["mode"] == "edit") {
-        this.pageType = "UPDATE";
+      if(params["mode"] == "update"){
+        this.pageType = params["mode"];
+        this.titlePageType = "UPDATE";
       }
-      else {
-        this.pageType = "INPUT";
+      else if(params["mode"] == "edit"){
+        this.pageType = params["mode"];
+        this.titlePageType = "INPUT";
       }
 
       if (params["CopyFrom"] != null) {
@@ -42,6 +45,7 @@ export class LeadInputPageComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.viewLeadHeaderMainInfo = "./assets/ucviewgeneric/viewLeadHeader.json";
   }
 
   EnterTab(type) {
@@ -57,11 +61,15 @@ export class LeadInputPageComponent implements OnInit {
   }
   
   editMainInfoHandler(){
-    this.router.navigate(["/Lead/LeadInput/MainInfo"], { queryParams: { LeadId: this.LeadId, mode: "edit" }});
+    this.router.navigate(["/Lead/LeadInput/MainInfo"], { queryParams: { LeadId: this.LeadId, mode: this.pageType }});
   }
 
   cancelHandler(){
-    this.router.navigate(['/Lead/Lead/Paging']);
+    if(this.pageType == "update"){
+      this.router.navigate(['/Lead/LeadUpdate/Paging']);  
+    }
+    else{
+      this.router.navigate(['/Lead/Lead/Paging']);  
+    }
   }
-
 }

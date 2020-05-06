@@ -5,12 +5,13 @@
         {
             "type": "dropdown",
             "datatype": "text",
-            "name": "L.ORI_OFFICE_NAME",
+            "name": "L.ORI_OFFICE_CODE",
             "id": "OfficeNameId",
             "value": "",
             "placeholder": "Placeholder",
             "isFromURL": true,
             "isSelectOne": false,
+            "isQueryIn" : true,
             "url": "http://r3app-server.ad-ins.com/Foundation_R3/RefOffice/GetListKvpActiveRefOfficeForPaging",
             "label": "OFFICE NAME",
             "items": [],
@@ -210,13 +211,9 @@
                             ],
                             "result": {
                                 "type": "url",
-                                "path": "/Lead/LeadInput/Page",
+                                "path": "/Lead/LeadInput/MainInfo",
                                 "icon": "ft-edit-2",
                                 "param": [
-                                    {
-                                        "type": "TaskListId",
-                                        "property": "TaskListId"
-                                    },
                                     {
                                         "type": "LeadId",
                                         "property": "LeadId"
@@ -227,7 +224,7 @@
                                     },
                                     {
                                         "type": "mode",
-                                        "property": "edit"
+                                        "property": "update"
                                     }
                                 ]
                             },
@@ -244,13 +241,9 @@
                             ],
                             "result": {
                                 "type": "url",
-                                "path": "/Lead/LeadInput/Page",
+                                "path": "/Lead/LeadInput/MainInfo",
                                 "icon": "ft-edit-2",
                                 "param": [
-                                    {
-                                        "type": "TaskListId",
-                                        "property": "TaskListId"
-                                    },
                                     {
                                         "type": "LeadId",
                                         "property": "LeadId"
@@ -261,7 +254,7 @@
                                     },
                                     {
                                         "type": "mode",
-                                        "property": "edit"
+                                        "property": "update"
                                     }
                                 ]
                             },

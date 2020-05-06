@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormArray, Validators } from '@angular/forms';
@@ -8,7 +8,6 @@ import { AppIdObj } from 'app/shared/model/AppIdObj.Model';
 import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
 import { formatDate } from '@angular/common';
 import { ReqTCObj } from 'app/shared/model/ReqTCObj.Model';
-import { WizardComponent } from 'angular-archwizard';
 
 @Component({
   selector: 'app-tc-data',
@@ -18,7 +17,9 @@ import { WizardComponent } from 'angular-archwizard';
 export class TcDataComponent implements OnInit {
 
   @Input() AppId: any;
-  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService, private wizard: WizardComponent) {
+  @Output() outputTab: EventEmitter<any> = new EventEmitter();
+
+  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
     })
@@ -57,7 +58,7 @@ export class TcDataComponent implements OnInit {
           this.ReconstructForm();
         }
         else {
-          this.http.post(AdInsConstant.CreateTCRule, this.AppIdObj).subscribe(
+          this.http.post(AdInsConstant.GetListTCbyAppIdFromRule, this.AppIdObj).subscribe(
             (response) => {
               this.listAppTcObj = response["AppTcs"];
               console.log(this.result);
@@ -194,7 +195,7 @@ export class TcDataComponent implements OnInit {
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
-          this.wizard.goToNextStep();
+          this.outputTab.emit();
         },
         (error) => {
           console.log(error);
@@ -205,7 +206,7 @@ export class TcDataComponent implements OnInit {
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
-          this.wizard.goToNextStep();
+          this.outputTab.emit();
         },
         (error) => {
           console.log(error);
