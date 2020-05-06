@@ -50,7 +50,6 @@ export class LegalReviewDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('legal');
     this.claimTask();
     this.items = this.LegalForm.get('items') as FormArray;
     this.termConditions = this.LegalForm.get('termConditions') as FormArray;
@@ -83,7 +82,7 @@ export class LegalReviewDetailComponent implements OnInit {
     );
   }
 
-  claimTask()
+  async claimTask()
   {
     var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"]};
@@ -110,7 +109,6 @@ export class LegalReviewDetailComponent implements OnInit {
   }
   
   SaveData(formObj: any, isSubmit : boolean) {
-    console.log('masuk save');
     var mouObj = new MouCustLglReviewObj();
     for (let index = 0; index < this.responseRefMasterObj.length; index++) {
       var tempMouObj = {
