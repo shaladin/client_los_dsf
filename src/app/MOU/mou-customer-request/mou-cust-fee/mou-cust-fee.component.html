@@ -29,7 +29,8 @@
         <tr *ngFor="let item of mouCustFeeList; let i = index">
           <td style="text-align: left;">{{item.FeeName}}</td>
           <td style="text-align: left;">{{item.FeeTypeView}}</td>
-          <td style="text-align: left;">{{item.FeeAmt}}</td>
+          <td style="text-align: left;" *ngIf="item.FeeType == 'AMT'">{{item.FeeAmt | currency : "USD" : ""}}</td>
+          <td style="text-align: left;" *ngIf="item.FeeType == 'PRCNT'">{{item.FeeAmt}} %</td>
           <td style="text-align: center;">
             <a (click)="deleteMouCustFee(item.MouCustFeeId, i)">
               <i class="fas fa-trash"></i>
