@@ -5,7 +5,8 @@
         <div class="card-header header-title">
           <div class="row">
             <div class="col-md-8">
-              <h4 class="card-title" id="horz-layout-colored-controls" translate> Application View
+              <h4 class="card-title" id="horz-layout-colored-controls" translate>
+                Application View
               </h4>
             </div>
           </div>
@@ -16,14 +17,17 @@
           <mat-tab-group>
             <mat-tab label="Customer">
               <ng-template matTabContent>
+                <app-view-app-cust-data-personal [appId]="AppId" *ngIf="CustType=='PERSONAL'"></app-view-app-cust-data-personal>
+                <app-view-app-cust-data-company [appId]="AppId" *ngIf="CustType=='COMPANY'"></app-view-app-cust-data-company>
               </ng-template>
             </mat-tab>
 
             <mat-tab label="Guarantor">
               <ng-template matTabContent>
+                <app-guarantor [AppId]="AppId"></app-guarantor>
               </ng-template>
             </mat-tab>
-            
+
             <mat-tab label="Referantor">
               <ng-template matTabContent>
                 <app-tab-referantor [appId]="AppId"></app-tab-referantor>
@@ -32,7 +36,7 @@
 
             <mat-tab label="Application">
               <ng-template matTabContent>
-                  <!-- <app-tab-application [appId]="AppId"></app-tab-application> -->
+                <app-tab-application [appId]="AppId"></app-tab-application>
               </ng-template>
             </mat-tab>
 
@@ -50,6 +54,7 @@
 
             <mat-tab label="Life Insurance">
               <ng-template matTabContent>
+                <app-life-insurance [AppId]="AppId"></app-life-insurance>
               </ng-template>
             </mat-tab>
 
@@ -61,6 +66,7 @@
 
             <mat-tab label="TC">
               <ng-template matTabContent>
+                <app-app-tc [AppId]="AppId"></app-app-tc>
               </ng-template>
             </mat-tab>
 
@@ -84,11 +90,13 @@
 
             <mat-tab label="Fraud Detection Result">
               <ng-template matTabContent>
+                <app-view-fraud-detection-result [appId]="AppId" [mrCustTypeCode]="CustType"></app-view-fraud-detection-result>
               </ng-template>
             </mat-tab>
 
             <mat-tab label="Deviation">
               <ng-template matTabContent>
+                <app-tab-deviation [AppId]="AppId" [Type]='View'></app-tab-deviation>
               </ng-template>
             </mat-tab>
 

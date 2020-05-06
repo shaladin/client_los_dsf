@@ -47,14 +47,16 @@ export class TabCommissionComponent implements OnInit {
       AppId: this.appId
     };
 
-    await this.http.post(AdInsConstant.GetAppCommissionDataDetailByAppId, obj).toPromise().then(
+    var url = AdInsConstant.GetAppCommissionDataDetailByAppId;
+
+    await this.http.post(url, obj).toPromise().then(
       (response) => {
-        console.log(response);
+        // console.log(response);
         var tempResponse = response[AdInsConstant.ReturnObj];
-        console.log(tempResponse);
+        // console.log(tempResponse);
         for(var i=0;i<tempResponse.length;i++){
           var tempObj = tempResponse[i];
-          console.log(tempObj);
+          // console.log(tempObj);
           tempObj.ListappCommissionDObj.sort((a, b) => a.SeqNo - b.SeqNo);
           if(tempObj.MrCommissionRecipientTypeCode == AdInsConstant.CommissionReceipientTypeCodeSupplier)
             this.ListSupplData.push(tempObj);
@@ -77,7 +79,7 @@ export class TabCommissionComponent implements OnInit {
         this.ReferantorData["title"]=AdInsConstant.TitleReferantor;
         this.ReferantorData["content"]=AdInsConstant.ContentReferantor;
         this.ReferantorData["listData"]=this.ListReferantorData;
-        console.log(this.SummaryData);
+        // console.log(this.SummaryData);
         // console.log(this.SupplData);
         // console.log(this.SupplEmpData);
         // console.log(this.ReferantorData);

@@ -19,20 +19,33 @@ import { ViewAssetDataComponent } from "../sharing-component/view-app-component/
 import { TabApplicationComponent } from "../sharing-component/view-app-component/tab-application/tab-application.component";
 import { UcviewgenericModule } from "@adins/ucviewgeneric";
 import { TabAnalysisResultComponent } from "../sharing-component/view-app-component/tab-analysis-result/tab-analysis-result.component";
+import { ViewAppCustDataCompanyComponent } from "../sharing-component/view-app-component/view-app-cust-data-company/view-app-cust-data-company.component";
+import { ViewAppCustDataPersonalComponent } from "../sharing-component/view-app-component/view-app-cust-data-personal/view-app-cust-data-personal.component";
+import { ViewInsuranceComponent } from "../sharing-component/view-app-component/view-insurance/view-insurance.component";
+import { TabDeviationComponent } from "../business-process/credit-process/credit-investigation/component/tab-deviation/tab-deviation.component";
+import { ViewFraudDetectionResultComponent } from "../business-process/credit-process/credit-investigation/component/view-fraud-detection-result/view-fraud-detection-result.component";
+import { CreditProcessSharingModule } from "../business-process/credit-process/credit-process.module";
+import { ViewSharingComponentModule } from "../sharing-component/view-app-component/view-sharing-component.module";
 
 @NgModule({
+  exports: [
+  ],
   imports: [
     NapViewRoutingModule,
     CommonModule,
     ViewMainInfoComponentModule,
     ViewAppComponentModule,
     MatTabsModule,
+    UcSubsectionModule,
+    UcviewgenericModule,
     ArchwizardModule,
-    NgbModule
+    NgbModule,
+    CreditProcessSharingModule,
+    ViewSharingComponentModule
   ],
   declarations: [
     AgreementViewContainerComponent,
-    ApplicationViewComponent,
-  ]
+    ApplicationViewComponent
+  ],
 })
 export class NapViewModule { }
