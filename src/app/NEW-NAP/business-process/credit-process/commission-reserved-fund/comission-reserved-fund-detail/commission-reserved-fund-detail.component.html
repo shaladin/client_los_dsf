@@ -2,22 +2,25 @@
   <div class="card">
     <lib-ucviewgeneric [viewInput]="viewProdMainInfoObj"> </lib-ucviewgeneric>
 
-    <span *ngIf='show'>
-      <div class="class=form-group row adins-required">
-        <label class="col-md-3 adInsLabel">Return Notes </label>
-        <div class="col-md-3">
-          <textarea class="form-control adInsInput width-75-per" formControlName="ReturnHandlingNotes">
-              <lib-uc-show-errors  [control]="HandlingForm.controls.ReturnHandlingNotes" [submit]="enjiForm.submitted">
-              </lib-uc-show-errors >
-          </textarea>
+    <span *ngIf="show">
+      <form class="form form-horizontal" [formGroup]="HandlingForm" #enjiForm="ngForm">
+        <div class="class=form-group row adins-required">
+          <label class="col-md-3 adInsLabel">Return Notes </label>
+          <div class="col-md-3">
+            <textarea class="form-control adInsInput width-75-per" formControlName="ReturnHandlingNotes">
+            </textarea>
+            <lib-uc-show-errors  [control]="HandlingForm.controls.ReturnHandlingNotes" [submit]="enjiForm.submitted">
+            </lib-uc-show-errors >
+          </div>
+          <label class="col-md-3 adInsLabel">Return Execution Notes </label>
+          <div class="col-md-3">
+            <textarea class="form-control adInsInput width-75-per" formControlName="ReturnHandlingExecNotes">
+            </textarea>
+            <lib-uc-show-errors  [control]="HandlingForm.controls.ReturnHandlingExecNotes" [submit]="enjiForm.submitted">
+            </lib-uc-show-errors>
+          </div>
         </div>
-        <label class="col-md-3 adInsLabel">Return Execution Notes </label>
-        <div class="col-md-3">
-          <textarea class="form-control adInsInput width-75-per" formControlName="ReturnHandlingExecNotes">
-              <lib-uc-show-errors  [control]="HandlingForm.controls.ReturnHandlingExecNotes" [submit]="enjiForm.submitted">
-          </textarea>
-        </div>
-      </div>
+      </form>
     </span>
 
     <aw-wizard #wizard navBarLayout="large-empty-symbols" [defaultStepIndex]="0">

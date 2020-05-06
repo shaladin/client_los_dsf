@@ -21,8 +21,10 @@ import { ViewFinancialComponent } from "./view-financial/view-financial.componen
 import { AppInsuranceComponent } from './app-insurance/app-insurance.component';
 import { AppInsuranceDetailComponent } from './app-insurance/app-insurance-detail/app-insurance-detail.component';
 import { ViewSharingComponentModule } from "./view-sharing-component.module";
-import { ViewAppCustDataCompanyComponent } from "./view-app-cust-data-company/view-app-cust-data-company.component";
-import { ViewAppCustDataPersonalComponent } from "./view-app-cust-data-personal/view-app-cust-data-personal.component";
+import { UcviewgenericModule } from "@adins/ucviewgeneric";
+import { UcSubsectionModule } from "@adins/uc-subsection";
+import { ApprovalHistComponent } from './approval-hist/approval-hist.component';
+import { UcapprovalhistModule  } from '@adins/ucapprovalhist';
 
 @NgModule({
   exports: [
@@ -39,13 +41,14 @@ import { ViewAppCustDataPersonalComponent } from "./view-app-cust-data-personal/
     TabApplicationComponent,
     LifeInsuranceComponent,
     AppTcComponent,
-    //ViewAppCustDataPersonalComponent,
-    //ViewAppCustDataCompanyComponent
   ],
   imports: [
     CommonModule,
     AdInsModule,
     ViewSharingComponentModule,
+    UcviewgenericModule,
+    UcSubsectionModule,
+    UcapprovalhistModule
   ],
   declarations: [
     InvoiceDataFctrComponent,
@@ -63,11 +66,10 @@ import { ViewAppCustDataPersonalComponent } from "./view-app-cust-data-personal/
     TabAnalysisResultComponent,
     AppAssetDataComponent,
     AppAssetDataDetailComponent,
+    ApprovalHistComponent,
     ViewFinancialComponent,
     AppInsuranceComponent,
-    AppInsuranceDetailComponent,
-    //ViewAppCustDataPersonalComponent,
-    //ViewAppCustDataCompanyComponent
+    AppInsuranceDetailComponent
   ],
   providers: [
     NGXToastrService

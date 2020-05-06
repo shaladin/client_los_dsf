@@ -42,13 +42,10 @@ import { TeleVerifDetailComponent } from './tele-verif/tele-verif-detail/tele-ve
 import { LeadInputLeadDataComponent } from "./lead-input/lead-input-lead-data/lead-input-lead-data.component";
 import { MatRadioModule } from "@angular/material";
 import { LeadUpdateComponent } from "./lead-update/lead-update.component";
-import { LeadUpdatePageComponent } from "./lead-update/lead-update-page/lead-update-page.component";
-import { LeadUpdateMainInfoComponent } from "./lead-update/lead-update-main-info/lead-update-main-info.component";
-import { LeadUpdateCustDataComponent } from "./lead-update/lead-update-cust-data/lead-update-cust-data.component";
-import { LeadUpdateLeadDataComponent } from "./lead-update/lead-update-lead-data/lead-update-lead-data.component";
 import { NgxCurrencyModule } from "ngx-currency";
 import { CustJobDataComponent } from "app/NEW-NAP/sharing-component/input-nap-component/customer-data/component/job-data/cust-job-data.component";
 import { CustSocmedComponent } from "app/NEW-NAP/sharing-component/input-nap-component/customer-data/component/socmed/cust-socmed.component";
+import { UcinputnumberModule } from "@adins/ucinputnumber";
 export const customCurrencyMaskConfig = {     
   align: "left",     
   allowNegative: true,     
@@ -83,7 +80,8 @@ export const customCurrencyMaskConfig = {
     SharingComponentModule,
     ArchwizardModule,
     MatRadioModule,
-    NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
+    NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
+    UcinputnumberModule
   ],
   declarations: [
     MainInfoComponent,
@@ -111,10 +109,6 @@ export const customCurrencyMaskConfig = {
     LeadInputLeadDataComponent,
     LeadViewHeaderComponent,
     LeadUpdateComponent,
-    LeadUpdatePageComponent,
-    LeadUpdateMainInfoComponent,
-    LeadUpdateCustDataComponent,
-    LeadUpdateLeadDataComponent,
     // ArchwizardModule, 
     ViewLeadDataComponent, 
     FraudVerifPagingComponent, 

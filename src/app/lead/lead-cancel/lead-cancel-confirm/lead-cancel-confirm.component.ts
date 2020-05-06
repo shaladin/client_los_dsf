@@ -50,8 +50,6 @@ export class LeadCancelConfirmComponent implements OnInit {
         WfTaskListIds = params['WfTaskListIds'];
         this.tempWfTaskListArr = WfTaskListIds.split(',');
       }
-      
-      console.log(this.tempWfTaskListArr);
     });
     var tempObj = { 'ListLeadId': tempLeadArr };
     this.http.post(this.GetListLeadForLeadCancelByListLeadId, tempObj).subscribe(

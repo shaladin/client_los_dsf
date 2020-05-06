@@ -145,7 +145,7 @@ export class InsuranceDataComponent implements OnInit {
     this.http.post(AdInsConstant.AddEditInsuranceData, this.saveObj).subscribe(
       (response) => {
         console.log(response);
-        this.toastr.successMessage(response["message"]);
+        this.toastr.successMessage(response["Message"]);
         // this.wizard.goToNextStep();
           this.outputTab.emit();
       },

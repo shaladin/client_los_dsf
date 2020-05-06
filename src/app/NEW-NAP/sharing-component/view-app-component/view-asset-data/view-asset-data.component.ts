@@ -24,7 +24,7 @@ export class ViewAssetDataComponent implements OnInit {
   AppObj: any;
   AppAssetObj: any;
   totalRsvFund: number = 0;
-
+  totalHalfResponseAppAssetAttrObjs: number = 0;
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
 
     //this.route.queryParams.subscribe(params => {
@@ -52,7 +52,8 @@ export class ViewAssetDataComponent implements OnInit {
         console.log(response);
         this.AppAssetObj = response;
         console.log(response);
-
+        if(this.AppAssetObj.ResponseAppAssetAttrObjs != null)
+          this.totalHalfResponseAppAssetAttrObjs = Math.ceil(this.AppAssetObj.ResponseAppAssetAttrObjs.length/2);
       },
       (error) => {
         console.log(error);
