@@ -72,7 +72,7 @@
         }
     ],
     "querystring": {
-        "select": "SELECT ac.MR_CUST_TYPE_CODE as CustTypeCode, a.ORI_OFFICE_NAME AS OfficeName, a.APP_NO AS AppNo, ac.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.APP_ID AS AppId",
+        "select": "SELECT ac.MR_CUST_TYPE_CODE as CustTypeCode, a.ORI_OFFICE_NAME AS OfficeName, a.APP_NO AS AppNo, ac.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.APP_ID AS AppId, ac.IS_EXISTING_CUST AS IsExistingCust",
         "from": "FROM dbo.APP a WITH(NOLOCK) JOIN dbo.APP_CUST ac WITH(NOLOCK) ON a.APP_ID = ac.APP_ID"
     },
     "bodyList": [
@@ -109,6 +109,11 @@
                                     "property": "CustTypeCode",
                                     "value": "PERSONAL",
                                     "restriction": "EQ"
+                                },
+                                {
+                                    "property": "IsExistingCust",
+                                    "value": "0",
+                                    "restriction": "EQ"
                                 }
                             ],
                             "result": {
@@ -128,13 +133,70 @@
                             "conditions": [
                                 {
                                     "property": "CustTypeCode",
+                                    "value": "PERSONAL",
+                                    "restriction": "EQ"
+                                },
+                                {
+                                    "property": "IsExistingCust",
+                                    "value": "1",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "../ApplicantExistingData/Personal",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "AppId",
+                                        "property": "AppId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "property": "CustTypeCode",
                                     "value": "COMPANY",
+                                    "restriction": "EQ"
+                                },
+                                {
+                                    "property": "IsExistingCust",
+                                    "value": "0",
                                     "restriction": "EQ"
                                 }
                             ],
                             "result": {
                                 "type": "url",
                                 "path": "../Company",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "AppId",
+                                        "property": "AppId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "property": "CustTypeCode",
+                                    "value": "COMPANY",
+                                    "restriction": "EQ"
+                                },
+                                {
+                                    "property": "IsExistingCust",
+                                    "value": "1",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "../ApplicantExistingData/Company",
                                 "icon": "ft-edit-2",
                                 "param": [
                                     {

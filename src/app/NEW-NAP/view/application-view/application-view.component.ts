@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { AdInsConstant } from '../../../shared/AdInstConstant';
 
 @Component({
   selector: 'app-application-view',
@@ -13,8 +14,10 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 export class ApplicationViewComponent implements OnInit {
   AppId: number;
   arrValue = [];
-  
-  constructor(private route: ActivatedRoute) { 
+  CustType: string = "";
+  AppCustObj: any;
+
+  constructor(private route: ActivatedRoute, private http: HttpClient) { 
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
     })
@@ -22,7 +25,20 @@ export class ApplicationViewComponent implements OnInit {
 
   ngOnInit() {
     this.arrValue.push(this.AppId);
+    this.GetAppCust();
   }
 
+  GetAppCust() {
+    var appObj = {
+      AppId: this.AppId,
+    };
+    this.http.post(AdInsConstant.GetAppCustByAppId, appObj).subscribe(
+      (response) => {
+        this.AppCustObj = response;
+        console.log(response);
+        this.CustType = this.AppCustObj.MrCustTypeCode;
+      }
+    );
+  }
 
 }

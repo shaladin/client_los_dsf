@@ -35,6 +35,10 @@ import { UcapprovalhistModule  } from '@adins/ucapprovalhist';
     TabAnalysisResultComponent,
     ViewAssetDataComponent,
     ViewPhoneVerifComponent,
+    GuarantorComponent,
+    TabApplicationComponent,
+    LifeInsuranceComponent,
+    AppTcComponent,
   ],
   imports: [
     CommonModule,
