@@ -67,7 +67,7 @@ export class FraudVerifPageComponent implements OnInit {
 
     this.leadCustObj = new LeadCustObj();
     this.leadCustObj.LeadId = this.LeadId;
-    this.leadCustPersonalObj = new LeadCustPersonalObj();  
+    this.leadCustPersonalObj = new LeadCustPersonalObj();
     this.http.post(this.GetLeadCustByLeadIdUrl, this.leadCustObj).subscribe(
       (response) => {
         this.tempLeadCustObj = response;
@@ -157,5 +157,12 @@ export class FraudVerifPageComponent implements OnInit {
       });
   }
 
-   
+  async claimTask(){
+    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"]};
+    console.log(wfClaimObj);
+    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+      (response) => {
+      });
+  }
 }

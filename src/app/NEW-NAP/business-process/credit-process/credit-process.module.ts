@@ -41,6 +41,10 @@ import { ViewSharingComponentModule } from "app/NEW-NAP/sharing-component/view-a
 import { UcviewgenericModule } from "@adins/ucviewgeneric";
 
 @NgModule({
+  exports: [
+    ViewFraudDetectionResultComponent,
+    TabDeviationComponent
+  ],
   imports: [
     CommonModule,
     CreditProcessSharingRoutingModule,

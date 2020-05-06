@@ -93,7 +93,7 @@ export class MouReviewGeneralComponent implements OnInit {
       })
   }
 
-  claimTask() {
+  async claimTask() {
     var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"] };
     console.log(wfClaimObj);

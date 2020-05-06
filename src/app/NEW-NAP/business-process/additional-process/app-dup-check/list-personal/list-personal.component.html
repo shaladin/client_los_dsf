@@ -11,32 +11,32 @@
 
             <div class="form-group row">
               <label class="col-md-3 adInsLabel">Customer No</label>
-              <label class="col-md-3 adInsLabel">{{AppCustObj.CustNo}} </label>
+              <label class="col-md-3 adInsLabel">{{AppCustObj?.CustNo}} </label>
             </div>
 
             <div class="form-group row">
               <label class="col-md-3 adInsLabel">NPWP</label>
-              <label class="col-md-3 adInsLabel">{{AppCustObj.TaxIdNo}} </label>
+              <label class="col-md-3 adInsLabel">{{AppCustObj?.TaxIdNo}} </label>
             </div>
 
             <div class="form-group row">
               <label class="col-md-3 adInsLabel">Customer Name</label>
-              <label class="col-md-3 adInsLabel">{{AppCustObj.CustName}} </label>
+              <label class="col-md-3 adInsLabel">{{AppCustObj?.CustName}} </label>
             </div>
 
             <div class="form-group row">
               <label class="col-md-3 adInsLabel">ID No</label>
-              <label class="col-md-3 adInsLabel">{{AppCustObj.IdNo}} </label>
+              <label class="col-md-3 adInsLabel">{{AppCustObj?.IdNo}} </label>
             </div>
 
             <div class="form-group row">
               <label class="col-md-3 adInsLabel">Gender</label>
-              <label class="col-md-3 adInsLabel">{{AppCustPersonalObj.MrGenderCode}} </label>
+              <label class="col-md-3 adInsLabel">{{AppCustPersonalObj?.MrGenderCode}} </label>
             </div>
 
             <div class="form-group row">
               <label class="col-md-3 adInsLabel">Birth Place / Date</label>
-              <label class="col-md-3 adInsLabel">{{AppCustPersonalObj.BirthPlace}} / {{AppCustPersonalObj.BirthDt}} </label>
+              <label class="col-md-3 adInsLabel">{{AppCustPersonalObj?.BirthPlace}} / {{AppCustPersonalObj?.BirthDt}} </label>
             </div>
 
           </div>
@@ -46,36 +46,34 @@
 
             <div class="form-group row">
               <label class="col-md-3 adInsLabel">Address</label>
-              <label class="col-md-3 adInsLabel">{{AppCustAddrObj.Addr}} </label>
+              <label class="col-md-3 adInsLabel">{{AppCustAddrObj?.Addr}} </label>
             </div>
 
             <div class="form-group row">
               <label class="col-md-3 adInsLabel">RT / RW</label>
-              <label class="col-md-2 adInsLabel">{{AppCustAddrObj.AreaCode4}} </label>
-              <label class="col-md-1 adInsLabel">/ </label>
-              <label class="col-md-2 adInsLabel">{{AppCustAddrObj.AreaCode3}} </label>
+              <label class="col-md-3 adInsLabel">{{AppCustAddrObj?.AreaCode4}} / {{AppCustAddrObj?.AreaCode3}} </label>
             </div>
 
             <div class="form-group row">
               <label class="col-md-3 adInsLabel">Kelurahan</label>
-              <label class="col-md-3 adInsLabel">{{AppCustAddrObj.AreaCode2}} </label>
+              <label class="col-md-3 adInsLabel">{{AppCustAddrObj?.AreaCode2}} </label>
             </div>
 
             <div class="form-group row">
               <label class="col-md-3 adInsLabel">Kecamatan</label>
-              <label class="col-md-3 adInsLabel">{{AppCustAddrObj.AreaCode1}} </label>
+              <label class="col-md-3 adInsLabel">{{AppCustAddrObj?.AreaCode1}} </label>
             </div>
 
             <div class="form-group row">
               <label class="col-md-3 adInsLabel">City </label>
-              <label class="col-md-3 adInsLabel">{{AppCustAddrObj.City}} </label>
+              <label class="col-md-3 adInsLabel">{{AppCustAddrObj?.City}} </label>
             </div>
 
           </div>
 
-          <div class="form-actions right">
-            <button type="button" class="btn btn-raised btn-primary mr-1" [routerLink]="['/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Personal']" 
-            [queryParams]="{custType:'P',appId:AppId}" translate> New Customer
+          <div class="pull-right">
+            <button type="button" class="btn btn-raised btn-primary mr-1" (click)="NewCustomer()" translate> 
+              New Customer
             </button>
           </div>
 
