@@ -211,13 +211,9 @@
                             ],
                             "result": {
                                 "type": "url",
-                                "path": "/Lead/LeadInput/Page",
+                                "path": "/Lead/LeadInput/MainInfo",
                                 "icon": "ft-edit-2",
                                 "param": [
-                                    {
-                                        "type": "TaskListId",
-                                        "property": "TaskListId"
-                                    },
                                     {
                                         "type": "LeadId",
                                         "property": "LeadId"
@@ -228,7 +224,7 @@
                                     },
                                     {
                                         "type": "mode",
-                                        "property": "edit"
+                                        "property": "update"
                                     }
                                 ]
                             },
@@ -245,13 +241,9 @@
                             ],
                             "result": {
                                 "type": "url",
-                                "path": "/Lead/LeadInput/Page",
+                                "path": "/Lead/LeadInput/MainInfo",
                                 "icon": "ft-edit-2",
                                 "param": [
-                                    {
-                                        "type": "TaskListId",
-                                        "property": "TaskListId"
-                                    },
                                     {
                                         "type": "LeadId",
                                         "property": "LeadId"
@@ -262,7 +254,7 @@
                                     },
                                     {
                                         "type": "mode",
-                                        "property": "edit"
+                                        "property": "update"
                                     }
                                 ]
                             },

@@ -4,8 +4,8 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
-import { AppWizardObj } from 'app/shared/model/App/AppWizard.Model';
 import { FormBuilder } from '@angular/forms';
+import Stepper from 'bs-stepper';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -14,26 +14,27 @@ import { FormBuilder } from '@angular/forms';
 })
 export class NapAddDetailComponent implements OnInit {
 
+  private stepper: Stepper;
+  AppStepIndex: number = 1;
   appId: number;
   mode: string;
   viewProdMainInfoObj: string;
   viewReturnInfoObj: string = "";
   NapObj: AppObj;
-  AppStepIndex: number;
   IsMultiAsset: string;
   ListAsset: any;
 
   AppStep = {
-    "NEW": 0,
-    "CUST": 0,
-    "GUAR": 1,
-    "REF": 2,
-    "APP": 3,
-    "ASSET": 4,
-    "INS": 5,
-    "LFI": 6,
-    "FIN": 7,
-    "TC": 8,
+    "NEW": 1,
+    "CUST": 1,
+    "GUAR": 2,
+    "REF": 3,
+    "APP": 4,
+    "ASSET": 5,
+    "INS": 6,
+    "LFI": 7,
+    "FIN": 8,
+    "TC": 9,
   };
 
   ResponseReturnInfoObj;
@@ -64,12 +65,24 @@ export class NapAddDetailComponent implements OnInit {
     this.NapObj.AppId = this.appId;
     this.http.post(AdInsConstant.GetAppById, this.NapObj).subscribe(
       (response: AppObj) => {
-        this.NapObj = response;
+        if (response) {
+          this.NapObj = response;
+          this.AppStepIndex = this.AppStep[response.AppCurrStep];
+          this.stepper.to(this.AppStepIndex);
+        }
+        else {
+          this.AppStepIndex = 0;
+        }
       },
       (error) => {
         console.log(error);
       }
     );
+
+    this.stepper = new Stepper(document.querySelector('#stepper1'), {
+      linear: false,
+      animation: true
+    })
     this.MakeViewReturnInfoObj();
   }
 
@@ -114,7 +127,7 @@ export class NapAddDetailComponent implements OnInit {
     )
   }
 
-  EnterTab(AppStep) {
+  ChangeTab(AppStep) {
     // console.log(AppStep);
     switch (AppStep) {
       case AdInsConstant.AppStepCust:
@@ -150,11 +163,10 @@ export class NapAddDetailComponent implements OnInit {
     }
   }
 
-  // WizardNavigation(AppWizard : AppWizardObj){
-  //   console.log("WIZNAV")
-  //   this.AppStepIndex = this.AppStep[AppWizard.AppStep];
-  //   AppWizard.Wizard.goToNextStep();
-  // }
+  NextStep(Step) {
+    this.ChangeTab(Step);
+    this.stepper.next();
+  }
 
   LastStepHandler() {
     this.http.post(AdInsConstant.SubmitNAP, this.NapObj).subscribe(

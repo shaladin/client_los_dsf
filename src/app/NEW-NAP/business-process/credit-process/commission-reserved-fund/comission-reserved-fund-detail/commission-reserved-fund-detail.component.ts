@@ -15,9 +15,9 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 export class CommissionReservedFundDetailComponent implements OnInit {
 
   TaskId;
-  appId;
-  ReturnHandlingHId;
-  ReturnHandlingDId;
+  appId: number = 0;
+  ReturnHandlingHId: number = 0;
+  ReturnHandlingDId: number = 0;
   show : boolean = false;
 
   HandlingForm = this.fb.group({
