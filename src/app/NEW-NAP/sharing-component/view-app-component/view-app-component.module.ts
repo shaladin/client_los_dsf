@@ -21,6 +21,7 @@ import { ViewFinancialComponent } from "./view-financial/view-financial.componen
 import { AppInsuranceComponent } from './app-insurance/app-insurance.component';
 import { AppInsuranceDetailComponent } from './app-insurance/app-insurance-detail/app-insurance-detail.component';
 import { ViewSharingComponentModule } from "./view-sharing-component.module";
+import { ViewAppFraudVerificationComponent } from './view-app-fraud-verification/view-app-fraud-verification.component';
 
 @NgModule({
   exports: [
@@ -57,7 +58,8 @@ import { ViewSharingComponentModule } from "./view-sharing-component.module";
     AppAssetDataDetailComponent,
     ViewFinancialComponent,
     AppInsuranceComponent,
-    AppInsuranceDetailComponent
+    AppInsuranceDetailComponent,
+    ViewAppFraudVerificationComponent    
   ],
   providers: [
     NGXToastrService
