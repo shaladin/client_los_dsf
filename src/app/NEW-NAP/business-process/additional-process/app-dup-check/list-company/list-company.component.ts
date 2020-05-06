@@ -14,7 +14,8 @@ import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 })
 export class ListCompanyComponent implements OnInit {
 
-  AppId: any;
+  AppId: number;
+  WfTaskListId: number;
   FondationUrl = environment.FoundationR3Url;
   LOSUrl = environment.losUrl;
   GetCustomerDuplicateCheckUrl = this.FondationUrl + AdInsConstant.GetCustomerDuplicateCheck;
@@ -41,6 +42,9 @@ export class ListCompanyComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
         this.AppId = params['AppId'];
+      }
+      if (params['WfTaskListId'] != null) {
+        this.WfTaskListId = params['WfTaskListId'];
       }
     });
     //Get App Cust Data
@@ -138,7 +142,7 @@ export class ListCompanyComponent implements OnInit {
     "CustNo":item.CustNo};
     this.http.post(AdInsConstant.EditCustNoAppCust, AppDupCheckObj).subscribe(
       response => {
-        this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { queryParams: { "AppId": this.AppId } });
+        this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId } });
       },
       error => {
         console.log("error");
@@ -146,12 +150,11 @@ export class ListCompanyComponent implements OnInit {
   }
 
   NewCustomer(){
-    console.log("new customer");
     var AppDupCheckObj = {"AppId": this.AppId, 
     "CustNo": this.AppCustObj.CustNo, RowVersion: ""};
     this.http.post(AdInsConstant.EditCustNoAppCust, AppDupCheckObj).subscribe(
       (response) => {
-        this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { queryParams: { "AppId": this.AppId } });
+        this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId } });
       },
       (error) => {
         console.log(error);

@@ -15,7 +15,8 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 })
 export class ApplicantExistingDataCompanyComponent implements OnInit {
 
-  AppId: any;
+  AppId: number;
+  WfTaskListId: number;
   FondationUrl = environment.FoundationR3Url;
   LOSUrl = environment.losUrl;
   GetAppGuarantorDuplicateCheckUrl = this.LOSUrl + AdInsConstant.GetAppGuarantorDuplicateCheck;
@@ -57,6 +58,9 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
         this.AppId = params['AppId'];
+      }
+      if (params['WfTaskListId'] != null) {
+        this.WfTaskListId = params['WfTaskListId'];
       }
     });
     //Get App Cust Data
@@ -166,6 +170,8 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
     appDupCheckObj.AppGuarantorIds = this.listSelectedIdGuarantor;
     appDupCheckObj.AppCustCompanyMgmntShrholderIds = this.listSelectedIdShareholder;
     appDupCheckObj.CustNo = this.AppCustObj.CustNo;
+    appDupCheckObj.AppId = this.AppId;
+    appDupCheckObj.WfTaskListId = this.WfTaskListId;
 
     this.http.post(AdInsConstant.SubmitAppDupCheck, appDupCheckObj).subscribe(
       (response) => {

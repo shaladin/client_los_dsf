@@ -14,7 +14,8 @@ import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 })
 export class ListPersonalComponent implements OnInit {
 
-  AppId: any;
+  AppId: number;
+  WfTaskListId: number;
   FondationUrl = environment.FoundationR3Url;
   LOSUrl = environment.losUrl;
   GetCustomerDuplicateCheckUrl = this.FondationUrl + AdInsConstant.GetCustomerDuplicateCheck;
@@ -41,6 +42,9 @@ export class ListPersonalComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
         this.AppId = params['AppId'];
+      }
+      if (params['WfTaskListId'] != null) {
+        this.WfTaskListId = params['WfTaskListId'];
       }
     });
 
@@ -103,7 +107,7 @@ export class ListPersonalComponent implements OnInit {
     "CustNo":item.CustNo};
     this.http.post(AdInsConstant.EditCustNoAppCust, AppDupCheckObj).subscribe(
       response => {
-        this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Personal"], { queryParams: { "AppId": this.AppId } });
+        this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Personal"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId } });
       },
       error => {
         console.log("error");
@@ -115,13 +119,11 @@ export class ListPersonalComponent implements OnInit {
     "CustNo":this.AppCustObj.CustNo, RowVersion: ""};
     this.http.post(AdInsConstant.EditCustNoAppCust, AppDupCheckObj).subscribe(
       (response) => {
-        this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Personal"], { queryParams: { "AppId": this.AppId } });
+        this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Personal"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId } });
       },
       (error) => {
         console.log("error");
       });
-      this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Personal"], { queryParams: { "AppId": this.AppId } });
-
   }
 
 }
