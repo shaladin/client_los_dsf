@@ -1,10 +1,10 @@
 {
-    "title": "MOU Review",
+    "title": "MOU Inquiry",
     "exportExcel": false,
     "component": [
         {
             "type": "textbox",
-            "name": "MOU.MOU_CUST_NO",
+            "name": "MOU_CUST_NO",
             "id": "MouCustNoId",
             "value": "",
             "label": "MOU NO",
@@ -28,7 +28,7 @@
         },
         {
             "type": "textbox",
-            "name": "MC.CUST_NAME",
+            "name": "CUST_NAME",
             "id": "CustNameId",
             "value": "",
             "label": "CUSTOMER NAME",
@@ -36,7 +36,7 @@
         },
         {
             "type": "dropdown",
-            "name": "MOU.IS_REVOLVING",
+            "name": "IS_REVOLVING",
             "id": "IsRevolvingId",
             "label": "REVOLVING",
             "value": "",
@@ -60,7 +60,7 @@
         },
         {
             "type": "datepicker",
-            "name": "MC.MOU_CUST_DT",
+            "name": "MOU_CUST_DT",
             "id": "GreaterMouDtId",
             "value": "",
             "label": "MOU DATE FROM",
@@ -69,7 +69,7 @@
         },
         {
             "type": "datepicker",
-            "name": "MC.MOU_CUST_DT",
+            "name": "MOU_CUST_DT",
             "id": "LessMouDtId",
             "value": "",
             "label": "MOU DATE TO",
@@ -78,7 +78,7 @@
         },
         {
             "type": "textbox",
-            "name": "MC.PLAFOND_AMT",
+            "name": "PLAFOND_AMT",
             "id": "GreaterPlafondAmt",
             "value": "",
             "label": "PLAFOND AMOUNT FROM",
@@ -87,7 +87,7 @@
         },
         {
             "type": "textbox",
-            "name": "MC.PLAFOND_AMT",
+            "name": "PLAFOND_AMT",
             "id": "LessPlafondAmt",
             "value": "",
             "label": "PLAFOND AMOUNT TO",
@@ -97,7 +97,7 @@
         {
             "type": "dropdown",
             "datatype": "text",
-            "name": "MC.MOU_STAT",
+            "name": "MOU_STAT",
             "id": "StatusCode",
             "value": "",
             "placeholder": "Placeholder",
@@ -112,8 +112,8 @@
         }
     ],
     "querystring": {
-        "select": "SELECT MOU.MOU_CUST_NO AS MouCustNo, MOU.MOU_CUST_ID AS MouCustId, MOU.CUST_NAME AS CustName, MOU.MOU_CUST_DT AS MouCustDt, MOU.START_DT AS StartDt, MOU.END_DT AS EndDt, MOU.PLAFOND_AMT PlafondAmt, MOU.IS_REVOLVING AS IsRevolving, MOU.REF_NO AS RefNo, MOU.MR_MOU_TYPE_CODE AS MrMouTypeCode",
-        "from": "FROM dbo.MOU_CUST MOU WITH(NOLOCK)"
+        "select": "SELECT MOU_CUST_NO AS MouCustNo, MOU_CUST_ID AS MouCustId, CUST_NAME AS CustName, MOU_CUST_DT AS MouCustDt, START_DT AS StartDt, END_DT AS EndDt, PLAFOND_AMT PlafondAmt, IS_REVOLVING AS IsRevolving, REF_NO AS RefNo, MR_MOU_TYPE_CODE AS MrMouTypeCode, MOU_STAT AS MouStat",
+        "from": "FROM dbo.MOU_CUST WITH(NOLOCK)"
     },
     "headerList": [
         {
@@ -156,14 +156,20 @@
             "type": "sort",
             "position": "left",
             "label": "MOU Status",
-            "name": "RM_STAT.DESCR"
+            "name": "MOU_STAT"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "MOU Type",
+            "name": "MR_MOU_TYPE_CODE"
         }
     ],
     "bodyList": [
         {
             "type": "link",
             "position": "center",
-            "property": "mouCustNo",
+            "property": "MouCustNo",
             "path": "/Mou/Cust/View",
             "target": "_blank",
             "param": [
@@ -181,7 +187,7 @@
         {
             "type": "date",
             "position": "center",
-            "property": "mouCustDt"
+            "property": "MouCustDt"
         },
         {
             "type": "date",
@@ -201,6 +207,11 @@
         {
             "type": "text",
             "position": "center",
+            "property": "MouStat"
+        },
+        {
+            "type": "text",
+            "position": "left",
             "property": "MrMouTypeCode"
         }
     ]
