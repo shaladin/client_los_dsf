@@ -10,6 +10,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueModel';
 import { RequestAppCrdInvstgObj } from 'app/shared/model/AppCrdInvstg/RequestAppCrdInvstgObj.Model';
 import { AppCrdInvstgDObj } from 'app/shared/model/AppCrdInvstg/AppCrdInvstgDObj.Model';
+import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 
 @Component({
   selector: 'app-credit-investigation-detail',
@@ -19,6 +20,7 @@ import { AppCrdInvstgDObj } from 'app/shared/model/AppCrdInvstg/AppCrdInvstgDObj
 export class CreditInvestigationDetailComponent implements OnInit {
 
   appId: number;
+  wfTaskListId: number;
   mrCustTypeCode: string;
   viewObj: string;
   arrValue = [];
@@ -41,9 +43,13 @@ export class CreditInvestigationDetailComponent implements OnInit {
       if (params["MrCustTypeCode"] != null) {
         this.mrCustTypeCode = params["MrCustTypeCode"];
       }
+      if (params["WfTaskListId"] != null) {
+        this.wfTaskListId = params["WfTaskListId"];
+      }
     });
   }
   async ngOnInit() : Promise<void> {
+    this.ClaimTask();
     this.arrValue.push(this.appId);
     this.viewObj = "./assets/ucviewgeneric/viewCreditInvestigationInfo.json";
     await this.bindAnalysisItemObj();
@@ -69,6 +75,7 @@ export class CreditInvestigationDetailComponent implements OnInit {
       reqAppCrdInvstg.AppCrdInvstgHObj.AppCrdInvstgDObjs.push(appCrdInvstgD);
     }
 
+    reqAppCrdInvstg.WfTaskListId = this.wfTaskListId;
     this.http.post(AdInsConstant.AddAppCrdInvstg, reqAppCrdInvstg).subscribe(
       (response) => {
         console.log(response);
@@ -109,5 +116,17 @@ export class CreditInvestigationDetailComponent implements OnInit {
         this.analysisItemObj = response["ReturnObject"];
       }
     );
+  }
+
+  ClaimTask(){
+    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var wfClaimObj = new ClaimWorkflowObj();
+    wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
+    wfClaimObj.pUserId = currentUserContext["UserName"];
+
+    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+      (response) => {
+    
+      });
   }
 }

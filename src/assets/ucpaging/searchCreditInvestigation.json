@@ -38,16 +38,52 @@
             "value": "",
             "label": "PROD OFFERING NAME",
             "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "name": "WTL.CLAIM_STAT",
+            "id": "ActiveStatusId",
+            "label": "TASK CLAIM STATUS",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": false,
+            "isSelectOne": false,
+            "items": [
+                {
+                    "key": "CLAIMED",
+                    "value": "CLAIMED"
+                },
+                {
+                    "key": "UNCLAIMED",
+                    "value": "UNCLAIMED"
+                }
+            ],
+            "itemsUrl": []
+        },
+        {
+            "type": "textbox",
+            "name": "WTL.USERNAME",
+            "id": "claimById",
+            "value": "",
+            "label": "CLAIM BY",
+            "placeholder": "Placeholder"
         }
     ],
     "querystring": {
-        "select": "SELECT A.ORI_OFFICE_NAME AS OfficeName, A.APP_NO AS AppNo, AC.CUST_NAME AS CustName, A.PROD_OFFERING_NAME AS ProdOfferingName, A.APP_ID AS AppId, AC.MR_CUST_TYPE_CODE AS MrCustTypeCode",
-        "from": "FROM dbo.APP A WITH(NOLOCK) JOIN dbo.APP_CUST AC WITH(NOLOCK) ON A.APP_ID = AC.APP_ID"
+        "select": "SELECT A.ORI_OFFICE_NAME AS OfficeName, A.APP_NO AS AppNo, AC.CUST_NAME AS CustName, A.PROD_OFFERING_NAME AS ProdOfferingName, A.APP_ID AS AppId, AC.MR_CUST_TYPE_CODE AS MrCustTypeCode, WTL.USERNAME AS ClaimBy, WTL.WF_TASK_LIST_ID AS WfTaskListId",
+        "from": "FROM dbo.APP A WITH(NOLOCK) JOIN dbo.APP_CUST AC WITH(NOLOCK) ON A.APP_ID = AC.APP_ID JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON a.APP_NO = WTL.TRANSACTION_CODE AND WTL.ACT_CODE = 'CRD_INV'",
+        "where": "WHERE WTL.END_EXECUTING_DATE IS NULL"
     },
     "headerList": [
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
+            "label": "Claim By",
+            "name": "ClaimBy"
+        },
+        {
+            "type": "sort",
+            "position": "left",
             "label": "OFFICE NAME",
             "name": "A.ORI_OFFICE_NAME"
         },
@@ -59,13 +95,13 @@
         },
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "CUSTOMER NAME",
             "name": "AC.CUST_NAME"
         },
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "PROD OFFERING NAME",
             "name": "A.PROD_OFFERING_NAME"
         },
@@ -78,7 +114,12 @@
     "bodyList": [
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
+            "property": "ClaimBy"
+        },
+        {
+            "type": "text",
+            "position": "left",
             "property": "OfficeName"
         },
         {
@@ -88,12 +129,12 @@
         },
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "CustName"
         },
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "ProdOfferingName"
         },
         {
@@ -101,16 +142,67 @@
             "position": "center",
             "action": [
                 {
-                    "type": "edit",
-                    "path": "../Detail",
-                    "param": [
+                    "type": "switch",
+                    "case": [
                         {
-                            "type": "AppId",
-                            "property": "AppId"
+                            "conditions": [
+                                {
+                                    "isUser": true,
+                                    "property": "ClaimBy",
+                                    "value": "",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "../Detail",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "AppId",
+                                        "property": "AppId"
+                                    },
+                                    {
+                                        "type": "MrCustTypeCode",
+                                        "property": "MrCustTypeCode"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "WfTaskListId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
                         },
                         {
-                            "type": "MrCustTypeCode",
-                            "property": "MrCustTypeCode"
+                            "conditions": [
+                                {
+                                    "isUser": false,
+                                    "property": "ClaimBy",
+                                    "value": "",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "../Detail",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "AppId",
+                                        "property": "AppId"
+                                    },
+                                    {
+                                        "type": "MrCustTypeCode",
+                                        "property": "MrCustTypeCode"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "WfTaskListId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
                         }
                     ]
                 }

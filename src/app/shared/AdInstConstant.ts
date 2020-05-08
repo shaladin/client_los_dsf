@@ -35,6 +35,7 @@ export class AdInsConstant {
   public static AppStepPGLV = "PGLV";
   public static AppStepCSR = "CSR";
   public static FL4W = "FL4W";
+  public static CF4W = "CF4W";
 
   public static GENERAL = "GENERAL";
   public static FACTORING = "FACTORING";
@@ -1014,6 +1015,7 @@ export class AdInsConstant {
 
   // Workflow Engine
   public static ClaimTask = environment.FoundationR3Url + "/Workflow/ClaimTask";
+  public static ClaimTaskNap = environment.losUrl + "/Application/ClaimTaskNap";
 
   //Application Data
   public static SaveApp = environment.losUrl + "/ApplicationData/SaveApp"
@@ -1042,6 +1044,8 @@ export class AdInsConstant {
   public static RequestReturnTask = environment.losUrl + "/ReturnHandlingD/RequestReturnTask";
   public static DeleteReturnHandlingD = environment.losUrl + "/ReturnHandlingD/DeleteReturnHandlingD";
   public static ResumeReturnHandling = environment.losUrl + "/ReturnHandlingH/ResumeReturnHandling";
+  // public static Test = environment.losUrl + "/ReturnHandlingD/Test";
+
   public static ReturnHandlingEditApp = "RTN_EDIT_APP";
   public static GetReturnHandlingDByReturnHandlingDId = environment.losUrl + "/ReturnHandlingD/GetReturnHandlingDByReturnHandlingDId";
 

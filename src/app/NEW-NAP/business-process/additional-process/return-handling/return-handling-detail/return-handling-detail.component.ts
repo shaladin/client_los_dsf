@@ -8,6 +8,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueModel';
 import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
+import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 
 @Component({
   selector: 'app-return-handling-detail',
@@ -49,6 +50,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
   }
 
   async ngOnInit() : Promise<void> {
+    this.ClaimTask();
     this.arrValue.push(this.appId);
     await this.bindTaskObj();
     await this.getReturnHandling();
@@ -70,6 +72,23 @@ export class ReturnHandlingDetailComponent implements OnInit {
       }
     );
   }
+
+  // Test(){
+  //   var reqObj = new ReturnHandlingHObj();
+  //   reqObj.WfTaskListId = this.wfTaskListId;
+  //   reqObj.ReturnHandlingHId = this.returnHandlingHId;
+
+  //   this.http.post(AdInsConstant.Test, reqObj).subscribe(
+  //     (response) => {
+  //       console.log(response);
+  //       this.toastr.successMessage(response["message"]);
+  //       this.router.navigate(["../ReturnHandling/Paging"]);
+  //     },
+  //     (error) => {
+  //       console.log(error);
+  //     }
+  //   );
+  // }
 
   AddTask(){
     var reqObj = new ReturnHandlingDObj();
@@ -159,5 +178,17 @@ export class ReturnHandlingDetailComponent implements OnInit {
         }
       }
     );
+  }
+
+  ClaimTask(){
+    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var wfClaimObj = new ClaimWorkflowObj();
+    wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
+    wfClaimObj.pUserId = currentUserContext["UserName"];
+
+    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+      (response) => {
+    
+      });
   }
 }

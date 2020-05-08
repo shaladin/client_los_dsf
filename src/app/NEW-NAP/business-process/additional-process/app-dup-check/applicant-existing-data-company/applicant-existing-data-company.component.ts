@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 import { RequestSubmitAppDupCheckCustObj } from 'app/shared/model/AppDupCheckCust/RequestSubmitAppDupCheckCustObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 
 @Component({
   selector: 'app-applicant-existing-data-company',
@@ -38,9 +39,19 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private toastr: NGXToastrService
-  ) { }
+  ) { 
+    this.route.queryParams.subscribe(params => {
+      if (params['AppId'] != null) {
+        this.AppId = params['AppId'];
+      }
+      if (params['WfTaskListId'] != null) {
+        this.WfTaskListId = params['WfTaskListId'];
+      }
+    });
+  }
 
   async ngOnInit() {
+    this.ClaimTask();
     await this.bindData();
     await this.processData();
   }
@@ -55,14 +66,7 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
 
   processData(){
 
-    this.route.queryParams.subscribe(params => {
-      if (params['AppId'] != null) {
-        this.AppId = params['AppId'];
-      }
-      if (params['WfTaskListId'] != null) {
-        this.WfTaskListId = params['WfTaskListId'];
-      }
-    });
+    
     //Get App Cust Data
     var appObj = { "AppId": this.AppId };
     this.http.post(this.GetCustDataByAppId, appObj).subscribe(
@@ -180,6 +184,18 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
       },
       (error) => {
         console.log(error);
+      });
+  }
+
+  ClaimTask(){
+    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var wfClaimObj = new ClaimWorkflowObj();
+    wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
+    wfClaimObj.pUserId = currentUserContext["UserName"];
+
+    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+      (response) => {
+    
       });
   }
 }

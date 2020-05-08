@@ -72,19 +72,19 @@
     ],
     "querystring": {
         "select": "SELECT WTL.USERNAME AS ClaimBy, A.ORI_OFFICE_NAME AS OriOfficeName, A.APP_NO AS AppNo, AC.CUST_NAME AS CustName, A.PROD_OFFERING_NAME AS ProdOfferingName, RHH.RETURN_HANDLING_H_ID AS ReturnHandlingHId, WTL.WF_TASK_LIST_ID AS WfTaskListId, A.APP_ID AS AppId",
-        "from": "FROM dbo.APP A WITH(NOLOCK) JOIN dbo.V_WF_TASK_LIST WTL WITH(NOLOCK) ON A.APP_NO = WTL.TRANSACTION_CODE AND WTL.ACT_CODE = 'RETURN_HANDLING' JOIN dbo.RETURN_HANDLING_H RHH WITH(NOLOCK) ON A.APP_ID = RHH.APP_ID JOIN dbo.APP_CUST AC WITH(NOLOCK) ON A.APP_ID = AC.APP_ID",
+        "from": "FROM dbo.APP A WITH(NOLOCK) JOIN dbo.V_WF_TASK_LIST WTL WITH(NOLOCK) ON A.APP_NO = WTL.TRANSACTION_CODE AND WTL.ACT_CODE = 'RTN' JOIN dbo.RETURN_HANDLING_H RHH WITH(NOLOCK) ON A.APP_ID = RHH.APP_ID JOIN dbo.APP_CUST AC WITH(NOLOCK) ON A.APP_ID = AC.APP_ID",
         "where" : "WHERE WTL.END_EXECUTING_DATE IS NULL"
     },
     "headerList": [
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "Claim By",
             "name": "WTL.USERNAME"
         },
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "Office",
             "name": "A.ORI_OFFICE_NAME"
         },
@@ -96,13 +96,13 @@
         },
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "Customer Name",
             "name": "AC.CUST_NAME"
         },
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "Product Offering Name",
             "name": "A.PROD_OFFERING_NAME"
         },
@@ -115,12 +115,12 @@
     "bodyList": [
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "ClaimBy"
         },
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "OriOfficeName"
         },
         {
@@ -130,12 +130,12 @@
         },
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "CustName"
         },
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "ProdOfferingName"
         },
         {
@@ -143,20 +143,67 @@
             "position": "center",
             "action": [
                 {
-                    "type": "edit",
-                    "path": "../ReturnHandling/Detail",
-                    "param": [
+                    "type": "switch",
+                    "case": [
                         {
-                            "type": "AppId",
-                            "property": "AppId"
+                            "conditions": [
+                                {
+                                    "isUser": true,
+                                    "property": "ClaimBy",
+                                    "value": "",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "../ReturnHandling/Detail",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "AppId",
+                                        "property": "AppId"
+                                    },
+                                    {
+                                        "type": "ReturnHandlingHId",
+                                        "property": "ReturnHandlingHId"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "WfTaskListId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
                         },
                         {
-                            "type": "ReturnHandlingHId",
-                            "property": "ReturnHandlingHId"
-                        },
-                        {
-                            "type": "WfTaskListId",
-                            "property": "WfTaskListId"
+                            "conditions": [
+                                {
+                                    "isUser": false,
+                                    "property": "ClaimBy",
+                                    "value": "",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "../ReturnHandling/Detail",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "AppId",
+                                        "property": "AppId"
+                                    },
+                                    {
+                                        "type": "ReturnHandlingHId",
+                                        "property": "ReturnHandlingHId"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "WfTaskListId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
                         }
                     ]
                 }
