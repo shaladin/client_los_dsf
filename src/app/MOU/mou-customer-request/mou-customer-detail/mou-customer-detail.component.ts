@@ -82,7 +82,7 @@ export class MouCustomerDetailComponent implements OnInit {
   }
 
   editMainInfoHandler(){
-    this.router.navigate(["/Mou/Request/Detail"], { queryParams: { mouCustId: this.mouCustId, mode: "edit", mrMouTypeCode: this.mouType }});
+    this.router.navigate(["/Mou/Request/Detail"], { queryParams: { MouCustId: this.mouCustId, mode: "edit", MrMouTypeCode: this.mouType }});
   }
 
   cancelHandler(){

@@ -131,7 +131,8 @@ export class FraudVerifPageComponent implements OnInit {
         this.toastr.successMessage(response["message"]);
         this.router.navigate(["/Lead/FraudVerif/Paging"]);
       });
-  } 
+  }
+ 
   verify() {
      
     this.leadFraudVerfObj = new LeadFraudVerfObj();
