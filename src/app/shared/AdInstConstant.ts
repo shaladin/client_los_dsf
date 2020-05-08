@@ -56,6 +56,7 @@ export class AdInsConstant {
   public static GetRuleFeeAndInsFixedNAP = environment.losUrl + "/Application/GetRuleFeeAndInsFixedNAP";
   public static GetAppAndAppCustDetailByAgrmntId = environment.losUrl + "/Application/GetAppAndAppCustDetailByAgrmntId";
   public static SubmitNAP = environment.losUrl + "/Application/SubmitNAP";
+  public static AddEditAppCF2W = environment.losUrl + "/Application/AddEditAppCF2W";
 
   //App Loan Purpose
   public static AddAppLoanPurpose = environment.losUrl + "/AppLoanPurpose/AddAppLoanPurpose";
@@ -495,8 +496,8 @@ export class AdInsConstant {
 
   //REF EMP
   public static GetRefEmpForLookupEmployee = environment.FoundationR3Url + "/RefEmp/GetRefEmpForLookupEmployee";
-  public static GetRefEmpForLookupByUsername = environment.FoundationR3Url +"/RefEmp/GetRefEmpForLookupByUsername";
-
+  public static GetRefEmpForLookupByUsername = environment.FoundationR3Url + "/RefEmp/GetRefEmpForLookupByUsername";
+  
   //REF EMP LEAVE MANAGEMENT
   public static GetRefEmpLeaveMngmntPaging = "/RefEmpLeaveManagement/GetRefEmpLeaveMngmntPaging";
   public static DeleteRefEmpLeaveMngmnt = "/RefEmpLeaveManagement/DeleteRefEmpLeaveMngmnt";
