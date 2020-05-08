@@ -15,8 +15,7 @@ import { NapAddComponent } from './nap-add/nap-add.component';
 import { NapPagingComponent } from './nap-paging/nap-paging.component';
 import { NapViewComponent } from './nap-view/nap-view.component';  
 import { CustomerDataComponent } from "./nap-tab/customer-data/customer-data.component";
-import { CustCompanyFinancialDataComponent } from "./nap-tab/customer-data/component/company-financial-data/cust-company-financial-data.component";
-import { CustUcaddressComponent } from "./nap-tab/customer-data/component/address/address.component";
+import { CustCompanyFinancialDataComponent } from "./nap-tab/customer-data/component/company-financial-data/cust-company-financial-data.component"; 
 import { CustPersonalMainDataComponent } from "./nap-tab/customer-data/component/personal-main-data/cust-personal-main-data.component";
 import { CustPersonalContactInformationComponent } from "./nap-tab/customer-data/component/personal-contact-information/cust-personal-contact-information.component";
 import { CustPersonalFinancialDataComponent } from "./nap-tab/customer-data/component/personal-financial-data/cust-personal-financial-data.component";
@@ -35,6 +34,8 @@ import { GuarantorCompanyComponent } from "./nap-tab/guarantor-data/guarantor-co
 import { ReferantorDataComponent } from "./nap-tab/referantor-data/referantor-data.component";
 import { MatCheckboxModule, MatRadioModule, MatSelectModule } from "@angular/material";
 import { NgxCurrencyModule } from "ngx-currency";
+import { customCurrencyMaskConfig } from "app/MOU/mou.module";
+import { CustUcaddressComponent } from "./nap-tab/customer-data/component/address/ucaddress.component";
 
 @NgModule({
   imports: [
