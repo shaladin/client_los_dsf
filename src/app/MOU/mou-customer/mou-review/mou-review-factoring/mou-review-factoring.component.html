@@ -53,70 +53,16 @@
 
           <form class="form form-horizontal" [formGroup]="MouReviewDataForm" (ngSubmit)="MouReviewDataForm.valid"
             #enjiForm="ngForm">
-            <lib-ucSubsection [id]="'ApvReccomendationId'" [title]="'Approval Reccomendation'" [panel]="'ApvReccomendation'">
+            <lib-ucSubsection [id]="'ApvRecommendationId'" [title]="'Approval Recommendation'"
+              [panel]="'ApvRecommendation'">
             </lib-ucSubsection>
-            <div class="form-body" id="ApvReccomendation">
-
-              <div class="form-group row">
-                <label class="col-md-2 adInsLabel">Latar Belakang Debitur</label>
-                <label class="col-md-1 adInsLabel">:</label>
+            <div class="form-body" id="ApvRecommendation" formArrayName="ApvRecommendation">
+              <div [formGroupName]="i" *ngFor="let item of MouReviewDataForm.controls.ApvRecommendation.controls; let i = index" class="form-group row">
+                <label class="col-md-2 adins-required-label">{{MouReviewDataForm.value.ApvRecommendation[i].RecommendationName}}</label>
                 <div class="col-md-2">
-                  <input type="text" class="form-control" formControlName="LatarBelakang"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.LatarBelakang.invalid }">
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label class="col-md-2 adInsLabel">Faktor - Faktor Mendukung</label>
-                <label class="col-md-1 adInsLabel">:</label>
-                <div class="col-md-2">
-                  <input type="text" class="form-control" formControlName="FaktorMendukung"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.FaktorMendukung.invalid }">
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label class="col-md-2 adInsLabel">Faktor - Faktor Tidak Mendukung</label>
-                <label class="col-md-1 adInsLabel">:</label>
-                <div class="col-md-2">
-                  <input type="text" class="form-control" formControlName="FaktorTidakMendukung"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.FaktorTidakMendukung.invalid }">
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label class="col-md-2 adInsLabel">Syarat - Syarat</label>
-                <label class="col-md-1 adInsLabel">:</label>
-                <div class="col-md-2">
-                  <input type="text" class="form-control" formControlName="Syarat"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.Syarat.invalid }">
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label class="col-md-2 adInsLabel">Dispensasi / Lain - Lain</label>
-                <label class="col-md-1 adInsLabel">:</label>
-                <div class="col-md-2">
-                  <input type="text" class="form-control" formControlName="Dispensasi"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.Dispensasi.invalid }">
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label class="col-md-2 adInsLabel">SWOT</label>
-                <label class="col-md-1 adInsLabel">:</label>
-                <div class="col-md-2">
-                  <input type="text" class="form-control" formControlName="SWOT"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.SWOT.invalid }">
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label class="col-md-2 adInsLabel">6C</label>
-                <label class="col-md-1 adInsLabel">:</label>
-                <div class="col-md-2">
-                  <input type="text" class="form-control" formControlName="SixC"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.SixC.invalid }">
+                  <input type="text" class="form-control" formControlName="RecommendationValue"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && MouReviewDataForm.controls.ApvRecommendation.controls[i].controls.RecommendationValue.invalid }">
+                    <lib-uc-show-errors [control]="MouReviewDataForm.controls.ApvRecommendation.controls[i].controls.RecommendationValue" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
               </div>
             </div>
