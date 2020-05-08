@@ -5,13 +5,15 @@ import { AdInsModule } from "app/components/adins-module/adins.module";
 import { ViewAgrmntReservedFundComponent } from "./view-reserved-fund/view-reserved-fund.component";
 import { AgrmntLifeInsuranceComponent } from "./life-insurance/life-insurance.component";
 import { ViewAgrmntDocumentComponent } from "./view-document/view-document.component";
+import { ViewDeliveryOrderComponent } from "./view-delivery-order/view-delivery-order.component";
 
 
 @NgModule({
   exports: [
     ViewAgrmntReservedFundComponent,
     AgrmntLifeInsuranceComponent,
-    ViewAgrmntDocumentComponent
+    ViewAgrmntDocumentComponent,
+    ViewDeliveryOrderComponent
   ],
   imports: [
     CommonModule,
@@ -21,7 +23,8 @@ import { ViewAgrmntDocumentComponent } from "./view-document/view-document.compo
   declarations: [
     ViewAgrmntReservedFundComponent,
     AgrmntLifeInsuranceComponent,
-    ViewAgrmntDocumentComponent
+    ViewAgrmntDocumentComponent,
+    ViewDeliveryOrderComponent
   ],
   providers: [
     NGXToastrService
