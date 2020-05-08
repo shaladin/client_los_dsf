@@ -52,6 +52,13 @@ export class MouDetailGeneralComponent implements OnInit {
   ) { 
     this.isDPInvalid = false;
     this.isTenorInvalid = false;
+  }
+
+  ngOnInit() {
+    this.MouDetailGeneralForm.patchValue({
+      MouCustId: this.MouCustId
+    });
+
     var refMasterCurrency = new RefMasterObj();
     refMasterCurrency.RefMasterTypeCode = "CURRENCY";
     let reqCurrency = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterCurrency);
@@ -67,40 +74,28 @@ export class MouDetailGeneralComponent implements OnInit {
     var refMasterFirstInst = new RefMasterObj();
     refMasterFirstInst.RefMasterTypeCode = "FIRST_INST_TYPE";
     let reqFirstInst = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterFirstInst);
-    forkJoin([reqCurrency, reqIntrstType, reqInstSchm, reqPayFreq, reqFirstInst]).subscribe(
+    var mouCustClause = new MouCustClauseObj();
+    mouCustClause.MouCustId = this.MouCustId;
+    let getMouCustClause = this.httpClient.post(AdInsConstant.GetMouCustClauseByMouCustId, mouCustClause);
+    forkJoin([reqCurrency, reqIntrstType, reqInstSchm, reqPayFreq, reqFirstInst, getMouCustClause]).subscribe(
       (response) => {
         this.currencyList = response[0];
         this.intrstTypeList = response[1];
         this.instSchmList = response[2];
         this.payFreqList = response[3];
         this.firstInstList = response[4];
+        var mouCustClauseData = response[5];
         this.MouDetailGeneralForm.patchValue({
           CurrCode: this.currencyList.ReturnObject[0].Key,
           MrInterestTypeCode: this.intrstTypeList.ReturnObject[0].Key,
           MrInstSchmCode: this.instSchmList.ReturnObject[0].Key,
           PayFreqCode: this.payFreqList.ReturnObject[0].Key
         });
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
 
-  }
-
-  ngOnInit() {
-    this.MouDetailGeneralForm.patchValue({
-      MouCustId: this.MouCustId
-    });
-
-    var mouCustClause = new MouCustClauseObj();
-    mouCustClause.MouCustId = this.MouCustId;
-    this.httpClient.post(AdInsConstant.GetMouCustClauseByMouCustId, mouCustClause).subscribe(
-      (response: MouCustClauseObj) => {
-        if(response.MouCustClauseId != 0){
+        if(mouCustClauseData["MouCustClauseId"] != 0){
           this.mode = "edit";
           this.MouDetailGeneralForm.patchValue({
-            ...response
+            ...mouCustClauseData
           });
         }
       },
