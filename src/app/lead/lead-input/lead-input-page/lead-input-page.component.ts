@@ -5,6 +5,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { CustPersonalObj } from 'app/shared/model/CustPersonalObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import Stepper from 'bs-stepper';
 
 @Component({
   selector: 'app-lead-input-page',
@@ -12,10 +13,11 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
   providers: [NGXToastrService],
 })
 export class LeadInputPageComponent implements OnInit {
+  private stepper: Stepper;
   LeadId: any;
   CopyFrom: any;
-  isCustomer: any;
-  isLead: any;
+  isCustData: any;
+  isLeadData: any;
   CustPersonalId: any;
   TaskListId: any;
   titlePageType: string;
@@ -46,17 +48,24 @@ export class LeadInputPageComponent implements OnInit {
 
   ngOnInit() {
     this.viewLeadHeaderMainInfo = "./assets/ucviewgeneric/viewLeadHeader.json";
+
+    this.stepper = new Stepper(document.querySelector('#stepper1'), {
+      linear: false,
+      animation: true
+    })
+    this.EnterTab('custData');
+    this.stepper.to(1);
   }
 
   EnterTab(type) {
-    if (type == "Customer") {
-      this.isCustomer = true;
-      this.isLead = false;
+    if (type == "custData") {
+      this.isCustData = true;
+      this.isLeadData = false;
     }
 
-    if (type == "Lead") {
-      this.isCustomer = false;
-      this.isLead = true;
+    if (type == "leadData") {
+      this.isCustData = false;
+      this.isLeadData = true;
     }
   }
   
@@ -72,4 +81,19 @@ export class LeadInputPageComponent implements OnInit {
       this.router.navigate(['/Lead/Lead/Paging']);  
     }
   }
+
+  getValue(ev)
+  {
+    if (ev.stepMode != undefined)
+    {
+      if (ev.stepMode == "next")
+      {
+        this.stepper.next();
+        this.EnterTab("leadData");
+      }
+      else
+        this.stepper.previous();
+    }
+  }
+
 }

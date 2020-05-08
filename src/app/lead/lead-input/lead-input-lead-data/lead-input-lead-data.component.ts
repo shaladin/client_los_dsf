@@ -7,9 +7,6 @@ import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
-import { WizardComponent } from 'angular-archwizard';
-import { formatDate } from '@angular/common';
 import { AssetTypeObj } from 'app/shared/model/AssetTypeObj.Model';
 import { LeadInputLeadDataObj } from 'app/shared/model/LeadInputLeadDataObj.Model';
 import { LeadAppObj } from 'app/shared/model/LeadAppObj.Model';
@@ -89,7 +86,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   leadObj: LeadObj;
   returnLeadObj: any;
   returnLobCode: string;
-  TaskListId: any;
+  WfTaskListId: any;
   editLead : string;
   editLeadObj : any;
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
@@ -112,10 +109,10 @@ export class LeadInputLeadDataComponent implements OnInit {
         this.typePage = params["mode"];
       }
       if (params["WfTaskListId"] == null) {
-        this.TaskListId = 0;
+        this.WfTaskListId = 0;
       }
       else {
-        this.TaskListId = params["WfTaskListId"];
+        this.WfTaskListId = params["WfTaskListId"];
       }
 
       if (params["CopyFrom"] != null) {
@@ -579,7 +576,7 @@ export class LeadInputLeadDataComponent implements OnInit {
         this.setLeadAsset();
         this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
         this.setLeadApp();
-        this.leadInputLeadDataObj.WfTaskListId = this.TaskListId;
+        this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
         // this.leadInputLeadDataObj.IsEdit = true;
         this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
           (response) => {
@@ -603,8 +600,7 @@ export class LeadInputLeadDataComponent implements OnInit {
       this.leadInputLeadDataObj = new LeadInputLeadDataObj();
       this.setLeadAsset();
       this.setLeadApp();
-      this.leadInputLeadDataObj.WfTaskListId = this.TaskListId;
-      // this.leadInputLeadDataObj.IsEdit = false;
+      this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
       this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
