@@ -6,6 +6,8 @@ import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
 import { environment } from 'environments/environment';
 import { AppCrdRvwHObj } from 'app/shared/model/AppCrdRvwHObj.Model';
 import { AppCrdRvwDObj } from 'app/shared/model/AppCrdRvwDObj.Model';
+import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
   selector: 'app-credit-review-main',
@@ -14,18 +16,32 @@ import { AppCrdRvwDObj } from 'app/shared/model/AppCrdRvwDObj.Model';
 })
 export class CreditReviewMainComponent implements OnInit {
 
-  appId;
+  appId: number = 0;
   ManualDeviationData;
   isExistedManualDeviationData;
   apvBaseUrl = environment.ApprovalR3Url;
   indentifierReason;
   indentifierApprover;
+  TaskId: number = 0;
+  ReturnHandlingHId: number = 0;
+  ReturnHandlingDId: number = 0;
+  show: boolean = false;
+
+  HandlingForm = this.fb.group({
+    ReturnHandlingNotes: [''],
+    ReturnHandlingExecNotes: [''],
+  });
+
   constructor(
     private route: ActivatedRoute, 
     private http: HttpClient, 
-    private fb: FormBuilder) { 
+    private fb: FormBuilder,
+    private toastr: NGXToastrService) { 
       this.route.queryParams.subscribe(params => {
         this.appId = params["AppId"];
+        this.TaskId =params["TaskId"];
+        this.ReturnHandlingHId = params["ReturnHandlingHId"];
+        this.ReturnHandlingDId = params["ReturnHandlingDId"];
       });
     }
   
@@ -57,6 +73,10 @@ export class CreditReviewMainComponent implements OnInit {
     this.UserAccess = JSON.parse(localStorage.getItem("UserAccess"));
     this.ManualDeviationData = new Array();
     this.isExistedManualDeviationData = false;
+
+    if(this.ReturnHandlingDId!=0){
+      this.show = true;
+    }
   }
 
   viewProdMainInfoObj;
@@ -239,6 +259,30 @@ export class CreditReviewMainComponent implements OnInit {
     );
 
     this.SaveManualDeviationData();
+    if(this.ReturnHandlingDId != 0)
+      this.EditReturnHandling();
+  }
+    
+  EditReturnHandling(){
+    var object = new ReturnHandlingDObj();
+    object.AppId = this.appId;
+    object.ReturnHandlingDId=this.ReturnHandlingDId;
+    object.ReturnHandlingHId = this.ReturnHandlingHId;
+    object.WfTaskListId = this.TaskId;
+    object.ReturnHandlingNotes = this.HandlingForm.controls.ReturnHandlingNotes.value;
+    object.ReturnHandlingExecNotes = this.HandlingForm.controls.ReturnHandlingExecNotes.value;
+    object.ReturnStat ="REQ";
+    object.MrReturnTaskCode = "RTN_EDIT_COM_RSV_FND";
+
+    
+    this.http.post(AdInsConstant.EditReturnHandlingD, object).subscribe(
+      (response) => {
+        this.toastr.successMessage(response["message"]);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
   
   SaveManualDeviationData(){

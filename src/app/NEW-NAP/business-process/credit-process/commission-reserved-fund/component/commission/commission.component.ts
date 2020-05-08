@@ -618,6 +618,10 @@ export class CommissionComponent implements OnInit {
     temp.MrTaxCalcMethodCode = obj.MrTaxCalcMethodCode;
     temp.TaxpayerNo = obj.TaxpayerNo;
     temp.RowVersion = obj.RowVersion;
+    if(CommReceipientTypeCode == AdInsConstant.CommissionReceipientTypeCodeSupplierEmp){
+      temp.ReservedField1 = obj.SupplCode;
+      temp.ReservedField2 = obj.MrSupplEmpPositionCodeDesc;
+    }
     temp.ListappCommissionDObj = this.DataFilterAppCommD(obj);
     return temp;
   }

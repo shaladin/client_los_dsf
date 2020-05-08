@@ -12,7 +12,8 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 })
 export class TabCommissionComponent implements OnInit {
 
-  @Input() appId;
+  @Input() appId: number = 0;
+  @Input() agrmntId: number = 0;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -43,21 +44,33 @@ export class TabCommissionComponent implements OnInit {
   }
 
   async GetCommissionData(){
-    var obj = {
-      AppId: this.appId
-    };
+    var obj: object = null;
 
-    var url = AdInsConstant.GetAppCommissionDataDetailByAppId;
+    var url: string = "";
+    
+    if(this.appId!=0){
+      url = AdInsConstant.GetAppCommissionDataDetailByAppId;
+      obj = {AppId: this.appId};
+    }
+    else if(this.agrmntId!=0){
+      url = AdInsConstant.GetListAgrmntCommissionWithDetailByAgrmntId;
+      obj = {AgrmntId: this.agrmntId};
+    }
 
     await this.http.post(url, obj).toPromise().then(
       (response) => {
-        // console.log(response);
+        console.log(response);
         var tempResponse = response[AdInsConstant.ReturnObj];
         // console.log(tempResponse);
         for(var i=0;i<tempResponse.length;i++){
           var tempObj = tempResponse[i];
           // console.log(tempObj);
-          tempObj.ListappCommissionDObj.sort((a, b) => a.SeqNo - b.SeqNo);
+          if(this.appId!=0){
+            tempObj.ListappCommissionDObj.sort((a, b) => a.SeqNo - b.SeqNo);
+          }
+          else if(this.agrmntId!=0){
+            tempObj.AgrmntCommDObjs.sort((a, b) => a.SeqNo - b.SeqNo);
+          }
           if(tempObj.MrCommissionRecipientTypeCode == AdInsConstant.CommissionReceipientTypeCodeSupplier)
             this.ListSupplData.push(tempObj);
           if(tempObj.MrCommissionRecipientTypeCode == AdInsConstant.CommissionReceipientTypeCodeSupplierEmp)
