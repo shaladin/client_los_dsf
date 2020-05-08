@@ -2,28 +2,6 @@
     "title": "Fraud Detection Paging",
     "exportExcel": false,
     "component": [
-        
-        {
-            "type": "dropdown",
-            "name": "OfficeName",
-            "id": "OfficeNameId",
-            "value": "Office",
-            "placeholder": "Placeholder",
-            "isFromURL": true,
-            "isSelectOne": false,
-            "url": "http://r3app-server.ad-ins.com/Foundation_R3/RefOffice/GetListKvpActiveRefOfficeForPaging",
-            "label": "Office",
-            "items": [],
-            "itemsUrl": []
-        },
-        {
-            "type": "textbox",
-            "name": "CustName",
-            "id": "CustNameId",
-            "value": "",
-            "label": "Customer Name",
-            "placeholder": "Placeholder"
-        },
         {
             "type": "textbox",
             "name": "AppNo",
@@ -39,6 +17,27 @@
             "value": "",
             "label": "Product Offering Name",
             "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "CustName",
+            "id": "CustNameId",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "name": "OfficeName",
+            "id": "OfficeNameId",
+            "value": "Office",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "isSelectOne": false,
+            "url": "http://r3app-server.ad-ins.com/Foundation_R3/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "label": "Office",
+            "items": [],
+            "itemsUrl": []
         }
     ],
     "headerList": [
@@ -73,8 +72,9 @@
         }
     ],
     "querystring": {
-        "select": "SELECT ac.MR_CUST_TYPE_CODE as CustTypeCode, a.ORI_OFFICE_NAME AS OfficeName, a.APP_NO AS AppNo, ac.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.APP_ID AS AppId",
-        "from": "FROM dbo.APP a WITH(NOLOCK) JOIN dbo.APP_CUST ac WITH(NOLOCK) ON a.APP_ID = ac.APP_ID"
+        "select": "SELECT ac.MR_CUST_TYPE_CODE as CustTypeCode, a.ORI_OFFICE_NAME AS OfficeName, a.APP_NO AS AppNo, ac.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.APP_ID AS AppId, ac.IS_EXISTING_CUST AS IsExistingCust, WTL.WF_TASK_LIST_ID AS WfTaskListId, WTL.USERNAME AS ClaimBy, a.APP_ID AS AppId",
+        "from": "FROM dbo.APP a WITH(NOLOCK) JOIN dbo.APP_CUST ac WITH(NOLOCK) ON a.APP_ID = ac.APP_ID JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON a.APP_NO = WTL.TRANSACTION_CODE AND WTL.ACT_CODE = 'FRD'",
+        "where": "WHERE WTL.END_EXECUTING_DATE IS NULL"
     },
     "bodyList": [
         {
@@ -102,14 +102,61 @@
             "position": "center",
             "action": [
                 {
-                    "type": "edit",
-                    "path": "../Detail",
-                    "param": [
+                  "type": "switch",
+                  "case": [
+                    {
+                      "conditions": [
                         {
+                          "isUser": true,
+                          "property": "ClaimBy",
+                          "value": "",
+                          "restriction": "EQ"
+                        }
+                      ],
+                      "result": {
+                        "type": "url",
+                        "path": "../Detail",
+                        "icon": "ft-edit-2",
+                        "param": [
+                          {
                             "type": "AppId",
                             "property": "AppId"
+                          },
+                          {
+                            "type": "WfTaskListId",
+                            "property": "WfTaskListId"
+                          }
+                        ]
+                      },
+                      "isHide": false
+                    },
+                    {
+                      "conditions": [
+                        {
+                          "isUser": false,
+                          "property": "ClaimBy",
+                          "value": "",
+                          "restriction": "EQ"
                         }
-                    ]
+                      ],
+                      "result": {
+                        "type": "url",
+                        "path": "../Detail",
+                        "icon": "ft-edit-2",
+                        "param": [
+                          {
+                            "type": "AppId",
+                            "property": "AppId"
+                          },
+                          {
+                            "type": "WfTaskListId",
+                            "property": "WfTaskListId"
+                          }
+                        ]
+                      },
+                      "isHide": false
+                    }
+                  ]
                 }
             ]
         }
