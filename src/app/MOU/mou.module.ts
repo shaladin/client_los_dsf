@@ -43,8 +43,7 @@ import { MouCustFeeDetailComponent } from './mou-customer-request/mou-cust-fee/m
 import { MouCustTcComponent } from './mou-customer-request/mou-cust-tc/mou-cust-tc.component';
 import { MouCustListedCustFctrComponent } from './mou-customer-request/mou-cust-listed-cust-fctr/mou-cust-listed-cust-fctr.component';
 import { MouCustListedCustFctrDetailComponent } from './mou-customer-request/mou-cust-listed-cust-fctr/mou-cust-listed-cust-fctr-detail/mou-cust-listed-cust-fctr-detail.component';
-import { MouRequestAddcollComponent } from './mou-customer/mou-request/mou-request-addcoll/mou-request-addcoll.component';
-import { MouRequestAddcollAddeditComponent } from './mou-customer/mou-request/mou-request-addcoll-addedit/mou-request-addcoll-addedit.component';
+import { MouRequestAddcollComponent } from './mou-customer-request/mou-request-addcoll/mou-request-addcoll.component';
 import { DocSignerDetailComponent } from "./doc-signer/doc-signer-detail/doc-signer-detail.component";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { EditMouCustomerComponent } from "./mou-customer/edit-mou-customer/edit-mou-customer.component";
@@ -130,7 +129,6 @@ export const customCurrencyMaskConfig = {
     MouCustListedCustFctrComponent,
     MouCustListedCustFctrDetailComponent,
     MouRequestAddcollComponent,
-    MouRequestAddcollAddeditComponent,
     DocSignerDetailComponent,
     EditMouCustomerComponent,
     LegalReviewPagingComponent,
@@ -162,9 +160,7 @@ export const customCurrencyMaskConfig = {
     MouApprovalGeneralComponent,
     MouApprovalFactoringComponent,
     MouRequestAddcollComponent,
-    MouRequestAddcollAddeditComponent,
     MouCustListedCustFctrDetailComponent,
-    
   ]
 })
 
