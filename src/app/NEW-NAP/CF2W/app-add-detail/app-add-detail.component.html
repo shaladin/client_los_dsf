@@ -55,10 +55,10 @@
               <app-referantor-data *ngIf="AppStepIndex == 2" [appId]=appId></app-referantor-data>
             </aw-wizard-step>
   
-            <aw-wizard-step [stepTitle]="'Application Data'" (stepEnter)="EnterTab('APP')"
+            <!-- <aw-wizard-step [stepTitle]="'Application Data'" (stepEnter)="EnterTab('APP')"
               [navigationSymbol]="{ symbol: '4' }">
               <app-application-data-model *ngIf="AppStepIndex == 3" [appId]=appId></app-application-data-model>
-            </aw-wizard-step>
+            </aw-wizard-step> -->
   
             <aw-wizard-step [stepTitle]="'Asset Data'" (stepEnter)="EnterTab('ASSET')"
               [navigationSymbol]="{ symbol: '5' }">
