@@ -16,7 +16,7 @@ import { UcaddressModule } from "@adins/ucaddress";
 import { UCSearchComponent } from '@adins/ucsearch';
 import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
 import { UcgridfooterModule, UcgridfooterComponent } from "@adins/ucgridfooter";
-import { MainInfoComponent } from 'app/view/main-info/main-info.component';
+// import { MainInfoComponent } from 'app/view/main-info/main-info.component';
 import { LeadRoutingModule } from "./lead-routing.module";
 import { CustomerSelfVerificationComponent } from './verification/customer-self-verification/customer-self-verification.component';
 import { CustomerDataComponent } from './verification/customer-self-verification/customer-data/customer-data.component';
@@ -42,13 +42,10 @@ import { TeleVerifDetailComponent } from './tele-verif/tele-verif-detail/tele-ve
 import { LeadInputLeadDataComponent } from "./lead-input/lead-input-lead-data/lead-input-lead-data.component";
 import { MatRadioModule } from "@angular/material";
 import { LeadUpdateComponent } from "./lead-update/lead-update.component";
-import { LeadUpdatePageComponent } from "./lead-update/lead-update-page/lead-update-page.component";
-import { LeadUpdateMainInfoComponent } from "./lead-update/lead-update-main-info/lead-update-main-info.component";
-import { LeadUpdateCustDataComponent } from "./lead-update/lead-update-cust-data/lead-update-cust-data.component";
-import { LeadUpdateLeadDataComponent } from "./lead-update/lead-update-lead-data/lead-update-lead-data.component";
 import { NgxCurrencyModule } from "ngx-currency";
 import { CustJobDataComponent } from "app/NEW-NAP/sharing-component/input-nap-component/customer-data/component/job-data/cust-job-data.component";
 import { CustSocmedComponent } from "app/NEW-NAP/sharing-component/input-nap-component/customer-data/component/socmed/cust-socmed.component";
+import { UcinputnumberModule } from "@adins/ucinputnumber";
 export const customCurrencyMaskConfig = {     
   align: "left",     
   allowNegative: true,     
@@ -83,10 +80,11 @@ export const customCurrencyMaskConfig = {
     SharingComponentModule,
     ArchwizardModule,
     MatRadioModule,
-    NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
+    NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
+    UcinputnumberModule
   ],
   declarations: [
-    MainInfoComponent,
+    // MainInfoComponent,
     CustJobDataComponent,
     CustSocmedComponent,
     LeadMainInfoComponent,
@@ -111,10 +109,6 @@ export const customCurrencyMaskConfig = {
     LeadInputLeadDataComponent,
     LeadViewHeaderComponent,
     LeadUpdateComponent,
-    LeadUpdatePageComponent,
-    LeadUpdateMainInfoComponent,
-    LeadUpdateCustDataComponent,
-    LeadUpdateLeadDataComponent,
     // ArchwizardModule, 
     ViewLeadDataComponent, 
     FraudVerifPagingComponent, 

@@ -85,6 +85,7 @@ export class LeadInputMainInfoComponent implements OnInit {
     LeadSource: [''],
   });
   leadUrl: string;
+  WfTaskListId: number;
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.addLead = AdInsConstant.AddLead;
@@ -103,8 +104,21 @@ export class LeadInputMainInfoComponent implements OnInit {
       if (params["LeadId"] != null) {
         this.LeadId = params["LeadId"];
       }
+      if (params["WfTaskListId"] != null) {
+        this.WfTaskListId = params["WfTaskListId"];
+      }
+      
     });
     this.leadUrl = environment.losR3Web + '/Lead/View?LeadId=' + this.LeadId;
+  }
+  backHandler(){
+    if(this.pageType == "update"){
+        this.router.navigate(['/Lead/LeadUpdate/Paging']);  
+      }
+      else{
+        this.router.navigate(['/Lead/Lead/Paging']);  
+      }
+  
   }
 
   getLookUpAgency(event) {
@@ -153,53 +167,51 @@ export class LeadInputMainInfoComponent implements OnInit {
             this.agencyLookUpObj.jsonSelect = this.returnVendorExistObj;
             this.tempAgencyCode = this.returnVendorExistObj.VendorCode;
           });
-        this.cmoNameLookUpObj.nameSelect = this.returnExistLead.CmoUsername;
-        this.cmoNameLookUpObj.jsonSelect = this.returnExistLead;
-        this.surveyorNameLookUpObj.nameSelect = this.returnExistLead.SurveyorUsername;
-        this.surveyorNameLookUpObj.jsonSelect = this.returnExistLead;
-        this.salesNameLookUpObj.nameSelect = this.returnExistLead.TeleMarketingUsername;
-        this.salesNameLookUpObj.jsonSelect = this.returnExistLead;
+        // this.cmoNameLookUpObj.nameSelect = this.returnExistLead.CmoUsername;
+        // this.cmoNameLookUpObj.jsonSelect = this.returnExistLead;
+        // this.surveyorNameLookUpObj.nameSelect = this.returnExistLead.SurveyorUsername;
+        // this.surveyorNameLookUpObj.jsonSelect = this.returnExistLead;
+        // this.salesNameLookUpObj.nameSelect = this.returnExistLead.TeleMarketingUsername;
+        // this.salesNameLookUpObj.jsonSelect = this.returnExistLead;
         this.tempCmoUsername = this.returnExistLead.CmoUsername;
         this.tempSurveyorUsername = this.returnExistLead.SurveyorUsername;
         this.tempSalesUsername = this.returnExistLead.TeleMarketingUsername;
 
-        // this.cmoExistObj = new RefEmpForLookupObj();
-        // this.cmoExistObj.EmpName = this.returnExistLead.CmoName;
-        // this.cmoExistObj.RoleCode = this.returnExistLead.CmoCode;
-        // this.http.post(this.getRefEmpForLookupEmployee, this.cmoExistObj).subscribe(
-        //   (response) => {
-        //     this.returnCmoExistObj = response;
-        //     this.cmoNameLookUpObj.nameSelect = this.returnCmoExistObj.EmpName;
-        //     this.cmoNameLookUpObj.jsonSelect = this.returnCmoExistObj;
+        this.cmoExistObj = new RefEmpForLookupObj();
+        this.cmoExistObj.Username = this.returnExistLead.CmoUsername;
+        this.http.post(AdInsConstant.GetRefEmpForLookupByUsername, this.cmoExistObj).subscribe(
+          (response) => {
+            this.returnCmoExistObj = response;
+            this.cmoNameLookUpObj.nameSelect = this.returnCmoExistObj.Username;
+            this.cmoNameLookUpObj.jsonSelect = this.returnCmoExistObj;
 
-        //   });
+          });
 
-        // this.surveyorExistObj = new RefEmpForLookupObj();
-        // this.surveyorExistObj.EmpName = this.returnExistLead.SurveyorName;
-        // this.surveyorExistObj.RoleCode = this.returnExistLead.SurveyorCode;
-        // this.http.post(this.getRefEmpForLookupEmployee, this.surveyorExistObj).subscribe(
-        //   (response) => {
-        //     this.returnSurveyorExistObj = response;
-        //     this.surveyorNameLookUpObj.nameSelect = this.returnSurveyorExistObj.EmpName;
-        //     this.surveyorNameLookUpObj.jsonSelect = this.returnSurveyorExistObj;
-        //   });
+        this.surveyorExistObj = new RefEmpForLookupObj();
+        this.surveyorExistObj.Username = this.returnExistLead.SurveyorUsername;
+        this.http.post(AdInsConstant.GetRefEmpForLookupByUsername, this.surveyorExistObj).subscribe(
+          (response) => {
+            this.returnSurveyorExistObj = response;
+            this.surveyorNameLookUpObj.nameSelect = this.returnSurveyorExistObj.Username;
+            this.surveyorNameLookUpObj.jsonSelect = this.returnSurveyorExistObj;
+          });
 
-        // this.salesExistObj = new RefEmpForLookupObj();
-        // this.salesExistObj.EmpName = this.returnExistLead.TeleMarketingName;
-        // this.salesExistObj.RoleCode = this.returnExistLead.TeleMarketingCode;
-        // this.http.post(this.getRefEmpForLookupEmployee, this.salesExistObj).subscribe(
-        //   (response) => {
-        //     this.returnSalesExistObj = response;
-        //     this.salesNameLookUpObj.nameSelect = this.returnSalesExistObj.EmpName;
-        //     this.salesNameLookUpObj.jsonSelect = this.returnSalesExistObj;
+        this.salesExistObj = new RefEmpForLookupObj();
+        this.salesExistObj.Username = this.returnExistLead.TeleMarketingUsername;
+        this.http.post(AdInsConstant.GetRefEmpForLookupByUsername, this.salesExistObj).subscribe(
+          (response) => {
+            this.returnSalesExistObj = response;
+            this.salesNameLookUpObj.nameSelect = this.returnSalesExistObj.Username;
+            this.salesNameLookUpObj.jsonSelect = this.returnSalesExistObj;
 
-        //   });
+          });
       });
   }
 
   ngOnInit() {
-    // console.log("ccc")
+    console.log("ccc")
     // console.log(JSON.parse(localStorage.getItem("UserAccess")));
+    this.claimTask();
     this.user = JSON.parse(localStorage.getItem("UserAccess"));
 
     if (this.user.MrOfficeTypeCode == "HO") {
@@ -293,12 +305,11 @@ export class LeadInputMainInfoComponent implements OnInit {
         this.MainInfoForm.patchValue({ LeadSource: response['ReturnObject'][0]['Key'] });
       });
 
-    if (this.pageType == "edit") {
+  if (this.pageType == "edit" || this.pageType == "update") {
       this.getLeadObj = new LeadObj();
       this.getLeadObj.LeadId = this.LeadId;
       this.http.post(this.getLeadByLeadId, this.getLeadObj).subscribe(
         (response) => {
-          console.log("aaa");
           this.returnLead = response;
           this.MainInfoForm.patchValue({
             OfficeCode: this.returnLead.OriOfficeCode,
@@ -308,7 +319,6 @@ export class LeadInputMainInfoComponent implements OnInit {
             LobName: this.returnLead.LobName,
             LeadSource: this.returnLead.MrLeadSourceCode,
           });
-
           this.leadIdExist = this.returnLead.LeadCopyId;
 
           if (this.returnLead.LeadCopyId != null) {
@@ -329,49 +339,44 @@ export class LeadInputMainInfoComponent implements OnInit {
               this.agencyLookUpObj.jsonSelect = this.returnVendorObj;
               this.tempAgencyCode = this.returnVendorObj.VendorCode;
             });
-          this.cmoNameLookUpObj.nameSelect = this.returnLead.CmoUsername;
-          this.cmoNameLookUpObj.jsonSelect = this.returnLead;
-          this.surveyorNameLookUpObj.nameSelect = this.returnLead.SurveyorUsername;
-          this.surveyorNameLookUpObj.jsonSelect = this.returnLead;
-          this.salesNameLookUpObj.nameSelect = this.returnLead.TeleMarketingUsername;
-          this.salesNameLookUpObj.jsonSelect = this.returnLead;
+
+          // this.cmoNameLookUpObj.nameSelect = this.returnLead.CmoUsername;
+          // this.cmoNameLookUpObj.jsonSelect = this.returnLead;
+          // this.surveyorNameLookUpObj.nameSelect = this.returnLead.SurveyorUsername;
+          // this.surveyorNameLookUpObj.jsonSelect = this.returnLead;
+          // this.salesNameLookUpObj.nameSelect = this.returnLead.TeleMarketingUsername;
+          // this.salesNameLookUpObj.jsonSelect = this.returnLead;
           this.tempCmoUsername = this.returnLead.CmoUsername;
           this.tempSurveyorUsername = this.returnLead.SurveyorUsername;
           this.tempSalesUsername = this.returnLead.TeleMarketingUsername;
-          // this.cmoObj = new RefEmpForLookupObj();
-          // this.cmoObj.EmpName = this.returnLead.CmoName;
-          // this.cmoObj.RoleCode = this.returnLead.CmoCode;
-          // console.log("awdawd");
-          // this.http.post(this.getRefEmpForLookupEmployee, this.cmoObj).subscribe(
-          //   (response) => {
-          //       this.returnCmoObj = response;
 
-          //       this.cmoNameLookUpObj.nameSelect = this.returnCmoObj.EmpName;
-          //       this.cmoNameLookUpObj.jsonSelect = this.returnCmoObj;
-          //       this.tempCmoUsername = this.returnCmoObj.EmpName; 
-          //   });
+          this.cmoObj = new RefEmpForLookupObj();
+          this.cmoObj.Username = this.returnLead.CmoUsername;
+          console.log("awdawd");
+          this.http.post(AdInsConstant.GetRefEmpForLookupByUsername, this.cmoObj).subscribe(
+            (response) => {
+                this.returnCmoObj = response;
+                this.cmoNameLookUpObj.nameSelect = this.returnCmoObj.Username;
+                this.cmoNameLookUpObj.jsonSelect = this.returnCmoObj;
+            });
 
-          // this.surveyorObj = new RefEmpForLookupObj();
-          // this.surveyorObj.EmpName = this.returnLead.SurveyorName;
-          // this.surveyorObj.RoleCode = this.returnLead.SurveyorCode;
-          // this.http.post(this.getRefEmpForLookupEmployee, this.surveyorObj).subscribe(
-          //   (response) => {
-          //       this.returnSurveyorObj = response;
-          //       this.surveyorNameLookUpObj.nameSelect = this.returnSurveyorObj.EmpName;
-          //       this.surveyorNameLookUpObj.jsonSelect = this.returnSurveyorObj;
-          //       this.tempSurveyorUsername = this.returnSurveyorObj.EmpName; 
-          //   });
+          this.surveyorObj = new RefEmpForLookupObj();
+          this.surveyorObj.Username = this.returnLead.SurveyorUsername;
+          this.http.post(AdInsConstant.GetRefEmpForLookupByUsername, this.surveyorObj).subscribe(
+            (response) => {
+                this.returnSurveyorObj = response;
+                this.surveyorNameLookUpObj.nameSelect = this.returnSurveyorObj.Username;
+                this.surveyorNameLookUpObj.jsonSelect = this.returnSurveyorObj;
+            });
 
-          // this.salesObj = new RefEmpForLookupObj();
-          // this.salesObj.EmpName = this.returnLead.TeleMarketingName;
-          // this.salesObj.RoleCode = this.returnLead.TeleMarketingCode;
-          // this.http.post(this.getRefEmpForLookupEmployee, this.salesObj).subscribe(
-          //   (response) => {
-          //       this.returnSalesObj = response;
-          //       this.salesNameLookUpObj.nameSelect = this.returnSalesObj.EmpName;
-          //       this.salesNameLookUpObj.jsonSelect = this.returnSalesObj;
-          //       this.tempSalesUsername = this.returnSalesObj.EmpName; 
-          //   });
+          this.salesObj = new RefEmpForLookupObj();
+          this.salesObj.Username = this.returnLead.TeleMarketingUsername;
+          this.http.post(AdInsConstant.GetRefEmpForLookupByUsername, this.salesObj).subscribe(
+            (response) => {
+                this.returnSalesObj = response;
+                this.salesNameLookUpObj.nameSelect = this.returnSalesObj.Username;
+                this.salesNameLookUpObj.jsonSelect = this.returnSalesObj;
+            });
 
         });
     }
@@ -409,17 +414,21 @@ export class LeadInputMainInfoComponent implements OnInit {
   }
 
   SaveForm() {
-    if (this.pageType == "edit") {
+    if (this.pageType == "edit" || this.pageType == "update" ) {
       this.leadObj = new LeadObj();
       this.leadObj.LeadId = this.LeadId;
-      this.leadObj.RowVersion = this.returnLead.RowVersion;
-      this.leadObj.IsSubmit = true;
+      this.leadObj.RowVersion = this.returnLead.RowVersion; 
       this.setLead();
       this.http.post(this.editLead, this.leadObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["/Lead/LeadInput/Page"], { queryParams: { "LeadId": this.LeadId, "mode": "edit" } });
-          // console.log(response)
+          if (this.pageType == "edit"){
+            this.router.navigate(["/Lead/LeadInput/Page"], { queryParams: { "LeadId": this.LeadId, "mode": this.pageType } });
+          }
+          else{
+          this.router.navigate(["/Lead/LeadInput/Page"], { queryParams: { "LeadId": this.LeadId, "mode": this.pageType, "WfTaskListId": this.WfTaskListId } });
+
+          }
         },
         (error) => {
           console.log(error);
@@ -427,15 +436,13 @@ export class LeadInputMainInfoComponent implements OnInit {
       );
     } else {
       this.leadObj = new LeadObj();
-      this.setLead();
-      this.leadObj.IsSubmit = true;
+      this.setLead(); 
       this.http.post(this.addLead, this.leadObj).subscribe(
         (response) => {
           this.responseLead = response;
           this.LeadId = this.responseLead.LeadId;
           this.toastr.successMessage(response["message"]);
           this.router.navigate(["/Lead/LeadInput/Page"], { queryParams: { "LeadId": this.LeadId, "CopyFrom": this.leadIdExist } });
-          // console.log(response)
         },
         (error) => {
           console.log(error);
@@ -445,16 +452,21 @@ export class LeadInputMainInfoComponent implements OnInit {
   }
 
   save() {
-    if (this.pageType == "edit") {
+    if (this.pageType == "edit" || this.pageType == "update" ) {
       this.leadObj = new LeadObj();
       this.leadObj.LeadId = this.LeadId;
-      this.leadObj.RowVersion = this.returnLead.RowVersion;
-      this.leadObj.IsSubmit = false;
+      this.leadObj.RowVersion = this.returnLead.RowVersion; 
       this.setLead();
       this.http.post(this.editLead, this.leadObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["/Lead/LeadInput/Page"], { queryParams: { "LeadId": this.LeadId, "mode": "edit" } });
+
+          if(this.pageType == "edit"){
+            this.router.navigate(["/Lead/Lead/Paging"]);
+          }
+          else{
+            this.router.navigate(["/Lead/LeadUpdate/Paging"]);
+          }
           // console.log(response)
         },
         (error) => {
@@ -464,14 +476,12 @@ export class LeadInputMainInfoComponent implements OnInit {
     } else {
       this.leadObj = new LeadObj();
       this.setLead();
-      this.leadObj.IsSubmit = false;
       this.http.post(this.addLead, this.leadObj).subscribe(
         (response) => {
           this.responseLead = response;
           this.LeadId = this.responseLead.LeadId;
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["/Lead/LeadInput/Page"], { queryParams: { "LeadId": this.LeadId, "CopyFrom": this.leadIdExist } });
-          // console.log(response)
+          this.router.navigate(["/Lead/Lead/Paging"]);
         },
         (error) => {
           console.log(error);
@@ -479,4 +489,13 @@ export class LeadInputMainInfoComponent implements OnInit {
       );
     }
   }
+
+  async claimTask() {
+    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"] };
+    console.log(wfClaimObj);
+    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+      (response) => {
+      });
+    }	
 }
