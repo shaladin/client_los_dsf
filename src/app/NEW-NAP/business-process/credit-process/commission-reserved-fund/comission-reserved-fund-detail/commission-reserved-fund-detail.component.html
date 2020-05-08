@@ -1,16 +1,21 @@
 <div class="col-md-12 text-left">
   <div class="card">
+    <div class="ucSearch-Button-Right">
+      <span class="mr-1">
+        <button type="button" class="backButton" (click)="Back()" translate>
+          <i class="ft-arrow-left"></i> Back
+        </button>
+      </span>
+    </div>
     <lib-ucviewgeneric [viewInput]="viewProdMainInfoObj"> </lib-ucviewgeneric>
 
-    <span *ngIf="show">
+    <span *ngIf="ReturnHandlingHObj.ReturnHandlingHId != 0">
       <form class="form form-horizontal" [formGroup]="HandlingForm" #enjiForm="ngForm">
         <div class="class=form-group row adins-required">
           <label class="col-md-3 adInsLabel">Return Notes </label>
           <div class="col-md-3">
-            <textarea class="form-control adInsInput width-75-per" formControlName="ReturnHandlingNotes">
+            <textarea class="form-control adInsInput width-75-per" formControlName="ReturnHandlingNotes" readonly>
             </textarea>
-            <lib-uc-show-errors  [control]="HandlingForm.controls.ReturnHandlingNotes" [submit]="enjiForm.submitted">
-            </lib-uc-show-errors >
           </div>
           <label class="col-md-3 adInsLabel">Return Execution Notes </label>
           <div class="col-md-3">
@@ -21,31 +26,56 @@
           </div>
         </div>
       </form>
+      <div class="form-actions row">
+        <div class="col-md-10"></div>
+        <div class="col-md-2">
+          <span *ngIf='show'>
+            <button type="button" (click)="SubmitReturnHandling()" class="btn btn-raised btn-primary" translate>
+              <i class="fa fa-check-square-o"></i> Submit
+            </button>
+          </span>
+        </div>
+      </div>
     </span>
-
+    <div id="stepper1" class="bs-stepper">
+      <div class="bs-stepper-header" role="tablist" style="overflow-x: auto;">
+        <!-- your steps here -->
+        <div class="step" data-target="#commission-tab">
+          <button type="button" class="step-trigger" role="tab" aria-controls="commission-tab"
+            id="commission-tab-trigger" [disabled]="!(AppStepIndex >= 1)" (click)="ChangeTab('COM')">
+            <span class="bs-stepper-circle">1</span>
+            <span class="bs-stepper-label">Commission Data</span>
+          </button>
+        </div>
+        <div class="line"></div>
+        <div class="step" data-target="#reserved-fund-tab">
+          <button type="button" class="step-trigger" role="tab" aria-controls="reserved-fund-tab"
+            id="reserved-fund-tab-trigger" [disabled]="!(AppStepIndex >= 2)" (click)="ChangeTab('RSV')">
+            <span class="bs-stepper-circle">2</span>
+            <span class="bs-stepper-label">Reserved Fund Data</span>
+          </button>
+        </div>
+      </div>
+      <br><br>
+      <div class="bs-stepper-content">
+        <!-- your steps content here -->
+        <div id="commission-tab" class="content" role="tabpanel" aria-labelledby="commission-tab-trigger">
+          <app-commission *ngIf="StepIndex == true" [AppId]=appId (outputTab)="NextStep('RSV')"></app-commission>
+        </div>
+        <div id="reserved-fund-tab" class="content" role="tabpanel" aria-labelledby="reserved-fund-tab-trigger">
+          <reserved-fund *ngIf="StepIndex == true" [ReturnHandlingHObj]="ReturnHandlingHObj" (outputTab)="LastStepHandler($allAppReservedFundObj)"></reserved-fund>
+        </div>
+      </div>
+    </div>
     <aw-wizard #wizard navBarLayout="large-empty-symbols" [defaultStepIndex]="0">
 
       <aw-wizard-step [awNavigationMode] navigateBackward="allow" navigateForward="allow" [stepTitle]="'Commission'"
         (stepEnter)="EnterTab('tab1')" [navigationSymbol]="{ symbol: '1' }">
-        <app-commission *ngIf="isTab1 == true" [AppId]=appId [ReturnHandlingDId]="ReturnHandlingDId"></app-commission>
       </aw-wizard-step>
 
       <aw-wizard-step [awNavigationMode] navigateBackward="allow" navigateForward="allow" [stepTitle]="'Reserved Fund'"
         (stepEnter)="EnterTab('tab2')" [navigationSymbol]="{ symbol: '2' }">
-        <reserved-fund *ngIf="isTab2 == true" [appId]=appId [ReturnHandlingDId]="ReturnHandlingDId"></reserved-fund>
       </aw-wizard-step>
-
     </aw-wizard>
-
-    <div class="form-actions row">
-      <div class="col-md-10"></div>
-      <div class="col-md-2">
-        <span *ngIf='show'>
-          <button type="button" (click)="EditReturnHandling()" class="btn btn-raised btn-primary" translate>
-            <i class="fa fa-check-square-o"></i> Submit
-          </button>
-        </span>
-      </div>
-    </div>
   </div>
 </div>

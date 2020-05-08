@@ -39,6 +39,9 @@ export class AdInsConstant {
   public static GENERAL = "GENERAL";
   public static FACTORING = "FACTORING";
 
+  //WORKFLOW (LEWAT FOUNDATION)
+  public static ResumeWorkflow = environment.FoundationR3Url + "/Workflow/ResumeWorkflow"
+
   // ASSET
   public static GetListKeyValueByCode = environment.FoundationR3Url + "/AssetType/GetListKeyValueByCode";
   public static GetAssetTypeByCode = environment.FoundationR3Url + "/AssetType/GetAssetTypeByCode";

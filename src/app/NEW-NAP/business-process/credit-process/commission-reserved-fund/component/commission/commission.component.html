@@ -1,18 +1,5 @@
 <div class="col-md-12 text-left">
     <div class="card">
-        <div class="ucSearch-Button-Right">
-            <span *ngIf='!show' class="mr-1">
-                <button type="button" class="backButton" [routerLink]="['../CommissionReservedFund/Paging']" translate>
-                    <i class="ft-arrow-left"></i> Back to Paging
-                </button>
-            </span>
-            <span *ngIf='show' class="mr-1">
-                <button type="button" class="backButton" [routerLink]="['/Nap/AddProcess/ReturnHandling/Commission']"
-                    translate>
-                    <i class="ft-arrow-left"></i> Back to Paging
-                </button>
-            </span>
-        </div>
         <!-- Income Information -->
         <div class="card-body">
             <div class="px-3">
@@ -101,9 +88,6 @@
                 <div class="form-actions row">
                     <div class="col-md-10"></div>
                     <div class="col-md-2">
-                        <!-- <button type="button" (click)="Cancel()" class="btn btn-raised btn-warning" translate>
-                        <i class="fa fa-check-square-o"></i> Cancel
-                      </button> -->
                         <button type="button" (click)="SaveData()" class="btn btn-raised btn-primary" translate>
                             <i class="fa fa-check-square-o"></i> Save
                         </button>
