@@ -119,7 +119,6 @@ export class DocSignerDetailComponent implements OnInit {
     console.log('vin');
     this.claimTask();
     this.custShareholderLookUpObj1 = new InputLookupObj();
-    // this.custShareholderLookUpObj1.isRequired = false;
     this.custShareholderLookUpObj1.urlJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
     this.custShareholderLookUpObj1.urlQryPaging = "/Generic/GetPagingObjectBySQL";
     this.custShareholderLookUpObj1.urlEnviPaging = environment.FoundationR3Url;
@@ -127,7 +126,7 @@ export class DocSignerDetailComponent implements OnInit {
     this.custShareholderLookUpObj1.genericJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
 
     this.custShareholderLookUpObj2 = new InputLookupObj();
-    // this.custShareholderLookUpObj2.isRequired = false;
+    this.custShareholderLookUpObj2.isRequired = false;
     this.custShareholderLookUpObj2.urlJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
     this.custShareholderLookUpObj2.urlQryPaging = "/Generic/GetPagingObjectBySQL";
     this.custShareholderLookUpObj2.urlEnviPaging = environment.FoundationR3Url;
@@ -135,7 +134,6 @@ export class DocSignerDetailComponent implements OnInit {
     this.custShareholderLookUpObj2.genericJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
 
     this.employeeLookUpObj1 = new InputLookupObj();
-    // this.employeeLookUpObj1.isRequired = false;
     this.employeeLookUpObj1.urlJson = "./assets/uclookup/lookupEmployee.json";
     this.employeeLookUpObj1.urlQryPaging = "/Generic/GetPagingObjectBySQL";
     this.employeeLookUpObj1.urlEnviPaging = environment.FoundationR3Url;
@@ -143,7 +141,7 @@ export class DocSignerDetailComponent implements OnInit {
     this.employeeLookUpObj1.genericJson = "./assets/uclookup/lookupEmployee.json";
 
     this.employeeLookUpObj2 = new InputLookupObj();
-    // this.employeeLookUpObj2.isRequired = false;
+    this.employeeLookUpObj2.isRequired = false;
     this.employeeLookUpObj2.urlJson = "./assets/uclookup/lookupEmployee.json";
     this.employeeLookUpObj2.urlQryPaging = "/Generic/GetPagingObjectBySQL";
     this.employeeLookUpObj2.urlEnviPaging = environment.FoundationR3Url;
