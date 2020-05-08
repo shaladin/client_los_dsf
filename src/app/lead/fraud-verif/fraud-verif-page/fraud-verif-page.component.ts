@@ -62,14 +62,12 @@ export class FraudVerifPageComponent implements OnInit {
     Notes: ['', [Validators.required]],
   });
   ngOnInit() {
-    console.log('fraud');
     this.claimTask();
     this.viewLeadHeaderMainInfo = "./assets/ucviewgeneric/viewLeadHeader.json";
 
     this.leadCustObj = new LeadCustObj();
     this.leadCustObj.LeadId = this.LeadId;
     this.leadCustPersonalObj = new LeadCustPersonalObj();
-    this.claimTask();
     this.http.post(this.GetLeadCustByLeadIdUrl, this.leadCustObj).subscribe(
       (response) => {
         this.tempLeadCustObj = response;
@@ -149,8 +147,7 @@ export class FraudVerifPageComponent implements OnInit {
       });
   }
 
-  claimTask(){
-    console.log("awd");
+  async claimTask(){
     var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"]};
     console.log(wfClaimObj);

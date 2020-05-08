@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
@@ -7,7 +7,6 @@ import { AppFinDataObj } from 'app/shared/model/AppFinData/AppFinData.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj.Model';
 import { ActivatedRoute } from '@angular/router';
-import { WizardComponent } from 'angular-archwizard';
 
 @Component({
   selector: 'app-financial-data',
@@ -15,6 +14,7 @@ import { WizardComponent } from 'angular-archwizard';
 })
 export class FinancialDataComponent implements OnInit {
   @Input() AppId: number;
+  @Output() outputTab: EventEmitter<any> = new EventEmitter();
   //AppId : number;
   FinDataForm: FormGroup;
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
@@ -30,8 +30,7 @@ export class FinancialDataComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private route: ActivatedRoute,
-    private wizard: WizardComponent
+    private route: ActivatedRoute
   ) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != undefined || params["AppId"] != null) {
@@ -158,7 +157,7 @@ export class FinancialDataComponent implements OnInit {
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["Message"]);
-          this.wizard.goToNextStep();
+          this.outputTab.emit();
         }
       );
     }

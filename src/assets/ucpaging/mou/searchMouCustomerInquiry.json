@@ -4,7 +4,7 @@
     "component": [
         {
             "type": "textbox",
-            "name": "MC.MOU_CUST_NO",
+            "name": "MOU_CUST_NO",
             "id": "MouCustNoId",
             "value": "",
             "label": "MOU NO",
@@ -13,8 +13,8 @@
         {
             "type": "dropdown",
             "datatype": "text",
-            "name": "MC.MR_MOU_TYPE_CODE",
-            "id": "MouTypeId",
+            "name": "MR_MOU_TYPE_CODE",
+            "id": "MrMouTypeCode",
             "value": "",
             "placeholder": "Placeholder",
             "isFromURL": true,
@@ -28,7 +28,7 @@
         },
         {
             "type": "textbox",
-            "name": "MC.CUST_NAME",
+            "name": "CUST_NAME",
             "id": "CustNameId",
             "value": "",
             "label": "CUSTOMER NAME",
@@ -36,23 +36,23 @@
         },
         {
             "type": "dropdown",
+            "name": "IS_REVOLVING",
+            "id": "IsRevolvingId",
             "label": "REVOLVING",
-            "name": "MC.IS_REVOLVING",
-            "id": "revolvingId",
             "value": "",
-            "datatype": "text",
+            "placeholder": "Placeholder",
+            "isFromURL": false,
             "isSelectOne": false,
             "items": [
                 {
-                    "key": "1",
+                    "key": true,
                     "value": "Yes"
                 },
                 {
-                    "key": "0",
+                    "key": false,
                     "value": "No"
                 }
             ],
-            "isFromURL": false,
             "url": "",
             "itemsUrl": [],
             "criteriaPropName": "",
@@ -60,7 +60,7 @@
         },
         {
             "type": "datepicker",
-            "name": "MC.MOU_CUST_DT",
+            "name": "MOU_CUST_DT",
             "id": "GreaterMouDtId",
             "value": "",
             "label": "MOU DATE FROM",
@@ -69,7 +69,7 @@
         },
         {
             "type": "datepicker",
-            "name": "MC.MOU_CUST_DT",
+            "name": "MOU_CUST_DT",
             "id": "LessMouDtId",
             "value": "",
             "label": "MOU DATE TO",
@@ -78,7 +78,7 @@
         },
         {
             "type": "textbox",
-            "name": "MC.PLAFOND_AMT",
+            "name": "PLAFOND_AMT",
             "id": "GreaterPlafondAmt",
             "value": "",
             "label": "PLAFOND AMOUNT FROM",
@@ -87,7 +87,7 @@
         },
         {
             "type": "textbox",
-            "name": "MC.PLAFOND_AMT",
+            "name": "PLAFOND_AMT",
             "id": "LessPlafondAmt",
             "value": "",
             "label": "PLAFOND AMOUNT TO",
@@ -97,7 +97,7 @@
         {
             "type": "dropdown",
             "datatype": "text",
-            "name": "MC.MOU_STAT",
+            "name": "MOU_STAT",
             "id": "StatusCode",
             "value": "",
             "placeholder": "Placeholder",
@@ -112,64 +112,64 @@
         }
     ],
     "querystring": {
-        "select": "SELECT MC.MOU_CUST_NO AS mouCustNo, MC.CUST_NAME AS custName, MC.MOU_CUST_DT AS mouCustDt, MC.END_DT AS endDt, MC.PLAFOND_AMT AS plafondAmt, MC.IS_REVOLVING AS isRevolving, RM_TYPE.DESCR AS mrMouTypeCode, RM_STAT.DESCR AS mouStat, MC.MOU_CUST_ID AS MouCustId",
-        "from": "FROM dbo.MOU_CUST AS MC WITH(NOLOCK) LEFT JOIN dbo.V_REF_MASTER AS RM_TYPE WITH(NOLOCK) ON MC.MR_MOU_TYPE_CODE = RM_TYPE.MASTER_CODE AND RM_TYPE.REF_MASTER_TYPE_CODE = 'MOU_TYPE' LEFT JOIN dbo.V_REF_STATUS AS RM_STAT WITH(NOLOCK) ON MC.MOU_STAT = RM_STAT.REF_STATUS_CODE AND RM_STAT.STATUS_GRP_CODE = 'MOUC_STAT'"
+        "select": "SELECT MOU_CUST_NO AS MouCustNo, MOU_CUST_ID AS MouCustId, CUST_NAME AS CustName, MOU_CUST_DT AS MouCustDt, START_DT AS StartDt, END_DT AS EndDt, PLAFOND_AMT PlafondAmt, IS_REVOLVING AS IsRevolving, REF_NO AS RefNo, MR_MOU_TYPE_CODE AS MrMouTypeCode, MOU_STAT AS MouStat",
+        "from": "FROM dbo.MOU_CUST WITH(NOLOCK)"
     },
     "headerList": [
         {
             "type": "sort",
             "position": "center",
-            "label": "MOU No.",
-            "name": "MC.MOU_CUST_NO"
+            "label": "Mou No",
+            "name": "MouCustNo"
         },
         {
             "type": "sort",
             "position": "left",
             "label": "Customer Name",
-            "name": "MC.CUST_NAME"
+            "name": "CustName"
         },
         {
             "type": "sort",
             "position": "center",
-            "label": "MOU Date",
-            "name": "MC.MOU_CUST_DT"
+            "label": "Mou Date",
+            "name": "MouCustDt"
         },
         {
             "type": "sort",
             "position": "center",
             "label": "Expired Date",
-            "name": "MC.END_DT"
+            "name": "EndDt"
         },
         {
             "type": "sort",
             "position": "right",
             "label": "Plafond Amount",
-            "name": "MC.PLAFOND_AMT"
+            "name": "PlafondAmt"
         },
         {
             "type": "sort",
             "position": "center",
             "label": "Revolving",
-            "name": "MC.IS_REVOLVING"
-        },
-        {
-            "type": "sort",
-            "position": "left",
-            "label": "MOU Type",
-            "name": "MC.MR_MOU_TYPE_CODE"
+            "name": "IsRevolving"
         },
         {
             "type": "sort",
             "position": "left",
             "label": "MOU Status",
-            "name": "RM_STAT.DESCR"
+            "name": "MOU_STAT"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "MOU Type",
+            "name": "MR_MOU_TYPE_CODE"
         }
     ],
     "bodyList": [
         {
             "type": "link",
             "position": "center",
-            "property": "mouCustNo",
+            "property": "MouCustNo",
             "path": "/Mou/Cust/View",
             "target": "_blank",
             "param": [
@@ -182,37 +182,37 @@
         {
             "type": "text",
             "position": "left",
-            "property": "custName"
+            "property": "CustName"
         },
         {
             "type": "date",
             "position": "center",
-            "property": "mouCustDt"
+            "property": "MouCustDt"
         },
         {
             "type": "date",
             "position": "center",
-            "property": "endDt"
+            "property": "EndDt"
         },
         {
             "type": "decimal",
             "position": "right",
-            "property": "plafondAmt"
+            "property": "PlafondAmt"
         },
         {
             "type": "boolean",
             "position": "center",
-            "property": "isRevolving"
+            "property": "IsRevolving"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "MouStat"
         },
         {
             "type": "text",
             "position": "left",
-            "property": "mrMouTypeCode"
-        },
-        {
-            "type": "text",
-            "position": "left",
-            "property": "mouStat"
+            "property": "MrMouTypeCode"
         }
     ]
 }

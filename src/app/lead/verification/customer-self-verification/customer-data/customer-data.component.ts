@@ -18,7 +18,7 @@ import { CustJobDataComponent } from 'app/NEW-NAP/sharing-component/input-nap-co
 @Component({
   selector: 'app-customer-data',
   templateUrl: './customer-data.component.html',
-  styleUrls: ['./customer-data.component.scss'],
+  styleUrls: [],
   providers: [NGXToastrService]
 })
 export class CustomerDataComponent implements OnInit {

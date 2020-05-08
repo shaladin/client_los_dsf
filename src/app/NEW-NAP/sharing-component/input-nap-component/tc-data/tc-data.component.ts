@@ -8,7 +8,6 @@ import { AppIdObj } from 'app/shared/model/AppIdObj.Model';
 import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
 import { formatDate } from '@angular/common';
 import { ReqTCObj } from 'app/shared/model/ReqTCObj.Model';
-import { WizardComponent } from 'angular-archwizard';
 
 @Component({
   selector: 'app-tc-data',
@@ -20,7 +19,7 @@ export class TcDataComponent implements OnInit {
   @Input() AppId: any;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
 
-  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService, private wizard: WizardComponent) {
+  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
     })
@@ -197,7 +196,6 @@ export class TcDataComponent implements OnInit {
           console.log(response);
           this.toastr.successMessage(response["message"]);
           this.outputTab.emit();
-          this.wizard.goToNextStep();
         },
         (error) => {
           console.log(error);
@@ -209,7 +207,6 @@ export class TcDataComponent implements OnInit {
           console.log(response);
           this.toastr.successMessage(response["message"]);
           this.outputTab.emit();
-          this.wizard.goToNextStep();
         },
         (error) => {
           console.log(error);

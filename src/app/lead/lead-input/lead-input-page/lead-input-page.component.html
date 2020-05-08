@@ -13,24 +13,42 @@
               </button>
               <button type="button" class="btn btn-raised btn-warning mr-1" (click)="cancelHandler()" translate>
                 Cancel
-              </button> 
+              </button>
             </div>
           </div>
-          <lib-ucviewgeneric [viewInput]="viewLeadHeaderMainInfo"></lib-ucviewgeneric>
-           
-        <aw-wizard #wizard navBarLayout="large-empty-symbols" [disableNavigationBar]=true [awNavigationMode]
-          navigateBackward="allow" navigateForward="allow">
-          <aw-wizard-step [stepTitle]="'Customer Data'"
-            [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }" (stepEnter)="EnterTab('Customer')">
-            <app-lead-input-cust-data *ngIf="isCustomer == true" [LeadId]="LeadId">
-            </app-lead-input-cust-data>
-          </aw-wizard-step>
-          <aw-wizard-step [stepTitle]="'Lead Data'"
-            [navigationSymbol]="{ symbol: '&#xf0b1;', fontFamily: 'FontAwesome' }" (stepEnter)="EnterTab('Lead')">
-            <app-lead-input-lead-data *ngIf="isLead == true">
-            </app-lead-input-lead-data>
-          </aw-wizard-step>
-        </aw-wizard>
+          <div id="stepper1" class="bs-stepper">
+            <div class="bs-stepper-header" role="tablist" style="overflow-x: auto;">
+              <!-- your steps here -->
+              <div class="step" data-target="#customer-data-tab">
+                <button type="button" class="step-trigger" role="tab" aria-controls="customer-data-tab"
+                  id="customer-data-tab-trigger" (click)="EnterTab('custData')">
+                  <span class="bs-stepper-circle">1</span>
+                  <span class="bs-stepper-label">CUSTOMER DATA</span>
+                </button>
+              </div>
+              <div class="line"></div>
+              <div class="step" data-target="#lead-data-tab">
+                <button type="button" class="step-trigger" role="tab" aria-controls="lead-data-tab"
+                  id="lead-data-tab-trigger" (click)="EnterTab('leadData')">
+                  <span class="bs-stepper-circle">2</span>
+                  <span class="bs-stepper-label">LEAD DATA</span>
+                </button>
+              </div>
+            </div>
+            <br><br>
+            <div class="bs-stepper-content">
+              <!-- your steps content here -->
+              <div id="customer-data-tab" class="content" role="tabpanel" aria-labelledby="customer-data-tab-trigger">
+                <app-lead-input-cust-data *ngIf="isCustData == true" (outputTab)="getValue($event)">
+                </app-lead-input-cust-data>
+              </div>
+              <div id="lead-data-tab" class="content" role="tabpanel" aria-labelledby="lead-data-tab-trigger">
+                <app-lead-input-lead-data *ngIf="isLeadData == true" (outputTab)="getValue($event)">
+                </app-lead-input-lead-data>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
