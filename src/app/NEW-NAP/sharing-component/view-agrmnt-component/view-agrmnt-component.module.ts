@@ -6,6 +6,7 @@ import { ViewAgrmntReservedFundComponent } from "./view-reserved-fund/view-reser
 import { AgrmntLifeInsuranceComponent } from "./life-insurance/life-insurance.component";
 import { ViewAgrmntDocumentComponent } from "./view-document/view-document.component";
 import { ViewDeliveryOrderComponent } from "./view-delivery-order/view-delivery-order.component";
+import { AgrmntFinancialComponent } from './agrmnt-financial/agrmnt-financial.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { ViewDeliveryOrderComponent } from "./view-delivery-order/view-delivery-
     ViewAgrmntReservedFundComponent,
     AgrmntLifeInsuranceComponent,
     ViewAgrmntDocumentComponent,
-    ViewDeliveryOrderComponent
+    ViewDeliveryOrderComponent,
+    AgrmntFinancialComponent
   ],
   providers: [
     NGXToastrService
