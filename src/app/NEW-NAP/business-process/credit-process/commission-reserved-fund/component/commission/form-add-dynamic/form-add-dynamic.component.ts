@@ -143,6 +143,7 @@ export class FormAddDynamicComponent implements OnInit {
       ContentName: ['', Validators.required],
       ContentNameValue: [''],
       MrSupplEmpPositionCodeDesc: [''],
+      SupplCode: [''],
       BankAccountNo: ['', Validators.required],
       BankAccountName: [''],
       BankBranch: [''],
@@ -328,7 +329,8 @@ export class FormAddDynamicComponent implements OnInit {
     });
     if(this.FormInputObj["content"]==AdInsConstant.ContentSupplierEmp)
       this.FormObj.controls.arr["controls"][indexFormObj].patchValue({
-        MrSupplEmpPositionCodeDesc: this.DDLContentName[idx].MrSupplEmpPositionCodeDesc
+        MrSupplEmpPositionCodeDesc: this.DDLContentName[idx].MrSupplEmpPositionCodeDesc,
+        SupplCode: this.DDLContentName[idx].SupplCode
       });
     var obj;
     var code;
@@ -366,7 +368,8 @@ export class FormAddDynamicComponent implements OnInit {
     });
     if(this.FormInputObj["content"]==AdInsConstant.ContentSupplierEmp)
       this.FormObj.controls.arr["controls"][idx].patchValue({
-        MrSupplEmpPositionCodeDesc: this.DDLContentName[indexFormObj].MrSupplEmpPositionCodeDesc
+        MrSupplEmpPositionCodeDesc: this.DDLContentName[indexFormObj].MrSupplEmpPositionCodeDesc,
+        SupplCode: this.DDLContentName[indexFormObj].SupplCode
       });
     var obj;
     var code;
@@ -400,7 +403,8 @@ export class FormAddDynamicComponent implements OnInit {
          
     if(this.FormInputObj["content"]==AdInsConstant.ContentSupplierEmp)
       this.FormObj.controls.arr["controls"][idx].patchValue({
-        MrSupplEmpPositionCodeDesc: this.DDLContentName[idxDDLContent].MrSupplEmpPositionCodeDesc
+        MrSupplEmpPositionCodeDesc: this.DDLContentName[idxDDLContent].MrSupplEmpPositionCodeDesc,
+        SupplCode: this.DDLContentName[idxDDLContent].SupplCode
       });
 
     this.FormObj.controls.arr["controls"][idx].patchValue({

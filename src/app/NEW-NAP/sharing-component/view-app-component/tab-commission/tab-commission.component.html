@@ -4,9 +4,9 @@
     <app-list-data-commission *ngIf="ListSupplEmpData.length" [FormInputObj]="SupplEmpData"></app-list-data-commission>
     <app-list-data-commission *ngIf="ListReferantorData.length" [FormInputObj]="ReferantorData"></app-list-data-commission>
     
-    <lib-ucSubsection *ngIf="SummaryData.totalCommAmt" [id]="'formSummaryId'" [title]="'Summary'" [panel]="'formSummary'">
+    <lib-ucSubsection [id]="'formSummaryId'" [title]="'Summary'" [panel]="'formSummary'">
     </lib-ucSubsection>
-    <div *ngIf="SummaryData.totalCommAmt" class="form-body" [id]="'formSummary'">
+    <div class="form-body" [id]="'formSummary'">
       <div class="form-body">
 
         <div class="form-group row">
