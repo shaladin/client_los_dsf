@@ -7,6 +7,7 @@ import { RequestSubmitAppDupCheckCustObj } from 'app/shared/model/AppDupCheckCus
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 
 @Component({
   selector: 'app-applicant-existing-data-personal',
@@ -41,16 +42,7 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private toastr: NGXToastrService
-  ) { }
-
-  ngOnInit() {
-    this.AppCustObj = new AppCustObj();
-    this.AppCustPersonalObj = new AppCustPersonalObj();
-    this.listSelectedIdGuarantor = new Array();
-    this.listSelectedIdSpouse = new Array();
-    this.listSelectedIdShareholder = new Array();
-
-
+  ) { 
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
         this.AppId = params['AppId'];
@@ -59,6 +51,18 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
         this.WfTaskListId = params['WfTaskListId'];
       }
     });
+  }
+
+  ngOnInit() {
+
+    this.ClaimTask();
+     
+    this.AppCustObj = new AppCustObj();
+    this.AppCustPersonalObj = new AppCustPersonalObj();
+    this.listSelectedIdGuarantor = new Array();
+    this.listSelectedIdSpouse = new Array();
+    this.listSelectedIdShareholder = new Array();
+    
     //Get App Cust Data
     var appObj = { "AppId": this.AppId };
     this.http.post(this.GetCustDataByAppId, appObj).subscribe(
@@ -217,5 +221,17 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
         console.log(error);
       });
   
+  }
+
+  ClaimTask(){
+    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var wfClaimObj = new ClaimWorkflowObj();
+    wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
+    wfClaimObj.pUserId = currentUserContext["UserName"];
+
+    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+      (response) => {
+    
+      });
   }
 }

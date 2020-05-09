@@ -27,41 +27,42 @@ export class PagingComponent implements OnInit {
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppDupCheck.json";
 
-    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
-    var addCrit = new CriteriaObj();
-    addCrit.DataType = 'text';
-    addCrit.propName = 'WTL.USERNAME';
-    addCrit.restriction = AdInsConstant.RestrictionIn;
-    var arrayString = new Array<string>();
-    arrayString.push(currentUserContext["UserName"]);
-    arrayString.push("");
-    addCrit.listValue = arrayString;
+    // var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    // var addCrit = new CriteriaObj();
+    // addCrit.DataType = 'text';
+    // addCrit.propName = 'WTL.USERNAME';
+    // addCrit.restriction = AdInsConstant.RestrictionIn;
+    // var arrayString = new Array<string>();
+    // arrayString.push(currentUserContext["UserName"]);
+    // arrayString.push("");
+    // addCrit.listValue = arrayString;
 
-    this.inputPagingObj.addCritInput.push(addCrit);
+    // this.inputPagingObj.addCritInput.push(addCrit);
   }
 
-  ClaimTask(event){
-    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
-    var wfClaimObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = event.RowObj.WfTaskListId;
-    wfClaimObj.pUserId = currentUserContext["UserName"];
+  NextScreen(event){
+    // var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    // var wfClaimObj = new ClaimWorkflowObj();
+    // wfClaimObj.pWFTaskListID = event.RowObj.WfTaskListId;
+    // wfClaimObj.pUserId = currentUserContext["UserName"];
 
-    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
-        if(event.RowObj.CustTypeCode == AdInsConstant.CustTypePersonal && event.RowObj.IsExistingCust == false){
-          this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/Personal"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
-        }
-        if(event.RowObj.CustTypeCode == AdInsConstant.CustTypePersonal && event.RowObj.IsExistingCust == true){
-          this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Personal"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
-        }
-        if(event.RowObj.CustTypeCode == AdInsConstant.CustTypeCompany && event.RowObj.IsExistingCust == false){
-          this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/Company"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
-        }
-        if(event.RowObj.CustTypeCode == AdInsConstant.CustTypeCompany && event.RowObj.IsExistingCust == true){
-          this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
-        }
-      });
+    // this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+    //   (response) => {
     
+    //   });
+    
+    if(event.RowObj.CustTypeCode == AdInsConstant.CustTypePersonal && event.RowObj.IsExistingCust == false){
+      this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/Personal"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
+    }
+    if(event.RowObj.CustTypeCode == AdInsConstant.CustTypePersonal && event.RowObj.IsExistingCust == true){
+      this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Personal"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
+    }
+    if(event.RowObj.CustTypeCode == AdInsConstant.CustTypeCompany && event.RowObj.IsExistingCust == false){
+      this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/Company"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
+    }
+    if(event.RowObj.CustTypeCode == AdInsConstant.CustTypeCompany && event.RowObj.IsExistingCust == true){
+      this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
+    }
   }
 
 }
