@@ -2,6 +2,10 @@ import { Component, OnInit, Input } from '@angular/core';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { AppGuarantorPersonalObj } from 'app/shared/model/AppGuarantorPersonalObj.Model';
+import { AppGuarantorObj } from 'app/shared/model/AppGuarantorObj.Model';
+import { AppGuarantorCompanyObj } from 'app/shared/model/AppGuarantorCompanyObj.Model';
+import { GuarantorPersonalObj } from 'app/shared/model/GuarantorPersonalObj.Model';
 
 @Component({
   selector: 'app-guarantor',
@@ -10,43 +14,47 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 })
 export class GuarantorComponent implements OnInit {
 
-  viewObj: string;
-  viewObj1: string;
-  viewObj2: string;
-  viewObj3: string;
-  viewObj4: string;
-  inputGridObj: InputGridObj;
-  @Input() arrValue = [];
   @Input() AppId;
+  listAppGuarantorPersonal : Array<AppGuarantorPersonalObj> = new Array<AppGuarantorPersonalObj>();
+  listAppGuarantorCompany : Array<AppGuarantorCompanyObj> = new Array<AppGuarantorCompanyObj>();
+  listAppGuarantor : Array<AppGuarantorObj> = new Array<AppGuarantorObj>();
+
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    this.inputGridObj = new InputGridObj();
-    this.inputGridObj.pagingJson = "./assets/ucgridview/gridAppGuarantorLegalDoc.json";
+    this.setValue();
+  }
 
-    var AppObj = {
-      AppId: this.AppId
-    }
-
-    this.http.post(AdInsConstant.GetListAppGuarantorCompanyByAppId, AppObj).subscribe(
+  setValue(){ 
+    this.http.post(AdInsConstant.GetListAppGuarantor, {AppId:this.AppId}).subscribe(
       (response) => {
         console.log(response);
-        this.inputGridObj.resultData = {
-          Data: ""
-        }
-        this.inputGridObj.resultData["Data"] = new Array();
-        this.inputGridObj.resultData.Data = response["ReturnObject"]["ListAppGuarantorCompanyLegalDoc"]
+        this.listAppGuarantor = response["ReturnObject"];
+      },
+      (error) => {
+        console.log(error);
+      }
+    );    
+    this.http.post(AdInsConstant.GetListAppGuarantorPersonalByAppId, {AppId:this.AppId}).subscribe(
+      (response) => {
+        console.log(response);
+        this.listAppGuarantorPersonal = response["ReturnObject"];
       },
       (error) => {
         console.log(error);
       }
     );
 
-    this.viewObj = "./assets/ucviewgeneric/viewGuarantorPersonalMainInfo.json";
-    this.viewObj1 = "./assets/ucviewgeneric/viewGuarantorPersonalAddr.json";
-    this.viewObj2 = "./assets/ucviewgeneric/viewGuarantorCompanyMainInfo.json";
-    this.viewObj3 = "./assets/ucviewgeneric/viewGuarantorCompanyAddr.json";
-    this.viewObj4 = "./assets/ucviewgeneric/viewGuarantorCompanyContactInfo.json";
+    this.http.post(AdInsConstant.GetListAppGuarantorCompanyByAppId, {AppId:this.AppId}).subscribe(
+      (response) => {
+        console.log(response);
+        this.listAppGuarantorCompany = response["ReturnObject"];
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
   }
 
 }

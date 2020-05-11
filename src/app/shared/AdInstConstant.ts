@@ -551,6 +551,7 @@ export class AdInsConstant {
   public static GetListAppGuarantorCompanyByAppId = environment.losUrl + "/AppGuarantor/GetListAppGuarantorCompanyByAppId"
   public static GuarantorTypeCodePersonal = "PERSONAL";
   public static GuarantorTypeCodeCompany = "COMPANY";
+  public static GetListAppGuarantorPersonalByAppId = environment.losUrl + "/AppGuarantor/GetListAppGuarantorPersonalByAppId"
 
 
   // Vendor
