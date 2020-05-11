@@ -15,7 +15,8 @@ import { AgrmntFinancialComponent } from './agrmnt-financial/agrmnt-financial.co
     ViewAgrmntReservedFundComponent,
     AgrmntLifeInsuranceComponent,
     ViewAgrmntDocumentComponent,
-    ViewDeliveryOrderComponent
+    ViewDeliveryOrderComponent,
+    ViewPurchaseOrderComponent,
   ],
   imports: [
     CommonModule,

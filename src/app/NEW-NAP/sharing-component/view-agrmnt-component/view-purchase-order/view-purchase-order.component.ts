@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { FormBuilder } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { Router, ActivatedRoute } from '@angular/router';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
 
 @Component({
   selector: 'app-view-purchase-order',
@@ -7,9 +12,39 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ViewPurchaseOrderComponent implements OnInit {
 
-  constructor() { }
+  @Input() agrmntId: number = 0;
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private http: HttpClient,
+    private fb: FormBuilder,
+    private toastr: NGXToastrService,
+  ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    console.log("this view PO");
+    console.log(this.agrmntId);
+    await this.BindPOData();
   }
 
+  ResponseAgrmntFinDataData;
+  ResponseAppAssetData;
+  ResponsePurchaseOrderHData;
+  async BindPOData(){
+    var obj = { AgrmntId: this.agrmntId };
+    await this.http.post(AdInsConstant.GetPurchaseOrderHDetailViewByAgrmntId, obj).toPromise().then(
+      (response) => {
+        console.log(response);
+        this.ResponseAgrmntFinDataData=response["ResponseAgrmntFinDataObj"];
+        this.ResponseAppAssetData=response["ResponseAppAssetObj"];
+        this.ResponsePurchaseOrderHData=response["ResponsePurchaseOrderHObj"];
+        // console.log(this.ResponseAgrmntFinDataData);
+        // console.log(this.ResponseAppAssetData);
+        // console.log(this.ResponsePurchaseOrderHData);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );     
+  }
 }
