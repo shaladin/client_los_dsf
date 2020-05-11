@@ -235,7 +235,7 @@ export class CommissionComponent implements OnInit {
 
   GetRuleSetName() {
     if (this.isFinishGetAppReferantorData && this.isFinishGetAppFeeData && this.isFinishGetAppData) {
-      var url = environment.FoundationR3Url + AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode;
+      var url = AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode;
       var obj = {
         ProdOfferingCode: this.ResultAppData.ProdOfferingCode,
         RefProdCompntCode: "COMMISSION_SCHM",
