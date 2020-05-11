@@ -15,19 +15,19 @@
     <table class="table table-responsive-md text-center table-hover">
       <thead>
         <tr class="table-header">
-          <th><span class="thead-header" name='CollNo' translate>Collateral No</span>
+          <th><span class="thead-header" name='CollNo' translate>COLLATERAL NO.</span>
           </th>
-          <th><span style="float: left;" class="thead-header" name='CollName' translate>Collateral Name</span>
+          <th><span style="float: left;" class="thead-header" name='CollName' translate>COLLATERAL NAME</span>
           </th>
-          <th><span style="float: left;" class="thead-header" name='CollType' translate>Collateral Type</span>
+          <th><span style="float: left;" class="thead-header" name='CollType' translate>COLLATERAL TYPE</span>
           </th>
-          <th><span style="float: left;" class="thead-header" name='MouCustName' translate>Document Owner Name</span>
+          <th><span style="float: left;" class="thead-header" name='MouCustName' translate>DOCUMENT OWNER NAME</span>
           </th>
-          <th><span style="float: right;" class="thead-header" name='CollPrice' translate>Collateral Price</span>
+          <th><span style="float: right;" class="thead-header" name='CollPrice' translate>COLLATERAL PRICE</span>
           </th>
-          <th><span class="thead-header" name='CollSource' translate>Collateral Source</span>
+          <th><span class="thead-header" name='CollSource' translate>COLLATERAL SOURCE</span>
           </th>
-          <th>Action</th>
+          <th>ACTION</th>
         </tr>
       </thead>
       <tbody>
@@ -87,7 +87,7 @@
               </lib-uc-show-errors>
             </div>
             <label class="col-md-1"></label>
-            <label class="col-md-2 adins-required-label" translate>Serial No 1</label>
+            <label class="col-md-2 adins-required-label" translate>Serial No. 1</label>
             <div class="col-md-2">
               <input type="text" class="form-control" formControlName="SerialNo1"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.SerialNo1.invalid }">
@@ -102,7 +102,7 @@
                 [identifier]="'FullAssetName'" (lookup)="getLookupCollateralTypeResponse($event)"></lib-uclookupgeneric>
             </div>
             <label class="col-md-1"></label>
-            <label class="col-md-2 adins-required-label" translate>Serial No 2</label>
+            <label class="col-md-2 adins-required-label" translate>Serial No. 2</label>
             <div class="col-md-2">
               <input type="text" class="form-control" formControlName="SerialNo2"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.SerialNo2.invalid }">
@@ -119,7 +119,7 @@
               </lib-uc-show-errors>
             </div>
             <label class="col-md-1"></label>
-            <label class="col-md-2 adins-required-label" translate>Serial No 3</label>
+            <label class="col-md-2 adins-required-label" translate>Serial No. 3</label>
             <div class="col-md-2">
               <input type="text" class="form-control" formControlName="SerialNo3"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.SerialNo3.invalid }">
@@ -134,7 +134,7 @@
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.Notes.invalid}"></textarea>
             </div>
             <label class="col-md-1"></label>
-            <label class="col-md-2 adins-required-label" translate>Serial No 4</label>
+            <label class="col-md-2 adins-required-label" translate>Serial No. 4</label>
             <div class="col-md-2">
               <input type="text" class="form-control" formControlName="SerialNo4"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.SerialNo4.invalid }">
@@ -178,7 +178,7 @@
               </lib-uc-show-errors>
             </div>
             <label class="col-md-1"></label>
-            <label class="col-md-2 adins-required-label" translate>Owner Id No</label>
+            <label class="col-md-2 adins-required-label" translate>Owner ID No.</label>
             <div class="col-md-2">
               <input type="text" class="form-control" formControlName="OwnerIdNo"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerIdNo.invalid }">
@@ -274,17 +274,15 @@
                 <tr class="table-header">
                   <th><input type="checkbox" [checked]="checkboxAll" (change)="SelectAll($event.target.checked)"
                       id="checkAll" name="CheckAll"></th>
-                  <th><span class="thead-header" name='CollNo' translate>Collateral No</span>
+                  <th><span class="thead-header" name='CollNo' translate>COLLATERAL NO.</span>
                   </th>
-                  <th><span style="float: left;" class="thead-header" name='CollName' translate>Collateral Name</span>
+                  <th><span style="float: left;" class="thead-header" name='CollName' translate>COLLATERAL NAME</span>
                   </th>
-                  <th><span style="float: left;" class="thead-header" name='CollType' translate>Collateral Type</span>
+                  <th><span style="float: left;" class="thead-header" name='CollType' translate>COLLATERAL TYPE</span>
                   </th>
-                  <th><span style="float: left;" class="thead-header" name='MouCustName' translate>Document Owner
-                      Name</span>
+                  <th><span style="float: left;" class="thead-header" name='MouCustName' translate>DOCUMENT OWNER NAME</span>
                   </th>
-                  <th><span style="float: right;" class="thead-header" name='CollPrice' translate>Collateral
-                      Price</span>
+                  <th><span style="float: right;" class="thead-header" name='CollPrice' translate>COLLATERAL PRICE</span>
                   </th>
                 </tr>
               </thead>
@@ -308,8 +306,6 @@
                 </tr>
               </tbody>
             </table>
-
-
             <div class="card-header">
               <div class="text-right">
                 <button type="button" (click)="addToTemp()" class="btn btn-raised btn-warning mr-1">
@@ -321,19 +317,17 @@
             <table class="table table-responsive-md text-center table-hover">
               <thead>
                 <tr class="table-header">
-                  <th><span class="thead-header" name='CollNo' translate>Collateral No</span>
+                  <th><span class="thead-header" name='CollNo' translate>COLLATERAL NO.</span>
                   </th>
-                  <th><span style="float: left;" class="thead-header" name='CollName' translate>Collateral Name</span>
+                  <th><span style="float: left;" class="thead-header" name='CollName' translate>COLLATERAL NAME</span>
                   </th>
-                  <th><span style="float: left;" class="thead-header" name='CollType' translate>Collateral Type</span>
+                  <th><span style="float: left;" class="thead-header" name='CollType' translate>COLLATERAL TYPE</span>
                   </th>
-                  <th><span style="float: left;" class="thead-header" name='MouCustName' translate>Document Owner
-                      Name</span>
+                  <th><span style="float: left;" class="thead-header" name='MouCustName' translate>DOCUMENT OWNER NAME</span>
                   </th>
-                  <th><span style="float: right;" class="thead-header" name='CollPrice' translate>Collateral
-                      Price</span>
+                  <th><span style="float: right;" class="thead-header" name='CollPrice' translate>COLLATERAL PRICE</span>
                   </th>
-                  <th translate>Delete</th>
+                  <th translate>DELETE</th>
                 </tr>
               </thead>
               <tbody>

@@ -10,7 +10,6 @@ import { OutstandingTcPagingComponent } from "./outstanding-tc/outstanding-tc-pa
 import { OutstandingTcDetailComponent } from "./outstanding-tc/outstanding-tc-detail/outstanding-tc-detail.component";
 import { ReturnHandlingPagingComponent } from "./return-handling/return-handling-paging/return-handling-paging.component";
 import { ReturnHandlingDetailComponent } from "./return-handling/return-handling-detail/return-handling-detail.component";
-import { ReturnHandlingCommissionComponent } from "./return-handling/return-handling-commission/return-handling-commission.component";
 import { ViewMainInfoComponentModule } from "app/NEW-NAP/sharing-component/view-main-info-component/view-main-info-component.module"
 import { PagingComponent } from "./app-dup-check/paging/paging.component";
 import { ListPersonalComponent } from "./app-dup-check/list-personal/list-personal.component";
@@ -27,6 +26,7 @@ import { ReturnHandlingCollateralDetailComponent } from "./return-handling/retur
 import { ReturnHandlingCollateralEditComponent } from "./return-handling/return-handling-collateral-edit/return-handling-collateral-edit.component";
 import { ReturnHandlingCollateralPagingComponent } from "./return-handling/return-handling-collateral-paging/return-handling-collateral-paging.component";
 import { MatCheckboxModule } from "@angular/material";
+import { ReturnHandlingComRsvfundPagingComponent } from "./return-handling/return-handling-com-rsvfund-paging/return-handling-com-rsvfund-paging.component";
 
 @NgModule({
   imports: [
@@ -51,7 +51,7 @@ import { MatCheckboxModule } from "@angular/material";
     ApplicantExistingDataCompanyComponent,
     ReturnHandlingEditAppPagingComponent,
     AssetInquiryComponent,
-    ReturnHandlingCommissionComponent,
+    ReturnHandlingComRsvfundPagingComponent,
     AppInquiryComponent,
     CreditProcessInquiryComponent,
     ReturnHandlingPhoneVerifPagingComponent,
