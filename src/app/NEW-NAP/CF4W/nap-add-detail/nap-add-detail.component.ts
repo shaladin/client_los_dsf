@@ -6,6 +6,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { FormBuilder } from '@angular/forms';
 import Stepper from 'bs-stepper';
+import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -17,6 +18,7 @@ export class NapAddDetailComponent implements OnInit {
   private stepper: Stepper;
   AppStepIndex: number = 1;
   appId: number;
+  wfTaskListId: number;
   mode: string;
   viewProdMainInfoObj: string;
   viewReturnInfoObj: string = "";
@@ -54,11 +56,15 @@ export class NapAddDetailComponent implements OnInit {
         this.mode = params["Mode"];
         this.CheckMultiAsset();
       }
+      if (params["WfTaskListId"] != null) {
+        this.wfTaskListId = params["WfTaskListId"];
+      }
     });
   }
 
   ngOnInit() {
-    console.log("this")
+    console.log("this");
+    this.ClaimTask();
     this.AppStepIndex = 0;
     this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
     this.NapObj = new AppObj();
@@ -169,6 +175,7 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   LastStepHandler() {
+    this.NapObj.WfTaskListId = this.wfTaskListId;
     this.http.post(AdInsConstant.SubmitNAP, this.NapObj).subscribe(
       (response) => {
         console.log(response);
@@ -198,5 +205,18 @@ export class NapAddDetailComponent implements OnInit {
         }
       )
     }
+  }
+
+  ClaimTask(){
+    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var wfClaimObj = new AppObj();
+    wfClaimObj.AppId = this.appId;
+    wfClaimObj.Username = currentUserContext["UserName"];
+    wfClaimObj.WfTaskListId = this.wfTaskListId;
+
+    this.http.post(AdInsConstant.ClaimTaskNap, wfClaimObj).subscribe(
+      (response) => {
+    
+      });
   }
 }

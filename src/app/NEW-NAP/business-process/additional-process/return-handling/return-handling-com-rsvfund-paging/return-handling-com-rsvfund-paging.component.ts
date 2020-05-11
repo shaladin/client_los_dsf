@@ -1,25 +1,25 @@
 import { Component, OnInit } from '@angular/core';
+import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 
 @Component({
-  selector: 'app-commission-reserved-fund-paging',
-  templateUrl: './commission-reserved-fund-paging.component.html',
+  selector: 'app-return-handling-com-rsvfund-paging',
+  templateUrl: './return-handling-com-rsvfund-paging.component.html',
   styleUrls: []
 })
-export class CommissionReservedFundPagingComponent implements OnInit {
+export class ReturnHandlingComRsvfundPagingComponent implements OnInit {
 
   constructor() { }
 
   inputPagingObj;
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
-    this.inputPagingObj._url="./assets/ucpaging/searchCommission.json";
+    this.inputPagingObj._url="./assets/ucpaging/searchReturnHandlingCommission.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
-    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCommission.json";
+    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReturnHandlingCommission.json";
 
     var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
     var addCrit = new CriteriaObj();
@@ -32,7 +32,6 @@ export class CommissionReservedFundPagingComponent implements OnInit {
     addCrit.listValue = arrayString;
 
     this.inputPagingObj.addCritInput.push(addCrit);
-
   }
 
 }

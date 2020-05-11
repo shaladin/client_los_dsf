@@ -6,7 +6,6 @@ import { OutstandingTcPagingComponent } from './outstanding-tc/outstanding-tc-pa
 import { OutstandingTcDetailComponent } from './outstanding-tc/outstanding-tc-detail/outstanding-tc-detail.component';
 import { ReturnHandlingPagingComponent } from './return-handling/return-handling-paging/return-handling-paging.component';
 import { ReturnHandlingDetailComponent } from './return-handling/return-handling-detail/return-handling-detail.component';
-import { ReturnHandlingCommissionComponent } from './return-handling/return-handling-commission/return-handling-commission.component';
 import { PagingComponent } from './app-dup-check/paging/paging.component';
 import { ListPersonalComponent } from './app-dup-check/list-personal/list-personal.component';
 import { ListCompanyComponent } from './app-dup-check/list-company/list-company.component';
@@ -19,6 +18,7 @@ import { ReturnHandlingSurveyComponent } from './return-handling/return-handling
 import { ReturnHandlingCollateralPagingComponent } from './return-handling/return-handling-collateral-paging/return-handling-collateral-paging.component';
 import { ReturnHandlingCollateralEditComponent } from './return-handling/return-handling-collateral-edit/return-handling-collateral-edit.component';
 import { ReturnHandlingCollateralDetailComponent } from './return-handling/return-handling-collateral-detail/return-handling-collateral-detail.component';
+import { ReturnHandlingComRsvfundPagingComponent } from './return-handling/return-handling-com-rsvfund-paging/return-handling-com-rsvfund-paging.component';
 
 const routes: Routes = [
   {
@@ -123,10 +123,10 @@ const routes: Routes = [
         }
       },
       {
-        path: 'ReturnHandling/Commission',
-        component: ReturnHandlingCommissionComponent,
+        path: 'ReturnHandling/CommissionReservedFund/Paging',
+        component: ReturnHandlingComRsvfundPagingComponent,
         data: {
-          title: 'Return Handling Commission'
+          title: 'Return Handling Commission Reserverd Fund'
         }
       },
       {

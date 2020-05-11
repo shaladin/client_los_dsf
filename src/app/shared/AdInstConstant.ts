@@ -35,9 +35,13 @@ export class AdInsConstant {
   public static AppStepPGLV = "PGLV";
   public static AppStepCSR = "CSR";
   public static FL4W = "FL4W";
+  public static CF4W = "CF4W";
 
   public static GENERAL = "GENERAL";
   public static FACTORING = "FACTORING";
+
+  //WORKFLOW (LEWAT FOUNDATION)
+  public static ResumeWorkflow = environment.FoundationR3Url + "/Workflow/ResumeWorkflow"
 
   // ASSET
   public static GetListKeyValueByCode = environment.FoundationR3Url + "/AssetType/GetListKeyValueByCode";
@@ -240,6 +244,7 @@ export class AdInsConstant {
 
   //REF REASON
   public static GetListActiveRefReason = environment.FoundationR3Url + "/RefReason/GetListActiveRefReason";
+  public static GetListActiveRefReasonByRefReasonTypeCode = environment.FoundationR3Url + "/RefReason/GetListKeyValueByCode";
   // AppAgrmntCancel
   public static AddAppAgrmntCancel = environment.losUrl + "/AppAgrmntCancel/AddAppAgrmntCancel"
 
@@ -699,6 +704,7 @@ export class AdInsConstant {
   public static EditAppAssetDOMultiAsset = environment.losUrl + "/AppAsset/EditAppAssetDOMultiAsset";
   public static EditDeliveryOrderMultiAsset = environment.losUrl + "/DeliveryOrder/EditDeliveryOrderMultiAsset";
   public static GetDeliveryOrderHByDeliveryOrderHId = environment.losUrl + "/DeliveryOrder/GetDeliveryOrderHByDeliveryOrderHId";
+  public static GetDeliveryOrderDataForOneAssetByAgrmntId = environment.losUrl + "/DeliveryOrder/GetDeliveryOrderDataForOneAssetByAgrmntId";
 
   //PURCHASE ORDER
   public static SubmitPurchaseOrder = environment.losUrl + "/PurchaseOrderH/SubmitPurchaseOrder";
@@ -819,6 +825,7 @@ export class AdInsConstant {
 
   //AGRMNT FIN DATA
   public static GetAgrmntFinDataByAgrmntId = environment.losUrl + "/AgrmntFinData/GetAgrmntFinDataByAgrmntId";
+  public static GetFinancialDataByAgrmntIdForView = environment.losUrl + "/AgrmntFinData/GetFinancialDataByAgrmntIdForView";
 
 
   // LEAD FRAUD VERF
@@ -843,6 +850,9 @@ export class AdInsConstant {
   public static GetAgrmntByCustNo = environment.losUrl + "/Agrmnt/GetAgrmntByCustNo";
   public static GetAgrmntByAppId = environment.losUrl + "/Agrmnt/GetAgrmntByAppId";
   public static GetAgrmntByAppIdGetAgrmntByAgrmntNo = environment.losUrl + "/Agrmnt/GetAgrmntByAgrmntNo";
+    
+  //AGRMNT Commission
+  public static GetListAgrmntCommissionWithDetailByAgrmntId = environment.losUrl + "/AgrmntCommission/GetListAgrmntCommissionWithDetailByAgrmntId";
 
   //REF TC
   public static GetRefTcByCode = environment.FoundationR3Url + "/RefTc/GetRefTcByCode";
@@ -870,7 +880,7 @@ export class AdInsConstant {
 
   //AGREEMENT DOC PRINT
   public static AddAgrmntDocPrint = environment.losUrl + "/AgrmntDocPrint/AddAgrmntDocPrint"
-
+  public static GetListAgrmntDocPrintByAgrmntId = environment.losUrl + "/AgrmntDocPrint/GetListAgrmntDocPrintByAgrmntId"
 
   //PURCHASE ORDER EXTENSION
   public static SubmitNewExpDate = environment.losUrl + "/PurchaseOrderH/SubmitNewExpDate";
@@ -1021,6 +1031,7 @@ export class AdInsConstant {
 
   // Workflow Engine
   public static ClaimTask = environment.FoundationR3Url + "/Workflow/ClaimTask";
+  public static ClaimTaskNap = environment.losUrl + "/Application/ClaimTaskNap";
 
   //Application Data
   public static SaveApp = environment.losUrl + "/ApplicationData/SaveApp"
@@ -1049,6 +1060,8 @@ export class AdInsConstant {
   public static RequestReturnTask = environment.losUrl + "/ReturnHandlingD/RequestReturnTask";
   public static DeleteReturnHandlingD = environment.losUrl + "/ReturnHandlingD/DeleteReturnHandlingD";
   public static ResumeReturnHandling = environment.losUrl + "/ReturnHandlingH/ResumeReturnHandling";
+  // public static Test = environment.losUrl + "/ReturnHandlingD/Test";
+
   public static ReturnHandlingEditApp = "RTN_EDIT_APP";
   public static GetReturnHandlingDByReturnHandlingDId = environment.losUrl + "/ReturnHandlingD/GetReturnHandlingDByReturnHandlingDId";
 
@@ -1079,5 +1092,11 @@ export class AdInsConstant {
 
   //RfaLog
   public static GetRfaLogByTrxNo  = environment.FoundationR3Url + "/RfaLog/GetRfaLogByTrxNo";
+
+  //Agrmnt Subsidy
+  public static GetAgrmntSubsidyListByAgrmntId  = environment.losUrl + "/AgrmntSubsidy/GetAgrmntSubsidyListByAgrmntId";
+
+  //Agrmnt Fee
+  public static GetAgrmntFeeListByAgrmntId  = environment.losUrl + "/AgrmntFee/GetAgrmntFeeListByAgrmntId";
 
 }
