@@ -60,7 +60,7 @@ export class SubsidyComponent implements OnInit {
 
   LoadSubsidyData()
   {
-    this.http.post(environment.losUrl + "/AppSubsidy/GetListAppSubsidyByAppId", { AppId: this.AppId }).subscribe(
+    this.http.post(environment.losUrl + "/AppSubsidy/GetOrInitAppSubsidyByAppId", { AppId: this.AppId }).subscribe(
       (response) => {
         this.listSubsidy = response["AppSubsidies"];
       }
