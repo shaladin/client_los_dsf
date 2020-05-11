@@ -1,0 +1,73 @@
+{
+    "isSeq" : true,
+    "headerList": [
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Subsidy Form Type",
+            "name": "MrSubdFromTypeCode"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Subsidy From Value",
+            "name": "MrSubdFromValueCode"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Subsidy Allocation",
+            "name": "MrSubdAllocCode"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Subsidy Source",
+            "name": "MrSubdSourceCode"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Subsidy Value Type",
+            "name": "MrSubdValueTypeCode"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Subsidy Value",
+            "name": "SubsidyAmt"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "MrSubdFromTypeCode"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "MrSubdFromValueCode"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "MrSubdAllocCode"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "MrSubdSourceCode"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "MrSubdValueTypeCode"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "SubsidyAmt"
+        }
+    ]
+}

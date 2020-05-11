@@ -6,6 +6,7 @@ import { environment } from 'environments/environment';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
+import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 
 @Component({
   selector: 'app-list-company',
@@ -14,7 +15,8 @@ import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 })
 export class ListCompanyComponent implements OnInit {
 
-  AppId: any;
+  AppId: number;
+  WfTaskListId: number;
   FondationUrl = environment.FoundationR3Url;
   LOSUrl = environment.losUrl;
   GetCustomerDuplicateCheckUrl = this.FondationUrl + AdInsConstant.GetCustomerDuplicateCheck;
@@ -35,14 +37,19 @@ export class ListCompanyComponent implements OnInit {
     private http: HttpClient,
     private route: ActivatedRoute,
     private router: Router,
-  ) { }
-
-  ngOnInit() {
+  ) { 
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
         this.AppId = params['AppId'];
       }
+      if (params['WfTaskListId'] != null) {
+        this.WfTaskListId = params['WfTaskListId'];
+      }
     });
+  }
+
+  ngOnInit() {
+    this.ClaimTask();
     //Get App Cust Data
     this.AppCustObj = new AppCustObj();
     this.AppCustCompanyObj = new AppCustCompanyObj();
@@ -138,7 +145,7 @@ export class ListCompanyComponent implements OnInit {
     "CustNo":item.CustNo};
     this.http.post(AdInsConstant.EditCustNoAppCust, AppDupCheckObj).subscribe(
       response => {
-        this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { queryParams: { "AppId": this.AppId } });
+        this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId } });
       },
       error => {
         console.log("error");
@@ -146,15 +153,26 @@ export class ListCompanyComponent implements OnInit {
   }
 
   NewCustomer(){
-    console.log("new customer");
     var AppDupCheckObj = {"AppId": this.AppId, 
     "CustNo": this.AppCustObj.CustNo, RowVersion: ""};
     this.http.post(AdInsConstant.EditCustNoAppCust, AppDupCheckObj).subscribe(
       (response) => {
-        this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { queryParams: { "AppId": this.AppId } });
+        this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId } });
       },
       (error) => {
         console.log(error);
+      });
+  }
+
+  ClaimTask(){
+    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var wfClaimObj = new ClaimWorkflowObj();
+    wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
+    wfClaimObj.pUserId = currentUserContext["UserName"];
+
+    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+      (response) => {
+    
       });
   }
 }
