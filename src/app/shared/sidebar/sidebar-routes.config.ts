@@ -112,7 +112,7 @@ export const ROUTES: RouteInfo[] = [
   {
     path: '', title: 'Fraud Detection', icon: 'ft-home', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false,
     submenu: [
-      { path: '/Nap/CreditProcess/FraudDetection/Paging', title: 'Fraud Detection', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] }
+      { path: '/Nap/CreditProcess/FraudDetection/Paging', title: 'Fraud Detection', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "CF4W" }] }
     ], params: []
   }
 ];
