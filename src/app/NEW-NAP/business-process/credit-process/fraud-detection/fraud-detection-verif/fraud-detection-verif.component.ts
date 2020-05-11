@@ -11,6 +11,7 @@ import { FraudDukcapilObj } from 'app/shared/model/FraudDukcapilObj.Model';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AppCustPersonalObj } from 'app/shared/model/AppCustPersonalObj.Model';
 import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
+import { AppDupCheckObj } from 'app/shared/model/AppDupCheckCust/AppDupCheckObj.Model';
 
 @Component({
   selector: 'app-fraud-detection-verif',
@@ -38,7 +39,7 @@ export class FraudDetectionVerifComponent implements OnInit {
   appObj: AppObj;
   leadId: any;
   dukcapilObj: any;
-  assetNegativeObj: any;
+  ListAssetNegative: any;
   listCustDuplicate: any;
   closeResult: string;
   idNo: any;
@@ -53,6 +54,12 @@ export class FraudDetectionVerifComponent implements OnInit {
   viewObj: string;
   arrValue = [];
 
+  respAppDupCheck : any;
+  respNegativeCust : any;
+  respAssetNegative : any;
+
+  WfTaskListId : number;
+
 
   constructor(
     private http: HttpClient,
@@ -63,11 +70,19 @@ export class FraudDetectionVerifComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
         this.appId = params['AppId'];
+        
+      }
+      if (params['WfTaskListId'] != null) {
+        this.WfTaskListId = params["WfTaskListId"]
       }
     });
   }
 
   ngOnInit() {
+
+    if (this.WfTaskListId != null || this.WfTaskListId != undefined)
+      this.claimTask();
+
     this.arrValue.push(this.appId);
     this.viewObj = "./assets/ucviewgeneric/viewCreditInvestigationInfo.json";
     var context = JSON.parse(localStorage.getItem("UserAccess"));
@@ -154,8 +169,7 @@ export class FraudDetectionVerifComponent implements OnInit {
         //List Negative Cust Duplicate Checking
         this.http.post(this.GetNegativeCustomerDuplicateCheckUrl, requestDupCheck).subscribe(
           response => {
-            console.log("AAA");
-            console.log(response);
+            this.respNegativeCust = response;
             this.ListNegativeCust = response['ReturnObject'].NegativeCustDuplicate;
           },
           error => {
@@ -189,7 +203,8 @@ export class FraudDetectionVerifComponent implements OnInit {
   getAppDupCheckCust(appId) {
     this.http.post(this.getAppDupCheckCustByAppId, appId).subscribe(
       response => {
-        this.listCustDuplicate = response;
+        this.respAppDupCheck = response;
+        this.listCustDuplicate = response["ReturnObject"];
       },
       error => {
         console.log("error")
@@ -201,6 +216,8 @@ export class FraudDetectionVerifComponent implements OnInit {
     this.http.post<AppAssetObj>(this.getAppAssetByAppId, appId).subscribe(
       response => {
         this.appAssetObj = response;
+
+        this.getNegativeAsset();
       },
       error => {
         console.log("error")
@@ -232,7 +249,8 @@ export class FraudDetectionVerifComponent implements OnInit {
     }
     this.http.post(this.getAssetNegativeDuplicateCheck, negativeAssetObj).subscribe(
       response => {
-        this.assetNegativeObj = response["AssetNegativeObj"];
+        this.respAssetNegative = response;
+        this.ListAssetNegative = response["ReturnObject"];
       },
       error => {
         console.log("error")
@@ -261,8 +279,13 @@ export class FraudDetectionVerifComponent implements OnInit {
 
   submit() {
     var verfObj = {
-      "AppId": this.appId, "VerifyByName": this.verfUser,
-      "VerifyDt": this.verfDt, "Notes": this.verfNotes, "VerifyByCode": this.verfCode, "VerifyStat": "Verified"
+      "AppId": this.appId, 
+      "VerifyByName": this.verfUser,
+      "VerifyDt": this.verfDt, 
+      "Notes": this.verfNotes, 
+      "VerifyByCode": this.verfCode, 
+      "VerifyStat": "Verified",
+      "WFTaskId" : this.WfTaskListId
     }
     this.http.post(this.addAppFraudVerf, verfObj).subscribe(
       response => {
@@ -273,6 +296,20 @@ export class FraudDetectionVerifComponent implements OnInit {
         console.log("error");
       }
     )
+  }
+
+  async claimTask()
+  {
+    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var wfClaimObj = { 
+      pWFTaskListID: this.WfTaskListId, 
+      pUserID: currentUserContext["UserName"],
+      isLoading:false
+    };
+    console.log(wfClaimObj);
+    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+      (response) => {
+      });
   }
 }
 

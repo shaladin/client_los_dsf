@@ -9,7 +9,8 @@
             </div>
           </div>
         </div>
-        <app-agr-main-info [arrValue]="arrValue"></app-agr-main-info>
+        <!-- <app-agr-main-info [arrValue]="arrValue"></app-agr-main-info> -->
+        <app-app-main-info [arrValue]="arrValue"></app-app-main-info>
         <div class="px-3">
           <form class="form form-horizontal" [formGroup]="DOAssetForm" (ngSubmit)="createDOHandler()">
             <lib-ucSubsection [id]="'AssetListId'" [title]="'Asset List'" [panel]="'AssetListSection'"></lib-ucSubsection>
