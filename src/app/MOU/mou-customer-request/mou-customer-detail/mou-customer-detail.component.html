@@ -23,6 +23,40 @@
             <app-main-info [MouCustId]="mouCustId"></app-main-info>
           </div>
         </div>
+
+        <!-- <div id="stepper1" class="bs-stepper">
+          <div class="bs-stepper-header" role="tablist" style="overflow-x: auto;">
+            <div class="step" data-target="#customer-data-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="customer-data-tab"
+                id="customer-data-tab-trigger" (click)="EnterTab('custData')" >
+                <span class="bs-stepper-circle">1</span>
+                <span class="bs-stepper-label">MoU Detail</span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#lead-data-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="lead-data-tab"
+                id="lead-data-tab-trigger" (click)="EnterTab('leadData')" >
+                <span class="bs-stepper-circle">2</span>
+                <span class="bs-stepper-label">LEAD DATA</span>
+              </button>
+            </div>
+          </div>
+          <br><br>
+          <div class="bs-stepper-content">
+            <div id="customer-data-tab" class="content" role="tabpanel"
+              aria-labelledby="customer-data-tab-trigger">
+              <app-lead-input-cust-data *ngIf="isCustData == true" (outputTab)="getValue($event)">
+              </app-lead-input-cust-data>
+            </div>
+            <div id="lead-data-tab" class="content" role="tabpanel" aria-labelledby="lead-data-tab-trigger">
+              <app-lead-input-lead-data *ngIf="isLeadData == true" (outputTab)="getValue($event)">
+              </app-lead-input-lead-data>
+            </div>
+          </div>
+        </div> -->
+
+
         <div class="row">
           <div class="col-md-12">
             <aw-wizard #WizardMouDetail navBarLayout="large-empty-symbols" [disableNavigationBar]=true [awNavigationMode]
