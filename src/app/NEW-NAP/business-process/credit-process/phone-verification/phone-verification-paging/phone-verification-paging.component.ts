@@ -4,6 +4,7 @@ import { AdInsConstant } from "app/shared/AdInstConstant";
 import { DecimalPipe } from "@angular/common";
 import { UcPagingObj } from "app/shared/model/UcPagingObj.Model";
 import { CriteriaObj } from "app/shared/model/CriteriaObj.model";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "phone-verification-paging",
@@ -13,7 +14,14 @@ import { CriteriaObj } from "app/shared/model/CriteriaObj.model";
 export class PhoneVerificationPagingComponent implements OnInit {
   inputPagingObj: any;
   arrCrit: any;
-  constructor() { }
+  constructor(private route: ActivatedRoute) { 
+    this.route.queryParams.subscribe(params => {
+      if (params['LobCode'] != null) {
+        var lobCode = params['LobCode'];
+        localStorage.setItem("LobCode",lobCode);
+      }
+    });
+  }
 
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
@@ -22,17 +30,6 @@ export class PhoneVerificationPagingComponent implements OnInit {
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppPhoneVerif.json";
 
-    this.arrCrit = new Array();
-    var critObj = new CriteriaObj();
-    critObj.restriction = AdInsConstant.RestrictionLike;
-    critObj.propName = 'a.APP_CURR_STEP';
-    critObj.value = AdInsConstant.AppStepPhnVerif;
-    this.arrCrit.push(critObj);
-    var critTypeObj = new CriteriaObj();
-    critTypeObj.restriction = AdInsConstant.RestrictionLike;
-    critTypeObj.propName = 'ac.MR_CUST_TYPE_CODE';
-    critTypeObj.value = AdInsConstant.CustTypePersonal;
-    this.arrCrit.push(critTypeObj);
-    this.inputPagingObj.addCritInput = this.arrCrit;
+    
   }
 }

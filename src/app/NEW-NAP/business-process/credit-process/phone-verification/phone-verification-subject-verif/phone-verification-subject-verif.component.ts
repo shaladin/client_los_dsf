@@ -34,7 +34,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
     MrVerfResultHStatCode: ['', [Validators.required, Validators.maxLength(50)]],
     Phn: ['', [Validators.required, Validators.maxLength(50)]],
     PhnType: ['', [Validators.required, Validators.maxLength(100)]],
-    Notes: ['', Validators.maxLength(4000)],
+    Notes: ['', [Validators.required, Validators.maxLength(4000)]],
     Score: [''],
     QuestionObjs: new FormArray([])
   });
@@ -170,7 +170,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
         console.log(response);
         this.toastr.successMessage(response["message"]);
         if (this.isReturnHandling == false) {
-          this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId);
+          this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId + "&WfTaskListId=" + this.wfTaskListId);
         }
         if (this.isReturnHandling == true) {
           this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId + "&ReturnHandlingDId=" + this.returnHandlingDId + "&WfTaskListId=" + this.wfTaskListId);
@@ -317,10 +317,12 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
             } else {
               this.ListVerfAnswer[i].push("");
             }
+            QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required])
           } else if (QuestionList[j].VerfAnswerTypeCode == "UC_INPUT_NUMBER") {
             QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
             this.ListVerfAnswer[i].push("");
           } else {
+            QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required])
             this.ListVerfAnswer[i].push("");
           }
           ResultGrp.push(QuestionResultGrp);
@@ -407,6 +409,11 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
       Phn: phnNumber,
       PhnType: phnType
     });
+  }
+
+  Cancel()
+  {
+    this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId);
   }
 
   test() {

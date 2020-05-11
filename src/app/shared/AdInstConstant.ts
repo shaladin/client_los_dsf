@@ -1073,4 +1073,6 @@ export class AdInsConstant {
   //RfaLog
   public static GetRfaLogByTrxNo  = environment.FoundationR3Url + "/RfaLog/GetRfaLogByTrxNo";
 
+  public static CompleteAppPhoneVerif = environment.losUrl + "/PhoneVerif/CompleteAppPhoneVerif";
+
 }

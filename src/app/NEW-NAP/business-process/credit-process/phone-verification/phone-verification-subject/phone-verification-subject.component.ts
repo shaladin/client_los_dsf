@@ -85,6 +85,9 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    if (this.wfTaskListId != null || this.wfTaskListId != undefined)
+      this.claimTask();
+
     this.initUrl();
     this.appObj.AppId = this.appId;
     this.viewObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
@@ -97,22 +100,20 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   }
 
   SaveForm() {
-    if (this.isReturnHandling == false) {
 
-    }
-    if (this.isReturnHandling == true) {
-      this.setReturnHandlingD();
-      this.http.post(this.editRtnHandlingDUrl, this.ReturnHandlingDData).subscribe(
-        (response) => {
-          console.log(response);
-          this.toastr.successMessage(response["message"]);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-
-    }
+    var reqObj = {
+      WfTaskListId: this.wfTaskListId,
+      isReturnHandling: this.isReturnHandling,
+      AppId: this.appId
+    };
+    this.http.post(AdInsConstant.CompleteAppPhoneVerif, reqObj).subscribe(
+      (response) => {
+        this.toastr.successMessage(response["message"]);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   setReturnHandlingD() {
@@ -174,7 +175,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
       this.addVerifResultObj.LobName = this.AppObj.LobCode;
       this.addVerifResultObj.Notes = "-";
 
-     await this.http.post(this.addVerfResultUrl, this.addVerifResultObj).toPromise().then(
+      await this.http.post(this.addVerfResultUrl, this.addVerifResultObj).toPromise().then(
         (response) => {
           console.log(response);
         }
@@ -195,15 +196,27 @@ export class PhoneVerificationSubjectComponent implements OnInit {
 
   View(VerifResultHid, SubjectName) {
     console.log(this.phoneVerifObj);
-    window.open("/Nap/PhoneVerif/Subject/View?AppId=" + this.appId + "&VerfResultHId=" + VerifResultHid + "&Name=" + SubjectName, "_blank");
+    window.open("/Nap/CreditProcess/PhoneVerification/Subject/View?AppId=" + this.appId + "&VerfResultHId=" + VerifResultHid + "&Name=" + SubjectName, "_blank");
   }
 
   Verif(VerifResultHid, SubjectName, SubjectType, IdSource) {
     if (this.isReturnHandling == false) {
-      this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject/Verif?AppId=" + this.appId + "&VerfResultHId=" + VerifResultHid + "&Name=" + SubjectName + "&Type=" + SubjectType + "&Source=" + IdSource);
+      this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject/Verif?AppId=" + this.appId + "&VerfResultHId=" + VerifResultHid + "&Name=" + SubjectName + "&Type=" + SubjectType + "&Source=" + IdSource + "&WfTaskListId=" + this.wfTaskListId);
     }
     if (this.isReturnHandling == true) {
       this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject/Verif?AppId=" + this.appId + "&VerfResultHId=" + VerifResultHid + "&Name=" + SubjectName + "&Type=" + SubjectType + "&Source=" + IdSource + "&ReturnHandlingDId=" + this.returnHandlingDId + "&WfTaskListId=" + this.wfTaskListId);
     }
+  }
+
+  async claimTask() {
+    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var wfClaimObj = {
+      pWFTaskListID: this.wfTaskListId,
+      pUserID: currentUserContext["UserName"],
+      isLoading: false
+    };
+    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+      (response) => {
+      });
   }
 }

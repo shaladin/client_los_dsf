@@ -1,93 +1,167 @@
 {
-  "title": "Phone Verification",
+  "title": "Phone Verification Paging",
   "exportExcel": false,
   "component": [
-    {
-      "type": "textbox",
-      "name": "a.APP_NO",
-      "id": "AppNoId",
-      "value": "",
-      "label": "Application No",
-      "placeholder": "Placeholder"
-    },
-    {
-      "type": "textbox",
-      "name": "ac.CUST_NO",
-      "id": "CustNoId",
-      "value": "",
-      "label": "Customer No",
-      "placeholder": "Placeholder"
-    },
-    {
-      "type": "textbox",
-      "name": "ac.CUST_NAME",
-      "id": "CustNameId",
-      "value": "",
-      "label": "Customer Name",
-      "placeholder": "Placeholder"
-    }
-
+      {
+          "type": "textbox",
+          "name": "AppNo",
+          "id": "AppNoId",
+          "value": "",
+          "label": "Application No",
+          "placeholder": "Placeholder"
+      },
+      {
+          "type": "textbox",
+          "name": "ProdOfferingName",
+          "id": "ProdOfferingNameId",
+          "value": "",
+          "label": "Product Offering Name",
+          "placeholder": "Placeholder"
+      },
+      {
+          "type": "textbox",
+          "name": "CustName",
+          "id": "CustNameId",
+          "value": "",
+          "label": "Customer Name",
+          "placeholder": "Placeholder"
+      },
+      {
+          "type": "dropdown",
+          "name": "OfficeName",
+          "id": "OfficeNameId",
+          "value": "Office",
+          "placeholder": "Placeholder",
+          "isFromURL": true,
+          "isSelectOne": false,
+          "url": "http://r3app-server.ad-ins.com/Foundation_R3/RefOffice/GetListKvpActiveRefOfficeForPaging",
+          "label": "Office",
+          "items": [],
+          "itemsUrl": []
+      }
   ],
   "headerList": [
-    {
-      "type": "sort",
-      "position": "center",
-      "label": "Application No",
-      "name": "a.APP_NO"
-    },
-    {
-      "type": "sort",
-      "position": "center",
-      "label": "Customer No",
-      "name": "ac.CUST_NO"
-    },
-    {
-      "type": "sort",
-      "position": "left",
-      "label": "Customer Name",
-      "name": "ac.CUST_NAME"
-    },
-    {
-      "type": "label",
-      "position": "center",
-      "label": "Action"
-    }
+      {
+          "type": "sort",
+          "position": "left",
+          "label": "Office",
+          "name": "OfficeName"
+      },
+      {
+          "type": "sort",
+          "position": "center",
+          "label": "Customer Name",
+          "name": "CustName"
+      },
+      {
+          "type": "sort",
+          "position": "center",
+          "label": "Application No",
+          "name": "AppNo"
+      },
+      {
+          "type": "sort",
+          "position": "center",
+          "label": "Product Offering Name",
+          "name": "ProdOfferingName"
+      },
+      {
+          "type": "label",
+          "position": "center",
+          "label": "Action"
+      }
   ],
   "querystring": {
-    "select": "SELECT a.APP_NO AS AppNo, ac.CUST_NAME AS CustName, ac.CUST_NO AS CustNo, a.APP_ID AS AppId",
-    "from": "FROM dbo.APP a WITH(NOLOCK) LEFT JOIN dbo.APP_CUST ac WITH(NOLOCK) ON a.APP_ID = ac.APP_ID"
+      "select": "SELECT ac.MR_CUST_TYPE_CODE as CustTypeCode, a.ORI_OFFICE_NAME AS OfficeName, a.APP_NO AS AppNo, ac.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.APP_ID AS AppId, ac.IS_EXISTING_CUST AS IsExistingCust, WTL.WF_TASK_LIST_ID AS WfTaskListId, WTL.USERNAME AS ClaimBy, a.APP_ID AS AppId",
+      "from": "FROM dbo.APP a WITH(NOLOCK) JOIN dbo.APP_CUST ac WITH(NOLOCK) ON a.APP_ID = ac.APP_ID JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON a.APP_NO = WTL.TRANSACTION_CODE AND WTL.ACT_CODE = 'PHN'",
+      "where": "WHERE WTL.END_EXECUTING_DATE IS NULL"
   },
   "bodyList": [
-    {
-      "type": "text",
-      "position": "center",
-      "property": "AppNo"
-    },
-    {
-      "type": "text",
-      "position": "center",
-      "property": "CustNo"
-    },
-    {
-      "type": "text",
-      "position": "left",
-      "property": "CustName"
-    },
-    {
-      "type": "action",
-      "position": "center",
-      "action": [
-        {
-          "type": "edit",
-          "path": "../PhoneVerification/View",
-          "param": [
-            {
-              "type": "AppId",
-              "property": "AppId"
-            }
+      {
+          "type": "text",
+          "position": "left",
+          "property": "OfficeName"
+      },
+      {
+          "type": "text",
+          "position": "center",
+          "property": "CustName"
+      },
+      {
+          "type": "text",
+          "position": "center",
+          "property": "AppNo"
+      },
+      {
+          "type": "text",
+          "position": "center",
+          "property": "ProdOfferingName"
+      },
+      {
+          "type": "action",
+          "position": "center",
+          "action": [
+              {
+                "type": "switch",
+                "case": [
+                  {
+                    "conditions": [
+                      {
+                        "isUser": true,
+                        "property": "ClaimBy",
+                        "value": "",
+                        "restriction": "EQ"
+                      }
+                    ],
+                    "result": {
+                      "type": "url",
+                      "path": "../Subject",
+                      "icon": "ft-edit-2",
+                      "param": [
+                        {
+                          "type": "AppId",
+                          "property": "AppId"
+                        },
+                        {
+                          "type": "WfTaskListId",
+                          "property": "WfTaskListId"
+                        }
+                      ]
+                    },
+                    "isHide": false
+                  },
+                  {
+                    "conditions": [
+                      {
+                        "isUser": false,
+                        "property": "ClaimBy",
+                        "value": "",
+                        "restriction": "EQ"
+                      }
+                    ],
+                    "result": {
+                      "type": "url",
+                      "path": "../Subject",
+                      "icon": "ft-edit-2",
+                      "param": [
+                        {
+                          "type": "AppId",
+                          "property": "AppId"
+                        },
+                        {
+                          "type": "WfTaskListId",
+                          "property": "WfTaskListId"
+                        }
+                      ] 
+                    },
+                    "isHide": false
+                  }
+                ]
+              }
           ]
-        }
-      ]
-    }
+      }
   ]
 }
+
+      
+      
