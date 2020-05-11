@@ -36,6 +36,7 @@ import { MatCheckboxModule, MatRadioModule, MatSelectModule } from "@angular/mat
 import { NgxCurrencyModule } from "ngx-currency";
 import { customCurrencyMaskConfig } from "app/MOU/mou.module";
 import { CustUcaddressComponent } from "./nap-tab/customer-data/component/address/ucaddress.component";
+import { NapAddDetailComponent } from './nap-add-detail/nap-add-detail.component';
 
 @NgModule({
   imports: [
@@ -78,7 +79,8 @@ import { CustUcaddressComponent } from "./nap-tab/customer-data/component/addres
     GuarantorPagingComponent,
     GuarantorPersonalComponent,
     GuarantorCompanyComponent,
-    ReferantorDataComponent,  
+    ReferantorDataComponent,
+    NapAddDetailComponent,  
   ],
   providers: [
     NGXToastrService
