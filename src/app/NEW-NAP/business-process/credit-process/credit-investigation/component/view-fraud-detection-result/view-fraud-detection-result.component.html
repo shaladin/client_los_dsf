@@ -221,7 +221,7 @@
     <tbody>
       <tr *ngFor="let item of listAssetNegative">
         <td>{{item.FullAssetName}}</td>
-        <td>{{item.SourceType}</td>
+        <td>{{item.SourceType}}</td>
         <td>{{item.SerialNo1}}</td>
         <td>{{item.SerialNo2}}</td>
         <td>{{item.SerialNo3}}</td>
@@ -231,7 +231,7 @@
   </table>
 </div>
 </div>
-<div class="px-3">
+<div class="px-3" *ngIf="isView == false">
   <lib-ucviewgeneric [viewInput]="viewFraudVerifResultObj" [whereValue]="arrValue"></lib-ucviewgeneric>
 </div>
 

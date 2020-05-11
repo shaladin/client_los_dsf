@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppCustPersonalObj } from 'app/shared/model/AppCustPersonalObj.Model';
 import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
+import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 
 @Component({
   selector: 'app-list-personal',
@@ -36,9 +37,7 @@ export class ListPersonalComponent implements OnInit {
     private http: HttpClient,
     private route: ActivatedRoute,
     private router: Router,
-  ) { }
-
-  ngOnInit() {
+  ) { 
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
         this.AppId = params['AppId'];
@@ -47,7 +46,11 @@ export class ListPersonalComponent implements OnInit {
         this.WfTaskListId = params['WfTaskListId'];
       }
     });
+  }
 
+  ngOnInit() {
+
+    this.ClaimTask();
     this.AppCustObj = new AppCustObj();
     this.AppCustPersonalObj = new AppCustPersonalObj();
     this.AppCustAddrObj = new AppCustAddrObj();
@@ -123,6 +126,18 @@ export class ListPersonalComponent implements OnInit {
       },
       (error) => {
         console.log("error");
+      });
+  }
+
+  ClaimTask(){
+    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var wfClaimObj = new ClaimWorkflowObj();
+    wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
+    wfClaimObj.pUserId = currentUserContext["UserName"];
+
+    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+      (response) => {
+    
       });
   }
 

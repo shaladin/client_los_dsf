@@ -6,6 +6,8 @@ import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
 import { environment } from 'environments/environment';
 import { AppCrdRvwHObj } from 'app/shared/model/AppCrdRvwHObj.Model';
 import { AppCrdRvwDObj } from 'app/shared/model/AppCrdRvwDObj.Model';
+import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
   selector: 'app-credit-review-main',
@@ -14,18 +16,30 @@ import { AppCrdRvwDObj } from 'app/shared/model/AppCrdRvwDObj.Model';
 })
 export class CreditReviewMainComponent implements OnInit {
 
-  appId;
+  appId: number = 0;
   ManualDeviationData;
   isExistedManualDeviationData;
   apvBaseUrl = environment.ApprovalR3Url;
   indentifierReason;
   indentifierApprover;
+  TaskId: number = 0;
+  ReturnHandlingHId: number = 0;
+  ReturnHandlingDId: number = 0;
+
+  // ReturnForm = this.fb.group({
+  //   ReturnReason: [''],
+  //   ReturnReasonDesc: [''],
+  //   ReturnExecNotes: [''],
+  // });
+
   constructor(
     private route: ActivatedRoute, 
     private http: HttpClient, 
-    private fb: FormBuilder) { 
+    private fb: FormBuilder,
+    private toastr: NGXToastrService) { 
       this.route.queryParams.subscribe(params => {
         this.appId = params["AppId"];
+        this.TaskId =params["TaskId"];
       });
     }
   
@@ -42,7 +56,8 @@ export class CreditReviewMainComponent implements OnInit {
   
 
   InitData(){
-    this.DDLReason = new Array();
+    this.DDLRecommendation = new Array();
+    this.DDLReasonReturn = new Array();
     this.AppStep = {
       "CUST": 0,
       "APP": 1,
@@ -57,6 +72,7 @@ export class CreditReviewMainComponent implements OnInit {
     this.UserAccess = JSON.parse(localStorage.getItem("UserAccess"));
     this.ManualDeviationData = new Array();
     this.isExistedManualDeviationData = false;
+    this.isReturnOn = false;
   }
 
   viewProdMainInfoObj;
@@ -66,14 +82,16 @@ export class CreditReviewMainComponent implements OnInit {
   Arr;
   UserAccess;
   ResponseExistCreditReview;
-  DDLReason;
+  DDLRecommendation;
+  DDLReasonReturn;
   async ngOnInit() {    
     console.log("User Access");
     console.log(JSON.parse(localStorage.getItem("UserAccess")));
     this.InitData();
     this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
     await this.GetMouCustData();
-    await this.BindDDLReason();
+    await this.BindDDLRecommendation();
+    await this.BindDDLReasonReturn();
     await this.BindCreditAnalysisItemFormObj();
     await this.BindAppvAmt();
     await this.GetExistingCreditReviewData();
@@ -153,13 +171,27 @@ export class CreditReviewMainComponent implements OnInit {
     );
   }
 
-  async BindDDLReason(){
+  async BindDDLRecommendation(){
     var Obj = { RefReasonTypeCode: "CRD_REVIEW" };
     await this.http.post(AdInsConstant.GetListActiveRefReason, Obj).toPromise().then(
       (response) => {
         console.log(response);   
-        this.DDLReason = response[AdInsConstant.ReturnObj];   
-        // console.log(this.DDLReason);   
+        this.DDLRecommendation = response[AdInsConstant.ReturnObj];   
+        // console.log(this.DDLRecommendation);   
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+  
+  async BindDDLReasonReturn(){
+    var obj = { RefReasonTypeCode: "CRD_REVIEW" };
+    await this.http.post(AdInsConstant.GetListActiveRefReasonByRefReasonTypeCode, obj).toPromise().then(
+      (response) => {
+        console.log(response);  
+        this.DDLReasonReturn = response[AdInsConstant.ReturnObj];
+        console.log(this.DDLReasonReturn);  
       },
       (error) => {
         console.log(error);
@@ -221,11 +253,15 @@ export class CreditReviewMainComponent implements OnInit {
     tempAppCrdRvwObj.appCrdRvwDObjs = this.BindAppCrdRvwDObj(temp.arr);
     console.log(tempAppCrdRvwObj);
 
+    if(this.isReturnOn)
+      temp.Approver = 0;
+
     var apiObj = {
       appCrdRvwHObj: tempAppCrdRvwObj,
       ApprovedById: temp.Approver,
       Reason: temp.Reason,
       Notes: temp.Notes,
+      WfTaskListId: this.TaskId,
       RowVersion: ""
     }
     console.log(apiObj);
@@ -283,5 +319,25 @@ export class CreditReviewMainComponent implements OnInit {
     // console.log(ev);
     this.ManualDeviationData = ev;
     this.isExistedManualDeviationData = true;
+  }
+
+  isReturnOn;
+  switchForm(){
+    this.FormObj.patchValue({
+      Reason: "",
+      ReasonDesc: "",
+      Notes: ""
+    });
+    console.log(this.FormObj);
+
+    if(!this.isReturnOn){
+      this.isReturnOn = true;
+      this.FormObj.controls.Approver.clearValidators();      
+    }else{
+      this.isReturnOn = false;
+      this.FormObj.controls.Approver.setValidators([Validators.required]);
+    }
+    this.FormObj.controls.Approver.updateValueAndValidity();
+
   }
 }

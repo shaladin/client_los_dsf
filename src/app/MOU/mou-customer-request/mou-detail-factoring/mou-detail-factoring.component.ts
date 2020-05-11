@@ -60,6 +60,10 @@ export class MouDetailFactoringComponent implements OnInit {
   ) { 
     this.isListedFctr = false;
     this.shouldComponentLoad = false;
+    
+  }
+
+  ngOnInit() {
     var rmRecourseType = new RefMasterObj();
     rmRecourseType.RefMasterTypeCode = "RECOURSE_TYPE";
     let getRecourseType = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, rmRecourseType);
@@ -84,7 +88,10 @@ export class MouDetailFactoringComponent implements OnInit {
     var refMasterCurrency = new RefMasterObj();
     refMasterCurrency.RefMasterTypeCode = "CURRENCY";
     let getCurrency = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterCurrency);
-    forkJoin([getRecourseType, getWop, getPaidBy, getInstType, getSingleInstCalcMethod, getPayFreq, getInstSchm, getCurrency]).subscribe(
+    var mouCustFctr = new MouCustFctrObj();
+    mouCustFctr.MouCustId = this.MouCustId;
+    let getMouFctr = this.httpClient.post(AdInsConstant.GetMouCustFctrByMouCustId, mouCustFctr);
+    forkJoin([getRecourseType, getWop, getPaidBy, getInstType, getSingleInstCalcMethod, getPayFreq, getInstSchm, getCurrency, getMouFctr]).subscribe(
       (response) => {
         this.recourseTypeList = response[0];
         this.wopList = response[1];
@@ -94,6 +101,7 @@ export class MouDetailFactoringComponent implements OnInit {
         this.payFreqList = response[5];
         this.instSchmList = response[6];
         this.currencyList = response[7];
+        var mouFctrData = response[8];
         this.MouDetailFactoringForm.patchValue({
           MrRecourseTypeCode: this.recourseTypeList.ReturnObject[0].Key,
           WopCode: this.wopList.ReturnObject[0].Key,
@@ -104,23 +112,11 @@ export class MouDetailFactoringComponent implements OnInit {
           MrInstSchmCode: this.instSchmList.ReturnObject[0].Key,
           CurrCode: this.currencyList.ReturnObject[0].Key
         });
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
-
-  ngOnInit() {
-    var mouCustFctr = new MouCustFctrObj();
-    mouCustFctr.MouCustId = this.MouCustId;
-    this.httpClient.post(AdInsConstant.GetMouCustFctrByMouCustId, mouCustFctr).subscribe(
-      (response: MouCustFctrObj) => {
-        this.isListedFctr = response.IsListedCust;
-        if(response.MouCustFctrId != 0){
+        this.isListedFctr = mouFctrData["IsListedCust"];
+        if(mouFctrData["MouCustFctrId"] != 0){
           this.mode = "edit";
           this.MouDetailFactoringForm.patchValue({
-            ...response
+            ...mouFctrData
           });
         }
         else{

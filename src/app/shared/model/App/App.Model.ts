@@ -47,6 +47,8 @@ export class AppObj {
     RsvField3: string;
     RsvField4: string;
     RsvField5: string;
+    WfTaskListId: number;
+    Username: string;
 
     constructor() {
         this.AppId = 0;
@@ -97,5 +99,6 @@ export class AppObj {
         this.RsvField3 = "";
         this.RsvField4 = "";
         this.RsvField5 = "";
+        this.WfTaskListId = 0;
     }
 }
