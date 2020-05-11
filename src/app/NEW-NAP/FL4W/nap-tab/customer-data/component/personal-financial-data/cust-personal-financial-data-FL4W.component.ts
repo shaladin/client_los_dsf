@@ -6,14 +6,14 @@ import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 import { AppCustPersonalFinDataObj } from 'app/shared/model/AppCustPersonalFinDataObj.Model';
 
 @Component({
-  selector: 'app-cust-personal-financial-data',
-  templateUrl: './cust-personal-financial-data.component.html',
+  selector: 'app-cust-personal-financial-data-FL4W',
+  templateUrl: './cust-personal-financial-data-FL4W.component.html',
   styleUrls: [],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 
 })
 
-export class CustPersonalFinancialDataComponent implements OnInit {
+export class CustPersonalFinancialDataFL4WComponent implements OnInit {
 
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;

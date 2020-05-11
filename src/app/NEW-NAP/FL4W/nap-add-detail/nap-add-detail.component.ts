@@ -5,10 +5,12 @@ import { HttpClient } from '@angular/common/http';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import Stepper from 'bs-stepper';
 import { FormBuilder } from '@angular/forms';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
   selector: 'app-nap-add-detail',
-  templateUrl: './nap-add-detail.component.html' 
+  templateUrl: './nap-add-detail.component.html',
+  providers: [NGXToastrService]
 })
 export class NapAddDetailComponent implements OnInit {
 
