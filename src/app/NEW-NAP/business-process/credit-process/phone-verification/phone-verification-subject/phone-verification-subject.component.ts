@@ -102,13 +102,16 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   SaveForm() {
 
     var reqObj = {
-      WfTaskListId: this.wfTaskListId,
+      WFTaskId: this.wfTaskListId,
       isReturnHandling: this.isReturnHandling,
       AppId: this.appId
     };
     this.http.post(AdInsConstant.CompleteAppPhoneVerif, reqObj).subscribe(
       (response) => {
+
         this.toastr.successMessage(response["message"]);
+        var lobCode = localStorage.getItem("LobCode")
+        this.router.navigate(["/Nap/CreditProcess/PhoneVerification/Paging"], { queryParams: { "LobCode": lobCode } });
       },
       (error) => {
         console.log(error);
