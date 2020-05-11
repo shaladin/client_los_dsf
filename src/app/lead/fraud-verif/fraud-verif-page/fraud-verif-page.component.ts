@@ -132,7 +132,7 @@ export class FraudVerifPageComponent implements OnInit {
         this.router.navigate(["/Lead/FraudVerif/Paging"]);
       });
   }
-
+ 
   verify() {
      
     this.leadFraudVerfObj = new LeadFraudVerfObj();

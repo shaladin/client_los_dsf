@@ -10,7 +10,7 @@
         <div class="card-body">
           <div class="px-3">
   
-            <form class="form form-horizontal" [formGroup]="NapAppForm" (ngSubmit)="NapAppForm.valid && SaveForm()"
+            <form class="form form-horizontal" [formGroup]="NapAppForm" (ngSubmit)="NapAppForm.valid"
               #enjiForm="ngForm">
               <!-- Main Info -->
               <div class="form-body">
@@ -41,7 +41,7 @@
                   <div class="col-md-9">
                     <lib-uclookupgeneric [lookupInput]="inputLookupObjName" [parentForm]='NapAppForm'
                       [enjiForm]='enjiForm' [identifier]="'ProductOfferingNameIdentifier'"
-                      (lookup)="getLookupAppResponseName($event)">
+                      (lookup)="getLookupProductOfferingName($event)">
                     </lib-uclookupgeneric>
                   </div>
                 </div>

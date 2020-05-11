@@ -4,6 +4,8 @@ export class RequestSubmitAppDupCheckCustObj {
     AppCustPersonalContactPersonIds: Array<number>;
     AppCustCompanyMgmntShrholderIds: Array<number>;
     CustNo: string;
+    AppId: number;
+    WfTaskListId: number;
     RowVersion: string;
 
     constructor() {
