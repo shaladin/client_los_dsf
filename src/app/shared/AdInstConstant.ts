@@ -530,6 +530,7 @@ export class AdInsConstant {
   public static GetPagingObjectBySQL = "/Generic/GetPagingObjectBySQL";
 
   // LEAD
+  public static ViewHeaderLeadMainInfo = "./assets/ucviewgeneric/viewLeadHeader.json";
   public static AddLead = environment.losUrl + "/Lead/AddLead";
   public static EditLead = environment.losUrl + "/Lead/EditLead";
   public static DeleteLead = environment.losUrl + "/Lead/DeleteLead";
