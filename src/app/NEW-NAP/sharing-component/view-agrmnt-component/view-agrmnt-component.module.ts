@@ -4,6 +4,7 @@ import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { AdInsModule } from "app/components/adins-module/adins.module";
 import { ViewAgrmntReservedFundComponent } from "./view-reserved-fund/view-reserved-fund.component";
 import { AgrmntLifeInsuranceComponent } from "./life-insurance/life-insurance.component";
+import { ViewPurchaseOrderComponent } from './view-purchase-order/view-purchase-order.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { AgrmntLifeInsuranceComponent } from "./life-insurance/life-insurance.co
   ],
   declarations: [
     ViewAgrmntReservedFundComponent,
-    AgrmntLifeInsuranceComponent
+    AgrmntLifeInsuranceComponent,
+    ViewPurchaseOrderComponent
   ],
   providers: [
     NGXToastrService
