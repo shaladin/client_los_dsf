@@ -482,6 +482,10 @@ export class InsuranceDataComponent implements OnInit {
     await this.http.post(AdInsConstant.ExecuteInsRateRule, reqObj).toPromise().then(
       (response) => {
         this.ruleObj = response["Result"];
+        if(this.ruleObj.InsAssetCategory == ""){
+          this.toastr.errorMessage("Please setting rule first.");
+          return;
+        }
         this.InsuranceDataForm.patchValue({
           CustAdminFeeAmt: this.ruleObj.AdminFeeToCust,
           InscoAdminFeeAmt: this.ruleObj.AdminFeeFromInsco
