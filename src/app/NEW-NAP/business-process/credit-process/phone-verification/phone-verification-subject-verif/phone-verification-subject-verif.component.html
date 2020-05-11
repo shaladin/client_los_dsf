@@ -10,19 +10,19 @@
             <div id="custInfo">
               <div class="form-group row">
                 <label class="col-md-2  adInsLabel" translate>Application No</label>
-                <label class="col-md-4  adins-required-label" translate *ngIf="this.AppObj?.AppNo">{{this.AppObj.AppNo}}</label>
+                <label class="col-md-4" translate *ngIf="this.AppObj?.AppNo">{{this.AppObj.AppNo}}</label>
                 <label class="col-md-2  adInsLabel" translate>Subject</label>
-                <label class="col-md-4  adins-required-label" translate>{{subjectType}}</label>
+                <label class="col-md-4" translate>{{subjectType}}</label>
               </div>
               <div class="form-group row">
                 <label class="col-md-2  adInsLabel" translate>Customer No</label>
-                <label class="col-md-4  adins-required-label" translate *ngIf="this.AppCustObj?.CustNo">{{this.AppCustObj.CustNo}}</label>
+                <label class="col-md-4  " translate *ngIf="this.AppCustObj?.CustNo">{{this.AppCustObj.CustNo}}</label>
                 <label class="col-md-2  adInsLabel" translate>Subject Name</label>
-                <label class="col-md-4  adins-required-label" translate>{{subjectName}}</label>
+                <label class="col-md-4  " translate>{{subjectName}}</label>
               </div>
               <div class="form-group row">
                 <label class="col-md-2  adInsLabel" translate>Customer Name</label>
-                <label class="col-md-4  adins-required-label" translate *ngIf="this.AppCustObj?.CustName">{{this.AppCustObj.CustName}}</label>
+                <label class="col-md-4  " translate *ngIf="this.AppCustObj?.CustName">{{this.AppCustObj.CustName}}</label>
                 <label class="col-md-2  adins-required-label" translate>Subject Relation</label>
                 <div class="col-md-4">
                   <select *ngIf="SubjectRelationObj" class="form-control" id="subjectRelationId" formControlName="MrVerfSubjectRelationCode"
@@ -54,7 +54,7 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-md-2  adins-required-label" translate>Notes</label>
+                <label class="col-md-2 adins-required-label" translate>Notes</label>
                 <div class="col-md-4">
                   <textarea type="text" class="form-control adInsInput" formControlName="Notes"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && PhoneDataForm.controls.Notes.invalid }"></textarea>
@@ -141,11 +141,14 @@
               </div>
             </div>
             <div class="form-actions right">
-              <button type="submit" class="btn btn-raised btn-primary">
-                <i class="fa fa-check-square-o"></i> Save And Continue
+              <button type="submit" class="btn btn-raised btn-primary margin-r-5">
+                <i class="fa fa-check-square-o"></i>Submit
               </button>
-              <button type="button" class="btn btn-raised btn-primary" (click)="test()">
+              <!-- <button type="button" class="btn btn-raised btn-primary" (click)="test()">
                 <i class="fa fa-check-square-o"></i> Check Value
+              </button> -->
+              <button type="button" class="btn btn-raised btn-primary" (click)="Cancel()">
+                <i class="fa fa-check-square-o"></i> Cancel
               </button>
             </div>
           </div>
