@@ -301,7 +301,11 @@ export class FraudDetectionVerifComponent implements OnInit {
   async claimTask()
   {
     var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
-    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"]};
+    var wfClaimObj = { 
+      pWFTaskListID: this.WfTaskListId, 
+      pUserID: currentUserContext["UserName"],
+      isLoading:false
+    };
     console.log(wfClaimObj);
     this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
