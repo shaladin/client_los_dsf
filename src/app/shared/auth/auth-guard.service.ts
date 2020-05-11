@@ -28,13 +28,13 @@ export class AuthGuard implements CanActivate {
       // this.router.navigate([AdInsConstant.FormDefault]);
     }
 
-    // if (currentUser == null) {
-    //   this.router.navigate(['pages/login'])
-    //   return false;
-    // }
-    // else {
-    //   return true;
-    // }
+    if (currentUser == null) {
+      this.router.navigate(['pages/login'])
+      return false;
+    }
+    else {
+      return true;
+    }
     return true;
   }
 
