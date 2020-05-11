@@ -170,8 +170,18 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   NextStep(Step) {
-    this.ChangeTab(Step);
-    this.stepper.next();
+    this.NapObj.AppCurrStep = Step;
+    this.http.post<AppObj>(AdInsConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
+      (response) =>{
+        console.log("Step Change to, Curr Step : "+response.AppCurrStep+", Last Step : "+response.AppLastStep);
+        this.ChangeTab(Step);
+        this.stepper.next();
+      },
+      (error)=>{
+        console.error("Error when updating AppStep");
+        console.error(error);
+      }
+    )
   }
 
   LastStepHandler() {
