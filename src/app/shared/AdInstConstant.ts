@@ -62,7 +62,7 @@ export class AdInsConstant {
   public static SubmitNAP = environment.losUrl + "/Application/SubmitNAP";
   public static AddEditAppCF2W = environment.losUrl + "/Application/AddEditAppCF2W";
   public static DataTableFeeAndInsNAP = "http://localhost:5001" + "/Application/DataTableFeeAndInsNAP";
-  public static UpdateAppStepByAppId = environment.losUrl +"Application/UpdateAppStepByAppId";
+  public static UpdateAppStepByAppId = environment.losUrl +"/Application/UpdateAppStepByAppId";
 
   //App Loan Purpose
   public static AddAppLoanPurpose = environment.losUrl + "/AppLoanPurpose/AddAppLoanPurpose";
@@ -710,6 +710,7 @@ export class AdInsConstant {
   //PURCHASE ORDER
   public static SubmitPurchaseOrder = environment.losUrl + "/PurchaseOrderH/SubmitPurchaseOrder";
   public static ResumeWorkflowPurchaseOrder = environment.losUrl + "/PurchaseOrderH/ResumeWorkflowPurchaseOrder";
+  public static GetPurchaseOrderHDetailViewByAgrmntId = environment.losUrl + "/PurchaseOrderH/GetPurchaseOrderHDetailViewByAgrmntId";
 
   // LEAD
   public static AddEditLeadCustPersonal = environment.losUrl + "/LeadCust/AddEditLeadCustPersonal";
