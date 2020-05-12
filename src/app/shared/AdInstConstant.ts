@@ -61,7 +61,7 @@ export class AdInsConstant {
   public static GetAppAndAppCustDetailByAgrmntId = environment.losUrl + "/Application/GetAppAndAppCustDetailByAgrmntId";
   public static SubmitNAP = environment.losUrl + "/Application/SubmitNAP";
   public static AddEditAppCF2W = "http://localhost:5001" + "/Application/AddEditAppCF2W";
-  public static DataTableFeeAndInsNAP = "http://localhost:5001" + "/Application/DataTableFeeAndInsNAP";
+  public static DataTableFeeAndInsNAP = environment.losUrl + "/Application/DataTableFeeAndInsNAP";
   public static UpdateAppStepByAppId = environment.losUrl +"Application/UpdateAppStepByAppId";
 
   //App Loan Purpose

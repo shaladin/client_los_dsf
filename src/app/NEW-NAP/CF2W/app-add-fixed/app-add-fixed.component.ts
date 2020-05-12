@@ -337,6 +337,10 @@ export class AppAddFixedComponent implements OnInit {
   SetSupplierBranch(event){
     this.supplierCode = event.VendorCode;
     this.supplierName = event.VendorName;
+
+    console.log("test")
+    console.log(this.supplierCode)
+    console.log(this.supplierName)
   }
 
   assetCode;
@@ -352,7 +356,7 @@ export class AppAddFixedComponent implements OnInit {
     this.assetName = event.FullAssetName;
     this.assetTypeCode = event.AssetTypeCode;
     this.assetCategoryCode = event.AssetCategoryCode
-    this.asset = this.assetName.split(' ');
+    this.asset = this.assetCode.split('.');
     for(var i = 0; i < this.asset.length; i++)
     {
       this.brand = this.asset[0];
@@ -368,10 +372,10 @@ export class AppAddFixedComponent implements OnInit {
   TypeCode;
   returnDtFixedNAPObj;
   generateData(){
-    this.SupplCode = "";
-    this.BrandCode = "";
-    this.ModelCode = "";
-    this.TypeCode = "";
+    this.SupplCode = this.supplierCode;
+    this.BrandCode = this.brand;
+    this.ModelCode = this.model;
+    this.TypeCode = this.type;
 
     var dtFixedNAPObj = new DataTableFixedNAPObj();
     dtFixedNAPObj.SupplCode = this.SupplCode;
@@ -473,7 +477,10 @@ export class AppAddFixedComponent implements OnInit {
         this.http.post(AdInsConstant.AddEditAppCF2W, this.allAppDataObj).subscribe(
           (response) => {
             this.returnAllAppDataObj = response;
+            console.log("test")
+            console.log(this.returnAllAppDataObj)
             this.toastr.successMessage(response["message"]);
+            this.router.navigate(["Nap/CF2W/Add/Detail"], { queryParams: { "LobCode":this.LobCode, "AppId": response["AppId"] } });
           },
           (error) => {
             console.log(error);
