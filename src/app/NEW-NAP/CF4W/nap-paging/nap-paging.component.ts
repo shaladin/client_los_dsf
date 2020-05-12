@@ -4,6 +4,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { HttpClient } from '@angular/common/http';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
   selector: 'app-nap-paging',
@@ -16,7 +17,8 @@ export class NapPagingComponent implements OnInit {
   arrCrit: any;
   userAccess: any;
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private toastr: NGXToastrService,
   ) { }
 
   async ngOnInit() {
@@ -55,5 +57,13 @@ export class NapPagingComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  GetCallBack(ev: any){
+    console.log(ev);
+    if(!ev.RowObj.IsAllowAppCreated){
+      this.toastr.typeErrorCustom('Is Not Allowed to Create App');
+      return;
+    }
   }
 }
