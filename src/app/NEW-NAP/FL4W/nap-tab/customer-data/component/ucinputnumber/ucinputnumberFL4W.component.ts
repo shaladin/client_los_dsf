@@ -9,7 +9,7 @@ import { ControlContainer, FormGroupDirective, FormGroup, NgForm, FormBuilder, V
 })
 
 //JANGAN DIPAKE, BUAT TEST DOANG
-export class UcinputnumberComponent implements OnInit {
+export class UcinputnumberFL4WComponent implements OnInit {
 
   @Input() parentForm: FormGroup;
   @Input() identifier: string = "UcInputNumber";

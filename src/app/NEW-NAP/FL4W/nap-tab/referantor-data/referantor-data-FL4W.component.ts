@@ -10,12 +10,12 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { NapAppReferantorModel } from 'app/shared/model/NapAppReferantor.Model';
 
 @Component({
-  selector: 'app-referantor-data',
-  templateUrl: './referantor-data.component.html',
+  selector: 'app-referantor-data-FL4W',
+  templateUrl: './referantor-data-FL4W.component.html',
   styleUrls: [],
   providers: [NGXToastrService]
 })
-export class ReferantorDataComponent implements OnInit {
+export class ReferantorDataFL4WComponent implements OnInit {
 
   @Input() appId: any;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();

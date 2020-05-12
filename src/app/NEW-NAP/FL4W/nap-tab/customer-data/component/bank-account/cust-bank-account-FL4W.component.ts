@@ -10,11 +10,11 @@ import { environment } from 'environments/environment';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
  
 @Component({
-  selector: 'app-cust-bank-account',
-  templateUrl: './cust-bank-account.component.html',
+  selector: 'app-cust-bank-account-FL4W',
+  templateUrl: './cust-bank-account-FL4W.component.html',
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
-export class CustBankAccountComponent implements OnInit {
+export class CustBankAccountFL4WComponent implements OnInit {
 
 
   @Input() listBankAcc: any = new Array<AppCustBankAccObj>();
