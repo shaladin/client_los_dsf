@@ -11,6 +11,7 @@ import { LeadFraudVerfObj } from 'app/shared/model/LeadFraudVerfObj.model';
 import { _ } from 'core-js';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder, Validators } from '@angular/forms';
+import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 
 @Component({
   selector: 'app-fraud-verif-page',
@@ -39,7 +40,7 @@ export class FraudVerifPageComponent implements OnInit {
   leadCustObj: LeadCustObj;
   leadAssetObj: LeadAssetObj;
   LeadId: number;
-  WfTaskListId: number;
+  WfTaskListId: string;
   GetLeadCustByLeadIdUrl: string;
   GetLeadCustPersonalByLeadCustIdUrl: string;
   GetCustomerAndNegativeCustDuplicateCheckUrl: string;
@@ -117,7 +118,7 @@ export class FraudVerifPageComponent implements OnInit {
           });
       });
   }
-  reject() {
+  reject() : void {
     this.leadFraudVerfObj = new LeadFraudVerfObj();
     this.leadFraudVerfObj.LeadId = this.LeadId;
     this.leadFraudVerfObj.VerifyStat = AdInsConstant.Reject;
@@ -130,7 +131,7 @@ export class FraudVerifPageComponent implements OnInit {
       });
   }
  
-  verify() {
+  verify() : void{
     this.leadFraudVerfObj = new LeadFraudVerfObj();
     this.leadFraudVerfObj.LeadId = this.LeadId;
     this.leadFraudVerfObj.VerifyStat = AdInsConstant.Verify;
@@ -146,7 +147,10 @@ export class FraudVerifPageComponent implements OnInit {
 
   async claimTask(){
     var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
-    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"]};
+    // var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"]};
+    var wfClaimObj : ClaimWorkflowObj = new ClaimWorkflowObj();
+    wfClaimObj.pWFTaskListID = this.WfTaskListId;
+    wfClaimObj.pUserId = currentUserContext["UserName"]
     console.log(wfClaimObj);
     this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {

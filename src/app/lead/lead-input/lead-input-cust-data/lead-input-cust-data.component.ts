@@ -341,8 +341,6 @@ export class LeadInputCustDataComponent implements OnInit {
     this.http.post(this.getRefMasterWithReserveField, this.custModel).subscribe(
       (response) => {
           this.listCustModel = response['ReturnObject'];
-          console.log("hhh");
-          console.log(this.listCustModel);
           this.CustomerDataForm.patchValue({ CustModel: response['ReturnObject'][0]['Key'] });
       });
     
