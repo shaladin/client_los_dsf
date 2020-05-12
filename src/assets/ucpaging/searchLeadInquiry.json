@@ -150,7 +150,7 @@
     ],
     "querystring": {
         "select": "SELECT l.LEAD_NO AS LeadNo, l.ORI_OFFICE_CODE AS OriOfficeCode, l.ORDER_NO AS OrderNo, lc.CUST_NAME as CustName,  l.MR_LEAD_SOURCE_CODE AS MrLeadSourceCode, la.FULL_ASSET_NAME AS FullAssetName, l.LEAD_STEP AS LeadStep, l.LEAD_STAT as LeadStat, l.lEAD_ID as LeadId, ro.OFFICE_NAME AS OfficeName",
-        "from": "FROM dbo.LEAD l WITH(NOLOCK) JOIN dbo.LEAD_CUST lc WITH(NOLOCK) ON l.LEAD_ID = lc.LEAD_ID JOIN dbo.LEAD_ASSET la on l.LEAD_ID = la.LEAD_ID JOIN dbo.V_REF_OFFICE ro WITH(NOLOCK) ON l.ORI_OFFICE_CODE = ro.OFFICE_CODE"
+        "from": "FROM dbo.LEAD l WITH(NOLOCK) LEFT JOIN dbo.LEAD_CUST lc WITH(NOLOCK) ON l.LEAD_ID = lc.LEAD_ID LEFT JOIN dbo.LEAD_ASSET la on l.LEAD_ID = la.LEAD_ID LEFT JOIN dbo.V_REF_OFFICE ro WITH(NOLOCK) ON l.ORI_OFFICE_CODE = ro.OFFICE_CODE"
     },
     "bodyList": [
         {
