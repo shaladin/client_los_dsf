@@ -811,21 +811,25 @@ export class LeadInputCustDataComponent implements OnInit {
         this.setLeadCustPersonalJobData();
         this.leadInputObj.LeadCustPersonalFinDataObj.RowVersion = this.resLeadCustPersonalFinDataObj.RowVersion;
         this.setLeadCustPersonalFinData();
-        this.http.post(this.addEditLeadCustPersonal, this.leadInputObj).subscribe(
-          (response) => {
-            console.log(response);
-            this.toastr.successMessage(response["message"]);
-            // this.router.navigate(
-            //   ["/Customer/CustomerPersonal/Address"], 
-            //   { queryParams: { "IdCust": this.IdCust }}
-            //   );
-            // console.log(response);
-            this.outputTab.emit({ stepMode: "next"});
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
+
+        console.log("vvv")
+        console.log(this.leadInputObj)
+
+        // this.http.post(this.addEditLeadCustPersonal, this.leadInputObj).subscribe(
+        //   (response) => {
+        //     console.log(response);
+        //     this.toastr.successMessage(response["message"]);
+        //     // this.router.navigate(
+        //     //   ["/Customer/CustomerPersonal/Address"], 
+        //     //   { queryParams: { "IdCust": this.IdCust }}
+        //     //   );
+        //     // console.log(response);
+        //     this.outputTab.emit({ stepMode: "next"});
+        //   },
+        //   (error) => {
+        //     console.log(error);
+        //   }
+        // );
       } else {
         this.leadInputObj = new LeadInputObj();
         this.setLeadCust();
