@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 import { AppObj } from 'app/shared/model/App/App.Model';
-import { FormBuilder } from '@angular/forms';
 import Stepper from 'bs-stepper';
-import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
+import { FormBuilder } from '@angular/forms';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -15,16 +14,22 @@ import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Mod
 })
 export class NapAddDetailComponent implements OnInit {
 
+  
+
   private stepper: Stepper;
   AppStepIndex: number = 1;
   appId: number;
-  wfTaskListId: number;
   mode: string;
   viewProdMainInfoObj: string;
-  viewReturnInfoObj: string = "";
   NapObj: AppObj;
-  IsMultiAsset: string;
+  ResponseReturnInfoObj: any;
+  OnFormReturnInfo: boolean = false;
+  IsMultiAsset: boolean = false;
   ListAsset: any;
+
+  FormReturnObj = this.fb.group({
+    ReturnExecNotes: ['']
+  });
 
   AppStep = {
     "NEW": 1,
@@ -39,49 +44,31 @@ export class NapAddDetailComponent implements OnInit {
     "TC": 9,
   };
 
-  ResponseReturnInfoObj;
-  FormReturnObj = this.fb.group({
-    ReturnExecNotes: ['']
-  });
-  OnFormReturnInfo = false;
-
-  constructor(
-    private route: ActivatedRoute,
-    private http: HttpClient,
-    private fb: FormBuilder,
-    private router: Router) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
         this.mode = params["Mode"];
         this.CheckMultiAsset();
       }
-      if (params["WfTaskListId"] != null) {
-        this.wfTaskListId = params["WfTaskListId"];
-      }
     });
   }
 
   ngOnInit() {
-    console.log("this");
-    this.ClaimTask();
-    this.AppStepIndex = 0;
     this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
     this.http.post(AdInsConstant.GetAppById, this.NapObj).subscribe(
       (response: AppObj) => {
         if (response) {
-          this.NapObj = response;
           this.AppStepIndex = this.AppStep[response.AppCurrStep];
           this.stepper.to(this.AppStepIndex);
-        }
-        else {
+          console.log(this.AppStepIndex);
+        } else {
           this.AppStepIndex = 0;
+          this.stepper.to(this.AppStepIndex);
+          console.log(this.AppStepIndex);
         }
-      },
-      (error) => {
-        console.log(error);
       }
     );
 
@@ -89,6 +76,7 @@ export class NapAddDetailComponent implements OnInit {
       linear: false,
       animation: true
     })
+
     this.MakeViewReturnInfoObj();
   }
 
@@ -113,6 +101,11 @@ export class NapAddDetailComponent implements OnInit {
     }
   }
 
+  NextStep(Step) {
+    this.ChangeTab(Step);
+    this.stepper.next();
+  }
+
   CheckMultiAsset() {
     var appObj = { AppId: this.appId }
     this.http.post(AdInsConstant.GetAppAssetListByAppId, appObj).subscribe(
@@ -120,12 +113,12 @@ export class NapAddDetailComponent implements OnInit {
         this.ListAsset = response['ReturnObject'];
         if (this.ListAsset != undefined && this.ListAsset != null) {
           if (this.ListAsset.length > 1)
-            this.IsMultiAsset = 'True';
+            this.IsMultiAsset = true;
           else
-            this.IsMultiAsset = 'False';
+            this.IsMultiAsset = false;
         }
         else
-          this.IsMultiAsset = 'False';
+          this.IsMultiAsset = false;
       },
       (error) => {
         console.log(error);
@@ -169,34 +162,6 @@ export class NapAddDetailComponent implements OnInit {
     }
   }
 
-  NextStep(Step) {
-    this.NapObj.AppCurrStep = Step;
-    this.http.post<AppObj>(AdInsConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
-      (response) =>{
-        console.log("Step Change to, Curr Step : "+response.AppCurrStep+", Last Step : "+response.AppLastStep);
-        this.ChangeTab(Step);
-        this.stepper.next();
-      },
-      (error)=>{
-        console.error("Error when updating AppStep");
-        console.error(error);
-      }
-    )
-  }
-
-  LastStepHandler() {
-    this.NapObj.WfTaskListId = this.wfTaskListId;
-    this.http.post(AdInsConstant.SubmitNAP, this.NapObj).subscribe(
-      (response) => {
-        console.log(response);
-        this.router.navigate(["/Nap/ConsumerFinance/InputNap/Paging"], { queryParams: { LobCode: "CF4W" } })
-      },
-      (error) => {
-        console.log(error);
-      }
-    )
-  }
-
   Submit() {
     if (this.mode == AdInsConstant.ModeResultHandling) {
       var obj = {
@@ -217,16 +182,4 @@ export class NapAddDetailComponent implements OnInit {
     }
   }
 
-  ClaimTask(){
-    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
-    var wfClaimObj = new AppObj();
-    wfClaimObj.AppId = this.appId;
-    wfClaimObj.Username = currentUserContext["UserName"];
-    wfClaimObj.WfTaskListId = this.wfTaskListId;
-
-    this.http.post(AdInsConstant.ClaimTaskNap, wfClaimObj).subscribe(
-      (response) => {
-    
-      });
-  }
 }

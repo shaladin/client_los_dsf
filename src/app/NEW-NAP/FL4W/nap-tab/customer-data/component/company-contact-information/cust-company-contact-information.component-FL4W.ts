@@ -7,14 +7,14 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AppCustCompanyContactPersonObj } from 'app/shared/model/AppCustCompanyContactPersonObj.Model';
 
 @Component({
-  selector: 'app-cust-company-contact-information',
-  templateUrl: './cust-company-contact-information.component.html',
+  selector: 'app-cust-company-contact-information-FL4W',
+  templateUrl: './cust-company-contact-information-FL4W.component.html',
   styleUrls: [],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 
 })
 
-export class CustCompanyContactInformationComponent implements OnInit {
+export class CustCompanyContactInformationFL4WComponent implements OnInit {
 
   @Input() listContactPersonCompany: any = new Array<AppCustCompanyContactPersonObj>();
 

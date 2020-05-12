@@ -11,14 +11,14 @@ import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 
 @Component({
-  selector: 'app-cust-personal-contact-information',
-  templateUrl: './cust-personal-contact-information.component.html',
+  selector: 'app-cust-personal-contact-information-FL4W',
+  templateUrl: './cust-personal-contact-information-FL4W.component.html',
   styleUrls: [],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 
 })
 
-export class CustPersonalContactInformationComponent implements OnInit {
+export class CustPersonalContactInformationFL4WComponent   implements OnInit {
   @Input() listContactPersonPersonal: any = new Array<AppCustPersonalContactPersonObj>();
 
 

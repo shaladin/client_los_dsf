@@ -12,14 +12,14 @@ import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 
 @Component({
-  selector: 'app-cust-job-data',
-  templateUrl: './cust-job-data.component.html',
+  selector: 'app-cust-job-data-FL4W',
+  templateUrl: './cust-job-data-FL4W.component.html',
   styleUrls: [],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 
 })
 
-export class CustJobDataComponent implements OnInit {
+export class CustJobDataFL4WComponent implements OnInit {
 
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;

@@ -12,14 +12,14 @@ import { ActivatedRoute } from '@angular/router';
 import { CustDataCompanyObj } from 'app/shared/model/CustDataCompanyObj.Model';
 
 @Component({
-  selector: 'app-cust-company-main-data',
-  templateUrl: './cust-company-main-data.component.html',
+  selector: 'app-cust-company-main-data-FL4W',
+  templateUrl: './cust-company-main-data-FL4W.component.html',
   styleUrls: [],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 
 })
 
-export class CustCompanyMainDataComponent implements OnInit {
+export class CustCompanyMainDataFL4WComponent implements OnInit {
 
   @Input() appId;
   @Input() enjiForm: NgForm;

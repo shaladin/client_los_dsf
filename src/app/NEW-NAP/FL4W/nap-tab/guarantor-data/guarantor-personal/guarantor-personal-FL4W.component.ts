@@ -14,12 +14,12 @@ import { GuarantorPersonalObj } from 'app/shared/model/GuarantorPersonalObj.Mode
 import { formatDate } from '@angular/common';
 import { environment } from 'environments/environment';
 @Component({
-  selector: 'app-guarantor-personal',
-  templateUrl: './guarantor-personal.component.html',
+  selector: 'app-guarantor-personal-FL4W',
+  templateUrl: './guarantor-personal-FL4W.component.html',
   styleUrls: [],
   providers: [NGXToastrService]
 })
-export class GuarantorPersonalComponent implements OnInit {
+export class GuarantorPersonalFL4WComponent implements OnInit {
 
   @Input() AppGuarantorId: any;
   @Input() mode: any;

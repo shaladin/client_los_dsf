@@ -13,24 +13,24 @@ import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 import { AppCustSocmedObj } from 'app/shared/model/AppCustSocmedObj.Model';
 import { AppCustGrpObj } from 'app/shared/model/AppCustGrpObj.Model';
 import { CustDataCompanyObj } from 'app/shared/model/CustDataCompanyObj.Model'; 
-import { formatDate } from '@angular/common';
-import { CustPersonalMainDataComponent } from './component/personal-main-data/cust-personal-main-data.component';
-import { CustPersonalContactInformationComponent } from './component/personal-contact-information/cust-personal-contact-information.component';
-import { CustJobDataComponent } from './component/job-data/cust-job-data.component';
-import { CustGrpMemberComponent } from './component/cust-grp-member/cust-grp-member.component';
+import { formatDate } from '@angular/common'; 
+import { CustPersonalMainDataFL4WComponent } from './component/personal-main-data/cust-personal-main-data-FL4W.component';
+import { CustPersonalContactInformationFL4WComponent } from './component/personal-contact-information/cust-personal-contact-information-FL4W.component';
+import { CustGrpMemberFL4WComponent } from './component/cust-grp-member/cust-grp-member-FL4W.component';
+import { CustJobDataFL4WComponent } from './component/job-data/cust-job-data-FL4W.component';
 
 @Component({
-  selector: 'app-customer-data',
-  templateUrl: './customer-data.component.html',
+  selector: 'app-customer-data-FL4W',
+  templateUrl: './customer-data-FL4W.component.html',
   styleUrls: []
 })
 
-export class CustomerDataComponent implements OnInit {
+export class CustomerDataFL4WComponent implements OnInit {
 
-  @ViewChild(CustPersonalMainDataComponent) mainDataComponent;
-  @ViewChild(CustPersonalContactInformationComponent) custContactInformationComponent;
-  @ViewChild(CustJobDataComponent) custJobDataComponent;
-  @ViewChild(CustGrpMemberComponent) custGrpMemberComponent;
+  @ViewChild(CustPersonalMainDataFL4WComponent) mainDataComponent;
+  @ViewChild(CustPersonalContactInformationFL4WComponent) custContactInformationComponent;
+  @ViewChild(CustJobDataFL4WComponent) custJobDataComponent;
+  @ViewChild(CustGrpMemberFL4WComponent) custGrpMemberComponent;
 
 
   CustDataForm = this.fb.group({

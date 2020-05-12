@@ -9,11 +9,11 @@ import { WizardComponent } from 'angular-archwizard';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
-  selector: 'app-guarantor-paging',
-  templateUrl: './guarantor-paging.component.html',
+  selector: 'app-guarantor-paging-FL4W',
+  templateUrl: './guarantor-paging-FL4W.component.html',
   styleUrls: []
 })
-export class GuarantorPagingComponent implements OnInit {
+export class GuarantorPagingFL4WComponent implements OnInit {
 
   @Input() AppId: any;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
