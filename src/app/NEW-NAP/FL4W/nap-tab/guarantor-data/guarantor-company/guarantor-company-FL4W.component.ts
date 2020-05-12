@@ -15,13 +15,13 @@ import { environment } from 'environments/environment';
 import { formatDate } from '@angular/common';
 
 @Component({
-  selector: 'app-guarantor-company',
-  templateUrl: './guarantor-company.component.html',
+  selector: 'app-guarantor-company-FL4W',
+  templateUrl: './guarantor-company-FL4W.component.html',
   styleUrls: [],
   providers: [NGXToastrService]
 })
 
-export class GuarantorCompanyComponent implements OnInit {
+export class GuarantorCompanyFL4WComponent implements OnInit {
 
   @Input() AppGuarantorId : any;
   @Input() mode : any;

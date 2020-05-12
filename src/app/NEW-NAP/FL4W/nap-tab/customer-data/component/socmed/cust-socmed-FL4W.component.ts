@@ -6,14 +6,14 @@ import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 import { AppCustSocmedObj } from 'app/shared/model/AppCustSocmedObj.Model';
 
 @Component({
-  selector: 'app-cust-socmed',
-  templateUrl: './cust-socmed.component.html',
+  selector: 'app-cust-socmed-FL4W',
+  templateUrl: './cust-socmed-FL4W.component.html',
   styleUrls: [],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 
 })
 
-export class CustSocmedComponent implements OnInit {
+export class CustSocmedFL4WComponent implements OnInit {
 
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;

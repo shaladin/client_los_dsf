@@ -7,12 +7,12 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 
 @Component({
-  selector: 'app-guarantor',
-  templateUrl: './guarantor.component.html',
+  selector: 'app-guarantor-FL4W',
+  templateUrl: './guarantor-FL4W.component.html',
   styleUrls: [],
   providers: [NGXToastrService]
 })
-export class GuarantorComponent implements OnInit {
+export class GuarantorFL4WComponent implements OnInit {
 
   @Input() AppGuarantorId : any;
   @Input() MrGuarantorTypeCode : any;

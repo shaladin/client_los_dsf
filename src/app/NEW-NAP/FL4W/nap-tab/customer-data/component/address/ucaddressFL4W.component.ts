@@ -6,14 +6,14 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 
 @Component({
-  selector: 'app-cust-ucaddress',
-  templateUrl: './ucaddress.component.html',
+  selector: 'app-cust-ucaddress-FL4W',
+  templateUrl: './ucaddressFL4W.component.html',
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
-export class CustUcaddressComponent implements OnInit {
+export class CustUcaddressFL4WComponent implements OnInit {
 
   @Input() UCAddrForm: FormGroup;
-  @Input() enjiForm: NgForm;
+  @Input() enjiForm: NgForm;  
   @Input() identifier: any;
   @Input() default: any;
   @Input() title = "Address Information";

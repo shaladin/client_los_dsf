@@ -12,14 +12,14 @@ import { formatDate } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-cust-personal-main-data',
-  templateUrl: './cust-personal-main-data.component.html',
+  selector: 'app-cust-personal-main-data-FL4W',
+  templateUrl: './cust-personal-main-data-FL4W.component.html',
   styleUrls: [],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 
 })
 
-export class CustPersonalMainDataComponent implements OnInit {
+export class CustPersonalMainDataFL4WComponent implements OnInit {
 
   @Input() appId;
   @Input() enjiForm: NgForm;

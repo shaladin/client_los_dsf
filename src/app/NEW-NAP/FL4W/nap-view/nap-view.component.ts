@@ -10,7 +10,7 @@ import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
   styles: []
 })
 export class NapViewComponent implements OnInit {
-  arrValue = [];
+  arrValue = []; 
   appId: number;
   appCustData: AppCustObj;
 

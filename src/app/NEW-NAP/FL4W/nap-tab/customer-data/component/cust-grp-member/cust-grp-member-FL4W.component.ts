@@ -8,14 +8,14 @@ import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 import { AppCustGrpObj } from 'app/shared/model/AppCustGrpObj.Model';
 
 @Component({
-  selector: 'app-cust-grp-member',
-  templateUrl: './cust-grp-member.component.html',
+  selector: 'app-cust-grp-member-FL4W',
+  templateUrl: './cust-grp-member-FL4W.component.html',
   styleUrls: [],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 
 })
 
-export class CustGrpMemberComponent implements OnInit {
+export class CustGrpMemberFL4WComponent implements OnInit {
 
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;

@@ -7,7 +7,7 @@ import { environment } from 'environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { MouCustSignerObj } from 'app/shared/model/MouCustSignerObj.Model';
@@ -116,9 +116,9 @@ export class DocSignerDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('vin');
     this.claimTask();
     this.custShareholderLookUpObj1 = new InputLookupObj();
-    this.custShareholderLookUpObj1.isRequired = false;
     this.custShareholderLookUpObj1.urlJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
     this.custShareholderLookUpObj1.urlQryPaging = "/Generic/GetPagingObjectBySQL";
     this.custShareholderLookUpObj1.urlEnviPaging = environment.FoundationR3Url;
@@ -134,7 +134,6 @@ export class DocSignerDetailComponent implements OnInit {
     this.custShareholderLookUpObj2.genericJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
 
     this.employeeLookUpObj1 = new InputLookupObj();
-    this.employeeLookUpObj1.isRequired = false;
     this.employeeLookUpObj1.urlJson = "./assets/uclookup/lookupEmployee.json";
     this.employeeLookUpObj1.urlQryPaging = "/Generic/GetPagingObjectBySQL";
     this.employeeLookUpObj1.urlEnviPaging = environment.FoundationR3Url;

@@ -12,14 +12,14 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AppCustCompanyMgmntShrholderObj } from 'app/shared/model/AppCustCompanyMgmntShrholderObj.Model';
 
 @Component({
-  selector: 'app-cust-shareholder',
-  templateUrl: './cust-shareholder.component.html',
+  selector: 'app-cust-shareholder-FL4W',
+  templateUrl: './cust-shareholder-FL4W.component.html',
   styleUrls: [],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 
 })
 
-export class CustShareholderComponent implements OnInit {
+export class CustShareholderFL4WComponent implements OnInit {
 
   @Input() listShareholder: any = new Array<AppCustCompanyMgmntShrholderObj>();
 

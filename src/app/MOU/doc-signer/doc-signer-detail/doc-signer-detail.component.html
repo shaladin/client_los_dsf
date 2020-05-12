@@ -60,7 +60,7 @@
                     </lib-ucSubsection>
                     <div id="mfSigner">
                         <div class="form-group row">
-                            <label class="col-md-3 adInsLabel adins-required" translate>Management / ShareHolder 1 </label>
+                            <label class="col-md-3 adInsLabel adins-required-label" translate>MF Signer 1 </label>
                             <div class="col-md-4">
                                 <lib-uclookupgeneric [lookupInput]="custShareholderLookUpObj1" [parentForm]="MouCustSignerForm"
                                     [enjiForm]="enjiForm" [identifier]="'ShareholderName1'" (lookup)=getLookUpShareholder1($event)>
@@ -68,7 +68,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 adInsLabel adins-required" translate>Management / ShareHolder Position 1 </label>
+                            <label class="col-md-3 adInsLabel adins-required" translate>MF Signer Position 1 </label>
                             <div class="col-md-4">
                             <input type="text" class="form-control adInsInput" formControlName="MfSignerPosition1"
                                     [ngClass]="{ 'is-invalid': enjiForm.submitted && MouCustSignerForm.controls.MfSignerPosition1.invalid }" disabled>
@@ -76,7 +76,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 adInsLabel adins-required" translate>Management / ShareHolder 2 </label>
+                            <label class="col-md-3 adInsLabel adins-required" translate>MF Signer 2 </label>
                             <div class="col-md-4">
                                 <lib-uclookupgeneric [lookupInput]="custShareholderLookUpObj2" [parentForm]="MouCustSignerForm"
                                     [enjiForm]="enjiForm" [identifier]="'ShareholderName2'" (lookup)=getLookUpShareholder2($event)>
@@ -84,7 +84,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 adInsLabel adins-required" translate>Management / ShareHolder Position 2 </label>
+                            <label class="col-md-3 adInsLabel adins-required" translate>MF Signer Position 2 </label>
                             <div class="col-md-4">
                             <input type="text" class="form-control adInsInput" formControlName="MfSignerPosition2"
                                     [ngClass]="{ 'is-invalid': enjiForm.submitted && MouCustSignerForm.controls.MfSignerPosition2.invalid }" disabled>
@@ -96,7 +96,7 @@
                     </lib-ucSubsection>
                     <div id="custSigner">
                         <div class="form-group row">
-                            <label class="col-md-3 adInsLabel adins-required" translate>Customer Commissioner Approver 1 </label>
+                            <label class="col-md-3 adInsLabel adins-required-label" translate>Customer Signer 1 </label>
                             <div class="col-md-4">
                                 <lib-uclookupgeneric [lookupInput]="employeeLookUpObj1" [parentForm]="MouCustSignerForm"
                                 [enjiForm]="enjiForm" [identifier]="'EmpName1'" (lookup)=getLookUpEmployee1($event)>
@@ -104,7 +104,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 adInsLabel adins-required" translate>Customer Commissioner Approver Position 1 </label>
+                            <label class="col-md-3 adInsLabel adins-required" translate>Customer Signer Position 1 </label>
                             <div class="col-md-4">
                             <input type="text" class="form-control adInsInput" formControlName="CustSignerPosition1"
                                     [ngClass]="{ 'is-invalid': enjiForm.submitted && MouCustSignerForm.controls.CustSignerPosition1.invalid }" disabled>
@@ -112,7 +112,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 adInsLabel adins-required" translate>Customer Commissioner Approver 2 </label>
+                            <label class="col-md-3 adInsLabel adins-required" translate>Customer Signer 2 </label>
                             <div class="col-md-4">
                                 <lib-uclookupgeneric [lookupInput]="employeeLookUpObj2" [parentForm]="MouCustSignerForm"
                                 [enjiForm]="enjiForm" [identifier]="'EmpName2'" (lookup)=getLookUpEmployee2($event)>
@@ -120,7 +120,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 adInsLabel adins-required" translate>Customer Commissioner Approver Position 2 </label>
+                            <label class="col-md-3 adInsLabel adins-required" translate>Customer Signer Position 2 </label>
                             <div class="col-md-4">
                             <input type="text" class="form-control adInsInput" formControlName="CustSignerPosition2"
                                     [ngClass]="{ 'is-invalid': enjiForm.submitted && MouCustSignerForm.controls.CustSignerPosition2.invalid }" disabled>

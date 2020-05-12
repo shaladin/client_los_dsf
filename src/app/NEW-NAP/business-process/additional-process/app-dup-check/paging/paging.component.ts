@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { HttpClient } from '@angular/common/http';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
@@ -17,8 +17,19 @@ export class PagingComponent implements OnInit {
 
   inputPagingObj: any;
   arrCrit: any;
+  lobCode: string;
 
-  constructor(private router: Router, private http: HttpClient) { }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router) {
+    this.route.queryParams.subscribe(params => {
+      if (params["LobCode"] != null) {
+        this.lobCode = params["LobCode"];
+        localStorage.setItem("LobCode", this.lobCode);
+      }
+      
+    });
+  }
 
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
@@ -26,6 +37,13 @@ export class PagingComponent implements OnInit {
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppDupCheck.json";
+
+    var critLobObj = new CriteriaObj();
+    critLobObj.restriction = AdInsConstant.RestrictionLike;
+    critLobObj.DataType = 'text';
+    critLobObj.propName = 'RL.BL_CODE';
+    critLobObj.value = localStorage.getItem("LobCode");
+    this.inputPagingObj.addCritInput.push(critLobObj);
 
     // var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
     // var addCrit = new CriteriaObj();

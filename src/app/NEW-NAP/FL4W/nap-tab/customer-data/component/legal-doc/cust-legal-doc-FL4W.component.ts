@@ -8,14 +8,14 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalDocObj.Model';
 
 @Component({
-  selector: 'app-cust-legal-doc',
-  templateUrl: './cust-legal-doc.component.html',
+  selector: 'app-cust-legal-doc-FL4W',
+  templateUrl: './cust-legal-doc-FL4W.component.html',
   styleUrls: [],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 
 })
 
-export class CustLegalDocComponent implements OnInit {
+export class CustLegalDocFL4WComponent implements OnInit {
 
   @Input() listLegalDoc: any = new Array<AppCustCompanyLegalDocObj>();
 

@@ -4,14 +4,14 @@ import { formatDate } from '@angular/common';
 import { AppCustCompanyFinDataObj } from 'app/shared/model/AppCustCompanyFinDataObj.Model';
 
 @Component({
-  selector: 'app-cust-company-financial-data',
-  templateUrl: './cust-company-financial-data.component.html',
+  selector: 'app-cust-company-financial-data-FL4W',
+  templateUrl: './cust-company-financial-data-Fl4W.component.html',
   styleUrls: [],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 
 })
 
-export class CustCompanyFinancialDataComponent implements OnInit {
+export class CustCompanyFinancialDataFL4WComponent implements OnInit {
 
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
