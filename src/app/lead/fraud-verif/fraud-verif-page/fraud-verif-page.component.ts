@@ -114,10 +114,7 @@ export class FraudVerifPageComponent implements OnInit {
               });
           });
       });
-
-
   }
-
   reject() {
     this.leadFraudVerfObj.LeadId = this.LeadId;
     this.leadFraudVerfObj.VerifyStat = AdInsConstant.Reject;
@@ -141,7 +138,7 @@ export class FraudVerifPageComponent implements OnInit {
         this.toastr.successMessage(response["message"]); 
         this.router.navigate(["/Lead/FraudVerif/Paging"]);
       });
-  }
+  } 
 
   async claimTask(){
     var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));

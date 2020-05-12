@@ -29,66 +29,57 @@ export class LeadInputCustDataComponent implements OnInit {
   @Input() LeadId: number;
   @Output() outputTab: EventEmitter<object> = new EventEmitter();
   businessDt: any;
-  CopyFrom: any;
+  CopyFrom: number;
   jobAddrId: any;
   othBizAddrId: any;
   jobDataId: any;
   rowVersion: any;
   typePage: string;
-  //LeadId: any;
-  addEditLeadCustPersonal: any;
-  jobAddressObj: any;
-  otherAddressObj: any;
+  addEditLeadCustPersonal: string;
   inputLegalAddressObj: InputFieldObj;
   inputResidenceAddressObj: InputFieldObj;
-  tempProfession: any;
-  professionLookUpObj: any;
-  legalAddressObj: any;
-  residenceAddressObj: any;
-  otherAddrObj: any;
-  idTypeCode: any;
+  tempProfession: string;
+  professionLookUpObj: InputLookupObj;
+  legalAddressObj: LeadCustAddrObj;
+  residenceAddressObj: LeadCustAddrObj;
+  idTypeCode: RefMasterObj;
   tempIdType: any;
-  maritalStatCode: any;
+  maritalStatCode: RefMasterObj;
   tempMrMaritalStatCode: any;
   getListActiveRefMasterUrl: string;
-  getRefMasterWithReserveField: any;
-  custModel: any;
+  getRefMasterWithReserveField: string;
+  custModel: RefMasterObj;
   listCustModel: any;
   leadInputObj: LeadInputObj = new LeadInputObj();
-  leadCustObj: any;
-  leadCustPersonalObj: any;
-  leadCustPersonalJobDataObj: any;
-  leadCustPersonalFinDataObj: any;
-  leadCustFacebookObj: any;
-  leadCustInstagramObj: any;
-  leadCustTwitterObj: any;
-  genderType: any;
+  leadCustFacebookObj: LeadCustSocmedObj;
+  leadCustInstagramObj: LeadCustSocmedObj;
+  leadCustTwitterObj: LeadCustSocmedObj;
+  genderType: RefMasterObj;
   tempGender: any;
-  getLeadByLeadId: any;
-  getLeadCustByLeadId: any;
-  getLeadCustAddr: any;
-  getLeadCustPersonal: any;
-  getLeadCustPersonalFinData: any;
-  getLeadCustPersonalJobData: any;
-  getRefProfessionByCode: any;
-  getListLeadCustSocmed: any;
-  reqLeadCustObj: any;
+  getLeadByLeadId: string;
+  getLeadCustByLeadId: string;
+  getLeadCustAddr: string;
+  getLeadCustPersonal: string;
+  getLeadCustPersonalFinData: string;
+  getLeadCustPersonalJobData: string;
+  getRefProfessionByCode: string;
+  getListLeadCustSocmed: string;
+  reqLeadCustObj: LeadCustObj;
   resLeadCustObj: any;
-  reqLeadCustPersonalObj: any;
+  reqLeadCustPersonalObj: LeadCustPersonalObj;
   resLeadCustPersonalObj: any;
-  reqLeadCustPersonalJobDataObj: any;
+  reqLeadCustPersonalJobDataObj: LeadCustPersonalJobDataObj;
   resLeadCustPersonalJobDataObj: any;
-  reqLeadCustPersonalFinDataObj: any;
+  reqLeadCustPersonalFinDataObj: LeadCustPersonalFinDataObj;
   resLeadCustPersonalFinDataObj: any;
-  reqLeadCustAddrLegalObj: any;
+  reqLeadCustAddrLegalObj: LeadCustAddrObj;
   resLeadCustAddrLegalObj: any;
-  reqLeadCustAddrResObj: any;
+  reqLeadCustAddrResObj: LeadCustAddrObj;
   resLeadCustAddrResObj: any;
-  refProfessionObj: any;
+  refProfessionObj: RefProfessionObj;
   returnRefProfessionObj: any;
-  reqLeadCustSocmedObj: any;
+  reqLeadCustSocmedObj: LeadCustSocmedObj;
   resLeadCustSocmedObj: any;
-  arrAddCrit: any;
   CustModelKey: string;
   CustomerDataForm = this.fb.group({
     CustType: [''],
@@ -112,7 +103,7 @@ export class LeadInputCustDataComponent implements OnInit {
     MonthlyIncome: [0],
     MonthlyExpense: [0]
   });
-
+  
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) { 
     this.getListActiveRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
     this.getRefMasterWithReserveField = AdInsConstant.GetListActiveRefMasterWithReserveFieldAll;
@@ -125,7 +116,6 @@ export class LeadInputCustDataComponent implements OnInit {
     this.getLeadCustPersonalJobData = AdInsConstant.GetLeadCustPersonalJobDataByLeadCustPersonalId;
     this.getRefProfessionByCode = AdInsConstant.GetRefProfessionByCode;
     this.getListLeadCustSocmed = AdInsConstant.GetListLeadCustSocmedByLeadCustId;
-
     this.route.queryParams.subscribe(params => {
         if (params["LeadId"] != null) {
           this.LeadId = params["LeadId"];
