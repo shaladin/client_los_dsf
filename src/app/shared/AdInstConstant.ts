@@ -60,9 +60,9 @@ export class AdInsConstant {
   public static GetRuleFeeAndInsFixedNAP = environment.losUrl + "/Application/GetRuleFeeAndInsFixedNAP";
   public static GetAppAndAppCustDetailByAgrmntId = environment.losUrl + "/Application/GetAppAndAppCustDetailByAgrmntId";
   public static SubmitNAP = environment.losUrl + "/Application/SubmitNAP";
-  public static AddEditAppCF2W = environment.losUrl + "/Application/AddEditAppCF2W";
+  public static AddEditAppCF2W = "http://localhost:5001" + "/Application/AddEditAppCF2W";
   public static DataTableFeeAndInsNAP = "http://localhost:5001" + "/Application/DataTableFeeAndInsNAP";
-  public static UpdateAppStepByAppId = environment.losUrl +"Application/UpdateAppStepByAppId";
+  public static UpdateAppStepByAppId = environment.losUrl +"/Application/UpdateAppStepByAppId";
 
   //App Loan Purpose
   public static AddAppLoanPurpose = environment.losUrl + "/AppLoanPurpose/AddAppLoanPurpose";
@@ -531,6 +531,7 @@ export class AdInsConstant {
   public static GetPagingObjectBySQL = "/Generic/GetPagingObjectBySQL";
 
   // LEAD
+  public static ViewHeaderLeadMainInfo = "./assets/ucviewgeneric/viewLeadHeader.json";
   public static AddLead = environment.losUrl + "/Lead/AddLead";
   public static EditLead = environment.losUrl + "/Lead/EditLead";
   public static DeleteLead = environment.losUrl + "/Lead/DeleteLead";
@@ -710,6 +711,7 @@ export class AdInsConstant {
   //PURCHASE ORDER
   public static SubmitPurchaseOrder = environment.losUrl + "/PurchaseOrderH/SubmitPurchaseOrder";
   public static ResumeWorkflowPurchaseOrder = environment.losUrl + "/PurchaseOrderH/ResumeWorkflowPurchaseOrder";
+  public static GetPurchaseOrderHDetailViewByAgrmntId = environment.losUrl + "/PurchaseOrderH/GetPurchaseOrderHDetailViewByAgrmntId";
 
   // LEAD
   public static AddEditLeadCustPersonal = environment.losUrl + "/LeadCust/AddEditLeadCustPersonal";
