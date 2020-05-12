@@ -12,6 +12,10 @@ import { _ } from 'core-js';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
+import { ResDuplicateCustomerObj } from 'app/shared/model/Lead/ResDuplicateCustomerObj.Model';
+import { ResDuplicateNegativeCustomerObj } from 'app/shared/model/Lead/ResDuplicateNegativeCustomerObj.Model';
+import { ResDuplicateNegativeAssetObj } from 'app/shared/model/Lead/ResDuplicateNegativeAssetObj.Model';
+import { ResLeadCustObj } from 'app/shared/model/Lead/ResLeadCustObj.Model';
 
 @Component({
   selector: 'app-fraud-verif-page',
@@ -36,39 +40,36 @@ export class FraudVerifPageComponent implements OnInit {
     this.AddLeadFraudVerfUrl = AdInsConstant.AddLeadFraudVerf;
   }
   viewLeadHeaderMainInfo: string;
-  DuplicateCustObj: DuplicateCustObj;
-  leadCustObj: LeadCustObj;
-  leadAssetObj: LeadAssetObj;
-  LeadId: number;
+  DuplicateCustObj: DuplicateCustObj = new DuplicateCustObj();
+  leadCustObj: LeadCustObj = new LeadCustObj();
+  leadAssetObj: LeadAssetObj = new LeadAssetObj();;
+  LeadId: string;
   WfTaskListId: string;
   GetLeadCustByLeadIdUrl: string;
   GetLeadCustPersonalByLeadCustIdUrl: string;
   GetCustomerAndNegativeCustDuplicateCheckUrl: string;
   GetLeadAssetForCheckUrl: string;
-  tempLeadCustObj: any;
+  tempLeadCustObj: any;//ResLeadCustObj = new ResLeadCustObj();
   tempLeadCustPersonalObj: any;
-  leadCustPersonalObj: LeadCustPersonalObj;
+  leadCustPersonalObj: LeadCustPersonalObj = new LeadCustPersonalObj();;
   DuplicateStatus: string;
-  ResultDuplicate: any;
-  ResultDuplicateNegative: any;
-  negativeAssetCheckObj: NegativeAssetCheckObj;
+  ResultDuplicate: ResDuplicateCustomerObj = new ResDuplicateCustomerObj();
+  ResultDuplicateNegative: ResDuplicateNegativeCustomerObj = new ResDuplicateNegativeCustomerObj();
+  negativeAssetCheckObj: NegativeAssetCheckObj = new NegativeAssetCheckObj();;
   tempAssetCategoryTypeCode: any;
   GetLeadAssetByLeadIdUrl: string;
   tempLeadAsset: any;
   GetAssetNegativeDuplicateCheckUrl: string;
-  ResultDuplicateAssetNegative: any;
-  leadFraudVerfObj: LeadFraudVerfObj;
+  ResultDuplicateAssetNegative: ResDuplicateNegativeAssetObj = new ResDuplicateNegativeAssetObj();
+  leadFraudVerfObj: LeadFraudVerfObj = new LeadFraudVerfObj();
   AddLeadFraudVerfUrl: string;
   FraudVerfForm = this.fb.group({
     Notes: ['', [Validators.required]],
   });
   ngOnInit() {
     this.claimTask();
-    this.viewLeadHeaderMainInfo = "./assets/ucviewgeneric/viewLeadHeader.json";
-
-    this.leadCustObj = new LeadCustObj();
+    this.viewLeadHeaderMainInfo = AdInsConstant.ViewHeaderLeadMainInfo;
     this.leadCustObj.LeadId = this.LeadId;
-    this.leadCustPersonalObj = new LeadCustPersonalObj();
     this.http.post(this.GetLeadCustByLeadIdUrl, this.leadCustObj).subscribe(
       (response) => {
         this.tempLeadCustObj = response;
@@ -76,7 +77,6 @@ export class FraudVerifPageComponent implements OnInit {
         this.http.post(this.GetLeadCustPersonalByLeadCustIdUrl, this.leadCustPersonalObj).subscribe(
           (response) => {
             this.tempLeadCustPersonalObj = response;
-            this.DuplicateCustObj = new DuplicateCustObj();
             this.DuplicateCustObj.CustName = this.tempLeadCustObj.CustName;
             this.DuplicateCustObj.MrCustTypeCode = "PERSONAL";
             this.DuplicateCustObj.IdNo = this.tempLeadCustObj.IdNo;
@@ -93,7 +93,6 @@ export class FraudVerifPageComponent implements OnInit {
               });
           });
       });
-    this.leadAssetObj = new LeadAssetObj();
     this.leadAssetObj.LeadId = this.LeadId;
     this.http.post(this.GetLeadAssetByLeadIdUrl, this.leadAssetObj).subscribe(
       (response) => {
@@ -103,7 +102,6 @@ export class FraudVerifPageComponent implements OnInit {
         this.http.post(this.GetLeadAssetForCheckUrl, this.leadAssetObj).subscribe(
           (response) => {
             this.tempAssetCategoryTypeCode = response;
-            this.negativeAssetCheckObj = new NegativeAssetCheckObj();
             this.negativeAssetCheckObj.AssetTypeCode = this.tempAssetCategoryTypeCode.AssetTypeCode;
             this.negativeAssetCheckObj.SerialNo1 = this.tempLeadAsset.SerialNo1;
             this.negativeAssetCheckObj.SerialNo2 = this.tempLeadAsset.SerialNo2;
@@ -147,11 +145,9 @@ export class FraudVerifPageComponent implements OnInit {
 
   async claimTask(){
     var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
-    // var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"]};
     var wfClaimObj : ClaimWorkflowObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.WfTaskListId;
-    wfClaimObj.pUserId = currentUserContext["UserName"]
-    console.log(wfClaimObj);
+    wfClaimObj.pUserID = currentUserContext["UserName"];
     this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
       });

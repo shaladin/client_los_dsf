@@ -1,8 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { DecimalPipe } from '@angular/common';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { UcpagingComponent } from '@adins/ucpaging';
 import { environment } from 'environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -24,56 +22,55 @@ import { RefEmpForLookupObj } from 'app/shared/model/RefEmpForLookupObj.Model';
 })
 export class LeadInputMainInfoComponent implements OnInit {
   user: any;
-  LeadId: number;
-  addLead: any;
-  editLead: any;
-  getLeadByLeadId: any;
+  LeadId: string;
+  addLead: string;
+  editLead: string;
+  getLeadByLeadId: string;
   returnLead: any;
   responseLead: any;
-  leadObj: any;
+  leadObj: LeadObj;
   getLeadObj: LeadObj;
-  cmoNameLookUpObj: any;
-  surveyorNameLookUpObj: any;
-  salesNameLookUpObj: any;
-  agencyLookUpObj: any;
+  cmoNameLookUpObj: InputLookupObj;
+  surveyorNameLookUpObj: InputLookupObj;
+  salesNameLookUpObj: InputLookupObj;
+  agencyLookUpObj: InputLookupObj;
   tempCmoUsername: any;
   tempSurveyorUsername: any;
   tempSalesUsername: any;
   tempAgencyCode: any;
-  getListRefOffice: any;
-  getListActiveLob: any;
-  getListActiveRefMasterUrl: any;
-  getVendorByVendorCode: any;
-  getRefEmpForLookupEmployee: any;
-  getLeadPersonalForLookup: any;
-  listRefOffice: any;
-  refOfficeObj: any;
-  listRefLob: any;
-  refLobObj: any;
-  leadSource: any;
-  listLeadSource: any;
-  vendorObj: any;
+  getListRefOffice: string;
+  getListActiveLob: string;
+  getListActiveRefMasterUrl: string;
+  getVendorByVendorCode: string;
+  getLeadPersonalForLookup: string;
+  listRefOffice: Array<any>;
+  refOfficeObj: RefOfficeObj;
+  listRefLob: Array<any>;
+  refLobObj: RefLobObj;
+  leadSource: RefMasterObj;
+  listLeadSource: Array<any>;
+  vendorObj: VendorObj;
   returnVendorObj: any;
   pageType: string = "add";
-  leadPersonalLookUpObj: any;
-  cmoObj: any;
+  leadPersonalLookUpObj: InputLookupObj;
+  cmoObj: RefEmpForLookupObj;
   returnCmoObj: any;
-  surveyorObj: any;
+  surveyorObj: RefEmpForLookupObj;
   returnSurveyorObj: any;
-  salesObj: any;
+  salesObj: RefEmpForLookupObj;
   returnSalesObj: any;
-  leadIdExist: number;
-  getExistLeadObj: any;
+  leadIdExist: string;
+  getExistLeadObj: LeadObj;
   returnExistLead: any;
-  vendorExistObj: any;
+  vendorExistObj: VendorObj;
   returnVendorExistObj: any;
-  cmoExistObj: any;
+  cmoExistObj: RefEmpForLookupObj;
   returnCmoExistObj: any;
-  surveyorExistObj: any;
+  surveyorExistObj: RefEmpForLookupObj;
   returnSurveyorExistObj: any;
-  salesExistObj: any;
+  salesExistObj: RefEmpForLookupObj;
   returnSalesExistObj: any;
-  leadExistObj: any;
+  leadExistObj: LeadObj;
   returnLeadExistObj: any;
   MainInfoForm = this.fb.group({
     OfficeCode: [''],
@@ -85,7 +82,7 @@ export class LeadInputMainInfoComponent implements OnInit {
     LeadSource: [''],
   });
   leadUrl: string;
-  WfTaskListId: number;
+  WfTaskListId: string;
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.addLead = AdInsConstant.AddLead;
@@ -95,7 +92,6 @@ export class LeadInputMainInfoComponent implements OnInit {
     this.getListActiveLob = AdInsConstant.GetListActiveLob;
     this.getListActiveRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
     this.getVendorByVendorCode = AdInsConstant.GetVendorByVendorCode;
-    this.getRefEmpForLookupEmployee = AdInsConstant.GetRefEmpForLookupEmployee;
     this.getLeadPersonalForLookup = AdInsConstant.GetLeadPersonalForLookupCopy;
     this.route.queryParams.subscribe(params => {
       if (params["mode"] != null) {
@@ -156,7 +152,6 @@ export class LeadInputMainInfoComponent implements OnInit {
           LobName: this.returnExistLead.LobName,
           LeadSource: this.returnExistLead.MrLeadSourceCode,
         });
- 
         
         this.vendorExistObj = new VendorObj();
         this.vendorExistObj.VendorCode = this.returnExistLead.AgencyCode;
@@ -203,14 +198,11 @@ export class LeadInputMainInfoComponent implements OnInit {
             this.returnSalesExistObj = response;
             this.salesNameLookUpObj.nameSelect = this.returnSalesExistObj.Username;
             this.salesNameLookUpObj.jsonSelect = this.returnSalesExistObj;
-
           });
       });
   }
 
   ngOnInit() {
-    console.log("ccc")
-    // console.log(JSON.parse(localStorage.getItem("UserAccess")));
     this.claimTask();
     this.user = JSON.parse(localStorage.getItem("UserAccess"));
 
@@ -269,9 +261,7 @@ export class LeadInputMainInfoComponent implements OnInit {
     this.refOfficeObj = new RefOfficeObj();
     this.http.post(this.getListRefOffice, this.refOfficeObj).subscribe(
       (response) => {
-        this.listRefOffice = response['ReturnObject']
-        // console.log("aaa")
-        // console.log(this.listRefOffice)
+        this.listRefOffice = response['ReturnObject'];
         this.MainInfoForm.patchValue({
           OfficeCode: response['ReturnObject'][0]['Key'],
           OfficeName: response['ReturnObject'][0]['Value']
@@ -377,7 +367,6 @@ export class LeadInputMainInfoComponent implements OnInit {
                 this.salesNameLookUpObj.nameSelect = this.returnSalesObj.Username;
                 this.salesNameLookUpObj.jsonSelect = this.returnSalesObj;
             });
-
         });
     }
   }
@@ -400,7 +389,7 @@ export class LeadInputMainInfoComponent implements OnInit {
     this.leadObj.OriOfficeCode = this.MainInfoForm.controls["OfficeCode"].value;
     this.leadObj.OriOfficeName = this.MainInfoForm.controls["OfficeName"].value;
     this.leadObj.CrtOfficeCode = this.MainInfoForm.controls["CrtOfficeCode"].value;
-    this.leadObj.CrtOfficeName = this.MainInfoForm.controls["CrtOfficeName"].value;
+    // this.leadObj.CrtOfficeName = this.MainInfoForm.controls["CrtOfficeName"].value;
     this.leadObj.LeadDt = new Date();
     this.leadObj.OrderNo = this.MainInfoForm.controls["OrderNo"].value;
     this.leadObj.LobCode = this.MainInfoForm.controls["LobCode"].value;
@@ -426,8 +415,7 @@ export class LeadInputMainInfoComponent implements OnInit {
             this.router.navigate(["/Lead/LeadInput/Page"], { queryParams: { "LeadId": this.LeadId, "mode": this.pageType } });
           }
           else{
-          this.router.navigate(["/Lead/LeadInput/Page"], { queryParams: { "LeadId": this.LeadId, "mode": this.pageType, "WfTaskListId": this.WfTaskListId } });
-
+            this.router.navigate(["/Lead/LeadInput/Page"], { queryParams: { "LeadId": this.LeadId, "mode": this.pageType, "WfTaskListId": this.WfTaskListId } });
           }
         },
         (error) => {
@@ -460,14 +448,12 @@ export class LeadInputMainInfoComponent implements OnInit {
       this.http.post(this.editLead, this.leadObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-
           if(this.pageType == "edit"){
             this.router.navigate(["/Lead/Lead/Paging"]);
           }
           else{
             this.router.navigate(["/Lead/LeadUpdate/Paging"]);
           }
-          // console.log(response)
         },
         (error) => {
           console.log(error);

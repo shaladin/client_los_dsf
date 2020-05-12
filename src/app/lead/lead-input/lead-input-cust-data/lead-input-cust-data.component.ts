@@ -26,10 +26,11 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 })
 
 export class LeadInputCustDataComponent implements OnInit {
-  @Input() LeadId: number;
+  @Input() LeadId: string;
   @Output() outputTab: EventEmitter<object> = new EventEmitter();
-  
-  CopyFrom: number;
+  businessDt: Date; // kayaknya
+  CopyFrom: string;
+  rowVersion: any;
   typePage: string;
   addEditLeadCustPersonal: string;
   inputLegalAddressObj: InputFieldObj;
@@ -134,13 +135,13 @@ export class LeadInputCustDataComponent implements OnInit {
   }
 
   ngOnInit() {
+      var context = JSON.parse(localStorage.getItem("UserAccess"));
+      this.businessDt = new Date(context["BusinessDt"]);
       this.reqLeadCustObj = new LeadCustObj();
       this.reqLeadCustObj.LeadId = this.LeadId;
       this.http.post(this.getLeadCustByLeadId, this.reqLeadCustObj).subscribe(
         (response) => { 
             this.resLeadCustObj = response;
-            console.log("ccc")
-            console.log(this.resLeadCustObj)
             if(this.resLeadCustObj.LeadCustId != 0)
             {
               this.CustomerDataForm.patchValue({ 
@@ -150,7 +151,6 @@ export class LeadInputCustDataComponent implements OnInit {
                 IdNo: this.resLeadCustObj.IdNo,
                 Npwp: this.resLeadCustObj.TaxIdNo,
               });
-              // this.typePage = "edit";
               this.reqLeadCustSocmedObj = new LeadCustSocmedObj();
               this.reqLeadCustSocmedObj.LeadCustId = this.resLeadCustObj.LeadCustId;
               this.http.post(this.getListLeadCustSocmed, this.reqLeadCustSocmedObj).subscribe(
@@ -171,7 +171,6 @@ export class LeadInputCustDataComponent implements OnInit {
               this.http.post(this.getLeadCustAddr, this.reqLeadCustAddrLegalObj).subscribe(
                 (response) => {
                     this.resLeadCustAddrLegalObj = response;
-      
                     this.legalAddressObj = new LeadCustAddrObj();
                     this.legalAddressObj.Addr = this.resLeadCustAddrLegalObj.Addr;
                     this.legalAddressObj.AreaCode3 = this.resLeadCustAddrLegalObj.AreaCode3;
@@ -202,7 +201,6 @@ export class LeadInputCustDataComponent implements OnInit {
                 this.http.post(this.getLeadCustAddr, this.reqLeadCustAddrResObj).subscribe(
                   (response) => {
                       this.resLeadCustAddrResObj = response;
-      
                       this.residenceAddressObj = new LeadCustAddrObj();
                       this.residenceAddressObj.Addr = this.resLeadCustAddrResObj.Addr;
                       this.residenceAddressObj.AreaCode3 = this.resLeadCustAddrResObj.AreaCode3;
@@ -219,17 +217,14 @@ export class LeadInputCustDataComponent implements OnInit {
                       this.residenceAddressObj.FaxArea = this.resLeadCustAddrResObj.FaxArea;
                       this.residenceAddressObj.Fax = this.resLeadCustAddrResObj.Fax;
                       this.residenceAddressObj.MrHouseOwnershipCode = this.resLeadCustAddrResObj.MrBuildingOwnershipCode;
-      
                       this.inputResidenceAddressObj = new InputFieldObj();
                       this.inputResidenceAddressObj.inputLookupObj = new InputLookupObj();
                       this.inputResidenceAddressObj.inputLookupObj.nameSelect = this.resLeadCustAddrResObj.Zipcode;
-                      this.inputResidenceAddressObj.inputLookupObj.jsonSelect = {Zipcode: this.resLeadCustAddrResObj.Zipcode};
-                      
+                      this.inputResidenceAddressObj.inputLookupObj.jsonSelect = {Zipcode: this.resLeadCustAddrResObj.Zipcode};     
                   });
     
                 this.reqLeadCustPersonalObj = new LeadCustPersonalObj();
                 this.reqLeadCustPersonalObj.LeadCustId = this.resLeadCustObj.LeadCustId;
-                console.log("aaa");
                 this.http.post(this.getLeadCustPersonal, this.reqLeadCustPersonalObj).subscribe(
                   (response) => {
                       this.resLeadCustPersonalObj = response;
@@ -243,7 +238,6 @@ export class LeadInputCustDataComponent implements OnInit {
                         MobilePhone1: this.resLeadCustPersonalObj.MobilePhnNo1,
                         MobilePhone2: this.resLeadCustPersonalObj.MobilePhnNo2,
                       });
-    
                   this.reqLeadCustPersonalJobDataObj = new LeadCustPersonalJobDataObj();
                   this.reqLeadCustPersonalJobDataObj.LeadCustPersonalId = this.resLeadCustPersonalObj.LeadCustPersonalId;
                   this.http.post(this.getLeadCustPersonalJobData, this.reqLeadCustPersonalJobDataObj).subscribe(
@@ -252,7 +246,6 @@ export class LeadInputCustDataComponent implements OnInit {
                         this.CustomerDataForm.patchValue({ 
                           CompanyName: this.resLeadCustPersonalJobDataObj.CompanyName,
                         });
-    
                         this.refProfessionObj = new RefProfessionObj();
                         this.refProfessionObj.ProfessionCode = this.resLeadCustPersonalJobDataObj.MrProfessionCode;
                         this.http.post(this.getRefProfessionByCode, this.refProfessionObj).subscribe(
@@ -263,7 +256,6 @@ export class LeadInputCustDataComponent implements OnInit {
                               this.tempProfession = this.returnRefProfessionObj.ProfessionCode;
                           });
                     });
-    
                   this.reqLeadCustPersonalFinDataObj = new LeadCustPersonalFinDataObj();
                   this.reqLeadCustPersonalFinDataObj.LeadCustPersonalId = this.resLeadCustPersonalObj.LeadCustPersonalId;
                   this.http.post(this.getLeadCustPersonalFinData, this.reqLeadCustPersonalFinDataObj).subscribe(
@@ -282,7 +274,6 @@ export class LeadInputCustDataComponent implements OnInit {
     this.inputLegalAddressObj.inputLookupObj = new InputLookupObj();
     this.inputResidenceAddressObj = new InputFieldObj();
     this.inputResidenceAddressObj.inputLookupObj = new InputLookupObj();
-
     this.professionLookUpObj = new InputLookupObj();
     this.professionLookUpObj.isRequired = false;
     this.professionLookUpObj.urlJson = "./assets/uclookup/lookupProfession.json";
@@ -357,16 +348,12 @@ export class LeadInputCustDataComponent implements OnInit {
               IdNo: this.resLeadCustObj.IdNo,
               Npwp: this.resLeadCustObj.TaxIdNo,
             });
-            
             this.CustModelKey = this.resLeadCustObj.MrCustModelCode;
-
         this.reqLeadCustSocmedObj = new LeadCustSocmedObj();
         this.reqLeadCustSocmedObj.LeadCustId = this.resLeadCustObj.LeadCustId;
         this.http.post(this.getListLeadCustSocmed, this.reqLeadCustSocmedObj).subscribe(
           (response) => {
               this.resLeadCustSocmedObj = response["ReturnObject"];
-              console.log("aaa")
-              console.log(this.resLeadCustSocmedObj)
               this.CustomerDataForm.patchValue({
                 Facebook: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "FB") == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "FB").SocmedId,
                 Instagram: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "IG") == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "IG").SocmedId,
@@ -380,7 +367,6 @@ export class LeadInputCustDataComponent implements OnInit {
         this.http.post(this.getLeadCustAddr, this.reqLeadCustAddrLegalObj).subscribe(
           (response) => {
               this.resLeadCustAddrLegalObj = response;
-
               this.legalAddressObj = new LeadCustAddrObj();
               this.legalAddressObj.Addr = this.resLeadCustAddrLegalObj.Addr;
               this.legalAddressObj.AreaCode3 = this.resLeadCustAddrLegalObj.AreaCode3;
@@ -402,7 +388,6 @@ export class LeadInputCustDataComponent implements OnInit {
               this.inputLegalAddressObj.inputLookupObj = new InputLookupObj();
               this.inputLegalAddressObj.inputLookupObj.nameSelect = this.resLeadCustAddrLegalObj.Zipcode;
               this.inputLegalAddressObj.inputLookupObj.jsonSelect = {Zipcode: this.resLeadCustAddrLegalObj.Zipcode};
-              
           });
 
           this.reqLeadCustAddrResObj = new LeadCustAddrObj();
@@ -411,7 +396,6 @@ export class LeadInputCustDataComponent implements OnInit {
           this.http.post(this.getLeadCustAddr, this.reqLeadCustAddrResObj).subscribe(
             (response) => {
                 this.resLeadCustAddrResObj = response;
-
                 this.residenceAddressObj = new LeadCustAddrObj();
                 this.residenceAddressObj.Addr = this.resLeadCustAddrResObj.Addr;
                 this.residenceAddressObj.AreaCode3 = this.resLeadCustAddrResObj.AreaCode3;
@@ -607,7 +591,6 @@ export class LeadInputCustDataComponent implements OnInit {
                           this.CustomerDataForm.patchValue({ 
                             CompanyName: this.resLeadCustPersonalJobDataObj.CompanyName,
                           });
-      
                           this.refProfessionObj = new RefProfessionObj();
                           this.refProfessionObj.ProfessionCode = this.resLeadCustPersonalJobDataObj.MrProfessionCode;
                           this.http.post(this.getRefProfessionByCode, this.refProfessionObj).subscribe(
@@ -656,7 +639,6 @@ export class LeadInputCustDataComponent implements OnInit {
 
     this.inputResidenceAddressObj.inputLookupObj.nameSelect = this.CustomerDataForm.controls["legalAddressZipcode"]["controls"].value.value;
     this.inputResidenceAddressObj.inputLookupObj.jsonSelect = {Zipcode: this.CustomerDataForm.controls["legalAddressZipcode"]["controls"].value.value};
- 
   }
 
   setLegalAddr(){
@@ -769,10 +751,6 @@ export class LeadInputCustDataComponent implements OnInit {
     }
     
   }
-
-  // back(){
-  //   this.wizard.goToPreviousStep();
-  // }
 
   SaveForm(){
     if(this.typePage == "edit" || this.typePage == "update") {

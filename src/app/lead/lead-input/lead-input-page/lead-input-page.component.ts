@@ -14,15 +14,14 @@ import Stepper from 'bs-stepper';
 })
 export class LeadInputPageComponent implements OnInit {
   private stepper: Stepper;
-  LeadId: any;
-  CopyFrom: any;
-  isCustData: any;
-  isLeadData: any;
-  CustPersonalId: any;
-  TaskListId: any;
+  LeadId: number;
+  CopyFrom: number;
+  isCustData: boolean;
+  isLeadData: boolean;
+  TaskListId: number;
   titlePageType: string;
-  viewLeadHeaderMainInfo : any;
-  pageType: any;
+  viewLeadHeaderMainInfo : string;
+  pageType: string;
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {
     this.route.queryParams.subscribe(params => {
       if (params["LeadId"] != null) {
@@ -39,7 +38,6 @@ export class LeadInputPageComponent implements OnInit {
         this.pageType = params["mode"];
         this.titlePageType = "INPUT";
       }
-
       if (params["CopyFrom"] != null) {
         this.CopyFrom = params["CopyFrom"];
       }
@@ -48,7 +46,6 @@ export class LeadInputPageComponent implements OnInit {
 
   ngOnInit() {
     this.viewLeadHeaderMainInfo = "./assets/ucviewgeneric/viewLeadHeader.json";
-
     this.stepper = new Stepper(document.querySelector('#stepper1'), {
       linear: false,
       animation: true
@@ -62,7 +59,6 @@ export class LeadInputPageComponent implements OnInit {
       this.isCustData = true;
       this.isLeadData = false;
     }
-
     if (type == "leadData") {
       this.isCustData = false;
       this.isLeadData = true;
@@ -70,7 +66,7 @@ export class LeadInputPageComponent implements OnInit {
   }
   
   editMainInfoHandler(){
-    var modeName;
+    var modeName : string;
     if(this.pageType == undefined){
       modeName = "edit";
     }
@@ -89,18 +85,15 @@ export class LeadInputPageComponent implements OnInit {
     }
   }
 
-  getValue(ev)
-  {
-    if (ev.stepMode != undefined)
-    {
-      if (ev.stepMode == "next")
-      {
+  getValue(ev){
+    if (ev.stepMode != undefined){
+      if (ev.stepMode == "next"){
         this.stepper.next();
         this.EnterTab("leadData");
       }
-      else
+      else{
         this.stepper.previous();
+      }
     }
   }
-
 }

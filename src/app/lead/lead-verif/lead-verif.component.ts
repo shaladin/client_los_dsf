@@ -22,31 +22,24 @@ export class LeadVerifComponent implements OnInit {
   @ViewChild(UcgridfooterComponent) ucgridFooter;
   @ViewChild(UCSearchComponent) UCSearchComponent;
   resultData: any;
-  pageNow: any;
-  totalData: any;
-  pageSize: any = 10;
-  apiUrl: any;
-  orderByKey: any = null;
-  orderByValue = true;
-  deleteUrl: any;
-  inputObj: any;
-  pageType: any = 'add';
-  IsActive: any;
-  leadVerfObj: any;
-  exportData: any;
-  arrLeadVerf: any = new Array();
-  responseResultData: any;
-  listSelectedId: Array<any> = [];
-  listDeletedId: Array<any> = [];
-  tempListId: Array<any> = [];
+  pageNow: number;
+  totalData: number;
+  pageSize: number = 10;
+  apiUrl: string;
+  orderByKey: string = null;
+  orderByValue : boolean = true;
+  inputObj: InputSearchObj;
+  arrLeadVerf: Array<LeadVerfObj> = new Array();
+  listSelectedId: Array<string> = [];
+  tempListId: Array<string> = [];
   tempData: Array<any> = [];
   arrAddCrit = new Array<CriteriaObj>();
-  arrCrit: any;
-  checkboxAll: any = false;
+  arrCrit: Array<CriteriaObj>;
+  checkboxAll: boolean = false;
   viewObj: string;
   AddRangeLeadVerfUrl = AdInsConstant.AddRangeLeadVerf;
-  verifyStatus: any;
-  leadUrl: any; 
+  verifyStatus: string;
+  leadUrl: string;
   constructor(
     private http: HttpClient,
     private toastr: NGXToastrService,
@@ -65,33 +58,8 @@ export class LeadVerifComponent implements OnInit {
     this.pageSize = 10;
     this.apiUrl = environment.losUrl + AdInsConstant.GetPagingObjectBySQL;
 
-    // var GetListLeadVerfUrl = AdInsConstant.GetListLeadVerf;
-    // var obj = {};
-    // var arr = [0];
-    // var temp;
-  //   this.http.post(GetListLeadVerfUrl, obj).subscribe(
-  //     response => {
-  //       console.log(response);
-  //       temp = response['ReturnObject'];
-  //       for (var i = 0; i < temp.length; i++) {
-  //         arr.push(temp[i]['LeadId']);
-  //       }
-  //       if (this.listSelectedId.length !== 0) {
-  //         const addCritAssetMasterId = new CriteriaObj();
-  //         addCritAssetMasterId.DataType = 'numeric';
-  //         addCritAssetMasterId.propName = 'L.LEAD_ID';
-  //         addCritAssetMasterId.restriction = AdInsConstant.RestrictionNotIn;
-  //         addCritAssetMasterId.listValue = this.listSelectedId;
-  //         this.arrCrit.push(addCritAssetMasterId);
-  //         this.inputObj.addCritInput.push(addCritAssetMasterId);
-  //       }
-  //     },
-  //     error => {
-  //       this.router.navigateByUrl('Error');
-  //     }
-  //   );
     if (this.listSelectedId.length !== 0) {
-      const addCritAssetMasterId = new CriteriaObj();
+      const addCritAssetMasterId : CriteriaObj = new CriteriaObj();
       addCritAssetMasterId.DataType = 'numeric';
       addCritAssetMasterId.propName = 'L.LEAD_ID';
       addCritAssetMasterId.restriction = AdInsConstant.RestrictionNotIn;
@@ -117,11 +85,11 @@ export class LeadVerifComponent implements OnInit {
       this.UCSearchComponent.search(this.apiUrl, this.pageNow, this.pageSize, order)
     }
   }
-  Checked(LeadId: any, isChecked: any): void {
+  Checked(LeadId: string, isChecked: boolean): void {
     if (isChecked) {
       this.listSelectedId.push(LeadId);
     } else {
-      const index = this.listSelectedId.indexOf(LeadId);
+      const index : number = this.listSelectedId.indexOf(LeadId);
       if (index > -1) { this.listSelectedId.splice(index, 1); }
     }
   }
@@ -150,12 +118,12 @@ export class LeadVerifComponent implements OnInit {
     this.totalData = event.Count;
   }
 
-  formValidate(form: any, verifyStatus) {
+  formValidate(form: any, verifyStatus : string) {
     this.adInsService.scrollIfFormHasErrors(form);
     this.verifyStatus = verifyStatus;
   }
   getListWfTaskListId() {
-    var tempArr = new Array();
+    var tempArr : Array<string> = new Array();
     for (let index = 0; index < this.tempData.length; index++) {
       tempArr.push(this.tempData[index]['WfTaskListId']);
     }
@@ -198,17 +166,13 @@ export class LeadVerifComponent implements OnInit {
         var object = this.resultData.find(x => x.LeadId == this.listSelectedId[i]);
         this.tempData.push(object);
       }
-      // for (var i = 0; i < this.listSelectedId.length; i++) {
-      //   var object = this.resultData.find(x => x.LeadId == this.listSelectedId[i]);
-      //   this.tempData.push(object);
-      // }
       this.arrAddCrit = new Array();
       if (this.arrCrit.length != 0) {
         for (var i = 0; i < this.arrCrit.length; i++) {
           this.arrAddCrit.push(this.arrCrit[i]);
         }
       }
-      var addCrit = new CriteriaObj();
+      var addCrit : CriteriaObj = new CriteriaObj();
       addCrit.DataType = "numeric";
       addCrit.propName = "L.LEAD_ID";
       addCrit.restriction = AdInsConstant.RestrictionNotIn;
@@ -248,7 +212,7 @@ export class LeadVerifComponent implements OnInit {
     }
   }
 
-  deleteFromTemp(LeadId: any) {
+  deleteFromTemp(LeadId: string) {
     if (confirm('Are you sure to delete this record?')) {
       this.arrAddCrit = new Array();
       if (this.arrCrit.length != 0) {
@@ -256,12 +220,12 @@ export class LeadVerifComponent implements OnInit {
           this.arrAddCrit.push(this.arrCrit[i]);
         }
       }
-      var index = this.tempListId.indexOf(LeadId);
+      var index : number = this.tempListId.indexOf(LeadId);
       if (index > -1) {
         this.tempListId.splice(index, 1);
         this.tempData.splice(index, 1);
       }
-      var addCrit = new CriteriaObj();
+      var addCrit : CriteriaObj = new CriteriaObj();
       addCrit.DataType = "numeric";
       addCrit.propName = "L.LEAD_ID";
       addCrit.restriction = AdInsConstant.RestrictionNotIn;

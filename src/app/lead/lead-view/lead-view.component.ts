@@ -9,13 +9,12 @@ export class LeadViewComponent implements OnInit {
 
   constructor() { }
 
-  leadViewHeader: any;
-  isLeadData: any;
-  isCustomerData: any;
+  leadViewHeader: string;
+  isLeadData: boolean;
+  isCustomerData: boolean;
   ngOnInit() {
     this.leadViewHeader = "./assets/ucviewgeneric/viewLeadHeader.json";
   }
-
   EnterTab(type) {
     if (type == "customerData") {
       this.isCustomerData = true;
