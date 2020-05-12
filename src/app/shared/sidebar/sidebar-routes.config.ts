@@ -17,7 +17,12 @@ export const ROUTES: RouteInfo[] = [
       { path: '/Nap/AdminProcess/CustomerConfirmation/Paging', title: 'Customer Confirmation', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "CF4W" }]},
       { path: '/Nap/AdminProcess/PurchaseOrder/Paging', title: 'Purchase Order', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "CF4W" }]},
       { path: '/Nap/AdminProcess/DeliveryOrder/Paging', title: 'Delivery Order', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "CF4W" }]},
-      { path: '/Nap/AdminProcess/PreGoLive/Paging', title: 'Pre Go Live', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "CF4W" }]}
+      { path: '/Nap/AdminProcess/PreGoLive/Paging', title: 'Pre Go Live', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "CF4W" }]},
+      {path: '', title: 'Additional Process', icon: '', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false,
+      submenu: [
+        { path: '/Nap/AdditionalProcess/AppDupCheck/Paging', title: 'App Duplicate Checking', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "CF4W" }] },
+        { path: '/Nap/AddProcess/ReturnHandling/Paging', title: 'Return Handling', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "CF4W" }] }
+      ], params: []}
     ], params: []
   },
   {
@@ -112,7 +117,7 @@ export const ROUTES: RouteInfo[] = [
   {
     path: '', title: 'Fraud Detection', icon: 'ft-home', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false,
     submenu: [
-      { path: '/Nap/CreditProcess/FraudDetection/Paging', title: 'Fraud Detection', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] }
+      { path: '/Nap/CreditProcess/FraudDetection/Paging', title: 'Fraud Detection', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [{ attr: "LobCode", value: "CF4W" }] }
     ], params: []
   }
 ];

@@ -4,7 +4,7 @@ import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -14,8 +14,17 @@ import { HttpClient } from '@angular/common/http';
 })
 export class FraudDetectionPagingComponent implements OnInit {
   inputPagingObj: any;
+  arrCrit: any;
+  lobCode : string;
 
-  constructor(private router: Router, private http: HttpClient) { }
+  constructor(private router: Router, private http: HttpClient,private route: ActivatedRoute) { 
+    this.route.queryParams.subscribe(params => {
+      if (params['LobCode'] != null) {
+        this.lobCode = params['LobCode'];
+        localStorage.setItem("LobCode",this.lobCode);
+      }
+    });
+  }
 
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
@@ -23,6 +32,14 @@ export class FraudDetectionPagingComponent implements OnInit {
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchFraudDetection.json";
+
+    this.arrCrit = new Array();
+    var critObj = new CriteriaObj();
+    critObj.restriction = AdInsConstant.RestrictionLike;
+    critObj.propName = 'RL.BL_CODE';
+    critObj.value = this.lobCode;
+    this.arrCrit.push(critObj);
+    this.inputPagingObj.addCritInput = this.arrCrit;
   }
 
   ClaimTask(event){

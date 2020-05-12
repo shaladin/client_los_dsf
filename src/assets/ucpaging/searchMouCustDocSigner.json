@@ -229,7 +229,7 @@
             "action": [
                 {
                     "type": "switch",
-                    "case": [
+                    "case": [ 
                         {
                             "conditions": [
                                 {

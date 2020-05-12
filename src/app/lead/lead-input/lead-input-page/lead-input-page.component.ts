@@ -70,7 +70,14 @@ export class LeadInputPageComponent implements OnInit {
   }
   
   editMainInfoHandler(){
-    this.router.navigate(["/Lead/LeadInput/MainInfo"], { queryParams: { LeadId: this.LeadId, mode: this.pageType }});
+    var modeName;
+    if(this.pageType == undefined){
+      modeName = "edit";
+    }
+    else{
+      modeName = this.pageType;
+    }
+    this.router.navigate(["/Lead/LeadInput/MainInfo"], { queryParams: { LeadId: this.LeadId, mode: modeName }});
   }
 
   cancelHandler(){
