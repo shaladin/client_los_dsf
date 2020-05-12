@@ -150,7 +150,7 @@
                                     "isUser": true,
                                     "property": "ClaimBy",
                                     "value": "",
-                                    "restriction": "EQ"
+                                    "restriction": "NEQ"
                                 }
                             ],
                             "result": {
@@ -193,6 +193,21 @@
                                         "property": "WfTaskListId"
                                     }
                                 ]
+                            },
+                            "isHide": false
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "property": "IsAllowAppCreated",
+                                    "value": "0",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "callback", 
+                                "key": "Not Allowed to Edit",
+                                "icon" : "ft-edit-2"
                             },
                             "isHide": false
                         }
