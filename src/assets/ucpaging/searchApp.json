@@ -204,6 +204,12 @@
                         {
                             "conditions": [
                                 {
+                                    "isUser": true,
+                                    "property": "ClaimBy",
+                                    "value": "",
+                                    "restriction": "EQ"
+                                },
+                                {
                                     "property": "IsAllowAppCreated",
                                     "value": "0",
                                     "restriction": "EQ"
