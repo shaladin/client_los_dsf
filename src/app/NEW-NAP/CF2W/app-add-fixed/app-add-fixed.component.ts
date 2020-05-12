@@ -480,7 +480,7 @@ export class AppAddFixedComponent implements OnInit {
             console.log("test")
             console.log(this.returnAllAppDataObj)
             this.toastr.successMessage(response["message"]);
-            this.router.navigate(["Nap/CF2W/Add/Detail"], { queryParams: { "LobCode":this.LobCode, "AppId": response["AppId"] } });
+            this.router.navigate(["Nap/CF2W/Add/Detail"], { queryParams: { "AppId": response["AppId"], "LobCode":this.LobCode } });
           },
           (error) => {
             console.log(error);
