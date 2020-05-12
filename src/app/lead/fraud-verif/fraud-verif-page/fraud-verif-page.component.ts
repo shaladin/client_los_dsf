@@ -34,29 +34,29 @@ export class FraudVerifPageComponent implements OnInit {
     this.GetAssetNegativeDuplicateCheckUrl = AdInsConstant.GetAssetNegativeDuplicateCheck;
     this.AddLeadFraudVerfUrl = AdInsConstant.AddLeadFraudVerf;
   }
-  viewLeadHeaderMainInfo: any;
-  DuplicateCustObj: any;
-  leadCustObj: any;
-  leadAssetObj: any;
-  LeadId: any;
-  WfTaskListId: any;
+  viewLeadHeaderMainInfo: string;
+  DuplicateCustObj: DuplicateCustObj;
+  leadCustObj: LeadCustObj;
+  leadAssetObj: LeadAssetObj;
+  LeadId: number;
+  WfTaskListId: number;
   GetLeadCustByLeadIdUrl: string;
-  GetLeadCustPersonalByLeadCustIdUrl: any;
+  GetLeadCustPersonalByLeadCustIdUrl: string;
   GetCustomerAndNegativeCustDuplicateCheckUrl: string;
   GetLeadAssetForCheckUrl: string;
   tempLeadCustObj: any;
   tempLeadCustPersonalObj: any;
-  leadCustPersonalObj: any;
+  leadCustPersonalObj: LeadCustPersonalObj;
   DuplicateStatus: string;
   ResultDuplicate: any;
   ResultDuplicateNegative: any;
-  negativeAssetCheckObj: any;
+  negativeAssetCheckObj: NegativeAssetCheckObj;
   tempAssetCategoryTypeCode: any;
   GetLeadAssetByLeadIdUrl: string;
   tempLeadAsset: any;
   GetAssetNegativeDuplicateCheckUrl: string;
   ResultDuplicateAssetNegative: any;
-  leadFraudVerfObj: any;
+  leadFraudVerfObj: LeadFraudVerfObj;
   AddLeadFraudVerfUrl: string;
   FraudVerfForm = this.fb.group({
     Notes: ['', [Validators.required]],
@@ -116,10 +116,7 @@ export class FraudVerifPageComponent implements OnInit {
               });
           });
       });
-
-
   }
-
   reject() {
     this.leadFraudVerfObj = new LeadFraudVerfObj();
     this.leadFraudVerfObj.LeadId = this.LeadId;
@@ -134,7 +131,6 @@ export class FraudVerifPageComponent implements OnInit {
   }
  
   verify() {
-     
     this.leadFraudVerfObj = new LeadFraudVerfObj();
     this.leadFraudVerfObj.LeadId = this.LeadId;
     this.leadFraudVerfObj.VerifyStat = AdInsConstant.Verify;
