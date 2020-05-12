@@ -17,7 +17,8 @@ export class ResponseCalculateObj {
     TotalARAmt : number
     TotalPrincipalAmt : number
     InstallmentTable : Array<InstallmentObj> = new Array<InstallmentObj>()
-    AppInstStepSchmObjs: Array<AppInstStepSchmObj> = new Array<AppInstStepSchmObj>()
+    AppInstStepSchmObjs: Array<AppInstStepSchmObj> = new Array<AppInstStepSchmObj>();
+    DiffRateAmt: number;
 
     constructor() {
     }
