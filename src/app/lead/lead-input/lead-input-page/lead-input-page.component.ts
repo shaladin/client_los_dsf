@@ -34,7 +34,7 @@ export class LeadInputPageComponent implements OnInit {
         this.pageType = params["mode"];
         this.titlePageType = "UPDATE";
       }
-      else if(params["mode"] == "edit"){
+      else if(params["mode"] == "edit" || params["mode"] == undefined){
         this.pageType = params["mode"];
         this.titlePageType = "INPUT";
       }
