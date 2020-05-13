@@ -4,13 +4,19 @@
   <form [formGroup]="ParentForm" #enjiForm="ngForm">
     <div class="col-md-12">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
           <div class="row">
-            <div class="col-md-6 form-inline">
-              <label>Total Asset Price</label>
+            <div class="col-md-3 form-inline">
+              <label>Installment Type</label>
             </div>
-            <div class="col-md-6 form-inline form-inline-right">
-              <label>{{ParentForm.controls.TotalAssetPriceAmt.value | number : '1.2-2'}}</label>
+            <div class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.MrInstTypeCode.value | number : '1.2-2'}}</label>
+            </div>
+            <div class="col-md-3 form-inline">
+              <label>Invoice Date</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.MrInstTypeCode.value | number : '1.2-2'}}</label>
             </div>
           </div>
         </div>

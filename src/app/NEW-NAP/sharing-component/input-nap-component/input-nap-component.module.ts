@@ -49,6 +49,9 @@ import { AssetDataPagingComponent } from "./multi-asset-data/asset-data-paging/a
 import { AssetDataAddEditComponent } from "./multi-asset-data/asset-data-add-edit/asset-data-add-edit.component";
 import { CollateralAddEditComponent } from "./multi-asset-data/collateral-add-edit/collateral-add-edit.component";
 import { MultiAssetDataComponent } from "./multi-asset-data/multi-asset-data.component";
+import { FinancialDataFctrComponent } from "./financial-data-fctr/financial-data-fctr.component";
+import { SchmRegulerFixFctrComponent } from "./financial-data-fctr/component/multiple-installment/schm-reguler-fix/schm-reguler-fix-fctr.component";
+
 export const customCurrencyMaskConfig = {     
   align: "right",     
   allowNegative: true,     
@@ -106,7 +109,9 @@ export const customCurrencyMaskConfig = {
     AssetDataPagingComponent,
     AssetDataAddEditComponent,
     CollateralAddEditComponent,
-    MultiAssetDataComponent
+    MultiAssetDataComponent,
+    FinancialDataFctrComponent,
+    SchmRegulerFixFctrComponent
   ],
   imports: [
     CommonModule,
@@ -160,7 +165,9 @@ export const customCurrencyMaskConfig = {
     AssetDataPagingComponent,
     AssetDataAddEditComponent,
     CollateralAddEditComponent,
-    MultiAssetDataComponent
+    MultiAssetDataComponent,
+    FinancialDataFctrComponent,
+    SchmRegulerFixFctrComponent
   ],
   entryComponents: [SubsidyAddEditComponent],
   providers: [

@@ -9,10 +9,10 @@ import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalcul
 import { environment } from 'environments/environment';
 
 @Component({
-  selector: 'app-schm-reguler-fix',
-  templateUrl: './schm-reguler-fix.component.html',
+  selector: 'app-schm-reguler-fix-fctr',
+  templateUrl: './schm-reguler-fix-fctr.component.html',
 })
-export class SchmRegulerFixComponent implements OnInit {
+export class SchmRegulerFixFctrComponent implements OnInit {
 
   @Input() AppId: number;
   @Input() ParentForm: FormGroup;
@@ -30,6 +30,7 @@ export class SchmRegulerFixComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log("reguler fix fctr");
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
   }
