@@ -194,7 +194,6 @@ export class NapAddComponent implements OnInit {
   }
 
   SaveForm() {
-    // this.router.navigate(["Nap/AppAddDetail"], { queryParams: { "AppId": response["AppId"] } });
     var napAppObj = new NapAppModel();
     napAppObj = this.NapAppForm.value;
     napAppObj.AppCreatedDt = this.user.BusinessDt;
@@ -202,13 +201,9 @@ export class NapAddComponent implements OnInit {
     napAppObj.AppStat = AdInsConstant.AppStepNew;
     napAppObj.AppCurrStep = AdInsConstant.AppStepNew;
     napAppObj.BlCode = "CF4W";
-
+    napAppObj.OriOfficeCode = this.NapAppForm.controls['OriOfficeCode'].value;
+    napAppObj.OriOfficeName = this.NapAppForm.controls['OriOfficeName'].value;
     napAppObj = this.CheckValue(napAppObj);
-    if (this.user.MrOfficeTypeCode == "HO") {
-      napAppObj.OriOfficeCode = this.user.OfficeCode;
-    } else if (this.user.MrOfficeTypeCode == "Center Group") {
-
-    }
     console.log(napAppObj);
 
     var url = environment.losUrl + AdInsConstant.AddApp;

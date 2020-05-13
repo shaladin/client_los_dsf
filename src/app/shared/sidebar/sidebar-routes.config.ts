@@ -3,8 +3,7 @@ import { RouteInfo } from './sidebar.metadata';
 //Sidebar menu Routes and data
 export const ROUTES: RouteInfo[] = [
 
-  { path: '/dashboard/dash-board', title: 'Menu', icon: 'ft-home', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
-  { path: '/Nap/AppPaging', title: 'NAP', icon: 'ft-home', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
+  { path: '/dashboard/dash-board', title: 'Home', icon: 'ft-home', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], params: [] },
   {
     path: '', title: 'Consumer Finance', icon: 'ft-file-plus', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false,
     submenu: [
