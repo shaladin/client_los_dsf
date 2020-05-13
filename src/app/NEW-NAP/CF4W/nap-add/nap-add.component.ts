@@ -130,18 +130,24 @@ export class NapAddComponent implements OnInit {
     this.inputLookupObjName.pagingJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.genericJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.nameSelect = this.NapAppForm.controls.ProdOfferingName.value;
-    
-    this.arrAddCrit = new Array();
 
+    var arrCopyLookupCrit = new Array();
+    var addCrit = new CriteriaObj();
+    addCrit.DataType = "text";
+    addCrit.propName = "a.ORI_OFFICE_CODE";
+    addCrit.restriction = AdInsConstant.RestrictionIn;
+    addCrit.listValue = [this.user.OfficeCode];
+    arrCopyLookupCrit.push(addCrit);
+    this.inputLookupObjCopyProduct.addCritInput = arrCopyLookupCrit;
+    
+    var arrAddCrit = new Array();
     var addCrit = new CriteriaObj();
     addCrit.DataType = "text";
     addCrit.propName = "ro.OFFICE_CODE";
     addCrit.restriction = AdInsConstant.RestrictionIn;
     addCrit.listValue = [this.user.OfficeCode];
-    this.arrAddCrit.push(addCrit);
-
-    this.inputLookupObjName.addCritInput = this.arrAddCrit;
-    this.inputLookupObjCopyProduct.addCritInput = this.arrAddCrit;
+    arrAddCrit.push(addCrit);
+    this.inputLookupObjName.addCritInput = arrAddCrit;
   }
 
   GetOfficeDDL() {
@@ -293,19 +299,27 @@ export class NapAddComponent implements OnInit {
       OriOfficeName: ev.target.selectedOptions[0].text
     });
 
-    this.arrAddCrit = new Array();
+    var arrCopyLookupCrit = new Array();
+    var addCrit = new CriteriaObj();
+    addCrit.DataType = "text";
+    addCrit.propName = "a.ORI_OFFICE_CODE";
+    addCrit.restriction = AdInsConstant.RestrictionIn;
+    addCrit.listValue = [this.user.OfficeCode];
+    arrCopyLookupCrit.push(addCrit);
 
+    this.inputLookupObjCopyProduct.addCritInput = arrCopyLookupCrit;
+    this.ucLookupCopyProduct.setAddCritInput();
+    
+    var arrAddCrit = new Array();
     var addCrit = new CriteriaObj();
     addCrit.DataType = "text";
     addCrit.propName = "ro.OFFICE_CODE";
     addCrit.restriction = AdInsConstant.RestrictionIn;
-    addCrit.listValue = [ev.target.selectedOptions[0].value];
-    this.arrAddCrit.push(addCrit);
-
-    this.inputLookupObjName.addCritInput = this.arrAddCrit;
-    this.inputLookupObjCopyProduct.addCritInput = this.arrAddCrit;
+    addCrit.listValue = [this.user.OfficeCode];
+    arrAddCrit.push(addCrit);
+    
+    this.inputLookupObjName.addCritInput = arrAddCrit;
     this.ucLookupOffering.setAddCritInput();
-    this.ucLookupCopyProduct.setAddCritInput();
   }
 
 }
