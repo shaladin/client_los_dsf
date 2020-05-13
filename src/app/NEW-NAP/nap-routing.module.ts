@@ -3,6 +3,9 @@ import { RouterModule, Routes } from "@angular/router";
 import { AssetDataPagingComponent } from "./sharing-component/input-nap-component/multi-asset-data/asset-data-paging/asset-data-paging.component";
 import { AssetDataAddEditComponent } from "./sharing-component/input-nap-component/multi-asset-data/asset-data-add-edit/asset-data-add-edit.component";
 import { CollateralAddEditComponent } from "./sharing-component/input-nap-component/multi-asset-data/collateral-add-edit/collateral-add-edit.component";
+import { MultiAssetLeasingComponent } from "./sharing-component/input-nap-component/multi-asset-leasing/multi-asset-leasing.component";
+import { MultiAssetDataComponent } from "./sharing-component/input-nap-component/multi-asset-data/multi-asset-data.component";
+import { AssetLeasingPagingComponent } from "./sharing-component/input-nap-component/multi-asset-leasing/asset-leasing-paging/asset-leasing-paging.component";
 
 const routes: Routes = [
     {
@@ -50,7 +53,7 @@ const routes: Routes = [
             },
             // {
             //     path: 'AssetData/Paging',
-            //     component: AssetDataPagingComponent,
+            //     component: MultiAssetDataComponent,
             //     data: {
             //       title: 'Asset Registration Summary'
             //     }
@@ -68,7 +71,14 @@ const routes: Routes = [
             //   data: {
             //     title: 'Collateral Registration Form'
             //   }
-            // }
+            // },
+            {
+                path: 'AssetLeasing/Paging',
+                component: MultiAssetLeasingComponent,
+                data: {
+                  title: 'Asset Leasing'
+                }
+            }
         ]
     }
 ]

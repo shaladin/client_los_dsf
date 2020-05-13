@@ -49,6 +49,10 @@ import { AssetDataPagingComponent } from "./multi-asset-data/asset-data-paging/a
 import { AssetDataAddEditComponent } from "./multi-asset-data/asset-data-add-edit/asset-data-add-edit.component";
 import { CollateralAddEditComponent } from "./multi-asset-data/collateral-add-edit/collateral-add-edit.component";
 import { MultiAssetDataComponent } from "./multi-asset-data/multi-asset-data.component";
+import { MultiAssetLeasingComponent } from "./multi-asset-leasing/multi-asset-leasing.component";
+import { AssetLeasingPagingComponent } from "./multi-asset-leasing/asset-leasing-paging/asset-leasing-paging.component";
+import { AssetLeasingAddEditComponent } from "./multi-asset-leasing/asset-leasing-add-edit/asset-leasing-add-edit.component";
+import { CollateralLeasingAddEditComponent } from "./multi-asset-leasing/collateral-leasing-add-edit/collateral-leasing-add-edit.component";
 export const customCurrencyMaskConfig = {     
   align: "right",     
   allowNegative: true,     
@@ -106,7 +110,11 @@ export const customCurrencyMaskConfig = {
     AssetDataPagingComponent,
     AssetDataAddEditComponent,
     CollateralAddEditComponent,
-    MultiAssetDataComponent
+    MultiAssetDataComponent,
+    // MultiAssetLeasingComponent,
+    // AssetLeasingPagingComponent,
+    // AssetLeasingAddEditComponent,
+    // CollateralLeasingAddEditComponent
   ],
   imports: [
     CommonModule,
@@ -160,7 +168,11 @@ export const customCurrencyMaskConfig = {
     AssetDataPagingComponent,
     AssetDataAddEditComponent,
     CollateralAddEditComponent,
-    MultiAssetDataComponent
+    MultiAssetDataComponent,
+    // MultiAssetLeasingComponent,
+    // AssetLeasingPagingComponent,
+    // AssetLeasingAddEditComponent,
+    // CollateralLeasingAddEditComponent
   ],
   entryComponents: [SubsidyAddEditComponent],
   providers: [
