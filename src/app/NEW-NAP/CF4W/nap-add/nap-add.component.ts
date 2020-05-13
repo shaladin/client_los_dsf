@@ -132,9 +132,9 @@ export class NapAddComponent implements OnInit {
 
     var addCrit = new CriteriaObj();
     addCrit.DataType = "text";
-    addCrit.propName = "ro.OFFICE_CODE ";
+    addCrit.propName = "ro.OFFICE_CODE";
     addCrit.restriction = AdInsConstant.RestrictionIn;
-    addCrit.listValue = [this.user.MrOfficeTypeCode];
+    addCrit.listValue = [this.user.OfficeCode];
     this.arrAddCrit.push(addCrit);
 
     this.inputLookupObjName.addCritInput = this.arrAddCrit;
@@ -288,6 +288,17 @@ export class NapAddComponent implements OnInit {
       OriOfficeCode: ev.target.selectedOptions[0].value,
       OriOfficeName: ev.target.selectedOptions[0].text
     });
+
+    this.arrAddCrit = new Array();
+
+    var addCrit = new CriteriaObj();
+    addCrit.DataType = "text";
+    addCrit.propName = "ro.OFFICE_CODE";
+    addCrit.restriction = AdInsConstant.RestrictionIn;
+    addCrit.listValue = [ev.target.selectedOptions[0].value];
+    this.arrAddCrit.push(addCrit);
+
+    this.inputLookupObjName.addCritInput = this.arrAddCrit;
     // console.log(this.NapAppForm);
   }
 
