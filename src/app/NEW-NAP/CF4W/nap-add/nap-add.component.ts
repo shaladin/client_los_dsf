@@ -141,6 +141,7 @@ export class NapAddComponent implements OnInit {
     this.arrAddCrit.push(addCrit);
 
     this.inputLookupObjName.addCritInput = this.arrAddCrit;
+    this.inputLookupObjCopyProduct.addCritInput = this.arrAddCrit;
   }
 
   GetOfficeDDL() {
