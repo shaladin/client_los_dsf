@@ -92,7 +92,13 @@ export class NapAddComponent implements OnInit {
 
     this.GetOfficeDDL();
 
-    if (this.user.MrOfficeTypeCode == "HO") {
+    if (this.user.MrOfficeTypeCode == "CG") {
+      this.NapAppForm.patchValue({
+        CrtOfficeCode: this.user.OfficeCode,
+        CrtOfficeName: this.user.OfficeName,
+      });
+    }
+    else {
       this.NapAppForm.controls.OriOfficeCode.disable();
       this.NapAppForm.patchValue({
         OriOfficeCode: this.user.OfficeCode,
@@ -100,12 +106,7 @@ export class NapAddComponent implements OnInit {
         CrtOfficeCode: this.user.OfficeCode,
         CrtOfficeName: this.user.OfficeName,
       });
-    } else if (this.user.MrOfficeTypeCode == "Center Group") {
-      this.NapAppForm.patchValue({
-        CrtOfficeCode: this.user.OfficeCode,
-        CrtOfficeName: this.user.OfficeName,
-      });
-    }
+    }  
 
     // Test Data
     console.log(this.user);
