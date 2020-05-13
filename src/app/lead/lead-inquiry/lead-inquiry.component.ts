@@ -10,7 +10,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 export class LeadInquiryComponent implements OnInit {
 
   constructor() { }
-  inputPagingObj : any;
+  inputPagingObj : UcPagingObj = new UcPagingObj();
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchLeadInquiry.json";

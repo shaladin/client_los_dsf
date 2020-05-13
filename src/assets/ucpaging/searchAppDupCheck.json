@@ -38,9 +38,44 @@
             "label": "Office",
             "items": [],
             "itemsUrl": []
+        },
+        {
+            "type": "dropdown",
+            "name": "WTL.CLAIM_STAT",
+            "id": "ActiveStatusId",
+            "label": "TASK CLAIM STATUS",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": false,
+            "isSelectOne": false,
+            "items": [
+                {
+                    "key": "CLAIMED",
+                    "value": "CLAIMED"
+                },
+                {
+                    "key": "UNCLAIMED",
+                    "value": "UNCLAIMED"
+                }
+            ],
+            "itemsUrl": []
+        },
+        {
+            "type": "textbox",
+            "name": "WTL.USERNAME",
+            "id": "claimById",
+            "value": "",
+            "label": "CLAIM BY",
+            "placeholder": "Placeholder"
         }
     ],
     "headerList": [
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Claim By",
+            "name": "ClaimBy"
+        },
         {
             "type": "sort",
             "position": "left",
@@ -49,7 +84,7 @@
         },
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "Customer Name",
             "name": "CustName"
         },
@@ -61,7 +96,7 @@
         },
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "Product Offering Name",
             "name": "ProdOfferingName"
         },
@@ -72,10 +107,17 @@
         }
     ],
     "querystring": {
-        "select": "SELECT ac.MR_CUST_TYPE_CODE as CustTypeCode, a.ORI_OFFICE_NAME AS OfficeName, a.APP_NO AS AppNo, ac.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.APP_ID AS AppId, ac.IS_EXISTING_CUST AS IsExistingCust",
-        "from": "FROM dbo.APP a WITH(NOLOCK) JOIN dbo.APP_CUST ac WITH(NOLOCK) ON a.APP_ID = ac.APP_ID"
+        "select": "SELECT ac.MR_CUST_TYPE_CODE as CustTypeCode, a.ORI_OFFICE_NAME AS OfficeName, a.APP_NO AS AppNo, ac.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.APP_ID AS AppId, ac.IS_EXISTING_CUST AS IsExistingCust, WTL.WF_TASK_LIST_ID AS WfTaskListId, a.APP_ID AS AppId, WTL.USERNAME AS ClaimBy",
+        "from": "FROM dbo.APP a WITH(NOLOCK) JOIN dbo.APP_CUST ac WITH(NOLOCK) ON a.APP_ID = ac.APP_ID JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON a.APP_NO = WTL.TRANSACTION_CODE AND WTL.ACT_CODE = 'DUP_CHECK' JOIN [dbo].[V_REF_LOB] RL WITH(NOLOCK) ON a.LOB_CODE = RL.LOB_CODE",
+        "where": "WHERE WTL.END_EXECUTING_DATE IS NULL AND ac.IS_APP_CUST_CHECKED = '0'"
+
     },
     "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "ClaimBy"
+        },
         {
             "type": "text",
             "position": "left",
@@ -83,7 +125,7 @@
         },
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "CustName"
         },
         {
@@ -93,7 +135,7 @@
         },
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "ProdOfferingName"
         },
         {
@@ -106,104 +148,28 @@
                         {
                             "conditions": [
                                 {
-                                    "property": "CustTypeCode",
-                                    "value": "PERSONAL",
-                                    "restriction": "EQ"
-                                },
-                                {
-                                    "property": "IsExistingCust",
-                                    "value": "0",
+                                    "isUser": true,
+                                    "property": "ClaimBy",
+                                    "value": "",
                                     "restriction": "EQ"
                                 }
                             ],
                             "result": {
-                                "type": "url",
-                                "path": "../Personal",
-                                "icon": "ft-edit-2",
-                                "param": [
-                                    {
-                                        "type": "AppId",
-                                        "property": "AppId"
-                                    }
-                                ]
+                                "type": "callback"
                             },
                             "isHide": false
                         },
                         {
                             "conditions": [
                                 {
-                                    "property": "CustTypeCode",
-                                    "value": "PERSONAL",
-                                    "restriction": "EQ"
-                                },
-                                {
-                                    "property": "IsExistingCust",
-                                    "value": "1",
+                                    "isUser": false,
+                                    "property": "ClaimBy",
+                                    "value": "",
                                     "restriction": "EQ"
                                 }
                             ],
                             "result": {
-                                "type": "url",
-                                "path": "../ApplicantExistingData/Personal",
-                                "icon": "ft-edit-2",
-                                "param": [
-                                    {
-                                        "type": "AppId",
-                                        "property": "AppId"
-                                    }
-                                ]
-                            },
-                            "isHide": false
-                        },
-                        {
-                            "conditions": [
-                                {
-                                    "property": "CustTypeCode",
-                                    "value": "COMPANY",
-                                    "restriction": "EQ"
-                                },
-                                {
-                                    "property": "IsExistingCust",
-                                    "value": "0",
-                                    "restriction": "EQ"
-                                }
-                            ],
-                            "result": {
-                                "type": "url",
-                                "path": "../Company",
-                                "icon": "ft-edit-2",
-                                "param": [
-                                    {
-                                        "type": "AppId",
-                                        "property": "AppId"
-                                    }
-                                ]
-                            },
-                            "isHide": false
-                        },
-                        {
-                            "conditions": [
-                                {
-                                    "property": "CustTypeCode",
-                                    "value": "COMPANY",
-                                    "restriction": "EQ"
-                                },
-                                {
-                                    "property": "IsExistingCust",
-                                    "value": "1",
-                                    "restriction": "EQ"
-                                }
-                            ],
-                            "result": {
-                                "type": "url",
-                                "path": "../ApplicantExistingData/Company",
-                                "icon": "ft-edit-2",
-                                "param": [
-                                    {
-                                        "type": "AppId",
-                                        "property": "AppId"
-                                    }
-                                ]
+                                "type": "callback"
                             },
                             "isHide": false
                         }

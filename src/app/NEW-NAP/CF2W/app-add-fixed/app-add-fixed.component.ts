@@ -11,6 +11,8 @@ import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { RefOfficeObj } from 'app/shared/model/RefOfficeObj.model';
 import { DataTableFixedNAPObj } from 'app/shared/model/DataTableFixedNAPObj.Model';
 import { SaveAppDataCF2WObj } from 'app/shared/model/SaveAppDataCF2WObj.Model';
+import { AppFixedFeeObj } from 'app/shared/model/AppFixedFeeObj.Model';
+import { AppFixedInsObj } from 'app/shared/model/AppFixedInsObj.Model';
 
 @Component({
   selector: 'app-app-add-fixed',
@@ -55,10 +57,10 @@ export class AppAddFixedComponent implements OnInit {
     CurrCode: [''],
     LobCode: [''],
     RefProdTypeCode: [''],
-    Tenor: 0,
+    Tenor: [''],
     NumOfInst: 0,
     PayFreqCode: [''],
-    MrFirstInstTypeCode: "test",
+    MrFirstInstTypeCode: [''],
     NumOfAsset: 1,
     MrLcCalcMethodCode: [''],
     LcInstRatePrml: [''],
@@ -184,14 +186,14 @@ export class AppAddFixedComponent implements OnInit {
     this.inputLookupSupplierObj.genericJson = "./assets/uclookup/NAP/lookupSupplierBranch.json";
 
 
-    this.critSupplier = new Array();
-    var addCritSupp = new CriteriaObj();
-    addCritSupp.DataType = "number";
-    addCritSupp.propName = "VOM.REF_OFFICE_ID";
-    addCritSupp.restriction = AdInsConstant.RestrictionIn;
-    addCritSupp.listValue = this.listRefOfficeId;
-    this.critSupplier.push(addCritSupp);
-    this.inputLookupSupplierObj.addCritInput = this.critSupplier;
+    // this.critSupplier = new Array();
+    // var addCritSupp = new CriteriaObj();
+    // addCritSupp.DataType = "number";
+    // addCritSupp.propName = "VOM.REF_OFFICE_ID";
+    // addCritSupp.restriction = AdInsConstant.RestrictionIn;
+    // addCritSupp.listValue = this.listRefOfficeId;
+    // this.critSupplier.push(addCritSupp);
+    // this.inputLookupSupplierObj.addCritInput = this.critSupplier;
   }
 
   GetOfficeDDL() {
@@ -235,16 +237,47 @@ export class AppAddFixedComponent implements OnInit {
     return obj;
   }
 
+  setApp()
+  {
+    if(this.NapAppForm.controls["LeadId"].value == 0)
+    {
+      this.allAppDataObj.AppObj.LeadId = null;
+    }
+    this.allAppDataObj.AppObj.AppNo = "0";
+    this.allAppDataObj.AppObj.PreviousAppId = null;
+    // this.allAppDataObj.AppObj.MouCustId = this.NapAppForm.controls["MouCustId"].value;
+    // this.allAppDataObj.AppObj.LeadId = this.NapAppForm.controls["LeadId"].value;
+    this.allAppDataObj.AppObj.OriOfficeCode = this.NapAppForm.controls["OriOfficeCode"].value;
+    this.allAppDataObj.AppObj.OriOfficeName = this.NapAppForm.controls["OriOfficeName"].value;
+    this.allAppDataObj.AppObj.CrtOfficeCode = this.NapAppForm.controls["CrtOfficeCode"].value;
+    this.allAppDataObj.AppObj.CrtOfficeName = this.NapAppForm.controls["CrtOfficeName"].value;
+    this.allAppDataObj.AppObj.ProdOfferingCode = this.NapAppForm.controls["ProdOfferingCode"].value;
+    this.allAppDataObj.AppObj.ProdOfferingName = this.NapAppForm.controls["ProdOfferingName"].value;
+    this.allAppDataObj.AppObj.ProdOfferingVersion = this.NapAppForm.controls["ProdOfferingVersion"].value;
+    this.allAppDataObj.AppObj.AppCreatedDt = this.user.BusinessDt;
+    this.allAppDataObj.AppObj.AppStat = AdInsConstant.AppStepNew;
+    this.allAppDataObj.AppObj.AppCurrStep = AdInsConstant.AppStepNew;
+    this.allAppDataObj.AppObj.CurrCode = this.NapAppForm.controls["CurrCode"].value;
+    this.allAppDataObj.AppObj.LobCode = this.NapAppForm.controls["LobCode"].value;
+    this.allAppDataObj.AppObj.RefProdTypeCode = this.NapAppForm.controls["RefProdTypeCode"].value;
+    this.allAppDataObj.AppObj.NumOfInst = this.NapAppForm.controls["NumOfInst"].value;
+    this.allAppDataObj.AppObj.PayFreqCode = this.NapAppForm.controls["PayFreqCode"].value;
+    this.allAppDataObj.AppObj.MrFirstInstTypeCode = this.NapAppForm.controls["MrFirstInstTypeCode"].value;
+    this.allAppDataObj.AppObj.NumOfAsset = this.NapAppForm.controls["NumOfAsset"].value;
+    this.allAppDataObj.AppObj.MrAppSourceCode = this.NapAppForm.controls["MrAppSourceCode"].value;
+    this.allAppDataObj.AppObj.MrWopCode = this.NapAppForm.controls["MrWopCode"].value;
+    this.allAppDataObj.AppObj.SalesOfficerNo = this.NapAppForm.controls["SalesOfficerNo"].value;
+    this.allAppDataObj.AppObj.MrCustNotifyOptCode = this.NapAppForm.controls["MrCustNotifyOptCode"].value;
+    this.allAppDataObj.AppObj.IsAppInitDone = false;
+  }
+
   setAppAsset()
   {
     this.allAppDataObj.AppAssetObj.FullAssetName = this.assetName;
-    this.allAppDataObj.AppAssetObj.MrAssetConditionCode = this.NapAppForm.controls["MrAssetConditionCode"].value;
-    this.allAppDataObj.AppAssetObj.MrAssetUsageCode = this.NapAppForm.controls["AssetUsage"].value;
+    this.allAppDataObj.AppAssetObj.MrAssetConditionCode = "NEW";
+    this.allAppDataObj.AppAssetObj.MrAssetUsageCode = "NON_COMM";
     this.allAppDataObj.AppAssetObj.SupplName = this.supplierName;
     this.allAppDataObj.AppAssetObj.SupplCode = this.supplierCode;
-    this.allAppDataObj.AppAssetObj.AssetPriceAmt = this.NapAppForm.controls["AssetPrice"].value;
-    this.allAppDataObj.AppAssetObj.DownPaymentAmt = this.NapAppForm.controls["DownPayment"].value;
-    this.allAppDataObj.AppAssetObj.AssetNotes = this.NapAppForm.controls["Notes"].value;
 
     this.allAppDataObj.AppAssetObj.AssetSeqNo = "1";
     this.allAppDataObj.AppAssetObj.FullAssetCode = this.assetCode;
@@ -260,44 +293,44 @@ export class AppAddFixedComponent implements OnInit {
     this.allAppDataObj.AppCollateralObj.CollateralSeqNo = "1";
     this.allAppDataObj.AppCollateralObj.FullAssetCode = this.assetCode;
     this.allAppDataObj.AppCollateralObj.FullAssetName = this.assetName;
-    this.allAppDataObj.AppCollateralObj.MrCollateralConditionCode = this.NapAppForm.controls["MrAssetConditionCode"].value;
-    this.allAppDataObj.AppCollateralObj.MrCollateralUsageCode = this.NapAppForm.controls["AssetUsage"].value;
-    this.allAppDataObj.AppCollateralObj.CollateralValueAmt = this.NapAppForm.controls["AssetPrice"].value;
+    this.allAppDataObj.AppCollateralObj.MrCollateralConditionCode = "NEW";
+    this.allAppDataObj.AppCollateralObj.MrCollateralUsageCode = "NON_COMM";
+    
     this.allAppDataObj.AppCollateralObj.AssetTypeCode = this.assetTypeCode;
     this.allAppDataObj.AppCollateralObj.AssetCategoryCode = this.assetCategoryCode;
 
   }
 
-  SaveForm() {
-    // this.router.navigate(["Nap/AppAddDetail"], { queryParams: { "AppId": response["AppId"] } });
-    var napAppObj = new NapAppModel();
-    napAppObj = this.NapAppForm.value;
-    napAppObj.AppCreatedDt = this.user.BusinessDt;
-    napAppObj.IsAppInitDone = false;
-    napAppObj.AppStat = AdInsConstant.AppStepNew;
-    napAppObj.AppCurrStep = AdInsConstant.AppStepNew;
+  // SaveForm() {
+  //   // this.router.navigate(["Nap/AppAddDetail"], { queryParams: { "AppId": response["AppId"] } });
+  //   var napAppObj = new NapAppModel();
+  //   napAppObj = this.NapAppForm.value;
+  //   napAppObj.AppCreatedDt = this.user.BusinessDt;
+  //   napAppObj.IsAppInitDone = false;
+  //   napAppObj.AppStat = AdInsConstant.AppStepNew;
+  //   napAppObj.AppCurrStep = AdInsConstant.AppStepNew;
 
-    napAppObj = this.CheckValue(napAppObj);
-    if (this.user.MrOfficeTypeCode == "HO") {
-      napAppObj.OriOfficeCode = this.user.OfficeCode;
-    } else if (this.user.MrOfficeTypeCode == "Center Group") {
+  //   napAppObj = this.CheckValue(napAppObj);
+  //   if (this.user.MrOfficeTypeCode == "HO") {
+  //     napAppObj.OriOfficeCode = this.user.OfficeCode;
+  //   } else if (this.user.MrOfficeTypeCode == "Center Group") {
 
-    }
-    console.log(napAppObj);
+  //   }
+  //   console.log(napAppObj);
 
-    var url = environment.losUrl + AdInsConstant.AddApp;
-    this.http.post(url, napAppObj).subscribe(
-      (response) => {
-        console.log(response);
-        this.toastr.successMessage(response["message"]);
-        //this.router.navigate(["Nap/ConsumerFinance/InputNap/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+  //   var url = environment.losUrl + AdInsConstant.AddApp;
+  //   this.http.post(url, napAppObj).subscribe(
+  //     (response) => {
+  //       console.log(response);
+  //       this.toastr.successMessage(response["message"]);
+  //       //this.router.navigate(["Nap/ConsumerFinance/InputNap/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
+  //     },
+  //     (error) => {
+  //       console.log(error);
+  //     }
+  //   );
 
-  }
+  // }
 
   supplierCode;
   supplierName;
@@ -348,6 +381,7 @@ export class AppAddFixedComponent implements OnInit {
     this.http.post(AdInsConstant.DataTableNAP, dtFixedNAPObj).subscribe(
       (response) => {
         this.returnDtFixedNAPObj = response;
+        this.toastr.successMessage(response["message"]);
       },
       (error) => {
         console.log(error);
@@ -356,28 +390,102 @@ export class AppAddFixedComponent implements OnInit {
   }
 
   returnFeeAndInsFixedNAP;
+  returnAllAppDataObj;
   downPayment;
   assetPrice;
+  firstInstallmentType;
   editItem(item: any) {
-    console.log("abc");
-    console.log(item);
-    this.downPayment = item.DP;
-    this.assetPrice = item.OTR;
+    this.downPayment = parseInt(item.DP, 10),
+    this.assetPrice = parseInt(item.OTR, 10),
+
+    this.NapAppForm.patchValue({
+      Tenor: parseInt(item.Tenor, 10),
+      MrFirstInstTypeCode: item.FirstInstallmentType
+    });
+
     var feeAndInsFixedNAP = new DataTableFixedNAPObj();
     feeAndInsFixedNAP.LobCode = this.LobCode;
     feeAndInsFixedNAP.OfficeCode = this.user.MrOfficeTypeCode;
     feeAndInsFixedNAP.InsPackage = item.InsPackage;
     feeAndInsFixedNAP.Tenor = parseInt(item.Tenor, 10);
-    this.http.post(AdInsConstant.GetRuleFeeAndInsFixedNAP, feeAndInsFixedNAP).subscribe(
+    this.http.post(AdInsConstant.DataTableFeeAndInsNAP, feeAndInsFixedNAP).subscribe(
       (response) => {
         this.returnFeeAndInsFixedNAP = response["ReturnObject"];
-        console.log("vvv");
-        console.log(this.returnFeeAndInsFixedNAP);
+        // console.log("vvv");
+        // console.log(this.returnFeeAndInsFixedNAP);
+
+        this.allAppDataObj = new SaveAppDataCF2WObj();
+        for(var i = 0; i < this.returnFeeAndInsFixedNAP.DtFeeFixedNAP.length; i++)
+        {
+          var appFixedFeeObj = new AppFixedFeeObj();
+          appFixedFeeObj.MrFeeTypeCode = this.returnFeeAndInsFixedNAP.DtFeeFixedNAP[i].ListFee;
+          appFixedFeeObj.MrFeePaymentTypeCode = this.returnFeeAndInsFixedNAP.DtFeeFixedNAP[i].FeeType;
+          appFixedFeeObj.StdFeeAmt = this.returnFeeAndInsFixedNAP.DtFeeFixedNAP[i].StdFeeAmt;
+          appFixedFeeObj.SellFeeAmt = this.returnFeeAndInsFixedNAP.DtFeeFixedNAP[i].SellFeeAmt;
+          appFixedFeeObj.StdFeePrcnt = this.returnFeeAndInsFixedNAP.DtFeeFixedNAP[i].StdFeePrcntg;
+          appFixedFeeObj.SellFeePrcnt = this.returnFeeAndInsFixedNAP.DtFeeFixedNAP[i].SellFeePrcntg;
+          appFixedFeeObj.MrFeeCptlzTypeCode = this.returnFeeAndInsFixedNAP.DtFeeFixedNAP[i].FeeCapitalizeType;
+          appFixedFeeObj.CptlzPrnct = this.returnFeeAndInsFixedNAP.DtFeeFixedNAP[i].FeeCapitalizePrcntg;
+          appFixedFeeObj.CptlzAmt = this.returnFeeAndInsFixedNAP.DtFeeFixedNAP[i].FeeCapitalizeAmt;
+          this.allAppDataObj.AppFixedFeeObj.push(appFixedFeeObj);
+        }
+
+        for(var j = 0; j < this.returnFeeAndInsFixedNAP.DtInsFixedNAP.length; j++)
+        {
+          var appFixedInsObj = new AppFixedInsObj();
+          appFixedInsObj.YearNum = parseInt(this.returnFeeAndInsFixedNAP.DtInsFixedNAP[j].Year, 10);
+          appFixedInsObj.MrInsMainCvgTypeCode = this.returnFeeAndInsFixedNAP.DtInsFixedNAP[j].MainCoverage;
+          appFixedInsObj.SumInsuredPrcnt = this.returnFeeAndInsFixedNAP.DtInsFixedNAP[j].SumInsuredPercentage;
+          appFixedInsObj.InsCapitalize = this.returnFeeAndInsFixedNAP.DtInsFixedNAP[j].InsCapitalize;
+          appFixedInsObj.SellingRatePrcnt = this.returnFeeAndInsFixedNAP.DtInsFixedNAP[j].SellingRate;
+          appFixedInsObj.BaseRatePrcnt = this.returnFeeAndInsFixedNAP.DtInsFixedNAP[j].BaseRate;
+          appFixedInsObj.MrAddCvgTypeCode = this.returnFeeAndInsFixedNAP.DtInsFixedNAP[j].AdditionalCoverage;
+          this.allAppDataObj.AppFixedInsObj.push(appFixedInsObj);
+        }
+
+        this.allAppDataObj.AppAssetObj.AssetPriceAmt = this.assetPrice;
+        this.allAppDataObj.AppAssetObj.DownPaymentAmt = this.downPayment;
+        this.allAppDataObj.AppCollateralObj.CollateralValueAmt = this.assetPrice;
+        this.setAppAsset();
+        this.allAppDataObj.AppObj.Tenor = this.NapAppForm.controls["Tenor"].value;
+        this.allAppDataObj.AppObj.MrFirstInstTypeCode = this.NapAppForm.controls["MrFirstInstTypeCode"].value;
+        this.setApp();
+        this.allAppDataObj.AppFixedObj.MrFirstInstTypeCode = item.FirstInstallmentType;
+        this.allAppDataObj.AppFixedObj.Tenor = this.NapAppForm.controls["Tenor"].value;
+        this.allAppDataObj.AppFixedObj.SupplEffectiveRate = item.SupplEffRate;
+        this.allAppDataObj.AppFixedObj.EffectiveRate = item.EffRate;
+        this.allAppDataObj.AppFixedObj.DownPaymentAmt = item.DP;
+        this.allAppDataObj.AppFixedObj.IsEditableDp = item.EditableDP;
+        this.allAppDataObj.AppFixedObj.AssetPriceAmt = item.OTR;
+        this.allAppDataObj.AppFixedObj.GracePeriod = parseInt(item.GracePeriod, 10);
+        this.allAppDataObj.AppFixedObj.MrGracePeriodTypeCode = item.GracePeriodType;
+        this.allAppDataObj.AppFixedObj.InscoBranchCode = item.InscoCode;
+        this.allAppDataObj.AppFixedObj.InsPackageCode = item.InsPackage;
+        this.allAppDataObj.AppFixedObj.InsAdminFee = item.InsAdmFee;
+        this.allAppDataObj.AppFixedObj.IsCoverLifeIns = item.LifeInsCover;
+        this.allAppDataObj.AppFixedObj.LifeInsCoverSubject = item.LifeInsCoverSubject;
+        this.allAppDataObj.AppFixedObj.LifeInscoBranchCode = item.LifeInsco;
+        this.allAppDataObj.AppFixedObj.LifeInsPaymentMethod = item.LifeInsPaymentMethod;
+
+        console.log("asd")
+        console.log(this.allAppDataObj)
+    
+        this.http.post(AdInsConstant.AddEditAppCF2W, this.allAppDataObj).subscribe(
+          (response) => {
+            this.returnAllAppDataObj = response;
+            this.toastr.successMessage(response["message"]);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
       },
       (error) => {
         console.log(error);
       }
     );
+    //this.allAppDataObj.AppFixedFeeObj = this.returnFeeAndInsFixedNAP.DtFeeFixedNAP;
+    //this.allAppDataObj.AppFixedInsObj = this.returnFeeAndInsFixedNAP.DtInsFixedNAP;
   }
 
   getLookupAppResponseCopy(ev: any) {
@@ -407,7 +515,7 @@ export class AppAddFixedComponent implements OnInit {
   }
 
   productOffering;
-  getLookupAppResponseName(ev: any) {
+  getLookupProductOfferingName(ev: any) {
     console.log(ev);
     var url = environment.FoundationR3Url + AdInsConstant.GetListProdOfferingDByProdOfferingCode;
     var obj = {

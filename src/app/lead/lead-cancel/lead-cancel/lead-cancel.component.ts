@@ -24,33 +24,25 @@ export class LeadCancelComponent implements OnInit {
   @ViewChild(UcgridfooterComponent) ucgridFooter;
   @ViewChild(UCSearchComponent) UCSearchComponent;
   resultData: any;
-  pageNow: any;
-  totalData: any;
-  pageSize: any = 10;
-  apiUrl: any;
-  orderByKey: any = null;
+  pageNow: number;
+  totalData: number;
+  pageSize: number;
+  apiUrl: string;
+  orderByKey: any = null;   // kayaknya string
   orderByValue = true;
-  deleteUrl: any;
-  inputObj: any;
-  pageType: any = 'add';
-  IsActive: any;
-  leadVerfObj: any;
-  exportData: any;
-  arrLeadVerf: any = new Array();
+  deleteUrl: string;
+  inputObj: InputSearchObj;
   responseResultData: any;
-  listSelectedId: Array<any> = [];
-  listDeletedId: Array<any> = [];
-  tempListId: Array<any> = [];
+  listSelectedId: Array<string> = [];
+  tempListId: Array<string> = [];
   tempData: Array<any> = [];
   arrAddCrit = new Array<CriteriaObj>();
-  arrCrit: any;
-  checkboxAll: any = false;
-  viewObj: string;
-  AddRangeLeadVerfUrl = AdInsConstant.AddRangeLeadVerf;
-  verifyStatus: any;
+  checkboxAll: any = false;                 // kayaknya bool
+  verifyStatus: any;                        // kayaknya gaperlu
   confirmUrl = "/Lead/ConfirmCancel";
   allowedStat = ['INP','NEW'];
   leadUrl: string;
+  tempLeadCancelObj: LeadCancelObj;
   constructor(
     private http: HttpClient,
     private toastr: NGXToastrService,
@@ -59,8 +51,7 @@ export class LeadCancelComponent implements OnInit {
     private adInsService: AdInsService) { }
 
   ngOnInit() {
-
-    this.arrCrit = new Array();
+    console.log('vin');
     this.inputObj = new InputSearchObj();
     this.inputObj._url = './assets/search/searchLeadCancel.json';
     this.inputObj.enviromentUrl = environment.losUrl;
@@ -144,28 +135,28 @@ export class LeadCancelComponent implements OnInit {
     this.totalData = event.Count;
   }
 
-  formValidate(form: any, verifyStatus) {
+  formValidate(form: any, verifyStatus) {     // verifyStatus kayaknya gaperlu
     this.adInsService.scrollIfFormHasErrors(form);
     this.verifyStatus = verifyStatus;
   }
 
   SaveLeadCancel(leadVerfForm: any) { 
-    var tempLeadCancelObj = new LeadCancelObj();
+    this.tempLeadCancelObj = new LeadCancelObj();
     for (let index = 0; index < this.tempData.length; index++) {
-      tempLeadCancelObj.LeadIds.push(this.tempData[index].LeadId);
+      this.tempLeadCancelObj.LeadIds.push(this.tempData[index].LeadId);
       if (this.tempData[index].WfTaskListId != null && this.tempData[index].WfTaskListId != undefined)
-        tempLeadCancelObj.listWfTaskListId.push(this.tempData[index].WfTaskListId)
+        this.tempLeadCancelObj.listWfTaskListId.push(this.tempData[index].WfTaskListId)
     }
-    if (tempLeadCancelObj.LeadIds.length == 0) {
+    if (this.tempLeadCancelObj.LeadIds.length == 0) {
       this.toastr.typeErrorCustom('Please Add At Least One Data');
       return;
     }
-    else if(tempLeadCancelObj.LeadIds.length > 50){
+    else if(this.tempLeadCancelObj.LeadIds.length > 50){
       this.toastr.typeErrorCustom('Maximum 50 Data');
       return;
     }
-    var params = tempLeadCancelObj.LeadIds.join(',')
-    var taskListId = tempLeadCancelObj.listWfTaskListId.join(',')
+    var params = this.tempLeadCancelObj.LeadIds.join(',')
+    var taskListId = this.tempLeadCancelObj.listWfTaskListId.join(',')
     this.router.navigate([this.confirmUrl], { queryParams: { "LeadIds": params, "WfTaskListIds":taskListId } });
   }
 
@@ -179,11 +170,6 @@ export class LeadCancelComponent implements OnInit {
         this.tempData.push(object);
       }
       this.arrAddCrit = new Array();
-      if (this.arrCrit.length != 0) {
-        for (var i = 0; i < this.arrCrit.length; i++) {
-          this.arrAddCrit.push(this.arrCrit[i]);
-        }
-      }
       var addCrit = new CriteriaObj();
       addCrit.DataType = "numeric";
       addCrit.propName = "L.LEAD_ID";
@@ -235,11 +221,6 @@ export class LeadCancelComponent implements OnInit {
   deleteFromTemp(LeadId: any) {
     if (confirm('Are you sure to delete this record?')) {
       this.arrAddCrit = new Array();
-      if (this.arrCrit.length != 0) {
-        for (var i = 0; i < this.arrCrit.length; i++) {
-          this.arrAddCrit.push(this.arrCrit[i]);
-        }
-      }
       var index = this.tempListId.indexOf(LeadId);
       if (index > -1) {
         this.tempListId.splice(index, 1);
@@ -257,7 +238,6 @@ export class LeadCancelComponent implements OnInit {
       allowedCrit.restriction = AdInsConstant.RestrictionIn;
       allowedCrit.listValue = this.allowedStat;
       this.arrAddCrit.push(allowedCrit);
-
 
       if (this.tempListId.length != 0) {
         this.arrAddCrit.push(addCrit);

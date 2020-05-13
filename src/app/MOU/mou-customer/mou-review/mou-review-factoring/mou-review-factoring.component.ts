@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormArray, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -22,6 +22,7 @@ export class MouReviewFactoringComponent implements OnInit {
   MouType : string = "FACTORING";
   PlafondAmt: any;
   listApprover: any;
+  listRecommendationObj: any;
 
   listReason: any = [
     {
@@ -60,6 +61,24 @@ export class MouReviewFactoringComponent implements OnInit {
         })
       })
 
+    var listRec = this.MouReviewDataForm.get("ApvRecommendation") as FormArray;
+    var apvRecommendObj = { SchemeCode: 'MOUC_FCTR_APV' }
+    this.http.post(AdInsConstant.GetRecommendations, apvRecommendObj).subscribe(
+      (response) => {
+        this.listRecommendationObj = response;
+        for (let i = 0; i < this.listRecommendationObj["length"]; i++) {
+          var ApvRecommendation = this.fb.group({
+            RefRecommendationId: this.listRecommendationObj[i].RefRecommendationId,
+            RecommendationCode: this.listRecommendationObj[i].RecommendationCode,
+            RecommendationName: this.listRecommendationObj[i].RecommendationName,
+            RecommendationValue: ['', Validators.required]
+          }) as FormGroup;
+          listRec.push(ApvRecommendation);
+        }
+        // this.ApvRecommendation = ApvRecommendation;
+        console.log(this.MouReviewDataForm);
+      })
+
     var mouCustObj = { MouCustId: this.MouCustId };
     this.http.post(AdInsConstant.GetMouCustById, mouCustObj).subscribe(
       (response) => {
@@ -71,16 +90,10 @@ export class MouReviewFactoringComponent implements OnInit {
     ListApprover: [''],
     Reason: [''],
     Notes: [''],
-    LatarBelakang: [''],
-    FaktorMendukung: [''],
-    FaktorTidakMendukung: [''],
-    Syarat: [''],
-    Dispensasi: [''],
-    SWOT: [''],
-    SixC: ['']
+    ApvRecommendation: this.fb.array([])
   })
 
-  claimTask()
+  async claimTask()
   {
     var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"]};
@@ -94,63 +107,17 @@ export class MouReviewFactoringComponent implements OnInit {
     this.mouCustObj.MouCustId = this.MouCustId;
     this.PlafondAmt = this.PlafondAmt;
 
-    this.rfaInfoObj.ApprovedById = this.MouReviewDataForm.controls.ListApprover.value;
-    this.rfaInfoObj.Reason = this.MouReviewDataForm.controls.Reason.value;
-    this.rfaInfoObj.Notes = this.MouReviewDataForm.controls.Notes.value;
+    var ReviewValue = this.MouReviewDataForm.value;
+    var ApvRecValue = ReviewValue.ApvRecommendation;
 
-    if (this.MouReviewDataForm.controls.LatarBelakang.value != null || this.MouReviewDataForm.controls.LatarBelakang.value != undefined)
-    {  
-      this.keyValueObj = new KeyValueObj()
-      this.keyValueObj.Key = "LatarBelakang",
-      this.keyValueObj.Value = this.MouReviewDataForm.controls.LatarBelakang.value
-      this.rfaInfoObj.RecommendationObj.push(this.keyValueObj);
-    }
+    this.rfaInfoObj.ApprovedById = ReviewValue.ListApprover;
+    this.rfaInfoObj.Reason = ReviewValue.Reason;
+    this.rfaInfoObj.Notes = ReviewValue.Notes;
 
-    if (this.MouReviewDataForm.controls.FaktorMendukung.value != null || this.MouReviewDataForm.controls.FaktorMendukung.value != undefined)
-    {  
+    for (let index = 0; index < ApvRecValue.length; index++) {
       this.keyValueObj = new KeyValueObj()
-      this.keyValueObj.Key = "FaktorMendukung",
-      this.keyValueObj.Value = this.MouReviewDataForm.controls.FaktorMendukung.value
-      this.rfaInfoObj.RecommendationObj.push(this.keyValueObj);
-    }
-
-    if (this.MouReviewDataForm.controls.FaktorTidakMendukung.value != null || this.MouReviewDataForm.controls.FaktorTidakMendukung.value != undefined)
-    {  
-      this.keyValueObj = new KeyValueObj()
-      this.keyValueObj.Key = "FaktorTidakMendukung",
-      this.keyValueObj.Value = this.MouReviewDataForm.controls.FaktorTidakMendukung.value
-      this.rfaInfoObj.RecommendationObj.push(this.keyValueObj);
-    }
-
-    if (this.MouReviewDataForm.controls.Syarat.value != null || this.MouReviewDataForm.controls.Syarat.value != undefined)
-    {  
-      this.keyValueObj = new KeyValueObj()
-      this.keyValueObj.Key = "Syarat",
-      this.keyValueObj.Value = this.MouReviewDataForm.controls.Syarat.value
-      this.rfaInfoObj.RecommendationObj.push(this.keyValueObj);
-    }
-
-    if (this.MouReviewDataForm.controls.Dispensasi.value != null || this.MouReviewDataForm.controls.Dispensasi.value != undefined)
-    {  
-      this.keyValueObj = new KeyValueObj()
-      this.keyValueObj.Key = "Dispensasi",
-      this.keyValueObj.Value = this.MouReviewDataForm.controls.Dispensasi.value
-      this.rfaInfoObj.RecommendationObj.push(this.keyValueObj);
-    }
-
-    if (this.MouReviewDataForm.controls.SWOT.value != null || this.MouReviewDataForm.controls.SWOT.value != undefined)
-    {  
-      this.keyValueObj = new KeyValueObj()
-      this.keyValueObj.Key = "SWOT",
-      this.keyValueObj.Value = this.MouReviewDataForm.controls.SWOT.value
-      this.rfaInfoObj.RecommendationObj.push(this.keyValueObj);
-    }
-
-    if (this.MouReviewDataForm.controls.SixC.value != null || this.MouReviewDataForm.controls.SixC.value != undefined)
-    {  
-      this.keyValueObj = new KeyValueObj()
-      this.keyValueObj.Key = "6C",
-      this.keyValueObj.Value = this.MouReviewDataForm.controls.SixC.value
+      this.keyValueObj.Key = ApvRecValue[index].RefRecommendationId;
+      this.keyValueObj.Value = ApvRecValue[index].RecommendationValue;
       this.rfaInfoObj.RecommendationObj.push(this.keyValueObj);
     }
 
@@ -163,7 +130,7 @@ export class MouReviewFactoringComponent implements OnInit {
         this.toastr.successMessage(response["message"]);
         this.router.navigate(["/Mou/Cust/ReviewPaging"]);
       })
-  } 
+  }
 
   Return() {
     var mouObj = { MouCustId: this.MouCustId, WfTaskListId: this.WfTaskListId }

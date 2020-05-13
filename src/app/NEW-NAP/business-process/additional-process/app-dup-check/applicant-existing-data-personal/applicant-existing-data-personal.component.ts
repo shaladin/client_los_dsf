@@ -7,6 +7,7 @@ import { RequestSubmitAppDupCheckCustObj } from 'app/shared/model/AppDupCheckCus
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 
 @Component({
   selector: 'app-applicant-existing-data-personal',
@@ -15,7 +16,8 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 })
 export class ApplicantExistingDataPersonalComponent implements OnInit {
 
-  AppId: any;
+  AppId: number;
+  WfTaskListId: number;
   FondationUrl = environment.FoundationR3Url;
   LOSUrl = environment.losUrl;
   GetAppGuarantorDuplicateCheckUrl = this.LOSUrl + AdInsConstant.GetAppGuarantorDuplicateCheck;
@@ -40,21 +42,27 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private toastr: NGXToastrService
-  ) { }
+  ) { 
+    this.route.queryParams.subscribe(params => {
+      if (params['AppId'] != null) {
+        this.AppId = params['AppId'];
+      }
+      if (params['WfTaskListId'] != null) {
+        this.WfTaskListId = params['WfTaskListId'];
+      }
+    });
+  }
 
   ngOnInit() {
+
+    this.ClaimTask();
+     
     this.AppCustObj = new AppCustObj();
     this.AppCustPersonalObj = new AppCustPersonalObj();
     this.listSelectedIdGuarantor = new Array();
     this.listSelectedIdSpouse = new Array();
     this.listSelectedIdShareholder = new Array();
-
-
-    this.route.queryParams.subscribe(params => {
-      if (params['AppId'] != null) {
-        this.AppId = params['AppId'];
-      }
-    });
+    
     //Get App Cust Data
     var appObj = { "AppId": this.AppId };
     this.http.post(this.GetCustDataByAppId, appObj).subscribe(
@@ -201,6 +209,8 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
     appDupCheckObj.AppCustCompanyMgmntShrholderIds = this.listSelectedIdShareholder;
     appDupCheckObj.AppCustPersonalContactPersonIds = this.listSelectedIdSpouse;
     appDupCheckObj.CustNo = this.AppCustObj.CustNo;
+    appDupCheckObj.AppId = this.AppId;
+    appDupCheckObj.WfTaskListId = this.WfTaskListId;
 
     this.http.post(AdInsConstant.SubmitAppDupCheck, appDupCheckObj).subscribe(
       (response) => {
@@ -211,5 +221,17 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
         console.log(error);
       });
   
+  }
+
+  ClaimTask(){
+    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var wfClaimObj = new ClaimWorkflowObj();
+    wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
+    wfClaimObj.pUserId = currentUserContext["UserName"];
+
+    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+      (response) => {
+    
+      });
   }
 }

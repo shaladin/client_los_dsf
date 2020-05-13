@@ -16,7 +16,7 @@ import { UcaddressModule } from "@adins/ucaddress";
 import { UCSearchComponent } from '@adins/ucsearch';
 import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
 import { UcgridfooterModule, UcgridfooterComponent } from "@adins/ucgridfooter";
-import { MainInfoComponent } from 'app/view/main-info/main-info.component';
+// import { MainInfoComponent } from 'app/view/main-info/main-info.component';
 import { LeadRoutingModule } from "./lead-routing.module";
 import { CustomerSelfVerificationComponent } from './verification/customer-self-verification/customer-self-verification.component';
 import { CustomerDataComponent } from './verification/customer-self-verification/customer-data/customer-data.component';
@@ -69,8 +69,7 @@ export const customCurrencyMaskConfig = {
     UcgridfooterModule,
     UcpagingModule,
     NgbModule,
-    SharingModule,
-    ArchwizardModule,
+    SharingModule, 
     ReactiveFormsModule,
     UcaddressModule,
     UcSubsectionModule,
@@ -84,7 +83,7 @@ export const customCurrencyMaskConfig = {
     UcinputnumberModule
   ],
   declarations: [
-    MainInfoComponent,
+    // MainInfoComponent,
     CustJobDataComponent,
     CustSocmedComponent,
     LeadMainInfoComponent,

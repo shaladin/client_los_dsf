@@ -12,32 +12,39 @@
         </div>
         <div class="px-3">
           <lib-ucviewgeneric [viewInput]="viewLeadHeaderMainInfo"></lib-ucviewgeneric>
-          <!-- <aw-wizard #wizard navBarLayout="large-empty-symbols" [defaultStepIndex]="0">
-
-            <aw-wizard-step [stepTitle]="'Customer Data'" (stepEnter)="EnterTab('Cust')"
-              [navigationSymbol]="{ symbol: '1', fontFamily: 'FontAwesome' }">
-              <app-customer-data [LeadId]="LeadId"></app-customer-data>
-            </aw-wizard-step>
-
-            <aw-wizard-step [stepTitle]="'Lead Data'" (stepEnter)="EnterTab('Lead')"
-              [navigationSymbol]="{ symbol: '2', fontFamily: 'FontAwesome' }">
-              <app-lead-data [LeadId]="LeadId" [LobCode]="LobCode"></app-lead-data>
-            </aw-wizard-step>
-
-          </aw-wizard> -->
-          <aw-wizard #wizard navBarLayout="large-empty-symbols" [awNavigationMode] navigateBackward="allow"
-            navigateForward="allow" [defaultStepIndex]="0">
-            <aw-wizard-step [stepTitle]="'CUSTOMER DATA'" (stepEnter)="EnterTab('custData')"
-              [navigationSymbol]="{ symbol: '1', fontFamily: 'FontAwesome' }">
-              <app-lead-input-cust-data *ngIf="isCustData == true">
-              </app-lead-input-cust-data>
-            </aw-wizard-step>
-            <aw-wizard-step [stepTitle]="'LEAD DATA'" (stepEnter)="EnterTab('leadData')"
-              [navigationSymbol]="{ symbol: '2', fontFamily: 'FontAwesome' }">
-              <app-lead-input-lead-data *ngIf="isLeadData == true">
-              </app-lead-input-lead-data>
-            </aw-wizard-step>
-          </aw-wizard>
+          <div id="stepper1" class="bs-stepper">
+            <div class="bs-stepper-header" role="tablist" style="overflow-x: auto;">
+              <!-- your steps here -->
+              <div class="step" data-target="#customer-data-tab">
+                <button type="button" class="step-trigger" role="tab" aria-controls="customer-data-tab"
+                  id="customer-data-tab-trigger" (click)="EnterTab('custData')" >
+                  <span class="bs-stepper-circle">1</span>
+                  <span class="bs-stepper-label">CUSTOMER DATA</span>
+                </button>
+              </div>
+              <div class="line"></div>
+              <div class="step" data-target="#lead-data-tab">
+                <button type="button" class="step-trigger" role="tab" aria-controls="lead-data-tab"
+                  id="lead-data-tab-trigger" (click)="EnterTab('leadData')" >
+                  <span class="bs-stepper-circle">2</span>
+                  <span class="bs-stepper-label">LEAD DATA</span>
+                </button>
+              </div>
+            </div>
+            <br><br>
+            <div class="bs-stepper-content">
+              <!-- your steps content here -->
+              <div id="customer-data-tab" class="content" role="tabpanel"
+                aria-labelledby="customer-data-tab-trigger">
+                <app-lead-input-cust-data *ngIf="isCustData == true" (outputTab)="getValue($event)">
+                </app-lead-input-cust-data>
+              </div>
+              <div id="lead-data-tab" class="content" role="tabpanel" aria-labelledby="lead-data-tab-trigger">
+                <app-lead-data *ngIf="isLeadData == true" (outputTab)="getValue($event)">
+                </app-lead-data>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

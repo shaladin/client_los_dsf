@@ -12,11 +12,9 @@
     <table class="table table-responsive-md text-center table-hover">
       <thead>
         <tr class="table-header">
-          <th><input type="checkbox" [checked]="checkboxAll" (change)="SelectAll($event.target.checked)" id="checkAll"
-              name="CheckAll">
+          <th><input type="checkbox" [checked]="checkboxAll" (change)="SelectAll($event.target.checked)" id="checkAll" name="CheckAll">
           </th>
-          <th class="text-center"><span class="thead-header" (click)="searchSort($event)" name='leadNo' translate>LEAD
-              NO</span>
+          <th class="text-center"><span class="thead-header" (click)="searchSort($event)" name='leadNo' translate>LEAD NO</span>
           </th>
           <th class="text-left"><span class="thead-header" (click)="searchSort($event)" name='officeName'
               translate>OFFICE NAME</span>
@@ -94,7 +92,7 @@
           </th>
           <th class="text-left"><span class="thead-header" name='duplicateLeadNo' translate>LEAD STATUS</span>
           </th>
-          <th translate>Action</th>
+          <th translate>ACTION</th>
         </tr>
       </thead>
       <tbody>

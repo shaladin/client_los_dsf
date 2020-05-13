@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -8,7 +8,6 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
-import { WizardComponent } from 'angular-archwizard';
 import { formatDate } from '@angular/common';
 import { LeadCustAddrObj } from 'app/shared/model/LeadCustAddrObj.Model';
 import { LeadCustSocmedObj } from 'app/shared/model/LeadCustSocmedObj.Model';
@@ -28,67 +27,59 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 
 export class LeadInputCustDataComponent implements OnInit {
   @Input() LeadId: number;
-
-  CopyFrom: any;
+  @Output() outputTab: EventEmitter<object> = new EventEmitter();
+  businessDt: any;
+  CopyFrom: number;
   jobAddrId: any;
   othBizAddrId: any;
   jobDataId: any;
   rowVersion: any;
   typePage: string;
-  //LeadId: any;
-  addEditLeadCustPersonal: any;
-  jobAddressObj: any;
-  otherAddressObj: any;
+  addEditLeadCustPersonal: string;
   inputLegalAddressObj: InputFieldObj;
   inputResidenceAddressObj: InputFieldObj;
-  tempProfession: any;
-  professionLookUpObj: any;
-  legalAddressObj: any;
-  residenceAddressObj: any;
-  otherAddrObj: any;
-  idTypeCode: any;
+  tempProfession: string;
+  professionLookUpObj: InputLookupObj;
+  legalAddressObj: LeadCustAddrObj;
+  residenceAddressObj: LeadCustAddrObj;
+  idTypeCode: RefMasterObj;
   tempIdType: any;
-  maritalStatCode: any;
+  maritalStatCode: RefMasterObj;
   tempMrMaritalStatCode: any;
   getListActiveRefMasterUrl: string;
-  getRefMasterWithReserveField: any;
-  custModel: any;
+  getRefMasterWithReserveField: string;
+  custModel: RefMasterObj;
   listCustModel: any;
   leadInputObj: LeadInputObj = new LeadInputObj();
-  leadCustObj: any;
-  leadCustPersonalObj: any;
-  leadCustPersonalJobDataObj: any;
-  leadCustPersonalFinDataObj: any;
-  leadCustFacebookObj: any;
-  leadCustInstagramObj: any;
-  leadCustTwitterObj: any;
-  genderType: any;
+  leadCustFacebookObj: LeadCustSocmedObj;
+  leadCustInstagramObj: LeadCustSocmedObj;
+  leadCustTwitterObj: LeadCustSocmedObj;
+  genderType: RefMasterObj;
   tempGender: any;
-  getLeadByLeadId: any;
-  getLeadCustByLeadId: any;
-  getLeadCustAddr: any;
-  getLeadCustPersonal: any;
-  getLeadCustPersonalFinData: any;
-  getLeadCustPersonalJobData: any;
-  getRefProfessionByCode: any;
-  getListLeadCustSocmed: any;
-  reqLeadCustObj: any;
+  getLeadByLeadId: string;
+  getLeadCustByLeadId: string;
+  getLeadCustAddr: string;
+  getLeadCustPersonal: string;
+  getLeadCustPersonalFinData: string;
+  getLeadCustPersonalJobData: string;
+  getRefProfessionByCode: string;
+  getListLeadCustSocmed: string;
+  reqLeadCustObj: LeadCustObj;
   resLeadCustObj: any;
-  reqLeadCustPersonalObj: any;
+  reqLeadCustPersonalObj: LeadCustPersonalObj;
   resLeadCustPersonalObj: any;
-  reqLeadCustPersonalJobDataObj: any;
+  reqLeadCustPersonalJobDataObj: LeadCustPersonalJobDataObj;
   resLeadCustPersonalJobDataObj: any;
-  reqLeadCustPersonalFinDataObj: any;
+  reqLeadCustPersonalFinDataObj: LeadCustPersonalFinDataObj;
   resLeadCustPersonalFinDataObj: any;
-  reqLeadCustAddrLegalObj: any;
+  reqLeadCustAddrLegalObj: LeadCustAddrObj;
   resLeadCustAddrLegalObj: any;
-  reqLeadCustAddrResObj: any;
+  reqLeadCustAddrResObj: LeadCustAddrObj;
   resLeadCustAddrResObj: any;
-  refProfessionObj: any;
+  refProfessionObj: RefProfessionObj;
   returnRefProfessionObj: any;
-  reqLeadCustSocmedObj: any;
+  reqLeadCustSocmedObj: LeadCustSocmedObj;
   resLeadCustSocmedObj: any;
-  arrAddCrit: any;
   CustModelKey: string;
   CustomerDataForm = this.fb.group({
     CustType: [''],
@@ -112,8 +103,8 @@ export class LeadInputCustDataComponent implements OnInit {
     MonthlyIncome: [0],
     MonthlyExpense: [0]
   });
-
-  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private wizard: WizardComponent) { 
+  
+  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) { 
     this.getListActiveRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
     this.getRefMasterWithReserveField = AdInsConstant.GetListActiveRefMasterWithReserveFieldAll;
     this.addEditLeadCustPersonal = AdInsConstant.AddEditLeadCustPersonal;
@@ -125,7 +116,6 @@ export class LeadInputCustDataComponent implements OnInit {
     this.getLeadCustPersonalJobData = AdInsConstant.GetLeadCustPersonalJobDataByLeadCustPersonalId;
     this.getRefProfessionByCode = AdInsConstant.GetRefProfessionByCode;
     this.getListLeadCustSocmed = AdInsConstant.GetListLeadCustSocmedByLeadCustId;
-
     this.route.queryParams.subscribe(params => {
         if (params["LeadId"] != null) {
           this.LeadId = params["LeadId"];
@@ -148,6 +138,8 @@ export class LeadInputCustDataComponent implements OnInit {
   }
 
   ngOnInit() {
+      var context = JSON.parse(localStorage.getItem("UserAccess"));
+      this.businessDt = new Date(context["BusinessDt"]);
       this.reqLeadCustObj = new LeadCustObj();
       this.reqLeadCustObj.LeadId = this.LeadId;
       this.http.post(this.getLeadCustByLeadId, this.reqLeadCustObj).subscribe(
@@ -809,6 +801,10 @@ export class LeadInputCustDataComponent implements OnInit {
         this.setLeadCustPersonalJobData();
         this.leadInputObj.LeadCustPersonalFinDataObj.RowVersion = this.resLeadCustPersonalFinDataObj.RowVersion;
         this.setLeadCustPersonalFinData();
+
+        console.log("vvv")
+        console.log(this.leadInputObj)
+
         this.http.post(this.addEditLeadCustPersonal, this.leadInputObj).subscribe(
           (response) => {
             console.log(response);
@@ -818,7 +814,7 @@ export class LeadInputCustDataComponent implements OnInit {
             //   { queryParams: { "IdCust": this.IdCust }}
             //   );
             // console.log(response);
-            this.wizard.goToNextStep();
+            this.outputTab.emit({ stepMode: "next"});
           },
           (error) => {
             console.log(error);
@@ -842,7 +838,7 @@ export class LeadInputCustDataComponent implements OnInit {
             //   { queryParams: { "IdCust": this.IdCust }}
             //   );
             // console.log(response);
-            this.wizard.goToNextStep();
+            this.outputTab.emit({ stepMode: "next"});
           },
           (error) => {
             console.log(error);
@@ -869,7 +865,7 @@ export class LeadInputCustDataComponent implements OnInit {
           //   { queryParams: { "IdCust": this.IdCust }}
           //   );
           // console.log(response);
-          this.wizard.goToNextStep();
+          this.outputTab.emit({ stepMode: "next"});
         },
         (error) => {
           console.log(error);

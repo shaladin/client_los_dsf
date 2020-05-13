@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
@@ -7,6 +7,8 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AppReservedFundObj } from 'app/shared/model/AppReservedFundObj.model';
 import { AllAppReservedFundObj } from 'app/shared/model/AllAppReservedFundObj.model';
 import { environment } from 'environments/environment';
+import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
+import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
 
 
 
@@ -28,11 +30,8 @@ export class ReservedFundComponent implements OnInit {
     ReservedFundObjs: this.fb.array([])
   });
 
-  @Input() appId: any;
-  @Input() ReturnHandlingDId;
-  appObj = {
-    AppId: 0,
-  };
+  @Input() ReturnHandlingHObj: ReturnHandlingHObj;
+  @Output() outputTab: EventEmitter<AllAppReservedFundObj> = new EventEmitter();
 
   appReservedFundObjs: Array<AppReservedFundObj>;
   allAppReservedFundObj: AllAppReservedFundObj;
@@ -46,13 +45,10 @@ export class ReservedFundComponent implements OnInit {
   remainingAllocatedAmt: any;
   totalRsvFundAmt: any;
   grossYield: any;
-  show : boolean = false;
+  show: boolean = false;
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
 
-    // this.route.queryParams.subscribe(params => {
-    //   this.appId = params["AppId"];
-    // });
   }
 
   initUrl() {
@@ -65,19 +61,16 @@ export class ReservedFundComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    
-    if(this.ReturnHandlingDId!=0){
-      this.show = true;
-    }
-
-
+    this.allAppReservedFundObj = new AllAppReservedFundObj();
     this.initUrl();
-    this.appObj.AppId = this.appId;
-    this.GetAppRsvFundRule(this.appObj);
-    this.GetAppFinData(this.appObj);
-    this.GetMaxAllocAmt(this.appObj);
-    this.GetAppFee(this.appObj);
+    var appObj = {
+      AppId: this.ReturnHandlingHObj.AppId,
+    };
+    this.GetAppRsvFundRule(appObj);
+    this.GetAppFinData(appObj);
+    this.GetMaxAllocAmt(appObj);
+    this.GetAppFee(appObj);
+    this.GetAppCust(appObj);
   }
 
   SaveForm() {
@@ -93,8 +86,12 @@ export class ReservedFundComponent implements OnInit {
         this.setAppReservedFundData();
         this.http.post(this.addEditRsvFundUrl, this.allAppReservedFundObj).subscribe(
           (response) => {
-            console.log(response);
             this.toastr.successMessage(response["message"]);
+            if (this.allAppReservedFundObj.ReturnHandlingHId != 0) {
+              this.outputTab.emit(this.allAppReservedFundObj);
+            } else {
+              this.router.navigate(["/Nap/CreditProcess/CommissionReservedFund/Paging"], { queryParams: { LobCode: "CF4W" } })
+            }
           },
           (error) => {
             console.log(error);
@@ -105,12 +102,13 @@ export class ReservedFundComponent implements OnInit {
   }
 
   setAppReservedFundData() {
-    this.allAppReservedFundObj = new AllAppReservedFundObj();
-    this.allAppReservedFundObj.AppId = this.appId;
+    this.allAppReservedFundObj.AppId = this.ReturnHandlingHObj.AppId;
+    this.allAppReservedFundObj.ReturnHandlingHId = this.ReturnHandlingHObj.ReturnHandlingHId;
+    this.allAppReservedFundObj.WfTaskIdListId = this.ReturnHandlingHObj.WfTaskListId;
     this.allAppReservedFundObj.RequestAppReservedFundObjs = new Array<AppReservedFundObj>();
     for (let i = 0; i < this.RsvForm.controls["ReservedFundObjs"].value.length; i++) {
       var appReservedFundObj = new AppReservedFundObj();
-      appReservedFundObj.AppId = this.appId;
+      appReservedFundObj.AppId = this.ReturnHandlingHObj.AppId;
       appReservedFundObj.MrReservedFundSourceCode = this.RsvForm.controls["ReservedFundObjs"].value[i].MrReservedFundSourceCode;
       appReservedFundObj.MrReservedFundCode = this.RsvForm.controls["ReservedFundObjs"].value[i].MrReservedFundCode;
       appReservedFundObj.ReservedFundAmt = this.RsvForm.controls["ReservedFundAmt" + i].value.replace(/\D/g, "");
@@ -121,7 +119,7 @@ export class ReservedFundComponent implements OnInit {
   }
 
   GetAppFinData(appObj) {
-    this.http.post(this.getAppFinDataUrl, this.appObj).subscribe(
+    this.http.post(this.getAppFinDataUrl, appObj).subscribe(
       (response) => {
         console.log(response);
         this.uppingRate = response["DiffRateAmt"];
@@ -133,7 +131,7 @@ export class ReservedFundComponent implements OnInit {
   }
 
   GetAppFee(appObj) {
-    this.http.post(this.getAppFinDataUrl, this.appObj).subscribe(
+    this.http.post(this.getAppFinDataUrl, appObj).subscribe(
       (response) => {
         this.appFeeObj = response["ReturnObject"];
 
@@ -141,12 +139,19 @@ export class ReservedFundComponent implements OnInit {
     );
   }
 
-  GetReservedFund(appObj) {
 
+  GetAppCust(appObj) {
+    this.http.post<AppCustObj>(AdInsConstant.GetAppCustByAppId, appObj).subscribe(
+      (response) => {
+        if (response.MrCustTypeCode == AdInsConstant.CustTypeCompany) {
+          this.allAppReservedFundObj.IsPersonal = false
+        }
+      }
+    )
   }
 
   GetMaxAllocAmt(appObj) {
-    this.http.post(this.getMaxAllocAmtRsvFundUrl, this.appObj).subscribe(
+    this.http.post(this.getMaxAllocAmtRsvFundUrl, appObj).subscribe(
       (response) => {
         console.log(response);
         this.maxAllocatedAmt = response["MaxRefundAmount"];
@@ -155,14 +160,14 @@ export class ReservedFundComponent implements OnInit {
   }
 
   GetAppRsvFundRule(appObj) {
-    this.http.post(this.getAppRsvFundRuleUrl, this.appObj).subscribe(
+    this.http.post(this.getAppRsvFundRuleUrl, appObj).subscribe(
       (response) => {
         this.ruleObj = response;
         console.log(this.ruleObj);
         this.appReservedFundObjs = new Array<AppReservedFundObj>();
         for (let i = 0; i < this.ruleObj.length; i++) {
           var appReservedFundObj = new AppReservedFundObj();
-          appReservedFundObj.AppId = this.appId;
+          appReservedFundObj.AppId = this.ReturnHandlingHObj.AppId;
           appReservedFundObj.MrReservedFundSourceCode = this.ruleObj[i].AllocationFrom;
           appReservedFundObj.MrReservedFundCode = this.ruleObj[i].AllocationTo;
           appReservedFundObj.ReservedFundAmt = this.ruleObj[i].AllocationAmount;

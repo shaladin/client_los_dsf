@@ -7,9 +7,6 @@ import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
-import { WizardComponent } from 'angular-archwizard';
-import { formatDate } from '@angular/common';
 import { AssetTypeObj } from 'app/shared/model/AssetTypeObj.Model';
 import { LeadInputLeadDataObj } from 'app/shared/model/LeadInputLeadDataObj.Model';
 import { LeadAppObj } from 'app/shared/model/LeadAppObj.Model';
@@ -26,24 +23,24 @@ import { LeadObj } from 'app/shared/model/Lead.Model';
 })
 
 export class LeadInputLeadDataComponent implements OnInit {
-  @Input() originPage :string;
+  @Input() originPage: string;
   typePage: string;
-  CopyFrom: any;
-  LeadId: any;
-  assetConditionObj: any;
-  returnAssetConditionObj: any;
-  downPaymentObj: any;
-  returnDownPaymentObj: any;
-  firstInstObj: any;
-  returnFirstInstObj: any;
-  InputLookupAssetObj: any;
-  getListActiveRefMasterUrl: any;
+  CopyFrom: number;
+  LeadId: number;
+  assetConditionObj: RefMasterObj;
+  returnAssetConditionObj: [];
+  downPaymentObj: RefMasterObj;
+  returnDownPaymentObj: [];
+  firstInstObj: RefMasterObj;
+  returnFirstInstObj: [];
+  InputLookupAssetObj: InputLookupObj;
+  getListActiveRefMasterUrl: string;
   assetTypeId: number;
-  leadInputLeadDataObj: any;
-  addEditLeadData: any;
-  getLeadAssetByLeadId: any;
-  getLeadAppByLeadId: any;
-  getAssetMasterForLookupEmployee: any;
+  leadInputLeadDataObj: LeadInputLeadDataObj;
+  addEditLeadData: string;
+  getLeadAssetByLeadId: string;
+  getLeadAppByLeadId: string;
+  getAssetMasterForLookupEmployee: string;
   serial1Disabled: boolean = false;
   serial2Disabled: boolean = false;
   serial3Disabled: boolean = false;
@@ -54,11 +51,11 @@ export class LeadInputLeadDataComponent implements OnInit {
   serial3Mandatory: boolean = false;
   serial4Mandatory: boolean = false;
   serial5Mandatory: boolean = false;
-  reqLeadAssetObj: any;
+  reqLeadAssetObj: LeadAssetObj;
   resLeadAssetObj: any;
-  reqLeadAppObj: any;
+  reqLeadAppObj: LeadAppObj;
   resLeadAppObj: any;
-  reqAssetMasterObj: any;
+  reqAssetMasterObj: AssetMasterObj;
   resAssetMasterObj: any;
   LeadDataForm = this.fb.group({
     FullAssetCode: [''],
@@ -73,7 +70,6 @@ export class LeadInputLeadDataComponent implements OnInit {
     SerialNo3: [''],
     SerialNo4: [''],
     SerialNo5: [''],
-
     Tenor: ['', Validators.required],
     MrFirstInstTypeCode: ['', Validators.required],
     NTFAmt: [''],
@@ -82,16 +78,17 @@ export class LeadInputLeadDataComponent implements OnInit {
   });
   getGeneralSettingByCode: string;
   getLeadByLeadId: string;
-  submitWorkflowLeadInput: any;
-  generalSettingObj: any;
+  submitWorkflowLeadInput: string;
+  generalSettingObj: GeneralSettingObj;
   returnGeneralSettingObj: any;
   lobKta = new Array();
   leadObj: LeadObj;
   returnLeadObj: any;
   returnLobCode: string;
-  TaskListId: any;
-  editLead : string;
-  editLeadObj : any;
+  WfTaskListId: number;
+  editLead: string;
+  editLeadObj: LeadObj;
+
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.getListActiveRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
     this.addEditLeadData = AdInsConstant.AddEditLeadData;
@@ -102,8 +99,6 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.getLeadByLeadId = AdInsConstant.GetLeadByLeadId;
     this.editLead = AdInsConstant.EditLead;
     this.submitWorkflowLeadInput = AdInsConstant.SubmitWorkflowLeadInput;
-
-
     this.route.queryParams.subscribe(params => {
       if (params["LeadId"] != null) {
         this.LeadId = params["LeadId"];
@@ -112,10 +107,10 @@ export class LeadInputLeadDataComponent implements OnInit {
         this.typePage = params["mode"];
       }
       if (params["WfTaskListId"] == null) {
-        this.TaskListId = 0;
+        this.WfTaskListId = 0;
       }
       else {
-        this.TaskListId = params["WfTaskListId"];
+        this.WfTaskListId = params["WfTaskListId"];
       }
 
       if (params["CopyFrom"] != null) {
@@ -139,7 +134,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   // }
 
   radioChange(event) {
-     
+
     this.serial2Mandatory = false;
     this.serial3Mandatory = false;
     this.serial4Mandatory = false;
@@ -231,7 +226,7 @@ export class LeadInputLeadDataComponent implements OnInit {
         this.leadObj = new LeadObj();
         this.leadObj.LeadId = this.LeadId;
         this.http.post(this.getLeadByLeadId, this.leadObj).subscribe(
-          (response) => { 
+          (response) => {
             this.returnLeadObj = response;
             this.returnLobCode = response['LobCode'];
             if (this.lobKta.includes(this.returnLobCode) == true) {
@@ -502,9 +497,9 @@ export class LeadInputLeadDataComponent implements OnInit {
                 });
               });
           }
-      });
+        });
     }
-  } 
+  }
 
   setLeadAsset() {
     this.leadInputLeadDataObj.LeadAssetObj.LeadId = this.LeadId;
@@ -533,6 +528,7 @@ export class LeadInputLeadDataComponent implements OnInit {
 
   save() {
     if (this.typePage == "edit" || this.typePage == "update") {
+      if (this.resLeadAssetObj.LeadAssetId != 0) {
         this.leadInputLeadDataObj = new LeadInputLeadDataObj();
         this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
         this.setLeadAsset();
@@ -541,13 +537,34 @@ export class LeadInputLeadDataComponent implements OnInit {
         this.http.post(this.addEditLeadData, this.leadInputLeadDataObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
-            if(this.originPage == "teleVerif"){
+            if (this.originPage == "teleVerif") {
               this.router.navigate(["/Lead/TeleVerif/Paging"]);
             }
-            else if(this.typePage == "edit"){
+            else if (this.typePage == "edit") {
               this.router.navigate(["/Lead/Lead/Paging"]);
             }
-            else{
+            else {
+              this.router.navigate(["/Lead/LeadUpdate/Paging"]);
+            }
+          },
+          (error) => {
+            console.log(error);
+          });
+      }
+      else {
+        this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+        this.setLeadAsset();
+        this.setLeadApp();
+        this.http.post(this.addEditLeadData, this.leadInputLeadDataObj).subscribe(
+          (response) => {
+            this.toastr.successMessage(response["message"]);
+            if (this.originPage == "teleVerif") {
+              this.router.navigate(["/Lead/TeleVerif/Paging"]);
+            }
+            else if (this.typePage == "edit") {
+              this.router.navigate(["/Lead/Lead/Paging"]);
+            }
+            else {
               this.router.navigate(["/Lead/LeadUpdate/Paging"]);
             }
           },
@@ -555,7 +572,8 @@ export class LeadInputLeadDataComponent implements OnInit {
             console.log(error);
           }
         );
-    } 
+      }
+    }
     else {
       this.leadInputLeadDataObj = new LeadInputLeadDataObj();
       this.setLeadAsset();
@@ -563,34 +581,43 @@ export class LeadInputLeadDataComponent implements OnInit {
       this.http.post(this.addEditLeadData, this.leadInputLeadDataObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["/Lead/Lead/Paging"]);
+          if (this.originPage == "teleVerif") {
+            this.router.navigate(["/Lead/TeleVerif/Paging"]);
+          }
+          else if (this.typePage == "edit") {
+            this.router.navigate(["/Lead/Lead/Paging"]);
+          }
+          else {
+            this.router.navigate(["/Lead/LeadUpdate/Paging"]);
+          }
         },
         (error) => {
           console.log(error);
         }
       );
-    } 
+    }
   }
 
   SaveForm() {
-    if (this.typePage == "edit" || this.typePage == "update" ) {
+    if (this.typePage == "edit" || this.typePage == "update") {
+      if (this.resLeadAssetObj.LeadAssetId != 0) {
         this.leadInputLeadDataObj = new LeadInputLeadDataObj();
         this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
         this.setLeadAsset();
         this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
         this.setLeadApp();
-        this.leadInputLeadDataObj.WfTaskListId = this.TaskListId;
+        this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
         // this.leadInputLeadDataObj.IsEdit = true;
         this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
-            if(this.originPage == "teleVerif"){
+            if (this.originPage == "teleVerif") {
               this.router.navigate(["/Lead/TeleVerif/Paging"]);
             }
-            else if(this.typePage == "update"){
+            else if (this.typePage == "update") {
               this.router.navigate(["/Lead/LeadUpdate/Paging"]);
             }
-            else{
+            else {
               this.router.navigate(["/Lead/Lead/Paging"]);
             }
           },
@@ -598,29 +625,53 @@ export class LeadInputLeadDataComponent implements OnInit {
             console.log(error);
           }
         );
-    } 
+      }
+      else {
+        this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+        this.setLeadAsset();
+        this.setLeadApp();
+        this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
+        this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
+          (response) => {
+            this.toastr.successMessage(response["message"]);
+            if (this.originPage == "teleVerif") {
+              this.router.navigate(["/Lead/TeleVerif/Paging"]);
+            }
+            else if (this.typePage == "edit") {
+              this.router.navigate(["/Lead/Lead/Paging"]);
+            }
+            else {
+              this.router.navigate(["/Lead/LeadUpdate/Paging"]);
+            }
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      }
+    }
     else {
       this.leadInputLeadDataObj = new LeadInputLeadDataObj();
       this.setLeadAsset();
       this.setLeadApp();
-      this.leadInputLeadDataObj.WfTaskListId = this.TaskListId;
-      // this.leadInputLeadDataObj.IsEdit = false;
+      this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
       this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["/Lead/Lead/Paging"]);
+          if (this.originPage == "teleVerif") {
+            this.router.navigate(["/Lead/TeleVerif/Paging"]);
+          }
+          else if (this.typePage == "edit") {
+            this.router.navigate(["/Lead/Lead/Paging"]);
+          }
+          else {
+            this.router.navigate(["/Lead/LeadUpdate/Paging"]);
+          }
         },
         (error) => {
           console.log(error);
         }
       );
     }
-    this.editLeadObj = new LeadObj();
-    this.editLeadObj = this.returnLeadObj;
-    this.editLeadObj.IsSubmit = true;
-    this.http.post(this.editLead, this.editLeadObj).subscribe(
-      (response) => {
-      } 
-    );
   }
 }

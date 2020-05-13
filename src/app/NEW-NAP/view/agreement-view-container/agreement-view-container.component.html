@@ -37,6 +37,18 @@
               </ng-template>
             </mat-tab>
 
+            <mat-tab label="Commission">
+              <ng-template matTabContent>
+                <app-tab-commission [agrmntId]="AgrmntId"></app-tab-commission>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab label="Purchase Order">
+              <ng-template matTabContent>
+                <app-view-purchase-order [agrmntId]="AgrmntId"></app-view-purchase-order>
+              </ng-template>
+            </mat-tab>
+
             <mat-tab label="Customer Card">
               <ng-template matTabContent>
               </ng-template>
@@ -57,8 +69,9 @@
               </ng-template>
             </mat-tab>
 
-            <mat-tab label="Term and Condition">
+            <mat-tab label="Delivery Order">
               <ng-template matTabContent>
+                <agrmnt-view-delivery-order [agrmntId]="AgrmntId"></agrmnt-view-delivery-order>
               </ng-template>
             </mat-tab>
 
@@ -69,6 +82,7 @@
 
             <mat-tab label="Document">
               <ng-template matTabContent>
+                <agrmnt-view-document [agrmntId]="AgrmntId"></agrmnt-view-document>
               </ng-template>
             </mat-tab>
 

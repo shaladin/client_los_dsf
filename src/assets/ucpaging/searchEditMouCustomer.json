@@ -72,7 +72,7 @@
             "label": "MOU DATE TO",
             "restriction": "lte",
             "datatype": "date"
-        },
+        },        
         {
             "type": "dropdown",
             "name": "WTL.CLAIM_STAT",

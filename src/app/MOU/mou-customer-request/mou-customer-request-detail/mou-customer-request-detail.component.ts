@@ -78,7 +78,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
     var context = JSON.parse(localStorage.getItem("UserAccess"));
     this.businessDtMin = new Date(context["BusinessDt"]);
-    this.businessDtMin.setDate(this.businessDtMin.getDate() - 1);
+    this.businessDtMin.setDate(this.businessDtMin.getDate());
     
     this.inputLookupCust = new InputLookupObj();
     this.inputLookupCust.urlJson = "./assets/uclookup/MOU/lookupCust_MOURequest.json";
@@ -122,7 +122,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     }
   }
 
-  claimTask()
+  async claimTask()
   {
     var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"]};
