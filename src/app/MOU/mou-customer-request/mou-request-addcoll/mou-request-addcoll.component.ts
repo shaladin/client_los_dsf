@@ -27,21 +27,21 @@ export class MouRequestAddcollComponent implements OnInit {
   @ViewChild(UcgridfooterComponent) UCGridFooter;
   @ViewChild(UCSearchComponent) UCSearchComponent;
 
-  inputObj: any;
-  arrCrit: any[];
-  checkboxAll = false;
-  listSelectedId: any;
-  tempListId: any;
-  orderByKey: any;
-  orderByValue: any;
+  inputObj: InputSearchObj;
+  arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
+  checkboxAll: boolean = false;
+  listSelectedId: Array<number> = new Array<number>();
+  tempListId: Array<number> = new Array<number>();
+  orderByKey: string;
+  orderByValue: boolean;
   pageNow: number;
   pageSize: number;
-  apiUrl: any;
-  totalData: any;
+  apiUrl: string;
+  totalData: number;
   resultData: any;
   tempData: any;
-  arrAddCrit: any[];
-  viewObj: any;
+  arrAddCrit: Array<CriteriaObj>;
+  viewObj: string;
   Data = [];
 
   mouCustCollateralObj: MouCustCollateralObj;
@@ -59,11 +59,11 @@ export class MouRequestAddcollComponent implements OnInit {
 
   locationAddrObj: AddrObj;
   inputFieldLocationObj: InputFieldObj;
-  copyFromLegal: any;
+  copyFromLegal: string;
 
-  collateralObj: any;
+  collateralObj: MouCustCollateralObj;
   collateralRegistrationObj: any;
-  listCollExisting: any;
+  listCollExisting: Array<string> = new Array<string>();
 
   copyToLocationObj: any = [
     {
@@ -181,7 +181,7 @@ export class MouRequestAddcollComponent implements OnInit {
     }
   }
 
-  Checked(VerfQuestionAnswerId: any, isChecked: any): void {
+  Checked(VerfQuestionAnswerId: number, isChecked: boolean): void {
     console.log(VerfQuestionAnswerId);
     if (isChecked) {
       this.listSelectedId.push(VerfQuestionAnswerId);
@@ -539,7 +539,8 @@ export class MouRequestAddcollComponent implements OnInit {
           SerialNo4: this.collateralObj.SerialNo4,
           SerialNo5: this.collateralObj.SerialNo5,
           CollateralValueAmt: this.collateralObj.CollateralValueAmt,
-          CollateralNotes: this.collateralObj.Notes,
+          // CollateralNotes: this.collateralObj.Notes,
+          CollateralNotes: this.collateralObj.CollateralNotes,
           RowVersionCollateral: this.collateralObj.RowVersion,
 
           MouCustCollateralRegistrationId: this.collateralRegistrationObj.MouCustCollateralRegistrationId,

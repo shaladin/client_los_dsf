@@ -12,8 +12,8 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
   providers: [DecimalPipe]
 })
 export class DocSignerComponent implements OnInit {
-  inputPagingObj: any;
-  arrCrit: any;
+  inputPagingObj: UcPagingObj;
+  arrCrit: Array<CriteriaObj>;
   
   constructor() { }
 
@@ -24,7 +24,7 @@ export class DocSignerComponent implements OnInit {
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchMouCustDocSigner.json";
 
-    this.arrCrit = new Array();
+    this.arrCrit = new Array<CriteriaObj>();
     
     const addCritMouStat = new CriteriaObj();
     addCritMouStat.DataType = 'text';

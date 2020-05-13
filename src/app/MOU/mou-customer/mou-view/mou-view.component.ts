@@ -9,13 +9,13 @@ import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
   templateUrl: './mou-view.component.html',
 })
 export class MouViewComponent implements OnInit {
- @Input() inputMouCustId;
+ @Input() inputMouCustId: number;
   
-  getMouCustByIdUrl : any;
-  MouCustId : any;
-  mouCustObj : any;
-  resultData : any;
-  MrMouTypeCode : any;
+  getMouCustByIdUrl : string;
+  MouCustId : number;
+  mouCustObj : MouCustObj;
+  resultData : MouCustObj;
+  MrMouTypeCode : string;
   constructor(private http: HttpClient, private route: ActivatedRoute) { 
     this.getMouCustByIdUrl = AdInsConstant.GetMouCustById;
     this.route.queryParams.subscribe(params => {
@@ -26,14 +26,14 @@ export class MouViewComponent implements OnInit {
     });
    
   }
-  viewMouHeader: any;
+  viewMouHeader: string;
   ngOnInit() {
     this.viewMouHeader = "./assets/ucviewgeneric/viewMouHeader.json";
     this.mouCustObj = new MouCustObj();
     this.mouCustObj.MouCustId = this.MouCustId;
      
     this.http.post(this.getMouCustByIdUrl, this.mouCustObj).subscribe(
-      (response) => {
+      (response: MouCustObj) => {
         this.resultData = response;
         this.MrMouTypeCode = this.resultData['MrMouTypeCode']; 
       },
@@ -42,14 +42,14 @@ export class MouViewComponent implements OnInit {
       }
     );
   }
-  isDetail: any;
-  isFee: any;
-  isCollateral: any;
-  isTC: any;
-  isDocument: any;
-  isSurvey: any;
-  isApprovalHistory: any;
-  isLegalReview: any;
+  isDetail: boolean;
+  isFee: boolean;
+  isCollateral: boolean;
+  isTC: boolean;
+  isDocument: boolean;
+  isSurvey: boolean;
+  isApprovalHistory: boolean;
+  isLegalReview: boolean;
   EnterTab(type) {
     if (type == "detail") {
       this.isDetail = true;

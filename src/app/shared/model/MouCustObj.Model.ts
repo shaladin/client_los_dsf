@@ -17,6 +17,7 @@ export class MouCustObj {
     Notes: any;
     SrvyOrderNo: any;
     MrCustTypeCode: any;
+    MouCustStatView: any;
     RowVersion: any;
     constructor(){ this.MouCustId = 0; this.RowVersion = ''}
 }

@@ -20,32 +20,32 @@ import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
   providers: [DecimalPipe]
 })
 export class DocSignerDetailComponent implements OnInit {
-  inputPagingObj: any;
+  inputPagingObj: UcPagingObj;
   WfTaskListId: any;
-  MouCustId: any;
-  MouType: any;
-  mouCustObj: any;
-  mouCustSignerObj: any;
-  returnMouCust: any;
+  MouCustId: number;
+  MouType: string;
+  mouCustObj: MouCustObj;
+  mouCustSignerObj: MouCustSignerObj;
+  returnMouCust: MouCustObj;
   returnMouCustSigner: any;
-  getMouCustById:any;
-  addMouCustSigner: any;
-  getMouCustSignerByMouCustId: any;
+  getMouCustById: string;
+  addMouCustSigner: string;
+  getMouCustSignerByMouCustId: string;
   getCustSignerObj: any;
-  tempShareholder1: any;
-  tempShareholderPosition1: any;
-  tempShareholder2: any;
-  tempShareholderPosition2: any;
-  tempEmployee1: any;
-  tempEmployeePosition1: any;
-  tempEmployee2: any;
-  tempEmployeePosition2: any;
-  custShareholderLookUpObj1: any;
-  custShareholderLookUpObj2: any;
-  employeeLookUpObj1: any;
-  employeeLookUpObj2: any;
-  pageType: any;
-  page:any;
+  tempShareholder1: string;
+  tempShareholderPosition1: string;
+  tempShareholder2: string;
+  tempShareholderPosition2: string;
+  tempEmployee1: string;
+  tempEmployeePosition1: string;
+  tempEmployee2: string;
+  tempEmployeePosition2: string;
+  custShareholderLookUpObj1: InputLookupObj;
+  custShareholderLookUpObj2: InputLookupObj;
+  employeeLookUpObj1: InputLookupObj;
+  employeeLookUpObj2: InputLookupObj;
+  pageType: string;
+  page:number;
   MouCustSignerForm = this.fb.group({
     MfSigner1: [''],
     MfSignerPosition1: [''],
@@ -151,10 +151,10 @@ export class DocSignerDetailComponent implements OnInit {
     this.mouCustObj = new MouCustObj();
     this.mouCustObj.MouCustId = this.MouCustId;
     this.http.post(this.getMouCustById, this.mouCustObj).subscribe(
-      (response) => {
+      (response: MouCustObj) => {
           this.returnMouCust = response;
       });
-    this.mouUrl = environment.losR3Web + '/Mou/Cust/Paging?MouCustId=' + this.MouCustId;
+    this.mouUrl = environment.losR3Web + "/Mou/Cust/View?MouCustId=" + this.MouCustId;
   }
 
   setMouCustSigner(){

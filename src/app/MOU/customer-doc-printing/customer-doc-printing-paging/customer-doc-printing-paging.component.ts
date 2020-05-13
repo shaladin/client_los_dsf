@@ -8,7 +8,7 @@ import { environment } from 'environments/environment';
   templateUrl: './customer-doc-printing-paging.component.html',
 })
 export class CustomerDocPrintingPagingComponent implements OnInit {
-  inputPagingObj: any;
+  inputPagingObj: UcPagingObj;
 
   constructor() { }
   // 1. menangkap param MouModel dari halaman paging

@@ -23,7 +23,7 @@ export class MouDetailGeneralComponent implements OnInit {
   instSchmList: any;
   payFreqList: any;
   firstInstList: any;
-  mode: any = "add";
+  mode: string = "add";
   isDPInvalid: boolean;
   dpInvalidMsg: string;
   isTenorInvalid: boolean;

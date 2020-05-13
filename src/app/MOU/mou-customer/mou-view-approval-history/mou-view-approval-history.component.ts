@@ -10,12 +10,12 @@ import { MouCustRvwDObj } from 'app/shared/model/MouCustRvwDObj.Model';
   templateUrl: './mou-view-approval-history.component.html',
 })
 export class MouViewApprovalHistoryComponent implements OnInit {
-  @Input() MouCustId: any;
+  @Input() MouCustId: number;
   GetMouCustRvwHByMouCustIdUrl : string;
   GetListMouCustRvwDUrl : string;
-  responseMouCustRvwH:any;
-  mouCustRvwHObj : any;
-  mouCustRvwDObj : any;
+  responseMouCustRvwH: MouCustRvwHObj;
+  mouCustRvwHObj : MouCustRvwHObj;
+  mouCustRvwDObj : MouCustRvwDObj;
   listMouCustRvwDObj : any;
   constructor(private http: HttpClient, private router: Router) { 
     this.GetMouCustRvwHByMouCustIdUrl = AdInsConstant.GetMouCustRvwHByMouCustId;
@@ -31,7 +31,7 @@ export class MouViewApprovalHistoryComponent implements OnInit {
     this.mouCustRvwHObj.MouCustId = this.MouCustId;
 
     this.http.post(this.GetMouCustRvwHByMouCustIdUrl, this.mouCustRvwHObj).subscribe(
-      response => {
+      (response: MouCustRvwHObj) => {
         this.responseMouCustRvwH = response ; 
 
         this.mouCustRvwDObj.MouCustRvwHId =  this.responseMouCustRvwH.MouCustRvwHId;
