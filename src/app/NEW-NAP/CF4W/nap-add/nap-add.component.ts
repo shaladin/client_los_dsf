@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -8,6 +8,7 @@ import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
+import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 
 @Component({
   selector: 'app-nap-add',
@@ -15,7 +16,9 @@ import { NapAppModel } from 'app/shared/model/NapApp.Model';
   providers: [NGXToastrService]
 })
 export class NapAddComponent implements OnInit {
-
+  
+  @ViewChild('LookupOffering') ucLookupOffering : UclookupgenericComponent;
+  @ViewChild('LookupCopyProduct') ucLookupCopyProduct : UclookupgenericComponent;
   param;
   ProductOfferingIdentifier;
   ProductOfferingNameIdentifier;
@@ -299,7 +302,9 @@ export class NapAddComponent implements OnInit {
     this.arrAddCrit.push(addCrit);
 
     this.inputLookupObjName.addCritInput = this.arrAddCrit;
-    // console.log(this.NapAppForm);
+    this.inputLookupObjCopyProduct.addCritInput = this.arrAddCrit;
+    this.ucLookupOffering.setAddCritInput();
+    this.ucLookupCopyProduct.setAddCritInput();
   }
 
 }
