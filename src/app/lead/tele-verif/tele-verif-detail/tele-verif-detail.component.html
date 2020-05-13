@@ -50,7 +50,7 @@
                 </app-lead-input-cust-data>
               </div>
               <div id="lead-data-tab" class="content" role="tabpanel" aria-labelledby="lead-data-tab-trigger">
-                <app-lead-input-lead-data *ngIf="isLeadData == true" (outputTab)="getValue($event)">
+                <app-lead-input-lead-data *ngIf="isLeadData == true" originPage="teleVerif" (outputTab)="getValue($event)">
                 </app-lead-input-lead-data>
               </div>
             </div>
