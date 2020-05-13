@@ -587,6 +587,9 @@ export class AdInsConstant {
   public static AddAppLifeInsH = environment.losUrl + "/AppLifeIns/AddAppLifeInsH";
   public static EditAppLifeInsH = environment.losUrl + "/AppLifeIns/EditAppLifeInsH";
   public static InitAppLifeInsH = environment.losUrl + "/AppLifeIns/InitAppLifeInsH";
+  public static CalculateRate = environment.losUrl + "/AppLifeIns/CalculateRate";
+  public static CalculateDisc = environment.losUrl + "/AppLifeIns/CalculateDisc";
+  public static DeleteAppLifeIns = environment.losUrl + "/AppLifeIns/DeleteAppLifeIns";
 
 
   // MOU CUST ASSET
