@@ -149,6 +149,11 @@ export class NapAddComponent implements OnInit {
     addCrit.listValue = [this.user.OfficeCode];
     arrAddCrit.push(addCrit);
     this.inputLookupObjName.addCritInput = arrAddCrit;
+
+    this.NapAppForm.patchValue({
+      OriOfficeCode: this.user.OfficeCode,
+      OriOfficeName: this.user.OfficeName,
+    });
   }
 
   GetOfficeDDL() {
@@ -161,10 +166,6 @@ export class NapAddComponent implements OnInit {
       (response) => {
         console.log(response);
         this.officeItems = response["ReturnObject"];
-        this.NapAppForm.patchValue({
-          OriOfficeCode: this.officeItems[0].Key,
-          OriOfficeName: this.officeItems[0].Value,
-        });
       },
       (error) => {
         console.log(error);
