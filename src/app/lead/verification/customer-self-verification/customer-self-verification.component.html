@@ -1,52 +1,51 @@
-<div class="row text-left">
-  <div class="col-md-12">
-    <div class="card">
-      <div class="card-body">
-        <div class="card-header header-title">
+<section id="horizontal-form-layouts">
+  <div class="row text-left">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
           <div class="row">
             <div class="col-md-8">
-              <h4 class="card-title" id="horz-layout-colored-controls" translate> Customer Self Verification
-              </h4>
-            </div>
-          </div>
-        </div>
-        <div class="px-3">
-          <lib-ucviewgeneric [viewInput]="viewLeadHeaderMainInfo"></lib-ucviewgeneric>
-          <div id="stepper1" class="bs-stepper">
-            <div class="bs-stepper-header" role="tablist" style="overflow-x: auto;">
-              <!-- your steps here -->
-              <div class="step" data-target="#customer-data-tab">
-                <button type="button" class="step-trigger" role="tab" aria-controls="customer-data-tab"
-                  id="customer-data-tab-trigger" (click)="EnterTab('custData')" >
-                  <span class="bs-stepper-circle">1</span>
-                  <span class="bs-stepper-label">CUSTOMER DATA</span>
-                </button>
-              </div>
-              <div class="line"></div>
-              <div class="step" data-target="#lead-data-tab">
-                <button type="button" class="step-trigger" role="tab" aria-controls="lead-data-tab"
-                  id="lead-data-tab-trigger" (click)="EnterTab('leadData')" >
-                  <span class="bs-stepper-circle">2</span>
-                  <span class="bs-stepper-label">LEAD DATA</span>
-                </button>
-              </div>
-            </div>
-            <br><br>
-            <div class="bs-stepper-content">
-              <!-- your steps content here -->
-              <div id="customer-data-tab" class="content" role="tabpanel"
-                aria-labelledby="customer-data-tab-trigger">
-                <app-lead-input-cust-data *ngIf="isCustData == true" (outputTab)="getValue($event)">
-                </app-lead-input-cust-data>
-              </div>
-              <div id="lead-data-tab" class="content" role="tabpanel" aria-labelledby="lead-data-tab-trigger">
-                <app-lead-data *ngIf="isLeadData == true" (outputTab)="getValue($event)">
-                </app-lead-data>
-              </div>
+              <h4 class="card-title" id="horz-layout-colored-controls" translate> Customer Self Verification</h4>
             </div>
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+<div class="card">
+  <div class="card-body">
+    <lib-ucviewgeneric [viewInput]="viewLeadHeaderMainInfo"></lib-ucviewgeneric>
+    <div id="stepper1" class="bs-stepper">
+      <div class="bs-stepper-header" role="tablist" style="overflow-x: auto;">
+        <!-- your steps here -->
+        <div class="step" data-target="#customer-data-tab">
+          <button type="button" class="step-trigger" role="tab" aria-controls="customer-data-tab"
+            id="customer-data-tab-trigger" (click)="EnterTab('custData')">
+            <span class="bs-stepper-circle">1</span>
+            <span class="bs-stepper-label">CUSTOMER DATA</span>
+          </button>
+        </div>
+        <div class="line"></div>
+        <div class="step" data-target="#lead-data-tab">
+          <button type="button" class="step-trigger" role="tab" aria-controls="lead-data-tab" id="lead-data-tab-trigger"
+            (click)="EnterTab('leadData')">
+            <span class="bs-stepper-circle">2</span>
+            <span class="bs-stepper-label">LEAD DATA</span>
+          </button>
+        </div>
+      </div>
+      <br><br>
+      <!-- <div class="bs-stepper-content"> -->
+      <div id="customer-data-tab" class="content" role="tabpanel" aria-labelledby="customer-data-tab-trigger">
+        <app-lead-input-cust-data *ngIf="isCustData == true" (outputTab)="getValue($event)">
+        </app-lead-input-cust-data>
+      </div>
+      <div id="lead-data-tab" class="content" role="tabpanel" aria-labelledby="lead-data-tab-trigger">
+        <app-lead-data *ngIf="isLeadData == true" (outputTab)="getValue($event)">
+        </app-lead-data>
+      </div>
+      <!-- </div> -->
     </div>
   </div>
 </div>
