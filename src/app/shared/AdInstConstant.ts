@@ -90,11 +90,11 @@ export class AdInsConstant {
   public static GetAppAssetSupplEmpByAppAssetIdAndCode = environment.losUrl + "/AppAssetSupplEmp/GetAppAssetSupplEmpByAppAssetIdAndCode";
 
   // App Referantor
-  public static AddAppReferantor = "/AppReferantor/AddAppReferantor";
-  public static EditAppReferantor = "/AppReferantor/EditAppReferantor";
-  public static DeleteAppReferantor = "/AppReferantor/DeleteAppReferantor";
-  public static GetAppReferantorByAppReferantorId = "/AppReferantor/GetAppReferantorByAppReferantorId";
-  public static GetAppReferantorByAppId = "/AppReferantor/GetAppReferantorByAppId";
+  public static AddAppReferantor = environment.losUrl + "/AppReferantor/AddAppReferantor";
+  public static EditAppReferantor = environment.losUrl + "/AppReferantor/EditAppReferantor";
+  public static DeleteAppReferantor = environment.losUrl + "/AppReferantor/DeleteAppReferantor";
+  public static GetAppReferantorByAppReferantorId = environment.losUrl + "/AppReferantor/GetAppReferantorByAppReferantorId";
+  public static GetAppReferantorByAppId = environment.losUrl + "/AppReferantor/GetAppReferantorByAppId";
 
   // App Cross
   public static EditAppAddAppCross = environment.losUrl + "/Application/EditAppAddAppCross";
