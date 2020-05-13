@@ -39,6 +39,10 @@ export class AdInsConstant {
 
   public static GENERAL = "GENERAL";
   public static FACTORING = "FACTORING";
+  
+  public static SALES_JOB_CODE = "SALES_PERSON";
+  public static ADMIN_HEAD_JOB_CODE = "ADMIN_HEAD";
+  public static BRANCH_MANAGER_JOB_CODE = "BRANCH_MANAGER";
 
   //WORKFLOW (LEWAT FOUNDATION)
   public static ResumeWorkflow = environment.FoundationR3Url + "/Workflow/ResumeWorkflow"
