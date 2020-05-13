@@ -27,7 +27,7 @@ export class NapPagingComponent implements OnInit {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'RL.BL_CODE';
-    critObj.value = AdInsConstant.CF4W;
+    critObj.value = AdInsConstant.CFNEWCAR;
     this.arrCrit.push(critObj);
     this.inputPagingObj.addCritInput = this.arrCrit;
   }

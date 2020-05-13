@@ -36,6 +36,7 @@ export class AdInsConstant {
   public static AppStepCSR = "CSR";
   public static FL4W = "FL4W";
   public static CF4W = "CF4W";
+  public static CFNEWCAR = "CFNEWCAR";
 
   public static GENERAL = "GENERAL";
   public static FACTORING = "FACTORING";
