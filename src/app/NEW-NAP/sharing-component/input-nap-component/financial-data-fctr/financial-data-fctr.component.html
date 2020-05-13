@@ -1,1 +1,11 @@
-test
+<form class="form-horizontal" [formGroup]="FinDataForm" (ngSubmit)="FinDataForm.valid && Submit()" #enjiForm="ngForm">
+    <app-fee *ngIf="IsParentLoaded" [AppId]="AppId" [ParentForm]="FinDataForm" [identifier]="'AppFee'"></app-fee>
+    <app-schm-reguler-fix-fctr *ngIf="IsParentLoaded" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-reguler-fix-fctr>
+    <div class="form-inline-right">
+      <button type="submit" class="btn btn-raised btn-primary" translate type="button" tabindex="0"
+        (click)="SaveAndContinue()">
+        Save and Continue
+      </button>
+    </div>
+      
+  </form>

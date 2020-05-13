@@ -2,6 +2,7 @@ export class AppFinDataObj {
     AppFinDataId: number;
     AppId: number;
     MrInstSchemeCode: string;
+    InstSchemeName: string;
     NumOfInst: number;
     RateType : string;
     TotalAR:number;
@@ -49,6 +50,20 @@ export class AppFinDataObj {
     TotalLifeInsCustAmt: number;
     TotalLifeInsInscoAmt: number;
     TotalAr: number;
+    MrInstTypeCode: string;
+    InstTypeName: string;
+    MrSingleInstCalcMthdCode: string;
+    SingleInstCalcMthdName: string;
+    InvcDt: Date;
+    TopBased: string;
+    TopBasedName: string;
+    EstEffDt: Date;
+    TotalInvcAmt: number;
+    TopDays: number;
+    RetentionPrcnt: number;
+    MaturityDate: Date;
+    TotalRetentionAmt: number;
+    TotalDisbAmt: number;
 
     constructor() {
     }

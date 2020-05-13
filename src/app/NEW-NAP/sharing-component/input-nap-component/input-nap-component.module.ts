@@ -50,6 +50,7 @@ import { AssetDataAddEditComponent } from "./multi-asset-data/asset-data-add-edi
 import { CollateralAddEditComponent } from "./multi-asset-data/collateral-add-edit/collateral-add-edit.component";
 import { MultiAssetDataComponent } from "./multi-asset-data/multi-asset-data.component";
 import { FinancialDataFctrComponent } from "./financial-data-fctr/financial-data-fctr.component";
+import { SchmRegulerFixFctrComponent } from "./financial-data-fctr/component/multiple-installment/schm-reguler-fix/schm-reguler-fix-fctr.component";
 
 export const customCurrencyMaskConfig = {     
   align: "right",     
@@ -109,7 +110,8 @@ export const customCurrencyMaskConfig = {
     AssetDataAddEditComponent,
     CollateralAddEditComponent,
     MultiAssetDataComponent,
-    FinancialDataFctrComponent
+    FinancialDataFctrComponent,
+    SchmRegulerFixFctrComponent
   ],
   imports: [
     CommonModule,
@@ -164,7 +166,8 @@ export const customCurrencyMaskConfig = {
     AssetDataAddEditComponent,
     CollateralAddEditComponent,
     MultiAssetDataComponent,
-    FinancialDataFctrComponent
+    FinancialDataFctrComponent,
+    SchmRegulerFixFctrComponent
   ],
   entryComponents: [SubsidyAddEditComponent],
   providers: [
