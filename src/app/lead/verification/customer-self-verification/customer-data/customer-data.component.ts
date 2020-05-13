@@ -24,11 +24,11 @@ import { CustJobDataComponent } from 'app/NEW-NAP/sharing-component/input-nap-co
 export class CustomerDataComponent implements OnInit {
   @Input() LeadId: any;
   @ViewChild(CustJobDataComponent) custJobDataComponent;
-
+  businessDt: any;
   inputLookupObj: InputLookupObj;
   criteriaList: Array<CriteriaObj>;
   criteriaObj: CriteriaObj;
-
+ 
   custDataObj: CustDataObj;
   custDataPersonalObj: CustDataPersonalObj = new CustDataPersonalObj();
   custDataCompanyObj: CustDataCompanyObj = new CustDataCompanyObj();
@@ -55,6 +55,8 @@ export class CustomerDataComponent implements OnInit {
               private http: HttpClient, private toastr: NGXToastrService, private wizard: WizardComponent) { }
 
   ngOnInit() {
+    var context = JSON.parse(localStorage.getItem("UserAccess"));
+    this.businessDt = new Date(context["BusinessDt"]);
     console.log(this.LeadId);
     this.bindUcLookup();
     this.bindMaritalStatObj();

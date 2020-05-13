@@ -11,6 +11,8 @@ import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { RefOfficeObj } from 'app/shared/model/RefOfficeObj.model';
 import { DataTableFixedNAPObj } from 'app/shared/model/DataTableFixedNAPObj.Model';
 import { SaveAppDataCF2WObj } from 'app/shared/model/SaveAppDataCF2WObj.Model';
+import { AppFixedFeeObj } from 'app/shared/model/AppFixedFeeObj.Model';
+import { AppFixedInsObj } from 'app/shared/model/AppFixedInsObj.Model';
 
 @Component({
   selector: 'app-app-add-fixed',
@@ -242,6 +244,7 @@ export class AppAddFixedComponent implements OnInit {
       this.allAppDataObj.AppObj.LeadId = null;
     }
     this.allAppDataObj.AppObj.AppNo = "0";
+    this.allAppDataObj.AppObj.PreviousAppId = null;
     // this.allAppDataObj.AppObj.MouCustId = this.NapAppForm.controls["MouCustId"].value;
     // this.allAppDataObj.AppObj.LeadId = this.NapAppForm.controls["LeadId"].value;
     this.allAppDataObj.AppObj.OriOfficeCode = this.NapAppForm.controls["OriOfficeCode"].value;
@@ -392,7 +395,6 @@ export class AppAddFixedComponent implements OnInit {
   assetPrice;
   firstInstallmentType;
   editItem(item: any) {
-    this.allAppDataObj = new SaveAppDataCF2WObj();
     this.downPayment = parseInt(item.DP, 10),
     this.assetPrice = parseInt(item.OTR, 10),
 
@@ -409,55 +411,81 @@ export class AppAddFixedComponent implements OnInit {
     this.http.post(AdInsConstant.DataTableFeeAndInsNAP, feeAndInsFixedNAP).subscribe(
       (response) => {
         this.returnFeeAndInsFixedNAP = response["ReturnObject"];
-        console.log("vvv");
-        console.log(this.returnFeeAndInsFixedNAP);
+        // console.log("vvv");
+        // console.log(this.returnFeeAndInsFixedNAP);
 
-        this.allAppDataObj.AppFixedFeeObj = this.returnFeeAndInsFixedNAP.DtFeeFixedNAP;
-        this.allAppDataObj.AppFixedInsObj = this.returnFeeAndInsFixedNAP.DtInsFixedNAP;
+        this.allAppDataObj = new SaveAppDataCF2WObj();
+        for(var i = 0; i < this.returnFeeAndInsFixedNAP.DtFeeFixedNAP.length; i++)
+        {
+          var appFixedFeeObj = new AppFixedFeeObj();
+          appFixedFeeObj.MrFeeTypeCode = this.returnFeeAndInsFixedNAP.DtFeeFixedNAP[i].ListFee;
+          appFixedFeeObj.MrFeePaymentTypeCode = this.returnFeeAndInsFixedNAP.DtFeeFixedNAP[i].FeeType;
+          appFixedFeeObj.StdFeeAmt = this.returnFeeAndInsFixedNAP.DtFeeFixedNAP[i].StdFeeAmt;
+          appFixedFeeObj.SellFeeAmt = this.returnFeeAndInsFixedNAP.DtFeeFixedNAP[i].SellFeeAmt;
+          appFixedFeeObj.StdFeePrcnt = this.returnFeeAndInsFixedNAP.DtFeeFixedNAP[i].StdFeePrcntg;
+          appFixedFeeObj.SellFeePrcnt = this.returnFeeAndInsFixedNAP.DtFeeFixedNAP[i].SellFeePrcntg;
+          appFixedFeeObj.MrFeeCptlzTypeCode = this.returnFeeAndInsFixedNAP.DtFeeFixedNAP[i].FeeCapitalizeType;
+          appFixedFeeObj.CptlzPrnct = this.returnFeeAndInsFixedNAP.DtFeeFixedNAP[i].FeeCapitalizePrcntg;
+          appFixedFeeObj.CptlzAmt = this.returnFeeAndInsFixedNAP.DtFeeFixedNAP[i].FeeCapitalizeAmt;
+          this.allAppDataObj.AppFixedFeeObj.push(appFixedFeeObj);
+        }
+
+        for(var j = 0; j < this.returnFeeAndInsFixedNAP.DtInsFixedNAP.length; j++)
+        {
+          var appFixedInsObj = new AppFixedInsObj();
+          appFixedInsObj.YearNum = parseInt(this.returnFeeAndInsFixedNAP.DtInsFixedNAP[j].Year, 10);
+          appFixedInsObj.MrInsMainCvgTypeCode = this.returnFeeAndInsFixedNAP.DtInsFixedNAP[j].MainCoverage;
+          appFixedInsObj.SumInsuredPrcnt = this.returnFeeAndInsFixedNAP.DtInsFixedNAP[j].SumInsuredPercentage;
+          appFixedInsObj.InsCapitalize = this.returnFeeAndInsFixedNAP.DtInsFixedNAP[j].InsCapitalize;
+          appFixedInsObj.SellingRatePrcnt = this.returnFeeAndInsFixedNAP.DtInsFixedNAP[j].SellingRate;
+          appFixedInsObj.BaseRatePrcnt = this.returnFeeAndInsFixedNAP.DtInsFixedNAP[j].BaseRate;
+          appFixedInsObj.MrAddCvgTypeCode = this.returnFeeAndInsFixedNAP.DtInsFixedNAP[j].AdditionalCoverage;
+          this.allAppDataObj.AppFixedInsObj.push(appFixedInsObj);
+        }
+
+        this.allAppDataObj.AppAssetObj.AssetPriceAmt = this.assetPrice;
+        this.allAppDataObj.AppAssetObj.DownPaymentAmt = this.downPayment;
+        this.allAppDataObj.AppCollateralObj.CollateralValueAmt = this.assetPrice;
+        this.setAppAsset();
+        this.allAppDataObj.AppObj.Tenor = this.NapAppForm.controls["Tenor"].value;
+        this.allAppDataObj.AppObj.MrFirstInstTypeCode = this.NapAppForm.controls["MrFirstInstTypeCode"].value;
+        this.setApp();
+        this.allAppDataObj.AppFixedObj.MrFirstInstTypeCode = item.FirstInstallmentType;
+        this.allAppDataObj.AppFixedObj.Tenor = this.NapAppForm.controls["Tenor"].value;
+        this.allAppDataObj.AppFixedObj.SupplEffectiveRate = item.SupplEffRate;
+        this.allAppDataObj.AppFixedObj.EffectiveRate = item.EffRate;
+        this.allAppDataObj.AppFixedObj.DownPaymentAmt = item.DP;
+        this.allAppDataObj.AppFixedObj.IsEditableDp = item.EditableDP;
+        this.allAppDataObj.AppFixedObj.AssetPriceAmt = item.OTR;
+        this.allAppDataObj.AppFixedObj.GracePeriod = parseInt(item.GracePeriod, 10);
+        this.allAppDataObj.AppFixedObj.MrGracePeriodTypeCode = item.GracePeriodType;
+        this.allAppDataObj.AppFixedObj.InscoBranchCode = item.InscoCode;
+        this.allAppDataObj.AppFixedObj.InsPackageCode = item.InsPackage;
+        this.allAppDataObj.AppFixedObj.InsAdminFee = item.InsAdmFee;
+        this.allAppDataObj.AppFixedObj.IsCoverLifeIns = item.LifeInsCover;
+        this.allAppDataObj.AppFixedObj.LifeInsCoverSubject = item.LifeInsCoverSubject;
+        this.allAppDataObj.AppFixedObj.LifeInscoBranchCode = item.LifeInsco;
+        this.allAppDataObj.AppFixedObj.LifeInsPaymentMethod = item.LifeInsPaymentMethod;
+
+        console.log("asd")
+        console.log(this.allAppDataObj)
+    
+        this.http.post(AdInsConstant.AddEditAppCF2W, this.allAppDataObj).subscribe(
+          (response) => {
+            this.returnAllAppDataObj = response;
+            this.toastr.successMessage(response["message"]);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
       },
       (error) => {
         console.log(error);
       }
     );
-    
-    this.allAppDataObj.AppAssetObj.AssetPriceAmt = this.assetPrice;
-    this.allAppDataObj.AppAssetObj.DownPaymentAmt = this.downPayment;
-    this.allAppDataObj.AppCollateralObj.CollateralValueAmt = this.assetPrice;
-    this.setAppAsset();
-    this.allAppDataObj.AppObj.Tenor = this.NapAppForm.controls["Tenor"].value;
-    this.allAppDataObj.AppObj.MrFirstInstTypeCode = this.NapAppForm.controls["MrFirstInstTypeCode"].value;
-    this.setApp();
-    this.allAppDataObj.AppFixedObj.MrFirstInstTypeCode = item.FirstInstallmentType;
-    this.allAppDataObj.AppFixedObj.Tenor = item.Tenor;
-    this.allAppDataObj.AppFixedObj.SupplEffectiveRate = item.SupplEffRate;
-    this.allAppDataObj.AppFixedObj.EffectiveRate = item.EffRate;
-    this.allAppDataObj.AppFixedObj.DownPaymentAmt = item.DP;
-    this.allAppDataObj.AppFixedObj.IsEditableDp = item.EditableDP;
-    this.allAppDataObj.AppFixedObj.AssetPriceAmt = item.OTR;
-    this.allAppDataObj.AppFixedObj.GracePeriod = item.GracePeriod;
-    this.allAppDataObj.AppFixedObj.MrGracePeriodTypeCode = item.GracePeriodType;
-    this.allAppDataObj.AppFixedObj.InscoBranchCode = item.InscoCode;
-    this.allAppDataObj.AppFixedObj.InsPackageCode = item.InsPackage;
-    this.allAppDataObj.AppFixedObj.InsAdminFee = item.InsAdmFee;
-    this.allAppDataObj.AppFixedObj.IsCoverLifeIns = item.LifeInsCover;
-    this.allAppDataObj.AppFixedObj.LifeInsCoverSubject = item.LifeInsCoverSubject;
-    this.allAppDataObj.AppFixedObj.LifeInscoBranchCode = item.LifeInsco;
-    this.allAppDataObj.AppFixedObj.LifeInsPaymentMethod = item.LifeInsPaymentMethod;
-    
-
-    console.log("asd")
-    console.log(this.allAppDataObj)
-
-    // this.http.post(AdInsConstant.AddEditAppCF2W, this.allAppDataObj).subscribe(
-    //   (response) => {
-    //     this.returnAllAppDataObj = response;
-    //     this.toastr.successMessage(response["message"]);
-    //   },
-    //   (error) => {
-    //     console.log(error);
-    //   }
-    // );
-    
+    //this.allAppDataObj.AppFixedFeeObj = this.returnFeeAndInsFixedNAP.DtFeeFixedNAP;
+    //this.allAppDataObj.AppFixedInsObj = this.returnFeeAndInsFixedNAP.DtInsFixedNAP;
   }
 
   getLookupAppResponseCopy(ev: any) {
