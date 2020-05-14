@@ -53,6 +53,9 @@ import { MultiAssetLeasingComponent } from "./multi-asset-leasing/multi-asset-le
 import { AssetLeasingPagingComponent } from "./multi-asset-leasing/asset-leasing-paging/asset-leasing-paging.component";
 import { AssetLeasingAddEditComponent } from "./multi-asset-leasing/asset-leasing-add-edit/asset-leasing-add-edit.component";
 import { CollateralLeasingAddEditComponent } from "./multi-asset-leasing/collateral-leasing-add-edit/collateral-leasing-add-edit.component";
+import { FinancialDataFctrComponent } from "./financial-data-fctr/financial-data-fctr.component";
+import { SchmRegulerFixFctrComponent } from "./financial-data-fctr/component/multiple-installment/schm-reguler-fix/schm-reguler-fix-fctr.component";
+
 export const customCurrencyMaskConfig = {     
   align: "right",     
   allowNegative: true,     
@@ -111,6 +114,8 @@ export const customCurrencyMaskConfig = {
     AssetDataAddEditComponent,
     CollateralAddEditComponent,
     MultiAssetDataComponent,
+    FinancialDataFctrComponent,
+    SchmRegulerFixFctrComponent
     // MultiAssetLeasingComponent,
     // AssetLeasingPagingComponent,
     // AssetLeasingAddEditComponent,
@@ -169,6 +174,8 @@ export const customCurrencyMaskConfig = {
     AssetDataAddEditComponent,
     CollateralAddEditComponent,
     MultiAssetDataComponent,
+    FinancialDataFctrComponent,
+    SchmRegulerFixFctrComponent
     // MultiAssetLeasingComponent,
     // AssetLeasingPagingComponent,
     // AssetLeasingAddEditComponent,

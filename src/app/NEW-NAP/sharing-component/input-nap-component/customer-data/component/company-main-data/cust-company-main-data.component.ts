@@ -177,7 +177,7 @@ export class CustCompanyMainDataComponent implements OnInit {
       }
     }
     
-    if(this.custDataCompanyObj.AppCustCompanyObj != undefined){
+    if(this.custDataCompanyObj.AppCustCompanyObj.AppCustCompanyId != 0){
       this.parentForm.controls[this.identifier].patchValue({
         IndustryTypeCode: this.custDataCompanyObj.AppCustCompanyObj.IndustryTypeCode,
         CompanyBrandName: this.custDataCompanyObj.AppCustCompanyObj.CompanyBrandName,
@@ -186,7 +186,6 @@ export class CustCompanyMainDataComponent implements OnInit {
         IsAffiliated: this.custDataCompanyObj.AppCustCompanyObj.IsAffiliated,
         EstablishmentDt: formatDate(this.custDataCompanyObj.AppCustCompanyObj.EstablishmentDt, 'yyyy-MM-dd', 'en-US')
       });
-      
       this.setIndustryTypeName(this.custDataCompanyObj.AppCustCompanyObj.IndustryTypeCode);
     }
   }
