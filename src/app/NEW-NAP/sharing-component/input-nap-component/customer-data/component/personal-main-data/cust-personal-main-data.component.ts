@@ -128,6 +128,9 @@ export class CustPersonalMainDataComponent implements OnInit {
       this.InputLookupCustomerObj.nameSelect = response["CustObj"].CustName;
       this.InputLookupCustomerObj.jsonSelect = {CustName: response["CustObj"].CustName};
       this.selectedCustNo = response["CustObj"].CustNo;
+      this.parentForm.controls[this.identifier]['controls']["MrIdTypeCode"].disable();
+      this.parentForm.controls[this.identifier]['controls']["IdNo"].disable();
+      this.parentForm.controls[this.identifier]['controls']["TaxIdNo"].disable();
     }
     
     if(response["CustPersonalObj"] != undefined){
@@ -154,6 +157,8 @@ export class CustPersonalMainDataComponent implements OnInit {
       
       this.selectedNationalityCountryCode = response["CustPersonalObj"].NationalityCountryCode;
       this.setCountryName(response["CustPersonalObj"].NationalityCountryCode);
+      this.parentForm.controls[this.identifier]['controls']["BirthPlace"].disable();
+      this.parentForm.controls[this.identifier]['controls']["BirthDt"].disable();
     }
   }
 

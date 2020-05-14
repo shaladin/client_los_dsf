@@ -109,6 +109,7 @@ export class CustCompanyMainDataComponent implements OnInit {
       this.InputLookupCustomerObj.nameSelect = response["CustObj"].CustName;
       this.InputLookupCustomerObj.jsonSelect = {CustName: response["CustObj"].CustName};
       this.selectedCustNo = response["CustObj"].CustNo;
+      this.parentForm.controls[this.identifier]['controls']["TaxIdNo"].disable();
     }
 
     if(response["CustCompanyObj"] != undefined){
@@ -242,5 +243,7 @@ export class CustCompanyMainDataComponent implements OnInit {
       }
     );
   }
-
+  test() {
+    console.log(this.parentForm);
+  }
 }
