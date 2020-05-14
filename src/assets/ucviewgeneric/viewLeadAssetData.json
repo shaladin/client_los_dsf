@@ -8,37 +8,37 @@
         "mainInfo": [
           {
             "type": "text",
-            "label": "Full Asset Name",
+            "label": "FULL ASSET NAME",
             "property": "FullAssetName"
           },
           {
             "type": "text",
-            "label": "Asset Condition",
+            "label": "ASSET CONDITION",
             "property": "AssetCondition"
           },
           {
             "type": "text",
-            "label": "Manufacturing Year",
+            "label": "MANUFACTURING YEAR",
             "property": "ManufacturingYear"
           },
           {
             "type": "text",
-            "label": "Asset Price",
+            "label": "ASSET PRICE",
             "property": "AssetPriceAmt"
           },
           {
             "type": "text",
-            "label": "Down Payment Type",
+            "label": "DOWN PAYMENT TYPE",
             "property": "DownPaymentType"
           },
           {
             "type": "currency",
-            "label": "Down Payment",
+            "label": "DOWN PAYMENT",
             "property": "DownPaymentAmt"
           },
           {
             "type": "text",
-            "label": "License plate NO",
+            "label": "LICENSE PLATE NO.",
             "property": "SerialNo1"
           }
         ],
