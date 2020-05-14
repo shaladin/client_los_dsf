@@ -1,15 +1,6 @@
 <div class="row text-left">
   <div class="col-md-12">
     <div class="card">
-      <div class="card-header header-title">
-        <div class="row">
-          <div class="col-md-12" style="text-align-last: right">
-            <button type="button" class="backButton" [routerLink]="[]" translate>
-              <i class="ft-arrow-left"></i> Back
-            </button>
-          </div>
-        </div>
-      </div>
       <div class="card-body">
         <div class="px-3">
           <form class="form form-horizontal" [formGroup]="AppTcForm" #enjiForm="ngForm">
@@ -63,7 +54,7 @@
               </ng-container>
               <div class="form-actions right">
                 <button type="submit" class="btn btn-raised btn-primary" (click)="SaveData()">
-                  <i class="fa fa-check-square-o"></i> Save And Submit
+                  <i class="fa fa-check-square-o"></i> Save
                 </button>
               </div>
             </div>

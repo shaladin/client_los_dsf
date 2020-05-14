@@ -7,15 +7,15 @@ import { AppFinDataObj } from 'app/shared/model/AppFinData/AppFinData.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj.Model';
 import { ActivatedRoute } from '@angular/router';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
 
 @Component({
-  selector: 'app-financial-data',
-  templateUrl: './financial-data.component.html',
+  selector: 'app-financial-data-fctr',
+  templateUrl: './financial-data-fctr.component.html',
 })
-export class FinancialDataComponent implements OnInit {
+export class FinancialDataFctrComponent implements OnInit {
   @Input() AppId: number;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
-  //AppId : number;
   FinDataForm: FormGroup;
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
@@ -82,6 +82,7 @@ export class FinancialDataComponent implements OnInit {
 
         NumOfStep: 0,
         MrInstSchemeCode: "",
+        InstSchemeName: "",
         CummulativeTenor: 0,
         StepUpStepDownInputType: "",
 
@@ -91,15 +92,31 @@ export class FinancialDataComponent implements OnInit {
         MrProvisionFeeTypeCode: '',
         MrProvisionFeeCalcMethodCode: '',
         BalloonValueAmt: 0,
-        NeedReCalculate: true
+        NeedReCalculate: true,
+
+        MrInstTypeCode: "",
+        InstTypeName: "",
+        MrSingleInstCalcMthdCode: "",
+        SingleInstCalcMthdName: "",
+        TopBased: "",
+        TopBasedName: "",
+        InvcDt: "",
+        MaturityDate: "",
+        EstEffDt: "",
+        TotalInvcAmt: 0,
+        TopDays: 0,
+        RetentionPrcnt: 0,
+        TotalRetentionAmt: 0,
+        TotalDisbAmt: 0
       }
     );
     this.LoadAppFinData();
   }
 
   LoadAppFinData() {
-    this.http.post<AppFinDataObj>(environment.losUrl + "/AppFinData/GetInitAppFinDataByAppId", { AppId: this.AppId }).subscribe(
+    this.http.post<AppFinDataObj>(AdInsConstant.GetInitAppFinDataFctrByAppId, { AppId: this.AppId }).subscribe(
       (response) => {
+        console.log(response);
         this.appFinDataObj = response;
 
         if (this.appFinDataObj.MrInstSchemeCode != 'RF') {
@@ -131,7 +148,23 @@ export class FinancialDataComponent implements OnInit {
           GrossYieldBhv: this.appFinDataObj.GrossYieldBhv,
 
           MrInstSchemeCode: this.appFinDataObj.MrInstSchemeCode,
+          InstSchemeName: this.appFinDataObj.InstSchemeName,
           CummulativeTenor: this.appFinDataObj.CummulativeTenor,
+
+          MrInstTypeCode: this.appFinDataObj.MrInstTypeCode,
+          InstTypeName: this.appFinDataObj.InstTypeName,
+          MrSingleInstCalcMthdCode: this.appFinDataObj.MrSingleInstCalcMthdCode,
+          SingleInstCalcMthdName: this.appFinDataObj.SingleInstCalcMthdName,
+          TopBased: this.appFinDataObj.TopBased,
+          TopBasedName: this.appFinDataObj.TopBasedName,
+          InvcDt: this.appFinDataObj.InvcDt,
+          MaturityDate: this.appFinDataObj.MaturityDate,
+          EstEffDt: this.appFinDataObj.EstEffDt,
+          TotalInvcAmt: this.appFinDataObj.TotalInvcAmt,
+          TopDays: this.appFinDataObj.TopDays,
+          RetentionPrcnt: this.appFinDataObj.RetentionPrcnt,
+          TotalRetentionAmt: this.appFinDataObj.TotalRetentionAmt,
+          TotalDisbAmt: this.appFinDataObj.TotalDisbAmt
         });
 
         this.IsParentLoaded = true;
@@ -150,8 +183,6 @@ export class FinancialDataComponent implements OnInit {
       return;
     }
     if (isValidGrossYield && isValidGracePeriod) {
-      console.log("GROSSSS");
-      console.log(this.FinDataForm.value);
 
       this.http.post(environment.losUrl + "/AppFinData/SaveAppFinData", this.FinDataForm.value).subscribe(
         (response) => {
@@ -197,31 +228,5 @@ export class FinancialDataComponent implements OnInit {
       }
     }
     return valid;
-  }
-
-  // EffectiveRatePrcntInput_FocusOut(){
-  //   var EffectiveRatePrcnt = this.FinDataForm.get("EffectiveRatePrcnt").value
-  //   var SupplEffectiveRatePrcnt = this.FinDataForm.get("SupplEffectiveRatePrcnt").value
-  //   var StdEffectiveRatePrcnt = this.FinDataForm.get("StdEffectiveRatePrcnt").value
-  //   var DiffRateAmtStd= +StdEffectiveRatePrcnt - +SupplEffectiveRatePrcnt
-
-  //   var diffRate = +EffectiveRatePrcnt - +SupplEffectiveRatePrcnt;
-  //   if(diffRate < DiffRateAmtStd)
-  //   {
-  //     this.FinDataForm.patchValue({
-  //       DiffRateAmt : 0
-  //     });
-  //   }
-  //   else
-  //   {
-  //     this.FinDataForm.patchValue({
-  //       DiffRateAmt : DiffRateAmtStd
-  //     });
-  //   }
-  // }
-
-  test() {
-    console.log(this.FinDataForm)
-    console.log(this.FinDataForm.value);
   }
 }
