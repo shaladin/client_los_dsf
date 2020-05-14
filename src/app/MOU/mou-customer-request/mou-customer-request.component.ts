@@ -10,7 +10,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 @Component({
   selector: 'app-mou-customer-request',
   templateUrl: './mou-customer-request.component.html',
-  styleUrls: ['./mou-customer-request.component.scss'],
+  styleUrls: [],
   providers: [NGXToastrService]
 })
 export class MouCustomerRequestComponent implements OnInit {
