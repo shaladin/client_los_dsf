@@ -177,7 +177,7 @@ export class CustCompanyMainDataComponent implements OnInit {
       }
     }
     
-    if(this.custDataCompanyObj.AppCustCompanyObj.AppCustId != 0){
+    if(this.custDataCompanyObj.AppCustCompanyObj.AppCustCompanyId != 0){
       this.parentForm.controls[this.identifier].patchValue({
         IndustryTypeCode: this.custDataCompanyObj.AppCustCompanyObj.IndustryTypeCode,
         CompanyBrandName: this.custDataCompanyObj.AppCustCompanyObj.CompanyBrandName,

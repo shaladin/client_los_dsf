@@ -31,7 +31,7 @@
                 <label class="col-md-4 adInsLabel">Copy Application From </label>
                 <div class="col-md-4">
                   <lib-uclookupgeneric [lookupInput]="inputLookupObjCopyProduct" [parentForm]='NapAppForm'
-                    [enjiForm]='enjiForm' [identifier]="'ProductOfferingIdentifier'"
+                    [enjiForm]='enjiForm' [identifier]="'ProductOfferingIdentifier'" #LookupCopyProduct
                     (lookup)="getLookupAppResponseCopy($event)">
                   </lib-uclookupgeneric>
                 </div>
@@ -40,7 +40,7 @@
                 <label class="col-md-4 adInsLabel">Product Offering Name </label>
                 <div class="col-md-4">
                   <lib-uclookupgeneric [lookupInput]="inputLookupObjName" [parentForm]='NapAppForm'
-                    [enjiForm]='enjiForm' [identifier]="'ProductOfferingNameIdentifier'"
+                    [enjiForm]='enjiForm' [identifier]="'ProductOfferingNameIdentifier'" #LookupOffering
                     (lookup)="getLookupAppResponseName($event)">
                   </lib-uclookupgeneric>
                 </div>
