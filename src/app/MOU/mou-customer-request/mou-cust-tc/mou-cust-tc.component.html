@@ -45,13 +45,13 @@
               {{MouCustTcForm.get('MouCustTcList').at(i).controls.IsMandatory.value == '1' ? 'Yes' : 'No'}}
             </td>
             <td style="text-align: left;">
-              <input type="date" class="form-control adInsInput" formControlName="ExpiredDt"
+              <input type="date" class="form-control adInsInput" formControlName="ExpiredDt" [min]="businessDate | date: 'yyyy-MM-dd'" onkeypress="return false;"
                 [ngClass]="{ 'is-invalid': formSubmitted && MouCustTcForm.get('MouCustTcList').at(i).controls.ExpiredDt.invalid }"
                 [attr.disabled]="MouCustTcForm.get('MouCustTcList').at(i).controls.IsChecked.value == true ? null : ''" />
               <lib-uc-show-errors [control]="MouCustTcForm.get('MouCustTcList').at(i).controls.ExpiredDt" [submit]="formSubmitted"></lib-uc-show-errors>
             </td>
             <td style="text-align: left;">
-              <input type="date" class="form-control adInsInput" formControlName="PromisedDt"
+              <input type="date" class="form-control adInsInput" formControlName="PromisedDt" [min]="businessDate | date: 'yyyy-MM-dd'" onkeypress="return false;"
                 [ngClass]="{ 'is-invalid': formSubmitted && MouCustTcForm.get('MouCustTcList').at(i).controls.PromisedDt.invalid }"
                 [attr.disabled]="MouCustTcForm.get('MouCustTcList').at(i).controls.IsChecked.value == true ? '' : null" />
               <lib-uc-show-errors [control]="MouCustTcForm.get('MouCustTcList').at(i).controls.PromisedDt" [submit]="formSubmitted"></lib-uc-show-errors>

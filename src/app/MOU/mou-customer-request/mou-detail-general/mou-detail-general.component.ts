@@ -63,7 +63,8 @@ export class MouDetailGeneralComponent implements OnInit {
     refMasterCurrency.RefMasterTypeCode = "CURRENCY";
     let reqCurrency = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterCurrency);
     var refMasterIntrstType = new RefMasterObj();
-    refMasterIntrstType.RefMasterTypeCode = "INTEREST_TYPE";
+    // refMasterIntrstType.RefMasterTypeCode = "INTEREST_TYPE";
+    refMasterIntrstType.RefMasterTypeCode = "INTRSTTYPE";
     let reqIntrstType = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterIntrstType);
     var refMasterInstSchm = new RefMasterObj();
     refMasterInstSchm.RefMasterTypeCode = "INST_SCHM";
