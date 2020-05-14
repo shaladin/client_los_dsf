@@ -52,17 +52,16 @@ addColl() {
 }
 
 event(ev){
+  console.log("test");
   console.log(ev);
-  this.AppAssetId = ev.AppAssetId;
-  this.AppId = ev.AppId;
-  this.editAsset = ev.editAsset;
+  this.AppAssetId = ev.RowObj.AppAssetId;
+  this.AppId = ev.RowObj.AppId;
+  this.editAsset = ev.RowObj.editAsset;
   this.outputValue.emit({ mode: 'editAsset', AppAssetId: this.AppAssetId });
   console.log("CHECK EVENT");
 }
 
 eventColl(ev){
-  console.log("test");
-  console.log(ev);
   if(ev.Key == "edit")
   {
     this.AppCollateralId = ev.RowObj.AppCollateralId;
@@ -78,11 +77,10 @@ eventColl(ev){
     if (confirm("Are you sure to delete this record?")) {
       var collateralObj = new AppCollateralObj();
       collateralObj.AppCollateralId = ev.RowObj.AppCollateralId;
+      console.log("qwe")
+      console.log(collateralObj.AppCollateralId)
       this.http.post(AdInsConstant.DeleteAppCollateral, collateralObj).subscribe(
         (response) => {
-          console.log("response: ");
-          console.log(response);
-          console.log(this.gridAppCollateralObj);
           this.toastr.successMessage(response["message"]);
           this.listAppCollateralObj = response["ReturnObject"];
 
@@ -100,7 +98,6 @@ eventColl(ev){
       );
     }
   }
-  
 }
 
   ngOnInit() {

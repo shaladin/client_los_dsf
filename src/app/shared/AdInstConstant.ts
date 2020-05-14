@@ -812,7 +812,7 @@ export class AdInsConstant {
   // App Collateral
   public static GetListAppCollateral = "http://localhost:5001" + "/AppCollateral/GetListAppCollateral";
   public static GetListAppCollateralByAppId = environment.losUrl + "/AppCollateral/GetListAppCollateralByAppId";
-  public static DeleteAppCollateral = environment.losUrl + "/AppCollateral/DeleteAppCollateral";
+  public static DeleteAppCollateral = "http://localhost:5001" + "/AppCollateral/DeleteAppCollateral";
   public static GetViewAppCollateralObjByAppId = environment.losUrl + "/AppCollateral/GetViewAppCollateralObjByAppId";
   public static AddEditAllCollateralData = environment.losUrl + "/AppCollateral/AddEditAllCollateralData";
   public static AddExistingAppCollateralData = environment.losUrl + "/AppCollateral/AddExistingAppCollateralData";
