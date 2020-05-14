@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { DecimalPipe } from '@angular/common';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
@@ -13,6 +13,7 @@ import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { MouCustSignerObj } from 'app/shared/model/MouCustSignerObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 
 
 @Component({
@@ -21,6 +22,8 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
   providers: [DecimalPipe]
 })
 export class DocSignerDetailComponent implements OnInit {
+  @ViewChild('LookupEmp1') ucLookupEmp1 : UclookupgenericComponent;
+  @ViewChild('LookupEmp2') ucLookupEmp2 : UclookupgenericComponent;
   WfTaskListId: any;
   MouCustId: any;
   mouCustObj: any;
@@ -97,10 +100,9 @@ export class DocSignerDetailComponent implements OnInit {
     addCrit.propName = "RE.REF_EMP_ID";
     addCrit.restriction = AdInsConstant.RestrictionNotIn;
     addCrit.listValue = [event.EmpId];
-
     this.employeeLookUpObj2.addCritInput = [];
     this.employeeLookUpObj2.addCritInput.push(addCrit);
-
+    this.ucLookupEmp2.setAddCritInput();
     this.tempEmployee1 = event.EmpName;
     this.tempEmployeePosition1 = event.RoleName;
     this.MouCustSignerForm.patchValue({
@@ -116,6 +118,7 @@ export class DocSignerDetailComponent implements OnInit {
     addCrit.listValue = [event.EmpId];
     this.employeeLookUpObj1.addCritInput = [];
     this.employeeLookUpObj1.addCritInput.push(addCrit);
+    this.ucLookupEmp1.setAddCritInput();
     this.tempEmployee2 = event.EmpName;
     this.tempEmployeePosition2 = event.RoleName;
     this.MouCustSignerForm.patchValue({
@@ -149,7 +152,6 @@ export class DocSignerDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('vin');
     this.claimTask();
     this.custShareholderLookUpObj1 = new InputLookupObj();
     this.custShareholderLookUpObj1.urlJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
@@ -231,7 +233,6 @@ export class DocSignerDetailComponent implements OnInit {
       this.mouCustSignerObj.CustSignerJobPosition2 = this.tempCustomerPosition2;
     }
   }
-  // CUST POSITIOIN : CUSTOMER
   SaveForm(){
     this.mouCustSignerObj = new MouCustSignerObj();
     this.setMouCustSigner();

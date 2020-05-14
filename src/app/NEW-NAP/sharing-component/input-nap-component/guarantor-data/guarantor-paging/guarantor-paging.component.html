@@ -5,7 +5,7 @@
 </span>
 <lib-ucgridview [gridInput]="inputGridObj" (callback)="event(content,$event)"></lib-ucgridview>
 <button type="button" (click)="SaveAndContinue()" class="btn btn-raised btn-primary pull-right margin-15">
-  <i class="fa fa-check-square-o"></i> Save And Continue
+  <i class="fa fa-check-square-o"></i> Save
 </button>
 <ng-template #content let-c="close" let-d="dismiss">
   <app-guarantor [AppGuarantorId]=AppGuarantorId [MrGuarantorTypeCode]=MrGuarantorTypeCode [mode]=mode [AppId]="AppId"

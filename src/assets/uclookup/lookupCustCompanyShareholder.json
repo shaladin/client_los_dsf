@@ -26,13 +26,13 @@
     "headerList": [
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "Shareholder Name",
             "name": "CC.MGMNT_SHRHOLDER_NAME"
         },
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "Shareholder Position",
             "name": "RM.DESCR"
         },
@@ -45,12 +45,12 @@
     "bodyList": [
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "ShareholderName"
         },
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "Descr"
         },
         {

@@ -7,22 +7,11 @@ import { Component, OnInit } from '@angular/core';
 
 export class LeadViewComponent implements OnInit {
 
-  constructor() { }
-
+  constructor() { } 
   leadViewHeader: string;
-  isLeadData: boolean;
-  isCustomerData: boolean;
+   
   ngOnInit() {
     this.leadViewHeader = "./assets/ucviewgeneric/viewLeadHeader.json";
   }
-  EnterTab(type) {
-    if (type == "customerData") {
-      this.isCustomerData = true;
-      this.isLeadData = false;
-    }
-    else if (type == "leadData") {
-      this.isCustomerData = false;
-      this.isLeadData = true;
-    }
-  }
+ 
 }

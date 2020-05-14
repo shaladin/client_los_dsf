@@ -26,13 +26,13 @@
     "headerList": [
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "Customer Full Name",
             "name": "CP.CUST_FULL_NAME"
         },
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "Customer No",
             "name": "C.CUST_NO"
         },
@@ -45,12 +45,12 @@
     "bodyList": [
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "CustFullName"
         },
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "CustNo"
         },
         {

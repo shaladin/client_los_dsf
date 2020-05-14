@@ -63,7 +63,7 @@
                             <label class="col-md-3 adInsLabel adins-required-label" translate>MF Signer 1 </label>
                             <div class="col-md-4">
                                 <lib-uclookupgeneric [lookupInput]="employeeLookUpObj1" [parentForm]="MouCustSignerForm"
-                                    [enjiForm]="enjiForm" [identifier]="'EmpName1'" (lookup)=getLookUpEmployee1($event)>
+                                    [enjiForm]="enjiForm" [identifier]="'EmpName1'" #LookupEmp1 (lookup)=getLookUpEmployee1($event)>
                                 </lib-uclookupgeneric>
                             </div>
                         </div>
@@ -79,7 +79,7 @@
                             <label class="col-md-3 adInsLabel adins-required" translate>MF Signer 2 </label>
                             <div class="col-md-4">
                                 <lib-uclookupgeneric [lookupInput]="employeeLookUpObj2" [parentForm]="MouCustSignerForm"
-                                    [enjiForm]="enjiForm" [identifier]="'EmpName2'" (lookup)=getLookUpEmployee2($event)>
+                                    [enjiForm]="enjiForm" [identifier]="'EmpName2'" #LookupEmp2 (lookup)=getLookUpEmployee2($event)>
                                 </lib-uclookupgeneric>
                             </div>
                         </div>
@@ -99,7 +99,7 @@
                             <label class="col-md-3 adInsLabel adins-required-label" translate>Customer Signer 1 </label>
                             <div class="col-md-4">
                                 <lib-uclookupgeneric *ngIf="MrCustTypeCode == 'PERSONAL'" [lookupInput]="customerLookUpObj1" [parentForm]="MouCustSignerForm"
-                                [enjiForm]="enjiForm" [identifier]="'CustName1'" (lookup)=getLookUpCustomer1($event)>
+                                [enjiForm]="enjiForm" [identifier]="'CustName1'"  (lookup)=getLookUpCustomer1($event)>
                                 </lib-uclookupgeneric>
 
                                 <lib-uclookupgeneric *ngIf="MrCustTypeCode == 'COMPANY'" [lookupInput]="custShareholderLookUpObj1" [parentForm]="MouCustSignerForm"

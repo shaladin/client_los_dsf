@@ -70,6 +70,7 @@ export class SchmBalloonComponent implements OnInit {
           TotalAR: response.TotalARAmt,
 
           NtfAmt: response.NtfAmt,
+          DiffRateAmt: response.DiffRateAmt
 
         })
 
@@ -99,6 +100,8 @@ export class SchmBalloonComponent implements OnInit {
           TotalAR: response.TotalARAmt,
 
           NtfAmt: response.NtfAmt,
+          DiffRateAmt: response.DiffRateAmt
+
         });
 
         this.SetInstallmentTable();
@@ -131,22 +134,27 @@ export class SchmBalloonComponent implements OnInit {
   }
 
   EffectiveRatePrcntInput_FocusOut() {
-    var EffectiveRatePrcnt = this.ParentForm.get("EffectiveRatePrcnt").value
-    var SupplEffectiveRatePrcnt = this.ParentForm.get("SupplEffectiveRatePrcnt").value
-    var StdEffectiveRatePrcnt = this.ParentForm.get("StdEffectiveRatePrcnt").value
-    var DiffRateAmtStd = +StdEffectiveRatePrcnt - +SupplEffectiveRatePrcnt
+    // var EffectiveRatePrcnt = this.ParentForm.get("EffectiveRatePrcnt").value
+    // var SupplEffectiveRatePrcnt = this.ParentForm.get("SupplEffectiveRatePrcnt").value
+    // var StdEffectiveRatePrcnt = this.ParentForm.get("StdEffectiveRatePrcnt").value
+    // var DiffRateAmtStd = +StdEffectiveRatePrcnt - +SupplEffectiveRatePrcnt
 
-    var diffRate = +EffectiveRatePrcnt - +SupplEffectiveRatePrcnt;
-    if (diffRate < DiffRateAmtStd) {
-      this.ParentForm.patchValue({
-        DiffRateAmt: 0
-      });
-    }
-    else {
-      this.ParentForm.patchValue({
-        DiffRateAmt: DiffRateAmtStd
-      });
-    }
+    // var diffRate = +EffectiveRatePrcnt - +SupplEffectiveRatePrcnt;
+    // if (diffRate < DiffRateAmtStd) {
+    //   this.ParentForm.patchValue({
+    //     DiffRateAmt: 0
+    //   });
+    // }
+    // else {
+    //   this.ParentForm.patchValue({
+    //     DiffRateAmt: DiffRateAmtStd
+    //   });
+    // }
+
+    this.ParentForm.patchValue({
+          DiffRateAmt: 0
+        });
+
     this.SetNeedReCalculate(true);
   }
 
