@@ -148,4 +148,8 @@ export class FraudVerifPageComponent implements OnInit {
       (response) => {
       });
   }
+  backHandler(){ 
+        this.router.navigate(['/Lead/FraudVerif/Paging']);   
+  
+  }
 }
