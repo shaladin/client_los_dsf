@@ -94,9 +94,9 @@ export class CustPersonalMainDataComponent implements OnInit {
       Email1: ['', Validators.maxLength(100)],
       FamilyCardNo: ['', Validators.maxLength(50)],
       Email2: ['', Validators.maxLength(50)],
-      NoOfResidence: ['', [Validators.pattern("^[0-9]+$"), Validators.maxLength(4)]],
+      NoOfResidence: ['', [Validators.maxLength(4)]],
       Email3: ['', Validators.maxLength(50)],
-      NoOfDependents: ['', [Validators.pattern("^[0-9]+$"), Validators.maxLength(4)]],
+      NoOfDependents: ['', [Validators.maxLength(4)]],
     }));
 
     this.initUrl();
@@ -159,6 +159,7 @@ export class CustPersonalMainDataComponent implements OnInit {
         NoOfDependents: response["CustPersonalObj"].NoOfDependents
       });
       
+      
       this.selectedNationalityCountryCode = response["CustPersonalObj"].NationalityCountryCode;
       this.setCountryName(response["CustPersonalObj"].NationalityCountryCode);
     }
@@ -188,6 +189,12 @@ export class CustPersonalMainDataComponent implements OnInit {
         console.log(response);
         this.InputLookupCountryObj.nameSelect = response["CountryName"];
         this.InputLookupCountryObj.jsonSelect = response;     
+        if(countryCode == "LOCAL"){
+          this.selectedNationalityCountryName = response["CountryName"];
+          this.isLocal = true;
+        }else{
+          this.isLocal = false
+        }
       },
       (error) => {
         console.log(error);
@@ -198,6 +205,7 @@ export class CustPersonalMainDataComponent implements OnInit {
 
   bindCustData(){
     if(this.custDataPersonalObj.AppCustObj != undefined){
+      console.log(this.custDataPersonalObj.AppCustObj);
       this.parentForm.controls[this.identifier].patchValue({
         MrIdTypeCode: this.custDataPersonalObj.AppCustObj.MrIdTypeCode,
         IdNo: this.custDataPersonalObj.AppCustObj.IdNo,
@@ -214,6 +222,7 @@ export class CustPersonalMainDataComponent implements OnInit {
     }
     
     if(this.custDataPersonalObj.AppCustPersonalObj != undefined){
+      console.log(this.custDataPersonalObj.AppCustPersonalObj);
       this.parentForm.controls[this.identifier].patchValue({
         CustFullName: this.custDataPersonalObj.AppCustPersonalObj.CustFullName,
         MrGenderCode: this.custDataPersonalObj.AppCustPersonalObj.MrGenderCode,		
@@ -370,11 +379,20 @@ export class CustPersonalMainDataComponent implements OnInit {
     );
   }
 
+  isLocal: boolean = false;
+  selectedNationalityCountryName: string = "";
   ChangeNationality(ev){
-    if(this.parentForm.controls[this.identifier]['controls'].MrNationalityCode.value != ""){
+    if(this.parentForm.controls[this.identifier]['controls'].MrNationalityCode.value == "LOCAL"){
       console.log(this.parentForm);
+      console.log(this.identifier);
       console.log(this.NationalityObj);
       console.log(ev);
+      var idx = ev.target.selectedIndex - 1;
+      this.selectedNationalityCountryCode = this.NationalityObj[idx].ReserveField1;
+      this.selectedNationalityCountryName = this.NationalityObj[idx].ReserveField2;
+      this.isLocal = true;
+    }else{
+      this.isLocal = false;
     }
   }
 }

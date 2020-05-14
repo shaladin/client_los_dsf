@@ -85,19 +85,22 @@
         <div class="form-group row">
           <label class="col-md-4" for="email1" translate>Email 1</label>
           <div class="col-md-8">
-            <input type="text" class="form-control" id="email1" formControlName="Email1">
+            <input pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" type="text" class="form-control" id="email1" formControlName="Email1">
+            <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].Email1" [submit]="enjiForm.submitted"></lib-uc-show-errors>
           </div>
         </div>
         <div class="form-group row">
           <label class="col-md-4" for="email2" translate>Email 2</label>
           <div class="col-md-8">
-            <input type="text" class="form-control" formControlName="Email2" id="email2">
+            <input pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" type="text" class="form-control" formControlName="Email2" id="email2">
+            <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].Email2" [submit]="enjiForm.submitted"></lib-uc-show-errors>
           </div>
         </div>
         <div class="form-group row">
           <label class="col-md-4" for="email3" translate>Email 3</label>
           <div class="col-md-8">
-            <input type="text" class="form-control" formControlName="Email3" id="email3">
+            <input pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" type="text" class="form-control" formControlName="Email3" id="email3">
+            <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].Email3" [submit]="enjiForm.submitted"></lib-uc-show-errors>
           </div>
         </div>
       </div>
@@ -154,7 +157,8 @@
         <div class="form-group row">
           <label class="col-md-4" for="country" translate>Country</label>
           <div class="col-md-8">
-            <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupCountryObj" [parentForm]="parentForm" [identifier]="'lookupCountry'" (lookup)="GetCountry($event)"></lib-uclookupgeneric>
+            <lib-uclookupgeneric *ngIf="!isLocal" [enjiForm]="enjiForm" [lookupInput]="InputLookupCountryObj" [parentForm]="parentForm" [identifier]="'lookupCountry'" (lookup)="GetCountry($event)"></lib-uclookupgeneric>
+            <label *ngIf="isLocal"> {{selectedNationalityCountryName}} </label>
           </div>
         </div>
         <div class="form-group row">          
@@ -193,14 +197,14 @@
         </div>
         <div class="form-group row">
           <label class="col-md-4" for="noOfResidence" translate>Number of Residence</label>
-          <div class="col-md-8">
-            <input type="number" class="form-control" formControlName="NoOfResidence" id="noOfResidence">
+          <div class="col-md-4">
+            <input type="text" class="form-control" formControlName="NoOfResidence" id="noOfResidence">
           </div>
         </div>
         <div class="form-group row">
           <label class="col-md-4" for="noOfDependents" translate>Number of Dependents</label>
-          <div class="col-md-8">
-            <input type="number" class="form-control" formControlName="NoOfDependents" id="noOfDependents">
+          <div class="col-md-4">
+            <input type="text" class="form-control" formControlName="NoOfDependents" id="noOfDependents">
           </div>
         </div>
       </div>

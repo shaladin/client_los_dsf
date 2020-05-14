@@ -137,6 +137,7 @@ export class CustomerDataComponent implements OnInit {
     if (this.MrCustTypeCode == AdInsConstant.CustTypePersonal) {
       this.custDataPersonalObj = new CustDataPersonalObj();
       this.setCustPersonalObjForSave();
+      if(this.isExpiredDt) return;
       this.http.post(this.addEditCustDataPersonalUrl, this.custDataPersonalObj).subscribe(
         (response) => {
           console.log(response);
@@ -169,6 +170,7 @@ export class CustomerDataComponent implements OnInit {
         this.toastr.errorMessage("Total Share (%) must be 100.");
         return;
       }
+      if(this.isExpiredDt) return;
       this.custDataCompanyObj = new CustDataCompanyObj();
       this.setCustCompanyObjForSave();
       this.http.post(AdInsConstant.AddEditCustDataCompany, this.custDataCompanyObj).subscribe(
@@ -211,6 +213,20 @@ export class CustomerDataComponent implements OnInit {
     this.setAppCustGrpObj();
   }
 
+  isExpiredDt: boolean = false;
+  CekExpiredDt(){
+    var UserAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    var MaxDate = formatDate(UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
+    let d1 = new Date(this.custDataPersonalObj.AppCustObj.IdExpiredDt);
+    let d2 = new Date(MaxDate);
+    if(d1 > d2){
+      this.toastr.errorMessage("Expired Dt can not be more than " + MaxDate);
+      this.isExpiredDt = true;
+    }else{
+      this.isExpiredDt = false;
+    }
+  }
+
   setAppCust() {
     if (this.MrCustTypeCode == AdInsConstant.CustTypePersonal) {
       this.custDataPersonalObj.AppCustObj.MrCustTypeCode = this.MrCustTypeCode;
@@ -219,6 +235,7 @@ export class CustomerDataComponent implements OnInit {
       this.custDataPersonalObj.AppCustObj.MrIdTypeCode = this.CustDataForm.controls["personalMainData"]["controls"].MrIdTypeCode.value;
       this.custDataPersonalObj.AppCustObj.IdNo = this.CustDataForm.controls["personalMainData"]["controls"].IdNo.value;
       this.custDataPersonalObj.AppCustObj.IdExpiredDt = this.CustDataForm.controls["personalMainData"]["controls"].IdExpiredDt.value;
+      this.CekExpiredDt();
       this.custDataPersonalObj.AppCustObj.TaxIdNo = this.CustDataForm.controls["personalMainData"]["controls"].TaxIdNo.value;
       this.custDataPersonalObj.AppCustObj.IsVip = this.CustDataForm.controls["personalMainData"]["controls"].IsVip.value;
       this.custDataPersonalObj.AppCustObj.AppId = this.appId;

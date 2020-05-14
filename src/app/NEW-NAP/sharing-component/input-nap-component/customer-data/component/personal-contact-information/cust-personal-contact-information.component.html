@@ -59,7 +59,7 @@
   </table>
   <ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header">
-      <h4 class="modal-title">Contact Information</h4>
+      <h4 class="modal-title"> {{mode}} Contact Information</h4>
       <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -69,111 +69,146 @@
         <form class="form form-horizontal" [formGroup]="ContactInfoPersonalForm" #enjiForm="ngForm" 
           (ngSubmit)="ContactInfoPersonalForm.valid && SaveForm()">
           <div class="form-body">
-            <lib-ucSubsection [id]="'addContactInfomationId'" [title]="'Add Contact Information'"
+            <lib-ucSubsection [id]="'addContactInfomationId'" [title]="'Contact Information'"
               [panel]="'addContactInfomation'">
             </lib-ucSubsection>
             <div id="addContactInfomation">
-              <div class="form-group row">
-                <label class="col-md-2 adins-required-label" for="ContactPersonName" translate>Name</label>
-                <div class="col-md-4">
-                  <input type="text" id="ContactPersonName" class="form-control" formControlName="ContactPersonName"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && ContactInfoPersonalForm.controls.ContactPersonName.invalid }">
-                  <lib-uc-show-errors [control]="ContactInfoPersonalForm.controls.ContactPersonName" [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                </div>
-                <label class="col-md-2" for="Gender" translate>Gender</label>
-                <div class="col-md-4">
-                  <mat-radio-group formControlName="MrGenderCode" (change)="GenderChanged($event)">
-                    <mat-radio-button class="custom-control custom-radio display-inline-block" *ngFor="let item of GenderObj" [value]="item.Key">
-                      {{item.Value}}
-                    </mat-radio-button>
-                  </mat-radio-group>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-md-2" for="idType" translate>ID Type</label>
-                <div class="col-md-4">
-                  <select class="form-control" id="idType" formControlName="MrIdTypeCode" 
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && ContactInfoPersonalForm.controls.MrIdTypeCode.invalid }">
-                    <option *ngFor="let item of IdTypeObj" [value]="item.Key">
-                      {{item.Value}}
-                    </option>
-                  </select>
-                </div>
-                <label class="col-md-2" for="CustRelationship" translate>Customer Relationship</label>
-                <div class="col-md-4">
-                  <select class="form-control" id="CustRelationship" formControlName="MrCustRelationshipCode" (change)="RelationshipChanged($event)"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && ContactInfoPersonalForm.controls.MrCustRelationshipCode.invalid }">
-                    <option *ngFor="let item of CustRelationshipObj" [value]="item.Key">
-                      {{item.Value}}
-                    </option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-md-2" for="IdNo" translate>Id No</label>
-                <div class="col-md-4">
-                  <input type="text" id="IdNo" class="form-control" formControlName="IdNo">
-                </div>
-                <label class="col-md-2" for="professionName" translate>Profession Name</label>
-                <div class="col-md-4">
-                  <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupProfessionObj" [parentForm]="ContactInfoPersonalForm" [identifier]="'lookupProfession'" (lookup)="GetProfession($event)"></lib-uclookupgeneric>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-md-2" translate>Birth Place / Date</label>
-                <div class="col-md-2" style="border-right: 1px solid grey">
-                  <input type="text" class="form-control" formControlName="BirthPlace" id="birthPlace">
-                </div>
-                <div class="col-md-2">
-                  <input type="date" class="form-control" formControlName="BirthDt" id="birthDt">
-                </div>
-                <label class="col-md-2" for="emergencyContact" translate>Emergency Contact</label>
-                <div class="col-md-4">
-                  <input class="border-primary" type="checkbox" data-md-icheck id="emergencyContact" formControlName="IsEmergencyContact">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-md-2 adins-required-label" for="mobilePhone" translate>Mobile Phone 1</label>
-                <div class="col-md-4">
-                  <input type="number" class="form-control" id="mobilePhone" formControlName="MobilePhnNo1"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && ContactInfoPersonalForm.controls.MobilePhnNo1.invalid }">
-                  <lib-uc-show-errors [control]="ContactInfoPersonalForm.controls.MobilePhnNo1" [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                </div>
-                <label class="col-md-2" for="isFamily" translate>Is Family</label>
-                <div class="col-md-4">
-                  <input class="border-primary" type="checkbox" data-md-icheck id="isFamily" formControlName="IsFamily">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-md-2" for="mobilePhone2" translate>Mobile Phone 2</label>
-                <div class="col-md-4">
-                  <input type="number" class="form-control" id="mobilePhone2" formControlName="MobilePhnNo2">
-                </div>
-                <label class="col-md-2" for="Email" translate>Email</label>
-                <div class="col-md-4">
-                  <input type="text" class="form-control" id="email" formControlName="Email">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-md-2" translate>Copy Address From</label>
-                <div class="col-md-4">
-                  <div class="input-group">
-                    <select class="form-control" formControlName="CopyFromContactPerson" [(ngModel)]="copyFromContactPerson">
-                      <option *ngFor="let item of copyToContactPersonAddrObj" [value]="item.Key">
-                        {{item.Value}}
-                      </option>
-                    </select>
-                    <div class="input-group-append">
-                        <span class="input-group-btn">
-                            <button class="btn btn-raised btn-primary" type="button" (click)="copyFromChanged()">
-                                <i class="fa fa-check-square-o"></i>Copy
-                            </button>
-                        </span>
+              <div class="px-3">
+                <div class="row">
+                  <!-- left -->
+                  <div class="col-md-6 ">
+                    <div class="form-group row">
+                      <label class="col-md-4 adins-required-label" for="ContactPersonName" translate>Name</label>
+                      <div class="col-md-8">
+                        <input type="text" id="ContactPersonName" class="form-control" formControlName="ContactPersonName"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && ContactInfoPersonalForm.controls.ContactPersonName.invalid }">
+                        <lib-uc-show-errors [control]="ContactInfoPersonalForm.controls.ContactPersonName" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                       </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-4" for="idType" translate>ID Type</label>
+                      <div class="col-md-8">
+                        <select class="form-control" id="idType" formControlName="MrIdTypeCode" 
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && ContactInfoPersonalForm.controls.MrIdTypeCode.invalid }">
+                          <option *ngFor="let item of IdTypeObj" [value]="item.Key">
+                            {{item.Value}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-4" for="IdNo" translate>Id No</label>
+                      <div class="col-md-8">
+                        <input type="text" id="IdNo" class="form-control" formControlName="IdNo">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-4" translate>Birth Place</label>
+                      <div class="col-md-8">
+                        <input type="text" class="form-control" formControlName="BirthPlace" id="birthPlace">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-4" translate>Birth Date</label>                      
+                      <div class="col-md-8">
+                        <input type="date" class="form-control" formControlName="BirthDt" id="birthDt">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-4 adins-required-label" for="mobilePhone" translate>Mobile Phone 1</label>
+                      <div class="col-md-8">
+                        <input type="text" class="form-control" id="mobilePhone" formControlName="MobilePhnNo1"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && ContactInfoPersonalForm.controls.MobilePhnNo1.invalid }">
+                        <lib-uc-show-errors [control]="ContactInfoPersonalForm.controls.MobilePhnNo1" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-4" for="mobilePhone2" translate>Mobile Phone 2</label>
+                      <div class="col-md-8">
+                        <input type="text" class="form-control" id="mobilePhone2" formControlName="MobilePhnNo2">
+                        <lib-uc-show-errors [control]="ContactInfoPersonalForm.controls.MobilePhnNo2" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- right -->
+                  <div class="col-md-6 ">
+                    <div class="form-group row">
+                      <label class="col-md-4" for="Gender" translate>Gender</label>
+                      <div class="col-md-8">
+                        <select class="form-control" id="Gender" formControlName="MrGenderCode" (change)="GenderChanged($event)"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && ContactInfoPersonalForm.controls.MrGenderCode.invalid }">
+                          <option *ngFor="let item of GenderObj" [value]="item.Key">
+                            {{item.Value}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-4" for="CustRelationship" translate>Customer Relationship</label>
+                      <div class="col-md-8">
+                        <select class="form-control" id="CustRelationship" formControlName="MrCustRelationshipCode" (change)="RelationshipChanged($event)"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && ContactInfoPersonalForm.controls.MrCustRelationshipCode.invalid }">
+                          <option *ngFor="let item of CustRelationshipObj" [value]="item.Key">
+                            {{item.Value}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-4" for="professionName" translate>Profession Name</label>
+                      <div class="col-md-8">
+                        <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupProfessionObj" [parentForm]="ContactInfoPersonalForm" [identifier]="'lookupProfession'" (lookup)="GetProfession($event)"></lib-uclookupgeneric>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-4" for="emergencyContact" translate>Emergency Contact</label>
+                      <div class="col-md-8">
+                        <input class="border-primary" type="checkbox" data-md-icheck id="emergencyContact" formControlName="IsEmergencyContact">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-4" for="isFamily" translate>Is Family</label>
+                      <div class="col-md-8">
+                        <input class="border-primary" type="checkbox" data-md-icheck id="isFamily" formControlName="IsFamily">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-4" for="Email" translate>Email</label>
+                      <div class="col-md-8">
+                        <input pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" type="text" class="form-control" id="email" formControlName="Email">
+                        <lib-uc-show-errors [control]="ContactInfoPersonalForm.controls.Email" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-              <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="ContactInfoPersonalForm" [enjiForm]="enjiForm" [identifier]="'contactPersonAddr'" [default]="contactPersonAddrObj" [inputField]="inputFieldContactPersonObj" [showAllPhn]="false"></lib-ucaddress>
+              <lib-ucSubsection [id]="'addressInfomationId'" [title]="'Address'"
+                [panel]="'addressInfomation'">
+              </lib-ucSubsection>
+              <div id="addressInfomation">
+                <div class="px-3">
+                  <div class="form-group row">
+                    <label class="col-md-2" translate>Copy Address From</label>
+                    <div class="col-md-4">
+                      <div class="input-group">
+                        <select class="form-control" formControlName="CopyFromContactPerson" [(ngModel)]="copyFromContactPerson">
+                          <option *ngFor="let item of copyToContactPersonAddrObj" [value]="item.Key">
+                            {{item.Value}}
+                          </option>
+                        </select>
+                        <div class="input-group-append">
+                            <span class="input-group-btn">
+                                <button class="btn btn-raised btn-primary" type="button" (click)="copyFromChanged()">
+                                    <i class="fa fa-check-square-o"></i>Copy
+                                </button>
+                            </span>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                  <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="ContactInfoPersonalForm" [enjiForm]="enjiForm" [identifier]="'contactPersonAddr'" [isRequired]="false" [default]="contactPersonAddrObj" [inputField]="inputFieldContactPersonObj" [showAllPhn]="false"></lib-ucaddress>
+                </div>
+              </div>
             </div>
             <div class="form-actions right">
               <button type="button" class="btn btn-raised btn-warning mr-1" (click)="cancel()" translate>
