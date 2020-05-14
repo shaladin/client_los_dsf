@@ -36,9 +36,14 @@ export class AdInsConstant {
   public static AppStepCSR = "CSR";
   public static FL4W = "FL4W";
   public static CF4W = "CF4W";
+  public static CFNEWCAR = "CFNEWCAR";
 
   public static GENERAL = "GENERAL";
   public static FACTORING = "FACTORING";
+  
+  public static SALES_JOB_CODE = "SALES_PERSON";
+  public static ADMIN_HEAD_JOB_CODE = "ADMIN_HEAD";
+  public static BRANCH_MANAGER_JOB_CODE = "BRANCH_MANAGER";
 
   //WORKFLOW (LEWAT FOUNDATION)
   public static ResumeWorkflow = environment.FoundationR3Url + "/Workflow/ResumeWorkflow"
@@ -86,11 +91,11 @@ export class AdInsConstant {
   public static GetAppAssetSupplEmpByAppAssetIdAndCode = environment.losUrl + "/AppAssetSupplEmp/GetAppAssetSupplEmpByAppAssetIdAndCode";
 
   // App Referantor
-  public static AddAppReferantor = "/AppReferantor/AddAppReferantor";
-  public static EditAppReferantor = "/AppReferantor/EditAppReferantor";
-  public static DeleteAppReferantor = "/AppReferantor/DeleteAppReferantor";
-  public static GetAppReferantorByAppReferantorId = "/AppReferantor/GetAppReferantorByAppReferantorId";
-  public static GetAppReferantorByAppId = "/AppReferantor/GetAppReferantorByAppId";
+  public static AddAppReferantor = environment.losUrl + "/AppReferantor/AddAppReferantor";
+  public static EditAppReferantor = environment.losUrl + "/AppReferantor/EditAppReferantor";
+  public static DeleteAppReferantor = environment.losUrl + "/AppReferantor/DeleteAppReferantor";
+  public static GetAppReferantorByAppReferantorId = environment.losUrl + "/AppReferantor/GetAppReferantorByAppReferantorId";
+  public static GetAppReferantorByAppId = environment.losUrl + "/AppReferantor/GetAppReferantorByAppId";
 
   // App Cross
   public static EditAppAddAppCross = environment.losUrl + "/Application/EditAppAddAppCross";
@@ -962,6 +967,7 @@ export class AdInsConstant {
   public static CalculateInstallmentStepUpStepDown = environment.losUrl + "/AppFinData/CalculateInstallmentStepUpStepDown";
   public static CalculateInstallmentEvenPrincipal = environment.losUrl + "/AppFinData/CalculateInstallmentEvenPrincipal";
   public static GetFinancialDataByAppIdForView = environment.losUrl + "/AppFinData/GetFinancialDataByAppIdForView";
+  public static GetInitAppFinDataFctrByAppId = environment.losUrl + "/AppFinData/GetInitAppFinDataFctrByAppId";
 
 
 
