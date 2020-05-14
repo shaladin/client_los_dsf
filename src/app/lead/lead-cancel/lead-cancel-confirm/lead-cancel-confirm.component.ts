@@ -26,8 +26,8 @@ export class LeadCancelConfirmComponent implements OnInit {
   EditListLeadForCancelByListLeadId = AdInsConstant.EditListLeadForCancelByListLeadId;
   tempWfTaskListArr = new Array();
   leadUrl: string;
-  tempLeadIds : string; // kayaknya
-  tempLeadArr : Array<string>; // kayaknya
+  tempLeadIds : string;
+  tempLeadArr : Array<string>;
   WfTaskListIds : string;
   constructor(
     private http: HttpClient,

@@ -28,7 +28,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 export class LeadInputCustDataComponent implements OnInit {
   @Input() LeadId: string;
   @Output() outputTab: EventEmitter<object> = new EventEmitter();
-  businessDt: Date; // kayaknya
+  businessDt: Date;
   CopyFrom: string;
   rowVersion: any;
   typePage: string;

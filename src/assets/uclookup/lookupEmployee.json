@@ -27,13 +27,13 @@
     "headerList": [
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "Employee Name",
             "name": "RE.EMP_NAME"
         },
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "Employee Position",
             "name": "RR.ROLE_NAME"
         },
@@ -46,12 +46,12 @@
     "bodyList": [
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "EmpName"
         },
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "RoleName"
         },
         {

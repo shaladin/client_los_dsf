@@ -28,7 +28,7 @@ export class LeadCancelComponent implements OnInit {
   totalData: number;
   pageSize: number;
   apiUrl: string;
-  orderByKey: any = null;   // kayaknya string
+  orderByKey: any = null;
   orderByValue = true;
   deleteUrl: string;
   inputObj: InputSearchObj;
@@ -37,8 +37,7 @@ export class LeadCancelComponent implements OnInit {
   tempListId: Array<string> = [];
   tempData: Array<any> = [];
   arrAddCrit = new Array<CriteriaObj>();
-  checkboxAll: any = false;                 // kayaknya bool
-  verifyStatus: any;                        // kayaknya gaperlu
+  checkboxAll: boolean = false;
   confirmUrl = "/Lead/ConfirmCancel";
   allowedStat = ['INP','NEW'];
   leadUrl: string;
@@ -51,7 +50,6 @@ export class LeadCancelComponent implements OnInit {
     private adInsService: AdInsService) { }
 
   ngOnInit() {
-    console.log('vin');
     this.inputObj = new InputSearchObj();
     this.inputObj._url = './assets/search/searchLeadCancel.json';
     this.inputObj.enviromentUrl = environment.losUrl;
