@@ -151,8 +151,6 @@ export class LifeInsuranceDataComponent implements OnInit {
       console.log(this.LifeInsObj.ListAppLifeInsD);
     } else {
       this.show = false;
-      this.ClearForm();
-      console.log(this.LifeInsObj.ListAppLifeInsD);
 
     }
 
@@ -272,18 +270,6 @@ export class LifeInsuranceDataComponent implements OnInit {
       console.log("event unchecked");
       this.LifeInsObj.ListAppLifeInsD.splice(i, 1);
     }
-  }
-
-
-  ClearForm() {
-    this.LifeInsForm = this.fb.group({
-      IsChecked: [false],
-      LifeInscoBranchName: [''],
-      MrLifeInsPaidMethodCode: [''],
-      TotalLifeInsCptlzAmt: [''],
-      NewCoverNotes: [''],
-      InscoAdminFeeAmt: [''],
-    });
   }
 
 }
