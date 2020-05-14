@@ -7,7 +7,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 @Component({
   selector: 'app-agreement-view-container',
   templateUrl: './agreement-view-container.component.html',
-  styleUrls: ['./agreement-view-container.component.scss']
+  styleUrls: []
 })
 export class AgreementViewContainerComponent implements OnInit {
 
