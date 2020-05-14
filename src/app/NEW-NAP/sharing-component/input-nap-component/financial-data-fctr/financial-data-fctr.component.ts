@@ -8,6 +8,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj.Model';
 import { ActivatedRoute } from '@angular/router';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-financial-data-fctr',
@@ -107,7 +108,8 @@ export class FinancialDataFctrComponent implements OnInit {
         TopDays: 0,
         RetentionPrcnt: 0,
         TotalRetentionAmt: 0,
-        TotalDisbAmt: 0
+        TotalDisbAmt: 0,
+        Tenor: 0
       }
     );
     this.LoadAppFinData();
@@ -159,12 +161,13 @@ export class FinancialDataFctrComponent implements OnInit {
           TopBasedName: this.appFinDataObj.TopBasedName,
           InvcDt: this.appFinDataObj.InvcDt,
           MaturityDate: this.appFinDataObj.MaturityDate,
-          EstEffDt: this.appFinDataObj.EstEffDt,
+          EstEffDt: this.appFinDataObj.EstEffDt != undefined ? formatDate(this.appFinDataObj.EstEffDt, 'yyyy-MM-dd', 'en-US') : '',
           TotalInvcAmt: this.appFinDataObj.TotalInvcAmt,
           TopDays: this.appFinDataObj.TopDays,
           RetentionPrcnt: this.appFinDataObj.RetentionPrcnt,
           TotalRetentionAmt: this.appFinDataObj.TotalRetentionAmt,
-          TotalDisbAmt: this.appFinDataObj.TotalDisbAmt
+          TotalDisbAmt: this.appFinDataObj.TotalDisbAmt,
+          Tenor: this.appFinDataObj.Tenor
         });
 
         this.IsParentLoaded = true;
