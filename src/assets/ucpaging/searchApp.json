@@ -150,7 +150,7 @@
                                     "isUser": true,
                                     "property": "ClaimBy",
                                     "value": "",
-                                    "restriction": "EQ"
+                                    "restriction": "NEQ"
                                 },
                                 {
                                     "property": "IsAllowAppCreated",

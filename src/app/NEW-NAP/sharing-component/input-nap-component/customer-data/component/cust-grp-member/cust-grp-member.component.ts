@@ -82,6 +82,19 @@ export class CustGrpMemberComponent implements OnInit {
 
     this.CustRelationshipObjs.push({list: []});
     
+    if(this.identifier == AdInsConstant.CustGrupIndentifierTypePersonal){
+      this.CustRelationshipObjs[max + 1].list = this.CustRelationshipPersonalObj;
+      this.parentForm.controls[this.identifier]["controls"][max + 1].patchValue({
+        MrCustRelationshipCode: this.defaultCustRelationshipPersonalCode
+      });
+    }
+
+    if(this.identifier == AdInsConstant.CustGrupIndentifierTypeCompany){
+      this.CustRelationshipObjs[max].list = this.CustRelationshipCompanyObj;
+      this.parentForm.controls[this.identifier]["controls"][max].patchValue({
+        MrCustRelationshipCode: this.defaultCustRelationshipCompanyCode
+      });
+    }
   }
 
   deleteCustGrp(i){
@@ -111,19 +124,19 @@ export class CustGrpMemberComponent implements OnInit {
       CustName: event.CustName
     });
 
-    if(event.MrCustTypeCode == AdInsConstant.CustTypePersonal){
-      this.CustRelationshipObjs[i].list = this.CustRelationshipPersonalObj;
-      this.parentForm.controls[this.identifier]["controls"][i].patchValue({
-        MrCustRelationshipCode: this.defaultCustRelationshipPersonalCode
-      });
-    }
+    // if(event.MrCustTypeCode == AdInsConstant.CustTypePersonal){
+    //   this.CustRelationshipObjs[i].list = this.CustRelationshipPersonalObj;
+    //   this.parentForm.controls[this.identifier]["controls"][i].patchValue({
+    //     MrCustRelationshipCode: this.defaultCustRelationshipPersonalCode
+    //   });
+    // }
 
-    if(event.MrCustTypeCode == AdInsConstant.CustTypeCompany){
-      this.CustRelationshipObjs[i].list = this.CustRelationshipCompanyObj;
-      this.parentForm.controls[this.identifier]["controls"][i].patchValue({
-        MrCustRelationshipCode: this.defaultCustRelationshipCompanyCode
-      });
-    }
+    // if(event.MrCustTypeCode == AdInsConstant.CustTypeCompany){
+    //   this.CustRelationshipObjs[i].list = this.CustRelationshipCompanyObj;
+    //   this.parentForm.controls[this.identifier]["controls"][i].patchValue({
+    //     MrCustRelationshipCode: this.defaultCustRelationshipCompanyCode
+    //   });
+    // }
 
     console.log(this.CustRelationshipObjs);
   }

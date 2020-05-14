@@ -19,7 +19,7 @@ import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 })
 
 export class CustPersonalContactInformationComponent implements OnInit {
-  @Input() listContactPersonPersonal: any = new Array<AppCustPersonalContactPersonObj>();
+  @Input() listContactPersonPersonal: Array<AppCustPersonalContactPersonObj> = new Array<AppCustPersonalContactPersonObj>();
 
 
   @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
@@ -99,6 +99,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
     this.initUrl();
     this.bindAllRefMasterObj();
     this.initContactPersonAddrObj();
+    console.log(this.listContactPersonPersonal);
   }
 
   SaveForm(){

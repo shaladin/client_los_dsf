@@ -163,7 +163,7 @@ export class CustCompanyMainDataComponent implements OnInit {
   bindCustData(){
     console.log("bind cust data");
     console.log(this.custDataCompanyObj);
-    if(this.custDataCompanyObj.AppCustObj != undefined){
+    if(this.custDataCompanyObj.AppCustObj.AppCustId != 0){
       this.parentForm.controls[this.identifier].patchValue({
         CustNo: this.custDataCompanyObj.AppCustObj.CustNo,
         CustModelCode: this.custDataCompanyObj.AppCustObj.CustModelCode,
@@ -177,7 +177,7 @@ export class CustCompanyMainDataComponent implements OnInit {
       }
     }
     
-    if(this.custDataCompanyObj.AppCustCompanyObj != undefined){
+    if(this.custDataCompanyObj.AppCustCompanyObj.AppCustId != 0){
       this.parentForm.controls[this.identifier].patchValue({
         IndustryTypeCode: this.custDataCompanyObj.AppCustCompanyObj.IndustryTypeCode,
         CompanyBrandName: this.custDataCompanyObj.AppCustCompanyObj.CompanyBrandName,
@@ -186,7 +186,6 @@ export class CustCompanyMainDataComponent implements OnInit {
         IsAffiliated: this.custDataCompanyObj.AppCustCompanyObj.IsAffiliated,
         EstablishmentDt: formatDate(this.custDataCompanyObj.AppCustCompanyObj.EstablishmentDt, 'yyyy-MM-dd', 'en-US')
       });
-      
       this.setIndustryTypeName(this.custDataCompanyObj.AppCustCompanyObj.IndustryTypeCode);
     }
   }

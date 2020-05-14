@@ -12,7 +12,7 @@
   },
   "private": true,
   "dependencies": {
-    "@adins/uc-show-errors": "^0.0.5",
+    "@adins/uc-show-errors": "0.0.5",
     "@adins/uc-subsection": "^1.0.4",
     "@adins/ucaddress": "^1.0.11",
     "@adins/ucapproval": "^1.0.2",

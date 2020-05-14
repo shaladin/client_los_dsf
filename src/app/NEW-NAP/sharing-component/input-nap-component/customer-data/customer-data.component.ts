@@ -18,6 +18,10 @@ import { AppCustGrpObj } from 'app/shared/model/AppCustGrpObj.Model';
 import { CustDataCompanyObj } from 'app/shared/model/CustDataCompanyObj.Model';
 import { CustGrpMemberComponent } from './component/cust-grp-member/cust-grp-member.component';
 import { formatDate } from '@angular/common';
+import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
+import { AppCustCompanyMgmntShrholderObj } from 'app/shared/model/AppCustCompanyMgmntShrholderObj.Model';
+import { AppCustPersonalContactPersonObj } from 'app/shared/model/AppCustPersonalContactPersonObj.Model';
+import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalDocObj.Model';
 
 @Component({
   selector: 'app-customer-data',
@@ -68,12 +72,12 @@ export class CustomerDataComponent implements OnInit {
   inputFieldMailingCompanyObj: InputFieldObj;
   copyFromMailingCompany: any;
   appCustPersonalId: any;
-  listAppCustPersonalContactInformation: any;
-  listAppCustBankAcc: any;
-  listAppCustBankAccCompany: any;
-  listShareholder: any;
-  listContactPersonCompany: any;
-  listLegalDoc: any;
+  listAppCustPersonalContactInformation: Array<AppCustPersonalContactPersonObj> = new Array<AppCustPersonalContactPersonObj>();;
+  listAppCustBankAcc: Array<AppCustBankAccObj> = new Array<AppCustBankAccObj>();
+  listAppCustBankAccCompany: Array<AppCustBankAccObj> = new Array<AppCustBankAccObj>();
+  listShareholder: Array<AppCustCompanyMgmntShrholderObj> = new Array<AppCustCompanyMgmntShrholderObj>();
+  listContactPersonCompany: Array<AppCustPersonalContactPersonObj> = new Array<AppCustPersonalContactPersonObj>();
+  listLegalDoc: Array<AppCustCompanyLegalDocObj> = new Array<AppCustCompanyLegalDocObj>();
 
   isBindDataDone: boolean = false;
 
@@ -711,6 +715,7 @@ export class CustomerDataComponent implements OnInit {
     this.custDataObj.AppId = this.appId;
     await this.http.post(this.getCustDataUrl, this.custDataObj).toPromise().then(
       (response) => {
+        console.log(response);
         if (response != "") {
           if (response["AppCustObj"]["MrCustTypeCode"] == AdInsConstant.CustTypePersonal) {
             this.custDataPersonalObj = new CustDataPersonalObj();

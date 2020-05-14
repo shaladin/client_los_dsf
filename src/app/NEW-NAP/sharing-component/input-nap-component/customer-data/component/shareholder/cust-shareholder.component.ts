@@ -21,7 +21,7 @@ import { AppCustCompanyMgmntShrholderObj } from 'app/shared/model/AppCustCompany
 
 export class CustShareholderComponent implements OnInit {
 
-  @Input() listShareholder: any = new Array<AppCustCompanyMgmntShrholderObj>();
+  @Input() listShareholder: Array<AppCustCompanyMgmntShrholderObj> = new Array<AppCustCompanyMgmntShrholderObj>();
 
   @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
 

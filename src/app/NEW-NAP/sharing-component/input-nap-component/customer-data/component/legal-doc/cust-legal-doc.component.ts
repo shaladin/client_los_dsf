@@ -17,7 +17,7 @@ import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalD
 
 export class CustLegalDocComponent implements OnInit {
 
-  @Input() listLegalDoc: any = new Array<AppCustCompanyLegalDocObj>();
+  @Input() listLegalDoc: Array<AppCustCompanyLegalDocObj> = new Array<AppCustCompanyLegalDocObj>();
 
   @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
 
@@ -54,6 +54,7 @@ export class CustLegalDocComponent implements OnInit {
 
   ngOnInit() {
     this.bindLegalDocTypeObj();
+    console.log(this.listLegalDoc);
   }
 
   SaveForm(){
