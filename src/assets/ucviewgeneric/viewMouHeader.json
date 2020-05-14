@@ -8,7 +8,7 @@
       "mainInfo": [
         {
           "type": "link",
-          "label": "MOU No",
+          "label": "MOU NO",
           "property": "MouCustNo",
           "path": "/Mou/Cust/View",
           "param": [
@@ -20,57 +20,57 @@
         },
         {
           "type": "date",
-          "label": "MOU Date",
+          "label": "MOU DATE",
           "property": "MouCustDt"
         },
         {
           "type": "text",
-          "label": "MOU Type",
+          "label": "MOU TYPE",
           "property": "MouType"
         },
         {
           "type": "text",
-          "label": "Customer Name",
+          "label": "CUSTOMER NAME",
           "property": "CustName"
         },
         {
           "type": "date",
-          "label": "Start Date",
+          "label": "START DATE",
           "property": "StartDt"
         },
         {
           "type": "date",
-          "label": "Expired Date",
+          "label": "EXPIRED DATE",
           "property": "EndDt"
         },
         {
           "type": "text",
-          "label": "Status",
+          "label": "STATUS",
           "property": "MouStat"
         },
         {
           "type": "text",
-          "label": "Ref No",
+          "label": "REF NO",
           "property": "RefNo"
         },
         {
           "type": "currency",
-          "label": "Plafond Ammount",
+          "label": "PLAFOND AMOUNT",
           "property": "PlafondAmt"
         },
         {
           "type": "currency",
-          "label": "Realisation Amount",
+          "label": "REALISATION AMOUNT",
           "property": "RealisationAmt"
         },
         {
           "type": "currency",
-          "label": "In Process Amount",
+          "label": "IN PROCESS AMOUNT",
           "property": "InProcessAmt"
         },
         {
           "type": "currency",
-          "label": "Available Amount",
+          "label": "AVAILABLE AMOUNT",
           "property": "AvailableAmt"
         }
       ],
