@@ -168,7 +168,7 @@ export class ListCompanyComponent implements OnInit {
     var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
     var wfClaimObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
-    wfClaimObj.pUserId = currentUserContext["UserName"];
+    wfClaimObj.pUserID = currentUserContext["UserName"];
 
     this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {

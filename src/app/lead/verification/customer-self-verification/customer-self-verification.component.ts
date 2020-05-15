@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import Stepper from 'bs-stepper';
+import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 
 @Component({
   selector: 'app-customer-self-verification',
@@ -13,12 +14,12 @@ import Stepper from 'bs-stepper';
 })
 export class CustomerSelfVerificationComponent implements OnInit {
   private stepper: Stepper;
-  LeadId: any;
+  LeadId: string;
   LobCode: string;
   isCustData: boolean;
   isLeadData: boolean;
-  viewLeadHeaderMainInfo : any;
-  WfTaskListId: any;
+  viewLeadHeaderMainInfo : string;
+  WfTaskListId: string;
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -58,22 +59,19 @@ export class CustomerSelfVerificationComponent implements OnInit {
     }
   }
 
-  async claimTask()
-  {
+  async claimTask(){
     var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
-    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: "adins"};
-    console.log(wfClaimObj);
+    var wfClaimObj : ClaimWorkflowObj = new ClaimWorkflowObj();
+    wfClaimObj.pWFTaskListID = this.WfTaskListId;
+    wfClaimObj.pUserID = "adins";
     this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
       });
   }
 
-  getValue(ev)
-  {
-    if (ev.stepMode != undefined)
-    {
-      if (ev.stepMode == "next")
-      {
+  getValue(ev){
+    if (ev.stepMode != undefined){
+      if (ev.stepMode == "next"){
         this.stepper.next();
         this.EnterTab("leadData");
       }

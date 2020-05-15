@@ -10,13 +10,13 @@ import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 
 @Component({
-  selector: 'app-asset-data-paging',
-  templateUrl: './asset-data-paging.component.html'
+  selector: 'app-asset-leasing-paging',
+  templateUrl: './asset-leasing-paging.component.html'
 })
-export class AssetDataPagingComponent implements OnInit {
+export class AssetLeasingPagingComponent implements OnInit {
 
   @Output() outputValue: EventEmitter<object> = new EventEmitter();
-  IdCust: any;
+  IdCust: number;
   appAssetObj : any;
   listAppAssetObj: any;
   appCollateralObj: any;
@@ -52,6 +52,7 @@ addColl() {
 }
 
 event(ev){
+  console.log("test");
   console.log(ev);
   this.AppAssetId = ev.RowObj.AppAssetId;
   this.AppId = ev.RowObj.AppId;

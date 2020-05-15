@@ -25,8 +25,8 @@ import { LeadObj } from 'app/shared/model/Lead.Model';
 export class LeadInputLeadDataComponent implements OnInit {
   @Input() originPage: string;
   typePage: string;
-  CopyFrom: number;
-  LeadId: number;
+  CopyFrom: string;
+  LeadId: string;
   assetConditionObj: RefMasterObj;
   returnAssetConditionObj: [];
   downPaymentObj: RefMasterObj;
@@ -35,7 +35,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   returnFirstInstObj: [];
   InputLookupAssetObj: InputLookupObj;
   getListActiveRefMasterUrl: string;
-  assetTypeId: number;
+  assetTypeId: string;
   leadInputLeadDataObj: LeadInputLeadDataObj;
   addEditLeadData: string;
   getLeadAssetByLeadId: string;
@@ -64,7 +64,8 @@ export class LeadInputLeadDataComponent implements OnInit {
     MrDownPaymentTypeCode: [''],
     ManufacturingYear: [''],
     AssetPrice: ['', Validators.required],
-    DownPayment: ['', Validators.required],
+    DownPaymentAmount: ['', Validators.required],
+    DownPaymentPercent: [''],
     SerialNo1: [''],
     SerialNo2: [''],
     SerialNo3: [''],
@@ -88,6 +89,14 @@ export class LeadInputLeadDataComponent implements OnInit {
   WfTaskListId: number;
   editLead: string;
   editLeadObj: LeadObj;
+  InstAmt: number;
+  TotalDownPayment: number;
+  AssetPrice: number;
+  NTFAmt: number;
+  Calculate: boolean = false;
+  DPAmount: number;
+  DPPercentage: number;
+  Tenor
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.getListActiveRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
@@ -134,7 +143,6 @@ export class LeadInputLeadDataComponent implements OnInit {
   // }
 
   radioChange(event) {
-
     this.serial2Mandatory = false;
     this.serial3Mandatory = false;
     this.serial4Mandatory = false;
@@ -276,7 +284,7 @@ export class LeadInputLeadDataComponent implements OnInit {
               MrAssetConditionCode: this.resLeadAssetObj.MrAssetConditionCode,
               ManufacturingYear: this.resLeadAssetObj.ManufacturingYear,
               AssetPrice: this.resLeadAssetObj.AssetPriceAmt,
-              DownPayment: this.resLeadAssetObj.DownPaymentAmt,
+              DownPaymentAmount: this.resLeadAssetObj.DownPaymentAmt,
               SerialNo1: this.resLeadAssetObj.SerialNo1,
               SerialNo2: this.resLeadAssetObj.SerialNo2,
               SerialNo3: this.resLeadAssetObj.SerialNo3,
@@ -395,7 +403,7 @@ export class LeadInputLeadDataComponent implements OnInit {
               MrAssetConditionCode: this.resLeadAssetObj.MrAssetConditionCode,
               ManufacturingYear: this.resLeadAssetObj.ManufacturingYear,
               AssetPrice: this.resLeadAssetObj.AssetPriceAmt,
-              DownPayment: this.resLeadAssetObj.DownPaymentAmt,
+              DownPaymentAmount: this.resLeadAssetObj.DownPaymentAmt,
               SerialNo1: this.resLeadAssetObj.SerialNo1,
               SerialNo2: this.resLeadAssetObj.SerialNo2,
               SerialNo3: this.resLeadAssetObj.SerialNo3,
@@ -501,6 +509,128 @@ export class LeadInputLeadDataComponent implements OnInit {
     }
   }
 
+  DownPaymentChange()
+  {
+    if(this.LeadDataForm.controls["MrDownPaymentTypeCode"].value == "AMT")
+    {
+      this.LeadDataForm.controls.DownPaymentPercent.disable();
+      this.LeadDataForm.controls.DownPaymentAmount.enable();
+
+    }
+    else
+    {
+      this.LeadDataForm.controls.DownPaymentPercent.enable();
+      this.LeadDataForm.controls.DownPaymentAmount.disable();
+    }
+  }
+
+  DPAmtChange()
+  {
+    this.DPAmount = this.LeadDataForm.controls["DownPaymentAmount"].value;
+    this.AssetPrice = this.LeadDataForm.controls["AssetPrice"].value;
+
+    this.DPPercentage = this.DPAmount / this.AssetPrice * 100;
+
+    this.LeadDataForm.patchValue({
+      DownPaymentPercent: this.DPPercentage,
+    });
+  }
+
+  DPPrcntChange()
+  {
+    this.DPPercentage = this.LeadDataForm.controls["DownPaymentPercent"].value;
+    this.AssetPrice = this.LeadDataForm.controls["AssetPrice"].value;
+
+    this.DPAmount = this.AssetPrice * this.DPPercentage/100;
+
+    this.LeadDataForm.patchValue({
+      DownPaymentAmount: this.DPAmount,
+    });
+  }
+
+  FirstInstChange()
+  {
+    this.Calculate = false;
+    this.LeadDataForm.patchValue({
+      NTFAmt: '',
+      TotalDownPayment: '',
+      InstallmentAmt: '',
+    });
+  }
+
+  TenorChange()
+  {
+    this.Calculate = false;
+    
+    console.log("test tenor");
+    console.log(this.Calculate);
+  }
+
+  calculateNonKta()
+  {
+    this.Calculate = true;
+    this.Tenor = this.LeadDataForm.controls["Tenor"].value;
+    this.AssetPrice = this.LeadDataForm.controls["AssetPrice"].value;
+    this.DPAmount = this.LeadDataForm.controls["DownPaymentAmount"].value;
+
+    if(this.DPAmount > this.AssetPrice)
+    {
+      this.toastr.errorMessage("Down Payment Amount Must Be Lower Than Asset Price!");
+      return;
+    }
+
+    if(this.Tenor == '')
+    {
+      this.toastr.errorMessage("Fill The Tenor First!");
+      return;
+    }
+
+    this.NTFAmt = this.AssetPrice - this.DPAmount;
+    this.InstAmt = this.NTFAmt / this.Tenor;
+    if(this.LeadDataForm.controls["MrFirstInstTypeCode"].value == "AD")
+    {
+      this.TotalDownPayment = this.DPAmount + this.InstAmt;
+    }
+    else
+    {
+      this.TotalDownPayment = this.DPAmount;
+    }
+
+    this.LeadDataForm.patchValue({
+      NTFAmt: this.NTFAmt,
+      TotalDownPayment: this.TotalDownPayment,
+      InstallmentAmt: this.InstAmt,
+    });
+  }
+
+  calculateKta()
+  {
+    this.Calculate = true;
+    this.Tenor = this.LeadDataForm.controls["Tenor"].value;
+    this.AssetPrice = this.LeadDataForm.controls["AssetPrice"].value;
+    this.DPAmount = this.LeadDataForm.controls["DownPaymentAmount"].value;
+
+    if(this.DPAmount > this.AssetPrice)
+    {
+      this.toastr.errorMessage("Down Payment Amount Must Be Lower Than Asset Price!");
+      return;
+    }
+
+    if(this.Tenor == '')
+    {
+      this.toastr.errorMessage("Fill The Tenor First!");
+      return;
+    }
+
+    this.NTFAmt = this.AssetPrice - this.DPAmount;
+    this.InstAmt = this.NTFAmt / this.Tenor;
+
+    this.LeadDataForm.patchValue({
+      NTFAmt: this.NTFAmt,
+      InstallmentAmt: this.InstAmt,
+    });
+  }
+
   setLeadAsset() {
     this.leadInputLeadDataObj.LeadAssetObj.LeadId = this.LeadId;
     this.leadInputLeadDataObj.LeadAssetObj.FullAssetCode = this.LeadDataForm.controls["FullAssetCode"].value;
@@ -509,7 +639,8 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.leadInputLeadDataObj.LeadAssetObj.MrAssetConditionCode = this.LeadDataForm.controls["MrAssetConditionCode"].value;
     this.leadInputLeadDataObj.LeadAssetObj.ManufacturingYear = this.LeadDataForm.controls["ManufacturingYear"].value;
     this.leadInputLeadDataObj.LeadAssetObj.AssetPriceAmt = this.LeadDataForm.controls["AssetPrice"].value;
-    this.leadInputLeadDataObj.LeadAssetObj.DownPaymentAmt = this.LeadDataForm.controls["DownPayment"].value;
+    this.leadInputLeadDataObj.LeadAssetObj.DownPaymentAmt = this.LeadDataForm.controls["DownPaymentAmount"].value;
+    this.leadInputLeadDataObj.LeadAssetObj.DownPaymentPrcnt = this.LeadDataForm.controls["DownPaymentPercent"].value;
     this.leadInputLeadDataObj.LeadAssetObj.SerialNo1 = this.LeadDataForm.controls["SerialNo1"].value;
     this.leadInputLeadDataObj.LeadAssetObj.SerialNo2 = this.LeadDataForm.controls["SerialNo2"].value;
     this.leadInputLeadDataObj.LeadAssetObj.SerialNo3 = this.LeadDataForm.controls["SerialNo3"].value;
@@ -527,6 +658,12 @@ export class LeadInputLeadDataComponent implements OnInit {
   }
 
   save() {
+    if(this.Calculate == false)
+    {
+      this.toastr.errorMessage("Calculate First");
+      return;
+    }
+
     if (this.typePage == "edit" || this.typePage == "update") {
       if (this.resLeadAssetObj.LeadAssetId != 0) {
         this.leadInputLeadDataObj = new LeadInputLeadDataObj();
@@ -599,6 +736,12 @@ export class LeadInputLeadDataComponent implements OnInit {
   }
 
   SaveForm() {
+    if(this.Calculate == false)
+    {
+      this.toastr.errorMessage("Calculate First");
+      return;
+    }
+
     if (this.typePage == "edit" || this.typePage == "update") {
       if (this.resLeadAssetObj.LeadAssetId != 0) {
         this.leadInputLeadDataObj = new LeadInputLeadDataObj();
