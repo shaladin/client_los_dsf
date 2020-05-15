@@ -23,6 +23,7 @@ import { ViewAppComponentModule } from "../sharing-component/view-app-component/
 import { AppMainInfoComponent } from "../sharing-component/view-main-info-component/app-main-info/app-main-info.component";
 import { ViewAppCustDataPersonalComponent } from "../sharing-component/view-app-component/view-app-cust-data-personal/view-app-cust-data-personal.component";
 import { ViewAppCustDataCompanyComponent } from "../sharing-component/view-app-component/view-app-cust-data-company/view-app-cust-data-company.component";
+import { ViewAgrmntComponent } from './view-agrmnt/view-agrmnt.component';
  
 
 @NgModule({
@@ -52,7 +53,8 @@ import { ViewAppCustDataCompanyComponent } from "../sharing-component/view-app-c
     NapAddDetailComponent, 
     AppMainInfoComponent,
     ViewAppCustDataPersonalComponent,
-    ViewAppCustDataCompanyComponent
+    ViewAppCustDataCompanyComponent,
+    ViewAgrmntComponent
   ],
   providers: [
     NGXToastrService
