@@ -37,6 +37,8 @@ import { DeliveryOrderMultiAssetComponent } from './delivery-order-multi-asset/d
 import { DeliveryOrderMultiAssetDetailComponent } from './delivery-order-multi-asset/delivery-order-multi-asset-detail/delivery-order-multi-asset-detail.component';
 import { CreateDoMultiAssetComponent } from './delivery-order-multi-asset/create-do-multi-asset/create-do-multi-asset.component';
 import { DoAssetDetailComponent } from './delivery-order-multi-asset/do-asset-detail/do-asset-detail.component';
+import { InvoiceVerifPagingComponent } from './invoice-verif/invoice-verif-paging/invoice-verif-paging.component';
+import { InvoiceVerifDetailComponent } from './invoice-verif/invoice-verif-detail/invoice-verif-detail.component';
 
 
 @NgModule({
@@ -79,7 +81,9 @@ import { DoAssetDetailComponent } from './delivery-order-multi-asset/do-asset-de
     DeliveryOrderMultiAssetComponent,
     DeliveryOrderMultiAssetDetailComponent,
     CreateDoMultiAssetComponent,
-    DoAssetDetailComponent
+    DoAssetDetailComponent,
+    InvoiceVerifPagingComponent,
+    InvoiceVerifDetailComponent
   ],
   providers: [
     NGXToastrService

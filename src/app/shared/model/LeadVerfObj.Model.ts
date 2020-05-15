@@ -1,8 +1,8 @@
 export class LeadVerfObj{
-    LeadId : any;
-    VerifyByCode : any;
-    VerifyByName : any;
-    VerifyDt : any;
-    VerifyStat : any;
-    WfTaskListId : any;
+    LeadId : string;
+    VerifyByCode : string;
+    VerifyByName : string;
+    VerifyDt : Date;
+    VerifyStat : string;
+    WfTaskListId : string;
 }

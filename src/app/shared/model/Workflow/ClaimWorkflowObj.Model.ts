@@ -1,7 +1,7 @@
 
 export class ClaimWorkflowObj {
     pWFTaskListID: string;
-    pUserId: string;
+    pUserID: string;
     pWorkingDate: Date;
 
     constructor() {

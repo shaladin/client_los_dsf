@@ -26,8 +26,8 @@ export class LeadCancelConfirmComponent implements OnInit {
   EditListLeadForCancelByListLeadId = AdInsConstant.EditListLeadForCancelByListLeadId;
   tempWfTaskListArr = new Array();
   leadUrl: string;
-  tempLeadIds : string; // kayaknya
-  tempLeadArr : Array<string>; // kayaknya
+  tempLeadIds : string;
+  tempLeadArr : Array<string>;
   WfTaskListIds : string;
   constructor(
     private http: HttpClient,
@@ -74,7 +74,7 @@ export class LeadCancelConfirmComponent implements OnInit {
   }
 
   SaveLeadConfirmCancel() {
-    var leadObj = new LeadConfirmCancelObj();
+    var leadObj : LeadConfirmCancelObj = new LeadConfirmCancelObj();
     leadObj.LeadStat = "CAN";
     leadObj.LeadStep = "CAN";
     leadObj.Notes = this.LeadConfirmCancelForm.controls.CancelReason.value;

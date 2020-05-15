@@ -43,9 +43,8 @@ import { LeadInputLeadDataComponent } from "./lead-input/lead-input-lead-data/le
 import { MatRadioModule } from "@angular/material";
 import { LeadUpdateComponent } from "./lead-update/lead-update.component";
 import { NgxCurrencyModule } from "ngx-currency";
-import { CustJobDataComponent } from "app/NEW-NAP/sharing-component/input-nap-component/customer-data/component/job-data/cust-job-data.component";
-import { CustSocmedComponent } from "app/NEW-NAP/sharing-component/input-nap-component/customer-data/component/socmed/cust-socmed.component";
 import { UcinputnumberModule } from "@adins/ucinputnumber";
+import { CustSharingComponentModule } from "app/NEW-NAP/sharing-component/input-nap-component/cust-sharing-component.module";
 export const customCurrencyMaskConfig = {     
   align: "left",     
   allowNegative: true,     
@@ -80,12 +79,10 @@ export const customCurrencyMaskConfig = {
     ArchwizardModule,
     MatRadioModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
-    UcinputnumberModule
+    UcinputnumberModule,
+    CustSharingComponentModule
   ],
   declarations: [
-    // MainInfoComponent,
-    CustJobDataComponent,
-    CustSocmedComponent,
     LeadMainInfoComponent,
     CustomerSelfVerificationComponent,
     CustomerDataComponent,
@@ -108,7 +105,6 @@ export const customCurrencyMaskConfig = {
     LeadInputLeadDataComponent,
     LeadViewHeaderComponent,
     LeadUpdateComponent,
-    // ArchwizardModule, 
     ViewLeadDataComponent, 
     FraudVerifPagingComponent, 
     FraudVerifPageComponent, 

@@ -18,10 +18,8 @@ export class ViewCustomerDataComponent implements OnInit {
     this.GetLeadCustByLeadIdUrl = AdInsConstant.GetLeadCustByLeadId;
     this.GetListLeadCustSocmedByLeadCustIdUrl = AdInsConstant.GetListLeadCustSocmedByLeadCustId;
   }
-  viewLeadCustomerPersonalMaindata: any;
-  viewLeadCustomerCompanyMaindata: any;
-  viewLeadCustSocmed: any;
-  LeadId: number;
+  viewLeadCustomerPersonalMaindata: string;
+  LeadId: string;
   GetLeadCustByLeadIdUrl: string;
   GetListLeadCustSocmedByLeadCustIdUrl: string;
   MrCustTypeCode: string;
@@ -49,11 +47,7 @@ export class ViewCustomerDataComponent implements OnInit {
         this.http.post(this.GetListLeadCustSocmedByLeadCustIdUrl, this.leadCustSocmedObj).subscribe(
           response => {
             this.listLeadCustSocmed = response["ReturnObject"];
-            console.log(this.listLeadCustSocmed);
           });
       });
-
-  
   }
-
 }

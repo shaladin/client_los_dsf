@@ -15,8 +15,6 @@ import { CustPersonalMainDataComponent } from "./customer-data/component/persona
 import { CustPersonalContactInformationComponent } from "./customer-data/component/personal-contact-information/cust-personal-contact-information.component";
 import { CustPersonalFinancialDataComponent } from "./customer-data/component/personal-financial-data/cust-personal-financial-data.component";
 import { CustBankAccountComponent } from "./customer-data/component/bank-account/cust-bank-account.component";
-import { CustJobDataComponent } from "./customer-data/component/job-data/cust-job-data.component";
-import { CustSocmedComponent } from "./customer-data/component/socmed/cust-socmed.component";
 import { CustGrpMemberComponent } from "./customer-data/component/cust-grp-member/cust-grp-member.component";
 import { CustCompanyMainDataComponent } from "./customer-data/component/company-main-data/cust-company-main-data.component";
 import { CustShareholderComponent } from "./customer-data/component/shareholder/cust-shareholder.component";
@@ -49,8 +47,13 @@ import { AssetDataPagingComponent } from "./multi-asset-data/asset-data-paging/a
 import { AssetDataAddEditComponent } from "./multi-asset-data/asset-data-add-edit/asset-data-add-edit.component";
 import { CollateralAddEditComponent } from "./multi-asset-data/collateral-add-edit/collateral-add-edit.component";
 import { MultiAssetDataComponent } from "./multi-asset-data/multi-asset-data.component";
+import { MultiAssetLeasingComponent } from "./multi-asset-leasing/multi-asset-leasing.component";
+import { AssetLeasingPagingComponent } from "./multi-asset-leasing/asset-leasing-paging/asset-leasing-paging.component";
+import { AssetLeasingAddEditComponent } from "./multi-asset-leasing/asset-leasing-add-edit/asset-leasing-add-edit.component";
+import { CollateralLeasingAddEditComponent } from "./multi-asset-leasing/collateral-leasing-add-edit/collateral-leasing-add-edit.component";
 import { FinancialDataFctrComponent } from "./financial-data-fctr/financial-data-fctr.component";
 import { SchmRegulerFixFctrComponent } from "./financial-data-fctr/component/multiple-installment/schm-reguler-fix/schm-reguler-fix-fctr.component";
+import { CustSharingComponentModule } from "./cust-sharing-component.module";
 
 export const customCurrencyMaskConfig = {     
   align: "right",     
@@ -71,8 +74,6 @@ export const customCurrencyMaskConfig = {
     CustPersonalContactInformationComponent,
     CustPersonalFinancialDataComponent,
     CustBankAccountComponent,
-    CustJobDataComponent,
-    CustSocmedComponent,
     CustGrpMemberComponent,
     CustCompanyMainDataComponent,
     CustShareholderComponent,
@@ -112,6 +113,10 @@ export const customCurrencyMaskConfig = {
     MultiAssetDataComponent,
     FinancialDataFctrComponent,
     SchmRegulerFixFctrComponent
+    // MultiAssetLeasingComponent,
+    // AssetLeasingPagingComponent,
+    // AssetLeasingAddEditComponent,
+    // CollateralLeasingAddEditComponent
   ],
   imports: [
     CommonModule,
@@ -120,7 +125,8 @@ export const customCurrencyMaskConfig = {
     MatCheckboxModule,
     MatRadioModule,
     MatSelectModule,
-    NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
+    NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
+    CustSharingComponentModule
   ],
   declarations: [
     CustomerDataComponent,
@@ -129,8 +135,6 @@ export const customCurrencyMaskConfig = {
     CustPersonalContactInformationComponent,
     CustPersonalFinancialDataComponent,
     CustBankAccountComponent,
-    CustJobDataComponent,
-    CustSocmedComponent,
     CustGrpMemberComponent,
     CustCompanyMainDataComponent,
     CustShareholderComponent,
@@ -168,6 +172,10 @@ export const customCurrencyMaskConfig = {
     MultiAssetDataComponent,
     FinancialDataFctrComponent,
     SchmRegulerFixFctrComponent
+    // MultiAssetLeasingComponent,
+    // AssetLeasingPagingComponent,
+    // AssetLeasingAddEditComponent,
+    // CollateralLeasingAddEditComponent
   ],
   entryComponents: [SubsidyAddEditComponent],
   providers: [
