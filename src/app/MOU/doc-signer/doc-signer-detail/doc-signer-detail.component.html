@@ -62,8 +62,8 @@
                         <div class="form-group row">
                             <label class="col-md-3 adInsLabel adins-required-label" translate>MF Signer 1 </label>
                             <div class="col-md-4">
-                                <lib-uclookupgeneric [lookupInput]="custShareholderLookUpObj1" [parentForm]="MouCustSignerForm"
-                                    [enjiForm]="enjiForm" [identifier]="'ShareholderName1'" (lookup)=getLookUpShareholder1($event)>
+                                <lib-uclookupgeneric [lookupInput]="employeeLookUpObj1" [parentForm]="MouCustSignerForm"
+                                    [enjiForm]="enjiForm" [identifier]="'EmpName1'" #LookupEmp1 (lookup)=getLookUpEmployee1($event)>
                                 </lib-uclookupgeneric>
                             </div>
                         </div>
@@ -78,8 +78,8 @@
                         <div class="form-group row">
                             <label class="col-md-3 adInsLabel adins-required" translate>MF Signer 2 </label>
                             <div class="col-md-4">
-                                <lib-uclookupgeneric [lookupInput]="custShareholderLookUpObj2" [parentForm]="MouCustSignerForm"
-                                    [enjiForm]="enjiForm" [identifier]="'ShareholderName2'" (lookup)=getLookUpShareholder2($event)>
+                                <lib-uclookupgeneric [lookupInput]="employeeLookUpObj2" [parentForm]="MouCustSignerForm"
+                                    [enjiForm]="enjiForm" [identifier]="'EmpName2'" #LookupEmp2 (lookup)=getLookUpEmployee2($event)>
                                 </lib-uclookupgeneric>
                             </div>
                         </div>
@@ -98,8 +98,12 @@
                         <div class="form-group row">
                             <label class="col-md-3 adInsLabel adins-required-label" translate>Customer Signer 1 </label>
                             <div class="col-md-4">
-                                <lib-uclookupgeneric [lookupInput]="employeeLookUpObj1" [parentForm]="MouCustSignerForm"
-                                [enjiForm]="enjiForm" [identifier]="'EmpName1'" (lookup)=getLookUpEmployee1($event)>
+                                <lib-uclookupgeneric *ngIf="MrCustTypeCode == 'PERSONAL'" [lookupInput]="customerLookUpObj1" [parentForm]="MouCustSignerForm"
+                                [enjiForm]="enjiForm" [identifier]="'CustName1'"  (lookup)=getLookUpCustomer1($event)>
+                                </lib-uclookupgeneric>
+
+                                <lib-uclookupgeneric *ngIf="MrCustTypeCode == 'COMPANY'" [lookupInput]="custShareholderLookUpObj1" [parentForm]="MouCustSignerForm"
+                                [enjiForm]="enjiForm" [identifier]="'CustName1'" (lookup)=getLookUpShareholder1($event)>
                                 </lib-uclookupgeneric>
                             </div>
                         </div>
@@ -114,8 +118,12 @@
                         <div class="form-group row">
                             <label class="col-md-3 adInsLabel adins-required" translate>Customer Signer 2 </label>
                             <div class="col-md-4">
-                                <lib-uclookupgeneric [lookupInput]="employeeLookUpObj2" [parentForm]="MouCustSignerForm"
-                                [enjiForm]="enjiForm" [identifier]="'EmpName2'" (lookup)=getLookUpEmployee2($event)>
+                                <lib-uclookupgeneric *ngIf="MrCustTypeCode == 'PERSONAL'" [lookupInput]="customerLookUpObj2" [parentForm]="MouCustSignerForm"
+                                [enjiForm]="enjiForm" [identifier]="'CustName2'" (lookup)=getLookUpCustomer2($event)>
+                                </lib-uclookupgeneric>
+
+                                <lib-uclookupgeneric *ngIf="MrCustTypeCode == 'COMPANY'" [lookupInput]="custShareholderLookUpObj2" [parentForm]="MouCustSignerForm"
+                                [enjiForm]="enjiForm" [identifier]="'CustName2'" (lookup)=getLookUpShareholder2($event)>
                                 </lib-uclookupgeneric>
                             </div>
                         </div>

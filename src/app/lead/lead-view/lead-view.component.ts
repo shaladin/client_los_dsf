@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class LeadViewComponent implements OnInit {
 
   constructor() { } 
-  leadViewHeader: any;
+  leadViewHeader: string;
    
   ngOnInit() {
     this.leadViewHeader = "./assets/ucviewgeneric/viewLeadHeader.json";

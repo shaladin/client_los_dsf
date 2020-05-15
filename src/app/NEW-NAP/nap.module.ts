@@ -13,10 +13,10 @@ import { AssetDataPagingComponent } from "./sharing-component/input-nap-componen
  
 @NgModule({
     declarations: [
-        AssetDataPagingComponent,
-        AssetDataAddEditComponent,
-        CollateralAddEditComponent,
-        CollateralFctrComponent
+        // AssetDataPagingComponent,
+        // AssetDataAddEditComponent,
+        // CollateralAddEditComponent,
+        // CollateralFctrComponent
         // AssetDataPagingComponent,
         // AssetDataAddEditComponent,
         // CollateralAddEditComponent,
