@@ -3,6 +3,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { AssetDataPagingComponent } from "./sharing-component/input-nap-component/multi-asset-data/asset-data-paging/asset-data-paging.component";
 import { AssetDataAddEditComponent } from "./sharing-component/input-nap-component/multi-asset-data/asset-data-add-edit/asset-data-add-edit.component";
 import { CollateralAddEditComponent } from "./sharing-component/input-nap-component/multi-asset-data/collateral-add-edit/collateral-add-edit.component";
+import { CollateralFctrComponent } from "./sharing-component/input-nap-component/multi-asset-data/collateral-fctr/collateral-fctr.component";
 
 const routes: Routes = [
     {
@@ -48,6 +49,30 @@ const routes: Routes = [
                 path: 'View',
                 loadChildren: './view/nap-view.module#NapViewModule'
             },
+<<<<<<< HEAD
+            {
+              path: 'AssetData/Detail',
+              component: AssetDataAddEditComponent,
+              data: {
+                title: 'Asset Registration Form'
+              }
+            },
+            {
+              path: 'Collateral/Detail',
+              component: CollateralAddEditComponent,
+              data: {
+                title: 'Collateral Registration Form'
+              }
+            },
+            {
+                path: 'Collateral/Factoring',
+                component: CollateralFctrComponent,
+                data: {
+                  title: 'Collateral Factoring Form'
+                }
+              },
+          
+=======
             // {
             //     path: 'AssetData/Paging',
             //     component: AssetDataPagingComponent,
@@ -69,6 +94,7 @@ const routes: Routes = [
             //     title: 'Collateral Registration Form'
             //   }
             // }
+>>>>>>> origin/master
         ]
     }
 ]

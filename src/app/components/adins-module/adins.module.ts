@@ -39,7 +39,11 @@ import { UcuploadModule } from '@adins/ucupload';
         UcapprovebyModule,
         MatCheckboxModule,
         UcuploadModule
+<<<<<<< HEAD
+
+=======
       //  UcapprovalModule
+>>>>>>> origin/master
     ],
     imports: [
         CommonModule,
