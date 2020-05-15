@@ -56,8 +56,9 @@
                         <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupAssetObj" [identifier]="'lookupAsset'" [enjiForm]='enjiForm' [parentForm]='AssetDataForm' (lookup)="SetAsset($event)">
                         </lib-uclookupgeneric>
                       </div>
-                      <!-- {{this.returnLeadExistObj?.CustName == null ? '-' : this.returnLeadExistObj?.CustName}} -->
-                      <label class="col-md-2 adInsLabel" translate>{{this.LobCode != 'FL4W' ? 'Down Payment Type' : 'Security Deposit Type'}}</label>
+                      <!-- {{this.returnLeadExistObj?.CustName == null ? '-' : this.returnLeadExistObj?.CustName}} 
+                      {{this.LobCode != 'FL4W' ? 'Down Payment Type' : 'Security Deposit Type'}}-->
+                      <label class="col-md-2 adInsLabel" translate>Down Payment Type </label>
                       <div class="col-md-3">
                         <select class="form-control adInsInput" style="width: auto" (change)="downPaymentChange($event)" formControlName="MrDownPaymentTypeCode"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.MrDownPaymentTypeCode.invalid }">
@@ -75,7 +76,7 @@
                         <lib-uc-show-errors [control]="AssetDataForm.controls.AssetPrice" [submit]="enjiForm.submitted">
                         </lib-uc-show-errors>
                       </div>
-                      <label class="col-md-2 adInsLabel" translate>{{this.LobCode != 'FL4W' ? 'Down Payment' : 'Security Deposit'}}</label>
+                      <label class="col-md-2 adInsLabel" translate>Down Payment </label>
                         <div class="col-md-3">
                             <input type="number" class="form-control adInsInput" formControlName="DownPayment"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.DownPayment.invalid}">

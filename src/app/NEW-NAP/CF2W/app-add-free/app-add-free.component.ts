@@ -211,7 +211,7 @@ export class AppAddFreeComponent implements OnInit {
       (response) => {
         console.log(response);
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["Nap/CF2W/Add/Detail"], { queryParams: { "LobCode": this.LobCode, "AppId": response["AppId"] } });
+        this.router.navigate(["Nap/CF2W/Add/Detail"], { queryParams: { "AppId": response["AppId"], "LobCode": this.LobCode } });
       },
       (error) => {
         console.log(error);
@@ -234,7 +234,7 @@ export class AppAddFreeComponent implements OnInit {
       RefProdTypeCode: ev.RefProdTypeCode,
       Tenor: ev.Tenor,
       NumOfInst: ev.NumOfInst,
-      NumOfAsset: ev.NumOfAsset,
+      NumOfAsset: "1",
       PayFreqCode: ev.PayFreqCode,
       MrFirstInstTypeCode: ev.MrFirstInstTypeCode,
       MrAppSourceCode: ev.MrAppSourceCode,

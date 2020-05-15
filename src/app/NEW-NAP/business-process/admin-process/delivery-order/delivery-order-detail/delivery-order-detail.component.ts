@@ -89,6 +89,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
 
     this.http.post(AdInsConstant.GetAppAssetByAgrmntId, appAssetobj).subscribe(
       (response) => {
+        console.log(response);
         this.appAssetObj = response;
         this.AppAssetId = this.appAssetObj.AppAssetId;
         this.MrAssetConditionCode = this.appAssetObj.MrAssetConditionCode;

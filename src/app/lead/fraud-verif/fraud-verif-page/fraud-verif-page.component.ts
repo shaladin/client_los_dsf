@@ -11,6 +11,7 @@ import { LeadFraudVerfObj } from 'app/shared/model/LeadFraudVerfObj.model';
 import { _ } from 'core-js';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder, Validators } from '@angular/forms';
+import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { ResDuplicateCustomerObj } from 'app/shared/model/Lead/ResDuplicateCustomerObj.Model';
 import { ResDuplicateNegativeCustomerObj } from 'app/shared/model/Lead/ResDuplicateNegativeCustomerObj.Model';
 import { ResDuplicateNegativeAssetObj } from 'app/shared/model/Lead/ResDuplicateNegativeAssetObj.Model';
@@ -42,8 +43,8 @@ export class FraudVerifPageComponent implements OnInit {
   DuplicateCustObj: DuplicateCustObj = new DuplicateCustObj();
   leadCustObj: LeadCustObj = new LeadCustObj();
   leadAssetObj: LeadAssetObj = new LeadAssetObj();;
-  LeadId: number;
-  WfTaskListId: number;
+  LeadId: string;
+  WfTaskListId: string;
   GetLeadCustByLeadIdUrl: string;
   GetLeadCustPersonalByLeadCustIdUrl: string;
   GetCustomerAndNegativeCustDuplicateCheckUrl: string;
@@ -115,7 +116,8 @@ export class FraudVerifPageComponent implements OnInit {
           });
       });
   }
-  reject() {
+  reject() : void {
+    this.leadFraudVerfObj = new LeadFraudVerfObj();
     this.leadFraudVerfObj.LeadId = this.LeadId;
     this.leadFraudVerfObj.VerifyStat = AdInsConstant.Reject;
     this.leadFraudVerfObj.Notes = this.FraudVerfForm.controls["Notes"].value;
@@ -127,7 +129,8 @@ export class FraudVerifPageComponent implements OnInit {
       });
   }
  
-  verify() {     
+  verify() : void{
+    this.leadFraudVerfObj = new LeadFraudVerfObj();
     this.leadFraudVerfObj.LeadId = this.LeadId;
     this.leadFraudVerfObj.VerifyStat = AdInsConstant.Verify;
     this.leadFraudVerfObj.Notes = this.FraudVerfForm.controls["Notes"].value;
@@ -142,8 +145,9 @@ export class FraudVerifPageComponent implements OnInit {
 
   async claimTask(){
     var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
-    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"]};
-    console.log(wfClaimObj);
+    var wfClaimObj : ClaimWorkflowObj = new ClaimWorkflowObj();
+    wfClaimObj.pWFTaskListID = this.WfTaskListId;
+    wfClaimObj.pUserID = currentUserContext["UserName"];
     this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
       });
