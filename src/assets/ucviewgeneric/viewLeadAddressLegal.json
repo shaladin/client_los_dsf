@@ -8,12 +8,12 @@
       "mainInfo": [
         {
           "type": "text",
-          "label": "Address",
+          "label": "ADDRESS",
           "property": "Addr"
         },
         {
           "type": "text",
-          "label": "Zip Code",
+          "label": "ZIP CODE",
           "property": "ZipCode"
         },
         {
@@ -23,32 +23,32 @@
         },
         {
           "type": "text",
-          "label": "Kelurahan",
+          "label": "KELURAHAN",
           "property": "Kelurahan"
         },
         {
           "type": "text",
-          "label": "Phone 1",
+          "label": "PHONE 1",
           "property": "Phone1"
         },
         {
           "type": "text",
-          "label": "Kecamatan",
+          "label": "KECAMATAN",
           "property": "Kecamatan"
         },
         {
           "type": "text",
-          "label": "Phone 2",
+          "label": "PHONE 2",
           "property": "Phone2"
         },
         {
           "type": "text",
-          "label": "City",
+          "label": "CITY",
           "property": "City"
         },
         {
           "type": "text",
-          "label": "Fax",
+          "label": "FAX",
           "property": "Fax"
         }
       ],
