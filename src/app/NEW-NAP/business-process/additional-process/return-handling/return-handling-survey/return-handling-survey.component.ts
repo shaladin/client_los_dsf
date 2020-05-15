@@ -27,7 +27,7 @@ export class ReturnHandlingSurveyComponent implements OnInit {
   event(ev){
     console.log(ev);
     this.TrxNo = ev.AppNo;
-    this.router.navigate(["http://localhost:4200/Survey/TaskWF"], { queryParams: { "TrxNo": this.TrxNo, "TrxType" : this.TrxType } });
+    this.router.navigate(["../Survey/TaskWF"], { queryParams: { "TrxNo": this.TrxNo, "TrxType" : this.TrxType } });
   }
 
 }
