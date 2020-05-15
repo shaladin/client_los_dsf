@@ -23,8 +23,8 @@ import { RefEmpForLookupObj } from 'app/shared/model/RefEmpForLookupObj.Model';
   providers: [DecimalPipe, NGXToastrService]
 })
 export class LeadViewHeaderComponent implements OnInit {
-  LeadId: any;
-  getLeadByLeadId: any;
+  LeadId: string;
+  getLeadByLeadId: string;
   returnLead: any;
   getLeadObj: LeadObj;
   MainInfoForm = this.fb.group({
@@ -41,7 +41,6 @@ export class LeadViewHeaderComponent implements OnInit {
   
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.getLeadByLeadId = AdInsConstant.GetLeadByLeadId;
-
     this.route.queryParams.subscribe(params => {
         if (params["LeadId"] != null) {
           this.LeadId = params["LeadId"];
@@ -55,8 +54,6 @@ export class LeadViewHeaderComponent implements OnInit {
     this.http.post(this.getLeadByLeadId, this.getLeadObj).subscribe(
     (response) => {
         this.returnLead = response;
-        console.log("aaaa")
-        console.log(this.returnLead)
     });
     this.leadUrl = environment.losR3Web + '/Lead/View?LeadId=' + this.LeadId;
   }

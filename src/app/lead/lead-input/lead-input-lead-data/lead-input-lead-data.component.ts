@@ -25,8 +25,8 @@ import { LeadObj } from 'app/shared/model/Lead.Model';
 export class LeadInputLeadDataComponent implements OnInit {
   @Input() originPage: string;
   typePage: string;
-  CopyFrom: number;
-  LeadId: number;
+  CopyFrom: string;
+  LeadId: string;
   assetConditionObj: RefMasterObj;
   returnAssetConditionObj: [];
   downPaymentObj: RefMasterObj;
@@ -35,7 +35,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   returnFirstInstObj: [];
   InputLookupAssetObj: InputLookupObj;
   getListActiveRefMasterUrl: string;
-  assetTypeId: number;
+  assetTypeId: string;
   leadInputLeadDataObj: LeadInputLeadDataObj;
   addEditLeadData: string;
   getLeadAssetByLeadId: string;
