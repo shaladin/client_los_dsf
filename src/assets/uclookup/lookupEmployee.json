@@ -20,20 +20,21 @@
       }
     ],
     "querystring": {
-      "select": "SELECT RE.EMP_NAME AS EmpName, RE.REF_EMP_ID AS EmpId, RE.EMP_NO AS EmpNo, RR.ROLE_CODE AS RoleCode, RR.ROLE_NAME AS RoleName",
+      "select": "SELECT RE.EMP_NAME AS EmpName, RE.EMP_NO AS EmpNo, RR.ROLE_NAME AS RoleName, RE.REF_EMP_ID AS EmpId",
       "from": "FROM dbo.REF_EMP RE WITH(NOLOCK) JOIN dbo.REF_USER RU WITH(NOLOCK) ON RU.REF_EMP_ID = RE.REF_EMP_ID JOIN dbo.REF_USER_ROLE RUR WITH(NOLOCK) ON RUR.REF_USER_ID = RU.REF_USER_ID JOIN dbo.REF_ROLE RR WITH(NOLOCK) ON RR.REF_ROLE_ID = RUR.REF_ROLE_ID",
-      "where":"WHERE RE.IS_ACTIVE = 1"
+      "where":"WHERE RE.IS_ACTIVE = 1",
+      "groupby":"GROUP BY RE.EMP_NAME, RE.EMP_NO ,RR.ROLE_NAME, RE.REF_EMP_ID"
     },
     "headerList": [
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "Employee Name",
             "name": "RE.EMP_NAME"
         },
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "Employee Position",
             "name": "RR.ROLE_NAME"
         },
@@ -46,12 +47,12 @@
     "bodyList": [
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "EmpName"
         },
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "RoleName"
         },
         {

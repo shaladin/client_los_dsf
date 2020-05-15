@@ -12,7 +12,8 @@ import { AssetDataAddEditComponent } from "./sharing-component/input-nap-compone
 import { CollateralAddEditComponent } from "./sharing-component/input-nap-component/multi-asset-data/collateral-add-edit/collateral-add-edit.component";
 import { MultiAssetDataComponent } from "./sharing-component/input-nap-component/multi-asset-data/multi-asset-data.component";
 import { MultiAssetLeasingComponent } from "./sharing-component/input-nap-component/multi-asset-leasing/multi-asset-leasing.component";
-
+import { CollateralFctrComponent } from "./sharing-component/input-nap-component/multi-asset-data/collateral-fctr/collateral-fctr.component";
+import { UcSubsectionModule } from "@adins/uc-subsection";
  
 @NgModule({
     declarations: [
@@ -20,21 +21,24 @@ import { MultiAssetLeasingComponent } from "./sharing-component/input-nap-compon
         // AssetDataAddEditComponent,
         // CollateralAddEditComponent,
         // MultiAssetDataComponent,
+        // CollateralFctrComponent
         // LoanObjectComponent,
         // SearchCrossAppComponent,
         // ApplicationDataComponent,
         // ApplicationDataRefinancingComponent,
         // CollateralAddEditComponent 
-        MultiAssetLeasingComponent,
-        AssetLeasingPagingComponent,
-        AssetLeasingAddEditComponent,
-        CollateralLeasingAddEditComponent
+        // MultiAssetLeasingComponent,
+        // AssetLeasingPagingComponent,
+        // AssetLeasingAddEditComponent,
+        // CollateralLeasingAddEditComponent
     ],
     imports: [
         CommonModule,
         MatRadioModule,
         NapRoutingModule,
         AdInsModule,
+        UcSubsectionModule
+        
     ],
     exports: [],
     providers: [

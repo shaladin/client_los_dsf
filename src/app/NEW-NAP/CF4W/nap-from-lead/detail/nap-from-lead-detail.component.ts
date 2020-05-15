@@ -20,7 +20,7 @@ export class NapFromLeadDetailComponent implements OnInit {
   param;
   ProductOfferingIdentifier;
   ProductOfferingNameIdentifier;
-  leadId: number;
+  leadId: string;
   constructor(
     private fb: FormBuilder,
     private router: Router,

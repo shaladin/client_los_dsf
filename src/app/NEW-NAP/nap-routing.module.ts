@@ -6,6 +6,7 @@ import { CollateralAddEditComponent } from "./sharing-component/input-nap-compon
 import { MultiAssetLeasingComponent } from "./sharing-component/input-nap-component/multi-asset-leasing/multi-asset-leasing.component";
 import { MultiAssetDataComponent } from "./sharing-component/input-nap-component/multi-asset-data/multi-asset-data.component";
 import { AssetLeasingPagingComponent } from "./sharing-component/input-nap-component/multi-asset-leasing/asset-leasing-paging/asset-leasing-paging.component";
+import { CollateralFctrComponent } from "./sharing-component/input-nap-component/multi-asset-data/collateral-fctr/collateral-fctr.component";
 
 const routes: Routes = [
     {
@@ -72,13 +73,13 @@ const routes: Routes = [
             //     title: 'Collateral Registration Form'
             //   }
             // },
-            {
-                path: 'AssetLeasing/Paging',
-                component: MultiAssetLeasingComponent,
-                data: {
-                  title: 'Asset Leasing'
-                }
-            }
+            // {
+            //     path: 'AssetLeasing/Paging',
+            //     component: MultiAssetLeasingComponent,
+            //     data: {
+            //       title: 'Asset Leasing'
+            //     }
+            // }
         ]
     }
 ]
