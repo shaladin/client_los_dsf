@@ -8,7 +8,7 @@
                             <h4 class="card-title" id="horz-layout-colored-controls" translate>TELE VERIFICATION</h4>
                         </div>
                         <div class="col-md-4" style="text-align-last: right">
-                            <button type="button" class="backButton" [routerLink]="['/Lead/TeleVerif/Paging']"
+                            <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['/Lead/TeleVerif/Paging']"
                                 [queryParams]="{AssetSchmHId: this.AssetSchmHId}" translate>
                                 <i class="ft-arrow-left"></i> Back
                             </button>
@@ -42,18 +42,17 @@
               </div>
             </div>
             <br><br>
-            <div class="bs-stepper-content">
-              <!-- your steps content here -->
+            <!-- <div class="bs-stepper-content"> -->
               <div id="customer-data-tab" class="content" role="tabpanel"
                 aria-labelledby="customer-data-tab-trigger">
                 <app-lead-input-cust-data *ngIf="isCustData == true" (outputTab)="getValue($event)">
                 </app-lead-input-cust-data>
               </div>
               <div id="lead-data-tab" class="content" role="tabpanel" aria-labelledby="lead-data-tab-trigger">
-                <app-lead-input-lead-data *ngIf="isLeadData == true" (outputTab)="getValue($event)">
+                <app-lead-input-lead-data *ngIf="isLeadData == true" originPage="teleVerif" (outputTab)="getValue($event)">
                 </app-lead-input-lead-data>
               </div>
-            </div>
+            <!-- </div> -->
           </div>
     </div>
 </div>

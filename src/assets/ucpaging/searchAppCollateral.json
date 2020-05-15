@@ -1,0 +1,29 @@
+{
+    "title": "Collateral List",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "textbox",
+            "name": "A.FULL_ASSET_CODE",
+            "id": "CollateralCodeId",
+            "value": "",
+            "label": "Collateral Code",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "A.FULL_ASSET_NAME",
+            "id": "CollateralNameId",
+            "value": "",
+            "label": "Collateral Name",
+            "placeholder": "Placeholder"
+        }
+    ],
+    "querystring": {
+     "select" :"SELECT A.APP_COLLATERAL_ID AS AppCollateralId,A.APP_ID AS AppId,A.COLLATERAL_SEQ_NO AS CollSeqNo,A.FULL_ASSET_CODE AS FullAssetCode,A.FULL_ASSET_NAME AS FullAssetName, A.MR_COLLATERAL_CONDITION_CODE AS MrCollConditionCode, A.MR_COLLATERAL_USAGE_CODE AS MrCollUsageCode,A.COLLATERAL_STAT AS CollStat,A.SERIAL_NO_1 AS Serial1,A.SERIAL_NO_2 AS Serial2,A.SERIAL_NO_3 AS Serial3,A.COLLATERAL_VALUE_AMT AS CollValueAmt,A.ASSET_TYPE_CODE AS AssetTypeCode,A.ASSET_CATEGORY_CODE AS AssetCategoryCode,A.COLLATERAL_NOTES AS CollNotes,A.COLLATERAL_PRCNT AS CollPrcnt,A.MANUFACTURING_YEAR AS ManufacturingYear,A.IS_MAIN_COLLATERAL AS IsMainColl, B.OWNER_NAME AS OwnerName",
+     "from":"FROM dbo.APP_COLLATERAL A WITH(NOLOCK) JOIN dbo.APP_COLLATERAL_REGISTRATION B WITH(NOLOCK) ON A.APP_COLLATERAL_ID = B.APP_COLLATERAL_ID",
+     "where":"WHERE APP_ID = 74"
+    },
+    "headerList": [],
+    "bodyList": []
+}

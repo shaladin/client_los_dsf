@@ -14,6 +14,7 @@ import { CustDataPersonalObj } from 'app/shared/model/CustDataPersonalObj.Model'
 import { CustDataCompanyObj } from 'app/shared/model/CustDataCompanyObj.Model';
 import { WizardComponent } from 'angular-archwizard';
 import { CustJobDataComponent } from 'app/NEW-NAP/sharing-component/input-nap-component/customer-data/component/job-data/cust-job-data.component';
+import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 
 @Component({
   selector: 'app-customer-data',
@@ -22,9 +23,9 @@ import { CustJobDataComponent } from 'app/NEW-NAP/sharing-component/input-nap-co
   providers: [NGXToastrService]
 })
 export class CustomerDataComponent implements OnInit {
-  @Input() LeadId: any;
+  @Input() LeadId: string;
   @ViewChild(CustJobDataComponent) custJobDataComponent;
-  businessDt: any;
+  businessDt: Date;
   inputLookupObj: InputLookupObj;
   criteriaList: Array<CriteriaObj>;
   criteriaObj: CriteriaObj;
@@ -36,14 +37,12 @@ export class CustomerDataComponent implements OnInit {
   inputFieldLegalObj: InputFieldObj;
   residenceAddrObj: AddrObj;
   inputFieldResidenceObj: InputFieldObj;
-  copyFromResidence: any;
+  copyFromResidence: string;
 
   MaritalStatObj: any;
   MrCustTypeCode: string = "PERSONAL";
-  MrCustModelCode: string;
   defCustModelCode: string;
   IdTypeList: any;
-
   copyToResidenceTypeObj: any = [
     {
     Key: "LEGAL",
@@ -57,7 +56,6 @@ export class CustomerDataComponent implements OnInit {
   ngOnInit() {
     var context = JSON.parse(localStorage.getItem("UserAccess"));
     this.businessDt = new Date(context["BusinessDt"]);
-    console.log(this.LeadId);
     this.bindUcLookup();
     this.bindMaritalStatObj();
     this.bindCustomerData();
@@ -75,9 +73,7 @@ export class CustomerDataComponent implements OnInit {
     MobilePhnNo1: ['', [Validators.required]],
     MobilePhnNo2: [''],
     Email: ['', [Validators.required]],
-
     CopyFromResidence: [''],
-
     Facebook: [''],
     Instagram: [''],
     Twitter: [''],
@@ -101,7 +97,7 @@ export class CustomerDataComponent implements OnInit {
   }
 
   setCriteriaLookupCustomer(custTypeCode){
-    var arrCrit = new Array();
+    var arrCrit : Array<CriteriaObj> = new Array();
     var critObj = new CriteriaObj();
     critObj.DataType = 'text';
     critObj.restriction = AdInsConstant.RestrictionEq;
@@ -117,9 +113,9 @@ export class CustomerDataComponent implements OnInit {
     });
   }
 
-  bindCustomerData()
-  {
-    var refMasterObj = { RefMasterTypeCode: 'ID_TYPE' };
+  bindCustomerData(){
+    var refMasterObj : RefMasterObj = new RefMasterObj();
+    refMasterObj.RefMasterTypeCode = 'ID_TYPE';
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe((response) => {
       this.IdTypeList = response['ReturnObject'];
       this.CustMainDataForm.patchValue({
@@ -129,7 +125,9 @@ export class CustomerDataComponent implements OnInit {
   }
 
   bindMaritalStatObj(){
-    var refMasterObj = { RefMasterTypeCode: "MARITAL_STAT" };
+    var refMasterObj : RefMasterObj = new RefMasterObj();
+    refMasterObj.RefMasterTypeCode = "MARITAL_STAT";
+
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
         this.MaritalStatObj = response["ReturnObject"];
@@ -180,9 +178,7 @@ export class CustomerDataComponent implements OnInit {
       this.inputFieldResidenceObj.inputLookupObj.jsonSelect = {Zipcode: this.CustMainDataForm.controls["legalAddrZipcode"]["controls"].value.value};
     }
   }
-
-  SaveLead()
-  {
+  SaveLead(){
     this.wizard.goToNextStep();
   }
 }

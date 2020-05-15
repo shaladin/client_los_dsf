@@ -1,0 +1,69 @@
+{
+    "url": "",
+    "title":"Lookup - Customer",
+    "component": [
+      {
+        "type": "textbox",
+        "name": "CP.CUST_FULL_NAME",
+        "id": "custFullNameId",
+        "value": "",
+        "label": "Customer Full Name",
+        "placeholder": ""
+      },
+      {
+        "type": "textbox",
+        "name": "C.CUST_NO",
+        "id": "custNoId",
+        "value": "",
+        "label": "Customer No",
+        "placeholder": ""
+      }
+    ],
+    "querystring": {
+      "select": "SELECT CP.CUST_FULL_NAME AS CustFullName, CP.CUST_ID AS CustId, C.CUST_NO AS CustNo",
+      "from": "FROM dbo.CUST_PERSONAL CP  WITH(NOLOCK) JOIN dbo.CUST C  WITH(NOLOCK) ON C.CUST_ID = CP.CUST_ID"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Customer Full Name",
+            "name": "CP.CUST_FULL_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Customer No",
+            "name": "C.CUST_NO"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Select"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustFullName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustNo"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "select",
+                    "property": "CustId"
+                }
+            ]
+        }
+    ],
+    "propertyId": "CustFullName",
+    "propertyName": "CustFullName"
+}

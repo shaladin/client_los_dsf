@@ -62,7 +62,7 @@ export class PagingComponent implements OnInit {
     // var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
     // var wfClaimObj = new ClaimWorkflowObj();
     // wfClaimObj.pWFTaskListID = event.RowObj.WfTaskListId;
-    // wfClaimObj.pUserId = currentUserContext["UserName"];
+    // wfClaimObj.pUserID = currentUserContext["UserName"];
 
     // this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
     //   (response) => {

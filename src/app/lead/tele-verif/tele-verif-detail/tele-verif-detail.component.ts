@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ActivatedRoute } from '@angular/router';
 import Stepper from 'bs-stepper';
+import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 
 @Component({
   selector: 'app-tele-verif-detail',
@@ -10,10 +11,10 @@ import Stepper from 'bs-stepper';
 })
 export class TeleVerifDetailComponent implements OnInit {
   private stepper: Stepper;
-  viewLeadHeaderMainInfo: any;
+  viewLeadHeaderMainInfo: string;
   isCustData: boolean;
   isLeadData: boolean;
-  WfTaskListId: any;
+  WfTaskListId: string;
 
   constructor(private http: HttpClient, private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
@@ -45,8 +46,9 @@ export class TeleVerifDetailComponent implements OnInit {
   }
   async claimTask() {
     var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
-    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"] };
-    console.log(wfClaimObj);
+    var wfClaimObj : ClaimWorkflowObj = new ClaimWorkflowObj();
+    wfClaimObj.pWFTaskListID = this.WfTaskListId;
+    wfClaimObj.pUserID = currentUserContext["UserName"];
     this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
         console.log(response);

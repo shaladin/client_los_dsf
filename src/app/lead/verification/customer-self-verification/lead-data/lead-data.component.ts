@@ -5,7 +5,6 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
-import { WizardComponent } from 'angular-archwizard';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { LeadObj } from 'app/shared/model/Lead.Model';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
@@ -24,22 +23,22 @@ import { LeadInputLeadDataObj } from 'app/shared/model/LeadInputLeadDataObj.Mode
 export class LeadDataComponent implements OnInit {
   @Input() originPage :string;
   typePage: string;
-  CopyFrom: any;
-  LeadId: any;
-  assetConditionObj: any;
+  CopyFrom: string;
+  LeadId: string;
+  assetConditionObj: RefMasterObj;
   returnAssetConditionObj: any;
-  downPaymentObj: any;
+  downPaymentObj: RefMasterObj;
   returnDownPaymentObj: any;
-  firstInstObj: any;
+  firstInstObj: RefMasterObj;
   returnFirstInstObj: any;
-  InputLookupAssetObj: any;
-  getListActiveRefMasterUrl: any;
-  assetTypeId: number;
-  leadInputLeadDataObj: any;
-  addEditLeadData: any;
-  getLeadAssetByLeadId: any;
-  getLeadAppByLeadId: any;
-  getAssetMasterForLookupEmployee: any;
+  InputLookupAssetObj: InputLookupObj;
+  getListActiveRefMasterUrl: string;
+  assetTypeId: string;
+  leadInputLeadDataObj: LeadInputLeadDataObj;
+  addEditLeadData: string;
+  getLeadAssetByLeadId: string;
+  getLeadAppByLeadId: string;
+  getAssetMasterForLookupEmployee: string;
   serial1Disabled: boolean = false;
   serial2Disabled: boolean = false;
   serial3Disabled: boolean = false;
@@ -50,11 +49,11 @@ export class LeadDataComponent implements OnInit {
   serial3Mandatory: boolean = false;
   serial4Mandatory: boolean = false;
   serial5Mandatory: boolean = false;
-  reqLeadAssetObj: any;
+  reqLeadAssetObj: LeadAssetObj;
   resLeadAssetObj: any;
-  reqLeadAppObj: any;
+  reqLeadAppObj: LeadAppObj;
   resLeadAppObj: any;
-  reqAssetMasterObj: any;
+  reqAssetMasterObj: AssetMasterObj;
   resAssetMasterObj: any;
   LeadDataForm = this.fb.group({
     FullAssetCode: [''],
@@ -77,16 +76,16 @@ export class LeadDataComponent implements OnInit {
   });
   getGeneralSettingByCode: string;
   getLeadByLeadId: string;
-  submitWorkflowLeadInput: any;
-  generalSettingObj: any;
+  submitWorkflowLeadInput: string;
+  generalSettingObj: GeneralSettingObj;
   returnGeneralSettingObj: any;
-  lobKta = new Array();
+  lobKta : Array<string> = new Array();
   leadObj: LeadObj;
   returnLeadObj: any;
   returnLobCode: string;
-  WfTaskListId: any;
+  WfTaskListId: string;
   editLead : string;
-  editLeadObj : any;
+  editLeadObj : LeadObj;
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.getListActiveRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
     this.addEditLeadData = AdInsConstant.AddEditLeadData;
@@ -98,7 +97,6 @@ export class LeadDataComponent implements OnInit {
     this.editLead = AdInsConstant.EditLead;
     this.submitWorkflowLeadInput = AdInsConstant.SubmitWorkflowLeadInput;
 
-
     this.route.queryParams.subscribe(params => {
       if (params["LeadId"] != null) {
         this.LeadId = params["LeadId"];
@@ -107,12 +105,11 @@ export class LeadDataComponent implements OnInit {
         this.typePage = params["mode"];
       }
       if (params["WfTaskListId"] == null) {
-        this.WfTaskListId = 0;
+        this.WfTaskListId = "0";
       }
       else {
         this.WfTaskListId = params["WfTaskListId"];
       }
-
       if (params["CopyFrom"] != null) {
         this.CopyFrom = params["CopyFrom"];
       }
@@ -134,13 +131,12 @@ export class LeadDataComponent implements OnInit {
   // }
 
   radioChange(event) {
-     
     this.serial2Mandatory = false;
     this.serial3Mandatory = false;
     this.serial4Mandatory = false;
     this.serial5Mandatory = false;
 
-    var assetType = new AssetTypeObj();
+    var assetType : AssetTypeObj= new AssetTypeObj();
     assetType.AssetTypeId = this.assetTypeId;
     this.http.post(AdInsConstant.GetAssetTypeById, assetType).subscribe(
       (response: any) => {
@@ -209,8 +205,6 @@ export class LeadDataComponent implements OnInit {
   }
 
   ngOnInit() {
-    
-    console.log('leaddata');
     this.InputLookupAssetObj = new InputLookupObj();
     this.InputLookupAssetObj.urlJson = "./assets/uclookup/NAP/lookupAsset.json";
     this.InputLookupAssetObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
@@ -285,13 +279,11 @@ export class LeadDataComponent implements OnInit {
               SerialNo5: this.resLeadAssetObj.SerialNo5,
             });
           }
-
           this.reqAssetMasterObj = new AssetMasterObj();
           this.reqAssetMasterObj.FullAssetCode = this.resLeadAssetObj.FullAssetCode;
           this.http.post(this.getAssetMasterForLookupEmployee, this.reqAssetMasterObj).subscribe(
             (response) => {
               this.resAssetMasterObj = response;
-
               this.InputLookupAssetObj.nameSelect = this.resAssetMasterObj.FullAssetName;
               this.InputLookupAssetObj.jsonSelect = this.resAssetMasterObj;
               this.LeadDataForm.patchValue({
@@ -314,7 +306,6 @@ export class LeadDataComponent implements OnInit {
                     this.LeadDataForm.controls['SerialNo1'].updateValueAndValidity();
                     this.serial1Mandatory = false;
                   }
-
                   if (response.IsMndtrySerialNo2 == "1" && this.resLeadAssetObj.MrAssetConditionCode == "USED") {
                     this.LeadDataForm.controls['SerialNo2'].setValidators([Validators.required]);
                     this.LeadDataForm.controls['SerialNo2'].updateValueAndValidity();
@@ -325,7 +316,6 @@ export class LeadDataComponent implements OnInit {
                     this.LeadDataForm.controls['SerialNo2'].updateValueAndValidity();
                     this.serial2Mandatory = false;
                   }
-
                   if (response.IsMndtrySerialNo3 == "1" && this.resLeadAssetObj.MrAssetConditionCode == "USED") {
                     this.LeadDataForm.controls['SerialNo3'].setValidators([Validators.required]);
                     this.LeadDataForm.controls['SerialNo3'].updateValueAndValidity();
@@ -336,7 +326,6 @@ export class LeadDataComponent implements OnInit {
                     this.LeadDataForm.controls['SerialNo3'].updateValueAndValidity();
                     this.serial3Mandatory = false;
                   }
-
                   if (response.IsMndtrySerialNo4 == "1" && this.resLeadAssetObj.MrAssetConditionCode == "USED") {
                     this.LeadDataForm.controls['SerialNo4'].setValidators([Validators.required]);
                     this.LeadDataForm.controls['SerialNo4'].updateValueAndValidity();
@@ -347,7 +336,6 @@ export class LeadDataComponent implements OnInit {
                     this.LeadDataForm.controls['SerialNo4'].updateValueAndValidity();
                     this.serial4Mandatory = false;
                   }
-
                   if (response.IsMndtrySerialNo5 == "1" && this.resLeadAssetObj.MrAssetConditionCode == "USED") {
                     this.LeadDataForm.controls['SerialNo5'].setValidators([Validators.required]);
                     this.LeadDataForm.controls['SerialNo5'].updateValueAndValidity();
@@ -358,7 +346,6 @@ export class LeadDataComponent implements OnInit {
                     this.LeadDataForm.controls['SerialNo5'].updateValueAndValidity();
                     this.serial5Mandatory = false;
                   }
-
                   this.serial1Disabled = response.SerialNo1Label == "" ? true : false;
                   this.serial2Disabled = response.SerialNo2Label == "" ? true : false;
                   this.serial3Disabled = response.SerialNo3Label == "" ? true : false;
@@ -403,13 +390,11 @@ export class LeadDataComponent implements OnInit {
               SerialNo4: this.resLeadAssetObj.SerialNo4,
               SerialNo5: this.resLeadAssetObj.SerialNo5,
             });
-
             this.reqAssetMasterObj = new AssetMasterObj();
             this.reqAssetMasterObj.FullAssetCode = this.resLeadAssetObj.FullAssetCode;
             this.http.post(this.getAssetMasterForLookupEmployee, this.reqAssetMasterObj).subscribe(
               (response) => {
                 this.resAssetMasterObj = response;
-
                 this.InputLookupAssetObj.nameSelect = this.resAssetMasterObj.FullAssetName;
                 this.InputLookupAssetObj.jsonSelect = this.resAssetMasterObj;
                 this.LeadDataForm.patchValue({

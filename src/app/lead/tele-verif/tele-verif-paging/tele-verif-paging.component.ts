@@ -8,7 +8,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
   templateUrl: './tele-verif-paging.component.html'
 })
 export class TeleVerifPagingComponent implements OnInit {
-  inputPagingObj: any;
+  inputPagingObj: UcPagingObj;
 
   constructor() { }
 
