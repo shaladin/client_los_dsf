@@ -109,7 +109,8 @@ export class FinancialDataFctrComponent implements OnInit {
         RetentionPrcnt: 0,
         TotalRetentionAmt: 0,
         TotalDisbAmt: 0,
-        Tenor: 0
+        Tenor: 0,
+        InterestType: ""
       }
     );
     this.LoadAppFinData();
@@ -152,6 +153,7 @@ export class FinancialDataFctrComponent implements OnInit {
           MrInstSchemeCode: this.appFinDataObj.MrInstSchemeCode,
           InstSchemeName: this.appFinDataObj.InstSchemeName,
           CummulativeTenor: this.appFinDataObj.CummulativeTenor,
+          TotalInterestAmt: this.appFinDataObj.TotalInterestAmt,
 
           MrInstTypeCode: this.appFinDataObj.MrInstTypeCode,
           InstTypeName: this.appFinDataObj.InstTypeName,
@@ -187,7 +189,7 @@ export class FinancialDataFctrComponent implements OnInit {
     }
     if (isValidGrossYield && isValidGracePeriod) {
 
-      this.http.post(environment.losUrl + "/AppFinData/SaveAppFinData", this.FinDataForm.value).subscribe(
+      this.http.post(AdInsConstant.SaveAppFinDataFctr, this.FinDataForm.value).subscribe(
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["Message"]);

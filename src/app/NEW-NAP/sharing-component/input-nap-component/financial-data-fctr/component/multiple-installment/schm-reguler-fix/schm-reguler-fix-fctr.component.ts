@@ -30,7 +30,6 @@ export class SchmRegulerFixFctrComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log("reguler fix fctr");
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
   }

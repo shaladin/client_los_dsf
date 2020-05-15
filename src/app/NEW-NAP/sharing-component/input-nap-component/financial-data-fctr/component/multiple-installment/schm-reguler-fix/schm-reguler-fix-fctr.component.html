@@ -146,7 +146,7 @@
             </div>
             <div class="col-md-3 form-inline">
               <select formControlName="RateType" class="form-control full-width"
-                (change)="DDLValueType_OnChange($event);">
+              (change)="SetNeedReCalculate()">
                 <option value="">--Select--</option>
                 <option *ngFor="let m of RateTypeOptions" value={{m.Key}}>{{m.Value}}</option>
               </select>
