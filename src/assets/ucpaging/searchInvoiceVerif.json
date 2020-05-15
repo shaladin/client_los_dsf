@@ -1,0 +1,93 @@
+{
+    "title": "Invoice Verification",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "textbox",
+            "name": "APP_NO",
+            "id": "AppNoId",
+            "value": "",
+            "label": "Application No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "PROD_OFFERNG_NAME",
+            "id": "ProdOfferingNameId",
+            "value": "",
+            "label": "Product Offering Name",
+            "placeholder": "Placeholder"
+        }
+    ],
+    "querystring": {
+        "select":"SELECT A.APP_NO AS ApplicationNo,B.AGRMNT_NO AS AggrementNo,B.CUST_NAME AS CustName,B.PROD_OFFERING_NAME AS ProdName,B.AGRMNT_STAT AS Status, B.AGRMNT_ID AS AgrmntId",
+        "from":"FROM dbo.APP A WITH (NOLOCK) JOIN dbo.AGRMNT B ON A.APP_ID = B.APP_ID JOIN dbo.V_WF_TASK_LIST C ON B.AGRMNT_NO = C.TRANSACTION_CODE",
+        "where" : "WHERE C.ACT_CODE = 'INVOICE_VERIF' "
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Application No",
+            "name": "ApplicationNo"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Customer Name",
+            "name": "CustName"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Product  Offering Name",
+            "name": "ProdName"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Verify"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "ApplicationNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "ProdName"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "edit",
+                    "path": "/Document/DocPrint/View",
+                    "param": [
+                        {
+                            "type": "AppId",
+                            "property": "AppId"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -5,7 +5,6 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
-import { WizardComponent } from 'angular-archwizard';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { LeadObj } from 'app/shared/model/Lead.Model';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';

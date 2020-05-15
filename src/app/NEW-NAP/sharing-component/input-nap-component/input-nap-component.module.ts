@@ -15,8 +15,6 @@ import { CustPersonalMainDataComponent } from "./customer-data/component/persona
 import { CustPersonalContactInformationComponent } from "./customer-data/component/personal-contact-information/cust-personal-contact-information.component";
 import { CustPersonalFinancialDataComponent } from "./customer-data/component/personal-financial-data/cust-personal-financial-data.component";
 import { CustBankAccountComponent } from "./customer-data/component/bank-account/cust-bank-account.component";
-import { CustJobDataComponent } from "./customer-data/component/job-data/cust-job-data.component";
-import { CustSocmedComponent } from "./customer-data/component/socmed/cust-socmed.component";
 import { CustGrpMemberComponent } from "./customer-data/component/cust-grp-member/cust-grp-member.component";
 import { CustCompanyMainDataComponent } from "./customer-data/component/company-main-data/cust-company-main-data.component";
 import { CustShareholderComponent } from "./customer-data/component/shareholder/cust-shareholder.component";
@@ -49,6 +47,10 @@ import { AssetDataPagingComponent } from "./multi-asset-data/asset-data-paging/a
 import { AssetDataAddEditComponent } from "./multi-asset-data/asset-data-add-edit/asset-data-add-edit.component";
 import { CollateralAddEditComponent } from "./multi-asset-data/collateral-add-edit/collateral-add-edit.component";
 import { MultiAssetDataComponent } from "./multi-asset-data/multi-asset-data.component";
+import { FinancialDataFctrComponent } from "./financial-data-fctr/financial-data-fctr.component";
+import { SchmRegulerFixFctrComponent } from "./financial-data-fctr/component/multiple-installment/schm-reguler-fix/schm-reguler-fix-fctr.component";
+import { CustSharingComponentModule } from "./cust-sharing-component.module";
+
 export const customCurrencyMaskConfig = {     
   align: "right",     
   allowNegative: true,     
@@ -68,8 +70,6 @@ export const customCurrencyMaskConfig = {
     CustPersonalContactInformationComponent,
     CustPersonalFinancialDataComponent,
     CustBankAccountComponent,
-    CustJobDataComponent,
-    CustSocmedComponent,
     CustGrpMemberComponent,
     CustCompanyMainDataComponent,
     CustShareholderComponent,
@@ -106,7 +106,9 @@ export const customCurrencyMaskConfig = {
     AssetDataPagingComponent,
     AssetDataAddEditComponent,
     CollateralAddEditComponent,
-    MultiAssetDataComponent
+    MultiAssetDataComponent,
+    FinancialDataFctrComponent,
+    SchmRegulerFixFctrComponent
   ],
   imports: [
     CommonModule,
@@ -115,7 +117,8 @@ export const customCurrencyMaskConfig = {
     MatCheckboxModule,
     MatRadioModule,
     MatSelectModule,
-    NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
+    NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
+    CustSharingComponentModule
   ],
   declarations: [
     CustomerDataComponent,
@@ -124,8 +127,6 @@ export const customCurrencyMaskConfig = {
     CustPersonalContactInformationComponent,
     CustPersonalFinancialDataComponent,
     CustBankAccountComponent,
-    CustJobDataComponent,
-    CustSocmedComponent,
     CustGrpMemberComponent,
     CustCompanyMainDataComponent,
     CustShareholderComponent,
@@ -160,7 +161,9 @@ export const customCurrencyMaskConfig = {
     AssetDataPagingComponent,
     AssetDataAddEditComponent,
     CollateralAddEditComponent,
-    MultiAssetDataComponent
+    MultiAssetDataComponent,
+    FinancialDataFctrComponent,
+    SchmRegulerFixFctrComponent
   ],
   entryComponents: [SubsidyAddEditComponent],
   providers: [

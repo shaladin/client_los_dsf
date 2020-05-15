@@ -124,7 +124,7 @@ export class FinancialDataComponent implements OnInit {
           RoundingAmt: this.appFinDataObj.RoundingAmt,
           SupplEffectiveRatePrcnt: this.appFinDataObj.SupplEffectiveRatePrcnt,
 
-          DiffRateAmt: +this.appFinDataObj.StdEffectiveRatePrcnt - +this.appFinDataObj.SupplEffectiveRatePrcnt,
+          DiffRateAmt: +this.appFinDataObj.DiffRateAmt,
 
           StdGrossYieldPrcnt: this.appFinDataObj.StdGrossYieldPrcnt,
           GrossYieldPrcnt: this.appFinDataObj.GrossYieldPrcnt,

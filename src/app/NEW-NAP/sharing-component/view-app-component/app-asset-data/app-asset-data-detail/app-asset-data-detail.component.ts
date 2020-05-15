@@ -38,13 +38,13 @@ export class AppAssetDataDetailComponent implements OnInit {
         this.appCollateralRegistration = response[2];
 
         for (const item of this.appAssetSupplEmp.ReturnObject) {
-          if(item.MrSupplEmpPositionCode == "SALES_PERSON"){
+          if(item.MrSupplEmpPositionCode == AdInsConstant.SALES_JOB_CODE){
             this.salesName = item.SupplEmpName;
           }
-          else if(item.MrSupplEmpPositionCode == "BRANCH_MANAGER"){
+          else if(item.MrSupplEmpPositionCode == AdInsConstant.BRANCH_MANAGER_JOB_CODE){
             this.branchManagerName = item.SupplEmpName;
           }
-          else if(item.MrSupplEmpPositionCode == "ADMIN_HEAD"){
+          else if(item.MrSupplEmpPositionCode == AdInsConstant.ADMIN_HEAD_JOB_CODE){
             this.adminHeadName = item.SupplEmpName;
           }
         }
