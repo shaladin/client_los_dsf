@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-return-handling-survey',
@@ -10,7 +11,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 })
 export class ReturnHandlingSurveyComponent implements OnInit {
 
-  constructor() { }
+  constructor(private route: ActivatedRoute,private router: Router) { }
   TrxNo : any;
   TrxType : any = "APP";
   Token : any = localStorage.getItem("Token");
@@ -26,6 +27,7 @@ export class ReturnHandlingSurveyComponent implements OnInit {
   event(ev){
     console.log(ev);
     this.TrxNo = ev.AppNo;
+    this.router.navigate(["http://localhost:4200/Survey/TaskWF"], { queryParams: { "TrxNo": this.TrxNo, "TrxType" : this.TrxType } });
   }
 
 }
