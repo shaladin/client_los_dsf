@@ -49,30 +49,6 @@ const routes: Routes = [
                 path: 'View',
                 loadChildren: './view/nap-view.module#NapViewModule'
             },
-<<<<<<< HEAD
-            {
-              path: 'AssetData/Detail',
-              component: AssetDataAddEditComponent,
-              data: {
-                title: 'Asset Registration Form'
-              }
-            },
-            {
-              path: 'Collateral/Detail',
-              component: CollateralAddEditComponent,
-              data: {
-                title: 'Collateral Registration Form'
-              }
-            },
-            {
-                path: 'Collateral/Factoring',
-                component: CollateralFctrComponent,
-                data: {
-                  title: 'Collateral Factoring Form'
-                }
-              },
-          
-=======
             // {
             //     path: 'AssetData/Paging',
             //     component: AssetDataPagingComponent,
@@ -94,7 +70,6 @@ const routes: Routes = [
             //     title: 'Collateral Registration Form'
             //   }
             // }
->>>>>>> origin/master
         ]
     }
 ]
