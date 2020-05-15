@@ -1,6 +1,6 @@
 {
     "url": "",
-    "title":"Lookup CMO",
+    "title":"Lookup Tele Sales",
     "component": [
       {
         "type": "textbox",
@@ -15,7 +15,7 @@
         "name": "RE.EMP_NO",
         "id": "empNo",
         "value": "",
-        "label": "Employee NO",
+        "label": "Tele Sales NO",
         "placeholder": ""
       },
       {
@@ -23,7 +23,7 @@
         "name": "RE.EMP_NAME",
         "id": "empNae",
         "value": "",
-        "label": "Employee Name",
+        "label": "Tele Sales Name",
         "placeholder": ""
       }
     ],
@@ -43,13 +43,13 @@
         {
             "type": "sort",
             "position": "center",
-            "label": "Employee NO",
+            "label": "Tele Sales NO",
             "name": "RE.EMP_NO"
         },
         {
             "type": "sort",
             "position": "center",
-            "label": "Employee Name",
+            "label": "Tele Sales Name",
             "name": "RE.EMP_NAME"
         },
         {
