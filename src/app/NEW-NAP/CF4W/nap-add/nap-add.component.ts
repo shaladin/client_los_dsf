@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -8,6 +8,7 @@ import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
+import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 
 @Component({
   selector: 'app-nap-add',
@@ -15,7 +16,9 @@ import { NapAppModel } from 'app/shared/model/NapApp.Model';
   providers: [NGXToastrService]
 })
 export class NapAddComponent implements OnInit {
-
+  
+  @ViewChild('LookupOffering') ucLookupOffering : UclookupgenericComponent;
+  @ViewChild('LookupCopyProduct') ucLookupCopyProduct : UclookupgenericComponent;
   param;
   ProductOfferingIdentifier;
   ProductOfferingNameIdentifier;
@@ -89,7 +92,13 @@ export class NapAddComponent implements OnInit {
 
     this.GetOfficeDDL();
 
-    if (this.user.MrOfficeTypeCode == "HO") {
+    if (this.user.MrOfficeTypeCode == "CG") {
+      this.NapAppForm.patchValue({
+        CrtOfficeCode: this.user.OfficeCode,
+        CrtOfficeName: this.user.OfficeName,
+      });
+    }
+    else {
       this.NapAppForm.controls.OriOfficeCode.disable();
       this.NapAppForm.patchValue({
         OriOfficeCode: this.user.OfficeCode,
@@ -97,12 +106,7 @@ export class NapAddComponent implements OnInit {
         CrtOfficeCode: this.user.OfficeCode,
         CrtOfficeName: this.user.OfficeName,
       });
-    } else if (this.user.MrOfficeTypeCode == "Center Group") {
-      this.NapAppForm.patchValue({
-        CrtOfficeCode: this.user.OfficeCode,
-        CrtOfficeName: this.user.OfficeName,
-      });
-    }
+    }  
 
     // Test Data
     console.log(this.user);
@@ -127,17 +131,29 @@ export class NapAddComponent implements OnInit {
     this.inputLookupObjName.pagingJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.genericJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.nameSelect = this.NapAppForm.controls.ProdOfferingName.value;
-    
-    this.arrAddCrit = new Array();
 
+    var arrCopyLookupCrit = new Array();
     var addCrit = new CriteriaObj();
     addCrit.DataType = "text";
-    addCrit.propName = "ro.OFFICE_CODE ";
+    addCrit.propName = "a.ORI_OFFICE_CODE";
     addCrit.restriction = AdInsConstant.RestrictionIn;
-    addCrit.listValue = [this.user.MrOfficeTypeCode];
-    this.arrAddCrit.push(addCrit);
+    addCrit.listValue = [this.user.OfficeCode];
+    arrCopyLookupCrit.push(addCrit);
+    this.inputLookupObjCopyProduct.addCritInput = arrCopyLookupCrit;
+    
+    var arrAddCrit = new Array();
+    var addCrit = new CriteriaObj();
+    addCrit.DataType = "text";
+    addCrit.propName = "ro.OFFICE_CODE";
+    addCrit.restriction = AdInsConstant.RestrictionIn;
+    addCrit.listValue = [this.user.OfficeCode];
+    arrAddCrit.push(addCrit);
+    this.inputLookupObjName.addCritInput = arrAddCrit;
 
-    this.inputLookupObjName.addCritInput = this.arrAddCrit;
+    this.NapAppForm.patchValue({
+      OriOfficeCode: this.user.OfficeCode,
+      OriOfficeName: this.user.OfficeName,
+    });
   }
 
   GetOfficeDDL() {
@@ -150,10 +166,6 @@ export class NapAddComponent implements OnInit {
       (response) => {
         console.log(response);
         this.officeItems = response["ReturnObject"];
-        this.NapAppForm.patchValue({
-          OriOfficeCode: this.officeItems[0].Key,
-          OriOfficeName: this.officeItems[0].Value,
-        });
       },
       (error) => {
         console.log(error);
@@ -182,20 +194,16 @@ export class NapAddComponent implements OnInit {
   }
 
   SaveForm() {
-    // this.router.navigate(["Nap/AppAddDetail"], { queryParams: { "AppId": response["AppId"] } });
     var napAppObj = new NapAppModel();
     napAppObj = this.NapAppForm.value;
     napAppObj.AppCreatedDt = this.user.BusinessDt;
     napAppObj.IsAppInitDone = false;
     napAppObj.AppStat = AdInsConstant.AppStepNew;
     napAppObj.AppCurrStep = AdInsConstant.AppStepNew;
-
+    napAppObj.BlCode = "CF4W";
+    napAppObj.OriOfficeCode = this.NapAppForm.controls['OriOfficeCode'].value;
+    napAppObj.OriOfficeName = this.NapAppForm.controls['OriOfficeName'].value;
     napAppObj = this.CheckValue(napAppObj);
-    if (this.user.MrOfficeTypeCode == "HO") {
-      napAppObj.OriOfficeCode = this.user.OfficeCode;
-    } else if (this.user.MrOfficeTypeCode == "Center Group") {
-
-    }
     console.log(napAppObj);
 
     var url = environment.losUrl + AdInsConstant.AddApp;
@@ -287,7 +295,28 @@ export class NapAddComponent implements OnInit {
       OriOfficeCode: ev.target.selectedOptions[0].value,
       OriOfficeName: ev.target.selectedOptions[0].text
     });
-    // console.log(this.NapAppForm);
+
+    var arrCopyLookupCrit = new Array();
+    var addCrit = new CriteriaObj();
+    addCrit.DataType = "text";
+    addCrit.propName = "a.ORI_OFFICE_CODE";
+    addCrit.restriction = AdInsConstant.RestrictionIn;
+    addCrit.listValue = [this.user.OfficeCode];
+    arrCopyLookupCrit.push(addCrit);
+
+    this.inputLookupObjCopyProduct.addCritInput = arrCopyLookupCrit;
+    this.ucLookupCopyProduct.setAddCritInput();
+    
+    var arrAddCrit = new Array();
+    var addCrit = new CriteriaObj();
+    addCrit.DataType = "text";
+    addCrit.propName = "ro.OFFICE_CODE";
+    addCrit.restriction = AdInsConstant.RestrictionIn;
+    addCrit.listValue = [this.user.OfficeCode];
+    arrAddCrit.push(addCrit);
+    
+    this.inputLookupObjName.addCritInput = arrAddCrit;
+    this.ucLookupOffering.setAddCritInput();
   }
 
 }

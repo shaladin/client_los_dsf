@@ -10,14 +10,16 @@
               </lib-ucSubsection>
               <div id="assetData">
                 <div class="form-group row">
-                  <label class="col-md-3 adInsLabel" translate>Full Asset Name</label>
-                  <div class="col-md-3">
+                  <label class="col-md-3 adins-required-label" translate>Full Asset Name</label>
+                  <div class="col-md-4">
                     <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupAssetObj" [identifier]="'lookupAsset'"
                       [enjiForm]='enjiForm' [parentForm]='LeadDataForm' (lookup)="SetAsset($event)">
                     </lib-uclookupgeneric>
                   </div>
+                </div>
+                <div class="form-group row"> 
                   <label class="col-md-3 adInsLabel" translate>Asset Condition</label>
-                  <div class="col-md-3">
+                  <div class="col-md-4">
                     <select class="form-control adInsInput" style="width: auto" (change)="radioChange($event)" formControlName="MrAssetConditionCode" required
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.MrAssetConditionCode.invalid }">
                       <option *ngFor="let it of returnAssetConditionObj" [value]="it.Key">
@@ -28,14 +30,16 @@
                 </div>
                 <div class="form-group row">
                   <label class="col-md-3 adInsLabel" translate>Manufacturing Year</label>
-                  <div class="col-md-3">
+                  <div class="col-md-4">
                     <input type="number" class="form-control adInsInput" formControlName="ManufacturingYear"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.ManufacturingYear.invalid}">
                     <lib-uc-show-errors  [control]="LeadDataForm.controls.ManufacturingYear" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors >
-                  </div>
-                  <label class="col-md-2 adInsLabel" translate>Asset Price</label>
-                  <div class="col-md-3">
+                  </div> 
+                </div> 
+                <div class="form-group row">
+                  <label class="col-md-3 adins-required-label" translate>Asset Price</label>
+                  <div class="col-md-4">
                     <input type="number" class="form-control adInsInput" formControlName="AssetPrice"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.AssetPrice.invalid}">
                     <lib-uc-show-errors  [control]="LeadDataForm.controls.AssetPrice" [submit]="enjiForm.submitted">
@@ -44,16 +48,18 @@
                 </div>
                 <div class="form-group row">
                   <label class="col-md-3 adInsLabel" translate>Down Payment Type</label>
-                  <div class="col-md-3">
-                    <select class="form-control adInsInput" style="width: auto" (change)="downPaymentChange($event)" formControlName="MrDownPaymentTypeCode" required
+                  <div class="col-md-4">
+                    <select class="form-control adInsInput" style="width: auto"  formControlName="MrDownPaymentTypeCode" required
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.MrDownPaymentTypeCode.invalid }">
                       <option *ngFor="let it of returnDownPaymentObj " [value]="it.Key">
                         {{it.Value}}
                       </option>
                     </select>
-                  </div>
-                  <label class="col-md-2 adInsLabel" translate>Down Payment</label>
-                  <div class="col-md-3">
+                  </div> 
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 adins-required-label" translate>Down Payment</label>
+                  <div class="col-md-4">
                     <input type="number" class="form-control adInsInput" formControlName="DownPayment"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.DownPayment.invalid}">
                     <lib-uc-show-errors  [control]="LeadDataForm.controls.DownPayment" [submit]="enjiForm.submitted">
@@ -62,7 +68,7 @@
                 </div>
                 <div class="form-group row {{serial1Mandatory ? 'adins-required' : ''}}">
                   <label class="col-md-3 adInsLabel" for="SerialNo1" translate>Serial No 1</label>
-                  <div class="col-md-3">
+                  <div class="col-md-4">
                     <input type="text" class="form-control adInsInput" formControlName="SerialNo1"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.SerialNo1.invalid}"
                       [attr.disabled]="pageType == 'edit' || serial1Disabled ? true : null">
@@ -72,7 +78,7 @@
                 </div>
                 <div class="form-group row {{serial2Mandatory ? 'adins-required' : ''}}">
                   <label class="col-md-3 adInsLabel" for="SerialNo2" translate>Serial No 2</label>
-                  <div class="col-md-3">
+                  <div class="col-md-4">
                     <input type="text" class="form-control adInsInput" formControlName="SerialNo2"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.SerialNo2.invalid}"
                       [attr.disabled]="pageType == 'edit' || serial2Disabled ? true : null">
@@ -82,7 +88,7 @@
                 </div>
                 <div class="form-group row {{serial3Mandatory ? 'adins-required' : ''}}">
                   <label class="col-md-3 adInsLabel" for="SerialNo3" translate>Serial No 3</label>
-                  <div class="col-md-3">
+                  <div class="col-md-4">
                     <input type="text" class="form-control adInsInput" formControlName="SerialNo3"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.SerialNo3.invalid}"
                       [attr.disabled]="pageType == 'edit' || serial3Disabled ? true : null">
@@ -92,7 +98,7 @@
                 </div>
                 <div class="form-group row {{serial4Mandatory ? 'adins-required' : ''}}">
                   <label class="col-md-3 adInsLabel" for="SerialNo4" translate>Serial No 4</label>
-                  <div class="col-md-3">
+                  <div class="col-md-4">
                     <input type="text" class="form-control adInsInput" formControlName="SerialNo4"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.SerialNo4.invalid}"
                       [attr.disabled]="pageType == 'edit' || serial4Disabled ? true : null">
@@ -102,7 +108,7 @@
                 </div>
                 <div class="form-group row {{serial5Mandatory ? 'adins-required' : ''}}">
                   <label class="col-md-3 adInsLabel" for="SerialNo5" translate>Serial No 5</label>
-                  <div class="col-md-3">
+                  <div class="col-md-4">
                     <input type="text" class="form-control adInsInput" formControlName="SerialNo5"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.SerialNo5.invalid}"
                       [attr.disabled]="pageType == 'edit' || serial5Disabled ? true : null">
@@ -115,7 +121,7 @@
               </lib-ucSubsection>
               <div *ngIf="lobKta.includes(returnLobCode) == false" id="financialData">
                 <div class="form-group row">
-                  <label class="col-md-3 adInsLabel" translate>Tenor</label>
+                  <label class="col-md-3 adins-required-label" translate>Tenor</label>
                   <div class="col-md-4">
                     <input type="number" class="form-control adInsInput" formControlName="Tenor"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.Tenor.invalid}">
@@ -155,18 +161,17 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-3 adInsLabel" translate>Installment Amount</label>
+                  <label class="col-md-3 adins-required-label" translate>Installment Amount</label>
                   <div class="col-md-4">
-                    <input type="text" class="form-control adInsInput" formControlName="InstallmentAmt"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.InstallmentAmt.invalid}">
-                    <lib-uc-show-errors  [control]="LeadDataForm.controls.InstallmentAmt" [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors >
+                    <lib-ucinputnumber [parentForm]="LeadDataForm" [identifier]="'InstallmentAmt'"
+                    [enjiForm]="enjiForm" [isRequired]="false"
+                    ucNumber="LeadDataForm.controls.InstallmentAmt.value"></lib-ucinputnumber> 
                   </div>
                 </div>
               </div>
               <div *ngIf="lobKta.includes(returnLobCode) == true" id="financialData">
                 <div class="form-group row">
-                  <label class="col-md-3 adInsLabel" translate>Tenor</label>
+                  <label class="col-md-3 adins-required-label" translate>Tenor</label>
                   <div class="col-md-4">
                     <input type="number" class="form-control adInsInput" formControlName="Tenor"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.Tenor.invalid}">
@@ -194,25 +199,24 @@
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.NTFAmt.invalid}">
                     <lib-uc-show-errors  [control]="LeadDataForm.controls.NTFAmt" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors >
-                  </div>
+                  </div> 
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-3 adInsLabel" translate>Installment Amount</label>
+                  <label class="col-md-3 adins-required-label"  translate>Installment Amount</label>
                   <div class="col-md-4">
-                    <input type="text" class="form-control adInsInput" formControlName="InstallmentAmt"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.InstallmentAmt.invalid}">
-                    <lib-uc-show-errors  [control]="LeadDataForm.controls.InstallmentAmt" [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors >
+                    <lib-ucinputnumber [parentForm]="LeadDataForm" [identifier]="'InstallmentAmt'"
+                    [enjiForm]="enjiForm" [isRequired]="false"
+                    ucNumber="LeadDataForm.controls.InstallmentAmt.value"></lib-ucinputnumber> 
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div class="form-actions right" style="text-align: right;">
-            <button type="button" class="btn btn-raised btn-primary mr-1" (click)="save()" translate>
+            <button type="button" class="btn btn-raised btn-primary mr-1" (click)="this.LeadDataForm.valid && save()" translate>
               <i class="fa fa-check-square-o"></i> Save
             </button>
-            <button type="submit" class="btn btn-raised btn-primary" translate>
+            <button type="submit" class="btn btn-raised btn-primary"  translate>
               <i class="fa fa-check-square-o"></i> Submit
             </button>
           </div>

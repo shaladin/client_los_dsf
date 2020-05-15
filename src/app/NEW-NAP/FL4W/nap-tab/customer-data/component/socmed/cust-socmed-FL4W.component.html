@@ -1,0 +1,43 @@
+<lib-ucSubsection [id]="'custSocmedId'" [title]="'Social Media Id'" [panel]="'custSocmed'">
+</lib-ucSubsection>
+<div id="custSocmed">
+  <div class="form-actions right">
+    <button type="button" name="add" id="add" (click)="addCustSocmed()" class="btn btn-raised btn-primary">
+      Add
+    </button>
+  </div>
+  <div formArrayName="{{identifier}}">
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+        <tr class="table-header">
+          <th><span translate class="thead-header">NO.</span></th>
+          <th><span translate class="thead-header">SOCIAL MEDIA</span></th>
+          <th><span translate class="thead-header">SOCIAL MEDIA ID</span></th>
+          <th><span translate class="thead-header">ACTION</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of parentForm.controls[identifier].controls;let i = index">
+          <td [formGroupName]="i" class="text-center">
+            {{i + 1}}
+          </td>
+          <td [formGroupName]="i" class="text-center"><select class="form-control" formControlName="MrSocmedCode" (change)="setSocmedName(i)">
+            <option *ngFor="let item of SocmedObj" value="{{item.Key}}">
+              {{item.Value}}
+            </option>
+          </select></td>
+          <td [formGroupName]="i">
+            <input type="text" class="form-control" formControlName="SocmedId"
+            [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'][i]['controls'].SocmedId.invalid }">
+            <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'][i]['controls'].SocmedId" [submit]="enjiForm.submitted"></lib-uc-show-errors>            
+          </td>
+          <td [formGroupName]="i">
+            <a class="danger p-0" data-original-title="" title="" (click)="deleteSocmed(i)">
+              <i class="ft-trash-2 font-medium-3 mr-2"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

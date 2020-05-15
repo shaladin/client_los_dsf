@@ -145,7 +145,7 @@ export class InsuranceDataComponent implements OnInit {
     this.http.post(AdInsConstant.AddEditInsuranceData, this.saveObj).subscribe(
       (response) => {
         console.log(response);
-        this.toastr.successMessage(response["message"]);
+        this.toastr.successMessage(response["Message"]);
         // this.wizard.goToNextStep();
           this.outputTab.emit();
       },
@@ -482,6 +482,10 @@ export class InsuranceDataComponent implements OnInit {
     await this.http.post(AdInsConstant.ExecuteInsRateRule, reqObj).toPromise().then(
       (response) => {
         this.ruleObj = response["Result"];
+        if(this.ruleObj.InsAssetCategory == ""){
+          this.toastr.errorMessage("Please setting rule first.");
+          return;
+        }
         this.InsuranceDataForm.patchValue({
           CustAdminFeeAmt: this.ruleObj.AdminFeeToCust,
           InscoAdminFeeAmt: this.ruleObj.AdminFeeFromInsco

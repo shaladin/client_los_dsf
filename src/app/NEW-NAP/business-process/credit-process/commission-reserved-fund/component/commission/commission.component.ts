@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder, FormArray } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -21,7 +21,7 @@ export class CommissionComponent implements OnInit {
   @ViewChild('Form2') FormAdd2: FormAddDynamicComponent;
   @ViewChild('Form3') FormAdd3: FormAddDynamicComponent;
   @Input() AppId;
-  @Input() ReturnHandlingDId;
+  @Output() outputTab : EventEmitter<any> = new EventEmitter();
 
   constructor(
     private route: ActivatedRoute,
@@ -47,12 +47,7 @@ export class CommissionComponent implements OnInit {
   Summary;
   isCalculateData;
   isAutoGenerate;
-  show : boolean = false;
   ngOnInit() {
-
-    if(this.ReturnHandlingDId!=0){
-      this.show = true;
-    }
 
     this.OnForm1 = false;
     this.OnForm2 = false;
@@ -167,7 +162,7 @@ export class CommissionComponent implements OnInit {
   }
 
   GetIncomeInfoObj() {
-    var url = environment.losUrl //+ AdInsConstant.GetAppFinDataWithRuleByAppId;
+    var url = AdInsConstant.GetAppFinDataWithRuleByAppId;
     var app = new NapAppModel();
     app = this.ResultAppData;
     var obj = {
@@ -240,7 +235,7 @@ export class CommissionComponent implements OnInit {
 
   GetRuleSetName() {
     if (this.isFinishGetAppReferantorData && this.isFinishGetAppFeeData && this.isFinishGetAppData) {
-      var url = environment.FoundationR3Url + AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode;
+      var url = AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode;
       var obj = {
         ProdOfferingCode: this.ResultAppData.ProdOfferingCode,
         RefProdCompntCode: "COMMISSION_SCHM",
@@ -396,7 +391,7 @@ export class CommissionComponent implements OnInit {
     var url;
     var obj;
     if (content == AdInsConstant.ContentSupplier) {
-      url = environment.losUrl + AdInsConstant.GetAppAssetListByAppId;
+      url = AdInsConstant.GetAppAssetListByAppId;
       obj = {
         AppId: this.AppId,
         RowVersion: ""
@@ -412,7 +407,7 @@ export class CommissionComponent implements OnInit {
         }
       );
     } else if (content == AdInsConstant.ContentSupplierEmp) {
-      url = environment.losUrl + AdInsConstant.GetListAppAssetSupplEmpByListAppAssetId;
+      url = AdInsConstant.GetListAppAssetSupplEmpByListAppAssetId;
       obj = {
         AppAssetId: this.AppAssetIdList,
         RowVersion: ""
@@ -479,6 +474,7 @@ export class CommissionComponent implements OnInit {
             Key: ReturnObject[i].SupplEmpNo,
             Value: ReturnObject[i].SupplEmpName,
             MrSupplEmpPositionCode: ReturnObject[i].MrSupplEmpPositionCode,
+            MrSupplEmpPositionCodeDesc: ReturnObject[i].MrSupplEmpPositionCodeDesc,
             SupplCode: ReturnObject[i].SupplCode
           };
           this.ContentObjSupplierEmp.push(KVPObj);
@@ -617,6 +613,10 @@ export class CommissionComponent implements OnInit {
     temp.MrTaxCalcMethodCode = obj.MrTaxCalcMethodCode;
     temp.TaxpayerNo = obj.TaxpayerNo;
     temp.RowVersion = obj.RowVersion;
+    if(CommReceipientTypeCode == AdInsConstant.CommissionReceipientTypeCodeSupplierEmp){
+      temp.ReservedField1 = obj.SupplCode;
+      temp.ReservedField2 = obj.MrSupplEmpPositionCodeDesc;
+    }
     temp.ListappCommissionDObj = this.DataFilterAppCommD(obj);
     return temp;
   }
@@ -676,18 +676,13 @@ export class CommissionComponent implements OnInit {
       };
       this.http.post(url, obj).subscribe(
         (response) => {
-          console.log(response);
           this.toastr.successMessage(response["message"]);
-          // Goto
-          // Belom Tau kemana
+          this.outputTab.emit();
         },
         (error) => {
           console.log(error);
         }
       );
     }
-  }
-  Cancel(){
-    this.router.navigate(["../CommissionReservedFund/Paging"]);
   }
 }

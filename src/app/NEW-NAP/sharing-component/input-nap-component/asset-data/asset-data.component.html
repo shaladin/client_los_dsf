@@ -1,4 +1,4 @@
-<div class="col-md-12">
+<div class="col-md-12" *ngIf="isOnlookup">
   <div class="card">
     <div class="card-body">
       <div class="px-3">
@@ -10,7 +10,7 @@
             <div id="supplierData">
               <div class="form-group row">
                 <label class="col-md-2  adInsLabel" translate>Supplier Name </label>
-                <div class="col-md-4">
+                <div class="col-md-4" *ngIf="isOnlookup">
                   <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupSupplierObj" [identifier]="'lookupSupplier'" [enjiForm]='enjiForm' [parentForm]='AssetDataForm' (lookup)="SetSupplier($event)">
                   </lib-uclookupgeneric>
                 </div>
@@ -46,7 +46,7 @@
             <div id="assetData">
               <div class="form-group row">
                 <label class="col-md-2  adInsLabel" translate>Asset Name </label>
-                <div class="col-md-4">
+                <div class="col-md-4" *ngIf="isOnlookup">
                   <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupAssetObj" [identifier]="'lookupAsset'" [enjiForm]='enjiForm' [parentForm]='AssetDataForm' (lookup)="SetAsset($event)">
                   </lib-uclookupgeneric>
                 </div>
@@ -148,7 +148,7 @@
                   <lib-uc-show-errors  [control]="AssetDataForm.controls.AssetNotes" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                 </div>
                 <label class="col-md-2" translate>BPKB City Issuer</label>
-                <div class="col-md-4">
+                <div class="col-md-4" *ngIf="isOnlookup">
                   <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupCityIssuerObj" [identifier]="'DistrictCode'" [enjiForm]='enjiForm' [parentForm]='AssetDataForm' (lookup)="SetBpkbCity($event)">
                   </lib-uclookupgeneric>
                 </div>
@@ -251,9 +251,9 @@
                 <div class="col-md-4">
                   <input type="text" class="form-control" formControlName="OwnerName">
                 </div>
-                <label class="col-md-2  adInsLabel" translate>Id Type </label>
+                <label class="col-md-2  adInsLabel" translate *ngIf="this.CustType == 'PERSONAL'">Id Type </label>
                 <div class="col-md-4">
-                  <select class="form-control" id="idType" formControlName="MrIdTypeCode"
+                  <select class="form-control" id="idType" formControlName="MrIdTypeCode" *ngIf="this.CustType == 'PERSONAL'"
                           [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.MrIdTypeCode.invalid }">
                     <option *ngFor="let item of IdTypeObj" [value]="item.Key">
                       {{item.Value}}
@@ -281,8 +281,8 @@
                 <div class="col-md-4">
                   <div class="input-group">
                     <select class="form-control" formControlName="OwnerAddrType" [(ngModel)]="copyFromAppCustAddrForOwner" (change)="SetOwnerAddrType($event.target.value)">
-                      <option *ngFor="let item of copyAddrObj" [value]="item.Key">
-                        {{item.Value}}
+                      <option *ngFor="let item of AppCustAddrObj" [value]="item.MrCustAddrTypeCode">
+                        {{item.MrCustAddrTypeCode}}
                       </option>
                     </select>
                     <div class="input-group-append">
@@ -317,8 +317,8 @@
                 <div class="col-md-4">
                   <div class="input-group">
                     <select class="form-control" formControlName="LocationAddrType" [(ngModel)]="copyFromAppCustAddrForLocation" (change)="SetLocationAddrType($event.target.value)">
-                      <option *ngFor="let item of copyAddrObj" [value]="item.Key">
-                        {{item.Value}}
+                      <option *ngFor="let item of AppCustAddrObj" [value]="item.MrCustAddrTypeCode">
+                        {{item.MrCustAddrTypeCode}}
                       </option>
                     </select>
                     <div class="input-group-append">
@@ -339,16 +339,11 @@
             </div>
             <div class="form-actions right">
               <button type="submit" class="btn btn-raised btn-primary">
-                <i class="fa fa-check-square-o"></i> Save And Continue
+                <i class="fa fa-check-square-o"></i> Save
               </button>
-              <!-- <button type="button" class="btn btn-raised btn-primary" (click)="findInvalidControls()">
-                <i class="fa fa-check-square-o"></i> Check Value
-              </button> -->
             </div>
           </div>
-
         </form>
-
       </div>
     </div>
   </div>

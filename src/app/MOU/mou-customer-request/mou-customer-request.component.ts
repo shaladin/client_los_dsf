@@ -10,7 +10,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 @Component({
   selector: 'app-mou-customer-request',
   templateUrl: './mou-customer-request.component.html',
-  styleUrls: ['./mou-customer-request.component.scss'],
+  styleUrls: [],
   providers: [NGXToastrService]
 })
 export class MouCustomerRequestComponent implements OnInit {
@@ -26,13 +26,6 @@ export class MouCustomerRequestComponent implements OnInit {
     this.inputPagingObj.apiQryPaging = "/Generic/GetPagingObjectBySQL";
     this.inputPagingObj.deleteUrl = "";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchMouCustomerRequest.json";
-    var criteriaList = new Array<CriteriaObj>();
-    var criteriaObj = new CriteriaObj();
-    criteriaObj.restriction = AdInsConstant.RestrictionEq;
-    criteriaObj.propName = 'MOU_STAT';
-    criteriaObj.value = 'NEW';
-    criteriaList.push(criteriaObj);
-    this.inputPagingObj.addCritInput = criteriaList;
   }
 
 }

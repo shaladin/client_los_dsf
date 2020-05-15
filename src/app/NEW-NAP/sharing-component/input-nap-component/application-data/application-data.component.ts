@@ -1,6 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
@@ -10,10 +9,9 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { NapAppCrossObj } from 'app/shared/model/NapAppCrossObj.Model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
-import { WizardComponent } from 'angular-archwizard';
 
 @Component({
-  selector: 'app-application-data-model',
+  selector: 'app-application-data',
   templateUrl: './application-data.component.html',
   styleUrls: [],
   providers: [NGXToastrService]
@@ -21,12 +19,12 @@ import { WizardComponent } from 'angular-archwizard';
 export class ApplicationDataComponent implements OnInit {
 
   @Input() appId: any;
+  @Output() outputTab: EventEmitter<any> = new EventEmitter();
   ListCrossAppObj: any = {};
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
-    private modalService: NgbModal,
-    private wizard: WizardComponent
+    private modalService: NgbModal
   ) { }
 
   NapAppModelForm = this.fb.group({
@@ -320,7 +318,7 @@ export class ApplicationDataComponent implements OnInit {
     addCrit3.DataType = "text";
     addCrit3.propName = "rbt.JOB_TITLE_CODE";
     addCrit3.restriction = AdInsConstant.RestrictionIn;
-    addCrit3.listValue = ["SALES_PERSON"];
+    addCrit3.listValue = [AdInsConstant.SALES_JOB_CODE];
     this.arrAddCrit.push(addCrit3);
 
     var addCrit4 = new CriteriaObj();
@@ -335,7 +333,7 @@ export class ApplicationDataComponent implements OnInit {
     this.makeLookUpObj();
   }
 
-  ChangeRecommendation(ev) {
+  ChangeRecommendation() {
     // console.log(ev);
     // console.log(this.NapAppModelForm);  
   }
@@ -473,7 +471,7 @@ export class ApplicationDataComponent implements OnInit {
     this.http.post(url, obj).subscribe(
       (response) => {
         console.log(response);
-        this.wizard.goToNextStep();
+        this.outputTab.emit();
       },
       (error) => {
         console.log(error);

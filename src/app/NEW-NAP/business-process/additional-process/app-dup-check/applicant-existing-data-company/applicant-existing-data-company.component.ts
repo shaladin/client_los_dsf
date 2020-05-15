@@ -3,8 +3,11 @@ import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
+import { RequestSubmitAppDupCheckCustObj } from 'app/shared/model/AppDupCheckCust/RequestSubmitAppDupCheckCustObj.Model';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 
 @Component({
   selector: 'app-applicant-existing-data-company',
@@ -13,7 +16,8 @@ import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 })
 export class ApplicantExistingDataCompanyComponent implements OnInit {
 
-  AppId: any;
+  AppId: number;
+  WfTaskListId: number;
   FondationUrl = environment.FoundationR3Url;
   LOSUrl = environment.losUrl;
   GetAppGuarantorDuplicateCheckUrl = this.LOSUrl + AdInsConstant.GetAppGuarantorDuplicateCheck;
@@ -33,9 +37,21 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
-  ) { }
+    private router: Router,
+    private toastr: NGXToastrService
+  ) { 
+    this.route.queryParams.subscribe(params => {
+      if (params['AppId'] != null) {
+        this.AppId = params['AppId'];
+      }
+      if (params['WfTaskListId'] != null) {
+        this.WfTaskListId = params['WfTaskListId'];
+      }
+    });
+  }
 
   async ngOnInit() {
+    this.ClaimTask();
     await this.bindData();
     await this.processData();
   }
@@ -50,11 +66,7 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
 
   processData(){
 
-    this.route.queryParams.subscribe(params => {
-      if (params['AppId'] != null) {
-        this.AppId = params['AppId'];
-      }
-    });
+    
     //Get App Cust Data
     var appObj = { "AppId": this.AppId };
     this.http.post(this.GetCustDataByAppId, appObj).subscribe(
@@ -155,5 +167,35 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
       const index = this.listSelectedIdShareholder.indexOf(AppCustCompanyMgmntShrholderId)
       if (index > -1) { this.listSelectedIdShareholder.splice(index, 1); }
     }
+  }
+
+  Submit(){
+    var appDupCheckObj = new RequestSubmitAppDupCheckCustObj();
+    appDupCheckObj.AppGuarantorIds = this.listSelectedIdGuarantor;
+    appDupCheckObj.AppCustCompanyMgmntShrholderIds = this.listSelectedIdShareholder;
+    appDupCheckObj.CustNo = this.AppCustObj.CustNo;
+    appDupCheckObj.AppId = this.AppId;
+    appDupCheckObj.WfTaskListId = this.WfTaskListId;
+
+    this.http.post(AdInsConstant.SubmitAppDupCheck, appDupCheckObj).subscribe(
+      (response) => {
+        this.toastr.successMessage(response["Message"]);
+        this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/Paging"]);
+      },
+      (error) => {
+        console.log(error);
+      });
+  }
+
+  ClaimTask(){
+    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var wfClaimObj = new ClaimWorkflowObj();
+    wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
+    wfClaimObj.pUserId = currentUserContext["UserName"];
+
+    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+      (response) => {
+    
+      });
   }
 }

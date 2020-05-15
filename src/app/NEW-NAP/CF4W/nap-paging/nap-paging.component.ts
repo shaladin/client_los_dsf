@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
+import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 
 @Component({
   selector: 'app-nap-paging',
@@ -11,6 +12,7 @@ import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 export class NapPagingComponent implements OnInit {
 
   inputPagingObj: any;
+  arrCrit: any;
   constructor() { }
 
   ngOnInit() {
@@ -20,6 +22,14 @@ export class NapPagingComponent implements OnInit {
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     // this.inputPagingObj.deleteUrl = "/RefBank/DeleteRefBank";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchApp.json";
+
+    this.arrCrit = new Array();
+    var critObj = new CriteriaObj();
+    critObj.restriction = AdInsConstant.RestrictionLike;
+    critObj.propName = 'RL.BL_CODE';
+    critObj.value = AdInsConstant.CF4W;
+    this.arrCrit.push(critObj);
+    this.inputPagingObj.addCritInput = this.arrCrit;
   }
 
 }

@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { environment } from 'environments/environment';
@@ -22,11 +21,7 @@ export class ReferantorDataComponent implements OnInit {
   inputLookupObj;
   constructor(
     private fb: FormBuilder,
-    private router: Router,
-    private http: HttpClient,
-    private route: ActivatedRoute,
-    private toastr: NGXToastrService
-  ) { }
+    private http: HttpClient  ) { }
 
   NapAppReferantorForm = this.fb.group({
     CheckBoxAppReferantor: [false],
@@ -84,7 +79,7 @@ export class ReferantorDataComponent implements OnInit {
     // this.appId = tempId;
 
     // Check Data App Id
-    var url = environment.losUrl + AdInsConstant.GetAppReferantorByAppId;
+    var url = AdInsConstant.GetAppReferantorByAppId;
     var obj = {
       AppId: this.appId,
       RowVersion: "",
@@ -133,14 +128,14 @@ export class ReferantorDataComponent implements OnInit {
       if (this.ReferantorOn) {
         // save
         console.log("Save Existed Data");
-        url = environment.losUrl + AdInsConstant.EditAppReferantor;
+        url = AdInsConstant.EditAppReferantor;
         this.SaveData(url);
         // this.wizard.goToNextStep();
           this.outputTab.emit();
       } else {
         // delete & go to paging
         console.log("Delete Existed Data");
-        url = environment.losUrl + AdInsConstant.DeleteAppReferantor;
+        url = AdInsConstant.DeleteAppReferantor;
         this.SaveData(url);    
         // this.wizard.goToNextStep();
           this.outputTab.emit();
@@ -149,7 +144,7 @@ export class ReferantorDataComponent implements OnInit {
       if (this.ReferantorOn) {
         // save
         console.log("Save New Data");
-        url = environment.losUrl + AdInsConstant.AddAppReferantor;
+        url = AdInsConstant.AddAppReferantor;
         this.appReferantorObj.AppId = this.appId;
         this.SaveData(url);
         // this.wizard.goToNextStep();
@@ -208,7 +203,7 @@ export class ReferantorDataComponent implements OnInit {
   }
 
   getDDLBank(VendorCode) {
-    var url = environment.FoundationR3Url + AdInsConstant.GetListVendorBankAccByVendorCode;
+    var url = AdInsConstant.GetListVendorBankAccByVendorCode;
     var obj = {
       VendorCode: VendorCode,
       RowVersion: ""

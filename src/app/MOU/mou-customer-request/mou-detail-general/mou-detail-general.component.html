@@ -1,12 +1,11 @@
 <form class="form form-horizontal" [formGroup]="MouDetailGeneralForm" #enjiForm="ngForm" novalidate
       (ngSubmit)="enjiForm.form.valid && Save(enjiForm)">
 <lib-ucSubsection [id]="'MouDetailGeneralId'" [title]="'MOU Detail'" [panel]="'MouDetailGeneralSection'"></lib-ucSubsection>
-<div class="col-md-12" id="MouDetailGeneralSection">
-  <div class="px-3">
+<div  id="MouDetailGeneralSection"> 
     <div class="form-body">
       <div class="form-group row">
-        <label class="col-md-3 adInsLabel adins-required-label" for="CurrCode" translate>Currency</label>
-        <div class="col-md-9">
+        <label class="col-md-2 adInsLabel adins-required-label" for="CurrCode" translate>Currency</label>
+        <div class="col-md-10">
           <select class="form-control adInsInput" formControlName="CurrCode" 
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailGeneralForm.controls.CurrCode.invalid }">
             <option *ngFor="let item of currencyList?.ReturnObject" [value]="item.Key">{{item.Value}}</option>
@@ -15,8 +14,8 @@
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-md-3 adInsLabel adins-required-label" for="MrInterestTypeCode" translate>Interest Type</label>
-        <div class="col-md-9">
+        <label class="col-md-2 adInsLabel adins-required-label" for="MrInterestTypeCode" translate>Interest Type</label>
+        <div class="col-md-10">
           <select class="form-control adInsInput" formControlName="MrInterestTypeCode" 
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailGeneralForm.controls.MrInterestTypeCode.invalid }">
             <option *ngFor="let item of intrstTypeList?.ReturnObject" [value]="item.Key">{{item.Value}}</option>
@@ -25,8 +24,8 @@
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-md-3 adInsLabel adins-required-label" for="MrInstSchmCode" translate>Installment Scheme</label>
-        <div class="col-md-9">
+        <label class="col-md-2 adInsLabel adins-required-label" for="MrInstSchmCode" translate>Installment Scheme</label>
+        <div class="col-md-10">
           <select class="form-control adInsInput" formControlName="MrInstSchmCode" 
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailGeneralForm.controls.MrInstSchmCode.invalid }">
             <option *ngFor="let item of instSchmList?.ReturnObject" [value]="item.Key">{{item.Value}}</option>
@@ -35,8 +34,8 @@
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-md-3 adInsLabel adins-required-label" for="PayFreqCode" translate>Payment Frequency</label>
-        <div class="col-md-9">
+        <label class="col-md-2 adInsLabel adins-required-label" for="PayFreqCode" translate>Payment Frequency</label>
+        <div class="col-md-10">
           <select class="form-control adInsInput" formControlName="PayFreqCode" 
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailGeneralForm.controls.PayFreqCode.invalid }">
             <option *ngFor="let item of payFreqList?.ReturnObject" [value]="item.Key">{{item.Value}}</option>
@@ -45,8 +44,8 @@
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-md-3 adInsLabel" for="MrFirstInstTypeCode" translate>First Installment Type</label>
-        <div class="col-md-9">
+        <label class="col-md-2 adInsLabel" for="MrFirstInstTypeCode" translate>First Installment Type</label>
+        <div class="col-md-10">
           <select type="text" class="form-control adInsInput" formControlName="MrFirstInstTypeCode" 
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailGeneralForm.controls.MrFirstInstTypeCode.invalid }">
             <option *ngFor="let item of firstInstList?.ReturnObject" [value]="item.Key">{{item.Value}}</option>
@@ -55,7 +54,7 @@
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-md-3 adInsLabel adins-required-label" for="DownPaymentFromToPrcnt" translate>Down Payment (%)</label>
+        <label class="col-md-2 adInsLabel adins-required-label" for="DownPaymentFromToPrcnt" translate>Down Payment (%)</label>
         <div class="col-md-2">
           <input type="number" class="form-control adInsInput" formControlName="DownPaymentFromPrcnt" 
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailGeneralForm.controls.DownPaymentFromPrcnt.invalid }" />
@@ -74,7 +73,7 @@
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-md-3 adInsLabel adins-required-label" for="TenorFromTo" translate>Tenor</label>
+        <label class="col-md-2 adInsLabel adins-required-label" for="TenorFromTo" translate>Tenor</label>
         <div class="col-md-2">
           <input type="number" class="form-control adInsInput" formControlName="TenorFrom" 
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailGeneralForm.controls.TenorFrom.invalid }" />
@@ -92,8 +91,7 @@
           <div translate>{{tenorInvalidMsg}}</div>
         </div>
       </div>
-    </div>
-  </div>
+    </div> 
 </div>
 <app-mou-cust-asset [MouCustId]="MouCustId" [IsAssetSelected]="MouDetailGeneralForm.controls.AssetTypeCode.value != ''"></app-mou-cust-asset>
 <div class="col-md-12" style="padding: 0; text-align: right;">
@@ -102,7 +100,7 @@
       <i class="ft-x"></i> Back
     </button>
     <button type="submit" class="btn btn-raised btn-primary">
-      <i class="fa fa-check-square-o"></i> Continue
+      <i class="fa fa-check-square-o"></i> Save and Continue
     </button>
   </div>
 </div>

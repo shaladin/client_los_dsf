@@ -1,6 +1,7 @@
 export class AppCollateralObj {
   AppCollateralId: any;
   AppId: any;
+  AppAssetId: any;
   CollateralNo: any;
   CollateralSeqNo: any;
   FullAssetCode: any;
@@ -32,6 +33,7 @@ export class AppCollateralObj {
   constructor() {
     this.AppCollateralId = 0;
     this.AppId = 0;
+    this.AppAssetId = 0;
     this.CollateralNo = "";
     this.CollateralSeqNo = 0;
     this.FullAssetCode = ""

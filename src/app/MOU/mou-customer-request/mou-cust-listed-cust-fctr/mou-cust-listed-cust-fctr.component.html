@@ -1,17 +1,22 @@
-<lib-ucSubsection [id]="'MouCustListedCustFctrId'" [title]="'Listed Customer Factoring'" [panel]="'MouCustListedCustFctrSection'"></lib-ucSubsection>
+<lib-ucSubsection [id]="'MouCustListedCustFctrId'" [title]="'Listed Customer Factoring'"
+  [panel]="'MouCustListedCustFctrSection'"></lib-ucSubsection>
 <div id="MouCustListedCustFctrSection">
-  <div class="col-md-12">
-    <form class="form form-horizontal" [formGroup]="MouCustIsListedForm" #enjiForm="ngForm" novalidate
-      (ngSubmit)="enjiForm.form.valid && Save(enjiForm)">
-      <label class="col-md-3 adInsLabel adins-required-label" for="IsListedCust" style="padding-left: 0;" translate>Listed Customer Factoring</label>
+
+  <form class="form form-horizontal" [formGroup]="MouCustIsListedForm" #enjiForm="ngForm" novalidate
+    (ngSubmit)="enjiForm.form.valid && Save(enjiForm)"> 
+    <div class="form-group row">
+      <label class="col-md-3 adInsLabel adins-required-label" for="IsListedCust" translate>Listed Customer
+        Factoring</label>
       <div class="col-md-9" style="display: inline-block;">
         <input type="checkbox" formControlName="IsListedCust" />
       </div>
-    </form>
-  </div>
+    </div>
+  </form>
+
   <div class="col-md-12" style="padding: 0; text-align: right;">
     <span class="mr-1">
-      <button type="button" class="addButton" (click)="openModalAddCustFctr()" [disabled]="MouCustIsListedForm.controls.IsListedCust.value == false" translate>
+      <button type="button" class="addButton" (click)="openModalAddCustFctr()"
+        [disabled]="MouCustIsListedForm.controls.IsListedCust.value == false" translate>
         <i class="ft-plus-circle"></i> Add
       </button>
     </span>
@@ -21,16 +26,16 @@
       <thead>
         <tr class="table-header">
           <th style="text-align: left;">
-            <span class="thead-header" name='custNo' translate>Customer No.</span>
+            <span class="thead-header" name='custNo' translate>CUSTOMER NO.</span>
           </th>
           <th style="text-align: left;">
-            <span class="thead-header" name='custName' translate>Customer Name</span>
+            <span class="thead-header" name='custName' translate>CUSTOMER NAME</span>
           </th>
           <th style="text-align: left;">
-            <span class="thead-header" name='custType' translate>Customer Type</span>
+            <span class="thead-header" name='custType' translate>CUSTOMER TYPE</span>
           </th>
           <th style="text-align: center;">
-            <span class="thead-header" name='action' translate>Delete</span>
+            <span class="thead-header" name='action' translate>DELETE</span>
           </th>
         </tr>
       </thead>

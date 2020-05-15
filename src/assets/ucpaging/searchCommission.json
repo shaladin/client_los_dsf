@@ -1,93 +1,140 @@
 {
-    "title": "Application Commission/Reserve-Fund Paging",
-    "exportExcel": false,
-    "component": [
-      {
-        "type": "textbox",
-        "name": "A.APP_NO",
-        "id": "AppNoId",
-        "value": "",
-        "label": "Application No",
-        "placeholder": "Placeholder"
-      },
-      {
-        "type": "textbox",
-        "name": "AC.CUST_NAME",
-        "id": "CustNameId",
-        "value": "",
-        "label": "Customer Name",
-        "placeholder": "Placeholder"
-      },
-      {
-        "type": "textbox",
-        "name": "A.PROD_OFFERING_NAME",
-        "id": "ProdOfferingNameId",
-        "value": "",
-        "label": "Product Offering Name",
-        "placeholder": "Placeholder"
-      }
-    ],
-    "headerList": [
-      {
-        "type": "sort",
-        "position": "center",
-        "label": "Application No",
-        "name": "A.APP_NO"
-      },
-      {
-        "type": "sort",
-        "position": "center",
-        "label": "Customer Name",
-        "name": "AC.CUST_NAME"
-      },
-      {
-        "type": "sort",
-        "position": "center",
-        "label": "Product Offering Name",
-        "name": "A.PROD_OFFERING_NAME"
-      },
-      {
-        "type": "label",
-        "position": "center",
-        "label": "Action"
-      }
-    ],
-    "querystring": {
-      "select": "SELECT A.APP_NO AS AppNo, AC.CUST_NAME AS CustName, A.PROD_OFFERING_NAME AS ProdOfferingName, A.APP_CURR_STEP AS AppCurrStep, A.LOB_CODE AS LobCode, A.APP_ID AS AppId",
-      "from": "FROM dbo.APP A WITH(NOLOCK) LEFT JOIN dbo.APP_CUST AC WITH(NOLOCK) ON A.APP_ID = AC.APP_ID"
+  "title": "Application Commission/Reserve-Fund Paging",
+  "exportExcel": false,
+  "component": [
+    {
+      "type": "textbox",
+      "name": "A.APP_NO",
+      "id": "AppNoId",
+      "value": "",
+      "label": "Application No",
+      "placeholder": "Placeholder"
     },
-    "bodyList": [
+    {
+      "type": "textbox",
+      "name": "AC.CUST_NAME",
+      "id": "CustNameId",
+      "value": "",
+      "label": "Customer Name",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "A.PROD_OFFERING_NAME",
+      "id": "ProdOfferingNameId",
+      "value": "",
+      "label": "Product Offering Name",
+      "placeholder": "Placeholder"
+    }
+  ],
+  "headerList": [
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Application No",
+      "name": "A.APP_NO"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Customer Name",
+      "name": "AC.CUST_NAME"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Product Offering Name",
+      "name": "A.PROD_OFFERING_NAME"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Action"
+    }
+  ],
+  "querystring": {
+    "select": "SELECT ac.MR_CUST_TYPE_CODE as CustTypeCode, a.ORI_OFFICE_NAME AS OfficeName, a.APP_NO AS AppNo, ac.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.APP_ID AS AppId, WTL.WF_TASK_LIST_ID AS WfTaskListId, WTL.USERNAME AS ClaimBy, a.APP_ID AS AppId",
+    "from": "FROM dbo.APP a WITH(NOLOCK) JOIN dbo.APP_CUST ac WITH(NOLOCK) ON a.APP_ID = ac.APP_ID JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON a.APP_NO = WTL.TRANSACTION_CODE AND WTL.ACT_CODE = 'COM_RSV'",
+    "where": "WHERE WTL.END_EXECUTING_DATE IS NULL"
+  },
+  "bodyList": [
+    {
+      "type": "text",
+      "position": "center",
+      "property": "AppNo"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "CustName"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "ProdOfferingName"
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
         {
-            "type": "text",
-            "position": "center",
-            "property": "AppNo"
-        },
-        {
-            "type": "text",
-            "position": "center",
-            "property": "CustName"
-        },
-        {
-            "type": "text",
-            "position": "center",
-            "property": "ProdOfferingName"
-        },
-        {
-            "type": "action",
-            "position": "center",
-            "action": [
+          "type": "switch",
+          "case": [
+            {
+              "conditions": [
                 {
-                    "type": "edit",
-                    "path": "../CommissionReservedFund/Detail",
-                    "param": [
-                        {
-                            "type": "AppId",
-                            "property": "AppId"
-                        }
-                    ]
+                  "isUser": true,
+                  "property": "ClaimBy",
+                  "value": "",
+                  "restriction": "EQ"
                 }
-            ]
-          }
-    ]    
+              ],
+              "result": {
+                "type": "url",
+                "path": "../Detail",
+                "icon": "ft-edit-2",
+                "param": [
+                  {
+                    "type": "AppId",
+                    "property": "AppId"
+                  },
+                  {
+                    "type": "WfTaskListId",
+                    "property": "WfTaskListId"
+                  }
+                ]
+              },
+              "isHide": false
+            },
+            {
+              "conditions": [
+                {
+                  "isUser": false,
+                  "property": "ClaimBy",
+                  "value": "",
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "url",
+                "path": "../Detail",
+                "icon": "ft-edit-2",
+                "param": [
+                  {
+                    "type": "AppId",
+                    "property": "AppId"
+                  },
+                  {
+                    "type": "WfTaskListId",
+                    "property": "WfTaskListId"
+                  }
+                ]
+              },
+              "isHide": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }
-  

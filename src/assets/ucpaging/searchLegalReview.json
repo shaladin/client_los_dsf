@@ -204,7 +204,7 @@
       "property": "EndDt"
     },
     {
-      "type": "currency",
+      "type": "decimal",
       "position": "right",
       "property": "PlafondAmt"
     },

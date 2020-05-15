@@ -3,65 +3,65 @@
   <lib-ucSubsection [id]="'MouDataId'" [title]="'Mou Data'" [panel]="'MouData'">
   </lib-ucSubsection>
   <div class="form-body" id="MouData">
-    <div class="form-group">
+    <div class="form-group row">
       <label class="col-md-2 adInsLabel" translate>Currency </label>
       <label class="col-md-2 adInsLabel" translate>{{CurrCode}} </label>
     </div>
-    <div *ngIf="MouType == 'FACTORING'" class="form-group">
+    <div *ngIf="MouType == 'FACTORING'" class="form-group row">
       <label class="col-md-2 adInsLabel" translate>Plafond Amount</label>
       <label style="align-items: left;" class="col-md-2 adInsLabel" translate>{{PlafondAmt | number}} </label>
     </div>
 
-    <div *ngIf="MouType == 'FACTORING'" class="form-group">
+    <div *ngIf="MouType == 'FACTORING'" class="form-group row">
       <label class="col-md-2 adInsLabel" translate>Revolving</label>
       <label *ngIf="IsRevolving == true" class="col-md-2 adInsLabel" translate>Yes </label>
       <label *ngIf="IsRevolving == false" class="col-md-2 adInsLabel" translate>No </label>
     </div>
 
-    <div *ngIf="MouType == 'FACTORING'" class="form-group">
+    <div *ngIf="MouType == 'FACTORING'" class="form-group row">
       <label class="col-md-2 adInsLabel" translate>Recourse Type</label>
       <label *ngIf="MrRecourseTypeCode == 'WITH_RECOURSE'" class="col-md-2 adInsLabel" translate>With Recourse </label>
       <label *ngIf="MrRecourseTypeCode == 'WITHOUT_RECOURSE'" class="col-md-2 adInsLabel" translate>Without Recourse </label>
     </div>
-    <div *ngIf="MouType == 'FACTORING'" class="form-group">
+    <div *ngIf="MouType == 'FACTORING'" class="form-group row">
       <label class="col-md-2 adInsLabel" translate>Is Disclosed</label>
       <label *ngIf="IsDisclosed == true" class="col-md-2 adInsLabel" translate>Yes </label>
       <label *ngIf="IsDisclosed == false" class="col-md-2 adInsLabel" translate>No </label>
     </div>
-    <div *ngIf="MouType == 'FACTORING'" class="form-group">
-      <label class="col-md-2 adInsLabel" translate>WOP</label>
+    <div *ngIf="MouType == 'FACTORING'" class="form-group row">
+      <label class="col-md-2 adInsLabel" translate>WoP</label>
       <label  *ngIf="WopCode == 'AD'" class="col-md-2 adInsLabel" translate>Auto Debit </label>
       <label  *ngIf="WopCode == 'CA'" class="col-md-2 adInsLabel" translate>Cash </label>
       <label  *ngIf="WopCode == 'PICK'" class="col-md-2 adInsLabel" translate>Pick-Up </label>
       <label  *ngIf="WopCode == 'BT'" class="col-md-2 adInsLabel" translate>Bank Transfer </label>
       <label  *ngIf="WopCode == 'PDC'" class="col-md-2 adInsLabel" translate>{{WopCode}} </label>
     </div>
-    <div *ngIf="MouType == 'FACTORING'" class="form-group">
+    <div *ngIf="MouType == 'FACTORING'" class="form-group row">
       <label class="col-md-2 adInsLabel" translate>TOP</label>
       <label style="align-items: left;" class="col-md-2 adInsLabel" translate>{{TopDays}} days </label>
     </div>
 
-    <div *ngIf="MouType == 'FACTORING'" class="form-group">
+    <div *ngIf="MouType == 'FACTORING'" class="form-group row">
       <label class="col-md-2 adInsLabel" translate>Tenor From</label>
       <label class="col-md-1 adInsLabel" translate>{{TenorFrom}}</label>
       <label class="col-md-1 adInsLabel" translate>to</label>
       <label class="col-md-1 adInsLabel" translate>{{TenorTo}}</label>
     </div>
 
-    <div *ngIf="MouType == 'FACTORING'" class="form-group">
+    <div *ngIf="MouType == 'FACTORING'" class="form-group row">
       <label class="col-md-2 adInsLabel" translate>Payment Frequency </label>
       <label class="col-md-2 adInsLabel" translate>{{PayFreqCode}}</label>
     </div>
 
-    <div *ngIf="MouType == 'GENERAL'" class="form-group">
-      <label class="col-md-2 adInsLabel" translate>Interest type </label>
+    <div *ngIf="MouType == 'GENERAL'" class="form-group row">
+      <label class="col-md-2 adInsLabel" translate>Interest Type </label>
       <label class="col-md-2 adInsLabel" translate>{{MrInterestTypeCode}}</label>
     </div>
-    <div *ngIf="MouType == 'FACTORING'" class="form-group">
+    <div *ngIf="MouType == 'FACTORING'" class="form-group row">
       <label class="col-md-2 adInsLabel" translate>Payment Frequency </label>
       <label class="col-md-2 adInsLabel" translate>{{PayFreqCode}} </label>
     </div>
-    <div class="form-group">
+    <div class="form-group row">
       <label class="col-md-2 adInsLabel" translate>Installment Scheme </label>
       <label *ngIf="MrInstSchmCode == 'BL'" class="col-md-2 adInsLabel" translate>Balloon </label>
       <label *ngIf="MrInstSchmCode == 'EP'" class="col-md-2 adInsLabel" translate>Even Principle </label>
@@ -72,29 +72,29 @@
       <label *ngIf="MrInstSchmCode == 'STRL'" class="col-md-2 adInsLabel" translate>Step Up Step Down Regular
         Leasing</label>
     </div>
-    <div *ngIf="MouType == 'GENERAL'" class="form-group">
+    <div *ngIf="MouType == 'GENERAL'" class="form-group row">
       <label class="col-md-2 adInsLabel" translate>Payment Frequency </label>
       <label class="col-md-2 adInsLabel" translate>{{PayFreqCode}} </label>
     </div>
-    <div *ngIf="MouType == 'GENERAL'" class="form-group">
+    <div *ngIf="MouType == 'GENERAL'" class="form-group row">
       <label class="col-md-2 adInsLabel" translate>First Installment Type</label>
       <label *ngIf="MrFirstInstTypeCode == 'AD'" class="col-md-2 adInsLabel" translate>Advance </label>
       <label *ngIf="MrFirstInstTypeCode == 'AR'" class="col-md-2 adInsLabel" translate>Arrear </label>
     </div>
-    <div *ngIf="MouType == 'FACTORING'" class="form-group">
+    <div *ngIf="MouType == 'FACTORING'" class="form-group row">
       <label class="col-md-2 adInsLabel" translate>Interest Rate (%)</label>
       <label class="col-md-2 adInsLabel" translate>{{InterestRatePrcnt}}%</label>
     </div>
-    <div *ngIf="MouType == 'FACTORING'" class="form-group">
+    <div *ngIf="MouType == 'FACTORING'" class="form-group row">
       <label class="col-md-2 adInsLabel" translate>Retention (%)</label>
       <label class="col-md-2 adInsLabel" translate>{{RetentionPrcnt}}%</label>
     </div>
-    <div *ngIf="MouType == 'FACTORING'" class="form-group">
+    <div *ngIf="MouType == 'FACTORING'" class="form-group row">
       <label class="col-md-2 adInsLabel" translate>Revolving</label>
       <label *ngIf="IsListedCust == true" class="col-md-2 adInsLabel" translate>Yes </label>
       <label *ngIf="IsListedCust == false" class="col-md-2 adInsLabel" translate>No </label>
     </div>
-    <div *ngIf="MouType == 'FACTORING'" class="form-group">
+    <div *ngIf="MouType == 'FACTORING'" class="form-group row">
       <label class="col-md-2 adInsLabel" translate>Notes</label>
       <label *ngIf="Notes == '' || Notes == null" class="col-md-2 adInsLabel" translate>-</label>
       <label *ngIf="Notes != '' && Notes != null" class="col-md-2 adInsLabel" translate>{{Notes}}</label>
@@ -103,13 +103,13 @@
       <label class="col-md-2 adInsLabel" translate>Insured By</label>
       <label class="col-md-2 adInsLabel" translate>Company</label>
     </div> -->
-    <div *ngIf="MouType == 'GENERAL'" class="form-group">
+    <div *ngIf="MouType == 'GENERAL'" class="form-group row">
       <label class="col-md-2 adInsLabel" translate>Down Payment (%)</label>
       <label class="col-md-1 adInsLabel" translate>{{DownPaymentFromPrcnt}}% </label>
       <label class="col-md-1 adInsLabel" translate>to</label>
       <label class="col-md-1 adInsLabel" translate>{{DownPaymentToPrcnt}}% </label>
     </div>
-    <div *ngIf="MouType == 'GENERAL'" class="form-group">
+    <div *ngIf="MouType == 'GENERAL'" class="form-group row">
       <label class="col-md-2 adInsLabel" translate>Tenor</label>
       <label class="col-md-1 adInsLabel" translate>{{TenorFrom}}</label>
       <label class="col-md-1 adInsLabel" translate>to</label>
@@ -123,11 +123,11 @@
     <table class="table table-responsive-md text-center table-hover">
       <thead>
         <tr class="table-header">
-          <th><span class="thead-header" name='No' translate>No</span>
+          <th><span class="thead-header" name='No' translate>NO.</span>
           </th>
-          <th><span class="thead-header" name='AssetType' translate>Asset Type</span>
+          <th><span class="thead-header" name='AssetType' translate>ASSET TYPE</span>
           </th>
-          <th><span class="thead-header" name='Brand' translate>Brand</span>
+          <th><span class="thead-header" name='Brand' translate>BRAND</span>
           </th>
         </tr>
       </thead>

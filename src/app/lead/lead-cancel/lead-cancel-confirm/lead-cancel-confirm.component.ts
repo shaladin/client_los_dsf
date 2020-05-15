@@ -24,9 +24,11 @@ export class LeadCancelConfirmComponent implements OnInit {
   ItemCancelReason: any;
   deletedArr = new Array();
   EditListLeadForCancelByListLeadId = AdInsConstant.EditListLeadForCancelByListLeadId;
-  tempWfTaskListArr: any = new Array();
+  tempWfTaskListArr = new Array();
   leadUrl: string;
-
+  tempLeadIds : string; // kayaknya
+  tempLeadArr : Array<string>; // kayaknya
+  WfTaskListIds : string;
   constructor(
     private http: HttpClient,
     private toastr: NGXToastrService,
@@ -37,23 +39,18 @@ export class LeadCancelConfirmComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    var tempLeadIds;
-    var tempLeadArr;
-    var WfTaskListIds;
     this.route.queryParams.subscribe(params => {
       if (params['LeadIds'] != null) {
-        tempLeadIds = params['LeadIds'];
-        tempLeadArr = tempLeadIds.split(',');
+        this.tempLeadIds = params['LeadIds'];
+        this.tempLeadArr = this.tempLeadIds.split(',');
       }
       
       if (params['WfTaskListIds'] != null && params['WfTaskListIds'] != "") {
-        WfTaskListIds = params['WfTaskListIds'];
-        this.tempWfTaskListArr = WfTaskListIds.split(',');
+        this.WfTaskListIds = params['WfTaskListIds'];
+        this.tempWfTaskListArr = this.WfTaskListIds.split(',');
       }
-      
-      console.log(this.tempWfTaskListArr);
     });
-    var tempObj = { 'ListLeadId': tempLeadArr };
+    var tempObj = { 'ListLeadId': this.tempLeadArr };
     this.http.post(this.GetListLeadForLeadCancelByListLeadId, tempObj).subscribe(
       response => {
         this.responseObj = response['ReturnObject'];

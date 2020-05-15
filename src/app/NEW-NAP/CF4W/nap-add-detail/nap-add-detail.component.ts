@@ -4,8 +4,9 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
-import { AppWizardObj } from 'app/shared/model/App/AppWizard.Model';
 import { FormBuilder } from '@angular/forms';
+import Stepper from 'bs-stepper';
+import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -14,26 +15,28 @@ import { FormBuilder } from '@angular/forms';
 })
 export class NapAddDetailComponent implements OnInit {
 
+  private stepper: Stepper;
+  AppStepIndex: number = 1;
   appId: number;
+  wfTaskListId: number;
   mode: string;
   viewProdMainInfoObj: string;
   viewReturnInfoObj: string = "";
   NapObj: AppObj;
-  AppStepIndex: number;
   IsMultiAsset: string;
   ListAsset: any;
 
   AppStep = {
-    "NEW": 0,
-    "CUST": 0,
-    "GUAR": 1,
-    "REF": 2,
-    "APP": 3,
-    "ASSET": 4,
-    "INS": 5,
-    "LFI": 6,
-    "FIN": 7,
-    "TC": 8,
+    "NEW": 1,
+    "CUST": 1,
+    "GUAR": 2,
+    "REF": 3,
+    "APP": 4,
+    "ASSET": 5,
+    "INS": 6,
+    "LFI": 7,
+    "FIN": 8,
+    "TC": 9,
   };
 
   ResponseReturnInfoObj;
@@ -53,23 +56,39 @@ export class NapAddDetailComponent implements OnInit {
         this.mode = params["Mode"];
         this.CheckMultiAsset();
       }
+      if (params["WfTaskListId"] != null) {
+        this.wfTaskListId = params["WfTaskListId"];
+      }
     });
   }
 
   ngOnInit() {
-    console.log("this")
+    console.log("this");
+    this.ClaimTask();
     this.AppStepIndex = 0;
     this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
     this.http.post(AdInsConstant.GetAppById, this.NapObj).subscribe(
       (response: AppObj) => {
-        this.NapObj = response;
+        if (response) {
+          this.NapObj = response;
+          this.AppStepIndex = this.AppStep[response.AppCurrStep];
+          this.stepper.to(this.AppStepIndex);
+        }
+        else {
+          this.AppStepIndex = 0;
+        }
       },
       (error) => {
         console.log(error);
       }
     );
+
+    this.stepper = new Stepper(document.querySelector('#stepper1'), {
+      linear: false,
+      animation: true
+    })
     this.MakeViewReturnInfoObj();
   }
 
@@ -114,7 +133,7 @@ export class NapAddDetailComponent implements OnInit {
     )
   }
 
-  EnterTab(AppStep) {
+  ChangeTab(AppStep) {
     // console.log(AppStep);
     switch (AppStep) {
       case AdInsConstant.AppStepCust:
@@ -150,13 +169,23 @@ export class NapAddDetailComponent implements OnInit {
     }
   }
 
-  // WizardNavigation(AppWizard : AppWizardObj){
-  //   console.log("WIZNAV")
-  //   this.AppStepIndex = this.AppStep[AppWizard.AppStep];
-  //   AppWizard.Wizard.goToNextStep();
-  // }
+  NextStep(Step) {
+    this.NapObj.AppCurrStep = Step;
+    this.http.post<AppObj>(AdInsConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
+      (response) =>{
+        console.log("Step Change to, Curr Step : "+response.AppCurrStep+", Last Step : "+response.AppLastStep);
+        this.ChangeTab(Step);
+        this.stepper.next();
+      },
+      (error)=>{
+        console.error("Error when updating AppStep");
+        console.error(error);
+      }
+    )
+  }
 
   LastStepHandler() {
+    this.NapObj.WfTaskListId = this.wfTaskListId;
     this.http.post(AdInsConstant.SubmitNAP, this.NapObj).subscribe(
       (response) => {
         console.log(response);
@@ -186,5 +215,18 @@ export class NapAddDetailComponent implements OnInit {
         }
       )
     }
+  }
+
+  ClaimTask(){
+    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var wfClaimObj = new AppObj();
+    wfClaimObj.AppId = this.appId;
+    wfClaimObj.Username = currentUserContext["UserName"];
+    wfClaimObj.WfTaskListId = this.wfTaskListId;
+
+    this.http.post(AdInsConstant.ClaimTaskNap, wfClaimObj).subscribe(
+      (response) => {
+    
+      });
   }
 }
