@@ -27,6 +27,8 @@ import { DocumentViewComponent } from './document-printing/document-view/documen
 import { InvoiceDataAddComponent } from './invoice-data/invoice-data-add/invoice-data-add.component';
 import { DeliveryOrderMultiAssetDetailComponent } from './delivery-order-multi-asset/delivery-order-multi-asset-detail/delivery-order-multi-asset-detail.component';
 import { DeliveryOrderMultiAssetComponent } from './delivery-order-multi-asset/delivery-order-multi-asset.component';
+import { InvoiceVerifPagingComponent } from './invoice-verif/invoice-verif-paging/invoice-verif-paging.component';
+import { InvoiceVerifDetailComponent } from './invoice-verif/invoice-verif-detail/invoice-verif-detail.component';
 
 const routes: Routes = [
   {
@@ -217,6 +219,20 @@ const routes: Routes = [
       {
         path: 'DeliveryOrderMultiAsset/Detail',
         component: DeliveryOrderMultiAssetDetailComponent,
+        data: {
+          title: 'Delivery Order Detail'
+        }
+      },
+      {
+        path: 'InvoiceVerif/Paging',
+        component: InvoiceVerifPagingComponent,
+        data: {
+          title: 'Delivery Order Paging'
+        }
+      },
+      {
+        path: 'InvoiceVerif/Detail',
+        component: InvoiceVerifDetailComponent,
         data: {
           title: 'Delivery Order Detail'
         }

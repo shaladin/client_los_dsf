@@ -121,20 +121,25 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                     //Ini Error kalau sudah masuk sampai ke Back End
                     if (event.body.StatusCode != undefined) {
                         if (event.body.StatusCode != '200' && event.body.StatusCode != '001') {
-                            let DetailError='';
-                            event.body.ErrorMessages.forEach(element => {
-                                if (element != undefined){
-                                    DetailError +=element["Field"] != undefined ? element["Field"] : "N/A"
-                                    DetailError +="; "
-                                }
-                            });
+                            let DetailError = '';
+                            if (Array.isArray(event.body.ErrorMessages)) {
+                                event.body.ErrorMessages.forEach(element => {
+                                    if (element != undefined) {
+                                        DetailError += element["Field"] != undefined ? element["Field"] : "N/A"
+                                        DetailError += "; "
+                                    }
+                                });
+                            }
+                            else if(event.body.ErrorMessages != null || event.body.ErrorMessages != undefined || event.body.ErrorMessages != ""){
+                                DetailError += event.body.ErrorMessages
+                            }
                             let data = {};
                             data = {
                                 reason: event.body.Message ? event.body.Message : '',
                                 status: event.body.StatusCode,
                                 additionalInfo: DetailError ? DetailError : ''
                             };
-                            this.toastr.error(data['reason']+"\n"+data['additionalInfo'], 'Status: ' + data['status'], { "tapToDismiss": true });
+                            this.toastr.error(data['reason'] + "\n" + data['additionalInfo'], 'Status: ' + data['status'], { "tapToDismiss": true });
                             return;
                         }
                     }

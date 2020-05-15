@@ -142,6 +142,14 @@ export class MouRequestAddcollComponent implements OnInit {
     this.criteriaObj.propName = 'A.IS_ACTIVE';
     this.criteriaObj.value = "1";
     this.criteriaList.push(this.criteriaObj);
+    
+    this.criteriaObj = new CriteriaObj();
+    this.criteriaObj.restriction = AdInsConstant.RestrictionEq;
+    this.criteriaObj.propName = 'A.IS_FINAL';
+    this.criteriaObj.value = "1";
+    this.criteriaList.push(this.criteriaObj);
+ 
+    this.inputLookupObj.addCritInput = this.criteriaList;
   }
 
   bindUcSearch()

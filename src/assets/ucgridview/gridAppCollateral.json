@@ -90,6 +90,7 @@
             "action": [
                 {
                     "type": "callback",
+                    "key": "edit",
                     "property": [
                         {
                             "type": "AppCollateralId",
@@ -102,6 +103,31 @@
                         {
                             "type": "editColl",
                             "property": "editColl"
+                        }
+                    ]
+                },
+                {
+                    "type" : "switch", 
+                    "case" : [ 
+                      {
+                        "conditions" : [ 
+                          {
+                            "property" : "AppAssetId", 
+                            "value" : null,
+                            "restriction": "EQ"
+                          }
+                        ],
+                          "result" : {
+                            "type": "callback",
+                            "key": "delete",
+                            "param" : [
+                              {
+                                "type": "AppCollateralId",
+                                "property": "AppCollateralId"
+                              }
+                            ],
+                            "icon" : "ft-trash-2"
+                          }
                         }
                     ]
                 }

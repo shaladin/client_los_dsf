@@ -14,8 +14,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 })
 export class LeadInputComponent implements OnInit {
   @ViewChild(UcpagingComponent) ucpaging;
-  inputPagingObj: any;
-  
+  inputPagingObj: UcPagingObj;
   constructor(private http: HttpClient, private toastr: NGXToastrService) { }
 
   ngOnInit() {

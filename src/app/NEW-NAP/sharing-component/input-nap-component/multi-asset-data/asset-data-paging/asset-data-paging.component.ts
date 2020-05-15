@@ -53,20 +53,50 @@ addColl() {
 
 event(ev){
   console.log(ev);
-  this.AppAssetId = ev.AppAssetId;
-  this.AppId = ev.AppId;
-  this.editAsset = ev.editAsset;
+  this.AppAssetId = ev.RowObj.AppAssetId;
+  this.AppId = ev.RowObj.AppId;
+  this.editAsset = ev.RowObj.editAsset;
   this.outputValue.emit({ mode: 'editAsset', AppAssetId: this.AppAssetId });
   console.log("CHECK EVENT");
 }
 
 eventColl(ev){
-  console.log(ev);
-  this.AppCollateralId = ev.AppCollateralId;
-  this.AppId = ev.AppId;
-  this.editColl = ev.editColl;
-  this.outputValue.emit({ mode: 'editColl', AppCollateralId: this.AppCollateralId });
-  console.log("CHECK EVENT");
+  if(ev.Key == "edit")
+  {
+    this.AppCollateralId = ev.RowObj.AppCollateralId;
+    this.AppId = ev.RowObj.AppId;
+    this.editColl = ev.RowObj.editColl;
+    this.AppAssetId = ev.RowObj.AppAssetId;
+    this.outputValue.emit({ mode: 'editColl', AppCollateralId: this.AppCollateralId });
+    console.log("CHECK EVENT");
+  }
+
+  if(ev.Key == "delete")
+  {
+    if (confirm("Are you sure to delete this record?")) {
+      var collateralObj = new AppCollateralObj();
+      collateralObj.AppCollateralId = ev.RowObj.AppCollateralId;
+      console.log("qwe")
+      console.log(collateralObj.AppCollateralId)
+      this.http.post(AdInsConstant.DeleteAppCollateral, collateralObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          this.listAppCollateralObj = response["ReturnObject"];
+
+          var DetailForGridCollateral ={
+            Data: response["ReturnObject"],
+            Count: "0"
+          }
+
+          this.gridAppCollateralObj.resultData = DetailForGridCollateral;
+
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+  }
 }
 
   ngOnInit() {
@@ -93,6 +123,7 @@ eventColl(ev){
 
     this.gridAppCollateralObj = new InputGridObj();
     this.gridAppCollateralObj.pagingJson = "./assets/ucgridview/gridAppCollateral.json";
+    this.gridAppCollateralObj.deleteUrl = AdInsConstant.DeleteAppCollateral;
     
     this.appCollateralObj = new AppCollateralObj();
     this.appCollateralObj.AppCollateralId = "-";

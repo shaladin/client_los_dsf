@@ -1,0 +1,3 @@
+<app-asset-leasing-paging *ngIf="mode == 'paging'" (outputValue)="terimaValue($event)"> </app-asset-leasing-paging>
+<app-asset-leasing-add-edit *ngIf="mode == 'addAsset' || mode =='editAsset'" [mode] = "this.mode" [AppAssetId]="this.AppAssetId" (assetValue)="terimaValue($event)"> </app-asset-leasing-add-edit>
+<app-collateral-leasing-add-edit *ngIf="mode == 'addColl' || mode =='editColl'" [mode] = "this.mode" [AppCollateralId]="this.AppCollateralId" (collValue)="terimaValue($event)"> </app-collateral-leasing-add-edit>
