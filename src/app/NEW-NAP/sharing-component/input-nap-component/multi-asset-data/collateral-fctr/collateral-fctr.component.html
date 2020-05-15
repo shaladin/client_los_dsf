@@ -25,29 +25,28 @@
           </th>
           <th><span class="thead-header" name='AddCollOwner' translate>Collateral Owner</span>
           </th>
-          <th><span class="thead-header" name='AddCollOwner' translate>Collateral Percentage</span>
+          <th><span class="thead-header" name='CollateralPrcnt' translate>Collateral Percentage</span>
           </th>
           <th>Edit</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let item of listCollateralData; let i = index">
-          <td>{{item.CollateralNo}}</td>
+          <td>{{i+1}}</td>
           <td align="left">{{item.FullAssetName}}</td>
           <td align="left">{{item.AssetTypeCode}}</td>
           <td align="left">{{item.CollateralValueAmt}}</td>
           <td align="right">{{item.CollateralValueAmt | number}}</td>
           <td align="left">{{item.CollateralPrcnt}}</td>
-          <td>{{item.CollateralStat}}</td>
           <td>
-            <!-- <a class="success p-0" data-original-title="" title=""
+            <a class="success p-0" data-original-title="" title=""
               (click)="editData(AdditionalCollateralContent, item.AppCollateralId)">
               <i class="ft-edit-2 font-medium-3 mr-2"></i>
             </a>
             <a *ngIf="item.CollateralStat == 'NEW'" class="danger p-0" data-original-title="" title=""
               (click)="delete(item.AppCollateralId)">
               <i class="ft-trash-2 font-medium-3 mr-2"></i>
-            </a> -->
+            </a>
           </td>
         </tr>
       </tbody>
@@ -182,24 +181,22 @@
           </div>
         </div>
 
-        <!-- <lib-ucSubsection [id]="'AddCollAttributeId'" [title]="'Collateral Attribute'" [panel]="'AddCollAttribut'">
+        <lib-ucSubsection [id]="'AddCollAttributeId'" [title]="'Collateral Attribute'" [panel]="'AddCollAttribut'">
         </lib-ucSubsection>
         <div class="form-body" id="CollAttribute" formArrayName="items">
           <table class="table table-responsive-md text-center table-hover">
             <tbody>
-              <tr *ngFor="let item of AddCollForm.controls.items.controls; let i = index" [formGroupName]="i">
+              <tr *ngFor="let item of listRefAppAttr; let i = index" [formGroupName]="i">
                 <td>
                   <div class="col-md-2">
-                    <label class="col-md-2 adins-label" translate>Attr {{i}}</label>
-                    <input type="text" class="form-control width-100-per" formControlName="AttrName">
-                    <lib-uc-show-errors [control]="AddCollForm.controls.AttrName" [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors>
+                    <label class="col-md-2 adins-label" translate>Attr {{i+1}}</label>
+                    <input type="text" class="form-control width-100-per" formControlName="AppAttrName"  value="{{item.AppAttrName}}">
                   </div>
                 </td>
               </tr>
             </tbody>
           </table>
-        </div> -->
+        </div>
 
         <lib-ucSubsection [id]="'AddCollDocumentId'" [title]="'Collateral Document'" [panel]="'AddCollDocument'">
         </lib-ucSubsection>
@@ -398,7 +395,7 @@
         <div id="AddCollInfo">
           <lib-UCSearch id="ucSearch" style="width:100%;" [searchInput]='inputObj' (result)="getResult($event)">
           </lib-UCSearch>
-          <div>
+          <div [hidden]="resultData?.Data == null">
             <table class="table table-responsive-md text-center table-hover">
               <thead>
                 <tr class="table-header">
@@ -410,37 +407,44 @@
                   </th>
                   <th><span style="float: left;" class="thead-header" name='CollType' translate>Collateral Type</span>
                   </th>
-                  <th><span style="float: left;" class="thead-header" name='MouCustName' translate>Collateral Owner
-                      </span>
+                  <th><span style="float: left;" class="thead-header" name='CollateralValueAmt' translate>Collateral Price</span>
                   </th>
-                  <th><span style="float: right;" class="thead-header" name='CollPrice' translate>Collateral
-                      Notes</span>
+                  <th><span style="float: left;" class="thead-header" name='OwnerName' translate>Collateral Owner</span>
                   </th>
-                  <th><span style="float: right;" class="thead-header" name='CollPrice' translate>Collateral Percentage
-                  </span>
+                  <th><span style="float: right;" class="thead-header" name='CollateralNotes' translate>Collateral Notes</span>
+                  </th>
+                  <th><span style="float: right;" class="thead-header" name='CollateralPrcnt' translate>Collateral Percentage</span>
                 </th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let item of listCollExisting; let i = index">
                   <td>
-                    <div *ngIf="listSelectedId.indexOf(item.CollateralId) >- 1">
+                    <div *ngIf="listSelectedId.indexOf(item.AppCollateralId) >- 1">
                       <input type="checkbox" id="checkSame" name="itemSame"
-                        (change)="Checked(item.CollateralId, $event.target.checked)" [checked]="true">
+                        (change)="Checked(item.AppCollateralId, $event.target.checked)" [checked]="true">
                     </div>
-                    <div *ngIf="listSelectedId.indexOf(item.CollateralId) < 0">
+                    <div *ngIf="listSelectedId.indexOf(item.AppCollateralId) < 0">
                       <input type="checkbox" id="checkDiff" name="itemDiff"
-                        (change)="Checked(item.CollateralId, $event.target.checked)" [checked]=false>
+                        (change)="Checked(item.AppCollateralId, $event.target.checked)" [checked]=false>
                     </div>
                   </td>
-                  <td>{{item.CollateralNo}}</td>
+                  <td>{{i+1}}</td>
                   <td align="left">{{item.FullAssetName}}</td>
                   <td align="left">{{item.FullAssetCode}}</td>
-                  <td align="left">{{item.CustName}}</td>
-                  <td align="right">{{item.CollateralValueAmt | number}}</td>
+                  <td align="center">{{item.CollateralValueAmt | number}}</td>
+                  <td align="center">{{item.OwnerName}}</td>
+                  <td align="left">{{item.CollateralNotes}}</td>
+                  <td>
+                    <input type="text" class="form-control width-100-per" formControlName="CollateralPrcnt">
+                    <lib-uc-show-errors [control]="AddCollForm.controls.CollateralPrcnt"
+                      [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                </td>
                 </tr>
               </tbody>
             </table>
+            <lib-ucgridfooter (select)="onSelect($event)"></lib-ucgridfooter>
 
 
             <div class="card-header">
@@ -454,19 +458,21 @@
             <table class="table table-responsive-md text-center table-hover">
               <thead>
                 <tr class="table-header">
-                  <th><span class="thead-header" name='CollNo' translate>Collateral No</span>
+                  <th><span class="thead-header">Delete</span>
                   </th>
                   <th><span style="float: left;" class="thead-header" name='CollName' translate>Collateral Name</span>
                   </th>
                   <th><span style="float: left;" class="thead-header" name='CollType' translate>Collateral Type</span>
                   </th>
-                  <th><span style="float: left;" class="thead-header" name='MouCustName' translate>Document Owner
-                      Name</span>
-                  </th>
                   <th><span style="float: right;" class="thead-header" name='CollPrice' translate>Collateral
                       Price</span>
                   </th>
-                  <th translate>Delete</th>
+                  <th><span style="float: left;" class="thead-header" name='OwnerName' translate>Collateral Owner
+                      Name</span>
+                  </th>
+                  <th><span style="float: right;" class="thead-header" name='CollateralNotes' translate>Collateral
+                    Notes</span>
+                </th>
                 </tr>
               </thead>
               <tbody>
@@ -474,15 +480,15 @@
                   <td>
                     <div>
                       <a class="danger p-0" data-original-title="" title=""
-                        (click)="deleteFromTemp(item.MouCustCollateralId)">
+                        (click)="deleteFromTemp(item.AppCollateralId)">
                         <i class="ft-trash-2 font-medium-3 mr-2"></i>
                       </a></div>
                   </td>
-                  <td>{{item.CollateralNo}}</td>
                   <td align="left">{{item.FullAssetName}}</td>
                   <td align="left">{{item.FullAssetCode}}</td>
-                  <td align="left">{{item.CustName}}</td>
                   <td align="right">{{item.CollateralValueAmt | number}}</td>
+                  <td align="left">{{item.OwnerName}}</td>
+                  <td align="left">{{item.CollateralNotes}}</td>
                 </tr>
               </tbody>
             </table>
