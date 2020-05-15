@@ -23,7 +23,7 @@ export class MouReviewGeneralComponent implements OnInit {
   PlafondAmt: any;
   listApprover: any;
   listRecommendationObj: any;
-
+  MrCustTypeCode : any;
   listReason: any = [
     {
       Key: "OTHR_RSN",
@@ -90,6 +90,12 @@ export class MouReviewGeneralComponent implements OnInit {
       (response) => {
         this.PlafondAmt = response['PlafondAmt'];
       })
+
+      this.http.post(AdInsConstant.GetMouCustById, mouCustObj).subscribe(
+        (response) => {
+            this.MrCustTypeCode = response['MrCustTypeCode']; 
+        });
+
   }
 
   async claimTask() {
