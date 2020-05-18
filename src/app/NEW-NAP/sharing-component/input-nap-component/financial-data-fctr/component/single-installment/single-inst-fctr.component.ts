@@ -7,6 +7,7 @@ import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj.Model';
 import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
 import { environment } from 'environments/environment';
+import { CalcSingleInstObj } from 'app/shared/model/AppFinData/CalcSingleInstObj.Model';
 
 @Component({
   selector: 'app-single-inst-fctr',
@@ -19,7 +20,7 @@ export class SingleInstFctrComponent implements OnInit {
 
   InterestTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
-  calcRegFixObj: CalcRegularFixObj = new CalcRegularFixObj();
+  calcSingleInstObj: CalcSingleInstObj = new CalcSingleInstObj();
   listInstallment: any;
   responseCalc: any;
 
@@ -47,28 +48,11 @@ export class SingleInstFctrComponent implements OnInit {
   }
 
   Calculate() {
-    this.calcRegFixObj = this.ParentForm.value;
-    this.calcRegFixObj["IsRecalculate"] = false;
-    this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateInstallmentRegularFix", this.calcRegFixObj).subscribe(
+    this.calcSingleInstObj = this.ParentForm.value;
+    this.calcSingleInstObj.TopBased = "EFF_DT";
+    this.http.post<ResponseCalculateObj>(AdInsConstant.CalculateSingleInst, this.calcSingleInstObj).subscribe(
       (response) => {
-        this.listInstallment = response.InstallmentTable;
-        this.ParentForm.patchValue({
-          TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
-          TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
-
-          EffectiveRatePrcnt: response.EffectiveRatePrcnt,
-          FlatRatePrcnt: response.FlatRatePrcnt,
-          InstAmt: response.InstAmt,
-
-          GrossYieldPrcnt: response.GrossYieldPrcnt,
-
-          TotalInterestAmt: response.TotalInterestAmt,
-          TotalAR: response.TotalARAmt,
-
-          NtfAmt: response.NtfAmt,
-          DiffRateAmt: response.DiffRateAmt
-
-        })
+        console.log(response);
 
         this.SetNeedReCalculate(false);
       }

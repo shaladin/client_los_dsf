@@ -991,6 +991,7 @@ export class AdInsConstant {
   public static CalculateInstallmentRegularFixFctr = environment.losUrl + "/AppFinData/CalculateInstallmentRegularFixFctr";
   public static SaveAppFinDataFctr = environment.losUrl + "/AppFinData/SaveAppFinDataFctr";
   public static CalculateInstallmentEvenPrincipalFctr = environment.losUrl + "/AppFinData/CalculateInstallmentEvenPrincipalFctr";
+  public static CalculateSingleInst = environment.losUrl + "/AppFinData/CalculateSingleInst";
 
 
 
