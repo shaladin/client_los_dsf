@@ -4,7 +4,7 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-    production: true,
+    production: false,
     navbarColor: 'transparent',
     losUrl : 'http://r3app-server.ad-ins.com/LOS',
     ApprovalR3Url: 'http://r3app-server/approval',

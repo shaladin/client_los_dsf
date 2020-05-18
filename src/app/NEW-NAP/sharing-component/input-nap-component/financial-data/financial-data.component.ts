@@ -132,6 +132,8 @@ export class FinancialDataComponent implements OnInit {
 
           MrInstSchemeCode: this.appFinDataObj.MrInstSchemeCode,
           CummulativeTenor: this.appFinDataObj.CummulativeTenor,
+
+          NtfAmt: this.appFinDataObj.NtfAmt
         });
 
         this.IsParentLoaded = true;

@@ -81,7 +81,7 @@ export class CustJobDataComponent implements OnInit {
       CompanyName: ['', [Validators.required, Validators.maxLength(100)]],
       MrJobPositionCode: ['', Validators.maxLength(50)],
       MrCompanyScaleCode: ['', Validators.maxLength(50)],
-      NumOfEmployee: [0],
+      NumOfEmployee: [0, Validators.min(0)],
       MrJobStatCode: ['', Validators.maxLength(50)],
       MrInvestmentTypeCode: ['', Validators.maxLength(50)]
     }));
