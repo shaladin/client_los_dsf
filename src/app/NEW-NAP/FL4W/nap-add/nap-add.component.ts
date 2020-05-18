@@ -103,6 +103,12 @@ export class NapAddComponent implements OnInit {
         CrtOfficeName: this.user.OfficeName,
       });
     }
+    else{
+      this.NapAppForm.patchValue({
+        CrtOfficeCode: this.user.OfficeCode,
+        CrtOfficeName: this.user.OfficeName,
+      });
+    }
 
     // Test Data
     console.log(this.user);
@@ -143,7 +149,8 @@ export class NapAddComponent implements OnInit {
     addCrit.DataType = "text";
     addCrit.propName = "ro.OFFICE_CODE";
     addCrit.restriction = AdInsConstant.RestrictionIn;
-    addCrit.listValue = [this.user.MrOfficeTypeCode];
+    // addCrit.listValue = [this.user.MrOfficeTypeCode];
+    addCrit.listValue = [this.user.OfficeCode];
     this.arrAddCrit.push(addCrit);
  
     var critObj = new CriteriaObj();
@@ -218,7 +225,7 @@ export class NapAddComponent implements OnInit {
       (response) => {
         console.log(response);
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["Nap/AppAddDetail"], { queryParams: { "AppId": response["AppId"] } });
+        this.router.navigate(["Nap/FinanceLeasing/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
       },
       (error) => {
         console.log(error);
