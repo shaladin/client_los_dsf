@@ -8,7 +8,7 @@
           <mat-tab-group>
             <mat-tab label="Agreement Card">
               <ng-template matTabContent>
-                <app-agrmnt-card [AgrmntId] ="AgrmntId"></app-agrmnt-card>
+                <!-- <app-agrmnt-card [AgrmntId] ="AgrmntId"></app-agrmnt-card> -->
               </ng-template>
             </mat-tab>
             <mat-tab label="Loan Object Data">
@@ -28,12 +28,12 @@
             </mat-tab>
             <mat-tab label="Commision Data">
               <ng-template matTabContent>
- 
+                
               </ng-template>
             </mat-tab>
             <mat-tab label="Reserved Fund Data">
               <ng-template matTabContent>
-                <agrmnt-view-reserved-fund agrmntId=1></agrmnt-view-reserved-fund>
+                <agrmnt-view-reserved-fund [agrmntId]="AgrmntId"></agrmnt-view-reserved-fund>
               </ng-template>
             </mat-tab>
             <mat-tab label="Document">
