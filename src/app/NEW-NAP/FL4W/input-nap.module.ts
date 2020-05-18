@@ -24,8 +24,7 @@ import { AppMainInfoComponent } from "../sharing-component/view-main-info-compon
 import { ViewAppCustDataPersonalComponent } from "../sharing-component/view-app-component/view-app-cust-data-personal/view-app-cust-data-personal.component";
 import { ViewAppCustDataCompanyComponent } from "../sharing-component/view-app-component/view-app-cust-data-company/view-app-cust-data-company.component";
 import { ViewAgrmntComponent } from './view-agrmnt/view-agrmnt.component';
-import { ViewAgrmntComponentModule } from "../sharing-component/view-agrmnt-component/view-agrmnt-component.module";
- 
+
 
 @NgModule({
   imports: [
@@ -44,7 +43,6 @@ import { ViewAgrmntComponentModule } from "../sharing-component/view-agrmnt-comp
     MatSelectModule,
     NapTabComponentModule,
     MatTabsModule,
-    ViewAgrmntComponentModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
   ],
   declarations: [

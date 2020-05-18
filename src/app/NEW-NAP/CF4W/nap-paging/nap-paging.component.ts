@@ -5,6 +5,7 @@ import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nap-paging',
@@ -19,6 +20,7 @@ export class NapPagingComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private toastr: NGXToastrService,
+    private router: Router
   ) { }
 
   async ngOnInit() {
@@ -39,19 +41,20 @@ export class NapPagingComponent implements OnInit {
     
     // console.log("User Access");
     // console.log(JSON.parse(localStorage.getItem("UserAccess")));
-    this.isAllowedCrt = false;
     this.userAccess = JSON.parse(localStorage.getItem("UserAccess"));
-    await this.GetOfficeData();
   }
-
-  isAllowedCrt: boolean;
-  async GetOfficeData(){
+  
+  CekOfficeData(){
     var obj = { OfficeCode: this.userAccess.OfficeCode };
-    await this.http.post(AdInsConstant.GetRefOfficeByOfficeCode, obj).toPromise().then(
+    this.http.post(AdInsConstant.GetRefOfficeByOfficeCode, obj).subscribe(
       (response) => {
         // console.log(response);
-        if(response["IsAllowAppCreated"] == true)
-          this.isAllowedCrt = true;
+        if(response["IsAllowAppCreated"] == true){
+          this.toastr.typeErrorCustom('Is Not Allowed to Create App');
+        }else{
+          this.router.navigate(["Nap/ConsumerFinance/InputNap/Add"]);
+        }
+
       },
       (error) => {
         console.log(error);
@@ -64,6 +67,8 @@ export class NapPagingComponent implements OnInit {
     if(!ev.RowObj.IsAllowAppCreated){
       this.toastr.typeErrorCustom('Is Not Allowed to Create App');
       return;
+    }else{
+      this.router.navigate(["Nap/ConsumerFinance/InputNap/Add/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId" : ev.RowObj.WfTaskListId } });
     }
   }
 }

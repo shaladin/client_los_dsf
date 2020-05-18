@@ -11,6 +11,7 @@ import { AgrmntFinancialComponent } from './agrmnt-financial/agrmnt-financial.co
 import { ViewAgrmntSummaryComponent } from "./view-summary/view-summary.component";
 import { ViewCommissionComponent } from './view-commission/view-commission.component';
 import { AgrmntCardComponent } from './agrmnt-card/agrmnt-card.component';
+import { ListDataCommissionAgrmntComponent } from "./view-commission/list-data-commission/list-data-commission.component";
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { AgrmntCardComponent } from './agrmnt-card/agrmnt-card.component';
     ViewPurchaseOrderComponent,
     ViewAgrmntSummaryComponent,
     ViewCommissionComponent,
+    ListDataCommissionAgrmntComponent,
     AgrmntCardComponent
   ],
   imports: [
@@ -38,6 +40,7 @@ import { AgrmntCardComponent } from './agrmnt-card/agrmnt-card.component';
     AgrmntFinancialComponent,
     ViewAgrmntSummaryComponent,
     ViewCommissionComponent,
+    ListDataCommissionAgrmntComponent,
     AgrmntCardComponent
   ],
   providers: [
