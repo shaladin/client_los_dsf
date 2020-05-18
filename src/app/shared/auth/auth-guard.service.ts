@@ -22,11 +22,13 @@ export class AuthGuard implements CanActivate {
 
     AdInsHelper.InsertLog(this.currentUrl,"PAGE");
 
-    if(!AdInsHelper.IsGrantAccess(this.currentUrl))
-    {
-      // this.errorDialogService.openDialog(AdInsErrorMessage.PageNotAuthorized);
-      // this.router.navigate([AdInsConstant.FormDefault]);
-    }
+    // pengecekan menu dihilangkan dulu, karna belum get menu dari backend
+
+    // if(!AdInsHelper.IsGrantAccess(this.currentUrl))
+    // {
+    //   // this.errorDialogService.openDialog(AdInsErrorMessage.PageNotAuthorized);
+    //   // this.router.navigate([AdInsConstant.FormDefault]);
+    // }
 
     if (currentUser == null) {
       this.router.navigate(['pages/login'])
@@ -35,7 +37,6 @@ export class AuthGuard implements CanActivate {
     else {
       return true;
     }
-    return true;
   }
 
 
