@@ -18,6 +18,7 @@ import { AgrmntCardComponent } from './agrmnt-card/agrmnt-card.component';
     ViewAgrmntDocumentComponent,
     ViewDeliveryOrderComponent,
     ViewPurchaseOrderComponent,
+    AgrmntCardComponent
   ],
   imports: [
     CommonModule,

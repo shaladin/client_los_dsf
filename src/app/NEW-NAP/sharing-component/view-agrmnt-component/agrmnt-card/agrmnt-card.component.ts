@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-agrmnt-card',
@@ -6,10 +6,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AgrmntCardComponent implements OnInit {
 
-  constructor() { }
-  viewAgrCardMainInfo : string;
-  ngOnInit() {
-    this.viewAgrCardMainInfo = "./assets/ucviewgeneric/viewAgrCardMainInfo.json";
+  constructor() { } 
+  @Input() AgrmntId: number;
+  ngOnInit() { 
   }
 
 }

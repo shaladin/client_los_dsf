@@ -11,24 +11,30 @@ import { environment } from 'environments/environment';
   templateUrl: './mou-view-approval-history.component.html',
 })
 export class MouViewApprovalHistoryComponent implements OnInit {
-  @Input() MouCustId: number; 
+  @Input() MouCustId: number;
+  GetMouCustRvwHByMouCustIdUrl : string;
+  GetListMouCustRvwDUrl : string;
+  responseMouCustRvwH: MouCustRvwHObj;
+  mouCustRvwHObj : MouCustRvwHObj;
+  mouCustRvwDObj : MouCustRvwDObj;
+  listMouCustRvwDObj : any;
   MouCustNo: string;
   MrMouTypeCode : string;
   result : any;
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { 
+    this.GetMouCustRvwHByMouCustIdUrl = AdInsConstant.GetMouCustRvwHByMouCustId;
+    this.GetListMouCustRvwDUrl = AdInsConstant.GetListMouCustRvwD;
+  }
 
   RfaLogObj :{
     RfaNo: any
   }
   ListRfaLogObj : any = new Array(this.RfaLogObj); 
   inputObj:  any;
-  listMouAppvrObj : any = new Array(this.inputObj);
-   
-  count1 : number = 0;
- 
+  listMouAppvrObj : any = new Array(this.inputObj);   
+  count1 : number = 0; 
 
   ngOnInit() {
-
     this.http.post(AdInsConstant.GetMouCustById, {MouCustID : this.MouCustId}).subscribe(
       (response) => {
         this.MouCustNo = response["MouCustNo"];
@@ -72,7 +78,4 @@ export class MouViewApprovalHistoryComponent implements OnInit {
       }
     );
   }
-
-
-
 }

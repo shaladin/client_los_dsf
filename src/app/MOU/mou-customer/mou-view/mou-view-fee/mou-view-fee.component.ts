@@ -11,7 +11,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
   providers: [NGXToastrService]
 })
 export class MouViewFeeComponent implements OnInit {
-  @Input() MouCustId: any;
+  @Input() MouCustId: number;
 
   listFeeData: any;
 

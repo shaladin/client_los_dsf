@@ -18,6 +18,7 @@ export class MouCustTcComponent implements OnInit {
   @Input() MouCustId: number;
   @Output() ResponseMouCustTc: EventEmitter<any> = new EventEmitter<any>();
   formSubmitted: boolean;
+  businessDate: Date;
 
   MouCustTcForm = this.fb.group({
     MouCustTcList: this.fb.array([])
@@ -32,6 +33,8 @@ export class MouCustTcComponent implements OnInit {
   }
 
   ngOnInit() {
+    var context = JSON.parse(localStorage.getItem("UserAccess"));
+    this.businessDate = new Date(context["BusinessDt"]);
     var datePipe = new DatePipe("en-US");
     var mouObj = new MouCustObj();
     mouObj.MouCustId = this.MouCustId;

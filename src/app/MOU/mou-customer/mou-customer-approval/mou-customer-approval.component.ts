@@ -9,8 +9,8 @@ import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
   templateUrl: './mou-customer-approval.component.html',
 })
 export class MouCustomerApprovalComponent implements OnInit {
-  inputPagingObj: any;
-  arrCrit: any;
+  inputPagingObj: UcPagingObj;
+  arrCrit: Array<CriteriaObj>;
 
   constructor() { }
 
@@ -21,7 +21,7 @@ export class MouCustomerApprovalComponent implements OnInit {
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchMouCustomerApproval.json";
 
-    this.arrCrit = new Array();
+    this.arrCrit = new Array<CriteriaObj>();
     var critObj = new CriteriaObj();
     critObj.DataType = 'text';
     critObj.restriction = AdInsConstant.RestrictionEq;

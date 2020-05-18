@@ -17,10 +17,10 @@ export class MouReviewGeneralComponent implements OnInit {
   rfaInfoObj: RFAInfoObj = new RFAInfoObj();
   mouCustObj: MouCustObj = new MouCustObj();
   keyValueObj: KeyValueObj;
-  MouCustId: any;
+  MouCustId: number;
   WfTaskListId: any;
   MouType: string = "GENERAL";
-  PlafondAmt: any;
+  PlafondAmt: number;
   listApprover: any;
   listRecommendationObj: any;
   MrCustTypeCode : any;
