@@ -23,8 +23,8 @@ export class MouReviewGeneralComponent implements OnInit {
   PlafondAmt: number;
   listApprover: any;
   listRecommendationObj: any;
-
-  listReason: Array<any> = [
+  MrCustTypeCode : any;
+  listReason: any = [
     {
       Key: "OTHR_RSN",
       Value: "Reason 1"
@@ -90,6 +90,12 @@ export class MouReviewGeneralComponent implements OnInit {
       (response) => {
         this.PlafondAmt = response['PlafondAmt'];
       })
+
+      this.http.post(AdInsConstant.GetMouCustById, mouCustObj).subscribe(
+        (response) => {
+            this.MrCustTypeCode = response['MrCustTypeCode']; 
+        });
+
   }
 
   async claimTask() {
