@@ -4,7 +4,7 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: true,
+  production: false,
   navbarColor: 'transparent',
   // losUrl : 'http://localhost:5001',
   // FoundationR3Url: 'http://localhost:5000',

@@ -20,6 +20,7 @@ import { MouRequestAddcollComponent } from './mou-customer-request/mou-request-a
 import { MouCustomerDetailComponent } from './mou-customer-request/mou-customer-detail/mou-customer-detail.component';
 import { MouCustomerInquiryComponent } from './mou-customer/mou-customer-inquiry/mou-customer-inquiry.component';
 import { TestUploadComponent } from './test-upload/test-upload.component';
+import { MouCancelComponent } from './mou-cancel/mou-cancel.component';
 
 const routes: Routes = [
   {
@@ -163,6 +164,13 @@ const routes: Routes = [
         component: MouCustomerInquiryComponent,
         data: {
           title: "MOU Inquiry"
+        }
+      },
+      {
+        path: "Cust/Cancel",
+        component: MouCancelComponent,
+        data: {
+          title: "MOU Cancel"
         }
       }
     ]

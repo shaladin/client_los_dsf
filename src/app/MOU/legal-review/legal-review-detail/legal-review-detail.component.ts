@@ -14,28 +14,28 @@ import { MouCustTcComponent } from 'app/MOU/mou-customer-request/mou-cust-tc/mou
 })
 export class LegalReviewDetailComponent implements OnInit {
   viewObj: string;
-  MouCustId: any;
+  MouCustId: number;
   WfTaskListId: any;
-  GetListActiveRefMasterUrl = AdInsConstant.GetListActiveRefMaster;
-  AddEditRangeMouCustLglReview = AdInsConstant.AddEditRangeMouCustLglReview;
+  GetListActiveRefMasterUrl: string = AdInsConstant.GetListActiveRefMaster;
+  AddEditRangeMouCustLglReview: string = AdInsConstant.AddEditRangeMouCustLglReview;
   responseObj: any;
   responseRefMasterObj: any;
-  GetMouCustTcForMouLglByCustMouIdUrl = AdInsConstant.GetMouCustTcForMouLglByCustMouId;
-  GetMouCustLglReviewByMouCustIdUrl = AdInsConstant.GetMouCustLglReviewByMouCustId;
-  EditRangeMouCustLglReviewUrl = AdInsConstant.EditRangeMouCustLglReview;
+  GetMouCustTcForMouLglByCustMouIdUrl: string = AdInsConstant.GetMouCustTcForMouLglByCustMouId;
+  GetMouCustLglReviewByMouCustIdUrl: string = AdInsConstant.GetMouCustLglReviewByMouCustId;
+  EditRangeMouCustLglReviewUrl: string = AdInsConstant.EditRangeMouCustLglReview;
   responseMouTcObj: any;
-  items: any;
-  termConditions : any;
+  items: FormArray;
+  termConditions : FormArray;
   LegalForm = this.fb.group(
     {
       items: this.fb.array([]),
       termConditions : this.fb.array([])
     }
   );
-  GetRefMasterByRefMasterTypeCodeUrl = AdInsConstant.GetRefMasterByRefMasterTypeCode;
-  EditListMouCustTc = AdInsConstant.EditListMouCustTc;
+  GetRefMasterByRefMasterTypeCodeUrl: string = AdInsConstant.GetRefMasterByRefMasterTypeCode;
+  EditListMouCustTc: string = AdInsConstant.EditListMouCustTc;
   @ViewChild("MouTc") public mouTc: MouCustTcComponent;
-  responseMouObj = new Array();
+  responseMouObj: Array<any> = new Array<any>();
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,

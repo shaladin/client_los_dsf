@@ -9,10 +9,10 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 })
 export class CustomerDocPrintingDetailComponent implements OnInit {
   viewObj: string;
-  MouCustId: any;
-  GetListMouCustDocPrintForViewByMouCustIdUrl  = AdInsConstant.GetListMouCustDocPrintForViewByMouCustId;
-  responseObj = new Array();
-  EditMouCustDocPrintSequenceNoUrl =  AdInsConstant.EditMouCustDocPrintSequenceNo;
+  MouCustId: number;
+  GetListMouCustDocPrintForViewByMouCustIdUrl: string = AdInsConstant.GetListMouCustDocPrintForViewByMouCustId;
+  responseObj: Array<any> = new Array<any>();
+  EditMouCustDocPrintSequenceNoUrl: string =  AdInsConstant.EditMouCustDocPrintSequenceNo;
 
   constructor(
     private http: HttpClient,

@@ -8,12 +8,12 @@
       "mainInfo": [
         {
           "type": "currency",
-          "label": "Monthly Income",
+          "label": "MONTHLY INCOME",
           "property": "MonthlyIncomeAmt"
         },
         {
           "type": "currency",
-          "label": "Monthly Expense",
+          "label": "MONTHLY EXPENSE",
           "property": "MonthlyExpenseAmt"
         }
       ],
