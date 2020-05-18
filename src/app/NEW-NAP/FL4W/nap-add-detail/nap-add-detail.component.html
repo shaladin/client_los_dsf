@@ -61,7 +61,7 @@
                 <span class="bs-stepper-label">Referantor Data</span>
               </button>
             </div>
-            <!-- <div class="line"></div>
+            <div class="line"></div>
             <div class="step" data-target="#application-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="application-tab"
                 id="application-tab-trigger" [disabled]="!(AppStepIndex >= 4)" (click)="ChangeTab('APP')">
@@ -108,7 +108,7 @@
                 <span class="bs-stepper-circle">9</span>
                 <span class="bs-stepper-label">Term & Conditions</span>
               </button>
-            </div> -->
+            </div>
           </div>
           <br><br>
           <div class="bs-stepper-content">
@@ -125,12 +125,12 @@
               <app-referantor-data-FL4W *ngIf="AppStepIndex == 3" [appId]="appId" (outputTab)="NextStep('APP')">
               </app-referantor-data-FL4W>
             </div>
-            <!-- <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
+            <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
               <app-application-data-refinancing *ngIf="AppStepIndex == 4" [AppId]="appId"
                 (outputTab)="NextStep('ASSET')"></app-application-data-refinancing>
             </div>
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
-              Collateral
+              <app-multi-asset-data (OutputMultiAsset)="NextStep('INS')"></app-multi-asset-data>
             </div>
             <div id="insurance-tab" class="content" role="tabpanel" aria-labelledby="insurance-tab-trigger">
               <app-insurance-data *ngIf="!IsMultiAsset && AppStepIndex == 6" [appId]="appId"
@@ -147,7 +147,7 @@
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
               <app-tc-data *ngIf="AppStepIndex == 9" [AppId]="appId" (outputTab)="NextStep('TC')"></app-tc-data>
-            </div> -->
+            </div>
           </div>
         </div>
       </div>
