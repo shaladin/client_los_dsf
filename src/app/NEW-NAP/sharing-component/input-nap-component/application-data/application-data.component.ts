@@ -543,12 +543,12 @@ export class ApplicationDataComponent implements OnInit {
     console.log(this.NapAppModelForm);
     if(this.NapAppModelForm.value.InterestType == "FIXED"){
       this.isFixedRate = true;
-      this.NapAppModelForm.controls.InterestType.setValidators(Validators.required);
+      this.NapAppModelForm.controls.FloatingPeriod.clearValidators();
     }
     else {
       this.isFixedRate = false;
-      this.NapAppModelForm.controls.InterestType.clearValidators();
+      this.NapAppModelForm.controls.FloatingPeriod.setValidators(Validators.required);
     }
-    this.NapAppModelForm.controls.InterestType.updateValueAndValidity();
+    this.NapAppModelForm.controls.FloatingPeriod.updateValueAndValidity();
   }
 }

@@ -109,6 +109,7 @@ export class CustCompanyMainDataComponent implements OnInit {
       this.InputLookupCustomerObj.nameSelect = response["CustObj"].CustName;
       this.InputLookupCustomerObj.jsonSelect = {CustName: response["CustObj"].CustName};
       this.selectedCustNo = response["CustObj"].CustNo;
+      this.parentForm.controls[this.identifier]['controls']["TaxIdNo"].disable();
     }
 
     if(response["CustCompanyObj"] != undefined){
@@ -163,7 +164,7 @@ export class CustCompanyMainDataComponent implements OnInit {
   bindCustData(){
     console.log("bind cust data");
     console.log(this.custDataCompanyObj);
-    if(this.custDataCompanyObj.AppCustObj != undefined){
+    if(this.custDataCompanyObj.AppCustObj.AppCustId != 0){
       this.parentForm.controls[this.identifier].patchValue({
         CustNo: this.custDataCompanyObj.AppCustObj.CustNo,
         CustModelCode: this.custDataCompanyObj.AppCustObj.CustModelCode,
@@ -241,5 +242,7 @@ export class CustCompanyMainDataComponent implements OnInit {
       }
     );
   }
-
+  test() {
+    console.log(this.parentForm);
+  }
 }
