@@ -61,6 +61,7 @@ import { MouCustomerInquiryComponent } from './mou-customer/mou-customer-inquiry
 import { NgxCurrencyModule } from "ngx-currency";
 import { TestUploadComponent } from './test-upload/test-upload.component';
 import { UcapprovalhistModule } from "@adins/ucapprovalhist";
+import { MouCancelComponent } from "./mou-cancel/mou-cancel.component";
 
 export const customCurrencyMaskConfig = {     
   align: "left",     
@@ -150,7 +151,8 @@ export const customCurrencyMaskConfig = {
     MouCustAssetComponent,
     MouCustAssetDetailComponent,
     MouDetailGeneralComponent,
-    TestUploadComponent
+    TestUploadComponent,
+    MouCancelComponent
   ],
   exports: [],
   providers: [NGXToastrService],

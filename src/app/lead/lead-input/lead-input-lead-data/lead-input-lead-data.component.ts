@@ -62,16 +62,16 @@ export class LeadInputLeadDataComponent implements OnInit {
     FullAssetName: [''],
     MrAssetConditionCode: [''],
     MrDownPaymentTypeCode: [''],
-    ManufacturingYear: [''],
-    AssetPrice: ['', Validators.required],
-    DownPaymentAmount: ['', Validators.required],
+    ManufacturingYear: ['', Validators.min(0)],
+    AssetPrice: ['', Validators.required, Validators.min(0)],
+    DownPaymentAmount: ['', Validators.required, Validators.min(0)],
     DownPaymentPercent: [''],
     SerialNo1: [''],
     SerialNo2: [''],
     SerialNo3: [''],
     SerialNo4: [''],
     SerialNo5: [''],
-    Tenor: ['', Validators.required],
+    Tenor: ['', Validators.required, Validators.min(0)],
     MrFirstInstTypeCode: ['', Validators.required],
     NTFAmt: [''],
     TotalDownPayment: [''],
@@ -96,6 +96,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   Calculate: boolean = false;
   DPAmount: number;
   DPPercentage: number;
+  year: number = new Date().getFullYear();
   Tenor
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
@@ -658,6 +659,12 @@ export class LeadInputLeadDataComponent implements OnInit {
   }
 
   save() {
+    if(this.LeadDataForm.controls["ManufacturingYear"].value > this.year)
+    {
+      this.toastr.errorMessage("Manufacturing Year must be lower or equal than current year.");
+      return;
+    }
+
     if(this.Calculate == false)
     {
       this.toastr.errorMessage("Calculate First");
@@ -736,6 +743,12 @@ export class LeadInputLeadDataComponent implements OnInit {
   }
 
   SaveForm() {
+    if(this.LeadDataForm.controls["ManufacturingYear"].value > this.year)
+    {
+      this.toastr.errorMessage("Manufacturing Year must be lower or equal than current year.");
+      return;
+    }
+
     if(this.Calculate == false)
     {
       this.toastr.errorMessage("Calculate First");
