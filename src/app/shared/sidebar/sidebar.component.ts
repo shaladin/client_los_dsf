@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ContextMenuComponent } from 'ngx-contextmenu';
 import { ROUTES } from './sidebar-routes.config';
+import { environment } from 'environments/environment';
 
 declare var $: any;
 
@@ -15,8 +16,8 @@ declare var $: any;
 
 export class SidebarComponent implements OnInit {
     public menuItems: any[];
-    public menu: any[];
-    private url: string;
+    public menu:any[];
+    private url:string;
     @ViewChild(ContextMenuComponent) public basicMenu: ContextMenuComponent;
 
     constructor(private router: Router,
@@ -36,23 +37,18 @@ export class SidebarComponent implements OnInit {
         //         this.menuItems = data;
         //     }
         //     );
-        this.menuItems = ROUTES.filter(menuItem => menuItem);
-        //this.menuItems = JSON.parse(localStorage.getItem("Menu"));
-        //this.menu = JSON.parse(localStorage.getItem("Menu"));
+        if(environment.production==false){
+            this.menuItems = ROUTES.filter(menuItem => menuItem);
+        }
+        else
+        {
+            this.menuItems = JSON.parse(localStorage.getItem("Menu"));
+        }
     }
 
     //NGX Wizard - skip url change
     ngxWizardFunction(path: string) {
         if (path.indexOf('forms/ngx') != -1)
             this.router.navigate(['forms/ngx/wizard'], { skipLocationChange: false });
-    }
-
-    genParam(params: [{ 'attr': string, 'value': string }]) {
-        var arrList = {};
-
-        for (var i = 0; i < params.length; i++) {
-            arrList[params[i].attr] = params[i].value;
-        }
-        return arrList;
     }
 }

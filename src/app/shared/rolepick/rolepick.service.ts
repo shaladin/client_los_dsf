@@ -67,7 +67,7 @@ export class RolePickService {
                 };
                 this.http.post(url, roleObject).subscribe(
                     (response) => {
-                        // localStorage.setItem("Menu", JSON.stringify(response["returnObject"]));
+                        localStorage.setItem("Menu", JSON.stringify(response["returnObject"]));
                         localStorage.setItem("Token", response["Token"]);
                         var currentUserContext = new CurrentUserContext;
                         currentUserContext.UserName = localStorage.getItem("Username");

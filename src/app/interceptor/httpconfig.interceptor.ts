@@ -34,7 +34,6 @@ export class HttpConfigInterceptor implements HttpInterceptor {
         var myObj;
         let today = new Date();
         var businessDt = formatDate(today, 'yyyy-MM-dd', 'en-US');
-        //token = localStorage.getItem("Token");
 
         var checkSession = AdInsHelper.CheckSessionTimeout();
         if (checkSession == "1") {
@@ -71,6 +70,10 @@ export class HttpConfigInterceptor implements HttpInterceptor {
             token = localStorage.getItem("Token");
         }
         
+        if(token==null)
+        {
+            token="";
+        }
 
         if (token != "") {
             request = request.clone({ headers: request.headers.set('Authorization', token) });
