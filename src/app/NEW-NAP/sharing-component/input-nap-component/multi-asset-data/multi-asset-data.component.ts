@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core'; 
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core'; 
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
  
  
@@ -8,7 +8,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
   providers: [NGXToastrService]
 })
 export class MultiAssetDataComponent implements OnInit {
- 
+  @Output() OutputMultiAsset: EventEmitter<any> = new EventEmitter<any>();
   mode: any;
   AppId:any;
   AppAssetId:any;
@@ -22,6 +22,9 @@ export class MultiAssetDataComponent implements OnInit {
   }
 
   terimaValue(ev : any){
+    if(this.mode == 'submit'){
+      this.OutputMultiAsset.emit();
+    }
     console.log(ev);
     this.mode = ev.mode; 
     //this.AppId =  ev.AppId;
