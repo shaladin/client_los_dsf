@@ -8,7 +8,7 @@
       "mainInfo": [
         {
           "type": "text",
-          "label": "Customer Type",
+          "label": "CUSTOMER TYPE",
           "property": "MrCustTypeCode"
         },
         {
@@ -18,22 +18,22 @@
         },
         {
           "type": "text",
-          "label": "Customer Name",
+          "label": "CUSTOMER NAME",
           "property": "CustFullName"
         },
         {
           "type": "text",
-          "label": "Birth Place",
+          "label": "BIRTH PLACE",
           "property": "BirthPlace"
         },
         {
           "type": "text",
-          "label": "ID Type",
+          "label": "ID TYPE",
           "property": "MrIdTypeCode"
         },
         {
           "type": "date",
-          "label": "Birth Date",
+          "label": "BIRTH DATE",
           "property": "BirthDt"
         },
         {
@@ -43,7 +43,7 @@
         },
         {
           "type": "text",
-          "label": "Mother Maiden Name",
+          "label": "MOTHER MAIDEN NAME",
           "property": "MotherMaidenName"
         },
         {
@@ -53,22 +53,22 @@
         },
         {
           "type": "text",
-          "label": "Marital Status",
+          "label": "MARITAL STATUS",
           "property": "MrMaritalStatCode"
         },
         {
           "type": "text",
-          "label": "Mobile Phone 1",
+          "label": "MOBILE PHONE 1",
           "property": "MobilePhnNo1"
         },
         {
           "type": "text",
-          "label": "Email",
+          "label": "EMAIL",
           "property": "Email1"
         },
         {
           "type": "text",
-          "label": "Mobile Phone 2",
+          "label": "MOBILE PHONE 2",
           "property": "MobilePhnNo2"
         }
       ],

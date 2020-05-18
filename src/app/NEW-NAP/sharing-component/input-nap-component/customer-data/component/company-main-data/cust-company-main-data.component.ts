@@ -164,7 +164,7 @@ export class CustCompanyMainDataComponent implements OnInit {
   bindCustData(){
     console.log("bind cust data");
     console.log(this.custDataCompanyObj);
-    if(this.custDataCompanyObj.AppCustObj != undefined){
+    if(this.custDataCompanyObj.AppCustObj.AppCustId != 0){
       this.parentForm.controls[this.identifier].patchValue({
         CustNo: this.custDataCompanyObj.AppCustObj.CustNo,
         CustModelCode: this.custDataCompanyObj.AppCustObj.CustModelCode,

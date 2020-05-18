@@ -13,7 +13,6 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 export class TabCommissionComponent implements OnInit {
 
   @Input() appId: number = 0;
-  @Input() agrmntId: number = 0;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -44,18 +43,9 @@ export class TabCommissionComponent implements OnInit {
   }
 
   async GetCommissionData(){
-    var obj: object = null;
+    var obj: object = {AppId: this.appId};
 
-    var url: string = "";
-    
-    if(this.appId!=0){
-      url = AdInsConstant.GetAppCommissionDataDetailByAppId;
-      obj = {AppId: this.appId};
-    }
-    else if(this.agrmntId!=0){
-      url = AdInsConstant.GetListAgrmntCommissionWithDetailByAgrmntId;
-      obj = {AgrmntId: this.agrmntId};
-    }
+    var url: string = AdInsConstant.GetAppCommissionDataDetailByAppId;
 
     await this.http.post(url, obj).toPromise().then(
       (response) => {
@@ -65,12 +55,8 @@ export class TabCommissionComponent implements OnInit {
         for(var i=0;i<tempResponse.length;i++){
           var tempObj = tempResponse[i];
           // console.log(tempObj);
-          if(this.appId!=0){
-            tempObj.ListappCommissionDObj.sort((a, b) => a.SeqNo - b.SeqNo);
-          }
-          else if(this.agrmntId!=0){
-            tempObj.AgrmntCommDObjs.sort((a, b) => a.SeqNo - b.SeqNo);
-          }
+          tempObj.ListappCommissionDObj.sort((a, b) => a.SeqNo - b.SeqNo);
+          
           if(tempObj.MrCommissionRecipientTypeCode == AdInsConstant.CommissionReceipientTypeCodeSupplier)
             this.ListSupplData.push(tempObj);
           if(tempObj.MrCommissionRecipientTypeCode == AdInsConstant.CommissionReceipientTypeCodeSupplierEmp)

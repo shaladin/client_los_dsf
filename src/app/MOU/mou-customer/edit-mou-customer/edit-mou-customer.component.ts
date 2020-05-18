@@ -14,8 +14,8 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 })
 export class EditMouCustomerComponent implements OnInit {
   @ViewChild(UcpagingComponent) ucpaging;
-  inputPagingObj: any;
-  arrCrit: any;
+  inputPagingObj: UcPagingObj;
+  arrCrit: Array<CriteriaObj>;
   
   constructor(private http: HttpClient, private toastr: NGXToastrService) { }
 
@@ -26,7 +26,7 @@ export class EditMouCustomerComponent implements OnInit {
     this.inputPagingObj.apiQryPaging = "/Generic/GetPagingObjectBySQL";
     this.inputPagingObj.deleteUrl = "";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchEditMouCustomer.json";
-    this.arrCrit = new Array();
+    this.arrCrit = new Array<CriteriaObj>();
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.propName = 'MOU.MOU_STAT';

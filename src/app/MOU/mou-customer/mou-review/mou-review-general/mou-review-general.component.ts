@@ -17,13 +17,13 @@ export class MouReviewGeneralComponent implements OnInit {
   rfaInfoObj: RFAInfoObj = new RFAInfoObj();
   mouCustObj: MouCustObj = new MouCustObj();
   keyValueObj: KeyValueObj;
-  MouCustId: any;
+  MouCustId: number;
   WfTaskListId: any;
   MouType: string = "GENERAL";
-  PlafondAmt: any;
+  PlafondAmt: number;
   listApprover: any;
   listRecommendationObj: any;
-
+  MrCustTypeCode : any;
   listReason: any = [
     {
       Key: "OTHR_RSN",
@@ -90,6 +90,12 @@ export class MouReviewGeneralComponent implements OnInit {
       (response) => {
         this.PlafondAmt = response['PlafondAmt'];
       })
+
+      this.http.post(AdInsConstant.GetMouCustById, mouCustObj).subscribe(
+        (response) => {
+            this.MrCustTypeCode = response['MrCustTypeCode']; 
+        });
+
   }
 
   async claimTask() {

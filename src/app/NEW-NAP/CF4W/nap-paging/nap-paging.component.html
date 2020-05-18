@@ -1,8 +1,8 @@
-<div class="ucSearch-Button-Right">
+<div class="ucSearch-Button-Right" *ngIf="isAllowedCrt">
   <span class="mr-1">
     <button type="button" class="addButton" [routerLink]="['../Add']" translate>
       <i class="ft-plus-circle"></i> Add
     </button>
   </span>
 </div>
-<lib-ucpaging [searchObj]="inputPagingObj"></lib-ucpaging>
+<lib-ucpaging [searchObj]="inputPagingObj" (callback)="GetCallBack($event)"></lib-ucpaging>
