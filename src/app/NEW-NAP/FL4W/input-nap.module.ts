@@ -25,6 +25,7 @@ import { ViewAppCustDataPersonalComponent } from "../sharing-component/view-app-
 import { ViewAppCustDataCompanyComponent } from "../sharing-component/view-app-component/view-app-cust-data-company/view-app-cust-data-company.component";
 import { ViewAgrmntComponent } from './view-agrmnt/view-agrmnt.component';
 import { ViewAgrmntComponentModule } from "../sharing-component/view-agrmnt-component/view-agrmnt-component.module";
+import { AgrmntCardComponent } from "../sharing-component/view-agrmnt-component/agrmnt-card/agrmnt-card.component";
  
 
 @NgModule({
@@ -57,6 +58,7 @@ import { ViewAgrmntComponentModule } from "../sharing-component/view-agrmnt-comp
     ViewAppCustDataPersonalComponent,
     ViewAppCustDataCompanyComponent,
     ViewAgrmntComponent, 
+    // AgrmntCardComponent
   ],
   providers: [
     NGXToastrService
