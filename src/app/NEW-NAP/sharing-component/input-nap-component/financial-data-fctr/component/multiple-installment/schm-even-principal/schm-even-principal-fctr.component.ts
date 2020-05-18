@@ -7,20 +7,21 @@ import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj.Model';
 import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
 import { environment } from 'environments/environment';
+import { CalcEvenPrincipleObj } from 'app/shared/model/AppFinData/CalcEvenPrincipleObj.Model';
 
 @Component({
-  selector: 'app-schm-reguler-fix',
-  templateUrl: './schm-reguler-fix.component.html',
+  selector: 'app-schm-even-principal-fctr',
+  templateUrl: './schm-even-principal-fctr.component.html',
 })
-export class SchmRegulerFixComponent implements OnInit {
+export class SchmEvenPrincipalFctrComponent implements OnInit {
 
   @Input() AppId: number;
   @Input() ParentForm: FormGroup;
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
-  calcRegFixObj: CalcRegularFixObj = new CalcRegularFixObj();
-  listInstallment: any;
+  calcEvenPrincipleObj: CalcEvenPrincipleObj = new CalcEvenPrincipleObj();
+    listInstallment: any;
   responseCalc: any;
 
   constructor(
@@ -50,10 +51,12 @@ export class SchmRegulerFixComponent implements OnInit {
     );
   }
 
-  CalcBaseOnRate() {
-    this.calcRegFixObj = this.ParentForm.value;
-    this.calcRegFixObj["IsRecalculate"] = false;
-    this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateInstallmentRegularFix", this.calcRegFixObj).subscribe(
+  CalculateInstallment() {
+
+    this.calcEvenPrincipleObj = this.ParentForm.value;
+
+
+    this.http.post<ResponseCalculateObj>(AdInsConstant.CalculateInstallmentEvenPrincipalFctr, this.calcEvenPrincipleObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
         this.ParentForm.patchValue({
@@ -70,43 +73,11 @@ export class SchmRegulerFixComponent implements OnInit {
           TotalAR: response.TotalARAmt,
 
           NtfAmt: response.NtfAmt,
-          DiffRateAmt: response.DiffRateAmt
 
         })
-
         this.SetInstallmentTable();
         this.SetNeedReCalculate(false);
-      }
-    );
-  }
 
-  CalcBaseOnInst() {
-    this.calcRegFixObj = this.ParentForm.value;
-    this.calcRegFixObj["IsRecalculate"] = true;
-    this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateInstallmentRegularFix", this.calcRegFixObj).subscribe(
-      (response) => {
-        this.listInstallment = response.InstallmentTable;
-        this.ParentForm.patchValue({
-          TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
-          TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
-
-          EffectiveRatePrcnt: response.EffectiveRatePrcnt,
-          FlatRatePrcnt: response.FlatRatePrcnt,
-          InstAmt: response.InstAmt,
-
-          GrossYieldPrcnt: response.GrossYieldPrcnt,
-
-          TotalInterestAmt: response.TotalInterestAmt,
-          TotalAR: response.TotalARAmt,
-
-          NtfAmt: response.NtfAmt,
-          DiffRateAmt: response.DiffRateAmt
-
-
-        })
-
-        this.SetInstallmentTable();
-        this.SetNeedReCalculate(false);
       }
     );
   }
@@ -135,23 +106,6 @@ export class SchmRegulerFixComponent implements OnInit {
   }
 
   EffectiveRatePrcntInput_FocusOut() {
-   // var EffectiveRatePrcnt = this.ParentForm.get("EffectiveRatePrcnt").value
-    // var SupplEffectiveRatePrcnt = this.ParentForm.get("SupplEffectiveRatePrcnt").value
-    // var StdEffectiveRatePrcnt = this.ParentForm.get("StdEffectiveRatePrcnt").value
-    // var DiffRateAmtStd = +StdEffectiveRatePrcnt - +SupplEffectiveRatePrcnt
-
-    // var diffRate = +EffectiveRatePrcnt - +SupplEffectiveRatePrcnt;
-    // if (diffRate < DiffRateAmtStd) {
-    //   this.ParentForm.patchValue({
-    //     DiffRateAmt: 0
-    //   });
-    // }
-    // else {
-    //   this.ParentForm.patchValue({
-    //     DiffRateAmt: DiffRateAmtStd
-    //   });
-    // }
-
     this.ParentForm.patchValue({
       DiffRateAmt: 0
     });
@@ -162,6 +116,15 @@ export class SchmRegulerFixComponent implements OnInit {
   SetNeedReCalculate(value) {
     this.ParentForm.patchValue({
       NeedReCalculate: value
+    });
+  }
+
+  EstEffDtFocusOut(event){
+    var maturityDate: Date = new Date(this.ParentForm.get("EstEffDt").value);
+    maturityDate.setMonth(maturityDate.getMonth() + this.ParentForm.get("Tenor").value);
+
+    this.ParentForm.patchValue({
+      MaturityDate: maturityDate
     });
   }
 }

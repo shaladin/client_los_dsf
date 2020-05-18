@@ -321,6 +321,7 @@ export class AssetDataComponent implements OnInit {
   }
 
   SaveForm() {
+    console.log(this.AssetDataForm);
     this.allAssetDataObj = new AllAssetDataObj();
     this.setAllAssetObj();
     this.http.post(this.AddEditAllAssetDataUrl, this.allAssetDataObj).subscribe(
@@ -981,76 +982,20 @@ export class AssetDataComponent implements OnInit {
         this.InputLookupAssetObj.jsonSelect = this.AssetMasterObj;
         this.InputLookupAssetObj.nameSelect = this.AssetMasterObj.FullAssetName;
         if (this.AssetDataForm.controls.MrAssetConditionCode.value == 'NEW') {
-          if (this.AssetMasterObj.SerialNo1Label != "" && this.AssetMasterObj.SerialNo1Label != null) {
-            if (this.AssetMasterObj.IsMndtrySerialNo1 == true) {
-              this.AssetDataForm.controls.SerialNo1.setValidators([Validators.required, Validators.maxLength(50)]);
-              this.AssetDataForm.controls.SerialNo1.updateValueAndValidity();
-            }
-            else {
-              this.AssetDataForm.controls.SerialNo1.clearValidators;
-              this.AssetDataForm.controls.SerialNo1.updateValueAndValidity();
-            }
-          }
-          else {
-            this.AssetDataForm.controls.SerialNo1.clearValidators;
-            this.AssetDataForm.controls.SerialNo1.updateValueAndValidity();
-          }
-          if (this.AssetMasterObj.SerialNo2Label != "" && this.AssetMasterObj.SerialNo2Label != null) {
-            if (this.AssetMasterObj.IsMndtrySerialNo2 == true) {
-              this.AssetDataForm.controls.SerialNo2.setValidators([Validators.required, Validators.maxLength(50)]);
-              this.AssetDataForm.controls.SerialNo2.updateValueAndValidity();
-            }
-            else {
-              this.AssetDataForm.controls.SerialNo2.clearValidators;
-              this.AssetDataForm.controls.SerialNo2.updateValueAndValidity();
-            }
-          }
-          else {
-            this.AssetDataForm.controls.SerialNo2.clearValidators;
-            this.AssetDataForm.controls.SerialNo2.updateValueAndValidity();
-          }
-          if (this.AssetMasterObj.SerialNo3Label != "" && this.AssetMasterObj.SerialNo3Label != null) {
-            if (this.AssetMasterObj.IsMndtrySerialNo3 == true) {
-              this.AssetDataForm.controls.SerialNo3.setValidators([Validators.required, Validators.maxLength(50)]);
-              this.AssetDataForm.controls.SerialNo3.updateValueAndValidity();
-            }
-            else {
-              this.AssetDataForm.controls.SerialNo3.clearValidators;
-              this.AssetDataForm.controls.SerialNo3.updateValueAndValidity();
-            }
-          }
-          else {
-            this.AssetDataForm.controls.SerialNo3.clearValidators;
-            this.AssetDataForm.controls.SerialNo3.updateValueAndValidity();
-          }
-          if (this.AssetMasterObj.SerialNo4Label != "" && this.AssetMasterObj.SerialNo4Label != null) {
-            if (this.AssetMasterObj.IsMndtrySerialNo4 == true) {
-              this.AssetDataForm.controls.SerialNo4.setValidators([Validators.required, Validators.maxLength(50)]);
-              this.AssetDataForm.controls.SerialNo4.updateValueAndValidity();
-            }
-            else {
-              this.AssetDataForm.controls.SerialNo4.clearValidators;
-              this.AssetDataForm.controls.SerialNo4.updateValueAndValidity();
-            }
-          }
-          else {
-            this.AssetDataForm.controls.SerialNo4.clearValidators;
-            this.AssetDataForm.controls.SerialNo4.updateValueAndValidity();
-          }
-          if (this.AssetMasterObj.SerialNo5Label != "" && this.AssetMasterObj.SerialNo5Label != null) {
-            if (this.AssetMasterObj.IsMndtrySerialNo5 == true) {
-              this.AssetDataForm.controls.SerialNo5.setValidators([Validators.required, Validators.maxLength(50)]);
-              this.AssetDataForm.controls.SerialNo5.updateValueAndValidity();
-            }
-            else {
-              this.AssetDataForm.controls.SerialNo5.clearValidators;
-              this.AssetDataForm.controls.SerialNo5.updateValueAndValidity();
-            }
-          }
-          else {
-            this.AssetDataForm.controls.SerialNo5.clearValidators;
-            this.AssetDataForm.controls.SerialNo5.updateValueAndValidity();
-          }
+          this.AssetDataForm.controls.SerialNo1.clearValidators();
+          this.AssetDataForm.controls.SerialNo1.updateValueAndValidity();
+
+          this.AssetDataForm.controls.SerialNo2.clearValidators();
+          this.AssetDataForm.controls.SerialNo2.updateValueAndValidity();
+
+          this.AssetDataForm.controls.SerialNo3.clearValidators();
+          this.AssetDataForm.controls.SerialNo3.updateValueAndValidity();
+
+          this.AssetDataForm.controls.SerialNo4.clearValidators();
+          this.AssetDataForm.controls.SerialNo4.updateValueAndValidity();
+
+          this.AssetDataForm.controls.SerialNo5.clearValidators();
+          this.AssetDataForm.controls.SerialNo5.updateValueAndValidity();     
         }
         if (this.AssetDataForm.controls.MrAssetConditionCode.value == 'USED') {
           if (this.AssetMasterObj.SerialNo1Label != "" && this.AssetMasterObj.SerialNo1Label != null) {
@@ -1058,7 +1003,7 @@ export class AssetDataComponent implements OnInit {
             this.AssetDataForm.controls.SerialNo1.updateValueAndValidity();
           }
           else {
-            this.AssetDataForm.controls.SerialNo1.clearValidators;
+            this.AssetDataForm.controls.SerialNo1.clearValidators();
             this.AssetDataForm.controls.SerialNo1.updateValueAndValidity();
           }
           if (this.AssetMasterObj.SerialNo2Label != "" && this.AssetMasterObj.SerialNo2Label != null) {
@@ -1066,7 +1011,7 @@ export class AssetDataComponent implements OnInit {
             this.AssetDataForm.controls.SerialNo2.updateValueAndValidity();
           }
           else {
-            this.AssetDataForm.controls.SerialNo2.clearValidators;
+            this.AssetDataForm.controls.SerialNo2.clearValidators();
             this.AssetDataForm.controls.SerialNo2.updateValueAndValidity();
           }
           if (this.AssetMasterObj.SerialNo3Label != "" && this.AssetMasterObj.SerialNo3Label != null) {
@@ -1074,7 +1019,7 @@ export class AssetDataComponent implements OnInit {
             this.AssetDataForm.controls.SerialNo3.updateValueAndValidity();
           }
           else {
-            this.AssetDataForm.controls.SerialNo3.clearValidators;
+            this.AssetDataForm.controls.SerialNo3.clearValidators();
             this.AssetDataForm.controls.SerialNo3.updateValueAndValidity();
           }
           if (this.AssetMasterObj.SerialNo4Label != "" && this.AssetMasterObj.SerialNo4Label != null) {
@@ -1082,7 +1027,7 @@ export class AssetDataComponent implements OnInit {
             this.AssetDataForm.controls.SerialNo4.updateValueAndValidity();
           }
           else {
-            this.AssetDataForm.controls.SerialNo4.clearValidators;
+            this.AssetDataForm.controls.SerialNo4.clearValidators();
             this.AssetDataForm.controls.SerialNo4.updateValueAndValidity();
           }
           if (this.AssetMasterObj.SerialNo5Label != "" && this.AssetMasterObj.SerialNo5Label != null) {
@@ -1090,7 +1035,7 @@ export class AssetDataComponent implements OnInit {
             this.AssetDataForm.controls.SerialNo5.updateValueAndValidity();
           }
           else {
-            this.AssetDataForm.controls.SerialNo5.clearValidators;
+            this.AssetDataForm.controls.SerialNo5.clearValidators();
             this.AssetDataForm.controls.SerialNo5.updateValueAndValidity();
           }
         }
@@ -1099,86 +1044,27 @@ export class AssetDataComponent implements OnInit {
   }
 
   AssetConditionChanged() {
+    if (this.AssetDataForm.controls.MrAssetConditionCode.value == 'NEW') {
+
+      this.AssetDataForm.controls.SerialNo1.clearValidators();
+      this.AssetDataForm.controls.SerialNo1.updateValueAndValidity();
+      this.AssetDataForm.controls.SerialNo2.clearValidators();
+      this.AssetDataForm.controls.SerialNo2.updateValueAndValidity();
+      this.AssetDataForm.controls.SerialNo3.clearValidators();
+      this.AssetDataForm.controls.SerialNo3.updateValueAndValidity();
+      this.AssetDataForm.controls.SerialNo4.clearValidators();
+      this.AssetDataForm.controls.SerialNo4.updateValueAndValidity();
+      this.AssetDataForm.controls.SerialNo5.clearValidators();
+      this.AssetDataForm.controls.SerialNo5.updateValueAndValidity();
+    }
     if (this.AssetMasterObj != null) {
-      if (this.AssetDataForm.controls.MrAssetConditionCode.value == 'NEW') {
-        if (this.AssetMasterObj.SerialNo1Label != "" && this.AssetMasterObj.SerialNo1Label != null) {
-          if (this.AssetMasterObj.IsMndtrySerialNo1 == true) {
-            this.AssetDataForm.controls.SerialNo1.setValidators([Validators.required, Validators.maxLength(50)]);
-            this.AssetDataForm.controls.SerialNo1.updateValueAndValidity();
-          }
-          else {
-            this.AssetDataForm.controls.SerialNo1.clearValidators;
-            this.AssetDataForm.controls.SerialNo1.updateValueAndValidity();
-          }
-        }
-        else {
-          this.AssetDataForm.controls.SerialNo1.clearValidators;
-          this.AssetDataForm.controls.SerialNo1.updateValueAndValidity();
-        }
-        if (this.AssetMasterObj.SerialNo2Label != "" && this.AssetMasterObj.SerialNo2Label != null) {
-          if (this.AssetMasterObj.IsMndtrySerialNo2 == true) {
-            this.AssetDataForm.controls.SerialNo2.setValidators([Validators.required, Validators.maxLength(50)]);
-            this.AssetDataForm.controls.SerialNo2.updateValueAndValidity();
-          }
-          else {
-            this.AssetDataForm.controls.SerialNo2.clearValidators;
-            this.AssetDataForm.controls.SerialNo2.updateValueAndValidity();
-          }
-        }
-        else {
-          this.AssetDataForm.controls.SerialNo2.clearValidators;
-          this.AssetDataForm.controls.SerialNo2.updateValueAndValidity();
-        }
-        if (this.AssetMasterObj.SerialNo3Label != "" && this.AssetMasterObj.SerialNo3Label != null) {
-          if (this.AssetMasterObj.IsMndtrySerialNo3 == true) {
-            this.AssetDataForm.controls.SerialNo3.setValidators([Validators.required, Validators.maxLength(50)]);
-            this.AssetDataForm.controls.SerialNo3.updateValueAndValidity();
-          }
-          else {
-            this.AssetDataForm.controls.SerialNo3.clearValidators;
-            this.AssetDataForm.controls.SerialNo3.updateValueAndValidity();
-          }
-        }
-        else {
-          this.AssetDataForm.controls.SerialNo3.clearValidators;
-          this.AssetDataForm.controls.SerialNo3.updateValueAndValidity();
-        }
-        if (this.AssetMasterObj.SerialNo4Label != "" && this.AssetMasterObj.SerialNo4Label != null) {
-          if (this.AssetMasterObj.IsMndtrySerialNo4 == true) {
-            this.AssetDataForm.controls.SerialNo4.setValidators([Validators.required, Validators.maxLength(50)]);
-            this.AssetDataForm.controls.SerialNo4.updateValueAndValidity();
-          }
-          else {
-            this.AssetDataForm.controls.SerialNo4.clearValidators;
-            this.AssetDataForm.controls.SerialNo4.updateValueAndValidity();
-          }
-        }
-        else {
-          this.AssetDataForm.controls.SerialNo4.clearValidators;
-          this.AssetDataForm.controls.SerialNo4.updateValueAndValidity();
-        }
-        if (this.AssetMasterObj.SerialNo5Label != "" && this.AssetMasterObj.SerialNo5Label != null) {
-          if (this.AssetMasterObj.IsMndtrySerialNo5 == true) {
-            this.AssetDataForm.controls.SerialNo5.setValidators([Validators.required, Validators.maxLength(50)]);
-            this.AssetDataForm.controls.SerialNo5.updateValueAndValidity();
-          }
-          else {
-            this.AssetDataForm.controls.SerialNo5.clearValidators;
-            this.AssetDataForm.controls.SerialNo5.updateValueAndValidity();
-          }
-        }
-        else {
-          this.AssetDataForm.controls.SerialNo5.clearValidators;
-          this.AssetDataForm.controls.SerialNo5.updateValueAndValidity();
-        }
-      }
       if (this.AssetDataForm.controls.MrAssetConditionCode.value == 'USED') {
         if (this.AssetMasterObj.SerialNo1Label != "" && this.AssetMasterObj.SerialNo1Label != null) {
           this.AssetDataForm.controls.SerialNo1.setValidators([Validators.required, Validators.maxLength(50)]);
           this.AssetDataForm.controls.SerialNo1.updateValueAndValidity();
         }
         else {
-          this.AssetDataForm.controls.SerialNo1.clearValidators;
+          this.AssetDataForm.controls.SerialNo1.clearValidators();
           this.AssetDataForm.controls.SerialNo1.updateValueAndValidity();
         }
         if (this.AssetMasterObj.SerialNo2Label != "" && this.AssetMasterObj.SerialNo2Label != null) {
@@ -1186,7 +1072,7 @@ export class AssetDataComponent implements OnInit {
           this.AssetDataForm.controls.SerialNo2.updateValueAndValidity();
         }
         else {
-          this.AssetDataForm.controls.SerialNo2.clearValidators;
+          this.AssetDataForm.controls.SerialNo2.clearValidators();
           this.AssetDataForm.controls.SerialNo2.updateValueAndValidity();
         }
         if (this.AssetMasterObj.SerialNo3Label != "" && this.AssetMasterObj.SerialNo3Label != null) {
@@ -1194,7 +1080,7 @@ export class AssetDataComponent implements OnInit {
           this.AssetDataForm.controls.SerialNo3.updateValueAndValidity();
         }
         else {
-          this.AssetDataForm.controls.SerialNo3.clearValidators;
+          this.AssetDataForm.controls.SerialNo3.clearValidators();
           this.AssetDataForm.controls.SerialNo3.updateValueAndValidity();
         }
         if (this.AssetMasterObj.SerialNo4Label != "" && this.AssetMasterObj.SerialNo4Label != null) {
@@ -1202,7 +1088,7 @@ export class AssetDataComponent implements OnInit {
           this.AssetDataForm.controls.SerialNo4.updateValueAndValidity();
         }
         else {
-          this.AssetDataForm.controls.SerialNo4.clearValidators;
+          this.AssetDataForm.controls.SerialNo4.clearValidators();
           this.AssetDataForm.controls.SerialNo4.updateValueAndValidity();
         }
         if (this.AssetMasterObj.SerialNo5Label != "" && this.AssetMasterObj.SerialNo5Label != null) {
@@ -1210,7 +1096,7 @@ export class AssetDataComponent implements OnInit {
           this.AssetDataForm.controls.SerialNo5.updateValueAndValidity();
         }
         else {
-          this.AssetDataForm.controls.SerialNo5.clearValidators;
+          this.AssetDataForm.controls.SerialNo5.clearValidators();
           this.AssetDataForm.controls.SerialNo5.updateValueAndValidity();
         }
       }

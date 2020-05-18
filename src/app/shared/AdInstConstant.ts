@@ -134,6 +134,8 @@ export class AdInsConstant {
   //CUST TYPE
   public static CustTypePersonal = "PERSONAL";
   public static CustTypeCompany = "COMPANY";
+  public static CustGrupIndentifierTypePersonal = "custGrpMember";
+  public static CustGrupIndentifierTypeCompany = "custGrpMemberCompany";
 
 
 
@@ -181,6 +183,9 @@ export class AdInsConstant {
   public static LobCodeFCTR = "FCTR";
   public static LobCodeRFN4W = "RFN4W";
 
+  //TOP CALC BASED
+  public static InvcDt = "INVC_DT";
+  public static EffDt = "EFF_DT";
 
   //Asset Accessory
   public static GetAssetAccessoryByCode = environment.FoundationR3Url + "/AssetAccessory/GetAssetAccessoryByCode";
@@ -420,6 +425,7 @@ export class AdInsConstant {
   public static GetListActiveRefMaster = environment.FoundationR3Url + "/RefMaster/GetListActiveRefMaster"
   public static GetRefMasterByRefMasterTypeCode = environment.FoundationR3Url + "/RefMaster/GetRefMasterByRefMasterTypeCode"
   public static GetListActiveRefMasterWithReserveFieldAll = environment.FoundationR3Url + "/RefMaster/GetListActiveRefMasterWithReserveFieldAll";
+  public static GetListRefMasterByRefMasterTypeCodes = environment.FoundationR3Url + "/RefMaster/GetListRefMasterByRefMasterTypeCodes";
 
   public static RefMasterTypeCodeCustType = "CUST_TYPE";
   public static RefMasterTypeCodeSlsRecom = "SLS_RECOM";
@@ -567,6 +573,7 @@ export class AdInsConstant {
   public static GetListAppGuarantorCompanyByAppId = environment.losUrl + "/AppGuarantor/GetListAppGuarantorCompanyByAppId"
   public static GuarantorTypeCodePersonal = "PERSONAL";
   public static GuarantorTypeCodeCompany = "COMPANY";
+  public static GetListAppGuarantorPersonalByAppId = environment.losUrl + "/AppGuarantor/GetListAppGuarantorPersonalByAppId"
 
 
   // Vendor
@@ -594,6 +601,9 @@ export class AdInsConstant {
   public static AddAppLifeInsH = environment.losUrl + "/AppLifeIns/AddAppLifeInsH";
   public static EditAppLifeInsH = environment.losUrl + "/AppLifeIns/EditAppLifeInsH";
   public static InitAppLifeInsH = environment.losUrl + "/AppLifeIns/InitAppLifeInsH";
+  public static CalculateRate = environment.losUrl + "/AppLifeIns/CalculateRate";
+  public static CalculateDisc = environment.losUrl + "/AppLifeIns/CalculateDisc";
+  public static DeleteAppLifeIns = environment.losUrl + "/AppLifeIns/DeleteAppLifeIns";
 
 
   // MOU CUST ASSET
@@ -862,7 +872,8 @@ export class AdInsConstant {
   public static GetAgrmntByCustNo = environment.losUrl + "/Agrmnt/GetAgrmntByCustNo";
   public static GetAgrmntByAppId = environment.losUrl + "/Agrmnt/GetAgrmntByAppId";
   public static GetAgrmntByAppIdGetAgrmntByAgrmntNo = environment.losUrl + "/Agrmnt/GetAgrmntByAgrmntNo";
-    
+  public static GetAgrmtSummaryByAgrmntId = environment.losUrl + "/Agrmnt/GetAgrmtSummaryByAgrmntId";
+  
   //AGRMNT Commission
   public static GetListAgrmntCommissionWithDetailByAgrmntId = environment.losUrl + "/AgrmntCommission/GetListAgrmntCommissionWithDetailByAgrmntId";
 
@@ -971,6 +982,11 @@ export class AdInsConstant {
   public static CalculateInstallmentEvenPrincipal = environment.losUrl + "/AppFinData/CalculateInstallmentEvenPrincipal";
   public static GetFinancialDataByAppIdForView = environment.losUrl + "/AppFinData/GetFinancialDataByAppIdForView";
   public static GetInitAppFinDataFctrByAppId = environment.losUrl + "/AppFinData/GetInitAppFinDataFctrByAppId";
+  public static CalculateInstallmentRegularFixFctr = environment.losUrl + "/AppFinData/CalculateInstallmentRegularFixFctr";
+  public static SaveAppFinDataFctr = environment.losUrl + "/AppFinData/SaveAppFinDataFctr";
+  public static CalculateInstallmentEvenPrincipalFctr = environment.losUrl + "/AppFinData/CalculateInstallmentEvenPrincipalFctr";
+
+
 
 
 

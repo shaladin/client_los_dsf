@@ -2,22 +2,22 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
-import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 
 @Component({
-  selector: 'app-tab-commission',
-  templateUrl: './tab-commission.component.html',
-  styleUrls: ['./tab-commission.component.scss']
+  selector: 'app-view-commission-agrmnt',
+  templateUrl: './view-commission.component.html',
+  styleUrls: ['./view-commission.component.scss']
 })
-export class TabCommissionComponent implements OnInit {
+export class ViewCommissionComponent implements OnInit {
 
-  @Input() appId: number = 0;
+  @Input() agrmntId: number = 0;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private http: HttpClient,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder
+  ) { }
 
   ListSupplData;
   ListSupplEmpData;
@@ -43,9 +43,9 @@ export class TabCommissionComponent implements OnInit {
   }
 
   async GetCommissionData(){
-    var obj: object = {AppId: this.appId};
+    var obj: object = {AgrmntId: this.agrmntId};
 
-    var url: string = AdInsConstant.GetAppCommissionDataDetailByAppId;
+    var url: string = AdInsConstant.GetListAgrmntCommissionWithDetailByAgrmntId;
 
     await this.http.post(url, obj).toPromise().then(
       (response) => {
@@ -55,8 +55,7 @@ export class TabCommissionComponent implements OnInit {
         for(var i=0;i<tempResponse.length;i++){
           var tempObj = tempResponse[i];
           // console.log(tempObj);
-          tempObj.ListappCommissionDObj.sort((a, b) => a.SeqNo - b.SeqNo);
-          
+          tempObj.AgrmntCommDObjs.sort((a, b) => a.SeqNo - b.SeqNo);
           if(tempObj.MrCommissionRecipientTypeCode == AdInsConstant.CommissionReceipientTypeCodeSupplier)
             this.ListSupplData.push(tempObj);
           if(tempObj.MrCommissionRecipientTypeCode == AdInsConstant.CommissionReceipientTypeCodeSupplierEmp)
