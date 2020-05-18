@@ -162,19 +162,8 @@
                                 }
                             ],
                             "result": {
-                                "type": "url",
-                                "path": "../Add/Detail",
-                                "icon": "ft-edit-2",
-                                "param": [
-                                    {
-                                        "type": "AppId",
-                                        "property": "AppId"
-                                    },
-                                    {
-                                        "type": "WfTaskListId",
-                                        "property": "WfTaskListId"
-                                    }
-                                ]
+                                "type": "callback",
+                                "icon": "ft-edit-2"
                             },
                             "isHide": false
                         },
@@ -188,19 +177,8 @@
                                 }
                             ],
                             "result": {
-                                "type": "url",
-                                "path": "../Add/Detail",
-                                "icon": "ft-edit-2",
-                                "param": [
-                                    {
-                                        "type": "AppId",
-                                        "property": "AppId"
-                                    },
-                                    {
-                                        "type": "WfTaskListId",
-                                        "property": "WfTaskListId"
-                                    }
-                                ]
+                                "type": "callback",
+                                "icon": "ft-edit-2"
                             },
                             "isHide": false
                         }
