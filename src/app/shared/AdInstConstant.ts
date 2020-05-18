@@ -45,6 +45,12 @@ export class AdInsConstant {
   public static ADMIN_HEAD_JOB_CODE = "ADMIN_HEAD";
   public static BRANCH_MANAGER_JOB_CODE = "BRANCH_MANAGER";
 
+  public static WebSocketUrl = environment.FoundationR3Url + "/Notificationhub";
+
+  
+  public static GetListNotificationHByRefUserId = environment.FoundationR3Url + "/NotificationH/GetListNotificationHByRefUserId";
+
+
   //WORKFLOW (LEWAT FOUNDATION)
   public static ResumeWorkflow = environment.FoundationR3Url + "/Workflow/ResumeWorkflow"
 

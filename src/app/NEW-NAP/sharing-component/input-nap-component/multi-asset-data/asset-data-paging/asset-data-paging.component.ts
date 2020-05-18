@@ -148,6 +148,10 @@ eventColl(ev){
     this.outputValue.emit({ mode: 'edit', AddrId: custAddrObj.CustAddrId });
   }
 
+  next(){
+    this.outputValue.emit({mode: 'submit'});
+  }
+
   // deleteItem(custAddrObj: any) {
   //   var custAddr = new CustAddrObj();
   //   custAddr.CustAddrId = custAddrObj.CustAddrId;
