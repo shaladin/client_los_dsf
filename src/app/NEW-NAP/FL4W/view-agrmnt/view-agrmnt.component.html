@@ -22,47 +22,50 @@
             </mat-tab>
             <mat-tab label="Life Insurance">
               <ng-template matTabContent>
-                
+                <agrmnt-life-insurance [agrmntId]="AgrmntId" ></agrmnt-life-insurance>
               </ng-template>
             </mat-tab>
             <mat-tab label="Financial">
-              <ng-template matTabContent>
-                
+              <ng-template matTabContent> 
+                <app-agrmnt-financial [AgrmntId]="AgrmntId"></app-agrmnt-financial>
               </ng-template>
             </mat-tab>
             <mat-tab label="TC">
               <ng-template matTabContent>
-                <agrmnt-view-reserved-fund [agrmntId]="AgrmntId"></agrmnt-view-reserved-fund>
+                <!-- <agrmnt-view-reserved-fund [agrmntId]="AgrmntId"></agrmnt-view-reserved-fund> -->
               </ng-template>
             </mat-tab>
             <mat-tab label="Commission">
               <ng-template matTabContent>
-        
+                <!-- <app-view-commission-agrmnt [agrmntId]="AgrmntId" ></app-view-commission-agrmnt> -->
               </ng-template>
             </mat-tab>
             <mat-tab label="Reserved Fund">
-              <ng-template matTabContent>
-        
+              <ng-template matTabContent> 
+                <agrmnt-view-reserved-fund [agrmntId]="AgrmntId" ></agrmnt-view-reserved-fund>
               </ng-template>
             </mat-tab>
             <mat-tab label="Purchase Order">
               <ng-template matTabContent>
-        
+                <app-view-purchase-order [agrmntId]="AgrmntId" ></app-view-purchase-order> 
               </ng-template>
             </mat-tab>  
             <mat-tab label="Delivery Order">
               <ng-template matTabContent>
-        
+                <agrmnt-view-delivery-order [agrmntId]="AgrmntId" ></agrmnt-view-delivery-order>
+  
               </ng-template>
             </mat-tab>
             <mat-tab label="Document">
               <ng-template matTabContent>
-        
+                <agrmnt-view-document [agrmntId]="AgrmntId" ></agrmnt-view-document>
+                
               </ng-template>
             </mat-tab>
             <mat-tab label="Summary">
               <ng-template matTabContent>
-        
+                <agrmnt-view-summary [agrmntId]="AgrmntId" ></agrmnt-view-summary>
+                
               </ng-template>
             </mat-tab> 
           </mat-tab-group>
