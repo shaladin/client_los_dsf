@@ -84,6 +84,7 @@ export class NapAddComponent implements OnInit {
   officeItems;
   user;
   ngOnInit() {
+    console.log('nap add');
     // Lookup Obj
     console.log(JSON.parse(localStorage.getItem("UserAccess")));
     this.user = JSON.parse(localStorage.getItem("UserAccess"));
