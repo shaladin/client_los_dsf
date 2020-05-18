@@ -27,7 +27,12 @@
         <th><span translate class="thead-header" name='action'>Action</span></th>
       </tr>
     </thead>
-    <tbody>
+    <tbody *ngIf = "listBankAcc?.length == 0">
+      <tr>
+        <td colspan="100%">No Data Available</td>
+      </tr>
+    </tbody>
+    <tbody *ngIf = "listBankAcc?.length > 0">
       <tr *ngFor="let item of listBankAcc; let i = index">
         <td style="text-align: center;">{{item.BankName}}</td>
         <td style="text-align: center;">{{item.BankBranch}}</td>
@@ -59,7 +64,7 @@
       <div class="px-3">
         <form class="form form-horizontal" [formGroup]="CustBankAccountForm" #enjiForm="ngForm"
           (ngSubmit)="CustBankAccountForm.valid && SaveForm()">
-          <lib-ucSubsection [id]="'addBankAccountId'" [title]="'Add Bank Account'" [panel]="'addBankAccount'">
+          <lib-ucSubsection [id]="'addBankAccountId'" [title]=" mode + ' Bank Account'" [panel]="'addBankAccount'">
           </lib-ucSubsection>
           <div id="addBankAccount">
             <div class="form-group row">
@@ -115,7 +120,12 @@
                     <th><span translate class="thead-header">Action</span></th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody *ngIf = "CustBankAccountForm.controls['BankStmntObjs'].controls.length == 0">
+                  <tr>
+                    <td colspan="100%">No Data Available</td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf = "CustBankAccountForm.controls['BankStmntObjs'].controls.length > 0">
                   <tr *ngFor="let item of CustBankAccountForm.controls['BankStmntObjs'].controls;let i = index">
                     <td [formGroupName]="i"><select class="form-control" formControlName="Month">
                       <option *ngFor="let item of MonthObj" value="{{item.Key}}">

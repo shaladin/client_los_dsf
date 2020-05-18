@@ -50,42 +50,29 @@ export class HttpConfigInterceptor implements HttpInterceptor {
         }
 
         //Ini kalau buat Login belom punya Current User Contexts
-        if (request.url == "http://r3app-server/foundation/UserManagement/HTML5Login") {
-            if (currentUserContext != null) {
-                token = localStorage.getItem("Token");
-                myObj = new Object();
-                if (request.body != null) {
-                    myObj = request.body;
-                }
-                myObj["Ip"] = localStorage.getItem("LocalIp");
-                myObj["RequestDateTime"] = businessDt;
+        
+        if (currentUserContext != null) {
+            token = localStorage.getItem("Token");
+            myObj = new Object();
+            if (request.body != null) {
+                myObj = request.body;
             }
-            else {
-                myObj = new Object();
-                if (request.body != null) {
-                    myObj = request.body;
-                }
-                myObj["Ip"] = localStorage.getItem("LocalIp");
-                myObj["RequestDateTime"] = businessDt;
+            myObj["Ip"] = localStorage.getItem("LocalIp");
+            myObj["RequestDateTime"] = businessDt;
+        }
+        else {
+            myObj = new Object();
+            if (request.body != null) {
+                myObj = request.body;
             }
-        } else {
-            if (currentUserContext != null) {
-                token = localStorage.getItem("Token");
-                myObj = new Object();
-                if (request.body != null) {
-                    myObj = request.body;
-                }
-                myObj["Ip"] = localStorage.getItem("LocalIp");
-                myObj["RequestDateTime"] = businessDt;
-            }
-            else {
-                myObj = new Object();
-                if (request.body != null) {
-                    myObj = request.body;
-                }
-                myObj["Ip"] = localStorage.getItem("LocalIp");
-                myObj["RequestDateTime"] = businessDt;
-            }
+            myObj["Ip"] = localStorage.getItem("LocalIp");
+            myObj["RequestDateTime"] = businessDt;
+            token = localStorage.getItem("Token");
+        }
+        
+        if(token==null)
+        {
+            token="";
         }
 
         if (token != "") {
@@ -120,26 +107,13 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                 if (event instanceof HttpResponse) {
                     //Ini Error kalau sudah masuk sampai ke Back End
                     if (event.body.StatusCode != undefined) {
-                        if (event.body.StatusCode != '200' && event.body.StatusCode != '001') {
-                            let DetailError = '';
-                            if (Array.isArray(event.body.ErrorMessages)) {
-                                event.body.ErrorMessages.forEach(element => {
-                                    if (element != undefined) {
-                                        DetailError += element["Field"] != undefined ? element["Field"] : "N/A"
-                                        DetailError += "; "
-                                    }
-                                });
-                            }
-                            else if(event.body.ErrorMessages != null || event.body.ErrorMessages != undefined || event.body.ErrorMessages != ""){
-                                DetailError += event.body.ErrorMessages
-                            }
+                        if (event.body.StatusCode != '200' && event.body.StatusCode != '999' && event.body.StatusCode != "001") {
                             let data = {};
                             data = {
                                 reason: event.body.Message ? event.body.Message : '',
-                                status: event.body.StatusCode,
-                                additionalInfo: DetailError ? DetailError : ''
+                                status: event.body.StatusCode
                             };
-                            this.toastr.error(data['reason'] + "\n" + data['additionalInfo'], 'Status: ' + data['status'], { "tapToDismiss": true });
+                            this.toastr.error(data['reason'], 'Status: ' + data['status'], { "tapToDismiss": true });
                             return;
                         }
                     }

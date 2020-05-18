@@ -53,11 +53,11 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     LobCode: [''],
     RefProdTypeCode: [''],
     Tenor: ["", [Validators.pattern("^[0-9]+$"), Validators.required]],
-    NumOfInst: [''],
+    NumOfInst: ['1'],
     PayFreqCode: ['', Validators.required],
     MrFirstInstTypeCode: ["", Validators.required],
     NumOfAsset: [''],
-    MrLcCalcMethodCode: ["", Validators.required],
+    MrLcCalcMethodCode: ["AD"],
     LcInstRatePrml: [''],
     LcInsRatePrml: [''],
     MrAppSourceCode: ["", Validators.required],
@@ -211,6 +211,7 @@ export class ApplicationDataRefinancingComponent implements OnInit {
 
     this.http.post(AdInsConstant.GetListKvpActiveRefAppSrc, obj).subscribe(
       (response) => {
+        console.log("GetListKvpActiveRefAppSrc Response : " + JSON.stringify(response));
         this.applicationDDLitems["APP_SOURCE"] = response["ReturnObject"];
       },
       (error) => {
@@ -226,6 +227,7 @@ export class ApplicationDataRefinancingComponent implements OnInit {
 
     this.http.post(AdInsConstant.GetListActiveRefPayFreq, obj).subscribe(
       (response) => {
+        console.log("GetListActiveRefPayFreq Response : " + JSON.stringify(response));
         var objTemp = response["ReturnObject"];
         this.applicationDDLitems["Pay_Freq"] = objTemp;
       },
@@ -313,13 +315,14 @@ export class ApplicationDataRefinancingComponent implements OnInit {
   ChangeRecommendation(ev) {
   }
 
-  PayFreqVal;
-  PayFreqTimeOfYear;
+  PayFreqVal: number = 1;
+  PayFreqTimeOfYear: number = 1;
   ChangeNumOfInstallmentTenor(){
     var temp = this.NapAppModelForm.controls.Tenor.value;
     if(!isNaN(temp)){
       var total = Math.floor((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
       this.PatchNumOfInstallment(total);      
+      console.log("Change Tenor result: " + total);
     }
   }
 
@@ -336,6 +339,7 @@ export class ApplicationDataRefinancingComponent implements OnInit {
   } 
 
   PatchNumOfInstallment(num){
+    console.log("NumOfInst: " + num);
     this.NapAppModelForm.patchValue({
       NumOfInst: num
     });
@@ -422,6 +426,7 @@ export class ApplicationDataRefinancingComponent implements OnInit {
   }
 
   ClickSave(){
+    console.log("Save App Data Refinancing");
     var tempAppObj = this.GetAppObjValue();
     var tempListAppCrossObj = this.GetListAppCrossValue();
     var tempAppFindDataObj = this.GetAppFinDataValue();
@@ -434,6 +439,7 @@ export class ApplicationDataRefinancingComponent implements OnInit {
 
     this.http.post(AdInsConstant.EditAppAddAppCross, obj).subscribe(
       (response) => {
+        console.log("response App Refinancing : " + JSON.stringify(response));
         this.outputTab.emit();
       },
       (error) => {
@@ -466,6 +472,8 @@ export class ApplicationDataRefinancingComponent implements OnInit {
   }
 
   AddTemp(contentCrossApp){
+    console.log("App Data Refinancing Form: " + JSON.stringify(this.NapAppModelForm.value));
+    console.log("Is Form Valid : " + this.NapAppModelForm.valid);
     this.Open(contentCrossApp);
   }
 

@@ -20,7 +20,7 @@ import { AppCustBankStmntObj } from 'app/shared/model/AppCustBankStmntObj.Model'
 
 export class CustBankAccountComponent implements OnInit {
 
-  @Input() listBankAcc: any = new Array<AppCustBankAccObj>();
+  @Input() listBankAcc: Array<AppCustBankAccObj> = new Array<AppCustBankAccObj>();
 
   @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
 
@@ -65,6 +65,7 @@ export class CustBankAccountComponent implements OnInit {
   ngOnInit() {
     this.initLookup();
     this.bindMonthObj();
+    console.log(this.listBankAcc);
   }
 
   SaveForm(){
