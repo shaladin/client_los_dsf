@@ -8,47 +8,47 @@
       "mainInfo": [
         {
           "type": "text",
-          "label": "Application No",
+          "label": "APPLICATION NO.",
           "property": "AppNo"
         },
         {
           "type": "text",
-          "label": "Original Office",
+          "label": "ORIGINAL OFFICE",
           "property": "OriOfficeName"
         },
         {
           "type": "text",
-          "label": "Customer Name",
+          "label": "CUSTOMER NAME",
           "property": "CustName"
         },
         {
           "type": "text",
-          "label": "Product Offering",
+          "label": "PRODUCT OFFERING",
           "property": "ProdOfferingName"
         },
         {
           "type": "text",
-          "label": "Tenor",
+          "label": "TENOR",
           "property": "Tenor"
         },
         {
           "type": "text",
-          "label": "Currency",
+          "label": "CURRENCY",
           "property": "CurrCode"
         },
         {
           "type": "text",
-          "label": "Order Information",
+          "label": "ORDER INFORMATION",
           "property": "MrOrderInfoCode"
         },
         {
           "type": "text",
-          "label": "Asset Name", 
+          "label": "ASSET NAME", 
           "property": "FullAssetName"
         },
         {
           "type": "text",
-          "label": "Lead No",
+          "label": "LEAD NO.",
           "property": "LeadNo"
         }
       ],

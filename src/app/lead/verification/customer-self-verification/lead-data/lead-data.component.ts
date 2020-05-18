@@ -346,11 +346,12 @@ export class LeadDataComponent implements OnInit {
                     this.LeadDataForm.controls['SerialNo5'].updateValueAndValidity();
                     this.serial5Mandatory = false;
                   }
-                  this.serial1Disabled = response.SerialNo1Label == "" ? true : false;
-                  this.serial2Disabled = response.SerialNo2Label == "" ? true : false;
-                  this.serial3Disabled = response.SerialNo3Label == "" ? true : false;
-                  this.serial4Disabled = response.SerialNo4Label == "" ? true : false;
-                  this.serial5Disabled = response.SerialNo5Label == "" ? true : false;
+
+                    // this.serial1Disabled = response.SerialNo1Label == "" ? true : false;
+                    // this.serial2Disabled = response.SerialNo2Label == "" ? true : false;
+                    // this.serial3Disabled = response.SerialNo3Label == "" ? true : false;
+                    // this.serial4Disabled = response.SerialNo4Label == "" ? true : false;
+                    // this.serial5Disabled = response.SerialNo5Label == "" ? true : false;
                 });
             });
         });
@@ -461,11 +462,11 @@ export class LeadDataComponent implements OnInit {
                       this.serial5Mandatory = false;
                     }
 
-                    this.serial1Disabled = response.SerialNo1Label == "" ? true : false;
-                    this.serial2Disabled = response.SerialNo2Label == "" ? true : false;
-                    this.serial3Disabled = response.SerialNo3Label == "" ? true : false;
-                    this.serial4Disabled = response.SerialNo4Label == "" ? true : false;
-                    this.serial5Disabled = response.SerialNo5Label == "" ? true : false;
+                    // this.serial1Disabled = response.SerialNo1Label == "" ? true : false;
+                    // this.serial2Disabled = response.SerialNo2Label == "" ? true : false;
+                    // this.serial3Disabled = response.SerialNo3Label == "" ? true : false;
+                    // this.serial4Disabled = response.SerialNo4Label == "" ? true : false;
+                    // this.serial5Disabled = response.SerialNo5Label == "" ? true : false;
                   });
               });
 
