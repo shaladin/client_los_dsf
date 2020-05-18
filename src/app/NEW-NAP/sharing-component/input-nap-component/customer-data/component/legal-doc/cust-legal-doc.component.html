@@ -15,7 +15,7 @@
         <th style="text-align: center;"><span class="thead-header" translate>Document No
         </span>
         </th>
-        <th style="text-align: center;"><span class="thead-header" translate>Date Issued
+        <th style="text-align: center;"><span class="thead-header" translate>Issued Date
         </span>
         </th>
         <th style="text-align: center;"><span class="thead-header" translate>Expired Date
@@ -27,7 +27,12 @@
         <th><span translate class="thead-header" name='action'>Action</span></th>
       </tr>
     </thead>
-    <tbody>
+    <tbody *ngIf = "listLegalDoc?.length == 0">
+      <tr>
+        <td colspan="100%">No Data Available</td>
+      </tr>
+    </tbody>
+    <tbody *ngIf="listLegalDoc?.length > 0">
       <tr *ngFor="let item of listLegalDoc; let i = index">
         <td style="text-align: center;">{{item.LegalDocName}}</td>
         <td style="text-align: center;">{{item.DocNo}}</td>
@@ -47,74 +52,76 @@
   </table>
   <ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header">
-      <h4 class="modal-title">Legal Document</h4>
+      <h4 class="modal-title"> {{mode}} Legal Document</h4>
       <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
-      <div class="px-3">
+      <!-- <div class="px-3"> -->
         <form class="form form-horizontal" [formGroup]="LegalDocForm" #enjiForm="ngForm" 
           (ngSubmit)="LegalDocForm.valid && SaveForm()">
           <div class="form-body">
-            <lib-ucSubsection [id]="'addLegalDocId'" [title]=" mode + 'Legal Document'"
+            <lib-ucSubsection [id]="'addLegalDocId'" [title]=" mode + ' Legal Document'"
               [panel]="'addLegalDoc'">
             </lib-ucSubsection>
             <div id="addLegalDoc">
-              <div class="form-group row">
-                <label class="col-md-2 adins-required-label" for="legalDocType" translate>Legal Doc Type</label>
-                <div class="col-md-4">
-                  <select class="form-control" id="idType" formControlName="MrLegalDocTypeCode"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && LegalDocForm.controls.MrLegalDocTypeCode.invalid }">
-                    <option *ngFor="let item of LegalDocTypeObj" [value]="item.Key">
-                      {{item.Value}}
-                    </option>
-                  </select>
-                  <lib-uc-show-errors [control]="LegalDocForm.controls.MrLegalDocTypeCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+              <!-- <div class="px-3"> -->
+                <div class="form-group row">
+                  <label class="col-md-2 adins-required-label" for="legalDocType" translate>Legal Doc Type</label>
+                  <div class="col-md-4">
+                    <select class="form-control" id="idType" formControlName="MrLegalDocTypeCode"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && LegalDocForm.controls.MrLegalDocTypeCode.invalid }">
+                      <option *ngFor="let item of LegalDocTypeObj" [value]="item.Key">
+                        {{item.Value}}
+                      </option>
+                    </select>
+                    <lib-uc-show-errors [control]="LegalDocForm.controls.MrLegalDocTypeCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                  </div>
+                  <label class="col-md-2 adins-required-label" for="dateIssued" translate>Issued Date</label>
+                  <div class="col-md-4">
+                    <input type="date" class="form-control" id="dateIssued" formControlName="DocDt"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && LegalDocForm.controls.DocDt.invalid }">
+                    <lib-uc-show-errors [control]="LegalDocForm.controls.DocDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                  </div>
                 </div>
-                <label class="col-md-2 adins-required-label" for="dateIssued" translate>Date Issued</label>
-                <div class="col-md-4">
-                  <input type="date" class="form-control" id="dateIssued" formControlName="DocDt"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && LegalDocForm.controls.DocDt.invalid }">
-                  <lib-uc-show-errors [control]="LegalDocForm.controls.DocDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                <div class="form-group row">
+                  <label class="col-md-2 adins-required-label" for="docNo" translate>Document No</label>
+                  <div class="col-md-4">
+                    <input type="text" class="form-control" id="docNo" formControlName="DocNo"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && LegalDocForm.controls.DocNo.invalid }">
+                    <lib-uc-show-errors [control]="LegalDocForm.controls.DocNo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                  </div>
+                  <label class="col-md-2 adins-required-label" for="expDt" translate>Expired Date</label>
+                  <div class="col-md-4">
+                    <input type="date" id="expDt" class="form-control" formControlName="DocExpiredDt"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && LegalDocForm.controls.DocExpiredDt.invalid }">
+                    <lib-uc-show-errors [control]="LegalDocForm.controls.DocExpiredDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                  </div>
                 </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-md-2 adins-required-label" for="docNo" translate>Document No</label>
-                <div class="col-md-4">
-                  <input type="text" class="form-control" id="docNo" formControlName="DocNo"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && LegalDocForm.controls.DocNo.invalid }">
-                  <lib-uc-show-errors [control]="LegalDocForm.controls.DocNo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                <div class="form-group row">
+                  <label class="col-md-2" for="releaseBy" translate>Release By</label>
+                  <div class="col-md-4">
+                    <input type="text" class="form-control" id="releaseBy" formControlName="ReleaseBy"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && LegalDocForm.controls.ReleaseBy.invalid }">
+                    <lib-uc-show-errors [control]="LegalDocForm.controls.ReleaseBy" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                  </div>
+                  <label class="col-md-2" for="releaseLocation" translate>Release Location</label>
+                  <div class="col-md-4">
+                    <input type="text" class="form-control" id="releaseLocation" formControlName="ReleaseLocation"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && LegalDocForm.controls.ReleaseLocation.invalid }">
+                    <lib-uc-show-errors [control]="LegalDocForm.controls.ReleaseLocation" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                  </div>
                 </div>
-                <label class="col-md-2 adins-required-label" for="expDt" translate>Expired Date</label>
-                <div class="col-md-4">
-                  <input type="date" id="expDt" class="form-control" formControlName="DocExpiredDt"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && LegalDocForm.controls.DocExpiredDt.invalid }">
-                  <lib-uc-show-errors [control]="LegalDocForm.controls.DocExpiredDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                <div class="form-group row">
+                  <label class="col-md-2" for="notes" translate>Notes</label>
+                  <div class="col-md-4">
+                    <textarea rows="5" class="form-control" id="notes" formControlName="DocNotes"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && LegalDocForm.controls.DocNotes.invalid }"></textarea>
+                    <lib-uc-show-errors [control]="LegalDocForm.controls.DocNotes" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                  </div>
                 </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-md-2" for="releaseBy" translate>Release By</label>
-                <div class="col-md-4">
-                  <input type="text" class="form-control" id="releaseBy" formControlName="ReleaseBy"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && LegalDocForm.controls.ReleaseBy.invalid }">
-                  <lib-uc-show-errors [control]="LegalDocForm.controls.ReleaseBy" [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                </div>
-                <label class="col-md-2" for="releaseLocation" translate>Release Location</label>
-                <div class="col-md-4">
-                  <input type="text" class="form-control" id="releaseLocation" formControlName="ReleaseLocation"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && LegalDocForm.controls.ReleaseLocation.invalid }">
-                  <lib-uc-show-errors [control]="LegalDocForm.controls.ReleaseLocation" [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-md-2" for="notes" translate>Notes</label>
-                <div class="col-md-4">
-                  <textarea rows="5" class="form-control" id="notes" formControlName="DocNotes"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && LegalDocForm.controls.DocNotes.invalid }"></textarea>
-                  <lib-uc-show-errors [control]="LegalDocForm.controls.DocNotes" [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                </div>
-              </div>
+              <!-- </div> -->
             </div>
             <div class="form-actions right">
               <button type="button" class="btn btn-raised btn-warning mr-1" (click)="cancel()" translate>
@@ -126,7 +133,7 @@
             </div>
           </div>
         </form>
-      </div>
+      <!-- </div> -->
     </div>
   </ng-template>
 </div>

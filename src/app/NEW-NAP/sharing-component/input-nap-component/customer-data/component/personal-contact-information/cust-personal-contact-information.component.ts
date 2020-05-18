@@ -19,7 +19,7 @@ import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 })
 
 export class CustPersonalContactInformationComponent implements OnInit {
-  @Input() listContactPersonPersonal: any = new Array<AppCustPersonalContactPersonObj>();
+  @Input() listContactPersonPersonal: Array<AppCustPersonalContactPersonObj> = new Array<AppCustPersonalContactPersonObj>();
 
 
   @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
@@ -99,6 +99,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
     this.initUrl();
     this.bindAllRefMasterObj();
     this.initContactPersonAddrObj();
+    console.log(this.listContactPersonPersonal);
   }
 
   SaveForm(){
@@ -107,26 +108,28 @@ export class CustPersonalContactInformationComponent implements OnInit {
       this.listContactPersonPersonal = new Array<AppCustPersonalContactPersonObj>();
     }
     this.setAppCustPersonalContactPerson();
-    if(this.mode == "add"){
+    if(this.mode == "Add"){
       this.listContactPersonPersonal.push(this.appCustPersonalContactPersonObj);
     }
-    if(this.mode == "edit"){
+    if(this.mode == "Edit"){
       this.listContactPersonPersonal[this.currentEditedIndex] = this.appCustPersonalContactPersonObj;
     }
+    console.log(this.ContactInfoPersonalForm);
     this.callbackSubmit.emit(this.listContactPersonPersonal);
     this.modalService.dismissAll();
     this.clearForm();
   }
 
   add(content){
-    this.mode = "add";
+    console.log(content);
+    this.mode = "Add";
     this.clearForm();
     this.open(content);
   }
 
   edit(i, content){
     this.clearForm();
-    this.mode = "edit";
+    this.mode = "Edit";
     this.currentEditedIndex = i;
     this.ContactInfoPersonalForm.patchValue({
       ContactPersonName: this.listContactPersonPersonal[i].ContactPersonName,
@@ -143,11 +146,20 @@ export class CustPersonalContactInformationComponent implements OnInit {
       IsFamily: this.listContactPersonPersonal[i].IsFamily
     });
 
+    this.setCustRelationShip(this.listContactPersonPersonal[i].MrCustRelationshipCode);
     this.setContactPersonAddr(this.listContactPersonPersonal[i]);
     this.selectedProfessionCode = this.listContactPersonPersonal[i].MrJobProfessionCode;
     this.setProfessionName(this.listContactPersonPersonal[i].MrJobProfessionCode);
 
     this.open(content);
+  }
+
+  setCustRelationShip(MrCustRelationshipCode: string){
+    console.log(this.CustRelationshipObj);
+    var selectedRelationship = this.CustRelationshipObj.find(x => x.Key == MrCustRelationshipCode);
+    console.log(selectedRelationship);
+    this.selectedRelationshipName = selectedRelationship.Value;
+    console.log(this.selectedRelationshipName);
   }
 
   delete(i){
@@ -167,8 +179,8 @@ export class CustPersonalContactInformationComponent implements OnInit {
       BirthPlace: ['', Validators.maxLength(100)],
       BirthDt: [''],
       IsEmergencyContact: [false],
-      MobilePhnNo1: ['', [Validators.required, Validators.maxLength(100)]],
-      MobilePhnNo2: ['', Validators.maxLength(100)],
+      MobilePhnNo1: ['', [Validators.required, Validators.maxLength(100), Validators.pattern("^[0-9]+$")]],
+      MobilePhnNo2: ['', [Validators.maxLength(100), Validators.pattern("^[0-9]+$")]],
       IsFamily: [false],
       Email: ['', Validators.maxLength(100)],
       CopyFromContactPerson: ['']
