@@ -123,9 +123,17 @@
             "property": "OfficeName"
         },
         {
-            "type": "text",
+            "type": "link",
             "position": "center",
-            "property": "AppNo"
+            "property": "AppNo",
+            "target" : "_self", 
+            "path" : "../../View/AppView", 
+            "param" : [ 
+                {
+                    "type" : "AppId", 
+                    "property" : "AppId" 
+                }
+            ]
         },
         {
             "type": "text",
