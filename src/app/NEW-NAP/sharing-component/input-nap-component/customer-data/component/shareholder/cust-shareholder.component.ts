@@ -21,7 +21,7 @@ import { AppCustCompanyMgmntShrholderObj } from 'app/shared/model/AppCustCompany
 
 export class CustShareholderComponent implements OnInit {
 
-  @Input() listShareholder: any = new Array<AppCustCompanyMgmntShrholderObj>();
+  @Input() listShareholder: Array<AppCustCompanyMgmntShrholderObj> = new Array<AppCustCompanyMgmntShrholderObj>();
 
   @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
 
@@ -263,7 +263,7 @@ export class CustShareholderComponent implements OnInit {
       TaxIdNo: ['', Validators.maxLength(50)],
       IdExpiredDt: [''],
       MobilePhnNo: ['', Validators.maxLength(50)],
-      Email: ['', Validators.maxLength(50)],
+      Email: ['', [Validators.maxLength(50), Validators.email]],
       SharePrcnt: [0, [Validators.min(0),Validators.max(100)]],
       MrJobPositionCode: [this.defaultJobPosition, Validators.maxLength(50)],
       IsSigner: [false],

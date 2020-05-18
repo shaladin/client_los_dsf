@@ -14,10 +14,16 @@
           <th><span translate class="thead-header">Customer Name</span></th>
           <th><span translate class="thead-header">Customer Relationship</span></th>
           <th><span translate class="thead-header">Notes</span></th>
+          <th><span translate class="thead-header">Is Reversible</span></th>
           <th><span translate class="thead-header">Action</span></th>
         </tr>
       </thead>
-      <tbody>
+      <tbody *ngIf = "parentForm.controls[identifier].controls.length == 0">
+        <tr>
+          <td colspan="100%">No Data Available</td>
+        </tr>
+      </tbody>
+      <tbody *ngIf = "parentForm.controls[identifier].controls.length > 0">
         <tr *ngFor="let item of parentForm.controls[identifier].controls;let i = index">
           <td [formGroupName]="i" class="text-center">
             {{i + 1}}
@@ -34,8 +40,12 @@
           </select></td>
           <td [formGroupName]="i" class="text-center">
             <textarea rows="5" class="form-control" formControlName="CustGrpNotes"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'][i]['controls'].CustGrpNotes.invalid }"></textarea>
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'][i]['controlCustGrpNotess'].CustGrpNotes.invalid }"></textarea>
             <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'][i]['controls'].CustGrpNotes" [submit]="enjiForm.submitted"></lib-uc-show-errors>            
+          </td>
+          <td [formGroupName]="i" class="text-center">
+            <input class="border-primary" type="checkbox" data-md-icheck formControlName="IsReversible" />
+            <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'][i]['controls'].IsReversible" [submit]="enjiForm.submitted"></lib-uc-show-errors>            
           </td>
           <td [formGroupName]="i">
             <a class="danger p-0" data-original-title="" title="" (click)="deleteCustGrp(i)">

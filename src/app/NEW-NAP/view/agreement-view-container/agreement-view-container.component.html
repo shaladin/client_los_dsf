@@ -39,7 +39,7 @@
 
             <mat-tab label="Commission">
               <ng-template matTabContent>
-                <app-tab-commission [agrmntId]="AgrmntId"></app-tab-commission>
+                <app-view-commission-agrmnt [agrmntId]="AgrmntId"></app-view-commission-agrmnt>
               </ng-template>
             </mat-tab>
 
@@ -77,6 +77,7 @@
 
             <mat-tab label="Summary">
               <ng-template matTabContent>
+                <agrmnt-view-summary [agrmntId]="AgrmntId"></agrmnt-view-summary>
               </ng-template>
             </mat-tab>
 
