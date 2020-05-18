@@ -12,7 +12,7 @@ import { DatePipe } from '@angular/common';
   providers: [NGXToastrService, DatePipe]
 })
 export class MouViewTcComponent implements OnInit {
-  @Input() MouCustId: any;
+  @Input() MouCustId: number;
 
   listTCData: any;
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, public datepipe: DatePipe) { }
