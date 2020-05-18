@@ -61,12 +61,12 @@ export class AdInsConstant {
   public static GetAppDetailForTabAddEditAppById = environment.losUrl + "/Application/GetAppDetailForTabAddEditAppById";
   public static GetAppDetailForAppTabById = environment.losUrl + "/Application/GetAppDetailForAppTabById";
   public static AddAppFromLead = environment.losUrl + "/Application/AddAppFromLead";
-  public static DataTableNAP = "http://localhost:5001" + "/Application/DataTableNAP";
+  public static DataTableNAP = environment.losUrl + "/Application/DataTableNAP";
   public static GetRuleFeeAndInsFixedNAP = environment.losUrl + "/Application/GetRuleFeeAndInsFixedNAP";
   public static GetAppAndAppCustDetailByAgrmntId = environment.losUrl + "/Application/GetAppAndAppCustDetailByAgrmntId";
   public static SubmitNAP = environment.losUrl + "/Application/SubmitNAP";
   public static AddEditAppCF2W = "http://localhost:5001" + "/Application/AddEditAppCF2W";
-  public static DataTableFeeAndInsNAP = "http://localhost:5001" + "/Application/DataTableFeeAndInsNAP";
+  public static DataTableFeeAndInsNAP = environment.losUrl + "/Application/DataTableFeeAndInsNAP";
   public static UpdateAppStepByAppId = environment.losUrl +"/Application/UpdateAppStepByAppId";
 
   //App Loan Purpose
@@ -810,12 +810,12 @@ export class AdInsConstant {
   public static GetListAppAssetData = environment.losUrl + "/AppAsset/GetListAppAssetData";
 
   // App Collateral
-  public static GetListAppCollateral = environment.losUrl + "/AppCollateral/GetListAppCollateral"
+  public static GetListAppCollateral = environment.losUrl + "/AppCollateral/GetListAppCollateral";
+  public static GetListAppCollateralByAppId = environment.losUrl + "/AppCollateral/GetListAppCollateralByAppId";
+  public static DeleteAppCollateral = environment.losUrl + "/AppCollateral/DeleteAppCollateral";
   public static GetRefAttrList = environment.losUrl + "/AppCollateral/GetRefAttrList"
   public static AddEditAllCollateralData = environment.losUrl + "/AppCollateral/AddEditAllCollateralData"
   public static AddExistingAppCollateralData = environment.losUrl + "/AppCollateral/AddExistingAppCollateralData"
-  public static DeleteAppCollateral = environment.losUrl + "/AppCollateral/DeleteAppCollateral"
-  public static GetListAppCollateralByAppId = environment.losUrl + "/AppCollateral/GetListAppCollateralByAppId";
   public static GetViewAppCollateralObjByAppId = environment.losUrl + "/AppCollateral/GetViewAppCollateralObjByAppId";
   public static GetAppCollateralByAppCollateralId = environment.losUrl + "/AppCollateral/GetAppCollateralByAppCollateralId";
   public static GetAppCollateralByAppId = environment.losUrl + "/AppCollateral/GetAppCollateralByAppId";
