@@ -31,7 +31,7 @@
                 <div class="form-group row">
                   <label class="col-md-3 adInsLabel" translate>Manufacturing Year</label>
                   <div class="col-md-4">
-                    <input type="number" class="form-control adInsInput" formControlName="ManufacturingYear"
+                    <input type="number" class="form-control adInsInput" id="manuYear" min="0" max="maxManuYear" formControlName="ManufacturingYear"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.ManufacturingYear.invalid}">
                     <lib-uc-show-errors  [control]="LeadDataForm.controls.ManufacturingYear" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors >
@@ -40,7 +40,7 @@
                 <div class="form-group row">
                   <label class="col-md-3 adins-required-label" translate>Asset Price</label>
                   <div class="col-md-4">
-                    <input type="number" class="form-control adInsInput" formControlName="AssetPrice"
+                    <input type="number" class="form-control adInsInput" id="assetPrice" min="0" max="maxAssetPrice" formControlName="AssetPrice"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.AssetPrice.invalid}">
                     <lib-uc-show-errors  [control]="LeadDataForm.controls.AssetPrice" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors >
@@ -60,7 +60,7 @@
                 <div class="form-group row">
                   <label class="col-md-3 adins-required-label" translate>Down Payment Amount</label>
                   <div class="col-md-4">
-                    <input type="number" class="form-control adInsInput" (change)="DPAmtChange()" formControlName="DownPaymentAmount"
+                    <input type="number" class="form-control adInsInput" (change)="DPAmtChange()" id="dpAmt" min="0" max="maxDpAmt" formControlName="DownPaymentAmount"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.DownPaymentAmount.invalid}">
                     <lib-uc-show-errors  [control]="LeadDataForm.controls.DownPaymentAmount" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors >
@@ -132,7 +132,7 @@
                 <div class="form-group row">
                   <label class="col-md-3 adins-required-label" translate>Tenor</label>
                   <div class="col-md-4">
-                    <input type="number" class="form-control adInsInput" (change)="TenorChange()" formControlName="Tenor"
+                    <input type="number" class="form-control adInsInput" (change)="TenorChange()" id="tenor" min="0" max="maxTenor" formControlName="Tenor"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.Tenor.invalid}">
                     <lib-uc-show-errors  [control]="LeadDataForm.controls.Tenor" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors >

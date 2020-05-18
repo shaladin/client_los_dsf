@@ -10,7 +10,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
   templateUrl: './mou-view-survey.component.html',
 })
 export class MouViewSurveyComponent implements OnInit {
-  @Input() MouCustId: any;
+  @Input() MouCustId: number;
   listSrvyOrder: any;
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) { }

@@ -17,14 +17,14 @@ export class MouReviewFactoringComponent implements OnInit {
   rfaInfoObj: RFAInfoObj = new RFAInfoObj();
   mouCustObj: MouCustObj = new MouCustObj();
   keyValueObj: KeyValueObj;
-  MouCustId : any;
+  MouCustId : number;
   WfTaskListId: any;
   MouType : string = "FACTORING";
-  PlafondAmt: any;
+  PlafondAmt: number;
   listApprover: any;
   listRecommendationObj: any;
 
-  listReason: any = [
+  listReason: Array<any> = [
     {
       Key: "OTHR_RSN",
       Value: "Reason 1"

@@ -17,22 +17,22 @@ import { environment } from 'environments/environment';
   providers: [NGXToastrService, DatePipe]
 })
 export class MainInfoComponent implements OnInit {
-  @Input() MouCustId: any;
+  @Input() MouCustId: number;
 
   mouCustObj: MouCustObj;
-  mode : any;
-  mouCustId : any;
-  mouCustNo : any;
-  mouStat : any;
-  custName: any;
-  mouCustDt: any;
-  startDt: any;
-  endDt: any;
-  refNo: any;
-  isRevolving: any;
-  plafondAmt: any;
-  mrMouTypeCode : any;
-  custId: any;
+  mode : string;
+  mouCustId : number;
+  mouCustNo : string;
+  mouStat : string;
+  custName: string;
+  mouCustDt: string;
+  startDt: string;
+  endDt: string;
+  refNo: string;
+  isRevolving: string;
+  plafondAmt: number;
+  mrMouTypeCode : string;
+  custId: number;
   custUrl: string;
   mouUrl: string;
   mouCustStatView: string;
@@ -71,7 +71,7 @@ export class MainInfoComponent implements OnInit {
         this.mouCustStatView = mouData['MouCustStatView'];
         this.custUrl = environment.FoundationR3Web + '/Customer/CustomerView/Page?CustId=' + this.custId;
         // this.custUrl = environment.FoundationR3Web + '/CustomerView/Page?CustId=' + this.custId;
-        this.mouUrl = "Mou/Cust/View?MouCustId=" + mouData['MouCustId'];
+        this.mouUrl = environment.losR3Web + "/Mou/Cust/View?MouCustId=" + mouData['MouCustId'];
       }
     );
   }

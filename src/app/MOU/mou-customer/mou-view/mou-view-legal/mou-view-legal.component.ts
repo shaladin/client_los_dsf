@@ -11,7 +11,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
   providers: [NGXToastrService]
 })
 export class MouViewLegalComponent implements OnInit {
-  @Input() MouCustId: any;
+  @Input() MouCustId: number;
 
   listLglReviewData: any;
   

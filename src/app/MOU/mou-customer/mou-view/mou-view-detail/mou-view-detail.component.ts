@@ -11,32 +11,32 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
   providers: [NGXToastrService]
 })
 export class MouViewDetailComponent implements OnInit {
-  @Input() MouCustId: any;
-  @Input() MouType: any;
+  @Input() MouCustId: number;
+  @Input() MouType: string;
 
-  MouCustClauseId: any;
-  CurrCode: any;
-  AssetTypeCode: any;
-  MrFirstInstTypeCode: any;
-  MrInterestTypeCode: any;
-  MrInstTypeCode: any;
-  MrInstSchmCode: any;
-  PayFreqCode: any;
-  DownPaymentFromPrcnt: any;
-  DownPaymentToPrcnt: any;
-  TenorFrom: any;
-  TenorTo: any;
+  MouCustClauseId: number;
+  CurrCode: string;
+  AssetTypeCode: string;
+  MrFirstInstTypeCode: string;
+  MrInterestTypeCode: string;
+  MrInstTypeCode: string;
+  MrInstSchmCode: string;
+  PayFreqCode: string;
+  DownPaymentFromPrcnt: number;
+  DownPaymentToPrcnt: number;
+  TenorFrom: number;
+  TenorTo: number;
 
-  WopCode: any;
-  PlafondAmt: any;
-  IsRevolving: any;
-  TopDays: any;
-  InterestRatePrcnt: any;
-  RetentionPrcnt: any;
-  IsDisclosed: any;
-  IsListedCust: any;
-  MrRecourseTypeCode: any;
-  Notes: any;
+  WopCode: string;
+  PlafondAmt: number;
+  IsRevolving: boolean;
+  TopDays: number;
+  InterestRatePrcnt: number;
+  RetentionPrcnt: number;
+  IsDisclosed: boolean;
+  IsListedCust: boolean;
+  MrRecourseTypeCode: string;
+  Notes: string;
 
   mouCust: any;
   mouCustClause: any;
@@ -89,7 +89,7 @@ export class MouViewDetailComponent implements OnInit {
           this.IsListedCust = this.mouCustFctr.IsListedCust;
           this.IsDisclosed = this.mouCustFctr.IsDisclosed;
           this.MrRecourseTypeCode = this.mouCustFctr.MrRecourseTypeCode;
-          this.Notes - this.mouCustFctr.Notes;
+          this.Notes = this.mouCustFctr.Notes;
         }
       })
     this.http.post(AdInsConstant.GetMouCustAssetByMouCustId, mouCustObj).subscribe(

@@ -10,7 +10,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 })
 export class LegalReviewPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
-  arrCrit = new Array();
+  arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
 
   constructor() { }
 

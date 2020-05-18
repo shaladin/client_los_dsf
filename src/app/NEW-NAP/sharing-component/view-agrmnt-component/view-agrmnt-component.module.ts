@@ -9,6 +9,7 @@ import { ViewAgrmntDocumentComponent } from "./view-document/view-document.compo
 import { ViewDeliveryOrderComponent } from "./view-delivery-order/view-delivery-order.component";
 import { AgrmntFinancialComponent } from './agrmnt-financial/agrmnt-financial.component';
 import { ViewCommissionComponent } from './view-commission/view-commission.component';
+import { AgrmntCardComponent } from './agrmnt-card/agrmnt-card.component';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { ViewCommissionComponent } from './view-commission/view-commission.compo
     ViewAgrmntDocumentComponent,
     ViewDeliveryOrderComponent,
     ViewPurchaseOrderComponent,
+    AgrmntCardComponent
   ],
   imports: [
     CommonModule,
@@ -31,7 +33,7 @@ import { ViewCommissionComponent } from './view-commission/view-commission.compo
     ViewAgrmntDocumentComponent,
     ViewDeliveryOrderComponent,
     AgrmntFinancialComponent,
-    ViewCommissionComponent
+    AgrmntCardComponent
   ],
   providers: [
     NGXToastrService
