@@ -36,7 +36,7 @@ export class FraudDetectionPagingComponent implements OnInit {
     this.arrCrit = new Array();
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
-    critObj.propName = 'RL.BL_CODE';
+    critObj.propName = 'RL.BIZ_TMPLT_CODE';
     critObj.value = this.lobCode;
     this.arrCrit.push(critObj);
     this.inputPagingObj.addCritInput = this.arrCrit;
