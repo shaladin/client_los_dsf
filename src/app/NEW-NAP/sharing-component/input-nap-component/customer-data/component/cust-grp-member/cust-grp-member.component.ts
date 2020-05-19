@@ -83,8 +83,8 @@ export class CustGrpMemberComponent implements OnInit {
     this.CustRelationshipObjs.push({list: []});
     
     if(this.identifier == AdInsConstant.CustGrupIndentifierTypePersonal){
-      this.CustRelationshipObjs[max + 1].list = this.CustRelationshipPersonalObj;
-      this.parentForm.controls[this.identifier]["controls"][max + 1].patchValue({
+      this.CustRelationshipObjs[max].list = this.CustRelationshipPersonalObj;
+      this.parentForm.controls[this.identifier]["controls"][max].patchValue({
         MrCustRelationshipCode: this.defaultCustRelationshipPersonalCode
       });
     }
