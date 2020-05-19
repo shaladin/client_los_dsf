@@ -13,7 +13,6 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 @Component({
   selector: 'app-mou-customer-request-detail',
   templateUrl: './mou-customer-request-detail.component.html',
-  styleUrls: ['./mou-customer-request-detail.component.scss'],
   providers: [NGXToastrService]
 })
 export class MouCustomerRequestDetailComponent implements OnInit {

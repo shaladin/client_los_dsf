@@ -5,6 +5,7 @@ import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-nap-paging',
@@ -19,39 +20,42 @@ export class NapPagingComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private toastr: NGXToastrService,
-  ) { }
+    private router: Router,
+    private route: ActivatedRoute
+  ) { 
+    this.route.queryParams.subscribe(params => {
+      if (params['LobCode'] != null) {
+        localStorage.setItem("LobCode",params['LobCode']);
+      }
+    });
+  }
 
   async ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url="./assets/ucpaging/searchApp.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
-    // this.inputPagingObj.deleteUrl = "/RefBank/DeleteRefBank";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchApp.json";
 
     this.arrCrit = new Array();
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
-    critObj.propName = 'RL.BL_CODE';
-    critObj.value = AdInsConstant.CF4W;
+    critObj.propName = 'RL.BIZ_TMPLT_CODE';
+    critObj.value = localStorage.getItem("LobCode");
     this.arrCrit.push(critObj);
     this.inputPagingObj.addCritInput = this.arrCrit;
-    
-    // console.log("User Access");
-    // console.log(JSON.parse(localStorage.getItem("UserAccess")));
-    this.isAllowedCrt = false;
     this.userAccess = JSON.parse(localStorage.getItem("UserAccess"));
-    await this.GetOfficeData();
   }
-
-  isAllowedCrt: boolean;
-  async GetOfficeData(){
+  
+  AddApp(){
     var obj = { OfficeCode: this.userAccess.OfficeCode };
-    await this.http.post(AdInsConstant.GetRefOfficeByOfficeCode, obj).toPromise().then(
+    this.http.post(AdInsConstant.GetRefOfficeByOfficeCode, obj).subscribe(
       (response) => {
-        // console.log(response);
-        if(response["IsAllowAppCreated"] == true)
-          this.isAllowedCrt = true;
+        if(response["IsAllowAppCreated"] == true){
+          this.router.navigate(["Nap/ConsumerFinance/InputNap/Add"]);
+        }else{
+          this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');
+        }
       },
       (error) => {
         console.log(error);
@@ -62,8 +66,10 @@ export class NapPagingComponent implements OnInit {
   GetCallBack(ev: any){
     console.log(ev);
     if(!ev.RowObj.IsAllowAppCreated){
-      this.toastr.typeErrorCustom('Is Not Allowed to Create App');
+      this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');
       return;
+    }else{
+      this.router.navigate(["Nap/ConsumerFinance/InputNap/Add/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId" : ev.RowObj.WfTaskListId } });
     }
   }
 }

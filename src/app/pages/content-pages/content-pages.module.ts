@@ -26,6 +26,7 @@ import { LeadInputCustDataComponent } from "app/lead/lead-input/lead-input-cust-
 import { NgxCurrencyModule } from "ngx-currency";
 import { UcinputnumberModule } from "@adins/ucinputnumber";
 import { CustSharingComponentModule } from "app/NEW-NAP/sharing-component/input-nap-component/cust-sharing-component.module";
+import { SubmissionPageComponent } from './external-page/submission-page/submission-page.component';
 
 export const customCurrencyMaskConfig = {     
     align: "left",     
@@ -68,6 +69,7 @@ export const customCurrencyMaskConfig = {
         CustomerDataComponent,
         LeadDataComponent,
         LeadInputCustDataComponent,
+        SubmissionPageComponent,
     ]
 })
 export class ContentPagesModule { }

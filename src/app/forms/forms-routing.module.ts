@@ -13,6 +13,7 @@ import { InputsComponent } from './elements/inputs/inputs.component';
 import { InputGroupsComponent } from './elements/input-groups/input-groups.component';
 import { InputGridComponent } from './elements/input-grid/input-grid.component';
 import { ArchwizardComponent } from './archwizard/archwizard.component';
+import { ReportComponent } from './report/report.component';
 
 const routes: Routes = [
   {
@@ -104,6 +105,13 @@ const routes: Routes = [
         component: ArchwizardComponent,
         data: {
           title: 'Angular Wizard Forms'
+        }
+      },
+      {
+        path: 'Report',
+        component: ReportComponent,
+        data: {
+          title: 'Report'
         }
       }
             
