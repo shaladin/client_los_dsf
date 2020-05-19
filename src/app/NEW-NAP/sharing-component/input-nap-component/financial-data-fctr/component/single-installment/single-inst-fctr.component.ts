@@ -49,14 +49,48 @@ export class SingleInstFctrComponent implements OnInit {
 
   Calculate() {
     this.calcSingleInstObj = this.ParentForm.value;
-    this.calcSingleInstObj.TopBased = "EFF_DT";
     this.http.post<ResponseCalculateObj>(AdInsConstant.CalculateSingleInst, this.calcSingleInstObj).subscribe(
       (response) => {
         console.log(response);
-
+        this.listInstallment = response.InstallmentTable;
+        this.ParentForm.patchValue({
+          EffectiveRatePrcnt: response.EffectiveRatePrcnt,
+          InstAmt: response.InstAmt,
+          TotalInterestAmt: response.TotalInterestAmt,
+          TotalAR: response.TotalARAmt,
+          NtfAmt: response.NtfAmt,
+          RefundInterestAmt: response.RefundInterestAmt,
+          TotalDisbAmt: response.TotalDisbAmt,
+          GrossYieldPrcnt: response.GrossYieldPrcnt
+        });
+        this.SetInstallmentTable();
         this.SetNeedReCalculate(false);
       }
     );
+  }
+
+  SetInstallmentTable() {
+    var ctrInstallment = this.ParentForm.get("InstallmentTable");
+    if (!ctrInstallment) {
+      this.ParentForm.addControl("InstallmentTable", this.fb.array([]))
+    }
+
+    while ((this.ParentForm.controls.InstallmentTable as FormArray).length) {
+      (this.ParentForm.controls.InstallmentTable as FormArray).removeAt(0);
+    }
+
+    for (let i = 0; i < this.listInstallment.length; i++) {
+      const group = this.fb.group({
+        InstSeqNo: this.listInstallment[i].InstSeqNo,
+        InstAmt: this.listInstallment[i].InstAmt,
+        PrincipalAmt: this.listInstallment[i].PrincipalAmt,
+        InterestAmt: this.listInstallment[i].InterestAmt,
+        OsPrincipalAmt: this.listInstallment[i].OsPrincipalAmt,
+        OsInterestAmt: this.listInstallment[i].OsInterestAmt,
+        DueDt: this.listInstallment[i].DueDt
+      });
+      (this.ParentForm.controls.InstallmentTable as FormArray).push(group);
+    }
   }
 
   SetNeedReCalculate(value) {
@@ -68,12 +102,12 @@ export class SingleInstFctrComponent implements OnInit {
   EstEffDtFocusOut(event){
     var topBased = this.ParentForm.get("TopBased").value;
     var maturityDate: Date;
-    if(topBased == AdInsConstant.InvcDt){
+    if(topBased == AdInsConstant.TopCalcBasedInvcDt){
       maturityDate = new Date(this.ParentForm.get("InvcDt").value);
       maturityDate.setDate(maturityDate.getDate() + this.ParentForm.get("TopDays").value);
     }
 
-    if(topBased == AdInsConstant.EffDt){
+    if(topBased == AdInsConstant.TopCalcBasedEffDt){
       maturityDate = new Date(this.ParentForm.get("EstEffDt").value);
       maturityDate.setDate(maturityDate.getDate() + this.ParentForm.get("TopDays").value);
     }

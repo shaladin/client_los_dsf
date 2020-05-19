@@ -190,9 +190,13 @@ export class AdInsConstant {
   public static LobCodeRFN4W = "RFN4W";
 
   //TOP CALC BASED
-  public static InvcDt = "INVC_DT";
-  public static EffDt = "EFF_DT";
+  public static TopCalcBasedInvcDt = "INVC_DT";
+  public static TopCalcBasedEffDt = "EFF_DT";
 
+  //INST TYPE
+  public static InstTypeSingle = "SINGLE";
+  public static InstTypeMultiple = "MULTIPLE";
+  
   //Asset Accessory
   public static GetAssetAccessoryByCode = environment.FoundationR3Url + "/AssetAccessory/GetAssetAccessoryByCode";
 
