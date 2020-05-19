@@ -53,7 +53,8 @@ export class CustPersonalMainDataComponent implements OnInit {
 
   getRefMasterUrl: any;
   getCountryUrl: any;
-
+  UserAccess: any;
+  MaxDate: any;
   constructor(
     private fb: FormBuilder, 
     private http: HttpClient,
@@ -63,6 +64,12 @@ export class CustPersonalMainDataComponent implements OnInit {
      }
 
   async ngOnInit() : Promise<void> {
+    console.log("User Access");
+    console.log(JSON.parse(localStorage.getItem("UserAccess")));
+    this.UserAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    this.MaxDate = formatDate(this.UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
+
+    console.log(this.MaxDate);
     console.log(this.identifier);
     console.log(this.parentForm);
 
@@ -75,21 +82,21 @@ export class CustPersonalMainDataComponent implements OnInit {
       IdExpiredDt: [''],
       MrMaritalStatCode: ['', Validators.maxLength(50)],
       BirthPlace: ['', [Validators.required, Validators.maxLength(100)]],
-      BirthDt: ['', Validators.required],
+      BirthDt: ['', [Validators.required, Validators.max(this.MaxDate)]],
       MrNationalityCode: ['', Validators.maxLength(50)],
-      TaxIdNo: ['', Validators.maxLength(50)],
-      MobilePhnNo1: ['', [Validators.required, Validators.maxLength(50)]],
+      TaxIdNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
+      MobilePhnNo1: ['', [Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
       MrEducationCode: ['', Validators.maxLength(50)],
-      MobilePhnNo2: ['', Validators.maxLength(50)],
+      MobilePhnNo2: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
       MrReligionCode: ['', Validators.maxLength(50)],
-      MobilePhnNo3: ['', Validators.maxLength(50)],
+      MobilePhnNo3: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
       IsVip: [false],
       Email1: ['', Validators.maxLength(100)],
       FamilyCardNo: ['', Validators.maxLength(50)],
       Email2: ['', Validators.maxLength(50)],
-      NoOfResidence: ['', [Validators.pattern("^[0-9]+$"), Validators.maxLength(4)]],
+      NoOfResidence: ['', [Validators.maxLength(4)]],
       Email3: ['', Validators.maxLength(50)],
-      NoOfDependents: ['', [Validators.pattern("^[0-9]+$"), Validators.maxLength(4)]],
+      NoOfDependents: ['', [Validators.maxLength(4)]],
     }));
 
     this.initUrl();
@@ -128,6 +135,9 @@ export class CustPersonalMainDataComponent implements OnInit {
       this.InputLookupCustomerObj.nameSelect = response["CustObj"].CustName;
       this.InputLookupCustomerObj.jsonSelect = {CustName: response["CustObj"].CustName};
       this.selectedCustNo = response["CustObj"].CustNo;
+      this.parentForm.controls[this.identifier]['controls']["MrIdTypeCode"].disable();
+      this.parentForm.controls[this.identifier]['controls']["IdNo"].disable();
+      this.parentForm.controls[this.identifier]['controls']["TaxIdNo"].disable();
     }
     
     if(response["CustPersonalObj"] != undefined){
@@ -152,8 +162,11 @@ export class CustPersonalMainDataComponent implements OnInit {
         NoOfDependents: response["CustPersonalObj"].NoOfDependents
       });
       
+      
       this.selectedNationalityCountryCode = response["CustPersonalObj"].NationalityCountryCode;
       this.setCountryName(response["CustPersonalObj"].NationalityCountryCode);
+      this.parentForm.controls[this.identifier]['controls']["BirthPlace"].disable();
+      this.parentForm.controls[this.identifier]['controls']["BirthDt"].disable();
     }
   }
 
@@ -181,6 +194,12 @@ export class CustPersonalMainDataComponent implements OnInit {
         console.log(response);
         this.InputLookupCountryObj.nameSelect = response["CountryName"];
         this.InputLookupCountryObj.jsonSelect = response;     
+        if(countryCode == "LOCAL"){
+          this.selectedNationalityCountryName = response["CountryName"];
+          this.isLocal = true;
+        }else{
+          this.isLocal = false
+        }
       },
       (error) => {
         console.log(error);
@@ -191,6 +210,7 @@ export class CustPersonalMainDataComponent implements OnInit {
 
   bindCustData(){
     if(this.custDataPersonalObj.AppCustObj != undefined){
+      console.log(this.custDataPersonalObj.AppCustObj);
       this.parentForm.controls[this.identifier].patchValue({
         MrIdTypeCode: this.custDataPersonalObj.AppCustObj.MrIdTypeCode,
         IdNo: this.custDataPersonalObj.AppCustObj.IdNo,
@@ -207,6 +227,7 @@ export class CustPersonalMainDataComponent implements OnInit {
     }
     
     if(this.custDataPersonalObj.AppCustPersonalObj != undefined){
+      console.log(this.custDataPersonalObj.AppCustPersonalObj);
       this.parentForm.controls[this.identifier].patchValue({
         CustFullName: this.custDataPersonalObj.AppCustPersonalObj.CustFullName,
         MrGenderCode: this.custDataPersonalObj.AppCustPersonalObj.MrGenderCode,		
@@ -267,16 +288,26 @@ export class CustPersonalMainDataComponent implements OnInit {
     await this.bindReligionObj();
   }
 
+  clearExpDt(){
+    if(this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == "EKTP"){
+      this.parentForm.controls[this.identifier].patchValue({
+        IdExpiredDt: '',
+      });
+    }
+  }
+
   async bindIdTypeObj(){
     this.refMasterObj.RefMasterTypeCode = "ID_TYPE";
     await this.http.post(this.getRefMasterUrl, this.refMasterObj).toPromise().then(
       (response) => {
         this.IdTypeObj = response["ReturnObject"];
+        console.log(this.IdTypeObj);
         if(this.IdTypeObj.length > 0){
           this.parentForm.controls[this.identifier].patchValue({
             MrIdTypeCode: this.IdTypeObj[0].Key
           });
         }
+        this.clearExpDt();
       }
     );
   }
@@ -310,13 +341,15 @@ export class CustPersonalMainDataComponent implements OnInit {
   }
 
   async bindNationalityObj(){
-    this.refMasterObj.RefMasterTypeCode = "NATIONALITY";
-    await this.http.post(this.getRefMasterUrl, this.refMasterObj).toPromise().then(
+    // this.refMasterObj.RefMasterTypeCode = "NATIONALITY";
+    var obj = { RefMasterTypeCodes: ["NATIONALITY"] };
+    await this.http.post(AdInsConstant.GetListRefMasterByRefMasterTypeCodes, obj).toPromise().then(
       (response) => {
+        console.log(response);
         this.NationalityObj = response["ReturnObject"];
         if(this.NationalityObj.length > 0){
           this.parentForm.controls[this.identifier].patchValue({
-            MrNationalityCode: this.NationalityObj[0].Key
+            MrNationalityCode: this.NationalityObj[0].MasterCode
           });
         }
       }
@@ -351,4 +384,20 @@ export class CustPersonalMainDataComponent implements OnInit {
     );
   }
 
+  isLocal: boolean = false;
+  selectedNationalityCountryName: string = "";
+  ChangeNationality(ev){
+    if(this.parentForm.controls[this.identifier]['controls'].MrNationalityCode.value == "LOCAL"){
+      console.log(this.parentForm);
+      console.log(this.identifier);
+      console.log(this.NationalityObj);
+      console.log(ev);
+      var idx = ev.target.selectedIndex - 1;
+      this.selectedNationalityCountryCode = this.NationalityObj[idx].ReserveField1;
+      this.selectedNationalityCountryName = this.NationalityObj[idx].ReserveField2;
+      this.isLocal = true;
+    }else{
+      this.isLocal = false;
+    }
+  }
 }

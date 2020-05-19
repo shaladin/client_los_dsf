@@ -7,7 +7,7 @@ export class AppCustGrpObj {
     MrCustRelationshipCode: string;
     RelationshipName: string;
     CustGrpNotes: string;
-    
+    IsReversible : boolean;
 
 
 constructor() { 

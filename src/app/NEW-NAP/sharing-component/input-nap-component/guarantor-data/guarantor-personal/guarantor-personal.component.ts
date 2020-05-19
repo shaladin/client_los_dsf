@@ -4,8 +4,6 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { UcLookupObj } from 'app/shared/model/UcLookupObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
@@ -41,24 +39,24 @@ export class GuarantorPersonalComponent implements OnInit {
   guarantorPersonalObj: GuarantorPersonalObj;
   AppGuarantorPersonalId: any;
 
-  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService) {
+  constructor(private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService) {
   }
 
   PersonalForm = this.fb.group({
-    GuarantorName: [''],
-    MrCustRelationshipCode: [''],
-    MrIdTypeCode: [''],
-    MrGenderCode: [''],
-    IdNo: ['', Validators.required],
-    MrMaritalStatCode: [''],
-    IdExpDt: [''],
-    MrNationalityCode: [''],
-    BirthPlace: [''],
-    BirthDt: [''],
-    CountryCode: [''],
-    TaxIdNo: [''],
-    MrReligionCode: [''],
-    MobilePhnNo: [''],
+    GuarantorName: ['', [Validators.required, Validators.maxLength(500)]],
+    MrCustRelationshipCode: ['', [Validators.required, Validators.maxLength(50)]],
+    MrIdTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
+    MrGenderCode: ['', [Validators.required, Validators.maxLength(50)]],
+    IdNo: ['', [Validators.required, Validators.maxLength(50)]],
+    MrMaritalStatCode: ['', [Validators.maxLength(50)]],
+    IdExpDt: ['', [Validators.required]],
+    MrNationalityCode: ['', [Validators.maxLength(50)]],
+    BirthPlace: ['', [Validators.required, Validators.maxLength(200)]],
+    BirthDt: ['',[Validators.required]],
+    CountryCode: ['', [Validators.maxLength(50)]],
+    TaxIdNo: ['', [Validators.maxLength(50)]],
+    MrReligionCode: ['', [Validators.maxLength(50)]],
+    MobilePhnNo: ['', [Validators.maxLength(50)]],
     Addr: [''],
     Phn: [''],
     AreaCode1: [''],
@@ -70,7 +68,7 @@ export class GuarantorPersonalComponent implements OnInit {
     Email: ['']
   });
 
-  ngOnInit() {
+  ngOnInit(){
 
     this.initLookup();
     this.initAddr();

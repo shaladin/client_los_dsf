@@ -30,7 +30,6 @@ export class SchmRegulerFixFctrComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log("reguler fix fctr");
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
   }
@@ -54,7 +53,7 @@ export class SchmRegulerFixFctrComponent implements OnInit {
   CalcBaseOnRate() {
     this.calcRegFixObj = this.ParentForm.value;
     this.calcRegFixObj["IsRecalculate"] = false;
-    this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateInstallmentRegularFix", this.calcRegFixObj).subscribe(
+    this.http.post<ResponseCalculateObj>(AdInsConstant.CalculateInstallmentRegularFixFctr, this.calcRegFixObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
         this.ParentForm.patchValue({
@@ -84,7 +83,7 @@ export class SchmRegulerFixFctrComponent implements OnInit {
   CalcBaseOnInst() {
     this.calcRegFixObj = this.ParentForm.value;
     this.calcRegFixObj["IsRecalculate"] = true;
-    this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateInstallmentRegularFix", this.calcRegFixObj).subscribe(
+    this.http.post<ResponseCalculateObj>(AdInsConstant.CalculateInstallmentRegularFixFctr, this.calcRegFixObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
         this.ParentForm.patchValue({
@@ -163,6 +162,15 @@ export class SchmRegulerFixFctrComponent implements OnInit {
   SetNeedReCalculate(value) {
     this.ParentForm.patchValue({
       NeedReCalculate: value
+    });
+  }
+
+  EstEffDtFocusOut(event){
+    var maturityDate: Date = new Date(this.ParentForm.get("EstEffDt").value);
+    maturityDate.setMonth(maturityDate.getMonth() + this.ParentForm.get("Tenor").value);
+
+    this.ParentForm.patchValue({
+      MaturityDate: maturityDate
     });
   }
 }

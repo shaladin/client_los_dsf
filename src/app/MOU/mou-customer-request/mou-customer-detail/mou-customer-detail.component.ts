@@ -2,24 +2,24 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
-import { WizardComponent } from 'angular-archwizard';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { Location } from '@angular/common';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { MouCustTcComponent } from '../mou-cust-tc/mou-cust-tc.component';
+import Stepper from 'bs-stepper';
 
 @Component({
   selector: 'app-mou-customer-detail',
   templateUrl: './mou-customer-detail.component.html',
-  styleUrls: ['./mou-customer-detail.component.scss'],
   providers: [NGXToastrService]
 })
 export class MouCustomerDetailComponent implements OnInit {
-  @ViewChild("WizardMouDetail") public wizard: WizardComponent;
+  private stepper: Stepper;
   @ViewChild("MouTcGeneral") public mouTcGeneral: MouCustTcComponent;
   @ViewChild("MouTcFactoring") public mouTcFactoring: MouCustTcComponent;
   mouType: string;
   mouCustId: number;
+  currentStepIndex: number;
 
   constructor(
     private router: Router,
@@ -39,9 +39,16 @@ export class MouCustomerDetailComponent implements OnInit {
         this.mouCustId = params['mouCustId'];
       }
     });
+    this.currentStepIndex = 1;
    }
 
   ngOnInit() {
+    this.stepper = new Stepper(document.querySelector('#stepper1'), {
+      linear: false,
+      animation: true
+    })
+    this.stepper.to(this.currentStepIndex);
+    console.log(this.stepper);
   }
 
   mouDetailGeneral(e){
@@ -65,10 +72,10 @@ export class MouCustomerDetailComponent implements OnInit {
   }
 
   saveMouTc(){
-    if(this.mouType == "GENERAL"){
+    if(this.mouType == AdInsConstant.GENERAL){
       this.mouTcGeneral.Save();
     }
-    else if(this.mouType == "FACTORING"){
+    else if(this.mouType == AdInsConstant.FACTORING){
       this.mouTcFactoring.Save();
     }
   }
@@ -78,7 +85,7 @@ export class MouCustomerDetailComponent implements OnInit {
   }
 
   mouDocumentBack(){
-    this.wizard.goToPreviousStep();
+    this.stepper.previous();
   }
 
   editMainInfoHandler(){
@@ -90,7 +97,7 @@ export class MouCustomerDetailComponent implements OnInit {
   }
 
   submitHandler(){
-    if(this.wizard.isLastStep()){
+    if((this.mouType == AdInsConstant.GENERAL && this.currentStepIndex == 4 ) || (this.mouType == AdInsConstant.FACTORING && this.currentStepIndex == 6) ){
       var mouObj = { MouCustId: this.mouCustId}
       this.httpClient.post(AdInsConstant.SubmitWorkflowMouRequest, mouObj).subscribe(
         (response: any) => {
@@ -110,11 +117,13 @@ export class MouCustomerDetailComponent implements OnInit {
   stepHandler(response){
     switch (response["StatusCode"].toString()) {
       case "200":
-        this.wizard.goToNextStep();
+        this.stepper.next();
+        this.currentStepIndex++;
         break;
 
       case "-1":
-        this.wizard.goToPreviousStep();
+        this.stepper.previous();
+        this.currentStepIndex--;
         break;
 
       case "-2":

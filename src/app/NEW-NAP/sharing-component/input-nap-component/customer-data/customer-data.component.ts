@@ -18,6 +18,10 @@ import { AppCustGrpObj } from 'app/shared/model/AppCustGrpObj.Model';
 import { CustDataCompanyObj } from 'app/shared/model/CustDataCompanyObj.Model';
 import { CustGrpMemberComponent } from './component/cust-grp-member/cust-grp-member.component';
 import { formatDate } from '@angular/common';
+import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
+import { AppCustCompanyMgmntShrholderObj } from 'app/shared/model/AppCustCompanyMgmntShrholderObj.Model';
+import { AppCustPersonalContactPersonObj } from 'app/shared/model/AppCustPersonalContactPersonObj.Model';
+import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalDocObj.Model';
 
 @Component({
   selector: 'app-customer-data',
@@ -68,12 +72,12 @@ export class CustomerDataComponent implements OnInit {
   inputFieldMailingCompanyObj: InputFieldObj;
   copyFromMailingCompany: any;
   appCustPersonalId: any;
-  listAppCustPersonalContactInformation: any;
-  listAppCustBankAcc: any;
-  listAppCustBankAccCompany: any;
-  listShareholder: any;
-  listContactPersonCompany: any;
-  listLegalDoc: any;
+  listAppCustPersonalContactInformation: Array<AppCustPersonalContactPersonObj> = new Array<AppCustPersonalContactPersonObj>();;
+  listAppCustBankAcc: Array<AppCustBankAccObj> = new Array<AppCustBankAccObj>();
+  listAppCustBankAccCompany: Array<AppCustBankAccObj> = new Array<AppCustBankAccObj>();
+  listShareholder: Array<AppCustCompanyMgmntShrholderObj> = new Array<AppCustCompanyMgmntShrholderObj>();
+  listContactPersonCompany: Array<AppCustPersonalContactPersonObj> = new Array<AppCustPersonalContactPersonObj>();
+  listLegalDoc: Array<AppCustCompanyLegalDocObj> = new Array<AppCustCompanyLegalDocObj>();
 
   isBindDataDone: boolean = false;
 
@@ -133,6 +137,7 @@ export class CustomerDataComponent implements OnInit {
     if (this.MrCustTypeCode == AdInsConstant.CustTypePersonal) {
       this.custDataPersonalObj = new CustDataPersonalObj();
       this.setCustPersonalObjForSave();
+      if(this.isExpiredDt) return;
       this.http.post(this.addEditCustDataPersonalUrl, this.custDataPersonalObj).subscribe(
         (response) => {
           console.log(response);
@@ -165,6 +170,7 @@ export class CustomerDataComponent implements OnInit {
         this.toastr.errorMessage("Total Share (%) must be 100.");
         return;
       }
+      if(this.isExpiredDt) return;
       this.custDataCompanyObj = new CustDataCompanyObj();
       this.setCustCompanyObjForSave();
       this.http.post(AdInsConstant.AddEditCustDataCompany, this.custDataCompanyObj).subscribe(
@@ -207,6 +213,20 @@ export class CustomerDataComponent implements OnInit {
     this.setAppCustGrpObj();
   }
 
+  isExpiredDt: boolean = false;
+  CekExpiredDt(){
+    var UserAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    var MaxDate = formatDate(UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
+    let d1 = new Date(this.custDataPersonalObj.AppCustObj.IdExpiredDt);
+    let d2 = new Date(MaxDate);
+    if(d1 > d2){
+      this.toastr.errorMessage("Expired Dt can not be more than " + MaxDate);
+      this.isExpiredDt = true;
+    }else{
+      this.isExpiredDt = false;
+    }
+  }
+
   setAppCust() {
     if (this.MrCustTypeCode == AdInsConstant.CustTypePersonal) {
       this.custDataPersonalObj.AppCustObj.MrCustTypeCode = this.MrCustTypeCode;
@@ -215,6 +235,7 @@ export class CustomerDataComponent implements OnInit {
       this.custDataPersonalObj.AppCustObj.MrIdTypeCode = this.CustDataForm.controls["personalMainData"]["controls"].MrIdTypeCode.value;
       this.custDataPersonalObj.AppCustObj.IdNo = this.CustDataForm.controls["personalMainData"]["controls"].IdNo.value;
       this.custDataPersonalObj.AppCustObj.IdExpiredDt = this.CustDataForm.controls["personalMainData"]["controls"].IdExpiredDt.value;
+      this.CekExpiredDt();
       this.custDataPersonalObj.AppCustObj.TaxIdNo = this.CustDataForm.controls["personalMainData"]["controls"].TaxIdNo.value;
       this.custDataPersonalObj.AppCustObj.IsVip = this.CustDataForm.controls["personalMainData"]["controls"].IsVip.value;
       this.custDataPersonalObj.AppCustObj.AppId = this.appId;
@@ -502,6 +523,7 @@ export class CustomerDataComponent implements OnInit {
         appCustGrpObj.CustNo = this.CustDataForm.controls["custGrpMember"].value[i].CustNo;
         appCustGrpObj.MrCustRelationshipCode = this.CustDataForm.controls["custGrpMember"].value[i].MrCustRelationshipCode;
         appCustGrpObj.CustGrpNotes = this.CustDataForm.controls["custGrpMember"].value[i].CustGrpNotes;
+        appCustGrpObj.IsReversible = this.CustDataForm.controls["custGrpMember"].value[i].IsReversible;
         this.custDataPersonalObj.AppCustGrpObjs.push(appCustGrpObj);
       }
     }
@@ -513,6 +535,7 @@ export class CustomerDataComponent implements OnInit {
         appCustGrpObj.CustNo = this.CustDataCompanyForm.controls["custGrpMemberCompany"].value[i].CustNo;
         appCustGrpObj.MrCustRelationshipCode = this.CustDataCompanyForm.controls["custGrpMemberCompany"].value[i].MrCustRelationshipCode;
         appCustGrpObj.CustGrpNotes = this.CustDataCompanyForm.controls["custGrpMemberCompany"].value[i].CustGrpNotes;
+        appCustGrpObj.IsReversible = this.CustDataForm.controls["custGrpMember"].value[i].IsReversible;
         this.custDataCompanyObj.AppCustGrpObjs.push(appCustGrpObj);
       }
     }
@@ -711,6 +734,7 @@ export class CustomerDataComponent implements OnInit {
     this.custDataObj.AppId = this.appId;
     await this.http.post(this.getCustDataUrl, this.custDataObj).toPromise().then(
       (response) => {
+        console.log(response);
         if (response != "") {
           if (response["AppCustObj"]["MrCustTypeCode"] == AdInsConstant.CustTypePersonal) {
             this.custDataPersonalObj = new CustDataPersonalObj();

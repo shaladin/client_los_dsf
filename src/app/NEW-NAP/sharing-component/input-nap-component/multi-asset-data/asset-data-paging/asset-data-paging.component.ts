@@ -52,6 +52,7 @@ addColl() {
 }
 
 event(ev){
+  console.log("test");
   console.log(ev);
   this.AppAssetId = ev.RowObj.AppAssetId;
   this.AppId = ev.RowObj.AppId;
@@ -146,6 +147,10 @@ eventColl(ev){
 
   editItem(custAddrObj: any) {
     this.outputValue.emit({ mode: 'edit', AddrId: custAddrObj.CustAddrId });
+  }
+
+  next(){
+    this.outputValue.emit({mode: 'submit'});
   }
 
   // deleteItem(custAddrObj: any) {
