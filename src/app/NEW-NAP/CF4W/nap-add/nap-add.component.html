@@ -1,21 +1,17 @@
 <div class="row text-left">
   <div class="col-md-12">
     <div class="card">
-
       <div class="card-header header-title">
         <div class="row">
         </div>
       </div>
-
       <div class="card-body">
         <div class="px-3">
-
           <form class="form form-horizontal" [formGroup]="NapAppForm" (ngSubmit)="NapAppForm.valid && SaveForm()"
             #enjiForm="ngForm">
             <!-- Main Info -->
             <div class="form-body">
               <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Add Application </h4>
-
               <div class="form-group row adins-required">
                 <label class="col-md-3 adInsLabel">Office </label>
                 <div class="col-md-9">
@@ -50,18 +46,16 @@
                 <label class="col-md-9 adInsLabel">{{NapAppForm.controls.CurrCode.value}} </label>
               </div>
             </div>
-
             <div class="form-actions right">
-              <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['../Paging']" [queryParams]="{LobCode:'CF4W'}" translate>
+              <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['../Paging']"
+                [queryParams]="{LobCode:'CF4W'}" translate>
                 <i class="fa fa-arrow-circle-left"></i> Cancel
               </button>
               <button type="submit" class="btn btn-raised btn-primary">
                 <i class="fa fa-check-square-o"></i> Next
               </button>
             </div>
-
           </form>
-
         </div>
       </div>
     </div>

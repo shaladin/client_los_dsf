@@ -1,0 +1,80 @@
+{
+  "title": "UC Report",
+  "reportName": "Report New",
+  "reportTemplateName": "ReportTestingMaster.rdlc",
+  "component": [
+    {
+      "type": "dropdown",
+      "label": "Office Name",
+      "name": "RefOfficeId",
+      "datatype": "numeric",
+      "isFromURL": true,
+      "isSelectOne": false,
+      "url": "http://r3app-server/FOUNDATION_R3/RefOffice/GetListKvpActiveRefOfficeIdForPaging",
+      "path": "",
+      "items": [],
+      "itemsUrl": [],
+      "criteriaPropName": "",
+      "criteriaPropValue": ""
+    },
+    {
+      "type": "dropdown",
+      "label": "Product Type",
+      "name": "ProductType",
+      "datatype": "text",
+      "isFromURL": false,
+      "isSelectOne": false,
+      "url": "",
+      "path": "",
+      "items": [
+        {
+          "key": "NEW",
+          "value": "New"
+        },
+        {
+          "key": "USED",
+          "value": "Used"
+        }
+      ],
+      "itemsUrl": [],
+      "isReportParam": true,
+      "isProviderParam": true
+    },
+    {
+      "type": "datepicker",
+      "label": "Period From",
+      "name": "PeriodFrom",
+      "datatype": "date",
+      "value": "BD-10",
+      "restriction": "gte",
+      "isReportParam": false
+    },
+    {
+      "type": "datepicker",
+      "label": "Period To",
+      "name": "PeriodTo",
+      "datatype": "date",
+      "value": "BD+10",
+      "restriction": "lte",
+      "isReportParam": false
+    },
+    {
+      "type": "datepicker",
+      "label": "App Date From",
+      "name": "AppDtFrom",
+      "datatype": "date",
+      "value": "BD-10",
+      "restriction": "gte",
+      "isReportParam": true
+    },
+    {
+      "type": "datepicker",
+      "label": "App Date To",
+      "name": "AppDtTo",
+      "datatype": "date",
+      "value": "BD+10",
+      "restriction": "lte",
+      "isReportParam": false
+    }
+  ]
+}
