@@ -1,21 +1,22 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { FormBuilder, CheckboxControlValueAccessor } from '@angular/forms';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { environment } from 'environments/environment';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 
 @Component({
   selector: 'app-nap-add',
-  templateUrl: './nap-add.component.html' 
+  templateUrl: './nap-add.component.html',
+  providers: [NGXToastrService]
 })
 export class NapAddComponent implements OnInit {
-
+  
   @ViewChild('LookupOffering') ucLookupOffering : UclookupgenericComponent;
   @ViewChild('LookupCopyProduct') ucLookupCopyProduct : UclookupgenericComponent;
   param;
@@ -83,7 +84,6 @@ export class NapAddComponent implements OnInit {
   officeItems;
   user;
   ngOnInit() {
-    console.log('test');
     // Lookup Obj
     console.log(JSON.parse(localStorage.getItem("UserAccess")));
     this.user = JSON.parse(localStorage.getItem("UserAccess"));
@@ -148,12 +148,23 @@ export class NapAddComponent implements OnInit {
     addCrit.restriction = AdInsConstant.RestrictionIn;
     addCrit.listValue = [this.user.OfficeCode];
     arrAddCrit.push(addCrit);
+
+    var addCritBizTempalte = new CriteriaObj();
+    addCritBizTempalte.DataType = "text";
+    addCritBizTempalte.propName = "rlob.BIZ_TMPLT_CODE";
+    addCritBizTempalte.restriction = AdInsConstant.RestrictionEq;
+    addCritBizTempalte.value = localStorage.getItem("LobCode");
+    arrAddCrit.push(addCritBizTempalte);
+
     this.inputLookupObjName.addCritInput = arrAddCrit;
 
-    this.NapAppForm.patchValue({
-      OriOfficeCode: this.user.OfficeCode,
-      OriOfficeName: this.user.OfficeName,
-    });
+    if (this.user.MrOfficeTypeCode != "CG") {
+      this.NapAppForm.patchValue({
+        OriOfficeCode: this.user.OfficeCode,
+        OriOfficeName: this.user.OfficeName,
+      });
+    }
+
   }
 
   GetOfficeDDL() {
@@ -161,7 +172,7 @@ export class NapAddComponent implements OnInit {
     var obj = {
       RowVersion: ""
     };
-    var url = environment.FoundationR3Url + AdInsConstant.GetListKvpActiveRefOffice;
+    var url = AdInsConstant.GetListKvpActiveRefOfficeForPaging;
     this.http.post(url, obj).subscribe(
       (response) => {
         console.log(response);
@@ -290,7 +301,7 @@ export class NapAddComponent implements OnInit {
   }
 
   ChangeValueOffice(ev: any) {
-    // console.log(ev);
+    console.log(ev);
     this.NapAppForm.patchValue({
       OriOfficeCode: ev.target.selectedOptions[0].value,
       OriOfficeName: ev.target.selectedOptions[0].text
@@ -301,7 +312,7 @@ export class NapAddComponent implements OnInit {
     addCrit.DataType = "text";
     addCrit.propName = "a.ORI_OFFICE_CODE";
     addCrit.restriction = AdInsConstant.RestrictionIn;
-    addCrit.listValue = [this.user.OfficeCode];
+    addCrit.listValue = [ev.target.selectedOptions[0].value];
     arrCopyLookupCrit.push(addCrit);
 
     this.inputLookupObjCopyProduct.addCritInput = arrCopyLookupCrit;
@@ -312,12 +323,18 @@ export class NapAddComponent implements OnInit {
     addCrit.DataType = "text";
     addCrit.propName = "ro.OFFICE_CODE";
     addCrit.restriction = AdInsConstant.RestrictionIn;
-    addCrit.listValue = [this.user.OfficeCode];
+    addCrit.listValue = [ev.target.selectedOptions[0].value];
     arrAddCrit.push(addCrit);
-    
+
+    var addCritBizTempalte = new CriteriaObj();
+    addCritBizTempalte.DataType = "text";
+    addCritBizTempalte.propName = "rlob.BIZ_TMPLT_CODE";
+    addCritBizTempalte.restriction = AdInsConstant.RestrictionEq;
+    addCritBizTempalte.value = localStorage.getItem("LobCode");
+    arrAddCrit.push(addCritBizTempalte);
+
     this.inputLookupObjName.addCritInput = arrAddCrit;
     this.ucLookupOffering.setAddCritInput();
   }
-
 
 }
