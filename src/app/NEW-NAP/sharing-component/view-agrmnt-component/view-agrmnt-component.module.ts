@@ -8,9 +8,10 @@ import { ViewPurchaseOrderComponent } from './view-purchase-order/view-purchase-
 import { ViewAgrmntDocumentComponent } from "./view-document/view-document.component";
 import { ViewDeliveryOrderComponent } from "./view-delivery-order/view-delivery-order.component";
 import { AgrmntFinancialComponent } from './agrmnt-financial/agrmnt-financial.component';
+ 
 import { ViewAgrmntSummaryComponent } from "./view-summary/view-summary.component";
 import { ViewCommissionComponent } from './view-commission/view-commission.component';
-import { AgrmntCardComponent } from './agrmnt-card/agrmnt-card.component';
+// import { AgrmntCardComponent } from './agrmnt-card/agrmnt-card.component';
 import { ListDataCommissionAgrmntComponent } from "./view-commission/list-data-commission/list-data-commission.component";
 
 
@@ -19,12 +20,12 @@ import { ListDataCommissionAgrmntComponent } from "./view-commission/list-data-c
     ViewAgrmntReservedFundComponent,
     AgrmntLifeInsuranceComponent,
     ViewAgrmntDocumentComponent,
-    ViewDeliveryOrderComponent,
+    ViewDeliveryOrderComponent,  
     ViewPurchaseOrderComponent,
     ViewAgrmntSummaryComponent,
     ViewCommissionComponent,
     ListDataCommissionAgrmntComponent,
-    AgrmntCardComponent
+    // AgrmntCardComponent
   ],
   imports: [
     CommonModule,
@@ -36,12 +37,12 @@ import { ListDataCommissionAgrmntComponent } from "./view-commission/list-data-c
     AgrmntLifeInsuranceComponent,
     ViewPurchaseOrderComponent,
     ViewAgrmntDocumentComponent,
-    ViewDeliveryOrderComponent,
+    ViewDeliveryOrderComponent, 
     AgrmntFinancialComponent,
     ViewAgrmntSummaryComponent,
     ViewCommissionComponent,
     ListDataCommissionAgrmntComponent,
-    AgrmntCardComponent
+    // AgrmntCardComponent
   ],
   providers: [
     NGXToastrService

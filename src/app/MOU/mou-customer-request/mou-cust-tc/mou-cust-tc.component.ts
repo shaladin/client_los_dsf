@@ -11,7 +11,6 @@ import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-mou-cust-tc',
   templateUrl: './mou-cust-tc.component.html',
-  styleUrls: ['./mou-cust-tc.component.scss'],
   providers: [NGXToastrService]
 })
 export class MouCustTcComponent implements OnInit {
