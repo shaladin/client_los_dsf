@@ -187,7 +187,7 @@ export class AdInsConstant {
 
   //LOB CODE
   public static LobCodeFCTR = "FCTR";
-  public static LobCodeRFN4W = "RFN4W";
+  public static LobCodeCFRFN = "CFRFN";
 
   //TOP CALC BASED
   public static InvcDt = "INVC_DT";
@@ -903,7 +903,7 @@ export class AdInsConstant {
   public static CalculateInsurance = environment.losUrl + "/AppIns/CalculateInsurance";
 
   //AGREEMENT DOC
-  public static GetListAgrmntDocByAgrmntId = environment.losUrl + "/AgrmntDoc/GetListAgrmntDocByAgrmntId"
+  public static GetListAgrmntDocByAgrmntId = "http://localhost:5001" + "/AgrmntDoc/GetListAgrmntDocByAgrmntId"
   public static GetAgrmntDocDataByAgrmntDocId = environment.losUrl + "/AgrmntDoc/GetAgrmntDocDataByAgrmntDocId"
   public static EditAgrmntDoc = environment.losUrl + "/AgrmntDoc/EditAgrmntDoc"
 
