@@ -32,7 +32,7 @@ export class AssetDataAddEditComponent implements OnInit {
   @Output() assetValue: EventEmitter<object> = new EventEmitter();
   //AppAssetId: number = 0;
   //type: string = "addAsset";
-  AppId: any;
+  @Input() AppId: any;
   LobCode: string;
   pageType: string = "add";
   custType: string;

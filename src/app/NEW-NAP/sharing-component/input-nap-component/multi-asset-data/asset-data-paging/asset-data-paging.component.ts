@@ -27,7 +27,7 @@ export class AssetDataPagingComponent implements OnInit {
   getListAppCollateral: any;
   AppAssetId: number;
   AppCollateralId: number;
-  AppId: number;
+  @Input() AppId: number;
   editAsset: string;
   editColl: string;
 
@@ -54,7 +54,7 @@ addColl() {
 event(ev){
   console.log(ev);
   this.AppAssetId = ev.RowObj.AppAssetId;
-  this.AppId = ev.RowObj.AppId;
+  // this.AppId = ev.RowObj.AppId;
   this.editAsset = ev.RowObj.editAsset;
   this.outputValue.emit({ mode: 'editAsset', AppAssetId: this.AppAssetId });
   console.log("CHECK EVENT");
@@ -64,7 +64,7 @@ eventColl(ev){
   if(ev.Key == "edit")
   {
     this.AppCollateralId = ev.RowObj.AppCollateralId;
-    this.AppId = ev.RowObj.AppId;
+    // this.AppId = ev.RowObj.AppId;
     this.editColl = ev.RowObj.editColl;
     this.AppAssetId = ev.RowObj.AppAssetId;
     this.outputValue.emit({ mode: 'editColl', AppCollateralId: this.AppCollateralId });
