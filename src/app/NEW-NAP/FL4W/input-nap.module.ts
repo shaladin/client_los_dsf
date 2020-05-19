@@ -33,6 +33,9 @@ import { AgrmntFinancialComponent } from "../sharing-component/view-agrmnt-compo
 import { ViewAgrmntReservedFundComponent } from "../sharing-component/view-agrmnt-component/view-reserved-fund/view-reserved-fund.component";
 import { ViewAgrmntSummaryComponent } from "../sharing-component/view-agrmnt-component/view-summary/view-summary.component";
 import { ViewAgrmntDocumentComponent } from "../sharing-component/view-agrmnt-component/view-document/view-document.component";
+import { AppTcComponent } from "../sharing-component/view-app-component/app-tc/app-tc.component";
+import { AppAssetDataComponent } from "../sharing-component/view-app-component/app-asset-data/app-asset-data.component";
+import { AppInsuranceComponent } from "../sharing-component/view-app-component/app-insurance/app-insurance.component";
  
  
  
@@ -68,14 +71,17 @@ import { ViewAgrmntDocumentComponent } from "../sharing-component/view-agrmnt-co
     ViewAppCustDataCompanyComponent,
     ViewAgrmntComponent,  
     AgrmntLifeInsuranceComponent,
-    // ViewCommissionComponent,
-    // ListDataCommissionComponent,
+    ViewCommissionComponent,
+    ListDataCommissionComponent,
     ViewPurchaseOrderComponent,
     ViewDeliveryOrderComponent,
     AgrmntFinancialComponent,
     ViewAgrmntReservedFundComponent,
     ViewAgrmntSummaryComponent,
-    ViewAgrmntDocumentComponent
+    ViewAgrmntDocumentComponent,
+    AppTcComponent,
+    AppAssetDataComponent,
+    AppInsuranceComponent, 
   ],
   providers: [
     NGXToastrService
