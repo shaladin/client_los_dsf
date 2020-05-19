@@ -28,33 +28,27 @@ export class NapPagingComponent implements OnInit {
     this.inputPagingObj._url="./assets/ucpaging/searchApp.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
-    // this.inputPagingObj.deleteUrl = "/RefBank/DeleteRefBank";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchApp.json";
 
     this.arrCrit = new Array();
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
-    critObj.propName = 'RL.BL_CODE';
+    critObj.propName = 'RL.BIZ_TMPLT_CODE';
     critObj.value = AdInsConstant.CF4W;
     this.arrCrit.push(critObj);
     this.inputPagingObj.addCritInput = this.arrCrit;
-    
-    // console.log("User Access");
-    // console.log(JSON.parse(localStorage.getItem("UserAccess")));
     this.userAccess = JSON.parse(localStorage.getItem("UserAccess"));
   }
   
-  CekOfficeData(){
+  AddApp(){
     var obj = { OfficeCode: this.userAccess.OfficeCode };
     this.http.post(AdInsConstant.GetRefOfficeByOfficeCode, obj).subscribe(
       (response) => {
-        // console.log(response);
         if(response["IsAllowAppCreated"] == true){
-          this.toastr.typeErrorCustom('Is Not Allowed to Create App');
+          this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');
         }else{
           this.router.navigate(["Nap/ConsumerFinance/InputNap/Add"]);
         }
-
       },
       (error) => {
         console.log(error);
@@ -65,7 +59,7 @@ export class NapPagingComponent implements OnInit {
   GetCallBack(ev: any){
     console.log(ev);
     if(!ev.RowObj.IsAllowAppCreated){
-      this.toastr.typeErrorCustom('Is Not Allowed to Create App');
+      this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');
       return;
     }else{
       this.router.navigate(["Nap/ConsumerFinance/InputNap/Add/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId" : ev.RowObj.WfTaskListId } });

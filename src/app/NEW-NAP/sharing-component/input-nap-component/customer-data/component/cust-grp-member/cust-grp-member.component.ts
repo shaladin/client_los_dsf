@@ -181,7 +181,7 @@ export class CustGrpMemberComponent implements OnInit {
         CustName: [''],
         MrCustRelationshipCode: [appCustGrpObj.MrCustRelationshipCode, [Validators.required, Validators.maxLength(50)]],
         CustGrpNotes: [appCustGrpObj.CustGrpNotes, [Validators.maxLength(4000)]],
-        IsReversible: [appCustGrpObj.IsReversible, [Validators.required]],
+        IsReversible: [appCustGrpObj.IsReversible],
       })
     } 
   }
