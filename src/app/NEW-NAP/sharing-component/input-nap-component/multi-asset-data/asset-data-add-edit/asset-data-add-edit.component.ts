@@ -559,12 +559,16 @@ copyToLocationAddr() {
   }
 
   setSupplierInfo(){
-    this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpName = this.AssetDataForm.controls["AdminHeadName"].value;
-    this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpNo = this.AssetDataForm.controls["AdminHeadNo"].value;
+    // this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpName = this.AssetDataForm.controls["AdminHeadName"].value;
+    // this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpNo = this.AssetDataForm.controls["AdminHeadNo"].value;
+    this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpName = "DUMMY";
+    this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpNo = "12345678";
     this.allAssetDataObj.AppAssetSupplEmpAdminObj.MrSupplEmpPositionCode = AdInsConstant.ADMIN_HEAD_JOB_CODE;
 
-    this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpName = this.AssetDataForm.controls["SalesPersonName"].value;
-    this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpNo = this.AssetDataForm.controls["SalesPersonNo"].value;
+    // this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpName = this.AssetDataForm.controls["SalesPersonName"].value;
+    this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpName = "DUMMY";
+    // this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpNo = this.AssetDataForm.controls["SalesPersonNo"].value;
+    this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpNo = "12345678";
     this.allAssetDataObj.AppAssetSupplEmpSalesObj.MrSupplEmpPositionCode = AdInsConstant.SALES_JOB_CODE;
 
     if(this.AssetDataForm.controls["BranchManagerName"].value == "")

@@ -143,10 +143,10 @@
               </app-life-insurance-data>
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
-              Financial
+              <app-financial-data *ngIf="AppStepIndex == 8" [AppId]="appId" (outputTab)="NextStep('TC')"></app-financial-data>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
-              <app-tc-data *ngIf="AppStepIndex == 9" [AppId]="appId" (outputTab)="NextStep('TC')"></app-tc-data>
+              <app-tc-data *ngIf="AppStepIndex == 9" [AppId]="appId" (outputTab)="NextStep('SUBMIT')"></app-tc-data>
             </div>
           </div>
         </div>

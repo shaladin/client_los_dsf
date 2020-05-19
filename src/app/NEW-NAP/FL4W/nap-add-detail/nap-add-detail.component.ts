@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import Stepper from 'bs-stepper';
@@ -42,9 +42,10 @@ export class NapAddDetailComponent implements OnInit {
     "LFI": 7,
     "FIN": 8,
     "TC": 9,
+    "SUBMIT": 10
   };
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -155,6 +156,9 @@ export class NapAddDetailComponent implements OnInit {
         break;
       case AdInsConstant.AppStepTC:
         this.AppStepIndex = this.AppStep[AdInsConstant.AppStepTC];
+        break;
+      case "SUBMIT":
+        this.router.navigate(["Nap/FinanceLeasing/Paging"]);
         break;
 
       default:

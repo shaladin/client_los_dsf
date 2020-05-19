@@ -32,8 +32,10 @@ export class AssetDataPagingComponent implements OnInit {
   editColl: string;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) { 
-    this.getListAppAssetData = AdInsConstant.GetListAppAssetData;
-    this.getListAppCollateral = AdInsConstant.GetListAppCollateral;
+    // this.getListAppAssetData = AdInsConstant.GetListAppAssetData;
+    this.getListAppAssetData = AdInsConstant.GetAppAssetListByAppId;
+    // this.getListAppCollateral = AdInsConstant.GetListAppCollateral;
+    this.getListAppCollateral = AdInsConstant.GetListAppCollateralByAppId;
 
     this.route.queryParams.subscribe(params => {
       if (params["IdCust"] != null) {
@@ -106,6 +108,7 @@ eventColl(ev){
     
     this.appAssetObj = new AppAssetObj();
     this.appAssetObj.AppAssetId = "-";
+    this.appAssetObj.AppId = this.AppId;
     this.http.post(this.getListAppAssetData, this.appAssetObj).subscribe(
       (response) => {
           this.listAppAssetObj = response["ReturnObject"];
@@ -128,6 +131,7 @@ eventColl(ev){
     
     this.appCollateralObj = new AppCollateralObj();
     this.appCollateralObj.AppCollateralId = "-";
+    this.appCollateralObj.AppId = this.AppId;
     this.http.post(this.getListAppCollateral, this.appCollateralObj).subscribe(
       (response) => {
           this.listAppCollateralObj = response["ReturnObject"];
