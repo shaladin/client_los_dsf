@@ -40,7 +40,7 @@ export class CreditInvestigationPagingComponent implements OnInit {
 
     var critLobObj = new CriteriaObj();
     critLobObj.restriction = AdInsConstant.RestrictionEq;
-    critLobObj.propName = 'RL.BL_CODE';
+    critLobObj.propName = 'RL.BIZ_TMPLT_CODE';
     critLobObj.value = localStorage.getItem("LobCode");
     this.inputPagingObj.addCritInput.push(critLobObj);
 

@@ -24,7 +24,17 @@ import { AppMainInfoComponent } from "../sharing-component/view-main-info-compon
 import { ViewAppCustDataPersonalComponent } from "../sharing-component/view-app-component/view-app-cust-data-personal/view-app-cust-data-personal.component";
 import { ViewAppCustDataCompanyComponent } from "../sharing-component/view-app-component/view-app-cust-data-company/view-app-cust-data-company.component";
 import { ViewAgrmntComponent } from './view-agrmnt/view-agrmnt.component';
-import { ViewAgrmntComponentModule } from "../sharing-component/view-agrmnt-component/view-agrmnt-component.module";
+import { AgrmntLifeInsuranceComponent } from "../sharing-component/view-agrmnt-component/life-insurance/life-insurance.component";
+import { ViewCommissionComponent } from "../sharing-component/view-agrmnt-component/view-commission/view-commission.component";
+import { ListDataCommissionComponent } from "../sharing-component/view-app-component/tab-commission/list-data-commission/list-data-commission.component";
+import { ViewPurchaseOrderComponent } from "../sharing-component/view-agrmnt-component/view-purchase-order/view-purchase-order.component";
+import { ViewDeliveryOrderComponent } from "../sharing-component/view-agrmnt-component/view-delivery-order/view-delivery-order.component";
+import { AgrmntFinancialComponent } from "../sharing-component/view-agrmnt-component/agrmnt-financial/agrmnt-financial.component";
+import { ViewAgrmntReservedFundComponent } from "../sharing-component/view-agrmnt-component/view-reserved-fund/view-reserved-fund.component";
+import { ViewAgrmntSummaryComponent } from "../sharing-component/view-agrmnt-component/view-summary/view-summary.component";
+import { ViewAgrmntDocumentComponent } from "../sharing-component/view-agrmnt-component/view-document/view-document.component";
+ 
+ 
  
 
 @NgModule({
@@ -44,7 +54,6 @@ import { ViewAgrmntComponentModule } from "../sharing-component/view-agrmnt-comp
     MatSelectModule,
     NapTabComponentModule,
     MatTabsModule,
-    ViewAgrmntComponentModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
   ],
   declarations: [
@@ -56,7 +65,16 @@ import { ViewAgrmntComponentModule } from "../sharing-component/view-agrmnt-comp
     AppMainInfoComponent,
     ViewAppCustDataPersonalComponent,
     ViewAppCustDataCompanyComponent,
-    ViewAgrmntComponent, 
+    ViewAgrmntComponent,  
+    AgrmntLifeInsuranceComponent,
+    // ViewCommissionComponent,
+    // ListDataCommissionComponent,
+    ViewPurchaseOrderComponent,
+    ViewDeliveryOrderComponent,
+    AgrmntFinancialComponent,
+    ViewAgrmntReservedFundComponent,
+    ViewAgrmntSummaryComponent,
+    ViewAgrmntDocumentComponent
   ],
   providers: [
     NGXToastrService

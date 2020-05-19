@@ -79,7 +79,7 @@
             "name": "Status"
         },
         {
-            "type": "Print",
+            "type": "label",
             "position": "center",
             "label": "Action"
         }
@@ -116,7 +116,7 @@
             "action": [
                 {
                     "type": "edit",
-                    "path": "/Document/DocPrint/View",
+                    "path": "/Nap/AdminProcess/DocPrint/View",
                     "param": [
                         {
                             "type": "AgrmntId",

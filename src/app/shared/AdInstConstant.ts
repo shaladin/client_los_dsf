@@ -187,7 +187,7 @@ export class AdInsConstant {
 
   //LOB CODE
   public static LobCodeFCTR = "FCTR";
-  public static LobCodeRFN4W = "RFN4W";
+  public static LobCodeCFRFN = "CFRFN";
 
   //TOP CALC BASED
   public static TopCalcBasedInvcDt = "INVC_DT";
@@ -640,7 +640,7 @@ export class AdInsConstant {
   public static SubmitWorkflowMouRequest = environment.losUrl + "/MouCust/SubmitWorkflowMouRequest";
   public static SubmitMouReview = environment.losUrl + "/MouCust/SubmitMouReview";
   public static ReturnMouReview = environment.losUrl + "/MouCust/ReturnMouReview";
-  public static EditMouForCancelByMouId = environment.losUrl + "/MouCust/EditMouForCancelByMouId";
+  public static EditMouForCancelByMouId = "http://localhost:5001" + "/MouCust/EditMouForCancelByMouId";
 
   // MOU CUST ASSET
   public static AddMouCustAsset = environment.losUrl + "/MouCustAsset/AddMouCustAsset";
@@ -907,7 +907,7 @@ export class AdInsConstant {
   public static CalculateInsurance = environment.losUrl + "/AppIns/CalculateInsurance";
 
   //AGREEMENT DOC
-  public static GetListAgrmntDocByAgrmntId = environment.losUrl + "/AgrmntDoc/GetListAgrmntDocByAgrmntId"
+  public static GetListAgrmntDocByAgrmntId = "http://localhost:5001" + "/AgrmntDoc/GetListAgrmntDocByAgrmntId"
   public static GetAgrmntDocDataByAgrmntDocId = environment.losUrl + "/AgrmntDoc/GetAgrmntDocDataByAgrmntDocId"
   public static EditAgrmntDoc = environment.losUrl + "/AgrmntDoc/EditAgrmntDoc"
 
