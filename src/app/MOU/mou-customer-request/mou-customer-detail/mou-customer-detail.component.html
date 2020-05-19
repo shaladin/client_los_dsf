@@ -23,61 +23,72 @@
             <app-main-info [MouCustId]="mouCustId"></app-main-info>
           </div>
         </div>
-
-        <!-- <div id="stepper1" class="bs-stepper">
-          <div class="bs-stepper-header" role="tablist" style="overflow-x: auto;">
-            <div class="step" data-target="#customer-data-tab">
-              <button type="button" class="step-trigger" role="tab" aria-controls="customer-data-tab"
-                id="customer-data-tab-trigger" (click)="EnterTab('custData')" >
-                <span class="bs-stepper-circle">1</span>
-                <span class="bs-stepper-label">MoU Detail</span>
-              </button>
-            </div>
-            <div class="line"></div>
-            <div class="step" data-target="#lead-data-tab">
-              <button type="button" class="step-trigger" role="tab" aria-controls="lead-data-tab"
-                id="lead-data-tab-trigger" (click)="EnterTab('leadData')" >
-                <span class="bs-stepper-circle">2</span>
-                <span class="bs-stepper-label">LEAD DATA</span>
-              </button>
-            </div>
-          </div>
-          <br><br>
-          <div class="bs-stepper-content">
-            <div id="customer-data-tab" class="content" role="tabpanel"
-              aria-labelledby="customer-data-tab-trigger">
-              <app-lead-input-cust-data *ngIf="isCustData == true" (outputTab)="getValue($event)">
-              </app-lead-input-cust-data>
-            </div>
-            <div id="lead-data-tab" class="content" role="tabpanel" aria-labelledby="lead-data-tab-trigger">
-              <app-lead-input-lead-data *ngIf="isLeadData == true" (outputTab)="getValue($event)">
-              </app-lead-input-lead-data>
-            </div>
-          </div>
-        </div> -->
-
-
         <div class="row">
           <div class="col-md-12">
-            <aw-wizard #WizardMouDetail navBarLayout="large-empty-symbols" [disableNavigationBar]=true [awNavigationMode]
-              navigateBackward="allow" navigateForward="allow">
-              <aw-wizard-step [stepTitle]="'MOU Detail'" [navigationSymbol]="{ symbol: '1', fontFamily: 'FontAwesome', fontWeight: 'bold' }">
-                <app-mou-detail-general *ngIf="mouType == 'GENERAL' && wizard.currentStepIndex == '0'" [MouCustId]="mouCustId" (ResponseMouDetailGeneral)="mouDetailGeneral($event)"></app-mou-detail-general>
-                <app-mou-detail-factoring *ngIf="mouType == 'FACTORING' && wizard.currentStepIndex == '0'" [MouCustId]="mouCustId" (ResponseMouCustFactoring)="mouDetailFactoring($event)"></app-mou-detail-factoring>
-              </aw-wizard-step>
-              <aw-wizard-step [stepTitle]="'Fee'" *ngIf="mouType == 'FACTORING'" [navigationSymbol]="{ symbol: '2', fontFamily: 'FontAwesome' }">
-                <app-mou-cust-fee *ngIf="mouType == 'FACTORING' && wizard.currentStepIndex == '1'" [MouCustId]="mouCustId" (ResponseMouCustFee)="mouCustFee($event)"></app-mou-cust-fee>
-              </aw-wizard-step>
-              <aw-wizard-step [stepTitle]="'Collateral'" [navigationSymbol]="{ symbol: mouType == 'FACTORING' ? '3' : '2', fontFamily: 'FontAwesome' }">
-                <app-mou-request-addcoll *ngIf="mouType == 'GENERAL' && wizard.currentStepIndex == '1'" [MouCustId]="mouCustId" (ResponseMouAddColl)="mouAddColl($event)"></app-mou-request-addcoll>
-                <app-mou-request-addcoll *ngIf="mouType == 'FACTORING' && wizard.currentStepIndex == '2'" [MouCustId]="mouCustId" (ResponseMouAddColl)="mouAddColl($event)"></app-mou-request-addcoll>
-              </aw-wizard-step>
-              <aw-wizard-step [stepTitle]="'Term and Condition'" [navigationSymbol]="{ symbol: mouType == 'FACTORING' ? '4' : '3', fontFamily: 'FontAwesome' }">
-                <app-mou-cust-tc #MouTcGeneral *ngIf="mouType == 'GENERAL' && wizard.currentStepIndex == '2'" [MouCustId]="mouCustId" (ResponseMouCustTc)="mouCustTc($event)"></app-mou-cust-tc>
-                <app-mou-cust-tc #MouTcFactoring *ngIf="mouType == 'FACTORING' && wizard.currentStepIndex == '3'" [MouCustId]="mouCustId" (ResponseMouCustTc)="mouCustTc($event)"></app-mou-cust-tc>
-                <br>
-                <br>
-                <br>
+            <div id="stepper1" class="bs-stepper">
+              <div class="bs-stepper-header" role="tablist" style="overflow-x: auto;">
+                <div class="step" data-target="#mou-detail-tab">
+                  <button type="button" class="step-trigger" role="tab" aria-controls="mou-detail-tab"
+                    id="mou-detail-tab-trigger">
+                    <span class="bs-stepper-circle">1</span>
+                    <span class="bs-stepper-label">MoU Detail</span>
+                  </button>
+                </div>
+                <div class="line"></div>
+                <div *ngIf="mouType == 'FACTORING'" class="step" data-target="#fee-data-tab">
+                  <button type="button" class="step-trigger" role="tab" aria-controls="fee-data-tab"
+                    id="fee-data-tab-trigger">
+                    <span class="bs-stepper-circle">2</span>
+                    <span class="bs-stepper-label">Fee</span>
+                  </button>
+                </div>
+                <div class="line"></div>
+                <div class="step" data-target="#collateral-data-tab">
+                  <button type="button" class="step-trigger" role="tab" aria-controls="collateral-data-tab"
+                    id="collateral-data-tab-trigger">
+                    <span *ngIf="mouType == 'GENERAL'" class="bs-stepper-circle">2</span>
+                    <span *ngIf="mouType == 'FACTORING'" class="bs-stepper-circle">3</span>
+                    <span class="bs-stepper-label">Collateral</span>
+                  </button>
+                </div>
+                <div class="line"></div>
+                <div class="step" data-target="#tc-data-tab">
+                  <button type="button" class="step-trigger" role="tab" aria-controls="tc-data-tab"
+                    id="tc-data-tab-trigger">
+                    <span *ngIf="mouType == 'GENERAL'" class="bs-stepper-circle">3</span>
+                    <span *ngIf="mouType == 'FACTORING'" class="bs-stepper-circle">4</span>
+                    <span class="bs-stepper-label">Term and Condition</span>
+                  </button>
+                </div>
+                <div class="line"></div>
+                <div class="step" data-target="#document-data-tab">
+                  <button type="button" class="step-trigger" role="tab" aria-controls="document-data-tab"
+                    id="document-data-tab-trigger">
+                    <span *ngIf="mouType == 'GENERAL'" class="bs-stepper-circle">4</span>
+                    <span *ngIf="mouType == 'FACTORING'" class="bs-stepper-circle">5</span>
+                    <span class="bs-stepper-label">Document</span>
+                  </button>
+                </div>
+              </div>
+              <br><br>
+              <div id="mou-detail-tab" class="content" role="tabpanel" aria-labelledby="mou-detail-tab-trigger">
+                <app-mou-detail-general *ngIf="mouType == 'GENERAL'" [MouCustId]="mouCustId" (ResponseMouDetailGeneral)="mouDetailGeneral($event)"></app-mou-detail-general>
+                <app-mou-detail-factoring *ngIf="mouType == 'FACTORING'" [MouCustId]="mouCustId" (ResponseMouCustFactoring)="mouDetailFactoring($event)"></app-mou-detail-factoring>
+              </div>
+
+              <div *ngIf="mouType == 'FACTORING'" id="fee-data-tab" class="content" role="tabpanel" aria-labelledby="fee-data-tab-trigger">
+                <app-mou-cust-fee *ngIf="mouType == 'FACTORING'" [MouCustId]="mouCustId" (ResponseMouCustFee)="mouCustFee($event)"></app-mou-cust-fee>
+              </div>
+
+              <div id="collateral-data-tab" class="content" role="tabpanel" aria-labelledby="collateral-data-tab-trigger">
+                <app-mou-request-addcoll *ngIf="mouType == 'GENERAL'" [MouCustId]="mouCustId" (ResponseMouAddColl)="mouAddColl($event)"></app-mou-request-addcoll>
+                <app-mou-request-addcoll *ngIf="mouType == 'FACTORING'" [MouCustId]="mouCustId" (ResponseMouAddColl)="mouAddColl($event)"></app-mou-request-addcoll>
+              </div>
+
+              <div id="tc-data-tab" class="content" role="tabpanel" aria-labelledby="tc-data-tab-trigger">
+                <app-mou-cust-tc #MouTcGeneral *ngIf="mouType == 'GENERAL'" [MouCustId]="mouCustId" (ResponseMouCustTc)="mouCustTc($event)"></app-mou-cust-tc>
+                <app-mou-cust-tc #MouTcFactoring *ngIf="mouType == 'FACTORING'" [MouCustId]="mouCustId" (ResponseMouCustTc)="mouCustTc($event)"></app-mou-cust-tc>
+                <br><br><br>
                 <div class="col-md-12" style="padding: 0;">
                   <div class="form-actions right" style="text-align: right;">
                     <button type="button" class="btn btn-raised btn-warning mr-1" (click)="backFromMouTc()" translate>
@@ -88,18 +99,18 @@
                     </button>
                   </div>
                 </div>
-              </aw-wizard-step>
-              <aw-wizard-step [stepTitle]="'Document'" [navigationSymbol]="{ symbol: mouType == 'FACTORING' ? '5' : '4', fontFamily: 'FontAwesome' }">
-                <div class="col-md-12" style="padding: 0; text-align: right;">
+              </div>
+
+              <div id="document-data-tab" class="content" role="tabpanel" aria-labelledby="document-data-tab-trigger">
+                <div *ngIf="mouType == 'GENERAL' && currentStepIndex == '4' || mouType == 'FACTORING' && currentStepIndex == '5'" class="col-md-12" style="padding: 0; text-align: right;">
                   <button type="button" class="btn btn-raised btn-warning mr-1" (click)="mouDocumentBack()" translate>
                     <i class="ft-x"></i> Back
                   </button>
                 </div>
-              </aw-wizard-step>
-            </aw-wizard>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>

@@ -317,6 +317,10 @@ aw-wizard-navigation-bar.horizontal ul.steps-indicator li a .label {
     margin-right: 150px;
 }
 
+.bs-stepper-content{
+    padding: 0px !important;
+}
+
 /* 
 .adInsReqMsg {
     

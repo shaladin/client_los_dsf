@@ -19,6 +19,7 @@ export class GuarantorPagingComponent implements OnInit {
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
 
   inputGridObj: any;
+  result : any = new Array();
   closeResult: any;
   AppGuarantorId: any;
   MrGuarantorTypeCode: any;
@@ -33,6 +34,24 @@ export class GuarantorPagingComponent implements OnInit {
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucpaging/searchGuarantor.json";
     this.inputGridObj.deleteUrl = AdInsConstant.DeleteAppGuarantor;
+
+    var guarantorObj = new GuarantorObj();
+    guarantorObj.AppId = this.AppId;
+    this.http.post(AdInsConstant.GetListAppGuarantor, guarantorObj).subscribe(
+      (response) => {
+        console.log(response);
+        this.inputGridObj.resultData = {
+          Data: ""
+        }
+        this.inputGridObj.resultData["Data"] = new Array();
+        this.inputGridObj.resultData.Data = response["ReturnObject"]
+        this.result = this.inputGridObj.resultData.Data;
+        console.log(this.result);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
     this.loadGuarantorListData(this.AppId);
   }
 

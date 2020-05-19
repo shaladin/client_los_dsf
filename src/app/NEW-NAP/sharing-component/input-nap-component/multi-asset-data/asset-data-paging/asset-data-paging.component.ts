@@ -52,6 +52,7 @@ addColl() {
 }
 
 event(ev){
+  console.log("test");
   console.log(ev);
   this.AppAssetId = ev.RowObj.AppAssetId;
   // this.AppId = ev.RowObj.AppId;

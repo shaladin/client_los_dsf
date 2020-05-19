@@ -41,7 +41,7 @@ export class PagingComponent implements OnInit {
     var critLobObj = new CriteriaObj();
     critLobObj.restriction = AdInsConstant.RestrictionLike;
     critLobObj.DataType = 'text';
-    critLobObj.propName = 'RL.BL_CODE';
+    critLobObj.propName = 'RL.BIZ_TMPLT_CODE';
     critLobObj.value = localStorage.getItem("LobCode");
     this.inputPagingObj.addCritInput.push(critLobObj);
 

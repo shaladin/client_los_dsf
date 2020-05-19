@@ -18,7 +18,6 @@
     <lib-ucviewgeneric [viewInput]="viewLeadHeaderMainInfo"></lib-ucviewgeneric>
     <div id="stepper1" class="bs-stepper">
       <div class="bs-stepper-header" role="tablist" style="overflow-x: auto;">
-        <!-- your steps here -->
         <div class="step" data-target="#customer-data-tab">
           <button type="button" class="step-trigger" role="tab" aria-controls="customer-data-tab"
             id="customer-data-tab-trigger" (click)="EnterTab('custData')">
@@ -36,7 +35,6 @@
         </div>
       </div>
       <br><br>
-      <!-- <div class="bs-stepper-content"> -->
       <div id="customer-data-tab" class="content" role="tabpanel" aria-labelledby="customer-data-tab-trigger">
         <app-lead-input-cust-data *ngIf="isCustData == true" (outputTab)="getValue($event)">
         </app-lead-input-cust-data>
@@ -45,7 +43,6 @@
         <app-lead-data *ngIf="isLeadData == true" (outputTab)="getValue($event)">
         </app-lead-data>
       </div>
-      <!-- </div> -->
     </div>
   </div>
 </div>
