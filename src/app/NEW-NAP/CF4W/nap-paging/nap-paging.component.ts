@@ -5,7 +5,7 @@ import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-nap-paging',
@@ -20,8 +20,15 @@ export class NapPagingComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private router: Router
-  ) { }
+    private router: Router,
+    private route: ActivatedRoute
+  ) { 
+    this.route.queryParams.subscribe(params => {
+      if (params['LobCode'] != null) {
+        localStorage.setItem("LobCode",params['LobCode']);
+      }
+    });
+  }
 
   async ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
@@ -34,7 +41,7 @@ export class NapPagingComponent implements OnInit {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'RL.BIZ_TMPLT_CODE';
-    critObj.value = AdInsConstant.CF4W;
+    critObj.value = localStorage.getItem("LobCode");
     this.arrCrit.push(critObj);
     this.inputPagingObj.addCritInput = this.arrCrit;
     this.userAccess = JSON.parse(localStorage.getItem("UserAccess"));
