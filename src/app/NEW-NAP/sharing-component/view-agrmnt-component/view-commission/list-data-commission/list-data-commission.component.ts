@@ -5,7 +5,7 @@ import { Component, OnInit, Input } from '@angular/core';
   templateUrl: './list-data-commission.component.html',
   styleUrls: ['./list-data-commission.component.scss']
 })
-export class ListDataCommissionComponent implements OnInit {
+export class ListDataCommissionAgrmntComponent implements OnInit {
 
   @Input() FormInputObj;
   constructor() { }

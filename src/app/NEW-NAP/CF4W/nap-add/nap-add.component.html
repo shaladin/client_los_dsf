@@ -22,6 +22,7 @@
                   <select class="form-control adInsInput" style="width: auto" formControlName="OriOfficeCode"
                     (change)="ChangeValueOffice($event)"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppForm.controls.OriOfficeCode.invalid }">
+                    <option value="">-Select One-</option>
                     <option *ngFor="let it of officeItems" value="{{it.Key}}">
                       {{it.Value}} </option>
                   </select>

@@ -544,13 +544,13 @@ export class LeadDataComponent implements OnInit {
           (response) => {
             this.toastr.successMessage(response["message"]);
             if(this.originPage == "teleVerif"){
-              this.router.navigate(["/Lead/TeleVerif/Paging"]);
+              this.router.navigate(["/pages/Submit?reason=submit"]);
             }
             else if(this.typePage == "edit"){
-              this.router.navigate(["/Lead/Lead/Paging"]);
+              this.router.navigate(["/pages/Submit?reason=submit"]);
             }
             else{
-              this.router.navigate(["/Lead/LeadUpdate/Paging"]);
+              this.router.navigate(["/pages/Submit?reason=submit"]);
             }
           },
           (error) => {
@@ -566,7 +566,7 @@ export class LeadDataComponent implements OnInit {
       this.http.post(this.addEditLeadData, this.leadInputLeadDataObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["/Lead/Lead/Paging"]);
+          this.router.navigate(["/pages/Submit?reason=submit"]);
         },
         (error) => {
           console.log(error);
