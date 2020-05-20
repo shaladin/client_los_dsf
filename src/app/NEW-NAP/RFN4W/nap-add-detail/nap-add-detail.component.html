@@ -126,11 +126,12 @@
               </app-referantor-data>
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
-              <app-application-data-refinancing *ngIf="AppStepIndex == 4" [AppId]="appId"
-                (outputTab)="NextStep('ASSET')"></app-application-data-refinancing>
+              <app-application-data *ngIf="AppStepIndex == 4" [appId]="appId" [IsLoanObject]="true"
+                (outputTab)="NextStep('ASSET')"></app-application-data>
             </div>
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
-              Collateral
+              <app-collateral-fctr *ngIf="AppStepIndex == 5" [AppId]="appId" (outputTab)="NextStep('INS')">
+              </app-collateral-fctr>
             </div>
             <div id="insurance-tab" class="content" role="tabpanel" aria-labelledby="insurance-tab-trigger">
               <app-insurance-data *ngIf="!IsMultiAsset && AppStepIndex == 6" [appId]="appId"

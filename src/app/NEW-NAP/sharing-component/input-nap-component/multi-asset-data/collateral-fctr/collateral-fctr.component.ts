@@ -196,7 +196,7 @@ export class CollateralFctrComponent implements OnInit {
         this.OwnerRelationshipObj = response["ReturnObject"];
         if (this.OwnerRelationshipObj.length > 0) {
           this.AddCollForm.patchValue({
-            OwnerRelationship: this.OwnerRelationshipObj[0].Key,
+            MrOwnerRelationshipCode: this.OwnerRelationshipObj[0].Key,
             CopyFromLegal : this.copyToLocationObj[0].Key
           });
         }
@@ -212,7 +212,6 @@ export class CollateralFctrComponent implements OnInit {
       )
 
     var appIdObj = { AppId: this.AppId }
-    console.log(appIdObj);
     this.http.post(AdInsConstant.GetAppCollateralByAppCollateralId, appIdObj).subscribe(
       (response) => {
         this.listCollateralData = response['ReturnObject'];
@@ -232,14 +231,13 @@ export class CollateralFctrComponent implements OnInit {
       (response) => {
         this.IdTypeList = response['ReturnObject'];
         this.AddCollForm.patchValue({
-          MrIdType: this.IdTypeList[0].Key
+          MrIdTypeCode: this.IdTypeList[0].Key
         });
       })
 
       var refMasterObj = { RefMasterTypeCode: 'ASSET_CONDITION' };
       this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
         (response) => {
-          console.log(response);
           this.ConditionCodeList = response['ReturnObject'];
           this.AddCollForm.patchValue({
             MrCollateralConditionCode: this.ConditionCodeList[0].Key
@@ -527,10 +525,10 @@ export class CollateralFctrComponent implements OnInit {
 
   SaveForm() {
     this.appCollateralDataObj = new AppCollateralDataObj();
-this.setCollateralInfo();
-this.setCollateralOwner();
-this.setCollateralLocation();
-this.setCollateralPercentage();
+    this.setCollateralInfo();
+    this.setCollateralOwnerAndUser();
+    this.setCollateralLocation();
+    this.setCollateralPercentage();
 
 this.listAppCollateralDocObj = new ListAppCollateralDocObj();
 this.listAppCollateralDocObj.AppCollateralDocObj = new Array();
@@ -670,8 +668,8 @@ console.log(this.appCollateralDataObj);
 
    }
 
-  setCollateralOwner(){
-    this.appCollateralDataObj.AppCollateralRegistrationObj.MrOwnerRelationshipCode = this.AddCollForm.controls["OwnerRelationship"].value;
+  setCollateralOwnerAndUser(){
+    this.appCollateralDataObj.AppCollateralRegistrationObj.MrOwnerRelationshipCode = this.AddCollForm.controls["MrOwnerRelationshipCode"].value;
     this.appCollateralDataObj.AppCollateralRegistrationObj.OwnerName = this.AddCollForm.controls["OwnerName"].value;
     this.appCollateralDataObj.AppCollateralRegistrationObj.MrIdTypeCode = this.AddCollForm.controls["MrIdTypeCode"].value;
     this.appCollateralDataObj.AppCollateralRegistrationObj.OwnerIdNo = this.AddCollForm.controls["OwnerIdNo"].value;
@@ -682,8 +680,11 @@ console.log(this.appCollateralDataObj);
     this.appCollateralDataObj.AppCollateralRegistrationObj.OwnerAreaCode4 = this.AddCollForm.controls["legalAddr"]["controls"].AreaCode4.value;
     this.appCollateralDataObj.AppCollateralRegistrationObj.OwnerCity = this.AddCollForm.controls["legalAddr"]["controls"].City.value;
     this.appCollateralDataObj.AppCollateralRegistrationObj.OwnerZipcode = this.AddCollForm.controls["legalAddrZipcode"]["controls"].value.value;
-    this.appCollateralDataObj.AppCollateralRegistrationObj.OwnerMobilePhnNo = this.AddCollForm.controls["ManufacturingYear"].value;
+    this.appCollateralDataObj.AppCollateralRegistrationObj.OwnerMobilePhnNo = this.AddCollForm.controls["OwnerMobilePhnNo"].value;
+    this.appCollateralDataObj.AppCollateralRegistrationObj.UserName = this.AddCollForm.controls["UserName"].value;
+    this.appCollateralDataObj.AppCollateralRegistrationObj.MrUserRelationshipCode = this.AddCollForm.controls["MrUserRelationshipCode"].value;
   }
+
   setCollateralLocation(){
     this.appCollateralDataObj.AppCollateralRegistrationObj.LocationAddr = this.AddCollForm.controls["locationAddr"]["controls"].Addr.value;
     this.appCollateralDataObj.AppCollateralRegistrationObj.LocationAreaCode1 = this.AddCollForm.controls["locationAddr"]["controls"].AreaCode1.value;
