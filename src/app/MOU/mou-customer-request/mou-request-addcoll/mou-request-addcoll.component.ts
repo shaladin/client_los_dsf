@@ -393,7 +393,7 @@ export class MouRequestAddcollComponent implements OnInit {
 
   SaveForm() {
     this.setCollateralObjForSave();
-
+console.log("aaaa");
     var custCollObj = {
       MouCustCollateral: this.mouCustCollateralObj,
       MouCustCollateralRegistration: this.mouCustCollateralRegistrationObj
@@ -437,10 +437,10 @@ export class MouRequestAddcollComponent implements OnInit {
     this.mouCustCollateralObj.MrCollateralConditionCode = "NEW";
     this.mouCustCollateralObj.MrCollateralUsageCode = "COMMERCIAL";
     this.mouCustCollateralObj.CollateralStat = "NEW";
-    this.mouCustCollateralObj.SerialNo1 = this.AddCollForm.controls.SerialNo1.value;
-    this.mouCustCollateralObj.SerialNo2 = this.AddCollForm.controls.SerialNo2.value;
-    this.mouCustCollateralObj.SerialNo3 = this.AddCollForm.controls.SerialNo3.value;
-    this.mouCustCollateralObj.SerialNo4 = this.AddCollForm.controls.SerialNo4.value;
+    // this.mouCustCollateralObj.SerialNo1 = this.AddCollForm.controls.SerialNo1.value;
+    // this.mouCustCollateralObj.SerialNo2 = this.AddCollForm.controls.SerialNo2.value;
+    // this.mouCustCollateralObj.SerialNo3 = this.AddCollForm.controls.SerialNo3.value;
+    // this.mouCustCollateralObj.SerialNo4 = this.AddCollForm.controls.SerialNo4.value;
     this.mouCustCollateralObj.CollateralValueAmt = this.AddCollForm.controls.CollateralValueAmt.value;
     this.mouCustCollateralObj.CollateralNotes = this.AddCollForm.controls.Notes.value;
 

@@ -50,6 +50,8 @@ export class DocSignerDetailComponent implements OnInit {
   employeeLookUpObj2: InputLookupObj;
   pageType: string;
   page:number;
+  custId : number;
+  custUrl : string;
   MouCustSignerForm = this.fb.group({
     MfSigner1: [''],
     MfSignerPosition1: [''],
@@ -209,6 +211,12 @@ export class DocSignerDetailComponent implements OnInit {
       (response: MouCustObj) => {
           this.returnMouCust = response;
           this.MrCustTypeCode = this.returnMouCust["MrCustTypeCode"];
+          var custObj = { CustNo: response['CustNo'] }; 
+          this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+            (response: any) => { 
+              this.custId = response['CustId'];
+              this.custUrl = environment.FoundationR3Web + '/Customer/CustomerView/Page?CustId=' + this.custId;
+            });
       });
     this.mouUrl = environment.losR3Web + "/Mou/Cust/View?MouCustId=" + this.MouCustId;
   }
