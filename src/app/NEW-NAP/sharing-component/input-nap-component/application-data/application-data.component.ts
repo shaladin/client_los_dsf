@@ -24,7 +24,8 @@ export class ApplicationDataComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private toastr:NGXToastrService,
   ) { }
 
   NapAppModelForm = this.fb.group({
@@ -79,6 +80,7 @@ export class ApplicationDataComponent implements OnInit {
     RsvField5: [''],
     MrInstSchemeCode: ["", Validators.required],
     InterestType: ['', Validators.required],
+    InterestTypeDesc: [''],
     FloatingPeriod: ['']
   });
 
@@ -105,13 +107,61 @@ export class ApplicationDataComponent implements OnInit {
     this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeCustType);
     this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeSlsRecom);
     this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeWOP);
-    this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeInstSchm);
     this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeCustNotifyOpt);
     this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeFirstInstType);
-    this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeInterestType);
     this.getPayFregData();
     this.getAppSrcData();
     this.GetCrossInfoData();
+  }
+
+  getInstSchm(){
+    var obj = {
+      ProdOfferingCode: "CF4W_FINAL_001",
+      RefProdCompntCode: AdInsConstant.RefMasterTypeCodeInstSchm,
+      ProdOfferingVersion: "3"
+    };
+    this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
+      (response) => {
+        // console.log(response);   
+        var listCompntValue: Array<string> = response["CompntValue"].split(";");
+
+        var listDDL = new Array;
+        for(var i=0;i<listCompntValue.length;i++){
+          var splitted=listCompntValue[i].split(":");
+          var keyValueObj={
+            Key: splitted[0],
+            Value: splitted[1]
+          }
+          listDDL.push(keyValueObj);
+        }
+        this.applicationDDLitems[AdInsConstant.RefMasterTypeCodeInstSchm]=listDDL;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  getInterestTypeCode(){
+    var obj = {
+      ProdOfferingCode: this.resultResponse.ProdOfferingCode,
+      RefProdCompntCode: AdInsConstant.RefMasterTypeCodeInterestType,
+      ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
+    };
+
+    this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
+      (response) => {
+        // console.log(response);   
+        this.NapAppModelForm.patchValue({
+          InterestType: response["CompntValue"],
+          InterestTypeDesc: response["CompntValueDesc"],
+        });
+        this.ChangeInterestType();
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   GetCrossInfoData(){
@@ -148,7 +198,7 @@ export class ApplicationDataComponent implements OnInit {
 
     this.http.post(url, obj).subscribe(
       (response) => {
-        console.log(response);
+        // console.log(response);
         this.resultResponse = response;
         console.log(this.resultResponse);
         this.NapAppModelForm.patchValue({
@@ -182,8 +232,10 @@ export class ApplicationDataComponent implements OnInit {
           SrvyOrderNo: this.resultResponse.SrvyOrderNo,
           ApvDt: this.resultResponse.ApvDt,
           SalesHeadNo: this.resultResponse.SalesHeadNo,
+          SalesHeadName: this.resultResponse.SalesHeadName,          
           SalesNotes: this.resultResponse.SalesNotes,
           SalesOfficerNo: this.resultResponse.SalesOfficerNo,
+          SalesOfficerName: this.resultResponse.SalesOfficerName,
           CreditAdminNo: this.resultResponse.CreditAdminNo,
           CreditAnalystNo: this.resultResponse.CreditAnalystNo,
           CreditRiskNo: this.resultResponse.CreditRiskNo,
@@ -201,13 +253,12 @@ export class ApplicationDataComponent implements OnInit {
           RsvField5: this.resultResponse.RsvField5,
           MrInstSchemeCode: this.resultResponse.MrInstSchemeCode,
           InterestType: this.resultResponse.InterestType,
-          FloatingPeriod: this.resultResponse.FloatingPeriodCode,
-          SalesOfficerName: this.resultResponse.SalesName,
-
+          FloatingPeriod: this.resultResponse.FloatingPeriodCode
         });
-        console.log(this.NapAppModelForm);
+        // console.log(this.NapAppModelForm);
         this.makeNewLookupCriteria();
-        this.ChangeInterestType();
+        this.getInterestTypeCode();
+        this.getInstSchm();
       },
       (error) => {
         console.log(error);
@@ -262,7 +313,7 @@ export class ApplicationDataComponent implements OnInit {
 
     this.http.post(url, obj).subscribe(
       (response) => {
-        console.log(response);
+        // console.log(response);
         var objTemp = response["ReturnObject"];
         this.applicationDDLitems[code] = objTemp;
       },
@@ -281,7 +332,7 @@ export class ApplicationDataComponent implements OnInit {
       SalesHeadName: ev.SalesHeadName
 
     });
-    console.log(this.NapAppModelForm);
+    // console.log(this.NapAppModelForm);
   }
 
   makeLookUpObj(){
@@ -292,7 +343,7 @@ export class ApplicationDataComponent implements OnInit {
     this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupEmp.json";
-    this.inputLookupObj.nameSelect = this.resultResponse.SalesName;
+    this.inputLookupObj.jsonSelect = this.resultResponse;
     this.inputLookupObj.addCritInput = this.arrAddCrit;
     this.isInputLookupObj = true;
   }
@@ -338,8 +389,8 @@ export class ApplicationDataComponent implements OnInit {
     // console.log(this.NapAppModelForm);  
   }
 
-  PayFreqVal;
-  PayFreqTimeOfYear;
+  PayFreqVal: number = 0;
+  PayFreqTimeOfYear: number = 0;
   ChangeNumOfInstallmentTenor(){
     console.log("Change Num from tenor");
     var temp = this.NapAppModelForm.controls.Tenor.value;
@@ -471,6 +522,7 @@ export class ApplicationDataComponent implements OnInit {
     this.http.post(url, obj).subscribe(
       (response) => {
         console.log(response);
+        this.toastr.successMessage('Save Data');
         this.outputTab.emit();
       },
       (error) => {
@@ -518,9 +570,9 @@ export class ApplicationDataComponent implements OnInit {
 
   DeleteCrossApp(idx){
     if (confirm('Are you sure to delete this record?')) {
-      console.log(idx);
-      console.log(this.resultCrossApp);
-      console.log(this.resultCrossApp[idx]);
+      // console.log(idx);
+      // console.log(this.resultCrossApp);
+      // console.log(this.resultCrossApp[idx]);
       if(this.resultCrossApp[idx].AppCrossId!=null){
         var url = AdInsConstant.DeleteAppCross;
         var obj = new NapAppCrossObj();

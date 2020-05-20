@@ -74,7 +74,7 @@ export class CustShareholderComponent implements OnInit {
     IdExpiredDt: [''],
     MobilePhnNo: ['', Validators.maxLength(50)],
     Email: ['', Validators.maxLength(50)],
-    SharePrcnt: [0, [Validators.min(0),Validators.max(100)]],
+    SharePrcnt: [0, [Validators.min(0),Validators.max(100), Validators.pattern("^[0-9]+$")]],
     MrJobPositionCode: ['', Validators.maxLength(50)],
     IsSigner: [false],
     MrCompanyTypeCode: ['', Validators.maxLength(50)],
@@ -90,7 +90,19 @@ export class CustShareholderComponent implements OnInit {
 
      }
 
+  UserAccess: any;
+  MaxDate: Date;
+  Max17YO: Date;
   ngOnInit() {
+    // console.log("User Access");
+    // console.log(JSON.parse(localStorage.getItem("UserAccess")));
+    this.UserAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    this.MaxDate = new Date(this.UserAccess.BusinessDt);
+    this.Max17YO = new Date(this.UserAccess.BusinessDt);
+    this.Max17YO.setFullYear(this.MaxDate.getFullYear()-17);
+    // console.log(this.MaxDate);
+    // console.log(this.Max17YO);
+
     this.initLookup();
     this.bindAllRefMasterObj();
   }
@@ -100,7 +112,7 @@ export class CustShareholderComponent implements OnInit {
     if(this.listShareholder == undefined){
       this.listShareholder = new Array<AppCustCompanyMgmntShrholderObj>();
     }
-    this.setAppCustCompanyMgmntShrholder();
+    if(this.setAppCustCompanyMgmntShrholder() == false) return;
     if(this.mode == "add"){
       if(this.checkSharePrcnt(-1) == false){
         this.toastr.errorMessage("Total Share Percentage cannot be more than 100.");
@@ -378,6 +390,18 @@ export class CustShareholderComponent implements OnInit {
       this.appCustCompanyMgmntShrholderObj.IdNo = this.CustShareholderForm.controls.IdNo.value;
       this.appCustCompanyMgmntShrholderObj.TaxIdNo = this.CustShareholderForm.controls.TaxIdNo.value;
       this.appCustCompanyMgmntShrholderObj.IdExpiredDt = this.CustShareholderForm.controls.IdExpiredDt.value;
+      let d1 = new Date(this.appCustCompanyMgmntShrholderObj.IdExpiredDt);
+      let d2 = new Date(this.MaxDate);
+      let d3 = new Date(this.appCustCompanyMgmntShrholderObj.BirthDt);
+      let d4 = new Date(this.Max17YO);
+      if(d1>d2){
+        this.toastr.errorMessage("Id Expired Date can not be more than " + this.MaxDate);
+        return false;
+      }
+      if(d3>d4){
+        this.toastr.errorMessage("Birth Date can not be more than " + this.Max17YO);
+        return false;
+      }
       this.appCustCompanyMgmntShrholderObj.MobilePhnNo = this.CustShareholderForm.controls.MobilePhnNo.value;
       this.appCustCompanyMgmntShrholderObj.Email = this.CustShareholderForm.controls.Email.value;
       this.appCustCompanyMgmntShrholderObj.SharePrcnt = this.CustShareholderForm.controls.SharePrcnt.value;
@@ -397,6 +421,8 @@ export class CustShareholderComponent implements OnInit {
       this.appCustCompanyMgmntShrholderObj.TaxIdNo = this.CustShareholderForm.controls.TaxIdNo.value;
       this.appCustCompanyMgmntShrholderObj.SharePrcnt = this.CustShareholderForm.controls.SharePrcnt.value;
     }
+
+    return true;
   }
 
   GetIndustryType(event){
@@ -533,7 +559,13 @@ export class CustShareholderComponent implements OnInit {
     this.modalService.dismissAll();
   }
 
-
+  clearExpDt(){
+    if(this.CustShareholderForm.value.MrIdTypeCode == "EKTP"){
+      this.CustShareholderForm.patchValue({
+        IdExpiredDt: ''
+      });
+    }
+  }
 
 
 
