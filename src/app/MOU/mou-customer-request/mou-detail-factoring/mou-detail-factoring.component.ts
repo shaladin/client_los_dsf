@@ -10,8 +10,7 @@ import { MouCustListedCustFctrComponent } from '../mou-cust-listed-cust-fctr/mou
 
 @Component({
   selector: 'app-mou-detail-factoring',
-  templateUrl: './mou-detail-factoring.component.html',
-  styleUrls: ['./mou-detail-factoring.component.scss']
+  templateUrl: './mou-detail-factoring.component.html'
 })
 export class MouDetailFactoringComponent implements OnInit {
   @Input() MouCustId: number;
