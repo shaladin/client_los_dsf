@@ -24,7 +24,7 @@ export class PreGoLivePagingComponent implements OnInit {
     var critInput = new CriteriaObj();
     critInput.propName = "app.LOB_CODE";
     critInput.restriction = AdInsConstant.RestrictionEq;
-    critInput.value = AdInsConstant.LobCodeRFN4W;
+    critInput.value = AdInsConstant.LobCodeCFRFN;
     this.inputPagingObj.addCritInput.push(critInput);
   }
 }
