@@ -25,7 +25,7 @@
               <div class="class=form-group row adins-required">
                 <label class="col-md-2 adInsLabel">Id Type </label>
                 <div class="col-md-4">
-                  <select class="form-control adInsInput" style="width: auto" formControlName="MrIdTypeCode"
+                  <select class="form-control adInsInput" style="width: auto" formControlName="MrIdTypeCode" (change)=clearExpDt()
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && PersonalForm.controls.MrIdTypeCode.invalid }">
                     <option *ngFor="let it of MrIdTypeCode" [value]="it.MasterCode">
                       {{it.Descr}}</option>
@@ -63,9 +63,11 @@
               <div class="class=form-group row adins-required">
                 <label class="col-md-2 adInsLabel">ID Expired Date </label>
                 <div class="col-md-4">
-                  <input type="date" class="form-control adInsInput width-75-per" formControlName="IdExpDt"
+                  <input type="date" class="form-control adInsInput width-75-per" formControlName="IdExpDt" *ngIf="PersonalForm.controls.MrIdTypeCode.value == 'EKTP'" readonly 
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && PersonalForm.controls.IdExpDt.invalid }">
-                  <lib-uc-show-errors  [control]="PersonalForm.controls.IdExpDt" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                  <input type="date" class="form-control adInsInput width-75-per" formControlName="IdExpDt" *ngIf="PersonalForm.controls.MrIdTypeCode.value != 'EKTP'" max="{{MaxDate | date:'yyyy-MM-dd'}}"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && PersonalForm.controls.IdExpDt.invalid }">
+                  <lib-uc-show-errors [control]="PersonalForm.controls.IdExpDt" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                 </div>
                 <label class="col-md-2 adInsLabel">Nationality </label>
                 <div class="col-md-4">
@@ -88,7 +90,7 @@
                       </lib-uc-show-errors >
                     </div>
                     <div class="col-md-6">
-                      <input type="date" class="form-control adInsInput width-100-per" formControlName="BirthDt"
+                      <input type="date" class="form-control adInsInput width-100-per" formControlName="BirthDt" max="{{Max17YO | date:'yyyy-MM-dd'}}"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && PersonalForm.controls.BirthDt.invalid}">
                       <lib-uc-show-errors  [control]="PersonalForm.controls.BirthDt" [submit]="enjiForm.submitted">
                       </lib-uc-show-errors >
