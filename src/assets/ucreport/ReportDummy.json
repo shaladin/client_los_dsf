@@ -6,8 +6,8 @@
     {
       "type": "dropdown",
       "label": "Office Name",
-      "name": "RefOfficeId",
-      "datatype": "numeric",
+      "name": "CrtOfficeCode",
+      "datatype": "text",
       "isFromURL": true,
       "isSelectOne": false,
       "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefOffice/GetListKvpActiveRefOfficeForPaging",
