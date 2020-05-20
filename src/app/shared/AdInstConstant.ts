@@ -226,6 +226,8 @@ export class AdInsConstant {
 
   //INS PAID BY
   public static InsPaidByCustomer = "CU";
+  public static InsPaidByAtCost = "CO";
+
   //GENERAL SETTING
   public static GetBusinessDt = "/GeneralSetting/GetBusinessDate";
   public static AddGeneralSetting = "/GeneralSetting/AddGeneralSetting";
