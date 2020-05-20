@@ -88,16 +88,16 @@ export class DocSignerDetailComponent implements OnInit {
   }
 
   getLookUpShareholder1(event) {
-    var addCrit: CriteriaObj = new CriteriaObj();
-    addCrit.DataType = "text";
-    addCrit.propName = "CC.CUST_COMPANY_MGMNT_SHRHOLDER_ID";
-    addCrit.restriction = AdInsConstant.RestrictionNotIn;
-    addCrit.listValue = [event.ShareholderId];
-    this.custShareholderLookUpObj2.addCritInput = [];
+    // var addCrit: CriteriaObj = new CriteriaObj();
+    // addCrit.DataType = "text";
+    // addCrit.propName = "CC.CUST_COMPANY_MGMNT_SHRHOLDER_ID";
+    // addCrit.restriction = AdInsConstant.RestrictionNotIn;
+    // addCrit.listValue = [event.ShareholderId];
+    // this.custShareholderLookUpObj2.addCritInput = [];
 
-    this.custShareholderLookUpObj2.addCritInput.push(this.custCompanyCrit);
-    this.custShareholderLookUpObj2.addCritInput.push(addCrit);
-    this.ucLookupShareHolder2.setAddCritInput();
+    // this.custShareholderLookUpObj2.addCritInput.push(this.custCompanyCrit);
+    // this.custShareholderLookUpObj2.addCritInput.push(addCrit);
+    // this.ucLookupShareHolder2.setAddCritInput();
 
     this.tempShareholder1 = event.ShareholderName;
     this.tempShareholderPosition1 = event.Descr;
@@ -107,16 +107,16 @@ export class DocSignerDetailComponent implements OnInit {
   }
 
   getLookUpShareholder2(event) {
-    var addCrit: CriteriaObj = new CriteriaObj();
-    addCrit.DataType = "text";
-    addCrit.propName = "CC.CUST_COMPANY_MGMNT_SHRHOLDER_ID";
-    addCrit.restriction = AdInsConstant.RestrictionNotIn;
-    addCrit.listValue = [event.ShareholderId];
-    this.custShareholderLookUpObj1.addCritInput = [];
+    // var addCrit: CriteriaObj = new CriteriaObj();
+    // addCrit.DataType = "text";
+    // addCrit.propName = "CC.CUST_COMPANY_MGMNT_SHRHOLDER_ID";
+    // addCrit.restriction = AdInsConstant.RestrictionNotIn;
+    // addCrit.listValue = [event.ShareholderId];
+    // this.custShareholderLookUpObj1.addCritInput = [];
 
-    this.custShareholderLookUpObj1.addCritInput.push(this.custCompanyCrit);
-    this.custShareholderLookUpObj1.addCritInput.push(addCrit);
-    this.ucLookupShareHolder1.setAddCritInput();
+    // this.custShareholderLookUpObj1.addCritInput.push(this.custCompanyCrit);
+    // this.custShareholderLookUpObj1.addCritInput.push(addCrit);
+    // this.ucLookupShareHolder1.setAddCritInput();
 
     this.tempShareholder2 = event.ShareholderName;
     this.tempShareholderPosition2 = event.Descr;
