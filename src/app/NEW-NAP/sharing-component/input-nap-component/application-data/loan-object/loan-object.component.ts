@@ -18,11 +18,11 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 })
 export class LoanObjectComponent implements OnInit {
 
-  @Input() AppId: any;
-  @Input() mode: any;
+  @Input() AppId: number;
+  @Input() mode: string;
   modal: any;
   loanObjectInputLookupObj: any;
-  AppLoanPurposeId: any;
+  AppLoanPurposeId: number;
   supplierInputLookupObj: any;
 
   MainInfoForm = this.fb.group({
