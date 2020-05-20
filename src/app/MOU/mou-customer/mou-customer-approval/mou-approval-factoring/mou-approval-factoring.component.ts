@@ -51,6 +51,6 @@ export class MouApprovalFactoringComponent implements OnInit {
   onApprovalSubmited(event)
   {
     this.toastr.successMessage("Success");
-    this.router.navigate(["/Product/HOApproval"]);
+    this.router.navigate(["/Mou/Cust/Approval"]);
   }
 }
