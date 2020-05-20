@@ -78,28 +78,12 @@
           <lib-uc-show-errors [control]="AddCollForm.controls.AssetTypeCode" [submit]="enjiForm.submitted">
           </lib-uc-show-errors>
         </div>
-        <label class="col-md-1"></label>
-        <label class="col-md-2 adins-required-label" translate>Serial No. 1</label>
-        <div class="col-md-2">
-          <input type="text" class="form-control" formControlName="SerialNo1"
-            [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.SerialNo1.invalid }">
-          <lib-uc-show-errors [control]="AddCollForm.controls.SerialNo1" [submit]="enjiForm.submitted">
-          </lib-uc-show-errors>
-        </div>
       </div>
       <div class="form-group row">
         <label class="col-md-2 adins-required-label" for="FullAssetName" translate>Collateral Name </label>
         <div class="col-md-3">
           <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]='AddCollForm' [enjiForm]='enjiForm'
             [identifier]="'FullAssetName'" #LookupCollateral (lookup)="getLookupCollateralTypeResponse($event)"></lib-uclookupgeneric>
-        </div>
-        <label class="col-md-1"></label>
-        <label class="col-md-2 adins-required-label" translate>Serial No. 2</label>
-        <div class="col-md-2">
-          <input type="text" class="form-control" formControlName="SerialNo2"
-            [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.SerialNo2.invalid }">
-          <lib-uc-show-errors [control]="AddCollForm.controls.SerialNo2" [submit]="enjiForm.submitted">
-          </lib-uc-show-errors>
         </div>
       </div>
       <div class="form-group row">
@@ -110,28 +94,12 @@
           <lib-uc-show-errors [control]="AddCollForm.controls.CollateralValueAmt" [submit]="enjiForm.submitted">
           </lib-uc-show-errors>
         </div>
-        <label class="col-md-1"></label>
-        <label class="col-md-2 adins-required-label" translate>Serial No. 3</label>
-        <div class="col-md-2">
-          <input type="text" class="form-control" formControlName="SerialNo3"
-            [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.SerialNo3.invalid }">
-          <lib-uc-show-errors [control]="AddCollForm.controls.SerialNo3" [submit]="enjiForm.submitted">
-          </lib-uc-show-errors>
-        </div>
       </div>
       <div class="form-group row">
         <label class="col-md-2 adins-label" translate>Notes</label>
         <div class="col-md-3">
           <textarea type="textarea" row="5" class="form-control" formControlName="Notes"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.Notes.invalid}"></textarea>
-        </div>
-        <label class="col-md-1"></label>
-        <label class="col-md-2 adins-required-label" translate>Serial No. 4</label>
-        <div class="col-md-2">
-          <input type="text" class="form-control" formControlName="SerialNo4"
-            [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.SerialNo4.invalid }">
-          <lib-uc-show-errors [control]="AddCollForm.controls.SerialNo4" [submit]="enjiForm.submitted">
-          </lib-uc-show-errors>
         </div>
       </div>
     </div>
@@ -311,16 +279,16 @@
             </tr>
           </tbody>
         </table>
-        <div class="card-header">
-          <div class="text-right">
-            <button type="button" class="btn btn-raised btn-warning mr-1" (click)="back()">
-              <i class="fa fa-arrow-circle-left"></i> Back
-            </button>
-            <button type="submit" (click)="SaveExistingCollateral()" class="btn btn-raised btn-primary" translate>
-              <i class="fa fa-check"></i> Save
-            </button>
-          </div>
-        </div>
+      </div>
+    </div>
+    <div class="card-header">
+      <div class="text-right">
+        <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()">
+          <i class="fa fa-arrow-circle-left"></i> Back
+        </button>
+        <button type="submit" (click)="SaveExistingCollateral()" class="btn btn-raised btn-primary" translate>
+          <i class="fa fa-check"></i> Save
+        </button>
       </div>
     </div>
   </form>
