@@ -903,7 +903,7 @@ export class AdInsConstant {
   public static CalculateInsurance = environment.losUrl + "/AppIns/CalculateInsurance";
 
   //AGREEMENT DOC
-  public static GetListAgrmntDocByAgrmntId = "http://localhost:5001" + "/AgrmntDoc/GetListAgrmntDocByAgrmntId"
+  public static GetListAgrmntDocByAgrmntId = environment.losUrl + "/AgrmntDoc/GetListAgrmntDocByAgrmntId"
   public static GetAgrmntDocDataByAgrmntDocId = environment.losUrl + "/AgrmntDoc/GetAgrmntDocDataByAgrmntDocId"
   public static EditAgrmntDoc = environment.losUrl + "/AgrmntDoc/EditAgrmntDoc"
 
