@@ -44,6 +44,7 @@ export class MouRequestAddcollComponent implements OnInit {
   arrAddCrit: Array<CriteriaObj>;
   viewObj: string;
   Data = [];
+  listAssetAndSerialNo: any;
 
   mouCustCollateralObj: MouCustCollateralObj;
   mouCustCollateralRegistrationObj: MouCustCollateralRegistrationObj;
@@ -352,11 +353,11 @@ export class MouRequestAddcollComponent implements OnInit {
     OwnerIdNo: ['', [Validators.required]],
     MrIdType: ['', [Validators.required]],
     Notes: [''],
-    SerialNo1: ['', [Validators.required]],
-    SerialNo2: ['', [Validators.required]],
-    SerialNo3: ['', [Validators.required]],
-    SerialNo4: ['', [Validators.required]],
-    SerialNo5: [''],
+    // SerialNo1: ['', [Validators.required]],
+    // SerialNo2: ['', [Validators.required]],
+    // SerialNo3: ['', [Validators.required]],
+    // SerialNo4: ['', [Validators.required]],
+    // SerialNo5: [''],
     RowVersionCollateral: [''],
     RowVersionCollateralRegistration: ['']
   })

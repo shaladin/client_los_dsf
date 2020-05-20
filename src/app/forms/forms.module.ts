@@ -22,6 +22,8 @@ import { InputGroupsComponent } from './elements/input-groups/input-groups.compo
 import { InputGridComponent } from './elements/input-grid/input-grid.component';
 import { ArchwizardComponent } from './archwizard/archwizard.component';
 import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
+import { ReportComponent } from './report/report.component';
+import { UcreportModule } from "@adins/ucreport";
 
 @NgModule({
     imports: [
@@ -34,7 +36,8 @@ import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
         CustomFormsModule,
         MatchHeightModule,
         NgbModule,
-        SharingComponentModule
+        SharingComponentModule,
+        UcreportModule
     ],
     declarations: [
         ValidationFormsComponent,
@@ -49,6 +52,7 @@ import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
         InputGroupsComponent,
         InputGridComponent,
         ArchwizardComponent,
+        ReportComponent,
 
     ]
 
