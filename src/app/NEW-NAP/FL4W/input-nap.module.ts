@@ -72,7 +72,7 @@ import { ViewAgrmntDocumentComponent } from "../sharing-component/view-agrmnt-co
     ListDataCommissionComponent,
     ViewAgrmntComponent,  
     AgrmntLifeInsuranceComponent,
-    // ViewCommissionComponent,
+    ViewCommissionComponent,
     // ListDataCommissionComponent,
     ViewPurchaseOrderComponent,
     ViewDeliveryOrderComponent,
