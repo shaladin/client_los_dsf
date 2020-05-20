@@ -11,8 +11,7 @@ import { MouCustAssetComponent } from './mou-cust-asset/mou-cust-asset.component
 
 @Component({
   selector: 'app-mou-detail-general',
-  templateUrl: './mou-detail-general.component.html',
-  styleUrls: ['./mou-detail-general.component.scss']
+  templateUrl: './mou-detail-general.component.html'
 })
 export class MouDetailGeneralComponent implements OnInit {
   @Input() MouCustId: number;
