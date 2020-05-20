@@ -118,35 +118,35 @@
               </app-customer-data>
             </div>
             <div id="guarantor-tab" class="content" role="tabpanel" aria-labelledby="guarantor-tab-trigger">
-              <!-- <app-guarantor-paging *ngIf="AppStepIndex == 2" [AppId]="appId" (outputTab)="NextStep('REF')">
-              </app-guarantor-paging> -->
+              <app-guarantor-paging *ngIf="AppStepIndex == 2" [AppId]="appId" (outputTab)="NextStep('REF')">
+              </app-guarantor-paging>
             </div>
             <div id="referantor-tab" class="content" role="tabpanel" aria-labelledby="referantor-tab-trigger">
-              <!-- <app-referantor-data *ngIf="AppStepIndex == 3" [appId]="appId" (outputTab)="NextStep('APP')">
-              </app-referantor-data> -->
+              <app-referantor-data *ngIf="AppStepIndex == 3" [appId]="appId" (outputTab)="NextStep('APP')">
+              </app-referantor-data>
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
-              <!-- <app-application-data-refinancing *ngIf="AppStepIndex == 4" [AppId]="appId"
-                (outputTab)="NextStep('ASSET')"></app-application-data-refinancing> -->
+              <app-application-data-refinancing *ngIf="AppStepIndex == 4" [AppId]="appId"
+                (outputTab)="NextStep('ASSET')"></app-application-data-refinancing>
             </div>
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
-              <!-- <app-collateral-fctr *ngIf="AppStepIndex == 5" [AppId]="appId" (outputTab)="NextStep('INS')"></app-collateral-fctr> -->
+              <app-collateral-fctr *ngIf="AppStepIndex == 5" [AppId]="appId" (outputTab)="NextStep('INS')"></app-collateral-fctr>
             </div>
             <div id="insurance-tab" class="content" role="tabpanel" aria-labelledby="insurance-tab-trigger">
-              <!-- <app-insurance-data *ngIf="!IsMultiAsset && AppStepIndex == 6" [appId]="appId"
+              <app-insurance-data *ngIf="!IsMultiAsset && AppStepIndex == 6" [appId]="appId"
                 (outputTab)="NextStep('LFI')"></app-insurance-data>
               <app-insurance-multi-asset-data *ngIf="IsMultiAsset && AppStepIndex == 6" [appId]="appId"
-                (outputTab)="NextStep('LFI')"></app-insurance-multi-asset-data> -->
+                (outputTab)="NextStep('LFI')"></app-insurance-multi-asset-data>
             </div>
             <div id="lifeInsurance-tab" class="content" role="tabpanel" aria-labelledby="lifeInsurance-tab-trigger">
-              <!-- <app-life-insurance-data *ngIf="AppStepIndex == 7" [AppId]="appId" (outputTab)="NextStep('FIN')">
-              </app-life-insurance-data> -->
+              <app-life-insurance-data *ngIf="AppStepIndex == 7" [AppId]="appId" (outputTab)="NextStep('FIN')">
+              </app-life-insurance-data>
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
               Financial
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
-              <!-- <app-tc-data *ngIf="AppStepIndex == 9" [AppId]="appId" (outputTab)="NextStep('TC')"></app-tc-data> -->
+              <app-tc-data *ngIf="AppStepIndex == 9" [AppId]="appId" (outputTab)="NextStep('TC')"></app-tc-data>
             </div>
           </div>
         </div>
