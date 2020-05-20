@@ -270,6 +270,7 @@ copyToLocationAddr() {
     this.adminHeadObj.MrVendorEmpPositionCode = AdInsConstant.ADMIN_HEAD_JOB_CODE;
     this.http.post(this.getListVendorEmp, this.adminHeadObj).subscribe(
     (response) => {
+        console.log("admin head list : " + JSON.stringify(response));
         this.listAdminHeadObj = response["ReturnObject"];
         this.AssetDataForm.patchValue({ 
           AdminHeadNo: response['ReturnObject'][0]['Key'],
@@ -465,6 +466,18 @@ copyToLocationAddr() {
               UserRelationship: this.returnAppCollateralRegistObj.MrUserRelationshipCode
             });
 
+            if(this.returnAppCollateralRegistObj.MrUserRelationshipCode == "SELF"){
+              this.AssetDataForm.patchValue({
+                SelfUsage: true
+              });
+              this.AssetDataForm.controls.Username.clearValidators();
+              this.AssetDataForm.controls.Username.updateValueAndValidity();
+              this.AssetDataForm.controls.UserRelationship.clearValidators();
+              this.AssetDataForm.controls.UserRelationship.updateValueAndValidity();
+              this.AssetDataForm.controls["Username"].disable();
+              this.AssetDataForm.controls["UserRelationship"].disable();
+            }
+
             this.locationAddrObj = new AppCustAddrObj();
             this.locationAddrObj.Addr = this.returnAppCollateralRegistObj.LocationAddr;
             this.locationAddrObj.AreaCode3 = this.returnAppCollateralRegistObj.LocationAreaCode3;
@@ -559,19 +572,23 @@ copyToLocationAddr() {
   }
 
   setSupplierInfo(){
-    // this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpName = this.AssetDataForm.controls["AdminHeadName"].value;
-    // this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpNo = this.AssetDataForm.controls["AdminHeadNo"].value;
-    this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpName = "DUMMY";
-    this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpNo = "12345678";
-    this.allAssetDataObj.AppAssetSupplEmpAdminObj.MrSupplEmpPositionCode = AdInsConstant.ADMIN_HEAD_JOB_CODE;
+    if(this.AssetDataForm.controls["AdminHeadName"].value == "undefined" || this.AssetDataForm.controls["AdminHeadName"].value == "")
+    {
+      this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpName = "-";
+      this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpNo = "-";
+      this.allAssetDataObj.AppAssetSupplEmpAdminObj.MrSupplEmpPositionCode = "-";
+    }
+    else{
+      this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpName = this.AssetDataForm.controls["AdminHeadName"].value;
+      this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpNo = this.AssetDataForm.controls["AdminHeadNo"].value;
+      this.allAssetDataObj.AppAssetSupplEmpAdminObj.MrSupplEmpPositionCode = AdInsConstant.ADMIN_HEAD_JOB_CODE;
+    }
 
-    // this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpName = this.AssetDataForm.controls["SalesPersonName"].value;
-    this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpName = "DUMMY";
-    // this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpNo = this.AssetDataForm.controls["SalesPersonNo"].value;
-    this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpNo = "12345678";
+    this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpName = this.AssetDataForm.controls["SalesPersonName"].value;
+    this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpNo = this.AssetDataForm.controls["SalesPersonNo"].value;
     this.allAssetDataObj.AppAssetSupplEmpSalesObj.MrSupplEmpPositionCode = AdInsConstant.SALES_JOB_CODE;
 
-    if(this.AssetDataForm.controls["BranchManagerName"].value == "")
+    if(this.AssetDataForm.controls["BranchManagerName"].value == "undefined" || this.AssetDataForm.controls["BranchManagerName"].value == "")
     {
       this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpName = "-";
       this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpNo = "-";
@@ -634,6 +651,8 @@ copyToLocationAddr() {
   }
 
   setAssetUser(){
+    console.log("Username : " + this.AssetDataForm.controls["Username"].value);
+    console.log("UserRelationship : " + this.AssetDataForm.controls["UserRelationship"].value);
     this.allAssetDataObj.AppCollateralRegistrationObj.UserName = this.AssetDataForm.controls["Username"].value;
     this.allAssetDataObj.AppCollateralRegistrationObj.MrUserRelationshipCode = this.AssetDataForm.controls["UserRelationship"].value;
     this.allAssetDataObj.AppCollateralRegistrationObj.OwnerName = this.AssetDataForm.controls["OwnerName"].value;

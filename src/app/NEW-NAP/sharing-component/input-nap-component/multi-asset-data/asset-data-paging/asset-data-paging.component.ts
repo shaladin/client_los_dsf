@@ -103,14 +103,16 @@ eventColl(ev){
 }
 
   ngOnInit() {
+    console.log("AppId: " + this.AppId);
     this.gridAssetDataObj = new InputGridObj();
     this.gridAssetDataObj.pagingJson = "./assets/ucgridview/gridAssetData.json";
     
     this.appAssetObj = new AppAssetObj();
-    this.appAssetObj.AppAssetId = "-";
+    // this.appAssetObj.AppAssetId = "-";
     this.appAssetObj.AppId = this.AppId;
     this.http.post(this.getListAppAssetData, this.appAssetObj).subscribe(
       (response) => {
+          console.log("Response Asset : " + JSON.stringify(response));
           this.listAppAssetObj = response["ReturnObject"];
 
           var DetailForGridAsset ={
@@ -130,7 +132,7 @@ eventColl(ev){
     this.gridAppCollateralObj.deleteUrl = AdInsConstant.DeleteAppCollateral;
     
     this.appCollateralObj = new AppCollateralObj();
-    this.appCollateralObj.AppCollateralId = "-";
+    // this.appCollateralObj.AppCollateralId = "-";
     this.appCollateralObj.AppId = this.AppId;
     this.http.post(this.getListAppCollateral, this.appCollateralObj).subscribe(
       (response) => {

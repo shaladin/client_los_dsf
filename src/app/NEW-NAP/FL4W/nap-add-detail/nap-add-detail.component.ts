@@ -108,23 +108,24 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   CheckMultiAsset() {
-    var appObj = { AppId: this.appId }
-    this.http.post(AdInsConstant.GetAppAssetListByAppId, appObj).subscribe(
-      (response) => {
-        this.ListAsset = response['ReturnObject'];
-        if (this.ListAsset != undefined && this.ListAsset != null) {
-          if (this.ListAsset.length > 1)
-            this.IsMultiAsset = true;
-          else
-            this.IsMultiAsset = false;
-        }
-        else
-          this.IsMultiAsset = false;
-      },
-      (error) => {
-        console.log(error);
-      }
-    )
+    this.IsMultiAsset = true;
+    // var appObj = { AppId: this.appId }
+    // this.http.post(AdInsConstant.GetAppAssetListByAppId, appObj).subscribe(
+    //   (response) => {
+    //     this.ListAsset = response['ReturnObject'];
+    //     if (this.ListAsset != undefined && this.ListAsset != null) {
+    //       if (this.ListAsset.length > 1)
+    //         this.IsMultiAsset = true;
+    //       else
+    //         this.IsMultiAsset = false;
+    //     }
+    //     else
+    //       this.IsMultiAsset = false;
+    //   },
+    //   (error) => {
+    //     console.log(error);
+    //   }
+    // )
   }
 
   ChangeTab(AppStep) {

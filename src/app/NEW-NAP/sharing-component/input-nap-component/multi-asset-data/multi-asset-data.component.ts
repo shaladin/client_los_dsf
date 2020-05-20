@@ -18,6 +18,7 @@ export class MultiAssetDataComponent implements OnInit {
   }
 
   ngOnInit() { 
+    console.log("Init Multi Asset");
     this.mode = "paging";
   }
 
