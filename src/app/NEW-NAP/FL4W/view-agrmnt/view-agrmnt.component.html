@@ -3,69 +3,68 @@
     <div class="card-body">
       <div class="px-3">
         <div class="form-body">
-          <h4 class="form-section card-title" translate>View APPLICATION</h4>
+          <h4 class="form-section card-title" translate>VIEW APPLICATION</h4>
          <lib-ucviewgeneric [viewInput]="viewAgrMainInfo" ></lib-ucviewgeneric>
           <mat-tab-group>
-            <mat-tab label="Customer">
+            <mat-tab label="CUSTOMER">
               <ng-template matTabContent> 
+                <app-view-app-cust-data-personal [appId]="AppId" *ngIf="MrCustTypeCode=='PERSONAL'"></app-view-app-cust-data-personal>
+                <app-view-app-cust-data-company [appId]="AppId" *ngIf="MrCustTypeCode=='COMPANY'"></app-view-app-cust-data-company>
               </ng-template>
             </mat-tab>
-            <mat-tab label="Asset">
+            <mat-tab label="ASSET">
               <ng-template matTabContent>
-                
+                <app-app-asset-data [AppId]="AppId"></app-app-asset-data>
               </ng-template>
             </mat-tab>
-            <mat-tab label="Insurance">
+            <mat-tab label="INSURANCE">
               <ng-template matTabContent>
-                 
+                <app-app-insurance [AppId]="AppId"></app-app-insurance>
               </ng-template>
             </mat-tab>
-            <mat-tab label="Life Insurance">
+            <mat-tab label="LIFE INSURANCE">
               <ng-template matTabContent>
                 <agrmnt-life-insurance [agrmntId]="AgrmntId" ></agrmnt-life-insurance>
               </ng-template>
             </mat-tab>
-            <mat-tab label="Financial">
+            <mat-tab label="FINACIAL">
               <ng-template matTabContent> 
                 <app-agrmnt-financial [AgrmntId]="AgrmntId"></app-agrmnt-financial>
               </ng-template>
             </mat-tab>
             <mat-tab label="TC">
               <ng-template matTabContent>
-                
+                <app-app-tc [AppId]="AppId"></app-app-tc>
               </ng-template>
             </mat-tab>
-            <mat-tab label="Commission">
+            <mat-tab label="COMMISSION">
               <ng-template matTabContent>
-                <!-- <app-view-commission-agrmnt [agrmntId]="AgrmntId" ></app-view-commission-agrmnt> -->
+                <app-view-commission-agrmnt [agrmntId]="AgrmntId" ></app-view-commission-agrmnt>
               </ng-template>
             </mat-tab>
-            <mat-tab label="Reserved Fund">
+            <mat-tab label="RESERVED FUND">
               <ng-template matTabContent> 
                 <agrmnt-view-reserved-fund [agrmntId]="AgrmntId" ></agrmnt-view-reserved-fund>
               </ng-template>
             </mat-tab>
-            <mat-tab label="Purchase Order">
+            <mat-tab label="PURCHASE ORDER">
               <ng-template matTabContent>
                 <app-view-purchase-order [agrmntId]="AgrmntId" ></app-view-purchase-order> 
               </ng-template>
             </mat-tab>  
-            <mat-tab label="Delivery Order">
+            <mat-tab label="DELIVERY ORDER">
               <ng-template matTabContent>
-                <agrmnt-view-delivery-order [agrmntId]="AgrmntId" ></agrmnt-view-delivery-order>
-  
+                <agrmnt-view-delivery-order [agrmntId]="AgrmntId" ></agrmnt-view-delivery-order> 
               </ng-template>
             </mat-tab>
-            <mat-tab label="Document">
+            <mat-tab label="DOCUMENT">
               <ng-template matTabContent>
-                <agrmnt-view-document [agrmntId]="AgrmntId" ></agrmnt-view-document>
-                
+                <agrmnt-view-document [agrmntId]="AgrmntId" ></agrmnt-view-document> 
               </ng-template>
             </mat-tab>
-            <mat-tab label="Summary">
+            <mat-tab label="SUMMARY">
               <ng-template matTabContent>
-                <agrmnt-view-summary [agrmntId]="AgrmntId" ></agrmnt-view-summary>
-                
+                <agrmnt-view-summary [agrmntId]="AgrmntId" ></agrmnt-view-summary> 
               </ng-template>
             </mat-tab> 
           </mat-tab-group>

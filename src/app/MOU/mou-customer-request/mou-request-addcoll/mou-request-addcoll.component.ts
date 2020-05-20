@@ -224,6 +224,7 @@ export class MouRequestAddcollComponent implements OnInit {
   }
 
   getResult(event) {
+    console.log(event);
     this.resultData = event.response;
     this.totalData = event.response.Count;
     this.UCGridFooter.pageNow = event.pageNow;
@@ -346,7 +347,7 @@ export class MouRequestAddcollComponent implements OnInit {
     MouCustCollateralRegistrationId: [''],
     CopyFromLegal: [''],
     AssetTypeCode: ['', [Validators.required]],
-    CollateralValueAmt: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
+    CollateralValueAmt: [0, [Validators.required]],
     FullAssetCode: [''],
     OwnerName: ['', [Validators.required]],
     OwnerRelationship: ['', [Validators.required]],
@@ -358,6 +359,13 @@ export class MouRequestAddcollComponent implements OnInit {
     // SerialNo3: ['', [Validators.required]],
     // SerialNo4: ['', [Validators.required]],
     // SerialNo5: [''],
+
+    SerialNo1: [''],
+    SerialNo2: [''],
+    SerialNo3: [''],
+    SerialNo4: [''],
+    SerialNo5: [''],
+    
     RowVersionCollateral: [''],
     RowVersionCollateralRegistration: ['']
   })
@@ -437,10 +445,16 @@ export class MouRequestAddcollComponent implements OnInit {
     this.mouCustCollateralObj.MrCollateralConditionCode = "NEW";
     this.mouCustCollateralObj.MrCollateralUsageCode = "COMMERCIAL";
     this.mouCustCollateralObj.CollateralStat = "NEW";
-    this.mouCustCollateralObj.SerialNo1 = this.AddCollForm.controls.SerialNo1.value;
-    this.mouCustCollateralObj.SerialNo2 = this.AddCollForm.controls.SerialNo2.value;
-    this.mouCustCollateralObj.SerialNo3 = this.AddCollForm.controls.SerialNo3.value;
-    this.mouCustCollateralObj.SerialNo4 = this.AddCollForm.controls.SerialNo4.value;
+    // this.mouCustCollateralObj.SerialNo1 = this.AddCollForm.controls.SerialNo1.value;
+    // this.mouCustCollateralObj.SerialNo2 = this.AddCollForm.controls.SerialNo2.value;
+    // this.mouCustCollateralObj.SerialNo3 = this.AddCollForm.controls.SerialNo3.value;
+    // this.mouCustCollateralObj.SerialNo4 = this.AddCollForm.controls.SerialNo4.value;
+    // this.mouCustCollateralObj.SerialNo5 = this.AddCollForm.controls.SerialNo5.value;
+    this.mouCustCollateralObj.SerialNo1 = '1'
+    this.mouCustCollateralObj.SerialNo2 = '2'
+    this.mouCustCollateralObj.SerialNo3 = '3'
+    this.mouCustCollateralObj.SerialNo4 = '4'
+    this.mouCustCollateralObj.SerialNo5 = '5'
     this.mouCustCollateralObj.CollateralValueAmt = this.AddCollForm.controls.CollateralValueAmt.value;
     this.mouCustCollateralObj.CollateralNotes = this.AddCollForm.controls.Notes.value;
 
