@@ -16,7 +16,6 @@ import { UclookupgenericComponent } from '@adins/uclookupgeneric';
   providers: [NGXToastrService]
 })
 export class NapAddComponent implements OnInit {
-  
   @ViewChild('LookupOffering') ucLookupOffering : UclookupgenericComponent;
   @ViewChild('LookupCopyProduct') ucLookupCopyProduct : UclookupgenericComponent;
   param;
@@ -85,6 +84,7 @@ export class NapAddComponent implements OnInit {
   user;
   ngOnInit() {
     // Lookup Obj
+    console.log('test');
     console.log(JSON.parse(localStorage.getItem("UserAccess")));
     this.user = JSON.parse(localStorage.getItem("UserAccess"));
 
