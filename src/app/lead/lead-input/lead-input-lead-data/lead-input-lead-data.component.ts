@@ -63,15 +63,15 @@ export class LeadInputLeadDataComponent implements OnInit {
     MrAssetConditionCode: [''],
     MrDownPaymentTypeCode: [''],
     ManufacturingYear: ['', Validators.min(0)],
-    AssetPrice: ['', Validators.required, Validators.min(0)],
-    DownPaymentAmount: ['', Validators.required, Validators.min(0)],
+    AssetPrice: ['', [Validators.required, Validators.min(0)]],
+    DownPaymentAmount: ['', [Validators.required, Validators.min(0)]],
     DownPaymentPercent: [''],
     SerialNo1: [''],
     SerialNo2: [''],
     SerialNo3: [''],
     SerialNo4: [''],
     SerialNo5: [''],
-    Tenor: ['', Validators.required, Validators.min(0)],
+    Tenor: ['', [Validators.required, Validators.min(0)]],
     MrFirstInstTypeCode: ['', Validators.required],
     NTFAmt: [''],
     TotalDownPayment: [''],
@@ -238,6 +238,7 @@ export class LeadInputLeadDataComponent implements OnInit {
           (response) => {
             this.returnLeadObj = response;
             this.returnLobCode = response['LobCode'];
+            
             if (this.lobKta.includes(this.returnLobCode) == true) {
               this.LeadDataForm.controls['NTFAmt'].setValidators([Validators.required]);
             }
@@ -516,12 +517,13 @@ export class LeadInputLeadDataComponent implements OnInit {
     {
       this.LeadDataForm.controls.DownPaymentPercent.disable();
       this.LeadDataForm.controls.DownPaymentAmount.enable();
-
+      // this.LeadDataForm.controls.DownPaymentPercent.clearValidators();
     }
     else
     {
       this.LeadDataForm.controls.DownPaymentPercent.enable();
       this.LeadDataForm.controls.DownPaymentAmount.disable();
+      // this.LeadDataForm.controls.DownPaymentAmount.clearValidators();
     }
   }
 
