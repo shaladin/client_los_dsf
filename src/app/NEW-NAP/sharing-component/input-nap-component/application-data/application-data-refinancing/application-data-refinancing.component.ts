@@ -98,7 +98,7 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     this.ListCrossAppObj["AppId"]=this.AppId;
     this.ListCrossAppObj["result"] = [];
     this.isInputLookupObj = false;
-
+    console.log('test app data refinanc');
     // this.makeLookUpObj();
     this.getAppModelInfo();
     
