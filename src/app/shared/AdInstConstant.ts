@@ -186,7 +186,7 @@ export class AdInsConstant {
   public static PremiumTypePrcnt = "PRCNT";
 
   //LOB CODE
-  public static LobCodeFCTR = "FACTORING";
+  public static LobCodeFCTR = "FCTR";
   public static LobCodeCFRFN = "CFRFN";
 
   //TOP CALC BASED
