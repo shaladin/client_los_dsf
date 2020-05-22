@@ -13,6 +13,7 @@ import { GuarantorCompanyObj } from 'app/shared/model/GuarantorCompanyObj.Model'
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { environment } from 'environments/environment';
 import { formatDate } from '@angular/common';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-guarantor-company',
@@ -71,7 +72,7 @@ export class GuarantorCompanyComponent implements OnInit {
     Subzipcode:['']
   });
 
-  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient,private fb:FormBuilder, private toastr: NGXToastrService) { 
+  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient,private fb:FormBuilder, private toastr: NGXToastrService, private modalService: NgbModal) { 
   }
 
   ngOnInit() {
@@ -381,4 +382,7 @@ ClearForm(){
   this.initAddr();
 }
 
+  cancel() {
+    this.modalService.dismissAll();
+  }
 }

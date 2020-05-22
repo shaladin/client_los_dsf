@@ -442,7 +442,8 @@ export class AdInsConstant {
   public static RefMasterTypeCodeCustType = "CUST_TYPE";
   public static RefMasterTypeCodeSlsRecom = "SLS_RECOM";
   public static RefMasterTypeCodeWOP = "WOP";
-  public static RefMasterTypeCodeInstSchm = "INST_SCHM";
+  public static RefMasterTypeCodeInstSchm = "INSTSCHM";
+  public static RefMasterTypeCodePayFreq = "PAYFREQ";
   public static RefMasterTypeCodeCustNotifyOpt = "CUST_NOTIF_OPT";
   public static RefMasterTypeCodeFirstInstType = "FIRST_INST_TYPE";
   public static RefMasterTypeCodeInterestType = "INTRSTTYPE";
@@ -818,6 +819,9 @@ export class AdInsConstant {
   public static TaxTypeCode = "WHT";
   public static VATTypeCode = "VAT";
   public static TrxTypeCode = "APP_COM";
+  public static LabelSupplier = "Supplier";
+  public static LabelSupplierEmp = "Supplier Employee";
+  public static LabelReferantor = "Referantor";
   public static ContentSupplier = "Supplier";
   public static ContentSupplierEmp = "SupplierEmployee";
   public static ContentReferantor = "Referantor";
