@@ -62,16 +62,16 @@ export class LeadInputLeadDataComponent implements OnInit {
     FullAssetName: [''],
     MrAssetConditionCode: [''],
     MrDownPaymentTypeCode: [''],
-    ManufacturingYear: ['', Validators.min(0)],
-    AssetPrice: ['', Validators.required, Validators.min(0)],
-    DownPaymentAmount: ['', Validators.required, Validators.min(0)],
+    ManufacturingYear: [''],
+    AssetPrice: ['', Validators.required],
+    DownPaymentAmount: ['', Validators.required],
     DownPaymentPercent: [''],
     SerialNo1: [''],
     SerialNo2: [''],
     SerialNo3: [''],
     SerialNo4: [''],
     SerialNo5: [''],
-    Tenor: ['', Validators.required, Validators.min(0)],
+    Tenor: ['', Validators.required],
     MrFirstInstTypeCode: ['', Validators.required],
     NTFAmt: [''],
     TotalDownPayment: [''],
@@ -286,6 +286,7 @@ export class LeadInputLeadDataComponent implements OnInit {
               ManufacturingYear: this.resLeadAssetObj.ManufacturingYear,
               AssetPrice: this.resLeadAssetObj.AssetPriceAmt,
               DownPaymentAmount: this.resLeadAssetObj.DownPaymentAmt,
+              DownPaymentPercent: this.resLeadAssetObj.DownPaymentPrcnt,
               SerialNo1: this.resLeadAssetObj.SerialNo1,
               SerialNo2: this.resLeadAssetObj.SerialNo2,
               SerialNo3: this.resLeadAssetObj.SerialNo3,
@@ -405,6 +406,7 @@ export class LeadInputLeadDataComponent implements OnInit {
               ManufacturingYear: this.resLeadAssetObj.ManufacturingYear,
               AssetPrice: this.resLeadAssetObj.AssetPriceAmt,
               DownPaymentAmount: this.resLeadAssetObj.DownPaymentAmt,
+              DownPaymentPercent: this.resLeadAssetObj.DownPaymentPrcnt,
               SerialNo1: this.resLeadAssetObj.SerialNo1,
               SerialNo2: this.resLeadAssetObj.SerialNo2,
               SerialNo3: this.resLeadAssetObj.SerialNo3,
@@ -512,6 +514,7 @@ export class LeadInputLeadDataComponent implements OnInit {
 
   DownPaymentChange()
   {
+    console.log(this.LeadDataForm.controls["MrDownPaymentTypeCode"].value)
     if(this.LeadDataForm.controls["MrDownPaymentTypeCode"].value == "AMT")
     {
       this.LeadDataForm.controls.DownPaymentPercent.disable();
@@ -535,6 +538,8 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.LeadDataForm.patchValue({
       DownPaymentPercent: this.DPPercentage,
     });
+    console.log("test test")
+    console.log(this.DPPercentage)
   }
 
   DPPrcntChange()
