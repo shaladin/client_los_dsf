@@ -107,27 +107,38 @@ export class ApplicationDataComponent implements OnInit {
     this.GetCrossInfoData();
   }
 
-  getInstSchm(){
+  getDDLFromProdOffering(refProdCompntCode:string){
     var obj = {
-      ProdOfferingCode: "CF4W_FINAL_001",
-      RefProdCompntCode: AdInsConstant.RefMasterTypeCodeInstSchm,
-      ProdOfferingVersion: "3"
+      ProdOfferingCode: this.resultResponse.ProdOfferingCode,
+      RefProdCompntCode: refProdCompntCode,
+      ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
     };
     this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
       (response) => {
-        // console.log(response);   
+        console.log(response);
         var listCompntValue: Array<string> = response["CompntValue"].split(";");
-
+        console.log(listCompntValue);
+        
         var listDDL = new Array;
-        for(var i=0;i<listCompntValue.length;i++){
-          var splitted=listCompntValue[i].split(":");
-          var keyValueObj={
-            Key: splitted[0],
-            Value: splitted[1]
+        var keyValueObj;
+        if(listCompntValue.length!=1){
+          for(var i=0;i<listCompntValue.length;i++){
+            var splitted=listCompntValue[i].split(":");
+            keyValueObj={
+              Key: splitted[0],
+              Value: splitted[1]
+            };
+            listDDL.push(keyValueObj);
           }
+        }else{
+          keyValueObj={
+            Key: response["CompntValue"],
+            Value: response["CompntValueDesc"]
+          };
           listDDL.push(keyValueObj);
         }
-        this.applicationDDLitems[AdInsConstant.RefMasterTypeCodeInstSchm]=listDDL;
+        console.log(listDDL);
+        this.applicationDDLitems[refProdCompntCode]=listDDL;
       },
       (error) => {
         console.log(error);
@@ -242,9 +253,9 @@ export class ApplicationDataComponent implements OnInit {
           FloatingPeriod: this.resultResponse.FloatingPeriodCode
         });
         this.makeNewLookupCriteria();
-        this.ChangeInterestType();
-        // this.getInterestTypeCode();
-        // this.getInstSchm();
+        this.getInterestTypeCode();
+        this.getDDLFromProdOffering(AdInsConstant.RefMasterTypeCodeInstSchm);
+        this.getDDLFromProdOffering(AdInsConstant.RefMasterTypeCodePayFreq);
       },
       (error) => {
         console.log(error);
@@ -268,16 +279,20 @@ export class ApplicationDataComponent implements OnInit {
     );
   }
 
+  DictRefPayFreq: any = {};
   getPayFregData() {
     var url = AdInsConstant.GetListActiveRefPayFreq;
-    var obj = {
-      RowVersion: ""
-    };
+    var obj = { RowVersion: "" };
 
     this.http.post(url, obj).subscribe(
       (response) => {
+        console.log(response);
         var objTemp = response["ReturnObject"];
-        this.applicationDDLitems["Pay_Freq"] = objTemp;
+        for(var i=0;i<objTemp.length;i++){
+          this.DictRefPayFreq[objTemp[i].PayFreqCode] = objTemp[i];
+        }
+        console.log(this.DictRefPayFreq);
+        // this.applicationDDLitems[AdInsConstant.RefMasterTypeCodePayFreq] = objTemp;
         this.applicationDDLitems["Floating_Period"] = objTemp;
       },
       (error) => {
@@ -377,8 +392,8 @@ export class ApplicationDataComponent implements OnInit {
     var idx = ev.target.selectedIndex - 1;
     var temp = this.NapAppModelForm.controls.Tenor.value;
     if (!isNaN(temp)) {
-      this.PayFreqVal = this.applicationDDLitems["Pay_Freq"][idx].PayFreqVal;
-      this.PayFreqTimeOfYear = this.applicationDDLitems["Pay_Freq"][idx].TimeOfYear;
+      this.PayFreqVal = this.DictRefPayFreq[this.applicationDDLitems[AdInsConstant.RefMasterTypeCodePayFreq][idx].Key].PayFreqVal;
+      this.PayFreqTimeOfYear = this.DictRefPayFreq[this.applicationDDLitems[AdInsConstant.RefMasterTypeCodePayFreq][idx].Key].TimeOfYear;
       var total = Math.ceil((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
       this.PatchNumOfInstallment(total);
     }
