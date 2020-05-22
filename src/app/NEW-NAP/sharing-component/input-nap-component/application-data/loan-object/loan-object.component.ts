@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
-import { FormBuilder, NgForm } from '@angular/forms';
+import { FormBuilder, NgForm, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -25,17 +25,14 @@ export class LoanObjectComponent implements OnInit {
   supplierInputLookupObj: any;
   title: string = "Add Loan Object";
   objEdit: any;
+  AppLoanPurposeObj: AppLoanPurposeObj = new AppLoanPurposeObj();
 
   MainInfoForm = this.fb.group({
     IsDisburseToCust: [false],
-    BudgetPlanAmount: [''],
-    SelfFinancing: [''],
-    FinancingAmount: [''],
-    MrLoanPurposeCode: [''],
-    SupplierCode: ['']
-
+    BudgetPlanAmount: ['', Validators.required],
+    SelfFinancing: ['', Validators.required],
+    FinancingAmount: ['', Validators.required]
   })
-  AppLoanPurposeObj: AppLoanPurposeObj;
   resultData: any;
   result: any;
   closeResult: string;
@@ -129,7 +126,6 @@ export class LoanObjectComponent implements OnInit {
     this.loanObjectInputLookupObj.urlEnviPaging = environment.losUrl;
     this.loanObjectInputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupLoanObject.json";
     this.loanObjectInputLookupObj.genericJson = "./assets/uclookup/NAP/lookupLoanObject.json";
-    this.loanObjectInputLookupObj.isRequired = false;
 
     this.supplierInputLookupObj = new InputLookupObj();
     this.supplierInputLookupObj.urlJson = "./assets/uclookup/NAP/lookupSupplier.json";
@@ -148,29 +144,22 @@ export class LoanObjectComponent implements OnInit {
   }
 
   getSupplierInputLookupValue(event) {
-    this.MainInfoForm.patchValue({
-      SupplierCode: event.VendorCode
-    });
+    this.AppLoanPurposeObj.SupplCode = event.VendorCode;
   }
 
   getLoanInputLookupValue(event) {
-    this.MainInfoForm.patchValue({
-      MrLoanPurposeCode: event.MasterCode
-    })
+    this.AppLoanPurposeObj.MrLoanPurposeCode = event.MasterCode;
   }
 
   SaveForm(enjiForm:NgForm) {
-    this.AppLoanPurposeObj = new AppLoanPurposeObj();
-    this.AppLoanPurposeObj.AppLoanPurposeId = this.objEdit.AppLoanPurposeId;
     this.AppLoanPurposeObj.AppId = this.AppId;
-    this.AppLoanPurposeObj.MrLoanPurposeCode = this.MainInfoForm.controls.MrLoanPurposeCode.value;
     this.AppLoanPurposeObj.IsDisburseToCust = this.MainInfoForm.controls.IsDisburseToCust.value;
-    this.AppLoanPurposeObj.SupplCode = this.MainInfoForm.controls.SupplierCode.value;
     this.AppLoanPurposeObj.BudgetPlanAmt = this.MainInfoForm.controls.BudgetPlanAmount.value;
     this.AppLoanPurposeObj.SelfFinancingAmt = this.MainInfoForm.controls.SelfFinancing.value;
     this.AppLoanPurposeObj.FinancingAmt = this.MainInfoForm.controls.FinancingAmount.value;
 
     if (this.mode == "edit") {
+      this.AppLoanPurposeObj.AppLoanPurposeId = this.objEdit.AppLoanPurposeId;
       this.AppLoanPurposeObj.RowVersion = this.objEdit.RowVersion;
       this.http.post(AdInsConstant.EditAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
         (response) => {
@@ -187,6 +176,7 @@ export class LoanObjectComponent implements OnInit {
     else {
       this.http.post(AdInsConstant.AddAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
         (response) => {
+          this.loadDataTable();
           this.modal.close();
           this.toastr.successMessage(response["message"]);
           this.router.navigate(['/Nap/ApplicationDataRefinancing'], { queryParams: { "AppId": this.AppId } });
@@ -196,7 +186,6 @@ export class LoanObjectComponent implements OnInit {
           console.log(error);
         });
     }
-    this.loadDataTable();
   }
 
   deleteLoanObject(AppLoanPurposeId) {
