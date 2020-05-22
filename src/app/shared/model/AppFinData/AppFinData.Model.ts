@@ -65,6 +65,7 @@ export class AppFinDataObj {
     TotalRetentionAmt: number;
     TotalDisbAmt: number;
     Tenor: number;
+    RefundInterestAmt: number;
 
     constructor() {
     }
