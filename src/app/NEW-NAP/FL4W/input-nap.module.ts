@@ -15,7 +15,6 @@ import { NapPagingComponent } from './nap-paging/nap-paging.component';
 import { NapViewComponent } from './nap-view/nap-view.component';   
 import { MatCheckboxModule, MatRadioModule, MatSelectModule, MatTabsModule } from "@angular/material";
 import { NgxCurrencyModule } from "ngx-currency";
-import { customCurrencyMaskConfig } from "app/MOU/mou.module"; 
 import { NapAddDetailComponent } from './nap-add-detail/nap-add-detail.component';
 import { NapTabComponentModule } from "./nap-tab/nap-tab.module";
 import { ViewMainInfoComponentModule } from "../sharing-component/view-main-info-component/view-main-info-component.module";
@@ -39,7 +38,17 @@ import { AppTcComponent } from "../sharing-component/view-app-component/app-tc/a
 import { AppAssetDataComponent } from "../sharing-component/view-app-component/app-asset-data/app-asset-data.component";
 import { AppInsuranceComponent } from "../sharing-component/view-app-component/app-insurance/app-insurance.component";
  
- 
+export const customCurrencyMaskConfig = {     
+  align: "right",     
+  allowNegative: true,     
+  allowZero: true,     
+  decimal: ".",     
+  precision: 2,     
+  prefix: "",     
+  suffix: "",     
+  thousands: ",",     
+  nullable: false
+};
  
 
 @NgModule({

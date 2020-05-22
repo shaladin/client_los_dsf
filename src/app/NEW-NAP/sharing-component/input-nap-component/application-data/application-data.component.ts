@@ -240,8 +240,8 @@ export class ApplicationDataComponent implements OnInit {
           FloatingPeriod: this.resultResponse.FloatingPeriodCode
         });
         this.makeNewLookupCriteria();
-        this.getInterestTypeCode();
-        this.getInstSchm();
+        // this.getInterestTypeCode();
+        // this.getInstSchm();
       },
       (error) => {
         console.log(error);
