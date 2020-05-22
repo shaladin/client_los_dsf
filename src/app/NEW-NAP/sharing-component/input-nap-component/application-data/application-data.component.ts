@@ -98,8 +98,10 @@ export class ApplicationDataComponent implements OnInit {
     this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeCustType);
     this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeSlsRecom);
     this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeWOP);
+    this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeInstSchm);
     this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeCustNotifyOpt);
     this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeFirstInstType);
+    this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeInterestType);
     this.getPayFregData();
     this.getAppSrcData();
     this.GetCrossInfoData();
@@ -240,8 +242,9 @@ export class ApplicationDataComponent implements OnInit {
           FloatingPeriod: this.resultResponse.FloatingPeriodCode
         });
         this.makeNewLookupCriteria();
-        this.getInterestTypeCode();
-        this.getInstSchm();
+        this.ChangeInterestType();
+        // this.getInterestTypeCode();
+        // this.getInstSchm();
       },
       (error) => {
         console.log(error);
@@ -319,7 +322,8 @@ export class ApplicationDataComponent implements OnInit {
     this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupEmp.json";
-    this.inputLookupObj.jsonSelect = this.resultResponse;
+    //this.inputLookupObj.jsonSelect = this.resultResponse;
+    this.inputLookupObj.nameSelect = this.resultResponse.SalesName;
     this.inputLookupObj.addCritInput = this.arrAddCrit;
     this.isInputLookupObj = true;
   }

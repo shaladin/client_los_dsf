@@ -60,7 +60,7 @@ export class AdInsConstant {
 
 
   // APP Application
-  public static AddApp = "/Application/AddApp";
+  public static AddApp = environment.FoundationR3Url + "/Application/AddApp";
   public static EditApp = "/Application/EditApp";
   public static GetAppById = environment.losUrl + "/Application/GetAppById";
   public static GetAppByIds = environment.losUrl + "/Application/GetAppById";
@@ -186,7 +186,7 @@ export class AdInsConstant {
   public static PremiumTypePrcnt = "PRCNT";
 
   //LOB CODE
-  public static LobCodeFCTR = "FCTR";
+  public static LobCodeFCTR = "FACTORING";
   public static LobCodeCFRFN = "CFRFN";
 
   //TOP CALC BASED

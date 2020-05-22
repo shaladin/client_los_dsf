@@ -9,11 +9,11 @@
       </div>
       <label class="col-md-2 adins-required-label" for="custModel" translate>Lessee Model</label>
       <div class="col-md-4">
-        <mat-radio-group formControlName="CustModelCode">
-          <mat-radio-button class="custom-control custom-radio display-inline-block" *ngFor="let item of CustModelObj" [value]="item.Key">
-            {{item.Value}}
-          </mat-radio-button>
-        </mat-radio-group>
+        <select class="form-control adInsInput" style="width: auto" formControlName="CustModelCode">
+          <option value="">-Select One-</option>
+          <option *ngFor="let item of CustModelObj" value="{{item.Key}}">
+            {{item.Value}} </option>
+        </select>
       </div>
     </div>
     <div class="form-group row">

@@ -130,11 +130,11 @@
                 (outputTab)="NextStep('ASSET')"></app-application-data-refinancing>
             </div>
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
-              <app-multi-asset-data (OutputMultiAsset)="NextStep('INS')"></app-multi-asset-data>
+              <app-multi-asset-data *ngIf="AppStepIndex == 5" [AppId]="appId" (OutputMultiAsset)="NextStep('INS')"></app-multi-asset-data>
             </div>
             <div id="insurance-tab" class="content" role="tabpanel" aria-labelledby="insurance-tab-trigger">
-              <app-insurance-data *ngIf="!IsMultiAsset && AppStepIndex == 6" [appId]="appId"
-                (outputTab)="NextStep('LFI')"></app-insurance-data>
+              <!-- <app-insurance-data *ngIf="!IsMultiAsset && AppStepIndex == 6" [appId]="appId"
+                (outputTab)="NextStep('LFI')"></app-insurance-data> -->
               <app-insurance-multi-asset-data *ngIf="IsMultiAsset && AppStepIndex == 6" [appId]="appId"
                 (outputTab)="NextStep('LFI')"></app-insurance-multi-asset-data>
             </div>
@@ -143,10 +143,10 @@
               </app-life-insurance-data>
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
-              Financial
+              <app-financial-data *ngIf="AppStepIndex == 8" [AppId]="appId" (outputTab)="NextStep('TC')"></app-financial-data>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
-              <app-tc-data *ngIf="AppStepIndex == 9" [AppId]="appId" (outputTab)="NextStep('TC')"></app-tc-data>
+              <app-tc-data *ngIf="AppStepIndex == 9" [AppId]="appId" (outputTab)="NextStep('SUBMIT')"></app-tc-data>
             </div>
           </div>
         </div>
