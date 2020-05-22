@@ -102,8 +102,8 @@
               </app-customer-data>
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
-              <app-application-data *ngIf="AppStepIndex == 2" [appId]="appId" [IsLoanObject]="false"
-                (outputTab)="NextStep('INVOICE')"></app-application-data>
+              <app-application-data-factoring *ngIf="AppStepIndex == 2" [AppId]="appId"
+                (outputTab)="NextStep('INVOICE')"></app-application-data-factoring>
             </div>
             <div id="invoice-tab" class="content" role="tabpanel" aria-labelledby="invoice-tab-trigger">
               <!-- <app-application-data *ngIf="AppStepIndex == 3" [appId]="appId" [IsLoanObject]="false"
