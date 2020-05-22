@@ -26,15 +26,15 @@
     "headerList": [
         {
             "type": "sort",
-            "position": "left",
-            "label": "Customer Full Name",
-            "name": "CP.CUST_FULL_NAME"
+            "position": "center",
+            "label": "Customer No",
+            "name": "C.CUST_NO"
         },
         {
             "type": "sort",
             "position": "left",
-            "label": "Customer No",
-            "name": "C.CUST_NO"
+            "label": "Customer Full Name",
+            "name": "CP.CUST_FULL_NAME"
         },
         {
             "type": "label",
@@ -45,13 +45,13 @@
     "bodyList": [
         {
             "type": "text",
-            "position": "left",
-            "property": "CustFullName"
+            "position": "center",
+            "property": "CustNo"
         },
         {
             "type": "text",
             "position": "left",
-            "property": "CustNo"
+            "property": "CustFullName"
         },
         {
             "type": "action",

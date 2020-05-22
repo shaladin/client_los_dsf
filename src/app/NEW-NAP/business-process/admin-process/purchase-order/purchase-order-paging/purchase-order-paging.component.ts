@@ -21,7 +21,7 @@ export class PurchaseOrderPagingComponent implements OnInit {
         this.lobCode = params["LobCode"];
       }
       else{
-        this.lobCode = "CF4W";
+        this.lobCode = "CFNEWCAR";
       }
     });
   }

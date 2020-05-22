@@ -1,6 +1,6 @@
 {
     "url": "",
-    "title":"Lookup - MF Signer",
+    "title":"Lookup - Shareholder",
     "component": [
       {
         "type": "textbox",
@@ -20,7 +20,7 @@
       }
     ],
     "querystring": {
-      "select": "SELECT CC.MGMNT_SHRHOLDER_NAME AS ShareholderName, CC.CUST_COMPANY_MGMNT_SHRHOLDER_ID AS ShareholderId, RM.MASTER_CODE AS MasterCode, RM.DESCR AS Descr",
+      "select": "SELECT CC.MGMNT_SHRHOLDER_NAME AS ShareholderName, CC.CUST_COMPANY_MGMNT_SHRHOLDER_ID AS ShareholderId, RM.MASTER_CODE AS MasterCode, RM.DESCR AS Descr,CC.CUST_COMPANY_ID AS CustCompanyId",
       "from": "FROM dbo.CUST_COMPANY_MGMNT_SHRHOLDER CC WITH(NOLOCK) JOIN dbo.REF_MASTER RM WITH(NOLOCK) ON CC.MR_JOB_POSITION_CODE = RM.MASTER_CODE and RM.REF_MASTER_TYPE_CODE = 'JOB_POSITION'"
     },
     "headerList": [

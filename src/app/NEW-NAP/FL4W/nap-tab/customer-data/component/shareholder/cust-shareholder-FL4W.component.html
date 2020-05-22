@@ -27,6 +27,11 @@
         <th><span translate class="thead-header" name='action'>ACTION</span></th>
       </tr>
     </thead>
+    <tbody *ngIf = "listShareholder == undefined">
+      <tr>
+        <td colspan="100%">No Data Available</td>
+      </tr>
+    </tbody>
     <tbody>
       <tr *ngFor="let item of listShareholder; let i = index">
         <td style="text-align: center;">{{item.MgmntShrholderName}}</td>
@@ -142,7 +147,7 @@
                 </div>
                 <label class="col-md-2" for="sharePrcnt" translate>Share (%)</label>
                 <div class="col-md-4">
-                  <input type="number" class="form-control" min="0" max="100" id="sharePrcnt" formControlName="SharePrcnt"
+                  <input type="" currencyMask class="form-control" min="0" max="100" id="sharePrcnt" formControlName="SharePrcnt"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && CustShareholderForm.controls.SharePrcnt.invalid}">
                   <lib-uc-show-errors [control]="CustShareholderForm.controls.SharePrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
@@ -201,7 +206,7 @@
                 </div>
                 <label class="col-md-2" for="sharePrcnt" translate>Share (%)</label>
                 <div class="col-md-4">
-                  <input type="number" class="form-control" id="sharePrcnt" formControlName="SharePrcnt"
+                  <input type="" currencyMask class="form-control" id="sharePrcnt" formControlName="SharePrcnt"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && CustShareholderForm.controls.SharePrcnt.invalid}">
                   <lib-uc-show-errors [control]="CustShareholderForm.controls.SharePrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>

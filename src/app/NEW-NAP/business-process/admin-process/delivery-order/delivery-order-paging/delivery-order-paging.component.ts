@@ -22,8 +22,8 @@ export class DeliveryOrderPagingComponent implements OnInit {
 
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionEq;
-    critObj.propName = 'AG.AGRMNT_CURR_STEP';
-    critObj.value = "DELIVERY_ORDER";
+    critObj.propName = 'WF.ACT_CODE';
+    critObj.value = "DO";
     this.inputPagingObj.addCritInput.push(critObj);
   }
 }
