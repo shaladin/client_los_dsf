@@ -79,18 +79,8 @@
             "position": "center",
             "action": [
                 {
-                    "type": "edit",
-                    "path": "/Nap/AssetData/Detail",
-                    "param": [
-                        {
-                            "type": "AppAssetId",
-                            "property": "AppAssetId"
-                        },
-                        {
-                            "type": "AppId",
-                            "property": "AppId"
-                        }
-                    ]
+                    "type": "callback",
+                    "key": "AppAssetId"
                 }
             ]
         }

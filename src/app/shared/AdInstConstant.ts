@@ -60,7 +60,7 @@ export class AdInsConstant {
 
 
   // APP Application
-  public static AddApp = "/Application/AddApp";
+  public static AddApp = environment.FoundationR3Url + "/Application/AddApp";
   public static EditApp = "/Application/EditApp";
   public static GetAppById = environment.losUrl + "/Application/GetAppById";
   public static GetAppByIds = environment.losUrl + "/Application/GetAppById";
@@ -186,7 +186,7 @@ export class AdInsConstant {
   public static PremiumTypePrcnt = "PRCNT";
 
   //LOB CODE
-  public static LobCodeFCTR = "FCTR";
+  public static LobCodeFCTR = "FACTORING";
   public static LobCodeCFRFN = "CFRFN";
 
   //TOP CALC BASED
@@ -442,7 +442,7 @@ export class AdInsConstant {
   public static RefMasterTypeCodeCustType = "CUST_TYPE";
   public static RefMasterTypeCodeSlsRecom = "SLS_RECOM";
   public static RefMasterTypeCodeWOP = "WOP";
-  public static RefMasterTypeCodeInstSchm = "INST_SCHM";
+  public static RefMasterTypeCodeInstSchm = "INSTSCHM";
   public static RefMasterTypeCodeCustNotifyOpt = "CUST_NOTIF_OPT";
   public static RefMasterTypeCodeFirstInstType = "FIRST_INST_TYPE";
   public static RefMasterTypeCodeInterestType = "INTRSTTYPE";
@@ -806,6 +806,7 @@ export class AdInsConstant {
   public static GetAppAssetByAgrmntId = environment.losUrl + "/AppAsset/GetAppAssetByAgrmntId";
   public static GetAllAssetDataByAppId = environment.losUrl + "/AppAsset/GetAllAssetDataByAppId";
   public static AddEditAllAssetData = environment.losUrl + "/AppAsset/AddEditAllAssetData";
+  public static CheckAssetValidationRule = environment.losUrl + "/AppAsset/CheckAssetValidationRule";
 
   //Asset Doc List
   public static GetAppAssetDataByAppId = environment.losUrl + "/AppAsset/GetAppAssetDataByAppId";
