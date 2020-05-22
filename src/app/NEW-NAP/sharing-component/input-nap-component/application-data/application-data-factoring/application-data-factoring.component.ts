@@ -1,22 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { NgForm, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit, Input } from '@angular/core';
+import { Validators, FormBuilder } from '@angular/forms';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { SalesInfoObj } from 'app/shared/model/SalesInfoObj.Model';
 import { PayFreqObj } from 'app/shared/model/PayFreqObj.Model';
-
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
 
 @Component({
-  selector: 'app-application-model-add',
-  templateUrl: './application-model-add.component.html',
-  styleUrls: ['./application-model-add.component.scss'],
-  providers: [NGXToastrService]
+  selector: 'app-application-data-factoring',
+  templateUrl: './application-data-factoring.component.html',
+  styleUrls: ['./application-data-factoring.component.scss']
 })
-export class ApplicationModelAddComponent implements OnInit {
-
+export class ApplicationDataFactoringComponent implements OnInit {
+  @Input() AppId: number;
 
   SalesAppInfoForm = this.fb.group({
     AppId: [''],
@@ -62,7 +60,6 @@ export class ApplicationModelAddComponent implements OnInit {
   listMultiple: Array<any> = ['Even Principle', 'Regular Fixed'];
   listSingle: Array<any> = ['Even Principle'];
   payfreq: PayFreqObj;
-  AppId: any;
   resultData: any;
   allPayFreq: any;
   allInSalesOffice: any;
@@ -244,7 +241,7 @@ export class ApplicationModelAddComponent implements OnInit {
     console.log(this.AppId);
   
     this.salesAppInfoObj = new SalesInfoObj();
-    this.salesAppInfoObj.AppId = this.AppId.value;
+    this.salesAppInfoObj.AppId = this.AppId;
     this.salesAppInfoObj = this.SalesAppInfoForm.value;
 
     console.log(this.salesAppInfoObj);
