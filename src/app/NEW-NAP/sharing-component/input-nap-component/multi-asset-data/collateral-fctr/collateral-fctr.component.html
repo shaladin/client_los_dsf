@@ -250,12 +250,12 @@
             </div>
             <label class="col-md-2 adins-required-label" translate>Collateral User Relationship</label>
             <div class="col-md-3">
-              <select class="form-control" formControlName="OwnerRelationship"
+              <select class="form-control" formControlName="MrUserRelationshipCode"
                 (change)="onItemChange($event.target.value)"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerRelationship.invalid }">
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.MrUserRelationshipCode.invalid }">
                 <option *ngFor="let item of OwnerRelationshipObj" [value]="item.Key">{{item.Value}}</option>
               </select>
-              <lib-uc-show-errors [control]="AddCollForm.controls.OwnerRelationship" [submit]="enjiForm.submitted">
+              <lib-uc-show-errors [control]="AddCollForm.controls.MrUserRelationshipCode" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
           </div>
@@ -275,23 +275,23 @@
             <label class="col-md-1"></label>
             <label class="col-md-2 adins-required-label" translate>ID Type</label>
             <div class="col-md-2">
-              <select class="form-control" formControlName="MrIdType" (change)="onItemChange($event.target.value)"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.MrIdType.invalid }">
+              <select class="form-control" formControlName="MrIdTypeCode" (change)="onItemChange($event.target.value)"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.MrIdTypeCode.invalid }">
                 <option *ngFor="let item of IdTypeList" [value]="item.Key">{{item.Value}}</option>
               </select>
-              <lib-uc-show-errors [control]="AddCollForm.controls.MrIdType" [submit]="enjiForm.submitted">
+              <lib-uc-show-errors [control]="AddCollForm.controls.MrIdTypeCode" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
           </div>
           <div class="form-group row">
             <label class="col-md-2 adins-required-label" translate>Owner Relationship</label>
             <div class="col-md-3">
-              <select class="form-control" formControlName="OwnerRelationship"
+              <select class="form-control" formControlName="MrOwnerRelationshipCode"
                 (change)="onItemChange($event.target.value)"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerRelationship.invalid }">
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.MrOwnerRelationshipCode.invalid }">
                 <option *ngFor="let item of OwnerRelationshipObj" [value]="item.Key">{{item.Value}}</option>
               </select>
-              <lib-uc-show-errors [control]="AddCollForm.controls.OwnerRelationship" [submit]="enjiForm.submitted">
+              <lib-uc-show-errors [control]="AddCollForm.controls.MrOwnerRelationshipCode" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
             <label class="col-md-1"></label>
