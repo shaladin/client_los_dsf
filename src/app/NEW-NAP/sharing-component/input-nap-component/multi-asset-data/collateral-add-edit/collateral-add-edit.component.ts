@@ -190,7 +190,8 @@ export class CollateralAddEditComponent implements OnInit {
   getLookupCollateralName(event) {
     this.AddCollForm.patchValue({
       FullAssetCode: event.FullAssetCode,
-      FullAssetName: event.FullAssetName
+      FullAssetName: event.FullAssetName,
+      AssetCategoryCode: event.AssetCategoryCode
     });
 
     this.assetCategoryObj = new AssetCategoryObj();
@@ -598,6 +599,7 @@ export class CollateralAddEditComponent implements OnInit {
     this.appCollateralDataObj.AppCollateralObj.MrCollateralConditionCode = "USED";
     this.appCollateralDataObj.AppCollateralObj.MrCollateralUsageCode = "NON_COMM";
     this.appCollateralDataObj.AppCollateralObj.AssetCategoryCode = this.AddCollForm.controls["AssetCategoryCode"].value;
+    // this.appCollateralDataObj.AppCollateralObj.AssetCategoryCode = "MOBIL1000";
   }
 
   setCollateralOwner(){
