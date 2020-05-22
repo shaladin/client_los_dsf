@@ -84,7 +84,7 @@ export class ReferantorDataFL4WComponent implements OnInit {
     // this.appId = tempId;
 
     // Check Data App Id
-    var url = environment.losUrl + AdInsConstant.GetAppReferantorByAppId;
+    var url = AdInsConstant.GetAppReferantorByAppId;
     var obj = {
       AppId: this.appId,
       RowVersion: "",
@@ -133,14 +133,14 @@ export class ReferantorDataFL4WComponent implements OnInit {
       if (this.ReferantorOn) {
         // save
         console.log("Save Existed Data");
-        url = environment.losUrl + AdInsConstant.EditAppReferantor;
+        url = AdInsConstant.EditAppReferantor;
         this.SaveData(url);
         // this.wizard.goToNextStep();
           this.outputTab.emit();
       } else {
         // delete & go to paging
         console.log("Delete Existed Data");
-        url = environment.losUrl + AdInsConstant.DeleteAppReferantor;
+        url = AdInsConstant.DeleteAppReferantor;
         this.SaveData(url);    
         // this.wizard.goToNextStep();
           this.outputTab.emit();
@@ -149,7 +149,7 @@ export class ReferantorDataFL4WComponent implements OnInit {
       if (this.ReferantorOn) {
         // save
         console.log("Save New Data");
-        url = environment.losUrl + AdInsConstant.AddAppReferantor;
+        url = AdInsConstant.AddAppReferantor;
         this.appReferantorObj.AppId = this.appId;
         this.SaveData(url);
         // this.wizard.goToNextStep();
@@ -208,7 +208,7 @@ export class ReferantorDataFL4WComponent implements OnInit {
   }
 
   getDDLBank(VendorCode) {
-    var url = environment.FoundationR3Url + AdInsConstant.GetListVendorBankAccByVendorCode;
+    var url = AdInsConstant.GetListVendorBankAccByVendorCode;
     var obj = {
       VendorCode: VendorCode,
       RowVersion: ""
