@@ -15,7 +15,6 @@ import { NapPagingComponent } from './nap-paging/nap-paging.component';
 import { NapViewComponent } from './nap-view/nap-view.component';   
 import { MatCheckboxModule, MatRadioModule, MatSelectModule, MatTabsModule } from "@angular/material";
 import { NgxCurrencyModule } from "ngx-currency";
-import { customCurrencyMaskConfig } from "app/MOU/mou.module"; 
 import { NapAddDetailComponent } from './nap-add-detail/nap-add-detail.component';
 import { NapTabComponentModule } from "./nap-tab/nap-tab.module";
 import { ViewMainInfoComponentModule } from "../sharing-component/view-main-info-component/view-main-info-component.module";
@@ -24,6 +23,8 @@ import { AppMainInfoComponent } from "../sharing-component/view-main-info-compon
 import { ViewAppCustDataPersonalComponent } from "../sharing-component/view-app-component/view-app-cust-data-personal/view-app-cust-data-personal.component";
 import { ViewAppCustDataCompanyComponent } from "../sharing-component/view-app-component/view-app-cust-data-company/view-app-cust-data-company.component";
 import { ViewAgrmntComponent } from './view-agrmnt/view-agrmnt.component';
+import { ViewAgrmntComponentModule } from "../sharing-component/view-agrmnt-component/view-agrmnt-component.module";
+import { TabCommissionComponent } from "../sharing-component/view-app-component/tab-commission/tab-commission.component";
 import { AgrmntLifeInsuranceComponent } from "../sharing-component/view-agrmnt-component/life-insurance/life-insurance.component";
 import { ViewCommissionComponent } from "../sharing-component/view-agrmnt-component/view-commission/view-commission.component";
 import { ListDataCommissionComponent } from "../sharing-component/view-app-component/tab-commission/list-data-commission/list-data-commission.component";
@@ -37,7 +38,17 @@ import { AppTcComponent } from "../sharing-component/view-app-component/app-tc/a
 import { AppAssetDataComponent } from "../sharing-component/view-app-component/app-asset-data/app-asset-data.component";
 import { AppInsuranceComponent } from "../sharing-component/view-app-component/app-insurance/app-insurance.component";
  
- 
+export const customCurrencyMaskConfig = {     
+  align: "right",     
+  allowNegative: true,     
+  allowZero: true,     
+  decimal: ".",     
+  precision: 2,     
+  prefix: "",     
+  suffix: "",     
+  thousands: ",",     
+  nullable: false
+};
  
 
 @NgModule({
@@ -68,6 +79,9 @@ import { AppInsuranceComponent } from "../sharing-component/view-app-component/a
     AppMainInfoComponent,
     ViewAppCustDataPersonalComponent,
     ViewAppCustDataCompanyComponent,
+    ViewAgrmntComponent, 
+    TabCommissionComponent,
+    ListDataCommissionComponent,
     ViewAgrmntComponent,  
     AgrmntLifeInsuranceComponent,
     ViewCommissionComponent,

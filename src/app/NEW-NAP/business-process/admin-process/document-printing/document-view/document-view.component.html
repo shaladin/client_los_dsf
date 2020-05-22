@@ -1,45 +1,40 @@
 <div class="col-md-12">
-  <div class="card">
-    <div class="card-header row">
-      <lib-ucviewgeneric [viewInput]="inputViewObj"></lib-ucviewgeneric>
-      <table class="table table-responsive-md text-center table-hover">
-        <thead>
-          <tr class="table-header">
-            <th class="text-left"><span translate class="thead-header" name='SeqNo'>No</span></th>
-            <th class="text-left"><span translate class="thead-header" name='DocName'>Document Name</span></th>
-            <th class="text-left"><span translate class="thead-header" name='IsNeedToBePrinted'>Need To Print</span>
-            </th>
-            <th class="text-left"><span translate class="thead-header" name='LastPrintDt'>Last Printed</span></th>
-            <th class="text-left"><span translate class="thead-header" name='EmpName'>Last Printed By</span></th>
-            <th class="text-left"><span translate class="thead-header" name='NumOfDocPrinted'>Number Of Printed</span>
-            </th>
-            <th class="text-left"><span translate class="thead-header" name='Print'>Print</span></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of AgrmntDocObj">
-            <td class="text-left">{{item.SeqNo}}</td>
-            <td class="text-left">{{item.DocName}}</td>
-            <td class="text-left">{{item.IsNeedToBePrinted}}</td>
-            <td class="text-left">{{item.LastPrintDt}}</td>
-            <td class="text-left">{{item.EmpName}}</td>
-            <td class="text-left">{{item.NumOfDocPrinted}}</td>
-            <td>
-              <a class="primary p-0" (click)="Print(item)">
-                <i class="font-medium-3 mr-2 fa fa-print"></i>
-              </a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="card-header">
-        <div class="text-right">
-          <button type="button" class="btn btn-raised btn-warning mr-1"
-            [routerLink]="['/Nap/AdminProcess/DocPrint/Paging/']">
-            <i class="fa fa-arrow-circle-left"></i> Back
-          </button>
-        </div>
-      </div>
-    </div>
+  <lib-ucviewgeneric [viewInput]="inputViewObj"></lib-ucviewgeneric>
+  <br/>
+  <table class="table table-responsive-md text-center table-hover">
+    <thead>
+      <tr class="table-header">
+        <th class="text-left"><span translate class="thead-header" name='SeqNo'>No</span></th>
+        <th class="text-left"><span translate class="thead-header" name='DocName'>Document Name</span></th>
+        <th class="text-left"><span translate class="thead-header" name='IsNeedToBePrinted'>Need To Print</span>
+        </th>
+        <th class="text-left"><span translate class="thead-header" name='LastPrintDt'>Last Printed</span></th>
+        <th class="text-left"><span translate class="thead-header" name='EmpName'>Last Printed By</span></th>
+        <th class="text-left"><span translate class="thead-header" name='NumOfDocPrinted'>Number Of Printed</span>
+        </th>
+        <th class="text-left"><span translate class="thead-header" name='Print'>Print</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of AgrmntDocObj">
+        <td class="text-left">{{item.SeqNo}}</td>
+        <td class="text-left">{{item.DocName}}</td>
+        <td class="text-left">{{item.IsNeedToBePrinted}}</td>
+        <td class="text-left">{{item.LastPrintDt}}</td>
+        <td class="text-left">{{item.EmpName}}</td>
+        <td class="text-left">{{item.NumOfDocPrinted}}</td>
+        <td>
+          <a class="primary p-0" (click)="Print(item)">
+            <i class="font-medium-3 mr-2 fa fa-print"></i>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <br/>
+  <div class="text-right">
+    <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['/Nap/AdminProcess/DocPrint/Paging/']">
+      <i class="fa fa-arrow-circle-left"></i> Back
+    </button>
   </div>
 </div>

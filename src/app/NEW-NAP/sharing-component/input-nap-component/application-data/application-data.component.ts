@@ -79,6 +79,7 @@ export class ApplicationDataComponent implements OnInit {
     RsvField5: [''],
     MrInstSchemeCode: ["", Validators.required],
     InterestType: ['', Validators.required],
+    InterestTypeDesc: [''],
     FloatingPeriod: ['']
   });
 
@@ -106,7 +107,57 @@ export class ApplicationDataComponent implements OnInit {
     this.GetCrossInfoData();
   }
 
-  GetCrossInfoData() {
+  getInstSchm(){
+    var obj = {
+      ProdOfferingCode: "CF4W_FINAL_001",
+      RefProdCompntCode: AdInsConstant.RefMasterTypeCodeInstSchm,
+      ProdOfferingVersion: "3"
+    };
+    this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
+      (response) => {
+        // console.log(response);   
+        var listCompntValue: Array<string> = response["CompntValue"].split(";");
+
+        var listDDL = new Array;
+        for(var i=0;i<listCompntValue.length;i++){
+          var splitted=listCompntValue[i].split(":");
+          var keyValueObj={
+            Key: splitted[0],
+            Value: splitted[1]
+          }
+          listDDL.push(keyValueObj);
+        }
+        this.applicationDDLitems[AdInsConstant.RefMasterTypeCodeInstSchm]=listDDL;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  getInterestTypeCode(){
+    var obj = {
+      ProdOfferingCode: this.resultResponse.ProdOfferingCode,
+      RefProdCompntCode: AdInsConstant.RefMasterTypeCodeInterestType,
+      ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
+    };
+
+    this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
+      (response) => {
+        // console.log(response);   
+        this.NapAppModelForm.patchValue({
+          InterestType: response["CompntValue"],
+          InterestTypeDesc: response["CompntValueDesc"],
+        });
+        this.ChangeInterestType();
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  GetCrossInfoData(){
     var obj = {
       AppId: this.appId,
       RowVersion: ""
@@ -167,8 +218,10 @@ export class ApplicationDataComponent implements OnInit {
           SrvyOrderNo: this.resultResponse.SrvyOrderNo,
           ApvDt: this.resultResponse.ApvDt,
           SalesHeadNo: this.resultResponse.SalesHeadNo,
+          SalesHeadName: this.resultResponse.SalesHeadName,          
           SalesNotes: this.resultResponse.SalesNotes,
           SalesOfficerNo: this.resultResponse.SalesOfficerNo,
+          SalesOfficerName: this.resultResponse.SalesOfficerName,
           CreditAdminNo: this.resultResponse.CreditAdminNo,
           CreditAnalystNo: this.resultResponse.CreditAnalystNo,
           CreditRiskNo: this.resultResponse.CreditRiskNo,
@@ -186,12 +239,12 @@ export class ApplicationDataComponent implements OnInit {
           RsvField5: this.resultResponse.RsvField5,
           MrInstSchemeCode: this.resultResponse.MrInstSchemeCode,
           InterestType: this.resultResponse.InterestType,
-          FloatingPeriod: this.resultResponse.FloatingPeriodCode,
-          SalesOfficerName: this.resultResponse.SalesName,
-
+          FloatingPeriod: this.resultResponse.FloatingPeriodCode
         });
         this.makeNewLookupCriteria();
         this.ChangeInterestType();
+        // this.getInterestTypeCode();
+        // this.getInstSchm();
       },
       (error) => {
         console.log(error);
@@ -269,6 +322,7 @@ export class ApplicationDataComponent implements OnInit {
     this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupEmp.json";
+    //this.inputLookupObj.jsonSelect = this.resultResponse;
     this.inputLookupObj.nameSelect = this.resultResponse.SalesName;
     this.inputLookupObj.addCritInput = this.arrAddCrit;
     this.isInputLookupObj = true;
