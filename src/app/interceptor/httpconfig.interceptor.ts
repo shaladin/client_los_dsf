@@ -28,7 +28,11 @@ export class HttpConfigInterceptor implements HttpInterceptor {
         if (request.method == "POST" && (request.body == null || request.body.isLoading == undefined || request.body.isLoading == true)) {
             this.spinner.show();
         }
-        this.count++;
+        
+        if (request.url != "./assets/i18n/en.json") {
+            this.count++;
+        }
+
         var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
         var token: string = "";
         var myObj;
@@ -149,13 +153,18 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                 console.log(JSON.stringify(request.body));
                 return throwError(error);
             }), finalize(() => {
-                this.count--;
+                if (request.url != "./assets/i18n/en.json") {
+                    this.count--;
+                }
 
                 if (request.method == "POST") {
                     AdInsHelper.ClearPageAccessLog();
                 }
                 if (this.count == 0) {
                     this.spinner.hide();
+                }
+                if (this.count == 1) {
+                    console.log("last one");
                 }
             })
         );
