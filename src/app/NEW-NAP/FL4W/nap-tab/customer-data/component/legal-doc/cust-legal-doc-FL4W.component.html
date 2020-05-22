@@ -27,6 +27,11 @@
         <th><span translate class="thead-header" name='action'>ACTION</span></th>
       </tr>
     </thead>
+    <tbody *ngIf = "listLegalDoc == undefined">
+      <tr>
+        <td colspan="100%">No Data Available</td>
+      </tr>
+    </tbody>
     <tbody>
       <tr *ngFor="let item of listLegalDoc; let i = index">
         <td style="text-align: center;">{{item.LegalDocName}}</td>

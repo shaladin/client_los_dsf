@@ -305,5 +305,4 @@ export class NapAddComponent implements OnInit {
     this.inputLookupObjName.addCritInput = arrAddCrit;
     this.ucLookupOffering.setAddCritInput();
   }
-
 }
