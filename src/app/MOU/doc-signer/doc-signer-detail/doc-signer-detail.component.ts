@@ -53,7 +53,9 @@ export class DocSignerDetailComponent implements OnInit {
   employeeLookUpObj1: InputLookupObj;
   employeeLookUpObj2: InputLookupObj;
   pageType: string;
-  page: number;
+  page:number;
+  custId : number;
+  custUrl : string;
   MouCustSignerForm = this.fb.group({
     MfSigner1: [''],
     MfSignerPosition1: [''],

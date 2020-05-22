@@ -38,7 +38,7 @@ export class MouDetailGeneralComponent implements OnInit {
     PayFreqCode: ['', [Validators.required]],
     DownPaymentFromPrcnt: ['', [Validators.required, Validators.pattern("^[0-9]+$"), Validators.min(0), Validators.max(100)]],
     DownPaymentToPrcnt: ['', [Validators.required, Validators.pattern("^[0-9]+$"), Validators.min(0), Validators.max(100)]],
-    TenorFrom: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
+    TenorFrom: ['', [Validators.required, Validators.pattern("^[0-9]+$"), Validators.min(0)]] ,
     TenorTo: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
     RowVersion: [''],
     CurrCode: ['', [Validators.required]]
