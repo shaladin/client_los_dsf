@@ -59,6 +59,7 @@ import { SingleInstFctrComponent } from "./financial-data-fctr/component/single-
 import { FeeFctrComponent } from "./financial-data-fctr/component/fee/fee-fctr.component";
 import { CollateralFctrComponent } from "./multi-asset-data/collateral-fctr/collateral-fctr.component";
 import { InvoiceDataComponent } from "./invoice-data/invoice-data.component";
+import { ApplicationDataFactoringComponent } from './application-data/application-data-factoring/application-data-factoring.component';
 
 export const customCurrencyMaskConfig = {     
   align: "right",     
@@ -123,7 +124,8 @@ export const customCurrencyMaskConfig = {
     SchmRegulerFixFctrComponent,
     FeeFctrComponent,
     CollateralFctrComponent,
-    InvoiceDataComponent
+    InvoiceDataComponent,
+    ApplicationDataFactoringComponent
     // MultiAssetLeasingComponent,
     // AssetLeasingPagingComponent,
     // AssetLeasingAddEditComponent,
@@ -188,7 +190,8 @@ export const customCurrencyMaskConfig = {
     SchmRegulerFixFctrComponent,
     FeeFctrComponent,
     CollateralFctrComponent,
-    InvoiceDataComponent
+    InvoiceDataComponent,
+    ApplicationDataFactoringComponent
     // MultiAssetLeasingComponent,
     // AssetLeasingPagingComponent,
     // AssetLeasingAddEditComponent,
