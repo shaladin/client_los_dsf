@@ -42,7 +42,7 @@
     {
       "type": "text",
       "position": "center",
-      "property": "MrCustRelationshipCode"
+      "property": "CustRelationshipCodeDesc"
     },
     {
       "type": "action",

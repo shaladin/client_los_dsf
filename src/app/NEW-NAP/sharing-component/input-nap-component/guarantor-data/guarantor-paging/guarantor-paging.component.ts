@@ -20,12 +20,14 @@ export class GuarantorPagingComponent implements OnInit {
 
   inputGridObj: any;
   result : any = new Array();
+  resultData : any;
   closeResult: any;
   AppGuarantorId: any;
   MrGuarantorTypeCode: any;
   mode: any;
   appWizardObj: AppWizardObj;
   closeChk: any;
+  MrCustRelationshipCode : any = new Array();
 
   constructor(private http: HttpClient, private modalService: NgbModal, private toastr: NGXToastrService) {
   }
@@ -37,14 +39,14 @@ export class GuarantorPagingComponent implements OnInit {
 
     var guarantorObj = new GuarantorObj();
     guarantorObj.AppId = this.AppId;
-    this.http.post(AdInsConstant.GetListAppGuarantor, guarantorObj).subscribe(
+    this.http.post(AdInsConstant.GetAppGuarantorList, guarantorObj).subscribe(
       (response) => {
         console.log(response);
         this.inputGridObj.resultData = {
           Data: ""
         }
         this.inputGridObj.resultData["Data"] = new Array();
-        this.inputGridObj.resultData.Data = response["ReturnObject"]
+        this.inputGridObj.resultData.Data = response["ReturnObject"];
         this.result = this.inputGridObj.resultData.Data;
         console.log(this.result);
       },
@@ -116,7 +118,7 @@ export class GuarantorPagingComponent implements OnInit {
   loadGuarantorListData(appId : number) {
     var guarantorObj = new AppGuarantorObj();
     guarantorObj.AppId = appId;
-    this.http.post(AdInsConstant.GetListAppGuarantor, guarantorObj).subscribe(
+    this.http.post(AdInsConstant.GetAppGuarantorList, guarantorObj).subscribe(
       (response) => {
         this.inputGridObj.resultData = {
           Data: ""

@@ -38,6 +38,7 @@ export class GuarantorPersonalComponent implements OnInit {
   appGuarantorPersonalObj: AppGuarantorPersonalObj;
   guarantorPersonalObj: GuarantorPersonalObj;
   AppGuarantorPersonalId: any;
+  selectedNationalityCountryCode: any;
 
   constructor(private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService) {
   }
@@ -48,14 +49,14 @@ export class GuarantorPersonalComponent implements OnInit {
     MrIdTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
     MrGenderCode: ['', [Validators.required, Validators.maxLength(50)]],
     IdNo: ['', [Validators.required, Validators.maxLength(50)]],
-    MrMaritalStatCode: ['', [Validators.maxLength(50)]],
+    MrMaritalStatCode: ['', [Validators.required,Validators.maxLength(50)]],
     IdExpDt: ['', [Validators.required]],
-    MrNationalityCode: ['', [Validators.maxLength(50)]],
+    MrNationalityCode: ['', [Validators.required,Validators.maxLength(50)]],
     BirthPlace: ['', [Validators.required, Validators.maxLength(200)]],
     BirthDt: ['',[Validators.required]],
     CountryCode: ['', [Validators.maxLength(50)]],
     TaxIdNo: ['', [Validators.maxLength(50)]],
-    MrReligionCode: ['', [Validators.maxLength(50)]],
+    MrReligionCode: ['', [Validators.required,Validators.maxLength(50)]],
     MobilePhnNo: ['', [Validators.maxLength(50)]],
     Addr: [''],
     Phn: [''],
@@ -67,6 +68,10 @@ export class GuarantorPersonalComponent implements OnInit {
     Zipcode: [''],
     Email: ['']
   });
+
+  countryObj = {
+    CountryCode: ""
+  };
 
   ngOnInit(){
 
@@ -81,15 +86,15 @@ export class GuarantorPersonalComponent implements OnInit {
           console.log(response);
           this.resultData = response;
           this.AppGuarantorPersonalId = this.resultData.appGuarantorPersonalObj.AppGuarantorPersonalId;
-          this.inputLookupObj.nameSelect = this.resultData.appGuarantorObj.GuarantorName;
-          this.inputLookupObj1.nameSelect = this.resultData.appGuarantorPersonalObj.CountryCode;
+          this.inputLookupObj.jsonSelect = {CustName: this.resultData.appGuarantorObj.GuarantorName};
+          this.inputLookupObj1.jsonSelect = {CountryName: this.resultData.appGuarantorPersonalObj.CountryCode};
           this.PersonalForm.patchValue({
             MrCustRelationshipCode: this.resultData.appGuarantorObj.MrCustRelationshipCode,
             MrIdTypeCode: this.resultData.appGuarantorPersonalObj.MrIdTypeCode,
             MrGenderCode: this.resultData.appGuarantorPersonalObj.MrGenderCode,
             IdNo: this.resultData.appGuarantorPersonalObj.IdNo,
             MrMaritalStatCode: this.resultData.appGuarantorPersonalObj.MrMaritalStatCode,
-            IdExpDt: formatDate(this.resultData.appGuarantorPersonalObj['IdExpDt'], 'yyyy-MM-dd', 'en-US'),
+            IdExpDt: this.resultData.appGuarantorPersonalObj.IdExpiredDt != undefined ? formatDate(this.resultData.AppCustObj.appGuarantorPersonalObj, 'yyyy-MM-dd', 'en-US') : '',
             MrNationalityCode: this.resultData.appGuarantorPersonalObj.MrNationalityCode,
             BirthPlace: this.resultData.appGuarantorPersonalObj.BirthPlace,
             BirthDt: formatDate(this.resultData.appGuarantorPersonalObj['BirthDt'], 'yyyy-MM-dd', 'en-US'),
@@ -97,6 +102,7 @@ export class GuarantorPersonalComponent implements OnInit {
             MrReligionCode: this.resultData.appGuarantorPersonalObj.MrReligionCode,
             MobilePhnNo: this.resultData.appGuarantorPersonalObj.MobilePhnNo,
           })
+          this.setCountryName(this.resultData.CountryCode);
           this.setAddrLegalObj();
         },
         (error) => {
@@ -124,10 +130,6 @@ export class GuarantorPersonalComponent implements OnInit {
       RefMasterTypeCode: "MARITAL_STAT",
       RowVersion: ""
     }
-    var natObj = {
-      RefMasterTypeCode: "NATIONALITY",
-      RowVersion: ""
-    }
     var religionObj = {
       RefMasterTypeCode: "RELIGION",
       RowVersion: ""
@@ -138,6 +140,7 @@ export class GuarantorPersonalComponent implements OnInit {
         this.PersonalForm.patchValue({
           MrIdTypeCode: this.MrIdTypeCode[0].MasterCode
         });
+        this.clearExpDt();
       }
     );
     this.http.post(AdInsConstant.GetListActiveRefMaster, refCustRelObj).subscribe(
@@ -152,7 +155,7 @@ export class GuarantorPersonalComponent implements OnInit {
       (response) => {
         this.MrGenderCode = response["ReturnObject"];
         this.PersonalForm.patchValue({
-          MrGenderCode: this.MrGenderCode[0].Key
+          MrGenderCode: this.MrGenderCode[0].MasterCode
         });
       }
     );
@@ -164,12 +167,16 @@ export class GuarantorPersonalComponent implements OnInit {
         });
       }
     );
-    this.http.post(AdInsConstant.GetListActiveRefMaster, natObj).subscribe(
+    var obj = { RefMasterTypeCodes: ["NATIONALITY"] };
+    this.http.post(AdInsConstant.GetListRefMasterByRefMasterTypeCodes, obj).toPromise().then(
       (response) => {
+        console.log(response);
         this.MrNationalityCode = response["ReturnObject"];
-        this.PersonalForm.patchValue({
-          MrNationalityCode: this.MrNationalityCode[0].MasterCode
-        });
+        if(this.MrNationalityCode.length > 0){
+          this.PersonalForm.patchValue({
+            MrNationalityCode: this.MrNationalityCode[0].MasterCode
+          });
+        }
       }
     );
     this.http.post(AdInsConstant.GetListActiveRefMaster, religionObj).subscribe(
@@ -193,6 +200,39 @@ export class GuarantorPersonalComponent implements OnInit {
 
     this.inputFieldObj.inputLookupObj.nameSelect = this.resultData.appGuarantorPersonalObj.Zipcode;
     this.inputFieldObj.inputLookupObj.jsonSelect = { Zipcode: this.resultData.appGuarantorPersonalObj.Zipcode };
+  }
+
+  setCountryName(countryCode){
+    this.countryObj.CountryCode = countryCode;
+
+    this.http.post(AdInsConstant.GetRefCountryByCountryCode, this.countryObj).subscribe(
+      (response) => {
+        console.log(response);    
+        if(countryCode == "LOCAL"){
+          this.selectedNationalityCountryName = response["CountryName"];
+          this.isLocal = true;
+        }else{
+          this.isLocal = false
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+  }  
+  isLocal: boolean = false;
+  selectedNationalityCountryName: string = "";  
+  ChangeNationality(ev){
+    if(this.PersonalForm.controls.MrNationalityCode.value == "LOCAL"){
+      console.log(this.MrNationalityCode);
+      var idx = ev.target.selectedIndex  - 1;
+      this.selectedNationalityCountryCode = this.MrNationalityCode[idx].ReserveField1;
+      this.selectedNationalityCountryName = this.MrNationalityCode[idx].ReserveField2;
+      this.isLocal = true;
+    }else{
+      this.isLocal = false;
+    }
   }
 
   initLookup() {
@@ -294,6 +334,15 @@ export class GuarantorPersonalComponent implements OnInit {
   Add() {
     this.setAppGuarantor();
     this.setAppGuarantorPersonal();
+  }  
+  
+  clearExpDt(){
+    if(this.PersonalForm.controls.MrIdTypeCode.value == "EKTP"){
+      this.PersonalForm.patchValue({
+        IdExpDt: '',
+      });
+      this.PersonalForm.controls.IdExpDt.clearValidators();
+    }
   }
 
   setAppGuarantor() {
