@@ -29,6 +29,8 @@ export class PurchaseOrderDetailComponent implements OnInit {
   PurchaseOrderExpiredDt: Date;
   purchaseOrderHObj: PurchaseOrderHObj;
   purchaseOrderDObj: PurchaseOrderDObj;
+  lobCode : string;
+  TaskListId : string;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -44,6 +46,12 @@ export class PurchaseOrderDetailComponent implements OnInit {
       if (params["SupplCode"] != null) {
         this.SupplCode = params["SupplCode"];
       }
+      if (params["TaskListId"] != null) {
+        this.TaskListId = params["TaskListId"];
+      }
+      if (params["LobCode"] != null) {
+        this.lobCode = params["LobCode"];
+      }
     });
   }
 
@@ -58,6 +66,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
     }
     this.http.post(AdInsConstant.GetAllAssetDataForPOByAsset, appAssetObj).subscribe(
       (response) => {
+        console.log(response);
         this.AssetObj = response["ReturnObject"];
         this.ProportionalValue = this.AssetObj["ProportionalValue"];
         this.TotalInsCustAmt = this.AssetObj["TotalInsCustAmt"];
@@ -71,8 +80,8 @@ export class PurchaseOrderDetailComponent implements OnInit {
 
         this.purchaseOrderHObj.AgrmntId = this.AgrmntId;
         this.purchaseOrderHObj.SupplCode = this.SupplCode;
-        this.purchaseOrderHObj.BankCode = this.AssetObj["VendorBankAccObj"].BankCode;
-        this.purchaseOrderHObj.BankBranch = this.AssetObj["VendorBankAccObj"].BankName;
+        this.purchaseOrderHObj.BankCode = "008";
+        this.purchaseOrderHObj.BankBranch = "Mandiri Bank";
         this.purchaseOrderHObj.BankAccNo = this.AssetObj["VendorBankAccObj"].BankAccountNo;
         this.purchaseOrderHObj.BankAccName = this.AssetObj["VendorBankAccObj"].BankAccountName;
         this.purchaseOrderHObj.TotalPurchaseOrderAmt = this.TotalPurchaseOrderAmt;
@@ -118,7 +127,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
     if (this.AssetObj["AgrmntFeeListObj"].length != 0) {
       for (let i = 0; i < this.AssetObj["AgrmntFeeListObj"].length; i++) {
         this.purchaseOrderDObj = new PurchaseOrderDObj();
-        if (this.AssetObj["AgrmntFeeListObj"][i].MrFeeTypeCode == "ADMIN") {
+        if (this.AssetObj["AgrmntFeeListObj"][i].MrFeeTypeCode == "ADM") {
           this.purchaseOrderDObj.MrPoItemCode = "ADMIN_FEE_NOT_CPTLZ";
           this.purchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFeeListObj"][i].AppFeeAmt;
           listPurchaseOrderD.push(this.purchaseOrderDObj);
@@ -134,8 +143,8 @@ export class PurchaseOrderDetailComponent implements OnInit {
           this.purchaseOrderDObj.MrPoItemCode = "FDCIA_FEE_NOT_CPTLZ";
           this.purchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFeeListObj"][i].AppFeeAmt;
           listPurchaseOrderD.push(this.purchaseOrderDObj);
-        } else {
-          this.purchaseOrderDObj.MrPoItemCode = "";
+        } else if (this.AssetObj["AgrmntFeeListObj"][i].MrFeeTypeCode == "ADDADMIN"){
+          this.purchaseOrderDObj.MrPoItemCode = "ADD_ADMIN_FEE_NOT_CPTLZ";
           this.purchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFeeListObj"][i].AppFeeAmt;
           listPurchaseOrderD.push(this.purchaseOrderDObj);
         }
@@ -148,7 +157,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
     this.http.post(AdInsConstant.SubmitPurchaseOrder, POObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["/Nap/AdminProcess/PurchaseOrder/Paging"]);
+        this.router.navigate(["/Nap/AdminProcess/PurchaseOrder/PO"], { queryParams: { "AppId": this.AppId, "AgrmntId": this.AgrmntId, "WfTaskListId": this.TaskListId, "LobCode" : this.lobCode } });
       },
       (error) => {
         console.log(error);

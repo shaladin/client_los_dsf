@@ -29,6 +29,7 @@ import { DeliveryOrderMultiAssetDetailComponent } from './delivery-order-multi-a
 import { DeliveryOrderMultiAssetComponent } from './delivery-order-multi-asset/delivery-order-multi-asset.component';
 import { InvoiceVerifPagingComponent } from './invoice-verif/invoice-verif-paging/invoice-verif-paging.component';
 import { InvoiceVerifDetailComponent } from './invoice-verif/invoice-verif-detail/invoice-verif-detail.component';
+import { CustConfirmationPagingComponent } from './cust-confirmation/cust-confirmation-paging/cust-confirmation-paging.component';
 
 const routes: Routes = [
   {
@@ -56,7 +57,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'DeliveryOrder/paging',
+        path: 'DeliveryOrder/Paging',
         component: DeliveryOrderPagingComponent,
         data: {
           title: 'Delivery Order Paging'
@@ -67,6 +68,13 @@ const routes: Routes = [
         component: DeliveryOrderDetailComponent,
         data: {
           title: 'Delivery Order'
+        }
+      },
+      {
+        path: 'CustConfirmation/Paging',
+        component: CustConfirmationPagingComponent,
+        data: {
+          title: 'Customer Confirmation Paging'
         }
       },
       {
