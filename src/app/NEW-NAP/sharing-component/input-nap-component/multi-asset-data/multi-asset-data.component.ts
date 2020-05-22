@@ -9,8 +9,8 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 })
 export class MultiAssetDataComponent implements OnInit {
   @Output() OutputMultiAsset: EventEmitter<any> = new EventEmitter<any>();
-  mode: any;
-  AppId:any;
+  mode: any = "paging";
+  @Input() AppId:any;
   AppAssetId:any;
   AppCollateralId: any;
   type:any;
@@ -18,19 +18,20 @@ export class MultiAssetDataComponent implements OnInit {
   }
 
   ngOnInit() { 
+    console.log("Init Multi Asset");
     this.mode = "paging";
   }
 
   terimaValue(ev : any){
-    if(this.mode == 'submit'){
-      this.OutputMultiAsset.emit();
-    }
     console.log(ev);
     this.mode = ev.mode; 
     //this.AppId =  ev.AppId;
     //this.type = "addAsset";
     this.AppAssetId = ev.AppAssetId;
     this.AppCollateralId = ev.AppCollateralId;
+    if(this.mode == 'submit'){
+      this.OutputMultiAsset.emit();
+    }
   }
 
   terimaCollateral(ev : any){
