@@ -398,9 +398,9 @@
               </div>
             </div>
           </ng-template>
-
-
           <br>
+        </form>
+        <form class="form form-horizontal" [formGroup]="InsuranceDataForm" (ngSubmit)="AppInsForm.valid && SubmitForm2()">
           <div class="form-body">
             <div class="row">
               <label class="col-md-2 adins-label" translate>Total Premium to Customer</label>
@@ -409,8 +409,8 @@
               <label class="col-md-2 adins-required-label" translate>Paid Amount By Customer</label>
               <div class="col-md-2">
                 <input type="text" class="form-control" formControlName="PaidAmtByCust"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.PaidAmtByCust.invalid }">
-                <lib-uc-show-errors [control]="InsuranceDataForm.controls.PaidAmtByCust" [submit]="enjiForm.submitted">
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && AppInsForm.controls.PaidAmtByCust.invalid }" />
+                <lib-uc-show-errors [control]="AppInsForm.controls.PaidAmtByCust" [submit]="enjiForm.submitted">
                 </lib-uc-show-errors>
               </div>
             </div>
