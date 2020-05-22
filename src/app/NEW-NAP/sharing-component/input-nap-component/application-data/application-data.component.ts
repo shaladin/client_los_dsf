@@ -277,15 +277,19 @@ export class ApplicationDataComponent implements OnInit {
     );
   }
 
+  DictRefPayFreq: any = {};
   getPayFregData() {
     var url = AdInsConstant.GetListActiveRefPayFreq;
-    var obj = {
-      RowVersion: ""
-    };
+    var obj = { RowVersion: "" };
 
     this.http.post(url, obj).subscribe(
       (response) => {
+        console.log(response);
         var objTemp = response["ReturnObject"];
+        for(var i=0;i<objTemp.length;i++){
+          this.DictRefPayFreq[objTemp[i].PayFreqCode] = objTemp[i];
+        }
+        console.log(this.DictRefPayFreq);
         // this.applicationDDLitems[AdInsConstant.RefMasterTypeCodePayFreq] = objTemp;
         this.applicationDDLitems["Floating_Period"] = objTemp;
       },
@@ -385,8 +389,8 @@ export class ApplicationDataComponent implements OnInit {
     var idx = ev.target.selectedIndex - 1;
     var temp = this.NapAppModelForm.controls.Tenor.value;
     if (!isNaN(temp)) {
-      this.PayFreqVal = this.applicationDDLitems[AdInsConstant.RefMasterTypeCodePayFreq][idx].PayFreqVal;
-      this.PayFreqTimeOfYear = this.applicationDDLitems[AdInsConstant.RefMasterTypeCodePayFreq][idx].TimeOfYear;
+      this.PayFreqVal = this.DictRefPayFreq[this.applicationDDLitems[AdInsConstant.RefMasterTypeCodePayFreq][idx].Key].PayFreqVal;
+      this.PayFreqTimeOfYear = this.DictRefPayFreq[this.applicationDDLitems[AdInsConstant.RefMasterTypeCodePayFreq][idx].Key].TimeOfYear;
       var total = Math.ceil((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
       this.PatchNumOfInstallment(total);
     }
