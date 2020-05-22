@@ -294,6 +294,10 @@ export class ApplicationDataComponent implements OnInit {
         console.log(this.DictRefPayFreq);
         // this.applicationDDLitems[AdInsConstant.RefMasterTypeCodePayFreq] = objTemp;
         this.applicationDDLitems["Floating_Period"] = objTemp;
+        this.PayFreqVal = this.DictRefPayFreq[this.resultResponse.PayFreqCode].PayFreqVal;
+        this.PayFreqTimeOfYear = this.DictRefPayFreq[this.resultResponse.PayFreqCode].TimeOfYear;
+        console.log(this.PayFreqVal);
+        console.log(this.PayFreqTimeOfYear);
       },
       (error) => {
         console.log(error);
@@ -337,7 +341,7 @@ export class ApplicationDataComponent implements OnInit {
     this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupEmp.json";
-    //this.inputLookupObj.jsonSelect = this.resultResponse;
+    this.inputLookupObj.jsonSelect = this.resultResponse;
     this.inputLookupObj.nameSelect = this.resultResponse.SalesName;
     this.inputLookupObj.addCritInput = this.arrAddCrit;
     this.isInputLookupObj = true;
@@ -377,8 +381,8 @@ export class ApplicationDataComponent implements OnInit {
     this.makeLookUpObj();
   }
 
-  PayFreqVal;
-  PayFreqTimeOfYear;
+  PayFreqVal: number = 0;
+  PayFreqTimeOfYear: number = 0;
   ChangeNumOfInstallmentTenor() {
     var temp = this.NapAppModelForm.controls.Tenor.value;
     if (!isNaN(temp)) {
