@@ -400,19 +400,20 @@ export class MouRequestAddcollComponent implements OnInit {
   }
 
   SaveForm() {
-    this.setCollateralObjForSave();
-console.log("aaaa");
+    this.setCollateralObjForSave(); 
     var custCollObj = {
       MouCustCollateral: this.mouCustCollateralObj,
       MouCustCollateralRegistration: this.mouCustCollateralRegistrationObj
     }
-
-    if (this.type == 'AddEdit') {
+ 
+    if (this.collateralObj == null) {
+    
       this.http.post(AdInsConstant.AddMouCustCollateralData, custCollObj).subscribe(
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
           this.type = 'Paging';
+          this.bindMouData();
         },
         (error) => {
           console.log(error);
@@ -426,17 +427,27 @@ console.log("aaaa");
           console.log(response);
           this.toastr.successMessage(response["message"]);
           this.type = 'Paging';
+          this.collateralObj = null;
+          this.bindMouData();
         },
         (error) => {
           console.log(error);
         }
       );
     }
-    this.bindMouData();
+    
+   
   }
 
   setCollateralObjForSave() {
-    this.mouCustCollateralObj = new MouCustCollateralObj;
+    this.mouCustCollateralObj = new MouCustCollateralObj; 
+    this.mouCustCollateralRegistrationObj = new MouCustCollateralRegistrationObj;
+    
+    if (this.collateralObj != null)
+    { 
+      this.mouCustCollateralObj = this.collateralObj;
+      this.mouCustCollateralRegistrationObj = this.collateralRegistrationObj; 
+    } 
     this.mouCustCollateralObj.MouCustId = this.MouCustId;
     this.mouCustCollateralObj.AssetTypeCode = this.AddCollForm.controls.AssetTypeCode.value;
     this.mouCustCollateralObj.FullAssetCode = this.AddCollForm.controls.AssetTypeCode.value;
@@ -458,7 +469,6 @@ console.log("aaaa");
     this.mouCustCollateralObj.CollateralValueAmt = this.AddCollForm.controls.CollateralValueAmt.value;
     this.mouCustCollateralObj.CollateralNotes = this.AddCollForm.controls.Notes.value;
 
-    this.mouCustCollateralRegistrationObj = new MouCustCollateralRegistrationObj;
     this.mouCustCollateralRegistrationObj.OwnerName = this.AddCollForm.controls.OwnerName.value;
     this.mouCustCollateralRegistrationObj.OwnerIdNo = this.AddCollForm.controls.OwnerIdNo.value;
     this.mouCustCollateralRegistrationObj.MrIdTypeCode = this.AddCollForm.controls.MrIdType.value;
@@ -482,15 +492,6 @@ console.log("aaaa");
     this.mouCustCollateralRegistrationObj.LocationAreaCode3 = this.AddCollForm.controls["locationAddr"]["controls"].AreaCode3.value;
     this.mouCustCollateralRegistrationObj.LocationAreaCode4 = this.AddCollForm.controls["locationAddr"]["controls"].AreaCode4.value;
 
-    if (this.type == 'Edit')
-    {
-      this.mouCustCollateralObj.MouCustCollateralId = this.AddCollForm.controls.MouCustCollateralId;
-      this.mouCustCollateralRegistrationObj.MouCustCollateralRegistrationId = this.AddCollDataForm.controls.MouCustCollateralRegistrationId;
-      this.mouCustCollateralRegistrationObj.MouCustCollateralId = this.AddCollForm.controls.MouCustCollateralId;
-
-      this.mouCustCollateralObj.RowVersion = this.AddCollForm.controls.RowVersionCollateral;
-      this.mouCustCollateralRegistrationObj.RowVersion = this.AddCollForm.controls.RowVersionCollateralRegistration;
-    }
   }
 
   copyToLocation()
@@ -520,6 +521,7 @@ console.log("aaaa");
     var collObj = { MouCustCollateralId: MouCustCollId };
     this.http.post(AdInsConstant.GetMouCustCollateralDataForUpdateByMouCustCollateralId, collObj).subscribe(
       (response) => {
+       
         this.collateralObj = response['MouCustCollateral'];
         this.collateralRegistrationObj = response['MouCustCollateralRegistration'];
 
@@ -609,12 +611,13 @@ console.log("aaaa");
       response => {
         this.toastr.successMessage(response['message']);
         this.type = 'Paging';
+        this.bindMouData();
       },
       error => {
         console.log(error);
       }
     );
-    this.bindMouData();
+ 
   }
 
   delete(MouCustCollId) {
@@ -623,6 +626,7 @@ console.log("aaaa");
       (response) => {
         console.log(response);
         this.toastr.successMessage(response["message"]);
+        this.bindMouData();
       },
       (error) => {
         console.log(error);
