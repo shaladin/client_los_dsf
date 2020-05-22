@@ -238,6 +238,7 @@ export class LeadInputLeadDataComponent implements OnInit {
           (response) => {
             this.returnLeadObj = response;
             this.returnLobCode = response['LobCode'];
+            
             if (this.lobKta.includes(this.returnLobCode) == true) {
               this.LeadDataForm.controls['NTFAmt'].setValidators([Validators.required]);
             }
@@ -519,12 +520,13 @@ export class LeadInputLeadDataComponent implements OnInit {
     {
       this.LeadDataForm.controls.DownPaymentPercent.disable();
       this.LeadDataForm.controls.DownPaymentAmount.enable();
-
+      // this.LeadDataForm.controls.DownPaymentPercent.clearValidators();
     }
     else
     {
       this.LeadDataForm.controls.DownPaymentPercent.enable();
       this.LeadDataForm.controls.DownPaymentAmount.disable();
+      // this.LeadDataForm.controls.DownPaymentAmount.clearValidators();
     }
   }
 

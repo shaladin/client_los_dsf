@@ -5,7 +5,7 @@ import { environment } from 'environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
@@ -76,7 +76,6 @@ export class LeadInputMainInfoComponent implements OnInit {
     OfficeCode: [''],
     OfficeName: [''],
     CrtOfficeCode: [''],
-    CrtOfficeName: [''],
     OrderNo: [''],
     LobCode: [''],
     LeadSource: [''],
@@ -203,81 +202,17 @@ export class LeadInputMainInfoComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('test');
     this.claimTask();
+    this.MakeLookUpObj();
+    this.GetOfficeDDL();
     this.user = JSON.parse(localStorage.getItem("UserAccess"));
-
-    if (this.user.MrOfficeTypeCode == "HO") {
-      this.MainInfoForm.patchValue({
-        CrtOfficeCode: this.user.OfficeCode,
-        CrtOfficeName: this.user.OfficeName,
-      });
-    } else if (this.user.MrOfficeTypeCode == "Center Group") {
-      this.MainInfoForm.patchValue({
-        CrtOfficeCode: this.user.OfficeCode,
-        CrtOfficeName: this.user.OfficeName,
-      });
-    }
-
-    this.leadPersonalLookUpObj = new InputLookupObj();
-    this.leadPersonalLookUpObj.isRequired = false;
-    this.leadPersonalLookUpObj.urlJson = "./assets/uclookup/lookupLeadPersonal.json";
-    this.leadPersonalLookUpObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.leadPersonalLookUpObj.urlEnviPaging = environment.losUrl;
-    this.leadPersonalLookUpObj.pagingJson = "./assets/uclookup/lookupLeadPersonal.json";
-    this.leadPersonalLookUpObj.genericJson = "./assets/uclookup/lookupLeadPersonal.json";
-
-    this.agencyLookUpObj = new InputLookupObj();
-    this.agencyLookUpObj.isRequired = false;
-    this.agencyLookUpObj.urlJson = "./assets/uclookup/lookupAgency.json";
-    this.agencyLookUpObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.agencyLookUpObj.urlEnviPaging = environment.FoundationR3Url;
-    this.agencyLookUpObj.pagingJson = "./assets/uclookup/lookupAgency.json";
-    this.agencyLookUpObj.genericJson = "./assets/uclookup/lookupAgency.json";
-
-    this.cmoNameLookUpObj = new InputLookupObj();
-    this.cmoNameLookUpObj.isRequired = false;
-    this.cmoNameLookUpObj.urlJson = "./assets/uclookup/lookupCMO.json";
-    this.cmoNameLookUpObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.cmoNameLookUpObj.urlEnviPaging = environment.FoundationR3Url;
-    this.cmoNameLookUpObj.pagingJson = "./assets/uclookup/lookupCMO.json";
-    this.cmoNameLookUpObj.genericJson = "./assets/uclookup/lookupCMO.json";
-
-    this.surveyorNameLookUpObj = new InputLookupObj();
-    this.surveyorNameLookUpObj.isRequired = false;
-    this.surveyorNameLookUpObj.urlJson = "./assets/uclookup/lookupSurveyor.json";
-    this.surveyorNameLookUpObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.surveyorNameLookUpObj.urlEnviPaging = environment.FoundationR3Url;
-    this.surveyorNameLookUpObj.pagingJson = "./assets/uclookup/lookupSurveyor.json";
-    this.surveyorNameLookUpObj.genericJson = "./assets/uclookup/lookupSurveyor.json";
-
-    this.salesNameLookUpObj = new InputLookupObj();
-    this.salesNameLookUpObj.isRequired = false;
-    this.salesNameLookUpObj.urlJson = "./assets/uclookup/lookupTeleSales.json";
-    this.salesNameLookUpObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.salesNameLookUpObj.urlEnviPaging = environment.FoundationR3Url;
-    this.salesNameLookUpObj.pagingJson = "./assets/uclookup/lookupTeleSales.json";
-    this.salesNameLookUpObj.genericJson = "./assets/uclookup/lookupTeleSales.json";
-
-    this.refOfficeObj = new RefOfficeObj();
-    this.http.post(this.getListRefOffice, this.refOfficeObj).subscribe(
-      (response) => {
-        this.listRefOffice = response['ReturnObject'];
-        this.MainInfoForm.patchValue({
-          OfficeCode: response['ReturnObject'][0]['Key'],
-          OfficeName: response['ReturnObject'][0]['Value']
-        });
-      },
-      (error) => {
-        console.log(error);
-      });
-
+    
     this.refLobObj = new RefLobObj();
     this.refLobObj.RefLobId = "-"
     this.http.post(this.getListActiveLob, this.refLobObj).subscribe(
       (response) => {
         this.listRefLob = response['ReturnObject'];
-        // console.log("bbb")
-        // console.log(this.listRefLob)
         this.MainInfoForm.patchValue({
           LobCode: response['ReturnObject'][0]['Key'],
           LobName: response['ReturnObject'][0]['Value']
@@ -371,9 +306,54 @@ export class LeadInputMainInfoComponent implements OnInit {
     }
   }
 
+  MakeLookUpObj(){
+    this.leadPersonalLookUpObj = new InputLookupObj();
+    this.leadPersonalLookUpObj.isRequired = false;
+    this.leadPersonalLookUpObj.urlJson = "./assets/uclookup/lookupLeadPersonal.json";
+    this.leadPersonalLookUpObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.leadPersonalLookUpObj.urlEnviPaging = environment.losUrl;
+    this.leadPersonalLookUpObj.pagingJson = "./assets/uclookup/lookupLeadPersonal.json";
+    this.leadPersonalLookUpObj.genericJson = "./assets/uclookup/lookupLeadPersonal.json";
+
+    this.agencyLookUpObj = new InputLookupObj();
+    this.agencyLookUpObj.isRequired = false;
+    this.agencyLookUpObj.urlJson = "./assets/uclookup/lookupAgency.json";
+    this.agencyLookUpObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.agencyLookUpObj.urlEnviPaging = environment.FoundationR3Url;
+    this.agencyLookUpObj.pagingJson = "./assets/uclookup/lookupAgency.json";
+    this.agencyLookUpObj.genericJson = "./assets/uclookup/lookupAgency.json";
+
+    this.cmoNameLookUpObj = new InputLookupObj();
+    this.cmoNameLookUpObj.isRequired = false;
+    this.cmoNameLookUpObj.urlJson = "./assets/uclookup/lookupCMO.json";
+    this.cmoNameLookUpObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.cmoNameLookUpObj.urlEnviPaging = environment.FoundationR3Url;
+    this.cmoNameLookUpObj.pagingJson = "./assets/uclookup/lookupCMO.json";
+    this.cmoNameLookUpObj.genericJson = "./assets/uclookup/lookupCMO.json";
+
+    this.surveyorNameLookUpObj = new InputLookupObj();
+    this.surveyorNameLookUpObj.isRequired = false;
+    this.surveyorNameLookUpObj.urlJson = "./assets/uclookup/lookupSurveyor.json";
+    this.surveyorNameLookUpObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.surveyorNameLookUpObj.urlEnviPaging = environment.FoundationR3Url;
+    this.surveyorNameLookUpObj.pagingJson = "./assets/uclookup/lookupSurveyor.json";
+    this.surveyorNameLookUpObj.genericJson = "./assets/uclookup/lookupSurveyor.json";
+
+    this.salesNameLookUpObj = new InputLookupObj();
+    this.salesNameLookUpObj.isRequired = false;
+    this.salesNameLookUpObj.urlJson = "./assets/uclookup/lookupTeleSales.json";
+    this.salesNameLookUpObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.salesNameLookUpObj.urlEnviPaging = environment.FoundationR3Url;
+    this.salesNameLookUpObj.pagingJson = "./assets/uclookup/lookupTeleSales.json";
+    this.salesNameLookUpObj.genericJson = "./assets/uclookup/lookupTeleSales.json";
+  }
   OfficeChanged(event) {
+    // this.MainInfoForm.patchValue({
+    //   OfficeName: this.listRefOffice.find(x => x.Key == event.target.value).Value
+    // });
     this.MainInfoForm.patchValue({
-      OfficeName: this.listRefOffice.find(x => x.Key == event.target.value).Value
+      OfficeCode: event.target.selectedOptions[0].value,
+      OfficeName: event.target.selectedOptions[0].text,
     });
   }
 
@@ -383,13 +363,46 @@ export class LeadInputMainInfoComponent implements OnInit {
     });
   }
 
+GetOfficeDDL(){
+  this.refOfficeObj = new RefOfficeObj();
+  this.http.post(this.getListRefOffice, this.refOfficeObj).subscribe(
+    (response) => {
+      this.listRefOffice = response['ReturnObject'];
+      console.log(this.listRefOffice)
+      // this.MainInfoForm.patchValue({
+      //   OfficeCode: response['ReturnObject'][0]['Key'],
+      //   OfficeName: response['ReturnObject'][0]['Value']
+      // });
+
+      if (this.user.MrOfficeTypeCode == "CG") {
+        this.MainInfoForm.patchValue({
+          CrtOfficeCode: this.user.OfficeCode,
+          OfficeCode : this.listRefOffice[0].Key,
+          OfficeName : this.listRefOffice[0].Value,
+        });
+        // this.MainInfoForm.controls.OfficeCode.setValidators([Validators.required]);    
+      }
+      else{
+        this.MainInfoForm.controls.OfficeCode.disable();
+        this.MainInfoForm.patchValue({
+          CrtOfficeCode: this.user.OfficeCode,
+          OfficeCode : this.user.OfficeCode,
+          OfficeName : this.user.OfficeName
+        });
+      }
+    },
+    (error) => {
+      console.log(error);
+    });
+}
+
+
   setLead() {
     this.leadObj.LeadNo = "0";
     this.leadObj.LeadCopyId = this.leadIdExist;
     this.leadObj.OriOfficeCode = this.MainInfoForm.controls["OfficeCode"].value;
-    this.leadObj.OriOfficeName = this.MainInfoForm.controls["OfficeName"].value;
+    // this.leadObj.OriOfficeName = this.MainInfoForm.controls["OfficeName"].value;
     this.leadObj.CrtOfficeCode = this.MainInfoForm.controls["CrtOfficeCode"].value;
-    // this.leadObj.CrtOfficeName = this.MainInfoForm.controls["CrtOfficeName"].value;
     this.leadObj.LeadDt = new Date();
     this.leadObj.OrderNo = this.MainInfoForm.controls["OrderNo"].value;
     this.leadObj.LobCode = this.MainInfoForm.controls["LobCode"].value;
