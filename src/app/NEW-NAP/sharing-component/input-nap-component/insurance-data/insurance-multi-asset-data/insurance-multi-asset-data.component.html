@@ -7,7 +7,7 @@
           <div id="assetData">
             <lib-ucSubsection [id]="'assetDataId'" [title]="'Loan Object'" [panel]="'assetData'">
             </lib-ucSubsection>
-            <lib-ucgridview [gridInput]="gridAssetDataObj"></lib-ucgridview>
+            <lib-ucgridview [gridInput]="gridAssetDataObj" (callback)="event2($event)"></lib-ucgridview>
           </div>
 
           <div id="collateral">
@@ -15,6 +15,18 @@
             </lib-ucSubsection>
             <lib-ucgridview [gridInput]="gridAppCollateralObj" (callback)="event($event)"></lib-ucgridview>
           </div>
+
+          <ng-template #AssetContent let-c="close" let-d="dismiss">
+            <div class="modal-header">
+              <h4 class="modal-title">Asset Data</h4>
+              <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <app-asset-data-add-edit [AppAssetId]="appAssetIdForAssetModal" [AppId]="appIdForAssetModal" (assetValue)="terimaValue($event)"> </app-asset-data-add-edit>
+            </div>
+          </ng-template>
 
           <ng-template #InsuranceContent let-c="close" let-d="dismiss">
             <div class="modal-header">
@@ -405,7 +417,7 @@
           </div>
           <div class="form-body">
             <div class="row">
-              <label class="col-md-2 adins-label" translate>Total Premium to Customer</label>
+              <label class="col-md-2 adins-label" translate>Capitalized Amount</label>
               <label class="col-md-2 adins-label" translate>8000000</label>
             </div>
           </div>

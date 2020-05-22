@@ -15,7 +15,6 @@ import { NapPagingComponent } from './nap-paging/nap-paging.component';
 import { NapViewComponent } from './nap-view/nap-view.component';   
 import { MatCheckboxModule, MatRadioModule, MatSelectModule, MatTabsModule } from "@angular/material";
 import { NgxCurrencyModule } from "ngx-currency";
-import { customCurrencyMaskConfig } from "app/MOU/mou.module"; 
 import { NapAddDetailComponent } from './nap-add-detail/nap-add-detail.component';
 import { NapTabComponentModule } from "./nap-tab/nap-tab.module";
 import { ViewMainInfoComponentModule } from "../sharing-component/view-main-info-component/view-main-info-component.module";
@@ -25,6 +24,31 @@ import { ViewAppCustDataPersonalComponent } from "../sharing-component/view-app-
 import { ViewAppCustDataCompanyComponent } from "../sharing-component/view-app-component/view-app-cust-data-company/view-app-cust-data-company.component";
 import { ViewAgrmntComponent } from './view-agrmnt/view-agrmnt.component';
 import { ViewAgrmntComponentModule } from "../sharing-component/view-agrmnt-component/view-agrmnt-component.module";
+import { TabCommissionComponent } from "../sharing-component/view-app-component/tab-commission/tab-commission.component";
+import { AgrmntLifeInsuranceComponent } from "../sharing-component/view-agrmnt-component/life-insurance/life-insurance.component";
+import { ViewCommissionComponent } from "../sharing-component/view-agrmnt-component/view-commission/view-commission.component";
+import { ListDataCommissionComponent } from "../sharing-component/view-app-component/tab-commission/list-data-commission/list-data-commission.component";
+import { ViewPurchaseOrderComponent } from "../sharing-component/view-agrmnt-component/view-purchase-order/view-purchase-order.component";
+import { ViewDeliveryOrderComponent } from "../sharing-component/view-agrmnt-component/view-delivery-order/view-delivery-order.component";
+import { AgrmntFinancialComponent } from "../sharing-component/view-agrmnt-component/agrmnt-financial/agrmnt-financial.component";
+import { ViewAgrmntReservedFundComponent } from "../sharing-component/view-agrmnt-component/view-reserved-fund/view-reserved-fund.component";
+import { ViewAgrmntSummaryComponent } from "../sharing-component/view-agrmnt-component/view-summary/view-summary.component";
+import { ViewAgrmntDocumentComponent } from "../sharing-component/view-agrmnt-component/view-document/view-document.component";
+import { AppTcComponent } from "../sharing-component/view-app-component/app-tc/app-tc.component";
+import { AppAssetDataComponent } from "../sharing-component/view-app-component/app-asset-data/app-asset-data.component";
+import { AppInsuranceComponent } from "../sharing-component/view-app-component/app-insurance/app-insurance.component";
+ 
+export const customCurrencyMaskConfig = {     
+  align: "right",     
+  allowNegative: true,     
+  allowZero: true,     
+  decimal: ".",     
+  precision: 2,     
+  prefix: "",     
+  suffix: "",     
+  thousands: ",",     
+  nullable: false
+};
  
 
 @NgModule({
@@ -44,7 +68,6 @@ import { ViewAgrmntComponentModule } from "../sharing-component/view-agrmnt-comp
     MatSelectModule,
     NapTabComponentModule,
     MatTabsModule,
-    ViewAgrmntComponentModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
   ],
   declarations: [
@@ -57,6 +80,21 @@ import { ViewAgrmntComponentModule } from "../sharing-component/view-agrmnt-comp
     ViewAppCustDataPersonalComponent,
     ViewAppCustDataCompanyComponent,
     ViewAgrmntComponent, 
+    TabCommissionComponent,
+    ListDataCommissionComponent,
+    ViewAgrmntComponent,  
+    AgrmntLifeInsuranceComponent,
+    ViewCommissionComponent,
+    ListDataCommissionComponent,
+    ViewPurchaseOrderComponent,
+    ViewDeliveryOrderComponent,
+    AgrmntFinancialComponent,
+    ViewAgrmntReservedFundComponent,
+    ViewAgrmntSummaryComponent,
+    ViewAgrmntDocumentComponent,
+    AppTcComponent,
+    AppAssetDataComponent,
+    AppInsuranceComponent, 
   ],
   providers: [
     NGXToastrService

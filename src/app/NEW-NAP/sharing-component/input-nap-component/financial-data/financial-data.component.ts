@@ -98,6 +98,7 @@ export class FinancialDataComponent implements OnInit {
   }
 
   LoadAppFinData() {
+    console.log("Load App Fin Data Started...");
     this.http.post<AppFinDataObj>(environment.losUrl + "/AppFinData/GetInitAppFinDataByAppId", { AppId: this.AppId }).subscribe(
       (response) => {
         this.appFinDataObj = response;
@@ -132,6 +133,8 @@ export class FinancialDataComponent implements OnInit {
 
           MrInstSchemeCode: this.appFinDataObj.MrInstSchemeCode,
           CummulativeTenor: this.appFinDataObj.CummulativeTenor,
+
+          NtfAmt: this.appFinDataObj.NtfAmt
         });
 
         this.IsParentLoaded = true;

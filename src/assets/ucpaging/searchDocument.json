@@ -33,14 +33,6 @@
             "value": "",
             "label": "Product Offering Name",
             "placeholder": "Placeholder"
-        },
-        {
-            "type": "textbox",
-            "name": "B.AGRMNT_STAT",
-            "id": "StatusId",
-            "value": "",
-            "label": "Status Of Need Doc Print",
-            "placeholder": "Placeholder"
         }
     ],
     "querystring": {
@@ -73,13 +65,7 @@
             "name": "ProdName"
         },
         {
-            "type": "sort",
-            "position": "right",
-            "label": "Status of Need Doc Print",
-            "name": "Status"
-        },
-        {
-            "type": "Print",
+            "type": "label",
             "position": "center",
             "label": "Action"
         }
@@ -106,17 +92,12 @@
             "property": "ProdName"
         },
         {
-            "type": "text",
-            "position": "right",
-            "property": "Status"
-        },
-        {
             "type": "action",
             "position": "center",
             "action": [
                 {
                     "type": "edit",
-                    "path": "/Document/DocPrint/View",
+                    "path": "/Nap/AdminProcess/DocPrint/View",
                     "param": [
                         {
                             "type": "AgrmntId",

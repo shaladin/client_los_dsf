@@ -4,8 +4,6 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { UcLookupObj } from 'app/shared/model/UcLookupObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
@@ -41,24 +39,24 @@ export class GuarantorPersonalComponent implements OnInit {
   guarantorPersonalObj: GuarantorPersonalObj;
   AppGuarantorPersonalId: any;
 
-  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService) {
+  constructor(private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService) {
   }
 
   PersonalForm = this.fb.group({
-    GuarantorName: [''],
-    MrCustRelationshipCode: [''],
-    MrIdTypeCode: [''],
-    MrGenderCode: [''],
-    IdNo: ['', Validators.required],
-    MrMaritalStatCode: [''],
-    IdExpDt: [''],
-    MrNationalityCode: [''],
-    BirthPlace: [''],
-    BirthDt: [''],
-    CountryCode: [''],
-    TaxIdNo: [''],
-    MrReligionCode: [''],
-    MobilePhnNo: [''],
+    GuarantorName: ['', [Validators.required, Validators.maxLength(500)]],
+    MrCustRelationshipCode: ['', [Validators.required, Validators.maxLength(50)]],
+    MrIdTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
+    MrGenderCode: ['', [Validators.required, Validators.maxLength(50)]],
+    IdNo: ['', [Validators.required, Validators.maxLength(50)]],
+    MrMaritalStatCode: ['', [Validators.maxLength(50)]],
+    IdExpDt: ['', [Validators.required]],
+    MrNationalityCode: ['', [Validators.maxLength(50)]],
+    BirthPlace: ['', [Validators.required, Validators.maxLength(200)]],
+    BirthDt: ['',[Validators.required]],
+    CountryCode: ['', [Validators.maxLength(50)]],
+    TaxIdNo: ['', [Validators.maxLength(50)]],
+    MrReligionCode: ['', [Validators.maxLength(50)]],
+    MobilePhnNo: ['', [Validators.maxLength(50)]],
     Addr: [''],
     Phn: [''],
     AreaCode1: [''],
@@ -70,7 +68,14 @@ export class GuarantorPersonalComponent implements OnInit {
     Email: ['']
   });
 
-  ngOnInit() {
+  UserAccess: any;
+  MaxDate: Date;
+  Max17YO: Date;
+  ngOnInit(){
+    this.UserAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    this.MaxDate = new Date(this.UserAccess.BusinessDt);
+    this.Max17YO = new Date(this.UserAccess.BusinessDt);
+    this.Max17YO.setFullYear(this.MaxDate.getFullYear()-17);
 
     this.initLookup();
     this.initAddr();
@@ -296,6 +301,19 @@ export class GuarantorPersonalComponent implements OnInit {
   Add() {
     this.setAppGuarantor();
     this.setAppGuarantorPersonal();
+    let d1 = new Date(this.guarantorPersonalObj.AppGuarantorPersonalObj.IdExpDt);
+    let d2 = new Date(this.MaxDate);
+    let d3 = new Date(this.guarantorPersonalObj.AppGuarantorPersonalObj.BirthDt);
+    let d4 = new Date(this.Max17YO);
+    if(d1>d2){
+      this.toastr.errorMessage("Id Expired Date can not be more than " + formatDate(this.MaxDate, 'yyyy-MM-dd', 'en-US'));
+      return false;
+    }
+    if(d3>d4){
+      this.toastr.errorMessage("Birth Date can not be more than " + formatDate(this.Max17YO, 'yyyy-MM-dd', 'en-US'));
+      return false;
+    }
+    return true;
   }
 
   setAppGuarantor() {
@@ -333,7 +351,7 @@ export class GuarantorPersonalComponent implements OnInit {
   SaveForm() {
     console.log(this.PersonalForm);
     this.guarantorPersonalObj = new GuarantorPersonalObj();
-    this.Add();
+    if(this.Add() == false) return;
     if (this.mode == "edit") {
       this.guarantorPersonalObj.RowVersion = this.resultData.RowVersion;
       this.guarantorPersonalObj.AppGuarantorObj.AppGuarantorId = this.AppGuarantorId;
@@ -381,4 +399,11 @@ export class GuarantorPersonalComponent implements OnInit {
     this.initAddr();
   }
 
+  clearExpDt(){
+    if(this.PersonalForm.value.MrIdTypeCode == "EKTP"){
+      this.PersonalForm.patchValue({
+        IdExpDt: ''
+      });
+    }
+  }
 }

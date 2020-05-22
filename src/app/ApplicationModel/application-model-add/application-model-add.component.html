@@ -1,26 +1,15 @@
 <div class="col-md-12">
   <div class="card">
-    <div class="card-header header-title">
-      <div class="row">
-        <div class="col-md-8">
-          <h4 class="card-title" id="horz-layout-colored-controls" translate>OFFICE </h4>
-        </div>
-      </div>
-    </div>
-
-
     <div class="row text-left">
       <div class="card-body">
         <div class="px-3">
           <form class="form form-horizontal" [formGroup]="SalesAppInfoForm"
             (ngSubmit)="SalesAppInfoForm.valid && SaveForm()" #enjiForm="ngForm">
             <div class="form-body">
-              <h4 class="form-section card-title" translate><i class="ft-file-text"></i> [-] Main Info</h4>
               <div class="row text-left">
                 <div class="card-body">
                   <div class="px-3">
                     <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Sales Information</h4>
-
                     <div class="form-group row adins-required">
                       <label class="col-md-3  adInsLabel" translate>Survey No </label>
                       <div class="col-md-9">
@@ -30,7 +19,6 @@
                         </lib-uc-show-errors>
                       </div>
                     </div>
-
                     <div class="form-group row adins-required">
                       <label class="col-md-3  adInsLabel" translate>Sales Recommendation </label>
                       <div class="col-md-9">
@@ -45,7 +33,6 @@
                         </lib-uc-show-errors>
                       </div>
                     </div>
-
                     <div class="form-group row adins-required">
                       <label class="col-md-3  adInsLabel" translate>Survey Notes </label>
                       <div class="col-md-9">
@@ -55,7 +42,6 @@
                         </lib-uc-show-errors>
                       </div>
                     </div>
-
                     <div class="form-group row adins-required">
                       <label class="col-md-3  adInsLabel" translate>Sales Officer</label>
                       <div class="col-md-9">
@@ -69,7 +55,6 @@
                         </lib-uc-show-errors>
                       </div>
                     </div>
-
                     <div class="form-group row adins-required">
                       <label class="col-md-3  adInsLabel" translate>Sales Head Officer </label>
                       <div class="col-md-9">
@@ -79,18 +64,9 @@
                         </lib-uc-show-errors>
                       </div>
                     </div>
-
-
-
-
-                    <!-- <app-ucAddress #ucAddress [parentForm]='OfficeReqForm'></app-ucAddress>
-                    <!- <app-ucContactInfo #ucContactInfo [parentForm]='OfficeReqForm'></app-ucContactInfo> -->
-
-
                     <div class="form-body">
                       <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Application Information
                       </h4>
-
                       <div class="form-group row adins-required">
                         <label class="col-md-3  adInsLabel" translate>Installment Type</label>
                         <div class="col-md-9">
@@ -104,12 +80,12 @@
                           </lib-uc-show-errors>
                         </div>
                       </div>
-
                       <ng-container *ngIf="SalesAppInfoForm.controls.MrInstTypeCode.value == 'SINGLE'">
                         <div class="form-group row adins-required">
                           <label class="col-md-3  adInsLabel" translate>Calculation Method</label>
                           <div class="col-md-9">
-                            <select class="form-control adInsInput" style="width: auto" formControlName="MrSingleInstCalcMthdCode"
+                            <select class="form-control adInsInput" style="width: auto"
+                              formControlName="MrSingleInstCalcMthdCode"
                               [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.MrSingleInstCalcMthdCode.invalid }">
                               <option *ngFor="let cm of allCalcMethod" value="{{cm.Key}}">
                                 {{cm.Value}}</option>
@@ -120,7 +96,6 @@
                           </div>
                         </div>
                       </ng-container>
-
                       <ng-container *ngIf="SalesAppInfoForm.controls.MrInstTypeCode.value == 'SINGLE'">
                         <div class="form-group row adins-required">
                           <label class="col-md-3  adInsLabel" translate>Term Of Payment</label>
@@ -132,7 +107,6 @@
                           </div>
                         </div>
                       </ng-container>
-
                       <ng-container *ngIf="SalesAppInfoForm.controls.MrInstTypeCode.value == 'SINGLE'">
                         <div class="form-group row adins-required">
                           <label class="col-md-3  adInsLabel" for="Tenor" translate>Tenor</label>
@@ -156,7 +130,6 @@
                           </div>
                         </div>
                       </ng-container>
-
                       <ng-container *ngIf="SalesAppInfoForm.controls.MrInstTypeCode.value == 'MULTIPLE'">
                         <div class="form-group row adins-required">
                           <label class="col-md-3  adInsLabel" translate>Payment Freqency</label>
@@ -172,7 +145,6 @@
                           </div>
                         </div>
                       </ng-container>
-
                       <div class="form-group row adins-required">
                         <label class="col-md-3  adInsLabel" translate>Num Of Installment</label>
                         <div class="col-md-9">
@@ -214,14 +186,12 @@
                           </div>
                         </div>
                       </ng-container>
-
                       <div class="form-group row">
                         <label class="col-md-3 adInsLabel">Is Disclosed</label>
                         <div class="col-md-9">
                           <input type="checkbox" class="border-primary" formControlName="IsDisclosed">
                         </div>
                       </div>
-
                       <div class="form-group row adins-required">
                         <label class="col-md-3  adInsLabel" translate>Paid By</label>
                         <div class="col-md-9">
@@ -235,7 +205,6 @@
                           </lib-uc-show-errors>
                         </div>
                       </div>
-
                       <div class="form-group row adins-required">
                         <label class="col-md-3  adInsLabel" translate>Way of Payment</label>
                         <div class="col-md-9">
@@ -249,7 +218,6 @@
                           </lib-uc-show-errors>
                         </div>
                       </div>
-
                       <div class="form-group row adins-required">
                         <label class="col-md-3  adInsLabel" translate>Recourse Type</label>
                         <div class="col-md-9">
@@ -263,7 +231,6 @@
                           </lib-uc-show-errors>
                         </div>
                       </div>
-
                       <div class="form-group row adins-required">
                         <label class="col-md-3  adInsLabel" translate>Application Source</label>
                         <div class="col-md-9">
@@ -278,7 +245,6 @@
                         </div>
                       </div>
                     </div>
-
                     <div class="form-actions right">
                       <button type="submit" class="btn btn-raised btn-primary" translate>
                         <i class="fa fa-check-square-o"></i> Save

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core'; 
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core'; 
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
  
  
@@ -8,9 +8,9 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
   providers: [NGXToastrService]
 })
 export class MultiAssetDataComponent implements OnInit {
- 
-  mode: any;
-  AppId:any;
+  @Output() OutputMultiAsset: EventEmitter<any> = new EventEmitter<any>();
+  mode: any = "paging";
+  @Input() AppId:any;
   AppAssetId:any;
   AppCollateralId: any;
   type:any;
@@ -18,6 +18,7 @@ export class MultiAssetDataComponent implements OnInit {
   }
 
   ngOnInit() { 
+    console.log("Init Multi Asset");
     this.mode = "paging";
   }
 
@@ -28,6 +29,9 @@ export class MultiAssetDataComponent implements OnInit {
     //this.type = "addAsset";
     this.AppAssetId = ev.AppAssetId;
     this.AppCollateralId = ev.AppCollateralId;
+    if(this.mode == 'submit'){
+      this.OutputMultiAsset.emit();
+    }
   }
 
   terimaCollateral(ev : any){

@@ -57,7 +57,7 @@ export class CustJobDataComponent implements OnInit {
   InvestmentTypeObj: any;
   CustModelObj: any;
 
-
+  testing: Date = new Date();
 
   constructor(
     private fb: FormBuilder, 
@@ -67,9 +67,15 @@ export class CustJobDataComponent implements OnInit {
 
      }
 
+   MaxDate: Date;
+   UserAccess: any;
    ngOnInit() {
-    console.log(this.identifier);
+    console.log(this.testing);
     console.log(this.parentForm);
+    // console.log("User Access");
+    // console.log(JSON.parse(localStorage.getItem("UserAccess")));
+    this.UserAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    this.MaxDate = this.UserAccess.BusinessDt;
 
     this.parentForm.removeControl(this.identifier);
     this.parentForm.addControl(this.identifier, this.fb.group({
@@ -81,7 +87,7 @@ export class CustJobDataComponent implements OnInit {
       CompanyName: ['', [Validators.required, Validators.maxLength(100)]],
       MrJobPositionCode: ['', Validators.maxLength(50)],
       MrCompanyScaleCode: ['', Validators.maxLength(50)],
-      NumOfEmployee: [0],
+      NumOfEmployee: [0, Validators.min(0)],
       MrJobStatCode: ['', Validators.maxLength(50)],
       MrInvestmentTypeCode: ['', Validators.maxLength(50)]
     }));

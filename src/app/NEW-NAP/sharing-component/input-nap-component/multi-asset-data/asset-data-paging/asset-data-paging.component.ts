@@ -27,13 +27,15 @@ export class AssetDataPagingComponent implements OnInit {
   getListAppCollateral: any;
   AppAssetId: number;
   AppCollateralId: number;
-  AppId: number;
+  @Input() AppId: number;
   editAsset: string;
   editColl: string;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) { 
-    this.getListAppAssetData = AdInsConstant.GetListAppAssetData;
-    this.getListAppCollateral = AdInsConstant.GetListAppCollateral;
+    // this.getListAppAssetData = AdInsConstant.GetListAppAssetData;
+    this.getListAppAssetData = AdInsConstant.GetAppAssetListByAppId;
+    // this.getListAppCollateral = AdInsConstant.GetListAppCollateral;
+    this.getListAppCollateral = AdInsConstant.GetListAppCollateralByAppId;
 
     this.route.queryParams.subscribe(params => {
       if (params["IdCust"] != null) {
@@ -52,9 +54,10 @@ addColl() {
 }
 
 event(ev){
+  console.log("test");
   console.log(ev);
   this.AppAssetId = ev.RowObj.AppAssetId;
-  this.AppId = ev.RowObj.AppId;
+  // this.AppId = ev.RowObj.AppId;
   this.editAsset = ev.RowObj.editAsset;
   this.outputValue.emit({ mode: 'editAsset', AppAssetId: this.AppAssetId });
   console.log("CHECK EVENT");
@@ -64,7 +67,7 @@ eventColl(ev){
   if(ev.Key == "edit")
   {
     this.AppCollateralId = ev.RowObj.AppCollateralId;
-    this.AppId = ev.RowObj.AppId;
+    // this.AppId = ev.RowObj.AppId;
     this.editColl = ev.RowObj.editColl;
     this.AppAssetId = ev.RowObj.AppAssetId;
     this.outputValue.emit({ mode: 'editColl', AppCollateralId: this.AppCollateralId });
@@ -100,13 +103,16 @@ eventColl(ev){
 }
 
   ngOnInit() {
+    console.log("AppId: " + this.AppId);
     this.gridAssetDataObj = new InputGridObj();
     this.gridAssetDataObj.pagingJson = "./assets/ucgridview/gridAssetData.json";
     
     this.appAssetObj = new AppAssetObj();
-    this.appAssetObj.AppAssetId = "-";
+    // this.appAssetObj.AppAssetId = "-";
+    this.appAssetObj.AppId = this.AppId;
     this.http.post(this.getListAppAssetData, this.appAssetObj).subscribe(
       (response) => {
+          console.log("Response Asset : " + JSON.stringify(response));
           this.listAppAssetObj = response["ReturnObject"];
 
           var DetailForGridAsset ={
@@ -126,7 +132,8 @@ eventColl(ev){
     this.gridAppCollateralObj.deleteUrl = AdInsConstant.DeleteAppCollateral;
     
     this.appCollateralObj = new AppCollateralObj();
-    this.appCollateralObj.AppCollateralId = "-";
+    // this.appCollateralObj.AppCollateralId = "-";
+    this.appCollateralObj.AppId = this.AppId;
     this.http.post(this.getListAppCollateral, this.appCollateralObj).subscribe(
       (response) => {
           this.listAppCollateralObj = response["ReturnObject"];
@@ -146,6 +153,10 @@ eventColl(ev){
 
   editItem(custAddrObj: any) {
     this.outputValue.emit({ mode: 'edit', AddrId: custAddrObj.CustAddrId });
+  }
+
+  next(){
+    this.outputValue.emit({mode: 'submit'});
   }
 
   // deleteItem(custAddrObj: any) {

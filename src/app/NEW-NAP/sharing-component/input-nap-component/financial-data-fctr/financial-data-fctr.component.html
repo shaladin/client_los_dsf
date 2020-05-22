@@ -1,11 +1,17 @@
 <form class="form-horizontal" [formGroup]="FinDataForm" (ngSubmit)="FinDataForm.valid && Submit()" #enjiForm="ngForm">
-    <app-fee *ngIf="IsParentLoaded" [AppId]="AppId" [ParentForm]="FinDataForm" [identifier]="'AppFee'"></app-fee>
-    <app-schm-reguler-fix-fctr *ngIf="IsParentLoaded" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-reguler-fix-fctr>
+    <app-fee-fctr *ngIf="IsParentLoaded" [AppId]="AppId" [ParentForm]="FinDataForm" [identifier]="'AppFee'"></app-fee-fctr>
+    <app-single-inst-fctr *ngIf="IsParentLoaded && FinDataForm.controls.MrInstTypeCode.value == 'SINGLE'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-single-inst-fctr>
+    <app-schm-reguler-fix-fctr *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'RF' && FinDataForm.controls.MrInstTypeCode.value == 'MULTIPLE'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-reguler-fix-fctr>
+    <app-schm-even-principal-fctr *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'EP' && FinDataForm.controls.MrInstTypeCode.value == 'MULTIPLE'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-even-principal-fctr>
     <div class="form-inline-right">
       <button type="submit" class="btn btn-raised btn-primary" translate type="button" tabindex="0"
         (click)="SaveAndContinue()">
         Save and Continue
       </button>
+      <button type="button" class="btn btn-raised btn-primary" translate type="button" tabindex="0"
+      (click)="Test()">
+      Test
+    </button>
     </div>
       
   </form>

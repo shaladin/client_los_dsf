@@ -13,7 +13,6 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 @Component({
   selector: 'app-mou-customer-request-detail',
   templateUrl: './mou-customer-request-detail.component.html',
-  styleUrls: ['./mou-customer-request-detail.component.scss'],
   providers: [NGXToastrService]
 })
 export class MouCustomerRequestDetailComponent implements OnInit {
@@ -25,7 +24,9 @@ export class MouCustomerRequestDetailComponent implements OnInit {
   refOfficeId: number;
   businessDtMin: Date;
   mouCustUrl: string;
-
+  CustNo : string;
+  custId : any;
+  custUrl : string;
   MOUMainInfoForm = this.fb.group({
     MouCustId: [0, [Validators.required]],
     MouCustNo: [''],
@@ -87,6 +88,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     this.inputLookupCust.pagingJson = "./assets/uclookup/MOU/lookupCust_MOURequest.json";
     this.inputLookupCust.genericJson = "./assets/uclookup/MOU/lookupCust_MOURequest.json";
     this.mouCustUrl =  environment.losR3Web + "/Mou/Cust/View?MouCustId=" + this.mouCustId;
+   
     var refOffice = new RefOfficeObj();
     refOffice.OfficeCode = currentUserContext["Office"];
     this.httpClient.post(AdInsConstant.GetRefOfficeByOfficeCode, refOffice).subscribe(
@@ -102,13 +104,20 @@ export class MouCustomerRequestDetailComponent implements OnInit {
       var mouCust = new MouCustObj();
       mouCust.MouCustId = this.mouCustId;
       this.httpClient.post(AdInsConstant.GetMouCustById, mouCust).subscribe(
-        (response: any) => {
+        (response: any) => { 
           response["MouCustDt"] = datePipe.transform(response["MouCustDt"], "yyyy-MM-dd");
           response["StartDt"] = datePipe.transform(response["StartDt"], "yyyy-MM-dd");
           response["EndDt"] = datePipe.transform(response["EndDt"], "yyyy-MM-dd");
           this.MOUMainInfoForm.patchValue({
             ...response
           });
+          var custObj = { CustNo: response['CustNo'] }; 
+          this.httpClient.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+            (response: any) => { 
+              this.custId = response['CustId'];
+              this.custUrl = environment.FoundationR3Web + '/Customer/CustomerView/Page?CustId=' + this.custId;
+            });
+
         },
         (error) => {
           console.log(error);
