@@ -819,6 +819,9 @@ export class AdInsConstant {
   public static TaxTypeCode = "WHT";
   public static VATTypeCode = "VAT";
   public static TrxTypeCode = "APP_COM";
+  public static LabelSupplier = "Supplier";
+  public static LabelSupplierEmp = "Supplier Employee";
+  public static LabelReferantor = "Referantor";
   public static ContentSupplier = "Supplier";
   public static ContentSupplierEmp = "SupplierEmployee";
   public static ContentReferantor = "Referantor";
