@@ -62,16 +62,16 @@ export class LeadInputLeadDataComponent implements OnInit {
     FullAssetName: [''],
     MrAssetConditionCode: [''],
     MrDownPaymentTypeCode: [''],
-    ManufacturingYear: ['', Validators.min(0)],
-    AssetPrice: ['', Validators.required, Validators.min(0)],
-    DownPaymentAmount: ['', Validators.required, Validators.min(0)],
+    ManufacturingYear: [''],
+    AssetPrice: ['', Validators.required],
+    DownPaymentAmount: ['', Validators.required],
     DownPaymentPercent: [''],
     SerialNo1: [''],
     SerialNo2: [''],
     SerialNo3: [''],
     SerialNo4: [''],
     SerialNo5: [''],
-    Tenor: ['', Validators.required, Validators.min(0)],
+    Tenor: ['', Validators.required],
     MrFirstInstTypeCode: ['', Validators.required],
     NTFAmt: [''],
     TotalDownPayment: [''],
@@ -238,6 +238,7 @@ export class LeadInputLeadDataComponent implements OnInit {
           (response) => {
             this.returnLeadObj = response;
             this.returnLobCode = response['LobCode'];
+            
             if (this.lobKta.includes(this.returnLobCode) == true) {
               this.LeadDataForm.controls['NTFAmt'].setValidators([Validators.required]);
             }
@@ -286,6 +287,7 @@ export class LeadInputLeadDataComponent implements OnInit {
               ManufacturingYear: this.resLeadAssetObj.ManufacturingYear,
               AssetPrice: this.resLeadAssetObj.AssetPriceAmt,
               DownPaymentAmount: this.resLeadAssetObj.DownPaymentAmt,
+              DownPaymentPercent: this.resLeadAssetObj.DownPaymentPrcnt,
               SerialNo1: this.resLeadAssetObj.SerialNo1,
               SerialNo2: this.resLeadAssetObj.SerialNo2,
               SerialNo3: this.resLeadAssetObj.SerialNo3,
@@ -405,6 +407,7 @@ export class LeadInputLeadDataComponent implements OnInit {
               ManufacturingYear: this.resLeadAssetObj.ManufacturingYear,
               AssetPrice: this.resLeadAssetObj.AssetPriceAmt,
               DownPaymentAmount: this.resLeadAssetObj.DownPaymentAmt,
+              DownPaymentPercent: this.resLeadAssetObj.DownPaymentPrcnt,
               SerialNo1: this.resLeadAssetObj.SerialNo1,
               SerialNo2: this.resLeadAssetObj.SerialNo2,
               SerialNo3: this.resLeadAssetObj.SerialNo3,
@@ -512,16 +515,18 @@ export class LeadInputLeadDataComponent implements OnInit {
 
   DownPaymentChange()
   {
+    console.log(this.LeadDataForm.controls["MrDownPaymentTypeCode"].value)
     if(this.LeadDataForm.controls["MrDownPaymentTypeCode"].value == "AMT")
     {
       this.LeadDataForm.controls.DownPaymentPercent.disable();
       this.LeadDataForm.controls.DownPaymentAmount.enable();
-
+      // this.LeadDataForm.controls.DownPaymentPercent.clearValidators();
     }
     else
     {
       this.LeadDataForm.controls.DownPaymentPercent.enable();
       this.LeadDataForm.controls.DownPaymentAmount.disable();
+      // this.LeadDataForm.controls.DownPaymentAmount.clearValidators();
     }
   }
 
@@ -535,12 +540,25 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.LeadDataForm.patchValue({
       DownPaymentPercent: this.DPPercentage,
     });
+    console.log("test test")
+    console.log(this.DPPercentage)
   }
 
   DPPrcntChange()
   {
     this.DPPercentage = this.LeadDataForm.controls["DownPaymentPercent"].value;
     this.AssetPrice = this.LeadDataForm.controls["AssetPrice"].value;
+
+    if(this.LeadDataForm.controls["DownPaymentPercent"].value < 0)
+    {
+      this.toastr.errorMessage("Down Payment must be above or equal 0");
+      return;
+    }
+    if(this.LeadDataForm.controls["DownPaymentPercent"].value > 100)
+    {
+      this.toastr.errorMessage("Down Payment must be lower or equal 100");
+      return;
+    }
 
     this.DPAmount = this.AssetPrice * this.DPPercentage/100;
 
@@ -561,10 +579,16 @@ export class LeadInputLeadDataComponent implements OnInit {
 
   TenorChange()
   {
+    if(this.LeadDataForm.controls["Tenor"].value < 0)
+    {
+      this.toastr.errorMessage("Tenor must be above 0");
+      return;
+    }
+
     this.Calculate = false;
     
-    console.log("test tenor");
-    console.log(this.Calculate);
+    // console.log("test tenor");
+    // console.log(this.Calculate);
   }
 
   calculateNonKta()

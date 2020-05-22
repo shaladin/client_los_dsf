@@ -54,6 +54,7 @@ export class MouReviewGeneralComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('moureview')
     this.claimTask();
 
     var apvObj = { SchemeCode: 'MOUC_GEN_APV' }
@@ -133,7 +134,11 @@ export class MouReviewGeneralComponent implements OnInit {
       (response) => {
         this.toastr.successMessage(response["message"]);
         this.router.navigate(["/Mou/Cust/ReviewPaging"]);
-      })
+      },
+      (error) =>{
+        console.log(error);
+      }
+      )
   }
 
   Return() {
