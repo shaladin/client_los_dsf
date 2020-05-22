@@ -22,12 +22,7 @@ export class NapPagingComponent implements OnInit {
     private toastr: NGXToastrService,
     private router: Router,
     private route: ActivatedRoute
-  ) { 
-    this.route.queryParams.subscribe(params => {
-      if (params['LobCode'] != null) {
-        localStorage.setItem("LobCode",params['LobCode']);
-      }
-    });
+  ) {
   }
 
   async ngOnInit() {
@@ -41,7 +36,7 @@ export class NapPagingComponent implements OnInit {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'RL.BIZ_TMPLT_CODE';
-    critObj.value = localStorage.getItem("LobCode");
+    critObj.value = AdInsConstant.CF4W;
     this.arrCrit.push(critObj);
     this.inputPagingObj.addCritInput = this.arrCrit;
     this.userAccess = JSON.parse(localStorage.getItem("UserAccess"));
