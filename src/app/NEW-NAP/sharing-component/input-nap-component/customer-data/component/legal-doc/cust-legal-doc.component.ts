@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { formatDate } from '@angular/common';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalDocObj.Model';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
   selector: 'app-cust-legal-doc',
@@ -30,6 +31,7 @@ export class CustLegalDocComponent implements OnInit {
   };
   LegalDocTypeObj: any;
   defaultLegalDocType: any;
+  selectedListLegalDocType = new Array();
   selectedLegalDocName: any;
   defaultLegalDocName: any;
 
@@ -47,12 +49,19 @@ export class CustLegalDocComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder, 
+    private toastr: NGXToastrService,
     private http: HttpClient,
     private modalService: NgbModal,) {
 
      }
 
+  UserAccess: any;
+  MaxDate: Date;
   ngOnInit() {
+    // console.log("User Access");
+    // console.log(JSON.parse(localStorage.getItem("UserAccess")));
+    this.UserAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    this.MaxDate = new Date(this.UserAccess.BusinessDt);
     this.bindLegalDocTypeObj();
     console.log(this.listLegalDoc);
   }
@@ -62,7 +71,8 @@ export class CustLegalDocComponent implements OnInit {
     if(this.listLegalDoc == undefined){
       this.listLegalDoc = new Array<AppCustCompanyLegalDocObj>();
     }
-    this.setAppCustCompanyLegalDoc();
+    if(this.setAppCustCompanyLegalDoc()==false) return;
+    console.log(this.appCustCompanyLegalDocObj);
     if(this.mode == "Add"){
       this.listLegalDoc.push(this.appCustCompanyLegalDocObj);
     }
@@ -99,6 +109,8 @@ export class CustLegalDocComponent implements OnInit {
 
   delete(i){
     if (confirm("Are you sure to delete this record?")) {
+      var idxSelected = this.selectedListLegalDocType.findIndex(x=>x.Key == this.listLegalDoc[i].MrLegalDocTypeCode);
+      this.selectedListLegalDocType.splice(idxSelected, 1);
       this.listLegalDoc.splice(i, 1);
       this.callbackSubmit.emit(this.listLegalDoc);
     }
@@ -118,6 +130,7 @@ export class CustLegalDocComponent implements OnInit {
   }
 
   setAppCustCompanyLegalDoc(){
+    var flag:boolean = true;
     this.appCustCompanyLegalDocObj.MrLegalDocTypeCode = this.LegalDocForm.controls.MrLegalDocTypeCode.value;
     this.appCustCompanyLegalDocObj.DocDt =  this.LegalDocForm.controls.DocDt.value;
     this.appCustCompanyLegalDocObj.DocNo = this.LegalDocForm.controls.DocNo.value;
@@ -126,8 +139,36 @@ export class CustLegalDocComponent implements OnInit {
     this.appCustCompanyLegalDocObj.DocNotes = this.LegalDocForm.controls.DocNotes.value;
     this.appCustCompanyLegalDocObj.ReleaseLocation = this.LegalDocForm.controls.ReleaseLocation.value;
     this.appCustCompanyLegalDocObj.LegalDocName = this.selectedLegalDocName;
+    let d1 = new Date(this.MaxDate);
+    let d2 = new Date(this.appCustCompanyLegalDocObj.DocDt);
+    let d3 = new Date(this.appCustCompanyLegalDocObj.DocExpiredDt);
+    if(d1>d3){
+      this.toastr.errorMessage("Expired Date can not be less than " + this.MaxDate);
+      flag = false;
+    }
+    if(d1<d2){
+      this.toastr.errorMessage("Issued Date can not be more than " + this.MaxDate);
+      flag = false;
+    }
+    if(this.cekDuplicateDocType() == false) flag=false;
+    return flag;
   }
 
+  cekDuplicateDocType(){
+    // var IdxSelected=
+    if(this.selectedListLegalDocType.length>0){
+      if(this.selectedListLegalDocType.find(x => x.Key == this.appCustCompanyLegalDocObj.MrLegalDocTypeCode)){
+        this.toastr.errorMessage("Legal Document Type "+this.appCustCompanyLegalDocObj.MrLegalDocTypeCode + " is duplicated ");    
+        return false;  
+      }
+    }
+    var keyValueObj={
+      Key: this.appCustCompanyLegalDocObj.MrLegalDocTypeCode,
+      Value: this.appCustCompanyLegalDocObj.LegalDocName,
+    }
+    this.selectedListLegalDocType.push(keyValueObj);
+    return true;
+  }
   bindLegalDocTypeObj(){
     this.refMasterObj.RefMasterTypeCode = "LEGAL_DOC_TYPE";
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
@@ -139,6 +180,12 @@ export class CustLegalDocComponent implements OnInit {
         }
       }
     );
+  }
+
+  changeLegalDocType(ev){
+    console.log(ev);
+    var idx = ev.target.selectedIndex;
+    this.selectedLegalDocName=this.LegalDocTypeObj[idx].Value;
   }
 
   open(content) {
