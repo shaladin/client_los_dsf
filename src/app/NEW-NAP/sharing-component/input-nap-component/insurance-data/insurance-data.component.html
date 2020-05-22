@@ -82,7 +82,7 @@
                   <div class="form-group row">
                     <label class="col-md-2 adins-required-label" for="custCvgAmt" translate>Coverage Amount</label>
                     <div class="col-md-4">
-                      <input type="" currencyMask id="custCvgAmt" class="form-control" formControlName="CustCvgAmt" [options]="{ min: 0 }"
+                      <input type="" currencyMask id="custCvgAmt" class="form-control" formControlName="CustCvgAmt" [options]="{ allowNegative: false }"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.CustCvgAmt.invalid }">
                       <lib-uc-show-errors [control]="InsuranceDataForm.controls.CustCvgAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                     </div>
@@ -143,7 +143,7 @@
                           {{item.Value}}
                         </option>
                       </select>
-                      <lib-uc-show-errors [control]="InsuranceDataForm.controls.InscoBranchCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                      <lib-uc-show-errors [control]="InsuranceDataForm.controls.PayPeriodToInsco" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                     </div>
                   </div>
                   <div class="form-group row">
@@ -173,7 +173,7 @@
                   <div class="form-group row">
                     <label class="col-md-2 adins-required-label" for="cvgAmt" translate>Coverage Amount</label>
                     <div class="col-md-4">
-                      <input type="" currencyMask id="cvgAmt" class="form-control" formControlName="CvgAmt" [options]="{ min: 0 }"
+                      <input type="" currencyMask id="cvgAmt" class="form-control" formControlName="CvgAmt" [options]="{ allowNegative: false }"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.CvgAmt.invalid }" (ngModelChange)="CvgAmtChanged($event)">
                       <lib-uc-show-errors [control]="InsuranceDataForm.controls.CvgAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                     </div>
@@ -217,7 +217,7 @@
                   <div class="form-group row">
                     <label class="col-md-2" for="adminFee" translate>Admin Fee</label>
                     <div class="col-md-4">
-                      <input type="" currencyMask id="adminFee" class="form-control" formControlName="CustAdminFeeAmt" [options]="{ min: 0 }"
+                      <input type="" currencyMask id="adminFee" class="form-control" formControlName="CustAdminFeeAmt" [options]="{ allowNegative: false }"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.CustAdminFeeAmt.invalid }" (ngModelChange)="CustAdminFeeAmtChanged($event)">
                       <lib-uc-show-errors [control]="InsuranceDataForm.controls.CustAdminFeeAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                     </div>
@@ -293,7 +293,7 @@
                             </div>
                           </td>
                           <td class="text-right">
-                            {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.CustMainPremiRate.value | number:'.2':'en-US'}} %
+                            {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.CustMainPremiRate.value | number:'.6':'en-US'}} %
                           </td>
                           <td class="text-right">
                             {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.CustMainPremiAmt.value | number:'.2':'en-US'}}
@@ -325,9 +325,15 @@
                             </div>
                           </td>
                           <td class="text-right">
-                            {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.CustAddPremiRate.value | number:'.2':'en-US'}}
+                            <!-- {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.CustAddPremiRate.value | number:'.2':'en-US'}}
                             <span *ngIf="InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.PremiumType.value == 'PRCNT'">
                               %
+                            </span> -->
+                            <span *ngIf="InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.PremiumType.value == 'AMT'">
+                              {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.CustAddPremiRate.value | number:'.2':'en-US'}}
+                            </span>
+                            <span *ngIf="InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.PremiumType.value == 'PRCNT'">
+                              {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.CustAddPremiRate.value | number:'.6':'en-US'}} %
                             </span>
                           </td>
                           <td class="text-right">
@@ -371,7 +377,7 @@
                   <div class="form-group row">
                     <label class="col-md-2" for="discAmt" translate>Discount</label>
                     <div class="col-md-4">
-                      <input type="" currencyMask id="discAmt" class="form-control" formControlName="TotalCustDiscAmt" [options]="{ min: 0 }"
+                      <input type="" currencyMask id="discAmt" class="form-control" formControlName="TotalCustDiscAmt" [options]="{ allowNegative: false }"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.TotalCustDiscAmt.invalid }">
                       <lib-uc-show-errors [control]="InsuranceDataForm.controls.TotalCustDiscAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                     </div>                  
@@ -383,7 +389,7 @@
                   <div class="form-group row">
                     <label class="col-md-2" for="insCpltzAmt" translate>Capitalize Amount</label>
                     <div class="col-md-4">
-                      <input type="" currencyMask id="insCpltzAmt" class="form-control" formControlName="InsCpltzAmt" [options]="{ min: 0 }"
+                      <input type="" currencyMask id="insCpltzAmt" class="form-control" formControlName="InsCpltzAmt" [options]="{ allowNegative: false }"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.InsCpltzAmt.invalid }">
                       <lib-uc-show-errors [control]="InsuranceDataForm.controls.InsCpltzAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                     </div>                  
