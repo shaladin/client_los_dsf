@@ -204,10 +204,10 @@
               </lib-uc-show-errors>
             </div>
             <div class="col-md-3 form-inline">
-              <label>Total Disburse</label>
+              <label>Gross Yield</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
-              <label>{{ParentForm.controls.TotalDisbAmt.value | number : '1.2-2'}}</label>
+              <label>{{ParentForm.controls.GrossYieldPrcnt.value | number : '1.2-2'}}</label>
             </div>
           </div>
         </div>
@@ -235,12 +235,6 @@
               <lib-uc-show-errors [control]="ParentForm.controls.MrGracePeriodTypeCode" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>       
-            <div class="col-md-3 form-inline">
-              <label>Gross Yield</label>
-            </div>
-            <div class="col-md-3 form-inline form-inline-right">
-              <label>{{ParentForm.controls.GrossYieldPrcnt.value | number : '1.2-2'}}</label>
-            </div>
           </div>
         </div>
       </div>
