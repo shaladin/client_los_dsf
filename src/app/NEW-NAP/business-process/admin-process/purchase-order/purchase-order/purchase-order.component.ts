@@ -1,9 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 
 @Component({
   selector: 'app-purchase-order',
@@ -15,13 +16,13 @@ export class PurchaseOrderComponent implements OnInit {
   lobCode: string;
   AppId: number;
   AgrmntId: number;
-  TaskListId: number;
+  TaskListId: any;
   arrValue: Array<number> = [];
   AppAssetList = [];
   tcForm: FormGroup = this.fb.group({
   });
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService, private router: Router) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.AppId = params["AppId"];
@@ -48,6 +49,7 @@ export class PurchaseOrderComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.claimTask();
     this.arrValue.push(this.AgrmntId);
     var appAssetObj = {
       AgrmntId: this.AgrmntId
@@ -85,6 +87,7 @@ export class PurchaseOrderComponent implements OnInit {
       this.http.post(AdInsConstant.ResumeWorkflowPurchaseOrder, workflowModel).subscribe(
         (response) => {
           this.AppAssetList = response["ReturnObject"];
+          this.router.navigate(["/Nap/AdminProcess/PurchaseOrder/Paging"]);
           this.toastr.successMessage(response["message"]);
         },
         (error) => {
@@ -92,5 +95,14 @@ export class PurchaseOrderComponent implements OnInit {
         }
       );
     }
+  }
+  async claimTask(){
+    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var wfClaimObj : ClaimWorkflowObj = new ClaimWorkflowObj();
+    wfClaimObj.pWFTaskListID = this.TaskListId;
+    wfClaimObj.pUserID = currentUserContext["UserName"];
+    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+      (response) => {
+      });
   }
 }

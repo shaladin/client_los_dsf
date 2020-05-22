@@ -44,6 +44,7 @@ export class MouRequestAddcollComponent implements OnInit {
   arrAddCrit: Array<CriteriaObj>;
   viewObj: string;
   Data = [];
+  listAssetAndSerialNo: any;
 
   mouCustCollateralObj: MouCustCollateralObj;
   mouCustCollateralRegistrationObj: MouCustCollateralRegistrationObj;
@@ -223,6 +224,7 @@ export class MouRequestAddcollComponent implements OnInit {
   }
 
   getResult(event) {
+    console.log(event);
     this.resultData = event.response;
     this.totalData = event.response.Count;
     this.UCGridFooter.pageNow = event.pageNow;
@@ -345,18 +347,25 @@ export class MouRequestAddcollComponent implements OnInit {
     MouCustCollateralRegistrationId: [''],
     CopyFromLegal: [''],
     AssetTypeCode: ['', [Validators.required]],
-    CollateralValueAmt: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
+    CollateralValueAmt: [0, [Validators.required]],
     FullAssetCode: [''],
     OwnerName: ['', [Validators.required]],
     OwnerRelationship: ['', [Validators.required]],
     OwnerIdNo: ['', [Validators.required]],
     MrIdType: ['', [Validators.required]],
     Notes: [''],
-    SerialNo1: ['', [Validators.required]],
-    SerialNo2: ['', [Validators.required]],
-    SerialNo3: ['', [Validators.required]],
-    SerialNo4: ['', [Validators.required]],
+    // SerialNo1: ['', [Validators.required]],
+    // SerialNo2: ['', [Validators.required]],
+    // SerialNo3: ['', [Validators.required]],
+    // SerialNo4: ['', [Validators.required]],
+    // SerialNo5: [''],
+
+    SerialNo1: [''],
+    SerialNo2: [''],
+    SerialNo3: [''],
+    SerialNo4: [''],
     SerialNo5: [''],
+    
     RowVersionCollateral: [''],
     RowVersionCollateralRegistration: ['']
   })
@@ -391,19 +400,20 @@ export class MouRequestAddcollComponent implements OnInit {
   }
 
   SaveForm() {
-    this.setCollateralObjForSave();
-
+    this.setCollateralObjForSave(); 
     var custCollObj = {
       MouCustCollateral: this.mouCustCollateralObj,
       MouCustCollateralRegistration: this.mouCustCollateralRegistrationObj
     }
-
-    if (this.type == 'AddEdit') {
+ 
+    if (this.collateralObj == null) {
+    
       this.http.post(AdInsConstant.AddMouCustCollateralData, custCollObj).subscribe(
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
           this.type = 'Paging';
+          this.bindMouData();
         },
         (error) => {
           console.log(error);
@@ -417,17 +427,27 @@ export class MouRequestAddcollComponent implements OnInit {
           console.log(response);
           this.toastr.successMessage(response["message"]);
           this.type = 'Paging';
+          this.collateralObj = null;
+          this.bindMouData();
         },
         (error) => {
           console.log(error);
         }
       );
     }
-    this.bindMouData();
+    
+   
   }
 
   setCollateralObjForSave() {
-    this.mouCustCollateralObj = new MouCustCollateralObj;
+    this.mouCustCollateralObj = new MouCustCollateralObj; 
+    this.mouCustCollateralRegistrationObj = new MouCustCollateralRegistrationObj;
+    
+    if (this.collateralObj != null)
+    { 
+      this.mouCustCollateralObj = this.collateralObj;
+      this.mouCustCollateralRegistrationObj = this.collateralRegistrationObj; 
+    } 
     this.mouCustCollateralObj.MouCustId = this.MouCustId;
     this.mouCustCollateralObj.AssetTypeCode = this.AddCollForm.controls.AssetTypeCode.value;
     this.mouCustCollateralObj.FullAssetCode = this.AddCollForm.controls.AssetTypeCode.value;
@@ -436,14 +456,19 @@ export class MouRequestAddcollComponent implements OnInit {
     this.mouCustCollateralObj.MrCollateralConditionCode = "NEW";
     this.mouCustCollateralObj.MrCollateralUsageCode = "COMMERCIAL";
     this.mouCustCollateralObj.CollateralStat = "NEW";
-    this.mouCustCollateralObj.SerialNo1 = this.AddCollForm.controls.SerialNo1.value;
-    this.mouCustCollateralObj.SerialNo2 = this.AddCollForm.controls.SerialNo2.value;
-    this.mouCustCollateralObj.SerialNo3 = this.AddCollForm.controls.SerialNo3.value;
-    this.mouCustCollateralObj.SerialNo4 = this.AddCollForm.controls.SerialNo4.value;
+    // this.mouCustCollateralObj.SerialNo1 = this.AddCollForm.controls.SerialNo1.value;
+    // this.mouCustCollateralObj.SerialNo2 = this.AddCollForm.controls.SerialNo2.value;
+    // this.mouCustCollateralObj.SerialNo3 = this.AddCollForm.controls.SerialNo3.value;
+    // this.mouCustCollateralObj.SerialNo4 = this.AddCollForm.controls.SerialNo4.value;
+    // this.mouCustCollateralObj.SerialNo5 = this.AddCollForm.controls.SerialNo5.value;
+    this.mouCustCollateralObj.SerialNo1 = '1'
+    this.mouCustCollateralObj.SerialNo2 = '2'
+    this.mouCustCollateralObj.SerialNo3 = '3'
+    this.mouCustCollateralObj.SerialNo4 = '4'
+    this.mouCustCollateralObj.SerialNo5 = '5'
     this.mouCustCollateralObj.CollateralValueAmt = this.AddCollForm.controls.CollateralValueAmt.value;
     this.mouCustCollateralObj.CollateralNotes = this.AddCollForm.controls.Notes.value;
 
-    this.mouCustCollateralRegistrationObj = new MouCustCollateralRegistrationObj;
     this.mouCustCollateralRegistrationObj.OwnerName = this.AddCollForm.controls.OwnerName.value;
     this.mouCustCollateralRegistrationObj.OwnerIdNo = this.AddCollForm.controls.OwnerIdNo.value;
     this.mouCustCollateralRegistrationObj.MrIdTypeCode = this.AddCollForm.controls.MrIdType.value;
@@ -467,15 +492,6 @@ export class MouRequestAddcollComponent implements OnInit {
     this.mouCustCollateralRegistrationObj.LocationAreaCode3 = this.AddCollForm.controls["locationAddr"]["controls"].AreaCode3.value;
     this.mouCustCollateralRegistrationObj.LocationAreaCode4 = this.AddCollForm.controls["locationAddr"]["controls"].AreaCode4.value;
 
-    if (this.type == 'Edit')
-    {
-      this.mouCustCollateralObj.MouCustCollateralId = this.AddCollForm.controls.MouCustCollateralId;
-      this.mouCustCollateralRegistrationObj.MouCustCollateralRegistrationId = this.AddCollDataForm.controls.MouCustCollateralRegistrationId;
-      this.mouCustCollateralRegistrationObj.MouCustCollateralId = this.AddCollForm.controls.MouCustCollateralId;
-
-      this.mouCustCollateralObj.RowVersion = this.AddCollForm.controls.RowVersionCollateral;
-      this.mouCustCollateralRegistrationObj.RowVersion = this.AddCollForm.controls.RowVersionCollateralRegistration;
-    }
   }
 
   copyToLocation()
@@ -505,6 +521,7 @@ export class MouRequestAddcollComponent implements OnInit {
     var collObj = { MouCustCollateralId: MouCustCollId };
     this.http.post(AdInsConstant.GetMouCustCollateralDataForUpdateByMouCustCollateralId, collObj).subscribe(
       (response) => {
+       
         this.collateralObj = response['MouCustCollateral'];
         this.collateralRegistrationObj = response['MouCustCollateralRegistration'];
 
@@ -594,12 +611,13 @@ export class MouRequestAddcollComponent implements OnInit {
       response => {
         this.toastr.successMessage(response['message']);
         this.type = 'Paging';
+        this.bindMouData();
       },
       error => {
         console.log(error);
       }
     );
-    this.bindMouData();
+ 
   }
 
   delete(MouCustCollId) {
@@ -608,6 +626,7 @@ export class MouRequestAddcollComponent implements OnInit {
       (response) => {
         console.log(response);
         this.toastr.successMessage(response["message"]);
+        this.bindMouData();
       },
       (error) => {
         console.log(error);

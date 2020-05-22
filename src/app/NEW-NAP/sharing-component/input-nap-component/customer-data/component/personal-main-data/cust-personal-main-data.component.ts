@@ -54,7 +54,7 @@ export class CustPersonalMainDataComponent implements OnInit {
   getRefMasterUrl: any;
   getCountryUrl: any;
   UserAccess: any;
-  MaxDate: any;
+  MaxDate: Date;
   constructor(
     private fb: FormBuilder, 
     private http: HttpClient,
@@ -67,7 +67,7 @@ export class CustPersonalMainDataComponent implements OnInit {
     console.log("User Access");
     console.log(JSON.parse(localStorage.getItem("UserAccess")));
     this.UserAccess = JSON.parse(localStorage.getItem("UserAccess"));
-    this.MaxDate = formatDate(this.UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
+    this.MaxDate = this.UserAccess.BusinessDt;
 
     console.log(this.MaxDate);
     console.log(this.identifier);
@@ -82,7 +82,7 @@ export class CustPersonalMainDataComponent implements OnInit {
       IdExpiredDt: [''],
       MrMaritalStatCode: ['', Validators.maxLength(50)],
       BirthPlace: ['', [Validators.required, Validators.maxLength(100)]],
-      BirthDt: ['', [Validators.required, Validators.max(this.MaxDate)]],
+      BirthDt: ['', [Validators.required]],
       MrNationalityCode: ['', Validators.maxLength(50)],
       TaxIdNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
       MobilePhnNo1: ['', [Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],

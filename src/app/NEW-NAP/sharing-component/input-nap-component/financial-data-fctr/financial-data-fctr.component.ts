@@ -110,7 +110,8 @@ export class FinancialDataFctrComponent implements OnInit {
         TotalRetentionAmt: 0,
         TotalDisbAmt: 0,
         Tenor: 0,
-        InterestType: ""
+        InterestType: "",
+        RefundInterestAmt: 0
       }
     );
     this.LoadAppFinData();
@@ -169,7 +170,8 @@ export class FinancialDataFctrComponent implements OnInit {
           RetentionPrcnt: this.appFinDataObj.RetentionPrcnt,
           TotalRetentionAmt: this.appFinDataObj.TotalRetentionAmt,
           TotalDisbAmt: this.appFinDataObj.TotalDisbAmt,
-          Tenor: this.appFinDataObj.Tenor
+          Tenor: this.appFinDataObj.Tenor,
+          RefundInterestAmt: this.appFinDataObj.RefundInterestAmt
         });
 
         this.IsParentLoaded = true;
@@ -233,5 +235,9 @@ export class FinancialDataFctrComponent implements OnInit {
       }
     }
     return valid;
+  }
+
+  Test(){
+    console.log(this.FinDataForm);
   }
 }

@@ -1,0 +1,44 @@
+{
+  "title": "Report Lead",
+  "reportName": "Contoh Report Lead",
+  "reportTemplateName": "AdIns_LeadSummaryRpt.rdlc",
+  "component": [
+    {
+      "type": "dropdown",
+      "label": "Office Name",
+      "name": "CrtOfficeCode",
+      "datatype": "text",
+      "isFromURL": true,
+      "isSelectOne": true,
+      "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefOffice/GetListKvpActiveRefOfficeForPaging",
+      "path": "",
+      "items": [],
+      "itemsUrl": [],
+      "criteriaPropName": "",
+      "criteriaPropValue": "",
+      "isReportParam": false,
+      "isProviderParam": true
+    },
+    {
+      "type": "datepicker",
+      "label": "Period From",
+      "name": "LeadDtGte",
+      "datatype": "date",
+      "value": "BD-10",
+      "restriction": "gte",
+      "isReportParam": false,
+      "isProviderParam": true
+    },
+    {
+      "type": "datepicker",
+      "label": "Period To",
+      "name": "LeadDtLte",
+      "datatype": "date",
+      "value": "BD+10",
+      "restriction": "lte",
+      "isReportParam": false,
+      "isProviderParam": true
+    }
+    
+  ]
+}

@@ -16,6 +16,7 @@ export class MouViewComponent implements OnInit {
   mouCustObj : MouCustObj;
   resultData : MouCustObj;
   MrMouTypeCode : string;
+  MrCustTypeCode : string;
   constructor(private http: HttpClient, private route: ActivatedRoute) { 
     this.getMouCustByIdUrl = AdInsConstant.GetMouCustById;
     this.route.queryParams.subscribe(params => {
@@ -36,6 +37,7 @@ export class MouViewComponent implements OnInit {
       (response: MouCustObj) => {
         this.resultData = response;
         this.MrMouTypeCode = this.resultData['MrMouTypeCode']; 
+        this.MrCustTypeCode = this.resultData['MrCustTypeCode'];
       },
       (error) =>{
         console.log(error);

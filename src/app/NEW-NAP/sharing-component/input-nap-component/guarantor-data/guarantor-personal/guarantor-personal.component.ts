@@ -73,7 +73,14 @@ export class GuarantorPersonalComponent implements OnInit {
     CountryCode: ""
   };
 
+  UserAccess: any;
+  MaxDate: Date;
+  Max17YO: Date;
   ngOnInit(){
+    this.UserAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    this.MaxDate = new Date(this.UserAccess.BusinessDt);
+    this.Max17YO = new Date(this.UserAccess.BusinessDt);
+    this.Max17YO.setFullYear(this.MaxDate.getFullYear()-17);
 
     this.initLookup();
     this.initAddr();
@@ -343,6 +350,19 @@ export class GuarantorPersonalComponent implements OnInit {
       });
       this.PersonalForm.controls.IdExpDt.clearValidators();
     }
+    let d1 = new Date(this.guarantorPersonalObj.AppGuarantorPersonalObj.IdExpDt);
+    let d2 = new Date(this.MaxDate);
+    let d3 = new Date(this.guarantorPersonalObj.AppGuarantorPersonalObj.BirthDt);
+    let d4 = new Date(this.Max17YO);
+    if(d1>d2){
+      this.toastr.errorMessage("Id Expired Date can not be more than " + formatDate(this.MaxDate, 'yyyy-MM-dd', 'en-US'));
+      return false;
+    }
+    if(d3>d4){
+      this.toastr.errorMessage("Birth Date can not be more than " + formatDate(this.Max17YO, 'yyyy-MM-dd', 'en-US'));
+      return false;
+    }
+    return true;
   }
 
   setAppGuarantor() {
@@ -380,7 +400,7 @@ export class GuarantorPersonalComponent implements OnInit {
   SaveForm() {
     console.log(this.PersonalForm);
     this.guarantorPersonalObj = new GuarantorPersonalObj();
-    this.Add();
+    this.Add(); 
     if (this.mode == "edit") {
       this.guarantorPersonalObj.RowVersion = this.resultData.RowVersion;
       this.guarantorPersonalObj.AppGuarantorObj.AppGuarantorId = this.AppGuarantorId;
@@ -427,5 +447,4 @@ export class GuarantorPersonalComponent implements OnInit {
     this.initLookup();
     this.initAddr();
   }
-
 }

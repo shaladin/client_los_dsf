@@ -47,6 +47,7 @@ export class TermConditionsComponent implements OnInit {
               PromisedDt: this.AppTcList[i].PromisedDt != null ? formatDate(this.AppTcList[i].PromisedDt, 'yyyy-MM-dd', 'en-US') : "",
               CheckedDt: this.AppTcList[i].CheckedDt != null ? formatDate(this.AppTcList[i].CheckedDt, 'yyyy-MM-dd', 'en-US') : "",
               Notes: this.AppTcList[i].Notes,
+              IsAdditional : this.AppTcList[i].IsAdditional,
               RowVersion : this.AppTcList[i].RowVersion
             }) as FormGroup;
 

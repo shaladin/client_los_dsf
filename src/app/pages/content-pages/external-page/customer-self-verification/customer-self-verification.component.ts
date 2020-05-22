@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import Stepper from 'bs-stepper';
+import { LeadObj } from 'app/shared/model/Lead.Model';
 
 @Component({
   selector: 'app-customer-self-verification',
@@ -15,8 +16,10 @@ export class CustomerSelfVerificationComponent implements OnInit {
   private stepper: Stepper;
   LeadId: any;
   LobCode: string;
+  LeadStep: string;
   isCustData: boolean;
   isLeadData: boolean;
+  leadObj: LeadObj;
   viewLeadHeaderMainInfo : any;
   WfTaskListId: any;
 
@@ -34,6 +37,16 @@ export class CustomerSelfVerificationComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.leadObj = new LeadObj;
+    this.leadObj.LeadId = this.LeadId;
+    this.http.post(AdInsConstant.GetLeadByLeadId, this.leadObj).subscribe(
+      (response) => { 
+        this.LeadStep = response["LeadStep"];
+        console.log(this.LeadStep);
+        if (this.LeadStep != "SVR")
+          this.router.navigate(["/pages/Submit?reason=resubmit"]);
+      })
+
     this.claimTask();
     this.viewLeadHeaderMainInfo = "./assets/ucviewgeneric/viewLeadHeader.json";
 
