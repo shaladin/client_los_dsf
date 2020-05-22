@@ -55,6 +55,8 @@ export class CustGrpMemberFL4WComponent implements OnInit {
      }
 
   async ngOnInit() : Promise<void> {
+    console.log("abcde")
+    console.log(this.parentForm.controls[this.identifier])
     console.log(this.identifier);
     console.log(this.parentForm);
 

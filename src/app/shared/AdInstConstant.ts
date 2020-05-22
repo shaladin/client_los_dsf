@@ -60,7 +60,7 @@ export class AdInsConstant {
 
 
   // APP Application
-  public static AddApp = "/Application/AddApp";
+  public static AddApp = environment.losUrl + "/Application/AddApp";
   public static EditApp = "/Application/EditApp";
   public static GetAppById = environment.losUrl + "/Application/GetAppById";
   public static GetAppByIds = environment.losUrl + "/Application/GetAppById";
@@ -190,9 +190,13 @@ export class AdInsConstant {
   public static LobCodeCFRFN = "CFRFN";
 
   //TOP CALC BASED
-  public static InvcDt = "INVC_DT";
-  public static EffDt = "EFF_DT";
+  public static TopCalcBasedInvcDt = "INVC_DT";
+  public static TopCalcBasedEffDt = "EFF_DT";
 
+  //INST TYPE
+  public static InstTypeSingle = "SINGLE";
+  public static InstTypeMultiple = "MULTIPLE";
+  
   //Asset Accessory
   public static GetAssetAccessoryByCode = environment.FoundationR3Url + "/AssetAccessory/GetAssetAccessoryByCode";
 
@@ -222,6 +226,8 @@ export class AdInsConstant {
 
   //INS PAID BY
   public static InsPaidByCustomer = "CU";
+  public static InsPaidByAtCost = "CO";
+
   //GENERAL SETTING
   public static GetBusinessDt = "/GeneralSetting/GetBusinessDate";
   public static AddGeneralSetting = "/GeneralSetting/AddGeneralSetting";
@@ -992,6 +998,7 @@ export class AdInsConstant {
   public static CalculateInstallmentRegularFixFctr = environment.losUrl + "/AppFinData/CalculateInstallmentRegularFixFctr";
   public static SaveAppFinDataFctr = environment.losUrl + "/AppFinData/SaveAppFinDataFctr";
   public static CalculateInstallmentEvenPrincipalFctr = environment.losUrl + "/AppFinData/CalculateInstallmentEvenPrincipalFctr";
+  public static CalculateSingleInst = environment.losUrl + "/AppFinData/CalculateSingleInst";
 
 
 

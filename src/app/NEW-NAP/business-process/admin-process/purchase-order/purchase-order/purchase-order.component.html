@@ -19,7 +19,7 @@
                 <td>{{item.PurchaseOrderNo}}</td>
                 <td>
                     <a class="success p-0" [routerLink]="[urlDetail]"
-                        [queryParams]="{AgrmntId:item.AgrmntId, AppId:item.AppId, AppAssetId:item.AppAssetId, SupplCode:item.SupplCode}">
+                        [queryParams]="{AgrmntId:item.AgrmntId, AppId:item.AppId, AppAssetId:item.AppAssetId, SupplCode:item.SupplCode, LobCode : lobCode, TaskListId : TaskListId}">
                         <i class="ft-edit-2 font-medium-3 mr-2"></i>
                     </a>
                 </td>
