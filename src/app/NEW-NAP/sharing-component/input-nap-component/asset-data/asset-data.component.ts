@@ -1248,12 +1248,14 @@ export class AssetDataComponent implements OnInit {
   }
 
   deleteAccessory(i) {
-    var appAccessoryObjs = this.AssetDataForm.controls["AssetAccessoriesObjs"] as FormArray;
-    var no = appAccessoryObjs.controls[i]["controls"]["No"].value;
-    appAccessoryObjs.removeAt(i);
-    //this.AllAssetObjs.splice(i, 1);
-    this.AssetDataForm.removeControl("lookupSupplierObj" + no);
-    this.AssetDataForm.removeControl("lookupAccObj" + no);
+    if (confirm("Are you sure to delete this record?")) {
+      var appAccessoryObjs = this.AssetDataForm.controls["AssetAccessoriesObjs"] as FormArray;
+      var no = appAccessoryObjs.controls[i]["controls"]["No"].value;
+      appAccessoryObjs.removeAt(i);
+      //this.AllAssetObjs.splice(i, 1);
+      this.AssetDataForm.removeControl("lookupSupplierObj" + no);
+      this.AssetDataForm.removeControl("lookupAccObj" + no);
+    }
   }
 
   bindAccessories() {
