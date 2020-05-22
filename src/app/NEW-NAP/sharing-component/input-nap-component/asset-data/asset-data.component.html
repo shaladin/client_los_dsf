@@ -9,7 +9,7 @@
             </lib-ucSubsection>
             <div id="supplierData">
               <div class="form-group row">
-                <label class="col-md-2  adInsLabel" translate>Supplier Name </label>
+                <label class="col-md-2  adins-required-label" translate>Supplier Name </label>
                 <div class="col-md-4" *ngIf="isOnlookup">
                   <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupSupplierObj" [identifier]="'lookupSupplier'" [enjiForm]='enjiForm' [parentForm]='AssetDataForm' (lookup)="SetSupplier($event)">
                   </lib-uclookupgeneric>
@@ -17,7 +17,8 @@
                 <label class="col-md-2  adins-required-label" translate>Sales Person</label>
                 <div class="col-md-4">
                   <select *ngIf="SalesPersonObj" class="form-control" id="salesPerson" formControlName="SalesPersonId" (change)="SalesPersonChanged($event)"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.SalesPersonName.invalid }">
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.SalesPersonId.invalid }" style="width:50%">
+                    <option value="">-Select One-</option>
                     <option *ngFor="let item of SalesPersonObj" [value]="item.VendorEmpId">
                       {{item.VendorEmpName}}
                     </option>
@@ -28,13 +29,14 @@
                 <label class="col-md-2  adins-required-label" translate>Admin Head</label>
                 <div class="col-md-4">
                   <select *ngIf="AdminHeadObj" class="form-control" id="adminHead" formControlName="AdminHeadId" (change)="AdminHeadChanged($event)"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.AdminHeadName.invalid }">
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.AdminHeadId.invalid }" style="width:50%">
+                    <option value="">-Select One-</option>
                     <option *ngFor="let item of AdminHeadObj" [value]="item.VendorEmpId">
                       {{item.VendorEmpName}}
                     </option>
                   </select>
                 </div>
-                <label class="col-md-2  adins-required-label" translate>Branch Manager</label>
+                <label class="col-md-2  adInsLabel" translate>Branch Manager</label>
                 <div class="col-md-4">
                   <label>{{BranchManagerName}}</label>
                 </div>
@@ -45,18 +47,19 @@
             </lib-ucSubsection>
             <div id="assetData">
               <div class="form-group row">
-                <label class="col-md-2  adInsLabel" translate>Asset Name </label>
+                <label class="col-md-2  adins-required-label" translate>Asset Name </label>
                 <div class="col-md-4" *ngIf="isOnlookup">
                   <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupAssetObj" [identifier]="'lookupAsset'" [enjiForm]='enjiForm' [parentForm]='AssetDataForm' (lookup)="SetAsset($event)">
                   </lib-uclookupgeneric>
                 </div>
-                <label class="col-md-2  adins-required-label" translate>Down Payment Type</label>
+                <label class="col-md-2  adInsLabel" translate>Down Payment Type</label>
                 <div class="col-md-4">
-                  <mat-radio-group formControlName="selectedDpType" (change)="DpTypeChange($event)">
-                    <mat-radio-button class="custom-control custom-radio display-inline-block" *ngFor="let item of dpTypeValue" [value]="item.Key">
+                  <select class="form-control" id="selectedDpTypeId" formControlName="selectedDpType" (change)="DpTypeChange()" style="width:50%">
+                    <option value="">-Select One-</option>
+                    <option *ngFor="let item of dpTypeValue" [value]="item.Key">
                       {{item.Value}}
-                    </mat-radio-button>
-                  </mat-radio-group>
+                    </option>
+                  </select>
                 </div>
               </div>
               <div class="form-group row">
@@ -77,16 +80,19 @@
               <div class="form-group row">
                 <label class="col-md-2  adins-required-label" translate>Asset Condition</label>
                 <div class="col-md-4">
-                  <mat-radio-group formControlName="MrAssetConditionCode" (change)="AssetConditionChanged()">
-                    <mat-radio-button class="custom-control custom-radio display-inline-block" *ngFor="let item of AssetConditionObj" [value]="item.Key">
+                  <select class="form-control" id="MrAssetConditionCodeId" formControlName="MrAssetConditionCode" (change)="AssetConditionChanged()"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.MrAssetConditionCode.invalid }" style="width:50%">
+                    <option value="">-Select One-</option>
+                    <option *ngFor="let item of AssetConditionObj" [value]="item.Key">
                       {{item.Value}}
-                    </mat-radio-button>
-                  </mat-radio-group>
+                    </option>
+                  </select>
                 </div>
                 <label class="col-md-2  adins-required-label" translate>Asset Usage</label>
                 <div class="col-md-4">
                   <select class="form-control" id="assetUsage" formControlName="MrAssetUsageCode"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.MrAssetUsageCode.invalid }">
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.MrAssetUsageCode.invalid }" style="width:50%">
+                    <option value="">-Select One-</option>
                     <option *ngFor="let item of AssetUsageObj" [value]="item.Key">
                       {{item.Value}}
                     </option>
@@ -124,7 +130,11 @@
               <div class="form-group row">
                 <label class="col-md-2  adins-required-label" translate>Manufacturing Year</label>
                 <div class="col-md-4">
-                  <input type="number" class="form-control" formControlName="ManufacturingYear">
+                  <input type="text" class="form-control" formControlName="ManufacturingYear">
+                </div>
+                <label class="col-md-2" translate>BPKB Issue Date</label>
+                <div class="col-md-4">
+                  <input type="date" class="form-control adInsInput" formControlName="TaxIssueDt">
                 </div>
               </div>
               <div class="form-group row">
@@ -132,11 +142,12 @@
                 <div class="col-md-4">
                   <input type="text" class="form-control" formControlName="Color"
                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.Color.invalid}">
-                  <lib-uc-show-errors  [control]="AssetDataForm.controls.Color" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                  <lib-uc-show-errors [control]="AssetDataForm.controls.Color" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
-                <label class="col-md-2" translate>BPKB Issue Date</label>
-                <div class="col-md-4">
-                  <input type="date" class="form-control adInsInput" formControlName="TaxIssueDt">
+                <label class="col-md-2" translate>BPKB City Issuer</label>
+                <div class="col-md-4" *ngIf="isOnlookup">
+                  <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupCityIssuerObj" [identifier]="'DistrictCode'" [enjiForm]='enjiForm' [parentForm]='AssetDataForm' (lookup)="SetBpkbCity($event)">
+                  </lib-uclookupgeneric>
                 </div>
               </div>
               <div class="form-group row">
@@ -145,11 +156,6 @@
                   <textarea type="text" class="form-control adInsInput" formControlName="AssetNotes"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.AssetNotes.invalid }"></textarea>
                   <lib-uc-show-errors  [control]="AssetDataForm.controls.AssetNotes" [submit]="enjiForm.submitted"></lib-uc-show-errors >
-                </div>
-                <label class="col-md-2" translate>BPKB City Issuer</label>
-                <div class="col-md-4" *ngIf="isOnlookup">
-                  <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupCityIssuerObj" [identifier]="'DistrictCode'" [enjiForm]='enjiForm' [parentForm]='AssetDataForm' (lookup)="SetBpkbCity($event)">
-                  </lib-uclookupgeneric>
                 </div>
               </div>
             </div>
@@ -175,6 +181,9 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <tr *ngIf="AssetDataForm.controls['AssetAccessoriesObjs'].controls == 0">
+                      <td align="center" colspan="7">No data found</td>
+                    </tr>
                     <tr *ngFor="let item of AssetDataForm.controls['AssetAccessoriesObjs'].controls;let i = index">
                       <td [formGroupName]="i" class="text-center">
                         {{i + 1}}
@@ -233,7 +242,8 @@
               <div class="form-group row">
                 <label class="col-md-2  adInsLabel" translate>User Relationship </label>
                 <div class="col-md-4">
-                  <select class="form-control" id="userRelationship" formControlName="MrUserRelationshipCode">
+                  <select class="form-control" id="userRelationship" formControlName="MrUserRelationshipCode" style="width:50%">
+                    <option value="">-Select One-</option>
                     <option *ngFor="let item of UserRelationObj" [value]="item.Key">
                       {{item.Value}}
                     </option>
@@ -253,7 +263,8 @@
                 <label class="col-md-2  adInsLabel" translate *ngIf="this.CustType == 'PERSONAL'">Id Type </label>
                 <div class="col-md-4">
                   <select class="form-control" id="idType" formControlName="MrIdTypeCode" *ngIf="this.CustType == 'PERSONAL'"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.MrIdTypeCode.invalid }">
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.MrIdTypeCode.invalid }" style="width:50%">
+                    <option value="">-Select One-</option>
                     <option *ngFor="let item of IdTypeObj" [value]="item.Key">
                       {{item.Value}}
                     </option>
@@ -264,7 +275,8 @@
                 <label class="col-md-2  adInsLabel" translate>Owner Relationship </label>
                 <div class="col-md-4">
                   <select class="form-control" id="userRelationship" formControlName="MrOwnerRelationshipCode"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.MrOwnerRelationshipCode.invalid }">
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.MrOwnerRelationshipCode.invalid }" style="width:50%">
+                    <option value="">-Select One-</option>
                     <option *ngFor="let item of OwnerRelationObj" [value]="item.Key">
                       {{item.Value}}
                     </option>
@@ -280,6 +292,7 @@
                 <div class="col-md-4">
                   <div class="input-group">
                     <select class="form-control" formControlName="OwnerAddrType" [(ngModel)]="copyFromAppCustAddrForOwner" (change)="SetOwnerAddrType($event.target.value)">
+                      <option value="">-Select One-</option>
                       <option *ngFor="let item of AppCustAddrObj" [value]="item.MrCustAddrTypeCode">
                         {{item.MrCustAddrTypeCode}}
                       </option>
@@ -293,17 +306,15 @@
                     </div>
                   </div>
                 </div>
+                <label class="col-md-2  adInsLabel" translate>Mobile Phone </label>
+                <div class="col-md-4">
+                  <input type="text" class="form-control" formControlName="OwnerMobilePhnNo">
+                </div>
               </div>
             </div>
             <div class="form-group row">
               <div class="col-md-12">
                 <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="AssetDataForm" [enjiForm]="enjiForm" [identifier]="'ownerData'" [default]="ownerAddrObj" [inputField]="inputFieldOwnerAddrObj" [showAllPhn]="false"></lib-ucaddress>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label class="col-md-2  adInsLabel" translate>Mobile Phone </label>
-              <div class="col-md-4">
-                <input type="text" class="form-control" formControlName="OwnerMobilePhnNo">
               </div>
             </div>
 
@@ -316,6 +327,7 @@
                 <div class="col-md-4">
                   <div class="input-group">
                     <select class="form-control" formControlName="LocationAddrType" [(ngModel)]="copyFromAppCustAddrForLocation" (change)="SetLocationAddrType($event.target.value)">
+                      <option value="">-Select One-</option>
                       <option *ngFor="let item of AppCustAddrObj" [value]="item.MrCustAddrTypeCode">
                         {{item.MrCustAddrTypeCode}}
                       </option>
