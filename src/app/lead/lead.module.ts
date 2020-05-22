@@ -19,7 +19,6 @@ import { UcgridfooterModule, UcgridfooterComponent } from "@adins/ucgridfooter";
 // import { MainInfoComponent } from 'app/view/main-info/main-info.component';
 import { LeadRoutingModule } from "./lead-routing.module";
 import { CustomerSelfVerificationComponent } from './verification/customer-self-verification/customer-self-verification.component';
-import { CustomerDataComponent } from './verification/customer-self-verification/customer-data/customer-data.component';
 import { LeadDataComponent } from './verification/customer-self-verification/lead-data/lead-data.component';
 import { LeadMainInfoComponent } from 'app/view/lead-main-info/lead-main-info.component';
 // import { ShowErrorsComponent } from "./app/test-new/show-errors.component";
@@ -56,8 +55,6 @@ export const customCurrencyMaskConfig = {
   thousands: ",",     
   nullable: false };
 
- 
-
 @NgModule({
   imports: [
     LeadRoutingModule,
@@ -85,7 +82,6 @@ export const customCurrencyMaskConfig = {
   declarations: [
     LeadMainInfoComponent,
     CustomerSelfVerificationComponent,
-    CustomerDataComponent,
     LeadDataComponent, 
     LeadDataComponent,
     LeadVerifComponent,
