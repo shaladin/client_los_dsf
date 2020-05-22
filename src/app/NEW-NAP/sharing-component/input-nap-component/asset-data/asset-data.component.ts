@@ -209,6 +209,8 @@ export class AssetDataComponent implements OnInit {
   AppCustObj: any;
   RefProdCmpt: any;
   AppCustCoyObj: any;
+  CheckValidationObj: any;
+  isValidOk: boolean = true;
 
   getRefMasterUrl: any;
   AddEditAllAssetDataUrl: any;
@@ -320,21 +322,80 @@ export class AssetDataComponent implements OnInit {
     this.getAppCustUrl = AdInsConstant.GetAppCustByAppId;
   }
 
-  SaveForm() {
+  async SaveForm() {
     console.log(this.AssetDataForm);
-    this.allAssetDataObj = new AllAssetDataObj();
-    this.setAllAssetObj();
-    this.http.post(this.AddEditAllAssetDataUrl, this.allAssetDataObj).subscribe(
+    this.isValidOk = true;
+    await this.CheckValidation();
+    if (this.CheckValidationObj != null) {
+      if (this.CheckValidationObj.MinManufYear != 0) {
+        if (this.CheckValidationObj.MinManufYear > this.AssetDataForm.controls.ManufacturingYear.value) {
+          this.toastr.errorMessage("Manufacturing Year must be more than " + this.CheckValidationObj.MinManufYear);
+          this.isValidOk = false;
+        }
+        if (this.CheckValidationObj.GrossDPPrctg != 0) {
+          if (this.AssetDataForm.controls.selectedDpType.value == 'PRCTG') {
+            if (this.CheckValidationObj.GrossDPPrctg > this.AssetDataForm.controls.DownPaymentAmt.value && this.CheckValidationObj.DPGrossBehaviour == 'MIN') {
+              this.toastr.errorMessage("DP must be more than " + this.CheckValidationObj.GrossDPPrctg +"% from Asset Price");
+              this.isValidOk = false;
+            }
+            if (this.CheckValidationObj.GrossDPPrctg < this.AssetDataForm.controls.DownPaymentAmt.value && this.CheckValidationObj.DPGrossBehaviour == 'MAX') {
+              this.toastr.errorMessage("DP must be less than " + this.CheckValidationObj.GrossDPPrctg + "% from Asset Price");
+              this.isValidOk = false;
+            }
+          }
+          if (this.AssetDataForm.controls.selectedDpType.value == 'AMT') {
+            var tempPrcnt = this.AssetDataForm.controls.DownPaymentAmt.value / this.AssetDataForm.controls.AssetPriceAmt.value * 100
+            if (this.CheckValidationObj.GrossDPPrctg > tempPrcnt && this.CheckValidationObj.DPGrossBehaviour == 'MIN') {
+              this.toastr.errorMessage("DP must be more than " + this.CheckValidationObj.GrossDPPrctg + "% from Asset Price");
+              this.isValidOk = false;
+            }
+            if (this.CheckValidationObj.GrossDPPrctg < tempPrcnt && this.CheckValidationObj.DPGrossBehaviour == 'MAX') {
+              this.toastr.errorMessage("DP must be less than " + this.CheckValidationObj.GrossDPPrctg + "% from Asset Price");
+              this.isValidOk = false;
+            }
+          }
+        }
+      }
+    }
+    if (this.isValidOk == true) {
+      this.allAssetDataObj = new AllAssetDataObj();
+      this.setAllAssetObj();
+      this.http.post(this.AddEditAllAssetDataUrl, this.allAssetDataObj).subscribe(
+        (response) => {
+          console.log(response);
+          this.toastr.successMessage(response["message"]);
+          this.outputTab.emit();
+        },
+        (error) => {
+          console.log(error);
+          
+        }
+      );
+    }
+
+
+  }
+
+  async CheckValidation() {
+    var CheckValidObj = {
+      SupplCode: this.AssetDataForm.controls.SupplCode.value,
+      FullAssetCode: this.AssetDataForm.controls.FullAssetCode.value,
+      AssetCondition: this.AssetDataForm.controls.MrAssetConditionCode.value,
+      ManufacturingYear: this.AssetDataForm.controls.ManufacturingYear.value,
+      Tenor: this.AppObj.Tenor,
+      AssetCategoryCode: this.AssetDataForm.controls.AssetCategoryCode.value,
+      MrAssetUsageCode: this.AssetDataForm.controls.MrAssetUsageCode.value
+    }
+    await this.http.post(AdInsConstant.CheckAssetValidationRule, CheckValidObj).toPromise().then(
       (response) => {
         console.log(response);
-        this.toastr.successMessage(response["message"]);
-        this.outputTab.emit();
+        this.CheckValidationObj = response;
       },
       (error) => {
         console.log(error);
+        this.isValidOk = false;
       }
     );
-
   }
 
   setAllAssetObj() {
