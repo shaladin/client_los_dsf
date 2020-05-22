@@ -64,12 +64,12 @@ export class NapPagingComponent implements OnInit {
   }
 
   GetCallBack(ev: any){
-    console.log(ev);
-    if(!ev.RowObj.IsAllowAppCreated){
-      this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');
-      return;
-    }else{
+    // console.log(ev);
+    // if(!ev.RowObj.IsAllowAppCreated){
+    //   this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');
+    //   return;
+    // }else{
       this.router.navigate(["Nap/ConsumerFinance/InputNap/Add/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId" : ev.RowObj.WfTaskListId } });
-    }
+    // }
   }
 }
