@@ -378,6 +378,7 @@ export class CustShareholderComponent implements OnInit {
   }
 
   setAppCustCompanyMgmntShrholder(){
+    var flag:boolean = true;
     if(this.CustShareholderForm.controls.MrCustTypeCode.value == AdInsConstant.CustTypePersonal){
       this.appCustCompanyMgmntShrholderObj.MrCustTypeCode = this.CustShareholderForm.controls.MrCustTypeCode.value;
       this.appCustCompanyMgmntShrholderObj.CustTypeName = this.selectedCustTypeName;
@@ -396,11 +397,11 @@ export class CustShareholderComponent implements OnInit {
       let d4 = new Date(this.Max17YO);
       if(d1>d2){
         this.toastr.errorMessage("Id Expired Date can not be more than " + this.MaxDate);
-        return false;
+        flag = false;
       }
       if(d3>d4){
         this.toastr.errorMessage("Birth Date can not be more than " + this.Max17YO);
-        return false;
+        flag = false;
       }
       this.appCustCompanyMgmntShrholderObj.MobilePhnNo = this.CustShareholderForm.controls.MobilePhnNo.value;
       this.appCustCompanyMgmntShrholderObj.Email = this.CustShareholderForm.controls.Email.value;
@@ -422,7 +423,7 @@ export class CustShareholderComponent implements OnInit {
       this.appCustCompanyMgmntShrholderObj.SharePrcnt = this.CustShareholderForm.controls.SharePrcnt.value;
     }
 
-    return true;
+    return flag;
   }
 
   GetIndustryType(event){
