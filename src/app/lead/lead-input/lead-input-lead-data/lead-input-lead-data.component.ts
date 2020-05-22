@@ -549,6 +549,17 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.DPPercentage = this.LeadDataForm.controls["DownPaymentPercent"].value;
     this.AssetPrice = this.LeadDataForm.controls["AssetPrice"].value;
 
+    if(this.LeadDataForm.controls["DownPaymentPercent"].value < 0)
+    {
+      this.toastr.errorMessage("Down Payment must be above or equal 0");
+      return;
+    }
+    if(this.LeadDataForm.controls["DownPaymentPercent"].value > 100)
+    {
+      this.toastr.errorMessage("Down Payment must be lower or equal 100");
+      return;
+    }
+
     this.DPAmount = this.AssetPrice * this.DPPercentage/100;
 
     this.LeadDataForm.patchValue({
@@ -568,10 +579,16 @@ export class LeadInputLeadDataComponent implements OnInit {
 
   TenorChange()
   {
+    if(this.LeadDataForm.controls["Tenor"].value < 0)
+    {
+      this.toastr.errorMessage("Tenor must be above 0");
+      return;
+    }
+
     this.Calculate = false;
     
-    console.log("test tenor");
-    console.log(this.Calculate);
+    // console.log("test tenor");
+    // console.log(this.Calculate);
   }
 
   calculateNonKta()
