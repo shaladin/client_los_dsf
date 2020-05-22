@@ -217,7 +217,7 @@ export class NapAddComponent implements OnInit {
     napAppObj = this.CheckValue(napAppObj);
     console.log(napAppObj);
 
-    var url = environment.losUrl + AdInsConstant.AddApp;
+    var url = AdInsConstant.AddApp;
     this.http.post(url, napAppObj).subscribe(
       (response) => {
         console.log(response);

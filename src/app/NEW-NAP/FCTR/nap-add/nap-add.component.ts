@@ -184,7 +184,7 @@ export class NapAddComponent implements OnInit {
 
     }
 
-    var url = environment.losUrl + AdInsConstant.AddApp;
+    var url =  AdInsConstant.AddApp;
     this.http.post(url, napAppObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
