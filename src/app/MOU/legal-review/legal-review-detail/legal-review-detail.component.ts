@@ -50,7 +50,6 @@ export class LegalReviewDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('vin');
     this.claimTask();
     this.items = this.LegalForm.get('items') as FormArray;
     this.termConditions = this.LegalForm.get('termConditions') as FormArray;
