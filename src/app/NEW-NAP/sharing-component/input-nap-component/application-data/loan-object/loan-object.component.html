@@ -63,7 +63,7 @@
     <div class="form-group row adins-required">
       <label class="col-md-2 adInsInput" for="BudgetPlanAmount" translate>Budget Plan Amount</label>
       <div class="col-md-4">
-        <input type="text" id="BudgetPlanAmount" class="form-control adInsInput width-25-per"
+        <input type="text" id="BudgetPlanAmount" class="form-control adInsInput number"
           formControlName="BudgetPlanAmount">
         <lib-uc-show-errors [control]="MainInfoForm.controls.BudgetPlanAmount" [submit]="MainInfoReqForm.submitted">
         </lib-uc-show-errors>
@@ -82,7 +82,7 @@
     <div class="form-group row adins-required">
       <label class="col-md-2 adInsInput" for="SelfFinancing" translate>Self Financing</label>
       <div class="col-md-4">
-        <input type="text" id="SelfFinancing" class="form-control adInsInput width-25-per"
+        <input type="text" id="SelfFinancing" class="form-control adInsInput number"
           formControlName="SelfFinancing">
         <lib-uc-show-errors [control]="MainInfoForm.controls.SelfFinancing" [submit]="MainInfoReqForm.submitted">
         </lib-uc-show-errors>
@@ -102,7 +102,7 @@
     <div class="form-group row adins-required">
       <label class="col-md-2 adInsInput" for="FinancingAmount" translate>Financing Amount</label>
       <div class="col-md-4">
-        <input type="text" id="FinancingAmount" class="form-control adInsInput width-25-per"
+        <input type="text" id="FinancingAmount" class="form-control adInsInput number"
           formControlName="FinancingAmount">
         <lib-uc-show-errors [control]="MainInfoForm.controls.FinancingAmount" [submit]="MainInfoReqForm.submitted">
         </lib-uc-show-errors>

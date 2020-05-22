@@ -24,6 +24,11 @@
         <th><span translate class="thead-header" name='action'>ACTION</span></th>
       </tr>
     </thead>
+    <tbody *ngIf = "listContactPersonCompany == undefined">
+      <tr>
+        <td colspan="100%">No Data Available</td>
+      </tr>
+    </tbody>
     <tbody>
       <tr *ngFor="let item of listContactPersonCompany; let i = index">
         <td style="text-align: left;">{{item.ContactPersonName}}</td>
@@ -77,7 +82,7 @@
               <div class="form-group row">
                 <label class="col-md-2" for="mobilePhone" translate>Mobile Phone 1</label>
                 <div class="col-md-4">
-                  <input type="number" class="form-control" id="mobilePhone" formControlName="MobilePhnNo1"
+                  <input type="text" class="form-control" id="mobilePhone" formControlName="MobilePhnNo1"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && ContactInfoCompanyForm.controls.MobilePhnNo1.invalid }">
                   <lib-uc-show-errors [control]="ContactInfoCompanyForm.controls.MobilePhnNo1" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
@@ -91,7 +96,7 @@
               <div class="form-group row">
                 <label class="col-md-2" for="mobilePhone2" translate>Mobile Phone 2</label>
                 <div class="col-md-4">
-                  <input type="number" class="form-control" id="mobilePhone2" formControlName="MobilePhnNo2"
+                  <input type="text" class="form-control" id="mobilePhone2" formControlName="MobilePhnNo2"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && ContactInfoCompanyForm.controls.MobilePhnNo2.invalid }">
                   <lib-uc-show-errors [control]="ContactInfoCompanyForm.controls.MobilePhnNo2" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
