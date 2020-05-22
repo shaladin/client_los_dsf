@@ -158,7 +158,7 @@ export class CustLegalDocComponent implements OnInit {
     // var IdxSelected=
     if(this.selectedListLegalDocType.length>0){
       if(this.selectedListLegalDocType.find(x => x.Key == this.appCustCompanyLegalDocObj.MrLegalDocTypeCode)){
-        this.toastr.errorMessage("Legal Document Type is duplicated with "+this.appCustCompanyLegalDocObj.MrLegalDocTypeCode);    
+        this.toastr.errorMessage("Legal Document Type "+this.appCustCompanyLegalDocObj.MrLegalDocTypeCode + " is duplicated ");    
         return false;  
       }
     }
