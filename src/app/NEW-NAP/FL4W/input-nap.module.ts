@@ -24,6 +24,8 @@ import { AppMainInfoComponent } from "../sharing-component/view-main-info-compon
 import { ViewAppCustDataPersonalComponent } from "../sharing-component/view-app-component/view-app-cust-data-personal/view-app-cust-data-personal.component";
 import { ViewAppCustDataCompanyComponent } from "../sharing-component/view-app-component/view-app-cust-data-company/view-app-cust-data-company.component";
 import { ViewAgrmntComponent } from './view-agrmnt/view-agrmnt.component';
+import { ViewAgrmntComponentModule } from "../sharing-component/view-agrmnt-component/view-agrmnt-component.module";
+import { TabCommissionComponent } from "../sharing-component/view-app-component/tab-commission/tab-commission.component";
 import { AgrmntLifeInsuranceComponent } from "../sharing-component/view-agrmnt-component/life-insurance/life-insurance.component";
 import { ViewCommissionComponent } from "../sharing-component/view-agrmnt-component/view-commission/view-commission.component";
 import { ListDataCommissionComponent } from "../sharing-component/view-app-component/tab-commission/list-data-commission/list-data-commission.component";
@@ -68,6 +70,9 @@ import { AppInsuranceComponent } from "../sharing-component/view-app-component/a
     AppMainInfoComponent,
     ViewAppCustDataPersonalComponent,
     ViewAppCustDataCompanyComponent,
+    ViewAgrmntComponent, 
+    TabCommissionComponent,
+    ListDataCommissionComponent,
     ViewAgrmntComponent,  
     AgrmntLifeInsuranceComponent,
     ViewCommissionComponent,

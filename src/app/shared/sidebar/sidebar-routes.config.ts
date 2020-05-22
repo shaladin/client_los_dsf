@@ -5,7 +5,7 @@ export const ROUTES: RouteInfo[] = [
 
   { Path: '/dashboard/dash-board', Title: 'Home', Icon: 'ft-home', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
   {
-    Path: '', Title: 'Consumer Finance', Icon: 'ft-file-plus', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
+    Path: '', Title: 'Consumer Finance 4W', Icon: 'ft-file-plus', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
     Submenu: [
       { Path: '/Nap/ConsumerFinance/InputNap/Paging', Title: 'New Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "LobCode", value: "CF4W" }]},
       { Path: '/Nap/CreditProcess/PhoneVerification/Paging', Title: 'Phone Verification', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "LobCode", value: "CF4W" }]},
@@ -25,7 +25,7 @@ export const ROUTES: RouteInfo[] = [
     ], Params: []
   },
   {
-    Path: '', Title: 'Finance Leasing', Icon: 'ft-file-plus', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
+    Path: '', Title: 'Finance Leasing 4W', Icon: 'ft-file-plus', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
     Submenu: [
       { Path: '/Nap/FinanceLeasing/Paging', Title: 'New Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "LobCode", value: "FL4W" }] },
       { Path: '/Nap/CreditProcess/CommissionData/Paging', Title: 'Commission Data', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "LobCode", value: "FL4W" }] },
@@ -39,7 +39,7 @@ export const ROUTES: RouteInfo[] = [
     ], Params: []
   },
   {
-    Path: '', Title: 'Refinancing', Icon: 'ft-bookmark', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
+    Path: '', Title: 'Refinancing 4W', Icon: 'ft-bookmark', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
     Submenu: [
       { Path: '/Nap/CFRefinancing/Paging', Title: 'New Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "LobCode", value: "FRN4W" }] },
       { Path: '/Nap/CreditProcess/CommissionData/Paging', Title: 'Commission Data', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "LobCode", value: "FRN4W" }] },
