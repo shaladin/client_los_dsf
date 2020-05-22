@@ -42,6 +42,7 @@ export class AppInsObjObj {
     CustInscoBranchName: string;
     CustCvgAmt: number;
     CustNotes: string;
+    PayPeriodToInsco: string;
     RowVersion: string;
 
 constructor() { 
