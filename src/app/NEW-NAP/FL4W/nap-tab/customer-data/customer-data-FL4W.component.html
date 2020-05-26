@@ -23,7 +23,7 @@
             [custDataPersonalObj]="custDataPersonalObj" [enjiForm]="enjiForm" [parentForm]="CustDataForm"
             [identifier]="'personalMainData'"></app-cust-personal-main-data-FL4W>
           <lib-ucaddress #UcAddrGrp [title]="'Legal Address'" [UCAddrForm]="CustDataForm" [enjiForm]="enjiForm"
-            [identifier]="'legalAddr'" [default]="legalAddrObj" [inputField]="inputFieldLegalObj" [showPhn3]="false">
+            [identifier]="'legalAddr'" [default]="legalAddrObj" [inputField]="inputFieldLegalObj" [showAllPhn]="false">
           </lib-ucaddress>
           <lib-ucSubsection [id]="'residenceAddrId'" [title]="'Residence Address'" [panel]="'residenceAddr'">
           </lib-ucSubsection>
@@ -158,7 +158,7 @@
       </div>
       <div class="form-actions right">
         <button type="submit" class="btn btn-raised btn-primary">
-          <i class="fa fa-check-square-o"></i> Save And Continue
+          <i class="fa fa-check-square-o"></i> Save
         </button>
         <!-- <button type="button" class="btn btn-raised btn-primary" (click)="testCompany()">
                   <i class="fa fa-check-square-o"></i> test

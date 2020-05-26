@@ -23,7 +23,6 @@ import { LeadMainInfoComponent } from 'app/view/lead-main-info/lead-main-info.co
 // import { ShowErrorsComponent } from "./app/test-new/show-errors.component";
 import { LeadVerifComponent } from './lead-verif/lead-verif.component';
 import { LeadInputComponent } from "./lead-input/lead-input.component";
-import { LeadInputCustDataComponent } from "./lead-input/lead-input-cust-data/lead-input-cust-data.component";
 import { LeadInputPageComponent } from "./lead-input/lead-input-page/lead-input-page.component";
 import { LeadInputMainInfoComponent } from "./lead-input/lead-input-main-info/lead-input-main-info.component";
 import { LeadViewHeaderComponent } from "./lead-input/lead-view-header/lead-view-header.component";
@@ -89,7 +88,6 @@ export const customCurrencyMaskConfig = {
     ViewLeadDataComponent, 
     FraudVerifPagingComponent, FraudVerifPageComponent, LeadInquiryComponent, 
     LeadInputComponent,
-    LeadInputCustDataComponent,
     LeadInputPageComponent,
     LeadInputMainInfoComponent,
     LeadViewHeaderComponent,
