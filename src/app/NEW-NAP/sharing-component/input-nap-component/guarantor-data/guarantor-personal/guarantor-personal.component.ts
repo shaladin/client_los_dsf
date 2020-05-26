@@ -11,6 +11,7 @@ import { AppGuarantorPersonalObj } from 'app/shared/model/AppGuarantorPersonalOb
 import { GuarantorPersonalObj } from 'app/shared/model/GuarantorPersonalObj.Model';
 import { formatDate } from '@angular/common';
 import { environment } from 'environments/environment';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-guarantor-personal',
   templateUrl: './guarantor-personal.component.html',
@@ -39,7 +40,7 @@ export class GuarantorPersonalComponent implements OnInit {
   guarantorPersonalObj: GuarantorPersonalObj;
   AppGuarantorPersonalId: any;
 
-  constructor(private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService) {
+  constructor(private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService, private modalService: NgbModal) {
   }
 
   PersonalForm = this.fb.group({
@@ -405,5 +406,9 @@ export class GuarantorPersonalComponent implements OnInit {
         IdExpDt: ''
       });
     }
+  }
+
+  cancel() {
+    this.modalService.dismissAll();
   }
 }

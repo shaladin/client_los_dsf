@@ -11,5 +11,6 @@ export class ReturnHandlingHObj {
 
     constructor() {
         this.RowVersion = ""; 
+        this.ReturnHandlingHId = 0;
     }
 }
