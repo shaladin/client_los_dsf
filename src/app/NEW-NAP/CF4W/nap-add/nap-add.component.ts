@@ -246,18 +246,18 @@ export class NapAddComponent implements OnInit {
 
   getLookupAppResponseName(ev: any) {
     console.log(ev);
-    var url = environment.FoundationR3Url + AdInsConstant.GetListProdOfferingDByProdOfferingCode;
     var obj = {
-      ProdOfferingCode: ev.ProdOfferingCode
+      ProdOfferingCode: ev.ProdOfferingCode,
+      ProdOfferingVersion: ev.ProdOfferingVersion,
     };
     var tempLobCode;
     var tempCurrCode;
     var tempPayFreqCode;
     var tempRefProdTypeCode;
-    this.http.post(url, obj).subscribe(
+    this.http.post(AdInsConstant.GetListProdOfferingDByProdOfferingCodeAndProdOfferingVersion, obj).subscribe(
       (response) => {
-        // console.log(response);
-        var temp = response["ReturnObject"];
+        console.log(response);
+        var temp = response["ListProdOfferingDObj"];
         for (var i = 0; i < temp.length; i++) {
           if (temp[i].RefProdCompntCode == "LOB") {
             tempLobCode = temp[i].CompntValue;
