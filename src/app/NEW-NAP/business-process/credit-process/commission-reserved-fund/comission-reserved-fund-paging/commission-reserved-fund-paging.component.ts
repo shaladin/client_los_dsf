@@ -21,17 +21,16 @@ export class CommissionReservedFundPagingComponent implements OnInit {
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCommission.json";
 
-    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
-    var addCrit = new CriteriaObj();
-    addCrit.DataType = 'text';
-    addCrit.propName = 'WTL.USERNAME';
-    addCrit.restriction = AdInsConstant.RestrictionIn;
-    var arrayString = new Array<string>();
-    arrayString.push(currentUserContext["UserName"]);
-    arrayString.push("");
-    addCrit.listValue = arrayString;
+    // var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    // var addCrit = new CriteriaObj();
+    // addCrit.DataType = 'text';
+    // addCrit.propName = 'WTL.USERNAME';
+    // addCrit.restriction = AdInsConstant.RestrictionIn;
+    // var arrayString = new Array<string>();
+    // arrayString.push(currentUserContext["UserName"]);
+    // addCrit.listValue = arrayString;
 
-    this.inputPagingObj.addCritInput.push(addCrit);
+    // this.inputPagingObj.addCritInput.push(addCrit);
 
   }
 

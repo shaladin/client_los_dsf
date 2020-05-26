@@ -34,7 +34,7 @@ export class ReservedFundComponent implements OnInit {
   @Output() outputTab: EventEmitter<AllAppReservedFundObj> = new EventEmitter();
 
   appReservedFundObjs: Array<AppReservedFundObj>;
-  allAppReservedFundObj: AllAppReservedFundObj;
+  allAppReservedFundObj: AllAppReservedFundObj = new AllAppReservedFundObj();
   isCalculated: boolean = false;
   uppingRate: any;
   insuranceIncome: any;
