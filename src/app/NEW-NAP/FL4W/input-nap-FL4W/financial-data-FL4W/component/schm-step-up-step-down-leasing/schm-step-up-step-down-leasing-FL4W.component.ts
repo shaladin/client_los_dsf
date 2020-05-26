@@ -13,11 +13,11 @@ import { CalcStepUpStepDownObj } from 'app/shared/model/AppFinData/CalcStepUpSte
 import { AppInstStepSchmObj } from 'app/shared/model/AppInstStepSchm/AppInstStepSchmObj.Model';
 
 @Component({
-  selector: 'app-schm-step-up-step-down-normal',
-  templateUrl: './schm-step-up-step-down-normal.component.html',
+  selector: 'app-schm-step-up-step-down-leasing-FL4W',
+  templateUrl: './schm-step-up-step-down-leasing-FL4W.component.html',
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
-export class SchmStepUpStepDownNormalComponent implements OnInit {
+export class SchmStepUpStepDownLeasingFL4WComponent implements OnInit {
   @Input() AppId: number;
   @Input() ParentForm: FormGroup;
 
@@ -89,16 +89,6 @@ export class SchmStepUpStepDownNormalComponent implements OnInit {
     }
   }
 
-  InputTypeChanged(){
-    for(let i = 0; i < (this.ParentForm.controls.ListEntryInst as FormArray).length; i++){
-      this.ParentForm.controls.ListEntryInst["controls"][i].patchValue({
-        InstAmt: 0
-      });
-    }
-
-    this.SetNeedReCalculate(true);
-  }
-
   SetInstallmentTable() {
     var ctrInstallment = this.ParentForm.get("InstallmentTable");
     if (!ctrInstallment) {
@@ -128,6 +118,16 @@ export class SchmStepUpStepDownNormalComponent implements OnInit {
     });
   }
 
+  InputTypeChanged(){
+    for(let i = 0; i < (this.ParentForm.controls.ListEntryInst as FormArray).length; i++){
+      this.ParentForm.controls.ListEntryInst["controls"][i].patchValue({
+        InstAmt: 0
+      });
+    }
+
+    this.SetNeedReCalculate(true);
+  }
+
   SetEntryInstallment(){
     while ((this.ParentForm.controls.ListEntryInst as FormArray).length) {
       (this.ParentForm.controls.ListEntryInst as FormArray).removeAt(0);
@@ -140,15 +140,12 @@ export class SchmStepUpStepDownNormalComponent implements OnInit {
       });
       (this.ParentForm.controls.ListEntryInst as FormArray).push(group);
     }
+
     this.SetNeedReCalculate(true);
   }
 
 
   CalculateAmortization() {
-    if(this.ParentForm.controls.StepUpStepDownInputType.value == ""){
-      this.toastr.errorMessage("Please choose Step Up Step Down Input Type.");
-      return;
-    } 
 
     this.calcStepUpStepDownObj = this.ParentForm.value;
     this.calcStepUpStepDownObj["IsRecalculate"] = false;
@@ -176,7 +173,7 @@ export class SchmStepUpStepDownNormalComponent implements OnInit {
 
           NtfAmt: response.NtfAmt,
 
-        });
+        })
         this.SetInstallmentTable();
         this.SetInstStepSchm();
         this.SetNeedReCalculate(false);

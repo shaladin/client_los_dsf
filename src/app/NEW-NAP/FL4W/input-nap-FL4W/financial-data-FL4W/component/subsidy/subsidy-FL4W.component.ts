@@ -6,14 +6,14 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { environment } from 'environments/environment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { SubsidyAddEditComponent } from '../subsidy-add-edit/subsidy-add-edit.component';
+import { SubsidyAddEditFL4WComponent } from '../subsidy-add-edit/subsidy-add-edit-FL4W.component';
 import { AppFeeObj } from 'app/shared/model/AppFeeObj.Model';
 
 @Component({
-  selector: 'app-subsidy',
-  templateUrl: './subsidy.component.html',
+  selector: 'app-subsidy-FL4W',
+  templateUrl: './subsidy-FL4W.component.html',
 })
-export class SubsidyComponent implements OnInit {
+export class SubsidyFL4WComponent implements OnInit {
   @Input() AppId: number;
   @Input() ParentForm : FormGroup;
 
@@ -32,7 +32,7 @@ export class SubsidyComponent implements OnInit {
   AddReason()
   {
     this.listAppFeeObj = this.ParentForm.get("AppFee").value;
-    const modalRef = this.modalService.open(SubsidyAddEditComponent, { size:'sm' });
+    const modalRef = this.modalService.open(SubsidyAddEditFL4WComponent, { size:'sm' });
     modalRef.componentInstance.mode = "add";
     modalRef.componentInstance.AppId = this.AppId;
     modalRef.componentInstance.listAppFeeObj = this.listAppFeeObj;

@@ -9,10 +9,10 @@ import { environment } from 'environments/environment';
 import { CalcIrregularObj } from 'app/shared/model/AppFinData/CalcIrregularObj.Model';
 
 @Component({
-  selector: 'app-schm-irregular',
-  templateUrl: './schm-irregular.component.html',
+  selector: 'app-schm-irregular-FL4W',
+  templateUrl: './schm-irregular-FL4W.component.html',
 })
-export class SchmIrregularComponent implements OnInit {
+export class SchmIrregularFL4WComponent implements OnInit {
 
   @Input() AppId: number;
   @Input() ParentForm: FormGroup;

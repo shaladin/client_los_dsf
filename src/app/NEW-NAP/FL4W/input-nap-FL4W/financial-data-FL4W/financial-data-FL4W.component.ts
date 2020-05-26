@@ -72,6 +72,7 @@ export class FinancialDataFL4WComponent implements OnInit {
         SupplEffectiveRatePrcnt: 0,
         SupplFlatRatePrcnt: 0,
         DiffRateAmt: 0,
+        ResidualValueAmt: 0,
 
         TotalInterestAmt: 0,
         TotalAR: 0,

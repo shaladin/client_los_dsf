@@ -9,10 +9,10 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppFeeObj } from 'app/shared/model/AppFeeObj.Model';
 
 @Component({
-  selector: 'app-subsidy-add-edit',
-  templateUrl: './subsidy-add-edit.component.html',
+  selector: 'app-subsidy-add-edit-FL4W',
+  templateUrl: './subsidy-add-edit-FL4W.component.html',
 })
-export class SubsidyAddEditComponent implements OnInit {
+export class SubsidyAddEditFL4WComponent implements OnInit {
     @Input() AppId: number;
     @Input() listAppFeeObj : Array<AppFeeObj>;
     @Output() emitData = new EventEmitter();

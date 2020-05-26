@@ -13,11 +13,11 @@ import { CalcStepUpStepDownObj } from 'app/shared/model/AppFinData/CalcStepUpSte
 import { CalcEvenPrincipleObj } from 'app/shared/model/AppFinData/CalcEvenPrincipleObj.Model';
 
 @Component({
-  selector: 'app-schm-even-principal',
-  templateUrl: './schm-even-principal.component.html',
+  selector: 'app-schm-even-principal-FL4W',
+  templateUrl: './schm-even-principal-FL4W.component.html',
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
-export class SchmEvenPrincipalComponent implements OnInit {
+export class SchmEvenPrincipalFL4WComponent implements OnInit {
   @Input() AppId: number;
   @Input() ParentForm: FormGroup;
 

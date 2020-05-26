@@ -1,13 +1,13 @@
 <form class="form-horizontal" [formGroup]="FinDataForm" (ngSubmit)="FinDataForm.valid && Submit()" #enjiForm="ngForm">
-  <app-subsidy *ngIf="IsParentLoaded" [AppId]="AppId" [ParentForm]="FinDataForm"></app-subsidy>
-  <app-fee *ngIf="IsParentLoaded" [AppId]="AppId" [ParentForm]="FinDataForm" [identifier]="'AppFee'"></app-fee>
-  <app-schm-reguler-fix *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'RF'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-reguler-fix>
-  <app-schm-irregular *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'IR'" [AppId]="AppId" [ParentForm]="FinDataForm" [NumOfInst]="NumOfInst"> </app-schm-irregular>
-  <app-schm-step-up-step-down-normal *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'STNM'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-step-up-step-down-normal>
-  <app-schm-step-up-step-down-leasing *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'STLS'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-step-up-step-down-leasing>
-  <app-schm-step-up-step-down-cummulative *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'STCM'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-step-up-step-down-cummulative>
-  <app-schm-balloon *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'BL'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-balloon>
-  <app-schm-even-principal *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'EP'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-even-principal>
+  <app-subsidy-FL4W *ngIf="IsParentLoaded" [AppId]="AppId" [ParentForm]="FinDataForm"></app-subsidy-FL4W>
+  <app-fee-FL4W *ngIf="IsParentLoaded" [AppId]="AppId" [ParentForm]="FinDataForm" [identifier]="'AppFee'"></app-fee-FL4W>
+  <app-schm-reguler-fix-FL4W *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'RF'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-reguler-fix-FL4W>
+  <app-schm-irregular-FL4W *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'IR'" [AppId]="AppId" [ParentForm]="FinDataForm" [NumOfInst]="NumOfInst"> </app-schm-irregular-FL4W>
+  <app-schm-step-up-step-down-normal-FL4W *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'STNM'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-step-up-step-down-normal-FL4W>
+  <app-schm-step-up-step-down-leasing-FL4W *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'STLS'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-step-up-step-down-leasing-FL4W>
+  <app-schm-step-up-step-down-cummulative-FL4W *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'STCM'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-step-up-step-down-cummulative-FL4W>
+  <app-schm-balloon-FL4W *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'BL'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-balloon-FL4W>
+  <app-schm-even-principal-FL4W *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'EP'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-even-principal-FL4W>
 
   <!-- <lib-ucSubsection [id]="'FinData_FinDataId'" [title]="'Financial Data'" [panel]="'FinData_FinData'">
   </lib-ucSubsection> -->
