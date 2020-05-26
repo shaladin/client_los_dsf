@@ -106,19 +106,20 @@
                 (outputTab)="NextStep('INVOICE')"></app-application-data-factoring>
             </div>
             <div id="invoice-tab" class="content" role="tabpanel" aria-labelledby="invoice-tab-trigger">
-              <!-- <app-application-data *ngIf="AppStepIndex == 3" [appId]="appId" [IsLoanObject]="false"
-                (outputTab)="NextStep('COLL')"></app-application-data> -->
+              <app-invoice-data *ngIf="AppStepIndex == 3" [AppId]="appId" (outputTab)="NextStep('COLL')">
+              </app-invoice-data>
             </div>
             <div id="coll-tab" class="content" role="tabpanel" aria-labelledby="coll-tab-trigger">
               <app-collateral-fctr *ngIf="AppStepIndex == 4" [AppId]="appId" (outputTab)="NextStep('INS')">
               </app-collateral-fctr>
             </div>
             <div id="insurance-tab" class="content" role="tabpanel" aria-labelledby="insurance-tab-trigger">
-              <app-insurance-data *ngIf="AppStepIndex == 5" [appId]="appId"
-                (outputTab)="NextStep('FIN')"></app-insurance-data>
+              <app-insurance-data *ngIf="AppStepIndex == 5" [appId]="appId" (outputTab)="NextStep('FIN')">
+              </app-insurance-data>
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
-              <app-financial-data *ngIf="AppStepIndex == 6" [AppId]=appId (outputTab)="NextStep('TC')"></app-financial-data>
+              <app-financial-data *ngIf="AppStepIndex == 6" [AppId]=appId (outputTab)="NextStep('TC')">
+              </app-financial-data>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
               <app-tc-data *ngIf="AppStepIndex == 7" [AppId]="appId" (outputTab)="LastStepHandler()"></app-tc-data>

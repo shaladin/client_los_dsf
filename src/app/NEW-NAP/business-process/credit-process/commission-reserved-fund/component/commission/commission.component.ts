@@ -41,6 +41,7 @@ export class CommissionComponent implements OnInit {
   FormInputObjSupplier: any = {};
   FormInputObjSupplierEmpl: any = {};
   FormInputObjReferantor: any = {};
+  DictSupplierCode: any = {};
   OnForm1;
   OnForm2;
   OnForm3;
@@ -256,7 +257,7 @@ export class CommissionComponent implements OnInit {
   }
 
   GetRuleDataForForm(ruleSetName) {
-    var url = environment.losUrl + AdInsConstant.GetAppCommissionRule;
+    var url = AdInsConstant.GetAppCommissionRule;
     var listTemp = new Array();
     for (var i = 0; i < this.ContentObjSupplier.length; i++) {
       var temp = {
@@ -422,7 +423,7 @@ export class CommissionComponent implements OnInit {
         }
       );
     } else if (content == AdInsConstant.ContentReferantor) {
-      url = environment.losUrl + AdInsConstant.GetAppReferantorByAppId;
+      url = AdInsConstant.GetAppReferantorByAppId;
       obj = {
         AppId: this.AppId,
         RowVersion: ""
@@ -467,9 +468,11 @@ export class CommissionComponent implements OnInit {
             Key: ReturnObject[i].SupplCode,
             Value: ReturnObject[i].SupplName
           };
+          this.DictSupplierCode[ReturnObject[i].SupplCode]=ReturnObject[i].SupplName;
           this.ContentObjSupplier.push(KVPObj);
           this.AppAssetIdList.push(ReturnObject[i].AppAssetId);
         } else if (content == AdInsConstant.ContentSupplierEmp) {
+          console.log(ReturnObject[i]);
           KVPObj = {
             Key: ReturnObject[i].SupplEmpNo,
             Value: ReturnObject[i].SupplEmpName,
@@ -487,6 +490,7 @@ export class CommissionComponent implements OnInit {
     if (content == AdInsConstant.ContentSupplier) {
       this.FormInputObjSupplier["title"] = AdInsConstant.TitleSupplier;
       this.FormInputObjSupplier["content"] = AdInsConstant.ContentSupplier;
+      this.FormInputObjSupplier["labelName"] = AdInsConstant.LabelSupplier;
       this.FormInputObjSupplier["AppId"] = this.AppId;
       this.FormInputObjSupplier["contentObj"] = this.ContentObjSupplier;
       this.FormInputObjSupplier["ruleObj"] = this.RuleSupplierData;
@@ -498,17 +502,20 @@ export class CommissionComponent implements OnInit {
     } else if (content == AdInsConstant.ContentSupplierEmp) {
       this.FormInputObjSupplierEmpl["title"] = AdInsConstant.TitleSupplierEmp;
       this.FormInputObjSupplierEmpl["content"] = AdInsConstant.ContentSupplierEmp;
+      this.FormInputObjSupplierEmpl["labelName"] = AdInsConstant.LabelSupplierEmp;
       this.FormInputObjSupplierEmpl["AppId"] = this.AppId;
       this.FormInputObjSupplierEmpl["contentObj"] = this.ContentObjSupplierEmp;
       this.FormInputObjSupplierEmpl["ruleObj"] = this.RuleSupplierEmpData;
       this.FormInputObjSupplierEmpl["isAutoGenerate"] = this.isAutoGenerate;
       this.FormInputObjSupplierEmpl["isCalculated"] = false;
       this.FormInputObjSupplierEmpl["isDataInputed"] = false;
+      this.FormInputObjSupplierEmpl["dictSuppl"] = this.DictSupplierCode;
       this.OnForm2 = true;
-      // console.log(this.FormInputObjSupplierEmpl);
+      console.log(this.FormInputObjSupplierEmpl);
     } else if (content == AdInsConstant.ContentReferantor) {
       this.FormInputObjReferantor["title"] = AdInsConstant.TitleReferantor;
       this.FormInputObjReferantor["content"] = AdInsConstant.ContentReferantor;
+      this.FormInputObjReferantor["labelName"] = AdInsConstant.LabelReferantor;
       this.FormInputObjReferantor["AppId"] = this.AppId;
       this.FormInputObjReferantor["contentObj"] = this.ContentObjReferantor;
       this.FormInputObjReferantor["ruleObj"] = this.RuleReferantorData;
@@ -667,7 +674,7 @@ export class CommissionComponent implements OnInit {
       }
 
       // console.log(this.listAppCommissionHObj);
-      var url = environment.losUrl + AdInsConstant.AddOrEditAppCommissionData;
+      var url = AdInsConstant.AddOrEditAppCommissionData;
       var obj = {
         AppId: this.AppId,
         GrossYield: this.Summary.GrossYield,

@@ -76,7 +76,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
       this.claimTask();
 
     var datePipe = new DatePipe("en-US");
-    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     var context = JSON.parse(localStorage.getItem("UserAccess"));
     this.businessDtMin = new Date(context["BusinessDt"]);
     this.businessDtMin.setDate(this.businessDtMin.getDate());
@@ -133,7 +133,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
 
   async claimTask()
   {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"]};
     console.log(wfClaimObj);
     this.httpClient.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(

@@ -11,6 +11,7 @@ import { Dashboard2Component } from "app/dashboard/dashboard2/dashboard2.compone
 import { DashBoardComponent } from 'app/dashboard/dash-board/dash-board.component';
 import { TreeViewModule } from '@progress/kendo-angular-treeview';
 import { ContextMenuModule } from '@progress/kendo-angular-menu';
+import { UcthingstodoModule } from '@adins/ucthingstodo';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { ContextMenuModule } from '@progress/kendo-angular-menu';
         NgbModule,
         MatchHeightModule,
         TreeViewModule,
-        ContextMenuModule
+        ContextMenuModule,
+        UcthingstodoModule   
     ],
     exports: [],
     declarations: [

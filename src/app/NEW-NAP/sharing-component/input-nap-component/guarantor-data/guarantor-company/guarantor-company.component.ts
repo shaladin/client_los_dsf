@@ -14,6 +14,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { environment } from 'environments/environment';
 import { formatDate } from '@angular/common';
 import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalDocObj.Model';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-guarantor-company',
@@ -75,8 +76,7 @@ export class GuarantorCompanyComponent implements OnInit {
     LegalDocForm: this.fb.array([])
   });
 
-
-  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient,private fb:FormBuilder, private toastr: NGXToastrService) { 
+  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient,private fb:FormBuilder, private toastr: NGXToastrService, private modalService: NgbModal) { 
   }
 
   ngOnInit() {
@@ -477,4 +477,7 @@ bindLegalDoc() {
   }
 }
 
+  cancel() {
+    this.modalService.dismissAll();
+  }
 }
