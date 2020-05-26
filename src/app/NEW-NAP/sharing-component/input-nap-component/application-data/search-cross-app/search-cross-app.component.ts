@@ -77,7 +77,7 @@ export class SearchCrossAppComponent implements OnInit {
     this.inputObj.addCritInput = this.arrAddCrit;
   }
 
-  resultData;
+  resultData = { Data: new Array() };
   getResult(ev) {
     this.resultData=ev["response"];
     console.log(this.resultData);

@@ -37,7 +37,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
     this.ReturnHandlingHObj = new ReturnHandlingHObj();
     this.route.queryParams.subscribe(params => {
       this.ReturnHandlingHObj.AppId = params["AppId"];
-      this.ReturnHandlingHObj.WfTaskListId = params["TaskId"];
+      this.ReturnHandlingHObj.WfTaskListId = params["WfTaskListId"];
       this.ReturnHandlingHObj.ReturnHandlingHId = params["ReturnHandlingHId"];
     });
   }

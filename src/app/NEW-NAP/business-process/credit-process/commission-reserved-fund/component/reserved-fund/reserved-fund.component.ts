@@ -48,12 +48,16 @@ export class ReservedFundComponent implements OnInit {
   show: boolean = false;
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
-
+    this.route.queryParams.subscribe(params => {
+      if (params["WfTaskListId"] != null) {
+        this.allAppReservedFundObj.WfTaskIdListId = params["WfTaskListId"];
+      }
+    });
   }
 
   initUrl() {
     this.getAppFinDataUrl = AdInsConstant.GetAppFinDataByAppId;
-    this.getAppFeeUrl = environment.losUrl + AdInsConstant.GetListAppFeeByAppId;
+    this.getAppFeeUrl = AdInsConstant.GetListAppFeeByAppId;
     this.getAppRsvFundUrl = AdInsConstant.GetListAppReservedFundByAppId;
     this.addEditRsvFundUrl = AdInsConstant.AddEditAppReservedFund;
     this.getAppRsvFundRuleUrl = AdInsConstant.CreateRsvFundRule;
