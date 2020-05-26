@@ -227,6 +227,7 @@ export class LeadInputMainInfoComponent implements OnInit {
     this.http.post(this.getListActiveRefMasterUrl, this.leadSource).subscribe(
       (response) => {
         this.listLeadSource = response['ReturnObject'];
+        this.MainInfoForm.patchValue({ LeadSource: response['ReturnObject'][0]['Key'] });
       });
 
   if (this.pageType == "edit" || this.pageType == "update") {
