@@ -367,7 +367,7 @@ export class GuarantorPersonalComponent implements OnInit {
 
   setAppGuarantor() {
     this.guarantorPersonalObj.AppGuarantorObj.GuarantorName = this.inputLookupObj.nameSelect;
-    this.guarantorPersonalObj.AppGuarantorObj.MrGuarantorTypeCode = "Personal";
+    this.guarantorPersonalObj.AppGuarantorObj.MrGuarantorTypeCode = "PERSONAL";
     this.guarantorPersonalObj.AppGuarantorObj.TaxIdNo = this.PersonalForm.controls.TaxIdNo.value;
     this.guarantorPersonalObj.AppGuarantorObj.MrCustRelationshipCode = this.PersonalForm.controls.MrCustRelationshipCode.value;
     this.guarantorPersonalObj.AppGuarantorObj.RowVersion = "";

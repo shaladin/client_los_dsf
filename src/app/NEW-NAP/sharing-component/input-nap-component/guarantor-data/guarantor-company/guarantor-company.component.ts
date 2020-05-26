@@ -304,7 +304,7 @@ export class GuarantorCompanyComponent implements OnInit {
 
   setAppGuarantor(){
     this.guarantorCompanyObj.AppGuarantorObj.GuarantorName = this.inputLookupObj.nameSelect;
-    this.guarantorCompanyObj.AppGuarantorObj.MrGuarantorTypeCode = "Company";
+    this.guarantorCompanyObj.AppGuarantorObj.MrGuarantorTypeCode = "COMPANY";
     this.guarantorCompanyObj.AppGuarantorObj.TaxIdNo = this.CompanyForm.controls.TaxIdNo.value;
     this.guarantorCompanyObj.AppGuarantorObj.MrCustRelationshipCode = this.CompanyForm.controls.MrCustRelationshipCode.value;
     this.guarantorCompanyObj.AppGuarantorObj.RowVersion = "";
