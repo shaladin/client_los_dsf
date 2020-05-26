@@ -9,7 +9,7 @@
     </div>
     <lib-ucviewgeneric [viewInput]="viewProdMainInfoObj"> </lib-ucviewgeneric>
 
-    <span *ngIf="ReturnHandlingHObj.ReturnHandlingHId != 0">
+    <span *ngIf="ReturnHandlingHObj.ReturnHandlingHId != undefined">
       <form class="form form-horizontal" [formGroup]="HandlingForm" #enjiForm="ngForm">
         <div class="class=form-group row adins-required">
           <label class="col-md-3 adInsLabel">Return Notes </label>

@@ -105,11 +105,12 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   }
 
   Back() {
-    if (this.ReturnHandlingHObj.ReturnHandlingHId != 0) {
+    // console.log("test back commReserveFund");
+    // console.log(this.ReturnHandlingHObj);
+    if (this.ReturnHandlingHObj.ReturnHandlingHId != undefined) {
       this.router.navigate(["/Nap/AdditionalProcess/ReturnHandling/CommissionReservedFund/Paging"], { queryParams: { LobCode: "CF4W" } })
     } else {
       this.router.navigate(["/Nap/CreditProcess/CommissionReservedFund/Paging"], { queryParams: { LobCode: "CF4W" } })
-
     }
   }
 }
