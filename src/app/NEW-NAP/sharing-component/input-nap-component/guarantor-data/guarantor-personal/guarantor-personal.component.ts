@@ -449,14 +449,6 @@ export class GuarantorPersonalComponent implements OnInit {
     this.initAddr();
   }
 
-  clearExpDt(){
-    if(this.PersonalForm.value.MrIdTypeCode == "EKTP"){
-      this.PersonalForm.patchValue({
-        IdExpDt: ''
-      });
-    }
-  }
-
   cancel() {
     this.modalService.dismissAll();
   }
