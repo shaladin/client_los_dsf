@@ -24,8 +24,7 @@ import { LeadDataComponent } from 'app/lead/verification/customer-self-verificat
 import { LeadInputCustDataComponent } from "app/lead/lead-input/lead-input-cust-data/lead-input-cust-data.component";
 import { NgxCurrencyModule } from "ngx-currency";
 import { UcinputnumberModule } from "@adins/ucinputnumber";
-import { CustSharingComponentModule } from "app/NEW-NAP/sharing-component/input-nap-component/cust-sharing-component.module";
-import { SubmissionPageComponent } from './external-page/submission-page/submission-page.component';
+import { CustSharingComponentModule } from "app/NEW-NAP/sharing-component/input-nap-component/cust-sharing-component.module"; 
 
 export const customCurrencyMaskConfig = {     
     align: "left",     
@@ -66,8 +65,7 @@ export const customCurrencyMaskConfig = {
         LoginPageComponent,
         CustomerSelfVerificationComponent,
         LeadDataComponent,
-        LeadInputCustDataComponent,
-        SubmissionPageComponent,
+        LeadInputCustDataComponent, 
     ]
 })
 export class ContentPagesModule { }
