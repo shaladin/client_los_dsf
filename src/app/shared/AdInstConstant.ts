@@ -1085,6 +1085,7 @@ export class AdInsConstant {
   //Application Data
   public static SaveApp = environment.losUrl + "/ApplicationData/SaveApp"
   public static ClaimListTask = environment.FoundationR3Url + "/Workflow/ClaimListTask";
+  public static GetApplicationDataByAppId = environment.losUrl + "/ApplicationData/GetApplicationDataByAppId";
 
   // Phone Verif
   public static GetAppPhoneVerifSubjectListByAppId = environment.losUrl + "/PhoneVerif/GetAppPhoneVerifSubjectListByAppId";
