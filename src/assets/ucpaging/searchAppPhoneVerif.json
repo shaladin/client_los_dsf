@@ -77,91 +77,98 @@
       "where": "WHERE WTL.END_EXECUTING_DATE IS NULL"
   },
   "bodyList": [
-      {
-          "type": "text",
-          "position": "left",
-          "property": "OfficeName"
-      },
-      {
-          "type": "text",
-          "position": "center",
-          "property": "CustName"
-      },
-      {
-          "type": "text",
-          "position": "center",
-          "property": "AppNo"
-      },
-      {
-          "type": "text",
-          "position": "center",
-          "property": "ProdOfferingName"
-      },
-      {
-          "type": "action",
-          "position": "center",
-          "action": [
-              {
-                "type": "switch",
-                "case": [
+    {
+      "type": "text",
+      "position": "left",
+      "property": "OfficeName"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "CustName"
+    },
+    {
+      "type": "link",
+      "position": "center",
+      "property": "AppNo",
+      "path": "/Nap/View/AppView",
+      "target": "_blank",
+      "param": [
+        {
+          "type": "AppId",
+          "property": "AppId"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "ProdOfferingName"
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
+        {
+          "type": "switch",
+          "case": [
+            {
+              "conditions": [
+                {
+                  "isUser": true,
+                  "property": "ClaimBy",
+                  "value": "",
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "url",
+                "path": "../Subject",
+                "icon": "ft-edit-2",
+                "param": [
                   {
-                    "conditions": [
-                      {
-                        "isUser": true,
-                        "property": "ClaimBy",
-                        "value": "",
-                        "restriction": "EQ"
-                      }
-                    ],
-                    "result": {
-                      "type": "url",
-                      "path": "../Subject",
-                      "icon": "ft-edit-2",
-                      "param": [
-                        {
-                          "type": "AppId",
-                          "property": "AppId"
-                        },
-                        {
-                          "type": "WfTaskListId",
-                          "property": "WfTaskListId"
-                        }
-                      ]
-                    },
-                    "isHide": false
+                    "type": "AppId",
+                    "property": "AppId"
                   },
                   {
-                    "conditions": [
-                      {
-                        "isUser": false,
-                        "property": "ClaimBy",
-                        "value": "",
-                        "restriction": "EQ"
-                      }
-                    ],
-                    "result": {
-                      "type": "url",
-                      "path": "../Subject",
-                      "icon": "ft-edit-2",
-                      "param": [
-                        {
-                          "type": "AppId",
-                          "property": "AppId"
-                        },
-                        {
-                          "type": "WfTaskListId",
-                          "property": "WfTaskListId"
-                        }
-                      ] 
-                    },
-                    "isHide": false
+                    "type": "WfTaskListId",
+                    "property": "WfTaskListId"
                   }
                 ]
-              }
+              },
+              "isHide": false
+            },
+            {
+              "conditions": [
+                {
+                  "isUser": false,
+                  "property": "ClaimBy",
+                  "value": "",
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "url",
+                "path": "../Subject",
+                "icon": "ft-edit-2",
+                "param": [
+                  {
+                    "type": "AppId",
+                    "property": "AppId"
+                  },
+                  {
+                    "type": "WfTaskListId",
+                    "property": "WfTaskListId"
+                  }
+                ]
+              },
+              "isHide": false
+            }
           ]
-      }
+        }
+      ]
+    }
   ]
 }
 
-      
       
