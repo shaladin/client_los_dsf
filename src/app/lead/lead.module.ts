@@ -10,8 +10,8 @@ import { RouterModule } from "@angular/router";
 import { SharingModule } from 'app/shared/sharing.module';
 import { ArchwizardModule } from 'angular-archwizard';
 import { UcSubsectionModule } from "@adins/uc-subsection";
-import { UclookupgenericModule } from '@adins/uclookupgeneric';
-import { UcviewgenericModule } from '@adins/ucviewgeneric';
+import { UclookupgenericModule, UclookupgenericComponent } from '@adins/uclookupgeneric';
+import { UcviewgenericModule, UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { UcaddressModule } from "@adins/ucaddress";
 import { UCSearchComponent } from '@adins/ucsearch';
 import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
@@ -101,6 +101,10 @@ export const customCurrencyMaskConfig = {
     FraudVerifPageComponent, 
     LeadInquiryComponent, 
   ],
+  entryComponents: [
+    UclookupgenericComponent,
+    UcviewgenericComponent
+  ]
 })
 
 export class LeadModule { }

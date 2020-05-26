@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { CustPersonalObj } from 'app/shared/model/CustPersonalObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import Stepper from 'bs-stepper';
+import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 
 @Component({
   selector: 'app-lead-input-page',
@@ -22,7 +23,8 @@ export class LeadInputPageComponent implements OnInit {
   titlePageType: string;
   viewLeadHeaderMainInfo : string;
   pageType: string;
-  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {
+  @ViewChild("LeadMainInfo", { read: ViewContainerRef }) leadMainInfo: ViewContainerRef;
+  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, private componentFactoryResolver: ComponentFactoryResolver) {
     this.route.queryParams.subscribe(params => {
       if (params["LeadId"] != null) {
         this.LeadId = params["LeadId"];
@@ -52,6 +54,11 @@ export class LeadInputPageComponent implements OnInit {
     })
     this.EnterTab('custData');
     this.stepper.to(1);
+
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcviewgenericComponent);
+    this.leadMainInfo.clear();
+    const component = this.leadMainInfo.createComponent(componentFactory);
+    component.instance.viewInput = this.viewLeadHeaderMainInfo;
   }
 
   EnterTab(type) {
@@ -90,6 +97,13 @@ export class LeadInputPageComponent implements OnInit {
       if (ev.stepMode == "next"){
         this.stepper.next();
         this.EnterTab("leadData");
+
+        if(this.isLeadData == true){
+          const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcviewgenericComponent);
+          this.leadMainInfo.clear();
+          const component = this.leadMainInfo.createComponent(componentFactory);
+          component.instance.viewInput = this.viewLeadHeaderMainInfo;
+        }
       }
       else{
         this.stepper.previous();

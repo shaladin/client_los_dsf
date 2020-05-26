@@ -2,7 +2,7 @@
   <div class="card-body">
     <div class="px-3">
       <div class="customerData">
-        <form class="form form-horizontal" [formGroup]="LeadDataForm" (ngSubmit)="LeadDataForm.valid && SaveForm()"
+        <form class="form form-horizontal" [formGroup]="LeadDataForm" (ngSubmit)="LeadDataForm.valid"
           #enjiForm="ngForm">
           <div class="form-body">
             <div id="leadData">
@@ -42,7 +42,7 @@
                 <div class="form-group row">
                   <label class="col-md-3 adins-required-label" translate>Asset Price</label>
                   <div class="col-md-4">
-                    <input type="number" class="form-control adInsInput" id="assetPrice" min="0" max="maxAssetPrice" formControlName="AssetPrice"
+                    <input type="" currencyMask class="form-control adInsInput" id="assetPrice" min="1" max="maxAssetPrice" formControlName="AssetPrice"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.AssetPrice.invalid}">
                     <lib-uc-show-errors  [control]="LeadDataForm.controls.AssetPrice" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors >
@@ -62,7 +62,7 @@
                 <div class="form-group row">
                   <label class="col-md-3 adins-required-label" translate>Down Payment Amount</label>
                   <div class="col-md-4">
-                    <input type="number" class="form-control adInsInput" (change)="DPAmtChange()" id="dpAmt" min="0" max="maxDpAmt" formControlName="DownPaymentAmount"
+                    <input type="" currencyMask class="form-control adInsInput" (change)="DPAmtChange()" id="dpAmt" min="1" max="maxDpAmt" formControlName="DownPaymentAmount"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.DownPaymentAmount.invalid}">
                     <lib-uc-show-errors  [control]="LeadDataForm.controls.DownPaymentAmount" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors >
@@ -255,10 +255,10 @@
             </div>
           </div>
           <div class="form-actions right" style="text-align: right;">
-            <button type="button" class="btn btn-raised btn-primary mr-1" (click)="this.LeadDataForm.valid && save()" translate>
+            <button type="submit" class="btn btn-raised btn-primary mr-1" (click)="save()" translate>
               <i class="fa fa-check-square-o"></i> Save
             </button>
-            <button type="submit" class="btn btn-raised btn-primary"  translate>
+            <button type="submit" class="btn btn-raised btn-primary" (click)="SaveForm()"  translate>
               <i class="fa fa-check-square-o"></i> Submit
             </button>
           </div>
