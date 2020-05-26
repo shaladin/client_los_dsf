@@ -490,7 +490,7 @@ GetOfficeDDL(){
   }
 
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"] };
     console.log(wfClaimObj);
     this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
