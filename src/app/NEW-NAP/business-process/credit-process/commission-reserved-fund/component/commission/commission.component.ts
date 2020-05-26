@@ -257,7 +257,7 @@ export class CommissionComponent implements OnInit {
   }
 
   GetRuleDataForForm(ruleSetName) {
-    var url = environment.losUrl + AdInsConstant.GetAppCommissionRule;
+    var url = AdInsConstant.GetAppCommissionRule;
     var listTemp = new Array();
     for (var i = 0; i < this.ContentObjSupplier.length; i++) {
       var temp = {
@@ -674,7 +674,7 @@ export class CommissionComponent implements OnInit {
       }
 
       // console.log(this.listAppCommissionHObj);
-      var url = environment.losUrl + AdInsConstant.AddOrEditAppCommissionData;
+      var url = AdInsConstant.AddOrEditAppCommissionData;
       var obj = {
         AppId: this.AppId,
         GrossYield: this.Summary.GrossYield,

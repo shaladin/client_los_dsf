@@ -22,19 +22,14 @@ export class NapPagingComponent implements OnInit {
     private toastr: NGXToastrService,
     private router: Router,
     private route: ActivatedRoute
-  ) { 
-    this.route.queryParams.subscribe(params => {
-      if (params['LobCode'] != null) {
-        localStorage.setItem("LobCode",params['LobCode']);
-      }
-    });
+  ) {
   }
 
   makeCriteria(){
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'RL.BIZ_TMPLT_CODE';
-    critObj.value = localStorage.getItem("LobCode");
+    critObj.value = AdInsConstant.CF4W;
     this.arrCrit.push(critObj);
     
     critObj = new CriteriaObj();
@@ -76,6 +71,7 @@ export class NapPagingComponent implements OnInit {
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchApp.json";
+
     this.inputPagingObj.addCritInput = this.arrCrit;
   }
   
@@ -96,12 +92,12 @@ export class NapPagingComponent implements OnInit {
   }
 
   GetCallBack(ev: any){
-    console.log(ev);
-    if(!ev.RowObj.IsAllowAppCreated){
-      this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');
-      return;
-    }else{
+    // console.log(ev);
+    // if(!ev.RowObj.IsAllowAppCreated){
+    //   this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');
+    //   return;
+    // }else{
       this.router.navigate(["Nap/ConsumerFinance/InputNap/Add/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId" : ev.RowObj.WfTaskListId } });
-    }
+    // }
   }
 }
