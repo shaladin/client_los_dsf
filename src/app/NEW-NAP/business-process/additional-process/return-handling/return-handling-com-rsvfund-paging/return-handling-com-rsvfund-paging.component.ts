@@ -21,7 +21,7 @@ export class ReturnHandlingComRsvfundPagingComponent implements OnInit {
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReturnHandlingCommission.json";
 
-    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     var addCrit = new CriteriaObj();
     addCrit.DataType = 'text';
     addCrit.propName = 'WTL.USERNAME';
