@@ -59,9 +59,17 @@
   },
   "bodyList": [
     {
-      "type": "text",
+      "type": "link",
       "position": "center",
-      "property": "AppNo"
+      "property": "AppNo",
+      "path": "/Nap/View/AppView",
+      "target": "_blank",
+      "param": [
+        {
+          "type": "AppId",
+          "property": "AppId"
+        }
+      ]
     },
     {
       "type": "text",
