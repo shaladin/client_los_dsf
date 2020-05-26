@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { AppInvoiceFctrObj } from 'app/shared/model/AppInvoiceFctrObj.Model';
-import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { environment } from 'environments/environment';
+import { AppFctrObj } from 'app/shared/model/AppFctr/AppFctr.model';
 
 @Component({
   selector: 'app-invoice-data',
@@ -14,46 +16,61 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 })
 export class InvoiceDataComponent implements OnInit {
 
-  http: any;
+  @Input() AppId: number;
+  @Output() outputTab: EventEmitter<object> = new EventEmitter();
   inputPagingObj: UcPagingObj;
   invoiceObj: AppInvoiceFctrObj;
-  AppFctrId: any;
-  addUrl: string;
+  AppFactoringObj: AppFctrObj = new AppFctrObj();
   dataobj: Object;
-  total: any;
+  MouCustLookupObj: InputLookupObj = new InputLookupObj();
 
+  constructor(private httpClient: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
 
-  constructor(private router: Router, private route: ActivatedRoute, private httpClient: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) { 
-    this.route.queryParams.subscribe(params => {
-      if (params['AppFctrId'] != null) {
-        this.AppFctrId = params['AppFctrId'];
-      }
-    });
   }
 
   InvoiceForm = this.fb.group({
-    AppFctrId:[''],
-    CustomerFactoringName:['',Validators.required],
-    InvoiceNo:['',Validators.required],
-    InvoiceAmt: ['',Validators.required],
-    InvoiceDueDt: ['',Validators.required],
+    AppFctrId: [''],
+    CustomerFactoringNo: [''],
+    CustomerFactoringName: ['', Validators.required],
+    InvoiceNo: ['', Validators.required],
+    InvoiceAmt: ['', Validators.required],
+    InvoiceDueDt: ['', Validators.required],
     IsApproved: [false],
     Notes: [''],
     RowVersion: ['']
   })
 
   ngOnInit() {
-    this.GetListAppInvoiceFctr();
+    this.MouCustLookupObj.urlJson = "./assets/uclookup/NAP/lookupMouCustListedCustFctr.json";
+    this.MouCustLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.MouCustLookupObj.urlEnviPaging = environment.losUrl;
+    this.MouCustLookupObj.pagingJson = "./assets/uclookup/NAP/lookupMouCustListedCustFctr.json";
+    this.MouCustLookupObj.genericJson = "./assets/uclookup/NAP/lookupMouCustListedCustFctr.json";
+
+    var obj = {
+      AppId: this.AppId,
+    }
+    this.httpClient.post<AppFctrObj>(AdInsConstant.GetAppFctrByAppId, obj).subscribe(
+      (response) => {
+        this.AppFactoringObj = response;
+        if (!this.AppFactoringObj.IsCustListed) {
+          this.InvoiceForm.controls.CustomerFactoringName.clearValidators();
+          this.InvoiceForm.controls.CustomerFactoringName.updateValueAndValidity();
+        }
+        this.GetListAppInvoiceFctr();
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   GetListAppInvoiceFctr() {
     var obj = {
-      AppFctrId: this.AppFctrId,
+      AppFctrId: this.AppFactoringObj.AppFctrId,
     }
-    var getListUrl = AdInsConstant.GetListAppInvoiceFctrByAppFctrId;
-    this.httpClient.post(getListUrl, obj).subscribe(
+    this.httpClient.post(AdInsConstant.GetListAppInvoiceFctrByAppFctrId, obj).subscribe(
       (response) => {
-        console.log(response);
         this.dataobj = response['ReturnObject'];
       },
       (error) => {
@@ -62,48 +79,54 @@ export class InvoiceDataComponent implements OnInit {
     );
   }
 
-  SaveForm(){
+  GetLookupMouCust(ev) {
+    this.InvoiceForm.patchValue({
+      CustomerFactoringNo: ev.CustNo,
+      CustomerFactoringName: ev.CustName
+    });
+  }
+
+  SaveForm() {
     this.invoiceObj = new AppInvoiceFctrObj();
-    this.invoiceObj = this.InvoiceForm.value;
-    
-    this.invoiceObj.RowVersion = "";
-    this.invoiceObj.AppFctrId = this.AppFctrId;
+    this.invoiceObj.CustomerFactoringNo = this.InvoiceForm.controls.CustomerFactoringNo.value;
+    this.invoiceObj.CustomerFactoringName = this.InvoiceForm.controls.CustomerFactoringName.value;
+    this.invoiceObj.InvoiceNo = this.InvoiceForm.controls.InvoiceNo.value;
+    this.invoiceObj.InvoiceAmt = this.InvoiceForm.controls.InvoiceAmt.value;
+    this.invoiceObj.InvoiceDueDt = this.InvoiceForm.controls.InvoiceDueDt.value;
+    this.invoiceObj.InvoiceStat = "NEW";
+    this.invoiceObj.IsApproved = this.InvoiceForm.controls.IsApproved.value;
+    this.invoiceObj.Notes = this.InvoiceForm.controls.Notes.value;
+    this.invoiceObj.AppFctrId = this.AppFactoringObj.AppFctrId;
+
     console.log(this.invoiceObj);
-    this.invoiceObj.AppInvoiceFctrId = "0";
     this.httpClient.post(AdInsConstant.AddAppInvoiceFctr, this.invoiceObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
+        this.InvoiceForm.reset();
+        this.GetListAppInvoiceFctr();
       },
       (error) => {
         console.log(error);
       });
   }
 
-  DeleteInvoice(event) {
-    this.invoiceObj = new AppInvoiceFctrObj();
+  DeleteInvoice(AppInvoiceFctrId: number) {
+    if (confirm('Are you sure to delete this record?')) {
+      this.invoiceObj = new AppInvoiceFctrObj();
+      this.invoiceObj.AppInvoiceFctrId = AppInvoiceFctrId;
 
-    this.invoiceObj.AppInvoiceFctrId = event;
- 
-
-    console.log(event);
-    this.addUrl = AdInsConstant.DeleteAppInvoiceFctr;
-    this.httpClient.post(this.addUrl,this.invoiceObj).subscribe(
-      (response) => {
-        console.log(response);
-      },
-      (error) => {
-        console.log(error);
-      });
+      this.httpClient.post(AdInsConstant.DeleteAppInvoiceFctr, this.invoiceObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          this.GetListAppInvoiceFctr();
+        },
+        (error) => {
+          console.log(error);
+        });
+    }
   }
 
-//   getTotal() {
-//     let total = 0;
-//     for (var i = 0; i < this.items.length; i++) {
-//         if (this.items[i].amount) {
-//             total += this.items[i].amount;
-//             this.totalamount = total;
-//         }
-//     }
-//     return total;
-// }
+  SaveContinue(){
+    this.outputTab.emit();
+  }
 }
