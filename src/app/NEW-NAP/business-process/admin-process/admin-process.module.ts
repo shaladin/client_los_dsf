@@ -28,7 +28,6 @@ import { InvoiceViewComponent } from "./invoice/invoice-view/invoice-view.compon
 import { InvoiceDetailComponent } from "./invoice/invoice-detail/invoice-detail.component";
 import { DocumentPagingComponent } from "./document-printing/document-paging/document-paging.component";
 import { DocumentViewComponent } from "./document-printing/document-view/document-view.component";
-import { InvoiceDataAddComponent } from "./invoice-data/invoice-data-add/invoice-data-add.component";
 import { PreGoLiveApprovalDetailComponent } from "./pre-go-live/pre-go-live-approval-detail/pre-go-live-approval-detail.component";
 import { PreGoLiveApprovalPagingComponent } from "./pre-go-live/pre-go-live-approval-paging/pre-go-live-approval-paging.component";
 import { ViewMainInfoComponentModule } from "app/NEW-NAP/sharing-component/view-main-info-component/view-main-info-component.module";
@@ -77,7 +76,6 @@ import { InvoiceVerifDetailComponent } from './invoice-verif/invoice-verif-detai
     InvoiceDetailComponent,
     DocumentPagingComponent,
     DocumentViewComponent,
-    InvoiceDataAddComponent,
     DeliveryOrderMultiAssetComponent,
     DeliveryOrderMultiAssetDetailComponent,
     CreateDoMultiAssetComponent,
