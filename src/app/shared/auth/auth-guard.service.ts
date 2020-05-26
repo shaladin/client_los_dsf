@@ -14,7 +14,7 @@ export class AuthGuard implements CanActivate {
   constructor(private router: Router,public errorDialogService: ErrorDialogService) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    var currentUser = localStorage.getItem("UserContext");
+    var currentUser = localStorage.getItem("UserAccess");
     // console.log("Router Interceptor" + route.url);
 
     this.previousUrl = route.url;
