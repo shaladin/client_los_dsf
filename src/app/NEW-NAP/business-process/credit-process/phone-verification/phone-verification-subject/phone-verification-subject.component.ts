@@ -212,7 +212,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   }
 
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     var wfClaimObj = {
       pWFTaskListID: this.wfTaskListId,
       pUserID: currentUserContext["UserName"],
