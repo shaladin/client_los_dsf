@@ -60,7 +60,7 @@ export class AdInsConstant {
 
 
   // APP Application
-  public static AddApp = "/Application/AddApp";
+  public static AddApp = environment.losUrl + "/Application/AddApp";
   public static EditApp = "/Application/EditApp";
   public static GetAppById = environment.losUrl + "/Application/GetAppById";
   public static GetAppByIds = environment.losUrl + "/Application/GetAppById";
@@ -149,11 +149,11 @@ export class AdInsConstant {
   public static GetAssetMasterTypeByFullAssetCode = environment.FoundationR3Url + "/AssetMaster/GetAssetMasterTypeByFullAssetCode";
 
   // App Commission
-  public static AddOrEditAppCommissionData = "/AppCommission/AddOrEditAppCommissionData";
+  public static AddOrEditAppCommissionData = environment.losUrl + "/AppCommission/AddOrEditAppCommissionData";
   public static GetAppCommissionDataForEditByAppId = environment.losUrl + "/AppCommission/GetAppCommissionDataForEditByAppId";
   public static DeleteAppCommissionData = environment.losUrl + "/AppCommission/DeleteAppCommissionData";
-  public static GetAppCommissionRule = "/AppCommission/GetAppCommissionRule";
-  public static GetAppCommissionTax = "/AppCommission/GetAppCommissionTax";
+  public static GetAppCommissionRule = environment.losUrl + "/AppCommission/GetAppCommissionRule";
+  public static GetAppCommissionTax = environment.losUrl + "/AppCommission/GetAppCommissionTax";
 
   public static GetRefOfficeByOfficeCode = environment.FoundationR3Url + "/RefOffice/GetRefOfficeByOfficeCode";
 
@@ -168,7 +168,7 @@ export class AdInsConstant {
   public static GetAppCommissionDataDetailByAppId = environment.losUrl + "/AppCommission/GetAppCommissionDataDetailByAppId";
 
   // App Referantor
-  public static GetAppReferantorForAppsData = "/AppReferantor/GetAppReferantorForAppsData";
+  public static GetAppReferantorForAppsData = environment.losUrl + "/AppReferantor/GetAppReferantorForAppsData";
 
 
   //CUST TYPE
@@ -190,9 +190,13 @@ export class AdInsConstant {
   public static LobCodeCFRFN = "CFRFN";
 
   //TOP CALC BASED
-  public static InvcDt = "INVC_DT";
-  public static EffDt = "EFF_DT";
+  public static TopCalcBasedInvcDt = "INVC_DT";
+  public static TopCalcBasedEffDt = "EFF_DT";
 
+  //INST TYPE
+  public static InstTypeSingle = "SINGLE";
+  public static InstTypeMultiple = "MULTIPLE";
+  
   //Asset Accessory
   public static GetAssetAccessoryByCode = environment.FoundationR3Url + "/AssetAccessory/GetAssetAccessoryByCode";
 
@@ -222,6 +226,8 @@ export class AdInsConstant {
 
   //INS PAID BY
   public static InsPaidByCustomer = "CU";
+  public static InsPaidByAtCost = "CO";
+
   //GENERAL SETTING
   public static GetBusinessDt = "/GeneralSetting/GetBusinessDate";
   public static AddGeneralSetting = "/GeneralSetting/AddGeneralSetting";
@@ -436,7 +442,8 @@ export class AdInsConstant {
   public static RefMasterTypeCodeCustType = "CUST_TYPE";
   public static RefMasterTypeCodeSlsRecom = "SLS_RECOM";
   public static RefMasterTypeCodeWOP = "WOP";
-  public static RefMasterTypeCodeInstSchm = "INST_SCHM";
+  public static RefMasterTypeCodeInstSchm = "INSTSCHM";
+  public static RefMasterTypeCodePayFreq = "PAYFREQ";
   public static RefMasterTypeCodeCustNotifyOpt = "CUST_NOTIF_OPT";
   public static RefMasterTypeCodeFirstInstType = "FIRST_INST_TYPE";
   public static RefMasterTypeCodeInterestType = "INTRSTTYPE";
@@ -597,7 +604,7 @@ export class AdInsConstant {
 
   // VendorEmp
   public static GetListVendorBankByVendorEmpNo = "/VendorEmp​/GetListVendorBankByVendorEmpNo";
-  public static GetListVendorBankAccByListVendorEmpNo = "/VendorEmp/GetListVendorBankAccByListVendorEmpNo";
+  public static GetListVendorBankAccByListVendorEmpNo = environment.FoundationR3Url + "/VendorEmp/GetListVendorBankAccByListVendorEmpNo";
   public static GetVendorEmpByVendorEmpNo = "/VendorEmp/GetVendorEmpByVendorEmpNo";
   public static GetListVendorEmpByVendorIdAndPosition = environment.FoundationR3Url + "/VendorEmp/GetListVendorEmpByVendorIdAndPosition";
   public static GetListKeyValueVendorEmpByVendorIdAndPosition = environment.FoundationR3Url + "/VendorEmp/GetListKeyValueVendorEmpByVendorIdAndPosition"
@@ -800,6 +807,7 @@ export class AdInsConstant {
   public static GetAppAssetByAgrmntId = environment.losUrl + "/AppAsset/GetAppAssetByAgrmntId";
   public static GetAllAssetDataByAppId = environment.losUrl + "/AppAsset/GetAllAssetDataByAppId";
   public static AddEditAllAssetData = environment.losUrl + "/AppAsset/AddEditAllAssetData";
+  public static CheckAssetValidationRule = environment.losUrl + "/AppAsset/CheckAssetValidationRule";
 
   //Asset Doc List
   public static GetAppAssetDataByAppId = environment.losUrl + "/AppAsset/GetAppAssetDataByAppId";
@@ -811,6 +819,9 @@ export class AdInsConstant {
   public static TaxTypeCode = "WHT";
   public static VATTypeCode = "VAT";
   public static TrxTypeCode = "APP_COM";
+  public static LabelSupplier = "Supplier";
+  public static LabelSupplierEmp = "Supplier Employee";
+  public static LabelReferantor = "Referantor";
   public static ContentSupplier = "Supplier";
   public static ContentSupplierEmp = "SupplierEmployee";
   public static ContentReferantor = "Referantor";
@@ -991,6 +1002,7 @@ export class AdInsConstant {
   public static CalculateInstallmentRegularFixFctr = environment.losUrl + "/AppFinData/CalculateInstallmentRegularFixFctr";
   public static SaveAppFinDataFctr = environment.losUrl + "/AppFinData/SaveAppFinDataFctr";
   public static CalculateInstallmentEvenPrincipalFctr = environment.losUrl + "/AppFinData/CalculateInstallmentEvenPrincipalFctr";
+  public static CalculateSingleInst = environment.losUrl + "/AppFinData/CalculateSingleInst";
 
 
 

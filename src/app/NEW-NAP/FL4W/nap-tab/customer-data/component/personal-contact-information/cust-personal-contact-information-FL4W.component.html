@@ -30,6 +30,11 @@
         <th><span translate class="thead-header" name='action'>ACTION</span></th>
       </tr>
     </thead>
+    <tbody *ngIf = "listContactPersonPersonal == undefined">
+      <tr>
+        <td colspan="100%">No Data Available</td>
+      </tr>
+    </tbody>
     <tbody>
       <tr *ngFor="let item of listContactPersonPersonal; let i = index">
         <td style="text-align: left;">{{item.ContactPersonName}}</td>

@@ -118,6 +118,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                                 status: event.body.StatusCode
                             };
                             this.toastr.error(data['reason'], 'Status: ' + data['status'], { "tapToDismiss": true });
+                            console.log(event.body);
                             return;
                         }
                     }

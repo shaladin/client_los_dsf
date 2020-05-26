@@ -24,7 +24,6 @@ export class DocumentViewComponent implements OnInit {
   inputViewObj: string;
   inputObj: any;
   AgrmntDocObj: Object;
-  AgreementId: any;
   listSelectedId: any[];
   tempListId: any[];
   tempData: any[];
@@ -36,7 +35,7 @@ export class DocumentViewComponent implements OnInit {
   orderByKey: any;
   orderByValue: boolean;
   totalData: any;
-  AgrmntId: any;
+  AgrmntId: number;
   addUrl: any;
   editUrl: string;
   agrmntDocObj: AgrmntDocObj;
@@ -132,7 +131,7 @@ export class DocumentViewComponent implements OnInit {
     this.RdlcReport.ReportName = item.AgrmntDocName;
     this.RdlcReport.ReportTemplate = item.RptTmpltCode;
     this.RdlcReport.MainReportInfoDetail.ReportTemplateName = item.RptTmpltCode;
-    this.RdlcReport.MainReportInfoDetail.ReportDataProviderParameter["AgrmntId"] = this.AgrmntId;
+    this.RdlcReport.MainReportInfoDetail.ReportDataProviderParameter["AgrmntId"] = +this.AgrmntId;
     // this.RdlcReport.MainReportInfoDetail.ReportDataProviderParameter["RptTmpltCode"] = item.RptTmpltCode;
 
     console.log(this.RdlcReport);

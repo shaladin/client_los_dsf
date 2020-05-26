@@ -191,12 +191,12 @@ export class NapAddComponent implements OnInit {
     napAppObj.IsAppInitDone = false;
     napAppObj.AppStat = AdInsConstant.AppStepNew;
     napAppObj.AppCurrStep = AdInsConstant.AppStepNew;
-    napAppObj.BlCode = "CFRFN";
+    napAppObj.BlCode = "RFN4W";
     napAppObj.OriOfficeCode = this.NapAppForm.controls['OriOfficeCode'].value;
     napAppObj.OriOfficeName = this.NapAppForm.controls['OriOfficeName'].value;
     napAppObj = this.CheckValue(napAppObj);
 
-    var url = environment.losUrl + AdInsConstant.AddApp;
+    var url = AdInsConstant.AddApp;
     this.http.post(url, napAppObj).subscribe(
       (response) => {
         console.log(response);
@@ -305,5 +305,4 @@ export class NapAddComponent implements OnInit {
     this.inputLookupObjName.addCritInput = arrAddCrit;
     this.ucLookupOffering.setAddCritInput();
   }
-
 }

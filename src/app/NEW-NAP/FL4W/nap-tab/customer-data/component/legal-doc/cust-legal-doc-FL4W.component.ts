@@ -54,6 +54,7 @@ export class CustLegalDocFL4WComponent implements OnInit {
 
   ngOnInit() {
     this.bindLegalDocTypeObj();
+
   }
 
   SaveForm(){

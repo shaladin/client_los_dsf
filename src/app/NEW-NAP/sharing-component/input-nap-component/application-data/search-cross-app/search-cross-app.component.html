@@ -1,10 +1,7 @@
-<div class="card-header row">
-  <h4 class="card-title col-md-6">Add App Cross</h4>
-</div>
 <lib-UCSearch id="ucSearch" style="width:100%;" [searchInput]='inputObj' (result)="getResult($event)">
 </lib-UCSearch>
 
-<div [hidden]="resultData?.Data == null">
+<div>
   <table class="table table-responsive-md text-center table-hover">
     <thead>
       <tr class="table-header">
@@ -18,6 +15,11 @@
             No</span></th>
       </tr>
     </thead>
+    <tbody *ngIf = "resultData?.Data?.length == 0">
+      <tr>
+        <td colspan="100%">No Data Available</td>
+      </tr>
+    </tbody>
     <tbody>
       <tr *ngFor="let item of resultData?.Data">
         <td>
@@ -45,7 +47,7 @@
     </div>
   </div>
 
-  <div [hidden]="tempData?.length == 0">
+  <div>
     <table class="table table-responsive-md text-center table-hover">
       <thead>
         <tr class="table-header">
@@ -58,6 +60,11 @@
           <th translate>ACTION</th>
         </tr>
       </thead>
+      <tbody *ngIf = "tempData?.length == 0">
+        <tr>
+          <td colspan="100%">No Data Available</td>
+        </tr>
+      </tbody>
       <tbody>
         <tr *ngFor="let item of tempData">
           <td>{{item.AgrmntNo}}</td>

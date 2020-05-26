@@ -1,21 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
+import { AppInvoiceFctrObj } from 'app/shared/model/AppInvoiceFctrObj.Model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder, Validators } from '@angular/forms';
-
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { environment } from 'environments/environment';
-import { AppInvoiceFctrObj } from 'app/shared/model/AppInvoiceFctrObj.Model';
 
 @Component({
-  selector: 'app-invoice-data-add',
-  templateUrl: './invoice-data-add.component.html',
-  styleUrls: ['./invoice-data-add.component.scss'],
-  providers:[NGXToastrService]
+  selector: 'app-invoice-data',
+  templateUrl: './invoice-data.component.html',
+  styleUrls: ['./invoice-data.component.scss']
 })
-export class InvoiceDataAddComponent implements OnInit {
+export class InvoiceDataComponent implements OnInit {
 
   http: any;
   inputPagingObj: UcPagingObj;

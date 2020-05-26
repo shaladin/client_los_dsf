@@ -80,17 +80,13 @@ export class CustGrpMemberComponent implements OnInit {
     this.InputLookupCustomerObjs.push(InputLookupCustomerObj);
     this.dictLookup[max + 1] = InputLookupCustomerObj;
 
-    this.CustRelationshipObjs.push({list: []});
     
     if(this.identifier == AdInsConstant.CustGrupIndentifierTypePersonal){
-      this.CustRelationshipObjs[max].list = this.CustRelationshipPersonalObj;
-      this.parentForm.controls[this.identifier]["controls"][max].patchValue({
-        MrCustRelationshipCode: this.defaultCustRelationshipPersonalCode
-      });
+      this.CustRelationshipObjs.push({list: []});
     }
 
     if(this.identifier == AdInsConstant.CustGrupIndentifierTypeCompany){
-      this.CustRelationshipObjs[max].list = this.CustRelationshipCompanyObj;
+      this.CustRelationshipObjs.push({list: this.CustRelationshipCompanyObj});
       this.parentForm.controls[this.identifier]["controls"][max].patchValue({
         MrCustRelationshipCode: this.defaultCustRelationshipCompanyCode
       });
@@ -124,21 +120,23 @@ export class CustGrpMemberComponent implements OnInit {
       CustName: event.CustName
     });
 
-    // if(event.MrCustTypeCode == AdInsConstant.CustTypePersonal){
-    //   this.CustRelationshipObjs[i].list = this.CustRelationshipPersonalObj;
-    //   this.parentForm.controls[this.identifier]["controls"][i].patchValue({
-    //     MrCustRelationshipCode: this.defaultCustRelationshipPersonalCode
-    //   });
-    // }
+    if(this.identifier == AdInsConstant.CustGrupIndentifierTypePersonal){
+      if(event.MrCustTypeCode == AdInsConstant.CustTypePersonal){
+        this.CustRelationshipObjs[i].list = this.CustRelationshipPersonalObj;
+        this.parentForm.controls[this.identifier]["controls"][i].patchValue({
+          MrCustRelationshipCode: this.defaultCustRelationshipPersonalCode
+        });
+      }
+  
+      if(event.MrCustTypeCode == AdInsConstant.CustTypeCompany){
+        this.CustRelationshipObjs[i].list = this.CustRelationshipCompanyObj;
+        this.parentForm.controls[this.identifier]["controls"][i].patchValue({
+          MrCustRelationshipCode: this.defaultCustRelationshipCompanyCode
+        });
+      }
+    }
 
-    // if(event.MrCustTypeCode == AdInsConstant.CustTypeCompany){
-    //   this.CustRelationshipObjs[i].list = this.CustRelationshipCompanyObj;
-    //   this.parentForm.controls[this.identifier]["controls"][i].patchValue({
-    //     MrCustRelationshipCode: this.defaultCustRelationshipCompanyCode
-    //   });
-    // }
-
-    console.log(this.CustRelationshipObjs);
+    // console.log(this.CustRelationshipObjs);
   }
 
   async bindAppGrp(){
@@ -166,7 +164,7 @@ export class CustGrpMemberComponent implements OnInit {
     this.bindAppGrp();
   }
 
-  addGroup(appCustGrpObj, i){
+  addGroup(appCustGrpObj : AppCustGrpObj, i){
     if(appCustGrpObj == undefined){
       return this.fb.group({
         No: [i],
@@ -183,7 +181,7 @@ export class CustGrpMemberComponent implements OnInit {
         CustName: [''],
         MrCustRelationshipCode: [appCustGrpObj.MrCustRelationshipCode, [Validators.required, Validators.maxLength(50)]],
         CustGrpNotes: [appCustGrpObj.CustGrpNotes, [Validators.maxLength(4000)]],
-        IsReversible: [appCustGrpObj.IsReversible],
+        IsReversible: [appCustGrpObj.IsReversible == null ? false : appCustGrpObj.IsReversible],
       })
     } 
   }
