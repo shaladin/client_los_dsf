@@ -45,7 +45,7 @@ export class PagingComponent implements OnInit {
     critLobObj.value = localStorage.getItem("LobCode");
     this.inputPagingObj.addCritInput.push(critLobObj);
 
-    // var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    // var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     // var addCrit = new CriteriaObj();
     // addCrit.DataType = 'text';
     // addCrit.propName = 'WTL.USERNAME';
@@ -59,7 +59,7 @@ export class PagingComponent implements OnInit {
   }
 
   NextScreen(event){
-    // var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    // var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     // var wfClaimObj = new ClaimWorkflowObj();
     // wfClaimObj.pWFTaskListID = event.RowObj.WfTaskListId;
     // wfClaimObj.pUserID = currentUserContext["UserName"];

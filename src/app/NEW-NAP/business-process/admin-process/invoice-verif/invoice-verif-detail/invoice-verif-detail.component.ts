@@ -34,7 +34,7 @@ export class InvoiceVerifDetailComponent implements OnInit {
       this.TrxNo = params["TrxNo"];
     });
     this.BusinessDate = new Date(localStorage.getItem("BusinessDateRaw"));
-    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     this.Username = currentUserContext["UserName"];
    }
 
