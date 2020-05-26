@@ -33,7 +33,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
             this.count++;
         }
 
-        var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+        var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
         var token: string = "";
         var myObj;
         let today = new Date();

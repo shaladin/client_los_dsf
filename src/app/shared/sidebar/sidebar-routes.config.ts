@@ -62,9 +62,9 @@ export const ROUTES: RouteInfo[] = [
     ], Params: []
   },
   {
-    Path: '', Title: 'MOU', Icon: 'fas fa-user-plus', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
+    Path: '', Title: 'MOU', Icon: 'far fa-file-alt', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
     Submenu: [
-      { Path: '/Mou/TestUpload', Title: 'Test Upload', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
+      // { Path: '/Mou/TestUpload', Title: 'Test Upload', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
       { Path: '/Mou/Request/Paging', Title: 'MOU Request', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
       { Path: '/Mou/Cust/ReviewPaging', Title: 'MOU Review', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
       { Path: '/Mou/Cust/Approval', Title: 'MOU Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },

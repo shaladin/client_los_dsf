@@ -78,8 +78,8 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
     BirthPlace: ['', Validators.maxLength(100)],
     BirthDt: [''],
     IsEmergencyContact: [false],
-    MobilePhnNo1: ['', [Validators.required, Validators.maxLength(100)]],
-    MobilePhnNo2: ['', [Validators.required, Validators.maxLength(100)]],
+    MobilePhnNo1: ['', [Validators.required, Validators.maxLength(100), Validators.pattern("^[0-9]+$")]],
+    MobilePhnNo2: ['', [Validators.required, Validators.maxLength(100), Validators.pattern("^[0-9]+$")]],
     IsFamily: [false],
     Email: ['', Validators.maxLength(100)],
     CopyFromContactPerson: ['']
@@ -107,10 +107,10 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
       this.listContactPersonPersonal = new Array<AppCustPersonalContactPersonObj>();
     }
     this.setAppCustPersonalContactPerson();
-    if(this.mode == "add"){
+    if(this.mode == "Add"){
       this.listContactPersonPersonal.push(this.appCustPersonalContactPersonObj);
     }
-    if(this.mode == "edit"){
+    if(this.mode == "Edit"){
       this.listContactPersonPersonal[this.currentEditedIndex] = this.appCustPersonalContactPersonObj;
     }
     this.callbackSubmit.emit(this.listContactPersonPersonal);
@@ -119,14 +119,14 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
   }
 
   add(content){
-    this.mode = "add";
+    this.mode = "Add";
     this.clearForm();
     this.open(content);
   }
 
   edit(i, content){
     this.clearForm();
-    this.mode = "edit";
+    this.mode = "Edit";
     this.currentEditedIndex = i;
     this.ContactInfoPersonalForm.patchValue({
       ContactPersonName: this.listContactPersonPersonal[i].ContactPersonName,
