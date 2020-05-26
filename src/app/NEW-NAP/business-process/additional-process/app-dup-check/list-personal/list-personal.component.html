@@ -79,7 +79,7 @@
 
           <div class="form-body">
             <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Match/Similar Existing Customer </h4>
-            <table *ngIf="ListCustDuplicate?.length > 0" class="table table-responsive-md text-center table-hover">
+            <table *ngIf="ListCustomerDuplicate?.length > 0" class="table table-responsive-md text-center table-hover">
               <thead>
                 <tr class="table-header">
                   <th><span class="thead-header" (click)="searchSort($event)" name='custNo' translate>Customer No</span>
@@ -105,7 +105,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of ListCustDuplicate">
+                <tr *ngFor="let item of ListCustomerDuplicate">
                   <td>{{item.CustNo}}</td>
                   <td>{{item.CustName}}</td>
                   <td>{{item.MrIdTypeCode}}</td>
