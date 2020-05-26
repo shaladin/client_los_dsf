@@ -164,7 +164,7 @@ export class CustGrpMemberComponent implements OnInit {
     this.bindAppGrp();
   }
 
-  addGroup(appCustGrpObj, i){
+  addGroup(appCustGrpObj : AppCustGrpObj, i){
     if(appCustGrpObj == undefined){
       return this.fb.group({
         No: [i],
@@ -181,7 +181,7 @@ export class CustGrpMemberComponent implements OnInit {
         CustName: [''],
         MrCustRelationshipCode: [appCustGrpObj.MrCustRelationshipCode, [Validators.required, Validators.maxLength(50)]],
         CustGrpNotes: [appCustGrpObj.CustGrpNotes, [Validators.maxLength(4000)]],
-        IsReversible: [appCustGrpObj.IsReversible],
+        IsReversible: [appCustGrpObj.IsReversible == null ? false : appCustGrpObj.IsReversible],
       })
     } 
   }
