@@ -10,7 +10,7 @@ export class LifeInsObj {
     IsGuarantorCover: any;
     LifeInscoBranchCode : any;
     LifeInscoBranchName : any;
-    TotalLifeInsCptlzAmt : any;
+    PaidInAdvPrcnt : any;
     NewCoverNotes : any;
     InscoAdminFeeAmt: any;
     ListAppLifeInsD : Array<LifeInsDObj>;

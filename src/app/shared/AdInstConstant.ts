@@ -13,6 +13,8 @@ export class AdInsConstant {
   public static AppStepLIns = "LFI";
   public static AppStepFin = "FIN";
   public static AppStepTC = "TC";
+  public static AppStepColl = "COLL";
+  public static AppStepInvoice = "INVOICE";
   public static AppStepOther = "OTH";
   public static AppStepCrdIns = "CRI";
   public static AppStepComm = "COM";
@@ -109,6 +111,9 @@ export class AdInsConstant {
   public static DeleteAppCross = environment.losUrl + "/AppCross/DeleteAppCross";
   public static GetListAppCross = environment.losUrl + "/AppCross/GetListAppCross";
   public static AddListAppCross = "/AppCross/AddListAppCross";
+
+  // App Fctr
+  public static GetAppFctrByAppId = environment.losUrl + "/AppFctr/GetAppFctrByAppId";
 
   // Ref App Src
   public static GetListKvpActiveRefAppSrc = environment.losUrl + "/RefAppSrc/GetListKvpActiveRefAppSrc";
@@ -577,6 +582,7 @@ export class AdInsConstant {
 
   //GUARANTOR
   public static GetListAppGuarantor = environment.losUrl + "/AppGuarantor/GetListAppGuarantor"
+  public static GetAppGuarantorList = environment.losUrl + "/AppGuarantor/GetAppGuarantorList"
   public static GetListAppGuarantorDetail = environment.losUrl + "/AppGuarantor/GetListAppGuarantorDetail"
   public static AddAppGuarantorPersonal = environment.losUrl + "/AppGuarantor/AddAppGuarantorPersonal"
   public static AddAppGuarantorCompany = environment.losUrl + "/AppGuarantor/AddAppGuarantorCompany"
