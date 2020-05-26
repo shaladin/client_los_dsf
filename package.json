@@ -24,6 +24,7 @@
     "@adins/uclookupgeneric": "^2.0.13",
     "@adins/ucpaging": "^2.0.16",
     "@adins/ucreport": "^1.0.1",
+    "@adins/ucthingstodo": "^1.0.1",
     "@adins/ucupload": "^1.6.4",
     "@adins/ucviewgeneric": "^2.0.9",
     "@agm/core": "1.0.0-beta.5",
