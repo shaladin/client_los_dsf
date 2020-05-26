@@ -19,7 +19,7 @@
           <th class="text-left"><span class="thead-header" (click)="searchSort($event)" name='officeName'
               translate>OFFICE NAME</span>
           </th>
-          <th class="text-center"><span class="thead-header" (click)="searchSort($event)" name='orderNo' translate>ORDER
+          <th class="text-left"><span class="thead-header" (click)="searchSort($event)" name='orderNo' translate>ORDER
               NO</span>
           </th>
           <th class="text-left"><span class="thead-header" (click)="searchSort($event)" name='custName' translate>CUST
@@ -55,7 +55,7 @@
           <td class="text-center"><a href="{{leadUrl + item.LeadId}}">{{item.LeadNo}}</a></td>
           <td class="text-center" style="display: none;">{{item.WfTaskListId}}</td>
           <td class="text-left">{{item.OfficeName}}</td>
-          <td class="text-center">{{item.OrderNo}}</td>
+          <td class="text-left">{{item.OrderNo}}</td>
           <td class="text-left">{{item.CustName}}</td>
           <td class="text-left">{{item.LeadSource}}</td>
           <td class="text-left">{{item.FullAssetName}}</td>
