@@ -3,7 +3,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { UcLookupObj } from 'app/shared/model/UcLookupObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
@@ -13,6 +13,7 @@ import { GuarantorCompanyObj } from 'app/shared/model/GuarantorCompanyObj.Model'
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { environment } from 'environments/environment';
 import { formatDate } from '@angular/common';
+import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalDocObj.Model';
 
 @Component({
   selector: 'app-guarantor-company-FL4W',
@@ -41,6 +42,8 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
   appGuarantorCompanyObj : AppGuarantorCompanyObj;
   guarantorCompanyObj : GuarantorCompanyObj ;
   AppGuarantorCompanyId : any;
+  companyLegalDocObj : Array<AppCustCompanyLegalDocObj>;
+  DocObjs : any;
   
   CompanyForm = this.fb.group({
     GuarantorName:[''],
@@ -380,5 +383,74 @@ ClearForm(){
   this.initLookup();
   this.initAddr();
 }
+
+  legalDocObj : Array<AppCustCompanyLegalDocObj>;
+
+  addLegalDoc(){
+    var legalDocObjs = this.CompanyForm.controls["LegalDocForm"] as FormArray;
+    var length = this.CompanyForm.value["LegalDocForm"].length;
+    var max = 0;
+    if(length > 0){
+      max = this.CompanyForm.value["LegalDocForm"].length[length - 1];
+    }
+    legalDocObjs.push(this.addGroup(undefined, max + 1));
+    this.getDocType(max);
+  
+  }
+
+  getDocType(i){ 
+    var legalDocObj ={
+    RefMasterTypeCode:"LEGAL_DOC_TYPE",
+    RowVersion:""
+  }
+    this.http.post(AdInsConstant.GetListActiveRefMaster, legalDocObj).subscribe(
+      (response) => {
+          this.DocObjs = response["ReturnObject"];
+          this.CompanyForm.controls["LegalDocForm"]["controls"][i]["controls"].MrLegalDocTypeCode.patchValue({
+            MrLegalDocTypeCode: this.DocObjs[0].MasterCode
+          });
+      }
+    );
+  }
+
+  addGroup(legalDocObj, i){
+    if(legalDocObj == undefined){
+      return this.fb.group({
+        MrLegalDocTypeCode:['', [Validators.required, Validators.maxLength(50)]],
+        DocNo: ['', [Validators.required, Validators.maxLength(50)]],
+        DocDt: ['', [Validators.required]],
+        DocExpiredDt: ['', [Validators.required]],
+        DocNotes: ['', [Validators.maxLength(4000)]],
+        ReleaseBy: ['', [Validators.required, Validators.maxLength(500)]],
+        ReleaseLocation: ['', [Validators.required, Validators.maxLength(4000)]]
+      })
+    }else{
+      return this.fb.group({
+        No: [i],
+        MrLegalDocTypeCode:[legalDocObj.MrLegalDocTypeCode, [Validators.required, Validators.maxLength(50)]],
+        DocNo: [legalDocObj.DocNo, [Validators.required, Validators.maxLength(50)]],
+        DocDt: [formatDate(legalDocObj.DocDt, 'yyyy-MM-dd', 'en-US'), [Validators.required]],
+        DocExpiredDt: [formatDate(legalDocObj.DocDt, 'yyyy-MM-dd', 'en-US'), [Validators.required]],
+        DocNotes: [legalDocObj.DocNotes, [Validators.maxLength(4000)]],
+        ReleaseBy: [legalDocObj.ReleaseBy, [Validators.required, Validators.maxLength(500)]],
+        ReleaseLocation: [legalDocObj.ReleaseLocation, [Validators.required, Validators.maxLength(4000)]]
+      })
+    } 
+  }  
+
+  deleteLegalDoc(i) {
+    var legalDocObjs = this.CompanyForm.controls["LegalDocForm"] as FormArray;
+    legalDocObjs.removeAt(i);
+  }
+
+  bindLegalDoc() {
+    if (this.companyLegalDocObj != undefined) {
+      for (let i = 0; i < this.companyLegalDocObj.length; i++) {
+        var listLegalDocs = this.CompanyForm.controls["LegalDocForm"] as FormArray;
+        listLegalDocs.push(this.addGroup(this.companyLegalDocObj[i], i));
+        this.getDocType(i);
+      }
+    }
+  }
 
 }

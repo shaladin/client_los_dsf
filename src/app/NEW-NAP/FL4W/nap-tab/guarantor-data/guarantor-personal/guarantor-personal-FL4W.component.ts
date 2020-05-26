@@ -13,6 +13,7 @@ import { AppGuarantorPersonalObj } from 'app/shared/model/AppGuarantorPersonalOb
 import { GuarantorPersonalObj } from 'app/shared/model/GuarantorPersonalObj.Model';
 import { formatDate } from '@angular/common';
 import { environment } from 'environments/environment';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-guarantor-personal-FL4W',
   templateUrl: './guarantor-personal-FL4W.component.html',
@@ -41,7 +42,8 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
   guarantorPersonalObj: GuarantorPersonalObj;
   AppGuarantorPersonalId: any;
 
-  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService) {
+  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService,
+    private modalService: NgbModal) {
   }
 
   PersonalForm = this.fb.group({
@@ -56,7 +58,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
     BirthPlace: [''],
     BirthDt: [''],
     CountryCode: [''],
-    TaxIdNo: [''],
+    TaxIdNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
     MrReligionCode: [''],
     MobilePhnNo: [''],
     Addr: [''],
@@ -154,7 +156,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
       (response) => {
         this.MrGenderCode = response["ReturnObject"];
         this.PersonalForm.patchValue({
-          MrGenderCode: this.MrGenderCode[0].Key
+          MrGenderCode: this.MrGenderCode[0].MasterCode
         });
       }
     );
@@ -379,6 +381,10 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
 
     this.initLookup();
     this.initAddr();
+  }
+
+  cancel() {
+    this.modalService.dismissAll();
   }
 
 }
