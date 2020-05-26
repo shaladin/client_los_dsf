@@ -46,7 +46,7 @@ export class FraudDetectionPagingComponent implements OnInit {
 
     this.router.navigate(["/Nap/CreditProcess/FraudDetection/Detail"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
 
-    // var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    // var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     // var wfClaimObj = new ClaimWorkflowObj();
     // wfClaimObj.pWFTaskListID = event.RowObj.WfTaskListId;
     // wfClaimObj.pUserID = currentUserContext["UserName"];

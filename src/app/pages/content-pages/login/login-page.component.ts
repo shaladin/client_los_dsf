@@ -8,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
 import { RolePickService } from 'app/shared/rolepick/rolepick.service';
 import { environment } from 'environments/environment';
 import { CurrentUserContextService } from 'app/shared/CurrentUserContext/current-user-context.service';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
     selector: 'app-login-page',
@@ -37,7 +38,7 @@ export class LoginPageComponent implements OnInit {
             }
           });
       
-        if(localStorage.getItem("UserContext") != null)
+        if(localStorage.getItem("UserAccess") != null)
         {
             this.router.navigate(['dashboard/dash-board']);
         }
@@ -54,16 +55,17 @@ export class LoginPageComponent implements OnInit {
             this.http.post(AdInsConstant.LoginWithToken, {ModuleCode:environment.Module}).subscribe(
                 (response) => {
                     console.log(response);
-                    var currentUserContext = new CurrentUserContext;
-                    currentUserContext.UserName = response["Identity"].UserName;
-                    currentUserContext.Office = response["Identity"].OfficeCode;
-                    currentUserContext.Role = response["Identity"].RoleCode;
-                    currentUserContext.BusinessDate = response["Identity"].BusinessDt;
-                    localStorage.setItem("BusinessDateRaw",response["Identity"].BusinessDt);
-                    var DateParse = formatDate(response["Identity"].BusinessDt, 'yyyy/MM/dd', 'en-US');
-                    localStorage.setItem("BusinessDate", DateParse);
-                    localStorage.setItem("UserAccess", JSON.stringify(response["Identity"]));
-                    this.currentUserContextService.addCurrentUserContext(currentUserContext);
+                    AdInsHelper.CreateUserAccess(response);
+                    // var currentUserContext = new CurrentUserContext;
+                    // currentUserContext.UserName = response["Identity"].UserName;
+                    // currentUserContext.Office = response["Identity"].OfficeCode;
+                    // currentUserContext.Role = response["Identity"].RoleCode;
+                    // currentUserContext.BusinessDate = response["Identity"].BusinessDt;
+                    // localStorage.setItem("BusinessDateRaw",response["Identity"].BusinessDt);
+                    // var DateParse = formatDate(response["Identity"].BusinessDt, 'yyyy/MM/dd', 'en-US');
+                    // localStorage.setItem("BusinessDate", DateParse);
+                    // localStorage.setItem("UserAccess", JSON.stringify(response["Identity"]));
+                    // this.currentUserContextService.addCurrentUserContext(currentUserContext);
                     this.router.navigate(['dashboard/dash-board']);
                 },
                 (error) => {
