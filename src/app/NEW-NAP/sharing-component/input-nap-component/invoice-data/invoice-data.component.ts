@@ -21,8 +21,9 @@ export class InvoiceDataComponent implements OnInit {
   inputPagingObj: UcPagingObj;
   invoiceObj: AppInvoiceFctrObj;
   AppFactoringObj: AppFctrObj = new AppFctrObj();
-  dataobj: Object;
+  dataobj: any;
   MouCustLookupObj: InputLookupObj = new InputLookupObj();
+  IsDisableCustFctr: boolean = true;
 
   constructor(private httpClient: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
 
@@ -72,6 +73,18 @@ export class InvoiceDataComponent implements OnInit {
     this.httpClient.post(AdInsConstant.GetListAppInvoiceFctrByAppFctrId, obj).subscribe(
       (response) => {
         this.dataobj = response['ReturnObject'];
+        if (this.AppFactoringObj.PaidBy == "CUST_FCTR" && this.dataobj.AppInvoiceFctrList.length >= 1) {
+          this.IsDisableCustFctr = true;
+          this.InvoiceForm.patchValue({
+            CustomerFactoringNo: this.dataobj.AppInvoiceFctrList[0].CustomerFactoringNo,
+            CustomerFactoringName: this.dataobj.AppInvoiceFctrList[0].CustomerFactoringName
+          });
+          this.InvoiceForm.controls.CustomerFactoringName.clearValidators();
+          this.InvoiceForm.controls.CustomerFactoringName.updateValueAndValidity();
+          this.InvoiceForm.controls.CustomerFactoringName.disable();
+        } else {
+          this.IsDisableCustFctr = false;
+        }
       },
       (error) => {
         console.log(error);

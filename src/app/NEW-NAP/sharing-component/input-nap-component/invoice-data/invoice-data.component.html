@@ -10,7 +10,7 @@
           </div>
         </div>
         <div class="px-3">
-          <form class="form form-horizontal" [formGroup]="InvoiceForm" (ngSubmit)="InvoiceForm.valid && SaveForm(); enjiForm.reset()"
+          <form class="form form-horizontal" [formGroup]="InvoiceForm" (ngSubmit)="InvoiceForm.valid && SaveForm()"
             #enjiForm="ngForm">
             <lib-ucSubsection [id]="'InvoiceDataId'" [title]="'Invoice Data'" [panel]="'InvoiceData'">
             </lib-ucSubsection>
@@ -28,11 +28,11 @@
               <div class="form-group row">
                 <label class="col-md-3 adins-required-label" translate>Customer Factoring </label>
                 <div class="col-md-9">
-                  <lib-uclookupgeneric *ngIf="AppFactoringObj.IsCustListed" [lookupInput]="MouCustLookupObj"
-                    [parentForm]="InvoiceForm" [enjiForm]="enjiForm" [identifier]="'LookupCustomerFactoringName'"
-                    (lookup)=GetLookupMouCust($event)>
+                  <lib-uclookupgeneric *ngIf="AppFactoringObj.IsCustListed && !IsDisableCustFctr"
+                    [lookupInput]="MouCustLookupObj" [parentForm]="InvoiceForm" [enjiForm]="enjiForm"
+                    [identifier]="'LookupCustomerFactoringName'" (lookup)=GetLookupMouCust($event)>
                   </lib-uclookupgeneric>
-                  <span *ngIf="!AppFactoringObj.IsCustListed">
+                  <span *ngIf="!AppFactoringObj.IsCustListed || IsDisableCustFctr">
                     <input type="text" class="form-control" formControlName="CustomerFactoringName"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceForm.controls.CustomerFactoringName.invalid }">
                     <lib-uc-show-errors [control]="InvoiceForm.controls.CustomerFactoringName"
@@ -74,7 +74,7 @@
               <table class="table table-responsive-md text-center table-hover">
                 <thead>
                   <tr class="table-header">
-
+                    <th><span translate class="thead-header" name='SeqNo'>No</span></th>
                     <th class="text-left"><span translate class="thead-header" name='InvoiceNo'>Invoice No</span></th>
                     <th class="text-left"><span translate class="thead-header" name='CustomerFactoringName'>Customer
                         Factoring</span></th>
@@ -85,7 +85,8 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let item of dataobj?.AppInvoiceFctrList">
+                  <tr *ngFor="let item of dataobj?.AppInvoiceFctrList; let i = index;">
+                    <td>{{i}}</td>
                     <td class="text-left">{{item?.InvoiceNo}}</td>
                     <td class="text-left">{{item?.CustomerFactoringName}}</td>
                     <td class="text-left">{{item?.InvoiceAmt | number:'':'en-US'}}</td>
