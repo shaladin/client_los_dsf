@@ -156,6 +156,7 @@ export class AdInsConstant {
   public static GetAppCommissionTax = "/AppCommission/GetAppCommissionTax";
 
   public static GetRefOfficeByOfficeCode = environment.FoundationR3Url + "/RefOffice/GetRefOfficeByOfficeCode";
+  public static GetListCenterGrpMemberByCenterGrpCode = environment.FoundationR3Url + "/CenterGrpOfficeMbr/GetListCenterGrpMemberByCenterGrpCode";
 
 
   // public static GetAppDetailForAppTabById = environment.losUrl + "/Application/GetAppDetailForAppTabById";
@@ -1038,9 +1039,11 @@ export class AdInsConstant {
 
 
   // Product Offering
-  public static GetListProdOfferingDByProdOfferingCode = "/ProductOffering/GetListProdOfferingDByProdOfferingCode";
+  public static GetListProdOfferingDByProdOfferingCode = environment.FoundationR3Url + "/ProductOffering/GetListProdOfferingDByProdOfferingCode";
   public static GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode = environment.FoundationR3Url + "/ProductOffering/GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode";
+  public static GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL = environment.FoundationR3Url + "/ProductOffering/GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL";
   public static GetPayFreqByProdOfferingD = environment.FoundationR3Url + "/ProductOffering/GetPayFreqByProdOfferingD";
+  public static GetListProdOfferingDByProdOfferingCodeAndProdOfferingVersion = environment.FoundationR3Url + "/ProductOffering/GetListProdOfferingDByProdOfferingCodeAndProdOfferingVersion";
 
   //Ref Pay Freq
   public static GetPayFreqByProdOfferingCodeandRefProdCompntCode = environment.FoundationR3Url + "/RefPayFreq/GetPayFreqByProdOfferingCodeandRefProdCompntCode";

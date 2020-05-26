@@ -113,31 +113,11 @@ export class ApplicationDataComponent implements OnInit {
       RefProdCompntCode: refProdCompntCode,
       ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
     };
-    this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
+    this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL, obj).subscribe(
       (response) => {
-        console.log(response);
-        var listCompntValue: Array<string> = response["CompntValue"].split(";");
-        console.log(listCompntValue);
-        
-        var listDDL = new Array;
-        var keyValueObj;
-        if(listCompntValue.length!=1){
-          for(var i=0;i<listCompntValue.length;i++){
-            var splitted=listCompntValue[i].split(":");
-            keyValueObj={
-              Key: splitted[0],
-              Value: splitted[1]
-            };
-            listDDL.push(keyValueObj);
-          }
-        }else{
-          keyValueObj={
-            Key: response["CompntValue"],
-            Value: response["CompntValueDesc"]
-          };
-          listDDL.push(keyValueObj);
-        }
-        console.log(listDDL);
+        // console.log(response);
+        var listDDL = response["DDLRefProdComptCode"];
+        // console.log(listDDL);
         this.applicationDDLitems[refProdCompntCode]=listDDL;
       },
       (error) => {
@@ -197,6 +177,7 @@ export class ApplicationDataComponent implements OnInit {
 
     this.http.post(url, obj).subscribe(
       (response) => {
+        console.log(response);
         this.resultResponse = response;
         this.NapAppModelForm.patchValue({
           MouCustId: this.resultResponse.MouCustId,
