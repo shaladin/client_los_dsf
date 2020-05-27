@@ -323,7 +323,7 @@ export class ApplicationDataComponent implements OnInit {
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.jsonSelect = this.resultResponse;
-    this.inputLookupObj.nameSelect = this.resultResponse.SalesName;
+    // this.inputLookupObj.nameSelect = this.resultResponse.SalesName;
     this.inputLookupObj.addCritInput = this.arrAddCrit;
     this.isInputLookupObj = true;
   }
