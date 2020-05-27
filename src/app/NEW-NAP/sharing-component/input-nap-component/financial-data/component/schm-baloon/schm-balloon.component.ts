@@ -51,6 +51,10 @@ export class SchmBalloonComponent implements OnInit {
   }
 
   CalcBaseOnRate() {
+    if(this.ParentForm.get("BalloonValueAmt").value < 1){
+      this.toastr.errorMessage("Balloon Amount must be higher than 0.");
+      return;
+    }
     this.calcBalloonObj = this.ParentForm.value;
     this.calcBalloonObj["IsRecalculate"] = false;
     this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateInstallmentBalloon", this.calcBalloonObj).subscribe(
@@ -81,6 +85,11 @@ export class SchmBalloonComponent implements OnInit {
   }
 
   CalcBaseOnInst() {
+    if(this.ParentForm.get("BalloonValueAmt").value < 1){
+      this.toastr.errorMessage("Balloon Amount must be higher than 0.");
+      return;
+    }
+    
     this.calcBalloonObj = this.ParentForm.value;
     this.calcBalloonObj["IsRecalculate"] = true;
     this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateInstallmentBalloon", this.calcBalloonObj).subscribe(

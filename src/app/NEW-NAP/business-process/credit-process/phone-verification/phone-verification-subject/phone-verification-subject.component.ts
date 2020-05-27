@@ -222,4 +222,14 @@ export class PhoneVerificationSubjectComponent implements OnInit {
       (response) => {
       });
   }
+
+  back() {
+    if (this.isReturnHandling == false) {
+      this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Paging");
+    }
+    if (this.isReturnHandling == true) {
+      this.router.navigateByUrl("/Nap/AdditionalProcess/ReturnHandlingPhoneVerif/Paging");
+    }
+    
+  }
 }
