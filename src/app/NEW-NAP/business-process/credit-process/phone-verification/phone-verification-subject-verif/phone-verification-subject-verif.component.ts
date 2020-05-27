@@ -150,7 +150,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
     this.bindResultObj();
     this.bindSubjectRelationObj();
     this.GetPhoneNumber(this.phnObj);
-    this.GetQuestionList(VerfQAObj);
+    await this.GetQuestionList(VerfQAObj);
     await this.GetAppData();
     await this.GetAppCust();
     await this.GetVerfResultData();

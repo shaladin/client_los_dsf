@@ -22,7 +22,7 @@ export interface Chart {
   styleUrls: ['./dash-board.component.scss']
 })
 export class DashBoardComponent implements OnInit {
-Item:any;
+  Item : any;
   constructor() { }
 
   // line chart configuration Starts

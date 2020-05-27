@@ -358,6 +358,28 @@ export class AssetDataComponent implements OnInit {
         }
       }
     }
+    if (this.AssetDataForm.controls.selectedDpType.value == 'AMT') {
+      if (this.AssetDataForm.controls.DownPaymentAmt.value < 0) {
+        this.toastr.errorMessage("DP must be more than 0");
+        this.isValidOk = false;
+      }
+      if (this.AssetDataForm.controls.DownPaymentAmt.value > this.AssetDataForm.controls.AssetPriceAmt.value) {
+        this.toastr.errorMessage("DP must be less than Asset Price");
+        this.isValidOk = false;
+      }
+    }
+    if (this.AssetDataForm.controls.selectedDpType.value == 'PRCTG') {
+      var tempAmt = this.AssetDataForm.controls.AssetPriceAmt.value * this.AssetDataForm.controls.DownPaymentAmt.value / 100;
+      if (tempAmt < 0) {
+        this.toastr.errorMessage("DP must be more than 0");
+        this.isValidOk = false;
+      }
+      if (tempAmt > this.AssetDataForm.controls.AssetPriceAmt.value) {
+        this.toastr.errorMessage("DP must be less than Asset Price");
+        this.isValidOk = false;
+      }
+    }
+
     if (this.isValidOk == true) {
       this.allAssetDataObj = new AllAssetDataObj();
       this.setAllAssetObj();
@@ -401,7 +423,7 @@ export class AssetDataComponent implements OnInit {
 
   setAllAssetObj() {
     console.log(this.AssetDataForm.controls.MrUserRelationshipCode.value)
-
+    this.allAssetDataObj.AppAssetObj.AppAssetId = this.appAssetId;
     this.allAssetDataObj.AppAssetObj.AppId = this.AppId;
     this.allAssetDataObj.AppAssetObj.FullAssetName = this.AssetDataForm.controls.FullAssetName.value;
     this.allAssetDataObj.AppAssetObj.MrAssetConditionCode = this.AssetDataForm.controls.MrAssetConditionCode.value;
@@ -433,7 +455,7 @@ export class AssetDataComponent implements OnInit {
       this.allAssetDataObj.AppCollateralObj.AppAssetId = this.appAssetId;
       this.allAssetDataObj.AppCollateralObj.IsMainCollateral = true;
     }
-    else {
+    else {     
       this.allAssetDataObj.AppAssetObj.AssetStat = this.AssetDataForm.controls.AssetStat.value;
       this.allAssetDataObj.AppCollateralObj.CollateralStat = this.AssetDataForm.controls.AssetStat.value;
       this.allAssetDataObj.AppCollateralObj.AppAssetId = this.appAssetObj.ResponseAppCollateralObj.AppAssetId;
