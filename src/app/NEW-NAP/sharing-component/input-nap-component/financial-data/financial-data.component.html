@@ -1,4 +1,4 @@
-<form class="form-horizontal" [formGroup]="FinDataForm" (ngSubmit)="FinDataForm.valid && Submit()" #enjiForm="ngForm">
+<form class="form-horizontal" [formGroup]="FinDataForm" (ngSubmit)="FinDataForm.valid && SaveAndContinue()" #enjiForm="ngForm">
   <app-subsidy *ngIf="IsParentLoaded" [AppId]="AppId" [ParentForm]="FinDataForm"></app-subsidy>
   <app-fee *ngIf="IsParentLoaded" [AppId]="AppId" [ParentForm]="FinDataForm" [identifier]="'AppFee'"></app-fee>
   <app-schm-reguler-fix *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'RF'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-reguler-fix>
@@ -306,8 +306,7 @@
   </div> -->
 
   <div class="form-inline-right">
-    <button type="submit" class="btn btn-raised btn-primary" translate type="button" tabindex="0"
-      (click)="SaveAndContinue()">
+    <button type="submit" class="btn btn-raised btn-primary" translate tabindex="0">
       Save
     </button>
   </div>

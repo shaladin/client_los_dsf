@@ -235,6 +235,12 @@ export class AdInsConstant {
   public static InsPaidByCustomer = "CU";
   public static InsPaidByAtCost = "CO";
 
+  //INST SCHM
+  public static InstSchmBalloon = "BL";
+  public static InstSchmStepUpStepDownNormal = "STNM";
+  public static InstSchmStepUpStepDownLeasing = "STLS";
+
+
   //GENERAL SETTING
   public static GetBusinessDt = "/GeneralSetting/GetBusinessDate";
   public static AddGeneralSetting = "/GeneralSetting/AddGeneralSetting";
@@ -1011,6 +1017,7 @@ export class AdInsConstant {
   public static SaveAppFinDataFctr = environment.losUrl + "/AppFinData/SaveAppFinDataFctr";
   public static CalculateInstallmentEvenPrincipalFctr = environment.losUrl + "/AppFinData/CalculateInstallmentEvenPrincipalFctr";
   public static CalculateSingleInst = environment.losUrl + "/AppFinData/CalculateSingleInst";
+  public static CalculateProvisionFee = environment.losUrl + "/AppFee/CalculateProvisionFee";
 
 
 
