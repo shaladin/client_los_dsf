@@ -70,7 +70,8 @@
                       <div class="form-group row">
                         <label class="col-md-3  adins-required-label" translate>Installment Type</label>
                         <div class="col-md-9">
-                          <select class="form-control adInsInput" style="width: auto" formControlName="MrInstTypeCode" (change)="CheckInstType()"
+                          <select class="form-control adInsInput" style="width: auto" formControlName="MrInstTypeCode"
+                            (change)="CheckInstType()"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.MrInstTypeCode.invalid }">
                             <option *ngFor="let it of allInType" value="{{it.Key}}">
                               {{it.Value}}</option>
@@ -80,7 +81,7 @@
                           </lib-uc-show-errors>
                         </div>
                       </div>
-                      <ng-container *ngIf="SalesAppInfoForm.controls.MrInstTypeCode.value == 'SINGLE'">
+                      <div *ngIf="SalesAppInfoForm.controls.MrInstTypeCode.value == 'SINGLE'">
                         <div class="form-group row">
                           <label class="col-md-3  adins-required-label" translate>Calculation Method</label>
                           <div class="col-md-9">
@@ -95,8 +96,8 @@
                             </lib-uc-show-errors>
                           </div>
                         </div>
-                      </ng-container>
-                      <ng-container *ngIf="SalesAppInfoForm.controls.MrInstTypeCode.value == 'SINGLE'">
+                      </div>
+                      <div *ngIf="SalesAppInfoForm.controls.MrInstTypeCode.value == 'SINGLE'">
                         <div class="form-group row">
                           <label class="col-md-3  adins-required-label" translate>Term Of Payment</label>
                           <div class="col-md-9">
@@ -107,29 +108,17 @@
                             </lib-uc-show-errors>
                           </div>
                         </div>
-                      </ng-container>
-                      <ng-container *ngIf="SalesAppInfoForm.controls.MrInstTypeCode.value == 'SINGLE'">
-                        <div class="form-group row">
-                          <label class="col-md-3  adins-required-label" for="Tenor" translate>Tenor</label>
-                          <div class="col-md-9">
-                            <input type="text" class="form-control adInsInput width-30-per" id="Tenor" name="Tenor"
-                              value="1" disabled="disabled">
-                          </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-md-3  adins-required-label" translate>Tenor</label>
+                        <div class="col-md-9">
+                          <input type="text" class="form-control adInsInput width-30-per" formControlName="Tenor"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.Tenor.invalid }">
+                          <lib-uc-show-errors [control]="SalesAppInfoForm.controls.Tenor" [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors>
                         </div>
-                      </ng-container>
-                      <ng-container *ngIf="SalesAppInfoForm.controls.MrInstTypeCode.value == 'MULTIPLE'">
-                        <div class="form-group row">
-                          <label class="col-md-3  adins-required-label" translate>Tenor</label>
-                          <div class="col-md-9">
-                            <input type="text" class="form-control adInsInput width-30-per" formControlName="Tenor"
-                              [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.Tenor.invalid }">
-                            <lib-uc-show-errors [control]="SalesAppInfoForm.controls.Tenor"
-                              [submit]="enjiForm.submitted">
-                            </lib-uc-show-errors>
-                          </div>
-                        </div>
-                      </ng-container>
-                      <ng-container *ngIf="SalesAppInfoForm.controls.MrInstTypeCode.value == 'MULTIPLE'">
+                      </div>
+                      <div *ngIf="SalesAppInfoForm.controls.MrInstTypeCode.value == 'MULTIPLE'">
                         <div class="form-group row">
                           <label class="col-md-3  adins-required-label" translate>Payment Freqency</label>
                           <div class="col-md-9">
@@ -143,7 +132,7 @@
                             </lib-uc-show-errors>
                           </div>
                         </div>
-                      </ng-container>
+                      </div>
                       <div class="form-group row">
                         <label class="col-md-3  adins-required-label" translate>Num Of Installment</label>
                         <div class="col-md-9">
@@ -154,7 +143,7 @@
                           </lib-uc-show-errors>
                         </div>
                       </div>
-                      <ng-container *ngIf="SalesAppInfoForm.controls.MrInstTypeCode.value == 'SINGLE'">
+                      <div *ngIf="SalesAppInfoForm.controls.MrInstTypeCode.value == 'SINGLE'">
                         <div class="form-group row">
                           <label class="col-md-3  adins-required-label" translate>Installment Scheme</label>
                           <div class="col-md-9">
@@ -169,8 +158,8 @@
                             </lib-uc-show-errors>
                           </div>
                         </div>
-                      </ng-container>
-                      <ng-container *ngIf="SalesAppInfoForm.controls.MrInstTypeCode.value == 'MULTIPLE'">
+                      </div>
+                      <div *ngIf="SalesAppInfoForm.controls.MrInstTypeCode.value == 'MULTIPLE'">
                         <div class="form-group row">
                           <label class="col-md-3  adins-required-label" translate>Installment Scheme</label>
                           <div class="col-md-9">
@@ -185,15 +174,15 @@
                             </lib-uc-show-errors>
                           </div>
                         </div>
-                      </ng-container>
+                      </div>
                       <div class="form-group row">
                         <label class="col-md-3 adins-required-label">Is Disclosed</label>
                         <div class="col-md-9">
                           <input type="checkbox" class="border-primary" formControlName="IsDisclosed">
                         </div>
                         <lib-uc-show-errors [control]="SalesAppInfoForm.controls.IsDisclosed"
-                        [submit]="enjiForm.submitted">
-                      </lib-uc-show-errors>
+                          [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
                       </div>
                       <div class="form-group row">
                         <label class="col-md-3  adins-required-label" translate>Paid By</label>
@@ -243,6 +232,19 @@
                               {{app.Value}}</option>
                           </select>
                           <lib-uc-show-errors [control]="SalesAppInfoForm.controls.MrAppSourceCode"
+                            [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-md-3  adins-required-label" translate>Interest Type</label>
+                        <div class="col-md-9">
+                          <select class="form-control adInsInput" style="width: auto" formControlName="InterestType"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.InterestType.invalid }">
+                            <option *ngFor="let rt of allIntrstType" value="{{rt.Key}}">
+                              {{rt.Value}}</option>
+                          </select>
+                          <lib-uc-show-errors [control]="SalesAppInfoForm.controls.InterestType"
                             [submit]="enjiForm.submitted">
                           </lib-uc-show-errors>
                         </div>

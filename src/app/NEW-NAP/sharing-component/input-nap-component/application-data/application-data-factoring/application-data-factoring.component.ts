@@ -16,9 +16,10 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 export class ApplicationDataFactoringComponent implements OnInit {
   @Input() AppId: number;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
-  
+  mode: string = "edit";
+  salesAppInfoObj: SalesInfoObj = new SalesInfoObj();
+
   SalesAppInfoForm = this.fb.group({
-    AppId: [''],
     SrvyOrderNo: [''],
     MrSalesRecommendCode: ['', Validators.required],
     SalesNotes: [''],
@@ -35,18 +36,20 @@ export class ApplicationDataFactoringComponent implements OnInit {
     MrAppSourceCode: ['', Validators.required],
     MrWopCode: ['', Validators.required],
     PayFreqCode: ['', Validators.required],
-    MrSingleInstCalcMthdCode: ['', Validators.required]
+    MrSingleInstCalcMthdCode: ['', Validators.required],
+    InterestType: ['', Validators.required]
   })
 
-  refMasterInterestType: RefMasterObj;
-  refMasterInsScheme: RefMasterObj;
-  refMasterInsType: RefMasterObj;
-  refMasterRecommendation: any;
-  refMasterWOP: RefMasterObj;
-  refMasterAppSource: RefMasterObj;
-  refMasterCalcMethod: RefMasterObj;
-  refMasterAppPaidBy: RefMasterObj;
-  refMasterRecourseType: RefMasterObj;
+  refMasterInterestType: RefMasterObj = new RefMasterObj();
+  refMasterInsScheme: RefMasterObj = new RefMasterObj();
+  refMasterInsType: RefMasterObj = new RefMasterObj();
+  refMasterRecommendation: RefMasterObj = new RefMasterObj();
+  refMasterWOP: RefMasterObj = new RefMasterObj();
+  refMasterAppSource: RefMasterObj = new RefMasterObj();
+  refMasterCalcMethod: RefMasterObj = new RefMasterObj();
+  refMasterAppPaidBy: RefMasterObj = new RefMasterObj();
+  refMasterRecourseType: RefMasterObj = new RefMasterObj();
+  refMasterIntrstType: RefMasterObj = new RefMasterObj();
   allInterestType: any;
   allInScheme: any;
   allInType: any;
@@ -56,7 +59,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
   allPaidby: any;
   allRecourseType: any;
   allCalcMethod: any;
-  salesAppInfoObj: SalesInfoObj;
+  allIntrstType: any;
 
   listMultiple: Array<any> = ['Even Principle', 'Regular Fixed'];
   listSingle: Array<any> = ['Even Principle'];
@@ -75,50 +78,28 @@ export class ApplicationDataFactoringComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    this.SalesAppInfoForm.patchValue({
-      AppId: this.AppId
-    })
-    var obj = {
-      AppId: this.AppId
-    }
-
     this.loadData();
+  }
 
-    // this.http.post(AdInsConstant.GetAppByIds, obj).subscribe(
-    //   (response) => {
-    //     this.resultData = response;
-    //     this.payfreq = new PayFreqObj();
-    //     this.payfreq.ProdOfferingCode = this.resultData.ProdOfferingCode;
-    //     this.payfreq.RefProdCompntCode = "PAYFREQ";
-    //   })
-
-    this.refMasterInterestType = new RefMasterObj();
+  setDropdown(){
     this.refMasterInterestType.RefMasterTypeCode = 'INTEREST_TYPE';
-    this.refMasterInsScheme = new RefMasterObj();
     this.refMasterInsScheme.RefMasterTypeCode = 'INST_SCHM';
-    this.refMasterInsType = new RefMasterObj();
     this.refMasterInsType.RefMasterTypeCode = 'INST_TYPE';
-    this.refMasterRecommendation = new RefMasterObj();
-    this.refMasterRecommendation.refMasterTypeCode = 'SLS_RECOM';
-    this.refMasterWOP = new RefMasterObj();
+    this.refMasterRecommendation.RefMasterTypeCode = 'SLS_RECOM';
     this.refMasterWOP.RefMasterTypeCode = 'WOP';
-    this.refMasterCalcMethod = new RefMasterObj();
     this.refMasterCalcMethod.RefMasterTypeCode = 'SINGLE_INST_CALC_METHOD';
-    this.refMasterAppPaidBy = new RefMasterObj();
     this.refMasterAppPaidBy.RefMasterTypeCode = 'APP_PAID_BY';
-    this.refMasterRecourseType = new RefMasterObj();
     this.refMasterRecourseType.RefMasterTypeCode = 'RECOURSE_TYPE';
+    this.refMasterIntrstType.RefMasterTypeCode = 'INTRSTTYPE';
 
-
-
-
-    this.http.post(AdInsConstant.GetPayFreqByProdOfferingCodeandRefProdCompntCode, this.payfreq).subscribe(
+    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterIntrstType).subscribe(
       (response) => {
-        this.allPayFreq = response['ReturnObject'];
-        this.SalesAppInfoForm.patchValue({
-          PayFreqCode: this.allPayFreq[0].PayFreqCode
-        });
+        this.allIntrstType = response['ReturnObject'];
+        if (this.mode != 'edit') {
+          this.SalesAppInfoForm.patchValue({
+            InterestType: this.allIntrstType[0].Key
+          });
+        }
       },
       (error) => {
         console.log(error);
@@ -127,9 +108,11 @@ export class ApplicationDataFactoringComponent implements OnInit {
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterInsScheme).subscribe(
       (response) => {
         this.allInScheme = response['ReturnObject'];
-        this.SalesAppInfoForm.patchValue({
-          MrInstSchemeCode: this.allInScheme[1].Key
-        });
+        if (this.mode != 'edit') {
+          this.SalesAppInfoForm.patchValue({
+            MrInstSchemeCode: this.allInScheme[0].Key
+          });
+        }
       },
       (error) => {
         console.log(error);
@@ -138,9 +121,11 @@ export class ApplicationDataFactoringComponent implements OnInit {
     this.http.post(AdInsConstant.GetListRefEmpByGsValueandOfficeId, null).subscribe(
       (response) => {
         this.allInSalesOffice = response['ReturnObject'];
-        this.SalesAppInfoForm.patchValue({
-          SalesOfficerNo: this.allInSalesOffice[0].EmpNo
-        });
+        if (this.mode != 'edit') {
+          this.SalesAppInfoForm.patchValue({
+            SalesOfficerNo: this.allInSalesOffice[0].EmpNo
+          });
+        }
       },
       (error) => {
         console.log(error);
@@ -149,9 +134,11 @@ export class ApplicationDataFactoringComponent implements OnInit {
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterInsType).subscribe(
       (response) => {
         this.allInType = response['ReturnObject'];
-        this.SalesAppInfoForm.patchValue({
-          MrInstTypeCode: this.allInType[0].Key
-        });
+        if (this.mode != 'edit') {
+          this.SalesAppInfoForm.patchValue({
+            MrInstTypeCode: this.allInType[0].Key
+          });
+        }
       },
       (error) => {
         console.log(error);
@@ -160,9 +147,11 @@ export class ApplicationDataFactoringComponent implements OnInit {
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterRecommendation).subscribe(
       (response) => {
         this.allSlsRecom = response['ReturnObject'];
-        this.SalesAppInfoForm.patchValue({
-          MrSalesRecommendCode: this.allSlsRecom[0].Key
-        });
+        if (this.mode != 'edit') {
+          this.SalesAppInfoForm.patchValue({
+            MrSalesRecommendCode: this.allSlsRecom[0].Key
+          });
+        }
       },
       (error) => {
         console.log(error);
@@ -171,19 +160,24 @@ export class ApplicationDataFactoringComponent implements OnInit {
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterWOP).subscribe(
       (response) => {
         this.allWOP = response['ReturnObject'];
-        this.SalesAppInfoForm.patchValue({
-          MrWopCode: this.allWOP[0].Key
-        });
+        if (this.mode != 'edit') {
+          this.SalesAppInfoForm.patchValue({
+            MrWopCode: this.allWOP[0].Key
+          });
+        }
       },
       (error) => {
         console.log(error);
       });
+
     this.http.post(AdInsConstant.GetListKvpActiveRefAppSrc, null).subscribe(
       (response) => {
         this.allAppSource = response['ReturnObject'];
-        this.SalesAppInfoForm.patchValue({
-          MrAppSourceCode: this.allAppSource[0].Key
-        });
+        if (this.mode != 'edit') {
+          this.SalesAppInfoForm.patchValue({
+            MrAppSourceCode: this.allAppSource[0].Key
+          });
+        }
       },
       (error) => {
         console.log(error);
@@ -192,9 +186,11 @@ export class ApplicationDataFactoringComponent implements OnInit {
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterCalcMethod).subscribe(
       (response) => {
         this.allCalcMethod = response['ReturnObject'];
-        this.SalesAppInfoForm.patchValue({
-          MrSingleInstCalcMthdCode: this.allCalcMethod[0].Key
-        });
+        if (this.mode != 'edit') {
+          this.SalesAppInfoForm.patchValue({
+            MrSingleInstCalcMthdCode: this.allCalcMethod[0].Key
+          });
+        }
       },
       (error) => {
         console.log(error);
@@ -203,9 +199,11 @@ export class ApplicationDataFactoringComponent implements OnInit {
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterAppPaidBy).subscribe(
       (response) => {
         this.allPaidby = response['ReturnObject'];
-        this.SalesAppInfoForm.patchValue({
-          PaidBy: this.allPaidby[0].Key
-        });
+        if (this.mode != 'edit') {
+          this.SalesAppInfoForm.patchValue({
+            PaidBy: this.allPaidby[0].Key
+          });
+        }
       },
       (error) => {
         console.log(error);
@@ -214,29 +212,34 @@ export class ApplicationDataFactoringComponent implements OnInit {
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterRecourseType).subscribe(
       (response) => {
         this.allRecourseType = response['ReturnObject'];
-        this.SalesAppInfoForm.patchValue({
-          RecourseType: this.allRecourseType[0].Key
-        });
+        if (this.mode != 'edit') {
+          this.SalesAppInfoForm.patchValue({
+            RecourseType: this.allRecourseType[0].Key
+          });
+        }
       },
       (error) => {
         console.log(error);
       });
-
-
   }
 
-  CheckInstType(){
-    if(this.SalesAppInfoForm.controls.MrInstTypeCode.value == "MULTIPLE"){
-      
+  CheckInstType() {
+    if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == "MULTIPLE") {
       this.SalesAppInfoForm.controls.Tenor.setValidators([Validators.required]);
       this.SalesAppInfoForm.controls.PayFreqCode.setValidators([Validators.required]);
-      this.SalesAppInfoForm.controls.MRSingleInstCalcMthdCode.clearValidators();
+      this.SalesAppInfoForm.controls.MrSingleInstCalcMthdCode.clearValidators();
       this.SalesAppInfoForm.controls.TOPDays.clearValidators();
-    }else{
+
+      this.SalesAppInfoForm.controls.Tenor.enable();
+      this.SalesAppInfoForm.controls.Tenor.patchValue("");
+    } else {
       this.SalesAppInfoForm.controls.Tenor.clearValidators();
       this.SalesAppInfoForm.controls.PayFreqCode.clearValidators();
-      this.SalesAppInfoForm.controls.MRSingleInstCalcMthdCode.setValidators([Validators.required]);
+      this.SalesAppInfoForm.controls.MrSingleInstCalcMthdCode.setValidators([Validators.required]);
       this.SalesAppInfoForm.controls.TOPDays.setValidators([Validators.required]);
+      
+      this.SalesAppInfoForm.controls.Tenor.disable();
+      this.SalesAppInfoForm.controls.Tenor.patchValue(1);
     }
 
     this.SalesAppInfoForm.controls.Tenor.updateValueAndValidity();
@@ -249,9 +252,33 @@ export class ApplicationDataFactoringComponent implements OnInit {
     var obj = {
       AppId: this.AppId
     }
+
     this.http.post(AdInsConstant.GetApplicationDataByAppId, obj).subscribe(
       (response) => {
         this.resultData = response;
+        this.payfreq = new PayFreqObj();
+        this.payfreq.ProdOfferingCode = this.resultData.ProdOfferingCode;
+        this.payfreq.RefProdCompntCode = "PAYFREQ";
+        this.salesAppInfoObj.AppRowVersion = this.resultData.AppRowVersion;
+        this.salesAppInfoObj.AppFinDataRowVersion = this.resultData.AppFinDataRowVersion;
+        this.salesAppInfoObj.AppFctrRowVersion = this.resultData.AppFctrRowVersion;
+
+        this.setDropdown();
+        this.CheckInstType();
+
+        this.http.post(AdInsConstant.GetPayFreqByProdOfferingCodeandRefProdCompntCode, this.payfreq).subscribe(
+          (response) => {
+            this.allPayFreq = response['ReturnObject'];
+            if (this.mode != 'edit') {
+              this.SalesAppInfoForm.patchValue({
+                PayFreqCode: this.allPayFreq[0].PayFreqCode
+              });
+            }
+          },
+          (error) => {
+            console.log(error);
+          });
+          
         this.SalesAppInfoForm.patchValue({
           SrvyOrderNo: this.resultData.SrvyOrderNo,
           MrSalesRecommendCode: this.resultData.MrSalesRecommendCode,
@@ -269,7 +296,8 @@ export class ApplicationDataFactoringComponent implements OnInit {
           MrAppSourceCode: this.resultData.MrAppSourceCode,
           MrWopCode: this.resultData.MrWopCode,
           PayFreqCode: this.resultData.PayFreqCode,
-          MrSingleInstCalcMthdCode: this.resultData.MrSingleInstCalcMthdCode
+          MrSingleInstCalcMthdCode: this.resultData.MrSingleInstCalcMthdCode,
+          InterestType: this.resultData.InterestType
         })
       },
       (error) => {
@@ -279,9 +307,8 @@ export class ApplicationDataFactoringComponent implements OnInit {
   }
 
   SaveForm(): void {
-    this.salesAppInfoObj = new SalesInfoObj();
-    this.salesAppInfoObj.AppId = this.AppId;
     this.salesAppInfoObj = this.SalesAppInfoForm.value;
+    this.salesAppInfoObj.AppId = this.AppId;
 
     if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == 'SINGLE') {
       this.salesAppInfoObj.Tenor = 1;
@@ -293,14 +320,27 @@ export class ApplicationDataFactoringComponent implements OnInit {
       this.salesAppInfoObj.MrInstSchemeCode = 'RF';
     }
 
-    this.http.post(AdInsConstant.SaveApp, this.salesAppInfoObj).subscribe(
-      (response) => {
-        this.toastr.successMessage(response["message"]);
-        this.outputTab.emit();
-      },
-      (error) => {
-        console.log(error);
-      });
+    if(this.mode == "add"){
+      this.http.post(AdInsConstant.SaveApplicationData, this.salesAppInfoObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          this.outputTab.emit();
+          this.mode = "edit";
+        },
+        (error) => {
+          console.log(error);
+        });
+    }else{
+      this.http.post(AdInsConstant.EditApplicationData, this.salesAppInfoObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          this.outputTab.emit();
+        },
+        (error) => {
+          console.log(error);
+        });
+    }
+
   }
 
 }

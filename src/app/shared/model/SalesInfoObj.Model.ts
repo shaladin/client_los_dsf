@@ -1,22 +1,26 @@
 export class SalesInfoObj{
-    AppId: any;
+    AppId: number;
     SrvyOrderNo: any;
-    MrSalesRecommendCode: any;
+    MrSalesRecommendCode: string;
     SalesNotes:  any;
     SalesOfficerNo:  any;
     SalesHeadNo:  any;
-    MrInstTypeCode:  any;
+    MrInstTypeCode:  string;
     TopDays:  any;
     Tenor: any;
     NumOfInst: any;
-    MrInstSchemeCode:  any;
+    MrInstSchemeCode:  string;
     IsDisclosed:  any;
     PaidBy: any;
-    RecourseType:  any;
-    MrAppSourceCode: any;
-    MrWopCode:  any;
-    PayFreqCode:  any;
-    MrSingleInstCalcMthdCode:  any;
+    RecourseType:  string;
+    MrAppSourceCode: string;
+    MrWopCode:  string;
+    PayFreqCode:  string;
+    MrSingleInstCalcMthdCode:  string;
+    InterestType: string;
+    AppRowVersion : any;
+    AppFinDataRowVersion : any;
+    AppFctrRowVersion : any;
     RowVersion: any;
     constructor(){this.RowVersion = ""}
 }
