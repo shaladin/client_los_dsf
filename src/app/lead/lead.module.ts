@@ -42,6 +42,10 @@ import { LeadUpdateComponent } from "./lead-update/lead-update.component";
 import { NgxCurrencyModule } from "ngx-currency";
 import { UcinputnumberModule } from "@adins/ucinputnumber";
 import { CustSharingComponentModule } from "app/NEW-NAP/sharing-component/input-nap-component/cust-sharing-component.module";
+import { LeadMonitoringComponent } from './lead-monitoring/lead-monitoring.component';
+import { UcuploadModule } from "@adins/ucupload";
+import { LeadMonitoringReviewComponent } from './lead-monitoring-review/lead-monitoring-review.component';
+import { LeadMonitoringReviewDetailComponent } from './lead-monitoring-review/lead-monitoring-review-detail/lead-monitoring-review-detail.component';
 export const customCurrencyMaskConfig = {     
   align: "left",     
   allowNegative: true,     
@@ -75,7 +79,8 @@ export const customCurrencyMaskConfig = {
     MatRadioModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     UcinputnumberModule,
-    CustSharingComponentModule
+    CustSharingComponentModule,
+    UcuploadModule
   ],
   declarations: [
     LeadMainInfoComponent,
@@ -100,6 +105,7 @@ export const customCurrencyMaskConfig = {
     FraudVerifPagingComponent, 
     FraudVerifPageComponent, 
     LeadInquiryComponent, 
+    LeadMonitoringComponent, LeadMonitoringReviewComponent, LeadMonitoringReviewDetailComponent 
   ],
   entryComponents: [
     UclookupgenericComponent,

@@ -16,6 +16,7 @@ import { TeleVerifPagingComponent } from './tele-verif/tele-verif-paging/tele-ve
 import { TeleVerifDetailComponent } from './tele-verif/tele-verif-detail/tele-verif-detail.component';
 import { LeadInputLeadDataComponent } from './lead-input/lead-input-lead-data/lead-input-lead-data.component';
 import { LeadUpdateComponent } from './lead-update/lead-update.component';
+import { LeadMonitoringComponent } from './lead-monitoring/lead-monitoring.component';
 
 const routes: Routes = [
   {
@@ -131,6 +132,13 @@ const routes: Routes = [
         component: LeadUpdateComponent,
         data: {
           title: 'Lead Update Paging'
+        }
+      },
+      {
+        path: 'Monitoring',
+        component: LeadMonitoringComponent,
+        data: {
+          title: 'Lead Monitoring'
         }
       }
     ]
