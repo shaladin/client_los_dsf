@@ -20,8 +20,6 @@ import { MatRadioModule } from "@angular/material";
 import { ContentPagesRoutingModule } from "app/pages/content-pages/content-pages-routing.module";
 import { LoginPageComponent } from "app/pages/content-pages/login/login-page.component";
 import { CustomerSelfVerificationComponent } from './external-page/customer-self-verification/customer-self-verification.component';
-import { LeadDataComponent } from 'app/lead/verification/customer-self-verification/lead-data/lead-data.component';
-import { LeadInputCustDataComponent } from "app/lead/lead-input/lead-input-cust-data/lead-input-cust-data.component";
 import { NgxCurrencyModule } from "ngx-currency";
 import { UcinputnumberModule } from "@adins/ucinputnumber";
 import { CustSharingComponentModule } from "app/NEW-NAP/sharing-component/input-nap-component/cust-sharing-component.module"; 
@@ -63,9 +61,7 @@ export const customCurrencyMaskConfig = {
     ],
     declarations: [
         LoginPageComponent,
-        CustomerSelfVerificationComponent,
-        LeadDataComponent,
-        LeadInputCustDataComponent, 
+        CustomerSelfVerificationComponent 
     ]
 })
 export class ContentPagesModule { }

@@ -7,7 +7,7 @@ export class PreGoLiveMainObj {
     IsNeedApproval : any;
     ApprovalStat : any;
     RowVersion : any;
-
+    
     constructor() {
         this.PreGoLiveId = 0;
         this.AgrmntId = 0;

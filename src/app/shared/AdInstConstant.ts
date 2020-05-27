@@ -13,6 +13,8 @@ export class AdInsConstant {
   public static AppStepLIns = "LFI";
   public static AppStepFin = "FIN";
   public static AppStepTC = "TC";
+  public static AppStepColl = "COLL";
+  public static AppStepInvoice = "INVOICE";
   public static AppStepOther = "OTH";
   public static AppStepCrdIns = "CRI";
   public static AppStepComm = "COM";
@@ -110,6 +112,9 @@ export class AdInsConstant {
   public static GetListAppCross = environment.losUrl + "/AppCross/GetListAppCross";
   public static AddListAppCross = "/AppCross/AddListAppCross";
 
+  // App Fctr
+  public static GetAppFctrByAppId = environment.losUrl + "/AppFctr/GetAppFctrByAppId";
+
   // Ref App Src
   public static GetListKvpActiveRefAppSrc = environment.losUrl + "/RefAppSrc/GetListKvpActiveRefAppSrc";
 
@@ -136,6 +141,7 @@ export class AdInsConstant {
   public static LoginByRole = "/Authenticate/LoginByRole";
   public static LoginByToken = "/Authenticate/LoginByToken";
   public static UpdateToken = "/Authenticate/UpdateRole";
+  public static LoginURLFrontEnd = "pages/login";
 
   //CUST TYPE
   public static CustTypePersonal = "PERSONAL";
@@ -942,7 +948,7 @@ export class AdInsConstant {
 
   //CUST CONFIRM
   public static GetVerfQuestionAnswerListByAppIdAndSubject = environment.losUrl + "/CustCnfrm/GetVerfQuestionAnswerListByAppIdAndSubject";
-  public static AddCustCnfrm = environment.losUrl + "/CustCnfrm/AddCustCnfrm";
+  public static AddCustCnfrm = "http://localhost:5001" + "/CustCnfrm/AddCustCnfrm";
 
   //REF STATUS
   public static GetListActiveRefStatusByStatusGrpCode = environment.FoundationR3Url + "/RefStatus/GetListKeyValueActiveGrpCodeByCode";

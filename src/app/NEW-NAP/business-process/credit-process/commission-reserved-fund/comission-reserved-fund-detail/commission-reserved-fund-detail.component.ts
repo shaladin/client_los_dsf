@@ -83,7 +83,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   }
 
   async ClaimTask(WfTaskListId) {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     var wfClaimObj = { pWFTaskListID: WfTaskListId, pUserID: currentUserContext["UserName"], isLoading: false };
     this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(() => { });
   }
