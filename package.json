@@ -14,7 +14,7 @@
   "dependencies": {
     "@adins/uc-show-errors": "0.0.5",
     "@adins/uc-subsection": "^1.0.4",
-    "@adins/ucaddress": "^1.0.11",
+    "@adins/ucaddress": "^1.0.12",
     "@adins/ucapproval": "^1.0.2",
     "@adins/ucapprovalhist": "^1.0.3",
     "@adins/ucapproveby": "^1.0.1",
@@ -22,7 +22,7 @@
     "@adins/ucgridview": "^2.0.16",
     "@adins/ucinputnumber": "^1.0.1",
     "@adins/uclookupgeneric": "^2.0.13",
-    "@adins/ucpaging": "^2.0.16",
+    "@adins/ucpaging": "^2.0.17",
     "@adins/ucreport": "^1.0.1",
     "@adins/ucthingstodo": "^1.0.1",
     "@adins/ucupload": "^1.6.4",
