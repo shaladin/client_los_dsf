@@ -874,7 +874,8 @@ export class AdInsConstant {
 
 
   // LEAD FRAUD VERF
-  public static AddLeadFraudVerf = environment.losUrl + "/LeadFraudVerf/AddLeadFraudVerf"
+  public static AddLeadFraudVerf = environment.losUrl + "/LeadFraudVerf/AddLeadFraudVerf";
+  public static GetDoubleFinancingCheckAppAsset = environment.losUrl + "/FraudDetection/GetDoubleFinancingCheckAppAsset";
 
   // VERIFY STAT
   public static Reject = "REJECT";
