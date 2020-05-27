@@ -5,138 +5,279 @@
         <div class="px-3">
           <form class="form form-horizontal" [formGroup]="CompanyForm" #enjiForm="ngForm">
             <div class="form-body">
-              <h4 class="form-section card-title" translate><i class="ft-file-text"></i>Main Data</h4>
-              <div class="class=form-group row adins-required">
-                <label class="col-md-2 adInsLabel">Guarantor Name </label>
-                <div class="col-md-4">
-                  <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]="CompanyForm" [enjiForm]="enjiForm"
-                    [identifier]="'LookupGuarantor'" (lookup)="lookupGuarantor($event)"></lib-uclookupgeneric>
-                </div>
-              </div>
-              <div class="class=form-group row adins-required">
-                <label class="col-md-2 adInsLabel">Company Type </label>
-                <div class="col-md-4">
-                  <select class="form-control adInsInput" style="width: auto" formControlName="MrCompanyTypeCode">
-                    <option *ngFor="let it of MrCompanyTypeCode" [value]="it.MasterCode">
-                      {{it.Descr}}</option>
-                  </select>
-                </div>
-
-                <label class="col-md-2 adins-required-label" translate>NPWP</label>
-                <div class="col-md-4">
-                  <input type="number" class="form-control" formControlName="TaxIdNo">
-                </div>
-              </div>
-              <br>
-              <div class="class=form-group row adins-required">
-                <label class="col-md-2 adInsLabel">Lessee Relationship </label>
-                <div class="col-md-4">
-                  <select class="form-control adInsInput" style="width: auto" formControlName="MrCustRelationshipCode">
-                    <option *ngFor="let it of MrCustRelationshipCode" [value]="it.MasterCode">
-                      {{it.Descr}}</option>
-                  </select>
-                </div>
-                <label class="col-md-2 adInsLabel">Industry Type </label>
-                <div class="col-md-4">
-                  <lib-uclookupgeneric [lookupInput]="inputLookupObj1" [parentForm]="CompanyForm" [enjiForm]="enjiForm"
-                    [identifier]="'lookupIndustryType'" (lookup)="handleOutput1($event)"></lib-uclookupgeneric>
-                </div>
-              </div>
-              <br>
-              <h4 class="form-section card-title" translate><i class="ft-file-text"></i>Contact Information</h4>
-              <div class="class=form-group row adins-required">
-                <label class="col-md-2 adInsLabel">Contact Name </label>
-                <div class="col-md-4">
-                  <input type="text" class="form-control adInsInput width-75-per" formControlName="ContactName">
-                </div>
-                <label class="col-md-2 adInsLabel">Position </label>
-                <div class="col-md-4">
-                  <select class="form-control adInsInput" style="width: auto" formControlName="MrJobPositionCode">
-                    <option *ngFor="let it of MrJobPositionCode" value="{{it.MasterCode}}">
-                      {{it.Descr}}</option>
-                  </select>
-                </div>
-              </div>
-              <br>
-              <div class="class=form-group row adins-required">
-                <label class="col-md-2 adInsLabel">Mobile Phone 1</label>
-                <div class="col-md-4">
-                  <input type="text" class="form-control adInsInput width-75-per" formControlName="MobilePhnNo1">
-                </div>
-                <label class="col-md-2 adInsLabel">Phone No (Fix Line) 1 </label>
-                <div class="col-md-4">
-                  <div class="class=form-group row adins-required">
-                    <div class="col-md-4">
-                      <input type="text" class="form-control adInsInput width-100-per" formControlName="PhnArea1">
-                      <lib-uc-show-errors  [control]="CompanyForm.controls.PhnArea1" [submit]="enjiForm.submitted">
-                      </lib-uc-show-errors >
-                    </div>
-                    <div class="col-md-4">
-                      <input type="text" class="form-control adInsInput width-100-per" formControlName="Phn1">
-                      <lib-uc-show-errors  [control]="CompanyForm.controls.Phn1" [submit]="enjiForm.submitted">
-                      </lib-uc-show-errors >
-                    </div>
-                    <div class="col-md-4">
-                      <input type="text" class="form-control adInsInput width-100-per" formControlName="PhnExt1">
-                      <lib-uc-show-errors  [control]="CompanyForm.controls.PhnExt1" [submit]="enjiForm.submitted">
-                      </lib-uc-show-errors >
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <br>
-              <div class="class=form-group row adins-required">
-                <label class="col-md-2 adInsLabel">Mobile Phone 2</label>
-                <div class="col-md-4">
-                  <input type="text" class="form-control adInsInput width-75-per" formControlName="MobilePhnNo2">
-                </div>
-                <label class="col-md-2 adInsLabel">Phone No (Fix Line) 2 </label>
-                <div class="col-md-4">
-                  <div class="class=form-group row adins-required">
-                    <div class="col-md-4">
-                      <input type="text" class="form-control adInsInput width-100-per" formControlName="PhnArea2">
-                      <lib-uc-show-errors  [control]="CompanyForm.controls.PhnArea2" [submit]="enjiForm.submitted">
-                      </lib-uc-show-errors >
-                    </div>
-                    <div class="col-md-4">
-                      <input type="text" class="form-control adInsInput width-100-per" formControlName="Phn2">
-                      <lib-uc-show-errors  [control]="CompanyForm.controls.Phn2" [submit]="enjiForm.submitted">
-                      </lib-uc-show-errors >
-                    </div>
-                    <div class="col-md-4">
-                      <input type="text" class="form-control adInsInput width-100-per" formControlName="PhnExt2">
-                      <lib-uc-show-errors  [control]="CompanyForm.controls.PhnExt2" [submit]="enjiForm.submitted">
-                      </lib-uc-show-errors >
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <br>
-              <div class="class=form-group row adins-required">
-                <label class="col-md-2 adInsLabel">Email </label>
-                <div class="col-md-4">
-                  <input type="text" class="form-control" formControlName="ContactEmail">
-                </div>
-                <label class="col-md-2 adInsLabel">Fax </label>
-                <div class="col-md-4">
-                  <div class="class=form-group row adins-required">
+              <lib-ucSubsection [id]="'mainDataId'" [title]="'Main Data'" [panel]="'mainData'">
+              </lib-ucSubsection>
+              <div class="row" id="mainData">
+                <!-- left -->
+                <div class="col-md-6">
+                  <div class="form-group row adins-required">
+                    <label class="col-md-6 adInsLabel">Guarantor Name </label>
                     <div class="col-md-6">
-                      <input type="text" class="form-control adInsInput width-100-per" formControlName="FaxArea">
-                      <lib-uc-show-errors  [control]="CompanyForm.controls.FaxArea" [submit]="enjiForm.submitted">
-                      </lib-uc-show-errors >
-                    </div>
-                    <div class="col-md-6">
-                      <input type="text" class="form-control adInsInput width-100-per" formControlName="Fax">
-                      <lib-uc-show-errors  [control]="CompanyForm.controls.Fax" [submit]="enjiForm.submitted">
-                      </lib-uc-show-errors >
+                      <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]="CompanyForm" [enjiForm]="enjiForm"
+                        [identifier]="'LookupGuarantor'" (lookup)="lookupGuarantor($event)"></lib-uclookupgeneric>
                     </div>
                   </div>
+                  <div class="form-group row adins-required">
+                    <label class="col-md-6 adInsLabel">Company Type </label>
+                    <div class="col-md-6">
+                      <select class="form-control adInsInput full-width" style="width: auto" formControlName="MrCompanyTypeCode"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.MrCompanyTypeCode.invalid }">
+                        <option *ngFor="let it of MrCompanyTypeCode" [value]="it.MasterCode">
+                          {{it.Descr}}</option>
+                          <lib-uc-show-errors [control]="CompanyForm.controls.MrCompanyTypeCode"
+                            [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="class=form-group row ">
+                    <label class="col-md-6 adInsLabel">Leesee Relationship </label>
+                    <div class="col-md-6">
+                      <select class="form-control adInsInput full-width" style="width: auto" formControlName="MrCustRelationshipCode"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.MrCustRelationshipCode.invalid }">
+                        <option *ngFor="let it of MrCustRelationshipCode" [value]="it.MasterCode">
+                          {{it.Descr}}</option>
+                          <lib-uc-show-errors [control]="CompanyForm.controls.MrCustRelationshipCode"
+                            [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <!-- right -->
+                <div class="col-md-6 ">
+                  <div class="form-group row">
+                    <label class="col-md-6" translate>&#x200B;</label>
+                    <div class="col-md-6">
+                    </div>
+                  </div>
+                  <div class="form-group row adins-required">
+                    <label class="col-md-6 adins-required-label" translate>NPWP</label>
+                    <div class="col-md-6">
+                      <input type="text" class="form-control" formControlName="TaxIdNo"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.TaxIdNo.invalid }">
+                      <lib-uc-show-errors [control]="CompanyForm.controls.TaxIdNo"
+                      [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                    </div>
+                  </div>
+                  <div class="form-group row adins-required">
+                    <label class="col-md-6 adInsLabel">Industry Type </label>
+                    <div class="col-md-6">
+                      <lib-uclookupgeneric [lookupInput]="inputLookupObj1" [parentForm]="CompanyForm" [enjiForm]="enjiForm"
+                        [identifier]="'lookupIndustryType'" (lookup)="handleOutput1($event)"></lib-uclookupgeneric>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <lib-ucSubsection [id]="'legalDocId'" [title]="'Legal Doc Listing'" [panel]="'legalDoc'">
+              </lib-ucSubsection>
+              <div id="legalDoc">
+                <div class="form-actions right">
+                  <button type="button" name="add" id="add" (click)="addLegalDoc()" class="btn btn-raised btn-primary">
+                    Add
+                  </button>
+                </div>
+                <div formArrayName="LegalDocForm">
+                  <table class="table table-responsive-md text-center table-hover">
+                    <thead>
+                      <tr class="table-header">
+                        <th><span translate class="thead-header">Legal Doc Type</span></th>
+                        <th><span translate class="thead-header">Document No</span></th>
+                        <th><span translate class="thead-header">Date Issued</span></th>
+                        <th><span translate class="thead-header">Expired Date</span></th>
+                        <th><span translate class="thead-header">Notes</span></th>
+                        <th><span translate class="thead-header">Release By</span></th>
+                        <th><span translate class="thead-header">Release Location</span></th>
+                        <th><span translate class="thead-header">Delete</span></th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf = "CompanyForm.controls['LegalDocForm'].value.length == 0">
+                      <tr>
+                        <td colspan="100%">No Data Available</td>
+                      </tr>
+                    </tbody>
+                    <tbody>
+                      <tr *ngFor="let item of CompanyForm.controls['LegalDocForm'].controls;let i = index">
+                        <td [formGroupName]="i" class="text-center">
+                          <select class="form-control adInsInput full-width" style="width: auto" formControlName="MrLegalDocTypeCode"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls['LegalDocForm']['controls'][i]['controls'].MrLegalDocTypeCode.invalid }">
+                            <option *ngFor="let it of DocObjs" [value]="it.MasterCode">
+                              {{it.Descr}}</option>
+                              <lib-uc-show-errors [control]="CompanyForm.controls['LegalDocForm']['controls'][i]['controls'].MrLegalDocTypeCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                          </select>
+                        </td>
+                        <td [formGroupName]="i" class="text-center">
+                          <input type="text" class="form-control" formControlName="DocNo"
+                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls['LegalDocForm']['controls'][i]['controls'].DocNo.invalid }">
+                          <lib-uc-show-errors  [control]="CompanyForm.controls['LegalDocForm']['controls'][i]['controls'].DocNo" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                        </td>
+                        <td [formGroupName]="i">
+                          <input type="date" class="form-control" formControlName="DocDt"
+                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls['LegalDocForm']['controls'][i]['controls'].DocDt.invalid }">
+                          <lib-uc-show-errors  [control]="CompanyForm.controls['LegalDocForm']['controls'][i]['controls'].DocDt" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                        </td>
+                        <td [formGroupName]="i">
+                          <input type="date" class="form-control" formControlName="DocExpiredDt"
+                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls['LegalDocForm']['controls'][i]['controls'].DocExpiredDt.invalid }">
+                          <lib-uc-show-errors  [control]="CompanyForm.controls['LegalDocForm']['controls'][i]['controls'].DocExpiredDt" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                        </td>
+                        <td [formGroupName]="i">
+                          <input type="text" class="form-control" formControlName="DocNotes"
+                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls['LegalDocForm']['controls'][i]['controls'].DocNotes.invalid }">
+                          <lib-uc-show-errors  [control]="CompanyForm.controls['LegalDocForm']['controls'][i]['controls'].DocNotes" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                        </td>
+                        <td [formGroupName]="i">
+                          <input type="text" class="form-control" formControlName="ReleaseBy"
+                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls['LegalDocForm']['controls'][i]['controls'].ReleaseBy.invalid }">
+                          <lib-uc-show-errors  [control]="CompanyForm.controls['LegalDocForm']['controls'][i]['controls'].ReleaseBy" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                        </td>
+                        <td [formGroupName]="i">
+                          <input type="text" class="form-control" formControlName="ReleaseLocation"
+                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls['LegalDocForm']['controls'][i]['controls'].ReleaseLocation.invalid }">
+                          <lib-uc-show-errors  [control]="CompanyForm.controls['LegalDocForm']['controls'][i]['controls'].ReleaseLocation" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                        </td>
+                        <td [formGroupName]="i">
+                          <a class="danger p-0" data-original-title="" title="" (click)="deleteLegalDoc(i)">
+                            <i class="ft-trash-2 font-medium-3 mr-2"></i>
+                          </a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <lib-ucSubsection [id]="'contactInfoId'" [title]="'Contact Information'" [panel]="'contactInfo'">
+              </lib-ucSubsection>
+              <div class="row" id="contactInfo">
+                <div class="col-md-6">
+                  <!-- left -->
+                    <div class="form-group row">
+                      <label class="col-md-6 adInsLabel">Contact Name </label>
+                      <div class="col-md-6">
+                        <input type="text" class="form-control adInsInput width-100-per" formControlName="ContactName"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.ContactName.invalid }">
+                        <lib-uc-show-errors [control]="CompanyForm.controls.ContactName"
+                        [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-6 adInsLabel">Mobile Phone 1</label>
+                      <div class="col-md-6">
+                        <input type="text" class="form-control adInsInput width-100-per" formControlName="MobilePhnNo1"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.MobilePhnNo1.invalid }">
+                        <lib-uc-show-errors [control]="CompanyForm.controls.ContactName"
+                        [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-6 adInsLabel">Mobile Phone 2</label>
+                      <div class="col-md-6">
+                        <input type="text" class="form-control adInsInput width-100-per" formControlName="MobilePhnNo2"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.MobilePhnNo2.invalid }">
+                        <lib-uc-show-errors [control]="CompanyForm.controls.MobilePhnNo2"
+                        [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                      </div>
+                    </div> 
+                    <div class="form-group row">
+                      <label class="col-md-6 adInsLabel">Email </label>
+                      <div class="col-md-6">
+                        <input pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" type="text" class="form-control" formControlName="ContactEmail"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.ContactEmail.invalid }">
+                        <lib-uc-show-errors [control]="CompanyForm.controls.ContactEmail"
+                        [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                      </div>
+                    </div>   
+                </div>
+                <!-- right -->
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-md-6 adInsLabel">Position </label>
+                    <div class="col-md-6">
+                      <select class="form-control adInsInput full-width" style="width: auto" formControlName="MrJobPositionCode"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.MrJobPositionCode.invalid }">
+                        <option *ngFor="let it of MrJobPositionCode" value="{{it.MasterCode}}">
+                          {{it.Descr}}</option>
+                          <lib-uc-show-errors [control]="CompanyForm.controls.MrJobPositionCode"
+                          [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-6 adInsLabel">Phone No (Fix Line) 1 </label>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <div class="col-md-4">
+                          <input type="text" class="form-control adInsInput width-100-per" formControlName="PhnArea1"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.PhnArea1.invalid }">
+                          <lib-uc-show-errors  [control]="CompanyForm.controls.PhnArea1" [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors >
+                        </div>
+                        <div class="col-md-4">
+                          <input type="text" class="form-control adInsInput width-100-per" formControlName="Phn1"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.Phn1.invalid }">
+                          <lib-uc-show-errors  [control]="CompanyForm.controls.Phn1" [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors >
+                        </div>
+                        <div class="col-md-4">
+                          <input type="text" class="form-control adInsInput width-100-per" formControlName="PhnExt1"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.PhnExt1.invalid }">
+                          <lib-uc-show-errors  [control]="CompanyForm.controls.PhnExt1" [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-6 adInsLabel">Phone No (Fix Line) 2 </label>
+                    <div class="col-md-6">
+                      <div class="form-group row ">
+                        <div class="col-md-4">
+                          <input type="text" class="form-control adInsInput width-100-per" formControlName="PhnArea2"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.PhnArea2.invalid }">
+                          <lib-uc-show-errors  [control]="CompanyForm.controls.PhnArea2" [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors >
+                        </div>
+                        <div class="col-md-4">
+                          <input type="text" class="form-control adInsInput width-100-per" formControlName="Phn2"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.Phn2.invalid }">
+                          <lib-uc-show-errors  [control]="CompanyForm.controls.Phn2" [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors >
+                        </div>
+                        <div class="col-md-4">
+                          <input type="text" class="form-control adInsInput width-100-per" formControlName="PhnExt2"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.PhnExt2.invalid }">
+                          <lib-uc-show-errors  [control]="CompanyForm.controls.PhnExt2" [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors >
+                        </div>
+                      </div>
+                    </div>
+                  </div> 
+                  <div class="form-group row">
+                    <label class="col-md-6 adInsLabel">Fax </label>
+                    <div class="col-md-6">
+                      <div class="form-group row ">
+                        <div class="col-md-6">
+                          <input type="text" class="form-control adInsInput width-100-per" formControlName="FaxArea"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.FaxArea.invalid }">
+                          <lib-uc-show-errors  [control]="CompanyForm.controls.FaxArea" [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors >
+                        </div>
+                        <div class="col-md-6">
+                          <input type="text" class="form-control adInsInput width-100-per" formControlName="Fax"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.Fax.invalid }">
+                          <lib-uc-show-errors  [control]="CompanyForm.controls.Fax" [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors >
+                        </div>
+                      </div>
+                    </div>
+                  </div> 
                 </div>
               </div>
               <lib-ucaddress #UcAddrGrp [title]="'Address'" [UCAddrForm]="CompanyForm" [enjiForm]="enjiForm"
                 [identifier]="'AddrObj'" [default]="AddrObj" [inputField]="inputFieldObj" [showPhn3]="false">
               </lib-ucaddress>
               <div class="form-actions right">
+                <button type="button" class="btn btn-raised btn-warning mr-1" (click)="cancel()" translate>
+                  <i class="ft-x"></i> Cancel
+                </button>
                 <button type="submit" class="btn btn-raised btn-primary" (click)="SaveForm()" >
                   <i class="fa fa-check-square-o"></i> Save
                 </button>

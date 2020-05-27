@@ -20,7 +20,8 @@ export class MouCustomerDetailComponent implements OnInit {
   mouType: string;
   mouCustId: number;
   currentStepIndex: number;
-
+  mode : string;
+  
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -66,7 +67,13 @@ export class MouCustomerDetailComponent implements OnInit {
   mouAddColl(e){
     this.stepHandler(e);
   }
-
+  getModeDetail(e){
+    if(e!=null){
+      this.mode = e.mode;
+      console.log(e);
+      console.log(this.mode);
+    }
+  }
   mouCustTc(e){
     this.stepHandler(e);
   }

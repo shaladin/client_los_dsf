@@ -72,16 +72,16 @@
               </div>
               <br><br>
               <div id="mou-detail-tab" class="content" role="tabpanel" aria-labelledby="mou-detail-tab-trigger">
-                <app-mou-detail-general *ngIf="mouType == 'GENERAL'" [MouCustId]="mouCustId" (ResponseMouDetailGeneral)="mouDetailGeneral($event)"></app-mou-detail-general>
+                <app-mou-detail-general *ngIf="mouType == 'GENERAL'" [MouCustId]="mouCustId" [Mode]="mode" (ResponseMouDetailGeneral)="mouDetailGeneral($event)"></app-mou-detail-general>
                 <app-mou-detail-factoring *ngIf="mouType == 'FACTORING'" [MouCustId]="mouCustId" (ResponseMouCustFactoring)="mouDetailFactoring($event)"></app-mou-detail-factoring>
               </div>
 
               <div *ngIf="mouType == 'FACTORING'" id="fee-data-tab" class="content" role="tabpanel" aria-labelledby="fee-data-tab-trigger">
-                <app-mou-cust-fee *ngIf="mouType == 'FACTORING'" [MouCustId]="mouCustId" (ResponseMouCustFee)="mouCustFee($event)"></app-mou-cust-fee>
+                <app-mou-cust-fee *ngIf="mouType == 'FACTORING'" [MouCustId]="mouCustId"  (ResponseMouCustFee)="mouCustFee($event)"></app-mou-cust-fee>
               </div>
 
               <div id="collateral-data-tab" class="content" role="tabpanel" aria-labelledby="collateral-data-tab-trigger">
-                <app-mou-request-addcoll *ngIf="mouType == 'GENERAL'" [MouCustId]="mouCustId" (ResponseMouAddColl)="mouAddColl($event)"></app-mou-request-addcoll>
+                <app-mou-request-addcoll *ngIf="mouType == 'GENERAL'" [MouCustId]="mouCustId" (ResponseMouAddColl)="mouAddColl($event)"  (modeDetail)="getModeDetail($event)"></app-mou-request-addcoll>
                 <app-mou-request-addcoll *ngIf="mouType == 'FACTORING'" [MouCustId]="mouCustId" (ResponseMouAddColl)="mouAddColl($event)"></app-mou-request-addcoll>
               </div>
 
