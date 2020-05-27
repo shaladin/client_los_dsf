@@ -36,7 +36,7 @@
         <div class="line"></div>
         <div class="step" data-target="#lead-data-tab">
           <button type="button" class="step-trigger" role="tab" aria-controls="lead-data-tab" id="lead-data-tab-trigger"
-            (click)="EnterTab('leadData')">
+          [disabled]="!(AppStepIndex >= 2)" (click)="EnterTab('leadData')">
             <span class="bs-stepper-circle">2</span>
             <span class="bs-stepper-label">LEAD DATA</span>
           </button>
