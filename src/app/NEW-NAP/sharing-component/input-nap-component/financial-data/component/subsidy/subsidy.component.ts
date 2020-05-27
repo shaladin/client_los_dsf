@@ -48,7 +48,7 @@ export class SubsidyComponent implements OnInit {
         console.log(obj)
         this.http.post(environment.losUrl + "/AppSubsidy/DeleteSubsidy", { AppSubsidyId : obj.AppSubsidyId }).subscribe(
           (response) => {
-            this.LoadSubsidyData();
+            this.LoadSubsidyDataWithoutRule();
             this.SetNeedReCalculate(true);
           },
           (error) => {
@@ -60,7 +60,16 @@ export class SubsidyComponent implements OnInit {
 
   LoadSubsidyData()
   {
-    this.http.post(environment.losUrl + "/AppSubsidy/GetOrInitAppSubsidyByAppId", { AppId: this.AppId }).subscribe(
+    this.http.post(AdInsConstant.GetOrInitAppSubsidyByAppId, { AppId: this.AppId }).subscribe(
+      (response) => {
+        this.listSubsidy = response["AppSubsidies"];
+      }
+    );
+  }
+
+  LoadSubsidyDataWithoutRule()
+  {
+    this.http.post(AdInsConstant.GetListAppSubsidyByAppId, { AppId: this.AppId }).subscribe(
       (response) => {
         this.listSubsidy = response["AppSubsidies"];
       }
