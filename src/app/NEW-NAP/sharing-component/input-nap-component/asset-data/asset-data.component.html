@@ -23,6 +23,7 @@
                       {{item.VendorEmpName}}
                     </option>
                   </select>
+                  <lib-uc-show-errors [control]="AssetDataForm.controls.SalesPersonId" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
               </div>
               <div class="form-group row">
@@ -35,6 +36,7 @@
                       {{item.VendorEmpName}}
                     </option>
                   </select>
+                  <lib-uc-show-errors [control]="AssetDataForm.controls.AdminHeadId" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
                 <label class="col-md-2  adInsLabel" translate>Branch Manager</label>
                 <div class="col-md-4">
@@ -246,7 +248,7 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-md-2  adInsLabel" translate>User Relationship </label>
+                <label class="col-md-2  adins-required-label" translate>User Relationship </label>
                 <div class="col-md-4">
                   <select class="form-control" id="userRelationship" formControlName="MrUserRelationshipCode" style="width:50%">
                     <option value="">-Select One-</option>
@@ -254,6 +256,7 @@
                       {{item.Value}}
                     </option>
                   </select>
+                  <lib-uc-show-errors [control]="AssetDataForm.controls.MrUserRelationshipCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
               </div>
             </div>
@@ -266,7 +269,7 @@
                 <div class="col-md-4">
                   <input type="text" class="form-control" formControlName="OwnerName">
                 </div>
-                <label class="col-md-2  adInsLabel" translate *ngIf="this.CustType == 'PERSONAL'">Id Type </label>
+                <label class="col-md-2  adins-required-label" translate *ngIf="this.CustType == 'PERSONAL'">Id Type </label>
                 <div class="col-md-4">
                   <select class="form-control" id="idType" formControlName="MrIdTypeCode" *ngIf="this.CustType == 'PERSONAL'"
                           [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.MrIdTypeCode.invalid }" style="width:50%">
@@ -275,10 +278,11 @@
                       {{item.Value}}
                     </option>
                   </select>
+                  <lib-uc-show-errors [control]="AssetDataForm.controls.MrIdTypeCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-md-2  adInsLabel" translate>Owner Relationship </label>
+                <label class="col-md-2  adins-required-label" translate>Owner Relationship </label>
                 <div class="col-md-4">
                   <select class="form-control" id="userRelationship" formControlName="MrOwnerRelationshipCode"
                           [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.MrOwnerRelationshipCode.invalid }" style="width:50%">
@@ -287,6 +291,7 @@
                       {{item.Value}}
                     </option>
                   </select>
+                  <lib-uc-show-errors [control]="AssetDataForm.controls.MrOwnerRelationshipCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
                 <label class="col-md-2  adInsLabel" translate>Owner Id No </label>
                 <div class="col-md-4">
