@@ -1011,6 +1011,9 @@ export class AdInsConstant {
   public static CalculateInstallmentEvenPrincipalFctr = environment.losUrl + "/AppFinData/CalculateInstallmentEvenPrincipalFctr";
   public static CalculateSingleInst = environment.losUrl + "/AppFinData/CalculateSingleInst";
   public static CalculateProvisionFee = environment.losUrl + "/AppFee/CalculateProvisionFee";
+  public static GetOrInitAppSubsidyByAppId = environment.losUrl + "/AppSubsidy/GetOrInitAppSubsidyByAppId";
+  public static GetRuleSubsidyMax = environment.losUrl + "/AppSubsidy/GetRuleSubsidyMax";
+
 
 
 
