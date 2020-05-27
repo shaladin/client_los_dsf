@@ -374,7 +374,7 @@ GetOfficeDDL(){
       //   OfficeName: response['ReturnObject'][0]['Value']
       // });
 
-      if (this.user.MrOfficeTypeCode == "CG") {
+      if (this.user.MrOfficeTypeCode == "CG" || this.user.MrOfficeTypeCode == "HO") {
         this.MainInfoForm.patchValue({
           CrtOfficeCode: this.user.OfficeCode,
           OfficeCode : this.listRefOffice[0].Key,

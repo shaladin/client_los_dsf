@@ -39,18 +39,13 @@ export class MouViewApprovalHistoryComponent implements OnInit {
       (response) => {
         this.MouCustNo = response["MouCustNo"];
         this.MrMouTypeCode = response["MrMouTypeCode"];
-        console.log("test");
         console.log(response);
-        console.log(this.MouCustNo);
         this.http.post(AdInsConstant.GetRfaLogByTrxNo, {TrxNo : this.MouCustNo}).subscribe(
           (response) => {
-            console.log(response);
             this.result = response;
             this.ListRfaLogObj = response["ListRfaLogObj"];
-            console.log(this.ListRfaLogObj);
             for(let i =0;i<this.ListRfaLogObj.length;i++){
               if(this.ListRfaLogObj[i]["ApvCategory"]=="MOUC_GEN_APV" && this.MrMouTypeCode == "GENERAL"){
-                console.log(this.ListRfaLogObj[i]["RfaNo"])
                 this.listMouAppvrObj[i] = {
                   approvalBaseUrl: environment.ApprovalR3Url,
                   type: 'task',
@@ -58,7 +53,6 @@ export class MouViewApprovalHistoryComponent implements OnInit {
                 };
                 this.count1++;
               }else if(this.ListRfaLogObj[i]["ApvCategory"]=="MOUC_FCTR_APV" && this.MrMouTypeCode == "FACTORING"){
-                console.log(this.ListRfaLogObj[i]["RfaNo"])
                 this.listMouAppvrObj[i] = {
                   approvalBaseUrl: environment.ApprovalR3Url,
                   type: 'task',

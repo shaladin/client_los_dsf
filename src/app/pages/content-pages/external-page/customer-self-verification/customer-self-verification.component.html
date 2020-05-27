@@ -1,7 +1,7 @@
-<div class="row text-left">
+ <div class="row text-left" *ngIf="LeadStep == 'SVR'"> 
   <div class="col-md-12">
     <div class="card">
-      <div class="card-body">
+      <div class="card-body" >
         <div class="card-header header-title">
           <div class="row">
             <div class="col-md-8">
@@ -10,9 +10,9 @@
             </div>
           </div>
         </div>
-        <div class="px-3">
+        <div class="px-3" >
           <lib-ucviewgeneric [viewInput]="viewLeadHeaderMainInfo"></lib-ucviewgeneric>
-          <div id="stepper1" class="bs-stepper">
+          <div id="stepper1" class="bs-stepper" >
             <div class="bs-stepper-header margin-stepper" role="tablist" style="overflow-x: auto;">
               <div class="step" data-target="#customer-data-tab">
                 <button type="button" class="step-trigger" role="tab" aria-controls="customer-data-tab"
@@ -38,7 +38,7 @@
                 </app-lead-input-cust-data>
               </div>
               <div id="lead-data-tab" class="content" role="tabpanel" aria-labelledby="lead-data-tab-trigger">
-                <app-lead-data *ngIf="isLeadData == true" (outputTab)="getValue($event)">
+                <app-lead-data *ngIf="isLeadData == true" (outputTab)="getValue($event)" (outputPage)="getPage($event)">
                 </app-lead-data>
               </div>
             </div>
@@ -47,4 +47,17 @@
       </div>
     </div>
   </div>
+</div>
+ 
+<div *ngIf="LeadStep != 'SVR'" style="text-align: center;" class="col-md-12">
+  <br><br><br><br><br>
+  <!-- <i *ngIf="reason == 'submit'" style="min-width: 989px" class="fa fa-check-circle"></i> -->
+  <h3 *ngIf="reason == 'submit'">Thank You</h3>
+  <br>
+  <h4 *ngIf="reason == 'submit'" >The Form was submitted successfully.</h4>
+  <!-- <i *ngIf="reason == 'resubmit'" class="fa fa-times-circle"></i> -->
+  <h3 *ngIf="reason == 'resubmit'" style="color: red;">Sorry, You've already submitted this form.</h3>
+  <h3 *ngIf="reason == 'resubmit'">Our trained team have already received your form and will process as soon as posible. :)</h3>
+  <h3 *ngIf="reason == 'submit'">You can now close this page.</h3>
+  <h4 *ngIf="reason == 'resubmit'">You can now close this page.</h4>
 </div>
