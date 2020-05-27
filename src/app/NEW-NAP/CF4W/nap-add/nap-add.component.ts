@@ -78,6 +78,7 @@ export class NapAddComponent implements OnInit {
   constructor(private fb: FormBuilder, private router: Router,
     private http: HttpClient, private toastr: NGXToastrService) { }
 
+  isCopyData: boolean=false;
   ngOnInit() {
     // Lookup Obj
     this.user = JSON.parse(localStorage.getItem("UserAccess"));
@@ -130,6 +131,12 @@ export class NapAddComponent implements OnInit {
     addCrit.restriction = AdInsConstant.RestrictionIn;
     addCrit.listValue = [this.user.OfficeCode];
     arrCopyLookupCrit.push(addCrit);
+
+    var critObj = new CriteriaObj();
+    critObj.restriction = AdInsConstant.RestrictionEq;
+    critObj.propName = 'vrl.BIZ_TMPLT_CODE';
+    critObj.value = AdInsConstant.CF4W;
+    arrCopyLookupCrit.push(critObj);
     this.inputLookupObjCopyProduct.addCritInput = arrCopyLookupCrit;
 
     var arrAddCrit = new Array();
@@ -241,7 +248,9 @@ export class NapAddComponent implements OnInit {
       MrCustNotifyOptCode: ev.MrCustNotifyOptCode,
       SalesOfficerNo: ev.SalesOfficerNo
     });
+    console.log(this.NapAppForm);
     this.inputLookupObjName.nameSelect = ev.ProdOfferingName;
+    this.isCopyData=true;
   }
 
   getLookupAppResponseName(ev: any) {
@@ -268,7 +277,7 @@ export class NapAddComponent implements OnInit {
           } else if (temp[i].RefProdCompntCode == "PROD_TYPE") {
             tempRefProdTypeCode = temp[i].CompntValue;
           } else {
-            console.log("Not");
+            // console.log("Not");
           }
         }
         this.NapAppForm.patchValue({
@@ -280,6 +289,7 @@ export class NapAddComponent implements OnInit {
           PayFreqCode: tempPayFreqCode,
           RefProdTypeCode: tempRefProdTypeCode
         });
+        console.log(this.NapAppForm);
       },
       (error) => {
         console.log(error);

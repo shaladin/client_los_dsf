@@ -33,14 +33,17 @@
                   </lib-uclookupgeneric>
                 </div>
               </div>
-              <div class="form-group row adins-required">
-                <label class="col-md-4 adInsLabel">Product Offering Name </label>
-                <div class="col-md-4">
+              <div class="form-group row">
+                <div class="col-md-4 adins-required">
+                  <label class="adInsLabel">Product Offering Name </label>
+                </div>
+                <div class="col-md-4" *ngIf="!isCopyData">
                   <lib-uclookupgeneric [lookupInput]="inputLookupObjName" [parentForm]='NapAppForm'
                     [enjiForm]='enjiForm' [identifier]="'ProductOfferingNameIdentifier'" #LookupOffering
                     (lookup)="getLookupAppResponseName($event)">
                   </lib-uclookupgeneric>
                 </div>
+                <label class="col-md-4 adInsLabel" *ngIf="isCopyData">{{NapAppForm.controls.ProdOfferingName.value}} </label>
               </div>
               <div class="form-group row adins">
                 <label class="col-md-4 adInsLabel">Currency </label>
