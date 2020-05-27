@@ -85,8 +85,8 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
           console.log(response);
           this.resultData = response;
           this.AppGuarantorPersonalId = this.resultData.appGuarantorPersonalObj.AppGuarantorPersonalId;
-          this.inputLookupObj.nameSelect = this.resultData.appGuarantorObj.GuarantorName;
-          this.inputLookupObj1.nameSelect = this.resultData.appGuarantorPersonalObj.CountryCode;
+          this.inputLookupObj.jsonSelect = {CustName: this.resultData.appGuarantorObj.GuarantorName};
+          this.inputLookupObj1.jsonSelect = {CountryName: this.resultData.appGuarantorPersonalObj.CountryCode};
           this.PersonalForm.patchValue({
             MrCustRelationshipCode: this.resultData.appGuarantorObj.MrCustRelationshipCode,
             MrIdTypeCode: this.resultData.appGuarantorPersonalObj.MrIdTypeCode,
