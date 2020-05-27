@@ -128,6 +128,9 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
       this.InputLookupCustomerObj.nameSelect = response["CustObj"].CustName;
       this.InputLookupCustomerObj.jsonSelect = {CustName: response["CustObj"].CustName};
       this.selectedCustNo = response["CustObj"].CustNo;
+      this.parentForm.controls[this.identifier]['controls']["MrIdTypeCode"].disable();
+      this.parentForm.controls[this.identifier]['controls']["IdNo"].disable();
+      this.parentForm.controls[this.identifier]['controls']["TaxIdNo"].disable();
     }
     
     if(response["CustPersonalObj"] != undefined){
@@ -154,6 +157,8 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
       
       this.selectedNationalityCountryCode = response["CustPersonalObj"].NationalityCountryCode;
       this.setCountryName(response["CustPersonalObj"].NationalityCountryCode);
+      this.parentForm.controls[this.identifier]['controls']["BirthPlace"].disable();
+      this.parentForm.controls[this.identifier]['controls']["BirthDt"].disable();
     }
   }
 
@@ -180,7 +185,13 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
       (response) => {
         console.log(response);
         this.InputLookupCountryObj.nameSelect = response["CountryName"];
-        this.InputLookupCountryObj.jsonSelect = response;     
+        this.InputLookupCountryObj.jsonSelect = response;
+        if(countryCode == "LOCAL"){
+          this.selectedNationalityCountryName = response["CountryName"];
+          this.isLocal = true;
+        }else{
+          this.isLocal = false
+        }     
       },
       (error) => {
         console.log(error);
@@ -310,13 +321,15 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
   }
 
   async bindNationalityObj(){
-    this.refMasterObj.RefMasterTypeCode = "NATIONALITY";
-    await this.http.post(this.getRefMasterUrl, this.refMasterObj).toPromise().then(
+    // this.refMasterObj.RefMasterTypeCode = "NATIONALITY";
+    var obj = { RefMasterTypeCodes: ["NATIONALITY"] };
+    await this.http.post(AdInsConstant.GetListRefMasterByRefMasterTypeCodes, obj).toPromise().then(
       (response) => {
+        console.log(response);
         this.NationalityObj = response["ReturnObject"];
         if(this.NationalityObj.length > 0){
           this.parentForm.controls[this.identifier].patchValue({
-            MrNationalityCode: this.NationalityObj[0].Key
+            MrNationalityCode: this.NationalityObj[0].MasterCode
           });
         }
       }
@@ -349,6 +362,23 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
         }
       }
     );
+  }
+
+  isLocal: boolean = false;
+  selectedNationalityCountryName: string = "";
+  ChangeNationality(ev){
+    if(this.parentForm.controls[this.identifier]['controls'].MrNationalityCode.value == "LOCAL"){
+      console.log(this.parentForm);
+      console.log(this.identifier);
+      console.log(this.NationalityObj);
+      console.log(ev);
+      var idx = ev.target.selectedIndex - 1;
+      this.selectedNationalityCountryCode = this.NationalityObj[idx].ReserveField1;
+      this.selectedNationalityCountryName = this.NationalityObj[idx].ReserveField2;
+      this.isLocal = true;
+    }else{
+      this.isLocal = false;
+    }
   }
 
 }

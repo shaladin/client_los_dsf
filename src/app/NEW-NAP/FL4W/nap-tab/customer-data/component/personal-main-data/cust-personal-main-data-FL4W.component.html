@@ -154,10 +154,10 @@
         <div class="form-group row">
           <label class="col-md-4" for="nationality" translate>Nationality</label>
           <div class="col-md-8">
-            <select class="form-control adInsInput" id="nationality" formControlName="MrNationalityCode">
+            <select class="form-control adInsInput" id="nationality" formControlName="MrNationalityCode" (change)="ChangeNationality($event)" >
               <option value="">-Select One-</option>
-              <option *ngFor="let item of NationalityObj" [value]="item.Key">
-                {{item.Value}}
+              <option *ngFor="let item of NationalityObj" [value]="item.MasterCode">
+                {{item.Descr}}
               </option>
             </select>
           </div>
@@ -165,7 +165,8 @@
         <div class="form-group row">
           <label class="col-md-4" for="country" translate>Country</label>
           <div class="col-md-8">
-            <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupCountryObj" [parentForm]="parentForm" [identifier]="'lookupCountry'" (lookup)="GetCountry($event)"></lib-uclookupgeneric>
+            <lib-uclookupgeneric *ngIf="!isLocal" [enjiForm]="enjiForm" [lookupInput]="InputLookupCountryObj" [parentForm]="parentForm" [identifier]="'lookupCountry'" (lookup)="GetCountry($event)"></lib-uclookupgeneric>
+            <label *ngIf="isLocal"> {{selectedNationalityCountryName}} </label>
           </div>
         </div>
         <div class="form-group row">
