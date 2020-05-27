@@ -1,7 +1,6 @@
 <div *ngIf="result">
   <div *ngIf="count1>0">
-    <lib-ucSubsection [id]="'MouApprovalHistoryId'" [title]="'MOU Approval History'"
-      [panel]="'MouApprovalHistory'">
+    <lib-ucSubsection [id]="'MouApprovalHistoryId'" [title]="'MOU Approval History'" [panel]="'MouApprovalHistory'">
     </lib-ucSubsection>
     <div id="MouApprovalHistory">
       <div *ngFor="let item of listMouAppvrObj; let i = index">
@@ -10,5 +9,4 @@
       </div>
     </div>
   </div>
-   
-  </div>
+</div>

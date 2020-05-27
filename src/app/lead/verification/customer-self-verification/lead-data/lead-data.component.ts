@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -22,6 +22,8 @@ import { LeadInputLeadDataObj } from 'app/shared/model/LeadInputLeadDataObj.Mode
 })
 export class LeadDataComponent implements OnInit {
   @Input() originPage :string;
+  @Output() outputPage: EventEmitter<object> = new EventEmitter();
+  
   typePage: string;
   CopyFrom: string;
   LeadId: string;
@@ -588,15 +590,27 @@ export class LeadDataComponent implements OnInit {
         this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
+            // if(this.originPage == "teleVerif"){
+            //   this.router.navigate(["/Lead/TeleVerif/Paging"]);
+            // }
+            // else if(this.typePage == "update"){
+            //   this.router.navigate(["/Lead/LeadUpdate/Paging"]);
+            // }
+            // else{
+            //   this.router.navigate(["/Lead/Lead/Paging"]);
+            // }
             if(this.originPage == "teleVerif"){
-              this.router.navigate(["/Lead/TeleVerif/Paging"]);
+              // this.router.navigate(["/pages/Submit?reason=submit"]);
+              this.outputPage.emit({ pageType: "submit"});
             }
-            else if(this.typePage == "update"){
-              this.router.navigate(["/Lead/LeadUpdate/Paging"]);
+            else if(this.typePage == "edit"){
+              // this.router.navigate(["/pages/Submit?reason=submit"]);
+              this.outputPage.emit({ pageType: "submit"});
             }
             else{
-              this.router.navigate(["/Lead/Lead/Paging"]);
-            }
+              // this.router.navigate(["/pages/Submit?reason=submit"]);
+              this.outputPage.emit({ pageType: "submit"});
+            }     
           },
           (error) => {
             console.log(error);
