@@ -96,8 +96,6 @@
                             </lib-uc-show-errors>
                           </div>
                         </div>
-                      </div>
-                      <div *ngIf="SalesAppInfoForm.controls.MrInstTypeCode.value == 'SINGLE'">
                         <div class="form-group row">
                           <label class="col-md-3  adins-required-label" translate>Term Of Payment</label>
                           <div class="col-md-9">
@@ -143,38 +141,20 @@
                           </lib-uc-show-errors>
                         </div>
                       </div>
-                      <div *ngIf="SalesAppInfoForm.controls.MrInstTypeCode.value == 'SINGLE'">
                         <div class="form-group row">
                           <label class="col-md-3  adins-required-label" translate>Installment Scheme</label>
                           <div class="col-md-9">
                             <select class="form-control adInsInput" style="width: auto"
                               formControlName="MrInstSchemeCode"
                               [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.MrInstSchemeCode.invalid }">
-                              <option *ngFor="let item of listSingle">
-                                {{item}}</option>
+                              <option *ngFor="let item of allInScheme" value="{{item.Key}}">
+                                {{item.Value}}</option>
                             </select>
                             <lib-uc-show-errors [control]="SalesAppInfoForm.controls.MrInstSchemeCode"
                               [submit]="enjiForm.submitted">
                             </lib-uc-show-errors>
                           </div>
                         </div>
-                      </div>
-                      <div *ngIf="SalesAppInfoForm.controls.MrInstTypeCode.value == 'MULTIPLE'">
-                        <div class="form-group row">
-                          <label class="col-md-3  adins-required-label" translate>Installment Scheme</label>
-                          <div class="col-md-9">
-                            <select class="form-control adInsInput" style="width: auto"
-                              formControlName="MrInstSchemeCode"
-                              [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.MrInstSchemeCode.invalid }">
-                              <option *ngFor="let item of listMultiple">
-                                {{item}}</option>
-                            </select>
-                            <lib-uc-show-errors [control]="SalesAppInfoForm.controls.MrInstSchemeCode"
-                              [submit]="enjiForm.submitted">
-                            </lib-uc-show-errors>
-                          </div>
-                        </div>
-                      </div>
                       <div class="form-group row">
                         <label class="col-md-3 adins-required-label">Is Disclosed</label>
                         <div class="col-md-9">

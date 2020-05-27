@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { NULL_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-application-data-factoring',
@@ -16,7 +17,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 export class ApplicationDataFactoringComponent implements OnInit {
   @Input() AppId: number;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
-  mode: string = "edit";
+  mode: string;
   salesAppInfoObj: SalesInfoObj = new SalesInfoObj();
 
   SalesAppInfoForm = this.fb.group({
@@ -27,7 +28,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
     SalesHeadNo: [''],
     MrInstTypeCode: ['', Validators.required],
     TopDays: ['', Validators.required],
-    Tenor: [''],
+    Tenor: ['', Validators.required],
     NumOfInst: ['', Validators.required],
     MrInstSchemeCode: ['', Validators.required],
     IsDisclosed: [false, Validators.required],
@@ -61,13 +62,10 @@ export class ApplicationDataFactoringComponent implements OnInit {
   allCalcMethod: any;
   allIntrstType: any;
 
-  listMultiple: Array<any> = ['Even Principle', 'Regular Fixed'];
-  listSingle: Array<any> = ['Even Principle'];
   payfreq: PayFreqObj;
   resultData: any;
   allPayFreq: any;
   allInSalesOffice: any;
-  MrInstTypeCode: string;
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.route.queryParams.subscribe(params => {
@@ -81,9 +79,10 @@ export class ApplicationDataFactoringComponent implements OnInit {
     this.loadData();
   }
 
-  setDropdown(){
+  setDropdown() {
     this.refMasterInterestType.RefMasterTypeCode = 'INTEREST_TYPE';
     this.refMasterInsScheme.RefMasterTypeCode = 'INST_SCHM';
+    this.refMasterInsScheme.ReserveField1 = 'FCTR';
     this.refMasterInsType.RefMasterTypeCode = 'INST_TYPE';
     this.refMasterRecommendation.RefMasterTypeCode = 'SLS_RECOM';
     this.refMasterWOP.RefMasterTypeCode = 'WOP';
@@ -105,7 +104,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
         console.log(error);
       });
 
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterInsScheme).subscribe(
+    this.http.post(AdInsConstant.GetListActiveRefMasterWithReserveFieldAll, this.refMasterInsScheme).subscribe(
       (response) => {
         this.allInScheme = response['ReturnObject'];
         if (this.mode != 'edit') {
@@ -211,6 +210,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
 
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterRecourseType).subscribe(
       (response) => {
+        this.CheckInstType();
         this.allRecourseType = response['ReturnObject'];
         if (this.mode != 'edit') {
           this.SalesAppInfoForm.patchValue({
@@ -225,27 +225,20 @@ export class ApplicationDataFactoringComponent implements OnInit {
 
   CheckInstType() {
     if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == "MULTIPLE") {
-      this.SalesAppInfoForm.controls.Tenor.setValidators([Validators.required]);
-      this.SalesAppInfoForm.controls.PayFreqCode.setValidators([Validators.required]);
-      this.SalesAppInfoForm.controls.MrSingleInstCalcMthdCode.clearValidators();
-      this.SalesAppInfoForm.controls.TOPDays.clearValidators();
-
-      this.SalesAppInfoForm.controls.Tenor.enable();
-      this.SalesAppInfoForm.controls.Tenor.patchValue("");
-    } else {
-      this.SalesAppInfoForm.controls.Tenor.clearValidators();
-      this.SalesAppInfoForm.controls.PayFreqCode.clearValidators();
-      this.SalesAppInfoForm.controls.MrSingleInstCalcMthdCode.setValidators([Validators.required]);
-      this.SalesAppInfoForm.controls.TOPDays.setValidators([Validators.required]);
-      
+      this.SalesAppInfoForm.controls['Tenor'].enable();
+      this.SalesAppInfoForm.controls.MrInstSchemeCode.enable();
+      this.SalesAppInfoForm.controls.TopDays.clearValidators();
+    } else if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == "SINGLE") {
+      this.SalesAppInfoForm.controls.TopDays.setValidators(Validators.required);
+      if(this.resultData.TopDays == null){
+        this.SalesAppInfoForm.controls.TopDays.patchValue("");
+      }
       this.SalesAppInfoForm.controls.Tenor.disable();
       this.SalesAppInfoForm.controls.Tenor.patchValue(1);
+      this.SalesAppInfoForm.controls.MrInstSchemeCode.disable();
     }
 
-    this.SalesAppInfoForm.controls.Tenor.updateValueAndValidity();
-    this.SalesAppInfoForm.controls.PayFreqCode.updateValueAndValidity();
-    this.SalesAppInfoForm.controls.MRSingleInstCalcMthdCode.updateValueAndValidity();
-    this.SalesAppInfoForm.controls.TOPDays.updateValueAndValidity();
+    this.SalesAppInfoForm.controls.TopDays.updateValueAndValidity();
   }
 
   loadData() {
@@ -262,12 +255,16 @@ export class ApplicationDataFactoringComponent implements OnInit {
         this.salesAppInfoObj.AppRowVersion = this.resultData.AppRowVersion;
         this.salesAppInfoObj.AppFinDataRowVersion = this.resultData.AppFinDataRowVersion;
         this.salesAppInfoObj.AppFctrRowVersion = this.resultData.AppFctrRowVersion;
-
-        this.setDropdown();
-        this.CheckInstType();
+        
+        if(this.resultData.AppFinDataId == null && this.resultData.AppFctrId == null){
+          this.mode="add";
+        }else if(this.resultData.AppFinDataId != null && this.resultData.AppFctrId != null){
+          this.mode="edit";
+        }
 
         this.http.post(AdInsConstant.GetPayFreqByProdOfferingCodeandRefProdCompntCode, this.payfreq).subscribe(
           (response) => {
+            this.setDropdown();
             this.allPayFreq = response['ReturnObject'];
             if (this.mode != 'edit') {
               this.SalesAppInfoForm.patchValue({
@@ -278,7 +275,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
           (error) => {
             console.log(error);
           });
-          
+
         this.SalesAppInfoForm.patchValue({
           SrvyOrderNo: this.resultData.SrvyOrderNo,
           MrSalesRecommendCode: this.resultData.MrSalesRecommendCode,
@@ -310,27 +307,25 @@ export class ApplicationDataFactoringComponent implements OnInit {
     this.salesAppInfoObj = this.SalesAppInfoForm.value;
     this.salesAppInfoObj.AppId = this.AppId;
 
-    if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == 'SINGLE') {
-      this.salesAppInfoObj.Tenor = 1;
-    }
-    if (this.SalesAppInfoForm.controls.MrInstSchemeCode.value == 'Even Principle') {
-      this.salesAppInfoObj.MrInstSchemeCode = 'EP';
-    }
-    if (this.SalesAppInfoForm.controls.MrInstSchemeCode.value == 'Regular Fixed') {
-      this.salesAppInfoObj.MrInstSchemeCode = 'RF';
+    if(this.salesAppInfoObj.MrInstTypeCode=="SINGLE"){
+      this.salesAppInfoObj.MrInstSchemeCode = "EP";
+    }else{
+      this.salesAppInfoObj.MrInstSchemeCode = this.SalesAppInfoForm.controls.MrInstSchemeCode.value;
     }
 
-    if(this.mode == "add"){
+    if (this.mode == "add") {
       this.http.post(AdInsConstant.SaveApplicationData, this.salesAppInfoObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.outputTab.emit();
-          this.mode = "edit";
         },
         (error) => {
           console.log(error);
         });
-    }else{
+    } else {
+      this.salesAppInfoObj.AppRowVersion = this.resultData.AppRowVersion;
+      this.salesAppInfoObj.AppFctrRowVersion = this.resultData.AppFctrRowVersion;
+      this.salesAppInfoObj.AppFinDataRowVersion = this.resultData.AppFinDataRowVersion;
       this.http.post(AdInsConstant.EditApplicationData, this.salesAppInfoObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
