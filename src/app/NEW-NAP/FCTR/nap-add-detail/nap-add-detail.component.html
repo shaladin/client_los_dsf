@@ -106,7 +106,7 @@
                 (outputTab)="NextStep('INVOICE')"></app-application-data-factoring>
             </div>
             <div id="invoice-tab" class="content" role="tabpanel" aria-labelledby="invoice-tab-trigger">
-              <app-invoice-data *ngIf="AppStepIndex == 3" (outputTab)="NextStep('COLL')">
+              <app-invoice-data *ngIf="AppStepIndex == 3" [AppId]="appId" (outputTab)="NextStep('COLL')">
               </app-invoice-data>
             </div>
             <div id="coll-tab" class="content" role="tabpanel" aria-labelledby="coll-tab-trigger">
