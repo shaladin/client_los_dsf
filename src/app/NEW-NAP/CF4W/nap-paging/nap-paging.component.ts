@@ -39,7 +39,7 @@ export class NapPagingComponent implements OnInit {
       critObj.propName = 'a.ORI_OFFICE_CODE';
       critObj.listValue = [this.userAccess.OfficeCode];
     }else{
-      critObj.propName = 'a.ORI_OFFICE_NAME';
+      critObj.propName = 'a.ORI_OFFICE_CODE';
       var obj = { CenterGrpCode: AdInsConstant.CENTER_GROUP_CODE };
       this.http.post(AdInsConstant.GetListCenterGrpMemberByCenterGrpCode, obj).subscribe(
         (response) => {
