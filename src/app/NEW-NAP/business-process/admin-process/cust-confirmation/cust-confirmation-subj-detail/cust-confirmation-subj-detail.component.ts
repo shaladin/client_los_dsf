@@ -30,6 +30,8 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   VerfResultDForm: FormArray = this.fb.array([]);
   ListVerfAnswer = [];
   VerfResultHList = new Array<VerfResultHObj>();
+  AgrmntNo : any;
+  TaskListId : any;
 
   constructor(private route: ActivatedRoute, private fb: FormBuilder, private http: HttpClient,
     private router: Router, private toastr: NGXToastrService) {
@@ -45,6 +47,12 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
       }
       if (params["Subject"] != null) {
         this.Subject = params["Subject"];
+      }
+      if (params["AgrmntNo"] != null) {
+        this.AgrmntNo = params["AgrmntNo"];
+      }
+      if (params["TaskListId"] != null) {
+        this.TaskListId = params["TaskListId"];
       }
     });
   }
@@ -232,14 +240,14 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
     }
 
     console.log(VerfResultHeaderDetail);
-    // this.http.post(AdInsConstant.AddVerfResultHeaderAndVerfResultDetail, VerfResultHeaderDetail).subscribe(
-    //   (response) => {
-    //     this.toastr.successMessage(response["message"]);
-    //     this.router.navigate(["/Nap/AdminProcess/CustConfirmation/Paging"]);
-    //   },
-    //   (error) => {
-    //     console.log(error);
-    //   }
-    // );
+    this.http.post(AdInsConstant.AddVerfResultHeaderAndVerfResultDetail, VerfResultHeaderDetail).subscribe(
+      (response) => {
+        this.toastr.successMessage(response["message"]);
+        this.router.navigate(["/Nap/AdminProcess/CustConfirmation/Detail"], { queryParams: { "AgrmntId": this.AgrmntId, "AgrmntNo": this.AgrmntNo , "TaskListId" : this.TaskListId,  "AppId" : this.AppId} });
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 }
