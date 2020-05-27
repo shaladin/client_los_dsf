@@ -29,7 +29,7 @@ import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 export class LeadInputCustDataComponent implements OnInit {
   @Input() LeadId: string;
   @Output() outputTab: EventEmitter<object> = new EventEmitter();
-  businessDt: Date;
+  businessDt: Date = new Date();
   CopyFrom: string;
   rowVersion: any;
   typePage: string;
