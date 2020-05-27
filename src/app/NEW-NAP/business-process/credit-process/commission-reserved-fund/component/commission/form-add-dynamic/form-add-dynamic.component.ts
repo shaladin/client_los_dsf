@@ -2,7 +2,6 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 
 @Component({
@@ -74,7 +73,7 @@ export class FormAddDynamicComponent implements OnInit {
     var url;
     var obj;
     if(content == AdInsConstant.ContentSupplier){
-      url = environment.FoundationR3Url + AdInsConstant.GetListVendorBankAccByVendorCode;
+      url = AdInsConstant.GetListVendorBankAccByVendorCode;
       obj = {
         VendorCode: code,
         RowVersion: ""
@@ -100,7 +99,7 @@ export class FormAddDynamicComponent implements OnInit {
         }
       );
     }else if(content == AdInsConstant.ContentSupplierEmp){
-      url = environment.FoundationR3Url + AdInsConstant.GetListVendorBankAccByListVendorEmpNo;
+      url = AdInsConstant.GetListVendorBankAccByListVendorEmpNo;
       obj = {
         VendorEmpNo: code,
         RowVersion: ""
@@ -256,7 +255,7 @@ export class FormAddDynamicComponent implements OnInit {
         IsSave: true,
         Content: this.FormInputObj["content"],
       };
-      var url = environment.losUrl + AdInsConstant.GetAppCommissionTax;
+      var url = AdInsConstant.GetAppCommissionTax;
       this.http.post(url, obj).subscribe(
         (response) => {
           // console.log("response Tax");
@@ -474,6 +473,20 @@ export class FormAddDynamicComponent implements OnInit {
     this.PassData();
   }
 
+  SortDataAllocationV2(indexFormObj, ruleObj){
+    // sort
+    var arrListAllocated = this.FormObj.controls.arr["controls"][indexFormObj].controls.ListAllocated.value;
+    arrListAllocated.sort((a, b) => a.AllocationFromSeq - b.AllocationFromSeq);
+    this.FormObj.controls.arr["controls"][indexFormObj].controls.ListAllocated.patchValue(arrListAllocated);
+    
+    var tempRuleObj = ruleObj;
+    for(var i=0;i<this.FormObj.controls.arr["controls"][indexFormObj].controls.ListAllocated.controls.length;i++){
+      var idxRuleObj = tempRuleObj.indexOf(tempRuleObj.find(x => x.AllocationFrom == this.FormObj.controls.arr["controls"][indexFormObj].controls.ListAllocated.controls[i].controls.AllocationFrom.value));
+      this.FormObj.controls.arr["controls"][indexFormObj].controls.ListAllocated.controls[i].controls.AllocationAmount.setValidators([Validators.pattern("^[0-9]+$"), Validators.max(tempRuleObj[idxRuleObj].MaxAllocationAmount)]);
+    }
+    this.FormObj.controls.arr["controls"][indexFormObj].controls.ListAllocated.updateValueAndValidity();
+  }
+
   SortDataAllocation(indexFormObj, code){
     // sort
     var arrListAllocated = this.FormObj.controls.arr["controls"][indexFormObj].controls.ListAllocated.value;
@@ -531,7 +544,7 @@ export class FormAddDynamicComponent implements OnInit {
       this.FormObj.controls.arr["controls"][indexFormObj].controls.ListAllocated.push(eachAllocationDetail);
 
     }
-    this.SortDataAllocation(indexFormObj, code);
+    this.SortDataAllocationV2(indexFormObj, temp);
     
     // patch total
     this.FormObj.controls.arr["controls"][indexFormObj].patchValue({

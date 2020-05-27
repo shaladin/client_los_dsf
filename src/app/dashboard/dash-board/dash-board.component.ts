@@ -8,7 +8,6 @@ import { environment } from 'environments/environment';
 declare var require: any;
 
 const data: any = require('../../shared/data/chartist.json');
-
 export interface Chart {
   type: ChartType;
   data: Chartist.IChartistData;

@@ -374,7 +374,7 @@ GetOfficeDDL(){
       //   OfficeName: response['ReturnObject'][0]['Value']
       // });
 
-      if (this.user.MrOfficeTypeCode == "CG") {
+      if (this.user.MrOfficeTypeCode == "CG" || this.user.MrOfficeTypeCode == "HO") {
         this.MainInfoForm.patchValue({
           CrtOfficeCode: this.user.OfficeCode,
           OfficeCode : this.listRefOffice[0].Key,
@@ -490,7 +490,7 @@ GetOfficeDDL(){
   }
 
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"] };
     console.log(wfClaimObj);
     this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(

@@ -1,52 +1,6 @@
-<lib-ucthingstodo [ThingsToDoObj]="Item"></lib-ucthingstodo>
 <div class="row">
-  <!-- <div class="col-md-4 col-xl-4 col-lg-12" style="margin-top : 10px !important">
-    <div class="card" style="height:300px;">
-      <div class="card-body"> -->
-        <!-- <div class="card-block">
-          <h4 class="card-title">THINGS TO DO</h4>
-        </div> -->
-        <!-- <ul class="list-group">
-          <li class="list-group-item text-left">
-            <a translate><span class="badge bg-warning float-right">2</span> Purchase Order</a>
-          </li>
-          <li class="list-group-item text-left">
-            <a translate><span class="badge bg-primary float-right">2</span> Delivery Order</a>
-          </li>
-          <li class="list-group-item text-left">
-            <a translate><span class="badge bg-warning float-right">6</span> Credit Approval</a>
-          </li>
-          <li class="list-group-item text-left">
-            <a translate><span class="badge bg-primary float-right">4</span> Pre Go Live</a>
-          </li>
-        </ul> -->
-        <!-- <p>
-              Right click on someone's name:
-            </p>
-            <ul>
-                <li *ngFor="let item of items" [contextMenu]="basicMenu" [contextMenuSubject]="item">{{item?.name}}</li>
-            </ul>
-            <context-menu>
-              <ng-template contextMenuItem (execute)="showMessage('Hi, ' + $event.item.name)">
-                Say hi!
-              </ng-template>
-              <ng-template contextMenuItem divider="true"></ng-template>
-              <ng-template contextMenuItem let-item (execute)="showMessage($event.item.name + ' said: ' + $event.item.otherProperty)">
-                Bye, {{item?.name}}
-              </ng-template>
-              <ng-template contextMenuItem passive="true">
-                Input something: <input type="text">
-              </ng-template>
-            </context-menu> -->
-        <br>
-        <!-- <kendo-treeview [nodes]="data" textField="text" kendoTreeViewExpandable kendoTreeViewSelectable
-          kendoTreeViewHierarchyBinding childrenField="items" (nodeClick)="onNodeClick($event)">
-        </kendo-treeview>
-        <kendo-contextmenu #treemenu [items]="items" (select)="onSelect($event)">
-        </kendo-contextmenu> -->
-      <!-- </div>
-    </div>
-  </div> -->
+  <lib-ucthingstodo [ThingsToDoObj]="Item" class="col-md-4 col-xl-4 col-lg-12" style="margin-top : 10px !important"></lib-ucthingstodo>
+  
   
   <div class="col-md-4 col-xl-4 col-lg-12" style="margin-top : 10px !important">
     <div class="card" style="height:300px;">

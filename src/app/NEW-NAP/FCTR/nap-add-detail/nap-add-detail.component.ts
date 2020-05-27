@@ -129,23 +129,17 @@ export class NapAddDetailComponent implements OnInit {
       case AdInsConstant.AppStepCust:
         this.AppStepIndex = this.AppStep[AdInsConstant.AppStepCust];
         break;
-      case AdInsConstant.AppStepGuar:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepGuar];
-        break;
-      case AdInsConstant.AppStepRef:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepRef];
-        break;
       case AdInsConstant.AppStepApp:
         this.AppStepIndex = this.AppStep[AdInsConstant.AppStepApp];
         break;
-      case AdInsConstant.AppStepAsset:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepAsset];
+        case AdInsConstant.AppStepInvoice:
+          this.AppStepIndex = this.AppStep[AdInsConstant.AppStepInvoice];
+          break;
+      case AdInsConstant.AppStepColl:
+        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepColl];
         break;
       case AdInsConstant.AppStepIns:
         this.AppStepIndex = this.AppStep[AdInsConstant.AppStepIns];
-        break;
-      case AdInsConstant.AppStepLIns:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepLIns];
         break;
       case AdInsConstant.AppStepFin:
         this.AppStepIndex = this.AppStep[AdInsConstant.AppStepFin];
@@ -206,7 +200,7 @@ export class NapAddDetailComponent implements OnInit {
     }
   }
   ClaimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     var wfClaimObj = new AppObj();
     wfClaimObj.AppId = this.appId;
     wfClaimObj.Username = currentUserContext["UserName"];

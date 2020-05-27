@@ -37,7 +37,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
     this.ReturnHandlingHObj = new ReturnHandlingHObj();
     this.route.queryParams.subscribe(params => {
       this.ReturnHandlingHObj.AppId = params["AppId"];
-      this.ReturnHandlingHObj.WfTaskListId = params["TaskId"];
+      this.ReturnHandlingHObj.WfTaskListId = params["WfTaskListId"];
       this.ReturnHandlingHObj.ReturnHandlingHId = params["ReturnHandlingHId"];
     });
   }
@@ -83,7 +83,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   }
 
   async ClaimTask(WfTaskListId) {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     var wfClaimObj = { pWFTaskListID: WfTaskListId, pUserID: currentUserContext["UserName"], isLoading: false };
     this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(() => { });
   }
