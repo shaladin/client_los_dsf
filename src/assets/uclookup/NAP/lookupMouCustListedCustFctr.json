@@ -1,0 +1,68 @@
+{
+  "title": "Lookup Customer Factoring",
+  "component": [
+    {
+      "type": "textbox",
+      "name": "MC.CUST_NO",
+      "id": "CustNoId",
+      "value": "",
+      "label": "Customer No",
+      "placeholder": ""
+    },
+    {
+      "type": "textbox",
+      "name": "MC.CUST_NAME",
+      "id": "CustomerNameId",
+      "value": "",
+      "label": "Customer Name",
+      "placeholder": ""
+    }
+  ],
+  "querystring": {
+    "select": "SELECT MC.CUST_NO AS CustNo, MC.CUST_NAME AS CustName, MC.MR_CUST_TYPE_CODE AS MrCustTypeCode, MC.MOU_CUST_ID AS MouCustId",
+    "from": "FROM dbo.APP A WITH(NOLOCK) JOIN dbo.MOU_CUST_LISTED_CUST_FCTR MC WITH(NOLOCK) ON MC.MOU_CUST_ID = A.MOU_CUST_ID"
+  },
+  "headerList": [
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Customer No",
+      "name": "MC.CUST_NO"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Customer Name",
+      "name": "MC.CUST_NAME"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Select"
+    }
+  ],
+  "bodyList": [
+    {
+      "type": "text",
+      "position": "center",
+      "property": "CustNo"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "CustName"
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
+        {
+          "type": "select",
+          "property": "MouCustId"
+        }
+      ]
+    }
+  ],
+  "propertyId": "CustNo",
+  "propertyName": "CustName"
+}
