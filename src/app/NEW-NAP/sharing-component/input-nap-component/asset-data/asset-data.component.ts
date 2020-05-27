@@ -13,6 +13,7 @@ import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { AppAssetAccessoryObj } from 'app/shared/model/AppAssetAccessoryObj.model';
 import { AppDataObj } from 'app/shared/model/AppDataObj.model';
+import { AppCollateralAccessoryObj } from 'app/shared/model/AppCollateralAccessoryObj.Model';
 
 
 @Component({
@@ -502,8 +503,10 @@ export class AssetDataComponent implements OnInit {
     this.allAssetDataObj.AppCollateralRegistrationObj.LocationZipcode = this.AssetDataForm.controls.LocationZipcode.value;
 
     this.allAssetDataObj.AppAssetAccessoryObjs = new Array<AppAssetAccessoryObj>();
+    this.allAssetDataObj.AppCollateralAccessoryObjs = new Array<AppCollateralAccessoryObj>();
     for (let i = 0; i < this.AssetDataForm.controls["AssetAccessoriesObjs"].value.length; i++) {
       var appAssetAccObj = new AppAssetAccessoryObj();
+      var appCollateralAccObj = new AppCollateralAccessoryObj();
       appAssetAccObj.AssetAccessoryCode = this.AssetDataForm.controls["AssetAccessoriesObjs"].value[i].AssetAccessoryCode;
       appAssetAccObj.AssetAccessoryName = this.AssetDataForm.controls["AssetAccessoriesObjs"].value[i].AssetAccessoryName;
       appAssetAccObj.SupplCode = this.AssetDataForm.controls["AssetAccessoriesObjs"].value[i].SupplCodeAccessory;
@@ -511,7 +514,15 @@ export class AssetDataComponent implements OnInit {
       appAssetAccObj.AccessoryPriceAmt = this.AssetDataForm.controls["AssetAccessoriesObjs"].value[i].AccessoryPriceAmt;
       appAssetAccObj.DownPaymentAmt = this.AssetDataForm.controls["AssetAccessoriesObjs"].value[i].AccessoryDownPaymentAmt;
       appAssetAccObj.AccessoryNotes = this.AssetDataForm.controls["AssetAccessoriesObjs"].value[i].AccessoryNotes;
+
+      appCollateralAccObj.CollateralAccessoryCode = appAssetAccObj.AssetAccessoryCode;
+      appCollateralAccObj.CollateralAccessoryName = appAssetAccObj.AssetAccessoryName;
+      appCollateralAccObj.AccessoryPriceAmt = appAssetAccObj.AccessoryPriceAmt;
+      appCollateralAccObj.DownPaymentAmt = appAssetAccObj.DownPaymentAmt;
+      appCollateralAccObj.AccessoryNotes = appAssetAccObj.AccessoryNotes;
+
       this.allAssetDataObj.AppAssetAccessoryObjs.push(appAssetAccObj);
+      this.allAssetDataObj.AppCollateralAccessoryObjs.push(appCollateralAccObj);
     }
   }
 
