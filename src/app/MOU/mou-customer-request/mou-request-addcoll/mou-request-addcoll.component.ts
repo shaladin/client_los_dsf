@@ -24,6 +24,7 @@ import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 export class MouRequestAddcollComponent implements OnInit {
   @Input() MouCustId: number;
   @Output() ResponseMouAddColl: EventEmitter<any> = new EventEmitter<any>();
+  @Output() modeDetail: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild(UcgridfooterComponent) UCGridFooter;
   @ViewChild(UCSearchComponent) UCSearchComponent;
   @ViewChild('LookupCollateral') ucLookupCollateral : UclookupgenericComponent;
@@ -759,6 +760,9 @@ export class MouRequestAddcollComponent implements OnInit {
   }
 
   back(){
+    this.modeDetail.emit({ mode : "edit"});
     this.ResponseMouAddColl.emit({StatusCode: "-1"});
+    
+    
   }
 }
