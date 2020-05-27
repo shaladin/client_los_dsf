@@ -74,14 +74,7 @@ export class GuarantorPersonalComponent implements OnInit {
     CountryCode: ""
   };
 
-  UserAccess: any;
-  MaxDate: Date;
-  Max17YO: Date;
   ngOnInit(){
-    this.UserAccess = JSON.parse(localStorage.getItem("UserAccess"));
-    this.MaxDate = new Date(this.UserAccess.BusinessDt);
-    this.Max17YO = new Date(this.UserAccess.BusinessDt);
-    this.Max17YO.setFullYear(this.MaxDate.getFullYear()-17);
 
     this.initLookup();
     this.initAddr();
@@ -294,6 +287,12 @@ export class GuarantorPersonalComponent implements OnInit {
               BirthPlace: this.resultData.BirthPlace,
               BirthDt: formatDate(this.resultData.BirthDt, 'yyyy-MM-dd', 'en-US')
             });
+            if(this.resultData.MrNationalityCode == "LOCAL"){
+              this.isLocal = true;
+              var idx = 1;
+              this.selectedNationalityCountryCode = this.MrNationalityCode[idx].ReserveField1;
+              this.selectedNationalityCountryName = this.MrNationalityCode[idx].ReserveField2;
+            }
             this.http.post(AdInsConstant.GetRefCountryByCountryCode, { CountryCode: this.resultData.WnaCountryCode }).subscribe(
               (response) => {
                 this.inputLookupObj1.nameSelect = response["CountryName"];
@@ -351,19 +350,6 @@ export class GuarantorPersonalComponent implements OnInit {
       });
       this.PersonalForm.controls.IdExpDt.clearValidators();
     }
-    let d1 = new Date(this.guarantorPersonalObj.AppGuarantorPersonalObj.IdExpDt);
-    let d2 = new Date(this.MaxDate);
-    let d3 = new Date(this.guarantorPersonalObj.AppGuarantorPersonalObj.BirthDt);
-    let d4 = new Date(this.Max17YO);
-    if(d1>d2){
-      this.toastr.errorMessage("Id Expired Date can not be more than " + formatDate(this.MaxDate, 'yyyy-MM-dd', 'en-US'));
-      return false;
-    }
-    if(d3>d4){
-      this.toastr.errorMessage("Birth Date can not be more than " + formatDate(this.Max17YO, 'yyyy-MM-dd', 'en-US'));
-      return false;
-    }
-    return true;
   }
 
   setAppGuarantor() {
