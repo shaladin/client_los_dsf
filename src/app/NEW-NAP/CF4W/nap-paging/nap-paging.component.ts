@@ -6,6 +6,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { CenterGrpOfficeMbrObj } from 'app/shared/model/RefOffice/CenterGrpOfficeMbrObj.Model';
 
 @Component({
   selector: 'app-nap-paging',
@@ -34,18 +35,20 @@ export class NapPagingComponent implements OnInit {
     
     critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionIn;
-    if(this.userAccess.MrOfficeTypeCode!="CG"){
+    if(this.userAccess.MrOfficeTypeCode!=AdInsConstant.CENTER_GROUP_CODE){
       critObj.propName = 'a.ORI_OFFICE_CODE';
-      critObj.listValue = [this.userAccess.MrOfficeTypeCode];
+      critObj.listValue = [this.userAccess.OfficeCode];
     }else{
       critObj.propName = 'a.ORI_OFFICE_NAME';
-      var obj = { CenterGrpCode: "CG" };
+      var obj = { CenterGrpCode: AdInsConstant.CENTER_GROUP_CODE };
       this.http.post(AdInsConstant.GetListCenterGrpMemberByCenterGrpCode, obj).subscribe(
         (response) => {
           // console.log(response);
+          var CenterGrpOfficeMbrObjs : Array<CenterGrpOfficeMbrObj> = response["ListCenterGrpOfficeMbr"];
+
           var listDataTemp = new Array();
-          for(var i=0;i<response["ListCenterGrpOfficeMbr"].length;i++){
-            listDataTemp.push(response["ListCenterGrpOfficeMbr"][i].RefOfficeName);
+          for(var i=0;i<CenterGrpOfficeMbrObjs.length;i++){
+            listDataTemp.push(CenterGrpOfficeMbrObjs[i].RefOfficeCode);
           } 
           critObj.listValue = listDataTemp;
         },
