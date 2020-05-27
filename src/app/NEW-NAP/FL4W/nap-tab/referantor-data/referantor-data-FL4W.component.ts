@@ -136,6 +136,7 @@ export class ReferantorDataFL4WComponent implements OnInit {
         url = AdInsConstant.EditAppReferantor;
         this.SaveData(url);
         // this.wizard.goToNextStep();
+        this.toastr.successMessage('Save Edit Data');
           this.outputTab.emit();
       } else {
         // delete & go to paging
@@ -143,6 +144,7 @@ export class ReferantorDataFL4WComponent implements OnInit {
         url = AdInsConstant.DeleteAppReferantor;
         this.SaveData(url);    
         // this.wizard.goToNextStep();
+        this.toastr.successMessage('Remove Data');
           this.outputTab.emit();
       }
     } else {
@@ -153,6 +155,7 @@ export class ReferantorDataFL4WComponent implements OnInit {
         this.appReferantorObj.AppId = this.appId;
         this.SaveData(url);
         // this.wizard.goToNextStep();
+        this.toastr.successMessage('Save New Data');
         this.outputTab.emit();
       } else {
         // this.wizard.goToNextStep();

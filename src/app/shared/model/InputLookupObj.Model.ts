@@ -7,10 +7,11 @@ export class InputLookupObj{
     idSelect: any
     jsonSelect: any
     addCritInput: any
-    isRequired: any
+    isRequired: boolean
     pagingJson: any
     genericJson: any
-    isReadonly: any 
+    isReadonly: boolean 
+    isReady: boolean
 
     constructor()
     {
@@ -20,5 +21,6 @@ export class InputLookupObj{
         this.addCritInput = null;
         this.isRequired = true;
         this.isReadonly = true;
+        this.isReady = false;
     }
 }

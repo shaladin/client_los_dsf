@@ -1,23 +1,24 @@
 export class AddrObj {
-    Addr: any;
-    AreaCode4: any;
-    AreaCode3: any;
-    AreaCode2: any;
-    AreaCode1: any;
-    City: any;
-    PhnArea1: any;
-    Phn1: any;
-    PhnExt1: any;
-    PhnArea2: any;
-    Phn2: any;
-    PhnExt2: any;
-    PhnArea3: any;
-    Phn3: any;
-    PhnExt3: any;
-    FaxArea: any;
-    Fax: any;
-    MrHouseOwnershipCode: any;
-    SubZipcode: any;
+    Addr: string;
+    AreaCode4: string;
+    AreaCode3: string;
+    AreaCode2: string;
+    AreaCode1: string;
+    City: string;
+    PhnArea1: string;
+    Phn1: string;
+    PhnExt1: string;
+    PhnArea2: string;
+    Phn2: string;
+    PhnExt2: string;
+    PhnArea3: string;
+    Phn3: string;
+    PhnExt3: string;
+    FaxArea: string;
+    Fax: string;
+    MrHouseOwnershipCode: string;
+    SubZipcode: string;
+    StayLength: number;
 
 constructor() { 
     this.Addr = '';
@@ -39,5 +40,6 @@ constructor() {
     this.Fax = '';
     this.MrHouseOwnershipCode = '';
     this.SubZipcode = '';
+    this.StayLength = 0;
  }
 }

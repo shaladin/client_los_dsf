@@ -38,7 +38,7 @@ export class LifeInsuranceDataComponent implements OnInit {
     IsChecked: [false],
     LifeInscoBranchName: [''],
     MrLifeInsPaidMethodCode: [''],
-    TotalLifeInsCptlzAmt: [''],
+    PaidInAdvPrcnt: [''],
     NewCoverNotes: [''],
     InscoAdminFeeAmt: [''],
   });
@@ -82,7 +82,7 @@ export class LifeInsuranceDataComponent implements OnInit {
             IsChecked: true,
             LifeInscoBranchName: this.result.LifeInscoBranchCode,
             MrLifeInsPaidMethodCode: this.result.MrLifeInsPaidMethodCode,
-            TotalLifeInsCptlzAmt: this.result.TotalLifeInsCptlzAmt,
+            PaidInAdvPrcnt: this.result.PaidInAdvPrcnt,
             NewCoverNotes: this.result.NewCoverNotes,
             InscoAdminFeeAmt: this.result.InscoAdminFeeAmt
           })
@@ -163,8 +163,8 @@ export class LifeInsuranceDataComponent implements OnInit {
     this.LifeInsForm.controls.LifeInscoBranchName.updateValueAndValidity();
     this.LifeInsForm.controls.MrLifeInsPaidMethodCode.setValidators(Validators.required);
     this.LifeInsForm.controls.MrLifeInsPaidMethodCode.updateValueAndValidity();
-    this.LifeInsForm.controls.TotalLifeInsCptlzAmt.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
-    this.LifeInsForm.controls.TotalLifeInsCptlzAmt.updateValueAndValidity();
+    this.LifeInsForm.controls.PaidInAdvPrcnt.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
+    this.LifeInsForm.controls.PaidInAdvPrcnt.updateValueAndValidity();
     this.LifeInsForm.controls.InscoAdminFeeAmt.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
     this.LifeInsForm.controls.InscoAdminFeeAmt.updateValueAndValidity();
   }
@@ -173,8 +173,8 @@ export class LifeInsuranceDataComponent implements OnInit {
     this.LifeInsForm.controls.LifeInscoBranchName.updateValueAndValidity();
     this.LifeInsForm.controls.MrLifeInsPaidMethodCode.clearValidators();
     this.LifeInsForm.controls.MrLifeInsPaidMethodCode.updateValueAndValidity();
-    this.LifeInsForm.controls.TotalLifeInsCptlzAmt.clearValidators();
-    this.LifeInsForm.controls.TotalLifeInsCptlzAmt.updateValueAndValidity();
+    this.LifeInsForm.controls.PaidInAdvPrcnt.clearValidators();
+    this.LifeInsForm.controls.PaidInAdvPrcnt.updateValueAndValidity();
     this.LifeInsForm.controls.InscoAdminFeeAmt.clearValidators();
     this.LifeInsForm.controls.InscoAdminFeeAmt.updateValueAndValidity();
   }
@@ -184,7 +184,7 @@ export class LifeInsuranceDataComponent implements OnInit {
       this.LifeInsObj.LifeInscoBranchCode = this.LifeInsForm.controls.LifeInscoBranchName.value;
       this.LifeInsObj.LifeInscoBranchName = this.LifeInscoBranchName.find(i => i["VendorCode"] == this.LifeInsForm.controls.LifeInscoBranchName.value)["VendorName"];
       this.LifeInsObj.MrLifeInsPaidMethodCode = this.LifeInsForm.controls.MrLifeInsPaidMethodCode.value;
-      this.LifeInsObj.TotalLifeInsCptlzAmt = this.LifeInsForm.controls.TotalLifeInsCptlzAmt.value;
+      this.LifeInsObj.PaidInAdvPrcnt = this.LifeInsForm.controls.PaidInAdvPrcnt.value;
       this.LifeInsObj.NewCoverNotes = this.LifeInsForm.controls.NewCoverNotes.value;
       this.LifeInsObj.InscoAdminFeeAmt = this.LifeInsForm.controls.InscoAdminFeeAmt.value;
       this.LifeInsObj.AppId = this.AppId;
@@ -303,20 +303,20 @@ export class LifeInsuranceDataComponent implements OnInit {
   PremiMethodChanged(event) {
     if (event.target.value == "PAID_IN_ADV") {
       this.LifeInsForm.patchValue({
-        TotalLifeInsCptlzAmt: 0
+        PaidInAdvPrcnt: 0
 
       });
-      this.LifeInsForm.controls["TotalLifeInsCptlzAmt"].disable();
+      this.LifeInsForm.controls["PaidInAdvPrcnt"].disable();
     }
     else if (event.target.value == "CPTLZ") {
       this.LifeInsForm.patchValue({
-        TotalLifeInsCptlzAmt: 100
+        PaidInAdvPrcnt: 100
 
       });
-      this.LifeInsForm.controls["TotalLifeInsCptlzAmt"].disable();
+      this.LifeInsForm.controls["PaidInAdvPrcnt"].disable();
     }
     else {
-      this.LifeInsForm.controls["TotalLifeInsCptlzAmt"].enable();
+      this.LifeInsForm.controls["PaidInAdvPrcnt"].enable();
     }
   }
 

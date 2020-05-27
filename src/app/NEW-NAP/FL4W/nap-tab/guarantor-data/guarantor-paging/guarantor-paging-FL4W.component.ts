@@ -35,7 +35,7 @@ export class GuarantorPagingFL4WComponent implements OnInit {
     this.inputGridObj.deleteUrl = AdInsConstant.DeleteAppGuarantor;
 
     var guarantorObj = new GuarantorObj();
-    guarantorObj.AppGuarantorObj.AppId = this.AppId;
+    guarantorObj.AppId = this.AppId;
     this.http.post(AdInsConstant.GetListAppGuarantor, guarantorObj).subscribe(
       (response) => {
         console.log("response: ");
@@ -46,6 +46,9 @@ export class GuarantorPagingFL4WComponent implements OnInit {
         }
         this.inputGridObj.resultData["Data"] = new Array();
         this.inputGridObj.resultData.Data = response["ReturnObject"]
+
+        console.log("data")
+        console.log(guarantorObj.AppGuarantorObj.AppId)
 
       },
       (error) => {

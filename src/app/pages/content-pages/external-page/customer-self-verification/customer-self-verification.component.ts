@@ -16,13 +16,13 @@ export class CustomerSelfVerificationComponent implements OnInit {
   private stepper: Stepper;
   LeadId: any;
   LobCode: string;
-  LeadStep: string;
+  LeadStep: string = 'SVR';
   isCustData: boolean;
   isLeadData: boolean;
   leadObj: LeadObj;
   viewLeadHeaderMainInfo : any;
   WfTaskListId: any;
-
+  reason : string;
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       this.LeadId = params["LeadId"];
@@ -37,25 +37,28 @@ export class CustomerSelfVerificationComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.viewLeadHeaderMainInfo = "./assets/ucviewgeneric/viewLeadHeader.json";
     this.leadObj = new LeadObj;
     this.leadObj.LeadId = this.LeadId;
     this.http.post(AdInsConstant.GetLeadByLeadId, this.leadObj).subscribe(
       (response) => { 
         this.LeadStep = response["LeadStep"];
         console.log(this.LeadStep);
-        if (this.LeadStep != "SVR")
-          this.router.navigate(["/pages/Submit?reason=resubmit"]);
-      })
+         if (this.LeadStep != "SVR"){
+          this.reason = "resubmit"; 
+         }else{ 
+          this.claimTask(); 
+          this.stepper = new Stepper(document.querySelector('#stepper1'), {
+            linear: false,
+            animation: true
+          })
+          this.EnterTab('custData');
+          this.stepper.to(1);
+         }
 
-    this.claimTask();
-    this.viewLeadHeaderMainInfo = "./assets/ucviewgeneric/viewLeadHeader.json";
+      });
 
-    this.stepper = new Stepper(document.querySelector('#stepper1'), {
-      linear: false,
-      animation: true
-    })
-    this.EnterTab('custData');
-    this.stepper.to(1);
+  
   }
 
   EnterTab(type) {
@@ -93,5 +96,14 @@ export class CustomerSelfVerificationComponent implements OnInit {
       else
         this.stepper.previous();
     }
+  }
+  getPage(ev)
+  { 
+      if (ev.pageType == "submit")
+      {
+        this.reason = "submit";
+        this.LeadStep = "";
+      }
+      
   }
 }
