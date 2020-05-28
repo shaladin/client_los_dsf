@@ -152,7 +152,6 @@ export class CollateralAddEditSingleComponent implements OnInit {
 
 
     this.GetListAppCollateralByAppId();
-    console.log(this.listCollateralData);
     var appAssetobj = {
       AppId: this.AppId
     }
@@ -274,7 +273,6 @@ export class CollateralAddEditSingleComponent implements OnInit {
             
                 this.inputFieldLegalObj.inputLookupObj.nameSelect = AppCollateralRegistration.OwnerZipcode;
                 this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: AppCollateralRegistration.OwnerZipcode };
-                  console.log(AppCollateralRegistration)
               });
               var Obj2 = {
                 AppCollateralId : this.AppCollateralId
@@ -323,8 +321,6 @@ export class CollateralAddEditSingleComponent implements OnInit {
     this.http.post(AdInsConstant.GetListRefAppAttrCollateral, attrobj).subscribe(
       (response) => {
         this.listRefAppAttr = response['ReturnObject'];
-        console.log("this.listRefAppAttr");
-        console.log(this.listRefAppAttr);
         for (let i = 0; i < this.listRefAppAttr["length"]; i++) {
           var Attr = this.fb.group({
             AppAttrValue: this.listRefAppAttr[i].AppAttrValue,
@@ -335,7 +331,6 @@ export class CollateralAddEditSingleComponent implements OnInit {
     )
 
     var appIdObj = { AppId: this.AppId }
-    console.log(appIdObj);
     this.http.post(AdInsConstant.GetAppCollateralByAppCollateralId, appIdObj).subscribe(
       (response) => {
         this.listCollateralData = response['ReturnObject'];
@@ -362,7 +357,6 @@ export class CollateralAddEditSingleComponent implements OnInit {
     var refMasterObj = { RefMasterTypeCode: 'ASSET_CONDITION' };
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
-        console.log(response);
         this.ConditionCodeList = response['ReturnObject'];
         this.AddCollForm.patchValue({
           MrCollateralConditionCode: this.ConditionCodeList[0].Key
@@ -442,15 +436,13 @@ export class CollateralAddEditSingleComponent implements OnInit {
   }
 
   Checked(VerfQuestionAnswerId: any, isChecked: any): void {
-    console.log(VerfQuestionAnswerId);
     if (isChecked) {
       this.listSelectedId.push(VerfQuestionAnswerId);
     } else {
       const index = this.listSelectedId.indexOf(VerfQuestionAnswerId)
-      console.log(index);
+
       if (index > -1) { this.listSelectedId.splice(index, 1); }
     }
-    console.log('Sel', this.listSelectedId);
   }
 
   searchPagination(event: number) {
@@ -487,7 +479,6 @@ export class CollateralAddEditSingleComponent implements OnInit {
     var getListUrl = AdInsConstant.GetListAppCollateralByAppId;
     this.http.post(getListUrl, obj).subscribe(
       (response) => {
-        console.log(response);
         this.listCollExisting = response['ReturnObject'];
       },
       (error) => {
@@ -498,7 +489,6 @@ export class CollateralAddEditSingleComponent implements OnInit {
 
   SelectAll(condition) {
     this.checkboxAll = condition;
-    console.log(condition);
     if (condition) {
       for (let i = 0; i < this.resultData.Data.length; i++) {
         if (this.listSelectedId.indexOf(this.resultData.Data[i].AppCollateralId) < 0) {
@@ -512,11 +502,8 @@ export class CollateralAddEditSingleComponent implements OnInit {
         if (index > -1) {
           this.listSelectedId.splice(index, 1);
         }
-        console.log(this.resultData.Data[i]);
       }
     }
-    console.log(this.checkboxAll);
-    console.log(this.listSelectedId);
   }
 
   addToTemp() {
@@ -527,7 +514,6 @@ export class CollateralAddEditSingleComponent implements OnInit {
       for (var i = 0; i < this.listSelectedId.length; i++) {
         var object = this.resultData.Data.find(x => x.AppCollateralId == this.listSelectedId[i]);
         this.tempData.push(object);
-        console.log(this.tempData);
       }
 
       this.arrAddCrit = new Array();
@@ -620,13 +606,6 @@ export class CollateralAddEditSingleComponent implements OnInit {
   }
 
   onItemChange(value) {
-    // console.log(value);
-    // this.inputLookupObj = new InputLookupObj();
-    // this.inputLookupObj.urlJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
-    // this.inputLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    // this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
-    // this.inputLookupObj.pagingJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
-    // this.inputLookupObj.genericJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
 
     this.criteriaList = new Array();
     this.criteriaObj = new CriteriaObj();
@@ -662,14 +641,10 @@ export class CollateralAddEditSingleComponent implements OnInit {
       ListAppCollateralDocObj: this.listAppCollateralDocObj.AppCollateralDocObj
     }
 
-    // console.log(appCollObj);
-    console.log(this.appCollateralDataObj);
     if (this.type == 'Add') {
       this.http.post(AdInsConstant.AddEditAllCollateralData, this.appCollateralDataObj).subscribe(
         (response) => {
-          console.log(response);
           this.toastr.successMessage(response["message"]);
-          //this.router.navigate(["/Nap/AssetData/Paging"]);
 
         },
         (error) => {
@@ -680,7 +655,7 @@ export class CollateralAddEditSingleComponent implements OnInit {
     else {
       this.http.post(AdInsConstant.AddEditAllCollateralData, this.appCollateralDataObj).subscribe(
         (response) => {
-          console.log(response);
+
           this.toastr.successMessage(response["message"]);
           this.modalService.dismissAll();
         },
@@ -860,7 +835,6 @@ export class CollateralAddEditSingleComponent implements OnInit {
     var appCollObj = { AppCollateralId: AppCustCollId };
     this.http.post(AdInsConstant.DeleteAppCollateral, appCollObj).subscribe(
       (response) => {
-        console.log(response);
         this.toastr.successMessage(response["message"]);
       },
       (error) => {
@@ -875,9 +849,6 @@ export class CollateralAddEditSingleComponent implements OnInit {
 
   back() {
     this.outputTab.emit({ StatusCode: "-1" });
-  }
-  checkIsiForm() {
-    console.log(this.AddCollForm);
   }
   getLookupAppCollateralResponse(event) {
     var AppCollateralIdObj = { AppCollateralId: event.AppCollateralId }
@@ -965,7 +936,6 @@ export class CollateralAddEditSingleComponent implements OnInit {
       
           this.inputFieldLegalObj.inputLookupObj.nameSelect = AppCollateralRegistration.OwnerZipcode;
           this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: AppCollateralRegistration.OwnerZipcode };
-            console.log(AppCollateralRegistration)
         });
       
   }
