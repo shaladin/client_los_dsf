@@ -130,8 +130,8 @@
                 (outputTab)="NextStep('ASSET')"></app-application-data>
             </div>
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
-              <app-collateral-fctr *ngIf="AppStepIndex == 5" [AppId]="appId" (outputTab)="NextStep('INS')">
-              </app-collateral-fctr>
+              <app-collateral-add-edit-single *ngIf="AppStepIndex == 5" [AppId]="appId" (outputTab)="NextStep('INS')">
+              </app-collateral-add-edit-single>
             </div>
             <div id="insurance-tab" class="content" role="tabpanel" aria-labelledby="insurance-tab-trigger">
               <app-insurance-data *ngIf="!IsMultiAsset && AppStepIndex == 6" [appId]="appId"
