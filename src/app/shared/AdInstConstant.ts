@@ -195,7 +195,7 @@ export class AdInsConstant {
 
   //LOB CODE
   public static LobCodeFCTR = "FCTR";
-  public static LobCodeCFRFN = "CFRFN";
+  public static LobCodeCFRFN = "CFRFN4W";
 
   //TOP CALC BASED
   public static TopCalcBasedInvcDt = "INVC_DT";
