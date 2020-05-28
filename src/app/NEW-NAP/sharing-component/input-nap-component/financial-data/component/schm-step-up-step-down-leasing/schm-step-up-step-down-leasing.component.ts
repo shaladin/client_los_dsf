@@ -129,6 +129,15 @@ export class SchmStepUpStepDownLeasingComponent implements OnInit {
   }
 
   SetEntryInstallment(){
+    if(this.ParentForm.get("NumOfStep").value < 1){
+      this.toastr.errorMessage("Num of Step must be higher than 0.");
+      return;
+    }
+    if(this.ParentForm.controls.StepUpStepDownInputType.value == ""){
+      this.toastr.errorMessage("Please choose Step Up Step Down Input Type.");
+      return;
+    }
+    
     while ((this.ParentForm.controls.ListEntryInst as FormArray).length) {
       (this.ParentForm.controls.ListEntryInst as FormArray).removeAt(0);
     }
@@ -146,6 +155,10 @@ export class SchmStepUpStepDownLeasingComponent implements OnInit {
 
 
   CalculateAmortization() {
+    if(this.ParentForm.controls.StepUpStepDownInputType.value == ""){
+      this.toastr.errorMessage("Please choose Step Up Step Down Input Type.");
+      return;
+    }
 
     this.calcStepUpStepDownObj = this.ParentForm.value;
     this.calcStepUpStepDownObj["IsRecalculate"] = false;

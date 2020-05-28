@@ -20,8 +20,9 @@ export class LeadInputPageComponent implements OnInit {
   isLeadData: boolean;
   TaskListId: number;
   titlePageType: string;
-  viewLeadHeaderMainInfo : string;
+  viewLeadHeaderMainInfo : string; 
   pageType: string;
+   AppStepIndex :number =1;
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {
     this.route.queryParams.subscribe(params => {
       if (params["LeadId"] != null) {
@@ -58,10 +59,12 @@ export class LeadInputPageComponent implements OnInit {
     if (type == "custData") {
       this.isCustData = true;
       this.isLeadData = false;
+      this.AppStepIndex = 1;
     }
     if (type == "leadData") {
       this.isCustData = false;
       this.isLeadData = true;
+      this.AppStepIndex = 2;
     }
   }
   

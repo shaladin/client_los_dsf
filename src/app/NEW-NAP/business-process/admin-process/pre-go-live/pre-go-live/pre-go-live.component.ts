@@ -10,6 +10,7 @@ import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
 import { PreGoLiveMainObj } from 'app/shared/model/PreGoLiveMainObj.Model';
 import { PreGoLiveObj } from 'app/shared/model/PreGoLiveObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 
 @Component({
   selector: 'app-sharing-pre-go-live',
@@ -24,7 +25,7 @@ export class PreGoLiveComponent implements OnInit {
   result: any;
   viewObj: string;
   appTC: any;
-
+  TaskListId : any;
   PreGoLiveMainObj: PreGoLiveMainObj = new PreGoLiveMainObj();
   PreGoLiveObj: PreGoLiveObj = new PreGoLiveObj();
   AgrmntObj: AgrmntObj = new AgrmntObj();
@@ -44,10 +45,12 @@ export class PreGoLiveComponent implements OnInit {
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
+      this.TaskListId = params["TaskListId"];
     });
   }
 
   ngOnInit() {
+    this.claimTask();
     console.log("");
     this.viewObj = "./assets/ucviewgeneric/viewAgrMainInfoPreGoLive.json";
     var agrmntObj = new AgrmntObj;
@@ -113,18 +116,29 @@ export class PreGoLiveComponent implements OnInit {
     this.PreGoLiveObj.rAgrmntTC = this.AgrmntObj;
     this.PreGoLiveObj.rAppTcObj = this.listAppTCObj.AppTCObj;
     this.PreGoLiveObj.preGoLiveObj = this.PreGoLiveMainObj;
+    this.PreGoLiveObj.TaskListId = this.TaskListId;
 
     console.log(this.PreGoLiveObj);
 
     this.http.post(AdInsConstant.AddPreGoLive, this.PreGoLiveObj).subscribe(
       (response) => {
-        this.router.navigateByUrl('/AdminProcess/PreGoLive/Paging');
+        this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Paging');
         this.toastr.successMessage(response['message']);
       },
       (error) => {
         console.log(error);
       });
 
+  }
+
+  async claimTask(){
+    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var wfClaimObj : ClaimWorkflowObj = new ClaimWorkflowObj();
+    wfClaimObj.pWFTaskListID = this.TaskListId;
+    wfClaimObj.pUserID = currentUserContext["UserName"];
+    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+      (response) => {
+      });
   }
 
 }

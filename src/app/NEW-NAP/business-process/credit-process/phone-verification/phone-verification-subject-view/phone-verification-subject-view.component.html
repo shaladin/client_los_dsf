@@ -14,7 +14,7 @@
         </div>
         <div>
           <label class="col-md-3">Verification Date</label>
-          <label class="col-md-3">{{verifResultObj.VerfDt}}</label>
+          <label class="col-md-3" *ngIf="verifResultHObj">{{verifResultHObj.VerfDt | date: 'dd-MM-yyyy'}}</label>
         </div>
       </div>
       <lib-ucSubsection [id]="'subjectInformationId'" [title]="'Subject Information'" [panel]="'subjectInformation'">
@@ -22,7 +22,7 @@
       <div id="subjectInformation" *ngIf="verifResultHObj">
         <div>
           <label class="col-md-3">Subject Type</label>
-          <label class="col-md-3">{{verifResultHObj.MrVerfSubjectRelationName}}</label>
+          <label class="col-md-3">{{verifResultHObj.MrVerfObjectCode}}</label>
           <label class="col-md-3">Result Status</label>
           <label class="col-md-3">{{verifResultHObj.MrVerfResultHStatName}}</label>
         </div>
@@ -30,7 +30,7 @@
           <label class="col-md-3">Subject Name</label>
           <label class="col-md-3">{{subjectName}}</label>
           <label class="col-md-3">Time</label>
-          <label class="col-md-3"></label>
+          <label class="col-md-3">{{verifResultHObj.VerfDt | date:'HH:mm'}}</label>
         </div>
         <div>
           <label class="col-md-3">Subject Relation</label>
@@ -49,7 +49,7 @@
           <tbody>
             <tr *ngFor="let item of listVerifResultHObj">
               <td class="text-left">{{item.PhnType}} : {{item.Phn}}</td>
-              <td class="text-left">{{item.MrVerfResultHStatCode}}</td>
+              <td class="text-left">{{item.MrVerfResultHStatName}}</td>
               <td class="text-left">{{item.Notes}}</td>
               <td class="text-left">
                 <a class="success p-0" data-original-title="" title="" (click)="ViewSubjDetail(item.VerfResultHId)">
@@ -64,8 +64,8 @@
         <div *ngIf="verifResultHDetailObj">
           <div class="ucSearch-Button-Right">
             <span class="mr-1">
-              <button type="button" class="addButton" translate (click)="BackSubj()">
-                <i class="ft-plus-circle"></i> Back
+              <button type="button" class="backButton" (click)="BackSubj()" translate>
+                <i class="ft-arrow-left"></i> Back
               </button>
             </span>
           </div>
@@ -81,26 +81,28 @@
               <label class="col-md-3">{{verifResultHDetailObj[0].MrVerfResultHStatName}}</label>
             </div>
             <div *ngIf="listVerifResultDObj">
-              <div *ngFor="let item of listVerifResultDObj">
-                <br />
-                <h5 class="col-md-12">{{item.VerfQuestionGrpName}}</h5>
-                <table class="table table-responsive-md text-center table-hover">
-                  <thead>
-                    <tr class="table-header">
-                      <th class="text-left">Question</th>
-                      <th class="text-left">Answer</th>
-                      <th class="text-left">Notes</th>
+              <div *ngFor="let item of listVerifResultDObj; let i = index">
+                <lib-ucSubsection [id]="'verfResult'+i+'id'" [title]="item.VerfQuestionGrpName" [panel]="'verfResult'+i">
+                </lib-ucSubsection>
+                <div id="verfResult{{i}}">
+                  <table class="table table-responsive-md text-center table-hover">
+                    <thead>
+                      <tr class="table-header">
+                        <th class="text-left">Question</th>
+                        <th class="text-left">Answer</th>
+                        <th class="text-left">Notes</th>
 
-                    </tr>
-                  </thead>
-                  <tbody *ngIf="item.VerResultList">
-                    <tr *ngFor="let value of item.VerResultList">
-                      <td class="text-left">{{value.VerfQuestionText}}</td>
-                      <td class="text-left">{{value.Answer}}</td>
-                      <td class="text-left">{{value.Notes}}</td>
-                    </tr>
-                  </tbody>
-                </table>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="item.VerResultList">
+                      <tr *ngFor="let value of item.VerResultList">
+                        <td class="text-left">{{value.VerfQuestionText}}</td>
+                        <td class="text-left">{{value.Answer}}</td>
+                        <td class="text-left">{{value.Notes}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
