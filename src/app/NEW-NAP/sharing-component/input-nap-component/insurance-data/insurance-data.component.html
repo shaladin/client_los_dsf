@@ -5,19 +5,19 @@
         <form class="form form-horizontal" [formGroup]="InsuranceDataForm" (ngSubmit)="InsuranceDataForm.valid && SaveForm()"
             #enjiForm="ngForm">
             <div class="form-body">
-              <lib-ucSubsection [id]="'assetDataId'" [title]="'Asset Data'" [panel]="'assetData'">
+              <lib-ucSubsection [id]="'collateralDataId'" [title]="'Collateral Data'" [panel]="'collateralData'">
               </lib-ucSubsection>
-              <div id="assetData">
+              <div id="collateralData">
                 <div class="form-group row">
-                  <label class="col-md-2" translate>Asset Name</label>
-                  <label class="col-md-4" translate>{{appAssetObj?.FullAssetName}}</label>
-                  <label class="col-md-2" translate>Asset Price</label>
+                  <label class="col-md-2" translate>Collateral Name</label>
+                  <label class="col-md-4" translate>{{appCollateralObj?.FullAssetName}}</label>
+                  <label class="col-md-2" translate>Collateral Price</label>
                   <label class="col-md-4" translate>{{totalAssetPriceAmt | number:'.2':'en-US'}}</label>
                 </div>
               </div>
-              <lib-ucSubsection [id]="'assetAccessoriesId'" [title]="'Asset Accessories'" [panel]="'assetAccessories'">
+              <lib-ucSubsection [id]="'collateralAccessoriesId'" [title]="'Collateral Accessories'" [panel]="'collateralAccessories'">
               </lib-ucSubsection>
-              <div id="assetAccessories">
+              <div id="collateralAccessories">
                 <div class="form-group row">
                     <table class="table table-responsive-md text-center table-hover">
                       <thead>
@@ -34,9 +34,9 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr *ngFor="let item of appAssetAccessoryObjs; let i = index">
+                        <tr *ngFor="let item of appCollateralAccessoryObjs; let i = index">
                           <td style="text-align: center;">{{i + 1}}</td>
-                          <td style="text-align: center;">{{item.AssetAccessoryName}}</td>
+                          <td style="text-align: center;">{{item.CollateralAccessoryName}}</td>
                           <td style="text-align: right;">{{item.AccessoryPriceAmt | number:'.2':'en-US'}}</td>
                         </tr>
                       </tbody>
