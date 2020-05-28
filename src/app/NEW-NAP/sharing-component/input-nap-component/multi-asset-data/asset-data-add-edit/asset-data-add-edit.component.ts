@@ -109,7 +109,7 @@ export class AssetDataAddEditComponent implements OnInit {
     BranchManagerCode:[''],
 
     SalesPersonName:[''],
-    SalesPersonNo:[''],
+    SalesPersonNo:['', [Validators.required]],
     SalesPersonCode:[''],
 
     AdminHeadName:[''],
