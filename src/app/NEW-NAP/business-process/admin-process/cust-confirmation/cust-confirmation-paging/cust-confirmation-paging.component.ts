@@ -20,9 +20,10 @@ export class CustConfirmationPagingComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.bizTemplateCode = params["BizTemplateCode"];
+        localStorage.setItem("BizTemplateCode",this.bizTemplateCode);
       }
       else{
-        this.bizTemplateCode = "CFNEWCAR";
+        this.bizTemplateCode = localStorage.getItem("BizTemplateCode");
       }
     });
   }
