@@ -140,9 +140,15 @@ export class TcDataComponent implements OnInit {
   }
 
   SaveData() {
+    var businessDt = new Date(localStorage.getItem("BusinessDateRaw"));
     var fa_AppTc = this.AppTcForm.get("AppTc") as FormArray
     for (let i = 0; i < fa_AppTc.length; i++) {
       var item = fa_AppTc.at(i);
+      var expDt = new Date(item.get("ExpiredDt").value);
+      if(item.get("IsChecked").value && expDt < businessDt){
+        this.toastr.errorMessage("Expired Date for " + item.get("TcName").value + " can't be lower than Business Date");
+        return;
+      }
       this.listAppTcObj[i].AppId = this.AppId;
       this.listAppTcObj[i].IsChecked = item.get("IsChecked").value;
       this.listAppTcObj[i].PromisedDt = item.get("PromisedDt").value;
