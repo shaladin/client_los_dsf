@@ -557,22 +557,13 @@ export class CollateralAddEditSingleComponent implements OnInit {
 
 
   copyToLocation() {
+    this.locationAddrObj = new AddrObj();
     this.locationAddrObj.Addr = this.AddCollForm.controls["OwnerAddrObj"]["controls"].Addr.value;
-    this.locationAddrObj.AreaCode1 = this.AddCollForm.controls["OwnerAddrObj"]["controls"].AreaCode1.value;
+    this.locationAddrObj.AreaCode1 =this.AddCollForm.controls["OwnerAddrObj"]["controls"].AreaCode1.value;
     this.locationAddrObj.AreaCode2 = this.AddCollForm.controls["OwnerAddrObj"]["controls"].AreaCode2.value;
     this.locationAddrObj.AreaCode3 = this.AddCollForm.controls["OwnerAddrObj"]["controls"].AreaCode3.value;
     this.locationAddrObj.AreaCode4 = this.AddCollForm.controls["OwnerAddrObj"]["controls"].AreaCode4.value;
-    this.locationAddrObj.City = this.AddCollForm.controls["OwnerAddrObj"]["controls"].City.value;
-    this.locationAddrObj.Fax = this.AddCollForm.controls["OwnerAddrObj"]["controls"].Fax.value;
-    this.locationAddrObj.FaxArea = this.AddCollForm.controls["OwnerAddrObj"]["controls"].FaxArea.value;
-    this.locationAddrObj.Phn1 = this.AddCollForm.controls["OwnerAddrObj"]["controls"].Phn1.value;
-    this.locationAddrObj.Phn2 = this.AddCollForm.controls["OwnerAddrObj"]["controls"].Phn2.value;
-    this.locationAddrObj.PhnArea1 = this.AddCollForm.controls["OwnerAddrObj"]["controls"].PhnArea1.value;
-    this.locationAddrObj.PhnArea2 = this.AddCollForm.controls["OwnerAddrObj"]["controls"].PhnArea2.value;
-    this.locationAddrObj.PhnExt1 = this.AddCollForm.controls["OwnerAddrObj"]["controls"].PhnExt1.value;
-    this.locationAddrObj.PhnExt2 = this.AddCollForm.controls["OwnerAddrObj"]["controls"].PhnExt2.value;
-    this.locationAddrObj.SubZipcode = this.AddCollForm.controls["OwnerAddrObj"]["controls"].SubZipcode.value;
-
+    this.locationAddrObj.City = this.AddCollForm.controls["OwnerAddrObj"]["controls"].City;
     this.inputFieldLocationObj.inputLookupObj.nameSelect = this.AddCollForm.controls["OwnerAddrObjZipcode"]["controls"].value.value;
     this.inputFieldLocationObj.inputLookupObj.jsonSelect = { Zipcode: this.AddCollForm.controls["OwnerAddrObjZipcode"]["controls"].value.value };
   }
