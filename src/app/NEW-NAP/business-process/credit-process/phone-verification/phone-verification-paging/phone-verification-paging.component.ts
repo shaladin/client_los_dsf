@@ -1,5 +1,5 @@
 import { environment } from "environments/environment";
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { AdInsConstant } from "app/shared/AdInstConstant";
 import { DecimalPipe } from "@angular/common";
 import { UcPagingObj } from "app/shared/model/UcPagingObj.Model";
@@ -27,6 +27,7 @@ export class PhoneVerificationPagingComponent implements OnInit {
   }
 
   ngOnInit() {
+    var userAccess = JSON.parse(localStorage.getItem("UserAccess"))
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchAppPhoneVerif.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
@@ -38,6 +39,14 @@ export class PhoneVerificationPagingComponent implements OnInit {
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'RL.BIZ_TMPLT_CODE';
     critObj.value = this.lobCode;
+    this.arrCrit.push(critObj);
+    this.inputPagingObj.addCritInput = this.arrCrit;
+
+    this.arrCrit = new Array();
+    var critObj = new CriteriaObj();
+    critObj.restriction = AdInsConstant.RestrictionLike;
+    critObj.propName = 'a.ORI_OFFICE_CODE';
+    critObj.value = userAccess.OfficeCode;
     this.arrCrit.push(critObj);
     this.inputPagingObj.addCritInput = this.arrCrit;
 

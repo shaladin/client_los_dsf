@@ -4,6 +4,7 @@ import { ListAppTCObj } from "./ListAppTCObj.Model";
 import { AppTCObj } from "./AppTCObj.Model";
 
 export class PreGoLiveObj {
+    TaskListId : any;
     rAgrmntTC : AgrmntObj;
     preGoLiveObj : PreGoLiveMainObj;
     rAppTcObj: AppTCObj[];

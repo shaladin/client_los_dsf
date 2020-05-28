@@ -8,6 +8,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { VerfResultObj } from 'app/shared/model/VerfResult/VerfResult.Model';
 import { DatePipe } from '@angular/common';
 import { ReturnHandlingDObj } from '../../../../../shared/model/ReturnHandling/ReturnHandlingDObj.Model';
+import { ReturnHandlingHObj } from '../../../../../shared/model/ReturnHandling/ReturnHandlingHObj.Model';
 
 
 
@@ -58,6 +59,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   addVerifResultObj: VerfResultObj;
   returnHandlingDObj: any;
   ReturnHandlingDData: ReturnHandlingDObj;
+  ReturnHandlingHData: ReturnHandlingHObj;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
 
@@ -97,26 +99,57 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     if (this.isReturnHandling == true) {
       this.GetReturnHandlingD();
     }
+    else {
+      this.ReturnHandlingForm.controls.IsAnyUpdate.setValidators(Validators.required);
+      this.ReturnHandlingForm.controls.IsAnyUpdate.updateValueAndValidity();
+    }
   }
 
-  SaveForm() {
+  async SaveForm() {
+    var lobCode = localStorage.getItem("LobCode")
+    if (this.isReturnHandling == false) {
+      if (this.ReturnHandlingForm.controls.IsAnyUpdate.value == 'YES') {
+        this.setReturnHandlingH();
+        await this.http.post(AdInsConstant.AddReturnHandlingFromPhoneVerif, this.ReturnHandlingHData).toPromise().then(
+          (response) => {
 
-    var reqObj = {
-      WFTaskId: this.wfTaskListId,
-      isReturnHandling: this.isReturnHandling,
-      AppId: this.appId
-    };
-    this.http.post(AdInsConstant.CompleteAppPhoneVerif, reqObj).subscribe(
-      (response) => {
-
-        this.toastr.successMessage(response["message"]);
-        var lobCode = localStorage.getItem("LobCode")
-        this.router.navigate(["/Nap/CreditProcess/PhoneVerification/Paging"], { queryParams: { "LobCode": lobCode } });
-      },
-      (error) => {
-        console.log(error);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
       }
-    );
+      var reqObj = {
+        WFTaskId: this.wfTaskListId,
+        isReturnHandling: this.isReturnHandling,
+        AppId: this.appId
+      };
+      this.http.post(AdInsConstant.CompleteAppPhoneVerif, reqObj).subscribe(
+        (response) => {
+
+          this.toastr.successMessage(response["message"]);
+          this.router.navigate(["/Nap/CreditProcess/PhoneVerification/Paging"], { queryParams: { "LobCode": lobCode } });
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+    if (this.isReturnHandling == true) {
+      this.setReturnHandlingD();
+      this.http.post(this.editRtnHandlingDUrl, this.ReturnHandlingDData).subscribe(
+        (response) => {
+          console.log(response);
+          this.toastr.successMessage(response["message"]);
+          this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingPhoneVerif/Paging"], { queryParams: { "LobCode": lobCode } });
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+
+    }
+
   }
 
   setReturnHandlingD() {
@@ -129,6 +162,14 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     this.ReturnHandlingDData.ReturnHandlingExecNotes = this.ReturnHandlingForm.controls["ExecNotes"].value;
     this.ReturnHandlingDData.WfTaskListId = this.wfTaskListId;
     this.ReturnHandlingDData.RowVersion = this.returnHandlingDObj.RowVersion;
+  }
+
+  setReturnHandlingH() {
+    this.ReturnHandlingHData = new ReturnHandlingHObj();
+    this.ReturnHandlingHData.AppId = this.appId;
+    this.ReturnHandlingHData.ReturnBy = localStorage.getItem("Username");
+    this.ReturnHandlingHData.ReturnNotes = this.ReturnHandlingForm.controls.UpdateNotes.value;
+    this.ReturnHandlingHData.ReturnFromTrxType = "PHN";
   }
 
   async GetAppData() {
@@ -221,5 +262,15 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
       });
+  }
+
+  back() {
+    var lobCode = localStorage.getItem("LobCode")
+    if (this.isReturnHandling == false) {
+      this.router.navigate(["/Nap/CreditProcess/PhoneVerification/Paging"], { queryParams: { "LobCode": lobCode } });
+    }
+    if (this.isReturnHandling == true) {
+      this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingPhoneVerif/Paging"], { queryParams: { "LobCode": lobCode } });
+    }
   }
 }

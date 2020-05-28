@@ -882,7 +882,7 @@ export class LeadInputCustDataComponent implements OnInit {
         );
       }
     }
-    else {
+    else {  
       this.leadInputObj = new LeadInputObj();
       this.setLeadCust();
       this.setLeadCustPersonal();

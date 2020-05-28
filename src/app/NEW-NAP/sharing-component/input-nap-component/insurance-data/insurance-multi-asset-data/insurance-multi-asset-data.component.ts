@@ -238,6 +238,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   }
 
   SaveForm(){
+    console.log(this.InsuranceDataForm)
     var insuredBy = this.InsuranceDataForm.controls.InsAssetCoveredBy.value;
 
     if(insuredBy == AdInsConstant.InsuredByCompany || insuredBy == AdInsConstant.InsuredByCustomerCompany){
