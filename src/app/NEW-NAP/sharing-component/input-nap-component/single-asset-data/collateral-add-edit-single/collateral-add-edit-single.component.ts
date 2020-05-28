@@ -563,7 +563,7 @@ export class CollateralAddEditSingleComponent implements OnInit {
     this.locationAddrObj.AreaCode2 = this.AddCollForm.controls["OwnerAddrObj"]["controls"].AreaCode2.value;
     this.locationAddrObj.AreaCode3 = this.AddCollForm.controls["OwnerAddrObj"]["controls"].AreaCode3.value;
     this.locationAddrObj.AreaCode4 = this.AddCollForm.controls["OwnerAddrObj"]["controls"].AreaCode4.value;
-    this.locationAddrObj.City = this.AddCollForm.controls["OwnerAddrObj"]["controls"].City;
+    this.locationAddrObj.City = this.AddCollForm.controls["OwnerAddrObj"]["controls"].City.value;
     this.inputFieldLocationObj.inputLookupObj.nameSelect = this.AddCollForm.controls["OwnerAddrObjZipcode"]["controls"].value.value;
     this.inputFieldLocationObj.inputLookupObj.jsonSelect = { Zipcode: this.AddCollForm.controls["OwnerAddrObjZipcode"]["controls"].value.value };
   }
