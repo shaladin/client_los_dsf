@@ -98,13 +98,18 @@ export class ApplicationDataFactoringComponent implements OnInit {
     this.http.post(AdInsConstant.GetListMouByAppIdAndMouType, AppObj).subscribe(
       (response) => {
         this.allMouCust = response;
-        if (this.mode != 'edit') {
+        var MouCustId;
+        if (this.mode == 'edit') {
+          MouCustId = this.resultData.MouCustId          
           this.SalesAppInfoForm.patchValue({
-            MouCustId: this.allMouCust[0].MouCustId
+            MouCustId: MouCustId
           });
-          MouCustId = this.resultData.MouCustId
-        } else {
-          var MouCustId = this.allMouCust[0].MouCustId
+        }
+        if (MouCustId == null){
+          MouCustId = this.allMouCust[0].MouCustId;          
+          this.SalesAppInfoForm.patchValue({
+            MouCustId: MouCustId
+          });
         }
         this.SetPayFreq(MouCustId);
       },
@@ -242,6 +247,8 @@ export class ApplicationDataFactoringComponent implements OnInit {
       (error) => {
         console.log(error);
       });
+
+      this.CheckInstType();
   }
 
   SetPayFreq(MouCustId: number) {
@@ -254,9 +261,17 @@ export class ApplicationDataFactoringComponent implements OnInit {
         this.http.post(AdInsConstant.GetRefPayFreqByPayFreqCode, this.mouCustFctrObj).subscribe(
           (response) => {
             this.allPayFreq = response;
-            if (this.mode != 'edit') {
+            var PayFreqCode;
+            if (this.mode == 'edit') {
+              PayFreqCode = this.resultData.PayFreqCode
               this.SalesAppInfoForm.patchValue({
-                PayFreqCode: this.allPayFreq.PayFreqCode
+                PayFreqCode: PayFreqCode
+              });
+            }
+            if (PayFreqCode == null){
+              PayFreqCode = this.allPayFreq.PayFreqCode;          
+              this.SalesAppInfoForm.patchValue({
+                PayFreqCode: PayFreqCode
               });
             }
           },
@@ -304,34 +319,50 @@ export class ApplicationDataFactoringComponent implements OnInit {
         this.salesAppInfoObj.AppFinDataRowVersion = this.resultData.AppFinDataRowVersion;
         this.salesAppInfoObj.AppFctrRowVersion = this.resultData.AppFctrRowVersion;
 
-        if (this.resultData.AppFinDataId == null && this.resultData.AppFctrId == null) {
-          this.mode = "add";
-        } else if (this.resultData.AppFinDataId != null && this.resultData.AppFctrId != null) {
-          this.mode = "edit";
-        }
-
         this.setDropdown();
 
-        this.SalesAppInfoForm.patchValue({
-          MrSalesRecommendCode: this.resultData.MrSalesRecommendCode,
-          MouCustId: this.resultData.MouCustId,
-          SalesNotes: this.resultData.SalesNotes,
-          SalesOfficerNo: this.resultData.SalesOfficerNo,
-          SalesHeadNo: this.resultData.SalesHeadNo,
-          MrInstTypeCode: this.resultData.MrInstTypeCode,
-          TopDays: this.resultData.TopDays,
-          Tenor: this.resultData.Tenor,
-          NumOfInst: this.resultData.NumOfInst,
-          MrInstSchemeCode: this.resultData.MrInstSchemeCode,
-          IsDisclosed: this.resultData.IsDisclosed,
-          PaidBy: this.resultData.PaidBy,
-          RecourseType: this.resultData.RecourseType,
-          MrAppSourceCode: this.resultData.MrAppSourceCode,
-          MrWopCode: this.resultData.MrWopCode,
-          PayFreqCode: this.resultData.PayFreqCode,
-          MrSingleInstCalcMthdCode: this.resultData.MrSingleInstCalcMthdCode,
-          InterestType: this.resultData.InterestType
-        })
+        if (this.resultData.AppFinDataId == 0 && this.resultData.AppFctrId == 0) {
+          this.mode = "add";
+          this.SalesAppInfoForm.patchValue({
+            MrSalesRecommendCode: this.resultData.MrSalesRecommendCode,
+            MouCustId: this.resultData.MouCustId,
+            SalesNotes: this.resultData.SalesNotes,
+            SalesOfficerNo: this.resultData.SalesOfficerNo,
+            SalesHeadNo: this.resultData.SalesHeadNo,
+            MrInstTypeCode: this.resultData.MrInstTypeCode,
+            TopDays: this.resultData.TopDays,
+            Tenor: this.resultData.Tenor,
+            NumOfInst: this.resultData.NumOfInst,
+            IsDisclosed: this.resultData.IsDisclosed,
+            PaidBy: this.resultData.PaidBy,
+            RecourseType: this.resultData.RecourseType,
+            MrAppSourceCode: this.resultData.MrAppSourceCode,
+            MrWopCode: this.resultData.MrWopCode,
+            MrSingleInstCalcMthdCode: this.resultData.MrSingleInstCalcMthdCode
+          })
+        } else if (this.resultData.AppFinDataId != 0 && this.resultData.AppFctrId != 0) {
+          this.mode = "edit";
+          this.SalesAppInfoForm.patchValue({
+            MrSalesRecommendCode: this.resultData.MrSalesRecommendCode,
+            MouCustId: this.resultData.MouCustId,
+            SalesNotes: this.resultData.SalesNotes,
+            SalesOfficerNo: this.resultData.SalesOfficerNo,
+            SalesHeadNo: this.resultData.SalesHeadNo,
+            MrInstTypeCode: this.resultData.MrInstTypeCode,
+            TopDays: this.resultData.TopDays,
+            Tenor: this.resultData.Tenor,
+            NumOfInst: this.resultData.NumOfInst,
+            MrInstSchemeCode: this.resultData.MrInstSchemeCode,
+            IsDisclosed: this.resultData.IsDisclosed,
+            PaidBy: this.resultData.PaidBy,
+            RecourseType: this.resultData.RecourseType,
+            MrAppSourceCode: this.resultData.MrAppSourceCode,
+            MrWopCode: this.resultData.MrWopCode,
+            PayFreqCode: this.resultData.PayFreqCode,
+            MrSingleInstCalcMthdCode: this.resultData.MrSingleInstCalcMthdCode,
+            InterestType: this.resultData.InterestType
+          })
+        }
       },
       (error) => {
         console.log(error);
@@ -342,6 +373,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
   SaveForm(): void {
     this.salesAppInfoObj = this.SalesAppInfoForm.value;
     this.salesAppInfoObj.AppId = this.AppId;
+    this.salesAppInfoObj.MouCustId = this.SalesAppInfoForm.controls.MouCustId.value;
 
     if (this.salesAppInfoObj.MrInstTypeCode == "SINGLE") {
       this.salesAppInfoObj.MrInstSchemeCode = "EP";
@@ -350,6 +382,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
       this.salesAppInfoObj.NumOfInst = this.SalesAppInfoForm.controls.NumOfInst.value;
     }
 
+    
     if (this.mode == "add") {
       this.http.post(AdInsConstant.SaveApplicationData, this.salesAppInfoObj).subscribe(
         (response) => {
