@@ -98,34 +98,27 @@ export class ApplicationDataComponent implements OnInit {
     this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeCustType);
     this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeSlsRecom);
     this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeWOP);
+    this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeInstSchm);
     this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeCustNotifyOpt);
     this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeFirstInstType);
+    this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeInterestType);
     this.getPayFregData();
     this.getAppSrcData();
     this.GetCrossInfoData();
   }
 
-  getInstSchm(){
+  getDDLFromProdOffering(refProdCompntCode:string){
     var obj = {
-      ProdOfferingCode: "CF4W_FINAL_001",
-      RefProdCompntCode: AdInsConstant.RefMasterTypeCodeInstSchm,
-      ProdOfferingVersion: "3"
+      ProdOfferingCode: this.resultResponse.ProdOfferingCode,
+      RefProdCompntCode: refProdCompntCode,
+      ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
     };
-    this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
+    this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL, obj).subscribe(
       (response) => {
-        // console.log(response);   
-        var listCompntValue: Array<string> = response["CompntValue"].split(";");
-
-        var listDDL = new Array;
-        for(var i=0;i<listCompntValue.length;i++){
-          var splitted=listCompntValue[i].split(":");
-          var keyValueObj={
-            Key: splitted[0],
-            Value: splitted[1]
-          }
-          listDDL.push(keyValueObj);
-        }
-        this.applicationDDLitems[AdInsConstant.RefMasterTypeCodeInstSchm]=listDDL;
+        // console.log(response);
+        var listDDL = response["DDLRefProdComptCode"];
+        // console.log(listDDL);
+        this.applicationDDLitems[refProdCompntCode]=listDDL;
       },
       (error) => {
         console.log(error);
@@ -184,6 +177,7 @@ export class ApplicationDataComponent implements OnInit {
 
     this.http.post(url, obj).subscribe(
       (response) => {
+        console.log(response);
         this.resultResponse = response;
         this.NapAppModelForm.patchValue({
           MouCustId: this.resultResponse.MouCustId,
@@ -241,7 +235,8 @@ export class ApplicationDataComponent implements OnInit {
         });
         this.makeNewLookupCriteria();
         this.getInterestTypeCode();
-        this.getInstSchm();
+        this.getDDLFromProdOffering(AdInsConstant.RefMasterTypeCodeInstSchm);
+        this.getDDLFromProdOffering(AdInsConstant.RefMasterTypeCodePayFreq);
       },
       (error) => {
         console.log(error);
@@ -265,17 +260,25 @@ export class ApplicationDataComponent implements OnInit {
     );
   }
 
+  DictRefPayFreq: any = {};
   getPayFregData() {
     var url = AdInsConstant.GetListActiveRefPayFreq;
-    var obj = {
-      RowVersion: ""
-    };
+    var obj = { RowVersion: "" };
 
     this.http.post(url, obj).subscribe(
       (response) => {
+        console.log(response);
         var objTemp = response["ReturnObject"];
-        this.applicationDDLitems["Pay_Freq"] = objTemp;
+        for(var i=0;i<objTemp.length;i++){
+          this.DictRefPayFreq[objTemp[i].PayFreqCode] = objTemp[i];
+        }
+        console.log(this.DictRefPayFreq);
+        // this.applicationDDLitems[AdInsConstant.RefMasterTypeCodePayFreq] = objTemp;
         this.applicationDDLitems["Floating_Period"] = objTemp;
+        this.PayFreqVal = this.DictRefPayFreq[this.resultResponse.PayFreqCode].PayFreqVal;
+        this.PayFreqTimeOfYear = this.DictRefPayFreq[this.resultResponse.PayFreqCode].TimeOfYear;
+        console.log(this.PayFreqVal);
+        console.log(this.PayFreqTimeOfYear);
       },
       (error) => {
         console.log(error);
@@ -320,6 +323,7 @@ export class ApplicationDataComponent implements OnInit {
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.jsonSelect = this.resultResponse;
+    // this.inputLookupObj.nameSelect = this.resultResponse.SalesName;
     this.inputLookupObj.addCritInput = this.arrAddCrit;
     this.isInputLookupObj = true;
   }
@@ -358,8 +362,8 @@ export class ApplicationDataComponent implements OnInit {
     this.makeLookUpObj();
   }
 
-  PayFreqVal;
-  PayFreqTimeOfYear;
+  PayFreqVal: number = 0;
+  PayFreqTimeOfYear: number = 0;
   ChangeNumOfInstallmentTenor() {
     var temp = this.NapAppModelForm.controls.Tenor.value;
     if (!isNaN(temp)) {
@@ -373,8 +377,8 @@ export class ApplicationDataComponent implements OnInit {
     var idx = ev.target.selectedIndex - 1;
     var temp = this.NapAppModelForm.controls.Tenor.value;
     if (!isNaN(temp)) {
-      this.PayFreqVal = this.applicationDDLitems["Pay_Freq"][idx].PayFreqVal;
-      this.PayFreqTimeOfYear = this.applicationDDLitems["Pay_Freq"][idx].TimeOfYear;
+      this.PayFreqVal = this.DictRefPayFreq[this.applicationDDLitems[AdInsConstant.RefMasterTypeCodePayFreq][idx].Key].PayFreqVal;
+      this.PayFreqTimeOfYear = this.DictRefPayFreq[this.applicationDDLitems[AdInsConstant.RefMasterTypeCodePayFreq][idx].Key].TimeOfYear;
       var total = Math.ceil((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
       this.PatchNumOfInstallment(total);
     }

@@ -19,13 +19,10 @@ import { UcgridfooterModule, UcgridfooterComponent } from "@adins/ucgridfooter";
 // import { MainInfoComponent } from 'app/view/main-info/main-info.component';
 import { LeadRoutingModule } from "./lead-routing.module";
 import { CustomerSelfVerificationComponent } from './verification/customer-self-verification/customer-self-verification.component';
-import { CustomerDataComponent } from './verification/customer-self-verification/customer-data/customer-data.component';
-import { LeadDataComponent } from './verification/customer-self-verification/lead-data/lead-data.component';
 import { LeadMainInfoComponent } from 'app/view/lead-main-info/lead-main-info.component';
 // import { ShowErrorsComponent } from "./app/test-new/show-errors.component";
 import { LeadVerifComponent } from './lead-verif/lead-verif.component';
 import { LeadInputComponent } from "./lead-input/lead-input.component";
-import { LeadInputCustDataComponent } from "./lead-input/lead-input-cust-data/lead-input-cust-data.component";
 import { LeadInputPageComponent } from "./lead-input/lead-input-page/lead-input-page.component";
 import { LeadInputMainInfoComponent } from "./lead-input/lead-input-main-info/lead-input-main-info.component";
 import { LeadViewHeaderComponent } from "./lead-input/lead-view-header/lead-view-header.component";
@@ -56,8 +53,6 @@ export const customCurrencyMaskConfig = {
   thousands: ",",     
   nullable: false };
 
- 
-
 @NgModule({
   imports: [
     LeadRoutingModule,
@@ -85,9 +80,6 @@ export const customCurrencyMaskConfig = {
   declarations: [
     LeadMainInfoComponent,
     CustomerSelfVerificationComponent,
-    CustomerDataComponent,
-    LeadDataComponent, 
-    LeadDataComponent,
     LeadVerifComponent,
     LeadCancelComponent,
     LeadCancelConfirmComponent, 
@@ -96,7 +88,6 @@ export const customCurrencyMaskConfig = {
     ViewLeadDataComponent, 
     FraudVerifPagingComponent, FraudVerifPageComponent, LeadInquiryComponent, 
     LeadInputComponent,
-    LeadInputCustDataComponent,
     LeadInputPageComponent,
     LeadInputMainInfoComponent,
     LeadViewHeaderComponent,

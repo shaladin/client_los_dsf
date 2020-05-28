@@ -17,6 +17,11 @@
           <th><span translate class="thead-header">ACTION</span></th>
         </tr>
       </thead>
+      <tbody *ngIf = "parentForm.controls[identifier].value.length == 0">
+        <tr>
+          <td colspan="100%">No Data Available</td>
+        </tr>
+      </tbody>
       <tbody>
         <tr *ngFor="let item of parentForm.controls[identifier].controls;let i = index">
           <td [formGroupName]="i" class="text-center">

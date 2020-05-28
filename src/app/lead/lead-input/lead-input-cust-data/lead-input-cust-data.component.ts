@@ -28,7 +28,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 export class LeadInputCustDataComponent implements OnInit {
   @Input() LeadId: string;
   @Output() outputTab: EventEmitter<object> = new EventEmitter();
-  businessDt: Date;
+  businessDt: Date = new Date();
   CopyFrom: string;
   rowVersion: any;
   typePage: string;
@@ -136,7 +136,9 @@ export class LeadInputCustDataComponent implements OnInit {
 
   ngOnInit() {
       var context = JSON.parse(localStorage.getItem("UserAccess"));
-      this.businessDt = new Date(context["BusinessDt"]);
+      if (context != undefined && context != null)
+        this.businessDt = new Date(context["BusinessDt"]);
+
       this.reqLeadCustObj = new LeadCustObj();
       this.reqLeadCustObj.LeadId = this.LeadId;
       this.http.post(this.getLeadCustByLeadId, this.reqLeadCustObj).subscribe(
@@ -812,7 +814,7 @@ export class LeadInputCustDataComponent implements OnInit {
         );
       }
     }
-    else {
+    else {  
       this.leadInputObj = new LeadInputObj();
       this.setLeadCust();
       this.setLeadCustPersonal();

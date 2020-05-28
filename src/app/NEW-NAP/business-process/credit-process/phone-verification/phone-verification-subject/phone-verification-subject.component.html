@@ -43,10 +43,10 @@
                   <td class="text-left">{{item.Subject}}</td>
                   <td class="text-left">{{item.SubjectName}}</td>
                   <td class="text-left">{{item.PhoneNumber}}</td>
-                  <td class="text-left">{{item.DatetimeVerif}}</td>
-                  <td class="text-left">{{item.DatetimeVerif}}</td>
-                  <td class="text-left">{{item.Result}}</td>
-                  <td class="text-left">{{item.SubjectRelation}}</td>
+                  <td class="text-left">{{item.DatetimeVerif | date: 'dd-MM-yyyy'}}</td>
+                  <td class="text-left">{{item.DatetimeVerif | date:'HH:mm'}}</td>
+                  <td class="text-left">{{item.ResultName}}</td>
+                  <td class="text-left">{{item.SubjectRelationName}}</td>
                   <td class="text-left">{{item.Notes}}</td>
                   <td class="text-left" *ngIf="item.PhoneNumber != null"><a (click)="View(item.VerfResultHId, item.SubjectName)">View</a></td>
                   <td class="text-left" *ngIf="item.PhoneNumber == null"></td>
@@ -58,14 +58,35 @@
                 </tr>
               </tbody>
             </table>
+            <div *ngIf="isReturnHandling == 0">
+              <div class="form-group row">
+                <label class="col-md-2  adInsLabel" translate>Any Data Update</label>
+                <div class="col-md-4">
+                  <select class="form-control" id="isAnyUpdate" formControlName="IsAnyUpdate"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && ReturnHandlingForm.controls.IsAnyUpdate.invalid }" style="width:50%">
+                    <option value="">-Select One-</option>
+                    <option value="YES">Yes</option>
+                    <option value="NO">No</option>
+                  </select>
+                  <lib-uc-show-errors [control]="ReturnHandlingForm.controls.IsAnyUpdate" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2  adinslabel" translate>Update Data Notes</label>
+                <div class="col-md-4">
+                  <textarea type="text" class="form-control adInsInput" formControlName="UpdateNotes"></textarea>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="form-actions right">
-            <button type="submit" class="btn btn-raised btn-primary">
-              <i class="fa fa-check-square-o"></i> Submit
+            <button type="button" class="btn btn-raised btn-primary margin-r-5" (click)="back()">
+              <i class="fa fa-check-square-o"></i>Back
             </button>
-            <!-- <button type="button" class="btn btn-raised btn-primary" (click)="test()">
-              <i class="fa fa-check-square-o"></i> Check Value
-            </button> -->
+
+            <button type="submit" class="btn btn-raised btn-primary">
+              <i class="fa fa-check-square-o"></i>Save
+            </button>
           </div>
         </div>
       </form>

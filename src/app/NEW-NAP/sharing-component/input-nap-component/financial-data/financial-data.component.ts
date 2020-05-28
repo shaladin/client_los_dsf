@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
@@ -7,6 +7,8 @@ import { AppFinDataObj } from 'app/shared/model/AppFinData/AppFinData.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj.Model';
 import { ActivatedRoute } from '@angular/router';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
+
 
 @Component({
   selector: 'app-financial-data',
@@ -98,6 +100,7 @@ export class FinancialDataComponent implements OnInit {
   }
 
   LoadAppFinData() {
+    console.log("Load App Fin Data Started...");
     this.http.post<AppFinDataObj>(environment.losUrl + "/AppFinData/GetInitAppFinDataByAppId", { AppId: this.AppId }).subscribe(
       (response) => {
         this.appFinDataObj = response;
@@ -136,6 +139,7 @@ export class FinancialDataComponent implements OnInit {
           NtfAmt: this.appFinDataObj.NtfAmt
         });
 
+        this.setValidator(this.appFinDataObj.MrInstSchemeCode);
         this.IsParentLoaded = true;
       }
     );
@@ -199,6 +203,19 @@ export class FinancialDataComponent implements OnInit {
       }
     }
     return valid;
+  }
+
+  setValidator(mrInstSchemeCode){
+    if(mrInstSchemeCode == AdInsConstant.InstSchmBalloon){
+      this.FinDataForm.controls.BalloonValueAmt.setValidators([Validators.required]);
+      this.FinDataForm.controls.BalloonValueAmt.updateValueAndValidity();
+    }
+    if(mrInstSchemeCode == AdInsConstant.InstSchmStepUpStepDownNormal || mrInstSchemeCode == AdInsConstant.InstSchmStepUpStepDownLeasing){
+      this.FinDataForm.controls.NumOfStep.setValidators([Validators.required, Validators.min(1)]);
+      this.FinDataForm.controls.NumOfStep.updateValueAndValidity();
+      this.FinDataForm.controls.StepUpStepDownInputType.setValidators([Validators.required]);
+      this.FinDataForm.controls.NumOfStep.updateValueAndValidity();
+    }
   }
 
   // EffectiveRatePrcntInput_FocusOut(){

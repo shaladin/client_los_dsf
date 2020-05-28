@@ -70,8 +70,8 @@
               </button>
             </div>
             <div class="line"></div>
-            <div class="step" data-target="#asset-tab">
-              <button type="button" class="step-trigger" role="tab" aria-controls="asset-tab" id="asset-tab-trigger"
+            <div class="step" data-target="#coll-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="coll-tab" id="coll-tab-trigger"
                 [disabled]="!(AppStepIndex >= 5)" (click)="ChangeTab('ASSET')">
                 <span class="bs-stepper-circle">5</span>
                 <span class="bs-stepper-label">Collateral Data</span>
@@ -129,25 +129,23 @@
               <app-application-data *ngIf="AppStepIndex == 4" [appId]="appId" [IsLoanObject]="true"
                 (outputTab)="NextStep('ASSET')"></app-application-data>
             </div>
-            <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
+            <div id="coll-tab" class="content" role="tabpanel" aria-labelledby="coll-tab-trigger">
               <app-collateral-add-edit-single *ngIf="AppStepIndex == 5" [AppId]="appId" (outputTab)="NextStep('INS')">
               </app-collateral-add-edit-single>
             </div>
             <div id="insurance-tab" class="content" role="tabpanel" aria-labelledby="insurance-tab-trigger">
-              <app-insurance-data *ngIf="!IsMultiAsset && AppStepIndex == 6" [appId]="appId"
+              <app-insurance-data *ngIf="AppStepIndex == 6" [appId]="appId"
                 (outputTab)="NextStep('LFI')"></app-insurance-data>
-              <app-insurance-multi-asset-data *ngIf="IsMultiAsset && AppStepIndex == 6" [appId]="appId"
-                (outputTab)="NextStep('LFI')"></app-insurance-multi-asset-data>
             </div>
             <div id="lifeInsurance-tab" class="content" role="tabpanel" aria-labelledby="lifeInsurance-tab-trigger">
               <app-life-insurance-data *ngIf="AppStepIndex == 7" [AppId]="appId" (outputTab)="NextStep('FIN')">
               </app-life-insurance-data>
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
-              Financial
+              <app-financial-data *ngIf="AppStepIndex == 8" [AppId]=appId (outputTab)="NextStep('TC')"></app-financial-data>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
-              <app-tc-data *ngIf="AppStepIndex == 9" [AppId]="appId" (outputTab)="NextStep('TC')"></app-tc-data>
+              <app-tc-data *ngIf="AppStepIndex == 9" [AppId]="appId" (outputTab)="LastStepHandler()"></app-tc-data>
             </div>
           </div>
         </div>
@@ -157,8 +155,7 @@
 </div>
 
 <div class="form-actions pull-right">
-  <button type="button" class="btn btn-raised btn-warning" [routerLink]="['../../Paging']"
-    [queryParams]="{LobCode:'FRN4W'}" translate>
+  <button type="button" class="btn btn-raised btn-warning" [routerLink]="['../../Paging']" translate>
     <i class="fa fa-check-square-o"></i> Back
   </button>
   <button *ngIf="mode == 'ReturnHandling'" type="button" class="btn btn-raised btn-warning"

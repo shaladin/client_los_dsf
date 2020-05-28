@@ -22,9 +22,9 @@ export class PreGoLivePagingComponent implements OnInit {
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchPreGoLive.json";
 
     var critInput = new CriteriaObj();
-    critInput.propName = "app.LOB_CODE";
+    critInput.propName = "wFht.ACT_CODE";
     critInput.restriction = AdInsConstant.RestrictionEq;
-    critInput.value = AdInsConstant.LobCodeCFRFN;
+    critInput.value = "PGLV";
     this.inputPagingObj.addCritInput.push(critInput);
   }
 }

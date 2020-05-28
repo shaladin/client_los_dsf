@@ -1,3 +1,5 @@
+import { AppCustCompanyLegalDocObj } from "./AppCustCompanyLegalDocObj.Model";
+
 export class AppGuarantorCompanyObj {
     AppGuarantorCompanyId: any;
     MrCompanyTypeCode: any;
@@ -25,5 +27,6 @@ export class AppGuarantorCompanyObj {
     City: any;
     Zipcode: any;
     Subzipcode: any;
+    LegalDocObjs : any = new Array<AppCustCompanyLegalDocObj>();
   constructor() { this.AppGuarantorCompanyId = 0; this.RowVersion = "" }
 }

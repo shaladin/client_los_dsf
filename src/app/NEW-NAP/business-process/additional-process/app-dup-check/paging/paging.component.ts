@@ -17,15 +17,15 @@ export class PagingComponent implements OnInit {
 
   inputPagingObj: any;
   arrCrit: any;
-  lobCode: string;
+  BizTemplateCode: string;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router) {
     this.route.queryParams.subscribe(params => {
-      if (params["LobCode"] != null) {
-        this.lobCode = params["LobCode"];
-        localStorage.setItem("LobCode", this.lobCode);
+      if (params["BizTemplateCode"] != null) {
+        this.BizTemplateCode = params["BizTemplateCode"];
+        localStorage.setItem("BizTemplateCode", this.BizTemplateCode);
       }
       
     });
@@ -42,10 +42,10 @@ export class PagingComponent implements OnInit {
     critLobObj.restriction = AdInsConstant.RestrictionLike;
     critLobObj.DataType = 'text';
     critLobObj.propName = 'RL.BIZ_TMPLT_CODE';
-    critLobObj.value = localStorage.getItem("LobCode");
+    critLobObj.value = localStorage.getItem("BizTemplateCode");
     this.inputPagingObj.addCritInput.push(critLobObj);
 
-    // var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    // var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     // var addCrit = new CriteriaObj();
     // addCrit.DataType = 'text';
     // addCrit.propName = 'WTL.USERNAME';
@@ -59,7 +59,7 @@ export class PagingComponent implements OnInit {
   }
 
   NextScreen(event){
-    // var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    // var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     // var wfClaimObj = new ClaimWorkflowObj();
     // wfClaimObj.pWFTaskListID = event.RowObj.WfTaskListId;
     // wfClaimObj.pUserID = currentUserContext["UserName"];

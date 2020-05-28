@@ -45,7 +45,7 @@ export class TeleVerifDetailComponent implements OnInit {
     }
   }
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     var wfClaimObj : ClaimWorkflowObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.WfTaskListId;
     wfClaimObj.pUserID = currentUserContext["UserName"];

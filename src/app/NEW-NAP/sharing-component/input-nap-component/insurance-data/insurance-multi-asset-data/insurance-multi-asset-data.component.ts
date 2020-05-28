@@ -31,6 +31,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   @Input() appId: number;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @ViewChild('InsuranceContent') modalIns;
+  @ViewChild('AssetContent') modalAsset;
   
   listAppAssetObj: any;
   appCollateralObj: any;
@@ -77,6 +78,8 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   isGenerate: boolean = false;
   isCalculate: boolean = false;
   closeResult: string;
+  appIdForAssetModal: number;
+  appAssetIdForAssetModal: number;
 
   InsuranceDataForm = this.fb.group({
     InsAssetCoveredBy: ['', [Validators.required, Validators.maxLength(50)]],
@@ -105,7 +108,9 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     CvgAmt: [0, Validators.required],
     CustCvgAmt: [0, Validators.required],
     TotalCustDiscAmt: [0],
-    InsCpltzAmt: [0]
+    InsCpltzAmt: [0],
+    AppId: [0],
+    AppAssetId: [0]
   });
   
   constructor(private fb: FormBuilder, 
@@ -163,9 +168,27 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     );
   }
 
+  event2(e){
+    this.appIdForAssetModal = e.RowObj.AppId;
+    this.appAssetIdForAssetModal = e.RowObj.AppAssetId;
+    this.openModal(this.modalAsset);
+  }
+
+  terimaValue(e){
+    this.modalService.dismissAll();
+  }
+
   event(ev){
     this.AppCollateralId = ev.RowObj.AppCollateralId;
     this.open(this.modalIns);
+  }
+
+  openModal(content){
+    this.modalService.open(content).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
   }
 
   open(content) {
@@ -203,10 +226,11 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   
   SubmitForm()
   {
-
+    this.outputTab.emit();
   }
 
   SaveForm(){
+    console.log(this.InsuranceDataForm)
     var insuredBy = this.InsuranceDataForm.controls.InsAssetCoveredBy.value;
 
     if(insuredBy == AdInsConstant.InsuredByCompany || insuredBy == AdInsConstant.InsuredByCustomerCompany){
@@ -224,8 +248,9 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       (response) => {
         console.log(response);
         this.toastr.successMessage(response["message"]);
+        this.modalService.dismissAll();
         // this.wizard.goToNextStep();
-          this.outputTab.emit();
+          // this.outputTab.emit();
       },
       (error) => {
         console.log(error);
@@ -480,6 +505,11 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       reqObj.InsCoverage.push(insCoverage);
     }
     reqObj.AdminFee = this.InsuranceDataForm.controls.CustAdminFeeAmt.value;
+    reqObj.AppId = this.InsuranceDataForm.controls.AppId.value;
+    reqObj.AppAssetId = this.InsuranceDataForm.controls.AppAssetId.value;
+    reqObj.InscoBranchCode = this.InsuranceDataForm.controls.InscoBranchCode.value;
+    reqObj.ProdOfferingCode = this.appObj.ProdOfferingCode;
+    reqObj.ProdOfferingVersion = this.appObj.ProdOfferingVersion;
 
     await this.http.post(AdInsConstant.CalculateInsurance, reqObj).toPromise().then(
       (response) => {
@@ -1015,6 +1045,11 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         }
 
         this.appAssetId = this.appAssetObj.AppAssetId;
+
+        this.InsuranceDataForm.patchValue({
+          AppId: this.appId,
+          AppAssetId: this.appAssetId
+        });
       },
       (error) => {
         console.log(error);

@@ -39,6 +39,20 @@ import { UcSubsectionModule } from "@adins/uc-subsection";
 import { FraudVerificationMultiAssetComponent } from "./fraud-verification-multi-asset/fraud-verification-multi-asset.component";
 import { ViewSharingComponentModule } from "app/NEW-NAP/sharing-component/view-app-component/view-sharing-component.module";
 import { UcviewgenericModule } from "@adins/ucviewgeneric";
+import { NgxCurrencyModule } from "ngx-currency";
+
+
+export const customCurrencyMaskConfig = {
+  align: "right",
+  allowNegative: true,
+  allowZero: true,
+  decimal: ".",
+  precision: 2,
+  prefix: "",
+  suffix: "",
+  thousands: ",",
+  nullable: false
+};
 
 @NgModule({
   exports: [
@@ -63,7 +77,8 @@ import { UcviewgenericModule } from "@adins/ucviewgeneric";
     UcapprovebyModule,
     UcSubsectionModule ,
     ViewSharingComponentModule,
-    UcviewgenericModule
+    UcviewgenericModule,
+    NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
   ],
   declarations: [
     CreditApprovalPagingComponent,

@@ -87,12 +87,40 @@
         </div>
       </div>
       <div class="form-group row">
+        <label class="col-md-2 adins-required-label" translate>Collateral Condition</label>
+        <div class="col-md-3">
+          <select class="form-control" formControlName="MrCollateralConditionCode"  (change)="radioChange($event)"
+            [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.MrCollateralConditionCode.invalid }">
+            <option *ngFor="let item of AssetConditionList" [value]="item.Key">{{item.Value}}</option>
+          </select>
+          <lib-uc-show-errors [control]="AddCollForm.controls.MrCollateralConditionCode" [submit]="enjiForm.submitted">
+          </lib-uc-show-errors>
+        </div>
+      </div>
+      <div formArrayName="items">
+        <div *ngFor="let item of items.controls; let i = index;">
+          <div class="form-group row" [formGroupName]="i">
+            <label class="col-md-2 "[ngClass]="{'adins-required-label': isUsed && item.controls.IsMandatory.value == true}"  translate> {{item.controls.SerialNoLabel.value}} </label> 
+            <div class="col-md-3  ">
+              <input type="text" class="form-control adInsInput" formControlName="SerialNoValue" [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.items['controls'][i]['controls'].SerialNoValue.invalid}">
+              <lib-uc-show-errors  [control]="AddCollForm.controls.items['controls'][i]['controls'].SerialNoValue"
+                [submit]="enjiForm.submitted"></lib-uc-show-errors >
+            </div>
+          </div>
+        </div>
+      </div> 
+ 
+      <div class="form-group row">
         <label class="col-md-2 adins-required-label" translate>Collateral Price</label>
         <div class="col-md-3">
-          <input type="" currencyMask id="collateralValueAmt" class="form-control" formControlName="CollateralValueAmt"
+          <!-- <input type="text" class="form-control" formControlName="CollateralValueAmt"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CollateralValueAmt.invalid }">
           <lib-uc-show-errors [control]="AddCollForm.controls.CollateralValueAmt" [submit]="enjiForm.submitted">
-          </lib-uc-show-errors>
+          </lib-uc-show-errors> -->
+
+          <lib-ucinputnumber [parentForm]="AddCollForm" [identifier]="'CollateralValueAmt'"
+          [enjiForm]="enjiForm" [isRequired]="false"
+          ucNumber="AddCollForm.controls.CollateralValueAmt.value"></lib-ucinputnumber> 
         </div>
       </div>
       <div class="form-group row">

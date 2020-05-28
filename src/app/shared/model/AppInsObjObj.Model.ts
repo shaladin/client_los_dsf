@@ -48,7 +48,7 @@ export class AppInsObjObj {
 constructor() { 
     this.AppInsObjId = 0;
     this.AppId = 0;
-    this.AppAssetId = 0;
+    this.AppAssetId = null;
     this.AppCollateralId = null;
     this.AgrmntId = null;
     this.InsObjName = "";

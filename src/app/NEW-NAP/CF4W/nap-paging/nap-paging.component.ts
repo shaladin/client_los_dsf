@@ -6,6 +6,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { CenterGrpOfficeMbrObj } from 'app/shared/model/RefOffice/CenterGrpOfficeMbrObj.Model';
 
 @Component({
   selector: 'app-nap-paging',
@@ -22,29 +23,59 @@ export class NapPagingComponent implements OnInit {
     private toastr: NGXToastrService,
     private router: Router,
     private route: ActivatedRoute
-  ) { 
-    this.route.queryParams.subscribe(params => {
-      if (params['LobCode'] != null) {
-        localStorage.setItem("LobCode",params['LobCode']);
-      }
-    });
+  ) {
   }
 
+  makeCriteria(){
+    var critObj = new CriteriaObj();
+    critObj.restriction = AdInsConstant.RestrictionLike;
+    critObj.propName = 'RL.BIZ_TMPLT_CODE';
+    critObj.value = AdInsConstant.CF4W;
+    this.arrCrit.push(critObj);
+    
+    critObj = new CriteriaObj();
+    critObj.restriction = AdInsConstant.RestrictionIn;
+    if(this.userAccess.MrOfficeTypeCode!=AdInsConstant.CENTER_GROUP_CODE){
+      critObj.propName = 'a.ORI_OFFICE_CODE';
+      critObj.listValue = [this.userAccess.OfficeCode];
+    }else{
+      critObj.propName = 'a.ORI_OFFICE_CODE';
+      var obj = { CenterGrpCode: AdInsConstant.CENTER_GROUP_CODE };
+      this.http.post(AdInsConstant.GetListCenterGrpMemberByCenterGrpCode, obj).subscribe(
+        (response) => {
+          // console.log(response);
+          var CenterGrpOfficeMbrObjs : Array<CenterGrpOfficeMbrObj> = response["ListCenterGrpOfficeMbr"];
+
+          var listDataTemp = new Array();
+          for(var i=0;i<CenterGrpOfficeMbrObjs.length;i++){
+            listDataTemp.push(CenterGrpOfficeMbrObjs[i].RefOfficeCode);
+          } 
+          critObj.listValue = listDataTemp;
+        },
+        (error) => {
+          console.log(error);
+        }
+      )
+    }
+    // critObj.value = localStorage.getItem("LobCode");
+    this.arrCrit.push(critObj);
+  }
+  
   async ngOnInit() {
+    console.log("User Access");
+    console.log(JSON.parse(localStorage.getItem("UserAccess")));
+    this.userAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    
+    this.arrCrit = new Array();    
+    this.makeCriteria();
+
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url="./assets/ucpaging/searchApp.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchApp.json";
 
-    this.arrCrit = new Array();
-    var critObj = new CriteriaObj();
-    critObj.restriction = AdInsConstant.RestrictionLike;
-    critObj.propName = 'RL.BIZ_TMPLT_CODE';
-    critObj.value = localStorage.getItem("LobCode");
-    this.arrCrit.push(critObj);
     this.inputPagingObj.addCritInput = this.arrCrit;
-    this.userAccess = JSON.parse(localStorage.getItem("UserAccess"));
   }
   
   AddApp(){
@@ -64,12 +95,12 @@ export class NapPagingComponent implements OnInit {
   }
 
   GetCallBack(ev: any){
-    console.log(ev);
-    if(!ev.RowObj.IsAllowAppCreated){
-      this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');
-      return;
-    }else{
+    // console.log(ev);
+    // if(!ev.RowObj.IsAllowAppCreated){
+    //   this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');
+    //   return;
+    // }else{
       this.router.navigate(["Nap/ConsumerFinance/InputNap/Add/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId" : ev.RowObj.WfTaskListId } });
-    }
+    // }
   }
 }

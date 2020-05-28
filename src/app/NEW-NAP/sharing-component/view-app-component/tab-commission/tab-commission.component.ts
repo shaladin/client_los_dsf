@@ -44,7 +44,6 @@ export class TabCommissionComponent implements OnInit {
 
   async GetCommissionData(){
     var obj: object = {AppId: this.appId};
-
     var url: string = AdInsConstant.GetAppCommissionDataDetailByAppId;
 
     await this.http.post(url, obj).toPromise().then(
@@ -78,14 +77,14 @@ export class TabCommissionComponent implements OnInit {
         this.ReferantorData["title"]=AdInsConstant.TitleReferantor;
         this.ReferantorData["content"]=AdInsConstant.ContentReferantor;
         this.ReferantorData["listData"]=this.ListReferantorData;
-        // console.log(this.SummaryData);
+        // console.log(this.SummaryData); 
         // console.log(this.SupplData);
         // console.log(this.SupplEmpData);
         // console.log(this.ReferantorData);
       },
       (error) => {
         console.log(error);
-      }
+      } 
     )
   }
 }

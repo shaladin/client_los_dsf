@@ -15,13 +15,13 @@ import { HttpClient } from '@angular/common/http';
 export class FraudDetectionPagingComponent implements OnInit {
   inputPagingObj: any;
   arrCrit: any;
-  lobCode : string;
+  BizTemplateCode : string;
 
   constructor(private router: Router, private http: HttpClient,private route: ActivatedRoute) { 
     this.route.queryParams.subscribe(params => {
-      if (params['LobCode'] != null) {
-        this.lobCode = params['LobCode'];
-        localStorage.setItem("LobCode",this.lobCode);
+      if (params['BizTemplateCode'] != null) {
+        this.BizTemplateCode = params['BizTemplateCode'];
+        localStorage.setItem("BizTemplateCode",this.BizTemplateCode);
       }
     });
   }
@@ -37,7 +37,7 @@ export class FraudDetectionPagingComponent implements OnInit {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'RL.BIZ_TMPLT_CODE';
-    critObj.value = this.lobCode;
+    critObj.value = this.BizTemplateCode;
     this.arrCrit.push(critObj);
     this.inputPagingObj.addCritInput = this.arrCrit;
   }
@@ -46,7 +46,7 @@ export class FraudDetectionPagingComponent implements OnInit {
 
     this.router.navigate(["/Nap/CreditProcess/FraudDetection/Detail"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
 
-    // var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    // var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     // var wfClaimObj = new ClaimWorkflowObj();
     // wfClaimObj.pWFTaskListID = event.RowObj.WfTaskListId;
     // wfClaimObj.pUserID = currentUserContext["UserName"];

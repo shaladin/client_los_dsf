@@ -25,6 +25,7 @@ export class CustUcaddressComponent implements OnInit {
   @Input() showFax: boolean = true;
   @Input() showOwnership: boolean = false;
   @Input() showSubsection: boolean = true;
+  @Input() showStayLength: boolean = false;
   @Input() isRequired: boolean = true;
 
   houseOwnershipObj: any;
@@ -59,7 +60,8 @@ export class CustUcaddressComponent implements OnInit {
         FaxArea: '',
         Fax: '',
         MrHouseOwnershipCode: '',
-        SubZipcode:''
+        SubZipcode:'',
+        StayLength: 0
       };
     }
     this.UCAddrForm.addControl(this.identifier, this.fb.group({
@@ -81,7 +83,8 @@ export class CustUcaddressComponent implements OnInit {
       FaxArea: ['', Validators.pattern("^[0-9]+$")],
       Fax: ['', Validators.pattern("^[0-9]+$")],
       MrHouseOwnershipCode: [''],
-      SubZipcode:['']
+      SubZipcode:[''],
+      StayLength: [0, Validators.min(0)]
     }));
 
     if(this.inputField.inputLookupObj == undefined){

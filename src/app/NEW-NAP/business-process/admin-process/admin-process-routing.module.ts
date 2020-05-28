@@ -24,11 +24,12 @@ import { PreGoLiveApprovalPagingComponent } from './pre-go-live/pre-go-live-appr
 import { PreGoLiveApprovalDetailComponent } from './pre-go-live/pre-go-live-approval-detail/pre-go-live-approval-detail.component';
 import { DocumentPagingComponent } from './document-printing/document-paging/document-paging.component';
 import { DocumentViewComponent } from './document-printing/document-view/document-view.component';
-import { InvoiceDataAddComponent } from './invoice-data/invoice-data-add/invoice-data-add.component';
 import { DeliveryOrderMultiAssetDetailComponent } from './delivery-order-multi-asset/delivery-order-multi-asset-detail/delivery-order-multi-asset-detail.component';
 import { DeliveryOrderMultiAssetComponent } from './delivery-order-multi-asset/delivery-order-multi-asset.component';
 import { InvoiceVerifPagingComponent } from './invoice-verif/invoice-verif-paging/invoice-verif-paging.component';
 import { InvoiceVerifDetailComponent } from './invoice-verif/invoice-verif-detail/invoice-verif-detail.component';
+import { CustConfirmationPagingComponent } from './cust-confirmation/cust-confirmation-paging/cust-confirmation-paging.component';
+import { CustConfirmationSubjDetailComponent } from './cust-confirmation/cust-confirmation-subj-detail/cust-confirmation-subj-detail.component';
 
 const routes: Routes = [
   {
@@ -56,7 +57,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'DeliveryOrder/paging',
+        path: 'DeliveryOrder/Paging',
         component: DeliveryOrderPagingComponent,
         data: {
           title: 'Delivery Order Paging'
@@ -70,10 +71,24 @@ const routes: Routes = [
         }
       },
       {
+        path: 'CustConfirmation/Paging',
+        component: CustConfirmationPagingComponent,
+        data: {
+          title: 'Customer Confirmation Paging'
+        }
+      },
+      {
         path: 'CustConfirmation/Detail',
         component: CustConfirmationDetailComponent,
         data: {
           title: 'Customer Confirmation Detail'
+        }
+      },
+      {
+        path: 'CustConfirmation/Subj/Detail',
+        component: CustConfirmationSubjDetailComponent,
+        data: {
+          title: 'Customer Confirmation Subject Detail'
         }
       },
       {
@@ -200,13 +215,6 @@ const routes: Routes = [
         component: DocumentViewComponent,
         data: {
           title: 'Document Printing View'
-        }
-      },
-      {
-        path: 'InvoiceData/Add',
-        component: InvoiceDataAddComponent,
-        data: {
-          title: 'Invoice Data Add'
         }
       },
       {

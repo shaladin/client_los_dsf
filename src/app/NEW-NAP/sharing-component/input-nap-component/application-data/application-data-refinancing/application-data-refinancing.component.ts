@@ -98,7 +98,7 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     this.ListCrossAppObj["AppId"]=this.AppId;
     this.ListCrossAppObj["result"] = [];
     this.isInputLookupObj = false;
-
+    console.log('test app data refinanc');
     // this.makeLookUpObj();
     this.getAppModelInfo();
     
@@ -116,6 +116,80 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     this.getPayFregData();
     this.getAppSrcData();
     this.GetCrossInfoData();
+  }
+
+  getDDLFromProdOffering(refProdCompntCode:string){
+    var obj = {
+      ProdOfferingCode: this.resultResponse.ProdOfferingCode,
+      RefProdCompntCode: refProdCompntCode,
+      ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
+    };
+    this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
+      (response) => {
+        console.log(response);
+        var listCompntValue: Array<string> = response["CompntValue"].split(";");
+        console.log(listCompntValue);
+        
+        var listDDL = new Array;
+        var keyValueObj;
+        if(listCompntValue.length!=1){
+          for(var i=0;i<listCompntValue.length;i++){
+            var splitted=listCompntValue[i].split(":");
+            keyValueObj={
+              Key: splitted[0],
+              Value: splitted[1]
+            };
+            listDDL.push(keyValueObj);
+          }
+        }else{
+          keyValueObj={
+            Key: response["CompntValue"],
+            Value: response["CompntValueDesc"]
+          };
+          listDDL.push(keyValueObj);
+        }
+        console.log(listDDL);
+        this.applicationDDLitems[refProdCompntCode]=listDDL;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  getInterestTypeCode(){
+    var obj = {
+      ProdOfferingCode: this.resultResponse.ProdOfferingCode,
+      RefProdCompntCode: AdInsConstant.RefMasterTypeCodeInterestType,
+      ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
+    };
+
+    this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
+      (response) => {
+        // console.log(response);   
+        this.NapAppModelForm.patchValue({
+          InterestType: response["CompntValue"],
+          InterestTypeDesc: response["CompntValueDesc"],
+        });
+        this.ChangeInterestType();
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  isFixedRate: boolean = false;
+  ChangeInterestType() {
+    if (this.NapAppModelForm.value.InterestType == "FIXED") {
+      this.isFixedRate = true;
+      this.NapAppModelForm.controls.FloatingPeriod.clearValidators();
+    }
+    else {
+      this.isFixedRate = false;
+      this.NapAppModelForm.controls.FloatingPeriod.setValidators(Validators.required);
+    }
+    this.NapAppModelForm.controls.FloatingPeriod.updateValueAndValidity();
   }
 
   GetCrossInfoData(){
@@ -195,8 +269,14 @@ export class ApplicationDataRefinancingComponent implements OnInit {
           RsvField3: this.resultResponse.RsvField3,
           RsvField4: this.resultResponse.RsvField4,
           RsvField5: this.resultResponse.RsvField5,
+          MrInstSchemeCode: this.resultResponse.MrInstSchemeCode,
+          InterestType: this.resultResponse.InterestType,
+          FloatingPeriod: this.resultResponse.FloatingPeriodCode
         });
         this.makeNewLookupCriteria();
+        this.getInterestTypeCode();
+        this.getDDLFromProdOffering(AdInsConstant.RefMasterTypeCodeInstSchm);
+        this.getDDLFromProdOffering(AdInsConstant.RefMasterTypeCodePayFreq);
       },
       (error) => {
         console.log(error);

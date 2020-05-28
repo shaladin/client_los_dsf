@@ -27,6 +27,11 @@
         <th><span translate class="thead-header" name='action'>ACTION</span></th>
       </tr>
     </thead>
+    <tbody *ngIf = "listBankAcc == undefined">
+      <tr>
+        <td colspan="100%">No Data Available</td>
+      </tr>
+    </tbody>
     <tbody>
       <tr *ngFor="let item of listBankAcc; let i = index">
         <td style="text-align: center;">{{item.BankName}}</td>
@@ -115,6 +120,11 @@
                     <th><span translate class="thead-header">ACTION</span></th>
                   </tr>
                 </thead>
+                <tbody *ngIf = "CustBankAccountForm.controls['BankStmntObjs'].value.length == 0">
+                  <tr>
+                    <td colspan="100%">No Data Available</td>
+                  </tr>
+                </tbody>
                 <tbody>
                   <tr *ngFor="let item of CustBankAccountForm.controls['BankStmntObjs'].controls;let i = index">
                     <td [formGroupName]="i"><select class="form-control" formControlName="Month">

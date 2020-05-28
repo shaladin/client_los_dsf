@@ -64,7 +64,7 @@ export class NapAddDetailComponent implements OnInit {
 
   ngOnInit() {
     console.log("this");
-    // this.ClaimTask();
+    this.ClaimTask();
     this.AppStepIndex = 0;
     this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
     this.NapObj = new AppObj();
@@ -218,7 +218,7 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   ClaimTask(){
-    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     var wfClaimObj = new AppObj();
     wfClaimObj.AppId = this.appId;
     wfClaimObj.Username = currentUserContext["UserName"];
