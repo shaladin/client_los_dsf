@@ -3,6 +3,7 @@ import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-pre-go-live-paging',
@@ -12,7 +13,19 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 export class PreGoLivePagingComponent implements OnInit {
 
   inputPagingObj: any;
-  constructor() { }
+  bizTemplateCode :any;
+  constructor(private route: ActivatedRoute) {
+    this.route.queryParams.subscribe(params => {
+      if (params["BizTemplateCode"] != null) {
+        this.bizTemplateCode = params["BizTemplateCode"];
+      }
+      else{
+        this.bizTemplateCode = "CFNEWCAR";
+      }
+    });
+  }
+
+  
 
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
@@ -25,6 +38,12 @@ export class PreGoLivePagingComponent implements OnInit {
     critInput.propName = "wFht.ACT_CODE";
     critInput.restriction = AdInsConstant.RestrictionEq;
     critInput.value = "PGLV";
+
+    var critBizTemplate = new CriteriaObj();
+    critBizTemplate.propName = "app.BIZ_TEMPLATE_CODE";
+    critBizTemplate.restriction = AdInsConstant.RestrictionEq;
+    critBizTemplate.value = this.bizTemplateCode;
     this.inputPagingObj.addCritInput.push(critInput);
+    this.inputPagingObj.addCritInput.push(critBizTemplate);
   }
 }
