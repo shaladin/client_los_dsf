@@ -91,6 +91,16 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
     }
   }
 
+  designatedStepHandler(idx){
+    if(this.mouType == "GENERAL"){
+      this.stepperGeneral.to(idx);
+    }
+    else if(this.mouType == "FACTORING"){
+      this.stepperFactoring.to(idx);
+    }
+    this.currentStepIndex = idx;
+  }
+
   // mouCustTc(e){
   //   this.stepHandler(e);
   // }
