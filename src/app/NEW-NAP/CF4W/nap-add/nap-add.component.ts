@@ -235,7 +235,7 @@ export class NapAddComponent implements OnInit {
       ProdOfferingVersion: ev.ProdOfferingVersion,
       AppNo: ev.AppNo,
       MouCustId: ev.MouCustId,
-      LeadId: ev.LeadId,
+      LeadId: ev.LeadId, 
       CurrCode: ev.CurrCode,
       LobCode: ev.LobCode,
       RefProdTypeCode: ev.RefProdTypeCode,
