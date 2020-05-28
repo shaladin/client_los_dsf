@@ -11,13 +11,13 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: []
 })
 export class CommissionReservedFundPagingComponent implements OnInit {
-  lobCode : string;
+  BizTemplateCode : string;
 
   constructor(private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
-      if (params['LobCode'] != null) {
-        this.lobCode = params['LobCode'];
-        localStorage.setItem("LobCode",this.lobCode);
+      if (params['BizTemplateCode'] != null) {
+        this.BizTemplateCode = params['BizTemplateCode'];
+        localStorage.setItem("BizTemplateCode",this.BizTemplateCode);
       }
     }); }
 
@@ -33,7 +33,7 @@ export class CommissionReservedFundPagingComponent implements OnInit {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'RL.BIZ_TMPLT_CODE';
-    critObj.value = this.lobCode;
+    critObj.value = this.BizTemplateCode;
     arrCrit.push(critObj);
     this.inputPagingObj.addCritInput = arrCrit;
   }
