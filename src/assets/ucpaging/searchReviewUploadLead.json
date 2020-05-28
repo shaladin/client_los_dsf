@@ -1,164 +1,184 @@
 {
-    "title": "Review Lead Monitoring",
-    "exportExcel": false,
-    "component": [
-      {
-        "type": "dropdown",
-        "name": "UL.ORI_OFFICE_CODE",
-        "id": "OriOfficeCodeId",
-        "value": "",
-        "placeholder": "Placeholder",
-        "datatype": "text",
-        "isFromURL": true,
-        "isSelectOne": false,
-        "url": "http://r3app-server/FOUNDATION_R3/RefOffice/GetListKvpActiveRefOfficeForPaging",
-        "label": "Office Name",
-        "isQueryIn": true,
-        "items": [],
-        "itemsUrl": []
-      },
-      {
-        "type": "textbox",
-        "name": "UL.UPLOAD_MONITORING_NO",
-        "id": "UploadNoId",
-        "value": "",
-        "label": "Upload No",
-        "placeholder": "Placeholder",
-        "datatype": "text"
-      },
-      {
-        "type": "dropdown",
-        "name": "VWF.CLAIM_STAT",
-        "id": "ActiveStatusId",
-        "label": "TASK CLAIM STATUS",
-        "value": "",
-        "placeholder": "Placeholder",
-        "isFromURL": false,
-        "isSelectOne": false,
-        "items": [
-          {
-            "key": "CLAIMED",
-            "value": "CLAIMED"
-          },
-          {
-            "key": "UNCLAIMED",
-            "value": "UNCLAIMED"
-          }
-        ],
-        "itemsUrl": []
-      },
-      {
-        "type": "textbox",
-        "name": "VWF.USERNAME",
-        "id": "ClaimById",
-        "value": "",
-        "label": "CLAIM BY",
-        "placeholder": "Placeholder"
-      }
-    ],
-    "querystring": {
-      "select": "SELECT UL.UPLOAD_MONITORING_NO AS UploadNo, RO.OFFICE_NAME AS OfficeName, STAT.DESCR AS UploadStatusCode, UL.CUST_NO AS CustNo, UL.CUST_NAME AS CustName, UL.TAX_ID_NO AS TaxIdNo, ISNULL(VWF.WF_TASK_LIST_ID, 0) AS TaskListId, VWF.CLAIM_STAT AS ClaimStat, VWF.USERNAME AS ClaimBy",
-      "from": "FROM dbo.UPLOAD_LEAD AS UL WITH(NOLOCK) INNER JOIN dbo.V_REF_OFFICE AS RO WITH(NOLOCK) ON UL.ORI_OFFICE_CODE = RO.OFFICE_CODE INNER JOIN dbo.V_WF_TASK_LIST AS VWF WITH(NOLOCK) ON UL.UPLOAD_MONITORING_NO = VWF.TRANSACTION_CODE AND VWF.ACT_CODE = 'UPLOAD_LEAD_REVIEW' AND VWF.END_EXECUTING_DATE IS NULL LEFT JOIN dbo.V_REF_STATUS AS STAT WITH(NOLOCK) ON UL.UPLOAD_STATUS = STAT.REF_STATUS_CODE AND STATUS_GRP_CODE = 'UPLOAD_STATUS'",
-      "where": "WHERE UL.UPLOAD_STATUS = 'RVW'"
+  "title": "REVIEW LEAD MONITORING",
+  "exportExcel": false,
+  "component": [
+    {
+      "type": "dropdown",
+      "name": "UMH.OFFICE_CODE",
+      "id": "OriOfficeNameId",
+      "value": "",
+      "placeholder": "Placeholder",
+      "datatype": "text",
+      "isFromURL": true,
+      "isSelectOne": false,
+      "url": "http://r3app-server/FOUNDATION_R3/RefOffice/GetListKvpActiveRefOfficeForPaging",
+      "label": "Office Name",
+      "isQueryIn": true,
+      "items": [],
+      "itemsUrl": []
     },
-    "headerList": [
-      {
-        "type": "sort",
-        "position": "left",
-        "label": "CLAIM BY",
-        "name": "VWF.USERNAME"
-      },
-      {
-        "type": "sort",
-        "position": "center",
-        "label": "UPLOAD NO.",
-        "name": "UL.UPLOAD_MONITORING_NO"
-      },
-      {
-        "type": "sort",
-        "position": "center",
-        "label": "CUSTOMER NO.",
-        "name": "UL.CUST_NO"
-      },
-      {
-        "type": "sort",
-        "position": "left",
-        "label": "CUSTOMER NAME",
-        "name": "UL.CUST_NAME"
-      },
-      {
-        "type": "sort",
-        "position": "center",
-        "label": "TAX ID NO.",
-        "name": "UL.TAX_ID_NO"
-      },
-      {
-        "type": "label",
-        "position": "center",
-        "label": "REVIEW"
-      },
-      {
-        "type": "label",
-        "position": "center",
-        "label": "CANCEL"
-      }
-    ],
-    "bodyList": [
-      {
-        "type": "text",
-        "position": "center",
-        "property": "ClaimBy"
-      },
-      {
-        "type": "text",
-        "position": "center",
-        "property": "UploadNo"
-      },
-      {
-        "type": "text",
-        "position": "center",
-        "property": "CustNo"
-      },
-      {
-        "type": "text",
-        "position": "left",
-        "property": "CustName"
-      },
-      {
-        "type": "text",
-        "position": "center",
-        "property": "TaxIdNo"
-      },
-      {
-        "type": "action",
-        "position": "center",
-        "action": [
-          {
-            "type": "edit",
-            "path": "/Lead/Review/Detail",
-            "param": [
-              {
-                "type": "UploadNo",
-                "property": "UploadNo"
-              },
-              {
-                "type": "TaskListId",
-                "property": "TaskListId"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "type": "action",
-        "position": "center",
-        "action": [
-          {
-            "type": "callback",
-            "property": "UploadId",
-            "icon" : "ft-x"
-          }
-        ]
-      }
-    ]
-  }
+    {
+      "type": "textbox",
+      "name": "UMH.FILE_NAME",
+      "id": "FileNameId",
+      "value": "",
+      "label": "File Name",
+      "placeholder": "Placeholder",
+      "datatype": "text"
+    },
+    {
+      "type": "textbox",
+      "name": "UMH.UPLOAD_MONITORING_NO",
+      "id": "UploadNoId",
+      "value": "",
+      "label": "Upload No",
+      "placeholder": "Placeholder",
+      "datatype": "text"
+    },
+    {
+      "type": "dropdown",
+      "name": "VWF.CLAIM_STAT",
+      "id": "ActiveStatusId",
+      "label": "TASK CLAIM STATUS",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": false,
+      "isSelectOne": false,
+      "items": [
+        {
+          "key": "CLAIMED",
+          "value": "CLAIMED"
+        },
+        {
+          "key": "UNCLAIMED",
+          "value": "UNCLAIMED"
+        }
+      ],
+      "itemsUrl": []
+    },
+    {
+      "type": "textbox",
+      "name": "VWF.USERNAME",
+      "id": "ClaimById",
+      "value": "",
+      "label": "CLAIM BY",
+      "placeholder": "Placeholder"
+    }
+  ],
+  "querystring": {
+    "select": "SELECT RO.OFFICE_NAME AS OfficeName, UMH.UPLOAD_MONITORING_NO AS UploadNo, UMH.FILE_NAME AS FileName, UMH.UPLOAD_DT AS UploadDt, UL.UPLOAD_STATUS AS UploadStatusCode, UMH.TOTAL_RECORD AS TotalRecord,  UMH.TOTAL_RECORD_PROCESSED AS TotalRecordProcessed, ISNULL(VWF.WF_TASK_LIST_ID, 0) AS TaskListId, VWF.CLAIM_STAT AS ClaimStat, VWF.USERNAME AS ClaimBy",
+    "from": "FROM dbo.V_UPLOAD_MONITORING_H UMH WITH (NOLOCK) INNER JOIN UPLOAD_LEAD AS UL ON UMH.UPLOAD_MONITORING_NO = UL.UPLOAD_MONITORING_NO JOIN dbo.V_REF_STATUS RS WITH (NOLOCK) ON RS.REF_STATUS_CODE = UL.UPLOAD_STATUS AND RS.STATUS_GRP_CODE = 'UPLOAD_STATUS'  JOIN dbo.V_REF_OFFICE AS RO WITH (NOLOCK) ON UMH.OFFICE_CODE = RO.OFFICE_CODE  JOIN dbo.V_WF_TASK_LIST VWF WITH (NOLOCK) ON UMH.UPLOAD_MONITORING_NO = VWF.TRANSACTION_CODE AND VWF.ACT_CODE = 'UPLOAD_NAS_REVIEW' AND VWF.END_EXECUTING_DATE IS NULL",
+    "where": "WHERE UL.UPLOAD_STATUS = 'RVW'"
+  },
+  "headerList": [
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "CLAIM BY",
+      "name": "VWF.USERNAME"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "UPLOAD NO",
+      "name": "UMH.UPLOAD_MONITORING_NO"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "FILE NAME",
+      "name": "UMH.FILE_NAME"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "UPLOAD DATE",
+      "name": "UMH.UPLOAD_DT"
+    },
+    {
+      "type": "sort",
+      "position": "right",
+      "label": "TOTAL RECORD",
+      "name": "UMH.TOTAL_RECORD"
+    },
+    {
+      "type": "sort",
+      "position": "right",
+      "label": "TOTAL RECORD PROCESSED",
+      "name": "UMH.TOTAL_RECORD_PROCESSED"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "REVIEW"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "CANCEL"
+    }
+  ],
+  "bodyList": [
+    {
+      "type": "text",
+      "position": "center",
+      "property": "ClaimBy"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "UploadNo"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "FileName"
+    },
+    {
+      "type": "date",
+      "position": "center",
+      "property": "UploadDt"
+    },
+    {
+      "type": "text",
+      "position": "right",
+      "property": "TotalRecord"
+    },
+    {
+      "type": "text",
+      "position": "right",
+      "property": "TotalRecordProcessed"
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
+        {
+          "type": "edit",
+          "path": "/Lead/ReviewMonitoring/Detail",
+          "param": [
+            {
+              "type": "UploadNo",
+              "property": "UploadNo"
+            },
+            {
+              "type": "TaskListId",
+              "property": "TaskListId"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
+        {
+          "type": "callback",
+          "property": "UploadId",
+          "icon" : "ft-x"
+        }
+      ]
+    }
+  ]
+}

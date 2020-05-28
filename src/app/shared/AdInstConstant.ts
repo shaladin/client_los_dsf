@@ -558,6 +558,8 @@ export class AdInsConstant {
   public static AssignRoleToUploadSetting = "/UploadSetting/AssignRoleToUploadSetting"
   public static GetListRefRoleByUploadTypeId = "/UploadSetting/GetListRefRoleByUploadTypeId"
   public static GetListUploadSettingDByUploadSettingHId = '/UploadSetting/GetListUploadSettingDByUploadSettingHId'
+  public static CancelUpload = environment.FoundationR3Url + "/Upload/CancelUpload";
+  public static UploadReview = environment.FoundationR3Url + "/Upload/UploadReview";
 
   // GENERIC
   public static GetPagingObjectBySQL = "/Generic/GetPagingObjectBySQL";

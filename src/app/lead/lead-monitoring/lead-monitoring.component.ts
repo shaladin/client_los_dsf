@@ -14,7 +14,7 @@ export class LeadMonitoringComponent implements OnInit {
 
   ngOnInit() {
     this.uploadObj = {
-      title: 'Upload Negative Asset', // Title Paging dan Upload Page
+      title: 'Upload Lead', // Title Paging dan Upload Page
       subsectionId: 'UcUploadFile', // Ga perlu diubah
       formatsAllowed: '.xls, .xlsx', // File yang bisa di upload
       UploadTypeCode: 'UPL_LEAD', // UploadTypeCode berdasarkan keperluan

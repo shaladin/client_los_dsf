@@ -17,6 +17,8 @@ import { TeleVerifDetailComponent } from './tele-verif/tele-verif-detail/tele-ve
 import { LeadInputLeadDataComponent } from './lead-input/lead-input-lead-data/lead-input-lead-data.component';
 import { LeadUpdateComponent } from './lead-update/lead-update.component';
 import { LeadMonitoringComponent } from './lead-monitoring/lead-monitoring.component';
+import { LeadMonitoringReviewComponent } from './lead-monitoring-review/lead-monitoring-review.component';
+import { LeadMonitoringReviewDetailComponent } from './lead-monitoring-review/lead-monitoring-review-detail/lead-monitoring-review-detail.component';
 
 const routes: Routes = [
   {
@@ -139,6 +141,20 @@ const routes: Routes = [
         component: LeadMonitoringComponent,
         data: {
           title: 'Lead Monitoring'
+        }
+      },
+      {
+        path: 'ReviewMonitoring/Paging',
+        component: LeadMonitoringReviewComponent,
+        data: {
+          title: 'Lead Review Monitoring'
+        }
+      },
+      {
+        path: 'ReviewMonitoring/Detail',
+        component: LeadMonitoringReviewDetailComponent,
+        data: {
+          title: 'Lead Review Monitoring Detail'
         }
       }
     ]
