@@ -20,6 +20,7 @@
                     <div class="col-md-3">
                       <select class="form-control adInsInput" style="width: auto" formControlName="BranchManagerNo" (change)="BranchChanged($event)"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.BranchManagerNo.invalid }">
+                        <option [value]="" style="display: none;"></option>
                         <option *ngFor="let it of listBranchObj" [value]="it.Key">
                           {{it.Value}}
                         </option>
@@ -31,15 +32,19 @@
                     <div class="col-md-3">
                       <select class="form-control adInsInput" style="width: auto" formControlName="SalesPersonNo" (change)="SalesChanged($event)"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.SalesPersonNo.invalid }">
-                        <option *ngFor="let it of listSalesObj " [value]="it.Key">
+                        <option [value]="" style="display: none;"></option>
+                        <option *ngFor="let it of listSalesObj" [value]="it.Key">
                           {{it.Value}}
                         </option>
                       </select>
+                      <lib-uc-show-errors [control]="AssetDataForm.controls.SalesPersonNo" [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors>
                     </div>
                     <label class="col-md-2 adInsLabel" translate>Admin Head</label>
                     <div class="col-md-3">
                       <select class="form-control adInsInput" style="width: auto" formControlName="AdminHeadNo" (change)="AdminChanged($event)"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.AdminHeadNo.invalid }">
+                        <option [value]="" style="display: none;"></option>
                         <option *ngFor="let it of listAdminHeadObj " [value]="it.Key">
                           {{it.Value}}
                         </option>

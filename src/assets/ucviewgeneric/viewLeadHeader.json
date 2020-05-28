@@ -11,6 +11,7 @@
           "label": "LEAD NO.",
           "property": "LeadNo",
           "path": "/Lead/View",
+          "target" : "_blank",
           "param": [
             {
               "type": "LeadId",

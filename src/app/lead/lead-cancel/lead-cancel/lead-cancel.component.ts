@@ -159,6 +159,7 @@ export class LeadCancelComponent implements OnInit {
 
   addToTemp() {
     if (this.listSelectedId.length !== 0) {
+      this.checkboxAll = false;
       for (var i = 0; i < this.listSelectedId.length; i++) {
         this.tempListId.push(this.listSelectedId[i]);
       }
