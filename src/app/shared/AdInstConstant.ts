@@ -195,7 +195,7 @@ export class AdInsConstant {
 
   //LOB CODE
   public static LobCodeFCTR = "FCTR";
-  public static LobCodeCFRFN = "CFRFN";
+  public static LobCodeCFRFN = "CFRFN4W";
 
   //TOP CALC BASED
   public static TopCalcBasedInvcDt = "INVC_DT";
@@ -868,13 +868,15 @@ export class AdInsConstant {
   public static GetViewAppCollateralObjByAppId = environment.losUrl + "/AppCollateral/GetViewAppCollateralObjByAppId";
   public static GetAppCollateralByAppCollateralId = environment.losUrl + "/AppCollateral/GetAppCollateralByAppCollateralId";
   public static GetAppCollateralByAppId = environment.losUrl + "/AppCollateral/GetAppCollateralByAppId";
+  
 
   // App Collateral Suppl Emp
   public static GetListAppAssetSupplEmpByAppAssetId = environment.losUrl + "/AppAssetSupplEmp/GetListAppAssetSupplEmpByAppAssetId";
   public static AddEditAllCollateralDataByAppCollateraId = "";
   // App Collateral Registration
-  public static GetAppCollateralRegistrationByAppCollateralId = environment.losUrl + "/AppCollateralRegistration/GetAppCollateralRegistrationByAppCollateralId"
-
+  public static GetAppCollateralRegistrationByAppCollateralId = environment.losUrl + "/AppCollateralRegistration/GetAppCollateralRegistrationByAppCollateralId";
+  // App Collateral Doc
+  public static GetListAppCollateralDocsByAppCollateralId = environment.losUrl + "/AppCollateralDoc/GetListAppCollateralDocsByAppCollateralId";
 
   //AGRMNT SIGNER
   public static SubmitAgrmntSignerData = environment.losUrl + "/AgrmntSigner/SubmitAgrmntSignerData";

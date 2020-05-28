@@ -3,6 +3,7 @@ import { UcpagingModule } from '@adins/ucpaging';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-cust-confirmation-paging',
@@ -13,8 +14,19 @@ export class CustConfirmationPagingComponent implements OnInit {
 
   inputPagingObj: any;
   arrCrit = [];
+  bizTemplateCode :any;
 
-  constructor() { }
+  constructor(private route: ActivatedRoute) {
+    this.route.queryParams.subscribe(params => {
+      if (params["BizTemplateCode"] != null) {
+        this.bizTemplateCode = params["BizTemplateCode"];
+        localStorage.setItem("BizTemplateCode",this.bizTemplateCode);
+      }
+      else{
+        this.bizTemplateCode = localStorage.getItem("BizTemplateCode");
+      }
+    });
+  }
 
   ngOnInit() {
     this.inputPagingObj = new UcpagingModule();
@@ -28,6 +40,13 @@ export class CustConfirmationPagingComponent implements OnInit {
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'WF.ACT_CODE';
     critObj.value = "CNFR";
+
+    var critBizTemplate = new CriteriaObj();
+    critBizTemplate.propName = "A.BIZ_TEMPLATE_CODE";
+    critBizTemplate.restriction = AdInsConstant.RestrictionEq;
+    critBizTemplate.value = this.bizTemplateCode;
+
+    this.arrCrit.push(critBizTemplate);
     this.arrCrit.push(critObj);
     this.inputPagingObj.addCritInput = this.arrCrit;
   }
