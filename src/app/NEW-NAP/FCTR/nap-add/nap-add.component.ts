@@ -130,6 +130,12 @@ export class NapAddComponent implements OnInit {
     addCrit.restriction = AdInsConstant.RestrictionIn;
     addCrit.listValue = [this.user.OfficeCode];
     arrCopyLookupCrit.push(addCrit);
+
+    var critObj = new CriteriaObj();
+    critObj.restriction = AdInsConstant.RestrictionEq;
+    critObj.propName = 'vrl.BIZ_TMPLT_CODE';
+    critObj.value = AdInsConstant.CF4W;
+    arrCopyLookupCrit.push(critObj);
     this.inputLookupObjCopyProduct.addCritInput = arrCopyLookupCrit;
 
     var arrAddCrit = new Array();
@@ -139,12 +145,22 @@ export class NapAddComponent implements OnInit {
     addCrit.restriction = AdInsConstant.RestrictionIn;
     addCrit.listValue = [this.user.OfficeCode];
     arrAddCrit.push(addCrit);
+
+    var addCritBizTempalte = new CriteriaObj();
+    addCritBizTempalte.DataType = "text";
+    addCritBizTempalte.propName = "rlob.BIZ_TMPLT_CODE";
+    addCritBizTempalte.restriction = AdInsConstant.RestrictionEq;
+    addCritBizTempalte.value = AdInsConstant.LobCodeFCTR;
+    arrAddCrit.push(addCritBizTempalte);
+
     this.inputLookupObjName.addCritInput = arrAddCrit;
 
-    this.NapAppForm.patchValue({
-      OriOfficeCode: this.user.OfficeCode,
-      OriOfficeName: this.user.OfficeName,
-    });
+    if (this.user.MrOfficeTypeCode != "CG") {
+      this.NapAppForm.patchValue({
+        OriOfficeCode: this.user.OfficeCode,
+        OriOfficeName: this.user.OfficeName,
+      });
+    }
   }
 
   GetOfficeDDL() {
@@ -235,7 +251,7 @@ export class NapAddComponent implements OnInit {
 
   getLookupAppResponseName(ev: any) {
     console.log(ev);
-    var url = environment.FoundationR3Url + AdInsConstant.GetListProdOfferingDByProdOfferingCode;
+    var url = AdInsConstant.GetListProdOfferingDByProdOfferingCode;
     var obj = {
       ProdOfferingCode: ev.ProdOfferingCode
     };

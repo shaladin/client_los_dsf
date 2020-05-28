@@ -90,7 +90,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     this.mouCustUrl =  environment.losR3Web + "/Mou/Cust/View?MouCustId=" + this.mouCustId;
    
     var refOffice = new RefOfficeObj();
-    refOffice.OfficeCode = currentUserContext["Office"];
+    refOffice.OfficeCode = currentUserContext["OfficeCode"];
     this.httpClient.post(AdInsConstant.GetRefOfficeByOfficeCode, refOffice).subscribe(
       (response: any) => {
         this.refOfficeId = response.RefOfficeId;
@@ -155,7 +155,6 @@ export class MouCustomerRequestDetailComponent implements OnInit {
 
   Save(){
     var mouCustFormData = this.MOUMainInfoForm.value;
-
     if(this.pageType == "add"){
       mouCustFormData["RefOfficeId"] = this.refOfficeId;
       this.httpClient.post(AdInsConstant.AddMouCust, mouCustFormData).subscribe(

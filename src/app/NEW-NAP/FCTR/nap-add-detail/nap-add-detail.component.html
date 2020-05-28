@@ -118,8 +118,8 @@
               </app-insurance-data>
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
-              <app-financial-data *ngIf="AppStepIndex == 6" [AppId]=appId (outputTab)="NextStep('TC')">
-              </app-financial-data>
+              <app-financial-data-fctr *ngIf="AppStepIndex == 6" [AppId]=appId (outputTab)="NextStep('TC')">
+              </app-financial-data-fctr>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
               <app-tc-data *ngIf="AppStepIndex == 7" [AppId]="appId" (outputTab)="LastStepHandler()"></app-tc-data>
