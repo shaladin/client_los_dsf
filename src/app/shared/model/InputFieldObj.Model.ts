@@ -16,7 +16,7 @@ export class InputFieldObj{
     areaCode2: any;
     areaCode1: any;
     city: any;
-    inputLookupObj: any;
+    inputLookupObj: InputLookupObj;
 
     constructor()
     {

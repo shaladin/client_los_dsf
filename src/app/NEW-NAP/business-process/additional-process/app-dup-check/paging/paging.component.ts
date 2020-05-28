@@ -17,15 +17,15 @@ export class PagingComponent implements OnInit {
 
   inputPagingObj: any;
   arrCrit: any;
-  lobCode: string;
+  BizTemplateCode: string;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router) {
     this.route.queryParams.subscribe(params => {
-      if (params["LobCode"] != null) {
-        this.lobCode = params["LobCode"];
-        localStorage.setItem("LobCode", this.lobCode);
+      if (params["BizTemplateCode"] != null) {
+        this.BizTemplateCode = params["BizTemplateCode"];
+        localStorage.setItem("BizTemplateCode", this.BizTemplateCode);
       }
       
     });
@@ -42,7 +42,7 @@ export class PagingComponent implements OnInit {
     critLobObj.restriction = AdInsConstant.RestrictionLike;
     critLobObj.DataType = 'text';
     critLobObj.propName = 'RL.BIZ_TMPLT_CODE';
-    critLobObj.value = localStorage.getItem("LobCode");
+    critLobObj.value = localStorage.getItem("BizTemplateCode");
     this.inputPagingObj.addCritInput.push(critLobObj);
 
     // var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
