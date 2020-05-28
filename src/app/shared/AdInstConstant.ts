@@ -81,6 +81,8 @@ export class AdInsConstant {
   public static EditAppLoanPurpose = environment.losUrl + "/AppLoanPurpose/EditAppLoanPurpose";
   public static GetListAppLoanPurposeByAppId = environment.losUrl + "/AppLoanPurpose/GetListAppLoanPurposeByAppId";
   public static GetAppLoanPurposeByAppLoanPurposeId = environment.losUrl + "/AppLoanPurpose/GetAppLoanPurposeByAppLoanPurposeId";
+  public static DeleteAppLoanPurpose = environment.losUrl + "/AppLoanPurpose/DeleteAppLoanPurpose"
+
   // App Collateral
   public static GetAppCollateralRegistrationByAppId = "/AppCollateralRegistration/GetAppCollateralRegistrationByAppId";
 
@@ -657,7 +659,9 @@ export class AdInsConstant {
   public static SubmitWorkflowMouRequest = environment.losUrl + "/MouCust/SubmitWorkflowMouRequest";
   public static SubmitMouReview = environment.losUrl + "/MouCust/SubmitMouReview";
   public static ReturnMouReview = environment.losUrl + "/MouCust/ReturnMouReview";
-  public static EditMouForCancelByMouId = "http://localhost:5001" + "/MouCust/EditMouForCancelByMouId";
+  public static EditMouForCancelByMouId = environment.losUrl + "/MouCust/EditMouForCancelByMouId";
+  public static GetListMouByAppIdAndMouType = environment.losUrl + "/MouCust/GetListMouByAppIdAndMouType";
+  
 
   // MOU CUST ASSET
   public static AddMouCustAsset = environment.losUrl + "/MouCustAsset/AddMouCustAsset";
@@ -1103,8 +1107,10 @@ export class AdInsConstant {
   public static ClaimTaskNap = environment.losUrl + "/Application/ClaimTaskNap";
 
   //Application Data
-  public static SaveApp = environment.losUrl + "/ApplicationData/SaveApp"
+  public static SaveApplicationData = environment.losUrl + "/ApplicationData/SaveApplicationData"
+  public static EditApplicationData = environment.losUrl + "/ApplicationData/EditApplicationData"
   public static ClaimListTask = environment.FoundationR3Url + "/Workflow/ClaimListTask";
+  public static GetApplicationDataByAppId = environment.losUrl + "/ApplicationData/GetApplicationDataByAppId";
 
   // Phone Verif
   public static GetAppPhoneVerifSubjectListByAppId = environment.losUrl + "/PhoneVerif/GetAppPhoneVerifSubjectListByAppId";
@@ -1175,4 +1181,7 @@ export class AdInsConstant {
   //APP INVOICE FCTR
   public static GetListAppInvoiceFctrByAppId = environment.losUrl + "/AppInvoiceFctr/GetListAppInvoiceFctrByAppId";
   public static UpdateAppInvoiceFctr = environment.losUrl + "/AppInvoiceFctr/UpdateAppInvoiceFctr";
+
+  //REF PAY FREQ
+  public static GetRefPayFreqByPayFreqCode = environment.FoundationR3Url + "/RefPayFreq/GetRefPayFreqByPayFreqCode";
 }
