@@ -2,12 +2,11 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { SalesInfoObj } from 'app/shared/model/SalesInfoObj.Model';
-import { PayFreqObj } from 'app/shared/model/PayFreqObj.Model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { NULL_EXPR } from '@angular/compiler/src/output/output_ast';
+import { MouCustFctrObj } from 'app/shared/model/MouCustFctrObj.Model';
 
 @Component({
   selector: 'app-application-data-factoring',
@@ -19,9 +18,10 @@ export class ApplicationDataFactoringComponent implements OnInit {
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   mode: string;
   salesAppInfoObj: SalesInfoObj = new SalesInfoObj();
+  mouCustFctrObj: MouCustFctrObj = new MouCustFctrObj();
 
   SalesAppInfoForm = this.fb.group({
-    SrvyOrderNo: [''],
+    MouCustId: ['', Validators.required],
     MrSalesRecommendCode: ['', Validators.required],
     SalesNotes: [''],
     SalesOfficerNo: ['', Validators.required],
@@ -61,8 +61,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
   allRecourseType: any;
   allCalcMethod: any;
   allIntrstType: any;
-
-  payfreq: PayFreqObj;
+  allMouCust: any;
   resultData: any;
   allPayFreq: any;
   allInSalesOffice: any;
@@ -77,6 +76,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
 
   ngOnInit() {
     this.loadData();
+    this.SalesAppInfoForm.controls.NumOfInst.disable();
   }
 
   setDropdown() {
@@ -90,6 +90,27 @@ export class ApplicationDataFactoringComponent implements OnInit {
     this.refMasterAppPaidBy.RefMasterTypeCode = 'APP_PAID_BY';
     this.refMasterRecourseType.RefMasterTypeCode = 'RECOURSE_TYPE';
     this.refMasterIntrstType.RefMasterTypeCode = 'INTRSTTYPE';
+
+    var AppObj = {
+      AppId: this.resultData.AppId,
+      MouType: "FACTORING"
+    }
+    this.http.post(AdInsConstant.GetListMouByAppIdAndMouType, AppObj).subscribe(
+      (response) => {
+        this.allMouCust = response;
+        if (this.mode != 'edit') {
+          this.SalesAppInfoForm.patchValue({
+            MouCustId: this.allMouCust[0].MouCustId
+          });
+          MouCustId = this.resultData.MouCustId
+        } else {
+          var MouCustId = this.allMouCust[0].MouCustId
+        }
+        this.SetPayFreq(MouCustId);
+      },
+      (error) => {
+        console.log(error);
+      });
 
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterIntrstType).subscribe(
       (response) => {
@@ -223,19 +244,49 @@ export class ApplicationDataFactoringComponent implements OnInit {
       });
   }
 
+  SetPayFreq(MouCustId: number) {
+    var MouObj={
+      MouCustId: MouCustId
+    }
+    this.http.post<MouCustFctrObj>(AdInsConstant.GetMouCustFctrByMouCustId, MouObj).subscribe(
+      (response) => {
+        this.mouCustFctrObj = response;
+        this.http.post(AdInsConstant.GetRefPayFreqByPayFreqCode, this.mouCustFctrObj).subscribe(
+          (response) => {
+            this.allPayFreq = response;
+            if (this.mode != 'edit') {
+              this.SalesAppInfoForm.patchValue({
+                PayFreqCode: this.allPayFreq.PayFreqCode
+              });
+            }
+          },
+          (error) => {
+            console.log(error);
+          });
+      },
+      (error) => {
+        console.log(error);
+      });
+  }
+
+  CalculateNumOfInst() {
+    var numOfInst;
+    numOfInst = this.SalesAppInfoForm.controls.Tenor.value / this.allPayFreq.PayFreqVal;
+    this.SalesAppInfoForm.controls.NumOfInst.patchValue(numOfInst);
+    this.salesAppInfoObj.NumOfInst = numOfInst;
+  }
+
   CheckInstType() {
     if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == "MULTIPLE") {
-      this.SalesAppInfoForm.controls['Tenor'].enable();
+      this.SalesAppInfoForm.controls.Tenor.enable();
       this.SalesAppInfoForm.controls.MrInstSchemeCode.enable();
       this.SalesAppInfoForm.controls.TopDays.clearValidators();
     } else if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == "SINGLE") {
-      this.SalesAppInfoForm.controls.TopDays.setValidators(Validators.required);
-      if(this.resultData.TopDays == null){
-        this.SalesAppInfoForm.controls.TopDays.patchValue("");
-      }
       this.SalesAppInfoForm.controls.Tenor.disable();
       this.SalesAppInfoForm.controls.Tenor.patchValue(1);
+      this.SalesAppInfoForm.controls.TopDays.setValidators(Validators.required);
       this.SalesAppInfoForm.controls.MrInstSchemeCode.disable();
+      this.SalesAppInfoForm.controls.NumOfInst.patchValue(1);
     }
 
     this.SalesAppInfoForm.controls.TopDays.updateValueAndValidity();
@@ -249,36 +300,21 @@ export class ApplicationDataFactoringComponent implements OnInit {
     this.http.post(AdInsConstant.GetApplicationDataByAppId, obj).subscribe(
       (response) => {
         this.resultData = response;
-        this.payfreq = new PayFreqObj();
-        this.payfreq.ProdOfferingCode = this.resultData.ProdOfferingCode;
-        this.payfreq.RefProdCompntCode = "PAYFREQ";
         this.salesAppInfoObj.AppRowVersion = this.resultData.AppRowVersion;
         this.salesAppInfoObj.AppFinDataRowVersion = this.resultData.AppFinDataRowVersion;
         this.salesAppInfoObj.AppFctrRowVersion = this.resultData.AppFctrRowVersion;
-        
-        if(this.resultData.AppFinDataId == null && this.resultData.AppFctrId == null){
-          this.mode="add";
-        }else if(this.resultData.AppFinDataId != null && this.resultData.AppFctrId != null){
-          this.mode="edit";
+
+        if (this.resultData.AppFinDataId == null && this.resultData.AppFctrId == null) {
+          this.mode = "add";
+        } else if (this.resultData.AppFinDataId != null && this.resultData.AppFctrId != null) {
+          this.mode = "edit";
         }
 
-        this.http.post(AdInsConstant.GetPayFreqByProdOfferingCodeandRefProdCompntCode, this.payfreq).subscribe(
-          (response) => {
-            this.setDropdown();
-            this.allPayFreq = response['ReturnObject'];
-            if (this.mode != 'edit') {
-              this.SalesAppInfoForm.patchValue({
-                PayFreqCode: this.allPayFreq[0].PayFreqCode
-              });
-            }
-          },
-          (error) => {
-            console.log(error);
-          });
+        this.setDropdown();
 
         this.SalesAppInfoForm.patchValue({
-          SrvyOrderNo: this.resultData.SrvyOrderNo,
           MrSalesRecommendCode: this.resultData.MrSalesRecommendCode,
+          MouCustId: this.resultData.MouCustId,
           SalesNotes: this.resultData.SalesNotes,
           SalesOfficerNo: this.resultData.SalesOfficerNo,
           SalesHeadNo: this.resultData.SalesHeadNo,
@@ -307,10 +343,11 @@ export class ApplicationDataFactoringComponent implements OnInit {
     this.salesAppInfoObj = this.SalesAppInfoForm.value;
     this.salesAppInfoObj.AppId = this.AppId;
 
-    if(this.salesAppInfoObj.MrInstTypeCode=="SINGLE"){
+    if (this.salesAppInfoObj.MrInstTypeCode == "SINGLE") {
       this.salesAppInfoObj.MrInstSchemeCode = "EP";
-    }else{
+    } else {
       this.salesAppInfoObj.MrInstSchemeCode = this.SalesAppInfoForm.controls.MrInstSchemeCode.value;
+      this.salesAppInfoObj.NumOfInst = this.SalesAppInfoForm.controls.NumOfInst.value;
     }
 
     if (this.mode == "add") {

@@ -1,14 +1,14 @@
 export class SalesInfoObj{
     AppId: number;
-    SrvyOrderNo: any;
+    MouCustId: number;
     MrSalesRecommendCode: string;
-    SalesNotes:  any;
+    SalesNotes:  string;
     SalesOfficerNo:  any;
     SalesHeadNo:  any;
     MrInstTypeCode:  string;
-    TopDays:  any;
-    Tenor: any;
-    NumOfInst: any;
+    TopDays:  number;
+    Tenor: number;
+    NumOfInst: number;
     MrInstSchemeCode:  string;
     IsDisclosed:  any;
     PaidBy: any;
