@@ -14,11 +14,13 @@ import { MultiAssetDataComponent } from "./sharing-component/input-nap-component
 import { MultiAssetLeasingComponent } from "./sharing-component/input-nap-component/multi-asset-leasing/multi-asset-leasing.component";
 import { CollateralFctrComponent } from "./sharing-component/input-nap-component/multi-asset-data/collateral-fctr/collateral-fctr.component";
 import { UcSubsectionModule } from "@adins/uc-subsection";
+import { CollateralAddEditSingleComponent } from "./sharing-component/input-nap-component/single-asset-data/collateral-add-edit-single/collateral-add-edit-single.component";
  
 @NgModule({
     declarations: [
         // AssetDataPagingComponent,
         // AssetDataAddEditComponent,
+        // CollateralAddEditSingleComponent
         // CollateralAddEditComponent,
         // MultiAssetDataComponent,
         // CollateralFctrComponent

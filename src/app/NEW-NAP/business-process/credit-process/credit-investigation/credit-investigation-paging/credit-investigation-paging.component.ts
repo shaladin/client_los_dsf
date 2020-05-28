@@ -11,15 +11,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class CreditInvestigationPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
-  lobCode: string;
+  BizTemplateCode: string;
   
   constructor(
     private route: ActivatedRoute,
     private router: Router) {
     this.route.queryParams.subscribe(params => {
-      if (params["LobCode"] != null) {
-        this.lobCode = params["LobCode"];
-        localStorage.setItem("LobCode", this.lobCode);
+      if (params["BizTemplateCode"] != null) {
+        this.BizTemplateCode = params["BizTemplateCode"];
+        localStorage.setItem("BizTemplateCode", this.BizTemplateCode);
       }
       
     });
@@ -41,7 +41,7 @@ export class CreditInvestigationPagingComponent implements OnInit {
     var critLobObj = new CriteriaObj();
     critLobObj.restriction = AdInsConstant.RestrictionEq;
     critLobObj.propName = 'RL.BIZ_TMPLT_CODE';
-    critLobObj.value = localStorage.getItem("LobCode");
+    critLobObj.value = localStorage.getItem("BizTemplateCode");
     this.inputPagingObj.addCritInput.push(critLobObj);
 
   }

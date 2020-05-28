@@ -3,6 +3,7 @@ import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-commission-reserved-fund-paging',
@@ -10,8 +11,15 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
   styleUrls: []
 })
 export class CommissionReservedFundPagingComponent implements OnInit {
+  BizTemplateCode : string;
 
-  constructor() { }
+  constructor(private route: ActivatedRoute) {
+    this.route.queryParams.subscribe(params => {
+      if (params['BizTemplateCode'] != null) {
+        this.BizTemplateCode = params['BizTemplateCode'];
+        localStorage.setItem("BizTemplateCode",this.BizTemplateCode);
+      }
+    }); }
 
   inputPagingObj;
   ngOnInit() {
@@ -21,18 +29,13 @@ export class CommissionReservedFundPagingComponent implements OnInit {
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCommission.json";
 
-    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
-    var addCrit = new CriteriaObj();
-    addCrit.DataType = 'text';
-    addCrit.propName = 'WTL.USERNAME';
-    addCrit.restriction = AdInsConstant.RestrictionIn;
-    var arrayString = new Array<string>();
-    arrayString.push(currentUserContext["UserName"]);
-    arrayString.push("");
-    addCrit.listValue = arrayString;
-
-    this.inputPagingObj.addCritInput.push(addCrit);
-
+     var arrCrit = new Array();
+    var critObj = new CriteriaObj();
+    critObj.restriction = AdInsConstant.RestrictionLike;
+    critObj.propName = 'RL.BIZ_TMPLT_CODE';
+    critObj.value = this.BizTemplateCode;
+    arrCrit.push(critObj);
+    this.inputPagingObj.addCritInput = arrCrit;
   }
 
 }

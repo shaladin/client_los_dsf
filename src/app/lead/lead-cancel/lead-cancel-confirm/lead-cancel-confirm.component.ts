@@ -18,7 +18,7 @@ export class LeadCancelConfirmComponent implements OnInit {
   responseObj = new Array();
   LeadConfirmCancelForm = this.fb.group({
     CancelReason: ['', Validators.required],
-    Notes: ['', Validators.required]
+    Notes: ['']
   });
   GetListKeyValueActiveByCode = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
   ItemCancelReason: any;
@@ -70,29 +70,42 @@ export class LeadCancelConfirmComponent implements OnInit {
   deleteFromTemp(leadId) {
     if (confirm('Are you sure to delete this record?')) {
       this.deletedArr.push(leadId);
+      var idxToDel = 0;
+      for (var i = 0; i < this.responseObj.length; i++) {
+        if(this.responseObj[i]['LeadId'] == leadId){
+          idxToDel = i;
+          break;
+        }
+      }
+      this.responseObj.splice(idxToDel, 1);
     }
   }
 
   SaveLeadConfirmCancel() {
-    var leadObj : LeadConfirmCancelObj = new LeadConfirmCancelObj();
-    leadObj.LeadStat = "CAN";
-    leadObj.LeadStep = "CAN";
-    leadObj.Notes = this.LeadConfirmCancelForm.controls.CancelReason.value;
-    leadObj.MrCancelReasonCode = this.LeadConfirmCancelForm.controls.CancelReason.value;
-    leadObj.Notes = this.LeadConfirmCancelForm.controls.Notes.value;
-    var tempId = new Array();
-    for (var i = 0; i < this.responseObj.length; i++) {
-      if (this.deletedArr.includes(this.responseObj[i]['LeadId']) == false) {
-        tempId.push(this.responseObj[i]['LeadId']);
+    if(this.responseObj.length > 0){
+      var leadObj : LeadConfirmCancelObj = new LeadConfirmCancelObj();
+      leadObj.LeadStat = "CAN";
+      leadObj.LeadStep = "CAN";
+      leadObj.Notes = this.LeadConfirmCancelForm.controls.CancelReason.value;
+      leadObj.MrCancelReasonCode = this.LeadConfirmCancelForm.controls.CancelReason.value;
+      leadObj.Notes = this.LeadConfirmCancelForm.controls.Notes.value;
+      var tempId = new Array();
+      for (var i = 0; i < this.responseObj.length; i++) {
+        // if (this.deletedArr.includes(this.responseObj[i]['LeadId']) == false) {
+          tempId.push(this.responseObj[i]['LeadId']);
+        // }
       }
+      leadObj.ListLeadId = tempId;
+      leadObj.ListWfTaskListId = this.tempWfTaskListArr;
+      this.http.post(this.EditListLeadForCancelByListLeadId, leadObj).subscribe(
+        response => {
+          this.toastr.successMessage(response["Message"]);
+          this.router.navigate(["/Lead/Cancel"]);
+        }
+      );
     }
-    leadObj.ListLeadId = tempId;
-    leadObj.ListWfTaskListId = this.tempWfTaskListArr;
-    this.http.post(this.EditListLeadForCancelByListLeadId, leadObj).subscribe(
-      response => {
-        this.toastr.successMessage(response["Message"]);
-        this.router.navigate(["/Lead/Cancel"]);
-      }
-    );
+    else{
+      this.toastr.errorMessage("No Lead Available to Cancel");
+    }
   }
 }

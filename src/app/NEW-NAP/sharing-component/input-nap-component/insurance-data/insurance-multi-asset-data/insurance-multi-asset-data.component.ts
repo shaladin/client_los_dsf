@@ -112,6 +112,10 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     AppId: [0],
     AppAssetId: [0]
   });
+
+  AppInsForm = this.fb.group({
+    PaidAmtByCust: [0]
+  });
   
   constructor(private fb: FormBuilder, 
     private modalService: NgbModal,
@@ -229,7 +233,12 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     this.outputTab.emit();
   }
 
+  SubmitForm2(){
+    this.outputTab.emit();
+  }
+
   SaveForm(){
+    console.log(this.InsuranceDataForm)
     var insuredBy = this.InsuranceDataForm.controls.InsAssetCoveredBy.value;
 
     if(insuredBy == AdInsConstant.InsuredByCompany || insuredBy == AdInsConstant.InsuredByCustomerCompany){
