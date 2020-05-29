@@ -162,6 +162,10 @@
               "property": "UploadMonitoringHId"
             },
             {
+              "type": "UploadNo",
+              "property": "UploadNo"
+            },
+            {
               "type": "TaskListId",
               "property": "TaskListId"
             }
