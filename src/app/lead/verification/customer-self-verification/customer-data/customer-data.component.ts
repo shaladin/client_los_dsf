@@ -6,14 +6,8 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { environment } from 'environments/environment';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
-import { AddrObj } from 'app/shared/model/AddrObj.Model';
+import { AdInsConstant } from 'app/shared/AdInstConstant'; 
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
-import { CustDataPersonalObj } from 'app/shared/model/CustDataPersonalObj.Model';
-import { CustDataCompanyObj } from 'app/shared/model/CustDataCompanyObj.Model';
-import { WizardComponent } from 'angular-archwizard';
-import { CustJobDataComponent } from 'app/NEW-NAP/sharing-component/input-nap-component/customer-data/component/job-data/cust-job-data.component';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model'; 
 import { LeadCustAddrObj } from 'app/shared/model/LeadCustAddrObj.Model';
 import { LeadInputObj } from 'app/shared/model/LeadInputObj.Model';
@@ -34,7 +28,7 @@ import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 })
 export class CustomerDataComponent implements OnInit {
   @Input() LeadId: string;
-  @Output() outputTab: EventEmitter<object> = new EventEmitter(); 
+  @Output() outputTab: EventEmitter<object> = new EventEmitter();
   businessDt: Date = new Date();
   CopyFrom: string;
   rowVersion: any;
@@ -106,7 +100,7 @@ export class CustomerDataComponent implements OnInit {
     Twitter: [''],
     CustModel: [''],
     CompanyName: [''],
-    MonthlyIncome: [0, [Validators.required]],
+    MonthlyIncome: [0, [Validators.required, Validators.min(1.00)]],
     MonthlyExpense: [0]
   });
   

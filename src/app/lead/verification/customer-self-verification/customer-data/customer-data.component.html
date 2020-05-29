@@ -3,7 +3,7 @@
     <div class="px-3"> 
       <div class="customerData">
       <form class="form form-horizontal" [formGroup]="CustomerDataForm"
-        (ngSubmit)="CustomerDataForm.valid && SaveForm()" #enjiForm="ngForm">
+        (ngSubmit)="CustomerDataForm.valid && SaveForm()" #enjiForm="ngForm"> 
         <div class="form-actions right" style="text-align: right;">
           <button type="submit" class="btn btn-raised btn-primary" translate>
             <i class="fa fa-check-square-o"></i> Save and Continue
@@ -15,7 +15,7 @@
         <div class="form-body">
           <div id="custMainData">
             <div class="form-group row">
-              <label class="col-md-2 adInsLabel" translate>Customer Types</label>
+              <label class="col-md-2 adInsLabel" translate>Customer Type</label>
               <div class="col-md-4">
                 <label style="font-size: 12px;">PERSONAL</label>
               </div>
@@ -241,7 +241,6 @@
           </div>
           <!-- </div> -->
         </div>
-     
       </form>
       </div>
     </div>
