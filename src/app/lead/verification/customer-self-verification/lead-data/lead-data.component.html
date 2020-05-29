@@ -99,12 +99,7 @@
                   <div class="col-md-5">
                     <label class="  adInsLabel">{{LeadDataForm.controls.TotalDownPayment.value | number:'.2':'en-US'}}</label> 
                   </div>
-                </div>
-                <div class="form-group row">
-                  <button type="button" class="btn btn-raised btn-primary mr-1" (click)="calculateNonKta()">
-                    <i class="fa fa-check-square-o"></i> Calculate
-                  </button>
-                </div>
+                </div> 
               </div>
               <div *ngIf="lobKta.includes(returnLobCode) == true" id="financialData">
                 <div class="form-group row">
@@ -135,7 +130,7 @@
             <!-- </div> -->
           </div>
           <div class="form-actions right" style="text-align: right;">
-            <button type="submit" class="btn btn-raised btn-primary mr-1" (click)="save()" translate>
+            <button hidden type="submit" class="btn btn-raised btn-primary mr-1" (click)="save()" translate>
               <i class="fa fa-check-square-o"></i> Save
             </button>
             <button type="submit" class="btn btn-raised btn-primary" (click)="SaveForm()"  translate>
