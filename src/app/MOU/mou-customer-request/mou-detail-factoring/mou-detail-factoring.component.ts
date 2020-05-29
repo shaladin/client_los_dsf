@@ -59,7 +59,6 @@ export class MouDetailFactoringComponent implements OnInit {
   ) { 
     this.isListedFctr = false;
     this.shouldComponentLoad = false;
-    
   }
 
   ngOnInit() {
@@ -123,12 +122,29 @@ export class MouDetailFactoringComponent implements OnInit {
             MouCustId: this.MouCustId
           });
         }
+        this.instTypeHandler();
         this.shouldComponentLoad = true;
       },
       (error) => {
         console.log(error);
       }
     );
+  }
+
+  instTypeHandler(){
+    var value = this.MouDetailFactoringForm.controls["MrInstTypeCode"].value;
+    if(value == AdInsConstant.SINGLE_INST_TYPE){
+      this.MouDetailFactoringForm.patchValue({
+        PayFreqCode: AdInsConstant.PAY_FREQ_MONTHLY,
+        MrInstSchmCode: AdInsConstant.INST_SCHM_REGULAR_FIXED
+      });
+      this.MouDetailFactoringForm.controls["PayFreqCode"].disable();
+      this.MouDetailFactoringForm.controls["MrInstSchmCode"].disable();
+    }
+    else if(value == AdInsConstant.MULTIPLE_INST_TYPE){
+      this.MouDetailFactoringForm.controls["PayFreqCode"].enable();
+      this.MouDetailFactoringForm.controls["MrInstSchmCode"].enable();
+    }
   }
 
   Save(enjiForm){
