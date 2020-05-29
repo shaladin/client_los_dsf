@@ -33,7 +33,12 @@
                           </th>
                         </tr>
                       </thead>
-                      <tbody>
+                      <tbody *ngIf="appCollateralAccessoryObjs?.length == 0">
+                        <tr>
+                          <td colspan="100%">No Data Available</td>
+                        </tr>
+                      </tbody>
+                      <tbody *ngIf="appCollateralAccessoryObjs?.length > 0">
                         <tr *ngFor="let item of appCollateralAccessoryObjs; let i = index">
                           <td style="text-align: center;">{{i + 1}}</td>
                           <td style="text-align: center;">{{item.CollateralAccessoryName}}</td>
@@ -325,10 +330,6 @@
                             </div>
                           </td>
                           <td class="text-right">
-                            <!-- {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.CustAddPremiRate.value | number:'.2':'en-US'}}
-                            <span *ngIf="InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.PremiumType.value == 'PRCNT'">
-                              %
-                            </span> -->
                             <span *ngIf="InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.PremiumType.value == 'AMT'">
                               {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.CustAddPremiRate.value | number:'.2':'en-US'}}
                             </span>
@@ -399,7 +400,7 @@
             </div>
             <div class="form-actions right">
               <button type="submit" class="btn btn-raised btn-primary">
-                <i class="fa fa-check-square-o"></i> Save
+                <i class="far fa-check-square"></i> Save
               </button>
               <!-- <button type="button" class="btn btn-raised btn-primary" (click)="test()">
                 <i class="fa fa-check-square-o"></i> test
