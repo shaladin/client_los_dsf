@@ -11,6 +11,7 @@ import { AppCustPersonalObj } from 'app/shared/model/AppCustPersonalObj.Model';
 import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
 import { FraudDukcapilObj } from 'app/shared/model/FraudDukcapilObj.Model';
+import { NegativeCustObj } from 'app/shared/model/NegativeCust.Model';
 
 
 @Component({
@@ -21,13 +22,13 @@ import { FraudDukcapilObj } from 'app/shared/model/FraudDukcapilObj.Model';
 export class ViewFraudDetectionResultComponent implements OnInit {
 
   @Input() appId: number;
-  @Input() mrCustTypeCode: string;
+  @Input() mrCustTypeCode: string = "";
   @Input() isView: boolean = false;
 
   viewDukcapilMainDataObj: string;
   losUrl = environment.losUrl;
   foundationUrl = environment.FoundationR3Url;
-  getAppById = this.losUrl + AdInsConstant.GetAppById;
+  getAppById = AdInsConstant.GetAppById;
   getCustDataByAppId = AdInsConstant.GetCustDataByAppId;
   getAppDupCheckCustByAppId = AdInsConstant.GetAppDupCheckCustByAppId;
   getFraudDukcapilByIdNo = AdInsConstant.GetFraudDukcapilByIdNo;
@@ -43,7 +44,7 @@ export class ViewFraudDetectionResultComponent implements OnInit {
   appCustCompanyObj: any;
   appCustPersonalObj: any;
   idNo: any;
-  listNegativeCust: any;
+  listNegativeCust: Array<NegativeCustObj> = new Array<NegativeCustObj>();
   RowVersion: any;
   appAssetObj: any;
   listNegativeAsset: any;
@@ -62,7 +63,11 @@ export class ViewFraudDetectionResultComponent implements OnInit {
     private modalService: NgbModal) { }
 
   async ngOnInit(): Promise<void> {
-
+    console.log("Cek View Fraud");
+    this.appCustObj = new AppCustObj();
+    this.appCustPersonalObj = new AppCustPersonalObj();
+    this.appCustCompanyObj = new AppCustCompanyObj();
+    this.dukcapilObj = new FraudDukcapilObj();
     await this.getApp();
     this.arrValue.push(this.appId);
     this.viewDukcapilObj = "./assets/ucviewgeneric/viewDukcapilMainInfo.json";
@@ -70,14 +75,11 @@ export class ViewFraudDetectionResultComponent implements OnInit {
     this.isDataAlreadyLoaded = true;
   }
 
-  async getApp() {
-    this.appCustObj = new AppCustObj();
-    this.appCustPersonalObj = new AppCustPersonalObj();
-    this.appCustCompanyObj = new AppCustCompanyObj();
-    this.dukcapilObj = new FraudDukcapilObj();
-    var appReqObj = { "AppId": this.appId }
+  async getApp() {    
+    var appReqObj = { "AppId": this.appId };
     await this.http.post(this.getCustDataByAppId, appReqObj).subscribe(
-      response => {
+      (response) => {
+        console.log(response);
         this.appCustObj = response["AppCustObj"];
         this.appCustCompanyObj = response["AppCustCompanyObj"];
         this.appCustPersonalObj = response["AppCustPersonalObj"];
@@ -116,42 +118,48 @@ export class ViewFraudDetectionResultComponent implements OnInit {
         }
         this.getNegativeCustomer(this.requestDupCheck);
       },
-      error => {
-        console.log("error")
+      (error) => {
+        console.log(error);
       }
     );
 
-    this.getAppAsset(appReqObj);
-    this.getAppDupCheckCust(appReqObj);
+    // this.getAppAsset(appReqObj);
+    // this.getAppDupCheckCust(appReqObj);
   }
 
   getNegativeCustomer(reqObj) {
     //List Negative Cust Duplicate Checking
     this.http.post(this.getNegativeCustomerDuplicateCheckUrl, reqObj).subscribe(
-      response => {
+      (response) => {
+        console.log(response);
         this.listNegativeCust = response['ReturnObject'].NegativeCustDuplicate;
+        console.log(this.listNegativeCust);
+        var idxSelected=this.listNegativeCust.findIndex(x=>x.CustNo==this.appCustObj.CustNo);
+        if(idxSelected > -1)
+          this.listNegativeCust[idxSelected].IsSelected=true;
+
       },
-      error => {
-        console.log("error");
+      (error) => {
+        console.log(error);
       }
     );
   }
 
-  getFraudDukcapil(idNo) {
-    this.http.post(this.getFraudDukcapilByIdNo, idNo).subscribe(
-      response => {
-        this.dukcapilObj = response;
-
+  getFraudDukcapil(reqObj) {
+    this.http.post(this.getFraudDukcapilByIdNo, reqObj).subscribe(
+      (response) => {
+        if(response["StatusCode"]==200)
+          this.dukcapilObj = response["ReturnObject"];
       },
-      error => {
-        console.log("error")
+      (error) => {
+        console.log(error);
       }
     );
   }
 
   getAppDupCheckCust(appId) {
     this.http.post(this.getAppDupCheckCustByAppId, appId).subscribe(
-      response => {
+      (response) => {
         this.listCustDuplicate = response['ReturnObject'];
         if (this.listCustDuplicate.indexOf(this.appCustObj.CustNo) < 0) {
           this.custStat = "EXISTING"
@@ -160,20 +168,19 @@ export class ViewFraudDetectionResultComponent implements OnInit {
         }
 
       },
-      error => {
-        console.log("error")
+      (error) => {
+        console.log(error);
       }
     );
   }
 
-  getAppAsset(appId) {
-    this.http.post<AppAssetObj>(this.getAppAssetByAppId, appId).subscribe(
-      response => {
+  getAppAsset(reqObj) {
+    this.http.post<AppAssetObj>(this.getAppAssetByAppId, reqObj).subscribe(
+      (response) => {
         this.appAssetObj = response;
-
       },
-      error => {
-        console.log("error")
+      (error) => {
+        console.log(error);
       }
     );
   }
@@ -191,12 +198,13 @@ export class ViewFraudDetectionResultComponent implements OnInit {
       "serialNo5": this.appAssetObj.serialNo5,
     }
     this.http.post(this.getAssetNegativeDuplicateCheck, negativeAssetObj).subscribe(
-      response => {
+      (response) => {
+        console.log(response);
         this.listNegativeAsset = response["AssetNegativeObj"];
 
       },
-      error => {
-        console.log("error")
+      (error) => {
+        console.log(error);
       }
     );
   }

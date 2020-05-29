@@ -158,11 +158,13 @@ export class CreditReviewMainComponent implements OnInit {
       (response) => {
         console.log(response);  
         this.ResponseExistCreditReview = response["appCrdRvwHObj"];
-        for(var i=0;i<this.ResponseExistCreditReview.appCrdRvwDObjs.length;i++){
-          var idx = this.Arr.value.indexOf(this.Arr.value.find(x => x.QuestionCode == this.ResponseExistCreditReview.appCrdRvwDObjs[i].MrAnalysisItemCode));
-          this.Arr.controls[idx].patchValue({
-            Answer: this.ResponseExistCreditReview.appCrdRvwDObjs[i].AnalysisResult
-          });
+        if(this.ResponseExistCreditReview.appCrdRvwDObjs!=null){
+          for(var i=0;i<this.ResponseExistCreditReview.appCrdRvwDObjs.length;i++){
+            var idx = this.Arr.value.indexOf(this.Arr.value.find(x => x.QuestionCode == this.ResponseExistCreditReview.appCrdRvwDObjs[i].MrAnalysisItemCode));
+            this.Arr.controls[idx].patchValue({
+              Answer: this.ResponseExistCreditReview.appCrdRvwDObjs[i].AnalysisResult
+            });
+          }
         }
       },
       (error) => {
