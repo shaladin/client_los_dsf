@@ -141,7 +141,7 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   }
 
   submitHandler(){
-    if((this.mouType == AdInsConstant.GENERAL && this.currentStepIndex == 4 ) || (this.mouType == AdInsConstant.FACTORING && this.currentStepIndex == 6) ){
+    if((this.mouType == AdInsConstant.GENERAL && this.currentStepIndex == 4 ) || (this.mouType == AdInsConstant.FACTORING && this.currentStepIndex == 5) ){
       var mouObj = { MouCustId: this.mouCustId}
       this.httpClient.post(AdInsConstant.SubmitWorkflowMouRequest, mouObj).subscribe(
         (response: any) => {
