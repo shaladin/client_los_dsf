@@ -83,7 +83,7 @@ export class NapPagingComponent implements OnInit {
     this.http.post(AdInsConstant.GetRefOfficeByOfficeCode, obj).subscribe(
       (response) => {
         if(response["IsAllowAppCreated"] == true){
-          this.router.navigate(["Nap/CFRefinancing/InputNap/Add"]);
+          this.router.navigate(["Nap/CFRefinancing/Add"]);
         }else{
           this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');
         }
