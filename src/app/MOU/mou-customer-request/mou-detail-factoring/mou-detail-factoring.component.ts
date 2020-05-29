@@ -148,7 +148,7 @@ export class MouDetailFactoringComponent implements OnInit {
   }
 
   Save(enjiForm){
-    var formData = this.MouDetailFactoringForm.value;
+    var formData = this.MouDetailFactoringForm.getRawValue();
     var url;
 
     formData.IsListedCust = this.MouListedFctrComp.MouCustIsListedForm.controls["IsListedCust"].value;
