@@ -6,7 +6,6 @@ import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
 import { environment } from 'environments/environment';
 import { AppCrdRvwHObj } from 'app/shared/model/AppCrdRvwHObj.Model';
 import { AppCrdRvwDObj } from 'app/shared/model/AppCrdRvwDObj.Model';
-import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 
@@ -24,7 +23,6 @@ export class CreditReviewMainComponent implements OnInit {
   apvBaseUrl = environment.ApprovalR3Url;
   indentifierReason;
   indentifierApprover;
-  TaskId: number = 0;
   ReturnHandlingHId: number = 0;
   ReturnHandlingDId: number = 0;
 
@@ -37,11 +35,9 @@ export class CreditReviewMainComponent implements OnInit {
   constructor(
     private route: ActivatedRoute, 
     private http: HttpClient, 
-    private fb: FormBuilder,
-    private toastr: NGXToastrService) { 
+    private fb: FormBuilder) { 
       this.route.queryParams.subscribe(params => {
         this.appId = params["AppId"];
-        this.TaskId =params["TaskId"];
         if (params["WfTaskListId"] != null) {
           this.wfTaskListId = params["WfTaskListId"];
         }
@@ -95,7 +91,7 @@ export class CreditReviewMainComponent implements OnInit {
     console.log(JSON.parse(localStorage.getItem("UserAccess")));
     this.InitData();
     this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
-    await this.GetMouCustData();
+    await this.GetAppCustData();
     await this.BindDDLRecommendation();
     await this.BindDDLReasonReturn();
     await this.BindCreditAnalysisItemFormObj();
@@ -103,7 +99,7 @@ export class CreditReviewMainComponent implements OnInit {
     await this.GetExistingCreditReviewData();
   }
 
-  async GetMouCustData(){
+  async GetAppCustData(){
     var obj = {
       AppId: this.appId,
       RowVersion: ""
@@ -267,7 +263,7 @@ export class CreditReviewMainComponent implements OnInit {
       ApprovedById: temp.Approver,
       Reason: temp.Reason,
       Notes: temp.Notes,
-      WfTaskListId: this.TaskId,
+      WfTaskListId: this.wfTaskListId,
       RowVersion: ""
     }
     console.log(apiObj);
@@ -308,8 +304,9 @@ export class CreditReviewMainComponent implements OnInit {
       var temp = new AppCrdRvwDObj();
       temp.MrAnalysisItemCode = objArr[i].QuestionCode;
       temp.AnalysisResult = objArr[i].Answer;
-      if(this.ResponseExistCreditReview != null){
+      if(this.ResponseExistCreditReview.appCrdRvwDObjs != null){
         var idx = this.ResponseExistCreditReview.appCrdRvwDObjs.indexOf(this.ResponseExistCreditReview.appCrdRvwDObjs.find(x => x.MrAnalysisItemCode == objArr[i].QuestionCode));
+        temp.AppCrdRvwDId = this.ResponseExistCreditReview.appCrdRvwDObjs[idx].AppCrdRvwDId;
         temp.RowVersion = this.ResponseExistCreditReview.appCrdRvwDObjs[idx].RowVersion;
       }
       AppCrdRvwDObjs.push(temp);
@@ -355,7 +352,7 @@ export class CreditReviewMainComponent implements OnInit {
     wfClaimObj.pUserID = currentUserContext["UserName"];
 
     this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
+      () => {
     
       });
   }

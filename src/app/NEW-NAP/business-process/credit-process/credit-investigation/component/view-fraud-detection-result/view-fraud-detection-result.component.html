@@ -1,4 +1,4 @@
-<div class="px-3">
+<div class="card px-3">
 <lib-ucSubsection [id]="'CustDupCheckId'" [title]="'Customer Duplicate Checking'" [panel]="'CustDupCheck'">
 </lib-ucSubsection>
 <div class="form-body" id="CustDupCheck">
@@ -51,7 +51,7 @@
 </div>
 </div>
 
-<div class="px-3">
+<div class="card px-3">
 <lib-ucSubsection [id]="'NegCustId'" [title]="'Negative Customer'" [panel]="'NegCust'">
 </lib-ucSubsection>
 <div class="form-body" id="NegCust">
@@ -108,7 +108,7 @@
 
 <app-view-survey-task-list *ngIf="isDataAlreadyLoaded" [trxRefNo]="trxRefNo" [mrSrvySourceCode]="mrSrvySourceCode"></app-view-survey-task-list>
 
-<div class="px-3" *ngIf="mrCustTypeCode == 'PERSONAL'">
+<div class="card px-3" *ngIf="mrCustTypeCode == 'PERSONAL'">
 <lib-ucSubsection [id]="'DukId'" [title]="'Dukcapil'" [panel]="'Duk'">
 </lib-ucSubsection>
 <div class="form-body" id="Duk">
@@ -152,7 +152,7 @@
 <lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true" [viewInput]="viewDukcapilObj" [whereValue]="arrValue"></lib-ucviewgeneric>
 </ng-template>
 
-<div class="px-3">
+<div class="card px-3">
   <lib-ucSubsection [id]="'PefId'" [title]="'Pefindo'" [panel]="'Pef'">
   </lib-ucSubsection>
   <div class="form-body">
@@ -196,7 +196,7 @@
   </div>
 </div>
 
-<div class="px-3">
+<div class="card px-3">
 <lib-ucSubsection [id]="'NegAssetId'" [title]="'Negative Asset'" [panel]="'NegAsset'">
 </lib-ucSubsection>
 <div class="form-body" id="NegAsset">
@@ -231,7 +231,7 @@
   </table>
 </div>
 </div>
-<div class="px-3" *ngIf="isView == false">
+<div *ngIf="isView == false">
   <lib-ucviewgeneric [viewInput]="viewFraudVerifResultObj" [whereValue]="arrValue"></lib-ucviewgeneric>
 </div>
 
