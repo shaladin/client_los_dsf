@@ -66,7 +66,7 @@ export class LeadInputLeadDataComponent implements OnInit {
     ManufacturingYear: ['', Validators.min(0)],
     AssetPrice: ['', [Validators.required, Validators.min(1.00)]],
     DownPaymentAmount: ['', [Validators.required, Validators.min(1.00)]],
-    DownPaymentPercent: [''],
+    DownPaymentPercent: ['', [Validators.min(0), Validators.max(100)]],
     Tenor: ['', [Validators.required, Validators.min(0)]],
     MrFirstInstTypeCode: ['', Validators.required],
     NTFAmt: [''],
@@ -597,6 +597,16 @@ export class LeadInputLeadDataComponent implements OnInit {
   DPPrcntChange() {
     this.DPPercentage = this.LeadDataForm.controls["DownPaymentPercent"].value;
     this.AssetPrice = this.LeadDataForm.controls["AssetPrice"].value;
+    
+    if (this.DPPercentage > 100) {
+      this.toastr.errorMessage("Down Payment Percent Must Be Less Than 100!");
+      return;
+    }
+
+    if (this.DPPercentage < 0) {
+      this.toastr.errorMessage("Down Payment Percent Must Be More Than 0!");
+      return;
+    }
 
     this.DPAmount = this.AssetPrice * this.DPPercentage / 100;
 
