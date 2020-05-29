@@ -1,0 +1,96 @@
+{
+    "url": "",
+    "title":"Lookup - Customer",
+    "component": [
+      {
+        "type": "textbox",
+        "name": "C.CUST_NO",
+        "id": "custNoId",
+        "value": "",
+        "label": "Customer No",
+        "placeholder": ""
+      },
+      {
+        "type": "textbox",
+        "name": "C.CUST_NAME",
+        "id": "custNameId",
+        "value": "",
+        "label": "Customer Name",
+        "placeholder": ""
+      },
+      {
+        "type": "dropdown",
+        "datatype": "text",
+        "name": "C.MR_CUST_TYPE_CODE",
+        "id": "mrCustTypeCodeId",
+        "value": "",
+        "placeholder": "Placeholder",
+        "isFromURL": true,
+        "isSelectOne": false,
+        "url": "https://r3app-server.ad-ins.com/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
+        "label": "Customer Type",
+        "items": [],
+        "itemsUrl": [],
+        "criteriaPropName": "RefMasterTypeCode",
+        "criteriaPropValue": "CUST_TYPE"
+      }
+    ],
+    "querystring": {
+      "select": "SELECT C.CUST_NO AS CustNo, C.CUST_NAME AS CustName, CA.FULL_ADDR AS FullAddr, C.MR_CUST_TYPE_CODE AS MrCustTypeCode, C.CUST_ID AS CustId",
+      "from": "FROM dbo.CUST C WITH(NOLOCK) JOIN dbo.CUST_ADDR CA WITH(NOLOCK) ON C.CUST_ID = CA.CUST_ID AND CA.MR_CUST_ADDR_TYPE_CODE = 'LEGAL'"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Customer No",
+            "name": "C.CUST_NO"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Customer Name",
+            "name": "C.CUST_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Address",
+            "name": "CA.FULL_ADDR"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Select"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "CustNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "FullAddr"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "select",
+                    "property": "CustNo"
+                }
+            ]
+        }
+    ],
+    "propertyId": "CustNo",
+    "propertyName": "CustName"
+}

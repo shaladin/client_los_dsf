@@ -1,8 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
@@ -12,6 +9,7 @@ import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
 import { FraudDukcapilObj } from 'app/shared/model/FraudDukcapilObj.Model';
 import { NegativeCustObj } from 'app/shared/model/NegativeCust.Model';
+import { AppObj } from 'app/shared/model/App/App.Model';
 
 
 @Component({
@@ -40,7 +38,8 @@ export class ViewFraudDetectionResultComponent implements OnInit {
   arrValue = [];
   isDataAlreadyLoaded: boolean = false;
   closeResult: string;
-  appCustObj: any;
+  appObj: AppObj;
+  appCustObj: AppCustObj;
   appCustCompanyObj: any;
   appCustPersonalObj: any;
   idNo: any;
@@ -56,40 +55,34 @@ export class ViewFraudDetectionResultComponent implements OnInit {
   requestDupCheck: any;
   custStat: string;
 
-  constructor(private fb: FormBuilder,
-    private http: HttpClient,
-    private toastr: NGXToastrService,
-    private route: ActivatedRoute,
+  constructor(private http: HttpClient,
     private modalService: NgbModal) { }
 
-  async ngOnInit(): Promise<void> {
-    console.log("Cek View Fraud");
+  ngOnInit(){
+
+    this.getApp(this.appId);
+    this.getAppCust();
+    this.arrValue.push(this.appId);
+    this.viewDukcapilObj = "./assets/ucviewgeneric/viewDukcapilMainInfo.json";
+    this.viewFraudVerifResultObj = "./assets/ucviewgeneric/viewFraudVerifResult.json";
+  }
+
+  getAppCust() {
     this.appCustObj = new AppCustObj();
     this.appCustPersonalObj = new AppCustPersonalObj();
     this.appCustCompanyObj = new AppCustCompanyObj();
     this.dukcapilObj = new FraudDukcapilObj();
-    await this.getApp();
-    this.arrValue.push(this.appId);
-    this.viewDukcapilObj = "./assets/ucviewgeneric/viewDukcapilMainInfo.json";
-    this.viewFraudVerifResultObj = "./assets/ucviewgeneric/viewFraudVerifResult.json";
-    this.isDataAlreadyLoaded = true;
-  }
-
-  async getApp() {    
-    var appReqObj = { "AppId": this.appId };
-    await this.http.post(this.getCustDataByAppId, appReqObj).subscribe(
-      (response) => {
-        console.log(response);
+    var appReqObj = { "AppId": this.appId }
+    this.http.post(this.getCustDataByAppId, appReqObj).subscribe(
+      response => {
         this.appCustObj = response["AppCustObj"];
         this.appCustCompanyObj = response["AppCustCompanyObj"];
         this.appCustPersonalObj = response["AppCustPersonalObj"];
         this.idNo = this.appCustObj.IdNo;
-        this.trxRefNo = this.appCustObj.AppNo;
-        this.mrSrvySourceCode = "MOU";
         var fraudDukcapilReqObj = { "IdNo": this.idNo };
         this.getFraudDukcapil(fraudDukcapilReqObj);
 
-        if (this.mrCustTypeCode == "PERSONAL") {
+        if (this.appCustObj.MrCustTypeCode == "PERSONAL") {
           this.requestDupCheck = {
             "CustName": this.appCustObj.CustName,
             "MrCustTypeCode": this.appCustObj.MrCustTypeCode,
@@ -102,7 +95,7 @@ export class ViewFraudDetectionResultComponent implements OnInit {
             "MobilePhnNo1": this.appCustPersonalObj.MobilePhnNo1,
             "RowVersion": this.RowVersion
           };
-        } else if (this.mrCustTypeCode == "COMPANY") {
+        } else if (this.appCustObj.MrCustTypeCode == "COMPANY") {
           this.requestDupCheck = {
             "CustName": this.appCustObj.CustName,
             "MrCustTypeCode": this.appCustObj.MrCustTypeCode,
@@ -118,13 +111,29 @@ export class ViewFraudDetectionResultComponent implements OnInit {
         }
         this.getNegativeCustomer(this.requestDupCheck);
       },
-      (error) => {
-        console.log(error);
+      () => {
+        console.log("error")
       }
     );
 
     // this.getAppAsset(appReqObj);
     // this.getAppDupCheckCust(appReqObj);
+  }
+
+  getApp(appId : number){
+    var appReqObj = { "AppId": appId };
+    this.http.post<AppObj>(this.getAppById, appReqObj).subscribe(
+      response => {
+        this.appObj = response;
+        this.trxRefNo = this.appObj.AppNo;
+        this.mrSrvySourceCode = "APP";
+        this.isDataAlreadyLoaded = true;
+      },
+      error => {
+        console.log("error")
+      }
+
+    );
   }
 
   getNegativeCustomer(reqObj) {
@@ -139,8 +148,8 @@ export class ViewFraudDetectionResultComponent implements OnInit {
           this.listNegativeCust[idxSelected].IsSelected=true;
 
       },
-      (error) => {
-        console.log(error);
+      () => {
+        console.log("error");
       }
     );
   }
@@ -151,8 +160,8 @@ export class ViewFraudDetectionResultComponent implements OnInit {
         if(response["StatusCode"]==200)
           this.dukcapilObj = response["ReturnObject"];
       },
-      (error) => {
-        console.log(error);
+      () => {
+        console.log("error")
       }
     );
   }
@@ -168,8 +177,8 @@ export class ViewFraudDetectionResultComponent implements OnInit {
         }
 
       },
-      (error) => {
-        console.log(error);
+      () => {
+        console.log("error")
       }
     );
   }
@@ -179,8 +188,8 @@ export class ViewFraudDetectionResultComponent implements OnInit {
       (response) => {
         this.appAssetObj = response;
       },
-      (error) => {
-        console.log(error);
+      () => {
+        console.log("error")
       }
     );
   }
@@ -203,8 +212,8 @@ export class ViewFraudDetectionResultComponent implements OnInit {
         this.listNegativeAsset = response["AssetNegativeObj"];
 
       },
-      (error) => {
-        console.log(error);
+      () => {
+        console.log("error")
       }
     );
   }

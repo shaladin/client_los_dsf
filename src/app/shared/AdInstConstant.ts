@@ -446,7 +446,7 @@ export class AdInsConstant {
   public static DeleteRefMaster = "/RefMaster/DeleteRefMaster";
   public static GetRefMasterPaging = "/RefMaster/GetRefMasterPaging";
   public static GetRefMasterListDesc = "/RefMaster/GetRefMasterListDesc";
-  public static GetRefMasterByMasterCode = "/RefMaster/GetRefMasterByMasterCode";
+  public static GetRefMasterByMasterCode =  environment.FoundationR3Url +"/RefMaster/GetRefMasterByMasterCode";
   public static GetRefMasterListKeyValueActiveByCode = environment.FoundationR3Url + "/RefMaster/GetListKeyValueActiveByCode"
   public static GetListActiveRefMaster = environment.FoundationR3Url + "/RefMaster/GetListActiveRefMaster"
   public static GetRefMasterByRefMasterTypeCode = environment.FoundationR3Url + "/RefMaster/GetRefMasterByRefMasterTypeCode"
@@ -456,7 +456,7 @@ export class AdInsConstant {
   public static RefMasterTypeCodeCustType = "CUST_TYPE";
   public static RefMasterTypeCodeSlsRecom = "SLS_RECOM";
   public static RefMasterTypeCodeWOP = "WOP";
-  public static RefMasterTypeCodeInstSchm = "INSTSCHM";
+  public static RefMasterTypeCodeInstSchm = "INST_SCHM";
   public static RefMasterTypeCodePayFreq = "PAYFREQ";
   public static RefMasterTypeCodeCustNotifyOpt = "CUST_NOTIF_OPT";
   public static RefMasterTypeCodeFirstInstType = "FIRST_INST_TYPE";
@@ -566,6 +566,8 @@ export class AdInsConstant {
   public static AssignRoleToUploadSetting = "/UploadSetting/AssignRoleToUploadSetting"
   public static GetListRefRoleByUploadTypeId = "/UploadSetting/GetListRefRoleByUploadTypeId"
   public static GetListUploadSettingDByUploadSettingHId = '/UploadSetting/GetListUploadSettingDByUploadSettingHId'
+  public static CancelUpload = environment.FoundationR3Url + "/Upload/CancelUpload";
+  public static UploadReview = environment.FoundationR3Url + "/Upload/UploadReview";
 
   // GENERIC
   public static GetPagingObjectBySQL = "/Generic/GetPagingObjectBySQL";
@@ -661,6 +663,10 @@ export class AdInsConstant {
   public static ReturnMouReview = environment.losUrl + "/MouCust/ReturnMouReview";
   public static EditMouForCancelByMouId = environment.losUrl + "/MouCust/EditMouForCancelByMouId";
   public static GetListMouByAppIdAndMouType = environment.losUrl + "/MouCust/GetListMouByAppIdAndMouType";
+  public static SINGLE_INST_TYPE = "SINGLE";
+  public static MULTIPLE_INST_TYPE = "MULTIPLE";
+  public static PAY_FREQ_MONTHLY = "MONTHLY";
+  public static INST_SCHM_REGULAR_FIXED = "RF";
   
 
   // MOU CUST ASSET
@@ -765,6 +771,7 @@ export class AdInsConstant {
   // LEAD
   public static AddEditLeadCustPersonal = environment.losUrl + "/LeadCust/AddEditLeadCustPersonal";
   public static AddEditLeadData = environment.losUrl + "/Lead/AddEditLeadData";
+  public static GetLeadMonitoringByUploadMonitoringNoAndTrxType = environment.losUrl + "/Lead/GetLeadMonitoringByUploadMonitoringNoAndTrxType";
   public static AddEditLeadDataKta = environment.losUrl + "/Lead/AddEditLeadDataKta";
 
   //LEAD CANCEL

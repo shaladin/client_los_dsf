@@ -21,6 +21,7 @@ export class NapAddComponent implements OnInit {
   param;
   ProductOfferingIdentifier;
   ProductOfferingNameIdentifier;
+  bizTemplateValue: string;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -87,7 +88,7 @@ export class NapAddComponent implements OnInit {
     console.log('test');
     console.log(JSON.parse(localStorage.getItem("UserAccess")));
     this.user = JSON.parse(localStorage.getItem("UserAccess"));
-
+    this.bizTemplateValue = localStorage.getItem("BizTemplateCode");
     this.MakeLookUpObj();
 
     this.GetOfficeDDL();
@@ -149,12 +150,12 @@ export class NapAddComponent implements OnInit {
     addCrit.listValue = [this.user.OfficeCode];
     arrAddCrit.push(addCrit);
 
-    var addCritBizTempalte = new CriteriaObj();
-    addCritBizTempalte.DataType = "text";
-    addCritBizTempalte.propName = "rlob.BIZ_TMPLT_CODE";
-    addCritBizTempalte.restriction = AdInsConstant.RestrictionEq;
-    addCritBizTempalte.value = localStorage.getItem("LobCode");
-    arrAddCrit.push(addCritBizTempalte);
+    var addCritBizTemplate = new CriteriaObj();
+    addCritBizTemplate.DataType = "text";
+    addCritBizTemplate.propName = "rlob.BIZ_TMPLT_CODE";
+    addCritBizTemplate.restriction = AdInsConstant.RestrictionEq;
+    addCritBizTemplate.value = this.bizTemplateValue;
+    arrAddCrit.push(addCritBizTemplate);
 
     this.inputLookupObjName.addCritInput = arrAddCrit;
 
@@ -326,12 +327,12 @@ export class NapAddComponent implements OnInit {
     addCrit.listValue = [ev.target.selectedOptions[0].value];
     arrAddCrit.push(addCrit);
 
-    var addCritBizTempalte = new CriteriaObj();
-    addCritBizTempalte.DataType = "text";
-    addCritBizTempalte.propName = "rlob.BIZ_TMPLT_CODE";
-    addCritBizTempalte.restriction = AdInsConstant.RestrictionEq;
-    addCritBizTempalte.value = localStorage.getItem("LobCode");
-    arrAddCrit.push(addCritBizTempalte);
+    var addCritBizTemplate = new CriteriaObj();
+    addCritBizTemplate.DataType = "text";
+    addCritBizTemplate.propName = "rlob.BIZ_TMPLT_CODE";
+    addCritBizTemplate.restriction = AdInsConstant.RestrictionEq;
+    addCritBizTemplate.value = this.bizTemplateValue;
+    arrAddCrit.push(addCritBizTemplate);
 
     this.inputLookupObjName.addCritInput = arrAddCrit;
     this.ucLookupOffering.setAddCritInput();
