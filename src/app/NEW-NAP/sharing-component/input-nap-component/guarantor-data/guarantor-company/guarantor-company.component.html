@@ -3,7 +3,7 @@
     <div class="card">
       <div class="card-body">
         <div class="px-3">
-          <form class="form form-horizontal" [formGroup]="CompanyForm" #enjiForm="ngForm">
+          <form class="form form-horizontal" [formGroup]="CompanyForm" #enjiForm="ngForm" (ngSubmit)="CompanyForm.valid && SaveForm()">
             <div class="form-body">
               <lib-ucSubsection [id]="'mainDataId'" [title]="'Main Data'" [panel]="'mainData'">
               </lib-ucSubsection>
@@ -61,7 +61,7 @@
                   <div class="form-group row adins-required">
                     <label class="col-md-6 adInsLabel">Industry Type </label>
                     <div class="col-md-6">
-                      <lib-uclookupgeneric [lookupInput]="inputLookupObj1" [parentForm]="CompanyForm" [enjiForm]="enjiForm"
+                      <lib-uclookupgeneric *ngIf="inputLookupObj1.isReady" [lookupInput]="inputLookupObj1" [parentForm]="CompanyForm" [enjiForm]="enjiForm"
                         [identifier]="'lookupIndustryType'" (lookup)="handleOutput1($event)"></lib-uclookupgeneric>
                     </div>
                   </div>
@@ -89,7 +89,12 @@
                         <th><span translate class="thead-header">Delete</span></th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody *ngIf="CompanyForm.controls['LegalDocForm'].controls.length == 0">
+                      <tr>
+                        <td colspan="100%">No Data Available</td>
+                      </tr>
+                    </tbody>
+                    <tbody *ngIf="CompanyForm.controls['LegalDocForm'].controls.length > 0">
                       <tr *ngFor="let item of CompanyForm.controls['LegalDocForm'].controls;let i = index">
                         <td [formGroupName]="i" class="text-center">
                           <select class="form-control adInsInput full-width" style="width: auto" formControlName="MrLegalDocTypeCode"
@@ -199,13 +204,13 @@
                     <label class="col-md-6 adInsLabel">Phone No (Fix Line) 1 </label>
                     <div class="col-md-6">
                       <div class="form-group row">
-                        <div class="col-md-4">
+                        <div class="col-md-4" style="border-right: 1px solid grey">
                           <input type="text" class="form-control adInsInput width-100-per" formControlName="PhnArea1"
                           [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.PhnArea1.invalid }">
                           <lib-uc-show-errors  [control]="CompanyForm.controls.PhnArea1" [submit]="enjiForm.submitted">
                           </lib-uc-show-errors >
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4" style="border-right: 1px solid grey">
                           <input type="text" class="form-control adInsInput width-100-per" formControlName="Phn1"
                           [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.Phn1.invalid }">
                           <lib-uc-show-errors  [control]="CompanyForm.controls.Phn1" [submit]="enjiForm.submitted">
@@ -224,13 +229,13 @@
                     <label class="col-md-6 adInsLabel">Phone No (Fix Line) 2 </label>
                     <div class="col-md-6">
                       <div class="form-group row ">
-                        <div class="col-md-4">
+                        <div class="col-md-4" style="border-right: 1px solid grey">
                           <input type="text" class="form-control adInsInput width-100-per" formControlName="PhnArea2"
                           [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.PhnArea2.invalid }">
                           <lib-uc-show-errors  [control]="CompanyForm.controls.PhnArea2" [submit]="enjiForm.submitted">
                           </lib-uc-show-errors >
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4" style="border-right: 1px solid grey">
                           <input type="text" class="form-control adInsInput width-100-per" formControlName="Phn2"
                           [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.Phn2.invalid }">
                           <lib-uc-show-errors  [control]="CompanyForm.controls.Phn2" [submit]="enjiForm.submitted">
@@ -249,13 +254,13 @@
                     <label class="col-md-6 adInsLabel">Fax </label>
                     <div class="col-md-6">
                       <div class="form-group row ">
-                        <div class="col-md-6">
+                        <div class="col-md-4" style="border-right: 1px solid grey">
                           <input type="text" class="form-control adInsInput width-100-per" formControlName="FaxArea"
                           [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.FaxArea.invalid }">
                           <lib-uc-show-errors  [control]="CompanyForm.controls.FaxArea" [submit]="enjiForm.submitted">
                           </lib-uc-show-errors >
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                           <input type="text" class="form-control adInsInput width-100-per" formControlName="Fax"
                           [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.Fax.invalid }">
                           <lib-uc-show-errors  [control]="CompanyForm.controls.Fax" [submit]="enjiForm.submitted">
@@ -267,15 +272,18 @@
                 </div>
               </div>
               <lib-ucaddress #UcAddrGrp [title]="'Address'" [UCAddrForm]="CompanyForm" [enjiForm]="enjiForm"
-                [identifier]="'AddrObj'" [default]="AddrObj" [inputField]="inputFieldObj" [showPhn3]="false">
+                [identifier]="'AddrObj'" [default]="AddrObj" [inputField]="inputFieldObj" [showAllPhn]="false">
               </lib-ucaddress>
               <div class="form-actions right">
                 <button type="button" class="btn btn-raised btn-warning mr-1" (click)="cancel()" translate>
                   <i class="ft-x"></i> Cancel
                 </button>
-                <button type="submit" class="btn btn-raised btn-primary" (click)="SaveForm()" >
-                  <i class="fa fa-check-square-o"></i> Save
+                <button type="submit" class="btn btn-raised btn-primary" >
+                  <i class="far fa-check-square"></i> Save
                 </button>
+                <!-- <button type="button" class="btn btn-raised btn-primary" (click)="test()">
+                  <i class="fa fa-check-square-o"></i> Test
+                </button> -->
               </div>
             </div>
           </form>

@@ -8,6 +8,7 @@ import { AppCrdRvwHObj } from 'app/shared/model/AppCrdRvwHObj.Model';
 import { AppCrdRvwDObj } from 'app/shared/model/AppCrdRvwDObj.Model';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 
 @Component({
   selector: 'app-credit-review-main',
@@ -17,6 +18,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 export class CreditReviewMainComponent implements OnInit {
 
   appId: number = 0;
+  wfTaskListId: number;
   ManualDeviationData;
   isExistedManualDeviationData;
   apvBaseUrl = environment.ApprovalR3Url;
@@ -40,6 +42,9 @@ export class CreditReviewMainComponent implements OnInit {
       this.route.queryParams.subscribe(params => {
         this.appId = params["AppId"];
         this.TaskId =params["TaskId"];
+        if (params["WfTaskListId"] != null) {
+          this.wfTaskListId = params["WfTaskListId"];
+        }
       });
     }
   
@@ -85,6 +90,7 @@ export class CreditReviewMainComponent implements OnInit {
   DDLRecommendation;
   DDLReasonReturn;
   async ngOnInit() {    
+    this.ClaimTask();
     console.log("User Access");
     console.log(JSON.parse(localStorage.getItem("UserAccess")));
     this.InitData();
@@ -339,5 +345,18 @@ export class CreditReviewMainComponent implements OnInit {
     }
     this.FormObj.controls.Approver.updateValueAndValidity();
 
+  }
+  
+
+  ClaimTask(){
+    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    var wfClaimObj = new ClaimWorkflowObj();
+    wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
+    wfClaimObj.pUserID = currentUserContext["UserName"];
+
+    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+      (response) => {
+    
+      });
   }
 }
