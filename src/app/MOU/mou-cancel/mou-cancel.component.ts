@@ -32,20 +32,28 @@ export class MouCancelComponent implements OnInit {
 
   cancelMou(event)
   {
-    var mouCancel = new MouCustConfirmCancelObj;
-    mouCancel.MouStat = "CAN";
-    mouCancel.MouCustId = event.RowObj.MouCustId;
-    mouCancel.WfTaskListId = event.RowObj.WfTaskListId;
+    if (confirm("Are you sure to cancel this?"))
+    {
+      var mouCancel = new MouCustConfirmCancelObj;
+      mouCancel.MouStat = "CAN";
+      mouCancel.MouCustId = event.RowObj.MouCustId;
+      mouCancel.WfTaskListId = event.RowObj.WfTaskListId;
 
-    console.log("test")
-    console.log(mouCancel)
-    
-    this.http.post(AdInsConstant.EditMouForCancelByMouId, mouCancel).subscribe(
-        response => {
-          this.toastr.successMessage(response["Message"]);
-          this.router.navigate(["/Mou/Cust/Cancel"]);
-        }
-      );
+      // console.log("test")
+      // console.log(mouCancel)
+      
+      this.http.post(AdInsConstant.EditMouForCancelByMouId, mouCancel).subscribe(
+          response => {
+            this.toastr.successMessage(response["Message"]);
+            // this.router.navigate(["/Mou/Cust/Cancel"]);
+            // this.router.navigate(["/Mou"]);
+            // this.router.navigate(["/Mou/Cust/Cancel"]);
+            this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+              this.router.navigate(['/Mou/Cust/Cancel']);
+          });
+          }
+        );
+    }
   }
 
 }
