@@ -78,7 +78,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
       this.AllAppReservedFundObj = allAppReservedFundObj;
     }
     else {
-      this.router.navigate(["/Nap/CreditProcess/CommissionReservedFund/Paging"], { queryParams: { LobCode: "CF4W" } })
+      this.router.navigate(["/Nap/CreditProcess/CommissionReservedFund/Paging"], { queryParams: { BizTemplateCode: "CF4W" } })
     }
   }
 
@@ -96,7 +96,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
     this.http.post(AdInsConstant.ResumeWorkflow, workflowApiObj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["/Nap/AdditionalProcess/ReturnHandling/CommissionReservedFund/Paging"], { queryParams: { LobCode: "CF4W" } })
+        this.router.navigate(["/Nap/AdditionalProcess/ReturnHandling/CommissionReservedFund/Paging"], { queryParams: { BizTemplateCode: "CF4W" } })
       },
       error => {
         console.log(error);
@@ -105,11 +105,12 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   }
 
   Back() {
-    if (this.ReturnHandlingHObj.ReturnHandlingHId != 0) {
-      this.router.navigate(["/Nap/AdditionalProcess/ReturnHandling/CommissionReservedFund/Paging"], { queryParams: { LobCode: "CF4W" } })
+    // console.log("test back commReserveFund");
+    // console.log(this.ReturnHandlingHObj);
+    if (this.ReturnHandlingHObj.ReturnHandlingHId != undefined) {
+      this.router.navigate(["/Nap/AdditionalProcess/ReturnHandling/CommissionReservedFund/Paging"], { queryParams: { BizTemplateCode: "CF4W" } })
     } else {
-      this.router.navigate(["/Nap/CreditProcess/CommissionReservedFund/Paging"], { queryParams: { LobCode: "CF4W" } })
-
+      this.router.navigate(["/Nap/CreditProcess/CommissionReservedFund/Paging"], { queryParams: { BizTemplateCode: "CF4W" } })
     }
   }
 }

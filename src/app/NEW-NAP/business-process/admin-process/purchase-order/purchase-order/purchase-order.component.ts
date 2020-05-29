@@ -33,14 +33,14 @@ export class PurchaseOrderComponent implements OnInit {
       if (params["TaskListId"] != null) {
         this.TaskListId = params["TaskListId"];
       }
-      if (params["LobCode"] != null){
+      if (params["LobCode"] != null) {
         this.lobCode = params["LobCode"];
       }
       switch (this.lobCode) {
         case "FL4W":
           this.urlDetail = "/Nap/FinanceLeasing/AdminProcess/PurchaseOrder/Detail";
           break;
-      
+
         default:
           this.urlDetail = "/Nap/AdminProcess/PurchaseOrder/PO/Detail";
           break;
@@ -65,6 +65,7 @@ export class PurchaseOrderComponent implements OnInit {
   }
 
   SaveForm() {
+    console.log("Save");
     var IsSave = false;
     if (this.AppAssetList.length != 0) {
       for (let i = 0; i < this.AppAssetList.length; i++) {
@@ -96,9 +97,9 @@ export class PurchaseOrderComponent implements OnInit {
       );
     }
   }
-  async claimTask(){
+  async claimTask() {
     var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
-    var wfClaimObj : ClaimWorkflowObj = new ClaimWorkflowObj();
+    var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.TaskListId;
     wfClaimObj.pUserID = currentUserContext["UserName"];
     this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(

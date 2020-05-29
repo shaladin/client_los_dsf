@@ -9,6 +9,7 @@ import { AppCustPersonalContactPersonObj } from 'app/shared/model/AppCustPersona
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-cust-personal-contact-information',
@@ -131,6 +132,17 @@ export class CustPersonalContactInformationComponent implements OnInit {
     this.clearForm();
     this.mode = "Edit";
     this.currentEditedIndex = i;
+    var birthDt;
+    if(this.listContactPersonPersonal[i].BirthDt != undefined){
+      if(this.listContactPersonPersonal[i].BirthDt.toString() != ''){
+        birthDt = formatDate(this.listContactPersonPersonal[i].BirthDt, 'yyyy-MM-dd', 'en-US');
+      }else{
+        birthDt = '';
+      }
+    }else{
+      birthDt = '';
+    }
+
     this.ContactInfoPersonalForm.patchValue({
       ContactPersonName: this.listContactPersonPersonal[i].ContactPersonName,
       MrGenderCode: this.listContactPersonPersonal[i].MrGenderCode,
@@ -138,7 +150,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
       MrCustRelationshipCode: this.listContactPersonPersonal[i].MrCustRelationshipCode,
       IdNo: this.listContactPersonPersonal[i].IdNo,
       BirthPlace: this.listContactPersonPersonal[i].BirthPlace,
-      BirthDt: this.listContactPersonPersonal[i].BirthDt,
+      BirthDt: birthDt,
       IsEmergencyContact: this.listContactPersonPersonal[i].IsEmergencyContact,
       MobilePhnNo1: this.listContactPersonPersonal[i].MobilePhnNo1,
       MobilePhnNo2: this.listContactPersonPersonal[i].MobilePhnNo2,

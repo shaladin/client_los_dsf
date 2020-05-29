@@ -73,15 +73,16 @@ export class LeadInputMainInfoComponent implements OnInit {
   leadExistObj: LeadObj;
   returnLeadExistObj: any;
   MainInfoForm = this.fb.group({
-    OfficeCode: [''],
+    OfficeCode: ['', [Validators.required]],
     OfficeName: [''],
     CrtOfficeCode: [''],
-    OrderNo: [''],
-    LobCode: [''],
-    LeadSource: [''],
+    OrderNo: ['', [Validators.required]],
+    LobCode: ['', [Validators.required]],
+    LeadSource: ['', [Validators.required]],
   });
   leadUrl: string;
   WfTaskListId: string;
+  isCopyButtonDisabled: boolean = true;
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.addLead = AdInsConstant.AddLead;
@@ -135,6 +136,7 @@ export class LeadInputMainInfoComponent implements OnInit {
 
   getLookUpLead(event) {
     this.leadIdExist = event.LeadId;
+    this.isCopyButtonDisabled = false;
   }
 
   copyLead() {
@@ -322,6 +324,7 @@ export class LeadInputMainInfoComponent implements OnInit {
     this.agencyLookUpObj.urlEnviPaging = environment.FoundationR3Url;
     this.agencyLookUpObj.pagingJson = "./assets/uclookup/lookupAgency.json";
     this.agencyLookUpObj.genericJson = "./assets/uclookup/lookupAgency.json";
+    this.agencyLookUpObj.isRequired = true;
 
     this.cmoNameLookUpObj = new InputLookupObj();
     this.cmoNameLookUpObj.isRequired = false;
@@ -330,6 +333,7 @@ export class LeadInputMainInfoComponent implements OnInit {
     this.cmoNameLookUpObj.urlEnviPaging = environment.FoundationR3Url;
     this.cmoNameLookUpObj.pagingJson = "./assets/uclookup/lookupCMO.json";
     this.cmoNameLookUpObj.genericJson = "./assets/uclookup/lookupCMO.json";
+    this.cmoNameLookUpObj.isRequired = true;
 
     this.surveyorNameLookUpObj = new InputLookupObj();
     this.surveyorNameLookUpObj.isRequired = false;
@@ -338,6 +342,7 @@ export class LeadInputMainInfoComponent implements OnInit {
     this.surveyorNameLookUpObj.urlEnviPaging = environment.FoundationR3Url;
     this.surveyorNameLookUpObj.pagingJson = "./assets/uclookup/lookupSurveyor.json";
     this.surveyorNameLookUpObj.genericJson = "./assets/uclookup/lookupSurveyor.json";
+    this.surveyorNameLookUpObj.isRequired = true;
 
     this.salesNameLookUpObj = new InputLookupObj();
     this.salesNameLookUpObj.isRequired = false;
@@ -346,6 +351,7 @@ export class LeadInputMainInfoComponent implements OnInit {
     this.salesNameLookUpObj.urlEnviPaging = environment.FoundationR3Url;
     this.salesNameLookUpObj.pagingJson = "./assets/uclookup/lookupTeleSales.json";
     this.salesNameLookUpObj.genericJson = "./assets/uclookup/lookupTeleSales.json";
+    this.salesNameLookUpObj.isRequired = true;
   }
   OfficeChanged(event) {
     // this.MainInfoForm.patchValue({
@@ -374,7 +380,7 @@ GetOfficeDDL(){
       //   OfficeName: response['ReturnObject'][0]['Value']
       // });
 
-      if (this.user.MrOfficeTypeCode == "CG") {
+      if (this.user.MrOfficeTypeCode == "CG" || this.user.MrOfficeTypeCode == "HO") {
         this.MainInfoForm.patchValue({
           CrtOfficeCode: this.user.OfficeCode,
           OfficeCode : this.listRefOffice[0].Key,
@@ -416,76 +422,80 @@ GetOfficeDDL(){
   }
 
   SaveForm() {
-    if (this.pageType == "edit" || this.pageType == "update" ) {
-      this.leadObj = new LeadObj();
-      this.leadObj.LeadId = this.LeadId;
-      this.leadObj.RowVersion = this.returnLead.RowVersion; 
-      this.setLead();
-      this.http.post(this.editLead, this.leadObj).subscribe(
-        (response) => {
-          this.toastr.successMessage(response["message"]);
-          if (this.pageType == "edit"){
-            this.router.navigate(["/Lead/LeadInput/Page"], { queryParams: { "LeadId": this.LeadId, "mode": this.pageType } });
+    if(this.MainInfoForm.valid){
+      if (this.pageType == "edit" || this.pageType == "update" ) {
+        this.leadObj = new LeadObj();
+        this.leadObj.LeadId = this.LeadId;
+        this.leadObj.RowVersion = this.returnLead.RowVersion; 
+        this.setLead();
+        this.http.post(this.editLead, this.leadObj).subscribe(
+          (response) => {
+            this.toastr.successMessage(response["message"]);
+            if (this.pageType == "edit"){
+              this.router.navigate(["/Lead/LeadInput/Page"], { queryParams: { "LeadId": this.LeadId, "mode": this.pageType } });
+            }
+            else{
+              this.router.navigate(["/Lead/LeadInput/Page"], { queryParams: { "LeadId": this.LeadId, "mode": this.pageType, "WfTaskListId": this.WfTaskListId } });
+            }
+          },
+          (error) => {
+            console.log(error);
           }
-          else{
-            this.router.navigate(["/Lead/LeadInput/Page"], { queryParams: { "LeadId": this.LeadId, "mode": this.pageType, "WfTaskListId": this.WfTaskListId } });
+        );
+      } else {
+        this.leadObj = new LeadObj();
+        this.setLead(); 
+        this.http.post(this.addLead, this.leadObj).subscribe(
+          (response) => {
+            this.responseLead = response;
+            this.LeadId = this.responseLead.LeadId;
+            this.toastr.successMessage(response["message"]);
+            this.router.navigate(["/Lead/LeadInput/Page"], { queryParams: { "LeadId": this.LeadId, "CopyFrom": this.leadIdExist } });
+          },
+          (error) => {
+            console.log(error);
           }
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    } else {
-      this.leadObj = new LeadObj();
-      this.setLead(); 
-      this.http.post(this.addLead, this.leadObj).subscribe(
-        (response) => {
-          this.responseLead = response;
-          this.LeadId = this.responseLead.LeadId;
-          this.toastr.successMessage(response["message"]);
-          this.router.navigate(["/Lead/LeadInput/Page"], { queryParams: { "LeadId": this.LeadId, "CopyFrom": this.leadIdExist } });
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        );
+      }
     }
   }
 
   save() {
-    if (this.pageType == "edit" || this.pageType == "update" ) {
-      this.leadObj = new LeadObj();
-      this.leadObj.LeadId = this.LeadId;
-      this.leadObj.RowVersion = this.returnLead.RowVersion; 
-      this.setLead();
-      this.http.post(this.editLead, this.leadObj).subscribe(
-        (response) => {
-          this.toastr.successMessage(response["message"]);
-          if(this.pageType == "edit"){
+    if(this.MainInfoForm.valid){
+      if (this.pageType == "edit" || this.pageType == "update" ) {
+        this.leadObj = new LeadObj();
+        this.leadObj.LeadId = this.LeadId;
+        this.leadObj.RowVersion = this.returnLead.RowVersion; 
+        this.setLead();
+        this.http.post(this.editLead, this.leadObj).subscribe(
+          (response) => {
+            this.toastr.successMessage(response["message"]);
+            if(this.pageType == "edit"){
+              this.router.navigate(["/Lead/Lead/Paging"]);
+            }
+            else{
+              this.router.navigate(["/Lead/LeadUpdate/Paging"]);
+            }
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      } else {
+        this.leadObj = new LeadObj();
+        this.setLead();
+        this.http.post(this.addLead, this.leadObj).subscribe(
+          (response) => {
+            this.responseLead = response;
+            this.LeadId = this.responseLead.LeadId;
+            this.toastr.successMessage(response["message"]);
             this.router.navigate(["/Lead/Lead/Paging"]);
+          },
+          (error) => {
+            console.log(error);
           }
-          else{
-            this.router.navigate(["/Lead/LeadUpdate/Paging"]);
-          }
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    } else {
-      this.leadObj = new LeadObj();
-      this.setLead();
-      this.http.post(this.addLead, this.leadObj).subscribe(
-        (response) => {
-          this.responseLead = response;
-          this.LeadId = this.responseLead.LeadId;
-          this.toastr.successMessage(response["message"]);
-          this.router.navigate(["/Lead/Lead/Paging"]);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        );
+      }
     }
   }
 

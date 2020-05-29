@@ -255,8 +255,7 @@ export class FormAddDynamicComponent implements OnInit {
         IsSave: true,
         Content: this.FormInputObj["content"],
       };
-      var url = AdInsConstant.GetAppCommissionTax;
-      this.http.post(url, obj).subscribe(
+      this.http.post(AdInsConstant.GetAppCommissionTax, obj).subscribe(
         (response) => {
           // console.log("response Tax");
           // console.log(this.FormInputObj["content"]);

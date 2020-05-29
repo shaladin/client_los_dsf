@@ -7,6 +7,7 @@ import { VerfResultHObj } from 'app/shared/model/VerfResultH/VerfResultH.Model';
 import { VerfResultObj } from 'app/shared/model/VerfResult/VerfResult.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { CustCnfrmObj } from 'app/shared/model/CustCnfrm/CustCnfrm.Model';
+import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 
 @Component({
   selector: 'app-cust-confirmation-detail',
@@ -19,7 +20,7 @@ export class CustConfirmationDetailComponent implements OnInit {
   arrValue = [];
   AgrmntId: number;
   AppId: number;
-  TaskListId: number;
+  TaskListId: any;
   AgrmntNo: string;
   VerfResultList = new Array<VerfResultHObj>();
   IsSkip: boolean = false;
@@ -46,6 +47,7 @@ export class CustConfirmationDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.claimTask();
     this.arrValue.push(this.AgrmntId);
     this.viewObj = "./assets/ucviewgeneric/viewCustConfirmInfo.json";
 
@@ -85,6 +87,7 @@ export class CustConfirmationDetailComponent implements OnInit {
     }
     this.http.post<AppObj>(AdInsConstant.GetAppById, AppObj).subscribe(
       (response) => {
+        console.log(response);
         this.appObj = response;
 
         this.verfResultObj.TrxRefNo = this.AgrmntNo;
@@ -125,4 +128,13 @@ export class CustConfirmationDetailComponent implements OnInit {
     );
   }
 
+  async claimTask(){
+    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    var wfClaimObj : ClaimWorkflowObj = new ClaimWorkflowObj();
+    wfClaimObj.pWFTaskListID = this.TaskListId;
+    wfClaimObj.pUserID = currentUserContext["UserName"];
+    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+      (response) => {
+      });
+  }
 }

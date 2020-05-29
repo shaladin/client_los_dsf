@@ -11,10 +11,12 @@ import { ShowErrorsComponent } from './show-error/show-errors.component';
 import { UcviewgenericModule } from '@adins/ucviewgeneric';
 import { UcShowErrorsModule } from '@adins/uc-show-errors';
 import { MatTabsModule } from '@angular/material';
+import { UcthingstodoModule } from '@adins/ucthingstodo';
 
 @NgModule({
     exports: [
-        ShowErrorsComponent
+        ShowErrorsComponent,
+        UcthingstodoModule
     ],
     imports: [
         ReactiveFormsModule,
@@ -27,7 +29,8 @@ import { MatTabsModule } from '@angular/material';
         UcgridfooterModule,
         UcviewgenericModule,
         UcShowErrorsModule,
-        MatTabsModule
+        MatTabsModule,
+        UcthingstodoModule
     ],
     declarations: [
         ShowErrorsComponent

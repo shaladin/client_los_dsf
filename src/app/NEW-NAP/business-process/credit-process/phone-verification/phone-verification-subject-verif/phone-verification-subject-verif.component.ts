@@ -150,7 +150,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
     this.bindResultObj();
     this.bindSubjectRelationObj();
     this.GetPhoneNumber(this.phnObj);
-    this.GetQuestionList(VerfQAObj);
+    await this.GetQuestionList(VerfQAObj);
     await this.GetAppData();
     await this.GetAppCust();
     await this.GetVerfResultData();
@@ -183,10 +183,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   }
 
   setPhoneVerifData() {
-    var Business_Date = localStorage.getItem('BusinessDate');
-    var datePipe = new DatePipe("en-US");
-    var value = datePipe.transform(Business_Date, "yyyy-MM-dd");
-    var businessDt = new Date(value);
+    var businessDt = new Date();
 
     this.PhoneDataObj = new VerifResulHDetailObj();
     this.PhoneDataObj.VerfResultDListObj = new Array<VerfResultDObj>();
@@ -413,7 +410,12 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
 
   Cancel()
   {
-    this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId);
+    if (this.isReturnHandling == false) {
+      this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId + "&WfTaskListId=" + this.wfTaskListId);
+    }
+    if (this.isReturnHandling == true) {
+      this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId + "&ReturnHandlingDId=" + this.returnHandlingDId + "&WfTaskListId=" + this.wfTaskListId);
+    }
   }
 
   test() {

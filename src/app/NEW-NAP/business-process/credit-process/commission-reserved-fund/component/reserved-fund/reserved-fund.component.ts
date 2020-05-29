@@ -34,7 +34,7 @@ export class ReservedFundComponent implements OnInit {
   @Output() outputTab: EventEmitter<AllAppReservedFundObj> = new EventEmitter();
 
   appReservedFundObjs: Array<AppReservedFundObj>;
-  allAppReservedFundObj: AllAppReservedFundObj;
+  allAppReservedFundObj: AllAppReservedFundObj = new AllAppReservedFundObj();
   isCalculated: boolean = false;
   uppingRate: any;
   insuranceIncome: any;
@@ -91,7 +91,7 @@ export class ReservedFundComponent implements OnInit {
         this.http.post(this.addEditRsvFundUrl, this.allAppReservedFundObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
-            if (this.allAppReservedFundObj.ReturnHandlingHId != 0) {
+            if (this.allAppReservedFundObj.ReturnHandlingHId != 0 && this.allAppReservedFundObj.ReturnHandlingHId != undefined) {
               this.outputTab.emit(this.allAppReservedFundObj);
             } else {
               this.router.navigate(["/Nap/CreditProcess/CommissionReservedFund/Paging"], { queryParams: { LobCode: "CF4W" } })

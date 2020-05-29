@@ -13,6 +13,7 @@ import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { AppAssetAccessoryObj } from 'app/shared/model/AppAssetAccessoryObj.model';
 import { AppDataObj } from 'app/shared/model/AppDataObj.model';
+import { AppCollateralAccessoryObj } from 'app/shared/model/AppCollateralAccessoryObj.Model';
 
 
 @Component({
@@ -357,6 +358,28 @@ export class AssetDataComponent implements OnInit {
         }
       }
     }
+    if (this.AssetDataForm.controls.selectedDpType.value == 'AMT') {
+      if (this.AssetDataForm.controls.DownPaymentAmt.value < 0) {
+        this.toastr.errorMessage("DP must be more than 0");
+        this.isValidOk = false;
+      }
+      if (this.AssetDataForm.controls.DownPaymentAmt.value > this.AssetDataForm.controls.AssetPriceAmt.value) {
+        this.toastr.errorMessage("DP must be less than Asset Price");
+        this.isValidOk = false;
+      }
+    }
+    if (this.AssetDataForm.controls.selectedDpType.value == 'PRCTG') {
+      var tempAmt = this.AssetDataForm.controls.AssetPriceAmt.value * this.AssetDataForm.controls.DownPaymentAmt.value / 100;
+      if (tempAmt < 0) {
+        this.toastr.errorMessage("DP must be more than 0");
+        this.isValidOk = false;
+      }
+      if (tempAmt > this.AssetDataForm.controls.AssetPriceAmt.value) {
+        this.toastr.errorMessage("DP must be less than Asset Price");
+        this.isValidOk = false;
+      }
+    }
+
     if (this.isValidOk == true) {
       this.allAssetDataObj = new AllAssetDataObj();
       this.setAllAssetObj();
@@ -400,7 +423,7 @@ export class AssetDataComponent implements OnInit {
 
   setAllAssetObj() {
     console.log(this.AssetDataForm.controls.MrUserRelationshipCode.value)
-
+    this.allAssetDataObj.AppAssetObj.AppAssetId = this.appAssetId;
     this.allAssetDataObj.AppAssetObj.AppId = this.AppId;
     this.allAssetDataObj.AppAssetObj.FullAssetName = this.AssetDataForm.controls.FullAssetName.value;
     this.allAssetDataObj.AppAssetObj.MrAssetConditionCode = this.AssetDataForm.controls.MrAssetConditionCode.value;
@@ -432,7 +455,7 @@ export class AssetDataComponent implements OnInit {
       this.allAssetDataObj.AppCollateralObj.AppAssetId = this.appAssetId;
       this.allAssetDataObj.AppCollateralObj.IsMainCollateral = true;
     }
-    else {
+    else {     
       this.allAssetDataObj.AppAssetObj.AssetStat = this.AssetDataForm.controls.AssetStat.value;
       this.allAssetDataObj.AppCollateralObj.CollateralStat = this.AssetDataForm.controls.AssetStat.value;
       this.allAssetDataObj.AppCollateralObj.AppAssetId = this.appAssetObj.ResponseAppCollateralObj.AppAssetId;
@@ -502,8 +525,10 @@ export class AssetDataComponent implements OnInit {
     this.allAssetDataObj.AppCollateralRegistrationObj.LocationZipcode = this.AssetDataForm.controls.LocationZipcode.value;
 
     this.allAssetDataObj.AppAssetAccessoryObjs = new Array<AppAssetAccessoryObj>();
+    this.allAssetDataObj.AppCollateralAccessoryObjs = new Array<AppCollateralAccessoryObj>();
     for (let i = 0; i < this.AssetDataForm.controls["AssetAccessoriesObjs"].value.length; i++) {
       var appAssetAccObj = new AppAssetAccessoryObj();
+      var appCollateralAccObj = new AppCollateralAccessoryObj();
       appAssetAccObj.AssetAccessoryCode = this.AssetDataForm.controls["AssetAccessoriesObjs"].value[i].AssetAccessoryCode;
       appAssetAccObj.AssetAccessoryName = this.AssetDataForm.controls["AssetAccessoriesObjs"].value[i].AssetAccessoryName;
       appAssetAccObj.SupplCode = this.AssetDataForm.controls["AssetAccessoriesObjs"].value[i].SupplCodeAccessory;
@@ -511,7 +536,15 @@ export class AssetDataComponent implements OnInit {
       appAssetAccObj.AccessoryPriceAmt = this.AssetDataForm.controls["AssetAccessoriesObjs"].value[i].AccessoryPriceAmt;
       appAssetAccObj.DownPaymentAmt = this.AssetDataForm.controls["AssetAccessoriesObjs"].value[i].AccessoryDownPaymentAmt;
       appAssetAccObj.AccessoryNotes = this.AssetDataForm.controls["AssetAccessoriesObjs"].value[i].AccessoryNotes;
+
+      appCollateralAccObj.CollateralAccessoryCode = appAssetAccObj.AssetAccessoryCode;
+      appCollateralAccObj.CollateralAccessoryName = appAssetAccObj.AssetAccessoryName;
+      appCollateralAccObj.AccessoryPriceAmt = appAssetAccObj.AccessoryPriceAmt;
+      appCollateralAccObj.DownPaymentAmt = appAssetAccObj.DownPaymentAmt;
+      appCollateralAccObj.AccessoryNotes = appAssetAccObj.AccessoryNotes;
+
       this.allAssetDataObj.AppAssetAccessoryObjs.push(appAssetAccObj);
+      this.allAssetDataObj.AppCollateralAccessoryObjs.push(appCollateralAccObj);
     }
   }
 
@@ -1248,12 +1281,14 @@ export class AssetDataComponent implements OnInit {
   }
 
   deleteAccessory(i) {
-    var appAccessoryObjs = this.AssetDataForm.controls["AssetAccessoriesObjs"] as FormArray;
-    var no = appAccessoryObjs.controls[i]["controls"]["No"].value;
-    appAccessoryObjs.removeAt(i);
-    //this.AllAssetObjs.splice(i, 1);
-    this.AssetDataForm.removeControl("lookupSupplierObj" + no);
-    this.AssetDataForm.removeControl("lookupAccObj" + no);
+    if (confirm("Are you sure to delete this record?")) {
+      var appAccessoryObjs = this.AssetDataForm.controls["AssetAccessoriesObjs"] as FormArray;
+      var no = appAccessoryObjs.controls[i]["controls"]["No"].value;
+      appAccessoryObjs.removeAt(i);
+      //this.AllAssetObjs.splice(i, 1);
+      this.AssetDataForm.removeControl("lookupSupplierObj" + no);
+      this.AssetDataForm.removeControl("lookupAccObj" + no);
+    }
   }
 
   bindAccessories() {

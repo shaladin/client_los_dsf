@@ -1,0 +1,208 @@
+{
+    "title": "Lead Monitoring",
+    "exportExcel": true,
+    "component": [
+        {
+            "type": "dropdown",
+            "name": "UL.ORI_OFFICE_CODE",
+            "id": "OriOfficeNameId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "datatype": "text",
+            "isFromURL": true,
+            "isSelectOne": false,
+            "url": "http://r3app-server/FOUNDATION_R3/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "label": "Office Name",
+            "isQueryIn": true,
+            "items": [],
+            "itemsUrl": []
+        },
+        {
+            "type": "textbox",
+            "name": "UL.UPLOAD_MONITORING_NO",
+            "id": "UploadMonitoringNoId",
+            "value": "",
+            "label": "Upload No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "UL.CUST_NO",
+            "id": "CustNoId",
+            "value": "",
+            "label": "Customer No.",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "UL.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "UL.UPLOAD_STATUS",
+            "id": "UploadStatusId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "isSelectOne": false,
+            "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefStatus/GetRefStatusByTrxTypeCode",
+            "label": "Upload Status",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "TrxTypeCode",
+            "criteriaPropValue": "UPLOAD"
+        }
+    ],
+    "querystring": {
+        "select": "SELECT UL.UPLOAD_MONITORING_NO AS UploadMonitoringNo, RO.OFFICE_NAME AS OfficeName, UL.CUST_NO AS CustNo, UL.CUST_NAME AS CustName, UL.TAX_ID_NO AS TaxIdNo, STAT.DESCR AS UploadStatus",
+        "from": "FROM dbo.UPLOAD_LEAD AS UL WITH(NOLOCK) LEFT JOIN dbo.V_REF_OFFICE AS RO WITH(NOLOCK) ON UL.ORI_OFFICE_CODE = RO.OFFICE_CODE LEFT JOIN dbo.V_REF_STATUS AS STAT WITH(NOLOCK) ON UL.UPLOAD_STATUS = STAT.REF_STATUS_CODE AND STAT.STATUS_GRP_CODE = 'UPLOAD_STATUS'"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "UPLOAD NO.",
+            "name": "UL.UPLOAD_MONITORING_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "OFFICE NAME",
+            "name": "RO.OFFICE_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "CUSTOMER NO.",
+            "name": "UL.CUST_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "CUSTOMER NAME",
+            "name": "UL.CUST_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "TAX ID NO.",
+            "name": "UL.TAX_ID_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "UPLOAD STATUS",
+            "name": "UL.UPLOAD_STATUS"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "DOWNLOAD"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "UploadMonitoringNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "OfficeName"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "CustNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "TaxIdNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "UploadStatus"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "switch",
+                    "case": [
+                        {
+                            "conditions": [
+                                {
+                                    "property": "UploadStatus",
+                                    "value": "CAN",
+                                    "restriction": "EQ"
+                                },
+                                {
+                                    "property": "ErrorMessage",
+                                    "value": "",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "callback",
+                                "property": "UploadMonitoringNo"
+                            },
+                            "isHide": false
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "property": "UploadStatus",
+                                    "value": "ERR",
+                                    "restriction": "EQ"
+                                },
+                                {
+                                    "property": "ErrorMessage",
+                                    "value": "",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "callback",
+                                "property": "UploadMonitoringNo"
+                            },
+                            "isHide": false
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "property": "UploadStatus",
+                                    "value": "RJC",
+                                    "restriction": "EQ"
+                                },
+                                {
+                                    "property": "ErrorMessage",
+                                    "value": "",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "callback",
+                                "property": "UploadMonitoringNo"
+                            },
+                            "isHide": false
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
