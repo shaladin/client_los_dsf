@@ -76,7 +76,8 @@ export class NapAddComponent implements OnInit {
     RsvField2: [''],
     RsvField3: [''],
     RsvField4: [''],
-    RsvField5: ['']
+    RsvField5: [''],
+    BizTemplateCode: [AdInsConstant.FL4W]
   });
 
   inputLookupObjCopyProduct;
@@ -88,7 +89,8 @@ export class NapAddComponent implements OnInit {
     console.log('test');
     console.log(JSON.parse(localStorage.getItem("UserAccess")));
     this.user = JSON.parse(localStorage.getItem("UserAccess"));
-    this.bizTemplateValue = localStorage.getItem("BizTemplateCode");
+    // this.bizTemplateValue = localStorage.getItem("BizTemplateCode");
+    this.bizTemplateValue = AdInsConstant.FL4W;
     this.MakeLookUpObj();
 
     this.GetOfficeDDL();
@@ -267,7 +269,7 @@ export class NapAddComponent implements OnInit {
 
   getLookupAppResponseName(ev: any) {
     console.log(ev);
-    var url = environment.FoundationR3Url + AdInsConstant.GetListProdOfferingDByProdOfferingCode;
+    var url = AdInsConstant.GetListProdOfferingDByProdOfferingCode;
     var obj = {
       ProdOfferingCode: ev.ProdOfferingCode
     };
