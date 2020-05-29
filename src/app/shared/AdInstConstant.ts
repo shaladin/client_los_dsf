@@ -456,7 +456,7 @@ export class AdInsConstant {
   public static RefMasterTypeCodeCustType = "CUST_TYPE";
   public static RefMasterTypeCodeSlsRecom = "SLS_RECOM";
   public static RefMasterTypeCodeWOP = "WOP";
-  public static RefMasterTypeCodeInstSchm = "INSTSCHM";
+  public static RefMasterTypeCodeInstSchm = "INST_SCHM";
   public static RefMasterTypeCodePayFreq = "PAYFREQ";
   public static RefMasterTypeCodeCustNotifyOpt = "CUST_NOTIF_OPT";
   public static RefMasterTypeCodeFirstInstType = "FIRST_INST_TYPE";
@@ -566,6 +566,8 @@ export class AdInsConstant {
   public static AssignRoleToUploadSetting = "/UploadSetting/AssignRoleToUploadSetting"
   public static GetListRefRoleByUploadTypeId = "/UploadSetting/GetListRefRoleByUploadTypeId"
   public static GetListUploadSettingDByUploadSettingHId = '/UploadSetting/GetListUploadSettingDByUploadSettingHId'
+  public static CancelUpload = environment.FoundationR3Url + "/Upload/CancelUpload";
+  public static UploadReview = environment.FoundationR3Url + "/Upload/UploadReview";
 
   // GENERIC
   public static GetPagingObjectBySQL = "/Generic/GetPagingObjectBySQL";
@@ -765,6 +767,7 @@ export class AdInsConstant {
   // LEAD
   public static AddEditLeadCustPersonal = environment.losUrl + "/LeadCust/AddEditLeadCustPersonal";
   public static AddEditLeadData = environment.losUrl + "/Lead/AddEditLeadData";
+  public static GetLeadMonitoringByUploadMonitoringNoAndTrxType = environment.losUrl + "/Lead/GetLeadMonitoringByUploadMonitoringNoAndTrxType";
   public static AddEditLeadDataKta = environment.losUrl + "/Lead/AddEditLeadDataKta";
 
   //LEAD CANCEL
