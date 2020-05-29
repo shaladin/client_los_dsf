@@ -80,17 +80,18 @@ export class CustGrpMemberComponent implements OnInit {
     this.InputLookupCustomerObjs.push(InputLookupCustomerObj);
     this.dictLookup[max + 1] = InputLookupCustomerObj;
 
-    
-    if(this.identifier == AdInsConstant.CustGrupIndentifierTypePersonal){
-      this.CustRelationshipObjs.push({list: []});
-    }
+    this.CustRelationshipObjs.push({list: []});
 
-    if(this.identifier == AdInsConstant.CustGrupIndentifierTypeCompany){
-      this.CustRelationshipObjs.push({list: this.CustRelationshipCompanyObj});
-      this.parentForm.controls[this.identifier]["controls"][max].patchValue({
-        MrCustRelationshipCode: this.defaultCustRelationshipCompanyCode
-      });
-    }
+    // if(this.identifier == AdInsConstant.CustGrupIndentifierTypePersonal){
+    //   this.CustRelationshipObjs.push({list: []});
+    // }
+
+    // if(this.identifier == AdInsConstant.CustGrupIndentifierTypeCompany){
+    //   this.CustRelationshipObjs.push({list: this.CustRelationshipCompanyObj});
+    //   this.parentForm.controls[this.identifier]["controls"][max].patchValue({
+    //     MrCustRelationshipCode: this.defaultCustRelationshipCompanyCode
+    //   });
+    // }
   }
 
   deleteCustGrp(i){
@@ -105,11 +106,11 @@ export class CustGrpMemberComponent implements OnInit {
 
   initLookup(){
     var InputLookupCustomerObj = new InputLookupObj();
-    InputLookupCustomerObj.urlJson = "./assets/uclookup/lookupCustomer.json";
+    InputLookupCustomerObj.urlJson = "./assets/uclookup/lookupCustGrp.json";
     InputLookupCustomerObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
     InputLookupCustomerObj.urlEnviPaging = environment.FoundationR3Url;
-    InputLookupCustomerObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
-    InputLookupCustomerObj.genericJson = "./assets/uclookup/lookupCustomer.json";
+    InputLookupCustomerObj.pagingJson = "./assets/uclookup/lookupCustGrp.json";
+    InputLookupCustomerObj.genericJson = "./assets/uclookup/lookupCustGrp.json";
 
     return InputLookupCustomerObj;
   }
@@ -119,22 +120,20 @@ export class CustGrpMemberComponent implements OnInit {
       CustNo: event.CustNo,
       CustName: event.CustName
     });
-
-    if(this.identifier == AdInsConstant.CustGrupIndentifierTypePersonal){
-      if(event.MrCustTypeCode == AdInsConstant.CustTypePersonal){
-        this.CustRelationshipObjs[i].list = this.CustRelationshipPersonalObj;
-        this.parentForm.controls[this.identifier]["controls"][i].patchValue({
-          MrCustRelationshipCode: this.defaultCustRelationshipPersonalCode
-        });
-      }
-  
-      if(event.MrCustTypeCode == AdInsConstant.CustTypeCompany){
-        this.CustRelationshipObjs[i].list = this.CustRelationshipCompanyObj;
-        this.parentForm.controls[this.identifier]["controls"][i].patchValue({
-          MrCustRelationshipCode: this.defaultCustRelationshipCompanyCode
-        });
-      }
+    if(event.MrCustTypeCode == AdInsConstant.CustTypePersonal){
+      this.CustRelationshipObjs[i].list = this.CustRelationshipPersonalObj;
+      this.parentForm.controls[this.identifier]["controls"][i].patchValue({
+        MrCustRelationshipCode: this.defaultCustRelationshipPersonalCode
+      });
     }
+
+    if(event.MrCustTypeCode == AdInsConstant.CustTypeCompany){
+      this.CustRelationshipObjs[i].list = this.CustRelationshipCompanyObj;
+      this.parentForm.controls[this.identifier]["controls"][i].patchValue({
+        MrCustRelationshipCode: this.defaultCustRelationshipCompanyCode
+      });
+    }
+    
 
     // console.log(this.CustRelationshipObjs);
   }

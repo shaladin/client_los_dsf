@@ -395,8 +395,8 @@ export class CustShareholderComponent implements OnInit {
       let d2 = new Date(this.MaxDate);
       let d3 = new Date(this.appCustCompanyMgmntShrholderObj.BirthDt);
       let d4 = new Date(this.Max17YO);
-      if(d1>d2){
-        this.toastr.errorMessage("Id Expired Date can not be more than " + this.MaxDate);
+      if(d1<d2){
+        this.toastr.errorMessage("Id Expired Date can not be less than Business Date");
         flag = false;
       }
       if(d3>d4){
