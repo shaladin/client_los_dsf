@@ -8,7 +8,7 @@
               <h4 class="card-title" id="horz-layout-colored-controls" translate>LEAD {{this.titlePageType}}</h4>
             </div>
             <div class="col-md-4" style="text-align-last: right">
-              <button type="button" class="btn btn-raised btn-success mr-1" (click)="editMainInfoHandler()" translate>
+              <button *ngIf="this.titlePageType != 'UPDATE'" type="button" class="btn btn-raised btn-success mr-1" (click)="editMainInfoHandler()" translate>
                 Edit Main Info
               </button>
               <button type="button" class="btn btn-raised btn-warning mr-1" (click)="cancelHandler()" translate>
