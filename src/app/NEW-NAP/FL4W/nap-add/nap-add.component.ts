@@ -140,6 +140,13 @@ export class NapAddComponent implements OnInit {
     addCrit.restriction = AdInsConstant.RestrictionIn;
     addCrit.listValue = [this.user.OfficeCode];
     arrCopyLookupCrit.push(addCrit);
+
+    var critObj = new CriteriaObj();
+    critObj.restriction = AdInsConstant.RestrictionEq;
+    critObj.propName = 'vrl.BIZ_TMPLT_CODE';
+    critObj.value = AdInsConstant.FL4W;
+    arrCopyLookupCrit.push(critObj);
+
     this.inputLookupObjCopyProduct.addCritInput = arrCopyLookupCrit;
     
     var arrAddCrit = new Array();
