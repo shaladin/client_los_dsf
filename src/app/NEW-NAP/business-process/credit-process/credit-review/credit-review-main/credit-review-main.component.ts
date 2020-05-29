@@ -8,6 +8,8 @@ import { AppCrdRvwHObj } from 'app/shared/model/AppCrdRvwHObj.Model';
 import { AppCrdRvwDObj } from 'app/shared/model/AppCrdRvwDObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
+import { ScoringResultHObj } from 'app/shared/model/ScoringResultHObj.Model';
+import { NapAppModel } from 'app/shared/model/NapApp.Model';
 
 @Component({
   selector: 'app-credit-review-main',
@@ -59,13 +61,6 @@ export class CreditReviewMainComponent implements OnInit {
   InitData(){
     this.DDLRecommendation = new Array();
     this.DDLReasonReturn = new Array();
-    this.AppStep = {
-      "CUST": 0,
-      "APP": 1,
-      "FRD": 2,
-      "DEVC": 3,
-      "APV": 4,
-    };
     this.AppStepIndex = 0;
     this.CustTypeCode = "";
     this.Arr = this.FormObj.get('arr') as FormArray;
@@ -77,8 +72,14 @@ export class CreditReviewMainComponent implements OnInit {
   }
 
   viewProdMainInfoObj;
-  AppStepIndex;
-  AppStep;
+  AppStepIndex: number = 0;
+  AppStep = {
+    "CUST": 0,
+    "APP": 1,
+    "FRD": 2,
+    "DEVC": 3,
+    "APV": 4,
+  };
   CustTypeCode;
   Arr;
   UserAccess;
@@ -91,12 +92,43 @@ export class CreditReviewMainComponent implements OnInit {
     console.log(JSON.parse(localStorage.getItem("UserAccess")));
     this.InitData();
     this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
+    await this.GetAppNo();
     await this.GetAppCustData();
     await this.BindDDLRecommendation();
     await this.BindDDLReasonReturn();
     await this.BindCreditAnalysisItemFormObj();
     await this.BindAppvAmt();
     await this.GetExistingCreditReviewData();
+  }
+
+  async GetAppNo(){
+    var obj = { AppId: this.appId };
+    await this.http.post<NapAppModel>(AdInsConstant.GetAppById, obj).toPromise().then(
+      (response) => {
+        console.log(response);
+        if(response != undefined)
+          this.GetCreditScoring(response["AppNo"]);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  GetCreditScoring(appNo: string){
+    var obj = { ScoringResultH: { TrxSourceNo: appNo } };
+    this.http.post(AdInsConstant.GetLatestScoringResultHByTrxSourceNo, obj).toPromise().then(
+      (response) => {
+        console.log(response);
+        var ScoringResult: ScoringResultHObj = response["ScoringResultHObj"];
+        this.FormObj.patchValue({
+          CreditScoring: ScoringResult.ScoringValue
+        });
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   async GetAppCustData(){
