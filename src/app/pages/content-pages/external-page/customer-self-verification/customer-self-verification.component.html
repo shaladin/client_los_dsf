@@ -5,11 +5,13 @@
         <div class="card-header header-title">
           <div class="row">
             <div class="col-md-8">
-              <h4 class="card-title" id="horz-layout-colored-controls" translate> Customer Self Verification
+              <h4 class="card-title" id="horz-layout-colored-controls"  translate> Customer Self Verification
               </h4>
             </div>
           </div>
         </div>
+        <br>
+        <br>
         <div class="px-3" >
           <lib-ucviewgeneric [viewInput]="viewLeadHeaderMainInfo"></lib-ucviewgeneric>
           <div id="stepper1" class="bs-stepper" >
@@ -34,8 +36,8 @@
             <div class="bs-stepper-content">
               <div id="customer-data-tab" class="content" role="tabpanel"
                 aria-labelledby="customer-data-tab-trigger">
-                <app-lead-input-cust-data *ngIf="isCustData == true" (outputTab)="getValue($event)">
-                </app-lead-input-cust-data>
+                <app-lead-customer-data *ngIf="isCustData == true" (outputTab)="getValue($event)">
+                </app-lead-customer-data>
               </div>
               <div id="lead-data-tab" class="content" role="tabpanel" aria-labelledby="lead-data-tab-trigger">
                 <app-lead-data *ngIf="isLeadData == true" (outputTab)="getValue($event)" (outputPage)="getPage($event)">
