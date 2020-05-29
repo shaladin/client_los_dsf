@@ -100,7 +100,7 @@ export class LeadInputCustDataComponent implements OnInit {
     Twitter: [''],
     CustModel: [''],
     CompanyName: [''],
-    MonthlyIncome: [0, [Validators.required]],
+    MonthlyIncome: [0, [Validators.required, Validators.min(1.00)]],
     MonthlyExpense: [0]
   });
   
