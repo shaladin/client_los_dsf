@@ -663,6 +663,10 @@ export class AdInsConstant {
   public static ReturnMouReview = environment.losUrl + "/MouCust/ReturnMouReview";
   public static EditMouForCancelByMouId = environment.losUrl + "/MouCust/EditMouForCancelByMouId";
   public static GetListMouByAppIdAndMouType = environment.losUrl + "/MouCust/GetListMouByAppIdAndMouType";
+  public static SINGLE_INST_TYPE = "SINGLE";
+  public static MULTIPLE_INST_TYPE = "MULTIPLE";
+  public static PAY_FREQ_MONTHLY = "MONTHLY";
+  public static INST_SCHM_REGULAR_FIXED = "RF";
   
 
   // MOU CUST ASSET

@@ -46,24 +46,24 @@ export class NapAddComponent implements OnInit {
     Tenor: 0,
     NumOfInst: 0,
     PayFreqCode: [''],
-    MrFirstInstTypeCode: "test",
+    MrFirstInstTypeCode: "",
     NumOfAsset: 1,
     MrLcCalcMethodCode: [''],
     LcInstRatePrml: [''],
     LcInsRatePrml: [''],
-    MrAppSourceCode: "test",
-    MrWopCode: "test",
+    MrAppSourceCode: "",
+    MrWopCode: "",
     SrvyOrderNo: [''],
     ApvDt: [''],
     SalesHeadNo: [''],
     SalesNotes: [''],
-    SalesOfficerNo: "test",
+    SalesOfficerNo: "",
     CreditAdminNo: [''],
     CreditAnalystNo: [''],
     CreditRiskNo: [''],
     DataEntryNo: [''],
     MrSalesRecommendCode: [''],
-    MrCustNotifyOptCode: "test",
+    MrCustNotifyOptCode: "",
     PreviousAppId: [''],
     IsAppInitDone: [''],
     MrOrderInfoCode: [''],
@@ -209,7 +209,8 @@ export class NapAddComponent implements OnInit {
     napAppObj.IsAppInitDone = false;
     napAppObj.AppStat = AdInsConstant.AppStepNew;
     napAppObj.AppCurrStep = AdInsConstant.AppStepNew;
-    napAppObj.BlCode = "CF4W";
+    napAppObj.BizTemplateCode = AdInsConstant.CF4W;
+    napAppObj.BlCode = AdInsConstant.CF4W;
     napAppObj.OriOfficeCode = this.NapAppForm.controls['OriOfficeCode'].value;
     napAppObj.OriOfficeName = this.NapAppForm.controls['OriOfficeName'].value;
     napAppObj = this.CheckValue(napAppObj);
