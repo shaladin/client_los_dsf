@@ -9,7 +9,7 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { SharingModule } from 'app/shared/sharing.module';
 import { ArchwizardModule } from 'angular-archwizard';
 import { UcSubsectionModule } from "@adins/uc-subsection";
-import { UclookupgenericModule } from '@adins/uclookupgeneric';
+import { UclookupgenericModule, UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { UcviewgenericModule } from '@adins/ucviewgeneric';
 import { UcaddressModule } from "@adins/ucaddress";
 import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
@@ -62,6 +62,9 @@ export const customCurrencyMaskConfig = {
     declarations: [
         LoginPageComponent,
         CustomerSelfVerificationComponent 
-    ]
+    ],
+      entryComponents: [
+        UclookupgenericComponent,
+      ]
 })
 export class ContentPagesModule { }

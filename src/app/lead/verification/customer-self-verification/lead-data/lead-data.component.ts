@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -40,17 +40,7 @@ export class LeadDataComponent implements OnInit {
   addEditLeadData: string;
   getLeadAssetByLeadId: string;
   getLeadAppByLeadId: string;
-  getAssetMasterForLookupEmployee: string;
-  serial1Disabled: boolean = false;
-  serial2Disabled: boolean = false;
-  serial3Disabled: boolean = false;
-  serial4Disabled: boolean = false;
-  serial5Disabled: boolean = false;
-  serial1Mandatory: boolean = false;
-  serial2Mandatory: boolean = false;
-  serial3Mandatory: boolean = false;
-  serial4Mandatory: boolean = false;
-  serial5Mandatory: boolean = false;
+  getAssetMasterForLookupEmployee: string; 
   reqLeadAssetObj: LeadAssetObj;
   resLeadAssetObj: any;
   reqLeadAppObj: LeadAppObj;
@@ -62,19 +52,16 @@ export class LeadDataComponent implements OnInit {
     FullAssetName: [''],
     MrAssetConditionCode: [''],
     MrDownPaymentTypeCode: [''],
-    ManufacturingYear: [''],
-    AssetPrice: ['', Validators.required],
-    DownPayment: ['', Validators.required],
-    SerialNo1: [''],
-    SerialNo2: [''],
-    SerialNo3: [''],
-    SerialNo4: [''],
-    SerialNo5: [''], 
-    Tenor: ['', Validators.required],
+    ManufacturingYear: ['', Validators.min(0)],
+    AssetPrice: ['', [Validators.required, Validators.min(1.00)]],
+    DownPaymentAmount: ['', [Validators.required, Validators.min(1.00)]],
+    DownPaymentPercent: [''],
+    Tenor: ['', [Validators.required, Validators.min(0)]],
     MrFirstInstTypeCode: ['', Validators.required],
     NTFAmt: [''],
     TotalDownPayment: [''],
-    InstallmentAmt: ['', Validators.required]
+    InstallmentAmt: ['', Validators.required],
+    items: this.fb.array([]),
   });
   getGeneralSettingByCode: string;
   getLeadByLeadId: string;
@@ -88,6 +75,13 @@ export class LeadDataComponent implements OnInit {
   WfTaskListId: string;
   editLead : string;
   editLeadObj : LeadObj;
+  isUsed: boolean;
+  SerialNoList: any;
+  items: FormArray  ;
+  GetRefMasterByMasterCode : string;
+  tempMrAssetConditionCode : any;
+  tempMrDownPaymentTypeCode : any;
+  tempMrFirstInstTypeCode : any;
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.getListActiveRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
     this.addEditLeadData = AdInsConstant.AddEditLeadData;
@@ -98,7 +92,7 @@ export class LeadDataComponent implements OnInit {
     this.getLeadByLeadId = AdInsConstant.GetLeadByLeadId;
     this.editLead = AdInsConstant.EditLead;
     this.submitWorkflowLeadInput = AdInsConstant.SubmitWorkflowLeadInput;
-
+    this.GetRefMasterByMasterCode = AdInsConstant.GetRefMasterByMasterCode;
     this.route.queryParams.subscribe(params => {
       if (params["LeadId"] != null) {
         this.LeadId = params["LeadId"];
@@ -124,6 +118,29 @@ export class LeadDataComponent implements OnInit {
       FullAssetName: event.FullAssetName
     });
     this.assetTypeId = event.AssetTypeId;
+    var AssetTypeCode = { 'AssetTypeCode': event.AssetTypeCode };
+    console.log("aawd");
+    console.log(AssetTypeCode);
+
+    this.http.post(AdInsConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
+      (response: any) => {
+        while (this.items.length) {
+          this.items.removeAt(0);
+        }
+        this.SerialNoList = response['ReturnObject'];
+        for (var i = 0; i < this.SerialNoList["length"]; i++) {
+          var eachDataDetail = this.fb.group({
+            SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
+            SerialNoValue: [''],
+            IsMandatory: [this.SerialNoList[i].IsMandatory]
+          }) as FormGroup;
+          this.items.push(eachDataDetail);
+          if (this.isUsed == true && this.items.controls[i]['controls']['IsMandatory'].value == true) {
+            this.items.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required]);
+            this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
+          }
+        }
+      });
   }
 
   // downPaymentChange(event) {
@@ -132,81 +149,19 @@ export class LeadDataComponent implements OnInit {
   //   });
   // }
 
-  radioChange(event) {
-    this.serial2Mandatory = false;
-    this.serial3Mandatory = false;
-    this.serial4Mandatory = false;
-    this.serial5Mandatory = false;
+  radioChange(event) { 
 
     var assetType : AssetTypeObj= new AssetTypeObj();
     assetType.AssetTypeId = this.assetTypeId;
     this.http.post(AdInsConstant.GetAssetTypeById, assetType).subscribe(
-      (response: any) => {
-        if (response.IsMndtrySerialNo1 == "1" && event.target.value == "USED") {
-          this.LeadDataForm.controls['SerialNo1'].setValidators([Validators.required]);
-          this.LeadDataForm.controls['SerialNo1'].updateValueAndValidity();
-          this.serial1Mandatory = true;
-        }
-        else {
-          this.LeadDataForm.controls['SerialNo1'].clearValidators();
-          this.LeadDataForm.controls['SerialNo1'].updateValueAndValidity();
-          this.serial1Mandatory = false;
-        }
-
-        if (response.IsMndtrySerialNo2 == "1" && event.target.value == "USED") {
-          this.LeadDataForm.controls['SerialNo2'].setValidators([Validators.required]);
-          this.LeadDataForm.controls['SerialNo2'].updateValueAndValidity();
-          this.serial2Mandatory = true;
-        }
-        else {
-          this.LeadDataForm.controls['SerialNo2'].clearValidators();
-          this.LeadDataForm.controls['SerialNo2'].updateValueAndValidity();
-          this.serial2Mandatory = false;
-        }
-
-        if (response.IsMndtrySerialNo3 == "1" && event.target.value == "USED") {
-          this.LeadDataForm.controls['SerialNo3'].setValidators([Validators.required]);
-          this.LeadDataForm.controls['SerialNo3'].updateValueAndValidity();
-          this.serial3Mandatory = true;
-        }
-        else {
-          this.LeadDataForm.controls['SerialNo3'].clearValidators();
-          this.LeadDataForm.controls['SerialNo3'].updateValueAndValidity();
-          this.serial3Mandatory = false;
-        }
-
-        if (response.IsMndtrySerialNo4 == "1" && event.target.value == "USED") {
-          this.LeadDataForm.controls['SerialNo4'].setValidators([Validators.required]);
-          this.LeadDataForm.controls['SerialNo4'].updateValueAndValidity();
-          this.serial4Mandatory = true;
-        }
-        else {
-          this.LeadDataForm.controls['SerialNo4'].clearValidators();
-          this.LeadDataForm.controls['SerialNo4'].updateValueAndValidity();
-          this.serial4Mandatory = false;
-        }
-
-        if (response.IsMndtrySerialNo5 == "1" && event.target.value == "USED") {
-          this.LeadDataForm.controls['SerialNo5'].setValidators([Validators.required]);
-          this.LeadDataForm.controls['SerialNo5'].updateValueAndValidity();
-          this.serial5Mandatory = true;
-        }
-        else {
-          this.LeadDataForm.controls['SerialNo5'].clearValidators();
-          this.LeadDataForm.controls['SerialNo5'].updateValueAndValidity();
-          this.serial5Mandatory = false;
-        }
-
-        this.serial1Disabled = response.SerialNo1Label == "" ? true : false;
-        this.serial2Disabled = response.SerialNo2Label == "" ? true : false;
-        this.serial3Disabled = response.SerialNo3Label == "" ? true : false;
-        this.serial4Disabled = response.SerialNo4Label == "" ? true : false;
-        this.serial5Disabled = response.SerialNo5Label == "" ? true : false;
+      (response: any) => { 
+ 
       }
     );
   }
 
   ngOnInit() {
+    this.items = this.LeadDataForm.get('items') as FormArray;
     this.InputLookupAssetObj = new InputLookupObj();
     this.InputLookupAssetObj.urlJson = "./assets/uclookup/NAP/lookupAsset.json";
     this.InputLookupAssetObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
@@ -267,18 +222,34 @@ export class LeadDataComponent implements OnInit {
       this.http.post(this.getLeadAssetByLeadId, this.reqLeadAssetObj).subscribe(
         (response) => {
           this.resLeadAssetObj = response;
-          if (this.resLeadAssetObj.LeadAssetId != 0) {
+          if (this.resLeadAssetObj.MrAssetConditionCode == "USED") {
+            this.isUsed = true;
+          } else {
+            this.isUsed = false;
+          }
+          if (this.resLeadAssetObj.LeadAssetId != 0) { 
+            this.assetConditionObj = new RefMasterObj();
+            this.assetConditionObj.MasterCode = this.resLeadAssetObj.MrAssetConditionCode; 
+            this.http.post(this.GetRefMasterByMasterCode, this.assetConditionObj).subscribe(
+              (response) => {
+                this.tempMrAssetConditionCode = response["Descr"]; 
+              }
+            );
+            this.assetConditionObj = new RefMasterObj();
+            this.assetConditionObj.MasterCode = this.resLeadAssetObj.MrDownPaymentTypeCode; 
+            this.http.post(this.GetRefMasterByMasterCode, this.assetConditionObj).subscribe(
+              (response) => {
+                this.tempMrDownPaymentTypeCode = response["Descr"]; 
+              }
+            ); 
             this.LeadDataForm.patchValue({
+              FullAssetName: this.reqLeadAssetObj.FullAssetName,
               MrDownPaymentTypeCode: this.resLeadAssetObj.MrDownPaymentTypeCode,
               MrAssetConditionCode: this.resLeadAssetObj.MrAssetConditionCode,
               ManufacturingYear: this.resLeadAssetObj.ManufacturingYear,
               AssetPrice: this.resLeadAssetObj.AssetPriceAmt,
-              DownPayment: this.resLeadAssetObj.DownPaymentAmt,
-              SerialNo1: this.resLeadAssetObj.SerialNo1,
-              SerialNo2: this.resLeadAssetObj.SerialNo2,
-              SerialNo3: this.resLeadAssetObj.SerialNo3,
-              SerialNo4: this.resLeadAssetObj.SerialNo4,
-              SerialNo5: this.resLeadAssetObj.SerialNo5,
+              DownPaymentAmount: this.resLeadAssetObj.DownPaymentAmt,
+              DownPaymentPercent: this.resLeadAssetObj.DownPaymentPrcnt, 
             });
           }
           this.reqAssetMasterObj = new AssetMasterObj();
@@ -296,65 +267,57 @@ export class LeadDataComponent implements OnInit {
               var assetType = new AssetTypeObj();
               assetType.AssetTypeId = this.resAssetMasterObj.AssetTypeId;
               this.http.post(AdInsConstant.GetAssetTypeById, assetType).subscribe(
-                (response: any) => {
-                  console.log(response);
-                  if (response.IsMndtrySerialNo1 == "1" && this.resLeadAssetObj.MrAssetConditionCode == "USED") {
-                    this.LeadDataForm.controls['SerialNo1'].setValidators([Validators.required]);
-                    this.LeadDataForm.controls['SerialNo1'].updateValueAndValidity();
-                    this.serial1Mandatory = true;
-                  }
-                  else {
-                    this.LeadDataForm.controls['SerialNo1'].clearValidators();
-                    this.LeadDataForm.controls['SerialNo1'].updateValueAndValidity();
-                    this.serial1Mandatory = false;
-                  }
-                  if (response.IsMndtrySerialNo2 == "1" && this.resLeadAssetObj.MrAssetConditionCode == "USED") {
-                    this.LeadDataForm.controls['SerialNo2'].setValidators([Validators.required]);
-                    this.LeadDataForm.controls['SerialNo2'].updateValueAndValidity();
-                    this.serial2Mandatory = true;
-                  }
-                  else {
-                    this.LeadDataForm.controls['SerialNo2'].clearValidators();
-                    this.LeadDataForm.controls['SerialNo2'].updateValueAndValidity();
-                    this.serial2Mandatory = false;
-                  }
-                  if (response.IsMndtrySerialNo3 == "1" && this.resLeadAssetObj.MrAssetConditionCode == "USED") {
-                    this.LeadDataForm.controls['SerialNo3'].setValidators([Validators.required]);
-                    this.LeadDataForm.controls['SerialNo3'].updateValueAndValidity();
-                    this.serial3Mandatory = true;
-                  }
-                  else {
-                    this.LeadDataForm.controls['SerialNo3'].clearValidators();
-                    this.LeadDataForm.controls['SerialNo3'].updateValueAndValidity();
-                    this.serial3Mandatory = false;
-                  }
-                  if (response.IsMndtrySerialNo4 == "1" && this.resLeadAssetObj.MrAssetConditionCode == "USED") {
-                    this.LeadDataForm.controls['SerialNo4'].setValidators([Validators.required]);
-                    this.LeadDataForm.controls['SerialNo4'].updateValueAndValidity();
-                    this.serial4Mandatory = true;
-                  }
-                  else {
-                    this.LeadDataForm.controls['SerialNo4'].clearValidators();
-                    this.LeadDataForm.controls['SerialNo4'].updateValueAndValidity();
-                    this.serial4Mandatory = false;
-                  }
-                  if (response.IsMndtrySerialNo5 == "1" && this.resLeadAssetObj.MrAssetConditionCode == "USED") {
-                    this.LeadDataForm.controls['SerialNo5'].setValidators([Validators.required]);
-                    this.LeadDataForm.controls['SerialNo5'].updateValueAndValidity();
-                    this.serial5Mandatory = true;
-                  }
-                  else {
-                    this.LeadDataForm.controls['SerialNo5'].clearValidators();
-                    this.LeadDataForm.controls['SerialNo5'].updateValueAndValidity();
-                    this.serial5Mandatory = false;
-                  }
+                (response: any) => { 
+                  
 
-                    // this.serial1Disabled = response.SerialNo1Label == "" ? true : false;
-                    // this.serial2Disabled = response.SerialNo2Label == "" ? true : false;
-                    // this.serial3Disabled = response.SerialNo3Label == "" ? true : false;
-                    // this.serial4Disabled = response.SerialNo4Label == "" ? true : false;
-                    // this.serial5Disabled = response.SerialNo5Label == "" ? true : false;
+                  var AssetTypeCode = { 'AssetTypeCode': response.AssetTypeCode };
+                  this.http.post(AdInsConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
+                    (response: any) => {
+                      while (this.items.length) {
+                        this.items.removeAt(0);
+                      }
+                      this.SerialNoList = response['ReturnObject'];
+                      for (var i = 0; i < this.SerialNoList["length"]; i++) {
+                        var eachDataDetail = this.fb.group({
+                          SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
+                          SerialNoValue: [''],
+                          IsMandatory: [this.SerialNoList[i].IsMandatory]
+                        }) as FormGroup;
+                        this.items.push(eachDataDetail);
+                        if (this.isUsed == true && this.items.controls[i]['controls']['IsMandatory'].value == true) {
+                          this.items.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required]);
+                          this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
+                        }
+                        if (this.items.controls[0] != null) {
+                          this.items['controls'][0].patchValue({
+                            SerialNoValue: this.resLeadAssetObj.SerialNo1,
+                          });
+                        }
+                        if (this.items.controls[1] != null) {
+                          this.items['controls'][1].patchValue({
+                            SerialNoValue: this.resLeadAssetObj.SerialNo2,
+                          });
+                        }
+                        if (this.items.controls[2] != null) {
+                          this.items['controls'][2].patchValue({
+                            SerialNoValue: this.resLeadAssetObj.SerialNo3,
+                          });
+                        }
+                        if (this.items.controls[3] != null) {
+                          this.items['controls'][3].patchValue({
+                            SerialNoValue: this.resLeadAssetObj.SerialNo4,
+                          });
+                        }
+                        if (this.items.controls[4] != null) {
+                          this.items['controls'][4].patchValue({
+                            SerialNoValue: this.resLeadAssetObj.SerialNo4,
+                          });
+                        }
+                      }
+                    });
+                  console.log(response);
                 });
+  
             });
         });
 
@@ -362,7 +325,14 @@ export class LeadDataComponent implements OnInit {
       this.reqLeadAppObj.LeadId = this.CopyFrom;
       this.http.post(this.getLeadAppByLeadId, this.reqLeadAppObj).subscribe(
         (response) => {
-          this.resLeadAppObj = response;
+          this.resLeadAppObj = response; 
+          this.assetConditionObj = new RefMasterObj();
+          this.assetConditionObj.MasterCode = this.resLeadAppObj.MrFirstInstTypeCode;  
+          this.http.post(this.GetRefMasterByMasterCode, this.assetConditionObj).subscribe(
+            (response) => {
+              this.tempMrFirstInstTypeCode = response["Descr"]; 
+            }
+          ); 
           if (this.resLeadAppObj.LeadAppId != 0) {
             this.LeadDataForm.patchValue({
               Tenor: this.resLeadAppObj.Tenor,
@@ -379,19 +349,33 @@ export class LeadDataComponent implements OnInit {
       this.reqLeadAssetObj.LeadId = this.LeadId;
       this.http.post(this.getLeadAssetByLeadId, this.reqLeadAssetObj).subscribe(
         (response) => {
+          
           this.resLeadAssetObj = response;
-          if (this.resLeadAssetObj.LeadAssetId != 0) {
+          if (this.resLeadAssetObj.LeadAssetId != 0) { 
+            this.assetConditionObj = new RefMasterObj();
+            this.assetConditionObj.MasterCode = this.resLeadAssetObj.MrAssetConditionCode; 
+            this.http.post(this.GetRefMasterByMasterCode, this.assetConditionObj).subscribe(
+              (response) => {
+                this.tempMrAssetConditionCode = response["Descr"]; 
+              }
+            );
+            this.assetConditionObj = new RefMasterObj();
+            this.assetConditionObj.MasterCode = this.resLeadAssetObj.MrDownPaymentTypeCode; 
+            this.http.post(this.GetRefMasterByMasterCode, this.assetConditionObj).subscribe(
+              (response) => {
+                this.tempMrDownPaymentTypeCode = response["Descr"]; 
+              }
+            ); 
+
             this.LeadDataForm.patchValue({
+              FullAssetName: this.reqLeadAssetObj.FullAssetName,
               MrDownPaymentTypeCode: this.resLeadAssetObj.MrDownPaymentTypeCode,
               MrAssetConditionCode: this.resLeadAssetObj.MrAssetConditionCode,
               ManufacturingYear: this.resLeadAssetObj.ManufacturingYear,
-              AssetPrice: this.resLeadAssetObj.AssetPriceAmt,
-              DownPayment: this.resLeadAssetObj.DownPaymentAmt,
-              SerialNo1: this.resLeadAssetObj.SerialNo1,
-              SerialNo2: this.resLeadAssetObj.SerialNo2,
-              SerialNo3: this.resLeadAssetObj.SerialNo3,
-              SerialNo4: this.resLeadAssetObj.SerialNo4,
-              SerialNo5: this.resLeadAssetObj.SerialNo5,
+              AssetPrice: this.resLeadAssetObj.AssetPriceAmt, 
+              DownPaymentAmount: this.resLeadAssetObj.DownPaymentAmt,
+              DownPaymentPercent: this.resLeadAssetObj.DownPaymentPrcnt,
+            
             });
             this.reqAssetMasterObj = new AssetMasterObj();
             this.reqAssetMasterObj.FullAssetCode = this.resLeadAssetObj.FullAssetCode;
@@ -408,67 +392,54 @@ export class LeadDataComponent implements OnInit {
                 var assetType = new AssetTypeObj();
                 assetType.AssetTypeId = this.resAssetMasterObj.AssetTypeId;
                 this.http.post(AdInsConstant.GetAssetTypeById, assetType).subscribe(
-                  (response: any) => {
-                    if (response.IsMndtrySerialNo1 == "1" && this.resLeadAssetObj.MrAssetConditionCode == "USED") {
-                      this.LeadDataForm.controls['SerialNo1'].setValidators([Validators.required]);
-                      this.LeadDataForm.controls['SerialNo1'].updateValueAndValidity();
-                      this.serial1Mandatory = true;
-                    }
-                    else {
-                      this.LeadDataForm.controls['SerialNo1'].clearValidators();
-                      this.LeadDataForm.controls['SerialNo1'].updateValueAndValidity();
-                      this.serial1Mandatory = false;
-                    }
+                  (response: any) => { 
+                    
 
-                    if (response.IsMndtrySerialNo2 == "1" && this.resLeadAssetObj.MrAssetConditionCode == "USED") {
-                      this.LeadDataForm.controls['SerialNo2'].setValidators([Validators.required]);
-                      this.LeadDataForm.controls['SerialNo2'].updateValueAndValidity();
-                      this.serial2Mandatory = true;
-                    }
-                    else {
-                      this.LeadDataForm.controls['SerialNo2'].clearValidators();
-                      this.LeadDataForm.controls['SerialNo2'].updateValueAndValidity();
-                      this.serial2Mandatory = false;
-                    }
-
-                    if (response.IsMndtrySerialNo3 == "1" && this.resLeadAssetObj.MrAssetConditionCode == "USED") {
-                      this.LeadDataForm.controls['SerialNo3'].setValidators([Validators.required]);
-                      this.LeadDataForm.controls['SerialNo3'].updateValueAndValidity();
-                      this.serial3Mandatory = true;
-                    }
-                    else {
-                      this.LeadDataForm.controls['SerialNo3'].clearValidators();
-                      this.LeadDataForm.controls['SerialNo3'].updateValueAndValidity();
-                      this.serial3Mandatory = false;
-                    }
-
-                    if (response.IsMndtrySerialNo4 == "1" && this.resLeadAssetObj.MrAssetConditionCode == "USED") {
-                      this.LeadDataForm.controls['SerialNo4'].setValidators([Validators.required]);
-                      this.LeadDataForm.controls['SerialNo4'].updateValueAndValidity();
-                      this.serial4Mandatory = true;
-                    }
-                    else {
-                      this.LeadDataForm.controls['SerialNo4'].clearValidators();
-                      this.LeadDataForm.controls['SerialNo4'].updateValueAndValidity();
-                      this.serial4Mandatory = false;
-                    }
-
-                    if (response.IsMndtrySerialNo5 == "1" && this.resLeadAssetObj.MrAssetConditionCode == "USED") {
-                      this.LeadDataForm.controls['SerialNo5'].setValidators([Validators.required]);
-                      this.LeadDataForm.controls['SerialNo5'].updateValueAndValidity();
-                      this.serial5Mandatory = true;
-                    }
-                    else {
-                      this.LeadDataForm.controls['SerialNo5'].clearValidators();
-                      this.LeadDataForm.controls['SerialNo5'].updateValueAndValidity();
-                      this.serial5Mandatory = false;
-                    }
-
-                    // this.serial1Disabled = response.SerialNo1Label == "" ? true : false;
-                    // this.serial2Disabled = response.SerialNo2Label == "" ? true : false;
-                    // this.serial3Disabled = response.SerialNo3Label == "" ? true : false;
-                    // this.serial4Disabled = response.SerialNo4Label == "" ? true : false;
-                    // this.serial5Disabled = response.SerialNo5Label == "" ? true : false;
+                    var AssetTypeCode = { 'AssetTypeCode': response.AssetTypeCode };
+                    this.http.post(AdInsConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
+                      (response: any) => {
+                        while (this.items.length) {
+                          this.items.removeAt(0);
+                        }
+                        this.SerialNoList = response['ReturnObject'];
+                        for (var i = 0; i < this.SerialNoList["length"]; i++) {
+                          var eachDataDetail = this.fb.group({
+                            SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
+                            SerialNoValue: [''],
+                            IsMandatory: [this.SerialNoList[i].IsMandatory]
+                          }) as FormGroup;
+                          this.items.push(eachDataDetail);
+                          if (this.isUsed == true && this.items.controls[i]['controls']['IsMandatory'].value == true) {
+                            this.items.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required]);
+                            this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
+                          }
+                          if (this.items.controls[0] != null) {
+                            this.items['controls'][0].patchValue({
+                              SerialNoValue: this.resLeadAssetObj.SerialNo1,
+                            });
+                          }
+                          if (this.items.controls[1] != null) {
+                            this.items['controls'][1].patchValue({
+                              SerialNoValue: this.resLeadAssetObj.SerialNo2,
+                            });
+                          }
+                          if (this.items.controls[2] != null) {
+                            this.items['controls'][2].patchValue({
+                              SerialNoValue: this.resLeadAssetObj.SerialNo3,
+                            });
+                          }
+                          if (this.items.controls[3] != null) {
+                            this.items['controls'][3].patchValue({
+                              SerialNoValue: this.resLeadAssetObj.SerialNo4,
+                            });
+                          }
+                          if (this.items.controls[4] != null) {
+                            this.items['controls'][4].patchValue({
+                              SerialNoValue: this.resLeadAssetObj.SerialNo4,
+                            });
+                          }
+                        }
+                      });
                   });
               });
 
@@ -477,6 +448,14 @@ export class LeadDataComponent implements OnInit {
             this.http.post(this.getLeadAppByLeadId, this.reqLeadAppObj).subscribe(
               (response) => {
                 this.resLeadAppObj = response;
+                this.assetConditionObj = new RefMasterObj();
+                this.assetConditionObj.MasterCode = this.resLeadAppObj.MrFirstInstTypeCode; 
+                console.log("tese");
+                this.http.post(this.GetRefMasterByMasterCode, this.assetConditionObj).subscribe(
+                  (response) => {
+                    this.tempMrFirstInstTypeCode = response["Descr"]; 
+                  }
+                ); 
                 this.LeadDataForm.patchValue({
                   Tenor: this.resLeadAppObj.Tenor,
                   MrFirstInstTypeCode: this.resLeadAppObj.MrFirstInstTypeCode,
@@ -488,24 +467,7 @@ export class LeadDataComponent implements OnInit {
           }
       });
     }
-
-    this.LeadDataForm.controls.FullAssetCode.disable();
-    this.LeadDataForm.controls.FullAssetName.disable();
-    this.LeadDataForm.controls.MrAssetConditionCode.disable();
-    this.LeadDataForm.controls.MrDownPaymentTypeCode.disable();
-    this.LeadDataForm.controls.ManufacturingYear.disable();
-    this.LeadDataForm.controls.AssetPrice.disable();
-    this.LeadDataForm.controls.DownPayment.disable();  
-    this.serial1Disabled = true;
-    this.serial2Disabled = true;
-    this.serial3Disabled = true;
-    this.serial4Disabled = true;
-    this.serial5Disabled = true;
-    this.LeadDataForm.controls.Tenor.disable();
-    this.LeadDataForm.controls.MrFirstInstTypeCode.disable();
-    this.LeadDataForm.controls.NTFAmt.disable();
-    this.LeadDataForm.controls.TotalDownPayment.disable(); 
-    this.LeadDataForm.controls.InstallmentAmt.disable();
+ 
     
   } 
 
@@ -517,12 +479,23 @@ export class LeadDataComponent implements OnInit {
     this.leadInputLeadDataObj.LeadAssetObj.MrAssetConditionCode = this.LeadDataForm.controls["MrAssetConditionCode"].value;
     this.leadInputLeadDataObj.LeadAssetObj.ManufacturingYear = this.LeadDataForm.controls["ManufacturingYear"].value;
     this.leadInputLeadDataObj.LeadAssetObj.AssetPriceAmt = this.LeadDataForm.controls["AssetPrice"].value;
-    this.leadInputLeadDataObj.LeadAssetObj.DownPaymentAmt = this.LeadDataForm.controls["DownPayment"].value;
-    this.leadInputLeadDataObj.LeadAssetObj.SerialNo1 = this.LeadDataForm.controls["SerialNo1"].value;
-    this.leadInputLeadDataObj.LeadAssetObj.SerialNo2 = this.LeadDataForm.controls["SerialNo2"].value;
-    this.leadInputLeadDataObj.LeadAssetObj.SerialNo3 = this.LeadDataForm.controls["SerialNo3"].value;
-    this.leadInputLeadDataObj.LeadAssetObj.SerialNo4 = this.LeadDataForm.controls["SerialNo4"].value;
-    this.leadInputLeadDataObj.LeadAssetObj.SerialNo5 = this.LeadDataForm.controls["SerialNo5"].value;
+    this.leadInputLeadDataObj.LeadAssetObj.DownPaymentAmt = this.LeadDataForm.controls["DownPaymentAmount"].value;
+    this.leadInputLeadDataObj.LeadAssetObj.DownPaymentPrcnt = this.LeadDataForm.controls["DownPaymentPercent"].value;
+    if (this.items.controls[0] != null) {
+      this.leadInputLeadDataObj.LeadAssetObj.SerialNo1 = this.items.controls[0]["controls"]["SerialNoValue"].value;
+    }
+    if (this.items.controls[1] != null) {
+      this.leadInputLeadDataObj.LeadAssetObj.SerialNo2 = this.items.controls[1]["controls"]["SerialNoValue"].value;
+    }
+    if (this.items.controls[2] != null) {
+      this.leadInputLeadDataObj.LeadAssetObj.SerialNo3 = this.items.controls[2]["controls"]["SerialNoValue"].value;
+    }
+    if (this.items.controls[3] != null) {
+      this.leadInputLeadDataObj.LeadAssetObj.SerialNo4 = this.items.controls[3]["controls"]["SerialNoValue"].value;
+    }
+    if (this.items.controls[4] != null) {
+      this.leadInputLeadDataObj.LeadAssetObj.SerialNo5 = this.items.controls[4]["controls"]["SerialNoValue"].value;
+    }
   }
 
   setLeadApp() {
