@@ -38,6 +38,8 @@ export class AdInsConstant {
   public static AppStepCSR = "CSR";
   public static FL4W = "FL4W";
   public static CF4W = "CF4W";
+  public static FCTR = "FCTR";
+  public static CFRFN4W = "CFRFN4W";
   public static CFNEWCAR = "CFNEWCAR";
   public static CENTER_GROUP_CODE = "CG";
 
@@ -192,10 +194,6 @@ export class AdInsConstant {
   //PREMIUM TYPE
   public static PremiumTypeAmt = "AMT";
   public static PremiumTypePrcnt = "PRCNT";
-
-  //LOB CODE
-  public static LobCodeFCTR = "FCTR";
-  public static LobCodeCFRFN = "CFRFN4W";
 
   //TOP CALC BASED
   public static TopCalcBasedInvcDt = "INVC_DT";
