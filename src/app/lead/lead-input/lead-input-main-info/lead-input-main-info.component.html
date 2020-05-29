@@ -26,7 +26,7 @@
                                 <label class="adInsLabel" style="font-size: 12px;" translate>{{this.returnLeadExistObj?.CustName == null ? '-' : this.returnLeadExistObj?.CustName}}</label>
                             </div>
                             <div class="col-md-3" *ngIf="this.pageType == 'add'">
-                                <button type="button" class="btn btn-raised btn-primary" (click)="copyLead()">
+                                <button type="button" class="btn btn-raised btn-primary" (click)="copyLead()" [disabled]="isCopyButtonDisabled">
                                   <i class="fa fa-check-square-o"></i> Copy
                                 </button>
                             </div>
@@ -44,28 +44,30 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 adInsLabel adins-required" translate>Order No </label>
+                            <label class="col-md-3 adInsLabel adins-required-label" translate>Order No </label>
                             <div class="col-md-4">
                             <input type="text" class="form-control adInsInput" formControlName="OrderNo"
                                     [ngClass]="{ 'is-invalid': enjiForm.submitted && MainInfoForm.controls.OrderNo.invalid }">
                             <lib-uc-show-errors  [control]="MainInfoForm.controls.OrderNo" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                             </div>
                         </div>
-                        <div class="form-group row adins-required">
-                            <label class="col-md-3 adInsLabel adins-required" translate>Line Of Business </label>
+                        <div class="form-group row">
+                            <label class="col-md-3 adInsLabel adins-required-label" translate>Line Of Business </label>
                             <div class="col-md-4">
-                                <select class="form-control adInsInput" formControlName="LobCode" (change)="LobChanged($event)">
+                                <select class="form-control adInsInput" formControlName="LobCode" (change)="LobChanged($event)"
+                                    [ngClass]="{ 'is-invalid': enjiForm.submitted && MainInfoForm.controls.LobCode.invalid }">
                                 <option *ngFor="let ram of listRefLob" [value]="ram.Key">
                                     {{ram.Value}}
                                 </option>
                                 </select>
-                                <lib-uc-show-errors  [control]="MainInfoForm.controls.LobName" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                                <lib-uc-show-errors  [control]="MainInfoForm.controls.LobCode" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                             </div>
                         </div>
-                        <div class="form-group row adins-required">
-                            <label class="col-md-3 adInsLabel adins-required" translate>Lead Source </label>
+                        <div class="form-group row">
+                            <label class="col-md-3 adInsLabel adins-required-label" translate>Lead Source </label>
                             <div class="col-md-4">
-                                <select class="form-control adInsInput" formControlName="LeadSource">
+                                <select class="form-control adInsInput" formControlName="LeadSource"
+                                [ngClass]="{ 'is-invalid': enjiForm.submitted && MainInfoForm.controls.LeadSource.invalid }">
                                 <option *ngFor="let ram of listLeadSource" [value]="ram.Key">
                                     {{ram.Value}}
                                 </option>
@@ -74,7 +76,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 adInsLabel adins-required" translate>Agency </label>
+                            <label class="col-md-3 adInsLabel adins-required-label" translate>Agency </label>
                             <div class="col-md-4">
                                 <lib-uclookupgeneric [lookupInput]="agencyLookUpObj" [parentForm]="MainInfoForm"
                                     [enjiForm]="enjiForm" [identifier]="'Agency'" (lookup)=getLookUpAgency($event)>
@@ -82,7 +84,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 adInsLabel adins-required" translate>CMO Username </label>
+                            <label class="col-md-3 adInsLabel adins-required-label" translate>CMO Username </label>
                             <div class="col-md-4">
                                 <lib-uclookupgeneric [lookupInput]="cmoNameLookUpObj" [parentForm]="MainInfoForm"
                                     [enjiForm]="enjiForm" [identifier]="'CmoName'" (lookup)=getLookUpCmoName($event)>
@@ -90,7 +92,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 adInsLabel adins-required" translate>Surveyor Username </label>
+                            <label class="col-md-3 adInsLabel adins-required-label" translate>Surveyor Username </label>
                             <div class="col-md-4">
                                 <lib-uclookupgeneric [lookupInput]="surveyorNameLookUpObj" [parentForm]="MainInfoForm"
                                     [enjiForm]="enjiForm" [identifier]="'SurveyorName'" (lookup)=getLookUpSurveyorName($event)>
@@ -98,7 +100,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 adInsLabel adins-required" translate>Tele Sales Username </label>
+                            <label class="col-md-3 adInsLabel adins-required-label" translate>Tele Sales Username </label>
                             <div class="col-md-4">
                                 <lib-uclookupgeneric [lookupInput]="salesNameLookUpObj" [parentForm]="MainInfoForm"
                                     [enjiForm]="enjiForm" [identifier]="'SalesName'" (lookup)=getLookUpSalesName($event)>

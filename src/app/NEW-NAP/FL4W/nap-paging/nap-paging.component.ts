@@ -21,8 +21,8 @@ export class NapPagingComponent implements OnInit {
     private route: ActivatedRoute
   ) { 
     this.route.queryParams.subscribe(params => {
-      if (params['LobCode'] != null) {
-        localStorage.setItem("LobCode",params['LobCode']);
+      if (params['BizTemplateCode'] != null) {
+        localStorage.setItem("BizTemplateCode",params['BizTemplateCode']);
       }
     });
   }  
