@@ -112,6 +112,10 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     AppId: [0],
     AppAssetId: [0]
   });
+
+  AppInsForm = this.fb.group({
+    PaidAmtByCust: [0]
+  });
   
   constructor(private fb: FormBuilder, 
     private modalService: NgbModal,
@@ -226,6 +230,10 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   
   SubmitForm()
   {
+    this.outputTab.emit();
+  }
+
+  SubmitForm2(){
     this.outputTab.emit();
   }
 

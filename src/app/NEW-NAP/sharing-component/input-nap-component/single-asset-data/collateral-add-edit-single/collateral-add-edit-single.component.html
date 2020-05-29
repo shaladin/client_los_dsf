@@ -5,7 +5,6 @@
         <div class="px-3">
           <lib-ucSubsection [id]="'AddCollDataId'" [title]="'Additional Collateral'" [panel]="'ExistingCollateral'">
           </lib-ucSubsection>
-
           <div>
             <form class="form form-horizontal" #enjiForm="ngForm" [formGroup]="AddCollForm"
               (ngSubmit)="AddCollForm.valid && SaveForm()">
@@ -51,7 +50,7 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-2 adins-required-label" translate>Manufacturing Year</label>
+                  <label class="col-md-2" translate>Manufacturing Year</label>
                   <div class="col-md-3">
                     <input type="text" class="form-control" formControlName="ManufacturingYear"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.ManufacturingYear.invalid }">
@@ -73,7 +72,7 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-2 adins-required-label" translate>Serial No 1</label>
+                  <label class="col-md-2" translate>Serial No 1</label>
                   <div class="col-md-3">
                     <input type="text" class="form-control" formControlName="SerialNo1"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.SerialNo1.invalid }">
@@ -94,7 +93,7 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-2 adins-required-label" translate>Serial No 2</label>
+                  <label class="col-md-2" translate>Serial No 2</label>
                   <div class="col-md-3">
                     <input type="text" class="form-control" formControlName="SerialNo2"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.SerialNo2.invalid }">
@@ -111,7 +110,7 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-2 adins-required-label" translate>Serial No 3</label>
+                  <label class="col-md-2" translate>Serial No 3</label>
                   <div class="col-md-3">
                     <input type="text" class="form-control" formControlName="SerialNo3"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.SerialNo3.invalid }">
@@ -181,7 +180,7 @@
               </lib-ucSubsection>
               <div id="AddCollUser">
                 <div class="form-group row">
-                  <label class="col-md-2 adins-required-label" translate>Collateral User Name</label>
+                  <label class="col-md-2" translate>Collateral User Name</label>
                   <div class="col-md-3">
                     <input type="text" class="form-control" formControlName="UserName"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.UserName.invalid }">
@@ -189,7 +188,7 @@
                     </lib-uc-show-errors>
                   </div>
                   <label class="col-md-1"></label>
-                  <label class="col-md-2 adins-required-label" translate>Collateral User Relationship</label>
+                  <label class="col-md-2" translate>Collateral User Relationship</label>
                   <div class="col-md-3">
                     <select class="form-control" formControlName="MrUserRelationshipCode"
                       (change)="onItemChange($event.target.value)"
@@ -206,7 +205,7 @@
               </lib-ucSubsection>
               <div id="AddCollOwner">
                 <div class="form-group row">
-                  <label class="col-md-2 adins-required-label" translate>Owner Name</label>
+                  <label class="col-md-2" translate>Owner Name</label>
                   <div class="col-md-3">
                     <input type="text" class="form-control" formControlName="OwnerName"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerName.invalid }">
@@ -214,7 +213,7 @@
                     </lib-uc-show-errors>
                   </div>
                   <label class="col-md-1"></label>
-                  <label class="col-md-2 adins-required-label" translate>ID Type</label>
+                  <label class="col-md-2" translate>ID Type</label>
                   <div class="col-md-2">
                     <select class="form-control" formControlName="MrIdType" (change)="onItemChange($event.target.value)"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.MrIdType.invalid }">
@@ -225,7 +224,7 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-2 adins-required-label" translate>Owner Relationship</label>
+                  <label class="col-md-2" translate>Owner Relationship</label>
                   <div class="col-md-3">
                     <select class="form-control" formControlName="OwnerRelationship"
                       (change)="onItemChange($event.target.value)"
@@ -237,7 +236,7 @@
                     </lib-uc-show-errors>
                   </div>
                   <label class="col-md-1"></label>
-                  <label class="col-md-2 adins-required-label" translate>Owner Id No</label>
+                  <label class="col-md-2" translate>Owner Id No</label>
                   <div class="col-md-2">
                     <input type="text" class="form-control" formControlName="OwnerIdNo"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerIdNo.invalid }">
@@ -245,7 +244,7 @@
                     </lib-uc-show-errors>
                   </div>
                   <label class="col-md-1"></label>
-                  <label class="col-md-2 adins-required-label" translate>Owner Mobile Phone No</label>
+                  <label class="col-md-2" translate>Owner Mobile Phone No</label>
                   <div class="col-md-2">
                     <input type="text" class="form-control" formControlName="OwnerMobilePhnNo"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerMobilePhnNo.invalid }">
@@ -254,8 +253,8 @@
                   </div>
                 </div>
                 <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="AddCollForm" [enjiForm]="enjiForm"
-                  [identifier]="'OwnerAddrObj'" [default]="OwnerAddrObj" [inputField]="inputFieldLegalObj" [showPhn1]="false" [showPhn2]="false"
-                  [showPhn3]="false" [showFax]="false">
+                  [identifier]="'OwnerAddrObj'" [default]="OwnerAddrObj" [inputField]="inputFieldLegalObj"
+                  [showPhn1]="false" [showPhn2]="false" [showPhn3]="false" [showFax]="false">
                 </lib-ucaddress>
               </div>
               <lib-ucSubsection [id]="'AddCollLocationId'" [title]="'Collateral Location'" [panel]="'AddCollLocation'">
@@ -281,19 +280,18 @@
                   </div>
                 </div>
                 <lib-ucaddress #UcAddrGrp2 [showSubsection]="false" [UCAddrForm]="AddCollForm" [enjiForm]="enjiForm"
-                  [identifier]="'locationAddrObj'" [default]="locationAddrObj" [inputField]="inputFieldLocationObj" [showPhn1]="false" [showPhn2]="false"
-                  [showPhn3]="false" [showFax]="false">
+                  [identifier]="'locationAddrObj'" [default]="locationAddrObj" [inputField]="inputFieldLocationObj"
+                  [showPhn1]="false" [showPhn2]="false" [showPhn3]="false" [showFax]="false">
                 </lib-ucaddress>
               </div>
               <div class="form-actions right">
                 <button type="submit" class="btn btn-raised btn-primary" translate>
                   <i class="fa fa-check-square-o"></i> Save and Continue
                 </button>
-
               </div>
-
             </form>
           </div>
+          <button (click)="checkForm()"></button>
         </div>
       </div>
     </div>

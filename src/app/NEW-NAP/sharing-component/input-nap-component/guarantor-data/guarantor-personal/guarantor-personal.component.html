@@ -3,7 +3,7 @@
     <div class="card">
       <div class="card-body">
         <div class="px-3">
-          <form class="form form-horizontal" [formGroup]="PersonalForm" #enjiForm="ngForm">
+          <form class="form form-horizontal" [formGroup]="PersonalForm" #enjiForm="ngForm" (ngSubmit)="PersonalForm.valid && SaveForm()">
             <div class="form-body">
               <lib-ucSubsection [id]="'mainDataId'" [title]="'Main Data'" [panel]="'mainData'">
               </lib-ucSubsection>
@@ -147,7 +147,7 @@
                   <div class="form-group row">
                     <label class="col-md-6 adInsLabel">Country </label>
                     <div class="col-md-6">
-                      <lib-uclookupgeneric *ngIf="!isLocal" [lookupInput]="inputLookupObj1" [parentForm]="PersonalForm"
+                      <lib-uclookupgeneric *ngIf="!isLocal && inputLookupObj1.isReady" [lookupInput]="inputLookupObj1" [parentForm]="PersonalForm"
                         [enjiForm]="enjiForm" [identifier]="'LookupCountry'" (lookup)="lookupCountry($event)">
                       </lib-uclookupgeneric>
                       <label *ngIf="isLocal"> {{selectedNationalityCountryName}} </label>
@@ -170,15 +170,18 @@
                 </div>
               </div>
               <lib-ucaddress #UcAddrGrp [title]="'Address'" [UCAddrForm]="PersonalForm" [enjiForm]="enjiForm"
-                [identifier]="'AddrObj'" [default]="AddrObj" [inputField]="inputFieldObj" [showPhn3]="false">
+                [identifier]="'AddrObj'" [default]="AddrObj" [inputField]="inputFieldObj" [showAllPhn]="false">
               </lib-ucaddress>
               <div class="form-actions right">
                 <button type="button" class="btn btn-raised btn-warning mr-1" (click)="cancel()" translate>
                   <i class="ft-x"></i> Cancel
                 </button>
-                <button type="submit" class="btn btn-raised btn-primary" (click)="SaveForm()">
-                  <i class="fa fa-check-square-o"></i> Save
+                <button type="submit" class="btn btn-raised btn-primary">
+                  <i class="far fa-check-square"></i> Save
                 </button>
+                <!-- <button type="button" class="btn btn-raised btn-primary" (click)="test()">
+                  <i class="fa fa-check-square-o"></i> Test
+                </button> -->
               </div>
             </div>
           </form>

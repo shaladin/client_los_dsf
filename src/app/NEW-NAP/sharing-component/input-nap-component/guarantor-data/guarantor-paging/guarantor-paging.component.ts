@@ -104,7 +104,7 @@ export class GuarantorPagingComponent implements OnInit {
             }
             this.inputGridObj.resultData["Data"] = new Array();
             this.inputGridObj.resultData.Data = response["ReturnObject"]
-
+            this.result = this.inputGridObj.resultData.Data;
           },
           (error) => {
             console.log(error);
@@ -125,7 +125,7 @@ export class GuarantorPagingComponent implements OnInit {
         }
         this.inputGridObj.resultData["Data"] = new Array();
         this.inputGridObj.resultData.Data = response["ReturnObject"]
-
+        this.result = this.inputGridObj.resultData.Data;
       },
       (error) => {
         console.log(error);

@@ -50,7 +50,8 @@ export class NapAppModel{
     RsvField5 : any;
     RowVersion: any;
     FloatingPeriodCode: any;
-    BlCode: string;
+    BizTemplateCode: string;
+    BlCode:string;
 
     constructor () {
         this.RowVersion = "";

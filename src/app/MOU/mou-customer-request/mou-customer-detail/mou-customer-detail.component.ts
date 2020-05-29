@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
@@ -13,8 +13,9 @@ import Stepper from 'bs-stepper';
   templateUrl: './mou-customer-detail.component.html',
   providers: [NGXToastrService]
 })
-export class MouCustomerDetailComponent implements OnInit {
-  private stepper: Stepper;
+export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
+  private stepperGeneral: Stepper;
+  private stepperFactoring: Stepper;
   @ViewChild("MouTcGeneral") public mouTcGeneral: MouCustTcComponent;
   @ViewChild("MouTcFactoring") public mouTcFactoring: MouCustTcComponent;
   mouType: string;
@@ -44,29 +45,44 @@ export class MouCustomerDetailComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.stepper = new Stepper(document.querySelector('#stepper1'), {
-      linear: false,
-      animation: true
-    })
-    this.stepper.to(this.currentStepIndex);
-    console.log(this.stepper);
+    
   }
 
-  mouDetailGeneral(e){
-    this.stepHandler(e);
+  ngAfterViewInit(): void {
+    if(this.mouType == "GENERAL"){
+      this.stepperGeneral = new Stepper(document.querySelector('#stepperGeneral'), {
+        linear: false,
+        animation: true
+      });
+      this.stepperGeneral.to(this.currentStepIndex);
+      console.log(this.stepperGeneral);  
+    }
+    else if(this.mouType == "FACTORING"){
+      this.stepperFactoring = new Stepper(document.querySelector('#stepperFactoring'), {
+        linear: false,
+        animation: true
+      });
+      this.stepperFactoring.to(this.currentStepIndex);
+      console.log(this.stepperFactoring);  
+    }
   }
 
-  mouDetailFactoring(e){
-    this.stepHandler(e);
-  }
+  // mouDetailGeneral(e){
+  //   this.stepHandler(e);
+  // }
 
-  mouCustFee(e){
-    this.stepHandler(e);
-  }
+  // mouDetailFactoring(e){
+  //   this.stepHandler(e);
+  // }
 
-  mouAddColl(e){
-    this.stepHandler(e);
-  }
+  // mouCustFee(e){
+  //   this.stepHandler(e);
+  // }
+
+  // mouAddColl(e){
+  //   this.stepHandler(e);
+  // }
+
   getModeDetail(e){
     if(e!=null){
       this.mode = e.mode;
@@ -74,9 +90,20 @@ export class MouCustomerDetailComponent implements OnInit {
       console.log(this.mode);
     }
   }
-  mouCustTc(e){
-    this.stepHandler(e);
+
+  designatedStepHandler(idx){
+    if(this.mouType == "GENERAL"){
+      this.stepperGeneral.to(idx);
+    }
+    else if(this.mouType == "FACTORING"){
+      this.stepperFactoring.to(idx);
+    }
+    this.currentStepIndex = idx;
   }
+
+  // mouCustTc(e){
+  //   this.stepHandler(e);
+  // }
 
   saveMouTc(){
     if(this.mouType == AdInsConstant.GENERAL){
@@ -88,11 +115,21 @@ export class MouCustomerDetailComponent implements OnInit {
   }
 
   backFromMouTc(){
-    this.stepHandler({StatusCode: "-1"});
+    if(this.mouType == "GENERAL"){
+      this.stepHandlerGeneral({StatusCode: "-1"});
+    }
+    else if(this.mouType == "FACTORING"){
+      this.stepHandlerFactoring({StatusCode: "-1"});
+    }
   }
 
   mouDocumentBack(){
-    this.stepper.previous();
+    if(this.mouType == "GENERAL"){
+      this.stepperGeneral.previous();
+    }
+    else if(this.mouType == "FACTORING"){
+      this.stepperFactoring.previous();
+    }
   }
 
   editMainInfoHandler(){
@@ -121,15 +158,36 @@ export class MouCustomerDetailComponent implements OnInit {
     }
   }
 
-  stepHandler(response){
-    switch (response["StatusCode"].toString()) {
+  stepHandlerGeneral(response){
+    switch (response["StatusCode"].toString()){
       case "200":
-        this.stepper.next();
+        this.stepperGeneral.next();
         this.currentStepIndex++;
         break;
 
       case "-1":
-        this.stepper.previous();
+        this.stepperGeneral.previous();
+        this.currentStepIndex--;
+        break;
+
+      case "-2":
+        this.router.navigate(['/Mou/Request/Paging']);
+        break;
+    
+      default:
+        break;
+    }
+  }
+
+  stepHandlerFactoring(response){
+    switch (response["StatusCode"].toString()){
+      case "200":
+        this.stepperFactoring.next();
+        this.currentStepIndex++;
+        break;
+
+      case "-1":
+        this.stepperFactoring.previous();
         this.currentStepIndex--;
         break;
 
