@@ -23,10 +23,12 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
     Notes: ['', Validators.required]
   })
   RFAPreGoLive: any;
+  TaskListId: any;
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr : NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
       this.AgrmntNo = params["AgrmntNo"];
+      this.TaskListId = params["TaskListId"];
     });
   }
 
@@ -52,6 +54,7 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
     this.RFAPreGoLive.TransactionNo = this.AgrmntNo;
     this.RFAPreGoLive.Notes = this.MainInfoForm.controls.Notes.value;
     this.RFAPreGoLive.ApprovedBy = this.MainInfoForm.controls.ApprovedBy.value;
+    this.RFAPreGoLive.TaskListId = this.TaskListId;
     this.RFAPreGoLive.RowVersion = "";
 
     this.http.post(AdInsConstant.CreateRFAPreGoLive, this.RFAPreGoLive).subscribe((response) => {
