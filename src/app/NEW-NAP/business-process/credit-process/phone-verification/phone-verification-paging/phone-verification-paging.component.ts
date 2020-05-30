@@ -15,13 +15,13 @@ import { ActivatedRoute } from "@angular/router";
 export class PhoneVerificationPagingComponent implements OnInit {
   inputPagingObj: any;
   arrCrit: any;
-  lobCode : string;
+  BizTemplateCode : string;
 
   constructor(private route: ActivatedRoute) { 
     this.route.queryParams.subscribe(params => {
-      if (params['LobCode'] != null) {
-        this.lobCode = params['LobCode'];
-        localStorage.setItem("LobCode",this.lobCode);
+      if (params['BizTemplateCode'] != null) {
+        this.BizTemplateCode = params['BizTemplateCode'];
+        localStorage.setItem("BizTemplateCode",this.BizTemplateCode);
       }
     });
   }
@@ -37,17 +37,16 @@ export class PhoneVerificationPagingComponent implements OnInit {
     this.arrCrit = new Array();
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
-    critObj.propName = 'RL.BIZ_TMPLT_CODE';
-    critObj.value = this.lobCode;
+    critObj.propName = 'WTL.ACT_CODE';
+    critObj.value = "PHN_"+this.BizTemplateCode;
     this.arrCrit.push(critObj);
-    this.inputPagingObj.addCritInput = this.arrCrit;
 
-    this.arrCrit = new Array();
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'a.ORI_OFFICE_CODE';
     critObj.value = userAccess.OfficeCode;
     this.arrCrit.push(critObj);
+    
     this.inputPagingObj.addCritInput = this.arrCrit;
 
   }

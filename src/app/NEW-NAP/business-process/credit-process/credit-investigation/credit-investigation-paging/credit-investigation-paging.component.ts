@@ -38,11 +38,11 @@ export class CreditInvestigationPagingComponent implements OnInit {
     critObj.value = "CINV";
     this.inputPagingObj.addCritInput.push(critObj);
 
-    var critLobObj = new CriteriaObj();
-    critLobObj.restriction = AdInsConstant.RestrictionEq;
-    critLobObj.propName = 'RL.BIZ_TMPLT_CODE';
-    critLobObj.value = localStorage.getItem("BizTemplateCode");
-    this.inputPagingObj.addCritInput.push(critLobObj);
-
+    var critObj = new CriteriaObj();
+    critObj.restriction = AdInsConstant.RestrictionLike;
+    critObj.propName = 'WTL.ACT_CODE';
+    critObj.value = "CRD_INV_"+this.BizTemplateCode;
+    this.inputPagingObj.addCritInput.push(critObj);
+    
   }
 }
