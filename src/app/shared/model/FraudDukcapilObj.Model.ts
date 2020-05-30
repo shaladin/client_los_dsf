@@ -10,7 +10,7 @@ export class FraudDukcapilObj {
     MaritalStatus: any;
     Relationship: any;
     Education: any;
-    Proffession: any;
+    Profession: any;
     MotherIdNo: any;
     MotherMaidenName: any;
     FatherIdNo: any;
@@ -30,5 +30,5 @@ export class FraudDukcapilObj {
     UploadDt: any;
     CekDukcapilDt: any;
     DukcapilDataStatus: any;
-
+    RowVersion: any;
 }
