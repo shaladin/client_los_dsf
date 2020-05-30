@@ -211,7 +211,7 @@
                             ],
                             "result": {
                                 "type": "url",
-                                "path": "/Lead/LeadInput/MainInfo",
+                                "path": "/Lead/LeadInput/Page",
                                 "icon": "ft-edit-2",
                                 "param": [
                                     {
@@ -241,7 +241,7 @@
                             ],
                             "result": {
                                 "type": "url",
-                                "path": "/Lead/LeadInput/MainInfo",
+                                "path": "/Lead/LeadInput/Page",
                                 "icon": "ft-edit-2",
                                 "param": [
                                     {
