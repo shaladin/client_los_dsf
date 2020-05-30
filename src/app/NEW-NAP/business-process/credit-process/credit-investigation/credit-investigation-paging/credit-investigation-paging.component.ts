@@ -10,22 +10,20 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './credit-investigation-paging.component.html'
 })
 export class CreditInvestigationPagingComponent implements OnInit {
-  inputPagingObj: UcPagingObj;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   BizTemplateCode: string;
+  arrCrit: Array<any> = new Array();
   
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router) {
+  constructor(private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.BizTemplateCode = params["BizTemplateCode"];
         localStorage.setItem("BizTemplateCode", this.BizTemplateCode);
       }
-      
     });
   }
+  
   ngOnInit() {
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchCreditInvestigation.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
@@ -36,7 +34,7 @@ export class CreditInvestigationPagingComponent implements OnInit {
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.propName = 'A.APP_CURR_STEP';
     critObj.value = "CINV";
-    this.inputPagingObj.addCritInput.push(critObj);
+    this.arrCrit.push(critObj);
 
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;

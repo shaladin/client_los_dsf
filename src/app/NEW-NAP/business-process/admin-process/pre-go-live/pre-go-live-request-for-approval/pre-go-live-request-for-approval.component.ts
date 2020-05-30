@@ -24,9 +24,11 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
   })
   RFAPreGoLive: any;
   TaskListId: any;
+  AgrmntId: any;
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr : NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
+      this.AgrmntId = params["AgrmntId"];
       this.AgrmntNo = params["AgrmntNo"];
       this.TaskListId = params["TaskListId"];
     });
@@ -59,7 +61,7 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
 
     this.http.post(AdInsConstant.CreateRFAPreGoLive, this.RFAPreGoLive).subscribe((response) => {
       this.toastr.successMessage(response['message']);
-      this.router.navigateByUrl('/AdminProcess/AgreementCancellation/Paging');
+      this.router.navigateByUrl('/Nap/AdminProcess/AgreementCancellation/Paging');
     },
       (error) => {
         console.log(error);

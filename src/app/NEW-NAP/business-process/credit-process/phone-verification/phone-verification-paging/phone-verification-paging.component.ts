@@ -13,8 +13,8 @@ import { ActivatedRoute } from "@angular/router";
 })
 
 export class PhoneVerificationPagingComponent implements OnInit {
-  inputPagingObj: any;
-  arrCrit: any;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
+  arrCrit: Array<any> = new Array();
   BizTemplateCode : string;
 
   constructor(private route: ActivatedRoute) { 
@@ -28,13 +28,11 @@ export class PhoneVerificationPagingComponent implements OnInit {
 
   ngOnInit() {
     var userAccess = JSON.parse(localStorage.getItem("UserAccess"))
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchAppPhoneVerif.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppPhoneVerif.json";
 
-    this.arrCrit = new Array();
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'WTL.ACT_CODE';
@@ -48,6 +46,5 @@ export class PhoneVerificationPagingComponent implements OnInit {
     this.arrCrit.push(critObj);
     
     this.inputPagingObj.addCritInput = this.arrCrit;
-
   }
 }

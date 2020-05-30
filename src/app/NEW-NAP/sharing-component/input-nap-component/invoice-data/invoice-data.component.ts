@@ -3,7 +3,7 @@ import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { AppInvoiceFctrObj } from 'app/shared/model/AppInvoiceFctrObj.Model';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, NgForm } from '@angular/forms';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
@@ -36,7 +36,6 @@ export class InvoiceDataComponent implements OnInit {
     InvoiceNo: ['', Validators.required],
     InvoiceAmt: ['', Validators.required],
     InvoiceDueDt: ['', Validators.required],
-    IsApproved: [false],
     Notes: [''],
     RowVersion: ['']
   })
@@ -99,7 +98,7 @@ export class InvoiceDataComponent implements OnInit {
     });
   }
 
-  SaveForm() {
+  SaveForm(enjiForm: NgForm) {
     this.invoiceObj = new AppInvoiceFctrObj();
     this.invoiceObj.CustomerFactoringNo = this.InvoiceForm.controls.CustomerFactoringNo.value;
     this.invoiceObj.CustomerFactoringName = this.InvoiceForm.controls.CustomerFactoringName.value;
@@ -107,16 +106,17 @@ export class InvoiceDataComponent implements OnInit {
     this.invoiceObj.InvoiceAmt = this.InvoiceForm.controls.InvoiceAmt.value;
     this.invoiceObj.InvoiceDueDt = this.InvoiceForm.controls.InvoiceDueDt.value;
     this.invoiceObj.InvoiceStat = "NEW";
-    this.invoiceObj.IsApproved = this.InvoiceForm.controls.IsApproved.value;
+    this.invoiceObj.IsApproved = true;
     this.invoiceObj.Notes = this.InvoiceForm.controls.Notes.value;
     this.invoiceObj.AppFctrId = this.AppFactoringObj.AppFctrId;
 
-    console.log(this.invoiceObj);
     this.httpClient.post(AdInsConstant.AddAppInvoiceFctr, this.invoiceObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        this.InvoiceForm.reset();
         this.GetListAppInvoiceFctr();
+        this.InvoiceForm.reset();
+        enjiForm.resetForm();
+        this.InvoiceForm.controls.InvoiceAmt.patchValue(0);
       },
       (error) => {
         console.log(error);
