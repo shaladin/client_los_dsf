@@ -42,7 +42,7 @@
 
       <aw-wizard-step [awNavigationMode] navigateBackward="allow" navigateForward="allow"
         [stepTitle]="'Fraud Detection Result'" (stepEnter)="EnterTab('FRD')" [navigationSymbol]="{ symbol: '3' }">
-        <app-view-fraud-detection-result *ngIf="AppStepIndex == 2" [appId]=appId></app-view-fraud-detection-result>
+        <app-view-fraud-detection-result *ngIf="AppStepIndex == 2" [appId]=appId [mrCustTypeCode]="CustTypeCode"></app-view-fraud-detection-result>
       </aw-wizard-step>
 
       <aw-wizard-step [awNavigationMode] navigateBackward="allow" navigateForward="allow" [stepTitle]="'Deviation'"

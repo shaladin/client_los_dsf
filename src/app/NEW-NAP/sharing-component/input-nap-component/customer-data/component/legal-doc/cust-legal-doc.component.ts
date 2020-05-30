@@ -31,7 +31,6 @@ export class CustLegalDocComponent implements OnInit {
   };
   LegalDocTypeObj: any;
   defaultLegalDocType: any;
-  selectedListLegalDocType = new Array();
   selectedLegalDocName: any;
   defaultLegalDocName: any;
 
@@ -109,8 +108,6 @@ export class CustLegalDocComponent implements OnInit {
 
   delete(i){
     if (confirm("Are you sure to delete this record?")) {
-      var idxSelected = this.selectedListLegalDocType.findIndex(x=>x.Key == this.listLegalDoc[i].MrLegalDocTypeCode);
-      this.selectedListLegalDocType.splice(idxSelected, 1);
       this.listLegalDoc.splice(i, 1);
       this.callbackSubmit.emit(this.listLegalDoc);
     }
@@ -150,23 +147,22 @@ export class CustLegalDocComponent implements OnInit {
       this.toastr.errorMessage("Issued Date can not be more than " + this.MaxDate);
       flag = false;
     }
-    if(this.cekDuplicateDocType() == false) flag=false;
+    var currentEditedIndex = -1;
+    if(this.mode == "Edit"){
+      currentEditedIndex = this.currentEditedIndex;
+    }
+    flag = this.cekDuplicateDocType(currentEditedIndex);
     return flag;
   }
 
-  cekDuplicateDocType(){
-    // var IdxSelected=
-    if(this.selectedListLegalDocType.length>0){
-      if(this.selectedListLegalDocType.find(x => x.Key == this.appCustCompanyLegalDocObj.MrLegalDocTypeCode)){
-        this.toastr.errorMessage("Legal Document Type "+this.appCustCompanyLegalDocObj.MrLegalDocTypeCode + " is duplicated ");    
+  cekDuplicateDocType(currentEditedIndex){
+    if(this.listLegalDoc.length > 0){
+      var duplicateIndex = this.listLegalDoc.findIndex(x => x.MrLegalDocTypeCode == this.appCustCompanyLegalDocObj.MrLegalDocTypeCode);
+      if(duplicateIndex != currentEditedIndex && duplicateIndex != -1){
+        this.toastr.errorMessage("Legal Document Type " + this.appCustCompanyLegalDocObj.MrLegalDocTypeCode + " is duplicated ");    
         return false;  
       }
     }
-    var keyValueObj={
-      Key: this.appCustCompanyLegalDocObj.MrLegalDocTypeCode,
-      Value: this.appCustCompanyLegalDocObj.LegalDocName,
-    }
-    this.selectedListLegalDocType.push(keyValueObj);
     return true;
   }
   bindLegalDocTypeObj(){
