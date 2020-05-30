@@ -53,38 +53,16 @@ export class PreGoLiveComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
+      this.AgrmntId = params["AgrmntId"];
       this.AppId = params["AppId"];
       this.TaskListId = params["TaskListId"];
+      this.AgrmntNo = params["AgrmntNo"];
     });
   }
 
   ngOnInit() {
-
-
-
-    this.claimTask();
-    console.log("");
-    this.viewObj = "./assets/ucviewgeneric/viewAgrMainInfoPreGoLive.json";
-    var agrmntObj = new AgrmntObj;
-    agrmntObj.AppId = this.AppId;
-    this.http.post(AdInsConstant.GetAgrmntByAppId, agrmntObj).subscribe(
-      (response) => {
-        this.result = response;
-        this.MainInfoForm.patchValue({
-          AgrmntCreatedDt: formatDate(this.result.AgrmntCreatedDt, 'yyyy-MM-dd', 'en-US'),
-          EffectiveDt: formatDate(this.result.EffectiveDt, 'yyyy-MM-dd', 'en-US'),
-        })
-        this.AgrmntId = this.result.AgrmntId;
-        this.AgrmntNo = this.result.AgrmntNo;
-        console.log(this.AgrmntId);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-    console.log("asdasd");
-
-    this.http.post(AdInsConstant.GetRfaLogByTrxNoAndApvCategory, { TrxNo: "Product Offering Marvin 4", ApvCategory: "PRD_OFR_APV" }).subscribe(
+    console.log("test ts")
+    this.http.post(AdInsConstant.GetRfaLogByTrxNoAndApvCategory, { TrxNo: this.AgrmntNo, ApvCategory: "PRE_GPV_APV" }).subscribe(
       (response) => {
         this.result = response;
         this.ListRfaLogObj = response["ListRfaLogObj"];
@@ -103,13 +81,37 @@ export class PreGoLiveComponent implements OnInit {
         console.log(error);
       }
     );
+    this.claimTask();
+    console.log("AgrmntNo");
+    console.log(this.AgrmntNo);
+    this.viewObj = "./assets/ucviewgeneric/viewAgrMainInfoPreGoLive.json";
+    var agrmntObj = new AgrmntObj();
+    agrmntObj.AgrmntId = this.AgrmntId;
+    this.http.post(AdInsConstant.GetAgrmntByAgrmntId, agrmntObj).subscribe(
+      (response) => {
+        this.result = response;
+        this.MainInfoForm.patchValue({
+          AgrmntCreatedDt: formatDate(this.result.AgrmntCreatedDt, 'yyyy-MM-dd', 'en-US'),
+          EffectiveDt: formatDate(this.result.EffectiveDt, 'yyyy-MM-dd', 'en-US'),
+        })
+        this.AgrmntId = this.result.AgrmntId;
+        this.AppId = this.result.AppId;
+        console.log(this.AgrmntId);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    console.log("asdasd");
+
+    
   }
   ReceiveIsChecked(ev) {
     this.IsCheckedAll = ev;
   }
 
   RFA() {
-    this.router.navigate(["/Nap/AdminProcess/PreGoLive/RequestApproval"], { queryParams: { "AppId": this.AppId, "AgrmntNo": this.AgrmntNo, "TaskListId" : this.TaskListId } });
+    this.router.navigate(["/Nap/AdminProcess/PreGoLive/RequestApproval"], { queryParams: { "AgrmntId": this.AgrmntId, "AppId": this.AppId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId } });
   }
 
   SaveForm() {
