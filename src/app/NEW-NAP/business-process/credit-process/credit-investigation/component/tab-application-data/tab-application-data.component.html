@@ -62,7 +62,7 @@
               <div class="col-md-6 ">
                 <div class="row">
                   <label class="col-md-6 adInsLabel"> Cooperation Date </label>
-                  <label class="col-md-6 adInsLabel"> {{ReferantorData.CooperationDate | date: 'shortDate'}} </label>
+                  <label class="col-md-6 adInsLabel"> {{ReferantorData.CooperationDate | date: 'dd-MM-yyyy'}} </label>
                 </div>
                 <div class="row">
                   <label class="col-md-6 adInsLabel"> F12PD (Num Of Application) </label>
@@ -73,7 +73,7 @@
                   <label class="col-md-6 adInsLabel"> {{ReferantorData.InAmount}} </label>
                 </div>
                 <div class="row">
-                  <label class="col-md-6 adInsLabel"> Totol Loss </label>
+                  <label class="col-md-6 adInsLabel"> Total Loss </label>
                   <label class="col-md-6 adInsLabel"> {{ReferantorData.TotolLoss}} </label>
                 </div>
               </div>
@@ -91,7 +91,7 @@
                 </div>
                 <div class="row">
                   <label class="col-md-6 adInsLabel"> Join Date </label>
-                  <label class="col-md-6 adInsLabel"> {{AppDetailAssetData.JoinDt | date: 'shortDate'}} </label>
+                  <label class="col-md-6 adInsLabel"> {{AppDetailAssetData.JoinDt | date: 'dd-MM-yyyy'}} </label>
                 </div>
                 <div class="row">
                   <label class="col-md-6 adInsLabel"> F12PD (Num of Application) </label>
@@ -160,7 +160,7 @@
                 </div>
                 <div class="row">
                   <label class="col-md-6 adInsLabel"> Cooperation Date </label>
-                  <label class="col-md-6 adInsLabel"> {{DealerData.CooperationDate | date: 'shortDate'}} </label>
+                  <label class="col-md-6 adInsLabel"> {{DealerData.CooperationDate | date: 'dd-MM-yyyy'}} </label>
                 </div>
                 <div class="row">
                   <label class="col-md-6 adInsLabel"> Total Profit </label>
@@ -189,7 +189,7 @@
                 </div>
                 <div class="row">
                   <label class="col-md-6 adInsLabel"> Installment Amount </label>
-                  <label class="col-md-6 adInsLabel"> {{AppDetailFinData.InstAmt}} </label>
+                  <label class="col-md-6 adInsLabel"> {{AppDetailFinData.InstAmt | number:'.2':'en-US'}} </label>
                 </div>
               </div>
               <div class="col-md-6 ">
