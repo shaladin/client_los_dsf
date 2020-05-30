@@ -47,7 +47,7 @@ export class NapAddComponent implements OnInit {
     NumOfInst: 0,
     PayFreqCode: [''],
     MrFirstInstTypeCode: "",
-    NumOfAsset: 1,
+    NumOfAsset: 0,
     MrLcCalcMethodCode: [''],
     LcInstRatePrml: [''],
     LcInsRatePrml: [''],

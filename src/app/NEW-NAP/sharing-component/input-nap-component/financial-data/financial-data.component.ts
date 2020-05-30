@@ -93,6 +93,13 @@ export class FinancialDataComponent implements OnInit {
         MrProvisionFeeTypeCode: '',
         MrProvisionFeeCalcMethodCode: '',
         BalloonValueAmt: 0,
+
+        LcRate: 0,
+        MrLcCalcMethodCode: '',
+        LcGracePeriod: 0,
+        PrepaymentPenaltyRate: 0,
+        SellEffectiveRatePrcnt: 0,
+
         NeedReCalculate: true
       }
     );
@@ -136,7 +143,13 @@ export class FinancialDataComponent implements OnInit {
           MrInstSchemeCode: this.appFinDataObj.MrInstSchemeCode,
           CummulativeTenor: this.appFinDataObj.CummulativeTenor,
 
-          NtfAmt: this.appFinDataObj.NtfAmt
+          NtfAmt: this.appFinDataObj.NtfAmt,
+
+          LcRate: this.appFinDataObj.LcRate,
+          MrLcCalcMethodCode: this.appFinDataObj.MrLcCalcMethodCode,
+          LcGracePeriod: this.appFinDataObj.LcGracePeriod,
+          PrepaymentPenaltyRate: this.appFinDataObj.PrepaymentPenaltyRate,
+          SellEffectiveRatePrcnt: this.appFinDataObj.SellEffectiveRatePrcnt
         });
 
         this.setValidator(this.appFinDataObj.MrInstSchemeCode);

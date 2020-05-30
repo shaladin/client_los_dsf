@@ -145,8 +145,13 @@ export class TcDataComponent implements OnInit {
     for (let i = 0; i < fa_AppTc.length; i++) {
       var item = fa_AppTc.at(i);
       var expDt = new Date(item.get("ExpiredDt").value);
+      var prmsDt = new Date(item.get("PromisedDt").value);
       if(item.get("IsChecked").value && expDt < businessDt){
         this.toastr.errorMessage("Expired Date for " + item.get("TcName").value + " can't be lower than Business Date");
+        return;
+      }
+      if (item.get("IsChecked").value == false && prmsDt < businessDt) {
+        this.toastr.errorMessage("Promise Date for " + item.get("TcName").value + " can't be lower than Business Date");
         return;
       }
       this.listAppTcObj[i].AppId = this.AppId;
