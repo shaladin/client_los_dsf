@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
+import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-credit-review-paging',
@@ -9,8 +11,15 @@ import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
   styleUrls: []
 })
 export class CreditReviewPagingComponent implements OnInit {
-
-  constructor() { }
+  BizTemplateCode: string;
+  constructor(private route: ActivatedRoute) { 
+    this.route.queryParams.subscribe(params => {
+      if (params['BizTemplateCode'] != null) {
+        this.BizTemplateCode = params['BizTemplateCode'];
+        localStorage.setItem("BizTemplateCode", this.BizTemplateCode);
+      }
+    });
+  }
   
   inputPagingObj;
   ngOnInit() {
@@ -18,8 +27,16 @@ export class CreditReviewPagingComponent implements OnInit {
     this.inputPagingObj._url="./assets/ucpaging/searchCreditReview.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
-    // this.inputPagingObj.deleteUrl = "/RefBank/DeleteRefBank";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCreditReview.json";
+
+    var arrCrit = new Array();
+    var critObj = new CriteriaObj();
+    critObj.restriction = AdInsConstant.RestrictionLike;
+    critObj.propName = 'WTL.ACT_CODE';
+    critObj.value = "RVW_"+this.BizTemplateCode;
+    arrCrit.push(critObj);
+    
+    this.inputPagingObj.addCritInput = arrCrit;
   }
 
 }

@@ -31,11 +31,13 @@ export class CommissionReservedFundPagingComponent implements OnInit {
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCommission.json";
 
     var arrCrit = new Array();
+    
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
-    critObj.propName = 'RL.BIZ_TMPLT_CODE';
-    critObj.value = this.BizTemplateCode;
+    critObj.propName = 'WTL.ACT_CODE';
+    critObj.value = "COM_RSV_"+this.BizTemplateCode;
     arrCrit.push(critObj);
+
     this.inputPagingObj.addCritInput = arrCrit;
   }
 }
