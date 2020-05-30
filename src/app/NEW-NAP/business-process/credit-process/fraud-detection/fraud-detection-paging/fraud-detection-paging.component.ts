@@ -39,6 +39,13 @@ export class FraudDetectionPagingComponent implements OnInit {
     critObj.propName = 'RL.BIZ_TMPLT_CODE';
     critObj.value = this.BizTemplateCode;
     this.arrCrit.push(critObj);
+
+    this.arrCrit = new Array();
+    var critObj = new CriteriaObj();
+    critObj.restriction = AdInsConstant.RestrictionLike;
+    critObj.propName = 'WTL.ACT_CODE';
+    critObj.value = 'FRD_' + this.BizTemplateCode;
+    this.arrCrit.push(critObj);
     this.inputPagingObj.addCritInput = this.arrCrit;
   }
 
