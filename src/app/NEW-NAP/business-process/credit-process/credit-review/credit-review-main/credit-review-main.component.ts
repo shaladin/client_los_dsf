@@ -27,6 +27,7 @@ export class CreditReviewMainComponent implements OnInit {
   TaskId: number = 0;
   ReturnHandlingHId: number = 0;
   ReturnHandlingDId: number = 0;
+  BizTemplateCode: string = "";
 
   // ReturnForm = this.fb.group({
   //   ReturnReason: [''],
@@ -35,19 +36,19 @@ export class CreditReviewMainComponent implements OnInit {
   // });
 
   constructor(
-    private route: ActivatedRoute, 
-    private http: HttpClient, 
+    private route: ActivatedRoute,
+    private http: HttpClient,
     private fb: FormBuilder,
-    private toastr: NGXToastrService) { 
-      this.route.queryParams.subscribe(params => {
-        this.appId = params["AppId"];
-        this.TaskId =params["TaskId"];
-        if (params["WfTaskListId"] != null) {
-          this.wfTaskListId = params["WfTaskListId"];
-        }
-      });
-    }
-  
+    private toastr: NGXToastrService) {
+    this.route.queryParams.subscribe(params => {
+      this.appId = params["AppId"];
+      this.TaskId = params["TaskId"];
+      if (params["WfTaskListId"] != null) {
+        this.wfTaskListId = params["WfTaskListId"];
+      }
+    });
+  }
+
   FormObj = this.fb.group({
     arr: this.fb.array([]),
     AppvAmt: [''],
@@ -58,9 +59,10 @@ export class CreditReviewMainComponent implements OnInit {
     ApproverDesc: [""],
     Notes: ['', Validators.required]
   });
-  
 
-  InitData(){
+
+  InitData() {
+    this.BizTemplateCode = localStorage.getItem("BizTemplateCode")
     this.DDLRecommendation = new Array();
     this.DDLReasonReturn = new Array();
     this.AppStep = {
@@ -89,7 +91,7 @@ export class CreditReviewMainComponent implements OnInit {
   ResponseExistCreditReview;
   DDLRecommendation;
   DDLReasonReturn;
-  async ngOnInit() {    
+  async ngOnInit() {
     this.ClaimTask();
     console.log("User Access");
     console.log(JSON.parse(localStorage.getItem("UserAccess")));
@@ -103,7 +105,7 @@ export class CreditReviewMainComponent implements OnInit {
     await this.GetExistingCreditReviewData();
   }
 
-  async GetMouCustData(){
+  async GetMouCustData() {
     var obj = {
       AppId: this.appId,
       RowVersion: ""
@@ -120,13 +122,13 @@ export class CreditReviewMainComponent implements OnInit {
     );
   }
 
-  async BindCreditAnalysisItemFormObj(){
-    var refMasterObj = { RefMasterTypeCode: "CRD_RVW_ANALYSIS_ITEM"};
+  async BindCreditAnalysisItemFormObj() {
+    var refMasterObj = { RefMasterTypeCode: "CRD_RVW_ANALYSIS_ITEM" };
     await this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
       (response) => {
         console.log(response);
         var temp = response[AdInsConstant.ReturnObj];
-        for(var i=0;i<temp.length;i++){
+        for (var i = 0; i < temp.length; i++) {
           var NewDataForm = this.fb.group({
             QuestionCode: temp[i].Key,
             Question: temp[i].Value,
@@ -134,7 +136,7 @@ export class CreditReviewMainComponent implements OnInit {
           }) as FormGroup;
           this.Arr.push(NewDataForm);
         }
-        console.log(this.FormObj);        
+        console.log(this.FormObj);
       },
       (error) => {
         console.log(error);
@@ -142,15 +144,15 @@ export class CreditReviewMainComponent implements OnInit {
     );
   }
 
-  async BindAppvAmt(){
-    var Obj = { AppId: this.appId};
+  async BindAppvAmt() {
+    var Obj = { AppId: this.appId };
     await this.http.post(AdInsConstant.GetAppFinDataByAppId, Obj).toPromise().then(
       (response) => {
         console.log(response);
         this.FormObj.patchValue({
           AppvAmt: response["ApvAmt"]
         });
-        console.log(this.FormObj);        
+        console.log(this.FormObj);
       },
       (error) => {
         console.log(error);
@@ -158,17 +160,19 @@ export class CreditReviewMainComponent implements OnInit {
     );
   }
 
-  async GetExistingCreditReviewData(){
+  async GetExistingCreditReviewData() {
     var Obj = { appCrdRvwHObj: { AppId: this.appId } };
     await this.http.post(AdInsConstant.GetAppCrdRvwById, Obj).toPromise().then(
       (response) => {
-        console.log(response);  
+        console.log(response);
         this.ResponseExistCreditReview = response["appCrdRvwHObj"];
-        for(var i=0;i<this.ResponseExistCreditReview.appCrdRvwDObjs.length;i++){
-          var idx = this.Arr.value.indexOf(this.Arr.value.find(x => x.QuestionCode == this.ResponseExistCreditReview.appCrdRvwDObjs[i].MrAnalysisItemCode));
-          this.Arr.controls[idx].patchValue({
-            Answer: this.ResponseExistCreditReview.appCrdRvwDObjs[i].AnalysisResult
-          });
+        if (this.ResponseExistCreditReview.appCrdRvwDObjs != null) {
+          for (var i = 0; i < this.ResponseExistCreditReview.appCrdRvwDObjs.length; i++) {
+            var idx = this.Arr.value.indexOf(this.Arr.value.find(x => x.QuestionCode == this.ResponseExistCreditReview.appCrdRvwDObjs[i].MrAnalysisItemCode));
+            this.Arr.controls[idx].patchValue({
+              Answer: this.ResponseExistCreditReview.appCrdRvwDObjs[i].AnalysisResult
+            });
+          }
         }
       },
       (error) => {
@@ -177,12 +181,12 @@ export class CreditReviewMainComponent implements OnInit {
     );
   }
 
-  async BindDDLRecommendation(){
+  async BindDDLRecommendation() {
     var Obj = { RefReasonTypeCode: "CRD_REVIEW" };
     await this.http.post(AdInsConstant.GetListActiveRefReason, Obj).toPromise().then(
       (response) => {
-        console.log(response);   
-        this.DDLRecommendation = response[AdInsConstant.ReturnObj];   
+        console.log(response);
+        this.DDLRecommendation = response[AdInsConstant.ReturnObj];
         // console.log(this.DDLRecommendation);   
       },
       (error) => {
@@ -190,14 +194,14 @@ export class CreditReviewMainComponent implements OnInit {
       }
     );
   }
-  
-  async BindDDLReasonReturn(){
+
+  async BindDDLReasonReturn() {
     var obj = { RefReasonTypeCode: "CRD_REVIEW" };
     await this.http.post(AdInsConstant.GetListActiveRefReasonByRefReasonTypeCode, obj).toPromise().then(
       (response) => {
-        console.log(response);  
+        console.log(response);
         this.DDLReasonReturn = response[AdInsConstant.ReturnObj];
-        console.log(this.DDLReasonReturn);  
+        console.log(this.DDLReasonReturn);
       },
       (error) => {
         console.log(error);
@@ -205,7 +209,7 @@ export class CreditReviewMainComponent implements OnInit {
     );
   }
 
-  onChangeReason(ev){
+  onChangeReason(ev) {
     // console.log(ev);
     this.FormObj.patchValue({
       ReasonDesc: ev.target.selectedOptions[0].text
@@ -213,7 +217,7 @@ export class CreditReviewMainComponent implements OnInit {
     console.log(this.FormObj);
   }
 
-  onChangeApprover(ev){
+  onChangeApprover(ev) {
     console.log(ev);
     this.FormObj.patchValue({
       ApproverDesc: ev.target.selectedOptions[0].text
@@ -245,7 +249,7 @@ export class CreditReviewMainComponent implements OnInit {
     }
   }
 
-  SaveForm(){
+  SaveForm() {
     var temp = this.FormObj.value;
     // console.log(temp);
     var tempAppCrdRvwObj = new AppCrdRvwHObj();
@@ -253,13 +257,13 @@ export class CreditReviewMainComponent implements OnInit {
     tempAppCrdRvwObj.SubmitDt = this.UserAccess.BusinessDt;
     tempAppCrdRvwObj.CrdRvwStat = "DONE";
     tempAppCrdRvwObj.ReturnNotes = "";
-    if(this.ResponseExistCreditReview != null){
+    if (this.ResponseExistCreditReview != null) {
       tempAppCrdRvwObj.RowVersion = this.ResponseExistCreditReview.RowVersion;
     }
     tempAppCrdRvwObj.appCrdRvwDObjs = this.BindAppCrdRvwDObj(temp.arr);
     console.log(tempAppCrdRvwObj);
 
-    if(this.isReturnOn)
+    if (this.isReturnOn)
       temp.Approver = 0;
 
     var apiObj = {
@@ -273,7 +277,7 @@ export class CreditReviewMainComponent implements OnInit {
     console.log(apiObj);
     this.http.post(AdInsConstant.AddOrEditAppCrdRvwData, apiObj).subscribe(
       (response) => {
-        console.log(response);    
+        console.log(response);
       },
       (error) => {
         console.log(error);
@@ -282,17 +286,17 @@ export class CreditReviewMainComponent implements OnInit {
 
     this.SaveManualDeviationData();
   }
-  
-  SaveManualDeviationData(){
-    if(this.isExistedManualDeviationData){
+
+  SaveManualDeviationData() {
+    if (this.isExistedManualDeviationData) {
       var obj = {
         AppId: this.appId,
         ListDeviationResultObjs: this.ManualDeviationData
       }
-  
+
       this.http.post(AdInsConstant.AddListManualDeviationResultByAppId, obj).subscribe(
         (response) => {
-          console.log(response);    
+          console.log(response);
         },
         (error) => {
           console.log(error);
@@ -301,14 +305,14 @@ export class CreditReviewMainComponent implements OnInit {
     }
   }
 
-  BindAppCrdRvwDObj(objArr){
+  BindAppCrdRvwDObj(objArr) {
     var AppCrdRvwDObjs = new Array();
     // console.log(objArr);
-    for(var i=0;i<objArr.length;i++){
+    for (var i = 0; i < objArr.length; i++) {
       var temp = new AppCrdRvwDObj();
       temp.MrAnalysisItemCode = objArr[i].QuestionCode;
       temp.AnalysisResult = objArr[i].Answer;
-      if(this.ResponseExistCreditReview != null){
+      if (this.ResponseExistCreditReview != null) {
         var idx = this.ResponseExistCreditReview.appCrdRvwDObjs.indexOf(this.ResponseExistCreditReview.appCrdRvwDObjs.find(x => x.MrAnalysisItemCode == objArr[i].QuestionCode));
         temp.RowVersion = this.ResponseExistCreditReview.appCrdRvwDObjs[idx].RowVersion;
       }
@@ -317,18 +321,18 @@ export class CreditReviewMainComponent implements OnInit {
     return AppCrdRvwDObjs;
   }
 
-  CheckDeviationData(){
+  CheckDeviationData() {
     console.log(this.ManualDeviationData);
   }
 
-  BindManualDeviationData(ev){
+  BindManualDeviationData(ev) {
     // console.log(ev);
     this.ManualDeviationData = ev;
     this.isExistedManualDeviationData = true;
   }
 
   isReturnOn;
-  switchForm(){
+  switchForm() {
     this.FormObj.patchValue({
       Reason: "",
       ReasonDesc: "",
@@ -336,19 +340,19 @@ export class CreditReviewMainComponent implements OnInit {
     });
     console.log(this.FormObj);
 
-    if(!this.isReturnOn){
+    if (!this.isReturnOn) {
       this.isReturnOn = true;
-      this.FormObj.controls.Approver.clearValidators();      
-    }else{
+      this.FormObj.controls.Approver.clearValidators();
+    } else {
       this.isReturnOn = false;
       this.FormObj.controls.Approver.setValidators([Validators.required]);
     }
     this.FormObj.controls.Approver.updateValueAndValidity();
 
   }
-  
 
-  ClaimTask(){
+
+  ClaimTask() {
     var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     var wfClaimObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
@@ -356,7 +360,7 @@ export class CreditReviewMainComponent implements OnInit {
 
     this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
-    
+
       });
   }
 }

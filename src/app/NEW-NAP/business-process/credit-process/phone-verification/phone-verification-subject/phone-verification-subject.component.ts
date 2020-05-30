@@ -106,7 +106,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   }
 
   async SaveForm() {
-    var lobCode = localStorage.getItem("LobCode")
+    var BizTemplateCode = localStorage.getItem("BizTemplateCode")
     if (this.isReturnHandling == false) {
       if (this.ReturnHandlingForm.controls.IsAnyUpdate.value == 'YES') {
         this.setReturnHandlingH();
@@ -128,7 +128,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
         (response) => {
 
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["/Nap/CreditProcess/PhoneVerification/Paging"], { queryParams: { "LobCode": lobCode } });
+          this.router.navigate(["/Nap/CreditProcess/PhoneVerification/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
         },
         (error) => {
           console.log(error);
@@ -141,7 +141,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingPhoneVerif/Paging"], { queryParams: { "LobCode": lobCode } });
+          this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingPhoneVerif/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
         },
         (error) => {
           console.log(error);
@@ -265,12 +265,12 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   }
 
   back() {
-    var lobCode = localStorage.getItem("LobCode")
+    var BizTemplateCode = localStorage.getItem("BizTemplateCode")
     if (this.isReturnHandling == false) {
-      this.router.navigate(["/Nap/CreditProcess/PhoneVerification/Paging"], { queryParams: { "LobCode": lobCode } });
+      this.router.navigate(["/Nap/CreditProcess/PhoneVerification/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
     }
     if (this.isReturnHandling == true) {
-      this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingPhoneVerif/Paging"], { queryParams: { "LobCode": lobCode } });
+      this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingPhoneVerif/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
     }
   }
 }
