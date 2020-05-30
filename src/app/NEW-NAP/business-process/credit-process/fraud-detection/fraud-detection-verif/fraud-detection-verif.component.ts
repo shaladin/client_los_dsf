@@ -278,8 +278,8 @@ export class FraudDetectionVerifComponent implements OnInit {
   }
 
   cancel(){
-    var lobCode = localStorage.getItem("BizTemplateCode")
-    this.router.navigate(["/Nap/CreditProcess/FraudDetection/Paging"], { queryParams: { BizTemplateCode: lobCode } });
+    var BizTemplateCode = localStorage.getItem("BizTemplateCode")
+    this.router.navigate(["/Nap/CreditProcess/FraudDetection/Paging"], { queryParams: { BizTemplateCode: BizTemplateCode } });
   }
 
   submit() {
@@ -294,8 +294,8 @@ export class FraudDetectionVerifComponent implements OnInit {
     }
     this.http.post(this.addAppFraudVerf, verfObj).subscribe(
       response => {
-        var lobCode = localStorage.getItem("BizTemplateCode")
-        this.router.navigate(["/Nap/CreditProcess/FraudDetection/Paging"], { queryParams: { BizTemplateCode: lobCode } });
+        var BizTemplateCode = localStorage.getItem("BizTemplateCode")
+        this.router.navigate(["/Nap/CreditProcess/FraudDetection/Paging"], { queryParams: { BizTemplateCode: BizTemplateCode } });
       },
       error => {
         console.log("error");
