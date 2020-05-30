@@ -630,8 +630,8 @@ export class AdInsConstant {
   public static AddAppLifeInsH = environment.losUrl + "/AppLifeIns/AddAppLifeInsH";
   public static EditAppLifeInsH = environment.losUrl + "/AppLifeIns/EditAppLifeInsH";
   public static InitAppLifeInsH = environment.losUrl + "/AppLifeIns/InitAppLifeInsH";
-  public static CalculateRate = environment.losUrl + "/AppLifeIns/CalculateRate";
-  public static CalculateDisc = environment.losUrl + "/AppLifeIns/CalculateDisc";
+  public static GetRuleAdmFee = environment.losUrl + "/AppLifeIns/GetRuleAdmFee";
+  public static GetRuleRate = environment.losUrl + "/AppLifeIns/GetRuleRate";
   public static DeleteAppLifeIns = environment.losUrl + "/AppLifeIns/DeleteAppLifeIns";
 
 
@@ -1133,6 +1133,7 @@ export class AdInsConstant {
   // App Credit Review
   public static GetAppCrdRvwById = environment.losUrl + "/AppCrdRvw/GetAppCrdRvwById";
   public static AddOrEditAppCrdRvwData = environment.losUrl + "/AppCrdRvw/AddOrEditAppCrdRvwData";
+  public static GetLatestScoringResultHByTrxSourceNo = environment.FoundationR3Url + "/CreditScoring/GetLatestScoringResultHByTrxSourceNo";
 
   //RETURN HANDLING
   public static GetReturnHandlingWithDetailByReturnHandlingHId = environment.losUrl + "/ReturnHandlingH/GetReturnHandlingWithDetailByReturnHandlingHId";
@@ -1175,6 +1176,7 @@ export class AdInsConstant {
 
   //RfaLog
   public static GetRfaLogByTrxNo = environment.FoundationR3Url + "/RfaLog/GetRfaLogByTrxNo";
+  public static GetRfaLogByTrxNoAndApvCategory = environment.FoundationR3Url + "/RfaLog/GetRfaLogByTrxNoAndApvCategory";
 
   //Ref App Attr
   public static GetListRefAppAttrCollateral = environment.losUrl + "/RefAppAttr/GetListRefAppAttrCollateral";

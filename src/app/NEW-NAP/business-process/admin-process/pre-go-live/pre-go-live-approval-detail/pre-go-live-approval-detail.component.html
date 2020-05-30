@@ -74,6 +74,19 @@
             </div>
           </div>
 
+          <div *ngIf="result">
+            <div *ngIf="count1>0">
+              <lib-ucSubsection [id]="'PreGoLiveApprovalHistoryId'" [title]="'PreGoLive Approval History'" [panel]="'PreGoLiveApprovalHistory'">
+              </lib-ucSubsection>
+              <div id="PreGoLiveApprovalHistory">
+                <div *ngFor="let item of listPreGoLiveAppvrObj; let i = index">
+                  <lib-ucapprovalhist [inputObj]="listPreGoLiveAppvrObj[i]">
+                  </lib-ucapprovalhist>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <lib-ucSubsection [id]="'DataTableId'" [title]="'Term and Condition'" [panel]="'DataTable'">
           </lib-ucSubsection>
 
