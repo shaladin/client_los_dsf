@@ -74,7 +74,8 @@ export class ListPersonalComponent implements OnInit {
           "BirthDt": this.AppCustPersonalObj.BirthDt,
           "MotherMaidenName": this.AppCustPersonalObj.MotherMaidenName,
           "MobilePhnNo1": this.AppCustPersonalObj.MobilePhnNo1,          
-          "RowVersion": this.RowVersion
+          "RowVersion": this.RowVersion,
+          "AppId": this.AppId
         }
         //List Cust Duplicate And List Negative Cust Duplicate Checking
         this.http.post(this.GetCustomerDuplicateCheckUrl, requestDupCheck).subscribe(
