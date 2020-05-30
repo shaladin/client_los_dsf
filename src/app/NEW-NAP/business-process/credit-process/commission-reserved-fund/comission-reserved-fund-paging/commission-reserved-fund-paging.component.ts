@@ -11,25 +11,26 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: []
 })
 export class CommissionReservedFundPagingComponent implements OnInit {
-  BizTemplateCode : string;
+  BizTemplateCode: string;
 
   constructor(private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
       if (params['BizTemplateCode'] != null) {
         this.BizTemplateCode = params['BizTemplateCode'];
-        localStorage.setItem("BizTemplateCode",this.BizTemplateCode);
+        localStorage.setItem("BizTemplateCode", this.BizTemplateCode);
       }
-    }); }
+    });
+  }
 
   inputPagingObj;
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
-    this.inputPagingObj._url="./assets/ucpaging/searchCommission.json";
+    this.inputPagingObj._url = "./assets/ucpaging/searchCommission.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCommission.json";
 
-     var arrCrit = new Array();
+    var arrCrit = new Array();
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'RL.BIZ_TMPLT_CODE';
@@ -37,5 +38,4 @@ export class CommissionReservedFundPagingComponent implements OnInit {
     arrCrit.push(critObj);
     this.inputPagingObj.addCritInput = arrCrit;
   }
-
 }

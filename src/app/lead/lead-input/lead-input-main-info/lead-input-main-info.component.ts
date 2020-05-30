@@ -76,7 +76,7 @@ export class LeadInputMainInfoComponent implements OnInit {
     OfficeCode: ['', [Validators.required]],
     OfficeName: [''],
     CrtOfficeCode: [''],
-    OrderNo: ['', [Validators.required]],
+    OrderNo: [''],
     LobCode: ['', [Validators.required]],
     LeadSource: ['', [Validators.required]],
   });
@@ -333,7 +333,6 @@ export class LeadInputMainInfoComponent implements OnInit {
     this.cmoNameLookUpObj.urlEnviPaging = environment.FoundationR3Url;
     this.cmoNameLookUpObj.pagingJson = "./assets/uclookup/lookupCMO.json";
     this.cmoNameLookUpObj.genericJson = "./assets/uclookup/lookupCMO.json";
-    this.cmoNameLookUpObj.isRequired = true;
 
     this.surveyorNameLookUpObj = new InputLookupObj();
     this.surveyorNameLookUpObj.isRequired = false;
@@ -342,7 +341,6 @@ export class LeadInputMainInfoComponent implements OnInit {
     this.surveyorNameLookUpObj.urlEnviPaging = environment.FoundationR3Url;
     this.surveyorNameLookUpObj.pagingJson = "./assets/uclookup/lookupSurveyor.json";
     this.surveyorNameLookUpObj.genericJson = "./assets/uclookup/lookupSurveyor.json";
-    this.surveyorNameLookUpObj.isRequired = true;
 
     this.salesNameLookUpObj = new InputLookupObj();
     this.salesNameLookUpObj.isRequired = false;

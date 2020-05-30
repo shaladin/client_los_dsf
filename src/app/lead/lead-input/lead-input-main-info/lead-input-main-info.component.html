@@ -10,7 +10,7 @@
                     </lib-ucSubsection>
                     <div id="mainInfo">
                         <div class="form-group row">
-                            <label class="col-md-3 adInsLabel adins-required" translate>Lead No. </label>
+                            <label class="col-md-3 adInsLabel" translate>Lead No. </label>
                             <div class="col-md-3">
                                 <a href="{{leadUrl}}"><label class="adInsLabel" style="color: blue; cursor: pointer; font-size: 12px;" translate>{{this.returnLead?.LeadNo}}</label></a>
                             </div>
@@ -44,7 +44,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 adInsLabel adins-required-label" translate>Order No </label>
+                            <label class="col-md-3 adInsLabel" translate>Order No </label>
                             <div class="col-md-4">
                             <input type="text" class="form-control adInsInput" formControlName="OrderNo"
                                     [ngClass]="{ 'is-invalid': enjiForm.submitted && MainInfoForm.controls.OrderNo.invalid }">
@@ -84,7 +84,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 adInsLabel adins-required-label" translate>CMO Username </label>
+                            <label class="col-md-3 adInsLabel" translate>CMO Username </label>
                             <div class="col-md-4">
                                 <lib-uclookupgeneric [lookupInput]="cmoNameLookUpObj" [parentForm]="MainInfoForm"
                                     [enjiForm]="enjiForm" [identifier]="'CmoName'" (lookup)=getLookUpCmoName($event)>
@@ -92,7 +92,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 adInsLabel adins-required-label" translate>Surveyor Username </label>
+                            <label class="col-md-3 adInsLabel" translate>Surveyor Username </label>
                             <div class="col-md-4">
                                 <lib-uclookupgeneric [lookupInput]="surveyorNameLookUpObj" [parentForm]="MainInfoForm"
                                     [enjiForm]="enjiForm" [identifier]="'SurveyorName'" (lookup)=getLookUpSurveyorName($event)>
