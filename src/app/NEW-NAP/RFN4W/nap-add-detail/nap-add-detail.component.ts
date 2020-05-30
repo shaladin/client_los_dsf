@@ -57,7 +57,7 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.ClaimTask();
+    this.ClaimTask();
     this.AppStepIndex = 0;
     this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
     this.NapObj = new AppObj();
@@ -180,7 +180,7 @@ export class NapAddDetailComponent implements OnInit {
     this.http.post(AdInsConstant.SubmitNAP, this.NapObj).subscribe(
       (response) => {
         console.log(response);
-        this.router.navigate(["/Nap/ConsumerFinance/InputNap/Paging"], { queryParams: { LobCode: "CF4W" } })
+        this.router.navigate(["/Nap/CFRefinancing/Paging"])
       },
       (error) => {
         console.log(error);

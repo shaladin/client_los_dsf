@@ -38,6 +38,8 @@ export class AdInsConstant {
   public static AppStepCSR = "CSR";
   public static FL4W = "FL4W";
   public static CF4W = "CF4W";
+  public static FCTR = "FCTR";
+  public static CFRFN4W = "CFRFN4W";
   public static CFNEWCAR = "CFNEWCAR";
   public static CENTER_GROUP_CODE = "CG";
 
@@ -192,10 +194,6 @@ export class AdInsConstant {
   //PREMIUM TYPE
   public static PremiumTypeAmt = "AMT";
   public static PremiumTypePrcnt = "PRCNT";
-
-  //LOB CODE
-  public static LobCodeFCTR = "FCTR";
-  public static LobCodeCFRFN = "CFRFN4W";
 
   //TOP CALC BASED
   public static TopCalcBasedInvcDt = "INVC_DT";
@@ -446,7 +444,7 @@ export class AdInsConstant {
   public static DeleteRefMaster = "/RefMaster/DeleteRefMaster";
   public static GetRefMasterPaging = "/RefMaster/GetRefMasterPaging";
   public static GetRefMasterListDesc = "/RefMaster/GetRefMasterListDesc";
-  public static GetRefMasterByMasterCode = "/RefMaster/GetRefMasterByMasterCode";
+  public static GetRefMasterByMasterCode =  environment.FoundationR3Url +"/RefMaster/GetRefMasterByMasterCode";
   public static GetRefMasterListKeyValueActiveByCode = environment.FoundationR3Url + "/RefMaster/GetListKeyValueActiveByCode"
   public static GetListActiveRefMaster = environment.FoundationR3Url + "/RefMaster/GetListActiveRefMaster"
   public static GetRefMasterByRefMasterTypeCode = environment.FoundationR3Url + "/RefMaster/GetRefMasterByRefMasterTypeCode"
@@ -632,8 +630,8 @@ export class AdInsConstant {
   public static AddAppLifeInsH = environment.losUrl + "/AppLifeIns/AddAppLifeInsH";
   public static EditAppLifeInsH = environment.losUrl + "/AppLifeIns/EditAppLifeInsH";
   public static InitAppLifeInsH = environment.losUrl + "/AppLifeIns/InitAppLifeInsH";
-  public static CalculateRate = environment.losUrl + "/AppLifeIns/CalculateRate";
-  public static CalculateDisc = environment.losUrl + "/AppLifeIns/CalculateDisc";
+  public static GetRuleAdmFee = environment.losUrl + "/AppLifeIns/GetRuleAdmFee";
+  public static GetRuleRate = environment.losUrl + "/AppLifeIns/GetRuleRate";
   public static DeleteAppLifeIns = environment.losUrl + "/AppLifeIns/DeleteAppLifeIns";
 
 
@@ -663,6 +661,10 @@ export class AdInsConstant {
   public static ReturnMouReview = environment.losUrl + "/MouCust/ReturnMouReview";
   public static EditMouForCancelByMouId = environment.losUrl + "/MouCust/EditMouForCancelByMouId";
   public static GetListMouByAppIdAndMouType = environment.losUrl + "/MouCust/GetListMouByAppIdAndMouType";
+  public static SINGLE_INST_TYPE = "SINGLE";
+  public static MULTIPLE_INST_TYPE = "MULTIPLE";
+  public static PAY_FREQ_MONTHLY = "MONTHLY";
+  public static INST_SCHM_REGULAR_FIXED = "RF";
   
 
   // MOU CUST ASSET
@@ -1132,6 +1134,7 @@ export class AdInsConstant {
   // App Credit Review
   public static GetAppCrdRvwById = environment.losUrl + "/AppCrdRvw/GetAppCrdRvwById";
   public static AddOrEditAppCrdRvwData = environment.losUrl + "/AppCrdRvw/AddOrEditAppCrdRvwData";
+  public static GetLatestScoringResultHByTrxSourceNo = environment.FoundationR3Url + "/CreditScoring/GetLatestScoringResultHByTrxSourceNo";
 
   //RETURN HANDLING
   public static GetReturnHandlingWithDetailByReturnHandlingHId = environment.losUrl + "/ReturnHandlingH/GetReturnHandlingWithDetailByReturnHandlingHId";
@@ -1174,6 +1177,7 @@ export class AdInsConstant {
 
   //RfaLog
   public static GetRfaLogByTrxNo = environment.FoundationR3Url + "/RfaLog/GetRfaLogByTrxNo";
+  public static GetRfaLogByTrxNoAndApvCategory = environment.FoundationR3Url + "/RfaLog/GetRfaLogByTrxNoAndApvCategory";
 
   //Ref App Attr
   public static GetListRefAppAttrCollateral = environment.losUrl + "/RefAppAttr/GetListRefAppAttrCollateral";

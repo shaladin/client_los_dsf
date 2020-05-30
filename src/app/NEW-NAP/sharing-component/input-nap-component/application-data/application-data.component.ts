@@ -50,7 +50,7 @@ export class ApplicationDataComponent implements OnInit {
     PayFreqCode: ['', Validators.required],
     MrFirstInstTypeCode: ["", Validators.required],
     NumOfAsset: [''],
-    MrLcCalcMethodCode: ["", Validators.required],
+    MrLcCalcMethodCode: [""],
     LcInstRatePrml: [''],
     LcInsRatePrml: [''],
     MrAppSourceCode: ["", Validators.required],
@@ -560,5 +560,9 @@ export class ApplicationDataComponent implements OnInit {
       this.NapAppModelForm.controls.FloatingPeriod.setValidators(Validators.required);
     }
     this.NapAppModelForm.controls.FloatingPeriod.updateValueAndValidity();
+  }
+
+  test(){
+    console.log(this.NapAppModelForm);
   }
 }

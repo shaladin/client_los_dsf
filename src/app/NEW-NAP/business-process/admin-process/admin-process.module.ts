@@ -38,6 +38,9 @@ import { CreateDoMultiAssetComponent } from './delivery-order-multi-asset/create
 import { DoAssetDetailComponent } from './delivery-order-multi-asset/do-asset-detail/do-asset-detail.component';
 import { InvoiceVerifPagingComponent } from './invoice-verif/invoice-verif-paging/invoice-verif-paging.component';
 import { InvoiceVerifDetailComponent } from './invoice-verif/invoice-verif-detail/invoice-verif-detail.component';
+import { SharingModule } from "app/shared/sharing.module";
+import { UcapprovalModule } from "@adins/ucapproval";
+import { UcapprovalhistModule } from "@adins/ucapprovalhist";
 
 
 @NgModule({
@@ -47,7 +50,7 @@ import { InvoiceVerifDetailComponent } from './invoice-verif/invoice-verif-detai
     TcSharingComponentModule,
     ViewMainInfoComponentModule,
     ProcessComponentModule,
-    AdInsModule,
+    AdInsModule
   ],
   declarations: [
     PurchaseOrderPagingComponent,

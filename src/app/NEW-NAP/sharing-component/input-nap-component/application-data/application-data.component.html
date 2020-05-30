@@ -6,7 +6,7 @@
         <!-- <div class="px-3"> -->
 
           <form class="form form-horizontal" [formGroup]="NapAppModelForm"
-            (ngSubmit)="NapAppModelForm.valid && ClickSave()" #enjiForm="ngForm">
+            (ngSubmit)="NapAppModelForm.valid && ClickSave('next')" #enjiForm="ngForm">
             <!-- Sales Info -->
             <lib-ucSubsection [id]="'salesInfomationId'" [title]="'Sales Information'" [panel]="'salesInfomation'">
             </lib-ucSubsection>
@@ -188,7 +188,7 @@
                       <select class="form-control adInsInput" style="width: 50%" formControlName="MrInstSchemeCode"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrInstSchemeCode.invalid }">
                         <option value="">-Select One-</option>
-                        <option *ngFor="let it of applicationDDLitems['INSTSCHM']" value="{{it.Key}}">
+                        <option *ngFor="let it of applicationDDLitems['INST_SCHM']" value="{{it.Key}}">
                           {{it.Value}} </option>
                       </select>
                       <lib-uc-show-errors [control]="NapAppModelForm.controls.MrInstSchemeCode"
@@ -279,9 +279,12 @@
             <app-loan-object [AppId]="appId" [mode]="mode" *ngIf="IsLoanObject"></app-loan-object>
 
             <div class="form-actions right">
-              <button type="submit" class="btn btn-raised btn-primary" (click)="ClickSave('next')">
+              <button type="submit" class="btn btn-raised btn-primary">
                 <i class="fa fa-check-square-o"></i> Save
               </button>
+              <!-- <button type="button" class="btn btn-raised btn-primary" (click)="test()">
+                <i class="fa fa-check-square-o"></i> Test
+              </button> -->
               <!-- <button type="submit" (click)="ClickSave('next')" class="btn btn-raised btn-primary">
                 <i class="fa fa-check-square-o"></i> Next
               </button> -->

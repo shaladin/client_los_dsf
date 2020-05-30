@@ -3,7 +3,7 @@
     <div class="card">
       <div class="card-body">
         <div class="px-3">
-          <form class="form form-horizontal" [formGroup]="PersonalForm" #enjiForm="ngForm">
+          <form class="form form-horizontal" [formGroup]="PersonalForm" #enjiForm="ngForm" (ngSubmit)="PersonalForm.valid && SaveForm()">
             <div class="form-body">
               <lib-ucSubsection [id]="'mainDataId'" [title]="'Main Data'" [panel]="'mainData'">
               </lib-ucSubsection>
@@ -42,8 +42,10 @@
                   <div class="form-group row">
                     <label class="col-md-6 adInsLabel">ID Expired Date </label>
                     <div class="col-md-6">
-                      <input *ngIf="PersonalForm.controls.MrIdTypeCode.value == 'EKTP'" readonly type="date" class="form-control" id="idExpDt" formControlName="IdExpDt">
-                      <input *ngIf="PersonalForm.controls.MrIdTypeCode.value != 'EKTP'" type="date" class="form-control" id="idExpDt" formControlName="IdExpDt">
+                      <input *ngIf="PersonalForm.controls.MrIdTypeCode.value == 'EKTP'" readonly type="date" class="form-control" id="idExpDt" formControlName="IdExpDt"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && PersonalForm.controls.IdExpDt.invalid}">
+                      <input *ngIf="PersonalForm.controls.MrIdTypeCode.value != 'EKTP'" type="date" class="form-control" id="idExpDt" formControlName="IdExpDt"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && PersonalForm.controls.IdExpDt.invalid}">
                       <lib-uc-show-errors [control]="PersonalForm.controls.IdExpDt" [submit]="enjiForm.submitted">
                       </lib-uc-show-errors>
                     </div>
@@ -52,15 +54,15 @@
                     <label class="col-md-6 adInsLabel">Birth Place / Date </label>
                     <div class="col-md-6">
                       <div class="form-group row ">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                           <input type="text" class="form-control adInsInput width-100-per" formControlName="BirthPlace"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && PersonalForm.controls.BirthPlace.invalid}">
                           <lib-uc-show-errors [control]="PersonalForm.controls.BirthPlace"
                             [submit]="enjiForm.submitted">
                           </lib-uc-show-errors>
                         </div>
-                        <div class="col-md-6">
-                          <input type="date" class="form-control adInsInput width-100-per" formControlName="BirthDt"
+                        <div class="col-md-7">
+                          <input type="date" class="form-control" formControlName="BirthDt" max="{{Max17YO | date:'yyyy-MM-dd'}}"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && PersonalForm.controls.BirthDt.invalid}">
                           <lib-uc-show-errors [control]="PersonalForm.controls.BirthDt" [submit]="enjiForm.submitted">
                           </lib-uc-show-errors>
@@ -170,15 +172,18 @@
                 </div>
               </div>
               <lib-ucaddress #UcAddrGrp [title]="'Address'" [UCAddrForm]="PersonalForm" [enjiForm]="enjiForm"
-                [identifier]="'AddrObj'" [default]="AddrObj" [inputField]="inputFieldObj" [showPhn3]="false">
+                [identifier]="'AddrObj'" [default]="AddrObj" [inputField]="inputFieldObj" [showAllPhn]="false">
               </lib-ucaddress>
               <div class="form-actions right">
                 <button type="button" class="btn btn-raised btn-warning mr-1" (click)="cancel()" translate>
                   <i class="ft-x"></i> Cancel
                 </button>
-                <button type="submit" class="btn btn-raised btn-primary" (click)="SaveForm()">
-                  <i class="fa fa-check-square-o"></i> Save
+                <button type="submit" class="btn btn-raised btn-primary">
+                  <i class="far fa-check-square"></i> Save
                 </button>
+                <!-- <button type="button" class="btn btn-raised btn-primary" (click)="test()">
+                  <i class="fa fa-check-square-o"></i> Test
+                </button> -->
               </div>
             </div>
           </form>
