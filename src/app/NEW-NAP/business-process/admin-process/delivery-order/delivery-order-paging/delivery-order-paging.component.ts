@@ -37,7 +37,7 @@ export class DeliveryOrderPagingComponent implements OnInit {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.propName = 'WF.ACT_CODE';
-    critObj.value = "DO";
+    critObj.value = "DO_" + this.bizTemplateCode;
 
     this.inputPagingObj.addCritInput.push(critObj);
 
