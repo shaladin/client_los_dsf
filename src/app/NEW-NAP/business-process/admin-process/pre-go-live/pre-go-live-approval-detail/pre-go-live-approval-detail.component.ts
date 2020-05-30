@@ -5,6 +5,7 @@ import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { formatDate } from '@angular/common';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-pre-go-live-approval-detail',
@@ -38,6 +39,14 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   AppTcList: any = [];
   identifier: string = "TCList";
 
+  count1 : number = 0;
+  RfaLogObj :{
+    RfaNo: any
+  }
+  ListRfaLogObj : any = new Array(this.RfaLogObj); 
+  inputObj2 : any
+  listPreGoLiveAppvrObj : any = new Array(this.inputObj2);
+
   MainInfoForm = this.fb.group({
 
   });
@@ -57,6 +66,24 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+
+
+    this.http.post(AdInsConstant.GetRfaLogByTrxNoAndApvCategory, { TrxNo : this.TrxNo, ApvCategory : "PRE_GPV_APV" } ).subscribe(
+      (response) => {
+        this.result = response;
+        this.ListRfaLogObj = response["ListRfaLogObj"];
+        for(let i =0;i<this.ListRfaLogObj.length;i++){
+            this.listPreGoLiveAppvrObj[i] = {
+              approvalBaseUrl: environment.ApprovalR3Url,
+              type: 'task',
+              refId: this.ListRfaLogObj[i]["RfaNo"]
+            }
+          } 
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
 
     var Obj = {
       AgrmntNo: this.TrxNo,
@@ -170,6 +197,8 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
         console.log(error);
       }
     );
+
+    
   }
   changeValidation(arr) {
     if (this.MainInfoForm.controls[this.identifier]["controls"][arr]["controls"].IsMandatory.value == true) {
