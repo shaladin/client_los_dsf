@@ -10,7 +10,7 @@
           </div>
         </div>
         <div class="px-3">
-          <form class="form form-horizontal" [formGroup]="InvoiceForm" (ngSubmit)="InvoiceForm.valid && SaveForm()"
+          <form class="form form-horizontal" [formGroup]="InvoiceForm" (ngSubmit)="InvoiceForm.valid && SaveForm(enjiForm)"
             #enjiForm="ngForm">
             <lib-ucSubsection [id]="'InvoiceDataId'" [title]="'Invoice Data'" [panel]="'InvoiceData'">
             </lib-ucSubsection>
@@ -86,7 +86,7 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let item of dataobj?.AppInvoiceFctrList; let i = index;">
-                    <td>{{i}}</td>
+                    <td>{{i+1}}</td>
                     <td class="text-left">{{item?.InvoiceNo}}</td>
                     <td class="text-left">{{item?.CustomerFactoringName}}</td>
                     <td class="text-left">{{item?.InvoiceAmt | number:'':'en-US'}}</td>
