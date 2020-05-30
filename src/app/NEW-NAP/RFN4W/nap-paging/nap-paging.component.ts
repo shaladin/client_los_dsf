@@ -26,11 +26,28 @@ export class NapPagingComponent implements OnInit {
   ) {
   }
 
+  ngOnInit() {
+    console.log("User Access");
+    console.log(JSON.parse(localStorage.getItem("UserAccess")));
+    this.userAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    
+    this.arrCrit = new Array();    
+    this.makeCriteria();
+
+    this.inputPagingObj = new UcPagingObj();
+    this.inputPagingObj._url="./assets/ucpaging/searchApp.json";
+    this.inputPagingObj.enviromentUrl = environment.losUrl;
+    this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchApp.json";
+
+    this.inputPagingObj.addCritInput = this.arrCrit;
+  }
+
   makeCriteria(){
     var critObj = new CriteriaObj();
-    critObj.restriction = AdInsConstant.RestrictionEq;
+    critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'RL.BIZ_TMPLT_CODE';
-    critObj.value = AdInsConstant.LobCodeCFRFN;
+    critObj.value = AdInsConstant.CFRFN4W;
     this.arrCrit.push(critObj);
     
     critObj = new CriteriaObj();
@@ -59,23 +76,6 @@ export class NapPagingComponent implements OnInit {
     }
     // critObj.value = localStorage.getItem("LobCode");
     this.arrCrit.push(critObj);
-  }
-
-  async ngOnInit() {
-    console.log("User Access");
-    console.log(JSON.parse(localStorage.getItem("UserAccess")));
-    this.userAccess = JSON.parse(localStorage.getItem("UserAccess"));
-    
-    this.arrCrit = new Array();    
-    this.makeCriteria();
-
-    this.inputPagingObj = new UcPagingObj();
-    this.inputPagingObj._url="./assets/ucpaging/searchApp.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
-    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchApp.json";
-
-    this.inputPagingObj.addCritInput = this.arrCrit;
   }
   
   AddApp(){

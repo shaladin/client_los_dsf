@@ -17,7 +17,6 @@ import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueModel';
   providers: [NGXToastrService]
 })
 export class NapAddComponent implements OnInit {
-
   @ViewChild('LookupOffering') ucLookupOffering: UclookupgenericComponent;
   @ViewChild('LookupCopyProduct') ucLookupCopyProduct: UclookupgenericComponent;
   inputLookupObjCopyProduct: InputLookupObj = new InputLookupObj();
@@ -107,7 +106,6 @@ export class NapAddComponent implements OnInit {
   }
 
   MakeLookUpObj() {
-
     this.inputLookupObjCopyProduct = new InputLookupObj();
     this.inputLookupObjCopyProduct.urlJson = "./assets/uclookup/NAP/lookupApp.json";
     this.inputLookupObjCopyProduct.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
@@ -135,7 +133,7 @@ export class NapAddComponent implements OnInit {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.propName = 'vrl.BIZ_TMPLT_CODE';
-    critObj.value = AdInsConstant.CF4W;
+    critObj.value = AdInsConstant.CFRFN4W;
     arrCopyLookupCrit.push(critObj);
     this.inputLookupObjCopyProduct.addCritInput = arrCopyLookupCrit;
 
@@ -151,7 +149,7 @@ export class NapAddComponent implements OnInit {
     addCritBizTempalte.DataType = "text";
     addCritBizTempalte.propName = "rlob.BIZ_TMPLT_CODE";
     addCritBizTempalte.restriction = AdInsConstant.RestrictionEq;
-    addCritBizTempalte.value = AdInsConstant.LobCodeCFRFN;
+    addCritBizTempalte.value = AdInsConstant.CFRFN4W;
     arrAddCrit.push(addCritBizTempalte);
 
     this.inputLookupObjName.addCritInput = arrAddCrit;
@@ -208,7 +206,8 @@ export class NapAddComponent implements OnInit {
     napAppObj.IsAppInitDone = false;
     napAppObj.AppStat = AdInsConstant.AppStepNew;
     napAppObj.AppCurrStep = AdInsConstant.AppStepNew;
-    napAppObj.BlCode = "RFN4W";
+    napAppObj.BizTemplateCode = AdInsConstant.CFRFN4W;
+    napAppObj.LobCode = this.NapAppForm.controls.LobCode.value;
     napAppObj.OriOfficeCode = this.NapAppForm.controls['OriOfficeCode'].value;
     napAppObj.OriOfficeName = this.NapAppForm.controls['OriOfficeName'].value;
     napAppObj = this.CheckValue(napAppObj);

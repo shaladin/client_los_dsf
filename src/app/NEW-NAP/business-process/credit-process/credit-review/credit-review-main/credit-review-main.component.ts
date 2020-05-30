@@ -6,9 +6,10 @@ import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
 import { environment } from 'environments/environment';
 import { AppCrdRvwHObj } from 'app/shared/model/AppCrdRvwHObj.Model';
 import { AppCrdRvwDObj } from 'app/shared/model/AppCrdRvwDObj.Model';
-import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
+import { ScoringResultHObj } from 'app/shared/model/ScoringResultHObj.Model';
+import { NapAppModel } from 'app/shared/model/NapApp.Model';
 
 @Component({
   selector: 'app-credit-review-main',
@@ -24,7 +25,6 @@ export class CreditReviewMainComponent implements OnInit {
   apvBaseUrl = environment.ApprovalR3Url;
   indentifierReason;
   indentifierApprover;
-  TaskId: number = 0;
   ReturnHandlingHId: number = 0;
   ReturnHandlingDId: number = 0;
 
@@ -37,11 +37,9 @@ export class CreditReviewMainComponent implements OnInit {
   constructor(
     private route: ActivatedRoute, 
     private http: HttpClient, 
-    private fb: FormBuilder,
-    private toastr: NGXToastrService) { 
+    private fb: FormBuilder) { 
       this.route.queryParams.subscribe(params => {
         this.appId = params["AppId"];
-        this.TaskId =params["TaskId"];
         if (params["WfTaskListId"] != null) {
           this.wfTaskListId = params["WfTaskListId"];
         }
@@ -63,13 +61,6 @@ export class CreditReviewMainComponent implements OnInit {
   InitData(){
     this.DDLRecommendation = new Array();
     this.DDLReasonReturn = new Array();
-    this.AppStep = {
-      "CUST": 0,
-      "APP": 1,
-      "FRD": 2,
-      "DEVC": 3,
-      "APV": 4,
-    };
     this.AppStepIndex = 0;
     this.CustTypeCode = "";
     this.Arr = this.FormObj.get('arr') as FormArray;
@@ -81,8 +72,14 @@ export class CreditReviewMainComponent implements OnInit {
   }
 
   viewProdMainInfoObj;
-  AppStepIndex;
-  AppStep;
+  AppStepIndex: number = 0;
+  AppStep = {
+    "CUST": 0,
+    "APP": 1,
+    "FRD": 2,
+    "DEVC": 3,
+    "APV": 4,
+  };
   CustTypeCode;
   Arr;
   UserAccess;
@@ -95,7 +92,8 @@ export class CreditReviewMainComponent implements OnInit {
     console.log(JSON.parse(localStorage.getItem("UserAccess")));
     this.InitData();
     this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
-    await this.GetMouCustData();
+    await this.GetAppNo();
+    await this.GetAppCustData();
     await this.BindDDLRecommendation();
     await this.BindDDLReasonReturn();
     await this.BindCreditAnalysisItemFormObj();
@@ -103,7 +101,37 @@ export class CreditReviewMainComponent implements OnInit {
     await this.GetExistingCreditReviewData();
   }
 
-  async GetMouCustData(){
+  async GetAppNo(){
+    var obj = { AppId: this.appId };
+    await this.http.post<NapAppModel>(AdInsConstant.GetAppById, obj).toPromise().then(
+      (response) => {
+        console.log(response);
+        if(response != undefined)
+          this.GetCreditScoring(response["AppNo"]);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  GetCreditScoring(appNo: string){
+    var obj = { ScoringResultH: { TrxSourceNo: appNo } };
+    this.http.post(AdInsConstant.GetLatestScoringResultHByTrxSourceNo, obj).toPromise().then(
+      (response) => {
+        console.log(response);
+        var ScoringResult: ScoringResultHObj = response["ScoringResultHObj"];
+        this.FormObj.patchValue({
+          CreditScoring: ScoringResult.ScoringValue
+        });
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  async GetAppCustData(){
     var obj = {
       AppId: this.appId,
       RowVersion: ""
@@ -164,11 +192,13 @@ export class CreditReviewMainComponent implements OnInit {
       (response) => {
         console.log(response);  
         this.ResponseExistCreditReview = response["appCrdRvwHObj"];
-        for(var i=0;i<this.ResponseExistCreditReview.appCrdRvwDObjs.length;i++){
-          var idx = this.Arr.value.indexOf(this.Arr.value.find(x => x.QuestionCode == this.ResponseExistCreditReview.appCrdRvwDObjs[i].MrAnalysisItemCode));
-          this.Arr.controls[idx].patchValue({
-            Answer: this.ResponseExistCreditReview.appCrdRvwDObjs[i].AnalysisResult
-          });
+        if(this.ResponseExistCreditReview.appCrdRvwDObjs!=null){
+          for(var i=0;i<this.ResponseExistCreditReview.appCrdRvwDObjs.length;i++){
+            var idx = this.Arr.value.indexOf(this.Arr.value.find(x => x.QuestionCode == this.ResponseExistCreditReview.appCrdRvwDObjs[i].MrAnalysisItemCode));
+            this.Arr.controls[idx].patchValue({
+              Answer: this.ResponseExistCreditReview.appCrdRvwDObjs[i].AnalysisResult
+            });
+          }
         }
       },
       (error) => {
@@ -267,7 +297,7 @@ export class CreditReviewMainComponent implements OnInit {
       ApprovedById: temp.Approver,
       Reason: temp.Reason,
       Notes: temp.Notes,
-      WfTaskListId: this.TaskId,
+      WfTaskListId: this.wfTaskListId,
       RowVersion: ""
     }
     console.log(apiObj);
@@ -308,8 +338,9 @@ export class CreditReviewMainComponent implements OnInit {
       var temp = new AppCrdRvwDObj();
       temp.MrAnalysisItemCode = objArr[i].QuestionCode;
       temp.AnalysisResult = objArr[i].Answer;
-      if(this.ResponseExistCreditReview != null){
+      if(this.ResponseExistCreditReview.appCrdRvwDObjs != null){
         var idx = this.ResponseExistCreditReview.appCrdRvwDObjs.indexOf(this.ResponseExistCreditReview.appCrdRvwDObjs.find(x => x.MrAnalysisItemCode == objArr[i].QuestionCode));
+        temp.AppCrdRvwDId = this.ResponseExistCreditReview.appCrdRvwDObjs[idx].AppCrdRvwDId;
         temp.RowVersion = this.ResponseExistCreditReview.appCrdRvwDObjs[idx].RowVersion;
       }
       AppCrdRvwDObjs.push(temp);
@@ -355,7 +386,7 @@ export class CreditReviewMainComponent implements OnInit {
     wfClaimObj.pUserID = currentUserContext["UserName"];
 
     this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
+      () => {
     
       });
   }
