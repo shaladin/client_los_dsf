@@ -108,12 +108,8 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   async SaveForm() {
     var BizTemplateCode = localStorage.getItem("BizTemplateCode")
     if (this.isReturnHandling == false) {
-      var reqObj = {
-        WFTaskId: this.wfTaskListId,
-        isReturn: (this.ReturnHandlingForm.controls['IsAnyUpdate'].value == 'YES') ? true : false,
-        AppId: this.appId
-      };
-      this.http.post(AdInsConstant.CompleteAppPhoneVerif, reqObj).subscribe(
+      this.setReturnHandlingH();
+      this.http.post(AdInsConstant.CompleteAppPhoneVerif, this.ReturnHandlingHData).subscribe(
         (response) => {
 
           this.toastr.successMessage(response["message"]);
@@ -159,6 +155,8 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     this.ReturnHandlingHData.ReturnBy = localStorage.getItem("Username");
     this.ReturnHandlingHData.ReturnNotes = this.ReturnHandlingForm.controls.UpdateNotes.value;
     this.ReturnHandlingHData.ReturnFromTrxType = "PHN";
+    this.ReturnHandlingHData.WfTaskListId = this.wfTaskListId;
+    this.ReturnHandlingHData.IsReturn = (this.ReturnHandlingForm.controls['IsAnyUpdate'].value == 'YES') ? true : false;
   }
 
   async GetAppData() {
