@@ -108,20 +108,9 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   async SaveForm() {
     var BizTemplateCode = localStorage.getItem("BizTemplateCode")
     if (this.isReturnHandling == false) {
-      if (this.ReturnHandlingForm.controls.IsAnyUpdate.value == 'YES') {
-        this.setReturnHandlingH();
-        await this.http.post(AdInsConstant.AddReturnHandlingFromPhoneVerif, this.ReturnHandlingHData).toPromise().then(
-          (response) => {
-
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
-      }
       var reqObj = {
         WFTaskId: this.wfTaskListId,
-        isReturnHandling: this.isReturnHandling,
+        isReturn: (this.ReturnHandlingForm.controls['IsAnyUpdate'].value == 'YES') ? true : false,
         AppId: this.appId
       };
       this.http.post(AdInsConstant.CompleteAppPhoneVerif, reqObj).subscribe(
