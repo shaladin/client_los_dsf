@@ -76,11 +76,12 @@ export class CreditInvestigationDetailComponent implements OnInit {
     }
 
     reqAppCrdInvstg.WfTaskListId = this.wfTaskListId;
+    var lobCode = localStorage.getItem("BizTemplateCode");
     this.http.post(AdInsConstant.AddAppCrdInvstg, reqAppCrdInvstg).subscribe(
       (response) => {
         console.log(response);
-        this.toastr.successMessage(response["message"]);
-        this.router.navigate(["../Paging"]);
+        this.toastr.successMessage(response["message"]);       
+        this.router.navigate(["/Nap/CreditProcess/CreditInvestigation/Paging"], { queryParams: { BizTemplateCode: lobCode } })
       },
       (error) => {
         console.log(error);
@@ -128,5 +129,9 @@ export class CreditInvestigationDetailComponent implements OnInit {
       (response) => {
     
       });
+  }
+  Back() {
+    var lobCode = localStorage.getItem("BizTemplateCode");
+    this.router.navigate(["/Nap/CreditProcess/CreditInvestigation/Paging"], { queryParams: { BizTemplateCode: lobCode } })
   }
 }
