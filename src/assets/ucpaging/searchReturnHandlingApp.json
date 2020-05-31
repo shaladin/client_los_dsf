@@ -163,7 +163,7 @@
                 ],
                 "result": {
                   "type": "url",
-                  "path": "../Detail",
+                  "path": "/Nap/ConsumerFinance/InputNap/Add/Detail",
                   "icon": "ft-edit-2",
                   "param": [
                     {
@@ -193,7 +193,7 @@
                 ],
                 "result": {
                   "type": "url",
-                  "path": "../Detail",
+                  "path": "/Nap/ConsumerFinance/InputNap/Add/Detail",
                   "icon": "ft-edit-2",
                   "param": [
                     {
