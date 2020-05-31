@@ -12,18 +12,19 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class CreditReviewPagingComponent implements OnInit {
   BizTemplateCode: string;
-  constructor(private route: ActivatedRoute) { 
+  inputPagingObj: UcPagingObj = new UcPagingObj();
+  arrCrit: Array<any> = new Array();
+
+  constructor(private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
-      if (params['BizTemplateCode'] != null) {
-        this.BizTemplateCode = params['BizTemplateCode'];
+      if (params["BizTemplateCode"] != null) {
+        this.BizTemplateCode = params["BizTemplateCode"];
         localStorage.setItem("BizTemplateCode", this.BizTemplateCode);
       }
     });
   }
   
-  inputPagingObj;
   ngOnInit() {
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url="./assets/ucpaging/searchCreditReview.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;

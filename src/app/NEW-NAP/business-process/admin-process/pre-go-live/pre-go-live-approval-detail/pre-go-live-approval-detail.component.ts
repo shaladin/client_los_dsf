@@ -51,14 +51,17 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
 
   });
   AppId: any;
+  AgrmntId: any;
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
+      this.AgrmntId = params["AgrmntId"];
+      this.AppId = params["AppId"];
       this.TrxNo = params["TrxNo"];
       var obj = {
         taskId: params["TaskId"],
         instanceId: params["InstanceId"],
-        approvalBaseUrl: "http://r3app-server/APPROVAL"
+        approvalBaseUrl: environment.ApprovalR3Url
       }
 
       this.inputObj = obj;
@@ -225,5 +228,12 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   }
   ToCust(){
     this.router.navigate(["/Nap/AdminProcess/PreGoLive/Approval/Detail"], { queryParams: { "CustNo": this.CustNo } });
+  }
+  onAvailableNextTask() {
+
+  }
+  onApprovalSubmited() {
+    this.toastr.successMessage("Success");
+    this.router.navigate(["/Nap/AdminProcess/PreGoLive/Approval/Paging"]);
   }
 }

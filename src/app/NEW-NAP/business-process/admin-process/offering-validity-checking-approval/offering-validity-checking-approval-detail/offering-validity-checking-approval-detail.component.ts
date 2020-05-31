@@ -18,7 +18,7 @@ export class OfferingValidityCheckingApprovalDetailComponent implements OnInit {
       var obj = {
         taskId: params["TaskId"],
         instanceId: params["InstanceId"],
-        approvalBaseUrl: "http://r3app-server/APPROVAL"
+        approvalBaseUrl: environment.ApprovalR3Url
       }
 
       this.inputObj = obj;
