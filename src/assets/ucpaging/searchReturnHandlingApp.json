@@ -1,173 +1,221 @@
 {
-    "title": " Return Handling - Edit Application Data",
+    "title": "Return Handling - Edit Application",
     "exportExcel": false,
     "component": [
-        {
-            "type": "textbox",
-            "name": "a.APP_NO",
-            "id": "AppNoId",
-            "value": "",
-            "label": "Application No",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type": "textbox",
-            "name": "ac.CUST_NAME",
-            "id": "CustNameId",
-            "value": "",
-            "label": "Customer Name",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type": "dropdown",
-            "name": "a.ORI_OFFICE_CODE",
-            "id": "OfficeNameId",
-            "value": "Office",
-            "placeholder": "Placeholder",
-            "isFromURL": true,
-            "isSelectOne": false,
-            "url": "http://r3app-server.ad-ins.com/Foundation_R3/RefOffice/GetListKvpActiveRefOfficeForPaging",
-            "label": "Office",
-            "items": [],
-            "itemsUrl": []
-        },
-        {
-            "type": "textbox",
-            "name": "a.PROD_OFFERING_NAME",
-            "id": "ProdOfferingNameId",
-            "value": "",
-            "label": "Product Offering Name",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type": "textbox",
-            "name": "vwtl.USERNAME",
-            "id": "ClaimById",
-            "value": "",
-            "label": "Task Claim By",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type": "dropdown",
-            "name": "vwtl.CLAIM_STAT",
-            "id": "ClaimStatId",
-            "value": "ClaimStat",
-            "placeholder": "Placeholder",
-            "isFromURL": false,
-            "isSelectOne": false,
-            "url": "",
-            "label": "Claim Status",
-            "items": [
-                {
-                    "key" : "CLAIMED",
-                    "value" : "Claimed"
-                },
-                {
-                    "key" : "UNCLAIMED",
-                    "value" : "Un-Claimed"
-                }
-            ],
-            "itemsUrl": []
-        }
+      {
+        "type": "textbox",
+        "name": "A.APP_NO",
+        "id": "AppNoId",
+        "value": "",
+        "label": "Application No",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "AC.CUST_NAME",
+        "id": "CustNameId",
+        "value": "",
+        "label": "Customer Name",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "A.PROD_OFFERING_NAME",
+        "id": "ProdOfferingNameId",
+        "value": "",
+        "label": "Product Offering Name",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "dropdown",
+        "name": "a.ORI_OFFICE_CODE",
+        "id": "OfficeNameId",
+        "value": "Office",
+        "placeholder": "Placeholder",
+        "isFromURL": true,
+        "isSelectOne": false,
+        "url": "http://r3app-server.ad-ins.com/Foundation_R3/RefOffice/GetListKvpActiveRefOfficeForPaging",
+        "label": "Office",
+        "items": [],
+        "itemsUrl": []
+      },
+      {
+        "type": "dropdown",
+        "name": "WTL.CLAIM_STAT",
+        "id": "ActiveStatusId",
+        "label": "TASK CLAIM STATUS",
+        "value": "",
+        "placeholder": "Placeholder",
+        "isFromURL": false,
+        "isSelectOne": false,
+        "items": [
+          {
+            "key": "CLAIMED",
+            "value": "CLAIMED"
+          },
+          {
+            "key": "UNCLAIMED",
+            "value": "UNCLAIMED"
+          }
+        ],
+        "itemsUrl": []
+      },
+      {
+        "type": "textbox",
+        "name": "WTL.USERNAME",
+        "id": "claimById",
+        "value": "",
+        "label": "CLAIM BY",
+        "placeholder": "Placeholder"
+      }
     ],
     "headerList": [
-        {
-            "type": "sort",
-            "position": "left",
-            "label": "Claim By",
-            "name": "vwtl.USERNAME"
-        },
-        {
-            "type": "sort",
-            "position": "left",
-            "label": "Office",
-            "name": "a.ORI_OFFICE_NAME"
-        },
-        {
-            "type": "sort",
-            "position": "center",
-            "label": "Application No",
-            "name": "a.APP_NO"
-        },
-        {
-            "type": "sort",
-            "position": "center",
-            "label": "Customer Name",
-            "name": "ac.CUST_NAME"
-        },
-        {
-            "type": "sort",
-            "position": "center",
-            "label": "Product Offering Name",
-            "name": "a.PROD_OFFERING_NAME"
-        },
-        {
-            "type": "sort",
-            "position": "center",
-            "label": "Status",
-            "name": "vwtl.CLAIM_STAT"
-        },
-        {
-            "type": "label",
-            "position": "center",
-            "label": "Action"
-        }
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Claim By",
+        "name": "ClaimBy"
+      },
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Office",
+        "name": "a.ORI_OFFICE_NAME"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Application No",
+        "name": "a.APP_NO"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Customer Name",
+        "name": "ac.CUST_NAME"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Product Offering Name",
+        "name": "a.PROD_OFFERING_NAME"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Action"
+      }
     ],
     "querystring": {
-        "select": "SELECT vwtl.USERNAME AS ClaimBy, a.ORI_OFFICE_NAME AS OfficeName, a.ORI_OFFICE_CODE AS OfficeCode, a.APP_NO AS AppNo, ac.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.APP_ID AS AppId, vwtl.CLAIM_STAT AS ClaimStat",
-        "from": "FROM dbo.APP a WITH(NOLOCK) LEFT JOIN dbo.APP_CUST ac WITH(NOLOCK) ON a.APP_ID = ac.APP_ID JOIN dbo.V_WF_TASK_LIST vwtl WITH(NOLOCK) ON a.APP_NO = vwtl.TRANSACTION_CODE",
-        "where": "WHERE vwtl.WF_CODE = 'RTN_EDIT_APP'"
+      "select": "SELECT a.ORI_OFFICE_NAME AS OfficeName, a.ORI_OFFICE_CODE AS OfficeCode, a.APP_NO AS AppNo, ac.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.APP_ID AS AppId, WTL.USERNAME AS ClaimBy, WTL.WF_TASK_LIST_ID AS WfTaskListId, rhh.RETURN_HANDLING_H_ID as ReturnHandlingHId",
+      "from": "FROM dbo.APP a WITH ( NOLOCK ) LEFT JOIN dbo.APP_CUST ac WITH ( NOLOCK ) ON a.APP_ID = ac.APP_ID JOIN [dbo].[V_WF_TASK_LIST] WTL WITH ( NOLOCK ) ON a.APP_NO = WTL.TRANSACTION_CODE JOIN [dbo].[V_REF_OFFICE] vro WITH ( NOLOCK ) ON a.ORI_OFFICE_CODE = vro.OFFICE_CODE  JOIN [dbo].RETURN_HANDLING_H rhh WITH ( NOLOCK ) on a.APP_ID = rhh.APP_ID",
+      "where": "WHERE WTL.END_EXECUTING_DATE IS NULL AND a.IS_APP_INIT_DONE = '1'"
     },
     "bodyList": [
-        {
-            "type": "text",
-            "position": "left",
-            "property": "ClaimBy"
-        },
-        {
-            "type": "text",
-            "position": "left",
-            "property": "OfficeName"
-        },
-        {
-            "type": "text",
-            "position": "center",
-            "property": "AppNo"
-        },
-        {
-            "type": "text",
-            "position": "center",
-            "property": "CustName"
-        },
-        {
-            "type": "text",
-            "position": "center",
-            "property": "ProdOfferingName"
-        },
-        {
-            "type": "text",
-            "position": "center",
-            "property": "ClaimStat"
-        },
-        {
-            "type": "action",
-            "position": "center",
-            "action": [
-                {
-                    "type": "edit",
-                    "path": "../../../ConsumerFinance/InputNap/Add/Detail",
-                    "param": [
-                        {
-                            "type": "AppId",
-                            "property": "AppId"
-                        },
-                        {
-                            "type": "Mode",
-                            "property": "ReturnHandling"
-                        }
-                    ]
-                }
+      {
+        "type": "text",
+        "position": "left",
+        "property": "ClaimBy"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "OfficeName"
+      },
+      {
+        "type": "link",
+        "position": "center",
+        "property": "AppNo",
+        "target": "_blank",
+        "path": "/Nap/View/AppView",
+        "param": [
+          {
+            "type": "AppId",
+            "property": "AppId"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "CustName"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "ProdOfferingName"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "switch",
+            "case": [
+              {
+                "conditions": [
+                  {
+                    "isUser": true,
+                    "property": "ClaimBy",
+                    "value": "",
+                    "restriction": "EQ"
+                  }
+                ],
+                "result": {
+                  "type": "url",
+                  "path": "../Detail",
+                  "icon": "ft-edit-2",
+                  "param": [
+                    {
+                      "type": "AppId",
+                      "property": "AppId"
+                    },
+                    {
+                      "type": "WfTaskListId",
+                      "property": "WfTaskListId"
+                    },
+                    {
+                        "type":"ReturnHandlingHId",
+                        "property":"ReturnHandlingHId"
+                    }
+                  ]
+                },
+                "isHide": false
+              },
+              {
+                "conditions": [
+                  {
+                    "isUser": false,
+                    "property": "ClaimBy",
+                    "value": "",
+                    "restriction": "EQ"
+                  }
+                ],
+                "result": {
+                  "type": "url",
+                  "path": "../Detail",
+                  "icon": "ft-edit-2",
+                  "param": [
+                    {
+                      "type": "AppId",
+                      "property": "AppId"
+                    },
+                    {
+                      "type": "WfTaskListId",
+                      "property": "WfTaskListId"
+                    },
+                    {
+                        "type":"ReturnHandlingHId",
+                        "property":"ReturnHandlingHId"
+                    }
+                  ]
+                },
+                "isHide": false
+              }
             ]
-        }
+          }
+        ]
+      }
     ]
-}
+  }
+  
