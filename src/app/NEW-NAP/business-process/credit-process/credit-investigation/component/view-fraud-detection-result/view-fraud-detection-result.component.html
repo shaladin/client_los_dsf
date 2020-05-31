@@ -6,7 +6,7 @@
     <label class="col-md-3 adInsLabel">Customer No</label>
     <label class="col-md-3 adInsLabel">{{appCustObj.CustNo}} ({{custStat}})</label>
   </div>
-  <table *ngIf="listCustDuplicate?.length > 0" class="table table-responsive-md text-center table-hover">
+  <table class="table table-responsive-md text-center table-hover">
     <thead>
       <tr class="table-header">
         <th><span class="thead-header" (click)="searchSort($event)" name='custNo' translate>Customer No</span>
@@ -33,6 +33,9 @@
       </tr>
     </thead>
     <tbody>
+      <tr *ngIf="listCustDuplicate?.length == 0">
+        <td align="center" colspan="10">No data found</td>
+      </tr>
       <tr *ngFor="let item of listCustDuplicate">
         <td>{{item.CustNo}}</td>
         <td>{{item.CustName}}</td>
@@ -55,7 +58,7 @@
 <lib-ucSubsection [id]="'NegCustId'" [title]="'Negative Customer'" [panel]="'NegCust'">
 </lib-ucSubsection>
 <div class="form-body" id="NegCust">
-  <table *ngIf="listNegativeCust?.length > 0" class="table table-responsive-md text-center table-hover">
+  <table class="table table-responsive-md text-center table-hover">
     <thead>
       <tr class="table-header">
         <th><span class="thead-header" (click)="searchSort($event)" name='custNo' translate>Customer No</span>
@@ -86,6 +89,9 @@
       </tr>
     </thead>
     <tbody>
+      <tr *ngIf="listNegativeCust?.length == 0">
+        <td align="center" colspan="12">No data found</td>
+      </tr>
       <tr *ngFor="let item of listNegativeCust">
         <td>{{item.CustNo}}</td>
         <td>{{item.CustName}}</td>
