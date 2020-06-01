@@ -78,7 +78,8 @@ export class CommissionReservedFundDetailComponent implements OnInit {
       this.AllAppReservedFundObj = allAppReservedFundObj;
     }
     else {
-      this.router.navigate(["/Nap/CreditProcess/CommissionReservedFund/Paging"], { queryParams: { BizTemplateCode: "CF4W" } })
+      var lobCode = localStorage.getItem("BizTemplateCode");
+      this.router.navigate(["/Nap/CreditProcess/CommissionReservedFund/Paging"], { queryParams: { BizTemplateCode: lobCode } })
     }
   }
 
@@ -92,11 +93,11 @@ export class CommissionReservedFundDetailComponent implements OnInit {
     var workflowApiObj = new WorkflowApiObj();
     workflowApiObj.TaskListId = this.AllAppReservedFundObj.WfTaskIdListId;
     workflowApiObj.ListValue["pBookmarkValue"] = this.AllAppReservedFundObj.ReturnHandlingExecNotes;
-
+    var lobCode = localStorage.getItem("BizTemplateCode");
     this.http.post(AdInsConstant.ResumeWorkflow, workflowApiObj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["/Nap/AdditionalProcess/ReturnHandling/CommissionReservedFund/Paging"], { queryParams: { BizTemplateCode: "CF4W" } })
+        this.router.navigate(["/Nap/AdditionalProcess/ReturnHandling/CommissionReservedFund/Paging"], { queryParams: { BizTemplateCode: lobCode } })
       },
       error => {
         console.log(error);
@@ -107,10 +108,11 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   Back() {
     // console.log("test back commReserveFund");
     // console.log(this.ReturnHandlingHObj);
+    var lobCode = localStorage.getItem("BizTemplateCode");
     if (this.ReturnHandlingHObj.ReturnHandlingHId != undefined) {
-      this.router.navigate(["/Nap/AdditionalProcess/ReturnHandling/CommissionReservedFund/Paging"], { queryParams: { BizTemplateCode: "CF4W" } })
+      this.router.navigate(["/Nap/AdditionalProcess/ReturnHandling/CommissionReservedFund/Paging"], { queryParams: { BizTemplateCode: lobCode } })
     } else {
-      this.router.navigate(["/Nap/CreditProcess/CommissionReservedFund/Paging"], { queryParams: { BizTemplateCode: "CF4W" } })
+      this.router.navigate(["/Nap/CreditProcess/CommissionReservedFund/Paging"], { queryParams: { BizTemplateCode: lobCode } })
     }
   }
 }

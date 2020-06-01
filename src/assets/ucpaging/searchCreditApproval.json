@@ -1,5 +1,5 @@
 {
-    "title": "Return Handling - Edit Application",
+    "title": "Credit Approval",
     "exportExcel": false,
     "component": [
       {
@@ -40,29 +40,8 @@
         "itemsUrl": []
       },
       {
-        "type": "dropdown",
-        "name": "WTL.CLAIM_STAT",
-        "id": "ActiveStatusId",
-        "label": "TASK CLAIM STATUS",
-        "value": "",
-        "placeholder": "Placeholder",
-        "isFromURL": false,
-        "isSelectOne": false,
-        "items": [
-          {
-            "key": "CLAIMED",
-            "value": "CLAIMED"
-          },
-          {
-            "key": "UNCLAIMED",
-            "value": "UNCLAIMED"
-          }
-        ],
-        "itemsUrl": []
-      },
-      {
         "type": "textbox",
-        "name": "WTL.USERNAME",
+        "name": "ATL.CURRENT_USER_ID",
         "id": "claimById",
         "value": "",
         "label": "CLAIM BY",
@@ -107,9 +86,9 @@
       }
     ],
     "querystring": {
-      "select": "SELECT a.ORI_OFFICE_NAME AS OfficeName, a.ORI_OFFICE_CODE AS OfficeCode, a.APP_NO AS AppNo, ac.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.APP_ID AS AppId, WTL.USERNAME AS ClaimBy, WTL.WF_TASK_LIST_ID AS WfTaskListId, rhh.RETURN_HANDLING_H_ID as ReturnHandlingHId",
-      "from": "FROM dbo.APP a WITH ( NOLOCK ) LEFT JOIN dbo.APP_CUST ac WITH ( NOLOCK ) ON a.APP_ID = ac.APP_ID JOIN [dbo].[V_WF_TASK_LIST] WTL WITH ( NOLOCK ) ON a.APP_NO = WTL.TRANSACTION_CODE JOIN [dbo].[V_REF_OFFICE] vro WITH ( NOLOCK ) ON a.ORI_OFFICE_CODE = vro.OFFICE_CODE  JOIN [dbo].RETURN_HANDLING_H rhh WITH ( NOLOCK ) on a.APP_ID = rhh.APP_ID",
-      "where": "WHERE WTL.END_EXECUTING_DATE IS NULL AND a.IS_APP_INIT_DONE = '1'"
+      "select": "SELECT a.ORI_OFFICE_NAME AS OfficeName, a.ORI_OFFICE_CODE AS OfficeCode, a.APP_NO AS AppNo, ac.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.APP_ID AS AppId, ATL.CURRENT_USER_ID AS ClaimBy, ATL.INSTANCE_ID AS InstanceId, ATL.TASK_ID AS TaskId, vro.IS_ALLOW_APP_CREATED AS IsAllowAppCreated",
+      "from": "FROM dbo.APP a WITH ( NOLOCK ) LEFT JOIN dbo.APP_CUST ac WITH ( NOLOCK ) ON a.APP_ID = ac.APP_ID JOIN [dbo].[V_APV_TASK_LIST] ATL WITH ( NOLOCK ) ON a.APP_NO = ATL.TRX_NO  AND ATL.CATEGORY_CODE = 'CRD_APV' JOIN [dbo].[V_REF_LOB] RL WITH ( NOLOCK ) ON a.LOB_CODE = RL.LOB_CODE JOIN [dbo].[V_REF_OFFICE] vro WITH ( NOLOCK ) ON a.ORI_OFFICE_CODE = vro.OFFICE_CODE ",
+      "where": "WHERE a.IS_APP_INIT_DONE = '1'"
     },
     "bodyList": [
       {
@@ -163,7 +142,7 @@
                 ],
                 "result": {
                   "type": "url",
-                  "path": "/Nap/ConsumerFinance/InputNap/Add/Detail",
+                  "path": "/Nap/CreditProcess/CreditApproval/Detail",
                   "icon": "ft-edit-2",
                   "param": [
                     {
@@ -171,12 +150,12 @@
                       "property": "AppId"
                     },
                     {
-                      "type": "WfTaskListId",
-                      "property": "WfTaskListId"
+                      "type": "TaskId",
+                      "property": "TaskId"
                     },
                     {
-                        "type":"ReturnHandlingHId",
-                        "property":"ReturnHandlingHId"
+                      "type": "InstanceId",
+                      "property": "InstanceId"
                     }
                   ]
                 },
@@ -193,7 +172,7 @@
                 ],
                 "result": {
                   "type": "url",
-                  "path": "/Nap/ConsumerFinance/InputNap/Add/Detail",
+                  "path": "/Nap/CreditProcess/CreditApproval/Detail",
                   "icon": "ft-edit-2",
                   "param": [
                     {
@@ -201,12 +180,12 @@
                       "property": "AppId"
                     },
                     {
-                      "type": "WfTaskListId",
-                      "property": "WfTaskListId"
+                      "type": "TaskId",
+                      "property": "TaskId"
                     },
                     {
-                        "type":"ReturnHandlingHId",
-                        "property":"ReturnHandlingHId"
+                      "type": "InstanceId",
+                      "property": "InstanceId"
                     }
                   ]
                 },

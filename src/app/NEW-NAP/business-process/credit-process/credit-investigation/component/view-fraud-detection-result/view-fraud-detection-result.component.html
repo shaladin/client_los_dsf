@@ -1,4 +1,4 @@
-<div class="px-3">
+<div class="card px-3">
 <lib-ucSubsection [id]="'CustDupCheckId'" [title]="'Customer Duplicate Checking'" [panel]="'CustDupCheck'">
 </lib-ucSubsection>
 <div class="form-body" id="CustDupCheck">
@@ -6,7 +6,7 @@
     <label class="col-md-3 adInsLabel">Customer No</label>
     <label class="col-md-3 adInsLabel">{{appCustObj.CustNo}} ({{custStat}})</label>
   </div>
-  <table *ngIf="listCustDuplicate?.length > 0" class="table table-responsive-md text-center table-hover">
+  <table class="table table-responsive-md text-center table-hover">
     <thead>
       <tr class="table-header">
         <th><span class="thead-header" (click)="searchSort($event)" name='custNo' translate>Customer No</span>
@@ -33,6 +33,9 @@
       </tr>
     </thead>
     <tbody>
+      <tr *ngIf="listCustDuplicate?.length == 0">
+        <td align="center" colspan="10">No data found</td>
+      </tr>
       <tr *ngFor="let item of listCustDuplicate">
         <td>{{item.CustNo}}</td>
         <td>{{item.CustName}}</td>
@@ -51,11 +54,11 @@
 </div>
 </div>
 
-<div class="px-3">
+<div class="card px-3">
 <lib-ucSubsection [id]="'NegCustId'" [title]="'Negative Customer'" [panel]="'NegCust'">
 </lib-ucSubsection>
 <div class="form-body" id="NegCust">
-  <table *ngIf="listNegativeCust?.length > 0" class="table table-responsive-md text-center table-hover">
+  <table class="table table-responsive-md text-center table-hover">
     <thead>
       <tr class="table-header">
         <th><span class="thead-header" (click)="searchSort($event)" name='custNo' translate>Customer No</span>
@@ -86,20 +89,23 @@
       </tr>
     </thead>
     <tbody>
+      <tr *ngIf="listNegativeCust?.length == 0">
+        <td align="center" colspan="12">No data found</td>
+      </tr>
       <tr *ngFor="let item of listNegativeCust">
         <td>{{item.CustNo}}</td>
         <td>{{item.CustName}}</td>
-        <td>{{item.IdType}}</td>
+        <td>{{item.MrIdTypeCode}}</td>
         <td>{{item.IdNo}}</td>
         <td>{{item.BirthDt}}</td>
-        <td>{{item.MobilePhoneNo1}}</td>
+        <td>{{item.MobilePhnNo1}}</td>
         <td>{{item.MotherMaidenName}}</td>
         <td>{{item.TaxIdNo}}</td>
-        <td>{{item.NegativeStat}}</td>
-        <td>{{item.NegativeSrc}}</td>
+        <td>{{item.MrNegCustType}}</td>
+        <td>{{item.MrNegCustSource}}</td>
         <td>{{item.DuplicateItem}}</td>
-        <td *ngIf="item.IsSelected == '1'">Selected</td>
-        <td *ngIf="item.IsSelected == '0'"></td>
+        <td *ngIf="item.IsSelected">Selected</td>
+        <td *ngIf="!item.IsSelected">Not Selected</td>
       </tr>
     </tbody>
   </table>
@@ -108,7 +114,7 @@
 
 <app-view-survey-task-list *ngIf="isDataAlreadyLoaded" [trxRefNo]="trxRefNo" [mrSrvySourceCode]="mrSrvySourceCode"></app-view-survey-task-list>
 
-<div class="px-3" *ngIf="mrCustTypeCode == 'PERSONAL'">
+<div class="card px-3" *ngIf="mrCustTypeCode == 'PERSONAL'">
 <lib-ucSubsection [id]="'DukId'" [title]="'Dukcapil'" [panel]="'Duk'">
 </lib-ucSubsection>
 <div class="form-body" id="Duk">
@@ -152,7 +158,7 @@
 <lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true" [viewInput]="viewDukcapilObj" [whereValue]="arrValue"></lib-ucviewgeneric>
 </ng-template>
 
-<div class="px-3">
+<div class="card px-3">
   <lib-ucSubsection [id]="'PefId'" [title]="'Pefindo'" [panel]="'Pef'">
   </lib-ucSubsection>
   <div class="form-body">
@@ -196,7 +202,7 @@
   </div>
 </div>
 
-<div class="px-3">
+<div class="card px-3">
 <lib-ucSubsection [id]="'NegAssetId'" [title]="'Negative Asset'" [panel]="'NegAsset'">
 </lib-ucSubsection>
 <div class="form-body" id="NegAsset">
@@ -231,7 +237,7 @@
   </table>
 </div>
 </div>
-<div class="px-3" *ngIf="isView == false">
+<div *ngIf="isView == false">
   <lib-ucviewgeneric [viewInput]="viewFraudVerifResultObj" [whereValue]="arrValue"></lib-ucviewgeneric>
 </div>
 

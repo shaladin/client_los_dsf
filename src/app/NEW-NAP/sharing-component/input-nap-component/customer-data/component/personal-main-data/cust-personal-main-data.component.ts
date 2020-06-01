@@ -163,8 +163,9 @@ export class CustPersonalMainDataComponent implements OnInit {
       });
       
       
-      this.selectedNationalityCountryCode = response["CustPersonalObj"].NationalityCountryCode;
-      this.setCountryName(response["CustPersonalObj"].NationalityCountryCode);
+      this.selectedNationalityCountryCode = response["CustPersonalObj"].WnaCountryCode;
+      this.setCountryName(response["CustPersonalObj"].WnaCountryCode);
+      this.ChangeNationality(response["CustPersonalObj"].MrNationalityCode);
       this.parentForm.controls[this.identifier]['controls']["BirthPlace"].disable();
       this.parentForm.controls[this.identifier]['controls']["BirthDt"].disable();
     }
@@ -193,13 +194,7 @@ export class CustPersonalMainDataComponent implements OnInit {
       (response) => {
         console.log(response);
         this.InputLookupCountryObj.nameSelect = response["CountryName"];
-        this.InputLookupCountryObj.jsonSelect = response;     
-        if(countryCode == "LOCAL"){
-          this.selectedNationalityCountryName = response["CountryName"];
-          this.isLocal = true;
-        }else{
-          this.isLocal = false
-        }
+        this.InputLookupCountryObj.jsonSelect = response;
       },
       (error) => {
         console.log(error);
@@ -251,6 +246,7 @@ export class CustPersonalMainDataComponent implements OnInit {
       
       this.selectedNationalityCountryCode = this.custDataPersonalObj.AppCustPersonalObj.NationalityCountryCode;
       this.setCountryName(this.custDataPersonalObj.AppCustPersonalObj.NationalityCountryCode);
+      this.ChangeNationality(this.custDataPersonalObj.AppCustPersonalObj.MrNationalityCode);
     }
   }
 
@@ -386,15 +382,15 @@ export class CustPersonalMainDataComponent implements OnInit {
 
   isLocal: boolean = false;
   selectedNationalityCountryName: string = "";
-  ChangeNationality(ev){
-    if(this.parentForm.controls[this.identifier]['controls'].MrNationalityCode.value == "LOCAL"){
-      console.log(this.parentForm);
-      console.log(this.identifier);
-      console.log(this.NationalityObj);
-      console.log(ev);
-      var idx = ev.target.selectedIndex - 1;
-      this.selectedNationalityCountryCode = this.NationalityObj[idx].ReserveField1;
-      this.selectedNationalityCountryName = this.NationalityObj[idx].ReserveField2;
+
+  NationalityChanged(event){
+    this.ChangeNationality(event.target.value);
+  }
+
+  ChangeNationality(mrNationalityCode){
+    if(mrNationalityCode == "LOCAL"){
+      this.selectedNationalityCountryCode = this.NationalityObj.find(x => x.MasterCode == mrNationalityCode).ReserveField1;
+      this.selectedNationalityCountryName = this.NationalityObj.find(x => x.MasterCode == mrNationalityCode).ReserveField2;
       this.isLocal = true;
     }else{
       this.isLocal = false;

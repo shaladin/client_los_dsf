@@ -79,6 +79,10 @@ export class ApplicationDataFactoringComponent implements OnInit {
     this.SalesAppInfoForm.controls.NumOfInst.disable();
   }
 
+  checkValue() {
+    console.log(this.SalesAppInfoForm);
+  }
+
   setDropdown() {
     this.refMasterInterestType.RefMasterTypeCode = 'INTEREST_TYPE';
     this.refMasterInsScheme.RefMasterTypeCode = 'INST_SCHM';
@@ -261,7 +265,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
         this.http.post(AdInsConstant.GetRefPayFreqByPayFreqCode, this.mouCustFctrObj).subscribe(
           (response) => {
             this.allPayFreq = response;
-            var PayFreqCode;
+            var PayFreqCode = null;
             if (this.mode == 'edit') {
               PayFreqCode = this.resultData.PayFreqCode
               this.SalesAppInfoForm.patchValue({
@@ -269,7 +273,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
               });
             }
             if (PayFreqCode == null){
-              PayFreqCode = this.allPayFreq.PayFreqCode;          
+              PayFreqCode = "BIMONTHLY"
               this.SalesAppInfoForm.patchValue({
                 PayFreqCode: PayFreqCode
               });

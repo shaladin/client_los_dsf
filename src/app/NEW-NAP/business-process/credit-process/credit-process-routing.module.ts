@@ -15,6 +15,7 @@ import { PhoneVerificationSubjectVerifComponent } from './phone-verification/pho
 import { PhoneVerificationSubjectViewComponent } from './phone-verification/phone-verification-subject-view/phone-verification-subject-view.component';
 import { CreditInquiryComponent } from './credit-inquiry/credit-inquiry.component';
 import { FraudVerificationMultiAssetComponent } from './fraud-verification-multi-asset/fraud-verification-multi-asset.component';
+import { CreditApprovalDetailComponent } from './credit-approval/credit-approval-detail/credit-approval-detail.component';
 
 const routes: Routes = [
   {
@@ -95,6 +96,13 @@ const routes: Routes = [
         component: CreditApprovalPagingComponent,
         data: {
           title: 'Credit Approval Paging'
+        }
+      },
+      {
+        path: 'CreditApproval/Detail',
+        component: CreditApprovalDetailComponent,
+        data: {
+          title: 'Credit Approval Detail'
         }
       },
       {
