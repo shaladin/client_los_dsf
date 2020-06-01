@@ -81,7 +81,7 @@
                 <div class="col-md-4">
                   <input type="date" class="form-control" id="dateIssued" formControlName="DocDt"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && LegalDocForm.controls.DocDt.invalid }">
-                  <lib-uc-show-errors [control]="LegalDocForm.controls.DocDt" [submit]="enjiForm.submitted" [fieldName]="dateErrorMessage"></lib-uc-show-errors>
+                  <lib-uc-show-errors [control]="LegalDocForm.controls.DocDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
               </div>
               <div class="form-group row">
@@ -95,7 +95,7 @@
                 <div class="col-md-4">
                   <input type="date" id="expDt" class="form-control" formControlName="DocExpiredDt"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && LegalDocForm.controls.DocExpiredDt.invalid }">
-                  <lib-uc-show-errors [control]="LegalDocForm.controls.DocExpiredDt" [submit]="enjiForm.submitted" [fieldName]="dateErrorMessage"></lib-uc-show-errors>
+                  <lib-uc-show-errors [control]="LegalDocForm.controls.DocExpiredDt" [submit]="enjiForm.submitted" ></lib-uc-show-errors>
                 </div>
               </div>
               <div class="form-group row">
