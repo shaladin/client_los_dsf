@@ -848,10 +848,6 @@ export class LeadInputLeadDataComponent implements OnInit {
 
     if (this.typePage == "edit" || this.typePage == "update") {
       if (this.resLeadAssetObj.LeadAssetId != 0) {
-        if (this.LeadDataForm.controls["ManufacturingYear"].value > this.year) {
-          this.toastr.errorMessage("Manufacturing Year must be lower or equal than current year.");
-          return;
-        }
         this.leadInputLeadDataObj = new LeadInputLeadDataObj();
         this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
         this.setLeadAsset();
