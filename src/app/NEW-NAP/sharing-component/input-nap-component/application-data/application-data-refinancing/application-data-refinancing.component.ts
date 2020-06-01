@@ -52,7 +52,7 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     CurrCode: [''],
     LobCode: [''],
     RefProdTypeCode: [''],
-    Tenor: ["", [Validators.pattern("^[0-9]+$"), Validators.required]],
+    Tenor: ["", [Validators.pattern("^[0-9]+$"), Validators.required, Validators.min(1)]],
     NumOfInst: ['1'],
     PayFreqCode: ['', Validators.required],
     MrFirstInstTypeCode: ["", Validators.required],
@@ -95,7 +95,7 @@ export class ApplicationDataRefinancingComponent implements OnInit {
   salesRecommendationItems = [];
   isInputLookupObj;
   ngOnInit() {
-    this.ListCrossAppObj["AppId"]=this.AppId;
+    this.ListCrossAppObj["appId"] = this.AppId;
     this.ListCrossAppObj["result"] = [];
     this.isInputLookupObj = false;
     console.log('test app data refinanc');
@@ -556,8 +556,8 @@ export class ApplicationDataRefinancingComponent implements OnInit {
   }
 
   AddTemp(contentCrossApp){
-    console.log("App Data Refinancing Form: " + JSON.stringify(this.NapAppModelForm.value));
-    console.log("Is Form Valid : " + this.NapAppModelForm.valid);
+    //console.log("App Data Refinancing Form: " + JSON.stringify(this.NapAppModelForm.value));
+    //console.log("Is Form Valid : " + this.NapAppModelForm.valid);
     this.Open(contentCrossApp);
   }
 
@@ -570,19 +570,21 @@ export class ApplicationDataRefinancingComponent implements OnInit {
   }
 
   DeleteCrossApp(idx){
-    if(this.resultCrossApp[idx].AppCrossId!=null){
-      var obj = new NapAppCrossObj();
-      obj = this.resultCrossApp[idx];
-      this.http.post(AdInsConstant.DeleteAppCross, obj).subscribe(
-        (response) =>{
-        },
-        (error) => {
-          console.log(error);
-        }
-      )
+    if (confirm('Are you sure to delete this record?')) {
+      if (this.resultCrossApp[idx].AppCrossId != null){
+        var obj = new NapAppCrossObj();
+        obj = this.resultCrossApp[idx];
+        this.http.post(AdInsConstant.DeleteAppCross, obj).subscribe(
+          (response) =>{
+          },
+          (error) => {
+            console.log(error);
+          }
+        )
+      }
+      this.resultCrossApp.splice(idx, 1);
+      this.ListCrossAppObj["result"].splice(idx, 1);
     }
-    this.resultCrossApp.splice(idx, 1);
-    this.ListCrossAppObj["result"].splice(idx, 1);
   }
 
 }
