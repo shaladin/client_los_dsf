@@ -278,8 +278,8 @@ export class FraudDetectionVerifComponent implements OnInit {
   }
 
   cancel(){
-    var BizTemplateCode = localStorage.getItem("BizTemplateCode")
-    this.router.navigate(["/Nap/CreditProcess/FraudDetection/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
+    var lobCode = localStorage.getItem("BizTemplateCode")
+    this.router.navigate(["/Nap/CreditProcess/FraudDetection/Paging"], { queryParams: { BizTemplateCode: lobCode } });
   }
 
   submit() {

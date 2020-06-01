@@ -5,7 +5,6 @@ import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { RFAPreGoLiveObj } from 'app/shared/model/RFAPreGoLiveObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-
 @Component({
   selector: 'app-sharing-pre-go-live-request-for-approval',
   templateUrl: './pre-go-live-request-for-approval.component.html',

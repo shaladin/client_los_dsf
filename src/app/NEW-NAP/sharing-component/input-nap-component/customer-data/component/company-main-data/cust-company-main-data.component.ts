@@ -207,7 +207,7 @@ export class CustCompanyMainDataComponent implements OnInit {
         this.InputLookupCustomerObj.urlEnviPaging = environment.FoundationR3Url;
         this.InputLookupCustomerObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
         this.InputLookupCustomerObj.genericJson = "./assets/uclookup/lookupCustomer.json";
-        if (this.AppObj.BizTemplateCode != AdInsConstant.LobCodeFCTR) {
+        if (this.AppObj.BizTemplateCode != AdInsConstant.FCTR) {
           this.InputLookupCustomerObj.isReadonly = false;
         }
         this.setCriteriaLookupCustomer(AdInsConstant.CustTypeCompany);

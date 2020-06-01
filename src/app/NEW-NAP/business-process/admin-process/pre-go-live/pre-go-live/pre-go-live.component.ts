@@ -66,14 +66,15 @@ export class PreGoLiveComponent implements OnInit {
       (response) => {
         this.result = response;
         this.ListRfaLogObj = response["ListRfaLogObj"];
+        console.log(this.ListRfaLogObj);
         for (let i = 0; i < this.ListRfaLogObj.length; i++) {
           this.listPreGoLiveAppvrObj[i] = {
             approvalBaseUrl: environment.ApprovalR3Url,
             type: 'task',
             refId: this.ListRfaLogObj[i].RfaNo
           };
-          console.log("asdasdasdasd123123123")
-          console.log(this.listPreGoLiveAppvrObj[i])
+          console.log("asdasdasdasd123123123");
+          console.log(this.listPreGoLiveAppvrObj[i]);
         }
 
       },
@@ -108,9 +109,14 @@ export class PreGoLiveComponent implements OnInit {
   }
   ReceiveIsChecked(ev) {
     this.IsCheckedAll = ev;
+    if(this.ListRfaLogObj.length!=0)
+    {
+      this.IsCheckedAll=true;
+    }
   }
 
   RFA() {
+    var preGlvObj = this.SaveForm();
     this.router.navigate(["/Nap/AdminProcess/PreGoLive/RequestApproval"], { queryParams: { "AgrmntId": this.AgrmntId, "AppId": this.AppId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId } });
   }
 
@@ -152,8 +158,6 @@ export class PreGoLiveComponent implements OnInit {
     this.PreGoLiveObj.rAppTcObj = this.listAppTCObj.AppTCObj;
     this.PreGoLiveObj.preGoLiveObj = this.PreGoLiveMainObj;
     this.PreGoLiveObj.TaskListId = this.TaskListId;
-
-    console.log(this.PreGoLiveObj);
 
     this.http.post(AdInsConstant.AddPreGoLive, this.PreGoLiveObj).subscribe(
       (response) => {

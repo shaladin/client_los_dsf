@@ -146,7 +146,7 @@
         <div class="form-group row">
           <label class="col-md-4" for="nationality" translate>Nationality</label>
           <div class="col-md-4">
-            <select class="form-control adInsInput" id="nationality" formControlName="MrNationalityCode" (change)="ChangeNationality($event)" >
+            <select class="form-control adInsInput" id="nationality" formControlName="MrNationalityCode" (change)="NationalityChanged($event)" >
               <option value="">-Select One-</option>
               <option *ngFor="let item of NationalityObj" [value]="item.MasterCode">
                 {{item.Descr}}

@@ -23,6 +23,7 @@ export class CustomerSelfVerificationComponent implements OnInit {
   viewLeadHeaderMainInfo : any;
   WfTaskListId: any;
   reason : string;
+  AppStepIndex :number =1;
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       this.LeadId = params["LeadId"];
@@ -66,11 +67,13 @@ export class CustomerSelfVerificationComponent implements OnInit {
     {
       this.isCustData = true;
       this.isLeadData = false;
+      this.AppStepIndex = 1;
     }
     else if (type == 'leadData')
     {
       this.isCustData = false;
       this.isLeadData = true;
+      this.AppStepIndex = 2;
     }
   }
 

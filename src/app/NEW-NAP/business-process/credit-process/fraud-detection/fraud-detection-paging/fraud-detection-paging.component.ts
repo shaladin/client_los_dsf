@@ -14,7 +14,6 @@ import { HttpClient } from '@angular/common/http';
 })
 export class FraudDetectionPagingComponent implements OnInit {
   inputPagingObj: any;
-  arrCrit: any;
   BizTemplateCode : string;
 
   constructor(private router: Router, private http: HttpClient,private route: ActivatedRoute) { 
@@ -33,20 +32,13 @@ export class FraudDetectionPagingComponent implements OnInit {
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchFraudDetection.json";
 
-    this.arrCrit = new Array();
-    var critObj = new CriteriaObj();
-    critObj.restriction = AdInsConstant.RestrictionLike;
-    critObj.propName = 'RL.BIZ_TMPLT_CODE';
-    critObj.value = this.BizTemplateCode;
-    this.arrCrit.push(critObj);
-
-    this.arrCrit = new Array();
+    var arrCrit = new Array();
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'WTL.ACT_CODE';
-    critObj.value = 'FRD_' + this.BizTemplateCode;
-    this.arrCrit.push(critObj);
-    this.inputPagingObj.addCritInput = this.arrCrit;
+    critObj.value = "FRD_"+this.BizTemplateCode;
+    arrCrit.push(critObj);
+    this.inputPagingObj.addCritInput = arrCrit;
   }
 
   ClaimTask(event){

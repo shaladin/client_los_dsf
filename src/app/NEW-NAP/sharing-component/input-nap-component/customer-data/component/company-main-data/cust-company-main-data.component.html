@@ -12,8 +12,10 @@
         <select class="form-control adInsInput" style="width: auto" formControlName="CustModelCode">
           <option value="">-Select One-</option>
           <option *ngFor="let item of CustModelObj" value="{{item.Key}}">
-            {{item.Value}} </option>
+            {{item.Value}} 
+          </option>
         </select>
+        <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].CustModelCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
       </div>
     </div>
     <div class="form-group row">

@@ -13,8 +13,8 @@ import { ActivatedRoute } from "@angular/router";
 })
 
 export class PhoneVerificationPagingComponent implements OnInit {
-  inputPagingObj: UcPagingObj = new UcPagingObj();
-  arrCrit: Array<any> = new Array();
+  inputPagingObj: any;
+  arrCrit: any;
   BizTemplateCode : string;
 
   constructor(private route: ActivatedRoute) { 
@@ -32,12 +32,6 @@ export class PhoneVerificationPagingComponent implements OnInit {
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppPhoneVerif.json";
-
-    var critObj = new CriteriaObj();
-    critObj.restriction = AdInsConstant.RestrictionLike;
-    critObj.propName = 'RL.BIZ_TMPLT_CODE';
-    critObj.value = this.BizTemplateCode;
-    this.arrCrit.push(critObj);
 
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;

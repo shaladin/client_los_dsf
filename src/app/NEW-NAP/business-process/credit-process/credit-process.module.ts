@@ -41,6 +41,7 @@ import { ViewSharingComponentModule } from "app/NEW-NAP/sharing-component/view-a
 import { UcviewgenericModule } from "@adins/ucviewgeneric";
 import { NgxCurrencyModule } from "ngx-currency";
 import { CreditApprovalDetailComponent } from './credit-approval/credit-approval-detail/credit-approval-detail.component';
+import { MatTabsModule } from "@angular/material";
 
 
 export const customCurrencyMaskConfig = {
@@ -70,6 +71,7 @@ export const customCurrencyMaskConfig = {
     ReactiveFormsModule,
     HttpModule,
     RouterModule,
+    MatTabsModule,
     MatCheckboxModule,
     MatRadioModule,
     MatSelectModule,
