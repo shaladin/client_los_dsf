@@ -46,10 +46,10 @@ export class ViewFraudDetectionResultComponent implements OnInit {
   listNegativeCust: Array<NegativeCustObj> = new Array<NegativeCustObj>();
   RowVersion: any;
   appAssetObj: any;
-  listNegativeAsset: any;
+  listNegativeAsset: Array<any> = new Array<any>();
   dukcapilObj: any;
   viewDukcapilObj: string;
-  listCustDuplicate: any;
+  listCustDuplicate: Array<any> = new Array<any>();
   trxRefNo: string;
   mrSrvySourceCode: string;
   requestDupCheck: any;
@@ -116,8 +116,8 @@ export class ViewFraudDetectionResultComponent implements OnInit {
       }
     );
 
-    // this.getAppAsset(appReqObj);
-    // this.getAppDupCheckCust(appReqObj);
+    this.getAppAsset(appReqObj);
+    this.getAppDupCheckCust(appReqObj);
   }
 
   getApp(appId : number){

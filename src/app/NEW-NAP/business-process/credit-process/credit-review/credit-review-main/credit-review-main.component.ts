@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
 import { environment } from 'environments/environment';
@@ -37,7 +37,8 @@ export class CreditReviewMainComponent implements OnInit {
   constructor(
     private route: ActivatedRoute, 
     private http: HttpClient, 
-    private fb: FormBuilder) { 
+    private fb: FormBuilder,
+    private router: Router) { 
       this.route.queryParams.subscribe(params => {
         this.appId = params["AppId"];
         if (params["WfTaskListId"] != null) {
@@ -120,10 +121,16 @@ export class CreditReviewMainComponent implements OnInit {
     this.http.post(AdInsConstant.GetLatestScoringResultHByTrxSourceNo, obj).toPromise().then(
       (response) => {
         console.log(response);
-        var ScoringResult: ScoringResultHObj = response["ScoringResultHObj"];
-        this.FormObj.patchValue({
-          CreditScoring: ScoringResult.ScoringValue
-        });
+        if(response["ScoringResultHObj"]!=null){
+          var ScoringResult: ScoringResultHObj = response["ScoringResultHObj"];
+          this.FormObj.patchValue({
+            CreditScoring: ScoringResult.ScoringValue
+          });
+        }else{
+          this.FormObj.patchValue({
+            CreditScoring: "-"
+          });
+        }
       },
       (error) => {
         console.log(error);
@@ -158,7 +165,7 @@ export class CreditReviewMainComponent implements OnInit {
           var NewDataForm = this.fb.group({
             QuestionCode: temp[i].Key,
             Question: temp[i].Value,
-            Answer: ""
+            Answer: ["", Validators.required]
           }) as FormGroup;
           this.Arr.push(NewDataForm);
         }
@@ -298,39 +305,22 @@ export class CreditReviewMainComponent implements OnInit {
       Reason: temp.Reason,
       Notes: temp.Notes,
       WfTaskListId: this.wfTaskListId,
-      RowVersion: ""
+      RowVersion: "",
+      AppId: this.appId,
+      ListDeviationResultObjs: this.ManualDeviationData
     }
     console.log(apiObj);
-    this.http.post(AdInsConstant.AddOrEditAppCrdRvwData, apiObj).subscribe(
+    this.http.post(AdInsConstant.AddOrEditAppCrdRvwDataAndListManualDeviationData, apiObj).subscribe(
       (response) => {
         console.log(response);    
+        this.router.navigate(["/Nap/CreditProcess/CreditReview/Paging"]);
       },
       (error) => {
         console.log(error);
       }
     );
-
-    this.SaveManualDeviationData();
   }
   
-  SaveManualDeviationData(){
-    if(this.isExistedManualDeviationData){
-      var obj = {
-        AppId: this.appId,
-        ListDeviationResultObjs: this.ManualDeviationData
-      }
-  
-      this.http.post(AdInsConstant.AddListManualDeviationResultByAppId, obj).subscribe(
-        (response) => {
-          console.log(response);    
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    }
-  }
-
   BindAppCrdRvwDObj(objArr){
     var AppCrdRvwDObjs = new Array();
     // console.log(objArr);
@@ -353,7 +343,7 @@ export class CreditReviewMainComponent implements OnInit {
   }
 
   BindManualDeviationData(ev){
-    // console.log(ev);
+    console.log(ev);
     this.ManualDeviationData = ev;
     this.isExistedManualDeviationData = true;
   }
