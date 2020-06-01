@@ -38,7 +38,7 @@ export class PreGoLivePagingComponent implements OnInit {
     var critInput = new CriteriaObj();
     critInput.propName = "wFht.ACT_CODE";
     critInput.restriction = AdInsConstant.RestrictionEq;
-    critInput.value = "PGLV";
+    critInput.value = "PGLV_" + this.bizTemplateCode;
 
     var critBizTemplate = new CriteriaObj();
     critBizTemplate.propName = "app.BIZ_TEMPLATE_CODE";

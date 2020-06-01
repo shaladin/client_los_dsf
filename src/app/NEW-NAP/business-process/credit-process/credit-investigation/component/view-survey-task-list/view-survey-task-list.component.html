@@ -2,7 +2,7 @@
   <lib-ucSubsection [id]="'SrvyId'" [title]="'Survey'" [panel]="'Srvy'">
   </lib-ucSubsection>
   <div class="form-body" id="SrvyId">
-    <table *ngIf="listSrvy?.length > 0" class="table table-responsive-md text-center table-hover">
+    <table class="table table-responsive-md text-center table-hover">
       <thead>
         <tr class="table-header">
           <th><span class="thead-header" (click)="searchSort($event)" name='srvyTaskNo' translate>Survey Task No</span>
@@ -23,6 +23,9 @@
         </tr>
       </thead>
       <tbody>
+        <tr *ngIf="listSrvy?.length == 0">
+          <td align="center" colspan="10">No data found</td>
+        </tr>
         <tr *ngFor="let item of listSrvy">
           <td>{{item.SurveyTaskNo}}</td>
           <td>{{item.SurveyeeName}}</td>
@@ -35,7 +38,7 @@
           <td>{{item.ReviewBy}}</td>
           <td>
             <a [routerLink]="['']"
-              [queryParams]="{SrvyTaskId:item.SrvyTaskId}">View</a>
+               [queryParams]="{SrvyTaskId:item.SrvyTaskId}">View</a>
           </td>
         </tr>
       </tbody>

@@ -54,8 +54,6 @@ export class LifeInsuranceDataComponent implements OnInit {
     console.log(this.LifeInsObj);
     this.http.post(AdInsConstant.GetAppLifeInsHByAppId, this.LifeInsObj).subscribe(
       (response) => {
-        console.log("response: ");
-        console.log(response);
         this.result = response;
         this.AppLifeInsHId = this.result.AppLifeInsHId;
         if (this.result.ListAppLifeInsD != null && this.result.ListAppLifeInsD != undefined) {
@@ -114,14 +112,19 @@ export class LifeInsuranceDataComponent implements OnInit {
       }
     );
   }
-
+  LifeInscoBranchNameObj = {
+    MrVendorCategory : "LIFE_INSCO_BRANCH",
+    OfficeCode : "",
+    RowVersion : ""
+  }
   async initBranchName() {
-    var LifeInscoBranchNameObj = {
-      MrVendorCategory: "LIFE_INSCO_BRANCH",
-      OfficeCode: "HO",
-      RowVersion: ""
-    }
-    await this.http.post<Array<object>>(AdInsConstant.GetListVendorByCategoryCodeAndOfficeCode, LifeInscoBranchNameObj).toPromise().then(
+    await this.http.post(AdInsConstant.GetAppById, {AppId : this.AppId}).toPromise().then(
+      (response) => {
+        this.LifeInscoBranchNameObj.OfficeCode = response["OriOfficeCode"];
+      }
+    );
+    console.log(this.LifeInscoBranchNameObj);
+    await this.http.post<Array<object>>(AdInsConstant.GetListVendorByCategoryCodeAndOfficeCode, this.LifeInscoBranchNameObj).toPromise().then(
       (response) => {
         this.LifeInscoBranchName = response;
       }
@@ -132,7 +135,6 @@ export class LifeInsuranceDataComponent implements OnInit {
   initAppLifeInsD() {
     var lifeInsObj = new LifeInsObj();
     lifeInsObj.AppId = this.AppId;
-    lifeInsObj.MrLifeInsPaidMethodCode = "PAID_IN_ADV";
     this.http.post(AdInsConstant.InitAppLifeInsH, lifeInsObj).subscribe(
       (response) => {
         this.ListObj = new Array<LifeInsDObj>();
@@ -192,18 +194,19 @@ export class LifeInsuranceDataComponent implements OnInit {
     }
   }
 
-  async calculateFee(object){
-    object.LifeInscoBranchCode = this.LifeInsForm.controls.LifeInscoBranchName.value;
-    await this.http.post(AdInsConstant.CalculateRate, object).toPromise().then(
+  async calculateAdminFee(ev){
+    console.log(ev);
+    var object ={
+      AppId : this.AppId,
+      VendorCode : ev.target.value
+    }
+    await this.http.post(AdInsConstant.GetRuleAdmFee, object).toPromise().then(
       response => {
         console.log(response);
-        this.result = response;
-        for(let i =0;i<this.result.length;i++){
-          this.LifeInsObj.ListAppLifeInsD[i].CustRate = this.result[i].CustRate;
-          this.LifeInsObj.ListAppLifeInsD[i].BaseRate = this.result[i].BaseRate;
-          this.LifeInsObj.ListAppLifeInsD[i].InscoRate = this.result[i].InscoRate;
-          this.LifeInsObj.ListAppLifeInsD[i].SumInsured = this.result[i].SumInsured;
-        }
+        this.LifeInsObj.CustAdminFeeAmt = response["AdminFeeToCust"][0];
+        this.LifeInsForm.patchValue({
+          InscoAdminFeeAmt : response["AdminFeeFromInscoBranch"][0]
+        })
       },
       error => {
         console.log(error);
@@ -211,24 +214,24 @@ export class LifeInsuranceDataComponent implements OnInit {
     );
   }
 
-  calculateDisc(object){
-    this.http.post(AdInsConstant.CalculateDisc, object).subscribe(
-      response => {
-        console.log(response);
-        this.result = response;
-        for(let i =0;i<this.result.length;i++){
-          this.LifeInsObj.ListAppLifeInsD[i].DiscRate = this.result[i].DiscRate;
-        }
-      },
-      error => {
-        console.log(error);
+  isCoverCheck(){
+    for(let i =0 ;i<this.LifeInsObj.ListAppLifeInsD.length;i++){
+      console.log(this.LifeInsObj.ListAppLifeInsD[i].MrCustTypeCode);
+      if(this.LifeInsObj.ListAppLifeInsD[i].MrCustTypeCode =="PERSONAL"){
+        this.LifeInsObj.IsCustCover = true;
       }
-    );
+      if(this.LifeInsObj.ListAppLifeInsD[i].MrCustTypeCode =="SPOUSE"){
+        this.LifeInsObj.IsSpouseCover = true;
+      }
+      if(this.LifeInsObj.ListAppLifeInsD[i].MrCustTypeCode =="GUARANTOR"){
+        this.LifeInsObj.IsGuarantorCover = true;
+      }
+    }
   }
 
   async Save() {
     this.setValue();
-    await this.calculateFee(this.LifeInsObj.ListAppLifeInsD);
+    this.isCoverCheck();
     if (this.mode == "edit") {
       if(this.IsChecked){
         this.LifeInsObj.AppId = this.AppId;
@@ -280,19 +283,35 @@ export class LifeInsuranceDataComponent implements OnInit {
     }
   }
 
-  cek() {
-    this.calculateDisc(this.LifeInsObj.ListAppLifeInsD);
-  }
-
   ObjSelected(event, i) {
     if (event.target.checked) {
       console.log("event checked");
-      console.log(this.ListObj[i]);
+      console.log(this.LifeInsObj.ListAppLifeInsD[i]);
       var LifeInsD = new LifeInsDObj();
       LifeInsD.InsuredName = this.ListObj[i]["InsuredName"];
       LifeInsD.Age = this.ListObj[i]["Age"];
       LifeInsD.MrCustTypeCode = this.ListObj[i]["MrCustTypeCode"];
       LifeInsD.SeqNo = i+1;
+      var object = {
+        AppId : this.AppId,
+        VendorCode : this.LifeInsForm.controls.LifeInscoBranchName.value,
+        Age : LifeInsD.Age,
+        SeqNo : LifeInsD.SeqNo
+      }
+      this.http.post(AdInsConstant.GetRuleRate, object).toPromise().then(
+        response => {
+          console.log(response);
+          console.log(response["DiscRate"]);
+          LifeInsD.BaseRate = response["BaseRate"];
+          LifeInsD.CustRate = response["CustRate"];
+          LifeInsD.InscoRate = response["InscoRate"];
+          LifeInsD.SumInsured = response["SumInsured"];
+          LifeInsD.DiscRate = response["DiscRate"];
+        },
+        error => {
+          console.log(error);
+        }
+      );
       this.LifeInsObj.ListAppLifeInsD[i] = LifeInsD;
     } else {
       console.log("event unchecked");

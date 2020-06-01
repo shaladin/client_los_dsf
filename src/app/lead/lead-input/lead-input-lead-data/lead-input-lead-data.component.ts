@@ -65,8 +65,8 @@ export class LeadInputLeadDataComponent implements OnInit {
     MrDownPaymentTypeCode: [''],
     ManufacturingYear: ['', Validators.min(0)],
     AssetPrice: ['', [Validators.required, Validators.min(1.00)]],
-    DownPaymentAmount: ['', [Validators.required, Validators.min(1.00)]],
-    DownPaymentPercent: ['', [Validators.min(0), Validators.max(100)]],
+    DownPaymentAmount: ['', [Validators.required]],
+    DownPaymentPercent: ['', [Validators.min(1.00), Validators.max(100.00)]],
     Tenor: ['', [Validators.required, Validators.min(0)]],
     MrFirstInstTypeCode: ['', Validators.required],
     NTFAmt: [''],
@@ -137,9 +137,6 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.assetTypeId = event.AssetTypeId;
 
     var AssetTypeCode = { 'AssetTypeCode': event.AssetTypeCode };
-    console.log("aawd");
-    console.log(AssetTypeCode);
-
     this.http.post(AdInsConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
       (response: any) => {
         while (this.items.length) {
@@ -161,7 +158,7 @@ export class LeadInputLeadDataComponent implements OnInit {
       });
 
   }
-  
+
   // downPaymentChange(event) {
   //   this.LeadDataForm.patchValue({
   //     MrDownPaymentTypeCode: event.value,
@@ -186,7 +183,6 @@ export class LeadInputLeadDataComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.items = this.LeadDataForm.get('items') as FormArray;
 
     this.InputLookupAssetObj = new InputLookupObj();
@@ -274,7 +270,6 @@ export class LeadInputLeadDataComponent implements OnInit {
           } else {
             this.isUsed = false;
           }
-          console.log("Awdawd");
           if (this.resLeadAssetObj.LeadAssetId != 0) {
             this.LeadDataForm.patchValue({
               MrDownPaymentTypeCode: this.resLeadAssetObj.MrDownPaymentTypeCode,
@@ -382,7 +377,6 @@ export class LeadInputLeadDataComponent implements OnInit {
           } else {
             this.isUsed = false;
           }
-          console.log("Awdawd");
           if (this.resLeadAssetObj.LeadAssetId != 0) {
             this.LeadDataForm.patchValue({
               MrDownPaymentTypeCode: this.resLeadAssetObj.MrDownPaymentTypeCode,
@@ -579,11 +573,10 @@ export class LeadInputLeadDataComponent implements OnInit {
   }
 
   DPAmtChange() {
+    this.Calculate = false;
     this.DPAmount = this.LeadDataForm.controls["DownPaymentAmount"].value;
     this.AssetPrice = this.LeadDataForm.controls["AssetPrice"].value;
-
     this.DPPercentage = this.DPAmount / this.AssetPrice * 100;
-
     this.LeadDataForm.patchValue({
       DownPaymentPercent: this.DPPercentage,
     });
@@ -595,26 +588,22 @@ export class LeadInputLeadDataComponent implements OnInit {
   // }
 
   DPPrcntChange() {
+    this.Calculate = false;
     this.DPPercentage = this.LeadDataForm.controls["DownPaymentPercent"].value;
     this.AssetPrice = this.LeadDataForm.controls["AssetPrice"].value;
-    
-    if (this.DPPercentage > 100) {
-      this.toastr.errorMessage("Down Payment Percent Must Be Less Than 100!");
-      return;
-    }
-
-    if (this.DPPercentage < 0) {
-      this.toastr.errorMessage("Down Payment Percent Must Be More Than 0!");
-      return;
-    }
-
     this.DPAmount = this.AssetPrice * this.DPPercentage / 100;
-
     this.LeadDataForm.patchValue({
       DownPaymentAmount: this.DPAmount,
     });
   }
 
+  AssetPriceChange() {
+    this.Calculate = false;
+    this.AssetPrice = this.LeadDataForm.controls["AssetPrice"].value;
+    this.LeadDataForm.controls['DownPaymentAmount'].clearValidators();
+    this.LeadDataForm.controls['DownPaymentAmount'].setValidators([Validators.required, Validators.min(1.00), Validators.max(this.AssetPrice)]);
+    this.LeadDataForm.controls['DownPaymentAmount'].updateValueAndValidity();
+  }
   FirstInstChange() {
     this.Calculate = false;
     this.LeadDataForm.patchValue({
@@ -626,13 +615,9 @@ export class LeadInputLeadDataComponent implements OnInit {
 
   TenorChange() {
     this.Calculate = false;
-
-    console.log("test tenor");
-    console.log(this.Calculate);
   }
 
   calculateNonKta() {
-    this.Calculate = true;
     this.Tenor = this.LeadDataForm.controls["Tenor"].value;
     this.AssetPrice = this.LeadDataForm.controls["AssetPrice"].value;
     this.DPAmount = this.LeadDataForm.controls["DownPaymentAmount"].value;
@@ -641,31 +626,31 @@ export class LeadInputLeadDataComponent implements OnInit {
       this.toastr.errorMessage("Down Payment Amount Must Be Lower Than Asset Price!");
       return;
     }
-
+    if (this.DPAmount <= 0) {
+      this.toastr.errorMessage("Please Check Down Payment Amount!");
+      return;
+    }
     if (this.Tenor == '') {
       this.toastr.errorMessage("Fill The Tenor First!");
       return;
     }
-
     this.NTFAmt = this.AssetPrice - this.DPAmount;
     this.InstAmt = this.NTFAmt / this.Tenor;
-
     if (this.LeadDataForm.controls["MrFirstInstTypeCode"].value == "AD") {
       this.TotalDownPayment = this.DPAmount + this.InstAmt;
     }
     else {
       this.TotalDownPayment = this.DPAmount;
     }
-
     this.LeadDataForm.patchValue({
       NTFAmt: this.NTFAmt,
       TotalDownPayment: this.TotalDownPayment,
       InstallmentAmt: this.InstAmt,
     });
+    this.Calculate = true;
   }
 
   calculateKta() {
-    this.Calculate = true;
     this.Tenor = this.LeadDataForm.controls["Tenor"].value;
     this.AssetPrice = this.LeadDataForm.controls["AssetPrice"].value;
     this.DPAmount = this.LeadDataForm.controls["DownPaymentAmount"].value;
@@ -674,18 +659,16 @@ export class LeadInputLeadDataComponent implements OnInit {
       this.toastr.errorMessage("Down Payment Amount Must Be Lower Than Asset Price!");
       return;
     }
-
     if (this.Tenor == '') {
       this.toastr.errorMessage("Fill The Tenor First!");
       return;
     }
-
     this.NTFAmt = this.LeadDataForm.controls["NTFAmt"].value;
     this.InstAmt = this.NTFAmt / this.Tenor;
-
     this.LeadDataForm.patchValue({
       InstallmentAmt: this.InstAmt,
     });
+    this.Calculate = true;
   }
 
   setLeadAsset() {
@@ -726,17 +709,10 @@ export class LeadInputLeadDataComponent implements OnInit {
   }
 
   save() {
-    console.log("save");
-    if (this.LeadDataForm.controls["ManufacturingYear"].value > this.year) {
-      this.toastr.errorMessage("Manufacturing Year must be lower or equal than current year.");
-      return;
-    }
-
     if (this.Calculate == false) {
       this.toastr.errorMessage("Calculate First");
       return;
     }
-
     if (this.typePage == "edit" || this.typePage == "update") {
       if (this.resLeadAssetObj.LeadAssetId != 0) {
         this.leadInputLeadDataObj = new LeadInputLeadDataObj();
@@ -750,11 +726,11 @@ export class LeadInputLeadDataComponent implements OnInit {
             if (this.originPage == "teleVerif") {
               this.router.navigate(["/Lead/TeleVerif/Paging"]);
             }
-            else if (this.typePage == "edit") {
-              this.router.navigate(["/Lead/Lead/Paging"]);
+            else if (this.typePage == "update") {
+              this.router.navigate(["/Lead/LeadUpdate/Paging"]);
             }
             else {
-              this.router.navigate(["/Lead/LeadUpdate/Paging"]);
+              this.router.navigate(["/Lead/Lead/Paging"]);
             }
           },
           (error) => {
@@ -772,11 +748,11 @@ export class LeadInputLeadDataComponent implements OnInit {
               if (this.originPage == "teleVerif") {
                 this.router.navigate(["/Lead/TeleVerif/Paging"]);
               }
-              else if (this.typePage == "edit") {
-                this.router.navigate(["/Lead/Lead/Paging"]);
+              else if (this.typePage == "update") {
+                this.router.navigate(["/Lead/LeadUpdate/Paging"]);
               }
               else {
-                this.router.navigate(["/Lead/LeadUpdate/Paging"]);
+                this.router.navigate(["/Lead/Lead/Paging"]);
               }
             },
             (error) => {
@@ -789,7 +765,6 @@ export class LeadInputLeadDataComponent implements OnInit {
             this.toastr.errorMessage("Manufacturing Year must be lower or equal than current year.");
             return;
           }
-
           this.leadInputLeadDataObj = new LeadInputLeadDataObj();
           this.setLeadAsset();
           this.setLeadApp();
@@ -799,11 +774,11 @@ export class LeadInputLeadDataComponent implements OnInit {
               if (this.originPage == "teleVerif") {
                 this.router.navigate(["/Lead/TeleVerif/Paging"]);
               }
-              else if (this.typePage == "edit") {
-                this.router.navigate(["/Lead/Lead/Paging"]);
+              else if (this.typePage == "update") {
+                this.router.navigate(["/Lead/LeadUpdate/Paging"]);
               }
               else {
-                this.router.navigate(["/Lead/LeadUpdate/Paging"]);
+                this.router.navigate(["/Lead/Lead/Paging"]);
               }
             },
             (error) => {
@@ -824,11 +799,11 @@ export class LeadInputLeadDataComponent implements OnInit {
             if (this.originPage == "teleVerif") {
               this.router.navigate(["/Lead/TeleVerif/Paging"]);
             }
-            else if (this.typePage == "edit") {
-              this.router.navigate(["/Lead/Lead/Paging"]);
+            else if (this.typePage == "update") {
+              this.router.navigate(["/Lead/LeadUpdate/Paging"]);
             }
             else {
-              this.router.navigate(["/Lead/LeadUpdate/Paging"]);
+              this.router.navigate(["/Lead/Lead/Paging"]);
             }
           },
           (error) => {
@@ -846,11 +821,11 @@ export class LeadInputLeadDataComponent implements OnInit {
             if (this.originPage == "teleVerif") {
               this.router.navigate(["/Lead/TeleVerif/Paging"]);
             }
-            else if (this.typePage == "edit") {
-              this.router.navigate(["/Lead/Lead/Paging"]);
+            else if (this.typePage == "update") {
+              this.router.navigate(["/Lead/LeadUpdate/Paging"]);
             }
             else {
-              this.router.navigate(["/Lead/LeadUpdate/Paging"]);
+              this.router.navigate(["/Lead/Lead/Paging"]);
             }
           },
           (error) => {
@@ -873,12 +848,10 @@ export class LeadInputLeadDataComponent implements OnInit {
 
     if (this.typePage == "edit" || this.typePage == "update") {
       if (this.resLeadAssetObj.LeadAssetId != 0) {
-
         if (this.LeadDataForm.controls["ManufacturingYear"].value > this.year) {
           this.toastr.errorMessage("Manufacturing Year must be lower or equal than current year.");
           return;
         }
-
         this.leadInputLeadDataObj = new LeadInputLeadDataObj();
         this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
         this.setLeadAsset();
@@ -916,11 +889,11 @@ export class LeadInputLeadDataComponent implements OnInit {
               if (this.originPage == "teleVerif") {
                 this.router.navigate(["/Lead/TeleVerif/Paging"]);
               }
-              else if (this.typePage == "edit") {
-                this.router.navigate(["/Lead/Lead/Paging"]);
+              else if (this.typePage == "update") {
+                this.router.navigate(["/Lead/LeadUpdate/Paging"]);
               }
               else {
-                this.router.navigate(["/Lead/LeadUpdate/Paging"]);
+                this.router.navigate(["/Lead/Lead/Paging"]);
               }
             },
             (error) => {
@@ -933,7 +906,6 @@ export class LeadInputLeadDataComponent implements OnInit {
             this.toastr.errorMessage("Manufacturing Year must be lower or equal than current year.");
             return;
           }
-
           this.leadInputLeadDataObj = new LeadInputLeadDataObj();
           this.setLeadAsset();
           this.setLeadApp();
@@ -944,11 +916,11 @@ export class LeadInputLeadDataComponent implements OnInit {
               if (this.originPage == "teleVerif") {
                 this.router.navigate(["/Lead/TeleVerif/Paging"]);
               }
-              else if (this.typePage == "edit") {
-                this.router.navigate(["/Lead/Lead/Paging"]);
+              else if (this.typePage == "update") {
+                this.router.navigate(["/Lead/LeadUpdate/Paging"]);
               }
               else {
-                this.router.navigate(["/Lead/LeadUpdate/Paging"]);
+                this.router.navigate(["/Lead/Lead/Paging"]);
               }
             },
             (error) => {
@@ -970,11 +942,11 @@ export class LeadInputLeadDataComponent implements OnInit {
             if (this.originPage == "teleVerif") {
               this.router.navigate(["/Lead/TeleVerif/Paging"]);
             }
-            else if (this.typePage == "edit") {
-              this.router.navigate(["/Lead/Lead/Paging"]);
+            else if (this.typePage == "update") {
+              this.router.navigate(["/Lead/LeadUpdate/Paging"]);
             }
             else {
-              this.router.navigate(["/Lead/LeadUpdate/Paging"]);
+              this.router.navigate(["/Lead/Lead/Paging"]);
             }
           },
           (error) => {
@@ -993,11 +965,11 @@ export class LeadInputLeadDataComponent implements OnInit {
             if (this.originPage == "teleVerif") {
               this.router.navigate(["/Lead/TeleVerif/Paging"]);
             }
-            else if (this.typePage == "edit") {
-              this.router.navigate(["/Lead/Lead/Paging"]);
+            else if (this.typePage == "update") {
+              this.router.navigate(["/Lead/LeadUpdate/Paging"]);
             }
             else {
-              this.router.navigate(["/Lead/LeadUpdate/Paging"]);
+              this.router.navigate(["/Lead/Lead/Paging"]);
             }
           },
           (error) => {

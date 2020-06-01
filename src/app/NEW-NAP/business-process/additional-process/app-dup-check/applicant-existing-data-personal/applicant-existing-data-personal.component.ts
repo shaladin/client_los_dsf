@@ -24,11 +24,11 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
   GetSpouseDuplicateCheckUrl = this.LOSUrl + AdInsConstant.GetSpouseDuplicateCheck;
   GetAppShareholderDuplicateCheckUrl = this.LOSUrl + AdInsConstant.GetAppShareholderDuplicateCheck;
   GetCustDataByAppId = AdInsConstant.GetCustDataByAppId;
-  AppCustObj : AppCustObj;
-  AppCustPersonalObj : AppCustPersonalObj;
-  ListAppGuarantorDuplicate : any;
-  ListSpouseDuplicate : any;
-  ListAppShareholderDuplicate : any;
+  AppCustObj: AppCustObj;
+  AppCustPersonalObj: AppCustPersonalObj;
+  ListAppGuarantorDuplicate: any;
+  ListSpouseDuplicate: any;
+  ListAppShareholderDuplicate: any;
   listSelectedIdGuarantor: any;
   checkboxAllGuarantor: false;
   listSelectedIdSpouse: any;
@@ -42,7 +42,7 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private toastr: NGXToastrService
-  ) { 
+  ) {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
         this.AppId = params['AppId'];
@@ -56,13 +56,13 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
   ngOnInit() {
 
     this.ClaimTask();
-     
+
     this.AppCustObj = new AppCustObj();
     this.AppCustPersonalObj = new AppCustPersonalObj();
     this.listSelectedIdGuarantor = new Array();
     this.listSelectedIdSpouse = new Array();
     this.listSelectedIdShareholder = new Array();
-    
+
     //Get App Cust Data
     var appObj = { "AppId": this.AppId };
     this.http.post(this.GetCustDataByAppId, appObj).subscribe(
@@ -80,43 +80,44 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
           "TaxIdNo": this.AppCustObj.TaxIdNo,
           "BirthDt": this.AppCustPersonalObj.BirthDt,
           "MotherMaidenName": this.AppCustPersonalObj.MotherMaidenName,
-          "MobilePhnNo1": this.AppCustPersonalObj.MobilePhnNo1,          
+          "MobilePhnNo1": this.AppCustPersonalObj.MobilePhnNo1,
           "RowVersion": this.RowVersion
         }
-    //List App guarantor Checking
-    this.http.post(this.GetAppGuarantorDuplicateCheckUrl, requestDupCheck).subscribe(
-      response => {
-        this.ListAppGuarantorDuplicate = response['ReturnObject'];
-      },
-      error => {
-        console.log("error")
-      }
-    );
-    //List Spouse Duplicate Checking
-    this.http.post(this.GetSpouseDuplicateCheckUrl, requestDupCheck).subscribe(
-      response => {
-        this.ListSpouseDuplicate = response['ReturnObject'];
-      },
-      error => {
-        console.log("error")
-      }
-    );
+        //List App guarantor Checking
+        this.http.post(this.GetAppGuarantorDuplicateCheckUrl, requestDupCheck).subscribe(
+          response => {
+            this.ListAppGuarantorDuplicate = response['ReturnObject'];
+          },
+          error => {
+            console.log("error")
+          }
+        );
+        //List Spouse Duplicate Checking
+        this.http.post(this.GetSpouseDuplicateCheckUrl, requestDupCheck).subscribe(
+          response => {
+            this.ListSpouseDuplicate = response['ReturnObject'];
+            console.log(response);
+          },
+          error => {
+            console.log("error")
+          }
+        );
 
-    //List App Shareholder Duplicate Checking
-    this.http.post(this.GetAppShareholderDuplicateCheckUrl, requestDupCheck).subscribe(
-      response => {
-        this.ListAppShareholderDuplicate = response['ReturnObject'];
-      },
-      error => {
-        console.log("error")
-      }
-    );
+        //List App Shareholder Duplicate Checking
+        this.http.post(this.GetAppShareholderDuplicateCheckUrl, requestDupCheck).subscribe(
+          response => {
+            this.ListAppShareholderDuplicate = response['ReturnObject'];
+          },
+          error => {
+            console.log("error")
+          }
+        );
       },
       error => {
         console.log("error")
       }
     )
-    
+
   }
 
   SelectAllGuarantor(condition) {
@@ -203,7 +204,7 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
     }
   }
 
-  Submit(){
+  Submit() {
     var appDupCheckObj = new RequestSubmitAppDupCheckCustObj();
     appDupCheckObj.AppGuarantorIds = this.listSelectedIdGuarantor;
     appDupCheckObj.AppCustCompanyMgmntShrholderIds = this.listSelectedIdShareholder;
@@ -220,10 +221,10 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
       (error) => {
         console.log(error);
       });
-  
+
   }
 
-  ClaimTask(){
+  ClaimTask() {
     var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     var wfClaimObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
@@ -231,7 +232,10 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
 
     this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
-    
+
       });
+  }
+  Back() {
+    this.router.navigateByUrl("/Nap/AdditionalProcess/AppDupCheck/Personal?AppId=" + this.AppId + "&WfTaskListId=" + this.WfTaskListId);
   }
 }

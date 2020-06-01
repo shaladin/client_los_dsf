@@ -116,8 +116,8 @@ export class ViewFraudDetectionResultComponent implements OnInit {
       }
     );
 
-    this.getAppAsset(appReqObj);
-    this.getAppDupCheckCust(appReqObj);
+    // this.getAppAsset(appReqObj);
+     this.getAppDupCheckCust(appReqObj);
   }
 
   getApp(appId : number){

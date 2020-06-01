@@ -21,7 +21,7 @@ export class CommissionComponent implements OnInit {
   @ViewChild('Form2') FormAdd2: FormAddDynamicComponent;
   @ViewChild('Form3') FormAdd3: FormAddDynamicComponent;
   @Input() AppId;
-  @Output() outputTab : EventEmitter<any> = new EventEmitter();
+  @Output() outputTab: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private route: ActivatedRoute,
@@ -81,19 +81,19 @@ export class CommissionComponent implements OnInit {
     this.GetContentName(AdInsConstant.ContentReferantor);
   }
 
-  GetInfoCommission(){
+  GetInfoCommission() {
     var url = AdInsConstant.GetAppCommissionDataForEditByAppId;
     var objApi = {
       AppId: this.AppId,
       RowVersion: "",
     };
-    this.http.post(url,objApi).subscribe(
+    this.http.post(url, objApi).subscribe(
       (response) => {
         // console.log("response edit comm");
         // console.log(response);
         var tempObj = response[AdInsConstant.ReturnObj];
-        if(tempObj != null){
-          this.isAutoGenerate=false;
+        if (tempObj != null) {
+          this.isAutoGenerate = false;
           this.GetFormAddDynamicObj(AdInsConstant.ContentSupplier);
           this.GetFormAddDynamicObj(AdInsConstant.ContentSupplierEmp);
           this.GetFormAddDynamicObj(AdInsConstant.ContentReferantor);
@@ -103,19 +103,19 @@ export class CommissionComponent implements OnInit {
             var FormAdd1Idx = 0;
             var FormAdd2Idx = 0;
             var FormAdd3Idx = 0;
-            for(var i=0;i<tempObj.length;i++){
+            for (var i = 0; i < tempObj.length; i++) {
               var obj = tempObj[i];
-              if(obj.MrCommissionRecipientTypeCode == AdInsConstant.CommissionReceipientTypeCodeSupplier){
+              if (obj.MrCommissionRecipientTypeCode == AdInsConstant.CommissionReceipientTypeCodeSupplier) {
                 this.FormAdd1.AddNewDataForm();
                 this.FormAdd1.GenerateExistingContentName(obj, FormAdd1Idx);
                 this.FormInputObjSupplier["isDataInputed"] = true;
                 FormAdd1Idx++;
-              }else if(obj.MrCommissionRecipientTypeCode == AdInsConstant.CommissionReceipientTypeCodeSupplierEmp){
+              } else if (obj.MrCommissionRecipientTypeCode == AdInsConstant.CommissionReceipientTypeCodeSupplierEmp) {
                 this.FormAdd2.AddNewDataForm();
                 this.FormAdd2.GenerateExistingContentName(obj, FormAdd2Idx);
                 this.FormInputObjSupplierEmpl["isDataInputed"] = true;
                 FormAdd2Idx++;
-              }else if(obj.MrCommissionRecipientTypeCode == AdInsConstant.CommissionReceipientTypeCodeReferantor){
+              } else if (obj.MrCommissionRecipientTypeCode == AdInsConstant.CommissionReceipientTypeCodeReferantor) {
                 this.FormAdd3.AddNewDataForm();
                 this.FormAdd3.GenerateExistingContentName(obj, FormAdd3Idx);
                 this.FormInputObjReferantor["isDataInputed"] = true;
@@ -123,11 +123,11 @@ export class CommissionComponent implements OnInit {
               }
             }
           }, 1000);
-          
-        }else{
+
+        } else {
           this.GetFormAddDynamicObj(AdInsConstant.ContentSupplier);
           this.GetFormAddDynamicObj(AdInsConstant.ContentSupplierEmp);
-          this.GetFormAddDynamicObj(AdInsConstant.ContentReferantor);          
+          this.GetFormAddDynamicObj(AdInsConstant.ContentReferantor);
         }
       },
       (error) => {
@@ -215,13 +215,13 @@ export class CommissionComponent implements OnInit {
           this.viewIncomeInfoObj.Other.push(otherObj);
           if (listData[i].MrFeeTypeCode == AdInsConstant.MrFeeTypeCodeAdmin) {
             this.AdminFee = listData[i].AppFeeAmt;
-            this.UppingAdminFee = listData[i].SellFeeAmt-listData[i].AppFeeAmt;
+            this.UppingAdminFee = listData[i].SellFeeAmt - listData[i].AppFeeAmt;
             // console.log("admin fee");
             // console.log(this.AdminFee);
             // console.log(this.UppingProvisionFee);
           } else if (listData[i].MrFeeTypeCode == AdInsConstant.MrFeeTypeCodeProvision) {
             this.ProvisionFee = listData[i].AppFeeAmt;
-            this.UppingProvisionFee = listData[i].SellFeeAmt-listData[i].AppFeeAmt;
+            this.UppingProvisionFee = listData[i].SellFeeAmt - listData[i].AppFeeAmt;
             // console.log("provision fee");
             // console.log(this.ProvisionFee);
             // console.log(this.UppingProvisionFee);
@@ -266,16 +266,17 @@ export class CommissionComponent implements OnInit {
         console.log(response);
         // console.log(response["length"]);
 
-        for(var i=0;i<response["length"];i++){
-          var temp = response[i][AdInsConstant.ReturnObj].RuleDataObjects;
-          // console.log(temp);
-          this.SaveRuleData(temp["ResultSupplier"], AdInsConstant.ContentSupplier, this.ContentObjSupplier[i].Key);
-          this.SaveRuleData(temp["ResultSupplierEmp"], AdInsConstant.ContentSupplierEmp, this.ContentObjSupplier[i].Key);
+        if (response["length"] != 0) {
+          for (var i = 0; i < response["length"]; i++) {
+            var temp = response[i][AdInsConstant.ReturnObj].RuleDataObjects;
+            // console.log(temp);
+            this.SaveRuleData(temp["ResultSupplier"], AdInsConstant.ContentSupplier, this.ContentObjSupplier[i].Key);
+            this.SaveRuleData(temp["ResultSupplierEmp"], AdInsConstant.ContentSupplierEmp, this.ContentObjSupplier[i].Key);
+          }
+          this.SaveRuleData(response[0][AdInsConstant.ReturnObj].RuleDataObjects["ResultReferantor"], AdInsConstant.ContentReferantor, "");  
         }
-        this.SaveRuleData(response[0][AdInsConstant.ReturnObj].RuleDataObjects["ResultReferantor"], AdInsConstant.ContentReferantor, "");
-        
         this.GetInfoCommission();
-        
+
       },
       (error) => {
         console.log(error);
@@ -287,7 +288,7 @@ export class CommissionComponent implements OnInit {
   RuleSupplierData: any = {};
   RuleSupplierEmpData: any = {};
   RuleReferantorData = new Array();
-  private async SaveRuleData(obj, dataTo, content){
+  private async SaveRuleData(obj, dataTo, content) {
     // console.log(dataTo);
     // console.log(obj);
     var len = obj.AllocationFrom.length;
@@ -296,7 +297,7 @@ export class CommissionComponent implements OnInit {
     var listTempObj = new Array();
     var tempSuppEmpData: any = {};
     if (dataTo == AdInsConstant.ContentSupplier) {
-      for(var i = 0; i < len; i++){
+      for (var i = 0; i < len; i++) {
         tempObj = {
           AllocationFrom: obj.AllocationFrom[i],
           AllocationFromDesc: obj.AllocationFromDesc[obj.AllocationFrom[i]],
@@ -306,11 +307,11 @@ export class CommissionComponent implements OnInit {
           AllocationBehaviour: obj.AllocationBehaviour[i]
         };
         listTempObj.push(tempObj);
-        this.RuleSupplierData[content]=listTempObj;
+        this.RuleSupplierData[content] = listTempObj;
       }
     } else if (dataTo == AdInsConstant.ContentSupplierEmp) {
-      for(var i = 0; i < len; i++){
-        if(tempJobPosition != obj.JobPositionCode[i]){
+      for (var i = 0; i < len; i++) {
+        if (tempJobPosition != obj.JobPositionCode[i]) {
           listTempObj = new Array();
           tempJobPosition = obj.JobPositionCode[i];
         }
@@ -323,11 +324,11 @@ export class CommissionComponent implements OnInit {
           AllocationBehaviour: obj.AllocationBehaviour[i]
         };
         listTempObj.push(tempObj);
-        tempSuppEmpData[obj.JobPositionCode[i]]=listTempObj;
-        this.RuleSupplierEmpData[content]=tempSuppEmpData;
+        tempSuppEmpData[obj.JobPositionCode[i]] = listTempObj;
+        this.RuleSupplierEmpData[content] = tempSuppEmpData;
       }
     } else if (dataTo == AdInsConstant.ContentReferantor) {
-      for(var i = 0; i < len; i++){
+      for (var i = 0; i < len; i++) {
         tempObj = {
           AllocationFrom: obj.AllocationFrom[i],
           AllocationFromDesc: obj.AllocationFromDesc[obj.AllocationFrom[i]],
@@ -359,7 +360,9 @@ export class CommissionComponent implements OnInit {
       this.http.post(url, obj).subscribe(
         (response) => {
           // console.log(response);
-          this.GetDDLContent(response[AdInsConstant.ReturnObj], AdInsConstant.ContentSupplier);
+          if (response[AdInsConstant.ReturnObj].length != 0) {
+            this.GetDDLContent(response[AdInsConstant.ReturnObj], AdInsConstant.ContentSupplier);
+          }
           this.GetContentName(AdInsConstant.ContentSupplierEmp);
         },
         (error) => {
@@ -426,7 +429,7 @@ export class CommissionComponent implements OnInit {
             Key: ReturnObject[i].SupplCode,
             Value: ReturnObject[i].SupplName
           };
-          this.DictSupplierCode[ReturnObject[i].SupplCode]=ReturnObject[i].SupplName;
+          this.DictSupplierCode[ReturnObject[i].SupplCode] = ReturnObject[i].SupplName;
           this.ContentObjSupplier.push(KVPObj);
           this.AppAssetIdList.push(ReturnObject[i].AppAssetId);
         } else if (content == AdInsConstant.ContentSupplierEmp) {
@@ -488,15 +491,15 @@ export class CommissionComponent implements OnInit {
   GetData(ev, data) {
     this.FormGetObj[data] = ev;
     // console.log(this.FormGetObj);
-    if(this.isCalculateData){
+    if (this.isCalculateData) {
       if (this.FormGetObj[AdInsConstant.ContentSupplier] && data == AdInsConstant.ContentSupplier) {
         this.CalculateEachData(this.FormGetObj[AdInsConstant.ContentSupplier]);
       }
       if (this.FormGetObj[AdInsConstant.ContentSupplierEmp] && data == AdInsConstant.ContentSupplierEmp) {
-        this.CalculateEachData(this.FormGetObj[AdInsConstant.ContentSupplierEmp]);      
+        this.CalculateEachData(this.FormGetObj[AdInsConstant.ContentSupplierEmp]);
       }
       if (this.FormGetObj[AdInsConstant.ContentReferantor] && data == AdInsConstant.ContentReferantor) {
-        this.CalculateEachData(this.FormGetObj[AdInsConstant.ContentReferantor]);      
+        this.CalculateEachData(this.FormGetObj[AdInsConstant.ContentReferantor]);
       }
     }
   }
@@ -512,7 +515,7 @@ export class CommissionComponent implements OnInit {
     if (this.FormGetObj[AdInsConstant.ContentSupplier]) {
       this.FormAdd1.CalculateTax(this.ResultAppData.CurrCode, this.ResultAppData.AppNo, this.ResultAppData.OriOfficeCode, this.AppId);
     }
-    if (this.FormGetObj[AdInsConstant.ContentSupplierEmp]) {    
+    if (this.FormGetObj[AdInsConstant.ContentSupplierEmp]) {
       this.FormAdd2.CalculateTax(this.ResultAppData.CurrCode, this.ResultAppData.AppNo, this.ResultAppData.OriOfficeCode, this.AppId);
     }
     if (this.FormGetObj[AdInsConstant.ContentReferantor]) {
@@ -520,11 +523,11 @@ export class CommissionComponent implements OnInit {
     }
   }
 
-  CalculateEachData(FormObj){
+  CalculateEachData(FormObj) {
     // console.log(FormObj);
     var arr = FormObj.get('arr') as FormArray;
     var len = arr["controls"].length;
-    var tempTotalCommisionAmount=0;
+    var tempTotalCommisionAmount = 0;
     var tempTotalTaxAmmount = 0;
     var tempTotalVATAmount = 0;
     for (var i = 0; i < len; i++) {
@@ -536,7 +539,7 @@ export class CommissionComponent implements OnInit {
     this.Summary.TotalCommisionAmount += tempTotalCommisionAmount;
     this.Summary.TotalTaxAmmount += tempTotalTaxAmmount;
     this.Summary.TotalVATAmount += tempTotalVATAmount;
-    this.Summary.GrossYield +=arr["controls"][0].value.GrossYield;
+    this.Summary.GrossYield += arr["controls"][0].value.GrossYield;
   }
 
   listAppCommissionHObj;
@@ -551,7 +554,7 @@ export class CommissionComponent implements OnInit {
       var temp = arr["controls"][i].value;
       // console.log("Data at " + i);
       // console.log(temp);
-      if(temp.ContentName == "") continue;
+      if (temp.ContentName == "") continue;
       tempAppCommHObj = this.PatchTempDataValue(temp, CommReceipientTypeCode);
 
       // console.log(tempAppCommHObj);
@@ -561,7 +564,7 @@ export class CommissionComponent implements OnInit {
 
   private PatchTempDataValue(obj, CommReceipientTypeCode) {
     var temp = new AppCommissionHObj();
-    if(obj.AppCommissionHId != 0) temp.AppCommissionHId = obj.AppCommissionHId;
+    if (obj.AppCommissionHId != 0) temp.AppCommissionHId = obj.AppCommissionHId;
     temp.AppId = this.AppId;
     temp.BankAccNo = obj.BankAccountNo;
     temp.BankAccName = obj.BankAccountName;
@@ -578,7 +581,7 @@ export class CommissionComponent implements OnInit {
     temp.MrTaxCalcMethodCode = obj.MrTaxCalcMethodCode;
     temp.TaxpayerNo = obj.TaxpayerNo;
     temp.RowVersion = obj.RowVersion;
-    if(CommReceipientTypeCode == AdInsConstant.CommissionReceipientTypeCodeSupplierEmp){
+    if (CommReceipientTypeCode == AdInsConstant.CommissionReceipientTypeCodeSupplierEmp) {
       temp.ReservedField1 = obj.SupplCode;
       temp.ReservedField2 = obj.MrSupplEmpPositionCodeDesc;
     }
@@ -590,10 +593,10 @@ export class CommissionComponent implements OnInit {
     // console.log(obj);
     var listAppCommissionDObj = new Array();
     var temp = obj.ListAllocated;
-    for(var i=0;i<temp.length;i++){
+    for (var i = 0; i < temp.length; i++) {
       var tempObj = temp[i];
       var tempAppCommissionDObj = new AppCommissionDObj();
-      if(tempObj.AppCommissionDId != 0){
+      if (tempObj.AppCommissionDId != 0) {
         tempAppCommissionDObj.AppCommissionHId = tempObj.AppCommissionHId;
         tempAppCommissionDObj.AppCommissionDId = tempObj.AppCommissionDId;
       }
@@ -611,11 +614,11 @@ export class CommissionComponent implements OnInit {
 
   isCalculated;
   SaveData() {
-    if( (!this.FormInputObjSupplier["isCalculated"] && this.FormInputObjSupplier["isDataInputed"]) || (!this.FormInputObjSupplierEmpl["isCalculated"] && this.FormInputObjSupplierEmpl["isDataInputed"]) || (!this.FormInputObjReferantor["isCalculated"] && this.FormInputObjReferantor["isDataInputed"]) ){
+    if ((!this.FormInputObjSupplier["isCalculated"] && this.FormInputObjSupplier["isDataInputed"]) || (!this.FormInputObjSupplierEmpl["isCalculated"] && this.FormInputObjSupplierEmpl["isDataInputed"]) || (!this.FormInputObjReferantor["isCalculated"] && this.FormInputObjReferantor["isDataInputed"])) {
       this.toastr.errorMessage("Must Calculate First");
-      return ;
+      return;
     }
-    if(this.Summary.TotalCommisionAmount > this.viewIncomeInfoObj.MaxAllocatedAmount){
+    if (this.Summary.TotalCommisionAmount > this.viewIncomeInfoObj.MaxAllocatedAmount) {
       this.toastr.errorMessage("Total Commision Amount cannot more than Max Allocated Amount");
       return;
     }

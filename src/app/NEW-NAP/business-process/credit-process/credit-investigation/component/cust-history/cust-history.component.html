@@ -7,32 +7,35 @@
       </div>
       <div class="card-body">
         <div class="px-3">
-          <lib-ucSubsection [id]="'ExistAgrmntId'" [title]="'Existing Agreement'" [panel]="'ExistAgrmnt'">
+          <lib-ucSubsection [id]="'existAgrId'" [title]="'Existing Agreement'" [panel]="'existAgr'">
           </lib-ucSubsection>
-          <div id="ExistAgrmnt">
+          <div id="existAgr">
             <table class="table table-responsive-md text-center table-hover">
               <thead>
                 <tr class="table-header">
                   <th><span translate class="thead-header">No</span></th>
-                  <th><span translate class="thead-header" name='AgrmntNo'>Agreement No</span>
+                  <th>
+                    <span translate class="thead-header" name='AgrmntNo'>Agreement No</span>
                   </th>
-                  <th><span translate class="thead-header" name='ProdOffering'>Product Offering</span>
+                  <th>
+                    <span translate class="thead-header" name='ProdOffering'>Product Offering</span>
                   </th>
                   <th><span translate class="thead-header" name='GoLiveDt'>Go Live Date</span>
-                  <th style="text-align: right;"><span translate class="thead-header" name='InstallmentAmt'>Installment Amount</span>
+                  <th>
+                    <span translate class="thead-header" name='InstallmentAmt'>Installment Amount</span>
                   </th>
-                  <th style="text-align: right;"><span translate class="thead-header" name='OSAR'>OS AR</span>
+                  <th>
+                    <span translate class="thead-header" name='OSAR'>OS AR</span>
                   </th>
-                  <th><span translate class="thead-header" name='Sales'>Sales</span>
+                  <th>
+                    <span translate class="thead-header" name='Sales'>Sales</span>
                   </th>
                 </tr>
               </thead>
-              <tbody *ngIf = "ExstAgrmnt?.length == 0">
-                <tr>
-                  <td colspan="100%">No Data Available</td>
-                </tr>
-              </tbody>
               <tbody>
+                <tr *ngIf="ExstAgrmnt?.length == 0">
+                  <td align="center" colspan="7">No data found</td>
+                </tr>
                 <tr *ngFor="let item of ExstAgrmnt; let i = index">
                   <td>{{i+1}}</td>
                   <td *ngIf="item.AgrmntNo!=null">{{item.AgrmntNo}}</td>
@@ -51,30 +54,32 @@
               </tbody>
             </table>
           </div>
-          <lib-ucSubsection [id]="'AppRejectId'" [title]="'Application Reject'" [panel]="'AppReject'">
+          <lib-ucSubsection [id]="'appRjcId'" [title]="'Application Reject'" [panel]="'appRjc'">
           </lib-ucSubsection>
-          <div id="AppReject">
+          <div id="appRjc">
             <table class="table table-responsive-md text-center table-hover">
               <thead>
                 <tr class="table-header">
                   <th><span translate class="thead-header">No</span></th>
-                  <th><span translate class="thead-header" name='AgrmntNo'>Application No</span>
+                  <th>
+                    <span translate class="thead-header" name='AgrmntNo'>Application No</span>
                   </th>
-                  <th><span translate class="thead-header" name='ProdOffering'>Product Offering</span>
+                  <th>
+                    <span translate class="thead-header" name='ProdOffering'>Product Offering</span>
                   </th>
                   <th><span translate class="thead-header" name='GoLiveDt'>Sales</span>
-                  <th><span translate class="thead-header" name='InstallmentAmt'>Total NTF</span>
+                  <th>
+                    <span translate class="thead-header" name='InstallmentAmt'>Total NTF</span>
                   </th>
-                  <th><span translate class="thead-header" name='OSAR'>View Approval</span>
+                  <th>
+                    <span translate class="thead-header" name='OSAR'>View Approval</span>
                   </th>
                 </tr>
               </thead>
-              <tbody *ngIf = "AppRjct?.length == 0">
-                <tr>
-                  <td colspan="100%">No Data Available</td>
-                </tr>
-              </tbody>
               <tbody>
+                <tr *ngIf="AppRjct?.length == 0">
+                  <td align="center" colspan="6">No data found</td>
+                </tr>
                 <tr *ngFor="let item of AppRjct; let i = index">
                   <td>{{i+1}}</td>
                   <td *ngIf="item.AppNo!=null">{{item.AppNo}}</td>
@@ -90,30 +95,32 @@
               </tbody>
             </table>
           </div>
-          <lib-ucSubsection [id]="'AppProcessId'" [title]="'Application In Process'" [panel]="'AppProcess'">
+          <lib-ucSubsection [id]="'appPrcId'" [title]="'Application In Process'" [panel]="'appPrc'">
           </lib-ucSubsection>
-          <div id="AppProcess">
+          <div id="appPrc">
             <table class="table table-responsive-md text-center table-hover">
               <thead>
                 <tr class="table-header">
                   <th><span translate class="thead-header">No</span></th>
-                  <th><span translate class="thead-header" name='AgrmntNo'>Application No</span>
+                  <th>
+                    <span translate class="thead-header" name='AgrmntNo'>Application No</span>
                   </th>
-                  <th><span translate class="thead-header" name='ProdOffering'>Product Offering</span>
+                  <th>
+                    <span translate class="thead-header" name='ProdOffering'>Product Offering</span>
                   </th>
                   <th><span translate class="thead-header" name='GoLiveDt'>Sales</span>
-                  <th><span translate class="thead-header" name='InstallmentAmt'>Total NTF</span>
+                  <th>
+                    <span translate class="thead-header" name='InstallmentAmt'>Total NTF</span>
                   </th>
-                  <th><span translate class="thead-header" name='OSAR'>Application Step</span>
+                  <th>
+                    <span translate class="thead-header" name='OSAR'>Application Step</span>
                   </th>
                 </tr>
               </thead>
-              <tbody *ngIf = "AppPrcs?.length == 0">
-                <tr>
-                  <td colspan="100%">No Data Available</td>
-                </tr>
-              </tbody>
               <tbody>
+                <tr *ngIf="AppPrcs?.length == 0">
+                  <td align="center" colspan="6">No data found</td>
+                </tr>
                 <tr *ngFor="let item of AppPrcs; let i = index">
                   <td>{{i+1}}</td>
                   <td *ngIf="item.AppNo!=null">{{item.AppNo}}</td>

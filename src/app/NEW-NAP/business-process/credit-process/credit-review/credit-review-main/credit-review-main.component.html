@@ -42,7 +42,8 @@
     <div class="card-body">
       <div class="px-3">
 
-        <form class="form form-horizontal" [formGroup]="FormObj" (ngSubmit)="FormObj.valid && SaveForm()" #enjiForm="ngForm">
+        <form class="form form-horizontal" [formGroup]="FormObj" (ngSubmit)="FormObj.valid && SaveForm()"
+          #enjiForm="ngForm">
           <div class="form-body">
 
             <lib-ucSubsection [id]="'formCreditAnalysisId'" [title]="'Credit Analysis'" [panel]="'formCreditAnalysis'">
@@ -92,7 +93,8 @@
                   <label class="adInsLabel">Recommendation</label>
                 </div>
                 <div class="col-md-4">
-                  <select class="form-control adInsInput" style="width: auto" formControlName="Reason" (change)="onChangeReason($event)"
+                  <select class="form-control adInsInput" style="width: auto" formControlName="Reason"
+                    (change)="onChangeReason($event)"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && FormObj.controls.Reason.invalid}">
                     <option value="">-Select One-</option>
                     <option *ngFor="let it of DDLRecommendation" value="{{it.Key}}">
@@ -106,7 +108,8 @@
                 </div>
                 <div class="col-md-4">
                   <lib-ucapproveby [apvBaseUrl]="apvBaseUrl" [parentForm]="FormObj" [identifier]="'Approver'"
-                    [schemeCode]="'CRD_APV_CF'" [enjiForm]="enjiForm" [isRequired]="'true'" (onChange)="onChangeApprover($event)">
+                    [schemeCode]="'CRD_APV_CF'" [enjiForm]="enjiForm" [isRequired]="'true'"
+                    (onChange)="onChangeApprover($event)">
                   </lib-ucapproveby>
                   <lib-uc-show-errors [control]="Approver" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
@@ -135,7 +138,8 @@
                   <label class="adInsLabel">Return Reason</label>
                 </div>
                 <div class="col-md-4">
-                  <select class="form-control adInsInput" style="width: auto" formControlName="Reason" (change)="onChangeReason($event)"
+                  <select class="form-control adInsInput" style="width: auto" formControlName="Reason"
+                    (change)="onChangeReason($event)"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && FormObj.controls.Reason.invalid}">
                     <option value="">-Select One-</option>
                     <option *ngFor="let it of DDLReasonReturn" value="{{it.Key}}">
@@ -162,13 +166,12 @@
           </div>
 
           <div class="form-actions right">
-            <button type="button" class="btn btn-raised btn-danger mr-1"
-              (click)="switchForm()" translate>
-              <i *ngIf="!isReturnOn" class="ft-x"> Return</i> 
-              <i *ngIf="isReturnOn" class="ft-x"> Cancel Return</i> 
+            <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()" translate>
+              <i *ngIf="!isReturnOn" class="ft-x"> Return</i>
+              <i *ngIf="isReturnOn" class="ft-x"> Cancel Return</i>
             </button>
             <button *ngIf="!isReturnOn" type="button" class="btn btn-raised btn-warning mr-1"
-              [routerLink]="['../Paging']" translate>
+              [routerLink]="['../Paging']" [queryParams]="{BizTemplateCode:BizTemplateCode}" translate>
               <i class="fa fa-arrow-left"></i> Cancel
             </button>
             <!-- <button type="button" (click)="CheckDeviationData()" class="btn btn-raised btn-primary" translate>
