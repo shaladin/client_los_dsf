@@ -7,7 +7,7 @@
       "name": "A.APP_NO",
       "id": "AppNoId",
       "value": "",
-      "label": "APPLICATION NO",
+      "label": "Application No",
       "placeholder": "Placeholder"
     },
     {
@@ -15,38 +15,29 @@
       "name": "AC.CUST_NAME",
       "id": "CustNameId",
       "value": "",
-      "label": "CUSTOMER NAME",
+      "label": "Customer Name",
       "placeholder": "Placeholder"
-    },
-    {
-      "type": "dropdown",
-      "datatype": "text",
-      "name": "A.ORI_OFFICE_NAME",
-      "id": "OfficeNameId",
-      "value": "",
-      "placeholder": "Placeholder",
-      "isFromURL": true,
-      "isSelectOne": false,
-      "url": "http://r3app-server.ad-ins.com/Foundation_R3/RefOffice/GetListKvpActiveRefOfficeForPaging",
-      "label": "OFFICE NAME",
-      "items": [],
-      "itemsUrl": []
     },
     {
       "type": "textbox",
       "name": "A.PROD_OFFERING_NAME",
       "id": "ProdOfferingNameId",
       "value": "",
-      "label": "PROD OFFERING NAME",
+      "label": "Product Offering Name",
       "placeholder": "Placeholder"
     },
     {
-      "type": "textbox",
-      "name": "WTL.USERNAME",
-      "id": "claimById",
-      "value": "",
-      "label": "CLAIM BY",
-      "placeholder": "Placeholder"
+      "type": "dropdown",
+      "name": "a.ORI_OFFICE_CODE",
+      "id": "OfficeNameId",
+      "value": "Office",
+      "placeholder": "Placeholder",
+      "isFromURL": true,
+      "isSelectOne": false,
+      "url": "http://r3app-server.ad-ins.com/Foundation_R3/RefOffice/GetListKvpActiveRefOfficeForPaging",
+      "label": "Office",
+      "items": [],
+      "itemsUrl": []
     },
     {
       "type": "dropdown",
@@ -68,49 +59,46 @@
         }
       ],
       "itemsUrl": []
+    },
+    {
+      "type": "textbox",
+      "name": "WTL.USERNAME",
+      "id": "claimById",
+      "value": "",
+      "label": "CLAIM BY",
+      "placeholder": "Placeholder"
     }
   ],
-  "querystring": {
-    "select": "SELECT WTL.USERNAME AS ClaimBy, A.ORI_OFFICE_NAME AS OriOfficeName, A.APP_NO AS AppNo, AC.CUST_NAME AS CustName, A.PROD_OFFERING_NAME AS ProdOfferingName, RHD.RETURN_HANDLING_D_ID AS ReturnHandlingDId, WTL.WF_TASK_LIST_ID AS WfTaskListId, A.APP_ID AS AppId, RHD.RETURN_STAT as ReturnStat",
-    "from": "FROM dbo.APP A WITH(NOLOCK) JOIN dbo.V_WF_TASK_LIST WTL WITH(NOLOCK) ON A.APP_NO = WTL.TRANSACTION_CODE JOIN dbo.RETURN_HANDLING_H RHH WITH(NOLOCK) ON A.APP_ID = RHH.APP_ID JOIN dbo.APP_CUST AC WITH(NOLOCK) ON A.APP_ID = AC.APP_ID JOIN dbo.RETURN_HANDLING_D RHD WITH(NOLOCK) ON RHH.RETURN_HANDLING_H_ID = RHD.RETURN_HANDLING_H_ID",
-    "where": "WHERE WTL.ACT_CODE = 'RTN_ADD_PHN_VERF' AND RHD.MR_RETURN_TASK_CODE = 'RTN_ADD_PHN_VERF'"
-  },
   "headerList": [
     {
       "type": "sort",
-      "position": "center",
+      "position": "left",
       "label": "Claim By",
-      "name": "WTL.USERNAME"
+      "name": "ClaimBy"
     },
     {
       "type": "sort",
-      "position": "center",
+      "position": "left",
       "label": "Office",
-      "name": "A.ORI_OFFICE_NAME"
+      "name": "a.ORI_OFFICE_NAME"
     },
     {
       "type": "sort",
       "position": "center",
       "label": "Application No",
-      "name": "A.APP_NO"
+      "name": "a.APP_NO"
     },
     {
       "type": "sort",
       "position": "center",
       "label": "Customer Name",
-      "name": "AC.CUST_NAME"
+      "name": "ac.CUST_NAME"
     },
     {
       "type": "sort",
       "position": "center",
       "label": "Product Offering Name",
-      "name": "A.PROD_OFFERING_NAME"
-    },
-    {
-      "type": "sort",
-      "position": "center",
-      "label": "Status",
-      "name": "RHD.RETURN_STAT"
+      "name": "a.PROD_OFFERING_NAME"
     },
     {
       "type": "label",
@@ -118,21 +106,34 @@
       "label": "Action"
     }
   ],
+  "querystring": {
+    "select": "SELECT a.ORI_OFFICE_NAME AS OfficeName, a.ORI_OFFICE_CODE AS OfficeCode, a.APP_NO AS AppNo, ac.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.APP_ID AS AppId, WTL.USERNAME AS ClaimBy, WTL.WF_TASK_LIST_ID AS WfTaskListId, rhh.RETURN_HANDLING_H_ID as ReturnHandlingHId",
+    "from": "FROM dbo.APP a WITH ( NOLOCK ) LEFT JOIN dbo.APP_CUST ac WITH ( NOLOCK ) ON a.APP_ID = ac.APP_ID JOIN [dbo].[V_WF_TASK_LIST] WTL WITH ( NOLOCK ) ON a.APP_NO = WTL.TRANSACTION_CODE JOIN [dbo].[V_REF_OFFICE] vro WITH ( NOLOCK ) ON a.ORI_OFFICE_CODE = vro.OFFICE_CODE  JOIN [dbo].RETURN_HANDLING_H rhh WITH ( NOLOCK ) on a.APP_ID = rhh.APP_ID",
+    "where": "WHERE WTL.END_EXECUTING_DATE IS NULL AND a.IS_APP_INIT_DONE = '1'"
+  },
   "bodyList": [
     {
       "type": "text",
-      "position": "center",
+      "position": "left",
       "property": "ClaimBy"
     },
     {
       "type": "text",
-      "position": "center",
-      "property": "OriOfficeName"
+      "position": "left",
+      "property": "OfficeName"
     },
     {
-      "type": "text",
+      "type": "link",
       "position": "center",
-      "property": "AppNo"
+      "property": "AppNo",
+      "target": "_blank",
+      "path": "/Nap/View/AppView",
+      "param": [
+        {
+          "type": "AppId",
+          "property": "AppId"
+        }
+      ]
     },
     {
       "type": "text",
@@ -145,29 +146,71 @@
       "property": "ProdOfferingName"
     },
     {
-      "type": "text",
-      "position": "center",
-      "property": "ReturnStat"
-    },
-    {
       "type": "action",
       "position": "center",
       "action": [
         {
-          "type": "edit",
-          "path": "/Nap/CreditProcess/PhoneVerification/Subject",
-          "param": [
+          "type": "switch",
+          "case": [
             {
-              "type": "AppId",
-              "property": "AppId"
+              "conditions": [
+                {
+                  "isUser": true,
+                  "property": "ClaimBy",
+                  "value": "",
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "url",
+                "path": "/Nap/CreditProcess/PhoneVerification/Subject",
+                "icon": "ft-edit-2",
+                "param": [
+                  {
+                    "type": "AppId",
+                    "property": "AppId"
+                  },
+                  {
+                    "type": "WfTaskListId",
+                    "property": "WfTaskListId"
+                  },
+                  {
+                      "type":"ReturnHandlingHId",
+                      "property":"ReturnHandlingHId"
+                  }
+                ]
+              },
+              "isHide": false
             },
             {
-              "type": "ReturnHandlingDId",
-              "property": "ReturnHandlingDId"
-            },
-            {
-              "type": "WfTaskListId",
-              "property": "WfTaskListId"
+              "conditions": [
+                {
+                  "isUser": false,
+                  "property": "ClaimBy",
+                  "value": "",
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "url",
+                "path": "/Nap/CreditProcess/PhoneVerification/Subject",
+                "icon": "ft-edit-2",
+                "param": [
+                  {
+                    "type": "AppId",
+                    "property": "AppId"
+                  },
+                  {
+                    "type": "WfTaskListId",
+                    "property": "WfTaskListId"
+                  },
+                  {
+                      "type":"ReturnHandlingHId",
+                      "property":"ReturnHandlingHId"
+                  }
+                ]
+              },
+              "isHide": false
             }
           ]
         }

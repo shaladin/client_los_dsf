@@ -198,4 +198,8 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
     
       });
   }
+
+  Back() {
+    this.router.navigateByUrl("/Nap/AdditionalProcess/AppDupCheck/Company?AppId=" + this.AppId + "&WfTaskListId=" + this.WfTaskListId);
+  }
 }

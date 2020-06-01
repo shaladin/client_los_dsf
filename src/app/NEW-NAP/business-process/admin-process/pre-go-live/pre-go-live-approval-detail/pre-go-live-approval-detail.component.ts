@@ -5,6 +5,7 @@ import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { formatDate } from '@angular/common';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-pre-go-live-approval-detail',
@@ -38,18 +39,29 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   AppTcList: any = [];
   identifier: string = "TCList";
 
+  count1 : number = 0;
+  RfaLogObj :{
+    RfaNo: any
+  }
+  ListRfaLogObj : any = new Array(this.RfaLogObj); 
+  inputObj2 : any
+  listPreGoLiveAppvrObj : any = new Array(this.inputObj2);
+
   MainInfoForm = this.fb.group({
 
   });
   AppId: any;
+  AgrmntId: any;
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
+      this.AgrmntId = params["AgrmntId"];
+      this.AppId = params["AppId"];
       this.TrxNo = params["TrxNo"];
       var obj = {
         taskId: params["TaskId"],
         instanceId: params["InstanceId"],
-        approvalBaseUrl: "http://r3app-server/APPROVAL"
+        approvalBaseUrl: environment.ApprovalR3Url
       }
 
       this.inputObj = obj;
@@ -57,6 +69,24 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+
+
+    this.http.post(AdInsConstant.GetRfaLogByTrxNoAndApvCategory, { TrxNo : this.TrxNo, ApvCategory : "PRE_GPV_APV" } ).subscribe(
+      (response) => {
+        this.result = response;
+        this.ListRfaLogObj = response["ListRfaLogObj"];
+        for(let i =0;i<this.ListRfaLogObj.length;i++){
+            this.listPreGoLiveAppvrObj[i] = {
+              approvalBaseUrl: environment.ApprovalR3Url,
+              type: 'task',
+              refId: this.ListRfaLogObj[i]["RfaNo"]
+            }
+          } 
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
 
     var Obj = {
       AgrmntNo: this.TrxNo,
@@ -170,6 +200,8 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
         console.log(error);
       }
     );
+
+    
   }
   changeValidation(arr) {
     if (this.MainInfoForm.controls[this.identifier]["controls"][arr]["controls"].IsMandatory.value == true) {
@@ -196,5 +228,12 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   }
   ToCust(){
     this.router.navigate(["/Nap/AdminProcess/PreGoLive/Approval/Detail"], { queryParams: { "CustNo": this.CustNo } });
+  }
+  onAvailableNextTask() {
+
+  }
+  onApprovalSubmited() {
+    this.toastr.successMessage("Success");
+    this.router.navigate(["/Nap/AdminProcess/PreGoLive/Approval/Paging"]);
   }
 }

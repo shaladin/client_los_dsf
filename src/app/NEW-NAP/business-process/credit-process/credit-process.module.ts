@@ -40,6 +40,8 @@ import { FraudVerificationMultiAssetComponent } from "./fraud-verification-multi
 import { ViewSharingComponentModule } from "app/NEW-NAP/sharing-component/view-app-component/view-sharing-component.module";
 import { UcviewgenericModule } from "@adins/ucviewgeneric";
 import { NgxCurrencyModule } from "ngx-currency";
+import { CreditApprovalDetailComponent } from './credit-approval/credit-approval-detail/credit-approval-detail.component';
+import { MatTabsModule } from "@angular/material";
 
 
 export const customCurrencyMaskConfig = {
@@ -69,6 +71,7 @@ export const customCurrencyMaskConfig = {
     ReactiveFormsModule,
     HttpModule,
     RouterModule,
+    MatTabsModule,
     MatCheckboxModule,
     MatRadioModule,
     MatSelectModule,
@@ -105,7 +108,8 @@ export const customCurrencyMaskConfig = {
     ViewApprovalComponent,
     CreditReviewMainComponent,
     CreditInquiryComponent, 
-    FraudVerificationMultiAssetComponent
+    FraudVerificationMultiAssetComponent, 
+    CreditApprovalDetailComponent
   ],
   providers: [
     NGXToastrService

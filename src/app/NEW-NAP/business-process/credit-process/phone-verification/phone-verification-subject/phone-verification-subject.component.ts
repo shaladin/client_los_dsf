@@ -106,29 +106,14 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   }
 
   async SaveForm() {
-    var lobCode = localStorage.getItem("LobCode")
+    var BizTemplateCode = localStorage.getItem("BizTemplateCode")
     if (this.isReturnHandling == false) {
-      if (this.ReturnHandlingForm.controls.IsAnyUpdate.value == 'YES') {
-        this.setReturnHandlingH();
-        await this.http.post(AdInsConstant.AddReturnHandlingFromPhoneVerif, this.ReturnHandlingHData).toPromise().then(
-          (response) => {
-
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
-      }
-      var reqObj = {
-        WFTaskId: this.wfTaskListId,
-        isReturnHandling: this.isReturnHandling,
-        AppId: this.appId
-      };
-      this.http.post(AdInsConstant.CompleteAppPhoneVerif, reqObj).subscribe(
+      this.setReturnHandlingH();
+      this.http.post(AdInsConstant.CompleteAppPhoneVerif, this.ReturnHandlingHData).subscribe(
         (response) => {
 
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["/Nap/CreditProcess/PhoneVerification/Paging"], { queryParams: { "LobCode": lobCode } });
+          this.router.navigate(["/Nap/CreditProcess/PhoneVerification/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
         },
         (error) => {
           console.log(error);
@@ -141,7 +126,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingPhoneVerif/Paging"], { queryParams: { "LobCode": lobCode } });
+          this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingPhoneVerif/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
         },
         (error) => {
           console.log(error);
@@ -170,6 +155,8 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     this.ReturnHandlingHData.ReturnBy = localStorage.getItem("Username");
     this.ReturnHandlingHData.ReturnNotes = this.ReturnHandlingForm.controls.UpdateNotes.value;
     this.ReturnHandlingHData.ReturnFromTrxType = "PHN";
+    this.ReturnHandlingHData.WfTaskListId = this.wfTaskListId;
+    this.ReturnHandlingHData.IsReturn = (this.ReturnHandlingForm.controls['IsAnyUpdate'].value == 'YES') ? true : false;
   }
 
   async GetAppData() {
@@ -265,12 +252,12 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   }
 
   back() {
-    var lobCode = localStorage.getItem("LobCode")
+    var BizTemplateCode = localStorage.getItem("BizTemplateCode")
     if (this.isReturnHandling == false) {
-      this.router.navigate(["/Nap/CreditProcess/PhoneVerification/Paging"], { queryParams: { "LobCode": lobCode } });
+      this.router.navigate(["/Nap/CreditProcess/PhoneVerification/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
     }
     if (this.isReturnHandling == true) {
-      this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingPhoneVerif/Paging"], { queryParams: { "LobCode": lobCode } });
+      this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingPhoneVerif/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
     }
   }
 }
