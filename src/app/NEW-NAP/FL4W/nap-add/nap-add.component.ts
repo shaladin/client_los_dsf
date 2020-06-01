@@ -81,7 +81,6 @@ export class NapAddComponent implements OnInit {
   ngOnInit() {
     // Lookup Obj
     this.user = JSON.parse(localStorage.getItem("UserAccess"));
-    this.bizTemplateValue = AdInsConstant.FL4W;
     this.MakeLookUpObj();
 
     this.MakeLookUpObj();
