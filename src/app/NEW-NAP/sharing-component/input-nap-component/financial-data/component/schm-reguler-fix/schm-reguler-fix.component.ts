@@ -70,7 +70,8 @@ export class SchmRegulerFixComponent implements OnInit {
           TotalAR: response.TotalARAmt,
 
           NtfAmt: response.NtfAmt,
-          DiffRateAmt: response.DiffRateAmt
+          DiffRateAmt: response.DiffRateAmt,
+          ApvAmt: response.ApvAmt
 
         })
 
