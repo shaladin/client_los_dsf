@@ -32,12 +32,10 @@
               translate>Selected</span></th>
         </tr>
       </thead>
-      <tbody *ngIf = "listCustDuplicate?.length == 0">
-        <tr>
-          <td colspan="100%">No Data Available</td>
-        </tr>
-      </tbody>
       <tbody>
+        <tr *ngIf="listCustDuplicate?.length == 0">
+          <td align="center" colspan="10">No data found</td>
+        </tr>
         <tr *ngFor="let item of listCustDuplicate">
           <td>{{item.CustNo}}</td>
           <td>{{item.CustName}}</td>
@@ -58,52 +56,6 @@
       </tbody>
     </table>
   </div>
-  <table class="table table-responsive-md text-center table-hover">
-    <thead>
-      <tr class="table-header">
-        <th><span class="thead-header" (click)="searchSort($event)" name='custNo' translate>Customer No</span>
-        </th>
-        <th><span class="thead-header" (click)="searchSort($event)" name='custName' translate>Customer
-            Name</span>
-        </th>
-        <th><span class="thead-header" (click)="searchSort($event)" name='idType' translate>ID Type</span>
-        </th>
-        <th><span class="thead-header" (click)="searchSort($event)" name='idNo' translate>ID Number</span>
-        </th>
-        <th><span class="thead-header" (click)="searchSort($event)" name='birthDt' translate>Birth Date</span>
-        </th>
-        <th><span class="thead-header" (click)="searchSort($event)" name='mobilePhoneNo' translate>Mobile
-            Phone
-            Number</span></th>
-        <th><span class="thead-header" (click)="searchSort($event)" name='motherMaidenName' translate>Mother
-            Maiden Name</span></th>
-        <th><span class="thead-header" (click)="searchSort($event)" name='npwp' translate>NPWP</span></th>
-        <th><span class="thead-header" (click)="searchSort($event)" name='duplicateItem' translate>Duplicate
-            Item</span></th>
-        <th><span class="thead-header" (click)="searchSort($event)" name='isSelected'
-            translate>Selected</span></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngIf="listCustDuplicate?.length == 0">
-        <td align="center" colspan="10">No data found</td>
-      </tr>
-      <tr *ngFor="let item of listCustDuplicate">
-        <td>{{item.CustNo}}</td>
-        <td>{{item.CustName}}</td>
-        <td>{{item.IdType}}</td>
-        <td>{{item.IdNo}}</td>
-        <td>{{item.BirthDt | date: 'dd-MMMM-yyyy'}}</td>
-        <td>{{item.MobilePhnNo1}}</td>
-        <td>{{item.MotherMaidenName}}</td>
-        <td>{{item.Npwp}}</td>
-        <td>{{item.DuplicateItem}}</td>
-        <td *ngIf="item.IsSelected == '1'">Selected</td>
-        <td *ngIf="item.IsSelected == '0'"></td>
-      </tr>
-    </tbody>
-  </table>
-</div>
 </div>
 
 <div class="card px-3">
@@ -173,16 +125,28 @@
 
     <div class="form-group row">
       <label class="col-md-3 adInsLabel">Name</label>
-      <label class="col-md-3 adInsLabel">{{dukcapilObj.CustName}} </label>
+      <div class="col-md-3">
+        <label class="adInsLabel" *ngIf="dukcapilObj.CustName!=null">{{dukcapilObj.CustName}} </label>
+        <label class="adInsLabel" *ngIf="dukcapilObj.CustName==null"> -  </label>
+      </div>
       <label class="col-md-3 adInsLabel">Status Data</label>
-      <label class="col-md-3 adInsLabel">{{dukcapilObj.DukcapilDataStatus}} </label>
+      <div class="col-md-3">
+        <label class="adInsLabel" *ngIf="dukcapilObj.DukcapilDataStatus!=null">{{dukcapilObj.DukcapilDataStatus}} </label>
+        <label class="adInsLabel" *ngIf="dukcapilObj.DukcapilDataStatus==null"> - </label>
+      </div>
     </div>
 
     <div class="form-group row">
       <label class="col-md-3 adInsLabel">NIK</label>
-      <label class="col-md-3 adInsLabel">{{dukcapilObj.IdNo}} </label>
+      <div class="col-md-3">
+        <label class="adInsLabel" *ngIf="dukcapilObj.IdNo!=null">{{dukcapilObj.IdNo}} </label>
+        <label class="adInsLabel" *ngIf="dukcapilObj.IdNo==null"> -  </label>
+      </div>
       <label class="col-md-3 adInsLabel">Check Dukcapil Date</label>
-      <label class="col-md-3 adInsLabel">{{dukcapilObj.CekDukcapilDt | date: 'dd-MMMM-yyyy'}} </label>
+      <div class="col-md-3">
+        <label class="adInsLabel" *ngIf="dukcapilObj.CekDukcapilDt!=null">{{dukcapilObj.CekDukcapilDt | date: 'dd-MMMM-yyyy'}} </label>
+        <label class="adInsLabel" *ngIf="dukcapilObj.CekDukcapilDt==null"> - </label>
+      </div>
     </div>
 
     <div class="form-group row">
@@ -196,7 +160,12 @@
 
     <div class="form-group row">
       <label class="col-md-3 adInsLabel">Birth Place / Birth Date</label>
-      <label class="col-md-3 adInsLabel">{{dukcapilObj.BirthPlace}} / {{dukcapilObj.BirthDt | date: 'dd-MMMM-yyyy'}}</label>
+      <div class="col-md-3">
+        <label class="adInsLabel" *ngIf="dukcapilObj.BirthPlace!=null">{{dukcapilObj.BirthPlace}} / </label>
+        <label class="adInsLabel" *ngIf="dukcapilObj.BirthPlace==null"> - / </label>
+        <label class="adInsLabel" *ngIf="dukcapilObj.BirthDt!=null">{{dukcapilObj.BirthDt | date: 'dd-MMMM-yyyy'}}</label>
+        <label class="adInsLabel" *ngIf="dukcapilObj.BirthDt==null"> &nbsp; - </label>
+      </div>
     </div>
   </div>
   <ng-template #content let-c="close" let-d="dismiss">
