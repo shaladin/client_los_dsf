@@ -9,6 +9,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { NapAppCrossObj } from 'app/shared/model/NapAppCrossObj.Model';
 import { ActivatedRoute } from '@angular/router';
+import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 
 @Component({
   selector: 'app-application-data-refinancing',
@@ -94,7 +95,11 @@ export class ApplicationDataRefinancingComponent implements OnInit {
   employeeIdentifier;
   salesRecommendationItems = [];
   isInputLookupObj;
-  ngOnInit() {
+
+  mouCustObj;
+  resMouCustObj;
+  CustNo: string;
+  ngOnInit()  {
     this.ListCrossAppObj["appId"] = this.AppId;
     this.ListCrossAppObj["result"] = [];
     this.isInputLookupObj = false;
@@ -116,6 +121,36 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     this.getPayFregData();
     this.getAppSrcData();
     this.GetCrossInfoData();
+
+    var user = JSON.parse(localStorage.getItem("UserAccess"));
+    var AppObj = {
+      AppId: this.AppId
+    }
+    this.http.post(AdInsConstant.GetAppCustByAppId, AppObj).subscribe(
+      (response) => { 
+       this.CustNo = response["CustNo"];
+       console.log("asd")
+       console.log(this.CustNo);
+
+        this.mouCustObj = new MouCustObj();
+        this.mouCustObj.CustNo = this.CustNo;
+        this.mouCustObj.StartDt = user.BusinessDt;
+
+        this.http.post(AdInsConstant.GetListMouCustByCustNo, this.mouCustObj).subscribe(
+          (response) => {
+            this.resMouCustObj = response["ReturnObject"];
+            
+              // console.log("resMouCustObj")
+              // console.log(this.resMouCustObj)
+
+            // if(this.resMouCustObj.length > 0)
+            // {
+            //   this.NapAppModelForm.patchValue({ MouCustId: this.resMouCustObj[0].Key });
+            // }
+          }
+        );
+      });
+    
   }
 
   getDDLFromProdOffering(refProdCompntCode:string){

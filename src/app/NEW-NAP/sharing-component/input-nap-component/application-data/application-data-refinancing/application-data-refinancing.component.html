@@ -186,19 +186,18 @@
                 </div>
               </div>
 
-              <!-- <div class="form-group row">
-                MOU Cust
+              <div class="form-group row">
+                <!-- MOU Cust -->
                 <label class="col-md-2 adInsLabel"> MOU Customer </label>
                 <div class="col-md-4">
-                  <select class="form-control adInsInput" style="width: auto" formControlName="MrCustNotifyOptCode"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrCustNotifyOptCode.invalid }">
-                    <option value="">-Select One-</option>
-                    <option *ngFor="let it of applicationDDLitems['CUST_NOTIF_OPT']" value="{{it.Key}}">
-                      {{it.Value}} </option>
+                  <select class="form-control adInsInput" style="width: auto" formControlName="MouCustId">
+                    <option value = null>None</option>
+                    <option *ngFor="let it of resMouCustObj" [value]="it.Key">
+                      {{it.Value}} 
+                    </option>
                   </select>
-                  <lib-uc-show-errors  [control]="NapAppModelForm.controls.MrCustNotifyOptCode" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                 </div>
-              </div> -->
+              </div>
 
             </div>
 
