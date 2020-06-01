@@ -12,7 +12,12 @@
                 <th class="text-center"><span class="thead-header" name='houseOwnership' translate>House Ownership</span></th>
             </tr>
             </thead>
-            <tbody>
+            <tbody *ngIf="appCustAddrForViewObjs?.length == 0">
+                <tr>
+                    <td colspan="100%">No Data Available</td>
+                </tr>
+            </tbody>
+            <tbody *ngIf="appCustAddrForViewObjs?.length > 0">
             <ng-container *ngFor="let item of appCustAddrForViewObjs">
                 <tr>
                 <td class="text-center">{{item.CustAddrTypeName}}</td>
@@ -63,7 +68,12 @@
                         <th class="text-center"><span class="thead-header" name='balanceAmt' translate>Balance Amount</span></th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody *ngIf="appCustBankAccObjs[i].AppCustBankStmntObjs == null">
+                        <tr>
+                            <td colspan="100%">No Data Available</td>
+                        </tr>
+                    </tbody>
+                    <tbody *ngIf="appCustBankAccObjs[i]?.AppCustBankStmntObjs?.length > 0">
                     <ng-container *ngFor="let item of appCustBankAccObjs[i].AppCustBankStmntObjs">
                         <tr>
                             <td class="text-center">{{item.MonthName}}</td>
@@ -91,7 +101,12 @@
                 <th class="text-center"><span class="thead-header" name='socmedId' translate>Social Media ID</span></th>
             </tr>
             </thead>
-            <tbody>
+            <tbody *ngIf="appCustSocmedObjs?.length == 0">
+                <tr>
+                    <td colspan="100%">No Data Available</td>
+                </tr>
+            </tbody>
+            <tbody *ngIf="appCustSocmedObjs?.length > 0">
             <ng-container *ngFor="let item of appCustSocmedObjs; let i=index">
                 <tr>
                     <td class="text-center">{{i + 1}}</td>
@@ -116,7 +131,12 @@
                 <th class="text-center"><span class="thead-header" name='notes' translate>Notes</span></th>
             </tr>
             </thead>
-            <tbody>
+            <tbody *ngIf="appCustGrpObjs?.length == 0">
+                <tr>
+                    <td colspan="100%">No Data Available</td>
+                </tr>
+            </tbody>
+            <tbody *ngIf="appCustGrpObjs?.length > 0">
             <ng-container *ngFor="let item of appCustGrpObjs; let i=index">
                 <tr>
                     <td class="text-center">{{i + 1}}</td>
@@ -147,7 +167,12 @@
                 <th class="text-center"><span class="thead-header" name='family' translate>Family</span></th>
             </tr>
             </thead>
-            <tbody>
+            <tbody *ngIf="appCustPersonalContactPersonObjs?.length == 0">
+                <tr>
+                    <td colspan="100%">No Data Available</td>
+                </tr>
+            </tbody>
+            <tbody *ngIf="appCustPersonalContactPersonObjs?.length > 0">
                 <ng-container *ngFor="let item of appCustPersonalContactPersonObjs; let i=index">
                     <tr>
                         <td class="text-center">{{i + 1}}</td>
