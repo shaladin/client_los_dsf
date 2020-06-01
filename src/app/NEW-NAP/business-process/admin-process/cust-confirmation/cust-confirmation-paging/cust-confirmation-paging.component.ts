@@ -39,7 +39,7 @@ export class CustConfirmationPagingComponent implements OnInit {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'WF.ACT_CODE';
-    critObj.value = "CNFR";
+    critObj.value = "CNFR_" + this.bizTemplateCode;
 
     var critBizTemplate = new CriteriaObj();
     critBizTemplate.propName = "A.BIZ_TEMPLATE_CODE";

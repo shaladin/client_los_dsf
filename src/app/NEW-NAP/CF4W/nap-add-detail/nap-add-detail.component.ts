@@ -6,7 +6,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { FormBuilder } from '@angular/forms';
 import Stepper from 'bs-stepper';
-import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
+import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -19,12 +19,12 @@ export class NapAddDetailComponent implements OnInit {
   AppStepIndex: number = 1;
   appId: number;
   wfTaskListId: number;
-  mode: string;
   viewProdMainInfoObj: string;
   viewReturnInfoObj: string = "";
   NapObj: AppObj;
   IsMultiAsset: string;
   ListAsset: any;
+  ReturnHandlingHId : number = 0;
 
   AppStep = {
     "NEW": 1,
@@ -39,7 +39,7 @@ export class NapAddDetailComponent implements OnInit {
     "TC": 9,
   };
 
-  ResponseReturnInfoObj;
+  ResponseReturnInfoObj : ReturnHandlingDObj;
   FormReturnObj = this.fb.group({
     ReturnExecNotes: ['']
   });
@@ -53,52 +53,55 @@ export class NapAddDetailComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
-        this.mode = params["Mode"];
         this.CheckMultiAsset();
       }
       if (params["WfTaskListId"] != null) {
         this.wfTaskListId = params["WfTaskListId"];
       }
+      if(params["ReturnHandlingHId"] != null){
+        this.ReturnHandlingHId = params["ReturnHandlingHId"];
+      }
     });
   }
 
   ngOnInit() {
-    console.log("this");
     this.ClaimTask();
-    this.AppStepIndex = 0;
+    this.AppStepIndex = 1;
     this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
-    this.http.post(AdInsConstant.GetAppById, this.NapObj).subscribe(
-      (response: AppObj) => {
-        if (response) {
-          this.NapObj = response;
-          this.AppStepIndex = this.AppStep[response.AppCurrStep];
-          this.stepper.to(this.AppStepIndex);
-        }
-        else {
-          this.AppStepIndex = 0;
-        }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
 
     this.stepper = new Stepper(document.querySelector('#stepper1'), {
       linear: false,
       animation: true
     })
+
+    if(this.ReturnHandlingHId > 0 ){
+      this.stepper.to(this.AppStepIndex);
+    }else{
+      this.http.post(AdInsConstant.GetAppById, this.NapObj).subscribe(
+        (response: AppObj) => {
+          if (response) {
+            this.NapObj = response;
+            this.AppStepIndex = this.AppStep[response.AppCurrStep];
+            this.stepper.to(this.AppStepIndex);
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
     this.MakeViewReturnInfoObj();
   }
 
   MakeViewReturnInfoObj() {
-    if (this.mode == AdInsConstant.ModeResultHandling) {
+    if (this.ReturnHandlingHId > 0) {
       var obj = {
-        AppId: this.appId,
+        ReturnHandlingHId: this.ReturnHandlingHId,
         MrReturnTaskCode: AdInsConstant.ReturnHandlingEditApp
       }
-      this.http.post(AdInsConstant.GetReturnHandlingDByAppIdAndMrReturnTaskCode, obj).subscribe(
+      this.http.post<ReturnHandlingDObj>(AdInsConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
         (response) => {
           this.ResponseReturnInfoObj = response;
           this.FormReturnObj.patchValue({
@@ -186,29 +189,35 @@ export class NapAddDetailComponent implements OnInit {
 
   LastStepHandler() {
     this.NapObj.WfTaskListId = this.wfTaskListId;
-    this.http.post(AdInsConstant.SubmitNAP, this.NapObj).subscribe(
-      (response) => {
-        console.log(response);
-        this.router.navigate(["/Nap/ConsumerFinance/InputNap/Paging"], { queryParams: { LobCode: "CF4W" } })
-      },
-      (error) => {
-        console.log(error);
-      }
-    )
+    if(this.ReturnHandlingHId > 0){
+
+    }else{
+      this.http.post(AdInsConstant.SubmitNAP, this.NapObj).subscribe(
+        (response) => {
+          console.log(response);
+          this.router.navigate(["/Nap/ConsumerFinance/InputNap/Paging"], { queryParams: {BizTemplateCode:AdInsConstant.CF4W} })
+        },
+        (error) => {
+          console.log(error);
+        }
+      )
+    }
   }
 
   Submit() {
-    if (this.mode == AdInsConstant.ModeResultHandling) {
-      var obj = {
-        ReturnHandlingDId: this.ResponseReturnInfoObj.ReturnHandlingDId,
-        ReturnHandlingNotes: this.ResponseReturnInfoObj.ReturnHandlingNotes,
-        ReturnHandlingExecNotes: this.FormReturnObj.value.ReturnExecNotes,
-        RowVersion: this.ResponseReturnInfoObj.RowVersion
-      };
+    if (this.ReturnHandlingHId > 0) {
+      var ReturnHandlingResult : ReturnHandlingDObj = new ReturnHandlingDObj();
+      ReturnHandlingResult.WfTaskListId = this.wfTaskListId;
+      ReturnHandlingResult.MrReturnTaskCode = this.ResponseReturnInfoObj.MrReturnTaskCode;
+      ReturnHandlingResult.ReturnStat = this.ResponseReturnInfoObj.ReturnStat;
+      ReturnHandlingResult.ReturnHandlingNotes = this.ResponseReturnInfoObj.ReturnHandlingNotes;
+      ReturnHandlingResult.ReturnHandlingExecNotes = this.ResponseReturnInfoObj.ReturnHandlingExecNotes;
+      ReturnHandlingResult.RowVersion = this.ResponseReturnInfoObj.RowVersion;
 
-      this.http.post(AdInsConstant.EditReturnHandlingDNotesData, obj).subscribe(
+      this.http.post(AdInsConstant.EditReturnHandlingDNotesData, ReturnHandlingResult).subscribe(
         (response) => {
           console.log(response);
+          this.router.navigate(["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { queryParams: { BizTemplateCode: AdInsConstant.CF4W } })
         },
         (error) => {
           console.log(error);
@@ -225,7 +234,7 @@ export class NapAddDetailComponent implements OnInit {
     wfClaimObj.WfTaskListId = this.wfTaskListId;
 
     this.http.post(AdInsConstant.ClaimTaskNap, wfClaimObj).subscribe(
-      (response) => {
+      () => {
     
       });
   }

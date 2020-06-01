@@ -5,6 +5,18 @@
         <form class="form form-horizontal" [formGroup]="LeadDataForm" (ngSubmit)="LeadDataForm.valid"
           #enjiForm="ngForm">
           <div class="form-body">
+            <div class="form-actions right" style="text-align: right;">
+              <button hidden type="submit" class="btn btn-raised btn-primary mr-1" (click)="save()" translate>
+                <i class="fa fa-check-square-o"></i> Save
+              </button>
+              <button type="submit" class="btn btn-raised btn-primary" (click)="SaveForm()"  translate>
+                <i class="fa fa-check-square-o"></i> Submit
+              </button>
+              <!-- <button type="button" class="btn btn-raised btn-primary mr-1" (click)="this.LeadDataForm.valid && test()"
+                translate>
+                <i class="fa fa-check-square-o"></i> test
+              </button> -->
+            </div>
             <!-- <div id="leadData"> -->
               <div *ngIf="lobKta.includes(returnLobCode) == false" id="leadData">
                 <lib-ucSubsection [id]="'assetDataId'" [title]="'Asset Data'" [panel]="'assetData'">
@@ -31,7 +43,7 @@
                   <div class="form-group row">
                     <label class="col-md-3 adins-required-label" translate>Asset Price</label>
                     <div class="col-md-4">
-                      <label>{{LeadDataForm.controls.AssetPrice.value}}</label> 
+                      <label>{{LeadDataForm.controls.AssetPrice.value | number:'.2':'en-US'}}</label> 
                     </div>
                   </div>
                 </div>   
@@ -44,7 +56,7 @@
                 <div class="form-group row">
                   <label class="col-md-3 adins-required-label" translate>Down Payment Amount</label>
                   <div class="col-md-4">
-                   <label>{{LeadDataForm.controls.DownPaymentAmount.value}}</label>
+                   <label>{{LeadDataForm.controls.DownPaymentAmount.value | number:'.2':'en-US'}}</label>
                   </div>
                 </div> 
                   <div class="form-group row">
@@ -128,19 +140,7 @@
                 </div> 
               </div>
             <!-- </div> -->
-          </div>
-          <div class="form-actions right" style="text-align: right;">
-            <button hidden type="submit" class="btn btn-raised btn-primary mr-1" (click)="save()" translate>
-              <i class="fa fa-check-square-o"></i> Save
-            </button>
-            <button type="submit" class="btn btn-raised btn-primary" (click)="SaveForm()"  translate>
-              <i class="fa fa-check-square-o"></i> Submit
-            </button>
-            <!-- <button type="button" class="btn btn-raised btn-primary mr-1" (click)="this.LeadDataForm.valid && test()"
-              translate>
-              <i class="fa fa-check-square-o"></i> test
-            </button> -->
-          </div>
+          </div>  
         </form>
       </div>
     </div>

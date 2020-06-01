@@ -15,7 +15,6 @@ export const environment = {
   losR3Web: 'http://r3web-server/LOSR3',
   WorkflowR3Url: 'http://R3App-Server.ad-ins.com/WORKFLOW_R3',
   Module:"LOS"
-
 };
 
 

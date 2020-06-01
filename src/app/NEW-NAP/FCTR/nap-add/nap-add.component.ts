@@ -134,7 +134,7 @@ export class NapAddComponent implements OnInit {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.propName = 'vrl.BIZ_TMPLT_CODE';
-    critObj.value = AdInsConstant.CF4W;
+    critObj.value = AdInsConstant.FCTR;
     arrCopyLookupCrit.push(critObj);
     this.inputLookupObjCopyProduct.addCritInput = arrCopyLookupCrit;
 
@@ -150,7 +150,7 @@ export class NapAddComponent implements OnInit {
     addCritBizTempalte.DataType = "text";
     addCritBizTempalte.propName = "rlob.BIZ_TMPLT_CODE";
     addCritBizTempalte.restriction = AdInsConstant.RestrictionEq;
-    addCritBizTempalte.value = AdInsConstant.LobCodeFCTR;
+    addCritBizTempalte.value = AdInsConstant.FCTR;
     arrAddCrit.push(addCritBizTempalte);
 
     this.inputLookupObjName.addCritInput = arrAddCrit;
@@ -207,7 +207,8 @@ export class NapAddComponent implements OnInit {
     napAppObj.IsAppInitDone = false;
     napAppObj.AppStat = AdInsConstant.AppStepNew;
     napAppObj.AppCurrStep = AdInsConstant.AppStepNew;
-    napAppObj.BlCode = AdInsConstant.LobCodeFCTR;
+    napAppObj.BizTemplateCode = AdInsConstant.FCTR;
+    napAppObj.LobCode = this.NapAppForm.controls.LobCode.value;
     napAppObj.OriOfficeCode = this.NapAppForm.controls['OriOfficeCode'].value;
     napAppObj.OriOfficeName = this.NapAppForm.controls['OriOfficeName'].value;
     napAppObj = this.CheckValue(napAppObj);

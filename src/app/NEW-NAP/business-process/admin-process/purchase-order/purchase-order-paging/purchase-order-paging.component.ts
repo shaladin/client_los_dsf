@@ -39,7 +39,7 @@ export class PurchaseOrderPagingComponent implements OnInit {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'WF.ACT_CODE';
-    critObj.value = "PO";
+    critObj.value = "PO_" + this.bizTemplateCode;
     this.arrCrit.push(critObj);
 
     critObj = new CriteriaObj();

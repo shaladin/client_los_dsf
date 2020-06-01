@@ -15,40 +15,35 @@ import { ActivatedRoute } from "@angular/router";
 export class PhoneVerificationPagingComponent implements OnInit {
   inputPagingObj: any;
   arrCrit: any;
-  lobCode : string;
+  BizTemplateCode : string;
 
   constructor(private route: ActivatedRoute) { 
     this.route.queryParams.subscribe(params => {
-      if (params['LobCode'] != null) {
-        this.lobCode = params['LobCode'];
-        localStorage.setItem("LobCode",this.lobCode);
+      if (params['BizTemplateCode'] != null) {
+        this.BizTemplateCode = params['BizTemplateCode'];
+        localStorage.setItem("BizTemplateCode",this.BizTemplateCode);
       }
     });
   }
 
   ngOnInit() {
     var userAccess = JSON.parse(localStorage.getItem("UserAccess"))
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchAppPhoneVerif.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppPhoneVerif.json";
 
-    this.arrCrit = new Array();
-    var critObj = new CriteriaObj();
-    critObj.restriction = AdInsConstant.RestrictionLike;
-    critObj.propName = 'RL.BIZ_TMPLT_CODE';
-    critObj.value = this.lobCode;
-    this.arrCrit.push(critObj);
-    this.inputPagingObj.addCritInput = this.arrCrit;
-
-    this.arrCrit = new Array();
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'a.ORI_OFFICE_CODE';
     critObj.value = userAccess.OfficeCode;
     this.arrCrit.push(critObj);
-    this.inputPagingObj.addCritInput = this.arrCrit;
 
+    var critObj = new CriteriaObj();
+    critObj.restriction = AdInsConstant.RestrictionLike;
+    critObj.propName = 'WTL.ACT_CODE';
+    critObj.value = 'PHN_' + this.BizTemplateCode;
+    this.arrCrit.push(critObj);
+    this.inputPagingObj.addCritInput = this.arrCrit;
   }
 }

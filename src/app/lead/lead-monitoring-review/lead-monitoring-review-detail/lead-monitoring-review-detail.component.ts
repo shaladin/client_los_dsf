@@ -15,7 +15,8 @@ import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 export class LeadMonitoringReviewDetailComponent implements OnInit {
   inputPagingObj: UcPagingObj;
   viewUpload: string;
-  uploadNo: string;
+  UploadMonitoringHId: number;
+  UploadNo: string;
   taskListId: number;
 
   constructor(
@@ -25,8 +26,11 @@ export class LeadMonitoringReviewDetailComponent implements OnInit {
     private toastr: NGXToastrService
   ) {
     this.route.queryParams.subscribe(params => {
+      if (params["UploadMonitoringHId"] != null) {
+        this.UploadMonitoringHId = params["UploadMonitoringHId"];
+      }
       if (params["UploadNo"] != null) {
-        this.uploadNo = params["UploadNo"];
+        this.UploadNo = params["UploadNo"];
       }
       if (params["TaskListId"] != null) {
         this.taskListId = params["TaskListId"];
@@ -44,10 +48,10 @@ export class LeadMonitoringReviewDetailComponent implements OnInit {
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReviewMonitoringLeadDetail.json";
     var arrCrit = new Array<CriteriaObj>();
     var critObj = new CriteriaObj();
-    critObj.DataType = 'text';
-    critObj.propName = 'UPLOAD_MONITORING_NO';
+    critObj.DataType = 'test';
+    critObj.propName = 'UL.UPLOAD_MONITORING_NO';
     critObj.restriction = AdInsConstant.RestrictionEq;
-    critObj.value = this.uploadNo;
+    critObj.value = this.UploadNo;
     arrCrit.push(critObj);
     this.inputPagingObj.addCritInput = arrCrit;
   }
@@ -56,7 +60,7 @@ export class LeadMonitoringReviewDetailComponent implements OnInit {
     var uploadObj = {
       MrUploadStatusCode: status,
       TaskListId: this.taskListId,
-      UploadMonitoringNo: this.uploadNo
+      UploadMonitoringNo: this.UploadNo
     };
     this.http.post(AdInsConstant.UploadReview, uploadObj).subscribe(
       response => {
