@@ -108,4 +108,8 @@ export class NapPagingComponent implements OnInit {
       this.router.navigate(["Nap/FinanceLeasing/Add/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId" : ev.RowObj.WfTaskListId } });
     // }
   }
+<<<<<<< HEAD
+=======
+
+>>>>>>> a67bf74999ddad239bfe613db888dc5749873dc6
 }

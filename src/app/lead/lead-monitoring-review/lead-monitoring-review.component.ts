@@ -20,7 +20,7 @@ export class LeadMonitoringReviewComponent implements OnInit {
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchReviewUploadLead.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
+    this.inputPagingObj.enviromentUrl = environment.FoundationR3Url;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReviewUploadLead.json";
   }
