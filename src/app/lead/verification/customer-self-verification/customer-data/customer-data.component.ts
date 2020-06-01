@@ -23,7 +23,6 @@ import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 @Component({
   selector: 'app-lead-customer-data',
   templateUrl: './customer-data.component.html',
-  styleUrls: [],
   providers: [NGXToastrService]
 })
 export class CustomerDataComponent implements OnInit {
@@ -158,8 +157,11 @@ export class CustomerDataComponent implements OnInit {
 
   ngOnInit() {
       var context = JSON.parse(localStorage.getItem("UserAccess"));
-      this.businessDt = new Date(context["BusinessDt"]);
-      this.businessDt.setDate(this.businessDt.getDate() - 1);
+      if (context != null && context != undefined) // TOLONG JANGAN DIHAPUS, SUPAYA BISA DIAKSES EXTERNAL PAGE TANPA PERLU LOGIN!!!
+      {
+        this.businessDt = new Date(context["BusinessDt"]);
+        this.businessDt.setDate(this.businessDt.getDate() - 1);
+      }
       this.reqLeadCustObj = new LeadCustObj();
       this.reqLeadCustObj.LeadId = this.LeadId;
       this.http.post(this.getLeadCustByLeadId, this.reqLeadCustObj).subscribe(
