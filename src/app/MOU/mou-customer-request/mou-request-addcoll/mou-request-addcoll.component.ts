@@ -29,6 +29,7 @@ export class MouRequestAddcollComponent implements OnInit {
   @ViewChild(UCSearchComponent) UCSearchComponent;
   @ViewChild('LookupCollateral') ucLookupCollateral : UclookupgenericComponent;
 
+  resultData: any;
   inputObj: InputSearchObj;
   arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   checkboxAll: boolean = false;
@@ -40,7 +41,6 @@ export class MouRequestAddcollComponent implements OnInit {
   pageSize: number;
   apiUrl: string;
   totalData: number;
-  resultData: any;
   tempData: any;
   arrAddCrit: Array<CriteriaObj>;
   viewObj: string;
@@ -93,6 +93,7 @@ export class MouRequestAddcollComponent implements OnInit {
     AssetTypeCode: ['', [Validators.required]],
     CollateralValueAmt: [0, [Validators.required]],
     FullAssetCode: [''],
+    AssetCategoryCode: [''],
     OwnerName: ['', [Validators.required]],
     OwnerRelationship: ['', [Validators.required]],
     OwnerIdNo: ['', [Validators.required]],
@@ -118,7 +119,6 @@ export class MouRequestAddcollComponent implements OnInit {
 
   ngOnInit() {
     this.items = this.AddCollForm.get('items') as FormArray;
-    this.bindUcLookup(null);
     this.bindUcSearch();
     this.initAddrObj();
     this.bindMouData();
@@ -167,6 +167,7 @@ export class MouRequestAddcollComponent implements OnInit {
         this.AddCollForm.patchValue({
           AssetTypeCode: this.CollTypeList[0].Key
         });
+        this.bindUcLookup(this.CollTypeList[0].Value);
       })
 
     var refMasterObj = { RefMasterTypeCode: 'ID_TYPE' };
@@ -205,12 +206,13 @@ export class MouRequestAddcollComponent implements OnInit {
     {
       this.criteriaObj = new CriteriaObj();
       this.criteriaObj.restriction = AdInsConstant.RestrictionEq;
-      this.criteriaObj.propName = 'A.FULL_ASSET_CODE';
+      this.criteriaObj.propName = 'B.ASSET_TYPE_CODE';
       this.criteriaObj.value = value;
       this.criteriaList.push(this.criteriaObj);
     }
 
     this.inputLookupObj.addCritInput = this.criteriaList;
+    this.ucLookupCollateral.setAddCritInput();
   }
 
   bindUcSearch()
@@ -409,8 +411,9 @@ export class MouRequestAddcollComponent implements OnInit {
 
   getLookupCollateralTypeResponse(e) {
     this.AddCollForm.patchValue({
-      FullAssetCode: e.AssetTypeCode,
-      FullAssetName: e.FullAssetName
+      FullAssetCode: e.FullAssetCode,
+      FullAssetName: e.FullAssetName,
+      AssetCategoryCode: e.AssetCategoryCode
     });
     
     var AssetTypeCode = { 'AssetTypeCode': e.AssetTypeCode };
@@ -437,7 +440,6 @@ export class MouRequestAddcollComponent implements OnInit {
 
   onItemChange(value) {
     this.bindUcLookup(value);
-    this.ucLookupCollateral.setAddCritInput();
   }
   radioChange(event) {
     if( event.target.value == "USED"){
@@ -506,33 +508,29 @@ export class MouRequestAddcollComponent implements OnInit {
     } 
     this.mouCustCollateralObj.MouCustId = this.MouCustId;
     this.mouCustCollateralObj.AssetTypeCode = this.AddCollForm.controls.AssetTypeCode.value;
-    this.mouCustCollateralObj.FullAssetCode = this.AddCollForm.controls.AssetTypeCode.value;
+    this.mouCustCollateralObj.FullAssetCode = this.AddCollForm.controls.FullAssetCode.value;
     this.mouCustCollateralObj.FullAssetName = this.AddCollForm.controls.FullAssetName.value.value;
-    this.mouCustCollateralObj.AssetCategoryCode = "";
+    this.mouCustCollateralObj.AssetCategoryCode = this.AddCollForm.controls.AssetCategoryCode;
     this.mouCustCollateralObj.MrCollateralConditionCode = this.AddCollForm.controls.MrCollateralConditionCode.value;;
     this.mouCustCollateralObj.MrCollateralUsageCode = "COMMERCIAL";
     this.mouCustCollateralObj.CollateralStat = "NEW";
-    // this.mouCustCollateralObj.SerialNo1 = this.AddCollForm.controls.SerialNo1.value;
-    // this.mouCustCollateralObj.SerialNo2 = this.AddCollForm.controls.SerialNo2.value;
-    // this.mouCustCollateralObj.SerialNo3 = this.AddCollForm.controls.SerialNo3.value;
-    // this.mouCustCollateralObj.SerialNo4 = this.AddCollForm.controls.SerialNo4.value;
-    // this.mouCustCollateralObj.SerialNo5 = this.AddCollForm.controls.SerialNo5.value;
-      if(this.items.controls[0]!=null){ 
-      this.mouCustCollateralObj.SerialNo1 = this.items.controls[0]["controls"]["SerialNoValue"].value;
-      }
-      if(this.items.controls[1]!=null){  
-        this.mouCustCollateralObj.SerialNo2 = this.items.controls[1]["controls"]["SerialNoValue"].value;
-      }
-      if(this.items.controls[2]!=null){  
-        this.mouCustCollateralObj.SerialNo3 = this.items.controls[2]["controls"]["SerialNoValue"].value;
-      }
-      if(this.items.controls[3]!=null){  
-        this.mouCustCollateralObj.SerialNo4= this.items.controls[3]["controls"]["SerialNoValue"].value;
-      }
-      if(this.items.controls[4]!=null){  
-        this.mouCustCollateralObj.SerialNo5 = this.items.controls[4]["controls"]["SerialNoValue"].value; 
-      }
- 
+
+    if(this.items.controls[0]!=null){ 
+    this.mouCustCollateralObj.SerialNo1 = this.items.controls[0]["controls"]["SerialNoValue"].value;
+    }
+    if(this.items.controls[1]!=null){  
+      this.mouCustCollateralObj.SerialNo2 = this.items.controls[1]["controls"]["SerialNoValue"].value;
+    }
+    if(this.items.controls[2]!=null){  
+      this.mouCustCollateralObj.SerialNo3 = this.items.controls[2]["controls"]["SerialNoValue"].value;
+    }
+    if(this.items.controls[3]!=null){  
+      this.mouCustCollateralObj.SerialNo4= this.items.controls[3]["controls"]["SerialNoValue"].value;
+    }
+    if(this.items.controls[4]!=null){  
+      this.mouCustCollateralObj.SerialNo5 = this.items.controls[4]["controls"]["SerialNoValue"].value; 
+    }
+
     this.mouCustCollateralObj.CollateralValueAmt = this.AddCollForm.controls.CollateralValueAmt.value;
     this.mouCustCollateralObj.CollateralNotes = this.AddCollForm.controls.Notes.value;
 
@@ -558,7 +556,6 @@ export class MouRequestAddcollComponent implements OnInit {
     this.mouCustCollateralRegistrationObj.LocationAreaCode2 = this.AddCollForm.controls["locationAddr"]["controls"].AreaCode2.value;
     this.mouCustCollateralRegistrationObj.LocationAreaCode3 = this.AddCollForm.controls["locationAddr"]["controls"].AreaCode3.value;
     this.mouCustCollateralRegistrationObj.LocationAreaCode4 = this.AddCollForm.controls["locationAddr"]["controls"].AreaCode4.value;
-
   }
 
   copyToLocation()

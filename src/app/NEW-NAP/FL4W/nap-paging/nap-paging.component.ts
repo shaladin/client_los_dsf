@@ -11,7 +11,7 @@ import { CenterGrpOfficeMbrObj } from 'app/shared/model/RefOffice/CenterGrpOffic
 @Component({
   selector: 'app-nap-paging',
   templateUrl: './nap-paging.component.html',
-  styleUrls: ['./nap-paging.component.scss']
+  styleUrls: []
 })
 export class NapPagingComponent implements OnInit {
 
