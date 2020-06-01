@@ -309,12 +309,15 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
               var idx = 1;
               this.selectedNationalityCountryCode = this.MrNationalityCode[idx].ReserveField1;
               this.selectedNationalityCountryName = this.MrNationalityCode[idx].ReserveField2;
+            }else{
+              this.isLocal = false;
+              this.http.post(AdInsConstant.GetRefCountryByCountryCode, { CountryCode: this.resultData.WnaCountryCode }).subscribe(
+                (response) => {
+                  this.inputLookupObj1.nameSelect = response["CountryName"];
+                }
+              );
             }
-            this.http.post(AdInsConstant.GetRefCountryByCountryCode, { CountryCode: this.resultData.WnaCountryCode }).subscribe(
-              (response) => {
-                this.inputLookupObj1.nameSelect = response["CountryName"];
-              }
-            );
+           
           });
         this.http.post(AdInsConstant.GetCustAddrByMrCustAddrType, { CustId: event.CustId, MrCustAddrTypeCode: "LEGAL" }).subscribe(
           (response) => {
