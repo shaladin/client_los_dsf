@@ -5,7 +5,7 @@ import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { CenterGrpOfficeMbrObj } from 'app/shared/model/RefOffice/CenterGrpOfficeMbrObj.Model';
 
 @Component({
@@ -21,16 +21,14 @@ export class NapPagingComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {
+    private router: Router  ) {
   }
 
   makeCriteria(){
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
-    critObj.propName = 'RL.BIZ_TMPLT_CODE';
-    critObj.value = AdInsConstant.CF4W;
+    critObj.propName = 'WTL.ACT_CODE';
+    critObj.value = "NAP_"+AdInsConstant.CF4W;
     this.arrCrit.push(critObj);
     
     critObj = new CriteriaObj();

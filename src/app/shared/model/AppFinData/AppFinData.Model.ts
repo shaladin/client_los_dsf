@@ -66,6 +66,11 @@ export class AppFinDataObj {
     TotalDisbAmt: number;
     Tenor: number;
     RefundInterestAmt: number;
+    LcRate: number;
+    MrLcCalcMethodCode: string;
+    LcGracePeriod: number;
+    PrepaymentPenaltyRate: number;
+    SellEffectiveRatePrcnt: number;
 
     constructor() {
     }

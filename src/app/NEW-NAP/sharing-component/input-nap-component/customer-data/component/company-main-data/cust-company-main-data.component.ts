@@ -10,6 +10,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { formatDate } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { CustDataCompanyObj } from 'app/shared/model/CustDataCompanyObj.Model';
+import { AppObj } from 'app/shared/model/App/App.Model';
 
 @Component({
   selector: 'app-cust-company-main-data',
@@ -28,7 +29,8 @@ export class CustCompanyMainDataComponent implements OnInit {
   @Input() custDataCompanyObj: CustDataCompanyObj = new CustDataCompanyObj();
   @Input() custType: any;
   @Output() callbackCopyCust: EventEmitter<any> = new EventEmitter();
-
+  AppObj: AppObj = new AppObj();
+  AppId: number;
 
   refMasterObj = {
     RefMasterTypeCode: "",
@@ -45,18 +47,20 @@ export class CustCompanyMainDataComponent implements OnInit {
   IdTypeObj: any;
   CompanyTypeObj: any;
   CustModelObj: any;
-  custModelReqObj= {
+  custModelReqObj = {
     MrCustTypeCode: ""
   };
 
 
   constructor(
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
     private route: ActivatedRoute) {
-
-     }
+    this.route.queryParams.subscribe(params => {
+      this.AppId = params['AppId'];
+    });
+  }
 
   ngOnInit() {
 
@@ -85,7 +89,7 @@ export class CustCompanyMainDataComponent implements OnInit {
     });
     this.InputLookupCustomerObj.isReadonly = true;
 
-    var custObj = {CustId: event.CustId};
+    var custObj = { CustId: event.CustId };
     this.http.post(AdInsConstant.GetCustCompanyForCopyByCustId, custObj).subscribe(
       (response) => {
         console.log(response);
@@ -98,8 +102,8 @@ export class CustCompanyMainDataComponent implements OnInit {
     );
   }
 
-  CopyCustomer(response){
-    if(response["CustObj"] != undefined){
+  CopyCustomer(response) {
+    if (response["CustObj"] != undefined) {
       this.parentForm.controls[this.identifier].patchValue({
         CustNo: response["CustObj"].CustNo,
         CustModelCode: response["CustObj"].MrCustModelCode,
@@ -107,34 +111,34 @@ export class CustCompanyMainDataComponent implements OnInit {
         IsVip: response["CustObj"].IsVip
       });
       this.InputLookupCustomerObj.nameSelect = response["CustObj"].CustName;
-      this.InputLookupCustomerObj.jsonSelect = {CustName: response["CustObj"].CustName};
+      this.InputLookupCustomerObj.jsonSelect = { CustName: response["CustObj"].CustName };
       this.selectedCustNo = response["CustObj"].CustNo;
       this.parentForm.controls[this.identifier]['controls']["TaxIdNo"].disable();
     }
 
-    if(response["CustCompanyObj"] != undefined){
+    if (response["CustCompanyObj"] != undefined) {
       this.parentForm.controls[this.identifier].patchValue({
         IndustryTypeCode: response["CustCompanyObj"].IndustryTypeCode,
         CompanyBrandName: response["CustCompanyObj"].CompanyBrandName,
-        MrCompanyTypeCode: response["CustCompanyObj"].MrCompanyTypeCode,		
+        MrCompanyTypeCode: response["CustCompanyObj"].MrCompanyTypeCode,
         NumOfEmp: response["CustCompanyObj"].NumOfEmp,
         IsAffiliated: response["CustCompanyObj"].IsAffiliated,
         EstablishmentDt: formatDate(response["CustCompanyObj"].EstablishmentDt, 'yyyy-MM-dd', 'en-US')
       });
-      
+
       this.setIndustryTypeName(response["CustCompanyObj"].IndustryTypeCode);
-    }    
+    }
   }
 
-  
-  GetIndustryType(event){
+
+  GetIndustryType(event) {
     this.parentForm.controls[this.identifier].patchValue({
       IndustryTypeCode: event.IndustryTypeCode
     });
   }
 
 
-  setCriteriaLookupCustomer(custTypeCode){
+  setCriteriaLookupCustomer(custTypeCode) {
     var arrCrit = new Array();
     var critObj = new CriteriaObj();
     critObj.DataType = 'text';
@@ -145,14 +149,14 @@ export class CustCompanyMainDataComponent implements OnInit {
     this.InputLookupCustomerObj.addCritInput = arrCrit;
   }
 
-  setIndustryTypeName(industryTypeCode){
+  setIndustryTypeName(industryTypeCode) {
     this.refIndustryObj.IndustryTypeCode = industryTypeCode;
 
     this.http.post(AdInsConstant.GetRefIndustryTypeByCode, this.refIndustryObj).subscribe(
       (response) => {
         console.log(response);
         this.InputLookupIndustryTypeObj.nameSelect = response["IndustryTypeName"];
-        this.InputLookupIndustryTypeObj.jsonSelect = response;     
+        this.InputLookupIndustryTypeObj.jsonSelect = response;
       },
       (error) => {
         console.log(error);
@@ -161,10 +165,10 @@ export class CustCompanyMainDataComponent implements OnInit {
 
   }
 
-  bindCustData(){
+  bindCustData() {
     console.log("bind cust data");
     console.log(this.custDataCompanyObj);
-    if(this.custDataCompanyObj.AppCustObj.AppCustId != 0){
+    if (this.custDataCompanyObj.AppCustObj.AppCustId != 0) {
       this.parentForm.controls[this.identifier].patchValue({
         CustNo: this.custDataCompanyObj.AppCustObj.CustNo,
         CustModelCode: this.custDataCompanyObj.AppCustObj.CustModelCode,
@@ -172,17 +176,17 @@ export class CustCompanyMainDataComponent implements OnInit {
         IsVip: this.custDataCompanyObj.AppCustObj.IsVip
       });
       this.InputLookupCustomerObj.nameSelect = this.custDataCompanyObj.AppCustObj.CustName;
-      this.InputLookupCustomerObj.jsonSelect = {CustName: this.custDataCompanyObj.AppCustObj.CustName};
-      if(this.custDataCompanyObj.AppCustObj.CustNo != undefined && this.custDataCompanyObj.AppCustObj.CustNo != ""){
+      this.InputLookupCustomerObj.jsonSelect = { CustName: this.custDataCompanyObj.AppCustObj.CustName };
+      if (this.custDataCompanyObj.AppCustObj.CustNo != undefined && this.custDataCompanyObj.AppCustObj.CustNo != "") {
         this.InputLookupCustomerObj.isReadonly = true;
       }
     }
-    
-    if(this.custDataCompanyObj.AppCustCompanyObj.AppCustCompanyId != 0){
+
+    if (this.custDataCompanyObj.AppCustCompanyObj.AppCustCompanyId != 0) {
       this.parentForm.controls[this.identifier].patchValue({
         IndustryTypeCode: this.custDataCompanyObj.AppCustCompanyObj.IndustryTypeCode,
         CompanyBrandName: this.custDataCompanyObj.AppCustCompanyObj.CompanyBrandName,
-        MrCompanyTypeCode: this.custDataCompanyObj.AppCustCompanyObj.MrCompanyTypeCode,		
+        MrCompanyTypeCode: this.custDataCompanyObj.AppCustCompanyObj.MrCompanyTypeCode,
         NumOfEmp: this.custDataCompanyObj.AppCustCompanyObj.NumOfEmp,
         IsAffiliated: this.custDataCompanyObj.AppCustCompanyObj.IsAffiliated,
         EstablishmentDt: formatDate(this.custDataCompanyObj.AppCustCompanyObj.EstablishmentDt, 'yyyy-MM-dd', 'en-US')
@@ -191,35 +195,48 @@ export class CustCompanyMainDataComponent implements OnInit {
     }
   }
 
-  initLookup(){
-    this.InputLookupCustomerObj = new InputLookupObj();
-    this.InputLookupCustomerObj.urlJson = "./assets/uclookup/lookupCustomer.json";
-    this.InputLookupCustomerObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupCustomerObj.urlEnviPaging = environment.FoundationR3Url;
-    this.InputLookupCustomerObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
-    this.InputLookupCustomerObj.genericJson = "./assets/uclookup/lookupCustomer.json";
-    this.InputLookupCustomerObj.isReadonly = false;
-    this.setCriteriaLookupCustomer(AdInsConstant.CustTypeCompany);
+  initLookup() {
+    var AppObj = { AppId: this.AppId };
+    this.http.post<AppObj>(AdInsConstant.GetAppById, AppObj).subscribe(
+      (response) => {
+        this.AppObj = response;
 
-    this.InputLookupIndustryTypeObj = new InputLookupObj();
-    this.InputLookupIndustryTypeObj.urlJson = "./assets/uclookup/lookupIndustryType.json";
-    this.InputLookupIndustryTypeObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupIndustryTypeObj.urlEnviPaging = environment.FoundationR3Url;
-    this.InputLookupIndustryTypeObj.pagingJson = "./assets/uclookup/lookupIndustryType.json";
-    this.InputLookupIndustryTypeObj.genericJson = "./assets/uclookup/lookupIndustryType.json";
+        this.InputLookupCustomerObj = new InputLookupObj();
+        this.InputLookupCustomerObj.urlJson = "./assets/uclookup/lookupCustomer.json";
+        this.InputLookupCustomerObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+        this.InputLookupCustomerObj.urlEnviPaging = environment.FoundationR3Url;
+        this.InputLookupCustomerObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
+        this.InputLookupCustomerObj.genericJson = "./assets/uclookup/lookupCustomer.json";
+        if (this.AppObj.BizTemplateCode != AdInsConstant.FCTR) {
+          this.InputLookupCustomerObj.isReadonly = false;
+        }
+        this.setCriteriaLookupCustomer(AdInsConstant.CustTypeCompany);
 
+        this.InputLookupIndustryTypeObj = new InputLookupObj();
+        this.InputLookupIndustryTypeObj.urlJson = "./assets/uclookup/lookupIndustryType.json";
+        this.InputLookupIndustryTypeObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+        this.InputLookupIndustryTypeObj.urlEnviPaging = environment.FoundationR3Url;
+        this.InputLookupIndustryTypeObj.pagingJson = "./assets/uclookup/lookupIndustryType.json";
+        this.InputLookupIndustryTypeObj.genericJson = "./assets/uclookup/lookupIndustryType.json";
+
+        this.InputLookupCustomerObj.isReady = true;
+      }, 
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
-  bindAllRefMasterObj(){
+  bindAllRefMasterObj() {
     this.bindCompanyTypeObj();
   }
 
-  bindCompanyTypeObj(){
+  bindCompanyTypeObj() {
     this.refMasterObj.RefMasterTypeCode = "COMPANY_TYPE";
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.CompanyTypeObj = response["ReturnObject"];
-        if(this.CompanyTypeObj.length > 0  && (this.parentForm.controls[this.identifier]["controls"].MrCompanyTypeCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrCompanyTypeCode.value == "")){
+        if (this.CompanyTypeObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrCompanyTypeCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrCompanyTypeCode.value == "")) {
           this.parentForm.controls[this.identifier].patchValue({
             MrCompanyTypeCode: this.CompanyTypeObj[0].Key
           });
@@ -229,12 +246,12 @@ export class CustCompanyMainDataComponent implements OnInit {
     );
   }
 
-  bindCustModelObj(){
+  bindCustModelObj() {
     this.custModelReqObj.MrCustTypeCode = AdInsConstant.CustTypeCompany;
-     this.http.post(AdInsConstant.GetListKeyValueByMrCustTypeCode, this.custModelReqObj).toPromise().then(
+    this.http.post(AdInsConstant.GetListKeyValueByMrCustTypeCode, this.custModelReqObj).toPromise().then(
       (response) => {
         this.CustModelObj = response["ReturnObject"];
-        if(this.CustModelObj.length > 0  && (this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "")){
+        if (this.CustModelObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "")) {
           this.parentForm.controls[this.identifier].patchValue({
             CustModelCode: this.CustModelObj[0].Key
           });
