@@ -1,4 +1,4 @@
-<form class="form-horizontal" [formGroup]="FinDataForm" (ngSubmit)="FinDataForm.valid && Submit()" #enjiForm="ngForm">
+<form class="form-horizontal" [formGroup]="FinDataForm" (ngSubmit)="FinDataForm.valid && SaveAndContinue()" #enjiForm="ngForm">
   <app-subsidy-FL4W *ngIf="IsParentLoaded" [AppId]="AppId" [ParentForm]="FinDataForm"></app-subsidy-FL4W>
   <app-fee-FL4W *ngIf="IsParentLoaded" [AppId]="AppId" [ParentForm]="FinDataForm" [identifier]="'AppFee'"></app-fee-FL4W>
   <app-schm-reguler-fix-FL4W *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'RF'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-reguler-fix-FL4W>
@@ -237,7 +237,7 @@
               </lib-uc-show-errors>
             </div>
             <div class="col-md-3 form-inline">
-              <label>Diff Rate Amount (Commission Amount)</label>
+              <label>Diff Rate Amount</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{FinDataForm.controls.DiffRateAmt.value | number : '1.2-2'}}</label>
@@ -306,14 +306,13 @@
   </div> -->
 
   <div class="form-inline-right">
-    <button type="submit" class="btn btn-raised btn-primary" translate type="button" tabindex="0"
-      (click)="SaveAndContinue()">
-      Save
+    <button type="submit" class="btn btn-raised btn-primary" translate>
+      <i class="far fa-check-square"></i> Save
     </button>
   </div>
     
 </form>
-
-<!-- <button class="btn btn-raised btn-primary" translate type="button" tabindex="0" (click)="test()">
+<!-- 
+<button class="btn btn-raised btn-primary" translate type="button" tabindex="0" (click)="test()">
   Test
 </button> -->
