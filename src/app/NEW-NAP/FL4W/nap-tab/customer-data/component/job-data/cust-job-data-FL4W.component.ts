@@ -56,8 +56,7 @@ export class CustJobDataFL4WComponent implements OnInit {
   CompanyScaleObj: any;
   InvestmentTypeObj: any;
   CustModelObj: any;
-
-
+  businessDt: Date = new Date();
 
   constructor(
     private fb: FormBuilder, 
@@ -68,6 +67,9 @@ export class CustJobDataFL4WComponent implements OnInit {
      }
 
    ngOnInit() {
+    var context = JSON.parse(localStorage.getItem("UserAccess"));
+    this.businessDt = new Date(context["BusinessDt"]);
+    this.businessDt.setDate(this.businessDt.getDate() - 1);
     console.log(this.identifier);
     console.log(this.parentForm);
 

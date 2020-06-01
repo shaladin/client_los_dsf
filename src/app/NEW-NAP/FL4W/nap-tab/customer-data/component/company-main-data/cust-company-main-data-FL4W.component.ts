@@ -29,7 +29,7 @@ export class CustCompanyMainDataFL4WComponent implements OnInit {
   @Input() custType: any;
   @Output() callbackCopyCust: EventEmitter<any> = new EventEmitter();
 
-
+  businessDt: Date = new Date();
   refMasterObj = {
     RefMasterTypeCode: "",
   };
@@ -59,14 +59,16 @@ export class CustCompanyMainDataFL4WComponent implements OnInit {
      }
 
   ngOnInit() {
-
+    var context = JSON.parse(localStorage.getItem("UserAccess"));
+    this.businessDt = new Date(context["BusinessDt"]);
+    this.businessDt.setDate(this.businessDt.getDate() - 1);
     this.parentForm.addControl(this.identifier, this.fb.group({
       CustNo: [''],
       IndustryTypeCode: [''],
       CustModelCode: ['', [Validators.required, Validators.maxLength(50)]],
       CompanyBrandName: ['', Validators.maxLength(100)],
       MrCompanyTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
-      NumOfEmp: [0],
+      NumOfEmp: [0,[Validators.min(0)]],
       IsAffiliated: [false],
       EstablishmentDt: [''],
       TaxIdNo: ['', [Validators.required, Validators.maxLength(50)]],
