@@ -128,7 +128,7 @@ export class TcDataComponent implements OnInit {
         item.patchValue({
           PromisedDt: null
         });
-        item.get("PromisedDt").disable();
+        item.get("PromisedDt").enable();
         item.get("PromisedDt").clearValidators();
         item.patchValue({
           ExpiredDt: null
@@ -144,13 +144,19 @@ export class TcDataComponent implements OnInit {
     var fa_AppTc = this.AppTcForm.get("AppTc") as FormArray
     for (let i = 0; i < fa_AppTc.length; i++) {
       var item = fa_AppTc.at(i);
+      var prmsDt;
       var expDt = new Date(item.get("ExpiredDt").value);
-      var prmsDt = new Date(item.get("PromisedDt").value);
-      if(item.get("IsChecked").value && expDt < businessDt){
+      if (item.get("PromisedDt").value == null) {
+        prmsDt = null
+      }
+      else {
+        prmsDt = new Date(item.get("PromisedDt").value);
+      }
+      if (item.get("IsChecked").value && expDt < businessDt) {
         this.toastr.errorMessage("Expired Date for " + item.get("TcName").value + " can't be lower than Business Date");
         return;
       }
-      if (item.get("IsChecked").value == false && prmsDt < businessDt) {
+      if (item.get("IsChecked").value == false && prmsDt != null && prmsDt < businessDt) {
         this.toastr.errorMessage("Promise Date for " + item.get("TcName").value + " can't be lower than Business Date");
         return;
       }
