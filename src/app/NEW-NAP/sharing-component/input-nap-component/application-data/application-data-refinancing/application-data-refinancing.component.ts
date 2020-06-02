@@ -9,6 +9,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { NapAppCrossObj } from 'app/shared/model/NapAppCrossObj.Model';
 import { ActivatedRoute } from '@angular/router';
+import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 
 @Component({
   selector: 'app-application-data-refinancing',
@@ -52,7 +53,7 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     CurrCode: [''],
     LobCode: [''],
     RefProdTypeCode: [''],
-    Tenor: ["", [Validators.pattern("^[0-9]+$"), Validators.required]],
+    Tenor: ["", [Validators.pattern("^[0-9]+$"), Validators.required, Validators.min(1)]],
     NumOfInst: ['1'],
     PayFreqCode: ['', Validators.required],
     MrFirstInstTypeCode: ["", Validators.required],
@@ -94,8 +95,12 @@ export class ApplicationDataRefinancingComponent implements OnInit {
   employeeIdentifier;
   salesRecommendationItems = [];
   isInputLookupObj;
-  ngOnInit() {
-    this.ListCrossAppObj["AppId"]=this.AppId;
+
+  mouCustObj;
+  resMouCustObj;
+  CustNo: string;
+  ngOnInit()  {
+    this.ListCrossAppObj["appId"] = this.AppId;
     this.ListCrossAppObj["result"] = [];
     this.isInputLookupObj = false;
     console.log('test app data refinanc');
@@ -116,6 +121,36 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     this.getPayFregData();
     this.getAppSrcData();
     this.GetCrossInfoData();
+
+    var user = JSON.parse(localStorage.getItem("UserAccess"));
+    var AppObj = {
+      AppId: this.AppId
+    }
+    this.http.post(AdInsConstant.GetAppCustByAppId, AppObj).subscribe(
+      (response) => { 
+       this.CustNo = response["CustNo"];
+       console.log("asd")
+       console.log(this.CustNo);
+
+        this.mouCustObj = new MouCustObj();
+        this.mouCustObj.CustNo = this.CustNo;
+        this.mouCustObj.StartDt = user.BusinessDt;
+
+        this.http.post(AdInsConstant.GetListMouCustByCustNo, this.mouCustObj).subscribe(
+          (response) => {
+            this.resMouCustObj = response["ReturnObject"];
+            
+              // console.log("resMouCustObj")
+              // console.log(this.resMouCustObj)
+
+            // if(this.resMouCustObj.length > 0)
+            // {
+            //   this.NapAppModelForm.patchValue({ MouCustId: this.resMouCustObj[0].Key });
+            // }
+          }
+        );
+      });
+    
   }
 
   getDDLFromProdOffering(refProdCompntCode:string){
@@ -218,9 +253,11 @@ export class ApplicationDataRefinancingComponent implements OnInit {
       RowVersion: ""
     };
 
-    this.http.post(AdInsConstant.GetAppByIds, obj).subscribe(
+    this.http.post(AdInsConstant.GetAppDetailForTabAddEditAppById, obj).subscribe(
       (response) => {
         this.resultResponse = response;
+        console.log("testdata")
+        console.log(this.resultResponse)
         this.NapAppModelForm.patchValue({
           MouCustId: this.resultResponse.MouCustId,
           LeadId: this.resultResponse.LeadId,
@@ -252,6 +289,7 @@ export class ApplicationDataRefinancingComponent implements OnInit {
           SrvyOrderNo: this.resultResponse.SrvyOrderNo,
           ApvDt: this.resultResponse.ApvDt,
           SalesHeadNo: this.resultResponse.SalesHeadNo,
+          SalesHeadName: this.resultResponse.SalesHeadName,
           SalesNotes: this.resultResponse.SalesNotes,
           SalesOfficerNo: this.resultResponse.SalesOfficerNo,
           CreditAdminNo: this.resultResponse.CreditAdminNo,
@@ -352,7 +390,8 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupEmp.json";
-    this.inputLookupObj.nameSelect = this.NapAppModelForm.controls.SalesOfficerName.value;
+    this.inputLookupObj.jsonSelect = this.resultResponse;
+    //this.inputLookupObj.nameSelect = this.NapAppModelForm.controls.SalesOfficerName.value;
     this.inputLookupObj.addCritInput = this.arrAddCrit;
     this.isInputLookupObj = true;
   }
@@ -552,8 +591,8 @@ export class ApplicationDataRefinancingComponent implements OnInit {
   }
 
   AddTemp(contentCrossApp){
-    console.log("App Data Refinancing Form: " + JSON.stringify(this.NapAppModelForm.value));
-    console.log("Is Form Valid : " + this.NapAppModelForm.valid);
+    //console.log("App Data Refinancing Form: " + JSON.stringify(this.NapAppModelForm.value));
+    //console.log("Is Form Valid : " + this.NapAppModelForm.valid);
     this.Open(contentCrossApp);
   }
 
@@ -566,19 +605,21 @@ export class ApplicationDataRefinancingComponent implements OnInit {
   }
 
   DeleteCrossApp(idx){
-    if(this.resultCrossApp[idx].AppCrossId!=null){
-      var obj = new NapAppCrossObj();
-      obj = this.resultCrossApp[idx];
-      this.http.post(AdInsConstant.DeleteAppCross, obj).subscribe(
-        (response) =>{
-        },
-        (error) => {
-          console.log(error);
-        }
-      )
+    if (confirm('Are you sure to delete this record?')) {
+      if (this.resultCrossApp[idx].AppCrossId != null){
+        var obj = new NapAppCrossObj();
+        obj = this.resultCrossApp[idx];
+        this.http.post(AdInsConstant.DeleteAppCross, obj).subscribe(
+          (response) =>{
+          },
+          (error) => {
+            console.log(error);
+          }
+        )
+      }
+      this.resultCrossApp.splice(idx, 1);
+      this.ListCrossAppObj["result"].splice(idx, 1);
     }
-    this.resultCrossApp.splice(idx, 1);
-    this.ListCrossAppObj["result"].splice(idx, 1);
   }
 
 }

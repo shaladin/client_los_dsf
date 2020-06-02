@@ -4,7 +4,7 @@
   <div id="CustCompanyMainData">
     <div class="form-group row">
       <label class="col-md-2 adins-required-label" for="custName" translate>Customer Name</label>
-      <div class="col-md-4">
+      <div class="col-md-4" *ngIf="InputLookupCustomerObj.isReady">
         <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupCustomerObj" [parentForm]="parentForm" [identifier]="'lookupCustomerCompany'" (lookup)="CopyCustomerEvent($event)"></lib-uclookupgeneric>
       </div>
       <label class="col-md-2 adins-required-label" for="custModel" translate>Customer Model</label>
@@ -12,8 +12,10 @@
         <select class="form-control adInsInput" style="width: auto" formControlName="CustModelCode">
           <option value="">-Select One-</option>
           <option *ngFor="let item of CustModelObj" value="{{item.Key}}">
-            {{item.Value}} </option>
+            {{item.Value}} 
+          </option>
         </select>
+        <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].CustModelCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
       </div>
     </div>
     <div class="form-group row">

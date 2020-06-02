@@ -73,7 +73,8 @@ export class ListCompanyComponent implements OnInit {
           "BirthDt" : this.AppCustCompanyObj.EstablishmentDt,
           "MotherMaidenName" : "-",
           "MobilePhnNo1" : "-",
-          "RowVersion"  : this.RowVersion     
+          "RowVersion": this.RowVersion,
+          "AppId": this.AppId
         }
         console.log(requestDupCheck);
         //List Cust And Negative Cust Dup Check

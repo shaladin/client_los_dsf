@@ -1,0 +1,35 @@
+<div class="card">
+  <div class="card-header">
+    <h4 class="card-title" translate> Credit Approval </h4>
+  </div>
+  <div class="card-body">
+    <lib-ucviewgeneric [viewInput]="viewObj" [whereValue]="arrValue"></lib-ucviewgeneric>
+    <!-- <aw-wizard #wizard navBarLayout="large-empty-symbols" [awNavigationMode] navigateBackward="allow"
+      navigateForward="allow" [defaultStepIndex]="0">
+      <aw-wizard-step [stepTitle]="'CUSTOMER DATA'" (stepEnter)="EnterTab('customerData')"
+        [navigationSymbol]="{ symbol: '1' }">
+        <app-view-app-cust-data-personal *ngIf="type == 'customerData' && mrCustTypeCode == 'PERSONAL'" [appId]="appId">
+        </app-view-app-cust-data-personal>
+        <app-view-app-cust-data-company *ngIf="type == 'customerData' && mrCustTypeCode == 'COMPANY'" [appId]="appId">
+        </app-view-app-cust-data-company>
+      </aw-wizard-step>
+      <aw-wizard-step [stepTitle]="'APPLICATION DATA'" (stepEnter)="EnterTab('appData')"
+        [navigationSymbol]="{ symbol: '2' }">
+      <app-tab-application-data [appId]= "appId"></app-tab-application-data>
+      </aw-wizard-step>
+      <aw-wizard-step [stepTitle]="'FRAUD DETECTION RESULT'" (stepEnter)="EnterTab('fraudDetection')"
+      [navigationSymbol]="{ symbol: '3' }">
+      <app-view-fraud-detection-result [appId]="appId" [mrCustTypeCode]="mrCustTypeCode">
+      </app-view-fraud-detection-result>
+    </aw-wizard-step>
+    <aw-wizard-step [stepTitle]="'DEVIATION'" (stepEnter)="EnterTab('deviation')"
+    [navigationSymbol]="{ symbol: '4' }">
+    </aw-wizard-step> 
+    <aw-wizard-step [stepTitle]="'CUSTOMER HISTORY'" (stepEnter)="EnterTab('custHistory')"
+    [navigationSymbol]="{ symbol: '5' }">
+    </aw-wizard-step> 
+    </aw-wizard> -->
+    <lib-ucapproval [inputObj]="inputObj" (nextTask)="onAvailableNextTask($event)" (result)="onApprovalSubmited($event)">
+    </lib-ucapproval> 
+  </div>
+</div>

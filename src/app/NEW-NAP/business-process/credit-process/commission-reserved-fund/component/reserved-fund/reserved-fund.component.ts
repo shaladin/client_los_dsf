@@ -87,6 +87,7 @@ export class ReservedFundComponent implements OnInit {
         this.toastr.errorMessage("Total Reserved Fund Amount Must be Less Than Remaining Allocated Amount");
       }
       else {
+        var lobCode = localStorage.getItem("BizTemplateCode");
         this.setAppReservedFundData();
         this.http.post(this.addEditRsvFundUrl, this.allAppReservedFundObj).subscribe(
           (response) => {
@@ -94,7 +95,7 @@ export class ReservedFundComponent implements OnInit {
             if (this.allAppReservedFundObj.ReturnHandlingHId != 0 && this.allAppReservedFundObj.ReturnHandlingHId != undefined) {
               this.outputTab.emit(this.allAppReservedFundObj);
             } else {
-              this.router.navigate(["/Nap/CreditProcess/CommissionReservedFund/Paging"], { queryParams: { LobCode: "CF4W" } })
+              this.router.navigate(["/Nap/CreditProcess/CommissionReservedFund/Paging"], { queryParams: { BizTemplateCode: lobCode } })
             }
           },
           (error) => {

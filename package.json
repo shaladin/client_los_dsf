@@ -23,7 +23,7 @@
     "@adins/ucinputnumber": "^1.0.1",
     "@adins/uclookupgeneric": "^2.0.13",
     "@adins/ucpaging": "^2.0.17",
-    "@adins/ucreport": "^1.0.1",
+    "@adins/ucreport": "^1.0.3",
     "@adins/ucthingstodo": "^1.0.1",
     "@adins/ucupload": "^1.6.4",
     "@adins/ucviewgeneric": "^2.0.9",

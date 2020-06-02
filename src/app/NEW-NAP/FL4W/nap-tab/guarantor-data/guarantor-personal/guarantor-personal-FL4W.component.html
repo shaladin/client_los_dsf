@@ -3,7 +3,7 @@
     <div class="card">
       <div class="card-body">
         <div class="px-3">
-          <form class="form form-horizontal" [formGroup]="PersonalForm" #enjiForm="ngForm">
+          <form class="form form-horizontal" [formGroup]="PersonalForm" #enjiForm="ngForm" (ngSubmit)="PersonalForm.valid && SaveForm()">
             <div class="form-body">
               <lib-ucSubsection [id]="'mainDataId'" [title]="'Main Data'" [panel]="'mainData'">
               </lib-ucSubsection>
@@ -11,16 +11,16 @@
                 <!-- left -->
                 <div class="col-md-6 ">
                   <div class="form-group row adins-required">
-                    <label class="col-md-6 adInsLabel">Guarantor Name </label>
-                    <div class="col-md-6">
+                    <label class="col-md-4 adInsLabel">Guarantor Name </label>
+                    <div class="col-md-8">
                       <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]="PersonalForm"
                         [enjiForm]="enjiForm" [identifier]="'LookupGuarantor'" (lookup)="lookupGuarantor($event)">
                       </lib-uclookupgeneric>
                     </div>
                   </div>
                   <div class="form-group row adins-required">
-                    <label class="col-md-6 adInsLabel">Id Type </label>
-                    <div class="col-md-6">
+                    <label class="col-md-4 adInsLabel">Id Type </label>
+                    <div class="col-md-8">
                       <select class="form-control adInsInput full-width" style="width: auto" formControlName="MrIdTypeCode"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && PersonalForm.controls.MrIdTypeCode.invalid }">
                         <option *ngFor="let it of MrIdTypeCode" [value]="it.MasterCode">
@@ -31,8 +31,8 @@
                     </div>
                   </div>
                   <div class="form-group row adins-required">
-                    <label class="col-md-6 adInsLabel">ID No </label>
-                    <div class="col-md-6">
+                    <label class="col-md-4 adInsLabel">ID No </label>
+                    <div class="col-md-8">
                       <input type="number" class="form-control adInsInput width-100-per" formControlName="IdNo"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && PersonalForm.controls.IdNo.invalid}">
                       <lib-uc-show-errors [control]="PersonalForm.controls.IdNo" [submit]="enjiForm.submitted">
@@ -40,27 +40,29 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-6 adInsLabel">ID Expired Date </label>
-                    <div class="col-md-6">
-                      <input *ngIf="PersonalForm.controls.MrIdTypeCode.value == 'EKTP'" readonly type="date" class="form-control" id="idExpDt" formControlName="IdExpDt">
-                      <input *ngIf="PersonalForm.controls.MrIdTypeCode.value != 'EKTP'" type="date" class="form-control" id="idExpDt" formControlName="IdExpDt">
+                    <label class="col-md-4 adInsLabel">ID Expired Date </label>
+                    <div class="col-md-8">
+                      <input *ngIf="PersonalForm.controls.MrIdTypeCode.value == 'EKTP'" readonly type="date" class="form-control" id="idExpDt" formControlName="IdExpDt"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && PersonalForm.controls.IdExpDt.invalid}">
+                      <input *ngIf="PersonalForm.controls.MrIdTypeCode.value != 'EKTP'" type="date" class="form-control" id="idExpDt" formControlName="IdExpDt"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && PersonalForm.controls.IdExpDt.invalid}">
                       <lib-uc-show-errors [control]="PersonalForm.controls.IdExpDt" [submit]="enjiForm.submitted">
                       </lib-uc-show-errors>
                     </div>
                   </div>
                   <div class="form-group row adins-required">
-                    <label class="col-md-6 adInsLabel">Birth Place / Date </label>
-                    <div class="col-md-6">
+                    <label class="col-md-4 adInsLabel">Birth Place / Date </label>
+                    <div class="col-md-8">
                       <div class="form-group row ">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                           <input type="text" class="form-control adInsInput width-100-per" formControlName="BirthPlace"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && PersonalForm.controls.BirthPlace.invalid}">
                           <lib-uc-show-errors [control]="PersonalForm.controls.BirthPlace"
                             [submit]="enjiForm.submitted">
                           </lib-uc-show-errors>
                         </div>
-                        <div class="col-md-6">
-                          <input type="date" class="form-control adInsInput width-100-per" formControlName="BirthDt"
+                        <div class="col-md-7">
+                          <input type="date" class="form-control" formControlName="BirthDt" max="{{Max17YO | date:'yyyy-MM-dd'}}"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && PersonalForm.controls.BirthDt.invalid}">
                           <lib-uc-show-errors [control]="PersonalForm.controls.BirthDt" [submit]="enjiForm.submitted">
                           </lib-uc-show-errors>
@@ -69,8 +71,8 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-6 adInsLabel">NPWP </label>
-                    <div class="col-md-6">
+                    <label class="col-md-4 adInsLabel">NPWP </label>
+                    <div class="col-md-8">
                       <input type="text" class="form-control" formControlName="TaxIdNo"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && PersonalForm.controls.TaxIdNo.invalid}">
                       <lib-uc-show-errors [control]="PersonalForm.controls.TaxIdNo" [submit]="enjiForm.submitted">
@@ -78,8 +80,8 @@
                     </div>
                   </div>
                   <div class="form-group row adins-required">
-                    <label class="col-md-6 adInsLabel">Mobile Phone </label>
-                    <div class="col-md-6">
+                    <label class="col-md-4 adInsLabel">Mobile Phone </label>
+                    <div class="col-md-8">
                       <input type="number" class="form-control" id="npwp" formControlName="MobilePhnNo"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && PersonalForm.controls.MobilePhnNo.invalid}">
                       <lib-uc-show-errors [control]="PersonalForm.controls.MobilePhnNo" [submit]="enjiForm.submitted">
@@ -90,8 +92,8 @@
                 <!-- right -->
                 <div class="col-md-6 ">
                   <div class="form-group row adins-required">
-                    <label class="col-md-6 adInsLabel">Leesee Relationship </label>
-                    <div class="col-md-6">
+                    <label class="col-md-4 adInsLabel">Lessee Relationship </label>
+                    <div class="col-md-8">
                       <select class="form-control adInsInput full-width" style="width: auto"
                         formControlName="MrCustRelationshipCode"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && PersonalForm.controls.MrCustRelationshipCode.invalid }">
@@ -103,8 +105,8 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-6 adins-required-label" translate>Gender</label>
-                    <div class="col-md-6">
+                    <label class="col-md-4 adins-required-label" translate>Gender</label>
+                    <div class="col-md-8">
                       <select class="form-control adInsInput full-width" style="width: auto"
                         formControlName="MrGenderCode"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && PersonalForm.controls.MrGenderCode.invalid }">
@@ -119,8 +121,8 @@
                     </div>
                   </div>
                   <div class="form-group row adins-required">
-                    <label class="col-md-6 adInsLabel">Marital Status </label>
-                    <div class="col-md-6">
+                    <label class="col-md-4 adInsLabel">Marital Status </label>
+                    <div class="col-md-8">
                       <select class="form-control adInsInput full-width" style="width: auto" formControlName="MrMaritalStatCode"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && PersonalForm.controls.MrMaritalStatCode.invalid}">
                         <option value="">-Select One-</option>
@@ -132,8 +134,8 @@
                     </div>
                   </div>
                   <div class="form-group row adins-required">
-                    <label class="col-md-6 adInsLabel">Nationality </label>
-                    <div class="col-md-6">
+                    <label class="col-md-4 adInsLabel">Nationality </label>
+                    <div class="col-md-8">
                       <select class="form-control adInsInput full-width" style="width: auto" formControlName="MrNationalityCode"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && PersonalForm.controls.MrNationalityCode.invalid}" (change)="ChangeNationality($event)">
                         <option value="">-Select One-</option>
@@ -145,8 +147,8 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-6 adInsLabel">Country </label>
-                    <div class="col-md-6">
+                    <label class="col-md-4 adInsLabel">Country </label>
+                    <div class="col-md-8">
                       <lib-uclookupgeneric *ngIf="!isLocal" [lookupInput]="inputLookupObj1" [parentForm]="PersonalForm"
                         [enjiForm]="enjiForm" [identifier]="'LookupCountry'" (lookup)="lookupCountry($event)">
                       </lib-uclookupgeneric>
@@ -154,8 +156,8 @@
                     </div>
                   </div>
                   <div class="form-group row adins-required">
-                    <label class="col-md-6 adInsLabel">Religion </label>
-                    <div class="col-md-6">
+                    <label class="col-md-4 adInsLabel">Religion </label>
+                    <div class="col-md-8">
                       <select class="form-control adInsInput full-width" style="width: auto" formControlName="MrReligionCode"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && PersonalForm.controls.MrReligionCode.invalid}">
                         <option value="">-Select One-</option>
@@ -170,15 +172,15 @@
                 </div>
               </div>
               <lib-ucaddress #UcAddrGrp [title]="'Address'" [UCAddrForm]="PersonalForm" [enjiForm]="enjiForm"
-                [identifier]="'AddrObj'" [default]="AddrObj" [inputField]="inputFieldObj" [showPhn3]="false">
+                [identifier]="'AddrObj'" [default]="AddrObj" [inputField]="inputFieldObj" [showAllPhn]="false">
               </lib-ucaddress>
               <div class="form-actions right">
                 <button type="button" class="btn btn-raised btn-warning mr-1" (click)="cancel()" translate>
                   <i class="ft-x"></i> Cancel
                 </button>
-                <button type="submit" class="btn btn-raised btn-primary" (click)="SaveForm()">
-                  <i class="fa fa-check-square-o"></i> Save
-                </button>
+                <button type="submit" class="btn btn-raised btn-primary">
+                  <i class="far fa-check-square"></i> Save
+                </button> 
               </div>
             </div>
           </form>

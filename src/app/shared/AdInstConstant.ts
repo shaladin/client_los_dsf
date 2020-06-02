@@ -38,6 +38,8 @@ export class AdInsConstant {
   public static AppStepCSR = "CSR";
   public static FL4W = "FL4W";
   public static CF4W = "CF4W";
+  public static FCTR = "FCTR";
+  public static CFRFN4W = "CFRFN4W";
   public static CFNEWCAR = "CFNEWCAR";
   public static CENTER_GROUP_CODE = "CG";
 
@@ -192,10 +194,6 @@ export class AdInsConstant {
   //PREMIUM TYPE
   public static PremiumTypeAmt = "AMT";
   public static PremiumTypePrcnt = "PRCNT";
-
-  //LOB CODE
-  public static LobCodeFCTR = "FCTR";
-  public static LobCodeCFRFN = "CFRFN4W";
 
   //TOP CALC BASED
   public static TopCalcBasedInvcDt = "INVC_DT";
@@ -667,6 +665,7 @@ export class AdInsConstant {
   public static MULTIPLE_INST_TYPE = "MULTIPLE";
   public static PAY_FREQ_MONTHLY = "MONTHLY";
   public static INST_SCHM_REGULAR_FIXED = "RF";
+  public static GetListMouCustByCustNo = environment.losUrl + "/MouCust/GetListMouCustByCustNo";
   
 
   // MOU CUST ASSET
@@ -875,8 +874,9 @@ export class AdInsConstant {
   public static GetViewAppCollateralObjByAppId = environment.losUrl + "/AppCollateral/GetViewAppCollateralObjByAppId";
   public static GetAppCollateralByAppCollateralId = environment.losUrl + "/AppCollateral/GetAppCollateralByAppCollateralId";
   public static GetAppCollateralByAppId = environment.losUrl + "/AppCollateral/GetAppCollateralByAppId";
+  public static GetAppCollateralAndRegistrationByAppCollateralId = environment.losUrl + "/AppCollateral/GetAppCollateralAndRegistrationByAppCollateralId";
+  public static AddEditAllCollateralDataFactoring = environment.losUrl + "/AppCollateral/AddEditAllCollateralDataFactoring"
   
-
   // App Collateral Suppl Emp
   public static GetListAppAssetSupplEmpByAppAssetId = environment.losUrl + "/AppAssetSupplEmp/GetListAppAssetSupplEmpByAppAssetId";
   public static AddEditAllCollateralDataByAppCollateraId = "";
@@ -935,6 +935,7 @@ export class AdInsConstant {
   public static GetInsuranceDataByAppIdForView = environment.losUrl + "/AppIns/GetInsDataByAppIdForView";
   public static GetInsDataByAppIdAndAssetId = environment.losUrl + "/AppIns/GetInsDataByAppIdAndAssetId";
   public static AddEditInsuranceData = environment.losUrl + "/AppIns/AddEditInsuranceData";
+  public static AddEditInsuranceDataMultiAsset = environment.losUrl + "/AppIns/AddEditInsuranceDataMultiAsset";
   public static GetListAppInsObjByAppIdForView = environment.losUrl + "/AppIns/GetListAppInsObjByAppIdForView";
   public static GetAppInsObjViewDetail = environment.losUrl + "/AppIns/GetAppInsObjViewDetail";
 
@@ -1135,10 +1136,12 @@ export class AdInsConstant {
   // App Credit Review
   public static GetAppCrdRvwById = environment.losUrl + "/AppCrdRvw/GetAppCrdRvwById";
   public static AddOrEditAppCrdRvwData = environment.losUrl + "/AppCrdRvw/AddOrEditAppCrdRvwData";
+  public static GetLatestScoringResultHByTrxSourceNo = environment.FoundationR3Url + "/CreditScoring/GetLatestScoringResultHByTrxSourceNo";
 
   //RETURN HANDLING
   public static GetReturnHandlingWithDetailByReturnHandlingHId = environment.losUrl + "/ReturnHandlingH/GetReturnHandlingWithDetailByReturnHandlingHId";
   public static GetReturnHandlingDByAppIdAndMrReturnTaskCode = environment.losUrl + "/ReturnHandlingD/GetReturnHandlingDByAppIdAndMrReturnTaskCode";
+  public static GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode = environment.losUrl + "/ReturnHandlingD/GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode"
   public static AddReturnHandlingD = environment.losUrl + "/ReturnHandlingD/AddReturnHandlingD";
   public static EditReturnHandlingDNotesData = environment.losUrl + "/ReturnHandlingD/EditReturnHandlingDNotesData";
   public static EditReturnHandlingD = environment.losUrl + "/ReturnHandlingD/EditReturnHandlingD";
@@ -1177,6 +1180,7 @@ export class AdInsConstant {
 
   //RfaLog
   public static GetRfaLogByTrxNo = environment.FoundationR3Url + "/RfaLog/GetRfaLogByTrxNo";
+  public static GetRfaLogByTrxNoAndApvCategory = environment.FoundationR3Url + "/RfaLog/GetRfaLogByTrxNoAndApvCategory";
 
   //Ref App Attr
   public static GetListRefAppAttrCollateral = environment.losUrl + "/RefAppAttr/GetListRefAppAttrCollateral";
