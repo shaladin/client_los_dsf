@@ -7,6 +7,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { environment } from 'environments/environment';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppFeeObj } from 'app/shared/model/AppFeeObj.Model';
+import { ResultSubsidySchmMaxRuleObj } from 'app/shared/model/SubsidySchm/ResultSubsidySchmMaxRuleObj.Model';
 
 @Component({
   selector: 'app-subsidy-add-edit-FL4W',
@@ -25,6 +26,8 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
     SourceCodeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
     ValueTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
     showFromValue: boolean = false;
+    subsidyMaxRuleObj: ResultSubsidySchmMaxRuleObj = new ResultSubsidySchmMaxRuleObj();
+
     constructor(
       private fb: FormBuilder,
       private http: HttpClient,
@@ -34,6 +37,7 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
     ngOnInit() {
   
       this.InitForm();
+      // this.LoadSubsidyMaxRule();
       this.LoadDDLFromTypeCode();
       console.log(this.AppId);
     }
@@ -52,6 +56,16 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
         }
       );
       this.isSubmitted = false;
+    }
+
+    LoadSubsidyMaxRule()
+    {
+      this.http.post(AdInsConstant.GetRuleSubsidyMax, { AppId: this.AppId }).subscribe(
+        (response) => {
+          this.subsidyMaxRuleObj = response["ResultSubsidyMaxRuleObj"];
+          console.log(this.subsidyMaxRuleObj);
+        }
+      );
     }
   
     setSubmitted() {
@@ -78,12 +92,12 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
 
       this.http.post(environment.losUrl + "/AppSubsidy/AddSubsidy", subdObj ).subscribe(
         (response) => {
+          console.log(response);
           var x = response["ReturnObject"];
           this.emitData.emit(x);
+          this.activeModal.close();
         }
       );
-      
-      this.activeModal.close();
     }
   
     LoadDDLFromTypeCode() {

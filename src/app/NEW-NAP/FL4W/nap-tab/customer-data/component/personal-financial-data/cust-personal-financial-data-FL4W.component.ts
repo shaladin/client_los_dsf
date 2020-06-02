@@ -42,12 +42,12 @@ export class CustPersonalFinancialDataFL4WComponent implements OnInit {
 
     this.parentForm.removeControl(this.identifier);
     this.parentForm.addControl(this.identifier, this.fb.group({
-      MonthlyIncomeAmt: [0, Validators.required],
-      MonthlyExpenseAmt: [0],
-      MonthlyInstallmentAmt: [0],
+      MonthlyIncomeAmt: [0, [Validators.required, Validators.min(0)]],
+      MonthlyExpenseAmt: [0, Validators.min(0)],
+      MonthlyInstallmentAmt: [0, Validators.min(0)],
       MrSourceOfIncomeTypeCode: [''],
       IsJoinIncome: [false],
-      SpouseMonthlyIncomeAmt: [0]
+      SpouseMonthlyIncomeAmt: [0, Validators.min(0)]
     }));
 
     this.initUrl();
@@ -73,7 +73,6 @@ export class CustPersonalFinancialDataFL4WComponent implements OnInit {
     }
   }
   
-
   initUrl(){
     this.getRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
   }

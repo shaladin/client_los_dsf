@@ -53,6 +53,10 @@ export class AdInsConstant {
   public static WebSocketUrl = environment.FoundationR3Url + "/Notificationhub";
   public static GetListNotificationHByRefUserId = environment.FoundationR3Url + "/NotificationH/GetListNotificationHByRefUserId";
 
+  public static TrxTypeCodePhn = "PHN";
+  public static VerfTrxTypeCodePhn = "PHN_VERIF";
+  public static VerfResultStatCodeNew = "NEW";
+  public static RtnHandlingReturnStatDone = "DONE"
 
   //WORKFLOW (LEWAT FOUNDATION)
   public static ResumeWorkflow = environment.FoundationR3Url + "/Workflow/ResumeWorkflow"

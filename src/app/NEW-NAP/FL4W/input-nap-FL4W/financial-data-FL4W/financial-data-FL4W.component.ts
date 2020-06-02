@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
@@ -7,6 +7,8 @@ import { AppFinDataObj } from 'app/shared/model/AppFinData/AppFinData.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj.Model';
 import { ActivatedRoute } from '@angular/router';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
+
 
 @Component({
   selector: 'app-financial-data-FL4W',
@@ -72,7 +74,6 @@ export class FinancialDataFL4WComponent implements OnInit {
         SupplEffectiveRatePrcnt: 0,
         SupplFlatRatePrcnt: 0,
         DiffRateAmt: 0,
-        ResidualValueAmt: 0,
 
         TotalInterestAmt: 0,
         TotalAR: 0,
@@ -92,6 +93,13 @@ export class FinancialDataFL4WComponent implements OnInit {
         MrProvisionFeeTypeCode: '',
         MrProvisionFeeCalcMethodCode: '',
         BalloonValueAmt: 0,
+
+        LcRate: 0,
+        MrLcCalcMethodCode: '',
+        LcGracePeriod: 0,
+        PrepaymentPenaltyRate: 0,
+        SellEffectiveRatePrcnt: 0,
+
         NeedReCalculate: true
       }
     );
@@ -135,9 +143,16 @@ export class FinancialDataFL4WComponent implements OnInit {
           MrInstSchemeCode: this.appFinDataObj.MrInstSchemeCode,
           CummulativeTenor: this.appFinDataObj.CummulativeTenor,
 
-          NtfAmt: this.appFinDataObj.NtfAmt
+          NtfAmt: this.appFinDataObj.NtfAmt,
+
+          LcRate: this.appFinDataObj.LcRate,
+          MrLcCalcMethodCode: this.appFinDataObj.MrLcCalcMethodCode,
+          LcGracePeriod: this.appFinDataObj.LcGracePeriod,
+          PrepaymentPenaltyRate: this.appFinDataObj.PrepaymentPenaltyRate,
+          SellEffectiveRatePrcnt: this.appFinDataObj.SellEffectiveRatePrcnt
         });
 
+        this.setValidator(this.appFinDataObj.MrInstSchemeCode);
         this.IsParentLoaded = true;
       }
     );
@@ -183,6 +198,8 @@ export class FinancialDataFL4WComponent implements OnInit {
   }
 
   ValidateGrossYield() {
+    console.log("Standard GY : " + this.FinDataForm.get("StdGrossYieldPrcnt").value);
+    console.log("GY : " + this.FinDataForm.get("GrossYieldPrcnt").value);
     var GrossYieldBhv = this.FinDataForm.get("GrossYieldBhv").value
     var StdGrossYieldPrcnt = this.FinDataForm.get("StdGrossYieldPrcnt").value
     var GrossYieldPrcnt = this.FinDataForm.get("GrossYieldPrcnt").value
@@ -195,12 +212,26 @@ export class FinancialDataFL4WComponent implements OnInit {
       }
     }
     else {
-      if (GrossYieldPrcnt > StdGrossYieldPrcnt) {
-        this.toastr.errorMessage("Gross Yield cannot be greater than " + StdGrossYieldPrcnt + "%");
-        valid = false;
-      }
+      this.toastr.successMessage("Sementara Validasi GrossYieldPrcnt < StdGrossYieldPrcnt Tidak Diimplementasikan");
+      // if (GrossYieldPrcnt > StdGrossYieldPrcnt) {
+      //   this.toastr.errorMessage("Gross Yield cannot be greater than " + StdGrossYieldPrcnt + "%");
+      //   valid = false;
+      // }
     }
     return valid;
+  }
+
+  setValidator(mrInstSchemeCode){
+    if(mrInstSchemeCode == AdInsConstant.InstSchmBalloon){
+      this.FinDataForm.controls.BalloonValueAmt.setValidators([Validators.required]);
+      this.FinDataForm.controls.BalloonValueAmt.updateValueAndValidity();
+    }
+    if(mrInstSchemeCode == AdInsConstant.InstSchmStepUpStepDownNormal || mrInstSchemeCode == AdInsConstant.InstSchmStepUpStepDownLeasing){
+      this.FinDataForm.controls.NumOfStep.setValidators([Validators.required, Validators.min(1)]);
+      this.FinDataForm.controls.NumOfStep.updateValueAndValidity();
+      this.FinDataForm.controls.StepUpStepDownInputType.setValidators([Validators.required]);
+      this.FinDataForm.controls.NumOfStep.updateValueAndValidity();
+    }
   }
 
   // EffectiveRatePrcntInput_FocusOut(){

@@ -6,6 +6,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --prod --base-href /LOSR3/",
+    "sit": "ng build --configuration=sit --base-href /LOS_SIT/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -24,7 +25,7 @@
     "@adins/uclookupgeneric": "^2.0.13",
     "@adins/ucpaging": "^2.0.17",
     "@adins/ucreport": "^1.0.3",
-    "@adins/ucthingstodo": "^1.0.1",
+    "@adins/ucthingstodo": "^1.0.2",
     "@adins/ucupload": "^1.6.4",
     "@adins/ucviewgeneric": "^2.0.11",
     "@agm/core": "1.0.0-beta.5",

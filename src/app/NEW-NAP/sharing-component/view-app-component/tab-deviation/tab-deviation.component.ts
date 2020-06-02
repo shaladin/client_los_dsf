@@ -15,7 +15,8 @@ import { DeviationResultObj } from 'app/shared/model/DeviationResultObj.Model';
 export class TabDeviationComponent implements OnInit {
 
   @Input() AppId;
-  @Input() Type = "Edit";
+  @Input() IsEditManualDeviation: boolean = true;
+
   @Output("GetData") DataEmit: EventEmitter<any> = new EventEmitter<any>();
   constructor(
     private router: Router, 

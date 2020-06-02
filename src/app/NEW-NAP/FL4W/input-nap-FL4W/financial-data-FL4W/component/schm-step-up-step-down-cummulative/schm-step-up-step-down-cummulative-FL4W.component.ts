@@ -118,24 +118,24 @@ export class SchmStepUpStepDownCummulativeFL4WComponent implements OnInit {
     this.calcStepUpStepDownObj["IsRecalculate"] = false;
     this.calcStepUpStepDownObj["StepUpStepDownType"] = this.ParentForm.value.MrInstSchemeCode;
 
-    this.http.post<ResponseCalculateObj>(AdInsConstant.CalculateInstallmentStepUpStepDown, this.calcStepUpStepDownObj).subscribe(
+    this.http.post(AdInsConstant.CalculateInstallmentStepUpStepDown, this.calcStepUpStepDownObj).subscribe(
       (response) => {
-        this.listInstallment = response.InstallmentTable;
-        this.listAppInstStepSchm = response.AppInstStepSchmObjs;
+        this.listInstallment = response["InstallmentTable"];
+        this.listAppInstStepSchm = response["AppInstStepSchmObjs"];
         this.ParentForm.patchValue({
-          TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
-          TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
+          TotalDownPaymentNettAmt: response["TotalDownPaymentNettAmt"], //muncul di layar
+          TotalDownPaymentGrossAmt: response["TotalDownPaymentGrossAmt"], //inmemory
 
-          EffectiveRatePrcnt: response.EffectiveRatePrcnt,
-          FlatRatePrcnt: response.FlatRatePrcnt,
-          InstAmt: response.InstAmt,
+          EffectiveRatePrcnt: response["EffectiveRatePrcnt"],
+          FlatRatePrcnt: response["FlatRatePrcnt"],
+          InstAmt: response["InstAmt"],
 
-          GrossYieldPrcnt: response.GrossYieldPrcnt,
+          GrossYieldPrcnt: response["GrossYieldPrcnt"],
 
-          TotalInterestAmt: response.TotalInterestAmt,
-          TotalAR: response.TotalARAmt,
+          TotalInterestAmt: response["TotalInterestAmt"],
+          TotalAR: response["TotalARAmt"],
 
-          NtfAmt: response.NtfAmt,
+          NtfAmt: response["NtfAmt"],
 
         })
         this.SetInstallmentTable();

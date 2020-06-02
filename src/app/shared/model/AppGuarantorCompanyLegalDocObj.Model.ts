@@ -1,6 +1,6 @@
-export class AppCustCompanyLegalDocObj {
-    AppCustCompanyLegalDocId: number;
-    AppCustCompanyId: number; 
+export class AppGuarantorCompanyLegalDocObj {
+    AppGurarantorCompanyLegalDocId: number;
+    AppGuarantorCompanyId: number; 
     MrLegalDocTypeCode: string;
     LegalDocName: string; 
     DocNo: string; 
@@ -11,5 +11,5 @@ export class AppCustCompanyLegalDocObj {
     ReleaseLocation: string; 
     RowVersion: any;
     
-constructor() { this.AppCustCompanyLegalDocId = 0; this.RowVersion="" }
+constructor() { this.AppGurarantorCompanyLegalDocId = 0; this.RowVersion="" }
 }
