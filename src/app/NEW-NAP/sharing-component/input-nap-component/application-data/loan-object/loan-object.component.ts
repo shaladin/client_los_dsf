@@ -31,7 +31,7 @@ export class LoanObjectComponent implements OnInit {
     IsDisburseToCust: [false],
     BudgetPlanAmount: ['', Validators.required],
     SelfFinancing: ['', Validators.required],
-    FinancingAmount: ['', Validators.required]
+    FinancingAmount: ['']
   })
   resultData: any;
   result: any;
@@ -63,7 +63,8 @@ export class LoanObjectComponent implements OnInit {
     this.mode = "edit";
     this.AppLoanPurposeId = id;
     this.title = "Edit Loan Object";
-    
+    this.MainInfoForm.controls.FinancingAmount.disable();
+
     var obj = {
       AppLoanPurposeId: this.AppLoanPurposeId
     };
@@ -117,6 +118,16 @@ export class LoanObjectComponent implements OnInit {
   ngOnInit() {
     this.loadDataTable();
     this.setLookup();
+    this.MainInfoForm.controls.FinancingAmount.disable();
+  }
+  
+  CalculateFinancingAmt(){
+    var BudgetPlanAmt = this.MainInfoForm.controls.BudgetPlanAmount.value;
+    var SelfFinancingAmt = this.MainInfoForm.controls.SelfFinancing.value;
+    var FinancingAmt = BudgetPlanAmt - SelfFinancingAmt;
+    this.MainInfoForm.patchValue({
+      FinancingAmount: FinancingAmt
+    })
   }
 
   setLookup() {

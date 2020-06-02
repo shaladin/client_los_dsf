@@ -53,6 +53,10 @@ export class AdInsConstant {
   public static WebSocketUrl = environment.FoundationR3Url + "/Notificationhub";
   public static GetListNotificationHByRefUserId = environment.FoundationR3Url + "/NotificationH/GetListNotificationHByRefUserId";
 
+  public static TrxTypeCodePhn = "PHN";
+  public static VerfTrxTypeCodePhn = "PHN_VERIF";
+  public static VerfResultStatCodeNew = "NEW";
+  public static RtnHandlingReturnStatDone = "DONE"
 
   //WORKFLOW (LEWAT FOUNDATION)
   public static ResumeWorkflow = environment.FoundationR3Url + "/Workflow/ResumeWorkflow"
@@ -972,7 +976,7 @@ export class AdInsConstant {
 
   //CUST CONFIRM
   public static GetVerfQuestionAnswerListByAppIdAndSubject = environment.losUrl + "/CustCnfrm/GetVerfQuestionAnswerListByAppIdAndSubject";
-  public static AddCustCnfrm = "http://localhost:5001" + "/CustCnfrm/AddCustCnfrm";
+  public static AddCustCnfrm = environment.losUrl + "/CustCnfrm/AddCustCnfrm";
 
   //REF STATUS
   public static GetListActiveRefStatusByStatusGrpCode = environment.FoundationR3Url + "/RefStatus/GetListKeyValueActiveGrpCodeByCode";
