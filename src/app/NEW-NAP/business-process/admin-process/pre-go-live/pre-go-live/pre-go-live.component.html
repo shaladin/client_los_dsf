@@ -9,15 +9,15 @@
             <lib-ucSubsection [id]="'MainInfoFormId'" [title]="'Pre Go Live Information'" [panel]="'MainInfoForm'">
             </lib-ucSubsection>
             <div class="form-body" id="MainInfoForm">
-              <div class="form-group row adins-required">
-                <label class="col-md-2 adInsLabel" for="AgrmntDt" translate>Agreement Date</label>
+              <div class="form-group row">
+                <label class="col-md-2 adins-required-label" for="AgrmntDt" translate>Agreement Date</label>
                 <div class="col-md-4">
                   <input type="date" id="AgrmntDt" class="form-control adInsInput code"
                     formControlName="AgrmntCreatedDt">
                   <lib-uc-show-errors [control]="MainInfoForm.controls.AgrmntDt" [submit]="MainInfoReqForm.submitted">
                   </lib-uc-show-errors>
                 </div>
-                <label class="col-md-2 adInsLabel" for="EffectiveDt" translate>Effective Date</label>
+                <label class="col-md-2 adins-required-label" for="EffectiveDt" translate>Effective Date</label>
                 <div class="col-md-4">
                   <input type="date" id="EffectiveDt" class="form-control adInsInput name"
                     formControlName="EffectiveDt">
@@ -29,9 +29,12 @@
 
 
               <div class="form-group row">
-                <label class="col-md-2 adInsLabel" for="Note" translate>Notes</label>
+                <label class="col-md-2 adins-required-label" for="Note" translate>Notes</label>
                 <div class="col-md-4">
                   <input type="text" id="Note" class="form-control adInsInput name" formControlName="Notes">
+                  <lib-uc-show-errors [control]="MainInfoForm.controls.Notes"
+                    [submit]="MainInfoReqForm.submitted">
+                  </lib-uc-show-errors>
                 </div>
               </div>
             </div>
@@ -63,7 +66,7 @@
               </button>
 
               <button type="button" class="btn btn-raised btn-warning mr-1"
-                [routerLink]="['/AdminProcess/PreGoLive/Paging']" translate>
+                [routerLink]="['/Nap/AdminProcess/PreGoLive/Paging']" translate>
                 <i class=""></i> Back
               </button>
 

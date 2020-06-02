@@ -183,6 +183,7 @@ export class SchmStepUpStepDownNormalComponent implements OnInit {
           TotalAR: response.TotalARAmt,
 
           NtfAmt: response.NtfAmt,
+          ApvAmt: response.ApvAmt
 
         });
         this.SetInstallmentTable();

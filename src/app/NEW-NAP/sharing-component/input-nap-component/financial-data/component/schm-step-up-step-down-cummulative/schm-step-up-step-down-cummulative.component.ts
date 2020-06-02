@@ -136,6 +136,7 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
           TotalAR: response["TotalARAmt"],
 
           NtfAmt: response["NtfAmt"],
+          ApvAmt: response["ApvAmt"]
 
         })
         this.SetInstallmentTable();
@@ -171,7 +172,7 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
           TotalAR: response.TotalARAmt,
 
           NtfAmt: response.NtfAmt,
-
+          ApvAmt: response.ApvAmt
         })
 
         this.SetNeedReCalculate(false);
