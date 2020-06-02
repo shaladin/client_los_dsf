@@ -15,6 +15,9 @@ export class CreditApprovalDetailComponent implements OnInit {
   arrValue = [];
   type: string;
   inputObj: { taskId: any; instanceId: any; approvalBaseUrl: string; };
+  ManualDeviationData;
+  isExistedManualDeviationData;
+
   constructor(private toastr: NGXToastrService,
     private route: ActivatedRoute,
     private router: Router) {
