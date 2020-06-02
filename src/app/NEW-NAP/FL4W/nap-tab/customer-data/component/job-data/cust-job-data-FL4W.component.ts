@@ -83,7 +83,7 @@ export class CustJobDataFL4WComponent implements OnInit {
       CompanyName: ['', [Validators.required, Validators.maxLength(100)]],
       MrJobPositionCode: ['', Validators.maxLength(50)],
       MrCompanyScaleCode: ['', Validators.maxLength(50)],
-      NumOfEmployee: [0],
+      NumOfEmployee: [0, [Validators.min(0),Validators.pattern("^[0-9]+$")]],
       MrJobStatCode: ['', Validators.maxLength(50)],
       MrInvestmentTypeCode: ['', Validators.maxLength(50)]
     }));

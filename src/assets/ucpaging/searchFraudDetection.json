@@ -72,7 +72,7 @@
     }
   ],
   "querystring": {
-    "select": "SELECT ac.MR_CUST_TYPE_CODE as CustTypeCode, a.ORI_OFFICE_NAME AS OfficeName, a.ORI_OFFICE_CODE AS OfficeCode, a.APP_NO AS AppNo, ac.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.APP_ID AS AppId, ac.IS_EXISTING_CUST AS IsExistingCust, WTL.WF_TASK_LIST_ID AS WfTaskListId, WTL.USERNAME AS ClaimBy, a.APP_ID AS AppId",
+    "select": "SELECT ac.MR_CUST_TYPE_CODE as CustTypeCode, a.BIZ_TEMPLATE_CODE AS BizTemplateCode, a.ORI_OFFICE_NAME AS OfficeName, a.ORI_OFFICE_CODE AS OfficeCode, a.APP_NO AS AppNo, ac.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.APP_ID AS AppId, ac.IS_EXISTING_CUST AS IsExistingCust, WTL.WF_TASK_LIST_ID AS WfTaskListId, WTL.USERNAME AS ClaimBy, a.APP_ID AS AppId",
     "from": "FROM dbo.APP a WITH(NOLOCK) JOIN dbo.APP_CUST ac WITH(NOLOCK) ON a.APP_ID = ac.APP_ID JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON a.APP_NO = WTL.TRANSACTION_CODE",
     "where": "WHERE WTL.END_EXECUTING_DATE IS NULL"
   },
@@ -119,6 +119,11 @@
                   "property": "ClaimBy",
                   "value": "",
                   "restriction": "EQ"
+                },
+                {
+                  "property": "BizTemplateCode",
+                  "value": "CF4W",
+                  "restriction": "EQ"
                 }
               ],
               "result": {
@@ -145,6 +150,11 @@
                   "property": "ClaimBy",
                   "value": "",
                   "restriction": "EQ"
+                },
+                {
+                  "property": "BizTemplateCode",
+                  "value": "CF4W",
+                  "restriction": "EQ"
                 }
               ],
               "result": {
@@ -161,6 +171,108 @@
                     "property": "WfTaskListId"
                   }
                 ]
+              },
+              "isHide": false
+            },
+            {
+              "conditions": [
+                {
+                  "isUser": true,
+                  "property": "ClaimBy",
+                  "value": "",
+                  "restriction": "EQ"
+                },
+                {
+                  "property": "BizTemplateCode",
+                  "value": "CFRFN4W",
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "url",
+                "path": "../Detail",
+                "icon": "ft-edit-2",
+                "param": [
+                  {
+                    "type": "AppId",
+                    "property": "AppId"
+                  },
+                  {
+                    "type": "WfTaskListId",
+                    "property": "WfTaskListId"
+                  }
+                ]
+              },
+              "isHide": false
+            },
+            {
+              "conditions": [
+                {
+                  "isUser": false,
+                  "property": "ClaimBy",
+                  "value": "",
+                  "restriction": "EQ"
+                },
+                {
+                  "property": "BizTemplateCode",
+                  "value": "CFRFN4W",
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "url",
+                "path": "../Detail",
+                "icon": "ft-edit-2",
+                "param": [
+                  {
+                    "type": "AppId",
+                    "property": "AppId"
+                  },
+                  {
+                    "type": "WfTaskListId",
+                    "property": "WfTaskListId"
+                  }
+                ]
+              },
+              "isHide": false
+            },
+            {
+              "conditions": [
+                {
+                  "isUser": true,
+                  "property": "ClaimBy",
+                  "value": "",
+                  "restriction": "EQ"
+                },
+                {
+                  "property": "BizTemplateCode",
+                  "value": "FL4W",
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "callback",
+                "property": "url"
+              },
+              "isHide": false
+            },
+            {
+              "conditions": [
+                {
+                  "isUser": false,
+                  "property": "ClaimBy",
+                  "value": "",
+                  "restriction": "EQ"
+                },
+                {
+                  "property": "BizTemplateCode",
+                  "value": "FL4W",
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "callback",
+                "property": "url"
               },
               "isHide": false
             }

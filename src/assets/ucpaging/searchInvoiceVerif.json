@@ -28,9 +28,9 @@
         }
     ],
     "querystring": {
-        "select":"SELECT A.APP_NO AS ApplicationNo,B.AGRMNT_NO AS AggrementNo,B.CUST_NAME AS CustName,B.PROD_OFFERING_NAME AS ProdName,B.AGRMNT_STAT AS Status, B.AGRMNT_ID AS AgrmntId",
-        "from":"FROM dbo.APP A WITH (NOLOCK) JOIN dbo.AGRMNT B ON A.APP_ID = B.APP_ID JOIN dbo.V_WF_TASK_LIST C ON B.AGRMNT_NO = C.TRANSACTION_CODE",
-        "where" : "WHERE C.ACT_CODE = 'INVOICE_VERIF' "
+        "select":"SELECT C.WF_TASK_LIST_ID AS TaskListId, A.APP_NO AS ApplicationNo,B.CUST_NAME AS CustName,A.PROD_OFFERING_NAME AS ProdName, A.APP_ID AS AppId",
+        "from":"FROM dbo.APP A WITH (NOLOCK) JOIN dbo.APP_CUST B WITH (NOLOCK) ON A.APP_ID = B.APP_ID JOIN dbo.V_WF_TASK_LIST C ON A.APP_NO = C.TRANSACTION_CODE",
+        "where" : "WHERE C.ACT_CODE = 'INV_VERIF' "
     },
     "headerList": [
         {
@@ -79,11 +79,15 @@
             "action": [
                 {
                     "type": "edit",
-                    "path": "/Document/DocPrint/View",
+                    "path": "/Nap/AdminProcess/InvoiceVerif/Detail",
                     "param": [
                         {
                             "type": "AppId",
                             "property": "AppId"
+                        },
+                        {
+                            "type" : "TaskListId",
+                            "property" : "TaskListId"
                         }
                     ]
                 }

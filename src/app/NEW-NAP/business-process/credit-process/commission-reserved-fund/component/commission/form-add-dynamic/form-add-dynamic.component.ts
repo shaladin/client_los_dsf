@@ -99,10 +99,10 @@ export class FormAddDynamicComponent implements OnInit {
         }
       );
     }else if(content == AdInsConstant.ContentSupplierEmp){
-      url = AdInsConstant.GetListVendorBankAccByListVendorEmpNo;
+      url = AdInsConstant.GetListBankByVendorEmpNoAndVendorCode;
       obj = {
         VendorEmpNo: code,
-        RowVersion: ""
+        VendorCode: this.FormObj.value.arr[idx].SupplCode,
       };
       this.http.post(url, obj).subscribe(
         (response) =>{
@@ -257,9 +257,9 @@ export class FormAddDynamicComponent implements OnInit {
       };
       this.http.post(AdInsConstant.GetAppCommissionTax, obj).subscribe(
         (response) => {
-          // console.log("response Tax");
-          // console.log(this.FormInputObj["content"]);
-          // console.log(response);
+          console.log("response Tax");
+          console.log(this.FormInputObj["content"]);
+          console.log(response);
           var temp = response["ReturnObject"];
           len = this.arr.controls.length;
           if(temp.length == len){
@@ -355,6 +355,7 @@ export class FormAddDynamicComponent implements OnInit {
     this.DDLContentName.splice(idx,1);
     // console.log(this.tempDDLContentName);
     // console.log(this.DDLContentName);
+    console.log(this.FormObj);
     this.PassData();
   }
 

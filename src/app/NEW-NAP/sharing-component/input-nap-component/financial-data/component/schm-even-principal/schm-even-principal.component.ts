@@ -100,6 +100,7 @@ export class SchmEvenPrincipalComponent implements OnInit {
           TotalAR: response.TotalARAmt,
 
           NtfAmt: response.NtfAmt,
+          ApvAmt: response.ApvAmt
 
         })
         this.SetInstallmentTable();

@@ -22,6 +22,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
 
   SalesAppInfoForm = this.fb.group({
     MouCustId: ['', Validators.required],
+    TopBased: ['', Validators.required],
     MrSalesRecommendCode: ['', Validators.required],
     SalesNotes: [''],
     SalesOfficerNo: ['', Validators.required],
@@ -51,6 +52,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
   refMasterAppPaidBy: RefMasterObj = new RefMasterObj();
   refMasterRecourseType: RefMasterObj = new RefMasterObj();
   refMasterIntrstType: RefMasterObj = new RefMasterObj();
+  refMasterTOPType: RefMasterObj = new RefMasterObj();
   allInterestType: any;
   allInScheme: any;
   allInType: any;
@@ -62,6 +64,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
   allCalcMethod: any;
   allIntrstType: any;
   allMouCust: any;
+  allTopBased: any;
   resultData: any;
   allPayFreq: any;
   allInSalesOffice: any;
@@ -79,10 +82,6 @@ export class ApplicationDataFactoringComponent implements OnInit {
     this.SalesAppInfoForm.controls.NumOfInst.disable();
   }
 
-  checkValue() {
-    console.log(this.SalesAppInfoForm);
-  }
-
   setDropdown() {
     this.refMasterInterestType.RefMasterTypeCode = 'INTEREST_TYPE';
     this.refMasterInsScheme.RefMasterTypeCode = 'INST_SCHM';
@@ -94,6 +93,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
     this.refMasterAppPaidBy.RefMasterTypeCode = 'APP_PAID_BY';
     this.refMasterRecourseType.RefMasterTypeCode = 'RECOURSE_TYPE';
     this.refMasterIntrstType.RefMasterTypeCode = 'INTRSTTYPE';
+    this.refMasterTOPType.RefMasterTypeCode = 'TOP_CALC_BASED';
 
     var AppObj = {
       AppId: this.resultData.AppId,
@@ -133,6 +133,19 @@ export class ApplicationDataFactoringComponent implements OnInit {
       (error) => {
         console.log(error);
       });
+
+      this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterTOPType).subscribe(
+        (response) => {
+          this.allTopBased = response['ReturnObject'];
+          if (this.mode != 'edit') {
+            this.SalesAppInfoForm.patchValue({
+              TopBased: this.allTopBased[0].Key
+            });
+          }
+        },
+        (error) => {
+          console.log(error);
+        });
 
     this.http.post(AdInsConstant.GetListActiveRefMasterWithReserveFieldAll, this.refMasterInsScheme).subscribe(
       (response) => {
@@ -335,6 +348,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
             SalesHeadNo: this.resultData.SalesHeadNo,
             MrInstTypeCode: this.resultData.MrInstTypeCode,
             TopDays: this.resultData.TopDays,
+            TopBased : this.resultData.TopBased,
             Tenor: this.resultData.Tenor,
             NumOfInst: this.resultData.NumOfInst,
             IsDisclosed: this.resultData.IsDisclosed,
@@ -354,6 +368,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
             SalesHeadNo: this.resultData.SalesHeadNo,
             MrInstTypeCode: this.resultData.MrInstTypeCode,
             TopDays: this.resultData.TopDays,
+            TopBased : this.resultData.TopBased,
             Tenor: this.resultData.Tenor,
             NumOfInst: this.resultData.NumOfInst,
             MrInstSchemeCode: this.resultData.MrInstSchemeCode,
@@ -381,11 +396,12 @@ export class ApplicationDataFactoringComponent implements OnInit {
 
     if (this.salesAppInfoObj.MrInstTypeCode == "SINGLE") {
       this.salesAppInfoObj.MrInstSchemeCode = "EP";
+      this.salesAppInfoObj.Tenor = 1;
+      this.salesAppInfoObj.NumOfInst = 1;
     } else {
       this.salesAppInfoObj.MrInstSchemeCode = this.SalesAppInfoForm.controls.MrInstSchemeCode.value;
       this.salesAppInfoObj.NumOfInst = this.SalesAppInfoForm.controls.NumOfInst.value;
     }
-
     
     if (this.mode == "add") {
       this.http.post(AdInsConstant.SaveApplicationData, this.salesAppInfoObj).subscribe(
