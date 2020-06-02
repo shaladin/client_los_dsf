@@ -27,7 +27,7 @@ export class MouRequestAddcollComponent implements OnInit {
   @Output() modeDetail: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild(UcgridfooterComponent) UCGridFooter;
   @ViewChild(UCSearchComponent) UCSearchComponent;
-  @ViewChild('LookupCollateral') ucLookupCollateral : UclookupgenericComponent;
+  @ViewChild('LookupCollateral') ucLookupCollateral: UclookupgenericComponent;
 
   resultData: any;
   inputObj: InputSearchObj;
@@ -75,14 +75,14 @@ export class MouRequestAddcollComponent implements OnInit {
   ];
 
   CollTypeList: any;
-  AssetConditionList : any;
+  AssetConditionList: any;
   IdTypeList: any;
   type: any;
-  SerialNoList : any;
+  SerialNoList: any;
   items: FormArray;
-  isUsed : boolean;
+  isUsed: boolean;
 
-  
+
   AddCollDataForm = this.fb.group({
   })
 
@@ -108,24 +108,24 @@ export class MouRequestAddcollComponent implements OnInit {
     SerialNo2: [''],
     SerialNo3: [''],
     SerialNo4: [''],
-    SerialNo5: [''], 
+    SerialNo5: [''],
     RowVersionCollateral: [''],
     RowVersionCollateralRegistration: [''],
     items: this.fb.array([]),
-    MrCollateralConditionCode:['']
+    MrCollateralConditionCode: ['']
   })
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) { this.type = 'Paging'; }
 
   ngOnInit() {
     this.items = this.AddCollForm.get('items') as FormArray;
+    this.bindUcLookup()
     this.bindUcSearch();
     this.initAddrObj();
     this.bindMouData();
   }
 
-  bindMouData()
-  {
+  bindMouData() {
     var refMasterObj = { RefMasterTypeCode: "CUST_PERSONAL_RELATIONSHIP" };
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
@@ -133,21 +133,21 @@ export class MouRequestAddcollComponent implements OnInit {
         if (this.OwnerRelationshipObj.length > 0) {
           this.AddCollForm.patchValue({
             OwnerRelationship: this.OwnerRelationshipObj[0].Key,
-            CopyFromLegal : this.copyToLocationObj[0].Key
+            CopyFromLegal: this.copyToLocationObj[0].Key
           });
         }
       }
     );
     var refMasterObj = { RefMasterTypeCode: "ASSET_CONDITION" };
-   
+
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
         this.AssetConditionList = response["ReturnObject"];
         this.AddCollForm.patchValue({ MrCollateralConditionCode: response['ReturnObject'][0]['Key'] });
-       
-        if(response['ReturnObject'][0]['Key']=="USED"){
+
+        if (response['ReturnObject'][0]['Key'] == "USED") {
           this.isUsed = true;
-        }else{
+        } else {
           this.isUsed = false;
         }
       }
@@ -159,7 +159,7 @@ export class MouRequestAddcollComponent implements OnInit {
       (response) => {
         this.listCollateralData = response['ReturnObject'];
       })
-      
+
     var assetObj = {};
     this.http.post(AdInsConstant.GetListKeyValueByCode, assetObj).subscribe(
       (response) => {
@@ -167,7 +167,7 @@ export class MouRequestAddcollComponent implements OnInit {
         this.AddCollForm.patchValue({
           AssetTypeCode: this.CollTypeList[0].Key
         });
-        this.bindUcLookup(this.CollTypeList[0].Value);
+        this.updateUcLookup(this.CollTypeList[0].Value, true);
       })
 
     var refMasterObj = { RefMasterTypeCode: 'ID_TYPE' };
@@ -180,30 +180,49 @@ export class MouRequestAddcollComponent implements OnInit {
       })
   }
 
-  bindUcLookup(value)
-  {
+  bindUcLookup() {
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
     this.inputLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
     this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupObj.pagingJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
+  }
 
+  bindUcSearch() {
+    this.arrCrit = new Array();
+
+    this.listSelectedId = new Array();
+    this.tempListId = new Array();
+    this.tempData = new Array();
+    this.arrCrit = new Array();
+
+    this.inputObj = new InputSearchObj();
+    this.inputObj._url = "./assets/ucpaging/mou/searchMouCustCollateral.json";
+    this.inputObj.enviromentUrl = environment.FoundationR3Url;
+    this.inputObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+
+    this.pageNow = 1;
+    this.pageSize = 10;
+    this.apiUrl = environment.FoundationR3Url + AdInsConstant.GetPagingObjectBySQL;
+    this.inputObj.addCritInput = new Array();
+  }
+
+  updateUcLookup(value, firstBind) {
     this.criteriaList = new Array();
     this.criteriaObj = new CriteriaObj();
     this.criteriaObj.restriction = AdInsConstant.RestrictionEq;
     this.criteriaObj.propName = 'A.IS_ACTIVE';
     this.criteriaObj.value = "1";
     this.criteriaList.push(this.criteriaObj);
-    
+
     this.criteriaObj = new CriteriaObj();
     this.criteriaObj.restriction = AdInsConstant.RestrictionEq;
     this.criteriaObj.propName = 'A.IS_FINAL';
     this.criteriaObj.value = "1";
     this.criteriaList.push(this.criteriaObj);
 
-    if (value != null)
-    {
+    if (value != null) {
       this.criteriaObj = new CriteriaObj();
       this.criteriaObj.restriction = AdInsConstant.RestrictionEq;
       this.criteriaObj.propName = 'B.ASSET_TYPE_CODE';
@@ -212,28 +231,7 @@ export class MouRequestAddcollComponent implements OnInit {
     }
 
     this.inputLookupObj.addCritInput = this.criteriaList;
-    this.ucLookupCollateral.setAddCritInput();
-  }
-
-  bindUcSearch()
-  {
-    this.arrCrit = new Array();
-
-    this.listSelectedId = new Array();
-    this.tempListId = new Array();
-    this.tempData = new Array();
-    this.arrCrit = new Array();
-    
-    this.inputObj = new InputSearchObj();
-    this.inputObj._url = "./assets/ucpaging/mou/searchMouCustCollateral.json";
-    this.inputObj.enviromentUrl = environment.FoundationR3Url; 
-    this.inputObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
-
-    this.pageNow = 1;
-    this.pageSize = 10;
-    this.apiUrl = environment.FoundationR3Url + AdInsConstant.GetPagingObjectBySQL;
-    this.inputObj.addCritInput = new Array();
-    
+    if (!firstBind) this.ucLookupCollateral.setAddCritInput();
   }
 
   searchSort(event: any) {
@@ -263,7 +261,7 @@ export class MouRequestAddcollComponent implements OnInit {
     }
     console.log('Sel', this.listSelectedId);
   }
-  
+
   searchPagination(event: number) {
     this.pageNow = event;
     let order = null;
@@ -415,57 +413,58 @@ export class MouRequestAddcollComponent implements OnInit {
       FullAssetName: e.FullAssetName,
       AssetCategoryCode: e.AssetCategoryCode
     });
-    
+
     var AssetTypeCode = { 'AssetTypeCode': e.AssetTypeCode };
     this.http.post(AdInsConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
       (response: any) => {
         while (this.items.length) {
           this.items.removeAt(0);
-        } 
-        this.SerialNoList = response['ReturnObject']; 
+        }
+        this.SerialNoList = response['ReturnObject'];
         for (var i = 0; i < this.SerialNoList["length"]; i++) {
           var eachDataDetail = this.fb.group({
             SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
             SerialNoValue: [''],
-            IsMandatory : [this.SerialNoList[i].IsMandatory]   
-          }) as FormGroup; 
-          this.items.push(eachDataDetail);  
-          if(this.isUsed == true &&  this.items.controls[i]['controls']['IsMandatory'].value == true ){  
+            IsMandatory: [this.SerialNoList[i].IsMandatory]
+          }) as FormGroup;
+          this.items.push(eachDataDetail);
+          if (this.isUsed == true && this.items.controls[i]['controls']['IsMandatory'].value == true) {
             this.items.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required]);
-            this.items.controls[i]['controls'] ['SerialNoValue'].updateValueAndValidity();
+            this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
           }
-        } 
+        }
       });
   }
 
   onItemChange(value) {
-    this.bindUcLookup(value);
+    this.updateUcLookup(value, false);
   }
+
   radioChange(event) {
-    if( event.target.value == "USED"){
-      this.isUsed =true;
-    }else{
-      this.isUsed =false;
+    if (event.target.value == "USED") {
+      this.isUsed = true;
+    } else {
+      this.isUsed = false;
     }
     for (var i = 0; i < this.items["length"]; i++) {
-      if(this.isUsed == true &&  this.items.controls[i]['controls']['IsMandatory'].value == true ){
+      if (this.isUsed == true && this.items.controls[i]['controls']['IsMandatory'].value == true) {
         this.items.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required]);
-        this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();  
-      }else{
+        this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
+      } else {
         this.items.controls[i]['controls']['SerialNoValue'].clearValidators();
         this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
       }
-    } 
     }
+  }
   SaveForm() {
-    this.setCollateralObjForSave(); 
+    this.setCollateralObjForSave();
     var custCollObj = {
       MouCustCollateral: this.mouCustCollateralObj,
       MouCustCollateralRegistration: this.mouCustCollateralRegistrationObj
     }
- 
+
     if (this.collateralObj == null) {
-    
+
       this.http.post(AdInsConstant.AddMouCustCollateralData, custCollObj).subscribe(
         (response) => {
           console.log(response);
@@ -478,8 +477,7 @@ export class MouRequestAddcollComponent implements OnInit {
         }
       );
     }
-    else
-    {
+    else {
       this.http.post(AdInsConstant.EditMouCustCollateralData, custCollObj).subscribe(
         (response) => {
           console.log(response);
@@ -493,19 +491,16 @@ export class MouRequestAddcollComponent implements OnInit {
         }
       );
     }
-    
-   
   }
 
   setCollateralObjForSave() {
-    this.mouCustCollateralObj = new MouCustCollateralObj; 
+    this.mouCustCollateralObj = new MouCustCollateralObj;
     this.mouCustCollateralRegistrationObj = new MouCustCollateralRegistrationObj;
-    
-    if (this.collateralObj != null)
-    { 
+
+    if (this.collateralObj != null) {
       this.mouCustCollateralObj = this.collateralObj;
-      this.mouCustCollateralRegistrationObj = this.collateralRegistrationObj; 
-    } 
+      this.mouCustCollateralRegistrationObj = this.collateralRegistrationObj;
+    }
     this.mouCustCollateralObj.MouCustId = this.MouCustId;
     this.mouCustCollateralObj.AssetTypeCode = this.AddCollForm.controls.AssetTypeCode.value;
     this.mouCustCollateralObj.FullAssetCode = this.AddCollForm.controls.FullAssetCode.value;
@@ -515,20 +510,20 @@ export class MouRequestAddcollComponent implements OnInit {
     this.mouCustCollateralObj.MrCollateralUsageCode = "COMMERCIAL";
     this.mouCustCollateralObj.CollateralStat = "NEW";
 
-    if(this.items.controls[0]!=null){ 
-    this.mouCustCollateralObj.SerialNo1 = this.items.controls[0]["controls"]["SerialNoValue"].value;
+    if (this.items.controls[0] != null) {
+      this.mouCustCollateralObj.SerialNo1 = this.items.controls[0]["controls"]["SerialNoValue"].value;
     }
-    if(this.items.controls[1]!=null){  
+    if (this.items.controls[1] != null) {
       this.mouCustCollateralObj.SerialNo2 = this.items.controls[1]["controls"]["SerialNoValue"].value;
     }
-    if(this.items.controls[2]!=null){  
+    if (this.items.controls[2] != null) {
       this.mouCustCollateralObj.SerialNo3 = this.items.controls[2]["controls"]["SerialNoValue"].value;
     }
-    if(this.items.controls[3]!=null){  
-      this.mouCustCollateralObj.SerialNo4= this.items.controls[3]["controls"]["SerialNoValue"].value;
+    if (this.items.controls[3] != null) {
+      this.mouCustCollateralObj.SerialNo4 = this.items.controls[3]["controls"]["SerialNoValue"].value;
     }
-    if(this.items.controls[4]!=null){  
-      this.mouCustCollateralObj.SerialNo5 = this.items.controls[4]["controls"]["SerialNoValue"].value; 
+    if (this.items.controls[4] != null) {
+      this.mouCustCollateralObj.SerialNo5 = this.items.controls[4]["controls"]["SerialNoValue"].value;
     }
 
     this.mouCustCollateralObj.CollateralValueAmt = this.AddCollForm.controls.CollateralValueAmt.value;
@@ -558,8 +553,7 @@ export class MouRequestAddcollComponent implements OnInit {
     this.mouCustCollateralRegistrationObj.LocationAreaCode4 = this.AddCollForm.controls["locationAddr"]["controls"].AreaCode4.value;
   }
 
-  copyToLocation()
-  {
+  copyToLocation() {
     this.locationAddrObj.Addr = this.AddCollForm.controls["legalAddr"]["controls"].Addr.value;
     this.locationAddrObj.AreaCode1 = this.AddCollForm.controls["legalAddr"]["controls"].AreaCode1.value;
     this.locationAddrObj.AreaCode2 = this.AddCollForm.controls["legalAddr"]["controls"].AreaCode2.value;
@@ -577,7 +571,7 @@ export class MouRequestAddcollComponent implements OnInit {
     this.locationAddrObj.SubZipcode = this.AddCollForm.controls["legalAddr"]["controls"].SubZipcode.value;
 
     this.inputFieldLocationObj.inputLookupObj.nameSelect = this.AddCollForm.controls["legalAddrZipcode"]["controls"].value.value;
-    this.inputFieldLocationObj.inputLookupObj.jsonSelect = {Zipcode: this.AddCollForm.controls["legalAddrZipcode"]["controls"].value.value};
+    this.inputFieldLocationObj.inputLookupObj.jsonSelect = { Zipcode: this.AddCollForm.controls["legalAddrZipcode"]["controls"].value.value };
   }
 
   editData(MouCustCollId) {
@@ -585,12 +579,12 @@ export class MouRequestAddcollComponent implements OnInit {
     var collObj = { MouCustCollateralId: MouCustCollId };
     this.http.post(AdInsConstant.GetMouCustCollateralDataForUpdateByMouCustCollateralId, collObj).subscribe(
       (response) => {
-       
+
         this.collateralObj = response['MouCustCollateral'];
         this.collateralRegistrationObj = response['MouCustCollateralRegistration'];
-        if(this.collateralObj.MrCollateralConditionCode=="USED"){
+        if (this.collateralObj.MrCollateralConditionCode == "USED") {
           this.isUsed = true;
-        }else{
+        } else {
           this.isUsed = false;
         }
 
@@ -601,47 +595,47 @@ export class MouRequestAddcollComponent implements OnInit {
           (response: any) => {
             while (this.items.length) {
               this.items.removeAt(0);
-            } 
-            this.SerialNoList = response['ReturnObject']; 
+            }
+            this.SerialNoList = response['ReturnObject'];
             for (var i = 0; i < this.SerialNoList["length"]; i++) {
               var eachDataDetail = this.fb.group({
                 SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
                 SerialNoValue: ['', Validators.required],
-                IsMandatory : [this.SerialNoList[i].IsMandatory]  
-              }) as FormGroup; 
-              this.items.push(eachDataDetail);  
-              if(this.isUsed == true && this.items.controls[i]['controls']['IsMandatory'].value == true ){
+                IsMandatory: [this.SerialNoList[i].IsMandatory]
+              }) as FormGroup;
+              this.items.push(eachDataDetail);
+              if (this.isUsed == true && this.items.controls[i]['controls']['IsMandatory'].value == true) {
                 this.items.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required]);
-                this.items.controls[i]['controls']  ['SerialNoValue'].updateValueAndValidity();  
-              } 
-              if(this.items.controls[0]!=null){ 
-                this.items['controls'][0].patchValue({ 
-                  SerialNoValue: this.collateralObj.SerialNo1, 
+                this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
+              }
+              if (this.items.controls[0] != null) {
+                this.items['controls'][0].patchValue({
+                  SerialNoValue: this.collateralObj.SerialNo1,
                 });
               }
-              if(this.items.controls[1]!=null){
-                this.items['controls'][1].patchValue({ 
-                  SerialNoValue: this.collateralObj.SerialNo2, 
+              if (this.items.controls[1] != null) {
+                this.items['controls'][1].patchValue({
+                  SerialNoValue: this.collateralObj.SerialNo2,
                 });
               }
-              if(this.items.controls[2]!=null){
-                this.items['controls'][2].patchValue({ 
-                  SerialNoValue: this.collateralObj.SerialNo3, 
+              if (this.items.controls[2] != null) {
+                this.items['controls'][2].patchValue({
+                  SerialNoValue: this.collateralObj.SerialNo3,
                 });
               }
-              if(this.items.controls[3]!=null){
-                this.items['controls'][3].patchValue({ 
-                  SerialNoValue: this.collateralObj.SerialNo4, 
+              if (this.items.controls[3] != null) {
+                this.items['controls'][3].patchValue({
+                  SerialNoValue: this.collateralObj.SerialNo4,
                 });
               }
-              if(this.items.controls[4]!=null){
-                this.items['controls'][4].patchValue({ 
-                  SerialNoValue: this.collateralObj.SerialNo4, 
+              if (this.items.controls[4] != null) {
+                this.items['controls'][4].patchValue({
+                  SerialNoValue: this.collateralObj.SerialNo4,
                 });
-              }  
-            } 
+              }
+            }
           });
- 
+
         this.AddCollForm.patchValue({
           MouCustCollateralId: this.collateralObj.MouCustCollateralId,
           AssetTypeCode: this.collateralObj.AssetTypeCode,
@@ -683,7 +677,7 @@ export class MouRequestAddcollComponent implements OnInit {
         if (this.collateralRegistrationObj.PhnArea1 != null) this.legalAddrObj.Phn1 = this.collateralRegistrationObj.PhnArea1;
 
         this.inputFieldLegalObj.inputLookupObj.nameSelect = this.collateralRegistrationObj.OwnerZipcode;
-        this.inputFieldLegalObj.inputLookupObj.jsonSelect = {Zipcode: this.collateralRegistrationObj.OwnerZipcode};
+        this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: this.collateralRegistrationObj.OwnerZipcode };
 
         this.locationAddrObj.Addr = this.collateralRegistrationObj.LocationAddr;
         this.locationAddrObj.City = this.collateralRegistrationObj.LocationCity;
@@ -697,7 +691,7 @@ export class MouRequestAddcollComponent implements OnInit {
         if (this.collateralRegistrationObj.PhnArea1 != null) this.locationAddrObj.Phn1 = this.collateralRegistrationObj.PhnArea1;
 
         this.inputFieldLocationObj.inputLookupObj.nameSelect = this.collateralRegistrationObj.OwnerZipcode;
-        this.inputFieldLocationObj.inputLookupObj.jsonSelect = {Zipcode: this.collateralRegistrationObj.OwnerZipcode};
+        this.inputFieldLocationObj.inputLookupObj.jsonSelect = { Zipcode: this.collateralRegistrationObj.OwnerZipcode };
       })
   }
 
@@ -705,11 +699,10 @@ export class MouRequestAddcollComponent implements OnInit {
     this.type = 'Paging';
   }
 
-  SaveExistingCollateral()
-  {
+  SaveExistingCollateral() {
     this.mouCustCollateralObj = new MouCustCollateralObj();
     this.mouCustCollateralObj.MouCustId = this.MouCustId;
-    this.mouCustCollateralObj.ListCollateralId =  new Array();
+    this.mouCustCollateralObj.ListCollateralId = new Array();
 
     for (let index = 0; index < this.tempData.length; index++) {
       console.log(this.tempData);
@@ -734,7 +727,6 @@ export class MouRequestAddcollComponent implements OnInit {
         console.log(error);
       }
     );
- 
   }
 
   delete(MouCustCollId) {
@@ -752,14 +744,12 @@ export class MouRequestAddcollComponent implements OnInit {
     );
   }
 
-  next(){
-    this.ResponseMouAddColl.emit({StatusCode: "200"});
+  next() {
+    this.ResponseMouAddColl.emit({ StatusCode: "200" });
   }
 
-  back(){
-    this.modeDetail.emit({ mode : "edit"});
-    this.ResponseMouAddColl.emit({StatusCode: "-1"});
-    
-    
+  back() {
+    this.modeDetail.emit({ mode: "edit" });
+    this.ResponseMouAddColl.emit({ StatusCode: "-1" });
   }
 }

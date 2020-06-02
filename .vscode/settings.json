@@ -1,5 +1,4 @@
 {
     "editor.accessibilityPageSize": 14,
-    "files.autoGuessEncoding": true,
-    "editor.acceptSuggestionOnEnter": "off"
+    "files.autoGuessEncoding": true
 }
