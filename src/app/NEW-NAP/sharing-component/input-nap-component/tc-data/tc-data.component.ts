@@ -143,6 +143,8 @@ export class TcDataComponent implements OnInit {
         item.get("ExpiredDt").clearValidators();
       }
     }
+
+    fa_AppTc.updateValueAndValidity();
   }
 
   SaveData() {
