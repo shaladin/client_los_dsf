@@ -200,6 +200,7 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   Submit() {
+    this.ClaimTask();
     if (this.mode == AdInsConstant.ModeResultHandling) {
       var obj = {
         ReturnHandlingDId: this.ResponseReturnInfoObj.ReturnHandlingDId,
