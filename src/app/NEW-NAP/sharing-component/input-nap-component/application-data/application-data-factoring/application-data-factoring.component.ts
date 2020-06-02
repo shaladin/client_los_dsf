@@ -82,10 +82,6 @@ export class ApplicationDataFactoringComponent implements OnInit {
     this.SalesAppInfoForm.controls.NumOfInst.disable();
   }
 
-  checkValue() {
-    console.log(this.SalesAppInfoForm);
-  }
-
   setDropdown() {
     this.refMasterInterestType.RefMasterTypeCode = 'INTEREST_TYPE';
     this.refMasterInsScheme.RefMasterTypeCode = 'INST_SCHM';
@@ -400,11 +396,12 @@ export class ApplicationDataFactoringComponent implements OnInit {
 
     if (this.salesAppInfoObj.MrInstTypeCode == "SINGLE") {
       this.salesAppInfoObj.MrInstSchemeCode = "EP";
+      this.salesAppInfoObj.Tenor = 1;
+      this.salesAppInfoObj.NumOfInst = 1;
     } else {
       this.salesAppInfoObj.MrInstSchemeCode = this.SalesAppInfoForm.controls.MrInstSchemeCode.value;
       this.salesAppInfoObj.NumOfInst = this.SalesAppInfoForm.controls.NumOfInst.value;
     }
-
     
     if (this.mode == "add") {
       this.http.post(AdInsConstant.SaveApplicationData, this.salesAppInfoObj).subscribe(

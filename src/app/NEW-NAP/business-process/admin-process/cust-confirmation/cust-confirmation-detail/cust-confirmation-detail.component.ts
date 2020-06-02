@@ -54,7 +54,7 @@ export class CustConfirmationDetailComponent implements OnInit {
     this.GetVerfResult();
   }
 
-  GetVerfResult() {
+  GetVerfResult(IsAdded: boolean = false) {
     var verfResultHObj = {
       TrxRefNo: this.AgrmntNo
     }
@@ -72,13 +72,14 @@ export class CustConfirmationDetailComponent implements OnInit {
         this.CustCnfrmObj.AppId = this.AppId;
         this.CustCnfrmObj.AgrmntId = this.AgrmntId;
         if (this.VerfResultList.length == 0) {
-          this.AddNewVerfResult();
+          if (!IsAdded) {
+            this.AddNewVerfResult();
+          }
         }
       },
       (error) => {
         console.log(error);
-      }
-    );
+      });
   }
 
   AddNewVerfResult() {
@@ -99,7 +100,7 @@ export class CustConfirmationDetailComponent implements OnInit {
         this.verfResultObj.Notes = "-";
         this.http.post(AdInsConstant.AddVerfResultAndVerfResultH, this.verfResultObj).subscribe(
           (response) => {
-            this.GetVerfResult();
+            this.GetVerfResult(true);
           },
           (error) => {
             console.log(error);
@@ -128,9 +129,9 @@ export class CustConfirmationDetailComponent implements OnInit {
     );
   }
 
-  async claimTask(){
+  async claimTask() {
     var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
-    var wfClaimObj : ClaimWorkflowObj = new ClaimWorkflowObj();
+    var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.TaskListId;
     wfClaimObj.pUserID = currentUserContext["UserName"];
     this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(

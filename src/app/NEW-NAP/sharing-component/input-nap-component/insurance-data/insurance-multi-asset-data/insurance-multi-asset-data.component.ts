@@ -252,7 +252,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       }
     }
     this.setSaveObj(insuredBy);
-    this.http.post(AdInsConstant.AddEditInsuranceData, this.saveObj).subscribe(
+    this.http.post(AdInsConstant.AddEditInsuranceDataMultiAsset, this.saveObj).subscribe(
       (response) => {
         console.log(response);
         this.toastr.successMessage(response["message"]);

@@ -185,6 +185,7 @@ export class SchmStepUpStepDownLeasingComponent implements OnInit {
           TotalAR: response.TotalARAmt,
 
           NtfAmt: response.NtfAmt,
+          ApvAmt: response.ApvAmt
 
         })
         this.SetInstallmentTable();

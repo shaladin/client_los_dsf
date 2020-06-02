@@ -7,7 +7,7 @@
       <div class="form-actions right">
         <button type="button" (click)="AddNewDataForm()" class="btn btn-raised btn-primary"
           [hidden]="lenDDLContentName == 0" translate>
-          <i class="fa fa-check-square-o"></i> Add new
+          <i class="ft-plus-circle"></i> Add
         </button>
       </div>
 
@@ -79,10 +79,14 @@
 
                     <!-- Tax Amount -->
                     <label class="col-md-2 adInsLabel">Tax Amount </label>
-                    <div class="col-md-4">
-                      <label class="adInsLabel" *ngIf="item.controls.TotalTaxAmount.value != ''">
-                        {{item.controls.TotalTaxAmount.value}} </label>
-                      <label class="adInsLabel" *ngIf="item.controls.TotalTaxAmount.value == ''"> --- </label>
+                    <div class="col-md-4" style="text-align: right;">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <label class="adInsLabel" currencyMask *ngIf="item.controls.TotalTaxAmount.value != ''">
+                            {{item.controls.TotalTaxAmount.value}} </label>
+                          <label class="adInsLabel" *ngIf="item.controls.TotalTaxAmount.value == ''"> {{ 0 | number:'.2':'en-US' }} </label>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
@@ -91,18 +95,26 @@
                     <div class="col-md-2">
                       <label class="adInsLabel">Total Commission Amount</label>
                     </div>
-                    <div class="col-md-4">
-                      <label class="adInsLabel" *ngIf="item.controls.TotalCommisionAmount.value != ''">
-                        {{item.controls.TotalCommisionAmount.value}} </label>
-                      <label class="adInsLabel" *ngIf="item.controls.TotalCommisionAmount.value == ''"> --- </label>
+                    <div class="col-md-4" style="text-align: right;">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <label class="adInsLabel" *ngIf="item.controls.TotalCommisionAmount.value != ''">
+                            {{item.controls.TotalCommisionAmount.value | number:'.2':'en-US'}} </label>
+                          <label class="adInsLabel" *ngIf="item.controls.TotalCommisionAmount.value == ''"> {{ 0 | number:'.2':'en-US' }} </label>
+                        </div>
+                      </div>
                     </div>
 
                     <!-- VAT Amount -->
                     <label class="col-md-2 adInsLabel">VAT Amount </label>
-                    <div class="col-md-4">
-                      <label class="adInsLabel" *ngIf="item.controls.TotalVATAmount.value != ''">
-                        {{item.controls.TotalVATAmount.value}} </label>
-                      <label class="adInsLabel" *ngIf="item.controls.TotalVATAmount.value == ''"> --- </label>
+                    <div class="col-md-4" style="text-align: right;">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <label class="adInsLabel" *ngIf="item.controls.TotalVATAmount.value != ''">
+                            {{item.controls.TotalVATAmount.value | number:'.2':'en-US'}} </label>
+                          <label class="adInsLabel" *ngIf="item.controls.TotalVATAmount.value == ''"> {{ 0 | number:'.2':'en-US' }} </label>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
@@ -117,12 +129,12 @@
                               <label class="col-md-4 adInsLabel"> {{ruleItem.controls.AllocationFromDesc.value}}
                               </label>
                               <div class="col-md-8" [ngSwitch]="ruleItem.controls.AllocationBehaviour.value">
-                                <input type="text" *ngSwitchCase="'LOCK'" readonly
-                                  class="form-control adInsInput width-100-per text-left"
+                                <input type="text" currencyMask *ngSwitchCase="'LOCK'" readonly
+                                  class="form-control adInsInput width-50-per text-right"
                                   formControlName="AllocationAmount" (change)="ChangeDataLabel(i)">
-                                <input type="text"
+                                <input type="text" currencyMask
                                   max="FormObj.controls.arr['controls'][i].controls.ListAllocated.controls[idx].controls.MaxAllocationAmount.value"
-                                  *ngSwitchCase="'DEF'" class="form-control adInsInput width-100-per text-left"
+                                  *ngSwitchCase="'DEF'" class="form-control adInsInput width-50-per text-right"
                                   [ngClass]="{ 'is-invalid': enjiForm.submitted && ruleItem.controls.AllocationAmount.invalid }"
                                   formControlName="AllocationAmount" (change)="ChangeDataLabel(i)">
                                 <lib-uc-show-errors [control]="ruleItem.controls.AllocationAmount"
@@ -139,11 +151,11 @@
                               <label class="col-md-4 adInsLabel"> {{ruleItem.controls.AllocationFromDesc.value}}
                               </label>
                               <div class="col-md-8" [ngSwitch]="ruleItem.controls.AllocationBehaviour.value">
-                                <input type="text" *ngSwitchCase="'LOCK'" readonly
-                                  class="form-control adInsInput width-100-per text-left"
+                                <input type="text" currencyMask *ngSwitchCase="'LOCK'" readonly
+                                  class="form-control adInsInput width-50-per text-right"
                                   formControlName="AllocationAmount" (change)="ChangeDataLabel(i)">
-                                <input type="text" max="ruleItem.controls.MaxAllocationAmount.value"
-                                  *ngSwitchCase="'DEF'" class="form-control adInsInput width-100-per text-left"
+                                <input type="text" max="ruleItem.controls.MaxAllocationAmount.value" currencyMask
+                                  *ngSwitchCase="'DEF'" class="form-control adInsInput width-50-per text-right"
                                   [ngClass]="{ 'is-invalid': enjiForm.submitted && ruleItem.controls.AllocationAmount.invalid }"
                                   formControlName="AllocationAmount" (change)="ChangeDataLabel(i)">
                                 <lib-uc-show-errors [control]="ruleItem.controls.AllocationAmount"
