@@ -13,7 +13,7 @@
                     </lib-ucSubsection>
                     <div id="salesInfo">
                       <div class="form-group row">
-                        <label class="col-md-3  adins-required-label" translate>Sales Recommendation </label>
+                        <label class="col-md-3 adins-required-label" translate>Sales Recommendation </label>
                         <div class="col-md-9">
                           <select class="form-control adInsInput" style="width: auto"
                             formControlName="MrSalesRecommendCode"
@@ -36,7 +36,7 @@
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label class="col-md-3  adins-required-label" translate>Sales Officer</label>
+                        <label class="col-md-3 adins-required-label" translate>Sales Officer</label>
                         <div class="col-md-9">
                           <select class="form-control adInsInput" style="width: auto" formControlName="SalesOfficerNo"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.SalesOfficerNo.invalid }">
@@ -63,7 +63,7 @@
                     </lib-ucSubsection>
                     <div id="applicationInfo">
                       <div class="form-group row">
-                        <label class="col-md-3  adins-required-label" translate>MOU No</label>
+                        <label class="col-md-3 adins-required-label" translate>MOU No</label>
                         <div class="col-md-9">
                           <select class="form-control adInsInput" style="width: auto"
                             (change)="SetPayFreq(SalesAppInfoForm.controls.MouCustId.value)" formControlName="MouCustId"
@@ -76,8 +76,8 @@
                           </lib-uc-show-errors>
                         </div>
                       </div>
-                      <div class="form-group row">
-                        <label class="col-md-3  adins-required-label" translate>TOP Type</label>
+                      <div class="form-group row" *ngIf="SalesAppInfoForm.controls.MrInstTypeCode.value == 'MULTIPLE'">
+                        <label class="col-md-3 adins-required-label" translate>TOP Type</label>
                         <div class="col-md-9">
                           <select class="form-control adInsInput" style="width: auto" formControlName="TopBased"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.TopBased.invalid }">
@@ -90,7 +90,7 @@
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label class="col-md-3  adins-required-label" translate>Installment Type</label>
+                        <label class="col-md-3 adins-required-label" translate>Installment Type</label>
                         <div class="col-md-9">
                           <select class="form-control adInsInput" style="width: auto" formControlName="MrInstTypeCode"
                             (change)="CheckInstType()"
@@ -105,7 +105,7 @@
                       </div>
                       <div *ngIf="SalesAppInfoForm.controls.MrInstTypeCode.value == 'SINGLE'">
                         <div class="form-group row">
-                          <label class="col-md-3  adins-required-label" translate>Calculation Method</label>
+                          <label class="col-md-3 adins-required-label" translate>Calculation Method</label>
                           <div class="col-md-9">
                             <select class="form-control adInsInput" style="width: auto"
                               formControlName="MrSingleInstCalcMthdCode"
@@ -119,7 +119,7 @@
                           </div>
                         </div>
                         <div class="form-group row">
-                          <label class="col-md-3  adins-required-label" translate>Term Of Payment</label>
+                          <label class="col-md-3 adins-required-label" translate>Term Of Payment (Days)</label>
                           <div class="col-md-9">
                             <input type="text" class="form-control adInsInput width-30-per" formControlName="TopDays"
                               [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.TopDays.invalid }">
@@ -130,7 +130,7 @@
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label class="col-md-3  adins-required-label" translate>Tenor</label>
+                        <label class="col-md-3 adins-required-label" translate>Tenor</label>
                         <div class="col-md-9">
                           <input type="text" class="form-control adInsInput width-30-per" formControlName="Tenor"
                             (change)="CalculateNumOfInst()"
@@ -141,7 +141,7 @@
                       </div>
                       <div *ngIf="SalesAppInfoForm.controls.MrInstTypeCode.value == 'MULTIPLE'">
                         <div class="form-group row">
-                          <label class="col-md-3  adins-required-label" translate>Payment Freqency</label>
+                          <label class="col-md-3 adins-required-label" translate>Payment Freqency</label>
                           <div class="col-md-9">
                             <select class="form-control adInsInput" style="width: auto" formControlName="PayFreqCode">
                               <option value="{{allPayFreq?.PayFreqCode}}">
@@ -154,7 +154,7 @@
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label class="col-md-3  adins-required-label" translate>Num Of Installment</label>
+                        <label class="col-md-3 adins-required-label" translate>Num Of Installment</label>
                         <div class="col-md-9">
                           <input type="text" class="form-control adInsInput width-30-per" formControlName="NumOfInst"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.NumOfInst.invalid }">
@@ -164,7 +164,7 @@
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label class="col-md-3  adins-required-label" translate>Installment Scheme</label>
+                        <label class="col-md-3 adins-required-label" translate>Installment Scheme</label>
                         <div class="col-md-9">
                           <select class="form-control adInsInput" style="width: auto" formControlName="MrInstSchemeCode"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.MrInstSchemeCode.invalid }">
@@ -186,7 +186,7 @@
                         </lib-uc-show-errors>
                       </div>
                       <div class="form-group row">
-                        <label class="col-md-3  adins-required-label" translate>Paid By</label>
+                        <label class="col-md-3 adins-required-label" translate>Paid By</label>
                         <div class="col-md-9">
                           <select class="form-control adInsInput" style="width: auto" formControlName="PaidBy"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.PaidBy.invalid }">
@@ -199,7 +199,7 @@
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label class="col-md-3  adins-required-label" translate>Way of Payment</label>
+                        <label class="col-md-3 adins-required-label" translate>Way of Payment</label>
                         <div class="col-md-9">
                           <select class="form-control adInsInput" style="width: auto" formControlName="MrWopCode"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.MrWopCode.invalid }">
@@ -212,7 +212,7 @@
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label class="col-md-3  adins-required-label" translate>Recourse Type</label>
+                        <label class="col-md-3 adins-required-label" translate>Recourse Type</label>
                         <div class="col-md-9">
                           <select class="form-control adInsInput" style="width: auto" formControlName="RecourseType"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.RecourseType.invalid }">
@@ -225,7 +225,7 @@
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label class="col-md-3  adins-required-label" translate>Application Source</label>
+                        <label class="col-md-3 adins-required-label" translate>Application Source</label>
                         <div class="col-md-9">
                           <select class="form-control adInsInput" style="width: auto" formControlName="MrAppSourceCode"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.MrAppSourceCode.invalid }">
@@ -238,7 +238,7 @@
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label class="col-md-3  adins-required-label" translate>Interest Type</label>
+                        <label class="col-md-3 adins-required-label" translate>Interest Type</label>
                         <div class="col-md-9">
                           <select class="form-control adInsInput" style="width: auto" formControlName="InterestType"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.InterestType.invalid }">

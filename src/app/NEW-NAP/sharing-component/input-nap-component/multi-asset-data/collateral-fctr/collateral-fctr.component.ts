@@ -169,7 +169,7 @@ export class CollateralFctrComponent implements OnInit {
     );
   }
 
-  bindAppData() {//
+  bindAppData() {
     var refMasterObj = { RefMasterTypeCode: "CUST_PERSONAL_RELATIONSHIP" };
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
@@ -446,7 +446,7 @@ export class CollateralFctrComponent implements OnInit {
     this.ucLookupCollateral.setAddCritInput();
   }
 
-  SaveForm(enjiForm: NgForm) {//
+  SaveForm(enjiForm: NgForm) {
     this.appCollateralDataObj = new AppCollateralDataObj();
     this.setCollateralInfo();
     this.setCollateralOwner();
@@ -679,9 +679,5 @@ export class CollateralFctrComponent implements OnInit {
 
   next() {
     this.ResponseMouAddColl.emit({ StatusCode: "200" });
-  }
-
-  back() {
-    this.ResponseMouAddColl.emit({ StatusCode: "-1" });
   }
 }
