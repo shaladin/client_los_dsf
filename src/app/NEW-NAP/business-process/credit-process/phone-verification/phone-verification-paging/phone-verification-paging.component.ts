@@ -14,7 +14,7 @@ import { ActivatedRoute } from "@angular/router";
 
 export class PhoneVerificationPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
-  arrCrit: any;
+  arrCrit: Array<CriteriaObj>;
   BizTemplateCode : string;
 
   constructor(private route: ActivatedRoute) { 
