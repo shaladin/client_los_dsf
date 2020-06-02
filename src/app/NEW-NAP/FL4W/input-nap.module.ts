@@ -78,6 +78,7 @@ export const customCurrencyMaskConfig = {
     MatSelectModule,
     NapTabComponentModule,
     MatTabsModule,
+    ViewSharingComponentModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
   ],
   declarations: [
@@ -115,7 +116,6 @@ export const customCurrencyMaskConfig = {
     SubsidyFL4WComponent,
     SubsidyAddEditFL4WComponent,
     FinancialDataFL4WComponent,
-    ViewSharingComponentModule
   ],
   providers: [
     NGXToastrService

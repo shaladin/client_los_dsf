@@ -17,6 +17,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './fraud-verification-multi-asset.component.html' 
 })
 export class FraudVerificationMultiAssetComponent implements OnInit {
+  WfTaskListId: any;
 
 
   constructor(  private http: HttpClient, private route: ActivatedRoute,  private modalService: NgbModal ,  private router: Router) {
@@ -24,8 +25,8 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
       if (params['AppId'] != null) {
         this.AppId = params['AppId'];
       }
-      if (params["mrCustTypeCode"] != null) {
-        this.mrCustTypeCode = params["mrCustTypeCode"];
+      if (params['WfTaskListId'] != null) {
+        this.WfTaskListId = params['WfTaskListId'];
       }
     });
     this.getAppAssetListByAppIdUrl = AdInsConstant.GetAppAssetListByAppId;
@@ -77,6 +78,7 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
   tempAppObj : any;
   appFraudVerf : any;
   async ngOnInit(): Promise<void> {
+    console.log('fraudverf')
     this.arrValue.push(this.AppId);
     this.viewObj = "./assets/ucviewgeneric/viewCreditInvestigationInfo.json";
     var context = JSON.parse(localStorage.getItem("UserAccess"));
@@ -101,6 +103,7 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
     this.http.post(this.getCustDataByAppId, appReqObj).subscribe(
     response => {
         this.appCustObj = response["AppCustObj"];
+        this.mrCustTypeCode = this.appCustObj["MrCustTypeCode"];
         this.appCustCompanyObj = response["AppCustCompanyObj"];
         this.appCustPersonalObj  = response["AppCustPersonalObj"];
         this.TrxNo = this.appCustObj.AppNo;
@@ -174,10 +177,8 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
                 console.log("error")
             }
           );
-
       } 
     ); 
-    
     }
 
    getAppDupCheckCust(AppId){
@@ -197,7 +198,6 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
     }
 
   getAppAsset(){
-   
     this.appAssetObj = new AppAssetObj();
     this.negativeAssetCheckForMultiAssetObj = new NegativeAssetCheckForMultiAssetObj();
     this.negativeAssetCheckForMultiAssetObj.RequestObj = new Array<NegativeAssetCheckObj>();
@@ -250,11 +250,11 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
     }
     submit(){
       var verfObj = {"AppId": this.AppId, "VerifyByName": this.verfUser, 
-      "VerifyDt": this.verfDt, "Notes": this.verfNotes, "VerifyByCode": this.verfCode, "VerifyStat" : "Verified"}
+      "VerifyDt": this.verfDt, "Notes": this.verfNotes, "VerifyByCode": this.verfCode, "VerifyStat" : "Verified", "WfTaskId" : this.WfTaskListId}
       this.http.post(this.addAppFraudVerfUrl, verfObj).subscribe(
         response => {
           console.log("Success");
-          this.router.navigate(["../FraudDetection/Paging"]);
+          this.router.navigate(["Nap/CreditProcess/FraudDetection/Paging"]);
         },
         error => {
           console.log("error");
