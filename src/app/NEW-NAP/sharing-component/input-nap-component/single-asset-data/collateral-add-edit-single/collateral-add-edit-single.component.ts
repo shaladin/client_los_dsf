@@ -531,12 +531,12 @@ export class CollateralAddEditSingleComponent implements OnInit {
     this.appCollateralDataObj.AppCollateralObj.IsMainCollateral = true;
 
     if (this.type == 'Edit') {
-      this.appCollateralObj.AppCollateralId = this.AddCollForm.controls.AppCollateralId.value;
-      this.appCollateralObjRegistration.AppCollateralRegistrationId = this.AddCollDataForm.controls.AppCollateralRegistrationId;
-      this.appCollateralObjRegistration.AppCollateralId = this.AddCollForm.controls.AppCollateralId;
+      this.appCollateralObj.AppCollateralId = this.AddCollForm.value.AppCollateralId;
+      this.appCollateralObjRegistration.AppCollateralRegistrationId = this.AddCollDataForm.value.AppCollateralRegistrationId;
+      this.appCollateralObjRegistration.AppCollateralId = this.AddCollForm.value.AppCollateralId;
 
-      this.appCollateralObj.RowVersion = this.AddCollForm.controls.RowVersionCollateral.value;
-      this.appCollateralObjRegistration.RowVersion = this.AddCollForm.controls.RowVersionCollateralRegistration;
+      this.appCollateralObj.RowVersion = this.AddCollForm.value.RowVersionCollateral;
+      this.appCollateralObjRegistration.RowVersion = this.AddCollForm.value.RowVersionCollateralRegistration;
     }
 
   }
