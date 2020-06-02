@@ -12,18 +12,22 @@
                 <th class="text-center"><span class="thead-header" name='houseOwnership' translate>House Ownership</span></th>
             </tr>
             </thead>
-            <tbody *ngIf="appCustAddrForViewObjs?.length == 0">
+            <tbody *ngIf = "appCustAddrForViewObjs?.length == 0">
                 <tr>
                     <td colspan="100%">No Data Available</td>
                 </tr>
             </tbody>
-            <tbody *ngIf="appCustAddrForViewObjs?.length > 0">
+            <tbody>
             <ng-container *ngFor="let item of appCustAddrForViewObjs">
                 <tr>
-                <td class="text-center">{{item.CustAddrTypeName}}</td>
-                <td class="text-center">{{item.FullAddr}}</td>
-                <td class="text-center">{{item.PhoneNo}}</td>
-                <td class="text-center">{{item.HouseOwnershipName}}</td>
+                <td class="text-center" *ngIf="item.CustAddrTypeName != null">{{item.CustAddrTypeName}}</td>
+                <td class="text-center" *ngIf="item.CustAddrTypeName == null"> - </td>
+                <td class="text-center" *ngIf="item.FullAddr != null">{{item.FullAddr}}</td>
+                <td class="text-center" *ngIf="item.FullAddr == null"> - </td>
+                <td class="text-center" *ngIf="item.PhoneNo != null ">{{item.PhoneNo}}</td>
+                <td class="text-center" *ngIf="item.PhoneNo == null "> - </td>
+                <td class="text-center" *ngIf="item.HouseOwnershipName != null">{{item.HouseOwnershipName}}</td>
+                <td class="text-center" *ngIf="item.HouseOwnershipName == null"> - </td>
                 </tr>
             </ng-container>
             </tbody>
@@ -68,12 +72,12 @@
                         <th class="text-center"><span class="thead-header" name='balanceAmt' translate>Balance Amount</span></th>
                     </tr>
                     </thead>
-                    <tbody *ngIf="appCustBankAccObjs[i].AppCustBankStmntObjs == null">
+                    <tbody *ngIf = "appCustBankAccObjs[i].AppCustBankStmntObjs?.length == 0">
                         <tr>
                             <td colspan="100%">No Data Available</td>
                         </tr>
                     </tbody>
-                    <tbody *ngIf="appCustBankAccObjs[i]?.AppCustBankStmntObjs?.length > 0">
+                    <tbody>
                     <ng-container *ngFor="let item of appCustBankAccObjs[i].AppCustBankStmntObjs">
                         <tr>
                             <td class="text-center">{{item.MonthName}}</td>
@@ -101,12 +105,14 @@
                 <th class="text-center"><span class="thead-header" name='socmedId' translate>Social Media ID</span></th>
             </tr>
             </thead>
-            <tbody *ngIf="appCustSocmedObjs?.length == 0">
+            <tbody *ngIf = "appCustSocmedObjs?.length == 0">
+            <ng-container>                
                 <tr>
                     <td colspan="100%">No Data Available</td>
                 </tr>
+            </ng-container>                
             </tbody>
-            <tbody *ngIf="appCustSocmedObjs?.length > 0">
+            <tbody *ngIf = "appCustSocmedObjs?.length > 0">
             <ng-container *ngFor="let item of appCustSocmedObjs; let i=index">
                 <tr>
                     <td class="text-center">{{i + 1}}</td>
@@ -131,12 +137,12 @@
                 <th class="text-center"><span class="thead-header" name='notes' translate>Notes</span></th>
             </tr>
             </thead>
-            <tbody *ngIf="appCustGrpObjs?.length == 0">
+            <tbody *ngIf = "appCustGrpObjs?.length == 0">
                 <tr>
                     <td colspan="100%">No Data Available</td>
                 </tr>
             </tbody>
-            <tbody *ngIf="appCustGrpObjs?.length > 0">
+            <tbody>
             <ng-container *ngFor="let item of appCustGrpObjs; let i=index">
                 <tr>
                     <td class="text-center">{{i + 1}}</td>
@@ -167,20 +173,22 @@
                 <th class="text-center"><span class="thead-header" name='family' translate>Family</span></th>
             </tr>
             </thead>
-            <tbody *ngIf="appCustPersonalContactPersonObjs?.length == 0">
+            <tbody *ngIf = "appCustPersonalContactPersonObjs?.length == 0">
                 <tr>
                     <td colspan="100%">No Data Available</td>
                 </tr>
             </tbody>
-            <tbody *ngIf="appCustPersonalContactPersonObjs?.length > 0">
+            <tbody>
                 <ng-container *ngFor="let item of appCustPersonalContactPersonObjs; let i=index">
                     <tr>
                         <td class="text-center">{{i + 1}}</td>
                         <td class="text-center">{{item.ContactPersonName}}</td>
                         <td class="text-center">{{item.IdNo}}</td>
-                        <td class="text-center">{{item.RelationshipName}}</td>
+                        <td class="text-center" *ngIf="item.RelationshipName!=null">{{item.RelationshipName}}</td>
+                        <td class="text-center" *ngIf="item.RelationshipName==null"> - </td>
                         <td class="text-center">{{item.MobilePhnNo1}}</td>
-                        <td class="text-center">{{item.JobProfessionName}}</td>
+                        <td class="text-center" *ngIf="item.JobProfessionName!=null">{{item.JobProfessionName}}</td>
+                        <td class="text-center" *ngIf="item.JobProfessionName==null"> - </td>
                         <td class="text-center">{{item.FullAddr}}</td>
                         <td class="text-center">
                             <span *ngIf="item.IsEmergencyContact == true">Yes</span>

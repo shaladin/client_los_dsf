@@ -1,4 +1,4 @@
-<div class="px-3">
+<div class="card px-3">
   <lib-ucSubsection [id]="'SrvyId'" [title]="'Survey'" [panel]="'Srvy'">
   </lib-ucSubsection>
   <div class="form-body" id="SrvyId">
@@ -34,7 +34,7 @@
           <td>{{item.SurveyType}}</td>
           <td>{{item.SurveyorCode}}</td>
           <td>{{item.SurveyTaskStatus}}</td>
-          <td>{{item.ResultDt}}</td>
+          <td>{{item.ResultDt | date: 'dd-MMMM-yyyy'}}</td>
           <td>{{item.ReviewBy}}</td>
           <td>
             <a [routerLink]="['']"
@@ -44,4 +44,4 @@
       </tbody>
     </table>
   </div>
-  </div>
+</div>

@@ -45,13 +45,12 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
   AppGuarantorCompanyId : any;
   companyLegalDocObj : Array<AppCustCompanyLegalDocObj>;
   DocObjs : any;
-  defLegalDocType: string;
-  tempIndustryTypeCode : any;
+  defLegalDocType: string; 
   CompanyForm = this.fb.group({
     MrCustRelationshipCode : ['', [Validators.required, Validators.maxLength(50)]],
     TaxIdNo : ['', [Validators.required, Validators.maxLength(50)]],
     MrCompanyTypeCode : ['', [Validators.required, Validators.maxLength(50)]],
-    IndustryTypeCode : ['', [Validators.required, Validators.maxLength(50)]],
+    IndustryTypeCode : ['', [Validators.required, , Validators.maxLength(50)]],
     ContactName : ['', [Validators.maxLength(500)]],
     MrJobPositionCode : ['', [Validators.required, Validators.maxLength(50)]],
     MobilePhnNo1 : ['', [Validators.maxLength(50)]],
@@ -66,12 +65,15 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
     Phn2 : ['', [ Validators.maxLength(50)]],
     PhnExt2 : ['', [ Validators.maxLength(10)]],
     LegalDocForm: this.fb.array([])
-  });
-
+  }); 
+  businessDt: Date = new Date();
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient,private fb:FormBuilder, private toastr: NGXToastrService, private modalService: NgbModal) { 
   }
 
   ngOnInit() {
+    var context = JSON.parse(localStorage.getItem("UserAccess"));
+    this.businessDt = new Date(context["BusinessDt"]);
+    this.businessDt.setDate(this.businessDt.getDate() - 1);
     console.log("company");
     this.initLookup();
     this.initAddr();
@@ -220,7 +222,9 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
                 (response) => {
                   this.inputLookupObj1.nameSelect = response["IndustryTypeName"]; 
                     this.inputLookupObj1.jsonSelect = response;   
-                   console.log("aaa");
+                    this.CompanyForm.patchValue({
+                      IndustryTypeCode : response["IndustryTypeCode"]
+                    });
                 }
               );
               this.http.post(AdInsConstant.GetCustCompanyContactPersonByCustCompanyId, { CustCompanyId: this.resultData.CustCompanyId }).subscribe(
@@ -273,8 +277,7 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
       }
     );
     console.log(this.CompanyForm);
-    this.inputLookupObj1.isRequired = false;  
-    this.tempIndustryTypeCode = this.inputLookupObj1.nameSelect;
+   
   }
 
   // IndustryTypeCode="";
@@ -284,8 +287,7 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
       {
         IndustryTypeCode: event.IndustryTypeCode
       }
-    );
-    this.tempIndustryTypeCode = event.IndustryTypeCode;
+    ); 
     console.log(this.CompanyForm);
   }
   
@@ -319,7 +321,7 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
   setAppGuarantorCompany(){
     this.guarantorCompanyObj.AppGuarantorCompanyObj.MrCompanyTypeCode = this.CompanyForm.controls.MrCompanyTypeCode.value;
     this.guarantorCompanyObj.AppGuarantorCompanyObj.TaxIdNo = this.CompanyForm.controls.TaxIdNo.value;
-    this.guarantorCompanyObj.AppGuarantorCompanyObj.IndustryTypeCode = this.tempIndustryTypeCode;
+    this.guarantorCompanyObj.AppGuarantorCompanyObj.IndustryTypeCode =this.CompanyForm.controls.IndustryTypeCode.value;
     this.guarantorCompanyObj.AppGuarantorCompanyObj.ContactName = this.CompanyForm.controls.ContactName.value;
     this.guarantorCompanyObj.AppGuarantorCompanyObj.MrJobPositionCode = this.CompanyForm.controls.MrJobPositionCode.value;
     this.guarantorCompanyObj.AppGuarantorCompanyObj.ContactEmail = this.CompanyForm.controls.ContactEmail.value;
@@ -355,6 +357,7 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
       legalDocObj.ReleaseLocation = this.CompanyForm.controls["LegalDocForm"].value[i].ReleaseLocation;
       this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs.push(legalDocObj);
     }
+    console.log(this.guarantorCompanyObj);
   }
 
   SaveForm(){

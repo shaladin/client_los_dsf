@@ -60,7 +60,7 @@ export class ViewAppCustDataPersonalComponent implements OnInit {
         this.appCustBankAccObjs = response["AppCustBankAccObjs"];
         this.appCustSocmedObjs = response["AppCustSocmedObjs"];
         this.appCustGrpObjs = response["AppCustGrpObjs"];
-        this.appCustPersonalContactPersonObjs = response["AppCustPersonalContactPersonObjs"];
+        this.appCustPersonalContactPersonObjs = response["AppCustPersonalContactPersonObjs"] == null? new Array<AppCustPersonalContactPersonObj>() : response["AppCustPersonalContactPersonObjs"];
       },
       (error) => {
         console.log(error);

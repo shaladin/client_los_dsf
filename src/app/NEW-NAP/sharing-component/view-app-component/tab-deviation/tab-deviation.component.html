@@ -4,7 +4,7 @@
       <div class="card-body">
         <div class="px-3">
 
-          <lib-ucSubsection *ngIf="AutoDeviationData.length > 0" [id]="'viewAutoDeviationId'" [title]="'Automatic Deviation'" [panel]="'viewAutoDeviation'">
+          <lib-ucSubsection [id]="'viewAutoDeviationId'" [title]="'Automatic Deviation'" [panel]="'viewAutoDeviation'">
           </lib-ucSubsection>
           <div class="form-body" id="viewAutoDeviation" *ngIf="AutoDeviationData.length > 0">
             <table class="table table-responsive-md text-center table-hover" matSort (matSortChange)="sortAutoDeviationData($event)">
@@ -24,6 +24,11 @@
                   </th>
                 </tr>
               </thead>
+              <tbody *ngIf = "AutoDeviationData?.length == 0">
+                <tr>
+                  <td colspan="100%">No Data Available</td>
+                </tr>
+              </tbody>
               <tbody>
                 <tr *ngFor="let item of AutoDeviationData; let i = index">
                   <td>{{ i + 1 }}</td>
@@ -31,7 +36,8 @@
                   <td>{{ item.OriValue }}</td>
                   <td>{{ item.CurrValue }}</td>
                   <td>{{ item.AppvAt }}</td>
-                  <td>{{ item.Notes }}</td>
+                  <td *ngIf="item.Notes != null">{{ item.Notes }}</td>
+                  <td *ngIf="item.Notes == null"> - </td>
                 </tr>
               </tbody>
             </table>
@@ -102,12 +108,12 @@
                   <th *ngIf="IsEditManualDeviation" translate>ACTION</th>
                 </tr>
               </thead>
-              <tbody *ngIf="ManualDeviationData.length == 0">
+              <tbody *ngIf="ManualDeviationData?.length == 0">
                 <tr>
                   <td colspan="100%">No Data Available</td>
                 </tr>
               </tbody>
-              <tbody *ngIf="ManualDeviationData.length > 0">
+              <tbody *ngIf="ManualDeviationData?.length > 0">
                 <tr *ngFor="let item of ManualDeviationData; let i = index">
                   <td>{{ i + 1 }}</td>
                   <td style="text-align: left;">{{ item.DeviationCategory }}</td>

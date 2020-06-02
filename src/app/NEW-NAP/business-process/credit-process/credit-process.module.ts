@@ -4,7 +4,7 @@ import { ArchwizardModule } from "angular-archwizard";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
 import { RouterModule } from "@angular/router";
-import { MatCheckboxModule, MatRadioModule, MatSelectModule } from "@angular/material";
+import { MatCheckboxModule, MatRadioModule, MatSelectModule, MatTabsModule } from "@angular/material";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { AdInsModule } from "app/components/adins-module/adins.module";
 import { CreditProcessSharingRoutingModule } from "./credit-process-routing.module";
@@ -40,7 +40,6 @@ import { ViewSharingComponentModule } from "app/NEW-NAP/sharing-component/view-a
 import { UcviewgenericModule } from "@adins/ucviewgeneric";
 import { NgxCurrencyModule } from "ngx-currency";
 import { CreditApprovalDetailComponent } from './credit-approval/credit-approval-detail/credit-approval-detail.component';
-import { MatTabsModule } from "@angular/material";
 import { ViewAppComponentModule } from "app/NEW-NAP/sharing-component/view-app-component/view-app-component.module";
 
 
