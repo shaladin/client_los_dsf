@@ -137,9 +137,6 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.assetTypeId = event.AssetTypeId;
 
     var AssetTypeCode = { 'AssetTypeCode': event.AssetTypeCode };
-    console.log("aawd");
-    console.log(AssetTypeCode);
-
     this.http.post(AdInsConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
       (response: any) => {
         while (this.items.length) {
@@ -186,7 +183,6 @@ export class LeadInputLeadDataComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('lead input lead data');
     this.items = this.LeadDataForm.get('items') as FormArray;
 
     this.InputLookupAssetObj = new InputLookupObj();
@@ -274,7 +270,6 @@ export class LeadInputLeadDataComponent implements OnInit {
           } else {
             this.isUsed = false;
           }
-          console.log("Awdawd");
           if (this.resLeadAssetObj.LeadAssetId != 0) {
             this.LeadDataForm.patchValue({
               MrDownPaymentTypeCode: this.resLeadAssetObj.MrDownPaymentTypeCode,
@@ -620,8 +615,6 @@ export class LeadInputLeadDataComponent implements OnInit {
 
   TenorChange() {
     this.Calculate = false;
-    console.log("test tenor");
-    console.log(this.Calculate);
   }
 
   calculateNonKta() {
@@ -716,10 +709,6 @@ export class LeadInputLeadDataComponent implements OnInit {
   }
 
   save() {
-    if (this.LeadDataForm.controls["ManufacturingYear"].value > this.year) {
-      this.toastr.errorMessage("Manufacturing Year must be lower or equal than current year.");
-      return;
-    }
     if (this.Calculate == false) {
       this.toastr.errorMessage("Calculate First");
       return;
@@ -859,10 +848,6 @@ export class LeadInputLeadDataComponent implements OnInit {
 
     if (this.typePage == "edit" || this.typePage == "update") {
       if (this.resLeadAssetObj.LeadAssetId != 0) {
-        if (this.LeadDataForm.controls["ManufacturingYear"].value > this.year) {
-          this.toastr.errorMessage("Manufacturing Year must be lower or equal than current year.");
-          return;
-        }
         this.leadInputLeadDataObj = new LeadInputLeadDataObj();
         this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
         this.setLeadAsset();
@@ -917,7 +902,6 @@ export class LeadInputLeadDataComponent implements OnInit {
             this.toastr.errorMessage("Manufacturing Year must be lower or equal than current year.");
             return;
           }
-
           this.leadInputLeadDataObj = new LeadInputLeadDataObj();
           this.setLeadAsset();
           this.setLeadApp();

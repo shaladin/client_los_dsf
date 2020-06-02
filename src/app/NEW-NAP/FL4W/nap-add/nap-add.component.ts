@@ -71,7 +71,8 @@ export class NapAddComponent implements OnInit {
     RsvField2: [''],
     RsvField3: [''],
     RsvField4: [''],
-    RsvField5: ['']
+    RsvField5: [''],
+    BizTemplateCode: [AdInsConstant.FL4W]
   });
 
   constructor(private fb: FormBuilder, private router: Router,
@@ -80,6 +81,7 @@ export class NapAddComponent implements OnInit {
   ngOnInit() {
     // Lookup Obj
     this.user = JSON.parse(localStorage.getItem("UserAccess"));
+    this.MakeLookUpObj();
 
     this.MakeLookUpObj();
     this.GetOfficeDDL();
@@ -149,7 +151,7 @@ export class NapAddComponent implements OnInit {
     addCritBizTempalte.DataType = "text";
     addCritBizTempalte.propName = "rlob.BIZ_TMPLT_CODE";
     addCritBizTempalte.restriction = AdInsConstant.RestrictionEq;
-    addCritBizTempalte.value = AdInsConstant.CFRFN4W;
+    addCritBizTempalte.value = AdInsConstant.FL4W;
     arrAddCrit.push(addCritBizTempalte);
 
     this.inputLookupObjName.addCritInput = arrAddCrit;
