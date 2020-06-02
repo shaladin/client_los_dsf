@@ -37,7 +37,7 @@
             <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'][i]['controls'].SocmedId" [submit]="enjiForm.submitted"></lib-uc-show-errors>            
           </td>
           <td [formGroupName]="i">
-            <a class="danger p-0" data-original-title="" title="" (click)="deleteSocmed(i)">
+            <a class="danger p-0" (click)="deleteSocmed(i)">
               <i class="ft-trash-2 font-medium-3 mr-2"></i>
             </a>
           </td>

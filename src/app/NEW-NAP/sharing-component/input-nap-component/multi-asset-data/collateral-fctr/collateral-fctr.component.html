@@ -1,6 +1,6 @@
 <form class="form form-horizontal" #enjiForm="ngForm" [formGroup]="AddCollForm"
   (ngSubmit)="AddCollForm.valid && SaveForm()">
-  <lib-ucSubsection [id]="'AddCollDataId'" [title]="'Additional Collateral'" [panel]="'AddCollData'">
+  <lib-ucSubsection [id]="'AddCollDatasId'" [title]="'Additional Collateral'" [panel]="'AddCollDatas'">
   </lib-ucSubsection>
   <div [hidden]="HiddenState=='false'">
     <app-multi-collateral-paging (objOutput)="outputValue($event)"></app-multi-collateral-paging>

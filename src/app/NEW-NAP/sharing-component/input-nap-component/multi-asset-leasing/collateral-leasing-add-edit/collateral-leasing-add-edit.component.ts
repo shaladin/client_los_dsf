@@ -584,7 +584,7 @@ export class CollateralLeasingAddEditComponent implements OnInit {
 
   setCollateralInfo(){
     this.appCollateralDataObj.AppCollateralObj.AppId = this.AppId;
-    this.appCollateralDataObj.AppCollateralObj.CollateralSeqNo = "1";
+    this.appCollateralDataObj.AppCollateralObj.CollateralSeqNo = 1;
     this.appCollateralDataObj.AppCollateralObj.FullAssetCode = this.AddCollForm.controls["FullAssetCode"].value;
     this.appCollateralDataObj.AppCollateralObj.FullAssetName = this.AddCollForm.controls["FullAssetName"].value;
     this.appCollateralDataObj.AppCollateralObj.SerialNo1 = this.AddCollForm.controls["SerialNo1"].value;

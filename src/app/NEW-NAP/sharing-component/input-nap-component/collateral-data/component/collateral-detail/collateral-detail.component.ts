@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
   selector: 'app-collateral-detail',
@@ -7,9 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CollateralDetailComponent implements OnInit {
 
+  @Input() mode: string = "add";
+  @Output() outputValue: EventEmitter<number> = new EventEmitter<any>();
+
   constructor() { }
 
   ngOnInit() {
+    console.log(this.mode);
+  }
+
+  save(){
+    this.outputValue.emit();
   }
 
 }

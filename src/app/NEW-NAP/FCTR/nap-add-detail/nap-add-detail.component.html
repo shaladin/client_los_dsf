@@ -110,8 +110,10 @@
               </app-invoice-data>
             </div>
             <div id="coll-tab" class="content" role="tabpanel" aria-labelledby="coll-tab-trigger">
-              <app-collateral-fctr *ngIf="AppStepIndex == 4" [AppId]="appId" (outputTab)="NextStep('INS')">
-              </app-collateral-fctr>
+              <app-multi-coll-data *ngIf="AppStepIndex == 4" [AppId]="appId" (outputTab)="NextStep('INS')"></app-multi-coll-data>
+              <br><br><br><br><br>
+              <!-- <app-collateral-fctr *ngIf="AppStepIndex == 4" [AppId]="appId" (outputTab)="NextStep('INS')">
+              </app-collateral-fctr> -->
             </div>
             <div id="insurance-tab" class="content" role="tabpanel" aria-labelledby="insurance-tab-trigger">
               <app-insurance-data *ngIf="AppStepIndex == 5" [appId]="appId" (outputTab)="NextStep('FIN')">
