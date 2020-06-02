@@ -6,6 +6,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --prod --base-href /LOSR3/",
+    "sit": "ng build --configuration=sit --base-href /LOS_SIT/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

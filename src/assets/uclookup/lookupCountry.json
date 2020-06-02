@@ -32,7 +32,7 @@
         },
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "Country Name",
             "name": "COUNTRY_NAME"
         },

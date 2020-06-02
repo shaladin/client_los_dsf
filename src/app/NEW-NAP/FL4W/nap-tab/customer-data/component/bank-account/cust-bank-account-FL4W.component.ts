@@ -49,6 +49,7 @@ export class CustBankAccountFL4WComponent implements OnInit {
     IsDefault: [false],
     BankStmntObjs: this.fb.array([])
   });
+  currentYear: number;
 
 
   constructor(
@@ -61,6 +62,7 @@ export class CustBankAccountFL4WComponent implements OnInit {
 
   ngOnInit() {
     console.log('bank fl4w')
+    this.currentYear = new Date().getFullYear();
     this.initLookup();
     this.bindMonthObj();
   }
@@ -143,7 +145,7 @@ export class CustBankAccountFL4WComponent implements OnInit {
     this.CustBankAccountForm = this.fb.group({
       BankBranch: ['', [Validators.required, Validators.maxLength(50)]],
       BankAccName: ['', [Validators.required, Validators.maxLength(50)]],
-      BankAccNo: ['', [Validators.required, Validators.maxLength(50)]],
+      BankAccNo: ['', [Validators.required, Validators.maxLength(50),Validators.pattern("^[0-9]*$")]],
       IsDefault: [false],
       BankStmntObjs: this.fb.array([])
     });
@@ -214,15 +216,15 @@ export class CustBankAccountFL4WComponent implements OnInit {
     if(bankStmntObj == undefined){
       return this.fb.group({
         Month: [this.defaultMonth, [Validators.required, Validators.maxLength(2)]],
-        Year: ['', [Validators.required, Validators.maxLength(10), Validators.pattern("^[0-9]+$")]],
-        DebitAmt: [0, Validators.required],
-        CreditAmt: [0, Validators.required],
-        BalanceAmt: [0, Validators.required]
+        Year: ['', [Validators.required, Validators.maxLength(10), Validators.pattern("^[0-9]+$"), Validators.max(this.currentYear)]],
+        DebitAmt: [0, [Validators.required, Validators.min(0)]],
+        CreditAmt: [0, [Validators.required, Validators.min(0)]],
+        BalanceAmt: [0, [Validators.required, Validators.min(0)]]
       })
     }else{
       return this.fb.group({
         Month: [bankStmntObj.Month, [Validators.required, Validators.maxLength(2)]],
-        Year: [bankStmntObj.Year, [Validators.required, Validators.maxLength(10), Validators.pattern("^[0-9]+$")]],
+        Year: [bankStmntObj.Year, [Validators.required, Validators.maxLength(10), Validators.pattern("^[0-9]+$"),Validators.max(this.currentYear)]],
         DebitAmt: [bankStmntObj.DebitAmt, Validators.required],
         CreditAmt: [bankStmntObj.CreditAmt, Validators.required],
         BalanceAmt: [bankStmntObj.BalanceAmt, Validators.required]
