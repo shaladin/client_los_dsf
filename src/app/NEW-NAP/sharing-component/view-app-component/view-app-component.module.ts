@@ -26,6 +26,7 @@ import { UcviewgenericModule } from "@adins/ucviewgeneric";
 import { UcSubsectionModule } from "@adins/uc-subsection";
 import { ApprovalHistComponent } from './approval-hist/approval-hist.component';
 import { UcapprovalhistModule  } from '@adins/ucapprovalhist';
+import { TabDeviationComponent } from "./tab-deviation/tab-deviation.component";
 
 @NgModule({
   exports: [
@@ -42,6 +43,7 @@ import { UcapprovalhistModule  } from '@adins/ucapprovalhist';
     TabApplicationComponent,
     LifeInsuranceComponent,
     AppTcComponent,
+    TabDeviationComponent
   ],
   imports: [
     CommonModule,
@@ -71,7 +73,8 @@ import { UcapprovalhistModule  } from '@adins/ucapprovalhist';
     ViewFinancialComponent,
     AppInsuranceComponent,
     AppInsuranceDetailComponent,
-    ViewAppFraudVerificationComponent    
+    ViewAppFraudVerificationComponent,
+    TabDeviationComponent    
   ],
   providers: [
     NGXToastrService

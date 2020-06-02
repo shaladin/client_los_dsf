@@ -30,7 +30,7 @@ export class InvoiceVerifDetailComponent implements OnInit {
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private httpClient: HttpClient,private router: Router) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
-      this.WfTaskListId = params["WFTaskListId"];
+      this.WfTaskListId = params["TaskListId"];
       this.TrxNo = params["TrxNo"];
     });
     this.BusinessDate = new Date(localStorage.getItem("BusinessDateRaw"));

@@ -32,7 +32,7 @@ export class PhoneVerificationSubjectViewComponent implements OnInit {
 
   verfResObj = {
     TrxRefNo: "",
-    MrVerfTrxTypeCode: "PHN_VERIF",
+    MrVerfTrxTypeCode: AdInsConstant.VerfTrxTypeCodePhn,
   };
 
   verfResHObj = {
