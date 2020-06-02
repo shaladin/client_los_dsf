@@ -27,7 +27,6 @@ import { ReservedFundComponent } from "./commission-reserved-fund/component/rese
 import { CommissionReservedFundDetailComponent } from "./commission-reserved-fund/comission-reserved-fund-detail/commission-reserved-fund-detail.component";
 import { FraudDetectionPagingComponent } from "./fraud-detection/fraud-detection-paging/fraud-detection-paging.component";
 import { FraudDetectionVerifComponent } from "./fraud-detection/fraud-detection-verif/fraud-detection-verif.component";
-import { TabDeviationComponent } from "./credit-investigation/component/tab-deviation/tab-deviation.component";
 import { CreditReviewMainComponent } from "./credit-review/credit-review-main/credit-review-main.component";
 import { CreditReviewPagingComponent } from "./credit-review/credit-review-paging/credit-review-paging.component";
 import { UcinputnumberModule } from "@adins/ucinputnumber";
@@ -41,6 +40,7 @@ import { ViewSharingComponentModule } from "app/NEW-NAP/sharing-component/view-a
 import { UcviewgenericModule } from "@adins/ucviewgeneric";
 import { NgxCurrencyModule } from "ngx-currency";
 import { CreditApprovalDetailComponent } from './credit-approval/credit-approval-detail/credit-approval-detail.component';
+import { ViewAppComponentModule } from "app/NEW-NAP/sharing-component/view-app-component/view-app-component.module";
 
 
 export const customCurrencyMaskConfig = {
@@ -57,8 +57,7 @@ export const customCurrencyMaskConfig = {
 
 @NgModule({
   exports: [
-    ViewFraudDetectionResultComponent,
-    TabDeviationComponent
+    ViewFraudDetectionResultComponent
   ],
   imports: [
     CommonModule,
@@ -80,8 +79,8 @@ export const customCurrencyMaskConfig = {
     UcSubsectionModule ,
     ViewSharingComponentModule,
     UcviewgenericModule,
-    NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
-    MatTabsModule
+    ViewAppComponentModule,
+    NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
   ],
   declarations: [
     CreditApprovalPagingComponent,
@@ -92,7 +91,6 @@ export const customCurrencyMaskConfig = {
     CreditInvestigationDetailComponent,
     CreditInvestigationPagingComponent,
     TabApplicationDataComponent,
-    TabDeviationComponent,
     CustHistoryComponent,
     CommissionReservedFundPagingComponent,
     CommissionReservedFundDetailComponent,
