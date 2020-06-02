@@ -56,26 +56,11 @@ export class LifeInsuranceDataComponent implements OnInit {
       (response) => {
         this.result = response;
         this.AppLifeInsHId = this.result.AppLifeInsHId;
-        if (this.result.ListAppLifeInsD != null && this.result.ListAppLifeInsD != undefined) {
-          for (let i = 0; i < this.result.ListAppLifeInsD.length; i++) {
-            this.AppLifeInsD[i] = this.result.ListAppLifeInsD[i]["AppLifeInsDId"];
-          }
-        }
         console.log(this.AppLifeInsD);
         if (this.result.AppLifeInsHId != 0) {
           this.mode = "edit";
           this.show = true;
-          this.IsChecked = true;          
-          this.ListObj = new Array<LifeInsDObj>();
-          this.ListObj = [...this.result.ListAppLifeInsD];
-          // if (this.ListObj.length > 0) {
-          //   for(let i=0;i<this.ListObj.length;i++){
-          //     this.ObjSelected(checked,i){
-          //     }
-          //   }
-          // }
-          this.LifeInsObj.ListAppLifeInsD = new Array<LifeInsDObj>();
-          this.LifeInsObj.ListAppLifeInsD = [...this.result.ListAppLifeInsD];
+          this.IsChecked = true; 
           this.LifeInsForm.patchValue({
             IsChecked: true,
             LifeInscoBranchName: this.result.LifeInscoBranchCode,
@@ -228,49 +213,6 @@ export class LifeInsuranceDataComponent implements OnInit {
       }
     }
   }
-
-  // async Save() {
-  //   this.setValue();
-  //   this.isCoverCheck();
-  //   if (this.mode == "edit") {
-  //     if(this.IsChecked){
-  //       this.LifeInsObj.AppId = this.AppId;
-  //       this.LifeInsObj.AppLifeInsHId = this.AppLifeInsHId;
-  //       for (let i = 0; i < this.AppLifeInsD.length; i++) {
-  //         this.LifeInsObj.ListAppLifeInsD[i].AppLifeInsDId = this.AppLifeInsD[i]
-  //       }
-  //       this.http.post(AdInsConstant.EditAppLifeInsH, this.LifeInsObj).subscribe(
-  //         response => {
-  //           this.toastr.successMessage(response["message"]);
-  //           // this.wizard.goToNextStep()
-  //           this.outputTab.emit();
-  //         },
-  //         error => {
-  //           console.log(error);
-  //         }
-  //       );
-
-  //     } else {
-  //     }
-  //   } else {
-  //     if (this.IsChecked) {
-  //       this.http.post(AdInsConstant.AddAppLifeInsH, this.LifeInsObj).subscribe(
-  //         (response) => {
-  //           console.log(response);
-  //           this.toastr.successMessage(response["message"]);
-  //           // this.wizard.goToNextStep()
-  //           this.outputTab.emit();
-  //         },
-  //         (error) => {
-  //           console.log(error);
-  //         }
-  //       );
-  //     }
-  //     else {
-  //       this.outputTab.emit();
-  //     }
-  //   }
-  // }
 
   async SaveForm(){
     this.setValue();
