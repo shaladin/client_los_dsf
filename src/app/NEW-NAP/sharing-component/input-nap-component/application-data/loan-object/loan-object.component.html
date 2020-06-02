@@ -24,9 +24,9 @@
       <tr *ngFor="let item of resultData">
         <td class="text-left">{{item.MrLoanPurposeDescr}}</td>
         <td class="text-left">{{item.SupplName}}</td>
-        <td >{{item.BudgetPlanAmt | number:'.2':'en-US'}}</td>
-        <td >{{item.SelfFinancingAmt | number:'.2':'en-US'}}</td>
-        <td >{{item.FinancingAmt | number:'.2':'en-US'}}</td>
+        <td currencyMask>{{item.BudgetPlanAmt | number:'.2':'en-US'}}</td>
+        <td currencyMask>{{item.SelfFinancingAmt | number:'.2':'en-US'}}</td>
+        <td currencyMask>{{item.FinancingAmt | number:'.2':'en-US'}}</td>
         <td class="text-center" *ngIf="item.IsDisburseToCust==true">Yes</td>
         <td class="text-center" *ngIf="item.IsDisburseToCust==false">No</td>
         <td>
@@ -88,8 +88,8 @@
             <div class="form-group row">
               <label class="col-md-3 adins-required-label" for="SelfFinancing" translate>Self Financing</label>
               <div class="col-md-9">
-                <input currencyMask type="text" id="SelfFinancing" class="form-control adInsInput number"
-                  formControlName="SelfFinancing" [ngClass]="{ 'is-invalid': enjiForm.submitted && MainInfoForm.controls.SelfFinancing.invalid}">
+                <input currencyMask (focusout)="CalculateFinancingAmt()" type="text" id="SelfFinancing" class="form-control adInsInput number"
+                  formControlName="SelfFinancing" [ngClass]="{ 'is-invalid': enjiForm.submitted && MainInfoForm.controls.SelfFinancing.invalid}"> 
                 <lib-uc-show-errors [control]="MainInfoForm.controls.SelfFinancing"
                   [submit]="MainInfoReqForm.submitted">
                 </lib-uc-show-errors>

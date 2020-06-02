@@ -51,7 +51,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   verfResObj =
     {
       TrxRefNo: "",
-      MrVerfTrxTypeCode: "PHN_VERIF",
+      MrVerfTrxTypeCode: AdInsConstant.VerfTrxTypeCodePhn,
     };
   phoneVerifObj: any;
   AppObj: any;
@@ -142,7 +142,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     this.ReturnHandlingDData.ReturnHandlingDId = this.returnHandlingDObj.ReturnHandlingDId;
     this.ReturnHandlingDData.ReturnHandlingHId = this.returnHandlingDObj.ReturnHandlingHId;
     this.ReturnHandlingDData.MrReturnTaskCode = this.returnHandlingDObj.MrReturnTaskCode;
-    this.ReturnHandlingDData.ReturnStat = "DONE";
+    this.ReturnHandlingDData.ReturnStat = AdInsConstant.RtnHandlingReturnStatDone;
     this.ReturnHandlingDData.ReturnHandlingNotes = this.returnHandlingDObj.ReturnHandlingNotes;
     this.ReturnHandlingDData.ReturnHandlingExecNotes = this.ReturnHandlingForm.controls["ExecNotes"].value;
     this.ReturnHandlingDData.WfTaskListId = this.wfTaskListId;
@@ -154,7 +154,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     this.ReturnHandlingHData.AppId = this.appId;
     this.ReturnHandlingHData.ReturnBy = localStorage.getItem("Username");
     this.ReturnHandlingHData.ReturnNotes = this.ReturnHandlingForm.controls.UpdateNotes.value;
-    this.ReturnHandlingHData.ReturnFromTrxType = "PHN";
+    this.ReturnHandlingHData.ReturnFromTrxType = AdInsConstant.TrxTypeCodePhn;
     this.ReturnHandlingHData.WfTaskListId = this.wfTaskListId;
     this.ReturnHandlingHData.IsReturn = (this.ReturnHandlingForm.controls['IsAnyUpdate'].value == 'YES') ? true : false;
   }
@@ -200,8 +200,8 @@ export class PhoneVerificationSubjectComponent implements OnInit {
       this.addVerifResultObj.TrxRefNo = this.AppObj.AppNo;
       this.addVerifResultObj.VerfDt = businessDt;
       this.addVerifResultObj.EmpNo = "-";
-      this.addVerifResultObj.MrVerfResultStatCode = "NEW";
-      this.addVerifResultObj.MrVerfTrxTypeCode = "PHN_VERIF";
+      this.addVerifResultObj.MrVerfResultStatCode = AdInsConstant.VerfResultStatCodeNew;
+      this.addVerifResultObj.MrVerfTrxTypeCode = AdInsConstant.VerfTrxTypeCodePhn;
       this.addVerifResultObj.LobCode = this.AppObj.LobCode;
       this.addVerifResultObj.LobName = this.AppObj.LobCode;
       this.addVerifResultObj.Notes = "-";

@@ -21,6 +21,7 @@ export class ResponseCalculateObj {
     DiffRateAmt: number;
     RefundInterestAmt: number;
     TotalDisbAmt: number;
+    ApvAmt: number;
 
     constructor() {
     }

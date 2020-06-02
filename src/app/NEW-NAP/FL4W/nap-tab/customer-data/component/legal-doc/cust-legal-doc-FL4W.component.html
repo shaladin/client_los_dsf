@@ -21,7 +21,7 @@
         <th style="text-align: center;"><span class="thead-header" translate>EXPIRED DATE
         </span>
         </th>
-        <th style="text-align: center;"><span class="thead-header" translate>RELEASE BY
+        <th style="text-align: left;"><span class="thead-header" translate>RELEASE BY
         </span>
         </th>
         <th><span translate class="thead-header" name='action'>ACTION</span></th>
@@ -38,7 +38,7 @@
         <td style="text-align: center;">{{item.DocNo}}</td>
         <td style="text-align: center;">{{item.DocDt | date}}</td>
         <td style="text-align: center;">{{item.DocExpiredDt | date}}</td>
-        <td style="text-align: center;">{{item.ReleaseBy}}</td>
+        <td style="text-align: left;">{{item.ReleaseBy}}</td>
         <td>
           <a class="success p-0" data-original-title="" title="" (click)="edit(i, content)">
             <i class="ft-edit-2 font-medium-3 mr-2"></i>
@@ -81,7 +81,7 @@
                 <div class="col-md-4">
                   <input type="date" class="form-control" id="dateIssued" formControlName="DocDt"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && LegalDocForm.controls.DocDt.invalid }">
-                  <lib-uc-show-errors [control]="LegalDocForm.controls.DocDt" [submit]="enjiForm.submitted" [fieldName]="dateErrorMessage"></lib-uc-show-errors>
+                  <lib-uc-show-errors [control]="LegalDocForm.controls.DocDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
               </div>
               <div class="form-group row">
@@ -95,7 +95,7 @@
                 <div class="col-md-4">
                   <input type="date" id="expDt" class="form-control" formControlName="DocExpiredDt"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && LegalDocForm.controls.DocExpiredDt.invalid }">
-                  <lib-uc-show-errors [control]="LegalDocForm.controls.DocExpiredDt" [submit]="enjiForm.submitted" [fieldName]="dateErrorMessage"></lib-uc-show-errors>
+                  <lib-uc-show-errors [control]="LegalDocForm.controls.DocExpiredDt" [submit]="enjiForm.submitted" ></lib-uc-show-errors>
                 </div>
               </div>
               <div class="form-group row">

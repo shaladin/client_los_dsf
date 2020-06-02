@@ -7,6 +7,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AppWizardObj } from 'app/shared/model/App/AppWizard.Model';
 import { WizardComponent } from 'angular-archwizard';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { AppGuarantorObj } from 'app/shared/model/AppGuarantorObj.Model';
 
 @Component({
   selector: 'app-guarantor-paging-FL4W',
@@ -19,12 +20,15 @@ export class GuarantorPagingFL4WComponent implements OnInit {
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
 
   inputGridObj: any;
+  result : any = new Array();
+  resultData : any;
   closeResult: any;
-  AppGuarantorId : any;
-  MrGuarantorTypeCode : any;
+  AppGuarantorId: any;
+  MrGuarantorTypeCode: any;
   mode: any;
   appWizardObj: AppWizardObj;
-  closeChk : any;
+  closeChk: any;
+  MrCustRelationshipCode : any = new Array();
 
   constructor(private http: HttpClient, private modalService: NgbModal, private toastr: NGXToastrService) {
   }
@@ -36,28 +40,25 @@ export class GuarantorPagingFL4WComponent implements OnInit {
 
     var guarantorObj = new GuarantorObj();
     guarantorObj.AppId = this.AppId;
-    this.http.post(AdInsConstant.GetListAppGuarantor, guarantorObj).subscribe(
+    this.http.post(AdInsConstant.GetAppGuarantorList, guarantorObj).subscribe(
       (response) => {
-        console.log("response: ");
         console.log(response);
-        console.log(this.inputGridObj);
         this.inputGridObj.resultData = {
           Data: ""
         }
         this.inputGridObj.resultData["Data"] = new Array();
-        this.inputGridObj.resultData.Data = response["ReturnObject"]
-
-        console.log("data")
-        console.log(guarantorObj.AppGuarantorObj.AppId)
-
+        this.inputGridObj.resultData.Data = response["ReturnObject"];
+        this.result = this.inputGridObj.resultData.Data;
+        console.log(this.result);
       },
       (error) => {
         console.log(error);
       }
     );
+    this.loadGuarantorListData(this.AppId);
   }
 
-  add(content){
+  add(content) {
     this.mode = "add";
     this.open(content);
     this.AppGuarantorId = null;
@@ -80,70 +81,63 @@ export class GuarantorPagingFL4WComponent implements OnInit {
     }
   }
 
-  SaveAndContinue()
-  {
+  SaveAndContinue() {
     this.outputTab.emit();
   }
 
-  event(content,ev){
-    console.log("CHECK EVENT");
-    console.log(ev);
-    if(ev.Key == "edit"){
+  event(content, ev) {
+    if (ev.Key == "edit") {
       this.AppGuarantorId = ev.RowObj.AppGuarantorId;
       this.MrGuarantorTypeCode = ev.RowObj.MrGuarantorTypeCode;
       this.open(content);
-      console.log("CHECK EVENT");
-      console.log(this.AppGuarantorId);
     }
 
-    if(ev.Key == "delete"){
+    if (ev.Key == "delete") {
       if (confirm("Are you sure to delete this record?")) {
         var guarantorObj = new GuarantorObj();
         guarantorObj.AppGuarantorObj.AppGuarantorId = ev.RowObj.AppGuarantorId;
         guarantorObj.AppGuarantorObj.AppId = this.AppId;
         this.http.post(AdInsConstant.DeleteAppGuarantor, guarantorObj).subscribe(
           (response) => {
-            console.log("response: ");
-            console.log(response);
-            console.log(this.inputGridObj);
             this.toastr.successMessage(response["message"]);
             this.inputGridObj.resultData = {
               Data: ""
             }
             this.inputGridObj.resultData["Data"] = new Array();
             this.inputGridObj.resultData.Data = response["ReturnObject"]
-  
+            this.result = this.inputGridObj.resultData.Data;
           },
           (error) => {
             console.log(error);
           }
         );
-      }   
+      }
     }
-    
+
   }
 
-  close(event){
-    this.closeChk=event;
-    if(this.closeChk){
-      var guarantorObj = new GuarantorObj();
-      guarantorObj.AppGuarantorObj.AppId = this.AppId;
-      this.http.post(AdInsConstant.GetListAppGuarantor, guarantorObj).subscribe(
-        (response) => {
-          console.log("response: ");
-          console.log(response);
-          console.log(this.inputGridObj);
-          this.inputGridObj.resultData = {
-            Data: ""
-          }
-          this.inputGridObj.resultData["Data"] = new Array();
-          this.inputGridObj.resultData.Data = response["ReturnObject"]
-
-        },
-        (error) => {
-          console.log(error);
+  loadGuarantorListData(appId : number) {
+    var guarantorObj = new AppGuarantorObj();
+    guarantorObj.AppId = appId;
+    this.http.post(AdInsConstant.GetAppGuarantorList, guarantorObj).subscribe(
+      (response) => {
+        this.inputGridObj.resultData = {
+          Data: ""
         }
-      );
+        this.inputGridObj.resultData["Data"] = new Array();
+        this.inputGridObj.resultData.Data = response["ReturnObject"]
+        this.result = this.inputGridObj.resultData.Data;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  close(event) {
+    this.closeChk = event;
+    if (this.closeChk) {
+      this.loadGuarantorListData(this.AppId);
       this.modalService.dismissAll();
     }
   }

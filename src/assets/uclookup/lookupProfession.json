@@ -32,7 +32,7 @@
         },
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "Profession Name",
             "name": "PROFESSION_NAME"
         },
