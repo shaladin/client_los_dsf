@@ -229,57 +229,76 @@ export class LifeInsuranceDataComponent implements OnInit {
     }
   }
 
-  async Save() {
+  // async Save() {
+  //   this.setValue();
+  //   this.isCoverCheck();
+  //   if (this.mode == "edit") {
+  //     if(this.IsChecked){
+  //       this.LifeInsObj.AppId = this.AppId;
+  //       this.LifeInsObj.AppLifeInsHId = this.AppLifeInsHId;
+  //       for (let i = 0; i < this.AppLifeInsD.length; i++) {
+  //         this.LifeInsObj.ListAppLifeInsD[i].AppLifeInsDId = this.AppLifeInsD[i]
+  //       }
+  //       this.http.post(AdInsConstant.EditAppLifeInsH, this.LifeInsObj).subscribe(
+  //         response => {
+  //           this.toastr.successMessage(response["message"]);
+  //           // this.wizard.goToNextStep()
+  //           this.outputTab.emit();
+  //         },
+  //         error => {
+  //           console.log(error);
+  //         }
+  //       );
+
+  //     } else {
+  //     }
+  //   } else {
+  //     if (this.IsChecked) {
+  //       this.http.post(AdInsConstant.AddAppLifeInsH, this.LifeInsObj).subscribe(
+  //         (response) => {
+  //           console.log(response);
+  //           this.toastr.successMessage(response["message"]);
+  //           // this.wizard.goToNextStep()
+  //           this.outputTab.emit();
+  //         },
+  //         (error) => {
+  //           console.log(error);
+  //         }
+  //       );
+  //     }
+  //     else {
+  //       this.outputTab.emit();
+  //     }
+  //   }
+  // }
+
+  async SaveForm(){
     this.setValue();
     this.isCoverCheck();
-    if (this.mode == "edit") {
-      if(this.IsChecked){
-        this.LifeInsObj.AppId = this.AppId;
-        this.LifeInsObj.AppLifeInsHId = this.AppLifeInsHId;
-        for (let i = 0; i < this.AppLifeInsD.length; i++) {
-          this.LifeInsObj.ListAppLifeInsD[i].AppLifeInsDId = this.AppLifeInsD[i]
+    if(this.IsChecked){
+      this.LifeInsObj.AppId = this.AppId;
+      this.http.post(AdInsConstant.AddEditAppLifeInsH, this.LifeInsObj).subscribe(
+        response => {
+          this.toastr.successMessage(response["message"]);
+          // this.wizard.goToNextStep()
+          this.outputTab.emit();
+        },
+        error => {
+          console.log(error);
         }
-        this.http.post(AdInsConstant.EditAppLifeInsH, this.LifeInsObj).subscribe(
-          response => {
-            this.toastr.successMessage(response["message"]);
-            // this.wizard.goToNextStep()
-            this.outputTab.emit();
-          },
-          error => {
-            console.log(error);
-          }
-        );
-
-      } else {
-        this.LifeInsObj.AppLifeInsHId = this.AppLifeInsHId;
-        this.http.post(AdInsConstant.DeleteAppLifeIns, this.LifeInsObj).subscribe(
-          response => {
-            this.toastr.successMessage(response["message"]);
-            // this.wizard.goToNextStep()
-            this.outputTab.emit();
-          },
-          error => {
-            console.log(error);
-          }
-        );
-      }
-    } else {
-      if (this.IsChecked) {
-        this.http.post(AdInsConstant.AddAppLifeInsH, this.LifeInsObj).subscribe(
-          (response) => {
-            console.log(response);
-            this.toastr.successMessage(response["message"]);
-            // this.wizard.goToNextStep()
-            this.outputTab.emit();
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
-      }
-      else {
-        this.outputTab.emit();
-      }
+      );
+    }else{
+      this.LifeInsObj.AppLifeInsHId = this.AppLifeInsHId;
+      this.http.post(AdInsConstant.DeleteAppLifeIns, this.LifeInsObj).subscribe(
+        response => {
+          this.toastr.successMessage(response["message"]);
+          // this.wizard.goToNextStep()
+          this.outputTab.emit();
+        },
+        error => {
+          console.log(error);
+        }
+      );
     }
   }
 
@@ -316,6 +335,8 @@ export class LifeInsuranceDataComponent implements OnInit {
     } else {
       console.log("event unchecked");
       this.LifeInsObj.ListAppLifeInsD.splice(i, 1);
+      console.log(this.LifeInsObj.ListAppLifeInsD[i]);
+      console.log(this.LifeInsObj.ListAppLifeInsD);
     }
   }
 
