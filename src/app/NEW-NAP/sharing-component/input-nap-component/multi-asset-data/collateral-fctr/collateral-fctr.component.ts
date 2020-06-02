@@ -394,7 +394,6 @@ export class CollateralFctrComponent implements OnInit {
           UserName: AppCollateralRegistration.UserName,
           MrUserRelationshipCode: AppCollateralRegistration.MrUserRelationshipCode,
           CollateralNotes: AppCollateralRegistration.CollateralNotes
-
         })
 
         this.locationAddrObj = new AddrObj();
