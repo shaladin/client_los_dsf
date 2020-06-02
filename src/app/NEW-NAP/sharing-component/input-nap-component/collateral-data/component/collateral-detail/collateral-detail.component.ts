@@ -13,7 +13,6 @@ import { formatDate } from '@angular/common';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { AppCollateralRegistrationObj } from 'app/shared/model/AppCollateralRegistrationObj.Model';
-import { CollateralDocumentComponent } from '../collateral-document/collateral-document.component';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AppCollateralDataObj } from 'app/shared/model/AppCollateralDataObj.Model';
 import { ListAppCollateralDocObj } from 'app/shared/model/ListAppCollateralDocObj.Model';
@@ -27,7 +26,6 @@ import { AppCollateralDocObj } from 'app/shared/model/AppCollateralDocObj.Model'
 export class CollateralDetailComponent implements OnInit {
 
   @ViewChild('LookupCollateral') ucLookupCollateral: UclookupgenericComponent;
-  @ViewChild('CollateralDocument') collDocComp: CollateralDocumentComponent;
   @Input() mode: string = "add";
   @Input() AppId: number;
   @Output() outputValue: EventEmitter<number> = new EventEmitter<any>();
