@@ -977,7 +977,7 @@ export class AdInsConstant {
 
   //CUST CONFIRM
   public static GetVerfQuestionAnswerListByAppIdAndSubject = environment.losUrl + "/CustCnfrm/GetVerfQuestionAnswerListByAppIdAndSubject";
-  public static AddCustCnfrm = "http://localhost:5001" + "/CustCnfrm/AddCustCnfrm";
+  public static AddCustCnfrm = environment.losUrl + "/CustCnfrm/AddCustCnfrm";
 
   //REF STATUS
   public static GetListActiveRefStatusByStatusGrpCode = environment.FoundationR3Url + "/RefStatus/GetListKeyValueActiveGrpCodeByCode";
