@@ -78,12 +78,12 @@
           },
           {
             "type": "text",
-            "label": "Proffession",
+            "label": "Profession",
             "property": "Proffession"
           }
         ],
         "querystring": {
-          "select": "SELECT ID_NO AS IdNo, FAMILY_CARD_NO AS FamilyCardNo, CUST_NAME AS CustName, BIRTH_PLACE AS BirthPlace,BIRTH_DT AS BirthDt, GENDER AS Gender, RELIGION AS Religion, MARITAL_STATUS AS MaritalStatus,RELATIONSHIP AS Relationship, EDUCATION AS Education, PROFFESSION AS Proffession, MOTHER_ID_NO AS MotherIdNo,MOTHER_MAIDEN_NAME AS MotherMaidenName, FATHER_ID_NO AS FatherIdNo, FATHER_NAME AS FatherName",
+          "select": "SELECT ID_NO AS IdNo, FAMILY_CARD_NO AS FamilyCardNo, CUST_NAME AS CustName, BIRTH_PLACE AS BirthPlace,BIRTH_DT AS BirthDt, GENDER AS Gender, RELIGION AS Religion, MARITAL_STATUS AS MaritalStatus,RELATIONSHIP AS Relationship, EDUCATION AS Education, PROFESSION AS Proffession, MOTHER_ID_NO AS MotherIdNo,MOTHER_MAIDEN_NAME AS MotherMaidenName, FATHER_ID_NO AS FatherIdNo, FATHER_NAME AS FatherName",
            "from":" FROM dbo.FRAUD_DUKCAPIL WITH(NOLOCK)",
             "where":"WHERE ID_NO = {0}"
             
