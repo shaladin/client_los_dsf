@@ -304,7 +304,8 @@ export class GuarantorCompanyComponent implements OnInit {
 
   Add(){
     this.setAppGuarantor();
-    if(this.setAppGuarantorCompany() == false) return;
+    if(this.setAppGuarantorCompany() == false) return false;
+    else true;
   }
 
   setAppGuarantor(){
@@ -375,7 +376,7 @@ export class GuarantorCompanyComponent implements OnInit {
   SaveForm(){
     console.log(this.CompanyForm);
     this.guarantorCompanyObj = new GuarantorCompanyObj();
-    this.Add();
+    if(!this.Add()) return;
     if (this.mode == "edit") {
       this.guarantorCompanyObj.RowVersion = this.resultData.RowVersion;
       this.guarantorCompanyObj.AppGuarantorObj.AppGuarantorId = this.AppGuarantorId;
