@@ -65,17 +65,7 @@ export class LifeInsuranceDataComponent implements OnInit {
         if (this.result.AppLifeInsHId != 0) {
           this.mode = "edit";
           this.show = true;
-          this.IsChecked = true;          
-          this.ListObj = new Array<LifeInsDObj>();
-          this.ListObj = [...this.result.ListAppLifeInsD];
-          // if (this.ListObj.length > 0) {
-          //   for(let i=0;i<this.ListObj.length;i++){
-          //     this.ObjSelected(checked,i){
-          //     }
-          //   }
-          // }
-          this.LifeInsObj.ListAppLifeInsD = new Array<LifeInsDObj>();
-          this.LifeInsObj.ListAppLifeInsD = [...this.result.ListAppLifeInsD];
+          this.IsChecked = true; 
           this.LifeInsForm.patchValue({
             IsChecked: true,
             LifeInscoBranchName: this.result.LifeInscoBranchCode,
