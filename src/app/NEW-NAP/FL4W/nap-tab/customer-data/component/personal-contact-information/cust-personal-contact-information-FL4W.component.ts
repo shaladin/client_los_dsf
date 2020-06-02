@@ -74,14 +74,14 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
     MrGenderCode: ['', [Validators.required, Validators.maxLength(50)]],
     MrIdTypeCode: ['', Validators.maxLength(50)],
     MrCustRelationshipCode: ['', Validators.maxLength(50)],
-    IdNo: ['', Validators.maxLength(100)],
+    IdNo: ['', [Validators.maxLength(100),Validators.pattern("^[0-9]+$")]],
     BirthPlace: ['', Validators.maxLength(100)],
     BirthDt: [''],
     IsEmergencyContact: [false],
     MobilePhnNo1: ['', [Validators.required, Validators.maxLength(100), Validators.pattern("^[0-9]+$")]],
     MobilePhnNo2: ['', [Validators.required, Validators.maxLength(100), Validators.pattern("^[0-9]+$")]],
     IsFamily: [false],
-    Email: ['', Validators.maxLength(100)],
+    Email: ['', [Validators.maxLength(100)]],
     CopyFromContactPerson: ['']
   });
 
@@ -94,6 +94,7 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
      }
 
   ngOnInit() {
+    console.log('cust personal contact information')
     this.bindCopyFrom();
     this.initLookup();
     this.initUrl();

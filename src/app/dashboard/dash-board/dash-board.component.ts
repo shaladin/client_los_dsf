@@ -19,7 +19,7 @@ export interface Chart {
 @Component({
   selector: 'app-dash-board',
   templateUrl: './dash-board.component.html',
-  styleUrls: ['./dash-board.component.scss']
+  styleUrls: []
 })
 export class DashBoardComponent implements OnInit {
   Item : any;

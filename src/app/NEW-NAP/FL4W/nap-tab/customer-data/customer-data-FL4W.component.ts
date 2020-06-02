@@ -123,6 +123,7 @@ export class CustomerDataFL4WComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    console.log('customer data')
     this.initUrl();
     this.bindCustTypeObj();
     this.initAddrObj();

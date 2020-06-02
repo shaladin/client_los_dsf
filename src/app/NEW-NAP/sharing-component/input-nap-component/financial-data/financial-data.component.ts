@@ -100,6 +100,8 @@ export class FinancialDataComponent implements OnInit {
         PrepaymentPenaltyRate: 0,
         SellEffectiveRatePrcnt: 0,
 
+        ApvAmt: 0,
+
         NeedReCalculate: true
       }
     );
@@ -144,6 +146,7 @@ export class FinancialDataComponent implements OnInit {
           CummulativeTenor: this.appFinDataObj.CummulativeTenor,
 
           NtfAmt: this.appFinDataObj.NtfAmt,
+          ApvAmt: this.appFinDataObj.ApvAmt,
 
           LcRate: this.appFinDataObj.LcRate,
           MrLcCalcMethodCode: this.appFinDataObj.MrLcCalcMethodCode,

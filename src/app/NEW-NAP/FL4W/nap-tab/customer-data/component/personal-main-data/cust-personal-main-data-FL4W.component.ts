@@ -53,6 +53,7 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
 
   getRefMasterUrl: any;
   getCountryUrl: any;
+  businessDt: Date = new Date();
 
   constructor(
     private fb: FormBuilder, 
@@ -63,6 +64,9 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
      }
 
   async ngOnInit() : Promise<void> {
+    var context = JSON.parse(localStorage.getItem("UserAccess"));
+    this.businessDt = new Date(context["BusinessDt"]);
+    this.businessDt.setDate(this.businessDt.getDate() - 1);
     console.log(this.identifier);
     console.log(this.parentForm);
 
@@ -70,7 +74,7 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
       CustFullName: ['', [Validators.required, Validators.maxLength(500)]],
       MrIdTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
       MrGenderCode: ['', [Validators.required, Validators.maxLength(50)]],
-      IdNo: ['', [Validators.required, Validators.maxLength(50)]],
+      IdNo: ['', [Validators.required, Validators.maxLength(50),Validators.pattern("^[0-9]+$")]],
       MotherMaidenName: ['', [Validators.required, Validators.maxLength(500)]],
       IdExpiredDt: [''],
       MrMaritalStatCode: ['', Validators.maxLength(50)],

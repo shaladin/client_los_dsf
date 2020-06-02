@@ -10,5 +10,7 @@ export class ScoringResultHObj{
     TrxSourceNo: string;
     TrxSourceType: string;
 
-    constructor() {  }
+    constructor() {  
+        this.ScoringValue=0;
+    }
 }
