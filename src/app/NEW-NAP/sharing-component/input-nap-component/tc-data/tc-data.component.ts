@@ -137,6 +137,8 @@ export class TcDataComponent implements OnInit {
         item.get("ExpiredDt").clearValidators();
       }
     }
+
+    fa_AppTc.updateValueAndValidity();
   }
 
   SaveData() {
@@ -146,11 +148,11 @@ export class TcDataComponent implements OnInit {
       var item = fa_AppTc.at(i);
       var expDt = new Date(item.get("ExpiredDt").value);
       var prmsDt = new Date(item.get("PromisedDt").value);
-      if(item.get("IsChecked").value && expDt < businessDt){
+      if(item.get("IsChecked").value && expDt < businessDt && item.get("ExpiredDt").status != "DISABLED"){
         this.toastr.errorMessage("Expired Date for " + item.get("TcName").value + " can't be lower than Business Date");
         return;
       }
-      if (item.get("IsChecked").value == false && prmsDt < businessDt) {
+      if (item.get("IsChecked").value == false && prmsDt < businessDt && item.get("PromisedDt").status != "DISABLED") {
         this.toastr.errorMessage("Promise Date for " + item.get("TcName").value + " can't be lower than Business Date");
         return;
       }
