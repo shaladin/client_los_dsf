@@ -381,8 +381,14 @@ export class GuarantorCompanyComponent implements OnInit {
       this.guarantorCompanyObj.AppGuarantorObj.AppGuarantorId = this.AppGuarantorId;
       this.guarantorCompanyObj.AppGuarantorCompanyObj.AppGuarantorCompanyId = this.AppGuarantorCompanyId;
       console.log(this.guarantorCompanyObj);
-      for (let i = 0; i < this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs.length; i++) {
-        this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs[i].AppGuarantorCompanyLegalDocId = this.appLegalDoc[i];
+      if(this.appLegalDoc.length<this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs.length){
+        for (let i = 0; i < this.appLegalDoc.length; i++) {
+          this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs[i].AppGuarantorCompanyLegalDocId = this.appLegalDoc[i];
+        } 
+      }else{
+        for (let i = 0; i < this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs.length; i++) {
+          this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs[i].AppGuarantorCompanyLegalDocId = this.appLegalDoc[i];
+        }
       }
       this.http.post(AdInsConstant.EditAppGuarantorCompany, this.guarantorCompanyObj).subscribe(
         response => {
@@ -532,7 +538,6 @@ setIndustryTypeName(industryTypeCode){
 
   this.http.post(AdInsConstant.GetRefIndustryTypeByCode, refIndustryObj).subscribe(
     (response) => {
-      console.log(response);
       this.inputLookupObj1.nameSelect = response["IndustryTypeName"];
       this.inputLookupObj1.jsonSelect = response;
       this.inputLookupObj1.isReady = true;     
