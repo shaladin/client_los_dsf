@@ -9,7 +9,7 @@
   <table class="table table-responsive-md text-center table-hover">
     <thead>
       <tr class="table-header">
-        <th style="text-align: center;"><span class="thead-header" name="ShareholderName" translate>SHAREHOLDER NAME
+        <th style="text-align: left;"><span class="thead-header" name="ShareholderName" translate>SHAREHOLDER NAME
         </span>
         </th>
         <th style="text-align: center;"><span class="thead-header" name="JobPosition" translate>JOB POSITION
@@ -34,7 +34,7 @@
     </tbody>
     <tbody>
       <tr *ngFor="let item of listShareholder; let i = index">
-        <td style="text-align: center;">{{item.MgmntShrholderName}}</td>
+        <td style="text-align: left;">{{item.MgmntShrholderName}}</td>
         <td style="text-align: center;">{{item.JobPositionName}}</td>
         <td style="text-align: center;">{{item.CustTypeName}}</td>
         <td style="text-align: center;">{{item.TaxIdNo}}</td>
@@ -107,7 +107,7 @@
                   <lib-uc-show-errors [control]="CustShareholderForm.controls.BirthPlace" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
                 <div class="col-md-2">
-                  <input type="date" class="form-control" formControlName="BirthDt" id="birthDt"
+                  <input type="date" class="form-control" formControlName="BirthDt" id="birthDt" [max]="businessDt | date: 'yyyy-MM-dd'" onkeypress="return false;"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && CustShareholderForm.controls.BirthDt.invalid}">
                   <lib-uc-show-errors [control]="CustShareholderForm.controls.BirthDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
@@ -141,8 +141,7 @@
               <div class="form-group row">
                 <label class="col-md-2" for="email" translate>Email</label>
                 <div class="col-md-4">
-                  <input type="text" class="form-control" id="email" formControlName="Email"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && CustShareholderForm.controls.Email.invalid}">
+                  <input type="text" class="form-control" id="email" formControlName="Email"  pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" [ngClass]="{ 'is-invalid': enjiForm.submitted && CustShareholderForm.controls.Email.invalid}">
                   <lib-uc-show-errors [control]="CustShareholderForm.controls.Email" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
                 <label class="col-md-2" for="sharePrcnt" translate>Share (%)</label>
@@ -194,7 +193,7 @@
                 </div>
                 <label class="col-md-2" for="establishmentDt" translate>Establishment Date</label>
                 <div class="col-md-4">
-                  <input type="date" id="establishmentDt" class="form-control" formControlName="EstablishmentDt">
+                  <input type="date" id="establishmentDt" class="form-control" [max]="businessDt | date: 'yyyy-MM-dd'" onkeypress="return false;" formControlName="EstablishmentDt">
                 </div>
               </div>
               <div class="form-group row">

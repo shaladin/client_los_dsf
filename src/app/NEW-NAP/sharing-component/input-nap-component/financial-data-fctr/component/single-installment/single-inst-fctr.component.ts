@@ -49,6 +49,7 @@ export class SingleInstFctrComponent implements OnInit {
 
   Calculate() {
     this.calcSingleInstObj = this.ParentForm.value;
+    this.calcSingleInstObj.InvcDt = new Date(this.calcSingleInstObj.InvcDt);
     this.http.post<ResponseCalculateObj>(AdInsConstant.CalculateSingleInst, this.calcSingleInstObj).subscribe(
       (response) => {
         console.log(response);

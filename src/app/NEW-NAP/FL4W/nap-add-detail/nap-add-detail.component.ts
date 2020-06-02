@@ -129,7 +129,7 @@ export class NapAddDetailComponent implements OnInit {
       this.http.post(AdInsConstant.SubmitNAP, this.NapObj).subscribe(
         (response) => {
           console.log(response);
-          this.router.navigate(["/Nap/ConsumerFinance/InputNap/Paging"], { queryParams: { BizTemplateCode: AdInsConstant.FL4W } })
+          this.router.navigate(["/Nap/FinanceLeasing/Paging"], { queryParams: { BizTemplateCode: AdInsConstant.FL4W } })
         },
         (error) => {
           console.log(error);
@@ -190,7 +190,7 @@ export class NapAddDetailComponent implements OnInit {
         this.AppStepIndex = this.AppStep[AdInsConstant.AppStepTC];
         break;
       case "SUBMIT":
-        this.router.navigate(["Nap/FinanceLeasing/Paging"]);
+        this.router.navigate(["Nap/FinanceLeasing/Paging?BizTemplateCode=FL4W"], { queryParams: { BizTemplateCode: AdInsConstant.FL4W } });
         break;
 
       default:

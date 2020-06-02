@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { AppFeeObj } from 'app/shared/model/AppFeeObj.Model';
 import { CalcProvisionFee } from 'app/shared/model/AppFee/CalcProvisionFee.Model';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
 
 @Component({
   selector: 'app-fee-FL4W',
@@ -48,35 +49,40 @@ export class FeeFL4WComponent implements OnInit {
         }
 
         this.PatchProvisionFeeValue();
+        this.ProvisionFeeInput_FocusOut();
       }
     );
   }
 
-  IsCapitalize_CheckedChange(){
+  IsCapitalize_CheckedChange(feeTypeCode){
     var fa_AppFee = this.ParentForm.get(this.identifier) as FormArray
     for (let i = 0; i < fa_AppFee.length ; i++) {
       var item = fa_AppFee.at(i);
-      var isCapitalize : Boolean = item.get("IsCptlz").value;
-      if(isCapitalize)
-      {
-        item.patchValue({
-          FeeCapitalizeAmt : item.get("AppFeeAmt").value
-        });
-        // item.get("AppId").enable();
-      }
-      else
-      {
-        item.patchValue({
-          FeeCapitalizeAmt : 0
-        });
-        // item.get("AppId").disable();
+      if(item.get("MrFeeTypeCode").value == feeTypeCode){
+        var isCapitalize : Boolean = item.get("IsCptlz").value;
+        if(isCapitalize)
+        {
+          item.patchValue({
+            FeeCapitalizeAmt : item.get("AppFeeAmt").value
+          });
+          // item.get("AppId").enable();
+        }
+        else
+        {
+          item.patchValue({
+            FeeCapitalizeAmt : 0
+          });
+          // item.get("AppId").disable();
+        }
       }
     }
+    this.CalculateProvisionFee();
     this.CalculateTotalFeeAndCaptlzAmt();
   }
 
   CalcBase_OnChange(event)
   {
+    this.CalculateProvisionFee();
     this.PatchProvisionFeeValue();
   }
 
@@ -135,6 +141,7 @@ export class FeeFL4WComponent implements OnInit {
 
   FeeCapitalizeAmt_OnChange()
   {
+    this.CalculateProvisionFee();
     this.CalculateTotalFeeAndCaptlzAmt();
   }
 
@@ -221,7 +228,10 @@ export class FeeFL4WComponent implements OnInit {
 
   ProvisionFeeInput_FocusOut()
   {
+    this.CalculateProvisionFee(); 
+  }
 
+  CalculateProvisionFee(){
     var fb_provision = this.GetProvisionFormGroup();
 
     var calcObj : CalcProvisionFee = new CalcProvisionFee();
@@ -234,7 +244,7 @@ export class FeeFL4WComponent implements OnInit {
     calcObj.Fee = this.ParentForm.get(this.identifier).value;
 
 
-    this.http.post(environment.losUrl + "/AppFee/CalculateProvisionFee", calcObj).subscribe(
+    this.http.post(AdInsConstant.CalculateProvisionFee, calcObj).subscribe(
       (response) => {
         response["ProvisionFeePercentage"];
         var fb_provision = this.GetProvisionFormGroup();
