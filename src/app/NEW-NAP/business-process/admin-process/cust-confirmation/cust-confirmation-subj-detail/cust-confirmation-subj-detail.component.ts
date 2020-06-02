@@ -211,9 +211,11 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
     }
   }
 
-  SaveForm() {
+  SaveForm(ev) {
+    console.log(ev);
+
+    return true;
     var FormValue = this.VerfResultDForm.value;
-    console.log("FormValue : ")
     console.log(FormValue);
 
     var VerfResultDList = new Array<VerfResultDObj>();
