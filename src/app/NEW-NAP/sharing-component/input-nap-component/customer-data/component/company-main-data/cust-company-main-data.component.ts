@@ -196,28 +196,29 @@ export class CustCompanyMainDataComponent implements OnInit {
   }
 
   initLookup() {
+    this.InputLookupCustomerObj = new InputLookupObj();
+    this.InputLookupCustomerObj.urlJson = "./assets/uclookup/lookupCustomer.json";
+    this.InputLookupCustomerObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.InputLookupCustomerObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupCustomerObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
+    this.InputLookupCustomerObj.genericJson = "./assets/uclookup/lookupCustomer.json";
+
+    this.InputLookupIndustryTypeObj = new InputLookupObj();
+    this.InputLookupIndustryTypeObj.urlJson = "./assets/uclookup/lookupIndustryType.json";
+    this.InputLookupIndustryTypeObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.InputLookupIndustryTypeObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupIndustryTypeObj.pagingJson = "./assets/uclookup/lookupIndustryType.json";
+    this.InputLookupIndustryTypeObj.genericJson = "./assets/uclookup/lookupIndustryType.json";
+    this.setCriteriaLookupCustomer(AdInsConstant.CustTypeCompany);
+
     var AppObj = { AppId: this.AppId };
     this.http.post<AppObj>(AdInsConstant.GetAppById, AppObj).subscribe(
       (response) => {
         this.AppObj = response;
-
-        this.InputLookupCustomerObj = new InputLookupObj();
-        this.InputLookupCustomerObj.urlJson = "./assets/uclookup/lookupCustomer.json";
-        this.InputLookupCustomerObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-        this.InputLookupCustomerObj.urlEnviPaging = environment.FoundationR3Url;
-        this.InputLookupCustomerObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
-        this.InputLookupCustomerObj.genericJson = "./assets/uclookup/lookupCustomer.json";
+        
         if (this.AppObj.BizTemplateCode != AdInsConstant.FCTR) {
           this.InputLookupCustomerObj.isReadonly = false;
         }
-        this.setCriteriaLookupCustomer(AdInsConstant.CustTypeCompany);
-
-        this.InputLookupIndustryTypeObj = new InputLookupObj();
-        this.InputLookupIndustryTypeObj.urlJson = "./assets/uclookup/lookupIndustryType.json";
-        this.InputLookupIndustryTypeObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-        this.InputLookupIndustryTypeObj.urlEnviPaging = environment.FoundationR3Url;
-        this.InputLookupIndustryTypeObj.pagingJson = "./assets/uclookup/lookupIndustryType.json";
-        this.InputLookupIndustryTypeObj.genericJson = "./assets/uclookup/lookupIndustryType.json";
 
         this.InputLookupCustomerObj.isReady = true;
       }, 

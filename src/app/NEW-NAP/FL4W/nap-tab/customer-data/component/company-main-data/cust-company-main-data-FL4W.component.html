@@ -61,7 +61,7 @@
     <div class="form-group row">
       <label class="col-md-2" for="establishmentDt" translate>Establishment Date</label>
       <div class="col-md-4">
-        <input type="date" id="establishmentDt" class="form-control" formControlName="EstablishmentDt">
+        <input type="date" id="establishmentDt" class="form-control adInsInput"  [max]="businessDt | date: 'yyyy-MM-dd'" onkeypress="return false;" formControlName="EstablishmentDt">
       </div>
       <label class="col-md-2" for="vip" translate>VIP</label>
       <div class="col-md-4">

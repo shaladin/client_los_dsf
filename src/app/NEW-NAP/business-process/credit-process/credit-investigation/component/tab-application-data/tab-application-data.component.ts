@@ -36,7 +36,7 @@ export class TabApplicationDataComponent implements OnInit {
       TotalSalesAmount: 0,
       InAmount: 0,
       TotalProfit: 0,
-      TotolLoss: 0
+      TotalLoss: 0
     };
     this.AppDetailAssetData = {
       SalesName: "",

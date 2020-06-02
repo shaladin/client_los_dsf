@@ -17,9 +17,7 @@ import { UCSearchComponent } from '@adins/ucsearch';
 import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
 import { UcgridfooterModule, UcgridfooterComponent } from "@adins/ucgridfooter";
 // import { MainInfoComponent } from 'app/view/main-info/main-info.component';
-import { LeadRoutingModule } from "./lead-routing.module";
-import { CustomerSelfVerificationComponent } from './verification/customer-self-verification/customer-self-verification.component';
-import { LeadMainInfoComponent } from 'app/view/lead-main-info/lead-main-info.component';
+import { LeadRoutingModule } from "./lead-routing.module"; import { LeadMainInfoComponent } from 'app/view/lead-main-info/lead-main-info.component';
 // import { ShowErrorsComponent } from "./app/test-new/show-errors.component";
 import { LeadVerifComponent } from './lead-verif/lead-verif.component';
 import { LeadInputComponent } from "./lead-input/lead-input.component";
@@ -83,8 +81,7 @@ export const customCurrencyMaskConfig = {
     UcuploadModule
   ],
   declarations: [
-    LeadMainInfoComponent,
-    CustomerSelfVerificationComponent,
+    LeadMainInfoComponent, 
     LeadVerifComponent,
     LeadCancelComponent,
     LeadCancelConfirmComponent, 

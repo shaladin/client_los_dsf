@@ -11,7 +11,7 @@ import { CenterGrpOfficeMbrObj } from 'app/shared/model/RefOffice/CenterGrpOffic
 @Component({
   selector: 'app-nap-paging',
   templateUrl: './nap-paging.component.html',
-  styleUrls: ['./nap-paging.component.scss']
+  styleUrls: []
 })
 export class NapPagingComponent implements OnInit {
 
@@ -24,14 +24,9 @@ export class NapPagingComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute
   ) {
-    this.route.queryParams.subscribe(params => {
-      if (params['BizTemplateCode'] != null) {
-        localStorage.setItem("BizTemplateCode", params['BizTemplateCode']);
-      }
-    });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     console.log("User Access");
     console.log(JSON.parse(localStorage.getItem("UserAccess")));
     this.userAccess = JSON.parse(localStorage.getItem("UserAccess"));
@@ -40,7 +35,7 @@ export class NapPagingComponent implements OnInit {
     this.makeCriteria();
 
     this.inputPagingObj = new UcPagingObj();
-    this.inputPagingObj._url = "./assets/ucpaging/searchApp.json";
+    this.inputPagingObj._url="./assets/ucpaging/searchApp.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchApp.json";
@@ -51,8 +46,8 @@ export class NapPagingComponent implements OnInit {
   makeCriteria(){
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
-    critObj.propName = 'RL.BIZ_TMPLT_CODE';
-    critObj.value = AdInsConstant.FL4W;
+    critObj.propName = 'WTL.ACT_CODE';
+    critObj.value = "NAP_"+AdInsConstant.FL4W;
     this.arrCrit.push(critObj);
     
     critObj = new CriteriaObj();

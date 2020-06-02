@@ -10,30 +10,32 @@
     <lib-ucviewgeneric [viewInput]="viewProdMainInfoObj"> </lib-ucviewgeneric>
 
     <span *ngIf="ReturnHandlingHObj.ReturnHandlingHId != undefined">
-      <form class="form form-horizontal" [formGroup]="HandlingForm" #enjiForm="ngForm">
-        <div class="class=form-group row adins-required">
-          <label class="col-md-3 adInsLabel">Return Notes </label>
-          <div class="col-md-3">
-            <textarea class="form-control adInsInput width-75-per" formControlName="ReturnHandlingNotes" readonly>
-            </textarea>
+      <div class="px-3">
+        <form class="form form-horizontal" [formGroup]="HandlingForm" #enjiForm="ngForm">
+          <div class="class=form-group row adins-required">
+            <label class="col-md-3 adInsLabel">Return Notes </label>
+            <div class="col-md-3">
+              <textarea class="form-control adInsInput width-75-per" formControlName="ReturnHandlingNotes" readonly>
+              </textarea>
+            </div>
+            <label class="col-md-3 adInsLabel">Return Execution Notes </label>
+            <div class="col-md-3">
+              <textarea class="form-control adInsInput width-75-per" formControlName="ReturnHandlingExecNotes">
+              </textarea>
+              <lib-uc-show-errors  [control]="HandlingForm.controls.ReturnHandlingExecNotes" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
+            </div>
           </div>
-          <label class="col-md-3 adInsLabel">Return Execution Notes </label>
-          <div class="col-md-3">
-            <textarea class="form-control adInsInput width-75-per" formControlName="ReturnHandlingExecNotes">
-            </textarea>
-            <lib-uc-show-errors  [control]="HandlingForm.controls.ReturnHandlingExecNotes" [submit]="enjiForm.submitted">
-            </lib-uc-show-errors>
+        </form>
+        <div class="form-actions row">
+          <div class="col-md-10"></div>
+          <div class="col-md-2">
+            <span *ngIf='show'>
+              <button type="button" (click)="SubmitReturnHandling()" class="btn btn-raised btn-primary" translate>
+                <i class="fa fa-check-square-o"></i> Submit
+              </button>
+            </span>
           </div>
-        </div>
-      </form>
-      <div class="form-actions row">
-        <div class="col-md-10"></div>
-        <div class="col-md-2">
-          <span *ngIf='show'>
-            <button type="button" (click)="SubmitReturnHandling()" class="btn btn-raised btn-primary" translate>
-              <i class="fa fa-check-square-o"></i> Submit
-            </button>
-          </span>
         </div>
       </div>
     </span>
