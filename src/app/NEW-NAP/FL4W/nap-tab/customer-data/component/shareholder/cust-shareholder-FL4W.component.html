@@ -9,7 +9,7 @@
   <table class="table table-responsive-md text-center table-hover">
     <thead>
       <tr class="table-header">
-        <th style="text-align: center;"><span class="thead-header" name="ShareholderName" translate>SHAREHOLDER NAME
+        <th style="text-align: left;"><span class="thead-header" name="ShareholderName" translate>SHAREHOLDER NAME
         </span>
         </th>
         <th style="text-align: center;"><span class="thead-header" name="JobPosition" translate>JOB POSITION
@@ -34,7 +34,7 @@
     </tbody>
     <tbody>
       <tr *ngFor="let item of listShareholder; let i = index">
-        <td style="text-align: center;">{{item.MgmntShrholderName}}</td>
+        <td style="text-align: left;">{{item.MgmntShrholderName}}</td>
         <td style="text-align: center;">{{item.JobPositionName}}</td>
         <td style="text-align: center;">{{item.CustTypeName}}</td>
         <td style="text-align: center;">{{item.TaxIdNo}}</td>
