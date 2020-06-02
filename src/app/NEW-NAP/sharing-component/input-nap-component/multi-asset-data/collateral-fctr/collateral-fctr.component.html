@@ -4,7 +4,7 @@
   </lib-ucSubsection>
   <div [hidden]="HiddenState=='false'">
     <div class="form-actions right">
-      <button type="button" (click)="Hidden(enjiForm)" class="btn btn-raised btn-warning mr-1" translate>
+      <button type="button" (click)="SetHiddenState(enjiForm)" class="btn btn-raised btn-warning mr-1" translate>
         <i class="fa fa-plus"></i> Add Collateral
       </button>
     </div>
@@ -48,17 +48,12 @@
       </table>
     </div>
     <div class="col-md-12" style="padding: 0; text-align: right;">
-      <button type="button" class="btn btn-raised btn-warning mr-1" (click)="back()" translate>
-        <i class="ft-x"></i> Back
-      </button>
       <button type="submit" class="btn btn-raised btn-primary" (click)="next()" translate>
         <i class="fa fa-check-square-o"></i> Save and Continue
       </button>
     </div>
   </div>
-
   <div [hidden]="HiddenState=='true'">
-
     <div class="form-header">
       <h4>Additional Collateral - {{type}}</h4>
     </div>
@@ -95,7 +90,7 @@
             <label class="col-md-2 adins-required-label" translate>Collateral Name</label>
             <div class="col-md-3" *ngIf="inputLookupObj.isReady">
               <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]='AddCollForm' [enjiForm]='enjiForm'
-                [identifier]="'FullAssetName'" (lookup)="getLookupCollateralTypeResponse($event)">
+                [identifier]="'FullAssetName'" (lookup)="getLookupCollateralTypeResponse($event)" #LookupCollateral>
               </lib-uclookupgeneric>
             </div>
             <label class="col-md-1"></label>

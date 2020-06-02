@@ -13,12 +13,13 @@
     ],
     "querystring": {
         "select": " SELECT CUST_NAME AS CustName, CUST_ID AS CustId",
-        "from": "FROM CUST A WITH(NOLOCK) WHERE MR_CUST_TYPE_CODE='Personal'"
+        "from": "FROM CUST A WITH(NOLOCK)",
+        "where": "WHERE MR_CUST_TYPE_CODE='PERSONAL'"
     },
-        "headerList": [
+    "headerList": [
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "Guarantor Name",
             "name": "CUST_NAME"
         },
@@ -32,7 +33,7 @@
     "bodyList": [
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "CustName"
         },
         {
@@ -46,6 +47,6 @@
             ]
         }
     ],
-    "propertyId": "CustName", 
-    "propertyName": "CustName" 
+    "propertyId": "CustName",
+    "propertyName": "CustName"
 }

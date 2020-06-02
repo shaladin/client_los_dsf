@@ -63,10 +63,6 @@ export class CustLegalDocFL4WComponent implements OnInit {
     }
     this.setAppCustCompanyLegalDoc();
 
-    if(new Date(this.LegalDocForm.controls['DocExpiredDt'].value) < new Date(this.LegalDocForm.controls['DocDt'].value)){
-      this.toastr.errorMessage("Expired Date can't be less than Issued Date.");
-      return;
-    } 
     if(this.mode == "Add"){
       this.listLegalDoc.push(this.appCustCompanyLegalDocObj);
     }

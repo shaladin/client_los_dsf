@@ -53,6 +53,10 @@ export class AdInsConstant {
   public static WebSocketUrl = environment.FoundationR3Url + "/Notificationhub";
   public static GetListNotificationHByRefUserId = environment.FoundationR3Url + "/NotificationH/GetListNotificationHByRefUserId";
 
+  public static TrxTypeCodePhn = "PHN";
+  public static VerfTrxTypeCodePhn = "PHN_VERIF";
+  public static VerfResultStatCodeNew = "NEW";
+  public static RtnHandlingReturnStatDone = "DONE"
 
   //WORKFLOW (LEWAT FOUNDATION)
   public static ResumeWorkflow = environment.FoundationR3Url + "/Workflow/ResumeWorkflow"
@@ -665,6 +669,7 @@ export class AdInsConstant {
   public static MULTIPLE_INST_TYPE = "MULTIPLE";
   public static PAY_FREQ_MONTHLY = "MONTHLY";
   public static INST_SCHM_REGULAR_FIXED = "RF";
+  public static GetListMouCustByCustNo = environment.losUrl + "/MouCust/GetListMouCustByCustNo";
   
 
   // MOU CUST ASSET
@@ -934,6 +939,7 @@ export class AdInsConstant {
   public static GetInsuranceDataByAppIdForView = environment.losUrl + "/AppIns/GetInsDataByAppIdForView";
   public static GetInsDataByAppIdAndAssetId = environment.losUrl + "/AppIns/GetInsDataByAppIdAndAssetId";
   public static AddEditInsuranceData = environment.losUrl + "/AppIns/AddEditInsuranceData";
+  public static AddEditInsuranceDataMultiAsset = environment.losUrl + "/AppIns/AddEditInsuranceDataMultiAsset";
   public static GetListAppInsObjByAppIdForView = environment.losUrl + "/AppIns/GetListAppInsObjByAppIdForView";
   public static GetAppInsObjViewDetail = environment.losUrl + "/AppIns/GetAppInsObjViewDetail";
 

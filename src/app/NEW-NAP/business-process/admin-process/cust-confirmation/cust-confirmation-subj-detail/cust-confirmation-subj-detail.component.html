@@ -7,7 +7,7 @@
       <lib-ucSubsection [id]="'CustConfirmationId'" [title]="'Customer Confirmation'" [panel]="'CustConfirmation'">
       </lib-ucSubsection>
       <div class="form-body" id="CustConfirmation">
-        <form>
+        <form #enjisForm="ngForm">
           <div class="row">
             <div class="col-md-6">
               <div class="row">
@@ -30,6 +30,9 @@
                 <label class="label-control col-md-6">Notes</label>
                 <div class="col-md-6">
                   <textarea class="form-control" [(ngModel)]="newVerfResultHObj.Notes" name="Notes"></textarea>
+                  <lib-uc-show-errors [control]="enjisForm.controls.Notes"
+                    [submit]="enjisForm.submitted">
+                  </lib-uc-show-errors>
                 </div>
               </div>
             </div>
@@ -59,7 +62,7 @@
         </form>
       </div>
       <!-- Verification Question -->
-      <form class="form form-horizontal" [formGroup]="VerfResultDForm" (ngSubmit)="VerfResultDForm.valid && SaveForm()"
+      <form class="form form-horizontal" [formGroup]="VerfResultDForm" (ngSubmit)="VerfResultDForm.valid && SaveForm(enjisForm)"
         #enjiForm="ngForm">
         <div class="form-body" [formGroupName]="i"
           *ngFor="let QuestionGrpList of VerfResultDForm.controls; let i = index">
@@ -114,7 +117,7 @@
         <lib-ucSubsection [id]="'HistoryListId'" [title]="'History List'" [panel]="'HistoryList'">
         </lib-ucSubsection>
         <div class="form-body" id="HistoryList">
-          <table class="table table-responsive-md text-center table-hover">
+          <table class="table table-responsive-md table-hover">
             <thead>
               <tr class="table-header">
                 <th><span translate class="thead-header text-left">Phone No</span></th>
