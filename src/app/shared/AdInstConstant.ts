@@ -619,8 +619,8 @@ export class AdInsConstant {
 
 
   // VendorEmp
-  public static GetListVendorBankByVendorEmpNo = "/VendorEmp​/GetListVendorBankByVendorEmpNo";
-  public static GetListVendorBankAccByListVendorEmpNo = environment.FoundationR3Url + "/VendorEmp/GetListVendorBankAccByListVendorEmpNo";
+  public static GetListVendorBankByVendorEmpNo = "/VendorEmp/GetListVendorBankByVendorEmpNo";
+  public static GetListBankByVendorEmpNoAndVendorCode = environment.FoundationR3Url + "/VendorEmp/GetListBankByVendorEmpNoAndVendorCode";
   public static GetVendorEmpByVendorEmpNo = "/VendorEmp/GetVendorEmpByVendorEmpNo";
   public static GetListVendorEmpByVendorIdAndPosition = environment.FoundationR3Url + "/VendorEmp/GetListVendorEmpByVendorIdAndPosition";
   public static GetListKeyValueVendorEmpByVendorIdAndPosition = environment.FoundationR3Url + "/VendorEmp/GetListKeyValueVendorEmpByVendorIdAndPosition"
@@ -1133,7 +1133,7 @@ export class AdInsConstant {
 
   // App Credit Review
   public static GetAppCrdRvwById = environment.losUrl + "/AppCrdRvw/GetAppCrdRvwById";
-  public static AddOrEditAppCrdRvwData = environment.losUrl + "/AppCrdRvw/AddOrEditAppCrdRvwData";
+  public static AddOrEditAppCrdRvwDataAndListManualDeviationData = environment.losUrl + "/AppCrdRvw/AddOrEditAppCrdRvwDataAndListManualDeviationData";
   public static GetLatestScoringResultHByTrxSourceNo = environment.FoundationR3Url + "/CreditScoring/GetLatestScoringResultHByTrxSourceNo";
 
   //RETURN HANDLING
