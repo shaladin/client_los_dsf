@@ -9,12 +9,12 @@ import { ActivatedRoute } from "@angular/router";
 @Component({
   selector: "phone-verification-paging",
   templateUrl: "./phone-verification-paging.component.html",
-  providers: [DecimalPipe]
+  //providers: [DecimalPipe]
 })
 
 export class PhoneVerificationPagingComponent implements OnInit {
-  inputPagingObj: any;
-  arrCrit: any;
+  inputPagingObj: UcPagingObj;
+  arrCrit: Array<CriteriaObj>;
   BizTemplateCode : string;
 
   constructor(private route: ActivatedRoute) { 
@@ -28,6 +28,7 @@ export class PhoneVerificationPagingComponent implements OnInit {
 
   ngOnInit() {
     var userAccess = JSON.parse(localStorage.getItem("UserAccess"))
+    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchAppPhoneVerif.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;

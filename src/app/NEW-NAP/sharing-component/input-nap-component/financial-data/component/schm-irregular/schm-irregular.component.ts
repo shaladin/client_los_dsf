@@ -112,6 +112,7 @@ export class SchmIrregularComponent implements OnInit {
           TotalAR: response.TotalARAmt,
 
           NtfAmt: response.NtfAmt,
+          ApvAmt: response.ApvAmt
 
         })
 
