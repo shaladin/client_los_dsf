@@ -633,6 +633,7 @@ export class AdInsConstant {
   public static GetRuleAdmFee = environment.losUrl + "/AppLifeIns/GetRuleAdmFee";
   public static GetRuleRate = environment.losUrl + "/AppLifeIns/GetRuleRate";
   public static DeleteAppLifeIns = environment.losUrl + "/AppLifeIns/DeleteAppLifeIns";
+  public static AddEditAppLifeInsH = environment.losUrl + "/AppLifeIns/AddEditAppLifeInsH";
 
 
   // MOU CUST ASSET
