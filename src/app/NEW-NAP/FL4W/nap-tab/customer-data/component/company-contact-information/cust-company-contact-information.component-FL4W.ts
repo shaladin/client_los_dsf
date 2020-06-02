@@ -39,7 +39,7 @@ export class CustCompanyContactInformationFL4WComponent implements OnInit {
     MobilePhnNo1: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
     MobilePhnNo2: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
     JobTitleName: ['', Validators.maxLength(100)],
-    Email1: ['', Validators.maxLength(50)]
+    Email1: ['', [Validators.maxLength(50)]]
   });
 
 
