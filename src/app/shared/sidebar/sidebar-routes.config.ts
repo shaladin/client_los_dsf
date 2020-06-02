@@ -31,7 +31,7 @@ export const ROUTES: RouteInfo[] = [
     Submenu: [
       { Path: '/Nap/FinanceLeasing/Paging', Title: 'New Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "FL4W" }] },
       { Path: '/Nap/CreditProcess/CommissionData/Paging', Title: 'Commission Data', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "FL4W" }] },
-      { Path: '/Nap/CreditProcess/ReservedFund/Paging', Title: 'Reserved Fund', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "FL4W" }] },
+      { Path: '/Nap/CreditProcess/CommissionReservedFund/Paging', Title: 'Reserved Fund', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "FL4W" }] },
       { Path: '/Nap/CreditProcess/CreditReview/Paging', Title: 'Credit Review', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "FL4W" }] },
       { Path: '/Nap/CreditProcess/CreditApproval/Paging', Title: 'Credit Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "FL4W" }] },
       { Path: '/Nap/AdminProcess/AgreementActivation/Paging', Title: 'Agreement Activation', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "FL4W" }] },
