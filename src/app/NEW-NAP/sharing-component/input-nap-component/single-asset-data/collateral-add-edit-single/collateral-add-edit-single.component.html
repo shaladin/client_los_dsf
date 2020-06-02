@@ -42,7 +42,7 @@
                   <label class="col-md-1"></label>
                   <label class="col-md-2 adins-required-label" translate>Collateral Price</label>
                   <div class="col-md-2">
-                    <input type="text" class="form-control" formControlName="CollateralValueAmt"
+                    <input type="text" currencyMask class="form-control" formControlName="CollateralValueAmt"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CollateralValueAmt.invalid }">
                     <lib-uc-show-errors [control]="AddCollForm.controls.CollateralValueAmt"
                       [submit]="enjiForm.submitted">
