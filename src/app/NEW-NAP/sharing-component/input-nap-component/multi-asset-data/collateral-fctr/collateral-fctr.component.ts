@@ -476,7 +476,7 @@ export class CollateralFctrComponent implements OnInit {
 
     if (this.type == 'Add') {
       console.log(this.appCollateralDataObj)
-      this.http.post(AdInsConstant.AddEditAllCollateralDataFactoring, this.appCollateralDataObj).subscribe(
+      this.http.post(AdInsConstant.AddEditAllCollateralDataFactoring, appCollObj).subscribe(
         (response) => {
           this.GetListAppCollateralByAppId();
           this.HiddenState = "true";
@@ -493,7 +493,7 @@ export class CollateralFctrComponent implements OnInit {
       );
     }
     else {
-      this.http.post(AdInsConstant.AddEditAllCollateralDataFactoring, this.appCollateralDataObj).subscribe(
+      this.http.post(AdInsConstant.AddEditAllCollateralDataFactoring, appCollObj).subscribe(
         (response) => {
           this.GetListAppCollateralByAppId();
           this.HiddenState = "true";
