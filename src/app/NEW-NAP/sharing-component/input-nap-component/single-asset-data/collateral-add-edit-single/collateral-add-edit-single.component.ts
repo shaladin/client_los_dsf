@@ -681,8 +681,4 @@ export class CollateralAddEditSingleComponent implements OnInit {
   openExistingLookup() {
     this.IsOpenExisting = true;
   }
-  checkForm() {
-    console.log("this.AddCollForm");
-    console.log(this.AddCollForm);
-  }
 }
