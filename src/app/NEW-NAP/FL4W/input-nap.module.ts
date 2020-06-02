@@ -21,7 +21,6 @@ import { ViewMainInfoComponentModule } from "../sharing-component/view-main-info
 import { ViewAppComponentModule } from "../sharing-component/view-app-component/view-app-component.module";
 import { AppMainInfoComponent } from "../sharing-component/view-main-info-component/app-main-info/app-main-info.component";
 import { ViewSharingComponentModule } from "../sharing-component/view-app-component/view-sharing-component.module";
-import { ViewAppCustDataCompanyComponent } from "../sharing-component/view-app-component/view-app-cust-data-company/view-app-cust-data-company.component";
 import { ViewAgrmntComponent } from './view-agrmnt/view-agrmnt.component';
 import { TabCommissionComponent } from "../sharing-component/view-app-component/tab-commission/tab-commission.component";
 import { AgrmntLifeInsuranceComponent } from "../sharing-component/view-agrmnt-component/life-insurance/life-insurance.component";
@@ -77,6 +76,7 @@ export const customCurrencyMaskConfig = {
     MatRadioModule,
     MatSelectModule,
     NapTabComponentModule,
+    ViewSharingComponentModule,
     MatTabsModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
   ],
@@ -87,7 +87,6 @@ export const customCurrencyMaskConfig = {
     NapViewComponent,  
     NapAddDetailComponent, 
     AppMainInfoComponent,
-    ViewAppCustDataCompanyComponent,
     ViewAgrmntComponent, 
     TabCommissionComponent,
     ListDataCommissionComponent,
@@ -114,8 +113,7 @@ export const customCurrencyMaskConfig = {
     SchmStepUpStepDownNormalFL4WComponent,
     SubsidyFL4WComponent,
     SubsidyAddEditFL4WComponent,
-    FinancialDataFL4WComponent,
-    ViewSharingComponentModule
+    FinancialDataFL4WComponent
   ],
   providers: [
     NGXToastrService

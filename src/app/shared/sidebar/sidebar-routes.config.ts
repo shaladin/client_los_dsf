@@ -30,7 +30,6 @@ export const ROUTES: RouteInfo[] = [
     Path: '', Title: 'Finance Leasing 4W', Icon: 'ft-file-plus', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
     Submenu: [
       { Path: '/Nap/FinanceLeasing/Paging', Title: 'New Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "FL4W" }] },
-      { Path: '/Nap/CreditProcess/CommissionData/Paging', Title: 'Commission Data', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "FL4W" }] },
       { Path: '/Nap/CreditProcess/CommissionReservedFund/Paging', Title: 'Commission Reserved Fund', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "FL4W" }]},
       { Path: '/Nap/CreditProcess/FraudDetection/Paging', Title: 'Fraud Detection', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "FL4W" }] },
       { Path: '/Nap/CreditProcess/CreditInvestigation/Paging', Title: 'Credit Investigation', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "FL4W" }]},
