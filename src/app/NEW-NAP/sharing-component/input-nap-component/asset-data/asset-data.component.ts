@@ -228,7 +228,7 @@ export class AssetDataComponent implements OnInit {
   getAppCustUrl: any;
 
   OfficeCode: any;
-
+  DpTypeBefore: string = "";
 
   copyFromAppCustAddrForOwner: any;
   copyFromAppCustAddrForLocation: any;
@@ -629,16 +629,19 @@ export class AssetDataComponent implements OnInit {
 
   DpTypeChange() {
     console.log(this.AssetDataForm.controls.selectedDpType.value);
-    if (this.AssetDataForm.controls.selectedDpType.value == 'AMT') {
-      this.AssetDataForm.patchValue({
-        DownPaymentAmt: this.AssetDataForm.controls.AssetPriceAmt.value * this.AssetDataForm.controls.DownPaymentAmt.value / 100
-      });
-    };
-    if (this.AssetDataForm.controls.selectedDpType.value == 'PRCTG') {
-      this.AssetDataForm.patchValue({
-        DownPaymentAmt: this.AssetDataForm.controls.DownPaymentAmt.value / this.AssetDataForm.controls.AssetPriceAmt.value * 100
-      });
-    };
+    if (this.AssetDataForm.controls.selectedDpType.value != '') {
+      if (this.AssetDataForm.controls.selectedDpType.value == 'AMT' && this.DpTypeBefore == 'PRCTG') {
+        this.AssetDataForm.patchValue({
+          DownPaymentAmt: this.AssetDataForm.controls.AssetPriceAmt.value * this.AssetDataForm.controls.DownPaymentAmt.value / 100
+        });
+      };
+      if (this.AssetDataForm.controls.selectedDpType.value == 'PRCTG' && this.DpTypeBefore == 'AMT') {
+        this.AssetDataForm.patchValue({
+          DownPaymentAmt: this.AssetDataForm.controls.DownPaymentAmt.value / this.AssetDataForm.controls.AssetPriceAmt.value * 100
+        });
+      };
+      this.DpTypeBefore = this.AssetDataForm.controls.selectedDpType.value;
+    }
 
   }
 
