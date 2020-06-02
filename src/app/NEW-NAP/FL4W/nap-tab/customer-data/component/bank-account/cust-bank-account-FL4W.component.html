@@ -9,16 +9,16 @@
   <table class="table table-responsive-md text-center table-hover">
     <thead>
       <tr class="table-header">
-        <th style="text-align: center;"><span class="thead-header" name="BankCode" translate>BANK NAME
+        <th style="text-align: left;"><span class="thead-header" name="BankCode" translate>BANK NAME
         </span>
         </th>
-        <th style="text-align: center;"><span class="thead-header" name="BankBranch" translate>BANK BRANCH
+        <th style="text-align: left;"><span class="thead-header" name="BankBranch" translate>BANK BRANCH
         </span>
         </th>
         <th style="text-align: center;"><span class="thead-header" name="BankAccNo" translate>ACCOUNT NO.
         </span>
         </th>
-        <th style="text-align: center;"><span class="thead-header" name="BankAccName" translate>ACCOUNT NAME
+        <th style="text-align: left;"><span class="thead-header" name="BankAccName" translate>ACCOUNT NAME
         </span>
         </th>
         <th style="text-align: center;"><span class="thead-header" name="IsBankStmnt" translate>BANK STATEMENT
@@ -34,10 +34,10 @@
     </tbody>
     <tbody>
       <tr *ngFor="let item of listBankAcc; let i = index">
-        <td style="text-align: center;">{{item.BankName}}</td>
-        <td style="text-align: center;">{{item.BankBranch}}</td>
+        <td style="text-align: left;">{{item.BankName}}</td>
+        <td style="text-align: left;">{{item.BankBranch}}</td>
         <td style="text-align: center;">{{item.BankAccNo}}</td>
-        <td style="text-align: center;">{{item.BankAccName}}</td>
+        <td style="text-align: left;">{{item.BankAccName}}</td>
         <td style="text-align: center;">
           <span *ngIf="item.IsBankStmnt == true">Yes</span>
           <span *ngIf="item.IsBankStmnt == false">No</span> 
