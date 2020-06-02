@@ -54,7 +54,7 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     LobCode: [''],
     RefProdTypeCode: [''],
     Tenor: ["", [Validators.pattern("^[0-9]+$"), Validators.required, Validators.min(1)]],
-    NumOfInst: ['1'],
+    NumOfInst: [''],
     PayFreqCode: ['', Validators.required],
     MrFirstInstTypeCode: ["", Validators.required],
     NumOfAsset: [''],
@@ -150,6 +150,9 @@ export class ApplicationDataRefinancingComponent implements OnInit {
           }
         );
       });
+
+      console.log("ddl")
+      console.log(this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeInstSchm))
     
   }
 
@@ -320,6 +323,12 @@ export class ApplicationDataRefinancingComponent implements OnInit {
         console.log(error);
       }
     );
+    
+    if(this.NapAppModelForm.controls.PayFreqCode.value == "MONTHLY")
+    {
+      var total = this.NapAppModelForm.controls.Tenor.value
+      this.PatchNumOfInstallment(total)
+    }
   }
   
   getAppSrcData(){
@@ -348,6 +357,9 @@ export class ApplicationDataRefinancingComponent implements OnInit {
         console.log("GetListActiveRefPayFreq Response : " + JSON.stringify(response));
         var objTemp = response["ReturnObject"];
         this.applicationDDLitems["Pay_Freq"] = objTemp;
+
+        console.log("PayFreq")
+        console.log(this.applicationDDLitems["Pay_Freq"])
       },
       (error) => {
         console.log(error);
@@ -438,11 +450,21 @@ export class ApplicationDataRefinancingComponent implements OnInit {
   PayFreqTimeOfYear: number = 1;
   ChangeNumOfInstallmentTenor(){
     var temp = this.NapAppModelForm.controls.Tenor.value;
-    if(!isNaN(temp)){
+    if(this.NapAppModelForm.controls.PayFreqCode.value == "MONTHLY")
+    {
+      this.PatchNumOfInstallment(temp)
+    }
+    else
+    {
       var total = Math.floor((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
       this.PatchNumOfInstallment(total);      
       console.log("Change Tenor result: " + total);
     }
+    // if(!isNaN(temp)){
+    //   var total = Math.floor((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
+    //   this.PatchNumOfInstallment(total);      
+    //   console.log("Change Tenor result: " + total);
+    // }
   }
 
   ChangeNumOfInstallmentPayFreq(ev){
