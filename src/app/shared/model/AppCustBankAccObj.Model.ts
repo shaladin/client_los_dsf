@@ -11,7 +11,7 @@ export class AppCustBankAccObj {
     BalanceAmt: number;
     IsDefault: boolean;
     BankInfo: string;
-    AppCustBankStmntObjs: any;
+    AppCustBankStmntObjs: Array<any>;
 
 constructor() { 
         this.AppCustBankAccId = 0;      
