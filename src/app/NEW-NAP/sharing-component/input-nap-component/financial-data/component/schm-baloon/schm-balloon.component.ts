@@ -74,7 +74,8 @@ export class SchmBalloonComponent implements OnInit {
           TotalAR: response.TotalARAmt,
 
           NtfAmt: response.NtfAmt,
-          DiffRateAmt: response.DiffRateAmt
+          DiffRateAmt: response.DiffRateAmt,
+          ApvAmt: response.ApvAmt
 
         })
 
@@ -109,7 +110,8 @@ export class SchmBalloonComponent implements OnInit {
           TotalAR: response.TotalARAmt,
 
           NtfAmt: response.NtfAmt,
-          DiffRateAmt: response.DiffRateAmt
+          DiffRateAmt: response.DiffRateAmt,
+          ApvAmt: response.ApvAmt
 
         });
 
