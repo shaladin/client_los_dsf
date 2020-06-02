@@ -26,8 +26,8 @@ import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 export class CollateralFctrComponent implements OnInit {
   @ViewChild('LookupCollateral') ucLookupCollateral: UclookupgenericComponent;
   @Input() AppId: number;
-  @Output() ResponseMouAddColl: EventEmitter<any> = new EventEmitter<any>();
-
+  
+  AppCollateralId: number;
   viewObj: any;
   appCollateralObj: AppCollateralObj;
   appCollateralObjRegistration: AppCollateralRegistrationObj;
@@ -121,7 +121,6 @@ export class CollateralFctrComponent implements OnInit {
     this.bindUcLookup();
     this.initAddrObj();
     this.bindAppData();
-    this.GetListAppCollateralByAppId();
     var appAssetobj = {
       AgrmntId: this.AgrmntId
     }
@@ -288,27 +287,11 @@ export class CollateralFctrComponent implements OnInit {
     this.inputLookupObj.isReady = true;
   }
 
-  GetListAppCollateralByAppId() {
-    var obj = {
-      AppId: this.AppId,
-    }
-
-    this.http.post(AdInsConstant.GetListAppCollateralByAppId, obj).subscribe(
-      (response) => {
-        this.listCollateralDataOwnByAppId = response["ReturnObject"];
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
-
   SetHiddenState(enjiForm: NgForm) {
     enjiForm.resetForm();
     this.AddCollForm.patchValue({
       CollateralValueAmt: 0
     })
-    this.HiddenState = "false";
 
 
     this.type = "Add";
@@ -471,7 +454,7 @@ export class CollateralFctrComponent implements OnInit {
       console.log(this.appCollateralDataObj)
       this.http.post(AdInsConstant.AddEditAllCollateralDataFactoring, this.appCollateralDataObj).subscribe(
         (response) => {
-          this.GetListAppCollateralByAppId();
+    
           this.HiddenState = "true";
           this.toastr.successMessage(response["message"]);
           enjiForm.resetForm();
@@ -487,7 +470,7 @@ export class CollateralFctrComponent implements OnInit {
     else {
       this.http.post(AdInsConstant.AddEditAllCollateralDataFactoring, this.appCollateralDataObj).subscribe(
         (response) => {
-          this.GetListAppCollateralByAppId();
+    
           this.HiddenState = "true";
           this.toastr.successMessage(response["message"]);
           enjiForm.resetForm();
@@ -677,7 +660,11 @@ export class CollateralFctrComponent implements OnInit {
     );
   }
 
-  next() {
-    this.ResponseMouAddColl.emit({ StatusCode: "200" });
+  outputValue(event){
+    if(event == "false"){
+      this.HiddenState = "false";
+    }else{
+      this.editData(event)
+    }
   }
 }
