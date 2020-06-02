@@ -120,6 +120,13 @@ const routes: Routes = [
         }
       },
       {
+        path: 'FraudVerifMultiAsset/Paging',
+        component: FraudVerificationMultiAssetComponent,
+        data: {
+          title: 'Fraud Verification'
+        }
+      },
+      {
         path: 'CreditInquiry/Paging',
         component: CreditInquiryComponent,
         data: {

@@ -21,14 +21,14 @@
               </div>
               <div class="col-md-3 form-inline">
                 <label class=""><input type="checkbox" formControlName="IsCptlz"
-                    (change)="IsCapitalize_CheckedChange()">Capitalize
+                    (change)="IsCapitalize_CheckedChange(ParentForm.controls[identifier].value[i].MrFeeTypeCode)">Capitalize
                 </label>
               </div>
               <div class="col-md-3">
                 <input type="text" class="form-control" formControlName="FeeCapitalizeAmt"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && AppFeeForm.controls[identifier].controls.FeeCapitalizeAmt.invalid}"
                   [readonly]="!ParentForm.controls[identifier].value[i].IsCptlz"
-                  (keyup)="FeeCapitalizeAmt_OnChange()" currencyMask>
+                  (focusout)="FeeCapitalizeAmt_OnChange()" currencyMask>
                 <lib-uc-show-errors [control]="appfees.controls.FeeCapitalizeAmt" [submit]="enjiForm.submitted">
                 </lib-uc-show-errors>
               </div>
@@ -98,7 +98,7 @@
                   </div>
                   <div class="col-md-3 form-inline margin-b-5">
                     <label class=""><input type="checkbox" formControlName="IsCptlz"
-                        (change)="IsCapitalize_CheckedChange()">Capitalize
+                        (change)="IsCapitalize_CheckedChange(ParentForm.controls[identifier].value[i].MrFeeTypeCode)">Capitalize
                     </label>
                   </div>
                   <div class="col-md-3 margin-b-5">
