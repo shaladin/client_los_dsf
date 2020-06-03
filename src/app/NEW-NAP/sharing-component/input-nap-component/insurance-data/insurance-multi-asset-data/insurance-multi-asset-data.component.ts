@@ -43,8 +43,8 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   appAssetId: number;
   totalAssetPriceAmt: number;
   AppCollateralId: number;
-  CapAmt: number;
-  TotalPremiumToCust: number;
+  CapAmt: number = 0;
+  TotalPremiumToCust: number = 0;
 
   appObj: NapAppModel;
   appAssetObj : any;
@@ -98,8 +98,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     private http: HttpClient,
     private toastr: NGXToastrService,
     private route: ActivatedRoute){
-      this.route.queryParams.subscribe(params => {
-        this.appId = params["AppId"];
+      this.route.queryParams.subscribe(params => { this.appId = params["AppId"];
       })
   }
 
@@ -107,126 +106,68 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     this.gridAssetDataObj = new InputGridObj();
     this.gridAssetDataObj.pagingJson = "./assets/ucgridview/gridAssetDataView.json";
 
+    this.gridAppCollateralObj = new InputGridObj();
+    this.gridAppCollateralObj.pagingJson = "./assets/ucgridview/gridAppCollateralInsurance.json";
+
     this.appAssetObj = new AppAssetObj();
     this.appAssetObj.AppId = this.appId;
-    this.http.post(AdInsConstant.GetAppAssetListByAppId, this.appAssetObj).subscribe(
+    this.http.post(AdInsConstant.GetListAppInsObjByAppIdForView, this.appAssetObj).subscribe(
       (response) => {
-          this.listAppAssetObj = response["ReturnObject"];
+          this.listAppAssetObj = response["LoanAppInsObjects"];
+          this.listAppCollateralObj = response["CollateralAppInsObjects"];
 
-          var DetailForGridAsset ={
-            Data: response["ReturnObject"],
+          var DetailForGridAsset = {
+            Data: response["LoanAppInsObjects"],
+            Count: "0"
+          }
+
+          var DetailForGridCollateral ={
+            Data: response["CollateralAppInsObjects"],
             Count: "0"
           }
 
         this.gridAssetDataObj.resultData = DetailForGridAsset;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-
-    this.gridAppCollateralObj = new InputGridObj();
-    this.gridAppCollateralObj.pagingJson = "./assets/ucgridview/gridAppCollateralInsurance.json";
-    
-    this.appCollateralObj = new AppCollateralObj();
-    this.appCollateralObj.AppId = this.appId;
-    this.http.post(AdInsConstant.GetViewAppCollateralObjByAppId, this.appCollateralObj).subscribe(
-      (response) => {
-        console.log(response);
-          this.listAppCollateralObj = response["AppCollateralObjs"];
-
-          var DetailForGridCollateral ={
-            Data: response["AppCollateralObjs"],
-            Count: "0"
-          }
-
         this.gridAppCollateralObj.resultData = DetailForGridCollateral;
-        this.CapAmt = DetailForGridCollateral["Data"][0].CollateralValueAmt;
+
+        for (var i = 0; i < DetailForGridCollateral.Data.length; i++)
+        {
+          this.TotalPremiumToCust = this.TotalPremiumToCust + DetailForGridCollateral.Data[i].TotalCustMainPremiAmt + DetailForGridCollateral.Data[i].TotalCustAddPremiAmt - DetailForGridCollateral.Data[i].TotalCustDiscAmt;
+        }
+        this.CapAmt = this.TotalPremiumToCust;
+      
       },
       (error) => {
         console.log(error);
       }
     );
+  }
+
+  PaidAmtChanged(ev)
+  {
+    this.CapAmt = this.TotalPremiumToCust - Number(ev.replace(/,/g,''));
+    if (this.CapAmt < 0) this.toastr.errorMessage('Paid Amount by Cust cannot be greater than Total Premium to Customer!!!');
   }
 
   event2(e){
-    // this.appIdForAssetModal = e.RowObj.AppId;
-    // this.appAssetIdForAssetModal = e.RowObj.AppAssetId;
     this.PageState = 'EditAsset';
-    // this.openModal(this.modalAsset);
   }
 
-  terimaValue(e){
-    // this.modalService.dismissAll();
+  getValue(e){
     this.PageState = 'Paging';
   }
 
   event(ev){
     this.AppCollateralId = ev.RowObj.AppCollateralId;
     this.PageState = 'EditInsurance';
-    // this.open(this.modalIns);
   }
 
-  // openModal(content){
-  //   this.modalService.open(content).result.then((result) => {
-  //     this.closeResult = `Closed with: ${result}`;
-  //   }, (reason) => {
-  //     this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-  //   });
-  // }
-
-  // open(content) {
-  //   this.BindAllData();
-  //   this.modalService.open(content).result.then((result) => {
-  //     this.closeResult = `Closed with: ${result}`;
-  //   }, (reason) => {
-  //     this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-  //   });
-  // }
-
-  // private getDismissReason(reason: any): string {
-  //   if (reason === ModalDismissReasons.ESC) {
-  //     return 'by pressing ESC';
-  //   } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-  //     return 'by clicking on a backdrop';
-  //   } else {
-  //     return `with: ${reason}`;
-  //   }
-  // }
-  
-  // SubmitForm()
-  // {
-  //   this.outputTab.emit();
-  // }
-
   SubmitForm2(){
-    // console.log(this.InsuranceDataForm)
-    // this.saveObj
-
-
-    this.http.post(AdInsConstant.AddEditInsuranceDataMultiAsset, this.saveObj).subscribe(
-      (response) => {
-        console.log(response);
-        this.toastr.successMessage(response["message"]);
-        this.outputTab.emit();
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-    
+    if (this.CapAmt < 0) this.toastr.errorMessage('Paid Amount by Cust cannot be greater than Total Premium to Customer!!!');
+    else this.outputTab.emit();
   }
 
   SaveForm(){
-    console.log(this.InsuranceDataForm)
-    this.http.post(AdInsConstant.AddEditInsuranceDataMultiAsset, this.saveObj).subscribe(
-      (response) => {
-        console.log(response);
-        this.toastr.successMessage(response["message"]);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    if (this.CapAmt < 0) this.toastr.errorMessage('Paid Amount by Cust cannot be greater than Total Premium to Customer!!!');
+    else this.outputTab.emit();
   }
 }
