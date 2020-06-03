@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 
 @Component({
   selector: 'app-multi-collateral-paging',
@@ -10,35 +10,24 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
   styleUrls: ['./multi-collateral-paging.component.scss']
 })
 export class MultiCollateralPagingComponent implements OnInit {
-  HiddenState: string;
-  AppId: number;
-  listCollateralDataOwnByAppId: any;
-  @Output() ResponseMouAddColl: EventEmitter<any> = new EventEmitter<any>();
-  @Output() objOutput: EventEmitter<any> = new EventEmitter<any>();
+  @Input() AppId: number;
+  @Output() select: EventEmitter<number> = new EventEmitter<any>();
+  ListAppCollObj: Array<AppCollateralObj> = new Array<AppCollateralObj>();
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
-    this.route.queryParams.subscribe(params => {
-      this.AppId = params['AppId'];
-    });
+  constructor(private http: HttpClient, private toastr: NGXToastrService) {
   }
 
   ngOnInit() {
     this.GetListAppCollateralByAppId()
   }
 
-  SetHiddenState(){
-    this.HiddenState = "false";
-    this.objOutput.emit(this.HiddenState)
-  }
-
   GetListAppCollateralByAppId() {
-    var obj = {
+    var AppCollObj = {
       AppId: this.AppId,
     }
-
-    this.http.post(AdInsConstant.GetListAppCollateralByAppId, obj).subscribe(
+    this.http.post<Array<AppCollateralObj>>(AdInsConstant.GetListAppCollateralByAppId, AppCollObj).subscribe(
       (response) => {
-        this.listCollateralDataOwnByAppId = response["ReturnObject"];
+        this.ListAppCollObj = response["ReturnObject"];
       },
       (error) => {
         console.log(error);
@@ -46,11 +35,7 @@ export class MultiCollateralPagingComponent implements OnInit {
     );
   }
 
-  editData(AppCollateralId){
-    this.objOutput.emit(AppCollateralId);
-  }
-
-  next() {
-    this.ResponseMouAddColl.emit({ StatusCode: "200" });
+  editData(AppCollateralId: number){
+    this.select.emit(AppCollateralId);
   }
 }
