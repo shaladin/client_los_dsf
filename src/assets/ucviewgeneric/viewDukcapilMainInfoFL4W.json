@@ -91,7 +91,7 @@
         {
             "subSectionId": "DukcapilAddressDataId",
             "subSectionTitle": "Address Data",
-            "mainInfoUrl": "http://localhost:5001/Generic/GetDataViewBySQL",
+            "mainInfoUrl": "http://r3app-server.ad-ins.com/LOS/Generic/GetDataViewBySQL",
             "mainInfo": [
                 {
                     "type": "text",
