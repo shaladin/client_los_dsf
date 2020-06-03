@@ -48,6 +48,8 @@ export class CustomerDataComponent implements OnInit {
 
   @Input() appId: any;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
+
 
   refMasterObj = {
     RefMasterTypeCode: "",
@@ -184,6 +186,10 @@ export class CustomerDataComponent implements OnInit {
         }
       );
     }
+  }
+
+  Cancel(){
+    this.outputCancel.emit();
   }
 
   setCustPersonalObjForSave() {

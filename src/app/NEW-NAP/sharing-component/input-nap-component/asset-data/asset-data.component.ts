@@ -25,6 +25,7 @@ export class AssetDataComponent implements OnInit {
 
   @Input() AppId: any;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   BranchManagerName: string = "-";
   inputFieldOwnerAddrObj: InputFieldObj;
   ownerAddrObj: AddrObj;
@@ -397,6 +398,10 @@ export class AssetDataComponent implements OnInit {
     }
 
 
+  }
+
+  Cancel(){
+    this.outputCancel.emit();
   }
 
   async CheckValidation() {

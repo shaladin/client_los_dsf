@@ -20,6 +20,8 @@ export class ApplicationDataComponent implements OnInit {
   @Input() appId: number;
   @Input() IsLoanObject: boolean = false;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
+
   ListCrossAppObj: any = {};
   inputLookupObj;
   arrAddCrit;
@@ -493,6 +495,10 @@ export class ApplicationDataComponent implements OnInit {
       }
     );
 
+  }
+
+  Cancel(){
+    this.outputCancel.emit();
   }
 
   closeResult;
