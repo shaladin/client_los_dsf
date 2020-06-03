@@ -143,7 +143,7 @@ export class CustomerDataComponent implements OnInit {
           console.log(response);
           if (response["StatusCode"] == 200) {
             this.toastr.successMessage(response["message"]);
-            this.outputTab.emit();
+            this.EmitToMainComp();
           }
           else {
             response["ErrorMessages"].forEach((message: string) => {
@@ -177,7 +177,7 @@ export class CustomerDataComponent implements OnInit {
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
-          this.outputTab.emit();
+          this.EmitToMainComp();
         },
         (error) => {
           console.log(error);
@@ -1177,5 +1177,10 @@ export class CustomerDataComponent implements OnInit {
         }
       }
     );
+  }
+
+  EmitToMainComp(){
+    console.log(this.MrCustTypeCode);
+    this.outputTab.emit(this.MrCustTypeCode);
   }
 }
