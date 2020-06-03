@@ -64,6 +64,11 @@ export class PurchaseOrderComponent implements OnInit {
     );
   }
 
+  testData(){
+    console.log(this.tcForm);
+    console.log(this.tcForm.value);
+  }
+
   SaveForm() {
     console.log("Save");
     var IsSave = false;
