@@ -59,16 +59,16 @@ export class CollateralDetailComponent implements OnInit {
     AssetCategoryCode: ['', Validators.required],
     AssetTaxCode: [''],
     CollateralNotes: [''],
-    CollateralPrcnt: ['', Validators.required],
+    CollateralPrcnt: ['', [Validators.required, Validators.pattern("^[0-9]+$"), Validators.max(100)]],
     IsMainCollateral: true,
     ManufacturingYear: ['', Validators.pattern("^[0-9]*$")],
     CollateralNo: [''],
     AssetTaxDt: [''],
-    UserName: [''],
+    UserName: ['', Validators.required],
     MrUserRelationshipCode: [''],
-    OwnerMobilePhnNo: [''],
-    OwnerName: [''],
-    OwnerIdNo: [''],
+    OwnerMobilePhnNo: ['', Validators.required],
+    OwnerName: ['', Validators.required],
+    OwnerIdNo: ['', Validators.required],
     MrIdTypeCode: [''],
     MrOwnerRelationshipCode: [''],
     Notes: [''],
@@ -77,7 +77,8 @@ export class CollateralDetailComponent implements OnInit {
     OwnerRelationship: [''],
     MrIdType: [''],
     CopyFromLegal: ['LEGAL'],
-    AppAttrName: ['']
+    AppAttrName: [''],
+    SelfUsage: ['']
   });
 
   CollTypeList: Array<KeyValueObj> = new Array<KeyValueObj>();
@@ -100,6 +101,7 @@ export class CollateralDetailComponent implements OnInit {
     if (this.isSingleAsset) {
       this.getAppCollData(this.AppId, 0);
     }
+    this.AddCollForm.controls.AssetTypeCode.disable();
   }
 
   initUcLookup() {
@@ -338,6 +340,14 @@ export class CollateralDetailComponent implements OnInit {
     this.getAppCollData(0, event.AppCollateralId, true);
   }
 
+  getLookupCollateral(e) {
+    this.AddCollForm.patchValue({
+      FullAssetCode: e.FullAssetCode,
+      FullAssetName: e.FullAssetName,
+      AssetCategoryCode: e.AssetCategoryCode
+    });
+  }
+
   onItemChange(AssetCode: string) {
     var arrAddCrit = new Array();
     var addCrit = new CriteriaObj();
@@ -365,10 +375,12 @@ export class CollateralDetailComponent implements OnInit {
   }
 
   CopyUser() {
-    this.AddCollForm.patchValue({
-      OwnerName: this.AddCollForm.controls.UserName.value,
-      MrOwnerRelationshipCode: this.AddCollForm.controls.MrUserRelationshipCode.value
-    })
+    if(this.AddCollForm.controls.SelfUsage.value == true){
+      this.AddCollForm.patchValue({
+        OwnerName: this.AddCollForm.controls.UserName.value,
+        MrOwnerRelationshipCode: this.AddCollForm.controls.MrUserRelationshipCode.value
+      })
+    }
   }
 
   copyToLocation() {
@@ -463,7 +475,6 @@ export class CollateralDetailComponent implements OnInit {
     this.appCollateralDataObj.AppCollateralObj.ManufacturingYear = this.AddCollForm.controls["ManufacturingYear"].value;
     this.appCollateralDataObj.AppCollateralObj.AssetTaxDt = this.AddCollForm.controls["AssetTaxDt"].value;
     this.appCollateralDataObj.AppCollateralObj.IsMainCollateral = true;
-    this.appCollateralDataObj.AppCollateralObj.CollateralPrcnt = this.AddCollForm.controls["CollateralPrcnt"].value;
 
     if (this.mode == 'edit') {
       this.appCollateralDataObj.AppCollateralObj.AppCollateralId = this.appCollateralObj.AppCollateralId,
@@ -504,5 +515,9 @@ export class CollateralDetailComponent implements OnInit {
 
   setCollateralPercentage() {
     this.appCollateralDataObj.AppCollateralObj.CollateralPrcnt = this.AddCollForm.controls["CollateralPrcnt"].value;
+  }
+
+  Check(){
+    console.log(this.AddCollForm)
   }
 }
