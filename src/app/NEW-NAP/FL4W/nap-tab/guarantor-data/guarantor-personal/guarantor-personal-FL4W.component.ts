@@ -40,7 +40,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
   AppGuarantorPersonalId: any;
   selectedNationalityCountryCode: any;
   isLocal: boolean = false;
-
+  countryCode : string;
   constructor(private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService, private modalService: NgbModal) {
   }
 
@@ -166,7 +166,10 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
          
           this.resultData = response;
           this.AppGuarantorPersonalId = this.resultData.appGuarantorPersonalObj.AppGuarantorPersonalId;
-          this.inputLookupObj.jsonSelect = { CustName: this.resultData.appGuarantorObj.GuarantorName };
+           
+          do {
+            this.inputLookupObj.jsonSelect = { CustName: this.resultData.appGuarantorObj.GuarantorName };
+          } while (this.inputLookupObj.jsonSelect ==null); 
           this.PersonalForm.patchValue({
             MrCustRelationshipCode: this.resultData.appGuarantorObj.MrCustRelationshipCode,
             MrIdTypeCode: this.resultData.appGuarantorPersonalObj.MrIdTypeCode,
@@ -232,11 +235,13 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
         console.log(response);
         this.inputLookupObj1.nameSelect = response["CountryName"];
         this.inputLookupObj1.jsonSelect = response;
-        if (countryCode == "LOCAL") {
-          this.selectedNationalityCountryName = response["CountryName"];
+        if (this.resultData.appGuarantorPersonalObj.MrNationalityCode == "LOCAL") {
           this.isLocal = true;
+          this.selectedNationalityCountryName = response["CountryName"];
+          
         } else {
           this.isLocal = false
+          this.countryCode =  countryCode;
         }
       },
       (error) => {
@@ -321,6 +326,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
               this.http.post(AdInsConstant.GetRefCountryByCountryCode, { CountryCode: this.resultData.WnaCountryCode }).subscribe(
                 (response) => {
                   this.inputLookupObj1.nameSelect = response["CountryName"];
+                  this.countryCode =  response["CountryCode"];
                 }
               );
             }
@@ -406,7 +412,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
     if (this.PersonalForm.controls.MrNationalityCode.value == "LOCAL") {
       this.guarantorPersonalObj.AppGuarantorPersonalObj.CountryCode = this.selectedNationalityCountryCode;
     } else {
-      this.guarantorPersonalObj.AppGuarantorPersonalObj.CountryCode = this.inputLookupObj1.idSelect;
+      this.guarantorPersonalObj.AppGuarantorPersonalObj.CountryCode = this.countryCode;
     }
     this.guarantorPersonalObj.AppGuarantorPersonalObj.MrReligionCode = this.PersonalForm.controls.MrReligionCode.value;
     this.guarantorPersonalObj.AppGuarantorPersonalObj.MrMaritalStatCode = this.PersonalForm.controls.MrMaritalStatCode.value;

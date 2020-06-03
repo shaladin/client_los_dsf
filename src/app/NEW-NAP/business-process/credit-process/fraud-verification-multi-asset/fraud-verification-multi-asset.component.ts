@@ -31,7 +31,7 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
   verfDt: any;
   verfNotes: any;
   verfCode: any;
-  viewObj: any;
+  viewObj: string;
   arrValue = [];
   viewDukcapilMainDataObj: string;
   losUrl = environment.losUrl;
@@ -39,12 +39,11 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
   getAppById = AdInsConstant.GetAppById;
   getCustDataByAppId = AdInsConstant.GetCustDataByAppId;
   getAppDupCheckCustByAppId = AdInsConstant.GetAppDupCheckCustByAppId;
-  getFraudDukcapilByTrxNoAndTrxType = AdInsConstant.GetFraudDukcapilByTrxNoAndTrxType;
   getNegativeCustomerDuplicateCheckUrl = AdInsConstant.GetNegativeCustomerDuplicateCheck;
+  getFraudDukcapilByIdNo = AdInsConstant.GetFraudDukcapilByIdNo;
   getAppAssetByAppId = AdInsConstant.GetAppAssetByAppId;
   getAssetNegativeDuplicateCheck = AdInsConstant.GetAssetNegativeDuplicateCheck;
   addAppFraudVerfUrl = AdInsConstant.AddAppFraudVerf;
-
   isDataAlreadyLoaded: boolean = false;
   closeResult: string;
   appCustObj: any;
@@ -63,17 +62,15 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
   custStat: string;
   tempAppObj: any;
   appFraudVerf: any;
+  idNo: any;
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private modalService: NgbModal, private router: Router) {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
         this.AppId = params['AppId'];
       }
-      if (params["WfTaskListId"] != null) {
-        this.WfTaskListId = params["WfTaskListId"];
-      }
-      if (params["mrCustTypeCode"] != null) {
-        this.mrCustTypeCode = params["mrCustTypeCode"];
+      if (params['WfTaskListId'] != null) {
+        this.WfTaskListId = params['WfTaskListId'];
       }
     });
     this.getAppAssetListByAppIdUrl = AdInsConstant.GetAppAssetListByAppId;
@@ -81,9 +78,10 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    console.log('fraudverf')
     await this.ClaimTask();
     this.arrValue.push(this.AppId);
-    this.viewObj = "./assets/ucviewgeneric/viewCreditInvestigationInfo.json";
+    this.viewObj = "./assets/ucviewgeneric/viewFraudVerifMultiAssetMainInfo.json";
     var context = JSON.parse(localStorage.getItem("UserAccess"));
     this.verfUser = context["UserName"];
     this.verfDt = context["BusinessDt"];
@@ -109,10 +107,12 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
     this.http.post(this.getCustDataByAppId, appReqObj).subscribe(
       response => {
         this.appCustObj = response["AppCustObj"];
+        this.mrCustTypeCode = this.appCustObj["MrCustTypeCode"];
         this.appCustCompanyObj = response["AppCustCompanyObj"];
         this.appCustPersonalObj = response["AppCustPersonalObj"];
         this.TrxNo = this.appCustObj.AppNo;
         this.trxRefNo = this.appCustObj.AppNo;
+        this.idNo = this.appCustObj.IdNo;
         this.mrSrvySourceCode = "MOU";
         this.getFraudDukcapil();
 
@@ -167,13 +167,8 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
   }
 
   getFraudDukcapil() {
-    var appReqObj = { "AppId": this.AppId }
-    this.http.post(this.getAppById, appReqObj).subscribe(
-      response => {
-        this.tempAppObj = response;
-
-        var fraudDukcapilReqObj = { "TrxNo": this.tempAppObj.AppNo, "TrxTypeCode": "APP" };
-        this.http.post(this.getFraudDukcapilByTrxNoAndTrxType, fraudDukcapilReqObj).subscribe(
+        var fraudDukcapilReqObj = { "IdNo": this.idNo };
+        this.http.post(this.getFraudDukcapilByIdNo, fraudDukcapilReqObj).subscribe(
           response => {
             this.dukcapilObj = response["ReturnObject"];
             console.log(fraudDukcapilReqObj);
@@ -182,14 +177,12 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
             console.log("error")
           }
         );
-      }
-    );
   }
 
   getAppDupCheckCust(AppId) {
     this.http.post(this.getAppDupCheckCustByAppId, AppId).subscribe(
       response => {
-        this.listCustDuplicate = response;
+        this.listCustDuplicate = response["ReturnObject"];
         if (this.listCustDuplicate.indexOf(this.appCustObj.CustNo) < 0) {
           this.custStat = "EXISTING"
         } else {
@@ -256,12 +249,12 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
   submit() {
     var verfObj = {
       "AppId": this.AppId, "VerifyByName": this.verfUser,
-      "VerifyDt": this.verfDt, "Notes": this.verfNotes, "VerifyByCode": this.verfCode, "VerifyStat": "Verified"
+      "VerifyDt": this.verfDt, "Notes": this.verfNotes, "VerifyByCode": this.verfCode, "VerifyStat": "Verified", "WfTaskId": this.WfTaskListId
     }
     this.http.post(this.addAppFraudVerfUrl, verfObj).subscribe(
       response => {
         console.log("Success");
-        this.router.navigate(["../FraudDetection/Paging"]);
+        this.router.navigate(["Nap/CreditProcess/FraudDetection/Paging"]);
       },
       error => {
         console.log("error");
