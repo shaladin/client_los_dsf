@@ -214,7 +214,6 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   SaveForm(ev) {
     console.log(ev);
 
-    return true;
     var FormValue = this.VerfResultDForm.value;
     console.log(FormValue);
 
