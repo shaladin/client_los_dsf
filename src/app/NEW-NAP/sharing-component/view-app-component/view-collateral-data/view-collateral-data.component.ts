@@ -16,7 +16,7 @@ export class ViewCollateralDataComponent implements OnInit {
   @Input() appId: number;
   CollateralType: string;
   CollateralName: string;
-  CollateralPrice: string;
+  CollateralPrice: number;
   ManufacturingYear: string;
   CollateralCondition: string;
   CollateralUsage: string;
