@@ -27,6 +27,9 @@ export class LifeInsuranceDataComponent implements OnInit {
   AppLifeInsD: any = new Array();
   result: any;
 
+  minInsLength: number = 1;
+  maxInsLength: number = 99;
+
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       this.mode = params["mode"];
@@ -56,11 +59,6 @@ export class LifeInsuranceDataComponent implements OnInit {
       (response) => {
         this.result = response;
         this.AppLifeInsHId = this.result.AppLifeInsHId;
-        if (this.result.ListAppLifeInsD != null && this.result.ListAppLifeInsD != undefined) {
-          for (let i = 0; i < this.result.ListAppLifeInsD.length; i++) {
-            this.AppLifeInsD[i] = this.result.ListAppLifeInsD[i]["AppLifeInsDId"];
-          }
-        }
         console.log(this.AppLifeInsD);
         if (this.result.AppLifeInsHId != 0) {
           this.mode = "edit";
@@ -207,7 +205,7 @@ export class LifeInsuranceDataComponent implements OnInit {
   isCoverCheck(){
     for(let i =0 ;i<this.LifeInsObj.ListAppLifeInsD.length;i++){
       console.log(this.LifeInsObj.ListAppLifeInsD[i].MrCustTypeCode);
-      if(this.LifeInsObj.ListAppLifeInsD[i].MrCustTypeCode =="PERSONAL"){
+      if(this.LifeInsObj.ListAppLifeInsD[i].MrCustTypeCode =="CUSTOMER"){
         this.LifeInsObj.IsCustCover = true;
       }
       if(this.LifeInsObj.ListAppLifeInsD[i].MrCustTypeCode =="SPOUSE"){
@@ -219,52 +217,19 @@ export class LifeInsuranceDataComponent implements OnInit {
     }
   }
 
-  // async Save() {
-  //   this.setValue();
-  //   this.isCoverCheck();
-  //   if (this.mode == "edit") {
-  //     if(this.IsChecked){
-  //       this.LifeInsObj.AppId = this.AppId;
-  //       this.LifeInsObj.AppLifeInsHId = this.AppLifeInsHId;
-  //       for (let i = 0; i < this.AppLifeInsD.length; i++) {
-  //         this.LifeInsObj.ListAppLifeInsD[i].AppLifeInsDId = this.AppLifeInsD[i]
-  //       }
-  //       this.http.post(AdInsConstant.EditAppLifeInsH, this.LifeInsObj).subscribe(
-  //         response => {
-  //           this.toastr.successMessage(response["message"]);
-  //           // this.wizard.goToNextStep()
-  //           this.outputTab.emit();
-  //         },
-  //         error => {
-  //           console.log(error);
-  //         }
-  //       );
-
-  //     } else {
-  //     }
-  //   } else {
-  //     if (this.IsChecked) {
-  //       this.http.post(AdInsConstant.AddAppLifeInsH, this.LifeInsObj).subscribe(
-  //         (response) => {
-  //           console.log(response);
-  //           this.toastr.successMessage(response["message"]);
-  //           // this.wizard.goToNextStep()
-  //           this.outputTab.emit();
-  //         },
-  //         (error) => {
-  //           console.log(error);
-  //         }
-  //       );
-  //     }
-  //     else {
-  //       this.outputTab.emit();
-  //     }
-  //   }
-  // }
+  checkSubject(){
+    if(this.LifeInsObj.ListAppLifeInsD.length==0){
+      this.toastr.errorMessage("Minimal 1 Subject ");    
+      return false;
+    }else{
+      return true;
+    }
+  }
 
   async SaveForm(){
     this.setValue();
     this.isCoverCheck();
+    if(this.checkSubject()== false) return;
     if(this.IsChecked){
       this.LifeInsObj.AppId = this.AppId;
       this.http.post(AdInsConstant.AddEditAppLifeInsH, this.LifeInsObj).subscribe(

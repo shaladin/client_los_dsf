@@ -72,7 +72,7 @@
           <td>{{item.AppNo}}</td>
           <td>
             <div>
-              <a class="danger p-0" data-original-title="" title="" (click)="deleteFromTemp(item.AgrmntId)">
+              <a class="danger p-0" (click)="deleteFromTemp(item.AgrmntId)">
                 <i class="ft-trash-2 font-medium-3 mr-2"></i>
               </a></div>
           </td>
@@ -87,7 +87,7 @@
   <div class="text-right">
     <div [hidden]="tempData?.length == 0">
       <button type="submit" (click)="SaveToTemp()" class="btn btn-raised btn-primary" translate>
-        <i class="far"></i> Submit
+        <i class="far fa-check-square"></i> Save
       </button>
     </div>
   </div>

@@ -223,7 +223,7 @@
 
               <div class="form-actions right">
                 <button type="button" (click)="AddTemp(contentCrossApp)" class="btn btn-raised btn-primary" translate>
-                  <i class="fa fa-check-square-o"></i> Add
+                  <i class="fa ft-plus"></i> Add
                 </button>
               </div>
 
@@ -250,11 +250,11 @@
                 </tbody>
                 <tbody>
                   <tr *ngFor="let item of resultCrossApp; let i = index">
-                    <td style="text-align: center;">{{item.AgrmntNo}}</td>
+                    <td style="text-align: center;">{{item.CrossAgrmntNo}}</td>
                     <td style="text-align: left;">{{item.CustName}}</td>
-                    <td style="text-align: center;">{{item.AppNo}}</td>
+                    <td style="text-align: center;">{{item.CrossAppNo}}</td>
                     <td>
-                      <a class="warning p-0" data-original-title="" title="" (click)="DeleteCrossApp(i)">
+                      <a class="warning p-0" (click)="DeleteCrossApp(i)">
                         <i class="ft-trash-2 font-medium-3 mr-2"></i>
                       </a>
                     </td>
@@ -280,7 +280,7 @@
 
             <div class="form-actions right">
               <button type="submit" class="btn btn-raised btn-primary">
-                <i class="fa fa-check-square-o"></i> Save
+                <i class="far fa-check-square"></i> Save
               </button>
               <!-- <button type="button" class="btn btn-raised btn-primary" (click)="test()">
                 <i class="fa fa-check-square-o"></i> Test
