@@ -170,9 +170,9 @@ export class CustomerDataComponent implements OnInit {
         this.toastr.errorMessage("Total Share (%) must be 100.");
         return;
       }      
-      if(this.isExpiredBirthDt || this.isExpiredEstablishmentDt) return;
       this.custDataCompanyObj = new CustDataCompanyObj();
       this.setCustCompanyObjForSave();
+      if(this.isExpiredBirthDt || this.isExpiredEstablishmentDt) return;
       this.http.post(AdInsConstant.AddEditCustDataCompany, this.custDataCompanyObj).subscribe(
         (response) => {
           console.log(response);

@@ -122,7 +122,7 @@
             <!-- your steps here -->
             <div class="step" data-target="#customer-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="customer-tab"
-                id="customer-tab-trigger" [disabled]="!(AppStepIndex >= 1)" (click)="CheckCustType($event)">
+                id="customer-tab-trigger" [disabled]="!(AppStepIndex >= 1)" (click)="ChangeTab('CUST')">
                 <span class="bs-stepper-circle">1</span>
                 <span class="bs-stepper-label">Customer Data</span>
               </button>

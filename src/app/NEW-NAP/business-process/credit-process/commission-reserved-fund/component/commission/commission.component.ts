@@ -47,7 +47,7 @@ export class CommissionComponent implements OnInit {
   OnForm3;
   Summary;
   isCalculateData;
-  isAutoGenerate;
+  isAutoGenerate: boolean = true;
   async ngOnInit() {
 
     this.OnForm1 = false;
@@ -91,8 +91,9 @@ export class CommissionComponent implements OnInit {
       (response) => {
         // console.log("response edit comm");
         // console.log(response);
-        var tempObj = response[AdInsConstant.ReturnObj];
-        if (tempObj != null) {
+        var tempObj: Array<AppCommissionHObj> = response[AdInsConstant.ReturnObj];
+        if (tempObj.length > 0) {
+          // console.log("edit data");
           this.isAutoGenerate = false;
           this.GetFormAddDynamicObj(AdInsConstant.ContentSupplier);
           this.GetFormAddDynamicObj(AdInsConstant.ContentSupplierEmp);
@@ -125,6 +126,7 @@ export class CommissionComponent implements OnInit {
           }, 1000);
 
         } else {
+          // console.log("new data");
           this.GetFormAddDynamicObj(AdInsConstant.ContentSupplier);
           this.GetFormAddDynamicObj(AdInsConstant.ContentSupplierEmp);
           this.GetFormAddDynamicObj(AdInsConstant.ContentReferantor);
@@ -459,7 +461,7 @@ export class CommissionComponent implements OnInit {
       this.FormInputObjSupplier["isCalculated"] = false;
       this.FormInputObjSupplier["isDataInputed"] = false;
       this.OnForm1 = true;
-      // console.log(this.FormInputObjSupplier);
+      console.log(this.FormInputObjSupplier);
     } else if (content == AdInsConstant.ContentSupplierEmp) {
       this.FormInputObjSupplierEmpl["title"] = AdInsConstant.TitleSupplierEmp;
       this.FormInputObjSupplierEmpl["content"] = AdInsConstant.ContentSupplierEmp;
@@ -484,13 +486,17 @@ export class CommissionComponent implements OnInit {
       this.FormInputObjReferantor["isCalculated"] = false;
       this.FormInputObjReferantor["isDataInputed"] = false;
       this.OnForm3 = true;
-      // console.log(this.FormInputObjReferantor);
+      console.log(this.FormInputObjReferantor);
     }
   }
 
   GetData(ev, data) {
     this.FormGetObj[data] = ev;
     // console.log(this.FormGetObj);
+    this.Summary.TotalCommisionAmount=0;
+    this.Summary.TotalTaxAmmount=0;
+    this.Summary.TotalVATAmount=0;
+    this.Summary.GrossYield=0;
     if (this.isCalculateData) {
       if (this.FormGetObj[AdInsConstant.ContentSupplier] && data == AdInsConstant.ContentSupplier) {
         this.CalculateEachData(this.FormGetObj[AdInsConstant.ContentSupplier]);
