@@ -513,7 +513,7 @@ export class CollateralAddEditSingleComponent implements OnInit {
     this.appCollateralDataObj.AppCollateralObj.AppId = this.AppId;
     this.appCollateralDataObj.AppCollateralObj.AppAssetId = this.AppAssetId;
     this.appCollateralDataObj.AppCollateralObj.AgrmntId = this.AgrmntId;
-    this.appCollateralDataObj.AppCollateralObj.CollateralSeqNo = "1";
+    this.appCollateralDataObj.AppCollateralObj.CollateralSeqNo = 1;
     this.appCollateralDataObj.AppCollateralObj.FullAssetCode = this.AddCollForm.controls["FullAssetCode"].value;
     this.appCollateralDataObj.AppCollateralObj.FullAssetName = this.AddCollForm.controls["FullAssetName"].value.value;
     this.appCollateralDataObj.AppCollateralObj.SerialNo1 = this.AddCollForm.controls["SerialNo1"].value;
@@ -528,15 +528,15 @@ export class CollateralAddEditSingleComponent implements OnInit {
     this.appCollateralDataObj.AppCollateralObj.AssetCategoryCode = this.AddCollForm.controls["AssetCategoryCode"].value;
     this.appCollateralDataObj.AppCollateralObj.ManufacturingYear = this.AddCollForm.controls["ManufacturingYear"].value;
     this.appCollateralDataObj.AppCollateralObj.AssetTaxDt = this.AddCollForm.controls["AssetTaxDt"].value;
-    this.appCollateralDataObj.AppCollateralObj.IsMainCollateral = 1;
+    this.appCollateralDataObj.AppCollateralObj.IsMainCollateral = true;
 
     if (this.type == 'Edit') {
-      this.appCollateralObj.AppCollateralId = this.AddCollForm.controls.AppCollateralId;
-      this.appCollateralObjRegistration.AppCollateralRegistrationId = this.AddCollDataForm.controls.AppCollateralRegistrationId;
-      this.appCollateralObjRegistration.AppCollateralId = this.AddCollForm.controls.AppCollateralId;
+      this.appCollateralObj.AppCollateralId = this.AddCollForm.value.AppCollateralId;
+      this.appCollateralObjRegistration.AppCollateralRegistrationId = this.AddCollDataForm.value.AppCollateralRegistrationId;
+      this.appCollateralObjRegistration.AppCollateralId = this.AddCollForm.value.AppCollateralId;
 
-      this.appCollateralObj.RowVersion = this.AddCollForm.controls.RowVersionCollateral;
-      this.appCollateralObjRegistration.RowVersion = this.AddCollForm.controls.RowVersionCollateralRegistration;
+      this.appCollateralObj.RowVersion = this.AddCollForm.value.RowVersionCollateral;
+      this.appCollateralObjRegistration.RowVersion = this.AddCollForm.value.RowVersionCollateralRegistration;
     }
 
   }

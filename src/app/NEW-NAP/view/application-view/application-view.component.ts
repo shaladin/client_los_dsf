@@ -10,19 +10,40 @@ import { AdInsConstant } from '../../../shared/AdInstConstant';
 })
 export class ApplicationViewComponent implements OnInit {
   AppId: number;
+  
+  BizTemplateCode : string;
   arrValue = [];
   CustType: string = "";
   AppCustObj: any;
 
+  IsGuarantor : boolean = true;
+  IsCustomer : boolean = true;
+
   constructor(private route: ActivatedRoute, private http: HttpClient) { 
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
+      this.BizTemplateCode = params["BizTemplateCode"];
     })
   }
 
   ngOnInit() {
     this.arrValue.push(this.AppId);
     this.GetAppCust();
+    if(this.BizTemplateCode==AdInsConstant.FCTR)
+    {
+      this.IsCustomer= true;
+      this.IsGuarantor = false;
+    }
+    else if(this.BizTemplateCode==AdInsConstant.CFRFN4W){
+
+    }
+    else if(this.BizTemplateCode==AdInsConstant.CF4W){
+
+    }
+    else if(this.BizTemplateCode==AdInsConstant.FL4W)
+    {
+
+    }
   }
 
   GetAppCust() {
