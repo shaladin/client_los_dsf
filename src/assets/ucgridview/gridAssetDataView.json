@@ -3,39 +3,57 @@
     "headerList": [
         {
             "type": "label",
-            "position": "center",
+            "position": "left",
             "label": "Asset Name",
-            "name": "FullAssetName"
+            "name": "InsObjName"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Insured By",
+            "name": "InsAssetCoveredBy"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Paid By",
+            "name": "InsAssetPaidBy"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Insurance Company",
+            "name": "InscoBranchName"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Cover Period",
+            "name": "InsAssetCoverPeriod"
         },
         {
             "type": "label",
             "position": "center",
-            "label": "Supplier Branch",
-            "name": "SupplName"
+            "label": "Insurance Length",
+            "name": "InsLength"
         },
         {
             "type": "label",
-            "position": "center",
-            "label": "Serial No 1",
-            "name": "SerialNo1"
+            "position": "right",
+            "label": "Main Premi",
+            "name": "TotalCustMainPremiAmt"
         },
         {
             "type": "label",
-            "position": "center",
-            "label": "Serial No 2",
-            "name": "SerialNo2"
+            "position": "right",
+            "label": "Additional Premi",
+            "name": "TotalCustAddPremiAmt"
         },
         {
             "type": "label",
-            "position": "center",
-            "label": "Serial No 3",
-            "name": "SerialNo3"
-        },
-        {
-            "type": "label",
-            "position": "center",
-            "label": "Serial No 4",
-            "name": "SerialNo4"
+            "position": "right",
+            "label": "Fee",
+            "name": "CustAdminFeeAmt"
         },
         {
             "type": "label",
@@ -46,33 +64,48 @@
     "bodyList": [
         {
             "type": "text",
-            "position": "center",
-            "property": "FullAssetName"
+            "position": "left",
+            "property": "InsObjName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "InsAssetCoveredBy"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "InsAssetPaidBy"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "InscoBranchName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "InsAssetCoverPeriod"
         },
         {
             "type": "text",
             "position": "center",
-            "property": "SupplName"
+            "property": "InsLength"
         },
         {
-            "type": "text",
-            "position": "center",
-            "property": "SerialNo1"
+            "type": "decimal",
+            "position": "right",
+            "property": "TotalCustMainPremiAmt"
         },
         {
-            "type": "text",
-            "position": "center",
-            "property": "SerialNo2"
+            "type": "decimal",
+            "position": "right",
+            "property": "TotalCustAddPremiAmt"
         },
         {
-            "type": "text",
-            "position": "center",
-            "property": "SerialNo3"
-        },
-        {
-            "type": "text",
-            "position": "center",
-            "property": "SerialNo4"
+            "type": "decimal",
+            "position": "right",
+            "property": "CustAdminFeeAmt"
         },
         {
             "type": "action",

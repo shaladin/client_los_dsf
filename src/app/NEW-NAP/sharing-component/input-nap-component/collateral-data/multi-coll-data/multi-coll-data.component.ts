@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-multi-coll-data',
@@ -8,6 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class MultiCollDataComponent implements OnInit {
 
   @Input() AppId: number;
+  @Output() outputTab: EventEmitter<any> = new EventEmitter<any>();
   AppCollateralId: number = 0;
   mode: string = "add";
   IsDetail: boolean = false;
@@ -29,5 +30,9 @@ export class MultiCollDataComponent implements OnInit {
 
   CloseDetail() {
     this.IsDetail = false;
+  }
+
+  Next() {
+    this.outputTab.emit();
   }
 }

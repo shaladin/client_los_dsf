@@ -45,32 +45,32 @@
     "bodyList": [
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "FullAssetName"
         },
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "SupplName"
         },
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "SerialNo1"
         },
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "SerialNo2"
         },
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "SerialNo3"
         },
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "SerialNo4"
         },
         {
@@ -79,6 +79,7 @@
             "action": [
                 {
                     "type": "callback",
+                    "key": "edit",
                     "property": [
                         {
                             "type": "AppAssetId",
@@ -93,6 +94,17 @@
                             "property": "editAsset"
                         }
                     ]
+                },
+                {
+                    "type": "callback",
+                    "key": "delete",
+                    "property" : [
+                        {
+                        "type": "AppAssetId",
+                        "property": "AppAssetId"
+                        }
+                    ],
+                    "icon" : "ft-trash-2"
                 }
             ]
         }
