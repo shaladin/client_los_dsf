@@ -50,7 +50,7 @@ export class NapAddDetailComponent implements OnInit {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
         this.mode = params["Mode"];
-        this.CheckMultiAsset();
+        // this.CheckMultiAsset();
       }
       if (params["WfTaskListId"] != null) {
         this.wfTaskListId = params["WfTaskListId"];
@@ -138,26 +138,26 @@ export class NapAddDetailComponent implements OnInit {
     }
   }
 
-  CheckMultiAsset() {
-    this.IsMultiAsset = false;
-    var appObj = { AppId: this.appId }
-    this.http.post(AdInsConstant.GetAppAssetListByAppId, appObj).subscribe(
-      (response) => {
-        this.ListAsset = response['ReturnObject'];
-        if (this.ListAsset != undefined && this.ListAsset != null) {
-          if (this.ListAsset.length > 1)
-            this.IsMultiAsset = true;
-          else
-            this.IsMultiAsset = false;
-        }
-        else
-          this.IsMultiAsset = false;
-      },
-      (error) => {
-        console.log(error);
-      }
-    )
-  }
+  // CheckMultiAsset() {
+  //   this.IsMultiAsset = false;
+  //   var appObj = { AppId: this.appId }
+  //   this.http.post(AdInsConstant.GetAppAssetListByAppId, appObj).subscribe(
+  //     (response) => {
+  //       this.ListAsset = response['ReturnObject'];
+  //       if (this.ListAsset != undefined && this.ListAsset != null) {
+  //         if (this.ListAsset.length > 1)
+  //           this.IsMultiAsset = true;
+  //         else
+  //           this.IsMultiAsset = false;
+  //       }
+  //       else
+  //         this.IsMultiAsset = false;
+  //     },
+  //     (error) => {
+  //       console.log(error);
+  //     }
+  //   )
+  // }
 
   ChangeTab(AppStep) {
     // console.log(AppStep);
