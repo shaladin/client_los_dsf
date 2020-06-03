@@ -28,7 +28,7 @@ export class NapAddDetailComponent implements OnInit {
   IsMultiAsset: string;
   ListAsset: any;
   ReturnHandlingHId : number = 0;
-  custType: string = "";
+  custType: string = AdInsConstant.CustTypeCompany;
 
   AppStep = {
     "NEW": 1,
@@ -75,6 +75,7 @@ export class NapAddDetailComponent implements OnInit {
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
 
+    // this.ChangeStepper();
     
     if(this.ReturnHandlingHId > 0 ){
       this.ChangeStepper();
@@ -82,14 +83,14 @@ export class NapAddDetailComponent implements OnInit {
     }else{
       this.http.post(AdInsConstant.GetAppById, this.NapObj).subscribe(
         (response: AppObj) => {
+          console.log(response);
           if (response) {
             this.NapObj = response;
-            this.AppStepIndex = this.AppStep[response.AppCurrStep];
             if(this.NapObj.MrCustTypeCode!=null)
               this.custType=this.NapObj.MrCustTypeCode;
-            else
-              this.custType=AdInsConstant.CustTypeCompany;
+            
             this.ChangeStepper();
+            this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
             this.ChooseStep(this.AppStepIndex);
           }
         },
