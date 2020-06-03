@@ -11,11 +11,11 @@
       <tr class="table-header">
         <th class="text-left"><span translate class="thead-header" name='LoanObjectName'>Loan Object Name</span></th>
         <th class="text-left"><span translate class="thead-header" name='SupplierName'>Supplier Name</span></th>
-        <th class="text-left"><span translate class="thead-header" name='BudgetPlanAmount'>Budget Plan Amount</span>
+        <th class="text-right"><span translate class="thead-header" name='BudgetPlanAmount'>Budget Plan Amount</span>
         </th>
-        <th class="text-left"><span translate class="thead-header" name='SelfFinancing'>Self Financing</span></th>
-        <th class="text-left"><span translate class="thead-header" name='FinancingAmount'>Financing Amount</span></th>
-        <th class="text-left"><span translate class="thead-header" name='IsDisburseToCust'>Is Disburse to
+        <th class="text-right"><span translate class="thead-header" name='SelfFinancing'>Self Financing</span></th>
+        <th class="text-right"><span translate class="thead-header" name='FinancingAmount'>Financing Amount</span></th>
+        <th class="text-center"><span translate class="thead-header" name='IsDisburseToCust'>Is Disburse to
             Customer</span></th>
         <th class="text-left"><span translate class="thead-header" name='Action'>Action</span></th>
       </tr>
@@ -57,7 +57,7 @@
           (ngSubmit)="MainInfoForm.valid && SaveForm(enjiForm)" #enjiForm="ngForm">
           <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 adins-required-label" for="IsDisburseToCust" translate>Is Disburse to Cust</label>
+              <label class="col-md-3 " for="IsDisburseToCust" translate>Is Disburse to Cust</label>
               <div class="col-md-9">
                 <input type="checkbox" id="IsDisburseToCust" class="border-primary"
                   formControlName="IsDisburseToCust" (change)="CheckIsDisburseToCust()">

@@ -10,14 +10,13 @@ export class SingleCollDataComponent implements OnInit {
   @Output() outputTab: EventEmitter<any> = new EventEmitter<any>();
   AppCollateralId: number = 0;
   mode: string = "add";
-  IsDetail: boolean = false;
 
   constructor() { }
 
   ngOnInit() {
 
   }
-  
+
   Next() {
     this.outputTab.emit();
   }

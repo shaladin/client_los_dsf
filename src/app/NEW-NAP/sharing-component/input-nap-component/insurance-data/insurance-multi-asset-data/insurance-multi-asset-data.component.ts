@@ -111,7 +111,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
 
     this.appAssetObj = new AppAssetObj();
     this.appAssetObj.AppId = this.appId;
-    this.http.post(AdInsConstant.GetListAppInsObjByAppIdForView, this.appAssetObj).subscribe(
+    this.http.post(AdInsConstant.GetAppAssetListForInsuranceByAppId, this.appAssetObj).subscribe(
       (response) => {
           this.listAppAssetObj = response["LoanAppInsObjects"];
           this.listAppCollateralObj = response["CollateralAppInsObjects"];
