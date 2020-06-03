@@ -188,7 +188,7 @@
           <div class="bs-stepper-content">
             <!-- your steps content here -->
             <div id="customer-tab" class="content" role="tabpanel" aria-labelledby="customer-tab-trigger">
-              <app-customer-data *ngIf="AppStepIndex == 1" [appId]="appId" (outputTab)="NextStep('GUAR')">
+              <app-customer-data *ngIf="AppStepIndex == 1" [appId]="appId" (outputTab)="CheckCustType($event)">
               </app-customer-data>
             </div>
             <div id="guarantor-tab" class="content" role="tabpanel" aria-labelledby="guarantor-tab-trigger">
@@ -207,7 +207,7 @@
               <app-asset-data *ngIf="AppStepIndex == 5" [AppId]=appId (outputTab)="NextStep('INS')"></app-asset-data>
             </div>
             <div id="insurance-tab" class="content" role="tabpanel" aria-labelledby="insurance-tab-trigger">
-              <app-insurance-data *ngIf="AppStepIndex == 6" [appId]="appId" (outputTab)="NextStep('LFI')">
+              <app-insurance-data *ngIf="AppStepIndex == 6" [appId]="appId" (outputTab)="NextStep('FIN')">
               </app-insurance-data>
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
