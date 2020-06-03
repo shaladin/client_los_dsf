@@ -207,29 +207,40 @@
             </lib-ucSubsection>
             <div id="AddCollUser">
               <div class="form-group row">
-                <label class="col-md-2" translate>Self Usage</label>
-                <div class="col-md-3">
-                  <input type="checkbox" (change)="CopyUser()">
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-md-5" translate>Self Usage</label>
+                    <div class="col-md-7">
+                      <input type="checkbox" (change)="CopyUser()">
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-md-2 adins-required-label" translate>Collateral User Name</label>
-                <div class="col-md-3">
-                  <input type="text" class="form-control" formControlName="UserName"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.UserName.invalid }">
-                  <lib-uc-show-errors [control]="AddCollForm.controls.UserName" [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
+                <div class="col-md-6">
                 </div>
-                <label class="col-md-1"></label>
-                <label class="col-md-2 adins-required-label" translate>Collateral User Relationship</label>
-                <div class="col-md-3">
-                  <select class="form-control" formControlName="MrUserRelationshipCode"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.MrUserRelationshipCode.invalid }">
-                    <option *ngFor="let item of OwnerRelationList" [value]="item.Key">{{item.Value}}</option>
-                  </select>
-                  <lib-uc-show-errors [control]="AddCollForm.controls.MrUserRelationshipCode"
-                    [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-md-5 adins-required-label" translate>Collateral User Name</label>
+                    <div class="col-md-7">
+                      <input type="text" class="form-control" formControlName="UserName"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.UserName.invalid }">
+                      <lib-uc-show-errors [control]="AddCollForm.controls.UserName" [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-md-5 adins-required-label" translate>Collateral User Relationship</label>
+                    <div class="col-md-7">
+                      <select class="form-control" formControlName="MrUserRelationshipCode"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.MrUserRelationshipCode.invalid }">
+                        <option *ngFor="let item of OwnerRelationList" [value]="item.Key">{{item.Value}}</option>
+                      </select>
+                      <lib-uc-show-errors [control]="AddCollForm.controls.MrUserRelationshipCode"
+                        [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -237,57 +248,68 @@
             </lib-ucSubsection>
             <div id="AddCollOwner">
               <div class="form-group row">
-                <label class="col-md-2 adins-required-label" translate>Owner Name</label>
-                <div class="col-md-3">
-                  <input type="text" class="form-control" formControlName="OwnerName"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerName.invalid }">
-                  <lib-uc-show-errors [control]="AddCollForm.controls.OwnerName" [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-md-5 adins-required-label" translate>Owner Name</label>
+                    <div class="col-md-7">
+                      <input type="text" class="form-control" formControlName="OwnerName"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerName.invalid }">
+                      <lib-uc-show-errors [control]="AddCollForm.controls.OwnerName" [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-5 adins-required-label" translate>Owner Relationship</label>
+                    <div class="col-md-7">
+                      <select class="form-control" formControlName="MrOwnerRelationshipCode"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.MrOwnerRelationshipCode.invalid }">
+                        <option *ngFor="let item of OwnerRelationList" [value]="item.Key">{{item.Value}}</option>
+                      </select>
+                      <lib-uc-show-errors [control]="AddCollForm.controls.MrOwnerRelationshipCode"
+                        [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-5 adins-required-label" translate>Owner Mobile Phone No</label>
+                    <div class="col-md-7">
+                      <input type="text" class="form-control" formControlName="OwnerMobilePhnNo"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerMobilePhnNo.invalid }">
+                      <lib-uc-show-errors [control]="AddCollForm.controls.OwnerMobilePhnNo"
+                        [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors>
+                    </div>
+                  </div>
                 </div>
-                <label class="col-md-1"></label>
-                <label class="col-md-2 adins-required-label" translate>ID Type</label>
-                <div class="col-md-2">
-                  <select class="form-control" formControlName="MrIdTypeCode"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.MrIdTypeCode.invalid }">
-                    <option *ngFor="let item of IdTypeList" [value]="item.Key">{{item.Value}}</option>
-                  </select>
-                  <lib-uc-show-errors [control]="AddCollForm.controls.MrIdTypeCode" [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-md-2 adins-required-label" translate>Owner Relationship</label>
-                <div class="col-md-3">
-                  <select class="form-control" formControlName="MrOwnerRelationshipCode"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.MrOwnerRelationshipCode.invalid }">
-                    <option *ngFor="let item of OwnerRelationList" [value]="item.Key">{{item.Value}}</option>
-                  </select>
-                  <lib-uc-show-errors [control]="AddCollForm.controls.MrOwnerRelationshipCode"
-                    [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
-                </div>
-                <label class="col-md-1"></label>
-                <label class="col-md-2 adins-required-label" translate>Owner Id No</label>
-                <div class="col-md-2">
-                  <input type="text" class="form-control" formControlName="OwnerIdNo"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerIdNo.invalid }">
-                  <lib-uc-show-errors [control]="AddCollForm.controls.OwnerIdNo" [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label class="col-md-2 adins-required-label" translate>Owner Mobile Phone No</label>
-                <div class="col-md-2">
-                  <input type="text" class="form-control" formControlName="OwnerMobilePhnNo"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerMobilePhnNo.invalid }">
-                  <lib-uc-show-errors [control]="AddCollForm.controls.OwnerMobilePhnNo" [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-md-5 adins-required-label" translate>ID Type</label>
+                    <div class="col-md-7">
+                      <select class="form-control" formControlName="MrIdTypeCode"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.MrIdTypeCode.invalid }">
+                        <option *ngFor="let item of IdTypeList" [value]="item.Key">{{item.Value}}</option>
+                      </select>
+                      <lib-uc-show-errors [control]="AddCollForm.controls.MrIdTypeCode" [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-5 adins-required-label" translate>Owner Relationship</label>
+                    <div class="col-md-7">
+                      <select class="form-control" formControlName="MrOwnerRelationshipCode"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.MrOwnerRelationshipCode.invalid }">
+                        <option *ngFor="let item of OwnerRelationList" [value]="item.Key">{{item.Value}}</option>
+                      </select>
+                      <lib-uc-show-errors [control]="AddCollForm.controls.MrOwnerRelationshipCode"
+                        [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors>
+                    </div>
+                  </div>
                 </div>
               </div>
               <lib-ucaddress [showSubsection]="false" [UCAddrForm]="AddCollForm" [enjiForm]="enjiForm"
                 [identifier]="'OwnerAddrObj'" [default]="OwnerAddrObj" [inputField]="inputFieldLegalObj"
-                [showPhn1]="false" [showPhn2]="false" [showPhn3]="false" [showFax]="false">
+                [showAllPhn]="false">
               </lib-ucaddress>
             </div>
             <lib-ucSubsection [id]="'AddCollLocationId'" [title]="'Collateral Location'" [panel]="'AddCollLocation'">
@@ -296,7 +318,7 @@
               <div class="form-group row">
                 <label class="col-md-2" translate>Copy Address From</label>
                 <div class="col-md-4">
-                  <div class="input-group">
+                  <div class="input-group mb-0">
                     <select class="form-control" formControlName="CopyFromLegal" [(ngModel)]="copyFromLegal">
                       <option value="LEGAL"> Legal </option>
                     </select>
@@ -312,7 +334,7 @@
               </div>
               <lib-ucaddress [showSubsection]="false" [UCAddrForm]="AddCollForm" [enjiForm]="enjiForm"
                 [identifier]="'LocationAddrObj'" [default]="LocationAddrObj" [inputField]="inputFieldLocationObj"
-                [showPhn1]="false" [showPhn2]="false" [showPhn3]="false" [showFax]="false">
+                [showAllPhn]="false">
               </lib-ucaddress>
             </div>
             <div class="form-actions right">
