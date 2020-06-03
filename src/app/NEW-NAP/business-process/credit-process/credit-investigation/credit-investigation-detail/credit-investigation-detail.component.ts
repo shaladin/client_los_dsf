@@ -11,6 +11,8 @@ import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueModel';
 import { RequestAppCrdInvstgObj } from 'app/shared/model/AppCrdInvstg/RequestAppCrdInvstgObj.Model';
 import { AppCrdInvstgDObj } from 'app/shared/model/AppCrdInvstg/AppCrdInvstgDObj.Model';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
+import { AppCrdInvstgHObj } from 'app/shared/model/AppCrdInvstg/AppCrdInvstgHObj.Model';
+
 
 @Component({
   selector: 'app-credit-investigation-detail',
@@ -25,6 +27,7 @@ export class CreditInvestigationDetailComponent implements OnInit {
   viewObj: string;
   arrValue = [];
   analysisItemObj: Array<KeyValueObj>;
+  appCrdInvstgHObj: AppCrdInvstgHObj;
   type: string;
 
   CreditInvestigationForm = this.fb.group({
@@ -64,7 +67,7 @@ export class CreditInvestigationDetailComponent implements OnInit {
     reqAppCrdInvstg.AppCrdInvstgHObj.AppId = this.appId;
     reqAppCrdInvstg.AppCrdInvstgHObj.CrdInvstgStat = "DONE";
     reqAppCrdInvstg.AppCrdInvstgHObj.CrdRiskEmpNo = user.EmpNo;
-    reqAppCrdInvstg.AppCrdInvstgHObj.SubmitDt = new Date();
+    reqAppCrdInvstg.AppCrdInvstgHObj.SubmitDt = user.BusinessDt;
 
     for(let i = 0; i < this.CreditInvestigationForm.controls["AppCrdInvstgDs"]["controls"].length; i++){
       var appCrdInvstgD = new AppCrdInvstgDObj();
@@ -77,7 +80,7 @@ export class CreditInvestigationDetailComponent implements OnInit {
 
     reqAppCrdInvstg.WfTaskListId = this.wfTaskListId;
     var lobCode = localStorage.getItem("BizTemplateCode");
-    this.http.post(AdInsConstant.AddAppCrdInvstg, reqAppCrdInvstg).subscribe(
+    this.http.post(AdInsConstant.AddEditAppCrdInvstg, reqAppCrdInvstg).subscribe(
       (response) => {
         console.log(response);
         this.toastr.successMessage(response["message"]);       
@@ -95,12 +98,27 @@ export class CreditInvestigationDetailComponent implements OnInit {
   }
 
   generateFormAnalysisItem(){
-    for(let i = 0; i < this.analysisItemObj.length; i++){
-      (this.CreditInvestigationForm.controls.AppCrdInvstgDs as FormArray).push(this.addGroup(this.analysisItemObj[i]));
+    if(this.appCrdInvstgHObj.AppId == 0){
+      for(let i = 0; i < this.analysisItemObj.length; i++){
+        (this.CreditInvestigationForm.controls.AppCrdInvstgDs as FormArray).push(this.addGroupByRefMaster(this.analysisItemObj[i]));
+      }
+    }else if(this.appCrdInvstgHObj.AppCrdInvstgDObjs != null){
+      for(let i = 0; i < this.appCrdInvstgHObj.AppCrdInvstgDObjs.length; i++){
+        (this.CreditInvestigationForm.controls.AppCrdInvstgDs as FormArray).push(this.addGroupByAppCrdInvstgH(this.appCrdInvstgHObj.AppCrdInvstgDObjs[i]));
+      }
     }
   }
 
-  addGroup(analysisItem){
+  addGroupByAppCrdInvstgH(appCrdInvstgDObj){
+    var group = this.fb.group({
+      MrAnalysisItemCode: appCrdInvstgDObj.MrAnalysisItemCode,
+      AnalysisItemName: appCrdInvstgDObj.AnalysisItemName,
+      AnalysisResult: [appCrdInvstgDObj.AnalysisResult, Validators.maxLength(4000)]
+    });
+
+    return group;
+  }
+  addGroupByRefMaster(analysisItem){
     var group = this.fb.group({
       MrAnalysisItemCode: analysisItem.Key,
       AnalysisItemName: analysisItem.Value,
@@ -111,12 +129,22 @@ export class CreditInvestigationDetailComponent implements OnInit {
   }
 
   async bindAnalysisItemObj(){
-    var refMasterObj = { RefMasterTypeCode: "CRD_INVSTG_ANALYSIS_ITEM"};
-    await this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
+
+    var reqObj = { AppId: this.appId };
+
+    await this.http.post<AppCrdInvstgHObj>(AdInsConstant.GetAppCrdInvstgByAppId, reqObj).toPromise().then(
       (response) => {
-        this.analysisItemObj = response["ReturnObject"];
+        this.appCrdInvstgHObj = response;
       }
     );
+    if(this.appCrdInvstgHObj.AppId == 0){
+      var refMasterObj = { RefMasterTypeCode: "CRD_INVSTG_ANALYSIS_ITEM"};
+      await this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
+        (response) => {
+          this.analysisItemObj = response["ReturnObject"];
+        }
+      );
+    }
   }
 
   ClaimTask(){

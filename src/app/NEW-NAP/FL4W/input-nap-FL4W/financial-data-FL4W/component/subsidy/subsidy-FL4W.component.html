@@ -42,9 +42,9 @@
         <td style="text-align: center;">{{item.MrSubsidyFromValueName}}</td>
         <td style="text-align: center;">{{item.MrSubsidyAllocName}}</td>
         <td style="text-align: center;">{{item.MrSubsidyValueTypeName}}</td>
-        <td style="text-align: center;">{{item.SubsidyAmt | number : '1.2-2' }}</td>
+        <td style="text-align: right;">{{item.SubsidyAmt | number : '1.2-2' }}</td>
         <td>
-          <a class="warning p-0" data-original-title="" title="" (click)="deleteSubsidy(item)">
+          <a class="warning p-0" (click)="deleteSubsidy(item)">
             <i class="ft-trash-2 font-medium-3 mr-2"></i>
           </a>
         </td>

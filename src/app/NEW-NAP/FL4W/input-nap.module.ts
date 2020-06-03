@@ -20,10 +20,8 @@ import { NapTabComponentModule } from "./nap-tab/nap-tab.module";
 import { ViewMainInfoComponentModule } from "../sharing-component/view-main-info-component/view-main-info-component.module";
 import { ViewAppComponentModule } from "../sharing-component/view-app-component/view-app-component.module";
 import { AppMainInfoComponent } from "../sharing-component/view-main-info-component/app-main-info/app-main-info.component";
-import { ViewAppCustDataPersonalComponent } from "../sharing-component/view-app-component/view-app-cust-data-personal/view-app-cust-data-personal.component";
-import { ViewAppCustDataCompanyComponent } from "../sharing-component/view-app-component/view-app-cust-data-company/view-app-cust-data-company.component";
+import { ViewSharingComponentModule } from "../sharing-component/view-app-component/view-sharing-component.module";
 import { ViewAgrmntComponent } from './view-agrmnt/view-agrmnt.component';
-import { ViewAgrmntComponentModule } from "../sharing-component/view-agrmnt-component/view-agrmnt-component.module";
 import { TabCommissionComponent } from "../sharing-component/view-app-component/tab-commission/tab-commission.component";
 import { AgrmntLifeInsuranceComponent } from "../sharing-component/view-agrmnt-component/life-insurance/life-insurance.component";
 import { ViewCommissionComponent } from "../sharing-component/view-agrmnt-component/view-commission/view-commission.component";
@@ -78,7 +76,9 @@ export const customCurrencyMaskConfig = {
     MatRadioModule,
     MatSelectModule,
     NapTabComponentModule,
+    ViewSharingComponentModule,
     MatTabsModule,
+    ViewSharingComponentModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
   ],
   declarations: [
@@ -88,8 +88,6 @@ export const customCurrencyMaskConfig = {
     NapViewComponent,  
     NapAddDetailComponent, 
     AppMainInfoComponent,
-    ViewAppCustDataPersonalComponent,
-    ViewAppCustDataCompanyComponent,
     ViewAgrmntComponent, 
     TabCommissionComponent,
     ListDataCommissionComponent,

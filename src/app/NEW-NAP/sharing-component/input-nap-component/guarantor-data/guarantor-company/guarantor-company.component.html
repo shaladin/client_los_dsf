@@ -61,8 +61,8 @@
                   <div class="form-group row adins-required">
                     <label class="col-md-6 adInsLabel">Industry Type </label>
                     <div class="col-md-6">
-                      <lib-uclookupgeneric *ngIf="inputLookupObj1.isReady" [lookupInput]="inputLookupObj1" [parentForm]="CompanyForm" [enjiForm]="enjiForm"
-                        [identifier]="'lookupIndustryType'" (lookup)="handleOutput1($event)"></lib-uclookupgeneric>
+                      <lib-uclookupgeneric [lookupInput]="inputLookupObj1" [parentForm]="CompanyForm" [enjiForm]="enjiForm"
+                        [identifier]="'LookupIndustryType'" (lookup)="handleOutput1($event)"></lib-uclookupgeneric>
                     </div>
                   </div>
                 </div>
@@ -80,12 +80,12 @@
                     <thead>
                       <tr class="table-header">
                         <th><span translate class="thead-header">Legal Doc Type</span></th>
-                        <th><span translate class="thead-header">Document No</span></th>
-                        <th><span translate class="thead-header">Date Issued</span></th>
-                        <th><span translate class="thead-header">Expired Date</span></th>
+                        <th><span translate class="thead-header" style="color:red">Document No</span></th>
+                        <th><span translate class="thead-header" style="color:red">Date Issued</span></th>
+                        <th><span translate class="thead-header" style="color:red">Expired Date</span></th>
                         <th><span translate class="thead-header">Notes</span></th>
-                        <th><span translate class="thead-header">Release By</span></th>
-                        <th><span translate class="thead-header">Release Location</span></th>
+                        <th><span translate class="thead-header" style="color:red">Release By</span></th>
+                        <th><span translate class="thead-header" style="color:red">Release Location</span></th>
                         <th><span translate class="thead-header">Delete</span></th>
                       </tr>
                     </thead>
@@ -135,7 +135,7 @@
                           <lib-uc-show-errors  [control]="CompanyForm.controls['LegalDocForm']['controls'][i]['controls'].ReleaseLocation" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                         </td>
                         <td [formGroupName]="i">
-                          <a class="danger p-0" data-original-title="" title="" (click)="deleteLegalDoc(i)">
+                          <a class="danger p-0" (click)="deleteLegalDoc(i)">
                             <i class="ft-trash-2 font-medium-3 mr-2"></i>
                           </a>
                         </td>
@@ -158,12 +158,12 @@
                         [submit]="enjiForm.submitted"></lib-uc-show-errors>
                       </div>
                     </div>
-                    <div class="form-group row">
-                      <label class="col-md-6 adInsLabel">Mobile Phone 1</label>
+                    <div class="form-group row adins-required">
+                      <label class="col-md-6 adInsLabel ">Mobile Phone 1</label>
                       <div class="col-md-6">
                         <input type="text" class="form-control adInsInput width-100-per" formControlName="MobilePhnNo1"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.MobilePhnNo1.invalid }">
-                        <lib-uc-show-errors [control]="CompanyForm.controls.ContactName"
+                        <lib-uc-show-errors [control]="CompanyForm.controls.MobilePhnNo1"
                         [submit]="enjiForm.submitted"></lib-uc-show-errors>
                       </div>
                     </div>
@@ -176,7 +176,7 @@
                         [submit]="enjiForm.submitted"></lib-uc-show-errors>
                       </div>
                     </div> 
-                    <div class="form-group row">
+                    <div class="form-group row adins-required">
                       <label class="col-md-6 adInsLabel">Email </label>
                       <div class="col-md-6">
                         <input pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" type="text" class="form-control" formControlName="ContactEmail"
@@ -188,7 +188,7 @@
                 </div>
                 <!-- right -->
                 <div class="col-md-6">
-                  <div class="form-group row">
+                  <div class="form-group row adins-required">
                     <label class="col-md-6 adInsLabel">Position </label>
                     <div class="col-md-6">
                       <select class="form-control adInsInput full-width" style="width: auto" formControlName="MrJobPositionCode"
@@ -200,7 +200,7 @@
                       </select>
                     </div>
                   </div>
-                  <div class="form-group row">
+                  <div class="form-group row adins-required">
                     <label class="col-md-6 adInsLabel">Phone No (Fix Line) 1 </label>
                     <div class="col-md-6">
                       <div class="form-group row">
@@ -278,12 +278,9 @@
                 <button type="button" class="btn btn-raised btn-warning mr-1" (click)="cancel()" translate>
                   <i class="ft-x"></i> Cancel
                 </button>
-                <button type="submit" class="btn btn-raised btn-primary" >
+                <button type="submit" class="btn btn-raised btn-primary" (click)="cek()">
                   <i class="far fa-check-square"></i> Save
                 </button>
-                <!-- <button type="button" class="btn btn-raised btn-primary" (click)="test()">
-                  <i class="fa fa-check-square-o"></i> Test
-                </button> -->
               </div>
             </div>
           </form>

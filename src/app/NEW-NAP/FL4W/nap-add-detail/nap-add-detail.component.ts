@@ -50,7 +50,7 @@ export class NapAddDetailComponent implements OnInit {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
         this.mode = params["Mode"];
-        this.CheckMultiAsset();
+        // this.CheckMultiAsset();
       }
       if (params["WfTaskListId"] != null) {
         this.wfTaskListId = params["WfTaskListId"];
@@ -62,6 +62,7 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.ClaimTask();
     this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppFL4WMainInformation.json";
     this.NapObj.AppId = this.appId;
     this.http.post(AdInsConstant.GetAppById, this.NapObj).subscribe(
@@ -129,7 +130,7 @@ export class NapAddDetailComponent implements OnInit {
       this.http.post(AdInsConstant.SubmitNAP, this.NapObj).subscribe(
         (response) => {
           console.log(response);
-          this.router.navigate(["/Nap/ConsumerFinance/InputNap/Paging"], { queryParams: { BizTemplateCode: AdInsConstant.FL4W } })
+          this.router.navigate(["/Nap/FinanceLeasing/Paging"], { queryParams: { BizTemplateCode: AdInsConstant.FL4W } })
         },
         (error) => {
           console.log(error);
@@ -138,26 +139,26 @@ export class NapAddDetailComponent implements OnInit {
     }
   }
 
-  CheckMultiAsset() {
-    this.IsMultiAsset = false;
-    var appObj = { AppId: this.appId }
-    this.http.post(AdInsConstant.GetAppAssetListByAppId, appObj).subscribe(
-      (response) => {
-        this.ListAsset = response['ReturnObject'];
-        if (this.ListAsset != undefined && this.ListAsset != null) {
-          if (this.ListAsset.length > 1)
-            this.IsMultiAsset = true;
-          else
-            this.IsMultiAsset = false;
-        }
-        else
-          this.IsMultiAsset = false;
-      },
-      (error) => {
-        console.log(error);
-      }
-    )
-  }
+  // CheckMultiAsset() {
+  //   this.IsMultiAsset = false;
+  //   var appObj = { AppId: this.appId }
+  //   this.http.post(AdInsConstant.GetAppAssetListByAppId, appObj).subscribe(
+  //     (response) => {
+  //       this.ListAsset = response['ReturnObject'];
+  //       if (this.ListAsset != undefined && this.ListAsset != null) {
+  //         if (this.ListAsset.length > 1)
+  //           this.IsMultiAsset = true;
+  //         else
+  //           this.IsMultiAsset = false;
+  //       }
+  //       else
+  //         this.IsMultiAsset = false;
+  //     },
+  //     (error) => {
+  //       console.log(error);
+  //     }
+  //   )
+  // }
 
   ChangeTab(AppStep) {
     // console.log(AppStep);
@@ -190,7 +191,7 @@ export class NapAddDetailComponent implements OnInit {
         this.AppStepIndex = this.AppStep[AdInsConstant.AppStepTC];
         break;
       case "SUBMIT":
-        this.router.navigate(["Nap/FinanceLeasing/Paging"]);
+        this.router.navigate(["Nap/FinanceLeasing/Paging?BizTemplateCode=FL4W"], { queryParams: { BizTemplateCode: AdInsConstant.FL4W } });
         break;
 
       default:
@@ -199,6 +200,7 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   Submit() {
+    this.ClaimTask();
     if (this.mode == AdInsConstant.ModeResultHandling) {
       var obj = {
         ReturnHandlingDId: this.ResponseReturnInfoObj.ReturnHandlingDId,
@@ -216,5 +218,18 @@ export class NapAddDetailComponent implements OnInit {
         }
       )
     }
+  }
+
+  ClaimTask(){
+    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    var wfClaimObj = new AppObj();
+    wfClaimObj.AppId = this.appId;
+    wfClaimObj.Username = currentUserContext["UserName"];
+    wfClaimObj.WfTaskListId = this.wfTaskListId;
+
+    this.http.post(AdInsConstant.ClaimTaskNap, wfClaimObj).subscribe(
+      () => {
+    
+      });
   }
 }

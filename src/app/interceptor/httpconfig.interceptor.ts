@@ -111,14 +111,22 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                 if (event instanceof HttpResponse) {
                     //Ini Error kalau sudah masuk sampai ke Back End
                     if (event.body.StatusCode != undefined) {
-                        if (event.body.StatusCode != '200' && event.body.StatusCode != '999' && event.body.StatusCode != "001") {
-                            let data = {};
-                            data = {
-                                reason: event.body.Message ? event.body.Message : '',
-                                status: event.body.StatusCode
-                            };
-                            this.toastr.error(data['reason'], 'Status: ' + data['status'], { "tapToDismiss": true });
-                            console.log(event.body);
+                        if (event.body.StatusCode != '200' && event.body.StatusCode != "001") {
+                            
+                            if (event.body.StatusCode == '400') {
+                                for (var i = 0; i < event.body.ErrorMessages.length; i++) {
+                                    this.toastr.error(event.body.ErrorMessages[i].Message, 'Status: ' + event.body.StatusCode, { "tapToDismiss": true });
+                                }
+                            }else {
+                                let data = {};
+                                data = {
+                                    reason: event.body.Message ? event.body.Message : '',
+                                    status: event.body.StatusCode
+                                };
+                                this.toastr.error(data['reason'], 'Status: ' + data['status'], { "tapToDismiss": true });
+                                console.log(event.body);
+                            }
+                            
                             return;
                         }
                     }
@@ -139,9 +147,9 @@ export class HttpConfigInterceptor implements HttpInterceptor {
             //Ini Error kalau tidak sampai ke Back End
             catchError((error: HttpErrorResponse) => {
                 if (error.error != null) {
-                    if (error.error.errorMessages != null) {
-                        for (var i = 0; i < error.error.errorMessages.length; i++) {
-                            this.toastr.error(error.error.errorMessages[i].message, 'Status: ' + error.status, { "tapToDismiss": true });
+                    if (error.error.ErrorMessages != null) {
+                        for (var i = 0; i < error.error.ErrorMessages.length; i++) {
+                            this.toastr.error(error.error.ErrorMessages[i].Message, 'Status: ' + error.status, { "tapToDismiss": true });
                         }
                     } else {
                         this.toastr.error(error.error.Message, 'Status: ' + error.status, { "tapToDismiss": true });

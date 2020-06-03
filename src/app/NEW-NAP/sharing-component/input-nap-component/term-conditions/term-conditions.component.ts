@@ -14,8 +14,8 @@ export class TermConditionsComponent implements OnInit {
   AppTcList: any = [];
   listTempTCList: any = [];
 
-  @Output() OutputValueIsCheckAll : EventEmitter<any> = new EventEmitter();
-  @Input() IsCheckedAll : boolean = true;
+  @Output() OutputValueIsCheckAll: EventEmitter<any> = new EventEmitter();
+  @Input() IsCheckedAll: boolean = true;
   @Input() AppId: number;
   @Input() parentForm: FormGroup;
   @Input() enjiForm: NgForm;
@@ -24,7 +24,6 @@ export class TermConditionsComponent implements OnInit {
   constructor(private http: HttpClient, private fb: FormBuilder) { }
 
   ngOnInit() {
-    console.log(this.IsCheckedAll);
     this.parentForm.addControl(this.identifier, this.fb.array([]));
     var listTC = this.parentForm.get(this.identifier) as FormArray;
     var appTcObj = {
@@ -32,6 +31,7 @@ export class TermConditionsComponent implements OnInit {
     }
     this.http.post(AdInsConstant.GetListTCbyAppId, appTcObj).subscribe(
       (response) => {
+        console.log(response);
         this.AppTcList = response["AppTcs"];
         if (this.AppTcList != null && this.AppTcList["length"] != 0) {
           for (let i = 0; i < this.AppTcList["length"]; i++) {
@@ -47,30 +47,82 @@ export class TermConditionsComponent implements OnInit {
               PromisedDt: this.AppTcList[i].PromisedDt != null ? formatDate(this.AppTcList[i].PromisedDt, 'yyyy-MM-dd', 'en-US') : "",
               CheckedDt: this.AppTcList[i].CheckedDt != null ? formatDate(this.AppTcList[i].CheckedDt, 'yyyy-MM-dd', 'en-US') : "",
               Notes: this.AppTcList[i].Notes,
-              IsAdditional : this.AppTcList[i].IsAdditional,
-              RowVersion : this.AppTcList[i].RowVersion
+              IsAdditional: this.AppTcList[i].IsAdditional,
+              RowVersion: this.AppTcList[i].RowVersion
             }) as FormGroup;
 
-            if (this.AppTcList[i].IsMandatory == true) {
-              TCDetail.controls.PromisedDt.setValidators([Validators.required]);
-            }
-            if (this.AppTcList[i].IsChecked == false && this.AppTcList[i].IsMandatory == true) {
-              this.IsCheckedAll = false;
-            }
-            if (this.AppTcList[i].IsChecked == false) {
-              TCDetail.controls.ExpiredDt.disable();
-            } else {
-              TCDetail.controls.PromisedDt.disable();
-            }
+            // if (this.AppTcList[i].IsMandatory == true) {
+            //   TCDetail.controls.PromisedDt.setValidators([Validators.required]);
+            // }
+            // if (this.AppTcList[i].IsChecked == false && this.AppTcList[i].IsMandatory == true) {
+            //   this.IsCheckedAll = false;
+            // }
+            // if (this.AppTcList[i].IsChecked == false) {
+            //   TCDetail.controls.ExpiredDt.disable();
+            // } else {
+            //   TCDetail.controls.PromisedDt.disable();
+            // }
             listTC.push(TCDetail);
             this.OutputValueIsCheckAll.emit(this.IsCheckedAll);
           }
+          this.ReconstructForm();
+          console.log(this.parentForm);
         }
       },
       (error) => {
         console.log(error);
       }
     );
+  }
+
+  totalCheckAll: number =0;
+  ReconstructForm() {
+    console.log("ReconstructForm");
+    var listTC = this.parentForm.get(this.identifier) as FormArray
+    for (let i = 0; i < listTC.length; i++) {
+      var item = listTC.at(i);
+      console.log(item);
+      var isMandatory: Boolean = item.get("IsMandatory").value;
+      var isChecked: Boolean = item.get("IsChecked").value;
+
+      if (isMandatory) {
+        if (isChecked) {
+          item.patchValue({
+            PromisedDt: null
+          });
+          item.get("ExpiredDt").enable();
+          item.get("PromisedDt").disable();
+          item.get("ExpiredDt").setValidators([Validators.required]);
+          this.totalCheckAll++;
+        } else {
+          item.patchValue({
+            ExpiredDt: null
+          });
+          item.get("ExpiredDt").disable();
+          item.get("PromisedDt").enable();
+          item.get("PromisedDt").setValidators([Validators.required]);
+        }
+
+      } else {
+        if (isChecked) {
+          item.patchValue({
+            PromisedDt: null
+          });
+          item.get("ExpiredDt").enable();
+          item.get("PromisedDt").disable();
+          item.get("ExpiredDt").setValidators([Validators.required]);
+        } else {
+          item.patchValue({
+            ExpiredDt: null
+          });
+          item.get("ExpiredDt").disable();
+          item.get("PromisedDt").enable();
+        }
+      }
+      console.log(item.get("ExpiredDt"));
+
+    }
+    listTC.updateValueAndValidity();
   }
 
   changeValidation(arr) {
