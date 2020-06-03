@@ -126,8 +126,8 @@
               </app-referantor-data-FL4W>
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
-              <app-application-data-refinancing *ngIf="AppStepIndex == 4" [AppId]="appId"
-                (outputTab)="NextStep('ASSET')"></app-application-data-refinancing>
+              <app-application-data-FL4W *ngIf="AppStepIndex == 4" [AppId]="appId"
+                (outputTab)="NextStep('ASSET')"></app-application-data-FL4W>
             </div>
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
               <app-multi-asset-data *ngIf="AppStepIndex == 5" [AppId]="appId" (OutputMultiAsset)="NextStep('INS')">
