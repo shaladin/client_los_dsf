@@ -70,7 +70,6 @@ export class AdInsConstant {
   public static AddApp = environment.losUrl + "/Application/AddApp";
   public static EditApp = "/Application/EditApp";
   public static GetAppById = environment.losUrl + "/Application/GetAppById";
-  public static GetAppByIds = environment.losUrl + "/Application/GetAppById";
   public static GetAppDetailForTabAddEditAppById = environment.losUrl + "/Application/GetAppDetailForTabAddEditAppById";
   public static GetAppDetailForAppTabById = environment.losUrl + "/Application/GetAppDetailForAppTabById";
   public static AddAppFromLead = environment.losUrl + "/Application/AddAppFromLead";

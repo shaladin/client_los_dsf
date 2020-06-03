@@ -24,7 +24,6 @@ export class TermConditionsComponent implements OnInit {
   constructor(private http: HttpClient, private fb: FormBuilder) { }
 
   ngOnInit() {
-    console.log(this.IsCheckedAll);
     this.parentForm.addControl(this.identifier, this.fb.array([]));
     var listTC = this.parentForm.get(this.identifier) as FormArray;
     var appTcObj = {
