@@ -22,6 +22,10 @@ export class ResponseCalculateObj {
     RefundInterestAmt: number;
     TotalDisbAmt: number;
     ApvAmt: number;
+    TotalLifeInsCustAmt: number;
+    LifeInsCptlzAmt: number;
+    DownPaymentGrossAmt: number;
+    DownPaymentNettAmt: number;
 
     constructor() {
     }
