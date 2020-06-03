@@ -62,6 +62,7 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.ClaimTask();
     this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppFL4WMainInformation.json";
     this.NapObj.AppId = this.appId;
     this.http.post(AdInsConstant.GetAppById, this.NapObj).subscribe(
@@ -129,7 +130,7 @@ export class NapAddDetailComponent implements OnInit {
       this.http.post(AdInsConstant.SubmitNAP, this.NapObj).subscribe(
         (response) => {
           console.log(response);
-          this.router.navigate(["/Nap/ConsumerFinance/InputNap/Paging"], { queryParams: { BizTemplateCode: AdInsConstant.FL4W } })
+          this.router.navigate(["/Nap/FinanceLeasing/Paging"], { queryParams: { BizTemplateCode: AdInsConstant.FL4W } })
         },
         (error) => {
           console.log(error);
@@ -190,7 +191,7 @@ export class NapAddDetailComponent implements OnInit {
         this.AppStepIndex = this.AppStep[AdInsConstant.AppStepTC];
         break;
       case "SUBMIT":
-        this.router.navigate(["Nap/FinanceLeasing/Paging"]);
+        this.router.navigate(["Nap/FinanceLeasing/Paging?BizTemplateCode=FL4W"], { queryParams: { BizTemplateCode: AdInsConstant.FL4W } });
         break;
 
       default:
@@ -199,6 +200,7 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   Submit() {
+    this.ClaimTask();
     if (this.mode == AdInsConstant.ModeResultHandling) {
       var obj = {
         ReturnHandlingDId: this.ResponseReturnInfoObj.ReturnHandlingDId,
@@ -216,5 +218,18 @@ export class NapAddDetailComponent implements OnInit {
         }
       )
     }
+  }
+
+  ClaimTask(){
+    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    var wfClaimObj = new AppObj();
+    wfClaimObj.AppId = this.appId;
+    wfClaimObj.Username = currentUserContext["UserName"];
+    wfClaimObj.WfTaskListId = this.wfTaskListId;
+
+    this.http.post(AdInsConstant.ClaimTaskNap, wfClaimObj).subscribe(
+      () => {
+    
+      });
   }
 }

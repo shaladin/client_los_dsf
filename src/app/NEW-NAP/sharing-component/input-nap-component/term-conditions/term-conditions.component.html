@@ -16,8 +16,7 @@
         <td class="text-left">{{parentForm.controls[identifier].controls[i].controls.TcName.value}}</td>
         <td class="text-left">{{parentForm.controls[identifier].controls[i].controls.PriorTo.value}}</td>
         <td class="text-left">{{parentForm.controls[identifier].controls[i].controls.IsMandatory.value}}</td>
-        <td class="text-left"><input type="checkbox" class="border-primary" (change)="changeValidation(i)"
-            formControlName="IsChecked"></td>
+        <td class="text-left"><input type="checkbox" class="border-primary" (change)="ReconstructForm()" formControlName="IsChecked"></td>
         <td><input type="date" class="form-control" formControlName="PromisedDt"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier].controls[i].controls.PromisedDt.invalid}">
           <lib-uc-show-errors [control]="parentForm.controls[identifier].controls[i].controls.PromisedDt" [submit]="enjiForm.submitted">

@@ -3,7 +3,7 @@
     <div class="card">
       <div class="card-body">
         <div class="px-0">
-          <form class="form form-horizontal" [formGroup]="LifeInsForm" #enjiForm="ngForm" (ngSubmit)="LifeInsForm.valid && Save()">
+          <form class="form form-horizontal" [formGroup]="LifeInsForm" #enjiForm="ngForm" (ngSubmit)="LifeInsForm.valid && SaveForm()">
             <div class="form-body">
               <lib-ucSubsection [id]="'lifeinsInfoId'" [title]="'Life Insurance Info'" [panel]="'lifeinsInfo'">
               </lib-ucSubsection>

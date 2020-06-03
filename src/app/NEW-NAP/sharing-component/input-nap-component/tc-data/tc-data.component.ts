@@ -109,20 +109,26 @@ export class TcDataComponent implements OnInit {
           ExpiredDt: null
         });
         item.get("ExpiredDt").disable();
+        item.get("ExpiredDt").clearValidators();
+        item.get("ExpiredDt").updateValueAndValidity();
         item.get("PromisedDt").enable();
         item.get("PromisedDt").setValidators([Validators.required]);
+        item.get("PromisedDt").updateValueAndValidity();
       }
       else if (isChecked && isMandatory) {
         item.patchValue({
           PromisedDt: null
         });
         item.get("PromisedDt").disable();
+        item.get("PromisedDt").clearValidators();
+        item.get("PromisedDt").updateValueAndValidity();
         item.get("ExpiredDt").enable();
         item.get("ExpiredDt").setValidators([Validators.required]);
+        item.get("ExpiredDt").updateValueAndValidity();
       } else if (isChecked && !isMandatory) {
         item.get("PromisedDt").enable();
         item.get("ExpiredDt").enable();
-        item.get("ExpiredDt").setValidators([Validators.required]);
+        // item.get("ExpiredDt").setValidators([Validators.required]);
       }
       else {
         item.patchValue({
@@ -137,6 +143,8 @@ export class TcDataComponent implements OnInit {
         item.get("ExpiredDt").clearValidators();
       }
     }
+
+    fa_AppTc.updateValueAndValidity();
   }
 
   SaveData() {
@@ -144,21 +152,26 @@ export class TcDataComponent implements OnInit {
     var fa_AppTc = this.AppTcForm.get("AppTc") as FormArray
     for (let i = 0; i < fa_AppTc.length; i++) {
       var item = fa_AppTc.at(i);
-      var prmsDt;
       var expDt = new Date(item.get("ExpiredDt").value);
-      if (item.get("PromisedDt").value == null) {
-        prmsDt = null
+      var prmsDt = new Date(item.get("PromisedDt").value);
+      var expDtForm = item.get("ExpiredDt").value;
+      var prmsDtForm = item.get("PromisedDt").value;
+      console.log("expDtForm : " + expDtForm + ", prmsDtForm : " + prmsDtForm);
+      if(item.get("IsChecked").value){
+        if(expDtForm != null){
+          if(expDt < businessDt){
+            this.toastr.errorMessage("Expired Date for " + item.get("TcName").value + " can't be lower than Business Date");
+            return;
+          }
+        }
       }
-      else {
-        prmsDt = new Date(item.get("PromisedDt").value);
-      }
-      if (item.get("IsChecked").value && expDt < businessDt) {
-        this.toastr.errorMessage("Expired Date for " + item.get("TcName").value + " can't be lower than Business Date");
-        return;
-      }
-      if (item.get("IsChecked").value == false && prmsDt != null && prmsDt < businessDt) {
-        this.toastr.errorMessage("Promise Date for " + item.get("TcName").value + " can't be lower than Business Date");
-        return;
+      if (item.get("IsChecked").value == false) {
+        if(prmsDtForm != null){
+          if(prmsDt < businessDt){
+            this.toastr.errorMessage("Promise Date for " + item.get("TcName").value + " can't be lower than Business Date");
+            return;
+          }
+        }
       }
       this.listAppTcObj[i].AppId = this.AppId;
       this.listAppTcObj[i].IsChecked = item.get("IsChecked").value;

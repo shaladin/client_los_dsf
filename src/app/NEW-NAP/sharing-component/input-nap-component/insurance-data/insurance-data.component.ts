@@ -192,6 +192,8 @@ export class InsuranceDataComponent implements OnInit {
   }
 
   setSaveObj(insuredBy){
+    var user = JSON.parse(localStorage.getItem("UserAccess"));
+
     this.saveObj = new InsuranceDataObj();
     this.saveObj.AppId = this.appId;
     this.saveObj.AppInsuranceObj.AppId = this.appId;
@@ -239,9 +241,9 @@ export class InsuranceDataComponent implements OnInit {
       this.saveObj.AppInsObjObj.TotalInscoAddPremiAmt = this.InsuranceDataForm.controls.TotalInscoAddPremiAmt.value;
       this.saveObj.AppInsObjObj.TotalCustDiscAmt = this.InsuranceDataForm.controls.TotalCustDiscAmt.value;
       this.saveObj.AppInsObjObj.TotalInsCustAmt = this.saveObj.AppInsObjObj.TotalCustMainPremiAmt + this.saveObj.AppInsObjObj.TotalCustAddPremiAmt + this.saveObj.AppInsObjObj.CustAdminFeeAmt - this.saveObj.AppInsObjObj.TotalCustDiscAmt;
-      this.saveObj.AppInsObjObj.TotalInsInscoAmt = this.saveObj.AppInsObjObj.TotalInscoMainPremiAmt + this.saveObj.AppInsObjObj.TotalInscoAddPremiAmt + this.saveObj.AppInsObjObj.InscoAdminFeeAmt - this.saveObj.AppInsObjObj.TotalInscoDiscAmt;     
-      this.saveObj.AppInsObjObj.StartDt = new Date(localStorage.getItem("BusinessDateRaw"));
-      this.saveObj.AppInsObjObj.EndDt = new Date(localStorage.getItem("BusinessDateRaw"));   
+      this.saveObj.AppInsObjObj.TotalInsInscoAmt = this.saveObj.AppInsObjObj.TotalInscoMainPremiAmt + this.saveObj.AppInsObjObj.TotalInscoAddPremiAmt + this.saveObj.AppInsObjObj.InscoAdminFeeAmt - this.saveObj.AppInsObjObj.TotalInscoDiscAmt;  
+      this.saveObj.AppInsObjObj.StartDt = this.setDateWithoutTimezone(localStorage.getItem("BusinessDateRaw"));
+      this.saveObj.AppInsObjObj.EndDt = this.setDateWithoutTimezone(localStorage.getItem("BusinessDateRaw"));   
       this.saveObj.AppInsObjObj.EndDt.setMonth(this.saveObj.AppInsObjObj.EndDt.getMonth() + this.saveObj.AppInsObjObj.InsLength);
       this.saveObj.AppInsObjObj.PayPeriodToInsco = this.InsuranceDataForm.controls.PayPeriodToInsco.value;
 
@@ -253,9 +255,9 @@ export class InsuranceDataComponent implements OnInit {
         insCoverage.Tenor = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].Tenor.value;
         insCoverage.MrMainCvgTypeCode = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].MrMainCvgTypeCode.value;
 
-        insCoverage.StartDt = new Date(localStorage.getItem("BusinessDateRaw"));
+        insCoverage.StartDt = this.setDateWithoutTimezone(localStorage.getItem("BusinessDateRaw"));
         insCoverage.StartDt.setMonth(insCoverage.StartDt.getMonth() + addedTenor);
-        insCoverage.EndDt = new Date(localStorage.getItem("BusinessDateRaw"));
+        insCoverage.EndDt = this.setDateWithoutTimezone(localStorage.getItem("BusinessDateRaw"));
         insCoverage.EndDt.setMonth(insCoverage.EndDt.getMonth() + addedTenor + insCoverage.Tenor);
 
         addedTenor += insCoverage.Tenor;
@@ -329,16 +331,13 @@ export class InsuranceDataComponent implements OnInit {
       this.saveObj.AppInsObjObj.TotalCustDiscAmt = this.InsuranceDataForm.controls.TotalCustDiscAmt.value;
       this.saveObj.AppInsObjObj.TotalInsCustAmt = this.saveObj.AppInsObjObj.TotalCustMainPremiAmt + this.saveObj.AppInsObjObj.TotalCustAddPremiAmt + this.saveObj.AppInsObjObj.CustAdminFeeAmt - this.saveObj.AppInsObjObj.TotalCustDiscAmt;
       this.saveObj.AppInsObjObj.TotalInsInscoAmt = this.saveObj.AppInsObjObj.TotalInscoMainPremiAmt + this.saveObj.AppInsObjObj.TotalInscoAddPremiAmt + this.saveObj.AppInsObjObj.InscoAdminFeeAmt - this.saveObj.AppInsObjObj.TotalInscoDiscAmt;     
-      this.saveObj.AppInsObjObj.StartDt = new Date(localStorage.getItem("BusinessDateRaw"));
-      this.saveObj.AppInsObjObj.EndDt = new Date(localStorage.getItem("BusinessDateRaw"));   
-      this.saveObj.AppInsObjObj.EndDt.setMonth(this.saveObj.AppInsObjObj.EndDt.getMonth() + this.saveObj.AppInsObjObj.InsLength);
       this.saveObj.AppInsObjObj.CustInscoBranchName = this.InsuranceDataForm.controls.CustInscoBranchName.value;
       this.saveObj.AppInsObjObj.InsPolicyNo = this.InsuranceDataForm.controls.InsPolicyNo.value;
       this.saveObj.AppInsObjObj.InsPolicyName = this.InsuranceDataForm.controls.InsPolicyName.value;
       this.saveObj.AppInsObjObj.CustCvgAmt = this.InsuranceDataForm.controls.CustCvgAmt.value;
       this.saveObj.AppInsObjObj.CustCoverStartDt = this.InsuranceDataForm.controls.CustCoverStartDt.value;
-      this.saveObj.AppInsObjObj.StartDt = new Date(this.InsuranceDataForm.controls.EndDt.value);
-      this.saveObj.AppInsObjObj.EndDt = new Date(this.InsuranceDataForm.controls.EndDt.value);
+      this.saveObj.AppInsObjObj.StartDt = this.setDateWithoutTimezone(this.InsuranceDataForm.controls.EndDt.value);
+      this.saveObj.AppInsObjObj.EndDt = this.setDateWithoutTimezone(this.InsuranceDataForm.controls.EndDt.value);
       this.saveObj.AppInsObjObj.EndDt.setMonth(this.saveObj.AppInsObjObj.EndDt.getMonth() + this.saveObj.AppInsObjObj.InsLength);
       this.saveObj.AppInsObjObj.CustNotes = this.InsuranceDataForm.controls.CustNotes.value;
       this.saveObj.AppInsObjObj.PayPeriodToInsco = this.InsuranceDataForm.controls.PayPeriodToInsco.value;
@@ -351,9 +350,9 @@ export class InsuranceDataComponent implements OnInit {
         insCoverage.Tenor = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].Tenor.value;
         insCoverage.MrMainCvgTypeCode = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].MrMainCvgTypeCode.value;
 
-        insCoverage.StartDt = new Date(this.saveObj.AppInsObjObj.EndDt);
+        insCoverage.StartDt = this.setDateWithoutTimezone(this.saveObj.AppInsObjObj.EndDt);
         insCoverage.StartDt.setMonth(insCoverage.StartDt.getMonth() + addedTenor);
-        insCoverage.EndDt = new Date(this.saveObj.AppInsObjObj.EndDt);
+        insCoverage.EndDt = this.setDateWithoutTimezone(this.saveObj.AppInsObjObj.EndDt);
         insCoverage.EndDt.setMonth(insCoverage.EndDt.getMonth() + addedTenor + insCoverage.Tenor);
 
         addedTenor += insCoverage.Tenor;
@@ -1096,6 +1095,13 @@ export class InsuranceDataComponent implements OnInit {
       this.InsuranceDataForm.controls.PayPeriodToInsco.setValidators(Validators.required);
       this.InsuranceDataForm.controls.PayPeriodToInsco.updateValueAndValidity();    
     }
+  }
+
+  setDateWithoutTimezone(inputDate){
+    var date = new Date(inputDate);
+    date.setHours(0,0,0,0);
+    var userTimezoneOffset = date.getTimezoneOffset() * 60000;
+    return new Date(date.getTime() - userTimezoneOffset);
   }
 
   async getInsuranceData(){
