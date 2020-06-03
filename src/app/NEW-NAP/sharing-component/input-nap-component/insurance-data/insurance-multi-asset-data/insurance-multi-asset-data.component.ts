@@ -135,6 +135,9 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         }
         this.CapAmt = this.TotalPremiumToCust;
       
+        this.AppInsForm.patchValue({
+          PaidAmtByCust: 0
+        })
       },
       (error) => {
         console.log(error);
@@ -161,12 +164,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     this.PageState = 'EditInsurance';
   }
 
-  SubmitForm2(){
-    if (this.CapAmt < 0) this.toastr.errorMessage('Paid Amount by Cust cannot be greater than Total Premium to Customer!!!');
-    else this.outputTab.emit();
-  }
-
-  SaveForm(){
+  SubmitForm(){
     if (this.CapAmt < 0) this.toastr.errorMessage('Paid Amount by Cust cannot be greater than Total Premium to Customer!!!');
     else this.outputTab.emit();
   }

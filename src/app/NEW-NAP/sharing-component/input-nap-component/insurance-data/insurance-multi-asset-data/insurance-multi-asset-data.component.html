@@ -3,7 +3,7 @@
     <div class="card-body">
       <div class="px-3">
         <form class="form form-horizontal" [formGroup]="InsuranceDataForm"
-          (ngSubmit)="InsuranceDataForm.valid && SubmitForm()" #enjiForm="ngForm">
+          (ngSubmit)="InsuranceDataForm.valid" #enjiForm="ngForm">
           <div [hidden]="PageState != 'Paging'" id="assetData">
             <lib-ucSubsection [id]="'assetDataId'" [title]="'Loan Object'" [panel]="'assetData'">
             </lib-ucSubsection>
@@ -27,7 +27,7 @@
           <br>
         </form>
         <form [hidden]="PageState != 'Paging'" class="form form-horizontal" [formGroup]="InsuranceDataForm"
-          (ngSubmit)="AppInsForm.valid && SubmitForm2()">
+          (ngSubmit)="AppInsForm.valid && SubmitForm()">
           <div class="form-body">
             <div class="row">
               <label class="col-md-2 adins-label" translate>Total Premium to Customer</label>
