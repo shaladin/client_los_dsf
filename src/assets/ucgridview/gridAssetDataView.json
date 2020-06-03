@@ -10,32 +10,50 @@
         {
             "type": "label",
             "position": "center",
-            "label": "Supplier Branch",
-            "name": "SupplName"
+            "label": "Insured By",
+            "name": "InsuredBy"
         },
         {
             "type": "label",
             "position": "center",
-            "label": "Serial No 1",
-            "name": "SerialNo1"
+            "label": "Paid By",
+            "name": "PaidBy"
         },
         {
             "type": "label",
             "position": "center",
-            "label": "Serial No 2",
-            "name": "SerialNo2"
+            "label": "Insurance Company",
+            "name": "InscoName"
         },
         {
             "type": "label",
             "position": "center",
-            "label": "Serial No 3",
-            "name": "SerialNo3"
+            "label": "Cover Period",
+            "name": "CoverPeriod"
         },
         {
             "type": "label",
             "position": "center",
-            "label": "Serial No 4",
-            "name": "SerialNo4"
+            "label": "Insurance Length",
+            "name": "InsLength"
+        },
+        {
+            "type": "label",
+            "position": "right",
+            "label": "Main Premi",
+            "name": "MainPremi"
+        },
+        {
+            "type": "label",
+            "position": "right",
+            "label": "Additional Premi",
+            "name": "AddPremi"
+        },
+        {
+            "type": "label",
+            "position": "right",
+            "label": "Fee",
+            "name": "Fee"
         },
         {
             "type": "label",
@@ -46,33 +64,48 @@
     "bodyList": [
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "FullAssetName"
         },
         {
             "type": "text",
-            "position": "center",
-            "property": "SupplName"
+            "position": "left",
+            "property": "InsuredBy"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "PaidBy"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "InscoName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CoverPeriod"
         },
         {
             "type": "text",
             "position": "center",
-            "property": "SerialNo1"
+            "property": "InsLength"
         },
         {
             "type": "text",
-            "position": "center",
-            "property": "SerialNo2"
+            "position": "right",
+            "property": "MainPremi"
         },
         {
             "type": "text",
-            "position": "center",
-            "property": "SerialNo3"
+            "position": "right",
+            "property": "AddPremi"
         },
         {
             "type": "text",
-            "position": "center",
-            "property": "SerialNo4"
+            "position": "right",
+            "property": "Fee"
         },
         {
             "type": "action",

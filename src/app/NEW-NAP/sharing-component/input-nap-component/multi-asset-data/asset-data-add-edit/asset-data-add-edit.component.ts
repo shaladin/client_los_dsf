@@ -663,7 +663,7 @@ copyToLocationAddr() {
     this.allAssetDataObj.AppAssetObj.IsInsurance = true;
 
     this.allAssetDataObj.AppCollateralObj.AppId = this.AppId;
-    this.allAssetDataObj.AppCollateralObj.CollateralSeqNo = "1";
+    this.allAssetDataObj.AppCollateralObj.CollateralSeqNo = 1;
     this.allAssetDataObj.AppCollateralObj.FullAssetCode = this.AssetDataForm.controls["FullAssetCode"].value;
     this.allAssetDataObj.AppCollateralObj.FullAssetName = this.AssetDataForm.controls["FullAssetName"].value;
     this.allAssetDataObj.AppCollateralObj.MrCollateralConditionCode = this.AssetDataForm.controls["MrAssetConditionCode"].value;

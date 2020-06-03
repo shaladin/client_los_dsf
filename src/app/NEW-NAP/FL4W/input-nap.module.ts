@@ -78,6 +78,7 @@ export const customCurrencyMaskConfig = {
     NapTabComponentModule,
     ViewSharingComponentModule,
     MatTabsModule,
+    ViewSharingComponentModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
   ],
   declarations: [
