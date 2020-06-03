@@ -56,11 +56,48 @@ addColl() {
 event(ev){
   console.log("test");
   console.log(ev);
-  this.AppAssetId = ev.RowObj.AppAssetId;
-  // this.AppId = ev.RowObj.AppId;
-  this.editAsset = ev.RowObj.editAsset;
-  this.outputValue.emit({ mode: 'editAsset', AppAssetId: this.AppAssetId });
-  console.log("CHECK EVENT");
+  if(ev.Key == "edit")
+  {
+    this.AppAssetId = ev.RowObj.AppAssetId;
+    // this.AppId = ev.RowObj.AppId;
+    this.editAsset = ev.RowObj.editAsset;
+    this.outputValue.emit({ mode: 'editAsset', AppAssetId: this.AppAssetId });
+    console.log("CHECK EVENT");
+  }
+
+  if(ev.Key == "delete")
+  {
+    if (confirm("Are you sure to delete this record?")) {
+      var appAssetObj = new AppAssetObj();
+      appAssetObj.AppAssetId = ev.RowObj.AppAssetId;
+      appAssetObj.AppId = ev.RowObj.AppId;
+      this.http.post(AdInsConstant.DeleteAppAsset, appAssetObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          this.listAppAssetObj = response["ReturnAsset"];
+
+          var DetailForGridAsset ={
+            Data: response["ReturnAsset"],
+            Count: "0"
+          }
+
+          this.gridAssetDataObj.resultData = DetailForGridAsset;
+
+          this.listAppCollateralObj = response["ReturnCollateral"];
+
+          var DetailForGridCollateral ={
+            Data: response["ReturnCollateral"],
+            Count: "0"
+          }
+
+          this.gridAppCollateralObj.resultData = DetailForGridCollateral;
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+  }
 }
 
 eventColl(ev){
@@ -92,7 +129,6 @@ eventColl(ev){
           }
 
           this.gridAppCollateralObj.resultData = DetailForGridCollateral;
-
         },
         (error) => {
           console.log(error);
@@ -106,6 +142,7 @@ eventColl(ev){
     console.log("AppId: " + this.AppId);
     this.gridAssetDataObj = new InputGridObj();
     this.gridAssetDataObj.pagingJson = "./assets/ucgridview/gridAssetData.json";
+    this.gridAssetDataObj.deleteUrl = AdInsConstant.DeleteAppAsset;
     
     this.appAssetObj = new AppAssetObj();
     // this.appAssetObj.AppAssetId = "-";
@@ -144,6 +181,37 @@ eventColl(ev){
           }
 
         this.gridAppCollateralObj.resultData = DetailForGridCollateral;
+
+        console.log("abc")
+        console.log(this.gridAppCollateralObj.resultData.Data.length)
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  getGridCollateral(){
+    this.gridAppCollateralObj = new InputGridObj();
+    this.gridAppCollateralObj.pagingJson = "./assets/ucgridview/gridAppCollateral.json";
+    this.gridAppCollateralObj.deleteUrl = AdInsConstant.DeleteAppCollateral;
+    
+    this.appCollateralObj = new AppCollateralObj();
+    // this.appCollateralObj.AppCollateralId = "-";
+    this.appCollateralObj.AppId = this.AppId;
+    this.http.post(this.getListAppCollateral, this.appCollateralObj).subscribe(
+      (response) => {
+          this.listAppCollateralObj = response["ReturnObject"];
+
+          var DetailForGridCollateral ={
+            Data: response["ReturnObject"],
+            Count: "0"
+          }
+
+        this.gridAppCollateralObj.resultData = DetailForGridCollateral;
+
+        console.log("abc")
+        console.log(this.gridAppCollateralObj.resultData.Data.length)
       },
       (error) => {
         console.log(error);
@@ -156,7 +224,15 @@ eventColl(ev){
   }
 
   next(){
-    this.outputValue.emit({mode: 'submit'});
+    if(this.gridAppCollateralObj.resultData.Data.length < 1)
+    {
+      this.toastr.errorMessage("Asset minimum is 1");
+      return;
+    }
+    else
+    {
+      this.outputValue.emit({mode: 'submit'});
+    }
   }
 
   // deleteItem(custAddrObj: any) {
