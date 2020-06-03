@@ -38,7 +38,7 @@ export class TabReferantorComponent implements OnInit {
       RowVersion: ""
     }
 
-    await this.http.post(environment.losUrl + AdInsConstant.GetAppReferantorByAppId, obj).toPromise().then(
+    await this.http.post(AdInsConstant.GetAppReferantorByAppId, obj).toPromise().then(
       (response) => {
         console.log(response);
         this.existData = true;

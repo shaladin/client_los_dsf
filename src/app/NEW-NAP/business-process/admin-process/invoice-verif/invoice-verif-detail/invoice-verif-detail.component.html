@@ -7,11 +7,10 @@
         <form class="form form-horizontal" [formGroup]="InvoiceForm" #enjiForm="ngForm">
           <lib-ucSubsection [id]="'ListOfInvoiceId'" [title]="'List Of Invoice'" [panel]="'ListOfInvoice'">
           </lib-ucSubsection>
-          <div class="form-body" id="ListOfInvoice">
+          <div class="form-body" id="ListOfInvoice" formArrayName="Invoices">
             <table class="table table-responsive-md text-center table-hover">
               <thead>
                 <tr class="table-header">
-                  <th></th>
                   <th><span translate class="thead-header text-left">No</span></th>
                   <th><span translate class="thead-header text-right">Invoice No</span></th>
                   <th><span translate class="thead-header text-right">Customer Factoring</span></th>
@@ -22,11 +21,12 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of listInvoice ;let i = index">
-                  <td class="text-left">{{i + 1}}</td>
-                  <td class="text-right">{{item.InvoiceNo}}</td>
-                  <td class="text-right">{{item.CustName}}</td>
-                  <td>{{item.InvoiceAmt | number}}</td>
+                <tr [formGroupName]="i" *ngFor="let item of InvoiceForm.controls['Invoices'].controls; let i = index">
+                  <td class="text-center">{{i + 1}}</td>
+                  <td class="text-center">{{InvoiceForm.controls["Invoices"].controls[i].controls.InvoiceNo.value}}</td>
+                  <td class="text-left">{{InvoiceForm.controls["Invoices"].controls[i].controls.CustName.value}}</td>
+                  <td class="text-right">{{InvoiceForm.controls["Invoices"].controls[i].controls.InvoiceAmt.value | number}}</td>
+                  <td class="text-center">{{InvoiceForm.controls["Invoices"].controls[i].controls.InvoiceDt.value | date : 'dd-MMM-yyyy' }}</td>
                   <td><select class="form-control adInsInput" style="width: auto" formControlName="Verification">
                       <option *ngFor="let sr of listVerificationStatus" value="{{sr.Key}}">
                         {{sr.Value}}</option>
@@ -50,11 +50,6 @@
                 <div class="row">
                   <label class="col-md-6" translate>Verification Date</label>
                   <label class="col-md-6">{{BusinessDate | date}}</label>
-                </div>
-                <div class="row">
-                  <label class="col-md-6" translate>Verification Notes</label>
-                  <label class="col-md-6"><textarea type="text" class="form-control adInsInput"
-                      formControlName="VerificationNotes"></textarea></label>
                 </div>
               </div>
             </div>
