@@ -150,11 +150,49 @@ export class ApplicationDataRefinancingComponent implements OnInit {
           }
         );
       });
-
-      console.log("ddl")
-      console.log(this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeInstSchm))
     
   }
+
+  // getDDLFromProdOffering(refProdCompntCode:string){
+  //   var obj = {
+  //     ProdOfferingCode: this.resultResponse.ProdOfferingCode,
+  //     RefProdCompntCode: refProdCompntCode,
+  //     ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
+  //   };
+  //   this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
+  //     (response) => {
+  //       console.log(response);
+  //       var listCompntValue: Array<string> = response["CompntValue"].split(";");
+  //       var listCompntValueDesc: Array<string> = response["CompntValueDesc"].split(",");
+  //       console.log(listCompntValue);
+        
+  //       var listDDL = new Array;
+  //       var keyValueObj;
+  //       if(listCompntValue.length!=1){
+  //         for(var i=0;i<listCompntValue.length;i++){
+  //           var splitted=listCompntValue[i].split(":");
+  //           var splitted1=listCompntValueDesc[i].split(":");
+  //           keyValueObj={
+  //             Key: splitted[0],
+  //             Value: splitted1[0]
+  //           };
+  //           listDDL.push(keyValueObj);
+  //         }
+  //       }else{
+  //         keyValueObj={
+  //           Key: response["CompntValue"],
+  //           Value: response["CompntValueDesc"]
+  //         };
+  //         listDDL.push(keyValueObj);
+  //       }
+  //       console.log(listDDL);
+  //       this.applicationDDLitems[refProdCompntCode]=listDDL;
+  //     },
+  //     (error) => {
+  //       console.log(error);
+  //     }
+  //   );
+  // }
 
   getDDLFromProdOffering(refProdCompntCode:string){
     var obj = {
@@ -162,31 +200,11 @@ export class ApplicationDataRefinancingComponent implements OnInit {
       RefProdCompntCode: refProdCompntCode,
       ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
     };
-    this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
+    this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL, obj).subscribe(
       (response) => {
-        console.log(response);
-        var listCompntValue: Array<string> = response["CompntValue"].split(";");
-        console.log(listCompntValue);
-        
-        var listDDL = new Array;
-        var keyValueObj;
-        if(listCompntValue.length!=1){
-          for(var i=0;i<listCompntValue.length;i++){
-            var splitted=listCompntValue[i].split(":");
-            keyValueObj={
-              Key: splitted[0],
-              Value: splitted[1]
-            };
-            listDDL.push(keyValueObj);
-          }
-        }else{
-          keyValueObj={
-            Key: response["CompntValue"],
-            Value: response["CompntValueDesc"]
-          };
-          listDDL.push(keyValueObj);
-        }
-        console.log(listDDL);
+        // console.log(response);
+        var listDDL = response["DDLRefProdComptCode"];
+        // console.log(listDDL);
         this.applicationDDLitems[refProdCompntCode]=listDDL;
       },
       (error) => {
@@ -358,8 +376,8 @@ export class ApplicationDataRefinancingComponent implements OnInit {
         var objTemp = response["ReturnObject"];
         this.applicationDDLitems["Pay_Freq"] = objTemp;
 
-        console.log("PayFreq")
-        console.log(this.applicationDDLitems["Pay_Freq"])
+        // console.log("PayFreq")
+        // console.log(this.applicationDDLitems["Pay_Freq"])
       },
       (error) => {
         console.log(error);
@@ -377,6 +395,10 @@ export class ApplicationDataRefinancingComponent implements OnInit {
       (response) => {
         var objTemp = response["ReturnObject"];
         this.applicationDDLitems[code] = objTemp;
+
+        console.log("testddl")
+        console.log(code)
+        console.log(objTemp)
       },
       (error) => {
         console.log(error);
