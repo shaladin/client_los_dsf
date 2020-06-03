@@ -358,7 +358,8 @@ export class GuarantorPersonalComponent implements OnInit {
 
   Add() {
     this.setAppGuarantor();
-    this.setAppGuarantorPersonal();
+    if(!this.setAppGuarantorPersonal()) return false;
+    else return true;
   }  
   
   clearExpDt(){
@@ -417,7 +418,7 @@ export class GuarantorPersonalComponent implements OnInit {
   SaveForm() {
     console.log(this.PersonalForm);
     this.guarantorPersonalObj = new GuarantorPersonalObj();
-    this.Add(); 
+    if(!this.Add()) return;
     if (this.mode == "edit") {
       this.guarantorPersonalObj.RowVersion = this.resultData.RowVersion;
       this.guarantorPersonalObj.AppGuarantorObj.AppGuarantorId = this.AppGuarantorId;
