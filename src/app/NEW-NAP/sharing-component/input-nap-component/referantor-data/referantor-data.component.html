@@ -8,8 +8,10 @@
           <form class="form form-horizontal" [formGroup]="NapAppReferantorForm" (ngSubmit)="NapAppReferantorForm.valid"
             #enjiForm="ngForm">
             <!-- Main Info -->
-            <div class="form-body">
-              <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Referantor </h4>
+            <lib-ucSubsection [id]="'ReferantorId'" [title]="'Referantor'" [panel]="'Referantor'">
+            </lib-ucSubsection>
+            <div class="form-body" id="Referantor">
+              <!-- <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Referantor </h4> -->
 
               <div class="form-group row">
                 <label class="col-md-2 adInsLabel">Referantor </label>
@@ -102,7 +104,7 @@
 
             <div class="form-actions right">
               <button type="button" (click)="ClickSave()" class="btn btn-raised btn-primary">
-                <i class="fa fa-check-square-o"></i> Save
+                <i class="far fa-check-square"></i> Save
               </button>
               <!-- <button type="submit" (click)="ClickSave('next')" class="btn btn-raised btn-primary">
                 <i class="fa fa-check-square-o"></i> Next

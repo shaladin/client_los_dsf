@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { HttpClient } from '@angular/common/http';
@@ -7,6 +7,7 @@ import { AppObj } from 'app/shared/model/App/App.Model';
 import { FormBuilder } from '@angular/forms';
 import Stepper from 'bs-stepper';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
+import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -14,7 +15,8 @@ import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandli
   providers: [NGXToastrService]
 })
 export class NapAddDetailComponent implements OnInit {
-
+  
+  @ViewChild('viewMainProd') ucViewMainProd: UcviewgenericComponent;
   private stepper: Stepper;
   AppStepIndex: number = 1;
   appId: number;
@@ -170,6 +172,7 @@ export class NapAddDetailComponent implements OnInit {
       default:
         break;
     }
+    this.ucViewMainProd.initiateForm();
   }
 
   NextStep(Step) {
@@ -179,6 +182,7 @@ export class NapAddDetailComponent implements OnInit {
         console.log("Step Change to, Curr Step : "+response.AppCurrStep+", Last Step : "+response.AppLastStep);
         this.ChangeTab(Step);
         this.stepper.next();
+        this.ucViewMainProd.initiateForm();
       },
       (error)=>{
         console.error("Error when updating AppStep");
