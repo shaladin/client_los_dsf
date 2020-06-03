@@ -20,6 +20,8 @@ export class ApplicationDataComponent implements OnInit {
   @Input() appId: number;
   @Input() IsLoanObject: boolean = false;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
+
   ListCrossAppObj: any = {};
   inputLookupObj;
   arrAddCrit;
@@ -155,7 +157,9 @@ export class ApplicationDataComponent implements OnInit {
     }
     this.http.post(AdInsConstant.GetListAppCross, obj).subscribe(
       (response) => {
+        console.log(response);
         this.resultCrossApp = response["ReturnObject"];
+        console.log(this.resultCrossApp);
         for (var i = 0; i < this.resultCrossApp.length; i++) {
           this.ListCrossAppObj["result"].push(this.resultCrossApp[i].CrossAgrmntNo);
         }
@@ -363,7 +367,7 @@ export class ApplicationDataComponent implements OnInit {
   PayFreqTimeOfYear: number = 0;
 
   ChangeNumOfInstallmentTenor() {
-    var temp = this.NapAppModelForm.controls.Tenor.value;
+    var temp:number = +this.NapAppModelForm.controls.Tenor.value;
     if (!isNaN(temp)) {
       var total = Math.ceil((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
       this.PatchNumOfInstallment(total);
@@ -445,10 +449,11 @@ export class ApplicationDataComponent implements OnInit {
 
   GetListAppCrossValue() {
     var arr = [];
-    var temp = new NapAppCrossObj();
     for (var i = 0; i < this.resultCrossApp.length; i++) {
-      if (this.resultCrossApp[i].AppCrossId == null) {
-        temp.AppId = this.resultCrossApp[i].appId;
+      if (this.resultCrossApp[i].AppCrossId == 0) {
+        console.log(this.resultCrossApp[i]);
+        var temp = new NapAppCrossObj();
+        temp.AppId = this.appId;
         temp.CrossAgrmntNo = this.resultCrossApp[i].CrossAgrmntNo;
         temp.CrossAppNo = this.resultCrossApp[i].CrossAppNo;
         temp.CustName = this.resultCrossApp[i].CustName;
@@ -481,7 +486,8 @@ export class ApplicationDataComponent implements OnInit {
       appFinData: tempAppFindDataObj,
       RowVersion: ""
     };
-
+    console.log(obj);
+    console.log("test");
     this.http.post(url, obj).subscribe(
       (response) => {
         console.log(response);
@@ -493,6 +499,10 @@ export class ApplicationDataComponent implements OnInit {
       }
     );
 
+  }
+
+  Cancel(){
+    this.outputCancel.emit();
   }
 
   closeResult;
@@ -521,12 +531,19 @@ export class ApplicationDataComponent implements OnInit {
     this.Open(contentCrossApp);
   }
 
-  resultCrossApp = [];
+  resultCrossApp: Array<NapAppCrossObj> = new Array<NapAppCrossObj>();
   GetDataTemp(ev) {
     for (let i of ev) {
-      this.resultCrossApp.push(i);
+      var tempCrossApp = new NapAppCrossObj();
+      tempCrossApp.CrossAgrmntNo=i.AgrmntNo;
+      tempCrossApp.CrossAppNo=i.AppNo;
+      tempCrossApp.CustName=i.CustName;
+      tempCrossApp.ContractStat=i.AgrmntStat;
+      tempCrossApp.MaturityDt;
+      this.resultCrossApp.push(tempCrossApp);
       this.ListCrossAppObj["result"].push(i.AgrmntNo);
     }
+    console.log(this.resultCrossApp);
   }
 
   DeleteCrossApp(idx) {

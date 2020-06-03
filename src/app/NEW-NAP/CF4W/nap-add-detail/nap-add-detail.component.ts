@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { HttpClient } from '@angular/common/http';
@@ -7,6 +7,7 @@ import { AppObj } from 'app/shared/model/App/App.Model';
 import { FormBuilder } from '@angular/forms';
 import Stepper from 'bs-stepper';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
+import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -14,8 +15,10 @@ import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandli
   providers: [NGXToastrService]
 })
 export class NapAddDetailComponent implements OnInit {
-
-  private stepper: Stepper;
+  
+  @ViewChild('viewMainProd') ucViewMainProd: UcviewgenericComponent;
+  private stepperPersonal: Stepper;
+  private stepperCompany: Stepper;
   AppStepIndex: number = 1;
   appId: number;
   wfTaskListId: number;
@@ -25,6 +28,7 @@ export class NapAddDetailComponent implements OnInit {
   IsMultiAsset: string;
   ListAsset: any;
   ReturnHandlingHId : number = 0;
+  custType: string = "";
 
   AppStep = {
     "NEW": 1,
@@ -71,20 +75,22 @@ export class NapAddDetailComponent implements OnInit {
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
 
-    this.stepper = new Stepper(document.querySelector('#stepper1'), {
-      linear: false,
-      animation: true
-    })
-
+    
     if(this.ReturnHandlingHId > 0 ){
-      this.stepper.to(this.AppStepIndex);
+      this.ChangeStepper();
+      this.ChooseStep(this.AppStepIndex);
     }else{
       this.http.post(AdInsConstant.GetAppById, this.NapObj).subscribe(
         (response: AppObj) => {
           if (response) {
             this.NapObj = response;
             this.AppStepIndex = this.AppStep[response.AppCurrStep];
-            this.stepper.to(this.AppStepIndex);
+            if(this.NapObj.MrCustTypeCode!=null)
+              this.custType=this.NapObj.MrCustTypeCode;
+            else
+              this.custType=AdInsConstant.CustTypeCompany;
+            this.ChangeStepper();
+            this.ChooseStep(this.AppStepIndex);
           }
         },
         (error) => {
@@ -93,6 +99,34 @@ export class NapAddDetailComponent implements OnInit {
       );
     }
     this.MakeViewReturnInfoObj();
+  }
+
+  ChangeStepper() {
+    if (this.custType == AdInsConstant.CustTypePersonal) {
+      this.stepperPersonal = new Stepper(document.querySelector('#stepperPersonal'), {
+        linear: false,
+        animation: true
+      });
+      document.getElementById('stepperPersonal').style.display ='block';
+      document.getElementById('stepperCompany').style.display='none';
+      // console.log(this.stepperPersonal);  
+    } else if (this.custType == AdInsConstant.CustTypeCompany) {
+      this.stepperCompany = new Stepper(document.querySelector('#stepperCompany'), {
+        linear: false,
+        animation: true
+      });
+      document.getElementById('stepperPersonal').style.display='none';
+      document.getElementById('stepperCompany').style.display ='block';
+      // console.log(this.stepperCompany);  
+    }
+  }
+
+  ChooseStep(idxStep: number){
+    if (this.custType == AdInsConstant.CustTypePersonal) {
+      this.stepperPersonal.to(idxStep);
+    } else if (this.custType == AdInsConstant.CustTypeCompany) {
+      this.stepperCompany.to(idxStep);
+    }
   }
 
   MakeViewReturnInfoObj() {
@@ -170,6 +204,7 @@ export class NapAddDetailComponent implements OnInit {
       default:
         break;
     }
+    this.ucViewMainProd.initiateForm();
   }
 
   NextStep(Step) {
@@ -178,7 +213,14 @@ export class NapAddDetailComponent implements OnInit {
       (response) =>{
         console.log("Step Change to, Curr Step : "+response.AppCurrStep+", Last Step : "+response.AppLastStep);
         this.ChangeTab(Step);
-        this.stepper.next();
+        if (this.custType == AdInsConstant.CustTypePersonal) {
+          this.stepperPersonal.next();
+          // console.log(this.stepperPersonal);  
+        } else if (this.custType == AdInsConstant.CustTypeCompany) {
+          this.stepperCompany.next();
+          // console.log(this.stepperCompany);  
+        }
+        this.ucViewMainProd.initiateForm();
       },
       (error)=>{
         console.error("Error when updating AppStep");
@@ -202,6 +244,10 @@ export class NapAddDetailComponent implements OnInit {
         }
       )
     }
+  }
+
+  Cancel(){
+    this.router.navigate(["/Nap/ConsumerFinance/InputNap/Paging"], { queryParams: {BizTemplateCode:AdInsConstant.CF4W} });
   }
 
   Submit() {
@@ -237,5 +283,12 @@ export class NapAddDetailComponent implements OnInit {
       () => {
     
       });
+  }
+
+  CheckCustType(ev: string){
+    // console.log(ev);
+    this.custType=ev;
+    this.ChangeStepper();
+    this.NextStep(AdInsConstant.AppStepGuar);
   }
 }

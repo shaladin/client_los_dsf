@@ -17,6 +17,8 @@ export class LifeInsuranceDataComponent implements OnInit {
 
   @Input() AppId: any;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
+
   inputGridObj: any;
   show: any;
   LifeInsObj: LifeInsObj = new LifeInsObj();
@@ -255,6 +257,10 @@ export class LifeInsuranceDataComponent implements OnInit {
         }
       );
     }
+  }
+
+  Cancel(){
+    this.outputCancel.emit();
   }
 
   ObjSelected(event, i) {

@@ -203,7 +203,7 @@
                     </div>
                     <label class="col-md-2 adins-required-label" for="insLength" translate>Insurance Length</label>
                     <div class="col-md-4">
-                      <input type="number" id="insLength" min="minInsLength" max="maxInsLength" step="0.01" class="form-control adInsInput width-25-per" formControlName="InsLength" (change)="InsLengthChanged($event)"
+                      <input type="number" id="insLength" min="minInsLength" max="maxInsLength" class="form-control adInsInput width-25-per" formControlName="InsLength" (change)="InsLengthChanged($event)"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.InsLength.invalid}">
                       <lib-uc-show-errors [control]="InsuranceDataForm.controls.InsLength" [submit]="enjiForm.submitted"></lib-uc-show-errors>  
                     </div>
@@ -360,23 +360,23 @@
                 </lib-ucSubsection>
                 <div id="totalPremi">
                   <div class="form-group row">
-                    <label class="col-md-2" translate>Total Main Premi</label>
-                    <label class="col-md-4" translate>{{InsuranceDataForm.controls.TotalCustMainPremiAmt.value | number:'.2':'en-US'}}</label>
+                    <label class="col-md-2" style="font-size: 90%" translate>Total Main Premi</label>
+                    <label class="col-md-4 text-right" style="font-size: 90%" translate>{{InsuranceDataForm.controls.TotalCustMainPremiAmt.value | number:'.2':'en-US'}}</label>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-2" translate>Total Additional Premi</label>
-                    <label class="col-md-4" translate>{{InsuranceDataForm.controls.TotalCustAddPremiAmt.value | number:'.2':'en-US'}}</label>
+                    <label class="col-md-2" style="font-size: 90%" translate>Total Additional Premi</label>
+                    <label class="col-md-4 text-right" style="font-size: 90%" translate>{{InsuranceDataForm.controls.TotalCustAddPremiAmt.value | number:'.2':'en-US'}}</label>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-2" translate>Total Fee</label>
-                    <label class="col-md-4" translate>{{InsuranceDataForm.controls.CustAdminFeeAmt.value | number:'.2':'en-US'}}</label>
+                    <label class="col-md-2" style="font-size: 90%" translate>Total Fee</label>
+                    <label class="col-md-4 text-right" style="font-size: 90%" translate>{{InsuranceDataForm.controls.CustAdminFeeAmt.value | number:'.2':'en-US'}}</label>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-2" translate>Total Premi to Customer</label>
-                    <label class="col-md-4" translate>{{InsuranceDataForm.controls.TotalCustMainPremiAmt.value + InsuranceDataForm.controls.TotalCustAddPremiAmt.value + InsuranceDataForm.controls.CustAdminFeeAmt.value | number:'.2':'en-US'}}</label>
+                    <label class="col-md-2" style="font-size: 90%" translate>Total Premi to Customer</label>
+                    <label class="col-md-4 text-right" style="font-size: 90%" translate>{{InsuranceDataForm.controls.TotalCustMainPremiAmt.value + InsuranceDataForm.controls.TotalCustAddPremiAmt.value + InsuranceDataForm.controls.CustAdminFeeAmt.value | number:'.2':'en-US'}}</label>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-2" for="discAmt" translate>Discount</label>
+                    <label class="col-md-2" style="font-size: 90%" for="discAmt" translate>Discount</label>
                     <div class="col-md-4">
                       <input type="" currencyMask id="discAmt" class="form-control" formControlName="TotalCustDiscAmt" [options]="{ allowNegative: false }"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.TotalCustDiscAmt.invalid }">
@@ -384,11 +384,11 @@
                     </div>                  
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-2" translate>Total Premi to Customer after Discount</label>
-                    <label class="col-md-4" translate>{{InsuranceDataForm.controls.TotalCustMainPremiAmt.value + InsuranceDataForm.controls.TotalCustAddPremiAmt.value + InsuranceDataForm.controls.CustAdminFeeAmt.value - InsuranceDataForm.controls.TotalCustDiscAmt.value | number:'.2':'en-US'}}</label>
+                    <label class="col-md-2" style="font-size: 90%" translate>Total Premi to Customer after Discount</label>
+                    <label class="col-md-4 text-right" style="font-size: 90%" translate>{{InsuranceDataForm.controls.TotalCustMainPremiAmt.value + InsuranceDataForm.controls.TotalCustAddPremiAmt.value + InsuranceDataForm.controls.CustAdminFeeAmt.value - InsuranceDataForm.controls.TotalCustDiscAmt.value | number:'.2':'en-US'}}</label>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-2" for="insCpltzAmt" translate>Capitalize Amount</label>
+                    <label class="col-md-2" style="font-size: 90%" for="insCpltzAmt" translate>Capitalize Amount</label>
                     <div class="col-md-4">
                       <input type="" currencyMask id="insCpltzAmt" class="form-control" formControlName="InsCpltzAmt" [options]="{ allowNegative: false }"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.InsCpltzAmt.invalid }">
@@ -399,6 +399,9 @@
               </div>
             </div>
             <div class="form-actions right">
+              <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
+                <i class="ft-x"></i> Cancel
+              </button>
               <button type="submit" class="btn btn-raised btn-primary">
                 <i class="far fa-check-square"></i> Save
               </button>
