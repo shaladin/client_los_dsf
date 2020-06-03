@@ -21,19 +21,19 @@
         {
             "type": "label",
             "position": "center",
-            "label": "License Plate No",
+            "label": "Serial No 1",
             "name": "SerialNo1"
         },
         {
             "type": "label",
             "position": "center",
-            "label": "Chassis No",
+            "label": "Serial No 2",
             "name": "SerialNo2"
         },
         {
             "type": "label",
             "position": "center",
-            "label": "Engine No",
+            "label": "Serial No 4",
             "name": "SerialNo4"
         },
         {
@@ -51,7 +51,7 @@
     "bodyList": [
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "FullAssetName"
         },
         {
@@ -60,28 +60,28 @@
             "property": "AssetTypeCode"
         },
         {
-            "type": "text",
-            "position": "center",
+            "type": "decimal",
+            "position": "right",
             "property": "CollateralValueAmt"
         },
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "SerialNo1"
         },
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "SerialNo2"
         },
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "SerialNo4"
         },
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "OwnerName"
         },
         {
