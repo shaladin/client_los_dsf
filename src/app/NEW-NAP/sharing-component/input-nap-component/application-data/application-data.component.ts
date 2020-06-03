@@ -365,7 +365,7 @@ export class ApplicationDataComponent implements OnInit {
   PayFreqTimeOfYear: number = 0;
 
   ChangeNumOfInstallmentTenor() {
-    var temp = this.NapAppModelForm.controls.Tenor.value;
+    var temp:number = +this.NapAppModelForm.controls.Tenor.value;
     if (!isNaN(temp)) {
       var total = Math.ceil((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
       this.PatchNumOfInstallment(total);
