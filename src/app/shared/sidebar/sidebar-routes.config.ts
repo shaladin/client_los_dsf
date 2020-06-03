@@ -52,7 +52,6 @@ export const ROUTES: RouteInfo[] = [
     Path: '', Title: 'Refinancing 4W', Icon: 'ft-bookmark', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
     Submenu: [
       { Path: '/Nap/CFRefinancing/Paging', Title: 'New Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
-      { Path: '/Nap/CreditProcess/PhoneVerification/Paging', Title: 'Phone Verification', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CF4W" }]},
       { Path: '/Nap/CreditProcess/CommissionReservedFund/Paging', Title: 'Reserved Fund', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFRFN4W" }] },
       { Path: '/Nap/CreditProcess/PhoneVerification/Paging', Title: 'Phone Verification', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFRFN4W" }] },
       { Path: '/Nap/CreditProcess/FraudDetection/Paging', Title: 'Fraud Detection', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFRFN4W" }] },
@@ -60,7 +59,14 @@ export const ROUTES: RouteInfo[] = [
       { Path: '/Nap/CreditProcess/CreditReview/Paging', Title: 'Credit Review', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFRFN4W" }] },
       { Path: '/Nap/CreditProcess/CreditApproval/Paging', Title: 'Credit Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFRFN4W" }] },
       { Path: '/Nap/AdminProcess/CustConfirmation/Paging', Title: 'Customer Confirmation', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFRFN4W" }]},
-      { Path: '/Nap/AdminProcess/PreGoLive/Paging', Title: 'Pre Go Live', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFRFN4W" }] }
+      { Path: '/Nap/AdminProcess/PreGoLive/Paging', Title: 'Pre Go Live', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFRFN4W" }] },
+      { Path: '/Nap/AdminProcess/PreGoLive/Approval/Paging', Title: 'Pre Go Live Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFRFN4W" }]},
+      {Path: '', Title: 'Additional Process', Icon: '', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
+      Submenu: [
+        { Path: '/Nap/AdditionalProcess/AppDupCheck/Paging', Title: 'App Duplicate Checking', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFRFN4W" }] },
+        { Path: '/Nap/AddProcess/ReturnHandling/Paging', Title: 'Return Handling', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFRFN4W" }] },
+        { Path: '/Nap/AddProcess/ReturnHandling/EditAppPaging', Title: 'Return Handling - Edit Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFRFN4W" }] }
+      ], Params: []},
     ], Params: []
   },
   {
@@ -71,9 +77,10 @@ export const ROUTES: RouteInfo[] = [
       },
       
       { Path: '/Nap/AdminProcess/InvoiceVerif/Paging', Title: 'Invoice Verification', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "FCTR" }] },
-      { Path: '/Nap/CreditProcess/CreditReview/Paging', Title: 'Credit Review', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "FCTR" }] },
-      { Path: '/Nap/CreditProcess/CreditApproval/Paging', Title: 'Credit Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "FCTR" }] },
-      { Path: '/Nap/AdminProcess/PreGoLive/Paging', Title: 'Pre Go Live', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "FCTR" }] }
+      // { Path: '/Nap/CreditProcess/CreditReview/Paging', Title: 'Credit Review', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "FCTR" }] },
+      // { Path: '/Nap/CreditProcess/CreditApproval/Paging', Title: 'Credit Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "FCTR" }] },
+      { Path: '/Nap/AdminProcess/PreGoLive/Paging', Title: 'Pre Go Live', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "FCTR" }] },
+      { Path: '/Nap/AdminProcess/PreGoLive/Approval/Paging', Title: 'Pre Go Live Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "FCTR" }]},
     ], Params: []
   },
   {
@@ -91,17 +98,17 @@ export const ROUTES: RouteInfo[] = [
       { Path: '/Mou/Cust/Cancel', Title: 'MOU Cancel', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] }
     ], Params: []
   },
-  {
-    Path: '', Title: 'Additional Process', Icon: 'ft-bar-chart-2', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
-    Submenu: [
-      { Path: '/Nap/AdditionalProcess/AppDupCheck/Paging', Title: 'App Duplicate Checking', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
-      {
-        Path: '', Title: 'Return Handling', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [
-          { Path: '/Nap/AdditionalProcess/ReturnHandling/CommissionReservedFund/Paging', Title: 'Commission Reserved Fund', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
-        ], Params: []
-      },
-    ], Params: []
-  },
+  // {
+  //   Path: '', Title: 'Additional Process', Icon: 'ft-bar-chart-2', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
+  //   Submenu: [
+  //     { Path: '/Nap/AdditionalProcess/AppDupCheck/Paging', Title: 'App Duplicate Checking', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
+  //     {
+  //       Path: '', Title: 'Return Handling', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [
+  //         { Path: '/Nap/AdditionalProcess/ReturnHandling/CommissionReservedFund/Paging', Title: 'Commission Reserved Fund', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
+  //       ], Params: []
+  //     },
+  //   ], Params: []
+  // },
   {
     Path: '', Title: 'Lead', Icon: 'ft-home', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
     Submenu: [

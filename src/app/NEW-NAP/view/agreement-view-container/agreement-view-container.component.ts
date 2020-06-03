@@ -12,6 +12,21 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 export class AgreementViewContainerComponent implements OnInit {
 
   AgrmntId;
+  BizTemplateCode : string;
+  ResponseAppDetailData;
+  IsCustomer : boolean = true;
+  IsAsset : boolean = true;
+  IsInsurance : boolean = true;
+  IsAgreementCard : boolean = true;
+  IsCommission : boolean = true;
+  IsPurchaseOrde : boolean = true;
+  IsCustomerCard : boolean = true;
+  IsDeviation : boolean = true;
+  IsLoanData : boolean = true;
+  IsCollateral : boolean = true;
+  IsDeliveryOrder : boolean = true;
+  IsSummary : boolean = true;
+
   constructor(    
     private route: ActivatedRoute,
     private http: HttpClient,
@@ -20,6 +35,7 @@ export class AgreementViewContainerComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       if (params["AgrmntId"] != null) {
         this.AgrmntId = params["AgrmntId"];
+        this.BizTemplateCode = params["BizTemplateCode"];
       }
     });
   }
@@ -29,7 +45,7 @@ export class AgreementViewContainerComponent implements OnInit {
     await this.GetAppAndAppCustDetailByAgrmntId();
   }
 
-  ResponseAppDetailData;
+  
   async GetAppAndAppCustDetailByAgrmntId(){
     var obj = { agrmntId: this.AgrmntId};
     await this.http.post(AdInsConstant.GetAppAndAppCustDetailByAgrmntId, obj).toPromise().then(

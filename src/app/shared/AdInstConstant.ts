@@ -70,7 +70,6 @@ export class AdInsConstant {
   public static AddApp = environment.losUrl + "/Application/AddApp";
   public static EditApp = "/Application/EditApp";
   public static GetAppById = environment.losUrl + "/Application/GetAppById";
-  public static GetAppByIds = environment.losUrl + "/Application/GetAppById";
   public static GetAppDetailForTabAddEditAppById = environment.losUrl + "/Application/GetAppDetailForTabAddEditAppById";
   public static GetAppDetailForAppTabById = environment.losUrl + "/Application/GetAppDetailForAppTabById";
   public static AddAppFromLead = environment.losUrl + "/Application/AddAppFromLead";
@@ -1041,6 +1040,7 @@ export class AdInsConstant {
   public static CalculateProvisionFee = environment.losUrl + "/AppFee/CalculateProvisionFee";
   public static GetOrInitAppSubsidyByAppId = environment.losUrl + "/AppSubsidy/GetOrInitAppSubsidyByAppId";
   public static GetRuleSubsidyMax = environment.losUrl + "/AppSubsidy/GetRuleSubsidyMax";
+  public static GetInitAppFinDataByAppId = environment.losUrl+ "/AppFinData/GetInitAppFinDataByAppId";
 
 
 
