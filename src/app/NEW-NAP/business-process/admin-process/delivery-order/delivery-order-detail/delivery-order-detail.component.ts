@@ -60,7 +60,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
     items: this.fb.array([]),
     DeliveryNo: [''],
     RecipientName: [''],
-    DeliveryDt: [''],
+    DeliveryDt: ['', Validators.required],
     DeliveryAddr: [''],
     MrCustRelationshipCode: [''],
     IsChecked: [''],
