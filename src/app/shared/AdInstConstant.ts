@@ -1041,6 +1041,7 @@ export class AdInsConstant {
   public static CalculateProvisionFee = environment.losUrl + "/AppFee/CalculateProvisionFee";
   public static GetOrInitAppSubsidyByAppId = environment.losUrl + "/AppSubsidy/GetOrInitAppSubsidyByAppId";
   public static GetRuleSubsidyMax = environment.losUrl + "/AppSubsidy/GetRuleSubsidyMax";
+  public static GetInitAppFinDataByAppId = environment.losUrl+ "/AppFinData/GetInitAppFinDataByAppId";
 
 
 
