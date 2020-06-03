@@ -131,7 +131,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
           AppId: this.result.AppId,
           RowVersion: ""
         }
-        this.http.post(AdInsConstant.GetAppByIds, Obj4).subscribe(
+        this.http.post(AdInsConstant.GetAppById, Obj4).subscribe(
           (response) => {
             this.result4 = response;
             this.AppNo = this.result4.AppNo;

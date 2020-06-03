@@ -6,7 +6,7 @@
         <i class="ft-plus-circle"></i> Add Collateral
       </button>
     </span>
-  </div><br>
+  </div>
 
   <app-multi-collateral-paging [AppId]="AppId" (select)="OpenDetail($event)">
   </app-multi-collateral-paging>
@@ -17,4 +17,4 @@
     </button>
   </div>
 </div>
-<app-collateral-detail *ngIf="IsDetail" [mode]="mode" [AppId]="AppId" (outputValue)="CloseDetail($event)"></app-collateral-detail>
+<app-collateral-detail *ngIf="IsDetail" [mode]="mode" [AppId]="AppId" [AppCollateralId]="AppCollateralId" [isSingleAsset]="false" (outputValue)="CloseDetail($event)"></app-collateral-detail>

@@ -8,6 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class MultiCollDataComponent implements OnInit {
 
   @Input() AppId: number;
+  AppCollateralId: number = 0;
   mode: string = "add";
   IsDetail: boolean = false;
 
@@ -18,6 +19,7 @@ export class MultiCollDataComponent implements OnInit {
 
   OpenDetail(AppCollateralId: number = 0) {
     if (AppCollateralId != 0) {
+      this.AppCollateralId = AppCollateralId;
       this.mode = "edit";
     } else {
       this.mode = "add";

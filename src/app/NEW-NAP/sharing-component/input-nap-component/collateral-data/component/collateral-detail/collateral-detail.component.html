@@ -13,8 +13,7 @@
                 <label class="col-md-5" translate>Existing Collateral</label>
                 <div class="col-md-7">
                   <lib-uclookupgeneric [lookupInput]="inputLookupExistColl" [parentForm]='AddCollForm'
-                    [enjiForm]='enjiForm' [identifier]="'ExistingCollateralObj'"
-                    (lookup)="getExistingColl($event)">
+                    [enjiForm]='enjiForm' [identifier]="'ExistingCollateralObj'" (lookup)="getExistingColl($event)">
                   </lib-uclookupgeneric>
                 </div>
               </div>
@@ -89,6 +88,15 @@
                     </lib-uc-show-errors>
                   </div>
                 </div>
+                <div class="form-group row">
+                  <label class="col-md-5 adins-required-label" translate>Portion Percentage</label>
+                  <div class="col-md-7">
+                    <input type="text" class="form-control" formControlName="CollateralPrcnt"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CollateralPrcnt.invalid }">
+                    <lib-uc-show-errors [control]="AddCollForm.controls.CollateralPrcnt" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group row">
@@ -105,6 +113,7 @@
                   <label class="col-md-5 adins-required-label" translate>Collateral Condition</label>
                   <div class="col-md-7">
                     <select class="form-control" formControlName="MrCollateralConditionCode"
+                      (change)="changeSerialNoValidators($event.target.value)"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.MrCollateralConditionCode.invalid }">
                       <option *ngFor="let item of CollConditionList" [value]="item.Key">{{item.Value}}</option>
                     </select>
@@ -289,9 +298,7 @@
                 <div class="col-md-4">
                   <div class="input-group">
                     <select class="form-control" formControlName="CopyFromLegal" [(ngModel)]="copyFromLegal">
-                      <option *ngFor="let item of copyToLocationObj" [value]="item.Key">
-                        {{item.Value}}
-                      </option>
+                      <option value="LEGAL"> Legal </option>
                     </select>
                     <div class="input-group-append">
                       <span class="input-group-btn">
