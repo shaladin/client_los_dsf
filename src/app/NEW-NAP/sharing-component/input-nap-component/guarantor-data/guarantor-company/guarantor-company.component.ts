@@ -69,6 +69,7 @@ export class GuarantorCompanyComponent implements OnInit {
     LegalDocForm: this.fb.array([])
   });
 
+  selectedListLegalDocType : any;
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient,private fb:FormBuilder, private toastr: NGXToastrService, private modalService: NgbModal) { 
   }
 
@@ -318,6 +319,7 @@ export class GuarantorCompanyComponent implements OnInit {
   }
 
   setAppGuarantorCompany(){
+    this.selectedListLegalDocType = new Array();
     var flag:boolean = true;
     this.guarantorCompanyObj.AppGuarantorCompanyObj.MrCompanyTypeCode = this.CompanyForm.controls.MrCompanyTypeCode.value;
     this.guarantorCompanyObj.AppGuarantorCompanyObj.TaxIdNo = this.CompanyForm.controls.TaxIdNo.value;
@@ -376,21 +378,12 @@ export class GuarantorCompanyComponent implements OnInit {
   SaveForm(){
     console.log(this.CompanyForm);
     this.guarantorCompanyObj = new GuarantorCompanyObj();
-    if(!this.Add()) return;
+    if(this.Add()== false) return;
     if (this.mode == "edit") {
       this.guarantorCompanyObj.RowVersion = this.resultData.RowVersion;
       this.guarantorCompanyObj.AppGuarantorObj.AppGuarantorId = this.AppGuarantorId;
       this.guarantorCompanyObj.AppGuarantorCompanyObj.AppGuarantorCompanyId = this.AppGuarantorCompanyId;
       console.log(this.guarantorCompanyObj);
-      if(this.appLegalDoc.length<this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs.length){
-        for (let i = 0; i < this.appLegalDoc.length; i++) {
-          this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs[i].AppGuarantorCompanyLegalDocId = this.appLegalDoc[i];
-        } 
-      }else{
-        for (let i = 0; i < this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs.length; i++) {
-          this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs[i].AppGuarantorCompanyLegalDocId = this.appLegalDoc[i];
-        }
-      }
       this.http.post(AdInsConstant.EditAppGuarantorCompany, this.guarantorCompanyObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
@@ -514,7 +507,6 @@ bindLegalDoc() {
   }
 }
 
-selectedListLegalDocType = new Array();
 cekDuplicateDocType(i){
   // var IdxSelected=
   if(this.selectedListLegalDocType.length>0){

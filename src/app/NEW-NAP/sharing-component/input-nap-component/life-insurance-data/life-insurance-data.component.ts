@@ -29,6 +29,9 @@ export class LifeInsuranceDataComponent implements OnInit {
   AppLifeInsD: any = new Array();
   result: any;
 
+  minInsLength: number = 1;
+  maxInsLength: number = 99;
+
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       this.mode = params["mode"];
@@ -204,7 +207,7 @@ export class LifeInsuranceDataComponent implements OnInit {
   isCoverCheck(){
     for(let i =0 ;i<this.LifeInsObj.ListAppLifeInsD.length;i++){
       console.log(this.LifeInsObj.ListAppLifeInsD[i].MrCustTypeCode);
-      if(this.LifeInsObj.ListAppLifeInsD[i].MrCustTypeCode =="PERSONAL"){
+      if(this.LifeInsObj.ListAppLifeInsD[i].MrCustTypeCode =="CUSTOMER"){
         this.LifeInsObj.IsCustCover = true;
       }
       if(this.LifeInsObj.ListAppLifeInsD[i].MrCustTypeCode =="SPOUSE"){
@@ -216,9 +219,19 @@ export class LifeInsuranceDataComponent implements OnInit {
     }
   }
 
+  checkSubject(){
+    if(this.LifeInsObj.ListAppLifeInsD.length==0){
+      this.toastr.errorMessage("Minimal 1 Subject ");    
+      return false;
+    }else{
+      return true;
+    }
+  }
+
   async SaveForm(){
     this.setValue();
     this.isCoverCheck();
+    if(this.checkSubject()== false) return;
     if(this.IsChecked){
       this.LifeInsObj.AppId = this.AppId;
       this.http.post(AdInsConstant.AddEditAppLifeInsH, this.LifeInsObj).subscribe(
