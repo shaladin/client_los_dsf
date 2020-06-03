@@ -56,8 +56,7 @@ export class CustJobDataFL4WComponent implements OnInit {
   CompanyScaleObj: any;
   InvestmentTypeObj: any;
   CustModelObj: any;
-
-
+  businessDt: Date = new Date();
 
   constructor(
     private fb: FormBuilder, 
@@ -68,6 +67,9 @@ export class CustJobDataFL4WComponent implements OnInit {
      }
 
    ngOnInit() {
+    var context = JSON.parse(localStorage.getItem("UserAccess"));
+    this.businessDt = new Date(context["BusinessDt"]);
+    this.businessDt.setDate(this.businessDt.getDate() - 1);
     console.log(this.identifier);
     console.log(this.parentForm);
 
@@ -81,7 +83,7 @@ export class CustJobDataFL4WComponent implements OnInit {
       CompanyName: ['', [Validators.required, Validators.maxLength(100)]],
       MrJobPositionCode: ['', Validators.maxLength(50)],
       MrCompanyScaleCode: ['', Validators.maxLength(50)],
-      NumOfEmployee: [0],
+      NumOfEmployee: [0, [Validators.min(0),Validators.pattern("^[0-9]+$")]],
       MrJobStatCode: ['', Validators.maxLength(50)],
       MrInvestmentTypeCode: ['', Validators.maxLength(50)]
     }));

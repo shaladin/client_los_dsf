@@ -43,7 +43,10 @@ export class FraudDetectionPagingComponent implements OnInit {
 
   ClaimTask(event){
 
-    this.router.navigate(["/Nap/CreditProcess/FraudDetection/Detail"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
+    if (event.RowObj.BizTemplateCode == AdInsConstant.FL4W)
+      this.router.navigate(['/Nap/CreditProcess/FraudVerifMultiAsset/Paging'], { queryParams: {"AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId} })
+    else
+      this.router.navigate(["/Nap/CreditProcess/FraudDetection/Detail"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
 
     // var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     // var wfClaimObj = new ClaimWorkflowObj();

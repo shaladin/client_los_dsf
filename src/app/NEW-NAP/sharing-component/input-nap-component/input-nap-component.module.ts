@@ -61,6 +61,7 @@ import { CollateralFctrComponent } from "./multi-asset-data/collateral-fctr/coll
 import { CollateralAddEditSingleComponent } from "./single-asset-data/collateral-add-edit-single/collateral-add-edit-single.component";
 import { InvoiceDataComponent } from "./invoice-data/invoice-data.component";
 import { ApplicationDataFactoringComponent } from './application-data/application-data-factoring/application-data-factoring.component';
+import { MultiCollateralPagingComponent } from "./collateral-data/component/multi-collateral-paging/multi-collateral-paging.component";
 
 export const customCurrencyMaskConfig = {     
   align: "right",     
@@ -127,7 +128,8 @@ export const customCurrencyMaskConfig = {
     CollateralAddEditSingleComponent,
     CollateralFctrComponent,
     InvoiceDataComponent,
-    ApplicationDataFactoringComponent
+    ApplicationDataFactoringComponent,
+    MultiCollateralPagingComponent
     // MultiAssetLeasingComponent,
     // AssetLeasingPagingComponent,
     // AssetLeasingAddEditComponent,
@@ -194,7 +196,8 @@ export const customCurrencyMaskConfig = {
     CollateralAddEditSingleComponent,
     CollateralFctrComponent,
     InvoiceDataComponent,
-    ApplicationDataFactoringComponent
+    ApplicationDataFactoringComponent,
+    MultiCollateralPagingComponent
     // MultiAssetLeasingComponent,
     // AssetLeasingPagingComponent,
     // AssetLeasingAddEditComponent,

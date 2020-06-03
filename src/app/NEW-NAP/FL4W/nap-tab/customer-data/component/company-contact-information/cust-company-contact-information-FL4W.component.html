@@ -9,7 +9,7 @@
   <table class="table table-responsive-md text-center table-hover">
     <thead>
       <tr class="table-header">
-        <th style="text-align: center;"><span class="thead-header" translate>NAME
+        <th style="text-align: left;"><span class="thead-header" translate>NAME
         </span>
         </th>
         <th style="text-align: center;"><span class="thead-header" translate>JOB POSITION
@@ -102,7 +102,7 @@
                 </div>
                 <label class="col-md-2" for="email" translate>Email</label>
                 <div class="col-md-4">
-                  <input type="text" class="form-control" id="email" formControlName="Email1"
+                  <input type="text"  pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" class="form-control" id="email" formControlName="Email1"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && ContactInfoCompanyForm.controls.Email1.invalid }">
                   <lib-uc-show-errors [control]="ContactInfoCompanyForm.controls.Email1" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>

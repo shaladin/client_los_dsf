@@ -6,11 +6,13 @@ import { HttpClient } from '@angular/common/http';
 import { formatDate } from '@angular/common';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalDocObj.Model';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
   selector: 'app-cust-legal-doc-FL4W',
   templateUrl: './cust-legal-doc-FL4W.component.html',
   styleUrls: [],
+  providers: [NGXToastrService],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 
 })
@@ -43,18 +45,15 @@ export class CustLegalDocFL4WComponent implements OnInit {
     DocNotes: ['', Validators.maxLength(1000)],
     ReleaseLocation: ['', Validators.maxLength(200)]
   });
+  dateErrorMessage: any;
 
 
-  constructor(
-    private fb: FormBuilder, 
-    private http: HttpClient,
-    private modalService: NgbModal,) {
-
+  constructor(private fb: FormBuilder, private http: HttpClient,private modalService: NgbModal,private toastr: NGXToastrService) {
      }
 
   ngOnInit() {
+    console.log('legal doc')
     this.bindLegalDocTypeObj();
-
   }
 
   SaveForm(){
@@ -63,6 +62,7 @@ export class CustLegalDocFL4WComponent implements OnInit {
       this.listLegalDoc = new Array<AppCustCompanyLegalDocObj>();
     }
     this.setAppCustCompanyLegalDoc();
+
     if(this.mode == "Add"){
       this.listLegalDoc.push(this.appCustCompanyLegalDocObj);
     }
