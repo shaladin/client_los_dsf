@@ -274,13 +274,10 @@ export class ApplicationDataComponent implements OnInit {
         for(var i=0;i<objTemp.length;i++){
           this.DictRefPayFreq[objTemp[i].PayFreqCode] = objTemp[i];
         }
-        console.log(this.DictRefPayFreq);
-        // this.applicationDDLitems[AdInsConstant.RefMasterTypeCodePayFreq] = objTemp;
         this.applicationDDLitems["Floating_Period"] = objTemp;
         this.PayFreqVal = this.DictRefPayFreq[this.resultResponse.PayFreqCode].PayFreqVal;
         this.PayFreqTimeOfYear = this.DictRefPayFreq[this.resultResponse.PayFreqCode].TimeOfYear;
-        console.log(this.PayFreqVal);
-        console.log(this.PayFreqTimeOfYear);
+        this.ChangeNumOfInstallmentTenor()
       },
       (error) => {
         console.log(error);
@@ -366,6 +363,7 @@ export class ApplicationDataComponent implements OnInit {
 
   PayFreqVal: number = 0;
   PayFreqTimeOfYear: number = 0;
+
   ChangeNumOfInstallmentTenor() {
     var temp = this.NapAppModelForm.controls.Tenor.value;
     if (!isNaN(temp)) {

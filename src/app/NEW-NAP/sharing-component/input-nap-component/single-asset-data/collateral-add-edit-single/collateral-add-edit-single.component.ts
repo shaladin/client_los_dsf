@@ -228,7 +228,7 @@ export class CollateralAddEditSingleComponent implements OnInit {
               SerialNo3: AppCollateralObj.SerialNo3,
             });
             this.inputLookupObj.nameSelect = AppCollateralObj.FullAssetName
-
+            this.changeSerialNoValidators(AppCollateralObj.MrCollateralConditionCode.value);
             var AppCollateralRegistration: any;
             this.http.post(AdInsConstant.GetAppCollateralRegistrationByAppCollateralId, AppCollateralObj).subscribe(
               (response) => {
@@ -439,15 +439,15 @@ export class CollateralAddEditSingleComponent implements OnInit {
     this.criteriaList.push(this.criteriaObj);
 
     this.changeSerialNoValidators(value);
-    
+    console.log(this.AddCollForm.controls.MrCollateralConditionCode.value);
   }
 
   changeSerialNoValidators(value){
-    if (value == "USED") {
+    if (value == "USED" || value == "Used") {
       this.AddCollForm.controls.SerialNo1.setValidators(Validators.required);
       this.AddCollForm.controls.SerialNo2.setValidators(Validators.required);
     }
-    else if(value == "NEW"){
+    else if(value == "NEW" || value == "New"){
       this.AddCollForm.controls.SerialNo1.clearValidators();
       this.AddCollForm.controls.SerialNo2.clearValidators();
     }
