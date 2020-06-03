@@ -36,6 +36,7 @@ export class InsuranceDataComponent implements OnInit {
 
   @Input() appId: number;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
   appAssetId: number = 0;
   appCollateralId: number = 0;
@@ -189,6 +190,10 @@ export class InsuranceDataComponent implements OnInit {
       }
     );
 
+  }
+
+  Cancel(){
+    this.outputCancel.emit();
   }
 
   setSaveObj(insuredBy){

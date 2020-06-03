@@ -208,6 +208,10 @@ export class NapAddDetailComponent implements OnInit {
     }
   }
 
+  Cancel(){
+    this.router.navigate(["/Nap/ConsumerFinance/InputNap/Paging"], { queryParams: {BizTemplateCode:AdInsConstant.CF4W} });
+  }
+
   Submit() {
     if (this.ReturnHandlingHId > 0) {
       var ReturnHandlingResult : ReturnHandlingDObj = new ReturnHandlingDObj();

@@ -82,34 +82,34 @@
           <div class="bs-stepper-content">
             <!-- your steps content here -->
             <div id="customer-tab" class="content" role="tabpanel" aria-labelledby="customer-tab-trigger">
-              <app-customer-data *ngIf="AppStepIndex == 1" [appId]="appId" (outputTab)="NextStep('GUAR')">
+              <app-customer-data *ngIf="AppStepIndex == 1" [appId]="appId" (outputTab)="NextStep('GUAR')" (outputCancel)="Cancel()">
               </app-customer-data>
             </div>
             <div id="guarantor-tab" class="content" role="tabpanel" aria-labelledby="guarantor-tab-trigger">
-              <app-guarantor-paging *ngIf="AppStepIndex == 2" [AppId]="appId" (outputTab)="NextStep('REF')">
+              <app-guarantor-paging *ngIf="AppStepIndex == 2" [AppId]="appId" (outputTab)="NextStep('REF')" (outputCancel)="Cancel()">
               </app-guarantor-paging>
             </div>
             <div id="referantor-tab" class="content" role="tabpanel" aria-labelledby="referantor-tab-trigger">
-              <app-referantor-data *ngIf="AppStepIndex == 3" [appId]="appId" (outputTab)="NextStep('APP')">
+              <app-referantor-data *ngIf="AppStepIndex == 3" [appId]="appId" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()">
               </app-referantor-data>
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
-              <app-application-data *ngIf="AppStepIndex == 4" [appId]="appId" (outputTab)="NextStep('ASSET')">
+              <app-application-data *ngIf="AppStepIndex == 4" [appId]="appId" (outputTab)="NextStep('ASSET')" (outputCancel)="Cancel()">
               </app-application-data>
             </div>
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
-              <app-asset-data *ngIf="AppStepIndex == 5" [AppId]=appId (outputTab)="NextStep('INS')"></app-asset-data>
+              <app-asset-data *ngIf="AppStepIndex == 5" [AppId]=appId (outputTab)="NextStep('INS')" (outputCancel)="Cancel()"></app-asset-data>
             </div>
             <div id="insurance-tab" class="content" role="tabpanel" aria-labelledby="insurance-tab-trigger">
-              <app-insurance-data *ngIf="AppStepIndex == 6" [appId]="appId" (outputTab)="NextStep('LFI')">
+              <app-insurance-data *ngIf="AppStepIndex == 6" [appId]="appId" (outputTab)="NextStep('LFI')" (outputCancel)="Cancel()">
               </app-insurance-data>
             </div>
             <div id="lifeInsurance-tab" class="content" role="tabpanel" aria-labelledby="lifeInsurance-tab-trigger">
-              <app-life-insurance-data *ngIf="AppStepIndex == 7" [AppId]="appId" (outputTab)="NextStep('FIN')">
+              <app-life-insurance-data *ngIf="AppStepIndex == 7" [AppId]="appId" (outputTab)="NextStep('FIN')" (outputCancel)="Cancel()">
               </app-life-insurance-data>
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
-              <app-financial-data *ngIf="AppStepIndex == 8" [AppId]=appId (outputTab)="NextStep('TC')">
+              <app-financial-data *ngIf="AppStepIndex == 8" [AppId]=appId (outputTab)="NextStep('TC')" (outputCancel)="Cancel()">
               </app-financial-data>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
@@ -124,10 +124,10 @@
 <br>
 <div class="col-md-12">
   <div class="form-action pull-right">
-    <button *ngIf="ReturnHandlingHId == 0" type="button" class="btn btn-raised btn-warning"
+    <!-- <button *ngIf="ReturnHandlingHId == 0" type="button" class="btn btn-raised btn-warning"
       [routerLink]="['/Nap/ConsumerFinance/InputNap/Paging']" [queryParams]="{BizTemplateCode:'CF4W'}" translate>
       <i class="fa fa-check-square-o"></i> Back
-    </button>
+    </button> -->
   </div>
   <div class="card" *ngIf="ReturnHandlingHId > 0">
     <div class="card-body">
