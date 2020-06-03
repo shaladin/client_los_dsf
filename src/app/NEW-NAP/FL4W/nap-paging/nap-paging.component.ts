@@ -100,7 +100,7 @@ export class NapPagingComponent implements OnInit {
     //   this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');
     //   return;
     // }else{
-      this.router.navigate(["Nap/FinanceLeasing/Add/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId" : ev.RowObj.WfTaskListId } });
+      this.router.navigate(["Nap/FinanceLeasing/Add/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId" : ev.RowObj.WfTaskListId, "IsMultiAsset": "true" } });
     // }
   }
 }
