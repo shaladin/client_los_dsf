@@ -18,6 +18,8 @@ export class ReferantorDataComponent implements OnInit {
 
   @Input() appId: any;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
+
   inputLookupObj;
   constructor(
     private fb: FormBuilder,
@@ -161,6 +163,10 @@ export class ReferantorDataComponent implements OnInit {
           this.outputTab.emit();
       }
     }
+  }
+
+  Cancel(){
+    this.outputCancel.emit();
   }
 
   TurnReferantor() {

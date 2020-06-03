@@ -18,6 +18,8 @@ export class TcDataComponent implements OnInit {
 
   @Input() AppId: any;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
+
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -204,6 +206,10 @@ export class TcDataComponent implements OnInit {
       );
 
     }
+  }
+
+  Cancel(){
+    this.outputCancel.emit();
   }
 
 }

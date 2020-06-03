@@ -17,6 +17,8 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 export class FinancialDataComponent implements OnInit {
   @Input() AppId: number;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
+
   //AppId : number;
   FinDataForm: FormGroup;
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
@@ -183,6 +185,10 @@ export class FinancialDataComponent implements OnInit {
         }
       );
     }
+  }
+
+  Cancel(){
+    this.outputCancel.emit();
   }
 
   ValidateGracePeriode() {
