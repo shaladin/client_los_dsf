@@ -115,8 +115,9 @@ export class CollateralAddEditComponent implements OnInit {
   };
   
   AddCollForm = this.fb.group({
-    Collateral: [''],
+    Collateral: ['New'],
     AssetTypeCode:[''],
+    CollateralSeqNo: [1],
 
     FullAssetCode: [''],
     FullAssetName: [''],
@@ -442,6 +443,18 @@ export class CollateralAddEditComponent implements OnInit {
       this.http.post(this.getAppCollateralByAppCollateralId, this.appCollateralObj).subscribe(
       (response) => {
           this.returnAppCollateralObj = response;
+          if(this.returnAppCollateralObj.CollateralStat == "NEW"){
+            this.AddCollForm.patchValue({
+              Collateral: "New"
+            });
+          }
+          else{
+            this.AddCollForm.patchValue({
+              Collateral: "Exist"
+            });
+          }
+          this.AddCollForm.controls["Collateral"].disable();
+          this.CollChange();
           this.AddCollForm.patchValue({ 
             SerialNo1: this.returnAppCollateralObj.SerialNo1,
             SerialNo2: this.returnAppCollateralObj.SerialNo2,
@@ -452,6 +465,7 @@ export class CollateralAddEditComponent implements OnInit {
             AssetTypeCode: this.returnAppCollateralObj.AssetTypeCode,
             AssetCategoryCode: this.returnAppCollateralObj.AssetCategoryCode,
             CollPercentage: this.returnAppCollateralObj.CollateralPrcnt,
+            CollateralSeqNo: this.returnAppCollateralObj.CollateralSeqNo
           });
 
           this.reqAssetMasterObj = new AssetMasterObj();
@@ -585,7 +599,7 @@ export class CollateralAddEditComponent implements OnInit {
 
   setCollateralInfo(){
     this.appCollateralDataObj.AppCollateralObj.AppId = this.AppId;
-    this.appCollateralDataObj.AppCollateralObj.CollateralSeqNo = 1;
+    this.appCollateralDataObj.AppCollateralObj.CollateralSeqNo = this.AddCollForm.controls["CollateralSeqNo"].value;
     this.appCollateralDataObj.AppCollateralObj.FullAssetCode = this.AddCollForm.controls["FullAssetCode"].value;
     this.appCollateralDataObj.AppCollateralObj.FullAssetName = this.AddCollForm.controls["FullAssetName"].value;
     this.appCollateralDataObj.AppCollateralObj.SerialNo1 = this.AddCollForm.controls["SerialNo1"].value;
@@ -699,6 +713,7 @@ export class CollateralAddEditComponent implements OnInit {
       this.setCollateralLocation();
       this.setCollateralPercentage();
       //this.setCollateralAttribute();
+      this.appCollateralDataObj.AppCollateralObj.AppAssetId = null;
       this.http.post(this.addEditAllCollateralData, this.appCollateralDataObj).subscribe(
         (response) => {
           console.log(response);
@@ -719,9 +734,11 @@ export class CollateralAddEditComponent implements OnInit {
       this.setCollateralLocation();
       this.setCollateralPercentage();
       //this.setCollateralAttribute();
+      this.appCollateralDataObj.AppCollateralObj.AppAssetId = null;
       this.appCollateralDataObj.AppCollateralObj.AppCollateralId = this.AppCollateralId;
       this.appCollateralDataObj.AppCollateralObj.RowVersion = this.returnAppCollateralObj.RowVersion;
       this.appCollateralDataObj.AppCollateralRegistrationObj.AppCollateralRegistrationId = this.returnAppCollateralRegistObj.AppCollateralRegistrationId;
+      this.appCollateralDataObj.AppCollateralRegistrationObj.AppCollateralId = this.returnAppCollateralRegistObj.AppCollateralId;
       this.appCollateralDataObj.AppCollateralRegistrationObj.RowVersion = this.returnAppCollateralRegistObj.RowVersion;
       this.http.post(this.addEditAllCollateralData, this.appCollateralDataObj).subscribe(
         (response) => {

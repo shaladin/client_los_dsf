@@ -57,6 +57,7 @@ export class AdInsConstant {
   public static VerfTrxTypeCodePhn = "PHN_VERIF";
   public static VerfResultStatCodeNew = "NEW";
   public static RtnHandlingReturnStatDone = "DONE"
+  public static ASSET_TYPE_CAR = "CAR";
 
   //WORKFLOW (LEWAT FOUNDATION)
   public static ResumeWorkflow = environment.FoundationR3Url + "/Workflow/ResumeWorkflow"
