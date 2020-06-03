@@ -103,6 +103,7 @@ export class FinancialDataComponent implements OnInit {
         SellEffectiveRatePrcnt: 0,
 
         ApvAmt: 0,
+        TotalDpAmt: 0,
 
         NeedReCalculate: true
       }
@@ -154,7 +155,8 @@ export class FinancialDataComponent implements OnInit {
           MrLcCalcMethodCode: this.appFinDataObj.MrLcCalcMethodCode,
           LcGracePeriod: this.appFinDataObj.LcGracePeriod,
           PrepaymentPenaltyRate: this.appFinDataObj.PrepaymentPenaltyRate,
-          SellEffectiveRatePrcnt: this.appFinDataObj.SellEffectiveRatePrcnt
+          SellEffectiveRatePrcnt: this.appFinDataObj.SellEffectiveRatePrcnt,
+          TotalDpAmt: this.appFinDataObj.TotalDpAmt
         });
 
         this.setValidator(this.appFinDataObj.MrInstSchemeCode);

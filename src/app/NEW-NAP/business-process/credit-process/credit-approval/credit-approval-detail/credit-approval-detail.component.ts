@@ -46,6 +46,6 @@ export class CreditApprovalDetailComponent implements OnInit {
   }
   onApprovalSubmited() {
     this.toastr.successMessage("Success");
-    this.router.navigate(["/Nap/CreditProcess/CreditApproval/Paging"]);
+    this.router.navigate(["/Nap/CreditProcess/CreditApproval/Paging"], { queryParams: { "BizTemplateCode": localStorage.getItem("BizTemplateCode") } });
   }
 }

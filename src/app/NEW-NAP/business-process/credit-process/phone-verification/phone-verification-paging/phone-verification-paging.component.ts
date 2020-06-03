@@ -36,15 +36,16 @@ export class PhoneVerificationPagingComponent implements OnInit {
     var arrCrit = new Array();
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
+    critObj.propName = 'WTL.ACT_CODE';
+    critObj.value = "PHN_"+this.BizTemplateCode;
+    arrCrit.push(critObj);
+
+    critObj = new CriteriaObj();
+    critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'a.ORI_OFFICE_CODE';
     critObj.value = userAccess.OfficeCode;
     arrCrit.push(critObj);
 
-    var critObj = new CriteriaObj();
-    critObj.restriction = AdInsConstant.RestrictionLike;
-    critObj.propName = 'WTL.ACT_CODE';
-    critObj.value = 'PHN_' + this.BizTemplateCode;
-    arrCrit.push(critObj);
     this.inputPagingObj.addCritInput = arrCrit;
   }
 }
