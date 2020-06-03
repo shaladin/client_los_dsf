@@ -77,8 +77,8 @@ export class LifeInsuranceDataComponent implements OnInit {
         else {
           this.mode = "add";
           this.show = false;
-        }
-
+        }  
+      this.PremiMethodForm();
       },
       (error) => {
         console.log(error);
@@ -229,8 +229,8 @@ export class LifeInsuranceDataComponent implements OnInit {
   async SaveForm(){
     this.setValue();
     this.isCoverCheck();
-    if(this.checkSubject()== false) return;
     if(this.IsChecked){
+      if(this.checkSubject()== false) return;
       this.LifeInsObj.AppId = this.AppId;
       this.http.post(AdInsConstant.AddEditAppLifeInsH, this.LifeInsObj).subscribe(
         response => {
@@ -304,6 +304,26 @@ export class LifeInsuranceDataComponent implements OnInit {
       this.LifeInsForm.controls["PaidInAdvPrcnt"].disable();
     }
     else if (event.target.value == "CPTLZ") {
+      this.LifeInsForm.patchValue({
+        PaidInAdvPrcnt: 100
+
+      });
+      this.LifeInsForm.controls["PaidInAdvPrcnt"].disable();
+    }
+    else {
+      this.LifeInsForm.controls["PaidInAdvPrcnt"].enable();
+    }
+  }
+
+  PremiMethodForm(){
+    if (this.LifeInsForm.controls["MrLifeInsPaidMethodCode"].value == "PAID_IN_ADV") {
+      this.LifeInsForm.patchValue({
+        PaidInAdvPrcnt: 0
+
+      });
+      this.LifeInsForm.controls["PaidInAdvPrcnt"].disable();
+    }
+    else if (this.LifeInsForm.controls["MrLifeInsPaidMethodCode"].value == "CPTLZ") {
       this.LifeInsForm.patchValue({
         PaidInAdvPrcnt: 100
 
