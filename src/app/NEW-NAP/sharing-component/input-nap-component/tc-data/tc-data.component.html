@@ -37,7 +37,8 @@
                           <label>{{AppTcForm.controls['AppTc'].value[i].PriorTo}}</label>
                         </td>
                         <td [formGroupName]="i" class="text-center">
-                          <label>{{AppTcForm.controls['AppTc'].value[i].IsMandatory}}</label>
+                          <label *ngIf="AppTcForm.controls['AppTc'].value[i].IsMandatory == true">YES</label>
+                          <label *ngIf="AppTcForm.controls['AppTc'].value[i].IsMandatory != true">NO</label>
                         </td>
                         <td [formGroupName]="i" class="text-center"><input type="checkbox" class="form-check-input" (change)="ReconstructForm()" formControlName="IsChecked"></td>
                         <td [formGroupName]="i" class="text-center">
