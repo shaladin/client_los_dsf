@@ -56,7 +56,7 @@
                     <div class="form-group row">
                         <label class="col-md-2" translate>Collateral Price</label>
                         <div class="col-md-3">
-                            <input type="text" class="form-control" formControlName="CollateralValueAmt"
+                            <input type="" currencyMask class="form-control" formControlName="CollateralValueAmt"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CollateralValueAmt.invalid }">
                             <lib-uc-show-errors [control]="AddCollForm.controls.CollateralValueAmt" [submit]="enjiForm.submitted">
                             </lib-uc-show-errors>
@@ -252,7 +252,7 @@
                     <div class="form-group row">
                         <label class="col-md-2 adins-required-label" translate>Collateral Percentage</label>
                         <div class="col-md-3">
-                            <input type="text" class="form-control" formControlName="CollPercentage"
+                            <input type="" currencyMask class="form-control" formControlName="CollPercentage"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CollPercentage.invalid }">
                             <lib-uc-show-errors [control]="AddCollForm.controls.CollPercentage" [submit]="enjiForm.submitted">
                             </lib-uc-show-errors>
@@ -348,7 +348,7 @@
                         <tr *ngFor="let item of tempData; let i = index">
                           <td>
                             <div>
-                              <a class="danger p-0" data-original-title="" title=""
+                              <a class="danger p-0"
                                 (click)="deleteFromTemp(item.MouCustCollateralId)">
                                 <i class="ft-trash-2 font-medium-3 mr-2"></i>
                               </a></div>
@@ -468,7 +468,7 @@
                   <tr *ngFor="let item of tempData; let i = index">
                     <td>
                       <div>
-                        <a class="danger p-0" data-original-title="" title=""
+                        <a class="danger p-0"
                           (click)="deleteFromTemp(item.MouCustCollateralId)">
                           <i class="ft-trash-2 font-medium-3 mr-2"></i>
                         </a></div>

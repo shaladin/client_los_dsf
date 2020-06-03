@@ -37,10 +37,10 @@ export class InsuranceDataComponent implements OnInit {
   @Input() appId: number;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
 
-
   appAssetId: number = 0;
   appCollateralId: number = 0;
   totalAssetPriceAmt: number;
+  IsMultiAsset: string;
 
   appObj: NapAppModel;
   appAssetObj: AppAssetObj;

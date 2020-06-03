@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter,ViewChild } from '@angul
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { WizardComponent } from 'angular-archwizard';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
@@ -145,7 +145,7 @@ export class CollateralAddEditComponent implements OnInit {
 
     LocationAddrType:[''],
 
-    CollPercentage:[''],
+    CollPercentage:['', [Validators.min(1)]],
   });
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) { 
@@ -585,7 +585,7 @@ export class CollateralAddEditComponent implements OnInit {
 
   setCollateralInfo(){
     this.appCollateralDataObj.AppCollateralObj.AppId = this.AppId;
-    this.appCollateralDataObj.AppCollateralObj.CollateralSeqNo = "1";
+    this.appCollateralDataObj.AppCollateralObj.CollateralSeqNo = 1;
     this.appCollateralDataObj.AppCollateralObj.FullAssetCode = this.AddCollForm.controls["FullAssetCode"].value;
     this.appCollateralDataObj.AppCollateralObj.FullAssetName = this.AddCollForm.controls["FullAssetName"].value;
     this.appCollateralDataObj.AppCollateralObj.SerialNo1 = this.AddCollForm.controls["SerialNo1"].value;
@@ -691,23 +691,50 @@ export class CollateralAddEditComponent implements OnInit {
 
   SaveNewCollateral()
   {
-    this.appCollateralDataObj = new AppCollateralDataObj();
-    this.setCollateralInfo();
-    this.setCollateralOwner();
-    this.setCollateralLocation();
-    this.setCollateralPercentage();
-    //this.setCollateralAttribute();
-    this.http.post(this.addEditAllCollateralData, this.appCollateralDataObj).subscribe(
-      (response) => {
-        console.log(response);
-        this.toastr.successMessage(response["message"]);
-        //this.router.navigate(["/Nap/AssetData/Paging"]);
-        this.collValue.emit({mode : 'paging'});
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    if(this.mode == 'addColl')
+    {
+      this.appCollateralDataObj = new AppCollateralDataObj();
+      this.setCollateralInfo();
+      this.setCollateralOwner();
+      this.setCollateralLocation();
+      this.setCollateralPercentage();
+      //this.setCollateralAttribute();
+      this.http.post(this.addEditAllCollateralData, this.appCollateralDataObj).subscribe(
+        (response) => {
+          console.log(response);
+          this.toastr.successMessage(response["message"]);
+          //this.router.navigate(["/Nap/AssetData/Paging"]);
+          this.collValue.emit({mode : 'paging'});
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+    else
+    {
+      this.appCollateralDataObj = new AppCollateralDataObj();
+      this.setCollateralInfo();
+      this.setCollateralOwner();
+      this.setCollateralLocation();
+      this.setCollateralPercentage();
+      //this.setCollateralAttribute();
+      this.appCollateralDataObj.AppCollateralObj.AppCollateralId = this.AppCollateralId;
+      this.appCollateralDataObj.AppCollateralObj.RowVersion = this.returnAppCollateralObj.RowVersion;
+      this.appCollateralDataObj.AppCollateralRegistrationObj.AppCollateralRegistrationId = this.returnAppCollateralRegistObj.AppCollateralRegistrationId;
+      this.appCollateralDataObj.AppCollateralRegistrationObj.RowVersion = this.returnAppCollateralRegistObj.RowVersion;
+      this.http.post(this.addEditAllCollateralData, this.appCollateralDataObj).subscribe(
+        (response) => {
+          console.log(response);
+          this.toastr.successMessage(response["message"]);
+          //this.router.navigate(["/Nap/AssetData/Paging"]);
+          this.collValue.emit({mode : 'paging'});
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
   }
 
   SaveExistingCollateral()

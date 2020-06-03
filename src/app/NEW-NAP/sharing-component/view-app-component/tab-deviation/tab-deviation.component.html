@@ -121,7 +121,7 @@
                   <td>{{ item.Notes }}</td>
                   <td *ngIf ="IsEditManualDeviation">
                     <div>
-                      <a class="danger p-0" data-original-title="" title="" (click)="DeleteFromManualDeviationData(i)">
+                      <a class="danger p-0" (click)="DeleteFromManualDeviationData(i)">
                         <i class="ft-trash-2 font-medium-3 mr-2"></i>
                       </a>
                     </div>

@@ -120,9 +120,9 @@ export class AssetDataAddEditComponent implements OnInit {
     FullAssetName:[''],
     AssetCategoryCode:[''],
     AssetTypeCode:[''],
-    MrDownPaymentTypeCode:[''],
-    AssetPrice:[''],
-    DownPayment:[''],
+    MrDownPaymentTypeCode:['', [Validators.required]],
+    AssetPrice:['', [Validators.required, Validators.min(1.00)]],
+    DownPayment:['', [Validators.required]],
     MrAssetConditionCode:[''],
     AssetUsage:[''],
     LicensePlate:[''],
@@ -187,6 +187,18 @@ export class AssetDataAddEditComponent implements OnInit {
 
 back(){
   this.assetValue.emit({mode : 'paging'});
+}
+AssetPrice: number;
+DPAmount: number;
+DPAmtChange()
+{
+  this.AssetPrice = this.AssetDataForm.controls["AssetPrice"].value;
+  this.DPAmount = this.AssetDataForm.controls["DownPayment"].value;
+
+  if (this.DPAmount > this.AssetPrice) {
+    this.toastr.errorMessage("Down Payment Must Be Lower Than Asset Price!");
+    return;
+  }
 }
 
 SetAsset(event) {
@@ -340,7 +352,14 @@ copyToLocationAddr() {
     console.log("ddd")
     console.log(this.AppAssetId)
     console.log(this.mode)
+    
+    this.inputFieldLocationAddrObj = new InputFieldObj();
+    this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
+    
     if(this.mode == 'editAsset'){
+      this.AssetDataForm.controls['ManufacturingYear'].setValidators([Validators.required]);
+      this.AssetDataForm.controls['ManufacturingYear'].updateValueAndValidity();
+
       this.appAssetObj = new AppAssetObj();
       this.appAssetObj.AppAssetId = this.AppAssetId;
       this.http.post(this.getAppAssetByAppAssetId, this.appAssetObj).subscribe(
@@ -359,6 +378,18 @@ copyToLocationAddr() {
             AssetTypeCode: this.returnAppAssetObj.AssetTypeCode,
             AssetCategoryCode: this.returnAppAssetObj.AssetCategoryCode,
           });
+
+          if(this.returnAppAssetObj.MrAssetConditionCode == "USED")
+          {
+            this.AssetDataForm.controls['ChassisNo'].setValidators([Validators.required]);
+            this.AssetDataForm.controls['ChassisNo'].updateValueAndValidity();
+
+            this.AssetDataForm.controls['EngineNo'].setValidators([Validators.required]);
+            this.AssetDataForm.controls['EngineNo'].updateValueAndValidity();
+
+            this.AssetDataForm.controls['LicensePlate'].setValidators([Validators.required]);
+            this.AssetDataForm.controls['LicensePlate'].updateValueAndValidity();
+          }
 
           this.reqAssetMasterObj = new AssetMasterObj();
           this.reqAssetMasterObj.FullAssetCode = this.returnAppAssetObj.FullAssetCode;
@@ -495,10 +526,7 @@ copyToLocationAddr() {
     }
 
     this.GetListAddr();
-
-    this.inputFieldLocationAddrObj = new InputFieldObj();
-    this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
-
+    
     this.InputLookupSupplierObj = new InputLookupObj();
     this.InputLookupSupplierObj.urlJson = "./assets/uclookup/NAP/lookupSupplier.json";
     this.InputLookupSupplierObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
@@ -635,7 +663,7 @@ copyToLocationAddr() {
     this.allAssetDataObj.AppAssetObj.IsInsurance = true;
 
     this.allAssetDataObj.AppCollateralObj.AppId = this.AppId;
-    this.allAssetDataObj.AppCollateralObj.CollateralSeqNo = "1";
+    this.allAssetDataObj.AppCollateralObj.CollateralSeqNo = 1;
     this.allAssetDataObj.AppCollateralObj.FullAssetCode = this.AssetDataForm.controls["FullAssetCode"].value;
     this.allAssetDataObj.AppCollateralObj.FullAssetName = this.AssetDataForm.controls["FullAssetName"].value;
     this.allAssetDataObj.AppCollateralObj.MrCollateralConditionCode = this.AssetDataForm.controls["MrAssetConditionCode"].value;
