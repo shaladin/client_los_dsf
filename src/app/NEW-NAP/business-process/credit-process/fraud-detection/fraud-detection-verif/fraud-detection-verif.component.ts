@@ -79,7 +79,7 @@ export class FraudDetectionVerifComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    console.log('frauddetect')
     if (this.WfTaskListId != null || this.WfTaskListId != undefined)
       this.claimTask();
 
