@@ -50,9 +50,9 @@ export class NapPagingComponent implements OnInit {
   
   makeCriteria(){
     var critObj = new CriteriaObj();
-    critObj.restriction = AdInsConstant.RestrictionEq;
-    critObj.propName = "WTL.ACT_CODE";
-    critObj.value = "NAP_FCTR";
+    critObj.restriction = AdInsConstant.RestrictionLike;
+    critObj.propName = 'WTL.ACT_CODE';
+    critObj.value = "NAP_"+AdInsConstant.FCTR;
     this.arrCrit.push(critObj);
     
     critObj = new CriteriaObj();
