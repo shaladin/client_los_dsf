@@ -15,14 +15,14 @@
           <app-app-main-info [arrValue]="arrValue"></app-app-main-info>
 
           <mat-tab-group>
-            <mat-tab label="Customer">
+            <mat-tab *ngIf="IsCustomer" label="Customer">
               <ng-template matTabContent>
                 <app-view-app-cust-data-personal [appId]="AppId" *ngIf="CustType=='PERSONAL'"></app-view-app-cust-data-personal>
                 <app-view-app-cust-data-company [appId]="AppId" *ngIf="CustType=='COMPANY'"></app-view-app-cust-data-company>
               </ng-template>
             </mat-tab>
 
-            <mat-tab label="Guarantor">
+            <mat-tab *ngIf="IsGuarantor" label="Guarantor">
               <ng-template matTabContent>
                 <app-guarantor [AppId]="AppId"></app-guarantor>
               </ng-template>
