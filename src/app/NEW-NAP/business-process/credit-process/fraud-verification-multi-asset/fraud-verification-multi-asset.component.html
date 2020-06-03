@@ -15,15 +15,16 @@
 </section>
 <div class="card">
   <div class="card-body">
+    <lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true" [viewInput]="viewObj" [whereValue]="arrValue"></lib-ucviewgeneric>
     <div class="px-3">
     <lib-ucSubsection [id]="'CustDupCheckId'" [title]="'Customer Duplicate Checking'" [panel]="'CustDupCheck'">
     </lib-ucSubsection>
     <div class="form-body" id="CustDupCheck">
-      <div *ngIf="listCustDuplicate?.length > 0" class="form-group row">
+      <div class="form-group row">
         <label class="col-md-3 adInsLabel">Customer No</label>
         <label class="col-md-3 adInsLabel">{{appCustObj.CustNo}} ({{custStat}})</label>
       </div>
-      <table *ngIf="listCustDuplicate?.length > 0" class="table table-responsive-md text-center table-hover">
+      <table class="table table-responsive-md text-center table-hover">
         <thead>
           <tr class="table-header">
             <th><span class="thead-header" (click)="searchSort($event)" name='custNo' translate>Customer No</span>
@@ -68,7 +69,7 @@
     <lib-ucSubsection [id]="'NegCustId'" [title]="'Negative Customer'" [panel]="'NegCust'">
     </lib-ucSubsection>
     <div class="form-body" id="NegCust">
-      <table *ngIf="listNegativeCust?.length > 0" class="table table-responsive-md text-center table-hover">
+      <table class="table table-responsive-md text-center table-hover">
         <thead>
           <tr class="table-header">
             <th><span class="thead-header" (click)="searchSort($event)" name='custNo' translate>Customer No</span>
@@ -152,9 +153,10 @@
         <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
           <span aria-hidden="true">&times;</span>
         </button>
-      </div>
+      </div>      
       <lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true" [viewInput]="viewDukcapilObj" [whereValue]="arrValue">
       </lib-ucviewgeneric>
+      
     </ng-template>
     <lib-ucSubsection [id]="'AssetId'" [title]="'Asset'" [panel]="'Asset'">
     </lib-ucSubsection>
@@ -190,10 +192,16 @@
         </tbody>
       </table>
     </div>
+    <lib-ucSubsection [id]="'PefId'" [title]="'Pefindo'" [panel]="'Pef'">
+    </lib-ucSubsection>
+    <lib-ucSubsection [id]="'SlikId'" [title]="'Slik'" [panel]="'Slik'">
+    </lib-ucSubsection>
+    <lib-ucSubsection [id]="'ProfId'" [title]="'Prof'" [panel]="'Prof'">
+    </lib-ucSubsection>
     <lib-ucSubsection [id]="'NegAssetId'" [title]="'Negative Asset'" [panel]="'NegAsset'">
     </lib-ucSubsection>
     <div class="form-body" id="NegAsset">
-      <table *ngIf="ListAssetNegative?.length > 0" class="table table-responsive-md text-center table-hover">
+      <table class="table table-responsive-md text-center table-hover">
         <thead>
           <tr class="table-header">
             <th><span class="thead-header" (click)="searchSort($event)" name='no' translate>No</span></th>
@@ -217,7 +225,7 @@
             <td>{{item.SerialNo1}}</td>
             <td>{{item.SerialNo2}}</td>
             <td>{{item.SerialNo3}}</td>
-            <td>{{item.MrNegAssetSource}</td>
+            <td>{{item.MrNegAssetSource}}</td>
         <td>{{item.Notes}}</td>
           </tr>
         </tbody>

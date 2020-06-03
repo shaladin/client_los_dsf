@@ -31,7 +31,7 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
   verfDt: any;
   verfNotes: any;
   verfCode: any;
-  viewObj: any;
+  viewObj: string;
   arrValue = [];
   viewDukcapilMainDataObj: string;
   losUrl = environment.losUrl;
@@ -44,7 +44,6 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
   getAppAssetByAppId = AdInsConstant.GetAppAssetByAppId;
   getAssetNegativeDuplicateCheck = AdInsConstant.GetAssetNegativeDuplicateCheck;
   addAppFraudVerfUrl = AdInsConstant.AddAppFraudVerf;
-
   isDataAlreadyLoaded: boolean = false;
   closeResult: string;
   appCustObj: any;
@@ -82,7 +81,7 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
     console.log('fraudverf')
     await this.ClaimTask();
     this.arrValue.push(this.AppId);
-    this.viewObj = "./assets/ucviewgeneric/viewCreditInvestigationInfo.json";
+    this.viewObj = "./assets/ucviewgeneric/viewFraudVerifMultiAssetMainInfo.json";
     var context = JSON.parse(localStorage.getItem("UserAccess"));
     this.verfUser = context["UserName"];
     this.verfDt = context["BusinessDt"];
@@ -183,7 +182,7 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
   getAppDupCheckCust(AppId) {
     this.http.post(this.getAppDupCheckCustByAppId, AppId).subscribe(
       response => {
-        this.listCustDuplicate = response;
+        this.listCustDuplicate = response["ReturnObject"];
         if (this.listCustDuplicate.indexOf(this.appCustObj.CustNo) < 0) {
           this.custStat = "EXISTING"
         } else {
