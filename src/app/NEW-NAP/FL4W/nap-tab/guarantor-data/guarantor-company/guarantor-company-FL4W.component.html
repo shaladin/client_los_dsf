@@ -135,7 +135,7 @@
                           <lib-uc-show-errors  [control]="CompanyForm.controls['LegalDocForm']['controls'][i]['controls'].ReleaseLocation" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                         </td>
                         <td [formGroupName]="i">
-                          <a class="danger p-0" data-original-title="" title="" (click)="deleteLegalDoc(i)">
+                          <a class="danger p-0" (click)="deleteLegalDoc(i)">
                             <i class="ft-trash-2 font-medium-3 mr-2"></i>
                           </a>
                         </td>
