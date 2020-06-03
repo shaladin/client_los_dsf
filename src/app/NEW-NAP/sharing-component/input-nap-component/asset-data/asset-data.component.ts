@@ -184,6 +184,7 @@ export class AssetDataComponent implements OnInit {
   InputLookupAssetObj: any;
   InputLookupSupplAccObj: any;
   InputLookupAccObj: any;
+  InputLookupAccSupObj: any;
 
   EmpObj: any;
   AdminHeadObj: any;
@@ -636,9 +637,17 @@ export class AssetDataComponent implements OnInit {
         });
       };
       if (this.AssetDataForm.controls.selectedDpType.value == 'PRCTG' && this.DpTypeBefore == 'AMT') {
-        this.AssetDataForm.patchValue({
-          DownPaymentAmt: this.AssetDataForm.controls.DownPaymentAmt.value / this.AssetDataForm.controls.AssetPriceAmt.value * 100
-        });
+        if (this.AssetDataForm.controls.AssetPriceAmt.value == 0) {
+          this.AssetDataForm.patchValue({
+            DownPaymentAmt: 0
+          });
+        }
+        else {
+          this.AssetDataForm.patchValue({
+            DownPaymentAmt: this.AssetDataForm.controls.DownPaymentAmt.value / this.AssetDataForm.controls.AssetPriceAmt.value * 100
+          });
+        }
+
       };
       this.DpTypeBefore = this.AssetDataForm.controls.selectedDpType.value;
     }
@@ -886,6 +895,32 @@ export class AssetDataComponent implements OnInit {
     this.InputLookupSupplierObj.addCritInput = suppCrit;
 
     return this.InputLookupSupplierObj;
+  }
+
+  initLookupSuppAcc() {
+    this.InputLookupAccSupObj = new InputLookupObj();
+    this.InputLookupAccSupObj.urlJson = "./assets/uclookup/NAP/lookupSupplier.json";
+    this.InputLookupAccSupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.InputLookupAccSupObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupAccSupObj.pagingJson = "./assets/uclookup/NAP/lookupSupplier.json";
+    this.InputLookupAccSupObj.genericJson = "./assets/uclookup/NAP/lookupSupplier.json";
+    var suppCrit = new Array();
+    var critSuppObj = new CriteriaObj();
+    critSuppObj.DataType = 'text';
+    critSuppObj.restriction = AdInsConstant.RestrictionEq;
+    critSuppObj.propName = 'ro.OFFICE_CODE';
+    critSuppObj.value = this.OfficeCode;
+    //suppCrit.push(critSuppObj);
+
+    var critSupp2Obj = new CriteriaObj();
+    critSupp2Obj.DataType = 'text';
+    critSupp2Obj.restriction = AdInsConstant.RestrictionEq;
+    critSupp2Obj.propName = 'v.MR_VENDOR_CATEGORY_CODE';
+    critSupp2Obj.value = 'SUPPLIER_BRANCH';
+    suppCrit.push(critSupp2Obj);
+    this.InputLookupAccSupObj.addCritInput = suppCrit;
+
+    return this.InputLookupAccSupObj;
   }
 
   bindAllRefMasterObj() {
@@ -1273,7 +1308,7 @@ export class AssetDataComponent implements OnInit {
     appAccessoryObj.push(this.addGroup(undefined, max + 1));
 
     var InputLookupAccObj = this.initLookupAcc();
-    var InputLookupAccSupObj = this.initLookupSupp();
+    var InputLookupAccSupObj = this.initLookupSuppAcc();
     this.InputLookupAcceObjs.push(InputLookupAccObj);
     this.InputLookupSupplObjs.push(InputLookupAccSupObj);
 
@@ -1301,7 +1336,7 @@ export class AssetDataComponent implements OnInit {
         listAppAccessories.push(this.addGroup(this.appAssetAccessoriesObjs[i], i));
 
         var InputLookupAccObj = this.initLookupAcc();
-        var InputLookupAccSupObj = this.initLookupSupp();
+        var InputLookupAccSupObj = this.initLookupSuppAcc();
         this.dictAccLookup[i] = InputLookupAccObj;
         this.dictSuppLookup[i] = InputLookupAccSupObj;
         this.InputLookupAcceObjs.push(InputLookupAccObj);
@@ -1372,11 +1407,7 @@ export class AssetDataComponent implements OnInit {
     }
   }
 
-  //setAccessoryName(i) {
-  //  this.AssetDataForm.controls[this.identifier]["controls"][i].patchValue({
-  //    AssetAccessoryName: this.SocmedObj.find(x => x.Key == this.AssetDataForm.controls["Accessories"].value[i].AssetAccessoryName).Value
-  //  });
-  //}
+
   SetSupplierAccessory(i, event) {
     this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i].patchValue({
       SupplNameAccessory: event.VendorName,
@@ -1393,11 +1424,7 @@ export class AssetDataComponent implements OnInit {
 
   }
 
-  //setSupplierName(i) {
-  //  this.AssetDataForm.controls[this.identifier]["controls"][i].patchValue({
-  //    SupplNameAccessory: this.SocmedObj.find(x => x.Key == this.AssetDataForm.controls["Accessories"].value[i].SupplNameAccessory).Value
-  //  });
-  //}
+
 
   GetVendorAccessories() {
     this.http.post(this.getVendorUrl, this.vendorObj).subscribe(

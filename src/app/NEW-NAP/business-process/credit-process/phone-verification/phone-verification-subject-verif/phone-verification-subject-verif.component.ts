@@ -316,7 +316,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
             }
             QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required])
           } else if (QuestionList[j].VerfAnswerTypeCode == "UC_INPUT_NUMBER") {
-            QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
+            QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required]);
             this.ListVerfAnswer[i].push("");
           } else {
             QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required])
@@ -401,15 +401,23 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
     );
   }
 
-  PhoneChange(phnNumber, phnType) {
+  //PhoneChange(phnNumber, phnType) {
+  //  this.PhoneDataForm.patchValue({
+  //    Phn: phnNumber,
+  //    PhnType: phnType
+  //  });
+  //}
+
+  PhoneChange() {
+    var temp: any;
+    temp = this.PhoneNumberObj.filter(
+      x => x.PhoneNumber == this.PhoneDataForm.controls["Phn"].value);
     this.PhoneDataForm.patchValue({
-      Phn: phnNumber,
-      PhnType: phnType
+      Phn: temp[0].PhoneNumber,
+      PhnType: temp[0].PhoneType
     });
   }
-
-  Cancel()
-  {
+  Cancel() {
     if (this.isReturnHandling == false) {
       this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId + "&WfTaskListId=" + this.wfTaskListId);
     }
