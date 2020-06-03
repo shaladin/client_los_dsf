@@ -17,7 +17,6 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './fraud-verification-multi-asset.component.html'
 })
 export class FraudVerificationMultiAssetComponent implements OnInit {
-  WfTaskListId: any;
   appAssetObj: any;
   getAppAssetListByAppIdUrl: string;
   getAssetNegativeDuplicateCheckByListOfAssetUrl: string;
@@ -40,8 +39,8 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
   getAppById = AdInsConstant.GetAppById;
   getCustDataByAppId = AdInsConstant.GetCustDataByAppId;
   getAppDupCheckCustByAppId = AdInsConstant.GetAppDupCheckCustByAppId;
-  getFraudDukcapilByTrxNoAndTrxType = AdInsConstant.GetFraudDukcapilByTrxNoAndTrxType;
   getNegativeCustomerDuplicateCheckUrl = AdInsConstant.GetNegativeCustomerDuplicateCheck;
+  getFraudDukcapilByIdNo = AdInsConstant.GetFraudDukcapilByIdNo;
   getAppAssetByAppId = AdInsConstant.GetAppAssetByAppId;
   getAssetNegativeDuplicateCheck = AdInsConstant.GetAssetNegativeDuplicateCheck;
   addAppFraudVerfUrl = AdInsConstant.AddAppFraudVerf;
@@ -64,6 +63,7 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
   custStat: string;
   tempAppObj: any;
   appFraudVerf: any;
+  idNo: any;
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private modalService: NgbModal, private router: Router) {
     this.route.queryParams.subscribe(params => {
@@ -113,6 +113,7 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
         this.appCustPersonalObj = response["AppCustPersonalObj"];
         this.TrxNo = this.appCustObj.AppNo;
         this.trxRefNo = this.appCustObj.AppNo;
+        this.idNo = this.appCustObj.IdNo;
         this.mrSrvySourceCode = "MOU";
         this.getFraudDukcapil();
 
@@ -167,12 +168,8 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
   }
 
   getFraudDukcapil() {
-    var appReqObj = { "AppId": this.AppId }
-    this.http.post(this.getAppById, appReqObj).subscribe(
-      response => {
-        this.tempAppObj = response;
-        var fraudDukcapilReqObj = { "TrxNo": this.tempAppObj.AppNo, "TrxTypeCode": "APP" };
-        this.http.post(this.getFraudDukcapilByTrxNoAndTrxType, fraudDukcapilReqObj).subscribe(
+        var fraudDukcapilReqObj = { "IdNo": this.idNo };
+        this.http.post(this.getFraudDukcapilByIdNo, fraudDukcapilReqObj).subscribe(
           response => {
             this.dukcapilObj = response["ReturnObject"];
             console.log(fraudDukcapilReqObj);
@@ -181,8 +178,6 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
             console.log("error")
           }
         );
-      }
-    );
   }
 
   getAppDupCheckCust(AppId) {
@@ -267,5 +262,4 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
       }
     )
   }
-}
 }
