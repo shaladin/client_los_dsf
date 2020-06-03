@@ -110,6 +110,18 @@ export class NapAddDetailComponent implements OnInit {
       });
       document.getElementById('stepperPersonal').style.display ='block';
       document.getElementById('stepperCompany').style.display='none';
+      this.AppStep = {
+        "NEW": 1,
+        "CUST": 1,
+        "GUAR": 2,
+        "REF": 3,
+        "APP": 4,
+        "ASSET": 5,
+        "INS": 6,
+        "LFI": 7,
+        "FIN": 8,
+        "TC": 9,
+      };
       // console.log(this.stepperPersonal);  
     } else if (this.custType == AdInsConstant.CustTypeCompany) {
       this.stepperCompany = new Stepper(document.querySelector('#stepperCompany'), {
@@ -118,6 +130,18 @@ export class NapAddDetailComponent implements OnInit {
       });
       document.getElementById('stepperPersonal').style.display='none';
       document.getElementById('stepperCompany').style.display ='block';
+      this.AppStep = {
+        "NEW": 1,
+        "CUST": 1,
+        "GUAR": 2,
+        "REF": 3,
+        "APP": 4,
+        "ASSET": 5,
+        "INS": 6,
+        "LFI": 7,
+        "FIN": 7,
+        "TC": 8,
+      };
       // console.log(this.stepperCompany);  
     }
   }
