@@ -17,7 +17,8 @@ import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 export class NapAddDetailComponent implements OnInit {
   
   @ViewChild('viewMainProd') ucViewMainProd: UcviewgenericComponent;
-  private stepper: Stepper;
+  private stepperPersonal: Stepper;
+  private stepperCompany: Stepper;
   AppStepIndex: number = 1;
   appId: number;
   wfTaskListId: number;
@@ -27,6 +28,7 @@ export class NapAddDetailComponent implements OnInit {
   IsMultiAsset: string;
   ListAsset: any;
   ReturnHandlingHId : number = 0;
+  custType: string = "";
 
   AppStep = {
     "NEW": 1,
@@ -73,20 +75,22 @@ export class NapAddDetailComponent implements OnInit {
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
 
-    this.stepper = new Stepper(document.querySelector('#stepper1'), {
-      linear: false,
-      animation: true
-    })
-
+    
     if(this.ReturnHandlingHId > 0 ){
-      this.stepper.to(this.AppStepIndex);
+      this.ChangeStepper();
+      this.ChooseStep(this.AppStepIndex);
     }else{
       this.http.post(AdInsConstant.GetAppById, this.NapObj).subscribe(
         (response: AppObj) => {
           if (response) {
             this.NapObj = response;
             this.AppStepIndex = this.AppStep[response.AppCurrStep];
-            this.stepper.to(this.AppStepIndex);
+            if(this.NapObj.MrCustTypeCode!=null)
+              this.custType=this.NapObj.MrCustTypeCode;
+            else
+              this.custType=AdInsConstant.CustTypeCompany;
+            this.ChangeStepper();
+            this.ChooseStep(this.AppStepIndex);
           }
         },
         (error) => {
@@ -95,6 +99,34 @@ export class NapAddDetailComponent implements OnInit {
       );
     }
     this.MakeViewReturnInfoObj();
+  }
+
+  ChangeStepper() {
+    if (this.custType == AdInsConstant.CustTypePersonal) {
+      this.stepperPersonal = new Stepper(document.querySelector('#stepperPersonal'), {
+        linear: false,
+        animation: true
+      });
+      document.getElementById('stepperPersonal').style.display ='block';
+      document.getElementById('stepperCompany').style.display='none';
+      // console.log(this.stepperPersonal);  
+    } else if (this.custType == AdInsConstant.CustTypeCompany) {
+      this.stepperCompany = new Stepper(document.querySelector('#stepperCompany'), {
+        linear: false,
+        animation: true
+      });
+      document.getElementById('stepperPersonal').style.display='none';
+      document.getElementById('stepperCompany').style.display ='block';
+      // console.log(this.stepperCompany);  
+    }
+  }
+
+  ChooseStep(idxStep: number){
+    if (this.custType == AdInsConstant.CustTypePersonal) {
+      this.stepperPersonal.to(idxStep);
+    } else if (this.custType == AdInsConstant.CustTypeCompany) {
+      this.stepperCompany.to(idxStep);
+    }
   }
 
   MakeViewReturnInfoObj() {
@@ -181,7 +213,13 @@ export class NapAddDetailComponent implements OnInit {
       (response) =>{
         console.log("Step Change to, Curr Step : "+response.AppCurrStep+", Last Step : "+response.AppLastStep);
         this.ChangeTab(Step);
-        this.stepper.next();
+        if (this.custType == AdInsConstant.CustTypePersonal) {
+          this.stepperPersonal.next();
+          // console.log(this.stepperPersonal);  
+        } else if (this.custType == AdInsConstant.CustTypeCompany) {
+          this.stepperCompany.next();
+          // console.log(this.stepperCompany);  
+        }
         this.ucViewMainProd.initiateForm();
       },
       (error)=>{
@@ -245,5 +283,12 @@ export class NapAddDetailComponent implements OnInit {
       () => {
     
       });
+  }
+
+  CheckCustType(ev: string){
+    // console.log(ev);
+    this.custType=ev;
+    this.ChangeStepper();
+    this.NextStep(AdInsConstant.AppStepGuar);
   }
 }
