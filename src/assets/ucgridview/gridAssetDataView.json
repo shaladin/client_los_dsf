@@ -5,31 +5,31 @@
             "type": "label",
             "position": "left",
             "label": "Asset Name",
-            "name": "InsObjName"
+            "name": "FullAssetName"
         },
         {
             "type": "label",
             "position": "left",
             "label": "Insured By",
-            "name": "InsAssetCoveredBy"
+            "name": "InsuredBy"
         },
         {
             "type": "label",
             "position": "left",
             "label": "Paid By",
-            "name": "InsAssetPaidBy"
+            "name": "PaidBy"
         },
         {
             "type": "label",
             "position": "left",
             "label": "Insurance Company",
-            "name": "InscoBranchName"
+            "name": "InscoName"
         },
         {
             "type": "label",
             "position": "left",
             "label": "Cover Period",
-            "name": "InsAssetCoverPeriod"
+            "name": "CoverPeriod"
         },
         {
             "type": "label",
@@ -41,19 +41,19 @@
             "type": "label",
             "position": "right",
             "label": "Main Premi",
-            "name": "TotalCustMainPremiAmt"
+            "name": "MainPremi"
         },
         {
             "type": "label",
             "position": "right",
             "label": "Additional Premi",
-            "name": "TotalCustAddPremiAmt"
+            "name": "AddPremi"
         },
         {
             "type": "label",
             "position": "right",
             "label": "Fee",
-            "name": "CustAdminFeeAmt"
+            "name": "Fee"
         },
         {
             "type": "label",
@@ -65,27 +65,27 @@
         {
             "type": "text",
             "position": "left",
-            "property": "InsObjName"
+            "property": "FullAssetName"
         },
         {
             "type": "text",
             "position": "left",
-            "property": "InsAssetCoveredBy"
+            "property": "InsuredBy"
         },
         {
             "type": "text",
             "position": "left",
-            "property": "InsAssetPaidBy"
+            "property": "PaidBy"
         },
         {
             "type": "text",
             "position": "left",
-            "property": "InscoBranchName"
+            "property": "InscoName"
         },
         {
             "type": "text",
             "position": "left",
-            "property": "InsAssetCoverPeriod"
+            "property": "CoverPeriod"
         },
         {
             "type": "text",
@@ -95,17 +95,17 @@
         {
             "type": "decimal",
             "position": "right",
-            "property": "TotalCustMainPremiAmt"
+            "property": "MainPremi"
         },
         {
             "type": "decimal",
             "position": "right",
-            "property": "TotalCustAddPremiAmt"
+            "property": "AddPremi"
         },
         {
             "type": "decimal",
             "position": "right",
-            "property": "CustAdminFeeAmt"
+            "property": "Fee"
         },
         {
             "type": "action",
