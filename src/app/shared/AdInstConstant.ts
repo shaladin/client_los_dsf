@@ -859,6 +859,9 @@ export class AdInsConstant {
   public static CommissionReceipientTypeCodeSupplier = "SUPPLIER";
   public static CommissionReceipientTypeCodeSupplierEmp = "SUPPLIER_EMP";
   public static CommissionReceipientTypeCodeReferantor = "REFERANTOR";
+  public static MessageCalculate = "CALC";
+  public static MessagePassData = "PASS";
+  public static MessageDel = "DEL";
 
   public static TitleSupplier = "List Supplier Commission Data";
   public static TitleSupplierEmp = "List Supplier Employee Commission Data";
