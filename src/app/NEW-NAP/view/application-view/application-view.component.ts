@@ -11,7 +11,6 @@ import { AdInsConstant } from '../../../shared/AdInstConstant';
 export class ApplicationViewComponent implements OnInit {
   AppId: number;
   
-  BizTemplateCode : string;
   arrValue = [];
   CustType: string = "";
   AppCustObj: any;
@@ -35,61 +34,61 @@ export class ApplicationViewComponent implements OnInit {
   IsAnalysisResult : boolean = true;
   IsCollateral : boolean = true;
   IsMultiCollateral : boolean = true;
+  IsApprovalHist: boolean = true;
 
   constructor(private route: ActivatedRoute, private http: HttpClient) { 
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
-      this.BizTemplateCode = params["BizTemplateCode"];
     })
   }
 
   ngOnInit() {
     this.arrValue.push(this.AppId);
-    this.GetAppCust();
-    if(this.BizTemplateCode==AdInsConstant.FCTR)
-    {
-      this.IsCollateral = false;
-      this.IsGuarantor = false;
-      this.IsReferantor = false;
-      this.IsCommission = false;
-      this.IsReservedFund = false;
-      this.IsPhoneVerification = false;
-      this.IsAsset = false;
-      this.IsMultiAsset = false;
-  
-    }
-    else if(this.BizTemplateCode==AdInsConstant.CFRFN4W){
-      this.IsAsset = false;
-      this.IsMultiCollateral = false;
-      this.IsInvoice = false;
-      this.IsMultiAsset = false;
-      this.IsMultiInsurance = false;
-    }
-    else if(this.BizTemplateCode==AdInsConstant.CF4W){
-      this.IsCollateral = false;
-      this.IsMultiCollateral = false;
-      this.IsInvoice = false;
-      this.IsMultiAsset = false;
-      this.IsMultiInsurance = false;
-    }
-    else if(this.BizTemplateCode==AdInsConstant.FL4W)
-    {
-      this.IsCollateral = false;
-      this.IsMultiCollateral = false;
-      this.IsInvoice = false;
-      this.IsInsurance = false;
-    }
+    this.GetApp();
   }
 
-  GetAppCust() {
+  GetApp() {
     var appObj = {
       AppId: this.AppId,
     };
-    this.http.post(AdInsConstant.GetAppCustByAppId, appObj).subscribe(
+    this.http.post(AdInsConstant.GetAppById, appObj).subscribe(
       (response) => {
-        this.AppCustObj = response;
-        console.log(response);
-        this.CustType = this.AppCustObj.MrCustTypeCode;
+        var bizTemplateCode = response["BizTemplateCode"];
+        this.CustType = response["MrCustTypeCode"];
+
+        if(bizTemplateCode == AdInsConstant.FCTR)
+        {
+          this.IsCollateral = false;
+          this.IsGuarantor = false;
+          this.IsReferantor = false;
+          this.IsCommission = false;
+          this.IsReservedFund = false;
+          this.IsPhoneVerification = false;
+          this.IsAsset = false;
+          this.IsMultiAsset = false;
+      
+        }
+        else if(bizTemplateCode == AdInsConstant.CFRFN4W){
+          this.IsAsset = false;
+          this.IsMultiCollateral = false;
+          this.IsInvoice = false;
+          this.IsMultiAsset = false;
+          this.IsMultiInsurance = false;
+        }
+        else if(bizTemplateCode == AdInsConstant.CF4W){
+          this.IsCollateral = false;
+          this.IsMultiCollateral = false;
+          this.IsInvoice = false;
+          this.IsMultiAsset = false;
+          this.IsMultiInsurance = false;
+        }
+        else if(bizTemplateCode == AdInsConstant.FL4W)
+        {
+          this.IsCollateral = false;
+          this.IsMultiCollateral = false;
+          this.IsInvoice = false;
+          this.IsInsurance = false;
+        }
       }
     );
   }
