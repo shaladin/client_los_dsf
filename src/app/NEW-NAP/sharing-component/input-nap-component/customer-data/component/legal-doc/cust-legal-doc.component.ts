@@ -151,6 +151,8 @@ export class CustLegalDocComponent implements OnInit {
       this.toastr.errorMessage("Expired Date can not be less than " + this.MaxDate);
       flag = false;
     }
+    d1.setDate(d1.getDate()+1);
+    console.log(d1);
     if (d1 < d2 && d1 != d2) {
       this.toastr.errorMessage("Issued Date can not be more than " + this.MaxDate);
       flag = false;
