@@ -85,8 +85,6 @@ export const customCurrencyMaskConfig = {
     NapViewComponent,  
     NapAddDetailComponent, 
     ViewAgrmntComponent, 
-    TabCommissionComponent,
-    ListDataCommissionComponent,
     ViewAgrmntComponent,  
     AgrmntLifeInsuranceComponent,
     ViewCommissionComponent,
