@@ -14,6 +14,9 @@ export class TermConditionsComponent implements OnInit {
   AppTcList: any = [];
   listTempTCList: any = [];
 
+  totalCheckAll: number =0;
+  totalMandatory:number = 0;
+
   @Output() OutputValueIsCheckAll: EventEmitter<any> = new EventEmitter();
   @Input() IsCheckedAll: boolean = true;
   @Input() AppId: number;
@@ -51,20 +54,23 @@ export class TermConditionsComponent implements OnInit {
               RowVersion: this.AppTcList[i].RowVersion
             }) as FormGroup;
 
-            // if (this.AppTcList[i].IsMandatory == true) {
-            //   TCDetail.controls.PromisedDt.setValidators([Validators.required]);
-            // }
-            // if (this.AppTcList[i].IsChecked == false && this.AppTcList[i].IsMandatory == true) {
-            //   this.IsCheckedAll = false;
-            // }
-            // if (this.AppTcList[i].IsChecked == false) {
-            //   TCDetail.controls.ExpiredDt.disable();
-            // } else {
-            //   TCDetail.controls.PromisedDt.disable();
-            // }
+            if (this.AppTcList[i].IsMandatory == true) {
+              TCDetail.controls.PromisedDt.setValidators([Validators.required]);
+            }
+            if (this.AppTcList[i].IsChecked == false && this.AppTcList[i].IsMandatory == true) {
+              this.IsCheckedAll = false;
+            }
+            if (this.AppTcList[i].IsChecked == false) {
+              TCDetail.controls.ExpiredDt.disable();
+            } else {
+              TCDetail.controls.PromisedDt.disable();
+            }
+            
             listTC.push(TCDetail);
             this.OutputValueIsCheckAll.emit(this.IsCheckedAll);
+            
           }
+          
           this.ReconstructForm();
           console.log(this.parentForm);
         }
@@ -75,8 +81,11 @@ export class TermConditionsComponent implements OnInit {
     );
   }
 
-  totalCheckAll: number =0;
+  
   ReconstructForm() {
+    this.totalCheckAll = 0;
+    this.totalMandatory = 0;
+    this.IsCheckedAll = true;
     console.log("ReconstructForm");
     var listTC = this.parentForm.get(this.identifier) as FormArray
     for (let i = 0; i < listTC.length; i++) {
@@ -101,6 +110,7 @@ export class TermConditionsComponent implements OnInit {
           item.get("ExpiredDt").disable();
           item.get("PromisedDt").enable();
           item.get("PromisedDt").setValidators([Validators.required]);
+          this.IsCheckedAll = false;
         }
 
       } else {
@@ -122,6 +132,7 @@ export class TermConditionsComponent implements OnInit {
       console.log(item.get("ExpiredDt"));
 
     }
+    this.OutputValueIsCheckAll.emit(this.IsCheckedAll);
     listTC.updateValueAndValidity();
   }
 
