@@ -22,7 +22,9 @@ export class ApplicationViewComponent implements OnInit {
   IsApplication : boolean = true;
   IsInvoice : boolean = true;
   IsAsset : boolean = true;
+  IsMultiAsset : boolean = true;
   IsInsurance : boolean = true;
+  IsMultiInsurance : boolean = true;
   IsLifeInsurance : boolean = true;
   IsFinancial : boolean = true;
   IsTC : boolean = true;
@@ -53,22 +55,29 @@ export class ApplicationViewComponent implements OnInit {
       this.IsReservedFund = false;
       this.IsPhoneVerification = false;
       this.IsAsset = false;
+      this.IsMultiAsset = false;
+  
     }
     else if(this.BizTemplateCode==AdInsConstant.CFRFN4W){
       this.IsAsset = false;
       this.IsMultiCollateral = false;
       this.IsInvoice = false;
+      this.IsMultiAsset = false;
+      this.IsMultiInsurance = false;
     }
     else if(this.BizTemplateCode==AdInsConstant.CF4W){
       this.IsCollateral = false;
       this.IsMultiCollateral = false;
       this.IsInvoice = false;
+      this.IsMultiAsset = false;
+      this.IsMultiInsurance = false;
     }
     else if(this.BizTemplateCode==AdInsConstant.FL4W)
     {
       this.IsCollateral = false;
       this.IsMultiCollateral = false;
       this.IsInvoice = false;
+      this.IsInsurance = false;
     }
   }
 
