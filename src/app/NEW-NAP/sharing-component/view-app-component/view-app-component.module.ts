@@ -29,6 +29,7 @@ import { UcapprovalhistModule  } from '@adins/ucapprovalhist';
 import { TabDeviationComponent } from "./tab-deviation/tab-deviation.component";
 import { InvoiceViewComponent } from "app/NEW-NAP/business-process/admin-process/invoice/invoice-view/invoice-view.component";
 import { ViewCollateralDataComponent } from "./view-collateral-data/view-collateral-data.component";
+import { ViewCollateralMultiAssetComponent } from "./view-collateral-multi-asset/view-collateral-multi-asset.component";
 
 @NgModule({
   exports: [
@@ -48,7 +49,8 @@ import { ViewCollateralDataComponent } from "./view-collateral-data/view-collate
     TabDeviationComponent,
     InvoiceDataFctrComponent,
     InvoiceViewComponent,
-    ViewCollateralDataComponent
+    ViewCollateralDataComponent,
+    ViewCollateralMultiAssetComponent
   ],
   imports: [
     CommonModule,
@@ -81,7 +83,8 @@ import { ViewCollateralDataComponent } from "./view-collateral-data/view-collate
     ViewAppFraudVerificationComponent,
     TabDeviationComponent,
     InvoiceViewComponent,
-    ViewCollateralDataComponent
+    ViewCollateralDataComponent,
+    ViewCollateralMultiAssetComponent
   ],
   providers: [
     NGXToastrService

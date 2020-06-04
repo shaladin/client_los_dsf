@@ -5,6 +5,7 @@ import { formatDate } from '@angular/common';
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { AppCollateralRegistrationObj } from 'app/shared/model/AppCollateralRegistrationObj.Model';
 import { AppCollateralDocObj } from 'app/shared/model/AppCollateralDocObj.Model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-view-collateral-data',
@@ -13,7 +14,7 @@ import { AppCollateralDocObj } from 'app/shared/model/AppCollateralDocObj.Model'
 })
 export class ViewCollateralDataComponent implements OnInit {
 
-  @Input() appId: number;
+  @Input() appId: number = 0;
   CollateralType: string;
   CollateralName: string;
   CollateralPrice: number;
@@ -26,33 +27,34 @@ export class ViewCollateralDataComponent implements OnInit {
   AppCollateralObj: AppCollateralObj = new AppCollateralObj();
   AppCollateralRegistration: AppCollateralRegistrationObj = new AppCollateralRegistrationObj();
   AppCollateralDocs: AppCollateralDocObj = new AppCollateralDocObj();
-  
-  constructor(private http: HttpClient) { }
+  AppCollateralId: number = 0;
 
-  ngOnInit(){
+  constructor(private http: HttpClient, private route: ActivatedRoute) {
+    this.route.queryParams.subscribe(params => {
+      this.AppCollateralId = params["AppCollateralId"];
+    });
+  }
 
-     this.getCollateralData();
+  ngOnInit() {
+
+    this.getCollateralData();
 
   }
   getCollateralData() {
     var AppIdObj = {
-      AppId: this.appId
+      AppId: this.appId,
+      AppCollateralId: this.AppCollateralId
     }
-    this.http.post<AppCollateralObj>(AdInsConstant.GetAppCollateralByAppId, AppIdObj).subscribe(
+    this.http.post<AppCollateralObj>(AdInsConstant.GetAppCollateralAndRegistrationByAppCollateralId, AppIdObj).subscribe(
       (response) => {
-        
-        this.AppCollateralObj = response;
-        this.http.post<AppCollateralRegistrationObj>(AdInsConstant.GetAppCollateralRegistrationByAppCollateralId, this.AppCollateralObj).subscribe(
-          (response) => {
-            this.AppCollateralRegistration = response;
-            console.log(this.AppCollateralRegistration)
-          });
-    
+
+        this.AppCollateralObj = response["AppCollateral"];
+        this.AppCollateralRegistration = response["AppCollateralRegistration"];
+        console.log("this.AppCollateralRegistration")
+        console.log(this.AppCollateralRegistration)
         this.http.post<Array<AppCollateralDocObj>>(AdInsConstant.GetListAppCollateralDocsByAppCollateralId, this.AppCollateralObj).subscribe(
           (response) => {
             this.AppCollateralDocs = response["AppCollateralDocs"];
-            console.log("response");
-            console.log(response);
           }
         );
         if (this.AppCollateralObj.MrCollateralUsageCode == "COMM") {
@@ -75,7 +77,7 @@ export class ViewCollateralDataComponent implements OnInit {
 
       });
 
-    
+
 
   }
 }

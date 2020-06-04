@@ -57,7 +57,12 @@
                 <app-view-collateral-data [appId]="AppId"></app-view-collateral-data>
               </ng-template>
             </mat-tab>
-
+            
+            <mat-tab *ngIf="IsCollateral" label="Multi Asset Collateral Data">
+              <ng-template matTabContent>
+                <app-view-collateral-multi-asset [appId]="AppId"></app-view-collateral-multi-asset>
+              </ng-template>
+            </mat-tab>
 
             <mat-tab *ngIf="IsInsurance" label="Insurance">
               <ng-template matTabContent>
