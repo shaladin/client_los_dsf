@@ -27,6 +27,9 @@ import { UcSubsectionModule } from "@adins/uc-subsection";
 import { ApprovalHistComponent } from './approval-hist/approval-hist.component';
 import { UcapprovalhistModule  } from '@adins/ucapprovalhist';
 import { TabDeviationComponent } from "./tab-deviation/tab-deviation.component";
+import { InvoiceViewComponent } from "app/NEW-NAP/business-process/admin-process/invoice/invoice-view/invoice-view.component";
+import { ViewCollateralDataComponent } from "./view-collateral-data/view-collateral-data.component";
+import { ViewCollateralMultiAssetComponent } from "./view-collateral-multi-asset/view-collateral-multi-asset.component";
 
 @NgModule({
   exports: [
@@ -43,7 +46,11 @@ import { TabDeviationComponent } from "./tab-deviation/tab-deviation.component";
     TabApplicationComponent,
     LifeInsuranceComponent,
     AppTcComponent,
-    TabDeviationComponent
+    TabDeviationComponent,
+    InvoiceDataFctrComponent,
+    InvoiceViewComponent,
+    ViewCollateralDataComponent,
+    ViewCollateralMultiAssetComponent
   ],
   imports: [
     CommonModule,
@@ -74,7 +81,10 @@ import { TabDeviationComponent } from "./tab-deviation/tab-deviation.component";
     AppInsuranceComponent,
     AppInsuranceDetailComponent,
     ViewAppFraudVerificationComponent,
-    TabDeviationComponent    
+    TabDeviationComponent,
+    InvoiceViewComponent,
+    ViewCollateralDataComponent,
+    ViewCollateralMultiAssetComponent
   ],
   providers: [
     NGXToastrService

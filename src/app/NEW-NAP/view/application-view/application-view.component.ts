@@ -16,8 +16,22 @@ export class ApplicationViewComponent implements OnInit {
   CustType: string = "";
   AppCustObj: any;
 
-  IsGuarantor : boolean = true;
   IsCustomer : boolean = true;
+  IsGuarantor : boolean = true;
+  IsReferantor : boolean = true;
+  IsApplication : boolean = true;
+  IsInvoice : boolean = true;
+  IsAsset : boolean = true;
+  IsInsurance : boolean = true;
+  IsLifeInsurance : boolean = true;
+  IsFinancial : boolean = true;
+  IsTC : boolean = true;
+  IsCommission : boolean = true;
+  IsReservedFund : boolean = true;
+  IsPhoneVerification : boolean = true;
+  IsFraudDetectionResult : boolean = true;
+  IsAnalysisResult : boolean = true;
+  IsCollateral : boolean = true;
 
   constructor(private route: ActivatedRoute, private http: HttpClient) { 
     this.route.queryParams.subscribe(params => {
