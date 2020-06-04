@@ -123,7 +123,7 @@ export class LifeInsuranceDataComponent implements OnInit {
     await this.http.post(AdInsConstant.GetAppById, { AppId: this.AppId }).toPromise().then(
       (response) => {
         this.LifeInscoBranchNameObj.OfficeCode = response["OriOfficeCode"];
-      }
+      } 
     );
     console.log(this.LifeInscoBranchNameObj);
     await this.http.post<Array<object>>(AdInsConstant.GetListVendorByCategoryCodeAndOfficeCode, this.LifeInscoBranchNameObj).toPromise().then(
