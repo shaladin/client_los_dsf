@@ -1,6 +1,6 @@
 <div *ngIf="listAppGuarantor.length>0">
   <div *ngFor="let item of listAppGuarantor; let i =index">
-    <div *ngIf="listAppGuarantor[i].MrGuarantorTypeCode =='Personal'">
+    <div *ngIf="listAppGuarantor[i].MrGuarantorTypeCode =='PERSONAL'">
       <h4>Guarantor Main Data</h4>
       <div *ngFor="let ix of listAppGuarantorPersonal; let j = index">
         <div class="form-body">
@@ -254,7 +254,7 @@
     </div>
   </div>
   <div *ngFor="let item of listAppGuarantor; let i =index">
-    <div *ngIf="listAppGuarantor[i].MrGuarantorTypeCode =='Company'">
+    <div *ngIf="listAppGuarantor[i].MrGuarantorTypeCode =='COMPANY'">
       <h4>Guarantor Main Data</h4>
       <div *ngFor="let ix of listAppGuarantorCompany; let j = index">
         <div class="form-body">

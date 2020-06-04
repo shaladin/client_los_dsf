@@ -84,6 +84,7 @@ export class ApplicationViewComponent implements OnInit {
         }
         else if(bizTemplateCode == AdInsConstant.FL4W)
         {
+          this.IsAsset = false;
           this.IsCollateral = false;
           this.IsMultiCollateral = false;
           this.IsInvoice = false;
