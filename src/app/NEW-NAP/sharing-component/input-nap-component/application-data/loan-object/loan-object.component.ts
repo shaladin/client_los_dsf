@@ -185,7 +185,7 @@ export class LoanObjectComponent implements OnInit {
 
   SaveForm(enjiForm:NgForm) {
     this.AppLoanPurposeObj.AppId = this.AppId;
-    if(this.MainInfoForm.controls.IsDisburseToCust.value == "true"){
+    if(this.MainInfoForm.controls.IsDisburseToCust.value == true){
       this.AppLoanPurposeObj.IsDisburseToCust = true;
     }else{
       this.AppLoanPurposeObj.IsDisburseToCust = false;
