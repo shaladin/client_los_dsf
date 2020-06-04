@@ -133,7 +133,7 @@
               <app-multi-asset-data *ngIf="AppStepIndex == 5" [AppId]="appId" (OutputMultiAsset)="NextStep('INS')">
               </app-multi-asset-data>
             </div>
-            <div id="insurance-tab" class="content" role="tabpanel" aria-labelledby="insurance-tab-trigger">
+            <div id="insurance-tab" class="content  " role="tabpanel" aria-labelledby="insurance-tab-trigger">
               <!-- <app-insurance-data *ngIf="!IsMultiAsset && AppStepIndex == 6" [appId]="appId"
                 (outputTab)="NextStep('LFI')"></app-insurance-data> -->
               <app-insurance-multi-asset-data *ngIf="AppStepIndex == 6" [appId]="appId"
