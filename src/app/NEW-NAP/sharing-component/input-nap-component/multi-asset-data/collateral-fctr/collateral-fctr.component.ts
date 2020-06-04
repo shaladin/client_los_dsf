@@ -489,7 +489,8 @@ export class CollateralFctrComponent implements OnInit {
 
   setCollateralInfo() {//
     this.appCollateralDataObj.AppCollateralObj.AppId = this.AppId;
-    this.appCollateralDataObj.AppCollateralObj.AppAssetId = this.AppAssetId;
+    // this.appCollateralDataObj.AppCollateralObj.AppAssetId = this.AppAssetId;
+    this.appCollateralDataObj.AppCollateralObj.AppAssetId = null;
     this.appCollateralDataObj.AppCollateralObj.AgrmntId = this.AgrmntId;
     this.appCollateralDataObj.AppCollateralObj.CollateralSeqNo = 1;
     this.appCollateralDataObj.AppCollateralObj.FullAssetCode = this.AddCollForm.controls["FullAssetCode"].value;

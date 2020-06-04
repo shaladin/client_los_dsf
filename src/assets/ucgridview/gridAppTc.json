@@ -3,7 +3,7 @@
     "headerList": [
         {
             "type": "label",
-            "position": "center",
+            "position": "left",
             "label": "Document Name",
             "name": "TcName"
         },
@@ -33,7 +33,7 @@
         },
         {
             "type": "label",
-            "position": "center",
+            "position": "left",
             "label": "Notes",
             "name": "Notes"
         }
@@ -41,7 +41,7 @@
     "bodyList": [
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "TcName"
         },
         {
@@ -50,23 +50,23 @@
             "property": "PriorTo"
         },
         {
-            "type": "text",
+            "type": "boolean",
             "position": "center",
             "property": "IsChecked"
         },
         {
-            "type": "text",
+            "type": "date",
             "position": "center",
             "property": "PromisedDt"
         },
         {
-            "type": "text",
+            "type": "date",
             "position": "center",
             "property": "ExpiredDt"
         },
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "Notes"
         }
     ]

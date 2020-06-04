@@ -33,6 +33,7 @@ export class ViewAgrmntSummaryComponent implements OnInit {
 
 
   ngOnInit() {
+    console.log('summary')
     this.agrmntObj.AgrmntId = this.agrmntId;
     this.GetAgrmntSummary();
 

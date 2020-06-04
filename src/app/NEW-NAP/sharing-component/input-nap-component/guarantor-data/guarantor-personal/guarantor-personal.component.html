@@ -21,7 +21,7 @@
                   <div class="form-group row adins-required">
                     <label class="col-md-4 adInsLabel">Id Type </label>
                     <div class="col-md-8">
-                      <select class="form-control adInsInput full-width" style="width: auto" formControlName="MrIdTypeCode"
+                      <select class="form-control adInsInput full-width" style="width: auto" formControlName="MrIdTypeCode" (change)="ChangeIdType()"
                               [ngClass]="{ 'is-invalid': enjiForm.submitted && PersonalForm.controls.MrIdTypeCode.invalid }">
                         <option *ngFor="let it of MrIdTypeCode" [value]="it.MasterCode">
                           {{it.Descr}}

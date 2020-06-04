@@ -79,7 +79,7 @@
                                     <td>{{item.SerialNo1}}</td>
                                     <td>{{item.SerialNo2}}</td>
                                     <td>{{item.SerialNo3}}</td>
-                                    <td>{{item.Notes}}</td>
+                                    <td>{{item.AssetNotes}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -195,8 +195,8 @@
                                 translate>
                                 <i class="fa fa-arrow-circle-left"></i> Cancel
                             </button>
-                            <button type="submit" (click)="SaveForm()" class="btn btn-raised btn-primary">
-                                <i class="fa fa-check-square-o"></i> Save And Continue
+                            <button type="button" (click)="SaveForm()" class="btn btn-raised btn-primary" translate>
+                                <i class="far fa-check-square"></i> Save
                             </button>
                         </div>
                     </form>

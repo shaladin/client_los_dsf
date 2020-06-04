@@ -56,6 +56,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("ini po")
     this.arrValue.push(this.AgrmntId);
     this.purchaseOrderHObj = new PurchaseOrderHObj();
 

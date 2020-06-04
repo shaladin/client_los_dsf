@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
+import { AdInsConstant } from '../../../shared/AdInstConstant';
 
 @Component({
   selector: 'app-nap-view',
@@ -10,30 +9,52 @@ import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
   styles: []
 })
 export class NapViewComponent implements OnInit {
-  arrValue = []; 
-  appId: number;
-  appCustData: AppCustObj;
+  AppId: number;
+  
+  BizTemplateCode : string;
+  arrValue = [];
+  CustType: string = "";
+  AppCustObj: any;
 
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private location: Location,
-    private httpClient: HttpClient
-  ) { 
+  IsGuarantor : boolean = true;
+  IsCustomer : boolean = true;
+
+  constructor(private route: ActivatedRoute, private http: HttpClient) { 
     this.route.queryParams.subscribe(params => {
-      if (params['AppId'] != null) {
-        this.appId = params['AppId'];
-      }
-    });
+      this.AppId = params["AppId"];
+      this.BizTemplateCode = params["BizTemplateCode"];
+    })
   }
 
   ngOnInit() {
-    this.httpClient.post(AdInsConstant.GetAppCustByAppId, { AppId: this.appId }).subscribe(
-      (response: AppCustObj) => {
-        this.appCustData = response;
-      },
-      (error) => {
-        console.log(error);
+    this.arrValue.push(this.AppId);
+    this.GetAppCust();
+    if(this.BizTemplateCode==AdInsConstant.FCTR)
+    {
+      this.IsCustomer= true;
+      this.IsGuarantor = false;
+    }
+    else if(this.BizTemplateCode==AdInsConstant.CFRFN4W){
+
+    }
+    else if(this.BizTemplateCode==AdInsConstant.CF4W){
+
+    }
+    else if(this.BizTemplateCode==AdInsConstant.FL4W)
+    {
+
+    }
+  }
+
+  GetAppCust() {
+    var appObj = {
+      AppId: this.AppId,
+    };
+    this.http.post(AdInsConstant.GetAppCustByAppId, appObj).subscribe(
+      (response) => {
+        this.AppCustObj = response;
+        console.log(response);
+        this.CustType = this.AppCustObj.MrCustTypeCode;
       }
     );
   }

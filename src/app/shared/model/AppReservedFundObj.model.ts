@@ -7,6 +7,7 @@ export class AppReservedFundObj {
   StdReservedFundAmt: any;
   Behaviour: any;
   RowVersion: any;
+  MrReservedFundSourceName: any;
 
   constructor() {
     this.AppReservedFundId = 0;
@@ -17,5 +18,6 @@ export class AppReservedFundObj {
     this.StdReservedFundAmt = 0;
     this.Behaviour = "";
     this.RowVersion = "";
+    this.MrReservedFundSourceName = "";
   }
 }

@@ -9,7 +9,7 @@ import { GuarantorPersonalObj } from 'app/shared/model/GuarantorPersonalObj.Mode
 
 @Component({
   selector: 'app-guarantor',
-  templateUrl: './guarantor.component.html',
+  templateUrl: './view-guarantor.component.html',
   styleUrls: []
 })
 export class GuarantorComponent implements OnInit {
@@ -30,6 +30,7 @@ export class GuarantorComponent implements OnInit {
       (response) => {
         console.log(response);
         this.listAppGuarantor = response["ReturnObject"];
+        console.log(this.listAppGuarantor);
       },
       (error) => {
         console.log(error);
