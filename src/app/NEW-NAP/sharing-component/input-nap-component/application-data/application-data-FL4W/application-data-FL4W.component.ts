@@ -12,11 +12,11 @@ import { ActivatedRoute } from '@angular/router';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 
 @Component({
-  selector: 'app-application-data-refinancing',
-  templateUrl: './application-data-refinancing.component.html',
-  styleUrls: ['./application-data-refinancing.component.scss']
+  selector: 'app-application-data-FL4W',
+  templateUrl: './application-data-FL4W.component.html',
+  styleUrls: []
 })
-export class ApplicationDataRefinancingComponent implements OnInit {
+export class ApplicationDataFL4WComponent implements OnInit {
 
   @Input() AppId: any;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
@@ -150,49 +150,7 @@ export class ApplicationDataRefinancingComponent implements OnInit {
           }
         );
       });
-    
   }
-
-  // getDDLFromProdOffering(refProdCompntCode:string){
-  //   var obj = {
-  //     ProdOfferingCode: this.resultResponse.ProdOfferingCode,
-  //     RefProdCompntCode: refProdCompntCode,
-  //     ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
-  //   };
-  //   this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
-  //     (response) => {
-  //       console.log(response);
-  //       var listCompntValue: Array<string> = response["CompntValue"].split(";");
-  //       var listCompntValueDesc: Array<string> = response["CompntValueDesc"].split(",");
-  //       console.log(listCompntValue);
-        
-  //       var listDDL = new Array;
-  //       var keyValueObj;
-  //       if(listCompntValue.length!=1){
-  //         for(var i=0;i<listCompntValue.length;i++){
-  //           var splitted=listCompntValue[i].split(":");
-  //           var splitted1=listCompntValueDesc[i].split(":");
-  //           keyValueObj={
-  //             Key: splitted[0],
-  //             Value: splitted1[0]
-  //           };
-  //           listDDL.push(keyValueObj);
-  //         }
-  //       }else{
-  //         keyValueObj={
-  //           Key: response["CompntValue"],
-  //           Value: response["CompntValueDesc"]
-  //         };
-  //         listDDL.push(keyValueObj);
-  //       }
-  //       console.log(listDDL);
-  //       this.applicationDDLitems[refProdCompntCode]=listDDL;
-  //     },
-  //     (error) => {
-  //       console.log(error);
-  //     }
-  //   );
-  // }
 
   getDDLFromProdOffering(refProdCompntCode:string){
     var obj = {
