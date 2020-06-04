@@ -46,6 +46,7 @@ import { SchmStepUpStepDownNormalFL4WComponent } from "./input-nap-FL4W/financia
 import { SubsidyFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/subsidy/subsidy-FL4W.component";
 import { SubsidyAddEditFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/subsidy-add-edit/subsidy-add-edit-FL4W.component";
 import { FinancialDataFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/financial-data-FL4W.component";
+import { MultiCollDataComponent } from "../sharing-component/input-nap-component/collateral-data/multi-coll-data/multi-coll-data.component";
  
 export const customCurrencyMaskConfig = {     
   align: "right",     

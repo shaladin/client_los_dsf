@@ -48,6 +48,8 @@ export class CustomerDataComponent implements OnInit {
 
   @Input() appId: any;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
+
 
   refMasterObj = {
     RefMasterTypeCode: "",
@@ -143,7 +145,7 @@ export class CustomerDataComponent implements OnInit {
           console.log(response);
           if (response["StatusCode"] == 200) {
             this.toastr.successMessage(response["message"]);
-            this.outputTab.emit();
+            this.EmitToMainComp();
           }
           else {
             response["ErrorMessages"].forEach((message: string) => {
@@ -170,20 +172,24 @@ export class CustomerDataComponent implements OnInit {
         this.toastr.errorMessage("Total Share (%) must be 100.");
         return;
       }      
-      if(this.isExpiredBirthDt || this.isExpiredEstablishmentDt) return;
       this.custDataCompanyObj = new CustDataCompanyObj();
       this.setCustCompanyObjForSave();
+      if(this.isExpiredBirthDt || this.isExpiredEstablishmentDt) return;
       this.http.post(AdInsConstant.AddEditCustDataCompany, this.custDataCompanyObj).subscribe(
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
-          this.outputTab.emit();
+          this.EmitToMainComp();
         },
         (error) => {
           console.log(error);
         }
       );
     }
+  }
+
+  Cancel(){
+    this.outputCancel.emit();
   }
 
   setCustPersonalObjForSave() {
@@ -218,8 +224,12 @@ export class CustomerDataComponent implements OnInit {
   CekDt(inputDate: Date, type: string){
     var UserAccess = JSON.parse(localStorage.getItem("UserAccess"));
     var MaxDate = formatDate(UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
+    var Max17YO = formatDate(UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
+    let max17Yodt = new Date(Max17YO);
     let d1 = new Date(inputDate);
     let d2 = new Date(MaxDate);
+    max17Yodt.setFullYear(d2.getFullYear()-17);
+
     if(d1 > d2){
       this.toastr.errorMessage(type + "  can not be more than " + MaxDate);
       if(type=="Establishment Date")
@@ -227,7 +237,11 @@ export class CustomerDataComponent implements OnInit {
       if(type=="Birth Date")
         this.isExpiredBirthDt = true;
 
-    }else{
+    }else if(type == "Birth Date" && d1 > max17Yodt){
+      this.toastr.errorMessage(type + "  can not be more than " + Max17YO);
+      this.isExpiredBirthDt = true;
+    }
+    else{
       if(type=="Birth Date")
         this.isExpiredBirthDt = false;
       if(type=="Establishment Date")
@@ -1177,5 +1191,10 @@ export class CustomerDataComponent implements OnInit {
         }
       }
     );
+  }
+
+  EmitToMainComp(){
+    console.log(this.MrCustTypeCode);
+    this.outputTab.emit(this.MrCustTypeCode);
   }
 }

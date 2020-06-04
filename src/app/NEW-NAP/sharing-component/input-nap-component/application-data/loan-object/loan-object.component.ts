@@ -26,11 +26,12 @@ export class LoanObjectComponent implements OnInit {
   title: string = "Add Loan Object";
   objEdit: any;
   AppLoanPurposeObj: AppLoanPurposeObj = new AppLoanPurposeObj();
+  IsDisburseToCust: boolean;
 
   MainInfoForm = this.fb.group({
     IsDisburseToCust: [false],
-    BudgetPlanAmount: ['', Validators.required],
-    SelfFinancing: ['', Validators.required],
+    BudgetPlanAmount: ['', [Validators.required, Validators.min(1)]],
+    SelfFinancing: ['', [Validators.required, Validators.min(1)]],
     FinancingAmount: ['']
   })
   resultData: any;
@@ -80,6 +81,8 @@ export class LoanObjectComponent implements OnInit {
         SupplierCode: response["SupplCode"],
         SupplierName: response["SupplName"]
       });
+      this.AppLoanPurposeObj.MrLoanPurposeCode = this.objEdit.MrLoanPurposeCode;
+      this.AppLoanPurposeObj.SupplCode = this.objEdit.SupplCode;
       this.setLookup();
     })
 
@@ -94,12 +97,14 @@ export class LoanObjectComponent implements OnInit {
   }
 
   open(content) {
+    this.mode = "add";
+    this.objEdit = undefined;
     this.setLookup();
     this.MainInfoForm.patchValue({
       IsDisburseToCust: "",
-      BudgetPlanAmount: "",
-      SelfFinancing: "",
-      FinancingAmount: "",
+      BudgetPlanAmount: 0,
+      SelfFinancing: 0,
+      FinancingAmount: 0,
       MrLoanPurposeCode: "",
       SupplierCode: "",
     });
@@ -124,6 +129,12 @@ export class LoanObjectComponent implements OnInit {
   CalculateFinancingAmt(){
     var BudgetPlanAmt = this.MainInfoForm.controls.BudgetPlanAmount.value;
     var SelfFinancingAmt = this.MainInfoForm.controls.SelfFinancing.value;
+
+    if (SelfFinancingAmt > BudgetPlanAmt) {
+      this.toastr.errorMessage("Self Financing Amount Must Be Lower Than Budget Plan Amount!");
+      return;
+    }
+
     var FinancingAmt = BudgetPlanAmt - SelfFinancingAmt;
     this.MainInfoForm.patchValue({
       FinancingAmount: FinancingAmt
@@ -144,6 +155,16 @@ export class LoanObjectComponent implements OnInit {
     this.supplierInputLookupObj.urlEnviPaging = environment.FoundationR3Url;
     this.supplierInputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupSupplier.json";
     this.supplierInputLookupObj.genericJson = "./assets/uclookup/NAP/lookupSupplier.json";
+    
+    var arrCrit = new Array<CriteriaObj>();
+    const addCrit = new CriteriaObj();
+    addCrit.DataType = 'text';
+    addCrit.propName = 'v.MR_VENDOR_CATEGORY_CODE';
+    addCrit.restriction = AdInsConstant.RestrictionEq;
+    addCrit.value = 'SUPPLIER_BRANCH';
+    arrCrit.push(addCrit);
+
+    this.supplierInputLookupObj.addCritInput = arrCrit;
 
     if (this.objEdit != null) {
       this.loanObjectInputLookupObj.jsonSelect = { Descr: this.objEdit.MrLoanPurposeDescr };
@@ -164,7 +185,11 @@ export class LoanObjectComponent implements OnInit {
 
   SaveForm(enjiForm:NgForm) {
     this.AppLoanPurposeObj.AppId = this.AppId;
-    this.AppLoanPurposeObj.IsDisburseToCust = this.MainInfoForm.controls.IsDisburseToCust.value;
+    if(this.MainInfoForm.controls.IsDisburseToCust.value == "true"){
+      this.AppLoanPurposeObj.IsDisburseToCust = true;
+    }else{
+      this.AppLoanPurposeObj.IsDisburseToCust = false;
+    }
     this.AppLoanPurposeObj.BudgetPlanAmt = this.MainInfoForm.controls.BudgetPlanAmount.value;
     this.AppLoanPurposeObj.SelfFinancingAmt = this.MainInfoForm.controls.SelfFinancing.value;
     this.AppLoanPurposeObj.FinancingAmt = this.MainInfoForm.controls.FinancingAmount.value;
@@ -174,11 +199,10 @@ export class LoanObjectComponent implements OnInit {
       this.AppLoanPurposeObj.RowVersion = this.objEdit.RowVersion;
       this.http.post(AdInsConstant.EditAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
         (response) => {
-          this.loadDataTable();
           this.modal.close();
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(['/Nap/ApplicationDataRefinancing'], { queryParams: { "AppId": this.AppId } });
           enjiForm.reset();
+          this.loadDataTable();
         },
         (error) => {
           console.log(error);
@@ -187,11 +211,10 @@ export class LoanObjectComponent implements OnInit {
     else {
       this.http.post(AdInsConstant.AddAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
         (response) => {
-          this.loadDataTable();
           this.modal.close();
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(['/Nap/ApplicationDataRefinancing'], { queryParams: { "AppId": this.AppId } });
           enjiForm.reset();
+          this.loadDataTable();
         },
         (error) => {
           console.log(error);
@@ -229,4 +252,14 @@ export class LoanObjectComponent implements OnInit {
     );
   }
 
+  CheckIsDisburseToCust(){
+    if(this.MainInfoForm.controls.IsDisburseToCust.value == true){
+      this.supplierInputLookupObj.isRequired = false;
+      this.MainInfoForm.controls.lookupValueSupplier.clearValidators()
+    }else{
+      this.supplierInputLookupObj.isRequired = true;
+      this.MainInfoForm.controls.lookupValueSupplier.setValidators(Validators.required)
+    }
+    this.MainInfoForm.updateValueAndValidity();
+  }
 }

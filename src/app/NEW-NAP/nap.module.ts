@@ -15,6 +15,7 @@ import { MultiAssetLeasingComponent } from "./sharing-component/input-nap-compon
 import { CollateralFctrComponent } from "./sharing-component/input-nap-component/multi-asset-data/collateral-fctr/collateral-fctr.component";
 import { UcSubsectionModule } from "@adins/uc-subsection";
 import { CollateralAddEditSingleComponent } from "./sharing-component/input-nap-component/single-asset-data/collateral-add-edit-single/collateral-add-edit-single.component";
+import { InvoiceViewComponent } from "./business-process/admin-process/invoice/invoice-view/invoice-view.component";
  
 @NgModule({
     declarations: [
@@ -33,6 +34,7 @@ import { CollateralAddEditSingleComponent } from "./sharing-component/input-nap-
         // AssetLeasingPagingComponent,
         // AssetLeasingAddEditComponent,
         // CollateralLeasingAddEditComponent
+        // InvoiceViewComponent
     ],
     imports: [
         CommonModule,

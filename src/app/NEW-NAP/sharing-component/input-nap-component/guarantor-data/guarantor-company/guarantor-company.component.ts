@@ -48,33 +48,35 @@ export class GuarantorCompanyComponent implements OnInit {
   DocObjs : any;
   defLegalDocType: string;
   appLegalDoc : any = new Array();
-  
+  isReady: boolean = false;
+
   CompanyForm = this.fb.group({
     MrCustRelationshipCode : ['', [Validators.required, Validators.maxLength(50)]],
     TaxIdNo : ['', [Validators.required, Validators.maxLength(50)]],
     MrCompanyTypeCode : ['', [Validators.required, Validators.maxLength(50)]],
     ContactName : ['', [Validators.maxLength(500)]],
     MrJobPositionCode : ['', [Validators.required, Validators.maxLength(50)]],
-    MobilePhnNo1 : ['', [Validators.required,Validators.maxLength(50)]],
+    MobilePhnNo1: ['', [Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
     ContactEmail : ['', [Validators.required,Validators.maxLength(50)]],
-    MobilePhnNo2 : ['', [Validators.maxLength(50)]],
-    FaxArea : ['', [Validators.maxLength(20)]],
-    Fax : ['', [Validators.maxLength(50)]],
-    PhnArea1 : ['', [Validators.required,Validators.maxLength(20)]],
-    Phn1 : ['', [Validators.required,Validators.maxLength(50)]],
-    PhnExt1 : ['', [Validators.maxLength(10)]],
-    PhnArea2 : ['', [ Validators.maxLength(20)]],
-    Phn2 : ['', [ Validators.maxLength(50)]],
-    PhnExt2 : ['', [ Validators.maxLength(10)]],
+    MobilePhnNo2: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
+    FaxArea: ['', [Validators.maxLength(20), Validators.pattern("^[0-9]+$")]],
+    Fax: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
+    PhnArea1: ['', [Validators.required, Validators.maxLength(20), Validators.pattern("^[0-9]+$")]],
+    Phn1: ['', [Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
+    PhnExt1: ['', [Validators.maxLength(10), Validators.pattern("^[0-9]+$")]],
+    PhnArea2: ['', [Validators.maxLength(20), Validators.pattern("^[0-9]+$")]],
+    Phn2: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
+    PhnExt2: ['', [Validators.maxLength(10), Validators.pattern("^[0-9]+$")]],
     LegalDocForm: this.fb.array([])
   });
 
+  selectedListLegalDocType : any;
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient,private fb:FormBuilder, private toastr: NGXToastrService, private modalService: NgbModal) { 
   }
 
   UserAccess: any;
   MaxDate: Date;
-  ngOnInit() {
+  async ngOnInit(): Promise<void> {
     this.UserAccess = JSON.parse(localStorage.getItem("UserAccess"));
     this.MaxDate = new Date(this.UserAccess.BusinessDt);
     this.initLookup();
@@ -85,11 +87,12 @@ export class GuarantorCompanyComponent implements OnInit {
     if (this.mode == "edit") {
       var guarantorCompanyObj = new GuarantorCompanyObj();
       guarantorCompanyObj.AppGuarantorObj.AppGuarantorId = this.AppGuarantorId;
-      this.http.post(AdInsConstant.GetAppGuarantorCompanyByAppGuarantorId, guarantorCompanyObj).subscribe(
+      await this.http.post(AdInsConstant.GetAppGuarantorCompanyByAppGuarantorId, guarantorCompanyObj).toPromise().then(
         (response) => {
           this.resultData=response;
           this.AppGuarantorCompanyId = this.resultData.appGuarantorCompanyObj.AppGuarantorCompanyId;
-          this.inputLookupObj.jsonSelect = {CustName: this.resultData.appGuarantorObj.GuarantorName};
+          this.inputLookupObj.jsonSelect = { CustName: this.resultData.appGuarantorObj.GuarantorName };
+          this.inputLookupObj.nameSelect = this.resultData.appGuarantorObj.GuarantorName;
           this.inputLookupObj1.jsonSelect = {IndustryTypeName: this.resultData.appGuarantorCompanyObj.IndustryTypeCode};
           if (this.resultData.appGuarantorCompanyObj.ListAppGuarantorCompanyLegalDoc != null && this.resultData.appGuarantorCompanyObj.ListAppGuarantorCompanyLegalDoc != undefined) {
             for (let i = 0; i < this.resultData.appGuarantorCompanyObj.ListAppGuarantorCompanyLegalDoc.length; i++) {
@@ -174,7 +177,7 @@ export class GuarantorCompanyComponent implements OnInit {
       }
     );
     this.getDocType();
-
+    this.isReady = true;
   }
 
   initLookup(){
@@ -318,6 +321,7 @@ export class GuarantorCompanyComponent implements OnInit {
   }
 
   setAppGuarantorCompany(){
+    this.selectedListLegalDocType = new Array();
     var flag:boolean = true;
     this.guarantorCompanyObj.AppGuarantorCompanyObj.MrCompanyTypeCode = this.CompanyForm.controls.MrCompanyTypeCode.value;
     this.guarantorCompanyObj.AppGuarantorCompanyObj.TaxIdNo = this.CompanyForm.controls.TaxIdNo.value;
@@ -376,21 +380,12 @@ export class GuarantorCompanyComponent implements OnInit {
   SaveForm(){
     console.log(this.CompanyForm);
     this.guarantorCompanyObj = new GuarantorCompanyObj();
-    if(!this.Add()) return;
+    if(this.Add()== false) return;
     if (this.mode == "edit") {
       this.guarantorCompanyObj.RowVersion = this.resultData.RowVersion;
       this.guarantorCompanyObj.AppGuarantorObj.AppGuarantorId = this.AppGuarantorId;
       this.guarantorCompanyObj.AppGuarantorCompanyObj.AppGuarantorCompanyId = this.AppGuarantorCompanyId;
       console.log(this.guarantorCompanyObj);
-      if(this.appLegalDoc.length<this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs.length){
-        for (let i = 0; i < this.appLegalDoc.length; i++) {
-          this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs[i].AppGuarantorCompanyLegalDocId = this.appLegalDoc[i];
-        } 
-      }else{
-        for (let i = 0; i < this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs.length; i++) {
-          this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs[i].AppGuarantorCompanyLegalDocId = this.appLegalDoc[i];
-        }
-      }
       this.http.post(AdInsConstant.EditAppGuarantorCompany, this.guarantorCompanyObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
@@ -421,17 +416,17 @@ ClearForm(){
     MrCompanyTypeCode : ['', [Validators.required, Validators.maxLength(50)]],
     ContactName : ['', [Validators.maxLength(500)]],
     MrJobPositionCode : ['', [Validators.required, Validators.maxLength(50)]],
-    MobilePhnNo1 : ['', [Validators.required,Validators.maxLength(50)]],
+    MobilePhnNo1: ['', [Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
     ContactEmail : ['', [Validators.required,Validators.maxLength(50)]],
-    MobilePhnNo2 : ['', [Validators.maxLength(50)]],
-    FaxArea : ['', [Validators.maxLength(20)]],
-    Fax : ['', [Validators.maxLength(50)]],
-    PhnArea1 : ['', [Validators.required,Validators.maxLength(20)]],
-    Phn1 : ['', [Validators.required,Validators.maxLength(50)]],
-    PhnExt1 : ['', [Validators.maxLength(10)]],
-    PhnArea2 : ['', [ Validators.maxLength(20)]],
-    Phn2 : ['', [ Validators.maxLength(50)]],
-    PhnExt2 : ['', [ Validators.maxLength(10)]],
+    MobilePhnNo2: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
+    FaxArea: ['', [Validators.maxLength(20), Validators.pattern("^[0-9]+$")]],
+    Fax: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
+    PhnArea1: ['', [Validators.required, Validators.maxLength(20), Validators.pattern("^[0-9]+$")]],
+    Phn1: ['', [Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
+    PhnExt1: ['', [Validators.maxLength(10), Validators.pattern("^[0-9]+$")]],
+    PhnArea2: ['', [Validators.maxLength(20), Validators.pattern("^[0-9]+$")]],
+    Phn2: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
+    PhnExt2: ['', [Validators.maxLength(10), Validators.pattern("^[0-9]+$")]],
     LegalDocForm: this.fb.array([])
   });
   this.initLookup();
@@ -514,7 +509,6 @@ bindLegalDoc() {
   }
 }
 
-selectedListLegalDocType = new Array();
 cekDuplicateDocType(i){
   // var IdxSelected=
   if(this.selectedListLegalDocType.length>0){

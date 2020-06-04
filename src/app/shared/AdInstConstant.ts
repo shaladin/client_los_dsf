@@ -671,6 +671,8 @@ export class AdInsConstant {
   public static PAY_FREQ_MONTHLY = "MONTHLY";
   public static INST_SCHM_REGULAR_FIXED = "RF";
   public static GetListMouCustByCustNo = environment.losUrl + "/MouCust/GetListMouCustByCustNo";
+  public static GetMouCustByAppId = environment.losUrl + "/MouCust/GetMouCustByAppId";
+
   
 
   // MOU CUST ASSET
@@ -833,6 +835,7 @@ export class AdInsConstant {
   public static GetAppAssetListByAgrmntId = environment.losUrl + "/AppAsset/GetAppAssetListByAgrmntId";
   public static GetAppAssetByAppId = environment.losUrl + "/AppAsset/GetAppAssetDataByAppId";
   public static GetAppAssetListByAppId = environment.losUrl + "/AppAsset/GetAppAssetListByAppId";
+  public static GetAppAssetListForInsuranceByAppId = environment.losUrl + "/AppAsset/GetAppAssetListForInsuranceByAppId"
   public static GetAllAssetDataForPOByAsset = environment.losUrl + "/AppAsset/GetAllAssetDataForPOByAsset";
   public static GetAppAssetByAgrmntId = environment.losUrl + "/AppAsset/GetAppAssetByAgrmntId";
   public static GetAllAssetDataByAppId = environment.losUrl + "/AppAsset/GetAllAssetDataByAppId";
@@ -1012,6 +1015,7 @@ export class AdInsConstant {
   public static GetListAppInvoiceFctrByAgrmntId = environment.losUrl + "/AppInvoiceFctr/GetListAppInvoiceFctrByAgrmntId";
 
 
+  
   public static GetAppFinDataWithRuleByAppId = environment.losUrl + "/AppFinData/GetAppFinDataWithRuleByAppId";
 
   //App Cust Addr

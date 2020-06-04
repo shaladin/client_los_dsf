@@ -3,7 +3,7 @@
   </lib-ucSubsection>
   <div id="financialDataCompany">
     <div class="form-group row">
-      <label class="col-md-2" for="monthlyIncome" translate>Monthly Income </label>
+      <label class="col-md-2 adins-required-label" for="monthlyIncome" translate>Monthly Income </label>
       <div class="col-md-4">
         <input type="" currencyMask id="monthlyIncome" class="form-control" formControlName="GrossMonthlyIncomeAmt"
           [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].GrossMonthlyIncomeAmt.invalid }" [(ngModel)]="appCustCompanyFinDataObj.GrossMonthlyIncomeAmt">

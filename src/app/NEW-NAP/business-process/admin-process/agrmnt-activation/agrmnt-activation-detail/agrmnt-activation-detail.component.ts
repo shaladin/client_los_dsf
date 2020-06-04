@@ -4,6 +4,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdminProcessService } from 'app/NEW-NAP/business-process/admin-process/admin-process.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-agrmnt-activation-detail',
@@ -28,7 +29,7 @@ export class AgrmntActivationDetailComponent implements OnInit {
   WfTaskListId: number;
   TrxNo: string;
 
-  constructor(private toastr: NGXToastrService, private route: ActivatedRoute, private adminProcessSvc: AdminProcessService,private router: Router,) {
+  constructor(private toastr: NGXToastrService, private route: ActivatedRoute, private adminProcessSvc: AdminProcessService,private router: Router,private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
       this.WfTaskListId = params["WFTaskListId"];
@@ -37,15 +38,26 @@ export class AgrmntActivationDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.arrValue.push(this.AppId);
+    this.ClaimTask(this.WfTaskListId);
     var obj = {
       AppId: this.AppId
     };
 
     this.adminProcessSvc.GetListAppAssetAgrmntActivation(obj).subscribe((response) => {
+      console.log(response);
       this.AssetObj = response["ListAppAsset"];
+      console.log(this.AssetObj);
     });
 
   }
+
+  async ClaimTask(WfTaskListId) {
+    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    var wfClaimObj = { pWFTaskListID: WfTaskListId, pUserID: currentUserContext["UserName"], isLoading: false };
+    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(() => { });
+  }
+
   addToTemp() {
     if (this.listSelectedId.length != 0) {
       for (var i = 0; i < this.listSelectedId.length; i++) {
@@ -66,12 +78,14 @@ export class AgrmntActivationDetailComponent implements OnInit {
       });
       var objFinDataAndFee = {
         AppId: this.AppId,
-        ListAppAssetId: this.listSelectedId
+        ListAppAssetId: this.tempListId
       };
       this.adminProcessSvc.GetAppFinDataAndFeeByAppIdAndListAppAssetId(objFinDataAndFee).subscribe((response) => {
         this.AppFees = response["ListAppFeeObj"];
         this.AppFinData = response["AppFinDataObj"];
       })
+
+      this.listSelectedId = new Array();
 
     } else {
       this.toastr.typeErrorCustom("Please select at least one Asset");
@@ -90,13 +104,32 @@ export class AgrmntActivationDetailComponent implements OnInit {
   Submit() {
     var Obj = {
       CreateDt: this.CreateDt,
-      ListAppAssetId: this.listSelectedId,
+      ListAppAssetId: this.tempListId,
       TaskListId: this.WfTaskListId,
       TransactionNo: this.TrxNo
     }
     this.adminProcessSvc.SubmitAgrmntActivationByHuman(Obj).subscribe((response) => {
       this.toastr.successMessage(response["message"]);
-      this.router.navigate(["AgrmntActivation/Paging"]);
+      this.router.navigate(["/Nap/AdminProcess/AgrmntActivation/Paging"]);
     })
+  }
+
+  deleteFromTemp(AppAssetId: string) {
+    if (confirm('Are you sure to delete this record?')) {
+      var index : number = this.tempListId.indexOf(AppAssetId);
+      if (index > -1) {
+        this.tempListId.splice(index, 1);
+        this.tempData.splice(index, 1);
+      }
+      var obj = {
+        AppId: this.AppId,
+        ListAppAssetId: this.tempListId
+      };
+
+      this.adminProcessSvc.GetListAppAssetAgrmntActivation(obj).subscribe((response) => {
+        this.AssetObj = response["ListAppAsset"];
+      });
+
+    }
   }
 }

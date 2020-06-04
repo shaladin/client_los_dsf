@@ -259,6 +259,8 @@ export class ApplicationDataRefinancingComponent implements OnInit {
         for(var i = 0; i<this.resultCrossApp.length; i++){
           this.ListCrossAppObj["result"].push(this.resultCrossApp[i].CrossAgrmntNo);
         }
+        console.log("resultCrossApp")
+        console.log(this.resultCrossApp)
       },
       (error) => {
         console.log(error);
@@ -313,6 +315,7 @@ export class ApplicationDataRefinancingComponent implements OnInit {
           SalesHeadName: this.resultResponse.SalesHeadName,
           SalesNotes: this.resultResponse.SalesNotes,
           SalesOfficerNo: this.resultResponse.SalesOfficerNo,
+          SalesOfficerName: this.resultResponse.SalesOfficerName,
           CreditAdminNo: this.resultResponse.CreditAdminNo,
           CreditAnalystNo: this.resultResponse.CreditAnalystNo,
           CreditRiskNo: this.resultResponse.CreditRiskNo,
@@ -568,11 +571,11 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     for(var i = 0; i < this.resultCrossApp.length; i++){
       if(this.resultCrossApp[i].AppCrossId == null){
         temp.AppId = this.resultCrossApp[i].AppId;
-        temp.CrossAgrmntNo = this.resultCrossApp[i].CrossAgrmntNo;
-        temp.CrossAppNo = this.resultCrossApp[i].CrossAppNo;
+        temp.CrossAgrmntNo = this.resultCrossApp[i].AgrmntNo;
+        temp.CrossAppNo = this.resultCrossApp[i].AppNo;
         temp.CustName = this.resultCrossApp[i].CustName;
         temp.MaturityDt = this.resultCrossApp[i].MaturityDt;
-        temp.ContractStat = this.resultCrossApp[i].ContractStat;
+        temp.ContractStat = this.resultCrossApp[i].AgrmntStat;
         arr.push(temp);
       }
     }
@@ -599,6 +602,9 @@ export class ApplicationDataRefinancingComponent implements OnInit {
       appFinData: tempAppFindDataObj,
       RowVersion: ""
     };
+
+    console.log("appcross")
+    console.log(obj)
 
     this.http.post(AdInsConstant.EditAppAddAppCross, obj).subscribe(
       (response) => {

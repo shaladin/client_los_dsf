@@ -33,6 +33,7 @@ export class LeadInputCustDataComponent implements OnInit {
   CopyFrom: string;
   rowVersion: any;
   typePage: string;
+  WfTaskListId: number;
   addEditLeadCustPersonal: string;
   inputLegalAddressObj: InputFieldObj;
   inputResidenceAddressObj: InputFieldObj;
@@ -126,6 +127,9 @@ export class LeadInputCustDataComponent implements OnInit {
         if (params["CopyFrom"] != null) {
           this.CopyFrom = params["CopyFrom"];
         }
+        if (params["WfTaskListId"] != null) {
+          this.WfTaskListId = params["WfTaskListId"];
+        }
     });
   }
 
@@ -157,6 +161,7 @@ export class LeadInputCustDataComponent implements OnInit {
   }
 
   ngOnInit() {
+      this.claimTask();
       var context = JSON.parse(localStorage.getItem("UserAccess"));
       this.businessDt = new Date(context["BusinessDt"]);
       this.businessDt.setDate(this.businessDt.getDate() - 1);
@@ -909,4 +914,13 @@ export class LeadInputCustDataComponent implements OnInit {
       );
     }
   }
+  
+  async claimTask() {
+    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"] };
+    console.log(wfClaimObj);
+    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+      (response) => {
+      });
+    }	
 }

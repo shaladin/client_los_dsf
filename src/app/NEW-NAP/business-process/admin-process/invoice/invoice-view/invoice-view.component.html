@@ -1,21 +1,18 @@
 <table class="table table-responsive-md text-center table-hover">
   <thead>
     <tr class="table-header">
-      <th class="text-left"><span translate class="thead-header" name='InvoiceNo'>INVOICE NO</span></th>
-      <th class="text-left"><span translate class="thead-header" name='InvoiceDueDt'>INVOICE DATE</span></th>
-      <th class="text-left"><span translate class="thead-header" name='CustomerFactoringName'>CUSTOMER NAME</span></th>
-      <th class="text-left"><span translate class="thead-header" name='InvoiceAmt'>INVOICE AMOUNT</span></th>
-      <th class="text-left"><span translate class="thead-header" name='Receive'>RECEIVE</span></th>
+      <th class="text-center"><span translate class="thead-header" name='InvoiceNo'>INVOICE NO</span></th>
+      <th class="text-center"><span translate class="thead-header" name='InvoiceDueDt'>INVOICE DATE</span></th>
+      <th class="text-center"><span translate class="thead-header" name='CustomerFactoringName'>CUSTOMER NAME</span></th>
+      <th class="text-center"><span translate class="thead-header" name='InvoiceAmt'>INVOICE AMOUNT</span></th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let item of invoiceDataList">
-      <td class="text-left"><a (click)="ToDetail(item.AppInvoiceFctrId)">{{item.InvoiceNo}}</a></td>
-      <td class="text-left">{{item.InvoiceDueDt}}</td>
+      <td class="text-center"><a (click)="ToDetail(item.AppInvoiceFctrId)">{{item.InvoiceNo}}</a></td>
+      <td class="text-left">{{item.InvoiceDueDt | date: 'yyyy-MM-dd' }}</td>
       <td class="text-left">{{item.CustomerFactoringName}}</td>
-      <td class="text-left">{{item.InvoiceAmt}}</td>
-      <!-- <td class="text-left">{{item.Receive}}</td> -->
-      <td class="text-left"></td>
+      <td class="text-right" >{{item.InvoiceAmt | number:'.2':'en-US' }}</td>
     </tr>
   </tbody>
 </table>

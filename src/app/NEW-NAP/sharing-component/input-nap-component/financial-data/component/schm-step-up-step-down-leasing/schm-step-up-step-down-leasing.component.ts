@@ -155,6 +155,9 @@ export class SchmStepUpStepDownLeasingComponent implements OnInit {
 
 
   CalculateAmortization() {
+    if(this.ValidateFee() == false){
+      return;
+    }    
     if(this.ParentForm.controls.StepUpStepDownInputType.value == ""){
       this.toastr.errorMessage("Please choose Step Up Step Down Input Type.");
       return;
@@ -185,7 +188,10 @@ export class SchmStepUpStepDownLeasingComponent implements OnInit {
           TotalAR: response.TotalARAmt,
 
           NtfAmt: response.NtfAmt,
-          ApvAmt: response.ApvAmt
+          ApvAmt: response.ApvAmt,
+
+          TotalLifeInsCustAmt: response.TotalLifeInsCustAmt,
+          LifeInsCptlzAmt: response.LifeInsCptlzAmt
 
         })
         this.SetInstallmentTable();
@@ -262,6 +268,18 @@ export class SchmStepUpStepDownLeasingComponent implements OnInit {
     }
 
     this.SetNeedReCalculate(true);
+  }
+
+  
+  ValidateFee(){
+    for(let i = 0; i < this.ParentForm.controls["AppFee"]["controls"].length; i++){
+      if(this.ParentForm.controls["AppFee"].value[i].IsCptlz == true
+          && this.ParentForm.controls["AppFee"].value[i].AppFeeAmt < this.ParentForm.controls["AppFee"].value[i].FeeCapitalizeAmt){
+        this.toastr.errorMessage(this.ParentForm.controls["AppFee"].value[i].FeeTypeName + " Capitalized Amount can't be higher than " +  this.ParentForm.controls["AppFee"].value[i].AppFeeAmt);
+        return false;
+      }
+    }
+    return true;
   }
 
   test() {

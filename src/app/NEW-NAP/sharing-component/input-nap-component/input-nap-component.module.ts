@@ -65,6 +65,7 @@ import { MultiCollateralPagingComponent } from "./collateral-data/component/mult
 import { CollateralDetailComponent } from "./collateral-data/component/collateral-detail/collateral-detail.component";
 import { SingleCollDataComponent } from "./collateral-data/single-coll-data/single-coll-data.component";
 import { MultiCollDataComponent } from "./collateral-data/multi-coll-data/multi-coll-data.component";
+import { ApplicationDataFL4WComponent } from "./application-data/application-data-FL4W/application-data-FL4W.component";
 
 export const customCurrencyMaskConfig = {     
   align: "right",     
@@ -135,7 +136,8 @@ export const customCurrencyMaskConfig = {
     MultiCollateralPagingComponent,
     CollateralDetailComponent,
     SingleCollDataComponent,
-    MultiCollDataComponent
+    MultiCollDataComponent,
+    ApplicationDataFL4WComponent
     // MultiAssetLeasingComponent,
     // AssetLeasingPagingComponent,
     // AssetLeasingAddEditComponent,
@@ -206,7 +208,8 @@ export const customCurrencyMaskConfig = {
     MultiCollateralPagingComponent,
     CollateralDetailComponent,
     SingleCollDataComponent,
-    MultiCollDataComponent
+    MultiCollDataComponent,
+    ApplicationDataFL4WComponent
     // MultiAssetLeasingComponent,
     // AssetLeasingPagingComponent,
     // AssetLeasingAddEditComponent,
