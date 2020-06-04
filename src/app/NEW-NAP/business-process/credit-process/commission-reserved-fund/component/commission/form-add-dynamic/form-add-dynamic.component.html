@@ -83,7 +83,7 @@
                       <div class="row">
                         <div class="col-md-6">
                           <label class="adInsLabel" currencyMask *ngIf="item.controls.TotalTaxAmount.value != ''">
-                            {{item.controls.TotalTaxAmount.value}} </label>
+                            {{item.controls.TotalTaxAmount.value | number:'.2':'en-US'}} </label>
                           <label class="adInsLabel" *ngIf="item.controls.TotalTaxAmount.value == ''"> {{ 0 | number:'.2':'en-US' }} </label>
                         </div>
                       </div>
