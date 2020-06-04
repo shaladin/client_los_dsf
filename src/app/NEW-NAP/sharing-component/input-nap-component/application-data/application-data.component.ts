@@ -28,6 +28,8 @@ export class ApplicationDataComponent implements OnInit {
   salesRecommendationItems = [];
   isInputLookupObj: boolean = false;
   isFixedRate: boolean = false;
+  PayFreqVal: number;
+  PayFreqTimeOfYear: number;
 
   NapAppModelForm = this.fb.group({
     MouCustId: [''],
@@ -107,6 +109,7 @@ export class ApplicationDataComponent implements OnInit {
     this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeFirstInstType);
     // this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeInterestType);
     this.getPayFregData();
+    this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeInterestType);
     this.getAppSrcData();
     this.GetCrossInfoData();
   }
@@ -243,6 +246,7 @@ export class ApplicationDataComponent implements OnInit {
         this.getInterestTypeCode();
         this.getDDLFromProdOffering(AdInsConstant.RefMasterTypeCodeInstSchm);
         this.getDDLFromProdOffering(AdInsConstant.RefMasterTypeCodePayFreq);
+        this.getPayFregData();
       },
       (error) => {
         console.log(error);
@@ -364,9 +368,6 @@ export class ApplicationDataComponent implements OnInit {
 
     this.makeLookUpObj();
   }
-
-  PayFreqVal: number = 0;
-  PayFreqTimeOfYear: number = 0;
 
   ChangeNumOfInstallmentTenor() {
     var temp:number = +this.NapAppModelForm.controls.Tenor.value;

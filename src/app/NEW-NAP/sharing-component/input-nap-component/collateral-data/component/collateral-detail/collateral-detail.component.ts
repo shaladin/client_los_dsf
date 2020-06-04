@@ -59,16 +59,16 @@ export class CollateralDetailComponent implements OnInit {
     AssetCategoryCode: ['', Validators.required],
     AssetTaxCode: [''],
     CollateralNotes: [''],
-    CollateralPrcnt: ['', Validators.required],
+    CollateralPrcnt: ['', [Validators.required, Validators.pattern("^[0-9]+$"), Validators.max(100)]],
     IsMainCollateral: true,
     ManufacturingYear: ['', Validators.pattern("^[0-9]*$")],
     CollateralNo: [''],
     AssetTaxDt: [''],
-    UserName: [''],
+    UserName: ['', Validators.required],
     MrUserRelationshipCode: [''],
-    OwnerMobilePhnNo: [''],
-    OwnerName: [''],
-    OwnerIdNo: [''],
+    OwnerMobilePhnNo: ['', Validators.required],
+    OwnerName: ['', Validators.required],
+    OwnerIdNo: ['', Validators.required],
     MrIdTypeCode: [''],
     MrOwnerRelationshipCode: [''],
     Notes: [''],
@@ -77,7 +77,8 @@ export class CollateralDetailComponent implements OnInit {
     OwnerRelationship: [''],
     MrIdType: [''],
     CopyFromLegal: ['LEGAL'],
-    AppAttrName: ['']
+    AppAttrName: [''],
+    SelfUsage: ['']
   });
 
   CollTypeList: Array<KeyValueObj> = new Array<KeyValueObj>();
@@ -100,6 +101,7 @@ export class CollateralDetailComponent implements OnInit {
     if (this.isSingleAsset) {
       this.getAppCollData(this.AppId, 0);
     }
+    this.AddCollForm.controls.AssetTypeCode.disable();
   }
 
   initUcLookup() {
@@ -121,7 +123,7 @@ export class CollateralDetailComponent implements OnInit {
     this.http.post(AdInsConstant.GetListKeyValueByCode, {}).subscribe(
       (response) => {
         this.CollTypeList = response['ReturnObject'];
-        if (this.mode != "edit") {
+        if (this.mode != "edit" ) {
           this.AddCollForm.patchValue({
             AssetTypeCode: this.CollTypeList[0].Key
           });
@@ -268,45 +270,47 @@ export class CollateralDetailComponent implements OnInit {
       (response) => {
         this.appCollateralObj = response['AppCollateral'];
         this.collateralRegistrationObj = response['AppCollateralRegistration'];
-
-        this.AddCollForm.patchValue({
-          AppCollateralId: this.appCollateralObj.AppCollateralId,
-          AssetTypeCode: this.appCollateralObj.AssetTypeCode,
-          FullAssetCode: this.appCollateralObj.FullAssetCode,
-          AssetCategoryCode: this.appCollateralObj.AssetCategoryCode,
-          MrCollateralConditionCode: this.appCollateralObj.MrCollateralConditionCode,
-          MrCollateralUsageCode: this.appCollateralObj.MrCollateralUsageCode,
-          CollateralStat: this.appCollateralObj.CollateralStat,
-          SerialNo1: this.appCollateralObj.SerialNo1,
-          SerialNo2: this.appCollateralObj.SerialNo2,
-          SerialNo3: this.appCollateralObj.SerialNo3,
-          CollateralValueAmt: this.appCollateralObj.CollateralValueAmt,
-          CollateralNotes: this.appCollateralObj.CollateralNotes,
-          AssetTaxDt: formatDate(this.appCollateralObj.AssetTaxDt, 'yyyy-MM-dd', 'en-US'),
-          CollateralPrcnt: this.appCollateralObj.CollateralPrcnt,
-          IsMainCollateral: this.appCollateralObj.IsMainCollateral,
-          ManufacturingYear: this.appCollateralObj.ManufacturingYear,
-          RowVersionCollateral: this.appCollateralObj.RowVersion,
-
-          AppCollateralRegistrationId: this.collateralRegistrationObj.AppCollateralRegistrationId,
-          OwnerName: this.collateralRegistrationObj.OwnerName,
-          OwnerIdNo: this.collateralRegistrationObj.OwnerIdNo,
-          MrIdTypeCode: this.collateralRegistrationObj.MrIdTypeCode,
-          OwnerMobilePhnNo: this.collateralRegistrationObj.OwnerMobilePhnNo,
-          MrOwnerRelationshipCode: this.collateralRegistrationObj.MrOwnerRelationshipCode,
-          UserName: this.collateralRegistrationObj.UserName,
-          MrUserRelationshipCode: this.collateralRegistrationObj.MrUserRelationshipCode,
-          RowVersionCollateralRegistration: this.collateralRegistrationObj.RowVersion
-        });
-
+        
         if (!IsExisting) {
           if (this.appCollateralObj.AppCollateralId != 0) {
             this.mode = "edit";
+          }else{
+            return true;
           }
           this.AddCollForm.patchValue({
             CollateralStat: "EXISTING"
           });
         }
+
+          this.AddCollForm.patchValue({
+            AppCollateralId: this.appCollateralObj.AppCollateralId,
+            AssetTypeCode: this.appCollateralObj.AssetTypeCode,
+            FullAssetCode: this.appCollateralObj.FullAssetCode,
+            AssetCategoryCode: this.appCollateralObj.AssetCategoryCode,
+            MrCollateralConditionCode: this.appCollateralObj.MrCollateralConditionCode,
+            MrCollateralUsageCode: this.appCollateralObj.MrCollateralUsageCode,
+            CollateralStat: this.appCollateralObj.CollateralStat,
+            SerialNo1: this.appCollateralObj.SerialNo1,
+            SerialNo2: this.appCollateralObj.SerialNo2,
+            SerialNo3: this.appCollateralObj.SerialNo3,
+            CollateralValueAmt: this.appCollateralObj.CollateralValueAmt,
+            CollateralNotes: this.appCollateralObj.CollateralNotes,
+            AssetTaxDt: formatDate(this.appCollateralObj.AssetTaxDt, 'yyyy-MM-dd', 'en-US'),
+            CollateralPrcnt: this.appCollateralObj.CollateralPrcnt,
+            IsMainCollateral: this.appCollateralObj.IsMainCollateral,
+            ManufacturingYear: this.appCollateralObj.ManufacturingYear,
+            RowVersionCollateral: this.appCollateralObj.RowVersion,
+  
+            AppCollateralRegistrationId: this.collateralRegistrationObj.AppCollateralRegistrationId,
+            OwnerName: this.collateralRegistrationObj.OwnerName,
+            OwnerIdNo: this.collateralRegistrationObj.OwnerIdNo,
+            MrIdTypeCode: this.collateralRegistrationObj.MrIdTypeCode,
+            OwnerMobilePhnNo: this.collateralRegistrationObj.OwnerMobilePhnNo,
+            MrOwnerRelationshipCode: this.collateralRegistrationObj.MrOwnerRelationshipCode,
+            UserName: this.collateralRegistrationObj.UserName,
+            MrUserRelationshipCode: this.collateralRegistrationObj.MrUserRelationshipCode,
+            RowVersionCollateralRegistration: this.collateralRegistrationObj.RowVersion
+          });
 
         this.changeSerialNoValidators(this.appCollateralObj.MrCollateralConditionCode);
         this.onItemChange(this.appCollateralObj.AssetTypeCode);
@@ -338,6 +342,14 @@ export class CollateralDetailComponent implements OnInit {
     this.getAppCollData(0, event.AppCollateralId, true);
   }
 
+  getLookupCollateral(e) {
+    this.AddCollForm.patchValue({
+      FullAssetCode: e.FullAssetCode,
+      FullAssetName: e.FullAssetName,
+      AssetCategoryCode: e.AssetCategoryCode
+    });
+  }
+
   onItemChange(AssetCode: string) {
     var arrAddCrit = new Array();
     var addCrit = new CriteriaObj();
@@ -365,10 +377,12 @@ export class CollateralDetailComponent implements OnInit {
   }
 
   CopyUser() {
-    this.AddCollForm.patchValue({
-      OwnerName: this.AddCollForm.controls.UserName.value,
-      MrOwnerRelationshipCode: this.AddCollForm.controls.MrUserRelationshipCode.value
-    })
+    if(this.AddCollForm.controls.SelfUsage.value == true){
+      this.AddCollForm.patchValue({
+        OwnerName: this.AddCollForm.controls.UserName.value,
+        MrOwnerRelationshipCode: this.AddCollForm.controls.MrUserRelationshipCode.value
+      })
+    }
   }
 
   copyToLocation() {
@@ -463,7 +477,6 @@ export class CollateralDetailComponent implements OnInit {
     this.appCollateralDataObj.AppCollateralObj.ManufacturingYear = this.AddCollForm.controls["ManufacturingYear"].value;
     this.appCollateralDataObj.AppCollateralObj.AssetTaxDt = this.AddCollForm.controls["AssetTaxDt"].value;
     this.appCollateralDataObj.AppCollateralObj.IsMainCollateral = true;
-    this.appCollateralDataObj.AppCollateralObj.CollateralPrcnt = this.AddCollForm.controls["CollateralPrcnt"].value;
 
     if (this.mode == 'edit') {
       this.appCollateralDataObj.AppCollateralObj.AppCollateralId = this.appCollateralObj.AppCollateralId,
@@ -505,4 +518,5 @@ export class CollateralDetailComponent implements OnInit {
   setCollateralPercentage() {
     this.appCollateralDataObj.AppCollateralObj.CollateralPrcnt = this.AddCollForm.controls["CollateralPrcnt"].value;
   }
+
 }
