@@ -1,5 +1,5 @@
 {
-    "title": "Search Guarantor",
+    "title": "Search Customer",
     "exportExcel": false,
     "component": [
         {
@@ -20,7 +20,7 @@
         {
             "type": "sort",
             "position": "left",
-            "label": "Guarantor Name",
+            "label": "Customer Name",
             "name": "CustName"
         },
         {
