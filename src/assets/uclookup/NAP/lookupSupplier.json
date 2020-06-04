@@ -19,9 +19,9 @@
     }
   ],
   "querystring": {
-    "select": "SELECT v.VENDOR_CODE AS VendorCode, v.VENDOR_NAME AS VendorName, v.VENDOR_ID as VendorId",
+    "select": "SELECT v.VENDOR_CODE AS VendorCode, v.VENDOR_NAME AS VendorName, v.VENDOR_ID as VendorId, v.MR_VENDOR_CATEGORY_CODE AS MrVendorCategoryCode",
     "from": "FROM dbo.VENDOR v WITH(NOLOCK) LEFT JOIN dbo.VENDOR_OFFICE_MBR vom WITH(NOLOCK) ON v.VENDOR_ID = vom.VENDOR_ID LEFT JOIN REF_OFFICE ro WITH(NOLOCK) on vom.REF_OFFICE_ID = ro.REF_OFFICE_ID LEFT JOIN dbo.VENDOR_SCHM_MBR vcm WITH(NOLOCK) ON v.VENDOR_ID = vcm.VENDOR_ID",
-    "where": "WHERE v.IS_ACTIVE = 1"
+    "where": "WHERE v.IS_ACTIVE = 1 and v.MR_VENDOR_CATEGORY_CODE = 'SUPPLIER_BRANCH'"
   },
   "headerList": [
     {

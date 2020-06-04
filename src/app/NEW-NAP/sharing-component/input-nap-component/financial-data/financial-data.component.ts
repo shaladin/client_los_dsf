@@ -17,6 +17,8 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 export class FinancialDataComponent implements OnInit {
   @Input() AppId: number;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
+
   //AppId : number;
   FinDataForm: FormGroup;
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
@@ -101,6 +103,7 @@ export class FinancialDataComponent implements OnInit {
         SellEffectiveRatePrcnt: 0,
 
         ApvAmt: 0,
+        TotalDpAmt: 0,
 
         NeedReCalculate: true
       }
@@ -110,7 +113,7 @@ export class FinancialDataComponent implements OnInit {
 
   LoadAppFinData() {
     console.log("Load App Fin Data Started...");
-    this.http.post<AppFinDataObj>(environment.losUrl + "/AppFinData/GetInitAppFinDataByAppId", { AppId: this.AppId }).subscribe(
+    this.http.post<AppFinDataObj>(AdInsConstant.GetInitAppFinDataByAppId, { AppId: this.AppId }).subscribe(
       (response) => {
         this.appFinDataObj = response;
 
@@ -152,7 +155,8 @@ export class FinancialDataComponent implements OnInit {
           MrLcCalcMethodCode: this.appFinDataObj.MrLcCalcMethodCode,
           LcGracePeriod: this.appFinDataObj.LcGracePeriod,
           PrepaymentPenaltyRate: this.appFinDataObj.PrepaymentPenaltyRate,
-          SellEffectiveRatePrcnt: this.appFinDataObj.SellEffectiveRatePrcnt
+          SellEffectiveRatePrcnt: this.appFinDataObj.SellEffectiveRatePrcnt,
+          TotalDpAmt: this.appFinDataObj.TotalDpAmt
         });
 
         this.setValidator(this.appFinDataObj.MrInstSchemeCode);
@@ -183,6 +187,10 @@ export class FinancialDataComponent implements OnInit {
         }
       );
     }
+  }
+
+  Cancel(){
+    this.outputCancel.emit();
   }
 
   ValidateGracePeriode() {
