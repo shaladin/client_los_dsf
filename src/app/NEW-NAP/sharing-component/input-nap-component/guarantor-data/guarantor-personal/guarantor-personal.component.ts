@@ -49,7 +49,7 @@ export class GuarantorPersonalComponent implements OnInit {
     MrCustRelationshipCode: ['', [Validators.required, Validators.maxLength(50)]],
     MrIdTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
     MrGenderCode: ['', [Validators.required, Validators.maxLength(50)]],
-    IdNo: ['', [Validators.required, Validators.maxLength(50)]],
+    IdNo: ['', [Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
     MrMaritalStatCode: ['', [Validators.required,Validators.maxLength(50)]],
     IdExpDt: ['', [Validators.required]],
     MrNationalityCode: ['', [Validators.required,Validators.maxLength(50)]],
@@ -57,7 +57,7 @@ export class GuarantorPersonalComponent implements OnInit {
     BirthDt: ['',[Validators.required]],
     TaxIdNo: ['', [Validators.maxLength(50)]],
     MrReligionCode: ['', [Validators.required,Validators.maxLength(50)]],
-    MobilePhnNo: ['', [Validators.required, Validators.maxLength(50)]],
+    MobilePhnNo: ['', [Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
     CountryCode: ['']
   });
 
@@ -65,20 +65,20 @@ export class GuarantorPersonalComponent implements OnInit {
     CountryCode: ""
   };
 
-  ngOnInit(){
+  async ngOnInit(): Promise<void>{
     this.getDate();
     this.initLookup();
     this.initAddr();
     if (this.mode == "edit") {
       var guarantorPersonalObj = new GuarantorPersonalObj();
       guarantorPersonalObj.AppGuarantorObj.AppGuarantorId = this.AppGuarantorId;
-      this.http.post(AdInsConstant.GetAppGuarantorPersonalByAppGuarantorId, guarantorPersonalObj).subscribe(
+      await this.http.post(AdInsConstant.GetAppGuarantorPersonalByAppGuarantorId, guarantorPersonalObj).toPromise().then(
         (response) => {
           console.log("response: ");
           console.log(response);
           this.resultData = response;
           this.AppGuarantorPersonalId = this.resultData.appGuarantorPersonalObj.AppGuarantorPersonalId;
-          this.inputLookupObj.jsonSelect = {CustName: this.resultData.appGuarantorObj.GuarantorName};
+          this.inputLookupObj.jsonSelect = { CustName: this.resultData.appGuarantorObj.GuarantorName };
           this.PersonalForm.patchValue({
             MrCustRelationshipCode: this.resultData.appGuarantorObj.MrCustRelationshipCode,
             MrIdTypeCode: this.resultData.appGuarantorPersonalObj.MrIdTypeCode,
@@ -96,6 +96,7 @@ export class GuarantorPersonalComponent implements OnInit {
           this.setCountryName(this.resultData.appGuarantorPersonalObj.CountryCode);
           this.setAddrLegalObj();
           this.clearExpDt();
+
         },
         (error) => {
           console.log(error);
@@ -451,7 +452,7 @@ export class GuarantorPersonalComponent implements OnInit {
       MrCustRelationshipCode: ['', [Validators.required, Validators.maxLength(50)]],
       MrIdTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
       MrGenderCode: ['', [Validators.required, Validators.maxLength(50)]],
-      IdNo: ['', [Validators.required, Validators.maxLength(50)]],
+      IdNo: ['', [Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
       MrMaritalStatCode: ['', [Validators.required,Validators.maxLength(50)]],
       IdExpDt: ['', [Validators.required]],
       MrNationalityCode: ['', [Validators.required,Validators.maxLength(50)]],
@@ -459,7 +460,7 @@ export class GuarantorPersonalComponent implements OnInit {
       BirthDt: ['',[Validators.required]],
       TaxIdNo: ['', [Validators.maxLength(50)]],
       MrReligionCode: ['', [Validators.required,Validators.maxLength(50)]],
-      MobilePhnNo: ['', [Validators.required, Validators.maxLength(50)]],
+      MobilePhnNo: ['', [Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
       CountryCode: ['']
     });
 

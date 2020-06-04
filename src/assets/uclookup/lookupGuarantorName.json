@@ -1,10 +1,10 @@
 {
-    "title": "Search Guarantor",
+    "title": "Search Customer",
     "exportExcel": false,
     "component": [
         {
             "type": "textbox",
-            "name": "CUST_NAME",
+            "name": "A.CUST_NAME",
             "id": "CustNameId",
             "value": "",
             "label": "Guarantor Name",
@@ -12,7 +12,7 @@
         }
     ],
     "querystring": {
-        "select": " SELECT CUST_NAME AS CustName, CUST_ID AS CustId",
+        "select": " SELECT A.CUST_NAME AS CustName, A.CUST_ID AS CustId",
         "from": "FROM CUST A WITH(NOLOCK)",
         "where": "WHERE MR_CUST_TYPE_CODE='PERSONAL'"
     },
@@ -20,8 +20,8 @@
         {
             "type": "sort",
             "position": "left",
-            "label": "Guarantor Name",
-            "name": "CUST_NAME"
+            "label": "Customer Name",
+            "name": "A.CUST_NAME"
         },
         {
             "type": "sort",

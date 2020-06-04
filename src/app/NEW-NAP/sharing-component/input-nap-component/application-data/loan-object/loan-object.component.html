@@ -57,10 +57,10 @@
           (ngSubmit)="MainInfoForm.valid && SaveForm(enjiForm)" #enjiForm="ngForm">
           <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 adins-required-label" for="IsDisburseToCust" translate>Is Disburse to Cust</label>
+              <label class="col-md-3 " for="IsDisburseToCust" translate>Is Disburse to Cust</label>
               <div class="col-md-9">
                 <input type="checkbox" id="IsDisburseToCust" class="border-primary"
-                  formControlName="IsDisburseToCust" required>
+                  formControlName="IsDisburseToCust" (change)="CheckIsDisburseToCust()">
                 <lib-uc-show-errors [control]="MainInfoForm.controls.IsDisburseToCust"
                   [submit]="MainInfoReqForm.submitted">
                 </lib-uc-show-errors>
@@ -69,17 +69,17 @@
 
             <div class="form-group row">
               <label class="col-md-3 adins-required-label" for="BudgetPlanAmount" translate>Budget Plan Amount</label>
-              <div class="col-md-9">
-                <input currencyMask type="text" id="BudgetPlanAmount" class="form-control adInsInput number"
-                  formControlName="BudgetPlanAmount" [ngClass]="{ 'is-invalid': enjiForm.submitted && MainInfoForm.controls.BudgetPlanAmount.invalid}">
+              <div class="col-md-5">
+                <input currencyMask type="text" id="BudgetPlanAmount" class="form-control adInsInput"
+                  formControlName="BudgetPlanAmount" (focusout)="CalculateFinancingAmt()" [ngClass]="{ 'is-invalid': enjiForm.submitted && MainInfoForm.controls.BudgetPlanAmount.invalid}">
                 <lib-uc-show-errors [control]="MainInfoForm.controls.BudgetPlanAmount"
                   [submit]="MainInfoReqForm.submitted">
                 </lib-uc-show-errors>
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-md-3  adins-required-label" translate>Supplier Name</label>
-              <div class="col-md-3">
+              <label class="col-md-3" [ngClass]="{ 'adins-required-label': MainInfoForm.controls.IsDisburseToCust.value == false }" translate>Supplier Name</label>
+              <div class="col-md-5">
                 <lib-uclookupgeneric [lookupInput]="supplierInputLookupObj" [parentForm]='MainInfoForm'
                   [enjiForm]='MainInfoReqForm' [identifier]="'lookupValueSupplier'"
                   (lookup)="getSupplierInputLookupValue($event)"></lib-uclookupgeneric>
@@ -87,8 +87,8 @@
             </div>
             <div class="form-group row">
               <label class="col-md-3 adins-required-label" for="SelfFinancing" translate>Self Financing</label>
-              <div class="col-md-9">
-                <input currencyMask (focusout)="CalculateFinancingAmt()" type="text" id="SelfFinancing" class="form-control adInsInput number"
+              <div class="col-md-5">
+                <input currencyMask (focusout)="CalculateFinancingAmt()" type="text" id="SelfFinancing" class="form-control adInsInput"
                   formControlName="SelfFinancing" [ngClass]="{ 'is-invalid': enjiForm.submitted && MainInfoForm.controls.SelfFinancing.invalid}"> 
                 <lib-uc-show-errors [control]="MainInfoForm.controls.SelfFinancing"
                   [submit]="MainInfoReqForm.submitted">
@@ -97,7 +97,7 @@
             </div>
             <div class="form-group row">
               <label class="col-md-3 adins-required-label" translate>Loan Object</label>
-              <div class="col-md-3">
+              <div class="col-md-5">
                 <lib-uclookupgeneric [lookupInput]="loanObjectInputLookupObj" [parentForm]='MainInfoForm'
                   [enjiForm]='MainInfoReqForm' [identifier]="'lookupValueLoan'"
                   (lookup)="getLoanInputLookupValue($event)">
@@ -106,8 +106,8 @@
             </div>
             <div class="form-group row">
               <label class="col-md-3 adins-required-label" for="FinancingAmount" translate>Financing Amount</label>
-              <div class="col-md-9">
-                <input currencyMask type="text" id="FinancingAmount" class="form-control adInsInput number"
+              <div class="col-md-5">
+                <input currencyMask type="text" id="FinancingAmount" class="form-control adInsInput"
                   formControlName="FinancingAmount" [ngClass]="{ 'is-invalid': enjiForm.submitted && MainInfoForm.controls.FinancingAmount.invalid}">
                 <lib-uc-show-errors [control]="MainInfoForm.controls.FinancingAmount"
                   [submit]="MainInfoReqForm.submitted">
