@@ -16,8 +16,25 @@ export class ApplicationViewComponent implements OnInit {
   CustType: string = "";
   AppCustObj: any;
 
-  IsGuarantor : boolean = true;
   IsCustomer : boolean = true;
+  IsGuarantor : boolean = true;
+  IsReferantor : boolean = true;
+  IsApplication : boolean = true;
+  IsInvoice : boolean = true;
+  IsAsset : boolean = true;
+  IsMultiAsset : boolean = true;
+  IsInsurance : boolean = true;
+  IsMultiInsurance : boolean = true;
+  IsLifeInsurance : boolean = true;
+  IsFinancial : boolean = true;
+  IsTC : boolean = true;
+  IsCommission : boolean = true;
+  IsReservedFund : boolean = true;
+  IsPhoneVerification : boolean = true;
+  IsFraudDetectionResult : boolean = true;
+  IsAnalysisResult : boolean = true;
+  IsCollateral : boolean = true;
+  IsMultiCollateral : boolean = true;
 
   constructor(private route: ActivatedRoute, private http: HttpClient) { 
     this.route.queryParams.subscribe(params => {
@@ -31,18 +48,36 @@ export class ApplicationViewComponent implements OnInit {
     this.GetAppCust();
     if(this.BizTemplateCode==AdInsConstant.FCTR)
     {
-      this.IsCustomer= true;
+      this.IsCollateral = false;
       this.IsGuarantor = false;
+      this.IsReferantor = false;
+      this.IsCommission = false;
+      this.IsReservedFund = false;
+      this.IsPhoneVerification = false;
+      this.IsAsset = false;
+      this.IsMultiAsset = false;
+  
     }
     else if(this.BizTemplateCode==AdInsConstant.CFRFN4W){
-
+      this.IsAsset = false;
+      this.IsMultiCollateral = false;
+      this.IsInvoice = false;
+      this.IsMultiAsset = false;
+      this.IsMultiInsurance = false;
     }
     else if(this.BizTemplateCode==AdInsConstant.CF4W){
-
+      this.IsCollateral = false;
+      this.IsMultiCollateral = false;
+      this.IsInvoice = false;
+      this.IsMultiAsset = false;
+      this.IsMultiInsurance = false;
     }
     else if(this.BizTemplateCode==AdInsConstant.FL4W)
     {
-
+      this.IsCollateral = false;
+      this.IsMultiCollateral = false;
+      this.IsInvoice = false;
+      this.IsInsurance = false;
     }
   }
 

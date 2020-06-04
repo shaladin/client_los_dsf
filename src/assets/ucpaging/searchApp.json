@@ -126,8 +126,8 @@
             "type": "link",
             "position": "center",
             "property": "AppNo",
-            "target" : "_self", 
-            "path" : "../../View/AppView", 
+            "target" : "_blank", 
+            "path" : "../../../View/AppView", 
             "param" : [ 
                 {
                     "type" : "AppId", 

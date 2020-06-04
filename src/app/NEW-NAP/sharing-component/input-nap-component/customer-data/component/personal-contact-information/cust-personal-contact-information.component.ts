@@ -10,6 +10,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { formatDate } from '@angular/common';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
   selector: 'app-cust-personal-contact-information',
@@ -90,7 +91,8 @@ export class CustPersonalContactInformationComponent implements OnInit {
   constructor(
     private fb: FormBuilder, 
     private http: HttpClient,
-    private modalService: NgbModal,) {
+    private modalService: NgbModal,
+    private toastr: NGXToastrService,) {
 
      }
 
@@ -108,6 +110,16 @@ export class CustPersonalContactInformationComponent implements OnInit {
     if(this.listContactPersonPersonal == undefined){
       this.listContactPersonPersonal = new Array<AppCustPersonalContactPersonObj>();
     }
+    var userAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    var businessDtStr = formatDate(userAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
+    var businessDt = new Date(businessDtStr);
+    var birthDt = new Date(this.ContactInfoPersonalForm.controls.BirthDt.value);
+
+    if(birthDt > businessDt){
+      this.toastr.errorMessage("Birth Date can not be more than " + businessDtStr);
+      return;
+    }
+
     this.setAppCustPersonalContactPerson();
     if(this.mode == "Add"){
       this.listContactPersonPersonal.push(this.appCustPersonalContactPersonObj);
