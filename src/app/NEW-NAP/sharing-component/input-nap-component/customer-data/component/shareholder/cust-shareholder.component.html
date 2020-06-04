@@ -130,7 +130,7 @@
                 <label class="col-md-2" for="idExpDt" translate>Id Expired Date</label>
                 <div class="col-md-4">
                   <input *ngIf="CustShareholderForm.controls.MrIdTypeCode.value == 'EKTP'" readonly type="date" class="form-control" id="idExpDt" formControlName="IdExpiredDt">
-                  <input *ngIf="CustShareholderForm.controls.MrIdTypeCode.value != 'EKTP'" max="{{MaxDate | date:'yyyy-MM-dd'}}" type="date" class="form-control" id="idExpDt" formControlName="IdExpiredDt">
+                  <input *ngIf="CustShareholderForm.controls.MrIdTypeCode.value != 'EKTP'" min="{{MaxDate | date:'yyyy-MM-dd'}}" type="date" class="form-control" id="idExpDt" formControlName="IdExpiredDt">
                 </div>
                 <label class="col-md-2" for="mobilePhone" translate>Mobile Phone</label>
                 <div class="col-md-4">

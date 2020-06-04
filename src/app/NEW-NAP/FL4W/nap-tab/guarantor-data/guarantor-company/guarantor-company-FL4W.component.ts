@@ -54,14 +54,14 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
     IndustryTypeCode : ['', [Validators.required, , Validators.maxLength(50)]],
     ContactName : ['', [Validators.maxLength(500)]],
     MrJobPositionCode : ['', [Validators.required, Validators.maxLength(50)]],
-    MobilePhnNo1 : ['', [Validators.maxLength(50)]],
+    MobilePhnNo1 : ['', [Validators.required,Validators.maxLength(50)]],
     ContactEmail : ['', [Validators.maxLength(50)]],
     MobilePhnNo2 : ['', [Validators.maxLength(50)]],
     FaxArea : ['', [Validators.maxLength(20)]],
     Fax : ['', [Validators.maxLength(50)]],
-    PhnArea1 : ['', [Validators.maxLength(20)]],
-    Phn1 : ['', [Validators.maxLength(50)]],
-    PhnExt1 : ['', [Validators.maxLength(10)]],
+    PhnArea1 : ['', [Validators.required, Validators.maxLength(20)]],
+    Phn1 : ['', [Validators.required, Validators.maxLength(50)]],
+    PhnExt1 : ['', [Validators.required,Validators.maxLength(10)]],
     PhnArea2 : ['', [ Validators.maxLength(20)]],
     Phn2 : ['', [ Validators.maxLength(50)]],
     PhnExt2 : ['', [ Validators.maxLength(10)]],
@@ -363,6 +363,7 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
     
     this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs = new Array<AppGuarantorCompanyLegalDocObj>();
     var j = this.CompanyForm.controls["LegalDocForm"]["value"].length;
+    
     for (let i = 0; i < j; i++) {
       console.log(this.CompanyForm.controls["LegalDocForm"].value[i]);
       this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs[i] = new AppGuarantorCompanyLegalDocObj();
@@ -375,6 +376,8 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
       this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs[i].ReleaseLocation = this.CompanyForm.controls["LegalDocForm"].value[i].ReleaseLocation; 
       
        if(this.cekDuplicateDocType(i) == false) flag=false;
+
+       
     }
     return flag;
   }

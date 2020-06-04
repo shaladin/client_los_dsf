@@ -20,12 +20,16 @@ export class ApplicationDataComponent implements OnInit {
   @Input() appId: number;
   @Input() IsLoanObject: boolean = false;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
+
   ListCrossAppObj: any = {};
   inputLookupObj;
   arrAddCrit;
   salesRecommendationItems = [];
   isInputLookupObj: boolean = false;
   isFixedRate: boolean = false;
+  PayFreqVal: number;
+  PayFreqTimeOfYear: number;
 
   NapAppModelForm = this.fb.group({
     MouCustId: [''],
@@ -48,12 +52,14 @@ export class ApplicationDataComponent implements OnInit {
     Tenor: ["", [Validators.pattern("^[0-9]+$"), Validators.required]],
     NumOfInst: [''],
     PayFreqCode: ['', Validators.required],
+    PayFreqCodeDesc: [''],
     MrFirstInstTypeCode: ["", Validators.required],
     NumOfAsset: [''],
     MrLcCalcMethodCode: [""],
     LcInstRatePrml: [''],
     LcInsRatePrml: [''],
     MrAppSourceCode: ["", Validators.required],
+    MrAppSourceCodeDesc: [""],
     MrWopCode: ["", Validators.required],
     SrvyOrderNo: [''],
     ApvDt: [''],
@@ -101,8 +107,9 @@ export class ApplicationDataComponent implements OnInit {
     this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeInstSchm);
     this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeCustNotifyOpt);
     this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeFirstInstType);
-    this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeInterestType);
+    // this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeInterestType);
     this.getPayFregData();
+    this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeInterestType);
     this.getAppSrcData();
     this.GetCrossInfoData();
   }
@@ -115,7 +122,7 @@ export class ApplicationDataComponent implements OnInit {
     };
     this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL, obj).subscribe(
       (response) => {
-        // console.log(response);
+        console.log(response);
         var listDDL = response["DDLRefProdComptCode"];
         // console.log(listDDL);
         this.applicationDDLitems[refProdCompntCode]=listDDL;
@@ -239,6 +246,7 @@ export class ApplicationDataComponent implements OnInit {
         this.getInterestTypeCode();
         this.getDDLFromProdOffering(AdInsConstant.RefMasterTypeCodeInstSchm);
         this.getDDLFromProdOffering(AdInsConstant.RefMasterTypeCodePayFreq);
+        this.getPayFregData();
       },
       (error) => {
         console.log(error);
@@ -360,9 +368,6 @@ export class ApplicationDataComponent implements OnInit {
 
     this.makeLookUpObj();
   }
-
-  PayFreqVal: number = 0;
-  PayFreqTimeOfYear: number = 0;
 
   ChangeNumOfInstallmentTenor() {
     var temp:number = +this.NapAppModelForm.controls.Tenor.value;
@@ -497,6 +502,10 @@ export class ApplicationDataComponent implements OnInit {
       }
     );
 
+  }
+
+  Cancel(){
+    this.outputCancel.emit();
   }
 
   closeResult;

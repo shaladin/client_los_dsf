@@ -17,6 +17,7 @@ export class GuarantorPagingComponent implements OnInit {
 
   @Input() AppId: any;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
   inputGridObj: any;
   result : any = new Array();
@@ -82,6 +83,10 @@ export class GuarantorPagingComponent implements OnInit {
 
   SaveAndContinue() {
     this.outputTab.emit();
+  }
+
+  Cancel(){
+    this.outputCancel.emit();
   }
 
   event(content, ev) {
