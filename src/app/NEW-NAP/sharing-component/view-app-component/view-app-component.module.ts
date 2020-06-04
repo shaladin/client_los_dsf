@@ -54,7 +54,8 @@ import { ViewCollateralMultiAssetComponent } from "./view-collateral-multi-asset
     AppAssetDataComponent,
     AppInsuranceComponent,
     AppInsuranceDetailComponent,
-    AppAssetDataDetailComponent
+    AppAssetDataDetailComponent,
+    ApprovalHistComponent
   ],
   imports: [
     CommonModule,

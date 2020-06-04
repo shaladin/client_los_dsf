@@ -5,7 +5,8 @@ export class AllAppReservedFundObj {
   ReturnHandlingHId : number;
   ReturnHandlingExecNotes : string;
   WfTaskIdListId : number;
-  IsPersonal : boolean;
+  IsPersonal: boolean;
+  GrossYield: any;
 
   constructor() {
     this.AppId = 0;

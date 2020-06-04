@@ -1,7 +1,7 @@
 <div class="button-right margin-15">
-    <button type="button" class="btn btn-raised btn-primary" (click)="add(content)" translate>
-      <i class="ft-plus-circle"></i> Add
-    </button>
+  <button type="button" class="btn btn-raised btn-primary" (click)="add(content)" translate>
+    <i class="ft-plus-circle"></i> Add
+  </button>
 </div>
 <div *ngIf="result.length == 0">
   <table class="table table-responsive-md text-center table-hover">
@@ -42,12 +42,15 @@
 <div *ngIf="result.length > 0">
   <lib-ucgridview [gridInput]="inputGridObj" (callback)="event(content,$event)"></lib-ucgridview>
 </div>
-<button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
-  <i class="ft-x"></i> Cancel
-</button>
-<button type="button" (click)="SaveAndContinue()" class="btn btn-raised btn-primary pull-right margin-15">
-  <i class="far fa-check-square"></i> Save
-</button>
+<div class="pull-right margin-15">
+  <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
+    <i class="ft-x"></i> Cancel
+  </button>
+  <button type="button" (click)="SaveAndContinue()" class="btn btn-raised btn-primary">
+    <i class="far fa-check-square"></i> Save
+  </button>
+</div>
+
 <ng-template #content let-c="close" let-d="dismiss">
   <div class="modal-header">
     <h4 class="modal-title">Guarantor</h4>

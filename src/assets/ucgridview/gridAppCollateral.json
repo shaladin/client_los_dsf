@@ -89,20 +89,34 @@
             "position": "center",
             "action": [
                 {
-                    "type": "callback",
-                    "key": "edit",
-                    "property": [
-                        {
-                            "type": "AppCollateralId",
-                            "property": "AppCollateralId"
-                        },
-                        {
-                            "type": "AppId",
-                            "property": "AppId"
-                        },
-                        {
-                            "type": "editColl",
-                            "property": "editColl"
+                    "type" : "switch", 
+                    "case" : [ 
+                      {
+                        "conditions" : [ 
+                          {
+                            "property" : "AppAssetId", 
+                            "value": null,
+                            "restriction": "EQ"
+                          }
+                        ],
+                          "result" : {
+                            "type": "callback",
+                            "key": "edit",
+                            "property": [
+                                {
+                                    "type": "AppCollateralId",
+                                    "property": "AppCollateralId"
+                                },
+                                {
+                                    "type": "AppId",
+                                    "property": "AppId"
+                                },
+                                {
+                                    "type": "editColl",
+                                    "property": "editColl"
+                                }
+                            ]
+                          }
                         }
                     ]
                 },
