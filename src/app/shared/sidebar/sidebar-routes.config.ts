@@ -109,7 +109,7 @@ export const ROUTES: RouteInfo[] = [
   //         { Path: '/Nap/AdditionalProcess/ReturnHandling/CommissionReservedFund/Paging', Title: 'Commission Reserved Fund', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
   //       ], Params: []
   //     },
-  //   ], Params: []
+  //   ]
   // },
   {
     Path: '', Title: 'Lead', Icon: 'ft-home', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
