@@ -64,10 +64,52 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
     CountryCode: ""
   };
 
-  ngOnInit() {
+  async ngOnInit(): Promise<void> {
     this.getDate();
     this.initLookup();
     this.initAddr();
+
+    if (this.mode == "edit") {
+      var guarantorPersonalObj = new GuarantorPersonalObj();
+      guarantorPersonalObj.AppGuarantorObj.AppGuarantorId = this.AppGuarantorId;
+     await  this.http.post(AdInsConstant.GetAppGuarantorPersonalByAppGuarantorId, guarantorPersonalObj).toPromise().then(
+        (response) => {
+         
+          this.resultData = response;
+          this.AppGuarantorPersonalId = this.resultData.appGuarantorPersonalObj.AppGuarantorPersonalId;
+          this.inputLookupObj.jsonSelect = { CustName: this.resultData.appGuarantorObj.GuarantorName };
+          this.inputLookupObj.nameSelect = this.resultData.appGuarantorObj.GuarantorName;
+        
+          this.PersonalForm.patchValue({
+            MrCustRelationshipCode: this.resultData.appGuarantorObj.MrCustRelationshipCode,
+            MrIdTypeCode: this.resultData.appGuarantorPersonalObj.MrIdTypeCode,
+            MrGenderCode: this.resultData.appGuarantorPersonalObj.MrGenderCode,
+            IdNo: this.resultData.appGuarantorPersonalObj.IdNo,
+            MrMaritalStatCode: this.resultData.appGuarantorPersonalObj.MrMaritalStatCode, 
+            MrNationalityCode: this.resultData.appGuarantorPersonalObj.MrNationalityCode,
+            BirthPlace: this.resultData.appGuarantorPersonalObj.BirthPlace,
+            BirthDt: formatDate(this.resultData.appGuarantorPersonalObj['BirthDt'], 'yyyy-MM-dd', 'en-US'),
+            TaxIdNo: this.resultData.appGuarantorObj.TaxIdNo,
+            MrReligionCode: this.resultData.appGuarantorPersonalObj.MrReligionCode,
+            MobilePhnNo: this.resultData.appGuarantorPersonalObj.MobilePhnNo,
+          })
+          this.clearExpDt();
+          this.PersonalForm.patchValue({
+            IdExpDt: this.resultData.appGuarantorPersonalObj.IdExpDt != undefined ? formatDate(this.resultData.appGuarantorPersonalObj.IdExpDt, 'yyyy-MM-dd', 'en-US') : '',
+          });
+          this.setCountryName(this.resultData.appGuarantorPersonalObj.CountryCode);
+          this.setAddrLegalObj();
+          
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+    else {
+      this.ClearForm();
+      this.inputLookupObj1.isReady = true;
+    }
 
     var refCustRelObj = {
       RefMasterTypeCode: "CUST_PERSONAL_RELATIONSHIP",
@@ -155,51 +197,6 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
       }
     );
 
-
-    if (this.mode == "edit") {
-      var guarantorPersonalObj = new GuarantorPersonalObj();
-      guarantorPersonalObj.AppGuarantorObj.AppGuarantorId = this.AppGuarantorId;
-      this.http.post(AdInsConstant.GetAppGuarantorPersonalByAppGuarantorId, guarantorPersonalObj).subscribe(
-        (response) => {
-          console.log("response: ");
-          console.log(response);
-         
-          this.resultData = response;
-          this.AppGuarantorPersonalId = this.resultData.appGuarantorPersonalObj.AppGuarantorPersonalId;
-           
-          do {
-            this.inputLookupObj.jsonSelect = { CustName: this.resultData.appGuarantorObj.GuarantorName };
-          } while (this.inputLookupObj.jsonSelect ==null); 
-          this.PersonalForm.patchValue({
-            MrCustRelationshipCode: this.resultData.appGuarantorObj.MrCustRelationshipCode,
-            MrIdTypeCode: this.resultData.appGuarantorPersonalObj.MrIdTypeCode,
-            MrGenderCode: this.resultData.appGuarantorPersonalObj.MrGenderCode,
-            IdNo: this.resultData.appGuarantorPersonalObj.IdNo,
-            MrMaritalStatCode: this.resultData.appGuarantorPersonalObj.MrMaritalStatCode, 
-            MrNationalityCode: this.resultData.appGuarantorPersonalObj.MrNationalityCode,
-            BirthPlace: this.resultData.appGuarantorPersonalObj.BirthPlace,
-            BirthDt: formatDate(this.resultData.appGuarantorPersonalObj['BirthDt'], 'yyyy-MM-dd', 'en-US'),
-            TaxIdNo: this.resultData.appGuarantorObj.TaxIdNo,
-            MrReligionCode: this.resultData.appGuarantorPersonalObj.MrReligionCode,
-            MobilePhnNo: this.resultData.appGuarantorPersonalObj.MobilePhnNo,
-          })
-          this.clearExpDt();
-          this.PersonalForm.patchValue({
-            IdExpDt: this.resultData.appGuarantorPersonalObj.IdExpDt != undefined ? formatDate(this.resultData.appGuarantorPersonalObj.IdExpDt, 'yyyy-MM-dd', 'en-US') : '',
-          });
-          this.setCountryName(this.resultData.appGuarantorPersonalObj.CountryCode);
-          this.setAddrLegalObj();
-          
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    }
-    else {
-      this.ClearForm();
-      this.inputLookupObj1.isReady = true;
-    }
 
 
   }

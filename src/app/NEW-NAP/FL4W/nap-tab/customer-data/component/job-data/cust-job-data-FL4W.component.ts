@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormBuilder, Validators, NgForm, FormGroup, ControlContainer, FormGroupDirective } from '@angular/forms';
@@ -10,6 +10,8 @@ import { ActivatedRoute } from '@angular/router';
 import { AppCustPersonalJobDataObj } from 'app/shared/model/AppCustPersonalJobDataObj.Model';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
+import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 
 @Component({
   selector: 'app-cust-job-data-FL4W',
@@ -26,7 +28,7 @@ export class CustJobDataFL4WComponent implements OnInit {
   @Input() identifier: any;
   @Input() appCustPersonalJobDataObj: AppCustPersonalJobDataObj = new AppCustPersonalJobDataObj();
   @Input() custModelCode: any;
-
+  @ViewChild('LookupProfession') ucLookupProfession: UclookupgenericComponent;
   refMasterObj = {
     RefMasterTypeCode: "",
   };
@@ -115,6 +117,7 @@ export class CustJobDataFL4WComponent implements OnInit {
     if(this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "SME"){
       this.parentForm.controls[this.identifier]["controls"].CompanyName.setValidators([Validators.required, Validators.maxLength(100)]);
     }
+    this.setLookupProfessionCriteria();
   }
 
   GetProfession(event){
@@ -186,13 +189,23 @@ export class CustJobDataFL4WComponent implements OnInit {
     this.InputLookupProfessionObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupProfessionObj.pagingJson = "./assets/uclookup/lookupProfession.json";
     this.InputLookupProfessionObj.genericJson = "./assets/uclookup/lookupProfession.json";
-
+    this.setLookupProfessionCriteria();
     this.InputLookupIndustryTypeObj = new InputLookupObj();
     this.InputLookupIndustryTypeObj.urlJson = "./assets/uclookup/lookupIndustryType.json";
     this.InputLookupIndustryTypeObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
     this.InputLookupIndustryTypeObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupIndustryTypeObj.pagingJson = "./assets/uclookup/lookupIndustryType.json";
     this.InputLookupIndustryTypeObj.genericJson = "./assets/uclookup/lookupIndustryType.json";
+  }
+  setLookupProfessionCriteria() {
+    var arrCrit = new Array();
+    var critObj = new CriteriaObj();
+    critObj.DataType = 'text';
+    critObj.restriction = AdInsConstant.RestrictionIn;
+    critObj.propName = 'MR_CUST_MODEL_CODE';
+    critObj.listValue = [this.custModelCode];
+    arrCrit.push(critObj);
+    this.InputLookupProfessionObj.addCritInput = arrCrit;
   }
 
   bindAppCustPersonalJobData(){

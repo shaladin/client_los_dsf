@@ -66,6 +66,7 @@ import { CollateralDetailComponent } from "./collateral-data/component/collatera
 import { SingleCollDataComponent } from "./collateral-data/single-coll-data/single-coll-data.component";
 import { MultiCollDataComponent } from "./collateral-data/multi-coll-data/multi-coll-data.component";
 import { ApplicationDataFL4WComponent } from "./application-data/application-data-FL4W/application-data-FL4W.component";
+import { UclookupgenericComponent } from "@adins/uclookupgeneric";
 
 export const customCurrencyMaskConfig = {     
   align: "right",     
@@ -215,7 +216,7 @@ export const customCurrencyMaskConfig = {
     // AssetLeasingAddEditComponent,
     // CollateralLeasingAddEditComponent
   ],
-  entryComponents: [SubsidyAddEditComponent],
+  entryComponents: [SubsidyAddEditComponent, UclookupgenericComponent],
   providers: [
     NGXToastrService
   ]

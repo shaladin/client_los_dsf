@@ -136,22 +136,27 @@ export class CustLegalDocComponent implements OnInit {
     this.appCustCompanyLegalDocObj.DocNotes = this.LegalDocForm.controls.DocNotes.value;
     this.appCustCompanyLegalDocObj.ReleaseLocation = this.LegalDocForm.controls.ReleaseLocation.value;
     this.appCustCompanyLegalDocObj.LegalDocName = this.selectedLegalDocName;
-    let d1 = new Date(this.MaxDate);
-    let d2 = new Date(this.appCustCompanyLegalDocObj.DocDt);
-    let d3 = new Date(this.appCustCompanyLegalDocObj.DocExpiredDt);
-    if(d1>d3){
-      this.toastr.errorMessage("Expired Date can not be less than " + this.MaxDate);
-      flag = false;
-    }
-    if(d1<d2){
-      this.toastr.errorMessage("Issued Date can not be more than " + this.MaxDate);
-      flag = false;
-    }
     var currentEditedIndex = -1;
     if(this.mode == "Edit"){
       currentEditedIndex = this.currentEditedIndex;
     }
     flag = this.cekDuplicateDocType(currentEditedIndex);
+    let d1 = new Date(this.MaxDate);
+    let d2 = new Date(this.appCustCompanyLegalDocObj.DocDt);
+    let d3 = new Date(this.appCustCompanyLegalDocObj.DocExpiredDt);
+    console.log(d1);
+    console.log(d2);
+    console.log(d3);
+    if (d1 > d3 && d1 != d3) {
+      this.toastr.errorMessage("Expired Date can not be less than " + this.MaxDate);
+      flag = false;
+    }
+    d1.setDate(d1.getDate()+1);
+    console.log(d1);
+    if (d1 < d2 && d1 != d2) {
+      this.toastr.errorMessage("Issued Date can not be more than " + this.MaxDate);
+      flag = false;
+    }    
     return flag;
   }
 

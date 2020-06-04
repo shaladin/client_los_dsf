@@ -19,6 +19,7 @@ import { AppCollateralRegistrationObj } from 'app/shared/model/AppCollateralRegi
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { AppAssetSupplEmpObj } from 'app/shared/model/AppAssetSupplEmpObj.Model';
 import { VendorObj } from 'app/shared/model/Vendor.Model';
+import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 
 @Component({
   selector: 'app-asset-data-add-edit',
@@ -433,7 +434,13 @@ copyToLocationAddr() {
                       BranchManagerNo: this.branchAppAssetSupplEmpObj.SupplEmpNo,
                       BranchManagerName: this.branchAppAssetSupplEmpObj.SupplEmpName
                     });
+                },
+                (error) => {
+                  console.log(error);
                 });
+              },
+              (error) => {
+                console.log(error);
               });
 
               this.appAssetSupplEmpHeadObj = new AppAssetSupplEmpObj();
@@ -540,6 +547,14 @@ copyToLocationAddr() {
     this.InputLookupAssetObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupAssetObj.pagingJson = "./assets/uclookup/NAP/lookupAsset.json";
     this.InputLookupAssetObj.genericJson = "./assets/uclookup/NAP/lookupAsset.json";
+
+    var arrCrit = new Array<CriteriaObj>();
+    var critObj = new CriteriaObj();
+    critObj.restriction = AdInsConstant.RestrictionEq;
+    critObj.propName = 'B.ASSET_TYPE_CODE';
+    critObj.value = AdInsConstant.ASSET_TYPE_CAR;
+    arrCrit.push(critObj);
+    this.InputLookupAssetObj.addCritInput = arrCrit;
 
     this.assetConditionObj = new RefMasterObj();
     this.assetConditionObj.RefMasterTypeCode = "ASSET_CONDITION";
