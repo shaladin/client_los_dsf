@@ -5,7 +5,7 @@
       <div class="card-body">
         <div class="px-3">
 
-          <form class="form form-horizontal" [formGroup]="NapAppReferantorForm" (ngSubmit)="NapAppReferantorForm.valid"
+          <form class="form form-horizontal" [formGroup]="NapAppReferantorForm" (ngSubmit)="NapAppReferantorForm.valid && ClickSave()"
             #enjiForm="ngForm">
             <!-- Main Info -->
             <div class="form-body">
@@ -100,8 +100,8 @@
             </div>
 
             <div class="form-actions right">
-              <button type="button" (click)="ClickSave()" class="btn btn-raised btn-primary">
-                <i class="fa fa-check-square-o"></i> Save and Continue
+              <button type="submit" class="btn btn-raised btn-primary">
+                <i class="fa fa-check-square"></i> Save
               </button>
               <!-- <button type="submit" (click)="ClickSave('next')" class="btn btn-raised btn-primary">
                 <i class="fa fa-check-square-o"></i> Next

@@ -73,7 +73,7 @@
   <table class="table table-responsive-md text-center table-hover">
     <thead>
       <tr class="table-header">
-        <th class="text-left">No</th>
+        <th class="text-center">No</th>
         <th class="text-left">Document Name</th>
         <th class="text-left">Last Printed</th>
         <th class="text-left">Last Printed By</th>
@@ -82,9 +82,9 @@
     </thead>
     <tbody>
       <tr *ngFor="let item of AgrmntDocObj;let i=index">
-        <td class="text-left">{{i+1}}</td>
+        <td class="text-center">{{i+1}}</td>
         <td class="text-left">{{item.AgrmntDocName}}</td>
-        <td class="text-left">{{item.DocPrintDt}}</td>
+        <td class="text-left">{{item.DocPrintDt  | date: 'dd-MMMM-yyyy'}}</td>
         <td class="text-left">{{item.EmpName}}</td>
         <td class="text-left">{{item.NumOfDocPrinted}}</td>
       </tr>
