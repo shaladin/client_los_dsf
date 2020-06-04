@@ -3,7 +3,7 @@
     <div class="card-body">
       <div class="px-3">
         <div class="form-body">
-          <h4 class="form-section card-title" translate>VIEW APPLICATION</h4>
+          <h4 class="form-section card-title" translate>VIEW AGREEMENT</h4>
          <lib-ucviewgeneric [viewInput]="viewAgrMainInfo" ></lib-ucviewgeneric>
           <mat-tab-group>
             <mat-tab label="CUSTOMER">
@@ -27,7 +27,7 @@
                 <agrmnt-life-insurance [agrmntId]="AgrmntId" ></agrmnt-life-insurance>
               </ng-template>
             </mat-tab>
-            <mat-tab label="FINACIAL">
+            <mat-tab label="FINANCIAL">
               <ng-template matTabContent> 
                 <app-agrmnt-financial [AgrmntId]="AgrmntId"></app-agrmnt-financial>
               </ng-template>
