@@ -182,6 +182,17 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
     this.InputLookupCustomerObj.addCritInput = arrCrit;
   }
 
+  setCriteriaLookupCountry(){
+    var arrCrit = new Array();
+    var critObj = new CriteriaObj();
+    critObj.DataType = 'text';
+    critObj.restriction = AdInsConstant.RestrictionNotIn;
+    critObj.propName = 'COUNTRY_CODE';
+    critObj.listValue = ['IDN'];
+    arrCrit.push(critObj);
+    this.InputLookupCountryObj.addCritInput = arrCrit;
+  }
+
   setCountryName(countryCode){
     this.countryObj.CountryCode = countryCode;
 
@@ -270,7 +281,7 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
     this.InputLookupCountryObj.pagingJson = "./assets/uclookup/lookupCountry.json";
     this.InputLookupCountryObj.genericJson = "./assets/uclookup/lookupCountry.json";
     this.InputLookupCountryObj.isRequired = false;
-
+    this.setCriteriaLookupCountry();
   }
 
   async bindAllRefMasterObj(){

@@ -670,6 +670,8 @@ export class AdInsConstant {
   public static PAY_FREQ_MONTHLY = "MONTHLY";
   public static INST_SCHM_REGULAR_FIXED = "RF";
   public static GetListMouCustByCustNo = environment.losUrl + "/MouCust/GetListMouCustByCustNo";
+  public static GetMouCustByAppId = environment.losUrl + "/MouCust/GetMouCustByAppId";
+
   
 
   // MOU CUST ASSET
@@ -1015,6 +1017,7 @@ export class AdInsConstant {
   public static GetListAppInvoiceFctrByAgrmntId = environment.losUrl + "/AppInvoiceFctr/GetListAppInvoiceFctrByAgrmntId";
 
 
+  
   public static GetAppFinDataWithRuleByAppId = environment.losUrl + "/AppFinData/GetAppFinDataWithRuleByAppId";
 
   //App Cust Addr

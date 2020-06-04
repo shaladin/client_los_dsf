@@ -54,24 +54,24 @@ export class NapFromLeadDetailComponent implements OnInit {
     Tenor: 0,
     NumOfInst: 0,
     PayFreqCode: [''],
-    MrFirstInstTypeCode: "-",
-    NumOfAsset: 1,
+    MrFirstInstTypeCode: "",
+    NumOfAsset: 0,
     MrLcCalcMethodCode: [''],
     LcInstRatePrml: [''],
     LcInsRatePrml: [''],
-    MrAppSourceCode: "-",
-    MrWopCode: "-",
+    MrAppSourceCode: "",
+    MrWopCode: "",
     SrvyOrderNo: [''],
     ApvDt: [''],
     SalesHeadNo: [''],
     SalesNotes: [''],
-    SalesOfficerNo: "-",
+    SalesOfficerNo: "",
     CreditAdminNo: [''],
     CreditAnalystNo: [''],
     CreditRiskNo: [''],
     DataEntryNo: [''],
     MrSalesRecommendCode: [''],
-    MrCustNotifyOptCode: "-",
+    MrCustNotifyOptCode: "",
     PreviousAppId: [''],
     IsAppInitDone: [''],
     MrOrderInfoCode: [''],
@@ -116,8 +116,15 @@ export class NapFromLeadDetailComponent implements OnInit {
     addCrit.DataType = "text";
     addCrit.propName = "ro.OFFICE_CODE ";
     addCrit.restriction = AdInsConstant.RestrictionIn;
-    addCrit.listValue = [this.user.MrOfficeTypeCode];
+    addCrit.listValue = [this.user.OfficeCode];
     this.arrAddCrit.push(addCrit);
+
+    var addCritBizTempalte = new CriteriaObj();
+    addCritBizTempalte.DataType = "text";
+    addCritBizTempalte.propName = "rlob.BIZ_TMPLT_CODE";
+    addCritBizTempalte.restriction = AdInsConstant.RestrictionEq;
+    addCritBizTempalte.value = AdInsConstant.CF4W;
+    this.arrAddCrit.push(addCritBizTempalte);
 
     this.inputLookupObjName.addCritInput = this.arrAddCrit;
   }
@@ -169,6 +176,10 @@ export class NapFromLeadDetailComponent implements OnInit {
     napAppObj.IsAppInitDone = false;
     napAppObj.AppStat = AdInsConstant.AppStepNew;
     napAppObj.AppCurrStep = AdInsConstant.AppStepNew;
+    napAppObj.BizTemplateCode = AdInsConstant.CF4W;
+    napAppObj.LobCode = this.NapAppForm.controls.LobCode.value;
+    napAppObj.OriOfficeCode = this.NapAppForm.controls['OriOfficeCode'].value;
+    napAppObj.OriOfficeName = this.NapAppForm.controls['OriOfficeName'].value;
     napAppObj = this.CheckValue(napAppObj);
     this.http.post(AdInsConstant.AddAppFromLead, napAppObj).subscribe(
       (response) => {
@@ -195,46 +206,48 @@ export class NapFromLeadDetailComponent implements OnInit {
     console.log(napAppObj);
 }
 
-  getLookupAppResponseName(ev: any) {
-    console.log(ev);
-    var url = environment.FoundationR3Url + AdInsConstant.GetListProdOfferingDByProdOfferingCode;
-    var obj = {
-      ProdOfferingCode: ev.ProdOfferingCode
-    };
-    var tempLobCode;
-    var tempCurrCode;
-    var tempPayFreqCode;
-    var tempRefProdTypeCode;
-    this.http.post(url,obj).subscribe(
-      (response) => {
-        var temp = response["ReturnObject"];
-        for(var i=0;i<temp.length;i++){
-          if(temp[i].RefProdCompntCode == "LOB"){
-            tempLobCode = temp[i].CompntValue;
-          }else if(temp[i].RefProdCompntCode == "CURR"){
-            tempCurrCode = temp[i].CompntValue;
-          }else if(temp[i].RefProdCompntCode == "PAYFREQ"){
-            tempPayFreqCode = temp[i].CompntValue;
-          }else if(temp[i].RefProdCompntCode == "PROD_TYPE"){
-            tempRefProdTypeCode = temp[i].CompntValue;
-          }else{
-            console.log("Not");
-          }
+getLookupAppResponseName(ev: any) {
+  console.log(ev);
+  var obj = {
+    ProdOfferingCode: ev.ProdOfferingCode,
+    ProdOfferingVersion: ev.ProdOfferingVersion,
+  };
+  var tempLobCode;
+  var tempCurrCode;
+  var tempPayFreqCode;
+  var tempRefProdTypeCode;
+  this.http.post(AdInsConstant.GetListProdOfferingDByProdOfferingCodeAndProdOfferingVersion, obj).subscribe(
+    (response) => {
+      console.log(response);
+      var temp = response["ListProdOfferingDObj"];
+      for (var i = 0; i < temp.length; i++) {
+        if (temp[i].RefProdCompntCode == "LOB") {
+          tempLobCode = temp[i].CompntValue;
+        } else if (temp[i].RefProdCompntCode == "CURR") {
+          tempCurrCode = temp[i].CompntValue;
+        } else if (temp[i].RefProdCompntCode == "PAYFREQ") {
+          tempPayFreqCode = temp[i].CompntValue;
+        } else if (temp[i].RefProdCompntCode == "PROD_TYPE") {
+          tempRefProdTypeCode = temp[i].CompntValue;
+        } else {
+          // console.log("Not");
         }
-        this.NapAppForm.patchValue({
-          ProdOfferingCode: ev.ProdOfferingCode,
-          ProdOfferingName: ev.ProdOfferingName,
-          ProdOfferingVersion: ev.ProdOfferingVersion,
-          CurrCode: tempCurrCode,
-          LobCode: tempLobCode,
-          PayFreqCode: tempPayFreqCode,
-          RefProdTypeCode: tempRefProdTypeCode
-        });
-      },
-      (error) => {
-        console.log(error);
       }
-    );
-  }
+      this.NapAppForm.patchValue({
+        ProdOfferingCode: ev.ProdOfferingCode,
+        ProdOfferingName: ev.ProdOfferingName,
+        ProdOfferingVersion: ev.ProdOfferingVersion,
+        CurrCode: tempCurrCode,
+        LobCode: tempLobCode,
+        PayFreqCode: tempPayFreqCode,
+        RefProdTypeCode: tempRefProdTypeCode
+      });
+      console.log(this.NapAppForm);
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+}
 
 }
