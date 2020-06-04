@@ -6,7 +6,6 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute } from '@angular/router';
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { AppAssetAccessoryObj } from 'app/shared/model/AppAssetAccessoryObj.model';
 import { AppInsuranceObj } from 'app/shared/model/AppInsuranceObj.Model';
@@ -15,13 +14,6 @@ import { AppInsMainCvgObj } from 'app/shared/model/AppInsMainCvgObj.Model';
 import { ResultInsRateRuleObj } from 'app/shared/model/ResultInsRateRuleObj.Model';
 import { ResultCalcInsObj } from 'app/shared/model/ResultCalcInsObj.Model';
 import { InsuranceDataObj } from 'app/shared/model/InsuranceDataObj.Model';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { formatDate } from '@angular/common';
-import { InsuranceDataInsRateRuleObj } from 'app/shared/model/InsuranceDataInsRateRuleObj.Model';
-import { CalcInsAddCvgObj } from 'app/shared/model/CalcInsAddCvgObj.Model';
-import { RequestCalcInsObj } from 'app/shared/model/RequestCalcInsObj.Model';
-import { CalcInsMainCvgObj } from 'app/shared/model/CalcInsMainCvgObj.Model';
-import { AppInsAddCvgObj } from 'app/shared/model/AppInsAddCvgObj.Model';
 
 @Component({
   selector: 'app-insurance-multi-asset-data',
@@ -93,8 +85,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     PaidAmtByCust: [0]
   });
   
-  constructor(private fb: FormBuilder, 
-    private modalService: NgbModal,
+  constructor(private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
     private route: ActivatedRoute){
@@ -111,7 +102,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
 
     this.appAssetObj = new AppAssetObj();
     this.appAssetObj.AppId = this.appId;
-    this.http.post(AdInsConstant.GetListAppInsObjByAppIdForView, this.appAssetObj).subscribe(
+    this.http.post(AdInsConstant.GetAppAssetListForInsuranceByAppId, this.appAssetObj).subscribe(
       (response) => {
           this.listAppAssetObj = response["LoanAppInsObjects"];
           this.listAppCollateralObj = response["CollateralAppInsObjects"];
