@@ -6,6 +6,7 @@ import { AppObj } from 'app/shared/model/App/App.Model';
 import Stepper from 'bs-stepper';
 import { FormBuilder } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -26,6 +27,8 @@ export class NapAddDetailComponent implements OnInit {
   OnFormReturnInfo: boolean = false;
   IsMultiAsset: boolean = false;
   ListAsset: any;
+  appCustObj: AppCustObj = new AppCustObj();
+  CustType: string = '';
 
   FormReturnObj = this.fb.group({
     ReturnExecNotes: ['']
@@ -68,6 +71,11 @@ export class NapAddDetailComponent implements OnInit {
     this.http.post(AdInsConstant.GetAppById, this.NapObj).subscribe(
       (response: AppObj) => {
         if (response) {
+          this.http.post(AdInsConstant.GetAppCustByAppId, this.NapObj).subscribe(
+            (res: AppCustObj) => {
+              this.CustType = res.MrCustTypeCode;
+            })
+
           this.AppStepIndex = this.AppStep[response.AppCurrStep];
           this.stepper.to(this.AppStepIndex);
           console.log(this.AppStepIndex);

@@ -86,18 +86,19 @@
               </button>
             </div>
             <div class="line"></div>
-            <div class="step" data-target="#lifeInsurance-tab">
+            <div *ngIf="(CustType == '' || CustType == 'PERSONAL')" class="step" data-target="#lifeInsurance-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="lifeInsurance-tab"
                 id="lifeInsurance-tab-trigger" [disabled]="!(AppStepIndex >= 7)" (click)="ChangeTab('LFI')">
                 <span class="bs-stepper-circle">7</span>
-                <span class="bs-stepper-label">lifeInsurance Data</span>
+                <span class="bs-stepper-label">Life Insurance Data</span>
               </button>
             </div>
             <div class="line"></div>
             <div class="step" data-target="#financial-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="financial-tab"
                 id="financial-tab-trigger" [disabled]="!(AppStepIndex >= 8)" (click)="ChangeTab('FIN')">
-                <span class="bs-stepper-circle">8</span>
+                <span *ngIf="(CustType == '' || CustType == 'PERSONAL')" class="bs-stepper-circle">8</span>
+                <span *ngIf="CustType == 'COMPANY'" class="bs-stepper-circle">7</span>
                 <span class="bs-stepper-label">Financial Data</span>
               </button>
             </div>
@@ -105,7 +106,8 @@
             <div class="step" data-target="#TC-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="TC-tab" id="TC-tab-trigger"
                 [disabled]="!(AppStepIndex >= 9)" (click)="ChangeTab('TC')">
-                <span class="bs-stepper-circle">9</span>
+                <span *ngIf="(CustType == '' || CustType == 'PERSONAL')" class="bs-stepper-circle">9</span>
+                <span *ngIf="CustType == 'COMPANY'" class="bs-stepper-circle">8</span>
                 <span class="bs-stepper-label">Term & Conditions</span>
               </button>
             </div>
@@ -134,13 +136,13 @@
               </app-multi-asset-data>
             </div>
             <div id="insurance-tab" class="content" role="tabpanel" aria-labelledby="insurance-tab-trigger">
-              <!-- <app-insurance-data *ngIf="!IsMultiAsset && AppStepIndex == 6" [appId]="appId"
-                (outputTab)="NextStep('LFI')"></app-insurance-data> -->
-              <app-insurance-multi-asset-data *ngIf="AppStepIndex == 6" [appId]="appId"
+              <app-insurance-multi-asset-data *ngIf="AppStepIndex == 6 && (CustType == '' || CustType == 'PERSONAL')" [appId]="appId"
                 (outputTab)="NextStep('LFI')"></app-insurance-multi-asset-data>
+                <app-insurance-multi-asset-data *ngIf="AppStepIndex == 6 && CustType == 'COMPANY'" [appId]="appId"
+                (outputTab)="NextStep('FIN')"></app-insurance-multi-asset-data>
             </div>
             <div id="lifeInsurance-tab" class="content" role="tabpanel" aria-labelledby="lifeInsurance-tab-trigger">
-              <app-life-insurance-data *ngIf="AppStepIndex == 7" [AppId]="appId" (outputTab)="NextStep('FIN')">
+              <app-life-insurance-data *ngIf="AppStepIndex == 7 && (CustType == '' || CustType == 'PERSONAL')" [AppId]="appId" (outputTab)="NextStep('FIN')">
               </app-life-insurance-data>
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
