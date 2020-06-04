@@ -27,7 +27,7 @@
                   <td class="text-left">{{InvoiceForm.controls["Invoices"].controls[i].controls.CustName.value}}</td>
                   <td class="text-right">{{InvoiceForm.controls["Invoices"].controls[i].controls.InvoiceAmt.value | number}}</td>
                   <td class="text-center">{{InvoiceForm.controls["Invoices"].controls[i].controls.InvoiceDt.value | date : 'dd-MMM-yyyy' }}</td>
-                  <td><select class="form-control adInsInput" style="width: auto" formControlName="Verification">
+                  <td><select class="form-control adInsInput" style="width: auto" formControlName="Verification" (change)="Calculate(i)">
                       <option *ngFor="let sr of listVerificationStatus" value="{{sr.Key}}">
                         {{sr.Value}}</option>
                     </select></td>
@@ -43,6 +43,10 @@
           <div class="form-body" id="VerificationInfo">
             <div class="row">
               <div class="col-md-6">
+                <div class="row">
+                  <label class="col-md-6" translate>OS Plafond Amount</label>
+                  <label class="col-md-6">{{OsPlafondAmt}}</label>
+                </div>
                 <div class="row">
                   <label class="col-md-6" translate>Verified By</label>
                   <label class="col-md-6">{{Username}}</label>

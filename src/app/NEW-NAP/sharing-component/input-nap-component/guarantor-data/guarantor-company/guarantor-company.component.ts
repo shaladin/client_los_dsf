@@ -48,7 +48,8 @@ export class GuarantorCompanyComponent implements OnInit {
   DocObjs : any;
   defLegalDocType: string;
   appLegalDoc : any = new Array();
-  
+  isReady: boolean = false;
+
   CompanyForm = this.fb.group({
     MrCustRelationshipCode : ['', [Validators.required, Validators.maxLength(50)]],
     TaxIdNo : ['', [Validators.required, Validators.maxLength(50)]],
@@ -75,7 +76,7 @@ export class GuarantorCompanyComponent implements OnInit {
 
   UserAccess: any;
   MaxDate: Date;
-  ngOnInit() {
+  async ngOnInit(): Promise<void> {
     this.UserAccess = JSON.parse(localStorage.getItem("UserAccess"));
     this.MaxDate = new Date(this.UserAccess.BusinessDt);
     this.initLookup();
@@ -86,11 +87,12 @@ export class GuarantorCompanyComponent implements OnInit {
     if (this.mode == "edit") {
       var guarantorCompanyObj = new GuarantorCompanyObj();
       guarantorCompanyObj.AppGuarantorObj.AppGuarantorId = this.AppGuarantorId;
-      this.http.post(AdInsConstant.GetAppGuarantorCompanyByAppGuarantorId, guarantorCompanyObj).subscribe(
+      await this.http.post(AdInsConstant.GetAppGuarantorCompanyByAppGuarantorId, guarantorCompanyObj).toPromise().then(
         (response) => {
           this.resultData=response;
           this.AppGuarantorCompanyId = this.resultData.appGuarantorCompanyObj.AppGuarantorCompanyId;
-          this.inputLookupObj.jsonSelect = {CustName: this.resultData.appGuarantorObj.GuarantorName};
+          this.inputLookupObj.jsonSelect = { CustName: this.resultData.appGuarantorObj.GuarantorName };
+          this.inputLookupObj.nameSelect = this.resultData.appGuarantorObj.GuarantorName;
           this.inputLookupObj1.jsonSelect = {IndustryTypeName: this.resultData.appGuarantorCompanyObj.IndustryTypeCode};
           if (this.resultData.appGuarantorCompanyObj.ListAppGuarantorCompanyLegalDoc != null && this.resultData.appGuarantorCompanyObj.ListAppGuarantorCompanyLegalDoc != undefined) {
             for (let i = 0; i < this.resultData.appGuarantorCompanyObj.ListAppGuarantorCompanyLegalDoc.length; i++) {
@@ -175,7 +177,7 @@ export class GuarantorCompanyComponent implements OnInit {
       }
     );
     this.getDocType();
-
+    this.isReady = true;
   }
 
   initLookup(){
