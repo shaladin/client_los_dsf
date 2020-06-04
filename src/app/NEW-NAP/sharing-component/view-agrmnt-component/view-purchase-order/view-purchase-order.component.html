@@ -21,7 +21,7 @@
               </div>
               <div class="row">
                 <label class="col-md-6 adInsLabel"> Total Purchase Order Amount </label>
-                <label class="col-md-6 adInsLabel"> {{ResponsePurchaseOrderHData?.TotalPurchaseOrderAmt}} </label>
+                <label class="col-md-6 adInsLabel"> {{ResponsePurchaseOrderHData?.TotalPurchaseOrderAmt | number:'.2':'en-US'}} </label>
               </div>
             </div>
             <div class="col-md-6 ">
@@ -77,7 +77,7 @@
               </div>
               <div class="row">
                 <label class="col-md-6 adInsLabel"> Asset Price </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.AssetPriceAmt}} </label>
+                <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.AssetPriceAmt | number:'.2':'en-US'}} </label>
               </div>
               <div class="row">
                 <label class="col-md-6 adInsLabel"> Asset Condition </label>
@@ -103,7 +103,7 @@
             <div class="col-md-6 ">
               <div class="row">
                 <label class="col-md-6 adInsLabel"> Down Payment </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.DownPaymentAmt}} </label>
+                <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.DownPaymentAmt | number:'.2':'en-US'}} </label>
               </div>
               <div class="row">
                 <label class="col-md-6 adInsLabel"> Asset Usage </label>
@@ -135,15 +135,15 @@
             <div class="col-md-6 ">
               <div class="row">
                 <label class="col-md-6 adInsLabel"> Total Asset Price </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAgrmntFinDataData?.TotalAssetPriceAmt}} </label>
+                <label class="col-md-6 adInsLabel"> {{ResponseAgrmntFinDataData?.TotalAssetPriceAmt | number:'.2':'en-US'}} </label>
               </div>
               <div class="row">
                 <label class="col-md-6 adInsLabel"> DP Asset Paid by Customer </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAgrmntFinDataData?.DownPaymentGrossAmt}} </label>
+                <label class="col-md-6 adInsLabel"> {{ResponseAgrmntFinDataData?.DownPaymentGrossAmt | number:'.2':'en-US'}} </label>
               </div>
               <div class="row">
                 <label class="col-md-6 adInsLabel"> Subsidy DP from Dealer </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAgrmntFinDataData?.DownPaymentGrossAmt - ResponseAgrmntFinDataData?.DownPaymentNettAmt}} </label>
+                <label class="col-md-6 adInsLabel"> {{ResponseAgrmntFinDataData?.DownPaymentGrossAmt - ResponseAgrmntFinDataData?.DownPaymentNettAmt | number:'.2':'en-US'}} </label>
               </div>
               <div class="row">
                 <label class="col-md-6 adInsLabel"> First Installment in Advance </label>
@@ -152,23 +152,23 @@
               </div>
               <div class="row">
                 <label class="col-md-6 adInsLabel"> Total Insurance Premi </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAgrmntFinDataData?.TotalInsCustAmt}} </label>
+                <label class="col-md-6 adInsLabel"> {{ResponseAgrmntFinDataData?.TotalInsCustAmt | number:'.2':'en-US'}} </label>
               </div>
               <div class="row">
                 <label class="col-md-6 adInsLabel"> Total Life Insurance Premi </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAgrmntFinDataData?.TotalLifeInsCustAmt}} </label>
+                <label class="col-md-6 adInsLabel"> {{ResponseAgrmntFinDataData?.TotalLifeInsCustAmt | number:'.2':'en-US'}} </label>
               </div>
               <div class="row">
                 <label class="col-md-6 adInsLabel"> Total Fee </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAgrmntFinDataData?.TotalFeeAmt}} </label>
+                <label class="col-md-6 adInsLabel"> {{ResponseAgrmntFinDataData?.TotalFeeAmt | number:'.2':'en-US'}} </label>
               </div>
               <div class="row">
                 <label class="col-md-6 adInsLabel"> TDP Paid at MF </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAgrmntFinDataData?.TdpPaidCoyAmt}} </label>
+                <label class="col-md-6 adInsLabel"> {{ResponseAgrmntFinDataData?.TdpPaidCoyAmt | number:'.2':'en-US'}} </label>
               </div>
               <div class="row">
                 <label class="col-md-6 adInsLabel"> Total Purchase Order Amount </label>
-                <label class="col-md-6 adInsLabel"> {{ResponsePurchaseOrderHData?.TotalPurchaseOrderAmt}} </label>
+                <label class="col-md-6 adInsLabel"> {{ResponsePurchaseOrderHData?.TotalPurchaseOrderAmt | number:'.2':'en-US'}} </label>
               </div>
             </div>
             <div class="col-md-6 ">
