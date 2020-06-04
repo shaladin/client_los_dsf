@@ -17,6 +17,8 @@ export class LifeInsuranceDataComponent implements OnInit {
 
   @Input() AppId: any;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
+
   inputGridObj: any;
   show: any;
   LifeInsObj: LifeInsObj = new LifeInsObj();
@@ -26,6 +28,9 @@ export class LifeInsuranceDataComponent implements OnInit {
   ListObj: Array<LifeInsDObj> = new Array<LifeInsDObj>();
   AppLifeInsD: any = new Array();
   result: any;
+
+  minInsLength: number = 1;
+  maxInsLength: number = 99;
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -74,8 +79,8 @@ export class LifeInsuranceDataComponent implements OnInit {
         else {
           this.mode = "add";
           this.show = false;
-        }
-
+        }  
+      this.PremiMethodForm();
       },
       (error) => {
         console.log(error);
@@ -202,7 +207,7 @@ export class LifeInsuranceDataComponent implements OnInit {
   isCoverCheck(){
     for(let i =0 ;i<this.LifeInsObj.ListAppLifeInsD.length;i++){
       console.log(this.LifeInsObj.ListAppLifeInsD[i].MrCustTypeCode);
-      if(this.LifeInsObj.ListAppLifeInsD[i].MrCustTypeCode =="PERSONAL"){
+      if(this.LifeInsObj.ListAppLifeInsD[i].MrCustTypeCode =="CUSTOMER"){
         this.LifeInsObj.IsCustCover = true;
       }
       if(this.LifeInsObj.ListAppLifeInsD[i].MrCustTypeCode =="SPOUSE"){
@@ -214,10 +219,20 @@ export class LifeInsuranceDataComponent implements OnInit {
     }
   }
 
+  checkSubject(){
+    if(this.LifeInsObj.ListAppLifeInsD.length==0){
+      this.toastr.errorMessage("Minimal 1 Subject ");    
+      return false;
+    }else{
+      return true;
+    }
+  }
+
   async SaveForm(){
     this.setValue();
     this.isCoverCheck();
     if(this.IsChecked){
+      if(this.checkSubject()== false) return;
       this.LifeInsObj.AppId = this.AppId;
       this.http.post(AdInsConstant.AddEditAppLifeInsH, this.LifeInsObj).subscribe(
         response => {
@@ -242,6 +257,10 @@ export class LifeInsuranceDataComponent implements OnInit {
         }
       );
     }
+  }
+
+  Cancel(){
+    this.outputCancel.emit();
   }
 
   ObjSelected(event, i) {
@@ -291,6 +310,26 @@ export class LifeInsuranceDataComponent implements OnInit {
       this.LifeInsForm.controls["PaidInAdvPrcnt"].disable();
     }
     else if (event.target.value == "CPTLZ") {
+      this.LifeInsForm.patchValue({
+        PaidInAdvPrcnt: 100
+
+      });
+      this.LifeInsForm.controls["PaidInAdvPrcnt"].disable();
+    }
+    else {
+      this.LifeInsForm.controls["PaidInAdvPrcnt"].enable();
+    }
+  }
+
+  PremiMethodForm(){
+    if (this.LifeInsForm.controls["MrLifeInsPaidMethodCode"].value == "PAID_IN_ADV") {
+      this.LifeInsForm.patchValue({
+        PaidInAdvPrcnt: 0
+
+      });
+      this.LifeInsForm.controls["PaidInAdvPrcnt"].disable();
+    }
+    else if (this.LifeInsForm.controls["MrLifeInsPaidMethodCode"].value == "CPTLZ") {
       this.LifeInsForm.patchValue({
         PaidInAdvPrcnt: 100
 

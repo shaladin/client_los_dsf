@@ -1,4 +1,4 @@
-export class NapAppCrossObj{
+export class NapAppCrossObj {
 
     AppCrossId: any;
     AppId: any;
@@ -9,7 +9,8 @@ export class NapAppCrossObj{
     ContractStat: any;
     RowVersion: any;
 
-    constructor (){
+    constructor() {
+        this.AppCrossId = 0;
         this.RowVersion = "";
     }
 }

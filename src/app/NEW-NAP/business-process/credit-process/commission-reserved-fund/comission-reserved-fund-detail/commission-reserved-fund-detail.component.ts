@@ -8,6 +8,7 @@ import Stepper from 'bs-stepper';
 import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
 import { AllAppReservedFundObj } from 'app/shared/model/AllAppReservedFundObj.model';
 import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
+import { AppObj } from 'app/shared/model/App/App.Model';
 
 @Component({
   selector: 'app-commission-reserved-fund-detail',
@@ -51,7 +52,37 @@ export class CommissionReservedFundDetailComponent implements OnInit {
     this.stepper = new Stepper(document.querySelector('#stepper1'), {
       linear: false,
       animation: true
-    })
+    });
+    this.GetAndUpdateAppStep();
+  }
+
+  NapObj: AppObj = new AppObj();
+  GetAndUpdateAppStep(){
+    this.NapObj.AppId=this.ReturnHandlingHObj.AppId;
+    this.http.post(AdInsConstant.GetAppById, this.NapObj).subscribe(
+      (response: AppObj) => {
+        console.log(response);
+        if (response) {
+          this.NapObj = response;
+          if(this.NapObj.AppCurrStep!=AdInsConstant.AppStepComm && this.NapObj.AppCurrStep!=AdInsConstant.AppStepRSVFund){
+            this.NapObj.AppCurrStep = AdInsConstant.AppStepComm;
+            this.http.post<AppObj>(AdInsConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
+              (response) =>{
+                console.log("Step Change to, Curr Step : "+response.AppCurrStep+", Last Step : "+response.AppLastStep);
+                this.ChangeTab(AdInsConstant.AppStepComm);
+              },
+              (error)=>{
+                console.error("Error when updating AppStep");
+                console.error(error);
+              }
+            )
+          }
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   ChangeTab(AppStep) {
@@ -69,8 +100,18 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   }
 
   NextStep(Step) {
-    this.ChangeTab(Step);
-    this.stepper.next();
+    this.NapObj.AppCurrStep = Step;
+    this.http.post<AppObj>(AdInsConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
+      (response) =>{
+        console.log("Step Change to, Curr Step : "+response.AppCurrStep+", Last Step : "+response.AppLastStep);
+        this.ChangeTab(Step);
+        this.stepper.next();
+      },
+      (error)=>{
+        console.error("Error when updating AppStep");
+        console.error(error);
+      }
+    )
   }
 
   LastStepHandler(allAppReservedFundObj: AllAppReservedFundObj) {

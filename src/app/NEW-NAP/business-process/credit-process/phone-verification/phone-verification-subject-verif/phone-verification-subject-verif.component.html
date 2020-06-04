@@ -36,7 +36,7 @@
               <div class="form-group row">
                 <label class="col-md-2  adins-required-label" translate>Phone</label>
                 <div class="col-md-4">
-                  <select *ngIf="PhoneNumberObj" class="form-control" id="phoneNumberId" formControlName="Phn" (change)="PhoneChange(item.PhoneNumber,item.PhoneType)"
+                  <select *ngIf="PhoneNumberObj" class="form-control" id="phoneNumberId" formControlName="Phn" (change)="PhoneChange()"
                           [ngClass]="{ 'is-invalid': enjiForm.submitted && PhoneDataForm.controls.Phn.invalid }">
                     <option *ngFor="let item of PhoneNumberObj" [value]="item.PhoneNumber">
                       {{item.PhoneType}}: {{item.PhoneNumber}}
@@ -149,7 +149,7 @@
               </button>
 
               <button type="submit" class="btn btn-raised btn-primary">
-                <i class="fa fa-check-square-o"></i>Save
+                <i class="far fa-check-square"></i> Save
               </button>
               <!-- <button type="button" class="btn btn-raised btn-primary" (click)="test()">
                 <i class="fa fa-check-square-o"></i> Check Value
