@@ -464,8 +464,12 @@ export class AssetDataComponent implements OnInit {
     else {     
       this.allAssetDataObj.AppAssetObj.AssetStat = this.AssetDataForm.controls.AssetStat.value;
       this.allAssetDataObj.AppCollateralObj.CollateralStat = this.AssetDataForm.controls.AssetStat.value;
-      this.allAssetDataObj.AppCollateralObj.AppAssetId = this.appAssetObj.ResponseAppCollateralObj.AppAssetId;
-      this.allAssetDataObj.AppCollateralObj.IsMainCollateral = this.appAssetObj.ResponseAppCollateralObj.IsMainCollateral;
+      this.allAssetDataObj.AppCollateralObj.AppAssetId = this.appAssetId;
+      if(this.appAssetObj.ResponseAppCollateralObj != null){
+        this.allAssetDataObj.AppCollateralObj.IsMainCollateral = this.appAssetObj.ResponseAppCollateralObj.IsMainCollateral;
+      }else{
+        this.allAssetDataObj.AppCollateralObj.IsMainCollateral = true;
+      }
     }
     this.allAssetDataObj.AppAssetObj.AssetTypeCode = this.AssetDataForm.controls.AssetTypeCode.value;
     this.allAssetDataObj.AppAssetObj.AssetCategoryCode = this.AssetDataForm.controls.AssetCategoryCode.value;
@@ -761,37 +765,9 @@ export class AssetDataComponent implements OnInit {
             IsInsurance: this.appAssetObj.ResponseAppAssetObj.IsInsurance,
             IsEditableDp: this.appAssetObj.ResponseAppAssetObj.IsEditableDp,
 
-            AdminHeadName: this.appAssetObj.ResponseAdminHeadSupp.SupplEmpName,
-            AdminHeadNo: this.appAssetObj.ResponseAdminHeadSupp.SupplEmpNo,
-            AdminHeadPositionCode: this.appAssetObj.ResponseAdminHeadSupp.MrSupplEmpPositionCode,
-            SalesPersonName: this.appAssetObj.ResponseSalesPersonSupp.SupplEmpName,
-            SalesPersonNo: this.appAssetObj.ResponseSalesPersonSupp.SupplEmpNo,
-            SalesPersonPositionCode: this.appAssetObj.ResponseSalesPersonSupp.MrSupplEmpPositionCode,
             BranchManagerName: "-",
             BranchManagerNo: "-",
             BranchManagerPositionCode: "-",
-
-            UserName: this.appAssetObj.ResponseAppCollateralRegistrationObj.UserName,
-            MrUserRelationshipCode: this.appAssetObj.ResponseAppCollateralRegistrationObj.MrUserRelationshipCode,
-            OwnerName: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerName,
-            MrIdTypeCode: this.appAssetObj.ResponseAppCollateralRegistrationObj.MrIdTypeCode,
-            OwnerIdNo: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerIdNo,
-            MrOwnerRelationshipCode: this.appAssetObj.ResponseAppCollateralRegistrationObj.MrOwnerRelationshipCode,
-            OwnerAddr: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerAddr,
-            OwnerAreaCode1: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerAreaCode1,
-            OwnerAreaCode2: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerAreaCode2,
-            OwnerAreaCode3: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerAreaCode3,
-            OwnerAreaCode4: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerAreaCode4,
-            OwnerCity: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerCity,
-            OwnerZipcode: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerZipcode,
-            OwnerMobilePhnNo: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerMobilePhnNo,
-            LocationAddr: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationAddr,
-            LocationAreaCode1: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationAreaCode1,
-            LocationAreaCode2: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationAreaCode2,
-            LocationAreaCode3: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationAreaCode3,
-            LocationAreaCode4: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationAreaCode4,
-            LocationCity: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationCity,
-            LocationZipcode: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationZipcode,
             selectedDpType: 'AMT'
           });
           if (this.appAssetObj.ResponseBranchManagerSupp != null) {
@@ -802,12 +778,53 @@ export class AssetDataComponent implements OnInit {
             });
             this.BranchManagerName = this.appAssetObj.ResponseBranchManagerSupp.SupplEmpName;
           }
+          if(this.appAssetObj.ResponseAdminHeadSupp != null){
+            this.AssetDataForm.patchValue({
+              AdminHeadName: this.appAssetObj.ResponseAdminHeadSupp.SupplEmpName,
+              AdminHeadNo: this.appAssetObj.ResponseAdminHeadSupp.SupplEmpNo,
+              AdminHeadPositionCode: this.appAssetObj.ResponseAdminHeadSupp.MrSupplEmpPositionCode,
+            })
+          }
+          if(this.appAssetObj.ResponseSalesPersonSupp != null){
+            this.AssetDataForm.patchValue({
+              SalesPersonName: this.appAssetObj.ResponseSalesPersonSupp.SupplEmpName,
+              SalesPersonNo: this.appAssetObj.ResponseSalesPersonSupp.SupplEmpNo,
+              SalesPersonPositionCode: this.appAssetObj.ResponseSalesPersonSupp.MrSupplEmpPositionCode,
+            });
+          }
+          if(this.appAssetObj.AppCollateralRegistrationObj != null){
+            this.AssetDataForm.patchValue({
+              UserName: this.appAssetObj.ResponseAppCollateralRegistrationObj.UserName,
+              MrUserRelationshipCode: this.appAssetObj.ResponseAppCollateralRegistrationObj.MrUserRelationshipCode,
+              OwnerName: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerName,
+              MrIdTypeCode: this.appAssetObj.ResponseAppCollateralRegistrationObj.MrIdTypeCode,
+              OwnerIdNo: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerIdNo,
+              MrOwnerRelationshipCode: this.appAssetObj.ResponseAppCollateralRegistrationObj.MrOwnerRelationshipCode,
+              OwnerAddr: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerAddr,
+              OwnerAreaCode1: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerAreaCode1,
+              OwnerAreaCode2: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerAreaCode2,
+              OwnerAreaCode3: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerAreaCode3,
+              OwnerAreaCode4: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerAreaCode4,
+              OwnerCity: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerCity,
+              OwnerZipcode: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerZipcode,
+              OwnerMobilePhnNo: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerMobilePhnNo,
+              LocationAddr: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationAddr,
+              LocationAreaCode1: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationAreaCode1,
+              LocationAreaCode2: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationAreaCode2,
+              LocationAreaCode3: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationAreaCode3,
+              LocationAreaCode4: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationAreaCode4,
+              LocationCity: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationCity,
+              LocationZipcode: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationZipcode,
+            });
+          }
           console.log(this.AssetDataForm.value)
 
           this.appAssetAccessoriesObjs = this.appAssetObj.ResponseAppAssetAccessoryObjs;
           this.appAssetId = this.appAssetObj.ResponseAppAssetObj.AppAssetId;
-          this.setAddrOwnerObj();
-          this.setAddrLocationObj();
+          if(this.appAssetObj.AppCollateralRegistrationObj != null){
+            this.setAddrOwnerObj();
+            this.setAddrLocationObj();
+          }
           this.assetMasterObj.FullAssetCode = this.appAssetObj.ResponseAppAssetObj.FullAssetCode;
           this.GetAssetMaster(this.assetMasterObj);
           this.vendorObj.VendorCode = this.appAssetObj.ResponseAppAssetObj.SupplCode;
@@ -1048,10 +1065,14 @@ export class AssetDataComponent implements OnInit {
         });
         this.vendorEmpSalesObj.VendorId = this.VendorObj.VendorId;
         this.vendorEmpAdminObj.VendorId = this.VendorObj.VendorId;
-        this.vendorEmpAdminObj.VendorEmpNo = this.appAssetObj.ResponseAdminHeadSupp.SupplEmpNo;
-        this.vendorEmpSalesObj.VendorEmpNo = this.appAssetObj.ResponseSalesPersonSupp.SupplEmpNo;
-        this.GetVendorEmpSalesPerson();
-        this.GetVendorEmpAdminHead();
+        if(this.appAssetObj.ResponseAdminHeadSupp != null){
+          this.vendorEmpAdminObj.VendorEmpNo = this.appAssetObj.ResponseAdminHeadSupp.SupplEmpNo;
+          this.GetVendorEmpAdminHead();
+        }
+        if(this.appAssetObj.ResponseSalesPersonSupp != null){
+          this.vendorEmpSalesObj.VendorEmpNo = this.appAssetObj.ResponseSalesPersonSupp.SupplEmpNo;
+          this.GetVendorEmpSalesPerson();
+        }
 
         this.vendorObj.VendorId = this.VendorObj.VendorId;
         this.GetVendorEmpList();
@@ -1135,10 +1156,13 @@ export class AssetDataComponent implements OnInit {
     this.http.post(this.getAssetMasterTypeUrl, assetMasterObj).subscribe(
       (response) => {
         this.AssetMasterObj = response;
+        console.log("asset master");
+        console.log(this.AssetMasterObj);
         this.AssetDataForm.patchValue({
           FullAssetCode: this.AssetMasterObj.FullAssetCode,
           FullAssetName: this.AssetMasterObj.FullAssetName,
           AssetTypeCode: this.AssetMasterObj.AssetTypeCode,
+          AssetCategoryCode: this.AssetMasterObj.AssetCategoryCode
         });
         this.InputLookupAssetObj.jsonSelect = this.AssetMasterObj;
         this.InputLookupAssetObj.nameSelect = this.AssetMasterObj.FullAssetName;

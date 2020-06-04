@@ -122,6 +122,7 @@
             "type" : "link",
             "position" : "left",
             "property" : "LeadNo",
+            "target" : "_blank",
             "path" : "/Lead/View",
             "param" : [
                 {
