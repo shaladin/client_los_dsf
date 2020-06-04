@@ -9,7 +9,7 @@ import { GuarantorPersonalObj } from 'app/shared/model/GuarantorPersonalObj.Mode
 
 @Component({
   selector: 'app-guarantor',
-  templateUrl: './guarantor.component.html',
+  templateUrl: './view-guarantor.component.html',
   styleUrls: []
 })
 export class GuarantorComponent implements OnInit {
