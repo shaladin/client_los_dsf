@@ -75,7 +75,6 @@ import { UcapprovalhistModule } from "@adins/ucapprovalhist";
     OfferingValidityCheckingApprovalDetailComponent,
     DocSignerDetailComponent,
     DocSignerPagingComponent,
-    InvoiceViewComponent,
     InvoiceDetailComponent,
     DocumentPagingComponent,
     DocumentViewComponent,

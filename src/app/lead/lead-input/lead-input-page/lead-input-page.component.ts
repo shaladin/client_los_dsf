@@ -48,6 +48,7 @@ export class LeadInputPageComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.claimTask();
     this.viewLeadHeaderMainInfo = "./assets/ucviewgeneric/viewLeadHeader.json";
     this.stepper = new Stepper(document.querySelector('#stepper1'), {
       linear: false,
@@ -113,4 +114,13 @@ export class LeadInputPageComponent implements OnInit {
       }
     }
   }
+  
+  async claimTask() {
+    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    var wfClaimObj = { pWFTaskListID: this.TaskListId, pUserID: currentUserContext["UserName"] };
+    console.log(wfClaimObj);
+    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+      (response) => {
+      });
+    }	
 }

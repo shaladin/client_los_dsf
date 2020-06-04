@@ -155,7 +155,7 @@ export class LifeInsuranceDataComponent implements OnInit {
     this.LifeInsForm.controls.LifeInscoBranchName.updateValueAndValidity();
     this.LifeInsForm.controls.MrLifeInsPaidMethodCode.setValidators(Validators.required);
     this.LifeInsForm.controls.MrLifeInsPaidMethodCode.updateValueAndValidity();
-    this.LifeInsForm.controls.PaidInAdvPrcnt.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
+    this.LifeInsForm.controls.PaidInAdvPrcnt.setValidators([Validators.required]);
     this.LifeInsForm.controls.PaidInAdvPrcnt.updateValueAndValidity();
     this.LifeInsForm.controls.InscoAdminFeeAmt.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
     this.LifeInsForm.controls.InscoAdminFeeAmt.updateValueAndValidity();
@@ -266,7 +266,6 @@ export class LifeInsuranceDataComponent implements OnInit {
   ObjSelected(event, i) {
     if (event.target.checked) {
       console.log("event checked");
-      console.log(this.LifeInsObj.ListAppLifeInsD[i]);
       var LifeInsD = new LifeInsDObj();
       LifeInsD.InsuredName = this.ListObj[i]["InsuredName"];
       LifeInsD.Age = this.ListObj[i]["Age"];
@@ -292,10 +291,12 @@ export class LifeInsuranceDataComponent implements OnInit {
           console.log(error);
         }
       );
-      this.LifeInsObj.ListAppLifeInsD[i] = LifeInsD;
+      this.LifeInsObj.ListAppLifeInsD.push(LifeInsD);
+      console.log(this.LifeInsObj.ListAppLifeInsD);
     } else {
       console.log("event unchecked");
-      this.LifeInsObj.ListAppLifeInsD.splice(i, 1);
+      var index = this.LifeInsObj.ListAppLifeInsD.findIndex(x=> x.InsuredName == this.ListObj[i].InsuredName);
+      this.LifeInsObj.ListAppLifeInsD.splice(index, 1);
       console.log(this.LifeInsObj.ListAppLifeInsD[i]);
       console.log(this.LifeInsObj.ListAppLifeInsD);
     }

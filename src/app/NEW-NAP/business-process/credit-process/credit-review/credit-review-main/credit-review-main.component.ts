@@ -315,7 +315,7 @@ export class CreditReviewMainComponent implements OnInit {
     this.http.post(AdInsConstant.AddOrEditAppCrdRvwDataAndListManualDeviationData, apiObj).subscribe(
       (response) => {
         console.log(response);    
-        this.router.navigate(["/Nap/CreditProcess/CreditReview/Paging"]);
+        this.router.navigate(["/Nap/CreditProcess/CreditReview/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode, } });
       },
       (error) => {
         console.log(error);

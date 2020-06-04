@@ -61,20 +61,16 @@ export class PreGoLiveComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("test ts")
     this.http.post(AdInsConstant.GetRfaLogByTrxNoAndApvCategory, { TrxNo: this.AgrmntNo, ApvCategory: "PRE_GPV_APV" }).subscribe(
       (response) => {
         this.result = response;
         this.ListRfaLogObj = response["ListRfaLogObj"];
-        console.log(this.ListRfaLogObj);
         for (let i = 0; i < this.ListRfaLogObj.length; i++) {
           this.listPreGoLiveAppvrObj[i] = {
             approvalBaseUrl: environment.ApprovalR3Url,
             type: 'task',
             refId: this.ListRfaLogObj[i].RfaNo
           };
-          console.log("asdasdasdasd123123123");
-          console.log(this.listPreGoLiveAppvrObj[i]);
         }
 
       },
@@ -83,8 +79,6 @@ export class PreGoLiveComponent implements OnInit {
       }
     );
     this.claimTask();
-    console.log("AgrmntNo");
-    console.log(this.AgrmntNo);
     this.viewObj = "./assets/ucviewgeneric/viewAgrMainInfoPreGoLive.json";
     var agrmntObj = new AgrmntObj();
     agrmntObj.AgrmntId = this.AgrmntId;
@@ -97,15 +91,11 @@ export class PreGoLiveComponent implements OnInit {
         })
         this.AgrmntId = this.result.AgrmntId;
         this.AppId = this.result.AppId;
-        console.log(this.AgrmntId);
       },
       (error) => {
         console.log(error);
       }
     );
-    console.log("asdasd");
-
-    
   }
   ReceiveIsChecked(ev) {
     this.IsCheckedAll = ev;
@@ -142,8 +132,6 @@ export class PreGoLiveComponent implements OnInit {
       this.listAppTCObj.AppTCObj.push(this.appTC);
 
     }
-    console.log("isi nya gan");
-    console.log(this.listAppTCObj);
     this.AgrmntObj = new AgrmntObj();
     this.AgrmntObj.AgrmntId = this.AgrmntId;
     this.AgrmntObj.EffectiveDt = this.MainInfoForm.controls.EffectiveDt.value;
