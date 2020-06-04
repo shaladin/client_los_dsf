@@ -41,7 +41,7 @@ export class FormAddDynamicComponent implements OnInit {
   GenerateAutoAtStart(){
     if(this.FormInputObj["isAutoGenerate"]){
       this.FormInputObj["isDataInputed"] = true;
-      // console.log("Auto Genereate");
+      console.log("Auto Genereate");
       var len = this.DDLContentName.length;
       for(var i=len-1;i>=0;i--){
         // console.log("Genereate");
@@ -255,6 +255,7 @@ export class FormAddDynamicComponent implements OnInit {
         IsSave: true,
         Content: this.FormInputObj["content"],
       };
+      console.log(obj);
       this.http.post(AdInsConstant.GetAppCommissionTax, obj).subscribe(
         (response) => {
           console.log("response Tax");

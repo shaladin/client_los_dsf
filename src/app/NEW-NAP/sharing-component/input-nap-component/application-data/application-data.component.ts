@@ -50,12 +50,14 @@ export class ApplicationDataComponent implements OnInit {
     Tenor: ["", [Validators.pattern("^[0-9]+$"), Validators.required]],
     NumOfInst: [''],
     PayFreqCode: ['', Validators.required],
+    PayFreqCodeDesc: [''],
     MrFirstInstTypeCode: ["", Validators.required],
     NumOfAsset: [''],
     MrLcCalcMethodCode: [""],
     LcInstRatePrml: [''],
     LcInsRatePrml: [''],
     MrAppSourceCode: ["", Validators.required],
+    MrAppSourceCodeDesc: [""],
     MrWopCode: ["", Validators.required],
     SrvyOrderNo: [''],
     ApvDt: [''],
@@ -103,7 +105,7 @@ export class ApplicationDataComponent implements OnInit {
     this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeInstSchm);
     this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeCustNotifyOpt);
     this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeFirstInstType);
-    this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeInterestType);
+    // this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeInterestType);
     this.getPayFregData();
     this.getAppSrcData();
     this.GetCrossInfoData();
@@ -117,7 +119,7 @@ export class ApplicationDataComponent implements OnInit {
     };
     this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL, obj).subscribe(
       (response) => {
-        // console.log(response);
+        console.log(response);
         var listDDL = response["DDLRefProdComptCode"];
         // console.log(listDDL);
         this.applicationDDLitems[refProdCompntCode]=listDDL;
