@@ -1027,7 +1027,7 @@ export class AdInsConstant {
   public static AddEditAppReservedFund = environment.losUrl + "/AppReservedFund/AddEditAppReservedFund";
   public static GetListAppReservedFundByAppId = environment.losUrl + "/AppReservedFund/GetListAppReservedFundByAppId";
   public static CreateRsvFundRule = environment.losUrl + "/AppReservedFund/CreateRsvFundRule";
-
+  public static CalculateGrossYieldRsvFund = environment.losUrl + "/AppReservedFund/CalculateGrossYieldRsvFund";
   //App Fin Data
   public static GetAppFinDataByAppId = environment.losUrl + "/AppFinData/GetAppFinDataByAppId";
   public static CreateMaxAllocAmtRsvFund = environment.losUrl + "/AppFinData/CreateMaxAllocAmtRsvFund";

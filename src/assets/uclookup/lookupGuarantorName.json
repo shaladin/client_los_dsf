@@ -7,7 +7,7 @@
             "name": "A.CUST_NAME",
             "id": "CustNameId",
             "value": "",
-            "label": "Guarantor Name",
+            "label": "Customer Name",
             "placeholder": "Placeholder"
         }
     ],
