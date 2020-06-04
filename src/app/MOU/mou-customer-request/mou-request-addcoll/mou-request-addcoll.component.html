@@ -298,6 +298,11 @@
           </thead>
           <tbody>
             <tr *ngFor="let item of tempData; let i = index">
+              <td>{{item.CollateralNo}}</td>
+              <td align="left">{{item.FullAssetName}}</td>
+              <td align="left">{{item.FullAssetCode}}</td>
+              <td align="left">{{item.CustName}}</td>
+              <td align="right">{{item.CollateralValueAmt | number}}</td>
               <td>
                 <div>
                   <a class="danger p-0"
@@ -305,11 +310,6 @@
                     <i class="ft-trash-2 font-medium-3 mr-2"></i>
                   </a></div>
               </td>
-              <td>{{item.CollateralNo}}</td>
-              <td align="left">{{item.FullAssetName}}</td>
-              <td align="left">{{item.FullAssetCode}}</td>
-              <td align="left">{{item.CustName}}</td>
-              <td align="right">{{item.CollateralValueAmt | number}}</td>
             </tr>
           </tbody>
         </table>
