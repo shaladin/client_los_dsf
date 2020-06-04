@@ -122,7 +122,7 @@
             <!-- your steps here -->
             <div class="step" data-target="#customer-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="customer-tab"
-                id="customer-tab-trigger" [disabled]="!(AppStepIndex >= 1)" (click)="CheckCustType($event)">
+                id="customer-tab-trigger" [disabled]="!(AppStepIndex >= 1)" (click)="ChangeTab('CUST')">
                 <span class="bs-stepper-circle">1</span>
                 <span class="bs-stepper-label">Customer Data</span>
               </button>
@@ -170,7 +170,7 @@
             <div class="line"></div>
             <div class="step" data-target="#financial-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="financial-tab"
-                id="financial-tab-trigger" [disabled]="!(AppStepIndex >= 8)" (click)="ChangeTab('FIN')">
+                id="financial-tab-trigger" [disabled]="!(AppStepIndex >= 7)" (click)="ChangeTab('FIN')">
                 <span class="bs-stepper-circle">7</span>
                 <span class="bs-stepper-label">Financial Data</span>
               </button>
@@ -178,7 +178,7 @@
             <div class="line"></div>
             <div class="step" data-target="#TC-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="TC-tab" id="TC-tab-trigger"
-                [disabled]="!(AppStepIndex >= 9)" (click)="ChangeTab('TC')">
+                [disabled]="!(AppStepIndex >= 8)" (click)="ChangeTab('TC')">
                 <span class="bs-stepper-circle">8</span>
                 <span class="bs-stepper-label">Term & Conditions</span>
               </button>
@@ -188,7 +188,7 @@
           <div class="bs-stepper-content">
             <!-- your steps content here -->
             <div id="customer-tab" class="content" role="tabpanel" aria-labelledby="customer-tab-trigger">
-              <app-customer-data *ngIf="AppStepIndex == 1" [appId]="appId" (outputTab)="NextStep('GUAR')">
+              <app-customer-data *ngIf="AppStepIndex == 1" [appId]="appId" (outputTab)="CheckCustType($event)">
               </app-customer-data>
             </div>
             <div id="guarantor-tab" class="content" role="tabpanel" aria-labelledby="guarantor-tab-trigger">
@@ -207,15 +207,15 @@
               <app-asset-data *ngIf="AppStepIndex == 5" [AppId]=appId (outputTab)="NextStep('INS')"></app-asset-data>
             </div>
             <div id="insurance-tab" class="content" role="tabpanel" aria-labelledby="insurance-tab-trigger">
-              <app-insurance-data *ngIf="AppStepIndex == 6" [appId]="appId" (outputTab)="NextStep('LFI')">
+              <app-insurance-data *ngIf="AppStepIndex == 6" [appId]="appId" (outputTab)="NextStep('FIN')">
               </app-insurance-data>
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
-              <app-financial-data *ngIf="AppStepIndex == 8" [AppId]=appId (outputTab)="NextStep('TC')">
+              <app-financial-data *ngIf="AppStepIndex == 7" [AppId]=appId (outputTab)="NextStep('TC')">
               </app-financial-data>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
-              <app-tc-data *ngIf="AppStepIndex == 9" [AppId]="appId" (outputTab)="LastStepHandler()"></app-tc-data>
+              <app-tc-data *ngIf="AppStepIndex == 8" [AppId]="appId" (outputTab)="LastStepHandler()"></app-tc-data>
             </div>
           </div>
         </div>

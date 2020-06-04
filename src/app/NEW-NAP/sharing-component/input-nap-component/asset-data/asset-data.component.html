@@ -11,7 +11,7 @@
               <div class="form-group row">
                 <label class="col-md-2  adins-required-label" translate>Supplier Name </label>
                 <div class="col-md-4" *ngIf="isOnlookup">
-                  <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupSupplierObj" [identifier]="'lookupSupplier'" [enjiForm]='enjiForm' [parentForm]='AssetDataForm' (lookup)="SetSupplier($event)">
+                  <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupSupplierObj" [identifier]="'lookupSupp'" [enjiForm]='enjiForm' [parentForm]='AssetDataForm' (lookup)="SetSupplier($event)">
                   </lib-uclookupgeneric>
                 </div>
                 <label class="col-md-2  adins-required-label" translate>Sales Person</label>
@@ -173,7 +173,7 @@
             <div id="accessoriesData">
               <div class="form-actions right">
                 <button type="button" name="add" id="add" (click)="addAccessories()" class="btn btn-raised btn-primary">
-                  Add
+                  <i class="ft-plus-circle"></i> Add
                 </button>
               </div>
               <div formArrayName="AssetAccessoriesObjs">
@@ -198,22 +198,18 @@
                         {{i + 1}}
                       </td>
                       <td [formGroupName]="i" class="text-center">
-                        <!--<lib-uclookupgeneric width-75-per [lookupInput]="InputLookupSupplierObj" [identifier]="'identifier[i]'" [enjiForm]='enjiForm' [parentForm]='AssetDataForm' (lookup)="SetSupplierAccessory(i,$event)">
-                        </lib-uclookupgeneric>-->
                         <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="dictSuppLookup[AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].No.value]" [parentForm]="AssetDataForm" [identifier]="'lookupSupplierObj' + AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].No.value" (lookup)="SetSupplierAccessory(i,$event)"></lib-uclookupgeneric>
                       </td>
                       <td [formGroupName]="i" class="text-center">
-                        <!--<lib-uclookupgeneric width-75-per [lookupInput]="InputLookupAccObj" [identifier]="'identifier[i]'" [enjiForm]='enjiForm' [parentForm]='AssetDataForm' (lookup)="setAccessoryName(i)">
-                        </lib-uclookupgeneric>-->
                         <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="dictAccLookup[AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].No.value]" [parentForm]="AssetDataForm" [identifier]="'lookupAccObj' + AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].No.value" (lookup)="SetAccessory(i,$event)"></lib-uclookupgeneric>
                       </td>
                       <td [formGroupName]="i">
-                        <input type="" currencyMask id="accessoryPriceAmt" class="form-control" formControlName="AccessoryPriceAmt"
+                        <input type="" currencyMask id="accessoryPriceAmt{{i}}" class="form-control" formControlName="AccessoryPriceAmt" [options]="{ nullable: true }"
                                [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryPriceAmt.invalid }">
                         <lib-uc-show-errors  [control]="AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryPriceAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                       </td>
                       <td [formGroupName]="i">
-                        <input type="" currencyMask id="accessoryDownPaymentAmt" class="form-control" formControlName="AccessoryDownPaymentAmt"
+                        <input type="" currencyMask id="accessoryDownPaymentAmt{{i}}" class="form-control" formControlName="AccessoryDownPaymentAmt" [options]="{ nullable: true }"
                                [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryDownPaymentAmt.invalid }">
                         <lib-uc-show-errors  [control]="AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryDownPaymentAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                       </td>
@@ -365,7 +361,7 @@
                 <i class="ft-x"></i> Cancel
               </button>
               <button type="submit" class="btn btn-raised btn-primary">
-                <i class="fa fa-check-square-o"></i> Save
+                <i class="far fa-check-square"></i> Save
               </button>
             </div>
           </div>

@@ -892,8 +892,8 @@ export class InsuranceDataComponent implements OnInit {
 
   }
 
-  setPaidByInput(paidBy) {
-    if (paidBy == AdInsConstant.InsPaidByAtCost) {
+  setPaidByInput(paidBy){
+    if(paidBy == AdInsConstant.InsPaidByAtCost){
       this.InsuranceDataForm.controls.TotalCustDiscAmt.disable();
       this.InsuranceDataForm.controls.InsCpltzAmt.disable();
     } else {

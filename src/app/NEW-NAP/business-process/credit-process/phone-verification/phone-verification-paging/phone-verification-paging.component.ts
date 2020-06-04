@@ -14,7 +14,6 @@ import { ActivatedRoute } from "@angular/router";
 
 export class PhoneVerificationPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
-  arrCrit: Array<CriteriaObj>;
   BizTemplateCode : string;
 
   constructor(private route: ActivatedRoute) { 
@@ -35,7 +34,6 @@ export class PhoneVerificationPagingComponent implements OnInit {
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppPhoneVerif.json";
 
     var arrCrit = new Array();
-    
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'WTL.ACT_CODE';
@@ -47,7 +45,6 @@ export class PhoneVerificationPagingComponent implements OnInit {
     critObj.propName = 'a.ORI_OFFICE_CODE';
     critObj.value = userAccess.OfficeCode;
     arrCrit.push(critObj);
-
 
     this.inputPagingObj.addCritInput = arrCrit;
   }

@@ -1,25 +1,34 @@
-<span class="mr-1">
-  <button type="button" class="addButton pull-right" (click)="add(content)" translate>
-    <i class="ft-plus-circle"></i> Add Guarantor
-  </button>
-</span>
+<div class="button-right margin-15">
+    <button type="button" class="btn btn-raised btn-primary" (click)="add(content)" translate>
+      <i class="ft-plus-circle"></i> Add
+    </button>
+</div>
 <div *ngIf="result.length == 0">
   <table class="table table-responsive-md text-center table-hover">
     <thead>
       <tr class="table-header">
-        <th style="text-align: center;"><span class="thead-header" name="NoName" translate>No
+        <th style="text-align: center;">
+          <span class="thead-header" name="NoName" translate>
+            No
           </span>
         </th>
-        <th style="text-align: center;"><span class="thead-header" name="GuarantorName" translate>Guarantor Name </span>
+        <th style="text-align: center;">
+          <span class="thead-header" name="GuarantorName" translate>Guarantor Name </span>
         </th>
-        <th style="text-align: center;"><span class="thead-header" name="MrGuarantorTypeCode" translate>Guarantor Type
+        <th style="text-align: center;">
+          <span class="thead-header" name="MrGuarantorTypeCode" translate>
+            Guarantor Type
           </span>
         </th>
-        <th style="text-align: center;"><span class="thead-header" name="Relationship" translate>Relationship
-        </span>
+        <th style="text-align: center;">
+          <span class="thead-header" name="Relationship" translate>
+            Relationship
+          </span>
         </th>
-        <th style="text-align: center;"><span class="thead-header" name="Action" translate>Action
-        </span>
+        <th style="text-align: center;">
+          <span class="thead-header" name="Action" translate>
+            Action
+          </span>
         </th>
       </tr>
     </thead>
@@ -47,5 +56,5 @@
     </button>
   </div>
   <app-guarantor [AppGuarantorId]=AppGuarantorId [MrGuarantorTypeCode]=MrGuarantorTypeCode [mode]=mode [AppId]="AppId"
-    (closeX)="close($event)"></app-guarantor>
+                 (closeX)="close($event)"></app-guarantor>
 </ng-template>
