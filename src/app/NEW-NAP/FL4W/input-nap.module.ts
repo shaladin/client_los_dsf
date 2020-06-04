@@ -19,22 +19,16 @@ import { NapAddDetailComponent } from './nap-add-detail/nap-add-detail.component
 import { NapTabComponentModule } from "./nap-tab/nap-tab.module";
 import { ViewMainInfoComponentModule } from "../sharing-component/view-main-info-component/view-main-info-component.module";
 import { ViewAppComponentModule } from "../sharing-component/view-app-component/view-app-component.module";
-import { AppMainInfoComponent } from "../sharing-component/view-main-info-component/app-main-info/app-main-info.component";
 import { ViewSharingComponentModule } from "../sharing-component/view-app-component/view-sharing-component.module";
 import { ViewAgrmntComponent } from './view-agrmnt/view-agrmnt.component';
-import { TabCommissionComponent } from "../sharing-component/view-app-component/tab-commission/tab-commission.component";
 import { AgrmntLifeInsuranceComponent } from "../sharing-component/view-agrmnt-component/life-insurance/life-insurance.component";
 import { ViewCommissionComponent } from "../sharing-component/view-agrmnt-component/view-commission/view-commission.component";
-import { ListDataCommissionComponent } from "../sharing-component/view-app-component/tab-commission/list-data-commission/list-data-commission.component";
 import { ViewPurchaseOrderComponent } from "../sharing-component/view-agrmnt-component/view-purchase-order/view-purchase-order.component";
 import { ViewDeliveryOrderComponent } from "../sharing-component/view-agrmnt-component/view-delivery-order/view-delivery-order.component";
 import { AgrmntFinancialComponent } from "../sharing-component/view-agrmnt-component/agrmnt-financial/agrmnt-financial.component";
 import { ViewAgrmntReservedFundComponent } from "../sharing-component/view-agrmnt-component/view-reserved-fund/view-reserved-fund.component";
 import { ViewAgrmntSummaryComponent } from "../sharing-component/view-agrmnt-component/view-summary/view-summary.component";
 import { ViewAgrmntDocumentComponent } from "../sharing-component/view-agrmnt-component/view-document/view-document.component";
-import { AppTcComponent } from "../sharing-component/view-app-component/app-tc/app-tc.component";
-import { AppAssetDataComponent } from "../sharing-component/view-app-component/app-asset-data/app-asset-data.component";
-import { AppInsuranceComponent } from "../sharing-component/view-app-component/app-insurance/app-insurance.component";
 import { FeeFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/fee/fee-FL4W.component";
 import { SchmBalloonFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/schm-baloon/schm-balloon-FL4W.component";
 import { SchmEvenPrincipalFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/schm-even-principal/schm-even-principal-FL4W.component";
@@ -46,6 +40,7 @@ import { SchmStepUpStepDownNormalFL4WComponent } from "./input-nap-FL4W/financia
 import { SubsidyFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/subsidy/subsidy-FL4W.component";
 import { SubsidyAddEditFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/subsidy-add-edit/subsidy-add-edit-FL4W.component";
 import { FinancialDataFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/financial-data-FL4W.component";
+import { MultiCollDataComponent } from "../sharing-component/input-nap-component/collateral-data/multi-coll-data/multi-coll-data.component";
  
 export const customCurrencyMaskConfig = {     
   align: "right",     
@@ -78,7 +73,9 @@ export const customCurrencyMaskConfig = {
     NapTabComponentModule,
     ViewSharingComponentModule,
     MatTabsModule,
+    ViewAppComponentModule,
     ViewSharingComponentModule,
+    ViewMainInfoComponentModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
   ],
   declarations: [
@@ -87,23 +84,16 @@ export const customCurrencyMaskConfig = {
     NapPagingComponent,
     NapViewComponent,  
     NapAddDetailComponent, 
-    AppMainInfoComponent,
-    ViewAgrmntComponent, 
-    TabCommissionComponent,
-    ListDataCommissionComponent,
+    ViewAgrmntComponent,
     ViewAgrmntComponent,  
     AgrmntLifeInsuranceComponent,
     ViewCommissionComponent,
-    ListDataCommissionComponent,
     ViewPurchaseOrderComponent,
     ViewDeliveryOrderComponent,
     AgrmntFinancialComponent,
     ViewAgrmntReservedFundComponent,
     ViewAgrmntSummaryComponent,
     ViewAgrmntDocumentComponent,
-    AppTcComponent,
-    AppAssetDataComponent,
-    AppInsuranceComponent, 
     FeeFL4WComponent,
     SchmBalloonFL4WComponent,
     SchmEvenPrincipalFL4WComponent,

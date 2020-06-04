@@ -78,7 +78,6 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    console.log('fraudverf')
     await this.ClaimTask();
     this.arrValue.push(this.AppId);
     this.viewObj = "./assets/ucviewgeneric/viewFraudVerifMultiAssetMainInfo.json";
