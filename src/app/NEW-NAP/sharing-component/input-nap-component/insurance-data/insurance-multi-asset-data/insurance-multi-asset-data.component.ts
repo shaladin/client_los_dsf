@@ -120,8 +120,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
 
         for (var i = 0; i < this.listAppAssetObj.length; i++)
         {
-          // this.TotalPremiumToCust = this.TotalPremiumToCust + DetailForGridCollateral[i].MainPremi + DetailForGridCollateral[i].AddPremi - DetailForGridCollateral[i].TotalCustDiscAmt;
-          this.TotalPremiumToCust = this.TotalPremiumToCust + this.listAppAssetObj[i].MainPremi + this.listAppAssetObj[i].AddPremi;
+          this.TotalPremiumToCust =+ this.listAppAssetObj[i].PaidAmtByCust;
         }
         this.CapAmt = this.TotalPremiumToCust;
       
