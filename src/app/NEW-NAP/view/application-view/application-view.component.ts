@@ -40,6 +40,7 @@ export class ApplicationViewComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
       this.BizTemplateCode = params["BizTemplateCode"];
+
     })
   }
 
