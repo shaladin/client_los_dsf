@@ -19,6 +19,7 @@ import { ReturnHandlingCollateralPagingComponent } from './return-handling/retur
 import { ReturnHandlingCollateralEditComponent } from './return-handling/return-handling-collateral-edit/return-handling-collateral-edit.component';
 import { ReturnHandlingCollateralDetailComponent } from './return-handling/return-handling-collateral-detail/return-handling-collateral-detail.component';
 import { ReturnHandlingComRsvfundPagingComponent } from './return-handling/return-handling-com-rsvfund-paging/return-handling-com-rsvfund-paging.component';
+import { CopyCancelledApplicationComponent } from './copy-cancelled-application/copy-cancelled-application.component';
 
 const routes: Routes = [
   {
@@ -155,6 +156,13 @@ const routes: Routes = [
         component: ReturnHandlingCollateralDetailComponent,
         data: {
           title: 'Return Handling Collateral Detail'
+        }
+      },
+      {
+        path: 'CopyCancelledApplication',
+        component: CopyCancelledApplicationComponent,
+        data: {
+          title: 'Copy From Cancelled Application'
         }
       }
     ]
