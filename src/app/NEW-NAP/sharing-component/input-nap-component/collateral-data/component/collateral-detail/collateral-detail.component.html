@@ -43,7 +43,7 @@
                   <div class="col-md-7">
                     <lib-uclookupgeneric [lookupInput]="inputLookupColl" [parentForm]='AddCollForm'
                       [enjiForm]='enjiForm' [identifier]="'FullAssetName'"
-                      (lookup)="getLookupCollateralTypeResponse($event)" #LookupCollateral>
+                      (lookup)="getLookupCollateral($event)" #LookupCollateral>
                     </lib-uclookupgeneric>
                   </div>
                 </div>
@@ -144,7 +144,7 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-5 adins-label" translate>Notes</label>
+                  <label class="col-md-5 adins-label" translate>Collateral Notes</label>
                   <div class="col-md-7">
                     <textarea type="textarea" row="5" class="form-control" formControlName="Notes"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.Notes.invalid}"></textarea>
@@ -211,7 +211,7 @@
                   <div class="form-group row">
                     <label class="col-md-5" translate>Self Usage</label>
                     <div class="col-md-7">
-                      <input type="checkbox" (change)="CopyUser()">
+                      <input type="checkbox" (change)="CopyUser()" formControlName="SelfUsage">
                     </div>
                   </div>
                 </div>
@@ -227,8 +227,6 @@
                       </lib-uc-show-errors>
                     </div>
                   </div>
-                </div>
-                <div class="col-md-6">
                   <div class="form-group row">
                     <label class="col-md-5 adins-required-label" translate>Collateral User Relationship</label>
                     <div class="col-md-7">
@@ -294,13 +292,11 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-5 adins-required-label" translate>Owner Relationship</label>
+                    <label class="col-md-5 adins-required-label" translate>Owner Id No</label>
                     <div class="col-md-7">
-                      <select class="form-control" formControlName="MrOwnerRelationshipCode"
-                        [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.MrOwnerRelationshipCode.invalid }">
-                        <option *ngFor="let item of OwnerRelationList" [value]="item.Key">{{item.Value}}</option>
-                      </select>
-                      <lib-uc-show-errors [control]="AddCollForm.controls.MrOwnerRelationshipCode"
+                      <input type="text" class="form-control" formControlName="OwnerIdNo"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerIdNo.invalid }">
+                      <lib-uc-show-errors [control]="AddCollForm.controls.OwnerIdNo"
                         [submit]="enjiForm.submitted">
                       </lib-uc-show-errors>
                     </div>
