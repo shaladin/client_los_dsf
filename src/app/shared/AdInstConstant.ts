@@ -772,7 +772,7 @@ export class AdInsConstant {
   public static SubmitPurchaseOrder = environment.losUrl + "/PurchaseOrderH/SubmitPurchaseOrder";
   public static ResumeWorkflowPurchaseOrder = environment.losUrl + "/PurchaseOrderH/ResumeWorkflowPurchaseOrder";
   public static GetPurchaseOrderHDetailViewByAgrmntId = environment.losUrl + "/PurchaseOrderH/GetPurchaseOrderHDetailViewByAgrmntId";
-
+  public static GetPurchaseOrderHByAgrmntId = environment.losUrl + "/PurchaseOrderH/GetPurchaseOrderHByAgrmntId";
   // LEAD
   public static AddEditLeadCustPersonal = environment.losUrl + "/LeadCust/AddEditLeadCustPersonal";
   public static AddEditLeadData = environment.losUrl + "/Lead/AddEditLeadData";

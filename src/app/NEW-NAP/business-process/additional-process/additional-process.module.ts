@@ -27,6 +27,7 @@ import { ReturnHandlingCollateralEditComponent } from "./return-handling/return-
 import { ReturnHandlingCollateralPagingComponent } from "./return-handling/return-handling-collateral-paging/return-handling-collateral-paging.component";
 import { MatCheckboxModule } from "@angular/material";
 import { ReturnHandlingComRsvfundPagingComponent } from "./return-handling/return-handling-com-rsvfund-paging/return-handling-com-rsvfund-paging.component";
+import { CopyCancelledApplicationComponent } from './copy-cancelled-application/copy-cancelled-application.component';
 
 @NgModule({
   imports: [
@@ -58,7 +59,8 @@ import { ReturnHandlingComRsvfundPagingComponent } from "./return-handling/retur
     ReturnHandlingSurveyComponent,
     ReturnHandlingCollateralPagingComponent,
     ReturnHandlingCollateralEditComponent,
-    ReturnHandlingCollateralDetailComponent
+    ReturnHandlingCollateralDetailComponent,
+    CopyCancelledApplicationComponent
   ],
   providers: [
     NGXToastrService
