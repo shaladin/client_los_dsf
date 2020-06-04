@@ -448,7 +448,7 @@ export class FormAddDynamicComponent implements OnInit {
       code = this.DDLContentName[idxDDLContent].Key;
     }
 
-    var tempRuleObj = this.GetTempRuleObj(code, idx);
+    var tempRuleObj = this.GetTempRuleObj(code, idxDDLContent);
     // console.log(tempRuleObj);
     this.GetDDLBankAccount(this.FormObj.controls.arr["controls"][idx].controls.ContentName.value, idx);
 
