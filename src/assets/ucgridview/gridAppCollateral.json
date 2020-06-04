@@ -95,7 +95,7 @@
                         "conditions" : [ 
                           {
                             "property" : "AppAssetId", 
-                            "value" : null,
+                            "value": null,
                             "restriction": "EQ"
                           }
                         ],

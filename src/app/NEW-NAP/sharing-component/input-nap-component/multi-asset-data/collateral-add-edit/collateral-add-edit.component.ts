@@ -1,8 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter,ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter,ViewChild, ComponentFactoryResolver, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, NgForm } from '@angular/forms';
 import { WizardComponent } from 'angular-archwizard';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
@@ -23,6 +23,7 @@ import { AssetTypeObj } from 'app/shared/model/AssetTypeObj.Model';
 import { AssetCategoryObj } from 'app/shared/model/AssetCategoryObj.Model';
 import { AssetMasterObj } from 'app/shared/model/AssetMasterObj.Model';
 import { AppCollateralRegistrationObj } from 'app/shared/model/AppCollateralRegistrationObj.Model';
+import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 
 @Component({
   selector: 'app-collateral-add-edit',
@@ -109,6 +110,9 @@ export class CollateralAddEditComponent implements OnInit {
   resAssetMasterObj: any;
   appCollateralRegistObj: any;
   returnAppCollateralRegistObj: any;
+  businessDt: Date;
+  @ViewChild("CollateralModal", { read: ViewContainerRef }) collateralModal: ViewContainerRef;
+  @ViewChild("enjiForm") enjiForm: NgForm;
 
   appObj = {
     AppId: 0,
@@ -146,10 +150,10 @@ export class CollateralAddEditComponent implements OnInit {
 
     LocationAddrType:[''],
 
-    CollPercentage:['', [Validators.min(1)]],
+    CollPercentage:['', [Validators.required, Validators.min(1)]],
   });
 
-  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) { 
+  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private componentFactoryResolver: ComponentFactoryResolver) { 
     this.getListAppAssetData = AdInsConstant.GetListAppAssetData;
     this.getListVendorEmp = AdInsConstant.GetListVendorEmpByVendorIdAndPosition;
     this.getListActiveRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
@@ -195,16 +199,16 @@ export class CollateralAddEditComponent implements OnInit {
       AssetCategoryCode: event.AssetCategoryCode
     });
 
-    this.assetCategoryObj = new AssetCategoryObj();
-    this.assetCategoryObj.AssetCategoryId = event.AssetCategoryId;
-    this.http.post(this.getAssetCategoryById, this.assetCategoryObj).subscribe(
-      (response) => {
-        this.returnAssetCategoryObj = response;
-        this.AddCollForm.patchValue({ 
-          AssetCategoryCode: this.returnAssetCategoryObj.AssetCategoryCode 
-        });
-      }
-    );
+    // this.assetCategoryObj = new AssetCategoryObj();
+    // this.assetCategoryObj.AssetCategoryId = event.AssetCategoryId;
+    // this.http.post(this.getAssetCategoryById, this.assetCategoryObj).subscribe(
+    //   (response) => {
+    //     this.returnAssetCategoryObj = response;
+    //     this.AddCollForm.patchValue({ 
+    //       AssetCategoryCode: this.returnAssetCategoryObj.AssetCategoryCode 
+    //     });
+    //   }
+    // );
   }
 
   CollChange(){
@@ -212,6 +216,24 @@ export class CollateralAddEditComponent implements OnInit {
 
     console.log("aaa");
     console.log(this.collateral);
+  }
+
+  collateralTypeHandler(){
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UclookupgenericComponent);
+    this.collateralModal.clear();
+    var criteriaList = new Array<CriteriaObj>();
+    var criteriaObj = new CriteriaObj();
+    criteriaObj.restriction = AdInsConstant.RestrictionEq;
+    criteriaObj.propName = 'B.ASSET_TYPE_CODE';
+    criteriaObj.value = this.AddCollForm.controls["AssetTypeCode"].value;
+    criteriaList.push(criteriaObj);
+    this.inputLookupObj.addCritInput = criteriaList;
+    const component = this.collateralModal.createComponent(componentFactory);
+    component.instance.lookupInput = this.inputLookupObj;
+    component.instance.parentForm = this.AddCollForm;
+    component.instance.enjiForm = this.enjiForm;
+    component.instance.identifier = 'CollateralName';
+    component.instance.lookup.subscribe((e) => this.getLookupCollateralName(e));
   }
 
   bindUcSearch()
@@ -392,6 +414,7 @@ export class CollateralAddEditComponent implements OnInit {
     this.appCustAddrObj.AppCustAddrId = this.AddCollForm.controls["LocationAddrType"].value;
     this.http.post(this.getAppCustAddrByAppCustAddrId, this.appCustAddrObj).subscribe(
       (response) => {
+        console.log("Collateral Location : " + JSON.stringify(response));
           this.returnAppCustAddrObj = response;
           
           this.locationAddrObj = new AppCustAddrObj();
@@ -406,7 +429,6 @@ export class CollateralAddEditComponent implements OnInit {
           this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
           this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.returnAppCustAddrObj.Zipcode;
           this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = {Zipcode: this.returnAppCustAddrObj.Zipcode};
-          
       });
   }
 
@@ -437,6 +459,9 @@ export class CollateralAddEditComponent implements OnInit {
     console.log("ccc")
     console.log(this.mode)
     console.log(this.AppCollateralId)
+    var context = JSON.parse(localStorage.getItem("UserAccess"));
+    this.businessDt = new Date(context["BusinessDt"]);
+    this.businessDt.setDate(this.businessDt.getDate() - 1);
     if(this.mode == 'editColl'){
       this.appCollateralObj = new AppCollateralObj();
       this.appCollateralObj.AppCollateralId = this.AppCollateralId;
@@ -453,7 +478,6 @@ export class CollateralAddEditComponent implements OnInit {
               Collateral: "Exist"
             });
           }
-          this.AddCollForm.controls["Collateral"].disable();
           this.CollChange();
           this.AddCollForm.patchValue({ 
             SerialNo1: this.returnAppCollateralObj.SerialNo1,
@@ -571,15 +595,30 @@ export class CollateralAddEditComponent implements OnInit {
         console.log("aaa");
         console.log(this.returnCollTypeObj);
         this.AddCollForm.patchValue({ AssetTypeCode: response['ReturnObject'][0]['Key'] });
+
+        this.inputLookupObj = new InputLookupObj();
+        this.inputLookupObj.urlJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
+        this.inputLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+        this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
+        this.inputLookupObj.pagingJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
+        this.inputLookupObj.genericJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
+        var criteriaList = new Array<CriteriaObj>();
+        var criteriaObj = new CriteriaObj();
+        criteriaObj.restriction = AdInsConstant.RestrictionEq;
+        criteriaObj.propName = 'B.ASSET_TYPE_CODE';
+        criteriaObj.value = response['ReturnObject'][0]['Key'];
+        criteriaList.push(criteriaObj);
+        this.inputLookupObj.addCritInput = criteriaList;
+
+        const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UclookupgenericComponent);
+        const component = this.collateralModal.createComponent(componentFactory);
+        component.instance.lookupInput = this.inputLookupObj;
+        component.instance.parentForm = this.AddCollForm;
+        component.instance.enjiForm = this.enjiForm;
+        component.instance.identifier = 'CollateralName';
+        component.instance.lookup.subscribe((e) => this.getLookupCollateralName(e));
       }
     );
-
-    this.inputLookupObj = new InputLookupObj();
-    this.inputLookupObj.urlJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
-    this.inputLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
-    this.inputLookupObj.pagingJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
-    this.inputLookupObj.genericJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
 
     this.InputLookupCityIssuerObj = new InputLookupObj();
     this.InputLookupCityIssuerObj.urlJson = "./assets/uclookup/NAP/lookupDistrict.json";
@@ -598,6 +637,7 @@ export class CollateralAddEditComponent implements OnInit {
   }
 
   setCollateralInfo(){
+    var collateralStat = this.AddCollForm.controls["Collateral"].value;
     this.appCollateralDataObj.AppCollateralObj.AppId = this.AppId;
     this.appCollateralDataObj.AppCollateralObj.CollateralSeqNo = this.AddCollForm.controls["CollateralSeqNo"].value;
     this.appCollateralDataObj.AppCollateralObj.FullAssetCode = this.AddCollForm.controls["FullAssetCode"].value;
@@ -609,10 +649,12 @@ export class CollateralAddEditComponent implements OnInit {
     this.appCollateralDataObj.AppCollateralObj.CollateralValueAmt = this.AddCollForm.controls["CollateralValueAmt"].value;
     this.appCollateralDataObj.AppCollateralObj.CollateralNotes = this.AddCollForm.controls["Notes"].value;
     this.appCollateralDataObj.AppCollateralObj.AssetTypeCode = this.AddCollForm.controls["AssetTypeCode"].value;
-    this.appCollateralDataObj.AppCollateralObj.CollateralStat = "NEW";
+    this.appCollateralDataObj.AppCollateralObj.CollateralStat = collateralStat == "New" ? "NEW" : "EXISTING";
     this.appCollateralDataObj.AppCollateralObj.MrCollateralConditionCode = "USED";
     this.appCollateralDataObj.AppCollateralObj.MrCollateralUsageCode = "NON_COMM";
     this.appCollateralDataObj.AppCollateralObj.AssetCategoryCode = this.AddCollForm.controls["AssetCategoryCode"].value;
+    // console.log("SetCollateralInfo : " + JSON.stringify(this.appCollateralDataObj.AppCollateralObj));
+    // console.log("Asset Category Code Final : " + this.AddCollForm.controls["AssetCategoryCode"].value);
     // this.appCollateralDataObj.AppCollateralObj.AssetCategoryCode = "MOBIL1000";
   }
 
@@ -705,52 +747,57 @@ export class CollateralAddEditComponent implements OnInit {
 
   SaveNewCollateral()
   {
-    if(this.mode == 'addColl')
-    {
-      this.appCollateralDataObj = new AppCollateralDataObj();
-      this.setCollateralInfo();
-      this.setCollateralOwner();
-      this.setCollateralLocation();
-      this.setCollateralPercentage();
-      //this.setCollateralAttribute();
-      this.appCollateralDataObj.AppCollateralObj.AppAssetId = null;
-      this.http.post(this.addEditAllCollateralData, this.appCollateralDataObj).subscribe(
-        (response) => {
-          console.log(response);
-          this.toastr.successMessage(response["message"]);
-          //this.router.navigate(["/Nap/AssetData/Paging"]);
-          this.collValue.emit({mode : 'paging'});
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    }
-    else
-    {
-      this.appCollateralDataObj = new AppCollateralDataObj();
-      this.setCollateralInfo();
-      this.setCollateralOwner();
-      this.setCollateralLocation();
-      this.setCollateralPercentage();
-      //this.setCollateralAttribute();
-      this.appCollateralDataObj.AppCollateralObj.AppAssetId = null;
-      this.appCollateralDataObj.AppCollateralObj.AppCollateralId = this.AppCollateralId;
-      this.appCollateralDataObj.AppCollateralObj.RowVersion = this.returnAppCollateralObj.RowVersion;
-      this.appCollateralDataObj.AppCollateralRegistrationObj.AppCollateralRegistrationId = this.returnAppCollateralRegistObj.AppCollateralRegistrationId;
-      this.appCollateralDataObj.AppCollateralRegistrationObj.AppCollateralId = this.returnAppCollateralRegistObj.AppCollateralId;
-      this.appCollateralDataObj.AppCollateralRegistrationObj.RowVersion = this.returnAppCollateralRegistObj.RowVersion;
-      this.http.post(this.addEditAllCollateralData, this.appCollateralDataObj).subscribe(
-        (response) => {
-          console.log(response);
-          this.toastr.successMessage(response["message"]);
-          //this.router.navigate(["/Nap/AssetData/Paging"]);
-          this.collValue.emit({mode : 'paging'});
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+    if(this.AddCollForm.valid){
+      if(this.mode == 'addColl')
+      {
+        this.appCollateralDataObj = new AppCollateralDataObj();
+        this.setCollateralInfo();
+        this.setCollateralOwner();
+        this.setCollateralLocation();
+        this.setCollateralPercentage();
+        //this.setCollateralAttribute();
+        this.appCollateralDataObj.AppCollateralObj.AppAssetId = null;
+        this.appCollateralDataObj.AppCollateralObj.AgrmntId = null;
+        this.http.post(this.addEditAllCollateralData, this.appCollateralDataObj).subscribe(
+          (response) => {
+            console.log(response);
+            this.toastr.successMessage(response["message"]);
+            //this.router.navigate(["/Nap/AssetData/Paging"]);
+            // this.collValue.emit({mode : 'paging'});
+            console.log("Response Add Collateral : " + JSON.stringify(this.appCollateralDataObj));
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      }
+      else
+      {
+        this.appCollateralDataObj = new AppCollateralDataObj();
+        this.setCollateralInfo();
+        this.setCollateralOwner();
+        this.setCollateralLocation();
+        this.setCollateralPercentage();
+        //this.setCollateralAttribute();
+        this.appCollateralDataObj.AppCollateralObj.AppAssetId = null;
+        this.appCollateralDataObj.AppCollateralObj.AgrmntId = null;
+        this.appCollateralDataObj.AppCollateralObj.AppCollateralId = this.AppCollateralId;
+        this.appCollateralDataObj.AppCollateralObj.RowVersion = this.returnAppCollateralObj.RowVersion;
+        this.appCollateralDataObj.AppCollateralRegistrationObj.AppCollateralRegistrationId = this.returnAppCollateralRegistObj.AppCollateralRegistrationId;
+        this.appCollateralDataObj.AppCollateralRegistrationObj.AppCollateralId = this.returnAppCollateralRegistObj.AppCollateralId;
+        this.appCollateralDataObj.AppCollateralRegistrationObj.RowVersion = this.returnAppCollateralRegistObj.RowVersion;
+        this.http.post(this.addEditAllCollateralData, this.appCollateralDataObj).subscribe(
+          (response) => {
+            console.log(response);
+            this.toastr.successMessage(response["message"]);
+            //this.router.navigate(["/Nap/AssetData/Paging"]);
+            this.collValue.emit({mode : 'paging'});
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      }
     }
   }
 
