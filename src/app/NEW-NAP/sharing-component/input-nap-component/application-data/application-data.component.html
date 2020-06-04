@@ -152,7 +152,8 @@
                       <label class="adInsLabel"> Interest Type </label>
                     </div>
                     <div class="col-md-8">
-                      <select class="form-control adInsInput" style="width: auto" formControlName="InterestType"
+                      <label class="adInsLabel"> {{NapAppModelForm.controls.InterestTypeDesc.value}} </label>
+                      <!-- <select *ngIf="interestTypeShow == 'ALL'" class="form-control adInsInput" style="width: auto" formControlName="InterestType"
                         (change)="ChangeInterestType()"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.InterestType.invalid }">
                         <option value="">-Select One-</option>
@@ -160,7 +161,7 @@
                           {{it.Value}} </option>
                       </select>
                       <lib-uc-show-errors [control]="NapAppModelForm.controls.InterestType"
-                        [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                        [submit]="enjiForm.submitted"></lib-uc-show-errors> -->
                     </div>
                   </div>
 
@@ -223,7 +224,7 @@
 
               <div class="form-actions right">
                 <button type="button" (click)="AddTemp(contentCrossApp)" class="btn btn-raised btn-primary" translate>
-                  <i class="fa fa-check-square-o"></i> Add
+                  <i class="fa ft-plus"></i> Add
                 </button>
               </div>
 
@@ -250,9 +251,9 @@
                 </tbody>
                 <tbody>
                   <tr *ngFor="let item of resultCrossApp; let i = index">
-                    <td style="text-align: center;">{{item.AgrmntNo}}</td>
+                    <td style="text-align: center;">{{item.CrossAgrmntNo}}</td>
                     <td style="text-align: left;">{{item.CustName}}</td>
-                    <td style="text-align: center;">{{item.AppNo}}</td>
+                    <td style="text-align: center;">{{item.CrossAppNo}}</td>
                     <td>
                       <a class="warning p-0" (click)="DeleteCrossApp(i)">
                         <i class="ft-trash-2 font-medium-3 mr-2"></i>
@@ -279,8 +280,11 @@
             <app-loan-object [AppId]="appId" [mode]="mode" *ngIf="IsLoanObject"></app-loan-object>
 
             <div class="form-actions right">
+              <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
+                <i class="ft-x"></i> Cancel
+              </button>
               <button type="submit" class="btn btn-raised btn-primary">
-                <i class="fa fa-check-square-o"></i> Save
+                <i class="far fa-check-square"></i> Save
               </button>
               <!-- <button type="button" class="btn btn-raised btn-primary" (click)="test()">
                 <i class="fa fa-check-square-o"></i> Test

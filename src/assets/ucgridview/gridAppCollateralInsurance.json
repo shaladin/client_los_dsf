@@ -2,45 +2,57 @@
     "headerList": [
         {
             "type": "label",
-            "position": "center",
-            "label": "Collateral Name",
-            "name": "FullAssetName"
+            "position": "left",
+            "label": "Asset Name",
+            "name": "InsObjName"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Insured By",
+            "name": "InsAssetCoveredBy"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Paid By",
+            "name": "InsAssetPaidBy"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Insurance Company",
+            "name": "InscoBranchName"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Cover Period",
+            "name": "InsAssetCoverPeriod"
         },
         {
             "type": "label",
             "position": "center",
-            "label": "Collateral Type",
-            "name": "AssetTypeCode"
+            "label": "Insurance Length",
+            "name": "InsLength"
         },
         {
             "type": "label",
-            "position": "center",
-            "label": "Collateral Price",
-            "name": "CollateralValueAmt"
+            "position": "right",
+            "label": "Main Premi",
+            "name": "TotalCustMainPremiAmt"
         },
         {
             "type": "label",
-            "position": "center",
-            "label": "License Plate No",
-            "name": "SerialNo1"
+            "position": "right",
+            "label": "Additional Premi",
+            "name": "TotalCustAddPremiAmt"
         },
         {
             "type": "label",
-            "position": "center",
-            "label": "Chassis No",
-            "name": "SerialNo2"
-        },
-        {
-            "type": "label",
-            "position": "center",
-            "label": "Engine No",
-            "name": "SerialNo4"
-        },
-        {
-            "type": "label",
-            "position": "center",
-            "label": "Owner Name",
-            "name": "OwnerName"
+            "position": "right",
+            "label": "Fee",
+            "name": "CustAdminFeeAmt"
         },
         {
             "type": "label",
@@ -51,38 +63,48 @@
     "bodyList": [
         {
             "type": "text",
-            "position": "center",
-            "property": "FullAssetName"
+            "position": "left",
+            "property": "InsObjName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "InsAssetCoveredBy"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "InsAssetPaidBy"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "InscoBranchName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "InsAssetCoverPeriod"
         },
         {
             "type": "text",
             "position": "center",
-            "property": "AssetTypeCode"
+            "property": "InsLength"
         },
         {
-            "type": "text",
-            "position": "center",
-            "property": "CollateralValueAmt"
+            "type": "decimal",
+            "position": "right",
+            "property": "TotalCustMainPremiAmt"
         },
         {
-            "type": "text",
-            "position": "center",
-            "property": "SerialNo1"
+            "type": "decimal",
+            "position": "right",
+            "property": "TotalCustAddPremiAmt"
         },
         {
-            "type": "text",
-            "position": "center",
-            "property": "SerialNo2"
-        },
-        {
-            "type": "text",
-            "position": "center",
-            "property": "SerialNo4"
-        },
-        {
-            "type": "text",
-            "position": "center",
-            "property": "OwnerName"
+            "type": "decimal",
+            "position": "right",
+            "property": "CustAdminFeeAmt"
         },
         {
             "type": "action",

@@ -51,6 +51,9 @@ export class SchmBalloonComponent implements OnInit {
   }
 
   CalcBaseOnRate() {
+    if(this.ValidateFee() == false){
+      return;
+    }
     if(this.ParentForm.get("BalloonValueAmt").value < 1){
       this.toastr.errorMessage("Balloon Amount must be higher than 0.");
       return;
@@ -75,7 +78,13 @@ export class SchmBalloonComponent implements OnInit {
 
           NtfAmt: response.NtfAmt,
           DiffRateAmt: response.DiffRateAmt,
-          ApvAmt: response.ApvAmt
+          ApvAmt: response.ApvAmt,
+
+          TotalLifeInsCustAmt: response.TotalLifeInsCustAmt,
+          LifeInsCptlzAmt: response.LifeInsCptlzAmt,
+
+          DownPaymentGrossAmt: response.DownPaymentGrossAmt,
+          DownPaymentNettAmt: response.DownPaymentNettAmt
 
         })
 
@@ -86,6 +95,9 @@ export class SchmBalloonComponent implements OnInit {
   }
 
   CalcBaseOnInst() {
+    if(this.ValidateFee() == false){
+      return;
+    }    
     if(this.ParentForm.get("BalloonValueAmt").value < 1){
       this.toastr.errorMessage("Balloon Amount must be higher than 0.");
       return;
@@ -111,7 +123,13 @@ export class SchmBalloonComponent implements OnInit {
 
           NtfAmt: response.NtfAmt,
           DiffRateAmt: response.DiffRateAmt,
-          ApvAmt: response.ApvAmt
+          ApvAmt: response.ApvAmt,
+
+          TotalLifeInsCustAmt: response.TotalLifeInsCustAmt,
+          LifeInsCptlzAmt: response.LifeInsCptlzAmt,
+
+          DownPaymentGrossAmt: response.DownPaymentGrossAmt,
+          DownPaymentNettAmt: response.DownPaymentNettAmt
 
         });
 
@@ -173,6 +191,17 @@ export class SchmBalloonComponent implements OnInit {
     this.ParentForm.patchValue({
       NeedReCalculate: value
     });
+  }
+
+  ValidateFee(){
+    for(let i = 0; i < this.ParentForm.controls["AppFee"]["controls"].length; i++){
+      if(this.ParentForm.controls["AppFee"].value[i].IsCptlz == true
+          && this.ParentForm.controls["AppFee"].value[i].AppFeeAmt < this.ParentForm.controls["AppFee"].value[i].FeeCapitalizeAmt){
+        this.toastr.errorMessage(this.ParentForm.controls["AppFee"].value[i].FeeTypeName + " Capitalized Amount can't be higher than " +  this.ParentForm.controls["AppFee"].value[i].AppFeeAmt);
+        return false;
+      }
+    }
+    return true;
   }
 
 }

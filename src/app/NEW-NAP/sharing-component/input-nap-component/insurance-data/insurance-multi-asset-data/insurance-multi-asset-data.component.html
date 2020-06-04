@@ -3,41 +3,31 @@
     <div class="card-body">
       <div class="px-3">
         <form class="form form-horizontal" [formGroup]="InsuranceDataForm"
-          (ngSubmit)="InsuranceDataForm.valid && SubmitForm()" #enjiForm="ngForm">
-          <div *ngIf="PageState == 'Paging'" id="assetData">
+          (ngSubmit)="InsuranceDataForm.valid" #enjiForm="ngForm">
+          <div [hidden]="PageState != 'Paging'" id="assetData">
             <lib-ucSubsection [id]="'assetDataId'" [title]="'Loan Object'" [panel]="'assetData'">
             </lib-ucSubsection>
             <lib-ucgridview [gridInput]="gridAssetDataObj" (callback)="event2($event)"></lib-ucgridview>
           </div>
 
-          <div *ngIf="PageState == 'Paging'" id="collateral">
-            <lib-ucSubsection [id]="'collateralId'" [title]="'Additional Collateral'" [panel]="'collateral'">
+          <div [hidden]="PageState != 'Paging'" id="collateral">
+            <lib-ucSubsection [id]="'collateralId'" [title]="'Collateral'" [panel]="'collateral'">
             </lib-ucSubsection>
             <lib-ucgridview [gridInput]="gridAppCollateralObj" (callback)="event($event)"></lib-ucgridview>
           </div>
 
-          <!-- <ng-template #AssetContent let-c="close" let-d="dismiss">
-            <div class="modal-header">
-              <h4 class="modal-title">Asset Data</h4>
-              <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body"> -->
-          <div *ngIf="PageState == 'EditAsset'">
+          <div [hidden]="PageState != 'EditAsset'">
             <app-asset-data-add-edit [AppAssetId]="appAssetIdForAssetModal" [AppId]="appIdForAssetModal"
-              (assetValue)="terimaValue($event)"> </app-asset-data-add-edit>
+              (assetValue)="getValue($event)"> </app-asset-data-add-edit>
           </div>
-          <!-- </div>
-          </ng-template> -->
 
-          <div *ngIf="PageState == 'EditInsurance'">
-            <app-insurance-data></app-insurance-data>
+          <div [hidden]="PageState != 'EditInsurance'">
+            <app-insurance-data (outputTab)="getValue($event)"></app-insurance-data>
           </div>
           <br>
         </form>
-        <form *ngIf="PageState == 'Paging'" class="form form-horizontal" [formGroup]="InsuranceDataForm"
-          (ngSubmit)="AppInsForm.valid && SubmitForm2()">
+        <form [hidden]="PageState != 'Paging'" class="form form-horizontal" [formGroup]="InsuranceDataForm"
+          (ngSubmit)="AppInsForm.valid && SubmitForm()">
           <div class="form-body">
             <div class="row">
               <label class="col-md-2 adins-label" translate>Total Premium to Customer</label>
@@ -45,7 +35,7 @@
               <div class="col-md-2"></div>
               <label class="col-md-2 adins-required-label" translate>Paid Amount By Customer</label>
               <div class="col-md-2">
-                <input type="text" class="form-control" formControlName="PaidAmtByCust"
+                <input type="" currencyMask class="form-control adInsInput" formControlName="PaidAmtByCust" (focusout)="PaidAmtChanged($event.currentTarget.value)"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && AppInsForm.controls.PaidAmtByCust.invalid }" />
                 <lib-uc-show-errors [control]="AppInsForm.controls.PaidAmtByCust" [submit]="enjiForm.submitted">
                 </lib-uc-show-errors>

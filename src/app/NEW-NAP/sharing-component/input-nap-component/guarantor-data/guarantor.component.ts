@@ -87,6 +87,7 @@ export class GuarantorComponent implements OnInit {
   close(event){
     this.closeChk = event;
     this.closeX.emit(this.closeChk);
+    this.ClearForm();
   }
 
 }

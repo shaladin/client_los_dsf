@@ -44,7 +44,7 @@
         <!-- your steps here -->
         <div class="step" data-target="#commission-tab">
           <button type="button" class="step-trigger" role="tab" aria-controls="commission-tab"
-            id="commission-tab-trigger" [disabled]="!(AppStepIndex >= 1)" (click)="ChangeTab('COM')">
+            id="commission-tab-trigger" (click)="ChangeTab('COM')">
             <span class="bs-stepper-circle">1</span>
             <span class="bs-stepper-label">Commission Data</span>
           </button>
@@ -52,7 +52,7 @@
         <div class="line"></div>
         <div class="step" data-target="#reserved-fund-tab">
           <button type="button" class="step-trigger" role="tab" aria-controls="reserved-fund-tab"
-            id="reserved-fund-tab-trigger" [disabled]="!(AppStepIndex >= 2)" (click)="ChangeTab('RSV')">
+            id="reserved-fund-tab-trigger" (click)="ChangeTab('RSV')">
             <span class="bs-stepper-circle">2</span>
             <span class="bs-stepper-label">Reserved Fund Data</span>
           </button>
