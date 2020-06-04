@@ -5,26 +5,37 @@
       <lib-ucSubsection [id]="'incomeInformationId'" [title]="'Income Information'" [panel]="'incomeInfo'">
       </lib-ucSubsection>
       <div id="incomeInfo">
-        <div>
-          <label class="col-md-3">Upping Rate</label>
-          <label class="col-md-3">{{uppingRate}}</label>
-          <label class="col-md-3">Life Insurance Income</label>
-          <label class="col-md-3">{{lifeInsuranceIncome | number:'.2':'en-US'}}</label>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="row">
+              <label class="col-md-6">Upping Rate</label>
+              <label class="col-md-6" style="text-align: right;">{{uppingRate}}</label>
+            </div>
+            <div class="row">
+              <label class="col-md-6">Insurance Income</label>
+              <label class="col-md-6" style="text-align: right;">{{insuranceIncome | number:'.2':'en-US'}}</label>
+            </div>
+            <div class="row">
+              <label class="col-md-6">Life Insurance Income</label>
+              <label class="col-md-6" style="text-align: right;">{{lifeInsuranceIncome | number:'.2':'en-US'}}</label>
+            </div>
+            <div class="row">
+              <label class="col-md-6">Max Allocated Amount</label>
+              <label class="col-md-6" style="text-align: right;">{{maxAllocatedAmt | number:'.2':'en-US'}}</label>
+            </div>
+            <div class="row">
+              <label class="col-md-6">Remaining Allocated Amount</label>
+              <label class="col-md-6" style="text-align: right;">{{remainingAllocatedAmt | number:'.2':'en-US'}}</label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div *ngFor="let item of appFeeObj" class="row">
+              <label class="col-md-6">{{item.FeeTypeName}}</label>
+              <label class="col-md-6" style="text-align: right;">{{item.AppFeeAmt | number:'.2':'en-US'}}</label>
+            </div>
+          </div>
         </div>
-        <div>
-          <label class="col-md-3">Insurance Income</label>
-          <label class="col-md-3">{{insuranceIncome | number:'.2':'en-US'}}</label>
-        </div>
-        <div *ngFor="let item of appFeeObj">
-          <label class="col-md-3">{{item.MrFeeTypeCode}}</label>
-          <label class="col-md-3">{{item.AppFeeAmt | number:'.2':'en-US'}}</label>
-        </div>
-        <div>
-          <label class="col-md-3">Max Allocated Amount</label>
-          <label class="col-md-3">{{maxAllocatedAmt | number:'.2':'en-US'}}</label>
-          <label class="col-md-3">Remaining Allocated Amount</label>
-          <label class="col-md-3">{{remainingAllocatedAmt | number:'.2':'en-US'}}</label>
-        </div>
+
       </div>
 
       <form class="form form-horizontal" [formGroup]="RsvForm" (ngSubmit)="RsvForm.valid && SaveForm()"
@@ -32,13 +43,15 @@
         <div class="form-body">
           <div formArrayName="ReservedFundObjs">
             <div *ngFor="let item of RsvForm.controls['ReservedFundObjs'].controls;let i = index">
-              <lib-ucSubsection [id]="'reservedFundDataId' + i + 'id'" [title]="RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].MrReservedFundSourceCode.value" [panel]="'reservedFundDataId' + i">
+              <lib-ucSubsection [id]="'reservedFundDataId' + i + 'id'" [title]="RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].MrReservedFundSourceName.value" [panel]="'reservedFundDataId' + i">
               </lib-ucSubsection>
               <div [id]="'reservedFundDataId' + i">
-                <div [formGroupName]="i">
-                  <label class="col-md-2  adins-required-label" translate>Reserved Fund</label>
+                <div [formGroupName]="i" class="form-group row">
+                  <label class="col-md-2  adins-required-label" translate>{{RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].MrReservedFundCode.value}}</label>
                   <div class="col-md-4">
-                    <lib-ucinputnumber [parentForm]="RsvForm" [enjiForm]="enjiForm" [identifier]="'ReservedFundAmt'+i" [ucNumber]="RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].ReservedFundAmt.value" [isRequired]="true"></lib-ucinputnumber>
+                    <input type="" currencyMask id="ReservedFundAmt{{i}}" class="form-control" formControlName="ReservedFundAmt" [options]="{ nullable: false }" (change)="InputChanged()"
+                           [ngClass]="{ 'is-invalid': enjiForm.submitted && RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].ReservedFundAmt.invalid }">
+                    <!--<lib-ucinputnumber [parentForm]="RsvForm" [enjiForm]="enjiForm" [identifier]="'ReservedFundAmt'+i" [ucNumber]="RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].ReservedFundAmt.value" [isRequired]="true"></lib-ucinputnumber>-->
                   </div>
                 </div>
               </div>
@@ -58,7 +71,7 @@
             </div>
             <div>
               <label class="col-md-3">Gross Yield</label>
-              <label class="col-md-3">{{grossYield}}</label>
+              <label class="col-md-3">{{grossYield | number:'.2':'en-US'}}</label>
             </div>
             <div class="form-actions right">
               <button type="submit" class="btn btn-raised btn-primary">

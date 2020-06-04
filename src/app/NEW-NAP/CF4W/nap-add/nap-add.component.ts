@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, ValidationErrors } from '@angular/forms';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
@@ -78,7 +78,7 @@ export class NapAddComponent implements OnInit {
   constructor(private fb: FormBuilder, private router: Router,
     private http: HttpClient, private toastr: NGXToastrService) { }
 
-  isCopyData: boolean=false;
+  isCopyData: boolean = false;
   ngOnInit() {
     // Lookup Obj
     this.user = JSON.parse(localStorage.getItem("UserAccess"));
@@ -123,6 +123,7 @@ export class NapAddComponent implements OnInit {
     this.inputLookupObjName.pagingJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.genericJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.nameSelect = this.NapAppForm.controls.ProdOfferingName.value;
+    this.inputLookupObjName.isRequired = true;
 
     var arrCopyLookupCrit = new Array();
     var addCrit = new CriteriaObj();
@@ -202,7 +203,28 @@ export class NapAddComponent implements OnInit {
     return obj;
   }
 
+  testData(){
+    console.log(this.NapAppForm);
+    console.log(this.NapAppForm.valid);
+    this.getFormValidationErrors();
+    console.log(this.inputLookupObjName);
+    console.log(this.inputLookupObjCopyProduct);
+  }
+
+  getFormValidationErrors() {
+    const invalid = [];
+    const controls = this.NapAppForm.controls;
+    for (const name in controls) {
+        if (controls[name].invalid) {
+            invalid.push(name);
+            console.log(name);
+        }
+    }
+    console.log(invalid);
+  }
+  
   SaveForm() {
+    console.log("masuk save");
     var napAppObj = new NapAppModel();
     napAppObj = this.NapAppForm.value;
     napAppObj.AppCreatedDt = this.user.BusinessDt;
@@ -249,8 +271,12 @@ export class NapAddComponent implements OnInit {
       MrCustNotifyOptCode: ev.MrCustNotifyOptCode,
       SalesOfficerNo: ev.SalesOfficerNo
     });
+    this.NapAppForm.get("ProductOfferingNameIdentifier").patchValue({
+      value: ev.ProdOfferingName
+    });
     console.log(this.NapAppForm);
-    this.inputLookupObjName.nameSelect = ev.ProdOfferingName;
+    // this.inputLookupObjName.nameSelect = ev.ProdOfferingName;
+    this.inputLookupObjName.isRequired = false;
     this.isCopyData=true;
   }
 
