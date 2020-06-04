@@ -322,7 +322,7 @@
                           <td></td>
                           <td></td>
                           <td></td>
-                          <td class="text-center">
+                          <td class="text-left">
                             <div formArrayName="AppInsAddCvgs">
                               <div [formGroupName]="j">
                                 <mat-checkbox formControlName="Value" (change)="IsAddCvgChanged($event)">{{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.AddCvgTypeName.value}}</mat-checkbox>
@@ -399,6 +399,10 @@
               </div>
             </div>
             <div class="form-actions right">
+              <button [hidden]="IsMultiAsset == 'false'" type="button" (click)="back()" class="btn btn-raised btn-warning">
+                <i class="fa fa-arrow-left"></i> Back
+              </button>
+
               <button type="submit" class="btn btn-raised btn-primary">
                 <i class="far fa-check-square"></i> Save
               </button>
