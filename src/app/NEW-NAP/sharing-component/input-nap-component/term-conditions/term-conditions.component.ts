@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormBuilder, FormGroup, FormArray, Validators, ControlContainer, FormGroupDirective, NgForm } from '@angular/forms';
 import { formatDate } from '@angular/common';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
   selector: 'app-term-conditions',
@@ -23,10 +24,19 @@ export class TermConditionsComponent implements OnInit {
   @Input() parentForm: FormGroup;
   @Input() enjiForm: NgForm;
   @Input() identifier: string = "TCList";
+  businessDt: Date;
 
-  constructor(private http: HttpClient, private fb: FormBuilder) { }
+  MinDate : Date;
+  IsPromisedDtLowerThanBusinessDt : boolean = true;
+
+  constructor(private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService) { }
 
   ngOnInit() {
+    var context = JSON.parse(localStorage.getItem("UserAccess"));
+    this.businessDt = new Date(context["BusinessDt"]);
+    this.businessDt.setDate(this.businessDt.getDate() - 1);
+    
+
     this.parentForm.addControl(this.identifier, this.fb.array([]));
     var listTC = this.parentForm.get(this.identifier) as FormArray;
     var appTcObj = {
@@ -81,7 +91,6 @@ export class TermConditionsComponent implements OnInit {
     );
   }
 
-  
   ReconstructForm() {
     this.totalCheckAll = 0;
     this.totalMandatory = 0;

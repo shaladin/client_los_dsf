@@ -136,6 +136,12 @@
               </ng-template>
             </mat-tab>
 
+            <mat-tab *ngIf="IsApprovalHist" label="Approval History">
+              <ng-template matTabContent>
+                <app-approval-hist [AppId]="AppId"></app-approval-hist>
+              </ng-template>
+            </mat-tab>           
+
           </mat-tab-group>
         </div>
       </div>
