@@ -79,13 +79,13 @@
                   <table class="table table-responsive-md text-center table-hover">
                     <thead>
                       <tr class="table-header">
-                        <th><span translate class="thead-header">Legal Doc Type</span></th>
-                        <th><span translate class="thead-header">Document No</span></th>
-                        <th><span translate class="thead-header">Date Issued</span></th>
-                        <th><span translate class="thead-header">Expired Date</span></th>
+                        <th><span translate class="thead-header" style="color:red">Legal Doc Type</span></th>
+                        <th><span translate class="thead-header" style="color:red">Document No</span></th>
+                        <th><span translate class="thead-header" style="color:red">Date Issued</span></th>
+                        <th><span translate class="thead-header" style="color:red">Expired Date</span></th>
                         <th><span translate class="thead-header">Notes</span></th>
-                        <th><span translate class="thead-header">Release By</span></th>
-                        <th><span translate class="thead-header">Release Location</span></th>
+                        <th><span translate class="thead-header" style="color:red">Release By</span></th>
+                        <th><span translate class="thead-header" style="color:red">Release Location</span></th>
                         <th><span translate class="thead-header">Delete</span></th>
                       </tr>
                     </thead>
@@ -159,7 +159,7 @@
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label class="col-md-4 adInsLabel">Mobile Phone 1</label>
+                      <label class="col-md-4 adins-required-label">Mobile Phone 1</label>
                       <div class="col-md-8">
                         <input type="text" class="form-control adInsInput width-100-per" formControlName="MobilePhnNo1"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.MobilePhnNo1.invalid }">
@@ -189,7 +189,7 @@
                 <!-- right -->
                 <div class="col-md-6">
                   <div class="form-group row">
-                    <label class="col-md-4 adInsLabel">Position </label>
+                    <label class="col-md-4 adins-required-label">Position </label>
                     <div class="col-md-8">
                       <select class="form-control adInsInput full-width" style="width: auto" formControlName="MrJobPositionCode"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.MrJobPositionCode.invalid }">
@@ -201,7 +201,7 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-4 adInsLabel">Phone No (Fix Line) 1 </label>
+                    <label class="col-md-4  adins-required-label">Phone No (Fix Line) 1 </label>
                     <div class="col-md-8">
                       <div class="form-group row">
                         <div class="col-md-4" style="border-right: 1px solid grey">
