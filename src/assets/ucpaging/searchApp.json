@@ -126,7 +126,7 @@
             "type": "link",
             "position": "center",
             "property": "AppNo",
-            "target" : "_self", 
+            "target" : "_blank", 
             "path" : "../../View/AppView", 
             "param" : [ 
                 {
