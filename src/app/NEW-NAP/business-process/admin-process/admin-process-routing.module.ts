@@ -190,13 +190,6 @@ const routes: Routes = [
         }
       },
       {
-        path: 'Invoice/View',
-        component: InvoiceViewComponent,
-        data: {
-          title: 'Invoice View'
-        }
-      },
-      {
         path: 'Invoice/Detail',
         component: InvoiceDetailComponent,
         data: {
