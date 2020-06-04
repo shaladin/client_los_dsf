@@ -18,6 +18,8 @@ export class TcDataComponent implements OnInit {
 
   @Input() AppId: any;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
+
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -104,43 +106,41 @@ export class TcDataComponent implements OnInit {
       var item = fa_AppTc.at(a);
       var isMandatory: Boolean = item.get("IsMandatory").value;
       var isChecked: Boolean = item.get("IsChecked").value;
-      if (isMandatory && !isChecked) {
-        item.patchValue({
-          ExpiredDt: null
-        });
-        item.get("ExpiredDt").disable();
-        item.get("ExpiredDt").clearValidators();
-        item.get("ExpiredDt").updateValueAndValidity();
-        item.get("PromisedDt").enable();
-        item.get("PromisedDt").setValidators([Validators.required]);
-        item.get("PromisedDt").updateValueAndValidity();
-      }
-      else if (isChecked && isMandatory) {
-        item.patchValue({
-          PromisedDt: null
-        });
-        item.get("PromisedDt").disable();
-        item.get("PromisedDt").clearValidators();
-        item.get("PromisedDt").updateValueAndValidity();
-        item.get("ExpiredDt").enable();
-        item.get("ExpiredDt").setValidators([Validators.required]);
-        item.get("ExpiredDt").updateValueAndValidity();
-      } else if (isChecked && !isMandatory) {
-        item.get("PromisedDt").enable();
-        item.get("ExpiredDt").enable();
-        // item.get("ExpiredDt").setValidators([Validators.required]);
-      }
-      else {
-        item.patchValue({
-          PromisedDt: null
-        });
-        item.get("PromisedDt").enable();
-        item.get("PromisedDt").clearValidators();
-        item.patchValue({
-          ExpiredDt: null
-        });
-        item.get("ExpiredDt").disable();
-        item.get("ExpiredDt").clearValidators();
+      
+      item.get("ExpiredDt").clearValidators();
+      item.get("PromisedDt").clearValidators();
+      if (isMandatory) {
+        if (isChecked) {
+          item.patchValue({
+            PromisedDt: null
+          });
+          item.get("ExpiredDt").enable();
+          item.get("PromisedDt").disable();
+          item.get("ExpiredDt").setValidators([Validators.required]);
+        } else {
+          item.patchValue({
+            ExpiredDt: null
+          });
+          item.get("ExpiredDt").disable();
+          item.get("PromisedDt").enable();
+          item.get("PromisedDt").setValidators([Validators.required]);
+        }
+
+      } else {
+        if (isChecked) {
+          item.patchValue({
+            PromisedDt: null
+          });
+          item.get("ExpiredDt").enable();
+          item.get("PromisedDt").disable();
+          item.get("ExpiredDt").setValidators([Validators.required]);
+        } else {
+          item.patchValue({
+            ExpiredDt: null
+          });
+          item.get("ExpiredDt").disable();
+          item.get("PromisedDt").enable();
+        }
       }
     }
 
@@ -204,6 +204,10 @@ export class TcDataComponent implements OnInit {
       );
 
     }
+  }
+
+  Cancel(){
+    this.outputCancel.emit();
   }
 
 }

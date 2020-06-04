@@ -92,6 +92,9 @@ export class SchmIrregularComponent implements OnInit {
   }
 
   CalculateAmortization() {
+    if(this.ValidateFee() == false){
+      return;
+    }
     this.calcIrregularObj = this.ParentForm.value;
     this.calcIrregularObj["IsRecalculate"] = false;
     this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateIrregular", this.calcIrregularObj).subscribe(
@@ -112,7 +115,13 @@ export class SchmIrregularComponent implements OnInit {
           TotalAR: response.TotalARAmt,
 
           NtfAmt: response.NtfAmt,
-          ApvAmt: response.ApvAmt
+          ApvAmt: response.ApvAmt,
+
+          TotalLifeInsCustAmt: response.TotalLifeInsCustAmt,
+          LifeInsCptlzAmt: response.LifeInsCptlzAmt,
+
+          DownPaymentGrossAmt: response.DownPaymentGrossAmt,
+          DownPaymentNettAmt: response.DownPaymentNettAmt
 
         })
 
@@ -147,6 +156,17 @@ export class SchmIrregularComponent implements OnInit {
     this.ParentForm.patchValue({
       NeedReCalculate: value
     });
+  }
+
+  ValidateFee(){
+    for(let i = 0; i < this.ParentForm.controls["AppFee"]["controls"].length; i++){
+      if(this.ParentForm.controls["AppFee"].value[i].IsCptlz == true
+          && this.ParentForm.controls["AppFee"].value[i].AppFeeAmt < this.ParentForm.controls["AppFee"].value[i].FeeCapitalizeAmt){
+        this.toastr.errorMessage(this.ParentForm.controls["AppFee"].value[i].FeeTypeName + " Capitalized Amount can't be higher than " +  this.ParentForm.controls["AppFee"].value[i].AppFeeAmt);
+        return false;
+      }
+    }
+    return true;
   }
 
 }

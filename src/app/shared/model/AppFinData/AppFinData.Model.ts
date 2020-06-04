@@ -71,6 +71,7 @@ export class AppFinDataObj {
     LcGracePeriod: number;
     PrepaymentPenaltyRate: number;
     SellEffectiveRatePrcnt: number;
+    TotalDpAmt: number;
 
     constructor() {
     }

@@ -4,6 +4,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdminProcessService } from 'app/NEW-NAP/business-process/admin-process/admin-process.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-agrmnt-activation-detail',
@@ -28,7 +29,7 @@ export class AgrmntActivationDetailComponent implements OnInit {
   WfTaskListId: number;
   TrxNo: string;
 
-  constructor(private toastr: NGXToastrService, private route: ActivatedRoute, private adminProcessSvc: AdminProcessService,private router: Router,) {
+  constructor(private toastr: NGXToastrService, private route: ActivatedRoute, private adminProcessSvc: AdminProcessService,private router: Router,private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
       this.WfTaskListId = params["WFTaskListId"];
@@ -38,6 +39,7 @@ export class AgrmntActivationDetailComponent implements OnInit {
 
   ngOnInit() {
     this.arrValue.push(this.AppId);
+    this.ClaimTask(this.WfTaskListId);
     var obj = {
       AppId: this.AppId
     };
@@ -49,6 +51,13 @@ export class AgrmntActivationDetailComponent implements OnInit {
     });
 
   }
+
+  async ClaimTask(WfTaskListId) {
+    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    var wfClaimObj = { pWFTaskListID: WfTaskListId, pUserID: currentUserContext["UserName"], isLoading: false };
+    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(() => { });
+  }
+
   addToTemp() {
     if (this.listSelectedId.length != 0) {
       for (var i = 0; i < this.listSelectedId.length; i++) {
