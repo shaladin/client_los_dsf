@@ -111,6 +111,7 @@ export class CustomerDataFL4WComponent implements OnInit {
 
   defCustModelCode: any;
   MrCustTypeCode: any;
+  isSocmedValid: boolean = true;
 
   constructor(
     private fb: FormBuilder,
@@ -134,6 +135,10 @@ export class CustomerDataFL4WComponent implements OnInit {
     if (this.MrCustTypeCode == AdInsConstant.CustTypePersonal) {
       this.custDataPersonalObj = new CustDataPersonalObj();
       this.setCustPersonalObjForSave();
+
+      if(!this.isSocmedValid){
+        return;
+      }
       this.http.post(this.addEditCustDataPersonalUrl, this.custDataPersonalObj).subscribe(
         (response) => {
           console.log(response);
@@ -485,14 +490,28 @@ export class CustomerDataFL4WComponent implements OnInit {
   }
 
   setAppCustSocmedObj() {
+    var selectedSocmedCode = new Array();
     this.custDataPersonalObj.AppCustSocmedObjs = new Array<AppCustSocmedObj>();
     for (let i = 0; i < this.CustDataForm.controls["socmed"].value.length; i++) {
+      var tempKey = this.CustDataForm.controls["socmed"].value[i].MrSocmedCode
+
+      var index = selectedSocmedCode.indexOf(tempKey);
+      if (index > -1) {
+        this.toastr.errorMessage("Social Media cannot be duplicate!");
+        this.isSocmedValid = false;
+        return;
+      }
+      else{
+        selectedSocmedCode.push(tempKey);
+      }
+
       var appCustSocmedObj = new AppCustSocmedObj();
       appCustSocmedObj.MrSocmedCode = this.CustDataForm.controls["socmed"].value[i].MrSocmedCode;
       appCustSocmedObj.MrSocmedName = this.CustDataForm.controls["socmed"].value[i].MrSocmedName;
       appCustSocmedObj.SocmedId = this.CustDataForm.controls["socmed"].value[i].SocmedId;
       this.custDataPersonalObj.AppCustSocmedObjs.push(appCustSocmedObj);
     }
+    this.isSocmedValid = true;
   }
 
   setAppCustGrpObj() {
