@@ -173,6 +173,7 @@ eventColl(ev){
     this.appCollateralObj.AppId = this.AppId;
     this.http.post(this.getListAppCollateral, this.appCollateralObj).subscribe(
       (response) => {
+          console.log("Collateral : " + JSON.stringify(response));
           this.listAppCollateralObj = response["ReturnObject"];
 
           var DetailForGridCollateral ={
