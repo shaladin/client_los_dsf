@@ -30,6 +30,7 @@ export class GuarantorComponent implements OnInit {
       (response) => {
         console.log(response);
         this.listAppGuarantor = response["ReturnObject"];
+        console.log(this.listAppGuarantor);
       },
       (error) => {
         console.log(error);
