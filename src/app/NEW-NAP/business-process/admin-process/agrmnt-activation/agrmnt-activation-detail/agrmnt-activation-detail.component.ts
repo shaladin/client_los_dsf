@@ -37,12 +37,15 @@ export class AgrmntActivationDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.arrValue.push(this.AppId);
     var obj = {
       AppId: this.AppId
     };
 
     this.adminProcessSvc.GetListAppAssetAgrmntActivation(obj).subscribe((response) => {
+      console.log(response);
       this.AssetObj = response["ListAppAsset"];
+      console.log(this.AssetObj);
     });
 
   }
@@ -66,12 +69,14 @@ export class AgrmntActivationDetailComponent implements OnInit {
       });
       var objFinDataAndFee = {
         AppId: this.AppId,
-        ListAppAssetId: this.listSelectedId
+        ListAppAssetId: this.tempListId
       };
       this.adminProcessSvc.GetAppFinDataAndFeeByAppIdAndListAppAssetId(objFinDataAndFee).subscribe((response) => {
         this.AppFees = response["ListAppFeeObj"];
         this.AppFinData = response["AppFinDataObj"];
       })
+
+      this.listSelectedId = new Array();
 
     } else {
       this.toastr.typeErrorCustom("Please select at least one Asset");
@@ -90,13 +95,32 @@ export class AgrmntActivationDetailComponent implements OnInit {
   Submit() {
     var Obj = {
       CreateDt: this.CreateDt,
-      ListAppAssetId: this.listSelectedId,
+      ListAppAssetId: this.tempListId,
       TaskListId: this.WfTaskListId,
       TransactionNo: this.TrxNo
     }
     this.adminProcessSvc.SubmitAgrmntActivationByHuman(Obj).subscribe((response) => {
       this.toastr.successMessage(response["message"]);
-      this.router.navigate(["AgrmntActivation/Paging"]);
+      this.router.navigate(["/Nap/AdminProcess/AgrmntActivation/Paging"]);
     })
+  }
+
+  deleteFromTemp(AppAssetId: string) {
+    if (confirm('Are you sure to delete this record?')) {
+      var index : number = this.tempListId.indexOf(AppAssetId);
+      if (index > -1) {
+        this.tempListId.splice(index, 1);
+        this.tempData.splice(index, 1);
+      }
+      var obj = {
+        AppId: this.AppId,
+        ListAppAssetId: this.tempListId
+      };
+
+      this.adminProcessSvc.GetListAppAssetAgrmntActivation(obj).subscribe((response) => {
+        this.AssetObj = response["ListAppAsset"];
+      });
+
+    }
   }
 }
