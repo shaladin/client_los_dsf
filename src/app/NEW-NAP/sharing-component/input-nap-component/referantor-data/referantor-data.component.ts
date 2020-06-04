@@ -75,6 +75,7 @@ export class ReferantorDataComponent implements OnInit {
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupVendor.json";
     this.inputLookupObj.addCritInput = this.arrAddCrit;
     this.inputLookupObj.nameSelect = this.appReferantorObj.ReferantorName;
+    this.inputLookupObj.isRequired = false;
     this.NapAppReferantorForm.controls.AccountBank.disable();
   }
   
@@ -109,6 +110,7 @@ export class ReferantorDataComponent implements OnInit {
           console.log(this.NapAppReferantorForm);
           this.getDDLBank(this.appReferantorObj.ReferantorCode);
         }
+        this.inputLookupObj.isReady = true;
       },
       (error) => {
         console.log(error);
@@ -170,11 +172,16 @@ export class ReferantorDataComponent implements OnInit {
   }
 
   TurnReferantor() {
+    this.inputLookupObj.isReady = false;
     this.ReferantorOn = this.NapAppReferantorForm.controls.CheckBoxAppReferantor.value;
     // console.log(this.ReferantorOn);
     if (this.ReferantorOn == false) {
+      this.inputLookupObj.isRequired = false;
+      this.inputLookupObj.isReady = true;
       this.NapAppReferantorForm.controls.AccountBank.disable();
     } else {
+      this.inputLookupObj.isRequired = true;
+      this.inputLookupObj.isReady = true;
       this.NapAppReferantorForm.controls.AccountBank.enable();
     }
   }

@@ -50,7 +50,12 @@ import { ViewCollateralMultiAssetComponent } from "./view-collateral-multi-asset
     InvoiceDataFctrComponent,
     InvoiceViewComponent,
     ViewCollateralDataComponent,
-    ViewCollateralMultiAssetComponent
+    ViewCollateralMultiAssetComponent,
+    AppAssetDataComponent,
+    AppInsuranceComponent,
+    AppInsuranceDetailComponent,
+    AppAssetDataDetailComponent,
+    ApprovalHistComponent
   ],
   imports: [
     CommonModule,
@@ -84,7 +89,7 @@ import { ViewCollateralMultiAssetComponent } from "./view-collateral-multi-asset
     TabDeviationComponent,
     InvoiceViewComponent,
     ViewCollateralDataComponent,
-    ViewCollateralMultiAssetComponent
+    ViewCollateralMultiAssetComponent,
   ],
   providers: [
     NGXToastrService

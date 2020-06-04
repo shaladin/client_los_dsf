@@ -43,6 +43,7 @@ export class FormAddDynamicComponent implements OnInit {
       this.FormInputObj["isDataInputed"] = true;
       console.log("Auto Genereate");
       var len = this.DDLContentName.length;
+      console.log(len);
       for(var i=len-1;i>=0;i--){
         // console.log("Genereate");
         var j = len - i -1;
@@ -50,7 +51,7 @@ export class FormAddDynamicComponent implements OnInit {
         this.GenerateContentName(i, j);
 
       }
-      this.PassData();
+      this.PassData(AdInsConstant.MessagePassData);
     }
   }
 
@@ -200,7 +201,7 @@ export class FormAddDynamicComponent implements OnInit {
       if(this.totalDDLContentData == this.lenDDLContentName) 
         this.FormInputObj["isDataInputed"] = false;
       this.arr.removeAt(idx);
-      this.PassData();
+      this.PassData(AdInsConstant.MessageDel);
 
     }
   }
@@ -304,7 +305,7 @@ export class FormAddDynamicComponent implements OnInit {
             }
           }
           this.CheckData();
-          this.PassData();
+          this.PassData(AdInsConstant.MessageCalculate);
         },
         (error) => {
           console.log(error);
@@ -313,9 +314,13 @@ export class FormAddDynamicComponent implements OnInit {
     }
   }
 
-  PassData(){
+  PassData(message: string){
     // console.log("change data");
-    this.DataEmit.emit(this.FormObj);
+    var tempObj={
+      formObj: this.FormObj,
+      message: message
+    };
+    this.DataEmit.emit(tempObj);
   }
   
   ChooseContentName(ev, indexFormObj){
@@ -357,11 +362,11 @@ export class FormAddDynamicComponent implements OnInit {
     // console.log(this.tempDDLContentName);
     // console.log(this.DDLContentName);
     console.log(this.FormObj);
-    this.PassData();
+    this.PassData("ADD");
   }
 
   GenerateContentName(indexFormObj,idx){
-    // console.log(idx);
+    console.log(idx);
     this.FormObj.controls.arr["controls"][idx].patchValue({
       ContentName: this.DDLContentName[indexFormObj].Key,
       ContentNameValue: this.DDLContentName[indexFormObj].Value
@@ -397,7 +402,7 @@ export class FormAddDynamicComponent implements OnInit {
     // console.log(this.DDLContentName);
   }
 
-  GenerateExistingContentName(objExist, idx){
+  async GenerateExistingContentName(objExist, idx){
     // console.log(objExist);
     var idxDDLContent = this.DDLContentName.indexOf(this.DDLContentName.find(x => x.Key == objExist.CommissionRecipientRefNo));
          
@@ -443,7 +448,7 @@ export class FormAddDynamicComponent implements OnInit {
       code = this.DDLContentName[idxDDLContent].Key;
     }
 
-    var tempRuleObj = this.GetTempRuleObj(code, idx);
+    var tempRuleObj = this.GetTempRuleObj(code, idxDDLContent);
     // console.log(tempRuleObj);
     this.GetDDLBankAccount(this.FormObj.controls.arr["controls"][idx].controls.ContentName.value, idx);
 
@@ -467,11 +472,12 @@ export class FormAddDynamicComponent implements OnInit {
       }) as FormGroup;
       this.FormObj.controls.arr["controls"][idx].controls.ListAllocated.push(eachAllocationDetail);
     }
-    this.SortDataAllocation(idx, code);
+    await this.SortDataAllocation(idx, code);
     
     this.tempDDLContentName.push(obj);
     this.DDLContentName.splice(idxDDLContent,1);
-    this.PassData();
+    console.log(this.DDLContentName);
+    this.PassData(AdInsConstant.MessagePassData);
   }
 
   SortDataAllocationV2(indexFormObj, ruleObj){
@@ -566,7 +572,7 @@ export class FormAddDynamicComponent implements OnInit {
     this.FormObj.controls.arr["controls"][indexFormObj].patchValue({
       TotalCommisionAmount: tempTotal
     });
-    this.PassData();
+    this.PassData(AdInsConstant.MessagePassData);
   }
 
   ChangeBankAcc(ev, i){
@@ -583,6 +589,6 @@ export class FormAddDynamicComponent implements OnInit {
       BankCode: ddlObj.BankCode
     });
     
-    this.PassData();
+    this.PassData(AdInsConstant.MessagePassData);
   }
 }

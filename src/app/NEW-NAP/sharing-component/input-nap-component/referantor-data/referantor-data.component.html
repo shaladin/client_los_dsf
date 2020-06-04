@@ -5,7 +5,7 @@
       <div class="card-body">
         <!-- <div class="px-3"> -->
 
-          <form class="form form-horizontal" [formGroup]="NapAppReferantorForm" (ngSubmit)="NapAppReferantorForm.valid"
+          <form class="form form-horizontal" [formGroup]="NapAppReferantorForm" (ngSubmit)="NapAppReferantorForm.valid && ClickSave()"
             #enjiForm="ngForm">
             <!-- Main Info -->
             <lib-ucSubsection [id]="'ReferantorId'" [title]="'Referantor'" [panel]="'Referantor'">
@@ -24,7 +24,7 @@
                 <div class="form-group row adins-required">
                   <label class="col-md-2 adInsLabel">Referantor Name </label>
                   <div class="col-md-5">
-                    <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]='NapAppReferantorForm'
+                    <lib-uclookupgeneric *ngIf="inputLookupObj.isReady" [lookupInput]="inputLookupObj" [parentForm]='NapAppReferantorForm'
                       [enjiForm]='enjiForm' ng-disabled="!ReferantorOn" [identifier]="'ProductOfferingIdentifier'"
                       (lookup)="getLookupAppReferantorResponse($event)">
                     </lib-uclookupgeneric>
@@ -106,7 +106,7 @@
               <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
                 <i class="ft-x"></i> Cancel
               </button>
-              <button type="button" (click)="ClickSave()" class="btn btn-raised btn-primary">
+              <button type="submit" class="btn btn-raised btn-primary">
                 <i class="far fa-check-square"></i> Save
               </button>
               <!-- <button type="submit" (click)="ClickSave('next')" class="btn btn-raised btn-primary">
