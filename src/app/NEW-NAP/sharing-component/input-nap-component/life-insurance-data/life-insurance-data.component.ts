@@ -61,8 +61,7 @@ export class LifeInsuranceDataComponent implements OnInit {
 
     this.http.post<AppCustObj>(AdInsConstant.GetAppCustByAppId, { AppId: this.AppId }).subscribe(
       (response) => {
-        console.log("1234");
-        if (response.MrCustTypeCode == "PERSONAL") {
+        if (response.MrCustTypeCode == "COMPANY") {
           this.LifeInsForm.controls["IsChecked"].disable();
         }
       },
