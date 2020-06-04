@@ -111,8 +111,8 @@
           <td style="text-align: left;">
             {{coll.AssetTypeName}}
           </td>
-          <td style="text-align: left;">
-            {{coll.CollateralValueAmt}}
+          <td style="text-align: right;">
+            {{coll.CollateralValueAmt | number:'.2':'en-US'}}
           </td>
           <td style="text-align: left;">
             {{coll[coll.LicensePlateNo]}}
