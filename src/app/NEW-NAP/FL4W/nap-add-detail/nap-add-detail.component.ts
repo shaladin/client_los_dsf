@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -6,13 +6,14 @@ import { AppObj } from 'app/shared/model/App/App.Model';
 import Stepper from 'bs-stepper';
 import { FormBuilder } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-nap-add-detail',
   templateUrl: './nap-add-detail.component.html',
   providers: [NGXToastrService]
 })
-export class NapAddDetailComponent implements OnInit {
+export class NapAddDetailComponent implements OnInit, AfterViewInit {
 
   private stepper: Stepper;
   wfTaskListId: number;
@@ -26,6 +27,7 @@ export class NapAddDetailComponent implements OnInit {
   OnFormReturnInfo: boolean = false;
   IsMultiAsset: boolean = false;
   ListAsset: any;
+  mrCustTypeCode: string;
 
   FormReturnObj = this.fb.group({
     ReturnExecNotes: ['']
@@ -65,10 +67,13 @@ export class NapAddDetailComponent implements OnInit {
     this.ClaimTask();
     this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppFL4WMainInformation.json";
     this.NapObj.AppId = this.appId;
-    this.http.post(AdInsConstant.GetAppById, this.NapObj).subscribe(
-      (response: AppObj) => {
+    let getApp = this.http.post(AdInsConstant.GetAppById, this.NapObj);
+    let getAppCust = this.http.post(AdInsConstant.GetAppCustByAppId, this.NapObj);
+    forkJoin([getApp, getAppCust]).subscribe(
+      (response) => {
+        var appObj = response[0];
         if (response) {
-          this.AppStepIndex = this.AppStep[response.AppCurrStep];
+          this.AppStepIndex = this.AppStep[appObj["AppCurrStep"]];
           this.stepper.to(this.AppStepIndex);
           console.log(this.AppStepIndex);
         } else {
@@ -76,15 +81,18 @@ export class NapAddDetailComponent implements OnInit {
           this.stepper.to(this.AppStepIndex);
           console.log(this.AppStepIndex);
         }
+        this.mrCustTypeCode = response[1]["MrCustTypeCode"];
       }
     );
 
+    this.MakeViewReturnInfoObj();
+  }
+
+  ngAfterViewInit(): void {
     this.stepper = new Stepper(document.querySelector('#stepper1'), {
       linear: false,
       animation: true
     })
-
-    this.MakeViewReturnInfoObj();
   }
 
   MakeViewReturnInfoObj() {
