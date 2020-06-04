@@ -41,7 +41,7 @@ export class GuarantorPersonalComponent implements OnInit {
   AppGuarantorPersonalId: any;
   selectedNationalityCountryCode: any;
   isLocal: boolean = false;
-
+  isReady: boolean = false;
   constructor(private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService, private modalService: NgbModal) {
   }
 
@@ -79,6 +79,7 @@ export class GuarantorPersonalComponent implements OnInit {
           this.resultData = response;
           this.AppGuarantorPersonalId = this.resultData.appGuarantorPersonalObj.AppGuarantorPersonalId;
           this.inputLookupObj.jsonSelect = { CustName: this.resultData.appGuarantorObj.GuarantorName };
+          this.inputLookupObj.nameSelect = this.resultData.appGuarantorObj.GuarantorName;
           this.PersonalForm.patchValue({
             MrCustRelationshipCode: this.resultData.appGuarantorObj.MrCustRelationshipCode,
             MrIdTypeCode: this.resultData.appGuarantorPersonalObj.MrIdTypeCode,
@@ -193,7 +194,7 @@ export class GuarantorPersonalComponent implements OnInit {
         }
       }
     );
-
+    this.isReady = true;
   }
 
   UserAccess: any;

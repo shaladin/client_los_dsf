@@ -129,6 +129,12 @@ export class LoanObjectComponent implements OnInit {
   CalculateFinancingAmt(){
     var BudgetPlanAmt = this.MainInfoForm.controls.BudgetPlanAmount.value;
     var SelfFinancingAmt = this.MainInfoForm.controls.SelfFinancing.value;
+
+    if (SelfFinancingAmt > BudgetPlanAmt) {
+      this.toastr.errorMessage("Self Financing Amount Must Be Lower Than Budget Plan Amount!");
+      return;
+    }
+
     var FinancingAmt = BudgetPlanAmt - SelfFinancingAmt;
     this.MainInfoForm.patchValue({
       FinancingAmount: FinancingAmt
