@@ -402,7 +402,7 @@ export class FormAddDynamicComponent implements OnInit {
     // console.log(this.DDLContentName);
   }
 
-  GenerateExistingContentName(objExist, idx){
+  async GenerateExistingContentName(objExist, idx){
     // console.log(objExist);
     var idxDDLContent = this.DDLContentName.indexOf(this.DDLContentName.find(x => x.Key == objExist.CommissionRecipientRefNo));
          
@@ -472,10 +472,11 @@ export class FormAddDynamicComponent implements OnInit {
       }) as FormGroup;
       this.FormObj.controls.arr["controls"][idx].controls.ListAllocated.push(eachAllocationDetail);
     }
-    this.SortDataAllocation(idx, code);
+    await this.SortDataAllocation(idx, code);
     
     this.tempDDLContentName.push(obj);
     this.DDLContentName.splice(idxDDLContent,1);
+    console.log(this.DDLContentName);
     this.PassData(AdInsConstant.MessagePassData);
   }
 
