@@ -73,8 +73,11 @@
               <td>
                 {{item.DocCode}}
               </td>
-              <td>
-                {{item.IsReceived}}
+              <td *ngIf="item.IsReceived == true">
+                Yes
+              </td>
+              <td *ngIf="item.IsReceived == false">
+                No
               </td>
               <td>
                 {{item.DocNo}}

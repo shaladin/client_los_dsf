@@ -15,9 +15,10 @@
       <tr [formGroupName]="i" *ngFor="let item of parentForm.controls[identifier].controls; let i = index">
         <td class="text-left">{{parentForm.controls[identifier].controls[i].controls.TcName.value}}</td>
         <td class="text-left">{{parentForm.controls[identifier].controls[i].controls.PriorTo.value}}</td>
-        <td class="text-left">{{parentForm.controls[identifier].controls[i].controls.IsMandatory.value}}</td>
+        <td class="text-left" *ngIf="parentForm.controls[identifier].controls[i].controls.IsMandatory.value==true">Yes</td>
+        <td class="text-left" *ngIf="parentForm.controls[identifier].controls[i].controls.IsMandatory.value==false">No</td>
         <td class="text-left"><input type="checkbox" class="border-primary" (change)="ReconstructForm()" formControlName="IsChecked"></td>
-        <td><input type="date" class="form-control" formControlName="PromisedDt"
+        <td><input type="date" min="{{businessDt | date: 'yyyy-MM-dd'}}" class="form-control" formControlName="PromisedDt"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier].controls[i].controls.PromisedDt.invalid}">
           <lib-uc-show-errors [control]="parentForm.controls[identifier].controls[i].controls.PromisedDt" [submit]="enjiForm.submitted">
           </lib-uc-show-errors>
