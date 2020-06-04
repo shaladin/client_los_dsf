@@ -22,8 +22,6 @@ import { InsuranceDataObj } from 'app/shared/model/InsuranceDataObj.Model';
 export class InsuranceMultiAssetDataComponent implements OnInit {
   @Input() appId: number;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
-  @ViewChild('InsuranceContent') modalIns;
-  @ViewChild('AssetContent') modalAsset;
   
   PageState: string = 'Paging';
   listAppAssetObj: any;
@@ -104,25 +102,26 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     this.appAssetObj.AppId = this.appId;
     this.http.post(AdInsConstant.GetAppAssetListForInsuranceByAppId, this.appAssetObj).subscribe(
       (response) => {
-          this.listAppAssetObj = response["LoanAppInsObjects"];
-          this.listAppCollateralObj = response["CollateralAppInsObjects"];
+          this.listAppAssetObj = response["ReturnObject"];
+          this.listAppCollateralObj = response["ReturnObject"];
 
           var DetailForGridAsset = {
-            Data: response["LoanAppInsObjects"],
+            Data: response["ReturnObject"],
             Count: "0"
           }
 
           var DetailForGridCollateral ={
-            Data: response["CollateralAppInsObjects"],
+            Data: response["ReturnObject"],
             Count: "0"
           }
 
         this.gridAssetDataObj.resultData = DetailForGridAsset;
         this.gridAppCollateralObj.resultData = DetailForGridCollateral;
 
-        for (var i = 0; i < DetailForGridCollateral.Data.length; i++)
+        for (var i = 0; i < this.listAppAssetObj.length; i++)
         {
-          this.TotalPremiumToCust = this.TotalPremiumToCust + DetailForGridCollateral.Data[i].TotalCustMainPremiAmt + DetailForGridCollateral.Data[i].TotalCustAddPremiAmt - DetailForGridCollateral.Data[i].TotalCustDiscAmt;
+          // this.TotalPremiumToCust = this.TotalPremiumToCust + DetailForGridCollateral[i].MainPremi + DetailForGridCollateral[i].AddPremi - DetailForGridCollateral[i].TotalCustDiscAmt;
+          this.TotalPremiumToCust = this.TotalPremiumToCust + this.listAppAssetObj[i].MainPremi + this.listAppAssetObj[i].AddPremi;
         }
         this.CapAmt = this.TotalPremiumToCust;
       
