@@ -155,7 +155,7 @@ export class LifeInsuranceDataComponent implements OnInit {
     this.LifeInsForm.controls.LifeInscoBranchName.updateValueAndValidity();
     this.LifeInsForm.controls.MrLifeInsPaidMethodCode.setValidators(Validators.required);
     this.LifeInsForm.controls.MrLifeInsPaidMethodCode.updateValueAndValidity();
-    this.LifeInsForm.controls.PaidInAdvPrcnt.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
+    this.LifeInsForm.controls.PaidInAdvPrcnt.setValidators([Validators.required]);
     this.LifeInsForm.controls.PaidInAdvPrcnt.updateValueAndValidity();
     this.LifeInsForm.controls.InscoAdminFeeAmt.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
     this.LifeInsForm.controls.InscoAdminFeeAmt.updateValueAndValidity();
