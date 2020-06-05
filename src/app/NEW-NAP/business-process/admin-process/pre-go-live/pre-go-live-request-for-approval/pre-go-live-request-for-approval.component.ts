@@ -15,9 +15,10 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
   AppId: any;
   itemApprovedBy: any;
   AgrmntNo: any;
+  itemReason : any;
 
   MainInfoForm = this.fb.group({
-    Reason: [''],
+    Reason: ['',Validators.required],
     ApprovedBy: ['', Validators.required],
     Notes: ['', Validators.required]
   })
@@ -46,9 +47,23 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
         });
       }
     );
+    this.LoadRefReason();
     this.viewObj = "./assets/ucviewgeneric/viewAgrMainInfoPreGoLive.json";
   }
-
+LoadRefReason()
+{
+  var refReasonObj = {
+    RefReasonTypeCode: "PRE_GLV_APV"
+  }
+  this.http.post(AdInsConstant.GetListActiveRefReason, refReasonObj).subscribe(
+    (response) => {
+      this.itemReason = response["ReturnObject"];
+      this.MainInfoForm.patchValue({
+        Reason: this.itemReason[0].Key
+      });
+    }
+  );
+}
 
   SaveForm(){
     this.RFAPreGoLive = new RFAPreGoLiveObj();
@@ -58,9 +73,10 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
     this.RFAPreGoLive.TaskListId = this.TaskListId;
     this.RFAPreGoLive.RowVersion = "";
 
+    console.log("SaveForm")
+
     this.http.post(AdInsConstant.CreateRFAPreGoLive, this.RFAPreGoLive).subscribe((response) => {
-      this.toastr.successMessage(response['message']);
-      this.router.navigateByUrl('/Nap/AdminProcess/AgreementCancellation/Paging');
+      this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Paging?BizTemplateCode='+localStorage.getItem("BizTemplateCode"));
     },
       (error) => {
         console.log(error);
