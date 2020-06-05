@@ -841,7 +841,7 @@ export class AdInsConstant {
   public static GetAllAssetDataByAppId = environment.losUrl + "/AppAsset/GetAllAssetDataByAppId";
   public static AddEditAllAssetData = environment.losUrl + "/AppAsset/AddEditAllAssetData";
   public static CheckAssetValidationRule = environment.losUrl + "/AppAsset/CheckAssetValidationRule";
-  public static DeleteAppAsset = "http://localhost:5001" + "/AppAsset/DeleteAppAsset";
+  public static DeleteAppAsset = environment.losUrl + "/AppAsset/DeleteAppAsset";
 
   //Asset Doc List
   public static GetAppAssetDataByAppId = environment.losUrl + "/AppAsset/GetAppAssetDataByAppId";
