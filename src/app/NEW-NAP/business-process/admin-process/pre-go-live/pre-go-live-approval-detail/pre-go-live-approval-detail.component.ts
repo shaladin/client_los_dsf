@@ -162,7 +162,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
     this.MainInfoForm.addControl(this.identifier, this.fb.array([]));
     var listTC = this.MainInfoForm.get(this.identifier) as FormArray;
     var appTcObj = {
-      AppId: 11
+      AppId: this.AppId
     }
     this.http.post(AdInsConstant.GetListTCbyAppId, appTcObj).subscribe(
       (response) => {

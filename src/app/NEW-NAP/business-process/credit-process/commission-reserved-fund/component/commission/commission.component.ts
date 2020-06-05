@@ -271,8 +271,10 @@ export class CommissionComponent implements OnInit {
           for (var i = 0; i < response["length"]; i++) {
             var temp = response[i][AdInsConstant.ReturnObj].RuleDataObjects;
             // console.log(temp);
-            this.SaveRuleData(temp["ResultSupplier"], AdInsConstant.ContentSupplier, this.ContentObjSupplier[i].Key);
-            this.SaveRuleData(temp["ResultSupplierEmp"], AdInsConstant.ContentSupplierEmp, this.ContentObjSupplier[i].Key);
+            if(this.ContentObjSupplier.length > 0){
+              this.SaveRuleData(temp["ResultSupplier"], AdInsConstant.ContentSupplier, this.ContentObjSupplier[i].Key);
+              this.SaveRuleData(temp["ResultSupplierEmp"], AdInsConstant.ContentSupplierEmp, this.ContentObjSupplier[i].Key);
+            }
           }
           this.SaveRuleData(response[0][AdInsConstant.ReturnObj].RuleDataObjects["ResultReferantor"], AdInsConstant.ContentReferantor, "");  
         }
