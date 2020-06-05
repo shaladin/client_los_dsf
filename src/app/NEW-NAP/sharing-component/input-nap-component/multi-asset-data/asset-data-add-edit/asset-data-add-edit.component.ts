@@ -99,7 +99,9 @@ export class AssetDataAddEditComponent implements OnInit {
   headAppAssetSupplEmpObj: any;
   appAssetSupplEmpBranchObj: any;
   branchAppAssetSupplEmpObj: any;
-
+  isLicensePlateMandatory: boolean = false;
+  isEngineNoMandatory: boolean = false;
+  isChassisNoMandatory: boolean = false;
 
   AssetDataForm = this.fb.group({
     SupplName:[''],
@@ -128,7 +130,7 @@ export class AssetDataAddEditComponent implements OnInit {
     AssetUsage:[''],
     LicensePlate:[''],
     ChassisNo:[''],
-    ManufacturingYear:[''],
+    ManufacturingYear:['', [Validators.required]],
     EngineNo:[''],
     Notes:[''],
 
@@ -309,6 +311,37 @@ copyToLocationAddr() {
     );
   }
 
+  assetConditionHandler(){
+    var value = this.AssetDataForm.controls["MrAssetConditionCode"].value;
+    if(value == "USED")
+    {
+      this.AssetDataForm.controls['ChassisNo'].setValidators([Validators.required]);
+      this.AssetDataForm.controls['ChassisNo'].updateValueAndValidity();
+      this.isChassisNoMandatory = true;
+
+      this.AssetDataForm.controls['EngineNo'].setValidators([Validators.required]);
+      this.AssetDataForm.controls['EngineNo'].updateValueAndValidity();
+      this.isEngineNoMandatory = true;
+
+      this.AssetDataForm.controls['LicensePlate'].setValidators([Validators.required]);
+      this.AssetDataForm.controls['LicensePlate'].updateValueAndValidity();
+      this.isLicensePlateMandatory = true;
+    }
+    else{
+      this.AssetDataForm.controls['ChassisNo'].clearValidators();
+      this.AssetDataForm.controls['ChassisNo'].updateValueAndValidity();
+      this.isChassisNoMandatory = false;
+
+      this.AssetDataForm.controls['EngineNo'].clearValidators();
+      this.AssetDataForm.controls['EngineNo'].updateValueAndValidity();
+      this.isEngineNoMandatory = false;
+
+      this.AssetDataForm.controls['LicensePlate'].clearValidators();
+      this.AssetDataForm.controls['LicensePlate'].updateValueAndValidity();
+      this.isLicensePlateMandatory = false;
+    }
+  }
+
   SelfUsageChange(event) {
     console.log(event);
     if (event.checked == true) {
@@ -384,12 +417,15 @@ copyToLocationAddr() {
           {
             this.AssetDataForm.controls['ChassisNo'].setValidators([Validators.required]);
             this.AssetDataForm.controls['ChassisNo'].updateValueAndValidity();
+            this.isChassisNoMandatory = true;
 
             this.AssetDataForm.controls['EngineNo'].setValidators([Validators.required]);
             this.AssetDataForm.controls['EngineNo'].updateValueAndValidity();
+            this.isEngineNoMandatory = true;
 
             this.AssetDataForm.controls['LicensePlate'].setValidators([Validators.required]);
             this.AssetDataForm.controls['LicensePlate'].updateValueAndValidity();
+            this.isLicensePlateMandatory = true;
           }
 
           this.reqAssetMasterObj = new AssetMasterObj();
@@ -615,7 +651,8 @@ copyToLocationAddr() {
   }
 
   setSupplierInfo(){
-    if(this.AssetDataForm.controls["AdminHeadName"].value == "undefined" || this.AssetDataForm.controls["AdminHeadName"].value == "")
+    // if(this.AssetDataForm.controls["AdminHeadName"].value == "undefined" || this.AssetDataForm.controls["AdminHeadName"].value == "")
+    if(!this.AssetDataForm.controls["AdminHeadName"].value)
     {
       this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpName = "-";
       this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpNo = "-";
@@ -631,7 +668,8 @@ copyToLocationAddr() {
     this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpNo = this.AssetDataForm.controls["SalesPersonNo"].value;
     this.allAssetDataObj.AppAssetSupplEmpSalesObj.MrSupplEmpPositionCode = AdInsConstant.SALES_JOB_CODE;
 
-    if(this.AssetDataForm.controls["BranchManagerName"].value == "undefined" || this.AssetDataForm.controls["BranchManagerName"].value == "")
+    // if(this.AssetDataForm.controls["BranchManagerName"].value == "undefined" || this.AssetDataForm.controls["BranchManagerName"].value == "")
+    if(!this.AssetDataForm.controls["BranchManagerName"].value)
     {
       this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpName = "-";
       this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpNo = "-";
