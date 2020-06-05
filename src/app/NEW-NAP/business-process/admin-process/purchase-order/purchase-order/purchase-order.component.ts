@@ -74,7 +74,7 @@ export class PurchaseOrderComponent implements OnInit {
     var IsSave = false;
     if (this.AppAssetList.length != 0) {
       for (let i = 0; i < this.AppAssetList.length; i++) {
-        if (this.AppAssetList[i].PurchaseOrderNo == "") {
+        if (this.AppAssetList[i].PurchaseOrderNo == undefined) {
           IsSave = false;
           this.toastr.typeErrorCustom("Please submit purchase order first!");
           break;
