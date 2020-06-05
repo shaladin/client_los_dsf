@@ -498,22 +498,15 @@
 
           <br>
         </form>
-        <form [hidden]="PageState != 'Paging'" class="form form-horizontal" [formGroup]="InsuranceDataForm"
+        <form [hidden]="PageState != 'Paging'" class="form form-horizontal" [formGroup]="AppInsForm"
           (ngSubmit)="AppInsForm.valid && SubmitForm()">
           <div class="form-body">
             <div class="row">
               <label class="col-md-2 adins-label" translate>Total Premium to Customer</label>
               <label class="col-md-2 adins-label" translate>{{TotalPremiumToCust | number}}</label>
               <div class="col-md-2"></div>
-              <label class="col-md-2 adins-required-label" translate>Paid Amount By Customer</label>
+              <label class="col-md-2 adins-label" translate>Paid Amount By Customer</label>
               <label class="col-md-2 adins-label" translate>{{PaidAmtByCust | number}}</label>
-              <!-- <div class="col-md-2">
-                <input type="" currencyMask class="form-control adInsInput" formControlName="PaidAmtByCust"
-                  (focusout)="PaidAmtChanged($event.currentTarget.value)"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && AppInsForm.controls.PaidAmtByCust.invalid }" />
-                <lib-uc-show-errors [control]="AppInsForm.controls.PaidAmtByCust" [submit]="enjiForm.submitted">
-                </lib-uc-show-errors>
-              </div> -->
             </div>
           </div>
           <div class="form-body">
@@ -524,7 +517,7 @@
           </div>
           <div class="form-actions right">
             <button type="submit" class="btn btn-raised btn-primary">
-              <i class="fa fa-check-square"></i> Save
+              <i class="fa fa-check"></i> Save
             </button>
           </div>
         </form>

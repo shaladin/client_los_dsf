@@ -236,8 +236,4 @@ export class FinancialDataFctrComponent implements OnInit {
     }
     return valid;
   }
-
-  Test(){
-    console.log(this.FinDataForm);
-  }
 }
