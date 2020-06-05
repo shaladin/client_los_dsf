@@ -9,7 +9,7 @@ import { FinancialDataComponent } from '../sharing-component/input-nap-component
 
 const routes: Routes = [
   {
-    path: 'InputNap',
+    path: '',
     children: [
       {
           path: 'Paging',

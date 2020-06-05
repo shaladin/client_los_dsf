@@ -119,12 +119,12 @@ export class NapFromLeadDetailComponent implements OnInit {
     addCrit.listValue = [this.user.OfficeCode];
     this.arrAddCrit.push(addCrit);
 
-    var addCritBizTempalte = new CriteriaObj();
-    addCritBizTempalte.DataType = "text";
-    addCritBizTempalte.propName = "rlob.BIZ_TMPLT_CODE";
-    addCritBizTempalte.restriction = AdInsConstant.RestrictionEq;
-    addCritBizTempalte.value = AdInsConstant.CF4W;
-    this.arrAddCrit.push(addCritBizTempalte);
+    var addCritBizTemplate = new CriteriaObj();
+    addCritBizTemplate.DataType = "text";
+    addCritBizTemplate.propName = "rlob.BIZ_TMPLT_CODE";
+    addCritBizTemplate.restriction = AdInsConstant.RestrictionEq;
+    addCritBizTemplate.value = AdInsConstant.CF4W;
+    this.arrAddCrit.push(addCritBizTemplate);
 
     this.inputLookupObjName.addCritInput = this.arrAddCrit;
   }
@@ -185,7 +185,7 @@ export class NapFromLeadDetailComponent implements OnInit {
       (response) => {
         console.log(response);
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["Nap/ConsumerFinance/InputNap/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
+        this.router.navigate(["Nap/ConsumerFinance/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
       },
       (error) => {
         console.log(error);

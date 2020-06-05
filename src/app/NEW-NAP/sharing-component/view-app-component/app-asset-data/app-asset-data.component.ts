@@ -36,6 +36,9 @@ export class AppAssetDataComponent implements OnInit {
   }
 
   viewDetailHandler(appAssetId){
+    // console.log("assethandler")
+    // console.log(appAssetId)
+    // console.log(this.AppId)
     const modalAssetDetail = this.modalService.open(AppAssetDataDetailComponent);
     modalAssetDetail.componentInstance.AppAssetId = appAssetId;
     modalAssetDetail.componentInstance.AppId = this.AppId;

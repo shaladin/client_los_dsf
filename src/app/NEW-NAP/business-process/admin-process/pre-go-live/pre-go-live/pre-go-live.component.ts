@@ -57,6 +57,13 @@ export class PreGoLiveComponent implements OnInit {
       this.AppId = params["AppId"];
       this.TaskListId = params["TaskListId"];
       this.AgrmntNo = params["AgrmntNo"];
+
+      this.route.queryParams.subscribe(params => {
+        if (params["BizTemplateCode"] != null) {
+          localStorage.setItem("BizTemplateCode", params["BizTemplateCode"]);
+        }
+        
+      });
     });
   }
 
@@ -106,12 +113,11 @@ export class PreGoLiveComponent implements OnInit {
   }
 
   RFA() {
-    var preGlvObj = this.SaveForm();
-    this.router.navigate(["/Nap/AdminProcess/PreGoLive/RequestApproval"], { queryParams: { "AgrmntId": this.AgrmntId, "AppId": this.AppId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId } });
+    this.SaveForm(false);
   }
 
-  SaveForm() {
-
+  SaveForm(flag=true) {
+    console.log(flag);
     this.listAppTCObj = new ListAppTCObj();
     this.listAppTCObj.AppTCObj = new Array();
 
@@ -146,10 +152,18 @@ export class PreGoLiveComponent implements OnInit {
     this.PreGoLiveObj.rAppTcObj = this.listAppTCObj.AppTCObj;
     this.PreGoLiveObj.preGoLiveObj = this.PreGoLiveMainObj;
     this.PreGoLiveObj.TaskListId = this.TaskListId;
+    this.PreGoLiveObj.FlagResume = flag;
 
     this.http.post(AdInsConstant.AddPreGoLive, this.PreGoLiveObj).subscribe(
       (response) => {
-        this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Paging');
+        if(flag==false)
+        {
+          this.router.navigate(["/Nap/AdminProcess/PreGoLive/RequestApproval"], { queryParams: { "AgrmntId": this.AgrmntId, "AppId": this.AppId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId } });
+        }
+        else
+        {
+          this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Paging');
+        }
         this.toastr.successMessage(response['message']);
       },
       (error) => {

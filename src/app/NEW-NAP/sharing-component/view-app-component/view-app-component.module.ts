@@ -10,7 +10,7 @@ import { ViewReservedFundComponent } from "./view-reserved-fund/view-reserved-fu
 import { LifeInsuranceComponent } from './life-insurance/life-insurance.component';
 import { AppTcComponent } from './app-tc/app-tc.component';
 import { ViewInsuranceComponent } from "./view-insurance/view-insurance.component";
-import { GuarantorComponent } from './guarantor/guarantor.component';
+import { GuarantorComponent } from './view-guarantor/view-guarantor.component';
 import { ViewPhoneVerifComponent } from "./view-phone-verif/view-phone-verif.component";
 import { ViewAssetDataComponent } from "./view-asset-data/view-asset-data.component";
 import { TabApplicationComponent } from './tab-application/tab-application.component';
@@ -93,6 +93,9 @@ import { ViewCollateralMultiAssetComponent } from "./view-collateral-multi-asset
   ],
   providers: [
     NGXToastrService
+  ],
+  entryComponents: [
+    AppAssetDataDetailComponent
   ]
 })
 export class ViewAppComponentModule { }
