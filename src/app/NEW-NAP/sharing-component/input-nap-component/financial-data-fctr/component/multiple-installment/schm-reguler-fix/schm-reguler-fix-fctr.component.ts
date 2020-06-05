@@ -51,6 +51,11 @@ export class SchmRegulerFixFctrComponent implements OnInit {
   }
 
   CalcBaseOnRate() {
+    if(this.ParentForm.value.EstEffDt == "")
+    {
+      this.toastr.errorMessage("Insert Estimation Effective Date");
+      return;
+    }
     this.calcRegFixObj = this.ParentForm.value;
     this.calcRegFixObj["IsRecalculate"] = false;
     this.http.post<ResponseCalculateObj>(AdInsConstant.CalculateInstallmentRegularFixFctr, this.calcRegFixObj).subscribe(
@@ -81,6 +86,11 @@ export class SchmRegulerFixFctrComponent implements OnInit {
   }
 
   CalcBaseOnInst() {
+    if(this.ParentForm.value.EstEffDt == "")
+    {
+      this.toastr.errorMessage("Insert Estimation Effective Date");
+      return;
+    }
     this.calcRegFixObj = this.ParentForm.value;
     this.calcRegFixObj["IsRecalculate"] = true;
     this.http.post<ResponseCalculateObj>(AdInsConstant.CalculateInstallmentRegularFixFctr, this.calcRegFixObj).subscribe(
