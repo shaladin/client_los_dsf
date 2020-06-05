@@ -5,6 +5,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
+import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 
 @Component({
   selector: 'app-purchase-order',
@@ -87,9 +88,11 @@ export class PurchaseOrderComponent implements OnInit {
     }
 
     if (IsSave) {
-      var workflowModel = {
-        TaskListId: this.TaskListId
-      }
+      var workflowModel : WorkflowApiObj = new WorkflowApiObj();
+      workflowModel.TaskListId = this.TaskListId;
+      workflowModel.ListValue = {"AppAssets" : JSON.stringify(this.AppAssetList)};
+
+
       this.http.post(AdInsConstant.ResumeWorkflowPurchaseOrder, workflowModel).subscribe(
         (response) => {
           this.AppAssetList = response["ReturnObject"];
