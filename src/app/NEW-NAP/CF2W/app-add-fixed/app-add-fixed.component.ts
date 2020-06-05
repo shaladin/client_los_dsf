@@ -323,7 +323,7 @@ export class AppAddFixedComponent implements OnInit {
   //     (response) => {
   //       console.log(response);
   //       this.toastr.successMessage(response["message"]);
-  //       //this.router.navigate(["Nap/ConsumerFinance/InputNap/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
+  //       //this.router.navigate(["Nap/ConsumerFinance/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
   //     },
   //     (error) => {
   //       console.log(error);
