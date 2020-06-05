@@ -506,19 +506,20 @@
               <label class="col-md-2 adins-label" translate>{{TotalPremiumToCust | number}}</label>
               <div class="col-md-2"></div>
               <label class="col-md-2 adins-required-label" translate>Paid Amount By Customer</label>
-              <div class="col-md-2">
+              <label class="col-md-2 adins-label" translate>{{PaidAmtByCust | number}}</label>
+              <!-- <div class="col-md-2">
                 <input type="" currencyMask class="form-control adInsInput" formControlName="PaidAmtByCust"
                   (focusout)="PaidAmtChanged($event.currentTarget.value)"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && AppInsForm.controls.PaidAmtByCust.invalid }" />
                 <lib-uc-show-errors [control]="AppInsForm.controls.PaidAmtByCust" [submit]="enjiForm.submitted">
                 </lib-uc-show-errors>
-              </div>
+              </div> -->
             </div>
           </div>
           <div class="form-body">
             <div class="row">
               <label class="col-md-2 adins-label" translate>Capitalized Amount</label>
-              <label class="col-md-2 adins-label" translate>{{CapAmt | number}}</label>
+              <label class="col-md-2 adins-label" translate>{{InsCpltzAmt | number}}</label>
             </div>
           </div>
           <div class="form-actions right">
