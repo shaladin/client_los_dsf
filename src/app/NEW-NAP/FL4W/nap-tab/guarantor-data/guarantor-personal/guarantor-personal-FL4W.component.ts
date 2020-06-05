@@ -40,7 +40,8 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
   AppGuarantorPersonalId: any;
   selectedNationalityCountryCode: any;
   isLocal: boolean = false;
-  countryCode : string;
+  countryCode: string;
+  tempCustNo: string;
   constructor(private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService, private modalService: NgbModal) {
   }
 
@@ -72,20 +73,20 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
     if (this.mode == "edit") {
       var guarantorPersonalObj = new GuarantorPersonalObj();
       guarantorPersonalObj.AppGuarantorObj.AppGuarantorId = this.AppGuarantorId;
-     await  this.http.post(AdInsConstant.GetAppGuarantorPersonalByAppGuarantorId, guarantorPersonalObj).toPromise().then(
+      await this.http.post(AdInsConstant.GetAppGuarantorPersonalByAppGuarantorId, guarantorPersonalObj).toPromise().then(
         (response) => {
-         
+
           this.resultData = response;
           this.AppGuarantorPersonalId = this.resultData.appGuarantorPersonalObj.AppGuarantorPersonalId;
           this.inputLookupObj.jsonSelect = { CustName: this.resultData.appGuarantorObj.GuarantorName };
           this.inputLookupObj.nameSelect = this.resultData.appGuarantorObj.GuarantorName;
-        
+
           this.PersonalForm.patchValue({
             MrCustRelationshipCode: this.resultData.appGuarantorObj.MrCustRelationshipCode,
             MrIdTypeCode: this.resultData.appGuarantorPersonalObj.MrIdTypeCode,
             MrGenderCode: this.resultData.appGuarantorPersonalObj.MrGenderCode,
             IdNo: this.resultData.appGuarantorPersonalObj.IdNo,
-            MrMaritalStatCode: this.resultData.appGuarantorPersonalObj.MrMaritalStatCode, 
+            MrMaritalStatCode: this.resultData.appGuarantorPersonalObj.MrMaritalStatCode,
             MrNationalityCode: this.resultData.appGuarantorPersonalObj.MrNationalityCode,
             BirthPlace: this.resultData.appGuarantorPersonalObj.BirthPlace,
             BirthDt: formatDate(this.resultData.appGuarantorPersonalObj['BirthDt'], 'yyyy-MM-dd', 'en-US'),
@@ -99,12 +100,32 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
           });
           this.setCountryName(this.resultData.appGuarantorPersonalObj.CountryCode);
           this.setAddrLegalObj();
-          
+
         },
         (error) => {
           console.log(error);
         }
       );
+
+      if (this.resultData.appGuarantorObj.CustNo != null) {
+        this.tempCustNo = this.resultData.appGuarantorObj.CustNo;
+        this.inputLookupObj.isReadonly = true;
+        this.PersonalForm.controls["MobilePhnNo"].disable();
+        this.PersonalForm.controls["MrMaritalStatCode"].disable();
+        this.PersonalForm.controls["MrNationalityCode"].disable();
+        this.PersonalForm.controls["MrReligionCode"].disable();
+        this.PersonalForm.controls["MrGenderCode"].disable();
+        this.PersonalForm.controls["BirthPlace"].disable();
+        this.PersonalForm.controls["BirthDt"].disable();
+        this.PersonalForm.controls["IdNo"].disable();
+        this.PersonalForm.controls["IdExpDt"].disable();
+        this.PersonalForm.controls["MrIdTypeCode"].disable();
+        this.PersonalForm.controls["TaxIdNo"].disable();
+        this.PersonalForm.controls["MrCustRelationshipCode"].disable();
+        this.PersonalForm.controls["AddrObj"]["controls"].Addr.disable();
+        this.PersonalForm.controls["AddrObj"]["controls"].AreaCode3.disable();
+        this.PersonalForm.controls["AddrObj"]["controls"].AreaCode4.disable();
+      }
     }
     else {
       this.ClearForm();
@@ -235,10 +256,10 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
         if (this.resultData.appGuarantorPersonalObj.MrNationalityCode == "LOCAL") {
           this.isLocal = true;
           this.selectedNationalityCountryName = response["CountryName"];
-          
+
         } else {
           this.isLocal = false
-          this.countryCode =  countryCode;
+          this.countryCode = countryCode;
         }
       },
       (error) => {
@@ -287,6 +308,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
   // GuarantorName="";
   lookupGuarantor(event) {
     console.log(event);
+    this.tempCustNo = event.CustNo;
     this.inputLookupObj.isReadonly = true;
     this.http.post(AdInsConstant.GetCustByCustId, { CustId: event.CustId }).subscribe(
       (response) => {
@@ -300,7 +322,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
             MrIdTypeCode: this.resultData.MrIdTypeCode,
             TaxIdNo: this.resultData.TaxIdNo
           }
-        );  
+        );
         this.http.post(AdInsConstant.GetCustPersonalByCustId, { CustId: event.CustId }).subscribe(
           (response) => {
             this.resultData = response;
@@ -323,7 +345,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
               this.http.post(AdInsConstant.GetRefCountryByCountryCode, { CountryCode: this.resultData.WnaCountryCode }).subscribe(
                 (response) => {
                   this.inputLookupObj1.nameSelect = response["CountryName"];
-                  this.countryCode =  response["CountryCode"];
+                  this.countryCode = response["CountryCode"];
                 }
               );
             }
@@ -354,7 +376,21 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
         );
       }
     );
-    console.log(this.PersonalForm);
+    this.PersonalForm.controls["MobilePhnNo"].disable();
+    this.PersonalForm.controls["MrMaritalStatCode"].disable();
+    this.PersonalForm.controls["MrNationalityCode"].disable();
+    this.PersonalForm.controls["MrReligionCode"].disable();
+    this.PersonalForm.controls["MrGenderCode"].disable();
+    this.PersonalForm.controls["BirthPlace"].disable();
+    this.PersonalForm.controls["BirthDt"].disable();
+    this.PersonalForm.controls["IdNo"].disable();
+    this.PersonalForm.controls["IdExpDt"].disable();
+    this.PersonalForm.controls["MrIdTypeCode"].disable();
+    this.PersonalForm.controls["TaxIdNo"].disable();
+    this.PersonalForm.controls["MrCustRelationshipCode"].disable();
+    this.PersonalForm.controls["AddrObj"]["controls"].Addr.disable();
+    this.PersonalForm.controls["AddrObj"]["controls"].AreaCode3.disable();
+    this.PersonalForm.controls["AddrObj"]["controls"].AreaCode4.disable();
   }
 
   // CountryCode="";
@@ -383,6 +419,9 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
   }
 
   setAppGuarantor() {
+    if (this.tempCustNo != null) {
+      this.guarantorPersonalObj.AppGuarantorObj.CustNo = this.tempCustNo;
+    }
     this.guarantorPersonalObj.AppGuarantorObj.GuarantorName = this.inputLookupObj.nameSelect;
     this.guarantorPersonalObj.AppGuarantorObj.MrGuarantorTypeCode = "PERSONAL";
     this.guarantorPersonalObj.AppGuarantorObj.TaxIdNo = this.PersonalForm.controls.TaxIdNo.value;

@@ -140,6 +140,13 @@ export class InvoiceDataComponent implements OnInit {
   }
 
   SaveContinue(){
-    this.outputTab.emit();
+    if(this.dataobj["TotalInvoiceAmt"] <= 0)
+    {
+      this.toastr.errorMessage("Please Input At Least 1 invoice");
+    }
+    else
+    {
+      this.outputTab.emit();
+    }
   }
 }

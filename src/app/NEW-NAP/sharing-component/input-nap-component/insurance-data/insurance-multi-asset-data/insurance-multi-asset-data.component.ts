@@ -124,9 +124,9 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   TotalPremiumToCust: number = 0;
   PaidAmtByCust: number = 0;
 
-  // AppInsForm = this.fb.group({
-  //   PaidAmtByCust: [0]
-  // });
+  AppInsForm = this.fb.group({
+    // PaidAmtByCust: [0]
+  });
 
   constructor(private fb: FormBuilder,
     private http: HttpClient,
@@ -162,6 +162,10 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
 
         this.gridAssetDataObj.resultData = DetailForGridAsset;
         this.gridAppCollateralObj.resultData = DetailForGridCollateral;
+
+        this.PaidAmtByCust = 0;
+        this.InsCpltzAmt = 0;
+        this.TotalPremiumToCust = 0;
 
         for (var i = 0; i < this.listAppAssetObj.length; i++) {
           if (this.listAppAssetObj[i].PaidAmtByCust != null)
@@ -217,8 +221,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   }
 
   SubmitForm() {
-    if (this.InsCpltzAmt < 0) this.toastr.errorMessage('Paid Amount by Cust cannot be greater than Total Premium to Customer!!!');
-    else this.outputTab.emit();
+    this.outputTab.emit();
   }
 
   // Insurance Methods
@@ -1192,7 +1195,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   }
 
   async getInsuranceData() {
-    var reqObj = { AppId: this.appId, AppAssetId: this.appAssetId}
+    var reqObj = { AppId: this.appId, AppAssetId: this.appAssetId }
     await this.http.post(AdInsConstant.GetInsDataByAppAssetId, reqObj).toPromise().then(
       (response) => {
         console.log(response);
