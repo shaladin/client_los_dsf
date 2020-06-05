@@ -5,6 +5,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdminProcessService } from 'app/NEW-NAP/business-process/admin-process/admin-process.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-agrmnt-activation-detail',
@@ -28,13 +29,18 @@ export class AgrmntActivationDetailComponent implements OnInit {
   CreateDt: Date;
   WfTaskListId: number;
   TrxNo: string;
-
-  constructor(private toastr: NGXToastrService, private route: ActivatedRoute, private adminProcessSvc: AdminProcessService,private router: Router,private http: HttpClient) {
+  AgrmntActForm: FormGroup;
+  constructor(private fb: FormBuilder, private toastr: NGXToastrService, private route: ActivatedRoute, private adminProcessSvc: AdminProcessService, private router: Router, private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
       this.WfTaskListId = params["WFTaskListId"];
       this.TrxNo = params["TrxNo"];
     });
+
+    this.AgrmntActForm = fb.group({
+      'CreateDt': [this.CreateDt, Validators.compose([Validators.required])]
+    });
+
   }
 
   ngOnInit() {
@@ -102,21 +108,28 @@ export class AgrmntActivationDetailComponent implements OnInit {
     console.log('Sel', this.listSelectedId);
   }
   Submit() {
-    var Obj = {
-      CreateDt: this.CreateDt,
-      ListAppAssetId: this.tempListId,
-      TaskListId: this.WfTaskListId,
-      TransactionNo: this.TrxNo
+    this.markFormTouched(this.AgrmntActForm);
+    if (this.AgrmntActForm.valid) {
+      var Obj = {
+        CreateDt: this.CreateDt,
+        ListAppAssetId: this.tempListId,
+        TaskListId: this.WfTaskListId,
+        TransactionNo: this.TrxNo
+      }
+      this.adminProcessSvc.SubmitAgrmntActivationByHuman(Obj).subscribe((response) => {
+        this.toastr.successMessage(response["message"]);
+        this.router.navigate(["/Nap/AdminProcess/AgrmntActivation/Paging"]);
+      })
     }
-    this.adminProcessSvc.SubmitAgrmntActivationByHuman(Obj).subscribe((response) => {
-      this.toastr.successMessage(response["message"]);
-      this.router.navigate(["/Nap/AdminProcess/AgrmntActivation/Paging"]);
-    })
+    else
+    {
+      this.AgrmntActForm.controls['terms'].setValue(false);
+    }
   }
 
   deleteFromTemp(AppAssetId: string) {
     if (confirm('Are you sure to delete this record?')) {
-      var index : number = this.tempListId.indexOf(AppAssetId);
+      var index: number = this.tempListId.indexOf(AppAssetId);
       if (index > -1) {
         this.tempListId.splice(index, 1);
         this.tempData.splice(index, 1);
@@ -132,4 +145,12 @@ export class AgrmntActivationDetailComponent implements OnInit {
 
     }
   }
+
+  markFormTouched(group: FormGroup | FormArray) {
+    Object.keys(group.controls).forEach((key: string) => {
+      const control = group.controls[key];
+      if (control instanceof FormGroup || control instanceof FormArray) { control.markAsTouched(); this.markFormTouched(control); }
+      else { control.markAsTouched(); };
+    });
+  };
 }

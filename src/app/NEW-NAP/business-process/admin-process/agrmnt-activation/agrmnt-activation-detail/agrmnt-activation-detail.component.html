@@ -5,7 +5,7 @@
         <app-app-main-info [arrValue]="arrValue"></app-app-main-info>
         <div class="px-3">
           <div class="form-body">
-            <div class="row">
+            <div class="row" [formGroup]="AgrmntActForm">
               <div class="col-md-6">
                 <div class="row">
                   <label class="col-md-6" translate>Overwrite Agreement No</label>
@@ -22,7 +22,12 @@
                 </div>
                 <div class="row">
                   <label class="col-md-6" translate>Agreement Date</label>
-                  <div class="col-md-6"><input type="date" [(ngModel)]="CreateDt"> </div>
+                  <div class="col-md-6">
+                    <input type="date" formControlName="CreateDt" [(ngModel)]="CreateDt" required>
+                    <span class="text-danger"
+                      *ngIf="AgrmntActForm.controls['CreateDt'].hasError('required') && (AgrmntActForm.controls['CreateDt'].dirty || AgrmntActForm.controls['CreateDt'].touched)">This
+                      field is required</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -155,10 +160,11 @@
           <form>
             <div class="form-actions right">
               <button type="button" class="btn btn-raised btn-warning mr-1"
-                [routerLink]="['/Nap/AdminProcess/AgrmntActivation/Paging']" [queryParams]="{AgrmntId:AgrmntId}" translate>
+                [routerLink]="['/Nap/AdminProcess/AgrmntActivation/Paging']" [queryParams]="{AgrmntId:AgrmntId}"
+                translate>
                 <i class="fa fa-arrow-circle-left"></i> Cancel
               </button>
-              <button type="button" class="btn btn-raised btn-primary" (click)="Submit()">
+              <button type="submit" class="btn btn-raised btn-primary" (click)="Submit()">
                 <i class="fa fa-check-square-o"></i> Submit
               </button>
             </div>
