@@ -76,19 +76,6 @@
                           </lib-uc-show-errors>
                         </div>
                       </div>
-                      <div class="form-group row" *ngIf="SalesAppInfoForm.controls.MrInstTypeCode.value == 'MULTIPLE'">
-                        <label class="col-md-3 adins-required-label" translate>TOP Type</label>
-                        <div class="col-md-9">
-                          <select class="form-control adInsInput" style="width: auto" formControlName="TopBased"
-                            [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.TopBased.invalid }">
-                            <option *ngFor="let cm of allTopBased" value="{{cm.Key}}">
-                              {{cm.Value}}</option>
-                          </select>
-                          <lib-uc-show-errors [control]="SalesAppInfoForm.controls.TopBased"
-                            [submit]="enjiForm.submitted">
-                          </lib-uc-show-errors>
-                        </div>
-                      </div>
                       <div class="form-group row">
                         <label class="col-md-3 adins-required-label" translate>Installment Type</label>
                         <div class="col-md-9">
@@ -99,6 +86,19 @@
                               {{it.Value}}</option>
                           </select>
                           <lib-uc-show-errors [control]="SalesAppInfoForm.controls.MrInstTypeCode"
+                            [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors>
+                        </div>
+                      </div>
+                      <div class="form-group row" *ngIf="SalesAppInfoForm.controls.MrInstTypeCode.value == 'MULTIPLE'">
+                        <label class="col-md-3 adins-required-label" translate>TOP Type</label>
+                        <div class="col-md-9">
+                          <select class="form-control adInsInput" style="width: auto" formControlName="TopBased"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.TopBased.invalid }">
+                            <option *ngFor="let cm of allTopBased" value="{{cm.Key}}">
+                              {{cm.Value}}</option>
+                          </select>
+                          <lib-uc-show-errors [control]="SalesAppInfoForm.controls.TopBased"
                             [submit]="enjiForm.submitted">
                           </lib-uc-show-errors>
                         </div>
