@@ -37,6 +37,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   // Insurance Data
   appAssetId: number = 0;
   appCollateralId: number = 0;
+  appInsObjId: number = 0;
   totalAssetPriceAmt: number;
   IsMultiAsset: string = "false";
 
@@ -166,7 +167,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
           if (this.listAppAssetObj[i].PaidAmtByCust != null)
             PaidAmtByCust = PaidAmtByCust + this.listAppAssetObj[i].PaidAmtByCust;
         }
-        this.CapAmt = this.TotalPremiumToCust;
+        this.CapAmt = PaidAmtByCust;
 
         this.AppInsForm.patchValue({
           PaidAmtByCust: PaidAmtByCust
@@ -176,7 +177,9 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         console.log(error);
       }
     );
+  }
 
+  async GetInsMultiData(): Promise<void>{
     await this.getInsuranceData();
     await this.bindInsMainCvgTypeObj();
     await this.bindInsAddCvgTypeObj();
@@ -206,6 +209,9 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
 
   event(ev) {
     this.AppCollateralId = ev.RowObj.AppCollateralId;
+    this.appAssetId = ev.RowObj.AppAssetId;
+    this.appInsObjId = ev.RowObj.AppInsObjId;
+    this.GetInsMultiData();
     this.PageState = 'EditInsurance';
   }
 
@@ -261,13 +267,16 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       (response) => {
         console.log(response);
         this.toastr.successMessage(response["Message"]);
-        this.outputTab.emit();
+        this.PageState = 'Paging';
       },
       (error) => {
         console.log(error);
       }
     );
+  }
 
+  Cancel(){
+    this.PageState = 'Paging';
   }
 
   setSaveObj(insuredBy) {
