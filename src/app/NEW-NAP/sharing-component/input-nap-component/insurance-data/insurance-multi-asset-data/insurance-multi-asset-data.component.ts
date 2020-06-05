@@ -163,6 +163,10 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         this.gridAssetDataObj.resultData = DetailForGridAsset;
         this.gridAppCollateralObj.resultData = DetailForGridCollateral;
 
+        this.PaidAmtByCust = 0;
+        this.InsCpltzAmt = 0;
+        this.TotalPremiumToCust = 0;
+
         for (var i = 0; i < this.listAppAssetObj.length; i++) {
           if (this.listAppAssetObj[i].PaidAmtByCust != null)
             this.PaidAmtByCust = this.PaidAmtByCust + this.listAppAssetObj[i].PaidAmtByCust;
