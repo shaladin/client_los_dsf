@@ -46,7 +46,6 @@ export class CommissionComponent implements OnInit {
   OnForm2;
   OnForm3;
   Summary;
-  isCalculateData;
   isAutoGenerate: boolean = true;
   async ngOnInit() {
 
@@ -56,7 +55,6 @@ export class CommissionComponent implements OnInit {
     this.isFinishGetAppReferantorData = false;
     this.isFinishGetAppFeeData = false;
     this.isFinishGetAppData = false;
-    this.isCalculateData = false;
     this.isAutoGenerate = true;
 
     this.viewIncomeInfoObj = {
@@ -106,6 +104,7 @@ export class CommissionComponent implements OnInit {
             var FormAdd3Idx = 0;
             for (var i = 0; i < tempObj.length; i++) {
               var obj = tempObj[i];
+              console.log(obj);
               if (obj.MrCommissionRecipientTypeCode == AdInsConstant.CommissionReceipientTypeCodeSupplier) {
                 this.FormAdd1.AddNewDataForm();
                 this.FormAdd1.GenerateExistingContentName(obj, FormAdd1Idx);
@@ -410,7 +409,9 @@ export class CommissionComponent implements OnInit {
 
   AppAssetIdList = new Array();
   GetDDLContent(ReturnObject, content) {
+    // console.log(ReturnObject);
     if (content == AdInsConstant.ContentReferantor) {
+      if(ReturnObject.AppId==null) return;
       var KVPObj;
       KVPObj = {
         Key: ReturnObject.ReferantorCode,
@@ -491,13 +492,10 @@ export class CommissionComponent implements OnInit {
   }
 
   GetData(ev, data) {
-    this.FormGetObj[data] = ev;
+    // console.log(ev);
+    this.FormGetObj[data] = ev.formObj;
     // console.log(this.FormGetObj);
-    this.Summary.TotalCommisionAmount=0;
-    this.Summary.TotalTaxAmmount=0;
-    this.Summary.TotalVATAmount=0;
-    this.Summary.GrossYield=0;
-    if (this.isCalculateData) {
+    if (ev.message == AdInsConstant.MessageCalculate) {
       if (this.FormGetObj[AdInsConstant.ContentSupplier] && data == AdInsConstant.ContentSupplier) {
         this.CalculateEachData(this.FormGetObj[AdInsConstant.ContentSupplier]);
       }
@@ -511,7 +509,6 @@ export class CommissionComponent implements OnInit {
   }
 
   CalculateTotal() {
-    this.isCalculateData = true;
     this.Summary = {
       TotalCommisionAmount: 0,
       TotalTaxAmmount: 0,

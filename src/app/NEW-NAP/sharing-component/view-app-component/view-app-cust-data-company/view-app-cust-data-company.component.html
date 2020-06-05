@@ -6,8 +6,8 @@
         <table class="table table-responsive-md text-center table-hover">
             <thead>
             <tr class="table-header">
-                <th class="text-center"><span class="thead-header" name='addrType' translate>Address Type</span> </th>
-                <th class="text-center"><span class="thead-header" name='fullAddr' translate>Address</span></th>
+                <th class="text-left"><span class="thead-header" name='addrType' translate>Address Type</span> </th>
+                <th class="text-left"><span class="thead-header" name='fullAddr' translate>Address</span></th>
                 <th class="text-center"><span class="thead-header" name='phoneNo' translate>Phone No</span></th>
                 <th class="text-center"><span class="thead-header" name='houseOwnership' translate>House Ownership</span></th>
             </tr>
@@ -20,8 +20,8 @@
             <tbody>
             <ng-container *ngFor="let item of appCustAddrForViewObjs">
                 <tr>
-                <td class="text-center">{{item.CustAddrTypeName}}</td>
-                <td class="text-center">{{item.FullAddr}}</td>
+                <td class="text-left">{{item.CustAddrTypeName}}</td>
+                <td class="text-left">{{item.FullAddr}}</td>
                 <td class="text-center">{{item.PhoneNo}}</td>
                 <td class="text-center">{{item.HouseOwnershipName}}</td>
                 </tr>
@@ -37,7 +37,7 @@
         <table class="table table-responsive-md text-center table-hover">
             <thead>
             <tr class="table-header">
-                <th class="text-center"><span class="thead-header" name='addrType' translate>Name</span> </th>
+                <th class="text-left"><span class="thead-header" name='addrType' translate>Name</span> </th>
                 <th class="text-center"><span class="thead-header" name='fullAddr' translate>Job Position</span></th>
                 <th class="text-center"><span class="thead-header" name='phoneNo' translate>Type</span></th>
                 <th class="text-center"><span class="thead-header" name='houseOwnership' translate>NPWP</span></th>
@@ -52,7 +52,7 @@
             <tbody>
             <ng-container *ngFor="let item of appCustCompanyMgmntShrholderObjs">
                 <tr>
-                <td class="text-center">{{item.MgmntShrholderName}}</td>
+                <td class="text-left">{{item.MgmntShrholderName}}</td>
                 <td class="text-center">{{item.JobPositionName}}</td>
                 <td class="text-center">{{item.CustTypeName}}</td>
                 <td class="text-center">{{item.TaxIdNo}}</td>
@@ -161,7 +161,7 @@
             <thead>
             <tr class="table-header">
                 <th class="text-center"><span class="thead-header" name='no' translate>No</span> </th>
-                <th class="text-center"><span class="thead-header" name='custName' translate>Customer Name</span></th>
+                <th class="text-left"><span class="thead-header" name='custName' translate>Customer Name</span></th>
                 <th class="text-center"><span class="thead-header" name='relationship' translate>Customer Relationship</span></th>
                 <th class="text-center"><span class="thead-header" name='notes' translate>Notes</span></th>
             </tr>
@@ -175,7 +175,7 @@
             <ng-container *ngFor="let item of appCustGrpObjs; let i=index">
                 <tr>
                     <td class="text-center">{{i + 1}}</td>
-                    <td class="text-center">{{item.CustName}}</td>
+                    <td class="text-left">{{item.CustName}}</td>
                     <td class="text-center">{{item.RelationshipName}}</td>
                     <td class="text-center">{{item.CustGrpNotes}}</td>
                 </tr>

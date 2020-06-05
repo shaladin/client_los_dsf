@@ -5,7 +5,7 @@
           (ngSubmit)="AddCollForm.valid && SaveForm()">
             <div class="form-body">
               <div class="form-group row">
-                <label class="col-md-2 adins-required" translate>Collateral Type</label>
+                <label class="col-md-2 adins-required" translate>Collateral Status</label>
                 <div class="col-md-3">
                   <select class="form-control" formControlName="Collateral" (change)="CollChange()">
                     <option value="New">New Collateral</option>
@@ -20,7 +20,7 @@
                     <div class="form-group row">
                         <label class="col-md-2 adins-required" translate>Collateral Type</label>
                         <div class="col-md-3">
-                            <select class="form-control" formControlName="AssetTypeCode"
+                            <select class="form-control" formControlName="AssetTypeCode" (change)="collateralTypeHandler()"
                               [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.AssetTypeCode.invalid }">
                               <option *ngFor="let item of returnCollTypeObj" [value]="item.Key">
                                 {{item.Value}}
@@ -41,8 +41,9 @@
                     <div class="form-group row">
                       <label class="col-md-2 adins-required-label" for="FullAssetName" translate>Collateral Name </label>
                       <div class="col-md-3">
-                        <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]="AddCollForm" [enjiForm]='enjiForm'
-                          [identifier]="'CollateralName'" (lookup)="getLookupCollateralName($event)"></lib-uclookupgeneric>
+                        <ng-template #CollateralModal></ng-template> 
+                        <!-- <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]="AddCollForm" [enjiForm]='enjiForm'
+                          [identifier]="'CollateralName'" (lookup)="getLookupCollateralName($event)"></lib-uclookupgeneric> -->
                       </div>
                         <label class="col-md-1"></label>
                         <label class="col-md-2" translate>Serial No 2</label>
@@ -126,7 +127,7 @@
                     <label class="col-md-1"></label>
                     <label class="col-md-2 adins-required-label" translate>Owner Id No</label>
                     <div class="col-md-3">
-                        <input type="text" class="form-control" formControlName="OwnerIdNo"
+                        <input type="number" class="form-control" formControlName="OwnerIdNo"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerIdNo.invalid }">
                         <lib-uc-show-errors [control]="AddCollForm.controls.OwnerIdNo" [submit]="enjiForm.submitted">
                         </lib-uc-show-errors>
@@ -155,7 +156,7 @@
                     <div class="form-group row">
                       <label class="col-md-2 adins-required-label" translate>Mobile Phone</label>
                       <div class="col-md-3">
-                          <input type="text" class="form-control" formControlName="OwnerMobilePhn"
+                          <input type="number" class="form-control" formControlName="OwnerMobilePhn"
                           [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerMobilePhn.invalid }">
                           <lib-uc-show-errors [control]="AddCollForm.controls.OwnerMobilePhn" [submit]="enjiForm.submitted">
                           </lib-uc-show-errors>
@@ -196,7 +197,7 @@
                             </lib-uc-show-errors>
                         </div>
                         <label class="col-md-1"></label>
-                        <label class="col-md-2" translate>BPKB City Issuer</label>
+                        <label class="col-md-2 adins-required-label" translate>BPKB City Issuer</label>
                         <div class="col-md-3">
                           <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupCityIssuerObj" [identifier]="'DistrictCode'" [enjiForm]='enjiForm' [parentForm]='AddCollForm' (lookup)="SetBpkbCity($event)">
                           </lib-uclookupgeneric>
@@ -213,7 +214,7 @@
                         <label class="col-md-1"></label>
                         <label class="col-md-2" translate>BPKB Issue Date</label>
                         <div class="col-md-3">
-                            <input type="text" class="form-control" formControlName="BpkpIssueDate"
+                            <input type="date" class="form-control" formControlName="BpkpIssueDate" [max]="businessDt | date: 'yyyy-MM-dd'" onkeypress="return false;"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.BpkpIssueDate.invalid }">
                             <lib-uc-show-errors [control]="AddCollForm.controls.BpkpIssueDate" [submit]="enjiForm.submitted">
                             </lib-uc-show-errors>
@@ -227,7 +228,7 @@
                     <div class="form-group row">
                       <label class="col-md-2" translate>Copy Address From</label>
                       <div class="col-md-2">
-                        <select class="form-control adInsInput" formControlName="LocationAddrType" [(ngModel)]="copyFromAppCustAddrForLocation">
+                        <select class="form-control adInsInput" formControlName="LocationAddrType"> <!-- [(ngModel)]="copyFromAppCustAddrForLocation" -->
                           <option *ngFor="let ram of AppCustAddrObj" [value]="ram.AppCustAddrId">
                             {{ram.MrCustAddrTypeCode}}
                           </option>
@@ -240,9 +241,9 @@
                           </button>
                         </span>
                       </div>
-                    </div>
+                    </div><!-- collLocationAddrObj -->
                     <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="AddCollForm" [enjiForm]="enjiForm"
-                    [identifier]="'collLocationAddr'" [default]="collLocationAddrObj" [inputField]="inputFieldLocationObj"
+                    [identifier]="'collLocationAddr'" [default]="locationAddrObj" [inputField]="inputFieldLocationAddrObj"
                     [showAllPhn]="false"></lib-ucaddress>
                 </div>
 
@@ -370,7 +371,7 @@
                           <i class="fa fa-arrow-circle-left"></i> Cancel
                         </button>
                         <button type="submit" (click)="SaveExistingCollateral()" class="btn btn-raised btn-primary" translate>
-                          <i class="fa fa-check"></i> Save
+                          <i class="fa fa-check-square"></i> Save
                         </button>
                       </div>
                     </div>

@@ -57,6 +57,13 @@ export class PreGoLiveComponent implements OnInit {
       this.AppId = params["AppId"];
       this.TaskListId = params["TaskListId"];
       this.AgrmntNo = params["AgrmntNo"];
+
+      this.route.queryParams.subscribe(params => {
+        if (params["BizTemplateCode"] != null) {
+          localStorage.setItem("BizTemplateCode", params["BizTemplateCode"]);
+        }
+        
+      });
     });
   }
 
@@ -106,7 +113,6 @@ export class PreGoLiveComponent implements OnInit {
   }
 
   RFA() {
-    var preGlvObj = this.SaveForm();
     this.router.navigate(["/Nap/AdminProcess/PreGoLive/RequestApproval"], { queryParams: { "AgrmntId": this.AgrmntId, "AppId": this.AppId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId } });
   }
 
