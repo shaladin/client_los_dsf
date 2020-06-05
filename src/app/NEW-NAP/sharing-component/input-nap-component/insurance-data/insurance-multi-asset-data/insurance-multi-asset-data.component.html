@@ -16,11 +16,6 @@
             <lib-ucgridview [gridInput]="gridAppCollateralObj" (callback)="event($event)"></lib-ucgridview>
           </div>
 
-          <div [hidden]="PageState != 'EditAsset'">
-            <app-asset-data-add-edit [AppAssetId]="appAssetIdForAssetModal" [AppId]="appIdForAssetModal"
-              (assetValue)="getValue($event)"> </app-asset-data-add-edit>
-          </div>
-
           <!-- <app-insurance-data (outputTab)="getValue($event)"></app-insurance-data> -->
 
           <form [hidden]="PageState != 'EditInsurance'" class="form form-horizontal" [formGroup]="InsuranceDataForm"
