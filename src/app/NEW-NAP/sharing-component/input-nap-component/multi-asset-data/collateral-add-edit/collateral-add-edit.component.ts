@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter,ViewChild, ComponentFactoryResolver, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter,ViewChild, ComponentFactoryResolver, ViewContainerRef, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -29,7 +29,7 @@ import { UclookupgenericComponent } from '@adins/uclookupgeneric';
   selector: 'app-collateral-add-edit',
   templateUrl: './collateral-add-edit.component.html'
 })
-export class CollateralAddEditComponent implements OnInit {
+export class CollateralAddEditComponent implements OnInit, AfterViewInit {
   @Input() AppId: any;
   @Input() mode: any;
   @Input() AppCollateralId: number;
@@ -112,6 +112,7 @@ export class CollateralAddEditComponent implements OnInit {
   returnAppCollateralRegistObj: any;
   businessDt: Date;
   @ViewChild("CollateralModal", { read: ViewContainerRef }) collateralModal: ViewContainerRef;
+  @ViewChild("CityIssuerModal", { read: ViewContainerRef }) cityIssuerModal: ViewContainerRef;
   @ViewChild("enjiForm") enjiForm: NgForm;
 
   appObj = {
@@ -608,7 +609,7 @@ export class CollateralAddEditComponent implements OnInit {
               BpkpIssueDate: colObj.BpkpIssueDate
             });
             this.InputLookupCityIssuerObj.nameSelect = colObj.TaxCityIssuer;
-            this.InputLookupCityIssuerObj.jsonSelect = { DistrictCode: colObj.TaxCityIssuer }
+            this.InputLookupCityIssuerObj.jsonSelect = { DistrictCode: colObj.TaxCityIssuer };
           },
           (error) => {
             console.log(error);
@@ -702,6 +703,16 @@ export class CollateralAddEditComponent implements OnInit {
     critDisObj.value = 'DIS';
     disCrit.push(critDisObj);
     this.InputLookupCityIssuerObj.addCritInput = disCrit;
+  }
+
+  ngAfterViewInit(): void {
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UclookupgenericComponent);
+    const component = this.cityIssuerModal.createComponent(componentFactory);
+    component.instance.lookupInput = this.InputLookupCityIssuerObj;
+    component.instance.parentForm = this.AddCollForm;
+    component.instance.enjiForm = this.enjiForm;
+    component.instance.identifier = 'DistrictCode';
+    component.instance.lookup.subscribe((e) => this.SetBpkbCity(e));
   }
 
   setCollateralInfo(){
