@@ -23,7 +23,7 @@
           },
           {
             "type": "text",
-            "label": "Original Office",
+            "label": "  ",
             "property": "OfficeName"
           },
           {
