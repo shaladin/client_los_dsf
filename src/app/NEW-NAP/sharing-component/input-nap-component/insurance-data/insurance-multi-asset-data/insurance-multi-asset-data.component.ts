@@ -1190,8 +1190,8 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   }
 
   async getInsuranceData() {
-    var reqObj = { AppId: this.appId }
-    await this.http.post(AdInsConstant.GetInsuranceDataByAppId, reqObj).toPromise().then(
+    var reqObj = { AppId: this.appId, AppAssetId: this.appAssetId}
+    await this.http.post(AdInsConstant.GetInsDataByAppAssetId, reqObj).toPromise().then(
       (response) => {
         console.log(response);
         this.appObj = response["AppObj"];
