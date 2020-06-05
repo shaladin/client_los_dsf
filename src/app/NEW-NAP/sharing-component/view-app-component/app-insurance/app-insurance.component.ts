@@ -57,6 +57,8 @@ export class AppInsuranceComponent implements OnInit {
   }
 
   viewDetailCollateralHandler(appInsObjId){
+    // console.log("appInsObjId")
+    // console.log(appInsObjId)
     const modalInsDetail = this.modalService.open(AppInsuranceDetailComponent);
     modalInsDetail.componentInstance.AppInsObjId = appInsObjId;
     modalInsDetail.result.then().catch((error) => {
