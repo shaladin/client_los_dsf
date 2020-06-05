@@ -37,10 +37,10 @@ export class AppAssetDataDetailComponent implements OnInit {
         this.appAssetSupplEmp = response[1];
         this.appCollateralRegistration = response[2];
 
-        console.log("assetdetail")
-        console.log(this.appAsset)
-        console.log(this.appAssetSupplEmp)
-        console.log(this.appCollateralRegistration)
+        // console.log("assetdetail")
+        // console.log(this.appAsset)
+        // console.log(this.appAssetSupplEmp.ReturnObject)
+        // console.log(this.appCollateralRegistration)
 
         for (const item of this.appAssetSupplEmp.ReturnObject) {
           if(item.MrSupplEmpPositionCode == AdInsConstant.SALES_JOB_CODE){
