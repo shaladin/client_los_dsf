@@ -3,21 +3,21 @@
   "headerList": [
     {
       "type": "sort",
-      "position": "center",
+      "position": "left",
       "label": "Guarantor Name",
       "name": "sortId1",
       "width": "width-50-per"
     },
     {
       "type": "sort",
-      "position": "center",
+      "position": "left",
       "label": "Guarantor Type",
       "name": "sortId2",
       "width": "width-50-per"
     },
     {
       "type": "sort",
-      "position": "center",
+      "position": "left",
       "label": "Relationship",
       "name": "sortId3",
       "width": "width-50-per"
@@ -31,17 +31,17 @@
   "bodyList": [
     {
       "type": "text",
-      "position": "center",
+      "position": "left",
       "property": "GuarantorName"
     },
     {
       "type": "text",
-      "position": "center",
+      "position": "left",
       "property": "MrGuarantorTypeCode"
     },
     {
       "type": "text",
-      "position": "center",
+      "position": "left",
       "property": "CustRelationshipCodeDesc"
     },
     {

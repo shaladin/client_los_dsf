@@ -82,14 +82,15 @@ export class TcDataComponent implements OnInit {
   }
 
   AddTcControl(obj: AppTCObj) {
+    console.log(obj);
     return this.fb.group({
       TcName: obj.TcName,
       TcCode: obj.TcCode,
       PriorTo: obj.PriorTo,
       IsChecked: obj.IsChecked,
       IsMandatory: obj.IsMandatory,
-      PromisedDt: (obj.PromisedDt == null) ? null : formatDate(obj.PromisedDt, 'yyyy-MM-dd', 'en-US'),
-      ExpiredDt: (obj.ExpiredDt == null) ? null : formatDate(obj.ExpiredDt, 'yyyy-MM-dd', 'en-US'),
+      PromisedDt: (obj.PromisedDt == null) ? '' : formatDate(obj.PromisedDt, 'yyyy-MM-dd', 'en-US'),
+      ExpiredDt: (obj.ExpiredDt == null) ? '' : formatDate(obj.ExpiredDt, 'yyyy-MM-dd', 'en-US'),
       Notes: obj.Notes,
     })
   }
@@ -101,50 +102,61 @@ export class TcDataComponent implements OnInit {
   }
 
   ReconstructForm() {
-    var fa_AppTc = this.AppTcForm.get("AppTc") as FormArray
+    var fa_AppTc = this.AppTcForm.get("AppTc") as FormArray;
     for (let a = 0; a < fa_AppTc.length; a++) {
       var item = fa_AppTc.at(a);
       var isMandatory: Boolean = item.get("IsMandatory").value;
       var isChecked: Boolean = item.get("IsChecked").value;
       
-      item.get("ExpiredDt").clearValidators();
-      item.get("PromisedDt").clearValidators();
+      item.patchValue({
+        PromisedDt: null,
+        ExpiredDt: null,
+      });
       if (isMandatory) {
         if (isChecked) {
-          item.patchValue({
-            PromisedDt: null
-          });
           item.get("ExpiredDt").enable();
           item.get("PromisedDt").disable();
           item.get("ExpiredDt").setValidators([Validators.required]);
+          item.get("ExpiredDt").updateValueAndValidity();
         } else {
-          item.patchValue({
-            ExpiredDt: null
-          });
           item.get("ExpiredDt").disable();
           item.get("PromisedDt").enable();
           item.get("PromisedDt").setValidators([Validators.required]);
+          item.get("PromisedDt").updateValueAndValidity();
         }
-
+        
       } else {
         if (isChecked) {
-          item.patchValue({
-            PromisedDt: null
-          });
           item.get("ExpiredDt").enable();
           item.get("PromisedDt").disable();
           item.get("ExpiredDt").setValidators([Validators.required]);
+          item.get("ExpiredDt").updateValueAndValidity();
         } else {
-          item.patchValue({
-            ExpiredDt: null
-          });
           item.get("ExpiredDt").disable();
           item.get("PromisedDt").enable();
+          item.get("PromisedDt").updateValueAndValidity();
         }
       }
     }
-
     fa_AppTc.updateValueAndValidity();
+  }
+
+  Test(){
+    console.log(this.AppTcForm);
+    console.log(this.AppTcForm.invalid);
+    this.getFormValidationErrors();
+  }
+
+  getFormValidationErrors() {
+    const invalid = [];
+    const controls = this.AppTcForm.controls.AppTc["controls"];
+    for (const name in controls) {
+        if (controls[name].invalid) {
+            invalid.push(name);
+            console.log(name);
+        }
+    }
+    console.log(invalid);
   }
 
   SaveData() {
