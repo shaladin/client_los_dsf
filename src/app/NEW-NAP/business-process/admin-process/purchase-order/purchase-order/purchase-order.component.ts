@@ -90,7 +90,7 @@ export class PurchaseOrderComponent implements OnInit {
     if (IsSave) {
       var workflowModel : WorkflowApiObj = new WorkflowApiObj();
       workflowModel.TaskListId = this.TaskListId;
-      workflowModel.ListValue = {"AppAssets" : JSON.stringify(this.AppAssetList)};
+      workflowModel.ListValue = {"AgrmntId" : this.AgrmntId.toString()};
 
 
       this.http.post(AdInsConstant.ResumeWorkflowPurchaseOrder, workflowModel).subscribe(
