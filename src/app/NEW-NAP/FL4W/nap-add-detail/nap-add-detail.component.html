@@ -90,7 +90,7 @@
               <button type="button" class="step-trigger" role="tab" aria-controls="lifeInsurance-tab"
                 id="lifeInsurance-tab-trigger" [disabled]="!(AppStepIndex >= 7)" (click)="ChangeTab('LFI')">
                 <span class="bs-stepper-circle">7</span>
-                <span class="bs-stepper-label">lifeInsurance Data</span>
+                <span class="bs-stepper-label">Life Insurance Data</span>
               </button>
             </div>
             <div class="line"></div>
@@ -134,8 +134,6 @@
               </app-multi-asset-data>
             </div>
             <div id="insurance-tab" class="content  " role="tabpanel" aria-labelledby="insurance-tab-trigger">
-              <!-- <app-insurance-data *ngIf="!IsMultiAsset && AppStepIndex == 6" [appId]="appId"
-                (outputTab)="NextStep('LFI')"></app-insurance-data> -->
               <app-insurance-multi-asset-data *ngIf="AppStepIndex == 6 && mrCustTypeCode == 'PERSONAL'" [appId]="appId"
                 (outputTab)="NextStep('LFI')"></app-insurance-multi-asset-data>
               <app-insurance-multi-asset-data *ngIf="AppStepIndex == 6 && mrCustTypeCode == 'COMPANY'" [appId]="appId"
@@ -146,8 +144,8 @@
               </app-life-insurance-data>
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
-              <app-financial-data-FL4W *ngIf="AppStepIndex == 8" [AppId]="appId" (outputTab)="NextStep('TC')">
-              </app-financial-data-FL4W>
+              <app-financial-data *ngIf="AppStepIndex == 8" [AppId]="appId" (outputTab)="NextStep('TC')">
+              </app-financial-data>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
               <app-tc-data *ngIf="AppStepIndex == 9" [AppId]="appId" (outputTab)="LastStepHandler('SUBMIT')"></app-tc-data>

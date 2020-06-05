@@ -81,7 +81,7 @@ export class NapPagingComponent implements OnInit {
     this.http.post(AdInsConstant.GetRefOfficeByOfficeCode, obj).subscribe(
       (response) => {
         if(response["IsAllowAppCreated"] == true){
-          this.router.navigate(["Nap/ConsumerFinance/InputNap/Add"]);
+          this.router.navigate(["Nap/ConsumerFinance/Add"]);
         }else{
           this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');
         }
@@ -98,7 +98,7 @@ export class NapPagingComponent implements OnInit {
     //   this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');
     //   return;
     // }else{
-      this.router.navigate(["Nap/ConsumerFinance/InputNap/Add/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId" : ev.RowObj.WfTaskListId } });
+      this.router.navigate(["Nap/ConsumerFinance/Add/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId" : ev.RowObj.WfTaskListId } });
     // }
   }
 }

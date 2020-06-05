@@ -224,12 +224,19 @@ export class GuarantorCompanyComponent implements OnInit {
               this.CompanyForm.patchValue({
                 MrCompanyTypeCode: this.resultData.MrCompanyTypeCode
               });
-              this.http.post(AdInsConstant.GetRefIndustryTypeByRefIndustryTypeId, { RefIndustryTypeId: this.resultData.RefIndustryTypeId }).subscribe(
-                (response) => {
-                  this.inputLookupObj1.nameSelect = response["IndustryTypeName"];
-                  this.inputLookupObj1.jsonSelect = response;
-                }
-              );
+
+              if(this.resultData.RefIndustryTypeId != null){
+                this.http.post(AdInsConstant.GetRefIndustryTypeByRefIndustryTypeId, { RefIndustryTypeId: this.resultData.RefIndustryTypeId }).subscribe(
+                  (response) => {
+                    this.inputLookupObj1.nameSelect = response["IndustryTypeName"];
+                    this.inputLookupObj1.jsonSelect = response;
+                  }
+                );
+              }else{
+                this.inputLookupObj1.nameSelect = "";
+                this.inputLookupObj1.jsonSelect = {};
+              }
+
               this.http.post(AdInsConstant.GetCustCompanyContactPersonByCustCompanyId, { CustCompanyId: this.resultData.CustCompanyId }).subscribe(
                 (response) => {
                   this.resultData = response;
