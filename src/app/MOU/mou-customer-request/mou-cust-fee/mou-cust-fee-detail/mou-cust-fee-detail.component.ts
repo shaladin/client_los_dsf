@@ -46,6 +46,13 @@ export class MouCustFeeDetailComponent implements OnInit {
           RefFeeId: this.refFeeList[0].RefFeeId,
           MrFeeTypeCode: this.feeTypeList[0].Key
         });
+        if(this.feeTypeList[0].Value != 'Amount'){
+          this.MouCustFeeForm.patchValue({
+            FeeAmt: 0
+          });
+          this.MouCustFeeForm.controls['FeeAmt'].clearValidators();
+          this.MouCustFeeForm.controls['FeeAmt'].updateValueAndValidity();
+        }
       },
       (error) => {
         console.log(error);
@@ -68,15 +75,16 @@ export class MouCustFeeDetailComponent implements OnInit {
       this.MouCustFeeForm.patchValue({
         FeePrcnt: 0
       });
-      // this.MouCustFeeForm.controls['FeeAmt'].clearValidators();
-      // this.MouCustFeeForm.controls['FeeAmt'].setValidators([Validators.min(1), Validators.required]);
-      // this.MouCustFeeForm.controls['FeeAmt'].updateValueAndValidity();
+      this.MouCustFeeForm.controls['FeeAmt'].clearValidators();
+      this.MouCustFeeForm.controls['FeeAmt'].setValidators([Validators.required, Validators.min(1)]);
+      this.MouCustFeeForm.controls['FeeAmt'].updateValueAndValidity();
     }
     else if(e.target.value == 'PRCNT'){
       this.MouCustFeeForm.patchValue({
         FeeAmt: 0
       });
-      // this.MouCustFeeForm['FeeAmt'].clearValidators();
+      this.MouCustFeeForm.controls['FeeAmt'].clearValidators();
+      this.MouCustFeeForm.controls['FeeAmt'].updateValueAndValidity();
     }
   }
 
