@@ -1,12 +1,12 @@
 export class AppCustPersonalFinDataObj {
-    AppCustPersonalFinDataId: any;
-    AppCustPersonalId: any;
-    MonthlyIncomeAmt: string;
-    MonthlyExpenseAmt: any;
-    MonthlyInstallmentAmt: any;
-    MrSourceOfIncomeTypeCode: any;
-    SpouseMonthlyIncomeAmt: any;
-    IsJoinIncome: any;
+    AppCustPersonalFinDataId: number;
+    AppCustPersonalId: number;
+    MonthlyIncomeAmt: number;
+    MonthlyExpenseAmt: number;
+    MonthlyInstallmentAmt: number;
+    MrSourceOfIncomeTypeCode: string;
+    SpouseMonthlyIncomeAmt: number;
+    IsJoinIncome: boolean;
 
 constructor() { 
         this.AppCustPersonalFinDataId = 0;
@@ -15,6 +15,7 @@ constructor() {
         this.MonthlyInstallmentAmt = 0;
         this.MrSourceOfIncomeTypeCode = "";
         this.SpouseMonthlyIncomeAmt = 0;
+        this.MonthlyIncomeAmt = 0;
         this.IsJoinIncome = false;
     }
 }
