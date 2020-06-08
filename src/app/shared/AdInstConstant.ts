@@ -58,6 +58,7 @@ export class AdInsConstant {
   public static VerfResultStatCodeNew = "NEW";
   public static RtnHandlingReturnStatDone = "DONE"
   public static ASSET_TYPE_CAR = "CAR";
+  public static LICENSE_PLATE_NO = "LICENSE PLATE NO";
 
   //WORKFLOW (LEWAT FOUNDATION)
   public static ResumeWorkflow = environment.FoundationR3Url + "/Workflow/ResumeWorkflow"
