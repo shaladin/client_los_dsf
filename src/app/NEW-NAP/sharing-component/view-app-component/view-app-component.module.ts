@@ -85,7 +85,7 @@ import { ViewCollateralMultiAssetComponent } from "./view-collateral-multi-asset
     ViewFinancialComponent,
     AppInsuranceComponent,
     AppInsuranceDetailComponent,
-    ViewAppFraudVerificationComponent,
+    //ViewAppFraudVerificationComponent,
     TabDeviationComponent,
     InvoiceViewComponent,
     ViewCollateralDataComponent,
