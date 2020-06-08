@@ -1,7 +1,4 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
@@ -17,22 +14,9 @@ export class MultiCollDataComponent implements OnInit {
   mode: string = "add";
   IsDetail: boolean = false;
   AppCollateral: any;
-  constructor(private http: HttpClient, private toastr : NGXToastrService) { }
+  constructor(private toastr : NGXToastrService) { }
 
   ngOnInit() {
-    // var obj = {
-    //   AppId: this.AppId,
-    // }
-    // var getListUrl = AdInsConstant.GetAppCollateralByAppId;
-    // this.http.post(getListUrl, obj).subscribe(
-    //   (response) => {
-    //     this.AppCollateral = response;
-    //     console.log(response);
-    //   },
-    //   (error) => {
-    //     console.log(error);
-    //   }
-    // );
   }
   GetList(ev) {
     this.AppCollateral = ev;
@@ -53,7 +37,6 @@ export class MultiCollDataComponent implements OnInit {
   }
 
   Next() {
-    console.log(this.AppCollateral);
     if (this.AppCollateral.length == 0) {
       this.toastr.errorMessage("Please Input At Least 1 Collateral Data");
     }
