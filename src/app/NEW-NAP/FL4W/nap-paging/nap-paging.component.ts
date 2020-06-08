@@ -95,12 +95,12 @@ export class NapPagingComponent implements OnInit {
   }
 
   GetCallBack(ev: any){
-    // console.log(ev);
-    // if(!ev.RowObj.IsAllowAppCreated){
-    //   this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');
-    //   return;
-    // }else{
+    if(ev.Key == "ViewProdOffering"){
+      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.RowObj.prodOfferingCode + "&prodOfferingVersion=" + ev.RowObj.prodOfferingVersion;
+      this.router.navigate([]).then(result => { window.open(link, '_blank'); });
+    }
+    if(ev.Key == "Edit"){
       this.router.navigate(["Nap/FinanceLeasing/Add/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId" : ev.RowObj.WfTaskListId, "IsMultiAsset": "true" } });
-    // }
+    }
   }
 }
