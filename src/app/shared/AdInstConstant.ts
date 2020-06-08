@@ -81,7 +81,8 @@ export class AdInsConstant {
   public static AddEditAppCF2W = environment.losUrl + "/Application/AddEditAppCF2W";
   public static DataTableFeeAndInsNAP = environment.losUrl + "/Application/DataTableFeeAndInsNAP";
   public static UpdateAppStepByAppId = environment.losUrl + "/Application/UpdateAppStepByAppId";
-
+  public static CopyCancelledApp = environment.losUrl + "/Application/CopyCancelledApp";
+  
   //App Loan Purpose
   public static AddAppLoanPurpose = environment.losUrl + "/AppLoanPurpose/AddAppLoanPurpose";
   public static EditAppLoanPurpose = environment.losUrl + "/AppLoanPurpose/EditAppLoanPurpose";
@@ -90,7 +91,7 @@ export class AdInsConstant {
   public static DeleteAppLoanPurpose = environment.losUrl + "/AppLoanPurpose/DeleteAppLoanPurpose"
 
   // App Collateral
-  public static GetAppCollateralRegistrationByAppId = "/AppCollateralRegistration/GetAppCollateralRegistrationByAppId";
+  public static GetAppCollateralRegistrationByAppId = environment.losUrl + "/AppCollateralRegistration/GetAppCollateralRegistrationByAppId";
 
   // App Asset Suppl Emp
   //public static GetListAppAssetSupplEmpByAppAssetId = "/AppAssetSupplEmp/GetListAppAssetSupplEmpByAppAssetId";
@@ -98,7 +99,7 @@ export class AdInsConstant {
   // App Asset
   public static GetAppAssetListByAppIdForCommision = "/AppAsset/GetAppAssetListByAppIdForCommision";
   //public static GetAppAssetByAppAssetId = "/AppAsset/GetAppAssetByAppAssetId";
-  public static GetAppAssetByAppAssetIdWithSerialNoDefinition = "/AppAsset/GetAppAssetByAppAssetIdWithSerialNoDefinition";
+  public static GetAppAssetByAppAssetIdWithSerialNoDefinition = environment.losUrl + "/AppAsset/GetAppAssetByAppAssetIdWithSerialNoDefinition";
   public static GetAppAssetByAppAssetId = environment.losUrl + "/AppAsset/GetAppAssetByAppAssetId"
 
   // App Asset Suppl Emp
@@ -757,7 +758,7 @@ export class AdInsConstant {
 
   //DELIVERY ORDER
   public static SubmitDeliveryOrderData = environment.losUrl + "/DeliveryOrder/SubmitDeliveryOrderData";
-  public static GetRefAssetDocList = environment.losUrl + "/DeliveryOrder/GetRefAssetDocList";
+  public static GetRefAssetDocList = environment.FoundationR3Url + "/AssetDocList/GetListAssetDocListByAssetTypeCode";
   public static GetDeliveryOrderHByAgrmntId = environment.losUrl + "/DeliveryOrder/GetDeliveryOrderHByAgrmntId";
   public static GetAssetListForDOMultiAsset = environment.losUrl + "/DeliveryOrder/GetAssetListForDOMultiAsset";
   public static GetListDeliveryOrderHByAppIdAgrmntId = environment.losUrl + "/DeliveryOrder/GetListDeliveryOrderHByAppIdAgrmntId";
@@ -841,7 +842,7 @@ export class AdInsConstant {
   public static GetAllAssetDataByAppId = environment.losUrl + "/AppAsset/GetAllAssetDataByAppId";
   public static AddEditAllAssetData = environment.losUrl + "/AppAsset/AddEditAllAssetData";
   public static CheckAssetValidationRule = environment.losUrl + "/AppAsset/CheckAssetValidationRule";
-  public static DeleteAppAsset = "http://localhost:5001" + "/AppAsset/DeleteAppAsset";
+  public static DeleteAppAsset = environment.losUrl + "/AppAsset/DeleteAppAsset";
 
   //Asset Doc List
   public static GetAppAssetDataByAppId = environment.losUrl + "/AppAsset/GetAppAssetDataByAppId";
@@ -888,6 +889,7 @@ export class AdInsConstant {
   public static GetAppCollateralByAppId = environment.losUrl + "/AppCollateral/GetAppCollateralByAppId";
   public static GetAppCollateralAndRegistrationByAppCollateralId = environment.losUrl + "/AppCollateral/GetAppCollateralAndRegistrationByAppCollateralId";
   public static AddEditAllCollateralDataFactoring = environment.losUrl + "/AppCollateral/AddEditAllCollateralDataFactoring"
+  public static GetAppCollateralAttrByAppCollateralId = environment.losUrl + "/AppCollateral/GetAppCollateralAttrByAppCollateralId";
   
   // App Collateral Suppl Emp
   public static GetListAppAssetSupplEmpByAppAssetId = environment.losUrl + "/AppAssetSupplEmp/GetListAppAssetSupplEmpByAppAssetId";
@@ -946,6 +948,7 @@ export class AdInsConstant {
   public static GetInsuranceDataByAppId = environment.losUrl + "/AppIns/GetInsDataByAppId";
   public static GetInsuranceDataByAppIdForView = environment.losUrl + "/AppIns/GetInsDataByAppIdForView";
   public static GetInsDataByAppIdAndAssetId = environment.losUrl + "/AppIns/GetInsDataByAppIdAndAssetId";
+  public static GetInsDataByAppAssetId = environment.losUrl + "/AppIns/GetInsDataByAppAssetId";
   public static AddEditInsuranceData = environment.losUrl + "/AppIns/AddEditInsuranceData";
   public static AddEditInsuranceDataMultiAsset = environment.losUrl + "/AppIns/AddEditInsuranceDataMultiAsset";
   public static GetListAppInsObjByAppIdForView = environment.losUrl + "/AppIns/GetListAppInsObjByAppIdForView";
@@ -1159,7 +1162,6 @@ export class AdInsConstant {
   public static GetReturnHandlingDByAppIdAndMrReturnTaskCode = environment.losUrl + "/ReturnHandlingD/GetReturnHandlingDByAppIdAndMrReturnTaskCode";
   public static GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode = environment.losUrl + "/ReturnHandlingD/GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode"
   public static AddReturnHandlingD = environment.losUrl + "/ReturnHandlingD/AddReturnHandlingD";
-  public static EditReturnHandlingDNotesData = environment.losUrl + "/ReturnHandlingD/EditReturnHandlingDNotesData";
   public static EditReturnHandlingD = environment.losUrl + "/ReturnHandlingD/EditReturnHandlingD";
   public static RequestReturnTask = environment.losUrl + "/ReturnHandlingD/RequestReturnTask";
   public static DeleteReturnHandlingD = environment.losUrl + "/ReturnHandlingD/DeleteReturnHandlingD";

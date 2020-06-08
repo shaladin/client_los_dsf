@@ -5,8 +5,6 @@ import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
-import { DatePipe } from '@angular/common';
-
 @Component({
   selector: "view-asset-data",
   templateUrl: "./view-asset-data.component.html",
@@ -16,7 +14,7 @@ export class ViewAssetDataComponent implements OnInit {
 
   getAppUrl: any;
   getAllAssetDataUrl: any;
-  @Input() appId: any;
+  @Input() appId: number = 0;
   appObj = {
     AppId: 0,
   };
@@ -27,11 +25,11 @@ export class ViewAssetDataComponent implements OnInit {
   totalHalfResponseAppAssetAttrObjs: number = 0;
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
 
-    //this.route.queryParams.subscribe(params => {
-    //  if (params['AppId'] != null) {
-    //    this.appId = params['AppId'];
-    //  }
-    //});
+    this.route.queryParams.subscribe(params => {
+     if (params['AppId'] != null) {
+       this.appId = params['AppId'];
+     }
+    });
   }
 
   initUrl() {

@@ -58,23 +58,43 @@
                 </tr>
               </tbody>
             </table>
-            <div *ngIf="isReturnHandling == 0">
-              <div class="form-group row">
-                <label class="col-md-2  adInsLabel" translate>Any Data Update</label>
-                <div class="col-md-4">
-                  <select class="form-control" id="isAnyUpdate" formControlName="IsAnyUpdate"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && ReturnHandlingForm.controls.IsAnyUpdate.invalid }" style="width:50%">
-                    <option value="">-Select One-</option>
-                    <option value="YES">Yes</option>
-                    <option value="NO">No</option>
-                  </select>
-                  <lib-uc-show-errors [control]="ReturnHandlingForm.controls.IsAnyUpdate" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+          </div>
+          <div *ngIf="isReturnHandling == 0">
+            <lib-ucSubsection [id]="'summaryId'" [title]="'Summary'" [panel]="'summary'">
+            </lib-ucSubsection>
+            <div id="summary" class="row">
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-md-4  adInsLabel" translate>Any Data Update</label>
+                  <div class="col-md-8">
+                    <select class="form-control" id="isAnyUpdate" formControlName="IsAnyUpdate"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && ReturnHandlingForm.controls.IsAnyUpdate.invalid }" style="width:50%">
+                      <option value="">-Select One-</option>
+                      <option value="YES">Yes</option>
+                      <option value="NO">No</option>
+                    </select>
+                    <lib-uc-show-errors [control]="ReturnHandlingForm.controls.IsAnyUpdate" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4  adinslabel" translate>Update Data Notes</label>
+                  <div class="col-md-8">
+                    <textarea type="text" class="form-control adInsInput" formControlName="UpdateNotes"></textarea>
+                  </div>
                 </div>
               </div>
-              <div class="form-group row">
-                <label class="col-md-2  adinslabel" translate>Update Data Notes</label>
-                <div class="col-md-4">
-                  <textarea type="text" class="form-control adInsInput" formControlName="UpdateNotes"></textarea>
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-md-4  adInsLabel" translate>Success for Verified</label>
+                  <label class="col-md-8  adInsLabel" translate>{{scsCount}}</label>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4  adInsLabel" translate>Fail for Verified</label>
+                  <label class="col-md-8  adInsLabel" translate>{{failCount}}</label>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4  adInsLabel" translate>Not Verified Yet</label>
+                  <label class="col-md-8  adInsLabel" translate>{{blankCount}}</label>
                 </div>
               </div>
             </div>

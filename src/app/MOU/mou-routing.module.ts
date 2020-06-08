@@ -18,6 +18,8 @@ import { MouApprovalGeneralComponent } from './mou-customer/mou-customer-approva
 import { MouApprovalFactoringComponent } from './mou-customer/mou-customer-approval/mou-approval-factoring/mou-approval-factoring.component';
 import { MouRequestAddcollComponent } from './mou-customer-request/mou-request-addcoll/mou-request-addcoll.component';
 import { MouCustomerDetailComponent } from './mou-customer-request/mou-customer-detail/mou-customer-detail.component';
+import { MouOsTcPagingComponent } from './mou-os-tc/mou-os-tc-paging/mou-os-tc-paging.component';
+import { MouOsTcDetailComponent } from './mou-os-tc/mou-os-tc-detail/mou-os-tc-detail.component';
 import { MouCustomerInquiryComponent } from './mou-customer/mou-customer-inquiry/mou-customer-inquiry.component';
 import { TestUploadComponent } from './test-upload/test-upload.component';
 import { MouCancelComponent } from './mou-cancel/mou-cancel.component';
@@ -171,6 +173,20 @@ const routes: Routes = [
         component: MouCancelComponent,
         data: {
           title: "MOU Cancel"
+        }
+      },
+      {
+        path: "Cust/OutstandingTC/Paging",
+        component: MouOsTcPagingComponent,
+        data: {
+          title: "MOU Outstanding TC"
+        }
+      },
+      {
+        path: "Cust/OutstandingTC/Detail",
+        component: MouOsTcDetailComponent,
+        data: {
+          title: "MOU Outstanding TC"
         }
       }
     ]

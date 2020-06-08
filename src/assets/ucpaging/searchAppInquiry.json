@@ -94,7 +94,7 @@
     {
       "type": "dropdown",
       "datatype": "text",
-      "name": "A.APP_CURR_STEP",
+      "name": "ISNULL(B.AGRMNT_CURR_STEP,A.APP_CURR_STEP)",
       "id": "appStepId",
       "value": "",
       "placeholder": "Placeholder",
@@ -109,7 +109,7 @@
     }
   ],
   "querystring": {
-    "select": "SELECT A.APP_NO AS appNo, B.AGRMNT_NO AS agrmntNo, C.CUST_NO AS custNo, C.CUST_NAME AS custName, A.PROD_OFFERING_NAME AS prodOfferingName, A.PROD_OFFERING_CODE AS prodOfferingCode, A.PROD_OFFERING_VERSION as prodOfferingVersion, A.APP_CREATED_DT AS appDt, A.ORI_OFFICE_CODE AS OriOfficeCode, E.INST_AMT AS instAmt, A.IS_APP_INIT_DONE AS isNapSub, B.AGRMNT_STAT AS contractStat, A.APP_CURR_STEP AS appStep, A.APP_STAT AS appStat, A.APP_ID AS AppId,A.BIZ_TEMPLATE_CODE as BizTemplateCode, B.AGRMNT_ID as AgrmntId, C.APP_CUST_ID as appCustId",
+    "select": "SELECT A.APP_NO AS appNo, B.AGRMNT_NO AS agrmntNo, C.CUST_NO AS custNo, C.CUST_NAME AS custName, A.PROD_OFFERING_NAME AS prodOfferingName, A.PROD_OFFERING_CODE AS prodOfferingCode, A.PROD_OFFERING_VERSION as prodOfferingVersion, A.APP_CREATED_DT AS appDt, A.ORI_OFFICE_CODE AS OriOfficeCode, E.INST_AMT AS instAmt, A.IS_APP_INIT_DONE AS isNapSub, B.AGRMNT_STAT AS contractStat, ISNULL(B.AGRMNT_CURR_STEP,A.APP_CURR_STEP) AS appStep, A.APP_STAT AS appStat, A.APP_ID AS AppId,A.BIZ_TEMPLATE_CODE as BizTemplateCode, B.AGRMNT_ID as AgrmntId, C.APP_CUST_ID as appCustId",
     "from": "FROM dbo.APP A WITH(NOLOCK) LEFT JOIN dbo.AGRMNT B WITH(NOLOCK) ON A.APP_ID = B.APP_ID LEFT JOIN dbo.APP_CUST C WITH (NOLOCK) ON A.APP_ID = C.APP_ID LEFT JOIN dbo.APP_FIN_DATA E WITH (NOLOCK) ON A.APP_ID = E.APP_ID"
   },
   "headerList": [
@@ -166,7 +166,7 @@
       "type": "label",
       "position": "left",
       "label": "Application Step",
-      "name": "A.APP_CURR_STEP"
+      "name": "appStep"
     },
     {
       "type": "label",
@@ -180,27 +180,69 @@
       "type": "link",
       "position": "left",
       "property": "appNo",
+      "target" : "_blank",
       "path": "/Nap/View/AppView",
       "param": [
         {
           "type": "AppId",
           "property": "AppId"
-        },
-        {
-          "type": "BizTemplateCode",
-          "property": "BizTemplateCode"
         }
       ]
     },
     {
-      "type": "link",
+      "type": "action",
       "position": "left",
-      "property": "agrmntNo",
-      "path": "",
-      "param": [
+      "action": [
         {
-          "type": "AgrmntId",
-          "property": "AgrmntId"
+          "type": "switch",
+          "case": [
+            {
+              "conditions": [
+                {
+                  "property": "BizTemplateCode",
+                  "value": "CF4W",
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "link",
+                "position": "left",
+                "property": "agrmntNo",
+                "target" : "_blank",
+                "path": "",
+                "param": [
+                  {
+                    "type": "AgrmntId",
+                    "property": "AgrmntId"
+                  }
+                ]
+              },
+              "isHide": false
+            },
+            {
+              "conditions": [
+                {
+                  "property": "BizTemplateCode",
+                  "value": "FL4W",
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "link",
+                "position": "left",
+                "property": "agrmntNo",
+                "target" : "_blank",
+                "path": "/Nap/FinanceLeasing/ViewAgrmnt",
+                "param": [
+                  {
+                    "type": "AgrmntId",
+                    "property": "AgrmntId"
+                  }
+                ]
+              },
+              "isHide": false
+            }
+          ]
         }
       ]
     },
