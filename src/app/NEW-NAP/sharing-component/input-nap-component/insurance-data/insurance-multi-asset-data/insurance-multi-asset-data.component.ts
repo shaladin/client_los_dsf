@@ -221,7 +221,19 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   }
 
   SubmitForm() {
-    this.outputTab.emit();
+    this.http.post(AdInsConstant.GetAppAssetListForInsuranceByAppId, this.appAssetObj).subscribe(
+      (response) => {
+        var isValid = true;
+        var validateObj = response["ReturnObject"];
+        for (var i = 0; i < validateObj.length; i++) {
+          if (validateObj[i].AppInsObjId == 0)
+            isValid = false;
+          }
+        if (isValid)
+          this.outputTab.emit();
+        else
+          this.toastr.errorMessage("Please Complete Insurance Data on All Collateral.");
+      });
   }
 
   // Insurance Methods

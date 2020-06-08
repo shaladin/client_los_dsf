@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppInsObjObj } from 'app/shared/model/AppInsObjObj.Model';
+import { RequestInsuranceDataObj } from 'app/shared/model/RequestInsuranceDataObj.model';
 
 @Component({
   selector: 'app-app-insurance-detail',
@@ -18,6 +19,7 @@ export class AppInsuranceDetailComponent implements OnInit {
   public static COMPANY: string = "CO";
   public static CUSTOMER_COMPANY: string = "CUCO";
   public static OFF_SYSTEM: string = "OFF";
+  reqInsuranceDataObj: any;
 
   constructor(
     private httpClient: HttpClient,
@@ -25,11 +27,19 @@ export class AppInsuranceDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.httpClient.post(AdInsConstant.GetAppInsObjViewDetail, { AppInsObjId: this.AppInsObjId }).subscribe(
+    // this.appInsObj = new AppInsObjObj();
+    // this.appInsObj.AppInsObjId = this.AppInsObjId
+    this.reqInsuranceDataObj = new RequestInsuranceDataObj();
+    this.reqInsuranceDataObj.AppInsObjObj.AppInsObjId = this.AppInsObjId;
+    this.httpClient.post(AdInsConstant.GetAppInsObjViewDetail, this.reqInsuranceDataObj).subscribe(
       (response: any) => {
         this.appInsObj = response.appInsObj;
         this.appInsCvgs = response.appInsCvgs;
         this.appInsCvgsFinal = new Array<any>();
+
+        // console.log("viewinsurance")
+        // console.log(this.appInsObj)
+        // console.log(this.appInsCvgs)
 
         for (const item of this.appInsCvgs) {
           var addCvg = "";
@@ -42,13 +52,13 @@ export class AppInsuranceDetailComponent implements OnInit {
             }
           }
           this.appInsCvgsFinal.push({
-            YearNo: item.YearNo,
-            MrMainCvgTypeCode: item.MrMainCvgTypeCode,
+            YearNo: item.appInsMainCvgObj.YearNo,
+            MrMainCvgTypeCode: item.appInsMainCvgObj.MrMainCvgTypeCode,
             MrAddCvgTypeCode: addCvg,
-            CustMainPremiAmt: item.CustMainPremiAmt,
-            CustAddPremiAmt: item.TotalCustAddPremiAmt,
-            InscoMainPremiAmt: item.InscoMainPremiAmt,
-            InscoAddPremiAmt: item.TotalInscoAddPremiAmt
+            CustMainPremiAmt: item.appInsMainCvgObj.CustMainPremiAmt,
+            CustAddPremiAmt: item.appInsMainCvgObj.TotalCustAddPremiAmt,
+            InscoMainPremiAmt: item.appInsMainCvgObj.InscoMainPremiAmt,
+            InscoAddPremiAmt: item.appInsMainCvgObj.TotalInscoAddPremiAmt
           });
         }
       },

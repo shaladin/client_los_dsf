@@ -56,6 +56,12 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   phoneVerifObj: any;
   AppObj: any;
   verifResultObj: any;
+  tempFail: any;
+  tempScs: any;
+  tempBlank: any;
+  failCount: number = 0;
+  scsCount: number = 0;
+  blankCount: number = 0;
   addVerifResultObj: VerfResultObj;
   returnHandlingDObj: any;
   ReturnHandlingDData: ReturnHandlingDObj;
@@ -175,6 +181,15 @@ export class PhoneVerificationSubjectComponent implements OnInit {
       (response) => {
         this.phoneVerifObj = response;
         console.log(this.phoneVerifObj);
+        this.tempBlank = this.phoneVerifObj.filter(
+          blank => blank.Result == '');
+        this.tempScs = this.phoneVerifObj.filter(
+          scs => scs.Result == 'SCS');
+        this.tempFail = this.phoneVerifObj.filter(
+          fail => fail.Result == 'FAIL');
+        this.blankCount = this.tempBlank.length;
+        this.scsCount = this.tempScs.length;
+        this.failCount = this.tempFail.length;
       }
     );
   }

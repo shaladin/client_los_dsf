@@ -102,12 +102,14 @@ export class NapAddDetailComponent implements OnInit {
     this.MakeViewReturnInfoObj();
   }
 
+  stepperMode: string = AdInsConstant.CustTypeCompany;
   ChangeStepper() {
     if (this.custType == AdInsConstant.CustTypePersonal) {
       this.stepperPersonal = new Stepper(document.querySelector('#stepperPersonal'), {
         linear: false,
         animation: true
       });
+      this.stepperMode = AdInsConstant.CustTypePersonal;
       document.getElementById('stepperPersonal').style.display = 'block';
       document.getElementById('stepperCompany').style.display = 'none';
       this.AppStep = {
@@ -128,6 +130,7 @@ export class NapAddDetailComponent implements OnInit {
         linear: false,
         animation: true
       });
+      this.stepperMode = AdInsConstant.CustTypeCompany;
       document.getElementById('stepperPersonal').style.display = 'none';
       document.getElementById('stepperCompany').style.display = 'block';
       this.AppStep = {

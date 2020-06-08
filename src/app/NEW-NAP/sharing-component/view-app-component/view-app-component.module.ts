@@ -95,7 +95,8 @@ import { ViewCollateralMultiAssetComponent } from "./view-collateral-multi-asset
     NGXToastrService
   ],
   entryComponents: [
-    AppAssetDataDetailComponent
+    AppAssetDataDetailComponent,
+    AppInsuranceDetailComponent
   ]
 })
 export class ViewAppComponentModule { }
