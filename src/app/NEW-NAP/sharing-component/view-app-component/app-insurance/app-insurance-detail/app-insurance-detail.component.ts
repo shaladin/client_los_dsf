@@ -25,11 +25,17 @@ export class AppInsuranceDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    // this.appInsObj = new AppInsObjObj();
+    // this.appInsObj.AppInsObjId = this.AppInsObjId
     this.httpClient.post(AdInsConstant.GetAppInsObjViewDetail, { AppInsObjId: this.AppInsObjId }).subscribe(
       (response: any) => {
         this.appInsObj = response.appInsObj;
         this.appInsCvgs = response.appInsCvgs;
         this.appInsCvgsFinal = new Array<any>();
+
+        console.log("viewinsurance")
+        console.log(this.appInsObj)
+        console.log(this.appInsCvgs)
 
         for (const item of this.appInsCvgs) {
           var addCvg = "";

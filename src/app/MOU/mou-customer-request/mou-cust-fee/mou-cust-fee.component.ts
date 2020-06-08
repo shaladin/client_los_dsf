@@ -16,6 +16,7 @@ export class MouCustFeeComponent implements OnInit {
   @Input() MouCustId: number;
   @Output() ResponseMouCustFee: EventEmitter<any> = new EventEmitter<any>();
   mouCustFeeList: any;
+  refFeeIdList : any;
 
   constructor(
     private httpClient: HttpClient,
@@ -25,11 +26,16 @@ export class MouCustFeeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.refFeeIdList = new Array()
+    console.log('fee')
     var mouCustFee = new MouCustFeeObj();
     mouCustFee.MouCustId = this.MouCustId;
     this.httpClient.post(AdInsConstant.GetMouCustFeeForMouRequestByMouCustId, mouCustFee).subscribe(
-      (response) => { 
+      (response) => {
         this.mouCustFeeList = response;
+        for (var i = 0; i < this.mouCustFeeList.length; i++) {
+          this.refFeeIdList.push(this.mouCustFeeList[i]['RefFeeId']);
+        }
       },
       (error) => {
         console.log(error);
@@ -40,14 +46,21 @@ export class MouCustFeeComponent implements OnInit {
   openModalAddFee() {
     const modalMouFee = this.modalService.open(MouCustFeeDetailComponent);
     modalMouFee.componentInstance.MouCustId = this.MouCustId;
+    modalMouFee.componentInstance.UsedRefFeeIdList = this.refFeeIdList;
+    this.refFeeIdList = new Array();
+    this.mouCustFeeList = new Array();
     modalMouFee.result.then(
       (response) => {
         this.spinner.show();
         var mouCustFee = new MouCustFeeObj();
         mouCustFee.MouCustId = this.MouCustId;
         this.httpClient.post(AdInsConstant.GetMouCustFeeForMouRequestByMouCustId, mouCustFee).subscribe(
-          (response) => { 
+          (response) => {
             this.mouCustFeeList = response;
+            for (var i = 0; i < this.mouCustFeeList.length; i++) {
+              this.refFeeIdList.push(this.mouCustFeeList[i]['RefFeeId']);
+            }
+            modalMouFee.componentInstance.UsedRefFeeIdList = this.refFeeIdList;
           },
           (error) => {
             console.log(error);
@@ -57,14 +70,14 @@ export class MouCustFeeComponent implements OnInit {
         this.toastr.successMessage(response["message"]);
       }
     ).catch((error) => {
-      if(error != 0){
+      if (error != 0) {
         console.log(error);
       }
     });
   }
 
-  deleteMouCustFee(mouCustFeeId, idx){
-    if(confirm('Are you sure to delete this record?')){
+  deleteMouCustFee(mouCustFeeId, idx) {
+    if (confirm('Are you sure to delete this record?')) {
       var mouCustFee = new MouCustFeeObj();
       mouCustFee.MouCustFeeId = mouCustFeeId;
       this.httpClient.post(AdInsConstant.DeleteMouCustFee, mouCustFee).subscribe(
@@ -76,15 +89,15 @@ export class MouCustFeeComponent implements OnInit {
           console.log(error);
         }
       );
-    }  
+    }
   }
 
-  next(){
-    this.ResponseMouCustFee.emit({StatusCode: "200"});
+  next() {
+    this.ResponseMouCustFee.emit({ StatusCode: "200" });
   }
 
-  back(){
-    this.ResponseMouCustFee.emit({StatusCode: "-1"});
+  back() {
+    this.ResponseMouCustFee.emit({ StatusCode: "-1" });
   }
 
 }

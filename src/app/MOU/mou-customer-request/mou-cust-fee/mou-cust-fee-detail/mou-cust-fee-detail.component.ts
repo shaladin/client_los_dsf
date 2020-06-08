@@ -14,6 +14,7 @@ import { forkJoin } from 'rxjs';
 })
 export class MouCustFeeDetailComponent implements OnInit {
   @Input() MouCustId: number;
+  @Input() UsedRefFeeIdList : Array<number>;
   refFeeList: any;
   feeTypeList: any;
 
@@ -53,6 +54,7 @@ export class MouCustFeeDetailComponent implements OnInit {
    }
 
   ngOnInit() {
+    console.log('feedetail')
     this.MouCustFeeForm.patchValue({
       MouCustId: this.MouCustId
     });
@@ -79,6 +81,10 @@ export class MouCustFeeDetailComponent implements OnInit {
     var formData = this.MouCustFeeForm.value;
     if(formData.FeeAmt > 0){
       formData.FeeAmt = this.currencyToNumber(formData.FeeAmt.toString());
+    }
+    if(this.UsedRefFeeIdList.includes(formData.RefFeeId) == true){
+      this.toastr.errorMessage("Fee Name can't be duplicate!");
+      return;
     }
     this.httpClient.post(AdInsConstant.AddMouCustFee, formData).subscribe(
       (response) => {

@@ -48,6 +48,12 @@ export class SingleInstFctrComponent implements OnInit {
   }
 
   Calculate() {
+    if(this.ParentForm.value.EstEffDt == "")
+    {
+      this.toastr.errorMessage("Insert Estimation Effective Date");
+      return;
+    }
+
     this.calcSingleInstObj = this.ParentForm.value;
     this.calcSingleInstObj.InvcDt = new Date(this.calcSingleInstObj.InvcDt);
     this.http.post<ResponseCalculateObj>(AdInsConstant.CalculateSingleInst, this.calcSingleInstObj).subscribe(
