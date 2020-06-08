@@ -1,0 +1,35 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="card-header header-title">
+          <div class="row">
+            <div class="col-md-8">
+              <h4 class="card-title" id="horz-layout-colored-controls" translate> MOU Outstanding Term and Condition
+              </h4>
+            </div>
+          </div>
+        </div>
+        <div class="px-3">
+          <form class="form form-horizontal" [formGroup]="MouTcDataForm" (ngSubmit)="MouTcDataForm.valid"
+            #enjiForm="ngForm">
+            <app-main-info [MouCustId]="MouCustId"></app-main-info>
+            <app-mou-cust-tc #MouTcFactoring [MouCustId]="MouCustId" (ResponseMouCustTc)="getValue($event)"></app-mou-cust-tc>
+
+            <br><br><br>
+            <div class="col-md-12" style="padding: 0;">
+              <div class="form-actions right" style="text-align: right;">
+                <button type="button" class="btn btn-raised btn-warning mr-1" (click)="back()" translate>
+                  <i class="ft-x"></i> Back
+                </button>
+                <button type="button" class="btn btn-raised btn-primary" (click)="saveMouTc()" translate>
+                  <i class="fa fa-check"></i> Save
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
