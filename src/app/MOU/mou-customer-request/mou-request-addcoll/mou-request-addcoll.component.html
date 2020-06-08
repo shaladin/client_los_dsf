@@ -41,8 +41,7 @@
             <a *ngIf="item.CollateralStat == 'NEW'" class="success p-0" (click)="editData(item.MouCustCollateralId)">
               <i class="ft-edit-2 font-medium-3 mr-2"></i>
             </a>
-            <a *ngIf="item.CollateralStat == 'NEW'" class="danger p-0"
-              (click)="delete(item.MouCustCollateralId)">
+            <a class="danger p-0" (click)="delete(item.MouCustCollateralId)">
               <i class="ft-trash-2 font-medium-3 mr-2"></i>
             </a>
           </td>
@@ -270,6 +269,7 @@
             </tr>
           </tbody>
         </table>
+        <lib-ucgridfooter (select)="onSelect($event)"></lib-ucgridfooter>
         <div class="card-header">
           <div class="text-right">
             <button type="button" (click)="addToTemp()" class="btn btn-raised btn-warning mr-1">
@@ -305,15 +305,13 @@
               <td align="right">{{item.CollateralValueAmt | number}}</td>
               <td>
                 <div>
-                  <a class="danger p-0"
-                    (click)="deleteFromTemp(item.CollateralId)">
+                  <a class="danger p-0" (click)="deleteFromTemp(item.CollateralId)">
                     <i class="ft-trash-2 font-medium-3 mr-2"></i>
                   </a></div>
               </td>
             </tr>
           </tbody>
         </table>
-        <lib-ucgridfooter (select)="onSelect($event)"></lib-ucgridfooter>
       </div>
     </div>
     <div class="card-header">
