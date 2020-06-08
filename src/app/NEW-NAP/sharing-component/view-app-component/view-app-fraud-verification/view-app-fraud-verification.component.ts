@@ -14,6 +14,7 @@ import { NegativeAssetCheckObj } from 'app/shared/model/NegativeAssetCheckObj.Mo
 })
 export class ViewAppFraudVerificationComponent implements OnInit {
   @Input() AppId: number;
+  @Input() mrCustTypeCode: string = "";
   appData: any;
   appCustData: any;
   srvyOrderData: any;
