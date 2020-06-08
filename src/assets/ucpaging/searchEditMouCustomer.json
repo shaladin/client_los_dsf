@@ -1,5 +1,5 @@
 {
-    "title": "Edit MOU Customer",
+    "title": "MOU Return",
     "exportExcel": false,
     "component": [
         {
@@ -217,7 +217,7 @@
                                     },
                                     {
                                         "type": "mode",
-                                        "property": "edit"
+                                        "property": "return"
                                     },
                                     {
                                         "type": "MrMouTypeCode",
@@ -251,7 +251,7 @@
                                     },
                                     {
                                         "type": "mode",
-                                        "property": "edit"
+                                        "property": "return"
                                     },
                                     {
                                         "type": "MrMouTypeCode",

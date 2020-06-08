@@ -36,8 +36,8 @@ export class AppInsuranceComponent implements OnInit {
         this.totalCapitalizedAmt = response.AppInsurance.TotalInsCptlzAmt;
         this.totalCustPaidAmt = response.AppInsurance.TotalPremiPaidByCustAmt;
 
-        console.log("resins")
-        console.log(response)
+        // console.log("resins")
+        // console.log(response)
       },
       (error) => {
         console.log(error);
@@ -57,6 +57,8 @@ export class AppInsuranceComponent implements OnInit {
   }
 
   viewDetailCollateralHandler(appInsObjId){
+    // console.log("appInsObjId")
+    // console.log(appInsObjId)
     const modalInsDetail = this.modalService.open(AppInsuranceDetailComponent);
     modalInsDetail.componentInstance.AppInsObjId = appInsObjId;
     modalInsDetail.result.then().catch((error) => {
