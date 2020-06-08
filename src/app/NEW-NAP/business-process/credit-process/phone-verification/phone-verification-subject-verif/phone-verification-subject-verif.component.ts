@@ -105,6 +105,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   SubjectRelationObj: any;
   PhoneNumberObj: any;
   QuestionObj: any;
+  isQuestionLoaded: boolean = true;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
 
@@ -164,22 +165,27 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   }
 
   SaveForm() {
-    this.setPhoneVerifData();
-    this.http.post(this.saveVerfResultHDetailUrl, this.PhoneDataObj).subscribe(
-      (response) => {
-        console.log(response);
-        this.toastr.successMessage(response["message"]);
-        if (this.isReturnHandling == false) {
-          this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId + "&WfTaskListId=" + this.wfTaskListId);
+    if (this.isQuestionLoaded == false) {
+      this.toastr.errorMessage("Can't process further because questions are not loaded");
+    }
+    else {
+      this.setPhoneVerifData();
+      this.http.post(this.saveVerfResultHDetailUrl, this.PhoneDataObj).subscribe(
+        (response) => {
+          console.log(response);
+          this.toastr.successMessage(response["message"]);
+          if (this.isReturnHandling == false) {
+            this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId + "&WfTaskListId=" + this.wfTaskListId);
+          }
+          if (this.isReturnHandling == true) {
+            this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId + "&ReturnHandlingDId=" + this.returnHandlingDId + "&WfTaskListId=" + this.wfTaskListId);
+          }
+        },
+        (error) => {
+          console.log(error);
         }
-        if (this.isReturnHandling == true) {
-          this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId + "&ReturnHandlingDId=" + this.returnHandlingDId + "&WfTaskListId=" + this.wfTaskListId);
-        }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      );
+    }
   }
 
   setPhoneVerifData() {
@@ -256,7 +262,10 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
           this.GenerateFormVerfQuestion();
 
         }
-
+        else {
+          this.isQuestionLoaded = false;
+          this.toastr.errorMessage("Questions are not loaded, please check RULE or Question Scheme if there're any typos in RULE or question scheme is not available for this BizTemplateCode");
+        }
       }
     );
   }

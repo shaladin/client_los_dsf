@@ -8,7 +8,7 @@
     </span>
   </div>
 
-  <app-multi-collateral-paging [AppId]="AppId" (select)="OpenDetail($event)">
+  <app-multi-collateral-paging [AppId]="AppId" (select)="OpenDetail($event)" (list)="GetList($event)">
   </app-multi-collateral-paging>
 
   <div class="col-md-12" style="padding: 0; text-align: right;">
