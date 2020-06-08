@@ -20,14 +20,16 @@
                 <label class="col-md-2 adins-required-label" for="SerialNo1Model" translate>Serial No
                   1</label>
                 <div class="col-md-4">
-                  <input type="text" class="form-control width-75-per" formControlName="SerialNo1">
+                  <input type="text" class="form-control width-75-per" formControlName="SerialNo1"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && DeliveryOrderForm.controls.SerialNo1.invalid}">
                   <lib-uc-show-errors [control]="DeliveryOrderForm.controls.SerialNo1" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
                 <label class="col-md-2 adins-required-label" for="SerialNo3Model" translate>License Plate
                   No</label>
                 <div class="col-md-4">
-                  <input type="text" class="form-control width-75-per" formControlName="SerialNo3">
+                  <input type="text" class="form-control width-75-per" formControlName="SerialNo3"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && DeliveryOrderForm.controls.SerialNo3.invalid}">
                   <lib-uc-show-errors [control]="DeliveryOrderForm.controls.SerialNo3" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
@@ -36,14 +38,16 @@
                 <label class="col-md-2 adins-required-label" for="SerialNo2Model" translate>Serial No
                   2</label>
                 <div class="col-md-4">
-                  <input type="text" class="form-control width-75-per" formControlName="SerialNo2">
+                  <input type="text" class="form-control width-75-per" formControlName="SerialNo2"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && DeliveryOrderForm.controls.SerialNo2.invalid}">
                   <lib-uc-show-errors [control]="DeliveryOrderForm.controls.SerialNo2" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
                 <label class="col-md-2 adins-required-label" for="ManufacturingYearModel" translate>Manufacturing
                   Year</label>
                 <div class="col-md-4">
-                  <input type="text" class="form-control width-75-per" formControlName="ManufacturingYear">
+                  <input type="text" class="form-control width-75-per" formControlName="ManufacturingYear"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && DeliveryOrderForm.controls.ManufacturingYear.invalid}">
                   <lib-uc-show-errors [control]="DeliveryOrderForm.controls.ManufacturingYear"
                     [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
@@ -58,14 +62,16 @@
                 <div class="form-group row">
                   <label class="col-md-2" translate>Temporary Registration Letter No</label>
                   <div class="col-md-4">
-                    <input type="text" class="form-control width-75-per" formControlName="TempRegisLettNo">
+                    <input type="text" class="form-control width-75-per" formControlName="TempRegisLettNo"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && DeliveryOrderForm.controls.TempRegisLettNo.invalid}">
                     <lib-uc-show-errors [control]="DeliveryOrderForm.controls.TempRegisLettNo"
                       [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
                   <label class="col-md-2" translate>Temporary Registration Letter Date</label>
                   <div class="col-md-4">
-                    <input type="date" class="form-control width-75-per" formControlName="TempRegisLettDt">
+                    <input type="date" class="form-control width-75-per" formControlName="TempRegisLettDt"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && DeliveryOrderForm.controls.TempRegisLettDt.invalid}">
                     <lib-uc-show-errors [control]="DeliveryOrderForm.controls.TempRegisLettDt"
                       [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
@@ -101,19 +107,22 @@
                       <input type="checkbox" class="border-primary" formControlName="IsReceived">
                     </td>
                     <td>
-                      <input type="text" class="form-control width-100-per" formControlName="DocNo">
-                      <lib-uc-show-errors [control]="DeliveryOrderForm.controls.DocNo" [submit]="enjiForm.submitted">
+                      <input type="text" class="form-control width-100-per" formControlName="DocNo"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && DeliveryOrderForm.controls.items.controls[i].controls.DocNo.invalid}">
+                      <lib-uc-show-errors [control]="DeliveryOrderForm.controls.items.controls[i].controls.DocNo" [submit]="enjiForm.submitted">
                       </lib-uc-show-errors>
                     </td>
                     <td>
-                      <input type="date" class="form-control width-100-per" formControlName="ACDExpiredDt">
-                      <lib-uc-show-errors [control]="DeliveryOrderForm.controls.ACDExpiredDt"
+                      <input type="date" class="form-control width-100-per" formControlName="ACDExpiredDt"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && DeliveryOrderForm.controls.items.controls[i].controls.ACDExpiredDt.invalid}">
+                      <lib-uc-show-errors [control]="DeliveryOrderForm.controls.items.controls[i].controls.ACDExpiredDt"
                         [submit]="enjiForm.submitted">
                       </lib-uc-show-errors>
                     </td>
                     <td>
-                      <input type="text" class="form-control width-100-per" formControlName="DocNotes">
-                      <lib-uc-show-errors [control]="DeliveryOrderForm.controls.DocNotes" [submit]="enjiForm.submitted">
+                      <input type="text" class="form-control width-100-per" formControlName="DocNotes"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && DeliveryOrderForm.controls.items.controls[i].controls.DocNotes.invalid}">
+                      <lib-uc-show-errors [control]="DeliveryOrderForm.controls.items.controls[i].controls.DocNotes" [submit]="enjiForm.submitted">
                       </lib-uc-show-errors>
                     </td>
                   </tr>
