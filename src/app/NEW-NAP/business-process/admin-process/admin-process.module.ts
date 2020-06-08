@@ -87,6 +87,10 @@ import { UcapprovalhistModule } from "@adins/ucapprovalhist";
   ],
   providers: [
     NGXToastrService
+  ],
+  entryComponents: [
+    CreateDoMultiAssetComponent,
+    DoAssetDetailComponent
   ]
 })
 export class AdminProcessSharingModule { }
