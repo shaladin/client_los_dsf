@@ -63,6 +63,7 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
   tempAppObj: any;
   appFraudVerf: any;
   idNo: any;
+  bizTemplateCode: any;
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private modalService: NgbModal, private router: Router) {
     this.route.queryParams.subscribe(params => {
@@ -89,6 +90,7 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
     await this.getAppAsset();
     this.viewDukcapilObj = "./assets/ucviewgeneric/viewDukcapilMainInfoFL4W.json";
     this.isDataAlreadyLoaded = true;
+    this.bizTemplateCode = AdInsConstant.FL4W;
   }
 
   async ClaimTask() {

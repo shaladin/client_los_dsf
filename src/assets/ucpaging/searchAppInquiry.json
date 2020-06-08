@@ -180,27 +180,69 @@
       "type": "link",
       "position": "left",
       "property": "AppNo",
+      "target" : "_blank",
       "path": "/Nap/View/AppView",
       "param": [
         {
           "type": "AppId",
           "property": "AppId"
-        },
-        {
-          "type": "BizTemplateCode",
-          "property": "BizTemplateCode"
         }
       ]
     },
     {
-      "type": "link",
+      "type": "action",
       "position": "left",
-      "property": "AgrmntNo",
-      "path": "",
-      "param": [
+      "action": [
         {
-          "type": "AgrmntId",
-          "property": "AgrmntId"
+          "type": "switch",
+          "case": [
+            {
+              "conditions": [
+                {
+                  "property": "BizTemplateCode",
+                  "value": "CF4W",
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "link",
+                "position": "left",
+                "property": "agrmntNo",
+                "target" : "_blank",
+                "path": "",
+                "param": [
+                  {
+                    "type": "AgrmntId",
+                    "property": "AgrmntId"
+                  }
+                ]
+              },
+              "isHide": false
+            },
+            {
+              "conditions": [
+                {
+                  "property": "BizTemplateCode",
+                  "value": "FL4W",
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "link",
+                "position": "left",
+                "property": "agrmntNo",
+                "target" : "_blank",
+                "path": "/Nap/FinanceLeasing/ViewAgrmnt",
+                "param": [
+                  {
+                    "type": "AgrmntId",
+                    "property": "AgrmntId"
+                  }
+                ]
+              },
+              "isHide": false
+            }
+          ]
         }
       ]
     },

@@ -72,7 +72,7 @@ export class CustCompanyMainDataComponent implements OnInit {
       MrCompanyTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
       NumOfEmp: [0],
       IsAffiliated: [false],
-      EstablishmentDt: [''],
+      EstablishmentDt: ['',[Validators.required]],
       TaxIdNo: ['', [Validators.required, Validators.maxLength(50)]],
       IsVip: [false]
     }));

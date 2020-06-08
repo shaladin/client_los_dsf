@@ -46,8 +46,9 @@ export class AdInsHelper {
         // localStorage.removeItem("UserAccess");
         // localStorage.removeItem("Token");
         // localStorage.removeItem("Menu");
-
+        let version = localStorage.getItem("Version");
         localStorage.clear();
+        localStorage.setItem("Version",version);
     }
 
     public static ClearPageAccessLog() {

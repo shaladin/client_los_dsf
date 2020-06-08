@@ -289,6 +289,7 @@ export class LifeInsuranceDataComponent implements OnInit {
         Age: LifeInsD.Age,
         SeqNo: LifeInsD.SeqNo
       }
+      console.log("Object Checked : " + JSON.stringify(object));
       this.http.post(AdInsConstant.GetRuleRate, object).toPromise().then(
         response => {
           console.log(response);

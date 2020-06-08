@@ -89,9 +89,12 @@ export class NapFromLeadDetailComponent implements OnInit {
   user;
 
   leadObj: LeadObj;
+  bizTemplateCode: string;
 
   async ngOnInit() : Promise<void> {
     this.user = JSON.parse(localStorage.getItem("UserAccess"));
+    this.bizTemplateCode = localStorage.getItem("BizTemplateCode");
+
     this.MakeLookUpObj();
     await this.GetLead();
     this.NapAppForm.patchValue({
@@ -119,12 +122,12 @@ export class NapFromLeadDetailComponent implements OnInit {
     addCrit.listValue = [this.user.OfficeCode];
     this.arrAddCrit.push(addCrit);
 
-    var addCritBizTempalte = new CriteriaObj();
-    addCritBizTempalte.DataType = "text";
-    addCritBizTempalte.propName = "rlob.BIZ_TMPLT_CODE";
-    addCritBizTempalte.restriction = AdInsConstant.RestrictionEq;
-    addCritBizTempalte.value = AdInsConstant.CF4W;
-    this.arrAddCrit.push(addCritBizTempalte);
+    var addCritBizTemplate = new CriteriaObj();
+    addCritBizTemplate.DataType = "text";
+    addCritBizTemplate.propName = "rlob.BIZ_TMPLT_CODE";
+    addCritBizTemplate.restriction = AdInsConstant.RestrictionEq;
+    addCritBizTemplate.value = this.bizTemplateCode;
+    this.arrAddCrit.push(addCritBizTemplate);
 
     this.inputLookupObjName.addCritInput = this.arrAddCrit;
   }
@@ -176,7 +179,7 @@ export class NapFromLeadDetailComponent implements OnInit {
     napAppObj.IsAppInitDone = false;
     napAppObj.AppStat = AdInsConstant.AppStepNew;
     napAppObj.AppCurrStep = AdInsConstant.AppStepNew;
-    napAppObj.BizTemplateCode = AdInsConstant.CF4W;
+    napAppObj.BizTemplateCode = this.bizTemplateCode;
     napAppObj.LobCode = this.NapAppForm.controls.LobCode.value;
     napAppObj.OriOfficeCode = this.NapAppForm.controls['OriOfficeCode'].value;
     napAppObj.OriOfficeName = this.NapAppForm.controls['OriOfficeName'].value;
@@ -185,7 +188,18 @@ export class NapFromLeadDetailComponent implements OnInit {
       (response) => {
         console.log(response);
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["Nap/ConsumerFinance/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
+        if(this.bizTemplateCode == AdInsConstant.CF4W){
+          this.router.navigate(["Nap/ConsumerFinance/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
+        }
+        if(this.bizTemplateCode == AdInsConstant.FL4W){
+          this.router.navigate(["Nap/FinanceLeasing/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
+        }
+        if(this.bizTemplateCode == AdInsConstant.CFRFN4W){
+          this.router.navigate(["Nap/CFRefinancing/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
+        }
+        if(this.bizTemplateCode == AdInsConstant.FCTR){
+          this.router.navigate(["Nap/Factoring/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
+        }
       },
       (error) => {
         console.log(error);

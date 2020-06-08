@@ -792,7 +792,7 @@ export class AssetDataComponent implements OnInit {
               SalesPersonPositionCode: this.appAssetObj.ResponseSalesPersonSupp.MrSupplEmpPositionCode,
             });
           }
-          if(this.appAssetObj.AppCollateralRegistrationObj != null){
+          if (this.appAssetObj.ResponseAppCollateralRegistrationObj != null){
             this.AssetDataForm.patchValue({
               UserName: this.appAssetObj.ResponseAppCollateralRegistrationObj.UserName,
               MrUserRelationshipCode: this.appAssetObj.ResponseAppCollateralRegistrationObj.MrUserRelationshipCode,
@@ -821,7 +821,7 @@ export class AssetDataComponent implements OnInit {
 
           this.appAssetAccessoriesObjs = this.appAssetObj.ResponseAppAssetAccessoryObjs;
           this.appAssetId = this.appAssetObj.ResponseAppAssetObj.AppAssetId;
-          if(this.appAssetObj.AppCollateralRegistrationObj != null){
+          if (this.appAssetObj.ResponseAppCollateralRegistrationObj != null){
             this.setAddrOwnerObj();
             this.setAddrLocationObj();
           }
