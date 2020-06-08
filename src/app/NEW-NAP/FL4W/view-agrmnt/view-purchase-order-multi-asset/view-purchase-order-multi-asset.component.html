@@ -1,0 +1,38 @@
+
+<div *ngIf = "isView == false" >
+<lib-ucSubsection [id]="'SupplierListId'" [title]="'Supplier List'" [panel]="'SupplierList'">
+</lib-ucSubsection>
+<div class="form-body" id="SupplierList">
+  <table class="table table-responsive-md text-center table-hover">
+    <thead>
+      <tr class="table-header">
+        <th><span translate class="thead-header">Supplier Code </span></th>
+        <th><span translate class="thead-header text-left">Supplier Name</span></th>
+        <th><span translate class="thead-header">Purchase Order No</span></th> 
+        <th translate>View</th> 
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of this.listPurchaseOrder; let i = index">
+        <td>{{item.SupplCode}}</td>
+        <td>{{item.SupplName}}</td>
+        <td>{{item.PurchaseOrderNo}}</td>   
+        <td>
+          <a button="click" (click)="view()">View</a>
+        </td>
+        <td> 
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+</div >
+
+
+<app-view-purchase-order-multi-asset-detail *ngIf = "isView == true" [agrmntId]="agrmntId" > 
+  
+</app-view-purchase-order-multi-asset-detail>
+
+ 
