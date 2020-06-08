@@ -197,7 +197,7 @@ export class NapAddDetailComponent implements OnInit {
         RowVersion: this.ResponseReturnInfoObj.RowVersion
       };
 
-      this.http.post(AdInsConstant.EditReturnHandlingDNotesData, obj).subscribe(
+      this.http.post(AdInsConstant.EditReturnHandlingD, obj).subscribe(
         (response) => {
           console.log(response);
         },

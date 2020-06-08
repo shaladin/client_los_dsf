@@ -33,7 +33,6 @@ export class DocSignerDetailComponent implements OnInit {
   @ViewChild('LookupEmp2') ucLookupEmp2: UclookupgenericComponent;
   @ViewChild('LookupShareHolder1') ucLookupShareHolder1: UclookupgenericComponent;
   @ViewChild('LookupShareHolder2') ucLookupShareHolder2: UclookupgenericComponent;
-  @ViewChild('LookupPersonal1') ucLookupPersonal1: UclookupgenericComponent;
 
   returnMouCustSigner: any;
   getMouCustById: string;
@@ -76,6 +75,7 @@ export class DocSignerDetailComponent implements OnInit {
   getCustCompanyByCustId: string;
   custCompanyId: string;
   custCompanyCrit: CriteriaObj;
+  custNo: any;
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.getMouCustById = AdInsConstant.GetMouCustById;
@@ -90,17 +90,6 @@ export class DocSignerDetailComponent implements OnInit {
   }
 
   getLookUpShareholder1(event) {
-    // var addCrit: CriteriaObj = new CriteriaObj();
-    // addCrit.DataType = "text";
-    // addCrit.propName = "CC.CUST_COMPANY_MGMNT_SHRHOLDER_ID";
-    // addCrit.restriction = AdInsConstant.RestrictionNotIn;
-    // addCrit.listValue = [event.ShareholderId];
-    // this.custShareholderLookUpObj2.addCritInput = [];
-
-    // this.custShareholderLookUpObj2.addCritInput.push(this.custCompanyCrit);
-    // this.custShareholderLookUpObj2.addCritInput.push(addCrit);
-    // this.ucLookupShareHolder2.setAddCritInput();
-
     this.tempShareholder1 = event.ShareholderName;
     this.tempShareholderPosition1 = event.Descr;
     this.MouCustSignerForm.patchValue({
@@ -109,17 +98,6 @@ export class DocSignerDetailComponent implements OnInit {
   }
 
   getLookUpShareholder2(event) {
-    // var addCrit: CriteriaObj = new CriteriaObj();
-    // addCrit.DataType = "text";
-    // addCrit.propName = "CC.CUST_COMPANY_MGMNT_SHRHOLDER_ID";
-    // addCrit.restriction = AdInsConstant.RestrictionNotIn;
-    // addCrit.listValue = [event.ShareholderId];
-    // this.custShareholderLookUpObj1.addCritInput = [];
-
-    // this.custShareholderLookUpObj1.addCritInput.push(this.custCompanyCrit);
-    // this.custShareholderLookUpObj1.addCritInput.push(addCrit);
-    // this.ucLookupShareHolder1.setAddCritInput();
-
     this.tempShareholder2 = event.ShareholderName;
     this.tempShareholderPosition2 = event.Descr;
     this.MouCustSignerForm.patchValue({
@@ -176,6 +154,7 @@ export class DocSignerDetailComponent implements OnInit {
       });
   }
   ngOnInit() {
+    console.log('docsigner')
     this.claimTask();
     this.custShareholderLookUpObj1 = new InputLookupObj();
     this.custShareholderLookUpObj1.urlJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
@@ -225,9 +204,9 @@ export class DocSignerDetailComponent implements OnInit {
       (response: MouCustObj) => {
         this.returnMouCust = response;
         this.MrCustTypeCode = this.returnMouCust["MrCustTypeCode"];
+        this.custNo = this.returnMouCust["CustNo"];
         if (this.MrCustTypeCode == "COMPANY") {
-          var custNo = this.returnMouCust["CustNo"];
-          var custObj = { CustNo: custNo };
+          var custObj = { CustNo: this.custNo };
           this.http.post(this.getCustByCustNo, custObj).subscribe(
             (response) => {
               var custId = response['CustId'];
@@ -249,8 +228,15 @@ export class DocSignerDetailComponent implements OnInit {
             }
           );
         }
+        this.mouUrl = environment.losR3Web + "/Mou/Cust/View?MouCustId=" + this.MouCustId;
+        var addCustomerCrit: CriteriaObj = new CriteriaObj();
+        addCustomerCrit.DataType = "text";
+        addCustomerCrit.propName = "C.CUST_NO";
+        addCustomerCrit.restriction = AdInsConstant.RestrictionEq;
+        addCustomerCrit.value = this.custNo;
+        this.customerLookUpObj1.addCritInput = [];
+        this.customerLookUpObj1.addCritInput.push(addCustomerCrit);
       });      
-    this.mouUrl = environment.losR3Web + "/Mou/Cust/View?MouCustId=" + this.MouCustId;
   }
 
   setMouCustSigner() {

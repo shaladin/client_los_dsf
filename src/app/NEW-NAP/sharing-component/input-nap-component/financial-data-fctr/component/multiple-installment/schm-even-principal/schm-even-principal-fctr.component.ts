@@ -53,9 +53,15 @@ export class SchmEvenPrincipalFctrComponent implements OnInit {
 
   CalculateInstallment() {
 
+    if(this.ParentForm.value.EstEffDt == "")
+    {
+      this.toastr.errorMessage("Insert Estimation Effective Date");
+      return;
+    }
+
     this.calcEvenPrincipleObj = this.ParentForm.value;
 
-
+    console.log(this.calcEvenPrincipleObj);
     this.http.post<ResponseCalculateObj>(AdInsConstant.CalculateInstallmentEvenPrincipalFctr, this.calcEvenPrincipleObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;

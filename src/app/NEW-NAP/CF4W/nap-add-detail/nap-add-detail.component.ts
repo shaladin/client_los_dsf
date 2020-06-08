@@ -102,12 +102,14 @@ export class NapAddDetailComponent implements OnInit {
     this.MakeViewReturnInfoObj();
   }
 
+  stepperMode: string = AdInsConstant.CustTypeCompany;
   ChangeStepper() {
     if (this.custType == AdInsConstant.CustTypePersonal) {
       this.stepperPersonal = new Stepper(document.querySelector('#stepperPersonal'), {
         linear: false,
         animation: true
       });
+      this.stepperMode = AdInsConstant.CustTypePersonal;
       document.getElementById('stepperPersonal').style.display = 'block';
       document.getElementById('stepperCompany').style.display = 'none';
       this.AppStep = {
@@ -128,6 +130,7 @@ export class NapAddDetailComponent implements OnInit {
         linear: false,
         animation: true
       });
+      this.stepperMode = AdInsConstant.CustTypeCompany;
       document.getElementById('stepperPersonal').style.display = 'none';
       document.getElementById('stepperCompany').style.display = 'block';
       this.AppStep = {
@@ -279,20 +282,21 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   Cancel() {
-    this.router.navigate(["/Nap/ConsumerFinance/Paging"], { queryParams: { BizTemplateCode: AdInsConstant.CF4W } });
+  this.router.navigate(["/Nap/ConsumerFinance/Paging"], { queryParams: { BizTemplateCode: AdInsConstant.CF4W } });
   }
 
   Submit() {
     if (this.ReturnHandlingHId > 0) {
       var ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
       ReturnHandlingResult.WfTaskListId = this.wfTaskListId;
+      ReturnHandlingResult.ReturnHandlingDId = this.ResponseReturnInfoObj.ReturnHandlingDId;
       ReturnHandlingResult.MrReturnTaskCode = this.ResponseReturnInfoObj.MrReturnTaskCode;
       ReturnHandlingResult.ReturnStat = this.ResponseReturnInfoObj.ReturnStat;
       ReturnHandlingResult.ReturnHandlingNotes = this.ResponseReturnInfoObj.ReturnHandlingNotes;
-      ReturnHandlingResult.ReturnHandlingExecNotes = this.ResponseReturnInfoObj.ReturnHandlingExecNotes;
+      ReturnHandlingResult.ReturnHandlingExecNotes = this.FormReturnObj.controls['ReturnExecNotes'].value;
       ReturnHandlingResult.RowVersion = this.ResponseReturnInfoObj.RowVersion;
 
-      this.http.post(AdInsConstant.EditReturnHandlingDNotesData, ReturnHandlingResult).subscribe(
+      this.http.post(AdInsConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
         (response) => {
           console.log(response);
           this.router.navigate(["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { queryParams: { BizTemplateCode: AdInsConstant.CF4W } })

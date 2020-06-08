@@ -20,15 +20,15 @@ export class GuarantorPagingFL4WComponent implements OnInit {
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
 
   inputGridObj: any;
-  result : any = new Array();
-  resultData : any;
+  result: any = new Array();
+  resultData: any;
   closeResult: any;
   AppGuarantorId: any;
   MrGuarantorTypeCode: any;
   mode: any;
   appWizardObj: AppWizardObj;
   closeChk: any;
-  MrCustRelationshipCode : any = new Array();
+  MrCustRelationshipCode: any = new Array();
 
   constructor(private http: HttpClient, private modalService: NgbModal, private toastr: NGXToastrService) {
   }
@@ -116,7 +116,7 @@ export class GuarantorPagingFL4WComponent implements OnInit {
 
   }
 
-  loadGuarantorListData(appId : number) {
+  loadGuarantorListData(appId: number) {
     var guarantorObj = new AppGuarantorObj();
     guarantorObj.AppId = appId;
     this.http.post(AdInsConstant.GetAppGuarantorList, guarantorObj).subscribe(
