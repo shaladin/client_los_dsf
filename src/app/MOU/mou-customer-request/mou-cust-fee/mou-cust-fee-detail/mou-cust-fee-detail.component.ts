@@ -23,7 +23,7 @@ export class MouCustFeeDetailComponent implements OnInit {
     MouCustId: [0, [Validators.required]],
     RefFeeId: [0, [Validators.required]],
     FeePrcnt: [0, [Validators.required, Validators.min(0), Validators.max(100)]],
-    FeeAmt: [0, [Validators.required, Validators.min(0)]],
+    FeeAmt: [0, [Validators.required, Validators.min(1)]],
     MrFeeTypeCode: ['', [Validators.required]],
     RowVersion: ['']
   });
@@ -68,11 +68,23 @@ export class MouCustFeeDetailComponent implements OnInit {
       this.MouCustFeeForm.patchValue({
         FeePrcnt: 0
       });
+      // this.MouCustFeeForm.controls['FeeAmt'].clearValidators();
+      // this.MouCustFeeForm.controls['FeeAmt'].setValidators([Validators.min(1), Validators.required]);
+      // this.MouCustFeeForm.controls['FeeAmt'].updateValueAndValidity();
     }
     else if(e.target.value == 'PRCNT'){
       this.MouCustFeeForm.patchValue({
         FeeAmt: 0
       });
+      // this.MouCustFeeForm['FeeAmt'].clearValidators();
+    }
+  }
+
+  getDdlName(key){
+    for(var i=0;i< this.refFeeList.length ;i++){
+      if(this.refFeeList[i]['RefFeeId'] == key){
+        return this.refFeeList[i]['FeeName'];
+      }
     }
   }
 
@@ -82,9 +94,15 @@ export class MouCustFeeDetailComponent implements OnInit {
       formData.FeeAmt = this.currencyToNumber(formData.FeeAmt.toString());
     }
     if(this.UsedRefFeeIdList.includes(parseInt(formData.RefFeeId)) == true){
-      this.toastr.errorMessage("Mou Fee can't be duplicate!");
+      var message = this.getDdlName(formData.RefFeeId) + " Already Exists";
+      this.toastr.errorMessage(message);
       return;
     }
+    if(formData['MrFeeTypeCode'] == 'AMT' && formData['FeeAmt'] == 0){
+      this.toastr.errorMessage(message);
+      return;
+    }
+
     this.httpClient.post(AdInsConstant.AddMouCustFee, formData).subscribe(
       (response) => {
         this.activeModal.close(response);
