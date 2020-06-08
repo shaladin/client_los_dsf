@@ -37,9 +37,9 @@ export class AppInsuranceDetailComponent implements OnInit {
         this.appInsCvgs = response.appInsCvgs;
         this.appInsCvgsFinal = new Array<any>();
 
-        console.log("viewinsurance")
-        console.log(this.appInsObj)
-        console.log(this.appInsCvgs)
+        // console.log("viewinsurance")
+        // console.log(this.appInsObj)
+        // console.log(this.appInsCvgs)
 
         for (const item of this.appInsCvgs) {
           var addCvg = "";
