@@ -36,8 +36,8 @@ export class AppInsuranceComponent implements OnInit {
         this.totalCapitalizedAmt = response.AppInsurance.TotalInsCptlzAmt;
         this.totalCustPaidAmt = response.AppInsurance.TotalPremiPaidByCustAmt;
 
-        console.log("resins")
-        console.log(response)
+        // console.log("resins")
+        // console.log(response)
       },
       (error) => {
         console.log(error);
