@@ -54,7 +54,6 @@ export class MouCustFeeDetailComponent implements OnInit {
    }
 
   ngOnInit() {
-    console.log('feedetail')
     this.MouCustFeeForm.patchValue({
       MouCustId: this.MouCustId
     });

@@ -26,8 +26,7 @@ export class MouCustFeeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.refFeeIdList = new Array()
-    console.log('fee')
+    this.refFeeIdList = new Array();
     var mouCustFee = new MouCustFeeObj();
     mouCustFee.MouCustId = this.MouCustId;
     this.httpClient.post(AdInsConstant.GetMouCustFeeForMouRequestByMouCustId, mouCustFee).subscribe(
