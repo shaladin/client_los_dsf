@@ -35,7 +35,8 @@ export class DeliveryOrderMultiAssetComponent implements OnInit {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.propName = 'AG.AGRMNT_CURR_STEP';
-    critObj.value = "DELIVERY_ORDER";
+    // critObj.value = "DELIVERY_ORDER";
+    critObj.value = "DO";
     criteriaList.push(critObj);
 
     critObj = new CriteriaObj();
