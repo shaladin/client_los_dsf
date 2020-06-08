@@ -1,12 +1,13 @@
 {
   "name": "apex",
-  "version": "6.0.0",
+  "version": "1.0.0-3",
   "license": "",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --prod --base-href /LOSR3/",
     "sit": "ng build --configuration=sit --base-href /LOS_SIT/",
+    "version:patch": "npm version prerelease -m UpVersion && git push origin HEAD:master --follow-tags --force",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -16,11 +17,11 @@
     "@adins/uc-show-errors": "0.0.5",
     "@adins/uc-subsection": "^1.0.4",
     "@adins/ucaddress": "^1.0.12",
-    "@adins/ucapproval": "^1.0.2",
+    "@adins/ucapproval": "^1.0.4",
     "@adins/ucapprovalhist": "^1.0.3",
     "@adins/ucapproveby": "^1.0.1",
     "@adins/ucgridfooter": "^1.0.1",
-    "@adins/ucgridview": "^2.0.17",
+    "@adins/ucgridview": "^2.0.18",
     "@adins/ucinputnumber": "^1.0.1",
     "@adins/uclookupgeneric": "^2.0.13",
     "@adins/ucpaging": "^2.0.17",

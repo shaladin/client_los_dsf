@@ -53,6 +53,10 @@ const routes: Routes = [
                 path: 'View',
                 loadChildren: './view/nap-view.module#NapViewModule'
             },
+            {
+                path: 'Sharing',
+                loadChildren: './sharing-page/sharing-page.module#SharingPageModule'
+            },
             // {
             //     path: 'AssetData/Paging',
             //     component: MultiAssetDataComponent,

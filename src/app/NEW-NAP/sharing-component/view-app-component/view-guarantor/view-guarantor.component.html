@@ -1,10 +1,11 @@
 <div *ngIf="listAppGuarantor.length>0">
   <div *ngFor="let item of listAppGuarantor; let i =index">
     <div *ngIf="listAppGuarantor[i].MrGuarantorTypeCode =='PERSONAL'">
-      <h4>Guarantor Main Data</h4>
       <div *ngFor="let ix of listAppGuarantorPersonal; let j = index">
         <div class="form-body">
-          <div class="form-group-row">
+          <lib-ucSubsection [id]="'mainDataId'" [title]="'Guarantor Main Data'" [panel]="'personalMainData'">
+          </lib-ucSubsection>
+          <div class="form-group row" id="personalMainData">
             <div class="col-md-6">
               <div class="row">
                 <div class="col-md-6">
@@ -147,8 +148,9 @@
             </div>
           </div>
           <div>
-            <h4> Guarantor Address</h4>
-            <div class="form-group-row">
+            <lib-ucSubsection [id]="'addressId'" [title]="'Guarantor Address'" [panel]="'personalAddress'">
+            </lib-ucSubsection>
+            <div class="form-group row" id="personalAddress">
               <div class="col-md-6">
                 <div class="row">
                   <div class="col-md-6">
@@ -255,303 +257,311 @@
   </div>
   <div *ngFor="let item of listAppGuarantor; let i =index">
     <div *ngIf="listAppGuarantor[i].MrGuarantorTypeCode =='COMPANY'">
-      <h4>Guarantor Main Data</h4>
       <div *ngFor="let ix of listAppGuarantorCompany; let j = index">
         <div class="form-body">
-          <div class="col-md-6">
-            <div class="row">
-              <div class="col-md-6">
-                <label class="adInsLabel"> Guarantor Name </label>
-              </div>
-              <div class="col-md-6">
-                <label class="adInsLabel"> {{item.GuarantorName}} </label>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="row">
-              <div class="col-md-6">
-                <label class="adInsLabel"> Guarantor Type </label>
-              </div>
-              <div class="col-md-6">
-                <label class="adInsLabel"> {{item.MrGuarantorTypeCode}} </label>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="row">
-              <div class="col-md-6">
-                <label class="adInsLabel"> Company Type </label>
-              </div>
-              <div class="col-md-6">
-                <label class="adInsLabel"> {{ix.MrCompanyTypeCode}} </label>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="row">
-              <div class="col-md-6">
-                <label class="adInsLabel"> NPWP </label>
-              </div>
-              <div class="col-md-6">
-                <label class="adInsLabel"> {{item.TaxIdNo}} </label>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="row">
-              <div class="col-md-6">
-                <label class="adInsLabel"> Customer Relationship </label>
-              </div>
-              <div class="col-md-6">
-                <label class="adInsLabel"> {{item.MrCustRelationshipCode}} </label>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="row">
-              <div class="col-md-6">
-                <label class="adInsLabel"> Industry Type </label>
-              </div>
-              <div class="col-md-6">
-                <label class="adInsLabel"> {{ix.IndustryTypeCode}} </label>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div>
-          <h4> Guarantor Address</h4>
-          <div class="form-group-row">
+          <lib-ucSubsection [id]="'mainDataId'" [title]="'Guarantor Main Data'" [panel]="'companyMainData'">
+          </lib-ucSubsection>
+          <div class="form-group row" id="companyMainData">
             <div class="col-md-6">
               <div class="row">
                 <div class="col-md-6">
-                  <label class="adInsLabel"> Address </label>
+                  <label class="adInsLabel"> Guarantor Name </label>
                 </div>
                 <div class="col-md-6">
-                  <label class="adInsLabel"> {{ix.Addr}} </label>
+                  <label class="adInsLabel"> {{item.GuarantorName}} </label>
                 </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="row">
                 <div class="col-md-6">
-                  <label class="adInsLabel"> Phone </label>
+                  <label class="adInsLabel"> Guarantor Type </label>
                 </div>
                 <div class="col-md-6">
-                  <label class="adInsLabel"> {{ix.MobilePhnNo1}} </label>
+                  <label class="adInsLabel"> {{item.MrGuarantorTypeCode}} </label>
                 </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="row">
                 <div class="col-md-6">
+                  <label class="adInsLabel"> Company Type </label>
                 </div>
                 <div class="col-md-6">
+                  <label class="adInsLabel"> {{ix.MrCompanyTypeCode}} </label>
                 </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="row">
                 <div class="col-md-6">
-                  <label class="adInsLabel"> Phone 2 </label>
+                  <label class="adInsLabel"> NPWP </label>
                 </div>
                 <div class="col-md-6">
-                  <label class="adInsLabel"> {{ix.MobilePhnNo2}} </label>
+                  <label class="adInsLabel"> {{item.TaxIdNo}} </label>
                 </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="row">
                 <div class="col-md-6">
-                  <label class="adInsLabel"> RT/RW </label>
+                  <label class="adInsLabel"> Customer Relationship </label>
                 </div>
                 <div class="col-md-6">
-                  <label class="adInsLabel"> {{ix.AreaCode4}}/{{ix.AreaCode3}} </label>
+                  <label class="adInsLabel"> {{item.MrCustRelationshipCode}} </label>
                 </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="row">
                 <div class="col-md-6">
-                  <label class="adInsLabel"> Fax </label>
+                  <label class="adInsLabel"> Industry Type </label>
                 </div>
                 <div class="col-md-6">
-                  <label class="adInsLabel">{{ix.Fax}}</label>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-12">
-              <div class="row">
-                <div class="col-md-3">
-                  <label class="adInsLabel"> Kelurahan </label>
-                </div>
-                <div class="col-md-3">
-                  <label class="adInsLabel"> {{ix.AreaCode2}} </label>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-12">
-              <div class="row">
-                <div class="col-md-3">
-                  <label class="adInsLabel"> Kecamatan </label>
-                </div>
-                <div class="col-md-3">
-                  <label class="adInsLabel"> {{ix.AreaCode1}} </label>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-12">
-              <div class="row">
-                <div class="col-md-3">
-                  <label class="adInsLabel"> City </label>
-                </div>
-                <div class="col-md-3">
-                  <label class="adInsLabel"> {{ix.City}} </label>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-12">
-              <div class="row">
-                <div class="col-md-3">
-                  <label class="adInsLabel"> Zipcode </label>
-                </div>
-                <div class="col-md-3">
-                  <label class="adInsLabel"> {{ix.Zipcode}} </label>
+                  <label class="adInsLabel"> {{ix.IndustryTypeCode}} </label>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div>
-          <h4> Legal Document</h4>
-          <table class="table table-responsive-md text-center table-hover">
-            <thead>
-              <tr class="table-header">
-                <th style="text-align: center;"><span class="thead-header" name="NoName" translate>No
-                  </span>
-                </th>
-                <th style="text-align: center;"><span class="thead-header" name="MrLegalDocTypeCode" translate>Legal Document Type
-                  </span>
-                </th>
-                <th style="text-align: center;"><span class="thead-header" name="DocNo" translate>Document No
-                  </span>
-                </th>
-                <th style="text-align: center;"><span class="thead-header" name="DocDt" translate>Issued Date
-                </span>
-                </th>
-                <th style="text-align: center;"><span class="thead-header" name="DocExpiredDt" translate>Expired Date
-                  </span>
-                </th>
-                <th style="text-align: center;"><span class="thead-header" name="DocNotes" translate>Notes
-                  </span>
-                </th>
-                <th style="text-align: center;"><span class="thead-header" name="ReleaseBy" translate>Release By
-                  </span>
-                </th>
-                <th style="text-align: center;"><span class="thead-header" name="ReleaseLocation" translate>Release Location
-                  </span>
-                </th>
-              </tr>
-            </thead>
-            <tbody *ngIf = "item.ListAppGuarantorCompanyLegalDoc== undefined">
-              <tr>
-                <td colspan="100%">No Data Available</td>
-              </tr>
-            </tbody>
-            <tbody *ngIf = "item.ListAppGuarantorCompanyLegalDoc != undefined">
-              <tr *ngFor="let item of item.ListAppGuarantorCompanyLegalDoc; let i = index">
-                <td style="text-align: center;">{{i+1}}</td>
-                <td style="text-align: center;">{{item.MrLegalDocTypeCode}}</td>
-                <td style="text-align: center;">{{item.DocNo}}</td>
-                <td style="text-align: center;">{{item.DocDt}}</td>
-                <td style="text-align: center;">{{item.DocExpiredDt}}</td>
-                <td style="text-align: center;">{{item.DocNotes}}</td>
-                <td style="text-align: center;">{{item.ReleaseBy}}</td>
-                <td style="text-align: center;">{{item.ReleaseLocation}}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div>
-          <h4> Contact Information</h4>
-          <div class="form-group-row">
-            <div class="col-md-6">
-              <div class="row">
-                <div class="col-md-6">
-                  <label class="adInsLabel"> Contact Name </label>
+          <div>
+            <lib-ucSubsection [id]="'addressId'" [title]="'Guarantor Address'" [panel]="'companyAddress'">
+            </lib-ucSubsection>
+            <div class="form-group row" id="companyAddress">
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> Address </label>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> {{ix.Addr}} </label>
+                  </div>
                 </div>
-                <div class="col-md-6">
-                  <label class="adInsLabel"> {{ix.ContactName}} </label>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> Phone </label>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> {{ix.MobilePhnNo1}} </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-6">
+                  </div>
+                  <div class="col-md-6">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> Phone 2 </label>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> {{ix.MobilePhnNo2}} </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> RT/RW </label>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> {{ix.AreaCode4}}/{{ix.AreaCode3}} </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> Fax </label>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="adInsLabel">{{ix.Fax}}</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-3">
+                    <label class="adInsLabel"> Kelurahan </label>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="adInsLabel"> {{ix.AreaCode2}} </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-3">
+                    <label class="adInsLabel"> Kecamatan </label>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="adInsLabel"> {{ix.AreaCode1}} </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-3">
+                    <label class="adInsLabel"> City </label>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="adInsLabel"> {{ix.City}} </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-3">
+                    <label class="adInsLabel"> Zipcode </label>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="adInsLabel"> {{ix.Zipcode}} </label>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="col-md-6">
-              <div class="row">
-                <div class="col-md-6">
-                  <label class="adInsLabel"> Job Position </label>
-                </div>
-                <div class="col-md-6">
-                  <label class="adInsLabel"> {{ix.MrJobPositionCode}} </label>
+          </div>
+          <lib-ucSubsection [id]="'legalDocId'" [title]="'Legal Document'" [panel]="'legalDoc'">
+          </lib-ucSubsection>
+          <div id="legalDoc">
+            <table class="table table-responsive-md text-center table-hover">
+              <thead>
+                <tr class="table-header">
+                  <th style="text-align: center;"><span class="thead-header" name="NoName" translate>No
+                    </span>
+                  </th>
+                  <th style="text-align: center;"><span class="thead-header" name="MrLegalDocTypeCode" translate>Legal
+                      Document Type
+                    </span>
+                  </th>
+                  <th style="text-align: center;"><span class="thead-header" name="DocNo" translate>Document No
+                    </span>
+                  </th>
+                  <th style="text-align: center;"><span class="thead-header" name="DocDt" translate>Issued Date
+                    </span>
+                  </th>
+                  <th style="text-align: center;"><span class="thead-header" name="DocExpiredDt" translate>Expired Date
+                    </span>
+                  </th>
+                  <th style="text-align: center;"><span class="thead-header" name="DocNotes" translate>Notes
+                    </span>
+                  </th>
+                  <th style="text-align: center;"><span class="thead-header" name="ReleaseBy" translate>Release By
+                    </span>
+                  </th>
+                  <th style="text-align: center;"><span class="thead-header" name="ReleaseLocation" translate>Release
+                      Location
+                    </span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody *ngIf="item.ListAppGuarantorCompanyLegalDoc== undefined">
+                <tr>
+                  <td colspan="100%">No Data Available</td>
+                </tr>
+              </tbody>
+              <tbody *ngIf="item.ListAppGuarantorCompanyLegalDoc != undefined">
+                <tr *ngFor="let item of item.ListAppGuarantorCompanyLegalDoc; let i = index">
+                  <td style="text-align: center;">{{i+1}}</td>
+                  <td style="text-align: center;">{{item.MrLegalDocTypeCode}}</td>
+                  <td style="text-align: center;">{{item.DocNo}}</td>
+                  <td style="text-align: center;">{{item.DocDt}}</td>
+                  <td style="text-align: center;">{{item.DocExpiredDt}}</td>
+                  <td style="text-align: center;">{{item.DocNotes}}</td>
+                  <td style="text-align: center;">{{item.ReleaseBy}}</td>
+                  <td style="text-align: center;">{{item.ReleaseLocation}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <lib-ucSubsection [id]="'contactInfoId'" [title]="'Contact Information'" [panel]="'contactInfo'">
+          </lib-ucSubsection>
+          <div id="contactInfo">
+            <div class="form-group row">
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> Contact Name </label>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> {{ix.ContactName}} </label>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-md-6">
-              <div class="row">
-                <div class="col-md-6">
-                  <label class="adInsLabel"> Mobile Phone 1 </label>
-                </div>
-                <div class="col-md-6">
-                  <label class="adInsLabel"> {{ix.MobilePhnNo1}} </label>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="row">
-                <div class="col-md-6">
-                  <label class="adInsLabel"> Phone No 1 </label>
-                </div>
-                <div class="col-md-6">
-                  <label class="adInsLabel"> {{ix.PhnArea1}}{{ix.Phn1}}{{ix.PhnExt1}} </label>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> Job Position </label>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> {{ix.MrJobPositionCode}} </label>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-md-6">
-              <div class="row">
-                <div class="col-md-6">
-                  <label class="adInsLabel"> Mobile Phone 2 </label>
-                </div>
-                <div class="col-md-6">
-                  <label class="adInsLabel"> {{ix.MobilePhnNo2}} </label>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="row">
-                <div class="col-md-6">
-                  <label class="adInsLabel"> Phone No 2 </label>
-                </div>
-                <div class="col-md-6">
-                  <label class="adInsLabel"> {{ix.PhnArea2}}{{ix.Phn2}}{{ix.PhnExt2}} </label>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> Mobile Phone 1 </label>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> {{ix.MobilePhnNo1}} </label>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-md-12">
-              <div class="row">
-                <div class="col-md-3">
-                  <label class="adInsLabel"> Email </label>
-                </div>
-                <div class="col-md-3">
-                  <label class="adInsLabel"> {{ix.ContactEmail}} </label>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> Phone No 1 </label>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> {{ix.PhnArea1}}{{ix.Phn1}}{{ix.PhnExt1}} </label>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-md-6">
-              <div class="row">
-                <div class="col-md-6">
-                  <label class="adInsLabel"> Fax </label>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> Mobile Phone 2 </label>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> {{ix.MobilePhnNo2}} </label>
+                  </div>
                 </div>
-                <div class="col-md-6">
-                  <label class="adInsLabel">{{ix.Fax}}</label>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> Phone No 2 </label>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> {{ix.PhnArea2}}{{ix.Phn2}}{{ix.PhnExt2}} </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-3">
+                    <label class="adInsLabel"> Email </label>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="adInsLabel"> {{ix.ContactEmail}} </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> Fax </label>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="adInsLabel">{{ix.Fax}}</label>
+                  </div>
                 </div>
               </div>
             </div>

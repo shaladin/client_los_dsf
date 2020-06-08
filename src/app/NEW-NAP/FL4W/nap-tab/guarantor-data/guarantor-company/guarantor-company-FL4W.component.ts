@@ -46,6 +46,7 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
   AppGuarantorCompanyId: any;
   companyLegalDocObj: Array<AppCustCompanyLegalDocObj>;
   DocObjs: any;
+  tempCustNo: string;
   defLegalDocType: string;
   CompanyForm = this.fb.group({
     MrCustRelationshipCode: ['', [Validators.required, Validators.maxLength(50)]],
@@ -90,12 +91,12 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
           console.log("response: ");
           console.log(response);
           this.resultData = response;
-          this.AppGuarantorCompanyId = this.resultData.appGuarantorCompanyObj.AppGuarantorCompanyId; 
+          this.AppGuarantorCompanyId = this.resultData.appGuarantorCompanyObj.AppGuarantorCompanyId;
           this.inputLookupObj.jsonSelect = { CustName: this.resultData.appGuarantorObj.GuarantorName };
           this.inputLookupObj.nameSelect = this.resultData.appGuarantorObj.GuarantorName;
           this.inputLookupObj1.nameSelect = response["IndustryTypeName"];
           this.inputLookupObj1.jsonSelect = response;
-          this.inputLookupObj1.isReady = true; 
+          this.inputLookupObj1.isReady = true;
 
           this.CompanyForm.patchValue({
             MrCustRelationshipCode: this.resultData.appGuarantorObj.MrCustRelationshipCode,
@@ -121,6 +122,32 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
           this.companyLegalDocObj = this.resultData.appGuarantorCompanyObj.ListAppGuarantorCompanyLegalDoc;
           console.log(this.companyLegalDocObj);
           this.bindLegalDoc();
+
+          if (this.resultData.appGuarantorObj.CustNo != null) {
+            this.tempCustNo = this.resultData.appGuarantorObj.CustNo;
+            this.inputLookupObj.isReadonly = true;
+            this.CompanyForm.controls["MrCustRelationshipCode"].disable();
+            this.CompanyForm.controls["TaxIdNo"].disable();
+            this.CompanyForm.controls["MrCompanyTypeCode"].disable();
+            this.CompanyForm.controls["IndustryTypeCode"].disable();
+            this.CompanyForm.controls["ContactName"].disable();
+            this.CompanyForm.controls["MrJobPositionCode"].disable();
+            this.CompanyForm.controls["MobilePhnNo1"].disable();
+            this.CompanyForm.controls["ContactEmail"].disable();
+            this.CompanyForm.controls["MobilePhnNo2"].disable();
+            this.CompanyForm.controls["FaxArea"].disable();
+            this.CompanyForm.controls["Fax"].disable();
+            this.CompanyForm.controls["PhnArea1"].disable();
+            this.CompanyForm.controls["Phn1"].disable();
+            this.CompanyForm.controls["PhnExt1"].disable();
+            this.CompanyForm.controls["PhnArea2"].disable();
+            this.CompanyForm.controls["Phn2"].disable();
+            this.CompanyForm.controls["PhnExt2"].disable();
+            this.CompanyForm.controls["AddrObj"]["controls"].Addr.disable();
+            this.CompanyForm.controls["AddrObj"]["controls"].AreaCode3.disable();
+            this.CompanyForm.controls["AddrObj"]["controls"].AreaCode4.disable();
+          }
+
         },
         (error) => {
           console.log(error);
@@ -130,7 +157,7 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
       this.ClearForm();
       this.inputLookupObj1.isReady = true;
     }
- 
+
     var refCompObj = {
       RefMasterTypeCode: "COMPANY_TYPE",
       RowVersion: ""
@@ -211,6 +238,9 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
   lookupGuarantor(event) {
     console.log(event);
     this.inputLookupObj.isReadonly = true;
+    this.tempCustNo = event.CustNo;
+
+    console.log("aaa");
     this.http.post(AdInsConstant.GetCustByCustId, { CustId: event.CustId }).subscribe(
       (response) => {
         console.log(response);
@@ -245,13 +275,7 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
                   MrJobPositionCode: this.resultData.MrJobPositionCode,
                   MobilePhnNo1: this.resultData.MobilePhnNo1,
                   MobilePhnNo2: this.resultData.MobilePhnNo2,
-                  ContactEmail: this.resultData.Email1,
-                  Phn1: this.resultData.Phn1,
-                  Phn2: this.resultData.Phn2,
-                  PhnArea1: this.resultData.PhnArea1,
-                  PhnArea2: this.resultData.PhnArea2,
-                  PhnExt1: this.resultData.PhnExt1,
-                  PhnExt2: this.resultData.PhnExt2
+                  ContactEmail: this.resultData.Email1
                 });
               }
             );
@@ -263,7 +287,13 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
             this.resultData = response;
             this.CompanyForm.patchValue({
               FaxArea: this.resultData.FaxArea,
-              Fax: this.resultData.Fax
+              Fax: this.resultData.Fax,
+              Phn1: this.resultData.Phn1,
+              Phn2: this.resultData.Phn2,
+              PhnArea1: this.resultData.PhnArea1,
+              PhnArea2: this.resultData.PhnArea2,
+              PhnExt1: this.resultData.PhnExt1,
+              PhnExt2: this.resultData.PhnExt2
             });
             this.AddrObj = new AddrObj();
             this.AddrObj.Addr = this.resultData.Addr;
@@ -287,6 +317,27 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
       }
     );
     console.log(this.CompanyForm);
+
+    this.CompanyForm.controls["MrCustRelationshipCode"].disable();
+    this.CompanyForm.controls["TaxIdNo"].disable();
+    this.CompanyForm.controls["MrCompanyTypeCode"].disable();
+    this.CompanyForm.controls["IndustryTypeCode"].disable();
+    this.CompanyForm.controls["ContactName"].disable();
+    this.CompanyForm.controls["MrJobPositionCode"].disable();
+    this.CompanyForm.controls["MobilePhnNo1"].disable();
+    this.CompanyForm.controls["ContactEmail"].disable();
+    this.CompanyForm.controls["MobilePhnNo2"].disable();
+    this.CompanyForm.controls["FaxArea"].disable();
+    this.CompanyForm.controls["Fax"].disable();
+    this.CompanyForm.controls["PhnArea1"].disable();
+    this.CompanyForm.controls["Phn1"].disable();
+    this.CompanyForm.controls["PhnExt1"].disable();
+    this.CompanyForm.controls["PhnArea2"].disable();
+    this.CompanyForm.controls["Phn2"].disable();
+    this.CompanyForm.controls["PhnExt2"].disable();
+    this.CompanyForm.controls["AddrObj"]["controls"].Addr.disable();
+    this.CompanyForm.controls["AddrObj"]["controls"].AreaCode3.disable();
+    this.CompanyForm.controls["AddrObj"]["controls"].AreaCode4.disable();
 
   }
 
@@ -321,6 +372,9 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
   }
 
   setAppGuarantor() {
+    if (this.tempCustNo != null) {
+      this.guarantorCompanyObj.AppGuarantorObj.CustNo = this.tempCustNo;
+    }
     this.guarantorCompanyObj.AppGuarantorObj.GuarantorName = this.inputLookupObj.nameSelect;
     this.guarantorCompanyObj.AppGuarantorObj.MrGuarantorTypeCode = "COMPANY";
     this.guarantorCompanyObj.AppGuarantorObj.TaxIdNo = this.CompanyForm.controls.TaxIdNo.value;
@@ -439,14 +493,14 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
       IndustryTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
       ContactName: ['', [Validators.maxLength(500)]],
       MrJobPositionCode: ['', [Validators.required, Validators.maxLength(50)]],
-      MobilePhnNo1: ['', [Validators.maxLength(50)]],
+      MobilePhnNo1: ['', [Validators.required,Validators.maxLength(50)]],
       ContactEmail: ['', [Validators.maxLength(50)]],
       MobilePhnNo2: ['', [Validators.maxLength(50)]],
       FaxArea: ['', [Validators.maxLength(20)]],
       Fax: ['', [Validators.maxLength(50)]],
-      PhnArea1: ['', [Validators.maxLength(20)]],
-      Phn1: ['', [Validators.maxLength(50)]],
-      PhnExt1: ['', [Validators.maxLength(10)]],
+      PhnArea1: ['', [Validators.required,Validators.maxLength(20)]],
+      Phn1: ['', [Validators.required,Validators.maxLength(50)]],
+      PhnExt1: ['', [Validators.required,Validators.maxLength(10)]],
       PhnArea2: ['', [Validators.maxLength(20)]],
       Phn2: ['', [Validators.maxLength(50)]],
       PhnExt2: ['', [Validators.maxLength(10)]],
