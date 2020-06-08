@@ -25,6 +25,7 @@ export class LoginPageComponent implements OnInit {
     IsNeedUpdate : boolean;
     FoundationR3Url: string;
     token:string;
+    version:string;
     result: any;
 
     constructor(private router: Router, private http: HttpClient, public rolePickService : RolePickService,
@@ -32,6 +33,7 @@ export class LoginPageComponent implements OnInit {
         private currentUserContextService: CurrentUserContextService) {
         //Ini buat check klo misal udah login jadi lgsg lempar ke tempat laennya lagi
 
+        this.version = localStorage.getItem("Version");
         this.route.queryParams.subscribe(params => {
             if (params['token'] != null) {
               this.token = params['token'];
@@ -45,6 +47,7 @@ export class LoginPageComponent implements OnInit {
     }
 
     ngOnInit() {
+
         console.log("Init Login");
         this.FoundationR3Url = environment.FoundationR3Url;
         

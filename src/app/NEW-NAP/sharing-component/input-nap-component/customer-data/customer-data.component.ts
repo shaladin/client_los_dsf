@@ -1185,6 +1185,7 @@ export class CustomerDataComponent implements OnInit {
     this.refMasterObj.RefMasterTypeCode = "CUST_TYPE";
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
+        console.log(response);
         this.CustTypeObj = response["ReturnObject"];
         if (this.CustTypeObj.length > 0) {
           this.MrCustTypeCode = this.CustTypeObj[0].Key;
