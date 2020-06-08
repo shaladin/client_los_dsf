@@ -8,6 +8,7 @@ import { MultiAssetDataComponent } from "./sharing-component/input-nap-component
 import { AssetLeasingPagingComponent } from "./sharing-component/input-nap-component/multi-asset-leasing/asset-leasing-paging/asset-leasing-paging.component";
 import { CollateralFctrComponent } from "./sharing-component/input-nap-component/multi-asset-data/collateral-fctr/collateral-fctr.component";
 import { CollateralAddEditSingleComponent } from "./sharing-component/input-nap-component/single-asset-data/collateral-add-edit-single/collateral-add-edit-single.component";
+import { ViewAssetDataComponent } from "./sharing-component/view-app-component/view-asset-data/view-asset-data.component";
 
 const routes: Routes = [
     {
@@ -57,6 +58,13 @@ const routes: Routes = [
                 path: 'Sharing',
                 loadChildren: './sharing-page/sharing-page.module#SharingPageModule'
             },
+            {
+                path: 'ViewAsset',
+                component: ViewAssetDataComponent,
+                data: {
+                  title: 'View Asset Data'
+                }
+            }
             // {
             //     path: 'AssetData/Paging',
             //     component: MultiAssetDataComponent,
