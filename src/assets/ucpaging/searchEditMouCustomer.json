@@ -251,7 +251,7 @@
                                     },
                                     {
                                         "type": "mode",
-                                        "property": "edit"
+                                        "property": "return"
                                     },
                                     {
                                         "type": "MrMouTypeCode",
