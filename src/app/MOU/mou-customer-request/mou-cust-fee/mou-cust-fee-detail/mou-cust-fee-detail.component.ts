@@ -82,8 +82,8 @@ export class MouCustFeeDetailComponent implements OnInit {
     if(formData.FeeAmt > 0){
       formData.FeeAmt = this.currencyToNumber(formData.FeeAmt.toString());
     }
-    if(this.UsedRefFeeIdList.includes(formData.RefFeeId) == true){
-      this.toastr.errorMessage("Fee Name can't be duplicate!");
+    if(this.UsedRefFeeIdList.includes(parseInt(formData.RefFeeId)) == true){
+      this.toastr.errorMessage("Mou Fee can't be duplicate!");
       return;
     }
     this.httpClient.post(AdInsConstant.AddMouCustFee, formData).subscribe(
