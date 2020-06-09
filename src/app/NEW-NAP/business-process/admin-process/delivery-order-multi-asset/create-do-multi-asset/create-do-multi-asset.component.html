@@ -17,13 +17,13 @@
                 <th style="text-align: left;">
                   <span class="thead-header" name='seqNo' translate>SEQ NO.</span>
                 </th>
-                <th style="text-align: center;">
-                  <span class="thead-header" name='assetName' translate>ASSET NAME</span>
+                <th style="text-align: left;">
+                  <span class="thead-header" name='assetName' translate>FULL ASSET NAME</span>
                 </th>
-                <th style="text-align: center;">
+                <th style="text-align: right;">
                   <span class="thead-header" name='assetPrice' translate>ASSET PRICE</span>
                 </th>
-                <th style="text-align: left;">
+                <th style="text-align: right;">
                   <span class="thead-header" name='downPayment' translate>DOWN PAYMENT</span>
                 </th>
                 <th style="text-align: left;">
@@ -41,6 +41,9 @@
                 <th style="text-align: left;">
                   <span class="thead-header" name='tempLetterNo' translate>TEMP LETTER NO</span>
                 </th>
+                <th style="text-align: center;">
+                  <span class="thead-header" name='action' translate>ACTION</span>
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -52,10 +55,10 @@
                   {{item.FullAssetName}}
                 </td>
                 <td style="text-align: left;">
-                  {{item.AssetPriceAmt}}
+                  {{item.AssetPriceAmt | currency : "USD" : ""}}
                 </td>
                 <td style="text-align: left;">
-                  {{item.DownPaymentAmt}}
+                  {{item.DownPaymentAmt | currency : "USD" : ""}}
                 </td>
                 <td style="text-align: left;">
                   {{item.SerialNo1}}
@@ -70,6 +73,9 @@
                   {{item.ManufacturingYear}}
                 </td>
                 <td style="text-align: left;">
+                  {{item.TempLetterNo}}
+                </td>
+                <td style="text-align: left;">
                   <a (click)="AssetTempLetterHandler(item.AppAssetId)"><i class="fas fa-pencil-alt"></i></a>
                 </td>
               </tr>
@@ -82,8 +88,8 @@
       <div class="px-3">
         <lib-ucSubsection [id]="'RecipientInfoId'" [title]="'Recipient Information'" [panel]="'RecipientInfoSection'"></lib-ucSubsection>
         <div class="form-body" id="RecipientInfoSection">
-          <div class="form-group row">
-            <div class="col-md-6">
+          <div class="form-group row" style="margin-left: 0; margin-right: 0;">
+            <div class="col-md-6 row">
               <label class="col-md-3 adInsLabel adins-required-label" for="DeliveryDt" translate>Delivery Date</label>
               <div class="col-md-9">
                 <input type="date" class="form-control adInsInput" formControlName="DeliveryDt" onkeypress="return false;"
@@ -91,7 +97,7 @@
                 <lib-uc-show-errors [control]="DeliveryOrderForm.controls.DeliveryDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 row" style="margin-left: 15px;">
               <label class="col-md-3 adInsLabel adins-required-label" for="RecipientName" translate>Recipient Name</label>
               <div class="col-md-9">
                 <input type="text" class="form-control adInsInput" formControlName="RecipientName" 
@@ -100,8 +106,8 @@
               </div>
             </div>
           </div>
-          <div class="form-group row">
-            <div class="col-md-6">
+          <div class="form-group row" style="margin-left: 0; margin-right: 0;">
+            <div class="col-md-6 row">
               <label class="col-md-3 adInsLabel adins-required-label" for="MrCustRelationshipCode" translate>Customer Relationship</label>
               <div class="col-md-9">
                 <select type="text" class="form-control adInsInput" formControlName="MrCustRelationshipCode" 
@@ -111,7 +117,7 @@
                 <lib-uc-show-errors [control]="DeliveryOrderForm.controls.MrCustRelationshipCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 row" style="margin-left: 15px;">
               <label class="col-md-3 adInsLabel adins-required-label" for="DeliveryAddr" translate>Recipient Address</label>
               <div class="col-md-9">
                 <textarea class="form-control adInsInput" formControlName="DeliveryAddr"
