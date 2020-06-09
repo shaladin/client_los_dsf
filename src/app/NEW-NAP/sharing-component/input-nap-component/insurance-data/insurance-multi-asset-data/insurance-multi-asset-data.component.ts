@@ -35,7 +35,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
 
   // Insurance Data
-  appAssetId: number = 0;
+  AppAssetId: number = 0;
   AppCollateralId: number = 0;
   appInsObjId: number = 0;
   totalAssetPriceAmt: number;
@@ -219,7 +219,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
 
   event(ev) {
     this.AppCollateralId = ev.RowObj.AppCollateralId;
-    this.appAssetId = ev.RowObj.AppAssetId;
+    this.AppAssetId = ev.RowObj.AppAssetId;
     this.appInsObjId = ev.RowObj.AppInsObjId;
     this.InsSeqNo = ev.RowObj.InsSeqNo;
     this.GetInsMultiData();
@@ -227,7 +227,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   }
 
   SubmitForm() {
-    this.http.post(AdInsConstant.GetAppAssetListForInsuranceByAppId, this.appAssetObj).subscribe(
+    this.http.post(AdInsConstant.GetAppCollateralListForInsuranceByAppId, this.appAssetObj).subscribe(
       (response) => {
         var isValid = true;
         var validateObj = response["ReturnObject"];
@@ -311,8 +311,8 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     this.saveObj.AppInsObjObj.InsAssetCoveredBy = insuredBy;
     this.saveObj.AppInsObjObj.InsSeqNo = this.InsSeqNo;;
 
-    if (this.appAssetId != 0) {
-      this.saveObj.AppInsObjObj.AppAssetId = this.appAssetId;
+    if (this.AppAssetId != 0) {
+      this.saveObj.AppInsObjObj.AppAssetId = this.AppAssetId;
     }
     if (this.AppCollateralId != 0) {
       this.saveObj.AppInsObjObj.AppCollateralId = this.AppCollateralId;
@@ -565,7 +565,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     reqObj.ProdOfferingCode = this.appObj.ProdOfferingCode;
     reqObj.ProdOfferingVersion = this.appObj.ProdOfferingVersion;
     reqObj.AppId = this.appId;
-    reqObj.AppAssetId = this.appAssetId;
+    reqObj.AppAssetId = this.AppAssetId;
 
     await this.http.post(AdInsConstant.CalculateInsurance, reqObj).toPromise().then(
       (response) => {
@@ -1213,7 +1213,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   }
 
   async getInsuranceData() {
-    var reqObj = { AppId: this.appId, AppAssetId: this.appAssetId, AppCollateralId: this.AppCollateralId }
+    var reqObj = { AppId: this.appId, AppAssetId: this.AppAssetId, AppCollateralId: this.AppCollateralId }
     await this.http.post(AdInsConstant.GetInsDataByAppAssetId, reqObj).toPromise().then(
       (response) => {
         console.log(response);
@@ -1242,7 +1242,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
           });
         }
         if (this.appAssetObj != undefined) {
-          this.appAssetId = this.appAssetObj.AppAssetId;
+          this.AppAssetId = this.appAssetObj.AppAssetId;
         }
         if (this.appCollateralObj != undefined) {
           this.AppCollateralId = this.appCollateralObj.AppCollateralId;
