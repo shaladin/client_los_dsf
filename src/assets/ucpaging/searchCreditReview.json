@@ -111,6 +111,10 @@
       "from": "FROM dbo.APP a WITH(NOLOCK) LEFT JOIN dbo.APP_CUST ac WITH(NOLOCK) ON a.APP_ID = ac.APP_ID JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON a.APP_NO = WTL.TRANSACTION_CODE JOIN [dbo].[V_REF_OFFICE] vro WITH(NOLOCK) ON a.ORI_OFFICE_CODE = vro.OFFICE_CODE",
       "where": "WHERE WTL.END_EXECUTING_DATE IS NULL AND a.IS_APP_INIT_DONE = '1'"
     },
+    "orderby": {
+        "key": "a.APP_NO", 
+        "value": "false"
+    },
     "bodyList": [
       {
         "type": "text",

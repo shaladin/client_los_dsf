@@ -17,6 +17,7 @@ export class NapPagingComponent implements OnInit {
   inputPagingObj: any;
   arrCrit: any;
   userAccess: any;
+  token : any = localStorage.getItem("Token");
   
   constructor(
     private http: HttpClient,
@@ -101,7 +102,7 @@ export class NapPagingComponent implements OnInit {
 
   GetCallBack(ev: any){
     if(ev.Key == "ViewProdOffering"){
-      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.RowObj.prodOfferingCode + "&prodOfferingVersion=" + ev.RowObj.prodOfferingVersion;
+      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.RowObj.prodOfferingCode + "&prodOfferingVersion=" + ev.RowObj.prodOfferingVersion  + "&Token=" + this.token;
       this.router.navigate([]).then(result => { window.open(link, '_blank'); });
     }
     if(ev.Key == "Edit"){

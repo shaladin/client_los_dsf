@@ -42,6 +42,7 @@ import { NgxCurrencyModule } from "ngx-currency";
 import { CreditApprovalDetailComponent } from './credit-approval/credit-approval-detail/credit-approval-detail.component';
 import { ViewAppComponentModule } from "app/NEW-NAP/sharing-component/view-app-component/view-app-component.module";
 import { ViewAppFraudVerificationComponent } from "app/NEW-NAP/sharing-component/view-app-component/view-app-fraud-verification/view-app-fraud-verification.component";
+import { ViewApplicationDataMultiComponent } from "./credit-investigation/component/view-application-data-multi/view-application-data-multi.component";
 
 
 export const customCurrencyMaskConfig = {
@@ -110,7 +111,8 @@ export const customCurrencyMaskConfig = {
     CreditInquiryComponent, 
     FraudVerificationMultiAssetComponent, 
     CreditApprovalDetailComponent,
-    ViewAppFraudVerificationComponent
+    ViewAppFraudVerificationComponent,
+    ViewApplicationDataMultiComponent
   ],
   providers: [
     NGXToastrService

@@ -90,6 +90,10 @@
       "from": "FROM dbo.APP a WITH ( NOLOCK ) LEFT JOIN dbo.APP_CUST ac WITH ( NOLOCK ) ON a.APP_ID = ac.APP_ID JOIN [dbo].[V_APV_TASK_LIST] ATL WITH ( NOLOCK ) ON a.APP_NO = ATL.TRX_NO  AND ATL.CATEGORY_CODE = 'CRD_APV' JOIN [dbo].[V_REF_LOB] RL WITH ( NOLOCK ) ON a.BIZ_TEMPLATE_CODE = RL.BIZ_TMPLT_CODE  AND  a.LOB_CODE = RL.LOB_CODE JOIN [dbo].[V_REF_OFFICE] vro WITH ( NOLOCK ) ON a.ORI_OFFICE_CODE = vro.OFFICE_CODE ",
       "where": "WHERE a.IS_APP_INIT_DONE = '1'"
     },
+    "orderby": {
+        "key": "a.APP_NO", 
+        "value": "false"
+    },
     "bodyList": [
       {
         "type": "text",
