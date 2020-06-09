@@ -12,6 +12,7 @@ import { GuarantorPersonalObj } from 'app/shared/model/GuarantorPersonalObj.Mode
 import { formatDate, DatePipe } from '@angular/common';
 import { environment } from 'environments/environment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 @Component({
   selector: 'app-guarantor-personal',
   templateUrl: './guarantor-personal.component.html',
@@ -255,14 +256,26 @@ export class GuarantorPersonalComponent implements OnInit {
     }
   }
 
+  setCriteriaLookupCustomer(custTypeCode){
+    var arrCrit = new Array();
+    var critObj = new CriteriaObj();
+    critObj.DataType = 'text';
+    critObj.restriction = AdInsConstant.RestrictionEq;
+    critObj.propName = 'MR_CUST_TYPE_CODE';
+    critObj.value = custTypeCode;
+    arrCrit.push(critObj);
+    this.inputLookupObj.addCritInput = arrCrit;
+  }
+
   initLookup() {
     this.inputLookupObj = new InputLookupObj();
-    this.inputLookupObj.urlJson = "./assets/uclookup/lookupGuarantorName.json";
+    this.inputLookupObj.urlJson = "./assets/uclookup/lookupCustomer.json";
     this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.inputLookupObj.pagingJson = "./assets/uclookup/lookupGuarantorName.json";
-    this.inputLookupObj.genericJson = "./assets/uclookup/lookupGuarantorName.json";
+    this.inputLookupObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
+    this.inputLookupObj.genericJson = "./assets/uclookup/lookupCustomer.json";
     this.inputLookupObj.isReadonly = false;
+    this.setCriteriaLookupCustomer(AdInsConstant.CustTypePersonal);
 
     this.inputLookupObj1 = new InputLookupObj();
     this.inputLookupObj1.urlJson = "./assets/uclookup/lookupCountry.json";

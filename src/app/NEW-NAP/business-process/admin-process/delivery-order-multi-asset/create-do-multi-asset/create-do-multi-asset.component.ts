@@ -48,6 +48,8 @@ export class CreateDoMultiAssetComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    var context = JSON.parse(localStorage.getItem("UserAccess"));
+    console.log(context);
     var rmRelation = new RefMasterObj();
     rmRelation.RefMasterTypeCode = this.CustType == 'PERSONAL' ? 'CUST_PERSONAL_RELATIONSHIP' : 'CUST_COMPANY_RELATIONSHIP';
     if(this.Mode == "add"){
@@ -104,7 +106,7 @@ export class CreateDoMultiAssetComponent implements OnInit {
         var doRequest = { AppId: this.AppId, AgrmntId: this.AgrmntId };
         this.httpClient.post(AdInsConstant.GetAssetListForDOMultiAsset, doRequest).subscribe(
           (response) => {
-            var doAssetList = response[0]["AssetListForDOMultiAssetObj"];
+            var doAssetList = response["AssetListForDOMultiAssetObj"];
             for (let selected of this.SelectedDOAssetList) {
               for (let item of doAssetList) {
                 if(selected.AppAssetId == item.AppAssetId){

@@ -313,12 +313,12 @@ export class ApplicationDataFactoringComponent implements OnInit {
     if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == "MULTIPLE") {
       this.SalesAppInfoForm.controls.Tenor.enable();
       this.SalesAppInfoForm.controls.MrInstSchemeCode.enable();
-      this.SalesAppInfoForm.controls.TopBased.enable();
+      this.SalesAppInfoForm.controls.TopBased.disable();
       this.SalesAppInfoForm.controls.TopDays.clearValidators();
     } else if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == "SINGLE") {
       this.SalesAppInfoForm.controls.Tenor.disable();
       this.SalesAppInfoForm.controls.Tenor.patchValue(1);
-      this.SalesAppInfoForm.controls.TopBased.disable();
+      this.SalesAppInfoForm.controls.TopBased.enable();
       this.SalesAppInfoForm.controls.TopDays.setValidators([Validators.required,Validators.pattern("^[0-9]+$")]);
       this.SalesAppInfoForm.controls.MrInstSchemeCode.disable();
       this.SalesAppInfoForm.controls.NumOfInst.patchValue(1);
