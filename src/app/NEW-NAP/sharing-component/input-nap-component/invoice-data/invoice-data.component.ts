@@ -99,6 +99,13 @@ export class InvoiceDataComponent implements OnInit {
   }
 
   SaveForm(enjiForm: NgForm) {
+    if(this.InvoiceForm.controls.InvoiceAmt.value == 0){
+      this.toastr.errorMessage("Invoice Amount cannot be zero (0).");
+    }
+    else if(this.InvoiceForm.controls.InvoiceAmt.value < 0){
+      this.toastr.errorMessage("Invoice Amount cannot be less than zero (0).");
+    }
+    else{
     this.invoiceObj = new AppInvoiceFctrObj();
     this.invoiceObj.CustomerFactoringNo = this.InvoiceForm.controls.CustomerFactoringNo.value;
     this.invoiceObj.CustomerFactoringName = this.InvoiceForm.controls.CustomerFactoringName.value;
@@ -121,6 +128,7 @@ export class InvoiceDataComponent implements OnInit {
       (error) => {
         console.log(error);
       });
+    }
   }
 
   DeleteInvoice(AppInvoiceFctrId: number) {

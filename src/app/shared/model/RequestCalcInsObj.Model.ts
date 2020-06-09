@@ -10,6 +10,7 @@ export class RequestCalcInsObj {
     ProdOfferingVersion: string;
     AppId: number;
     AppAssetId: number;
+    AppCollateralId: number;
 
 constructor() {
     this.InsCoverage = new Array<CalcInsMainCvgObj>();
