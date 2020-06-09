@@ -13,6 +13,9 @@ export class ViewPurchaseOrderMultiAssetDetailComponent implements OnInit {
 
 
   @Input() agrmntId: number = 0;
+  @Input() supplCode: string;
+  @Input() PurchaseOrderHId: number = 0;
+  
   constructor(
     private route: ActivatedRoute,
   private router: Router,
@@ -25,14 +28,20 @@ export class ViewPurchaseOrderMultiAssetDetailComponent implements OnInit {
     console.log("this view PO");
     console.log(this.agrmntId);
     await this.BindPOData();
+    console.log("aaaaa");
   }
 
   ResponseAgrmntFinDataData;
   ResponseAppAssetData;
   ResponsePurchaseOrderHData;
+ 
   async BindPOData(){
-    var obj = { AgrmntId: this.agrmntId };
-    await this.http.post(AdInsConstant.GetPurchaseOrderHDetailViewByAgrmntId, obj).toPromise().then(
+    var obj = { 
+      AgrmntId: this.agrmntId,
+      SupplCode : this.supplCode,
+      PurchaseOrderHId : this.PurchaseOrderHId
+     };
+    await this.http.post(AdInsConstant.GetPurchaseOrderHDetailViewMultiAssetByAgrmntId, obj).toPromise().then(
       (response) => {
         console.log(response);
         this.ResponseAgrmntFinDataData=response["ResponseAgrmntFinDataObj"];

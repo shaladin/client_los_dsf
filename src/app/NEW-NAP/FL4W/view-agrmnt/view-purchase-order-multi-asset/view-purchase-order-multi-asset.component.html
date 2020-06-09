@@ -18,7 +18,7 @@
         <td>{{item.SupplName}}</td>
         <td>{{item.PurchaseOrderNo}}</td>   
         <td>
-          <a button="click" (click)="view()">View</a>
+          <a button="click" (click)="view(item.SupplCode, item.PurchaseOrderHId)">View</a>
         </td>
         <td> 
         </td>
@@ -31,7 +31,7 @@
 </div >
 
 
-<app-view-purchase-order-multi-asset-detail *ngIf = "isView == true" [agrmntId]="agrmntId" > 
+<app-view-purchase-order-multi-asset-detail *ngIf = "isView == true" [agrmntId]="agrmntId" [supplCode]="tempSupplCode" [PurchaseOrderHId] ="tempPurchaseOrderHId" > 
   
 </app-view-purchase-order-multi-asset-detail>
 

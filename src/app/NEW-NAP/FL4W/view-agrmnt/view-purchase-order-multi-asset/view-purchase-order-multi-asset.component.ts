@@ -15,6 +15,8 @@ export class ViewPurchaseOrderMultiAssetComponent implements OnInit {
   isView : boolean;
   listPurchaseOrder : any;
   MrCustRelationshipCode: any = new Array();
+  tempSupplCode: string;
+  tempPurchaseOrderHId : number;
   constructor(private http: HttpClient ) {
   }
 
@@ -35,7 +37,9 @@ export class ViewPurchaseOrderMultiAssetComponent implements OnInit {
     });
   }
 
-  view(){
+  view(supplCode: string, PurchaseOrderHId : number){
+    this.tempSupplCode = supplCode;
+    this.tempPurchaseOrderHId = PurchaseOrderHId;
     this.isView=true;
   }
 

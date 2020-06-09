@@ -66,68 +66,35 @@
             </div>
           </div>
         </div>
-        <lib-ucSubsection [id]="'viewAssetInfoId'" [title]="'Asset Information'" [panel]="'viewAssetInfo'">
+        <lib-ucSubsection [id]="'AssetInfoId'" [title]="'Asset List'" [panel]="'AssetInfo'">
         </lib-ucSubsection>
-        <div class="form-body" id="viewAssetInfo">
-          <div class="row">
-            <div class="col-md-6 ">
-              <div class="row">
-                <label class="col-md-6 adInsLabel"> Asset Name </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.FullAssetName}} </label>
-              </div>
-              <div class="row">
-                <label class="col-md-6 adInsLabel"> Asset Price </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.AssetPriceAmt | number:'.2':'en-US'}} </label>
-              </div>
-              <div class="row">
-                <label class="col-md-6 adInsLabel"> Asset Condition </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.MrAssetConditionCodeDesc}} </label>
-              </div>
-              <div class="row">
-                <label class="col-md-6 adInsLabel"> License Plate No </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.LicensePlateNo}} </label>
-              </div>
-              <div class="row">
-                <label class="col-md-6 adInsLabel"> Chassis No </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.ChassisNo}} </label>
-              </div>
-              <div class="row">
-                <label class="col-md-6 adInsLabel"> Engine No </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.EngineNo}} </label>
-              </div>
-              <div class="row">
-                <label class="col-md-6 adInsLabel"> Notes </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.AssetNotes}} </label>
-              </div>
-            </div>
-            <div class="col-md-6 ">
-              <div class="row">
-                <label class="col-md-6 adInsLabel"> Down Payment </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.DownPaymentAmt | number:'.2':'en-US'}} </label>
-              </div>
-              <div class="row">
-                <label class="col-md-6 adInsLabel"> Asset Usage </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.MrAssetUsageCodeDesc}} </label>
-              </div>
-              <div class="row">
-                <label class="col-md-6 adInsLabel"> Manufacturing Year </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.ManufacturingYear}} </label>
-              </div>
-              <div class="row">
-                <label class="col-md-6 adInsLabel"> Color </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.Color}} </label>
-              </div>
-              <div class="row">
-                <label class="col-md-6 adInsLabel"> BPKB Issue Date </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.TaxIssueDt | date:shortDate}} </label>
-              </div>
-              <div class="row">
-                <label class="col-md-6 adInsLabel"> BPKB City Issuer </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.TaxCityIssuer}} </label>
-              </div>
-            </div>
-          </div>
+        <div class="form-body" id="AssetInfo">
+            <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                    <tr class="table-header">
+                        <th><span translate class="thead-header text-left">ASSET NAME</span></th>
+                        <th><span translate class="thead-header text-right">ASSET PRICE</span></th>
+                        <th><span translate class="thead-header text-right">DOWN PAYMENT</span></th>
+                        <th><span translate class="thead-header">SERIAL NO. 1</span></th>
+                        <th><span translate class="thead-header">SERIAL NO. 2</span></th>
+                        <th><span translate class="thead-header">LICENSE PLATE</span></th>
+                        <th><span translate class="thead-header">NOTES</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of ResponseAppAssetData ">
+                        <td class="text-left">{{item.FullAssetName}}</td>
+                        <td class="text-right">{{item.AssetPriceAmt | number}}</td>
+                        <td class="text-right">{{item.DownPaymentAmt | number}}</td>
+                        <td>{{item.SerialNo1}}</td>
+                        <td>{{item.SerialNo2}}</td>
+                        <td>{{item.SerialNo3}}</td>
+                        <td>{{item.AssetNotes}}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
+
         <lib-ucSubsection [id]="'viewFinInfoId'" [title]="'Financial Information'" [panel]="'viewFinInfo'">
         </lib-ucSubsection>
         <div class="form-body" id="viewFinInfo">
