@@ -45,7 +45,7 @@ export const ROUTES: RouteInfo[] = [
       { Path: '/Nap/AdminProcess/CustConfirmation/Paging', Title: 'Customer Confirmation', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "FL4W" }]},
       { Path: '/Nap/AdminProcess/AgrmntActivation/Paging', Title: 'Agreement Activation', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "FL4W" }] },
       { Path: '/Nap/AdminProcess/PurchaseOrder/Paging', Title: 'Purchase Order', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "FL4W" }] },
-      { Path: '/Nap/AdminProcess/DeliveryOrder/Paging', Title: 'Delivery Order', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "FL4W" }] },
+      { Path: '/Nap/AdminProcess/DeliveryOrderMultiAsset/Paging', Title: 'Delivery Order', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "FL4W" }] },
       { Path: '/Nap/AdminProcess/PreGoLive/Paging', Title: 'Pre Go Live', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "FL4W" }] },
       {Path: '', Title: 'Additional Process', Icon: '', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
       Submenu: [
