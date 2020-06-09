@@ -36,7 +36,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
 
   // Insurance Data
   appAssetId: number = 0;
-  appCollateralId: number = 0;
+  AppCollateralId: number = 0;
   appInsObjId: number = 0;
   totalAssetPriceAmt: number;
   InsSeqNo: number = 0;
@@ -119,7 +119,6 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   gridAssetDataObj: InputGridObj = new InputGridObj();
   gridAppCollateralObj: InputGridObj = new InputGridObj();
 
-  AppCollateralId: number;
   InsCpltzAmt: number = 0;
   TotalPremiumToCust: number = 0;
   PaidAmtByCust: number = 0;
@@ -140,11 +139,11 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   ngOnInit() {
     this.gridAssetDataObj.pagingJson = "./assets/ucgridview/gridAssetDataView.json";
     this.gridAppCollateralObj.pagingJson = "./assets/ucgridview/gridAppCollateralInsurance.json";
-    this.appAssetObj.AppId = this.appId;
     this.BindMultiInsGridData();
   }
 
   BindMultiInsGridData() {
+    this.appAssetObj.AppId = this.appId;
     this.http.post(AdInsConstant.GetAppAssetListForInsuranceByAppId, this.appAssetObj).subscribe(
       (response) => {
         this.listAppAssetObj = response["ReturnObject"];
@@ -174,15 +173,15 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         this.InsCpltzAmt = 0;
         this.TotalPremiumToCust = 0;
 
-        for (var i = 0; i < this.listAppAssetObj.length; i++) {
-          if (this.listAppAssetObj[i].PaidAmtByCust != null)
-            this.PaidAmtByCust = this.PaidAmtByCust + this.listAppAssetObj[i].PaidAmtByCust;
+        for (var i = 0; i < this.listAppCollateralObj.length; i++) {
+          if (this.listAppCollateralObj[i].PaidAmtByCust != null)
+            this.PaidAmtByCust = this.PaidAmtByCust + this.listAppCollateralObj[i].PaidAmtByCust;
 
-          if (this.listAppAssetObj[i].InsCpltzAmt != null)
-            this.InsCpltzAmt = this.InsCpltzAmt + this.listAppAssetObj[i].InsCpltzAmt;
+          if (this.listAppCollateralObj[i].InsCpltzAmt != null)
+            this.InsCpltzAmt = this.InsCpltzAmt + this.listAppCollateralObj[i].InsCpltzAmt;
         }
-        if (this.listAppAssetObj[0].TotalCustPremiAmt != null)
-          this.TotalPremiumToCust = this.listAppAssetObj[0].TotalCustPremiAmt;
+        if (this.listAppCollateralObj[0].TotalCustPremiAmt != null)
+          this.TotalPremiumToCust = this.listAppCollateralObj[0].TotalCustPremiAmt;
       },
       (error) => {
         console.log(error);
@@ -315,8 +314,8 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     if (this.appAssetId != 0) {
       this.saveObj.AppInsObjObj.AppAssetId = this.appAssetId;
     }
-    if (this.appCollateralId != 0) {
-      this.saveObj.AppInsObjObj.AppCollateralId = this.appCollateralId;
+    if (this.AppCollateralId != 0) {
+      this.saveObj.AppInsObjObj.AppCollateralId = this.AppCollateralId;
     }
     if (this.appInsObjId != 0) {
       this.saveObj.AppInsObjObj.AppInsObjId = this.appInsObjId;
@@ -1214,7 +1213,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   }
 
   async getInsuranceData() {
-    var reqObj = { AppId: this.appId, AppAssetId: this.appAssetId }
+    var reqObj = { AppId: this.appId, AppAssetId: this.appAssetId, AppCollateralId: this.AppCollateralId }
     await this.http.post(AdInsConstant.GetInsDataByAppAssetId, reqObj).toPromise().then(
       (response) => {
         console.log(response);
@@ -1246,7 +1245,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
           this.appAssetId = this.appAssetObj.AppAssetId;
         }
         if (this.appCollateralObj != undefined) {
-          this.appCollateralId = this.appCollateralObj.AppCollateralId;
+          this.AppCollateralId = this.appCollateralObj.AppCollateralId;
         }
         if (this.appInsObjObj != undefined) {
           this.appInsObjId = this.appInsObjObj.AppInsObjId;
