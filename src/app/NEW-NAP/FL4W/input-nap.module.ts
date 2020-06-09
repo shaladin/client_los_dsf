@@ -40,7 +40,9 @@ import { SchmStepUpStepDownNormalFL4WComponent } from "./input-nap-FL4W/financia
 import { SubsidyFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/subsidy/subsidy-FL4W.component";
 import { SubsidyAddEditFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/subsidy-add-edit/subsidy-add-edit-FL4W.component";
 import { FinancialDataFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/financial-data-FL4W.component";
-import { MultiCollDataComponent } from "../sharing-component/input-nap-component/collateral-data/multi-coll-data/multi-coll-data.component";
+import { MultiCollDataComponent } from "../sharing-component/input-nap-component/collateral-data/multi-coll-data/multi-coll-data.component"; 
+import { ViewPurchaseOrderMultiAssetComponent } from './view-agrmnt/view-purchase-order-multi-asset/view-purchase-order-multi-asset.component';
+import { ViewPurchaseOrderMultiAssetDetailComponent } from './view-agrmnt/view-purchase-order-multi-asset/view-purchase-order-multi-asset-detail/view-purchase-order-multi-asset-detail.component'; 
  
 export const customCurrencyMaskConfig = {     
   align: "right",     
@@ -104,7 +106,8 @@ export const customCurrencyMaskConfig = {
     SchmStepUpStepDownNormalFL4WComponent,
     SubsidyFL4WComponent,
     SubsidyAddEditFL4WComponent,
-    FinancialDataFL4WComponent
+    FinancialDataFL4WComponent, 
+    ViewPurchaseOrderMultiAssetComponent, ViewPurchaseOrderMultiAssetDetailComponent 
   ],
   providers: [
     NGXToastrService

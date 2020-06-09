@@ -96,10 +96,18 @@
             "property": "Username"
         },
         {
-            "type": "text",
+            "type": "link",
             "position": "left",
-            "property": "AppNo"
-        },
+            "property": "AppNo",
+            "target" : "_blank",
+            "path": "/Nap/View/AppView",
+            "param": [
+              {
+                "type": "AppId",
+                "property": "AppId"
+              }
+            ]
+          },
         {
             "type": "text",
             "position": "left",
