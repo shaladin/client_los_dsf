@@ -250,12 +250,12 @@ export class MouRequestAddcollComponent implements OnInit {
     }
   }
 
-  Checked(VerfQuestionAnswerId: number, isChecked: boolean): void {
-    console.log(VerfQuestionAnswerId);
+  Checked(CollateralId: number, isChecked: boolean): void {
+    console.log(CollateralId);
     if (isChecked) {
-      this.listSelectedId.push(VerfQuestionAnswerId);
+      this.listSelectedId.push(CollateralId);
     } else {
-      const index = this.listSelectedId.indexOf(VerfQuestionAnswerId)
+      const index = this.listSelectedId.indexOf(CollateralId)
       console.log(index);
       if (index > -1) { this.listSelectedId.splice(index, 1); }
     }
@@ -696,6 +696,7 @@ export class MouRequestAddcollComponent implements OnInit {
   }
 
   Cancel() {
+    this.clearList();
     this.type = 'Paging';
   }
 
@@ -722,6 +723,7 @@ export class MouRequestAddcollComponent implements OnInit {
         this.toastr.successMessage(response['message']);
         this.type = 'Paging';
         this.bindMouData();
+        this.clearList();
       },
       error => {
         console.log(error);
@@ -729,19 +731,27 @@ export class MouRequestAddcollComponent implements OnInit {
     );
   }
 
+  clearList() {
+    this.resultData = [];
+    this.tempData = [];
+    this.tempListId = [];
+    this.inputObj.addCritInput = new Array();
+  }
+
   delete(MouCustCollId) {
-    console.log("aaa");
-    var custCollObj = { MouCustCollateralId: MouCustCollId };
-    this.http.post(AdInsConstant.DeleteMouCustCollateral, custCollObj).subscribe(
-      (response) => {
-        console.log(response);
-        this.toastr.successMessage(response["message"]);
-        this.bindMouData();
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    if (confirm('Are you sure to delete this record?')) {
+      var custCollObj = { MouCustCollateralId: MouCustCollId };
+      this.http.post(AdInsConstant.DeleteMouCustCollateral, custCollObj).subscribe(
+        (response) => {
+          console.log(response);
+          this.toastr.successMessage(response["message"]);
+          this.bindMouData();
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
   }
 
   next() {

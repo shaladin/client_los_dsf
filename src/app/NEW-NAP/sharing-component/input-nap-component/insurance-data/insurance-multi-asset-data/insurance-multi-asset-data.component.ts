@@ -148,19 +148,26 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     this.http.post(AdInsConstant.GetAppAssetListForInsuranceByAppId, this.appAssetObj).subscribe(
       (response) => {
         this.listAppAssetObj = response["ReturnObject"];
-        this.listAppCollateralObj = response["ReturnObject"];
 
         var DetailForGridAsset = {
           Data: response["ReturnObject"],
           Count: "0"
         }
+        this.gridAssetDataObj.resultData = DetailForGridAsset;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+    this.http.post(AdInsConstant.GetAppCollateralListForInsuranceByAppId, this.appAssetObj).subscribe(
+      (response) => {
+        this.listAppCollateralObj = response["ReturnObject"];
 
         var DetailForGridCollateral = {
           Data: response["ReturnObject"],
           Count: "0"
         }
-
-        this.gridAssetDataObj.resultData = DetailForGridAsset;
         this.gridAppCollateralObj.resultData = DetailForGridCollateral;
 
         this.PaidAmtByCust = 0;

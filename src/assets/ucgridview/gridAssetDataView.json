@@ -1,4 +1,3 @@
-
 {
     "headerList": [
         {
@@ -54,18 +53,21 @@
             "position": "right",
             "label": "Fee",
             "name": "Fee"
-        },
-        {
-            "type": "label",
-            "position": "center",
-            "label": "View Detail"
         }
     ],
     "bodyList": [
         {
-            "type": "text",
+            "type": "link",
             "position": "left",
-            "property": "FullAssetName"
+            "property" : "FullAssetName",
+            "target" : "_blank",
+            "path": "/Nap/ViewAsset",
+            "param": [
+                {
+                    "type": "AppAssetId",
+                    "property": "AppAssetId"
+                }
+            ]
         },
         {
             "type": "text",
@@ -106,16 +108,6 @@
             "type": "decimal",
             "position": "right",
             "property": "Fee"
-        },
-        {
-            "type": "action",
-            "position": "center",
-            "action": [
-                {
-                    "type": "callback",
-                    "key": "AppAssetId"
-                }
-            ]
         }
     ]
 }

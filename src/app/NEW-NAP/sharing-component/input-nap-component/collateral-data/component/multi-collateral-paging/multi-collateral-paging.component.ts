@@ -12,6 +12,7 @@ import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 export class MultiCollateralPagingComponent implements OnInit {
   @Input() AppId: number;
   @Output() select: EventEmitter<number> = new EventEmitter<any>();
+  @Output() list: EventEmitter<any> = new EventEmitter<any>();
   ListAppCollObj: Array<AppCollateralObj> = new Array<AppCollateralObj>();
 
   constructor(private http: HttpClient, private toastr: NGXToastrService) {
@@ -28,6 +29,7 @@ export class MultiCollateralPagingComponent implements OnInit {
     this.http.post<Array<AppCollateralObj>>(AdInsConstant.GetListAppCollateralByAppId, AppCollObj).subscribe(
       (response) => {
         this.ListAppCollObj = response["ReturnObject"];
+        this.list.emit(this.ListAppCollObj);
       },
       (error) => {
         console.log(error);
