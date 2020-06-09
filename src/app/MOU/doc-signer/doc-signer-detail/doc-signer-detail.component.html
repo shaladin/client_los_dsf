@@ -99,7 +99,7 @@
                             <label class="col-md-3 adInsLabel adins-required-label" translate>Customer Signer 1 </label>
                             <div class="col-md-4">
                                 <lib-uclookupgeneric *ngIf="MrCustTypeCode == 'PERSONAL'" [lookupInput]="customerLookUpObj1" [parentForm]="MouCustSignerForm"
-                                [enjiForm]="enjiForm" [identifier]="'CustName1'" #LookupPersonal1 (lookup)=getLookUpCustomer1($event)>
+                                [enjiForm]="enjiForm" [identifier]="'CustName1'" (lookup)=getLookUpCustomer1($event)>
                                 </lib-uclookupgeneric>
                                 <lib-uclookupgeneric *ngIf="MrCustTypeCode == 'COMPANY'" [lookupInput]="custShareholderLookUpObj1" [parentForm]="MouCustSignerForm"
                                 [enjiForm]="enjiForm" [identifier]="'CustName1'" #LookupShareHolder1 (lookup)=getLookUpShareholder1($event)>

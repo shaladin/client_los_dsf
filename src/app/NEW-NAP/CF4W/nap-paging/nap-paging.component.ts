@@ -18,6 +18,7 @@ export class NapPagingComponent implements OnInit {
   inputPagingObj: any;
   arrCrit: any;
   userAccess: any;
+  token : any = localStorage.getItem("Token");
   constructor(
     private http: HttpClient,
     private toastr: NGXToastrService,
@@ -93,12 +94,12 @@ export class NapPagingComponent implements OnInit {
   }
 
   GetCallBack(ev: any){
-    // console.log(ev);
-    // if(!ev.RowObj.IsAllowAppCreated){
-    //   this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');
-    //   return;
-    // }else{
+    if(ev.Key == "ViewProdOffering"){
+      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.RowObj.prodOfferingCode + "&prodOfferingVersion=" + ev.RowObj.prodOfferingVersion + "&Token=" + this.token;
+      this.router.navigate([]).then(result => { window.open(link, '_blank'); });
+    }
+    if(ev.Key == "Edit"){
       this.router.navigate(["Nap/ConsumerFinance/Add/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId" : ev.RowObj.WfTaskListId } });
-    // }
+    }
   }
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
   selector: 'app-multi-coll-data',
@@ -12,10 +13,13 @@ export class MultiCollDataComponent implements OnInit {
   AppCollateralId: number = 0;
   mode: string = "add";
   IsDetail: boolean = false;
-
-  constructor() { }
+  AppCollateral: any;
+  constructor(private toastr : NGXToastrService) { }
 
   ngOnInit() {
+  }
+  GetList(ev) {
+    this.AppCollateral = ev;
   }
 
   OpenDetail(AppCollateralId: number = 0) {
@@ -33,6 +37,11 @@ export class MultiCollDataComponent implements OnInit {
   }
 
   Next() {
-    this.outputTab.emit();
+    if (this.AppCollateral.length == 0) {
+      this.toastr.errorMessage("Please Input At Least 1 Collateral Data");
+    }
+    else {
+      this.outputTab.emit();
+    }
   }
 }

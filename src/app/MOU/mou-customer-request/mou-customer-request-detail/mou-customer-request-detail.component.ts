@@ -100,7 +100,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
       }
     );
 
-    if(this.pageType == "edit"){
+    if(this.pageType == "edit" || this.pageType == "return"){
       var mouCust = new MouCustObj();
       mouCust.MouCustId = this.mouCustId;
       this.httpClient.post(AdInsConstant.GetMouCustById, mouCust).subscribe(
@@ -168,11 +168,16 @@ export class MouCustomerRequestDetailComponent implements OnInit {
         }
       );
     }
-    else if(this.pageType == "edit"){
+    else if(this.pageType == "edit" || this.pageType == "return"){
       this.httpClient.post(AdInsConstant.EditMouCust, mouCustFormData).subscribe(
         (response: any) => {
           this.toastr.successMessage(response["Message"]);
-          this.router.navigate(['/Mou/Detail', this.mouType], { queryParams: { mouCustId: mouCustFormData.MouCustId }});
+          if(this.pageType == "return"){
+            this.router.navigate(['/Mou/Detail', this.mouType], { queryParams: { mouCustId: mouCustFormData.MouCustId, mode : "return" }});
+          }
+          else{
+            this.router.navigate(['/Mou/Detail', this.mouType], { queryParams: { mouCustId: mouCustFormData.MouCustId }});
+          }
         },
         (error) => {
           console.log(error);

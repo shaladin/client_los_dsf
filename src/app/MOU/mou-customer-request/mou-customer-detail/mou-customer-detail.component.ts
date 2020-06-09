@@ -21,8 +21,10 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   mouType: string;
   mouCustId: number;
   currentStepIndex: number;
-  mode : string;
-  
+  mode: string;
+  pageType: string;
+  pageTitle: string;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -40,30 +42,38 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
       if (params['mouCustId'] != null) {
         this.mouCustId = params['mouCustId'];
       }
+      if (params['mode'] != null) {
+        this.pageType = params['mode'];
+      }
     });
     this.currentStepIndex = 1;
-   }
+  }
 
   ngOnInit() {
-    
+    if (this.pageType == "return") {
+      this.pageTitle = "MOU Return Detail";
+    }
+    else{
+      this.pageTitle = "MOU Customer Detail";
+    }
   }
 
   ngAfterViewInit(): void {
-    if(this.mouType == "GENERAL"){
+    if (this.mouType == "GENERAL") {
       this.stepperGeneral = new Stepper(document.querySelector('#stepperGeneral'), {
         linear: false,
         animation: true
       });
       this.stepperGeneral.to(this.currentStepIndex);
-      console.log(this.stepperGeneral);  
+      console.log(this.stepperGeneral);
     }
-    else if(this.mouType == "FACTORING"){
+    else if (this.mouType == "FACTORING") {
       this.stepperFactoring = new Stepper(document.querySelector('#stepperFactoring'), {
         linear: false,
         animation: true
       });
       this.stepperFactoring.to(this.currentStepIndex);
-      console.log(this.stepperFactoring);  
+      console.log(this.stepperFactoring);
     }
   }
 
@@ -83,19 +93,19 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   //   this.stepHandler(e);
   // }
 
-  getModeDetail(e){
-    if(e!=null){
+  getModeDetail(e) {
+    if (e != null) {
       this.mode = e.mode;
       console.log(e);
       console.log(this.mode);
     }
   }
 
-  designatedStepHandler(idx){
-    if(this.mouType == "GENERAL"){
+  designatedStepHandler(idx) {
+    if (this.mouType == "GENERAL") {
       this.stepperGeneral.to(idx);
     }
-    else if(this.mouType == "FACTORING"){
+    else if (this.mouType == "FACTORING") {
       this.stepperFactoring.to(idx);
     }
     this.currentStepIndex = idx;
@@ -105,61 +115,76 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   //   this.stepHandler(e);
   // }
 
-  saveMouTc(){
-    if(this.mouType == AdInsConstant.GENERAL){
+  saveMouTc() {
+    if (this.mouType == AdInsConstant.GENERAL) {
       this.mouTcGeneral.Save();
     }
-    else if(this.mouType == AdInsConstant.FACTORING){
+    else if (this.mouType == AdInsConstant.FACTORING) {
       this.mouTcFactoring.Save();
     }
   }
 
-  backFromMouTc(){
-    if(this.mouType == "GENERAL"){
-      this.stepHandlerGeneral({StatusCode: "-1"});
+  backFromMouTc() {
+    if (this.mouType == "GENERAL") {
+      this.stepHandlerGeneral({ StatusCode: "-1" });
     }
-    else if(this.mouType == "FACTORING"){
-      this.stepHandlerFactoring({StatusCode: "-1"});
+    else if (this.mouType == "FACTORING") {
+      this.stepHandlerFactoring({ StatusCode: "-1" });
     }
   }
 
-  mouDocumentBack(){
-    if(this.mouType == "GENERAL"){
+  mouDocumentBack() {
+    if (this.mouType == "GENERAL") {
       this.stepperGeneral.previous();
     }
-    else if(this.mouType == "FACTORING"){
+    else if (this.mouType == "FACTORING") {
       this.stepperFactoring.previous();
     }
   }
 
-  editMainInfoHandler(){
-    this.router.navigate(["/Mou/Request/Detail"], { queryParams: { MouCustId: this.mouCustId, mode: "edit", MrMouTypeCode: this.mouType }});
+  editMainInfoHandler() {
+    if (this.pageType == "return") {
+      this.router.navigate(["/Mou/Request/Detail"], { queryParams: { MouCustId: this.mouCustId, mode: "return", MrMouTypeCode: this.mouType } });
+    }
+    else {
+      this.router.navigate(["/Mou/Request/Detail"], { queryParams: { MouCustId: this.mouCustId, mode: "edit", MrMouTypeCode: this.mouType } });
+    }
   }
 
-  cancelHandler(){
-    this.router.navigate(['/Mou/Request/Paging']);
+  cancelHandler() {
+    if (this.pageType == "return") {
+      this.router.navigate(["Mou/EditMouCustomer/Paging"]);
+    }
+    else {
+      this.router.navigate(['/Mou/Request/Paging']);
+    }
   }
 
-  submitHandler(){
-    if((this.mouType == AdInsConstant.GENERAL && this.currentStepIndex == 4 ) || (this.mouType == AdInsConstant.FACTORING && this.currentStepIndex == 5) ){
-      var mouObj = { MouCustId: this.mouCustId}
+  submitHandler() {
+    if ((this.mouType == AdInsConstant.GENERAL && this.currentStepIndex == 4) || (this.mouType == AdInsConstant.FACTORING && this.currentStepIndex == 5)) {
+      var mouObj = { MouCustId: this.mouCustId }
       this.httpClient.post(AdInsConstant.SubmitWorkflowMouRequest, mouObj).subscribe(
         (response: any) => {
           this.toastr.successMessage("Success");
-          this.router.navigate(['/Mou/Request/Paging']);
+          if (this.pageType == "return") {
+            this.router.navigate(['/Mou/EditMouCustomer/Paging']);
+          }
+          else {
+            this.router.navigate(['/Mou/Request/Paging']);
+          }
         },
         (error) => {
           console.log(error);
         }
       );
     }
-    else{
+    else {
       this.toastr.errorMessage("Please follow the steps first");
     }
   }
 
-  stepHandlerGeneral(response){
-    switch (response["StatusCode"].toString()){
+  stepHandlerGeneral(response) {
+    switch (response["StatusCode"].toString()) {
       case "200":
         this.stepperGeneral.next();
         this.currentStepIndex++;
@@ -171,16 +196,20 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
         break;
 
       case "-2":
-        this.router.navigate(['/Mou/Request/Paging']);
+        if (this.pageType == "return") {
+          this.router.navigate(['/Mou/EditMouCustomer/Paging']);
+        }
+        else {
+          this.router.navigate(['/Mou/Request/Paging']);
+        }
         break;
-    
       default:
         break;
     }
   }
 
-  stepHandlerFactoring(response){
-    switch (response["StatusCode"].toString()){
+  stepHandlerFactoring(response) {
+    switch (response["StatusCode"].toString()) {
       case "200":
         this.stepperFactoring.next();
         this.currentStepIndex++;
@@ -192,9 +221,13 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
         break;
 
       case "-2":
-        this.router.navigate(['/Mou/Request/Paging']);
+        if (this.pageType == "return") {
+          this.router.navigate(['/Mou/EditMouCustomer/Paging']);
+        }
+        else {
+          this.router.navigate(['/Mou/Request/Paging']);
+        }
         break;
-    
       default:
         break;
     }

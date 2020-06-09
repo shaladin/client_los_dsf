@@ -15,8 +15,10 @@ export class ViewAssetDataComponent implements OnInit {
   getAppUrl: any;
   getAllAssetDataUrl: any;
   @Input() appId: number = 0;
+  appAssetId: number = 0;
   appObj = {
     AppId: 0,
+    AppAssetId: 0
   };
 
   AppObj: any;
@@ -29,6 +31,9 @@ export class ViewAssetDataComponent implements OnInit {
      if (params['AppId'] != null) {
        this.appId = params['AppId'];
      }
+     if (params['AppAssetId'] != null) {
+      this.appAssetId = params['AppAssetId'];
+    }
     });
   }
 
@@ -37,9 +42,22 @@ export class ViewAssetDataComponent implements OnInit {
     this.getAllAssetDataUrl = AdInsConstant.GetAllAssetDataByAppId;
   }
 
+  initSingleAssetUrl(){
+    this.getAppUrl = AdInsConstant.GetAppById;
+    this.getAllAssetDataUrl = AdInsConstant.GetAllAssetDataByAppAssetId;
+  }
+
   async ngOnInit(): Promise<void> {
-    this.initUrl();
+    if (this.appAssetId != 0)
+    {
+      this.initSingleAssetUrl();
+      this.appObj.AppAssetId = this.appAssetId;
+    }
+    else
+      this.initUrl();
+
     this.appObj.AppId = this.appId;
+    console.log(this.appId);
     await this.GetAllAssetData();
 
   }

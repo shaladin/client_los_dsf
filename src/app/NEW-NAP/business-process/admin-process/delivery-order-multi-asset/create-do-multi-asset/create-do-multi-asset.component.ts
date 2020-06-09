@@ -25,6 +25,7 @@ export class CreateDoMultiAssetComponent implements OnInit {
   @Input() Mode: string;
   @Input() DeliveryOrderHId: number;
   relationshipList: any;
+  context: any;
 
   DeliveryOrderForm = this.fb.group({
     DeliveryOrderHId: [0, [Validators.required]],
@@ -48,6 +49,7 @@ export class CreateDoMultiAssetComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.context = JSON.parse(localStorage.getItem("UserAccess"));
     var rmRelation = new RefMasterObj();
     rmRelation.RefMasterTypeCode = this.CustType == 'PERSONAL' ? 'CUST_PERSONAL_RELATIONSHIP' : 'CUST_COMPANY_RELATIONSHIP';
     if(this.Mode == "add"){
@@ -104,7 +106,7 @@ export class CreateDoMultiAssetComponent implements OnInit {
         var doRequest = { AppId: this.AppId, AgrmntId: this.AgrmntId };
         this.httpClient.post(AdInsConstant.GetAssetListForDOMultiAsset, doRequest).subscribe(
           (response) => {
-            var doAssetList = response[0]["AssetListForDOMultiAssetObj"];
+            var doAssetList = response["AssetListForDOMultiAssetObj"];
             for (let selected of this.SelectedDOAssetList) {
               for (let item of doAssetList) {
                 if(selected.AppAssetId == item.AppAssetId){
@@ -143,8 +145,8 @@ export class CreateDoMultiAssetComponent implements OnInit {
 
   Save(){
     var formData = this.DeliveryOrderForm.value;
-    var doHeader = { "DeliveryOrderH": {...formData} };
-    var doDetails = { "DeliveryOrderDs": [] };
+    var DeliveryOrderH = {...formData};
+    var DeliveryOrderDs = [];
     var url = "";
     for (const item of this.SelectedDOAssetList) {
       var doDetailObj = {
@@ -153,9 +155,9 @@ export class CreateDoMultiAssetComponent implements OnInit {
         SeqNo: item.AssetSeqNo,
         AppAssetId: item.AppAssetId
       }
-      doDetails["DeliveryOrderDs"].push(doDetailObj);
+      DeliveryOrderDs.push(doDetailObj);
     }
-    var DOData = { doHeader, doDetails };
+    var DOData = { DeliveryOrderH, DeliveryOrderDs, RefOfficeId: this.context.OfficeId };
 
     if(this.Mode == "add"){
       url = AdInsConstant.AddDeliveryOrderMultiAsset;

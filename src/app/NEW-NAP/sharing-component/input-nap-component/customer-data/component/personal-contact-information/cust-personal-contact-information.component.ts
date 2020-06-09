@@ -252,7 +252,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
   }
 
   GenderChanged(event){
-    this.selectedGenderName = this.GenderObj.find(x => x.Key == event.value).Value;
+    this.selectedGenderName = event.target.options[event.target.options.selectedIndex].text;
   }
 
   RelationshipChanged(event){

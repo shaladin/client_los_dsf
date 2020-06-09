@@ -130,7 +130,7 @@ export class CustomerDataComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.initUrl();
-    this.bindCustTypeObj();
+    await this.bindCustTypeObj();
     this.initAddrObj();
     await this.getCustData();
   }
@@ -758,7 +758,7 @@ export class CustomerDataComponent implements OnInit {
     this.custDataObj.AppId = this.appId;
     await this.http.post(this.getCustDataUrl, this.custDataObj).toPromise().then(
       (response) => {
-        console.log(response);
+        // console.log(response);
         if (response != "") {
           if (response["AppCustObj"]["MrCustTypeCode"] == AdInsConstant.CustTypePersonal) {
             this.custDataPersonalObj = new CustDataPersonalObj();
@@ -815,6 +815,9 @@ export class CustomerDataComponent implements OnInit {
 
             this.MrCustTypeCode = this.custDataCompanyObj.AppCustObj.MrCustTypeCode;
           }
+        }
+        else{
+            this.MrCustTypeCode = this.CustTypeObj[0].Key;
         }
         this.isBindDataDone = true;
       },
@@ -1181,15 +1184,15 @@ export class CustomerDataComponent implements OnInit {
   //   });
   // }
 
-  bindCustTypeObj() {
+  async bindCustTypeObj() {
     this.refMasterObj.RefMasterTypeCode = "CUST_TYPE";
-    this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
+    await this.http.post(this.getRefMasterUrl, this.refMasterObj).toPromise().then(
       (response) => {
-        console.log(response);
+        // console.log(response);
         this.CustTypeObj = response["ReturnObject"];
-        if (this.CustTypeObj.length > 0) {
-          this.MrCustTypeCode = this.CustTypeObj[0].Key;
-        }
+        // if (this.CustTypeObj.length > 0) {
+        //   this.MrCustTypeCode = this.CustTypeObj[0].Key;
+        // }
       }
     );
   }
