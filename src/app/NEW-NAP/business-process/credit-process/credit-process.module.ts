@@ -41,6 +41,7 @@ import { UcviewgenericModule } from "@adins/ucviewgeneric";
 import { NgxCurrencyModule } from "ngx-currency";
 import { CreditApprovalDetailComponent } from './credit-approval/credit-approval-detail/credit-approval-detail.component';
 import { ViewAppComponentModule } from "app/NEW-NAP/sharing-component/view-app-component/view-app-component.module";
+import { ViewAppFraudVerificationComponent } from "app/NEW-NAP/sharing-component/view-app-component/view-app-fraud-verification/view-app-fraud-verification.component";
 
 
 export const customCurrencyMaskConfig = {
@@ -57,7 +58,8 @@ export const customCurrencyMaskConfig = {
 
 @NgModule({
   exports: [
-    ViewFraudDetectionResultComponent
+    ViewFraudDetectionResultComponent,
+    ViewAppFraudVerificationComponent
   ],
   imports: [
     CommonModule,
@@ -107,7 +109,8 @@ export const customCurrencyMaskConfig = {
     CreditReviewMainComponent,
     CreditInquiryComponent, 
     FraudVerificationMultiAssetComponent, 
-    CreditApprovalDetailComponent
+    CreditApprovalDetailComponent,
+    ViewAppFraudVerificationComponent
   ],
   providers: [
     NGXToastrService

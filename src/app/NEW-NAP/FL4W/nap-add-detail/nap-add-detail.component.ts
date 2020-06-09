@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -13,7 +13,7 @@ import { forkJoin } from 'rxjs';
   templateUrl: './nap-add-detail.component.html',
   providers: [NGXToastrService]
 })
-export class NapAddDetailComponent implements OnInit, AfterViewInit {
+export class NapAddDetailComponent implements OnInit {
 
   private stepper: Stepper;
   wfTaskListId: number;
@@ -27,7 +27,10 @@ export class NapAddDetailComponent implements OnInit, AfterViewInit {
   OnFormReturnInfo: boolean = false;
   IsMultiAsset: boolean = false;
   ListAsset: any;
-  mrCustTypeCode: string;
+  // mrCustTypeCode: string;
+
+  getApp: any;
+  // getAppCust: any;
 
   FormReturnObj = this.fb.group({
     ReturnExecNotes: ['']
@@ -67,32 +70,27 @@ export class NapAddDetailComponent implements OnInit, AfterViewInit {
     this.ClaimTask();
     this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppFL4WMainInformation.json";
     this.NapObj.AppId = this.appId;
-    let getApp = this.http.post(AdInsConstant.GetAppById, this.NapObj);
-    let getAppCust = this.http.post(AdInsConstant.GetAppCustByAppId, this.NapObj);
-    forkJoin([getApp, getAppCust]).subscribe(
+    this.getApp = this.http.post(AdInsConstant.GetAppById, this.NapObj);
+    // this.getAppCust = this.http.post(AdInsConstant.GetAppCustByAppId, this.NapObj);
+    forkJoin([this.getApp]).subscribe(
       (response) => {
         var appObj = response[0];
+        this.stepper = new Stepper(document.querySelector('#stepper1'), {
+          linear: false,
+          animation: true
+        });
         if (response) {
           this.AppStepIndex = this.AppStep[appObj["AppCurrStep"]];
           this.stepper.to(this.AppStepIndex);
-          console.log(this.AppStepIndex);
+          console.log(this.stepper);
         } else {
           this.AppStepIndex = 0;
           this.stepper.to(this.AppStepIndex);
-          console.log(this.AppStepIndex);
+          console.log(this.stepper);
         }
-        this.mrCustTypeCode = response[1]["MrCustTypeCode"];
       }
     );
-
     this.MakeViewReturnInfoObj();
-  }
-
-  ngAfterViewInit(): void {
-    this.stepper = new Stepper(document.querySelector('#stepper1'), {
-      linear: false,
-      animation: true
-    })
   }
 
   MakeViewReturnInfoObj() {
@@ -128,7 +126,7 @@ export class NapAddDetailComponent implements OnInit, AfterViewInit {
         console.error("Error when updating AppStep");
         console.error(error);
       }
-    )
+    );
   }
 
   LastStepHandler() {

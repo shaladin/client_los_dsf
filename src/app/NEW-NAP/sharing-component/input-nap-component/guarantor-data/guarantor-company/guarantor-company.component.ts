@@ -180,14 +180,26 @@ export class GuarantorCompanyComponent implements OnInit {
     this.isReady = true;
   }
 
+  setCriteriaLookupCustomer(custTypeCode) {
+    var arrCrit = new Array();
+    var critObj = new CriteriaObj();
+    critObj.DataType = 'text';
+    critObj.restriction = AdInsConstant.RestrictionEq;
+    critObj.propName = 'MR_CUST_TYPE_CODE';
+    critObj.value = custTypeCode;
+    arrCrit.push(critObj);
+    this.inputLookupObj.addCritInput = arrCrit;
+  }
+
   initLookup(){
     this.inputLookupObj = new InputLookupObj();
-    this.inputLookupObj.urlJson = "./assets/uclookup/lookupGuarantorCompany.json";
+    this.inputLookupObj.urlJson = "./assets/uclookup/lookupCustomer.json";
     this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.inputLookupObj.pagingJson = "./assets/uclookup/lookupGuarantorCompany.json";
-    this.inputLookupObj.genericJson = "./assets/uclookup/lookupGuarantorCompany.json";
+    this.inputLookupObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
+    this.inputLookupObj.genericJson = "./assets/uclookup/lookupCustomer.json";
     this.inputLookupObj.isReadonly =false;
+    this.setCriteriaLookupCustomer(AdInsConstant.CustTypeCompany);
 
     this.inputLookupObj1 = new InputLookupObj();
     this.inputLookupObj1.urlJson = "./assets/uclookup/lookupIndustryType.json";

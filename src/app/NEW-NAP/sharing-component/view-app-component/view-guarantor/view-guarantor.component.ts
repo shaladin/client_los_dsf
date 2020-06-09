@@ -26,17 +26,17 @@ export class GuarantorComponent implements OnInit {
   }
 
   setValue(){ 
-    this.http.post(AdInsConstant.GetListAppGuarantor, {AppId:this.AppId}).subscribe(
-      (response) => {
-        console.log(response);
-        this.listAppGuarantor = response["ReturnObject"];
-        console.log(this.listAppGuarantor);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );    
-    this.http.post(AdInsConstant.GetListAppGuarantorPersonalByAppId, {AppId:this.AppId}).subscribe(
+    // this.http.post(AdInsConstant.GetListAppGuarantor, {AppId:this.AppId}).subscribe(
+    //   (response) => {
+    //     console.log(response);
+    //     this.listAppGuarantor = response["ReturnObject"];
+    //     console.log(this.listAppGuarantor);
+    //   },
+    //   (error) => {
+    //     console.log(error);
+    //   }
+    // );    
+    this.http.post(AdInsConstant.GetListAppGuarantorPersonalForView, {AppId:this.AppId}).subscribe(
       (response) => {
         console.log(response);
         this.listAppGuarantorPersonal = response["ReturnObject"];
@@ -46,7 +46,7 @@ export class GuarantorComponent implements OnInit {
       }
     );
 
-    this.http.post(AdInsConstant.GetListAppGuarantorCompanyByAppId, {AppId:this.AppId}).subscribe(
+    this.http.post(AdInsConstant.GetListAppGuarantorCompanyForView, {AppId:this.AppId}).subscribe(
       (response) => {
         console.log(response);
         this.listAppGuarantorCompany = response["ReturnObject"];
