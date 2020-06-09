@@ -12,14 +12,14 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class DeliveryOrderMultiAssetComponent implements OnInit {
   inputPagingObj: UcPagingObj;
-  lobCode: string;
+  bizTemplateCode: string;
   
   constructor(
     private route: ActivatedRoute
   ) { 
     this.route.queryParams.subscribe(params => {
-      if (params['LobCode'] != null) {
-        this.lobCode = params['LobCode'];
+      if (params['BizTemplateCode'] != null) {
+        this.bizTemplateCode = params['BizTemplateCode'];
       }
     });
   }
@@ -32,19 +32,20 @@ export class DeliveryOrderMultiAssetComponent implements OnInit {
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchDeliveryOrderMultiAsset.json";
 
     var criteriaList = new Array();
+    
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionEq;
-    critObj.propName = 'AG.AGRMNT_CURR_STEP';
-    // critObj.value = "DELIVERY_ORDER";
-    critObj.value = "DO";
-    criteriaList.push(critObj);
+    critObj.propName = 'WF.ACT_CODE';
+    critObj.value = "DO_" + this.bizTemplateCode;
 
-    critObj = new CriteriaObj();
-    critObj.restriction = AdInsConstant.RestrictionEq;
-    critObj.propName = 'AP.LOB_CODE';
-    critObj.value = this.lobCode;
-    criteriaList.push(critObj);
-    this.inputPagingObj.addCritInput = criteriaList;
+    this.inputPagingObj.addCritInput.push(critObj);
+
+    var critBizTemplate = new CriteriaObj();
+    critBizTemplate.restriction = AdInsConstant.RestrictionEq;
+    critBizTemplate.propName = 'AP.BIZ_TEMPLATE_CODE';
+    critBizTemplate.value = this.bizTemplateCode;
+
+    this.inputPagingObj.addCritInput.push(critBizTemplate);
   }
 
 }

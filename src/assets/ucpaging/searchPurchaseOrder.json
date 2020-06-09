@@ -48,6 +48,10 @@
         "from": "FROM dbo.APP A WITH(NOLOCK) JOIN dbo.AGRMNT AGR WITH(NOLOCK) ON AGR.APP_ID = A.APP_ID JOIN dbo.V_WF_TASK_LIST WF WITH(NOLOCK) ON WF.TRANSACTION_CODE = AGR.AGRMNT_NO",
         "where" : "WHERE WF.END_EXECUTING_DATE IS NULL"
     },
+    "orderby": {
+        "key": "A.APP_NO", 
+        "value": "false"
+    },
     "headerList": [
         {
             "type": "sort",
@@ -92,10 +96,18 @@
             "property": "Username"
         },
         {
-            "type": "text",
+            "type": "link",
             "position": "left",
-            "property": "AppNo"
-        },
+            "property": "AppNo",
+            "target" : "_blank",
+            "path": "/Nap/View/AppView",
+            "param": [
+              {
+                "type": "AppId",
+                "property": "AppId"
+              }
+            ]
+          },
         {
             "type": "text",
             "position": "left",
