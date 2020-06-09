@@ -773,12 +773,15 @@ export class AdInsConstant {
   public static EditDeliveryOrderMultiAsset = environment.losUrl + "/DeliveryOrder/EditDeliveryOrderMultiAsset";
   public static GetDeliveryOrderHByDeliveryOrderHId = environment.losUrl + "/DeliveryOrder/GetDeliveryOrderHByDeliveryOrderHId";
   public static GetDeliveryOrderDataForOneAssetByAgrmntId = environment.losUrl + "/DeliveryOrder/GetDeliveryOrderDataForOneAssetByAgrmntId";
+  public static SubmitDeliveryOrderMultiAsset = environment.losUrl + "/DeliveryOrder/SubmitDeliveryOrderMultiAsset";
 
   //PURCHASE ORDER
   public static SubmitPurchaseOrder = environment.losUrl + "/PurchaseOrderH/SubmitPurchaseOrder";
   public static ResumeWorkflowPurchaseOrder = environment.losUrl + "/PurchaseOrderH/ResumeWorkflowPurchaseOrder";
   public static GetPurchaseOrderHDetailViewByAgrmntId = environment.losUrl + "/PurchaseOrderH/GetPurchaseOrderHDetailViewByAgrmntId";
   public static GetPurchaseOrderHByAgrmntId = environment.losUrl + "/PurchaseOrderH/GetPurchaseOrderHByAgrmntId";
+  public static GetListPurchaseOrderHByAgrmntId = environment.losUrl + "/PurchaseOrderH/GetListPurchaseOrderHByAgrmntId"
+  public static GetPurchaseOrderHDetailViewMultiAssetByAgrmntId = environment.losUrl + "/PurchaseOrderH/GetPurchaseOrderHDetailViewMultiAssetByAgrmntId"
   // LEAD
   public static AddEditLeadCustPersonal = environment.losUrl + "/LeadCust/AddEditLeadCustPersonal";
   public static AddEditLeadData = environment.losUrl + "/Lead/AddEditLeadData";
