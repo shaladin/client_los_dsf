@@ -1,0 +1,30 @@
+<table class="table table-responsive-md text-center table-hover">
+  <thead>
+    <tr class="table-header">
+      <th class="text-left"><span class="thead-header" translate>Delivery Order No
+        </span> </th>
+      <th class="text-left"><span class="thead-header" translate>Delivery Date
+        </span> </th>
+      <th class="text-left"><span class="thead-header" translate>Cust Relationship
+        </span> </th>
+      <th class="text-left"><span class="thead-header" translate>Recipient Name
+        </span> </th>
+      <th class="text-left"><span class="thead-header" translate>Recipient Address
+        </span> </th>
+      <th class="text-left"><span class="thead-header" translate>Detail
+        </span> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let item of doList">
+      <tr>
+        <td class="text-center">{{item.DeliveryNo}}</td>
+        <td class="text-center">{{item.DeliveryDt}}</td>
+        <td class="text-center">{{item.MrCustRelationshipCode}}</td>
+        <td class="text-center">{{item.RecipientName}}</td>
+        <td class="text-center">{{item.DeliveryAddr}}</td>
+      </tr>
+    </ng-container>
+  </tbody>
+
+</table>

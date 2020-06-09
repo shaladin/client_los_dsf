@@ -5,6 +5,8 @@ import { NapAddComponent } from './nap-add/nap-add.component';
 import { NapPagingComponent } from './nap-paging/nap-paging.component';
 import { NapAddDetailComponent } from './nap-add-detail/nap-add-detail.component';
 import { ViewAgrmntComponent } from './view-agrmnt/view-agrmnt.component';
+import { ViewDeliveryOrderMultiAssetComponent } from './view-agrmnt/view-delivery-order-multi-asset/view-delivery-order-multi-asset.component';
+import { ViewDeliveryOrderDetailComponent } from './view-agrmnt/view-delivery-order-multi-asset/view-delivery-order-detail/view-delivery-order-detail.component';
 
 const routes: Routes = [
   {
@@ -42,6 +44,20 @@ const routes: Routes = [
           title: 'AddDetail'
         }
       },
+      {
+        path: 'ViewDo',
+        component: ViewDeliveryOrderMultiAssetComponent,
+        data: {
+          title: 'View DO'
+        }
+      },
+      {
+        path: 'ViewDo/Detail',
+        component: ViewDeliveryOrderDetailComponent,
+        data: {
+          title: 'View DO'
+        }
+      }
     ]
   }
 ];

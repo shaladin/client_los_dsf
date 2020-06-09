@@ -41,6 +41,8 @@ import { SubsidyFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/compo
 import { SubsidyAddEditFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/subsidy-add-edit/subsidy-add-edit-FL4W.component";
 import { FinancialDataFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/financial-data-FL4W.component";
 import { MultiCollDataComponent } from "../sharing-component/input-nap-component/collateral-data/multi-coll-data/multi-coll-data.component";
+import { ViewDeliveryOrderMultiAssetComponent } from './view-agrmnt/view-delivery-order-multi-asset/view-delivery-order-multi-asset.component';
+import { ViewDeliveryOrderDetailComponent } from './view-agrmnt/view-delivery-order-multi-asset/view-delivery-order-detail/view-delivery-order-detail.component';
  
 export const customCurrencyMaskConfig = {     
   align: "right",     
@@ -104,7 +106,9 @@ export const customCurrencyMaskConfig = {
     SchmStepUpStepDownNormalFL4WComponent,
     SubsidyFL4WComponent,
     SubsidyAddEditFL4WComponent,
-    FinancialDataFL4WComponent
+    FinancialDataFL4WComponent,
+    ViewDeliveryOrderMultiAssetComponent,
+    ViewDeliveryOrderDetailComponent
   ],
   providers: [
     NGXToastrService
