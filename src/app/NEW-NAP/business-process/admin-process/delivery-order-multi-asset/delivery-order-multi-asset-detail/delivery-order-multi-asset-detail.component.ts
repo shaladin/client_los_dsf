@@ -281,7 +281,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
       this.toastr.errorMessage("All Asset Must Be Processed to Submit");
     }
     else{
-      this.httpClient.post(AdInsConstant.SubmitDeliveryOrderMultiAsset, { TaskListId: this.wfTaskListId }).subscribe(
+      this.httpClient.post(AdInsConstant.SubmitDeliveryOrderMultiAsset, { TaskListId: this.wfTaskListId, AgrmntId: this.agrmntId }).subscribe(
         (response) => {
           this.toastr.successMessage(response["Message"]);
           this.router.navigate(['/Nap/FinanceLeasing/AdminProcess/DeliveryOrder/Paging'], { queryParams: { LobCode: 'FL4W' }});
