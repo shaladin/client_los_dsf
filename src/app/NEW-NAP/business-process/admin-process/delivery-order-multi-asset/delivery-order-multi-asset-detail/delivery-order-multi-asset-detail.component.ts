@@ -93,6 +93,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
             DeliveryDt : [item.DeliveryDt],
             IsAvailable : [item.IsAvailable],
             ManufacturingYear: [item.ManufacturingYear],
+            TempLetterNo: [item.TempLetterNo],
             IsSelected: false
           });
           formArray.push(formGroup);
@@ -240,6 +241,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
               DeliveryDt : [item.DeliveryDt],
               IsAvailable : [item.IsAvailable],
               ManufacturingYear: [item.ManufacturingYear],
+              TempLetterNo: [item.TempLetterNo],
               IsSelected: false
             });
             formArray.push(formGroup);
@@ -281,9 +283,12 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
       this.toastr.errorMessage("All Asset Must Be Processed to Submit");
     }
     else{
-      this.httpClient.post(AdInsConstant.SubmitDeliveryOrderMultiAsset, { TaskListId: this.wfTaskListId }).subscribe(
+      var tcFormData = this.AppTcForm.value.TCList;
+      let editTc = this.httpClient.post(AdInsConstant.EditAppTc, tcFormData);
+      let submitDO = this.httpClient.post(AdInsConstant.SubmitDeliveryOrderMultiAsset, { TaskListId: this.wfTaskListId });
+      forkJoin([editTc, submitDO]).subscribe(
         (response) => {
-          this.toastr.successMessage(response["Message"]);
+          this.toastr.successMessage(response[1]["Message"]);
           this.router.navigate(['/Nap/FinanceLeasing/AdminProcess/DeliveryOrder/Paging'], { queryParams: { LobCode: 'FL4W' }});
         },
         (error) => {
