@@ -9,6 +9,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CreateDoMultiAssetComponent } from '../create-do-multi-asset/create-do-multi-asset.component';
 import { map, mergeMap } from 'rxjs/operators';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-delivery-order-multi-asset-detail',
@@ -25,6 +26,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
   isCreateDOInvalid: boolean;
   createDOInvalidMsg: string;
   arrValue: Array<any> = new Array<any>();
+  wfTaskListId: number;
 
   DOAssetForm = this.fb.group({
     DOAssetList: this.fb.array([])
@@ -39,7 +41,8 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private modalService: NgbModal,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private location: Location
   ) { 
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
@@ -47,6 +50,9 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
       }
       if (params['AgrmntId'] != null) {
         this.agrmntId = params['AgrmntId'];
+      }
+      if(params['WfTaskListId'] != null){
+        this.wfTaskListId = params['WfTaskListId'];
       }
     });
   }
@@ -57,6 +63,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
     var getDOList = this.httpClient.post(AdInsConstant.GetListDeliveryOrderHByAppIdAgrmntId, doRequest);
     forkJoin([getDOAssetList, getDOList]).subscribe(
       (response) => {
+        console.log("DO List: " + JSON.stringify(response[1]));
         this.doAssetList = response[0]["AssetListForDOMultiAssetObj"];
         this.custType = response[0]["MrCustTypeCode"];
         this.licensePlateAttr = response[0]["LicensePlateAttr"];
@@ -231,6 +238,10 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
     }
   }
 
+  Back(){
+    this.location.back();
+  }
+
   SaveForm(){
     if(this.doList.length > 0){
       var tcFormData = this.AppTcForm.value.TCList;
@@ -245,7 +256,24 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
       );
     }
     else{
-      alert("At Least 1 Delivery Order Needed To Submit");
+      this.toastr.errorMessage("At Least 1 Delivery Order Needed To Save");
+    }
+  }
+
+  DOSubmitHandler(){
+    if(this.doList.length != this.doAssetList.length){
+      this.toastr.errorMessage("All Asset Must Be Processed to Submit");
+    }
+    else{
+      this.httpClient.post(AdInsConstant.SubmitDeliveryOrderMultiAsset, { TaskListId: this.wfTaskListId }).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["Message"]);
+          this.router.navigate(['/Nap/FinanceLeasing/AdminProcess/DeliveryOrder/Paging'], { queryParams: { LobCode: 'FL4W' }});
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     }
   }
 
