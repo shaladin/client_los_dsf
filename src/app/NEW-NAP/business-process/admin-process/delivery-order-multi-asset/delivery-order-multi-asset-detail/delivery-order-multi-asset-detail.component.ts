@@ -44,6 +44,8 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private location: Location
   ) { 
+    this.doList = new Array();
+    this.doAssetList = new Array();
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
         this.appId = params['AppId'];
@@ -58,12 +60,16 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.wfTaskListId != null || this.wfTaskListId != undefined){
+      this.claimTask();
+    }
+      
     var doRequest = { AppId: this.appId, AgrmntId: this.agrmntId };
     let getDOAssetList = this.httpClient.post(AdInsConstant.GetAssetListForDOMultiAsset, doRequest);
-    var getDOList = this.httpClient.post(AdInsConstant.GetListDeliveryOrderHByAppIdAgrmntId, doRequest);
+    let getDOList = this.httpClient.post(AdInsConstant.GetListDeliveryOrderHByAppIdAgrmntId, doRequest);
     forkJoin([getDOAssetList, getDOList]).subscribe(
       (response) => {
-        console.log("DO List: " + JSON.stringify(response[1]));
+        // console.log("DO List: " + JSON.stringify(response[1]));
         this.doAssetList = response[0]["AssetListForDOMultiAssetObj"];
         this.custType = response[0]["MrCustTypeCode"];
         this.licensePlateAttr = response[0]["LicensePlateAttr"];
@@ -93,6 +99,16 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
         }
       }
     );
+  }
+
+  async claimTask()
+  {
+    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    var wfClaimObj = { pWFTaskListID: this.wfTaskListId, pUserID: currentUserContext["UserName"]};
+    console.log(wfClaimObj);
+    this.httpClient.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+      (response) => {
+      });
   }
 
   showModalDO(formArray: FormArray, mode: string, deliveryOrderHId: number){
