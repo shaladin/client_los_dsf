@@ -45,7 +45,7 @@
                     <div class="col-md-8">
                       <input *ngIf="PersonalForm.controls.MrIdTypeCode.value == 'EKTP'" readonly type="date" class="form-control" id="idExpDt" formControlName="IdExpDt"
                              [ngClass]="{ 'is-invalid': enjiForm.submitted && PersonalForm.controls.IdExpDt.invalid}">
-                      <input *ngIf="PersonalForm.controls.MrIdTypeCode.value != 'EKTP'" type="date" class="form-control" id="idExpDt" formControlName="IdExpDt"
+                      <input *ngIf="PersonalForm.controls.MrIdTypeCode.value != 'EKTP'" type="date" min="{{MaxDate | date:'yyyy-MM-dd'}}" class="form-control" id="idExpDt" formControlName="IdExpDt"
                              [ngClass]="{ 'is-invalid': enjiForm.submitted && PersonalForm.controls.IdExpDt.invalid}">
                       <lib-uc-show-errors [control]="PersonalForm.controls.IdExpDt" [submit]="enjiForm.submitted">
                       </lib-uc-show-errors>
