@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { DeliveryOrderHObj } from 'app/shared/model/DeliveryOrderHObj.Model';
-
 @Component({
   selector: 'app-view-delivery-order-multi-asset',
   templateUrl: './view-delivery-order-multi-asset.component.html',
@@ -11,7 +10,7 @@ import { DeliveryOrderHObj } from 'app/shared/model/DeliveryOrderHObj.Model';
 })
 export class ViewDeliveryOrderMultiAssetComponent implements OnInit {
   AgrmntId: number;
-  doList: any;
+  doList: Array<any>;
   AppId: number;
   GetListDeliveryOrderHByAppIdAgrmntId: string;
 
@@ -27,7 +26,7 @@ export class ViewDeliveryOrderMultiAssetComponent implements OnInit {
 
   }
 
-  ngOnInit() {
+  async ngOnInit(){
     console.log('viewmulti')
     this.GetListDeliveryOrderHByAppIdAgrmntId = AdInsConstant.GetListDeliveryOrderHByAppIdAgrmntId;
     var doObj = new DeliveryOrderHObj();
@@ -37,6 +36,8 @@ export class ViewDeliveryOrderMultiAssetComponent implements OnInit {
       (response) => { 
        this.doList = response["DeliveryOrderHObjs"];
       });
-  }
-
+      (error) =>{
+        console.log('error');
+      }
+  } 
 }

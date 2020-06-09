@@ -112,8 +112,9 @@ export const customCurrencyMaskConfig = {
     FinancialDataFL4WComponent,
     ViewDeliveryOrderMultiAssetComponent,
     ViewDeliveryOrderDetailComponent,
-    ViewDeliveryOrderAssetDetailComponent
-    ViewPurchaseOrderMultiAssetComponent, ViewPurchaseOrderMultiAssetDetailComponent 
+    ViewDeliveryOrderAssetDetailComponent,
+    ViewPurchaseOrderMultiAssetComponent, 
+    ViewPurchaseOrderMultiAssetDetailComponent 
   ],
   providers: [
     NGXToastrService

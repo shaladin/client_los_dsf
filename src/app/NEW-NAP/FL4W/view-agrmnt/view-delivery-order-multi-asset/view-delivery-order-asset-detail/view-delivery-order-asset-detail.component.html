@@ -1,26 +1,77 @@
-<div class="form-group row">
-  <label class="col-md-2 adInsLabel" translate>Serial No 1</label>
-  <label class="col-md-2 adInsLabel" translate>{{assetData["ResponseAppCollateralObj"].SerialNo1 }} </label>
-</div>
-<div class="form-group row">
-  <label class="col-md-2 adInsLabel" translate>Serial No 2</label>
-  <label class="col-md-2 adInsLabel" translate>{{assetData["ResponseAppCollateralObj"].SerialNo2}} </label>
-</div>
-<div class="form-group row">
-  <label class="col-md-2 adInsLabel" translate>Lisence Plate No</label>
-  <label class="col-md-2 adInsLabel" translate>{{assetData["ResponseAppCollateralObj"].SerialNo3}} </label>
-</div>
-<div class="form-group row">
-  <label class="col-md-2 adInsLabel" translate>Manufacturing Year</label>
-  <label class="col-md-2 adInsLabel" translate>{{assetData["ResponseAppCollateralObj"].ManufacturingYear}} </label>
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="card-header header-title">
+          <div class="row">
+            <div class="col-md-8">
+              <h4 class="card-title" id="horz-layout-colored-controls" translate>ASSET DETAIL
+              </h4>
+            </div>
+          </div>
+        </div>
+        <div class="px-3">
+          <lib-ucSubsection [title]="'ASSET INFORMATION'" [panel]="'AssetPanel'">
+          </lib-ucSubsection>
+          <div id="AssetPanel">
+            <div class="form-group row">
+              <label class="col-md-3 adInsLabel" translate>Serial No 1</label>
+              <label class="col-md-3 adInsLabel" translate>{{assetData?.ResponseAppCollateralObj?.SerialNo1 }} </label>
+              <label class="col-md-3 adInsLabel" translate>Lisence Plate No</label>
+              <label class="col-md-3 adInsLabel" translate>{{assetData?.ResponseAppCollateralObj?.SerialNo3 }} </label>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 adInsLabel" translate>Serial No 2</label>
+              <label class="col-md-3 adInsLabel" translate>{{assetData?.ResponseAppCollateralObj?.SerialNo2}} </label>
+              <label class="col-md-3 adInsLabel" translate>Manufacturing Year</label>
+              <label class="col-md-3 adInsLabel" translate>{{assetData?.ResponseAppCollateralObj?.ManufacturingYear}}
+              </label>
+            </div>
+          </div>
+          <lib-ucSubsection [title]="'MAIN DOCUMENT LETTER'" [panel]="'DocPanel'">
+          </lib-ucSubsection>
+          <div id="DocPanel">
+            <div class="form-group row">
+              <label class="col-md-3 adInsLabel" translate>Temporary Registration Letter No</label>
+              <label class="col-md-3 adInsLabel" translate>{{assetData?.ResponseAppAssetObj?.TempRegisLettNo}} </label>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 adInsLabel" translate>Temporary Registration Letter Date</label>
+              <label class="col-md-3 adInsLabel" translate>{{assetData?.ResponseAppAssetObj?.TempRegisLettDt  | date: 'dd-MM-yyyy'}} </label>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
+<!-- <lib-ucgridview [gridInput]="inputGridObj"></lib-ucgridview> -->
 
-<div class="form-group row">
-  <label class="col-md-2 adInsLabel" translate>Temporary Registration Letter No</label>
-  <label class="col-md-2 adInsLabel" translate>{{assetData["ResponseAppAssetObj"].TempRegisLettNo}} </label>
-</div>
-<div class="form-group row">
-  <label class="col-md-2 adInsLabel" translate>Temporary Registration Letter Date</label>
-  <label class="col-md-2 adInsLabel" translate>{{assetData["ResponseAppAssetObj"].TempRegisLettDt}} </label>
-</div>
+
+<!-- 
+<lib-ucSubsection [id]="'custSocmedId'" [title]="'Social Media Id'" [panel]="'custSocmed'">
+</lib-ucSubsection>
+<div id="custSocmed">
+  <table class="table table-responsive-md text-center table-hover">
+    <thead>
+      <tr class="table-header">
+        <th class="text-center"><span class="thead-header" translate>Document Name
+          </span> </th>
+        <th class="text-center"><span class="thead-header" translate>Value Needed
+          </span> </th>
+        <th class="text-center"><span class="thead-header" translate>Mandatory
+          </span> </th>
+        <th class="text-center"><span class="thead-header" translate>Checked
+          </span> </th>
+        <th class="text-center"><span class="thead-header" translate>Document No
+          </span> </th>
+        <th class="text-center"><span class="thead-header" translate>Notes
+          </span> </th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let item of doList">
+        <tr>
+          <td class="text-center">{{item.DeliveryNo}}</td>
+      </tbody>
+</div> -->

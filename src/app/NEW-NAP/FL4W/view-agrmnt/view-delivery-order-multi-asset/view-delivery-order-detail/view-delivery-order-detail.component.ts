@@ -3,6 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { DeliveryOrderHObj } from 'app/shared/model/DeliveryOrderHObj.Model';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ViewDeliveryOrderAssetDetailComponent } from '../view-delivery-order-asset-detail/view-delivery-order-asset-detail.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-view-delivery-order-detail',
@@ -16,7 +19,7 @@ export class ViewDeliveryOrderDetailComponent implements OnInit {
   GetDeliveryOrderHByDeliveryOrderHId: string;
   doData: Object;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private modalService: NgbModal, private spinner: NgxSpinnerService) {
     this.route.queryParams.subscribe(params => {
       if (params['DOHId'] != null) {
         this.DOHId = params['DOHId'];
@@ -24,7 +27,7 @@ export class ViewDeliveryOrderDetailComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit(){
     console.log('viewmultidetail')
     this.GetListAppAssetByDOHId = AdInsConstant.GetListAppAssetByDOHId;
     this.GetDeliveryOrderHByDeliveryOrderHId = AdInsConstant.GetDeliveryOrderHByDeliveryOrderHId;
@@ -41,4 +44,18 @@ export class ViewDeliveryOrderDetailComponent implements OnInit {
       });
   }
 
+  openModal(appAssetId) {
+    const modalMouFee = this.modalService.open(ViewDeliveryOrderAssetDetailComponent);
+    modalMouFee.componentInstance.AppAssetId = appAssetId;
+    modalMouFee.result.then(
+      (response) => {
+        this.spinner.show();
+        // this.spinner.hide();
+      }
+    ).catch((error) => {
+      if (error != 0) {
+        console.log(error);
+      }
+    });
+  }
 }
