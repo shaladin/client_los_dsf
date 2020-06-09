@@ -147,9 +147,7 @@ export class NapAddDetailComponent implements OnInit {
       case AdInsConstant.AppStepTC:
         this.AppStepIndex = this.AppStep[AdInsConstant.AppStepTC];
         break;
-        case "SUBMIT":
-          this.router.navigate(["Nap/FinanceLeasing/Paging?BizTemplateCode=FL4W"], { queryParams: { BizTemplateCode: AdInsConstant.FL4W } });
-          break;
+
       default:
         break;
     }
@@ -171,11 +169,10 @@ export class NapAddDetailComponent implements OnInit {
   }
   LastStepHandler() {
     this.NapObj.WfTaskListId = this.wfTaskListId;
-    
     this.http.post(AdInsConstant.SubmitNAP, this.NapObj).subscribe(
       (response) => {
         console.log(response);
-        this.router.navigate(["/Nap/ConsumerFinance/Paging"], { queryParams: { LobCode: "CF4W" } })
+        this.router.navigate(["/Nap/Factoring/Paging"])
       },
       (error) => {
         console.log(error);
@@ -184,7 +181,6 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   Submit() {
-    this.ClaimTask();
     if (this.mode == AdInsConstant.ModeResultHandling) {
       var obj = {
         ReturnHandlingDId: this.ResponseReturnInfoObj.ReturnHandlingDId,
