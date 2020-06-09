@@ -10,15 +10,44 @@
       <th class="text-left"><span class="thead-header" translate>Lisence Plate No</span> </th>
       <th class="text-left"><span class="thead-header" translate>Manufacturing Year</span> </th>
       <th class="text-left"><span class="thead-header" translate>Temp Letter No</span> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let item of assetDetailList; let i = index">
+      <tr>
+        <td class="text-center">{{i+1}}</td>
+        <td class="text-center">{{item.FullAssetName}}</td>
+        <td class="text-center">{{item.AssetPriceAmt | number}}</td>
+        <td class="text-center">{{item.DownPaymentAmt | number}}</td>
+        <td class="text-center">{{item.SerialNo1}}</td>
+        <td class="text-center">{{item.SerialNo2}}</td>
+        <td class="text-center">{{item.SerialNo3}}</td>
+        <td class="text-center">{{item.ManufacturingYear}}</td>
+        <td class="text-center">{{item.TempRegisLettNo}}</td>
       </tr>
-</thead>
-<tbody>
-  <ng-container *ngFor="let item of doDetailList">
-    <tr>
-      <td class="text-center">{{item.DeliveryNo}}</td>
+    </ng-container>
+  </tbody>
+</table>
 
-      </tr>
-      </ng-container>
-      </tbody>
-      </table>
 
+
+<div class="form-group row">
+  <label class="col-md-2 adInsLabel" translate>Delivery Date </label>
+  <label class="col-md-2 adInsLabel" translate>{{doData.DeliveryDt | date: 'dd-MM-yyyy'}} </label>
+</div>
+<div class="form-group row">
+  <label class="col-md-2 adInsLabel" translate>Customer Relationship </label>
+  <label class="col-md-2 adInsLabel" translate>{{doData.MrCustRelationshipCode}} </label>
+</div>
+<div class="form-group row">
+  <label class="col-md-2 adInsLabel" translate>Delivery Order No </label>
+  <label class="col-md-2 adInsLabel" translate>{{doData.DeliveryNo}} </label>
+</div>
+<div class="form-group row">
+  <label class="col-md-2 adInsLabel" translate>Recipient Name </label>
+  <label class="col-md-2 adInsLabel" translate>{{doData.RecipientName}} </label>
+</div>
+<!-- <div class="form-group row">
+  <label class="col-md-2 adInsLabel" translate>Recipient Notes </label>
+  <label class="col-md-2 adInsLabel" translate>{{doData.}} </label>
+</div> -->

@@ -43,6 +43,7 @@ import { FinancialDataFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W
 import { MultiCollDataComponent } from "../sharing-component/input-nap-component/collateral-data/multi-coll-data/multi-coll-data.component";
 import { ViewDeliveryOrderMultiAssetComponent } from './view-agrmnt/view-delivery-order-multi-asset/view-delivery-order-multi-asset.component';
 import { ViewDeliveryOrderDetailComponent } from './view-agrmnt/view-delivery-order-multi-asset/view-delivery-order-detail/view-delivery-order-detail.component';
+import { ViewDeliveryOrderAssetDetailComponent } from './view-agrmnt/view-delivery-order-multi-asset/view-delivery-order-asset-detail/view-delivery-order-asset-detail.component';
  
 export const customCurrencyMaskConfig = {     
   align: "right",     
@@ -108,7 +109,8 @@ export const customCurrencyMaskConfig = {
     SubsidyAddEditFL4WComponent,
     FinancialDataFL4WComponent,
     ViewDeliveryOrderMultiAssetComponent,
-    ViewDeliveryOrderDetailComponent
+    ViewDeliveryOrderDetailComponent,
+    ViewDeliveryOrderAssetDetailComponent
   ],
   providers: [
     NGXToastrService

@@ -11,13 +11,17 @@ import { DeliveryOrderHObj } from 'app/shared/model/DeliveryOrderHObj.Model';
 })
 export class ViewDeliveryOrderMultiAssetComponent implements OnInit {
   AgrmntId: number;
-  GetDeliveryOrderHByAgrmntId: string;
   doList: any;
+  AppId: number;
+  GetListDeliveryOrderHByAppIdAgrmntId: string;
 
   constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
       if (params['AgrmntId'] != null) {
         this.AgrmntId = params['AgrmntId'];
+      }
+      if (params['AppId'] != null) {
+        this.AppId = params['AppId'];
       }
     });
 
@@ -25,10 +29,11 @@ export class ViewDeliveryOrderMultiAssetComponent implements OnInit {
 
   ngOnInit() {
     console.log('viewmulti')
-    this.GetDeliveryOrderHByAgrmntId = AdInsConstant.GetDeliveryOrderHByAgrmntId;
+    this.GetListDeliveryOrderHByAppIdAgrmntId = AdInsConstant.GetListDeliveryOrderHByAppIdAgrmntId;
     var doObj = new DeliveryOrderHObj();
     doObj.AgrmntId = this.AgrmntId;
-    this.http.post(this.GetDeliveryOrderHByAgrmntId, doObj).subscribe(
+    doObj.AppId = this.AppId;
+    this.http.post(this.GetListDeliveryOrderHByAppIdAgrmntId, doObj).subscribe(
       (response) => { 
        this.doList = response["DeliveryOrderHObjs"];
       });
