@@ -74,6 +74,10 @@
     "from": "FROM dbo.APP A WITH(NOLOCK) JOIN dbo.APP_CUST AC WITH(NOLOCK) ON A.APP_ID = AC.APP_ID JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON a.APP_NO = WTL.TRANSACTION_CODE",
     "where": "WHERE WTL.END_EXECUTING_DATE IS NULL"
   },
+  "orderby": {
+      "key": "A.APP_NO", 
+      "value": "false"
+  },
   "headerList": [
     {
       "type": "sort",
