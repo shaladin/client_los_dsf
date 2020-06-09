@@ -48,6 +48,10 @@
         "from": "FROM dbo.AGRMNT agr WITH(NOLOCK) JOIN dbo.APP app WITH(NOLOCK) ON app.APP_ID = agr.APP_ID JOIN dbo.V_WF_TASK_LIST wFht WITH(NOLOCK) ON agr.AGRMNT_NO = wFht.TRANSACTION_CODE",
         "where" : "WHERE wFht.END_EXECUTING_DATE IS NULL"
     },
+    "orderby": {
+        "key": "app.APP_NO", 
+        "value": "false"
+    },
     "headerList": [
         {
             "type": "sort",
