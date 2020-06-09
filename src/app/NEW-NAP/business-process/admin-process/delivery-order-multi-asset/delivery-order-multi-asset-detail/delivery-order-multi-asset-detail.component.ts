@@ -277,11 +277,12 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
 
   SaveForm(){
     if(this.doList.length > 0){
-      var tcFormData = this.AppTcForm.value.TCList;
+      // var tcFormData = this.AppTcForm.value.TCList;
+      var tcFormData = { "ListAppTcObj": [...this.AppTcForm.value.TCList]};
       this.httpClient.post(AdInsConstant.EditAppTc, tcFormData).subscribe(
         (response) => {
           this.toastr.successMessage(response["Message"]);
-          this.router.navigate(['/Nap/FinanceLeasing/AdminProcess/DeliveryOrder/Paging'], { queryParams: { LobCode: 'FL4W' }});
+          this.router.navigate(['/Nap/FinanceLeasing/AdminProcess/DeliveryOrderMultiAsset/Paging'], { queryParams: { BizTemplateCode: 'FL4W' }});
         },
         (error) => {
           console.log(error);
@@ -298,13 +299,14 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
       this.toastr.errorMessage("All Asset Must Be Processed to Submit");
     }
     else{
-      var tcFormData = this.AppTcForm.value.TCList;
+      // var tcFormData = this.AppTcForm.value.TCList;
+      var tcFormData = { "ListAppTcObj": [...this.AppTcForm.value.TCList]};
       let editTc = this.httpClient.post(AdInsConstant.EditAppTc, tcFormData);
       let submitDO = this.httpClient.post(AdInsConstant.SubmitDeliveryOrderMultiAsset, { TaskListId: this.wfTaskListId });
       forkJoin([editTc, submitDO]).subscribe(
         (response) => {
           this.toastr.successMessage(response[1]["Message"]);
-          this.router.navigate(['/Nap/FinanceLeasing/AdminProcess/DeliveryOrder/Paging'], { queryParams: { LobCode: 'FL4W' }});
+          this.router.navigate(['/Nap/FinanceLeasing/AdminProcess/DeliveryOrderMultiAsset/Paging'], { queryParams: { BizTemplateCode: 'FL4W' }});
         },
         (error) => {
           console.log(error);
