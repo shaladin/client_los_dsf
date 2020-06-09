@@ -46,8 +46,6 @@ export class MouCustFeeComponent implements OnInit {
     const modalMouFee = this.modalService.open(MouCustFeeDetailComponent);
     modalMouFee.componentInstance.MouCustId = this.MouCustId;
     modalMouFee.componentInstance.UsedRefFeeIdList = this.refFeeIdList;
-    this.refFeeIdList = new Array();
-    this.mouCustFeeList = new Array();
     modalMouFee.result.then(
       (response) => {
         this.spinner.show();
@@ -56,6 +54,7 @@ export class MouCustFeeComponent implements OnInit {
         this.httpClient.post(AdInsConstant.GetMouCustFeeForMouRequestByMouCustId, mouCustFee).subscribe(
           (response) => {
             this.mouCustFeeList = response;
+            this.refFeeIdList = new Array();
             for (var i = 0; i < this.mouCustFeeList.length; i++) {
               this.refFeeIdList.push(this.mouCustFeeList[i]['RefFeeId']);
             }
@@ -82,6 +81,7 @@ export class MouCustFeeComponent implements OnInit {
       this.httpClient.post(AdInsConstant.DeleteMouCustFee, mouCustFee).subscribe(
         (response: any) => {
           this.mouCustFeeList.splice(idx, 1);
+          this.refFeeIdList.splice(idx, 1);
           this.toastr.successMessage(response["message"]);
         },
         (error) => {
