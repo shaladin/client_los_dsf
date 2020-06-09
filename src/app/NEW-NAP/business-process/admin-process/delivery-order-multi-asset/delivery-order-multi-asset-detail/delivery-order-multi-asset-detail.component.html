@@ -153,7 +153,7 @@
             (ngSubmit)="AppTcForm.valid && SaveForm()" #enjiForm="ngForm">
             <app-term-conditions [AppId]="appId" [parentForm]="AppTcForm" [enjiForm]="enjiForm"></app-term-conditions>
             <div class="form-actions right">
-              <button type="button" class="btn btn-raised btn-primary" (click)="DOSubmitHandler()" *ngIf="doList.length == doAssetList.length">
+              <button type="button" class="btn btn-raised btn-primary" (click)="DOSubmitHandler()" *ngIf="isFinal">
                 <i class="fa fa-check-square-o"></i> Submit
               </button>
               <button type="submit" class="btn btn-raised btn-primary mr-1 ml-1">

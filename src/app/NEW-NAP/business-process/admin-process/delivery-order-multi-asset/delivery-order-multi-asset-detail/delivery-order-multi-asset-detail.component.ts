@@ -27,6 +27,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
   createDOInvalidMsg: string;
   arrValue: Array<any> = new Array<any>();
   wfTaskListId: number;
+  isFinal: boolean;
 
   DOAssetForm = this.fb.group({
     DOAssetList: this.fb.array([])
@@ -46,6 +47,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
   ) { 
     this.doList = new Array();
     this.doAssetList = new Array();
+    this.isFinal = false;
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
         this.appId = params['AppId'];
@@ -67,7 +69,8 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
     var doRequest = { AppId: this.appId, AgrmntId: this.agrmntId };
     let getDOAssetList = this.httpClient.post(AdInsConstant.GetAssetListForDOMultiAsset, doRequest);
     let getDOList = this.httpClient.post(AdInsConstant.GetListDeliveryOrderHByAppIdAgrmntId, doRequest);
-    forkJoin([getDOAssetList, getDOList]).subscribe(
+    let checkAllDO = this.httpClient.post(AdInsConstant.CheckAllDeliveryOrderData, { AgrmntId: this.agrmntId });
+    forkJoin([getDOAssetList, getDOList, checkAllDO]).subscribe(
       (response) => {
         // console.log("DO List: " + JSON.stringify(response[1]));
         this.doAssetList = response[0]["AssetListForDOMultiAssetObj"];
@@ -98,6 +101,9 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
           });
           formArray.push(formGroup);
         }
+
+        this.isFinal = response[2]["IsFinal"];
+        console.log("Is Final : " + this.isFinal);
       }
     );
   }
@@ -126,8 +132,9 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
         this.spinner.show();
         var doRequest = { AppId: this.appId, AgrmntId: this.agrmntId };
         let getDOAssetList = this.httpClient.post(AdInsConstant.GetAssetListForDOMultiAsset, doRequest);
-        var getDOList = this.httpClient.post(AdInsConstant.GetListDeliveryOrderHByAppIdAgrmntId, doRequest);
-        forkJoin([getDOAssetList, getDOList]).subscribe(
+        let getDOList = this.httpClient.post(AdInsConstant.GetListDeliveryOrderHByAppIdAgrmntId, doRequest);
+        let checkAllDO = this.httpClient.post(AdInsConstant.CheckAllDeliveryOrderData, { AgrmntId: this.agrmntId });
+        forkJoin([getDOAssetList, getDOList, checkAllDO]).subscribe(
           (response) => {
             this.doAssetList = response[0]["AssetListForDOMultiAssetObj"];
             this.custType = response[0]["MrCustTypeCode"];
@@ -160,6 +167,9 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
               });
               formArray.push(formGroup);
             }
+
+            this.isFinal = response[2]["IsFinal"];
+            console.log("Is Final : " + this.isFinal);
           }
         );
         this.spinner.hide();
@@ -207,9 +217,10 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
         mergeMap((response) => {
           var doRequest = { AppId: this.appId, AgrmntId: this.agrmntId };
           let getDOAssetList = this.httpClient.post(AdInsConstant.GetAssetListForDOMultiAsset, doRequest);
-          var getDOList = this.httpClient.post(AdInsConstant.GetListDeliveryOrderHByAppIdAgrmntId, doRequest);
+          let getDOList = this.httpClient.post(AdInsConstant.GetListDeliveryOrderHByAppIdAgrmntId, doRequest);
+          let checkAllDO = this.httpClient.post(AdInsConstant.CheckAllDeliveryOrderData, { AgrmntId: this.agrmntId });
           var tempResponse = [response];
-          return forkJoin([getDOAssetList, getDOList, tempResponse]);
+          return forkJoin([getDOAssetList, getDOList, tempResponse, checkAllDO]);
         })
       ).subscribe(
         (response) => {
@@ -246,6 +257,10 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
             });
             formArray.push(formGroup);
           }
+
+          this.isFinal = response[3]["IsFinal"];
+          console.log("Is Final : " + this.isFinal);
+
           this.spinner.hide();
           this.toastr.successMessage(deleteResponse["Message"]);
         },
@@ -279,7 +294,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
   }
 
   DOSubmitHandler(){
-    if(this.doList.length != this.doAssetList.length){
+    if(!this.isFinal){
       this.toastr.errorMessage("All Asset Must Be Processed to Submit");
     }
     else{
