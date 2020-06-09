@@ -55,7 +55,7 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.ClaimTask();
+    this.ClaimTask();
     this.AppStepIndex = 0;
     this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
     this.NapObj = new AppObj();
@@ -147,7 +147,9 @@ export class NapAddDetailComponent implements OnInit {
       case AdInsConstant.AppStepTC:
         this.AppStepIndex = this.AppStep[AdInsConstant.AppStepTC];
         break;
-
+        case "SUBMIT":
+          this.router.navigate(["Nap/FinanceLeasing/Paging?BizTemplateCode=FL4W"], { queryParams: { BizTemplateCode: AdInsConstant.FL4W } });
+          break;
       default:
         break;
     }
@@ -169,6 +171,7 @@ export class NapAddDetailComponent implements OnInit {
   }
   LastStepHandler() {
     this.NapObj.WfTaskListId = this.wfTaskListId;
+    
     this.http.post(AdInsConstant.SubmitNAP, this.NapObj).subscribe(
       (response) => {
         console.log(response);
@@ -181,6 +184,7 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   Submit() {
+    this.ClaimTask();
     if (this.mode == AdInsConstant.ModeResultHandling) {
       var obj = {
         ReturnHandlingDId: this.ResponseReturnInfoObj.ReturnHandlingDId,
