@@ -27,7 +27,8 @@
                 </div>
                 <!-- Sales Supervisor -->
                 <label class="col-md-2 adInsLabel">Sales Supervisor </label>
-                <label class="col-md-4 adInsLabel">{{NapAppModelForm.controls.SalesHeadName.value}} </label>
+                <label class="col-md-4 adInsLabel" *ngIf="NapAppModelForm.controls.SalesHeadName.value">{{NapAppModelForm.controls.SalesHeadName.value}} </label>
+                <label class="col-md-4 adInsLabel" *ngIf="!NapAppModelForm.controls.SalesHeadName.value"> -  </label>
               </div>
 
               <div class="form-group row">
