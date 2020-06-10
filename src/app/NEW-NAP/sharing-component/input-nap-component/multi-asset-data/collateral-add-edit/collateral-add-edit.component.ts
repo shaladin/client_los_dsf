@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter,ViewChild, ComponentFactoryResolver, ViewContainerRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter,ViewChild, ComponentFactoryResolver, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -24,12 +24,14 @@ import { AssetCategoryObj } from 'app/shared/model/AssetCategoryObj.Model';
 import { AssetMasterObj } from 'app/shared/model/AssetMasterObj.Model';
 import { AppCollateralRegistrationObj } from 'app/shared/model/AppCollateralRegistrationObj.Model';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { LookupTaxCityIssuerComponent } from './lookup-tax-city-issuer/lookup-tax-city-issuer.component';
 
 @Component({
   selector: 'app-collateral-add-edit',
   templateUrl: './collateral-add-edit.component.html'
 })
-export class CollateralAddEditComponent implements OnInit, AfterViewInit {
+export class CollateralAddEditComponent implements OnInit {
   @Input() AppId: any;
   @Input() mode: any;
   @Input() AppCollateralId: number;
@@ -154,7 +156,7 @@ export class CollateralAddEditComponent implements OnInit, AfterViewInit {
     CollPercentage:['', [Validators.required, Validators.min(1), Validators.max(100)]],
   });
 
-  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private componentFactoryResolver: ComponentFactoryResolver) { 
+  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private componentFactoryResolver: ComponentFactoryResolver, private modalService: NgbModal) { 
     this.getListAppAssetData = AdInsConstant.GetListAppAssetData;
     this.getListVendorEmp = AdInsConstant.GetListVendorEmpByVendorIdAndPosition;
     this.getListActiveRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
@@ -608,8 +610,24 @@ export class CollateralAddEditComponent implements OnInit, AfterViewInit {
               TaxCityIssuer: colObj.TaxCityIssuer,
               BpkpIssueDate: colObj.BpkpIssueDate
             });
+            this.InputLookupCityIssuerObj = new InputLookupObj();
+            this.InputLookupCityIssuerObj.urlJson = "./assets/uclookup/NAP/lookupDistrict.json";
+            this.InputLookupCityIssuerObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+            this.InputLookupCityIssuerObj.urlEnviPaging = environment.FoundationR3Url;
+            this.InputLookupCityIssuerObj.pagingJson = "./assets/uclookup/NAP/lookupDistrict.json";
+            this.InputLookupCityIssuerObj.genericJson = "./assets/uclookup/NAP/lookupDistrict.json";
+            var disCrit = new Array();
+            var critDisObj = new CriteriaObj();
+            critDisObj.DataType = 'text';
+            critDisObj.restriction = AdInsConstant.RestrictionEq;
+            critDisObj.propName = 'TYPE';
+            critDisObj.value = 'DIS';
+            disCrit.push(critDisObj);
+            this.InputLookupCityIssuerObj.addCritInput = disCrit;
             this.InputLookupCityIssuerObj.nameSelect = colObj.TaxCityIssuer;
             this.InputLookupCityIssuerObj.jsonSelect = { DistrictCode: colObj.TaxCityIssuer };
+            console.log("Name Select Issuer : " + this.InputLookupCityIssuerObj.nameSelect);
+            console.log("InputLookupCityIssuerObj : " + JSON.stringify(this.InputLookupCityIssuerObj));
           },
           (error) => {
             console.log(error);
@@ -705,14 +723,19 @@ export class CollateralAddEditComponent implements OnInit, AfterViewInit {
     this.InputLookupCityIssuerObj.addCritInput = disCrit;
   }
 
-  ngAfterViewInit(): void {
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UclookupgenericComponent);
-    const component = this.cityIssuerModal.createComponent(componentFactory);
-    component.instance.lookupInput = this.InputLookupCityIssuerObj;
-    component.instance.parentForm = this.AddCollForm;
-    component.instance.enjiForm = this.enjiForm;
-    component.instance.identifier = 'DistrictCode';
-    component.instance.lookup.subscribe((e) => this.SetBpkbCity(e));
+  showModalTaxCityIssuer(){
+    const modalTaxCityIssuer = this.modalService.open(LookupTaxCityIssuerComponent);
+    modalTaxCityIssuer.result.then(
+      (response) => {
+        this.AddCollForm.patchValue({
+          TaxCityIssuer: response.DistrictCode
+        });
+      }
+    ).catch((error) => {
+      if (error != 0) {
+        console.log(error);
+      }
+    });
   }
 
   setCollateralInfo(){
