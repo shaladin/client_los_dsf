@@ -9,31 +9,54 @@
                     <div class="row">
                         <div class="col-md-6 ">
                             <div class="row">
-                                <label class="col-md-6 adInsLabel"> Upping Rate </label>
-                                <label class="col-md-6 adInsLabel" style="text-align: right;"> {{viewIncomeInfoObj.UppingRate | number:'.2':'en-US'}} </label>
+                                <div class="col-md-6 form-inline">
+                                  <label class="adInsLabel"> Upping Rate </label>
+                                </div>
+                                <div class="col-md-6 form-inline form-inline-right">
+                                  <label> {{viewIncomeInfoObj.UppingRate | number:'.2':'en-US'}} </label>
+                                </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-6 adInsLabel"> Insurance Income </label>
-                                <label class="col-md-6 adInsLabel" style="text-align: right;"> {{viewIncomeInfoObj.InsuranceIncome | number:'.2':'en-US'}} </label>
+                                <div class="col-md-6 form-inline">
+                                  <label class="adInsLabel"> Insurance Income </label>
+                                </div>
+                                <div class="col-md-6 form-inline form-inline-right">
+                                  <label> {{viewIncomeInfoObj.InsuranceIncome | number:'.2':'en-US'}} </label>
+                                </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-6 adInsLabel"> Life Insurance Income </label>
-                                <label class="col-md-6 adInsLabel" style="text-align: right;"> {{viewIncomeInfoObj.LifeInsuranceIncome | number:'.2':'en-US'}} </label>
+                                <div class="col-md-6 form-inline">
+                                  <label class="adInsLabel"> Life Insurance Income </label>
+                                </div>
+                                <div class="col-md-6 form-inline form-inline-right">
+                                  <label> {{viewIncomeInfoObj.LifeInsuranceIncome | number:'.2':'en-US'}} </label>
+                                </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-6 adInsLabel"> Max Allocated Amount </label>
-                                <label class="col-md-6 adInsLabel" style="text-align: right;"> {{viewIncomeInfoObj.MaxAllocatedAmount | number:'.2':'en-US'}} </label>
+                                <div class="col-md-6 form-inline">
+                                  <label class="adInsLabel"> Max Allocated Amount </label>
+                                </div>
+                                <div class="col-md-6 form-inline form-inline-right">
+                                  <label> {{viewIncomeInfoObj.MaxAllocatedAmount | number:'.2':'en-US'}} </label>
+                                </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-6 adInsLabel"> Remaining Allocated Amount </label>
-                                <label class="col-md-6 adInsLabel" style="text-align: right;"> {{viewIncomeInfoObj.RemainingAllocatedAmount | number:'.2':'en-US'}}
-                                </label>
+                                <div class="col-md-6 form-inline">
+                                  <label class="adInsLabel"> Remaining Allocated Amount </label>
+                                </div>
+                                <div class="col-md-6 form-inline form-inline-right">
+                                  <label> {{viewIncomeInfoObj.RemainingAllocatedAmount | number:'.2':'en-US'}} </label>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-6 ">
                             <div class="row" *ngFor="let item of viewIncomeInfoObj.Other; let i = index">
-                                <label class="col-md-6 adInsLabel"> {{ item.FeeTypeName }} </label>
-                                <label class="col-md-6 adInsLabel" style="text-align: right;"> {{item.AppFeeAmt | number:'.2':'en-US'}} </label>
+                                <div class="col-md-6 form-inline">
+                                  <label class="adInsLabel"> {{ item.FeeTypeName }} </label>
+                                </div>
+                                <div class="col-md-6 form-inline form-inline-right">
+                                  <label> {{item.AppFeeAmt | number:'.2':'en-US'}} </label>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -57,38 +80,60 @@
                 <div class="form-actions row">
                     <div class="col-md-10"></div>
                     <div class="col-md-2">
-                        <button type="button" style="float: right;" (click)="CalculateTotal()" class="btn btn-raised btn-primary" translate>
+                        <button type="button" style="float: right;" (click)="CalculateTotal()"
+                            class="btn btn-raised btn-primary" translate>
                             <i class="far fa-check-square"></i> Calculate
                         </button>
                     </div>
                 </div>
                 <lib-ucSubsection [id]="'viewSummaryId'" [title]="'Summary'" [panel]="'viewSummary'">
-                </lib-ucSubsection>
-                <div class="form-body" id="viewSummary">
-                    <div class="row">
-                        <label id="totalCommAmt" class="col-md-4 adInsLabel"> Total Commision Amount </label>
-                        <label *ngIf="Summary.TotalCommisionAmount <= viewIncomeInfoObj.MaxAllocatedAmount"
-                            class="col-md-2 adInsLabel" style="text-align: right;"> {{Summary.TotalCommisionAmount | number:'.2':'en-US'}} </label>
-                        <label *ngIf="Summary.TotalCommisionAmount > viewIncomeInfoObj.MaxAllocatedAmount"
-                            style="color: red; text-align: right;" class="col-md-2 adInsLabel"> {{Summary.TotalCommisionAmount | number:'.2':'en-US'}} </label>
-                    </div>
-                    <div class="row">
-                        <label class="col-md-4 adInsLabel"> Total TAX </label>
-                        <label class="col-md-2 adInsLabel" style="text-align: right;"> {{Summary.TotalTaxAmmount | number:'.2':'en-US'}} </label>
-                    </div>
-                    <div class="row">
-                        <label class="col-md-4 adInsLabel"> Total VAT </label>
-                        <label class="col-md-2 adInsLabel" style="text-align: right;"> {{Summary.TotalVATAmount | number:'.2':'en-US'}} </label>
-                    </div>
-                    <div class="row">
-                        <label class="col-md-4 adInsLabel"> Gross Yield </label>
-                        <label class="col-md-2 adInsLabel" style="text-align: right;"> {{Summary.GrossYield | number:'.2':'en-US'}} </label>
+                </lib-ucSubsection>                
+                <div class="row" id="viewSummary">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-2 form-inline">
+                                <label>Total Commision Amount</label>
+                            </div>
+                            <div class="col-md-2 form-inline form-inline-right">
+                                <label *ngIf="Summary.TotalCommisionAmount <= viewIncomeInfoObj.MaxAllocatedAmount"
+                                    style="text-align: right;">
+                                    {{Summary.TotalCommisionAmount | number:'.2':'en-US'}} </label>
+                                <label *ngIf="Summary.TotalCommisionAmount > viewIncomeInfoObj.MaxAllocatedAmount"
+                                    style="color: red; text-align: right;">
+                                    {{Summary.TotalCommisionAmount | number:'.2':'en-US'}} </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2 form-inline">
+                                <label>Total TAX</label>
+                            </div>
+                            <div class="col-md-2 form-inline form-inline-right">
+                                <label>{{Summary.TotalTaxAmmount | number:'.2':'en-US'}}</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2 form-inline">
+                                <label>Total VAT</label>
+                            </div>
+                            <div class="col-md-2 form-inline form-inline-right">
+                                <label>{{Summary.TotalVATAmount | number:'.2':'en-US'}}</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2 form-inline">
+                                <label>Gross Yield</label>
+                            </div>
+                            <div class="col-md-2 form-inline form-inline-right">
+                                <label>{{Summary.GrossYield | number:'.2':'en-US'}}</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="form-actions row">
                     <div class="col-md-10"></div>
                     <div class="col-md-2">
-                        <button type="button" style="float: right;" (click)="SaveData()" class="btn btn-raised btn-primary" translate>
+                        <button type="button" style="float: right;" (click)="SaveData()"
+                            class="btn btn-raised btn-primary" translate>
                             <i class="far fa-check-square"></i> Save
                         </button>
                     </div>
