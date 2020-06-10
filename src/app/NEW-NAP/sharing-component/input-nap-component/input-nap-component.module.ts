@@ -67,6 +67,7 @@ import { SingleCollDataComponent } from "./collateral-data/single-coll-data/sing
 import { MultiCollDataComponent } from "./collateral-data/multi-coll-data/multi-coll-data.component";
 import { ApplicationDataFL4WComponent } from "./application-data/application-data-FL4W/application-data-FL4W.component";
 import { UclookupgenericComponent } from "@adins/uclookupgeneric";
+import { LookupTaxCityIssuerComponent } from './multi-asset-data/collateral-add-edit/lookup-tax-city-issuer/lookup-tax-city-issuer.component';
 
 export const customCurrencyMaskConfig = {     
   align: "right",     
@@ -210,13 +211,14 @@ export const customCurrencyMaskConfig = {
     CollateralDetailComponent,
     SingleCollDataComponent,
     MultiCollDataComponent,
-    ApplicationDataFL4WComponent
+    ApplicationDataFL4WComponent,
+    LookupTaxCityIssuerComponent
     // MultiAssetLeasingComponent,
     // AssetLeasingPagingComponent,
     // AssetLeasingAddEditComponent,
     // CollateralLeasingAddEditComponent
   ],
-  entryComponents: [SubsidyAddEditComponent, UclookupgenericComponent],
+  entryComponents: [SubsidyAddEditComponent, UclookupgenericComponent, LookupTaxCityIssuerComponent],
   providers: [
     NGXToastrService
   ]
