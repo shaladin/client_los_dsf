@@ -65,21 +65,25 @@
           <lib-ucSubsection [id]="'bottomSideId'" [title]="'Summary'" [panel]="'bottomSide'">
           </lib-ucSubsection>
           <div id="bottomSide">
-            <div>
-              <label class="col-md-3">Total Reserved Fund Amount</label>
-              <label class="col-md-3">{{totalRsvFundAmt | number:'.2':'en-US'}}</label>
-            </div>
-            <div>
-              <label class="col-md-3">Gross Yield</label>
-              <label class="col-md-3">{{grossYield | number:'.2':'en-US'}}</label>
-            </div>
-            <div class="form-actions right">
-              <button type="submit" class="btn btn-raised btn-primary">
-                <i class="fa fa-check-square-o"></i> Save
-              </button>
-              <!--<button type="button" class="btn btn-raised btn-primary" (click)="test()">
-                <i class="fa fa-check-square-o"></i> Check Value
-              </button>-->
+            <div class="row">
+              <div class="col-md-12">
+                <div class="row">
+                  <label class="col-md-6">Total Reserved Fund Amount</label>
+                  <label class="col-md-6">{{totalRsvFundAmt | number:'.2':'en-US'}}</label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6">Gross Yield</label>
+                  <label class="col-md-6">{{grossYield | number:'.2':'en-US'}}</label>
+                </div>
+                <div class="form-actions right">
+                  <button type="submit" class="btn btn-raised btn-primary">
+                    <i class="fa fa-check-square-o"></i> Save
+                  </button>
+                  <!--<button type="button" class="btn btn-raised btn-primary" (click)="test()">
+      <i class="fa fa-check-square-o"></i> Check Value
+    </button>-->
+                </div>
+              </div>
             </div>
           </div>
         </div>
