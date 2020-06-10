@@ -35,6 +35,7 @@ export class ApplicationViewComponent implements OnInit {
   IsCollateral : boolean = true;
   IsMultiCollateral : boolean = true;
   IsApprovalHist: boolean = true;
+  IsFraudDetectionMulti: boolean = true;
 
   constructor(private route: ActivatedRoute, private http: HttpClient) { 
     this.route.queryParams.subscribe(params => {
@@ -66,6 +67,7 @@ export class ApplicationViewComponent implements OnInit {
           this.IsPhoneVerification = false;
           this.IsAsset = false;
           this.IsMultiAsset = false;
+          this.IsFraudDetectionMulti = false;
       
         }
         else if(bizTemplateCode == AdInsConstant.CFRFN4W){
@@ -74,6 +76,7 @@ export class ApplicationViewComponent implements OnInit {
           this.IsInvoice = false;
           this.IsMultiAsset = false;
           this.IsMultiInsurance = false;
+          this.IsFraudDetectionMulti = false;
         }
         else if(bizTemplateCode == AdInsConstant.CF4W){
           this.IsCollateral = false;
@@ -81,6 +84,7 @@ export class ApplicationViewComponent implements OnInit {
           this.IsInvoice = false;
           this.IsMultiAsset = false;
           this.IsMultiInsurance = false;
+          this.IsFraudDetectionMulti = false;
         }
         else if(bizTemplateCode == AdInsConstant.FL4W)
         {
