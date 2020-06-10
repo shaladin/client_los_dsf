@@ -11,6 +11,7 @@ import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalcul
 import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
 import { CalcStepUpStepDownObj } from 'app/shared/model/AppFinData/CalcStepUpStepDownObj.Model';
 import { AppInstStepSchmObj } from 'app/shared/model/AppInstStepSchm/AppInstStepSchmObj.Model';
+import { AppObj } from 'app/shared/model/App/App.Model';
 
 @Component({
   selector: 'app-schm-step-up-step-down-normal',
@@ -28,7 +29,8 @@ export class SchmStepUpStepDownNormalComponent implements OnInit {
   listInstallment: any;
   listAppInstStepSchm: Array<AppInstStepSchmObj> = new Array<AppInstStepSchmObj>();
   responseCalc: any;
-
+  result: AppObj = new AppObj();
+  PriceLabel : string = "Asset Price";
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -39,6 +41,17 @@ export class SchmStepUpStepDownNormalComponent implements OnInit {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
     this.LoadDDLStepUpStepDownInputType();
+    this.http.post<AppObj>(AdInsConstant.GetAppById, { AppId: this.AppId}).subscribe(
+      (response) => {
+        this.result = response;
+        if(this.result.BizTemplateCode == "CFRFN4W"){
+          this.PriceLabel = "Financing Amount";
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   LoadDDLRateType() {

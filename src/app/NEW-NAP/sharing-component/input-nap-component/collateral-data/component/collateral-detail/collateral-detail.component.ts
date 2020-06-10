@@ -44,6 +44,9 @@ export class CollateralDetailComponent implements OnInit {
   appCollateralDoc: AppCollateralDocObj = new AppCollateralDocObj();
   appCollateralObj: AppCollateralObj = new AppCollateralObj();
   collateralRegistrationObj: any;
+  criteriaList: Array<CriteriaObj>;
+  criteriaObj: CriteriaObj;
+
 
   AddCollForm = this.fb.group({
     AppCollateralId: [''],
@@ -117,6 +120,13 @@ export class CollateralDetailComponent implements OnInit {
     this.inputLookupColl.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupColl.pagingJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
     this.inputLookupColl.genericJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
+
+    // this.criteriaList = new Array();
+    // this.criteriaObj = new CriteriaObj();
+    // this.criteriaObj.restriction = AdInsConstant.RestrictionEq;
+    // this.criteriaObj.propName = 'apctrl.ASSET_TYPE_CODE';
+    // this.criteriaObj.value = this.AssetTypeCode;
+    // this.criteriaList.push(this.criteriaObj);
   }
 
   initDropdownList() {
@@ -206,6 +216,7 @@ export class CollateralDetailComponent implements OnInit {
     };
     this.http.post(AdInsConstant.GetListProdOfferingDByProdOfferingCodeAndProdOfferingVersion, ProdOfferingObj).subscribe(
       (response) => {
+        console.log(response);
         var temp = response["ListProdOfferingDObj"];
         var LobCode: string = "";
         for (var i = 0; i < temp.length; i++) {
@@ -220,7 +231,17 @@ export class CollateralDetailComponent implements OnInit {
         this.onItemChange(this.AssetTypeCode);
         // Generate Collateral Doc
         // this.getRefAssetDocList();
+
+    this.criteriaList = new Array();
+    this.criteriaObj = new CriteriaObj();
+    this.criteriaObj.restriction = AdInsConstant.RestrictionEq;
+    this.criteriaObj.propName = 'apctrl.ASSET_TYPE_CODE';
+    this.criteriaObj.value = this.AssetTypeCode;
+    this.criteriaList.push(this.criteriaObj);
+    this.inputLookupExistColl.addCritInput = this.criteriaList;
+    this.inputLookupExistColl.isReady = true;
       });
+      
   }
 
   getRefAssetDocList() {

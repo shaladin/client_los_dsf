@@ -63,7 +63,7 @@
     <div class="form-group row">
       <label class="col-md-2 adins-required-label" for="establishmentDt" translate>Establishment Date</label>
       <div class="col-md-4">
-        <input type="date" id="establishmentDt" class="form-control" formControlName="EstablishmentDt"
+        <input type="date" max="{{MaxDate | date:'yyyy-MM-dd'}}" id="establishmentDt" class="form-control" formControlName="EstablishmentDt"
         [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].EstablishmentDt.invalid }">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].EstablishmentDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>     
       </div>

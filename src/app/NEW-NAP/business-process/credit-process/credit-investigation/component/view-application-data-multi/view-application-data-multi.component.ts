@@ -94,7 +94,7 @@ export class ViewApplicationDataMultiComponent implements OnInit {
     await this.GetGuarantorData();
     await this.GetReferantorData();
     await this.GetAppDetailData();
-    await this.GetDealerData();
+    // await this.GetDealerData();
     await this.GetCommData();
     await this.GetListAssetData();
     await this.GetListCollateralData();
@@ -310,8 +310,8 @@ export class ViewApplicationDataMultiComponent implements OnInit {
         console.log(response);
         this.AssetDealerData = response;
 
-        console.log("lisassetdata");
-        console.log(this.AssetDealerData);
+        // console.log("lisassetdata");
+        // console.log(this.AssetDealerData);
 
         this.open(content);
       },

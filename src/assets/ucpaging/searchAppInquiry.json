@@ -264,6 +264,29 @@
                 ]
               },
               "isHide": false
+            },
+            {
+              "conditions": [
+                {
+                  "property": "BizTemplateCode",
+                  "value": "FACTORING",
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "link",
+                "position": "left",
+                "property": "agrmntNo",
+                "target" : "_blank",
+                "path": "/Nap/FinanceLeasing/ViewAgrmnt",
+                "param": [
+                  {
+                    "type": "AgrmntId",
+                    "property": "AgrmntId"
+                  }
+                ]
+              },
+              "isHide": false
             }
           ]
         }
