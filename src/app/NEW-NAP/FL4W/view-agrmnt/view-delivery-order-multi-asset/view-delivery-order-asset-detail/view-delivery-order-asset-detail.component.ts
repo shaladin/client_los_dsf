@@ -14,6 +14,8 @@ export class ViewDeliveryOrderAssetDetailComponent implements OnInit {
   assetData: any;
   inputGridObj: any;
   @Input() AppAssetId : number;
+  GetListAppCollateralForDOView: string;
+  doList: Array<any>;
   constructor(private route: ActivatedRoute, private http: HttpClient) {
 
   }
@@ -21,6 +23,7 @@ export class ViewDeliveryOrderAssetDetailComponent implements OnInit {
   async ngOnInit(){
     console.log('asset detail');
     this.GetAllAssetDataByAppAssetId = AdInsConstant.GetAllAssetDataByAppAssetId;
+    this.GetListAppCollateralForDOView = AdInsConstant.GetListAppCollateralForDOView;
     var assetObj = { "AppAssetId" : this.AppAssetId};
 
     this.http.post(this.GetAllAssetDataByAppAssetId, assetObj).subscribe(
@@ -28,10 +31,10 @@ export class ViewDeliveryOrderAssetDetailComponent implements OnInit {
        this.assetData = response;
       });
 
-  //   this.http.post(this.GetDeliveryOrderHByDeliveryOrderHId, doObj).subscribe(
-  //     (response) => { 
-  //       this.doData = response;
-  //     });
+    this.http.post(this.GetListAppCollateralForDOView, assetObj).subscribe(
+      (response) => { 
+        this.doList = response['ReturnObject'];
+      });
   }
 
 }
