@@ -69,7 +69,8 @@ export class CustPersonalContactInformationComponent implements OnInit {
   selectedRelationshipName: any;
   defaultGenderName: any;
   defaultRelationshipName: any;
-
+  UserAccess: any;
+  MaxDate: Date;
 
   ContactInfoPersonalForm = this.fb.group({
     ContactPersonName: ['', [Validators.required, Validators.maxLength(1000)]],
@@ -97,6 +98,8 @@ export class CustPersonalContactInformationComponent implements OnInit {
      }
 
   ngOnInit() {
+    this.UserAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    this.MaxDate = this.UserAccess.BusinessDt;
     this.bindCopyFrom();
     this.initLookup();
     this.initUrl();
@@ -254,6 +257,14 @@ export class CustPersonalContactInformationComponent implements OnInit {
 
   RelationshipChanged(event){
     this.selectedRelationshipName = event.target.options[event.target.options.selectedIndex].text;
+    if (this.ContactInfoPersonalForm.controls.MrCustRelationshipCode.value == 'SPOUSE') {
+      this.ContactInfoPersonalForm.controls.BirthDt.setValidators([Validators.required]);
+      this.ContactInfoPersonalForm.controls.BirthDt.updateValueAndValidity();
+    }
+    else {
+      this.ContactInfoPersonalForm.controls.BirthDt.clearValidators();
+      this.ContactInfoPersonalForm.controls.BirthDt.updateValueAndValidity();
+    }
   }
 
   copyFromChanged(){

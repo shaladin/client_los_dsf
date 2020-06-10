@@ -218,4 +218,7 @@ export class NapAddDetailComponent implements OnInit {
 
       });
   }
+  Cancel() {
+    this.router.navigate(["Paging"], { relativeTo: this.route.parent, skipLocationChange: true, queryParams: { BizTemplateCode: AdInsConstant.CFRFN4W } });
+  }
 }

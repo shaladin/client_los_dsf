@@ -50,6 +50,8 @@ export class CustCompanyMainDataComponent implements OnInit {
   custModelReqObj = {
     MrCustTypeCode: ""
   };
+  UserAccess: any;
+  MaxDate: Date;
 
 
   constructor(
@@ -63,6 +65,9 @@ export class CustCompanyMainDataComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.UserAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    this.MaxDate = this.UserAccess.BusinessDt;
 
     this.parentForm.addControl(this.identifier, this.fb.group({
       CustNo: [''],
