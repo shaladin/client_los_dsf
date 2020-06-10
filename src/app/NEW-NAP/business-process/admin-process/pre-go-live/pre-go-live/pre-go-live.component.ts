@@ -117,6 +117,8 @@ export class PreGoLiveComponent implements OnInit {
   }
 
   SaveForm(flag=true) {
+    var businessDt = new Date(localStorage.getItem("BusinessDateRaw"));
+
     console.log(flag);
     this.listAppTCObj = new ListAppTCObj();
     this.listAppTCObj.AppTCObj = new Array();
@@ -135,6 +137,18 @@ export class PreGoLiveComponent implements OnInit {
       this.appTC.CheckedDt = this.MainInfoForm.value.TCList[i].CheckedDt;
       this.appTC.Notes = this.MainInfoForm.value.TCList[i].Notes;
       this.appTC.RowVersion = this.MainInfoForm.value.TCList[i].RowVersion;
+
+      var prmsDt = new Date(this.appTC.PromisedDt);
+      var prmsDtForm = this.MainInfoForm.value.TCList[i].PromisedDt;
+
+      if (this.appTC.IsChecked == false) {
+        if(prmsDtForm != null){
+          if(prmsDt < businessDt){
+            this.toastr.errorMessage("Promise Date for " + this.appTC.TcName + " can't be lower than Business Date");
+            return;
+          }
+        }
+      }
       this.listAppTCObj.AppTCObj.push(this.appTC);
 
     }
