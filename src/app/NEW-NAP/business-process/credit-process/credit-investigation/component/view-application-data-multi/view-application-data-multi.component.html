@@ -224,21 +224,21 @@
                       <div class="col-md-6 ">
                         <div class="row">
                           <label class="col-md-6 adInsLabel"> Address </label>
-                          <label class="col-md-6 adInsLabel" *ngIf="AssetDealerData.Address!=null"> {{AssetDealerData.Address}} </label>
-                          <label class="col-md-6 adInsLabel" *ngIf="AssetDealerData.Address==null"> - </label>
+                          <label class="col-md-6 adInsLabel" *ngIf="AssetDealerData.Addr!=null"> {{AssetDealerData.Addr}} </label>
+                          <label class="col-md-6 adInsLabel" *ngIf="AssetDealerData.Addr==null"> - </label>
                         </div>
                         <div class="row">
-                          <label class="col-md-6 adInsLabel"> {{AssetDealerData.SpvPositionCode}} </label>
-                          <label class="col-md-6 adInsLabel"> {{AssetDealerData.SpvName}} </label>
+                          <label class="col-md-6 adInsLabel"> {{AssetDealerData.SpvDealerPositionCode}} </label>
+                          <label class="col-md-6 adInsLabel"> {{AssetDealerData.SpvDealerName}} </label>
                         </div>
                         <div class="row">
-                          <label class="col-md-6 adInsLabel"> {{AssetDealerData.BMPositionCode}} </label>
-                          <label class="col-md-6 adInsLabel"> {{AssetDealerData.BMName}} </label>
+                          <label class="col-md-6 adInsLabel"> {{AssetDealerData.BMDealerPositionCode}} </label>
+                          <label class="col-md-6 adInsLabel"> {{AssetDealerData.BMDealerName}} </label>
                         </div>
                         <div class="row">
                           <label class="col-md-6 adInsLabel"> Cooperation Date </label>
-                          <label class="col-md-6 adInsLabel" *ngIf="AssetDealerData.CooperationDate!=null"> {{AssetDealerData.CooperationDate | date: 'dd-MMMM-yyyy'}} </label>
-                          <label class="col-md-6 adInsLabel" *ngIf="AssetDealerData.CooperationDate==null"> - </label>
+                          <label class="col-md-6 adInsLabel" *ngIf="AssetDealerData.CooperationDt!=null"> {{AssetDealerData.CooperationDt | date: 'dd-MMMM-yyyy'}} </label>
+                          <label class="col-md-6 adInsLabel" *ngIf="AssetDealerData.CooperationDt==null"> - </label>
                         </div>
                         <div class="row">
                           <label class="col-md-6 adInsLabel"> Total Profit </label>
