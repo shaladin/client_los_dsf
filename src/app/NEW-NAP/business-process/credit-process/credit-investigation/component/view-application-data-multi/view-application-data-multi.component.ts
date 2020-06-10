@@ -94,7 +94,7 @@ export class ViewApplicationDataMultiComponent implements OnInit {
     await this.GetGuarantorData();
     await this.GetReferantorData();
     await this.GetAppDetailData();
-    await this.GetDealerData();
+    // await this.GetDealerData();
     await this.GetCommData();
     await this.GetListAssetData();
     await this.GetListCollateralData();

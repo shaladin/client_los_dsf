@@ -5,22 +5,19 @@
       "type": "sort",
       "position": "left",
       "label": "Guarantor Name",
-      "name": "sortId1",
-      "width": "width-50-per"
+      "name": "sortId1"
     },
     {
       "type": "sort",
       "position": "left",
       "label": "Guarantor Type",
-      "name": "sortId2",
-      "width": "width-50-per"
+      "name": "sortId2"
     },
     {
       "type": "sort",
       "position": "left",
       "label": "Relationship",
-      "name": "sortId3",
-      "width": "width-50-per"
+      "name": "sortId3"
     },
     {
       "type": "label",
