@@ -587,9 +587,9 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         else if (this.subsidyRuleObj != null) {
           if (this.subsidyRuleObj.SubsidyValue != null) {
             for (let i = 0; i < this.subsidyRuleObj.SubsidyValue.length; i++) {
-              if (this.subsidyRuleObj.SubsidyFromType[i] == "INSCO" && this.subsidyRuleObj.SubsidyFromValue[i] == this.InsuranceDataForm.controls.InscoBranchCode.value) {
+              // if (this.subsidyRuleObj.SubsidyFromType[i] == "INSCO" && this.subsidyRuleObj.SubsidyFromValue[i] == this.InsuranceDataForm.controls.InscoBranchCode.value) {
                 custDiscAmt += this.subsidyRuleObj.SubsidyValue[i];
-              }
+              // }
             }
           }
         }
