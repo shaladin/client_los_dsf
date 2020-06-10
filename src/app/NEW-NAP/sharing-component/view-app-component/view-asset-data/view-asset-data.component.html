@@ -31,12 +31,12 @@
               *ngIf="AppAssetObj?.ResponseAppAssetObj?.FullAssetName">{{AppAssetObj.ResponseAppAssetObj.FullAssetName}}</label>
             <label class="col-md-2  adInsLabel" translate>Down Payment</label>
             <label class="col-md-4  adinslabel" translate
-              *ngIf="AppAssetObj?.ResponseAppAssetObj?.DownPaymentAmt">{{AppAssetObj.ResponseAppAssetObj.DownPaymentAmt}}</label>
+              *ngIf="AppAssetObj?.ResponseAppAssetObj?.DownPaymentAmt">{{AppAssetObj.ResponseAppAssetObj.DownPaymentAmt | number:'.2':'en-US'}}</label>
           </div>
           <div>
             <label class="col-md-2  adInsLabel" translate>Asset Price</label>
             <label class="col-md-4  adinslabel" translate
-              *ngIf="AppAssetObj?.ResponseAppAssetObj?.AssetPriceAmt">{{AppAssetObj.ResponseAppAssetObj.AssetPriceAmt}}</label>
+              *ngIf="AppAssetObj?.ResponseAppAssetObj?.AssetPriceAmt">{{AppAssetObj.ResponseAppAssetObj.AssetPriceAmt | number:'.2':'en-US'}}</label>
             <label class="col-md-2  adInsLabel" translate>Asset Usage</label>
             <label class="col-md-4  adinslabel" translate
               *ngIf="AppAssetObj?.ResponseAppAssetObj?.MrAssetUsageCode">{{AppAssetObj.ResponseAppAssetObj.MrAssetUsageCode}}</label>
