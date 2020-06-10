@@ -2,6 +2,10 @@ import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { Sort } from '@angular/material';
+import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
+import { LifeInsObj } from 'app/shared/model/LifeInsObj.Model';
 
 @Component({
   selector: 'app-view-application-data-multi',
@@ -14,6 +18,7 @@ export class ViewApplicationDataMultiComponent implements OnInit {
   @Input() MrCustTypeCode;
   constructor(
     private http: HttpClient,
+    private modalService: NgbModal
   ) { }
   
   GuarantorData;
@@ -24,6 +29,9 @@ export class ViewApplicationDataMultiComponent implements OnInit {
   AppDetailFinData;
   AssetInsuranceAndLifeInsuranceData;
   InsuranceTitle;
+  ListAssetData;
+  closeResult;
+
   InitData(){
     // this.appId = 31;
     this.GuarantorData = new Array();
@@ -86,14 +94,74 @@ export class ViewApplicationDataMultiComponent implements OnInit {
     await this.GetGuarantorData();
     await this.GetReferantorData();
     await this.GetAppDetailData();
-    await this.GetDealerData();
+    // await this.GetDealerData();
     await this.GetCommData();
-    if(this.AssetInsuranceAndLifeInsuranceData.CoverBy=="CO"){
-      this.InsuranceTitle ="Asset Insurance";
-    }else{
-      this.InsuranceTitle ="Asset Insurance & Life Insurance"
+    await this.GetListAssetData();
+    await this.GetListCollateralData();
+    await this.GetLifeInsData();
+
+    if(this.AssetInsuranceAndLifeInsuranceData.CoverBy == "CO"){
+      this.InsuranceTitle = "Asset Insurance";
+    } else {
+      this.InsuranceTitle = "Asset Insurance & Life Insurance"
     }
     console.log(this.AssetInsuranceAndLifeInsuranceData);
+  }
+
+  appAssetObj;
+  async GetListAssetData(){
+    this.appAssetObj = new AppAssetObj();
+    this.appAssetObj.AppId = this.AppId
+    await this.http.post(AdInsConstant.GetAppAssetListByAppId, this.appAssetObj).toPromise().then(
+      (response) => {
+        console.log(response);
+        this.ListAssetData = response["ReturnObject"];
+
+        // console.log("lisassetdata");
+        // console.log(this.ListAssetData);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  appCollateralObj;
+  ListCollateralData;
+  async GetListCollateralData(){
+    this.appCollateralObj = new AppCollateralObj();
+    this.appCollateralObj.AppId = this.AppId
+    await this.http.post(AdInsConstant.GetAppCollateralListForInsuranceByAppId, this.appCollateralObj).toPromise().then(
+      (response) => {
+        console.log(response);
+        this.ListCollateralData = response["ReturnObject"];
+
+        // console.log("listcolldata");
+        // console.log(this.ListCollateralData);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  lifeInsObj;
+  LifeInsuranceData;
+  async GetLifeInsData(){
+    this.lifeInsObj = new LifeInsObj();
+    this.lifeInsObj.AppId = this.AppId
+    await this.http.post(AdInsConstant.GetAppLifeInsHByAppId, this.lifeInsObj).toPromise().then(
+      (response) => {
+        console.log(response);
+        this.LifeInsuranceData = response;
+
+        // console.log("lifeinsdata");
+        // console.log(this.LifeInsuranceData);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   async GetGuarantorData(){
@@ -228,6 +296,52 @@ export class ViewApplicationDataMultiComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  AssetDealerData;
+  dealerAssetObj;
+  getDealer(appAssetId, content)
+  {
+    this.dealerAssetObj = new AppAssetObj();
+    this.dealerAssetObj.AppAssetId = appAssetId
+
+    this.http.post(AdInsConstant.GetAppAssetForDealerDataByAppAssetId, this.dealerAssetObj).toPromise().then(
+      (response) => {
+        console.log(response);
+        this.AssetDealerData = response;
+
+        // console.log("lisassetdata");
+        // console.log(this.AssetDealerData);
+
+        this.open(content);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  open(content) {
+    this.modalService.open(content).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+
+  cancel()
+  {
+    this.modalService.dismissAll();
   }
 
   async GetCommData(){

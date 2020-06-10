@@ -2,7 +2,7 @@
   (ngSubmit)="enjiForm.form.valid && Save()">
   <div class="modal-header">
     <h4 class="modal-title">Asset Detail</h4>
-    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('0')">
+    <button type="button" class="close" aria-label="Close" (click)="activeModalAsset.dismiss('0')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -12,7 +12,7 @@
         <lib-ucSubsection [id]="'DOAssetInformationId'" [title]="'ASSET INFORMATION'" [panel]="'DOAssetInformationSection'"></lib-ucSubsection>
         <div id="DOAssetInformationSection" class="form-body">
           <div class="col-md-6">
-            <div class="form-group row" *ngIf="ShowSerialNo1">
+            <div class="form-group row">
               <label class="col-md-3 adInsLabel {{serial1Mandatory ? 'adins-required-label' : ''}}" for="SerialNo1" translate>Serial No. 1</label>
               <div class="col-md-9">
                 <input type="text" class="form-control adInsInput" formControlName="SerialNo1" 
@@ -20,7 +20,7 @@
                 <lib-uc-show-errors [control]="DOAssetDetail.controls.SerialNo1" [submit]="enjiForm.submitted"></lib-uc-show-errors>
               </div>
             </div>
-            <div class="form-group row" *ngIf="ShowSerialNo2">
+            <div class="form-group row">
               <label class="col-md-3 adInsLabel {{serial2Mandatory ? 'adins-required-label' : ''}}" for="SerialNo2" translate>Serial No. 2</label>
               <div class="col-md-9">
                 <input type="text" class="form-control adInsInput" formControlName="SerialNo2" 
@@ -28,7 +28,7 @@
                 <lib-uc-show-errors [control]="DOAssetDetail.controls.SerialNo2" [submit]="enjiForm.submitted"></lib-uc-show-errors>
               </div>
             </div>
-            <div class="form-group row" *ngIf="ShowSerialNo3">
+            <!-- <div class="form-group row" *ngIf="ShowSerialNo3">
               <label class="col-md-3 adInsLabel {{serial3Mandatory ? 'adins-required-label' : ''}}" for="SerialNo3" translate>Serial No. 3</label>
               <div class="col-md-9">
                 <input type="text" class="form-control adInsInput" formControlName="SerialNo3" 
@@ -51,7 +51,7 @@
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls.SerialNo5.invalid }" />
                 <lib-uc-show-errors [control]="DOAssetDetail.controls.SerialNo5" [submit]="enjiForm.submitted"></lib-uc-show-errors>
               </div>
-            </div>
+            </div> -->
           </div>
           <div class="col-md-9">
             <div class="form-group row">
@@ -129,20 +129,20 @@
                   {{DOAssetDetail.get('DOAssetDocList').at(i).controls.IsValueNeeded.value}}
                 </td>
                 <td style="text-align: left;">
-                  {{DOAssetDetail.get('DOAssetDocList').at(i).controls.IsMandatory.value}}
+                  {{DOAssetDetail.get('DOAssetDocList').at(i).controls.MrCollateralConditionCode.value == 'NEW' ? DOAssetDetail.get('DOAssetDocList').at(i).controls.IsMandatoryNew.value : DOAssetDetail.get('DOAssetDocList').at(i).controls.IsMandatoryUsed.value}}
                 </td>
                 <td style="text-align: left;">
                   <input type="checkbox" formControlName="IsReceived" />
                 </td>
                 <td style="text-align: left;">
                   <input type="text" class="form-control adInsInput" formControlName="DocNo"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls.DocNo.invalid }" />
-                  <lib-uc-show-errors [control]="DOAssetDetail.controls.DocNo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.get('DOAssetDocList').at(i).controls.DocNo.invalid }" />
+                  <lib-uc-show-errors [control]="DOAssetDetail.get('DOAssetDocList').at(i).controls.DocNo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </td>
                 <td style="text-align: left;">
                   <textarea class="form-control adInsInput" formControlName="DocNotes"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls.DocNotes.invalid }"></textarea>
-                  <lib-uc-show-errors [control]="DOAssetDetail.controls.DocNotes" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.get('DOAssetDocList').at(i).controls.DocNotes.invalid }"></textarea>
+                  <lib-uc-show-errors [control]="DOAssetDetail.get('DOAssetDocList').at(i).controls.DocNotes" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </td>
               </tr>
             </tbody>
@@ -155,7 +155,7 @@
     <button type="submit" class="btn btn-raised btn-primary">
       <i class="fa fa-check-square-o"></i> Save
     </button>
-    <button type="button" class="btn btn-warning btn-raised" (click)="activeModal.dismiss('0')">Cancel</button>
+    <button type="button" class="btn btn-warning btn-raised" (click)="activeModalAsset.dismiss('0')">Cancel</button>
   </div>
 </form>
 

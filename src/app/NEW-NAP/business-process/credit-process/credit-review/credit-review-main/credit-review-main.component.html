@@ -13,15 +13,27 @@
         </ng-template>
       </mat-tab>
 
-      <mat-tab label="Application Data">
+      <!-- <mat-tab label="Application Data">
         <ng-template matTabContent>
           <app-tab-application-data [AppId]=appId></app-tab-application-data>
         </ng-template>
+      </mat-tab> -->
+
+      <mat-tab label="Application Data">
+        <ng-template matTabContent>
+          <app-view-application-data-multi [AppId]=appId></app-view-application-data-multi>
+        </ng-template>
       </mat-tab>
+
+      <!-- <mat-tab label="Fraud Detection Data">
+        <ng-template matTabContent>        
+          <app-view-fraud-detection-result [appId]=appId [mrCustTypeCode]="CustTypeCode"></app-view-fraud-detection-result>
+        </ng-template>
+      </mat-tab> -->
 
       <mat-tab label="Fraud Detection Data">
         <ng-template matTabContent>        
-          <app-view-fraud-detection-result [appId]=appId [mrCustTypeCode]="CustTypeCode"></app-view-fraud-detection-result>
+          <app-view-app-fraud-verification [AppId]=appId [mrCustTypeCode]="CustTypeCode"></app-view-app-fraud-verification>
         </ng-template>
       </mat-tab>
 
