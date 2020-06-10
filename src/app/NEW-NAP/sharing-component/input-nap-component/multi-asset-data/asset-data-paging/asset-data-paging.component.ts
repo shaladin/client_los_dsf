@@ -116,10 +116,12 @@ eventColl(ev){
     if (confirm("Are you sure to delete this record?")) {
       var collateralObj = new AppCollateralObj();
       collateralObj.AppCollateralId = ev.RowObj.AppCollateralId;
+      collateralObj.AppId = this.AppId;
       console.log("qwe")
       console.log(collateralObj.AppCollateralId)
       this.http.post(AdInsConstant.DeleteAppCollateral, collateralObj).subscribe(
         (response) => {
+          console.log(response);
           this.toastr.successMessage(response["message"]);
           this.listAppCollateralObj = response["ReturnObject"];
 
