@@ -1,0 +1,57 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="card-header header-title">
+          <div class="row">
+            <div class="col-md-8">
+              <h4 class="card-title" id="horz-layout-colored-controls" translate>DELIVERY ORDER DETAIL
+              </h4>
+            </div>
+          </div>
+        </div>
+        <div class="px-3">
+          <lib-ucSubsection [title]="'DELIVERY LIST'" [panel]="'DeliveryPanel'">
+          </lib-ucSubsection>
+          <div id="DeliveryPanel">
+            <table class="table table-responsive-md text-center table-hover">
+              <thead>
+                <tr class="table-header">
+                  <th class="text-center"><span class="thead-header" translate>Delivery Order No
+                    </span> </th>
+                  <th class="text-center"><span class="thead-header" translate>Delivery Date
+                    </span> </th>
+                  <th class="text-left"><span class="thead-header" translate>Cust Relationship
+                    </span> </th>
+                  <th class="text-left"><span class="thead-header" translate>Recipient Name
+                    </span> </th>
+                  <th class="text-left"><span class="thead-header" translate>Recipient Address
+                    </span> </th>
+                  <th class="text-center"><span class="thead-header" translate>Detail
+                    </span> </th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngFor="let item of doList">
+                  <tr>
+                    <td class="text-center">{{item.DeliveryNo}}</td>
+                    <td class="text-center">{{item.DeliveryDt  | date: 'dd-MM-yyyy'}}</td>
+                    <td class="text-left">{{item.MrCustRelationshipCode}}</td>
+                    <td class="text-left">{{item.RecipientName}}</td>
+                    <td class="text-left">{{item.DeliveryAddr}}</td>
+                    <td class="text-center">
+                      <a class="success p-0" [routerLink]="['/Nap/FinanceLeasing/ViewDo/Detail']"
+                        [queryParams]="{DOHId : item.DeliveryOrderHId}">
+                        <i class="ft-edit-2 font-medium-3 mr-2"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
