@@ -310,8 +310,8 @@ export class ViewApplicationDataMultiComponent implements OnInit {
         console.log(response);
         this.AssetDealerData = response;
 
-        console.log("lisassetdata");
-        console.log(this.AssetDealerData);
+        // console.log("lisassetdata");
+        // console.log(this.AssetDealerData);
 
         this.open(content);
       },
