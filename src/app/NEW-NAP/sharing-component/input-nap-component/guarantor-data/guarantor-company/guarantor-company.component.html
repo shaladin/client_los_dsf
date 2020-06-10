@@ -67,83 +67,8 @@
                   </div>
                 </div>
               </div>
-              <lib-ucSubsection [id]="'legalDocId'" [title]="'Legal Doc Listing'" [panel]="'legalDoc'">
-              </lib-ucSubsection>
-              <div id="legalDoc">
-                <div class="form-actions right">
-                  <button type="button" name="add" id="add" (click)="addLegalDoc()" class="btn btn-raised btn-primary">
-                    Add
-                  </button>
-                </div>
-                <div formArrayName="LegalDocForm">
-                  <table class="table table-responsive-md text-center table-hover">
-                    <thead>
-                      <tr class="table-header">
-                        <th><span translate class="thead-header">Legal Doc Type</span></th>
-                        <th><span translate class="thead-header" style="color:red">Document No</span></th>
-                        <th><span translate class="thead-header" style="color:red">Date Issued</span></th>
-                        <th><span translate class="thead-header" style="color:red">Expired Date</span></th>
-                        <th><span translate class="thead-header">Notes</span></th>
-                        <th><span translate class="thead-header" style="color:red">Release By</span></th>
-                        <th><span translate class="thead-header" style="color:red">Release Location</span></th>
-                        <th><span translate class="thead-header">Delete</span></th>
-                      </tr>
-                    </thead>
-                    <tbody *ngIf="CompanyForm.controls['LegalDocForm'].controls.length == 0">
-                      <tr>
-                        <td colspan="100%">No Data Available</td>
-                      </tr>
-                    </tbody>
-                    <tbody *ngIf="CompanyForm.controls['LegalDocForm'].controls.length > 0">
-                      <tr *ngFor="let item of CompanyForm.controls['LegalDocForm'].controls;let i = index">
-                        <td [formGroupName]="i" class="text-center">
-                          <select class="form-control adInsInput full-width" style="width: auto" formControlName="MrLegalDocTypeCode"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls['LegalDocForm']['controls'][i]['controls'].MrLegalDocTypeCode.invalid }">
-                            <option *ngFor="let it of DocObjs" [value]="it.MasterCode">
-                              {{it.Descr}}</option>
-                              <lib-uc-show-errors [control]="CompanyForm.controls['LegalDocForm']['controls'][i]['controls'].MrLegalDocTypeCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                          </select>
-                        </td>
-                        <td [formGroupName]="i" class="text-center">
-                          <input type="text" class="form-control" formControlName="DocNo"
-                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls['LegalDocForm']['controls'][i]['controls'].DocNo.invalid }">
-                          <lib-uc-show-errors  [control]="CompanyForm.controls['LegalDocForm']['controls'][i]['controls'].DocNo" [submit]="enjiForm.submitted"></lib-uc-show-errors >
-                        </td>
-                        <td [formGroupName]="i">
-                          <input type="date" class="form-control" formControlName="DocDt"
-                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls['LegalDocForm']['controls'][i]['controls'].DocDt.invalid }">
-                          <lib-uc-show-errors  [control]="CompanyForm.controls['LegalDocForm']['controls'][i]['controls'].DocDt" [submit]="enjiForm.submitted"></lib-uc-show-errors >
-                        </td>
-                        <td [formGroupName]="i">
-                          <input type="date" class="form-control" formControlName="DocExpiredDt"
-                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls['LegalDocForm']['controls'][i]['controls'].DocExpiredDt.invalid }">
-                          <lib-uc-show-errors  [control]="CompanyForm.controls['LegalDocForm']['controls'][i]['controls'].DocExpiredDt" [submit]="enjiForm.submitted"></lib-uc-show-errors >
-                        </td>
-                        <td [formGroupName]="i">
-                          <input type="text" class="form-control" formControlName="DocNotes"
-                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls['LegalDocForm']['controls'][i]['controls'].DocNotes.invalid }">
-                          <lib-uc-show-errors  [control]="CompanyForm.controls['LegalDocForm']['controls'][i]['controls'].DocNotes" [submit]="enjiForm.submitted"></lib-uc-show-errors >
-                        </td>
-                        <td [formGroupName]="i">
-                          <input type="text" class="form-control" formControlName="ReleaseBy"
-                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls['LegalDocForm']['controls'][i]['controls'].ReleaseBy.invalid }">
-                          <lib-uc-show-errors  [control]="CompanyForm.controls['LegalDocForm']['controls'][i]['controls'].ReleaseBy" [submit]="enjiForm.submitted"></lib-uc-show-errors >
-                        </td>
-                        <td [formGroupName]="i">
-                          <input type="text" class="form-control" formControlName="ReleaseLocation"
-                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls['LegalDocForm']['controls'][i]['controls'].ReleaseLocation.invalid }">
-                          <lib-uc-show-errors  [control]="CompanyForm.controls['LegalDocForm']['controls'][i]['controls'].ReleaseLocation" [submit]="enjiForm.submitted"></lib-uc-show-errors >
-                        </td>
-                        <td [formGroupName]="i">
-                          <a class="danger p-0" (click)="deleteLegalDoc(i)">
-                            <i class="ft-trash-2 font-medium-3 mr-2"></i>
-                          </a>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+              <app-guarantor-legal-doc (callbackSubmit)="getAppGuarantorLegalDoc($event)" [listLegalDoc]="listLegalDoc">
+              </app-guarantor-legal-doc>
               <lib-ucSubsection [id]="'contactInfoId'" [title]="'Contact Information'" [panel]="'contactInfo'">
               </lib-ucSubsection>
               <div class="row" id="contactInfo">

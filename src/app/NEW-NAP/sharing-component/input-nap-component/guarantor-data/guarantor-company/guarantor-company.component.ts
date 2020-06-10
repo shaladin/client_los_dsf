@@ -13,7 +13,6 @@ import { GuarantorCompanyObj } from 'app/shared/model/GuarantorCompanyObj.Model'
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { environment } from 'environments/environment';
 import { formatDate } from '@angular/common';
-import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalDocObj.Model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppGuarantorCompanyLegalDocObj } from 'app/shared/model/AppGuarantorCompanyLegalDocObj.Model';
 
@@ -42,9 +41,9 @@ export class GuarantorCompanyComponent implements OnInit {
   inputFieldObj: InputFieldObj;
   AddrObj: AddrObj;
   appGuarantorCompanyObj : AppGuarantorCompanyObj;
-  guarantorCompanyObj : GuarantorCompanyObj ;
+  guarantorCompanyObj : GuarantorCompanyObj = new GuarantorCompanyObj();
   AppGuarantorCompanyId : any;
-  companyLegalDocObj : Array<AppGuarantorCompanyLegalDocObj>;
+  listLegalDoc: Array<AppGuarantorCompanyLegalDocObj> = new Array<AppGuarantorCompanyLegalDocObj>();
   DocObjs : any;
   defLegalDocType: string;
   appLegalDoc : any = new Array();
@@ -66,11 +65,9 @@ export class GuarantorCompanyComponent implements OnInit {
     PhnExt1: ['', [Validators.maxLength(10), Validators.pattern("^[0-9]+$")]],
     PhnArea2: ['', [Validators.maxLength(20), Validators.pattern("^[0-9]+$")]],
     Phn2: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
-    PhnExt2: ['', [Validators.maxLength(10), Validators.pattern("^[0-9]+$")]],
-    LegalDocForm: this.fb.array([])
+    PhnExt2: ['', [Validators.maxLength(10), Validators.pattern("^[0-9]+$")]]
   });
 
-  selectedListLegalDocType : any;
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient,private fb:FormBuilder, private toastr: NGXToastrService, private modalService: NgbModal) { 
   }
 
@@ -89,17 +86,12 @@ export class GuarantorCompanyComponent implements OnInit {
       guarantorCompanyObj.AppGuarantorObj.AppGuarantorId = this.AppGuarantorId;
       await this.http.post(AdInsConstant.GetAppGuarantorCompanyByAppGuarantorId, guarantorCompanyObj).toPromise().then(
         (response) => {
+          console.log(response);
           this.resultData=response;
           this.AppGuarantorCompanyId = this.resultData.appGuarantorCompanyObj.AppGuarantorCompanyId;
           this.inputLookupObj.jsonSelect = { CustName: this.resultData.appGuarantorObj.GuarantorName };
           this.inputLookupObj.nameSelect = this.resultData.appGuarantorObj.GuarantorName;
           this.inputLookupObj1.jsonSelect = {IndustryTypeName: this.resultData.appGuarantorCompanyObj.IndustryTypeCode};
-          if (this.resultData.appGuarantorCompanyObj.ListAppGuarantorCompanyLegalDoc != null && this.resultData.appGuarantorCompanyObj.ListAppGuarantorCompanyLegalDoc != undefined) {
-            for (let i = 0; i < this.resultData.appGuarantorCompanyObj.ListAppGuarantorCompanyLegalDoc.length; i++) {
-              this.appLegalDoc[i] = this.resultData.appGuarantorCompanyObj.ListAppGuarantorCompanyLegalDoc[i]["AppGuarantorCompanyLegalDocId"];
-            }
-            console.log(this.appLegalDoc);
-          }
           this.CompanyForm.patchValue({
             MrCustRelationshipCode : this.resultData.appGuarantorObj.MrCustRelationshipCode,
             TaxIdNo : this.resultData.appGuarantorObj.TaxIdNo,
@@ -120,9 +112,9 @@ export class GuarantorCompanyComponent implements OnInit {
           })
           this.setIndustryTypeName(this.resultData.appGuarantorCompanyObj.IndustryTypeCode);
           this.setAddrLegalObj();
-          this.companyLegalDocObj = this.resultData.appGuarantorCompanyObj.ListAppGuarantorCompanyLegalDoc;
-          console.log(this.companyLegalDocObj);
-          this.bindLegalDoc();
+          this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs = this.resultData.appGuarantorCompanyObj.ListAppGuarantorCompanyLegalDoc;
+          console.log(this.guarantorCompanyObj);
+          this.listLegalDoc = this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs;
         },
         (error) => {
           console.log(error);
@@ -176,7 +168,6 @@ export class GuarantorCompanyComponent implements OnInit {
           }
       }
     );
-    this.getDocType();
     this.isReady = true;
   }
 
@@ -326,8 +317,7 @@ export class GuarantorCompanyComponent implements OnInit {
 
   Add(){
     this.setAppGuarantor();
-    if(this.setAppGuarantorCompany() == false) return false;
-    else true;
+    this.setAppGuarantorCompany();
   }
 
   setAppGuarantor(){
@@ -340,8 +330,6 @@ export class GuarantorCompanyComponent implements OnInit {
   }
 
   setAppGuarantorCompany(){
-    this.selectedListLegalDocType = new Array();
-    var flag:boolean = true;
     this.guarantorCompanyObj.AppGuarantorCompanyObj.MrCompanyTypeCode = this.CompanyForm.controls.MrCompanyTypeCode.value;
     this.guarantorCompanyObj.AppGuarantorCompanyObj.TaxIdNo = this.CompanyForm.controls.TaxIdNo.value;
     this.guarantorCompanyObj.AppGuarantorCompanyObj.IndustryTypeCode = this.inputLookupObj1.jsonSelect.IndustryTypeCode;
@@ -367,39 +355,18 @@ export class GuarantorCompanyComponent implements OnInit {
     this.guarantorCompanyObj.AppGuarantorCompanyObj.Zipcode = this.inputFieldObj.inputLookupObj.nameSelect;
     this.guarantorCompanyObj.AppGuarantorCompanyObj.RowVersion = "";
 
-    
-    this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs = new Array<AppGuarantorCompanyLegalDocObj>();
-    var j = this.CompanyForm.controls["LegalDocForm"]["value"].length;
-    for (let i = 0; i < j; i++) {
-      console.log(this.CompanyForm.controls["LegalDocForm"].value[i]);
-      this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs[i] = new AppGuarantorCompanyLegalDocObj();
-      this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs[i].MrLegalDocTypeCode = this.CompanyForm.controls["LegalDocForm"].value[i].MrLegalDocTypeCode;
-      this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs[i].DocNo = this.CompanyForm.controls["LegalDocForm"].value[i].DocNo;
-      this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs[i].DocDt = this.CompanyForm.controls["LegalDocForm"].value[i].DocDt;
-      this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs[i].DocExpiredDt = this.CompanyForm.controls["LegalDocForm"].value[i].DocExpiredDt;
-      this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs[i].DocNotes = this.CompanyForm.controls["LegalDocForm"].value[i].DocNotes;
-      this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs[i].ReleaseBy = this.CompanyForm.controls["LegalDocForm"].value[i].ReleaseBy;
-      this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs[i].ReleaseLocation = this.CompanyForm.controls["LegalDocForm"].value[i].ReleaseLocation;
-      let d1 = new Date(this.MaxDate);
-      let d2 = new Date(this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs[i].DocDt);
-      let d3 = new Date(this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs[i].DocExpiredDt);``
-      if(d1>d3){
-        this.toastr.errorMessage("Expired Date can not be less than " + this.MaxDate);
-        flag = false;
-      }
-      if(d1<d2){
-        this.toastr.errorMessage("Issued Date can not be more than " + this.MaxDate);
-        flag = false;
-      }
-      if(this.cekDuplicateDocType(i) == false) flag=false;
-    }
-    return flag;
+    this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs = this.listLegalDoc;
+  }
+
+  getAppGuarantorLegalDoc(event) {
+    console.log(event);
+    this.listLegalDoc = event;
   }
 
   SaveForm(){
     console.log(this.CompanyForm);
     this.guarantorCompanyObj = new GuarantorCompanyObj();
-    if(this.Add()== false) return;
+    this.Add();
     if (this.mode == "edit") {
       this.guarantorCompanyObj.RowVersion = this.resultData.RowVersion;
       this.guarantorCompanyObj.AppGuarantorObj.AppGuarantorId = this.AppGuarantorId;
@@ -445,103 +412,10 @@ ClearForm(){
     PhnExt1: ['', [Validators.maxLength(10), Validators.pattern("^[0-9]+$")]],
     PhnArea2: ['', [Validators.maxLength(20), Validators.pattern("^[0-9]+$")]],
     Phn2: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
-    PhnExt2: ['', [Validators.maxLength(10), Validators.pattern("^[0-9]+$")]],
-    LegalDocForm: this.fb.array([])
+    PhnExt2: ['', [Validators.maxLength(10), Validators.pattern("^[0-9]+$")]]
   });
   this.initLookup();
   this.initAddr();
-}
-
-legalDocObj : Array<AppCustCompanyLegalDocObj>;
-
-addLegalDoc(){
-  var legalDocObjs = this.CompanyForm.controls["LegalDocForm"] as FormArray;
-  var length = this.CompanyForm.value["LegalDocForm"].length;
-  var max = 0;
-  if(length > 0){
-    max = this.CompanyForm.value["LegalDocForm"].length[length - 1];
-  }
-  legalDocObjs.push(this.addGroup(undefined, max + 1));
-  // this.getDocType(max);
- 
-}
-
-cek(){
-  console.log(this.CompanyForm)
-  console.log(this.inputLookupObj1)
-}
-
-getDocType(){ 
-  var legalDocObj ={
-    RefMasterTypeCode:"LEGAL_DOC_TYPE",
-    RowVersion:""
-  }
-  this.http.post(AdInsConstant.GetListActiveRefMaster, legalDocObj).subscribe(
-    (response) => {
-        this.DocObjs = response["ReturnObject"];
-        if(this.DocObjs.length > 0){
-          this.defLegalDocType = this.DocObjs[0].MasterCode;
-        }
-    }
-  );
-}
-
-addGroup(legalDocObj, i){
-  if(legalDocObj == undefined){
-    return this.fb.group({
-      MrLegalDocTypeCode:[this.defLegalDocType, [Validators.required, Validators.maxLength(50)]],
-      DocNo: ['', [Validators.required, Validators.maxLength(50)]],
-      DocDt: ['', [Validators.required]],
-      DocExpiredDt: ['', [Validators.required]],
-      DocNotes: ['', [Validators.maxLength(4000)]],
-      ReleaseBy: ['', [Validators.required, Validators.maxLength(500)]],
-      ReleaseLocation: ['', [Validators.required, Validators.maxLength(4000)]]
-    })
-  }else{
-    return this.fb.group({
-      No: [i],
-      MrLegalDocTypeCode:[legalDocObj.MrLegalDocTypeCode, [Validators.required, Validators.maxLength(50)]],
-      DocNo: [legalDocObj.DocNo, [Validators.required, Validators.maxLength(50)]],
-      DocDt: [formatDate(legalDocObj.DocDt, 'yyyy-MM-dd', 'en-US'), [Validators.required]],
-      DocExpiredDt: [formatDate(legalDocObj.DocExpiredDt, 'yyyy-MM-dd', 'en-US'), [Validators.required]],
-      DocNotes: [legalDocObj.DocNotes, [Validators.maxLength(4000)]],
-      ReleaseBy: [legalDocObj.ReleaseBy, [Validators.required, Validators.maxLength(500)]],
-      ReleaseLocation: [legalDocObj.ReleaseLocation, [Validators.required, Validators.maxLength(4000)]]
-    })
-  } 
-}  
-
-deleteLegalDoc(i) {
-  if (confirm("Are you sure to delete this record?")) {
-    var legalDocObjs = this.CompanyForm.controls["LegalDocForm"] as FormArray;
-    legalDocObjs.removeAt(i);
-  }
-}
-
-bindLegalDoc() {
-  if (this.companyLegalDocObj != undefined) {
-    for (let i = 0; i < this.companyLegalDocObj.length; i++) {
-      var listLegalDocs = this.CompanyForm.controls["LegalDocForm"] as FormArray;
-      listLegalDocs.push(this.addGroup(this.companyLegalDocObj[i], i));
-      // this.getDocType(i);
-    }
-  }
-}
-
-cekDuplicateDocType(i){
-  // var IdxSelected=
-  if(this.selectedListLegalDocType.length>0){
-    if(this.selectedListLegalDocType.find(x => x.Key == this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs[i].MrLegalDocTypeCode)){
-      this.toastr.errorMessage("Legal Document Type "+this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs[i].MrLegalDocTypeCode + " is duplicated ");    
-      return false;  
-    }
-  }
-  var keyValueObj={
-    Key: this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs[i].MrLegalDocTypeCode,
-    Value: this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs[i].LegalDocName,
-  }
-  this.selectedListLegalDocType.push(keyValueObj);
-  return true;
 }
 
 setIndustryTypeName(industryTypeCode){
