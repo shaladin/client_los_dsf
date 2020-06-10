@@ -770,6 +770,12 @@ copyToLocationAddr() {
       this.setAssetUser();
       this.setAssetLocation();
       this.allAssetDataObj.AppAssetObj.AppAssetId = 0;
+
+      if(this.allAssetDataObj.AppAssetObj.DownPaymentAmt > this.allAssetDataObj.AppAssetObj.AssetPriceAmt){
+        this.toastr.errorMessage("Down Payment Must Be Lower Than Asset Price!");
+        return false;
+      }
+
       this.http.post(this.addEditAllAssetDataUrl, this.allAssetDataObj).subscribe(
         (response) => {
           console.log(response);
@@ -795,6 +801,12 @@ copyToLocationAddr() {
       this.allAssetDataObj.AppAssetObj.AppAssetId = this.AppAssetId;
       this.allAssetDataObj.AppCollateralObj.AppCollateralId = this.returnAppCollateralObj.AppCollateralId;
       this.allAssetDataObj.AppCollateralRegistrationObj.AppCollateralRegistrationId = this.returnAppCollateralRegistObj.AppCollateralRegistrationId;
+
+      if(this.allAssetDataObj.AppAssetObj.DownPaymentAmt > this.allAssetDataObj.AppAssetObj.AssetPriceAmt){
+        this.toastr.errorMessage("Down Payment Must Be Lower Than Asset Price!");
+        return false;
+      }
+
       this.http.post(this.addEditAllAssetDataUrl, this.allAssetDataObj).subscribe(
         (response) => {
           console.log(response);
