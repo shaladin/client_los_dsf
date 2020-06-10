@@ -39,7 +39,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     RefNo: [''],
     IsRevolving: [false],
     CurrCode: [''],
-    PlafondAmt: ['', [Validators.required]],
+    PlafondAmt:  ['', [Validators.required, Validators.min(1.00)]],
     RealisationAmt: [0],
     MouStat: ['NEW', [Validators.required]],
     MrMouTypeCode: ['', [Validators.required]],
