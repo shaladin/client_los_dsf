@@ -9,6 +9,7 @@ import { DoAssetDetailComponent } from '../do-asset-detail/do-asset-detail.compo
 import { NgxSpinnerService } from 'ngx-spinner';
 import { map, mergeMap } from 'rxjs/operators';
 import { forkJoin } from 'rxjs';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-create-do-multi-asset',
@@ -25,6 +26,7 @@ export class CreateDoMultiAssetComponent implements OnInit {
   @Input() Mode: string;
   @Input() DeliveryOrderHId: number;
   relationshipList: any;
+  context: any;
 
   DeliveryOrderForm = this.fb.group({
     DeliveryOrderHId: [0, [Validators.required]],
@@ -48,8 +50,9 @@ export class CreateDoMultiAssetComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    var context = JSON.parse(localStorage.getItem("UserAccess"));
-    console.log(context);
+    console.log("Selected : " + JSON.stringify(this.SelectedDOAssetList));
+    var datePipe = new DatePipe("en-US");
+    this.context = JSON.parse(localStorage.getItem("UserAccess"));
     var rmRelation = new RefMasterObj();
     rmRelation.RefMasterTypeCode = this.CustType == 'PERSONAL' ? 'CUST_PERSONAL_RELATIONSHIP' : 'CUST_COMPANY_RELATIONSHIP';
     if(this.Mode == "add"){
@@ -81,6 +84,7 @@ export class CreateDoMultiAssetComponent implements OnInit {
           var deliveryOrderHData = response[0];
           var relationResponse = response[1];
           this.relationshipList = relationResponse;
+          deliveryOrderHData["DeliveryDt"] = datePipe.transform(deliveryOrderHData["DeliveryDt"], "yyyy-MM-dd");
           this.DeliveryOrderForm.patchValue({
             ...deliveryOrderHData
           });
@@ -124,6 +128,7 @@ export class CreateDoMultiAssetComponent implements OnInit {
                   selected.DeliveryDt = item.DeliveryDt;
                   selected.IsAvailable = item.IsAvailable;
                   selected.ManufacturingYear = item.ManufacturingYear;
+                  selected.TempLetterNo = item.TempLetterNo;
                   break;
                 }
               }
@@ -145,8 +150,8 @@ export class CreateDoMultiAssetComponent implements OnInit {
 
   Save(){
     var formData = this.DeliveryOrderForm.value;
-    var doHeader = { "DeliveryOrderH": {...formData} };
-    var doDetails = { "DeliveryOrderDs": [] };
+    var DeliveryOrderH = {...formData};
+    var DeliveryOrderDs = [];
     var url = "";
     for (const item of this.SelectedDOAssetList) {
       var doDetailObj = {
@@ -155,9 +160,9 @@ export class CreateDoMultiAssetComponent implements OnInit {
         SeqNo: item.AssetSeqNo,
         AppAssetId: item.AppAssetId
       }
-      doDetails["DeliveryOrderDs"].push(doDetailObj);
+      DeliveryOrderDs.push(doDetailObj);
     }
-    var DOData = { doHeader, doDetails };
+    var DOData = { DeliveryOrderH, DeliveryOrderDs, RefOfficeId: this.context.OfficeId };
 
     if(this.Mode == "add"){
       url = AdInsConstant.AddDeliveryOrderMultiAsset;

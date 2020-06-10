@@ -8,6 +8,8 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { forkJoin } from 'rxjs';
 import { MouCustClauseObj } from 'app/shared/model/MouCustClauseObj.Model';
 import { MouCustAssetComponent } from './mou-cust-asset/mou-cust-asset.component';
+import { MouCustAssetObj } from 'app/shared/model/MouCustAssetObj.Model';
+import { MouCustAssetListObj } from 'app/shared/model/MouCustAssetListObj.Model';
 
 @Component({
   selector: 'app-mou-detail-general',
@@ -31,6 +33,9 @@ export class MouDetailGeneralComponent implements OnInit {
   mouCustClause : any; 
   url : string;
   tempMouCustClause : any;
+  tempMouCustAsset : MouCustAssetListObj  
+  AssetForm = this.fb.group({ 
+  });
   MouDetailGeneralForm = this.fb.group({
     MouCustClauseId: [0, [Validators.required]],
     MouCustId: [0, [Validators.required]],
@@ -81,6 +86,7 @@ export class MouDetailGeneralComponent implements OnInit {
     let getMouCustClause = this.httpClient.post(AdInsConstant.GetMouCustClauseByMouCustId, mouCustClause);
     forkJoin([reqCurrency, reqIntrstType, reqInstSchm, reqPayFreq, reqFirstInst, getMouCustClause]).subscribe(
       (response) => {
+        console.log("aaa");
         this.currencyList = response[0];
         this.intrstTypeList = response[1];
         this.instSchmList = response[2];
@@ -108,9 +114,9 @@ export class MouDetailGeneralComponent implements OnInit {
     );
   }
 
-  Save(enjiForm){
-  
-    if(this.Mode != null){ 
+  Save(enjiForm){ 
+    if(this.Mode != null){  
+      this.saveMouCustAssetDetail();
       this.mouCustClause = new MouCustClauseObj();
        this.mouCustClause.MouCustId = this.MouCustId;
        this.httpClient.post(AdInsConstant.GetMouCustClauseByMouCustId, this.mouCustClause).subscribe(
@@ -123,10 +129,29 @@ export class MouDetailGeneralComponent implements OnInit {
         }
       );
     } 
-    else{
+    else{ 
+      this.saveMouCustAssetDetail(); 
       this.getData();
     }
   }
+ 
+saveMouCustAssetDetail(){ 
+    this.tempMouCustAsset = new MouCustAssetListObj();
+    this.tempMouCustAsset.RequestMouCustAssetObj =  new Array<MouCustAssetObj>(); 
+    for(var i=0; i<this.AssetForm.controls.Asset["controls"]["length"];i++){
+      this.tempMouCustAsset.RequestMouCustAssetObj[i] =  new MouCustAssetObj(); 
+      this.tempMouCustAsset.RequestMouCustAssetObj[i].MouCustId = this.MouCustId;
+      this.tempMouCustAsset.RequestMouCustAssetObj[i].FullAssetName = this.AssetForm.controls.Asset["controls"][i]["controls"]["FullAssetName"].value;
+      this.tempMouCustAsset.RequestMouCustAssetObj[i].FullAssetCode = this.AssetForm.controls.Asset["controls"][i]["controls"]["FullAssetCode"].value; 
+    } 
+    this.tempMouCustAsset.MouCustId = this.MouCustId;
+    console.log(this.tempMouCustAsset);
+    this.httpClient.post(AdInsConstant.AddMouCustAsset, this.tempMouCustAsset).subscribe(
+      (response) => { 
+      }
+    ); 
+}
+
 getData(){
   
   this.mouCustClause = this.tempMouCustClause;
@@ -187,6 +212,14 @@ getData(){
       console.log(error);
     }
   );
+
+
+
+  
+   
+
+
+  
 }
 
   back(){
