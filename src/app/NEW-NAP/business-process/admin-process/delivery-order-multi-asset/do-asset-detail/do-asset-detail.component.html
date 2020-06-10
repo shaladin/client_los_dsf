@@ -2,7 +2,7 @@
   (ngSubmit)="enjiForm.form.valid && Save()">
   <div class="modal-header">
     <h4 class="modal-title">Asset Detail</h4>
-    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('0')">
+    <button type="button" class="close" aria-label="Close" (click)="activeModalAsset.dismiss('0')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -155,7 +155,7 @@
     <button type="submit" class="btn btn-raised btn-primary">
       <i class="fa fa-check-square-o"></i> Save
     </button>
-    <button type="button" class="btn btn-warning btn-raised" (click)="activeModal.dismiss('0')">Cancel</button>
+    <button type="button" class="btn btn-warning btn-raised" (click)="activeModalAsset.dismiss('0')">Cancel</button>
   </div>
 </form>
 

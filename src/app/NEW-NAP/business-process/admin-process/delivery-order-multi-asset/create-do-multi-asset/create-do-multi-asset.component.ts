@@ -9,6 +9,7 @@ import { DoAssetDetailComponent } from '../do-asset-detail/do-asset-detail.compo
 import { NgxSpinnerService } from 'ngx-spinner';
 import { map, mergeMap } from 'rxjs/operators';
 import { forkJoin } from 'rxjs';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-create-do-multi-asset',
@@ -49,6 +50,8 @@ export class CreateDoMultiAssetComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log("Selected : " + JSON.stringify(this.SelectedDOAssetList));
+    var datePipe = new DatePipe("en-US");
     this.context = JSON.parse(localStorage.getItem("UserAccess"));
     var rmRelation = new RefMasterObj();
     rmRelation.RefMasterTypeCode = this.CustType == 'PERSONAL' ? 'CUST_PERSONAL_RELATIONSHIP' : 'CUST_COMPANY_RELATIONSHIP';
@@ -81,6 +84,7 @@ export class CreateDoMultiAssetComponent implements OnInit {
           var deliveryOrderHData = response[0];
           var relationResponse = response[1];
           this.relationshipList = relationResponse;
+          deliveryOrderHData["DeliveryDt"] = datePipe.transform(deliveryOrderHData["DeliveryDt"], "yyyy-MM-dd");
           this.DeliveryOrderForm.patchValue({
             ...deliveryOrderHData
           });
@@ -124,6 +128,7 @@ export class CreateDoMultiAssetComponent implements OnInit {
                   selected.DeliveryDt = item.DeliveryDt;
                   selected.IsAvailable = item.IsAvailable;
                   selected.ManufacturingYear = item.ManufacturingYear;
+                  selected.TempLetterNo = item.TempLetterNo;
                   break;
                 }
               }
