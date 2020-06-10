@@ -120,6 +120,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   gridAppCollateralObj: InputGridObj = new InputGridObj();
 
   InsCpltzAmt: number = 0;
+  InsDiscAmt: number = 0;
   TotalPremiumToCust: number = 0;
   PaidAmtByCust: number = 0;
 
@@ -173,15 +174,18 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         this.InsCpltzAmt = 0;
         this.TotalPremiumToCust = 0;
 
-        for (var i = 0; i < this.listAppCollateralObj.length; i++) {
-          if (this.listAppCollateralObj[i].PaidAmtByCust != null)
-            this.PaidAmtByCust = this.PaidAmtByCust + this.listAppCollateralObj[i].PaidAmtByCust;
+        if (this.listAppCollateralObj[0].PaidAmtByCust != null)
+          this.PaidAmtByCust = this.listAppCollateralObj[0].PaidAmtByCust;
 
-          if (this.listAppCollateralObj[i].InsCpltzAmt != null)
-            this.InsCpltzAmt = this.InsCpltzAmt + this.listAppCollateralObj[i].InsCpltzAmt;
-        }
+        if (this.listAppCollateralObj[0].InsCpltzAmt != null)
+          this.InsCpltzAmt += this.listAppCollateralObj[0].InsCpltzAmt;
+
+        if (this.listAppCollateralObj[0].InsDiscAmt != null)
+          this.InsDiscAmt += this.listAppCollateralObj[0].InsDiscAmt;
+
         if (this.listAppCollateralObj[0].TotalCustPremiAmt != null)
           this.TotalPremiumToCust = this.listAppCollateralObj[0].TotalCustPremiAmt;
+
       },
       (error) => {
         console.log(error);
@@ -587,9 +591,9 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         else if (this.subsidyRuleObj != null) {
           if (this.subsidyRuleObj.SubsidyValue != null) {
             for (let i = 0; i < this.subsidyRuleObj.SubsidyValue.length; i++) {
-              if (this.subsidyRuleObj.SubsidyFromType[i] == "INSCO" && this.subsidyRuleObj.SubsidyFromValue[i] == this.InsuranceDataForm.controls.InscoBranchCode.value) {
+              // if (this.subsidyRuleObj.SubsidyFromType[i] == "INSCO" && this.subsidyRuleObj.SubsidyFromValue[i] == this.InsuranceDataForm.controls.InscoBranchCode.value) {
                 custDiscAmt += this.subsidyRuleObj.SubsidyValue[i];
-              }
+              // }
             }
           }
         }
