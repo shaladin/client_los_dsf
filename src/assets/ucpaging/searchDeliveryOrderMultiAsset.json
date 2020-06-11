@@ -83,12 +83,7 @@
             "label": "CUSTOMER NAME",
             "name": "AG.CUST_NAME"
         },
-        {
-            "type": "sort",
-            "position": "center",
-            "label": "PURCHASE ORDER NO",
-            "name": "PO.PURCHASE_ORDER_NO"
-        },
+       
         {
             "type": "sort",
             "position": "left",
@@ -111,27 +106,38 @@
             "type": "text",
             "position": "center",
             "property": "PONumber"
-        },
+        }, 
+    {
+      "type": "link",
+      "position": "left",
+      "property": "AgrmntNo",
+      "target": "_blank",
+      "path": "/Nap/View/AgrmntView", 
+      "param": [
         {
-            "type": "text",
-            "position": "center",
-            "property": "AgrmntNo"
-        },
+          "type": "AgrmntId",
+          "property": "AgrmntId"
+        }
+      ]
+    },
         {
-            "type": "text",
+            "type": "link",
             "position": "center",
-            "property": "AppNo"
-        },
+            "property": "AppNo",
+            "target": "_blank",
+            "path": "/Nap/View/AppView",
+            "param": [
+              {
+                "type": "AppId",
+                "property": "AppId"
+              }
+            ]
+          },
         {
             "type": "text",
             "position": "left",
             "property": "CustName"
-        },
-        {
-            "type": "text",
-            "position": "center",
-            "property": "PurchaseOrderNo"
-        },
+        }, 
         {
             "type": "text",
             "position": "left",

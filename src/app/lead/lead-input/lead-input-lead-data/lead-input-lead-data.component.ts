@@ -600,10 +600,30 @@ export class LeadInputLeadDataComponent implements OnInit {
   AssetPriceChange() {
     this.Calculate = false;
     this.AssetPrice = this.LeadDataForm.controls["AssetPrice"].value;
+    this.DPAmount = this.LeadDataForm.controls["DownPaymentAmount"].value;
+    this.DPPercentage = this.LeadDataForm.controls["DownPaymentPercent"].value;
+
     this.LeadDataForm.controls['DownPaymentAmount'].clearValidators();
     this.LeadDataForm.controls['DownPaymentAmount'].setValidators([Validators.required, Validators.min(1.00), Validators.max(this.AssetPrice)]);
     this.LeadDataForm.controls['DownPaymentAmount'].updateValueAndValidity();
+
+    if (this.LeadDataForm.controls["MrDownPaymentTypeCode"].value == "AMT") {
+      this.DPPercentage = this.DPAmount / this.AssetPrice * 100;
+
+      this.LeadDataForm.patchValue({
+        DownPaymentPercent: this.DPPercentage,
+      });
+    }
+    else
+    {
+      this.DPAmount = this.AssetPrice * this.DPPercentage / 100;
+
+      this.LeadDataForm.patchValue({
+        DownPaymentAmount: this.DPAmount,
+      });
+    }
   }
+
   FirstInstChange() {
     this.Calculate = false;
     this.LeadDataForm.patchValue({
@@ -681,8 +701,10 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.leadInputLeadDataObj.LeadAssetObj.AssetPriceAmt = this.LeadDataForm.controls["AssetPrice"].value;
     this.leadInputLeadDataObj.LeadAssetObj.DownPaymentAmt = this.LeadDataForm.controls["DownPaymentAmount"].value;
     this.leadInputLeadDataObj.LeadAssetObj.DownPaymentPrcnt = this.LeadDataForm.controls["DownPaymentPercent"].value;
+    this.leadInputLeadDataObj.LeadAssetObj.AssetSeqNo = 1;
     if (this.items.controls[0] != null) {
       this.leadInputLeadDataObj.LeadAssetObj.SerialNo1 = this.items.controls[0]["controls"]["SerialNoValue"].value;
+      
     }
     if (this.items.controls[1] != null) {
       this.leadInputLeadDataObj.LeadAssetObj.SerialNo2 = this.items.controls[1]["controls"]["SerialNoValue"].value;

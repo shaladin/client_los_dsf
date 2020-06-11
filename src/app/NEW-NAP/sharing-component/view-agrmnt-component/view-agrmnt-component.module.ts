@@ -11,6 +11,7 @@ import { AgrmntFinancialComponent } from './agrmnt-financial/agrmnt-financial.co
  
 import { ViewAgrmntSummaryComponent } from "./view-summary/view-summary.component";
 import { ViewCommissionComponent } from './view-commission/view-commission.component';
+import { ViewDeviationComponent } from './view-deviation/view-deviation.component';
 // import { AgrmntCardComponent } from './agrmnt-card/agrmnt-card.component';
 // import { ListDataCommissionAgrmntComponent } from "./view-commission/list-data-commission/list-data-commission.component";
 
@@ -24,6 +25,7 @@ import { ViewCommissionComponent } from './view-commission/view-commission.compo
     ViewPurchaseOrderComponent,
     ViewAgrmntSummaryComponent,
     ViewCommissionComponent,
+    ViewDeviationComponent,
     // ListDataCommissionAgrmntComponent,
     // AgrmntCardComponent
   ],
@@ -40,7 +42,8 @@ import { ViewCommissionComponent } from './view-commission/view-commission.compo
     ViewDeliveryOrderComponent, 
     AgrmntFinancialComponent,
     ViewAgrmntSummaryComponent,
-    ViewCommissionComponent, 
+    ViewCommissionComponent,
+    ViewDeviationComponent, 
     // ListDataCommissionAgrmntComponent,
     // AgrmntCardComponent
   ],

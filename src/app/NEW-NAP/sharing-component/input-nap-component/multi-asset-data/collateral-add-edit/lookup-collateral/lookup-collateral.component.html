@@ -1,0 +1,9 @@
+<div class="modal-header">
+  <h4 class="modal-title">Lookup Collateral Type</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('0')">
+      <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <lib-ucpaging [searchObj]="inputObj" (select)="GetResult($event)"></lib-ucpaging>
+</div>

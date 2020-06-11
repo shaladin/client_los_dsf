@@ -18,6 +18,7 @@ import { CollateralAddEditSingleComponent } from "./sharing-component/input-nap-
 import { InvoiceViewComponent } from "./business-process/admin-process/invoice/invoice-view/invoice-view.component";
 import { ViewAppComponentModule } from "app/NEW-NAP/sharing-component/view-app-component/view-app-component.module";
 
+
 @NgModule({
     declarations: [
         // AssetDataPagingComponent,
@@ -35,7 +36,7 @@ import { ViewAppComponentModule } from "app/NEW-NAP/sharing-component/view-app-c
         // AssetLeasingPagingComponent,
         // AssetLeasingAddEditComponent,
         // CollateralLeasingAddEditComponent
-        // InvoiceViewComponent
+        // InvoiceViewComponentt
     ],
     imports: [
         CommonModule,
