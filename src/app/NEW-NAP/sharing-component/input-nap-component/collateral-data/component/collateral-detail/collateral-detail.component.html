@@ -12,7 +12,7 @@
               <div class="form-group row" id="ExistingCollateral">
                 <label class="col-md-5" translate>Existing Collateral</label>
                 <div class="col-md-7">
-                  <lib-uclookupgeneric [lookupInput]="inputLookupExistColl" [parentForm]='AddCollForm'
+                  <lib-uclookupgeneric *ngIf="inputLookupExistColl.isReady" [lookupInput]="inputLookupExistColl" [parentForm]='AddCollForm'
                     [enjiForm]='enjiForm' [identifier]="'ExistingCollateralObj'" (lookup)="getExistingColl($event)">
                   </lib-uclookupgeneric>
                 </div>

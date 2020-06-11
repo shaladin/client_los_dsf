@@ -67,9 +67,9 @@
                     <tr class="table-header">
                         <th class="text-center"><span class="thead-header" name='month' translate>Month</span> </th>
                         <th class="text-center"><span class="thead-header" name='year' translate>Year</span></th>
-                        <th class="text-center"><span class="thead-header" name='debit' translate>Debit</span></th>
-                        <th class="text-center"><span class="thead-header" name='credit' translate>Credit</span></th>
-                        <th class="text-center"><span class="thead-header" name='balanceAmt' translate>Balance Amount</span></th>
+                        <th class="text-right"><span class="thead-header" name='debit' translate>Debit</span></th>
+                        <th class="text-right"><span class="thead-header" name='credit' translate>Credit</span></th>
+                        <th class="text-right"><span class="thead-header" name='balanceAmt' translate>Balance Amount</span></th>
                     </tr>
                     </thead>
                     <tbody *ngIf = "appCustBankAccObjs[i].AppCustBankStmntObjs?.length == 0">
@@ -82,9 +82,9 @@
                         <tr>
                             <td class="text-center">{{item.MonthName}}</td>
                             <td class="text-center">{{item.Year}}</td>
-                            <td class="text-center">{{item.DebitAmt | number:'.2':'en-US'}}</td>
-                            <td class="text-center">{{item.CreditAmt | number:'.2':'en-US'}}</td>
-                            <td class="text-center">{{item.BalanceAmt | number:'.2':'en-US'}}</td>
+                            <td class="text-right">{{item.DebitAmt | number:'.2':'en-US'}}</td>
+                            <td class="text-right">{{item.CreditAmt | number:'.2':'en-US'}}</td>
+                            <td class="text-right">{{item.BalanceAmt | number:'.2':'en-US'}}</td>
                         </tr>
                     </ng-container>
                     </tbody>
