@@ -14,7 +14,7 @@
             <label class="adInsLabel">Total Commission Amount</label>
           </div>
           <div class="col-md-4">
-            <label class="adInsLabel"> {{SummaryData.totalCommAmt}} </label>
+            <label class="adInsLabel"> {{SummaryData.totalCommAmt | number:'.2':'en-US'}} </label>
           </div>
         </div>
 
@@ -23,7 +23,7 @@
             <label class="adInsLabel">Total Tax Amount</label>
           </div>
           <div class="col-md-4">
-            <label class="adInsLabel"> {{SummaryData.totalTaxAmt}} </label>
+            <label class="adInsLabel"> {{SummaryData.totalTaxAmt | number:'.2':'en-US'}} </label>
           </div>
         </div>
 
@@ -32,7 +32,7 @@
             <label class="adInsLabel">Total Vat Amount</label>
           </div>
           <div class="col-md-4">
-            <label class="adInsLabel"> {{SummaryData.totalVatAmt}} </label>
+            <label class="adInsLabel"> {{SummaryData.totalVatAmt | number:'.2':'en-US'}} </label>
           </div>
         </div>
 
