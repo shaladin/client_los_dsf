@@ -71,7 +71,7 @@
         }
     ],
     "querystring": {
-        "select": "SELECT WTL.USERNAME AS ClaimBy, A.ORI_OFFICE_NAME AS OriOfficeName, A.APP_NO AS AppNo, AC.CUST_NAME AS CustName, A.PROD_OFFERING_NAME AS ProdOfferingName, RHH.RETURN_HANDLING_H_ID AS ReturnHandlingHId, WTL.WF_TASK_LIST_ID AS WfTaskListId, A.APP_ID AS AppId",
+        "select": "SELECT WTL.USERNAME AS ClaimBy, A.ORI_OFFICE_NAME AS OriOfficeName, A.APP_NO AS AppNo, AC.CUST_NAME AS CustName, A.PROD_OFFERING_NAME AS ProdOfferingName, RHH.RETURN_HANDLING_H_ID AS ReturnHandlingHId, WTL.WF_TASK_LIST_ID AS WfTaskListId, A.APP_ID AS AppId, A.BIZ_TEMPLATE_CODE AS BizTemplateCode",
         "from": "FROM dbo.APP A WITH(NOLOCK) JOIN dbo.V_WF_TASK_LIST WTL WITH(NOLOCK) ON A.APP_NO = WTL.TRANSACTION_CODE JOIN dbo.RETURN_HANDLING_H RHH WITH(NOLOCK) ON A.APP_ID = RHH.APP_ID JOIN dbo.APP_CUST AC WITH(NOLOCK) ON A.APP_ID = AC.APP_ID",
         "where" : "WHERE WTL.END_EXECUTING_DATE IS NULL"
     },
@@ -178,6 +178,10 @@
                                     {
                                         "type": "WfTaskListId",
                                         "property": "WfTaskListId"
+                                    },
+                                    {
+                                        "type": "BizTemplateCode",
+                                        "property": "BizTemplateCode"
                                     }
                                 ]
                             },
@@ -208,6 +212,10 @@
                                     {
                                         "type": "WfTaskListId",
                                         "property": "WfTaskListId"
+                                    },
+                                    {
+                                        "type": "BizTemplateCode",
+                                        "property": "BizTemplateCode"
                                     }
                                 ]
                             },

@@ -114,6 +114,14 @@ export class CustConfirmationDetailComponent implements OnInit {
   }
 
   SaveForm() {
+    if(this.VerfResultList!=null && this.CustCnfrmObj.IsSkip != true){
+      for(var i = 0; i<this.VerfResultList.length; i++){
+        if(this.VerfResultList[i].MrVerfResultHStatCode == "FAIL"){
+          this.toastr.errorMessage("Result can't be Failed");
+          return;
+        }
+      }
+    }
     var CustCnfrmWFObj = {
       RequestCustCnfrmObj: this.CustCnfrmObj,
       wfTaskListId: this.TaskListId
