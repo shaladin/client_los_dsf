@@ -81,8 +81,8 @@ export class PurchaseOrderDetailComponent implements OnInit {
 
         this.purchaseOrderHObj.AgrmntId = this.AgrmntId;
         this.purchaseOrderHObj.SupplCode = this.SupplCode;
-        this.purchaseOrderHObj.BankCode = "008";
-        this.purchaseOrderHObj.BankBranch = "Mandiri Bank";
+        this.purchaseOrderHObj.BankCode = this.AssetObj["VendorBankAccObj"].BankCode;
+        this.purchaseOrderHObj.BankBranch = this.AssetObj["VendorBankAccObj"].BankName;
         this.purchaseOrderHObj.BankAccNo = this.AssetObj["VendorBankAccObj"].BankAccountNo;
         this.purchaseOrderHObj.BankAccName = this.AssetObj["VendorBankAccObj"].BankAccountName;
         this.purchaseOrderHObj.TotalPurchaseOrderAmt = this.TotalPurchaseOrderAmt;
