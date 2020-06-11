@@ -131,12 +131,12 @@
                               <div class="col-md-8" [ngSwitch]="ruleItem.controls.AllocationBehaviour.value">
                                 <input type="text" currencyMask *ngSwitchCase="'LOCK'" readonly
                                   class="form-control adInsInput width-50-per text-right"
-                                  formControlName="AllocationAmount" (change)="ChangeDataLabel(i)">
+                                  formControlName="AllocationAmount" (change)="ChangeDataLabel(i)" (keyup)="ChangeDataLabel(i)">
                                 <input type="text" currencyMask
                                   max="FormObj.controls.arr['controls'][i].controls.ListAllocated.controls[idx].controls.MaxAllocationAmount.value"
                                   *ngSwitchCase="'DEF'" class="form-control adInsInput width-50-per text-right"
                                   [ngClass]="{ 'is-invalid': enjiForm.submitted && ruleItem.controls.AllocationAmount.invalid }"
-                                  formControlName="AllocationAmount" (change)="ChangeDataLabel(i)">
+                                  formControlName="AllocationAmount" (change)="ChangeDataLabel(i)" (keyup)="ChangeDataLabel(i)">
                                 <lib-uc-show-errors [control]="ruleItem.controls.AllocationAmount"
                                   [submit]="enjiForm.submitted"></lib-uc-show-errors>
                               </div>
@@ -153,11 +153,11 @@
                               <div class="col-md-8" [ngSwitch]="ruleItem.controls.AllocationBehaviour.value">
                                 <input type="text" currencyMask *ngSwitchCase="'LOCK'" readonly
                                   class="form-control adInsInput width-50-per text-right"
-                                  formControlName="AllocationAmount" (change)="ChangeDataLabel(i)">
+                                  formControlName="AllocationAmount" (change)="ChangeDataLabel(i)" (keyup)="ChangeDataLabel(i)">
                                 <input type="text" max="ruleItem.controls.MaxAllocationAmount.value" currencyMask
                                   *ngSwitchCase="'DEF'" class="form-control adInsInput width-50-per text-right"
                                   [ngClass]="{ 'is-invalid': enjiForm.submitted && ruleItem.controls.AllocationAmount.invalid }"
-                                  formControlName="AllocationAmount" (change)="ChangeDataLabel(i)">
+                                  formControlName="AllocationAmount" (change)="ChangeDataLabel(i)" (keyup)="ChangeDataLabel(i)">
                                 <lib-uc-show-errors [control]="ruleItem.controls.AllocationAmount"
                                   [submit]="enjiForm.submitted"></lib-uc-show-errors>
                               </div>
