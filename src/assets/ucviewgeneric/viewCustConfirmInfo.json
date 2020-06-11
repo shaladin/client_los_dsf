@@ -10,13 +10,14 @@
           "type": "link",
           "label": "Application No",
           "property": "AppNo",
-          "path": "/test/paging",
+          "path": "/Nap/View/AppView",
           "target" : "_blank",
-          "param": [
+          "param" : [
             {
-              "property": "AppId"
+                "type" : "AppId",
+                "property" : "AppId"
             }
-          ]
+        ]
         },
         {
           "type": "link",
@@ -34,12 +35,13 @@
           "type": "link",
           "label": "Agreement No",
           "property": "AgrmntNo",
-          "path": "/test/paging",
-          "target" : "_blank",
-          "param": [
-            {
-              "property": "AgrmntId"
-            }
+          "target": "_blank",
+          "path" : "/Nap/FinanceLeasing/ViewAgrmnt",
+          "param" : [
+              {
+                  "type" : "AgrmntId",
+                  "property" : "AgrmntId"
+              }
           ]
         },
         {
