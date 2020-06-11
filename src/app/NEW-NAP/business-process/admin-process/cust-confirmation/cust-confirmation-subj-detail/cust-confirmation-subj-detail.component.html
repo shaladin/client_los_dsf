@@ -40,7 +40,7 @@
             <div class="col-md-6">
               <div class="row">
                 <label class="label-control col-md-6">Subject</label>
-                <label class="label-control col-md-6">{{Subject}}</label>
+                <label class="label-control col-md-6">{{SubjectResponse.Descr}}</label>
               </div>
               <div class="row">
                 <label class="label-control col-md-6">Phone</label>
@@ -68,9 +68,9 @@
         <div formArrayName="VerfResultDForm">
           <div class="form-body" [formGroupName]="i"
             *ngFor="let QuestionGrpList of CustConfirm.controls.VerfResultDForm.controls; let i = index">
-            <lib-ucSubsection [id]="'VerifQuestId'" [title]="QuestionGrpList.value.VerfQuestionGrpName" [panel]="i">
+            <lib-ucSubsection [id]="'verifQuest' + i + 'id'" [title]="QuestionGrpList.value.VerfQuestionGrpName" [panel]="'section' + i">
             </lib-ucSubsection>
-            <div id="i">
+            <div [id]="'section' + i">
               <span formArrayName="VerfQuestionAnswerList">
                 <div class="form-group row" [formGroupName]="j"
                   *ngFor="let QRList of QuestionGrpList.controls.VerfQuestionAnswerList?.controls; let j = index">
