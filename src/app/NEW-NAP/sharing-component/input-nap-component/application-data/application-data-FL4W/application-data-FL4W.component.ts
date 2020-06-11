@@ -86,7 +86,8 @@ export class ApplicationDataFL4WComponent implements OnInit {
     RsvField4: [''],
     RsvField5: [''],
     MrInstSchemeCode: ["", Validators.required],
-    InterestType: ['', Validators.required]
+    InterestType: ['', Validators.required],
+    InterestTypeDesc: [''],
   });
 
   inputPagingObj;
