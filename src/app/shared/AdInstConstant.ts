@@ -856,7 +856,7 @@ export class AdInsConstant {
 
   //Asset Doc List
   public static GetAppAssetDataByAppId = environment.losUrl + "/AppAsset/GetAppAssetDataByAppId";
-
+  public static GetListAppCollateralForDOView = environment.losUrl + "/AppCollateralDoc/GetListAppCollateralForDOView";
 
   // Tax
   public static AppCom = "APP_COM";
