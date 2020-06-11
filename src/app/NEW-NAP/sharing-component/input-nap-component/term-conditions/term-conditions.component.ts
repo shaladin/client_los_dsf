@@ -19,6 +19,7 @@ export class TermConditionsComponent implements OnInit {
   totalMandatory:number = 0;
 
   @Output() OutputValueIsCheckAll: EventEmitter<any> = new EventEmitter();
+  @Output() OutputMode: EventEmitter<any> = new EventEmitter();
   @Input() IsCheckedAll: boolean = true;
   @Input() AppId: number;
   @Input() parentForm: FormGroup;
@@ -33,9 +34,7 @@ export class TermConditionsComponent implements OnInit {
 
   ngOnInit() {
     var context = JSON.parse(localStorage.getItem("UserAccess"));
-    this.businessDt = new Date(context["BusinessDt"]);
-    this.businessDt.setDate(this.businessDt.getDate() - 1);
-    
+    this.businessDt = new Date(context["BusinessDt"]);    
 
     this.parentForm.addControl(this.identifier, this.fb.array([]));
     var listTC = this.parentForm.get(this.identifier) as FormArray;
@@ -83,6 +82,53 @@ export class TermConditionsComponent implements OnInit {
           
           this.ReconstructForm();
           console.log(this.parentForm);
+          this.OutputMode.emit("edit");
+        }else {
+          this.http.post(AdInsConstant.GetListTCbyAppIdFromRule, appTcObj).subscribe(
+            (response) => {
+              this.AppTcList = response["AppTcs"];
+              for (let i = 0; i < this.AppTcList["length"]; i++) {
+                var TCDetail = this.fb.group({
+                  AppTcId: this.AppTcList[i].AppTcId,
+                  AppId: this.AppTcList[i].AppId,
+                  TcCode: this.AppTcList[i].TcCode,
+                  TcName: this.AppTcList[i].TcName,
+                  PriorTo: this.AppTcList[i].PriorTo,
+                  IsChecked: this.AppTcList[i].IsChecked,
+                  ExpiredDt: this.AppTcList[i].ExpiredDt != null ? formatDate(this.AppTcList[i].ExpiredDt, 'yyyy-MM-dd', 'en-US') : "",
+                  IsMandatory: this.AppTcList[i].IsMandatory,
+                  PromisedDt: this.AppTcList[i].PromisedDt != null ? formatDate(this.AppTcList[i].PromisedDt, 'yyyy-MM-dd', 'en-US') : "",
+                  CheckedDt: this.AppTcList[i].CheckedDt != null ? formatDate(this.AppTcList[i].CheckedDt, 'yyyy-MM-dd', 'en-US') : "",
+                  Notes: this.AppTcList[i].Notes,
+                  IsAdditional: this.AppTcList[i].IsAdditional,
+                  RowVersion: this.AppTcList[i].RowVersion
+                }) as FormGroup;
+    
+                if (this.AppTcList[i].IsMandatory == true) {
+                  TCDetail.controls.PromisedDt.setValidators([Validators.required]);
+                }
+                if (this.AppTcList[i].IsChecked == false && this.AppTcList[i].IsMandatory == true) {
+                  this.IsCheckedAll = false;
+                }
+                if (this.AppTcList[i].IsChecked == false) {
+                  TCDetail.controls.ExpiredDt.disable();
+                } else {
+                  TCDetail.controls.PromisedDt.disable();
+                }
+                
+                listTC.push(TCDetail);
+                this.OutputValueIsCheckAll.emit(this.IsCheckedAll);
+                
+              }
+              
+              this.ReconstructForm();
+              console.log(this.parentForm);
+              this.OutputMode.emit("add");
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
         }
       },
       (error) => {
@@ -111,6 +157,7 @@ export class TermConditionsComponent implements OnInit {
           item.get("ExpiredDt").enable();
           item.get("PromisedDt").disable();
           item.get("ExpiredDt").setValidators([Validators.required]);
+          item.get("ExpiredDt").updateValueAndValidity();
           this.totalCheckAll++;
         } else {
           item.patchValue({
@@ -119,6 +166,7 @@ export class TermConditionsComponent implements OnInit {
           item.get("ExpiredDt").disable();
           item.get("PromisedDt").enable();
           item.get("PromisedDt").setValidators([Validators.required]);
+          item.get("PromisedDt").updateValueAndValidity();
           this.IsCheckedAll = false;
         }
 
@@ -130,6 +178,7 @@ export class TermConditionsComponent implements OnInit {
           item.get("ExpiredDt").enable();
           item.get("PromisedDt").disable();
           item.get("ExpiredDt").setValidators([Validators.required]);
+          item.get("ExpiredDt").updateValueAndValidity();
         } else {
           item.patchValue({
             ExpiredDt: null

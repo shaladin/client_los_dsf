@@ -36,7 +36,7 @@ export class ReturnHandlingPagingComponent implements OnInit {
     var critLobObj = new CriteriaObj();
     critLobObj.restriction = AdInsConstant.RestrictionEq;
     critLobObj.propName = 'WTL.ACT_CODE';
-    critLobObj.value = "RTN_"+localStorage.getItem("BizTemplateCode");
+    critLobObj.value = "RTN_"+ this.BizTemplateCode;
     this.inputPagingObj.addCritInput.push(critLobObj);
   }
 }

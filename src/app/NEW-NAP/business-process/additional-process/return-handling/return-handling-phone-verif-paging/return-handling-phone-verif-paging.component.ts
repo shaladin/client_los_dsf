@@ -6,7 +6,7 @@ import { DecimalPipe } from "@angular/common";
 import { HttpClient } from '@angular/common/http';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CenterGrpOfficeMbrObj } from 'app/shared/model/RefOffice/CenterGrpOfficeMbrObj.Model';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-return-handling-phone-verif-paging',
@@ -17,14 +17,15 @@ export class ReturnHandlingPhoneVerifPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
   BizTemplateCode: string;
   userAccess;
-  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient,
+    private route: ActivatedRoute,) {
     this.route.queryParams.subscribe(params => {
-      if (params['BizTemplateCode'] != null) {
-        this.BizTemplateCode = params['BizTemplateCode'];
+      if (params["BizTemplateCode"] != null) {
+        this.BizTemplateCode = params["BizTemplateCode"];
         localStorage.setItem("BizTemplateCode", this.BizTemplateCode);
       }
     });
-  }
+   }
 
   ngOnInit() {
     this.userAccess = JSON.parse(localStorage.getItem("UserAccess"));

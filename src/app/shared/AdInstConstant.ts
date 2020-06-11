@@ -1174,6 +1174,9 @@ export class AdInsConstant {
   // public static Test = environment.losUrl + "/ReturnHandlingD/Test";
 
   public static ReturnHandlingEditApp = "RTN_EDIT_APP";
+  public static ReturnHandlingAddPhnVerf = "RTN_ADD_PHN_VERF";
+  public static ReturnHandlingEditComRsvFnd = "RTN_EDIT_COM_RSV_FND";
+  public static ReturnHandlingAddColtr = "RTN_ADD_COLTR";
   public static GetReturnHandlingDByReturnHandlingDId = environment.losUrl + "/ReturnHandlingD/GetReturnHandlingDByReturnHandlingDId";
 
   // Deviation Result
