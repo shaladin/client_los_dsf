@@ -55,10 +55,7 @@ export class CustConfirmationDetailComponent implements OnInit {
   }
 
   GetVerfResult(IsAdded: boolean = false) {
-    var verfResultHObj = {
-      TrxRefNo: this.AgrmntNo
-    }
-    this.http.post(AdInsConstant.GetVerfResultHsByTrxRefNo, verfResultHObj).subscribe(
+    this.http.post(AdInsConstant.GetVerfResultHsByTrxRefNo, {TrxRefNo: this.AgrmntNo}).subscribe(
       (response) => {
         this.VerfResultList = response["responseVerfResultHCustomObjs"];
         this.CustCnfrmObj.Phone = "-";
