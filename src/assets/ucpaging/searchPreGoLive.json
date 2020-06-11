@@ -1,147 +1,163 @@
 {
-    "title": "Pre Go Live Paging",
-    "exportExcel": false,
-    "component": [
-        {
-            "type": "textbox",
-            "name": "agr.AGRMNT_NO",
-            "id": "AgrmntNo",
-            "value": "",
-            "label": "AGREEMENT NO",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type": "textbox",
-            "name": "app.APP_NO",
-            "id": "AppNoId",
-            "value": "",
-            "label": "APPLICATION NO",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type": "textbox",
-            "name": "agr.PROD_OFFERING_NAME",
-            "id": "ProdOfferingNameId",
-            "value": "",
-            "label": "PROD OFFERING NAME",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type": "textbox",
-            "name": "agr.CUST_NAME",
-            "id": "CustNameId",
-            "value": "",
-            "label": "CUSTOMER NAME",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type": "textbox",
-            "name": "wFht.USERNAME",
-            "id": "UsernameId",
-            "value": "",
-            "label": "TASK CLAIM BY",
-            "placeholder": "Placeholder"
-        }
-    ],
-    "querystring": {
-        "select": "SELECT wFht.WF_TASK_LIST_ID AS TaskListId, wFht.USERNAME AS Username, agr.AGRMNT_NO AS AgrmntNo, app.APP_NO AS AppNo, agr.CUST_NAME AS CustName, agr.PROD_OFFERING_NAME AS ProdOfferingName, app.LOB_CODE AS LobCode, agr.AGRMNT_ID AS AgrmntId, app.APP_ID AS AppId, app.BIZ_TEMPLATE_CODE as BizTemplateCode ",
-        "from": "FROM dbo.AGRMNT agr WITH(NOLOCK) JOIN dbo.APP app WITH(NOLOCK) ON app.APP_ID = agr.APP_ID JOIN dbo.V_WF_TASK_LIST wFht WITH(NOLOCK) ON agr.AGRMNT_NO = wFht.TRANSACTION_CODE",
-        "where" : "WHERE wFht.END_EXECUTING_DATE IS NULL"
+  "title": "Pre Go Live Paging",
+  "exportExcel": false,
+  "component": [
+    {
+      "type": "textbox",
+      "name": "agr.AGRMNT_NO",
+      "id": "AgrmntNo",
+      "value": "",
+      "label": "AGREEMENT NO",
+      "placeholder": "Placeholder"
     },
-    "orderby": {
-        "key": "app.APP_NO", 
-        "value": "false"
+    {
+      "type": "textbox",
+      "name": "app.APP_NO",
+      "id": "AppNoId",
+      "value": "",
+      "label": "APPLICATION NO",
+      "placeholder": "Placeholder"
     },
-    "headerList": [
+    {
+      "type": "textbox",
+      "name": "agr.PROD_OFFERING_NAME",
+      "id": "ProdOfferingNameId",
+      "value": "",
+      "label": "PROD OFFERING NAME",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "agr.CUST_NAME",
+      "id": "CustNameId",
+      "value": "",
+      "label": "CUSTOMER NAME",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "wFht.USERNAME",
+      "id": "UsernameId",
+      "value": "",
+      "label": "TASK CLAIM BY",
+      "placeholder": "Placeholder"
+    }
+  ],
+  "querystring": {
+    "select": "SELECT wFht.WF_TASK_LIST_ID AS TaskListId, wFht.USERNAME AS Username, agr.AGRMNT_NO AS AgrmntNo, app.APP_NO AS AppNo, agr.CUST_NAME AS CustName, agr.PROD_OFFERING_NAME AS ProdOfferingName, app.LOB_CODE AS LobCode, agr.AGRMNT_ID AS AgrmntId, app.APP_ID AS AppId, app.BIZ_TEMPLATE_CODE as BizTemplateCode ",
+    "from": "FROM dbo.AGRMNT agr WITH(NOLOCK) JOIN dbo.APP app WITH(NOLOCK) ON app.APP_ID = agr.APP_ID JOIN dbo.V_WF_TASK_LIST wFht WITH(NOLOCK) ON agr.AGRMNT_NO = wFht.TRANSACTION_CODE",
+    "where": "WHERE wFht.END_EXECUTING_DATE IS NULL"
+  },
+  "orderby": {
+    "key": "app.APP_NO",
+    "value": "false"
+  },
+  "headerList": [
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "CLAIM BY",
+      "name": "Username"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "AGREEMENT NO",
+      "name": "AgrmntNo"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "APPLICATION NO",
+      "name": "AppNo"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "CUSTOMER NAME",
+      "name": "CustName"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "PRODUCT OFFERING NAME",
+      "name": "ProdOfferingName"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Action"
+    }
+  ],
+  "bodyList": [
+    {
+      "type": "text",
+      "position": "center",
+      "property": "Username"
+    },
+    {
+      "type": "link",
+      "position": "left",
+      "property": "AgrmntNo",
+      "target": "_blank",
+      "path": "/Nap/View/AgrmntView", 
+      "param": [
         {
-            "type": "sort",
-            "position": "center",
-            "label": "CLAIM BY",
-            "name": "Username"
-        },
-        {
-            "type": "sort",
-            "position": "center",
-            "label": "AGREEMENT NO",
-            "name": "AgrmntNo"
-        },
-        {
-            "type": "sort",
-            "position": "center",
-            "label": "APPLICATION NO",
-            "name": "AppNo"
-        },
-        {
-            "type": "sort",
-            "position": "center",
-            "label": "CUSTOMER NAME",
-            "name": "CustName"
-        },
-        {
-            "type": "sort",
-            "position": "center",
-            "label": "PRODUCT OFFERING NAME",
-            "name": "ProdOfferingName"
-        },
-        {
-            "type": "label",
-            "position": "center",
-            "label": "Action"
+          "type": "AgrmntId",
+          "property": "AgrmntId"
         }
-    ],
-    "bodyList": [
+      ]
+    },
+    {
+      "type": "link",
+      "position": "center",
+      "property": "AppNo",
+      "target": "_blank",
+      "path": "/Nap/View/AppView",
+      "param": [
         {
-            "type": "text",
-            "position": "center",
-            "property": "Username"
-        },
-        {
-            "type": "text",
-            "position": "center",
-            "property": "AgrmntNo"
-        },
-        {
-            "type": "text",
-            "position": "center",
-            "property": "AppNo"
-        },
-        {
-            "type": "text",
-            "position": "center",
-            "property": "CustName"
-        },
-        {
-            "type": "text",
-            "position": "center",
-            "property": "ProdOfferingName"
-        },
-        {
-            "type": "action",
-            "position": "center",
-            "action": [
-                {
-                    "type": "edit",
-                    "path": "/Nap/AdminProcess/PreGoLive/Detail",
-                    "param": [
-                        {
-                            "type": "AgrmntId",
-                            "property": "AgrmntId"
-                        },
-                        {
-                            "type": "AppId",
-                            "property": "AppId"
-                        },
-                        {
-                            "type": "TaskListId",
-                            "property": "TaskListId"
-                        },
-                        {
-                            "type": "AgrmntNo",
-                            "property": "AgrmntNo"
-                        }
-                    ]
-                }
-            ]
+          "type": "AppId",
+          "property": "AppId"
         }
-    ]
+      ]
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "CustName"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "ProdOfferingName"
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
+        {
+          "type": "edit",
+          "path": "/Nap/AdminProcess/PreGoLive/Detail",
+          "param": [
+            {
+              "type": "AgrmntId",
+              "property": "AgrmntId"
+            },
+            {
+              "type": "AppId",
+              "property": "AppId"
+            },
+            {
+              "type": "TaskListId",
+              "property": "TaskListId"
+            },
+            {
+              "type": "AgrmntNo",
+              "property": "AgrmntNo"
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }
