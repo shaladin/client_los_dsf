@@ -8,7 +8,7 @@
       "mainInfo": [
         {
           "type": "link",
-          "label": "APPLICATION NO",
+          "label": "Application No",
           "property": "AppNo",
           "position": "left",
           "path": "/Nap/View/AppView",
@@ -22,42 +22,42 @@
         },
         {
           "type": "text",
-          "label": "ORIGINAL OFFICE",
+          "label": "Original Office",
           "property": "OriOfficeName"
         },
         {
           "type": "text",
-          "label": "CUSTOMER NAME",
+          "label": "Customer Name",
           "property": "CustName"
         },
         {
           "type": "text",
-          "label": "PRODUCT OFFERING",
+          "label": "Product Offering",
           "property": "ProdOfferingName"
         },
         {
           "type": "text",
-          "label": "TENOR",
+          "label": "Tenor",
           "property": "Tenor"
         },
         {
           "type": "text",
-          "label": "CURRENCY",
+          "label": "Currency",
           "property": "CurrCode"
         },
         {
           "type": "text",
-          "label": "ORDER INFORMATION",
+          "label": "Order Information",
           "property": "MrOrderInfoCode"
         },
         {
           "type": "text",
-          "label": "ASSET NAME",
+          "label": "Asset Name",
           "property": "FullAssetName"
         },
         {
           "type": "text",
-          "label": "LEAD NO.",
+          "label": "Lead No.",
           "property": "LeadNo"
         }
       ],

@@ -276,7 +276,8 @@ export class CommissionComponent implements OnInit {
               this.SaveRuleData(temp["ResultSupplierEmp"], AdInsConstant.ContentSupplierEmp, this.ContentObjSupplier[i].Key);
             }
           }
-          this.SaveRuleData(response[0][AdInsConstant.ReturnObj].RuleDataObjects["ResultReferantor"], AdInsConstant.ContentReferantor, "");  
+          if (response[0][AdInsConstant.ReturnObj].RuleDataObjects["ResultReferantor"] != null)
+            this.SaveRuleData(response[0][AdInsConstant.ReturnObj].RuleDataObjects["ResultReferantor"], AdInsConstant.ContentReferantor, "");  
         }
         this.GetInfoCommission();
 
