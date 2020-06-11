@@ -27,6 +27,7 @@ export class CustConfirmationDetailComponent implements OnInit {
   appObj: AppObj = new AppObj();
   verfResultObj: VerfResultObj = new VerfResultObj();
   CustCnfrmObj: CustCnfrmObj = new CustCnfrmObj();
+  BizTemplateCode: string;
 
   constructor(private route: ActivatedRoute, private http: HttpClient,
     private router: Router, private toastr: NGXToastrService) {
@@ -42,6 +43,9 @@ export class CustConfirmationDetailComponent implements OnInit {
       }
       if (params["TaskListId"] != null) {
         this.TaskListId = params["TaskListId"];
+      }
+      if (params["BizTemplateCode"] != null) {
+        this.BizTemplateCode = params["BizTemplateCode"];
       }
     });
   }
@@ -126,7 +130,7 @@ export class CustConfirmationDetailComponent implements OnInit {
     this.http.post(AdInsConstant.AddCustCnfrm, CustCnfrmWFObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["/Nap/AdminProcess/CustConfirmation/Paging"]);
+        this.router.navigate(["/Nap/AdminProcess/CustConfirmation/Paging"], {queryParams: {"BizTemplateCode": this.BizTemplateCode}});
       },
       (error) => {
         console.log(error);
