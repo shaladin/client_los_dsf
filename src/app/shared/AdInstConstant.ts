@@ -757,6 +757,7 @@ export class AdInsConstant {
   public static GetCustCompanyForCopyByCustId = environment.FoundationR3Url + "/Cust/GetCustCompanyForCopyByCustId";
   public static GetCustPersonalForCopyMgmntShrholderByCustId = environment.FoundationR3Url + "/Cust/GetCustPersonalForCopyMgmntShrholderByCustId";
   public static GetCustCompanyForCopyMgmntShrholderByCustId = environment.FoundationR3Url + "/Cust/GetCustCompanyForCopyMgmntShrholderByCustId";
+  public static GetListKeyValueMobilePhnByAppId = environment.losUrl + "/AppCust/GetListKeyValueMobilePhnByAppId";
 
   //CUST DATA COMPANY
   public static AddEditCustDataCompany = environment.losUrl + "/AppCust/AddEditCustDataCompany";
@@ -831,8 +832,6 @@ export class AdInsConstant {
   public static GetCustDataPersonalForViewByAppId = environment.losUrl + "/AppCust/GetCustDataPersonalForViewByAppId";
   public static GetCustDataCompanyForViewByAppId = environment.losUrl + "/AppCust/GetCustDataCompanyForViewByAppId";
   public static GetAppCustCompanyByAppCustId = environment.losUrl + "/AppCust/GetAppCustCompanyByAppCustId";
-
-
 
   // APP TC
   public static GetListTCbyAppId = environment.losUrl + "/AppTc/GetListTCbyAppId";
