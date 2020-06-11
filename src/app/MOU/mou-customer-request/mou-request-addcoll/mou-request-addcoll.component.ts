@@ -81,7 +81,7 @@ export class MouRequestAddcollComponent implements OnInit {
   SerialNoList: any;
   items: FormArray;
   isUsed: boolean;
-
+  custNo: string;
 
   AddCollDataForm = this.fb.group({
   })
@@ -388,6 +388,25 @@ export class MouRequestAddcollComponent implements OnInit {
 
   open(pageType) {
     this.type = pageType;
+    if (pageType == 'AddExisting') {
+      this.clearList();
+      var listCollateralNo: Array<string> = new Array();
+      for (let index = 0; index < this.listCollateralData.length; index++) {
+        if (this.listCollateralData[index].CollateralStat == 'EXISTING')
+          listCollateralNo.push(this.listCollateralData[index].CollateralNo);
+      }
+
+      var collObj = { ListCollateralNo: listCollateralNo}
+      this.http.post(AdInsConstant.GetListCollateralByListCollateralNo, collObj).subscribe(
+        (response: any) => {
+          var collateralObj = response['ReturnObject'];
+          for (var i = 0; i < collateralObj.length; i++) {
+            this.listSelectedId.push(collateralObj[i].CollateralId);
+          }
+          if (this.listSelectedId.length > 0)
+            this.addToTemp();
+        })
+    }
   }
 
   initAddrObj() {
