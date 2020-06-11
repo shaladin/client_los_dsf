@@ -20,6 +20,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
   appId: number;
   returnHandlingHId: number;
   wfTaskListId: number;
+  lobCode: string;
   viewObj: string;
   arrValue = [];
   returnHandlingHObj: ReturnHandlingHObj;
@@ -50,6 +51,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
   }
 
   async ngOnInit() : Promise<void> {
+    this.lobCode = localStorage.getItem("BizTemplateCode");
     this.ClaimTask();
     this.arrValue.push(this.appId);
     await this.bindTaskObj();
@@ -65,7 +67,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
       (response) => {
         console.log(response);
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["../ReturnHandling/Paging"]);
+        this.router.navigate(["/Nap/AddProcess/ReturnHandling/Paging"], { queryParams: { BizTemplateCode: this.lobCode } });
       },
       (error) => {
         console.log(error);
@@ -167,7 +169,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
   }
 
   async bindTaskObj(){
-    var refMasterObj = { RefMasterTypeCode: "RETURN_TASK"};
+    var refMasterObj = { RefMasterTypeCode: "RETURN_TASK", ReserveField1: this.lobCode};
     await this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
       (response) => {
         this.taskObj = response["ReturnObject"];
