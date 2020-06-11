@@ -704,7 +704,8 @@ export class AdInsConstant {
   public static GetMouCustCollateralByMouCustId = environment.losUrl + "/MouCustCollateral/GetMouCustCollateralByMouCustId";
   public static GetMouCustCollateralDataForUpdateByMouCustCollateralId = environment.losUrl + "/MouCustCollateral/GetMouCustCollateralDataForUpdateByMouCustCollateralId";
   public static GetListCollateralByCustNo = environment.FoundationR3Url + "/Collateral/GetListCollateralByCustNo";
-
+  public static GetListCollateralByListCollateralNo = environment.FoundationR3Url + "/Collateral/GetListCollateralByListCollateralNo";
+  
   // MOU CUST COLLATERAL DOC
 
   // MOU CUST RVW H
