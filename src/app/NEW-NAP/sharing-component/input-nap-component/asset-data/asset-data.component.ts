@@ -14,6 +14,7 @@ import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { AppAssetAccessoryObj } from 'app/shared/model/AppAssetAccessoryObj.model';
 import { AppDataObj } from 'app/shared/model/AppDataObj.model';
 import { AppCollateralAccessoryObj } from 'app/shared/model/AppCollateralAccessoryObj.Model';
+import { AppCollateralAttrObj } from '../../../../shared/model/AppCollateralAttrObj.Model';
 
 
 @Component({
@@ -536,6 +537,8 @@ export class AssetDataComponent implements OnInit {
 
     this.allAssetDataObj.AppAssetAccessoryObjs = new Array<AppAssetAccessoryObj>();
     this.allAssetDataObj.AppCollateralAccessoryObjs = new Array<AppCollateralAccessoryObj>();
+    this.allAssetDataObj.AppCollateralAttrObj = new Array<AppCollateralAttrObj>();
+
     for (let i = 0; i < this.AssetDataForm.controls["AssetAccessoriesObjs"].value.length; i++) {
       var appAssetAccObj = new AppAssetAccessoryObj();
       var appCollateralAccObj = new AppCollateralAccessoryObj();
