@@ -14,9 +14,9 @@
           "path": "/Nap/View/AppView",
           "target": "_blank",
           "param": [
-            {
-              "property": "AppId"
-
+            { 
+              "type": "AppId",
+              "property": "AppId" 
             }
           ]
         },

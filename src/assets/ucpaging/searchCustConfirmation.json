@@ -42,51 +42,69 @@
             "label" : "Task Claim By",
             "placeholder": "Placeholder"
         }
-    ],
-    "querystring": {
-        "select": "SELECT WF.WF_TASK_LIST_ID as TaskListId, WF.USERNAME AS Username, AGR.AGRMNT_NO AS AgrmntNo, A.APP_NO AS AppNo, AGR.CUST_NO AS CustNo, AGR.CUST_NAME AS CustName, A.PROD_OFFERING_NAME AS ProdOfferingName, CASE WHEN WF.USERNAME = NULL OR WF.USERNAME = '' THEN 'UNCLAIMED' ELSE 'CLAIMED' END AS ClaimStatus, A.APP_ID AS AppId, AGR.AGRMNT_ID AS AgrmntId, A.APP_ID AS AppId, A.BIZ_TEMPLATE_CODE AS BizTemplateCode",
-        "from": "FROM dbo.APP A WITH(NOLOCK) JOIN dbo.AGRMNT AGR WITH(NOLOCK) ON AGR.APP_ID = A.APP_ID JOIN dbo.V_WF_TASK_LIST WF WITH(NOLOCK) ON WF.TRANSACTION_CODE = AGR.AGRMNT_NO",
-        "where" : "WHERE WF.END_EXECUTING_DATE IS NULL"
+    ],  
+  "querystring": {
+    "select": "SELECT WF.WF_TASK_LIST_ID as TaskListId, WF.USERNAME AS Username, AGR.AGRMNT_NO AS AgrmntNo, A.APP_NO AS AppNo, AGR.CUST_NO AS CustNo, AGR.CUST_NAME AS CustName, A.PROD_OFFERING_NAME AS ProdOfferingName, CASE WHEN WF.USERNAME = NULL OR WF.USERNAME = '' THEN 'UNCLAIMED' ELSE 'CLAIMED' END AS ClaimStatus, A.APP_ID AS AppId, AGR.AGRMNT_ID AS AgrmntId, A.BIZ_TEMPLATE_CODE AS BizTemplateCode",
+    "from": "FROM dbo.APP A WITH(NOLOCK) JOIN dbo.AGRMNT AGR WITH(NOLOCK) ON AGR.APP_ID = A.APP_ID JOIN dbo.V_WF_TASK_LIST WF WITH(NOLOCK) ON WF.TRANSACTION_CODE = AGR.AGRMNT_NO",
+    "where": "WHERE WF.END_EXECUTING_DATE IS NULL"
+  },
+  "orderby": {
+    "key": "A.APP_NO",
+    "value": "false"
+  },
+  "headerList": [
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Claim By",
+      "name": "WF.USERNAME"
     },
-    "orderby": {
-        "key": "A.APP_NO", 
-        "value": "false"
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Application No",
+      "name": "A.APP_NO"
     },
-    "headerList": [
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Agreement No",
+      "name": "AGR.AGRMNT_NO"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Customer No",
+      "name": "AGR.CUST_NO"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Customer Name",
+      "name": "AGR.CUST_NAME"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Action"
+    }
+  ],
+  "bodyList": [
+    {
+      "type": "text",
+      "position": "left",
+      "property": "Username"
+    },
+    {
+      "type": "link",
+      "position": "left",
+      "property": "AppNo",
+      "target": "_blank",
+      "path": "/Nap/View/AppView",
+      "param": [
         {
-            "type": "sort",
-            "position": "left",
-            "label": "Claim By",
-            "name": "WF.USERNAME"
-        },
-        {
-            "type": "sort",
-            "position": "left",
-            "label": "Application No",
-            "name": "A.APP_NO"
-        },
-        {
-            "type": "sort",
-            "position": "left",
-            "label": "Agreement No",
-            "name": "AGR.AGRMNT_NO"
-        },
-        {
-            "type": "sort",
-            "position": "left",
-            "label": "Customer No",
-            "name": "AGR.CUST_NO"
-        },
-        {
-            "type": "sort",
-            "position": "left",
-            "label": "Customer Name",
-            "name": "AGR.CUST_NAME"
-        },
-        {
-            "type": "label",
-            "position": "center",
-            "label": "Action"
+          "type": "AppId",
+          "property": "AppId"
         }
     ],
     "bodyList": [
@@ -109,18 +127,18 @@
             ]
         },
         {
-            "type" : "link",
-            "position": "left",
-            "property": "AgrmntNo",
-            "target" : "_blank",
-            "path" : "/Nap/FinanceLeasing/ViewAgrmnt",
-            "param" : [
-                {
-                    "type" : "AgrmntId",
-                    "property" : "AgrmntId"
-                }
-            ]
-        },
+          "type": "link",
+          "position": "left",
+          "property": "AgrmntNo",
+          "target" : "_blank",
+          "path": "Nap/View/AgrmntView",
+          "param": [
+            {
+              "type": "AgrmntId",
+              "property": "AgrmntId"
+            }
+          ]
+        }, 
         {
             "type": "text",
             "position": "left",
@@ -163,5 +181,7 @@
                 }
             ]
         }
-    ]
+      ]
+    }
+  ]
 }
