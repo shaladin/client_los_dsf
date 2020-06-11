@@ -10,11 +10,13 @@
           "type": "link",
           "label": "Application No",
           "property": "AppNo",
-          "path": "/test/paging",
+          "path": "/Nap/View/AppView",
           "target" : "_blank",
           "param": [
             {
+              "type": "AppId",
               "property": "AppId"
+              
             }
           ]
         },
@@ -26,22 +28,25 @@
           "target" : "_blank",
           "param": [
             {
+              
               "property": "CustNo"
             }
           ]
-        },
+        },  
         {
           "type": "link",
           "label": "Agreement No",
           "property": "AgrmntNo",
-          "path": "/test/paging",
+          "path": "/Nap/View/AgrmntViewNap/View/AgrmntView",
           "target" : "_blank",
           "param": [
             {
+              "type": "AgrmntId",
               "property": "AgrmntId"
             }
           ]
-        },
+        },  
+
         {
           "type": "text",
           "label": "Customer Name",
@@ -49,7 +54,7 @@
         }
       ],
       "querystring": {
-        "select": "SELECT A.APP_NO AS AppNo, AGR.CUST_NO AS CustNo, AGR.CUST_NAME AS CustName, AGR.AGRMNT_NO AS AgrmntNo, AGR.AGRMNT_ID AS AgrmntId, A.APP_ID AS AppId",
+        "select": "SELECT A.APP_NO AS AppNo, AGR.CUST_NO AS CustNo, AGR.CUST_NAME AS CustName, AGR.AGRMNT_NO AS AgrmntNo, AGR.AGRMNT_ID AS AgrmntId, A.APP_ID AS AppId, A.BIZ_TEMPLATE_CODE as BizTemplateCode",
         "from": "FROM dbo.AGRMNT AGR WITH(NOLOCK) JOIN dbo.APP A WITH(NOLOCK) ON A.APP_ID = AGR.APP_ID",
         "where": "WHERE AGR.AGRMNT_ID = {0}"
       }

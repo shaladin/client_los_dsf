@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -14,8 +14,8 @@ export class ViewPurchaseOrderMultiAssetDetailComponent implements OnInit {
 
   @Input() agrmntId: number = 0;
   @Input() supplCode: string;
-  @Input() PurchaseOrderHId: number = 0;
-  
+  @Input() PurchaseOrderHId: number = 0; 
+  @Output() IsView: EventEmitter<boolean> = new EventEmitter();
   constructor(
     private route: ActivatedRoute,
   private router: Router,
@@ -52,5 +52,9 @@ export class ViewPurchaseOrderMultiAssetDetailComponent implements OnInit {
         console.log(error);
       }
     );     
+  } 
+  back(){
+    var isView = false;
+    this.IsView.emit(isView);
   }
 }

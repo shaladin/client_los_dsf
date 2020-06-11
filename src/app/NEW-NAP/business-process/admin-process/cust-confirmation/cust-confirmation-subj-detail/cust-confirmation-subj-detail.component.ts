@@ -10,6 +10,7 @@ import { VerfQuestionAnswerCustomObj } from 'app/shared/model/VerfQuestionAnswer
 import { VerfResultHObj } from 'app/shared/model/VerfResultH/VerfResultH.Model';
 import { VerfResultDObj } from 'app/shared/model/VerfResultD/VerfResultH.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-cust-confirmation-subj-detail',
@@ -38,7 +39,8 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   VerfResultHList = new Array<VerfResultHObj>();
   AgrmntNo : any;
   TaskListId : any;
-
+  appUrl : string;
+  agrmntUrl : string;
   constructor(private route: ActivatedRoute, private fb: FormBuilder, private http: HttpClient,
     private router: Router, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -64,6 +66,9 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.appUrl = environment.losR3Web + "/Nap/View/AppView?AppId=" + this.AppId;
+    this.agrmntUrl =  environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + this.AgrmntId;
+    console.log(this.appUrl);
     this.GetData();
     var RefStatusObj = {
       StatusGrpCode: "VERF_RESULT_STAT"
@@ -122,7 +127,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
         };
         this.http.post<AppObj>(AdInsConstant.GetAppById, appObj).subscribe(
           (response) => {
-            this.appObj = response;
+            this.appObj = response; 
           },
           (error) => {
             console.log(error);

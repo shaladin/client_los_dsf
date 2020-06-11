@@ -124,10 +124,18 @@
             "property": "OriOfficeName"
         },
         {
-            "type": "text",
+            "type": "link",
             "position": "center",
-            "property": "AppNo"
-        },
+            "property": "AppNo",
+            "target": "_blank",
+            "path": "/Nap/View/AppView",
+            "param": [
+              {
+                "type": "AppId",
+                "property": "AppId"
+              }
+            ]
+          },
         {
             "type": "text",
             "position": "left",
@@ -139,83 +147,17 @@
             "property": "ProdOfferingName"
         },
         {
-            "type": "action",
-            "position": "center",
-            "action": [
-                {
-                    "type": "switch",
-                    "case": [
-                        {
-                            "conditions": [
-                                {
-                                    "isUser": true,
-                                    "property": "ClaimBy",
-                                    "value": "",
-                                    "restriction": "EQ"
-                                }
-                            ],
-                            "result": {
-                                "type": "url",
-                                "path": "../Detail",
-                                "icon": "ft-edit-2",
-                                "param": [
-                                    {
-                                        "type": "AppId",
-                                        "property": "AppId"
-                                    },
-                                    {
-                                        "type": "ReturnHandlingHId",
-                                        "property": "ReturnHandlingHId"
-                                    },
-                                    {
-                                        "type": "WfTaskListId",
-                                        "property": "WfTaskListId"
-                                    },
-                                    {
-                                        "type": "BizTemplateCode",
-                                        "property": "BizTemplateCode"
-                                    }
-                                ]
-                            },
-                            "isHide": false
-                        },
-                        {
-                            "conditions": [
-                                {
-                                    "isUser": false,
-                                    "property": "ClaimBy",
-                                    "value": "",
-                                    "restriction": "EQ"
-                                }
-                            ],
-                            "result": {
-                                "type": "url",
-                                "path": "../Detail",
-                                "icon": "ft-edit-2",
-                                "param": [
-                                    {
-                                        "type": "AppId",
-                                        "property": "AppId"
-                                    },
-                                    {
-                                        "type": "ReturnHandlingHId",
-                                        "property": "ReturnHandlingHId"
-                                    },
-                                    {
-                                        "type": "WfTaskListId",
-                                        "property": "WfTaskListId"
-                                    },
-                                    {
-                                        "type": "BizTemplateCode",
-                                        "property": "BizTemplateCode"
-                                    }
-                                ]
-                            },
-                            "isHide": false
-                        }
-                    ]
-                }
+            "type": "link",
+            "position": "left",
+            "property": "AgrmntNo",
+            "target" : "_blank",
+            "path": "Nap/View/AgrmntView",
+            "param": [
+              {
+                "type": "AgrmntId",
+                "property": "AgrmntId"
+              }
             ]
-        }
+          } 
     ]
 }
