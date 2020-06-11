@@ -902,6 +902,7 @@ export class AdInsConstant {
   public static AddEditAllCollateralDataFactoring = environment.losUrl + "/AppCollateral/AddEditAllCollateralDataFactoring"
   public static GetAppCollateralAttrByAppCollateralId = environment.losUrl + "/AppCollateral/GetAppCollateralAttrByAppCollateralId";
   public static GetAppCollateralListForInsuranceByAppId = environment.losUrl+ "/AppCollateral/GetAppCollateralListForInsuranceByAppId";
+  public static GetAppCollateralAttrByAppAssetId = environment.losUrl + "/AppCollateral/GetAppCollateralAttrByAppAssetId";
   
   // App Collateral Suppl Emp
   public static GetListAppAssetSupplEmpByAppAssetId = environment.losUrl + "/AppAssetSupplEmp/GetListAppAssetSupplEmpByAppAssetId";
