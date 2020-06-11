@@ -60,7 +60,7 @@
           <td style="text-align: left;">
             {{item.SerialNo5}}
           </td>
-          <td style="text-align: left;">
+          <td style="text-align: center;">
             <a (click)="viewDetailHandler(item.AppAssetId)"><i class="fas fa-pencil-alt"></i></a>
           </td>
         </tr>
@@ -83,7 +83,7 @@
           <th style="text-align: left;">
             <span class="thead-header" name='collateralType' translate>Collateral Type</span>
           </th>
-          <th style="text-align: left;">
+          <th style="text-align: right;">
             <span class="thead-header" name='collateralPrice' translate>Collateral Price</span>
           </th>
           <th style="text-align: left;">
@@ -111,8 +111,8 @@
           <td style="text-align: left;">
             {{coll.AssetTypeName}}
           </td>
-          <td style="text-align: left;">
-            {{coll.CollateralValueAmt}}
+          <td style="text-align: right;">
+            {{coll.CollateralValueAmt | number:'.2':'en-US'}}
           </td>
           <td style="text-align: left;">
             {{coll[coll.LicensePlateNo]}}

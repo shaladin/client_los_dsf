@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { formatDate } from '@angular/common';
+import { AdInsHelper } from '../AdInsHelper';
 
 @Component({
   selector: 'app-rolepick',
@@ -41,6 +42,7 @@ export class RolepickComponent implements OnInit, AfterViewInit {
       RoleCode: item.RoleCode,
       JobTitleCode: item.JobTitleCode,
       RequestDateTime: item.BusinessDt,
+      ModuleCode:environment.Module,
       Ip: "",
       RowVersion: ""
 
@@ -51,16 +53,18 @@ export class RolepickComponent implements OnInit, AfterViewInit {
       this.http.post(updateRoleUrl, roleObject).subscribe(
         (response) => {
           localStorage.setItem("Token", response["Token"]);
-          var currentUserContext = new CurrentUserContext;
-          currentUserContext.UserName = localStorage.getItem("Username");
-          currentUserContext.Office = item.OfficeCode;
-          currentUserContext.Role = item.RoleCode;
-          currentUserContext.BusinessDate = item.BusinessDt;
-          localStorage.setItem("BusinessDateRaw",item.BusinessDt);
-          var DateParse = formatDate(item.BusinessDt, 'yyyy/MM/dd', 'en-US');
-          localStorage.setItem("BusinessDate", DateParse);
-          localStorage.setItem("UserAccess", JSON.stringify(response["Identity"]));
-          this.currentUserContextService.addCurrentUserContext(currentUserContext);
+          localStorage.setItem("Menu", JSON.stringify(response["Menu"]));
+          AdInsHelper.CreateUserAccess(response);
+          // var currentUserContext = new CurrentUserContext;
+          // currentUserContext.UserName = localStorage.getItem("Username");
+          // currentUserContext.Office = item.OfficeCode;
+          // currentUserContext.Role = item.RoleCode;
+          // currentUserContext.BusinessDate = item.BusinessDt;
+          // localStorage.setItem("BusinessDateRaw",item.BusinessDt);
+          // var DateParse = formatDate(item.BusinessDt, 'yyyy/MM/dd', 'en-US');
+          // localStorage.setItem("BusinessDate", DateParse);
+          // localStorage.setItem("UserAccess", JSON.stringify(response["Identity"]));
+          // this.currentUserContextService.addCurrentUserContext(currentUserContext);
           window.location.reload();
           //this.router.navigate(['dashboard/dash-board']);
         },
@@ -74,16 +78,18 @@ export class RolepickComponent implements OnInit, AfterViewInit {
       this.http.post(roleUrl, roleObject).subscribe(
         (response) => {
           localStorage.setItem("Token", response["Token"]);
-          var currentUserContext = new CurrentUserContext;
-          currentUserContext.UserName = localStorage.getItem("Username");
-          currentUserContext.Office = item.OfficeCode;
-          currentUserContext.Role = item.RoleCode;
-          currentUserContext.BusinessDate = item.BusinessDt;
-          localStorage.setItem("BusinessDateRaw",item.BusinessDt);
-          var DateParse = formatDate(item.BusinessDt, 'yyyy/MM/dd', 'en-US');
-          localStorage.setItem("BusinessDate", DateParse);
-          localStorage.setItem("UserAccess", JSON.stringify(response["Identity"]));
-          this.currentUserContextService.addCurrentUserContext(currentUserContext);
+          localStorage.setItem("Menu", JSON.stringify(response["Menu"]));
+          AdInsHelper.CreateUserAccess(response);
+          // var currentUserContext = new CurrentUserContext;
+          // currentUserContext.UserName = localStorage.getItem("Username");
+          // currentUserContext.Office = item.OfficeCode;
+          // currentUserContext.Role = item.RoleCode;
+          // currentUserContext.BusinessDate = item.BusinessDt;
+          // localStorage.setItem("BusinessDateRaw",item.BusinessDt);
+          // var DateParse = formatDate(item.BusinessDt, 'yyyy/MM/dd', 'en-US');
+          // localStorage.setItem("BusinessDate", DateParse);
+          // localStorage.setItem("UserAccess", JSON.stringify(response["Identity"]));
+          // this.currentUserContextService.addCurrentUserContext(currentUserContext);
           window.location.reload();
           //this.router.navigate(['dashboard/dash-board']);
         },

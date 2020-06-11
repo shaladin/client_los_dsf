@@ -74,7 +74,8 @@ export class ListPersonalComponent implements OnInit {
           "BirthDt": this.AppCustPersonalObj.BirthDt,
           "MotherMaidenName": this.AppCustPersonalObj.MotherMaidenName,
           "MobilePhnNo1": this.AppCustPersonalObj.MobilePhnNo1,          
-          "RowVersion": this.RowVersion
+          "RowVersion": this.RowVersion,
+          "AppId": this.AppId
         }
         //List Cust Duplicate And List Negative Cust Duplicate Checking
         this.http.post(this.GetCustomerDuplicateCheckUrl, requestDupCheck).subscribe(
@@ -130,7 +131,7 @@ export class ListPersonalComponent implements OnInit {
   }
 
   ClaimTask(){
-    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     var wfClaimObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
     wfClaimObj.pUserID = currentUserContext["UserName"];

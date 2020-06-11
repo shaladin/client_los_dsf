@@ -11,7 +11,6 @@ import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-mou-cust-tc',
   templateUrl: './mou-cust-tc.component.html',
-  styleUrls: ['./mou-cust-tc.component.scss'],
   providers: [NGXToastrService]
 })
 export class MouCustTcComponent implements OnInit {
@@ -33,6 +32,7 @@ export class MouCustTcComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.MouCustId);
     var context = JSON.parse(localStorage.getItem("UserAccess"));
     this.businessDate = new Date(context["BusinessDt"]);
     var datePipe = new DatePipe("en-US");

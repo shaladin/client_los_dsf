@@ -23,7 +23,7 @@
             [custDataPersonalObj]="custDataPersonalObj" [enjiForm]="enjiForm" [parentForm]="CustDataForm"
             [identifier]="'personalMainData'"></app-cust-personal-main-data>
           <lib-ucaddress #UcAddrGrp [title]="'Legal Address'" [UCAddrForm]="CustDataForm" [enjiForm]="enjiForm"
-            [identifier]="'legalAddr'" [default]="legalAddrObj" [inputField]="inputFieldLegalObj" [showPhn3]="false">
+            [identifier]="'legalAddr'" [default]="legalAddrObj" [inputField]="inputFieldLegalObj" [showAllPhn]="false">
           </lib-ucaddress>
           <lib-ucSubsection [id]="'residenceAddrId'" [title]="'Residence Address'" [panel]="'residenceAddr'">
           </lib-ucSubsection>
@@ -95,10 +95,13 @@
         </div>
       </div>
       <div class="form-actions right">
-        <button type="submit" class="btn btn-raised btn-primary">
-          <i class="fa fa-check-square-o"></i> Save
+        <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
+          <i class="ft-x"></i> Cancel
         </button>
-        <!-- <button type="button" class="btn btn-raised btn-primary" (click)="test()">
+        <button type="submit" class="btn btn-raised btn-primary">
+          <i class="fa fa-check-square"></i> Save
+        </button>
+        <!-- <button type="button" class="btn btn-raised btn-primary" (click)="CekExpiredDt()">
                   <i class="fa fa-check-square-o"></i> test
                 </button> -->
       </div>
@@ -157,8 +160,11 @@
         </div>
       </div>
       <div class="form-actions right">
+        <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
+          <i class="ft-x"></i> Cancel
+        </button>
         <button type="submit" class="btn btn-raised btn-primary">
-          <i class="fa fa-check-square-o"></i> Save And Continue
+          <i class="fa fa-check-square"></i> Save
         </button>
         <!-- <button type="button" class="btn btn-raised btn-primary" (click)="testCompany()">
                   <i class="fa fa-check-square-o"></i> test

@@ -15,7 +15,7 @@ export class TestUploadComponent implements OnInit {
       title: 'Test Upload File', // Title Paging dan Upload Page
       subsectionId: 'UcUploadFile', // Ga perlu diubah
       formatsAllowed: '.txt, .xls, .xlsx, .csv', // File yang bisa di upload
-      UploadTypeCode: 'UPL_ASM', // UploadTypeCode berdasarkan keperluan
+      UploadTypeCode: 'UPL_TEST', // UploadTypeCode berdasarkan keperluan
       ErrorDownloadUrl: AdInsConstant.GetUploadAssetMasterByUploadMonitoringNoAndTrxType, // URL untuk Download Error File
       TemplateUrl: AdInsConstant.DownloadTemplate, // URL untuk Download Template File
       TemplateName: 'TestTemplate', // Nama Excel Template File

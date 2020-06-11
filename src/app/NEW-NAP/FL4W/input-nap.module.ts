@@ -15,16 +15,49 @@ import { NapPagingComponent } from './nap-paging/nap-paging.component';
 import { NapViewComponent } from './nap-view/nap-view.component';   
 import { MatCheckboxModule, MatRadioModule, MatSelectModule, MatTabsModule } from "@angular/material";
 import { NgxCurrencyModule } from "ngx-currency";
-import { customCurrencyMaskConfig } from "app/MOU/mou.module"; 
 import { NapAddDetailComponent } from './nap-add-detail/nap-add-detail.component';
 import { NapTabComponentModule } from "./nap-tab/nap-tab.module";
 import { ViewMainInfoComponentModule } from "../sharing-component/view-main-info-component/view-main-info-component.module";
 import { ViewAppComponentModule } from "../sharing-component/view-app-component/view-app-component.module";
-import { AppMainInfoComponent } from "../sharing-component/view-main-info-component/app-main-info/app-main-info.component";
-import { ViewAppCustDataPersonalComponent } from "../sharing-component/view-app-component/view-app-cust-data-personal/view-app-cust-data-personal.component";
-import { ViewAppCustDataCompanyComponent } from "../sharing-component/view-app-component/view-app-cust-data-company/view-app-cust-data-company.component";
+import { ViewSharingComponentModule } from "../sharing-component/view-app-component/view-sharing-component.module";
 import { ViewAgrmntComponent } from './view-agrmnt/view-agrmnt.component';
-import { ViewAgrmntComponentModule } from "../sharing-component/view-agrmnt-component/view-agrmnt-component.module";
+import { AgrmntLifeInsuranceComponent } from "../sharing-component/view-agrmnt-component/life-insurance/life-insurance.component";
+import { ViewCommissionComponent } from "../sharing-component/view-agrmnt-component/view-commission/view-commission.component";
+import { ViewPurchaseOrderComponent } from "../sharing-component/view-agrmnt-component/view-purchase-order/view-purchase-order.component";
+import { ViewDeliveryOrderComponent } from "../sharing-component/view-agrmnt-component/view-delivery-order/view-delivery-order.component";
+import { AgrmntFinancialComponent } from "../sharing-component/view-agrmnt-component/agrmnt-financial/agrmnt-financial.component";
+import { ViewAgrmntReservedFundComponent } from "../sharing-component/view-agrmnt-component/view-reserved-fund/view-reserved-fund.component";
+import { ViewAgrmntSummaryComponent } from "../sharing-component/view-agrmnt-component/view-summary/view-summary.component";
+import { ViewAgrmntDocumentComponent } from "../sharing-component/view-agrmnt-component/view-document/view-document.component";
+import { FeeFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/fee/fee-FL4W.component";
+import { SchmBalloonFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/schm-baloon/schm-balloon-FL4W.component";
+import { SchmEvenPrincipalFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/schm-even-principal/schm-even-principal-FL4W.component";
+import { SchmIrregularFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/schm-irregular/schm-irregular-FL4W.component";
+import { SchmRegulerFixFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/schm-reguler-fix/schm-reguler-fix-FL4W.component";
+import { SchmStepUpStepDownCummulativeFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/schm-step-up-step-down-cummulative/schm-step-up-step-down-cummulative-FL4W.component";
+import { SchmStepUpStepDownLeasingFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/schm-step-up-step-down-leasing/schm-step-up-step-down-leasing-FL4W.component";
+import { SchmStepUpStepDownNormalFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/schm-step-up-step-down-normal/schm-step-up-step-down-normal-FL4W.component";
+import { SubsidyFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/subsidy/subsidy-FL4W.component";
+import { SubsidyAddEditFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/subsidy-add-edit/subsidy-add-edit-FL4W.component";
+import { FinancialDataFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/financial-data-FL4W.component";
+import { ViewDeliveryOrderMultiAssetComponent } from './view-agrmnt/view-delivery-order-multi-asset/view-delivery-order-multi-asset.component';
+import { ViewDeliveryOrderDetailComponent } from './view-agrmnt/view-delivery-order-multi-asset/view-delivery-order-detail/view-delivery-order-detail.component';
+import { ViewDeliveryOrderAssetDetailComponent } from './view-agrmnt/view-delivery-order-multi-asset/view-delivery-order-asset-detail/view-delivery-order-asset-detail.component';
+import { MultiCollDataComponent } from "../sharing-component/input-nap-component/collateral-data/multi-coll-data/multi-coll-data.component"; 
+import { ViewPurchaseOrderMultiAssetComponent } from './view-agrmnt/view-purchase-order-multi-asset/view-purchase-order-multi-asset.component';
+import { ViewPurchaseOrderMultiAssetDetailComponent } from './view-agrmnt/view-purchase-order-multi-asset/view-purchase-order-multi-asset-detail/view-purchase-order-multi-asset-detail.component'; 
+ 
+export const customCurrencyMaskConfig = {     
+  align: "right",     
+  allowNegative: true,     
+  allowZero: true,     
+  decimal: ".",     
+  precision: 2,     
+  prefix: "",     
+  suffix: "",     
+  thousands: ",",     
+  nullable: false
+};
  
 
 @NgModule({
@@ -43,8 +76,11 @@ import { ViewAgrmntComponentModule } from "../sharing-component/view-agrmnt-comp
     MatRadioModule,
     MatSelectModule,
     NapTabComponentModule,
+    ViewSharingComponentModule,
     MatTabsModule,
-    ViewAgrmntComponentModule,
+    ViewAppComponentModule,
+    ViewSharingComponentModule,
+    ViewMainInfoComponentModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
   ],
   declarations: [
@@ -53,13 +89,38 @@ import { ViewAgrmntComponentModule } from "../sharing-component/view-agrmnt-comp
     NapPagingComponent,
     NapViewComponent,  
     NapAddDetailComponent, 
-    AppMainInfoComponent,
-    ViewAppCustDataPersonalComponent,
-    ViewAppCustDataCompanyComponent,
     ViewAgrmntComponent, 
+    ViewAgrmntComponent,  
+    AgrmntLifeInsuranceComponent,
+    ViewCommissionComponent,
+    ViewPurchaseOrderComponent,
+    ViewDeliveryOrderComponent,
+    AgrmntFinancialComponent,
+    ViewAgrmntReservedFundComponent,
+    ViewAgrmntSummaryComponent,
+    ViewAgrmntDocumentComponent,
+    FeeFL4WComponent,
+    SchmBalloonFL4WComponent,
+    SchmEvenPrincipalFL4WComponent,
+    SchmIrregularFL4WComponent,
+    SchmRegulerFixFL4WComponent,
+    SchmStepUpStepDownCummulativeFL4WComponent,
+    SchmStepUpStepDownLeasingFL4WComponent,
+    SchmStepUpStepDownNormalFL4WComponent,
+    SubsidyFL4WComponent,
+    SubsidyAddEditFL4WComponent,
+    FinancialDataFL4WComponent,
+    ViewDeliveryOrderMultiAssetComponent,
+    ViewDeliveryOrderDetailComponent,
+    ViewDeliveryOrderAssetDetailComponent,
+    ViewPurchaseOrderMultiAssetComponent, 
+    ViewPurchaseOrderMultiAssetDetailComponent 
   ],
   providers: [
     NGXToastrService
-  ] 
+  ],
+  entryComponents: [
+    SubsidyAddEditFL4WComponent
+  ]
 })
 export class InputNapFL4WModule { }

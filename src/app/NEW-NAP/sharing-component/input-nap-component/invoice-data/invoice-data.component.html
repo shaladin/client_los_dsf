@@ -1,0 +1,117 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="card-header header-title">
+          <div class="row">
+            <div class="col-md-8">
+              <h4 class="card-title" id="horz-layout-colored-controls" translate> {{pageType}} INVOICE DATA </h4>
+            </div>
+          </div>
+        </div>
+        <div class="px-3">
+          <form class="form form-horizontal" [formGroup]="InvoiceForm" (ngSubmit)="InvoiceForm.valid && SaveForm(enjiForm)"
+            #enjiForm="ngForm">
+            <lib-ucSubsection [id]="'InvoiceDataId'" [title]="'Invoice Data'" [panel]="'InvoiceData'">
+            </lib-ucSubsection>
+
+            <div class="form-body" id="InvoiceData">
+              <div class="form-group row">
+                <label class="col-md-3 adins-required-label" translate>Invoice No</label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control" formControlName="InvoiceNo"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceForm.controls.InvoiceNo.invalid }">
+                  <lib-uc-show-errors [control]="InvoiceForm.controls.InvoiceNo" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 adins-required-label" translate>Customer Factoring </label>
+                <div class="col-md-9">
+                  <lib-uclookupgeneric *ngIf="AppFactoringObj.IsCustListed && !IsDisableCustFctr"
+                    [lookupInput]="MouCustLookupObj" [parentForm]="InvoiceForm" [enjiForm]="enjiForm"
+                    [identifier]="'LookupCustomerFactoringName'" (lookup)=GetLookupMouCust($event)>
+                  </lib-uclookupgeneric>
+                  <span *ngIf="!AppFactoringObj.IsCustListed || IsDisableCustFctr">
+                    <input type="text" class="form-control" formControlName="CustomerFactoringName"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceForm.controls.CustomerFactoringName.invalid }">
+                    <lib-uc-show-errors [control]="InvoiceForm.controls.CustomerFactoringName"
+                      [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 adins-required-label" translate>Invoice Amount</label>
+                <div class="col-md-9">
+                  <input type="text" currencyMask class="form-control" formControlName="InvoiceAmt"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceForm.controls.InvoiceAmt.invalid }">
+                  <lib-uc-show-errors [control]="InvoiceForm.controls.InvoiceAmt" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 adins-required-label" translate>Due Date</label>
+                <div class="col-md-9">
+                  <input type="date" class="form-control" formControlName="InvoiceDueDt"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceForm.controls.InvoiceDueDt.invalid }">
+                  <lib-uc-show-errors [control]="InvoiceForm.controls.InvoiceDueDt" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+            </div>
+            <div class="form-actions right">
+              <!-- <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['/Office/OfficeArea']"
+                translate>
+                <i class="fa fa-arrow-circle-left"></i> Cancel
+              </button> -->
+              <button type="submit" class="btn btn-raised btn-primary" translate>
+                <i class="fa fa-check-square-o"></i> Add
+              </button>
+            </div>
+
+            <div>
+              <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                  <tr class="table-header">
+                    <th><span translate class="thead-header" name='SeqNo'>No</span></th>
+                    <th class="text-left"><span translate class="thead-header" name='InvoiceNo'>Invoice No</span></th>
+                    <th class="text-left"><span translate class="thead-header" name='CustomerFactoringName'>Customer
+                        Factoring</span></th>
+                    <th class="text-left"><span translate class="thead-header" name='InvoiceAmt'>Invoice Amount</span>
+                    </th>
+                    <th class="text-left"><span translate class="thead-header" name='InvoiceDueDt'>Due Date</span></th>
+                    <th class="text-left"><span translate class="thead-header" name='Print'>Action</span></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of dataobj?.AppInvoiceFctrList; let i = index;">
+                    <td>{{i+1}}</td>
+                    <td class="text-left">{{item?.InvoiceNo}}</td>
+                    <td class="text-left">{{item?.CustomerFactoringName}}</td>
+                    <td class="text-left">{{item?.InvoiceAmt | number:'':'en-US'}}</td>
+                    <td class="text-left">{{item?.InvoiceDueDt | date:'dd/MM/yyyy'}}</td>
+                    <td>
+                      <a class="danger p-0" (click)="DeleteInvoice(item.AppInvoiceFctrId)">
+                        <i class="ft-trash-2 font-medium-3 mr-2"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="form-actions right">
+              <button type="button" (click)="SaveContinue()" class="btn btn-raised btn-primary" translate>
+                <i class="far"></i> Save & Continue
+              </button>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3" translate>Total Amount</label>
+              <label class="col-md-3" translate>{{dataobj?.TotalInvoiceAmt | number:'':'en-US'}}</label>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

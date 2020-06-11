@@ -5,14 +5,15 @@ export class LifeInsObj {
     AppId: any;
     RowVersion: any;
     MrLifeInsPaidMethodCode : any;
-    IsCustCover : any;
-    IsSpouseCover : any;
-    IsGuarantorCover: any;
+    IsCustCover : boolean = false;
+    IsSpouseCover : boolean = false;
+    IsGuarantorCover: boolean = false;
     LifeInscoBranchCode : any;
     LifeInscoBranchName : any;
-    TotalLifeInsCptlzAmt : any;
+    PaidInAdvPrcnt : any;
     NewCoverNotes : any;
     InscoAdminFeeAmt: any;
+    CustAdminFeeAmt : any;
     ListAppLifeInsD : Array<LifeInsDObj>;
   constructor() { this.AppLifeInsHId = 0; this.RowVersion = "" ; this.ListAppLifeInsD = new Array<LifeInsDObj>();}
 }

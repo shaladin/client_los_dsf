@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { HttpClient } from '@angular/common/http';
@@ -6,7 +6,8 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { FormBuilder } from '@angular/forms';
 import Stepper from 'bs-stepper';
-import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
+import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
+import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -15,16 +16,19 @@ import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Mod
 })
 export class NapAddDetailComponent implements OnInit {
 
-  private stepper: Stepper;
+  @ViewChild('viewMainProd') ucViewMainProd: UcviewgenericComponent;
+  private stepperPersonal: Stepper;
+  private stepperCompany: Stepper;
   AppStepIndex: number = 1;
   appId: number;
   wfTaskListId: number;
-  mode: string;
   viewProdMainInfoObj: string;
   viewReturnInfoObj: string = "";
   NapObj: AppObj;
   IsMultiAsset: string;
   ListAsset: any;
+  ReturnHandlingHId: number = 0;
+  custType: string = AdInsConstant.CustTypeCompany;
 
   AppStep = {
     "NEW": 1,
@@ -39,7 +43,7 @@ export class NapAddDetailComponent implements OnInit {
     "TC": 9,
   };
 
-  ResponseReturnInfoObj;
+  ResponseReturnInfoObj: ReturnHandlingDObj;
   FormReturnObj = this.fb.group({
     ReturnExecNotes: ['']
   });
@@ -53,52 +57,113 @@ export class NapAddDetailComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
-        this.mode = params["Mode"];
         this.CheckMultiAsset();
       }
       if (params["WfTaskListId"] != null) {
         this.wfTaskListId = params["WfTaskListId"];
       }
+      if (params["ReturnHandlingHId"] != null) {
+        this.ReturnHandlingHId = params["ReturnHandlingHId"];
+      }
     });
   }
 
   ngOnInit() {
-    console.log("this");
     this.ClaimTask();
-    this.AppStepIndex = 0;
+    this.AppStepIndex = 1;
     this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
-    this.http.post(AdInsConstant.GetAppById, this.NapObj).subscribe(
-      (response: AppObj) => {
-        if (response) {
-          this.NapObj = response;
-          this.AppStepIndex = this.AppStep[response.AppCurrStep];
-          this.stepper.to(this.AppStepIndex);
-        }
-        else {
-          this.AppStepIndex = 0;
-        }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
 
-    this.stepper = new Stepper(document.querySelector('#stepper1'), {
-      linear: false,
-      animation: true
-    })
+    // this.ChangeStepper();
+
+    if (this.ReturnHandlingHId > 0) {
+      this.ChangeStepper();
+      this.ChooseStep(this.AppStepIndex);
+    } else {
+      this.http.post(AdInsConstant.GetAppById, this.NapObj).subscribe(
+        (response: AppObj) => {
+          console.log(response);
+          if (response) {
+            this.NapObj = response;
+            if (this.NapObj.MrCustTypeCode != null)
+              this.custType = this.NapObj.MrCustTypeCode;
+
+            this.ChangeStepper();
+            this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
+            this.ChooseStep(this.AppStepIndex);
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
     this.MakeViewReturnInfoObj();
   }
 
+  stepperMode: string = AdInsConstant.CustTypeCompany;
+  ChangeStepper() {
+    if (this.custType == AdInsConstant.CustTypePersonal) {
+      this.stepperPersonal = new Stepper(document.querySelector('#stepperPersonal'), {
+        linear: false,
+        animation: true
+      });
+      this.stepperMode = AdInsConstant.CustTypePersonal;
+      document.getElementById('stepperPersonal').style.display = 'block';
+      document.getElementById('stepperCompany').style.display = 'none';
+      this.AppStep = {
+        "NEW": 1,
+        "CUST": 1,
+        "GUAR": 2,
+        "REF": 3,
+        "APP": 4,
+        "ASSET": 5,
+        "INS": 6,
+        "LFI": 7,
+        "FIN": 8,
+        "TC": 9,
+      };
+      // console.log(this.stepperPersonal);  
+    } else if (this.custType == AdInsConstant.CustTypeCompany) {
+      this.stepperCompany = new Stepper(document.querySelector('#stepperCompany'), {
+        linear: false,
+        animation: true
+      });
+      this.stepperMode = AdInsConstant.CustTypeCompany;
+      document.getElementById('stepperPersonal').style.display = 'none';
+      document.getElementById('stepperCompany').style.display = 'block';
+      this.AppStep = {
+        "NEW": 1,
+        "CUST": 1,
+        "GUAR": 2,
+        "REF": 3,
+        "APP": 4,
+        "ASSET": 5,
+        "INS": 6,
+        "LFI": 7,
+        "FIN": 7,
+        "TC": 8,
+      };
+      // console.log(this.stepperCompany);  
+    }
+  }
+
+  ChooseStep(idxStep: number) {
+    if (this.custType == AdInsConstant.CustTypePersonal) {
+      this.stepperPersonal.to(idxStep);
+    } else if (this.custType == AdInsConstant.CustTypeCompany) {
+      this.stepperCompany.to(idxStep);
+    }
+  }
+
   MakeViewReturnInfoObj() {
-    if (this.mode == AdInsConstant.ModeResultHandling) {
+    if (this.ReturnHandlingHId > 0) {
       var obj = {
-        AppId: this.appId,
+        ReturnHandlingHId: this.ReturnHandlingHId,
         MrReturnTaskCode: AdInsConstant.ReturnHandlingEditApp
       }
-      this.http.post(AdInsConstant.GetReturnHandlingDByAppIdAndMrReturnTaskCode, obj).subscribe(
+      this.http.post<ReturnHandlingDObj>(AdInsConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
         (response) => {
           this.ResponseReturnInfoObj = response;
           this.FormReturnObj.patchValue({
@@ -134,7 +199,7 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   ChangeTab(AppStep) {
-    // console.log(AppStep);
+    console.log(AppStep);
     switch (AppStep) {
       case AdInsConstant.AppStepCust:
         this.AppStepIndex = this.AppStep[AdInsConstant.AppStepCust];
@@ -167,17 +232,32 @@ export class NapAddDetailComponent implements OnInit {
       default:
         break;
     }
+    this.ucViewMainProd.initiateForm();
   }
 
   NextStep(Step) {
+    if (this.ReturnHandlingHId > 0) {
+
+    } else {
+      this.UpdateAppStep(Step);
+    }
+
+    this.ChangeTab(Step);
+    if (this.custType == AdInsConstant.CustTypePersonal) {
+      this.stepperPersonal.next();
+    } else if (this.custType == AdInsConstant.CustTypeCompany) {
+      this.stepperCompany.next();
+    }
+    this.ucViewMainProd.initiateForm();
+  }
+
+  UpdateAppStep(Step : string){
     this.NapObj.AppCurrStep = Step;
     this.http.post<AppObj>(AdInsConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
-      (response) =>{
-        console.log("Step Change to, Curr Step : "+response.AppCurrStep+", Last Step : "+response.AppLastStep);
-        this.ChangeTab(Step);
-        this.stepper.next();
+      (response) => {
+        console.log("Step Change to, Curr Step : " + response.AppCurrStep + ", Last Step : " + response.AppLastStep);
       },
-      (error)=>{
+      (error) => {
         console.error("Error when updating AppStep");
         console.error(error);
       }
@@ -186,29 +266,13 @@ export class NapAddDetailComponent implements OnInit {
 
   LastStepHandler() {
     this.NapObj.WfTaskListId = this.wfTaskListId;
-    this.http.post(AdInsConstant.SubmitNAP, this.NapObj).subscribe(
-      (response) => {
-        console.log(response);
-        this.router.navigate(["/Nap/ConsumerFinance/InputNap/Paging"], { queryParams: { LobCode: "CF4W" } })
-      },
-      (error) => {
-        console.log(error);
-      }
-    )
-  }
+    if (this.ReturnHandlingHId > 0) {
 
-  Submit() {
-    if (this.mode == AdInsConstant.ModeResultHandling) {
-      var obj = {
-        ReturnHandlingDId: this.ResponseReturnInfoObj.ReturnHandlingDId,
-        ReturnHandlingNotes: this.ResponseReturnInfoObj.ReturnHandlingNotes,
-        ReturnHandlingExecNotes: this.FormReturnObj.value.ReturnExecNotes,
-        RowVersion: this.ResponseReturnInfoObj.RowVersion
-      };
-
-      this.http.post(AdInsConstant.EditReturnHandlingDNotesData, obj).subscribe(
+    } else {
+      this.http.post(AdInsConstant.SubmitNAP, this.NapObj).subscribe(
         (response) => {
           console.log(response);
+          this.router.navigate(["/Nap/ConsumerFinance/Paging"], { queryParams: { BizTemplateCode: AdInsConstant.CF4W } })
         },
         (error) => {
           console.log(error);
@@ -217,16 +281,50 @@ export class NapAddDetailComponent implements OnInit {
     }
   }
 
-  ClaimTask(){
-    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+  Cancel() {
+  this.router.navigate(["/Nap/ConsumerFinance/Paging"], { queryParams: { BizTemplateCode: AdInsConstant.CF4W } });
+  }
+
+  Submit() {
+    if (this.ReturnHandlingHId > 0) {
+      var ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
+      ReturnHandlingResult.WfTaskListId = this.wfTaskListId;
+      ReturnHandlingResult.ReturnHandlingDId = this.ResponseReturnInfoObj.ReturnHandlingDId;
+      ReturnHandlingResult.MrReturnTaskCode = this.ResponseReturnInfoObj.MrReturnTaskCode;
+      ReturnHandlingResult.ReturnStat = this.ResponseReturnInfoObj.ReturnStat;
+      ReturnHandlingResult.ReturnHandlingNotes = this.ResponseReturnInfoObj.ReturnHandlingNotes;
+      ReturnHandlingResult.ReturnHandlingExecNotes = this.FormReturnObj.controls['ReturnExecNotes'].value;
+      ReturnHandlingResult.RowVersion = this.ResponseReturnInfoObj.RowVersion;
+
+      this.http.post(AdInsConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
+        (response) => {
+          console.log(response);
+          this.router.navigate(["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { queryParams: { BizTemplateCode: AdInsConstant.CF4W } })
+        },
+        (error) => {
+          console.log(error);
+        }
+      )
+    }
+  }
+
+  ClaimTask() {
+    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     var wfClaimObj = new AppObj();
     wfClaimObj.AppId = this.appId;
     wfClaimObj.Username = currentUserContext["UserName"];
     wfClaimObj.WfTaskListId = this.wfTaskListId;
 
     this.http.post(AdInsConstant.ClaimTaskNap, wfClaimObj).subscribe(
-      (response) => {
-    
+      () => {
+
       });
+  }
+
+  CheckCustType(ev: string) {
+    // console.log(ev);
+    this.custType = ev;
+    this.ChangeStepper();
+    this.NextStep(AdInsConstant.AppStepGuar);
   }
 }

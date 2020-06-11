@@ -10,12 +10,17 @@
     <table class="table table-responsive-md text-center table-hover">
       <thead>
         <tr class="table-header">
-          <th><span translate class="thead-header">NO.</span></th>
-          <th><span translate class="thead-header">SOCIAL MEDIA</span></th>
-          <th><span translate class="thead-header">SOCIAL MEDIA ID</span></th>
-          <th><span translate class="thead-header">ACTION</span></th>
+          <th style="text-align: center;"><span translate class="thead-header">NO.</span></th>
+          <th style="text-align: left;"><span translate class="thead-header">SOCIAL MEDIA</span></th>
+          <th style="text-align: left;"><span translate class="thead-header">SOCIAL MEDIA ID</span></th>
+          <th style="text-align: center;"><span translate class="thead-header">ACTION</span></th>
         </tr>
       </thead>
+      <tbody *ngIf = "parentForm.controls[identifier].value.length == 0">
+        <tr>
+          <td colspan="100%">No Data Available</td>
+        </tr>
+      </tbody>
       <tbody>
         <tr *ngFor="let item of parentForm.controls[identifier].controls;let i = index">
           <td [formGroupName]="i" class="text-center">
@@ -32,7 +37,7 @@
             <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'][i]['controls'].SocmedId" [submit]="enjiForm.submitted"></lib-uc-show-errors>            
           </td>
           <td [formGroupName]="i">
-            <a class="danger p-0" data-original-title="" title="" (click)="deleteSocmed(i)">
+            <a class="danger p-0" (click)="deleteSocmed(i)">
               <i class="ft-trash-2 font-medium-3 mr-2"></i>
             </a>
           </td>

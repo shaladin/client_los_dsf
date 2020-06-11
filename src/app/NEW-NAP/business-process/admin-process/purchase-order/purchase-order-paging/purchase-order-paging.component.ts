@@ -11,17 +11,18 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./purchase-order-paging.component.scss']
 })
 export class PurchaseOrderPagingComponent implements OnInit {
-  lobCode: string;
+  bizTemplateCode: string;
   inputPagingObj: UcPagingObj;
   arrCrit: Array<CriteriaObj>;
 
   constructor(private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
-      if (params["LobCode"] != null) {
-        this.lobCode = params["LobCode"];
+      if (params["BizTemplateCode"] != null) {
+        this.bizTemplateCode = params["BizTemplateCode"];
+        localStorage.setItem("BizTemplateCode",this.bizTemplateCode);
       }
       else{
-        this.lobCode = "CF4W";
+        this.bizTemplateCode = localStorage.getItem("BizTemplateCode");
       }
     });
   }
@@ -38,13 +39,13 @@ export class PurchaseOrderPagingComponent implements OnInit {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'WF.ACT_CODE';
-    critObj.value = "PO";
+    critObj.value = "PO_" + this.bizTemplateCode;
     this.arrCrit.push(critObj);
 
     critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionEq;
-    critObj.propName = 'A.LOB_CODE';
-    critObj.value = this.lobCode;
+    critObj.propName = 'A.BIZ_TEMPLATE_CODE';
+    critObj.value = this.bizTemplateCode;
     this.arrCrit.push(critObj);
     this.inputPagingObj.addCritInput = this.arrCrit;
   }

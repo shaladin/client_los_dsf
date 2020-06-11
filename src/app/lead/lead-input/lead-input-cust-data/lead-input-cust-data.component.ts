@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, NgForm } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'environments/environment';
@@ -18,6 +18,7 @@ import { LeadCustPersonalFinDataObj } from 'app/shared/model/LeadCustPersonalFin
 import { LeadCustPersonalJobDataObj } from 'app/shared/model/LeadCustPersonalJobDataObj.Model';
 import { RefProfessionObj } from 'app/shared/model/RefProfessionObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { UclookupgenericComponent } from '@adins/uclookupgeneric';
  
 @Component({
   selector: 'app-lead-input-cust-data',
@@ -28,10 +29,11 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 export class LeadInputCustDataComponent implements OnInit {
   @Input() LeadId: string;
   @Output() outputTab: EventEmitter<object> = new EventEmitter();
-  businessDt: Date;
+  businessDt: Date = new Date();
   CopyFrom: string;
   rowVersion: any;
   typePage: string;
+  WfTaskListId: number;
   addEditLeadCustPersonal: string;
   inputLegalAddressObj: InputFieldObj;
   inputResidenceAddressObj: InputFieldObj;
@@ -77,7 +79,9 @@ export class LeadInputCustDataComponent implements OnInit {
   returnRefProfessionObj: any;
   reqLeadCustSocmedObj: LeadCustSocmedObj;
   resLeadCustSocmedObj: any;
-  CustModelKey: string;
+  CustModelKey: string = "";
+  @ViewChild("ProfessionModal", { read: ViewContainerRef }) professionModal: ViewContainerRef;
+  @ViewChild("enjiForm") enjiForm: NgForm;
   CustomerDataForm = this.fb.group({
     CustType: [''],
     Gender: [''],
@@ -89,7 +93,7 @@ export class LeadInputCustDataComponent implements OnInit {
     IdNo: [''],
     MrMaritalStatCode: [''],
     Npwp: [''],
-    Email: [''],
+    Email: ['', [Validators.required, Validators.pattern("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")]],
     MobilePhone1: [''],
     MobilePhone2: [''],
     Facebook: [''],
@@ -97,11 +101,11 @@ export class LeadInputCustDataComponent implements OnInit {
     Twitter: [''],
     CustModel: [''],
     CompanyName: [''],
-    MonthlyIncome: [0],
+    MonthlyIncome: [0, [Validators.required, Validators.min(1.00)]],
     MonthlyExpense: [0]
   });
   
-  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) { 
+  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private componentFactoryResolver: ComponentFactoryResolver) { 
     this.getListActiveRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
     this.getRefMasterWithReserveField = AdInsConstant.GetListActiveRefMasterWithReserveFieldAll;
     this.addEditLeadCustPersonal = AdInsConstant.AddEditLeadCustPersonal;
@@ -123,6 +127,9 @@ export class LeadInputCustDataComponent implements OnInit {
         if (params["CopyFrom"] != null) {
           this.CopyFrom = params["CopyFrom"];
         }
+        if (params["WfTaskListId"] != null) {
+          this.WfTaskListId = params["WfTaskListId"];
+        }
     });
   }
 
@@ -132,11 +139,32 @@ export class LeadInputCustDataComponent implements OnInit {
 
   custModelChange(event) {
     this.CustModelKey =  this.listCustModel.find(x => x.Key == event.target.value).Key;
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UclookupgenericComponent);
+    this.professionModal.clear();
+    this.professionLookUpObj.nameSelect = "";
+    this.professionLookUpObj.jsonSelect = "";
+    this.tempProfession = "";
+    const component = this.professionModal.createComponent(componentFactory);
+    component.instance.lookupInput = this.professionLookUpObj;
+    component.instance.parentForm = this.CustomerDataForm;
+    component.instance.enjiForm = this.enjiForm;
+    component.instance.identifier = 'MrJobProfessionCode';
+    component.instance.lookup.subscribe((e) => this.getLookUpProfession(e));
+    var arrAddCrit = new Array();
+    var addCrit = new CriteriaObj();
+    addCrit.DataType = "text";
+    addCrit.propName = "MR_CUST_MODEL_CODE";
+    addCrit.restriction = AdInsConstant.RestrictionEq;
+    addCrit.value = this.CustModelKey;
+    arrAddCrit.push(addCrit);
+    this.professionLookUpObj.addCritInput = arrAddCrit;
   }
 
   ngOnInit() {
+      this.claimTask();
       var context = JSON.parse(localStorage.getItem("UserAccess"));
       this.businessDt = new Date(context["BusinessDt"]);
+      this.businessDt.setDate(this.businessDt.getDate() - 1);
       this.reqLeadCustObj = new LeadCustObj();
       this.reqLeadCustObj.LeadId = this.LeadId;
       this.http.post(this.getLeadCustByLeadId, this.reqLeadCustObj).subscribe(
@@ -281,15 +309,7 @@ export class LeadInputCustDataComponent implements OnInit {
     this.professionLookUpObj.urlEnviPaging = environment.FoundationR3Url;
     this.professionLookUpObj.pagingJson = "./assets/uclookup/lookupProfession.json";
     this.professionLookUpObj.genericJson = "./assets/uclookup/lookupProfession.json";
-
-    // this.arrAddCrit = new Array();
-    // var addCrit = new CriteriaObj();
-    // addCrit.DataType = "text";
-    // addCrit.propName = "MR_CUST_MODEL_CODE";
-    // addCrit.restriction = AdInsConstant.RestrictionEq;
-    // addCrit.listValue = [this.CustModelKey];
-    // this.arrAddCrit.push(addCrit);
-    // this.professionLookUpObj.addCritInput = this.arrAddCrit;
+    this.professionLookUpObj.isRequired = true;
 
     this.genderType = new RefMasterObj();
     this.genderType.RefMasterTypeCode = "GENDER";
@@ -333,6 +353,25 @@ export class LeadInputCustDataComponent implements OnInit {
       (response) => {
           this.listCustModel = response['ReturnObject'];
           this.CustomerDataForm.patchValue({ CustModel: response['ReturnObject'][0]['Key'] });
+          this.CustModelKey = response['ReturnObject'][0]['Key'];
+          var arrAddCrit = new Array();
+          var addCrit = new CriteriaObj();
+          addCrit.DataType = "text";
+          addCrit.propName = "MR_CUST_MODEL_CODE";
+          addCrit.restriction = AdInsConstant.RestrictionEq;
+          addCrit.value = this.CustModelKey;
+          arrAddCrit.push(addCrit);
+          this.professionLookUpObj.addCritInput = arrAddCrit;
+
+          const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UclookupgenericComponent);
+          this.professionModal.clear();
+          this.professionLookUpObj.nameSelect = "";
+          const component = this.professionModal.createComponent(componentFactory);
+          component.instance.lookupInput = this.professionLookUpObj;
+          component.instance.parentForm = this.CustomerDataForm;
+          component.instance.enjiForm = this.enjiForm;
+          component.instance.identifier = 'MrJobProfessionCode';
+          component.instance.lookup.subscribe((e) => this.getLookUpProfession(e));
       });
     
     if(this.CopyFrom != null){
@@ -349,6 +388,25 @@ export class LeadInputCustDataComponent implements OnInit {
               Npwp: this.resLeadCustObj.TaxIdNo,
             });
             this.CustModelKey = this.resLeadCustObj.MrCustModelCode;
+            var arrAddCrit = new Array();
+            var addCrit = new CriteriaObj();
+            addCrit.DataType = "text";
+            addCrit.propName = "MR_CUST_MODEL_CODE";
+            addCrit.restriction = AdInsConstant.RestrictionEq;
+            addCrit.value = this.CustModelKey;
+            arrAddCrit.push(addCrit);
+            this.professionLookUpObj.addCritInput = arrAddCrit;
+
+            const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UclookupgenericComponent);
+            this.professionModal.clear();
+            this.professionLookUpObj.nameSelect = "";
+            const component = this.professionModal.createComponent(componentFactory);
+            component.instance.lookupInput = this.professionLookUpObj;
+            component.instance.parentForm = this.CustomerDataForm;
+            component.instance.enjiForm = this.enjiForm;
+            component.instance.identifier = 'MrJobProfessionCode';
+            component.instance.lookup.subscribe((e) => this.getLookUpProfession(e));
+
         this.reqLeadCustSocmedObj = new LeadCustSocmedObj();
         this.reqLeadCustSocmedObj.LeadCustId = this.resLeadCustObj.LeadCustId;
         this.http.post(this.getListLeadCustSocmed, this.reqLeadCustSocmedObj).subscribe(
@@ -488,6 +546,14 @@ export class LeadInputCustDataComponent implements OnInit {
               });
               
               this.CustModelKey = this.resLeadCustObj.MrCustModelCode;
+              var arrAddCrit = new Array();
+              var addCrit = new CriteriaObj();
+              addCrit.DataType = "text";
+              addCrit.propName = "MR_CUST_MODEL_CODE";
+              addCrit.restriction = AdInsConstant.RestrictionEq;
+              addCrit.value = this.CustModelKey;
+              arrAddCrit.push(addCrit);
+              this.professionLookUpObj.addCritInput = arrAddCrit;
               console.log("ggg");
               console.log(this.CustModelKey);
   
@@ -599,6 +665,15 @@ export class LeadInputCustDataComponent implements OnInit {
                                 this.professionLookUpObj.nameSelect = this.returnRefProfessionObj.ProfessionName;
                                 this.professionLookUpObj.jsonSelect = this.returnRefProfessionObj;
                                 this.tempProfession = this.returnRefProfessionObj.ProfessionCode;
+
+                                const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UclookupgenericComponent);
+                                this.professionModal.clear();
+                                const component = this.professionModal.createComponent(componentFactory);
+                                component.instance.lookupInput = this.professionLookUpObj;
+                                component.instance.parentForm = this.CustomerDataForm;
+                                component.instance.enjiForm = this.enjiForm;
+                                component.instance.identifier = 'MrJobProfessionCode';
+                                component.instance.lookup.subscribe((e) => this.getLookUpProfession(e));
                             });
                       });
   
@@ -812,7 +887,7 @@ export class LeadInputCustDataComponent implements OnInit {
         );
       }
     }
-    else {
+    else {  
       this.leadInputObj = new LeadInputObj();
       this.setLeadCust();
       this.setLeadCustPersonal();
@@ -839,4 +914,13 @@ export class LeadInputCustDataComponent implements OnInit {
       );
     }
   }
+  
+  async claimTask() {
+    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"] };
+    console.log(wfClaimObj);
+    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+      (response) => {
+      });
+    }	
 }

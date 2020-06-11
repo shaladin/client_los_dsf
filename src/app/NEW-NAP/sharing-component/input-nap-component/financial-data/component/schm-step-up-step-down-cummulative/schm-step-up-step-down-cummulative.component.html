@@ -7,7 +7,7 @@
         <div class="col-md-6">
           <div class="row">
             <div class="col-md-6 form-inline">
-              <label>Total Asset Price</label>
+              <label>Total {{PriceLabel}}</label>
             </div>
             <div class="col-md-6 form-inline form-inline-right">
               <label>{{ParentForm.controls.TotalAssetPriceAmt.value | number : '1.2-2'}}</label>
@@ -161,13 +161,14 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label>Effective Rate To Customer</label>
+              <label>Effective Rate</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <input type="" class="form-control full-width" formControlName="EffectiveRatePrcnt"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.EffectiveRatePrcnt.invalid}"
                 [readonly]="ParentForm.controls.RateType.value != 'EFCTV'"
                 (focusout)="EffectiveRatePrcntInput_FocusOut()"
+                [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: true, allowZero:true, precision: 6, nullable: false }"
                 currencyMask>
               <lib-uc-show-errors [control]="ParentForm.controls.EffectiveRatePrcnt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
@@ -190,12 +191,13 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label>Flat Rate To Customer</label>
+              <label>Flat Rate</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <input type="" class="form-control full-width" formControlName="FlatRatePrcnt" (ngModelChange)="SetNeedReCalculate(true)"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.FlatRatePrcnt.invalid}"
                 [readonly]="ParentForm.controls.RateType.value != 'FLT'"
+                [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: true, allowZero:true, precision: 6, nullable: false }"
                 currencyMask>
               <lib-uc-show-errors [control]="ParentForm.controls.FlatRatePrcnt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>

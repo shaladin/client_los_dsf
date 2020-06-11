@@ -2,7 +2,6 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 
 @Component({
@@ -42,8 +41,9 @@ export class FormAddDynamicComponent implements OnInit {
   GenerateAutoAtStart(){
     if(this.FormInputObj["isAutoGenerate"]){
       this.FormInputObj["isDataInputed"] = true;
-      // console.log("Auto Genereate");
+      console.log("Auto Genereate");
       var len = this.DDLContentName.length;
+      console.log(len);
       for(var i=len-1;i>=0;i--){
         // console.log("Genereate");
         var j = len - i -1;
@@ -51,7 +51,7 @@ export class FormAddDynamicComponent implements OnInit {
         this.GenerateContentName(i, j);
 
       }
-      this.PassData();
+      this.PassData(AdInsConstant.MessagePassData);
     }
   }
 
@@ -74,7 +74,7 @@ export class FormAddDynamicComponent implements OnInit {
     var url;
     var obj;
     if(content == AdInsConstant.ContentSupplier){
-      url = environment.FoundationR3Url + AdInsConstant.GetListVendorBankAccByVendorCode;
+      url = AdInsConstant.GetListVendorBankAccByVendorCode;
       obj = {
         VendorCode: code,
         RowVersion: ""
@@ -100,10 +100,10 @@ export class FormAddDynamicComponent implements OnInit {
         }
       );
     }else if(content == AdInsConstant.ContentSupplierEmp){
-      url = environment.FoundationR3Url + AdInsConstant.GetListVendorBankAccByListVendorEmpNo;
+      url = AdInsConstant.GetListBankByVendorEmpNoAndVendorCode;
       obj = {
         VendorEmpNo: code,
-        RowVersion: ""
+        VendorCode: this.FormObj.value.arr[idx].SupplCode,
       };
       this.http.post(url, obj).subscribe(
         (response) =>{
@@ -201,7 +201,7 @@ export class FormAddDynamicComponent implements OnInit {
       if(this.totalDDLContentData == this.lenDDLContentName) 
         this.FormInputObj["isDataInputed"] = false;
       this.arr.removeAt(idx);
-      this.PassData();
+      this.PassData(AdInsConstant.MessageDel);
 
     }
   }
@@ -256,12 +256,12 @@ export class FormAddDynamicComponent implements OnInit {
         IsSave: true,
         Content: this.FormInputObj["content"],
       };
-      var url = environment.losUrl + AdInsConstant.GetAppCommissionTax;
-      this.http.post(url, obj).subscribe(
+      console.log(obj);
+      this.http.post(AdInsConstant.GetAppCommissionTax, obj).subscribe(
         (response) => {
-          // console.log("response Tax");
-          // console.log(this.FormInputObj["content"]);
-          // console.log(response);
+          console.log("response Tax");
+          console.log(this.FormInputObj["content"]);
+          console.log(response);
           var temp = response["ReturnObject"];
           len = this.arr.controls.length;
           if(temp.length == len){
@@ -305,7 +305,7 @@ export class FormAddDynamicComponent implements OnInit {
             }
           }
           this.CheckData();
-          this.PassData();
+          this.PassData(AdInsConstant.MessageCalculate);
         },
         (error) => {
           console.log(error);
@@ -314,9 +314,13 @@ export class FormAddDynamicComponent implements OnInit {
     }
   }
 
-  PassData(){
+  PassData(message: string){
     // console.log("change data");
-    this.DataEmit.emit(this.FormObj);
+    var tempObj={
+      formObj: this.FormObj,
+      message: message
+    };
+    this.DataEmit.emit(tempObj);
   }
   
   ChooseContentName(ev, indexFormObj){
@@ -357,11 +361,12 @@ export class FormAddDynamicComponent implements OnInit {
     this.DDLContentName.splice(idx,1);
     // console.log(this.tempDDLContentName);
     // console.log(this.DDLContentName);
-    this.PassData();
+    console.log(this.FormObj);
+    this.PassData("ADD");
   }
 
   GenerateContentName(indexFormObj,idx){
-    // console.log(idx);
+    console.log(idx);
     this.FormObj.controls.arr["controls"][idx].patchValue({
       ContentName: this.DDLContentName[indexFormObj].Key,
       ContentNameValue: this.DDLContentName[indexFormObj].Value
@@ -397,7 +402,7 @@ export class FormAddDynamicComponent implements OnInit {
     // console.log(this.DDLContentName);
   }
 
-  GenerateExistingContentName(objExist, idx){
+  async GenerateExistingContentName(objExist, idx){
     // console.log(objExist);
     var idxDDLContent = this.DDLContentName.indexOf(this.DDLContentName.find(x => x.Key == objExist.CommissionRecipientRefNo));
          
@@ -443,7 +448,7 @@ export class FormAddDynamicComponent implements OnInit {
       code = this.DDLContentName[idxDDLContent].Key;
     }
 
-    var tempRuleObj = this.GetTempRuleObj(code, idx);
+    var tempRuleObj = this.GetTempRuleObj(code, idxDDLContent);
     // console.log(tempRuleObj);
     this.GetDDLBankAccount(this.FormObj.controls.arr["controls"][idx].controls.ContentName.value, idx);
 
@@ -467,11 +472,26 @@ export class FormAddDynamicComponent implements OnInit {
       }) as FormGroup;
       this.FormObj.controls.arr["controls"][idx].controls.ListAllocated.push(eachAllocationDetail);
     }
-    this.SortDataAllocation(idx, code);
+    await this.SortDataAllocation(idx, code);
     
     this.tempDDLContentName.push(obj);
     this.DDLContentName.splice(idxDDLContent,1);
-    this.PassData();
+    console.log(this.DDLContentName);
+    this.PassData(AdInsConstant.MessagePassData);
+  }
+
+  SortDataAllocationV2(indexFormObj, ruleObj){
+    // sort
+    var arrListAllocated = this.FormObj.controls.arr["controls"][indexFormObj].controls.ListAllocated.value;
+    arrListAllocated.sort((a, b) => a.AllocationFromSeq - b.AllocationFromSeq);
+    this.FormObj.controls.arr["controls"][indexFormObj].controls.ListAllocated.patchValue(arrListAllocated);
+    
+    var tempRuleObj = ruleObj;
+    for(var i=0;i<this.FormObj.controls.arr["controls"][indexFormObj].controls.ListAllocated.controls.length;i++){
+      var idxRuleObj = tempRuleObj.indexOf(tempRuleObj.find(x => x.AllocationFrom == this.FormObj.controls.arr["controls"][indexFormObj].controls.ListAllocated.controls[i].controls.AllocationFrom.value));
+      this.FormObj.controls.arr["controls"][indexFormObj].controls.ListAllocated.controls[i].controls.AllocationAmount.setValidators([Validators.pattern("^[0-9]+$"), Validators.max(tempRuleObj[idxRuleObj].MaxAllocationAmount)]);
+    }
+    this.FormObj.controls.arr["controls"][indexFormObj].controls.ListAllocated.updateValueAndValidity();
   }
 
   SortDataAllocation(indexFormObj, code){
@@ -531,7 +551,7 @@ export class FormAddDynamicComponent implements OnInit {
       this.FormObj.controls.arr["controls"][indexFormObj].controls.ListAllocated.push(eachAllocationDetail);
 
     }
-    this.SortDataAllocation(indexFormObj, code);
+    this.SortDataAllocationV2(indexFormObj, temp);
     
     // patch total
     this.FormObj.controls.arr["controls"][indexFormObj].patchValue({
@@ -552,7 +572,7 @@ export class FormAddDynamicComponent implements OnInit {
     this.FormObj.controls.arr["controls"][indexFormObj].patchValue({
       TotalCommisionAmount: tempTotal
     });
-    this.PassData();
+    this.PassData(AdInsConstant.MessagePassData);
   }
 
   ChangeBankAcc(ev, i){
@@ -569,6 +589,6 @@ export class FormAddDynamicComponent implements OnInit {
       BankCode: ddlObj.BankCode
     });
     
-    this.PassData();
+    this.PassData(AdInsConstant.MessagePassData);
   }
 }

@@ -11,37 +11,32 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: []
 })
 export class CreditApprovalPagingComponent implements OnInit {
-  LobCode: string = "";
+  BizTemplateCode: string;
   inputPagingObj: UcPagingObj;
   arrCrit: Array<CriteriaObj>;
 
   constructor(private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
-      if (params["LobCode"] != null) {
-        this.LobCode = params["LobCode"];
+      if (params['BizTemplateCode'] != null) {
+        this.BizTemplateCode = params['BizTemplateCode'];
+        localStorage.setItem("BizTemplateCode",this.BizTemplateCode);
       }
-    });
+    }); 
   }
 
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
-    this.inputPagingObj._url = "./assets/ucpaging/searchProcessGeneral.json";
+    this.inputPagingObj._url = "./assets/ucpaging/searchCreditApproval.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
-    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchProcessGeneral.json";
+    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCreditApproval.json";
 
-    this.arrCrit = new Array();
+    var arrCrit = new Array();
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
-    critObj.propName = 'WF.ACT_CODE';
-    critObj.value = "PO";
-    this.arrCrit.push(critObj);
-
-    critObj = new CriteriaObj();
-    critObj.restriction = AdInsConstant.RestrictionEq;
-    critObj.propName = 'A.LOB_CODE';
-    critObj.value = this.LobCode;
-    this.arrCrit.push(critObj);
-    this.inputPagingObj.addCritInput = this.arrCrit;
+    critObj.propName = 'RL.BIZ_TMPLT_CODE';
+    critObj.value = this.BizTemplateCode;
+    arrCrit.push(critObj);
+    this.inputPagingObj.addCritInput = arrCrit;
   }
 }

@@ -4,16 +4,18 @@
   <div id="CustCompanyMainData">
     <div class="form-group row">
       <label class="col-md-2 adins-required-label" for="custName" translate>Customer Name</label>
-      <div class="col-md-4">
+      <div class="col-md-4" *ngIf="InputLookupCustomerObj.isReady">
         <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupCustomerObj" [parentForm]="parentForm" [identifier]="'lookupCustomerCompany'" (lookup)="CopyCustomerEvent($event)"></lib-uclookupgeneric>
       </div>
       <label class="col-md-2 adins-required-label" for="custModel" translate>Customer Model</label>
       <div class="col-md-4">
-        <mat-radio-group formControlName="CustModelCode">
-          <mat-radio-button class="custom-control custom-radio display-inline-block" *ngFor="let item of CustModelObj" [value]="item.Key">
-            {{item.Value}}
-          </mat-radio-button>
-        </mat-radio-group>
+        <select class="form-control adInsInput" style="width: auto" formControlName="CustModelCode">
+          <option value="">-Select One-</option>
+          <option *ngFor="let item of CustModelObj" value="{{item.Key}}">
+            {{item.Value}} 
+          </option>
+        </select>
+        <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].CustModelCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
       </div>
     </div>
     <div class="form-group row">
@@ -59,9 +61,11 @@
       </div>
     </div>
     <div class="form-group row">
-      <label class="col-md-2" for="establishmentDt" translate>Establishment Date</label>
+      <label class="col-md-2 adins-required-label" for="establishmentDt" translate>Establishment Date</label>
       <div class="col-md-4">
-        <input type="date" id="establishmentDt" class="form-control" formControlName="EstablishmentDt">
+        <input type="date" max="{{MaxDate | date:'yyyy-MM-dd'}}" id="establishmentDt" class="form-control" formControlName="EstablishmentDt"
+        [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].EstablishmentDt.invalid }">
+        <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].EstablishmentDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>     
       </div>
       <label class="col-md-2" for="vip" translate>VIP</label>
       <div class="col-md-4">

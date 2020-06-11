@@ -1,0 +1,197 @@
+<div class="card">
+
+<div class="card-body">
+  <div class="px-3">
+    <lib-ucSubsection [id]="'AddCollInfoId'" [title]="'Collateral Information'" [panel]="'AddCollInfo'">
+    </lib-ucSubsection>
+    <div id="AddCollInfo">
+      <div>
+        <label class="col-md-2" translate>Collateral Type</label>
+        <label class="col-md-4" translate>{{CollateralType}}</label>
+
+        <label class="col-md-2" translate>Collateral Name</label>
+        <label class="col-md-4" translate>{{CollateralName}}</label>
+      </div>
+      <div>
+        <label class="col-md-2" translate>Collateral Price</label>
+        <label class="col-md-4" currencyMask translate>{{CollateralPrice}}</label>
+
+        <label class="col-md-2" translate>Manufacturing Year</label>
+        <label class="col-md-4" translate>{{ManufacturingYear}}</label>
+      </div>
+      <div>
+        <label class="col-md-2" translate>Collateral Codition</label>
+        <label class="col-md-4" translate>{{CollateralCondition}}</label>
+
+        <label class="col-md-2  adInsLabel" translate *ngIf="this.AppCollateralObj?.SerialNo1">Serial No 1</label>
+        <label class="col-md-4  adinslabel" translate
+          *ngIf="this.AppCollateralObj?.SerialNo1">{{this.AppCollateralObj?.SerialNo1}}</label>
+      </div>
+      <div>
+        <label class="col-md-2" translate>Collateral Usage</label>
+        <label class="col-md-4" translate>{{CollateralUsage}}</label>
+
+
+        <label class="col-md-2  adInsLabel" translate *ngIf="this.AppCollateralObj?.SerialNo2">Serial No 2</label>
+        <label class="col-md-4  adinslabel" translate
+          *ngIf="this.AppCollateralObj?.SerialNo2">{{this.AppCollateralObj?.SerialNo2}}</label>
+      </div>
+      <div>
+        <label class="col-md-2  " translate>Collateral Tax Date</label>
+        <label class="col-md-4" translate>{{CollateralTaxDate}}</label>
+
+
+        <label class="col-md-2  adInsLabel" translate *ngIf="this.AppCollateralObj?.SerialNo3">Serial No 3</label>
+        <label class="col-md-4  adinslabel" translate
+          *ngIf="this.AppCollateralObj?.SerialNo3">{{this.AppCollateralObj?.SerialNo3}}</label>
+      </div>
+      <div>
+        <label class="col-md-2" translate *ngIf="this.AppCollateralObj?.CollateralPrcnt">Portion Percentage</label>
+        <label class="col-md-4  adinslabel" translate
+          *ngIf="this.AppCollateralObj?.CollateralPrcnt">{{this.AppCollateralObj?.CollateralPrcnt}}</label>
+        <label class="col-md-2" translate *ngIf="this.AppCollateralObj?.CollateralNotes">Notes</label>
+        <label class="col-md-4  adinslabel" translate
+          *ngIf="this.AppCollateralObj?.CollateralNotes">{{this.AppCollateralObj?.CollateralNotes}}</label>
+      </div>
+    </div>
+    <div *ngIf="this.AppCollateralDocs?.length">
+      <lib-ucSubsection [id]="'AddCollDocumentId'" [title]="'Collateral Document'" [panel]="'AddCollDocument'">
+      </lib-ucSubsection>
+      <div class="form-body" id="AddCollDocument">
+        <table class="table table-responsive-md text-center table-hover">
+          <thead>
+            <tr class="table-header">
+              <th><span translate class="thead-header">Document</span></th>
+              <th><span translate class="thead-header">Received</span></th>
+              <th><span translate class="thead-header">Document No</span></th>
+              <th><span translate class="thead-header">Expired Date</span></th>
+              <th><span translate class="thead-header">Document Notes</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of this.AppCollateralDocs">
+              <td>
+                {{item.DocCode}}
+              </td>
+              <td *ngIf="item.IsReceived == true">
+                Yes
+              </td>
+              <td *ngIf="item.IsReceived == false">
+                No
+              </td>
+              <td>
+                {{item.DocNo}}
+              </td>
+              <td>
+                {{item.ExpiredDt | date: 'yyyy-MM-dd'}}
+              </td>
+              <td>
+                {{item.DocNotes}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <lib-ucSubsection [id]="'userId'" [title]="'Collateral User'" [panel]="'CollateralUser'">
+    </lib-ucSubsection>
+    <div id="CollateralUser">
+      <label class="col-md-2  adInsLabel" translate *ngIf="this.AppCollateralRegistration?.UserName">Collateral User
+        Name</label>
+      <label class="col-md-4  adinslabel" translate
+        *ngIf="this.AppCollateralRegistration?.UserName">{{this.AppCollateralRegistration?.UserName}}</label>
+      <label class="col-md-2  adInsLabel" translate
+        *ngIf="this.AppCollateralRegistration?.MrUserRelationshipCode">Collateral User Relationship</label>
+      <label class="col-md-4  adinslabel" translate
+        *ngIf="this.AppCollateralRegistration?.MrUserRelationshipCode">{{this.AppCollateralRegistration?.MrUserRelationshipCode}}</label>
+    </div>
+    <lib-ucSubsection [id]="'ownerId'" [title]="'Collateral Owner'" [panel]="'CollateralOwner'">
+    </lib-ucSubsection>
+    <div id="CollateralOwner">
+      <div>
+        <label class="col-md-2  adInsLabel" translate>Owner Name</label>
+        <label class="col-md-4  adinslabel" translate
+          *ngIf="this.AppCollateralRegistration.OwnerName">{{this.AppCollateralRegistration?.OwnerName}}</label>
+        <label class="col-md-2  adInsLabel" translate>Address</label>
+        <label class="col-md-4  adinslabel" translate
+          *ngIf="this.AppCollateralRegistration.OwnerAddr">{{this.AppCollateralRegistration?.OwnerAddr}}</label>
+      </div>
+      <div>
+        <label class="col-md-2  adInsLabel" translate>Owner Relationship</label>
+        <label class="col-md-4  adinslabel" translate
+          *ngIf="this.AppCollateralRegistration.MrOwnerRelationshipCode">{{this.AppCollateralRegistration?.MrOwnerRelationshipCode}}</label>
+        <label class="col-md-2  adInsLabel" translate>RT / RW</label>
+        <label class="col-md-4  adinslabel" translate
+          *ngIf="this.AppCollateralRegistration.OwnerAreaCode3">{{this.AppCollateralRegistration?.OwnerAreaCode4}}
+          / {{this.AppCollateralRegistration.OwnerAreaCode3}}</label>
+      </div>
+      <div>
+        <label class="col-md-2  adInsLabel" translate>Id Type</label>
+        <label class="col-md-4  adinslabel" translate
+          *ngIf="this.AppCollateralRegistration.MrIdTypeCode">{{this.AppCollateralRegistration?.MrIdTypeCode}}</label>
+        <label class="col-md-2  adInsLabel" translate>Kelurahan</label>
+        <label class="col-md-4  adinslabel" translate
+          *ngIf="this.AppCollateralRegistration.OwnerAreaCode2">{{this.AppCollateralRegistration?.OwnerAreaCode2}}</label>
+      </div>
+      <div>
+        <label class="col-md-2  adInsLabel" translate>Owner Id No</label>
+        <label class="col-md-4  adinslabel" translate
+          *ngIf="this.AppCollateralRegistration.OwnerIdNo">{{this.AppCollateralRegistration?.OwnerIdNo}}</label>
+        <label class="col-md-2  adInsLabel" translate>Kecamatan</label>
+        <label class="col-md-4  adinslabel" translate
+          *ngIf="this.AppCollateralRegistration.OwnerAreaCode1">{{this.AppCollateralRegistration?.OwnerAreaCode1}}</label>
+      </div>
+      <div>
+        <label class="col-md-2  adInsLabel" translate>Mobile Phone No</label>
+        <label class="col-md-4  adinslabel" translate
+          *ngIf="this.AppCollateralRegistration.OwnerMobilePhnNo">{{this.AppCollateralRegistration?.OwnerMobilePhnNo}}</label>
+        <label class="col-md-2  adInsLabel" translate>City</label>
+        <label class="col-md-4  adinslabel" translate
+          *ngIf="this.AppCollateralRegistration.OwnerCity">{{this.AppCollateralRegistration?.OwnerCity}}</label>
+      </div>
+      <div>
+        <label class="col-md-2  adInsLabel" translate> </label>
+        <label class="col-md-4  adinslabel" translate> </label>
+        <label class="col-md-2  adInsLabel" translate>Zipcode</label>
+        <label class="col-md-4  adinslabel" translate
+          *ngIf="this.AppCollateralRegistration.OwnerZipcode">{{this.AppCollateralRegistration?.OwnerZipcode}}</label>
+      </div>
+    </div>
+    <lib-ucSubsection [id]="'locationId'" [title]="'Collateral Location'" [panel]="'CollateralLocation'">
+    </lib-ucSubsection>
+    <div id="CollateralLocation">
+      <div>
+        <label class="col-md-2  adInsLabel" translate>Address</label>
+        <label class="col-md-4  adinslabel" translate
+          *ngIf="this.AppCollateralRegistration.LocationAddr">{{this.AppCollateralRegistration?.LocationAddr}}</label>
+      </div>
+      <div>
+        <label class="col-md-2  adInsLabel" translate>RT / RW</label>
+        <label class="col-md-4  adinslabel" translate
+          *ngIf="this.AppCollateralRegistration.LocationAreaCode3">{{this.AppCollateralRegistration?.LocationAreaCode4}}
+          / {{this.AppCollateralRegistration.LocationAreaCode3}}</label>
+      </div>
+      <div>
+        <label class="col-md-2  adInsLabel" translate>Kelurahan</label>
+        <label class="col-md-4  adinslabel" translate
+          *ngIf="this.AppCollateralRegistration.LocationAreaCode2">{{this.AppCollateralRegistration?.LocationAreaCode2}}</label>
+      </div>
+      <div>
+        <label class="col-md-2  adInsLabel" translate>Kecamatan</label>
+        <label class="col-md-4  adinslabel" translate
+          *ngIf="this.AppCollateralRegistration.LocationAreaCode1">{{this.AppCollateralRegistration?.LocationAreaCode1}}</label>
+      </div>
+      <div>
+        <label class="col-md-2  adInsLabel" translate>City</label>
+        <label class="col-md-4  adinslabel" translate
+          *ngIf="this.AppCollateralRegistration.LocationCity">{{this.AppCollateralRegistration?.LocationCity}}</label>
+      </div>
+      <div>
+        <label class="col-md-2  adInsLabel" translate>Zipcode</label>
+        <label class="col-md-4  adinslabel" translate
+          *ngIf="this.AppCollateralRegistration.LocationZipcode">{{this.AppCollateralRegistration?.LocationZipcode}}</label>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

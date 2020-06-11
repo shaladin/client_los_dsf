@@ -13,11 +13,13 @@ import { DatePipe } from '@angular/common';
 export class DoAssetDetailComponent implements OnInit {
   @Input() AppAssetId: number;
   @Input() AppId: number;
+  licensePlateNoMandatory: boolean;
+  licensePlateAttr: string;
   serial1Mandatory: boolean;
   serial2Mandatory: boolean;
-  serial3Mandatory: boolean;
-  serial4Mandatory: boolean;
-  serial5Mandatory: boolean;
+  // serial3Mandatory: boolean;
+  // serial4Mandatory: boolean;
+  // serial5Mandatory: boolean;
 
   DOAssetDetail = this.fb.group({
     AppAssetId: [0, [Validators.required]],
@@ -49,7 +51,7 @@ export class DoAssetDetailComponent implements OnInit {
     Color: [''],
     TaxCityIssuer: [''],
     TaxIssueDt: [''],
-    ManufacturingYear: ['', [Validators.required]],
+    ManufacturingYear: ['', [Validators.required, Validators.pattern("^[0-9]+$"), Validators.max(new Date().getFullYear())]],
     IsEditableDp: [''],
     RsvField1: [''],
     RsvField2: [''],
@@ -57,7 +59,8 @@ export class DoAssetDetailComponent implements OnInit {
     RsvField4: [''],
     RsvField5: [''],
     RowVersion: [''],
-    DOAssetDocList: this.fb.array([])
+    DOAssetDocList: this.fb.array([]),
+    LicensePlateNo: ['']
   });
 
   constructor(
@@ -65,11 +68,9 @@ export class DoAssetDetailComponent implements OnInit {
     private fb: FormBuilder,
     public activeModalAsset: NgbActiveModal
   ) { 
+    this.licensePlateNoMandatory = false;
     this.serial1Mandatory = false;
     this.serial2Mandatory = false;
-    this.serial3Mandatory = false;
-    this.serial4Mandatory = false;
-    this.serial5Mandatory = false;
   }
 
   ngOnInit() {
@@ -80,31 +81,61 @@ export class DoAssetDetailComponent implements OnInit {
         var appAsset = response["AppAssetObj"];
         var appCollateral = response["AppCollateralDoc"];
         appAsset.TempRegisLettDt = datePipe.transform(appAsset.TempRegisLettDt, "yyyy-MM-dd");
+        if(appAsset.SerialNo1Label == AdInsConstant.LICENSE_PLATE_NO){
+          this.DOAssetDetail.patchValue({
+            LicensePlateNo: appAsset.SerialNo1
+          });
+          if(appAsset.IsMandatorySerialNo1 == true){
+            this.SetLicensePlateMandatory();
+          }
+          this.licensePlateAttr = "SerialNo1";
+        }
+        else if(appAsset.SerialNo2Label == AdInsConstant.LICENSE_PLATE_NO){
+          this.DOAssetDetail.patchValue({
+            LicensePlateNo: appAsset.SerialNo2
+          });
+          if(appAsset.IsMandatorySerialNo2 == "1"){
+            this.SetLicensePlateMandatory();
+          }
+          this.licensePlateAttr = "SerialNo2";
+        }
+        else if(appAsset.SerialNo3Label == AdInsConstant.LICENSE_PLATE_NO){
+          this.DOAssetDetail.patchValue({
+            LicensePlateNo: appAsset.SerialNo3
+          });
+          if(appAsset.IsMandatorySerialNo3 == "1"){
+            this.SetLicensePlateMandatory();
+          }
+          this.licensePlateAttr = "SerialNo3";
+        }
+        else if(appAsset.SerialNo4Label == AdInsConstant.LICENSE_PLATE_NO){
+          this.DOAssetDetail.patchValue({
+            LicensePlateNo: appAsset.SerialNo4
+          });
+          if(appAsset.IsMandatorySerialNo4 == "1"){
+            this.SetLicensePlateMandatory();
+          }
+          this.licensePlateAttr = "SerialNo4";
+        }
+        else if(appAsset.SerialNo5Label == AdInsConstant.LICENSE_PLATE_NO){
+          this.DOAssetDetail.patchValue({
+            LicensePlateNo: appAsset.SerialNo5
+          });
+          if(appAsset.IsMandatorySerialNo5 == "1"){
+            this.SetLicensePlateMandatory();
+          }
+          this.licensePlateAttr = "SerialNo5";
+        }
 
         if(appAsset.IsMandatorySerialNo1 == "1"){
-          this.DOAssetDetail.controls['SerialNo1'].setValidators([Validators.required]);
-          this.DOAssetDetail.controls['SerialNo1'].updateValueAndValidity();
+          this.DOAssetDetail.controls["SerialNo1"].setValidators([Validators.required]);
+          this.DOAssetDetail.controls["SerialNo1"].updateValueAndValidity();
           this.serial1Mandatory = true;
         }
         if(appAsset.IsMandatorySerialNo2 == "1"){
-          this.DOAssetDetail.controls['SerialNo2'].setValidators([Validators.required]);
-          this.DOAssetDetail.controls['SerialNo2'].updateValueAndValidity();
+          this.DOAssetDetail.controls["SerialNo2"].setValidators([Validators.required]);
+          this.DOAssetDetail.controls["SerialNo2"].updateValueAndValidity();
           this.serial2Mandatory = true;
-        }
-        if(appAsset.IsMandatorySerialNo3 == "1"){
-          this.DOAssetDetail.controls['SerialNo3'].setValidators([Validators.required]);
-          this.DOAssetDetail.controls['SerialNo3'].updateValueAndValidity();
-          this.serial3Mandatory = true;
-        }
-        if(appAsset.IsMandatorySerialNo4 == "1"){
-          this.DOAssetDetail.controls['SerialNo4'].setValidators([Validators.required]);
-          this.DOAssetDetail.controls['SerialNo4'].updateValueAndValidity();
-          this.serial4Mandatory = true;
-        }
-        if(appAsset.IsMandatorySerialNo5 == "1"){
-          this.DOAssetDetail.controls['SerialNo5'].setValidators([Validators.required]);
-          this.DOAssetDetail.controls['SerialNo5'].updateValueAndValidity();
-          this.serial5Mandatory = true;
         }
 
         this.DOAssetDetail.patchValue({
@@ -113,15 +144,32 @@ export class DoAssetDetailComponent implements OnInit {
 
         var formArray = this.DOAssetDetail.get('DOAssetDocList') as FormArray;
         for (const item of appCollateral) {
+          var isMandatory = false;
+          if(item.MrCollateralConditionCode == "NEW"){
+            console.log("New Collateral");
+            if(item.IsMandatoryNew == true){
+              isMandatory = true;
+            }
+          }
+          else{
+            console.log("Used Collateral");
+            if(item.IsMandatoryUsed == true){
+              isMandatory = true;
+            }
+          }
           var formGroup = this.fb.group({
             AppCollateralDocId: [item.AppCollateralDocId, [Validators.required]],
-            AppCollareralId: [item.AppCollateralId, [Validators.required]],
+            AppCollateralId: [item.AppCollateralId, [Validators.required]],
             DocCode: [item.DocCode],
+            DocName: [item.DocName],
+            DocNo: [item.DocNo, isMandatory ? [Validators.required] : []],
             IsReceived: [item.IsReceived],
             ExpiredDt: [item.ExpiredDt],
             DocNotes: [item.DocNotes],
-            DocName: [item.DocName],
-            DocNo: [item.DocNo, [Validators.required]]
+            IsValueNeeded: [item.IsValueNeeded],
+            IsMandatoryNew: [item.IsMandatoryNew],
+            IsMandatoryUsed: [item.IsMandatoryUsed],
+            MrCollateralConditionCode: [item.MrCollateralConditionCode]
           });
           formArray.push(formGroup);
         }
@@ -129,8 +177,15 @@ export class DoAssetDetailComponent implements OnInit {
     );
   }
 
+  SetLicensePlateMandatory(){
+    this.DOAssetDetail.controls['LicensePlateNo'].setValidators([Validators.required]);
+    this.DOAssetDetail.controls['LicensePlateNo'].updateValueAndValidity();
+    this.licensePlateNoMandatory = true;
+  }
+
   Save(){
     var formData = this.DOAssetDetail.value;
+    formData[this.licensePlateAttr] = formData.LicensePlateNo;
     var appAssetData = {
       AppAssetId: formData.AppAssetId,
       AppId: formData.AppId,

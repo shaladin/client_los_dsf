@@ -8,6 +8,7 @@ import Stepper from 'bs-stepper';
 import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
 import { AllAppReservedFundObj } from 'app/shared/model/AllAppReservedFundObj.model';
 import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
+import { AppObj } from 'app/shared/model/App/App.Model';
 
 @Component({
   selector: 'app-commission-reserved-fund-detail',
@@ -37,7 +38,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
     this.ReturnHandlingHObj = new ReturnHandlingHObj();
     this.route.queryParams.subscribe(params => {
       this.ReturnHandlingHObj.AppId = params["AppId"];
-      this.ReturnHandlingHObj.WfTaskListId = params["TaskId"];
+      this.ReturnHandlingHObj.WfTaskListId = params["WfTaskListId"];
       this.ReturnHandlingHObj.ReturnHandlingHId = params["ReturnHandlingHId"];
     });
   }
@@ -51,7 +52,37 @@ export class CommissionReservedFundDetailComponent implements OnInit {
     this.stepper = new Stepper(document.querySelector('#stepper1'), {
       linear: false,
       animation: true
-    })
+    });
+    this.GetAndUpdateAppStep();
+  }
+
+  NapObj: AppObj = new AppObj();
+  GetAndUpdateAppStep(){
+    this.NapObj.AppId=this.ReturnHandlingHObj.AppId;
+    this.http.post(AdInsConstant.GetAppById, this.NapObj).subscribe(
+      (response: AppObj) => {
+        console.log(response);
+        if (response) {
+          this.NapObj = response;
+          if(this.NapObj.AppCurrStep!=AdInsConstant.AppStepComm && this.NapObj.AppCurrStep!=AdInsConstant.AppStepRSVFund){
+            this.NapObj.AppCurrStep = AdInsConstant.AppStepComm;
+            this.http.post<AppObj>(AdInsConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
+              (response) =>{
+                console.log("Step Change to, Curr Step : "+response.AppCurrStep+", Last Step : "+response.AppLastStep);
+                this.ChangeTab(AdInsConstant.AppStepComm);
+              },
+              (error)=>{
+                console.error("Error when updating AppStep");
+                console.error(error);
+              }
+            )
+          }
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   ChangeTab(AppStep) {
@@ -69,8 +100,18 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   }
 
   NextStep(Step) {
-    this.ChangeTab(Step);
-    this.stepper.next();
+    this.NapObj.AppCurrStep = Step;
+    this.http.post<AppObj>(AdInsConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
+      (response) =>{
+        console.log("Step Change to, Curr Step : "+response.AppCurrStep+", Last Step : "+response.AppLastStep);
+        this.ChangeTab(Step);
+        this.stepper.next();
+      },
+      (error)=>{
+        console.error("Error when updating AppStep");
+        console.error(error);
+      }
+    )
   }
 
   LastStepHandler(allAppReservedFundObj: AllAppReservedFundObj) {
@@ -78,12 +119,13 @@ export class CommissionReservedFundDetailComponent implements OnInit {
       this.AllAppReservedFundObj = allAppReservedFundObj;
     }
     else {
-      this.router.navigate(["/Nap/CreditProcess/CommissionReservedFund/Paging"], { queryParams: { LobCode: "CF4W" } })
+      var lobCode = localStorage.getItem("BizTemplateCode");
+      this.router.navigate(["/Nap/CreditProcess/CommissionReservedFund/Paging"], { queryParams: { BizTemplateCode: lobCode } })
     }
   }
 
   async ClaimTask(WfTaskListId) {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     var wfClaimObj = { pWFTaskListID: WfTaskListId, pUserID: currentUserContext["UserName"], isLoading: false };
     this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(() => { });
   }
@@ -92,11 +134,11 @@ export class CommissionReservedFundDetailComponent implements OnInit {
     var workflowApiObj = new WorkflowApiObj();
     workflowApiObj.TaskListId = this.AllAppReservedFundObj.WfTaskIdListId;
     workflowApiObj.ListValue["pBookmarkValue"] = this.AllAppReservedFundObj.ReturnHandlingExecNotes;
-
+    var lobCode = localStorage.getItem("BizTemplateCode");
     this.http.post(AdInsConstant.ResumeWorkflow, workflowApiObj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["/Nap/AdditionalProcess/ReturnHandling/CommissionReservedFund/Paging"], { queryParams: { LobCode: "CF4W" } })
+        this.router.navigate(["/Nap/AdditionalProcess/ReturnHandling/CommissionReservedFund/Paging"], { queryParams: { BizTemplateCode: lobCode } })
       },
       error => {
         console.log(error);
@@ -105,11 +147,13 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   }
 
   Back() {
-    if (this.ReturnHandlingHObj.ReturnHandlingHId != 0) {
-      this.router.navigate(["/Nap/AdditionalProcess/ReturnHandling/CommissionReservedFund/Paging"], { queryParams: { LobCode: "CF4W" } })
+    // console.log("test back commReserveFund");
+    // console.log(this.ReturnHandlingHObj);
+    var lobCode = localStorage.getItem("BizTemplateCode");
+    if (this.ReturnHandlingHObj.ReturnHandlingHId != undefined) {
+      this.router.navigate(["/Nap/AdditionalProcess/ReturnHandling/CommissionReservedFund/Paging"], { queryParams: { BizTemplateCode: lobCode } })
     } else {
-      this.router.navigate(["/Nap/CreditProcess/CommissionReservedFund/Paging"], { queryParams: { LobCode: "CF4W" } })
-
+      this.router.navigate(["/Nap/CreditProcess/CommissionReservedFund/Paging"], { queryParams: { BizTemplateCode: lobCode } })
     }
   }
 }

@@ -23,7 +23,7 @@ export class MouReviewFactoringComponent implements OnInit {
   PlafondAmt: number;
   listApprover: any;
   listRecommendationObj: any;
-
+  MrCustTypeCode : string;
   listReason: Array<any> = [
     {
       Key: "OTHR_RSN",
@@ -84,6 +84,11 @@ export class MouReviewFactoringComponent implements OnInit {
       (response) => {
         this.PlafondAmt = response['PlafondAmt'];
       })
+      this.http.post(AdInsConstant.GetMouCustById, mouCustObj).subscribe(
+        (response) => {
+          console.log("awdawd");
+            this.MrCustTypeCode = response['MrCustTypeCode']; 
+        });
   }
 
   MouReviewDataForm = this.fb.group({
@@ -95,7 +100,7 @@ export class MouReviewFactoringComponent implements OnInit {
 
   async claimTask()
   {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"]};
     console.log(wfClaimObj);
     this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(

@@ -81,7 +81,17 @@ export class CustGrpMemberComponent implements OnInit {
     this.dictLookup[max + 1] = InputLookupCustomerObj;
 
     this.CustRelationshipObjs.push({list: []});
-    
+
+    // if(this.identifier == AdInsConstant.CustGrupIndentifierTypePersonal){
+    //   this.CustRelationshipObjs.push({list: []});
+    // }
+
+    // if(this.identifier == AdInsConstant.CustGrupIndentifierTypeCompany){
+    //   this.CustRelationshipObjs.push({list: this.CustRelationshipCompanyObj});
+    //   this.parentForm.controls[this.identifier]["controls"][max].patchValue({
+    //     MrCustRelationshipCode: this.defaultCustRelationshipCompanyCode
+    //   });
+    // }
   }
 
   deleteCustGrp(i){
@@ -96,11 +106,11 @@ export class CustGrpMemberComponent implements OnInit {
 
   initLookup(){
     var InputLookupCustomerObj = new InputLookupObj();
-    InputLookupCustomerObj.urlJson = "./assets/uclookup/lookupCustomer.json";
+    InputLookupCustomerObj.urlJson = "./assets/uclookup/lookupCustGrp.json";
     InputLookupCustomerObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
     InputLookupCustomerObj.urlEnviPaging = environment.FoundationR3Url;
-    InputLookupCustomerObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
-    InputLookupCustomerObj.genericJson = "./assets/uclookup/lookupCustomer.json";
+    InputLookupCustomerObj.pagingJson = "./assets/uclookup/lookupCustGrp.json";
+    InputLookupCustomerObj.genericJson = "./assets/uclookup/lookupCustGrp.json";
 
     return InputLookupCustomerObj;
   }
@@ -110,7 +120,6 @@ export class CustGrpMemberComponent implements OnInit {
       CustNo: event.CustNo,
       CustName: event.CustName
     });
-
     if(event.MrCustTypeCode == AdInsConstant.CustTypePersonal){
       this.CustRelationshipObjs[i].list = this.CustRelationshipPersonalObj;
       this.parentForm.controls[this.identifier]["controls"][i].patchValue({
@@ -124,8 +133,9 @@ export class CustGrpMemberComponent implements OnInit {
         MrCustRelationshipCode: this.defaultCustRelationshipCompanyCode
       });
     }
+    
 
-    console.log(this.CustRelationshipObjs);
+    // console.log(this.CustRelationshipObjs);
   }
 
   async bindAppGrp(){
@@ -153,7 +163,7 @@ export class CustGrpMemberComponent implements OnInit {
     this.bindAppGrp();
   }
 
-  addGroup(appCustGrpObj, i){
+  addGroup(appCustGrpObj : AppCustGrpObj, i){
     if(appCustGrpObj == undefined){
       return this.fb.group({
         No: [i],
@@ -161,6 +171,7 @@ export class CustGrpMemberComponent implements OnInit {
         CustName: [''],
         MrCustRelationshipCode: ['', [Validators.required, Validators.maxLength(50)]],
         CustGrpNotes: ['', [Validators.maxLength(4000)]],
+        IsReversible: [false]
       })
     }else{
       return this.fb.group({
@@ -169,6 +180,7 @@ export class CustGrpMemberComponent implements OnInit {
         CustName: [''],
         MrCustRelationshipCode: [appCustGrpObj.MrCustRelationshipCode, [Validators.required, Validators.maxLength(50)]],
         CustGrpNotes: [appCustGrpObj.CustGrpNotes, [Validators.maxLength(4000)]],
+        IsReversible: [appCustGrpObj.IsReversible == null ? false : appCustGrpObj.IsReversible],
       })
     } 
   }

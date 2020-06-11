@@ -9,6 +9,7 @@ export class AppCustCompanyLegalDocObj {
     DocNotes: string; 
     ReleaseBy: string; 
     ReleaseLocation: string; 
+    RowVersion: any;
     
-constructor() { this.AppCustCompanyLegalDocId = 0; }
+constructor() { this.AppCustCompanyLegalDocId = 0; this.RowVersion="" }
 }

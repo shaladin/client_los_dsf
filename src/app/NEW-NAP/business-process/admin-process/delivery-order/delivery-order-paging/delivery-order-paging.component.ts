@@ -3,6 +3,7 @@ import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-delivery-order-paging',
@@ -11,6 +12,19 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 })
 export class DeliveryOrderPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
+  bizTemplateCode: string;
+
+  constructor(private route: ActivatedRoute) {
+    this.route.queryParams.subscribe(params => {
+      if (params["BizTemplateCode"] != null) {
+        this.bizTemplateCode = params["BizTemplateCode"];
+        localStorage.setItem("BizTemplateCode",this.bizTemplateCode);
+      }
+      else{
+        this.bizTemplateCode = localStorage.getItem("BizTemplateCode");
+      }
+    });
+  }
   
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
@@ -22,8 +36,18 @@ export class DeliveryOrderPagingComponent implements OnInit {
 
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionEq;
-    critObj.propName = 'AG.AGRMNT_CURR_STEP';
-    critObj.value = "DELIVERY_ORDER";
+    critObj.propName = 'WF.ACT_CODE';
+    critObj.value = "DO_" + this.bizTemplateCode;
+
     this.inputPagingObj.addCritInput.push(critObj);
+
+    var critBizTemplate = new CriteriaObj();
+    critBizTemplate.restriction = AdInsConstant.RestrictionEq;
+    critBizTemplate.propName = 'AP.BIZ_TEMPLATE_CODE';
+    critBizTemplate.value = this.bizTemplateCode;
+
+    this.inputPagingObj.addCritInput.push(critBizTemplate);
+
+    
   }
 }

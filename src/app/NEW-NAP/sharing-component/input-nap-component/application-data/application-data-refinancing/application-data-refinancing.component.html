@@ -35,12 +35,18 @@
                   <label class="adInsLabel">Sales Recommendation </label>
                 </div>
                 <div class="col-md-4" *ngIf="applicationDDLitems['SLS_RECOM']">
-                  <mat-radio-group formControlName="MrSalesRecommendCode">
+                  <!-- <mat-radio-group formControlName="MrSalesRecommendCode">
                     <mat-radio-button class="custom-control custom-radio" color="primary"
                       *ngFor="let item of applicationDDLitems['SLS_RECOM']" [value]="item.Key">
                       {{item.Value}}
                     </mat-radio-button>
-                  </mat-radio-group>
+                  </mat-radio-group> -->
+                  <select class="form-control adInsInput" style="width: auto" formControlName="MrSalesRecommendCode"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrSalesRecommendCode.invalid }">
+                    <option value="">-Select One-</option>
+                    <option *ngFor="let it of applicationDDLitems['SLS_RECOM']" value="{{it.Key}}">
+                      {{it.Value}} </option>
+                  </select>
                   <lib-uc-show-errors  [control]="NapAppModelForm.controls.MrSalesRecommendCode" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                 </div>
                 <!-- Sales Notes -->
@@ -92,12 +98,18 @@
                 <!-- First Installment Type -->
                 <label class="col-md-2 adInsLabel"> First Installment Type </label>
                 <div class="col-md-4">
-                  <mat-radio-group formControlName="MrFirstInstTypeCode">
+                  <!-- <mat-radio-group formControlName="MrFirstInstTypeCode">
                     <mat-radio-button class="custom-control custom-radio" [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrFirstInstTypeCode.invalid }"
                       *ngFor="let item of applicationDDLitems['FIRST_INST_TYPE']" [value]="item.Key" color="primary">
                       {{item.Value}}
                     </mat-radio-button>
-                  </mat-radio-group>
+                  </mat-radio-group> -->
+                  <select class="form-control adInsInput" style="width: 50%" formControlName="MrFirstInstTypeCode"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrFirstInstTypeCode.invalid }">
+                        <option value="">-Select One-</option>
+                        <option *ngFor="let it of applicationDDLitems['FIRST_INST_TYPE']" value="{{it.Key}}">
+                          {{it.Value}} </option>
+                      </select>
                   <lib-uc-show-errors  [control]="NapAppModelForm.controls.MrFirstInstTypeCode" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                 </div>
               </div>
@@ -118,11 +130,12 @@
                 <label class="col-md-2 adInsLabel"> Interest Type </label>
                 <div class="col-md-4">
                   <select class="form-control adInsInput" style="width: auto" formControlName="InterestType"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.InterestType.invalid }">
-                    <option value="">-Select One-</option>                    
-                    <option *ngFor="let it of applicationDDLitems['INTRSTTYPE']" value="{{it.Key}}">
-                      {{it.Value}} </option>
-                  </select>
+                      (change)="ChangeInterestType()"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.InterestType.invalid }">
+                      <option value="">-Select One-</option>
+                      <option *ngFor="let it of applicationDDLitems['INTRSTTYPE']" value="{{it.Key}}">
+                        {{it.Value}} </option>
+                    </select>
                   <lib-uc-show-errors  [control]="NapAppModelForm.controls.InterestType" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                 </div>
               </div>
@@ -137,7 +150,7 @@
                   <label class="adInsLabel">Installment Scheme</label>
                 </div>
                 <div class="col-md-4">
-                  <select class="form-control adInsInput" style="width: auto" formControlName="MrInstSchemeCode"
+                  <select class="form-control adInsInput" style="width: 50%" formControlName="MrInstSchemeCode"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrInstSchemeCode.invalid }">
                     <option value="">-Select One-</option>
                     <option *ngFor="let it of applicationDDLitems['INST_SCHM']" value="{{it.Key}}">
@@ -173,6 +186,19 @@
                 </div>
               </div>
 
+              <div class="form-group row">
+                <!-- MOU Cust -->
+                <label class="col-md-2 adInsLabel"> MOU Customer </label>
+                <div class="col-md-4">
+                  <select class="form-control adInsInput" style="width: auto" formControlName="MouCustId">
+                    <option value = null>None</option>
+                    <option *ngFor="let it of resMouCustObj" [value]="it.Key">
+                      {{it.Value}} 
+                    </option>
+                  </select>
+                </div>
+              </div>
+
             </div>
 
             <!-- Cross Info -->
@@ -187,28 +213,33 @@
               </div>
 
               <!-- Table Cross Application -->
-              <table class="table table-responsive-md text-center table-hover" [hidden]="resultCrossApp?.length == 0">
+              <table class="table table-responsive-md text-center table-hover">
                 <thead>
                   <tr class="table-header">
                     <th style="text-align: center;"><span class="thead-header" translate>Agreement No
-                    </span>
+                      </span>
                     </th>
                     <th style="text-align: left;"><span class="thead-header" translate>Customer Name
-                    </span>
+                      </span>
                     </th>
                     <th style="text-align: center;"><span class="thead-header" translate>Application No
-                    </span>
+                      </span>
                     </th>
                     <th><span translate class="thead-header" name='action'>Delete</span></th>
                   </tr>
                 </thead>
+                <tbody *ngIf = "resultCrossApp?.length == 0">
+                  <tr>
+                    <td colspan="100%">No Data Available</td>
+                  </tr>
+                </tbody>
                 <tbody>
                   <tr *ngFor="let item of resultCrossApp; let i = index">
-                    <td style="text-align: center;">{{item.AgrmntNo}}</td>
+                    <td style="text-align: center;">{{item.CrossAgrmntNo}}</td>
                     <td style="text-align: left;">{{item.CustName}}</td>
-                    <td style="text-align: center;">{{item.AppNo}}</td>
+                    <td style="text-align: center;">{{item.CrossAppNo}}</td>
                     <td>
-                      <a class="warning p-0" data-original-title="" title="" (click)="DeleteCrossApp(i)">
+                      <a class="warning p-0" (click)="DeleteCrossApp(i)">
                         <i class="ft-trash-2 font-medium-3 mr-2"></i>
                       </a>
                     </td>
@@ -218,11 +249,19 @@
 
               <!-- Model Card -->
               <ng-template #contentCrossApp let-c="close" let-d="dismiss">
-                <app-search-cross-app [ListCrossAppObjInput]="ListCrossAppObj" (objTempOutput)="GetDataTemp($event)"></app-search-cross-app>
+                <div class="modal-header">
+                  <h4 class="modal-title">Add App Cross</h4>
+                  <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <app-search-cross-app [ListCrossAppObjInput]="ListCrossAppObj" (objTempOutput)="GetDataTemp($event)">
+                </app-search-cross-app>
               </ng-template>
             </div>
 
-                <app-loan-object [AppId]="AppId" [mode]="mode"> </app-loan-object>
+
+            <app-loan-object [AppId]="AppId" [mode]="mode"> </app-loan-object>
             
 
             <div class="form-actions right">

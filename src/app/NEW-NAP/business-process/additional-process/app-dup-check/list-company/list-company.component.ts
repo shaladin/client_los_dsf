@@ -73,7 +73,8 @@ export class ListCompanyComponent implements OnInit {
           "BirthDt" : this.AppCustCompanyObj.EstablishmentDt,
           "MotherMaidenName" : "-",
           "MobilePhnNo1" : "-",
-          "RowVersion"  : this.RowVersion     
+          "RowVersion": this.RowVersion,
+          "AppId": this.AppId
         }
         console.log(requestDupCheck);
         //List Cust And Negative Cust Dup Check
@@ -165,7 +166,7 @@ export class ListCompanyComponent implements OnInit {
   }
 
   ClaimTask(){
-    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     var wfClaimObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
     wfClaimObj.pUserID = currentUserContext["UserName"];

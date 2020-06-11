@@ -8,6 +8,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { VerfResultObj } from 'app/shared/model/VerfResult/VerfResult.Model';
 import { DatePipe } from '@angular/common';
 import { ReturnHandlingDObj } from '../../../../../shared/model/ReturnHandling/ReturnHandlingDObj.Model';
+import { ReturnHandlingHObj } from '../../../../../shared/model/ReturnHandling/ReturnHandlingHObj.Model';
 
 
 
@@ -50,14 +51,21 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   verfResObj =
     {
       TrxRefNo: "",
-      MrVerfTrxTypeCode: "PHN_VERIF",
+      MrVerfTrxTypeCode: AdInsConstant.VerfTrxTypeCodePhn,
     };
   phoneVerifObj: any;
   AppObj: any;
   verifResultObj: any;
+  tempFail: any;
+  tempScs: any;
+  tempBlank: any;
+  failCount: number = 0;
+  scsCount: number = 0;
+  blankCount: number = 0;
   addVerifResultObj: VerfResultObj;
   returnHandlingDObj: any;
   ReturnHandlingDData: ReturnHandlingDObj;
+  ReturnHandlingHData: ReturnHandlingHObj;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
 
@@ -97,26 +105,42 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     if (this.isReturnHandling == true) {
       this.GetReturnHandlingD();
     }
+    else {
+      this.ReturnHandlingForm.controls.IsAnyUpdate.setValidators(Validators.required);
+      this.ReturnHandlingForm.controls.IsAnyUpdate.updateValueAndValidity();
+    }
   }
 
-  SaveForm() {
+  async SaveForm() {
+    var BizTemplateCode = localStorage.getItem("BizTemplateCode")
+    if (this.isReturnHandling == false) {
+      this.setReturnHandlingH();
+      this.http.post(AdInsConstant.CompleteAppPhoneVerif, this.ReturnHandlingHData).subscribe(
+        (response) => {
 
-    var reqObj = {
-      WFTaskId: this.wfTaskListId,
-      isReturnHandling: this.isReturnHandling,
-      AppId: this.appId
-    };
-    this.http.post(AdInsConstant.CompleteAppPhoneVerif, reqObj).subscribe(
-      (response) => {
+          this.toastr.successMessage(response["message"]);
+          this.router.navigate(["/Nap/CreditProcess/PhoneVerification/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+    if (this.isReturnHandling == true) {
+      this.setReturnHandlingD();
+      this.http.post(this.editRtnHandlingDUrl, this.ReturnHandlingDData).subscribe(
+        (response) => {
+          console.log(response);
+          this.toastr.successMessage(response["message"]);
+          this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingPhoneVerif/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
 
-        this.toastr.successMessage(response["message"]);
-        var lobCode = localStorage.getItem("LobCode")
-        this.router.navigate(["/Nap/CreditProcess/PhoneVerification/Paging"], { queryParams: { "LobCode": lobCode } });
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    }
+
   }
 
   setReturnHandlingD() {
@@ -124,11 +148,21 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     this.ReturnHandlingDData.ReturnHandlingDId = this.returnHandlingDObj.ReturnHandlingDId;
     this.ReturnHandlingDData.ReturnHandlingHId = this.returnHandlingDObj.ReturnHandlingHId;
     this.ReturnHandlingDData.MrReturnTaskCode = this.returnHandlingDObj.MrReturnTaskCode;
-    this.ReturnHandlingDData.ReturnStat = "DONE";
+    this.ReturnHandlingDData.ReturnStat = AdInsConstant.RtnHandlingReturnStatDone;
     this.ReturnHandlingDData.ReturnHandlingNotes = this.returnHandlingDObj.ReturnHandlingNotes;
     this.ReturnHandlingDData.ReturnHandlingExecNotes = this.ReturnHandlingForm.controls["ExecNotes"].value;
     this.ReturnHandlingDData.WfTaskListId = this.wfTaskListId;
     this.ReturnHandlingDData.RowVersion = this.returnHandlingDObj.RowVersion;
+  }
+
+  setReturnHandlingH() {
+    this.ReturnHandlingHData = new ReturnHandlingHObj();
+    this.ReturnHandlingHData.AppId = this.appId;
+    this.ReturnHandlingHData.ReturnBy = localStorage.getItem("Username");
+    this.ReturnHandlingHData.ReturnNotes = this.ReturnHandlingForm.controls.UpdateNotes.value;
+    this.ReturnHandlingHData.ReturnFromTrxType = AdInsConstant.TrxTypeCodePhn;
+    this.ReturnHandlingHData.WfTaskListId = this.wfTaskListId;
+    this.ReturnHandlingHData.IsReturn = (this.ReturnHandlingForm.controls['IsAnyUpdate'].value == 'YES') ? true : false;
   }
 
   async GetAppData() {
@@ -147,6 +181,15 @@ export class PhoneVerificationSubjectComponent implements OnInit {
       (response) => {
         this.phoneVerifObj = response;
         console.log(this.phoneVerifObj);
+        this.tempBlank = this.phoneVerifObj.filter(
+          blank => blank.Result == '');
+        this.tempScs = this.phoneVerifObj.filter(
+          scs => scs.Result == 'SCS');
+        this.tempFail = this.phoneVerifObj.filter(
+          fail => fail.Result == 'FAIL');
+        this.blankCount = this.tempBlank.length;
+        this.scsCount = this.tempScs.length;
+        this.failCount = this.tempFail.length;
       }
     );
   }
@@ -172,8 +215,8 @@ export class PhoneVerificationSubjectComponent implements OnInit {
       this.addVerifResultObj.TrxRefNo = this.AppObj.AppNo;
       this.addVerifResultObj.VerfDt = businessDt;
       this.addVerifResultObj.EmpNo = "-";
-      this.addVerifResultObj.MrVerfResultStatCode = "NEW";
-      this.addVerifResultObj.MrVerfTrxTypeCode = "PHN_VERIF";
+      this.addVerifResultObj.MrVerfResultStatCode = AdInsConstant.VerfResultStatCodeNew;
+      this.addVerifResultObj.MrVerfTrxTypeCode = AdInsConstant.VerfTrxTypeCodePhn;
       this.addVerifResultObj.LobCode = this.AppObj.LobCode;
       this.addVerifResultObj.LobName = this.AppObj.LobCode;
       this.addVerifResultObj.Notes = "-";
@@ -212,7 +255,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   }
 
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     var wfClaimObj = {
       pWFTaskListID: this.wfTaskListId,
       pUserID: currentUserContext["UserName"],
@@ -221,5 +264,15 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
       });
+  }
+
+  back() {
+    var BizTemplateCode = localStorage.getItem("BizTemplateCode")
+    if (this.isReturnHandling == false) {
+      this.router.navigate(["/Nap/CreditProcess/PhoneVerification/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
+    }
+    if (this.isReturnHandling == true) {
+      this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingPhoneVerif/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
+    }
   }
 }

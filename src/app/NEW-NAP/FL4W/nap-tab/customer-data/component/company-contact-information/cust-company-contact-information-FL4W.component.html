@@ -9,7 +9,7 @@
   <table class="table table-responsive-md text-center table-hover">
     <thead>
       <tr class="table-header">
-        <th style="text-align: center;"><span class="thead-header" translate>NAME
+        <th style="text-align: left;"><span class="thead-header" translate>NAME
         </span>
         </th>
         <th style="text-align: center;"><span class="thead-header" translate>JOB POSITION
@@ -24,6 +24,11 @@
         <th><span translate class="thead-header" name='action'>ACTION</span></th>
       </tr>
     </thead>
+    <tbody *ngIf = "listContactPersonCompany == undefined">
+      <tr>
+        <td colspan="100%">No Data Available</td>
+      </tr>
+    </tbody>
     <tbody>
       <tr *ngFor="let item of listContactPersonCompany; let i = index">
         <td style="text-align: left;">{{item.ContactPersonName}}</td>
@@ -31,10 +36,10 @@
         <td style="text-align: center;">{{item.MobilePhnNo1}}</td>
         <td style="text-align: center;">{{item.Email1}}</td>
         <td>
-          <a class="success p-0" data-original-title="" title="" (click)="edit(i, content)">
+          <a class="success p-0" (click)="edit(i, content)">
             <i class="ft-edit-2 font-medium-3 mr-2"></i>
           </a>
-          <a class="warning p-0" data-original-title="" title="" (click)="delete(i)">
+          <a class="warning p-0" (click)="delete(i)">
             <i class="ft-trash-2 font-medium-3 mr-2"></i>
           </a>
         </td>
@@ -77,7 +82,7 @@
               <div class="form-group row">
                 <label class="col-md-2" for="mobilePhone" translate>Mobile Phone 1</label>
                 <div class="col-md-4">
-                  <input type="number" class="form-control" id="mobilePhone" formControlName="MobilePhnNo1"
+                  <input type="text" class="form-control" id="mobilePhone" formControlName="MobilePhnNo1"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && ContactInfoCompanyForm.controls.MobilePhnNo1.invalid }">
                   <lib-uc-show-errors [control]="ContactInfoCompanyForm.controls.MobilePhnNo1" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
@@ -91,13 +96,13 @@
               <div class="form-group row">
                 <label class="col-md-2" for="mobilePhone2" translate>Mobile Phone 2</label>
                 <div class="col-md-4">
-                  <input type="number" class="form-control" id="mobilePhone2" formControlName="MobilePhnNo2"
+                  <input type="text" class="form-control" id="mobilePhone2" formControlName="MobilePhnNo2"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && ContactInfoCompanyForm.controls.MobilePhnNo2.invalid }">
                   <lib-uc-show-errors [control]="ContactInfoCompanyForm.controls.MobilePhnNo2" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
                 <label class="col-md-2" for="email" translate>Email</label>
                 <div class="col-md-4">
-                  <input type="text" class="form-control" id="email" formControlName="Email1"
+                  <input type="text"  pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" class="form-control" id="email" formControlName="Email1"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && ContactInfoCompanyForm.controls.Email1.invalid }">
                   <lib-uc-show-errors [control]="ContactInfoCompanyForm.controls.Email1" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>

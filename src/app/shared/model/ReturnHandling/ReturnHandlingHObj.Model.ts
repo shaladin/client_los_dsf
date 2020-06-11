@@ -8,8 +8,10 @@ export class ReturnHandlingHObj {
     ReturnFromTrxType: string;
     WfTaskListId: number;
     RowVersion: any;
+    IsReturn : boolean;
 
     constructor() {
         this.RowVersion = ""; 
+        this.ReturnHandlingHId = 0;
     }
 }

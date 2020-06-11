@@ -53,6 +53,7 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
 
   getRefMasterUrl: any;
   getCountryUrl: any;
+  businessDt: Date = new Date();
 
   constructor(
     private fb: FormBuilder, 
@@ -63,6 +64,9 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
      }
 
   async ngOnInit() : Promise<void> {
+    var context = JSON.parse(localStorage.getItem("UserAccess"));
+    this.businessDt = new Date(context["BusinessDt"]);
+    this.businessDt.setDate(this.businessDt.getDate() - 1);
     console.log(this.identifier);
     console.log(this.parentForm);
 
@@ -70,25 +74,25 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
       CustFullName: ['', [Validators.required, Validators.maxLength(500)]],
       MrIdTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
       MrGenderCode: ['', [Validators.required, Validators.maxLength(50)]],
-      IdNo: ['', [Validators.required, Validators.maxLength(50)]],
+      IdNo: ['', [Validators.required, Validators.maxLength(50),Validators.pattern("^[0-9]+$")]],
       MotherMaidenName: ['', [Validators.required, Validators.maxLength(500)]],
       IdExpiredDt: [''],
-      MrMaritalStatCode: ['', Validators.maxLength(50)],
+      MrMaritalStatCode: ['',[Validators.required,Validators.maxLength(50)]],
       BirthPlace: ['', [Validators.required, Validators.maxLength(100)]],
       BirthDt: ['', Validators.required],
       MrNationalityCode: ['', Validators.maxLength(50)],
-      TaxIdNo: ['', Validators.maxLength(50)],
-      MobilePhnNo1: ['', [Validators.required, Validators.maxLength(50)]],
+      TaxIdNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
+      MobilePhnNo1: ['', [Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
       MrEducationCode: ['', Validators.maxLength(50)],
-      MobilePhnNo2: ['', Validators.maxLength(50)],
+      MobilePhnNo2: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
       MrReligionCode: ['', Validators.maxLength(50)],
-      MobilePhnNo3: ['', Validators.maxLength(50)],
+      MobilePhnNo3: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
       IsVip: [false],
       Email1: ['', Validators.maxLength(100)],
       FamilyCardNo: ['', Validators.maxLength(50)],
-      Email2: ['', Validators.maxLength(50)],
+      Email2: ['', Validators.maxLength(100)],
       NoOfResidence: ['', [Validators.pattern("^[0-9]+$"), Validators.maxLength(4)]],
-      Email3: ['', Validators.maxLength(50)],
+      Email3: ['', Validators.maxLength(100)],
       NoOfDependents: ['', [Validators.pattern("^[0-9]+$"), Validators.maxLength(4)]],
     }));
 
@@ -128,6 +132,9 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
       this.InputLookupCustomerObj.nameSelect = response["CustObj"].CustName;
       this.InputLookupCustomerObj.jsonSelect = {CustName: response["CustObj"].CustName};
       this.selectedCustNo = response["CustObj"].CustNo;
+      this.parentForm.controls[this.identifier]['controls']["MrIdTypeCode"].disable();
+      this.parentForm.controls[this.identifier]['controls']["IdNo"].disable();
+      this.parentForm.controls[this.identifier]['controls']["TaxIdNo"].disable();
     }
     
     if(response["CustPersonalObj"] != undefined){
@@ -154,6 +161,8 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
       
       this.selectedNationalityCountryCode = response["CustPersonalObj"].NationalityCountryCode;
       this.setCountryName(response["CustPersonalObj"].NationalityCountryCode);
+      this.parentForm.controls[this.identifier]['controls']["BirthPlace"].disable();
+      this.parentForm.controls[this.identifier]['controls']["BirthDt"].disable();
     }
   }
 
@@ -173,6 +182,17 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
     this.InputLookupCustomerObj.addCritInput = arrCrit;
   }
 
+  setCriteriaLookupCountry(){
+    var arrCrit = new Array();
+    var critObj = new CriteriaObj();
+    critObj.DataType = 'text';
+    critObj.restriction = AdInsConstant.RestrictionNotIn;
+    critObj.propName = 'COUNTRY_CODE';
+    critObj.listValue = ['IDN'];
+    arrCrit.push(critObj);
+    this.InputLookupCountryObj.addCritInput = arrCrit;
+  }
+
   setCountryName(countryCode){
     this.countryObj.CountryCode = countryCode;
 
@@ -180,7 +200,13 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
       (response) => {
         console.log(response);
         this.InputLookupCountryObj.nameSelect = response["CountryName"];
-        this.InputLookupCountryObj.jsonSelect = response;     
+        this.InputLookupCountryObj.jsonSelect = response;
+        if(countryCode == "LOCAL"){
+          this.selectedNationalityCountryName = response["CountryName"];
+          this.isLocal = true;
+        }else{
+          this.isLocal = false
+        }     
       },
       (error) => {
         console.log(error);
@@ -255,7 +281,7 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
     this.InputLookupCountryObj.pagingJson = "./assets/uclookup/lookupCountry.json";
     this.InputLookupCountryObj.genericJson = "./assets/uclookup/lookupCountry.json";
     this.InputLookupCountryObj.isRequired = false;
-
+    this.setCriteriaLookupCountry();
   }
 
   async bindAllRefMasterObj(){
@@ -310,13 +336,15 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
   }
 
   async bindNationalityObj(){
-    this.refMasterObj.RefMasterTypeCode = "NATIONALITY";
-    await this.http.post(this.getRefMasterUrl, this.refMasterObj).toPromise().then(
+    // this.refMasterObj.RefMasterTypeCode = "NATIONALITY";
+    var obj = { RefMasterTypeCodes: ["NATIONALITY"] };
+    await this.http.post(AdInsConstant.GetListRefMasterByRefMasterTypeCodes, obj).toPromise().then(
       (response) => {
+        console.log(response);
         this.NationalityObj = response["ReturnObject"];
         if(this.NationalityObj.length > 0){
           this.parentForm.controls[this.identifier].patchValue({
-            MrNationalityCode: this.NationalityObj[0].Key
+            MrNationalityCode: this.NationalityObj[0].MasterCode
           });
         }
       }
@@ -349,6 +377,23 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
         }
       }
     );
+  }
+
+  isLocal: boolean = false;
+  selectedNationalityCountryName: string = "";
+  ChangeNationality(ev){
+    if(this.parentForm.controls[this.identifier]['controls'].MrNationalityCode.value == "LOCAL"){
+      console.log(this.parentForm);
+      console.log(this.identifier);
+      console.log(this.NationalityObj);
+      console.log(ev);
+      var idx = ev.target.selectedIndex - 1;
+      this.selectedNationalityCountryCode = this.NationalityObj[idx].ReserveField1;
+      this.selectedNationalityCountryName = this.NationalityObj[idx].ReserveField2;
+      this.isLocal = true;
+    }else{
+      this.isLocal = false;
+    }
   }
 
 }

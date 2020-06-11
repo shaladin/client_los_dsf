@@ -8,6 +8,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { environment } from 'environments/environment';
 import { AgrmntDocObj } from 'app/shared/model/AgrmntDocObj.Model';
 import { AgrmntDocPrintObj } from 'app/shared/model/AgrmntDocPrintObj.Model';
+import { RdlcReportObj } from 'app/shared/model/Report/RdlcReportObj.model';
 
 @Component({
   selector: 'app-document-view',
@@ -23,7 +24,6 @@ export class DocumentViewComponent implements OnInit {
   inputViewObj: string;
   inputObj: any;
   AgrmntDocObj: Object;
-  AgreementId: any;
   listSelectedId: any[];
   tempListId: any[];
   tempData: any[];
@@ -35,13 +35,13 @@ export class DocumentViewComponent implements OnInit {
   orderByKey: any;
   orderByValue: boolean;
   totalData: any;
-  AgrmntId: any;
+  AgrmntId: number;
   addUrl: any;
   editUrl: string;
   agrmntDocObj: AgrmntDocObj;
   agrmntDocPrintObj: AgrmntDocPrintObj;
   getUrl: string;
-
+  RdlcReport: RdlcReportObj = new RdlcReportObj();
 
   constructor(private http: HttpClient,
     private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService) {
@@ -53,7 +53,6 @@ export class DocumentViewComponent implements OnInit {
 
   }
   ngOnInit() {
-
     this.inputViewObj = "./assets/ucviewgeneric/viewDocument.json";
 
     this.GetListAgrmntDocByAgrmntId();
@@ -66,8 +65,6 @@ export class DocumentViewComponent implements OnInit {
     this.pageNow = 1;
     this.pageSize = 10;
     this.apiUrl = environment.losUrl + AdInsConstant.GetPagingObjectBySQL;
-
-
   }
   searchPagination(event: number) {
     this.pageNow = event;
@@ -99,8 +96,7 @@ export class DocumentViewComponent implements OnInit {
     var obj = {
       AgrmntId: this.AgrmntId,
     }
-    var getListUrl = AdInsConstant.GetListAgrmntDocByAgrmntId;
-    this.http.post(getListUrl, obj).subscribe(
+    this.http.post(AdInsConstant.GetListAgrmntDocByAgrmntId, obj).subscribe(
       (response) => {
         console.log(response);
         this.AgrmntDocObj = response;
@@ -115,12 +111,7 @@ export class DocumentViewComponent implements OnInit {
     this.agrmntDocObj = new AgrmntDocObj();
     this.agrmntDocPrintObj = new AgrmntDocPrintObj();
     this.agrmntDocPrintObj.RowVersion = "";
-
     this.agrmntDocPrintObj.AgrmntDocId = event;
-    // var obj = {
-    //   AgrmntId: this.AgrmntId,
-    // }
-
 
     console.log(event);
     this.addUrl = AdInsConstant.AddAgrmntDocPrint;
@@ -133,4 +124,38 @@ export class DocumentViewComponent implements OnInit {
       });
   }
 
+  Print(item) {
+    this.RdlcReport.ExportFormat = "JPDF";
+    this.RdlcReport.ExportFile = "JPDF";
+    this.RdlcReport.MainReportParameter = null;
+    this.RdlcReport.ReportName = item.AgrmntDocName;
+    this.RdlcReport.ReportTemplate = item.RptTmpltCode;
+    this.RdlcReport.MainReportInfoDetail.ReportTemplateName = item.RptTmpltCode;
+    this.RdlcReport.MainReportInfoDetail.ReportDataProviderParameter["AgrmntId"] = +this.AgrmntId;
+    // this.RdlcReport.MainReportInfoDetail.ReportDataProviderParameter["RptTmpltCode"] = item.RptTmpltCode;
+
+    console.log(this.RdlcReport);
+
+    let Obj = {
+      RequestObject: this.RdlcReport
+    };
+    this.http.post("http://r3app-server.ad-ins.com/FOUNDATION_R3/Report/GenerateReportSync", Obj).subscribe(
+      (response) => {
+        let linkSource: string = 'data:application/pdf;base64,' + response["ReturnObject"];
+        let fileName: string = item.AgrmntDocName + ".pdf";
+        const downloadLink = document.createElement("a");
+        downloadLink.href = linkSource;
+        downloadLink.download = fileName;
+
+        if (response["ReturnObject"] != undefined) {
+          downloadLink.click();
+          this.toastr.successMessage(response['message']);
+        } else {
+          this.toastr.errorMessage(response['Message']);
+        }
+      },
+      (error) => {
+        console.log(error);
+      });
+  }
 }

@@ -9,6 +9,8 @@ import { AppCustPersonalContactPersonObj } from 'app/shared/model/AppCustPersona
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
+import { formatDate } from '@angular/common';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
   selector: 'app-cust-personal-contact-information',
@@ -19,7 +21,7 @@ import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 })
 
 export class CustPersonalContactInformationComponent implements OnInit {
-  @Input() listContactPersonPersonal: any = new Array<AppCustPersonalContactPersonObj>();
+  @Input() listContactPersonPersonal: Array<AppCustPersonalContactPersonObj> = new Array<AppCustPersonalContactPersonObj>();
 
 
   @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
@@ -67,7 +69,8 @@ export class CustPersonalContactInformationComponent implements OnInit {
   selectedRelationshipName: any;
   defaultGenderName: any;
   defaultRelationshipName: any;
-
+  UserAccess: any;
+  MaxDate: Date;
 
   ContactInfoPersonalForm = this.fb.group({
     ContactPersonName: ['', [Validators.required, Validators.maxLength(1000)]],
@@ -89,16 +92,20 @@ export class CustPersonalContactInformationComponent implements OnInit {
   constructor(
     private fb: FormBuilder, 
     private http: HttpClient,
-    private modalService: NgbModal,) {
+    private modalService: NgbModal,
+    private toastr: NGXToastrService,) {
 
      }
 
   ngOnInit() {
+    this.UserAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    this.MaxDate = this.UserAccess.BusinessDt;
     this.bindCopyFrom();
     this.initLookup();
     this.initUrl();
     this.bindAllRefMasterObj();
     this.initContactPersonAddrObj();
+    console.log(this.listContactPersonPersonal);
   }
 
   SaveForm(){
@@ -106,28 +113,51 @@ export class CustPersonalContactInformationComponent implements OnInit {
     if(this.listContactPersonPersonal == undefined){
       this.listContactPersonPersonal = new Array<AppCustPersonalContactPersonObj>();
     }
+    var userAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    var businessDtStr = formatDate(userAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
+    var businessDt = new Date(businessDtStr);
+    var birthDt = new Date(this.ContactInfoPersonalForm.controls.BirthDt.value);
+
+    if(birthDt > businessDt){
+      this.toastr.errorMessage("Birth Date can not be more than " + businessDtStr);
+      return;
+    }
+
     this.setAppCustPersonalContactPerson();
-    if(this.mode == "add"){
+    if(this.mode == "Add"){
       this.listContactPersonPersonal.push(this.appCustPersonalContactPersonObj);
     }
-    if(this.mode == "edit"){
+    if(this.mode == "Edit"){
       this.listContactPersonPersonal[this.currentEditedIndex] = this.appCustPersonalContactPersonObj;
     }
+    console.log(this.ContactInfoPersonalForm);
     this.callbackSubmit.emit(this.listContactPersonPersonal);
     this.modalService.dismissAll();
     this.clearForm();
   }
 
   add(content){
-    this.mode = "add";
+    console.log(content);
+    this.mode = "Add";
     this.clearForm();
     this.open(content);
   }
 
   edit(i, content){
     this.clearForm();
-    this.mode = "edit";
+    this.mode = "Edit";
     this.currentEditedIndex = i;
+    var birthDt;
+    if(this.listContactPersonPersonal[i].BirthDt != undefined){
+      if(this.listContactPersonPersonal[i].BirthDt.toString() != ''){
+        birthDt = formatDate(this.listContactPersonPersonal[i].BirthDt, 'yyyy-MM-dd', 'en-US');
+      }else{
+        birthDt = '';
+      }
+    }else{
+      birthDt = '';
+    }
+
     this.ContactInfoPersonalForm.patchValue({
       ContactPersonName: this.listContactPersonPersonal[i].ContactPersonName,
       MrGenderCode: this.listContactPersonPersonal[i].MrGenderCode,
@@ -135,7 +165,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
       MrCustRelationshipCode: this.listContactPersonPersonal[i].MrCustRelationshipCode,
       IdNo: this.listContactPersonPersonal[i].IdNo,
       BirthPlace: this.listContactPersonPersonal[i].BirthPlace,
-      BirthDt: this.listContactPersonPersonal[i].BirthDt,
+      BirthDt: birthDt,
       IsEmergencyContact: this.listContactPersonPersonal[i].IsEmergencyContact,
       MobilePhnNo1: this.listContactPersonPersonal[i].MobilePhnNo1,
       MobilePhnNo2: this.listContactPersonPersonal[i].MobilePhnNo2,
@@ -143,11 +173,20 @@ export class CustPersonalContactInformationComponent implements OnInit {
       IsFamily: this.listContactPersonPersonal[i].IsFamily
     });
 
+    this.setCustRelationShip(this.listContactPersonPersonal[i].MrCustRelationshipCode);
     this.setContactPersonAddr(this.listContactPersonPersonal[i]);
     this.selectedProfessionCode = this.listContactPersonPersonal[i].MrJobProfessionCode;
     this.setProfessionName(this.listContactPersonPersonal[i].MrJobProfessionCode);
 
     this.open(content);
+  }
+
+  setCustRelationShip(MrCustRelationshipCode: string){
+    console.log(this.CustRelationshipObj);
+    var selectedRelationship = this.CustRelationshipObj.find(x => x.Key == MrCustRelationshipCode);
+    console.log(selectedRelationship);
+    this.selectedRelationshipName = selectedRelationship.Value;
+    console.log(this.selectedRelationshipName);
   }
 
   delete(i){
@@ -167,8 +206,8 @@ export class CustPersonalContactInformationComponent implements OnInit {
       BirthPlace: ['', Validators.maxLength(100)],
       BirthDt: [''],
       IsEmergencyContact: [false],
-      MobilePhnNo1: ['', [Validators.required, Validators.maxLength(100)]],
-      MobilePhnNo2: ['', Validators.maxLength(100)],
+      MobilePhnNo1: ['', [Validators.required, Validators.maxLength(100), Validators.pattern("^[0-9]+$")]],
+      MobilePhnNo2: ['', [Validators.maxLength(100), Validators.pattern("^[0-9]+$")]],
       IsFamily: [false],
       Email: ['', Validators.maxLength(100)],
       CopyFromContactPerson: ['']
@@ -213,11 +252,19 @@ export class CustPersonalContactInformationComponent implements OnInit {
   }
 
   GenderChanged(event){
-    this.selectedGenderName = this.GenderObj.find(x => x.Key == event.value).Value;
+    this.selectedGenderName = event.target.options[event.target.options.selectedIndex].text;
   }
 
   RelationshipChanged(event){
     this.selectedRelationshipName = event.target.options[event.target.options.selectedIndex].text;
+    if (this.ContactInfoPersonalForm.controls.MrCustRelationshipCode.value == 'SPOUSE') {
+      this.ContactInfoPersonalForm.controls.BirthDt.setValidators([Validators.required]);
+      this.ContactInfoPersonalForm.controls.BirthDt.updateValueAndValidity();
+    }
+    else {
+      this.ContactInfoPersonalForm.controls.BirthDt.clearValidators();
+      this.ContactInfoPersonalForm.controls.BirthDt.updateValueAndValidity();
+    }
   }
 
   copyFromChanged(){

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormBuilder, FormGroup, FormArray, Validators, ControlContainer, FormGroupDirective, NgForm } from '@angular/forms';
 import { formatDate } from '@angular/common';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
   selector: 'app-term-conditions',
@@ -14,17 +15,28 @@ export class TermConditionsComponent implements OnInit {
   AppTcList: any = [];
   listTempTCList: any = [];
 
-  @Output() OutputValueIsCheckAll : EventEmitter<any> = new EventEmitter();
-  @Input() IsCheckedAll : boolean = true;
+  totalCheckAll: number =0;
+  totalMandatory:number = 0;
+
+  @Output() OutputValueIsCheckAll: EventEmitter<any> = new EventEmitter();
+  @Input() IsCheckedAll: boolean = true;
   @Input() AppId: number;
   @Input() parentForm: FormGroup;
   @Input() enjiForm: NgForm;
   @Input() identifier: string = "TCList";
+  businessDt: Date;
 
-  constructor(private http: HttpClient, private fb: FormBuilder) { }
+  MinDate : Date;
+  IsPromisedDtLowerThanBusinessDt : boolean = true;
+
+  constructor(private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService) { }
 
   ngOnInit() {
-    console.log(this.IsCheckedAll);
+    var context = JSON.parse(localStorage.getItem("UserAccess"));
+    this.businessDt = new Date(context["BusinessDt"]);
+    this.businessDt.setDate(this.businessDt.getDate() - 1);
+    
+
     this.parentForm.addControl(this.identifier, this.fb.array([]));
     var listTC = this.parentForm.get(this.identifier) as FormArray;
     var appTcObj = {
@@ -32,6 +44,7 @@ export class TermConditionsComponent implements OnInit {
     }
     this.http.post(AdInsConstant.GetListTCbyAppId, appTcObj).subscribe(
       (response) => {
+        console.log(response);
         this.AppTcList = response["AppTcs"];
         if (this.AppTcList != null && this.AppTcList["length"] != 0) {
           for (let i = 0; i < this.AppTcList["length"]; i++) {
@@ -47,7 +60,8 @@ export class TermConditionsComponent implements OnInit {
               PromisedDt: this.AppTcList[i].PromisedDt != null ? formatDate(this.AppTcList[i].PromisedDt, 'yyyy-MM-dd', 'en-US') : "",
               CheckedDt: this.AppTcList[i].CheckedDt != null ? formatDate(this.AppTcList[i].CheckedDt, 'yyyy-MM-dd', 'en-US') : "",
               Notes: this.AppTcList[i].Notes,
-              RowVersion : this.AppTcList[i].RowVersion
+              IsAdditional: this.AppTcList[i].IsAdditional,
+              RowVersion: this.AppTcList[i].RowVersion
             }) as FormGroup;
 
             if (this.AppTcList[i].IsMandatory == true) {
@@ -61,15 +75,74 @@ export class TermConditionsComponent implements OnInit {
             } else {
               TCDetail.controls.PromisedDt.disable();
             }
+            
             listTC.push(TCDetail);
             this.OutputValueIsCheckAll.emit(this.IsCheckedAll);
+            
           }
+          
+          this.ReconstructForm();
+          console.log(this.parentForm);
         }
       },
       (error) => {
         console.log(error);
       }
     );
+  }
+
+  ReconstructForm() {
+    this.totalCheckAll = 0;
+    this.totalMandatory = 0;
+    this.IsCheckedAll = true;
+    console.log("ReconstructForm");
+    var listTC = this.parentForm.get(this.identifier) as FormArray
+    for (let i = 0; i < listTC.length; i++) {
+      var item = listTC.at(i);
+      console.log(item);
+      var isMandatory: Boolean = item.get("IsMandatory").value;
+      var isChecked: Boolean = item.get("IsChecked").value;
+
+      if (isMandatory) {
+        if (isChecked) {
+          item.patchValue({
+            PromisedDt: null
+          });
+          item.get("ExpiredDt").enable();
+          item.get("PromisedDt").disable();
+          item.get("ExpiredDt").setValidators([Validators.required]);
+          this.totalCheckAll++;
+        } else {
+          item.patchValue({
+            ExpiredDt: null
+          });
+          item.get("ExpiredDt").disable();
+          item.get("PromisedDt").enable();
+          item.get("PromisedDt").setValidators([Validators.required]);
+          this.IsCheckedAll = false;
+        }
+
+      } else {
+        if (isChecked) {
+          item.patchValue({
+            PromisedDt: null
+          });
+          item.get("ExpiredDt").enable();
+          item.get("PromisedDt").disable();
+          item.get("ExpiredDt").setValidators([Validators.required]);
+        } else {
+          item.patchValue({
+            ExpiredDt: null
+          });
+          item.get("ExpiredDt").disable();
+          item.get("PromisedDt").enable();
+        }
+      }
+      console.log(item.get("ExpiredDt"));
+
+    }
+    this.OutputValueIsCheckAll.emit(this.IsCheckedAll);
+    listTC.updateValueAndValidity();
   }
 
   changeValidation(arr) {

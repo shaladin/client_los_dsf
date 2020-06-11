@@ -4,7 +4,7 @@
     <table class="table table-responsive-md text-center table-hover">
       <thead>
         <tr class="table-header">
-          <th style="text-align: center;">
+          <th style="text-align: left;">
             <span class="thead-header" name='assetName' translate>Asset Name</span>
           </th>
           <th style="text-align: left;">
@@ -19,13 +19,13 @@
           <th style="text-align: left;">
             <span class="thead-header" name='coverPeriod' translate>Cover Period</span>
           </th>
-          <th style="text-align: left;">
+          <th style="text-align: center;">
             <span class="thead-header" name='insuranceLength' translate>Insurance Length</span>
           </th>
           <th style="text-align: left;">
             <span class="thead-header" name='mainPremi' translate>Main Premi</span>
           </th>
-          <th style="text-align: left;">
+          <th style="text-align: right;">
             <span class="thead-header" name='addPremi' translate>Additional Premi</span>
           </th>
           <th style="text-align: center;">
@@ -38,7 +38,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let item of appInsObjs; index as i">
-          <td style="text-align: center;">
+          <td style="text-align: left;">
             {{item.InsObjName}}
           </td>
           <td style="text-align: left;">
@@ -53,19 +53,19 @@
           <td style="text-align: left;">
             {{item.InsAssetCoverPeriod}}
           </td>
-          <td style="text-align: left;">
+          <td style="text-align: center;">
             {{item.InsLength}}
           </td>
-          <td style="text-align: left;">
-            {{item.TotalCustMainPremiAmt}}
+          <td style="text-align: right;">
+            {{item.TotalCustMainPremiAmt | number:'.2':'en-US'}}
           </td>
-          <td style="text-align: left;">
-            {{item.TotalCustAddPremiAmt}}
+          <td style="text-align: right;">
+            {{item.TotalCustAddPremiAmt | number:'.2':'en-US'}}
           </td>
-          <td style="text-align: left;">
-            {{item.CustAdminFeeAmt}}
+          <td style="text-align: right;">
+            {{item.CustAdminFeeAmt | number:'.2':'en-US'}}
           </td>
-          <td style="text-align: left;">
+          <td style="text-align: center;">
             <a (click)="viewDetailLoanHandler(item.AppAssetId)"><i class="fas fa-pencil-alt"></i></a>
           </td>
         </tr>
@@ -79,7 +79,7 @@
     <table class="table table-responsive-md text-center table-hover">
       <thead>
         <tr class="table-header">
-          <th style="text-align: center;">
+          <th style="text-align: left;">
             <span class="thead-header" name='assetName' translate>Asset Name</span>
           </th>
           <th style="text-align: left;">
@@ -94,13 +94,13 @@
           <th style="text-align: left;">
             <span class="thead-header" name='coverPeriod' translate>Cover Period</span>
           </th>
-          <th style="text-align: left;">
+          <th style="text-align: center;">
             <span class="thead-header" name='insuranceLength' translate>Insurance Length</span>
           </th>
           <th style="text-align: left;">
             <span class="thead-header" name='mainPremi' translate>Main Premi</span>
           </th>
-          <th style="text-align: left;">
+          <th style="text-align: right;">
             <span class="thead-header" name='addPremi' translate>Additional Premi</span>
           </th>
           <th style="text-align: center;">
@@ -112,8 +112,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of appInsObjs; index as i">
-          <td style="text-align: center;">
+        <tr *ngFor="let item of appCollObjs; index as i">
+          <td style="text-align: left;">
             {{item.InsObjName}}
           </td>
           <td style="text-align: left;">
@@ -128,19 +128,19 @@
           <td style="text-align: left;">
             {{item.InsAssetCoverPeriod}}
           </td>
-          <td style="text-align: left;">
+          <td style="text-align: center;">
             {{item.InsLength}}
           </td>
-          <td style="text-align: left;">
-            {{item.TotalCustMainPremiAmt}}
+          <td style="text-align: right;">
+            {{item.TotalCustMainPremiAmt | number:'.2':'en-US'}}
           </td>
-          <td style="text-align: left;">
-            {{item.TotalCustAddPremiAmt}}
+          <td style="text-align: right;">
+            {{item.TotalCustAddPremiAmt | number:'.2':'en-US'}}
           </td>
-          <td style="text-align: left;">
-            {{item.CustAdminFeeAmt}}
+          <td style="text-align: right;">
+            {{item.CustAdminFeeAmt | number:'.2':'en-US'}}
           </td>
-          <td style="text-align: left;">
+          <td style="text-align: center;">
             <a (click)="viewDetailCollateralHandler(item.AppInsObjId)"><i class="fas fa-pencil-alt"></i></a>
           </td>
         </tr>
@@ -151,19 +151,19 @@
 <div class="SummarySection" style="margin-top: 20px;">
   <div class="col-md-12">
     <div class="col-md-12" style="padding: 0;">
-      <div class="col-md-6">
-        <label class="col-md-3 adInsLabel" translate>Total Premi to Customer</label>
-        <label class="col-md-3 adInsLabel" translate>{{custTotalPremi}}</label>
+      <div class="col-md-6" style="margin-bottom: 5px;">
+        <label class="col-md-6 adInsLabel" translate>Total Premi to Customer</label>
+        <label class="col-md-6 adInsLabel" translate>{{custTotalPremi | number:'.2':'en-US'}}</label>
       </div>
-      <div class="col-md-6">
-        <label class="col-md-3 adInsLabel" translate>Paid Amount by Customer</label>
-        <label class="col-md-3 adInsLabel" translate>{{totalCustPaidAmt}}</label>
+      <div class="col-md-6" style="margin-bottom: 5px;">
+        <label class="col-md-6 adInsLabel" translate>Paid Amount by Customer</label>
+        <label class="col-md-6 adInsLabel" translate>{{totalCustPaidAmt | number:'.2':'en-US'}}</label>
       </div>
     </div>
     <div class="col-md-12" style="padding: 0;">
-      <div class="col-md-6">
-        <label class="col-md-3 adInsLabel" translate>Capitalized Amount</label>
-        <label class="col-md-3 adInsLabel" translate>{{totalCapitalizedAmt}}</label>
+      <div class="col-md-6" style="margin-bottom: 5px;">
+        <label class="col-md-6 adInsLabel" translate>Capitalized Amount</label>
+        <label class="col-md-6 adInsLabel" translate>{{totalCapitalizedAmt | number:'.2':'en-US'}} </label>
       </div>
     </div>
   </div>

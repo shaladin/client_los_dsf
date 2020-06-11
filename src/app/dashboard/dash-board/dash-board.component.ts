@@ -3,11 +3,11 @@ import { ContextMenuComponent } from '@progress/kendo-angular-menu';
 
 import * as Chartist from 'chartist';
 import { ChartType, ChartEvent } from "ng-chartist";
+import { environment } from 'environments/environment';
 
 declare var require: any;
 
 const data: any = require('../../shared/data/chartist.json');
-
 export interface Chart {
   type: ChartType;
   data: Chartist.IChartistData;
@@ -19,10 +19,10 @@ export interface Chart {
 @Component({
   selector: 'app-dash-board',
   templateUrl: './dash-board.component.html',
-  styleUrls: ['./dash-board.component.scss']
+  styleUrls: []
 })
 export class DashBoardComponent implements OnInit {
-
+  Item : any;
   constructor() { }
 
   // line chart configuration Starts
@@ -102,7 +102,7 @@ export class DashBoardComponent implements OnInit {
   // Line area chart configuration Ends
 
   ngOnInit() {
-    
+    this.Item = {Url : environment.FoundationR3Url + "/ThingsToDo/GetThingsToDoByRole", Module : "LOS"};
   }
 
   showMessage(message: any) {

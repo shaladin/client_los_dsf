@@ -10,7 +10,7 @@ import { ViewReservedFundComponent } from "./view-reserved-fund/view-reserved-fu
 import { LifeInsuranceComponent } from './life-insurance/life-insurance.component';
 import { AppTcComponent } from './app-tc/app-tc.component';
 import { ViewInsuranceComponent } from "./view-insurance/view-insurance.component";
-import { GuarantorComponent } from './guarantor/guarantor.component';
+import { GuarantorComponent } from './view-guarantor/view-guarantor.component';
 import { ViewPhoneVerifComponent } from "./view-phone-verif/view-phone-verif.component";
 import { ViewAssetDataComponent } from "./view-asset-data/view-asset-data.component";
 import { TabApplicationComponent } from './tab-application/tab-application.component';
@@ -26,6 +26,10 @@ import { UcviewgenericModule } from "@adins/ucviewgeneric";
 import { UcSubsectionModule } from "@adins/uc-subsection";
 import { ApprovalHistComponent } from './approval-hist/approval-hist.component';
 import { UcapprovalhistModule  } from '@adins/ucapprovalhist';
+import { TabDeviationComponent } from "./tab-deviation/tab-deviation.component";
+import { InvoiceViewComponent } from "app/NEW-NAP/business-process/admin-process/invoice/invoice-view/invoice-view.component";
+import { ViewCollateralDataComponent } from "./view-collateral-data/view-collateral-data.component";
+import { ViewCollateralMultiAssetComponent } from "./view-collateral-multi-asset/view-collateral-multi-asset.component";
 
 @NgModule({
   exports: [
@@ -42,6 +46,16 @@ import { UcapprovalhistModule  } from '@adins/ucapprovalhist';
     TabApplicationComponent,
     LifeInsuranceComponent,
     AppTcComponent,
+    TabDeviationComponent,
+    InvoiceDataFctrComponent,
+    InvoiceViewComponent,
+    ViewCollateralDataComponent,
+    ViewCollateralMultiAssetComponent,
+    AppAssetDataComponent,
+    AppInsuranceComponent,
+    AppInsuranceDetailComponent,
+    AppAssetDataDetailComponent,
+    ApprovalHistComponent
   ],
   imports: [
     CommonModule,
@@ -71,10 +85,18 @@ import { UcapprovalhistModule  } from '@adins/ucapprovalhist';
     ViewFinancialComponent,
     AppInsuranceComponent,
     AppInsuranceDetailComponent,
-    ViewAppFraudVerificationComponent    
+    //ViewAppFraudVerificationComponent,
+    TabDeviationComponent,
+    InvoiceViewComponent,
+    ViewCollateralDataComponent,
+    ViewCollateralMultiAssetComponent,
   ],
   providers: [
     NGXToastrService
+  ],
+  entryComponents: [
+    AppAssetDataDetailComponent,
+    AppInsuranceDetailComponent
   ]
 })
 export class ViewAppComponentModule { }

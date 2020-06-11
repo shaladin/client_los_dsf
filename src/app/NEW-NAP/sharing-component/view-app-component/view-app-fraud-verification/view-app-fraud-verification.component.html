@@ -2,14 +2,14 @@
   <div class="card">
     <div class="card-body">
       <div class="px-3">
-        <div class="row" style="border-bottom: 1px solid black; margin-bottom: 15px;">
+        <!-- <div class="row" style="border-bottom: 1px solid black; margin-bottom: 15px;">
           <div class="col-md-12" style="padding-left: 0px;">
             <h4 class="form-section card-title" translate><i class="ft-file-text"></i>Application View</h4>
           </div>
-        </div>
+        </div> -->
         <div class="row">
           <div class="col-md-12">
-            <app-app-main-info [arrValue]="arrValue"></app-app-main-info>
+            <!--<app-app-main-info [arrValue]="arrValue"></app-app-main-info>-->
           </div>
         </div>
         <div class="row">
@@ -17,7 +17,7 @@
             <lib-ucSubsection [id]="'CustomerDuplicateCheckId'" [title]="'Customer Duplicate Checking'" [panel]="'CustomerDuplicateCheckSection'"></lib-ucSubsection>
             <div id="CustomerDuplicateCheckSection">
               <div class="col-md-12">
-                <label class="adInsLabel" translate>Customer No. :  {{appCustData.CustNo}} ({{appCustData.IsExistingCust == 'true' ? 'Existing' : 'New'}})</label>
+                <label class="adInsLabel" translate>Customer No. :  {{appCustData?.CustNo}} ({{appCustData?.IsExistingCust == 'true' ? 'Existing' : 'New'}})</label>
               </div>
               <div class="col-md-12">
                 <table class="table table-responsive-md text-center table-hover">
@@ -59,6 +59,9 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <tr *ngIf="dupCustList?.length == 0">
+                      <td align="center" colspan="10">No Data Available</td>
+                    </tr>
                     <tr *ngFor="let item of dupCustList;">
                       <td style="text-align: center;">
                         {{item.CustNo}}
@@ -150,6 +153,9 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <tr *ngIf="negCustList?.length == 0">
+                      <td align="center" colspan="10">No Data Available</td>
+                    </tr>
                     <tr *ngFor="let negCust of negCustList;">
                       <td style="text-align: center;">
                         {{negCust.CustNo}}
@@ -196,7 +202,7 @@
         </div>
         <div class="row">
           <div class="col-md-12">
-            <app-view-survey-task-list [trxRefNo]="appData.AppNo" [mrSrvySourceCode]="srvyOrderData.MrSrvySourceCode"></app-view-survey-task-list>
+            <!--<app-view-survey-task-list [trxRefNo]="appData.AppNo" [mrSrvySourceCode]="srvyOrderData.MrSrvySourceCode"></app-view-survey-task-list>-->
           </div>
         </div>
         <div class="row">
@@ -205,26 +211,26 @@
             <div id="DukcapilSection">
               <div class="col-md-12">
                 <label class="col-md-3 adInsLabel">Name</label>
-                <label class="col-md-3 adInsLabel">{{dukcapilObj.CustName}} </label>
+                <label class="col-md-3 adInsLabel">{{dukcapilObj?.CustName}} </label>
                 <label class="col-md-3 adInsLabel">Status Data</label>
-                <label class="col-md-3 adInsLabel">{{dukcapilObj.DukcapilDataStatus}} </label>
+                <label class="col-md-3 adInsLabel">{{dukcapilObj?.DukcapilDataStatus}} </label>
               </div>
               <div class="col-md-12">
                 <label class="col-md-3 adInsLabel">NIK</label>
-                <label class="col-md-3 adInsLabel">{{dukcapilObj.IdNo}} </label>
+                <label class="col-md-3 adInsLabel">{{dukcapilObj?.IdNo}} </label>
                 <label class="col-md-3 adInsLabel">Check Dukcapil Date</label>
-                <label class="col-md-3 adInsLabel">{{dukcapilObj.CekDukcapilDt  | date: 'dd-MM-yyyy'}} </label>
+                <label class="col-md-3 adInsLabel">{{dukcapilObj?.CekDukcapilDt  | date: 'dd-MM-yyyy'}} </label>
               </div>
               <div class="col-md-12">
                 <label class="col-md-3 adInsLabel">No KK</label>
-                <label class="col-md-3 adInsLabel">{{dukcapilObj.FamilyCardNo}} </label>
+                <label class="col-md-3 adInsLabel">{{dukcapilObj?.FamilyCardNo}} </label>
                 <label class="col-md-3 adInsLabel">
-                  <a class="success p-0" data-original-title="" title="" (click)="open(DukcapilDetailModal)">Detail</a> 
+                  <a class="success p-0" (click)="open(DukcapilDetailModal)">Detail</a> 
                 </label>
               </div>
               <div class="col-md-12">
                 <label class="col-md-3 adInsLabel">Birth Place / Birth Date</label>
-                <label class="col-md-3 adInsLabel">{{dukcapilObj.BirthPlace}} / {{dukcapilObj.BirthDt | date: 'dd-MM-yyyy'}}</label>
+                <label class="col-md-3 adInsLabel">{{dukcapilObj?.BirthPlace}} / {{dukcapilObj?.BirthDt | date: 'dd-MM-yyyy'}}</label>
               </div>
             </div>
           </div>
@@ -260,7 +266,10 @@
                       </th>
                     </tr>
                   </thead>
-                  <tbody>   
+                  <tbody>
+                    <tr *ngIf="appAssetList?.length == 0">
+                      <td align="center" colspan="10">No Data Available</td>
+                    </tr>   
                     <tr *ngFor="let appAsset of appAssetList; index as i">
                       <td>
                         {{i+1}}
@@ -295,7 +304,7 @@
             <lib-ucSubsection [id]="'NegativeAssetId'" [title]="'Negative Asset'" [panel]="'NegativeAssetSection'"></lib-ucSubsection>
             <div id="NegativeAssetSection">
               <div class="col-md-12">
-                <table *ngIf="negAssetList?.length > 0" class="table table-responsive-md text-center table-hover">
+                <table class="table table-responsive-md text-center table-hover">
                   <thead>
                     <tr class="table-header">
                       <th>
@@ -322,6 +331,9 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <tr *ngIf="negAssetList?.length == 0">
+                      <td align="center" colspan="10">No Data Available</td>
+                    </tr> 
                     <tr *ngFor="let negAsset of negAssetList; index as j">
                       <td>
                         {{j+1}}
@@ -357,15 +369,15 @@
             <div id="FraudVerifSection"> 
               <div class="col-md-12">
                 <label class="col-md-3 adInsLabel">Verify By</label>
-                <label class="col-md-3 adInsLabel">{{fraudVerfData.VerifyByName}} </label>
+                <label class="col-md-3 adInsLabel">{{fraudVerfData?.VerifyByName}} </label>
               </div>
               <div class="col-md-12">
                 <label class="col-md-3 adInsLabel">Verify Date</label>
-                <label class="col-md-3 adInsLabel">{{fraudVerfData.VerifyDt | date: 'dd-MMM-yyyy'}} </label>
+                <label class="col-md-3 adInsLabel">{{fraudVerfData?.VerifyDt | date: 'dd-MMM-yyyy'}} </label>
               </div>
               <div class="col-md-12">
                 <label class="col-md-3 adInsLabel">Verify Notes</label>
-                <label class="col-md-3 adInsLabel">{{fraudVerfData.Notes}}</label>                
+                <label class="col-md-3 adInsLabel">{{fraudVerfData?.Notes}}</label>                
               </div>
             </div>
           </div>

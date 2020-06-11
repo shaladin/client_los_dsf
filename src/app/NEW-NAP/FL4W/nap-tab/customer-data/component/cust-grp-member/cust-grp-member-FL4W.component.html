@@ -17,6 +17,11 @@
           <th><span translate class="thead-header">ACTION</span></th>
         </tr>
       </thead>
+      <tbody *ngIf = "parentForm.controls[identifier].value.length == 0">
+        <tr>
+          <td colspan="100%">No Data Available</td>
+        </tr>
+      </tbody>
       <tbody>
         <tr *ngFor="let item of parentForm.controls[identifier].controls;let i = index">
           <td [formGroupName]="i" class="text-center">
@@ -38,7 +43,7 @@
             <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'][i]['controls'].CustGrpNotes" [submit]="enjiForm.submitted"></lib-uc-show-errors>            
           </td>
           <td [formGroupName]="i">
-            <a class="danger p-0" data-original-title="" title="" (click)="deleteCustGrp(i)">
+            <a class="danger p-0" (click)="deleteCustGrp(i)">
               <i class="ft-trash-2 font-medium-3 mr-2"></i>
             </a>
           </td>

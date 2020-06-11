@@ -19,6 +19,11 @@ import { AppCollateralRegistrationObj } from 'app/shared/model/AppCollateralRegi
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { AppAssetSupplEmpObj } from 'app/shared/model/AppAssetSupplEmpObj.Model';
 import { VendorObj } from 'app/shared/model/Vendor.Model';
+import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { AppCollateralAttrObj } from 'app/shared/model/AppCollateralAttrObj.Model';
+import { LookupTaxCityIssuerComponent } from '../collateral-add-edit/lookup-tax-city-issuer/lookup-tax-city-issuer.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-asset-data-add-edit',
@@ -32,7 +37,7 @@ export class AssetDataAddEditComponent implements OnInit {
   @Output() assetValue: EventEmitter<object> = new EventEmitter();
   //AppAssetId: number = 0;
   //type: string = "addAsset";
-  AppId: any;
+  @Input() AppId: any;
   LobCode: string;
   pageType: string = "add";
   custType: string;
@@ -98,7 +103,9 @@ export class AssetDataAddEditComponent implements OnInit {
   headAppAssetSupplEmpObj: any;
   appAssetSupplEmpBranchObj: any;
   branchAppAssetSupplEmpObj: any;
-
+  isLicensePlateMandatory: boolean = false;
+  isEngineNoMandatory: boolean = false;
+  isChassisNoMandatory: boolean = false;
 
   AssetDataForm = this.fb.group({
     SupplName:[''],
@@ -109,7 +116,7 @@ export class AssetDataAddEditComponent implements OnInit {
     BranchManagerCode:[''],
 
     SalesPersonName:[''],
-    SalesPersonNo:[''],
+    SalesPersonNo:['', [Validators.required]],
     SalesPersonCode:[''],
 
     AdminHeadName:[''],
@@ -120,16 +127,20 @@ export class AssetDataAddEditComponent implements OnInit {
     FullAssetName:[''],
     AssetCategoryCode:[''],
     AssetTypeCode:[''],
-    MrDownPaymentTypeCode:[''],
-    AssetPrice:[''],
-    DownPayment:[''],
+    MrDownPaymentTypeCode:['', [Validators.required]],
+    AssetPrice:['', [Validators.required, Validators.min(1.00)]],
+    DownPayment:['', [Validators.required]],
     MrAssetConditionCode:[''],
     AssetUsage:[''],
     LicensePlate:[''],
     ChassisNo:[''],
-    ManufacturingYear:[''],
+    ManufacturingYear:['', [Validators.required, Validators.pattern("^[0-9]+$"), Validators.max(new Date().getFullYear())]],
     EngineNo:[''],
-    Notes:[''],
+    Notes:['', [Validators.required]],
+
+    TaxIssueDt:[''],
+    Color:[''],
+    TaxCityIssuer:[''],
 
     SelfUsage: [false],
     Username:[''],
@@ -152,7 +163,7 @@ export class AssetDataAddEditComponent implements OnInit {
     AppId: 0,
   };
 
-  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) { 
+  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private modalService: NgbModal) { 
     this.getListAppAssetData = AdInsConstant.GetListAppAssetData;
     this.getListVendorEmp = AdInsConstant.GetListKeyValueVendorEmpByVendorIdAndPosition;
     this.getListActiveRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
@@ -187,6 +198,18 @@ export class AssetDataAddEditComponent implements OnInit {
 
 back(){
   this.assetValue.emit({mode : 'paging'});
+}
+AssetPrice: number;
+DPAmount: number;
+DPAmtChange()
+{
+  this.AssetPrice = this.AssetDataForm.controls["AssetPrice"].value;
+  this.DPAmount = this.AssetDataForm.controls["DownPayment"].value;
+
+  if (this.DPAmount > this.AssetPrice) {
+    this.toastr.errorMessage("Down Payment Must Be Lower Than Asset Price!");
+    return;
+  }
 }
 
 SetAsset(event) {
@@ -270,6 +293,7 @@ copyToLocationAddr() {
     this.adminHeadObj.MrVendorEmpPositionCode = AdInsConstant.ADMIN_HEAD_JOB_CODE;
     this.http.post(this.getListVendorEmp, this.adminHeadObj).subscribe(
     (response) => {
+        console.log("admin head list : " + JSON.stringify(response));
         this.listAdminHeadObj = response["ReturnObject"];
         this.AssetDataForm.patchValue({ 
           AdminHeadNo: response['ReturnObject'][0]['Key'],
@@ -293,6 +317,37 @@ copyToLocationAddr() {
         });
       }
     );
+  }
+
+  assetConditionHandler(){
+    var value = this.AssetDataForm.controls["MrAssetConditionCode"].value;
+    if(value == "USED")
+    {
+      this.AssetDataForm.controls['ChassisNo'].setValidators([Validators.required]);
+      this.AssetDataForm.controls['ChassisNo'].updateValueAndValidity();
+      this.isChassisNoMandatory = true;
+
+      this.AssetDataForm.controls['EngineNo'].setValidators([Validators.required]);
+      this.AssetDataForm.controls['EngineNo'].updateValueAndValidity();
+      this.isEngineNoMandatory = true;
+
+      this.AssetDataForm.controls['LicensePlate'].setValidators([Validators.required]);
+      this.AssetDataForm.controls['LicensePlate'].updateValueAndValidity();
+      this.isLicensePlateMandatory = true;
+    }
+    else{
+      this.AssetDataForm.controls['ChassisNo'].clearValidators();
+      this.AssetDataForm.controls['ChassisNo'].updateValueAndValidity();
+      this.isChassisNoMandatory = false;
+
+      this.AssetDataForm.controls['EngineNo'].clearValidators();
+      this.AssetDataForm.controls['EngineNo'].updateValueAndValidity();
+      this.isEngineNoMandatory = false;
+
+      this.AssetDataForm.controls['LicensePlate'].clearValidators();
+      this.AssetDataForm.controls['LicensePlate'].updateValueAndValidity();
+      this.isLicensePlateMandatory = false;
+    }
   }
 
   SelfUsageChange(event) {
@@ -339,7 +394,15 @@ copyToLocationAddr() {
     console.log("ddd")
     console.log(this.AppAssetId)
     console.log(this.mode)
+    
+    var datePipe = new DatePipe("en-US");
+    this.inputFieldLocationAddrObj = new InputFieldObj();
+    this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
+    
     if(this.mode == 'editAsset'){
+      // this.AssetDataForm.controls['ManufacturingYear'].setValidators([Validators.required]);
+      // this.AssetDataForm.controls['ManufacturingYear'].updateValueAndValidity();
+
       this.appAssetObj = new AppAssetObj();
       this.appAssetObj.AppAssetId = this.AppAssetId;
       this.http.post(this.getAppAssetByAppAssetId, this.appAssetObj).subscribe(
@@ -357,7 +420,25 @@ copyToLocationAddr() {
             ManufacturingYear: this.returnAppAssetObj.ManufacturingYear,
             AssetTypeCode: this.returnAppAssetObj.AssetTypeCode,
             AssetCategoryCode: this.returnAppAssetObj.AssetCategoryCode,
+            Color: this.returnAppAssetObj.Color,
+            TaxCityIssuer: this.returnAppAssetObj.TaxCityIssuer,
+            TaxIssueDt: datePipe.transform(this.returnAppAssetObj.TaxIssueDt, "yyyy-MM-dd")
           });
+
+          if(this.returnAppAssetObj.MrAssetConditionCode == "USED")
+          {
+            this.AssetDataForm.controls['ChassisNo'].setValidators([Validators.required]);
+            this.AssetDataForm.controls['ChassisNo'].updateValueAndValidity();
+            this.isChassisNoMandatory = true;
+
+            this.AssetDataForm.controls['EngineNo'].setValidators([Validators.required]);
+            this.AssetDataForm.controls['EngineNo'].updateValueAndValidity();
+            this.isEngineNoMandatory = true;
+
+            this.AssetDataForm.controls['LicensePlate'].setValidators([Validators.required]);
+            this.AssetDataForm.controls['LicensePlate'].updateValueAndValidity();
+            this.isLicensePlateMandatory = true;
+          }
 
           this.reqAssetMasterObj = new AssetMasterObj();
           this.reqAssetMasterObj.FullAssetCode = this.returnAppAssetObj.FullAssetCode;
@@ -401,7 +482,13 @@ copyToLocationAddr() {
                       BranchManagerNo: this.branchAppAssetSupplEmpObj.SupplEmpNo,
                       BranchManagerName: this.branchAppAssetSupplEmpObj.SupplEmpName
                     });
+                },
+                (error) => {
+                  console.log(error);
                 });
+              },
+              (error) => {
+                console.log(error);
               });
 
               this.appAssetSupplEmpHeadObj = new AppAssetSupplEmpObj();
@@ -452,6 +539,8 @@ copyToLocationAddr() {
         this.http.post(this.getAppCollateralByAppId, this.appCollateralObj).subscribe(
         (response) => {
           this.returnAppCollateralObj = response;
+          console.log("backcoll")
+          console.log(this.returnAppCollateralObj)
 
           this.appCollateralRegistObj = new AppCollateralRegistrationObj();
           this.appCollateralRegistObj.AppCollateralId = this.returnAppCollateralObj.AppCollateralId;
@@ -462,6 +551,18 @@ copyToLocationAddr() {
               Username: this.returnAppCollateralRegistObj.UserName,
               UserRelationship: this.returnAppCollateralRegistObj.MrUserRelationshipCode
             });
+
+            if(this.returnAppCollateralRegistObj.MrUserRelationshipCode == "SELF"){
+              this.AssetDataForm.patchValue({
+                SelfUsage: true
+              });
+              this.AssetDataForm.controls.Username.clearValidators();
+              this.AssetDataForm.controls.Username.updateValueAndValidity();
+              this.AssetDataForm.controls.UserRelationship.clearValidators();
+              this.AssetDataForm.controls.UserRelationship.updateValueAndValidity();
+              this.AssetDataForm.controls["Username"].disable();
+              this.AssetDataForm.controls["UserRelationship"].disable();
+            }
 
             this.locationAddrObj = new AppCustAddrObj();
             this.locationAddrObj.Addr = this.returnAppCollateralRegistObj.LocationAddr;
@@ -480,10 +581,7 @@ copyToLocationAddr() {
     }
 
     this.GetListAddr();
-
-    this.inputFieldLocationAddrObj = new InputFieldObj();
-    this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
-
+    
     this.InputLookupSupplierObj = new InputLookupObj();
     this.InputLookupSupplierObj.urlJson = "./assets/uclookup/NAP/lookupSupplier.json";
     this.InputLookupSupplierObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
@@ -497,6 +595,14 @@ copyToLocationAddr() {
     this.InputLookupAssetObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupAssetObj.pagingJson = "./assets/uclookup/NAP/lookupAsset.json";
     this.InputLookupAssetObj.genericJson = "./assets/uclookup/NAP/lookupAsset.json";
+
+    var arrCrit = new Array<CriteriaObj>();
+    var critObj = new CriteriaObj();
+    critObj.restriction = AdInsConstant.RestrictionEq;
+    critObj.propName = 'B.ASSET_TYPE_CODE';
+    critObj.value = AdInsConstant.ASSET_TYPE_CAR;
+    arrCrit.push(critObj);
+    this.InputLookupAssetObj.addCritInput = arrCrit;
 
     this.assetConditionObj = new RefMasterObj();
     this.assetConditionObj.RefMasterTypeCode = "ASSET_CONDITION";
@@ -556,18 +662,50 @@ copyToLocationAddr() {
     );
   }
 
+  showModalTaxCityIssuer(){
+    const modalTaxCityIssuer = this.modalService.open(LookupTaxCityIssuerComponent);
+    modalTaxCityIssuer.result.then(
+      (response) => {
+        this.AssetDataForm.patchValue({
+          TaxCityIssuer: response.DistrictCode
+        });
+      }
+    ).catch((error) => {
+      if (error != 0) {
+        console.log(error);
+      }
+    });
+  }
+
   setSupplierInfo(){
-    this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpName = this.AssetDataForm.controls["AdminHeadName"].value;
-    this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpNo = this.AssetDataForm.controls["AdminHeadNo"].value;
-    this.allAssetDataObj.AppAssetSupplEmpAdminObj.MrSupplEmpPositionCode = AdInsConstant.ADMIN_HEAD_JOB_CODE;
+    // if(this.AssetDataForm.controls["AdminHeadName"].value == "undefined" || this.AssetDataForm.controls["AdminHeadName"].value == "")
+    if(!this.AssetDataForm.controls["AdminHeadName"].value)
+    {
+      this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpName = "-";
+      this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpNo = "-";
+      this.allAssetDataObj.AppAssetSupplEmpAdminObj.MrSupplEmpPositionCode = "-";
+    }
+    else{
+      this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpName = this.AssetDataForm.controls["AdminHeadName"].value;
+      this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpNo = this.AssetDataForm.controls["AdminHeadNo"].value;
+      this.allAssetDataObj.AppAssetSupplEmpAdminObj.MrSupplEmpPositionCode = AdInsConstant.ADMIN_HEAD_JOB_CODE;
+    }
 
     this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpName = this.AssetDataForm.controls["SalesPersonName"].value;
     this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpNo = this.AssetDataForm.controls["SalesPersonNo"].value;
     this.allAssetDataObj.AppAssetSupplEmpSalesObj.MrSupplEmpPositionCode = AdInsConstant.SALES_JOB_CODE;
 
-    this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpName = this.AssetDataForm.controls["BranchManagerName"].value;
-    this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpNo = this.AssetDataForm.controls["BranchManagerNo"].value;
-    this.allAssetDataObj.AppAssetSupplEmpManagerObj.MrSupplEmpPositionCode = AdInsConstant.BRANCH_MANAGER_JOB_CODE;
+    // if(this.AssetDataForm.controls["BranchManagerName"].value == "undefined" || this.AssetDataForm.controls["BranchManagerName"].value == "")
+    if(!this.AssetDataForm.controls["BranchManagerName"].value)
+    {
+      this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpName = "-";
+      this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpNo = "-";
+      this.allAssetDataObj.AppAssetSupplEmpManagerObj.MrSupplEmpPositionCode = "-";
+    } else {
+      this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpName = this.AssetDataForm.controls["BranchManagerName"].value;
+      this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpNo = this.AssetDataForm.controls["BranchManagerNo"].value;
+      this.allAssetDataObj.AppAssetSupplEmpManagerObj.MrSupplEmpPositionCode = AdInsConstant.BRANCH_MANAGER_JOB_CODE;
+    }
   }
 
   // MrDownPaymentTypeCode:[''],
@@ -603,9 +741,12 @@ copyToLocationAddr() {
     this.allAssetDataObj.AppAssetObj.AssetCategoryCode = this.AssetDataForm.controls["AssetCategoryCode"].value;
     this.allAssetDataObj.AppAssetObj.IsCollateral = true;
     this.allAssetDataObj.AppAssetObj.IsInsurance = true;
+    this.allAssetDataObj.AppAssetObj.Color = this.AssetDataForm.controls["Color"].value;
+    this.allAssetDataObj.AppAssetObj.TaxCityIssuer = this.AssetDataForm.controls["TaxCityIssuer"].value;
+    this.allAssetDataObj.AppAssetObj.TaxIssueDt = this.AssetDataForm.controls["TaxIssueDt"].value;
 
     this.allAssetDataObj.AppCollateralObj.AppId = this.AppId;
-    this.allAssetDataObj.AppCollateralObj.CollateralSeqNo = "1";
+    this.allAssetDataObj.AppCollateralObj.CollateralSeqNo = 1;
     this.allAssetDataObj.AppCollateralObj.FullAssetCode = this.AssetDataForm.controls["FullAssetCode"].value;
     this.allAssetDataObj.AppCollateralObj.FullAssetName = this.AssetDataForm.controls["FullAssetName"].value;
     this.allAssetDataObj.AppCollateralObj.MrCollateralConditionCode = this.AssetDataForm.controls["MrAssetConditionCode"].value;
@@ -621,6 +762,8 @@ copyToLocationAddr() {
   }
 
   setAssetUser(){
+    console.log("Username : " + this.AssetDataForm.controls["Username"].value);
+    console.log("UserRelationship : " + this.AssetDataForm.controls["UserRelationship"].value);
     this.allAssetDataObj.AppCollateralRegistrationObj.UserName = this.AssetDataForm.controls["Username"].value;
     this.allAssetDataObj.AppCollateralRegistrationObj.MrUserRelationshipCode = this.AssetDataForm.controls["UserRelationship"].value;
     this.allAssetDataObj.AppCollateralRegistrationObj.OwnerName = this.AssetDataForm.controls["OwnerName"].value;
@@ -646,23 +789,96 @@ copyToLocationAddr() {
     this.allAssetDataObj.AppCollateralRegistrationObj.LocationZipcode = this.AssetDataForm.controls["assetLocationAddressZipcode"]["controls"].value.value;
   }
 
+  setCollateralAttribute(){
+    var collAttr;
+    if(this.AssetDataForm.controls["Color"].value != "")
+    {
+      collAttr = new AppCollateralAttrObj();
+      collAttr.CollateralAttrCode = "COLOR";
+      collAttr.CollateralAttrName = "Color";
+      collAttr.AttrValue = this.AssetDataForm.controls["Color"].value;
+      this.allAssetDataObj.AppCollateralAttrObj.push(collAttr);
+    }
+    if(this.AssetDataForm.controls["TaxCityIssuer"].value != "")
+    {
+      collAttr = new AppCollateralAttrObj();
+      collAttr.CollateralAttrCode = "TAX_CITY_ISSUER";
+      collAttr.CollateralAttrName = "Tax City Issuer";
+      collAttr.AttrValue = this.AssetDataForm.controls["TaxCityIssuer"].value;
+      this.allAssetDataObj.AppCollateralAttrObj.push(collAttr);
+    }
+    if(this.AssetDataForm.controls["TaxIssueDt"].value != "")
+    {
+      collAttr = new AppCollateralAttrObj();
+      collAttr.CollateralAttrCode = "BPKB_ISSUE_DATE";
+      collAttr.CollateralAttrName = "BPKB Issue Date";
+      collAttr.AttrValue = this.AssetDataForm.controls["TaxIssueDt"].value;
+      this.allAssetDataObj.AppCollateralAttrObj.push(collAttr);
+    }
+  }
+
   SaveForm() {
-    this.allAssetDataObj = new AllAssetDataObj();
-    this.setSupplierInfo();
-    this.setAssetInfo();
-    this.setAssetUser();
-    this.setAssetLocation();
-    this.http.post(this.addEditAllAssetDataUrl, this.allAssetDataObj).subscribe(
-      (response) => {
-        console.log(response);
-        this.toastr.successMessage(response["message"]);
-        //this.router.navigate(["/Nap/AssetData/Paging"]);
-        this.assetValue.emit({mode : 'paging'});
-      },
-      (error) => {
-        console.log(error);
+    console.log("coba")
+    console.log(this.AssetDataForm.controls["BranchManagerName"].value)
+    if(this.mode == 'addAsset')
+    {
+      this.allAssetDataObj = new AllAssetDataObj();
+      this.setSupplierInfo();
+      this.setAssetInfo();
+      this.setAssetUser();
+      this.setAssetLocation();
+      this.setCollateralAttribute();
+      this.allAssetDataObj.AppAssetObj.AppAssetId = 0;
+
+      if(this.allAssetDataObj.AppAssetObj.DownPaymentAmt > this.allAssetDataObj.AppAssetObj.AssetPriceAmt){
+        this.toastr.errorMessage("Down Payment Must Be Lower Than Asset Price!");
+        return false;
       }
-    );
+
+      this.http.post(this.addEditAllAssetDataUrl, this.allAssetDataObj).subscribe(
+        (response) => {
+          console.log(response);
+          this.toastr.successMessage(response["message"]);
+          //this.router.navigate(["/Nap/AssetData/Paging"]);
+          this.assetValue.emit({mode : 'paging'});
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+    else
+    {
+      this.allAssetDataObj = new AllAssetDataObj();
+      this.setSupplierInfo();
+      this.setAssetInfo();
+      this.setAssetUser();
+      this.setAssetLocation();
+      this.setCollateralAttribute();
+      this.allAssetDataObj.AppAssetObj.RowVersion = this.returnAppAssetObj.RowVersion;
+      this.allAssetDataObj.AppCollateralObj.RowVersion = this.returnAppCollateralObj.RowVersion;
+      this.allAssetDataObj.AppCollateralRegistrationObj.RowVersion = this.returnAppCollateralRegistObj.RowVersion;
+      this.allAssetDataObj.AppAssetObj.AppAssetId = this.AppAssetId;
+      this.allAssetDataObj.AppCollateralObj.AppCollateralId = this.returnAppCollateralObj.AppCollateralId;
+      this.allAssetDataObj.AppCollateralRegistrationObj.AppCollateralRegistrationId = this.returnAppCollateralRegistObj.AppCollateralRegistrationId;
+
+      if(this.allAssetDataObj.AppAssetObj.DownPaymentAmt > this.allAssetDataObj.AppAssetObj.AssetPriceAmt){
+        this.toastr.errorMessage("Down Payment Must Be Lower Than Asset Price!");
+        return false;
+      }
+
+      this.http.post(this.addEditAllAssetDataUrl, this.allAssetDataObj).subscribe(
+        (response) => {
+          console.log(response);
+          this.toastr.successMessage(response["message"]);
+          //this.router.navigate(["/Nap/AssetData/Paging"]);
+          this.assetValue.emit({mode : 'paging'});
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
   }
 
   // editItem(custAddrObj: any) {

@@ -1,98 +1,113 @@
-
 {
     "headerList": [
         {
             "type": "label",
-            "position": "center",
+            "position": "left",
             "label": "Asset Name",
             "name": "FullAssetName"
         },
         {
             "type": "label",
-            "position": "center",
-            "label": "Supplier Branch",
-            "name": "SupplName"
+            "position": "left",
+            "label": "Insured By",
+            "name": "InsuredBy"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Paid By",
+            "name": "PaidBy"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Insurance Company",
+            "name": "InscoName"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Cover Period",
+            "name": "CoverPeriod"
         },
         {
             "type": "label",
             "position": "center",
-            "label": "Serial No 1",
-            "name": "SerialNo1"
+            "label": "Insurance Length",
+            "name": "InsLength"
         },
         {
             "type": "label",
-            "position": "center",
-            "label": "Serial No 2",
-            "name": "SerialNo2"
+            "position": "right",
+            "label": "Main Premi",
+            "name": "MainPremi"
         },
         {
             "type": "label",
-            "position": "center",
-            "label": "Serial No 3",
-            "name": "SerialNo3"
+            "position": "right",
+            "label": "Additional Premi",
+            "name": "AddPremi"
         },
         {
             "type": "label",
-            "position": "center",
-            "label": "Serial No 4",
-            "name": "SerialNo4"
-        },
-        {
-            "type": "label",
-            "position": "center",
-            "label": "View Detail"
+            "position": "right",
+            "label": "Fee",
+            "name": "Fee"
         }
     ],
     "bodyList": [
         {
-            "type": "text",
-            "position": "center",
-            "property": "FullAssetName"
-        },
-        {
-            "type": "text",
-            "position": "center",
-            "property": "SupplName"
-        },
-        {
-            "type": "text",
-            "position": "center",
-            "property": "SerialNo1"
-        },
-        {
-            "type": "text",
-            "position": "center",
-            "property": "SerialNo2"
-        },
-        {
-            "type": "text",
-            "position": "center",
-            "property": "SerialNo3"
-        },
-        {
-            "type": "text",
-            "position": "center",
-            "property": "SerialNo4"
-        },
-        {
-            "type": "action",
-            "position": "center",
-            "action": [
+            "type": "link",
+            "position": "left",
+            "property" : "FullAssetName",
+            "target" : "_blank",
+            "path": "/Nap/ViewAsset",
+            "param": [
                 {
-                    "type": "edit",
-                    "path": "/Nap/AssetData/Detail",
-                    "param": [
-                        {
-                            "type": "AppAssetId",
-                            "property": "AppAssetId"
-                        },
-                        {
-                            "type": "AppId",
-                            "property": "AppId"
-                        }
-                    ]
+                    "type": "AppAssetId",
+                    "property": "AppAssetId"
                 }
             ]
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "InsuredBy"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "PaidBy"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "InscoName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CoverPeriod"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "InsLength"
+        },
+        {
+            "type": "decimal",
+            "position": "right",
+            "property": "MainPremi"
+        },
+        {
+            "type": "decimal",
+            "position": "right",
+            "property": "AddPremi"
+        },
+        {
+            "type": "decimal",
+            "position": "right",
+            "property": "Fee"
         }
     ]
 }

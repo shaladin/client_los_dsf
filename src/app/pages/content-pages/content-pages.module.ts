@@ -9,7 +9,7 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { SharingModule } from 'app/shared/sharing.module';
 import { ArchwizardModule } from 'angular-archwizard';
 import { UcSubsectionModule } from "@adins/uc-subsection";
-import { UclookupgenericModule } from '@adins/uclookupgeneric';
+import { UclookupgenericModule, UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { UcviewgenericModule } from '@adins/ucviewgeneric';
 import { UcaddressModule } from "@adins/ucaddress";
 import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
@@ -20,12 +20,9 @@ import { MatRadioModule } from "@angular/material";
 import { ContentPagesRoutingModule } from "app/pages/content-pages/content-pages-routing.module";
 import { LoginPageComponent } from "app/pages/content-pages/login/login-page.component";
 import { CustomerSelfVerificationComponent } from './external-page/customer-self-verification/customer-self-verification.component';
-import { CustomerDataComponent } from 'app/lead/verification/customer-self-verification/customer-data/customer-data.component';
-import { LeadDataComponent } from 'app/lead/verification/customer-self-verification/lead-data/lead-data.component';
-import { LeadInputCustDataComponent } from "app/lead/lead-input/lead-input-cust-data/lead-input-cust-data.component";
 import { NgxCurrencyModule } from "ngx-currency";
 import { UcinputnumberModule } from "@adins/ucinputnumber";
-import { CustSharingComponentModule } from "app/NEW-NAP/sharing-component/input-nap-component/cust-sharing-component.module";
+import { CustSharingComponentModule } from "app/NEW-NAP/sharing-component/input-nap-component/cust-sharing-component.module"; 
 
 export const customCurrencyMaskConfig = {     
     align: "left",     
@@ -64,10 +61,10 @@ export const customCurrencyMaskConfig = {
     ],
     declarations: [
         LoginPageComponent,
-        CustomerSelfVerificationComponent,
-        CustomerDataComponent,
-        LeadDataComponent,
-        LeadInputCustDataComponent,
-    ]
+        CustomerSelfVerificationComponent 
+    ],
+      entryComponents: [
+        UclookupgenericComponent,
+      ]
 })
 export class ContentPagesModule { }

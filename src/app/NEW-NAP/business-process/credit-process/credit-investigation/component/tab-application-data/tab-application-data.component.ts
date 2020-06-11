@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { Sort } from '@angular/material';
-import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-tab-application-data',
@@ -37,7 +36,7 @@ export class TabApplicationDataComponent implements OnInit {
       TotalSalesAmount: 0,
       InAmount: 0,
       TotalProfit: 0,
-      TotolLoss: 0
+      TotalLoss: 0
     };
     this.AppDetailAssetData = {
       SalesName: "",
@@ -141,7 +140,7 @@ export class TabApplicationDataComponent implements OnInit {
       AppID: this.AppId,
       RowVersion: ""
     };
-    await this.http.post(environment.losUrl + AdInsConstant.GetAppReferantorForAppsData, obj).toPromise().then(
+    await this.http.post(AdInsConstant.GetAppReferantorForAppsData, obj).toPromise().then(
       (response) => {
         console.log(response);
         this.ReferantorData.ReferantorName = response["ReferantorName"];

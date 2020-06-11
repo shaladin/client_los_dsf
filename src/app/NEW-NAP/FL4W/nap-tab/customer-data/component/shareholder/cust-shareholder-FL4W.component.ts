@@ -69,10 +69,10 @@ export class CustShareholderFL4WComponent implements OnInit {
     MrIdTypeCode: ['', Validators.maxLength(50)],
     BirthPlace: ['', Validators.maxLength(200)],
     BirthDt: [''],
-    IdNo: ['', Validators.maxLength(50)],
-    TaxIdNo: ['', Validators.maxLength(50)],
+    IdNo: ['', [Validators.maxLength(50),Validators.pattern("^[0-9]+$")]],
+    TaxIdNo: ['', [Validators.maxLength(50),Validators.pattern("^[0-9]+$")]],
     IdExpiredDt: [''],
-    MobilePhnNo: ['', Validators.maxLength(50)],
+    MobilePhnNo: ['', [Validators.maxLength(50),Validators.pattern("^[0-9]+$")]],
     Email: ['', Validators.maxLength(50)],
     SharePrcnt: [0, [Validators.min(0),Validators.max(100)]],
     MrJobPositionCode: ['', Validators.maxLength(50)],
@@ -80,6 +80,7 @@ export class CustShareholderFL4WComponent implements OnInit {
     MrCompanyTypeCode: ['', Validators.maxLength(50)],
     EstablishmentDt: ['']
   });
+  businessDt: Date;
 
 
   constructor(
@@ -91,6 +92,9 @@ export class CustShareholderFL4WComponent implements OnInit {
      }
 
   ngOnInit() {
+    var context = JSON.parse(localStorage.getItem("UserAccess"));
+    this.businessDt = new Date(context["BusinessDt"]);
+    this.businessDt.setDate(this.businessDt.getDate() - 1);
     this.initLookup();
     this.bindAllRefMasterObj();
   }
@@ -259,10 +263,10 @@ export class CustShareholderFL4WComponent implements OnInit {
       MrIdTypeCode: [this.defaultIdType, Validators.maxLength(50)],
       BirthPlace: ['', Validators.maxLength(200)],
       BirthDt: [''],
-      IdNo: ['', Validators.maxLength(50)],
-      TaxIdNo: ['', Validators.maxLength(50)],
+      IdNo: ['', [Validators.maxLength(50),Validators.pattern("^[0-9]+$")]],
+      TaxIdNo: ['', [Validators.maxLength(50),Validators.pattern("^[0-9]+$")]],
       IdExpiredDt: [''],
-      MobilePhnNo: ['', Validators.maxLength(50)],
+      MobilePhnNo: ['', [Validators.maxLength(50),Validators.pattern("^[0-9]+$")]],
       Email: ['', Validators.maxLength(50)],
       SharePrcnt: [0, [Validators.min(0),Validators.max(100)]],
       MrJobPositionCode: [this.defaultJobPosition, Validators.maxLength(50)],

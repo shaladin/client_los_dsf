@@ -5,7 +5,7 @@
         <div class="card-header header-title">
           <div class="row">
             <div class="col-md-8">
-              <h4 class="card-title" id="horz-layout-colored-controls" translate> View Application
+              <h4 class="card-title" id="horz-layout-colored-controls" translate> Agreement View
               </h4>
             </div>
           </div>
@@ -39,7 +39,7 @@
 
             <mat-tab label="Commission">
               <ng-template matTabContent>
-                <app-tab-commission [agrmntId]="AgrmntId"></app-tab-commission>
+                <app-view-commission-agrmnt [agrmntId]="AgrmntId"></app-view-commission-agrmnt>
               </ng-template>
             </mat-tab>
 
@@ -56,6 +56,7 @@
 
             <mat-tab label="Deviation">
               <ng-template matTabContent>
+                <app-view-deviation [AppId]="ResponseAppDetailData?.AppId"></app-view-deviation>
               </ng-template>
             </mat-tab>
 
@@ -77,67 +78,13 @@
 
             <mat-tab label="Summary">
               <ng-template matTabContent>
+                <agrmnt-view-summary [agrmntId]="AgrmntId"></agrmnt-view-summary>
               </ng-template>
             </mat-tab>
 
             <mat-tab label="Document">
               <ng-template matTabContent>
                 <agrmnt-view-document [agrmntId]="AgrmntId"></agrmnt-view-document>
-              </ng-template>
-            </mat-tab>
-
-            <mat-tab label="Collection">
-              <ng-template matTabContent>
-              </ng-template>
-            </mat-tab>
-
-            <mat-tab label="Remedial">
-              <ng-template matTabContent>
-              </ng-template>
-            </mat-tab>
-
-            <mat-tab label="Payment History">
-              <ng-template matTabContent>
-              </ng-template>
-            </mat-tab>
-
-            <mat-tab label="PDC">
-              <ng-template matTabContent>
-              </ng-template>
-            </mat-tab>
-
-            <mat-tab label="EWS">
-              <ng-template matTabContent>
-              </ng-template>
-            </mat-tab>
-
-            <mat-tab label="Amendment History">
-              <ng-template matTabContent>
-              </ng-template>
-            </mat-tab>
-
-            <mat-tab label="Online Payment">
-              <ng-template matTabContent>
-              </ng-template>
-            </mat-tab>
-
-            <mat-tab label="Income Recognize">
-              <ng-template matTabContent>
-              </ng-template>
-            </mat-tab>
-
-            <mat-tab label="PSAK Amortization">
-              <ng-template matTabContent>
-              </ng-template>
-            </mat-tab>
-
-            <mat-tab label="SMS History">
-              <ng-template matTabContent>
-              </ng-template>
-            </mat-tab>
-
-            <mat-tab label="Funding">
-              <ng-template matTabContent>
               </ng-template>
             </mat-tab>
 

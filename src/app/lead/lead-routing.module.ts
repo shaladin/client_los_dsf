@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { CustomerSelfVerificationComponent } from './verification/customer-self-verification/customer-self-verification.component';
+import { Routes, RouterModule } from '@angular/router'; 
 import { LeadVerifComponent } from './lead-verif/lead-verif.component';
 import { LeadInputComponent } from './lead-input/lead-input.component';
 import { LeadInputCustDataComponent } from './lead-input/lead-input-cust-data/lead-input-cust-data.component';
@@ -16,18 +15,14 @@ import { TeleVerifPagingComponent } from './tele-verif/tele-verif-paging/tele-ve
 import { TeleVerifDetailComponent } from './tele-verif/tele-verif-detail/tele-verif-detail.component';
 import { LeadInputLeadDataComponent } from './lead-input/lead-input-lead-data/lead-input-lead-data.component';
 import { LeadUpdateComponent } from './lead-update/lead-update.component';
+import { LeadMonitoringComponent } from './lead-monitoring/lead-monitoring.component';
+import { LeadMonitoringReviewComponent } from './lead-monitoring-review/lead-monitoring-review.component';
+import { LeadMonitoringReviewDetailComponent } from './lead-monitoring-review/lead-monitoring-review-detail/lead-monitoring-review-detail.component';
 
 const routes: Routes = [
   {
     path: '',
-    children: [
-      {
-        path: 'SelfVerification',
-        component: CustomerSelfVerificationComponent,
-        data: {
-          title: 'Lead Customer Self Verification'
-        }
-      },
+    children: [ 
       {
         path: 'Verif',
         component: LeadVerifComponent,
@@ -131,6 +126,27 @@ const routes: Routes = [
         component: LeadUpdateComponent,
         data: {
           title: 'Lead Update Paging'
+        }
+      },
+      {
+        path: 'Monitoring',
+        component: LeadMonitoringComponent,
+        data: {
+          title: 'Lead Monitoring'
+        }
+      },
+      {
+        path: 'ReviewMonitoring/Paging',
+        component: LeadMonitoringReviewComponent,
+        data: {
+          title: 'Lead Review Monitoring'
+        }
+      },
+      {
+        path: 'ReviewMonitoring/Detail',
+        component: LeadMonitoringReviewDetailComponent,
+        data: {
+          title: 'Lead Review Monitoring Detail'
         }
       }
     ]

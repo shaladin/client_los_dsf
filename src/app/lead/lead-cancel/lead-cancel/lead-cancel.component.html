@@ -19,7 +19,7 @@
           <th class="text-left"><span class="thead-header" (click)="searchSort($event)" name='officeName'
               translate>OFFICE NAME</span>
           </th>
-          <th class="text-center"><span class="thead-header" (click)="searchSort($event)" name='orderNo' translate>ORDER
+          <th class="text-left"><span class="thead-header" (click)="searchSort($event)" name='orderNo' translate>ORDER
               NO</span>
           </th>
           <th class="text-left"><span class="thead-header" (click)="searchSort($event)" name='custName' translate>CUST
@@ -52,10 +52,10 @@
             </div>
           </td>
           <!-- <td class="text-center">{{item.LeadNo}}</td> -->
-          <td class="text-center"><a href="{{leadUrl + item.LeadId}}">{{item.LeadNo}}</a></td>
+          <td class="text-center"><a href="{{leadUrl + item.LeadId}}" target="_blank">{{item.LeadNo}}</a></td>
           <td class="text-center" style="display: none;">{{item.WfTaskListId}}</td>
           <td class="text-left">{{item.OfficeName}}</td>
-          <td class="text-center">{{item.OrderNo}}</td>
+          <td class="text-left">{{item.OrderNo}}</td>
           <td class="text-left">{{item.CustName}}</td>
           <td class="text-left">{{item.LeadSource}}</td>
           <td class="text-left">{{item.FullAssetName}}</td>
@@ -80,7 +80,7 @@
           </th>
           <th class="text-left"><span class="thead-header" name='officeName' translate>OFFICE NAME</span>
           </th>
-          <th class="text-center"><span class="thead-header" name='orderNo' translate>ORDER NO</span>
+          <th class="text-left"><span class="thead-header" name='orderNo' translate>ORDER NO</span>
           </th>
           <th class="text-left"><span class="thead-header" name='custName' translate>CUSTOMER NAME</span>
           </th>
@@ -97,17 +97,17 @@
       </thead>
       <tbody>
         <tr *ngFor="let item of tempData">
-          <td class="text-center"><a href="{{leadUrl + item.LeadId}}">{{item.LeadNo}}</a></td>
+          <td class="text-center"><a href="{{leadUrl + item.LeadId}}" target="_blank">{{item.LeadNo}}</a></td>
           <td class="text-center" style="display: none;">{{item.WfTaskListId}}</td>
           <td class="text-left">{{item.OfficeName}}</td>
-          <td class="text-center">{{item.OrderNo}}</td>
+          <td class="text-left">{{item.OrderNo}}</td>
           <td class="text-left">{{item.CustName}}</td>
           <td class="text-left">{{item.LeadSource}}</td>
           <td class="text-left">{{item.FullAssetName}}</td>
           <td class="text-left">{{item.LeadStep}}</td>
           <td class="text-left">{{item.LeadStatus}}</td>
           <td class="text-center">
-            <a class="danger p-0" data-original-title="" title="" (click)="deleteFromTemp(item.LeadId)">
+            <a class="danger p-0" (click)="deleteFromTemp(item.LeadId)">
               <i class="ft-trash-2 font-medium-3 mr-2"></i>
             </a>
           </td>

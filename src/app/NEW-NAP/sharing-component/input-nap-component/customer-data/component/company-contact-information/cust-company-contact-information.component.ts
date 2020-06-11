@@ -16,7 +16,7 @@ import { AppCustCompanyContactPersonObj } from 'app/shared/model/AppCustCompanyC
 
 export class CustCompanyContactInformationComponent implements OnInit {
 
-  @Input() listContactPersonCompany: any = new Array<AppCustCompanyContactPersonObj>();
+  @Input() listContactPersonCompany: Array<AppCustCompanyContactPersonObj> = new Array<AppCustCompanyContactPersonObj>();
 
   @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
 
@@ -36,8 +36,8 @@ export class CustCompanyContactInformationComponent implements OnInit {
   ContactInfoCompanyForm = this.fb.group({
     ContactPersonName: ['', [Validators.required, Validators.maxLength(500)]],
     MrJobPositionCode: ['', Validators.maxLength(50)],
-    MobilePhnNo1: ['', Validators.maxLength(50)],
-    MobilePhnNo2: ['', Validators.maxLength(50)],
+    MobilePhnNo1: ['', [Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
+    MobilePhnNo2: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
     JobTitleName: ['', Validators.maxLength(100)],
     Email1: ['', Validators.maxLength(50)]
   });
@@ -108,8 +108,8 @@ export class CustCompanyContactInformationComponent implements OnInit {
     this.ContactInfoCompanyForm = this.fb.group({
       ContactPersonName: ['', [Validators.required, Validators.maxLength(500)]],
       MrJobPositionCode: [this.defaultJobPosition, Validators.maxLength(50)],
-      MobilePhnNo1: ['', Validators.maxLength(50)],
-      MobilePhnNo2: ['', Validators.maxLength(50)],
+      MobilePhnNo1: ['', [Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
+      MobilePhnNo2: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
       JobTitleName: ['', Validators.maxLength(100)],
       Email1: ['', Validators.maxLength(50)]
     });

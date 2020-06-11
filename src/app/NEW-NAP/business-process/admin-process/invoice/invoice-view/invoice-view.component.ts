@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
@@ -14,13 +14,11 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 })
 export class InvoiceViewComponent implements OnInit {
   inputPagingObj: any;
-  AgrmntId: any;
   invoiceDataList: Object;
-
+  @Input() AppId: number;
+ 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
-    this.route.queryParams.subscribe(params => {
-      this.AgrmntId = params["AgrmntId"];
-    });
+ 
   }
 
   ngOnInit() {
@@ -29,13 +27,14 @@ export class InvoiceViewComponent implements OnInit {
 
   GetListInvoiceData() {
     var obj = {
-      AgrmntId: this.AgrmntId
+      AppId: this.AppId
     }
-    var getListUrl = AdInsConstant.GetListAppInvoiceFctrByAgrmntId;
+    var getListUrl = AdInsConstant.GetListAppInvoiceFctrByAppId;
     this.http.post(getListUrl, obj).subscribe(
       (response) => {
         console.log(response);
-        this.invoiceDataList = response['ReturnObject'];
+        this.invoiceDataList = response['AppInvoiceFctrObjs'];
+        
       },
       (error) => {
         console.log(error);
@@ -44,6 +43,6 @@ export class InvoiceViewComponent implements OnInit {
   }
   ToDetail(ev) {
     console.log(ev);
-    this.router.navigate(["/AdminProcess/Invoice/Detail"], { queryParams: { "AppInvoiceFctrId": ev } });
+    this.router.navigate(["/Nap/AdminProcess/Invoice/Detail"], { queryParams: { "AppInvoiceFctrId": ev } });
   }
 }

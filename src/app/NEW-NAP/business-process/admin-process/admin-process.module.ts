@@ -28,7 +28,6 @@ import { InvoiceViewComponent } from "./invoice/invoice-view/invoice-view.compon
 import { InvoiceDetailComponent } from "./invoice/invoice-detail/invoice-detail.component";
 import { DocumentPagingComponent } from "./document-printing/document-paging/document-paging.component";
 import { DocumentViewComponent } from "./document-printing/document-view/document-view.component";
-import { InvoiceDataAddComponent } from "./invoice-data/invoice-data-add/invoice-data-add.component";
 import { PreGoLiveApprovalDetailComponent } from "./pre-go-live/pre-go-live-approval-detail/pre-go-live-approval-detail.component";
 import { PreGoLiveApprovalPagingComponent } from "./pre-go-live/pre-go-live-approval-paging/pre-go-live-approval-paging.component";
 import { ViewMainInfoComponentModule } from "app/NEW-NAP/sharing-component/view-main-info-component/view-main-info-component.module";
@@ -39,6 +38,9 @@ import { CreateDoMultiAssetComponent } from './delivery-order-multi-asset/create
 import { DoAssetDetailComponent } from './delivery-order-multi-asset/do-asset-detail/do-asset-detail.component';
 import { InvoiceVerifPagingComponent } from './invoice-verif/invoice-verif-paging/invoice-verif-paging.component';
 import { InvoiceVerifDetailComponent } from './invoice-verif/invoice-verif-detail/invoice-verif-detail.component';
+import { SharingModule } from "app/shared/sharing.module";
+import { UcapprovalModule } from "@adins/ucapproval";
+import { UcapprovalhistModule } from "@adins/ucapprovalhist";
 
 
 @NgModule({
@@ -48,7 +50,7 @@ import { InvoiceVerifDetailComponent } from './invoice-verif/invoice-verif-detai
     TcSharingComponentModule,
     ViewMainInfoComponentModule,
     ProcessComponentModule,
-    AdInsModule,
+    AdInsModule
   ],
   declarations: [
     PurchaseOrderPagingComponent,
@@ -73,11 +75,9 @@ import { InvoiceVerifDetailComponent } from './invoice-verif/invoice-verif-detai
     OfferingValidityCheckingApprovalDetailComponent,
     DocSignerDetailComponent,
     DocSignerPagingComponent,
-    InvoiceViewComponent,
     InvoiceDetailComponent,
     DocumentPagingComponent,
     DocumentViewComponent,
-    InvoiceDataAddComponent,
     DeliveryOrderMultiAssetComponent,
     DeliveryOrderMultiAssetDetailComponent,
     CreateDoMultiAssetComponent,
@@ -87,6 +87,10 @@ import { InvoiceVerifDetailComponent } from './invoice-verif/invoice-verif-detai
   ],
   providers: [
     NGXToastrService
+  ],
+  entryComponents: [
+    CreateDoMultiAssetComponent,
+    DoAssetDetailComponent
   ]
 })
 export class AdminProcessSharingModule { }

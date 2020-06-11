@@ -1,22 +1,22 @@
 import { InputLookupObj } from "./InputLookupObj.Model";
 
 export class InputFieldObj{
-    addr: any;
-    areaCode4: any;
-    areaCode3: any;
-    phnArea1: any;
-    phn1: any;
-    phnExt1: any;
-    phnArea2: any;
-    phn2: any;
-    phnExt2: any;
-    faxArea: any;
-    fax: any;
-    subZipCode: any;
-    areaCode2: any;
-    areaCode1: any;
-    city: any;
-    inputLookupObj: any;
+    addr: string;
+    areaCode4: string;
+    areaCode3: string;
+    phnArea1: string;
+    phn1: string;
+    phnExt1: string;
+    phnArea2: string;
+    phn2: string;
+    phnExt2: string;
+    faxArea: string;
+    fax: string;
+    subZipCode: string;
+    areaCode2: string;
+    areaCode1: string;
+    city: string;
+    inputLookupObj: InputLookupObj;
 
     constructor()
     {

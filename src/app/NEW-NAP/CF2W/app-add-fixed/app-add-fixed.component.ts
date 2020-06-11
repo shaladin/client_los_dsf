@@ -290,7 +290,7 @@ export class AppAddFixedComponent implements OnInit {
     this.allAppDataObj.AppAssetObj.IsCollateral = true;
     this.allAppDataObj.AppAssetObj.IsInsurance = true;
 
-    this.allAppDataObj.AppCollateralObj.CollateralSeqNo = "1";
+    this.allAppDataObj.AppCollateralObj.CollateralSeqNo = 1;
     this.allAppDataObj.AppCollateralObj.FullAssetCode = this.assetCode;
     this.allAppDataObj.AppCollateralObj.FullAssetName = this.assetName;
     this.allAppDataObj.AppCollateralObj.MrCollateralConditionCode = "NEW";
@@ -323,7 +323,7 @@ export class AppAddFixedComponent implements OnInit {
   //     (response) => {
   //       console.log(response);
   //       this.toastr.successMessage(response["message"]);
-  //       //this.router.navigate(["Nap/ConsumerFinance/InputNap/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
+  //       //this.router.navigate(["Nap/ConsumerFinance/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
   //     },
   //     (error) => {
   //       console.log(error);

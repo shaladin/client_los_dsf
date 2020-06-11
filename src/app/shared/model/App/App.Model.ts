@@ -49,6 +49,8 @@ export class AppObj {
     RsvField5: string;
     WfTaskListId: number;
     Username: string;
+    BizTemplateCode: string;
+    MrCustTypeCode: string;
 
     constructor() {
         this.AppId = 0;
@@ -100,5 +102,7 @@ export class AppObj {
         this.RsvField4 = "";
         this.RsvField5 = "";
         this.WfTaskListId = 0;
+        this.BizTemplateCode = "";
+        this.MrCustTypeCode = "";
     }
 }

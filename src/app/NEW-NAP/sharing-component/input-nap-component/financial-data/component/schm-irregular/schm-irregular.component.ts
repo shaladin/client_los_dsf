@@ -7,6 +7,7 @@ import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
 import { environment } from 'environments/environment';
 import { CalcIrregularObj } from 'app/shared/model/AppFinData/CalcIrregularObj.Model';
+import { AppObj } from 'app/shared/model/App/App.Model';
 
 @Component({
   selector: 'app-schm-irregular',
@@ -23,6 +24,8 @@ export class SchmIrregularComponent implements OnInit {
   calcIrregularObj: CalcIrregularObj = new CalcIrregularObj();
   listInstallment: any;
   responseCalc: any;
+  result: AppObj = new AppObj();
+  PriceLabel: string= "Asset Price";
 
   constructor(
     private fb: FormBuilder,
@@ -34,6 +37,17 @@ export class SchmIrregularComponent implements OnInit {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
     this.SetEntryInstallment();
+    this.http.post<AppObj>(AdInsConstant.GetAppById, { AppId: this.AppId}).subscribe(
+      (response) => {
+        this.result = response;
+        if(this.result.BizTemplateCode == "CFRFN4W"){
+          this.PriceLabel = "Financing Amount";
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   LoadDDLRateType() {
@@ -92,6 +106,9 @@ export class SchmIrregularComponent implements OnInit {
   }
 
   CalculateAmortization() {
+    if(this.ValidateFee() == false){
+      return;
+    }
     this.calcIrregularObj = this.ParentForm.value;
     this.calcIrregularObj["IsRecalculate"] = false;
     this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateIrregular", this.calcIrregularObj).subscribe(
@@ -112,6 +129,13 @@ export class SchmIrregularComponent implements OnInit {
           TotalAR: response.TotalARAmt,
 
           NtfAmt: response.NtfAmt,
+          ApvAmt: response.ApvAmt,
+
+          TotalLifeInsCustAmt: response.TotalLifeInsCustAmt,
+          LifeInsCptlzAmt: response.LifeInsCptlzAmt,
+
+          DownPaymentGrossAmt: response.DownPaymentGrossAmt,
+          DownPaymentNettAmt: response.DownPaymentNettAmt
 
         })
 
@@ -146,6 +170,17 @@ export class SchmIrregularComponent implements OnInit {
     this.ParentForm.patchValue({
       NeedReCalculate: value
     });
+  }
+
+  ValidateFee(){
+    for(let i = 0; i < this.ParentForm.controls["AppFee"]["controls"].length; i++){
+      if(this.ParentForm.controls["AppFee"].value[i].IsCptlz == true
+          && this.ParentForm.controls["AppFee"].value[i].AppFeeAmt < this.ParentForm.controls["AppFee"].value[i].FeeCapitalizeAmt){
+        this.toastr.errorMessage(this.ParentForm.controls["AppFee"].value[i].FeeTypeName + " Capitalized Amount can't be higher than " +  this.ParentForm.controls["AppFee"].value[i].AppFeeAmt);
+        return false;
+      }
+    }
+    return true;
   }
 
 }

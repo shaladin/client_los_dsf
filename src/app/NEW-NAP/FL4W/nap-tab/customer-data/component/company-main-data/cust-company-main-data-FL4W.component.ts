@@ -29,7 +29,7 @@ export class CustCompanyMainDataFL4WComponent implements OnInit {
   @Input() custType: any;
   @Output() callbackCopyCust: EventEmitter<any> = new EventEmitter();
 
-
+  businessDt: Date = new Date();
   refMasterObj = {
     RefMasterTypeCode: "",
   };
@@ -58,24 +58,26 @@ export class CustCompanyMainDataFL4WComponent implements OnInit {
 
      }
 
-  ngOnInit() {
-
+  async ngOnInit() : Promise<void> {
+    var context = JSON.parse(localStorage.getItem("UserAccess"));
+    this.businessDt = new Date(context["BusinessDt"]);
+    this.businessDt.setDate(this.businessDt.getDate() - 1);
     this.parentForm.addControl(this.identifier, this.fb.group({
       CustNo: [''],
       IndustryTypeCode: [''],
-      CustModelCode: ['', [Validators.required, Validators.maxLength(50)]],
+      CustModelCode: ['', [Validators.required]],
       CompanyBrandName: ['', Validators.maxLength(100)],
       MrCompanyTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
-      NumOfEmp: [0],
+      NumOfEmp: [0,[Validators.min(0)]],
       IsAffiliated: [false],
-      EstablishmentDt: [''],
-      TaxIdNo: ['', [Validators.required, Validators.maxLength(50)]],
+      EstablishmentDt: ['',[Validators.required]],
+      TaxIdNo: ['', [Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
       IsVip: [false]
     }));
 
     this.initLookup();
-    this.bindAllRefMasterObj();
-    this.bindCustModelObj();
+    await this.bindCompanyTypeObj();
+    await this.bindCustModelObj();
     this.bindCustData();
   }
 
@@ -207,16 +209,12 @@ export class CustCompanyMainDataFL4WComponent implements OnInit {
     this.InputLookupIndustryTypeObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupIndustryTypeObj.pagingJson = "./assets/uclookup/lookupIndustryType.json";
     this.InputLookupIndustryTypeObj.genericJson = "./assets/uclookup/lookupIndustryType.json";
-
+    this.InputLookupIndustryTypeObj.required = true;
   }
 
-  bindAllRefMasterObj(){
-    this.bindCompanyTypeObj();
-  }
-
-  bindCompanyTypeObj(){
+  async bindCompanyTypeObj(){
     this.refMasterObj.RefMasterTypeCode = "COMPANY_TYPE";
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    await this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).toPromise().then(
       (response) => {
         this.CompanyTypeObj = response["ReturnObject"];
         if(this.CompanyTypeObj.length > 0  && (this.parentForm.controls[this.identifier]["controls"].MrCompanyTypeCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrCompanyTypeCode.value == "")){
@@ -229,9 +227,9 @@ export class CustCompanyMainDataFL4WComponent implements OnInit {
     );
   }
 
-  bindCustModelObj(){
+  async bindCustModelObj(){
     this.custModelReqObj.MrCustTypeCode = AdInsConstant.CustTypeCompany;
-     this.http.post(AdInsConstant.GetListKeyValueByMrCustTypeCode, this.custModelReqObj).toPromise().then(
+    await this.http.post(AdInsConstant.GetListKeyValueByMrCustTypeCode, this.custModelReqObj).toPromise().then(
       (response) => {
         this.CustModelObj = response["ReturnObject"];
         if(this.CustModelObj.length > 0  && (this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "")){

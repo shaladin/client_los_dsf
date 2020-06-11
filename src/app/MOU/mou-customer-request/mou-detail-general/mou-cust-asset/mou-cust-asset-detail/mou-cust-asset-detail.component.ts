@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -16,8 +16,7 @@ export class MouCustAssetDetailComponent implements OnInit {
   @Input() ListExcludeFullAssetCode: Array<string>;
   @Input() AssetTypeCode: string;
   @Input() MouCustId: number;
-  inputLookupObj: InputLookupObj;
-
+  inputLookupObj: InputLookupObj; 
   MOUCustAssetForm = this.fb.group({
     MouCustAssetId: [0],
     MouCustId: [0],
@@ -76,14 +75,15 @@ export class MouCustAssetDetailComponent implements OnInit {
   Save(enjiForm){
     var formData = this.MOUCustAssetForm.value;
 
-    this.httpClient.post(AdInsConstant.AddMouCustAsset, formData).subscribe(
-      (response) => {
-        this.activeModal.close(response);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    this.activeModal.close(formData); 
+    // this.httpClient.post(AdInsConstant.AddMouCustAsset, formData).subscribe(
+    //   (response) => {
+    //     this.activeModal.close(response);
+    //   },
+    //   (error) => {
+    //     console.log(error);
+    //   }
+    // );
   }
 
 }

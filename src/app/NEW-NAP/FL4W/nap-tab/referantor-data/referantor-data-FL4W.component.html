@@ -5,23 +5,23 @@
       <div class="card-body">
         <div class="px-3">
 
-          <form class="form form-horizontal" [formGroup]="NapAppReferantorForm" (ngSubmit)="NapAppReferantorForm.valid"
+          <form class="form form-horizontal" [formGroup]="NapAppReferantorForm" (ngSubmit)="NapAppReferantorForm.valid && ClickSave()"
             #enjiForm="ngForm">
             <!-- Main Info -->
             <div class="form-body">
               <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Referantor </h4>
 
               <div class="form-group row">
-                <label class="col-md-3 adInsLabel">Referantor </label>
-                <div class="col-md-9">
+                <label class="col-md-2 adInsLabel">Referantor </label>
+                <div class="col-md-10">
                   <mat-checkbox color="primary" formControlName="CheckBoxAppReferantor" (change)="TurnReferantor()"></mat-checkbox>
                 </div>
               </div>
 
               <div [hidden]="!ReferantorOn">
                 <div class="form-group row adins-required">
-                  <label class="col-md-3 adInsLabel">Referantor Name </label>
-                  <div class="col-md-9">
+                  <label class="col-md-2 adInsLabel">Referantor Name </label>
+                  <div class="col-md-5">
                     <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]='NapAppReferantorForm'
                       [enjiForm]='enjiForm' ng-disabled="!ReferantorOn" [identifier]="'ProductOfferingIdentifier'"
                       (lookup)="getLookupAppReferantorResponse($event)">
@@ -30,16 +30,16 @@
                 </div>
 
                 <div class="form-group row" [hidden]="appReferantorObj.MrReferantorType == null">
-                  <label class="col-md-3 adInsLabel">Referantor Type</label>
-                  <label class="col-md-3 adInsLabel" *ngIf="appReferantorObj.MrReferantorType == 'AGENCY_COMPANY'">
+                  <label class="col-md-2 adInsLabel">Referantor Type</label>
+                  <label class="col-md-5 adInsLabel" *ngIf="appReferantorObj.MrReferantorType == 'AGENCY_COMPANY'">
                     Agency Company </label>
-                  <label class="col-md-3 adInsLabel" *ngIf="appReferantorObj.MrReferantorType == 'AGENCY_PERSONAL'">
+                  <label class="col-md-5 adInsLabel" *ngIf="appReferantorObj.MrReferantorType == 'AGENCY_PERSONAL'">
                     Agency Personal </label>
                 </div>
 
                 <div class="form-group row adins-required" [hidden]="bankItems.length == 0">
-                  <label class="col-md-3 adInsLabel">Account Bank</label>
-                  <div class="col-md-9">
+                  <label class="col-md-2 adInsLabel">Account Bank</label>
+                  <div class="col-md-10">
                     <select class="form-control adInsInput" style="width: auto" formControlName="AccountBank"
                       ng-disabled="!ReferantorOn" (change)="ChangeValueBank($event)"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppReferantorForm.controls.AccountBank.invalid }">
@@ -49,49 +49,50 @@
                   </div>
                 </div>
 
-                <div class="form-body" [hidden]="!NpwpOn">
-                  <h4 class="form-section card-title" translate><i class="ft-file-text"></i> NPWP REFERANTOR INFO </h4>
+                <lib-ucSubsection [hidden]="!NpwpOn" [id]="'NPWPReferantorInfoId'" [title]="'NPWP REFERANTOR INFO'" [panel]="'NPWPReferantorInfo'">
+                </lib-ucSubsection>
+                <div class="form-body" [hidden]="!NpwpOn" id="NPWPReferantorInfo">
 
                   <div class="form-group row">
-                    <label class="col-md-3 adInsLabel">Npwp No</label>
-                    <label class="col-md-3 adInsLabel">{{appReferantorObj.TaxIdNo}} </label>
+                    <label class="col-md-2 adInsLabel">Npwp No</label>
+                    <label class="col-md-4 adInsLabel">{{appReferantorObj.TaxIdNo}} </label>
                   </div>
 
                   <div class="form-group row">
-                    <label class="col-md-3 adInsLabel">Npwp Name</label>
-                    <label class="col-md-3 adInsLabel">{{appReferantorObj.TaxIdName}} </label>
+                    <label class="col-md-2 adInsLabel">Npwp Name</label>
+                    <label class="col-md-4 adInsLabel">{{appReferantorObj.TaxIdName}} </label>
                   </div>
 
                   <div class="form-group row">
-                    <label class="col-md-3 adInsLabel">Address</label>
-                    <label class="col-md-3 adInsLabel">{{appReferantorObj.TaxIdAddr}} </label>
+                    <label class="col-md-2 adInsLabel">Address</label>
+                    <label class="col-md-4 adInsLabel">{{appReferantorObj.TaxIdAddr}} </label>
                   </div>
 
                   <div class="form-group row">
-                    <label class="col-md-3 adInsLabel">RT / RW</label>
-                    <label class="col-md-2 adInsLabel">{{appReferantorObj.TaxIdAreaCode4}} </label>
-                    <label class="col-md-1 adInsLabel">/ </label>
-                    <label class="col-md-2 adInsLabel">{{appReferantorObj.TaxIdAreaCode3}} </label>
+                    <label class="col-md-2 adInsLabel">RT / RW</label>
+                    <label class="col-md-4 adInsLabel">{{appReferantorObj.TaxIdAreaCode4}} / {{appReferantorObj.TaxIdAreaCode3}} </label>
+                    <!-- <label class="col-md-1 adInsLabel">/ </label>
+                    <label class="col-md-2 adInsLabel">{{appReferantorObj.TaxIdAreaCode3}} </label> -->
                   </div>
 
                   <div class="form-group row">
-                    <label class="col-md-3 adInsLabel">Kelurahan</label>
-                    <label class="col-md-3 adInsLabel">{{appReferantorObj.TaxIdAreaCode2}} </label>
+                    <label class="col-md-2 adInsLabel">Kelurahan</label>
+                    <label class="col-md-4 adInsLabel">{{appReferantorObj.TaxIdAreaCode2}} </label>
                   </div>
 
                   <div class="form-group row">
-                    <label class="col-md-3 adInsLabel">Kecamatan</label>
-                    <label class="col-md-3 adInsLabel">{{appReferantorObj.TaxIdAreaCode1}} </label>
+                    <label class="col-md-2 adInsLabel">Kecamatan</label>
+                    <label class="col-md-4 adInsLabel">{{appReferantorObj.TaxIdAreaCode1}} </label>
                   </div>
 
                   <div class="form-group row">
-                    <label class="col-md-3 adInsLabel">City </label>
-                    <label class="col-md-3 adInsLabel">{{appReferantorObj.TaxIdCity}} </label>
+                    <label class="col-md-2 adInsLabel">City </label>
+                    <label class="col-md-4 adInsLabel">{{appReferantorObj.TaxIdCity}} </label>
                   </div>
 
                   <div class="form-group row">
-                    <label class="col-md-3 adInsLabel">Zip Code </label>
-                    <label class="col-md-3 adInsLabel">{{appReferantorObj.TaxIdZipcode}} </label>
+                    <label class="col-md-2 adInsLabel">Zip Code </label>
+                    <label class="col-md-4 adInsLabel">{{appReferantorObj.TaxIdZipcode}} </label>
                   </div>
 
                 </div>
@@ -99,8 +100,8 @@
             </div>
 
             <div class="form-actions right">
-              <button type="button" (click)="ClickSave()" class="btn btn-raised btn-primary">
-                <i class="fa fa-check-square-o"></i> Save and Continue
+              <button type="submit" class="btn btn-raised btn-primary">
+                <i class="fa fa-check-square"></i> Save
               </button>
               <!-- <button type="submit" (click)="ClickSave('next')" class="btn btn-raised btn-primary">
                 <i class="fa fa-check-square-o"></i> Next

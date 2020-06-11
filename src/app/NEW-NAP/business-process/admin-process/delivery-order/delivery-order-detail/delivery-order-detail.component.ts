@@ -10,6 +10,8 @@ import { ListAppCollateralDocObj } from 'app/shared/model/ListAppCollateralDocOb
 import { ListAppTCObj } from 'app/shared/model/ListAppTCObj.Model';
 import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueModel';
+import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-delivery-order-detail',
@@ -37,14 +39,19 @@ export class DeliveryOrderDetailComponent implements OnInit {
   FullAssetName: string;
   MrAssetUsageCode: string;
   AssetCategoryCode: string;
-
+  TaskListId: any;
   arrValue = [];
+
+  businessDt: Date = new Date();
+
+  PurchaseOrderDt : Date = new Date();
 
   constructor(private fb: FormBuilder, private http: HttpClient,
     private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params['AppId'];
       this.AgrmntId = params['AgrmntId'];
+      this.TaskListId = params['TaskListId'];
     });
   }
 
@@ -58,7 +65,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
     items: this.fb.array([]),
     DeliveryNo: [''],
     RecipientName: [''],
-    DeliveryDt: [''],
+    DeliveryDt: ['', Validators.required],
     DeliveryAddr: [''],
     MrCustRelationshipCode: [''],
     IsChecked: [''],
@@ -68,7 +75,18 @@ export class DeliveryOrderDetailComponent implements OnInit {
   })
 
   ngOnInit() {
+    this.claimTask();
     this.arrValue.push(this.AgrmntId);
+
+    var appAssetobj = {
+      AgrmntId: this.AgrmntId
+    }
+
+    this.http.post(AdInsConstant.GetPurchaseOrderHByAgrmntId, appAssetobj).subscribe(
+      (response) => {
+        this.PurchaseOrderDt = new Date(response["PurchaseOrderDt"]);
+      }
+    );
 
     var refMasterTypeObj = {
       RefMasterTypeCode: "CUST_RELATIONSHIP",
@@ -82,9 +100,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
       }
     );
 
-    var appAssetobj = {
-      AgrmntId: this.AgrmntId
-    }
+
     this.items = this.DeliveryOrderForm.get('items') as FormArray;
 
     this.http.post(AdInsConstant.GetAppAssetByAgrmntId, appAssetobj).subscribe(
@@ -122,18 +138,33 @@ export class DeliveryOrderDetailComponent implements OnInit {
                   ACDExpiredDt: response["ReturnObject"][i].ACDExpiredDt,
                   DocNotes: response["ReturnObject"][i].DocNotes
                 }) as FormGroup;
+                if (response["ReturnObject"][i].IsValueNeeded == true) {
+                  assetDocumentDetail.controls.DocNo.setValidators([Validators.required]);
+                }
                 this.items.push(assetDocumentDetail);
               }
+
+
             }
           }
         );
       }
     );
   }
-
   SaveForm() {
+    if (Date.parse(this.DeliveryOrderForm.value.TCList[0].PromisedDt) < this.businessDt.getTime()) {
+      this.toastr.errorMessage("Promised Date Must Bigger Than Business Date")
+      return;
+    }
     var appAsset = {
       AppAssetId: this.AppAssetId,
+      AppId: this.appAssetObj.AppId,
+      AssetSeqNo: this.appAssetObj.AssetSeqNo,
+      AssetPriceAmt: this.appAssetObj.AssetPriceAmt,
+      DownPaymentAmt: this.appAssetObj.DownPaymentAmt,
+      IsCollateral: this.appAssetObj.IsCollateral,
+      IsInsurance: this.appAssetObj.IsInsurance,
+      IsEditableDp: this.appAssetObj.IsEditableDp,
       SerialNo1: this.DeliveryOrderForm.controls.SerialNo1.value,
       SerialNo2: this.DeliveryOrderForm.controls.SerialNo2.value,
       SerialNo3: this.DeliveryOrderForm.controls.SerialNo3.value,
@@ -165,9 +196,9 @@ export class DeliveryOrderDetailComponent implements OnInit {
     for (var i = 0; i < this.DeliveryOrderForm.value.items["length"]; i++) {
       this.appCollateralDoc = new AppCollateralDocObj();
       this.appCollateralDoc.DocCode = this.DeliveryOrderForm.value.items[i].DocCode;
-      this.appCollateralDoc.IsReceived = this.DeliveryOrderForm.value.items[i].IsReceived;
+      this.appCollateralDoc.IsReceived = this.DeliveryOrderForm.value.items[i].IsReceived == null ? false : this.DeliveryOrderForm.value.items[i].IsReceived;
       this.appCollateralDoc.DocNo = this.DeliveryOrderForm.value.items[i].DocNo;
-      this.appCollateralDoc.ACDExpiredDt = this.DeliveryOrderForm.value.items[i].ACDExpiredDt;
+      this.appCollateralDoc.ExpiredDt = this.DeliveryOrderForm.value.items[i].ExpiredDt;
       this.appCollateralDoc.DocNotes = this.DeliveryOrderForm.value.items[i].DocNotes;
       this.listAppCollateralDocObj.AppCollateralDocObj.push(this.appCollateralDoc);
     }
@@ -188,9 +219,11 @@ export class DeliveryOrderDetailComponent implements OnInit {
       this.appTC.PromisedDt = this.DeliveryOrderForm.value.TCList[i].PromisedDt;
       this.appTC.CheckedDt = this.DeliveryOrderForm.value.TCList[i].CheckedDt;
       this.appTC.Notes = this.DeliveryOrderForm.value.TCList[i].Notes;
+      this.appTC.IsAdditional = this.DeliveryOrderForm.value.TCList[i].IsAdditional;
       this.listAppTCObj.AppTCObj.push(this.appTC);
     }
 
+    this.deliveryOrderObj.TaskListId = this.TaskListId;
     this.deliveryOrderObj.AppAssetObj = appAsset;
     this.deliveryOrderObj.DeliveryOrderHObj = deliveryOrderH;
     this.deliveryOrderObj.ListAppCollateralDocObj = this.listAppCollateralDocObj.AppCollateralDocObj;
@@ -205,5 +238,16 @@ export class DeliveryOrderDetailComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  async claimTask() {
+    console.log("Claim");
+    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
+    wfClaimObj.pWFTaskListID = this.TaskListId;
+    wfClaimObj.pUserID = currentUserContext["UserName"];
+    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+      (response) => {
+      });
   }
 }

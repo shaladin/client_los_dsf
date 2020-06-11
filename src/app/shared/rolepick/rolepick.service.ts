@@ -8,6 +8,7 @@ import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { formatDate } from '@angular/common';
 import { Router } from '@angular/router';
 import { CurrentUserContextService } from 'app/shared/CurrentUserContext/current-user-context.service';
+import { AdInsHelper } from '../AdInsHelper';
 
 @Injectable()
 export class RolePickService {
@@ -67,18 +68,19 @@ export class RolePickService {
                 };
                 this.http.post(url, roleObject).subscribe(
                     (response) => {
-                        // localStorage.setItem("Menu", JSON.stringify(response["returnObject"]));
+                        localStorage.setItem("Menu", JSON.stringify(response["returnObject"]));
                         localStorage.setItem("Token", response["Token"]);
-                        var currentUserContext = new CurrentUserContext;
-                        currentUserContext.UserName = localStorage.getItem("Username");
-                        currentUserContext.Office = item.OfficeCode;
-                        currentUserContext.Role = item.RoleCode;
-                        currentUserContext.BusinessDate = item.BusinessDt;
-                        localStorage.setItem("BusinessDateRaw",item.BusinessDt);
-                        var DateParse = formatDate(item.BusinessDt, 'yyyy/MM/dd', 'en-US');
-                        localStorage.setItem("BusinessDate", DateParse);
-                        localStorage.setItem("UserAccess", JSON.stringify(response["Identity"]));
-                        this.currentUserContextService.addCurrentUserContext(currentUserContext);
+                        AdInsHelper.CreateUserAccess(response);
+                        // var currentUserContext = new CurrentUserContext;
+                        // currentUserContext.UserName = localStorage.getItem("Username");
+                        // currentUserContext.Office = item.OfficeCode;
+                        // currentUserContext.Role = item.RoleCode;
+                        // currentUserContext.BusinessDate = item.BusinessDt;
+                        // localStorage.setItem("BusinessDateRaw",item.BusinessDt);
+                        // var DateParse = formatDate(item.BusinessDt, 'yyyy/MM/dd', 'en-US');
+                        // localStorage.setItem("BusinessDate", DateParse);
+                        // localStorage.setItem("UserAccess", JSON.stringify(response["Identity"]));
+                        // this.currentUserContextService.addCurrentUserContext(currentUserContext);
                         this.router.navigate(['dashboard/dash-board']);
                     },
                     (error) => {

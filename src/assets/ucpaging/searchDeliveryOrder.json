@@ -43,9 +43,13 @@
         }
     ],
     "querystring": {
-        "select": "SELECT WF.USERNAME AS UserName, CASE WHEN WF.USERNAME = NULL OR WF.USERNAME = '' THEN 'UNCLAIMED' ELSE 'CLAIMED' END AS ClaimStatus, AG.AGRMNT_NO AS AgrmntNo, AP.APP_NO AS AppNo, AG.PROD_OFFERING_NAME AS ProdOfferingName, AG.CUST_NAME AS CustName, AG.APP_ID AS AppId, AG.AGRMNT_CURR_STEP AS AgrmntCurrStep",
-        "from": "FROM dbo.APP AP WITH(NOLOCK) JOIN dbo.AGRMNT AG WITH(NOLOCK) ON AP.APP_ID = AG.APP_ID JOIN dbo.V_WF_TASK_LIST WF WITH(NOLOCK) ON WF.TRANSACTION_CODE = AP.APP_NO",
+        "select": "SELECT WF.WF_TASK_LIST_ID AS TaskListId, WF.USERNAME AS Username, CASE WHEN WF.USERNAME = NULL OR WF.USERNAME = '' THEN 'UNCLAIMED' ELSE 'CLAIMED' END AS ClaimStatus, AG.AGRMNT_NO AS AgrmntNo, AP.APP_NO AS AppNo, AG.AGRMNT_ID AS AgrmntId, AG.PROD_OFFERING_NAME AS ProdOfferingName, AG.CUST_NAME AS CustName, AG.APP_ID AS AppId, AG.AGRMNT_CURR_STEP AS AgrmntCurrStep,AP.BIZ_TEMPLATE_CODE AS LobCode",
+        "from": "FROM dbo.APP AP WITH(NOLOCK) JOIN dbo.AGRMNT AG WITH(NOLOCK) ON AP.APP_ID = AG.APP_ID JOIN dbo.V_WF_TASK_LIST WF WITH(NOLOCK) ON WF.TRANSACTION_CODE = AG.AGRMNT_NO",
         "where" : "WHERE WF.END_EXECUTING_DATE IS NULL"
+    },
+    "orderby": {
+        "key": "AP.APP_NO", 
+        "value": "false"
     },
     "headerList": [
         {
@@ -96,10 +100,18 @@
             "property": "AgrmntNo"
         },
         {
-            "type": "text",
+            "type": "link",
             "position": "center",
-            "property": "AppNo"
-        },
+            "property": "AppNo",
+            "target" : "_blank",
+            "path": "/Nap/View/AppView",
+            "param": [
+              {
+                "type": "AppId",
+                "property": "AppId"
+              }
+            ]
+          },
         {
             "type": "text",
             "position": "left",
@@ -125,6 +137,10 @@
                         {
                             "type": "AgrmntId",
                             "property": "AgrmntId"
+                        },
+                        {
+                            "type": "TaskListId",
+                            "property": "TaskListId"
                         }
                     ]
                 }

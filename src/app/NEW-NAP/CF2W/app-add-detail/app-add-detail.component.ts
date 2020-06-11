@@ -206,7 +206,7 @@ export class AppAddDetailComponent implements OnInit {
         RowVersion: this.ResponseReturnInfoObj.RowVersion
       };
 
-      this.http.post(AdInsConstant.EditReturnHandlingDNotesData, obj).subscribe(
+      this.http.post(AdInsConstant.EditReturnHandlingD, obj).subscribe(
         (response) => {
           console.log(response);
         },
@@ -218,7 +218,7 @@ export class AppAddDetailComponent implements OnInit {
   }
 
   // ClaimTask(){
-  //   var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+  //   var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
   //   var wfClaimObj = new AppObj();
   //   wfClaimObj.AppId = this.appId;
   //   wfClaimObj.Username = currentUserContext["UserName"];

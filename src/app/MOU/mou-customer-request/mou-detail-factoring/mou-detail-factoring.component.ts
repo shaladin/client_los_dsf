@@ -10,8 +10,7 @@ import { MouCustListedCustFctrComponent } from '../mou-cust-listed-cust-fctr/mou
 
 @Component({
   selector: 'app-mou-detail-factoring',
-  templateUrl: './mou-detail-factoring.component.html',
-  styleUrls: ['./mou-detail-factoring.component.scss']
+  templateUrl: './mou-detail-factoring.component.html'
 })
 export class MouDetailFactoringComponent implements OnInit {
   @Input() MouCustId: number;
@@ -60,7 +59,6 @@ export class MouDetailFactoringComponent implements OnInit {
   ) { 
     this.isListedFctr = false;
     this.shouldComponentLoad = false;
-    
   }
 
   ngOnInit() {
@@ -124,6 +122,7 @@ export class MouDetailFactoringComponent implements OnInit {
             MouCustId: this.MouCustId
           });
         }
+        this.instTypeHandler();
         this.shouldComponentLoad = true;
       },
       (error) => {
@@ -132,8 +131,24 @@ export class MouDetailFactoringComponent implements OnInit {
     );
   }
 
+  instTypeHandler(){
+    var value = this.MouDetailFactoringForm.controls["MrInstTypeCode"].value;
+    if(value == AdInsConstant.SINGLE_INST_TYPE){
+      this.MouDetailFactoringForm.patchValue({
+        PayFreqCode: AdInsConstant.PAY_FREQ_MONTHLY,
+        MrInstSchmCode: AdInsConstant.INST_SCHM_REGULAR_FIXED
+      });
+      this.MouDetailFactoringForm.controls["PayFreqCode"].disable();
+      this.MouDetailFactoringForm.controls["MrInstSchmCode"].disable();
+    }
+    else if(value == AdInsConstant.MULTIPLE_INST_TYPE){
+      this.MouDetailFactoringForm.controls["PayFreqCode"].enable();
+      this.MouDetailFactoringForm.controls["MrInstSchmCode"].enable();
+    }
+  }
+
   Save(enjiForm){
-    var formData = this.MouDetailFactoringForm.value;
+    var formData = this.MouDetailFactoringForm.getRawValue();
     var url;
 
     formData.IsListedCust = this.MouListedFctrComp.MouCustIsListedForm.controls["IsListedCust"].value;

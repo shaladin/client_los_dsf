@@ -2,45 +2,57 @@
     "headerList": [
         {
             "type": "label",
-            "position": "center",
-            "label": "Collateral Name",
+            "position": "left",
+            "label": "Asset Name",
             "name": "FullAssetName"
         },
         {
             "type": "label",
-            "position": "center",
-            "label": "Collateral Type",
-            "name": "AssetTypeCode"
+            "position": "left",
+            "label": "Insured By",
+            "name": "InsuredBy"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Paid By",
+            "name": "PaidBy"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Insurance Company",
+            "name": "InscoName"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Cover Period",
+            "name": "CoverPeriod"
         },
         {
             "type": "label",
             "position": "center",
-            "label": "Collateral Price",
-            "name": "CollateralValueAmt"
+            "label": "Insurance Length",
+            "name": "InsLength"
         },
         {
             "type": "label",
-            "position": "center",
-            "label": "License Plate No",
-            "name": "SerialNo1"
+            "position": "right",
+            "label": "Main Premi",
+            "name": "MainPremi"
         },
         {
             "type": "label",
-            "position": "center",
-            "label": "Chassis No",
-            "name": "SerialNo2"
+            "position": "right",
+            "label": "Additional Premi",
+            "name": "AddPremi"
         },
         {
             "type": "label",
-            "position": "center",
-            "label": "Engine No",
-            "name": "SerialNo4"
-        },
-        {
-            "type": "label",
-            "position": "center",
-            "label": "Owner Name",
-            "name": "OwnerName"
+            "position": "right",
+            "label": "Fee",
+            "name": "Fee"
         },
         {
             "type": "label",
@@ -51,38 +63,48 @@
     "bodyList": [
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "FullAssetName"
         },
         {
             "type": "text",
-            "position": "center",
-            "property": "AssetTypeCode"
+            "position": "left",
+            "property": "InsuredBy"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "PaidBy"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "InscoName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CoverPeriod"
         },
         {
             "type": "text",
             "position": "center",
-            "property": "CollateralValueAmt"
+            "property": "InsLength"
         },
         {
-            "type": "text",
-            "position": "center",
-            "property": "SerialNo1"
+            "type": "decimal",
+            "position": "right",
+            "property": "MainPremi"
         },
         {
-            "type": "text",
-            "position": "center",
-            "property": "SerialNo2"
+            "type": "decimal",
+            "position": "right",
+            "property": "AddPremi"
         },
         {
-            "type": "text",
-            "position": "center",
-            "property": "SerialNo4"
-        },
-        {
-            "type": "text",
-            "position": "center",
-            "property": "OwnerName"
+            "type": "decimal",
+            "position": "right",
+            "property": "Fee"
         },
         {
             "type": "action",

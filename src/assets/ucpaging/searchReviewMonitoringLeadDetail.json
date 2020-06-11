@@ -1,0 +1,201 @@
+{
+    "title": "LEAD",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "UL.ORI_OFFICE_CODE",
+            "id": "OfficeNameId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "isSelectOne": false,
+            "isQueryIn" : true,
+            "url": "http://r3app-server.ad-ins.com/Foundation_R3/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "label": "OFFICE NAME",
+            "items": [],
+            "itemsUrl": []
+        },
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "UL.LOB_CODE",
+            "id": "MrLeadSourceCodeId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "isSelectOne": false,
+            "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefLob/GetListKvpRefLob",
+            "label": "Line Of Business",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "",
+            "criteriaPropValue": ""
+        },
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": " UL.MR_CUST_MODEL_CODE",
+            "id": "MrCustModelCodeId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "isSelectOne": false,
+            "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
+            "label": "Customer Model",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "RefMasterTypeCode",
+            "criteriaPropValue": "CUST_MODEL"
+        },
+        {
+            "type": "textbox",
+            "name": "UL.CUST_NAME",
+            "id": "CustName",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder"
+        }
+    ],
+    "querystring": {
+        "select": "SELECT UL.ORI_OFFICE_CODE AS OriOfficeCode, LOB.LOB_NAME AS LobCode, UL.CUST_NO AS CustNo, UL.CUST_NAME AS CustName, CM.DESCR AS CustModel, ID.DESCR AS IdType, UL.ID_NO AS IdNo, UL.TAX_ID_NO AS TaxIdNo, UL.BIRTH_PLACE AS BirthPlace, UL.BIRTH_DT AS BirthDt, G.DESCR AS Gender, UL.MOBILE_PHN_NO_1 AS MobilePhnNo1, VUH.UPLOAD_MONITORING_H_ID AS UploadMonitoringHId",
+        "from": "FROM dbo.UPLOAD_LEAD AS UL WITH(NOLOCK) LEFT JOIN V_REF_LOB AS LOB ON UL.LOB_CODE = LOB.LOB_CODE LEFT JOIN V_REF_MASTER AS CM ON UL.MR_CUST_MODEL_CODE = CM.MASTER_CODE AND CM.REF_MASTER_TYPE_CODE = 'CUST_MODEL' LEFT JOIN V_REF_MASTER AS ID ON UL.MR_ID_TYPE_CODE = ID.MASTER_CODE AND ID.REF_MASTER_TYPE_CODE = 'ID_TYPE' LEFT JOIN V_REF_MASTER AS G ON UL.MR_GENDER_CODE = G.MASTER_CODE AND G.REF_MASTER_TYPE_CODE = 'GENDER' JOIN dbo.V_UPLOAD_MONITORING_H VUH ON UL.UPLOAD_MONITORING_NO = VUH.UPLOAD_MONITORING_NO"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "OFFICE",
+            "name": "UL.ORI_OFFICE_CODE"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "LOB",
+            "name": "UL.LOB_CODE"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "CUSTOMER NO.",
+            "name": "UL.CUST_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "CUSTOMER NAME",
+            "name": "UL.CUST_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "CUSTOMER MODEL",
+            "name": "UL.MR_CUST_MODEL_CODE"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "ID TYPE",
+            "name": "UL.MR_ID_TYPE_CODE"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "ID NO.",
+            "name": "UL.ID_NO"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "TAX ID NO.",
+            "name": "UL.TAX_ID_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "BIRTH PLACE",
+            "name": "UL.BIRTH_PLACE"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "BIRTH DATE",
+            "name": "UL.BIRTH_DT"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "GENDER",
+            "name": "UL.MR_GENDER_CODE"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "MOBILE PHONE NO.",
+            "name": "UL.MOBILE_PHN_NO_1"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "OriOfficeCode"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "LobCode"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "CustNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustModel"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "IdType"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "IdNo"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "TaxIdNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "BirthPlace"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "BirthDt"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "Gender"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "MobilePhnNo1"
+        }
+    ]
+}

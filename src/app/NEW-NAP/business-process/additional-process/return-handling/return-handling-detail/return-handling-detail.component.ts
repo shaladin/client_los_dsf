@@ -25,6 +25,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
   returnHandlingHObj: ReturnHandlingHObj;
   returnHandlingDObjs: Array<ReturnHandlingDObj>;
   taskObj: Array<KeyValueObj>;
+  BizTemplateCode: string = '';
 
   ReturnHandlingForm = this.fb.group({
     MrReturnTaskCode: ['', [Validators.required, Validators.maxLength(50)]],
@@ -45,6 +46,9 @@ export class ReturnHandlingDetailComponent implements OnInit {
       }
       if (params["WfTaskListId"] != null) {
         this.wfTaskListId = params["WfTaskListId"];
+      }
+      if (params["BizTemplateCode"] != null) {
+        this.BizTemplateCode = params["BizTemplateCode"];
       }
     });
   }
@@ -167,7 +171,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
   }
 
   async bindTaskObj(){
-    var refMasterObj = { RefMasterTypeCode: "RETURN_TASK"};
+    var refMasterObj = { RefMasterTypeCode: "RETURN_TASK", ReserveField1: this.BizTemplateCode};
     await this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
       (response) => {
         this.taskObj = response["ReturnObject"];
@@ -181,7 +185,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
   }
 
   ClaimTask(){
-    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     var wfClaimObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
     wfClaimObj.pUserID = currentUserContext["UserName"];

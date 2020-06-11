@@ -67,7 +67,7 @@
     ],
     "querystring": {
         "select": "SELECT RO.OFFICE_NAME AS OriOfficeName, L.LEAD_NO AS LeadNo, LC.CUST_NAME AS CustName, RL.LOB_NAME AS LobName, L.LEAD_DT AS LeadDt, RMSC.DESCR AS LeadSourceName, L.MR_LEAD_SOURCE_CODE AS MrLeadSourceCode, L.LEAD_STAT AS LeadStat, L.LEAD_ID AS LeadId",
-        "from": "FROM dbo.LEAD L WITH(NOLOCK) JOIN dbo.LEAD_CUST LC WITH(NOLOCK) ON L.LEAD_ID = LC.LEAD_ID LEFT JOIN V_REF_MASTER RMSC WITH(NOLOCK) ON L.MR_LEAD_SOURCE_CODE = RMSC.MASTER_CODE AND RMSC.REF_MASTER_TYPE_CODE = 'LEAD_SOURCE' LEFT JOIN V_REF_OFFICE RO WITH(NOLOCK) ON L.ORI_OFFICE_CODE = RO.OFFICE_CODE LEFT JOIN V_REF_LOB RL WITH(NOLOCK) ON L.LOB_CODE = RL.LOB_CODE AND RL.BL_CODE = 'CF4W'"
+        "from": "FROM dbo.LEAD L WITH(NOLOCK) JOIN dbo.LEAD_CUST LC WITH(NOLOCK) ON L.LEAD_ID = LC.LEAD_ID LEFT JOIN V_REF_MASTER RMSC WITH(NOLOCK) ON L.MR_LEAD_SOURCE_CODE = RMSC.MASTER_CODE AND RMSC.REF_MASTER_TYPE_CODE = 'LEAD_SOURCE' LEFT JOIN V_REF_OFFICE RO WITH(NOLOCK) ON L.ORI_OFFICE_CODE = RO.OFFICE_CODE LEFT JOIN V_REF_LOB RL WITH(NOLOCK) ON L.LOB_CODE = RL.LOB_CODE"
     },
     "headerList": [
         {
@@ -122,6 +122,7 @@
             "type" : "link",
             "position" : "left",
             "property" : "LeadNo",
+            "target" : "_blank",
             "path" : "/Lead/View",
             "param" : [
                 {
@@ -155,14 +156,7 @@
             "position": "center",
             "action": [
                 {
-                    "type": "edit",
-                    "path": "/Nap/ConsumerFinance/InputNap/NapFromLead/Detail",
-                    "param": [
-                        {
-                            "type": "LeadId",
-                            "property": "LeadId"
-                        }
-                    ]
+                    "type": "callback"
                 }
             ]
         }

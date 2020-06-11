@@ -75,6 +75,8 @@ export class ReferantorDataFL4WComponent implements OnInit {
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupVendor.json";
     this.inputLookupObj.addCritInput = this.arrAddCrit;
     this.inputLookupObj.nameSelect = this.appReferantorObj.ReferantorName;
+    this.inputLookupObj.isReady = true;
+    this.inputLookupObj.isRequired = false;
     this.NapAppReferantorForm.controls.AccountBank.disable();
   }
   
@@ -84,7 +86,7 @@ export class ReferantorDataFL4WComponent implements OnInit {
     // this.appId = tempId;
 
     // Check Data App Id
-    var url = environment.losUrl + AdInsConstant.GetAppReferantorByAppId;
+    var url = AdInsConstant.GetAppReferantorByAppId;
     var obj = {
       AppId: this.appId,
       RowVersion: "",
@@ -116,6 +118,7 @@ export class ReferantorDataFL4WComponent implements OnInit {
   }
 
   SaveData(url) {
+
     this.http.post(url, this.appReferantorObj).subscribe(
       (response) => {
         console.log(response);
@@ -128,31 +131,35 @@ export class ReferantorDataFL4WComponent implements OnInit {
 
   ClickSave() {
     console.log(this.appReferantorObj);
+    console.log(this.NapAppReferantorForm);
     var url;
     if (this.ExistedData) {
       if (this.ReferantorOn) {
         // save
         console.log("Save Existed Data");
-        url = environment.losUrl + AdInsConstant.EditAppReferantor;
+        url = AdInsConstant.EditAppReferantor;
         this.SaveData(url);
         // this.wizard.goToNextStep();
+        this.toastr.successMessage('Save Edit Data');
           this.outputTab.emit();
       } else {
         // delete & go to paging
         console.log("Delete Existed Data");
-        url = environment.losUrl + AdInsConstant.DeleteAppReferantor;
+        url = AdInsConstant.DeleteAppReferantor;
         this.SaveData(url);    
         // this.wizard.goToNextStep();
+        this.toastr.successMessage('Remove Data');
           this.outputTab.emit();
       }
     } else {
       if (this.ReferantorOn) {
         // save
         console.log("Save New Data");
-        url = environment.losUrl + AdInsConstant.AddAppReferantor;
+        url = AdInsConstant.AddAppReferantor;
         this.appReferantorObj.AppId = this.appId;
         this.SaveData(url);
         // this.wizard.goToNextStep();
+        this.toastr.successMessage('Save New Data');
         this.outputTab.emit();
       } else {
         // this.wizard.goToNextStep();
@@ -164,10 +171,15 @@ export class ReferantorDataFL4WComponent implements OnInit {
   TurnReferantor() {
     this.ReferantorOn = this.NapAppReferantorForm.controls.CheckBoxAppReferantor.value;
     // console.log(this.ReferantorOn);
-    if (this.ReferantorOn == false) {
+    if (this.ReferantorOn == false) { 
+      this.inputLookupObj.isRequired = false;
       this.NapAppReferantorForm.controls.AccountBank.disable();
+            
     } else {
-      this.NapAppReferantorForm.controls.AccountBank.enable();
+      this.NapAppReferantorForm.controls.AccountBank.enable(); 
+      this.inputLookupObj.isRequired = true;
+      this.NapAppReferantorForm.updateValueAndValidity();
+      console.log("aawd");
     }
   }
 
@@ -208,7 +220,7 @@ export class ReferantorDataFL4WComponent implements OnInit {
   }
 
   getDDLBank(VendorCode) {
-    var url = environment.FoundationR3Url + AdInsConstant.GetListVendorBankAccByVendorCode;
+    var url = AdInsConstant.GetListVendorBankAccByVendorCode;
     var obj = {
       VendorCode: VendorCode,
       RowVersion: ""

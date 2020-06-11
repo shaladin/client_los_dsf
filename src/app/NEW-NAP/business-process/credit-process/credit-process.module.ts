@@ -4,7 +4,7 @@ import { ArchwizardModule } from "angular-archwizard";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
 import { RouterModule } from "@angular/router";
-import { MatCheckboxModule, MatRadioModule, MatSelectModule } from "@angular/material";
+import { MatCheckboxModule, MatRadioModule, MatSelectModule, MatTabsModule } from "@angular/material";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { AdInsModule } from "app/components/adins-module/adins.module";
 import { CreditProcessSharingRoutingModule } from "./credit-process-routing.module";
@@ -27,7 +27,6 @@ import { ReservedFundComponent } from "./commission-reserved-fund/component/rese
 import { CommissionReservedFundDetailComponent } from "./commission-reserved-fund/comission-reserved-fund-detail/commission-reserved-fund-detail.component";
 import { FraudDetectionPagingComponent } from "./fraud-detection/fraud-detection-paging/fraud-detection-paging.component";
 import { FraudDetectionVerifComponent } from "./fraud-detection/fraud-detection-verif/fraud-detection-verif.component";
-import { TabDeviationComponent } from "./credit-investigation/component/tab-deviation/tab-deviation.component";
 import { CreditReviewMainComponent } from "./credit-review/credit-review-main/credit-review-main.component";
 import { CreditReviewPagingComponent } from "./credit-review/credit-review-paging/credit-review-paging.component";
 import { UcinputnumberModule } from "@adins/ucinputnumber";
@@ -39,11 +38,29 @@ import { UcSubsectionModule } from "@adins/uc-subsection";
 import { FraudVerificationMultiAssetComponent } from "./fraud-verification-multi-asset/fraud-verification-multi-asset.component";
 import { ViewSharingComponentModule } from "app/NEW-NAP/sharing-component/view-app-component/view-sharing-component.module";
 import { UcviewgenericModule } from "@adins/ucviewgeneric";
+import { NgxCurrencyModule } from "ngx-currency";
+import { CreditApprovalDetailComponent } from './credit-approval/credit-approval-detail/credit-approval-detail.component';
+import { ViewAppComponentModule } from "app/NEW-NAP/sharing-component/view-app-component/view-app-component.module";
+import { ViewAppFraudVerificationComponent } from "app/NEW-NAP/sharing-component/view-app-component/view-app-fraud-verification/view-app-fraud-verification.component";
+import { ViewApplicationDataMultiComponent } from "./credit-investigation/component/view-application-data-multi/view-application-data-multi.component";
+
+
+export const customCurrencyMaskConfig = {
+  align: "right",
+  allowNegative: true,
+  allowZero: true,
+  decimal: ".",
+  precision: 2,
+  prefix: "",
+  suffix: "",
+  thousands: ",",
+  nullable: false
+};
 
 @NgModule({
   exports: [
     ViewFraudDetectionResultComponent,
-    TabDeviationComponent
+    ViewAppFraudVerificationComponent
   ],
   imports: [
     CommonModule,
@@ -55,6 +72,7 @@ import { UcviewgenericModule } from "@adins/ucviewgeneric";
     ReactiveFormsModule,
     HttpModule,
     RouterModule,
+    MatTabsModule,
     MatCheckboxModule,
     MatRadioModule,
     MatSelectModule,
@@ -63,7 +81,9 @@ import { UcviewgenericModule } from "@adins/ucviewgeneric";
     UcapprovebyModule,
     UcSubsectionModule ,
     ViewSharingComponentModule,
-    UcviewgenericModule
+    UcviewgenericModule,
+    ViewAppComponentModule,
+    NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
   ],
   declarations: [
     CreditApprovalPagingComponent,
@@ -74,7 +94,6 @@ import { UcviewgenericModule } from "@adins/ucviewgeneric";
     CreditInvestigationDetailComponent,
     CreditInvestigationPagingComponent,
     TabApplicationDataComponent,
-    TabDeviationComponent,
     CustHistoryComponent,
     CommissionReservedFundPagingComponent,
     CommissionReservedFundDetailComponent,
@@ -90,7 +109,10 @@ import { UcviewgenericModule } from "@adins/ucviewgeneric";
     ViewApprovalComponent,
     CreditReviewMainComponent,
     CreditInquiryComponent, 
-    FraudVerificationMultiAssetComponent
+    FraudVerificationMultiAssetComponent, 
+    CreditApprovalDetailComponent,
+    ViewAppFraudVerificationComponent,
+    ViewApplicationDataMultiComponent
   ],
   providers: [
     NGXToastrService

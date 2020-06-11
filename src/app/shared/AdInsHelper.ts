@@ -1,5 +1,6 @@
 import { formatDate } from "@angular/common";
 import { AdInsConstant } from "app/shared/AdInstConstant";
+import { CurrentUserContext } from "./model/CurrentUserContext.model";
 
 export class AdInsHelper {
     //Function
@@ -45,8 +46,9 @@ export class AdInsHelper {
         // localStorage.removeItem("UserAccess");
         // localStorage.removeItem("Token");
         // localStorage.removeItem("Menu");
-
+        let version = localStorage.getItem("Version");
         localStorage.clear();
+        localStorage.setItem("Version",version);
     }
 
     public static ClearPageAccessLog() {
@@ -72,6 +74,20 @@ export class AdInsHelper {
         }
         return "0";
 
+    }
+
+    public static CreateUserAccess(response)
+    {
+        // var currentUserContext = new CurrentUserContext;
+        // currentUserContext.UserName = response["Identity"].UserName;
+        // currentUserContext.Office = response["Identity"].OfficeCode;
+        // currentUserContext.Role = response["Identity"].RoleCode;
+        // currentUserContext.BusinessDate = response["Identity"].BusinessDt;
+        localStorage.setItem("BusinessDateRaw",response["Identity"].BusinessDt);
+        var DateParse = formatDate(response["Identity"].BusinessDt, 'yyyy/MM/dd', 'en-US');
+        localStorage.setItem("BusinessDate", DateParse);
+        localStorage.setItem("UserAccess", JSON.stringify(response["Identity"]));
+        //localStorage.setItem("UserContext",JSON.stringify(currentUserContext));
     }
 
     public static IsGrantAccess(formPath) {

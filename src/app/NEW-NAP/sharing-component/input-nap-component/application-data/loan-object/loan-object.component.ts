@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, NgForm, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -17,26 +17,24 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./loan-object.component.scss']
 })
 export class LoanObjectComponent implements OnInit {
-
-  @Input() AppId: any;
-  @Input() mode: any;
+  @Input() AppId: number;
+  @Input() mode: string;
   modal: any;
   loanObjectInputLookupObj: any;
-  AppLoanPurposeId: any;
+  AppLoanPurposeId: number;
   supplierInputLookupObj: any;
+  title: string = "Add Loan Object";
+  objEdit: any;
+  AppLoanPurposeObj: AppLoanPurposeObj = new AppLoanPurposeObj();
+  IsDisburseToCust: boolean;
 
   MainInfoForm = this.fb.group({
     IsDisburseToCust: [false],
-    BudgetPlanAmount: [''],
-    SelfFinancing: [''],
-    FinancingAmount: [''],
-    MrLoanPurposeCode: [''],
-    SupplierCode: ['']
-
+    BudgetPlanAmount: ['', [Validators.required, Validators.min(1)]],
+    SelfFinancing: ['', [Validators.required, Validators.min(1)]],
+    FinancingAmount: ['']
   })
-  AppLoanPurposeObj: AppLoanPurposeObj;
   resultData: any;
-  title: string;
   result: any;
   closeResult: string;
 
@@ -62,13 +60,56 @@ export class LoanObjectComponent implements OnInit {
     }
   }
 
-
-  editLoanObject(id) {
-    this.AppLoanPurposeId = id;
+  async editLoanObject(id, content) {
     this.mode = "edit";
+    this.AppLoanPurposeId = id;
+    this.title = "Edit Loan Object";
+    this.MainInfoForm.controls.FinancingAmount.disable();
+
+    var obj = {
+      AppLoanPurposeId: this.AppLoanPurposeId
+    };
+
+    await this.http.post(AdInsConstant.GetAppLoanPurposeByAppLoanPurposeId, obj).toPromise().then(response => {
+      this.objEdit = response;
+      this.MainInfoForm.patchValue({
+        IsDisburseToCust: response["IsDisburseToCust"],
+        BudgetPlanAmount: response["BudgetPlanAmt"],
+        SelfFinancing: response["SelfFinancingAmt"],
+        FinancingAmount: response["FinancingAmt"],
+        MrLoanPurposeCode: response["MrLoanPurposeCode"],
+        SupplierCode: response["SupplCode"],
+        SupplierName: response["SupplName"]
+      });
+      this.AppLoanPurposeObj.MrLoanPurposeCode = this.objEdit.MrLoanPurposeCode;
+      this.AppLoanPurposeObj.SupplCode = this.objEdit.SupplCode;
+      this.setLookup();
+    })
+
+    this.modal = this.modalService.open(content);
+    this.modal.result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+      this.modal.close();
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      this.modal.close();
+    });
   }
 
   open(content) {
+    this.mode = "add";
+    this.objEdit = undefined;
+    this.setLookup();
+    this.MainInfoForm.patchValue({
+      IsDisburseToCust: "",
+      BudgetPlanAmount: 0,
+      SelfFinancing: 0,
+      FinancingAmount: 0,
+      MrLoanPurposeCode: "",
+      SupplierCode: "",
+    });
+
+
     this.modal = this.modalService.open(content);
     this.modal.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -81,20 +122,32 @@ export class LoanObjectComponent implements OnInit {
 
   ngOnInit() {
     this.loadDataTable();
+    this.setLookup();
+    this.MainInfoForm.controls.FinancingAmount.disable();
+  }
+  
+  CalculateFinancingAmt(){
+    var BudgetPlanAmt = this.MainInfoForm.controls.BudgetPlanAmount.value;
+    var SelfFinancingAmt = this.MainInfoForm.controls.SelfFinancing.value;
+
+    if (SelfFinancingAmt > BudgetPlanAmt) {
+      this.toastr.errorMessage("Self Financing Amount Must Be Lower Than Budget Plan Amount!");
+      return;
+    }
+
+    var FinancingAmt = BudgetPlanAmt - SelfFinancingAmt;
+    this.MainInfoForm.patchValue({
+      FinancingAmount: FinancingAmt
+    })
+  }
+
+  setLookup() {
     this.loanObjectInputLookupObj = new InputLookupObj();
     this.loanObjectInputLookupObj.urlJson = "./assets/uclookup/NAP/lookupLoanObject.json";
     this.loanObjectInputLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
     this.loanObjectInputLookupObj.urlEnviPaging = environment.losUrl;
     this.loanObjectInputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupLoanObject.json";
     this.loanObjectInputLookupObj.genericJson = "./assets/uclookup/NAP/lookupLoanObject.json";
-    this.loanObjectInputLookupObj.isRequired = false;
-    this.loanObjectInputLookupObj.addCritInput = new Array();
-
-    var critMasterObj = new CriteriaObj();
-    critMasterObj.propName = 'REF_MASTER_TYPE_CODE';
-    critMasterObj.restriction = AdInsConstant.RestrictionEq;
-    critMasterObj.value = "LOAN_PURPOSE";
-    this.loanObjectInputLookupObj.addCritInput.push(critMasterObj);
 
     this.supplierInputLookupObj = new InputLookupObj();
     this.supplierInputLookupObj.urlJson = "./assets/uclookup/NAP/lookupSupplier.json";
@@ -102,98 +155,96 @@ export class LoanObjectComponent implements OnInit {
     this.supplierInputLookupObj.urlEnviPaging = environment.FoundationR3Url;
     this.supplierInputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupSupplier.json";
     this.supplierInputLookupObj.genericJson = "./assets/uclookup/NAP/lookupSupplier.json";
+    
+    var arrCrit = new Array<CriteriaObj>();
+    const addCrit = new CriteriaObj();
+    addCrit.DataType = 'text';
+    addCrit.propName = 'v.MR_VENDOR_CATEGORY_CODE';
+    addCrit.restriction = AdInsConstant.RestrictionEq;
+    addCrit.value = 'SUPPLIER_BRANCH';
+    arrCrit.push(addCrit);
 
-    if (this.mode == "edit") {
-      this.title = "Edit Loan Object";
-      var appLoanPurposeObj = new AppLoanPurposeObj();
-      appLoanPurposeObj.AppLoanPurposeId = this.AppLoanPurposeId;
+    this.supplierInputLookupObj.addCritInput = arrCrit;
 
-      this.http.post(AdInsConstant.GetAppLoanPurposeByAppLoanPurposeId, appLoanPurposeObj).subscribe(
-        (response) => {
-          this.result = response;
-          this.MainInfoForm.patchValue({
-            IsDisburseToCust: this.result.IsDisburseToCust,
-            BudgetPlanAmount: this.result.BudgetPlanAmt,
-            SelfFinancing: this.result.SelfFinancingAmt,
-            FinancingAmount: this.result.FinancingAmt
-          })
-          this.supplierInputLookupObj.jsonSelect = { VendorCode: this.result.SupplCode };
-          this.loanObjectInputLookupObj.jsonSelect = { MasterCode: this.result.MrLoanPurposeCode };
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+    if (this.objEdit != null) {
+      this.loanObjectInputLookupObj.jsonSelect = { Descr: this.objEdit.MrLoanPurposeDescr };
+      this.supplierInputLookupObj.jsonSelect = {VendorName: this.objEdit.SupplName};
+    } else {
+      this.loanObjectInputLookupObj.jsonSelect = { Descr: "" };
+      this.supplierInputLookupObj.jsonSelect = { VendorName: "" };
     }
-
   }
 
   getSupplierInputLookupValue(event) {
-    this.MainInfoForm.patchValue({
-      SupplierCode: event.VendorCode
-    });
+    this.AppLoanPurposeObj.SupplCode = event.VendorCode;
   }
 
   getLoanInputLookupValue(event) {
-    this.MainInfoForm.patchValue({
-      MrLoanPurposeCode: event.MrLoanPurposeCode
-    })
+    this.AppLoanPurposeObj.MrLoanPurposeCode = event.MasterCode;
   }
 
-  SaveForm() {
-    if (this.mode == "edit") {
-      this.AppLoanPurposeObj = new AppLoanPurposeObj();
-      this.AppLoanPurposeObj.AppId = this.AppId;
-      this.AppLoanPurposeObj.BudgetPlanAmt = this.MainInfoForm.controls.BudgetPlanAmount.value;
-      this.AppLoanPurposeObj.FinancingAmt = this.MainInfoForm.controls.FinancingAmount.value;
-      this.AppLoanPurposeObj.IsDisburseToCust = this.MainInfoForm.controls.IsDisburseToCust.value;
-      this.AppLoanPurposeObj.SelfFinancingAmt = this.MainInfoForm.controls.SelfFinancing.value;
-      this.AppLoanPurposeObj.MrLoanPurposeCode = this.MainInfoForm.controls.MrLoanPurposeCode.value;
-      // this.AppLoanPurposeObj.MrLoanPurposeCode = "testing";
+  SaveForm(enjiForm:NgForm) {
+    this.AppLoanPurposeObj.AppId = this.AppId;
+    if(this.MainInfoForm.controls.IsDisburseToCust.value == true){
+      this.AppLoanPurposeObj.IsDisburseToCust = true;
+    }else{
+      this.AppLoanPurposeObj.IsDisburseToCust = false;
+    }
+    this.AppLoanPurposeObj.BudgetPlanAmt = this.MainInfoForm.controls.BudgetPlanAmount.value;
+    this.AppLoanPurposeObj.SelfFinancingAmt = this.MainInfoForm.controls.SelfFinancing.value;
+    this.AppLoanPurposeObj.FinancingAmt = this.MainInfoForm.controls.FinancingAmount.value;
 
-      this.AppLoanPurposeObj.SupplCode = this.MainInfoForm.controls.SupplierCode.value;
-      this.AppLoanPurposeObj.RowVersion = this.result.RowVersion;
+    if (this.mode == "edit") {
+      this.AppLoanPurposeObj.AppLoanPurposeId = this.objEdit.AppLoanPurposeId;
+      this.AppLoanPurposeObj.RowVersion = this.objEdit.RowVersion;
       this.http.post(AdInsConstant.EditAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
         (response) => {
+          this.modal.close();
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(['/Nap/ApplicationDataRefinancing'], { queryParams: { "AppId": this.AppId } });
+          enjiForm.reset();
+          this.loadDataTable();
         },
         (error) => {
           console.log(error);
         });
     }
     else {
-      this.AppLoanPurposeObj = new AppLoanPurposeObj();
-      this.AppLoanPurposeObj.AppId = this.AppId;
-      this.AppLoanPurposeObj.BudgetPlanAmt = this.MainInfoForm.controls.BudgetPlanAmount.value;
-      this.AppLoanPurposeObj.IsDisburseToCust = this.MainInfoForm.controls.IsDisburseToCust.value;
-      this.AppLoanPurposeObj.FinancingAmt = this.MainInfoForm.controls.FinancingAmount.value;
-      this.AppLoanPurposeObj.MrLoanPurposeCode = this.MainInfoForm.controls.MrLoanPurposeCode.value;
-      this.AppLoanPurposeObj.SupplCode = this.MainInfoForm.controls.SupplierCode.value;
-
       this.http.post(AdInsConstant.AddAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
         (response) => {
+          this.modal.close();
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(['/Nap/ApplicationDataRefinancing'], { queryParams: { "AppId": this.AppId } });
+          enjiForm.reset();
+          this.loadDataTable();
         },
         (error) => {
           console.log(error);
         });
     }
-    this.loadDataTable();
   }
 
-  loadDataTable() {
-    this.AppLoanPurposeObj = new AppLoanPurposeObj();
-    this.AppLoanPurposeObj.AppId = this.AppId;
+  deleteLoanObject(AppLoanPurposeId) {
+    if (confirm("Are you sure to delete this record?")) {
+      var obj = {
+        AppLoanPurposeId: AppLoanPurposeId
+      };
 
-    console.log(this.AppLoanPurposeObj);
-    this.http.post(AdInsConstant.GetListAppLoanPurposeByAppId, this.AppLoanPurposeObj).subscribe(
+      this.http.post(AdInsConstant.DeleteAppLoanPurpose, obj).subscribe(response => {
+        this.toastr.successMessage(response["Message"]);
+        this.loadDataTable();
+      },
+        error => {
+          console.log(error);
+        });
+    }
+  }
+  
+  loadDataTable() {
+    var obj = {
+      AppId: this.AppId
+    }
+    this.http.post(AdInsConstant.GetListAppLoanPurposeByAppId, obj).subscribe(
       (response) => {
-        console.log("ResponseLoadDataTable")
-        console.log(response);
         this.resultData = response["listResponseAppLoanPurpose"];
-        console.log(this.resultData)
       },
       (error) => {
         console.log(error);
@@ -201,4 +252,14 @@ export class LoanObjectComponent implements OnInit {
     );
   }
 
+  CheckIsDisburseToCust(){
+    if(this.MainInfoForm.controls.IsDisburseToCust.value == true){
+      this.supplierInputLookupObj.isRequired = false;
+      this.MainInfoForm.controls.lookupValueSupplier.clearValidators()
+    }else{
+      this.supplierInputLookupObj.isRequired = true;
+      this.MainInfoForm.controls.lookupValueSupplier.setValidators(Validators.required)
+    }
+    this.MainInfoForm.updateValueAndValidity();
+  }
 }

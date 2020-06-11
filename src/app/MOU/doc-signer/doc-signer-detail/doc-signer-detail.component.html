@@ -11,8 +11,8 @@
                     <div id="mainInfo">
                         <div class="form-group row">
                             <label class="col-md-3 adInsLabel adins-required" translate>MoU No </label>
-                            <div class="col-md-3">
-                                <a href="{{mouUrl}}"><label class="adInsLabel" style="color: blue; cursor: pointer;" translate>{{returnMouCust?.MouCustNo}}</label></a>
+                            <div class="col-md-3"> 
+                                <a href="{{mouUrl}}" target="_blank">{{returnMouCust?.MouCustNo}}</a>
                             </div>
                             <label class="col-md-3 adInsLabel adins-required" translate>MoU Date </label>
                             <div class="col-md-3">
@@ -21,8 +21,8 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 adInsLabel adins-required" translate>Customer Name </label>
-                            <div class="col-md-3">
-                                <label class="adInsLabel" translate>{{returnMouCust?.CustName}}</label>
+                            <div class="col-md-3"> 
+                                <a href="{{custUrl}}" target="_blank">{{returnMouCust?.CustName}}</a>
                             </div>
                             <label class="col-md-3 adInsLabel adins-required" translate>MoU Type </label>
                             <div class="col-md-3">
@@ -99,11 +99,10 @@
                             <label class="col-md-3 adInsLabel adins-required-label" translate>Customer Signer 1 </label>
                             <div class="col-md-4">
                                 <lib-uclookupgeneric *ngIf="MrCustTypeCode == 'PERSONAL'" [lookupInput]="customerLookUpObj1" [parentForm]="MouCustSignerForm"
-                                [enjiForm]="enjiForm" [identifier]="'CustName1'"  (lookup)=getLookUpCustomer1($event)>
+                                [enjiForm]="enjiForm" [identifier]="'CustName1'" (lookup)=getLookUpCustomer1($event)>
                                 </lib-uclookupgeneric>
-
                                 <lib-uclookupgeneric *ngIf="MrCustTypeCode == 'COMPANY'" [lookupInput]="custShareholderLookUpObj1" [parentForm]="MouCustSignerForm"
-                                [enjiForm]="enjiForm" [identifier]="'CustName1'" (lookup)=getLookUpShareholder1($event)>
+                                [enjiForm]="enjiForm" [identifier]="'CustName1'" #LookupShareHolder1 (lookup)=getLookUpShareholder1($event)>
                                 </lib-uclookupgeneric>
                             </div>
                         </div>
@@ -115,19 +114,15 @@
                             <lib-uc-show-errors  [control]="MouCustSignerForm.controls.CustSignerPosition1" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                             </div>
                         </div>
-                        <div class="form-group row">
+                        <div *ngIf="MrCustTypeCode == 'COMPANY'" class="form-group row">
                             <label class="col-md-3 adInsLabel adins-required" translate>Customer Signer 2 </label>
                             <div class="col-md-4">
-                                <lib-uclookupgeneric *ngIf="MrCustTypeCode == 'PERSONAL'" [lookupInput]="customerLookUpObj2" [parentForm]="MouCustSignerForm"
-                                [enjiForm]="enjiForm" [identifier]="'CustName2'" (lookup)=getLookUpCustomer2($event)>
-                                </lib-uclookupgeneric>
-
-                                <lib-uclookupgeneric *ngIf="MrCustTypeCode == 'COMPANY'" [lookupInput]="custShareholderLookUpObj2" [parentForm]="MouCustSignerForm"
-                                [enjiForm]="enjiForm" [identifier]="'CustName2'" (lookup)=getLookUpShareholder2($event)>
+                                <lib-uclookupgeneric  [lookupInput]="custShareholderLookUpObj2" [parentForm]="MouCustSignerForm"
+                                [enjiForm]="enjiForm" [identifier]="'CustName2'" #LookupShareHolder2 (lookup)=getLookUpShareholder2($event)>
                                 </lib-uclookupgeneric>
                             </div>
                         </div>
-                        <div class="form-group row">
+                        <div *ngIf="MrCustTypeCode == 'COMPANY'" class="form-group row">
                             <label class="col-md-3 adInsLabel adins-required" translate>Customer Signer Position 2 </label>
                             <div class="col-md-4">
                             <input type="text" class="form-control adInsInput" formControlName="CustSignerPosition2"

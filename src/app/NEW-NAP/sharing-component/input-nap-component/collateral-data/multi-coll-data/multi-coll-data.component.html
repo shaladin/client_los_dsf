@@ -1,0 +1,20 @@
+<div *ngIf="!IsDetail">
+  <!-- <div class="ucSearch-Button-Right"> -->
+  <div class="text-right">
+    <span class="mr-1">
+      <button type="button" class="btn btn-raised btn-warning mr-1" (click)="OpenDetail()" translate>
+        <i class="ft-plus-circle"></i> Add Collateral
+      </button>
+    </span>
+  </div>
+
+  <app-multi-collateral-paging [AppId]="AppId" (select)="OpenDetail($event)" (list)="GetList($event)">
+  </app-multi-collateral-paging>
+
+  <div class="col-md-12" style="padding: 0; text-align: right;">
+    <button type="submit" class="btn btn-raised btn-primary" (click)="Next()" translate>
+      <i class="fa fa-check-square"></i> Save  
+    </button>
+  </div>
+</div>
+<app-collateral-detail *ngIf="IsDetail" [mode]="mode" [AppId]="AppId" [AppCollateralId]="AppCollateralId" [isSingleAsset]="false" (outputValue)="CloseDetail($event)"></app-collateral-detail>

@@ -561,10 +561,17 @@ copyToLocationAddr() {
     this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpName = this.AssetDataForm.controls["SalesPersonName"].value;
     this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpNo = this.AssetDataForm.controls["SalesPersonNo"].value;
     this.allAssetDataObj.AppAssetSupplEmpSalesObj.MrSupplEmpPositionCode = "SALES_PERSON";
-
-    this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpName = this.AssetDataForm.controls["BranchManagerName"].value;
-    this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpNo = this.AssetDataForm.controls["BranchManagerNo"].value;
-    this.allAssetDataObj.AppAssetSupplEmpManagerObj.MrSupplEmpPositionCode = "BRANCH_MANAGER";
+    
+    if(this.AssetDataForm.controls["BranchManagerName"].value == "")
+    {
+      this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpName = "-";
+      this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpNo = "-";
+      this.allAssetDataObj.AppAssetSupplEmpManagerObj.MrSupplEmpPositionCode = "-";
+    } else {
+      this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpName = this.AssetDataForm.controls["BranchManagerName"].value;
+      this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpNo = this.AssetDataForm.controls["BranchManagerNo"].value;
+      this.allAssetDataObj.AppAssetSupplEmpManagerObj.MrSupplEmpPositionCode = AdInsConstant.BRANCH_MANAGER_JOB_CODE;
+    }
   }
 
   // MrDownPaymentTypeCode:[''],
@@ -602,7 +609,7 @@ copyToLocationAddr() {
     this.allAssetDataObj.AppAssetObj.IsInsurance = true;
 
     this.allAssetDataObj.AppCollateralObj.AppId = this.AppId;
-    this.allAssetDataObj.AppCollateralObj.CollateralSeqNo = "1";
+    this.allAssetDataObj.AppCollateralObj.CollateralSeqNo = 1;
     this.allAssetDataObj.AppCollateralObj.FullAssetCode = this.AssetDataForm.controls["FullAssetCode"].value;
     this.allAssetDataObj.AppCollateralObj.FullAssetName = this.AssetDataForm.controls["FullAssetName"].value;
     this.allAssetDataObj.AppCollateralObj.MrCollateralConditionCode = this.AssetDataForm.controls["MrAssetConditionCode"].value;
@@ -644,22 +651,51 @@ copyToLocationAddr() {
   }
 
   SaveForm() {
-    this.allAssetDataObj = new AllAssetDataObj();
-    this.setSupplierInfo();
-    this.setAssetInfo();
-    this.setAssetUser();
-    this.setAssetLocation();
-    this.http.post(this.addEditAllAssetDataUrl, this.allAssetDataObj).subscribe(
-      (response) => {
-        console.log(response);
-        this.toastr.successMessage(response["message"]);
-        //this.router.navigate(["/Nap/AssetData/Paging"]);
-        this.assetValue.emit({mode : 'paging'});
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    if(this.mode == 'addAsset')
+    {
+      this.allAssetDataObj = new AllAssetDataObj();
+      this.setSupplierInfo();
+      this.setAssetInfo();
+      this.setAssetUser();
+      this.setAssetLocation();
+      this.allAssetDataObj.AppAssetObj.AppAssetId = 0;
+      this.http.post(this.addEditAllAssetDataUrl, this.allAssetDataObj).subscribe(
+        (response) => {
+          console.log(response);
+          this.toastr.successMessage(response["message"]);
+          //this.router.navigate(["/Nap/AssetData/Paging"]);
+          this.assetValue.emit({mode : 'paging'});
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+    else
+    {
+      this.allAssetDataObj = new AllAssetDataObj();
+      this.setSupplierInfo();
+      this.setAssetInfo();
+      this.setAssetUser();
+      this.setAssetLocation();
+      this.allAssetDataObj.AppAssetObj.RowVersion = this.returnAppAssetObj.RowVersion;
+      this.allAssetDataObj.AppCollateralObj.RowVersion = this.returnAppCollateralObj.RowVersion;
+      this.allAssetDataObj.AppCollateralRegistrationObj.RowVersion = this.returnAppCollateralRegistObj.RowVersion;
+      this.allAssetDataObj.AppAssetObj.AppAssetId = this.AppAssetId;
+      this.allAssetDataObj.AppCollateralObj.AppCollateralId = this.returnAppCollateralObj.AppCollateralId;
+      this.allAssetDataObj.AppCollateralRegistrationObj.AppCollateralRegistrationId = this.returnAppCollateralRegistObj.AppCollateralRegistrationId;
+      this.http.post(this.addEditAllAssetDataUrl, this.allAssetDataObj).subscribe(
+        (response) => {
+          console.log(response);
+          this.toastr.successMessage(response["message"]);
+          //this.router.navigate(["/Nap/AssetData/Paging"]);
+          this.assetValue.emit({mode : 'paging'});
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
   }
 
   // editItem(custAddrObj: any) {

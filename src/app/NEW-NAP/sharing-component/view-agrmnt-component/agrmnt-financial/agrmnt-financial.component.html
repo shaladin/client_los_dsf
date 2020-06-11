@@ -8,7 +8,7 @@
             Name
           </span>
         </th>
-        <th style="text-align: center;"><span class="thead-header" name="MrSubsidyFromValueName" translate>From Value
+        <th style="text-align: left;"><span class="thead-header" name="MrSubsidyFromValueName" translate>From Value
             Name
           </span>
         </th>
@@ -20,7 +20,7 @@
           Source
         </span>
         </th>
-        <th style="text-align: center;"><span class="thead-header" name="SubsidyAmt" translate>Subsidy Value
+        <th style="text-align: right;"><span class="thead-header" name="SubsidyAmt" translate>Subsidy Value
           </span>
         </th>
       </tr>
@@ -33,10 +33,10 @@
     <tbody *ngIf = "listSubsidy != undefined">
       <tr *ngFor="let item of listSubsidy; let i = index">
         <td style="text-align: center;">{{item.MrSubdFromTypeCode}}</td>
-        <td style="text-align: center;">{{item.MrSubdFromValueCode}}</td>
+        <td style="text-align: left;">{{item.MrSubdFromValueCode}}</td>
         <td style="text-align: center;">{{item.MrSubdAllocCode}}</td>
         <td style="text-align: center;">{{item.MrSubdSourceCode}}</td>
-        <td style="text-align: center;">{{item.SubsidyAmt | number : '1.2-2' }}</td>
+        <td style="text-align: right;">{{item.SubsidyAmt | number : '1.2-2' }}</td>
       </tr>
     </tbody>
   </table>
@@ -327,7 +327,7 @@
     <div class="col-md-6">
       <div class="row">
         <div class="col-md-6">
-          <label class="adInsLabel"> Diff Rate Amount  (Commission Amount) </label>
+          <label class="adInsLabel"> Diff Rate Amount</label>
         </div>
         <div class="col-md-6">
           <label class="adInsLabel"> {{agrmntFinDataObj?.DiffRateAmt | number:'.2':'en-US'}} </label>
@@ -363,23 +363,23 @@
             No
           </span>
         </th>
-        <th style="text-align: center;"><span class="thead-header" name="MrSubsidyFromValueName" translate>
+        <th style="text-align: right;"><span class="thead-header" name="MrSubsidyFromValueName" translate>
           Installment Amount  
           </span>
         </th>
-        <th style="text-align: center;"><span class="thead-header" name="MrSubsidyAllocName" translate>
+        <th style="text-align: right;"><span class="thead-header" name="MrSubsidyAllocName" translate>
           Principal Amount
           </span>
         </th>
-        <th style="text-align: center;"><span class="thead-header" name="MrSubsidyValueTypeName" translate>
+        <th style="text-align: right;"><span class="thead-header" name="MrSubsidyValueTypeName" translate>
           Interest Amount
           </span>
         </th>
-        <th style="text-align: center;"><span class="thead-header" name="SubsidyPrcnt" translate>
+        <th style="text-align: right;"><span class="thead-header" name="SubsidyPrcnt" translate>
           Os Principal Amount
         </span>
         </th>
-        <th style="text-align: center;"><span class="thead-header" name="SubsidyAmt" translate>
+        <th style="text-align: right;"><span class="thead-header" name="SubsidyAmt" translate>
           Os Interest Amount  
         </span>
         </th>

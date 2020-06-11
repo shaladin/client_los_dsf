@@ -1,5 +1,5 @@
 {
-    "title": "Purchase Order Paging",
+    "title": "Agreement Activation Paging",
     "exportExcel": false,
     "component": [
         {
@@ -34,7 +34,7 @@
             "value": "",
             "placeholder": "Placeholder",
             "isFromURL": true,
-            "isSelectOne": true,
+            "isSelectOne": false,
             "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
             "label": "Distribution Status",
             "criteriaPropName": "RefMasterTypeCode",
@@ -58,7 +58,7 @@
             "value": "",
             "placeholder": "Placeholder",
             "isFromURL": true,
-            "isSelectOne": true,
+            "isSelectOne": false,
             "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefMaster/GetListKeyValueActiveByCode",
             "label": "Task Claim Status",
             "criteriaPropName": "RefMasterTypeCode",
@@ -68,7 +68,7 @@
           }
     ],
     "querystring": {
-        "select": "SELECT A.APP_NO,AC.CUST_NAME as CustName, A.PROD_OFFERING_NAME as ProdOfferingName, WF.USERNAME as ClaimBy, WF.WF_TASK_LIST_ID as WFTaskListId, WF.TRANSACTION_CODE as TrxNo",
+        "select": "SELECT A.APP_NO AS AppNo, A.APP_ID AS AppId, AC.CUST_NAME as CustName, A.PROD_OFFERING_NAME as ProdOfferingName, WF.USERNAME as ClaimBy, WF.WF_TASK_LIST_ID as WFTaskListId, WF.TRANSACTION_CODE as TrxNo",
         "from": "FROM APP A WITH(NOLOCK) JOIN APP_CUST AC ON A.APP_ID = AC.APP_ID JOIN V_WF_TASK_LIST WF WITH(NOLOCK) ON A.APP_NO = WF.TRANSACTION_CODE",
         "where" : "WHERE WF.END_EXECUTING_DATE IS NULL"
     },
@@ -127,10 +127,18 @@
             "property": "ClaimBy"
         },
         {
-            "type": "text",
+            "type": "link",
             "position": "left",
-            "property": "AppNo"
-        },
+            "property": "AppNo",
+            "target": "_blank",
+            "path": "/Nap/View/AppView",
+            "param": [
+              {
+                "type": "AppId",
+                "property": "AppId"
+              }
+            ]
+          },
         {
             "type": "text",
             "position": "left",
@@ -142,16 +150,21 @@
             "property": "ProdOfferingName"
         },
         {
+            "type": "text",
+            "position": "left",
+            "property": ""
+        },
+        {
             "type": "action",
             "position": "center",
             "action": [
                 {
                     "type": "edit",
-                    "path": "/AdminProcess/PurchaseOrder/PO",
+                    "path": "/Nap/AdminProcess/AgrmntActivation/Detail",
                     "param": [
                         {
-                            "type": "AgrmntId",
-                            "property": "AgrmntId"
+                            "type": "AppId",
+                            "property": "AppId"
                         },
                         {
                             "type" : "WFTaskListId",

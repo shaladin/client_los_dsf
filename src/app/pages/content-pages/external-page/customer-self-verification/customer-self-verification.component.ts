@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import Stepper from 'bs-stepper';
+import { LeadObj } from 'app/shared/model/Lead.Model';
 
 @Component({
   selector: 'app-customer-self-verification',
@@ -15,11 +16,14 @@ export class CustomerSelfVerificationComponent implements OnInit {
   private stepper: Stepper;
   LeadId: any;
   LobCode: string;
+  LeadStep: string = 'SVR';
   isCustData: boolean;
   isLeadData: boolean;
+  leadObj: LeadObj;
   viewLeadHeaderMainInfo : any;
   WfTaskListId: any;
-
+  reason : string;
+  AppStepIndex :number =1;
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       this.LeadId = params["LeadId"];
@@ -34,15 +38,28 @@ export class CustomerSelfVerificationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.claimTask();
     this.viewLeadHeaderMainInfo = "./assets/ucviewgeneric/viewLeadHeader.json";
+    this.leadObj = new LeadObj;
+    this.leadObj.LeadId = this.LeadId;
+    this.http.post(AdInsConstant.GetLeadByLeadId, this.leadObj).subscribe(
+      (response) => { 
+        this.LeadStep = response["LeadStep"];
+        console.log(this.LeadStep);
+         if (this.LeadStep != "SVR"){
+          this.reason = "resubmit"; 
+         }else{ 
+          this.claimTask(); 
+          this.stepper = new Stepper(document.querySelector('#stepper1'), {
+            linear: false,
+            animation: true
+          })
+          this.EnterTab('custData');
+          this.stepper.to(1);
+         }
 
-    this.stepper = new Stepper(document.querySelector('#stepper1'), {
-      linear: false,
-      animation: true
-    })
-    this.EnterTab('custData');
-    this.stepper.to(1);
+      });
+
+  
   }
 
   EnterTab(type) {
@@ -50,17 +67,19 @@ export class CustomerSelfVerificationComponent implements OnInit {
     {
       this.isCustData = true;
       this.isLeadData = false;
+      this.AppStepIndex = 1;
     }
     else if (type == 'leadData')
     {
       this.isCustData = false;
       this.isLeadData = true;
+      this.AppStepIndex = 2;
     }
   }
 
   async claimTask()
   {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: "adins"};
     console.log(wfClaimObj);
     this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
@@ -80,5 +99,14 @@ export class CustomerSelfVerificationComponent implements OnInit {
       else
         this.stepper.previous();
     }
+  }
+  getPage(ev)
+  { 
+      if (ev.pageType == "submit")
+      {
+        this.reason = "submit";
+        this.LeadStep = "";
+      }
+      
   }
 }

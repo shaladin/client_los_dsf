@@ -4,23 +4,23 @@
   <table class="table table-responsive-md text-center table-hover">
     <thead>
       <tr class="table-header">
-        <th style="text-align: center;"><span class="thead-header" name="MrSubsidyFromTypeName" translate>From Type
+        <th style="text-align: left;"><span class="thead-header" name="MrSubsidyFromTypeName" translate>From Type
             Name
           </span>
         </th>
-        <th style="text-align: center;"><span class="thead-header" name="MrSubsidyFromValueName" translate>From Value
+        <th style="text-align: left;"><span class="thead-header" name="MrSubsidyFromValueName" translate>From Value
             Name
           </span>
         </th>
-        <th style="text-align: center;"><span class="thead-header" name="MrSubsidyAllocName" translate>Subsidy
+        <th style="text-align: left;"><span class="thead-header" name="MrSubsidyAllocName" translate>Subsidy
             Allocation
           </span>
         </th>
-        <th style="text-align: center;"><span class="thead-header" name="MrSubsidySourceName" translate>Subsidy
+        <th style="text-align: left;"><span class="thead-header" name="MrSubsidySourceName" translate>Subsidy
           Source
         </span>
         </th>
-        <th style="text-align: center;"><span class="thead-header" name="MrSubsidyValueTypeName" translate>Subsidy
+        <th style="text-align: left;"><span class="thead-header" name="MrSubsidyValueTypeName" translate>Subsidy
             Value Type
           </span>
         </th>
@@ -36,12 +36,12 @@
     </tbody>
     <tbody *ngIf = "listSubsidy != undefined">
       <tr *ngFor="let item of listSubsidy; let i = index">
-        <td style="text-align: center;">{{item.MrSubsidyFromTypeName}}</td>
-        <td style="text-align: center;">{{item.MrSubsidyFromValueName}}</td>
-        <td style="text-align: center;">{{item.MrSubsidyAllocName}}</td>
-        <td style="text-align: center;">{{item.MrSubsidySourceName}}</td>
-        <td style="text-align: center;">{{item.MrSubsidyValueTypeName}}</td>
-        <td style="text-align: center;">{{item.SubsidyAmt | number : '1.2-2' }}</td>
+        <td style="text-align: left;">{{item.MrSubsidyFromTypeName}}</td>
+        <td style="text-align: left;">{{item.MrSubsidyFromValueName}}</td>
+        <td style="text-align: left;">{{item.MrSubsidyAllocName}}</td>
+        <td style="text-align: left;">{{item.MrSubsidySourceName}}</td>
+        <td style="text-align: left;">{{item.MrSubsidyValueTypeName}}</td>
+        <td style="text-align: right;">{{item.SubsidyAmt | number : '1.2-2' }}</td>
       </tr>
     </tbody>
   </table>
@@ -53,16 +53,16 @@
     <div class="col-md-12" *ngFor="let item of listAppFeeObj">
       <div class="row">
         <div class="col-md-3">
-          <label class="adInsLabel"> {{item.FeeTypeName}} </label>
+          <label class="adInsLabel" style="text-align: right;"> {{item.FeeTypeName}} </label>
         </div>
         <div class="col-md-3">
-          <label class="adInsLabel"> {{item.AppFeeAmt | number:'.2':'en-US'}} </label>
+          <label class="adInsLabel" style="text-align: right;"> {{item.AppFeeAmt | number:'.2':'en-US'}} </label>
         </div>
         <div class="col-md-3">
-          <label class="adInsLabel"> {{item.FeeTypeName + ' Capitalized Amount'}} </label>
+          <label class="adInsLabel" style="text-align: right;"> {{item.FeeTypeName + ' Capitalized Amount'}} </label>
         </div>
         <div class="col-md-3">
-          <label class="adInsLabel"> {{item.FeeCapitalizeAmt | number:'.2':'en-US'}} </label>
+          <label class="adInsLabel" style="text-align: right;"> {{item.FeeCapitalizeAmt | number:'.2':'en-US'}} </label>
         </div>
       </div>
     </div>
@@ -126,7 +126,7 @@
           <label class="adInsLabel"> Total Insurance Premi Capitalized </label>
         </div>
         <div class="col-md-6">
-          <label class="adInsLabel"> {{appFinDataObj?.InsCptlzAmt | number:'.2':'en-US'}} </label>
+          <label class="adInsLabel">{{appFinDataObj?.InsCptlzAmt | number:'.2':'en-US'}} </label>
         </div>
       </div>
     </div>
@@ -302,7 +302,7 @@
           <label class="adInsLabel"> Balloon Value Amount </label>
         </div>
         <div class="col-md-6">
-          <label class="adInsLabel"> {{appFinDataObj?.BalloonValueAmt}} </label>
+          <label class="adInsLabel"> {{appFinDataObj?.BalloonValueAmt | number:'.2':'en-US'}} </label>
         </div>
       </div>
     </div>
@@ -332,7 +332,7 @@
     <div class="col-md-6">
       <div class="row">
         <div class="col-md-6">
-          <label class="adInsLabel"> Diff Rate Amount  (Commission Amount) </label>
+          <label class="adInsLabel"> Diff Rate Amount </label>
         </div>
         <div class="col-md-6">
           <label class="adInsLabel"> {{appFinDataObj?.DiffRateAmt | number:'.2':'en-US'}} </label>

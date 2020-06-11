@@ -18,8 +18,8 @@
                 <lib-uclookupgeneric [lookupInput]="inputLookupCust" [parentForm]='MOUMainInfoForm' [enjiForm]='enjiForm' [identifier]="'CustLookup'"
                     (lookup)="getCustLookupResponse($event)"></lib-uclookupgeneric>
               </div>
-              <div class="col-md-9" *ngIf="pageType == 'edit'" style="padding: 0;">
-                <div class="col-md-9 adInsLabel">{{MOUMainInfoForm.controls.CustName.value}}</div>
+              <div class="col-md-9" *ngIf="pageType == 'edit'"> 
+                <a href="{{custUrl}}" target="_blank">{{MOUMainInfoForm.controls.CustName.value}}</a>
               </div>
             </div>
             <div class="form-group row">
@@ -63,9 +63,12 @@
             <div class="form-group row">
               <label class="col-md-3 adInsLabel adins-required-label" for="PlafondAmt" translate>Plafond Amount</label>
               <div class="col-md-4">
-                <input type="" currencyMask class="form-control adInsInput" formControlName="PlafondAmt" 
+                <input type="" currencyMask class="form-control adInsInput"  min="0"  formControlName="PlafondAmt" 
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && MOUMainInfoForm.controls.PlafondAmt.invalid }" />
-                <lib-uc-show-errors [control]="MOUMainInfoForm.controls.PlafondAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                <lib-uc-show-errors [control]="MOUMainInfoForm.controls.PlafondAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors>  
+                <!-- <lib-ucinputnumber   [parentForm]="MOUMainInfoForm" [identifier]="'PlafondAmt'"
+                [enjiForm]="enjiForm" [isRequired]="false"
+                ucNumber="MOUMainInfoForm.controls.PlafondAmt.value"></lib-ucinputnumber>  -->
               </div>
             </div>
             <div class="form-group row">

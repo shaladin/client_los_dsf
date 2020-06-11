@@ -8,6 +8,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj.Model';
 import { ActivatedRoute } from '@angular/router';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-financial-data-fctr',
@@ -49,6 +50,7 @@ export class FinancialDataFctrComponent implements OnInit {
         TotalFeeCptlzAmt: 0,
         TotalInsCustAmt: 0,
         InsCptlzAmt: 0,
+        TotalInsInscoAmt: 0,
         TotalLifeInsCustAmt: 0,
         LifeInsCptlzAmt: 0,
         DownPaymentGrossAmt: 0,
@@ -107,7 +109,10 @@ export class FinancialDataFctrComponent implements OnInit {
         TopDays: 0,
         RetentionPrcnt: 0,
         TotalRetentionAmt: 0,
-        TotalDisbAmt: 0
+        TotalDisbAmt: 0,
+        Tenor: 0,
+        InterestType: "",
+        RefundInterestAmt: 0
       }
     );
     this.LoadAppFinData();
@@ -129,6 +134,7 @@ export class FinancialDataFctrComponent implements OnInit {
           TotalFeeCptlzAmt: this.appFinDataObj.TotalFeeCptlzAmt,
           TotalInsCustAmt: this.appFinDataObj.TotalInsCustAmt,
           InsCptlzAmt: this.appFinDataObj.InsCptlzAmt,
+          TotalInsInscoAmt: this.appFinDataObj.TotalInsInscoAmt,
           TotalLifeInsCustAmt: this.appFinDataObj.TotalLifeInsCustAmt,
           LifeInsCptlzAmt: this.appFinDataObj.LifeInsCptlzAmt,
           DownPaymentGrossAmt: this.appFinDataObj.DownPaymentGrossAmt,
@@ -150,6 +156,7 @@ export class FinancialDataFctrComponent implements OnInit {
           MrInstSchemeCode: this.appFinDataObj.MrInstSchemeCode,
           InstSchemeName: this.appFinDataObj.InstSchemeName,
           CummulativeTenor: this.appFinDataObj.CummulativeTenor,
+          TotalInterestAmt: this.appFinDataObj.TotalInterestAmt,
 
           MrInstTypeCode: this.appFinDataObj.MrInstTypeCode,
           InstTypeName: this.appFinDataObj.InstTypeName,
@@ -159,12 +166,14 @@ export class FinancialDataFctrComponent implements OnInit {
           TopBasedName: this.appFinDataObj.TopBasedName,
           InvcDt: this.appFinDataObj.InvcDt,
           MaturityDate: this.appFinDataObj.MaturityDate,
-          EstEffDt: this.appFinDataObj.EstEffDt,
+          EstEffDt: this.appFinDataObj.EstEffDt != undefined ? formatDate(this.appFinDataObj.EstEffDt, 'yyyy-MM-dd', 'en-US') : '',
           TotalInvcAmt: this.appFinDataObj.TotalInvcAmt,
           TopDays: this.appFinDataObj.TopDays,
           RetentionPrcnt: this.appFinDataObj.RetentionPrcnt,
           TotalRetentionAmt: this.appFinDataObj.TotalRetentionAmt,
-          TotalDisbAmt: this.appFinDataObj.TotalDisbAmt
+          TotalDisbAmt: this.appFinDataObj.TotalDisbAmt,
+          Tenor: this.appFinDataObj.Tenor,
+          RefundInterestAmt: this.appFinDataObj.RefundInterestAmt
         });
 
         this.IsParentLoaded = true;
@@ -184,7 +193,7 @@ export class FinancialDataFctrComponent implements OnInit {
     }
     if (isValidGrossYield && isValidGracePeriod) {
 
-      this.http.post(environment.losUrl + "/AppFinData/SaveAppFinData", this.FinDataForm.value).subscribe(
+      this.http.post(AdInsConstant.SaveAppFinDataFctr, this.FinDataForm.value).subscribe(
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["Message"]);

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
@@ -7,6 +7,8 @@ import { AppFinDataObj } from 'app/shared/model/AppFinData/AppFinData.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj.Model';
 import { ActivatedRoute } from '@angular/router';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
+
 
 @Component({
   selector: 'app-financial-data',
@@ -15,6 +17,8 @@ import { ActivatedRoute } from '@angular/router';
 export class FinancialDataComponent implements OnInit {
   @Input() AppId: number;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
+
   //AppId : number;
   FinDataForm: FormGroup;
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
@@ -49,6 +53,7 @@ export class FinancialDataComponent implements OnInit {
         TotalFeeCptlzAmt: 0,
         TotalInsCustAmt: 0,
         InsCptlzAmt: 0,
+        TotalInsInscoAmt: 0,
         TotalLifeInsCustAmt: 0,
         LifeInsCptlzAmt: 0,
         DownPaymentGrossAmt: 0,
@@ -91,6 +96,16 @@ export class FinancialDataComponent implements OnInit {
         MrProvisionFeeTypeCode: '',
         MrProvisionFeeCalcMethodCode: '',
         BalloonValueAmt: 0,
+
+        LcRate: 0,
+        MrLcCalcMethodCode: '',
+        LcGracePeriod: 0,
+        PrepaymentPenaltyRate: 0,
+        SellEffectiveRatePrcnt: 0,
+
+        ApvAmt: 0,
+        TotalDpAmt: 0,
+
         NeedReCalculate: true
       }
     );
@@ -98,7 +113,8 @@ export class FinancialDataComponent implements OnInit {
   }
 
   LoadAppFinData() {
-    this.http.post<AppFinDataObj>(environment.losUrl + "/AppFinData/GetInitAppFinDataByAppId", { AppId: this.AppId }).subscribe(
+    console.log("Load App Fin Data Started...");
+    this.http.post<AppFinDataObj>(AdInsConstant.GetInitAppFinDataByAppId, { AppId: this.AppId }).subscribe(
       (response) => {
         this.appFinDataObj = response;
 
@@ -112,6 +128,7 @@ export class FinancialDataComponent implements OnInit {
           TotalFeeCptlzAmt: this.appFinDataObj.TotalFeeCptlzAmt,
           TotalInsCustAmt: this.appFinDataObj.TotalInsCustAmt,
           InsCptlzAmt: this.appFinDataObj.InsCptlzAmt,
+          TotalInsInscoAmt: this.appFinDataObj.TotalInsInscoAmt,
           TotalLifeInsCustAmt: this.appFinDataObj.TotalLifeInsCustAmt,
           LifeInsCptlzAmt: this.appFinDataObj.LifeInsCptlzAmt,
           DownPaymentGrossAmt: this.appFinDataObj.DownPaymentGrossAmt,
@@ -132,8 +149,19 @@ export class FinancialDataComponent implements OnInit {
 
           MrInstSchemeCode: this.appFinDataObj.MrInstSchemeCode,
           CummulativeTenor: this.appFinDataObj.CummulativeTenor,
+
+          NtfAmt: this.appFinDataObj.NtfAmt,
+          ApvAmt: this.appFinDataObj.ApvAmt,
+
+          LcRate: this.appFinDataObj.LcRate,
+          MrLcCalcMethodCode: this.appFinDataObj.MrLcCalcMethodCode,
+          LcGracePeriod: this.appFinDataObj.LcGracePeriod,
+          PrepaymentPenaltyRate: this.appFinDataObj.PrepaymentPenaltyRate,
+          SellEffectiveRatePrcnt: this.appFinDataObj.SellEffectiveRatePrcnt,
+          TotalDpAmt: this.appFinDataObj.TotalDpAmt
         });
 
+        this.setValidator(this.appFinDataObj.MrInstSchemeCode);
         this.IsParentLoaded = true;
       }
     );
@@ -161,6 +189,10 @@ export class FinancialDataComponent implements OnInit {
         }
       );
     }
+  }
+
+  Cancel(){
+    this.outputCancel.emit();
   }
 
   ValidateGracePeriode() {
@@ -197,6 +229,19 @@ export class FinancialDataComponent implements OnInit {
       }
     }
     return valid;
+  }
+
+  setValidator(mrInstSchemeCode){
+    if(mrInstSchemeCode == AdInsConstant.InstSchmBalloon){
+      this.FinDataForm.controls.BalloonValueAmt.setValidators([Validators.required]);
+      this.FinDataForm.controls.BalloonValueAmt.updateValueAndValidity();
+    }
+    if(mrInstSchemeCode == AdInsConstant.InstSchmStepUpStepDownNormal || mrInstSchemeCode == AdInsConstant.InstSchmStepUpStepDownLeasing){
+      this.FinDataForm.controls.NumOfStep.setValidators([Validators.required, Validators.min(1)]);
+      this.FinDataForm.controls.NumOfStep.updateValueAndValidity();
+      this.FinDataForm.controls.StepUpStepDownInputType.setValidators([Validators.required]);
+      this.FinDataForm.controls.NumOfStep.updateValueAndValidity();
+    }
   }
 
   // EffectiveRatePrcntInput_FocusOut(){

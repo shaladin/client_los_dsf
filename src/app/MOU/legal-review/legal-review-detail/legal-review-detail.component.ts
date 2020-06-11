@@ -2,7 +2,7 @@ import { Component, OnInit,ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { FormArray, FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MouCustLglReviewObj } from 'app/shared/model/MouCustLglReviewObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { MouCustTcComponent } from 'app/MOU/mou-customer-request/mou-cust-tc/mou-cust-tc.component';
@@ -50,7 +50,6 @@ export class LegalReviewDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('vin');
     this.claimTask();
     this.items = this.LegalForm.get('items') as FormArray;
     this.termConditions = this.LegalForm.get('termConditions') as FormArray;
@@ -60,7 +59,7 @@ export class LegalReviewDetailComponent implements OnInit {
       response =>{
         this.responseMouObj = response['ReturnObject'];
 
-        var refLglReviewObj = { "RefMasterTypeCode": "LGL_REVIEW" };
+          var refLglReviewObj = { "RefMasterTypeCode": "LGL_REVIEW" };
         this.http.post(this.GetListActiveRefMasterUrl, refLglReviewObj).subscribe(
           (response) => {
             var lengthDataReturnObj = response["ReturnObject"].length;
@@ -68,9 +67,9 @@ export class LegalReviewDetailComponent implements OnInit {
             for (var i = 0; i < lengthDataReturnObj; i++) {
               var eachDataDetail = this.fb.group({
                 ReviewComponentName: [response["ReturnObject"][i].Descr],
-                ReviewComponentValue: [response["ReturnObject"][i].MasterCode],
+                ReviewComponentValue: [  response["ReturnObject"][i].MasterCode],
                 RowVersion : [this.SearchLegalReview(response["ReturnObject"][i].MasterCode, true)],
-                values: [this.SearchLegalReview(response["ReturnObject"][i].MasterCode, false)]
+                values: [this.SearchLegalReview(response["ReturnObject"][i].MasterCode, false)  , [Validators.required ]]
               }) as FormGroup;
               this.items.push(eachDataDetail);
             }
@@ -85,7 +84,7 @@ export class LegalReviewDetailComponent implements OnInit {
 
   async claimTask()
   {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"]};
     console.log(wfClaimObj);
     this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
@@ -110,27 +109,30 @@ export class LegalReviewDetailComponent implements OnInit {
   }
   
   SaveData(formObj: any, isSubmit : boolean) {
-    var mouObj = new MouCustLglReviewObj();
-    for (let index = 0; index < this.responseRefMasterObj.length; index++) {
-      var tempMouObj = {
-        MouCustId: this.MouCustId,
-        MrLglReviewCode: formObj.value.items[index].ReviewComponentValue,
-        LglReviewResult: formObj.value.items[index].values,
-        RowVersion: formObj.value.items[index].RowVersion
+    if(this.LegalForm.valid){
+      var mouObj = new MouCustLglReviewObj();
+      for (let index = 0; index < this.responseRefMasterObj.length; index++) {
+        var tempMouObj = {
+          MouCustId: this.MouCustId,
+          MrLglReviewCode: formObj.value.items[index].ReviewComponentValue,
+          LglReviewResult: formObj.value.items[index].values,
+          RowVersion: formObj.value.items[index].RowVersion
+        }
+        mouObj.MouCustLglReviewObjs.push(tempMouObj);
       }
-      mouObj.MouCustLglReviewObjs.push(tempMouObj);
-    }
-    mouObj.WfTaskListId = this.WfTaskListId;
-    mouObj.IsSubmit = isSubmit;
-    this.http.post(this.AddEditRangeMouCustLglReview, mouObj).subscribe(
-      response => {
-        this.toastr.successMessage(response['message']);
-        this.router.navigate(["/Mou/CustomerLegalReview/Paging"]);
-      },
-      error => {
-        console.log(error);
-      }
-    );
-    this.mouTc.Save();
+      mouObj.WfTaskListId = this.WfTaskListId;
+      mouObj.IsSubmit = isSubmit;
+      this.http.post(this.AddEditRangeMouCustLglReview, mouObj).subscribe(
+        response => {
+          this.toastr.successMessage(response['message']);
+          this.router.navigate(["/Mou/CustomerLegalReview/Paging"]);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+      this.mouTc.Save();
+     }
+   
   }
 }

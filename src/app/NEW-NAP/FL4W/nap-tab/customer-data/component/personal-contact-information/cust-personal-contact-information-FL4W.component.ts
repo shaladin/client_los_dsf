@@ -19,7 +19,7 @@ import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 })
 
 export class CustPersonalContactInformationFL4WComponent   implements OnInit {
-  @Input() listContactPersonPersonal: any = new Array<AppCustPersonalContactPersonObj>();
+  @Input() listContactPersonPersonal: Array<AppCustPersonalContactPersonObj> = new Array<AppCustPersonalContactPersonObj>();
 
 
   @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
@@ -74,16 +74,17 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
     MrGenderCode: ['', [Validators.required, Validators.maxLength(50)]],
     MrIdTypeCode: ['', Validators.maxLength(50)],
     MrCustRelationshipCode: ['', Validators.maxLength(50)],
-    IdNo: ['', Validators.maxLength(100)],
+    IdNo: ['', [Validators.maxLength(100),Validators.pattern("^[0-9]+$")]],
     BirthPlace: ['', Validators.maxLength(100)],
     BirthDt: [''],
     IsEmergencyContact: [false],
-    MobilePhnNo1: ['', [Validators.required, Validators.maxLength(100)]],
-    MobilePhnNo2: ['', [Validators.required, Validators.maxLength(100)]],
+    MobilePhnNo1: ['', [Validators.required, Validators.maxLength(100), Validators.pattern("^[0-9]+$")]],
+    MobilePhnNo2: ['', [Validators.required, Validators.maxLength(100), Validators.pattern("^[0-9]+$")]],
     IsFamily: [false],
-    Email: ['', Validators.maxLength(100)],
+    Email: ['', [Validators.maxLength(100)]],
     CopyFromContactPerson: ['']
   });
+  businessDt: Date = new Date();
 
 
   constructor(
@@ -94,6 +95,10 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
      }
 
   ngOnInit() {
+    var context = JSON.parse(localStorage.getItem("UserAccess"));
+    this.businessDt = new Date(context["BusinessDt"]);
+    this.businessDt.setDate(this.businessDt.getDate() - 1);
+    console.log('cust personal contact information')
     this.bindCopyFrom();
     this.initLookup();
     this.initUrl();
@@ -107,10 +112,10 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
       this.listContactPersonPersonal = new Array<AppCustPersonalContactPersonObj>();
     }
     this.setAppCustPersonalContactPerson();
-    if(this.mode == "add"){
+    if(this.mode == "Add"){
       this.listContactPersonPersonal.push(this.appCustPersonalContactPersonObj);
     }
-    if(this.mode == "edit"){
+    if(this.mode == "Edit"){
       this.listContactPersonPersonal[this.currentEditedIndex] = this.appCustPersonalContactPersonObj;
     }
     this.callbackSubmit.emit(this.listContactPersonPersonal);
@@ -119,14 +124,14 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
   }
 
   add(content){
-    this.mode = "add";
+    this.mode = "Add";
     this.clearForm();
     this.open(content);
   }
 
   edit(i, content){
     this.clearForm();
-    this.mode = "edit";
+    this.mode = "Edit";
     this.currentEditedIndex = i;
     this.ContactInfoPersonalForm.patchValue({
       ContactPersonName: this.listContactPersonPersonal[i].ContactPersonName,
@@ -163,12 +168,12 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
       MrGenderCode: [this.defaultGender, [Validators.required, Validators.maxLength(50)]],
       MrIdTypeCode: [this.defaultIdType, Validators.maxLength(50)],
       MrCustRelationshipCode: [this.defaultCustRelationship, Validators.maxLength(50)],
-      IdNo: ['', Validators.maxLength(100)],
+      IdNo: ['', [Validators.maxLength(100),Validators.pattern("^[0-9]+$")]],
       BirthPlace: ['', Validators.maxLength(100)],
       BirthDt: [''],
       IsEmergencyContact: [false],
-      MobilePhnNo1: ['', [Validators.required, Validators.maxLength(100)]],
-      MobilePhnNo2: ['', Validators.maxLength(100)],
+      MobilePhnNo1: ['', [Validators.required, Validators.maxLength(100),Validators.pattern("^[0-9]+$")]],
+      MobilePhnNo2: ['', [Validators.maxLength(100),Validators.pattern("^[0-9]+$")]],
       IsFamily: [false],
       Email: ['', Validators.maxLength(100)],
       CopyFromContactPerson: ['']
@@ -213,7 +218,7 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
   }
 
   GenderChanged(event){
-    this.selectedGenderName = this.GenderObj.find(x => x.Key == event.value).Value;
+    this.selectedGenderName = this.GenderObj.find(x => x.Key == event.target.value).Value;
   }
 
   RelationshipChanged(event){

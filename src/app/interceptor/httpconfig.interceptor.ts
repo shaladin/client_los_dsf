@@ -28,8 +28,12 @@ export class HttpConfigInterceptor implements HttpInterceptor {
         if (request.method == "POST" && (request.body == null || request.body.isLoading == undefined || request.body.isLoading == true)) {
             this.spinner.show();
         }
-        this.count++;
-        var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+        
+        if (request.url != "./assets/i18n/en.json") {
+            this.count++;
+        }
+
+        var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
         var token: string = "";
         var myObj;
         let today = new Date();
@@ -50,42 +54,29 @@ export class HttpConfigInterceptor implements HttpInterceptor {
         }
 
         //Ini kalau buat Login belom punya Current User Contexts
-        if (request.url == "http://r3app-server/foundation/UserManagement/HTML5Login") {
-            if (currentUserContext != null) {
-                token = localStorage.getItem("Token");
-                myObj = new Object();
-                if (request.body != null) {
-                    myObj = request.body;
-                }
-                myObj["Ip"] = localStorage.getItem("LocalIp");
-                myObj["RequestDateTime"] = businessDt;
+        
+        if (currentUserContext != null) {
+            token = localStorage.getItem("Token");
+            myObj = new Object();
+            if (request.body != null) {
+                myObj = request.body;
             }
-            else {
-                myObj = new Object();
-                if (request.body != null) {
-                    myObj = request.body;
-                }
-                myObj["Ip"] = localStorage.getItem("LocalIp");
-                myObj["RequestDateTime"] = businessDt;
+            myObj["Ip"] = localStorage.getItem("LocalIp");
+            myObj["RequestDateTime"] = businessDt;
+        }
+        else {
+            myObj = new Object();
+            if (request.body != null) {
+                myObj = request.body;
             }
-        } else {
-            if (currentUserContext != null) {
-                token = localStorage.getItem("Token");
-                myObj = new Object();
-                if (request.body != null) {
-                    myObj = request.body;
-                }
-                myObj["Ip"] = localStorage.getItem("LocalIp");
-                myObj["RequestDateTime"] = businessDt;
-            }
-            else {
-                myObj = new Object();
-                if (request.body != null) {
-                    myObj = request.body;
-                }
-                myObj["Ip"] = localStorage.getItem("LocalIp");
-                myObj["RequestDateTime"] = businessDt;
-            }
+            myObj["Ip"] = localStorage.getItem("LocalIp");
+            myObj["RequestDateTime"] = businessDt;
+            token = localStorage.getItem("Token");
+        }
+        
+        if(token==null)
+        {
+            token="";
         }
 
         if (token != "") {
@@ -120,26 +111,22 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                 if (event instanceof HttpResponse) {
                     //Ini Error kalau sudah masuk sampai ke Back End
                     if (event.body.StatusCode != undefined) {
-                        if (event.body.StatusCode != '200' && event.body.StatusCode != '001') {
-                            let DetailError = '';
-                            if (Array.isArray(event.body.ErrorMessages)) {
-                                event.body.ErrorMessages.forEach(element => {
-                                    if (element != undefined) {
-                                        DetailError += element["Field"] != undefined ? element["Field"] : "N/A"
-                                        DetailError += "; "
-                                    }
-                                });
+                        if (event.body.StatusCode != '200' && event.body.StatusCode != "001") {
+                            
+                            if (event.body.StatusCode == '400') {
+                                for (var i = 0; i < event.body.ErrorMessages.length; i++) {
+                                    this.toastr.error(event.body.ErrorMessages[i].Message, 'Status: ' + event.body.StatusCode, { "tapToDismiss": true });
+                                }
+                            }else {
+                                let data = {};
+                                data = {
+                                    reason: event.body.Message ? event.body.Message : '',
+                                    status: event.body.StatusCode
+                                };
+                                this.toastr.error(data['reason'], 'Status: ' + data['status'], { "tapToDismiss": true });
+                                console.log(event.body);
                             }
-                            else if(event.body.ErrorMessages != null || event.body.ErrorMessages != undefined || event.body.ErrorMessages != ""){
-                                DetailError += event.body.ErrorMessages
-                            }
-                            let data = {};
-                            data = {
-                                reason: event.body.Message ? event.body.Message : '',
-                                status: event.body.StatusCode,
-                                additionalInfo: DetailError ? DetailError : ''
-                            };
-                            this.toastr.error(data['reason'] + "\n" + data['additionalInfo'], 'Status: ' + data['status'], { "tapToDismiss": true });
+                            
                             return;
                         }
                     }
@@ -160,9 +147,9 @@ export class HttpConfigInterceptor implements HttpInterceptor {
             //Ini Error kalau tidak sampai ke Back End
             catchError((error: HttpErrorResponse) => {
                 if (error.error != null) {
-                    if (error.error.errorMessages != null) {
-                        for (var i = 0; i < error.error.errorMessages.length; i++) {
-                            this.toastr.error(error.error.errorMessages[i].message, 'Status: ' + error.status, { "tapToDismiss": true });
+                    if (error.error.ErrorMessages != null) {
+                        for (var i = 0; i < error.error.ErrorMessages.length; i++) {
+                            this.toastr.error(error.error.ErrorMessages[i].Message, 'Status: ' + error.status, { "tapToDismiss": true });
                         }
                     } else {
                         this.toastr.error(error.error.Message, 'Status: ' + error.status, { "tapToDismiss": true });
@@ -175,13 +162,18 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                 console.log(JSON.stringify(request.body));
                 return throwError(error);
             }), finalize(() => {
-                this.count--;
+                if (request.url != "./assets/i18n/en.json") {
+                    this.count--;
+                }
 
                 if (request.method == "POST") {
                     AdInsHelper.ClearPageAccessLog();
                 }
                 if (this.count == 0) {
                     this.spinner.hide();
+                }
+                if (this.count == 1) {
+                    console.log("last one");
                 }
             })
         );

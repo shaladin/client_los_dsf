@@ -12,7 +12,7 @@
         },
         {
             "type": "textbox",
-            "name": "AGR.AGREEMENT_NO",
+            "name": "AGR.AGRMNT_NO",
             "id": "AgreementNoId",
             "value": "",
             "label": "Agreement No",
@@ -44,9 +44,13 @@
         }
     ],
     "querystring": {
-        "select": "SELECT WF.USERNAME AS Username, AGR.AGRMNT_NO AS AgrmntNo, A.APP_NO AS AppNo, AGR.CUST_NAME AS CustName, A.PROD_OFFERING_NAME AS ProdOfferingName, CASE WHEN WF.USERNAME = NULL OR WF.USERNAME = '' THEN 'UNCLAIMED' ELSE 'CLAIMED' END AS ClaimStatus, A.APP_ID AS AppId, AGR.AGRMNT_ID AS AgrmntId, A.LOB_CODE AS LobCode",
-        "from": "FROM dbo.APP A WITH(NOLOCK) JOIN dbo.AGRMNT AGR WITH(NOLOCK) ON AGR.APP_ID = A.APP_ID JOIN dbo.V_WF_TASK_LIST WF WITH(NOLOCK) ON WF.TRANSACTION_CODE = A.APP_NO",
+        "select": "SELECT WF.WF_TASK_LIST_ID AS TaskListId, WF.USERNAME AS Username, AGR.AGRMNT_NO AS AgrmntNo, A.APP_NO AS AppNo, AGR.CUST_NAME AS CustName, A.PROD_OFFERING_NAME AS ProdOfferingName, CASE WHEN WF.USERNAME = NULL OR WF.USERNAME = '' THEN 'UNCLAIMED' ELSE 'CLAIMED' END AS ClaimStatus, A.APP_ID AS AppId, AGR.AGRMNT_ID AS AgrmntId, A.BIZ_TEMPLATE_CODE AS LobCode",
+        "from": "FROM dbo.APP A WITH(NOLOCK) JOIN dbo.AGRMNT AGR WITH(NOLOCK) ON AGR.APP_ID = A.APP_ID JOIN dbo.V_WF_TASK_LIST WF WITH(NOLOCK) ON WF.TRANSACTION_CODE = AGR.AGRMNT_NO",
         "where" : "WHERE WF.END_EXECUTING_DATE IS NULL"
+    },
+    "orderby": {
+        "key": "A.APP_NO", 
+        "value": "false"
     },
     "headerList": [
         {
@@ -65,7 +69,7 @@
             "type": "sort",
             "position": "left",
             "label": "Agreement No",
-            "name": "AGR.AGREEMENT_NO"
+            "name": "AGR.AGRMNT_NO"
         },
         {
             "type": "sort",
@@ -92,15 +96,31 @@
             "property": "Username"
         },
         {
-            "type": "text",
+            "type": "link",
             "position": "left",
-            "property": "AppNo"
-        },
-        {
-            "type": "text",
+            "property": "AppNo",
+            "target" : "_blank",
+            "path": "/Nap/View/AppView",
+            "param": [
+              {
+                "type": "AppId",
+                "property": "AppId"
+              }
+            ]
+          }, 
+          {
+            "type": "link",
             "position": "left",
-            "property": "AgreementNo"
-        },
+            "property": "AgrmntNo",
+            "target" : "_blank",
+            "path": "Nap/View/AgrmntView",
+            "param": [
+              {
+                "type": "AgrmntId",
+                "property": "AgrmntId"
+              }
+            ]
+          },  
         {
             "type": "text",
             "position": "left",
@@ -126,6 +146,14 @@
                         {
                             "type": "LobCode",
                             "property": "LobCode"
+                        },
+                        {
+                            "type": "AppId",
+                            "property": "AppId"
+                        },
+                        {
+                            "type": "TaskListId",
+                            "property": "TaskListId"
                         }
                     ]
                 }

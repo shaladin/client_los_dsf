@@ -10,22 +10,20 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './credit-investigation-paging.component.html'
 })
 export class CreditInvestigationPagingComponent implements OnInit {
-  inputPagingObj: UcPagingObj;
-  lobCode: string;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
+  BizTemplateCode: string;
+  arrCrit: Array<any> = new Array();
   
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router) {
+  constructor(private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
-      if (params["LobCode"] != null) {
-        this.lobCode = params["LobCode"];
-        localStorage.setItem("LobCode", this.lobCode);
+      if (params["BizTemplateCode"] != null) {
+        this.BizTemplateCode = params["BizTemplateCode"];
+        localStorage.setItem("BizTemplateCode", this.BizTemplateCode);
       }
-      
     });
   }
+  
   ngOnInit() {
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchCreditInvestigation.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
@@ -36,13 +34,13 @@ export class CreditInvestigationPagingComponent implements OnInit {
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.propName = 'A.APP_CURR_STEP';
     critObj.value = "CINV";
+    this.arrCrit.push(critObj);
+
+    var critObj = new CriteriaObj();
+    critObj.restriction = AdInsConstant.RestrictionLike;
+    critObj.propName = 'WTL.ACT_CODE';
+    critObj.value = "CRD_INV_"+this.BizTemplateCode;
     this.inputPagingObj.addCritInput.push(critObj);
-
-    var critLobObj = new CriteriaObj();
-    critLobObj.restriction = AdInsConstant.RestrictionEq;
-    critLobObj.propName = 'RL.BL_CODE';
-    critLobObj.value = localStorage.getItem("LobCode");
-    this.inputPagingObj.addCritInput.push(critLobObj);
-
+    
   }
 }

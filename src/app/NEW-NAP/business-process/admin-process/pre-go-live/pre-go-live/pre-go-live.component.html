@@ -9,73 +9,71 @@
             <lib-ucSubsection [id]="'MainInfoFormId'" [title]="'Pre Go Live Information'" [panel]="'MainInfoForm'">
             </lib-ucSubsection>
             <div class="form-body" id="MainInfoForm">
-              <div class="form-group row adins-required">
-                <label class="col-md-2 adInsLabel" for="AgrmntDt" translate>Agreement Date</label>
+              <div class="form-group row">
+                <label class="col-md-2 adins-required-label" for="AgrmntDt" translate>Agreement Date</label>
                 <div class="col-md-4">
-                  <input type="date" id="AgrmntDt" class="form-control adInsInput code"
+                  <input type="date" id="AgrmntDt" class="form-control adInsInput"
                     formControlName="AgrmntCreatedDt">
                   <lib-uc-show-errors [control]="MainInfoForm.controls.AgrmntDt" [submit]="MainInfoReqForm.submitted">
                   </lib-uc-show-errors>
                 </div>
-                <label class="col-md-2 adInsLabel" for="EffectiveDt" translate>Effective Date</label>
+                <label class="col-md-2 adins-required-label" for="EffectiveDt" translate>Effective Date</label>
                 <div class="col-md-4">
                   <input type="date" id="EffectiveDt" class="form-control adInsInput name"
                     formControlName="EffectiveDt">
-                  <lib-uc-show-errors [control]="MainInfoForm.controls.EffectiveDt" [submit]="MainInfoReqForm.submitted">
+                  <lib-uc-show-errors [control]="MainInfoForm.controls.EffectiveDt"
+                    [submit]="MainInfoReqForm.submitted">
                   </lib-uc-show-errors>
                 </div>
               </div>
 
 
               <div class="form-group row">
-                <label class="col-md-2 adInsLabel" for="Note" translate>Notes</label>
+                <label class="col-md-2 adins-required-label" for="Note" translate>Notes</label>
                 <div class="col-md-4">
                   <input type="text" id="Note" class="form-control adInsInput name" formControlName="Notes">
-                </div>
-              </div>
-            </div>
-
-
-
-            <lib-ucSubsection [id]="'MainInfoFormId2'" [title]="'Approval Pre Go Live Information'"
-              [panel]="'MainInfoForm2'"></lib-ucSubsection>
-            <div class="form-body" id="MainInfoForm2">
-              <div class="form-group row">
-                <label class="col-md-2 adInsLabel" for="ApprovalStatus" translate>Approval Status</label>
-                <div class="col-md-4">
-                  <!-- <label id="ApprovalStatus" class="col-md-2 adInsLabel"
-                    formControlName="ApprovalStatus"></label> -->
-                  <lib-uc-show-errors [control]="MainInfoForm.controls.ApprovalStatus" [submit]="MainInfoReqForm.submitted">
+                  <lib-uc-show-errors [control]="MainInfoForm.controls.Notes"
+                    [submit]="MainInfoReqForm.submitted">
                   </lib-uc-show-errors>
                 </div>
               </div>
+            </div>
 
 
-              <div class="form-group row">
-                <label class="col-md-2 adInsLabel" for="Notes" translate>Notes</label>
-                <div class="col-md-4">
-                  <input type="text" id="Notes" class="form-control adInsInput name" formControlName="Notes">
-                </div>
+
+
+            <lib-ucSubsection [id]="'PreGoLiveApprovalHistoryId'" [title]="'PreGoLive Approval History'"
+              [panel]="'PreGoLiveApprovalHistory'">
+            </lib-ucSubsection>
+            <div id="PreGoLiveApprovalHistory">
+              <div *ngFor="let item of listPreGoLiveAppvrObj; let i = index">
+                <lib-ucapprovalhist [inputObj]="listPreGoLiveAppvrObj[i]">
+                </lib-ucapprovalhist>
               </div>
             </div>
-            <app-term-conditions [AppId]="AppId" [parentForm]="MainInfoForm" [enjiForm]="MainInfoReqForm"
-              (OutputValueIsCheckAll)="ReceiveIsChecked($event)">
-            </app-term-conditions>
-            <div class="form-actions right">
 
-              <button *ngIf="!IsCheckedAll" type="button" class="btn btn-raised btn-primary mr-1" (click)="RFA()" translate>
+            <lib-ucSubsection [id]="'TCListId'" [title]="'Term and Condition'" [panel]="'TCList'">
+            </lib-ucSubsection>
+            <div id="TCList">
+              <app-term-conditions [AppId]="AppId" [parentForm]="MainInfoForm" [enjiForm]="MainInfoReqForm"
+                (OutputValueIsCheckAll)="ReceiveIsChecked($event)">
+              </app-term-conditions>
+            </div>
+            <div class="form-actions right">
+              <button *ngIf="!IsCheckedAll" type="button" class="btn btn-raised btn-primary mr-1" (click)="RFA()"
+                translate>
                 <i class="fa fa-check-square-o"></i> Request For Approval
               </button>
 
-              <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['/AdminProcess/PreGoLive/Paging']"
-                translate>
+              <button type="button" class="btn btn-raised btn-warning mr-1"
+                [routerLink]="['/Nap/AdminProcess/PreGoLive/Paging']" translate>
                 <i class=""></i> Back
               </button>
 
               <button *ngIf="IsCheckedAll" type="submit" class="btn btn-raised btn-primary mr-1" translate>
                 <i class="fa fa-check-square-o"></i> Submit
               </button>
-              
+
             </div>
           </form>
         </div>

@@ -70,7 +70,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
 
   verfResObj = {
     TrxRefNo: "",
-    MrVerfTrxTypeCode: "PHN_VERIF",
+    MrVerfTrxTypeCode: AdInsConstant.VerfTrxTypeCodePhn,
   };
 
   verfResHObj = {
@@ -105,6 +105,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   SubjectRelationObj: any;
   PhoneNumberObj: any;
   QuestionObj: any;
+  isQuestionLoaded: boolean = true;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
 
@@ -150,7 +151,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
     this.bindResultObj();
     this.bindSubjectRelationObj();
     this.GetPhoneNumber(this.phnObj);
-    this.GetQuestionList(VerfQAObj);
+    await this.GetQuestionList(VerfQAObj);
     await this.GetAppData();
     await this.GetAppCust();
     await this.GetVerfResultData();
@@ -164,29 +165,31 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   }
 
   SaveForm() {
-    this.setPhoneVerifData();
-    this.http.post(this.saveVerfResultHDetailUrl, this.PhoneDataObj).subscribe(
-      (response) => {
-        console.log(response);
-        this.toastr.successMessage(response["message"]);
-        if (this.isReturnHandling == false) {
-          this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId + "&WfTaskListId=" + this.wfTaskListId);
+    if (this.isQuestionLoaded == false) {
+      this.toastr.errorMessage("Can't process further because questions are not loaded");
+    }
+    else {
+      this.setPhoneVerifData();
+      this.http.post(this.saveVerfResultHDetailUrl, this.PhoneDataObj).subscribe(
+        (response) => {
+          console.log(response);
+          this.toastr.successMessage(response["message"]);
+          if (this.isReturnHandling == false) {
+            this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId + "&WfTaskListId=" + this.wfTaskListId);
+          }
+          if (this.isReturnHandling == true) {
+            this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId + "&ReturnHandlingDId=" + this.returnHandlingDId + "&WfTaskListId=" + this.wfTaskListId);
+          }
+        },
+        (error) => {
+          console.log(error);
         }
-        if (this.isReturnHandling == true) {
-          this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId + "&ReturnHandlingDId=" + this.returnHandlingDId + "&WfTaskListId=" + this.wfTaskListId);
-        }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      );
+    }
   }
 
   setPhoneVerifData() {
-    var Business_Date = localStorage.getItem('BusinessDate');
-    var datePipe = new DatePipe("en-US");
-    var value = datePipe.transform(Business_Date, "yyyy-MM-dd");
-    var businessDt = new Date(value);
+    var businessDt = new Date();
 
     this.PhoneDataObj = new VerifResulHDetailObj();
     this.PhoneDataObj.VerfResultDListObj = new Array<VerfResultDObj>();
@@ -259,7 +262,10 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
           this.GenerateFormVerfQuestion();
 
         }
-
+        else {
+          this.isQuestionLoaded = false;
+          this.toastr.errorMessage("Questions are not loaded, please check RULE or Question Scheme if there're any typos in RULE or question scheme is not available for this BizTemplateCode");
+        }
       }
     );
   }
@@ -319,7 +325,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
             }
             QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required])
           } else if (QuestionList[j].VerfAnswerTypeCode == "UC_INPUT_NUMBER") {
-            QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
+            QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required]);
             this.ListVerfAnswer[i].push("");
           } else {
             QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required])
@@ -404,16 +410,29 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
     );
   }
 
-  PhoneChange(phnNumber, phnType) {
+  //PhoneChange(phnNumber, phnType) {
+  //  this.PhoneDataForm.patchValue({
+  //    Phn: phnNumber,
+  //    PhnType: phnType
+  //  });
+  //}
+
+  PhoneChange() {
+    var temp: any;
+    temp = this.PhoneNumberObj.filter(
+      x => x.PhoneNumber == this.PhoneDataForm.controls["Phn"].value);
     this.PhoneDataForm.patchValue({
-      Phn: phnNumber,
-      PhnType: phnType
+      Phn: temp[0].PhoneNumber,
+      PhnType: temp[0].PhoneType
     });
   }
-
-  Cancel()
-  {
-    this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId);
+  Cancel() {
+    if (this.isReturnHandling == false) {
+      this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId + "&WfTaskListId=" + this.wfTaskListId);
+    }
+    if (this.isReturnHandling == true) {
+      this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId + "&ReturnHandlingDId=" + this.returnHandlingDId + "&WfTaskListId=" + this.wfTaskListId);
+    }
   }
 
   test() {

@@ -19,7 +19,7 @@
                                     <label class="col-md-6">Supplier Name </label>
                                     <label class="col-md-6">{{AssetObj?.VendorObj.VendorName}} </label>
                                 </div>
-                                <div class="row">
+                                <div class="row" style="display:none;">
                                     <label class="col-md-6">Address </label>
                                     <label class="col-md-6">{{AssetObj?.VendorAddrObj.Addr}} </label>
                                 </div>
@@ -27,7 +27,7 @@
                                     <label class="col-md-6">Supplier Bank Account No </label>
                                     <label class="col-md-6">{{AssetObj?.VendorBankAccObj.BankAccountNo}} </label>
                                 </div>
-                                <div class="row">
+                                <div class="row" style="display:none;">
                                     <label class="col-md-6">MoU </label>
                                     <div class="col-md-6">
                                         <select class="form-control" [(ngModel)]="MouNo" name="MouNo">
@@ -79,7 +79,7 @@
                                     <td>{{item.SerialNo1}}</td>
                                     <td>{{item.SerialNo2}}</td>
                                     <td>{{item.SerialNo3}}</td>
-                                    <td>{{item.Notes}}</td>
+                                    <td>{{item.AssetNotes}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -93,41 +93,41 @@
                             <div class="col-md-6">
                                 <div class="row">
                                     <label class="col-md-6">Total Asset Price </label>
-                                    <label class="col-md-6">{{AssetObj?.AgrmntFinDataObj.TotalAssetPriceAmt | number}}
+                                    <label class="col-md-6 text-right">{{AssetObj?.AgrmntFinDataObj.TotalAssetPriceAmt | number}}
                                     </label>
                                 </div>
                                 <div class="row">
                                     <label class="col-md-6">Down Payment Nett </label>
                                     <label
-                                        class="col-md-6">{{AssetObj?.AgrmntFinDataObj.TotalDownPaymentNettAmt | number}}
+                                        class="col-md-6 text-right">{{AssetObj?.AgrmntFinDataObj.TotalDownPaymentNettAmt | number}}
                                     </label>
                                 </div>
                                 <div class="row">
                                     <label class="col-md-6">TDP At Coy </label>
-                                    <label class="col-md-6">{{AssetObj?.AgrmntFinDataObj.TdpPaidCoyAmt | number}}
+                                    <label class="col-md-6 text-right">{{AssetObj?.AgrmntFinDataObj.TdpPaidCoyAmt | number}}
                                     </label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="row">
                                     <label class="col-md-6">Insurance Premium </label>
-                                    <label class="col-md-6">{{TotalInsCustAmt | number}}
+                                    <label class="col-md-6 text-right">{{TotalInsCustAmt | number}}
                                     </label>
                                 </div>
                                 <div class="row">
                                     <label class="col-md-6">Life Insurance Premium </label>
-                                    <label class="col-md-6">{{TotalLifeInsCustAmt | number}}
+                                    <label class="col-md-6 text-right">{{TotalLifeInsCustAmt | number}}
                                     </label>
                                 </div>
                                 <div class="row">
                                     <label class="col-md-6">First Installment Amount </label>
-                                    <label class="col-md-6">{{AssetObj?.AgrmntFinDataObj.InstAmt | number}} </label>
+                                    <label class="col-md-6 text-right">{{AssetObj?.AgrmntFinDataObj.InstAmt | number}} </label>
                                 </div>
                             </div>
                             <div class="col-md-6" *ngFor="let item of AssetObj?.AgrmntFeeListObj">
                                 <div class="row">
                                     <label class="col-md-6">{{item.FeeName}} </label>
-                                    <label class="col-md-6">{{item.AppFeeAmt | number}} </label>
+                                    <label class="col-md-6 text-right">{{item.AppFeeAmt | number}} </label>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -135,7 +135,7 @@
                                     <div class="col-md-6">
                                         <div class="row">
                                             <label class="col-md-6">Total Purchase Order </label>
-                                            <label class="col-md-6">{{TotalPurchaseOrderAmt | number}} </label>
+                                            <label class="col-md-6 text-right">{{TotalPurchaseOrderAmt | number}} </label>
                                         </div>
                                     </div>
                                 </div>
@@ -195,8 +195,8 @@
                                 translate>
                                 <i class="fa fa-arrow-circle-left"></i> Cancel
                             </button>
-                            <button type="submit" (click)="SaveForm()" class="btn btn-raised btn-primary">
-                                <i class="fa fa-check-square-o"></i> Save And Continue
+                            <button type="button" (click)="SaveForm()" class="btn btn-raised btn-primary" translate>
+                                <i class="far fa-check-square"></i> Save
                             </button>
                         </div>
                     </form>

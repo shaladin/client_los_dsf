@@ -16,6 +16,7 @@ import { ResDuplicateCustomerObj } from 'app/shared/model/Lead/ResDuplicateCusto
 import { ResDuplicateNegativeCustomerObj } from 'app/shared/model/Lead/ResDuplicateNegativeCustomerObj.Model';
 import { ResDuplicateNegativeAssetObj } from 'app/shared/model/Lead/ResDuplicateNegativeAssetObj.Model';
 import { ResLeadCustObj } from 'app/shared/model/Lead/ResLeadCustObj.Model';
+import { ResDuplicateDoubleFinancingObj } from 'app/shared/model/Lead/ResDuplicateDoubleFinancingObj.Model';
 
 @Component({
   selector: 'app-fraud-verif-page',
@@ -24,7 +25,7 @@ import { ResLeadCustObj } from 'app/shared/model/Lead/ResLeadCustObj.Model';
 })
 export class FraudVerifPageComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder,  private router: Router) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
     this.route.queryParams.subscribe(params => {
       this.LeadId = params['LeadId'];
     });
@@ -61,6 +62,7 @@ export class FraudVerifPageComponent implements OnInit {
   tempLeadAsset: any;
   GetAssetNegativeDuplicateCheckUrl: string;
   ResultDuplicateAssetNegative: ResDuplicateNegativeAssetObj = new ResDuplicateNegativeAssetObj();
+  ResultDuplicateDoubleFinancing: ResDuplicateDoubleFinancingObj = new ResDuplicateDoubleFinancingObj();
   leadFraudVerfObj: LeadFraudVerfObj = new LeadFraudVerfObj();
   AddLeadFraudVerfUrl: string;
   FraudVerfForm = this.fb.group({
@@ -108,6 +110,12 @@ export class FraudVerifPageComponent implements OnInit {
             this.negativeAssetCheckObj.SerialNo3 = this.tempLeadAsset.SerialNo3;
             this.negativeAssetCheckObj.SerialNo4 = this.tempLeadAsset.SerialNo4;
             this.negativeAssetCheckObj.SerialNo5 = this.tempLeadAsset.SerialNo5;
+
+            this.http.post(AdInsConstant.GetDoubleFinancingCheckAppAsset, this.negativeAssetCheckObj).subscribe(
+              (response) => {
+                this.ResultDuplicateDoubleFinancing = response["ReturnObject"];
+              })
+
             this.http.post(this.GetAssetNegativeDuplicateCheckUrl, this.negativeAssetCheckObj).subscribe(
               (response) => {
                 this.ResultDuplicateAssetNegative = response["ReturnObject"];
@@ -116,7 +124,7 @@ export class FraudVerifPageComponent implements OnInit {
           });
       });
   }
-  reject() : void {
+  reject(): void {
     this.leadFraudVerfObj = new LeadFraudVerfObj();
     this.leadFraudVerfObj.LeadId = this.LeadId;
     this.leadFraudVerfObj.VerifyStat = AdInsConstant.Reject;
@@ -128,32 +136,32 @@ export class FraudVerifPageComponent implements OnInit {
         this.router.navigate(["/Lead/FraudVerif/Paging"]);
       });
   }
- 
-  verify() : void{
+
+  verify(): void {
     this.leadFraudVerfObj = new LeadFraudVerfObj();
     this.leadFraudVerfObj.LeadId = this.LeadId;
     this.leadFraudVerfObj.VerifyStat = AdInsConstant.Verify;
     this.leadFraudVerfObj.Notes = this.FraudVerfForm.controls["Notes"].value;
     this.leadFraudVerfObj.WfTaskListId = this.WfTaskListId;
-  
+
     this.http.post(this.AddLeadFraudVerfUrl, this.leadFraudVerfObj).subscribe(
-      (response) => { 
-        this.toastr.successMessage(response["message"]); 
+      (response) => {
+        this.toastr.successMessage(response["message"]);
         this.router.navigate(["/Lead/FraudVerif/Paging"]);
       });
-  } 
+  }
 
-  async claimTask(){
-    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
-    var wfClaimObj : ClaimWorkflowObj = new ClaimWorkflowObj();
+  async claimTask() {
+    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.WfTaskListId;
     wfClaimObj.pUserID = currentUserContext["UserName"];
     this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
       });
   }
-  backHandler(){ 
-        this.router.navigate(['/Lead/FraudVerif/Paging']);   
-  
+  backHandler() {
+    this.router.navigate(['/Lead/FraudVerif/Paging']);
+
   }
 }

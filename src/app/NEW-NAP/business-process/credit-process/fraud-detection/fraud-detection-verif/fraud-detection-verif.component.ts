@@ -79,7 +79,6 @@ export class FraudDetectionVerifComponent implements OnInit {
   }
 
   ngOnInit() {
-
     if (this.WfTaskListId != null || this.WfTaskListId != undefined)
       this.claimTask();
 
@@ -278,8 +277,8 @@ export class FraudDetectionVerifComponent implements OnInit {
   }
 
   cancel(){
-    var lobCode = localStorage.getItem("LobCode")
-    this.router.navigate(["/Nap/CreditProcess/FraudDetection/Paging"], { queryParams: { "LobCode": lobCode } });
+    var lobCode = localStorage.getItem("BizTemplateCode")
+    this.router.navigate(["/Nap/CreditProcess/FraudDetection/Paging"], { queryParams: { BizTemplateCode: lobCode } });
   }
 
   submit() {
@@ -294,8 +293,8 @@ export class FraudDetectionVerifComponent implements OnInit {
     }
     this.http.post(this.addAppFraudVerf, verfObj).subscribe(
       response => {
-        var lobCode = localStorage.getItem("LobCode")
-        this.router.navigate(["/Nap/CreditProcess/FraudDetection/Paging"], { queryParams: { "LobCode": lobCode } });
+        var BizTemplateCode = localStorage.getItem("BizTemplateCode")
+        this.router.navigate(["/Nap/CreditProcess/FraudDetection/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
       },
       error => {
         console.log("error");
@@ -305,7 +304,7 @@ export class FraudDetectionVerifComponent implements OnInit {
 
   async claimTask()
   {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserContext"));
+    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     var wfClaimObj = { 
       pWFTaskListID: this.WfTaskListId, 
       pUserID: currentUserContext["UserName"],

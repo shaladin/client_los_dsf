@@ -1,9 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
+import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 
 @Component({
   selector: 'app-purchase-order',
@@ -15,13 +17,13 @@ export class PurchaseOrderComponent implements OnInit {
   lobCode: string;
   AppId: number;
   AgrmntId: number;
-  TaskListId: number;
+  TaskListId: any;
   arrValue: Array<number> = [];
   AppAssetList = [];
   tcForm: FormGroup = this.fb.group({
   });
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService, private router: Router) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.AppId = params["AppId"];
@@ -32,14 +34,14 @@ export class PurchaseOrderComponent implements OnInit {
       if (params["TaskListId"] != null) {
         this.TaskListId = params["TaskListId"];
       }
-      if (params["LobCode"] != null){
+      if (params["LobCode"] != null) {
         this.lobCode = params["LobCode"];
       }
       switch (this.lobCode) {
         case "FL4W":
           this.urlDetail = "/Nap/FinanceLeasing/AdminProcess/PurchaseOrder/Detail";
           break;
-      
+
         default:
           this.urlDetail = "/Nap/AdminProcess/PurchaseOrder/PO/Detail";
           break;
@@ -52,6 +54,7 @@ export class PurchaseOrderComponent implements OnInit {
     var appAssetObj = {
       AgrmntId: this.AgrmntId
     }
+    this.claimTask();
     this.http.post(AdInsConstant.GetAppAssetListByAgrmntId, appAssetObj).subscribe(
       (response) => {
         this.AppAssetList = response["ReturnObject"];
@@ -62,11 +65,17 @@ export class PurchaseOrderComponent implements OnInit {
     );
   }
 
+  testData(){
+    console.log(this.tcForm);
+    console.log(this.tcForm.value);
+  }
+
   SaveForm() {
+    console.log("Save");
     var IsSave = false;
     if (this.AppAssetList.length != 0) {
       for (let i = 0; i < this.AppAssetList.length; i++) {
-        if (this.AppAssetList[i].PurchaseOrderNo == "") {
+        if (this.AppAssetList[i].PurchaseOrderNo == undefined) {
           IsSave = false;
           this.toastr.typeErrorCustom("Please submit purchase order first!");
           break;
@@ -79,12 +88,15 @@ export class PurchaseOrderComponent implements OnInit {
     }
 
     if (IsSave) {
-      var workflowModel = {
-        TaskListId: this.TaskListId
-      }
+      var workflowModel : WorkflowApiObj = new WorkflowApiObj();
+      workflowModel.TaskListId = this.TaskListId;
+      workflowModel.ListValue = {"AgrmntId" : this.AgrmntId.toString()};
+
+
       this.http.post(AdInsConstant.ResumeWorkflowPurchaseOrder, workflowModel).subscribe(
         (response) => {
           this.AppAssetList = response["ReturnObject"];
+          this.router.navigate(["/Nap/AdminProcess/PurchaseOrder/Paging"]);
           this.toastr.successMessage(response["message"]);
         },
         (error) => {
@@ -92,5 +104,14 @@ export class PurchaseOrderComponent implements OnInit {
         }
       );
     }
+  }
+  async claimTask() {
+    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
+    wfClaimObj.pWFTaskListID = this.TaskListId;
+    wfClaimObj.pUserID = currentUserContext["UserName"];
+    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+      (response) => {
+      });
   }
 }

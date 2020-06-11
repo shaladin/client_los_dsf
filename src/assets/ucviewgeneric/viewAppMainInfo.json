@@ -5,12 +5,19 @@
         "subSectionId": "AgrMainInformationId",
         "subSectionTitle": "Main Information",
         "mainInfoUrl": "http://r3app-server.ad-ins.com/LOS/Generic/GetDataViewBySQL",
-        "mainInfo": [
+        "mainInfo": [ 
           {
-            "type": "text",
+            "type": "link",
             "label": "Application No",
-            "property": "AppNo"
-          },
+            "property": "AppNo",
+            "path": "/Nap/View/AppView",
+            "target" : "_blank",
+            "param": [
+              {
+                "property": "AppId"
+              }
+            ]
+          }, 
           {
             "type": "text",
             "label": "Number Of Asset",
@@ -48,8 +55,8 @@
           }
         ],
         "querystring": {
-          "select": "SELECT A.APP_NO AS AppNo, AC.CUST_NAME AS CustName, A.TENOR AS Tenor, A.CURR_CODE AS CurrCode, A.NUM_OF_ASSET AS NumOfAsset, A.ORI_OFFICE_NAME AS OfficeName, A.PROD_OFFERING_NAME AS ProdOfferingName, A.MR_ORDER_INFO_CODE AS MrOrderInfoCode",
-          "from": "FROM APP A WITH(NOLOCK) JOIN APP_CUST AC WITH(NOLOCK) ON A.APP_ID = AC.APP_ID",
+          "select": "SELECT A.APP_NO AS AppNo,  A.APP_ID AS AppId, AC.CUST_NAME AS CustName, A.TENOR AS Tenor, A.CURR_CODE AS CurrCode, A.NUM_OF_ASSET AS NumOfAsset, A.ORI_OFFICE_NAME AS OfficeName, A.PROD_OFFERING_NAME AS ProdOfferingName, A.MR_ORDER_INFO_CODE AS MrOrderInfoCode",
+          "from": "FROM APP A WITH(NOLOCK) LEFT JOIN APP_CUST AC WITH(NOLOCK) ON A.APP_ID = AC.APP_ID",
           "where": "WHERE A.APP_ID = {0}"
         }
       }

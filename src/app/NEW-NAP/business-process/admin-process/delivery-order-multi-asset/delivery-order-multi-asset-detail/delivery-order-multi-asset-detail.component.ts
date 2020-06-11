@@ -9,6 +9,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CreateDoMultiAssetComponent } from '../create-do-multi-asset/create-do-multi-asset.component';
 import { map, mergeMap } from 'rxjs/operators';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-delivery-order-multi-asset-detail',
@@ -25,6 +26,8 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
   isCreateDOInvalid: boolean;
   createDOInvalidMsg: string;
   arrValue: Array<any> = new Array<any>();
+  wfTaskListId: number;
+  isFinal: boolean;
 
   DOAssetForm = this.fb.group({
     DOAssetList: this.fb.array([])
@@ -39,8 +42,12 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private modalService: NgbModal,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private location: Location
   ) { 
+    this.doList = new Array();
+    this.doAssetList = new Array();
+    this.isFinal = false;
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
         this.appId = params['AppId'];
@@ -48,15 +55,24 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
       if (params['AgrmntId'] != null) {
         this.agrmntId = params['AgrmntId'];
       }
+      if(params['WfTaskListId'] != null){
+        this.wfTaskListId = params['WfTaskListId'];
+      }
     });
   }
 
   ngOnInit() {
+    if (this.wfTaskListId != null || this.wfTaskListId != undefined){
+      this.claimTask();
+    }
+      
     var doRequest = { AppId: this.appId, AgrmntId: this.agrmntId };
     let getDOAssetList = this.httpClient.post(AdInsConstant.GetAssetListForDOMultiAsset, doRequest);
-    var getDOList = this.httpClient.post(AdInsConstant.GetListDeliveryOrderHByAppIdAgrmntId, doRequest);
-    forkJoin([getDOAssetList, getDOList]).subscribe(
+    let getDOList = this.httpClient.post(AdInsConstant.GetListDeliveryOrderHByAppIdAgrmntId, doRequest);
+    let checkAllDO = this.httpClient.post(AdInsConstant.CheckAllDeliveryOrderData, { AgrmntId: this.agrmntId });
+    forkJoin([getDOAssetList, getDOList, checkAllDO]).subscribe(
       (response) => {
+        // console.log("DO List: " + JSON.stringify(response[1]));
         this.doAssetList = response[0]["AssetListForDOMultiAssetObj"];
         this.custType = response[0]["MrCustTypeCode"];
         this.licensePlateAttr = response[0]["LicensePlateAttr"];
@@ -80,12 +96,26 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
             DeliveryDt : [item.DeliveryDt],
             IsAvailable : [item.IsAvailable],
             ManufacturingYear: [item.ManufacturingYear],
+            TempLetterNo: [item.TempLetterNo],
             IsSelected: false
           });
           formArray.push(formGroup);
         }
+
+        this.isFinal = response[2]["IsFinal"];
+        console.log("Is Final : " + this.isFinal);
       }
     );
+  }
+
+  async claimTask()
+  {
+    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    var wfClaimObj = { pWFTaskListID: this.wfTaskListId, pUserID: currentUserContext["UserName"]};
+    console.log(wfClaimObj);
+    this.httpClient.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+      (response) => {
+      });
   }
 
   showModalDO(formArray: FormArray, mode: string, deliveryOrderHId: number){
@@ -102,8 +132,9 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
         this.spinner.show();
         var doRequest = { AppId: this.appId, AgrmntId: this.agrmntId };
         let getDOAssetList = this.httpClient.post(AdInsConstant.GetAssetListForDOMultiAsset, doRequest);
-        var getDOList = this.httpClient.post(AdInsConstant.GetListDeliveryOrderHByAppIdAgrmntId, doRequest);
-        forkJoin([getDOAssetList, getDOList]).subscribe(
+        let getDOList = this.httpClient.post(AdInsConstant.GetListDeliveryOrderHByAppIdAgrmntId, doRequest);
+        let checkAllDO = this.httpClient.post(AdInsConstant.CheckAllDeliveryOrderData, { AgrmntId: this.agrmntId });
+        forkJoin([getDOAssetList, getDOList, checkAllDO]).subscribe(
           (response) => {
             this.doAssetList = response[0]["AssetListForDOMultiAssetObj"];
             this.custType = response[0]["MrCustTypeCode"];
@@ -136,6 +167,9 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
               });
               formArray.push(formGroup);
             }
+
+            this.isFinal = response[2]["IsFinal"];
+            console.log("Is Final : " + this.isFinal);
           }
         );
         this.spinner.hide();
@@ -183,9 +217,10 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
         mergeMap((response) => {
           var doRequest = { AppId: this.appId, AgrmntId: this.agrmntId };
           let getDOAssetList = this.httpClient.post(AdInsConstant.GetAssetListForDOMultiAsset, doRequest);
-          var getDOList = this.httpClient.post(AdInsConstant.GetListDeliveryOrderHByAppIdAgrmntId, doRequest);
+          let getDOList = this.httpClient.post(AdInsConstant.GetListDeliveryOrderHByAppIdAgrmntId, doRequest);
+          let checkAllDO = this.httpClient.post(AdInsConstant.CheckAllDeliveryOrderData, { AgrmntId: this.agrmntId });
           var tempResponse = [response];
-          return forkJoin([getDOAssetList, getDOList, tempResponse]);
+          return forkJoin([getDOAssetList, getDOList, tempResponse, checkAllDO]);
         })
       ).subscribe(
         (response) => {
@@ -217,10 +252,15 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
               DeliveryDt : [item.DeliveryDt],
               IsAvailable : [item.IsAvailable],
               ManufacturingYear: [item.ManufacturingYear],
+              TempLetterNo: [item.TempLetterNo],
               IsSelected: false
             });
             formArray.push(formGroup);
           }
+
+          this.isFinal = response[3]["IsFinal"];
+          console.log("Is Final : " + this.isFinal);
+
           this.spinner.hide();
           this.toastr.successMessage(deleteResponse["Message"]);
         },
@@ -231,13 +271,18 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
     }
   }
 
+  Back(){
+    this.location.back();
+  }
+
   SaveForm(){
     if(this.doList.length > 0){
-      var tcFormData = this.AppTcForm.value.TCList;
+      // var tcFormData = this.AppTcForm.value.TCList;
+      var tcFormData = { "ListAppTcObj": [...this.AppTcForm.value.TCList]};
       this.httpClient.post(AdInsConstant.EditAppTc, tcFormData).subscribe(
         (response) => {
           this.toastr.successMessage(response["Message"]);
-          this.router.navigate(['/Nap/FinanceLeasing/AdminProcess/DeliveryOrder/Paging'], { queryParams: { LobCode: 'FL4W' }});
+          this.router.navigate(['/Nap/FinanceLeasing/AdminProcess/DeliveryOrderMultiAsset/Paging'], { queryParams: { BizTemplateCode: 'FL4W' }});
         },
         (error) => {
           console.log(error);
@@ -245,7 +290,28 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
       );
     }
     else{
-      alert("At Least 1 Delivery Order Needed To Submit");
+      this.toastr.errorMessage("At Least 1 Delivery Order Needed To Save");
+    }
+  }
+
+  DOSubmitHandler(){
+    if(!this.isFinal){
+      this.toastr.errorMessage("All Asset Must Be Processed to Submit");
+    }
+    else{
+      // var tcFormData = this.AppTcForm.value.TCList;
+      var tcFormData = { "ListAppTcObj": [...this.AppTcForm.value.TCList]};
+      let editTc = this.httpClient.post(AdInsConstant.EditAppTc, tcFormData);
+      let submitDO = this.httpClient.post(AdInsConstant.SubmitDeliveryOrderMultiAsset, { TaskListId: this.wfTaskListId });
+      forkJoin([editTc, submitDO]).subscribe(
+        (response) => {
+          this.toastr.successMessage(response[1]["Message"]);
+          this.router.navigate(['/Nap/FinanceLeasing/AdminProcess/DeliveryOrderMultiAsset/Paging'], { queryParams: { BizTemplateCode: 'FL4W' }});
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     }
   }
 

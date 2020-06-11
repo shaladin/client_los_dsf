@@ -36,7 +36,7 @@
                 <app-mou-view-approval-history [MouCustId]="MouCustId"></app-mou-view-approval-history>
               </ng-template>
             </mat-tab>
-            <mat-tab label="Legal Review">
+            <mat-tab label="Legal Review" *ngIf="this.MrCustTypeCode == 'COMPANY'">
               <ng-template matTabContent>
                 <app-mou-view-legal [MouCustId]="MouCustId"></app-mou-view-legal>
               </ng-template>

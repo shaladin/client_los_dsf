@@ -45,7 +45,7 @@
                 <tbody>
                   <tr *ngFor="let item of responseObj">
                     <ng-container *ngIf="deletedArr.includes(item.LeadId) == false">
-                      <td class="text-left"><a href="{{leadUrl + item.LeadId}}">{{item.LeadNo}}</a></td>
+                      <td class="text-left"><a href="{{leadUrl + item.LeadId}}" target="_blank">{{item.LeadNo}}</a></td>
                       <td class="text-left">{{item.OfficeName}}</td>
                       <td class="text-left">{{item.OrderNo}}</td>
                       <td class="text-left">{{item.CustName}}</td>
@@ -54,7 +54,7 @@
                       <td class="text-left">{{item.LeadStep}}</td>
                       <td class="text-left">{{item.LeadStatus}}</td>
                       <td>
-                        <a class="danger p-0" data-original-title="" title="" (click)="deleteFromTemp(item.LeadId)">
+                        <a class="danger p-0" (click)="deleteFromTemp(item.LeadId)">
                           <i class="ft-trash-2 font-medium-3 mr-2"></i>
                         </a>
                       </td>

@@ -7,9 +7,18 @@
       "mainInfoUrl": "http://r3app-server.ad-ins.com/LOS/Generic/GetDataViewBySQL",
       "mainInfo": [
         {
-          "type": "text",
-          "label": "APPLICATION NO.",
-          "property": "AppNo"
+          "type": "link",
+          "label": "APPLICATION NO",
+          "property": "AppNo",
+          "position": "left",
+          "path": "/Nap/View/AppView",
+          "target": "_blank",
+          "param": [
+            { 
+              "type": "AppId",
+              "property": "AppId" 
+            }
+          ]
         },
         {
           "type": "text",
@@ -43,7 +52,7 @@
         },
         {
           "type": "text",
-          "label": "ASSET NAME", 
+          "label": "ASSET NAME",
           "property": "FullAssetName"
         },
         {
@@ -53,7 +62,7 @@
         }
       ],
       "querystring": {
-        "select": "SELECT a.APP_NO AS AppNo, a.ORI_OFFICE_NAME AS OriOfficeName, b.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.TENOR AS Tenor, a.CURR_CODE AS CurrCode, a.MR_ORDER_INFO_CODE AS MrOrderInfoCode, c.FULL_ASSET_NAME AS FullAssetName, d.LEAD_NO AS LeadNo",
+        "select": "SELECT a.APP_NO AS AppNo, a.APP_ID AS AppId, a.ORI_OFFICE_NAME AS OriOfficeName, b.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.TENOR AS Tenor, a.CURR_CODE AS CurrCode, a.MR_ORDER_INFO_CODE AS MrOrderInfoCode, c.FULL_ASSET_NAME AS FullAssetName, d.LEAD_NO AS LeadNo",
         "from": "FROM dbo.APP a WITH(NOLOCK) LEFT JOIN dbo.APP_CUST b ON a.APP_ID = b.APP_ID LEFT JOIN dbo.APP_ASSET c ON a.APP_ID = c.APP_ID LEFT JOIN dbo.LEAD d ON a.LEAD_ID = d.LEAD_ID",
         "where": "WHERE a.APP_ID = {0}"
       }

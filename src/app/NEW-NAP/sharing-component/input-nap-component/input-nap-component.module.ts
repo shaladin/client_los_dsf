@@ -54,6 +54,21 @@ import { CollateralLeasingAddEditComponent } from "./multi-asset-leasing/collate
 import { FinancialDataFctrComponent } from "./financial-data-fctr/financial-data-fctr.component";
 import { SchmRegulerFixFctrComponent } from "./financial-data-fctr/component/multiple-installment/schm-reguler-fix/schm-reguler-fix-fctr.component";
 import { CustSharingComponentModule } from "./cust-sharing-component.module";
+import { SchmEvenPrincipalFctrComponent } from "./financial-data-fctr/component/multiple-installment/schm-even-principal/schm-even-principal-fctr.component";
+import { SingleInstFctrComponent } from "./financial-data-fctr/component/single-installment/single-inst-fctr.component";
+import { FeeFctrComponent } from "./financial-data-fctr/component/fee/fee-fctr.component";
+import { CollateralFctrComponent } from "./multi-asset-data/collateral-fctr/collateral-fctr.component";
+import { CollateralAddEditSingleComponent } from "./single-asset-data/collateral-add-edit-single/collateral-add-edit-single.component";
+import { InvoiceDataComponent } from "./invoice-data/invoice-data.component";
+import { ApplicationDataFactoringComponent } from './application-data/application-data-factoring/application-data-factoring.component';
+import { MultiCollateralPagingComponent } from "./collateral-data/component/multi-collateral-paging/multi-collateral-paging.component";
+import { CollateralDetailComponent } from "./collateral-data/component/collateral-detail/collateral-detail.component";
+import { SingleCollDataComponent } from "./collateral-data/single-coll-data/single-coll-data.component";
+import { MultiCollDataComponent } from "./collateral-data/multi-coll-data/multi-coll-data.component";
+import { ApplicationDataFL4WComponent } from "./application-data/application-data-FL4W/application-data-FL4W.component";
+import { UclookupgenericComponent } from "@adins/uclookupgeneric";
+import { LookupTaxCityIssuerComponent } from './multi-asset-data/collateral-add-edit/lookup-tax-city-issuer/lookup-tax-city-issuer.component';
+import { LookupCollateralComponent } from './multi-asset-data/collateral-add-edit/lookup-collateral/lookup-collateral.component';
 
 export const customCurrencyMaskConfig = {     
   align: "right",     
@@ -112,7 +127,20 @@ export const customCurrencyMaskConfig = {
     CollateralAddEditComponent,
     MultiAssetDataComponent,
     FinancialDataFctrComponent,
-    SchmRegulerFixFctrComponent
+    SchmRegulerFixFctrComponent,
+    SchmEvenPrincipalFctrComponent,
+    SingleInstFctrComponent,
+    SchmRegulerFixFctrComponent,
+    FeeFctrComponent,
+    CollateralAddEditSingleComponent,
+    CollateralFctrComponent,
+    InvoiceDataComponent,
+    ApplicationDataFactoringComponent,
+    MultiCollateralPagingComponent,
+    CollateralDetailComponent,
+    SingleCollDataComponent,
+    MultiCollDataComponent,
+    ApplicationDataFL4WComponent
     // MultiAssetLeasingComponent,
     // AssetLeasingPagingComponent,
     // AssetLeasingAddEditComponent,
@@ -171,13 +199,28 @@ export const customCurrencyMaskConfig = {
     CollateralAddEditComponent,
     MultiAssetDataComponent,
     FinancialDataFctrComponent,
-    SchmRegulerFixFctrComponent
+    SchmRegulerFixFctrComponent,
+    SchmEvenPrincipalFctrComponent,
+    SingleInstFctrComponent,
+    SchmRegulerFixFctrComponent,
+    FeeFctrComponent,
+    CollateralAddEditSingleComponent,
+    CollateralFctrComponent,
+    InvoiceDataComponent,
+    ApplicationDataFactoringComponent,
+    MultiCollateralPagingComponent,
+    CollateralDetailComponent,
+    SingleCollDataComponent,
+    MultiCollDataComponent,
+    ApplicationDataFL4WComponent,
+    LookupTaxCityIssuerComponent,
+    LookupCollateralComponent
     // MultiAssetLeasingComponent,
     // AssetLeasingPagingComponent,
     // AssetLeasingAddEditComponent,
     // CollateralLeasingAddEditComponent
   ],
-  entryComponents: [SubsidyAddEditComponent],
+  entryComponents: [SubsidyAddEditComponent, UclookupgenericComponent, LookupTaxCityIssuerComponent, LookupCollateralComponent],
   providers: [
     NGXToastrService
   ]
