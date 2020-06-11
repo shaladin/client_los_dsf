@@ -28,7 +28,7 @@
                 <label class="label-control col-md-6">{{agrmntObj.CustName}}</label>
               </div>
               <div class="row">
-                <label class="label-control col-md-6">Notes</label>
+                <label class="label-control col-md-6  adins-required-label">Notes</label>
                 <div class="col-md-6">
                   <textarea class="form-control" formControlName="Notes"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && CustConfirm.controls.Notes.invalid }"></textarea>
@@ -74,7 +74,7 @@
               <span formArrayName="VerfQuestionAnswerList">
                 <div class="form-group row" [formGroupName]="j"
                   *ngFor="let QRList of QuestionGrpList.controls.VerfQuestionAnswerList?.controls; let j = index">
-                  <label class="col-md-3" translate>{{QRList.value.QuestionGrp.VerfQuestionText}} </label>
+                  <label class="col-md-3 adins-required-label" translate>{{QRList.value.QuestionGrp.VerfQuestionText}} </label>
                   <div class="col-md-5" formGroupName="ResultGrp">
                     <span
                       *ngIf="QRList.value.QuestionGrp.VerfAnswerTypeCode == 'DDL' || QRList.value.QuestionGrp.VerfAnswerTypeCode == 'RBL'">
