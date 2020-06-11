@@ -208,8 +208,8 @@
                 "type": "link",
                 "position": "left",
                 "property": "agrmntNo",
-                "target" : "_blank",
-                "path": "",
+                "target": "_blank",
+                "path": "/Nap/View/AgrmntView",
                 "param": [
                   {
                     "type": "AgrmntId",
