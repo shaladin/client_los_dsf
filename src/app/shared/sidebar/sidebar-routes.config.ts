@@ -27,7 +27,7 @@ export const ROUTES: RouteInfo[] = [
         { Path: '/Nap/AddProcess/ReturnHandlingPhoneVerif/Paging', Title: 'Return Handling - Phone Verif', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CF4W" }] },
         { Path: '/Nap/AddProcess/ReturnHandling/CommissionReservedFund/Paging', Title: 'Return Handling - Commission Reserved Fund', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CF4W" }] },
         { Path: '/Nap/AddProcess/ReturnHandling/Survey', Title: 'Return Handling - Survey', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CF4W" }] },
-        { Path: '/Nap/AddProcess/ReturnHandling/ReturnHandlingCollateral/Paging', Title: 'Return Handling - Collateral', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CF4W" }] },
+        { Path: '/Nap/AddProcess/ReturnHandlingCollateral/Paging', Title: 'Return Handling - Collateral', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CF4W" }] },
         { Path: '/Nap/AddProcess/CopyCancelledApplication', Title: 'Copy From Cancelled Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] }
       ], Params: []}
     ], Params: []
@@ -55,7 +55,7 @@ export const ROUTES: RouteInfo[] = [
         { Path: '/Nap/AddProcess/ReturnHandlingPhoneVerif/Paging', Title: 'Return Handling - Phone Verif', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "FL4W" }] },
         { Path: '/Nap/AddProcess/ReturnHandling/CommissionReservedFund/Paging', Title: 'Return Handling - Commission Reserved Fund', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "FL4W" }] },
         { Path: '/Nap/AddProcess/ReturnHandling/Survey', Title: 'Return Handling - Survey', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "FL4W" }] },
-        { Path: '/Nap/AddProcess/ReturnHandling/ReturnHandlingCollateral/Paging', Title: 'Return Handling - Collateral', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "FL4W" }] },
+        { Path: '/Nap/AddProcess/ReturnHandlingCollateral/Paging', Title: 'Return Handling - Collateral', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "FL4W" }] },
         { Path: '/Nap/AddProcess/CopyCancelledApplication', Title: 'Copy From Cancelled Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "FL4W" }] }
       
       ], Params: []}
