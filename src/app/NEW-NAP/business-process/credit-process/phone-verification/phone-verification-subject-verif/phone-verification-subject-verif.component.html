@@ -3,7 +3,7 @@
     <div class="card-body">
       <div class="px-3">
         <form class="form form-horizontal" [formGroup]="PhoneDataForm" (ngSubmit)="PhoneDataForm.valid && SaveForm()"
-              #enjiForm="ngForm">
+          #enjiForm="ngForm">
           <div class="form-body">
             <lib-ucSubsection [id]="'custInfoId'" [title]="'Customer Information'" [panel]="'custInfo'">
             </lib-ucSubsection>
@@ -22,11 +22,13 @@
               </div>
               <div class="form-group row">
                 <label class="col-md-2  adInsLabel" translate>Customer Name</label>
-                <label class="col-md-4  " translate *ngIf="this.AppCustObj?.CustName">{{this.AppCustObj.CustName}}</label>
+                <label class="col-md-4  " translate
+                  *ngIf="this.AppCustObj?.CustName">{{this.AppCustObj.CustName}}</label>
                 <label class="col-md-2  adins-required-label" translate>Subject Relation</label>
                 <div class="col-md-4">
-                  <select *ngIf="SubjectRelationObj" class="form-control" id="subjectRelationId" formControlName="MrVerfSubjectRelationCode"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && PhoneDataForm.controls.MrVerfSubjectRelationCode.invalid }">
+                  <select *ngIf="SubjectRelationObj" class="form-control" id="subjectRelationId"
+                    formControlName="MrVerfSubjectRelationCode"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && PhoneDataForm.controls.MrVerfSubjectRelationCode.invalid }">
                     <option *ngFor="let item of SubjectRelationObj" [value]="item.Key">
                       {{item.Value}}
                     </option>
@@ -36,8 +38,9 @@
               <div class="form-group row">
                 <label class="col-md-2  adins-required-label" translate>Phone</label>
                 <div class="col-md-4">
-                  <select *ngIf="PhoneNumberObj" class="form-control" id="phoneNumberId" formControlName="Phn" (change)="PhoneChange()"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && PhoneDataForm.controls.Phn.invalid }">
+                  <select *ngIf="PhoneNumberObj" class="form-control" id="phoneNumberId" formControlName="Phn"
+                    (change)="PhoneChange()"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && PhoneDataForm.controls.Phn.invalid }">
                     <option *ngFor="let item of PhoneNumberObj" [value]="item.PhoneNumber">
                       {{item.PhoneType}}: {{item.PhoneNumber}}
                     </option>
@@ -45,8 +48,9 @@
                 </div>
                 <label class="col-md-2  adins-required-label" translate>Result</label>
                 <div class="col-md-4">
-                  <select *ngIf="ResultObj" class="form-control" id="subjectResultId" formControlName="MrVerfResultHStatCode"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && PhoneDataForm.controls.MrVerfResultHStatCode.invalid }">
+                  <select *ngIf="ResultObj" class="form-control" id="subjectResultId"
+                    formControlName="MrVerfResultHStatCode"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && PhoneDataForm.controls.MrVerfResultHStatCode.invalid }">
                     <option *ngFor="let item of ResultObj" [value]="item.Key">
                       {{item.Value}}
                     </option>
@@ -57,55 +61,60 @@
                 <label class="col-md-2 adins-required-label" translate>Notes</label>
                 <div class="col-md-4">
                   <textarea type="text" class="form-control adInsInput" formControlName="Notes"
-                            [ngClass]="{ 'is-invalid': enjiForm.submitted && PhoneDataForm.controls.Notes.invalid }"></textarea>
-                  <lib-uc-show-errors [control]="PhoneDataForm.controls.Notes" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && PhoneDataForm.controls.Notes.invalid }"></textarea>
+                  <lib-uc-show-errors [control]="PhoneDataForm.controls.Notes" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
                 </div>
               </div>
             </div>
             <div formArrayName="QuestionObjs">
               <div class="form-body" [formGroupName]="i"
-                   *ngFor="let QuestionGrpList of PhoneDataForm.controls.QuestionObjs.controls; let i = index">
+                *ngFor="let QuestionGrpList of PhoneDataForm.controls.QuestionObjs.controls; let i = index">
                 <!--<h4 class="form-section card-title" translate>
                   <i class="ft-file-text"></i>{{QuestionGrpList.value.VerfQuestionGrpName}}
                 </h4>-->
-                <lib-ucSubsection [id]="'grpName'+i+'id'" [title]="QuestionGrpList.value.VerfQuestionGrpName" [panel]="'grpName'+i" >
+                <lib-ucSubsection [id]="'grpName'+i+'id'" [title]="QuestionGrpList.value.VerfQuestionGrpName"
+                  [panel]="'grpName'+i">
                 </lib-ucSubsection>
-                <div id="grpName{{i}}" >
+                <div id="grpName{{i}}">
                   <span formArrayName="VerfQuestionAnswerList">
                     <div class="form-group row" [formGroupName]="j"
-                         *ngFor="let QRList of QuestionGrpList.controls.VerfQuestionAnswerList.controls; let j = index">
-                      <label class="col-md-3" translate>{{QRList.value.QuestionGrp.VerfQuestionText}} </label>
+                      *ngFor="let QRList of QuestionGrpList.controls.VerfQuestionAnswerList.controls; let j = index">
+                      <label class="col-md-3 adins-required-label"
+                        translate>{{QRList.value.QuestionGrp.VerfQuestionText}} </label>
                       <div class="col-md-5" formGroupName="ResultGrp">
-                        <span *ngIf="QRList.value.QuestionGrp.VerfAnswerTypeCode == 'DDL' || QRList.value.QuestionGrp.VerfAnswerTypeCode == 'RBL'">
+                        <span
+                          *ngIf="QRList.value.QuestionGrp.VerfAnswerTypeCode == 'DDL' || QRList.value.QuestionGrp.VerfAnswerTypeCode == 'RBL'">
                           <select class="form-control" formControlName="Answer"
-                                  [ngClass]="{ 'is-invalid': enjiForm.submitted && QRList.controls.ResultGrp.controls.Answer.invalid }">
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && QRList.controls.ResultGrp.controls.Answer.invalid }">
                             <lib-uc-show-errors [control]="QRList.controls.ResultGrp.controls.Answer"
-                                                [submit]="enjiForm.submitted">
+                              [submit]="enjiForm.submitted">
                             </lib-uc-show-errors>
                             <option *ngFor="let item of ListVerfAnswer[i][j]" value="{{item}}">
                               {{item}}
                             </option>
                           </select>
+
                         </span>
                         <span *ngIf="QRList.value.QuestionGrp.VerfAnswerTypeCode == 'TXT'">
                           <input type="text" class="form-control" formControlName="Answer"
-                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && QRList.controls.ResultGrp.controls.Answer.invalid }">
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && QRList.controls.ResultGrp.controls.Answer.invalid }">
                           <lib-uc-show-errors [control]="QRList.controls.ResultGrp.controls.Answer"
-                                              [submit]="enjiForm.submitted">
+                            [submit]="enjiForm.submitted">
                           </lib-uc-show-errors>
                         </span>
                         <span *ngIf="QRList.value.QuestionGrp.VerfAnswerTypeCode == 'DT_PICKER'">
                           <input type="date" class="form-control" formControlName="Answer"
-                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && QRList.controls.ResultGrp.controls.Answer.invalid }">
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && QRList.controls.ResultGrp.controls.Answer.invalid }">
                           <lib-uc-show-errors [control]="QRList.controls.ResultGrp.controls.Answer"
-                                              [submit]="enjiForm.submitted">
+                            [submit]="enjiForm.submitted">
                           </lib-uc-show-errors>
                         </span>
                         <span *ngIf="QRList.value.QuestionGrp.VerfAnswerTypeCode == 'UC_INPUT_NUMBER'">
                           <input type="" currencyMask id="AnswerId" class="form-control" formControlName="Answer"
-                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && QRList.controls.ResultGrp.controls.Answer.invalid }">
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && QRList.controls.ResultGrp.controls.Answer.invalid }">
                           <lib-uc-show-errors [control]="QRList.controls.ResultGrp.controls.Answer"
-                                              [submit]="enjiForm.submitted">
+                            [submit]="enjiForm.submitted">
                           </lib-uc-show-errors>
                         </span>
                       </div>
@@ -162,4 +171,3 @@
     </div>
   </div>
 </div>
-

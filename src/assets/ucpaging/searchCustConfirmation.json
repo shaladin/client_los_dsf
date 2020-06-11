@@ -172,6 +172,10 @@
                         {
                             "type": "AppId",
                             "property": "AppId"
+                        },
+                        {
+                            "type": "BizTemplateCode",
+                            "property": "BizTemplateCode"
                         }
                     ]
                 }

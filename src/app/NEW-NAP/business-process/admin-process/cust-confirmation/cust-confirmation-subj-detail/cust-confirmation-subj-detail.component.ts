@@ -10,6 +10,7 @@ import { VerfQuestionAnswerCustomObj } from 'app/shared/model/VerfQuestionAnswer
 import { VerfResultHObj } from 'app/shared/model/VerfResultH/VerfResultH.Model';
 import { VerfResultDObj } from 'app/shared/model/VerfResultD/VerfResultH.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { environment } from 'environments/environment';
 
 @Component({
@@ -39,6 +40,8 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   VerfResultHList = new Array<VerfResultHObj>();
   AgrmntNo : any;
   TaskListId : any;
+  SubjectResponse: RefMasterObj = new RefMasterObj();
+
   appUrl : string;
   agrmntUrl : string;
   constructor(private route: ActivatedRoute, private fb: FormBuilder, private http: HttpClient,
@@ -70,10 +73,17 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
     this.agrmntUrl =  environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + this.AgrmntId;
     console.log(this.appUrl);
     this.GetData();
-    var RefStatusObj = {
-      StatusGrpCode: "VERF_RESULT_STAT"
-    };
-    this.http.post(AdInsConstant.GetListActiveRefStatusByStatusGrpCode, RefStatusObj).subscribe(
+
+    this.http.post<RefMasterObj>(AdInsConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, {MasterCode: this.Subject, RefMasterTypeCode: "VERF_SUBJ_RELATION" }).subscribe(
+      (response) => {
+        this.SubjectResponse = response;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+    this.http.post(AdInsConstant.GetListActiveRefStatusByStatusGrpCode, {StatusGrpCode: "VERF_RESULT_STAT"}).subscribe(
       (response) => {
         this.RefStatusList = response["ReturnObject"];
         this.CustConfirm.patchValue({
@@ -97,11 +107,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
       }
     );
 
-    var VerfQAObj = {
-      AppId: this.AppId,
-      Subject: this.Subject
-    };
-    this.http.post(AdInsConstant.GetVerfQuestionAnswerListByAppIdAndSubject, VerfQAObj).subscribe(
+    this.http.post(AdInsConstant.GetVerfQuestionAnswerListByAppIdAndSubject, {AppId: this.AppId, Subject: this.Subject}).subscribe(
       (response) => {
         this.verfQuestionAnswerObj = response["ReturnObject"];
         if (this.verfQuestionAnswerObj != null && this.verfQuestionAnswerObj.VerfQuestionAnswerListObj.length != 0) {
@@ -115,17 +121,11 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   }
 
   GetData() {
-    var agrmntObj = {
-      AgrmntId: this.AgrmntId
-    };
-    this.http.post<AgrmntObj>(AdInsConstant.GetAgrmntByAgrmntId, agrmntObj).subscribe(
+
+    this.http.post<AgrmntObj>(AdInsConstant.GetAgrmntByAgrmntId, {AgrmntId: this.AgrmntId}).subscribe(
       (response) => {
         this.agrmntObj = response;
-
-        var appObj = {
-          AppId: this.agrmntObj.AppId
-        };
-        this.http.post<AppObj>(AdInsConstant.GetAppById, appObj).subscribe(
+        this.http.post<AppObj>(AdInsConstant.GetAppById, {AppId: this.agrmntObj.AppId}).subscribe(
           (response) => {
             this.appObj = response; 
           },
@@ -139,10 +139,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
       }
     );
 
-    var VerfResultHObj = {
-      VerfResultHId: this.VerfResultHId
-    };
-    this.http.post<VerfResultHObj>(AdInsConstant.GetVerfResultHById, VerfResultHObj).subscribe(
+    this.http.post<VerfResultHObj>(AdInsConstant.GetVerfResultHById, { VerfResultHId: this.VerfResultHId}).subscribe(
       (response) => {
         this.newVerfResultHObj.VerfResultId = response.VerfResultId;
         this.newVerfResultHObj.VerfSchemeHId = response.VerfSchemeHId;
@@ -270,7 +267,6 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
       VerfResultDListObj: VerfResultDList
     }
 
-    console.log(VerfResultHeaderDetail);
     this.http.post(AdInsConstant.AddVerfResultHeaderAndVerfResultDetail, VerfResultHeaderDetail).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);

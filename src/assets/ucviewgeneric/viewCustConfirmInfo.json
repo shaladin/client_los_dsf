@@ -12,13 +12,12 @@
           "property": "AppNo",
           "path": "/Nap/View/AppView",
           "target" : "_blank",
-          "param": [
+          "param" : [
             {
               "type": "AppId",
-              "property": "AppId"
-              
+              "property": "AppId"              
             }
-          ]
+        ]
         },
         {
           "type": "link",
