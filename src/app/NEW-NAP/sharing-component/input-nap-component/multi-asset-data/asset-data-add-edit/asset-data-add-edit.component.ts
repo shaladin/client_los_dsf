@@ -20,6 +20,10 @@ import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { AppAssetSupplEmpObj } from 'app/shared/model/AppAssetSupplEmpObj.Model';
 import { VendorObj } from 'app/shared/model/Vendor.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { AppCollateralAttrObj } from 'app/shared/model/AppCollateralAttrObj.Model';
+import { LookupTaxCityIssuerComponent } from '../collateral-add-edit/lookup-tax-city-issuer/lookup-tax-city-issuer.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-asset-data-add-edit',
@@ -132,7 +136,11 @@ export class AssetDataAddEditComponent implements OnInit {
     ChassisNo:[''],
     ManufacturingYear:['', [Validators.required, Validators.pattern("^[0-9]+$"), Validators.max(new Date().getFullYear())]],
     EngineNo:[''],
-    Notes:[''],
+    Notes:['', [Validators.required]],
+
+    TaxIssueDt:[''],
+    Color:[''],
+    TaxCityIssuer:[''],
 
     SelfUsage: [false],
     Username:[''],
@@ -155,7 +163,7 @@ export class AssetDataAddEditComponent implements OnInit {
     AppId: 0,
   };
 
-  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) { 
+  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private modalService: NgbModal) { 
     this.getListAppAssetData = AdInsConstant.GetListAppAssetData;
     this.getListVendorEmp = AdInsConstant.GetListKeyValueVendorEmpByVendorIdAndPosition;
     this.getListActiveRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
@@ -387,6 +395,7 @@ copyToLocationAddr() {
     console.log(this.AppAssetId)
     console.log(this.mode)
     
+    var datePipe = new DatePipe("en-US");
     this.inputFieldLocationAddrObj = new InputFieldObj();
     this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
     
@@ -411,6 +420,9 @@ copyToLocationAddr() {
             ManufacturingYear: this.returnAppAssetObj.ManufacturingYear,
             AssetTypeCode: this.returnAppAssetObj.AssetTypeCode,
             AssetCategoryCode: this.returnAppAssetObj.AssetCategoryCode,
+            Color: this.returnAppAssetObj.Color,
+            TaxCityIssuer: this.returnAppAssetObj.TaxCityIssuer,
+            TaxIssueDt: datePipe.transform(this.returnAppAssetObj.TaxIssueDt, "yyyy-MM-dd")
           });
 
           if(this.returnAppAssetObj.MrAssetConditionCode == "USED")
@@ -650,6 +662,21 @@ copyToLocationAddr() {
     );
   }
 
+  showModalTaxCityIssuer(){
+    const modalTaxCityIssuer = this.modalService.open(LookupTaxCityIssuerComponent);
+    modalTaxCityIssuer.result.then(
+      (response) => {
+        this.AssetDataForm.patchValue({
+          TaxCityIssuer: response.DistrictCode
+        });
+      }
+    ).catch((error) => {
+      if (error != 0) {
+        console.log(error);
+      }
+    });
+  }
+
   setSupplierInfo(){
     // if(this.AssetDataForm.controls["AdminHeadName"].value == "undefined" || this.AssetDataForm.controls["AdminHeadName"].value == "")
     if(!this.AssetDataForm.controls["AdminHeadName"].value)
@@ -714,6 +741,9 @@ copyToLocationAddr() {
     this.allAssetDataObj.AppAssetObj.AssetCategoryCode = this.AssetDataForm.controls["AssetCategoryCode"].value;
     this.allAssetDataObj.AppAssetObj.IsCollateral = true;
     this.allAssetDataObj.AppAssetObj.IsInsurance = true;
+    this.allAssetDataObj.AppAssetObj.Color = this.AssetDataForm.controls["Color"].value;
+    this.allAssetDataObj.AppAssetObj.TaxCityIssuer = this.AssetDataForm.controls["TaxCityIssuer"].value;
+    this.allAssetDataObj.AppAssetObj.TaxIssueDt = this.AssetDataForm.controls["TaxIssueDt"].value;
 
     this.allAssetDataObj.AppCollateralObj.AppId = this.AppId;
     this.allAssetDataObj.AppCollateralObj.CollateralSeqNo = 1;
@@ -759,6 +789,34 @@ copyToLocationAddr() {
     this.allAssetDataObj.AppCollateralRegistrationObj.LocationZipcode = this.AssetDataForm.controls["assetLocationAddressZipcode"]["controls"].value.value;
   }
 
+  setCollateralAttribute(){
+    var collAttr;
+    if(this.AssetDataForm.controls["Color"].value != "")
+    {
+      collAttr = new AppCollateralAttrObj();
+      collAttr.CollateralAttrCode = "COLOR";
+      collAttr.CollateralAttrName = "Color";
+      collAttr.AttrValue = this.AssetDataForm.controls["Color"].value;
+      this.allAssetDataObj.AppCollateralAttrObj.push(collAttr);
+    }
+    if(this.AssetDataForm.controls["TaxCityIssuer"].value != "")
+    {
+      collAttr = new AppCollateralAttrObj();
+      collAttr.CollateralAttrCode = "TAX_CITY_ISSUER";
+      collAttr.CollateralAttrName = "Tax City Issuer";
+      collAttr.AttrValue = this.AssetDataForm.controls["TaxCityIssuer"].value;
+      this.allAssetDataObj.AppCollateralAttrObj.push(collAttr);
+    }
+    if(this.AssetDataForm.controls["TaxIssueDt"].value != "")
+    {
+      collAttr = new AppCollateralAttrObj();
+      collAttr.CollateralAttrCode = "BPKB_ISSUE_DATE";
+      collAttr.CollateralAttrName = "BPKB Issue Date";
+      collAttr.AttrValue = this.AssetDataForm.controls["TaxIssueDt"].value;
+      this.allAssetDataObj.AppCollateralAttrObj.push(collAttr);
+    }
+  }
+
   SaveForm() {
     console.log("coba")
     console.log(this.AssetDataForm.controls["BranchManagerName"].value)
@@ -769,6 +827,7 @@ copyToLocationAddr() {
       this.setAssetInfo();
       this.setAssetUser();
       this.setAssetLocation();
+      this.setCollateralAttribute();
       this.allAssetDataObj.AppAssetObj.AppAssetId = 0;
 
       if(this.allAssetDataObj.AppAssetObj.DownPaymentAmt > this.allAssetDataObj.AppAssetObj.AssetPriceAmt){
@@ -795,6 +854,7 @@ copyToLocationAddr() {
       this.setAssetInfo();
       this.setAssetUser();
       this.setAssetLocation();
+      this.setCollateralAttribute();
       this.allAssetDataObj.AppAssetObj.RowVersion = this.returnAppAssetObj.RowVersion;
       this.allAssetDataObj.AppCollateralObj.RowVersion = this.returnAppCollateralObj.RowVersion;
       this.allAssetDataObj.AppCollateralRegistrationObj.RowVersion = this.returnAppCollateralRegistObj.RowVersion;

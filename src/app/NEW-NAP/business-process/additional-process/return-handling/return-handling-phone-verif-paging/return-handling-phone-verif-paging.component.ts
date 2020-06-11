@@ -14,10 +14,9 @@ import { ActivatedRoute } from '@angular/router';
   providers: [DecimalPipe]
 })
 export class ReturnHandlingPhoneVerifPagingComponent implements OnInit {
-
   inputPagingObj: UcPagingObj;
-  userAccess;
   BizTemplateCode: string;
+  userAccess;
   constructor(private http: HttpClient,
     private route: ActivatedRoute,) {
     this.route.queryParams.subscribe(params => {

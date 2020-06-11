@@ -208,8 +208,8 @@
                 "type": "link",
                 "position": "left",
                 "property": "agrmntNo",
-                "target" : "_blank",
-                "path": "",
+                "target": "_blank",
+                "path": "/Nap/View/AgrmntView",
                 "param": [
                   {
                     "type": "AgrmntId",
@@ -255,7 +255,7 @@
                 "position": "left",
                 "property": "agrmntNo",
                 "target" : "_blank",
-                "path": "/Nap/FinanceLeasing/ViewAgrmnt",
+                "path": "/Nap/View/AgrmntView",
                 "param": [
                   {
                     "type": "AgrmntId",
@@ -278,7 +278,7 @@
                 "position": "left",
                 "property": "agrmntNo",
                 "target" : "_blank",
-                "path": "/Nap/FinanceLeasing/ViewAgrmnt",
+                "path": "/Nap/View/AgrmntView",
                 "param": [
                   {
                     "type": "AgrmntId",

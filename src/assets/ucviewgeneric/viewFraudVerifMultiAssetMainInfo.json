@@ -10,11 +10,13 @@
             "type": "link",
             "label": "Application No",
             "property": "AppNo",
-            "path": "/test/paging",
+            "path": "/Nap/View/AppView",
             "target" : "_blank",
             "param": [
               {
+                "type": "AppId",
                 "property": "AppId"
+                
               }
             ]
           },

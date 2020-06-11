@@ -30,7 +30,7 @@
               <td>{{item.Phn}}</td>
               <td>{{item.VerfDt | date}}</td>
               <td>{{item.VerfDt | date:'mediumTime'}}</td>
-              <td>{{item.MrVerfResultHStatCode}}</td>
+              <td>{{item.MrVerfResultHStatName}}</td>
               <td>{{item.Notes}}</td>
               <td>
                 <a [routerLink]="['/Nap/AdminProcess/CustConfirmation/Subj/View']"
@@ -63,7 +63,7 @@
       <form  (ngSubmit)="SaveForm()">
         <div class="form-actions right">
           <button type="button" class="btn btn-raised btn-warning mr-1"
-            [routerLink]="['/Nap/AdminProcess/CustConfirmation/Paging']" translate>
+            [routerLink]="['/Nap/AdminProcess/CustConfirmation/Paging']" [queryParams]="{BizTemplateCode: this.BizTemplateCode}" translate>
             <i class="ft-x"></i> Cancel
           </button>
           <button type="submit" class="btn btn-raised btn-primary" translate>
