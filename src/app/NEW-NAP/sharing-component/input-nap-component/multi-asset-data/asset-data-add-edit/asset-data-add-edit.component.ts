@@ -130,7 +130,7 @@ export class AssetDataAddEditComponent implements OnInit {
     AssetUsage:[''],
     LicensePlate:[''],
     ChassisNo:[''],
-    ManufacturingYear:['', [Validators.required]],
+    ManufacturingYear:['', [Validators.required, Validators.pattern("^[0-9]+$"), Validators.max(new Date().getFullYear())]],
     EngineNo:[''],
     Notes:[''],
 
@@ -391,8 +391,8 @@ copyToLocationAddr() {
     this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
     
     if(this.mode == 'editAsset'){
-      this.AssetDataForm.controls['ManufacturingYear'].setValidators([Validators.required]);
-      this.AssetDataForm.controls['ManufacturingYear'].updateValueAndValidity();
+      // this.AssetDataForm.controls['ManufacturingYear'].setValidators([Validators.required]);
+      // this.AssetDataForm.controls['ManufacturingYear'].updateValueAndValidity();
 
       this.appAssetObj = new AppAssetObj();
       this.appAssetObj.AppAssetId = this.AppAssetId;

@@ -34,7 +34,7 @@
       </thead>
       <tbody>
         <tr *ngIf="listCustDuplicate?.length == 0">
-          <td align="center" colspan="10">No data found</td>
+          <td align="center" colspan="10">No Data Available</td>
         </tr>
         <tr *ngFor="let item of listCustDuplicate">
           <td>{{item.CustNo}}</td>
@@ -94,7 +94,7 @@
     </thead>
     <tbody>
       <tr *ngIf="listNegativeCust?.length == 0">
-        <td align="center" colspan="12">No data found</td>
+        <td align="center" colspan="12">No Data Available</td>
       </tr>
       <tr *ngFor="let item of listNegativeCust">
         <td>{{item.CustNo}}</td>
