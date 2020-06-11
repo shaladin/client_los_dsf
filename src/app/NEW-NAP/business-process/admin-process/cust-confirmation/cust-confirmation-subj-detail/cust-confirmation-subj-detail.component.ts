@@ -25,6 +25,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   agrmntObj: AgrmntObj = new AgrmntObj();
   appObj: AppObj = new AppObj();
   RefStatusList: Array<KeyValueObj> = new Array<KeyValueObj>();
+  PhnList: any;
   verfQuestionAnswerObj: VerfQuestionAnswerCustomObj = new VerfQuestionAnswerCustomObj();
   newVerfResultHObj: VerfResultHObj = new VerfResultHObj();
   VerfResultDForm: FormArray = this.fb.array([]);
@@ -58,6 +59,10 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    if(this.Subject == "CUST"){
+      this.Subject = "Customer";
+    }
+
     this.GetData();
     var RefStatusObj = {
       StatusGrpCode: "VERF_RESULT_STAT"
@@ -65,6 +70,15 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
     this.http.post(AdInsConstant.GetListActiveRefStatusByStatusGrpCode, RefStatusObj).subscribe(
       (response) => {
         this.RefStatusList = response["ReturnObject"];
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+    this.http.post(AdInsConstant.GetListKeyValueMobilePhnByAppId, {AppId: this.AppId}).subscribe(
+      (response) => {
+        this.PhnList = response;
       },
       (error) => {
         console.log(error);
