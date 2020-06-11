@@ -28,7 +28,12 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   PhnList: any;
   verfQuestionAnswerObj: VerfQuestionAnswerCustomObj = new VerfQuestionAnswerCustomObj();
   newVerfResultHObj: VerfResultHObj = new VerfResultHObj();
-  VerfResultDForm: FormArray = this.fb.array([]);
+  CustConfirm = this.fb.group({
+    Notes: ["", Validators.required],
+    Phn: ["", Validators.required],
+    MrVerfResultHStatCode: ["", Validators.required],
+    VerfResultDForm: this.fb.array([])
+  })
   ListVerfAnswer = [];
   VerfResultHList = new Array<VerfResultHObj>();
   AgrmntNo : any;
@@ -59,10 +64,6 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(this.Subject == "CUST"){
-      this.Subject = "Customer";
-    }
-
     this.GetData();
     var RefStatusObj = {
       StatusGrpCode: "VERF_RESULT_STAT"
@@ -70,6 +71,9 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
     this.http.post(AdInsConstant.GetListActiveRefStatusByStatusGrpCode, RefStatusObj).subscribe(
       (response) => {
         this.RefStatusList = response["ReturnObject"];
+        this.CustConfirm.patchValue({
+          MrVerfResultHStatCode: this.RefStatusList[0].Key
+        })
       },
       (error) => {
         console.log(error);
@@ -79,6 +83,9 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
     this.http.post(AdInsConstant.GetListKeyValueMobilePhnByAppId, {AppId: this.AppId}).subscribe(
       (response) => {
         this.PhnList = response;
+        this.CustConfirm.patchValue({
+          Phn: this.PhnList[0].Key
+        })
       },
       (error) => {
         console.log(error);
@@ -92,8 +99,6 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
     this.http.post(AdInsConstant.GetVerfQuestionAnswerListByAppIdAndSubject, VerfQAObj).subscribe(
       (response) => {
         this.verfQuestionAnswerObj = response["ReturnObject"];
-        console.log("this is verf question answer");
-        console.log(this.verfQuestionAnswerObj);
         if (this.verfQuestionAnswerObj != null && this.verfQuestionAnswerObj.VerfQuestionAnswerListObj.length != 0) {
           this.GenerateFormVerfQuestion(this.verfQuestionAnswerObj);
         }
@@ -164,14 +169,17 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
     this.verfQuestionAnswerObj.VerfQuestionAnswerListObj[0].VerfQuestionGrpName
     var grpListObj = this.verfQuestionAnswerObj.VerfQuestionAnswerListObj;
 
+
     for (let i = 0; i < grpListObj.length; i++) {
-      var QuestionGrp = this.fb.group({
+        var QuestionGrp = this.fb.group({
         VerfQuestionGrpCode: grpListObj[i].VerfQuestionGrpCode,
         VerfQuestionGrpName: grpListObj[i].VerfQuestionGrpName,
         VerfQuestionAnswerList: this.fb.array([])
       }) as FormGroup;
-      this.VerfResultDForm.push(QuestionGrp);
-      var ResultGrp = this.VerfResultDForm.controls[i].get("VerfQuestionAnswerList") as FormArray;
+      
+      var formArray = this.CustConfirm.get('VerfResultDForm') as FormArray;
+      formArray.push(QuestionGrp);
+      var ResultGrp = this.CustConfirm.controls.VerfResultDForm['controls'][i].get("VerfQuestionAnswerList") as FormArray;
       var QuestionList = grpListObj[i].verfQuestionAnswerList;
 
       this.ListVerfAnswer.push([]);
@@ -196,7 +204,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
               VerfResultHId: 0,
               VerfQuestionAnswerId: QuestionList[j].VerfQuestionAnswerId,
               VerfQuestionText: QuestionList[j].VerfQuestionText,
-              Answer: "",
+              Answer: ["", Validators.required],
               Notes: "",
               SeqNo: j + 1,
               Score: 0,
@@ -219,18 +227,15 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
           } else {
             this.ListVerfAnswer[i].push("");
           }
-          ResultGrp.push(QuestionResultGrp);
+         ResultGrp.push(QuestionResultGrp);
         }
       }
     }
   }
 
+  
   SaveForm(ev) {
-    console.log(ev);
-
-    var FormValue = this.VerfResultDForm.value;
-    console.log(FormValue);
-
+    var FormValue = this.CustConfirm.value.VerfResultDForm;
     var VerfResultDList = new Array<VerfResultDObj>();
     for (let i = 0; i < FormValue.length; i++) {
       var currGrp = FormValue[i].VerfQuestionAnswerList;
@@ -249,6 +254,12 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
       }
     }
 
+    this.newVerfResultHObj.MrVerfObjectCode = "-";
+    this.newVerfResultHObj.PhnType = "-";
+    this.newVerfResultHObj.MrVerfSubjectRelationCode = this.Subject;
+    this.newVerfResultHObj.Phn = this.CustConfirm.controls.Phn.value;
+    this.newVerfResultHObj.MrVerfResultHStatCode = this.CustConfirm.controls.MrVerfResultHStatCode.value;
+    this.newVerfResultHObj.Notes = this.CustConfirm.controls.Notes.value;
     var VerfResultHeaderDetail = {
       VerfResultHObj: this.newVerfResultHObj,
       VerfResultDListObj: VerfResultDList
