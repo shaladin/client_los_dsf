@@ -12,6 +12,7 @@ export class AppComponent implements OnInit {
 
     // private _hubConnection: HubConnection;
     // msgs: Message[] = [];
+    // Jason test push
 
     constructor() { }
 
