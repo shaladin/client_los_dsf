@@ -51,6 +51,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
   AppObj: any;
   returnHandlingDObj: any;
   ReturnHandlingDData: ReturnHandlingDObj;
+  BizTemplateCode: string;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
 
@@ -76,6 +77,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    this.BizTemplateCode = localStorage.getItem("BizTemplateCode");
     this.ClaimTask();
     this.initUrl();
     this.appObj.AppId = this.appId;
@@ -97,6 +99,8 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
+          var lobCode = localStorage.getItem("BizTemplateCode");
+          this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingCollateral/Paging"], { queryParams: { BizTemplateCode: lobCode } })
         },
         (error) => {
           console.log(error);
@@ -153,8 +157,6 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
       this.http.post<ReturnHandlingDObj>(AdInsConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
         (response) => {
           this.returnHandlingDObj = response;
-          var lobCode = localStorage.getItem("BizTemplateCode");
-          this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingCollateral/Paging"], { queryParams: { BizTemplateCode: lobCode } })
         },
         (error) => {
           console.log(error);

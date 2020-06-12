@@ -28,6 +28,19 @@ import { ReturnHandlingCollateralPagingComponent } from "./return-handling/retur
 import { MatCheckboxModule } from "@angular/material";
 import { ReturnHandlingComRsvfundPagingComponent } from "./return-handling/return-handling-com-rsvfund-paging/return-handling-com-rsvfund-paging.component";
 import { CopyCancelledApplicationComponent } from './copy-cancelled-application/copy-cancelled-application.component';
+import { NgxCurrencyModule } from "ngx-currency";
+
+export const customCurrencyMaskConfig = {
+  align: "right",
+  allowNegative: true,
+  allowZero: true,
+  decimal: ".",
+  precision: 2,
+  prefix: "",
+  suffix: "",
+  thousands: ",",
+  nullable: false
+};
 
 @NgModule({
   imports: [
@@ -36,7 +49,9 @@ import { CopyCancelledApplicationComponent } from './copy-cancelled-application/
     AdInsModule,
     TcSharingComponentModule,
     ViewMainInfoComponentModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
+
   ],
   declarations: [
     PoExtensionPagingComponent,
