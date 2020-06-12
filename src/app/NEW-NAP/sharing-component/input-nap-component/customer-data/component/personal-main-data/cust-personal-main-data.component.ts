@@ -285,14 +285,14 @@ export class CustPersonalMainDataComponent implements OnInit {
   }
 
   clearExpDt(){
-    if(this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == "EKTP"){
+    if(this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == AdInsConstant.MrIdTypeCodeEKTP){
       this.parentForm.controls[this.identifier].patchValue({
         IdExpiredDt: '',
       });
     }
     var idExpiredDate = this.parentForm.controls[this.identifier].get("IdExpiredDt");
     console.log(idExpiredDate);
-    if(this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == "KITAS" || this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == "SIM"){
+    if (this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == AdInsConstant.MrIdTypeCodeKITAS || this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == AdInsConstant.MrIdTypeCodeSIM) {
       idExpiredDate.setValidators([Validators.required]);
     }else{
       idExpiredDate.clearValidators();      

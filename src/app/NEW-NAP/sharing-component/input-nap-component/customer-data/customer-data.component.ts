@@ -231,7 +231,7 @@ export class CustomerDataComponent implements OnInit {
     let d2 = new Date(MaxDate);
     max17Yodt.setFullYear(d2.getFullYear()-17);
 
-    if (type == "Id Expired Date") {
+    if (type == AdInsConstant.DateErrorMessageIdExpiredDate) {
       d2.setDate(d2.getDate() - 1);
       if (d1 < d2) {
         this.isExpiredDate = true;
@@ -242,19 +242,19 @@ export class CustomerDataComponent implements OnInit {
 
     if(d1 > d2){
       this.toastr.errorMessage(type + "  can not be more than " + MaxDate);
-      if(type=="Establishment Date")
+      if (type == AdInsConstant.DateErrorMessageEstablishmentDate)
         this.isExpiredEstablishmentDt = true;
-      if(type=="Birth Date")
+      if (type == AdInsConstant.DateErrorMessageBirthDate)
         this.isExpiredBirthDt = true;
 
-    }else if(type == "Birth Date" && d1 > max17Yodt){
+    }else if(type == AdInsConstant.DateErrorMessageBirthDate && d1 > max17Yodt){
       this.toastr.errorMessage(type + "  can not be more than " + Max17YO);
       this.isExpiredBirthDt = true;
     }
     else{
-      if(type=="Birth Date")
+      if (type == AdInsConstant.DateErrorMessageBirthDate)
         this.isExpiredBirthDt = false;
-      if(type=="Establishment Date")
+      if (type == AdInsConstant.DateErrorMessageEstablishmentDate)
         this.isExpiredEstablishmentDt = false;
     }
   }
@@ -268,7 +268,7 @@ export class CustomerDataComponent implements OnInit {
       this.custDataPersonalObj.AppCustObj.IdNo = this.CustDataForm.controls["personalMainData"]["controls"].IdNo.value;
       this.custDataPersonalObj.AppCustObj.IdExpiredDt = this.CustDataForm.controls["personalMainData"]["controls"].IdExpiredDt.value;
       if(this.custDataPersonalObj.AppCustObj.MrIdTypeCode=="KITAS" || this.custDataPersonalObj.AppCustObj.MrIdTypeCode=="SIM"){
-        this.CekDt(this.custDataPersonalObj.AppCustObj.IdExpiredDt, "Id Expired Date");}
+        this.CekDt(this.custDataPersonalObj.AppCustObj.IdExpiredDt, AdInsConstant.DateErrorMessageIdExpiredDate);}
       this.custDataPersonalObj.AppCustObj.TaxIdNo = this.CustDataForm.controls["personalMainData"]["controls"].TaxIdNo.value;
       this.custDataPersonalObj.AppCustObj.IsVip = this.CustDataForm.controls["personalMainData"]["controls"].IsVip.value;
       this.custDataPersonalObj.AppCustObj.AppId = this.appId;
@@ -306,7 +306,7 @@ export class CustomerDataComponent implements OnInit {
     this.custDataCompanyObj.AppCustCompanyObj.NumOfEmp = this.CustDataCompanyForm.controls["companyMainData"]["controls"].NumOfEmp.value;
     this.custDataCompanyObj.AppCustCompanyObj.IsAffiliated = this.CustDataCompanyForm.controls["companyMainData"]["controls"].IsAffiliated.value;
     this.custDataCompanyObj.AppCustCompanyObj.EstablishmentDt = this.CustDataCompanyForm.controls["companyMainData"]["controls"].EstablishmentDt.value;
-    this.CekDt(this.custDataCompanyObj.AppCustCompanyObj.EstablishmentDt, "Establishment Date");
+    this.CekDt(this.custDataCompanyObj.AppCustCompanyObj.EstablishmentDt, AdInsConstant.DateErrorMessageEstablishmentDate);
   }
 
   setAppCustPersonal() {
@@ -316,7 +316,7 @@ export class CustomerDataComponent implements OnInit {
     this.custDataPersonalObj.AppCustPersonalObj.MrMaritalStatCode = this.CustDataForm.controls["personalMainData"]["controls"].MrMaritalStatCode.value;
     this.custDataPersonalObj.AppCustPersonalObj.BirthPlace = this.CustDataForm.controls["personalMainData"]["controls"].BirthPlace.value;
     this.custDataPersonalObj.AppCustPersonalObj.BirthDt = this.CustDataForm.controls["personalMainData"]["controls"].BirthDt.value;
-    this.CekDt(this.custDataPersonalObj.AppCustPersonalObj.BirthDt, "Birth Date");
+    this.CekDt(this.custDataPersonalObj.AppCustPersonalObj.BirthDt, AdInsConstant.DateErrorMessageBirthDate);
     this.custDataPersonalObj.AppCustPersonalObj.MrNationalityCode = this.CustDataForm.controls["personalMainData"]["controls"].MrNationalityCode.value;
     this.custDataPersonalObj.AppCustPersonalObj.NationalityCountryCode = this.mainDataComponent.selectedNationalityCountryCode;
     this.custDataPersonalObj.AppCustPersonalObj.MobilePhnNo1 = this.CustDataForm.controls["personalMainData"]["controls"].MobilePhnNo1.value;
@@ -537,7 +537,7 @@ export class CustomerDataComponent implements OnInit {
     if (this.custDataPersonalObj.AppCustObj.CustModelCode == AdInsConstant.CustModelNonProfessional) {
       this.custDataPersonalObj.AppCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
     }
-    this.CekDt(this.custDataPersonalObj.AppCustPersonalJobDataObj.EstablishmentDt, "Establishment Date");      
+    this.CekDt(this.custDataPersonalObj.AppCustPersonalJobDataObj.EstablishmentDt, AdInsConstant.DateErrorMessageEstablishmentDate);      
   }
 
   setAppCustSocmedObj() {
