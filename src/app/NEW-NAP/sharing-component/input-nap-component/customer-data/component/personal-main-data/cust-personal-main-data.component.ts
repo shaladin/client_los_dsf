@@ -290,6 +290,14 @@ export class CustPersonalMainDataComponent implements OnInit {
         IdExpiredDt: '',
       });
     }
+    var idExpiredDate = this.parentForm.controls[this.identifier].get("IdExpiredDt");
+    console.log(idExpiredDate);
+    if(this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == "KITAS" || this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == "SIM"){
+      idExpiredDate.setValidators([Validators.required]);
+    }else{
+      idExpiredDate.clearValidators();      
+    }
+    idExpiredDate.updateValueAndValidity();
   }
 
   async bindIdTypeObj(){

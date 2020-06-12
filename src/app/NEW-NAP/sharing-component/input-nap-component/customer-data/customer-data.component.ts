@@ -139,7 +139,7 @@ export class CustomerDataComponent implements OnInit {
     if (this.MrCustTypeCode == AdInsConstant.CustTypePersonal) {
       this.custDataPersonalObj = new CustDataPersonalObj();
       this.setCustPersonalObjForSave();
-      if(this.isExpiredBirthDt || this.isExpiredEstablishmentDt) return;
+      if(this.isExpiredBirthDt || this.isExpiredEstablishmentDt || this.isExpiredDate) return;
       this.http.post(this.addEditCustDataPersonalUrl, this.custDataPersonalObj).subscribe(
         (response) => {
           console.log(response);
@@ -221,6 +221,7 @@ export class CustomerDataComponent implements OnInit {
 
   isExpiredBirthDt: boolean = false;
   isExpiredEstablishmentDt: boolean = false;
+  isExpiredDate: boolean = false;
   CekDt(inputDate: Date, type: string){
     var UserAccess = JSON.parse(localStorage.getItem("UserAccess"));
     var MaxDate = formatDate(UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
@@ -229,6 +230,15 @@ export class CustomerDataComponent implements OnInit {
     let d1 = new Date(inputDate);
     let d2 = new Date(MaxDate);
     max17Yodt.setFullYear(d2.getFullYear()-17);
+
+    if (type == "Id Expired Date") {
+      d2.setDate(d2.getDate() - 1);
+      if (d1 < d2) {
+        this.isExpiredDate = true;
+        this.toastr.errorMessage(type + "  can not be less than " + MaxDate);
+      } else this.isExpiredDate = false;
+      return;
+    }
 
     if(d1 > d2){
       this.toastr.errorMessage(type + "  can not be more than " + MaxDate);
@@ -257,6 +267,8 @@ export class CustomerDataComponent implements OnInit {
       this.custDataPersonalObj.AppCustObj.MrIdTypeCode = this.CustDataForm.controls["personalMainData"]["controls"].MrIdTypeCode.value;
       this.custDataPersonalObj.AppCustObj.IdNo = this.CustDataForm.controls["personalMainData"]["controls"].IdNo.value;
       this.custDataPersonalObj.AppCustObj.IdExpiredDt = this.CustDataForm.controls["personalMainData"]["controls"].IdExpiredDt.value;
+      if(this.custDataPersonalObj.AppCustObj.MrIdTypeCode=="KITAS" || this.custDataPersonalObj.AppCustObj.MrIdTypeCode=="SIM"){
+        this.CekDt(this.custDataPersonalObj.AppCustObj.IdExpiredDt, "Id Expired Date");}
       this.custDataPersonalObj.AppCustObj.TaxIdNo = this.CustDataForm.controls["personalMainData"]["controls"].TaxIdNo.value;
       this.custDataPersonalObj.AppCustObj.IsVip = this.CustDataForm.controls["personalMainData"]["controls"].IsVip.value;
       this.custDataPersonalObj.AppCustObj.AppId = this.appId;
