@@ -20,7 +20,7 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-md-2  adInsLabel" translate>Collateral Name </label>
+                <label class="col-md-2  adInsLabel adins-required-label" translate>Collateral Name </label>
                 <div class="col-md-4">
                   <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupAssetObj" [identifier]="'lookupAsset'" [enjiForm]='enjiForm' [parentForm]='CollateralDataForm' (lookup)="SetAsset($event)">
                   </lib-uclookupgeneric>
@@ -95,11 +95,11 @@
               <div class="form-group row">
                 <label class="col-md-2  adins-required-label" translate>Portion Percentage</label>
                 <div class="col-md-4">
-                  <input type="" currencyMask id="assetPrcnt" class="form-control" formControlName="CollateralPrcnt"
+                  <input type="" currencyMask id="assetPrcnt" class="form-control" formControlName="CollateralPrcnt" [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: true, allowZero:true, precision: 6, nullable: false }"
                          [ngClass]="{ 'is-invalid': enjiForm.submitted && CollateralDataForm.controls.CollateralPrcnt.invalid}">
                   <lib-uc-show-errors [control]="CollateralDataForm.controls.CollateralPrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
-                <label class="col-md-2  adins-required-label" translate>Collateral Notes</label>
+                <label class="col-md-2" translate>Collateral Notes</label>
                 <div class="col-md-4">
                   <textarea type="text" class="form-control adInsInput" formControlName="CollateralNotes"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && CollateralDataForm.controls.CollateralNotes.invalid }"></textarea>
@@ -230,12 +230,15 @@
               </div>
             </div>
             <div class="form-actions right">
+              <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['/Nap/AdditionalProcess/ReturnHandlingCollateral/Edit']" [queryParams]="{AppId: AppId, ReturnHandlingHId: returnHandlingHId, WfTaskListId: wfTaskListId}">
+                <i class="ft-x"></i> Cancel
+            </button> 
               <button type="submit" class="btn btn-raised btn-primary">
-                <i class="fa fa-check-square-o"></i> Save And Continue
+                <i class="fa fa-check-square"></i> Save
               </button>
-              <button type="button" class="btn btn-raised btn-primary" (click)="test()">
+              <!-- <button type="button" class="btn btn-raised btn-primary" (click)="test()">
                 <i class="fa fa-check-square-o"></i> Check Value
-              </button>
+              </button> -->
             </div>
           </div>
 

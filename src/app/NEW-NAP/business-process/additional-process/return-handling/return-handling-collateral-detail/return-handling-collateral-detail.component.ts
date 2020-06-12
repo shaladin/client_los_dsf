@@ -21,17 +21,19 @@ import { AllCollateralDataObj } from '../../../../../shared/model/AllCollateralD
 
 export class ReturnHandlingCollateralDetailComponent implements OnInit {
 
-  AppId: any;
-  wfTaskListId: any;
-  returnHandlingDId: any;
+  AppId: number;
+  wfTaskListId: number;
+  returnHandlingHId: number;
   isReturnHandling: boolean = false;
-  BranchManagerName: any;
+  BranchManagerName: string;
   inputFieldOwnerAddrObj: InputFieldObj;
   ownerAddrObj: AddrObj;
   inputFieldLocationAddrObj: InputFieldObj;
   locationAddrObj: AddrObj;
   //appAssetAccessoriesObjs: Array<AppAssetAccessoryObj>;
-  AppCollateralId: any;
+  AppCollateralId: number;
+  AppAssetId: number = null;
+  AgrmntId: number = null;
 
   CollateralDataForm = this.fb.group({
 
@@ -48,7 +50,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     IsSerialNo4: [false],
     SerialNo5: [''],
     IsSerialNo5: [false],
-    CollateralValueAmt: ['', Validators.required],
+    CollateralValueAmt: ['0', Validators.required],
     CollateralPrcnt: ['', Validators.required],
     CollateralNotes: ['', Validators.maxLength(4000)],
     AssetTaxDt: [''],
@@ -161,8 +163,8 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
       this.AppCollateralId = params["AppCollateralId"];
-      if (params['ReturnHandlingDId'] != null) {
-        this.returnHandlingDId = params['ReturnHandlingDId'];
+      if (params['ReturnHandlingHId'] != null) {
+        this.returnHandlingHId = params['ReturnHandlingHId'];
         this.isReturnHandling = true;
       }
       if (params['WfTaskListId'] != null) {
@@ -218,7 +220,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
       (response) => {
         console.log(response);
         this.toastr.successMessage(response["message"]);
-        this.router.navigateByUrl("/Nap/AdditionalProcess/ReturnHandlingCollateral/Edit?AppId=" + this.AppId + "&ReturnHandlingDId=" + this.returnHandlingDId + "&WfTaskListId=" + this.wfTaskListId);
+        this.router.navigateByUrl("/Nap/AdditionalProcess/ReturnHandlingCollateral/Edit?AppId=" + this.AppId + "&ReturnHandlingHId=" + this.returnHandlingHId + "&WfTaskListId=" + this.wfTaskListId);
       },
       (error) => {
         console.log(error);
@@ -241,6 +243,8 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     }
     this.allCollateralDataObj.AppCollateralObj.AppCollateralId = this.AppCollateralId;
     this.allCollateralDataObj.AppCollateralObj.AppId = this.AppId;
+    this.allCollateralDataObj.AppCollateralObj.AppAssetId = this.AppAssetId;
+    this.allCollateralDataObj.AppCollateralObj.AgrmntId = this.AgrmntId;
     this.allCollateralDataObj.AppCollateralObj.CollateralSeqNo = this.CollateralDataForm.controls.CollateralSeqNo.value;
     this.allCollateralDataObj.AppCollateralObj.FullAssetCode = this.CollateralDataForm.controls.FullAssetCode.value;
     this.allCollateralDataObj.AppCollateralObj.FullAssetName = this.CollateralDataForm.controls.FullAssetName.value;
@@ -391,6 +395,8 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
 
             //this.appAssetAccessoriesObjs = this.appCollateral.ResponseAppAssetAccessoryObjs
             this.AppCollateralId = this.appCollateral.AppCollateralId;
+            this.AppAssetId = this.appCollateral.AppAssetId;
+            this.AgrmntId = this.appCollateral.AgrmntId;
             this.assetMasterObj.FullAssetCode = this.appCollateral.FullAssetCode;
             this.GetAssetMaster(this.assetMasterObj);
             this.AssetTypeChanged(this.appCollateral.AssetTypeCode);
