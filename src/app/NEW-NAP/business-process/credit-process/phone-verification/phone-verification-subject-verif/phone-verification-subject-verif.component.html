@@ -10,20 +10,20 @@
             <div id="custInfo">
               <div class="form-group row">
                 <label class="col-md-2  adInsLabel" translate>Application No</label>
-                <label class="col-md-4" translate *ngIf="this.AppObj?.AppNo">{{this.AppObj.AppNo}}</label>
+                <label class="col-md-4" translate >{{this.AppObj?.AppNo}}</label>
                 <label class="col-md-2  adInsLabel" translate>Subject</label>
                 <label class="col-md-4" translate>{{subjectType}}</label>
               </div>
               <div class="form-group row">
                 <label class="col-md-2  adInsLabel" translate>Customer No</label>
-                <label class="col-md-4  " translate *ngIf="this.AppCustObj?.CustNo">{{this.AppCustObj.CustNo}}</label>
+                <label class="col-md-4  " translate >{{this.AppCustObj?.CustNo}}</label>
                 <label class="col-md-2  adInsLabel" translate>Subject Name</label>
                 <label class="col-md-4  " translate>{{subjectName}}</label>
               </div>
               <div class="form-group row">
                 <label class="col-md-2  adInsLabel" translate>Customer Name</label>
                 <label class="col-md-4  " translate
-                  *ngIf="this.AppCustObj?.CustName">{{this.AppCustObj.CustName}}</label>
+                  >{{this.AppCustObj?.CustName}}</label>
                 <label class="col-md-2  adins-required-label" translate>Subject Relation</label>
                 <div class="col-md-4">
                   <select *ngIf="SubjectRelationObj" class="form-control" id="subjectRelationId"

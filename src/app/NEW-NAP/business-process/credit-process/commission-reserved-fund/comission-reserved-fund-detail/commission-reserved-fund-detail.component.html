@@ -14,7 +14,7 @@
         <form class="form form-horizontal" [formGroup]="HandlingForm" #enjiForm="ngForm">
           <div class="form-group row">
             <label class="col-md-3 adInsLabel">Return Notes </label>
-            <label class="col-md-3 adinslabel" translate *ngIf="this.returnHandlingDObj?.ReturnHandlingNotes">{{this.returnHandlingDObj.ReturnHandlingNotes}}</label>
+            <label class="col-md-3 adinslabel" translate>{{this.returnHandlingDObj?.ReturnHandlingNotes}}</label>
             <label class="col-md-3 adInsLabel adins-required-label">Return Execution Notes </label>
             <div class="col-md-3">
               <textarea class="form-control adInsInput width-75-per" formControlName="ReturnHandlingExecNotes">
