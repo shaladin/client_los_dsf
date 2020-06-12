@@ -829,6 +829,13 @@ export class AdInsConstant {
 
   public static GetAppCustPersonalDataAndSpouseByAppId = environment.losUrl + "/AppCust/GetAppCustPersonalDataAndSpouseByAppCustId";
 
+  public static DateErrorMessageIdExpiredDate = "Id Expired Date";
+  public static DateErrorMessageEstablishmentDate = "Establishment Date";
+  public static DateErrorMessageBirthDate = "Birth Date";
+
+  public static MrIdTypeCodeEKTP = "EKTP";
+  public static MrIdTypeCodeSIM = "SIM";
+  public static MrIdTypeCodeKITAS = "KITAS";
   //CUST DATA COMPANY
   public static GetCustDataForViewByAppId = environment.losUrl + "/AppCust/GetCustDataForViewByAppId";
   public static GetCustDataPersonalForViewByAppId = environment.losUrl + "/AppCust/GetCustDataPersonalForViewByAppId";
