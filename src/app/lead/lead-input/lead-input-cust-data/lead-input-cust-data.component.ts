@@ -161,7 +161,9 @@ export class LeadInputCustDataComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.WfTaskListId > 0) {
       this.claimTask();
+    }
       var context = JSON.parse(localStorage.getItem("UserAccess"));
       this.businessDt = new Date(context["BusinessDt"]);
       this.businessDt.setDate(this.businessDt.getDate() - 1);

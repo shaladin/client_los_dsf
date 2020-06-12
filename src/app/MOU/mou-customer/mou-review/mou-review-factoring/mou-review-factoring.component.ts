@@ -46,8 +46,10 @@ export class MouReviewFactoringComponent implements OnInit {
     })
   }
 
-  ngOnInit() {
-    this.claimTask();
+  ngOnInit() {    
+    if (this.WfTaskListId > 0) {
+      this.claimTask();
+    }
 
     var apvObj = { SchemeCode: 'MOUC_FCTR_APV' }
     this.http.post(AdInsConstant.GetApprovedBy, apvObj).subscribe(

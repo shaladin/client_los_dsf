@@ -50,7 +50,9 @@ export class LegalReviewDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.claimTask();
+    if (this.WfTaskListId > 0) {
+      this.claimTask();
+    }
     this.items = this.LegalForm.get('items') as FormArray;
     this.termConditions = this.LegalForm.get('termConditions') as FormArray;
     this.viewObj = "./assets/ucviewgeneric/viewMouHeader.json";
