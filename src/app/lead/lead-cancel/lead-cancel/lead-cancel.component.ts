@@ -162,8 +162,6 @@ export class LeadCancelComponent implements OnInit {
       this.checkboxAll = false;
       for (var i = 0; i < this.listSelectedId.length; i++) {
         this.tempListId.push(this.listSelectedId[i]);
-      }
-      for (var i = 0; i < this.listSelectedId.length; i++) {
         var object = this.resultData.find(x => x.LeadId == this.listSelectedId[i]);
         this.tempData.push(object);
       }
