@@ -34,19 +34,18 @@ export class LeadUpdateComponent implements OnInit {
 
   rejectLead(event)
   {
-    console.log("testevent")
-    console.log(event)
+    // console.log("testevent")
+    // console.log(event)
 
     if (confirm("Are you sure to reject this Lead?"))
     {
       var leadReject = new LeadForRejectObj;
       leadReject.LeadStat = "RJC";
-      leadReject.LeadStep = "RJC";
       leadReject.LeadId = event.RowObj.LeadId;
       leadReject.WfTaskListId = event.RowObj.WfTaskListId;
 
-      console.log("test")
-      console.log(leadReject)
+      // console.log("test")
+      // console.log(leadReject)
       
       this.http.post(AdInsConstant.RejectLead, leadReject).subscribe(
           response => {
