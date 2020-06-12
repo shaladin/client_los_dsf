@@ -55,14 +55,14 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
 
   viewObj: any;
 
-  appId: any;
-  returnHandlingDId: any;
-  wfTaskListId: any;
-  verfResultHId: any;
+  appId: number;
+  returnHandlingHId: number;
+  wfTaskListId: number;
+  verfResultHId: number;
   subjectName: string;
   subjectType: string;
-  idSource: any;
-  verfSchemeHId: any;
+  idSource: number;
+  verfSchemeHId: number;
 
   appObj = {
     AppId: 0,
@@ -115,8 +115,8 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
       this.subjectName = params["Name"];
       this.subjectType = params["Type"];
       this.idSource = params["Source"];
-      if (params['ReturnHandlingDId'] != null) {
-        this.returnHandlingDId = params['ReturnHandlingDId'];
+      if (params['ReturnHandlingHId'] != null) {
+        this.returnHandlingHId = params['ReturnHandlingHId'];
         this.isReturnHandling = true;
       }
       if (params['WfTaskListId'] != null) {
@@ -178,7 +178,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
             this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId + "&WfTaskListId=" + this.wfTaskListId);
           }
           if (this.isReturnHandling == true) {
-            this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId + "&ReturnHandlingDId=" + this.returnHandlingDId + "&WfTaskListId=" + this.wfTaskListId);
+            this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId + "&ReturnHandlingHId=" + this.returnHandlingHId + "&WfTaskListId=" + this.wfTaskListId);
           }
         },
         (error) => {
@@ -431,7 +431,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
       this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId + "&WfTaskListId=" + this.wfTaskListId);
     }
     if (this.isReturnHandling == true) {
-      this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId + "&ReturnHandlingDId=" + this.returnHandlingDId + "&WfTaskListId=" + this.wfTaskListId);
+      this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId + "&ReturnHandlingHId=" + this.returnHandlingHId + "&WfTaskListId=" + this.wfTaskListId);
     }
   }
 

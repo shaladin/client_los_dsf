@@ -12,7 +12,7 @@
             <div id="returnInformation">
               <div class="form-group row">
                 <label class="col-md-2  adInsLabel" translate>Return Notes</label>
-                <label class="col-md-4  adinslabel" translate *ngIf="this.returnHandlingDObj?.ReturnHandlingNotes">{{this.returnHandlingDObj.ReturnHandlingNotes}}</label>
+                <label class="col-md-4  adinslabel" translate>{{this.returnHandlingDObj?.ReturnHandlingNotes}}</label>
                 <label class="col-md-2  adinslabel" translate>Return Execution Notes</label>
                 <div class="col-md-4">
                   <textarea type="text" class="form-control adInsInput" formControlName="ExecNotes"></textarea>
