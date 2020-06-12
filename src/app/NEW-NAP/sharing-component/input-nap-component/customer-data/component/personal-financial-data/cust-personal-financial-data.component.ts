@@ -47,7 +47,10 @@ export class CustPersonalFinancialDataComponent implements OnInit {
       MonthlyInstallmentAmt: [0],
       MrSourceOfIncomeTypeCode: [''],
       IsJoinIncome: [false],
-      SpouseMonthlyIncomeAmt: [0]
+      SpouseMonthlyIncomeAmt: [0],
+      TotalMonthlyIncome: [0],
+      TotalMonthlyExpense: [0],
+      NettMonthlyIncome: [0]
     }));
 
     this.initUrl();
@@ -58,17 +61,28 @@ export class CustPersonalFinancialDataComponent implements OnInit {
   setSpouseMonthlyIncome(){
     if(this.parentForm.controls[this.identifier]["controls"].IsJoinIncome.value == false){
       this.appCustPersonalFinDataObj.SpouseMonthlyIncomeAmt = 0;
+      this.parentForm.controls[this.identifier].patchValue({
+        SpouseMonthlyIncomeAmt: 0
+      });
     }
+    this.ChangeTotalMonthly();
   }
 
   bindAppCustPersonalFinData(){
+    console.log(this.appCustPersonalFinDataObj);
     if(this.appCustPersonalFinDataObj != undefined){
+      let TotalMonthlyIncome = this.appCustPersonalFinDataObj.MonthlyIncomeAmt + this.appCustPersonalFinDataObj.SpouseMonthlyIncomeAmt;
+      let TotalMonthlyExpense = this.appCustPersonalFinDataObj.MonthlyExpenseAmt + this.appCustPersonalFinDataObj.SpouseMonthlyIncomeAmt;
       this.parentForm.controls[this.identifier].patchValue({
         MonthlyIncomeAmt: this.appCustPersonalFinDataObj.MonthlyIncomeAmt,
         MonthlyExpenseAmt: this.appCustPersonalFinDataObj.MonthlyExpenseAmt,
         MonthlyInstallmentAmt: this.appCustPersonalFinDataObj.MonthlyInstallmentAmt,
         MrSourceOfIncomeTypeCode: this.appCustPersonalFinDataObj.MrSourceOfIncomeTypeCode,
         IsJoinIncome: this.appCustPersonalFinDataObj.IsJoinIncome,
+        SpouseMonthlyIncomeAmt: this.appCustPersonalFinDataObj.SpouseMonthlyIncomeAmt,
+        TotalMonthlyIncome: TotalMonthlyIncome,
+        TotalMonthlyExpense: TotalMonthlyExpense,
+        NettMonthlyIncome: TotalMonthlyIncome - TotalMonthlyExpense
       });
     }
   }
@@ -92,4 +106,14 @@ export class CustPersonalFinancialDataComponent implements OnInit {
     );
   }
 
+  ChangeTotalMonthly(){
+    console.log("Calc Total");
+    let TotalMonthlyIncome = this.parentForm.controls[this.identifier].get("MonthlyIncomeAmt").value + this.parentForm.controls[this.identifier].get("SpouseMonthlyIncomeAmt").value;
+    let TotalMonthlyExpense = this.parentForm.controls[this.identifier].get("MonthlyExpenseAmt").value + this.parentForm.controls[this.identifier].get("SpouseMonthlyIncomeAmt").value;
+    this.parentForm.controls[this.identifier].patchValue({
+      TotalMonthlyIncome: TotalMonthlyIncome,
+      TotalMonthlyExpense: TotalMonthlyExpense,
+      NettMonthlyIncome: TotalMonthlyIncome - TotalMonthlyExpense
+    });
+  }
 }

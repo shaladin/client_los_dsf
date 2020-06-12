@@ -6,7 +6,6 @@ import { AppObj } from 'app/shared/model/App/App.Model';
 import Stepper from 'bs-stepper';
 import { FormBuilder } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -15,7 +14,8 @@ import { forkJoin } from 'rxjs';
 })
 export class NapAddDetailComponent implements OnInit {
 
-  private stepper: Stepper;
+  private stepperPersonal: Stepper;
+  private stepperCompany: Stepper;
   wfTaskListId: number;
   ReturnHandlingHId: number = 0;
   AppStepIndex: number = 1;
@@ -27,10 +27,8 @@ export class NapAddDetailComponent implements OnInit {
   OnFormReturnInfo: boolean = false;
   IsMultiAsset: boolean = false;
   ListAsset: any;
-  // mrCustTypeCode: string;
-
+  custType: string = AdInsConstant.CustTypeCompany;
   getApp: any;
-  // getAppCust: any;
 
   FormReturnObj = this.fb.group({
     ReturnExecNotes: ['']
@@ -46,8 +44,7 @@ export class NapAddDetailComponent implements OnInit {
     "INS": 6,
     "LFI": 7,
     "FIN": 8,
-    "TC": 9,
-    "SUBMIT": 10
+    "TC": 9
   };
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router) {
@@ -55,7 +52,6 @@ export class NapAddDetailComponent implements OnInit {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
         this.mode = params["Mode"];
-        // this.CheckMultiAsset();
       }
       if (params["WfTaskListId"] != null) {
         this.wfTaskListId = params["WfTaskListId"];
@@ -70,27 +66,83 @@ export class NapAddDetailComponent implements OnInit {
     this.ClaimTask();
     this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppFL4WMainInformation.json";
     this.NapObj.AppId = this.appId;
-    this.getApp = this.http.post(AdInsConstant.GetAppById, this.NapObj);
-    // this.getAppCust = this.http.post(AdInsConstant.GetAppCustByAppId, this.NapObj);
-    forkJoin([this.getApp]).subscribe(
-      (response) => {
-        var appObj = response[0];
-        this.stepper = new Stepper(document.querySelector('#stepper1'), {
-          linear: false,
-          animation: true
-        });
-        if (response) {
-          this.AppStepIndex = this.AppStep[appObj["AppCurrStep"]];
-          this.stepper.to(this.AppStepIndex);
-          console.log(this.stepper);
-        } else {
-          this.AppStepIndex = 0;
-          this.stepper.to(this.AppStepIndex);
-          console.log(this.stepper);
+
+    if (this.ReturnHandlingHId > 0) {
+      this.ChangeStepper();
+      this.ChooseStep(this.AppStepIndex);
+    } else {
+      this.http.post(AdInsConstant.GetAppById, this.NapObj).subscribe(
+        (response: AppObj) => {
+          console.log(response);
+          if (response) {
+            this.NapObj = response;
+            if (this.NapObj.MrCustTypeCode != null)
+              this.custType = this.NapObj.MrCustTypeCode;
+
+            this.ChangeStepper();
+            this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
+            this.ChooseStep(this.AppStepIndex);
+          }
+        },
+        (error) => {
+          console.log(error);
         }
-      }
-    );
+      );
+    }
     this.MakeViewReturnInfoObj();
+  }
+
+  stepperMode: string = AdInsConstant.CustTypeCompany;
+  ChangeStepper() {
+    if (this.custType == AdInsConstant.CustTypePersonal) {
+      this.stepperPersonal = new Stepper(document.querySelector('#stepperPersonal'), {
+        linear: false,
+        animation: true
+      });
+      this.stepperMode = AdInsConstant.CustTypePersonal;
+      document.getElementById('stepperPersonal').style.display = 'block';
+      document.getElementById('stepperCompany').style.display = 'none';
+      this.AppStep = {
+        "NEW": 1,
+        "CUST": 1,
+        "GUAR": 2,
+        "REF": 3,
+        "APP": 4,
+        "ASSET": 5,
+        "INS": 6,
+        "LFI": 7,
+        "FIN": 8,
+        "TC": 9,
+      };
+    } else if (this.custType == AdInsConstant.CustTypeCompany) {
+      this.stepperCompany = new Stepper(document.querySelector('#stepperCompany'), {
+        linear: false,
+        animation: true
+      });
+      this.stepperMode = AdInsConstant.CustTypeCompany;
+      document.getElementById('stepperPersonal').style.display = 'none';
+      document.getElementById('stepperCompany').style.display = 'block';
+      this.AppStep = {
+        "NEW": 1,
+        "CUST": 1,
+        "GUAR": 2,
+        "REF": 3,
+        "APP": 4,
+        "ASSET": 5,
+        "INS": 6,
+        "LFI": 7,
+        "FIN": 7,
+        "TC": 8,
+      };
+    }
+  }
+
+  ChooseStep(idxStep: number) {
+    if (this.custType == AdInsConstant.CustTypePersonal) {
+      this.stepperPersonal.to(idxStep);
+    } else if (this.custType == AdInsConstant.CustTypeCompany) {
+      this.stepperCompany.to(idxStep);
+    }
   }
 
   MakeViewReturnInfoObj() {
@@ -115,18 +167,30 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   NextStep(Step) {
+    if (this.ReturnHandlingHId > 0) {
+      if (this.custType == AdInsConstant.CustTypePersonal) {
+        this.stepperPersonal.next();
+      } else if (this.custType == AdInsConstant.CustTypeCompany) {
+        this.stepperCompany.next();
+      }
+    } else {
+      this.UpdateAppStep(Step);
+    }
+  }
+
+  UpdateAppStep(Step: string) {
     this.NapObj.AppCurrStep = Step;
     this.http.post<AppObj>(AdInsConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
       (response) => {
         console.log("Step Change to, Curr Step : " + response.AppCurrStep + ", Last Step : " + response.AppLastStep);
-        this.ChangeTab(Step);
-        this.stepper.next();
+        this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
+        this.ChooseStep(this.AppStepIndex);
       },
       (error) => {
         console.error("Error when updating AppStep");
         console.error(error);
       }
-    );
+    )
   }
 
   LastStepHandler() {
@@ -145,29 +209,7 @@ export class NapAddDetailComponent implements OnInit {
     }
   }
 
-  // CheckMultiAsset() {
-  //   this.IsMultiAsset = false;
-  //   var appObj = { AppId: this.appId }
-  //   this.http.post(AdInsConstant.GetAppAssetListByAppId, appObj).subscribe(
-  //     (response) => {
-  //       this.ListAsset = response['ReturnObject'];
-  //       if (this.ListAsset != undefined && this.ListAsset != null) {
-  //         if (this.ListAsset.length > 1)
-  //           this.IsMultiAsset = true;
-  //         else
-  //           this.IsMultiAsset = false;
-  //       }
-  //       else
-  //         this.IsMultiAsset = false;
-  //     },
-  //     (error) => {
-  //       console.log(error);
-  //     }
-  //   )
-  // }
-
   ChangeTab(AppStep) {
-    // console.log(AppStep);
     switch (AppStep) {
       case AdInsConstant.AppStepCust:
         this.AppStepIndex = this.AppStep[AdInsConstant.AppStepCust];
@@ -196,10 +238,6 @@ export class NapAddDetailComponent implements OnInit {
       case AdInsConstant.AppStepTC:
         this.AppStepIndex = this.AppStep[AdInsConstant.AppStepTC];
         break;
-      case "SUBMIT":
-        this.router.navigate(["Nap/FinanceLeasing/Paging?BizTemplateCode=FL4W"], { queryParams: { BizTemplateCode: AdInsConstant.FL4W } });
-        break;
-
       default:
         break;
     }
@@ -226,7 +264,7 @@ export class NapAddDetailComponent implements OnInit {
     }
   }
 
-  ClaimTask(){
+  ClaimTask() {
     var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     var wfClaimObj = new AppObj();
     wfClaimObj.AppId = this.appId;
@@ -235,7 +273,6 @@ export class NapAddDetailComponent implements OnInit {
 
     this.http.post(AdInsConstant.ClaimTaskNap, wfClaimObj).subscribe(
       () => {
-    
       });
   }
 }

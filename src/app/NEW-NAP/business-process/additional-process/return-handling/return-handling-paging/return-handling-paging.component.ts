@@ -26,6 +26,7 @@ export class ReturnHandlingPagingComponent implements OnInit {
   }
   
   ngOnInit() {
+    //perubahan
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchReturnHandling.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;

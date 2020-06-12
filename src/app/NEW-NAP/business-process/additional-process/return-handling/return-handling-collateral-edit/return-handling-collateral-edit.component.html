@@ -12,7 +12,7 @@
             <div id="returnInformation">
               <div class="form-group row">
                 <label class="col-md-2  adInsLabel" translate>Return Notes</label>
-                <label class="col-md-4  adinslabel" translate *ngIf="this.returnHandlingDObj?.ReturnHandlingNotes">{{this.returnHandlingDObj.ReturnHandlingNotes}}</label>
+                <label class="col-md-4  adinslabel" translate >{{this.returnHandlingDObj?.ReturnHandlingNotes}}</label>
                 <label class="col-md-2  adinslabel" translate>Return Execution Notes</label>
                 <div class="col-md-4">
                   <textarea type="text" class="form-control adInsInput" formControlName="ExecNotes"></textarea>
@@ -24,9 +24,9 @@
           </lib-ucSubsection>
           <div id="collateralList">
             <div class="form-actions right">
-              <!-- <button type="button" class="btn btn-raised btn-primary" (click)="AddEdit(0)">
-                <i class="fa fa-check-square-o"></i> Check Value
-              </button> -->
+              <button type="button" class="btn btn-raised btn-primary" (click)="AddEdit(0)">
+                <i class="fa fa-check-square-o"></i> Add
+              </button>
             </div>
             <table class="table table-responsive-md text-center table-hover">
               <thead>
@@ -57,6 +57,9 @@
             </table>
           </div>
           <div class="form-actions right">
+            <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['/Nap/AddProcess/ReturnHandlingCollateral/Paging']" [queryParams]="{BizTemplateCode: BizTemplateCode}">
+              <i class="ft-x"></i> Cancel
+          </button> 
             <button type="submit" class="btn btn-raised btn-primary">
               <i class="fa fa-check-square"></i> Save
             </button>
