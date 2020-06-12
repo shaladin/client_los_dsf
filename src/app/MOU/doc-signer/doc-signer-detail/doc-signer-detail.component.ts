@@ -154,8 +154,10 @@ export class DocSignerDetailComponent implements OnInit {
       });
   }
   ngOnInit() {
-    console.log('docsigner')
-    this.claimTask();
+    console.log('docsigner')    
+    if (this.WfTaskListId > 0) {
+      this.claimTask();
+    }
     this.custShareholderLookUpObj1 = new InputLookupObj();
     this.custShareholderLookUpObj1.urlJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
     this.custShareholderLookUpObj1.urlQryPaging = "/Generic/GetPagingObjectBySQL";

@@ -207,9 +207,6 @@ export class CollateralLeasingAddEditComponent implements OnInit {
 
   CollChange(){
     this.collateral = this.AddCollForm.controls["Collateral"].value;
-
-    console.log("aaa");
-    console.log(this.collateral);
   }
 
   bindUcSearch()
@@ -303,8 +300,6 @@ export class CollateralLeasingAddEditComponent implements OnInit {
     if (this.listSelectedId.length != 0) {
       for (var i = 0; i < this.listSelectedId.length; i++) {
         this.tempListId.push(this.listSelectedId[i]);
-      }
-      for (var i = 0; i < this.listSelectedId.length; i++) {
         var object = this.resultData.Data.find(x => x.CollateralId == this.listSelectedId[i]);
         this.tempData.push(object);
       }
