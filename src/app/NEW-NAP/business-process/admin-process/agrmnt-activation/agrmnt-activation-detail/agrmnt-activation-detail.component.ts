@@ -68,8 +68,6 @@ export class AgrmntActivationDetailComponent implements OnInit {
     if (this.listSelectedId.length != 0) {
       for (var i = 0; i < this.listSelectedId.length; i++) {
         this.tempListId.push(this.listSelectedId[i]);
-      }
-      for (var i = 0; i < this.listSelectedId.length; i++) {
         var object = this.AssetObj.find(x => x.AppAssetId == this.listSelectedId[i]);
         this.tempData.push(object);
       }
