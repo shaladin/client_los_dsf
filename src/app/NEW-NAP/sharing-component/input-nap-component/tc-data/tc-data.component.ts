@@ -28,7 +28,7 @@ export class TcDataComponent implements OnInit {
   }
 
   AppTcForm = this.fb.group({
-    AppTc: this.fb.array([])
+    
   });
 
 
@@ -46,39 +46,39 @@ export class TcDataComponent implements OnInit {
   ngOnInit() {
     this.AppIdObj.AppId = this.AppId;
     console.log(this.AppIdObj);
-    this.http.post(AdInsConstant.GetListTCbyAppId, this.AppIdObj).subscribe(
-      (response) => {
-        console.log("check");
-        console.log(response);
-        this.listAppTcObj = response["AppTcs"];
-        if (this.listAppTcObj.length > 0) {
-          this.mode = "edit";
-          for (let j = 0; j < this.listAppTcObj.length; j++) {
-            var fa_apptc = this.AppTcForm.get("AppTc") as FormArray;
-            fa_apptc.push(this.AddTcControl(this.listAppTcObj[j]))
-          }
-          this.ReconstructForm();
-        }
-        else {
-          this.http.post(AdInsConstant.GetListTCbyAppIdFromRule, this.AppIdObj).subscribe(
-            (response) => {
-              this.listAppTcObj = response["AppTcs"];
-              console.log(this.result);
-              // this.listAppTcObj = this.result;
-              for (let i = 0; i < this.listAppTcObj.length; i++) {
-                var fa_apptc = this.AppTcForm.get("AppTc") as FormArray;
-                fa_apptc.push(this.AddTcControl(this.listAppTcObj[i]))
-              }
+    // this.http.post(AdInsConstant.GetListTCbyAppId, this.AppIdObj).subscribe(
+    //   (response) => {
+    //     console.log("check");
+    //     console.log(response);
+    //     this.listAppTcObj = response["AppTcs"];
+    //     if (this.listAppTcObj.length > 0) {
+    //       this.mode = "edit";
+    //       for (let j = 0; j < this.listAppTcObj.length; j++) {
+    //         var fa_apptc = this.AppTcForm.get("AppTc") as FormArray;
+    //         fa_apptc.push(this.AddTcControl(this.listAppTcObj[j]))
+    //       }
+    //       this.ReconstructForm();
+    //     }
+    //     else {
+    //       this.http.post(AdInsConstant.GetListTCbyAppIdFromRule, this.AppIdObj).subscribe(
+    //         (response) => {
+    //           this.listAppTcObj = response["AppTcs"];
+    //           console.log(this.result);
+    //           // this.listAppTcObj = this.result;
+    //           for (let i = 0; i < this.listAppTcObj.length; i++) {
+    //             var fa_apptc = this.AppTcForm.get("AppTc") as FormArray;
+    //             fa_apptc.push(this.AddTcControl(this.listAppTcObj[i]))
+    //           }
 
-              this.ReconstructForm();
-            },
-            (error) => {
-              console.log(error);
-            }
-          );
-        }
-      }
-    );
+    //           this.ReconstructForm();
+    //         },
+    //         (error) => {
+    //           console.log(error);
+    //         }
+    //       );
+    //     }
+    //   }
+    // );
   }
 
   AddTcControl(obj: AppTCObj) {
@@ -160,36 +160,68 @@ export class TcDataComponent implements OnInit {
   }
 
   SaveData() {
+    //var fa_AppTc = this.AppTcForm.get("AppTc") as FormArray;
+    //this.listAppTcObj = new Array<AppTCObj>();
+    //for (let i = 0; i < fa_AppTc.length; i++) {
+    //  var item = fa_AppTc.at(i);
+      // var expDt = new Date(item.get("ExpiredDt").value);
+      // var prmsDt = new Date(item.get("PromisedDt").value);
+      // var expDtForm = item.get("ExpiredDt").value;
+      // var prmsDtForm = item.get("PromisedDt").value;
+      // if(item.get("IsChecked").value){
+      //   if(expDtForm != null){
+      //     if(expDt < businessDt){
+      //       this.toastr.errorMessage("Expired Date for " + item.get("TcName").value + " can't be lower than Business Date");
+      //       return;
+      //     }
+      //   }
+      // }
+      // if (item.get("IsChecked").value == false) {
+      //   if(prmsDtForm != null){
+      //     if(prmsDt < businessDt){
+      //       this.toastr.errorMessage("Promise Date for " + item.get("TcName").value + " can't be lower than Business Date");
+      //       return;
+      //     }
+      //   }
+      // }
+      //var appTcObj : AppTCObj = new AppTCObj();
+      //appTcObj.AppId = this.AppId;
+      //appTcObj.IsChecked = item.get("IsChecked").value;
+      //appTcObj.PromisedDt = item.get("PromisedDt").value;
+     // appTcObj.ExpiredDt = item.get("ExpiredDt").value;
+      //appTcObj.Notes = item.get("Notes").value;
+     // this.listAppTcObj.push(appTcObj);
+    //}
+
     var businessDt = new Date(localStorage.getItem("BusinessDateRaw"));
-    var fa_AppTc = this.AppTcForm.get("AppTc") as FormArray
-    for (let i = 0; i < fa_AppTc.length; i++) {
-      var item = fa_AppTc.at(i);
-      var expDt = new Date(item.get("ExpiredDt").value);
-      var prmsDt = new Date(item.get("PromisedDt").value);
-      var expDtForm = item.get("ExpiredDt").value;
-      var prmsDtForm = item.get("PromisedDt").value;
-      console.log("expDtForm : " + expDtForm + ", prmsDtForm : " + prmsDtForm);
-      if(item.get("IsChecked").value){
-        if(expDtForm != null){
-          if(expDt < businessDt){
-            this.toastr.errorMessage("Expired Date for " + item.get("TcName").value + " can't be lower than Business Date");
-            return;
-          }
-        }
-      }
-      if (item.get("IsChecked").value == false) {
+    this.listAppTcObj = new Array<AppTCObj>();
+    for (var i = 0; i < this.AppTcForm.value.TCList["length"]; i++) {
+      var appTC = new AppTCObj();
+      appTC.AppId = this.AppId;
+      appTC.AppTcId = this.AppTcForm.value.TCList[i].AppTcId;
+      appTC.TcCode = this.AppTcForm.value.TCList[i].TcCode;
+      appTC.TcName = this.AppTcForm.value.TCList[i].TcName;
+      appTC.PriorTo = this.AppTcForm.value.TCList[i].PriorTo;
+      appTC.IsChecked = this.AppTcForm.value.TCList[i].IsChecked;
+      appTC.ExpiredDt = this.AppTcForm.value.TCList[i].ExpiredDt;
+      appTC.IsMandatory = this.AppTcForm.value.TCList[i].IsMandatory;
+      appTC.PromisedDt = this.AppTcForm.value.TCList[i].PromisedDt;
+      appTC.CheckedDt = this.AppTcForm.value.TCList[i].CheckedDt;
+      appTC.Notes = this.AppTcForm.value.TCList[i].Notes;
+      appTC.IsAdditional = this.AppTcForm.value.TCList[i].IsAdditional;
+
+      var prmsDt = new Date(appTC.PromisedDt);
+      var prmsDtForm = this.AppTcForm.value.TCList[i].PromisedDt;
+  
+      if (appTC.IsChecked == false) {
         if(prmsDtForm != null){
           if(prmsDt < businessDt){
-            this.toastr.errorMessage("Promise Date for " + item.get("TcName").value + " can't be lower than Business Date");
+            this.toastr.errorMessage("Promise Date for " + appTC.TcName + " can't be lower than Business Date");
             return;
           }
         }
       }
-      this.listAppTcObj[i].AppId = this.AppId;
-      this.listAppTcObj[i].IsChecked = item.get("IsChecked").value;
-      this.listAppTcObj[i].PromisedDt = item.get("PromisedDt").value;
-      this.listAppTcObj[i].ExpiredDt = item.get("ExpiredDt").value;
-      this.listAppTcObj[i].Notes = item.get("Notes").value;
+      this.listAppTcObj.push(appTC);
     }
     this.ReqTCObj.ListAppTcObj = this.listAppTcObj;
     if (this.mode == "edit") {
@@ -220,6 +252,10 @@ export class TcDataComponent implements OnInit {
 
   Cancel(){
     this.outputCancel.emit();
+  }
+
+  SetMode(event){
+    this.mode = event;
   }
 
 }

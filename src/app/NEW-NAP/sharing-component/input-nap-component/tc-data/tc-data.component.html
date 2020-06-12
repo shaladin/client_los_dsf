@@ -5,7 +5,9 @@
         <div class="px-3">
           <form class="form form-horizontal" [formGroup]="AppTcForm" (ngSubmit)="AppTcForm.valid && SaveData()" #enjiForm="ngForm">
             <div class="form-body">
-              <ng-container formArrayName="AppTc">
+              <app-term-conditions [AppId]="AppId" [parentForm]="AppTcForm" [enjiForm]="enjiForm" (OutputMode)="SetMode($event)">
+              </app-term-conditions>
+              <!-- <ng-container formArrayName="AppTc">
                   <table class="table table-responsive-md text-center table-hover">
                     <thead>
                       <tr class="table-header">
@@ -56,7 +58,7 @@
                       </tr>
                     </tbody>
                   </table>
-              </ng-container>
+              </ng-container> -->
               <div class="form-actions right">
                 <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
                   <i class="ft-x"></i> Cancel

@@ -158,7 +158,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
     this.http.post(AdInsConstant.SubmitPurchaseOrder, POObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["/Nap/AdminProcess/PurchaseOrder/PO"], { queryParams: { "AppId": this.AppId, "AgrmntId": this.AgrmntId, "WfTaskListId": this.TaskListId, "LobCode" : this.lobCode } });
+        this.router.navigate(["/Nap/AdminProcess/PurchaseOrder/PO"], { queryParams: { "AgrmntId": this.AgrmntId, "LobCode": this.lobCode, "AppId": this.AppId, "TaskListId": this.TaskListId } });
       },
       (error) => {
         console.log(error);

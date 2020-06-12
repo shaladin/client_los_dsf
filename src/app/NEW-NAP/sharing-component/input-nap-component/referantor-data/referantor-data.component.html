@@ -53,49 +53,83 @@
 
                 <lib-ucSubsection [hidden]="!NpwpOn" [id]="'NPWPReferantorInfoId'" [title]="'NPWP REFERANTOR INFO'" [panel]="'NPWPReferantorInfo'">
                 </lib-ucSubsection>
-                <div class="form-body" [hidden]="!NpwpOn" id="NPWPReferantorInfo">
+                <div class="row" [hidden]="!NpwpOn" id="NPWPReferantorInfo">
                   <!-- <h4 class="form-section card-title" translate><i class="ft-file-text"></i> NPWP REFERANTOR INFO </h4> -->
+                  <div class="col-md-12">
 
-                  <div class="form-group row">
-                    <label class="col-md-2 adInsLabel">Npwp No</label>
-                    <label class="col-md-4 adInsLabel">{{appReferantorObj.TaxIdNo}} </label>
+                    <div class="row">
+                      <div class="col-md-2 form-inline">
+                        <label> Npwp No </label>
+                      </div>
+                      <div class="col-md-4 form-inline">
+                        <label> {{appReferantorObj.TaxIdNo}} </label>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-2 form-inline">
+                        <label> Npwp Name </label>
+                      </div>
+                      <div class="col-md-4 form-inline">
+                        <label> {{appReferantorObj.TaxIdName}} </label>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-2 form-inline">
+                        <label> Address </label>
+                      </div>
+                      <div class="col-md-4 form-inline">
+                        <label> {{appReferantorObj.TaxIdAddr}} </label>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-2 form-inline">
+                        <label> RT / RW </label>
+                      </div>
+                      <div class="col-md-4 form-inline">
+                        <label> {{appReferantorObj.TaxIdAreaCode4}} / {{appReferantorObj.TaxIdAreaCode3}}</label>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-2 form-inline">
+                        <label> Kelurahan </label>
+                      </div>
+                      <div class="col-md-4 form-inline">
+                        <label> {{appReferantorObj.TaxIdAreaCode2}} </label>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-2 form-inline">
+                        <label> Kecamatan </label>
+                      </div>
+                      <div class="col-md-4 form-inline">
+                        <label> {{appReferantorObj.TaxIdAreaCode1}} </label>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-2 form-inline">
+                        <label> City </label>
+                      </div>
+                      <div class="col-md-4 form-inline">
+                        <label> {{appReferantorObj.TaxIdCity}} </label>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-2 form-inline">
+                        <label> Zip Code </label>
+                      </div>
+                      <div class="col-md-4 form-inline">
+                        <label> {{appReferantorObj.TaxIdZipcode}} </label>
+                      </div>
+                    </div>
+
                   </div>
-
-                  <div class="form-group row">
-                    <label class="col-md-2 adInsLabel">Npwp Name</label>
-                    <label class="col-md-4 adInsLabel">{{appReferantorObj.TaxIdName}} </label>
-                  </div>
-
-                  <div class="form-group row">
-                    <label class="col-md-2 adInsLabel">Address</label>
-                    <label class="col-md-4 adInsLabel">{{appReferantorObj.TaxIdAddr}} </label>
-                  </div>
-
-                  <div class="form-group row">
-                    <label class="col-md-2 adInsLabel">RT / RW</label>
-                    <label class="col-md-4 adInsLabel">{{appReferantorObj.TaxIdAreaCode4}} / {{appReferantorObj.TaxIdAreaCode3}} </label>
-                  </div>
-
-                  <div class="form-group row">
-                    <label class="col-md-2 adInsLabel">Kelurahan</label>
-                    <label class="col-md-4 adInsLabel">{{appReferantorObj.TaxIdAreaCode2}} </label>
-                  </div>
-
-                  <div class="form-group row">
-                    <label class="col-md-2 adInsLabel">Kecamatan</label>
-                    <label class="col-md-4 adInsLabel">{{appReferantorObj.TaxIdAreaCode1}} </label>
-                  </div>
-
-                  <div class="form-group row">
-                    <label class="col-md-2 adInsLabel">City </label>
-                    <label class="col-md-4 adInsLabel">{{appReferantorObj.TaxIdCity}} </label>
-                  </div>
-
-                  <div class="form-group row">
-                    <label class="col-md-2 adInsLabel">Zip Code </label>
-                    <label class="col-md-4 adInsLabel">{{appReferantorObj.TaxIdZipcode}} </label>
-                  </div>
-
                 </div>
               </div>
 

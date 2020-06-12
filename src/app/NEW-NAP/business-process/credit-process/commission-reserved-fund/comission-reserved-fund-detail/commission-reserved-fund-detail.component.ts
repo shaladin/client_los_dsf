@@ -9,6 +9,7 @@ import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandli
 import { AllAppReservedFundObj } from 'app/shared/model/AllAppReservedFundObj.model';
 import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 
 @Component({
   selector: 'app-commission-reserved-fund-detail',
@@ -22,6 +23,8 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   AllAppReservedFundObj: AllAppReservedFundObj;
   StepIndex: number = 1;
   private stepper: Stepper;
+  returnHandlingDObj: ReturnHandlingDObj;
+
 
   Step = {
     "COM": 1,
@@ -54,6 +57,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
       animation: true
     });
     this.GetAndUpdateAppStep();
+    this.MakeViewReturnInfoObj();
   }
 
   NapObj: AppObj = new AppObj();
@@ -83,6 +87,23 @@ export class CommissionReservedFundDetailComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  MakeViewReturnInfoObj() {
+    if (this.ReturnHandlingHObj.ReturnHandlingHId > 0) {
+      var obj = {
+        ReturnHandlingHId: this.ReturnHandlingHObj.ReturnHandlingHId,
+        MrReturnTaskCode: AdInsConstant.ReturnHandlingEditComRsvFnd
+      }
+      this.http.post<ReturnHandlingDObj>(AdInsConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
+        (response) => {
+          this.returnHandlingDObj = response;
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
   }
 
   ChangeTab(AppStep) {
@@ -117,6 +138,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   LastStepHandler(allAppReservedFundObj: AllAppReservedFundObj) {
     if (allAppReservedFundObj.ReturnHandlingHId != 0) {
       this.AllAppReservedFundObj = allAppReservedFundObj;
+      this.SubmitReturnHandling();
     }
     else {
       var lobCode = localStorage.getItem("BizTemplateCode");
@@ -131,19 +153,27 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   }
 
   SubmitReturnHandling() {
-    var workflowApiObj = new WorkflowApiObj();
-    workflowApiObj.TaskListId = this.AllAppReservedFundObj.WfTaskIdListId;
-    workflowApiObj.ListValue["pBookmarkValue"] = this.AllAppReservedFundObj.ReturnHandlingExecNotes;
-    var lobCode = localStorage.getItem("BizTemplateCode");
-    this.http.post(AdInsConstant.ResumeWorkflow, workflowApiObj).subscribe(
-      response => {
-        this.toastr.successMessage(response["message"]);
-        this.router.navigate(["/Nap/AdditionalProcess/ReturnHandling/CommissionReservedFund/Paging"], { queryParams: { BizTemplateCode: lobCode } })
-      },
-      error => {
-        console.log(error);
-      }
-    );
+    if (this.ReturnHandlingHObj.ReturnHandlingHId > 0) {
+      var ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
+      ReturnHandlingResult.WfTaskListId = this.ReturnHandlingHObj.WfTaskListId;
+      ReturnHandlingResult.ReturnHandlingDId = this.returnHandlingDObj.ReturnHandlingDId;
+      ReturnHandlingResult.MrReturnTaskCode = this.returnHandlingDObj.MrReturnTaskCode;
+      ReturnHandlingResult.ReturnStat = this.returnHandlingDObj.ReturnStat;
+      ReturnHandlingResult.ReturnHandlingNotes = this.returnHandlingDObj.ReturnHandlingNotes;
+      ReturnHandlingResult.ReturnHandlingExecNotes = this.HandlingForm.controls['ReturnHandlingExecNotes'].value;
+      ReturnHandlingResult.RowVersion = this.returnHandlingDObj.RowVersion;
+
+      this.http.post(AdInsConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
+        (response) => {
+          console.log(response);
+          var lobCode = localStorage.getItem("BizTemplateCode");
+          this.router.navigate(["/Nap/AddProcess/ReturnHandling/CommissionReservedFund/Paging"], { queryParams: { BizTemplateCode: lobCode } })
+        },
+        (error) => {
+          console.log(error);
+        }
+      )
+    }
   }
 
   Back() {

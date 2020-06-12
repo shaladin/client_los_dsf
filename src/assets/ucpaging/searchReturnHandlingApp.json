@@ -162,23 +162,8 @@
                   }
                 ],
                 "result": {
-                  "type": "url",
-                  "path": "/Nap/ConsumerFinance/Add/Detail",
-                  "icon": "ft-edit-2",
-                  "param": [
-                    {
-                      "type": "AppId",
-                      "property": "AppId"
-                    },
-                    {
-                      "type": "WfTaskListId",
-                      "property": "WfTaskListId"
-                    },
-                    {
-                        "type":"ReturnHandlingHId",
-                        "property":"ReturnHandlingHId"
-                    }
-                  ]
+                  "type": "callback",
+                  "icon": "ft-edit-2"
                 },
                 "isHide": false
               },
@@ -192,23 +177,8 @@
                   }
                 ],
                 "result": {
-                  "type": "url",
-                  "path": "/Nap/ConsumerFinance/Add/Detail",
-                  "icon": "ft-edit-2",
-                  "param": [
-                    {
-                      "type": "AppId",
-                      "property": "AppId"
-                    },
-                    {
-                      "type": "WfTaskListId",
-                      "property": "WfTaskListId"
-                    },
-                    {
-                        "type":"ReturnHandlingHId",
-                        "property":"ReturnHandlingHId"
-                    }
-                  ]
+                  "type": "callback",
+                  "icon": "ft-edit-2"
                 },
                 "isHide": false
               }

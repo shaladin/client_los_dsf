@@ -61,7 +61,7 @@
                 <lib-uc-show-errors [control]="CustomerDataForm.controls.MrIdTypeCode" [submit]="enjiForm.submitted">
                 </lib-uc-show-errors>
               </div>
-              <label class="col-md-2 adInsLabel" translate>Mother Maiden Name</label>
+              <label class="col-md-2 adins-required-label" translate>Mother Maiden Name</label>
               <div class="col-md-4">
                 <input type="text" class="form-control adInsInput" formControlName="MotherName"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && CustomerDataForm.controls.MotherName.invalid}">
@@ -77,7 +77,7 @@
                 <lib-uc-show-errors [control]="CustomerDataForm.controls.IdNo" [submit]="enjiForm.submitted">
                 </lib-uc-show-errors>
               </div>
-              <label class="col-md-2 adInsLabel" translate>Marital Status</label>
+              <label class="col-md-2 adins-required-label" translate>Marital Status</label>
               <div class="col-md-4">
                 <select class="form-control adInsInput" style="width: auto" formControlName="MrMaritalStatCode"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && CustomerDataForm.controls.MrMaritalStatCode.invalid }">

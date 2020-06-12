@@ -902,6 +902,7 @@ export class AdInsConstant {
   public static AddEditAllCollateralDataFactoring = environment.losUrl + "/AppCollateral/AddEditAllCollateralDataFactoring"
   public static GetAppCollateralAttrByAppCollateralId = environment.losUrl + "/AppCollateral/GetAppCollateralAttrByAppCollateralId";
   public static GetAppCollateralListForInsuranceByAppId = environment.losUrl+ "/AppCollateral/GetAppCollateralListForInsuranceByAppId";
+  public static GetAppCollateralAttrByAppAssetId = environment.losUrl + "/AppCollateral/GetAppCollateralAttrByAppAssetId";
   
   // App Collateral Suppl Emp
   public static GetListAppAssetSupplEmpByAppAssetId = environment.losUrl + "/AppAssetSupplEmp/GetListAppAssetSupplEmpByAppAssetId";
@@ -1173,6 +1174,9 @@ export class AdInsConstant {
   // public static Test = environment.losUrl + "/ReturnHandlingD/Test";
 
   public static ReturnHandlingEditApp = "RTN_EDIT_APP";
+  public static ReturnHandlingAddPhnVerf = "RTN_ADD_PHN_VERF";
+  public static ReturnHandlingEditComRsvFnd = "RTN_EDIT_COM_RSV_FND";
+  public static ReturnHandlingAddColtr = "RTN_ADD_COLTR";
   public static GetReturnHandlingDByReturnHandlingDId = environment.losUrl + "/ReturnHandlingD/GetReturnHandlingDByReturnHandlingDId";
 
   // Deviation Result

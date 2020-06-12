@@ -6,6 +6,7 @@ import { DecimalPipe } from "@angular/common";
 import { HttpClient } from '@angular/common/http';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CenterGrpOfficeMbrObj } from 'app/shared/model/RefOffice/CenterGrpOfficeMbrObj.Model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-return-handling-collateral-paging',
@@ -16,9 +17,18 @@ export class ReturnHandlingCollateralPagingComponent implements OnInit {
 
   inputPagingObj: UcPagingObj;
   userAccess;
+  BizTemplateCode: string;
   constructor(
-    private http: HttpClient
-  ) { }
+    private http: HttpClient,
+    private route: ActivatedRoute
+  ) {
+    this.route.queryParams.subscribe(params => {
+      if (params["BizTemplateCode"] != null) {
+        this.BizTemplateCode = params["BizTemplateCode"];
+        localStorage.setItem("BizTemplateCode", this.BizTemplateCode);
+      }
+    });  
+   }
 
   ngOnInit() {
     this.userAccess = JSON.parse(localStorage.getItem("UserAccess"));
@@ -37,7 +47,7 @@ export class ReturnHandlingCollateralPagingComponent implements OnInit {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'WTL.ACT_CODE';
-    critObj.value = "ADD_COLTR";
+    critObj.value = "ADD_COLTR_" + this.BizTemplateCode;
     critObjs.push(critObj);
 
     critObj = new CriteriaObj();

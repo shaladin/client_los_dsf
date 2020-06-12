@@ -5,6 +5,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { HttpClient } from '@angular/common/http';
 import { CenterGrpOfficeMbrObj } from 'app/shared/model/RefOffice/CenterGrpOfficeMbrObj.Model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-return-handling-com-rsvfund-paging',
@@ -13,7 +14,16 @@ import { CenterGrpOfficeMbrObj } from 'app/shared/model/RefOffice/CenterGrpOffic
 })
 export class ReturnHandlingComRsvfundPagingComponent implements OnInit {
 
-  constructor(private http: HttpClient) { }
+  BizTemplateCode: string;
+  constructor(private http: HttpClient,
+    private route: ActivatedRoute) {
+    this.route.queryParams.subscribe(params => {
+      if (params["BizTemplateCode"] != null) {
+        this.BizTemplateCode = params["BizTemplateCode"];
+        localStorage.setItem("BizTemplateCode", this.BizTemplateCode);
+      }
+    });
+   }
   userAccess;
   inputPagingObj;
   ngOnInit() {
@@ -34,7 +44,7 @@ export class ReturnHandlingComRsvfundPagingComponent implements OnInit {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'WTL.ACT_CODE';
-    critObj.value = "EDIT_COM_RSV_FND";
+    critObj.value = "EDIT_COM_RSV_FND_" + this.BizTemplateCode;
     critObjs.push(critObj);
 
     critObj = new CriteriaObj();

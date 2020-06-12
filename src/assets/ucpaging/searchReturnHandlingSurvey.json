@@ -152,12 +152,7 @@
               "restriction": "EQ"
             }],
             "result": {
-              "type": "action",
-              "position": "center",
-              "action": [{
-                "type": "callback",
-                "key": "keyX"
-              }]
+              "type": "callback"
             },
             "isHide": false
           },
@@ -169,12 +164,7 @@
               "restriction": "EQ"
             }],
             "result": {
-              "type": "action",
-              "position": "center",
-              "action": [{
-                "type": "callback",
-                "key": "keyX"
-              }]
+              "type": "callback"
             },
             "isHide": false
           }
