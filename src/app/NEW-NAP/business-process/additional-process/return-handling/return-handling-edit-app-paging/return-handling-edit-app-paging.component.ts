@@ -5,6 +5,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { HttpClient } from '@angular/common/http';
 import { CenterGrpOfficeMbrObj } from 'app/shared/model/RefOffice/CenterGrpOfficeMbrObj.Model';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-return-handling-edit-app-paging',
@@ -13,8 +14,18 @@ import { CenterGrpOfficeMbrObj } from 'app/shared/model/RefOffice/CenterGrpOffic
 })
 export class ReturnHandlingEditAppPagingComponent implements OnInit {
 
+  BizTemplateCode: string;
   constructor(
-    private http: HttpClient) { }
+    private http: HttpClient,
+    private route: ActivatedRoute,
+    private router: Router,) {
+      this.route.queryParams.subscribe(params => {
+        if (params["BizTemplateCode"] != null) {
+          this.BizTemplateCode = params["BizTemplateCode"];
+          localStorage.setItem("BizTemplateCode", this.BizTemplateCode);
+        }
+      });
+     }
   
   inputPagingObj;
   userAccess;
@@ -35,7 +46,7 @@ export class ReturnHandlingEditAppPagingComponent implements OnInit {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'WTL.ACT_CODE';
-    critObj.value = "EDIT_APP";
+    critObj.value = "EDIT_APP_" + this.BizTemplateCode;
     critObjs.push(critObj);
     
     critObj = new CriteriaObj();
@@ -64,6 +75,18 @@ export class ReturnHandlingEditAppPagingComponent implements OnInit {
     critObjs.push(critObj);
 
     return critObjs;
+  }
+
+  GetCallback(ev){
+    if(this.BizTemplateCode == AdInsConstant.CF4W){
+      this.router.navigate(["Nap/ConsumerFinance/Add/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId } });
+    }
+    if(this.BizTemplateCode == AdInsConstant.FL4W){
+      this.router.navigate(["Nap/FinanceLeasing/Add/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId } });
+    }
+    if(this.BizTemplateCode == AdInsConstant.CFRFN4W){
+      this.router.navigate(["Nap/CFRefinancing/Add/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId } });
+    }
   }
 
 }

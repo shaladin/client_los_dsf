@@ -1,163 +1,170 @@
 {
-    "title": "Customer Confirmation Paging",
-    "exportExcel": false,
-    "component": [
-        {
-            "type": "textbox",
-            "name": "A.APP_NO",
-            "id": "AppNoId",
-            "value": "",
-            "label": "Application No",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type": "textbox",
-            "name": "AGR.AGRMNT_NO",
-            "id": "AgreementNoId",
-            "value": "",
-            "label": "Agreement No",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type" : "textbox",
-            "name" : "AGR.CUST_NO",
-            "id" : "CustNoId",
-            "value" : "",
-            "label" : "Customer No",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type" : "textbox",
-            "name" : "AGR.CUST_NAME",
-            "id" : "CustNameId",
-            "value" : "",
-            "label" : "Customer Name",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type" : "textbox",
-            "name" : "WF.USERNAME",
-            "id" : "TaskClaimById",
-            "value" : "",
-            "label" : "Task Claim By",
-            "placeholder": "Placeholder"
-        }
-    ],
-    "querystring": {
-        "select": "SELECT WF.WF_TASK_LIST_ID as TaskListId, WF.USERNAME AS Username, AGR.AGRMNT_NO AS AgrmntNo, A.APP_NO AS AppNo, AGR.CUST_NO AS CustNo, AGR.CUST_NAME AS CustName, A.PROD_OFFERING_NAME AS ProdOfferingName, CASE WHEN WF.USERNAME = NULL OR WF.USERNAME = '' THEN 'UNCLAIMED' ELSE 'CLAIMED' END AS ClaimStatus, A.APP_ID AS AppId, AGR.AGRMNT_ID AS AgrmntId, A.APP_ID AS AppId, A.BIZ_TEMPLATE_CODE AS BizTemplateCode",
-        "from": "FROM dbo.APP A WITH(NOLOCK) JOIN dbo.AGRMNT AGR WITH(NOLOCK) ON AGR.APP_ID = A.APP_ID JOIN dbo.V_WF_TASK_LIST WF WITH(NOLOCK) ON WF.TRANSACTION_CODE = AGR.AGRMNT_NO",
-        "where" : "WHERE WF.END_EXECUTING_DATE IS NULL"
+  "title": "Customer Confirmation Paging",
+  "exportExcel": false,
+  "component": [
+    {
+      "type": "textbox",
+      "name": "A.APP_NO",
+      "id": "AppNoId",
+      "value": "",
+      "label": "Application No",
+      "placeholder": "Placeholder"
     },
-    "orderby": {
-        "key": "A.APP_NO", 
-        "value": "false"
+    {
+      "type": "textbox",
+      "name": "AGR.AGRMNT_NO",
+      "id": "AgreementNoId",
+      "value": "",
+      "label": "Agreement No",
+      "placeholder": "Placeholder"
     },
-    "headerList": [
+    {
+      "type": "textbox",
+      "name": "AGR.CUST_NO",
+      "id": "CustNoId",
+      "value": "",
+      "label": "Customer No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "AGR.CUST_NAME",
+      "id": "CustNameId",
+      "value": "",
+      "label": "Customer Name",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "WF.USERNAME",
+      "id": "TaskClaimById",
+      "value": "",
+      "label": "Task Claim By",
+      "placeholder": "Placeholder"
+    }
+  ],
+  "querystring": {
+    "select": "SELECT WF.WF_TASK_LIST_ID as TaskListId, WF.USERNAME AS Username, AGR.AGRMNT_NO AS AgrmntNo, A.APP_NO AS AppNo, AGR.CUST_NO AS CustNo, AGR.CUST_NAME AS CustName, A.PROD_OFFERING_NAME AS ProdOfferingName, CASE WHEN WF.USERNAME = NULL OR WF.USERNAME = '' THEN 'UNCLAIMED' ELSE 'CLAIMED' END AS ClaimStatus, A.APP_ID AS AppId, AGR.AGRMNT_ID AS AgrmntId, A.BIZ_TEMPLATE_CODE AS BizTemplateCode",
+    "from": "FROM dbo.APP A WITH(NOLOCK) JOIN dbo.AGRMNT AGR WITH(NOLOCK) ON AGR.APP_ID = A.APP_ID JOIN dbo.V_WF_TASK_LIST WF WITH(NOLOCK) ON WF.TRANSACTION_CODE = AGR.AGRMNT_NO",
+    "where": "WHERE WF.END_EXECUTING_DATE IS NULL"
+  },
+  "orderby": {
+    "key": "A.APP_NO",
+    "value": "false"
+  },
+  "headerList": [
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Claim By",
+      "name": "WF.USERNAME"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Application No",
+      "name": "A.APP_NO"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Agreement No",
+      "name": "AGR.AGRMNT_NO"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Customer No",
+      "name": "AGR.CUST_NO"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Customer Name",
+      "name": "AGR.CUST_NAME"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Action"
+    }
+  ],
+
+  "bodyList": [
+    {
+      "type": "text",
+      "position": "left",
+      "property": "Username"
+    },
+    {
+      "type": "link",
+      "position": "left",
+      "property": "AppNo",
+      "target": "_blank",
+      "path": "/Nap/View/AppView",
+      "param": [
         {
-            "type": "sort",
-            "position": "left",
-            "label": "Claim By",
-            "name": "WF.USERNAME"
-        },
-        {
-            "type": "sort",
-            "position": "left",
-            "label": "Application No",
-            "name": "A.APP_NO"
-        },
-        {
-            "type": "sort",
-            "position": "left",
-            "label": "Agreement No",
-            "name": "AGR.AGRMNT_NO"
-        },
-        {
-            "type": "sort",
-            "position": "left",
-            "label": "Customer No",
-            "name": "AGR.CUST_NO"
-        },
-        {
-            "type": "sort",
-            "position": "left",
-            "label": "Customer Name",
-            "name": "AGR.CUST_NAME"
-        },
-        {
-            "type": "label",
-            "position": "center",
-            "label": "Action"
+          "type": "AppId",
+          "property": "AppId"
         }
-    ],
-    "bodyList": [
+      ]
+    },
+    {
+      "type": "link",
+      "position": "left",
+      "property": "AgrmntNo",
+      "target": "_blank",
+      "path": "Nap/View/AgrmntView",
+      "param": [
         {
-            "type": "text",
-            "position": "left",
-            "property": "Username"
-        },
-        {
-            "type" : "link",
-            "position": "left",
-            "property": "AppNo",
-            "target" : "_blank",
-            "path" : "/Nap/View/AppView",
-            "param" : [
-                {
-                    "type" : "AppId",
-                    "property" : "AppId"
-                }
-            ]
-        },
-        {
-            "type" : "link",
-            "position": "left",
-            "property": "AgrmntNo",
-            "target" : "_blank",
-            "path" : "/Nap/FinanceLeasing/ViewAgrmnt",
-            "param" : [
-                {
-                    "type" : "AgrmntId",
-                    "property" : "AgrmntId"
-                }
-            ]
-        },
-        {
-            "type": "text",
-            "position": "left",
-            "property": "CustNo"
-        },
-        {
-            "type": "text",
-            "position": "left",
-            "property": "CustName"
-        },
-        {
-            "type": "action",
-            "position": "center",
-            "action": [
-                {
-                    "type": "edit",
-                    "path": "/Nap/AdminProcess/CustConfirmation/Detail",
-                    "param": [
-                        {
-                            "type": "AgrmntId",
-                            "property": "AgrmntId"
-                        },
-                        {
-                            "type": "AgrmntNo",
-                            "property": "AgrmntNo"
-                        },
-                        {
-                            "type": "TaskListId",
-                            "property": "TaskListId"
-                        },
-                        {
-                            "type": "AppId",
-                            "property": "AppId"
-                        }
-                    ]
-                }
-            ]
+          "type": "AgrmntId",
+          "property": "AgrmntId"
         }
-    ]
+      ]
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "CustNo"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "CustName"
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
+        {
+          "type": "edit",
+          "path": "/Nap/AdminProcess/CustConfirmation/Detail",
+          "param": [
+            {
+              "type": "AgrmntId",
+              "property": "AgrmntId"
+            },
+            {
+              "type": "AgrmntNo",
+              "property": "AgrmntNo"
+            },
+            {
+              "type": "TaskListId",
+              "property": "TaskListId"
+            },
+            {
+              "type": "AppId",
+              "property": "AppId"
+            },
+            {
+              "type": "BizTemplateCode",
+              "property": "BizTemplateCode"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+
+
 }

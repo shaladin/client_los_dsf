@@ -12,13 +12,10 @@
     <span *ngIf="ReturnHandlingHObj.ReturnHandlingHId != undefined">
       <div class="px-3">
         <form class="form form-horizontal" [formGroup]="HandlingForm" #enjiForm="ngForm">
-          <div class="class=form-group row adins-required">
+          <div class="form-group row">
             <label class="col-md-3 adInsLabel">Return Notes </label>
-            <div class="col-md-3">
-              <textarea class="form-control adInsInput width-75-per" formControlName="ReturnHandlingNotes" readonly>
-              </textarea>
-            </div>
-            <label class="col-md-3 adInsLabel">Return Execution Notes </label>
+            <label class="col-md-3 adinslabel" translate>{{this.returnHandlingDObj?.ReturnHandlingNotes}}</label>
+            <label class="col-md-3 adInsLabel adins-required-label">Return Execution Notes </label>
             <div class="col-md-3">
               <textarea class="form-control adInsInput width-75-per" formControlName="ReturnHandlingExecNotes">
               </textarea>
@@ -65,7 +62,7 @@
           <app-commission *ngIf="StepIndex == true" [AppId]="ReturnHandlingHObj.AppId" (outputTab)="NextStep('RSV')"></app-commission>
         </div>
         <div id="reserved-fund-tab" class="content" role="tabpanel" aria-labelledby="reserved-fund-tab-trigger">
-          <reserved-fund *ngIf="StepIndex == true" [ReturnHandlingHObj]="ReturnHandlingHObj" (outputTab)="LastStepHandler($allAppReservedFundObj)"></reserved-fund>
+          <reserved-fund *ngIf="StepIndex == true" [ReturnHandlingHObj]="ReturnHandlingHObj" (outputTab)="LastStepHandler($event)"></reserved-fund>
         </div>
       </div>
     </div>

@@ -591,6 +591,7 @@ export class AdInsConstant {
   public static SubmitWorkflowLeadInput = environment.losUrl + "/Lead/SubmitWorkflowLeadInput";
   public static GetLeadPersonalForLookupCopy = environment.losUrl + "/Lead/GetLeadPersonalForLookupCopy";
   public static SubmitWorkflowLeadInputKta = environment.losUrl + "/Lead/SubmitWorkflowLeadInputKta";
+  public static RejectLead = environment.losUrl + "/Lead/RejectLead";
 
   // LEAD ASSET
   public static GetLeadAssetByLeadId = environment.losUrl + "/LeadAsset/GetLeadAssetByLeadId";
@@ -828,6 +829,13 @@ export class AdInsConstant {
 
   public static GetAppCustPersonalDataAndSpouseByAppId = environment.losUrl + "/AppCust/GetAppCustPersonalDataAndSpouseByAppCustId";
 
+  public static DateErrorMessageIdExpiredDate = "Id Expired Date";
+  public static DateErrorMessageEstablishmentDate = "Establishment Date";
+  public static DateErrorMessageBirthDate = "Birth Date";
+
+  public static MrIdTypeCodeEKTP = "EKTP";
+  public static MrIdTypeCodeSIM = "SIM";
+  public static MrIdTypeCodeKITAS = "KITAS";
   //CUST DATA COMPANY
   public static GetCustDataForViewByAppId = environment.losUrl + "/AppCust/GetCustDataForViewByAppId";
   public static GetCustDataPersonalForViewByAppId = environment.losUrl + "/AppCust/GetCustDataPersonalForViewByAppId";
@@ -902,6 +910,7 @@ export class AdInsConstant {
   public static AddEditAllCollateralDataFactoring = environment.losUrl + "/AppCollateral/AddEditAllCollateralDataFactoring"
   public static GetAppCollateralAttrByAppCollateralId = environment.losUrl + "/AppCollateral/GetAppCollateralAttrByAppCollateralId";
   public static GetAppCollateralListForInsuranceByAppId = environment.losUrl+ "/AppCollateral/GetAppCollateralListForInsuranceByAppId";
+  public static GetAppCollateralAttrByAppAssetId = environment.losUrl + "/AppCollateral/GetAppCollateralAttrByAppAssetId";
   
   // App Collateral Suppl Emp
   public static GetListAppAssetSupplEmpByAppAssetId = environment.losUrl + "/AppAssetSupplEmp/GetListAppAssetSupplEmpByAppAssetId";
@@ -1173,10 +1182,14 @@ export class AdInsConstant {
   // public static Test = environment.losUrl + "/ReturnHandlingD/Test";
 
   public static ReturnHandlingEditApp = "RTN_EDIT_APP";
+  public static ReturnHandlingAddPhnVerf = "RTN_ADD_PHN_VERF";
+  public static ReturnHandlingEditComRsvFnd = "RTN_EDIT_COM_RSV_FND";
+  public static ReturnHandlingAddColtr = "RTN_ADD_COLTR";
   public static GetReturnHandlingDByReturnHandlingDId = environment.losUrl + "/ReturnHandlingD/GetReturnHandlingDByReturnHandlingDId";
 
   // Deviation Result
   public static GetListDeviationResultForDeviationDataByAppId = environment.losUrl + "/DeviationResult/GetListDeviationResultForDeviationDataByAppId";
+  public static GetListDeviationResultByAppNo = environment.losUrl + "/DeviationResult/GetListDeviationResultByAppNo";
   public static AddListManualDeviationResultByAppId = environment.losUrl + "/DeviationResult/AddListManualDeviationResultByAppId";
 
   // APP Mode

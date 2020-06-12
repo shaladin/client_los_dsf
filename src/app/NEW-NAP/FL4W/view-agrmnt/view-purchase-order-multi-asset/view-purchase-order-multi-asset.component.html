@@ -31,7 +31,7 @@
 </div >
 
 
-<app-view-purchase-order-multi-asset-detail *ngIf = "isView == true" [agrmntId]="agrmntId" [supplCode]="tempSupplCode" [PurchaseOrderHId] ="tempPurchaseOrderHId" > 
+<app-view-purchase-order-multi-asset-detail *ngIf = "isView == true" [agrmntId]="agrmntId" [supplCode]="tempSupplCode" [PurchaseOrderHId] ="tempPurchaseOrderHId" (IsView)="getIsView($event)"> 
   
 </app-view-purchase-order-multi-asset-detail>
 

@@ -221,10 +221,10 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   }
   //nanti bakalan ke View, sementara kek gini dlu
   ToApp(){
-    this.router.navigate(["/Nap/AdminProcess/PreGoLive/Approval/Detail"], { queryParams: { "AppNo": this.AppNo } });
+    this.router.navigate(["/Nap/View/AppView"], { queryParams: { "AppId": this.AppId } });
   }
   ToAgrmnt(){
-    this.router.navigate(["/Nap/AdminProcess/PreGoLive/Approval/Detail"], { queryParams: { "AgrmntNo": this.AgrmntNo } });
+    this.router.navigate(["/Nap/View/AgrmntView"], { queryParams: { "AgrmntId": this.AgrmntId } });
   }
   ToCust(){
     this.router.navigate(["/Nap/AdminProcess/PreGoLive/Approval/Detail"], { queryParams: { "CustNo": this.CustNo } });

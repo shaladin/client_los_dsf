@@ -124,10 +124,18 @@
             "property": "OriOfficeName"
         },
         {
-            "type": "text",
+            "type": "link",
             "position": "center",
-            "property": "AppNo"
-        },
+            "property": "AppNo",
+            "target": "_blank",
+            "path": "/Nap/View/AppView",
+            "param": [
+              {
+                "type": "AppId",
+                "property": "AppId"
+              }
+            ]
+          },
         {
             "type": "text",
             "position": "left",
@@ -170,10 +178,6 @@
                                     {
                                         "type": "WfTaskListId",
                                         "property": "WfTaskListId"
-                                    },
-                                    {
-                                        "type": "BizTemplateCode",
-                                        "property": "BizTemplateCode"
                                     }
                                 ]
                             },
@@ -204,10 +208,6 @@
                                     {
                                         "type": "WfTaskListId",
                                         "property": "WfTaskListId"
-                                    },
-                                    {
-                                        "type": "BizTemplateCode",
-                                        "property": "BizTemplateCode"
                                     }
                                 ]
                             },

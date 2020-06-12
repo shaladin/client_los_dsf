@@ -14,7 +14,16 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ReturnHandlingSurveyComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute,private router: Router,private http: HttpClient) { }
+  BizTemplateCode: string;
+
+  constructor(private route: ActivatedRoute,private router: Router,private http: HttpClient) {
+    this.route.queryParams.subscribe(params => {
+      if (params["BizTemplateCode"] != null) {
+        this.BizTemplateCode = params["BizTemplateCode"];
+        localStorage.setItem("BizTemplateCode", this.BizTemplateCode);
+      }
+    }); 
+   }
   TrxNo : any;
   TrxType : any = "APP";
   Token : any = localStorage.getItem("Token");
@@ -36,7 +45,7 @@ export class ReturnHandlingSurveyComponent implements OnInit {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'WTL.ACT_CODE';
-    critObj.value = "ADD_SRVY";
+    critObj.value = "ADD_SRVY_" + this.BizTemplateCode;
     critObjs.push(critObj);
     
     critObj = new CriteriaObj();
@@ -69,8 +78,8 @@ export class ReturnHandlingSurveyComponent implements OnInit {
 
   event(ev){
     console.log(ev);
-    this.TrxNo = ev.AppNo;
-    this.router.navigate([environment.FoundationR3Web + "/Survey/TaskWF"], { queryParams: { "TrxNo": this.TrxNo, "TrxType" : this.TrxType, "Token" : this.Token  } });
+    this.TrxNo = ev.RowObj.AppNo;
+    window.location.href = environment.FoundationR3Web + "/Survey/ViewOrderExternal?TrxNo=" + this.TrxNo + "&TrxType=" + this.TrxType + "&Token=" + this.Token;
   }
 
 }

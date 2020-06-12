@@ -1,6 +1,6 @@
 {
   "name": "apex",
-  "version": "1.0.0-24",
+  "version": "1.0.0-28",
   "license": "",
   "scripts": {
     "ng": "ng",
@@ -27,7 +27,7 @@
     "@adins/ucpaging": "^2.0.17",
     "@adins/ucreport": "^1.0.3",
     "@adins/ucthingstodo": "^1.0.3",
-    "@adins/ucupload": "^1.6.4",
+    "@adins/ucupload": "^1.7.1",
     "@adins/ucviewgeneric": "^2.0.11",
     "@agm/core": "1.0.0-beta.5",
     "@angular/animations": "^7.2.16",
@@ -43,7 +43,7 @@
     "@angular/platform-server": "7.0.0",
     "@angular/router": "7.0.0",
     "@aspnet/signalr": "1.1.0",
-    "@microsoft/signalr": "^3.1.4",
+    "@microsoft/signalr": "^3.1.5",
     "@ng-bootstrap/ng-bootstrap": "4.0.0",
     "@ng-select/ng-select": "2.11.2",
     "@ngrx/store": "6.1.0",

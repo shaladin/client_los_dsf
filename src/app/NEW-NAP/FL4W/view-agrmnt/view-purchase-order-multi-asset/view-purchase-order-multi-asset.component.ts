@@ -11,6 +11,7 @@ export class ViewPurchaseOrderMultiAssetComponent implements OnInit {
  
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Input() agrmntId: number = 0;
+  
   inputGridObj: any;
   isView : boolean;
   listPurchaseOrder : any;
@@ -41,6 +42,8 @@ export class ViewPurchaseOrderMultiAssetComponent implements OnInit {
     this.tempSupplCode = supplCode;
     this.tempPurchaseOrderHId = PurchaseOrderHId;
     this.isView=true;
+  } 
+  getIsView(event) {
+    this.isView = event;
   }
-
 }

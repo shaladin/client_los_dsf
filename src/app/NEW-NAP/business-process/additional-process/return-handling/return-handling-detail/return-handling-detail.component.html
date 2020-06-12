@@ -85,12 +85,11 @@
                             </table>
                         </div>
                         <div class="form-actions right">
-                            <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['../Paging']"
-                            [queryParams]="{BizTemplateCode: BizTemplateCode}">
-                                <i class="ft-x"></i> Back
+                            <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['/Nap/AddProcess/ReturnHandling/Paging']" [queryParams]="{BizTemplateCode: lobCode}">
+                                <i class="ft-x"></i> Cancel
                             </button>            
                             <button type="button" class="btn btn-raised btn-primary" (click)="SubmitAll()">
-                            <i class="fa fa-check-square-o"></i> Submit
+                            <i class="fa fa-check-square"></i> Save
                             </button>
                             <!-- <button type="button" class="btn btn-raised btn-primary" (click)="Test()">
                               <i class="fa fa-check-square-o"></i> Test

@@ -152,10 +152,11 @@ export class DeliveryOrderDetailComponent implements OnInit {
     );
   }
   SaveForm() {
-    if (Date.parse(this.DeliveryOrderForm.value.TCList[0].PromisedDt) < this.businessDt.getTime()) {
-      this.toastr.errorMessage("Promised Date Must Bigger Than Business Date")
-      return;
-    }
+    var businessDt = new Date(localStorage.getItem("BusinessDateRaw"));
+    // if (Date.parse(this.DeliveryOrderForm.value.TCList[0].PromisedDt) < this.businessDt.getTime()) {
+    //   this.toastr.errorMessage("Promised Date Must Bigger Than Business Date")
+    //   return;
+    // }
     var appAsset = {
       AppAssetId: this.AppAssetId,
       AppId: this.appAssetObj.AppId,
@@ -220,6 +221,17 @@ export class DeliveryOrderDetailComponent implements OnInit {
       this.appTC.CheckedDt = this.DeliveryOrderForm.value.TCList[i].CheckedDt;
       this.appTC.Notes = this.DeliveryOrderForm.value.TCList[i].Notes;
       this.appTC.IsAdditional = this.DeliveryOrderForm.value.TCList[i].IsAdditional;
+
+      var prmsDt = new Date(this.appTC.PromisedDt);
+      var prmsDtForm = this.DeliveryOrderForm.value.TCList[i].PromisedDt;
+      if (this.appTC.IsChecked == false) {
+        if(prmsDtForm != null){
+          if(prmsDt < businessDt){
+            this.toastr.errorMessage("Promise Date for " + this.appTC.TcName + " can't be lower than Business Date");
+            return;
+          }
+        }
+      }
       this.listAppTCObj.AppTCObj.push(this.appTC);
     }
 

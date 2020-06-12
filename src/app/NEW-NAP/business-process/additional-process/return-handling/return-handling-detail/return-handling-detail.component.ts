@@ -20,12 +20,12 @@ export class ReturnHandlingDetailComponent implements OnInit {
   appId: number;
   returnHandlingHId: number;
   wfTaskListId: number;
+  lobCode: string;
   viewObj: string;
   arrValue = [];
   returnHandlingHObj: ReturnHandlingHObj;
   returnHandlingDObjs: Array<ReturnHandlingDObj>;
   taskObj: Array<KeyValueObj>;
-  BizTemplateCode: string = '';
 
   ReturnHandlingForm = this.fb.group({
     MrReturnTaskCode: ['', [Validators.required, Validators.maxLength(50)]],
@@ -47,13 +47,11 @@ export class ReturnHandlingDetailComponent implements OnInit {
       if (params["WfTaskListId"] != null) {
         this.wfTaskListId = params["WfTaskListId"];
       }
-      if (params["BizTemplateCode"] != null) {
-        this.BizTemplateCode = params["BizTemplateCode"];
-      }
     });
   }
 
   async ngOnInit() : Promise<void> {
+    this.lobCode = localStorage.getItem("BizTemplateCode");
     this.ClaimTask();
     this.arrValue.push(this.appId);
     await this.bindTaskObj();
@@ -69,7 +67,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
       (response) => {
         console.log(response);
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["../ReturnHandling/Paging"]);
+        this.router.navigate(["/Nap/AddProcess/ReturnHandling/Paging"], { queryParams: { BizTemplateCode: this.lobCode } });
       },
       (error) => {
         console.log(error);
@@ -171,7 +169,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
   }
 
   async bindTaskObj(){
-    var refMasterObj = { RefMasterTypeCode: "RETURN_TASK", ReserveField1: this.BizTemplateCode};
+    var refMasterObj = { RefMasterTypeCode: "RETURN_TASK", ReserveField1: this.lobCode};
     await this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
       (response) => {
         this.taskObj = response["ReturnObject"];

@@ -67,7 +67,9 @@ import { SingleCollDataComponent } from "./collateral-data/single-coll-data/sing
 import { MultiCollDataComponent } from "./collateral-data/multi-coll-data/multi-coll-data.component";
 import { ApplicationDataFL4WComponent } from "./application-data/application-data-FL4W/application-data-FL4W.component";
 import { UclookupgenericComponent } from "@adins/uclookupgeneric";
+import { GuarantorLegalDocComponent } from "./guarantor-data/guarantor-company/guarantor-legal-doc/guarantor-legal-doc.component";
 import { LookupTaxCityIssuerComponent } from './multi-asset-data/collateral-add-edit/lookup-tax-city-issuer/lookup-tax-city-issuer.component';
+import { LookupCollateralComponent } from './multi-asset-data/collateral-add-edit/lookup-collateral/lookup-collateral.component';
 
 export const customCurrencyMaskConfig = {     
   align: "right",     
@@ -96,6 +98,7 @@ export const customCurrencyMaskConfig = {
     CustLegalDocComponent,
     TcSharingComponentModule,
     GuarantorComponent,
+    GuarantorLegalDocComponent,
     GuarantorPagingComponent,
     GuarantorPersonalComponent,
     GuarantorCompanyComponent,
@@ -169,6 +172,7 @@ export const customCurrencyMaskConfig = {
     CustCompanyFinancialDataComponent,
     CustLegalDocComponent,
     GuarantorComponent,
+    GuarantorLegalDocComponent,
     GuarantorPagingComponent,
     GuarantorPersonalComponent,
     GuarantorCompanyComponent,
@@ -212,13 +216,14 @@ export const customCurrencyMaskConfig = {
     SingleCollDataComponent,
     MultiCollDataComponent,
     ApplicationDataFL4WComponent,
-    LookupTaxCityIssuerComponent
+    LookupTaxCityIssuerComponent,
+    LookupCollateralComponent
     // MultiAssetLeasingComponent,
     // AssetLeasingPagingComponent,
     // AssetLeasingAddEditComponent,
     // CollateralLeasingAddEditComponent
   ],
-  entryComponents: [SubsidyAddEditComponent, UclookupgenericComponent, LookupTaxCityIssuerComponent],
+  entryComponents: [SubsidyAddEditComponent, UclookupgenericComponent, LookupTaxCityIssuerComponent, LookupCollateralComponent],
   providers: [
     NGXToastrService
   ]

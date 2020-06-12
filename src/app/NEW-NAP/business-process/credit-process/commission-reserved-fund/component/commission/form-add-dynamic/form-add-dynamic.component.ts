@@ -152,10 +152,10 @@ export class FormAddDynamicComponent implements OnInit {
       MrTaxCalcMethodCode: [''],
       TaxpayerNo: [''],
       GrossYield: [0],
-      TotalCommisionAmount: [0, Validators.pattern("^[0-9]+$")],
-      TotalTaxAmount: [0, Validators.pattern("^[0-9]+$")],
-      TotalVATAmount: [0, Validators.pattern("^[0-9]+$")],
-      TotalPenaltyAmount: [0, Validators.pattern("^[0-9]+$")],
+      TotalCommisionAmount: [0, Validators.pattern("^[0-9]+([,.][0-9]+)?$")],
+      TotalTaxAmount: [0, Validators.pattern("^[0-9]+([,.][0-9]+)?$")],
+      TotalVATAmount: [0, Validators.pattern("^[0-9]+([,.][0-9]+)?$")],
+      TotalPenaltyAmount: [0, Validators.pattern("^[0-9]+([,.][0-9]+)?$")],
       RowVersion: [''],
       ListAllocated: this.fb.array([]),
       DropDownList: this.fb.array([])
@@ -462,7 +462,7 @@ export class FormAddDynamicComponent implements OnInit {
         AllocationFrom: [objExist.AppCommissionD[i].MrCommissionSourceCode],
         AllocationFromDesc: [tempRuleObj[idxRuleObj].AllocationFromDesc],
         MaxAllocationAmount: [tempRuleObj[idxRuleObj].MaxAllocationAmount],
-        AllocationAmount: [objExist.AppCommissionD[i].CommissionAmt, [Validators.pattern("^[0-9]+$"), Validators.max(tempRuleObj[idxRuleObj].MaxAllocationAmount)]],
+        AllocationAmount: [objExist.AppCommissionD[i].CommissionAmt, [Validators.pattern("^[0-9]+([,.][0-9]+)?$"), Validators.max(tempRuleObj[idxRuleObj].MaxAllocationAmount)]],
         AllocationBehaviour: [tempRuleObj[idxRuleObj].AllocationBehaviour],
         TaxAmt: [objExist.AppCommissionD[i].TaxAmt],
         VatAmt: [objExist.AppCommissionD[i].VatAmt],
@@ -489,7 +489,7 @@ export class FormAddDynamicComponent implements OnInit {
     var tempRuleObj = ruleObj;
     for(var i=0;i<this.FormObj.controls.arr["controls"][indexFormObj].controls.ListAllocated.controls.length;i++){
       var idxRuleObj = tempRuleObj.indexOf(tempRuleObj.find(x => x.AllocationFrom == this.FormObj.controls.arr["controls"][indexFormObj].controls.ListAllocated.controls[i].controls.AllocationFrom.value));
-      this.FormObj.controls.arr["controls"][indexFormObj].controls.ListAllocated.controls[i].controls.AllocationAmount.setValidators([Validators.pattern("^[0-9]+$"), Validators.max(tempRuleObj[idxRuleObj].MaxAllocationAmount)]);
+      this.FormObj.controls.arr["controls"][indexFormObj].controls.ListAllocated.controls[i].controls.AllocationAmount.setValidators([Validators.pattern("^[0-9]+([,.][0-9]+)?$"), Validators.max(tempRuleObj[idxRuleObj].MaxAllocationAmount)]);
     }
     this.FormObj.controls.arr["controls"][indexFormObj].controls.ListAllocated.updateValueAndValidity();
   }
@@ -503,7 +503,7 @@ export class FormAddDynamicComponent implements OnInit {
     var tempRuleObj = this.GetTempRuleObj(code, indexFormObj);
     for(var i=0;i<this.FormObj.controls.arr["controls"][indexFormObj].controls.ListAllocated.controls.length;i++){
       var idxRuleObj = tempRuleObj.indexOf(tempRuleObj.find(x => x.AllocationFrom == this.FormObj.controls.arr["controls"][indexFormObj].controls.ListAllocated.controls[i].controls.AllocationFrom.value));
-      this.FormObj.controls.arr["controls"][indexFormObj].controls.ListAllocated.controls[i].controls.AllocationAmount.setValidators([Validators.pattern("^[0-9]+$"), Validators.max(tempRuleObj[idxRuleObj].MaxAllocationAmount)]);
+      this.FormObj.controls.arr["controls"][indexFormObj].controls.ListAllocated.controls[i].controls.AllocationAmount.setValidators([Validators.pattern("^[0-9]+([,.][0-9]+)?$"), Validators.max(tempRuleObj[idxRuleObj].MaxAllocationAmount)]);
     }
     this.FormObj.controls.arr["controls"][indexFormObj].controls.ListAllocated.updateValueAndValidity();
   }
@@ -561,7 +561,7 @@ export class FormAddDynamicComponent implements OnInit {
   }
 
   ChangeDataLabel(indexFormObj){
-    // console.log(idx);
+    // console.log(indexFormObj);
     this.FormInputObj["isCalculated"] = false; 
     var len = this.FormObj.controls.arr["controls"][indexFormObj].controls.ListAllocated.controls.length;
     var tempTotal = 0;

@@ -146,6 +146,11 @@
         {
             "type": "label",
             "position": "center",
+            "label": "Reject"
+        },
+        {
+            "type": "label",
+            "position": "center",
             "label": "Action"
         }
     ],
@@ -192,6 +197,16 @@
             "type": "text",
             "position": "left",
             "property": "FullAssetName"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "callback",
+                    "icon" : "ft-x-circle"
+                }
+            ]
         },
         {
             "type": "action",

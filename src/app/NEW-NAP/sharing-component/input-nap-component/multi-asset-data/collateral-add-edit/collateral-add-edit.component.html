@@ -41,8 +41,21 @@
                     <div class="form-group row">
                       <label class="col-md-2 adins-required-label" for="FullAssetName" translate>Collateral Name </label>
                       <div class="col-md-3">
-                        <ng-template #CollateralModal></ng-template> 
-                        <!-- <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]="AddCollForm" [enjiForm]='enjiForm'
+                        <div class="col-md-12 input-group" style="padding: 0;">
+                          <input type="text" class="form-control" formControlName="CollateralName" 
+                            [readonly]="true" [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CollateralName.invalid }" />
+                          <div class="input-group-append">
+                              <span class="input-group-btn">
+                                  <button class="btn btn-raised btn-primary" type="button" (click)="showModalCollateral()">
+                                      <i class="ft-search"></i>
+                                  </button>
+                              </span>
+                          </div>
+                        </div>
+                        <lib-uc-show-errors [control]="AddCollForm.controls.CollateralName" [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
+                        <!-- <ng-template #CollateralModal></ng-template>  -->
+                        <!-- <lib-uclookupgeneric *ngIf="inputLookupObj.isReady == true" [lookupInput]="inputLookupObj" [parentForm]="AddCollForm" [enjiForm]='enjiForm'
                           [identifier]="'CollateralName'" (lookup)="getLookupCollateralName($event)"></lib-uclookupgeneric> -->
                       </div>
                         <label class="col-md-1"></label>
@@ -200,7 +213,7 @@
                         <label class="col-md-2 adins-required-label" translate>BPKB City Issuer</label>
                         <div class="col-md-3 input-group">
                           <input type="text" class="form-control" formControlName="TaxCityIssuer" 
-                            [readonly]="true" [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.Color.invalid }" />
+                            [readonly]="true" [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.TaxCityIssuer.invalid }" />
                           <div class="input-group-append">
                               <span class="input-group-btn">
                                   <button class="btn btn-raised btn-primary" type="button" (click)="showModalTaxCityIssuer()">

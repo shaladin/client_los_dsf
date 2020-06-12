@@ -600,10 +600,30 @@ export class LeadInputLeadDataComponent implements OnInit {
   AssetPriceChange() {
     this.Calculate = false;
     this.AssetPrice = this.LeadDataForm.controls["AssetPrice"].value;
+    this.DPAmount = this.LeadDataForm.controls["DownPaymentAmount"].value;
+    this.DPPercentage = this.LeadDataForm.controls["DownPaymentPercent"].value;
+
     this.LeadDataForm.controls['DownPaymentAmount'].clearValidators();
     this.LeadDataForm.controls['DownPaymentAmount'].setValidators([Validators.required, Validators.min(1.00), Validators.max(this.AssetPrice)]);
     this.LeadDataForm.controls['DownPaymentAmount'].updateValueAndValidity();
+
+    if (this.LeadDataForm.controls["MrDownPaymentTypeCode"].value == "AMT") {
+      this.DPPercentage = this.DPAmount / this.AssetPrice * 100;
+
+      this.LeadDataForm.patchValue({
+        DownPaymentPercent: this.DPPercentage,
+      });
+    }
+    else
+    {
+      this.DPAmount = this.AssetPrice * this.DPPercentage / 100;
+
+      this.LeadDataForm.patchValue({
+        DownPaymentAmount: this.DPAmount,
+      });
+    }
   }
+
   FirstInstChange() {
     this.Calculate = false;
     this.LeadDataForm.patchValue({

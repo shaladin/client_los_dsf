@@ -26,6 +26,7 @@ import { AppCollateralRegistrationObj } from 'app/shared/model/AppCollateralRegi
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LookupTaxCityIssuerComponent } from './lookup-tax-city-issuer/lookup-tax-city-issuer.component';
+import { LookupCollateralComponent } from './lookup-collateral/lookup-collateral.component';
 
 @Component({
   selector: 'app-collateral-add-edit',
@@ -113,7 +114,7 @@ export class CollateralAddEditComponent implements OnInit {
   appCollateralRegistObj: any;
   returnAppCollateralRegistObj: any;
   businessDt: Date;
-  @ViewChild("CollateralModal", { read: ViewContainerRef }) collateralModal: ViewContainerRef;
+  // @ViewChild("CollateralModal", { read: ViewContainerRef }) collateralModal: ViewContainerRef;
   @ViewChild("CityIssuerModal", { read: ViewContainerRef }) cityIssuerModal: ViewContainerRef;
   @ViewChild("enjiForm") enjiForm: NgForm;
 
@@ -125,9 +126,10 @@ export class CollateralAddEditComponent implements OnInit {
     Collateral: ['New'],
     AssetTypeCode:[''],
     CollateralSeqNo: [1],
+    CollateralName: ['', [Validators.required]],
 
-    FullAssetCode: [''],
-    FullAssetName: [''],
+    FullAssetCode: ['', [Validators.required]],
+    FullAssetName: ['', [Validators.required]],
     AssetCategoryCode: [''],
     SerialNo1: [''],
     SerialNo2: [''],
@@ -168,6 +170,8 @@ export class CollateralAddEditComponent implements OnInit {
     this.getAppCollateralByAppCollateralId = AdInsConstant.GetAppCollateralByAppCollateralId;
     this.getAssetMasterForLookupEmployee = AdInsConstant.GetAssetMasterForLookupEmployee;
     this.getAppCollateralRegistByAppCollateralId = AdInsConstant.GetAppCollateralRegistrationByAppCollateralId;
+    this.inputLookupObj = new InputLookupObj();
+    this.inputLookupObj.isReady = false;
 
     this.route.queryParams.subscribe(params => {
       if (params["AppCollateralId"] != null) {
@@ -201,7 +205,6 @@ export class CollateralAddEditComponent implements OnInit {
       FullAssetName: event.FullAssetName,
       AssetCategoryCode: event.AssetCategoryCode
     });
-
     // this.assetCategoryObj = new AssetCategoryObj();
     // this.assetCategoryObj.AssetCategoryId = event.AssetCategoryId;
     // this.http.post(this.getAssetCategoryById, this.assetCategoryObj).subscribe(
@@ -214,6 +217,25 @@ export class CollateralAddEditComponent implements OnInit {
     // );
   }
 
+  showModalCollateral(){
+    const modalCollateral = this.modalService.open(LookupCollateralComponent);
+    modalCollateral.componentInstance.AssetTypeCode = this.AddCollForm.controls["AssetTypeCode"].value;
+    modalCollateral.result.then(
+      (response) => {
+        this.AddCollForm.patchValue({
+          FullAssetCode: response.FullAssetCode,
+          FullAssetName: response.FullAssetName,
+          AssetCategoryCode: response.AssetCategoryCode,
+          CollateralName: response.FullAssetName
+        });
+      }
+    ).catch((error) => {
+      if (error != 0) {
+        console.log(error);
+      }
+    });
+  }
+
   CollChange(){
     this.collateral = this.AddCollForm.controls["Collateral"].value;
 
@@ -222,8 +244,9 @@ export class CollateralAddEditComponent implements OnInit {
   }
 
   collateralTypeHandler(){
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UclookupgenericComponent);
-    this.collateralModal.clear();
+    // const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UclookupgenericComponent);
+    // this.collateralModal.clear();
+    this.inputLookupObj.isReady = false;
     var criteriaList = new Array<CriteriaObj>();
     var criteriaObj = new CriteriaObj();
     criteriaObj.restriction = AdInsConstant.RestrictionEq;
@@ -231,12 +254,22 @@ export class CollateralAddEditComponent implements OnInit {
     criteriaObj.value = this.AddCollForm.controls["AssetTypeCode"].value;
     criteriaList.push(criteriaObj);
     this.inputLookupObj.addCritInput = criteriaList;
-    const component = this.collateralModal.createComponent(componentFactory);
-    component.instance.lookupInput = this.inputLookupObj;
-    component.instance.parentForm = this.AddCollForm;
-    component.instance.enjiForm = this.enjiForm;
-    component.instance.identifier = 'CollateralName';
-    component.instance.lookup.subscribe((e) => this.getLookupCollateralName(e));
+    this.inputLookupObj.isReady = true;
+    console.log("Asset Type Code : " + this.AddCollForm.controls["AssetTypeCode"].value);
+    console.log("ColTypeHandler InputLookup : " + JSON.stringify(this.inputLookupObj));
+    this.AddCollForm.patchValue({
+      FullAssetCode: "",
+      FullAssetName: "",
+      AssetCategoryCode: "",
+      CollateralName: ""
+    });
+    // bookmark
+    // const component = this.collateralModal.createComponent(componentFactory);
+    // component.instance.lookupInput = this.inputLookupObj;
+    // component.instance.parentForm = this.AddCollForm;
+    // component.instance.enjiForm = this.enjiForm;
+    // component.instance.identifier = 'CollateralName';
+    // component.instance.lookup.subscribe((e) => this.getLookupCollateralName(e));
   }
 
   bindUcSearch()
@@ -503,6 +536,7 @@ export class CollateralAddEditComponent implements OnInit {
               this.AddCollForm.patchValue({
                 FullAssetCode: this.resAssetMasterObj.FullAssetCode,
                 FullAssetName: this.resAssetMasterObj.FullAssetName,
+                CollateralName: this.resAssetMasterObj.FullAssetName
               });
           });
       });
@@ -682,6 +716,7 @@ export class CollateralAddEditComponent implements OnInit {
         this.AddCollForm.patchValue({ AssetTypeCode: response['ReturnObject'][0]['Key'] });
 
         this.inputLookupObj = new InputLookupObj();
+        this.inputLookupObj.isReady = false;
         this.inputLookupObj.urlJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
         this.inputLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
         this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
@@ -694,14 +729,16 @@ export class CollateralAddEditComponent implements OnInit {
         criteriaObj.value = response['ReturnObject'][0]['Key'];
         criteriaList.push(criteriaObj);
         this.inputLookupObj.addCritInput = criteriaList;
+        this.inputLookupObj.isReady = true;
 
-        const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UclookupgenericComponent);
-        const component = this.collateralModal.createComponent(componentFactory);
-        component.instance.lookupInput = this.inputLookupObj;
-        component.instance.parentForm = this.AddCollForm;
-        component.instance.enjiForm = this.enjiForm;
-        component.instance.identifier = 'CollateralName';
-        component.instance.lookup.subscribe((e) => this.getLookupCollateralName(e));
+        // bookmark
+        // const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UclookupgenericComponent);
+        // const component = this.collateralModal.createComponent(componentFactory);
+        // component.instance.lookupInput = this.inputLookupObj;
+        // component.instance.parentForm = this.AddCollForm;
+        // component.instance.enjiForm = this.enjiForm;
+        // component.instance.identifier = 'CollateralName';
+        // component.instance.lookup.subscribe((e) => this.getLookupCollateralName(e));
       }
     );
 
