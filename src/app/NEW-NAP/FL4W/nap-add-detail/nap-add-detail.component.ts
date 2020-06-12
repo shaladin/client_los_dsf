@@ -168,6 +168,11 @@ export class NapAddDetailComponent implements OnInit {
 
   NextStep(Step) {
     if (this.ReturnHandlingHId > 0) {
+      if (this.custType == AdInsConstant.CustTypePersonal) {
+        this.stepperPersonal.next();
+      } else if (this.custType == AdInsConstant.CustTypeCompany) {
+        this.stepperCompany.next();
+      }
     } else {
       this.UpdateAppStep(Step);
     }
