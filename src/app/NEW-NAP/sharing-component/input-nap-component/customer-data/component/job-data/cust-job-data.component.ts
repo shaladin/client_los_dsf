@@ -10,6 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AppCustPersonalJobDataObj } from 'app/shared/model/AppCustPersonalJobDataObj.Model';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
+import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 
 @Component({
   selector: 'app-cust-job-data',
@@ -25,7 +26,7 @@ export class CustJobDataComponent implements OnInit {
   @Input() parentForm: FormGroup;
   @Input() identifier: any;
   @Input() appCustPersonalJobDataObj: AppCustPersonalJobDataObj = new AppCustPersonalJobDataObj();
-  @Input() custModelCode: any;
+  @Input() custModelCode: string;
 
   refMasterObj = {
     RefMasterTypeCode: "",
@@ -101,9 +102,21 @@ export class CustJobDataComponent implements OnInit {
     this.bindAppCustPersonalJobData();
   }
 
+  CriteriaAddLookUpProfessionName(){
+    var arrCopyLookupCrit = new Array();
+    var addCrit = new CriteriaObj();
+    addCrit.DataType = "text";
+    addCrit.propName = "MR_CUST_MODEL_CODE";
+    addCrit.restriction = AdInsConstant.RestrictionIn;
+    addCrit.listValue = [this.custModelCode];
+    arrCopyLookupCrit.push(addCrit);
+    this.InputLookupProfessionObj.addCritInput = arrCopyLookupCrit;
+  }
+
   CustModelChanged(){
     console.log(this.parentForm);
     this.custModelCode = this.parentForm.controls[this.identifier]["controls"].CustModelCode.value;
+    this.CriteriaAddLookUpProfessionName();
     if(this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "NONPROF"){
       this.parentForm.controls[this.identifier]["controls"].CompanyName.setValidators(null);
       this.parentForm.removeControl("jobDataAddr");
@@ -300,6 +313,7 @@ export class CustJobDataComponent implements OnInit {
           this.parentForm.controls[this.identifier].patchValue({
             CustModelCode: this.CustModelObj[0].Key
           });
+          this.CriteriaAddLookUpProfessionName();
         }
       }
     );
