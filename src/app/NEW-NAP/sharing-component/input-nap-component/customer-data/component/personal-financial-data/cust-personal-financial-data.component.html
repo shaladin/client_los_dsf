@@ -7,13 +7,13 @@
         <label class="col-md-2 adins-required-label" for="monthlyIncome" translate>Monthly Income </label>
         <div class="col-md-4">
           <input type="" currencyMask id="monthlyIncome" class="form-control" formControlName="MonthlyIncomeAmt" [options]="{ allowNegative: false}"
-            [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].MonthlyIncomeAmt.invalid }">
+            [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].MonthlyIncomeAmt.invalid }" (change)="ChangeTotalMonthly()" (keyup)="ChangeTotalMonthly()">
           <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].MonthlyIncomeAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
         </div>
         <label class="col-md-2" for="monthlyExpense" translate>Monthly Expense </label>
         <div class="col-md-4">
           <input type="" currencyMask id="monthlyExpense" class="form-control" formControlName="MonthlyExpenseAmt" [options]="{ allowNegative: false}"
-            [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].MonthlyExpenseAmt.invalid }">
+            [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].MonthlyExpenseAmt.invalid }" (change)="ChangeTotalMonthly()" (keyup)="ChangeTotalMonthly()">
           <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].MonthlyExpenseAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
         </div>
       </div>
@@ -43,9 +43,31 @@
         <label class="col-md-2" for="spouseMonthlyIncome" translate>Spouse Monthly Income </label>
         <div class="col-md-4">
           <input type="" currencyMask id="spouseMonthlyIncome" class="form-control" formControlName="SpouseMonthlyIncomeAmt" [options]="{ allowNegative: false}"
-            [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].SpouseMonthlyIncomeAmt.invalid }">
+            [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].SpouseMonthlyIncomeAmt.invalid }" (change)="ChangeTotalMonthly()" (keyup)="ChangeTotalMonthly()">
           <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].SpouseMonthlyIncomeAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
         </div>
+      </div>
+      <div class="row">
+          <div class="col-md-2 form-inline">
+            <label class="adInsLabel"> Total Monthly Income </label>
+          </div>
+          <div class="col-md-4 form-inline form-inline-right">
+            <label> {{parentForm.controls[identifier]['controls'].TotalMonthlyIncome.value | number:'.2':'en-US'}} </label>
+          </div>
+          <div class="col-md-2 form-inline">
+            <label class="adInsLabel"> Total Monthly Expense </label>
+          </div>
+          <div class="col-md-4 form-inline form-inline-right">
+            <label> {{parentForm.controls[identifier]['controls'].TotalMonthlyExpense.value | number:'.2':'en-US'}} </label>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-md-2 form-inline">
+            <label class="adInsLabel"> Nett Monthly Income </label>
+          </div>
+          <div class="col-md-4 form-inline form-inline-right">
+            <label> {{parentForm.controls[identifier]['controls'].NettMonthlyIncome.value | number:'.2':'en-US'}} </label>
+          </div>
       </div>
     </div>
   </div>
