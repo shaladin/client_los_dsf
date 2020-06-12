@@ -41,6 +41,7 @@ export class LeadUpdateComponent implements OnInit {
     {
       var leadReject = new LeadForRejectObj;
       leadReject.LeadStat = "RJC";
+      leadReject.LeadStep = "RJC";
       leadReject.LeadId = event.RowObj.LeadId;
       leadReject.WfTaskListId = event.RowObj.WfTaskListId;
 

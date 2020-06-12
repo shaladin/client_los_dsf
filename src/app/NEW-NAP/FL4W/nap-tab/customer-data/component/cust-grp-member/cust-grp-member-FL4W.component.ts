@@ -104,11 +104,11 @@ export class CustGrpMemberFL4WComponent implements OnInit {
 
   initLookup(){
     var InputLookupCustomerObj = new InputLookupObj();
-    InputLookupCustomerObj.urlJson = "./assets/uclookup/lookupCustomer.json";
+    InputLookupCustomerObj.urlJson = "./assets/uclookup/lookupCustGrp.json";
     InputLookupCustomerObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
     InputLookupCustomerObj.urlEnviPaging = environment.FoundationR3Url;
-    InputLookupCustomerObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
-    InputLookupCustomerObj.genericJson = "./assets/uclookup/lookupCustomer.json";
+    InputLookupCustomerObj.pagingJson = "./assets/uclookup/lookupCustGrp.json";
+    InputLookupCustomerObj.genericJson = "./assets/uclookup/lookupCustGrp.json";
 
     return InputLookupCustomerObj;
   }
