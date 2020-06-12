@@ -81,7 +81,7 @@ export class LeadInputMainInfoComponent implements OnInit {
     LeadSource: ['', [Validators.required]],
   });
   leadUrl: string;
-  WfTaskListId: string;
+  WfTaskListId: number;
   isCopyButtonDisabled: boolean = true;
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
@@ -205,7 +205,9 @@ export class LeadInputMainInfoComponent implements OnInit {
 
   ngOnInit() {
     console.log('test');
-    this.claimTask();
+    if (this.WfTaskListId > 0) {
+      this.claimTask();
+    }
     this.MakeLookUpObj();
     this.GetOfficeDDL();
     this.user = JSON.parse(localStorage.getItem("UserAccess"));

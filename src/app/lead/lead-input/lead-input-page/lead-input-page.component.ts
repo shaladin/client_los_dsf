@@ -48,7 +48,9 @@ export class LeadInputPageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.claimTask();
+    if (this.TaskListId > 0) {
+      this.claimTask();
+    }
     this.viewLeadHeaderMainInfo = "./assets/ucviewgeneric/viewLeadHeader.json";
     this.stepper = new Stepper(document.querySelector('#stepper1'), {
       linear: false,

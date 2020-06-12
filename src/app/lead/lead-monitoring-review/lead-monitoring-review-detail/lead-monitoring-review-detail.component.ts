@@ -40,7 +40,9 @@ export class LeadMonitoringReviewDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.claimTask();
+    if (this.taskListId > 0) {
+      this.claimTask();
+    }
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchReviewMonitoringLeadDetail.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
