@@ -211,7 +211,9 @@ export class AssetDataComponent implements OnInit {
   VendorEmpSalesObj: any;
   VendorAdminHeadObj: any;
   AppCustObj: any;
-  RefProdCmpt: any;
+  RefProdCmptAssetType: any;
+  RefProdCmptSupplSchm: any;
+  RefProdCmptAssetSchm: any;
   AppCustCoyObj: any;
   CheckValidationObj: any;
   isValidOk: boolean = true;
@@ -877,8 +879,15 @@ export class AssetDataComponent implements OnInit {
     critAssetObj.DataType = 'text';
     critAssetObj.restriction = AdInsConstant.RestrictionEq;
     critAssetObj.propName = 'B.ASSET_TYPE_NAME';
-    critAssetObj.value = this.RefProdCmpt.CompntValue;
+    critAssetObj.value = this.RefProdCmptAssetType.CompntValue;
     assetCrit.push(critAssetObj);
+
+    var critAssetSchmObj = new CriteriaObj();
+    critAssetSchmObj.DataType = 'text';
+    critAssetSchmObj.restriction = AdInsConstant.RestrictionEq;
+    critAssetSchmObj.propName = 'E.ASSET_SCHM_CODE';
+    critAssetSchmObj.value = this.RefProdCmptAssetSchm.CompntValue;
+    assetCrit.push(critAssetSchmObj);
     this.InputLookupAssetObj.addCritInput = assetCrit;
 
 
@@ -909,7 +918,7 @@ export class AssetDataComponent implements OnInit {
     critSuppObj.restriction = AdInsConstant.RestrictionEq;
     critSuppObj.propName = 'ro.OFFICE_CODE';
     critSuppObj.value = this.OfficeCode;
-    //suppCrit.push(critSuppObj);
+    suppCrit.push(critSuppObj);
 
     var critSupp2Obj = new CriteriaObj();
     critSupp2Obj.DataType = 'text';
@@ -917,6 +926,13 @@ export class AssetDataComponent implements OnInit {
     critSupp2Obj.propName = 'v.MR_VENDOR_CATEGORY_CODE';
     critSupp2Obj.value = 'SUPPLIER_BRANCH';
     suppCrit.push(critSupp2Obj);
+
+    var critSuppSupplSchmObj = new CriteriaObj();
+    critSuppSupplSchmObj.DataType = 'text';
+    critSuppSupplSchmObj.restriction = AdInsConstant.RestrictionEq;
+    critSuppSupplSchmObj.propName = 'vs.VENDOR_SCHM_CODE';
+    critSuppSupplSchmObj.value = this.RefProdCmptSupplSchm.CompntValue;
+    suppCrit.push(critSuppSupplSchmObj);
     this.InputLookupSupplierObj.addCritInput = suppCrit;
 
     return this.InputLookupSupplierObj;
@@ -935,7 +951,7 @@ export class AssetDataComponent implements OnInit {
     critSuppObj.restriction = AdInsConstant.RestrictionEq;
     critSuppObj.propName = 'ro.OFFICE_CODE';
     critSuppObj.value = this.OfficeCode;
-    //suppCrit.push(critSuppObj);
+    suppCrit.push(critSuppObj);
 
     var critSupp2Obj = new CriteriaObj();
     critSupp2Obj.DataType = 'text';
@@ -944,6 +960,14 @@ export class AssetDataComponent implements OnInit {
     critSupp2Obj.value = 'SUPPLIER_BRANCH';
     suppCrit.push(critSupp2Obj);
     this.InputLookupAccSupObj.addCritInput = suppCrit;
+
+    var critSuppSupplSchmObj = new CriteriaObj();
+    critSuppSupplSchmObj.DataType = 'text';
+    critSuppSupplSchmObj.restriction = AdInsConstant.RestrictionEq;
+    critSuppSupplSchmObj.propName = 'vs.VENDOR_SCHM_CODE';
+    critSuppSupplSchmObj.value = this.RefProdCmptSupplSchm.CompntValue;
+    suppCrit.push(critSuppSupplSchmObj);
+    this.InputLookupSupplierObj.addCritInput = suppCrit;
 
     return this.InputLookupAccSupObj;
   }
@@ -1594,14 +1618,36 @@ export class AssetDataComponent implements OnInit {
   async GetRefProdCompt() {
     var appObj = {
       ProdOfferingCode: this.AppObj.ProdOfferingCode,
-      RefProdCompntCode: "ASSETTYPE",
+      RefProdCompntCode: AdInsConstant.RefProdCompntAssetType,
       ProdOfferingVersion: this.AppObj.ProdOfferingVersion,
     };
     await this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj).toPromise().then(
       (response) => {
-        this.RefProdCmpt = response;
+        this.RefProdCmptAssetType = response;
         console.log("AWWWWWW");
         console.log(response);
+      }
+    );
+
+    appObj = {
+      ProdOfferingCode: this.AppObj.ProdOfferingCode,
+      RefProdCompntCode: AdInsConstant.RefProdCompntSupplSchm,
+      ProdOfferingVersion: this.AppObj.ProdOfferingVersion,
+    };
+    await this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj).toPromise().then(
+      (response) => {
+        this.RefProdCmptSupplSchm = response;
+      }
+    );
+
+    appObj = {
+      ProdOfferingCode: this.AppObj.ProdOfferingCode,
+      RefProdCompntCode: AdInsConstant.RefProdCompntAssetSchm,
+      ProdOfferingVersion: this.AppObj.ProdOfferingVersion,
+    };
+    await this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj).toPromise().then(
+      (response) => {
+        this.RefProdCmptAssetSchm = response;
       }
     );
   }
