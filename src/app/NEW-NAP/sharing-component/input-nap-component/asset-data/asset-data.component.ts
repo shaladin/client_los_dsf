@@ -763,7 +763,7 @@ export class AssetDataComponent implements OnInit {
       }
       if (this.CustType == AdInsConstant.CustTypeCompany) {
         this.AssetDataForm.patchValue({
-          MrIdTypeCode: "",
+          MrIdTypeCode: this.appAssetObj.ResponseAppCollateralRegistrationObj.MrIdTypeCode,
           OwnerIdNo: this.AppCustCoyObj.RegistrationNo,
         });
       }
