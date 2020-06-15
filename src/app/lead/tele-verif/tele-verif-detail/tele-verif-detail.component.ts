@@ -14,7 +14,7 @@ export class TeleVerifDetailComponent implements OnInit {
   viewLeadHeaderMainInfo: string;
   isCustData: boolean;
   isLeadData: boolean;
-  WfTaskListId: string;
+  WfTaskListId: number;
 
   constructor(private http: HttpClient, private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
@@ -23,7 +23,9 @@ export class TeleVerifDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.claimTask();
+    if (this.WfTaskListId > 0) {
+      this.claimTask();
+    }
     this.viewLeadHeaderMainInfo = "./assets/ucviewgeneric/viewLeadHeader.json";
 
     this.stepper = new Stepper(document.querySelector('#stepper1'), {
@@ -47,7 +49,7 @@ export class TeleVerifDetailComponent implements OnInit {
   async claimTask() {
     var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     var wfClaimObj : ClaimWorkflowObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = this.WfTaskListId;
+    wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
     wfClaimObj.pUserID = currentUserContext["UserName"];
     this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {

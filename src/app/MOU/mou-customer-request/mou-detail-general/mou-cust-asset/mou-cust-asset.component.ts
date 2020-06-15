@@ -65,8 +65,9 @@ export class MouCustAssetComponent implements OnInit {
 
     this.httpClient.post(AdInsConstant.GetMouCustAssetByMouCustId, mouAsset).subscribe(
       (response: any) => {
-        console.log("awdawd");
         console.log(this.IsAssetSelected);
+
+        this.IsAssetSelected = false;
         if (response.ReturnObject != null && response.ReturnObject.length > 0) {
           this.IsAssetSelected = true;
 
@@ -118,17 +119,6 @@ export class MouCustAssetComponent implements OnInit {
         }
         this.mouAssetList.push(tempMouAsset);
 
-
-        // this.httpClient.post(AdInsConstant.GetMouCustAssetByMouCustId, mouAsset).subscribe(
-        //   (response: any) => {
-        //     this.IsAssetSelected = true;
-        //     this.mouAssetList = [...response.ReturnObject]; 
-        //     this.listExclude = new Array<string>();
-        //     for(const item of this.mouAssetList){
-        //       this.listExclude.push(item["FullAssetCode"]);
-        //     }
-        //   }
-        // ); 
         this.spinner.hide();
         this.toastr.successMessage(response["message"]);
 

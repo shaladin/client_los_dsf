@@ -145,8 +145,6 @@ export class SearchCrossAppComponent implements OnInit {
     if(this.listSelectedId.length != 0){
       for (var i = 0; i < this.listSelectedId.length; i++) {
         this.tempListId.push(this.listSelectedId[i]);
-      }
-      for (var i = 0; i < this.listSelectedId.length; i++) {
         var object = this.resultData.Data.find(x => x.AgrmntId == this.listSelectedId[i]);
         object["IsAllowedCrt"]=false;
         this.tempData.push(object);

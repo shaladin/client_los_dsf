@@ -37,6 +37,20 @@ export class AdInsHelper {
         localStorage.setItem('PageAccess', JSON.stringify(pageAccess));
     }
 
+    public static ForceLogOut(timeLeft,toastr) {
+        let interval = setInterval(() => {
+            if (timeLeft > 0) {
+                console.log("Time Left : " + timeLeft)
+                toastr.errorMessage("Automatic Log out at : " + timeLeft);
+                toastr.clearToast();
+                timeLeft--;
+            } else {
+                this.ClearAllLog();
+                window.location.reload();
+            }
+        }, 1000)
+    }
+
     public static ClearAllLog() {
         // localStorage.removeItem("UserContext");
         // localStorage.removeItem("PageAccess");

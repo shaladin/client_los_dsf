@@ -17,7 +17,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 })
 export class MouCustomerRequestDetailComponent implements OnInit {
   mouType: string;
-  WfTaskListId: any;
+  WfTaskListId: number;
   inputLookupCust: InputLookupObj;
   pageType: string = "add";
   mouCustId: number;
@@ -25,7 +25,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
   businessDtMin: Date;
   mouCustUrl: string;
   CustNo : string;
-  custId : any;
+  custId : number;
   custUrl : string;
   MOUMainInfoForm = this.fb.group({
     MouCustId: [0, [Validators.required]],
@@ -72,7 +72,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
    }
 
   ngOnInit() {
-    if (this.WfTaskListId != null || this.WfTaskListId != undefined)
+    if (this.WfTaskListId > 0)
       this.claimTask();
 
     var datePipe = new DatePipe("en-US");
