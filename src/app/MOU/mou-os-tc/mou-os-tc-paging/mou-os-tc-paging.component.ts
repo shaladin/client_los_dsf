@@ -22,5 +22,12 @@ export class MouOsTcPagingComponent implements OnInit {
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     console.log(AdInsConstant.GetPagingObjectBySQL);
     this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchMouOsTc.json";
+
+    this.inputPagingObj.ddlEnvironments = [
+      {
+        name: "MOU.MOU_CUST_NO",
+        environment: environment.FoundationR3Url
+      }
+    ];
   }
 }

@@ -19,5 +19,11 @@ export class OutstandingTcPagingComponent implements OnInit {
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchOutstandingTC.json";
+    this.inputPagingObj.ddlEnvironments = [
+      {
+        name: "AG.OFFICE_NAME",
+        environment: environment.FoundationR3Url
+      }
+    ];
   }
 }
