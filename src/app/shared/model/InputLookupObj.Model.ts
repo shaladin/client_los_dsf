@@ -12,6 +12,7 @@ export class InputLookupObj{
     genericJson: any
     isReadonly: boolean 
     isReady: boolean
+    ddlEnvironments : any
 
     constructor()
     {

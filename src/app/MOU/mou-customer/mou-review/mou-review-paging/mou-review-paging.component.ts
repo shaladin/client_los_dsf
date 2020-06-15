@@ -21,5 +21,11 @@ export class MouReviewPagingComponent implements OnInit {
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     console.log(AdInsConstant.GetPagingObjectBySQL);
     this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchMouReview.json";
+    this.inputPagingObj.ddlEnvironments = [
+      {
+        name: "MR_MOU_TYPE_CODE",
+        environment: environment.FoundationR3Url
+      }
+    ];
   }
 }

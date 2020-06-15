@@ -17,6 +17,16 @@ export class LeadInquiryComponent implements OnInit {
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchLeadInquiry.json";
+    this.inputPagingObj.ddlEnvironments = [
+      {
+        name: "l.ORI_OFFICE_CODE",
+        environment: environment.FoundationR3Url
+      },
+      {
+        name: "l.MR_LEAD_SOURCE_CODE",
+        environment: environment.FoundationR3Url
+      }
+    ];
   }
 
 }

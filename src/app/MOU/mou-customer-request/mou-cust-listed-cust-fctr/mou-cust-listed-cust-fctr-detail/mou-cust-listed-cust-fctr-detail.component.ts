@@ -37,6 +37,13 @@ export class MouCustListedCustFctrDetailComponent implements OnInit {
     this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupObj.pagingJson = "./assets/uclookup/MOU/lookupCust_MOUListCustFctr.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/MOU/lookupCust_MOUListCustFctr.json";
+
+    this.inputLookupObj.ddlEnvironments = [
+      {
+        name: "A.MR_CUST_TYPE_CODE",
+        environment: environment.FoundationR3Url
+      }
+    ];
   }
 
   ngOnInit() {
