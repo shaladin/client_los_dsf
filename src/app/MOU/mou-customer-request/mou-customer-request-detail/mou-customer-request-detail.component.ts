@@ -87,6 +87,14 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     this.inputLookupCust.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupCust.pagingJson = "./assets/uclookup/MOU/lookupCust_MOURequest.json";
     this.inputLookupCust.genericJson = "./assets/uclookup/MOU/lookupCust_MOURequest.json";
+
+    this.inputLookupCust.ddlEnvironments = [
+      {
+        name: "A.MR_CUST_TYPE_CODE",
+        environment: environment.FoundationR3Url
+      }
+    ];
+    
     this.mouCustUrl =  environment.losR3Web + "/Mou/Cust/View?MouCustId=" + this.mouCustId;
    
     var refOffice = new RefOfficeObj();

@@ -34,6 +34,12 @@ export class ReturnHandlingComRsvfundPagingComponent implements OnInit {
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReturnHandlingCommission.json";
+    this.inputPagingObj.ddlEnvironments = [
+      {
+        name: "a.ORI_OFFICE_CODE",
+        environment: environment.FoundationR3Url
+      }
+    ];
 
     this.inputPagingObj.addCritInput = this.ActAndOfficeCriteria();
   }
