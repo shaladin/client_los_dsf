@@ -24,6 +24,8 @@ import { AppCollateralAttrObj } from 'app/shared/model/AppCollateralAttrObj.Mode
 import { LookupTaxCityIssuerComponent } from '../collateral-add-edit/lookup-tax-city-issuer/lookup-tax-city-issuer.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DatePipe } from '@angular/common';
+import { map, mergeMap } from 'rxjs/operators';
+import { AppObj } from 'app/shared/model/App/App.Model';
 
 @Component({
   selector: 'app-asset-data-add-edit',
@@ -583,11 +585,42 @@ copyToLocationAddr() {
     this.GetListAddr();
     
     this.InputLookupSupplierObj = new InputLookupObj();
-    this.InputLookupSupplierObj.urlJson = "./assets/uclookup/NAP/lookupSupplier.json";
+    this.InputLookupSupplierObj.urlJson = "./assets/uclookup/NAP/lookupSupplier_CollateralAsset_FL4W.json";
     this.InputLookupSupplierObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
     this.InputLookupSupplierObj.urlEnviPaging = environment.FoundationR3Url;
-    this.InputLookupSupplierObj.pagingJson = "./assets/uclookup/NAP/lookupSupplier.json";
-    this.InputLookupSupplierObj.genericJson = "./assets/uclookup/NAP/lookupSupplier.json";
+    this.InputLookupSupplierObj.pagingJson = "./assets/uclookup/NAP/lookupSupplier_CollateralAsset_FL4W.json";
+    this.InputLookupSupplierObj.genericJson = "./assets/uclookup/NAP/lookupSupplier_CollateralAsset_FL4W.json";
+
+    this.http.post(AdInsConstant.GetAppById, {AppId: this.AppId}).pipe(
+      map((response: AppObj) => {
+        return response;
+      }),
+      mergeMap((response: AppObj) => {
+        return this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, {ProdOfferingCode: response.ProdOfferingCode, RefProdCompntCode: "SUPPLSCHM", ProdOfferingVersion: response.ProdOfferingVersion});
+      })
+    ).subscribe(
+      (response) => {
+        var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+        var arrCritSuppl = new Array<CriteriaObj>();
+        var critObjSuppl = new CriteriaObj();
+        critObjSuppl.DataType = "text";
+        critObjSuppl.restriction = AdInsConstant.RestrictionEq;
+        critObjSuppl.propName = "vs.VENDOR_SCHM_CODE";
+        critObjSuppl.value = response["CompntValue"];
+        arrCritSuppl.push(critObjSuppl);
+
+        critObjSuppl = new CriteriaObj();
+        critObjSuppl.DataType = "text";
+        critObjSuppl.restriction = AdInsConstant.RestrictionEq;
+        critObjSuppl.propName = "ro.OFFICE_CODE";
+        critObjSuppl.value = currentUserContext["OfficeCode"];
+        arrCritSuppl.push(critObjSuppl);
+        this.InputLookupSupplierObj.isReady = true;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
 
     this.InputLookupAssetObj = new InputLookupObj();
     this.InputLookupAssetObj.urlJson = "./assets/uclookup/NAP/lookupAsset.json";

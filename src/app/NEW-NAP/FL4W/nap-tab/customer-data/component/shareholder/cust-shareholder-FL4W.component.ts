@@ -70,7 +70,7 @@ export class CustShareholderFL4WComponent implements OnInit {
     BirthPlace: ['', Validators.maxLength(200)],
     BirthDt: [''],
     IdNo: ['', [Validators.maxLength(50),Validators.pattern("^[0-9]+$")]],
-    TaxIdNo: ['', [Validators.maxLength(50),Validators.pattern("^[0-9]+$")]],
+    TaxIdNo: ['', [Validators.maxLength(50)]],
     IdExpiredDt: [''],
     MobilePhnNo: ['', [Validators.maxLength(50),Validators.pattern("^[0-9]+$")]],
     Email: ['', Validators.maxLength(50)],

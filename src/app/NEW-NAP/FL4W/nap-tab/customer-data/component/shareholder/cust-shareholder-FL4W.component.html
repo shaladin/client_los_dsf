@@ -12,10 +12,10 @@
         <th style="text-align: left;"><span class="thead-header" name="ShareholderName" translate>SHAREHOLDER NAME
         </span>
         </th>
-        <th style="text-align: center;"><span class="thead-header" name="JobPosition" translate>JOB POSITION
+        <th style="text-align: left;"><span class="thead-header" name="JobPosition" translate>JOB POSITION
         </span>
         </th>
-        <th style="text-align: center;"><span class="thead-header" name="Type" translate>TYPE
+        <th style="text-align: left;"><span class="thead-header" name="Type" translate>TYPE
         </span>
         </th>
         <th style="text-align: center;"><span class="thead-header" name="NPWP" translate>NPWP
@@ -35,8 +35,8 @@
     <tbody>
       <tr *ngFor="let item of listShareholder; let i = index">
         <td style="text-align: left;">{{item.MgmntShrholderName}}</td>
-        <td style="text-align: center;">{{item.JobPositionName}}</td>
-        <td style="text-align: center;">{{item.CustTypeName}}</td>
+        <td style="text-align: left;">{{item.JobPositionName}}</td>
+        <td style="text-align: left;">{{item.CustTypeName}}</td>
         <td style="text-align: center;">{{item.TaxIdNo}}</td>
         <td style="text-align: center;">{{item.SharePrcnt}}</td>
         <td>
