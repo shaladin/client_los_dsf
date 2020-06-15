@@ -260,7 +260,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
           RefProdTypeCode: this.resultResponse.RefProdTypeCode,
           Tenor: this.resultResponse.Tenor,
           NumOfInst: this.resultResponse.NumOfInst,
-          PayFreqCode: this.resultResponse.PayFreqCode,
+          PayFreqCode: this.resultResponse.PayFreqCode == null ? "": this.resultResponse.PayFreqCode,
           MrFirstInstTypeCode: this.resultResponse.MrFirstInstTypeCode,
           NumOfAsset: this.resultResponse.NumOfAsset,
           MrLcCalcMethodCode: this.resultResponse.MrLcCalcMethodCode,

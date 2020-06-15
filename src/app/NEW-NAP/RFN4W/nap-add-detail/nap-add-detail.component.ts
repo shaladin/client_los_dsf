@@ -6,6 +6,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { FormBuilder } from '@angular/forms';
 import Stepper from 'bs-stepper'
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -25,6 +26,7 @@ export class NapAddDetailComponent implements OnInit {
   OnFormReturnInfo: boolean = false;
   IsMultiAsset: boolean = false;
   ListAsset: any;
+  token : any = localStorage.getItem("Token");
 
   FormReturnObj = this.fb.group({
     ReturnExecNotes: ['']
@@ -220,5 +222,10 @@ export class NapAddDetailComponent implements OnInit {
   }
   Cancel() {
     this.router.navigate(["Paging"], { relativeTo: this.route.parent, skipLocationChange: true, queryParams: { BizTemplateCode: AdInsConstant.CFRFN4W } });
+  }
+
+  GetCallback(ev){
+    var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.ViewObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.ViewObj.ProdOfferingVersion + "&Token=" + this.token;
+    this.router.navigate([]).then(result => { window.open(link, '_blank'); });
   }
 }

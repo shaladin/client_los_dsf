@@ -50,7 +50,7 @@ export class AdInsConstant {
   public static ADMIN_HEAD_JOB_CODE = "ADMIN_HEAD";
   public static BRANCH_MANAGER_JOB_CODE = "BRANCH_MANAGER";
 
-  public static WebSocketUrl = environment.FoundationR3Url + "/Notificationhub";
+  public static WebSocketUrl = environment.WebSocketURL + "/Notificationhub";
   public static GetListNotificationHByRefUserId = environment.FoundationR3Url + "/NotificationH/GetListNotificationHByRefUserId";
 
   public static TrxTypeCodePhn = "PHN";
@@ -120,6 +120,7 @@ export class AdInsConstant {
   public static DeleteAppCross = environment.losUrl + "/AppCross/DeleteAppCross";
   public static GetListAppCross = environment.losUrl + "/AppCross/GetListAppCross";
   public static AddListAppCross = "/AppCross/AddListAppCross";
+  public static AgrmntStatCancel = "CANCEL";
 
   // App Fctr
   public static GetAppFctrByAppId = environment.losUrl + "/AppFctr/GetAppFctrByAppId";

@@ -70,6 +70,7 @@ import { UclookupgenericComponent } from "@adins/uclookupgeneric";
 import { GuarantorLegalDocComponent } from "./guarantor-data/guarantor-company/guarantor-legal-doc/guarantor-legal-doc.component";
 import { LookupTaxCityIssuerComponent } from './multi-asset-data/collateral-add-edit/lookup-tax-city-issuer/lookup-tax-city-issuer.component';
 import { LookupCollateralComponent } from './multi-asset-data/collateral-add-edit/lookup-collateral/lookup-collateral.component';
+import { UcaddtotempModule } from '@adins/ucaddtotemp';
 
 export const customCurrencyMaskConfig = {     
   align: "right",     
@@ -156,7 +157,8 @@ export const customCurrencyMaskConfig = {
     MatRadioModule,
     MatSelectModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
-    CustSharingComponentModule
+    CustSharingComponentModule,
+    UcaddtotempModule
   ],
   declarations: [
     CustomerDataComponent,
