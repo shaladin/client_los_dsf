@@ -15,13 +15,13 @@
         <th style="text-align: center;"><span class="thead-header" translate>ID NO.
         </span>
         </th>
-        <th style="text-align: center;"><span class="thead-header" translate>CUST RELATIONSHIP
+        <th style="text-align: left;"><span class="thead-header" translate>CUST RELATIONSHIP
         </span>
         </th>
         <th style="text-align: center;"><span class="thead-header" translate>MOBILE PHONE
         </span>
         </th>
-        <th style="text-align: center;"><span class="thead-header" translate>GENDER
+        <th style="text-align: left;"><span class="thead-header" translate>GENDER
         </span>
         </th>
         <th style="text-align: center;"><span class="thead-header" translate>EMERGENCY CONTACT
@@ -39,9 +39,9 @@
       <tr *ngFor="let item of listContactPersonPersonal; let i = index">
         <td style="text-align: left;">{{item.ContactPersonName}}</td>
         <td style="text-align: center;">{{item.IdNo}}</td>
-        <td style="text-align: center;">{{item.RelationshipName}}</td>
+        <td style="text-align: left;">{{item.RelationshipName}}</td>
         <td style="text-align: center;">{{item.MobilePhnNo1}}</td>
-        <td style="text-align: center;">{{item.GenderName}}</td>
+        <td style="text-align: left;">{{item.GenderName}}</td>
         <td style="text-align: center;">
           <span *ngIf="item.IsEmergencyContact == true">Yes</span>
           <span *ngIf="item.IsEmergencyContact == false">No</span>

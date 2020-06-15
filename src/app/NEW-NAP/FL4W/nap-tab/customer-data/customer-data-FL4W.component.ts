@@ -225,6 +225,9 @@ export class CustomerDataFL4WComponent implements OnInit {
       this.custDataPersonalObj.AppCustObj.IsVip = this.CustDataForm.controls["personalMainData"]["controls"].IsVip.value;
       this.custDataPersonalObj.AppCustObj.AppId = this.appId;
 
+      if(this.custDataPersonalObj.AppCustObj.MrIdTypeCode == "EKTP"){
+        this.custDataPersonalObj.AppCustObj.IdExpiredDt = null;
+      }
       if (this.custDataPersonalObj.AppCustObj.CustNo != "" && this.custDataPersonalObj.AppCustObj.CustNo != undefined) {
         this.custDataPersonalObj.AppCustObj.IsExistingCust = true;
       } else {
