@@ -123,6 +123,7 @@ export class NapAddComponent implements OnInit {
     this.inputLookupObjName.pagingJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.genericJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.nameSelect = this.NapAppForm.controls.ProdOfferingName.value;
+    console.log(this.inputLookupObjName);
 
     var arrCopyLookupCrit = new Array();
     var addCrit = new CriteriaObj();
