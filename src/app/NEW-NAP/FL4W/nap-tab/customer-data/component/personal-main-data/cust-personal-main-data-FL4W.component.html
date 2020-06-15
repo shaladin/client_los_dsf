@@ -35,8 +35,8 @@
         <div class="form-group row">
           <label [ngClass]="(parentForm.controls[identifier]['controls'].MrIdTypeCode.value == 'EKTP') ? 'col-md-4':'col-md-4 adins-required-label'" for="idExpDt" translate>Id Expired Date</label>
           <div class="col-md-8">
-            <input *ngIf="parentForm.controls[identifier]['controls'].MrIdTypeCode.value == 'EKTP'" readonly type="date" class="form-control" id="idExpDt" formControlName="IdExpiredDt">
-            <input *ngIf="parentForm.controls[identifier]['controls'].MrIdTypeCode.value != 'EKTP'" required type="date" class="form-control" id="idExpDt" formControlName="IdExpiredDt">
+            <input *ngIf="parentForm.controls[identifier]['controls'].MrIdTypeCode.value == 'EKTP'" disabled type="date" class="form-control" id="idExpDt" formControlName="IdExpiredDt">
+            <input *ngIf="parentForm.controls[identifier]['controls'].MrIdTypeCode.value != 'EKTP'" type="date" class="form-control" id="idExpDt" formControlName="IdExpiredDt">
             <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].IdExpiredDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
           </div>
         </div>
