@@ -82,7 +82,7 @@ export class LifeInsuranceDataComponent implements OnInit {
             IsChecked: true,
             LifeInscoBranchName: this.result.LifeInscoBranchCode,
             MrLifeInsPaidMethodCode: this.result.MrLifeInsPaidMethodCode,
-            PaidInAdvPrcnt: this.result.PaidInAdvPrcnt,
+            PaidInAdvPrcnt: 100-this.result.PaidInAdvPrcnt,
             NewCoverNotes: this.result.NewCoverNotes,
             InscoAdminFeeAmt: this.result.InscoAdminFeeAmt
           })
