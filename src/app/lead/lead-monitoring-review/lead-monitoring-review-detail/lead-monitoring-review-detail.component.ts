@@ -52,6 +52,14 @@ export class LeadMonitoringReviewDetailComponent implements OnInit {
       {
         name: "UL.ORI_OFFICE_CODE",
         environment: environment.FoundationR3Url
+      },
+      {
+        name: "UL.MR_CUST_MODEL_CODE",
+        environment: environment.FoundationR3Url
+      },
+      {
+        name: "UL.LOB_CODE",
+        environment: environment.FoundationR3Url
       }
     ];
 
