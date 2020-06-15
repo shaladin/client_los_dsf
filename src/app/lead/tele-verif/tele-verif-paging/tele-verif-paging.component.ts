@@ -19,6 +19,17 @@ export class TeleVerifPagingComponent implements OnInit {
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchTeleVerif.json";
     this.inputPagingObj.deleteUrl = "";
+
+    this.inputPagingObj.ddlEnvironments = [
+      {
+        name: "L.ORI_OFFICE_CODE",
+        environment: environment.FoundationR3Url
+      },
+      {
+        name: "L.MR_LEAD_SOURCE_CODE",
+        environment: environment.FoundationR3Url
+      }
+    ];
   }
 
 }

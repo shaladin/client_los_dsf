@@ -20,6 +20,13 @@ export class AppPagingComponent implements OnInit {
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     // this.inputPagingObj.deleteUrl = "/RefBank/DeleteRefBank";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchApp.json";
+
+    this.inputPagingObj.ddlEnvironments = [
+      {
+        name: "a.ORI_OFFICE_CODE",
+        environment: environment.FoundationR3Url
+      }
+    ];
   }
 
 }
