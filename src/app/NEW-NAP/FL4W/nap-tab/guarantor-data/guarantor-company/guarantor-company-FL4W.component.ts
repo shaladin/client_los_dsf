@@ -565,8 +565,10 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
   }
 
   deleteLegalDoc(i) {
+    if (confirm("Are you sure to delete this record?")) {
     var legalDocObjs = this.CompanyForm.controls["LegalDocForm"] as FormArray;
     legalDocObjs.removeAt(i);
+    }
   }
 
   bindLegalDoc() {
