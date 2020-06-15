@@ -48,6 +48,13 @@ export class LeadMonitoringReviewDetailComponent implements OnInit {
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReviewMonitoringLeadDetail.json";
+    this.inputPagingObj.ddlEnvironments = [
+      {
+        name: "UL.ORI_OFFICE_CODE",
+        environment: environment.FoundationR3Url
+      }
+    ];
+
     var arrCrit = new Array<CriteriaObj>();
     var critObj = new CriteriaObj();
     critObj.DataType = 'test';

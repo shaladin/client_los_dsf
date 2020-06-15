@@ -55,8 +55,25 @@ export class LeadCancelComponent implements OnInit {
     this.inputObj.enviromentUrl = environment.losUrl;
     this.inputObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputObj.addCritInput = new Array();
-    this.pageNow = 1;
-    this.pageSize = 10;
+
+    this.inputObj.ddlEnvironments = [
+      {
+        name: "L.ORI_OFFICE_CODE",
+        environment: environment.FoundationR3Url
+      },
+      {
+        name: "L.MR_LEAD_SOURCE_CODE",
+        environment: environment.FoundationR3Url
+      },
+      {
+        name: "L.LEAD_STEP",
+        environment: environment.FoundationR3Url
+      },
+      {
+        name: "L.LEAD_STAT",
+        environment: environment.FoundationR3Url
+      }
+    ];
     this.apiUrl = environment.losUrl + AdInsConstant.GetPagingObjectBySQL;
     this.leadUrl = environment.losR3Web + '/Lead/View?LeadId=';
 

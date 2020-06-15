@@ -39,6 +39,13 @@ export class ReturnHandlingCollateralPagingComponent implements OnInit {
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReturnHandlingCollateral.json";
     this.inputPagingObj.addCritInput = this.ActAndOfficeCriteria();
+
+    this.inputPagingObj.ddlEnvironments = [
+      {
+        name: "a.ORI_OFFICE_CODE",
+        environment: environment.FoundationR3Url
+      }
+    ];
   }
 
   ActAndOfficeCriteria(): Array<CriteriaObj> {
