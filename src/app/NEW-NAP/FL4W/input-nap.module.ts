@@ -45,7 +45,9 @@ import { ViewDeliveryOrderDetailComponent } from './view-agrmnt/view-delivery-or
 import { ViewDeliveryOrderAssetDetailComponent } from './view-agrmnt/view-delivery-order-multi-asset/view-delivery-order-asset-detail/view-delivery-order-asset-detail.component';
 import { MultiCollDataComponent } from "../sharing-component/input-nap-component/collateral-data/multi-coll-data/multi-coll-data.component"; 
 import { ViewPurchaseOrderMultiAssetComponent } from './view-agrmnt/view-purchase-order-multi-asset/view-purchase-order-multi-asset.component';
-import { ViewPurchaseOrderMultiAssetDetailComponent } from './view-agrmnt/view-purchase-order-multi-asset/view-purchase-order-multi-asset-detail/view-purchase-order-multi-asset-detail.component'; 
+import { ViewPurchaseOrderMultiAssetDetailComponent } from './view-agrmnt/view-purchase-order-multi-asset/view-purchase-order-multi-asset-detail/view-purchase-order-multi-asset-detail.component';
+import { ViewAgrmntFl4wComponent } from './view-agrmnt-fl4w/view-agrmnt-fl4w.component';
+import { AppInsuranceFl4wComponent } from './view-agrmnt-fl4w/app-insurance-fl4w/app-insurance-fl4w.component'; 
  
 export const customCurrencyMaskConfig = {     
   align: "right",     
@@ -114,7 +116,7 @@ export const customCurrencyMaskConfig = {
     ViewDeliveryOrderDetailComponent,
     ViewDeliveryOrderAssetDetailComponent,
     ViewPurchaseOrderMultiAssetComponent, 
-    ViewPurchaseOrderMultiAssetDetailComponent 
+    ViewPurchaseOrderMultiAssetDetailComponent, ViewAgrmntFl4wComponent, AppInsuranceFl4wComponent 
   ],
   providers: [
     NGXToastrService
