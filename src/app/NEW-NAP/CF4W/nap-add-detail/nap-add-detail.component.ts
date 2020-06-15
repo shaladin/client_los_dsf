@@ -8,6 +8,7 @@ import { FormBuilder } from '@angular/forms';
 import Stepper from 'bs-stepper';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -29,6 +30,7 @@ export class NapAddDetailComponent implements OnInit {
   ListAsset: any;
   ReturnHandlingHId: number = 0;
   custType: string = AdInsConstant.CustTypeCompany;
+  token : any = localStorage.getItem("Token");
 
   AppStep = {
     "NEW": 1,
@@ -326,5 +328,10 @@ export class NapAddDetailComponent implements OnInit {
     this.custType = ev;
     this.ChangeStepper();
     this.NextStep(AdInsConstant.AppStepGuar);
+  }
+
+  GetCallback(ev){
+    var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.ViewObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.ViewObj.ProdOfferingVersion + "&Token=" + this.token;
+    this.router.navigate([]).then(result => { window.open(link, '_blank'); });
   }
 }

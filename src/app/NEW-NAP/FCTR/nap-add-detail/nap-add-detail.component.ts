@@ -25,6 +25,7 @@ export class NapAddDetailComponent implements OnInit {
   OnFormReturnInfo: boolean = false;
   IsMultiAsset: boolean = false;
   ListAsset: any;
+  token : any = localStorage.getItem("Token");
 
   FormReturnObj = this.fb.group({
     ReturnExecNotes: ['']
@@ -211,5 +212,10 @@ export class NapAddDetailComponent implements OnInit {
       (response) => {
 
       });
+  }
+
+  GetCallback(ev){
+    var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.ViewObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.ViewObj.ProdOfferingVersion + "&Token=" + this.token;
+    this.router.navigate([]).then(result => { window.open(link, '_blank'); });
   }
 }
