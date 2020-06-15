@@ -19,6 +19,9 @@ export class CustPersonalFinancialDataFL4WComponent implements OnInit {
   @Input() parentForm: FormGroup;
   @Input() identifier: any;
   @Input() appCustPersonalFinDataObj: AppCustPersonalFinDataObj = new AppCustPersonalFinDataObj();
+  totalMonthlyIncome: number;
+  nettMonthlyIncome: number;
+  totalMonthlyExpense: number;
 
   refMasterObj = {
     RefMasterTypeCode: "",
@@ -70,6 +73,9 @@ export class CustPersonalFinancialDataFL4WComponent implements OnInit {
         MrSourceOfIncomeTypeCode: this.appCustPersonalFinDataObj.MrSourceOfIncomeTypeCode,
         IsJoinIncome: this.appCustPersonalFinDataObj.IsJoinIncome,
       });
+      this.totalMonthlyIncome = this.appCustPersonalFinDataObj.MonthlyIncomeAmt + this.appCustPersonalFinDataObj.SpouseMonthlyIncomeAmt;
+      this.totalMonthlyExpense = this.appCustPersonalFinDataObj.MonthlyExpenseAmt + this.appCustPersonalFinDataObj.MonthlyInstallmentAmt;
+      this.nettMonthlyIncome = this.totalMonthlyIncome - this.totalMonthlyExpense;
     }
   }
   
@@ -89,6 +95,14 @@ export class CustPersonalFinancialDataFL4WComponent implements OnInit {
         }
       }
     );
+  }
+
+  CalculateFinData(){
+    var formGroup = this.parentForm.controls[this.identifier] as FormGroup;
+    console.log("Monthly Income : " + formGroup.controls["MonthlyIncomeAmt"].value);
+    this.totalMonthlyIncome = formGroup.controls["MonthlyIncomeAmt"].value + formGroup.controls["SpouseMonthlyIncomeAmt"].value;
+    this.totalMonthlyExpense = formGroup.controls["MonthlyExpenseAmt"].value + formGroup.controls["MonthlyInstallmentAmt"].value;
+    this.nettMonthlyIncome = this.totalMonthlyIncome - this.totalMonthlyExpense;
   }
 
 }

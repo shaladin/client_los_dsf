@@ -34,6 +34,10 @@ export class AgrmntActivationPagingComponent implements OnInit {
       {
         name: "DISTRIBUTION_STAT",
         environment: environment.FoundationR3Url
+      },
+      {
+        name: "TASK_CLAIM_STAT",
+        environment: environment.FoundationR3Url
       }
     ];
 

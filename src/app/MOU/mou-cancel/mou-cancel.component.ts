@@ -32,6 +32,10 @@ export class MouCancelComponent implements OnInit {
       {
         name: "MC.MR_MOU_TYPE_CODE",
         environment: environment.FoundationR3Url
+      },
+      {
+        name: "MC.MOU_STAT",
+        environment: environment.FoundationR3Url
       }
     ];
   }

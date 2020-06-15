@@ -23,7 +23,7 @@
                 <table class="table table-responsive-md text-center table-hover">
                   <thead>
                     <tr class="table-header">
-                      <th style="text-align: left;">
+                      <th style="text-align: center;">
                         <span class="thead-header" translate>Customer No.</span>
                       </th>
                       <th style="text-align: left;">
@@ -32,19 +32,19 @@
                       <th style="text-align: left;">
                         <span class="thead-header" translate>ID Type</span>
                       </th>
-                      <th style="text-align: left;">
+                      <th style="text-align: center;">
                         <span class="thead-header" translate>ID No.</span>
                       </th>
-                      <th style="text-align: left;">
+                      <th style="text-align: center;">
                         <span class="thead-header" translate>Birth Date</span>
                       </th>
                       <th style="text-align: left;">
                         <span class="thead-header" translate>Address</span>
                       </th>
-                      <th style="text-align: left;">
+                      <th style="text-align: center;">
                         <span class="thead-header" translate>Mobile Phone No.</span>
                       </th>
-                      <th style="text-align: left;">
+                      <th style="text-align: center;">
                         <span class="thead-header" translate>NPWP</span>
                       </th>
                       <th style="text-align: left;">
@@ -53,7 +53,7 @@
                       <th style="text-align: left;">
                         <span class="thead-header" translate>Duplicate Item</span>
                       </th>
-                      <th style="text-align: left;">
+                      <th style="text-align: center;">
                         <span class="thead-header" translate>Selected</span>
                       </th>
                     </tr>
@@ -72,19 +72,19 @@
                       <td style="text-align: left;">
                         {{item.MrIdType}}
                       </td>
-                      <td style="text-align: left;">
+                      <td style="text-align: center;">
                         {{item.IdNo}}
                       </td>
-                      <td style="text-align: left;">
+                      <td style="text-align: center;">
                         {{item.BirthDt | date: 'dd-MMM-yyyy'}}
                       </td>
                       <td style="text-align: left;">
                         {{item.Address}}
                       </td>
-                      <td style="text-align: left;">
+                      <td style="text-align: center;">
                         {{item.MobilePhnNo}}
                       </td>
-                      <td style="text-align: left;">
+                      <td style="text-align: center;">
                         {{item.Npwp}}
                       </td>
                       <td style="text-align: left;">
@@ -93,7 +93,7 @@
                       <td style="text-align: left;">
                         {{item.DuplicateItem}}
                       </td>
-                      <td style="text-align: left;">
+                      <td style="text-align: center;">
                         {{item.IsSelected == 'true' ? 'Yes' : 'No'}}
                       </td>
                     </tr>
@@ -111,7 +111,7 @@
                 <table class="table table-responsive-md text-center table-hover">
                   <thead>
                     <tr class="table-header">
-                      <th style="text-align: left;">
+                      <th style="text-align: center;">
                         <span class="thead-header" translate>Customer No.</span>
                       </th>
                       <th style="text-align: left;">
@@ -120,19 +120,19 @@
                       <th style="text-align: left;">
                         <span class="thead-header" translate>ID Type</span>
                       </th>
-                      <th style="text-align: left;">
+                      <th style="text-align: center;">
                         <span class="thead-header" translate>ID No.</span>
                       </th>
-                      <th style="text-align: left;">
+                      <th style="text-align: center;">
                         <span class="thead-header" translate>Birth Date</span>
                       </th>
                       <th style="text-align: left;">
                         <span class="thead-header" translate>Address</span>
                       </th>
-                      <th style="text-align: left;">
+                      <th style="text-align: center;">
                         <span class="thead-header" translate>Mobile Phone No.</span>
                       </th>
-                      <th style="text-align: left;">
+                      <th style="text-align: center;">
                         <span class="thead-header" translate>NPWP</span>
                       </th>
                       <th style="text-align: left;">
@@ -147,7 +147,7 @@
                       <th style="text-align: left;">
                         <span class="thead-header" translate>Duplicate Item</span>
                       </th>
-                      <th style="text-align: left;">
+                      <th style="text-align: center;">
                         <span class="thead-header" translate>Selected</span>
                       </th>
                     </tr>
@@ -166,19 +166,19 @@
                       <td style="text-align: left;">
                         {{negCust.MrIdType}}
                       </td>
-                      <td style="text-align: left;">
+                      <td style="text-align: center;">
                         {{negCust.IdNo}}
                       </td>
-                      <td style="text-align: left;">
+                      <td style="text-align: center;">
                         {{negCust.BirthDt | date: 'dd-MMM-yyyy'}}
                       </td>
                       <td style="text-align: left;">
                         {{negCust.Address}}
                       </td>
-                      <td style="text-align: left;">
+                      <td style="text-align: center;">
                         {{negCust.MobilePhnNo}}
                       </td>
-                      <td style="text-align: left;">
+                      <td style="text-align: center;">
                         {{negCust.Npwp}}
                       </td>
                       <td style="text-align: left;">
@@ -243,25 +243,25 @@
                 <table *ngIf="appAssetList?.length > 0" class="table table-responsive-md text-center table-hover">
                   <thead>
                     <tr class="table-header">
-                      <th>
+                      <th style="text-align: center;">
                         <span class="thead-header" translate>No</span>
                       </th>
-                      <th>
+                      <th style="text-align: left;">
                         <span class="thead-header" translate>Asset Name</span>
                       </th>
-                      <th>
+                      <th style="text-align: left;">
                         <span class="thead-header" translate>Serial No 1</span>
                       </th>
-                      <th>
+                      <th style="text-align: left;">
                         <span class="thead-header" translate>Serial No 2</span>
                       </th>
-                      <th>
+                      <th style="text-align: left;">
                         <span class="thead-header" translate>Serial No 3</span>
                       </th>
-                      <th>
+                      <th style="text-align: left;">
                         <span class="thead-header" translate>Serial No 4</span>
                       </th>
-                      <th>
+                      <th style="text-align: left;">
                         <span class="thead-header" translate>Serial No 5</span>
                       </th>
                     </tr>
@@ -271,25 +271,25 @@
                       <td align="center" colspan="10">No Data Available</td>
                     </tr>   
                     <tr *ngFor="let appAsset of appAssetList; index as i">
-                      <td>
+                      <td style="text-align: center;">
                         {{i+1}}
                       </td>
-                      <td>
+                      <td style="text-align: left;">
                         {{appAsset.FullAssetName}}
                       </td>
-                      <td>
+                      <td style="text-align: left;">
                         {{appAsset.SerialNo1}}
                       </td>
-                      <td>
+                      <td style="text-align: left;">
                         {{appAsset.SerialNo2}}
                       </td>
-                      <td>
+                      <td style="text-align: left;">
                         {{appAsset.SerialNo3}}
                       </td>
-                      <td>
+                      <td style="text-align: left;">
                         {{appAsset.SerialNo4}}
                       </td>
-                      <td>
+                      <td style="text-align: left;">
                         {{appAsset.SerialNo5}}
                       </td>
                     </tr>
@@ -307,25 +307,25 @@
                 <table class="table table-responsive-md text-center table-hover">
                   <thead>
                     <tr class="table-header">
-                      <th>
+                      <th style="text-align: center;">
                         <span class="thead-header" translate>No</span>
                       </th>
-                      <th>
+                      <th style="text-align: left;">
                         <span class="thead-header" translate>Asset Name</span>
                       </th>
-                      <th>
+                      <th style="text-align: left;">
                         <span class="thead-header" translate>Serial No 1</span>
                       </th>
-                      <th>
+                      <th style="text-align: left;">
                         <span class="thead-header" translate>Serial No 2</span>
                       </th>
-                      <th>
+                      <th style="text-align: left;">
                         <span class="thead-header" translate>Serial No 3</span>
                       </th>
-                      <th>
+                      <th style="text-align: left;">
                         <span class="thead-header" translate>Source Type</span>
                       </th>
-                      <th>
+                      <th style="text-align: left;">
                         <span class="thead-header" translate>Notes</span>
                       </th>
                     </tr>
@@ -335,25 +335,25 @@
                       <td align="center" colspan="10">No Data Available</td>
                     </tr> 
                     <tr *ngFor="let negAsset of negAssetList; index as j">
-                      <td>
+                      <td style="text-align: center;">
                         {{j+1}}
                       </td>
-                      <td>
+                      <td style="text-align: left;">
                         {{negAsset.FullAssetName}}
                       </td>
-                      <td>
+                      <td style="text-align: left;">
                         {{negAsset.SerialNo1}}
                       </td>
-                      <td>
+                      <td style="text-align: left;">
                         {{negAsset.SerialNo2}}
                       </td>
-                      <td>
+                      <td style="text-align: left;">
                         {{negAsset.SerialNo3}}
                       </td>
-                      <td>
+                      <td style="text-align: left;">
                         {{negAsset.MrNegAssetSource}
                       </td>
-                      <td>
+                      <td style="text-align: left;">
                         {{negAsset.Notes}}
                       </td>
                     </tr>

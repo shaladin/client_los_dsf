@@ -247,6 +247,10 @@ export class AdInsConstant {
   public static InstSchmStepUpStepDownNormal = "STNM";
   public static InstSchmStepUpStepDownLeasing = "STLS";
 
+  //REF PROD COMPNT
+  public static RefProdCompntAssetType = "ASSETTYPE";
+  public static RefProdCompntSupplSchm = "SUPPLSCHM";
+  public static RefProdCompntAssetSchm = "ASSETSCHM";
 
   //GENERAL SETTING
   public static GetBusinessDt = "/GeneralSetting/GetBusinessDate";
