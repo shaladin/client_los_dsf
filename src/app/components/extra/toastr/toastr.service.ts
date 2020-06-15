@@ -72,6 +72,15 @@ export class NGXToastrService {
         this.toastr.error(msg);
     }
 
+    infoMessageTitle(title,msg)
+    {
+        this.toastr.info(msg,title);
+    }
+
+    errorMessageTitle(title,msg) {
+        this.toastr.error(msg,title);
+    }
+
     typeSave(msg) {
       this.toastr.success(msg);
     }

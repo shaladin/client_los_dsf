@@ -115,7 +115,7 @@ export class CustomerDataComponent implements OnInit {
     }
   ];
 
-  defCustModelCode: any;
+  defCustModelCode: string;
   MrCustTypeCode: any;
 
   constructor(

@@ -21,7 +21,7 @@ export class CustomerSelfVerificationComponent implements OnInit {
   isLeadData: boolean;
   leadObj: LeadObj;
   viewLeadHeaderMainInfo : any;
-  WfTaskListId: any;
+  WfTaskListId: number;
   reason : string;
   AppStepIndex :number =1;
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
@@ -30,7 +30,7 @@ export class CustomerSelfVerificationComponent implements OnInit {
       if (this.LeadId == null || this.LeadId == undefined) this.LeadId = "1";
 
       this.WfTaskListId = params["WfTaskListId"];
-      if (this.WfTaskListId == null || this.WfTaskListId == undefined) this.WfTaskListId = "0";
+      if (this.WfTaskListId == null || this.WfTaskListId == undefined) this.WfTaskListId = 0;
 
       this.LobCode = params["LobCode"];
       if (this.LobCode == null || this.LobCode == undefined) this.LobCode = "KTA";
@@ -48,7 +48,9 @@ export class CustomerSelfVerificationComponent implements OnInit {
          if (this.LeadStep != "SVR"){
           this.reason = "resubmit"; 
          }else{ 
-          this.claimTask(); 
+          if (this.WfTaskListId > 0) {
+            this.claimTask();
+          }
           this.stepper = new Stepper(document.querySelector('#stepper1'), {
             linear: false,
             animation: true

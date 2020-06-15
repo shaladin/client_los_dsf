@@ -45,7 +45,7 @@ export class FraudVerifPageComponent implements OnInit {
   leadCustObj: LeadCustObj = new LeadCustObj();
   leadAssetObj: LeadAssetObj = new LeadAssetObj();;
   LeadId: string;
-  WfTaskListId: string;
+  WfTaskListId: number;
   GetLeadCustByLeadIdUrl: string;
   GetLeadCustPersonalByLeadCustIdUrl: string;
   GetCustomerAndNegativeCustDuplicateCheckUrl: string;
@@ -69,7 +69,9 @@ export class FraudVerifPageComponent implements OnInit {
     Notes: ['', [Validators.required]],
   });
   ngOnInit() {
-    this.claimTask();
+    if (this.WfTaskListId > 0) {
+      this.claimTask();
+    }
     this.viewLeadHeaderMainInfo = AdInsConstant.ViewHeaderLeadMainInfo;
     this.leadCustObj.LeadId = this.LeadId;
     this.http.post(this.GetLeadCustByLeadIdUrl, this.leadCustObj).subscribe(
@@ -154,7 +156,7 @@ export class FraudVerifPageComponent implements OnInit {
   async claimTask() {
     var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = this.WfTaskListId;
+    wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
     wfClaimObj.pUserID = currentUserContext["UserName"];
     this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {

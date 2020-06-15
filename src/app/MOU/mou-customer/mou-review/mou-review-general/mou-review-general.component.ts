@@ -54,8 +54,10 @@ export class MouReviewGeneralComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('moureview')
-    this.claimTask();
+    
+    if (this.WfTaskListId > 0) {
+      this.claimTask();
+    }
 
     var apvObj = { SchemeCode: 'MOUC_GEN_APV' }
     this.http.post(AdInsConstant.GetApprovedBy, apvObj).subscribe(

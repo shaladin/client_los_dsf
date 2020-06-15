@@ -58,18 +58,10 @@ export class MouDetailGeneralComponent implements OnInit {
   ) { 
     this.isDPInvalid = false;
     this.isTenorInvalid = false;
-  }
-
-  ngOnInit() {
-    this.MouDetailGeneralForm.patchValue({
-      MouCustId: this.MouCustId
-    });
-
     var refMasterCurrency = new RefMasterObj();
     refMasterCurrency.RefMasterTypeCode = "CURRENCY";
     let reqCurrency = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterCurrency);
     var refMasterIntrstType = new RefMasterObj();
-    // refMasterIntrstType.RefMasterTypeCode = "INTEREST_TYPE";
     refMasterIntrstType.RefMasterTypeCode = "INTRSTTYPE";
     let reqIntrstType = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterIntrstType);
     var refMasterInstSchm = new RefMasterObj();
@@ -94,11 +86,13 @@ export class MouDetailGeneralComponent implements OnInit {
         this.firstInstList = response[4];
         this.tempMouCustClause = response[5];
         this.MouDetailGeneralForm.patchValue({
+          MouCustId: this.MouCustId,
           CurrCode: this.currencyList.ReturnObject[0].Key,
           MrInterestTypeCode: this.intrstTypeList.ReturnObject[0].Key,
           MrInstSchmCode: this.instSchmList.ReturnObject[0].Key,
           PayFreqCode: this.payFreqList.ReturnObject[0].Key,
-          MrFirstInstTypeCode : this.firstInstList.ReturnObject[0].Key
+          MrFirstInstTypeCode : this.firstInstList.ReturnObject[0].Key,
+          AssetTypeCode: this.tempMouCustClause.AssetTypeCode
         });
 
         if(this.tempMouCustClause["MouCustClauseId"] != 0){
@@ -112,6 +106,10 @@ export class MouDetailGeneralComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  ngOnInit() {
+    console.log('debug');
   }
 
   Save(enjiForm){ 
