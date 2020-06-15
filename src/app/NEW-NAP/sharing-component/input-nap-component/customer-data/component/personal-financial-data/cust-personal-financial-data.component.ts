@@ -109,7 +109,7 @@ export class CustPersonalFinancialDataComponent implements OnInit {
   ChangeTotalMonthly(){
     console.log("Calc Total");
     let TotalMonthlyIncome = this.parentForm.controls[this.identifier].get("MonthlyIncomeAmt").value + this.parentForm.controls[this.identifier].get("SpouseMonthlyIncomeAmt").value;
-    let TotalMonthlyExpense = this.parentForm.controls[this.identifier].get("MonthlyExpenseAmt").value + this.parentForm.controls[this.identifier].get("SpouseMonthlyIncomeAmt").value;
+    let TotalMonthlyExpense = this.parentForm.controls[this.identifier].get("MonthlyExpenseAmt").value + this.parentForm.controls[this.identifier].get("MonthlyInstallmentAmt").value;
     this.parentForm.controls[this.identifier].patchValue({
       TotalMonthlyIncome: TotalMonthlyIncome,
       TotalMonthlyExpense: TotalMonthlyExpense,
