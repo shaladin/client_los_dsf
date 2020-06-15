@@ -25,6 +25,14 @@ export class LeadInquiryComponent implements OnInit {
       {
         name: "l.MR_LEAD_SOURCE_CODE",
         environment: environment.FoundationR3Url
+      },
+      {
+        name: "l.LEAD_STAT",
+        environment: environment.FoundationR3Url
+      },
+      {
+        name: "l.LEAD_STEP",
+        environment: environment.FoundationR3Url
       }
     ];
   }
