@@ -43,6 +43,17 @@ export class NapFromLeadPagingComponent implements OnInit {
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppFromLead.json";
 
+    this.inputPagingObj.ddlEnvironments = [
+      {
+        name: "RO.OFFICE_NAME",
+        environment: environment.FoundationR3Url
+      },
+      {
+        name: "L.MR_LEAD_SOURCE_CODE",
+        environment: environment.FoundationR3Url
+      }
+    ];
+
     this.inputPagingObj.addCritInput = this.arrCrit;
   }
 

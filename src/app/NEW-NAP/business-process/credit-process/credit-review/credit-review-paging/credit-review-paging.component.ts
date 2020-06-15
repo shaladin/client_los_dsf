@@ -30,6 +30,15 @@ export class CreditReviewPagingComponent implements OnInit {
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCreditReview.json";
 
+    this.inputPagingObj.ddlEnvironments = [
+      {
+        name: "a.ORI_OFFICE_CODE",
+        environment: environment.FoundationR3Url
+      }
+    ];
+
+    
+
     var arrCrit = new Array();
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;

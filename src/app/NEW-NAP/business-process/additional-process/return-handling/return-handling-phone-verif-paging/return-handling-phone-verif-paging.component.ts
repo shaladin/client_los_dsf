@@ -35,6 +35,12 @@ export class ReturnHandlingPhoneVerifPagingComponent implements OnInit {
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReturnHandlingPhnVerif.json";
+    this.inputPagingObj.ddlEnvironments = [
+      {
+        name: "a.ORI_OFFICE_CODE",
+        environment: environment.FoundationR3Url
+      }
+    ];
     this.inputPagingObj.addCritInput = this.ActAndOfficeCriteria();
   }
 
