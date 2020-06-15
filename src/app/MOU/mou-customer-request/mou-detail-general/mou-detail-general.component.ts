@@ -34,7 +34,8 @@ export class MouDetailGeneralComponent implements OnInit {
   mouCustClause : any; 
   url : string;
   tempMouCustClause : any;
-  tempMouCustAsset : MouCustAssetListObj  
+  tempMouCustAsset : MouCustAssetListObj
+  isReady: boolean = false;
   AssetForm = this.fb.group({ 
   });
   MouDetailGeneralForm = this.fb.group({
@@ -109,6 +110,7 @@ export class MouDetailGeneralComponent implements OnInit {
             ...this.tempMouCustClause
           });
         }
+        this.isReady = true;
       },
       (error) => {
         console.log(error);
