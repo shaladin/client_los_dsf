@@ -120,6 +120,7 @@ export class AdInsConstant {
   public static DeleteAppCross = environment.losUrl + "/AppCross/DeleteAppCross";
   public static GetListAppCross = environment.losUrl + "/AppCross/GetListAppCross";
   public static AddListAppCross = "/AppCross/AddListAppCross";
+  public static AgrmntStatCancel = "CANCEL";
 
   // App Fctr
   public static GetAppFctrByAppId = environment.losUrl + "/AppFctr/GetAppFctrByAppId";
