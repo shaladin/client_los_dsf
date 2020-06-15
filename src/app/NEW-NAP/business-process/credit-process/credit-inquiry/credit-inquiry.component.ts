@@ -27,6 +27,10 @@ export class CreditInquiryComponent implements OnInit {
       {
         name: "A.APP_CURR_STEP",
         environment: environment.FoundationR3Url
+      },
+      {
+        name: "A.ORI_OFFICE_CODE",
+        environment: environment.FoundationR3Url
       }
     ];
   }

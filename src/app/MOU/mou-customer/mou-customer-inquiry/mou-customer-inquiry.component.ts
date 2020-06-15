@@ -23,6 +23,10 @@ export class MouCustomerInquiryComponent implements OnInit {
       {
         name: "MR_MOU_TYPE_CODE",
         environment: environment.FoundationR3Url
+      },
+      {
+        name: "MOU_STAT",
+        environment: environment.FoundationR3Url
       }
     ];
   }

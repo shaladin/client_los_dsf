@@ -25,6 +25,10 @@ export class FraudVerifPagingComponent implements OnInit {
       {
         name: "L.MR_LEAD_SOURCE_CODE",
         environment: environment.FoundationR3Url
+      },
+      {
+        name: "L.MR_CUST_TYPE_CODE",
+        environment: environment.FoundationR3Url
       }
     ];
   }
