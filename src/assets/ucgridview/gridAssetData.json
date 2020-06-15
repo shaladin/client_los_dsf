@@ -2,37 +2,37 @@
     "headerList": [
         {
             "type": "label",
-            "position": "center",
+            "position": "left",
             "label": "Asset Name",
             "name": "FullAssetName"
         },
         {
             "type": "label",
-            "position": "center",
+            "position": "left",
             "label": "Supplier Branch",
             "name": "SupplName"
         },
         {
             "type": "label",
-            "position": "center",
+            "position": "left",
             "label": "Serial No 1",
             "name": "SerialNo1"
         },
         {
             "type": "label",
-            "position": "center",
+            "position": "left",
             "label": "Serial No 2",
             "name": "SerialNo2"
         },
         {
             "type": "label",
-            "position": "center",
+            "position": "left",
             "label": "Serial No 3",
             "name": "SerialNo3"
         },
         {
             "type": "label",
-            "position": "center",
+            "position": "left",
             "label": "Serial No 4",
             "name": "SerialNo4"
         },

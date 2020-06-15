@@ -2,43 +2,43 @@
     "headerList": [
         {
             "type": "label",
-            "position": "center",
+            "position": "left",
             "label": "Collateral Name",
             "name": "FullAssetName"
         },
         {
             "type": "label",
-            "position": "center",
+            "position": "left",
             "label": "Collateral Type",
             "name": "AssetTypeCode"
         },
         {
             "type": "label",
-            "position": "center",
+            "position": "right",
             "label": "Collateral Price",
             "name": "CollateralValueAmt"
         },
         {
             "type": "label",
-            "position": "center",
+            "position": "left",
             "label": "Serial No 1",
             "name": "SerialNo1"
         },
         {
             "type": "label",
-            "position": "center",
+            "position": "left",
             "label": "Serial No 2",
             "name": "SerialNo2"
         },
         {
             "type": "label",
-            "position": "center",
+            "position": "left",
             "label": "Serial No 4",
             "name": "SerialNo4"
         },
         {
             "type": "label",
-            "position": "center",
+            "position": "left",
             "label": "Owner Name",
             "name": "OwnerName"
         },
@@ -56,7 +56,7 @@
         },
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "AssetTypeCode"
         },
         {
