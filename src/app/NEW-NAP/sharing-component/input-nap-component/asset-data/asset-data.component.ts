@@ -960,7 +960,7 @@ export class AssetDataComponent implements OnInit {
     this.InputLookupAssetObj.addCritInput = assetCrit;
 
 
-    this.InputLookupAccObj = this.initLookupAcc();
+    // this.InputLookupAccObj = this.initLookupAcc();
     this.isOnlookup = true;
   }
   initLookupAcc() {
