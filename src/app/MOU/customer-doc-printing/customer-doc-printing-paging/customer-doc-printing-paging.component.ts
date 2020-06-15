@@ -24,6 +24,13 @@ export class CustomerDocPrintingPagingComponent implements OnInit {
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCustomerDocPrinting.json";
+
+    this.inputPagingObj.ddlEnvironments = [
+      {
+        name: "MC.MR_MOU_TYPE_CODE",
+        environment: environment.FoundationR3Url
+      }
+    ];
   }
 
 }
