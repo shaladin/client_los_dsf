@@ -23,6 +23,12 @@ export class DocSignerComponent implements OnInit {
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchMouCustDocSigner.json";
+    this.inputPagingObj.ddlEnvironments = [
+      {
+        name: "MOU.MR_MOU_TYPE_CODE",
+        environment: environment.FoundationR3Url
+      }
+    ];
 
     this.arrCrit = new Array<CriteriaObj>();
     

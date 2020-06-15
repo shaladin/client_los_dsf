@@ -26,6 +26,12 @@ export class EditMouCustomerComponent implements OnInit {
     this.inputPagingObj.apiQryPaging = "/Generic/GetPagingObjectBySQL";
     this.inputPagingObj.deleteUrl = "";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchEditMouCustomer.json";
+    this.inputPagingObj.ddlEnvironments = [
+      {
+        name: "MOU.MR_MOU_TYPE_CODE",
+        environment: environment.FoundationR3Url
+      }
+    ];
     this.arrCrit = new Array<CriteriaObj>();
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionEq;
