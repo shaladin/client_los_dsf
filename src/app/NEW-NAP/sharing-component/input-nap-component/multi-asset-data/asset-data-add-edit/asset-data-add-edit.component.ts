@@ -600,6 +600,7 @@ copyToLocationAddr() {
       })
     ).subscribe(
       (response) => {
+        console.log("Response Prod Offering: " + JSON.stringify(response));
         var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
         var arrCritSuppl = new Array<CriteriaObj>();
         var critObjSuppl = new CriteriaObj();
@@ -615,6 +616,7 @@ copyToLocationAddr() {
         critObjSuppl.propName = "ro.OFFICE_CODE";
         critObjSuppl.value = currentUserContext["OfficeCode"];
         arrCritSuppl.push(critObjSuppl);
+        this.InputLookupSupplierObj.addCritInput = arrCritSuppl;
         this.InputLookupSupplierObj.isReady = true;
       },
       (error) => {
