@@ -54,8 +54,10 @@ export class CustSocmedComponent implements OnInit {
   }
 
   deleteSocmed(i){
-    var custSocmedObjs = this.parentForm.controls[this.identifier] as FormArray;
-    custSocmedObjs.removeAt(i);
+    if (confirm('Are you sure to delete this record?')) {
+      var custSocmedObjs = this.parentForm.controls[this.identifier] as FormArray;
+      custSocmedObjs.removeAt(i);
+    }
   }
 
   bindAppSocmed(){
