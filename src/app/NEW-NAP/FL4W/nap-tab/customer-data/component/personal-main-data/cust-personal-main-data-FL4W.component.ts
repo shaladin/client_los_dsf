@@ -378,7 +378,13 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
       }
     );
   }
-
+  ddlIdTypeChanged(event){
+    if(event.target.value == "EKTP"){
+      this.parentForm.controls[this.identifier].patchValue({
+        IdExpiredDt: null
+      });
+    }
+  }
   isLocal: boolean = false;
   selectedNationalityCountryName: string = "";
   ChangeNationality(ev){
