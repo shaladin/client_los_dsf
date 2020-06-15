@@ -20,6 +20,12 @@ export class LegalReviewPagingComponent implements OnInit {
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchLegalReview.json";
+    this.inputPagingObj.ddlEnvironments = [
+      {
+        name: "MC.MR_MOU_TYPE_CODE",
+        environment: environment.losUrl
+      }
+    ];
 
     const addCritMouStat = new CriteriaObj();
     addCritMouStat.DataType = 'text';

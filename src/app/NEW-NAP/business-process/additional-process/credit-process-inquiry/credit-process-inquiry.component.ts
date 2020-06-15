@@ -17,6 +17,17 @@ export class CreditProcessInquiryComponent implements OnInit {
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCreditProcessInquiry.json";
+
+    this.inputPagingObj.ddlEnvironments = [
+      {
+        name: "A.APP_LAST_STEP",
+        environment: environment.FoundationR3Url
+      },
+      {
+        name: "A.APP_CURR_STEP",
+        environment: environment.FoundationR3Url
+      }
+    ];
   }
 
 }

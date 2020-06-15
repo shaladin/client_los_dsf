@@ -30,6 +30,13 @@ export class CreditInvestigationPagingComponent implements OnInit {
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCreditInvestigation.json";
     this.inputPagingObj.addCritInput = new Array();
 
+    this.inputPagingObj.ddlEnvironments = [
+      {
+        name: "A.ORI_OFFICE_CODE",
+        environment: environment.FoundationR3Url
+      }
+    ];
+
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.propName = 'A.APP_CURR_STEP';

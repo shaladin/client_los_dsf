@@ -123,6 +123,7 @@ export class NapAddComponent implements OnInit {
     this.inputLookupObjName.pagingJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.genericJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.nameSelect = this.NapAppForm.controls.ProdOfferingName.value;
+    console.log(this.inputLookupObjName);
 
     var arrCopyLookupCrit = new Array();
     var addCrit = new CriteriaObj();
@@ -271,7 +272,12 @@ export class NapAddComponent implements OnInit {
           } else if (temp[i].RefProdCompntCode == "CURR") {
             tempCurrCode = temp[i].CompntValue;
           } else if (temp[i].RefProdCompntCode == "PAYFREQ") {
-            tempPayFreqCode = temp[i].CompntValue;
+            var listPayFreqCode = temp[i].CompntValue.split(";");
+            if(listPayFreqCode.length == 1){
+              tempPayFreqCode = temp[i].CompntValue;
+            }else{
+              tempPayFreqCode = null;
+            }            
           } else if (temp[i].RefProdCompntCode == "PROD_TYPE") {
             tempRefProdTypeCode = temp[i].CompntValue;
           } else {

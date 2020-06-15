@@ -42,6 +42,13 @@ export class NapPagingComponent implements OnInit {
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchApp.json";
 
+    this.inputPagingObj.ddlEnvironments = [
+      {
+        name: "a.ORI_OFFICE_CODE",
+        environment: environment.FoundationR3Url
+      }
+    ];
+
     this.inputPagingObj.addCritInput = this.arrCrit;
   }
 

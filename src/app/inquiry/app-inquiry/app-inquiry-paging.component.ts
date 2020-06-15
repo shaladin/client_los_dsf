@@ -21,6 +21,21 @@ export class AppInquiryPagingComponent implements OnInit {
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppInquiry.json";
+
+    this.inputPagingObj.ddlEnvironments = [
+      {
+        name: "A.ORI_OFFICE_CODE",
+        environment: environment.FoundationR3Url
+      },
+      {
+        name: "A.APP_STAT",
+        environment: environment.FoundationR3Url
+      },
+      {
+        name: "ISNULL(B.AGRMNT_CURR_STEP,A.APP_CURR_STEP)",
+        environment: environment.FoundationR3Url
+      }
+    ];
   }
 
   getEvent(event){
