@@ -10,6 +10,7 @@ import { MouCustClauseObj } from 'app/shared/model/MouCustClauseObj.Model';
 import { MouCustAssetComponent } from './mou-cust-asset/mou-cust-asset.component';
 import { MouCustAssetObj } from 'app/shared/model/MouCustAssetObj.Model';
 import { MouCustAssetListObj } from 'app/shared/model/MouCustAssetListObj.Model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-mou-detail-general',
@@ -53,9 +54,16 @@ export class MouDetailGeneralComponent implements OnInit {
 
   constructor(
     private httpClient: HttpClient,
+    private route: ActivatedRoute,
     private toastr: NGXToastrService,
     private fb: FormBuilder
   ) { 
+    this.route.queryParams.subscribe(params => {
+      if (params['mouCustId'] != null) {
+        this.MouCustId = params['mouCustId'];
+      }
+    });
+
     this.isDPInvalid = false;
     this.isTenorInvalid = false;
     var refMasterCurrency = new RefMasterObj();

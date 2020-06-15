@@ -1,0 +1,68 @@
+{
+    "title": "Search Agreement",
+    "keyProperty": "AgrmntId",
+    "keyPropCriteria": "ag.AGRMNT_ID",
+    "component": [
+        {
+            "type": "textbox",
+            "name": "ag.AGRMNT_NO",
+            "id": "AgrmntNoId",
+            "value": "",
+            "label": "Agreement No",
+            "placeholder": "Agrement No"
+        },
+        {
+            "type": "textbox",
+            "name": "ag.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Customer Name"
+        }
+    ],
+    "querystring": {
+        "select": "SELECT ag.AGRMNT_NO AS AgrmntNo, ag.CUST_NAME AS CustName, ap.APP_NO AS AppNo, ap.APP_ID AS AppId, ag.AGRMNT_STAT AS AgrmntStat, ag.AGRMNT_ID AS AgrmntId",
+        "from": "FROM dbo.APP ap WITH(NOLOCK) JOIN dbo.AGRMNT ag WITH(NOLOCK) ON ap.APP_ID = ag.APP_ID"
+    },
+    "orderby": {
+        "key": "ap.APP_NO",
+        "value": "false"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "AGREEMENT NO",
+            "name": "AgrmntNo"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "CUSTOMER NAME",
+            "name": "CustName"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "APPLICATION NO",
+            "name": "AppNo"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "AgrmntNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "AppNo"
+        }
+    ]
+}
