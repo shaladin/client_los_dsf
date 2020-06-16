@@ -34,7 +34,12 @@ export class PurchaseOrderPagingComponent implements OnInit {
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchPurchaseOrder.json";
-
+    this.inputPagingObj.ddlEnvironments = [
+      {
+        name: "A.ORI_OFFICE_CODE",
+        environment: environment.FoundationR3Url
+      }
+    ];
     this.arrCrit = new Array();
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;

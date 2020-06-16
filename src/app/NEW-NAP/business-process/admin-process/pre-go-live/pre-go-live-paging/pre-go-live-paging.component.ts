@@ -34,7 +34,12 @@ export class PreGoLivePagingComponent implements OnInit {
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchPreGoLive.json";
-
+    this.inputPagingObj.ddlEnvironments = [
+      {
+        name: "app.ORI_OFFICE_CODE",
+        environment: environment.FoundationR3Url
+      }
+    ];
     var critInput = new CriteriaObj();
     critInput.propName = "wFht.ACT_CODE";
     critInput.restriction = AdInsConstant.RestrictionEq;
