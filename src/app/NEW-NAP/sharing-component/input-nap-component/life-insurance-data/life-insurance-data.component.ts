@@ -46,7 +46,7 @@ export class LifeInsuranceDataComponent implements OnInit {
     MrLifeInsPaidMethodCode: [''],
     PaidInAdvPrcnt: [''],
     NewCoverNotes: [''],
-    InscoAdminFeeAmt: [''],
+    CustAdminFeeAmt: [''],
   });
 
   LifeInscoBranchName: Array<object>;
@@ -84,8 +84,9 @@ export class LifeInsuranceDataComponent implements OnInit {
             MrLifeInsPaidMethodCode: this.result.MrLifeInsPaidMethodCode,
             PaidInAdvPrcnt: 100-this.result.PaidInAdvPrcnt,
             NewCoverNotes: this.result.NewCoverNotes,
-            InscoAdminFeeAmt: this.result.InscoAdminFeeAmt
-          })
+            CustAdminFeeAmt: this.result.CustAdminFeeAmt
+          });
+          this.LifeInsObj.InscoAdminFeeAmt = this.result.InscoAdminFeeAmt;
           this.checked();
         }
         else {
@@ -169,8 +170,8 @@ export class LifeInsuranceDataComponent implements OnInit {
     this.LifeInsForm.controls.MrLifeInsPaidMethodCode.updateValueAndValidity();
     this.LifeInsForm.controls.PaidInAdvPrcnt.setValidators([Validators.required]);
     this.LifeInsForm.controls.PaidInAdvPrcnt.updateValueAndValidity();
-    this.LifeInsForm.controls.InscoAdminFeeAmt.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
-    this.LifeInsForm.controls.InscoAdminFeeAmt.updateValueAndValidity();
+    this.LifeInsForm.controls.CustAdminFeeAmt.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
+    this.LifeInsForm.controls.CustAdminFeeAmt.updateValueAndValidity();
   }
   unsetValidator() {
     this.LifeInsForm.controls.LifeInscoBranchName.clearValidators();
@@ -179,8 +180,8 @@ export class LifeInsuranceDataComponent implements OnInit {
     this.LifeInsForm.controls.MrLifeInsPaidMethodCode.updateValueAndValidity();
     this.LifeInsForm.controls.PaidInAdvPrcnt.clearValidators();
     this.LifeInsForm.controls.PaidInAdvPrcnt.updateValueAndValidity();
-    this.LifeInsForm.controls.InscoAdminFeeAmt.clearValidators();
-    this.LifeInsForm.controls.InscoAdminFeeAmt.updateValueAndValidity();
+    this.LifeInsForm.controls.CustAdminFeeAmt.clearValidators();
+    this.LifeInsForm.controls.CustAdminFeeAmt.updateValueAndValidity();
   }
 
   setValue() {
@@ -190,7 +191,7 @@ export class LifeInsuranceDataComponent implements OnInit {
       this.LifeInsObj.MrLifeInsPaidMethodCode = this.LifeInsForm.controls.MrLifeInsPaidMethodCode.value;
       this.LifeInsObj.PaidInAdvPrcnt = this.LifeInsForm.controls.PaidInAdvPrcnt.value;
       this.LifeInsObj.NewCoverNotes = this.LifeInsForm.controls.NewCoverNotes.value;
-      this.LifeInsObj.InscoAdminFeeAmt = this.LifeInsForm.controls.InscoAdminFeeAmt.value;
+      this.LifeInsObj.CustAdminFeeAmt = this.LifeInsForm.controls.CustAdminFeeAmt.value;
       this.LifeInsObj.AppId = this.AppId;
     } else {
     }
@@ -204,10 +205,10 @@ export class LifeInsuranceDataComponent implements OnInit {
     }
     await this.http.post(AdInsConstant.GetRuleAdmFee, object).toPromise().then(
       response => {
-        console.log(response);
-        this.LifeInsObj.CustAdminFeeAmt = response["AdminFeeToCust"][0];
+        console.log(response);       
+        this.LifeInsObj.InscoAdminFeeAmt = response["AdminFeeFromInscoBranch"][0];
         this.LifeInsForm.patchValue({
-          InscoAdminFeeAmt: response["AdminFeeFromInscoBranch"][0]
+          CustAdminFeeAmt: response["AdminFeeToCust"][0]
         })
       },
       error => {

@@ -800,8 +800,33 @@ export class InsuranceDataComponent implements OnInit {
     var index = this.ruleObj.MainCoverageType.findIndex(x => x == mainCoverageType);
     this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i].patchValue({
       CustMainPremiRate: this.ruleObj.MainRateToCust[index],
+      StdMainPremiRate: this.ruleObj.BaseRatePercentage[index],
       InscoMainPremiRate: this.ruleObj.MainRateToInsco[index]
     });
+    for (let j = 0; j < this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"].length; j++) {
+      var currAddCvgType = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j]["controls"].MrAddCvgTypeCode.value;
+      var indexAdd = this.ruleObj.AdditionalCoverageType.findIndex(x => x == currAddCvgType);
+
+      var premiumType = this.ruleObj.PremiumType[indexAdd];
+      var custAddPremiRate = 0;
+      var inscoAddPremiRate = 0;
+
+      if (premiumType == AdInsConstant.PremiumTypeAmt) {
+        custAddPremiRate = this.ruleObj.PremiToCust[indexAdd];
+        inscoAddPremiRate = this.ruleObj.PremiToInsco[indexAdd];
+      }
+
+      if (premiumType == AdInsConstant.PremiumTypePrcnt) {
+        custAddPremiRate = this.ruleObj.RateToCust[indexAdd];
+        inscoAddPremiRate = this.ruleObj.RateToInsco[indexAdd];
+      }
+
+      this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j].patchValue({
+        CustAddPremiRate: custAddPremiRate,
+        InscoAddPremiRate: inscoAddPremiRate,
+        StdAddPremiRate: this.ruleObj.BaseRate[indexAdd]
+      });      
+    }
   }
 
   ApplyToCoverage() {
