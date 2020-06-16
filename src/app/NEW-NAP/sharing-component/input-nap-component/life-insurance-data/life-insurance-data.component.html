@@ -71,24 +71,25 @@
                     <table class="table table-responsive-md text-center table-hover">
                       <thead>
                         <tr class="table-header">
-                          <th><span translate class="thead-header">Name</span></th>
-                          <th>
+                          <th style="text-align: left;"><span translate class="thead-header">Name</span>
+                          </th>
+                          <th style="text-align: center;">
                             <span translate class="thead-header" name='Age'>Age</span>
                           </th>
-                          <th>
+                          <th style="text-align: left;">
                             <span translate class="thead-header" name='ObjectType'>Subject Type</span>
                           </th>
-                          <th>
+                          <th style="text-align: center;">
                             <span translate class="thead-header" name='IsDefault'>Check</span>
                           </th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr *ngFor="let item of ListObj; let i = index">
-                          <td>{{item.InsuredName}}</td>
-                          <td>{{item.Age}}</td>
-                          <td>{{item.MrCustTypeCode}}</td>
-                          <td><input type="checkbox" class="form-check-input" (change)="ObjSelected($event,i)"></td>
+                          <td style="text-align: left;">{{item.InsuredName}}</td>
+                          <td style="text-align: center;">{{item.Age}}</td>
+                          <td style="text-align: left;">{{item.MrCustTypeCode}}</td>
+                          <td style="text-align: center;"><input type="checkbox" class="form-check-input" (change)="ObjSelected($event,i)"></td>
                         </tr>
                       </tbody>
                     </table>
