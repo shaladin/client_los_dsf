@@ -12,6 +12,7 @@ import { DashBoardComponent } from 'app/dashboard/dash-board/dash-board.componen
 import { TreeViewModule } from '@progress/kendo-angular-treeview';
 import { ContextMenuModule } from '@progress/kendo-angular-menu';
 import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
+import {ucdashboard2Module} from '@adins/ucdashboard2';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
         MatchHeightModule,
         TreeViewModule,
         ContextMenuModule,
-        SharingComponentModule
+        SharingComponentModule,
+        ucdashboard2Module
     ],
     exports: [],
     declarations: [
