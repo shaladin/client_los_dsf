@@ -238,7 +238,8 @@ export class FormAddDynamicComponent implements OnInit {
           
         trxAmt.push(tempTrxAmt);
         if(this.FormInputObj["content"] == AdInsConstant.ContentSupplierEmp){
-          vendorCode.push(this.tempDDLContentName[i].SupplCode);
+          let idxTempDDDLContentName = this.tempDDLContentName.indexOf(this.tempDDLContentName.find(x => x.Key == this.arr.controls[i].controls.ContentName.value));
+          vendorCode.push(this.tempDDLContentName[idxTempDDDLContentName].SupplCode);
           vendorEmpNo.push(this.arr.controls[i].controls.ContentName.value);
         }else{
           vendorCode.push(this.arr.controls[i].controls.ContentName.value);
