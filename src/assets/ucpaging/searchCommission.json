@@ -91,13 +91,13 @@
     },
     {
       "type": "sort",
-      "position": "center",
+      "position": "left",
       "label": "Customer Name",
       "name": "ac.CUST_NAME"
     },
     {
       "type": "sort",
-      "position": "center",
+      "position": "left",
       "label": "Product Offering Name",
       "name": "a.PROD_OFFERING_NAME"
     },
@@ -142,13 +142,13 @@
     },
     {
       "type": "text",
-      "position": "center",
+      "position": "left",
       "property": "CustName"
     },
     {
       "type": "callback",
       "key": "ViewProdOffering",
-      "position": "center",
+      "position": "left",
       "property": "ProdOfferingName"
     },
     {
