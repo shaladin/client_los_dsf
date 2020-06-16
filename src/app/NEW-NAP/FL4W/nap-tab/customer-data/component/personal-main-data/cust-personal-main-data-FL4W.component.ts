@@ -81,7 +81,7 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
       BirthPlace: ['', [Validators.required, Validators.maxLength(100)]],
       BirthDt: ['', Validators.required],
       MrNationalityCode: ['', Validators.maxLength(50)],
-      TaxIdNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
+      TaxIdNo: ['', [Validators.maxLength(50)]],
       MobilePhnNo1: ['', [Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
       MrEducationCode: ['', Validators.maxLength(50)],
       MobilePhnNo2: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
@@ -303,6 +303,17 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
             MrIdTypeCode: this.IdTypeObj[0].Key
           });
         }
+        if(this.IdTypeObj[0].Key == "EKTP"){
+          this.parentForm.controls[this.identifier].patchValue({
+            IdExpiredDt: null
+          });
+          this.parentForm.controls[this.identifier]['controls'].IdExpiredDt.clearValidators();
+          this.parentForm.controls[this.identifier]['controls'].IdExpiredDt.updateValueAndValidity();
+        }
+        else{
+          this.parentForm.controls[this.identifier]['controls'].IdExpiredDt.setValidators([Validators.required]);
+          this.parentForm.controls[this.identifier]['controls'].IdExpiredDt.updateValueAndValidity();
+        }
       }
     );
   }
@@ -378,7 +389,19 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
       }
     );
   }
-
+  ddlIdTypeChanged(event){
+    if(event.target.value == "EKTP"){
+      this.parentForm.controls[this.identifier].patchValue({
+        IdExpiredDt: null
+      });
+      this.parentForm.controls[this.identifier]['controls'].IdExpiredDt.clearValidators();
+      this.parentForm.controls[this.identifier]['controls'].IdExpiredDt.updateValueAndValidity();
+    }
+    else{
+      this.parentForm.controls[this.identifier]['controls'].IdExpiredDt.setValidators([Validators.required]);
+      this.parentForm.controls[this.identifier]['controls'].IdExpiredDt.updateValueAndValidity();
+    }
+  }
   isLocal: boolean = false;
   selectedNationalityCountryName: string = "";
   ChangeNationality(ev){
