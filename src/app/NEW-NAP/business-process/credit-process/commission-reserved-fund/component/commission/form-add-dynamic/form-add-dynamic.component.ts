@@ -245,8 +245,7 @@ export class FormAddDynamicComponent implements OnInit {
         }
         
       }else{
-        this.DeleteDataForm(i);
-        len--;
+        return this.toastr.errorMessage("Please Choose " + this.FormInputObj['labelName'] + " Name at Data " + (i+1) );
       }
     }
     if(vendorCode.length > 0){
