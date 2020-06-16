@@ -17,34 +17,71 @@
             "value": "",
             "label": "Agreement No",
             "placeholder": "Placeholder"
+        }, 
+        {
+          "type": "textbox",
+          "name": "AGR.CUST_NAME",
+          "id": "CustNameId",
+          "value": "",
+          "label": "Customer Name",
+          "placeholder": "Placeholder"
+        }, 
+        {
+          "type": "textbox",
+          "name": "A.PROD_OFFERING_NAME",
+          "id": "ProdOfferingNameId",
+          "value": "",
+          "label": "Product Offering Name",
+          "placeholder": "Placeholder"
         },
         {
-            "type" : "textbox",
-            "name" : "AGR.PROD_OFFERING_NAME",
-            "id" : "ProdOfferingNameId",
-            "value" : "",
-            "label" : "Prod Offering Name",
-            "placeholder": "Placeholder"
+          "type": "dropdown",
+          "datatype": "text",
+          "name": "A.ORI_OFFICE_CODE",
+          "id": "OfficeNameId",
+          "value": "",
+          "placeholder": "Placeholder",
+          "isFromURL": true,
+          "isSelectOne": false,
+          "isQueryIn" : true,
+          "url": "",
+          "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
+          "label": "OFFICE NAME",
+          "items": [],
+          "itemsUrl": []
         },
         {
-            "type" : "textbox",
-            "name" : "AGR.CUST_NAME",
-            "id" : "CustNameId",
-            "value" : "",
-            "label" : "Customer Name",
-            "placeholder": "Placeholder"
+          "type": "dropdown",
+          "name": "WF.CLAIM_STAT",
+          "id": "ActiveStatusId",
+          "label": "TASK CLAIM STATUS",
+          "value": "",
+          "placeholder": "Placeholder",
+          "isFromURL": false,
+          "isSelectOne": false,
+          "items": [
+            {
+              "key": "CLAIMED",
+              "value": "CLAIMED"
+            },
+            {
+              "key": "UNCLAIMED",
+              "value": "UNCLAIMED"
+            }
+          ],
+          "itemsUrl": []
         },
         {
-            "type" : "textbox",
-            "name" : "WF.USERNAME",
-            "id" : "TaskClaimById",
-            "value" : "",
-            "label" : "Task Claim By",
-            "placeholder": "Placeholder"
+          "type": "textbox",
+          "name": "WF.USERNAME",
+          "id": "TaskClaimById",
+          "value": "",
+          "label": "Task Claim By",
+          "placeholder": "Placeholder"
         }
     ],
     "querystring": {
-        "select": "SELECT WF.WF_TASK_LIST_ID AS TaskListId, WF.USERNAME AS Username, AGR.AGRMNT_NO AS AgrmntNo, A.APP_NO AS AppNo, AGR.CUST_NAME AS CustName, A.PROD_OFFERING_NAME AS ProdOfferingName, CASE WHEN WF.USERNAME = NULL OR WF.USERNAME = '' THEN 'UNCLAIMED' ELSE 'CLAIMED' END AS ClaimStatus, A.APP_ID AS AppId, AGR.AGRMNT_ID AS AgrmntId, A.BIZ_TEMPLATE_CODE AS LobCode",
+        "select": "SELECT WF.WF_TASK_LIST_ID AS TaskListId, A.ORI_OFFICE_NAME AS OfficeName,  WF.USERNAME AS Username, AGR.AGRMNT_NO AS AgrmntNo, A.APP_NO AS AppNo, AGR.CUST_NAME AS CustName, A.PROD_OFFERING_NAME AS ProdOfferingName, CASE WHEN WF.USERNAME = NULL OR WF.USERNAME = '' THEN 'UNCLAIMED' ELSE 'CLAIMED' END AS ClaimStatus, A.APP_ID AS AppId, AGR.AGRMNT_ID AS AgrmntId, A.BIZ_TEMPLATE_CODE AS LobCode",
         "from": "FROM dbo.APP A WITH(NOLOCK) JOIN dbo.AGRMNT AGR WITH(NOLOCK) ON AGR.APP_ID = A.APP_ID JOIN dbo.V_WF_TASK_LIST WF WITH(NOLOCK) ON WF.TRANSACTION_CODE = AGR.AGRMNT_NO",
         "where" : "WHERE WF.END_EXECUTING_DATE IS NULL"
     },
@@ -59,6 +96,12 @@
             "label": "Claim By",
             "name": "WF.USERNAME"
         },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "OFFICE",
+            "name": "A.ORI_OFFICE_NAME"
+          },
         {
             "type": "sort",
             "position": "left",
@@ -80,7 +123,7 @@
         {
             "type": "sort",
             "position": "left",
-            "label": "Prod Offering Name",
+            "label": "Product Offering Name",
             "name": "AGR.PROD_OFFERING_NAME"
         },
         {
@@ -95,6 +138,11 @@
             "position": "left",
             "property": "Username"
         },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "OfficeName"
+          },
         {
             "type": "link",
             "position": "left",
