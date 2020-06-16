@@ -162,7 +162,7 @@
       "position": "center",
       "property": "AgrmntNo",
       "target": "_blank",
-      "path": "Nap/View/AgrmntView",
+      "path": "/Nap/View/AgrmntView",
       "param": [
         {
           "type": "AgrmntId",
