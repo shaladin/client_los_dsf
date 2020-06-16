@@ -23,6 +23,7 @@ import { MouOsTcDetailComponent } from './mou-os-tc/mou-os-tc-detail/mou-os-tc-d
 import { MouCustomerInquiryComponent } from './mou-customer/mou-customer-inquiry/mou-customer-inquiry.component';
 import { TestUploadComponent } from './test-upload/test-upload.component';
 import { MouCancelComponent } from './mou-cancel/mou-cancel.component';
+import { UnauthorizedPageComponent } from './unauthorized-page/unauthorized-page.component';
 
 const routes: Routes = [
   {
@@ -187,6 +188,13 @@ const routes: Routes = [
         component: MouOsTcDetailComponent,
         data: {
           title: "MOU Outstanding TC"
+        }
+      },
+      {
+        path: "UnauthorizedPage",
+        component: UnauthorizedPageComponent,
+        data: {
+          title: "Unauthorized Page"
         }
       }
     ]

@@ -24,6 +24,7 @@ export class CommissionReservedFundPagingComponent implements OnInit {
   }
 
   inputPagingObj;
+  token : any = localStorage.getItem("Token");
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchCommission.json";
@@ -47,5 +48,12 @@ export class CommissionReservedFundPagingComponent implements OnInit {
     arrCrit.push(critObj);
 
     this.inputPagingObj.addCritInput = arrCrit;
+  }
+  GetCallBack(ev: any){
+    console.log(ev);
+    if(ev.Key == "ViewProdOffering"){
+      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.RowObj.prodOfferingCode + "&prodOfferingVersion=" + ev.RowObj.prodOfferingVersion + "&Token=" + this.token;
+      this.router.navigate([]).then(result => { window.open(link, '_blank'); });
+    }
   }
 }
