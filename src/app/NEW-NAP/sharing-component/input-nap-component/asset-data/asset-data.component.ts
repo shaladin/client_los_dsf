@@ -15,6 +15,7 @@ import { AppAssetAccessoryObj } from 'app/shared/model/AppAssetAccessoryObj.mode
 import { AppDataObj } from 'app/shared/model/AppDataObj.model';
 import { AppCollateralAccessoryObj } from 'app/shared/model/AppCollateralAccessoryObj.Model';
 import { AppCollateralAttrObj } from '../../../../shared/model/AppCollateralAttrObj.Model';
+import { AdInsErrorMessage } from 'app/shared/AdInsErrorMessage';
 
 
 @Component({
@@ -960,17 +961,19 @@ export class AssetDataComponent implements OnInit {
     this.InputLookupAssetObj.addCritInput = assetCrit;
 
 
-    // this.InputLookupAccObj = this.initLookupAcc();
+    this.InputLookupAccObj = this.initLookupAcc();
     this.isOnlookup = true;
   }
   initLookupAcc() {
     let arrAddCrit=new Array();
-    var addCrit = new CriteriaObj();
-    addCrit.DataType = "string";
-    addCrit.propName = "atp.ASSET_TYPE_CODE";
-    addCrit.restriction = AdInsConstant.RestrictionIn;
-    addCrit.listValue = [this.appAssetObj.ResponseAppAssetObj.AssetTypeCode];
-    arrAddCrit.push(addCrit);
+    if (this.AssetDataForm.get("AssetTypeCode").value != "") {
+      var addCrit = new CriteriaObj();
+      addCrit.DataType = "string";
+      addCrit.propName = "atp.ASSET_TYPE_CODE";
+      addCrit.restriction = AdInsConstant.RestrictionIn;
+      addCrit.listValue = [this.AssetDataForm.get("AssetTypeCode").value];
+      arrAddCrit.push(addCrit);
+    }
 
     this.InputLookupAccObj = new InputLookupObj();
     this.InputLookupAccObj.urlJson = "./assets/uclookup/NAP/lookupAcc.json";
@@ -1437,6 +1440,9 @@ export class AssetDataComponent implements OnInit {
   }
 
   addAccessories() {
+    if(this.AssetDataForm.get("AssetTypeCode").value == ""){
+      return this.toastr.errorMessage("Please Choose Asset First");      
+    }
     var appAccessoryObj = this.AssetDataForm.controls["AssetAccessoriesObjs"] as FormArray;
     var length = this.AssetDataForm.value["AssetAccessoriesObjs"].length;
     var max = 0;
