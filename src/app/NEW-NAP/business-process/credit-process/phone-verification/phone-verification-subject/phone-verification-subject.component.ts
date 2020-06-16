@@ -278,6 +278,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   View(VerifResultHid, SubjectName) {
     var link = environment.losR3Web + "/Nap/CreditProcess/PhoneVerification/Subject/View?AppId=" + this.appId + "&VerfResultHId=" + VerifResultHid + "&Name=" + SubjectName;
     this.router.navigate([]).then(result => { window.open(link, '_blank'); });
+
     //window.open("/Nap/CreditProcess/PhoneVerification/Subject/View?AppId=" + this.appId + "&VerfResultHId=" + VerifResultHid + "&Name=" + SubjectName, "_blank");
   }
 
