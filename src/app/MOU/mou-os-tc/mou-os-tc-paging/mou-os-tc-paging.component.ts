@@ -25,7 +25,7 @@ export class MouOsTcPagingComponent implements OnInit {
 
     this.inputPagingObj.ddlEnvironments = [
       {
-        name: "MOU.MOU_CUST_NO",
+        name: "MOU.MR_MOU_TYPE_CODE",
         environment: environment.FoundationR3Url
       }
     ];
