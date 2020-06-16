@@ -63,6 +63,8 @@ export class CommissionComponent implements OnInit {
       LifeInsuranceIncome: 0,
       MaxAllocatedAmount: 0,
       RemainingAllocatedAmount: 0,
+      InterestIncome: 0,
+      ReservedFundAllocatedAmount: 0,
       Other: []
     };
 
@@ -87,8 +89,8 @@ export class CommissionComponent implements OnInit {
     };
     this.http.post(url, objApi).subscribe(
       (response) => {
-        // console.log("response edit comm");
-        // console.log(response);
+        console.log("response edit comm");
+        console.log(response);
         var tempObj: Array<AppCommissionHObj> = response[AdInsConstant.ReturnObj];
         if (tempObj.length > 0) {
           // console.log("edit data");
@@ -102,9 +104,11 @@ export class CommissionComponent implements OnInit {
             var FormAdd1Idx = 0;
             var FormAdd2Idx = 0;
             var FormAdd3Idx = 0;
+            var totalCommAmt = 0;
             for (var i = 0; i < tempObj.length; i++) {
               var obj = tempObj[i];
               console.log(obj);
+              totalCommAmt += obj.TotalCommissionAmt;
               if (obj.MrCommissionRecipientTypeCode == AdInsConstant.CommissionReceipientTypeCodeSupplier) {
                 this.FormAdd1.AddNewDataForm();
                 this.FormAdd1.GenerateExistingContentName(obj, FormAdd1Idx);
@@ -122,6 +126,7 @@ export class CommissionComponent implements OnInit {
                 FormAdd3Idx++;
               }
             }
+            this.viewIncomeInfoObj.RemainingAllocatedAmount = this.viewIncomeInfoObj.MaxAllocatedAmount - totalCommAmt - this.viewIncomeInfoObj.ReservedFundAllocatedAmount;
           }, 1000);
 
         } else {
@@ -176,13 +181,15 @@ export class CommissionComponent implements OnInit {
     };
     this.http.post(AdInsConstant.GetAppFinDataWithRuleByAppId, obj).subscribe(
       (response) => {
-        // console.log(response);
+        console.log(response);
         this.viewIncomeInfoObj.UppingRate = response["DiffRateAmt"],
         this.viewIncomeInfoObj.InsuranceIncome = response["TotalInsCustAmt"] - response["TotalInsInscoAmt"],
         this.viewIncomeInfoObj.LifeInsuranceIncome = response["TotalLifeInsCustAmt"] - response["TotalLifeInsInscoAmt"],
         this.viewIncomeInfoObj.MaxAllocatedAmount = response["MaxAllocatedRefundAmt"],
         this.viewIncomeInfoObj.RemainingAllocatedAmount = response["MaxAllocatedRefundAmt"] - response["CommissionAllocatedAmt"] - response["ReservedFundAllocatedAmt"],
         this.viewIncomeInfoObj.TotalInterestAmount = response["TotalInterestAmt"];
+        this.viewIncomeInfoObj.InterestIncome = response["TotalInterestAmt"];
+        this.viewIncomeInfoObj.ReservedFundAllocatedAmount = response["ReservedFundAllocatedAmt"];
         this.GetRuleDataForForm();
         // this.GetAppFeeData();
       },
@@ -546,6 +553,7 @@ export class CommissionComponent implements OnInit {
     this.Summary.TotalTaxAmmount += tempTotalTaxAmmount;
     this.Summary.TotalVATAmount += tempTotalVATAmount;
     this.Summary.GrossYield += arr["controls"][0].value.GrossYield;
+    this.viewIncomeInfoObj.RemainingAllocatedAmount = this.viewIncomeInfoObj.MaxAllocatedAmount - this.Summary.TotalCommisionAmount - this.viewIncomeInfoObj.ReservedFundAllocatedAmount;
   }
 
   listAppCommissionHObj;
