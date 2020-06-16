@@ -13,6 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class MouCancelComponent implements OnInit {
   inputPagingObj: UcPagingObj;
+  user:any;
 
   constructor(
     private http: HttpClient,
@@ -22,22 +23,31 @@ export class MouCancelComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.inputPagingObj = new UcPagingObj();
-    this.inputPagingObj._url = "./assets/ucpaging/mou/searchMouCancel.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.inputPagingObj.deleteUrl = "";
-    this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchMouCancel.json";
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "MC.MR_MOU_TYPE_CODE",
-        environment: environment.FoundationR3Url
-      },
-      {
-        name: "MC.MOU_STAT",
-        environment: environment.FoundationR3Url
-      }
-    ];
+    this.user = JSON.parse(localStorage.getItem("UserAccess"));
+
+    if (this.user.MrOfficeTypeCode != "HO") {
+      this.router.navigate(["/Mou/UnauthorizedPage"]);
+      return;
+    }
+    else
+    {
+      this.inputPagingObj = new UcPagingObj();
+      this.inputPagingObj._url = "./assets/ucpaging/mou/searchMouCancel.json";
+      this.inputPagingObj.enviromentUrl = environment.losUrl;
+      this.inputPagingObj.apiQryPaging = "/Generic/GetPagingObjectBySQL";
+      this.inputPagingObj.deleteUrl = "";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchMouCancel.json";
+      this.inputPagingObj.ddlEnvironments = [
+        {
+          name: "MC.MR_MOU_TYPE_CODE",
+          environment: environment.FoundationR3Url
+        },
+        {
+          name: "MC.MOU_STAT",
+          environment: environment.FoundationR3Url
+        }
+      ];
+    }
   }
 
   cancelMou(event)

@@ -10,6 +10,7 @@ import { DatePipe } from '@angular/common';
 import { ReturnHandlingDObj } from '../../../../../shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 import { ReturnHandlingHObj } from '../../../../../shared/model/ReturnHandling/ReturnHandlingHObj.Model';
 import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
+import { environment } from 'environments/environment';
 
 
 
@@ -68,7 +69,6 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   ReturnHandlingDData: ReturnHandlingDObj;
   ReturnHandlingHData: ReturnHandlingHObj;
   OnFormReturnInfo: boolean = false;
-
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
 
     this.route.queryParams.subscribe(params => {
@@ -276,8 +276,10 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   }
 
   View(VerifResultHid, SubjectName) {
-    console.log(this.phoneVerifObj);
-    window.open("/Nap/CreditProcess/PhoneVerification/Subject/View?AppId=" + this.appId + "&VerfResultHId=" + VerifResultHid + "&Name=" + SubjectName, "_blank");
+    var link = environment.losR3Web + "/Nap/CreditProcess/PhoneVerification/Subject/View?AppId=" + this.appId + "&VerfResultHId=" + VerifResultHid + "&Name=" + SubjectName;
+    this.router.navigate([]).then(result => { window.open(link, '_blank'); });
+
+    //window.open("/Nap/CreditProcess/PhoneVerification/Subject/View?AppId=" + this.appId + "&VerfResultHId=" + VerifResultHid + "&Name=" + SubjectName, "_blank");
   }
 
   Verif(VerifResultHid, SubjectName, SubjectType, IdSource) {

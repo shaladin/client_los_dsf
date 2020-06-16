@@ -1086,6 +1086,11 @@ export class AdInsConstant {
   public static GetOrInitAppSubsidyByAppId = environment.losUrl + "/AppSubsidy/GetOrInitAppSubsidyByAppId";
   public static GetRuleSubsidyMax = environment.losUrl + "/AppSubsidy/GetRuleSubsidyMax";
   public static GetInitAppFinDataByAppId = environment.losUrl+ "/AppFinData/GetInitAppFinDataByAppId";
+  public static GetAppSubsidyByAppSubsidyId = environment.losUrl + "/AppSubsidy/GetAppSubsidyByAppSubsidyId";
+  public static AddAppSubsidy = environment.losUrl + "/AppSubsidy/AddSubsidy";
+  public static EditAppSubsidy = environment.losUrl + "/AppSubsidy/EditAppSubsidy";
+
+
 
   //Fraud Detection
   public static GetAppDupCheckCustByAppId = environment.losUrl + "/FraudDetection/GetAppDupCheckCustByAppId";
