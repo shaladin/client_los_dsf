@@ -960,7 +960,7 @@ export class AssetDataComponent implements OnInit {
     this.InputLookupAssetObj.addCritInput = assetCrit;
 
 
-    // this.InputLookupAccObj = this.initLookupAcc();
+    this.InputLookupAccObj = this.initLookupAcc();
     this.isOnlookup = true;
   }
   initLookupAcc() {
@@ -969,7 +969,7 @@ export class AssetDataComponent implements OnInit {
     addCrit.DataType = "string";
     addCrit.propName = "atp.ASSET_TYPE_CODE";
     addCrit.restriction = AdInsConstant.RestrictionIn;
-    addCrit.listValue = [this.appAssetObj.ResponseAppAssetObj.AssetTypeCode];
+    addCrit.listValue = [this.AssetDataForm.get("AssetTypeCode").value];
     arrAddCrit.push(addCrit);
 
     this.InputLookupAccObj = new InputLookupObj();
