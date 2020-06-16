@@ -453,7 +453,7 @@ copyToLocationAddr() {
             this.AssetDataForm.controls["DownPayment"].updateValueAndValidity();
           }
         }
-        if (this.AssetDataForm.controls.selectedDpType.value == 'AMT') {
+        if (this.AssetDataForm.controls["MrDownPaymentTypeCode"].value == 'AMT') {
           if (assetValidationRule["DPGrossBehaviour"] == 'MIN') {
             var minDP = this.AssetDataForm.controls.AssetPriceAmt.value * assetValidationRule["GrossDPPrctg"] / 100;
             this.AssetDataForm.patchValue({
