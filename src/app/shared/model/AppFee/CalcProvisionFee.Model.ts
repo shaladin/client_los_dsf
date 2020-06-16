@@ -8,6 +8,7 @@ export class CalcProvisionFee {
     SubsidyToPrincipal : number;
     ProvisionFeeType : string;
     ProvisionFeeSource : string;
+    LifeInsCapitalizedAmt: number;
     Fee : Array<AppFeeObj> = new Array<AppFeeObj>()
 
     constructor() {
