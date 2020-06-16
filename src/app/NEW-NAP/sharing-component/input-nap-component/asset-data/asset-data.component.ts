@@ -1040,7 +1040,6 @@ export class AssetDataComponent implements OnInit {
     critSupp2Obj.propName = 'v.MR_VENDOR_CATEGORY_CODE';
     critSupp2Obj.value = 'SUPPLIER_BRANCH';
     suppCrit.push(critSupp2Obj);
-    this.InputLookupAccSupObj.addCritInput = suppCrit;
 
     var critSuppSupplSchmObj = new CriteriaObj();
     critSuppSupplSchmObj.DataType = 'text';
@@ -1048,7 +1047,7 @@ export class AssetDataComponent implements OnInit {
     critSuppSupplSchmObj.propName = 'vs.VENDOR_SCHM_CODE';
     critSuppSupplSchmObj.value = this.RefProdCmptSupplSchm.CompntValue;
     suppCrit.push(critSuppSupplSchmObj);
-    this.InputLookupSupplierObj.addCritInput = suppCrit;
+    this.InputLookupAccSupObj.addCritInput = suppCrit;
 
     return this.InputLookupAccSupObj;
   }
