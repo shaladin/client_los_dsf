@@ -11,23 +11,22 @@
           </div>
         </div>
         <div class="px-3">
-          <form class="form form-horizontal" [formGroup]="MouTcDataForm" (ngSubmit)="MouTcDataForm.valid"
-            #enjiForm="ngForm">
-            <app-main-info [MouCustId]="MouCustId"></app-main-info>
-            <app-mou-cust-tc #MouTcFactoring [MouCustId]="MouCustId" (ResponseMouCustTc)="getValue($event)"></app-mou-cust-tc>
-
-            <br><br><br>
-            <div class="col-md-12" style="padding: 0;">
-              <div class="form-actions right" style="text-align: right;">
-                <button type="button" class="btn btn-raised btn-warning mr-1" (click)="back()" translate>
-                  <i class="ft-x"></i> Back
-                </button>
-                <button type="button" class="btn btn-raised btn-primary" (click)="saveMouTc()" translate>
-                  <i class="fa fa-check"></i> Save
-                </button>
-              </div>
+          <app-main-info [MouCustId]="MouCustId"></app-main-info>
+          <app-mou-cust-tc *ngIf="mouType == 'GENERAL'" #MouTcGeneral [MouCustId]="MouCustId"
+            (ResponseMouCustTc)="getValue($event)"></app-mou-cust-tc>
+          <app-mou-cust-tc *ngIf="mouType == 'FACTORING'" #MouTcFactoring [MouCustId]="MouCustId"
+            (ResponseMouCustTc)="getValue($event)"></app-mou-cust-tc>
+          <br><br><br>
+          <div class="col-md-12" style="padding: 0;">
+            <div class="form-actions right" style="text-align: right;">
+              <button type="button" class="btn btn-raised btn-warning mr-1" (click)="back()" translate>
+                <i class="ft-x"></i> Back
+              </button>
+              <button type="button" class="btn btn-raised btn-primary" (click)="saveMouTc()" translate>
+                <i class="fa fa-check"></i> Save
+              </button>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>
