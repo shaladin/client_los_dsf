@@ -13,7 +13,8 @@
                                   <label class="adInsLabel"> Upping Rate </label>
                                 </div>
                                 <div class="col-md-6 form-inline form-inline-right">
-                                  <label> {{viewIncomeInfoObj.UppingRate | number:'.2':'en-US'}} </label>
+                                  <label *ngIf="viewIncomeInfoObj.UppingRate >= 0"> {{viewIncomeInfoObj.UppingRate | number:'.2':'en-US'}} </label>
+                                  <label *ngIf="viewIncomeInfoObj.UppingRate < 0"> {{0 | number:'.2':'en-US'}} </label>
                                 </div>
                             </div>
                             <div class="row">
@@ -21,7 +22,8 @@
                                   <label class="adInsLabel"> Insurance Income </label>
                                 </div>
                                 <div class="col-md-6 form-inline form-inline-right">
-                                  <label> {{viewIncomeInfoObj.InsuranceIncome | number:'.2':'en-US'}} </label>
+                                  <label *ngIf="viewIncomeInfoObj.InsuranceIncome >= 0"> {{viewIncomeInfoObj.InsuranceIncome | number:'.2':'en-US'}} </label>
+                                  <label *ngIf="viewIncomeInfoObj.InsuranceIncome < 0"> {{0 | number:'.2':'en-US'}} </label>
                                 </div>
                             </div>
                             <div class="row">
@@ -29,7 +31,8 @@
                                   <label class="adInsLabel"> Life Insurance Income </label>
                                 </div>
                                 <div class="col-md-6 form-inline form-inline-right">
-                                  <label> {{viewIncomeInfoObj.LifeInsuranceIncome | number:'.2':'en-US'}} </label>
+                                  <label *ngIf="viewIncomeInfoObj.LifeInsuranceIncome >= 0"> {{viewIncomeInfoObj.LifeInsuranceIncome | number:'.2':'en-US'}} </label>
+                                  <label *ngIf="viewIncomeInfoObj.LifeInsuranceIncome < 0"> {{0 | number:'.2':'en-US'}} </label>
                                 </div>
                             </div>
                             <div class="row">
@@ -37,7 +40,8 @@
                                   <label class="adInsLabel"> Interest Income </label>
                                 </div>
                                 <div class="col-md-6 form-inline form-inline-right">
-                                  <label> {{viewIncomeInfoObj.InterestIncome | number:'.2':'en-US'}} </label>
+                                  <label *ngIf="viewIncomeInfoObj.InterestIncome >= 0"> {{viewIncomeInfoObj.InterestIncome | number:'.2':'en-US'}} </label>
+                                  <label *ngIf="viewIncomeInfoObj.InterestIncome < 0"> {{0 | number:'.2':'en-US'}} </label>
                                 </div>
                             </div>
                             <div class="row">
@@ -45,7 +49,8 @@
                                   <label class="adInsLabel"> Max Allocated Amount </label>
                                 </div>
                                 <div class="col-md-6 form-inline form-inline-right">
-                                  <label> {{viewIncomeInfoObj.MaxAllocatedAmount | number:'.2':'en-US'}} </label>
+                                  <label *ngIf="viewIncomeInfoObj.MaxAllocatedAmount >= 0"> {{viewIncomeInfoObj.MaxAllocatedAmount | number:'.2':'en-US'}} </label>
+                                  <label *ngIf="viewIncomeInfoObj.MaxAllocatedAmount < 0"> {{0 | number:'.2':'en-US'}} </label>
                                 </div>
                             </div>
                             <div class="row">
@@ -63,7 +68,8 @@
                                   <label class="adInsLabel"> {{ item.FeeTypeName }} </label>
                                 </div>
                                 <div class="col-md-6 form-inline form-inline-right">
-                                  <label> {{item.AppFeeAmt | number:'.2':'en-US'}} </label>
+                                  <label *ngIf="item.AppFeeAmt >= 0"> {{item.AppFeeAmt | number:'.2':'en-US'}} </label>
+                                  <label *ngIf="item.AppFeeAmt < 0"> {{0 | number:'.2':'en-US'}} </label>
                                 </div>
                             </div>
                         </div>
