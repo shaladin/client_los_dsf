@@ -109,7 +109,7 @@
         }, 
     {
       "type": "link",
-      "position": "left",
+      "position": "center",
       "property": "AgrmntNo",
       "target": "_blank",
       "path": "/Nap/View/AgrmntView", 

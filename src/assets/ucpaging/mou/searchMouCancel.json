@@ -157,7 +157,7 @@
         },
         {
             "type": "sort",
-            "position": "left",
+            "position": "center",
             "label": "MOU Status",
             "name": "MC.MOU_STAT"
         },
