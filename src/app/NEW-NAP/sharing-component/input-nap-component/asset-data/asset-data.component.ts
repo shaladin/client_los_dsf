@@ -270,7 +270,7 @@ export class AssetDataComponent implements OnInit {
   InputLookupSupplObjs: Array<InputLookupObj> = new Array<InputLookupObj>();
   dictAccLookup: { [key: string]: any; } = {};
   dictSuppLookup: { [key: string]: any; } = {};
-  isOnlookup: any;
+  isOnlookup: boolean = false;
 
   //AllAssetObjs: [{
   //  list: []
@@ -300,17 +300,17 @@ export class AssetDataComponent implements OnInit {
     if (this.CustType == AdInsConstant.CustTypeCompany) {
       await this.GetAppCustCoy();
     }
-    this.initLookup();
     this.bindAllRefMasterObj();
     await this.GetListAddr();
     //this.assetMasterObj.FullAssetCode = 'CAR';
     //this.GetAssetMaster(this.assetMasterObj);
-
+    
     this.AssetDataForm.removeControl("AssetAccessoriesObjs");
     this.AssetDataForm.addControl("AssetAccessoriesObjs", this.fb.array([]));
     //this.AllAssetObjs.splice(0, 1);
-
-    this.getAllAssetData();
+    
+    await this.getAllAssetData();
+    this.initLookup();
 
   }
 
@@ -800,11 +800,11 @@ export class AssetDataComponent implements OnInit {
   }
 
 
-  getAllAssetData() {
+  async getAllAssetData() {
     this.appData = new AppDataObj();
     this.appData.AppId = this.AppId;
     console.log(this.appData);
-    this.http.post(this.GetAllAssetDataUrl, this.appData).subscribe(
+    await this.http.post(this.GetAllAssetDataUrl, this.appData).toPromise().then(
       (response) => {
         console.log("RESPOOOON");
         this.appAssetObj = response;
@@ -960,16 +960,25 @@ export class AssetDataComponent implements OnInit {
     this.InputLookupAssetObj.addCritInput = assetCrit;
 
 
-    this.InputLookupAccObj = this.initLookupAcc();
+    // this.InputLookupAccObj = this.initLookupAcc();
     this.isOnlookup = true;
   }
   initLookupAcc() {
+    let arrAddCrit=new Array();
+    var addCrit = new CriteriaObj();
+    addCrit.DataType = "string";
+    addCrit.propName = "atp.ASSET_TYPE_CODE";
+    addCrit.restriction = AdInsConstant.RestrictionIn;
+    addCrit.listValue = [this.appAssetObj.ResponseAppAssetObj.AssetTypeCode];
+    arrAddCrit.push(addCrit);
+
     this.InputLookupAccObj = new InputLookupObj();
     this.InputLookupAccObj.urlJson = "./assets/uclookup/NAP/lookupAcc.json";
     this.InputLookupAccObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
     this.InputLookupAccObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupAccObj.pagingJson = "./assets/uclookup/NAP/lookupAcc.json";
     this.InputLookupAccObj.genericJson = "./assets/uclookup/NAP/lookupAcc.json";
+    this.InputLookupAccObj.addCritInput = arrAddCrit;
 
     return this.InputLookupAccObj;
   }
