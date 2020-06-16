@@ -1,0 +1,77 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-body">
+      <div class="px-3">
+        <div class="form-body">
+          <h4 class="form-section card-title" translate>VIEW AGREEMENT</h4>
+          <lib-ucviewgeneric [viewInput]="viewAgrMainInfo"></lib-ucviewgeneric>
+            <mat-tab-group>
+              <mat-tab label="CUSTOMER">
+                <ng-template matTabContent>
+                  <app-view-app-cust-data-personal [appId]="AppId" *ngIf="MrCustTypeCode=='PERSONAL'">
+                  </app-view-app-cust-data-personal>
+                  <app-view-app-cust-data-company [appId]="AppId" *ngIf="MrCustTypeCode=='COMPANY'">
+                  </app-view-app-cust-data-company>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="ASSET">
+                <ng-template matTabContent>
+                  <app-app-asset-data-fl4w [AgrmntId]="AgrmntId"></app-app-asset-data-fl4w>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="INSURANCE">
+                <ng-template matTabContent>
+                  <app-app-insurance-fl4w [AgrmntId]="AgrmntId"></app-app-insurance-fl4w>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="LIFE INSURANCE">
+                <ng-template matTabContent>
+                  <agrmnt-life-insurance [agrmntId]="AgrmntId"></agrmnt-life-insurance>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="FINANCIAL">
+                <ng-template matTabContent>
+                  <app-agrmnt-financial [AgrmntId]="AgrmntId"></app-agrmnt-financial>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="TC">
+                <ng-template matTabContent>
+                  <app-app-tc [AppId]="AppId"></app-app-tc>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="COMMISSION">
+                <ng-template matTabContent>
+                  <app-view-commission-agrmnt [agrmntId]="AgrmntId"></app-view-commission-agrmnt>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="RESERVED FUND">
+                <ng-template matTabContent>
+                  <agrmnt-view-reserved-fund [agrmntId]="AgrmntId"></agrmnt-view-reserved-fund>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="PURCHASE ORDER">
+                <ng-template matTabContent>
+                  <app-view-purchase-order-multi-asset [agrmntId]="AgrmntId"></app-view-purchase-order-multi-asset>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="DELIVERY ORDER">
+                <ng-template matTabContent>
+                  <app-view-delivery-order-multi-asset [AgrmntId]="AgrmntId"></app-view-delivery-order-multi-asset>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="DOCUMENT">
+                <ng-template matTabContent>
+                  <agrmnt-view-document [agrmntId]="AgrmntId"></agrmnt-view-document>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="SUMMARY">
+                <ng-template matTabContent>
+                  <app-view-summary-fl4w [AgrmntId]="AgrmntId"></app-view-summary-fl4w>
+                </ng-template>
+              </mat-tab>
+            </mat-tab-group>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
