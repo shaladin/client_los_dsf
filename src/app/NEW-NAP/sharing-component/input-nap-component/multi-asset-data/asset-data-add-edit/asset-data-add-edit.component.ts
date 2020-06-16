@@ -24,7 +24,7 @@ import { AppCollateralAttrObj } from 'app/shared/model/AppCollateralAttrObj.Mode
 import { LookupTaxCityIssuerComponent } from '../collateral-add-edit/lookup-tax-city-issuer/lookup-tax-city-issuer.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DatePipe } from '@angular/common';
-import { map, mergeMap } from 'rxjs/operators';
+import { map, mergeMap, first } from 'rxjs/operators';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { forkJoin } from 'rxjs';
 
@@ -109,6 +109,8 @@ export class AssetDataAddEditComponent implements OnInit {
   isLicensePlateMandatory: boolean = false;
   isEngineNoMandatory: boolean = false;
   isChassisNoMandatory: boolean = false;
+  appData: AppObj;
+  grossDPPrcnt: number = 0;
 
   AssetDataForm = this.fb.group({
     SupplName:[''],
@@ -223,7 +225,9 @@ SetAsset(event) {
     AssetCategoryCode: event.AssetCategoryCode,
     AssetTypeCode: event.AssetTypeCode
   });
-  console.log(event);
+  if(this.checkAssetValidationRequirement()){
+    this.CheckDP();
+  }
 }
 
 GetListAddr() {
@@ -352,6 +356,35 @@ copyToLocationAddr() {
       this.AssetDataForm.controls['LicensePlate'].updateValueAndValidity();
       this.isLicensePlateMandatory = false;
     }
+
+    if(this.checkAssetValidationRequirement()){
+      this.CheckDP();
+    }
+  }
+
+  assetUsageHandler(){
+    if(this.checkAssetValidationRequirement()){
+      this.CheckDP();
+    }
+  }
+
+  manufacturingYearHandler(){
+    if(this.checkAssetValidationRequirement()){
+      this.CheckDP();
+    }
+  }
+
+  checkAssetValidationRequirement(){
+    var hasAssetCondition = this.AssetDataForm.controls["MrAssetConditionCode"].value != '' && this.AssetDataForm.controls["MrAssetConditionCode"].value != undefined ? true : false;
+    var hasAssetUsage = this.AssetDataForm.controls["AssetUsage"].value != '' && this.AssetDataForm.controls["AssetUsage"].value != undefined ? true : false;
+    var hasManufacturingYear = this.AssetDataForm.controls["ManufacturingYear"].value != '' && this.AssetDataForm.controls["ManufacturingYear"].value != undefined ? true : false;
+    var hasAssetCategory = this.AssetDataForm.controls["AssetCategoryCode"].value != '' && this.AssetDataForm.controls["AssetCategoryCode"].value != undefined ? true : false;
+    if(hasAssetCondition && hasAssetUsage && hasManufacturingYear && hasAssetCategory){
+      return true;
+    }
+    else{
+      return false;
+    }
   }
 
   SelfUsageChange(event) {
@@ -392,6 +425,65 @@ copyToLocationAddr() {
     this.AssetDataForm.patchValue({
       AdminHeadName: this.listAdminHeadObj.find(x => x.Key == event.target.value).Value
     });
+  }
+
+  AssetValidation() {
+    var CheckValidObj = {
+      AssetCondition: this.AssetDataForm.controls["MrAssetConditionCode"].value,
+      ManufacturingYear: this.AssetDataForm.controls["ManufacturingYear"].value,
+      Tenor: this.appData.Tenor,
+      AssetCategoryCode: this.AssetDataForm.controls["AssetCategoryCode"].value,
+      MrAssetUsageCode: this.AssetDataForm.controls["AssetUsage"].value
+    }
+    return this.http.post(AdInsConstant.CheckAssetValidationRule, CheckValidObj).pipe(first());
+  }
+
+  CheckDP(){
+    let getAssetValidationRule = this.AssetValidation();
+    getAssetValidationRule.subscribe(
+      (response) => {
+        var assetValidationRule = response;
+        this.grossDPPrcnt = assetValidationRule["GrossDPPrctg"];
+        if (this.AssetDataForm.controls["MrDownPaymentTypeCode"].value == 'PRCNT') {
+          if (assetValidationRule["DPGrossBehaviour"] == 'MIN') {
+            this.AssetDataForm.patchValue({
+              DownPayment: assetValidationRule["GrossDPPrctg"]
+            });
+            this.AssetDataForm.controls["DownPayment"].setValidators([Validators.required, Validators.min(assetValidationRule["GrossDPPrctg"]), Validators.max(100)]);
+            this.AssetDataForm.controls["DownPayment"].updateValueAndValidity();
+          }
+        }
+        if (this.AssetDataForm.controls.selectedDpType.value == 'AMT') {
+          if (assetValidationRule["DPGrossBehaviour"] == 'MIN') {
+            var minDP = this.AssetDataForm.controls.AssetPriceAmt.value * assetValidationRule["GrossDPPrctg"] / 100;
+            this.AssetDataForm.patchValue({
+              DownPayment: minDP
+            });
+            this.AssetDataForm.controls["DownPayment"].setValidators([Validators.required, Validators.min(minDP)]);
+            this.AssetDataForm.controls["DownPayment"].updateValueAndValidity();
+          }
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  downPaymentChange(){
+    var value = this.AssetDataForm.controls["MrDownPaymentTypeCode"].value;
+    this.AssetDataForm.patchValue({
+      DownPayment: ''
+    });
+    if(value == "AMT"){
+      var minDP = this.AssetDataForm.controls.AssetPriceAmt.value * this.grossDPPrcnt / 100;
+      this.AssetDataForm.controls["DownPayment"].setValidators([Validators.required, Validators.min(minDP)]);
+      this.AssetDataForm.controls["DownPayment"].updateValueAndValidity();
+    }
+    else{
+      this.AssetDataForm.controls["DownPayment"].setValidators([Validators.required, Validators.min(this.grossDPPrcnt), Validators.max(100)]);
+      this.AssetDataForm.controls["DownPayment"].updateValueAndValidity();
+    }
   }
 
   ngOnInit() {
@@ -602,6 +694,7 @@ copyToLocationAddr() {
 
     this.http.post(AdInsConstant.GetAppById, {AppId: this.AppId}).pipe(
       map((response: AppObj) => {
+        this.appData = response;
         return response;
       }),
       mergeMap((response: AppObj) => {
@@ -781,7 +874,14 @@ copyToLocationAddr() {
     this.allAssetDataObj.AppAssetObj.SupplName = this.AssetDataForm.controls["SupplName"].value;
     this.allAssetDataObj.AppAssetObj.SupplCode = this.AssetDataForm.controls["SupplCode"].value;
     this.allAssetDataObj.AppAssetObj.AssetPriceAmt = this.AssetDataForm.controls["AssetPrice"].value;
-    this.allAssetDataObj.AppAssetObj.DownPaymentAmt = this.AssetDataForm.controls["DownPayment"].value;
+
+    if(this.AssetDataForm.controls["MrDownPaymentTypeCode"].value == "AMT"){
+      this.allAssetDataObj.AppAssetObj.DownPaymentAmt = this.AssetDataForm.controls["DownPayment"].value;
+    }
+    else{
+      this.allAssetDataObj.AppAssetObj.DownPaymentAmt = this.AssetDataForm.controls["AssetPrice"].value * this.AssetDataForm.controls["DownPayment"].value / 100;
+    }
+    
     this.allAssetDataObj.AppAssetObj.AssetNotes = this.AssetDataForm.controls["Notes"].value;
     this.allAssetDataObj.AppAssetObj.ManufacturingYear = this.AssetDataForm.controls["ManufacturingYear"].value;
 
