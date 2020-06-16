@@ -49,7 +49,8 @@ import { ViewPurchaseOrderMultiAssetDetailComponent } from './view-agrmnt/view-p
 import { ViewAgrmntFl4wComponent } from './view-agrmnt-fl4w/view-agrmnt-fl4w.component';
 import { AppInsuranceFl4wComponent } from './view-agrmnt-fl4w/app-insurance-fl4w/app-insurance-fl4w.component';
 import { AppAssetDataFl4wComponent } from './view-agrmnt-fl4w/app-asset-data-fl4w/app-asset-data-fl4w.component';
-import { ViewSummaryFl4wComponent } from './view-agrmnt-fl4w/view-summary-fl4w/view-summary-fl4w.component'; 
+import { ViewSummaryFl4wComponent } from './view-agrmnt-fl4w/view-summary-fl4w/view-summary-fl4w.component';
+import { AppAssetDataDetailFl4wComponent } from './view-agrmnt-fl4w/app-asset-data-fl4w/app-asset-data-detail-fl4w/app-asset-data-detail-fl4w.component'; 
  
 export const customCurrencyMaskConfig = {     
   align: "right",     
@@ -118,13 +119,14 @@ export const customCurrencyMaskConfig = {
     ViewDeliveryOrderDetailComponent,
     ViewDeliveryOrderAssetDetailComponent,
     ViewPurchaseOrderMultiAssetComponent, 
-    ViewPurchaseOrderMultiAssetDetailComponent, ViewAgrmntFl4wComponent, AppInsuranceFl4wComponent, AppAssetDataFl4wComponent, ViewSummaryFl4wComponent 
+    ViewPurchaseOrderMultiAssetDetailComponent, ViewAgrmntFl4wComponent, AppInsuranceFl4wComponent, AppAssetDataFl4wComponent, ViewSummaryFl4wComponent, AppAssetDataDetailFl4wComponent 
   ],
   providers: [
     NGXToastrService
   ],
   entryComponents: [
-    SubsidyAddEditFL4WComponent
+    SubsidyAddEditFL4WComponent,
+    AppAssetDataDetailFl4wComponent
   ]
 })
 export class InputNapFL4WModule { }

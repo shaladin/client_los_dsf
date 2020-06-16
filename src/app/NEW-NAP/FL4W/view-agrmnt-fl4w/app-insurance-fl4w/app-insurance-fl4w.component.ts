@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppAssetDataDetailComponent } from 'app/NEW-NAP/sharing-component/view-app-component/app-asset-data/app-asset-data-detail/app-asset-data-detail.component';
 import { AppInsuranceDetailComponent } from 'app/NEW-NAP/sharing-component/view-app-component/app-insurance/app-insurance-detail/app-insurance-detail.component';
+import { AppAssetDataDetailFl4wComponent } from '../app-asset-data-fl4w/app-asset-data-detail-fl4w/app-asset-data-detail-fl4w.component';
 
 @Component({
   selector: 'app-app-insurance-fl4w',
@@ -11,7 +12,7 @@ import { AppInsuranceDetailComponent } from 'app/NEW-NAP/sharing-component/view-
   styleUrls: ['./app-insurance-fl4w.component.scss']
 })
 export class AppInsuranceFl4wComponent implements OnInit {
-  @Input() AppId: number;
+  @Input() AgrmntId: number;
   appInsObjs: any;
   appCollObjs: any;
   custTotalPremi: number;
@@ -28,16 +29,14 @@ export class AppInsuranceFl4wComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.httpClient.post(AdInsConstant.GetListAppInsObjByAppIdForView, { AppId: this.AppId }).subscribe(
+    console.log('insurance')
+    this.httpClient.post(AdInsConstant.GetListAppInsObjByAgrmntIdForView, { AgrmntId: this.AgrmntId }).subscribe(
       (response: any) => {
         this.appInsObjs = response.LoanAppInsObjects;
         this.appCollObjs = response.CollateralAppInsObjects;
         this.custTotalPremi = response.AppInsurance.TotalCustPremiAmt;
         this.totalCapitalizedAmt = response.AppInsurance.TotalInsCptlzAmt;
         this.totalCustPaidAmt = response.AppInsurance.TotalPremiPaidByCustAmt;
-
-        // console.log("resins")
-        // console.log(response)
       },
       (error) => {
         console.log(error);
@@ -45,20 +44,7 @@ export class AppInsuranceFl4wComponent implements OnInit {
     );
   }
 
-  viewDetailLoanHandler(appAssetId){
-    const modalAssetDetail = this.modalService.open(AppAssetDataDetailComponent);
-    modalAssetDetail.componentInstance.AppAssetId = appAssetId;
-    modalAssetDetail.componentInstance.AppId = this.AppId;
-    modalAssetDetail.result.then().catch((error) => {
-      if(error != 0){
-        console.log(error);
-      }
-    });
-  }
-
   viewDetailCollateralHandler(appInsObjId){
-    // console.log("appInsObjId")
-    // console.log(appInsObjId)
     const modalInsDetail = this.modalService.open(AppInsuranceDetailComponent);
     modalInsDetail.componentInstance.AppInsObjId = appInsObjId;
     modalInsDetail.result.then().catch((error) => {

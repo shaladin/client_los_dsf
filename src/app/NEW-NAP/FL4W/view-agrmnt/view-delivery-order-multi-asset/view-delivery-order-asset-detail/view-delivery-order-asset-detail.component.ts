@@ -21,7 +21,6 @@ export class ViewDeliveryOrderAssetDetailComponent implements OnInit {
   }
 
   async ngOnInit(){
-    console.log('asset detail');
     this.GetAllAssetDataByAppAssetId = AdInsConstant.GetAllAssetDataByAppAssetId;
     this.GetListAppCollateralForDOView = AdInsConstant.GetListAppCollateralForDOView;
     var assetObj = { "AppAssetId" : this.AppAssetId};

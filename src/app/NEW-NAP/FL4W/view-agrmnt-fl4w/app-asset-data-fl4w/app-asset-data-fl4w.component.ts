@@ -1,9 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { forkJoin } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AppAssetDataDetailComponent } from 'app/NEW-NAP/sharing-component/view-app-component/app-asset-data/app-asset-data-detail/app-asset-data-detail.component';
+import { AppAssetDataDetailFl4wComponent } from './app-asset-data-detail-fl4w/app-asset-data-detail-fl4w.component';
 
 
 @Component({
@@ -14,7 +13,6 @@ import { AppAssetDataDetailComponent } from 'app/NEW-NAP/sharing-component/view-
 export class AppAssetDataFl4wComponent implements OnInit {
   @Input() AgrmntId: number;
   appAssetList: Array<any>;
-  appCollateralList: Array<any>;
   AppId: any;
 
   constructor(
@@ -24,12 +22,9 @@ export class AppAssetDataFl4wComponent implements OnInit {
 
   ngOnInit() {
     var request = { AgrmntId: this.AgrmntId };
-    let getAppAsset = this.httpClient.post(AdInsConstant.GetAppAssetListByAgrmntId, request);
-    let getAppCollateral = this.httpClient.post(AdInsConstant.GetViewAppCollateralObjByAppId, request);
-    forkJoin([getAppAsset, getAppCollateral]).subscribe(
+    this.httpClient.post(AdInsConstant.GetAppAssetListByAgrmntIdForViewAgrmnt, request).subscribe(
       (response) => {
-        this.appAssetList = response[0]["ReturnObject"];
-        this.appCollateralList = response[1]["AppCollateralObjs"];
+        this.appAssetList = response["ReturnObject"];
       },
       (error) => {
         console.log(error);
@@ -38,12 +33,9 @@ export class AppAssetDataFl4wComponent implements OnInit {
   }
 
   viewDetailHandler(appAssetId){
-    // console.log("assethandler")
-    // console.log(appAssetId)
-    // console.log(this.AppId)
-    const modalAssetDetail = this.modalService.open(AppAssetDataDetailComponent);
+    const modalAssetDetail = this.modalService.open(AppAssetDataDetailFl4wComponent);
     modalAssetDetail.componentInstance.AppAssetId = appAssetId;
-    modalAssetDetail.componentInstance.AppId = this.AppId;
+    modalAssetDetail.componentInstance.AgrmntId = this.AgrmntId;
     modalAssetDetail.result.then().catch((error) => {
       if(error != 0){
         console.log(error);

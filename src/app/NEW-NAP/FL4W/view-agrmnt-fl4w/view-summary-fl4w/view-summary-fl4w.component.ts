@@ -13,7 +13,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 })
 export class ViewSummaryFl4wComponent implements OnInit {
 
-  @Input() agrmntId: any;
+  @Input() AgrmntId: any;
 
   agrmntObj = {
     AgrmntId: 0,
@@ -27,7 +27,7 @@ export class ViewSummaryFl4wComponent implements OnInit {
 
   ngOnInit() {
     console.log('summary')
-    this.agrmntObj.AgrmntId = this.agrmntId;
+    this.agrmntObj.AgrmntId = this.AgrmntId;
     this.GetAgrmntSummary();
 
   }
