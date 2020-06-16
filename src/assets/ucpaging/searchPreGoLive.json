@@ -55,7 +55,7 @@
   "headerList": [
     {
       "type": "sort",
-      "position": "center",
+      "position": "left",
       "label": "CLAIM BY",
       "name": "Username"
     },
@@ -73,13 +73,13 @@
     },
     {
       "type": "sort",
-      "position": "center",
+      "position": "left",
       "label": "CUSTOMER NAME",
       "name": "CustName"
     },
     {
       "type": "sort",
-      "position": "center",
+      "position": "left",
       "label": "PRODUCT OFFERING NAME",
       "name": "ProdOfferingName"
     },
@@ -92,7 +92,7 @@
   "bodyList": [
     {
       "type": "text",
-      "position": "center",
+      "position": "left",
       "property": "Username"
     },
     {
@@ -123,12 +123,12 @@
     },
     {
       "type": "text",
-      "position": "center",
+      "position": "left",
       "property": "CustName"
     },
     {
       "type": "text",
-      "position": "center",
+      "position": "left",
       "property": "ProdOfferingName"
     },
     {

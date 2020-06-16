@@ -57,13 +57,13 @@
         },
         {
             "type": "sort",
-            "position": "left",
+            "position": "center",
             "label": "Agreement No",
             "name": "AGR.AGREEMENT_NO"
         },
         {
             "type": "sort",
-            "position": "left",
+            "position": "center",
             "label": "Application No",
             "name": "A.APP_NO"
         },
@@ -93,12 +93,12 @@
         },
         {
             "type": "text",
-            "position": "left",
+            "position": "center",
             "property": "AgreementNo"
         },
         {
             "type": "text",
-            "position": "left",
+            "position": "center",
             "property": "AppNo"
         },
         {
