@@ -524,23 +524,23 @@ export class ApplicationDataFL4WComponent implements OnInit {
     return temp;
   }
 
-  GetListAppCrossValue(){
+  GetListAppCrossValue() {
     var arr = [];
-    var temp = new NapAppCrossObj();
-    for(var i = 0; i < this.resultCrossApp.length; i++){
-      if(this.resultCrossApp[i].AppCrossId == null){
-        temp.AppId = this.resultCrossApp[i].AppId;
-        temp.CrossAgrmntNo = this.resultCrossApp[i].AgrmntNo;
-        temp.CrossAppNo = this.resultCrossApp[i].AppNo;
+    for (var i = 0; i < this.resultCrossApp.length; i++) {
+      // if (this.resultCrossApp[i].AppCrossId == 0) {
+        console.log(this.resultCrossApp[i]);
+        var temp = new NapAppCrossObj();
+        temp.AppId = this.AppId;
+        temp.CrossAgrmntNo = this.resultCrossApp[i].CrossAgrmntNo;
+        temp.CrossAppNo = this.resultCrossApp[i].CrossAppNo;
         temp.CustName = this.resultCrossApp[i].CustName;
         temp.MaturityDt = this.resultCrossApp[i].MaturityDt;
-        temp.ContractStat = this.resultCrossApp[i].AgrmntStat;
+        temp.ContractStat = this.resultCrossApp[i].ContractStat;
         arr.push(temp);
-      }
+      // }
     }
     return arr;
   }
-
   GetAppFinDataValue(){
     var temp = {
       AppId: this.AppId,
@@ -559,7 +559,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
       appObj: tempAppObj,
       listAppCrossObj: tempListAppCrossObj,
       appFinData: tempAppFindDataObj,
-      RowVersion: ""
+      RowVersion: this.resultResponse.RowVersion
     };
 
     console.log("appcross")
@@ -605,13 +605,21 @@ export class ApplicationDataFL4WComponent implements OnInit {
     this.Open(contentCrossApp);
   }
 
-  resultCrossApp=[];
-  GetDataTemp(ev){
-    for(let i of ev){
-      this.resultCrossApp.push(i);
+  resultCrossApp: Array<NapAppCrossObj> = new Array<NapAppCrossObj>();
+  GetDataTemp(ev) {
+    for (let i of ev) {
+      var tempCrossApp = new NapAppCrossObj();
+      tempCrossApp.CrossAgrmntNo=i.AgrmntNo;
+      tempCrossApp.CrossAppNo=i.AppNo;
+      tempCrossApp.CustName=i.CustName;
+      tempCrossApp.ContractStat=i.AgrmntStat;
+      tempCrossApp.MaturityDt;
+      this.resultCrossApp.push(tempCrossApp);
       this.ListCrossAppObj["result"].push(i.AgrmntNo);
     }
+    console.log(this.resultCrossApp);
   }
+
 
   DeleteCrossApp(idx){
     if (confirm('Are you sure to delete this record?')) {
