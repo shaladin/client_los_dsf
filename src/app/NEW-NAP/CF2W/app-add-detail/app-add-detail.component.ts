@@ -7,6 +7,7 @@ import { AppObj } from 'app/shared/model/App/App.Model';
 import { FormBuilder } from '@angular/forms';
 import Stepper from 'bs-stepper';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-app-add-detail',
@@ -25,6 +26,7 @@ export class AppAddDetailComponent implements OnInit {
   NapObj: AppObj;
   IsMultiAsset: string;
   ListAsset: any;
+  token : any = localStorage.getItem("Token");
 
   AppStep = {
     "NEW": 1,
@@ -229,4 +231,9 @@ export class AppAddDetailComponent implements OnInit {
     
   //     });
   // }
+
+  GetCallback(ev){
+    var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.ViewObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.ViewObj.ProdOfferingVersion + "&Token=" + this.token;
+    this.router.navigate([]).then(result => { window.open(link, '_blank'); });
+  }
 }

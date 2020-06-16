@@ -84,7 +84,7 @@ export class CustPersonalMainDataComponent implements OnInit {
       BirthPlace: ['', [Validators.required, Validators.maxLength(100)]],
       BirthDt: ['', [Validators.required]],
       MrNationalityCode: ['', Validators.maxLength(50)],
-      TaxIdNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
+      TaxIdNo: ['', [Validators.maxLength(50)]],
       MobilePhnNo1: ['', [Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
       MrEducationCode: ['', Validators.maxLength(50)],
       MobilePhnNo2: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],

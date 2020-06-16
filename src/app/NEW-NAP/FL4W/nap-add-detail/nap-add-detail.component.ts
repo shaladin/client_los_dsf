@@ -6,6 +6,7 @@ import { AppObj } from 'app/shared/model/App/App.Model';
 import Stepper from 'bs-stepper';
 import { FormBuilder } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -29,6 +30,7 @@ export class NapAddDetailComponent implements OnInit {
   ListAsset: any;
   custType: string = AdInsConstant.CustTypeCompany;
   getApp: any;
+  token : any = localStorage.getItem("Token");
 
   FormReturnObj = this.fb.group({
     ReturnExecNotes: ['']
@@ -274,5 +276,10 @@ export class NapAddDetailComponent implements OnInit {
     this.http.post(AdInsConstant.ClaimTaskNap, wfClaimObj).subscribe(
       () => {
       });
+  }
+
+  GetCallback(ev){
+    var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.ViewObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.ViewObj.ProdOfferingVersion + "&Token=" + this.token;
+    this.router.navigate([]).then(result => { window.open(link, '_blank'); });
   }
 }

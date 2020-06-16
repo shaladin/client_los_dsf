@@ -108,7 +108,7 @@ export class ApplicationDataComponent implements OnInit {
     this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeCustNotifyOpt);
     this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeFirstInstType);
     // this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeInterestType);
-    this.getPayFregData();
+    // this.getPayFregData();
     this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeInterestType);
     this.getAppSrcData();
     this.GetCrossInfoData();
@@ -208,7 +208,7 @@ export class ApplicationDataComponent implements OnInit {
           RefProdTypeCode: this.resultResponse.RefProdTypeCode,
           Tenor: this.resultResponse.Tenor,
           NumOfInst: this.resultResponse.NumOfInst,
-          PayFreqCode: this.resultResponse.PayFreqCode,
+          PayFreqCode: this.resultResponse.PayFreqCode == null ? "": this.resultResponse.PayFreqCode,
           MrFirstInstTypeCode: this.resultResponse.MrFirstInstTypeCode,
           NumOfAsset: this.resultResponse.NumOfAsset,
           MrLcCalcMethodCode: this.resultResponse.MrLcCalcMethodCode,
@@ -279,13 +279,18 @@ export class ApplicationDataComponent implements OnInit {
       (response) => {
         console.log(response);
         var objTemp = response["ReturnObject"];
+
         for(var i=0;i<objTemp.length;i++){
           this.DictRefPayFreq[objTemp[i].PayFreqCode] = objTemp[i];
         }
         this.applicationDDLitems["Floating_Period"] = objTemp;
-        this.PayFreqVal = this.DictRefPayFreq[this.resultResponse.PayFreqCode].PayFreqVal;
-        this.PayFreqTimeOfYear = this.DictRefPayFreq[this.resultResponse.PayFreqCode].TimeOfYear;
-        this.ChangeNumOfInstallmentTenor()
+
+        if(this.resultResponse.PayFreqCode != null){
+          this.PayFreqVal = this.DictRefPayFreq[this.resultResponse.PayFreqCode].PayFreqVal;
+          this.PayFreqTimeOfYear = this.DictRefPayFreq[this.resultResponse.PayFreqCode].TimeOfYear;
+        }
+
+        this.ChangeNumOfInstallmentTenor();
       },
       (error) => {
         console.log(error);
@@ -371,7 +376,7 @@ export class ApplicationDataComponent implements OnInit {
 
   ChangeNumOfInstallmentTenor() {
     var temp:number = +this.NapAppModelForm.controls.Tenor.value;
-    if (!isNaN(temp)) {
+    if (!isNaN(temp) && !isNaN(this.PayFreqTimeOfYear) && !isNaN(this.PayFreqVal)) {
       var total = Math.ceil((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
       this.PatchNumOfInstallment(total);
     }

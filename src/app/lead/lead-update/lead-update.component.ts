@@ -30,6 +30,16 @@ export class LeadUpdateComponent implements OnInit {
     this.inputPagingObj.apiQryPaging = "/Generic/GetPagingObjectBySQL";
     this.inputPagingObj.deleteUrl = "";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchLeadUpdate.json";
+    this.inputPagingObj.ddlEnvironments = [
+      {
+        name: "L.ORI_OFFICE_CODE",
+        environment: environment.FoundationR3Url
+      },
+      {
+        name: "L.MR_LEAD_SOURCE_CODE",
+        environment: environment.FoundationR3Url
+      }
+    ];
   }
 
   rejectLead(event)

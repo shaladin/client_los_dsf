@@ -30,6 +30,17 @@ export class AgrmntActivationPagingComponent implements OnInit {
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAgrmntActivation.json";
 
+    this.inputPagingObj.ddlEnvironments = [
+      {
+        name: "DISTRIBUTION_STAT",
+        environment: environment.FoundationR3Url
+      },
+      {
+        name: "TASK_CLAIM_STAT",
+        environment: environment.FoundationR3Url
+      }
+    ];
+
     var arrCrit = new Array();
     
     var critObj = new CriteriaObj();

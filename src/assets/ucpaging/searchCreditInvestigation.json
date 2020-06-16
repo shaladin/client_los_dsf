@@ -10,7 +10,9 @@
       "placeholder": "Placeholder",
       "isFromURL": true,
       "isSelectOne": false,
-      "url": "http://r3app-server.ad-ins.com/Foundation_R3/RefOffice/GetListKvpActiveRefOfficeForPaging",
+      "isQueryIn" : true,
+      "url": "",
+      "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
       "label": "OFFICE NAME",
       "items": [],
       "itemsUrl": []
