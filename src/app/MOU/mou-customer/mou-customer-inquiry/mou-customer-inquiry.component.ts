@@ -18,6 +18,17 @@ export class MouCustomerInquiryComponent implements OnInit {
     this.inputPagingObj.apiQryPaging = "/Generic/GetPagingObjectBySQL";
     this.inputPagingObj.deleteUrl = "";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchMouCustomerInquiry.json";
+
+    this.inputPagingObj.ddlEnvironments = [
+      {
+        name: "MR_MOU_TYPE_CODE",
+        environment: environment.FoundationR3Url
+      },
+      {
+        name: "MOU_STAT",
+        environment: environment.FoundationR3Url
+      }
+    ];
   }
 
 }

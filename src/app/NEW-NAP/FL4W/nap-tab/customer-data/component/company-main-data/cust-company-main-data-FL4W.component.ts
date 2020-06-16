@@ -71,7 +71,7 @@ export class CustCompanyMainDataFL4WComponent implements OnInit {
       NumOfEmp: [0,[Validators.min(0)]],
       IsAffiliated: [false],
       EstablishmentDt: ['',[Validators.required]],
-      TaxIdNo: ['', [Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
+      TaxIdNo: ['', [Validators.required, Validators.maxLength(50)]],
       IsVip: [false]
     }));
 

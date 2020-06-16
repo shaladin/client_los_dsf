@@ -28,6 +28,16 @@ export class MouCancelComponent implements OnInit {
     this.inputPagingObj.apiQryPaging = "/Generic/GetPagingObjectBySQL";
     this.inputPagingObj.deleteUrl = "";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchMouCancel.json";
+    this.inputPagingObj.ddlEnvironments = [
+      {
+        name: "MC.MR_MOU_TYPE_CODE",
+        environment: environment.FoundationR3Url
+      },
+      {
+        name: "MC.MOU_STAT",
+        environment: environment.FoundationR3Url
+      }
+    ];
   }
 
   cancelMou(event)

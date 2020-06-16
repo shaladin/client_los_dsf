@@ -121,6 +121,9 @@ export class AdInsConstant {
   public static GetListAppCross = environment.losUrl + "/AppCross/GetListAppCross";
   public static AddListAppCross = "/AppCross/AddListAppCross";
   public static AgrmntStatCancel = "CANCEL";
+  public static AgrmntStatReject = "RJC";
+  public static AgrmntStatExpired = "EXP";
+  public static AgrmntStatPaid = "RRD";
 
   // App Fctr
   public static GetAppFctrByAppId = environment.losUrl + "/AppFctr/GetAppFctrByAppId";
@@ -247,6 +250,10 @@ export class AdInsConstant {
   public static InstSchmStepUpStepDownNormal = "STNM";
   public static InstSchmStepUpStepDownLeasing = "STLS";
 
+  //REF PROD COMPNT
+  public static RefProdCompntAssetType = "ASSETTYPE";
+  public static RefProdCompntSupplSchm = "SUPPLSCHM";
+  public static RefProdCompntAssetSchm = "ASSETSCHM";
 
   //GENERAL SETTING
   public static GetBusinessDt = "/GeneralSetting/GetBusinessDate";

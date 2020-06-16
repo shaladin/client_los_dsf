@@ -63,7 +63,7 @@ export class SearchCrossAppComponent implements OnInit {
     addCrit.DataType = "string";
     addCrit.propName = "ag.AGRMNT_STAT";
     addCrit.restriction = AdInsConstant.RestrictionNotIn;
-    addCrit.listValue = [AdInsConstant.AgrmntStatCancel];
+    addCrit.listValue = [AdInsConstant.AgrmntStatCancel, AdInsConstant.AgrmntStatReject, AdInsConstant.AgrmntStatPaid, AdInsConstant.AgrmntStatExpired];
     this.arrAddCrit.push(addCrit);
 
     this.tempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/CrossAppTempPaging.json";

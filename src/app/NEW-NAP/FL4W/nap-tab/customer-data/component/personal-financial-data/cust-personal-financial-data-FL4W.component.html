@@ -6,13 +6,13 @@
       <div class="form-group row">
         <label class="col-md-2 adins-required-label" for="monthlyIncome" translate>Monthly Income </label>
         <div class="col-md-4">
-          <input type="" currencyMask id="monthlyIncome" class="form-control" formControlName="MonthlyIncomeAmt"
+          <input type="" currencyMask id="monthlyIncome" class="form-control" formControlName="MonthlyIncomeAmt" (keypress)="CalculateFinData()"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].MonthlyIncomeAmt.invalid }">
           <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].MonthlyIncomeAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
         </div>
         <label class="col-md-2" for="monthlyExpense" translate>Monthly Expense </label>
         <div class="col-md-4">
-          <input type="" currencyMask id="monthlyExpense" class="form-control" formControlName="MonthlyExpenseAmt"
+          <input type="" currencyMask id="monthlyExpense" class="form-control" formControlName="MonthlyExpenseAmt" (keypress)="CalculateFinData()"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].MonthlyExpenseAmt.invalid }">
           <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].MonthlyExpenseAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
         </div>
@@ -28,7 +28,7 @@
         </div>
         <label class="col-md-2" for="monthlyInstallment" translate>Monthly Installment </label>
         <div class="col-md-4">
-          <input type="" currencyMask id="monthlyInstallmentAmt" class="form-control" formControlName="MonthlyInstallmentAmt"
+          <input type="" currencyMask id="monthlyInstallmentAmt" class="form-control" formControlName="MonthlyInstallmentAmt" (keypress)="CalculateFinData()"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].MonthlyInstallmentAmt.invalid }">
           <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].MonthlyInstallmentAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
         </div>
@@ -42,10 +42,20 @@
       <div class="form-group row" *ngIf="parentForm.controls[identifier]['controls'].IsJoinIncome.value == true">
         <label class="col-md-2" for="spouseMonthlyIncome" translate>Spouse Monthly Income </label>
         <div class="col-md-4">
-          <input type="" currencyMask id="spouseMonthlyIncome" class="form-control" formControlName="SpouseMonthlyIncomeAmt"
+          <input type="" currencyMask id="spouseMonthlyIncome" class="form-control" formControlName="SpouseMonthlyIncomeAmt" (keypress)="CalculateFinData()"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].SpouseMonthlyIncomeAmt.invalid }">
           <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].SpouseMonthlyIncomeAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
         </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-2" translate>Total Monthly Income</label>
+        <label class="col-md-4">{{this.totalMonthlyIncome | currency : "USD" : ""}}</label>
+        <label class="col-md-2" translate>Total Monthly Expense</label>
+        <label class="col-md-4">{{this.totalMonthlyExpense | currency : "USD" : ""}}</label>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-2" translate>Nett Monthly Income</label>
+        <label class="col-md-4">{{this.nettMonthlyIncome | currency : "USD" : ""}}</label>
       </div>
     </div>
   </div>

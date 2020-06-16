@@ -110,6 +110,13 @@ export class CustGrpMemberFL4WComponent implements OnInit {
     InputLookupCustomerObj.pagingJson = "./assets/uclookup/lookupCustGrp.json";
     InputLookupCustomerObj.genericJson = "./assets/uclookup/lookupCustGrp.json";
 
+    InputLookupCustomerObj.ddlEnvironments = [
+      {
+        name: "C.MR_CUST_TYPE_CODE",
+        environment: environment.FoundationR3Url
+      },
+    ];
+
     return InputLookupCustomerObj;
   }
 
