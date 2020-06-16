@@ -61,19 +61,19 @@
     },
     {
       "type": "sort",
-      "position": "left",
+      "position": "center",
       "label": "Application No",
       "name": "A.APP_NO"
     },
     {
       "type": "sort",
-      "position": "left",
+      "position": "center",
       "label": "Agreement No",
       "name": "AGR.AGRMNT_NO"
     },
     {
       "type": "sort",
-      "position": "left",
+      "position": "center",
       "label": "Customer No",
       "name": "AGR.CUST_NO"
     },
@@ -98,7 +98,7 @@
     },
     {
       "type": "link",
-      "position": "left",
+      "position": "center",
       "property": "AppNo",
       "target": "_blank",
       "path": "/Nap/View/AppView",
@@ -111,7 +111,7 @@
     },
     {
       "type": "link",
-      "position": "left",
+      "position": "center",
       "property": "AgrmntNo",
       "target": "_blank",
       "path": "Nap/View/AgrmntView",
@@ -124,7 +124,7 @@
     },
     {
       "type": "text",
-      "position": "left",
+      "position": "center",
       "property": "CustNo"
     },
     {
