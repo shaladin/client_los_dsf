@@ -113,7 +113,7 @@
               </app-financial-data>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
-              <app-tc-data *ngIf="AppStepIndex == 9 && stepperMode == 'PERSONAL'" [AppId]="appId" (outputTab)="LastStepHandler()"></app-tc-data>
+              <app-tc-data *ngIf="AppStepIndex == 9 && stepperMode == 'PERSONAL'" [AppId]="appId" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()"></app-tc-data>
             </div>
           </div>
         </div>
