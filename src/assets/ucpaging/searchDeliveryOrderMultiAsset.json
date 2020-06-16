@@ -3,54 +3,86 @@
     "component": [
         {
             "type": "textbox",
-            "name": "AG.AGRMNT_NO",
-            "id": "AgrmntNoId",
-            "value": "",
-            "label": "AGREEMENT NO",
-            "placeholder": "Placeholder",
-            "datatype": "text"
-        },
-        {
-            "type": "textbox",
             "name": "AP.APP_NO",
             "id": "AppNoId",
             "value": "",
-            "label": "APPLICATION NO",
-            "placeholder": "Placeholder",
-            "datatype": "text"
+            "label": "Application No",
+            "placeholder": "Placeholder"
         },
         {
             "type": "textbox",
-            "name": "AG.PROD_OFFERING_NAME",
-            "id": "ProdOfferingNameId",
+            "name": "AG.AGRMNT_NO",
+            "id": "AgreementNoId",
             "value": "",
-            "label": "PROD OFFERING NAME",
-            "placeholder": "Placeholder",
-            "datatype": "text"
+            "label": "Agreement No",
+            "placeholder": "Placeholder"
         },
         {
             "type": "textbox",
             "name": "AG.CUST_NAME",
             "id": "CustNameId",
             "value": "",
-            "label": "CUSTOMER NAME",
-            "placeholder": "Placeholder",
-            "datatype": "text"
+            "label": "Customer Name",
+            "placeholder": "Placeholder"
         },
         {
-            "type" : "textbox",
-            "name" : "WF.USERNAME",
-            "id" : "TaskClaimById",
-            "value" : "",
-            "label" : "Task Claim By",
+            "type": "textbox",
+            "name": "AP.PROD_OFFERING_NAME",
+            "id": "ProdOfferingNameId",
+            "value": "",
+            "label": "Product Offering Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "AP.ORI_OFFICE_CODE",
+            "id": "OfficeNameId",
+            "value": "",
             "placeholder": "Placeholder",
-            "datatype": "text"
+            "isFromURL": true,
+            "isSelectOne": false,
+            "isQueryIn": true,
+            "url": "",
+            "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "label": "OFFICE NAME",
+            "items": [],
+            "itemsUrl": []
+        },
+        {
+            "type": "dropdown",
+            "name": "WF.CLAIM_STAT",
+            "id": "ActiveStatusId",
+            "label": "TASK CLAIM STATUS",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": false,
+            "isSelectOne": false,
+            "items": [
+                {
+                    "key": "CLAIMED",
+                    "value": "CLAIMED"
+                },
+                {
+                    "key": "UNCLAIMED",
+                    "value": "UNCLAIMED"
+                }
+            ],
+            "itemsUrl": []
+        },
+        {
+            "type": "textbox",
+            "name": "WF.USERNAME",
+            "id": "TaskClaimById",
+            "value": "",
+            "label": "Task Claim By",
+            "placeholder": "Placeholder"
         }
     ],
     "querystring": {
-        "select": "SELECT WF.USERNAME AS UserName, AG.AGRMNT_NO AS AgrmntNo, AP.APP_NO AS AppNo, AG.CUST_NAME AS CustName, AG.PROD_OFFERING_NAME AS ProdOfferingName, AG.APP_ID AS AppId, AG.AGRMNT_CURR_STEP AS AgrmntCurrStep, AG.AGRMNT_ID AS AgrmntId, WF.WF_TASK_LIST_ID AS WfTaskListId, PO.PURCHASE_ORDER_NO AS PONumber",
+        "select": "SELECT WF.USERNAME AS UserName, AP.ORI_OFFICE_NAME AS OfficeName, AG.AGRMNT_NO AS AgrmntNo, AP.APP_NO AS AppNo, AG.CUST_NAME AS CustName, AG.PROD_OFFERING_NAME AS ProdOfferingName, AG.APP_ID AS AppId, AG.AGRMNT_CURR_STEP AS AgrmntCurrStep, AG.AGRMNT_ID AS AgrmntId, WF.WF_TASK_LIST_ID AS WfTaskListId, PO.PURCHASE_ORDER_NO AS PONumber",
         "from": "FROM dbo.APP AS AP WITH(NOLOCK) INNER JOIN dbo.AGRMNT AS AG WITH(NOLOCK) ON AP.APP_ID = AG.APP_ID INNER JOIN dbo.V_WF_TASK_LIST AS WF WITH(NOLOCK) ON WF.TRANSACTION_CODE = AG.AGRMNT_NO INNER JOIN dbo.PURCHASE_ORDER_H AS PO WITH(NOLOCK) ON AG.AGRMNT_ID = PO.AGRMNT_ID",
-        "where" : "WHERE WF.END_EXECUTING_DATE IS NULL"
+        "where": "WHERE WF.END_EXECUTING_DATE IS NULL"
     },
     "headerList": [
         {
@@ -61,15 +93,9 @@
         },
         {
             "type": "sort",
-            "position": "center",
-            "label": "PURCHASE ORDER NO",
-            "name": "PO.PURCHASE_ORDER_NO"
-        },
-        {
-            "type": "sort",
-            "position": "center",
-            "label": "AGREEMENT NO",
-            "name": "AG.AGRMNT_NO"
+            "position": "left",
+            "label": "OFFICE",
+            "name": "AP.ORI_OFFICE_NAME"
         },
         {
             "type": "sort",
@@ -79,15 +105,20 @@
         },
         {
             "type": "sort",
+            "position": "center",
+            "label": "AGREEMENT NO",
+            "name": "AG.AGRMNT_NO"
+        },
+        {
+            "type": "sort",
             "position": "left",
             "label": "CUSTOMER NAME",
             "name": "AG.CUST_NAME"
         },
-       
         {
             "type": "sort",
             "position": "left",
-            "label": "PROD OFFERING NAME",
+            "label": "PRODUCT OFFERING NAME",
             "name": "AG.PROD_OFFERING_NAME"
         },
         {
@@ -104,22 +135,9 @@
         },
         {
             "type": "text",
-            "position": "center",
-            "property": "PONumber"
-        }, 
-    {
-      "type": "link",
-      "position": "center",
-      "property": "AgrmntNo",
-      "target": "_blank",
-      "path": "/Nap/View/AgrmntView", 
-      "param": [
-        {
-          "type": "AgrmntId",
-          "property": "AgrmntId"
-        }
-      ]
-    },
+            "position": "left",
+            "property": "OfficeName"
+        },
         {
             "type": "link",
             "position": "center",
@@ -127,17 +145,30 @@
             "target": "_blank",
             "path": "/Nap/View/AppView",
             "param": [
-              {
-                "type": "AppId",
-                "property": "AppId"
-              }
+                {
+                    "type": "AppId",
+                    "property": "AppId"
+                }
             ]
-          },
+        },
+        {
+            "type": "link",
+            "position": "center",
+            "property": "AgrmntNo",
+            "target": "_blank",
+            "path": "/Nap/View/AgrmntView",
+            "param": [
+                {
+                    "type": "AgrmntId",
+                    "property": "AgrmntId"
+                }
+            ]
+        },
         {
             "type": "text",
             "position": "left",
             "property": "CustName"
-        }, 
+        },
         {
             "type": "text",
             "position": "left",
