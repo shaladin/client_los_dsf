@@ -24,8 +24,9 @@ import { AppCollateralAttrObj } from 'app/shared/model/AppCollateralAttrObj.Mode
 import { LookupTaxCityIssuerComponent } from '../collateral-add-edit/lookup-tax-city-issuer/lookup-tax-city-issuer.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DatePipe } from '@angular/common';
-import { map, mergeMap } from 'rxjs/operators';
+import { map, mergeMap, first } from 'rxjs/operators';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-asset-data-add-edit',
@@ -108,6 +109,8 @@ export class AssetDataAddEditComponent implements OnInit {
   isLicensePlateMandatory: boolean = false;
   isEngineNoMandatory: boolean = false;
   isChassisNoMandatory: boolean = false;
+  appData: AppObj;
+  grossDPPrcnt: number = 0;
 
   AssetDataForm = this.fb.group({
     SupplName:[''],
@@ -133,6 +136,7 @@ export class AssetDataAddEditComponent implements OnInit {
     AssetPrice:['', [Validators.required, Validators.min(1.00)]],
     DownPayment:['', [Validators.required]],
     MrAssetConditionCode:[''],
+    MrAssetConditionCodeView:[''],
     AssetUsage:[''],
     LicensePlate:[''],
     ChassisNo:[''],
@@ -221,7 +225,9 @@ SetAsset(event) {
     AssetCategoryCode: event.AssetCategoryCode,
     AssetTypeCode: event.AssetTypeCode
   });
-  console.log(event);
+  if(this.checkAssetValidationRequirement()){
+    this.CheckDP();
+  }
 }
 
 GetListAddr() {
@@ -350,6 +356,35 @@ copyToLocationAddr() {
       this.AssetDataForm.controls['LicensePlate'].updateValueAndValidity();
       this.isLicensePlateMandatory = false;
     }
+
+    if(this.checkAssetValidationRequirement()){
+      this.CheckDP();
+    }
+  }
+
+  assetUsageHandler(){
+    if(this.checkAssetValidationRequirement()){
+      this.CheckDP();
+    }
+  }
+
+  manufacturingYearHandler(){
+    if(this.checkAssetValidationRequirement()){
+      this.CheckDP();
+    }
+  }
+
+  checkAssetValidationRequirement(){
+    var hasAssetCondition = this.AssetDataForm.controls["MrAssetConditionCode"].value != '' && this.AssetDataForm.controls["MrAssetConditionCode"].value != undefined ? true : false;
+    var hasAssetUsage = this.AssetDataForm.controls["AssetUsage"].value != '' && this.AssetDataForm.controls["AssetUsage"].value != undefined ? true : false;
+    var hasManufacturingYear = this.AssetDataForm.controls["ManufacturingYear"].value != '' && this.AssetDataForm.controls["ManufacturingYear"].value != undefined ? true : false;
+    var hasAssetCategory = this.AssetDataForm.controls["AssetCategoryCode"].value != '' && this.AssetDataForm.controls["AssetCategoryCode"].value != undefined ? true : false;
+    if(hasAssetCondition && hasAssetUsage && hasManufacturingYear && hasAssetCategory){
+      return true;
+    }
+    else{
+      return false;
+    }
   }
 
   SelfUsageChange(event) {
@@ -390,6 +425,65 @@ copyToLocationAddr() {
     this.AssetDataForm.patchValue({
       AdminHeadName: this.listAdminHeadObj.find(x => x.Key == event.target.value).Value
     });
+  }
+
+  AssetValidation() {
+    var CheckValidObj = {
+      AssetCondition: this.AssetDataForm.controls["MrAssetConditionCode"].value,
+      ManufacturingYear: this.AssetDataForm.controls["ManufacturingYear"].value,
+      Tenor: this.appData.Tenor,
+      AssetCategoryCode: this.AssetDataForm.controls["AssetCategoryCode"].value,
+      MrAssetUsageCode: this.AssetDataForm.controls["AssetUsage"].value
+    }
+    return this.http.post(AdInsConstant.CheckAssetValidationRule, CheckValidObj).pipe(first());
+  }
+
+  CheckDP(){
+    let getAssetValidationRule = this.AssetValidation();
+    getAssetValidationRule.subscribe(
+      (response) => {
+        var assetValidationRule = response;
+        this.grossDPPrcnt = assetValidationRule["GrossDPPrctg"];
+        if (this.AssetDataForm.controls["MrDownPaymentTypeCode"].value == 'PRCNT') {
+          if (assetValidationRule["DPGrossBehaviour"] == 'MIN') {
+            this.AssetDataForm.patchValue({
+              DownPayment: assetValidationRule["GrossDPPrctg"]
+            });
+            this.AssetDataForm.controls["DownPayment"].setValidators([Validators.required, Validators.min(assetValidationRule["GrossDPPrctg"]), Validators.max(100)]);
+            this.AssetDataForm.controls["DownPayment"].updateValueAndValidity();
+          }
+        }
+        if (this.AssetDataForm.controls["MrDownPaymentTypeCode"].value == 'AMT') {
+          if (assetValidationRule["DPGrossBehaviour"] == 'MIN') {
+            var minDP = this.AssetDataForm.controls.AssetPriceAmt.value * assetValidationRule["GrossDPPrctg"] / 100;
+            this.AssetDataForm.patchValue({
+              DownPayment: minDP
+            });
+            this.AssetDataForm.controls["DownPayment"].setValidators([Validators.required, Validators.min(minDP)]);
+            this.AssetDataForm.controls["DownPayment"].updateValueAndValidity();
+          }
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  downPaymentChange(){
+    var value = this.AssetDataForm.controls["MrDownPaymentTypeCode"].value;
+    this.AssetDataForm.patchValue({
+      DownPayment: ''
+    });
+    if(value == "AMT"){
+      var minDP = this.AssetDataForm.controls.AssetPriceAmt.value * this.grossDPPrcnt / 100;
+      this.AssetDataForm.controls["DownPayment"].setValidators([Validators.required, Validators.min(minDP)]);
+      this.AssetDataForm.controls["DownPayment"].updateValueAndValidity();
+    }
+    else{
+      this.AssetDataForm.controls["DownPayment"].setValidators([Validators.required, Validators.min(this.grossDPPrcnt), Validators.max(100)]);
+      this.AssetDataForm.controls["DownPayment"].updateValueAndValidity();
+    }
   }
 
   ngOnInit() {
@@ -591,22 +685,45 @@ copyToLocationAddr() {
     this.InputLookupSupplierObj.pagingJson = "./assets/uclookup/NAP/lookupSupplier_CollateralAsset_FL4W.json";
     this.InputLookupSupplierObj.genericJson = "./assets/uclookup/NAP/lookupSupplier_CollateralAsset_FL4W.json";
 
+    this.InputLookupAssetObj = new InputLookupObj();
+    this.InputLookupAssetObj.urlJson = "./assets/uclookup/NAP/lookupAsset.json";
+    this.InputLookupAssetObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.InputLookupAssetObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupAssetObj.pagingJson = "./assets/uclookup/NAP/lookupAsset.json";
+    this.InputLookupAssetObj.genericJson = "./assets/uclookup/NAP/lookupAsset.json";
+
     this.http.post(AdInsConstant.GetAppById, {AppId: this.AppId}).pipe(
       map((response: AppObj) => {
+        this.appData = response;
         return response;
       }),
       mergeMap((response: AppObj) => {
-        return this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, {ProdOfferingCode: response.ProdOfferingCode, RefProdCompntCode: "SUPPLSCHM", ProdOfferingVersion: response.ProdOfferingVersion});
+        let getVendorSchmCode = this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, {ProdOfferingCode: response.ProdOfferingCode, RefProdCompntCode: "SUPPLSCHM", ProdOfferingVersion: response.ProdOfferingVersion});
+        let getAssetCond = this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, {ProdOfferingCode: response.ProdOfferingCode, RefProdCompntCode: "ASSETCOND", ProdOfferingVersion: response.ProdOfferingVersion});
+        let getAssetType = this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, {ProdOfferingCode: response.ProdOfferingCode, RefProdCompntCode: "ASSETTYPE", ProdOfferingVersion: response.ProdOfferingVersion});
+        let getAssetSchm = this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, {ProdOfferingCode: response.ProdOfferingCode, RefProdCompntCode: "ASSETSCHM", ProdOfferingVersion: response.ProdOfferingVersion});
+        return forkJoin([getVendorSchmCode, getAssetCond, getAssetType, getAssetSchm]);
       })
     ).subscribe(
       (response) => {
+        var vendorSchmCode = response[0];
+        var assetCond = response[1];
+        var assetType = response[2];
+        var assetSchm = response[3];
         var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+
+        this.AssetDataForm.patchValue({ 
+          MrAssetConditionCode: assetCond["CompntValue"],
+          MrAssetConditionCodeView: assetCond["CompntValue"]
+        });
+        this.AssetDataForm.controls["MrAssetConditionCodeView"].disable();
+
         var arrCritSuppl = new Array<CriteriaObj>();
         var critObjSuppl = new CriteriaObj();
         critObjSuppl.DataType = "text";
         critObjSuppl.restriction = AdInsConstant.RestrictionEq;
         critObjSuppl.propName = "vs.VENDOR_SCHM_CODE";
-        critObjSuppl.value = response["CompntValue"];
+        critObjSuppl.value = vendorSchmCode["CompntValue"];
         arrCritSuppl.push(critObjSuppl);
 
         critObjSuppl = new CriteriaObj();
@@ -615,34 +732,37 @@ copyToLocationAddr() {
         critObjSuppl.propName = "ro.OFFICE_CODE";
         critObjSuppl.value = currentUserContext["OfficeCode"];
         arrCritSuppl.push(critObjSuppl);
+        this.InputLookupSupplierObj.addCritInput = arrCritSuppl;
         this.InputLookupSupplierObj.isReady = true;
+
+        var arrCritAsset = new Array<CriteriaObj>();
+        var critObjAsset = new CriteriaObj();
+        critObjAsset.DataType = "text";
+        critObjAsset.restriction = AdInsConstant.RestrictionEq;
+        critObjAsset.propName = 'B.ASSET_TYPE_CODE';
+        critObjAsset.value = assetType["CompntValue"];
+        arrCritAsset.push(critObjAsset);
+
+        critObjAsset = new CriteriaObj();
+        critObjAsset.DataType = "text";
+        critObjAsset.restriction = AdInsConstant.RestrictionEq;
+        critObjAsset.propName = 'E.ASSET_SCHM_CODE';
+        critObjAsset.value = assetSchm["CompntValue"];
+        arrCritAsset.push(critObjAsset);
+        this.InputLookupAssetObj.addCritInput = arrCritAsset;
+        this.InputLookupAssetObj.isReady = true;
       },
       (error) => {
         console.log(error);
       }
     );
 
-    this.InputLookupAssetObj = new InputLookupObj();
-    this.InputLookupAssetObj.urlJson = "./assets/uclookup/NAP/lookupAsset.json";
-    this.InputLookupAssetObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupAssetObj.urlEnviPaging = environment.FoundationR3Url;
-    this.InputLookupAssetObj.pagingJson = "./assets/uclookup/NAP/lookupAsset.json";
-    this.InputLookupAssetObj.genericJson = "./assets/uclookup/NAP/lookupAsset.json";
-
-    var arrCrit = new Array<CriteriaObj>();
-    var critObj = new CriteriaObj();
-    critObj.restriction = AdInsConstant.RestrictionEq;
-    critObj.propName = 'B.ASSET_TYPE_CODE';
-    critObj.value = AdInsConstant.ASSET_TYPE_CAR;
-    arrCrit.push(critObj);
-    this.InputLookupAssetObj.addCritInput = arrCrit;
-
     this.assetConditionObj = new RefMasterObj();
     this.assetConditionObj.RefMasterTypeCode = "ASSET_CONDITION";
     this.http.post(this.getListActiveRefMasterUrl, this.assetConditionObj).subscribe(
       (response) => {
         this.returnAssetConditionObj = response["ReturnObject"];
-        this.AssetDataForm.patchValue({ MrAssetConditionCode: response['ReturnObject'][0]['Key'] });
+        // this.AssetDataForm.patchValue({ MrAssetConditionCode: response['ReturnObject'][0]['Key'] });
       }
     );
 
@@ -754,7 +874,14 @@ copyToLocationAddr() {
     this.allAssetDataObj.AppAssetObj.SupplName = this.AssetDataForm.controls["SupplName"].value;
     this.allAssetDataObj.AppAssetObj.SupplCode = this.AssetDataForm.controls["SupplCode"].value;
     this.allAssetDataObj.AppAssetObj.AssetPriceAmt = this.AssetDataForm.controls["AssetPrice"].value;
-    this.allAssetDataObj.AppAssetObj.DownPaymentAmt = this.AssetDataForm.controls["DownPayment"].value;
+
+    if(this.AssetDataForm.controls["MrDownPaymentTypeCode"].value == "AMT"){
+      this.allAssetDataObj.AppAssetObj.DownPaymentAmt = this.AssetDataForm.controls["DownPayment"].value;
+    }
+    else{
+      this.allAssetDataObj.AppAssetObj.DownPaymentAmt = this.AssetDataForm.controls["AssetPrice"].value * this.AssetDataForm.controls["DownPayment"].value / 100;
+    }
+    
     this.allAssetDataObj.AppAssetObj.AssetNotes = this.AssetDataForm.controls["Notes"].value;
     this.allAssetDataObj.AppAssetObj.ManufacturingYear = this.AssetDataForm.controls["ManufacturingYear"].value;
 

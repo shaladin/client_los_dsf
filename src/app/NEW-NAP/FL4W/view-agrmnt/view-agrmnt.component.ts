@@ -2,12 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-view-agrmnt',
   templateUrl: './view-agrmnt.component.html'
 })
 export class ViewAgrmntComponent implements OnInit {
+
+  viewEnvironment: string;
 
   constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
@@ -20,15 +23,16 @@ export class ViewAgrmntComponent implements OnInit {
   viewAgrMainInfo: string;
   AgrmntId: number;
   AppId: number;
-  MrCustTypeCode : string;
+  MrCustTypeCode: string;
   ngOnInit() {
     this.viewAgrMainInfo = "./assets/ucviewgeneric/viewAgrMainInfo.json";
+    this.viewEnvironment = environment.FoundationR3Url;
 
     var AgrmntObj = {
       AgrmntId: this.AgrmntId
     }
     this.http.post(AdInsConstant.GetAgrmntByAgrmntId, AgrmntObj).subscribe(
-      (response) => { 
+      (response) => {
         this.AppId = response["AppId"];
         console.log(this.AppId);
 
@@ -36,9 +40,9 @@ export class ViewAgrmntComponent implements OnInit {
           AppId: this.AppId
         }
         this.http.post(AdInsConstant.GetAppCustByAppId, AppObj).subscribe(
-          (response) => { 
-           this.MrCustTypeCode = response["MrCustTypeCode"];
-           console.log(this.MrCustTypeCode);
+          (response) => {
+            this.MrCustTypeCode = response["MrCustTypeCode"];
+            console.log(this.MrCustTypeCode);
           });
       }
     );
