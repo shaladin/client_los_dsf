@@ -276,11 +276,14 @@ copyToLocationAddr() {
     this.http.post(this.getListVendorEmp, this.branchObj).subscribe(
     (response) => {
         this.listBranchObj = response["ReturnObject"];
-        this.AssetDataForm.patchValue({ 
-          BranchManagerNo: response['ReturnObject'][0]['Key'],
-          BranchManagerName: response['ReturnObject'][0]['Value'] 
-        });
-      
+        if(this.listBranchObj){
+          if(this.listBranchObj.length > 0){
+            this.AssetDataForm.patchValue({ 
+              BranchManagerNo: response['ReturnObject'][0]['Key'],
+              BranchManagerName: response['ReturnObject'][0]['Value'] 
+            });
+          }
+        }
     });
 
     this.salesObj = new VendorEmpObj();
@@ -289,11 +292,14 @@ copyToLocationAddr() {
     this.http.post(this.getListVendorEmp, this.salesObj).subscribe(
     (response) => {
         this.listSalesObj = response["ReturnObject"];
-        this.AssetDataForm.patchValue({ 
-          SalesPersonNo: response['ReturnObject'][0]['Key'],
-          SalesPersonName: response['ReturnObject'][0]['Value']
-        });
-      
+        if(this.listSalesObj){
+          if(this.listSalesObj.length > 0){
+            this.AssetDataForm.patchValue({ 
+              SalesPersonNo: response['ReturnObject'][0]['Key'],
+              SalesPersonName: response['ReturnObject'][0]['Value']
+            });
+          }
+        }
     });
 
     this.adminHeadObj = new VendorEmpObj();
@@ -301,13 +307,15 @@ copyToLocationAddr() {
     this.adminHeadObj.MrVendorEmpPositionCode = AdInsConstant.ADMIN_HEAD_JOB_CODE;
     this.http.post(this.getListVendorEmp, this.adminHeadObj).subscribe(
     (response) => {
-        console.log("admin head list : " + JSON.stringify(response));
         this.listAdminHeadObj = response["ReturnObject"];
-        this.AssetDataForm.patchValue({ 
-          AdminHeadNo: response['ReturnObject'][0]['Key'],
-          AdminHeadName: response['ReturnObject'][0]['Value'] 
-        });
-      
+        if(this.listAdminHeadObj){
+          if(this.listAdminHeadObj.length > 0){
+            this.AssetDataForm.patchValue({ 
+              AdminHeadNo: response['ReturnObject'][0]['Key'],
+              AdminHeadName: response['ReturnObject'][0]['Value'] 
+            });
+          }
+        }
     });
   }
 
@@ -443,6 +451,7 @@ copyToLocationAddr() {
     getAssetValidationRule.subscribe(
       (response) => {
         var assetValidationRule = response;
+        console.log("AssetValidationRule: " + JSON.stringify(response));
         this.grossDPPrcnt = assetValidationRule["GrossDPPrctg"];
         if (this.AssetDataForm.controls["MrDownPaymentTypeCode"].value == 'PRCNT') {
           if (assetValidationRule["DPGrossBehaviour"] == 'MIN') {
@@ -455,7 +464,7 @@ copyToLocationAddr() {
         }
         if (this.AssetDataForm.controls["MrDownPaymentTypeCode"].value == 'AMT') {
           if (assetValidationRule["DPGrossBehaviour"] == 'MIN') {
-            var minDP = this.AssetDataForm.controls.AssetPriceAmt.value * assetValidationRule["GrossDPPrctg"] / 100;
+            var minDP = this.AssetDataForm.controls["AssetPrice"].value * assetValidationRule["GrossDPPrctg"] / 100;
             this.AssetDataForm.patchValue({
               DownPayment: minDP
             });
@@ -476,7 +485,7 @@ copyToLocationAddr() {
       DownPayment: ''
     });
     if(value == "AMT"){
-      var minDP = this.AssetDataForm.controls.AssetPriceAmt.value * this.grossDPPrcnt / 100;
+      var minDP = this.AssetDataForm.controls["AssetPrice"].value * this.grossDPPrcnt / 100;
       this.AssetDataForm.controls["DownPayment"].setValidators([Validators.required, Validators.min(minDP)]);
       this.AssetDataForm.controls["DownPayment"].updateValueAndValidity();
     }
