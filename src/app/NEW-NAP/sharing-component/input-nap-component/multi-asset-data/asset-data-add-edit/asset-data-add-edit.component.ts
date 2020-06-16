@@ -26,6 +26,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DatePipe } from '@angular/common';
 import { map, mergeMap } from 'rxjs/operators';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-asset-data-add-edit',
@@ -133,6 +134,7 @@ export class AssetDataAddEditComponent implements OnInit {
     AssetPrice:['', [Validators.required, Validators.min(1.00)]],
     DownPayment:['', [Validators.required]],
     MrAssetConditionCode:[''],
+    MrAssetConditionCodeView:[''],
     AssetUsage:[''],
     LicensePlate:[''],
     ChassisNo:[''],
@@ -591,23 +593,44 @@ copyToLocationAddr() {
     this.InputLookupSupplierObj.pagingJson = "./assets/uclookup/NAP/lookupSupplier_CollateralAsset_FL4W.json";
     this.InputLookupSupplierObj.genericJson = "./assets/uclookup/NAP/lookupSupplier_CollateralAsset_FL4W.json";
 
+    this.InputLookupAssetObj = new InputLookupObj();
+    this.InputLookupAssetObj.urlJson = "./assets/uclookup/NAP/lookupAsset.json";
+    this.InputLookupAssetObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.InputLookupAssetObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupAssetObj.pagingJson = "./assets/uclookup/NAP/lookupAsset.json";
+    this.InputLookupAssetObj.genericJson = "./assets/uclookup/NAP/lookupAsset.json";
+
     this.http.post(AdInsConstant.GetAppById, {AppId: this.AppId}).pipe(
       map((response: AppObj) => {
         return response;
       }),
       mergeMap((response: AppObj) => {
-        return this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, {ProdOfferingCode: response.ProdOfferingCode, RefProdCompntCode: "SUPPLSCHM", ProdOfferingVersion: response.ProdOfferingVersion});
+        let getVendorSchmCode = this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, {ProdOfferingCode: response.ProdOfferingCode, RefProdCompntCode: "SUPPLSCHM", ProdOfferingVersion: response.ProdOfferingVersion});
+        let getAssetCond = this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, {ProdOfferingCode: response.ProdOfferingCode, RefProdCompntCode: "ASSETCOND", ProdOfferingVersion: response.ProdOfferingVersion});
+        let getAssetType = this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, {ProdOfferingCode: response.ProdOfferingCode, RefProdCompntCode: "ASSETTYPE", ProdOfferingVersion: response.ProdOfferingVersion});
+        let getAssetSchm = this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, {ProdOfferingCode: response.ProdOfferingCode, RefProdCompntCode: "ASSETSCHM", ProdOfferingVersion: response.ProdOfferingVersion});
+        return forkJoin([getVendorSchmCode, getAssetCond, getAssetType, getAssetSchm]);
       })
     ).subscribe(
       (response) => {
-        console.log("Response Prod Offering: " + JSON.stringify(response));
+        var vendorSchmCode = response[0];
+        var assetCond = response[1];
+        var assetType = response[2];
+        var assetSchm = response[3];
         var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+
+        this.AssetDataForm.patchValue({ 
+          MrAssetConditionCode: assetCond["CompntValue"],
+          MrAssetConditionCodeView: assetCond["CompntValue"]
+        });
+        this.AssetDataForm.controls["MrAssetConditionCodeView"].disable();
+
         var arrCritSuppl = new Array<CriteriaObj>();
         var critObjSuppl = new CriteriaObj();
         critObjSuppl.DataType = "text";
         critObjSuppl.restriction = AdInsConstant.RestrictionEq;
         critObjSuppl.propName = "vs.VENDOR_SCHM_CODE";
-        critObjSuppl.value = response["CompntValue"];
+        critObjSuppl.value = vendorSchmCode["CompntValue"];
         arrCritSuppl.push(critObjSuppl);
 
         critObjSuppl = new CriteriaObj();
@@ -618,33 +641,35 @@ copyToLocationAddr() {
         arrCritSuppl.push(critObjSuppl);
         this.InputLookupSupplierObj.addCritInput = arrCritSuppl;
         this.InputLookupSupplierObj.isReady = true;
+
+        var arrCritAsset = new Array<CriteriaObj>();
+        var critObjAsset = new CriteriaObj();
+        critObjAsset.DataType = "text";
+        critObjAsset.restriction = AdInsConstant.RestrictionEq;
+        critObjAsset.propName = 'B.ASSET_TYPE_CODE';
+        critObjAsset.value = assetType["CompntValue"];
+        arrCritAsset.push(critObjAsset);
+
+        critObjAsset = new CriteriaObj();
+        critObjAsset.DataType = "text";
+        critObjAsset.restriction = AdInsConstant.RestrictionEq;
+        critObjAsset.propName = 'E.ASSET_SCHM_CODE';
+        critObjAsset.value = assetSchm["CompntValue"];
+        arrCritAsset.push(critObjAsset);
+        this.InputLookupAssetObj.addCritInput = arrCritAsset;
+        this.InputLookupAssetObj.isReady = true;
       },
       (error) => {
         console.log(error);
       }
     );
 
-    this.InputLookupAssetObj = new InputLookupObj();
-    this.InputLookupAssetObj.urlJson = "./assets/uclookup/NAP/lookupAsset.json";
-    this.InputLookupAssetObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupAssetObj.urlEnviPaging = environment.FoundationR3Url;
-    this.InputLookupAssetObj.pagingJson = "./assets/uclookup/NAP/lookupAsset.json";
-    this.InputLookupAssetObj.genericJson = "./assets/uclookup/NAP/lookupAsset.json";
-
-    var arrCrit = new Array<CriteriaObj>();
-    var critObj = new CriteriaObj();
-    critObj.restriction = AdInsConstant.RestrictionEq;
-    critObj.propName = 'B.ASSET_TYPE_CODE';
-    critObj.value = AdInsConstant.ASSET_TYPE_CAR;
-    arrCrit.push(critObj);
-    this.InputLookupAssetObj.addCritInput = arrCrit;
-
     this.assetConditionObj = new RefMasterObj();
     this.assetConditionObj.RefMasterTypeCode = "ASSET_CONDITION";
     this.http.post(this.getListActiveRefMasterUrl, this.assetConditionObj).subscribe(
       (response) => {
         this.returnAssetConditionObj = response["ReturnObject"];
-        this.AssetDataForm.patchValue({ MrAssetConditionCode: response['ReturnObject'][0]['Key'] });
+        // this.AssetDataForm.patchValue({ MrAssetConditionCode: response['ReturnObject'][0]['Key'] });
       }
     );
 
