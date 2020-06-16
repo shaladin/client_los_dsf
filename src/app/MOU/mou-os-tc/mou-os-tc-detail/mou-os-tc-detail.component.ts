@@ -18,9 +18,6 @@ export class MouOsTcDetailComponent implements OnInit {
   MouCustId: number = 0;
   mouType: string;
 
-  MouTcDataForm = this.fb.group({
-  })
-
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       this.MouCustId = params["MouCustId"];
@@ -34,7 +31,10 @@ export class MouOsTcDetailComponent implements OnInit {
   ngOnInit() {
   }
 
-  getValue() {
+  getValue(response) {
+    if (response["StatusCode"].toString() == "200") {
+      this.redirect();
+    }
   }
 
   back() {
@@ -48,11 +48,9 @@ export class MouOsTcDetailComponent implements OnInit {
   saveMouTc() {
     if (this.mouType == AdInsConstant.GENERAL) {
       this.mouTcGeneral.Save();
-      this.redirect();
     }
     else if (this.mouType == AdInsConstant.FACTORING) {
       this.mouTcFactoring.Save();
-      this.redirect();
     }
   }
 }
