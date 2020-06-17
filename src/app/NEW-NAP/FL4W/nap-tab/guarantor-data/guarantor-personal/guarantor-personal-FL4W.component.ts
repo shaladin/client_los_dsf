@@ -440,7 +440,9 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
     let d3 = new Date(this.guarantorPersonalObj.AppGuarantorPersonalObj.BirthDt);
     let d4 = new Date(this.Max17YO);
     if (d3 > d4) {
-      this.toastr.errorMessage("Birth Date can not be more than " + this.Max17YO);
+      // this.toastr.errorMessage("Birth Date can not be more than " + this.Max17YO);
+      this.toastr.errorMessage("Customer age must be at least 17 year old");
+      
       flag = false;
     }
     this.guarantorPersonalObj.AppGuarantorPersonalObj.IdExpDt = this.PersonalForm.controls.IdExpDt.value;
