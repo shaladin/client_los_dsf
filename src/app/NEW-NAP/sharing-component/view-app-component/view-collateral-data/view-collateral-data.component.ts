@@ -9,8 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-view-collateral-data',
-  templateUrl: './view-collateral-data.component.html',
-  styleUrls: ['./view-collateral-data.component.scss']
+  templateUrl: './view-collateral-data.component.html'
 })
 export class ViewCollateralDataComponent implements OnInit {
 

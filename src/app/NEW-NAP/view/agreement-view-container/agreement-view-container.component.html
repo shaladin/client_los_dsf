@@ -26,6 +26,12 @@
               </ng-template>
             </mat-tab>
 
+            <mat-tab label="Collateral">
+              <ng-template matTabContent>
+                <agrmnt-view-collateral [agrmntId]="AgrmntId"></agrmnt-view-collateral>
+              </ng-template>
+            </mat-tab>
+
             <mat-tab label="Insurance">
               <ng-template matTabContent>
                 <view-insurance [AppId]="ResponseAppDetailData?.AppId"></view-insurance>
