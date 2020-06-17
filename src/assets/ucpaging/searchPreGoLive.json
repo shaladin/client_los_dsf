@@ -4,26 +4,18 @@
   "component": [
     {
       "type": "textbox",
-      "name": "agr.AGRMNT_NO",
-      "id": "AgrmntNo",
-      "value": "",
-      "label": "AGREEMENT NO",
-      "placeholder": "Placeholder"
-    },
-    {
-      "type": "textbox",
       "name": "app.APP_NO",
       "id": "AppNoId",
       "value": "",
-      "label": "APPLICATION NO",
+      "label": "Application No",
       "placeholder": "Placeholder"
     },
     {
       "type": "textbox",
-      "name": "agr.PROD_OFFERING_NAME",
-      "id": "ProdOfferingNameId",
+      "name": "agr.AGRMNT_NO",
+      "id": "AgreementNoId",
       "value": "",
-      "label": "PROD OFFERING NAME",
+      "label": "Agreement No",
       "placeholder": "Placeholder"
     },
     {
@@ -31,15 +23,60 @@
       "name": "agr.CUST_NAME",
       "id": "CustNameId",
       "value": "",
-      "label": "CUSTOMER NAME",
+      "label": "Customer Name",
       "placeholder": "Placeholder"
     },
     {
       "type": "textbox",
-      "name": "wFht.USERNAME",
-      "id": "UsernameId",
+      "name": "app.PROD_OFFERING_NAME",
+      "id": "ProdOfferingNameId",
       "value": "",
-      "label": "TASK CLAIM BY",
+      "label": "Product Offering Name",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "dropdown",
+      "datatype": "text",
+      "name": "app.ORI_OFFICE_CODE",
+      "id": "OfficeNameId",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": true,
+      "isSelectOne": false,
+      "isQueryIn": true,
+      "url": "",
+      "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+      "label": "OFFICE NAME",
+      "items": [],
+      "itemsUrl": []
+    },
+    {
+      "type": "dropdown",
+      "name": "wFht.CLAIM_STAT",
+      "id": "ActiveStatusId",
+      "label": "TASK CLAIM STATUS",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": false,
+      "isSelectOne": false,
+      "items": [
+        {
+          "key": "CLAIMED",
+          "value": "CLAIMED"
+        },
+        {
+          "key": "UNCLAIMED",
+          "value": "UNCLAIMED"
+        }
+      ],
+      "itemsUrl": []
+    },
+    {
+      "type": "textbox",
+      "name": "wFht.USERNAME",
+      "id": "TaskClaimById",
+      "value": "",
+      "label": "Task Claim By",
       "placeholder": "Placeholder"
     }
   ],
@@ -56,32 +93,38 @@
     {
       "type": "sort",
       "position": "left",
-      "label": "CLAIM BY",
-      "name": "Username"
-    },
-    {
-      "type": "sort",
-      "position": "center",
-      "label": "AGREEMENT NO",
-      "name": "AgrmntNo"
-    },
-    {
-      "type": "sort",
-      "position": "center",
-      "label": "APPLICATION NO",
-      "name": "AppNo"
+      "label": "Claim By",
+      "name": "wFht.USERNAME"
     },
     {
       "type": "sort",
       "position": "left",
-      "label": "CUSTOMER NAME",
-      "name": "CustName"
+      "label": "OFFICE",
+      "name": "app.ORI_OFFICE_NAME"
     },
     {
       "type": "sort",
       "position": "left",
-      "label": "PRODUCT OFFERING NAME",
-      "name": "ProdOfferingName"
+      "label": "Application No",
+      "name": "app.APP_NO"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Agreement No",
+      "name": "agr.AGRMNT_NO"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Customer Name",
+      "name": "agr.CUST_NAME"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Product Offering Name",
+      "name": "agr.PROD_OFFERING_NAME"
     },
     {
       "type": "label",
@@ -96,17 +139,9 @@
       "property": "Username"
     },
     {
-      "type": "link",
+      "type": "text",
       "position": "left",
-      "property": "AgrmntNo",
-      "target": "_blank",
-      "path": "/Nap/View/AgrmntView", 
-      "param": [
-        {
-          "type": "AgrmntId",
-          "property": "AgrmntId"
-        }
-      ]
+      "property": "OfficeName"
     },
     {
       "type": "link",
@@ -118,6 +153,19 @@
         {
           "type": "AppId",
           "property": "AppId"
+        }
+      ]
+    },
+    {
+      "type": "link",
+      "position": "left",
+      "property": "AgrmntNo",
+      "target": "_blank",
+      "path": "/Nap/View/AgrmntView",
+      "param": [
+        {
+          "type": "AgrmntId",
+          "property": "AgrmntId"
         }
       ]
     },

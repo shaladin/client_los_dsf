@@ -12,18 +12,18 @@
         },
         {
             "type": "textbox",
-            "name": "a.PROD_OFFERING_NAME",
-            "id": "ProdOfferingNameId",
-            "value": "",
-            "label": "Product Offering Name",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type": "textbox",
             "name": "ac.CUST_NAME",
             "id": "CustNameId",
             "value": "",
             "label": "Customer Name",
+            "placeholder": "Placeholder"
+        }, 
+        {
+            "type": "textbox",
+            "name": "a.PROD_OFFERING_NAME",
+            "id": "ProdOfferingNameId",
+            "value": "",
+            "label": "Product Offering Name",
             "placeholder": "Placeholder"
         },
         {
@@ -35,11 +35,11 @@
             "isFromURL": true,
             "isSelectOne": false,
             "url": "",
-            "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
             "label": "Office",
             "items": [],
             "itemsUrl": [],
-            "isQueryIn" : true
+            "isQueryIn": true
         },
         {
             "type": "dropdown",
@@ -86,15 +86,15 @@
         },
         {
             "type": "sort",
-            "position": "left",
-            "label": "Customer Name",
-            "name": "CustName"
-        },
-        {
-            "type": "sort",
             "position": "center",
             "label": "Application No",
             "name": "AppNo"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Customer Name",
+            "name": "CustName"
         },
         {
             "type": "sort",
@@ -112,7 +112,6 @@
         "select": "SELECT ac.MR_CUST_TYPE_CODE as CustTypeCode, a.ORI_OFFICE_NAME AS OfficeName, a.ORI_OFFICE_CODE AS OfficeCode, a.APP_NO AS AppNo, ac.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.APP_ID AS AppId, ac.IS_EXISTING_CUST AS IsExistingCust, WTL.WF_TASK_LIST_ID AS WfTaskListId, a.APP_ID AS AppId, WTL.USERNAME AS ClaimBy, WTL.CLAIM_STAT AS ClaimStat, RL.BIZ_TMPLT_CODE AS BizTmpltCode",
         "from": "FROM dbo.APP a WITH(NOLOCK) JOIN dbo.APP_CUST ac WITH(NOLOCK) ON a.APP_ID = ac.APP_ID JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON a.APP_NO = WTL.TRANSACTION_CODE AND WTL.ACT_CODE = 'DUP_CHECK' JOIN [dbo].[V_REF_LOB] RL WITH(NOLOCK) ON a.LOB_CODE = RL.LOB_CODE",
         "where": "WHERE WTL.END_EXECUTING_DATE IS NULL AND ac.IS_APP_CUST_CHECKED = '0'"
-
     },
     "bodyList": [
         {
@@ -126,23 +125,23 @@
             "property": "OfficeName"
         },
         {
-            "type": "text",
-            "position": "left",
-            "property": "CustName"
-        },
-        {
             "type": "link",
             "position": "center",
             "property": "AppNo",
             "target": "_blank",
             "path": "/Nap/View/AppView",
             "param": [
-              {
-                "type": "AppId",
-                "property": "AppId"
-              }
+                {
+                    "type": "AppId",
+                    "property": "AppId"
+                }
             ]
-          },
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustName"
+        },
         {
             "type": "text",
             "position": "left",
@@ -189,6 +188,3 @@
         }
     ]
 }
-
-        
-        
