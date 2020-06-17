@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { Sort } from '@angular/material';
+import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 
 @Component({
   selector: 'app-tab-application-data',
@@ -24,6 +25,9 @@ export class TabApplicationDataComponent implements OnInit {
   AppDetailFinData;
   AssetInsuranceAndLifeInsuranceData;
   InsuranceTitle;
+  inputGridObj: InputGridObj;
+  IsGridTcReady: boolean = false;
+
   InitData(){
     // this.appId = 31;
     this.GuarantorData = new Array();
@@ -88,6 +92,7 @@ export class TabApplicationDataComponent implements OnInit {
     await this.GetAppDetailData();
     await this.GetDealerData();
     await this.GetCommData();
+    await this.GetAppTc();
     if(this.AssetInsuranceAndLifeInsuranceData.CoverBy=="CO"){
       this.InsuranceTitle ="Asset Insurance";
     }else{
@@ -254,6 +259,32 @@ export class TabApplicationDataComponent implements OnInit {
       }
     );
   }
+
+  async GetAppTc(){
+    this.inputGridObj = new InputGridObj();
+    this.inputGridObj.pagingJson = "./assets/ucgridview/gridAppTc.json";
+
+    
+    var AppObj = {
+      AppId: this.AppId
+    }
+
+    this.http.post(AdInsConstant.GetListTCbyAppId, AppObj).toPromise().then(
+      (response) => {
+        console.log(response);
+        this.inputGridObj.resultData = {
+          Data: ""
+        }
+        this.inputGridObj.resultData["Data"] = new Array();
+        this.inputGridObj.resultData.Data = response["AppTcs"]
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    this.IsGridTcReady = true;
+  }
+  
 
   sortGuarantorData(sort: Sort) {
     const data = this.GuarantorData.slice();

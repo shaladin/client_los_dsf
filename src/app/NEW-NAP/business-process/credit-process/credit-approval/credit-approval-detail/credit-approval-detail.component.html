@@ -13,9 +13,14 @@
           </app-view-app-cust-data-company>
         </ng-template>
       </mat-tab>
-      <mat-tab label="Application Data">
+      <mat-tab *ngIf="BizTemplateCode != 'FL4W'" label="Application Data">
         <ng-template matTabContent>
           <app-tab-application-data [AppId]="appId"></app-tab-application-data>
+        </ng-template>
+      </mat-tab>
+      <mat-tab *ngIf="BizTemplateCode == 'FL4W'" label="Application Data">
+        <ng-template matTabContent>
+          <app-view-application-data-multi [AppId]=appId></app-view-application-data-multi>
         </ng-template>
       </mat-tab>
       <mat-tab label="Fraud Detection Result">

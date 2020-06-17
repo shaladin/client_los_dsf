@@ -317,7 +317,11 @@
               </tbody>
             </table>
           </div>
-
+          <lib-ucSubsection [id]="'viewAppTcId'" [title]="'Term & Condition'" [panel]="'viewAppTcInfo'">
+          </lib-ucSubsection>
+          <div class="form-body" id="viewAppTcInfo">
+              <lib-ucgridview *ngIf="IsGridTcReady" [gridInput]="inputGridObj"></lib-ucgridview>
+          </div>
         </div>
       </div>
     </div>
