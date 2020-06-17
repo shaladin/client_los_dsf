@@ -127,7 +127,7 @@
                             <div class="col-md-6" *ngFor="let item of AssetObj?.AgrmntFeeListObj">
                                 <div class="row">
                                     <label class="col-md-6">{{item.FeeName}} </label>
-                                    <label class="col-md-6 text-right">{{item.AppFeeAmt | number}} </label>
+                                    <label class="col-md-6 text-right">{{item.AppFeeAmt - item.CptlzAmt | number}} </label>
                                 </div>
                             </div>
                             <div class="col-md-12">
