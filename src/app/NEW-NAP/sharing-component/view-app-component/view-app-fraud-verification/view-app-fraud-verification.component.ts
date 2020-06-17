@@ -23,6 +23,8 @@ export class ViewAppFraudVerificationComponent implements OnInit {
   negCustList: Array<any>;
   appAssetList: Array<any>;
   negAssetList: Array<any>;
+  viewDukcapilObj: string;
+  arrValue = [];
 
   constructor(
     private httpClient: HttpClient,
@@ -30,6 +32,8 @@ export class ViewAppFraudVerificationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.arrValue.push(this.AppId);
+    this.viewDukcapilObj = "./assets/ucviewgeneric/viewDukcapilMainInfo.json";
     this.httpClient.post(AdInsConstant.GetAppById, { AppId: this.AppId }).pipe(
       map((response) => {
         this.appData = response;
