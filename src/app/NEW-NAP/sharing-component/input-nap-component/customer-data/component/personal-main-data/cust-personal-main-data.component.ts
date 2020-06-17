@@ -80,7 +80,7 @@ export class CustPersonalMainDataComponent implements OnInit {
       IdNo: ['', [Validators.required, Validators.maxLength(50)]],
       MotherMaidenName: ['', [Validators.required, Validators.maxLength(500)]],
       IdExpiredDt: [''],
-      MrMaritalStatCode: ['', Validators.maxLength(50)],
+      MrMaritalStatCode: ['', [Validators.required, Validators.maxLength(50)]],
       BirthPlace: ['', [Validators.required, Validators.maxLength(100)]],
       BirthDt: ['', [Validators.required]],
       MrNationalityCode: ['', Validators.maxLength(50)],
