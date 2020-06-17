@@ -30,10 +30,15 @@
 <lib-ucSubsection [id]="'TermConditionsId'" [title]="'Term & Conditions'" [panel]="'TermConditions'">
 </lib-ucSubsection>
 <div class="form-body" id="TermConditions">
-    <form class="form form-horizontal" [formGroup]="tcForm" (ngSubmit)="tcForm.valid && SaveForm()" #enjiForm="ngForm">
-        <app-term-conditions [AppId]="AppId" [parentForm]="tcForm" [enjiForm]="enjiForm"></app-term-conditions>
-        <button type="submit" class="btn btn-raised btn-primary pull-right" translate>
-            <i class="fa fa-check-square-o"></i> Save
-        </button>
-    </form>
+  <form class="form form-horizontal" [formGroup]="tcForm" (ngSubmit)="tcForm.valid && SaveForm()" #enjiForm="ngForm">
+    <app-term-conditions [AppId]="AppId" [parentForm]="tcForm" [enjiForm]="enjiForm"></app-term-conditions>
+    <div class="form-actions right">
+      <button type="button" class="btn btn-raised btn-warning mr-1 margin-r-5" (click)="Cancel()">
+        <i class="ft-x"></i> Cancel
+      </button>
+      <button type="submit" class="btn btn-raised btn-primary">
+        <i class="far fa-check-square"></i> Save
+      </button>
+    </div>
+  </form>
 </div>
