@@ -43,7 +43,7 @@ import { CreditApprovalDetailComponent } from './credit-approval/credit-approval
 import { ViewAppComponentModule } from "app/NEW-NAP/sharing-component/view-app-component/view-app-component.module";
 import { ViewAppFraudVerificationComponent } from "app/NEW-NAP/sharing-component/view-app-component/view-app-fraud-verification/view-app-fraud-verification.component";
 import { ViewApplicationDataMultiComponent } from "./credit-investigation/component/view-application-data-multi/view-application-data-multi.component";
-import { AppMainInfoComponent } from 'app/NEW-NAP/sharing-component/view-main-info-component/app-main-info/app-main-info.component';
+import { ViewMainInfoComponentModule } from "app/NEW-NAP/sharing-component/view-main-info-component/view-main-info-component.module";
 
 
 export const customCurrencyMaskConfig = {
@@ -84,6 +84,7 @@ export const customCurrencyMaskConfig = {
     ViewSharingComponentModule,
     UcviewgenericModule,
     ViewAppComponentModule,
+    ViewMainInfoComponentModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
   ],
   declarations: [
@@ -114,7 +115,6 @@ export const customCurrencyMaskConfig = {
     CreditApprovalDetailComponent,
     ViewAppFraudVerificationComponent,
     ViewApplicationDataMultiComponent,
-    AppMainInfoComponent
   ],
   providers: [
     NGXToastrService
