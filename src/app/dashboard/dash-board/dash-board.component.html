@@ -3,67 +3,14 @@
     <lib-ucthingstodo [ThingsToDoObj]="Item">
     </lib-ucthingstodo>
   </div>
-  <div class="col-md-4 col-xl-4 col-lg-12" style="margin-top : 10px !important">
-    <div class="card" style="height:300px;">
-      <div class="card-body">
-        <div class="card-block">
-          <h4 class="card-title text-center">Application In This Month</h4>
-        </div>
-        <br>
-        <div class="text-center">
-          <i class="ft-package" style="font-size:120px;color:darkblue;"></i>
-        </div>
-        <br>
-        <div>
-          <h2 class="text-center">30 Application</h2>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <div class="col-md-4 col-xl-4 col-lg-12" style="margin-top : 10px !important">
-    <div class="card" style="height:300px;">
-      <div class="card-body">
-        <div class="card-block">
-          <h4 class="card-title text-center">Application Live This Month</h4>
-        </div>
-        <br>
-        <div class="text-center">
-          <i class="ft-award" style="font-size:120px;color:limegreen;"></i>
-        </div>
-        <br>
-        <div>
-          <h2 class="text-center">5 Application</h2>
-        </div>
-      </div>
-    </div>
+  <div class="col-md-8 col-xl-8 col-lg-12" style="margin-top : 10px !important">
+    <lib-front-dash [inUsername]="username" [inOfficeCode]="officeCode" [inRoleCode]="roleCode" [inUrl]="url">
+    </lib-front-dash>
   </div>
 </div>
-
-<br>
-<!--Line with Area Chart 1 Starts-->
 <div class="row">
-  <div class="col-sm-12 col-md-12">
-    <div class="card">
-      <div class="card-header">
-        <h4 class="card-title">PRODUCTS SALES 2020</h4>
-      </div>
-      <div class="card-body">
-        <div class="card-block">
-          <div class="chart-info mb-3 ml-3">
-            <span class="gradient-blackberry d-inline-block rounded-circle mr-1"
-              style="width:15px; height:15px;"></span> Consumer Finance
-            <span class="gradient-mint d-inline-block rounded-circle mr-1 ml-2" style="width:15px; height:15px;"></span>
-            Refinancing
-          </div>
-          <div id="line-area" class="height-350 lineArea">
-            <x-chartist [data]="lineArea.data" [type]="lineArea.type" [options]="lineArea.options"
-              [responsiveOptions]="lineArea.responsiveOptions" [events]="lineArea.events">
-            </x-chartist>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <lib-front-dash2 class="col-md-12" [inUsername]="username" [inOfficeCode]="officeCode" [inRoleCode]="roleCode" [inUrl]="url">
+  </lib-front-dash2>
+
 </div>
-<!--Line with Area Chart 1 Ends-->

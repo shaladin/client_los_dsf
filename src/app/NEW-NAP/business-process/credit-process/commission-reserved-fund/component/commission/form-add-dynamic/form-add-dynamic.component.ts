@@ -17,7 +17,8 @@ export class FormAddDynamicComponent implements OnInit {
   @Input() FormInputObj;
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient  ) { }
+    private http: HttpClient,
+    private toastr: NGXToastrService  ) { }
 
   FormObj = this.fb.group({
     arr: this.fb.array([])
@@ -221,18 +222,27 @@ export class FormAddDynamicComponent implements OnInit {
     var trxAmt = new Array();
     for(var i = len-1; i >= 0; i--){
       if(this.arr.controls[i].controls.ContentName.value != ""){
+
+        var lenAllocated = this.arr.controls[i].controls.ListAllocated.controls.length;
+        var tempTrxAmt = new Array();
+        let totalCommAmt = 0;
+        for(var j=0;j<lenAllocated;j++){
+          totalCommAmt += this.arr.controls[i].controls.ListAllocated.controls[j].controls.AllocationAmount.value;
+          tempTrxAmt.push(this.arr.controls[i].controls.ListAllocated.controls[j].controls.AllocationAmount.value);
+        }
+        // console.log(totalCommAmt);
+        if (totalCommAmt == 0){
+          this.FormInputObj["isCalculated"] = false;
+          return this.toastr.errorMessage("Please Allocate at least 1 item for " + this.arr.controls[i].controls.ContentName.value);
+        }
+          
+        trxAmt.push(tempTrxAmt);
         if(this.FormInputObj["content"] == AdInsConstant.ContentSupplierEmp){
           vendorCode.push(this.tempDDLContentName[i].SupplCode);
           vendorEmpNo.push(this.arr.controls[i].controls.ContentName.value);
         }else{
           vendorCode.push(this.arr.controls[i].controls.ContentName.value);
         }
-        var lenAllocated = this.arr.controls[i].controls.ListAllocated.controls.length;
-        var tempTrxAmt = new Array();
-        for(var j=0;j<lenAllocated;j++){
-          tempTrxAmt.push(this.arr.controls[i].controls.ListAllocated.controls[j].controls.AllocationAmount.value);
-        }
-        trxAmt.push(tempTrxAmt);
         
       }else{
         this.DeleteDataForm(i);
@@ -455,15 +465,27 @@ export class FormAddDynamicComponent implements OnInit {
     for(var i=0;i<objExist.AppCommissionD.length;i++){
       var idxRuleObj = tempRuleObj.indexOf(tempRuleObj.find(x => x.AllocationFrom == objExist.AppCommissionD[i].MrCommissionSourceCode));
       // console.log(tempRuleObj[idxRuleObj]);
+
+      let behaviour: string = tempRuleObj[idxRuleObj].AllocationBehaviour;
+      let maxAllocAmt: number = tempRuleObj[idxRuleObj].MaxAllocationAmount;
+      if (maxAllocAmt <= 0) {
+        behaviour = "LOCK";
+        maxAllocAmt = 0;
+      }
+
+      let allocAmt: number = objExist.AppCommissionD[i].CommissionAmt;
+      if (allocAmt <= 0)
+        allocAmt = 0;
+
       var eachAllocationDetail = this.fb.group({
         AppCommissionDId: [objExist.AppCommissionD[i].AppCommissionDId],
         AppCommissionHId: [objExist.AppCommissionD[i].AppCommissionHId],
         AllocationFromSeq: [tempRuleObj[idxRuleObj].AllocationFromSeq],
         AllocationFrom: [objExist.AppCommissionD[i].MrCommissionSourceCode],
         AllocationFromDesc: [tempRuleObj[idxRuleObj].AllocationFromDesc],
-        MaxAllocationAmount: [tempRuleObj[idxRuleObj].MaxAllocationAmount],
-        AllocationAmount: [objExist.AppCommissionD[i].CommissionAmt, [Validators.pattern("^[0-9]+([,.][0-9]+)?$"), Validators.max(tempRuleObj[idxRuleObj].MaxAllocationAmount)]],
-        AllocationBehaviour: [tempRuleObj[idxRuleObj].AllocationBehaviour],
+        MaxAllocationAmount: [maxAllocAmt],
+        AllocationAmount: [allocAmt, [Validators.pattern("^[0-9]+([,.][0-9]+)?$"), Validators.max(maxAllocAmt)]],
+        AllocationBehaviour: [behaviour],
         TaxAmt: [objExist.AppCommissionD[i].TaxAmt],
         VatAmt: [objExist.AppCommissionD[i].VatAmt],
         PenaltyAmt: [objExist.AppCommissionD[i].PenaltyAmt],
@@ -532,15 +554,27 @@ export class FormAddDynamicComponent implements OnInit {
     var temp =this.GetTempRuleObj(code, idx);
     var TotalCommisionAmount = 0;
     for(var i=0;i<temp.length;i++){
+
+      let behaviour: string = temp[i].AllocationBehaviour;
+      let maxAllocAmt: number = temp[i].MaxAllocationAmount;
+      if (maxAllocAmt <= 0) {
+        behaviour = "LOCK";
+        maxAllocAmt = 0;
+      }
+
+      let allocAmt: number = temp[i].AllocationAmount;
+      if (allocAmt <= 0)
+        allocAmt = 0;
+
       var eachAllocationDetail = this.fb.group({
         AppCommissionDId: [0],
         AppCommissionHId: [0],
         AllocationFromSeq: [temp[i].AllocationFromSeq],
         AllocationFrom: [temp[i].AllocationFrom],
         AllocationFromDesc: [temp[i].AllocationFromDesc],
-        MaxAllocationAmount: [temp[i].MaxAllocationAmount],
-        AllocationAmount: [temp[i].AllocationAmount],
-        AllocationBehaviour: [temp[i].AllocationBehaviour],
+        MaxAllocationAmount: [maxAllocAmt],
+        AllocationAmount: [allocAmt, [Validators.pattern("^[0-9]+([,.][0-9]+)?$"), Validators.max(maxAllocAmt)]],
+        AllocationBehaviour: [behaviour],
         TaxAmt: [0],
         VatAmt: [0],
         PenaltyAmt: [0],
