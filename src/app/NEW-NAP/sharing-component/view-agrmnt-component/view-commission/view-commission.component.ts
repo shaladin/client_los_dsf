@@ -6,8 +6,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 
 @Component({
   selector: 'app-view-commission-agrmnt',
-  templateUrl: './view-commission.component.html',
-  styleUrls: ['./view-commission.component.scss']
+  templateUrl: './view-commission.component.html'
 })
 export class ViewCommissionComponent implements OnInit {
 
