@@ -27,11 +27,14 @@ $spacers: (
 $body-bg:       #f5f7fa;
 
 // Fonts
-$font-family-sans-serif:Open Sans;
-//$font-family-sans-serif: "Montserrat", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-//$font-family-content: "Montserrat", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+// $font-family-sans-serif:Open Sans;
+// $font-family-sans-serif: "Montserrat", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+// $font-family-content: "Montserrat", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 //$font-family-content:Roboto,"Helvetica Neue",sans-serif;
-$font-family-content:Open Sans;
+// $font-family-content:Open Sans;
 //$font-family-content:'Open Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
 
-$font-size-root: 14px;
+$font-family-sans-serif: Arial, Helvetica, sans-serif;
+$font-family-content: Arial, Helvetica, sans-serif;
+
+$font-size-root: 12px;

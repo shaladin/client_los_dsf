@@ -115,8 +115,9 @@
   </table>
 </div>
 </div>
-
-<app-view-survey-task-list *ngIf="isDataAlreadyLoaded" [trxRefNo]="trxRefNo" [mrSrvySourceCode]="mrSrvySourceCode"></app-view-survey-task-list>
+<div class="card px-3">
+  <app-view-survey-task-list *ngIf="isDataAlreadyLoaded" [trxRefNo]="trxRefNo" [mrSrvySourceCode]="mrSrvySourceCode"></app-view-survey-task-list>
+</div>
 
 <div class="card px-3" *ngIf="mrCustTypeCode == 'PERSONAL'">
   <lib-ucSubsection [id]="'DukId'" [title]="'Dukcapil'" [panel]="'Duk'">

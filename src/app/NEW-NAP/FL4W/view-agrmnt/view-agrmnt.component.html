@@ -17,9 +17,14 @@
                 <app-app-asset-data [AppId]="AppId"></app-app-asset-data>
               </ng-template>
             </mat-tab>
+            <mat-tab label="COLLATERAL">
+              <ng-template matTabContent>
+                <agrmnt-view-collateral [agrmntId]="AgrmntId"></agrmnt-view-collateral>
+              </ng-template>
+            </mat-tab>
             <mat-tab label="INSURANCE">
               <ng-template matTabContent>
-                <app-app-insurance [AppId]="AppId"></app-app-insurance>
+                <agrmnt-view-insurance [agrmntId]="AgrmntId"></agrmnt-view-insurance>
               </ng-template>
             </mat-tab>
             <mat-tab label="LIFE INSURANCE">
