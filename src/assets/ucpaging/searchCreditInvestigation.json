@@ -1,6 +1,30 @@
 {
   "title": "CREDIT INVESTIGATION PAGING",
-  "component": [
+  "component": [ 
+    {
+      "type": "textbox",
+      "name": "A.APP_NO",
+      "id": "AppNoId",
+      "value": "",
+      "label": "APPLICATION NO",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "AC.CUST_NAME",
+      "id": "CustNameId",
+      "value": "",
+      "label": "CUSTOMER NAME",
+      "placeholder": "Placeholder"
+    }, 
+    {
+      "type": "textbox",
+      "name": "A.PROD_OFFERING_NAME",
+      "id": "ProdOfferingNameId",
+      "value": "",
+      "label": "PRODUCT OFFERING NAME",
+      "placeholder": "Placeholder"
+    },
     {
       "type": "dropdown",
       "datatype": "text",
@@ -13,33 +37,9 @@
       "isQueryIn" : true,
       "url": "",
       "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
-      "label": "OFFICE NAME",
+      "label": "OFFICE",
       "items": [],
       "itemsUrl": []
-    },
-    {
-      "type": "textbox",
-      "name": "AC.CUST_NAME",
-      "id": "CustNameId",
-      "value": "",
-      "label": "CUSTOMER NAME",
-      "placeholder": "Placeholder"
-    },
-    {
-      "type": "textbox",
-      "name": "A.APP_NO",
-      "id": "AppNoId",
-      "value": "",
-      "label": "APPLICATION NO",
-      "placeholder": "Placeholder"
-    },
-    {
-      "type": "textbox",
-      "name": "A.PROD_OFFERING_NAME",
-      "id": "ProdOfferingNameId",
-      "value": "",
-      "label": "PROD OFFERING NAME",
-      "placeholder": "Placeholder"
     },
     {
       "type": "dropdown",
@@ -90,7 +90,7 @@
     {
       "type": "sort",
       "position": "left",
-      "label": "OFFICE NAME",
+      "label": "OFFICE",
       "name": "A.ORI_OFFICE_NAME"
     },
     {
@@ -108,7 +108,7 @@
     {
       "type": "sort",
       "position": "left",
-      "label": "PROD OFFERING NAME",
+      "label": "PRODUCT OFFERING NAME",
       "name": "A.PROD_OFFERING_NAME"
     },
     {

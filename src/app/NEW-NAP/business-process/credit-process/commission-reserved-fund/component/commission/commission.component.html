@@ -108,7 +108,7 @@
                             <div class="col-md-2 form-inline">
                                 <label>Total Commision Amount</label>
                             </div>
-                            <div class="col-md-2 form-inline form-inline-right">
+                            <div class="col-md-4 form-inline form-inline-right">
                                 <label *ngIf="Summary.TotalCommisionAmount <= viewIncomeInfoObj.MaxAllocatedAmount"
                                     style="text-align: right;">
                                     {{Summary.TotalCommisionAmount | number:'.2':'en-US'}} </label>
@@ -121,7 +121,7 @@
                             <div class="col-md-2 form-inline">
                                 <label>Total TAX</label>
                             </div>
-                            <div class="col-md-2 form-inline form-inline-right">
+                            <div class="col-md-4 form-inline form-inline-right">
                                 <label>{{Summary.TotalTaxAmmount | number:'.2':'en-US'}}</label>
                             </div>
                         </div>
@@ -129,7 +129,7 @@
                             <div class="col-md-2 form-inline">
                                 <label>Total VAT</label>
                             </div>
-                            <div class="col-md-2 form-inline form-inline-right">
+                            <div class="col-md-4 form-inline form-inline-right">
                                 <label>{{Summary.TotalVATAmount | number:'.2':'en-US'}}</label>
                             </div>
                         </div>
@@ -137,7 +137,7 @@
                             <div class="col-md-2 form-inline">
                                 <label>Gross Yield</label>
                             </div>
-                            <div class="col-md-2 form-inline form-inline-right">
+                            <div class="col-md-4 form-inline form-inline-right">
                                 <label>{{Summary.GrossYield | number:'.2':'en-US'}}</label>
                             </div>
                         </div>

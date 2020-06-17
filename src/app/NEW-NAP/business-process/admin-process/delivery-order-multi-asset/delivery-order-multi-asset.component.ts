@@ -30,7 +30,12 @@ export class DeliveryOrderMultiAssetComponent implements OnInit {
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchDeliveryOrderMultiAsset.json";
-
+    this.inputPagingObj.ddlEnvironments = [
+      {
+        name: "AP.ORI_OFFICE_CODE",
+        environment: environment.FoundationR3Url
+      }
+    ];
     var criteriaList = new Array();
     
     var critObj = new CriteriaObj();

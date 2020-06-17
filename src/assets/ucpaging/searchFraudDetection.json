@@ -12,18 +12,18 @@
     },
     {
       "type": "textbox",
-      "name": "a.PROD_OFFERING_NAME",
-      "id": "ProdOfferingNameId",
-      "value": "",
-      "label": "Product Offering Name",
-      "placeholder": "Placeholder"
-    },
-    {
-      "type": "textbox",
       "name": "ac.CUST_NAME",
       "id": "CustNameId",
       "value": "",
       "label": "Customer Name",
+      "placeholder": "Placeholder"
+    }, 
+    {
+      "type": "textbox",
+      "name": "a.PROD_OFFERING_NAME",
+      "id": "ProdOfferingNameId",
+      "value": "",
+      "label": "Product Offering Name",
       "placeholder": "Placeholder"
     },
     {
@@ -39,9 +39,44 @@
       "label": "Office",
       "items": [],
       "itemsUrl": []
+    },
+    {
+      "type": "dropdown",
+      "name": "WTL.CLAIM_STAT",
+      "id": "ActiveStatusId",
+      "label": "TASK CLAIM STATUS",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": false,
+      "isSelectOne": false,
+      "items": [
+        {
+          "key": "CLAIMED",
+          "value": "CLAIMED"
+        },
+        {
+          "key": "UNCLAIMED",
+          "value": "UNCLAIMED"
+        }
+      ],
+      "itemsUrl": []
+    },
+    {
+      "type": "textbox",
+      "name": "WTL.USERNAME",
+      "id": "claimById",
+      "value": "",
+      "label": "CLAIM BY",
+      "placeholder": "Placeholder"
     }
   ],
   "headerList": [
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Claim By",
+      "name": "ClaimBy"
+    },
     {
       "type": "sort",
       "position": "left",
@@ -50,16 +85,16 @@
     },
     {
       "type": "sort",
-      "position": "left",
-      "label": "Customer Name",
-      "name": "ac.CUST_NAME"
-    },
-    {
-      "type": "sort",
       "position": "center",
       "label": "Application No",
       "name": "a.APP_NO"
     },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Customer Name",
+      "name": "ac.CUST_NAME"
+    }, 
     {
       "type": "sort",
       "position": "left",
@@ -73,7 +108,7 @@
     }
   ],
   "querystring": {
-    "select": "SELECT ac.MR_CUST_TYPE_CODE as CustTypeCode, a.BIZ_TEMPLATE_CODE AS BizTemplateCode, a.ORI_OFFICE_NAME AS OfficeName, a.ORI_OFFICE_CODE AS OfficeCode, a.APP_NO AS AppNo, ac.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.APP_ID AS AppId, ac.IS_EXISTING_CUST AS IsExistingCust, WTL.WF_TASK_LIST_ID AS WfTaskListId, WTL.USERNAME AS ClaimBy, a.APP_ID AS AppId",
+    "select": "SELECT ac.MR_CUST_TYPE_CODE as CustTypeCode, a.BIZ_TEMPLATE_CODE AS BizTemplateCode, a.ORI_OFFICE_NAME AS OfficeName, a.ORI_OFFICE_CODE AS OfficeCode, a.APP_NO AS AppNo, ac.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.APP_ID AS AppId, ac.IS_EXISTING_CUST AS IsExistingCust, WTL.WF_TASK_LIST_ID AS WfTaskListId, WTL.USERNAME AS ClaimBy, a.APP_ID AS AppId" ,
     "from": "FROM dbo.APP a WITH(NOLOCK) JOIN dbo.APP_CUST ac WITH(NOLOCK) ON a.APP_ID = ac.APP_ID JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON a.APP_NO = WTL.TRANSACTION_CODE",
     "where": "WHERE WTL.END_EXECUTING_DATE IS NULL"
   },
@@ -81,12 +116,12 @@
     {
       "type": "text",
       "position": "left",
-      "property": "OfficeName"
+      "property": "ClaimBy"
     },
     {
       "type": "text",
       "position": "left",
-      "property": "CustName"
+      "property": "OfficeName"
     },
     {
       "type": "link",
@@ -101,6 +136,11 @@
         }
       ]
     },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "CustName"
+    }, 
     {
       "type": "text",
       "position": "left",

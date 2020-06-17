@@ -17,6 +17,14 @@
             "value": "",
             "label": "CUSTOMER NAME",
             "placeholder": "Placeholder"
+        }, 
+        {
+            "type": "textbox",
+            "name": "A.PROD_OFFERING_NAME",
+            "id": "ProdOfferingNameId",
+            "value": "",
+            "label": "PROD OFFERING NAME",
+            "placeholder": "Placeholder"
         },
         {
             "type": "dropdown",
@@ -29,25 +37,9 @@
             "isSelectOne": false,
             "url": "",
             "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
-            "label": "OFFICE NAME",
+            "label": "OFFICE",
             "items": [],
             "itemsUrl": []
-        },
-        {
-            "type": "textbox",
-            "name": "A.PROD_OFFERING_NAME",
-            "id": "ProdOfferingNameId",
-            "value": "",
-            "label": "PROD OFFERING NAME",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type": "textbox",
-            "name": "WTL.USERNAME",
-            "id": "claimById",
-            "value": "",
-            "label": "CLAIM BY",
-            "placeholder": "Placeholder"
         },
         {
             "type": "dropdown",
@@ -69,7 +61,15 @@
                 }
             ],
             "itemsUrl": []
-        }
+        }, 
+        {
+            "type": "textbox",
+            "name": "WTL.USERNAME",
+            "id": "claimById",
+            "value": "",
+            "label": "CLAIM BY",
+            "placeholder": "Placeholder"
+        } 
     ],
     "querystring": {
         "select": "SELECT WTL.USERNAME AS ClaimBy, A.ORI_OFFICE_NAME AS OriOfficeName, A.APP_NO AS AppNo, AC.CUST_NAME AS CustName, A.PROD_OFFERING_NAME AS ProdOfferingName, RHH.RETURN_HANDLING_H_ID AS ReturnHandlingHId, WTL.WF_TASK_LIST_ID AS WfTaskListId, A.APP_ID AS AppId, A.BIZ_TEMPLATE_CODE AS BizTemplateCode",

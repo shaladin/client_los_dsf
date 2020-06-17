@@ -8,6 +8,7 @@ import { ViewAgrmntComponent } from './view-agrmnt/view-agrmnt.component';
 import { ViewDeliveryOrderMultiAssetComponent } from './view-agrmnt/view-delivery-order-multi-asset/view-delivery-order-multi-asset.component';
 import { ViewDeliveryOrderDetailComponent } from './view-agrmnt/view-delivery-order-multi-asset/view-delivery-order-detail/view-delivery-order-detail.component';
 import { ViewDeliveryOrderAssetDetailComponent } from './view-agrmnt/view-delivery-order-multi-asset/view-delivery-order-asset-detail/view-delivery-order-asset-detail.component';
+import { ViewAgrmntFl4wComponent } from './view-agrmnt-fl4w/view-agrmnt-fl4w.component';
 
 const routes: Routes = [
   {
@@ -41,6 +42,13 @@ const routes: Routes = [
       {
         path: 'ViewAgrmnt',
         component: ViewAgrmntComponent,
+        data: {
+          title: 'AddDetail'
+        }
+      },
+      {
+        path: 'ViewAgrmntFL4W',
+        component: ViewAgrmntFl4wComponent,
         data: {
           title: 'AddDetail'
         }
