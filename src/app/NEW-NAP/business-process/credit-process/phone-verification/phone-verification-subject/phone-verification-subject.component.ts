@@ -69,6 +69,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   ReturnHandlingDData: ReturnHandlingDObj;
   ReturnHandlingHData: ReturnHandlingHObj;
   OnFormReturnInfo: boolean = false;
+  arrValue = [];
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
 
     this.route.queryParams.subscribe(params => {
@@ -95,6 +96,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    this.arrValue.push(this.appId);
     if (this.wfTaskListId != null || this.wfTaskListId != undefined)
       this.claimTask();
 

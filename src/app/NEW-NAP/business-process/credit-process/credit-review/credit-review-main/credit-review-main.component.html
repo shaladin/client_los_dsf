@@ -1,6 +1,6 @@
 <div class="col-md-12 text-left">
   <div class="card">
-    <lib-ucviewgeneric [viewInput]="viewProdMainInfoObj"> </lib-ucviewgeneric>
+    <app-app-main-info [arrValue]="arrValue"></app-app-main-info>
 
     <mat-tab-group mat-align-tabs="center">
       
@@ -13,29 +13,29 @@
         </ng-template>
       </mat-tab>
 
-      <!-- <mat-tab label="Application Data">
+      <mat-tab *ngIf="BizTemplateCode != 'FL4W'" label="Application Data">
         <ng-template matTabContent>
           <app-tab-application-data [AppId]=appId></app-tab-application-data>
         </ng-template>
-      </mat-tab> -->
+      </mat-tab>
 
-      <mat-tab label="Application Data">
+      <mat-tab *ngIf="BizTemplateCode == 'FL4W'" label="Application Data">
         <ng-template matTabContent>
           <app-view-application-data-multi [AppId]=appId></app-view-application-data-multi>
         </ng-template>
       </mat-tab>
 
-      <!-- <mat-tab label="Fraud Detection Data">
+      <mat-tab label="Fraud Detection Data">
         <ng-template matTabContent>        
           <app-view-fraud-detection-result [appId]=appId [mrCustTypeCode]="CustTypeCode"></app-view-fraud-detection-result>
         </ng-template>
-      </mat-tab> -->
+      </mat-tab>
 
-      <mat-tab label="Fraud Detection Data">
+      <!-- <mat-tab label="Fraud Detection Data">
         <ng-template matTabContent>        
           <app-view-app-fraud-verification [AppId]=appId [mrCustTypeCode]="CustTypeCode"></app-view-app-fraud-verification>
         </ng-template>
-      </mat-tab>
+      </mat-tab> -->
 
       <mat-tab label="Deviation Data">
         <ng-template matTabContent>        
@@ -43,7 +43,7 @@
         </ng-template>
       </mat-tab>
 
-      <mat-tab label="Approval History Data">
+      <mat-tab label="Customer History Data">
         <ng-template matTabContent>        
           <app-cust-history [AppId]=appId></app-cust-history>
         </ng-template>
