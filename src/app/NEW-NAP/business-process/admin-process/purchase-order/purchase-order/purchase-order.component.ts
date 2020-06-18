@@ -65,7 +65,7 @@ export class PurchaseOrderComponent implements OnInit {
     );
   }
 
-  testData(){
+  testData() {
     console.log(this.tcForm);
     console.log(this.tcForm.value);
   }
@@ -88,9 +88,9 @@ export class PurchaseOrderComponent implements OnInit {
     }
 
     if (IsSave) {
-      var workflowModel : WorkflowApiObj = new WorkflowApiObj();
+      var workflowModel: WorkflowApiObj = new WorkflowApiObj();
       workflowModel.TaskListId = this.TaskListId;
-      workflowModel.ListValue = {"AgrmntId" : this.AgrmntId.toString()};
+      workflowModel.ListValue = { "AgrmntId": this.AgrmntId.toString() };
 
 
       this.http.post(AdInsConstant.ResumeWorkflowPurchaseOrder, workflowModel).subscribe(
@@ -113,5 +113,9 @@ export class PurchaseOrderComponent implements OnInit {
     this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
       });
+  }
+  Cancel() {
+    var BizTemplateCode = localStorage.getItem("BizTemplateCode")
+    this.router.navigate(["/Nap/AdminProcess/PurchaseOrder/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
   }
 }
