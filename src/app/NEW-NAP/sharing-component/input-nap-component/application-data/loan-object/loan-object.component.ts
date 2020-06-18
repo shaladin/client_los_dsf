@@ -27,6 +27,9 @@ export class LoanObjectComponent implements OnInit {
   objEdit: any;
   AppLoanPurposeObj: AppLoanPurposeObj = new AppLoanPurposeObj();
   IsDisburseToCust: boolean;
+  AppObj: any;
+  OfficeCode: string;
+  RefProdCmptSupplSchm: any;
 
   MainInfoForm = this.fb.group({
     IsDisburseToCust: [false],
@@ -83,6 +86,7 @@ export class LoanObjectComponent implements OnInit {
       });
       this.AppLoanPurposeObj.MrLoanPurposeCode = this.objEdit.MrLoanPurposeCode;
       this.AppLoanPurposeObj.SupplCode = this.objEdit.SupplCode;
+      this.GetAppData();
       this.setLookup();
     })
 
@@ -99,6 +103,7 @@ export class LoanObjectComponent implements OnInit {
   open(content) {
     this.mode = "add";
     this.objEdit = undefined;
+    this.GetAppData();
     this.setLookup();
     this.MainInfoForm.patchValue({
       IsDisburseToCust: "",
@@ -122,6 +127,7 @@ export class LoanObjectComponent implements OnInit {
 
   ngOnInit() {
     this.loadDataTable();
+    this.GetAppData();
     this.setLookup();
     this.MainInfoForm.controls.FinancingAmount.disable();
   }
@@ -141,6 +147,26 @@ export class LoanObjectComponent implements OnInit {
     })
   }
 
+  async GetAppData() {
+    await this.http.post(AdInsConstant.GetAppById, {AppId: this.AppId}).toPromise().then(
+      (response) => {
+        this.AppObj = response;
+        this.OfficeCode = this.AppObj.OriOfficeCode;
+      }
+    );
+
+    var appObj = {
+      ProdOfferingCode: this.AppObj.ProdOfferingCode,
+      RefProdCompntCode: AdInsConstant.RefProdCompntSupplSchm,
+      ProdOfferingVersion: this.AppObj.ProdOfferingVersion,
+    };
+    await this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj).toPromise().then(
+      (response) => {
+        this.RefProdCmptSupplSchm = response;
+      }
+    );
+  }
+
   setLookup() {
     this.loanObjectInputLookupObj = new InputLookupObj();
     this.loanObjectInputLookupObj.urlJson = "./assets/uclookup/NAP/lookupLoanObject.json";
@@ -155,16 +181,14 @@ export class LoanObjectComponent implements OnInit {
     this.supplierInputLookupObj.urlEnviPaging = environment.FoundationR3Url;
     this.supplierInputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupSupplier.json";
     this.supplierInputLookupObj.genericJson = "./assets/uclookup/NAP/lookupSupplier.json";
-    
-    var arrCrit = new Array<CriteriaObj>();
-    const addCrit = new CriteriaObj();
-    addCrit.DataType = 'text';
-    addCrit.propName = 'v.MR_VENDOR_CATEGORY_CODE';
-    addCrit.restriction = AdInsConstant.RestrictionEq;
-    addCrit.value = 'SUPPLIER_BRANCH';
-    arrCrit.push(addCrit);
+    this.supplierInputLookupObj.addCritInput = new Array();
 
-    this.supplierInputLookupObj.addCritInput = arrCrit;
+    var critSuppObj = new CriteriaObj();
+    critSuppObj.DataType = 'text';
+    critSuppObj.restriction = AdInsConstant.RestrictionEq;
+    critSuppObj.propName = 'RO.OFFICE_CODE';
+    critSuppObj.value = this.OfficeCode;
+    this.supplierInputLookupObj.addCritInput.push(critSuppObj);
 
     if (this.objEdit != null) {
       this.loanObjectInputLookupObj.jsonSelect = { Descr: this.objEdit.MrLoanPurposeDescr };

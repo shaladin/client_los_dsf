@@ -128,7 +128,6 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   ChangeTab(AppStep) {
-    // console.log(AppStep);
     switch (AppStep) {
       case AdInsConstant.AppStepCust:
         this.AppStepIndex = this.AppStep[AdInsConstant.AppStepCust];
@@ -142,8 +141,8 @@ export class NapAddDetailComponent implements OnInit {
       case AdInsConstant.AppStepApp:
         this.AppStepIndex = this.AppStep[AdInsConstant.AppStepApp];
         break;
-      case AdInsConstant.AppStepAsset:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepAsset];
+      case AdInsConstant.AppStepColl:
+        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepColl];
         break;
       case AdInsConstant.AppStepIns:
         this.AppStepIndex = this.AppStep[AdInsConstant.AppStepIns];

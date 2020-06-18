@@ -39,8 +39,12 @@ export class AppInquiryPagingComponent implements OnInit {
   }
 
   getEvent(event){
-    if(event.Key == "Customer"){
-        this.http.post(AdInsConstant.GetCustByCustNo, {CustNo: event.RowObj.CustNo}).subscribe(
+    // console.log("customerlink")
+    // console.log(event)
+    
+    if(event.Key == "customer"){
+        var custObj = { CustNo: event.RowObj.custNo };
+        this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
           response => {
             this.link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
             this.router.navigate([]).then(result => { window.open(this.link, '_blank'); });
@@ -49,6 +53,22 @@ export class AppInquiryPagingComponent implements OnInit {
             console.log(error);
           }
         );
+    }
+    else if(event.Key == "agreement"){
+      var bizTemplateCode = event.RowObj.BizTemplateCode;
+
+      if(bizTemplateCode == "CF4W" || bizTemplateCode == "CFRFN4W" || bizTemplateCode == "FACTORING"){
+        window.open( environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + event.RowObj.AgrmntId, "_blank");
+      }
+      else if(bizTemplateCode == "FL4W"){
+        window.open( environment.losR3Web + "/Nap/FinanceLeasing/ViewAgrmnt?AgrmntId=" + event.RowObj.AgrmntId, "_blank");
+      }
+    }
+    else if(event.Key == "application"){
+      window.open( environment.losR3Web + "/Nap/View/AppView?AppId=" + event.RowObj.AppId, "_blank");
+    }
+    else if(event.Key == "product"){
+      window.open( environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=" + 0 + "&prodOfferingCode=" + event.RowObj.prodOfferingCode + "&prodOfferingVersion=" + event.RowObj.prodOfferingVersion, "_blank");
     }
   }
 }

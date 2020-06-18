@@ -6,7 +6,7 @@ import { DecimalPipe } from "@angular/common";
 import { HttpClient } from '@angular/common/http';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CenterGrpOfficeMbrObj } from 'app/shared/model/RefOffice/CenterGrpOfficeMbrObj.Model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-return-handling-collateral-paging',
@@ -17,10 +17,12 @@ export class ReturnHandlingCollateralPagingComponent implements OnInit {
 
   inputPagingObj: UcPagingObj;
   userAccess;
+  token : any = localStorage.getItem("Token");
   BizTemplateCode: string;
   constructor(
     private http: HttpClient,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router 
   ) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
@@ -83,5 +85,12 @@ export class ReturnHandlingCollateralPagingComponent implements OnInit {
     critObjs.push(critObj);
 
     return critObjs;
+  }
+  
+  GetCallBack(ev: any){
+    if(ev.Key == "ViewProdOffering"){
+      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.RowObj.prodOfferingCode + "&prodOfferingVersion=" + ev.RowObj.prodOfferingVersion + "&Token=" + this.token;
+      this.router.navigate([]).then(result => { window.open(link, '_blank'); });
+    }
   }
 }
