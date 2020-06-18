@@ -11,6 +11,7 @@
           </div>
         </div>
         <div class="px-3">
+          <app-agr-main-info [arrValue]="arrValue"></app-agr-main-info>
 
           <mat-tab-group>
             <mat-tab label="Customer">
@@ -23,6 +24,12 @@
             <mat-tab label="Asset">
               <ng-template matTabContent>
                 <view-asset-data [appId]="ResponseAppDetailData?.AppId"></view-asset-data>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab label="Collateral">
+              <ng-template matTabContent>
+                <agrmnt-view-collateral [agrmntId]="AgrmntId"></agrmnt-view-collateral>
               </ng-template>
             </mat-tab>
 

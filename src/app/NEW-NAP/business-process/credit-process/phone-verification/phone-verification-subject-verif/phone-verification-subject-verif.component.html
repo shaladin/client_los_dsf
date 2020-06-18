@@ -2,7 +2,7 @@
   <div class="card">
     <div class="card-body">
       <div class="px-3">
-        <form class="form form-horizontal" [formGroup]="PhoneDataForm" (ngSubmit)="PhoneDataForm.valid && SaveForm()"
+        <form class="form form-horizontal" [formGroup]="PhoneDataForm" #formDirective="ngForm" (ngSubmit)="PhoneDataForm.valid  && SaveForm(formDirective)"
           #enjiForm="ngForm">
           <div class="form-body">
             <lib-ucSubsection [id]="'custInfoId'" [title]="'Customer Information'" [panel]="'custInfo'">
@@ -10,7 +10,7 @@
             <div id="custInfo">
               <div class="form-group row">
                 <label class="col-md-2  adInsLabel" translate>Application No</label>
-                <a class="col-md-4" [routerLink]="['/Nap/View/AppView']" [queryParams]="{AppId: this.AppObj?.AppId}">
+                <a class="col-md-4" (click)="Navigate()">
                   {{this.AppObj?.AppNo}}
                 </a>
                 <label class="col-md-2  adInsLabel" translate>Subject</label>
@@ -128,7 +128,12 @@
                 </div>
               </div>
             </div>
-            <div *ngIf="listVerifResultHObj">
+            <div>
+              <div class="form-actions right">
+                <button type="submit" class="btn btn-raised btn-primary" id="saveHistory"> 
+                  <i class="far fa-check-square"></i> Save History
+                </button>
+              </div>
               <lib-ucSubsection [id]="'historylistId'" [title]="'History List'" [panel]="'historylist'">
               </lib-ucSubsection>
               <div id="historylist">
@@ -143,6 +148,9 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <tr *ngIf="listVerifResultHObj==null || listVerifResultHObj?.length==0">
+                      <td colspan="100%">No Data Available</td>
+                    </tr>
                     <tr *ngFor="let item of listVerifResultHObj">
                       <td class="text-left">{{item.MrVerfObjectCode}}</td>
                       <td class="text-left">{{item.Phn}}</td>
@@ -159,7 +167,7 @@
                 <i class="ft-x"></i> Cancel
               </button>
 
-              <button type="submit" class="btn btn-raised btn-primary">
+              <button type="submit" class="btn btn-raised btn-primary" id="save">
                 <i class="far fa-check-square"></i> Save
               </button>
               <!-- <button type="button" class="btn btn-raised btn-primary" (click)="test()">

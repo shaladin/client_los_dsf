@@ -1,6 +1,6 @@
 {
   "name": "apex",
-  "version": "1.0.0-38",
+  "version": "1.0.0-42",
   "license": "",
   "scripts": {
     "ng": "ng",
@@ -14,14 +14,14 @@
   },
   "private": true,
   "dependencies": {
-    "@adins/uc-show-errors": "0.0.5",
+    "@adins/uc-show-errors": "^1.0.0",
     "@adins/uc-subsection": "^1.0.4",
     "@adins/ucaddress": "^1.0.12",
     "@adins/ucaddtotemp": "^1.0.4",
     "@adins/ucapproval": "^1.0.6",
     "@adins/ucapprovalhist": "^1.0.3",
     "@adins/ucapproveby": "^1.0.1",
-    "@adins/ucdashboard2": "1.0.0",
+    "@adins/ucdashboard2": "1.0.2",
     "@adins/ucgridfooter": "^1.0.1",
     "@adins/ucgridview": "^2.0.24",
     "@adins/ucinputnumber": "^1.0.1",

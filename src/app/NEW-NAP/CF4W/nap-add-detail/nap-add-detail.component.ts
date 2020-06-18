@@ -29,6 +29,7 @@ export class NapAddDetailComponent implements OnInit {
   IsMultiAsset: string;
   ListAsset: any;
   ReturnHandlingHId: number = 0;
+  showCancel: boolean = true;
   custType: string = AdInsConstant.CustTypeCompany;
   token : any = localStorage.getItem("Token");
 
@@ -66,6 +67,7 @@ export class NapAddDetailComponent implements OnInit {
       }
       if (params["ReturnHandlingHId"] != null) {
         this.ReturnHandlingHId = params["ReturnHandlingHId"];
+        this.showCancel = false;
       }
     });
   }
