@@ -17,6 +17,7 @@ import { NapAppReferantorModel } from 'app/shared/model/NapAppReferantor.Model';
 export class ReferantorDataComponent implements OnInit {
 
   @Input() appId: any;
+  @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
