@@ -36,7 +36,7 @@ export class MouCustAssetComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.listExclude = new Array<string>();
-    this.httpClient.post(AdInsConstant.GetAssetTypeKeyValueCode, null).subscribe(
+    this.httpClient.post(AdInsConstant.GetListAssetTypeByCode, null).subscribe(
       (response: any) => {
         this.assetTypeList = response;
         if (this.AssetTypeCode != null) {
