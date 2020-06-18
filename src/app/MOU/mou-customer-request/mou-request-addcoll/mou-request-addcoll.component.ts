@@ -161,7 +161,7 @@ export class MouRequestAddcollComponent implements OnInit {
       })
 
     var assetObj = {};
-    this.http.post(AdInsConstant.GetListKeyValueByCode, assetObj).subscribe(
+    this.http.post(AdInsConstant.GetListAssetTypeByCode, assetObj).subscribe(
       (response) => {
         this.CollTypeList = response['ReturnObject'];
         this.AddCollForm.patchValue({
