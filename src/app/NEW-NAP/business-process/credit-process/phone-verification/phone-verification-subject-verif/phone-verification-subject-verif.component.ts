@@ -8,6 +8,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { DatePipe } from '@angular/common';
 import { VerfResultDObj } from 'app/shared/model/VerfResultD/VerfResultH.Model';
 import { VerifResulHDetailObj } from 'app/shared/model/VerfResultH/VerifResulHDetailObj.model';
+import { environment } from 'environments/environment';
 
 
 
@@ -478,6 +479,11 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
       });
 
     }
+  }
+
+  Navigate(){
+    var link = environment.losR3Web + "/Nap/View/AppView/AppId=" + this.AppObj.AppId;
+    this.router.navigate([]).then(result => { window.open(link, '_blank'); });
   }
 
   test() {
