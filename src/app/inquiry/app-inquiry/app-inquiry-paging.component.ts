@@ -39,8 +39,12 @@ export class AppInquiryPagingComponent implements OnInit {
   }
 
   getEvent(event){
+    // console.log("customerlink")
+    // console.log(event)
+    
     if(event.Key == "Customer"){
-        this.http.post(AdInsConstant.GetCustByCustNo, {CustNo: event.RowObj.CustNo}).subscribe(
+        var custObj = { CustNo: event.RowObj.custNo };
+        this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
           response => {
             this.link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
             this.router.navigate([]).then(result => { window.open(this.link, '_blank'); });
