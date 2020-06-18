@@ -176,4 +176,9 @@ export class ListCompanyComponent implements OnInit {
     
       });
   }
+
+  back() {
+    var BizTemplateCode = localStorage.getItem("BizTemplateCode")
+    this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
+  }
 }
