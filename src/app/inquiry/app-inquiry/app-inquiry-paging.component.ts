@@ -12,6 +12,7 @@ import { HttpClient } from "@angular/common/http";
 export class AppInquiryPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
   link: string;
+  token : any = localStorage.getItem("Token");
 
   constructor(private router:Router, private http:HttpClient) { }
 
@@ -39,7 +40,7 @@ export class AppInquiryPagingComponent implements OnInit {
   }
 
   getEvent(event){
-    // console.log("customerlink")
+    // console.log("productlink")
     // console.log(event)
     
     if(event.Key == "customer"){
@@ -47,12 +48,16 @@ export class AppInquiryPagingComponent implements OnInit {
         this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
           response => {
             this.link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
-            this.router.navigate([]).then(result => { window.open(this.link, '_blank'); });
+            window.open(this.link, '_blank');
           },
           (error) => {
             console.log(error);
           }
         );
+    }
+    else if(event.Key == "product"){
+      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + event.RowObj.prodOfferingCode + "&prodOfferingVersion=" + event.RowObj.prodOfferingVersion + "&Token=" + this.token;
+      this.router.navigate([]).then(result => { window.open(link, '_blank'); });
     }
     else if(event.Key == "agreement"){
       var bizTemplateCode = event.RowObj.BizTemplateCode;

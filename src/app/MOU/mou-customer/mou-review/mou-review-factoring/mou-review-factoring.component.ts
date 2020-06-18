@@ -7,6 +7,7 @@ import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { RFAInfoObj } from 'app/shared/model/Approval/RFAInfoObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-mou-review-factoring',
@@ -91,6 +92,15 @@ export class MouReviewFactoringComponent implements OnInit {
           console.log("awdawd");
             this.MrCustTypeCode = response['MrCustTypeCode']; 
         });
+    
+    this.http.post(AdInsConstant.GetListActiveRefReasonByRefReasonTypeCode, {RefReasonTypeCode: AdInsConstant.REF_REASON_MOU_GENERAL}).pipe(first()).subscribe(
+      (response) => {
+        this.listReason = response["ReturnObject"];
+        this.MouReviewDataForm.patchValue({
+          Reason: this.listReason[0].Key
+        });
+      }
+    );
   }
 
   MouReviewDataForm = this.fb.group({
