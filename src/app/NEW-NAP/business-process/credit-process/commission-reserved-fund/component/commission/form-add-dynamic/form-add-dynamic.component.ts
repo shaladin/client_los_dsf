@@ -263,7 +263,7 @@ export class FormAddDynamicComponent implements OnInit {
         CurrCode: CurrCode,
         OfficeCode: OriOfficeCode,
         ExchangeRateAmt: AdInsConstant.ExchangeRateAmt, 
-        IsSave: true,
+        IsSave: false,
         Content: this.FormInputObj["content"],
       };
       console.log(obj);
