@@ -73,7 +73,7 @@
     "bodyList": [
         {
             "type": "link",
-            "position": "left",
+            "position": "center",
             "property": "ApplicationNo",
             "target" : "_blank",
             "path": "/Nap/View/AppView",
@@ -86,7 +86,7 @@
         },
         {
             "type": "action",
-            "position": "left",
+            "position": "center",
             "action": [
                 {
                 "type": "switch",
@@ -101,7 +101,7 @@
                     ],
                     "result": {
                         "type": "link",
-                        "position": "left",
+                        "position": "center",
                         "property": "AggrementNo",
                         "target": "_blank",
                         "path": "/Nap/View/AgrmntView",
@@ -124,7 +124,7 @@
                     ],
                     "result": {
                         "type": "link",
-                        "position": "left",
+                        "position": "center",
                         "property": "AggrementNo",
                         "target" : "_blank",
                         "path": "/Nap/FinanceLeasing/ViewAgrmnt",
@@ -147,7 +147,7 @@
                     ],
                     "result": {
                         "type": "link",
-                        "position": "left",
+                        "position": "center",
                         "property": "AggrementNo",
                         "target" : "_blank",
                         "path": "/Nap/View/AgrmntView",
@@ -170,7 +170,7 @@
                     ],
                     "result": {
                         "type": "link",
-                        "position": "left",
+                        "position": "center",
                         "property": "AggrementNo",
                         "target" : "_blank",
                         "path": "/Nap/View/AgrmntView",
