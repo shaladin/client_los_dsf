@@ -3,7 +3,7 @@
   "component": [
     {
       "type": "textbox",
-      "name": "v.VENDOR_CODE",
+      "name": "V.VENDOR_CODE",
       "id": "supplierCode",
       "value": "",
       "label": "Supplier Code",
@@ -11,7 +11,7 @@
     },
     {
       "type": "textbox",
-      "name": "v.VENDOR_NAME",
+      "name": "V.VENDOR_NAME",
       "id": "supplierName",
       "value": "",
       "label": "Supplier Name",
@@ -19,9 +19,9 @@
     }
   ],
   "querystring": {
-    "select": "SELECT v.VENDOR_CODE AS VendorCode, v.VENDOR_NAME AS VendorName, v.VENDOR_ID as VendorId, v.MR_VENDOR_CATEGORY_CODE AS MrVendorCategoryCode",
-    "from": "FROM dbo.VENDOR v WITH(NOLOCK) JOIN dbo.VENDOR_OFFICE_MBR vom WITH(NOLOCK) ON v.VENDOR_ID = vom.VENDOR_ID JOIN REF_OFFICE ro WITH(NOLOCK) on vom.REF_OFFICE_ID = ro.REF_OFFICE_ID JOIN dbo.VENDOR_SCHM_MBR vcm WITH(NOLOCK) ON v.VENDOR_ID = vcm.VENDOR_ID JOIN dbo.VENDOR_SCHM vs WITH(NOLOCK) ON vcm.VENDOR_SCHM_ID = vs.VENDOR_SCHM_ID",
-    "where": "WHERE v.IS_ACTIVE = 1 and v.MR_VENDOR_CATEGORY_CODE = 'SUPPLIER_BRANCH'"
+    "select": "SELECT V.VENDOR_CODE AS VendorCode, V.VENDOR_NAME AS VendorName, V.VENDOR_ID as VendorId, V.MR_VENDOR_CATEGORY_CODE AS MrVendorCategoryCode",
+    "from": "FROM dbo.VENDOR V WITH(NOLOCK) JOIN dbo.VENDOR_OFFICE_MBR VOM WITH(NOLOCK) ON V.VENDOR_ID = VOM.VENDOR_ID JOIN REF_OFFICE RO WITH(NOLOCK) on VOM.REF_OFFICE_ID = RO.REF_OFFICE_ID",
+    "where": "WHERE V.IS_ACTIVE = 1 and V.MR_VENDOR_CATEGORY_CODE = 'SUPPLIER_BRANCH'"
   },
   "headerList": [
     {
