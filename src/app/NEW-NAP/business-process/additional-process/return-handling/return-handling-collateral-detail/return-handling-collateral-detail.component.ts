@@ -53,7 +53,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     SerialNo5: [''],
     IsSerialNo5: [false],
     CollateralValueAmt: ['0', Validators.required],
-    CollateralPrcnt: ['', Validators.required],
+    CollateralPrcnt: ['', [Validators.required, Validators.max(100)]],
     CollateralNotes: ['', Validators.maxLength(4000)],
     AssetTaxDt: [''],
     ManufacturingYear: [''],
