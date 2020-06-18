@@ -34,7 +34,7 @@
       "placeholder": "Placeholder",
       "isFromURL": true,
       "isSelectOne": false,
-      "isQueryIn": true,
+      "isQueryIn":true,
       "url": "",
       "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
       "label": "Office",

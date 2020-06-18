@@ -12,6 +12,7 @@
       "isFromURL": true,
       "isSelectOne": false,
       "url": "",
+      "isQueryIn" : true,
       "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
       "label": "Original Office Name",
       "items": [],
