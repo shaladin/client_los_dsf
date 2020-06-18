@@ -71,8 +71,6 @@ export class CustPersonalFinancialDataComponent implements OnInit {
   bindAppCustPersonalFinData(){
     console.log(this.appCustPersonalFinDataObj);
     if(this.appCustPersonalFinDataObj != undefined){
-      let TotalMonthlyIncome = this.appCustPersonalFinDataObj.MonthlyIncomeAmt + this.appCustPersonalFinDataObj.SpouseMonthlyIncomeAmt;
-      let TotalMonthlyExpense = this.appCustPersonalFinDataObj.MonthlyExpenseAmt + this.appCustPersonalFinDataObj.SpouseMonthlyIncomeAmt;
       this.parentForm.controls[this.identifier].patchValue({
         MonthlyIncomeAmt: this.appCustPersonalFinDataObj.MonthlyIncomeAmt,
         MonthlyExpenseAmt: this.appCustPersonalFinDataObj.MonthlyExpenseAmt,
@@ -80,10 +78,8 @@ export class CustPersonalFinancialDataComponent implements OnInit {
         MrSourceOfIncomeTypeCode: this.appCustPersonalFinDataObj.MrSourceOfIncomeTypeCode,
         IsJoinIncome: this.appCustPersonalFinDataObj.IsJoinIncome,
         SpouseMonthlyIncomeAmt: this.appCustPersonalFinDataObj.SpouseMonthlyIncomeAmt,
-        TotalMonthlyIncome: TotalMonthlyIncome,
-        TotalMonthlyExpense: TotalMonthlyExpense,
-        NettMonthlyIncome: TotalMonthlyIncome - TotalMonthlyExpense
       });
+      this.ChangeTotalMonthly();
     }
   }
   
