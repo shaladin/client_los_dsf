@@ -1,242 +1,255 @@
 {
-    "title": "Credit Prcess Inquiry",
-    "exportExcel": false,
-    "component": [
-      {
-        "type": "dropdown",
-        "datatype": "text",
-        "name": "A.ORI_OFFICE_CODE",
-        "id": "oriOfficeCodeId",
-        "value": "",
-        "placeholder": "Placeholder",
-        "isFromURL": true,
-        "isSelectOne": false,
-        "url": "",
-        "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
-        "label": "Original Office Name",
-        "items": [],
-        "itemsUrl": []
-      }, 
-      {
-        "type": "textbox",
-        "name": "A.APP_NO",
-        "id": "appNoId",
-        "value": "",
-        "label": "Application No",
-        "placeholder": "Placeholder"
-      },
-      {
-        "type": "textbox",
-        "name": "A.AGRMNT_NO",
-        "id": "agrmntNoId",
-        "value": "",
-        "label": "Agreement No",
-        "placeholder": "Placeholder"
-      },
-      {
-        "type": "textbox",
-        "name": "AC.CUST_NAME",
-        "id": "custNameId",
-        "value": "",
-        "label": "Customer Name",
-        "placeholder": "Placeholder"
-      },  
-      {
-        "type": "datepicker",
-        "name": "A.APP_CREATED_DT",
-        "id": "appDtgte",
-        "value": "",
-        "label": "Application Created Date From >=",
-        "restriction": "gte",
-        "datatype": "date"
-      },
-      {
-        "type": "datepicker",
-        "name": "A.APP_CREATED_DT",
-        "id": "appDtlte",
-        "value": "",
-        "label": "Application Created Date To <=",
-        "restriction": "lte",
-        "datatype": "date"
-      },
-      {
-        "type": "textbox",
-        "name": "RE.EMP_NAME",
-        "id": "salesOfficerName",
-        "value": "",
-        "label": "Sales Person Name",
-        "placeholder": "Placeholder"
-      },  
-      {
-        "type": "textbox",
-        "name": "A.IS_APP_INIT_DONE",
-        "id": "isAppInitDone",
-        "value": "",
-        "label": "Nap Submitted",
-        "placeholder": "Placeholder"
-      },
-      {
-        "type": "dropdown",
-        "datatype": "text",
-        "name": "A.APP_LAST_STEP",
-        "id": "appLastStepId",
-        "value": "",
-        "placeholder": "Placeholder",
-        "isFromURL": true,
-        "isSelectOne": false,
-        "url": "",
-        "path":"/RefStatus/GetListKeyValueActiveGrpCodeByCode",
-        "label": "Last Application Step",
-        "items": [],
-        "itemsUrl": [],
-        "criteriaPropName": "StatusGrpCode",
-        "criteriaPropValue": "APP_STEP"
-      },  
-      {
-        "type": "dropdown",
-        "datatype": "text",
-        "name": "A.APP_CURR_STEP",
-        "id": "appCurrStepId",
-        "value": "",
-        "placeholder": "Placeholder",
-        "isFromURL": true,
-        "isSelectOne": false,
-        "url": "",
-        "path":"/RefStatus/GetListKeyValueActiveGrpCodeByCode",
-        "label": "Current Application Step",
-        "items": [],
-        "itemsUrl": [],
-        "criteriaPropName": "StatusGrpCode",
-        "criteriaPropValue": "APP_STEP"
-      }
-    ],
-    "querystring": {
-      "select": "select A.APP_ID AS AppId, A.APP_NO AS AppNo, AGR.AGRMNT_NO AS AgrmntNo,AGR.AGRMNT_ID AS agrmntId, AC.CUST_NAME AS CustName, AGR.AGRMNT_STAT AS AgrmntStat, AC.CUST_NAME AS CustName, A.APP_CREATED_DT AS AppCreatedDt, A.IS_APP_INIT_DONE AS isNapSub,   A.APP_LAST_STEP AS AppLastStep, A.APP_CURR_STEP AS AppCurrStep, DATEDIFF(SECOND, A.DTM_CRT, A.DTM_UPD) AS TotalTimeNap , CONVERT(VARCHAR(12), DATEDIFF(SECOND,A.DTM_CRT,A.DTM_UPD) / 60 / 60 / 24) + ' Day(s) ' +  CONVERT(VARCHAR(12), DATEDIFF(SECOND,A.DTM_CRT,A.DTM_UPD) / 60 / 60 % 24) + ' Hour(s) ' +  CONVERT(VARCHAR(2), DATEDIFF(SECOND,A.DTM_CRT,A.DTM_UPD) / 60 % 60) + ' Minute(s) ' +  CONVERT(VARCHAR(2), DATEDIFF(SECOND,A.DTM_CRT,A.DTM_UPD) % 60) + ' Second(s) ' AS 'DateDiff', RE.EMP_NAME AS SalesOfficerName, AC.APP_CUST_ID AS AppCustId",
-      "from": "FROM dbo.APP A WITH(NOLOCK) JOIN dbo.AGRMNT AGR WITH(NOLOCK) ON A.APP_ID = AGR.APP_ID JOIN dbo.APP_CUST AC WITH(NOLOCK) ON AC.APP_ID = A.APP_ID JOIN dbo.APP_FIN_DATA FD ON FD.APP_ID = A.APP_ID JOIN [dbo].[V_EMP_NAME] RE WITH (NOLOCK) ON AGR.SALES_OFFICER_NO = RE.EMP_NO" 
+  "title": "Credit Process Inquiry",
+  "exportExcel": false,
+  "component": [
+    {
+      "type": "dropdown",
+      "datatype": "text",
+      "name": "A.ORI_OFFICE_CODE",
+      "id": "oriOfficeCodeId",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": true,
+      "isSelectOne": false,
+      "url": "",
+      "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+      "label": "Original Office Name",
+      "items": [],
+      "itemsUrl": []
     },
-    "headerList": [
-      {
-        "type": "sort",
-        "position": "left",
-        "label": "Application No",
-        "name": "A.APP_NO"
-      },
-      {
-        "type": "sort",
-        "position": "left",
-        "label": "Agreement No",
-        "name": "B.AGRMNT_NO"
-      }, 
-      {
-        "type": "sort",
-        "position": "left",
-        "label": "Customer Name",
-        "name": "AC.CUST_NAME"
-      }, 
-      {
-        "type": "sort",
-        "position": "left",
-        "label": "Contract Status",
-        "name": "AGR.AGRMNT_STAT"
-      }, 
-      {
-        "type": "sort",
-        "position": "left",
-        "label": "Sales Person Name",
-        "name": "RE.EMP_NAME"
-      },  
-      {
-        "type": "label",
-        "position": "left",
-        "label": "NAP Submitted",
-        "name": "A.IS_APP_INIT_DONE"
-      },
-      {
-        "type": "sort",
-        "position": "left",
-        "label": "Application Created Date",
-        "name": "A.APP_CREATED_DT"
-      }, 
-      {
-        "type": "label",
-        "position": "left",
-        "label": "Last Application Step",
-        "name": "A.APP_LAST_STEP"
-      },
-      {
-        "type": "label",
-        "position": "left",
-        "label": "Current Application Step",
-        "name": "A.APP_STAT"
-      }
-    ],
-    "bodyList": [
-      {
-        "type": "link",
-        "position": "left",
-        "property": "AppNo",
-        "path": "",
-        "param": [
-          {
-            "type": "appId",
-            "property": "appId"
-          }
-        ]
-      },
-      {
-        "type": "link",
-        "position": "left",
-        "property": "AgrmntNo",
-        "path": "",
-        "param": [
-          {
-            "type": "agrmntId",
-            "property": "agrmntId"
-          }
-        ]
-      },
-      {
-        "type": "link",
-        "position": "left",
-        "property": "CustName",
-        "path": "",
-        "param": [
-          {
-            "type": "AppCustId",
-            "property": "AppCustId"
-          }
-        ]
-      },
-      {
-        "type": "text",
-        "position": "left",
-        "property": "AgrmntStat"
-      },
-      {
-        "type": "text",
-        "position": "left",
-        "property": "SalesOfficerName"
-      },
-      {
-        "type": "text",
-        "position": "left",
-        "property": "isNapSub"
-      }, 
-      {
-        "type": "date",
-        "position": "left",
-        "property": "AppCreatedDt"
-      },
-     
-      {
-        "type": "text",
-        "position": "left",
-        "property": "AppLastStep"
-      }, 
-      {
-        "type": "text",
-        "position": "left",
-        "property": "AppCurrStep"
-      }
-    ]
-  }
+    {
+      "type": "textbox",
+      "name": "AC.CUST_NO",
+      "id": "custNoId",
+      "value": "",
+      "label": "Customer No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "A.APP_NO",
+      "id": "appNoId",
+      "value": "",
+      "label": "Application No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "A.AGRMNT_NO",
+      "id": "agrmntNoId",
+      "value": "",
+      "label": "Agreement No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "AC.CUST_NAME",
+      "id": "custNameId",
+      "value": "",
+      "label": "Customer Name",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "datepicker",
+      "name": "A.APP_CREATED_DT",
+      "id": "appDtgte",
+      "value": "",
+      "label": "Application Created Date From >=",
+      "restriction": "gte",
+      "datatype": "date"
+    },
+    {
+      "type": "datepicker",
+      "name": "A.APP_CREATED_DT",
+      "id": "appDtlte",
+      "value": "",
+      "label": "Application Created Date To <=",
+      "restriction": "lte",
+      "datatype": "date"
+    },
+    {
+      "type": "textbox",
+      "name": "RE.EMP_NAME",
+      "id": "salesOfficerName",
+      "value": "",
+      "label": "Sales Person Name",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "dropdown",
+      "name": "A.IS_APP_INIT_DONE",
+      "id": "isAppInitDone",
+      "label": "Nap Submitted",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": false,
+      "isSelectOne": false,
+      "items": [
+        {
+          "key": true,
+          "value": "Yes"
+        },
+        {
+          "key": false,
+          "value": "No"
+        }
+      ],
+      "itemsUrl": []
+    },
+    {
+      "type": "dropdown",
+      "datatype": "text",
+      "name": "A.APP_LAST_STEP",
+      "id": "appLastStepId",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": true,
+      "isSelectOne": false,
+      "url": "",
+      "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+      "label": "Last Application Step",
+      "items": [],
+      "itemsUrl": [],
+      "criteriaPropName": "StatusGrpCode",
+      "criteriaPropValue": "APP_STEP"
+    },
+    {
+      "type": "dropdown",
+      "datatype": "text",
+      "name": "A.APP_CURR_STEP",
+      "id": "appCurrStepId",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": true,
+      "isSelectOne": false,
+      "url": "",
+      "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+      "label": "Current Application Step",
+      "items": [],
+      "itemsUrl": [],
+      "criteriaPropName": "StatusGrpCode",
+      "criteriaPropValue": "APP_STEP"
+    }
+  ],
+  "querystring": {
+    "select": "SELECT A.APP_ID AS AppId, A.APP_NO AS AppNo, AC.CUST_NO AS CustNo,AGR.AGRMNT_NO AS AgrmntNo,AGR.AGRMNT_ID AS agrmntId, AC.CUST_NAME AS CustName, AGR.AGRMNT_STAT AS AgrmntStat, AC.CUST_NAME AS CustName, A.APP_CREATED_DT AS AppCreatedDt, A.IS_APP_INIT_DONE AS isNapSub,   A.APP_LAST_STEP AS AppLastStep, A.APP_CURR_STEP AS AppCurrStep, DATEDIFF(SECOND, A.DTM_CRT, A.DTM_UPD) AS TotalTimeNap , CONVERT(VARCHAR(12), DATEDIFF(SECOND,A.DTM_CRT,A.DTM_UPD) / 60 / 60 / 24) + ' Day(s) ' +  CONVERT(VARCHAR(12), DATEDIFF(SECOND,A.DTM_CRT,A.DTM_UPD) / 60 / 60 % 24) + ' Hour(s) ' +  CONVERT(VARCHAR(2), DATEDIFF(SECOND,A.DTM_CRT,A.DTM_UPD) / 60 % 60) + ' Minute(s) ' +  CONVERT(VARCHAR(2), DATEDIFF(SECOND,A.DTM_CRT,A.DTM_UPD) % 60) + ' Second(s) ' AS 'DateDiff', RE.EMP_NAME AS SalesOfficerName, AC.APP_CUST_ID AS AppCustId",
+    "from": "FROM dbo.APP A WITH(NOLOCK) JOIN dbo.AGRMNT AGR WITH(NOLOCK) ON A.APP_ID = AGR.APP_ID JOIN dbo.APP_CUST AC WITH(NOLOCK) ON AC.APP_ID = A.APP_ID JOIN dbo.APP_FIN_DATA FD ON FD.APP_ID = A.APP_ID JOIN [dbo].[V_EMP_NAME] RE WITH (NOLOCK) ON AGR.SALES_OFFICER_NO = RE.EMP_NO"
+  },
+  "headerList": [
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Application No",
+      "name": "A.APP_NO"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Agreement No",
+      "name": "B.AGRMNT_NO"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Customer No",
+      "name": "AC.CUST_NO"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Customer Name",
+      "name": "AC.CUST_NAME"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Contract Status",
+      "name": "AGR.AGRMNT_STAT"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Sales Person Name",
+      "name": "RE.EMP_NAME"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "NAP Submitted",
+      "name": "A.IS_APP_INIT_DONE"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Application Created Date",
+      "name": "A.APP_CREATED_DT"
+    },
+    {
+      "type": "label",
+      "position": "left",
+      "label": "Last Application Step",
+      "name": "A.APP_LAST_STEP"
+    },
+    {
+      "type": "label",
+      "position": "left",
+      "label": "Current Application Step",
+      "name": "A.APP_STAT"
+    }
+  ],
+  "bodyList": [
+    {
+      "type": "callback",
+      "position": "center",
+      "property": "AppNo",
+      "key": "application"
+    },
+    {
+      "type": "callback",
+      "position": "center",
+      "property": "AgrmntNo",
+      "key": "agreement"
+    },
+    {
+      "type": "callback",
+      "position": "center",
+      "property": "CustNo",
+      "key": "customer"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "CustName"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "AgrmntStat"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "SalesOfficerName"
+    },
+    {
+      "type": "boolean",
+      "position": "center",
+      "property": "isNapSub"
+    },
+    {
+      "type": "date",
+      "position": "center",
+      "property": "AppCreatedDt"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "AppLastStep"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "AppCurrStep"
+    }
+  ]
+}
