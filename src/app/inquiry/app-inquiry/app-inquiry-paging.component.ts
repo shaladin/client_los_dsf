@@ -48,7 +48,7 @@ export class AppInquiryPagingComponent implements OnInit {
         this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
           response => {
             this.link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
-            this.router.navigate([]).then(result => { window.open(this.link, '_blank'); });
+            window.open(this.link, '_blank');
           },
           (error) => {
             console.log(error);
