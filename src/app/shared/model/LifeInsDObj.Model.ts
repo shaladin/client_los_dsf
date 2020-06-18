@@ -1,15 +1,16 @@
 export class LifeInsDObj {
-    AppLifeInsDId: any;
-    AppLifeInsHId: any;
+    AppLifeInsDId: number;
+    AppLifeInsHId: number;
     RowVersion: any;
-    InsuredName : any;
-    Age : any;
-    MrCustTypeCode : any;
-    SeqNo : any;
-    BaseRate : any;
-    CustRate : any;
-    InscoRate : any;
-    DiscRate : any;
-    SumInsured : any;
+    InsuredName : string;
+    Age : number;
+    MrCustTypeCode : string;
+    SeqNo : number;
+    BaseRate : number;
+    CustRate : number;
+    InscoRate : number;
+    DiscRate : number;
+    DiscRateToInsco: number;
+    SumInsured : number;
   constructor() { this.AppLifeInsDId = 0; this.RowVersion = "" }
 }
