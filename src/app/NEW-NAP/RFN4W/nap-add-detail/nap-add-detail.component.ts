@@ -38,7 +38,7 @@ export class NapAddDetailComponent implements OnInit {
     "GUAR": 2,
     "REF": 3,
     "APP": 4,
-    "ASSET": 5,
+    "COLL": 5,
     "INS": 6,
     "LFI": 7,
     "FIN": 8,
