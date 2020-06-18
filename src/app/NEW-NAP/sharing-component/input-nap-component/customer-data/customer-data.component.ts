@@ -248,7 +248,8 @@ export class CustomerDataComponent implements OnInit {
         this.isExpiredBirthDt = true;
 
     }else if(type == AdInsConstant.DateErrorMessageBirthDate && d1 > max17Yodt){
-      this.toastr.errorMessage(type + "  can not be more than " + Max17YO);
+      this.toastr.errorMessage("Customer age must be at least 17 year old");
+      // this.toastr.errorMessage(type + "  can not be more than " + Max17YO);
       this.isExpiredBirthDt = true;
     }
     else{
