@@ -6,7 +6,7 @@ import { DecimalPipe } from "@angular/common";
 import { HttpClient } from '@angular/common/http';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CenterGrpOfficeMbrObj } from 'app/shared/model/RefOffice/CenterGrpOfficeMbrObj.Model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-return-handling-phone-verif-paging',
@@ -17,8 +17,10 @@ export class ReturnHandlingPhoneVerifPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
   BizTemplateCode: string;
   userAccess;
+  token : any = localStorage.getItem("Token");
   constructor(private http: HttpClient,
-    private route: ActivatedRoute,) {
+    private route: ActivatedRoute,
+    private router: Router) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.BizTemplateCode = params["BizTemplateCode"];
@@ -79,5 +81,12 @@ export class ReturnHandlingPhoneVerifPagingComponent implements OnInit {
     critObjs.push(critObj);
 
     return critObjs;
+  }
+
+  GetCallBack(ev: any){
+    if(ev.Key == "ViewProdOffering"){
+      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.ViewObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.ViewObj.ProdOfferingVersion + "&Token=" + this.token;
+      this.router.navigate([]).then(result => { window.open(link, '_blank'); });
+    }
   }
 }
