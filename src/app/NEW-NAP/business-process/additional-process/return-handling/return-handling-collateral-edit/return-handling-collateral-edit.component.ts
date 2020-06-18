@@ -52,6 +52,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
   returnHandlingDObj: any;
   ReturnHandlingDData: ReturnHandlingDObj;
   BizTemplateCode: string;
+  arrValue = [];
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
 
@@ -79,6 +80,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.BizTemplateCode = localStorage.getItem("BizTemplateCode");
     this.ClaimTask();
+    this.arrValue.push(this.appId);
     this.initUrl();
     this.appObj.AppId = this.appId;
     this.viewObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";

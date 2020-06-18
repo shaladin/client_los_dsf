@@ -118,19 +118,19 @@
   "headerList": [
     {
       "type": "sort",
-      "position": "left",
+      "position": "center",
       "label": "Application No",
       "name": "A.APP_NO"
     },
     {
       "type": "sort",
-      "position": "left",
+      "position": "center",
       "label": "Agreement No",
       "name": "B.AGRMNT_NO"
     },
     {
       "type": "sort",
-      "position": "left",
+      "position": "center",
       "label": "Customer No",
       "name": "C.CUST_NO"
     },
@@ -148,20 +148,20 @@
     },
     {
       "type": "sort",
-      "position": "left",
+      "position": "center",
       "label": "Application Date",
       "name": "A.APP_CREATED_DT"
     },
 
     {
       "type": "label",
-      "position": "left",
+      "position": "center",
       "label": "NAP Submitted",
       "name": "A.IS_APP_INIT_DONE"
     },
     {
       "type": "label",
-      "position": "left",
+      "position": "center",
       "label": "Contract Status",
       "name": "B.AGRMNT_STAT"
     },
@@ -181,7 +181,7 @@
   "bodyList": [
     {
       "type": "link",
-      "position": "left",
+      "position": "center",
       "property": "appNo",
       "target" : "_blank",
       "path": "/Nap/View/AppView",
@@ -194,7 +194,7 @@
     },
     {
       "type": "action",
-      "position": "left",
+      "position": "center",
       "action": [
         {
           "type": "switch",
@@ -296,16 +296,10 @@
       ]
     },
     {
-      "type": "link",
-      "position": "left",
-      "property": "custNo",
-      "path": "",
-      "param": [
-        {
-          "type": "appCustId",
-          "property": "appCustId"
-        }
-      ]
+      "type": "callback",
+      "key": "Customer",
+      "position": "center",
+      "property": "custNo"
     },
     {
       "type": "text",
@@ -334,12 +328,12 @@
     },
     {
       "type": "date",
-      "position": "left",
+      "position": "center",
       "property": "appDt"
     },
     {
       "type": "text",
-      "position": "left",
+      "position": "center",
       "property": "isNapSub"
     },
     {
