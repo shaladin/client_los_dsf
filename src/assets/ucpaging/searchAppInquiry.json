@@ -12,7 +12,7 @@
       "isFromURL": true,
       "isSelectOne": false,
       "url": "",
-      "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
+      "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
       "label": "Original Office Name",
       "items": [],
       "itemsUrl": []
@@ -57,7 +57,6 @@
       "label": "Product Offering Name",
       "placeholder": "Placeholder"
     },
-
     {
       "type": "datepicker",
       "name": "A.APP_CREATED_DT",
@@ -86,7 +85,7 @@
       "isFromURL": true,
       "isSelectOne": false,
       "url": "",
-      "path":"/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+      "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
       "label": "Application Status",
       "items": [],
       "itemsUrl": [],
@@ -103,7 +102,7 @@
       "isFromURL": true,
       "isSelectOne": false,
       "url": "",
-      "path":"/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+      "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
       "label": "Current Application Step",
       "items": [],
       "itemsUrl": [],
@@ -118,19 +117,19 @@
   "headerList": [
     {
       "type": "sort",
-      "position": "left",
+      "position": "center",
       "label": "Application No",
       "name": "A.APP_NO"
     },
     {
       "type": "sort",
-      "position": "left",
+      "position": "center",
       "label": "Agreement No",
       "name": "B.AGRMNT_NO"
     },
     {
       "type": "sort",
-      "position": "left",
+      "position": "center",
       "label": "Customer No",
       "name": "C.CUST_NO"
     },
@@ -148,20 +147,19 @@
     },
     {
       "type": "sort",
-      "position": "left",
+      "position": "center",
       "label": "Application Date",
       "name": "A.APP_CREATED_DT"
     },
-
     {
       "type": "label",
-      "position": "left",
+      "position": "center",
       "label": "NAP Submitted",
       "name": "A.IS_APP_INIT_DONE"
     },
     {
       "type": "label",
-      "position": "left",
+      "position": "center",
       "label": "Contract Status",
       "name": "B.AGRMNT_STAT"
     },
@@ -180,132 +178,22 @@
   ],
   "bodyList": [
     {
-      "type": "link",
-      "position": "left",
+      "type": "callback",
+      "position": "center",
       "property": "appNo",
-      "target" : "_blank",
-      "path": "/Nap/View/AppView",
-      "param": [
-        {
-          "type": "AppId",
-          "property": "AppId"
-        }
-      ]
+      "key": "application"
     },
     {
-      "type": "action",
-      "position": "left",
-      "action": [
-        {
-          "type": "switch",
-          "case": [
-            {
-              "conditions": [
-                {
-                  "property": "BizTemplateCode",
-                  "value": "CF4W",
-                  "restriction": "EQ"
-                }
-              ],
-              "result": {
-                "type": "link",
-                "position": "left",
-                "property": "agrmntNo",
-                "target": "_blank",
-                "path": "/Nap/View/AgrmntView",
-                "param": [
-                  {
-                    "type": "AgrmntId",
-                    "property": "AgrmntId"
-                  }
-                ]
-              },
-              "isHide": false
-            },
-            {
-              "conditions": [
-                {
-                  "property": "BizTemplateCode",
-                  "value": "FL4W",
-                  "restriction": "EQ"
-                }
-              ],
-              "result": {
-                "type": "link",
-                "position": "left",
-                "property": "agrmntNo",
-                "target" : "_blank",
-                "path": "/Nap/FinanceLeasing/ViewAgrmnt",
-                "param": [
-                  {
-                    "type": "AgrmntId",
-                    "property": "AgrmntId"
-                  }
-                ]
-              },
-              "isHide": false
-            },
-            {
-              "conditions": [
-                {
-                  "property": "BizTemplateCode",
-                  "value": "CFRFN4W",
-                  "restriction": "EQ"
-                }
-              ],
-              "result": {
-                "type": "link",
-                "position": "left",
-                "property": "agrmntNo",
-                "target" : "_blank",
-                "path": "/Nap/View/AgrmntView",
-                "param": [
-                  {
-                    "type": "AgrmntId",
-                    "property": "AgrmntId"
-                  }
-                ]
-              },
-              "isHide": false
-            },
-            {
-              "conditions": [
-                {
-                  "property": "BizTemplateCode",
-                  "value": "FACTORING",
-                  "restriction": "EQ"
-                }
-              ],
-              "result": {
-                "type": "link",
-                "position": "left",
-                "property": "agrmntNo",
-                "target" : "_blank",
-                "path": "/Nap/View/AgrmntView",
-                "param": [
-                  {
-                    "type": "AgrmntId",
-                    "property": "AgrmntId"
-                  }
-                ]
-              },
-              "isHide": false
-            }
-          ]
-        }
-      ]
+      "type": "callback",
+      "position": "center",
+      "property": "agrmntNo",
+      "key": "agreement"
     },
     {
-      "type": "link",
-      "position": "left",
-      "property": "custNo",
-      "path": "",
-      "param": [
-        {
-          "type": "appCustId",
-          "property": "appCustId"
-        }
-      ]
+      "type": "callback",
+      "key": "customer",
+      "position": "center",
+      "property": "custNo"
     },
     {
       "type": "text",
@@ -313,33 +201,19 @@
       "property": "custName"
     },
     {
-      "type": "link",
+      "type": "callback",
+      "key": "product",
       "position": "left",
-      "property": "prodOfferingName",
-      "path": "",
-      "param": [
-        {
-          "type": "prodOfferingHId",
-          "property": "0"
-        },
-        {
-          "type": "prodOfferingCode",
-          "property": "prodOfferingCode"
-        },
-        {
-          "type": "prodOfferingVersion",
-          "property": "prodOfferingVersion"
-        }
-      ]
+      "property": "prodOfferingName"
     },
     {
       "type": "date",
-      "position": "left",
+      "position": "center",
       "property": "appDt"
     },
     {
-      "type": "text",
-      "position": "left",
+      "type": "boolean",
+      "position": "center",
       "property": "isNapSub"
     },
     {
