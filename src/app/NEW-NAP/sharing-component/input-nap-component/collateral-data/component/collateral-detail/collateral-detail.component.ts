@@ -18,6 +18,7 @@ import { AppCollateralDataObj } from 'app/shared/model/AppCollateralDataObj.Mode
 import { ListAppCollateralDocObj } from 'app/shared/model/ListAppCollateralDocObj.Model';
 import { AppCollateralDocObj } from 'app/shared/model/AppCollateralDocObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 
 @Component({
   selector: 'app-collateral-detail',
@@ -37,7 +38,9 @@ export class CollateralDetailComponent implements OnInit {
   inputLookupColl: InputLookupObj = new InputLookupObj();
   inputFieldLegalObj: InputFieldObj = new InputFieldObj();
   inputFieldLocationObj: InputFieldObj = new InputFieldObj();
-  LocationAddrObj: AddrObj = new AddrObj();;
+  LocationAddrObj: AddrObj = new AddrObj();
+  
+  AppCustObj: AppCustObj;
   OwnerAddrObj: AddrObj = new AddrObj();
   appCollateralDataObj: AppCollateralDataObj = new AppCollateralDataObj();
   listAppCollateralDocObj: ListAppCollateralDocObj = new ListAppCollateralDocObj();
@@ -396,13 +399,33 @@ export class CollateralDetailComponent implements OnInit {
     this.AddCollForm.controls.SerialNo1.updateValueAndValidity();
     this.AddCollForm.controls.SerialNo2.updateValueAndValidity();
   }
-
   CopyUser() {
     if(this.AddCollForm.controls.SelfUsage.value == true){
-      this.AddCollForm.patchValue({
-        OwnerName: this.AddCollForm.controls.UserName.value,
-        MrOwnerRelationshipCode: this.AddCollForm.controls.MrUserRelationshipCode.value
-      })
+      this.AddCollForm.controls.UserName.disable();
+      this.AddCollForm.controls.OwnerName.disable();
+      this.AddCollForm.controls.MrOwnerRelationshipCode.disable();
+      this.AddCollForm.controls.MrUserRelationshipCode.disable();
+
+      this.AppCustObj = new AppCustObj();
+      var appObj = { "AppId": this.AppId };
+      this.http.post(AdInsConstant.GetCustDataByAppId, appObj).subscribe(
+        response => { 
+          this.AppCustObj = response['AppCustObj'];        
+          
+          this.AddCollForm.patchValue({
+            UserName: this.AppCustObj.CustName,
+            OwnerName: this.AppCustObj.CustName,
+            MrOwnerRelationshipCode: this.OwnerRelationList[1].Key,
+            MrUserRelationshipCode: this.OwnerRelationList[1].Key,
+          })
+        }
+      )
+    }
+    else{
+      this.AddCollForm.controls.UserName.enable();
+      this.AddCollForm.controls.OwnerName.enable();
+      this.AddCollForm.controls.MrOwnerRelationshipCode.enable();
+      this.AddCollForm.controls.MrUserRelationshipCode.enable();
     }
   }
 
