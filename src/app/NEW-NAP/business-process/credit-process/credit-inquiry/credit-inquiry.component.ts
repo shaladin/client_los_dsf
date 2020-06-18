@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-credit-inquiry',
@@ -10,7 +11,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 })
 export class CreditInquiryComponent implements OnInit {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   inputPagingObj;
   ngOnInit() {
@@ -34,5 +35,25 @@ export class CreditInquiryComponent implements OnInit {
       }
     ];
   }
+  openView(ev){
+    var key = ev.Key;
+    var appId = ev.RowObj.AppId;
+    var custNo = ev.RowObj.CustNo;
+    var agrmntId = ev.RowObj.agrmntId;
 
+    if(key == "application"){
+      window.open( environment.losR3Web + "/Nap/View/AppView?AppId=" + appId, "_blank");
+    }
+    else if(key == "customer"){
+      var custObj = {CustNo : custNo};
+      this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+        (response)=>{
+          window.open( environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response['CustId'], "_blank");
+        }
+      )
+    }
+    else if(key == "agreement"){
+      window.open( environment.losR3Web + "/Nap/FinanceLeasing/ViewAgrmnt?AgrmntId=" + agrmntId, "_blank");
+    }
+  }
 }

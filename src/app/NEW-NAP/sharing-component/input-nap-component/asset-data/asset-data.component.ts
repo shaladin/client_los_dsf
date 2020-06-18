@@ -26,6 +26,7 @@ import { AdInsErrorMessage } from 'app/shared/AdInsErrorMessage';
 export class AssetDataComponent implements OnInit {
 
   @Input() AppId: any;
+  @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   BranchManagerName: string = "-";
