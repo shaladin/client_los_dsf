@@ -69,37 +69,49 @@
                         </a>
                         <div ngbDropdownMenu aria-labelledby="dropdownBasic2" class="notification-dropdown">
                             <div class="noti-list">
-                                <a
-                                    class="dropdown-item noti-container py-3 border-bottom border-bottom-blue-grey border-bottom-lighten-4" routerLink="/Nap/PurchaseOrder">
-                                    <i class="ft-file-text info float-left d-block font-large-1 mt-1 mr-2"></i>
+                                <a *ngFor="let item of NotificationHListObj"
+                                    class="dropdown-item noti-container py-3 border-bottom border-bottom-blue-grey border-bottom-lighten-4 " (click)="ClickNotification(item)">
+                                    <i class="ft-bell info float-left d-block font-large-1 mt-1 mr-2"></i>
                                     <span class="noti-wrapper">
-                                        <span class="noti-title line-height-1 d-block text-bold-400 info">Purchase Order</span>
-                                        <span class="noti-text">Application No : 20190210010001, Steven Febrian</span>
+                                        <span class="noti-title line-height-1 d-block text-bold-400 info">{{item.Title}}</span>
+                                        <span class="noti-text">{{item.ShortDesc}}</span>
+                                    </span>
+                                </a>
+                                <!-- <a
+                                    class="dropdown-item noti-container py-3 border-bottom border-bottom-blue-grey border-bottom-lighten-4">
+                                    <i class="ft-bell info float-left d-block font-large-1 mt-1 mr-2"></i>
+                                    <span class="noti-wrapper">
+                                        <span class="noti-title line-height-1 d-block text-bold-400 info">New Order
+                                            Received</span>
+                                        <span class="noti-text">Lorem ipsum dolor sit ametitaque in, et!</span>
                                     </span>
                                 </a>
                                 <a
-                                    class="dropdown-item noti-container py-3 border-bottom border-bottom-blue-grey border-bottom-lighten-4" routerLink="/Nap/PurchaseOrder">
-                                    <i class="ft-file-text warning float-left d-block font-large-1 mt-1 mr-2"></i>
+                                    class="dropdown-item noti-container py-3 border-bottom border-bottom-blue-grey border-bottom-lighten-4">
+                                    <i class="ft-bell warning float-left d-block font-large-1 mt-1 mr-2"></i>
                                     <span class="noti-wrapper">
-                                        <span class="noti-title line-height-1 d-block text-bold-400 warning">Purchase Order</span>
-                                        <span class="noti-text">Application No : 201907APP10002, Budi</span>
+                                        <span class="noti-title line-height-1 d-block text-bold-400 warning">New User
+                                            Registered</span>
+                                        <span class="noti-text">Lorem ipsum dolor sit ametitaque in </span>
                                     </span>
                                 </a>
                                 <a
-                                    class="dropdown-item noti-container py-3 border-bottom border-bottom-blue-grey border-bottom-lighten-4" [routerLink]="['/Nap/CreditReview/Detail']" [queryParams]="{ custType : 'P' }">
-                                    <i class="ft-clipboard danger float-left d-block font-large-1 mt-1 mr-2"></i>
+                                    class="dropdown-item noti-container py-3 border-bottom border-bottom-blue-grey border-bottom-lighten-4">
+                                    <i class="ft-bell danger float-left d-block font-large-1 mt-1 mr-2"></i>
                                     <span class="noti-wrapper">
-                                        <span class="noti-title line-height-1 d-block text-bold-400 danger">Credit Review</span>
-                                        <span class="noti-text">Application No : 201907APP010002, Andi</span>
+                                        <span class="noti-title line-height-1 d-block text-bold-400 danger">New Order
+                                            Received</span>
+                                        <span class="noti-text">Lorem ipsum dolor sit ametest?</span>
                                     </span>
                                 </a>
-                                <a class="dropdown-item noti-container py-3" routerLink="/Nap/PhoneVerification/Detail">
-                                    <i class="ft-phone success float-left d-block font-large-1 mt-1 mr-2"></i>
+                                <a class="dropdown-item noti-container py-3">
+                                    <i class="ft-bell success float-left d-block font-large-1 mt-1 mr-2"></i>
                                     <span class="noti-wrapper">
-                                        <span class="noti-title line-height-1 d-block text-bold-400 success">Phone Verification</span>
-                                        <span class="noti-text">Application No : 201907APP010003, Tejo Surti</span>
+                                        <span class="noti-title line-height-1 d-block text-bold-400 success">New User
+                                            Registered</span>
+                                        <span class="noti-text">Lorem ipsum dolor sit ametnatus aut.</span>
                                     </span>
-                                </a>
+                                </a> -->
                             </div>
                             <a
                                 class="noti-footer primary text-center d-block border-top border-top-blue-grey border-top-lighten-4 text-bold-400 py-1">Read

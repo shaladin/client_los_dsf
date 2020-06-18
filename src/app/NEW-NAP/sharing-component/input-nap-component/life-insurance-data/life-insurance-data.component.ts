@@ -300,13 +300,13 @@ export class LifeInsuranceDataComponent implements OnInit {
           LifeInsD.InscoRate = response["InscoRate"];
           LifeInsD.SumInsured = response["SumInsured"];
           LifeInsD.DiscRate = response["DiscRate"];
+          LifeInsD.DiscRateToInsco = response["DiscRateToInsco"];
+          this.LifeInsObj.ListAppLifeInsD.push(LifeInsD);
         },
         error => {
           console.log(error);
         }
       );
-      this.LifeInsObj.ListAppLifeInsD.push(LifeInsD);
-      console.log(this.LifeInsObj.ListAppLifeInsD);
     } else {
       console.log("event unchecked");
       var index = this.LifeInsObj.ListAppLifeInsD.findIndex(x => x.InsuredName == this.ListObj[i].InsuredName);

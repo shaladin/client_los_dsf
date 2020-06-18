@@ -26,7 +26,7 @@
             "isFromURL": false,
             "isSelectOne": false,
             "url": "",
-            "label": "Is Active",
+            "label": "Active Status",
             "items": [
                 {
                     "key": "1",
@@ -60,13 +60,13 @@
         },
         {
             "type": "sort",
-            "position": "left",
-            "label": "Is Active",
+            "position": "center",
+            "label": "Active Status",
             "name" : "IsActive"
         },
         {
             "type": "label",
-            "position": "left",
+            "position": "center",
             "label": "Select"
         }
     ],
