@@ -31,16 +31,23 @@
                 <app-mou-view-doc></app-mou-view-doc>
               </ng-template>
             </mat-tab>
-            <mat-tab label="Approval History">
+
+            <mat-tab label="Survey">
               <ng-template matTabContent>
-                <app-mou-view-approval-history [MouCustId]="MouCustId"></app-mou-view-approval-history>
+                <app-mou-view-survey [MouCustId]="MouCustId"></app-mou-view-survey>
               </ng-template>
-            </mat-tab>
+            </mat-tab> 
             <mat-tab label="Legal Review" *ngIf="this.MrCustTypeCode == 'COMPANY'">
               <ng-template matTabContent>
                 <app-mou-view-legal [MouCustId]="MouCustId"></app-mou-view-legal>
               </ng-template>
             </mat-tab>
+            <mat-tab label="Approval History">
+              <ng-template matTabContent>
+                <app-mou-view-approval-history [MouCustId]="MouCustId"></app-mou-view-approval-history>
+              </ng-template>
+            </mat-tab>
+          
           </mat-tab-group>
         </div>
       </div>

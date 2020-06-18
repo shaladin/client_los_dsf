@@ -16,6 +16,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 })
 export class FinancialDataComponent implements OnInit {
   @Input() AppId: number;
+  @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
