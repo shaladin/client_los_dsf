@@ -59,10 +59,10 @@
       <div class="bs-stepper-content">
         <!-- your steps content here -->
         <div id="commission-tab" class="content" role="tabpanel" aria-labelledby="commission-tab-trigger">
-          <app-commission *ngIf="StepIndex == true" [AppId]="ReturnHandlingHObj.AppId" (outputTab)="NextStep('RSV')"></app-commission>
+          <app-commission *ngIf="StepIndex == 1" [AppId]="ReturnHandlingHObj.AppId" (outputTab)="NextStep('RSV')"></app-commission>
         </div>
         <div id="reserved-fund-tab" class="content" role="tabpanel" aria-labelledby="reserved-fund-tab-trigger">
-          <reserved-fund *ngIf="StepIndex == true" [ReturnHandlingHObj]="ReturnHandlingHObj" (outputTab)="LastStepHandler($event)"></reserved-fund>
+          <reserved-fund *ngIf="StepIndex == 2" [ReturnHandlingHObj]="ReturnHandlingHObj" (outputTab)="LastStepHandler($event)"></reserved-fund>
         </div>
       </div>
     </div>

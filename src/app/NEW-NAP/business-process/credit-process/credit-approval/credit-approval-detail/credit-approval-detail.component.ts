@@ -17,6 +17,7 @@ export class CreditApprovalDetailComponent implements OnInit {
   inputObj: { taskId: any; instanceId: any; approvalBaseUrl: string; };
   ManualDeviationData;
   isExistedManualDeviationData;
+  BizTemplateCode: string;
 
   constructor(private toastr: NGXToastrService,
     private route: ActivatedRoute,
@@ -37,6 +38,7 @@ export class CreditApprovalDetailComponent implements OnInit {
     });
   }
   async ngOnInit(): Promise<void> {
+    this.BizTemplateCode = localStorage.getItem("BizTemplateCode");
     this.arrValue.push(this.appId);
     this.viewObj = "./assets/ucviewgeneric/viewCreditApprovalInfo.json";
 
@@ -46,6 +48,6 @@ export class CreditApprovalDetailComponent implements OnInit {
   }
   onApprovalSubmited() {
     this.toastr.successMessage("Success");
-    this.router.navigate(["/Nap/CreditProcess/CreditApproval/Paging"], { queryParams: { "BizTemplateCode": localStorage.getItem("BizTemplateCode") } });
+    this.router.navigate(["/Nap/CreditProcess/CreditApproval/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
   }
 }
