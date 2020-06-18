@@ -263,7 +263,7 @@ export class FormAddDynamicComponent implements OnInit {
         CurrCode: CurrCode,
         OfficeCode: OriOfficeCode,
         ExchangeRateAmt: AdInsConstant.ExchangeRateAmt, 
-        IsSave: true,
+        IsSave: false,
         Content: this.FormInputObj["content"],
       };
       console.log(obj);
@@ -272,7 +272,7 @@ export class FormAddDynamicComponent implements OnInit {
           console.log("response Tax");
           console.log(this.FormInputObj["content"]);
           console.log(response);
-          var temp = response["ReturnObject"];
+          var temp = response["ResponseTaxObjs"];
           len = this.arr.controls.length;
           if(temp.length == len){
             for(var i=0;i<temp.length;i++){
@@ -310,7 +310,7 @@ export class FormAddDynamicComponent implements OnInit {
                 TotalTaxAmount: totalTaxAmount,
                 TotalVATAmount: totalVATAmount,
                 TotalPenaltyAmount: grandTotalPenalty,
-                GrossYield: temp[0].GrossYield,
+                GrossYield: response["GrossYield"],
               });
             }
           }

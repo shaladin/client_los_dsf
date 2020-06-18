@@ -552,7 +552,7 @@ export class CommissionComponent implements OnInit {
     this.Summary.TotalCommisionAmount += tempTotalCommisionAmount;
     this.Summary.TotalTaxAmmount += tempTotalTaxAmmount;
     this.Summary.TotalVATAmount += tempTotalVATAmount;
-    this.Summary.GrossYield += arr["controls"][0].value.GrossYield;
+    this.Summary.GrossYield = arr["controls"][0].value.GrossYield;
     this.viewIncomeInfoObj.RemainingAllocatedAmount = this.viewIncomeInfoObj.MaxAllocatedAmount - this.Summary.TotalCommisionAmount - this.viewIncomeInfoObj.ReservedFundAllocatedAmount;
   }
 
