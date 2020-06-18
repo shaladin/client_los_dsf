@@ -17,6 +17,7 @@ import { ReqTCObj } from 'app/shared/model/ReqTCObj.Model';
 export class TcDataComponent implements OnInit {
 
   @Input() AppId: any;
+  @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 

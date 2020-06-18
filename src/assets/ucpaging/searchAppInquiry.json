@@ -12,7 +12,7 @@
       "isFromURL": true,
       "isSelectOne": false,
       "url": "",
-      "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
+      "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
       "label": "Original Office Name",
       "items": [],
       "itemsUrl": []
@@ -57,7 +57,6 @@
       "label": "Product Offering Name",
       "placeholder": "Placeholder"
     },
-
     {
       "type": "datepicker",
       "name": "A.APP_CREATED_DT",
@@ -86,7 +85,7 @@
       "isFromURL": true,
       "isSelectOne": false,
       "url": "",
-      "path":"/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+      "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
       "label": "Application Status",
       "items": [],
       "itemsUrl": [],
@@ -103,7 +102,7 @@
       "isFromURL": true,
       "isSelectOne": false,
       "url": "",
-      "path":"/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+      "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
       "label": "Current Application Step",
       "items": [],
       "itemsUrl": [],
@@ -152,7 +151,6 @@
       "label": "Application Date",
       "name": "A.APP_CREATED_DT"
     },
-
     {
       "type": "label",
       "position": "center",
@@ -180,124 +178,20 @@
   ],
   "bodyList": [
     {
-      "type": "link",
+      "type": "callback",
       "position": "center",
       "property": "appNo",
-      "target" : "_blank",
-      "path": "/Nap/View/AppView",
-      "param": [
-        {
-          "type": "AppId",
-          "property": "AppId"
-        }
-      ]
-    },
-    {
-      "type": "action",
-      "position": "center",
-      "action": [
-        {
-          "type": "switch",
-          "case": [
-            {
-              "conditions": [
-                {
-                  "property": "BizTemplateCode",
-                  "value": "CF4W",
-                  "restriction": "EQ"
-                }
-              ],
-              "result": {
-                "type": "link",
-                "position": "left",
-                "property": "agrmntNo",
-                "target": "_blank",
-                "path": "/Nap/View/AgrmntView",
-                "param": [
-                  {
-                    "type": "AgrmntId",
-                    "property": "AgrmntId"
-                  }
-                ]
-              },
-              "isHide": false
-            },
-            {
-              "conditions": [
-                {
-                  "property": "BizTemplateCode",
-                  "value": "FL4W",
-                  "restriction": "EQ"
-                }
-              ],
-              "result": {
-                "type": "link",
-                "position": "left",
-                "property": "agrmntNo",
-                "target" : "_blank",
-                "path": "/Nap/FinanceLeasing/ViewAgrmnt",
-                "param": [
-                  {
-                    "type": "AgrmntId",
-                    "property": "AgrmntId"
-                  }
-                ]
-              },
-              "isHide": false
-            },
-            {
-              "conditions": [
-                {
-                  "property": "BizTemplateCode",
-                  "value": "CFRFN4W",
-                  "restriction": "EQ"
-                }
-              ],
-              "result": {
-                "type": "link",
-                "position": "left",
-                "property": "agrmntNo",
-                "target" : "_blank",
-                "path": "/Nap/View/AgrmntView",
-                "param": [
-                  {
-                    "type": "AgrmntId",
-                    "property": "AgrmntId"
-                  }
-                ]
-              },
-              "isHide": false
-            },
-            {
-              "conditions": [
-                {
-                  "property": "BizTemplateCode",
-                  "value": "FACTORING",
-                  "restriction": "EQ"
-                }
-              ],
-              "result": {
-                "type": "link",
-                "position": "left",
-                "property": "agrmntNo",
-                "target" : "_blank",
-                "path": "/Nap/View/AgrmntView",
-                "param": [
-                  {
-                    "type": "AgrmntId",
-                    "property": "AgrmntId"
-                  }
-                ]
-              },
-              "isHide": false
-            }
-          ]
-        }
-      ]
+      "key": "application"
     },
     {
       "type": "callback",
-      "key": "Customer",
+      "position": "center",
+      "property": "agrmntNo",
+      "key": "agreement"
+    },
+    {
+      "type": "callback",
+      "key": "customer",
       "position": "center",
       "property": "custNo"
     },
@@ -307,24 +201,10 @@
       "property": "custName"
     },
     {
-      "type": "link",
+      "type": "callback",
+      "key": "product",
       "position": "left",
-      "property": "prodOfferingName",
-      "path": "",
-      "param": [
-        {
-          "type": "prodOfferingHId",
-          "property": "0"
-        },
-        {
-          "type": "prodOfferingCode",
-          "property": "prodOfferingCode"
-        },
-        {
-          "type": "prodOfferingVersion",
-          "property": "prodOfferingVersion"
-        }
-      ]
+      "property": "prodOfferingName"
     },
     {
       "type": "date",
@@ -332,7 +212,7 @@
       "property": "appDt"
     },
     {
-      "type": "text",
+      "type": "boolean",
       "position": "center",
       "property": "isNapSub"
     },
