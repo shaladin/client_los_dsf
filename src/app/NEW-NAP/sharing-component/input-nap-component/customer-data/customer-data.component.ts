@@ -46,7 +46,8 @@ export class CustomerDataComponent implements OnInit {
     CopyFromMailing: ['']
   });
 
-  @Input() appId: any;
+  @Input() appId: number;
+  @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
@@ -129,6 +130,8 @@ export class CustomerDataComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    console.log("show cancel");
+    console.log(this.showCancel);
     this.initUrl();
     await this.bindCustTypeObj();
     this.initAddrObj();
