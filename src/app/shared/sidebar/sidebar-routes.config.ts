@@ -142,7 +142,8 @@ export const ROUTES: RouteInfo[] = [
   {
     Path: '', Title: 'Inquiry', Icon: 'ft-home', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
     Submenu: [
-      { Path: '/Inquiry/AppInquiry', Title: 'App Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] }
+      { Path: '/Inquiry/AppInquiry', Title: 'App Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
+      { Path: '/Nap/CreditProcess/CreditInquiry/Paging', Title: 'Credit Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] }
     ], Params: []
   },
   {
