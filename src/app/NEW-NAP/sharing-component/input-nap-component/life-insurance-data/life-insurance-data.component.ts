@@ -17,6 +17,7 @@ import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 export class LifeInsuranceDataComponent implements OnInit {
 
   @Input() AppId: any;
+  @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
