@@ -307,24 +307,10 @@
       "property": "custName"
     },
     {
-      "type": "link",
+      "type": "callback",
+      "key": "Product",
       "position": "left",
-      "property": "prodOfferingName",
-      "path": "",
-      "param": [
-        {
-          "type": "prodOfferingHId",
-          "property": "0"
-        },
-        {
-          "type": "prodOfferingCode",
-          "property": "prodOfferingCode"
-        },
-        {
-          "type": "prodOfferingVersion",
-          "property": "prodOfferingVersion"
-        }
-      ]
+      "property": "prodOfferingName"
     },
     {
       "type": "date",
