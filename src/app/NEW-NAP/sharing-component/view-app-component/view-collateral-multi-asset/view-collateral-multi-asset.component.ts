@@ -7,8 +7,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-view-collateral-multi-asset',
-  templateUrl: './view-collateral-multi-asset.component.html',
-  styleUrls: ['./view-collateral-multi-asset.component.scss']
+  templateUrl: './view-collateral-multi-asset.component.html'
 })
 export class ViewCollateralMultiAssetComponent implements OnInit {
 

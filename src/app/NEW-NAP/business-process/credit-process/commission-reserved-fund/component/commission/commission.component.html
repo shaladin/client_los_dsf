@@ -58,7 +58,8 @@
                                   <label class="adInsLabel"> Remaining Allocated Amount </label>
                                 </div>
                                 <div class="col-md-6 form-inline form-inline-right">
-                                  <label> {{viewIncomeInfoObj.RemainingAllocatedAmount | number:'.2':'en-US'}} </label>
+                                    <label *ngIf="viewIncomeInfoObj.RemainingAllocatedAmount >= 0"> {{viewIncomeInfoObj.RemainingAllocatedAmount | number:'.2':'en-US'}} </label>
+                                    <label *ngIf="viewIncomeInfoObj.RemainingAllocatedAmount < 0" style="color: red;"> ( {{-viewIncomeInfoObj.RemainingAllocatedAmount | number:'.2':'en-US'}} )</label>
                                 </div>
                             </div>
                         </div>
