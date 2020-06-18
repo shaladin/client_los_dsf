@@ -10,7 +10,7 @@
             <div id="custInfo">
               <div class="form-group row">
                 <label class="col-md-2  adInsLabel" translate>Application No</label>
-                <a class="col-md-4" [routerLink]="['/Nap/View/AppView']" [queryParams]="{AppId: this.AppObj?.AppId}">
+                <a class="col-md-4" (click)="Navigate()">
                   {{this.AppObj?.AppNo}}
                 </a>
                 <label class="col-md-2  adInsLabel" translate>Subject</label>
