@@ -525,6 +525,7 @@ export class AdInsConstant {
 
   //NOTIFICATION
   public static NotificationPost = "/Message/Post";
+  public static UpdateReadNotification = environment.FoundationR3Url+"/NotificationD/UpdateReadNotificationD";
 
   //REF CURR
   public static GetRefCurrPaging = "/RefCurr/GetRefCurrPaging";

@@ -44,4 +44,19 @@ export class MouCustomerRequestComponent implements OnInit {
       ];
     }
   }
+
+  customerView(ev){
+    var custNo = ev.RowObj.CustNo;
+    var custObj = {CustNo : custNo};
+    var custId : number
+    this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+      (response) => { 
+        custId = response['CustId'];
+        window.open( environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + custId, "_blank");
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
 }
