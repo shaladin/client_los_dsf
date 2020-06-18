@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
@@ -12,6 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { AllCollateralDataObj } from '../../../../../shared/model/AllCollateralDataObj.Model';
+import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 
 
 @Component({
@@ -21,6 +22,7 @@ import { AllCollateralDataObj } from '../../../../../shared/model/AllCollateralD
 
 export class ReturnHandlingCollateralDetailComponent implements OnInit {
 
+  @ViewChild('lookupAsset') ucLookupAsset: UclookupgenericComponent;
   AppId: number;
   wfTaskListId: number;
   returnHandlingHId: number;
@@ -107,7 +109,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
 
   allCollateralDataObj: AllCollateralDataObj;
 
-  InputLookupAssetObj: any;
+  InputLookupAssetObj: InputLookupObj;
 
   UserRelationObj: any;
   OwnerRelationObj: any;
@@ -141,7 +143,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
 
   copyFromAppCustAddrForOwner: any;
   copyFromAppCustAddrForLocation: any;
-
+  typeCrit: any;
 
 
 
@@ -463,7 +465,6 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     this.InputLookupAssetObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupAssetObj.pagingJson = "./assets/uclookup/NAP/lookupAsset.json";
     this.InputLookupAssetObj.genericJson = "./assets/uclookup/NAP/lookupAsset.json";
-
   }
 
   bindAllRefMasterObj() {
@@ -591,14 +592,15 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
         this.AssetTypeObj = response;
       }
     );
-
-    var typeCrit = new Array();
+    this.typeCrit = new Array();
     var critTypeObj = new CriteriaObj();
-    critTypeObj.restriction = AdInsConstant.RestrictionEq;
-    critTypeObj.propName = 'A.ASSET_TYPE_ID';
-    critTypeObj.value = this.AssetTypeObj.AssetTypeId;
-    typeCrit.push(critTypeObj);
-    this.InputLookupAssetObj.addCritInput = typeCrit;
+    critTypeObj.DataType = "string";
+    critTypeObj.restriction = AdInsConstant.RestrictionIn;
+    critTypeObj.propName = "B.ASSET_TYPE_CODE";
+    critTypeObj.listValue = [Code];
+    this.typeCrit.push(critTypeObj);
+    this.InputLookupAssetObj.addCritInput = this.typeCrit;
+    this.ucLookupAsset.setAddCritInput();
 
     if (this.AssetTypeObj.SerialNo1Label != "" && this.AssetTypeObj.SerialNo1Label != null) {
       if (this.AssetTypeObj.IsMndtrySerialNo1 == true) {
