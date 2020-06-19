@@ -20,6 +20,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
 
   @Input() AppId: any;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   mode : any;
   ListCrossAppObj: any = {};
   constructor(
@@ -152,6 +153,10 @@ export class ApplicationDataFL4WComponent implements OnInit {
           }
         );
       });
+  }
+
+  Cancel(){
+    this.outputCancel.emit();
   }
 
   getDDLFromProdOffering(refProdCompntCode:string){

@@ -33,6 +33,7 @@ export class CollateralDetailComponent implements OnInit {
   @Input() AppId: number = 0;
   @Input() AppCollateralId: number = 0;
   @Output() outputValue: EventEmitter<number> = new EventEmitter<any>();
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
   inputLookupExistColl: InputLookupObj = new InputLookupObj();
   inputLookupColl: InputLookupObj = new InputLookupObj();
@@ -503,7 +504,8 @@ export class CollateralDetailComponent implements OnInit {
   }
 
   Cancel() {
-    this.outputValue.emit();
+    // this.outputValue.emit();
+    this.outputCancel.emit();
   }
 
   setCollateralInfo() {

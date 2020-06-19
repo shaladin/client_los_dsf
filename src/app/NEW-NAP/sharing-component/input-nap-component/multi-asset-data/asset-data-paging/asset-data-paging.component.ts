@@ -16,6 +16,7 @@ import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 export class AssetDataPagingComponent implements OnInit {
 
   @Output() outputValue: EventEmitter<object> = new EventEmitter();
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   IdCust: any;
   appAssetObj : any;
   listAppAssetObj: any;
@@ -51,6 +52,10 @@ addAsset() {
 
 addColl() {
   this.outputValue.emit({ mode: 'addColl' });
+}
+
+Cancel(){
+  this.outputCancel.emit();
 }
 
 event(ev){
