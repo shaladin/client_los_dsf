@@ -17,6 +17,10 @@ export class CustConfirmationSubjViewComponent implements OnInit {
 
   VerfResultHId: number;
   AgrmntId: number;
+  AppId: number;
+  AgrmntNo: string;
+  TaskListId: number;
+  BizTemplateCode: string;
   VerfResultHList = new Array<VerfResultHObj>();
   AgrmntObj: AgrmntObj;
   AppObj: AppObj;
@@ -33,6 +37,18 @@ export class CustConfirmationSubjViewComponent implements OnInit {
       }
       if (params["AgrmntId"] != null) {
         this.AgrmntId = params["AgrmntId"];
+      }
+      if (params["AppId"] != null) {
+        this.AppId = params["AppId"];
+      }
+      if (params["AgrmntNo"] != null) {
+        this.AgrmntNo = params["AgrmntNo"];
+      }
+      if (params["TaskListId"] != null) {
+        this.TaskListId = params["TaskListId"];
+      }
+      if (params["BizTemplateCode"] != null) {
+        this.BizTemplateCode = params["BizTemplateCode"];
       }
     });
   }
