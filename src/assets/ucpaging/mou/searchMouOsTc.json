@@ -7,7 +7,7 @@
             "name": "MOU.MOU_CUST_NO",
             "id": "MouCustNoId",
             "value": "",
-            "label": "MOU NO",
+            "label": "Mou No",
             "placeholder": "Placeholder"
         },
         {
@@ -20,7 +20,7 @@
             "isFromURL": true,
             "isSelectOne": false,
             "path":"/RefMaster/GetListKeyValueActiveByCode",
-            "label": "MOU TYPE",
+            "label": "Mou Type",
             "items": [],
             "itemsUrl": [],
             "criteriaPropName": "RefMasterTypeCode",
@@ -31,7 +31,7 @@
             "name": "MOU.CUST_NAME",
             "id": "CustNameId",
             "value": "",
-            "label": "CUSTOMER NAME",
+            "label": "Customer Name",
             "placeholder": "Placeholder"
         }
     ],
@@ -44,49 +44,49 @@
         {
             "type": "sort",
             "position": "center",
-            "label": "Mou No",
+            "label": "MOU NO",
             "name": "MouCustNo"
         },
         {
             "type": "sort",
             "position": "left",
-            "label": "Customer Name",
+            "label": "CUSTOMER NAME",
             "name": "CustName"
         },
         {
             "type": "sort",
             "position": "center",
-            "label": "Mou Date",
+            "label": "MOU DATE",
             "name": "MouCustDt"
         },
         {
             "type": "sort",
             "position": "center",
-            "label": "Expired Date",
+            "label": "EXPIRED DATE",
             "name": "EndDt"
         },
         {
             "type": "sort",
             "position": "right",
-            "label": "Plafond Amount",
+            "label": "PLAFOND AMOUNT",
             "name": "PlafondAmt"
         },
         {
             "type": "sort",
             "position": "center",
-            "label": "Revolving",
+            "label": "REVOLVING",
             "name": "IsRevolving"
         },
         {
             "type": "sort",
             "position": "center",
-            "label": "Mou Type",
+            "label": "MOU TYPE",
             "name": "MrMouTypeCode"
         },
         {
             "type": "label",
             "position": "center",
-            "label": "Action"
+            "label": "ACTION"
         }
     ],
     "bodyList": [

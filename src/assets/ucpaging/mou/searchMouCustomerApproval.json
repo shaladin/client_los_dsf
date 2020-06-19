@@ -7,7 +7,7 @@
             "name": "TRX_NO",
             "id": "TrxNoId",
             "value": "",
-            "label": "TRANSACTION NO",
+            "label": "Transaction No",
             "placeholder": "Placeholder"
         },
         {
@@ -15,7 +15,7 @@
             "name": "CUST_NAME",
             "id": "CustNameId",
             "value": "",
-            "label": "CUSTOMER NAME",
+            "label": "Customer Name",
             "placeholder": "Placeholder"
         },
         {
@@ -23,7 +23,7 @@
             "name": "APV_NO",
             "id": "ApvNoId",
             "value": "",
-            "label": "APPROVAL NO",
+            "label": "Approval No",
             "placeholder": "Placeholder"
         },
         {
@@ -31,7 +31,7 @@
             "name": "TL.REQUEST_BY",
             "id": "ReqById",
             "value": "",
-            "label": "REQUEST BY",
+            "label": "Request By",
             "placeholder": "Placeholder"
         },
         {
@@ -39,7 +39,7 @@
             "name": "TL.CURRENT_USER_ID",
             "id": "TaskOwnerId",
             "value": "",
-            "label": "TASK OWNER",
+            "label": "Task Owner",
             "placeholder": "Placeholder"
         },
         {
@@ -47,7 +47,7 @@
             "name": "TL.CURRENT_USER_ID",
             "id": "CurrentUserId",
             "value": "",
-            "label": "CURRENT USER",
+            "label": "Current User",
             "placeholder": "Placeholder"
         },
         {
@@ -55,7 +55,7 @@
             "name": "TL.REQUEST_DATE",
             "id": "ReqDtFromId",
             "value": "",
-            "label": "REQUEST DATE FROM",
+            "label": "Request Date From",
             "restriction": "gte",
             "datatype": "date"
         },
@@ -64,7 +64,7 @@
             "name": "TL.REQUEST_DATE",
             "id": "ReqDtFromId",
             "value": "",
-            "label": "REQUEST DATE TO",
+            "label": "Request Date To",
             "restriction": "lte",
             "datatype": "date"
         }
@@ -78,49 +78,49 @@
         {
             "type": "sort",
             "position": "center",
-            "label": "Apv No",
+            "label": "APV NO",
             "name": "APV_NO"
         },
         {
             "type": "sort",
             "position": "left",
-            "label": "Customer Name",
+            "label": "CUSTOMER NAME",
             "name": "CustName"
         },
         {
             "type": "sort",
             "position": "center",
-            "label": "Mou No",
+            "label": "MOU NO",
             "name": "MouCustNo"
         },
         {
             "type": "sort",
             "position": "left",
-            "label": "Request By",
+            "label": "REQUEST BY",
             "name": "RequestBy"
         },
         {
             "type": "sort",
             "position": "left",
-            "label": "Task Owner",
+            "label": "TASK OWNER",
             "name": "MainUserId"
         },
         {
             "type": "sort",
             "position": "left",
-            "label": "Current User",
+            "label": "CURRENT USER",
             "name": "CurrentUserId"
         },
         {
             "type": "sort",
             "position": "center",
-            "label": "Request Date",
+            "label": "REQUEST DATE",
             "name": "RequestDate"
         },
         {
             "type": "label",
             "position": "center",
-            "label": "Action"
+            "label": "ACTION"
         }
     ],
     "bodyList": [

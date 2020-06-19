@@ -7,7 +7,7 @@
           (ngSubmit)="enjiForm.form.valid && Save(enjiForm)">
           <div class="form-body">
             <div class="form-group row" *ngIf="pageType == 'edit'">
-              <label class="col-md-3 adInsLabel" for="MouCustNo" translate>MoU No.</label>
+              <label class="col-md-3 adInsLabel" for="MouCustNo" translate>Mou No.</label>
               <div class="col-md-9">
                 <a href="{{mouCustUrl}}" target="_blank">{{MOUMainInfoForm.controls.MouCustNo.value}}</a>
               </div>
@@ -23,7 +23,7 @@
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-md-3 adInsLabel adins-required-label" for="MouCustDt" translate>MoU Date</label>
+              <label class="col-md-3 adInsLabel adins-required-label" for="MouCustDt" translate>Mou Date</label>
               <div class="col-md-4">
                 <input type="date" class="form-control adInsInput" formControlName="MouCustDt" 
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && MOUMainInfoForm.controls.MouCustDt.invalid }" [max]="businessDtMin | date: 'yyyy-MM-dd'" onkeypress="return false;" />
@@ -78,7 +78,7 @@
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-md-3 adInsLabel" for="MrMouTypeCode">MoU Type</label>
+              <label class="col-md-3 adInsLabel" for="MrMouTypeCode">Mou Type</label>
               <div class="col-md-4">
                 {{MOUMainInfoForm.controls.MrMouTypeCode.value}}
               </div>
