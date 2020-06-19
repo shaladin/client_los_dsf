@@ -48,6 +48,7 @@ export class LifeInsuranceDataComponent implements OnInit {
     PaidInAdvPrcnt: [''],
     NewCoverNotes: [''],
     CustAdminFeeAmt: [''],
+
   });
 
   LifeInscoBranchName: Array<object>;
@@ -139,10 +140,28 @@ export class LifeInsuranceDataComponent implements OnInit {
   initAppLifeInsD() {
     var lifeInsObj = new LifeInsObj();
     lifeInsObj.AppId = this.AppId;
+    lifeInsObj.AppLifeInsHId = this.AppLifeInsHId;
     this.http.post(AdInsConstant.InitAppLifeInsH, lifeInsObj).subscribe(
       (response) => {
         this.ListObj = new Array<LifeInsDObj>();
         this.ListObj = response["ListAppLifeInsD"];
+
+        for(let i = 0; i < this.ListObj.length; i++){
+          if(this.ListObj[i].IsChecked == true){
+            var LifeInsD = new LifeInsDObj();
+            LifeInsD.InsuredName = this.ListObj[i].InsuredName;
+            LifeInsD.Age = this.ListObj[i].Age;
+            LifeInsD.MrCustTypeCode = this.ListObj[i].MrCustTypeCode;
+            LifeInsD.SeqNo = this.ListObj[i].SeqNo;
+            LifeInsD.BaseRate = this.ListObj[i].BaseRate;
+            LifeInsD.CustRate = this.ListObj[i].CustRate;
+            LifeInsD.InscoRate = this.ListObj[i].InscoRate;
+            LifeInsD.SumInsured = this.ListObj[i].SumInsured;
+            LifeInsD.DiscRate = this.ListObj[i].DiscRate;
+            LifeInsD.DiscRateToInsco = this.ListObj[i].DiscRateToInsco;
+            this.LifeInsObj.ListAppLifeInsD.push(LifeInsD);
+          }
+        }
       },
       (error) => {
         console.log(error);
