@@ -4,6 +4,7 @@ import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-legal-review-paging',
@@ -14,7 +15,7 @@ export class LegalReviewPagingComponent implements OnInit {
   arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   user: any;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private http : HttpClient) { }
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem("UserAccess"));
@@ -50,6 +51,21 @@ export class LegalReviewPagingComponent implements OnInit {
       addCritOfficeCode.restriction = AdInsConstant.RestrictionNotIn;
       addCritOfficeCode.value = 'HO';
       this.arrCrit.push(addCritOfficeCode);
+    }
+  }
+  getEvent(event){
+    if(event.Key == "customer"){
+        var link : string;
+        var custObj = { CustNo: event.RowObj.CustNo };
+        this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+          response => {
+            link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
+            window.open(link, '_blank');
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
     }
   }
 }

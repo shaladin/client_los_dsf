@@ -34,7 +34,7 @@
           <td>{{item.CollateralNo}}</td>
           <td align="left">{{item.FullAssetName}}</td>
           <td align="left">{{item.FullAssetCode}}</td>
-          <td align="left">{{item.CustName}}</td>
+          <td align="left"><a [routerLink]="" (click)="openView(item.CustNo)">{{item.CustName}}</a></td>
           <td align="right">{{item.CollateralValueAmt | number}}</td>
           <td>{{item.CollateralStat}}</td>
           <td>
