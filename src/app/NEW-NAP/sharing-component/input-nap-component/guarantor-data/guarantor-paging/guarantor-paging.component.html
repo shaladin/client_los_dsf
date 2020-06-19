@@ -43,7 +43,7 @@
   <lib-ucgridview [gridInput]="inputGridObj" (callback)="event(content,$event)"></lib-ucgridview>
 </div>
 <div class="pull-right margin-15">
-  <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
+  <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
     <i class="ft-x"></i> Cancel
   </button>
   <button type="button" (click)="SaveAndContinue()" class="btn btn-raised btn-primary">

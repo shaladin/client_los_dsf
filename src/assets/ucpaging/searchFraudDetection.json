@@ -35,6 +35,7 @@
       "isFromURL": true,
       "isSelectOne": false,
       "url": "",
+      "isQueryIn" : true,
       "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
       "label": "Office",
       "items": [],

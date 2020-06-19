@@ -18,6 +18,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 export class ApplicationDataComponent implements OnInit {
 
   @Input() appId: number;
+  @Input() showCancel: boolean = true;
   @Input() IsLoanObject: boolean = false;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
