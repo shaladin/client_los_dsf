@@ -152,17 +152,19 @@
                 </div>
               </div>
             </div>
-            <lib-ucSubsection [id]="'AddCollAttributeId'" [title]="'Collateral Attribute'" [panel]="'AddCollAttribute'">
-            </lib-ucSubsection>
-            <div class="form-body" id="AddCollAttribute" formArrayName="ListAttr">
-              <div class="col-md-6 form-group row"
-                *ngFor="let item of AddCollForm.controls.ListAttr.controls; let i = index" [formGroupName]="i">
-                <label class="col-md-5 adins-required-label" translate>Attr</label>
-                <div class="col-md-7">
-                  <input type="text" class=" form-control width-100-per" formControlName="AppAttrValue">
+            <div style="display: none;">
+              <lib-ucSubsection [id]="'AddCollAttributeId'" [title]="'Collateral Attribute'" [panel]="'AddCollAttribute'">
+              </lib-ucSubsection>
+              <div class="form-body" id="AddCollAttribute" formArrayName="ListAttr">
+                <div class="col-md-6 form-group row"
+                  *ngFor="let item of AddCollForm.controls.ListAttr.controls; let i = index" [formGroupName]="i">
+                  <label class="col-md-5 adins-required-label" translate>Attr</label>
+                  <div class="col-md-7">
+                    <input type="text" class=" form-control width-100-per" formControlName="AppAttrValue">
+                  </div>
                 </div>
               </div>
-            </div>
+          </div>
             <lib-ucSubsection [id]="'AddCollDocumentId'" [title]="'Collateral Document'" [panel]="'AddCollDocument'">
             </lib-ucSubsection>
             <div id="AddCollDocument" *ngIf="false">

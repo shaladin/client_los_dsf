@@ -13,7 +13,7 @@
         {
             "type": "dropdown",
             "datatype": "text",
-            "name": "RO.OFFICE_NAME",
+            "name": "RO.OFFICE_CODE",
             "id": "OfficeNameId",
             "value": "",
             "placeholder": "Placeholder",
@@ -23,6 +23,7 @@
             "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
             "label": "OFFICE",
             "items": [],
+            "isQueryIn":true,
             "itemsUrl": []
         },
         {
@@ -122,7 +123,7 @@
         },
         {
             "type" : "link",
-            "position" : "left",
+            "position" : "center",
             "property" : "LeadNo",
             "target" : "_blank",
             "path" : "/Lead/View",

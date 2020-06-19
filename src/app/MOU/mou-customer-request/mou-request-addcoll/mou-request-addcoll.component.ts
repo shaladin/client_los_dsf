@@ -161,7 +161,7 @@ export class MouRequestAddcollComponent implements OnInit {
       })
 
     var assetObj = {};
-    this.http.post(AdInsConstant.GetListKeyValueByCode, assetObj).subscribe(
+    this.http.post(AdInsConstant.GetListAssetTypeByCode, assetObj).subscribe(
       (response) => {
         this.CollTypeList = response['ReturnObject'];
         this.AddCollForm.patchValue({
@@ -617,7 +617,7 @@ export class MouRequestAddcollComponent implements OnInit {
             for (var i = 0; i < this.SerialNoList["length"]; i++) {
               var eachDataDetail = this.fb.group({
                 SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
-                SerialNoValue: ['', Validators.required],
+                SerialNoValue: [''],
                 IsMandatory: [this.SerialNoList[i].IsMandatory]
               }) as FormGroup;
               this.items.push(eachDataDetail);

@@ -43,7 +43,7 @@
         }
     ],
     "querystring": {
-        "select": "SELECT A.APP_NO AS AppNo, A.PROD_OFFERING_NAME AS ProdOfferingName, AC.CUST_NAME As CustName, POH.PURCHASE_ORDER_NO AS PurchaseOrderNo, AG.AGRMNT_NO AS AgrmntNo, POH.PURCHASE_ORDER_DT AS PurchaseOrderDt, POH.PURCHASE_ORDER_EXPIRED_DT AS PurchaseOrderExpiredDt, AA.SUPPL_NAME AS SupplName, DATEDIFF(DAY,POH.PURCHASE_ORDER_DT,POH.PURCHASE_ORDER_EXPIRED_DT) AS RemainingDays, A.APP_ID AS AppId, AG.AGRMNT_ID, POH.PURCHASE_ORDER_H_ID AS PurchaseOrderHId, POH.NUM_OF_EXTENSION AS NumOfExtension",
+        "select": "SELECT A.APP_NO AS AppNo, A.PROD_OFFERING_NAME AS ProdOfferingName, AC.CUST_NAME As CustName, POH.PURCHASE_ORDER_NO AS PurchaseOrderNo, AG.AGRMNT_NO AS AgrmntNo, POH.PURCHASE_ORDER_DT AS PurchaseOrderDt, POH.PURCHASE_ORDER_EXPIRED_DT AS PurchaseOrderExpiredDt, AA.SUPPL_NAME AS SupplName, DATEDIFF(DAY,POH.PURCHASE_ORDER_DT,POH.PURCHASE_ORDER_EXPIRED_DT) AS RemainingDays, A.APP_ID AS AppId, AG.AGRMNT_ID, POH.PURCHASE_ORDER_H_ID AS PurchaseOrderHId, POH.NUM_OF_EXTENSION AS NumOfExtension, AG.AGRMNT_ID AS AgrmntId, AG.PROD_OFFERING_CODE AS ProdOfferingCode, AA.SUPPL_CODE AS SupplCode",
         "from": "FROM dbo.APP A WITH(NOLOCK) JOIN dbo.APP_CUST AC WITH(NOLOCK) ON A.APP_ID = AC.APP_ID JOIN dbo.AGRMNT AG WITH(NOLOCK) ON A.APP_ID = AG.APP_ID JOIN dbo.APP_ASSET AA ON AA.AGRMNT_ID = AG.AGRMNT_ID JOIN dbo.PURCHASE_ORDER_H POH WITH(NOLOCK) ON AG.AGRMNT_ID = POH.AGRMNT_ID"
     },
     "headerList": [
@@ -67,13 +67,13 @@
         },
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "CUSTOMER NAME",
             "name": "AC.CUST_NAME"
         },
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "Supplier Branch Name",
             "name": "AA.SUPPL_NAME"
         },
@@ -109,28 +109,20 @@
     ],
     "bodyList": [
         {
-            "type" : "link",
-            "position": "left",
-            "property": "PurchaseOrderNo",
-            "target" : "_blank",
-            "path" : "//",
-            "param" : [
-                {
-                    "type" : "",
-                    "property" : ""
-                }
-            ]
+            "type" : "text",
+            "position": "center",
+            "property": "PurchaseOrderNo"
         },
         {
-            "type" : "link",
+            "type": "link",
             "position": "center",
             "property": "AppNo",
-            "target" : "_blank",
-            "path" : "//",
-            "param" : [
+            "target": "_blank",
+            "path" : "/Nap/View/AppView", 
+            "param" : [ 
                 {
-                    "type" : "",
-                    "property" : ""
+                    "type" : "AppId", 
+                    "property" : "AppId" 
                 }
             ]
         },
@@ -138,40 +130,25 @@
             "type" : "link",
             "position": "center",
             "property": "AgrmntNo",
-            "target" : "_blank",
-            "path" : "//",
-            "param" : [
+            "target": "_blank",
+            "path" : "/Nap/View/AgrmntView", 
+            "param" : [ 
                 {
-                    "type" : "",
-                    "property" : ""
+                    "type" : "AgrmntId", 
+                    "property" : "AgrmntId" 
                 }
             ]
         },
         {
-            "type" : "link",
-            "position": "center",
-            "property": "CustName",
-            "target" : "_blank",
-            "path" : "//",
-            "param" : [
-                {
-                    "type" : "",
-                    "property" : ""
-                }
-            ]
+            "type" : "text",
+            "position": "left",
+            "property": "CustName"
         },
         {
-            "type" : "link",
-            "position": "center",
+            "type" : "callback",
+            "position": "left",
             "property": "SupplName",
-            "target" : "_blank",
-            "path" : "//",
-            "param" : [
-                {
-                    "type" : "",
-                    "property" : ""
-                }
-            ]
+            "key" : "suppl"
         },
         {
             "type": "date",
@@ -199,7 +176,7 @@
             "action": [
                 {
                     "type": "edit",
-                    "path": "/AddProcess/POExtension/Detail",
+                    "path": "/Nap/AddProcess/POExtension/Detail",
                     "param": [
                         {
                             "type": "AppId",

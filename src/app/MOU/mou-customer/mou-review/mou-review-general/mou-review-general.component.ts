@@ -7,6 +7,7 @@ import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { RFAInfoObj } from 'app/shared/model/Approval/RFAInfoObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-mou-review-general',
@@ -54,7 +55,6 @@ export class MouReviewGeneralComponent implements OnInit {
   }
 
   ngOnInit() {
-    
     if (this.WfTaskListId > 0) {
       this.claimTask();
     }
@@ -67,7 +67,7 @@ export class MouReviewGeneralComponent implements OnInit {
 
         this.MouReviewDataForm.patchValue({
           ListApprover: this.listApprover[0].Key,
-          Reason: this.listReason[0].Key
+          // Reason: this.listReason[0].Key
         })
       })
 
@@ -99,6 +99,14 @@ export class MouReviewGeneralComponent implements OnInit {
             this.MrCustTypeCode = response['MrCustTypeCode']; 
         });
 
+    this.http.post(AdInsConstant.GetListActiveRefReason, {RefReasonTypeCode: AdInsConstant.REF_REASON_MOU_GENERAL}).pipe(first()).subscribe(
+      (response) => {
+        this.listReason = response["ReturnObject"];
+        this.MouReviewDataForm.patchValue({
+          Reason: this.listReason[0].Key
+        });
+      }
+    );
   }
 
   async claimTask() {

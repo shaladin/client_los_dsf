@@ -37,13 +37,14 @@
       "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
       "label": "Office",
       "items": [],
-      "itemsUrl": []
+      "itemsUrl": [],
+      "isQueryIn":true
     },
     {
       "type": "dropdown",
       "name": "WTL.CLAIM_STAT",
       "id": "ActiveStatusId",
-      "label": "TASK CLAIM STATUS",
+      "label": "Task Claim Status",
       "value": "",
       "placeholder": "Placeholder",
       "isFromURL": false,
@@ -64,7 +65,7 @@
       "name": "WTL.USERNAME",
       "id": "claimById",
       "value": "",
-      "label": "CLAIM BY",
+      "label": "Claim By",
       "placeholder": "Placeholder"
     }
   ],

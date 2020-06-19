@@ -7,7 +7,7 @@
             "name": "MOU_CUST_NO",
             "id": "MouCustNoId",
             "value": "",
-            "label": "MOU NO",
+            "label": "Mou No",
             "placeholder": "Placeholder"
         },
         {
@@ -21,7 +21,7 @@
             "isSelectOne": false,
             "url": "",
             "path":"/RefMaster/GetListKeyValueActiveByCode",
-            "label": "MOU TYPE",
+            "label": "Mou Type",
             "items": [],
             "itemsUrl": [],
             "criteriaPropName": "RefMasterTypeCode",
@@ -32,14 +32,14 @@
             "name": "CUST_NAME",
             "id": "CustNameId",
             "value": "",
-            "label": "CUSTOMER NAME",
+            "label": "Customer Name",
             "placeholder": "Placeholder"
         },
         {
             "type": "dropdown",
             "name": "IS_REVOLVING",
             "id": "IsRevolvingId",
-            "label": "REVOLVING",
+            "label": "Revolving",
             "value": "",
             "placeholder": "Placeholder",
             "isFromURL": false,
@@ -61,7 +61,7 @@
             "name": "MOU_CUST_DT",
             "id": "GreaterMouDtId",
             "value": "",
-            "label": "MOU DATE FROM",
+            "label": "Mou Date From",
             "restriction": "gte",
             "datatype": "date"
         },
@@ -70,7 +70,7 @@
             "name": "MOU_CUST_DT",
             "id": "LessMouDtId",
             "value": "",
-            "label": "MOU DATE TO",
+            "label": "Mou Date To",
             "restriction": "lte",
             "datatype": "date"
         },
@@ -84,45 +84,45 @@
         }
     ],
     "querystring": {
-        "select": "SELECT MOU_CUST_NO AS mouCustNo, CUST_NAME AS CustName, MOU_CUST_DT AS MouCustDt, REF_NO AS RefNo, MR_MOU_TYPE_CODE AS MrMouTypeCode, MOU_CUST_ID AS MouCustId",
+        "select": "SELECT MOU_CUST_NO AS mouCustNo, CUST_NAME AS CustName, MOU_CUST_DT AS MouCustDt, REF_NO AS RefNo, MR_MOU_TYPE_CODE AS MrMouTypeCode, MOU_CUST_ID AS MouCustId,CUST_NO AS CustNo",
         "from": "FROM dbo.MOU_CUST WITH(NOLOCK)",
-        "where" : "WHERE MOU_STAT = N'NEW'"
+        "where": "WHERE MOU_STAT = N'NEW'"
     },
     "headerList": [
         {
             "type": "sort",
             "position": "center",
-            "label": "MOU No",
+            "label": "MOU NO",
             "name": "MOU_CUST_NO"
         },
         {
             "type": "sort",
             "position": "left",
-            "label": "Customer Name",
+            "label": "CUSTOMER NAME",
             "name": "CUST_NAME"
         },
         {
             "type": "sort",
             "position": "center",
-            "label": "Mou Date",
+            "label": "MOU DATE",
             "name": "MOU_CUST_DT"
         },
         {
             "type": "sort",
             "position": "center",
-            "label": "Reference No.",
+            "label": "REFERENCE NO.",
             "name": "REF_NO"
         },
         {
             "type": "sort",
             "position": "left",
-            "label": "MOU Type",
+            "label": "MOU TYPE",
             "name": "MR_MOU_TYPE_CODE"
         },
         {
             "type": "label",
             "position": "center",
-            "label": "Action"
+            "label": "ACTION"
         }
     ],
     "bodyList": [
@@ -140,7 +140,7 @@
             ]
         },
         {
-            "type": "text",
+            "type": "callback",
             "position": "left",
             "property": "CustName"
         },

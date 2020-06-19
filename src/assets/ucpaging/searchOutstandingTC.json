@@ -72,7 +72,7 @@
         }
     ],
     "querystring": {
-        "select": "SELECT A.APP_NO AS AppNo, AG.AGRMNT_NO AS AgrmntNo, AG.CUST_NAME AS CustName, AG.PROD_OFFERING_NAME AS ProdOfferingName, AG.GO_LIVE_DT AS GoLiveDt, AG.OFFICE_NAME AS OfficeName, A.APP_ID AS AppId",
+        "select": "SELECT A.APP_NO AS AppNo, AG.AGRMNT_NO AS AgrmntNo, AG.CUST_NAME AS CustName, AG.PROD_OFFERING_NAME AS ProdOfferingName, AG.GO_LIVE_DT AS GoLiveDt, AG.OFFICE_NAME AS OfficeName, A.APP_ID AS AppId, AG.AGRMNT_ID AS AgrmntId, AG.PROD_OFFERING_CODE AS ProdOfferingCode",
         "from": "FROM dbo.APP A WITH(NOLOCK) JOIN dbo.AGRMNT AG WITH(NOLOCK) ON A.APP_ID = AG.APP_ID"
     },
     "headerList": [
@@ -90,19 +90,19 @@
         },
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "CUSTOMER NAME",
             "name": "AG.CUST_NAME"
         },
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "Product Offering Name",
             "name": "AG.PROD_OFFERING_NAME"
         },
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "Office Name",
             "name": "AG.OFFICE_NAME"
         },
@@ -120,60 +120,45 @@
     ],
     "bodyList": [
         {
-            "type" : "link",
-            "position" : "center",
-            "property" : "AppNo",
-            "target" : "_blank",
-            "path" : "//",
-            "param" : [
+            "type": "link",
+            "position": "center",
+            "property": "AppNo",
+            "target": "_blank",
+            "path" : "/Nap/View/AppView", 
+            "param" : [ 
                 {
-                    "type" : "",
-                    "property" : ""
+                    "type" : "AppId", 
+                    "property" : "AppId" 
                 }
             ]
         },
         {
-            "type" : "link",
+            "type": "link",
             "position": "center",
             "property": "AgrmntNo",
-            "target" : "_blank",
-            "path" : "//",
-            "param" : [
+            "target": "_blank",
+            "path" : "/Nap/View/AgrmntView", 
+            "param" : [ 
                 {
-                    "type" : "",
-                    "property" : ""
+                    "type" : "AgrmntId", 
+                    "property" : "AgrmntId" 
                 }
             ]
         },
         {
-            "type" : "link",
-            "position": "center",
-            "property": "CustName",
-            "target" : "_blank",
-            "path" : "//",
-            "param" : [
-                {
-                    "type" : "",
-                    "property" : ""
-                }
-            ]
+            "type" : "text",
+            "position": "left",
+            "property": "CustName"
         },
         {
-            "type" : "link",
-            "position": "center",
-            "property": "ProdOfferingName",
-            "target" : "_blank",
-            "path" : "//",
-            "param" : [
-                {
-                    "type" : "",
-                    "property" : ""
-                }
-            ]
+            "type": "callback",
+            "key": "prodOff",
+            "position": "left",
+            "property": "ProdOfferingName"
         },
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "OfficeName"
         },
         {
@@ -187,7 +172,7 @@
             "action": [
                 {
                     "type": "edit",
-                    "path": "/AddProcess/OutstandingTC/Detail",
+                    "path": "/Nap/AddProcess/OutstandingTC/Detail",
                     "param": [
                         {
                             "type": "AppId",

@@ -34,6 +34,7 @@
       "placeholder": "Placeholder",
       "isFromURL": true,
       "isSelectOne": false,
+      "isQueryIn":true,
       "url": "",
       "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
       "label": "Office",
@@ -44,7 +45,7 @@
       "type": "dropdown",
       "name": "WTL.CLAIM_STAT",
       "id": "ActiveStatusId",
-      "label": "TASK CLAIM STATUS",
+      "label": "Task Claim Status",
       "value": "",
       "placeholder": "Placeholder",
       "isFromURL": false,
@@ -66,7 +67,7 @@
       "name": "WTL.USERNAME",
       "id": "claimById",
       "value": "",
-      "label": "CLAIM BY",
+      "label": "Claim By",
       "placeholder": "Placeholder"
     }
   ],
