@@ -43,25 +43,25 @@
         {
             "type": "sort",
             "position": "left",
-            "label": "Customer No",
+            "label": "CUSTOMER NO",
             "name": "A.CUST_NO"
         },
         {
             "type": "sort",
             "position": "left",
-            "label": "Customer Name",
+            "label": "CUSTOMER NAME",
             "name": "A.CUST_NAME"
         },
         {
             "type": "sort",
             "position": "left",
-            "label": "Customer Type",
+            "label": "CUSTOMER TYPE",
             "name": "A.MR_CUST_TYPE_CODE"
         },
         {
             "type": "label",
             "position": "center",
-            "label": "Action"
+            "label": "ACTION"
         }
     ],
     "bodyList": [

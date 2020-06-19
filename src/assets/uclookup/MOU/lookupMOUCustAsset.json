@@ -27,19 +27,19 @@
         {
             "type": "sort",
             "position": "left",
-            "label": "Full Asset Code",
+            "label": "FULL ASSET CODE",
             "name": "AM.FULL_ASSET_CODE"
         },
         {
             "type": "sort",
             "position": "left",
-            "label": "Full Asset Name",
+            "label": "FULL ASSET NAME",
             "name": "AM.FULL_ASSET_NAME"
         },
         {
             "type": "label",
             "position": "center",
-            "label": "Action"
+            "label": "ACTION"
         }
     ],
     "bodyList": [
