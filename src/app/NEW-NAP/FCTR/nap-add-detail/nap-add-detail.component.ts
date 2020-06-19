@@ -85,6 +85,10 @@ export class NapAddDetailComponent implements OnInit {
     this.MakeViewReturnInfoObj();
   }
 
+  Cancel() {
+    this.router.navigate(["/Nap/Factoring/Paging"]);
+  }
+
   MakeViewReturnInfoObj() {
     if (this.mode == AdInsConstant.ModeResultHandling) {
       var obj = {
