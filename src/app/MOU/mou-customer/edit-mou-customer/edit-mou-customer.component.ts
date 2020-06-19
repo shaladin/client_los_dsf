@@ -51,4 +51,20 @@ export class EditMouCustomerComponent implements OnInit {
       this.inputPagingObj.addCritInput = this.arrCrit;
     }
   }
+
+  getEvent(event){
+    if(event.Key == "customer"){
+        var link : string;
+        var custObj = { CustNo: event.RowObj.CustNo };
+        this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+          response => {
+            link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
+            window.open(link, '_blank');
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+    }
+  }
 }

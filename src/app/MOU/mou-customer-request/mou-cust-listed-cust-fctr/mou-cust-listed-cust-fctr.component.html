@@ -42,7 +42,7 @@
       <tbody>
         <tr *ngFor="let item of listedCusts; let i = index">
           <td style="text-align: left;">{{item.CustNo}}</td>
-          <td style="text-align: left;">{{item.CustName}}</td>
+          <td style="text-align: left;"><a [routerLink]="" (click)="openView(item.CustNo)">{{item.CustName}}</a></td>
           <td style="text-align: left;">{{item.MrCustTypeCode}}</td>
           <td style="text-align: center;">
             <a (click)="deleteCustFctr(item.MouListedCustFctrId, i)">

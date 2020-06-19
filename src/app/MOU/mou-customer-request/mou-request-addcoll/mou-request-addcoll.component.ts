@@ -384,6 +384,20 @@ export class MouRequestAddcollComponent implements OnInit {
     }
   }
 
+  openView(custNo) {
+    var link: string;
+    var custObj = { CustNo: custNo };
+    this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+      response => {
+        link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
+        window.open(link, '_blank');
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
   open(pageType) {
     this.type = pageType;
     if (pageType == 'AddExisting') {
