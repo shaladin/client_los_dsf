@@ -236,6 +236,8 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
       });
   }
   Back() {
-    this.router.navigateByUrl("/Nap/AdditionalProcess/AppDupCheck/Personal?AppId=" + this.AppId + "&WfTaskListId=" + this.WfTaskListId);
+    // this.router.navigateByUrl("/Nap/AdditionalProcess/AppDupCheck/Personal?AppId=" + this.AppId + "&WfTaskListId=" + this.WfTaskListId);
+    var BizTemplateCode = localStorage.getItem("BizTemplateCode")
+    this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
   }
 }
