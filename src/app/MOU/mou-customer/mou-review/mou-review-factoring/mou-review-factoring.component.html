@@ -66,11 +66,9 @@
                 </div>
               </div>
             </div>
-
             <lib-ucSubsection [id]="'ApvReqId'" [title]="'Approval Request'" [panel]="'ApvReq'">
             </lib-ucSubsection>
             <div class="form-body" id="ApvReq">
-
               <div class="form-group row">
                 <label class="col-md-2 adInsLabel">Approval Amount</label>
                 <label class="col-md-2 adInsLabel">{{PlafondAmt | number}}</label>
@@ -85,7 +83,6 @@
                   </lib-uc-show-errors>
                 </div>
               </div>
-
               <div class="form-group row">
                 <label class="col-md-2 adInsLabel">Scoring</label>
                 <label class="col-md-2 adInsLabel">{{ScoreResult}} - {{MrScoreTypeCode}}</label>
@@ -100,7 +97,6 @@
                   </lib-uc-show-errors>
                 </div>
               </div>
-
               <div class="form-group row">
                 <label class="col-md-2" for="notes" translate>Notes</label>
                 <div class="col-md-4">
@@ -110,7 +106,6 @@
                   </lib-uc-show-errors>
                 </div>
               </div>
-
               <div class="form-actions right">
                 <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['/Mou/Cust/ReviewPaging']"
                   translate>

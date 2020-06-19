@@ -136,6 +136,7 @@ export class AdInsConstant {
 
   public static RestrictionLike = "Like";
   public static RestrictionEq = "Eq";
+  public static RestrictionNeq = "Neq";
   public static RestrictionIn = "IN";
   public static RestrictionNotIn = "NotIn";
   public static RestrictionIsNull = "isnull";
