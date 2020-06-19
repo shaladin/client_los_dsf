@@ -111,7 +111,7 @@ export class PreGoLiveComponent implements OnInit {
     {
       this.IsCheckedAll=false;
     }
-    if(this.ListRfaLogObj.length == 0){
+    else{
       this.IsCheckedAll = ev;
     }
   }
