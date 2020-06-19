@@ -93,7 +93,7 @@ export class MouReviewFactoringComponent implements OnInit {
             this.MrCustTypeCode = response['MrCustTypeCode']; 
         });
     
-    this.http.post(AdInsConstant.GetListActiveRefReasonByRefReasonTypeCode, {RefReasonTypeCode: AdInsConstant.REF_REASON_MOU_GENERAL}).pipe(first()).subscribe(
+    this.http.post(AdInsConstant.GetListActiveRefReason, {RefReasonTypeCode: AdInsConstant.REF_REASON_MOU_GENERAL}).pipe(first()).subscribe(
       (response) => {
         this.listReason = response["ReturnObject"];
         this.MouReviewDataForm.patchValue({
