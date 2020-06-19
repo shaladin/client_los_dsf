@@ -8,7 +8,7 @@
       "mainInfo": [
         {
           "type": "link",
-          "label": "MOU NO",
+          "label": "Mou No",
           "property": "MouCustNo",
           "path": "/Mou/Cust/View",
           "target": "_blank",
@@ -21,57 +21,58 @@
         },
         {
           "type": "date",
-          "label": "MOU DATE",
+          "label": "Mou Date",
           "property": "MouCustDt"
         },
         {
-          "type": "text",
-          "label": "MOU TYPE",
-          "property": "MouType"
-        },
-        {
-          "type": "text",
-          "label": "CUSTOMER NAME",
+          "type": "callback",
+          "key": "customer",
+          "label": "Customer Name",
           "property": "CustName"
         },
         {
+          "type": "text",
+          "label": "Mou Type",
+          "property": "MouType"
+        },
+        {
           "type": "date",
-          "label": "START DATE",
+          "label": "Start Date",
           "property": "StartDt"
         },
         {
           "type": "date",
-          "label": "EXPIRED DATE",
+          "label": "Expired Date",
           "property": "EndDt"
         },
         {
           "type": "text",
-          "label": "STATUS",
+          "label": "Status",
           "property": "MouStat"
         },
         {
           "type": "text",
-          "label": "REF NO",
+          "label": "Ref No",
           "property": "RefNo"
         },
         {
           "type": "currency",
-          "label": "PLAFOND AMOUNT",
+          "label": "Plafond Amount",
           "property": "PlafondAmt"
         },
         {
           "type": "currency",
-          "label": "REALISATION AMOUNT",
+          "label": "Realisation Amount",
           "property": "RealisationAmt"
         },
         {
           "type": "currency",
-          "label": "IN PROCESS AMOUNT",
+          "label": "In Process Amount",
           "property": "InProcessAmt"
         },
         {
           "type": "currency",
-          "label": "AVAILABLE AMOUNT",
+          "label": "Available Amount",
           "property": "AvailableAmt"
         }
       ],

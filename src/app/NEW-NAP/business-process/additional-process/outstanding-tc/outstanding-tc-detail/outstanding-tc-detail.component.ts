@@ -60,7 +60,7 @@ export class OutstandingTcDetailComponent implements OnInit {
     this.http.post(AdInsConstant.SubmitOutstandingTc, this.outstandingTcObj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["/AddProcess/OutstandingTC/Paging"]);
+        this.router.navigate(["/Nap/AddProcess/OutstandingTC/Paging"]);
       },
       error => {
         console.log(error);
