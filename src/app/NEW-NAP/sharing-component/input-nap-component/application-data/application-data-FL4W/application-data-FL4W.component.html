@@ -193,8 +193,8 @@
                   <div class="col-md-4">
                     <select class="form-control adInsInput" style="width: auto" formControlName="MouCustId">
                       <option value = null>None</option>
-                      <option *ngFor="let it of resMouCustObj" [value]="it.Key">
-                        {{it.Value}} 
+                      <option *ngFor="let it of resMouCustObj" [value]="it.MouCustId">
+                        {{it.MouCustNo}} - {{it.CustName}}
                       </option>
                     </select>
                   </div>
