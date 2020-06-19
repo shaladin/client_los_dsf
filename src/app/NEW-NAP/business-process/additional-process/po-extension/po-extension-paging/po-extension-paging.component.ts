@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { HttpClient } from '@angular/common/http';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-po-extension-paging',
@@ -10,6 +13,8 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 })
 export class PoExtensionPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
+  link: string;
+  constructor(private http: HttpClient, private toastr: NGXToastrService, private router: Router) { }
   
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
@@ -19,4 +24,25 @@ export class PoExtensionPagingComponent implements OnInit {
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchPOExtension.json";
   }
 
+  getEvent(ev){
+    if(ev.Key == "prodOff"){
+      this.http.post(AdInsConstant.GetProdOfferingHByCode, {ProdOfferingCode : ev.RowObj.ProdOfferingCode}).subscribe(
+        response => {
+          window.open(environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=" + response['ProdOfferingHId'], '_blank');
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }else if(ev.Key == "suppl"){
+      this.http.post(AdInsConstant.GetVendorByVendorCode, {VendorCode : ev.RowObj.SupplCode}).subscribe(
+        response => {
+          window.open(environment.FoundationR3Web + "/Vendor/Branch/View?VendorId=" + response['VendorId'], '_blank');
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+  }
 }

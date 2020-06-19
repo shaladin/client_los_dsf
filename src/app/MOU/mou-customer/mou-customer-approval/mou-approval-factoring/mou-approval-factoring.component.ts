@@ -53,4 +53,9 @@ export class MouApprovalFactoringComponent implements OnInit {
     this.toastr.successMessage("Success");
     this.router.navigate(["/Mou/Cust/Approval"]);
   }
+
+  onCancelClick()
+  {
+    this.router.navigate(["/Mou/Cust/Approval"]);
+  }
 }
