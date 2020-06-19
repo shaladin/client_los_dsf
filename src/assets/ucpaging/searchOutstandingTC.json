@@ -187,7 +187,7 @@
             "action": [
                 {
                     "type": "edit",
-                    "path": "/AddProcess/OutstandingTC/Detail",
+                    "path": "/Nap/AddProcess/OutstandingTC/Detail",
                     "param": [
                         {
                             "type": "AppId",

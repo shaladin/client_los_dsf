@@ -79,7 +79,7 @@
         {
             "type": "callback",
             "key": "prodOff",
-            "position": "center",
+            "position": "left",
             "property": "ProdOfferingName"
         },
         {
