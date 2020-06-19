@@ -400,7 +400,8 @@ export class CustShareholderComponent implements OnInit {
         flag = false;
       }
       if(d3>d4){
-        this.toastr.errorMessage("Birth Date can not be more than " + this.Max17YO);
+        // this.toastr.errorMessage("Birth Date can not be more than " + this.Max17YO);
+        this.toastr.errorMessage("Customer age must be at least 17 year old");
         flag = false;
       }
       this.appCustCompanyMgmntShrholderObj.MobilePhnNo = this.CustShareholderForm.controls.MobilePhnNo.value;

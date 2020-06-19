@@ -28,6 +28,7 @@ export class CreditReviewMainComponent implements OnInit {
   ReturnHandlingHId: number = 0;
   ReturnHandlingDId: number = 0;
   BizTemplateCode: string = "";
+  arrValue = [];
 
   // ReturnForm = this.fb.group({
   //   ReturnReason: [''],
@@ -90,6 +91,7 @@ export class CreditReviewMainComponent implements OnInit {
   DDLRecommendation;
   DDLReasonReturn;
   async ngOnInit() {
+    this.arrValue.push(this.appId);
     this.ClaimTask();
     console.log("User Access");
     console.log(JSON.parse(localStorage.getItem("UserAccess")));

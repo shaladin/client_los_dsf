@@ -11,6 +11,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 })
 export class AgreementViewContainerComponent implements OnInit {
 
+  arrValue = [];
   AgrmntId;
   BizTemplateCode : string;
   ResponseAppDetailData;
@@ -42,9 +43,10 @@ export class AgreementViewContainerComponent implements OnInit {
 
   async ngOnInit() {
     console.log(this.AgrmntId);
+    this.arrValue.push(this.AgrmntId);
     await this.GetAppAndAppCustDetailByAgrmntId();
   }
-
+  
   
   async GetAppAndAppCustDetailByAgrmntId(){
     var obj = { agrmntId: this.AgrmntId};

@@ -58,7 +58,8 @@
                                   <label class="adInsLabel"> Remaining Allocated Amount </label>
                                 </div>
                                 <div class="col-md-6 form-inline form-inline-right">
-                                  <label> {{viewIncomeInfoObj.RemainingAllocatedAmount | number:'.2':'en-US'}} </label>
+                                    <label *ngIf="viewIncomeInfoObj.RemainingAllocatedAmount >= 0"> {{viewIncomeInfoObj.RemainingAllocatedAmount | number:'.2':'en-US'}} </label>
+                                    <label *ngIf="viewIncomeInfoObj.RemainingAllocatedAmount < 0" style="color: red;"> ( {{-viewIncomeInfoObj.RemainingAllocatedAmount | number:'.2':'en-US'}} )</label>
                                 </div>
                             </div>
                         </div>
@@ -138,7 +139,8 @@
                                 <label>Gross Yield</label>
                             </div>
                             <div class="col-md-4 form-inline form-inline-right">
-                                <label>{{Summary.GrossYield | number:'.2':'en-US'}}</label>
+                                <label *ngIf="Summary.GrossYield >= 0"> {{Summary.GrossYield | number:'.2':'en-US'}} </label>
+                                <label *ngIf="Summary.GrossYield < 0" style="color: red;"> ( {{-Summary.GrossYield | number:'.2':'en-US'}} )</label>
                             </div>
                         </div>
                     </div>

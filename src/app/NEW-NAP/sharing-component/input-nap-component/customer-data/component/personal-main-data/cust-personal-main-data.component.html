@@ -135,7 +135,7 @@
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-md-4" for="maritalStatus" translate>Marital Status</label>
+          <label class="col-md-4 adins-required-label" for="maritalStatus" translate>Marital Status</label>
           <div class="col-md-4">
             <select class="form-control adInsInput" id="maritalStatus" formControlName="MrMaritalStatCode">
               <option value="">-Select One-</option>
@@ -143,6 +143,7 @@
                 {{item.Value}}
               </option>
             </select>
+            <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].MrMaritalStatCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
           </div>
         </div>
         <div class="form-group row">

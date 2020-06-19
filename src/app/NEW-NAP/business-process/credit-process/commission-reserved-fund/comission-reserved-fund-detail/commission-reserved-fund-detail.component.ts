@@ -47,9 +47,11 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   }
 
   viewProdMainInfoObj;
+  arrValue = [];
 
   ngOnInit() {
     this.ClaimTask(this.ReturnHandlingHObj.WfTaskListId);
+    this.arrValue.push(this.ReturnHandlingHObj.AppId);
     this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
 
     this.stepper = new Stepper(document.querySelector('#stepper1'), {
@@ -109,10 +111,10 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   ChangeTab(AppStep) {
     switch (AppStep) {
       case AdInsConstant.AppStepComm:
-        this.StepIndex = this.Step[AdInsConstant.AppStepComm];
+        this.StepIndex = 1;
         break;
-      case AdInsConstant.AppStepComm:
-        this.StepIndex = this.Step[AdInsConstant.AppStepComm];
+      case AdInsConstant.AppStepRSVFund:
+        this.StepIndex = 2;
         break;
 
       default:

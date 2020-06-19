@@ -36,7 +36,7 @@ export class MouCustAssetComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.listExclude = new Array<string>();
-    this.httpClient.post(AdInsConstant.GetAssetTypeKeyValueCode, null).subscribe(
+    this.httpClient.post(AdInsConstant.GetListAssetTypeByCode, null).subscribe(
       (response: any) => {
         this.assetTypeList = response;
         if (this.AssetTypeCode != null) {
@@ -147,16 +147,17 @@ export class MouCustAssetComponent implements OnInit {
   }
 
   deleteMouAsset(mouCustAssetId, idx) {
-    var mouAsset = new MouCustAssetObj();
-    mouAsset.MouCustAssetId = mouCustAssetId;
-
-    this.mouAssetList.splice(idx, 1);
-
-    var listMou = this.parentForm.controls[this.identifier] as FormArray;
-    listMou.removeAt(idx);
-    this.index--;
-    if (this.mouAssetList.length == 0) {
-      this.IsAssetSelected = false;
+    var confirmation = confirm("Are you sure to delete this data ?");
+    if (confirmation == true) {
+      var mouAsset = new MouCustAssetObj();
+      mouAsset.MouCustAssetId = mouCustAssetId;
+      this.mouAssetList.splice(idx, 1);
+      var listMou = this.parentForm.controls[this.identifier] as FormArray;
+      listMou.removeAt(idx);
+      this.index--;
+      if (this.mouAssetList.length == 0) {
+        this.IsAssetSelected = false;
+      }
     }
     // this.httpClient.post(AdInsConstant.DeleteMouCustAsset, mouAsset).subscribe(
     //   (response: any) => { 

@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder, Validators, FormArray, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, FormArray, FormGroup, FormGroupDirective } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 import { DatePipe } from '@angular/common';
 import { VerfResultDObj } from 'app/shared/model/VerfResultD/VerfResultH.Model';
 import { VerifResulHDetailObj } from 'app/shared/model/VerfResultH/VerifResulHDetailObj.model';
+import { environment } from 'environments/environment';
 
 
 
@@ -54,7 +55,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   getPhnNumberUrl: any;
 
   viewObj: any;
-
+  VerfResultAfterAddObj: any;
   appId: number;
   returnHandlingHId: number;
   wfTaskListId: number;
@@ -164,7 +165,8 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
 
   }
 
-  SaveForm() {
+  SaveForm(formDirective: FormGroupDirective) {
+    var activeButton = document.activeElement.id;
     if (this.isQuestionLoaded == false) {
       this.toastr.errorMessage("Can't process further because questions are not loaded");
     }
@@ -174,11 +176,20 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
-          if (this.isReturnHandling == false) {
-            this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId + "&WfTaskListId=" + this.wfTaskListId);
+          if (activeButton == "save") {
+            if (this.isReturnHandling == false) {
+              this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId + "&WfTaskListId=" + this.wfTaskListId);
+            }
+            if (this.isReturnHandling == true) {
+              this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId + "&ReturnHandlingHId=" + this.returnHandlingHId + "&WfTaskListId=" + this.wfTaskListId);
+            }
           }
-          if (this.isReturnHandling == true) {
-            this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId + "&ReturnHandlingHId=" + this.returnHandlingHId + "&WfTaskListId=" + this.wfTaskListId);
+          else {
+            this.VerfResultAfterAddObj = response;
+            this.verfResHObj.MrVerfObjectCode = this.VerfResultAfterAddObj.MrVerfObjectCode
+            this.GetListVerfResulHtData(this.verfResHObj);
+            formDirective.resetForm();
+            this.clearform();
           }
         },
         (error) => {
@@ -433,6 +444,46 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
     if (this.isReturnHandling == true) {
       this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId + "&ReturnHandlingHId=" + this.returnHandlingHId + "&WfTaskListId=" + this.wfTaskListId);
     }
+  }
+
+  clearform() {
+    this.PhoneDataForm.reset();
+    this.PhoneDataForm = this.fb.group({
+      MrVerfSubjectRelationCode: ['', [Validators.required, Validators.maxLength(50)]],
+      MrVerfResultHStatCode: ['', [Validators.required, Validators.maxLength(50)]],
+      Phn: ['', [Validators.required, Validators.maxLength(50)]],
+      PhnType: ['', [Validators.required, Validators.maxLength(100)]],
+      Notes: ['', [Validators.required, Validators.maxLength(4000)]],
+      Score: [''],
+      QuestionObjs: new FormArray([])
+    });
+    this.PhoneDataForm.controls.Notes.markAsPristine();
+    this.PhoneDataForm.markAsUntouched();
+
+
+    this.GenerateFormVerfQuestion();
+    if (this.PhoneNumberObj.length > 0) {
+      this.PhoneDataForm.patchValue({
+        Phn: this.PhoneNumberObj[0].PhoneNumber,
+        PhnType: this.PhoneNumberObj[0].PhoneType
+      });
+    }
+    if (this.SubjectRelationObj.length > 0) {
+      this.PhoneDataForm.patchValue({
+        MrVerfSubjectRelationCode: this.SubjectRelationObj[0].Key
+      });
+    }
+    if (this.ResultObj.length > 0) {
+      this.PhoneDataForm.patchValue({
+        MrVerfResultHStatCode: this.ResultObj[0].Key
+      });
+
+    }
+  }
+
+  Navigate(){
+    var link = environment.losR3Web + "/Nap/View/AppView/AppId=" + this.AppObj.AppId;
+    this.router.navigate([]).then(result => { window.open(link, '_blank'); });
   }
 
   test() {

@@ -35,6 +35,8 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   CustName: any;
   OfficeName: any;
   PurposeOfFinancing: any;
+  ProdOfferingCode: string;
+  ProdOfferingVersion: string;
 
   AppTcList: any = [];
   identifier: string = "TCList";
@@ -52,6 +54,8 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   });
   AppId: any;
   AgrmntId: any;
+  token = localStorage.getItem("Token");
+
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -102,6 +106,8 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
         this.NumOfAsset = this.result.NumOfAsset;
         this.Tenor = this.result.Tenor;
         this.ProdOfferingName = this.result.ProdOfferingName;
+        this.ProdOfferingCode = this.result.ProdOfferingCode;
+        this.ProdOfferingVersion = this.result.ProdOfferingVersion;
         var Obj2 = {
           ProdOfferingCode: this.result.ProdOfferingCode,
           RefProdCompntCode: "WAY_OF_FINANCING",
@@ -221,14 +227,30 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   }
   //nanti bakalan ke View, sementara kek gini dlu
   ToApp(){
-    this.router.navigate(["/Nap/View/AppView"], { queryParams: { "AppId": this.AppId } });
+
+    window.open("/Nap/View/AppView?AppId=" + this.AppId, "_blank");
   }
   ToAgrmnt(){
-    this.router.navigate(["/Nap/View/AgrmntView"], { queryParams: { "AgrmntId": this.AgrmntId } });
+    window.open("/Nap/View/AgrmntView?AgrmntId=" + this.AgrmntId, "_blank");
   }
   ToCust(){
-    this.router.navigate(["/Nap/AdminProcess/PreGoLive/Approval/Detail"], { queryParams: { "CustNo": this.CustNo } });
+    var custObj = { CustNo: this.CustNo };
+    this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+      response => {
+        var link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"] + "&Token=" + this.token;
+        window.open(link, '_blank');
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
+
+  ToProdOffering(){
+    var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + this.ProdOfferingCode + "&prodOfferingVersion=" + this.ProdOfferingVersion + "&Token=" + this.token;
+    window.open(link, '_blank');
+  }
+
   onAvailableNextTask() {
 
   }

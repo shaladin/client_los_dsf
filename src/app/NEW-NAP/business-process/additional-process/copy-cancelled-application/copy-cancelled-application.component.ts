@@ -5,6 +5,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { UcpagingComponent } from '@adins/ucpaging';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-copy-cancelled-application',
@@ -14,8 +15,9 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 export class CopyCancelledApplicationComponent implements OnInit {
   @ViewChild(UcpagingComponent) paging: UcpagingComponent;
   inputPagingObj: UcPagingObj = new UcPagingObj();
+  link: string;
 
-  constructor(private http: HttpClient, private toastr: NGXToastrService) { }
+  constructor(private http: HttpClient, private toastr: NGXToastrService, private router: Router) { }
 
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchCancelledApp.json";
@@ -24,17 +26,29 @@ export class CopyCancelledApplicationComponent implements OnInit {
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCancelledApp.json";
   }
 
-  CopyCancelled(ev) {
-    if (confirm("Are you sure to copy this application?")) {
-      this.http.post(AdInsConstant.CopyCancelledApp, { AppId: ev.RowObj.AppId }).subscribe(
+  getEvent(ev) {
+    if(ev.Key == "prodOff"){
+      this.http.post(AdInsConstant.GetProdOfferingHByCode, {ProdOfferingCode : ev.RowObj.ProdOfferingCode}).subscribe(
         response => {
-          this.toastr.successMessage(response["message"]);
-          this.paging.searchPagination(1);
+          this.link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=" + response['ProdOfferingHId'];
+          window.open(this.link, '_blank');
         },
-        error => {
+        (error) => {
           console.log(error);
         }
       );
+    }else if(ev.Key == "copy"){
+      if (confirm("Are you sure to copy this application?")) {
+        this.http.post(AdInsConstant.CopyCancelledApp, { AppId: ev.RowObj.AppId }).subscribe(
+          response => {
+            this.toastr.successMessage(response["message"]);
+            this.paging.searchPagination(1);
+          },
+          error => {
+            console.log(error);
+          }
+        );
+      }
     }
   }
 }
