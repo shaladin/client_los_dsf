@@ -126,7 +126,7 @@
               </app-referantor-data>
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
-              <app-application-data *ngIf="AppStepIndex == 4" [appId]="appId" [isRefinancing]= "true" [IsLoanObject]="true" (outputCancel)="Cancel()"
+              <app-application-data *ngIf="AppStepIndex == 4" [appId]="appId" [isCollateral]= "false" [IsLoanObject]="true" (outputCancel)="Cancel()"
                 (outputTab)="NextStep('COLL')"></app-application-data>
             </div>
             <div id="coll-tab" class="content" role="tabpanel" aria-labelledby="coll-tab-trigger">

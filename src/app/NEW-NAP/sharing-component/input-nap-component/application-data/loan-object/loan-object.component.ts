@@ -18,7 +18,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 export class LoanObjectComponent implements OnInit {
   @Input() AppId: number;
   @Input() mode: string;
-  @Input() isRefinancing: string;
+  @Input() isCollateral: boolean;
 
   modal: any;
   loanObjectInputLookupObj: any;
@@ -127,7 +127,7 @@ export class LoanObjectComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(this.isRefinancing==null) this.isRefinancing="true";
+    if(this.isCollateral==null) this.isCollateral=true;
     this.loadDataTable();
     this.GetAppData();
     this.setLookup();
@@ -178,14 +178,14 @@ export class LoanObjectComponent implements OnInit {
     this.loanObjectInputLookupObj.genericJson = "./assets/uclookup/NAP/lookupLoanObject.json";
 
     this.supplierInputLookupObj = new InputLookupObj();
-    if(this.isRefinancing == "false"){
+    if(this.isCollateral){
       this.supplierInputLookupObj.urlJson = "./assets/uclookup/NAP/lookupSupplier.json";
       this.supplierInputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupSupplier.json";
       this.supplierInputLookupObj.genericJson = "./assets/uclookup/NAP/lookupSupplier.json";
     }else{
-      this.supplierInputLookupObj.urlJson = "./assets/uclookup/NAP/lookupSupplierLoanObj.json";
-      this.supplierInputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupSupplierLoanObj.json";
-      this.supplierInputLookupObj.genericJson = "./assets/uclookup/NAP/lookupSupplierLoanObj.json";
+      this.supplierInputLookupObj.urlJson = "./assets/uclookup/NAP/lookupSupplierRefinancingLoanObj.json";
+      this.supplierInputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupSupplierRefinancingLoanObj.json";
+      this.supplierInputLookupObj.genericJson = "./assets/uclookup/NAP/lookupSupplierRefinancingLoanObj.json";
     }
 
     this.supplierInputLookupObj.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
