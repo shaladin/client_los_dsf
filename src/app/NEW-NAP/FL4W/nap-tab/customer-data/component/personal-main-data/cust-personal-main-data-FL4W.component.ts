@@ -64,13 +64,9 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
      }
 
   async ngOnInit() : Promise<void> {
-    console.log('masuk personal')
     var context = JSON.parse(localStorage.getItem("UserAccess"));
     this.businessDt = new Date(context["BusinessDt"]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
-    console.log(this.identifier);
-    console.log(this.parentForm);
-
     this.parentForm.addControl(this.identifier, this.fb.group({
       CustFullName: ['', [Validators.required, Validators.maxLength(500)]],
       MrIdTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
