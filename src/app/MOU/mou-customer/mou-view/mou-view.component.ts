@@ -1,8 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-mou-view',
@@ -18,7 +19,7 @@ export class MouViewComponent implements OnInit {
   MrMouTypeCode : string;
   MrCustTypeCode : string;
   IsResponseProcessed : boolean = false;
-  constructor(private http: HttpClient, private route: ActivatedRoute) { 
+  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router ) { 
     this.getMouCustByIdUrl = AdInsConstant.GetMouCustById;
     this.route.queryParams.subscribe(params => {
       if (params["MouCustId"] != null)
@@ -46,6 +47,22 @@ export class MouViewComponent implements OnInit {
       }
     );
   }
+
+  GetCallBack(event){
+    if(event.Key == "customer"){
+      var custObj = { CustNo: this.resultData['CustNo'] };
+      this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+        response => {
+          var link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
+          window.open(link, '_blank');
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
   isDetail: boolean;
   isFee: boolean;
   isCollateral: boolean;

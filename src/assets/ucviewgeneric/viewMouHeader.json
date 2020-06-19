@@ -25,7 +25,8 @@
           "property": "MouCustDt"
         },
         {
-          "type": "text",
+          "type": "callback",
+          "key": "customer",
           "label": "Customer Name",
           "property": "CustName"
         },
