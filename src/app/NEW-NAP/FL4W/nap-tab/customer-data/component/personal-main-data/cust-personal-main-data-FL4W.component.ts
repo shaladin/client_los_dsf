@@ -64,6 +64,7 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
      }
 
   async ngOnInit() : Promise<void> {
+    console.log('masuk personal')
     var context = JSON.parse(localStorage.getItem("UserAccess"));
     this.businessDt = new Date(context["BusinessDt"]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
@@ -96,6 +97,11 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
       NoOfDependents: ['', [Validators.pattern("^[0-9]+$"), Validators.maxLength(4)]],
     }));
 
+    this.parentForm.controls[this.identifier]['controls']["BirthPlace"].enable();
+    this.parentForm.controls[this.identifier]['controls']["BirthDt"].enable();
+    this.parentForm.controls[this.identifier]['controls']["MrIdTypeCode"].enable();
+    this.parentForm.controls[this.identifier]['controls']["IdNo"].enable();
+    this.parentForm.controls[this.identifier]['controls']["TaxIdNo"].enable();
     this.initUrl();
     this.initLookup();
     await this.bindAllRefMasterObj();
