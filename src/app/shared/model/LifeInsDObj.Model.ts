@@ -12,5 +12,6 @@ export class LifeInsDObj {
     DiscRate : number;
     DiscRateToInsco: number;
     SumInsured : number;
+    IsChecked: boolean;
   constructor() { this.AppLifeInsDId = 0; this.RowVersion = "" }
 }

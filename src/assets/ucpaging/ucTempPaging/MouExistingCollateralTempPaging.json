@@ -1,0 +1,86 @@
+{
+    "title": "Collateral List",
+    "keyProperty": "CollateralId",
+    "keyPropCriteria": "CL.COLLATERAL_ID",
+    "component": [
+        {
+            "type": "textbox",
+            "name": "CL.COLLATERAL_NO",
+            "id": "CollateralNoId",
+            "value": "",
+            "label": "Collateral No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "CL.FULL_ASSET_NAME",
+            "id": "CollateralNameId",
+            "value": "",
+            "label": "Collateral Name",
+            "placeholder": "Placeholder"
+        }
+    ],
+    "querystring": {
+        "select": "SELECT CL.COLLATERAL_NO AS CollateralNo, CL.COLLATERAL_ID AS CollateralId, CL.FULL_ASSET_CODE AS FullAssetCode, CL.FULL_ASSET_NAME AS FullAssetName, ATE.ASSET_TYPE_NAME AS AssetTypeName, CL.COLLATERAL_PRICE_AMT AS CollateralValueAmt, CU.CUST_NAME AS CustName",
+        "from": "FROM dbo.CUST CU WITH(NOLOCK) JOIN dbo.COLLATERAL CL WITH(NOLOCK) ON CL.CUST_ID = CU.CUST_ID JOIN dbo.ASSET_TYPE ATE ON ATE.ASSET_TYPE_CODE = CL.ASSET_TYPE_CODE"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "COLLATERAL NO.",
+            "name": "CollateralNo"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "COLLATERAL NAME",
+            "name": "FullAssetName"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "COLLATERAL TYPE",
+            "name": "FullAssetCode"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "DOCUMENT OWNER NAME",
+            "name": "CustName"
+        },
+        {
+            "type": "sort",
+            "position": "right",
+            "label": "COLLATERAL PRICE",
+            "name": "CollateralValueAmt"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "CollateralNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "FullAssetName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "FullAssetCode"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "decimal",
+            "position": "right",
+            "property": "CollateralValueAmt"
+        }
+    ]
+}
