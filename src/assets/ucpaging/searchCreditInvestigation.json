@@ -6,7 +6,7 @@
       "name": "A.APP_NO",
       "id": "AppNoId",
       "value": "",
-      "label": "APPLICATION NO",
+      "label": "Application No",
       "placeholder": "Placeholder"
     },
     {
@@ -14,7 +14,7 @@
       "name": "AC.CUST_NAME",
       "id": "CustNameId",
       "value": "",
-      "label": "CUSTOMER NAME",
+      "label": "Customer Name",
       "placeholder": "Placeholder"
     }, 
     {
@@ -22,7 +22,7 @@
       "name": "A.PROD_OFFERING_NAME",
       "id": "ProdOfferingNameId",
       "value": "",
-      "label": "PRODUCT OFFERING NAME",
+      "label": "Product Offering Name",
       "placeholder": "Placeholder"
     },
     {
@@ -37,7 +37,7 @@
       "isQueryIn" : true,
       "url": "",
       "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
-      "label": "OFFICE",
+      "label": "Office",
       "items": [],
       "itemsUrl": []
     },
@@ -45,7 +45,7 @@
       "type": "dropdown",
       "name": "WTL.CLAIM_STAT",
       "id": "ActiveStatusId",
-      "label": "TASK CLAIM STATUS",
+      "label": "Task Claim Status",
       "value": "",
       "placeholder": "Placeholder",
       "isFromURL": false,
@@ -67,7 +67,7 @@
       "name": "WTL.USERNAME",
       "id": "claimById",
       "value": "",
-      "label": "CLAIM BY",
+      "label": "Claim By",
       "placeholder": "Placeholder"
     }
   ],

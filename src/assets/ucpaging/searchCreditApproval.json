@@ -46,7 +46,7 @@
         "name": "ATL.CURRENT_USER_ID",
         "id": "claimById",
         "value": "",
-        "label": "CLAIM BY",
+        "label": "Claim By",
         "placeholder": "Placeholder"
       }
     ],
