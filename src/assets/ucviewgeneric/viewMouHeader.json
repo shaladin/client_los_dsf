@@ -26,13 +26,13 @@
         },
         {
           "type": "text",
-          "label": "Mou Type",
-          "property": "MouType"
+          "label": "Customer Name",
+          "property": "CustName"
         },
         {
           "type": "text",
-          "label": "Customer Name",
-          "property": "CustName"
+          "label": "Mou Type",
+          "property": "MouType"
         },
         {
           "type": "date",
