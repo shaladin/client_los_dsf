@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
-import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { FormBuilder, NgForm, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -19,6 +18,8 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 export class LoanObjectComponent implements OnInit {
   @Input() AppId: number;
   @Input() mode: string;
+  @Input() isRefinancing: string;
+
   modal: any;
   loanObjectInputLookupObj: any;
   AppLoanPurposeId: number;
@@ -126,6 +127,7 @@ export class LoanObjectComponent implements OnInit {
   }
 
   ngOnInit() {
+    if(this.isRefinancing==null) this.isRefinancing="true";
     this.loadDataTable();
     this.GetAppData();
     this.setLookup();
@@ -170,17 +172,24 @@ export class LoanObjectComponent implements OnInit {
   setLookup() {
     this.loanObjectInputLookupObj = new InputLookupObj();
     this.loanObjectInputLookupObj.urlJson = "./assets/uclookup/NAP/lookupLoanObject.json";
-    this.loanObjectInputLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.loanObjectInputLookupObj.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.loanObjectInputLookupObj.urlEnviPaging = environment.losUrl;
     this.loanObjectInputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupLoanObject.json";
     this.loanObjectInputLookupObj.genericJson = "./assets/uclookup/NAP/lookupLoanObject.json";
 
     this.supplierInputLookupObj = new InputLookupObj();
-    this.supplierInputLookupObj.urlJson = "./assets/uclookup/NAP/lookupSupplier.json";
-    this.supplierInputLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    if(this.isRefinancing == "false"){
+      this.supplierInputLookupObj.urlJson = "./assets/uclookup/NAP/lookupSupplier.json";
+      this.supplierInputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupSupplier.json";
+      this.supplierInputLookupObj.genericJson = "./assets/uclookup/NAP/lookupSupplier.json";
+    }else{
+      this.supplierInputLookupObj.urlJson = "./assets/uclookup/NAP/lookupSupplierLoanObj.json";
+      this.supplierInputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupSupplierLoanObj.json";
+      this.supplierInputLookupObj.genericJson = "./assets/uclookup/NAP/lookupSupplierLoanObj.json";
+    }
+
+    this.supplierInputLookupObj.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.supplierInputLookupObj.urlEnviPaging = environment.FoundationR3Url;
-    this.supplierInputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupSupplier.json";
-    this.supplierInputLookupObj.genericJson = "./assets/uclookup/NAP/lookupSupplier.json";
     this.supplierInputLookupObj.addCritInput = new Array();
 
     var critSuppObj = new CriteriaObj();
