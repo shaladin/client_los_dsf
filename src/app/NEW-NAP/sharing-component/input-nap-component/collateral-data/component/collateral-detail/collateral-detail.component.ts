@@ -81,7 +81,7 @@ export class CollateralDetailComponent implements OnInit {
     MrIdType: [''],
     CopyFromLegal: ['LEGAL'],
     AppAttrName: [''],
-    SelfUsage: ['']
+    SelfUsage: [false]
   });
 
   CollTypeList: Array<KeyValueObj> = new Array<KeyValueObj>();
@@ -333,8 +333,17 @@ export class CollateralDetailComponent implements OnInit {
             RowVersionCollateralRegistration: this.collateralRegistrationObj.RowVersion
           });
 
+          if(this.AddCollForm.controls.MrUserRelationshipCode.value == "SELF"){
+            this.AddCollForm.patchValue({
+              SelfUsage:true
+            })
+          }
+
+  
         this.changeSerialNoValidators(this.appCollateralObj.MrCollateralConditionCode);
         this.onItemChange(this.appCollateralObj.AssetTypeCode);
+        this.inputLookupExistColl.nameSelect = this.appCollateralObj.FullAssetName;
+        this.inputLookupExistColl.jsonSelect = { FullAssetName: this.appCollateralObj.FullAssetName };
         this.inputLookupColl.nameSelect = this.appCollateralObj.FullAssetName;
         this.inputLookupColl.jsonSelect = { FullAssetName: this.appCollateralObj.FullAssetName };
         // set data Location Address
@@ -397,8 +406,8 @@ export class CollateralDetailComponent implements OnInit {
     this.AddCollForm.controls.SerialNo2.updateValueAndValidity();
   }
 
-  CopyUser() {
-    if(this.AddCollForm.controls.SelfUsage.value == true){
+  CopyUser(event) {
+    if(event.checked == true){
       this.AddCollForm.patchValue({
         OwnerName: this.AddCollForm.controls.UserName.value,
         MrOwnerRelationshipCode: this.AddCollForm.controls.MrUserRelationshipCode.value
