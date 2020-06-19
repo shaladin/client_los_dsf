@@ -7,7 +7,7 @@
       "name": "MC.MOU_CUST_NO",
       "id": "MouCustNoId",
       "value": "",
-      "label": "MOU No",
+      "label": "Mou No",
       "placeholder": "Placeholder",
       "datatype": "text"
     },
@@ -22,7 +22,7 @@
       "isSelectOne": false,
       "url": "",
       "path":"/RefMaster/GetListKeyValueActiveByCode",
-      "label": "MOU TYPE",
+      "label": "Mou Type",
       "items": [],
       "itemsUrl": [],
       "criteriaPropName": "RefMasterTypeCode",
@@ -33,7 +33,7 @@
       "name": "MC.CUST_NAME",
       "id": "CustNameId",
       "value": "",
-      "label": "CUSTOMER NAME",
+      "label": "Customer Name",
       "placeholder": "Placeholder",
       "datatype": "text"
     },
@@ -41,7 +41,7 @@
       "type": "dropdown",
       "name": "MC.IS_REVOLVING",
       "id": "IsRevolvingId",
-      "label": "REVOLVING",
+      "label": "Revolving",
       "value": "",
       "placeholder": "Placeholder",
       "isFromURL": false,
@@ -63,7 +63,7 @@
       "name": "MC.MOU_CUST_DT",
       "id": "GreaterMouDtId",
       "value": "",
-      "label": "MOU DATE FROM",
+      "label": "Mou Date From",
       "restriction": "gte",
       "datatype": "date"
     },
@@ -72,7 +72,7 @@
       "name": "MC.MOU_CUST_DT",
       "id": "LessMouDtId",
       "value": "",
-      "label": "MOU DATE TO",
+      "label": "Mou Date To",
       "restriction": "lte",
       "datatype": "date"
     }

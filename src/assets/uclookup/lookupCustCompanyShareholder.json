@@ -27,19 +27,19 @@
         {
             "type": "sort",
             "position": "left",
-            "label": "Shareholder Name",
+            "label": "SHAREHOLDER NAME",
             "name": "CC.MGMNT_SHRHOLDER_NAME"
         },
         {
             "type": "sort",
             "position": "left",
-            "label": "Shareholder Position",
+            "label": "SHAREHOLDER POSITION",
             "name": "RM.DESCR"
         },
         {
             "type": "label",
             "position": "center",
-            "label": "Select"
+            "label": "SELECT"
         }
     ],
     "bodyList": [

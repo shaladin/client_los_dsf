@@ -18,7 +18,7 @@ export class ApplicationAgreementCancellationPagingComponent implements OnInit {
 
     var critInputAppStatNotCancel = new CriteriaObj();
     critInputAppStatNotCancel.propName = "ap.APP_STAT";
-    // critInputAppStatNotCancel.restriction = AdInsConstant.RestrictionNeq;
+    critInputAppStatNotCancel.restriction = AdInsConstant.RestrictionNeq;
     critInputAppStatNotCancel.value = "CANCEL";
 
     this.inputPagingObj = new UcPagingObj();

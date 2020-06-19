@@ -7,7 +7,7 @@
             "name": "MOU.MOU_CUST_NO",
             "id": "MouCustNoId",
             "value": "",
-            "label": "MOU NO",
+            "label": "Mou No",
             "placeholder": "Placeholder"
         },
         {
@@ -21,7 +21,7 @@
             "isSelectOne": false,
             "url": "",
             "path":"/RefMaster/GetListKeyValueActiveByCode",
-            "label": "MOU TYPE",
+            "label": "Mou Type",
             "items": [],
             "itemsUrl": [],
             "criteriaPropName": "RefMasterTypeCode",
@@ -32,14 +32,14 @@
             "name": "MOU.CUST_NAME",
             "id": "CustNameId",
             "value": "",
-            "label": "CUSTOMER NAME",
+            "label": "Customer Name",
             "placeholder": "Placeholder"
         },
         {
             "type": "dropdown",
             "name": "MOU.IS_REVOLVING",
             "id": "IsRevolvingId",
-            "label": "REVOLVING",
+            "label": "Revolving",
             "value": "",
             "placeholder": "Placeholder",
             "isFromURL": false,
@@ -61,7 +61,7 @@
             "name": "MOU.MOU_CUST_DT",
             "id": "MouDtId",
             "value": "",
-            "label": "MOU DATE FROM",
+            "label": "Mou Date From",
             "restriction": "gte",
             "datatype": "date"
         },
@@ -70,7 +70,7 @@
             "name": "MOU.MOU_CUST_DT",
             "id": "EndDtId",
             "value": "",
-            "label": "MOU DATE TO",
+            "label": "Mou Date To",
             "restriction": "lte",
             "datatype": "date"
         },
@@ -78,7 +78,7 @@
             "type": "dropdown",
             "name": "WTL.CLAIM_STAT",
             "id": "ActiveStatusId",
-            "label": "TASK CLAIM STATUS",
+            "label": "Task Claim Status",
             "value": "",
             "placeholder": "Placeholder",
             "isFromURL": false,
@@ -86,11 +86,11 @@
             "items": [
                 {
                     "key": "CLAIMED",
-                    "value": "CLAIMED"
+                    "value": "Claimed"
                 },
                 {
                     "key": "UNCLAIMED",
-                    "value": "UNCLAIMED"
+                    "value": "Unclaimed"
                 }
             ],
             "itemsUrl": []
@@ -100,7 +100,7 @@
             "name": "WTL.USERNAME",
             "id": "claimById",
             "value": "",
-            "label": "CLAIM BY",
+            "label": "Claim By",
             "placeholder": "Placeholder"
         }
     ],
@@ -113,61 +113,61 @@
         {
             "type": "sort",
             "position": "left",
-            "label": "Claim By",
+            "label": "CLAIM BY",
             "name": "ClaimBy"
         },
         {
             "type": "sort",
             "position": "center",
-            "label": "Mou No",
+            "label": "MOU NO",
             "name": "MOU.MOU_CUST_NO"
         },
         {
             "type": "sort",
             "position": "left",
-            "label": "Customer Name",
+            "label": "CUSTOMER NAME",
             "name": "MOU.CUST_NAME"
         },
         {
             "type": "sort",
             "position": "center",
-            "label": "Mou Date",
+            "label": "MOU DATE",
             "name": "MOU.MOU_CUST_DT"
         },
         {
             "type": "sort",
             "position": "center",
-            "label": "End Date",
+            "label": "END DATE",
             "name": "MOU.END_DT"
         },
         {
             "type": "sort",
             "position": "right",
-            "label": "Plafond Amount",
+            "label": "PLAFOND AMOUNT",
             "name": "MOU.PLAFOND_AMT"
         },
         {
             "type": "sort",
             "position": "center",
-            "label": "Revolving",
+            "label": "REVOLVING",
             "name": "MOU.IS_REVOLVING"
         },
         {
             "type": "label",
             "position": "left",
-            "label": "Mou Type",
+            "label": "MOU TYPE",
             "name": "RM.DESCR"
         },
         {
             "type": "label",
             "position": "center",
-            "label": "Ref No",
+            "label": "REF NO",
             "name": "MOU.REF_NO"
         },
         {
             "type": "label",
             "position": "center",
-            "label": "Action"
+            "label": "ACTION"
         }
     ],
     "bodyList": [
