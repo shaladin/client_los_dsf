@@ -126,6 +126,27 @@ export class NavbarComponent implements AfterViewChecked, OnInit {
 
     }
 
+    ClickNotification(item)
+    {
+        this.http.post(AdInsConstant.UpdateReadNotification, {NotificationDId:item.NotificationDId}).subscribe(
+            (response) => {
+            },
+            (error) => {
+                console.log(error);
+            });
+        if(item.MrNotificationMethodCode=="EXT_LINK")
+        {
+            window.open(item.Url,"_blank");
+        }
+        else if(item.MrNotificationMethodCode="INT_LINK")
+        {
+            window.open(item.Url);
+        }
+
+        
+    }
+
+
     logout() {
         var url = environment.FoundationR3Url + AdInsConstant.Logout;
         this.http.post(url, "");

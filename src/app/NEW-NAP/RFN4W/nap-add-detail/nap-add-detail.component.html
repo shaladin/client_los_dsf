@@ -72,7 +72,7 @@
             <div class="line"></div>
             <div class="step" data-target="#coll-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="coll-tab" id="coll-tab-trigger"
-                [disabled]="!(AppStepIndex >= 5)" (click)="ChangeTab('ASSET')">
+                [disabled]="!(AppStepIndex >= 5)" (click)="ChangeTab('COLL')">
                 <span class="bs-stepper-circle">5</span>
                 <span class="bs-stepper-label">Collateral Data</span>
               </button>
@@ -127,10 +127,10 @@
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
               <app-application-data *ngIf="AppStepIndex == 4" [appId]="appId" [IsLoanObject]="true" (outputCancel)="Cancel()"
-                (outputTab)="NextStep('ASSET')"></app-application-data>
+                (outputTab)="NextStep('COLL')"></app-application-data>
             </div>
             <div id="coll-tab" class="content" role="tabpanel" aria-labelledby="coll-tab-trigger">
-              <app-single-coll-data *ngIf="AppStepIndex == 5" [AppId]="appId" (outputTab)="NextStep('INS')"> </app-single-coll-data>
+              <app-single-coll-data *ngIf="AppStepIndex == 5" [AppId]="appId" (outputTab)="NextStep('INS')" (outputCancel)="Cancel()"> </app-single-coll-data>
             </div>
             <div id="insurance-tab" class="content" role="tabpanel" aria-labelledby="insurance-tab-trigger" (outputCancel)="Cancel()">
               <app-insurance-data *ngIf="AppStepIndex == 6" [appId]="appId"

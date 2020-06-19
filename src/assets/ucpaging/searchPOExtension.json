@@ -199,7 +199,7 @@
             "action": [
                 {
                     "type": "edit",
-                    "path": "/AddProcess/POExtension/Detail",
+                    "path": "/Nap/AddProcess/POExtension/Detail",
                     "param": [
                         {
                             "type": "AppId",

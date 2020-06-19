@@ -399,7 +399,7 @@
               </div>
             </div>
             <div class="form-actions right">
-              <button [hidden]="IsMultiAsset == 'true'" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
+              <button [hidden]="IsMultiAsset == 'true' || showCancel == false" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
                 <i class="ft-x"></i> Cancel
               </button>
               <button style="margin-right: 10px;" [hidden]="IsMultiAsset == 'false'" type="button" (click)="back()" class="btn btn-raised btn-warning">

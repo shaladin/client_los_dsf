@@ -12,7 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ReturnHandlingPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
   BizTemplateCode: string;
-
+  token: any = localStorage.getItem("Token");
   constructor(
     private route: ActivatedRoute,
     private router: Router) {
@@ -34,7 +34,7 @@ export class ReturnHandlingPagingComponent implements OnInit {
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReturnHandling.json";
     this.inputPagingObj.ddlEnvironments = [
       {
-        name: "A.ORI_OFFICE_NAME",
+        name: "A.ORI_OFFICE_CODE",
         environment: environment.FoundationR3Url
       }
     ];
@@ -45,5 +45,12 @@ export class ReturnHandlingPagingComponent implements OnInit {
     critLobObj.propName = 'WTL.ACT_CODE';
     critLobObj.value = "RTN_"+ this.BizTemplateCode;
     this.inputPagingObj.addCritInput.push(critLobObj);
+  }
+
+  GetCallBack(ev: any) {
+    if (ev.Key == "ViewProdOffering") {
+      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.RowObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.RowObj.ProdOfferingVersion + "&Token=" + this.token;
+      this.router.navigate([]).then(result => { window.open(link, '_blank'); });
+    }
   }
 }

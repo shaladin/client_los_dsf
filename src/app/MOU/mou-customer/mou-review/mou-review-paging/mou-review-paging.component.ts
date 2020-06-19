@@ -4,6 +4,7 @@ import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-mou-review-paging',
@@ -13,8 +14,9 @@ export class MouReviewPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
   arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   user: any;
+  link: string;
   
-  constructor(private router: Router) { }
+  constructor(private router: Router, private http:HttpClient) { }
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem("UserAccess"));
@@ -37,6 +39,24 @@ export class MouReviewPagingComponent implements OnInit {
           environment: environment.FoundationR3Url
         }
       ];
+    }
+  }
+
+  GetCallBack(event)
+  {
+    // console.log("customerlink")
+    // console.log(event)
+    if(event.Key == "customer"){
+      var custObj = { CustNo: event.RowObj.CustNo };
+      this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+        response => {
+          this.link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
+          this.router.navigate([]).then(result => { window.open(this.link, '_blank'); });
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     }
   }
 }
