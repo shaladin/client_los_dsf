@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
 import { Router } from '@angular/router';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-mou-customer-inquiry',
@@ -11,7 +13,7 @@ export class MouCustomerInquiryComponent implements OnInit {
   inputPagingObj: UcPagingObj;
   user:any;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private http: HttpClient) { }
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem("UserAccess"));
@@ -38,6 +40,21 @@ export class MouCustomerInquiryComponent implements OnInit {
           environment: environment.FoundationR3Url
         }
       ];
+    }
+  }
+  getEvent(event){
+    if(event.Key == "customer"){
+        var link : string;
+        var custObj = { CustNo: event.RowObj.CustNo };
+        this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+          response => {
+            link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
+            window.open(link, '_blank');
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
     }
   }
 }

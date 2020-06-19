@@ -114,7 +114,7 @@
         }
     ],
     "querystring": {
-        "select": "SELECT MC.MOU_CUST_NO AS MouCustNo, MC.MOU_CUST_ID AS MouCustId, MC.CUST_NAME AS CustName, MC.MOU_CUST_DT AS MouCustDt, MC.START_DT AS StartDt, MC.END_DT AS EndDt, MC.PLAFOND_AMT PlafondAmt, MC.IS_REVOLVING AS IsRevolving, MC.REF_NO AS RefNo, MC.MR_MOU_TYPE_CODE AS MrMouTypeCode, MC.MOU_STAT AS MouStat, ISNULL(WF.WF_TASK_LIST_ID,0) AS WfTaskListId",
+        "select": "SELECT MC.MOU_CUST_NO AS MouCustNo, MC.MOU_CUST_ID AS MouCustId, MC.CUST_NAME AS CustName, MC.MOU_CUST_DT AS MouCustDt, MC.START_DT AS StartDt, MC.END_DT AS EndDt, MC.PLAFOND_AMT PlafondAmt, MC.IS_REVOLVING AS IsRevolving, MC.REF_NO AS RefNo, MC.MR_MOU_TYPE_CODE AS MrMouTypeCode, MC.MOU_STAT AS MouStat, ISNULL(WF.WF_TASK_LIST_ID,0) AS WfTaskListId, MC.CUST_NO AS CustNo",
         "from": "FROM dbo.MOU_CUST MC WITH(NOLOCK) LEFT JOIN (SELECT VWF.TRANSACTION_CODE,MAX(VWF.WF_TASK_LIST_ID) AS WF_TASK_LIST_ID FROM dbo.V_WF_TASK_LIST VWF WITH(NOLOCK) WHERE VWF.WF_CODE IN('WF_MOU_FACTORING','WF_MOU_GENERAL') GROUP BY VWF.TRANSACTION_CODE) WF ON MC.MOU_CUST_NO = WF.TRANSACTION_CODE",
         "where": "WHERE MC.MOU_STAT NOT IN ('RJC','CAN','EXP','ACT')"
     },
@@ -171,7 +171,7 @@
             "type": "label",
             "position": "center",
             "label": "ACTION"
-          }
+        }
     ],
     "bodyList": [
         {
@@ -188,7 +188,8 @@
             ]
         },
         {
-            "type": "text",
+            "type": "callback",
+            "key": "customer",
             "position": "left",
             "property": "CustName"
         },
@@ -228,7 +229,8 @@
             "action": [
                 {
                     "type": "callback",
-                    "icon" : "ft-x-circle"
+                    "key": "cancel",
+                    "icon": "ft-x-circle"
                 }
             ]
         }
