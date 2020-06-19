@@ -14,7 +14,7 @@
             "isQueryIn" : true,
             "url": "",
             "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
-            "label": "OFFICE NAME",
+            "label": "Office Name",
             "items": [],
             "itemsUrl": []
         },

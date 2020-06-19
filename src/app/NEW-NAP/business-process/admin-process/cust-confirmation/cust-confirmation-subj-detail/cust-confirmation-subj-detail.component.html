@@ -13,11 +13,13 @@
             <div class="col-md-6">
               <div class="row">
                 <label class="label-control col-md-6">Application No</label>
-                <a href="{{appUrl}}" target="_blank" class="label-control col-md-6" style="font-size : 0.75rem">{{appObj.AppNo}}</a>
+                <a href="{{appUrl}}" target="_blank" class="label-control col-md-6"
+                  style="font-size : 0.75rem">{{appObj.AppNo}}</a>
               </div>
               <div class="row">
-                <label class="label-control col-md-6">Agreement No</label> 
-                <a href="{{agrmntUrl}}" target="_blank" class="label-control col-md-6" style="font-size : 0.75rem">{{agrmntObj.AgrmntNo}}</a>
+                <label class="label-control col-md-6">Agreement No</label>
+                <a href="{{agrmntUrl}}" target="_blank" class="label-control col-md-6"
+                  style="font-size : 0.75rem">{{agrmntObj.AgrmntNo}}</a>
               </div>
               <div class="row">
                 <label class="label-control col-md-6">Customer No</label>
@@ -68,13 +70,15 @@
         <div formArrayName="VerfResultDForm">
           <div class="form-body" [formGroupName]="i"
             *ngFor="let QuestionGrpList of CustConfirm.controls.VerfResultDForm.controls; let i = index">
-            <lib-ucSubsection [id]="'verifQuest' + i + 'id'" [title]="QuestionGrpList.value.VerfQuestionGrpName" [panel]="'section' + i">
+            <lib-ucSubsection [id]="'verifQuest' + i + 'id'" [title]="QuestionGrpList.value.VerfQuestionGrpName"
+              [panel]="'section' + i">
             </lib-ucSubsection>
             <div [id]="'section' + i">
               <span formArrayName="VerfQuestionAnswerList">
                 <div class="form-group row" [formGroupName]="j"
                   *ngFor="let QRList of QuestionGrpList.controls.VerfQuestionAnswerList?.controls; let j = index">
-                  <label class="col-md-3 adins-required-label" translate>{{QRList.value.QuestionGrp.VerfQuestionText}} </label>
+                  <label class="col-md-3 adins-required-label" translate>{{QRList.value.QuestionGrp.VerfQuestionText}}
+                  </label>
                   <div class="col-md-5" formGroupName="ResultGrp">
                     <span
                       *ngIf="QRList.value.QuestionGrp.VerfAnswerTypeCode == 'DDL' || QRList.value.QuestionGrp.VerfAnswerTypeCode == 'RBL'">
@@ -144,11 +148,12 @@
         <div class="form-actions right">
           <button type="button" class="btn btn-raised btn-warning mr-1"
             [routerLink]="['/Nap/AdminProcess/CustConfirmation/Detail']"
-            [queryParams]="{AgrmntId:AgrmntId, AppId:AppId, AgrmntNo:agrmntObj.AgrmntNo}" translate>
+            [queryParams]="{AgrmntId:AgrmntId, AppId:AppId, AgrmntNo:agrmntObj.AgrmntNo, TaskListId: TaskListId, BizTemplateCode: BizTemplateCode}"
+            translate>
             <i class="ft-x"></i> Cancel
           </button>
           <button type="submit" class="btn btn-raised btn-primary" translate>
-            <i class="fa fa-check-square-o"></i> Save
+            <i class="far fa-check-square"></i> Save
           </button>
         </div>
       </form>

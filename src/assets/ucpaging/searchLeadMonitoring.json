@@ -23,7 +23,7 @@
             "name": "UL.UPLOAD_MONITORING_NO",
             "id": "UploadMonitoringNoId",
             "value": "",
-            "label": "Upload No",
+            "label": "Upload No.",
             "placeholder": "Placeholder"
         },
         {
