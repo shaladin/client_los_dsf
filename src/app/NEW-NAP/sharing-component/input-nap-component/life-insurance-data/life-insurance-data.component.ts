@@ -225,11 +225,24 @@ export class LifeInsuranceDataComponent implements OnInit {
     }
     await this.http.post(AdInsConstant.GetRuleAdmFee, object).toPromise().then(
       response => {
-        console.log(response);       
-        this.LifeInsObj.InscoAdminFeeAmt = response["AdminFeeFromInscoBranch"][0];
-        this.LifeInsForm.patchValue({
-          CustAdminFeeAmt: response["AdminFeeToCust"][0]
-        })
+        console.log(response);
+
+        if(response["AdminFeeFromInscoBranch"].length > 0){
+          this.LifeInsObj.InscoAdminFeeAmt = response["AdminFeeFromInscoBranch"][0];
+        }else{
+          this.LifeInsObj.InscoAdminFeeAmt = 0;
+        }
+        
+        if(response["AdminFeeToCust"].length > 0){
+          this.LifeInsForm.patchValue({
+            CustAdminFeeAmt: response["AdminFeeToCust"][0]
+          });
+        }else{
+          this.LifeInsForm.patchValue({
+            CustAdminFeeAmt: 0
+          });
+        }
+        
       },
       error => {
         console.log(error);
