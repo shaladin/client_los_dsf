@@ -112,6 +112,7 @@ export class CustomerDataFL4WComponent implements OnInit {
   defCustModelCode: any;
   MrCustTypeCode: any;
   isSocmedValid: boolean = true;
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private fb: FormBuilder,
@@ -129,6 +130,10 @@ export class CustomerDataFL4WComponent implements OnInit {
     this.bindCustTypeObj();
     this.initAddrObj();
     await this.getCustData();
+  }
+
+  Cancel(){
+    this.outputCancel.emit();
   }
 
   SaveForm() {

@@ -18,6 +18,7 @@ export class GuarantorPagingFL4WComponent implements OnInit {
 
   @Input() AppId: any;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
   inputGridObj: any;
   result: any = new Array();
@@ -56,6 +57,10 @@ export class GuarantorPagingFL4WComponent implements OnInit {
       }
     );
     this.loadGuarantorListData(this.AppId);
+  }
+
+  Cancel(){
+    this.outputCancel.emit();
   }
 
   add(content) {

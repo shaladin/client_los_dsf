@@ -13,7 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class MouCancelComponent implements OnInit {
   inputPagingObj: UcPagingObj;
-  user:any;
+  user: any;
 
   constructor(
     private http: HttpClient,
@@ -29,8 +29,7 @@ export class MouCancelComponent implements OnInit {
       this.router.navigate(["/Mou/UnauthorizedPage"]);
       return;
     }
-    else
-    {
+    else {
       this.inputPagingObj = new UcPagingObj();
       this.inputPagingObj._url = "./assets/ucpaging/mou/searchMouCancel.json";
       this.inputPagingObj.enviromentUrl = environment.losUrl;
@@ -50,15 +49,27 @@ export class MouCancelComponent implements OnInit {
     }
   }
 
-  cancelMou(event)
-  {
-    if (confirm("Are you sure to cancel this?"))
-    {
-      var mouCancel = new MouCustConfirmCancelObj;
-      mouCancel.MouStat = "CAN";
-      mouCancel.MouCustId = event.RowObj.MouCustId;
-      mouCancel.WfTaskListId = event.RowObj.WfTaskListId;
-      this.http.post(AdInsConstant.EditMouForCancelByMouId, mouCancel).subscribe(
+  getEvent(event) {
+    if (event.Key == "customer") {
+      var link: string;
+      var custObj = { CustNo: event.RowObj.CustNo };
+      this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+        response => {
+          link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
+          window.open(link, '_blank');
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+    else if (event.Key == "cancel") {
+      if (confirm("Are you sure to cancel this?")) {
+        var mouCancel = new MouCustConfirmCancelObj;
+        mouCancel.MouStat = "CAN";
+        mouCancel.MouCustId = event.RowObj.MouCustId;
+        mouCancel.WfTaskListId = event.RowObj.WfTaskListId;
+        this.http.post(AdInsConstant.EditMouForCancelByMouId, mouCancel).subscribe(
           response => {
             this.toastr.successMessage(response["Message"]);
             // this.router.navigate(["/Mou/Cust/Cancel"]);
@@ -66,9 +77,10 @@ export class MouCancelComponent implements OnInit {
             // this.router.navigate(["/Mou/Cust/Cancel"]);
             this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
               this.router.navigate(['/Mou/Cust/Cancel']);
-          });
+            });
           }
         );
+      }
     }
   }
 
