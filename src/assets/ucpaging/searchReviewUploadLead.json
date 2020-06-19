@@ -40,7 +40,7 @@
       "type": "dropdown",
       "name": "VWF.CLAIM_STAT",
       "id": "ActiveStatusId",
-      "label": "TASK CLAIM STATUS",
+      "label": "Task Claim Status",
       "value": "",
       "placeholder": "Placeholder",
       "isFromURL": false,
@@ -62,7 +62,7 @@
       "name": "VWF.USERNAME",
       "id": "ClaimById",
       "value": "",
-      "label": "CLAIM BY",
+      "label": "Claim By",
       "placeholder": "Placeholder"
     }
   ],
