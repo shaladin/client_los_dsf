@@ -23,6 +23,7 @@
             "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
             "label": "OFFICE",
             "items": [],
+            "isQueryIn":true,
             "itemsUrl": []
         },
         {

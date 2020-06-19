@@ -38,7 +38,8 @@
       "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
       "label": "Office",
       "items": [],
-      "itemsUrl": []
+      "itemsUrl": [],
+      "isQueryIn":true
     },
     {
       "type": "dropdown",
