@@ -6,7 +6,7 @@
             "name": "AP.APP_NO",
             "id": "AppNoId",
             "value": "",
-            "label": "APPLICATION NO",
+            "label": "Application No",
             "placeholder": "Placeholder"
         },
         {
@@ -14,7 +14,7 @@
             "name": "AG.AGRMNT_NO",
             "id": "AgrmntNoId",
             "value": "",
-            "label": "AGREEMENT NO",
+            "label": "Agreement No",
             "placeholder": "Placeholder"
         },
         {
@@ -22,7 +22,7 @@
             "name": "AG.CUST_NAME",
             "id": "CustNameId",
             "value": "",
-            "label": "CUSTOMER NAME",
+            "label": "Customer Name",
             "placeholder": "Placeholder"
         },
         {
@@ -30,12 +30,12 @@
             "name": "AG.PROD_OFFERING_NAME",
             "id": "ProdOfferingNameId",
             "value": "",
-            "label": "PROD OFFERING NAME",
+            "label": "Prod Offering Name",
             "placeholder": "Placeholder"
         }
     ],
     "querystring": {
-        "select": "SELECT AP.APP_NO AS AppNo, AG.AGRMNT_NO AS AgrmntNo, AG.PROD_OFFERING_NAME AS ProdOfferingName, AG.CUST_NAME AS CustName, AG.APP_ID AS AppId, AG.AGRMNT_ID AS AgrmntId",
+        "select": "SELECT AP.APP_NO AS AppNo, AG.AGRMNT_NO AS AgrmntNo, AG.PROD_OFFERING_NAME AS ProdOfferingName, AG.CUST_NAME AS CustName, AG.APP_ID AS AppId, AG.AGRMNT_ID AS AgrmntId, AG.PROD_OFFERING_CODE AS ProdOfferingCode, AP.BIZ_TEMPLATE_CODE as BizTemplateCode",
         "from": "FROM dbo.APP AP WITH(NOLOCK) JOIN dbo.AGRMNT AG WITH(NOLOCK) ON AP.APP_ID = AG.APP_ID"
     },
     "headerList": [
@@ -74,27 +74,20 @@
             "type": "link",
             "position": "center",
             "property": "AppNo",
-            "target" : "_blank",
-            "path" : "//",
-            "param" : [
+            "target": "_blank",
+            "path" : "/Nap/View/AppView", 
+            "param" : [ 
                 {
-                    "type" : "",
-                    "property" : ""
+                    "type" : "AppId", 
+                    "property" : "AppId" 
                 }
             ]
         },
         {
-            "type": "link",
+            "type" : "callback",
             "position": "center",
             "property": "AgrmntNo",
-            "target" : "_blank",
-            "path" : "//",
-            "param" : [
-                {
-                    "type" : "",
-                    "property" : ""
-                }
-            ]
+            "key": "agrmnt"
         },
         {
             "type": "text",
@@ -102,9 +95,10 @@
             "property": "CustName"
         },
         {
-            "type": "text",
+            "type": "callback",
             "position": "left",
-            "property": "ProdOfferingName"
+            "property": "ProdOfferingName",
+            "key": "prodOff"
         },
         {
             "type": "action",

@@ -45,7 +45,7 @@ export class NapFromLeadPagingComponent implements OnInit {
 
     this.inputPagingObj.ddlEnvironments = [
       {
-        name: "RO.OFFICE_NAME",
+        name: "RO.OFFICE_CODE",
         environment: environment.FoundationR3Url
       },
       {

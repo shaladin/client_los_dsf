@@ -25,14 +25,15 @@
           "property": "MouCustDt"
         },
         {
-          "type": "text",
-          "label": "Mou Type",
-          "property": "MouType"
+          "type": "callback",
+          "key": "customer",
+          "label": "Customer Name",
+          "property": "CustName"
         },
         {
           "type": "text",
-          "label": "Customer Name",
-          "property": "CustName"
+          "label": "Mou Type",
+          "property": "MouType"
         },
         {
           "type": "date",
