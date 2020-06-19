@@ -206,12 +206,17 @@ export class DocSignerDetailComponent implements OnInit {
     this.inputLookupAppCustCompanyShareHolder3Obj.addCritInput.push(crit4Obj);
 
     if (this.ResponseAgrmntSignerObj != null) {
+      this.inputLookupBranchEmpObj.nameSelect = this.ResponseAgrmntSignerObj.SupplBranchEmpName;
       this.inputLookupBranchEmpObj.jsonSelect = { VendorEmpName: this.ResponseAgrmntSignerObj.SupplBranchEmpName };
+      this.inputLookupBranchEmpObj.isReady = true;
       this.inputLookupOfficeEmp1Obj.jsonSelect = { OfficeEmpName: this.ResponseAgrmntSignerObj.MfEmpName1 };
       this.inputLookupOfficeEmp2Obj.jsonSelect = { OfficeEmpName: this.ResponseAgrmntSignerObj.MfEmpName2 };
       this.inputLookupAppCustCompanyShareHolder1Obj.jsonSelect = { MgmntShrholderName: this.ResponseAgrmntSignerObj.AppCustCompanyMgmntShrholder1Name };
       this.inputLookupAppCustCompanyShareHolder2Obj.jsonSelect = { MgmntShrholderName: this.ResponseAgrmntSignerObj.AppCustCompanyMgmntShrholder2Name };
       this.inputLookupAppCustCompanyShareHolder3Obj.jsonSelect = { MgmntShrholderName: this.ResponseAgrmntSignerObj.AppCustCompanyMgmntShrholder3Name };
+    }
+    else{
+      this.inputLookupBranchEmpObj.isReady = true;
     }
   }
 
@@ -282,7 +287,7 @@ export class DocSignerDetailComponent implements OnInit {
       this.http.post(AdInsConstant.EditAgrmntSignerData, this.agrmntSignerObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["AdminProcess/DocumentSigner/Paging"]);
+          this.router.navigate(["Nap/AdminProcess/DocumentSigner/Paging"]);
         },
         error => {
           console.log(error);
@@ -292,7 +297,7 @@ export class DocSignerDetailComponent implements OnInit {
       this.http.post(AdInsConstant.SubmitAgrmntSignerData, this.agrmntSignerObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["AdminProcess/DocumentSigner/Paging"]);
+          this.router.navigate(["Nap/AdminProcess/DocumentSigner/Paging"]);
         },
         error => {
           console.log(error);

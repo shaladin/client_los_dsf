@@ -17,7 +17,7 @@
                                         <lib-uclookupgeneric [lookupInput]="inputLookupBranchEmpObj"
                                             [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
                                             [identifier]="'lookupBranchEmp'" (lookup)="getLookupBranchEmp($event)"
-                                            *ngIf="inputLookupBranchEmpObj != undefined">
+                                            *ngIf="inputLookupBranchEmpObj.isReady">
                                         </lib-uclookupgeneric>
                                     </div>
                                 </div>
