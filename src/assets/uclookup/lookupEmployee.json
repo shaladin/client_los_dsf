@@ -29,19 +29,19 @@
         {
             "type": "sort",
             "position": "left",
-            "label": "Employee Name",
+            "label": "EMPLOYEE NAME",
             "name": "RE.EMP_NAME"
         },
         {
             "type": "sort",
             "position": "left",
-            "label": "Employee Position",
+            "label": "EMPLOYEE POSITION",
             "name": "RR.ROLE_NAME"
         },
         {
             "type": "label",
             "position": "center",
-            "label": "Select"
+            "label": "SELECT"
         }
     ],
     "bodyList": [
