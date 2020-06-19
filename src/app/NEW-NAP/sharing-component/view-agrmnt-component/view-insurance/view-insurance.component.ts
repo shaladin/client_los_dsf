@@ -3,6 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppAssetDataDetailComponent } from '../../view-app-component/app-asset-data/app-asset-data-detail/app-asset-data-detail.component';
+import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
+import { environment } from 'environments/environment';
+import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
+import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
 
 @Component({
   selector: 'agrmnt-view-insurance',
@@ -17,39 +21,55 @@ export class ViewInsuranceComponent implements OnInit {
   totalCapitalizedAmt: number;
   totalCustPaidAmt: number;
   ResponseAppDetailData: any;
+  PaidAmtByCust: number = 0;
+  InsCpltzAmt: number  = 0;
+  InsDiscAmt: number  = 0;
+  TotalPremiumToCust: number  = 0;
+
+  inputGridObj: any;
+  result : any = new Array();
+  resultData : any;
+  closeResult: any;
+  token : any = localStorage.getItem("Token");
+  appAssetObj: AppAssetObj = new AppAssetObj();
+  gridAssetDataObj: InputGridObj = new InputGridObj();
+  listAppAssetObj: any;
 
   constructor(
     private httpClient: HttpClient,
     private modalService: NgbModal
-  ) {
-    this.custTotalPremi = 0;
-    this.totalCapitalizedAmt = 0;
-    this.totalCustPaidAmt = 0;
-  }
+  ) {}
 
   ngOnInit() {
-    this.GetAppAndAppCustDetailByAgrmntId();
-    this.httpClient.post(AdInsConstant.GetListAppInsObjByAgrmntIdForView, { AgrmntId: this.agrmntId }).subscribe(
-      (response: any) => {
-        this.appInsObjs = response.LoanAppInsObjects;
-        this.appCollObjs = response.CollateralAppInsObjects;
-        this.custTotalPremi = response.AppInsurance.TotalCustPremiAmt;
-        this.totalCapitalizedAmt = response.AppInsurance.TotalInsCptlzAmt;
-        this.totalCustPaidAmt = response.AppInsurance.TotalPremiPaidByCustAmt;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
-
-  GetAppAndAppCustDetailByAgrmntId() {
-    var obj = { agrmntId: this.agrmntId };
-    this.httpClient.post(AdInsConstant.GetAppAndAppCustDetailByAgrmntId, obj).toPromise().then(
+    this.inputGridObj = new InputGridObj();
+    this.inputGridObj.pagingJson = "./assets/ucgridview/gridAssetDataView.json";
+    this.inputGridObj.deleteUrl = AdInsConstant.DeleteAppGuarantor;
+    
+    this.httpClient.post(AdInsConstant.GetAppAssetListForInsuranceByAgrmntId, { AgrmntId: this.agrmntId }).subscribe(
       (response) => {
-        console.log(response);
-        this.ResponseAppDetailData = response;
-        this.AppId = this.ResponseAppDetailData.AppId;
+        this.listAppAssetObj = response["ReturnObject"];
+        console.log(this.listAppAssetObj);
+
+        this.inputGridObj.resultData = {
+          Data: ""
+        }
+        this.inputGridObj.resultData["Data"] = new Array();
+        this.inputGridObj.resultData.Data = response["ReturnObject"];
+        this.result = this.inputGridObj.resultData.Data;
+        console.log(this.result);
+
+        if (this.listAppAssetObj[0].PaidAmtByCust != null)
+          this.PaidAmtByCust = this.listAppAssetObj[0].PaidAmtByCust;
+
+        if (this.listAppAssetObj[0].InsCpltzAmt != null)
+          this.InsCpltzAmt += this.listAppAssetObj[0].InsCpltzAmt;
+
+        if (this.listAppAssetObj[0].InsDiscAmt != null)
+          this.InsDiscAmt += this.listAppAssetObj[0].InsDiscAmt;
+
+        if (this.listAppAssetObj[0].TotalCustPremiAmt != null)
+          this.TotalPremiumToCust = this.listAppAssetObj[0].TotalCustPremiAmt;
+
       },
       (error) => {
         console.log(error);
@@ -66,5 +86,8 @@ export class ViewInsuranceComponent implements OnInit {
         console.log(error);
       }
     });
+  }
+
+  getEvent(event){
   }
 }
