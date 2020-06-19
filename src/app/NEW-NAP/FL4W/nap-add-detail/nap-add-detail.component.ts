@@ -94,6 +94,10 @@ export class NapAddDetailComponent implements OnInit {
     this.MakeViewReturnInfoObj();
   }
 
+  Cancel() {
+    this.router.navigate(["/Nap/FinanceLeasing/Paging"], { queryParams: { BizTemplateCode: AdInsConstant.FL4W } });
+  }
+
   stepperMode: string = AdInsConstant.CustTypeCompany;
   ChangeStepper() {
     if (this.custType == AdInsConstant.CustTypePersonal) {

@@ -8,6 +8,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class SingleCollDataComponent implements OnInit {
   @Input() AppId: number;
   @Output() outputTab: EventEmitter<any> = new EventEmitter<any>();
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   AppCollateralId: number = 0;
   mode: string = "add";
 
@@ -19,5 +20,9 @@ export class SingleCollDataComponent implements OnInit {
 
   Next() {
     this.outputTab.emit();
+  }
+
+  Cancel(){
+    this.outputCancel.emit();
   }
 }
