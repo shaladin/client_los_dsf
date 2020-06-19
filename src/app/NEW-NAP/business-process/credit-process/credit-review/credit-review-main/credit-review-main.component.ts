@@ -234,7 +234,7 @@ export class CreditReviewMainComponent implements OnInit {
 
   async BindDDLReasonReturn() {
     var obj = { RefReasonTypeCode: "CRD_REVIEW" };
-    await this.http.post(AdInsConstant.GetListActiveRefReasonByRefReasonTypeCode, obj).toPromise().then(
+    await this.http.post(AdInsConstant.GetListActiveRefReason, obj).toPromise().then(
       (response) => {
         console.log(response);
         this.DDLReasonReturn = response[AdInsConstant.ReturnObj];
@@ -306,7 +306,7 @@ export class CreditReviewMainComponent implements OnInit {
     var apiObj = {
       appCrdRvwHObj: tempAppCrdRvwObj,
       ApprovedById: temp.Approver,
-      Reason: temp.Reason,
+      Reason: temp.ReasonDesc,
       Notes: temp.Notes,
       WfTaskListId: this.wfTaskListId,
       RowVersion: "",
