@@ -3,12 +3,12 @@
     <div class="card-body">
       <div class="px-3">
         <div class="form-body">
-          <h4 class="form-section card-title" translate>MOU VIEW</h4>
-          <lib-ucviewgeneric [viewInput]="viewMouHeader"></lib-ucviewgeneric>
+          <h4 class="form-section card-title" translate>MOU APPROVAL</h4>
+          <lib-ucviewgeneric [viewInput]="viewMouHeader" (callback)="GetCallBack($event)"></lib-ucviewgeneric>
           <mat-tab-group>
             <mat-tab label="MoU Detail">
               <ng-template matTabContent>
-                <app-mou-view-detail [MouCustId]="MouCustId" [MouType]="MrMouTypeCode"></app-mou-view-detail>
+                <app-mou-view-detail *ngIf="IsResponseProcessed == true" [MouCustId]="MouCustId" [MouType]="MrMouTypeCode"></app-mou-view-detail>
               </ng-template>
             </mat-tab>
             <mat-tab label="Fee">

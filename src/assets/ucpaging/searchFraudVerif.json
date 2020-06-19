@@ -14,7 +14,7 @@
             "isQueryIn" : true,
             "url": "",
             "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
-            "label": "OFFICE NAME",
+            "label": "Office Name",
             "items": [],
             "itemsUrl": []
         },
@@ -29,7 +29,7 @@
             "isSelectOne": false,
             "url": "",
             "path":"/RefMaster/GetListKeyValueActiveByCode",
-            "label": "LEAD SOURCE",
+            "label": "Lead Source",
             "items": [],
             "itemsUrl": [],
             "criteriaPropName": "RefMasterTypeCode",
@@ -40,7 +40,7 @@
             "name": "L.LEAD_NO",
             "id": "LeadNoId",
             "value": "",
-            "label": "LEAD NO",
+            "label": "Lead No.",
             "placeholder": "Placeholder"
         },
         {
@@ -48,14 +48,14 @@
             "name": "L.ORDER_NO",
             "id": "OrderNoId",
             "value": "",
-            "label": "ORDER NO",
+            "label": "Order No.",
             "placeholder": "Placeholder"
         },
         {
             "type": "dropdown",
             "name": "WTL.CLAIM_STAT",
             "id": "ActiveStatusId",
-            "label": "TASK CLAIM STATUS",
+            "label": "Task Claim Status",
             "value": "",
             "placeholder": "Placeholder",
             "isFromURL": false,
@@ -77,7 +77,7 @@
             "name": "WTL.USERNAME",
             "id": "ClaimById",
             "value": "",
-            "label": "CLAIM BY",
+            "label": "Claim By",
             "placeholder": "Placeholder"
         },
         {
@@ -102,7 +102,7 @@
             "name": "LC.CUST_NO",
             "id": "CustNoId",
             "value": "",
-            "label": "CUSTOMER NO",
+            "label": "Customer No.",
             "placeholder": "Placeholder"
         },
         {
@@ -110,7 +110,7 @@
             "name": "LC.CUST_NAME",
             "id": "CustNameId",
             "value": "",
-            "label": "CUSTOMER NAME",
+            "label": "Customer Name",
             "placeholder": "Placeholder"
         }
     ],

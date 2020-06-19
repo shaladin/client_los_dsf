@@ -10,6 +10,7 @@ import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
 import { AppInsuranceObj } from 'app/shared/model/AppInsuranceObj.Model';
 import { AppInsMainCvgObj } from 'app/shared/model/AppInsMainCvgObj.Model';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
+import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 
 @Component({
   selector: "view-insurance",
@@ -22,6 +23,7 @@ export class ViewInsuranceComponent implements OnInit {
   appInsuranceObj: AppInsuranceObj = new AppInsuranceObj();
   appInsObjObj: AppInsObjObj = new AppInsObjObj();
   appAssetObj: AppAssetObj = new AppAssetObj();
+  appCollateralObj: AppCollateralObj = new AppCollateralObj();
   appInsMainCvgObjs: Array<AppInsMainCvgObj> = new Array<AppInsMainCvgObj>();
 
 
@@ -29,7 +31,7 @@ export class ViewInsuranceComponent implements OnInit {
 
   }
 
-  
+
 
   ngOnInit() {
     this.inputGridObj = new InputGridObj();
@@ -38,14 +40,19 @@ export class ViewInsuranceComponent implements OnInit {
     this.getInsuranceData();
   }
 
-  getInsuranceData(){
-    var reqObj = {AppId: this.AppId};
+  getInsuranceData() {
+    var reqObj = { AppId: this.AppId };
     this.http.post(AdInsConstant.GetInsuranceDataByAppIdForView, reqObj).subscribe(
       (response) => {
         console.log(response);
         this.appInsuranceObj = response["AppInsuranceObj"];
         this.appInsObjObj = response["AppInsObjObj"];
-        this.appAssetObj = response["AppAssetObj"];
+        if (response["AppAssetObj"] != null) {
+          this.appAssetObj = response["AppAssetObj"];
+        }
+        if (response["AppCollateralObj"] != null) {
+          this.appCollateralObj = response["AppCollateralObj"];
+        }
         this.appInsMainCvgObjs = response["AppInsMainCvgObjs"];
 
         var detailForGridCoverage = {

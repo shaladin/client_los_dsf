@@ -67,9 +67,6 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
     var context = JSON.parse(localStorage.getItem("UserAccess"));
     this.businessDt = new Date(context["BusinessDt"]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
-    console.log(this.identifier);
-    console.log(this.parentForm);
-
     this.parentForm.addControl(this.identifier, this.fb.group({
       CustFullName: ['', [Validators.required, Validators.maxLength(500)]],
       MrIdTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
@@ -96,6 +93,11 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
       NoOfDependents: ['', [Validators.pattern("^[0-9]+$"), Validators.maxLength(4)]],
     }));
 
+    this.parentForm.controls[this.identifier]['controls']["BirthPlace"].enable();
+    this.parentForm.controls[this.identifier]['controls']["BirthDt"].enable();
+    this.parentForm.controls[this.identifier]['controls']["MrIdTypeCode"].enable();
+    this.parentForm.controls[this.identifier]['controls']["IdNo"].enable();
+    this.parentForm.controls[this.identifier]['controls']["TaxIdNo"].enable();
     this.initUrl();
     this.initLookup();
     await this.bindAllRefMasterObj();
