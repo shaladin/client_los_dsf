@@ -17,7 +17,7 @@
                                         <lib-uclookupgeneric [lookupInput]="inputLookupBranchEmpObj"
                                             [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
                                             [identifier]="'lookupBranchEmp'" (lookup)="getLookupBranchEmp($event)"
-                                            *ngIf="inputLookupBranchEmpObj.isReady">
+                                            *ngIf="inputLookupBranchEmpObj != undefined">
                                         </lib-uclookupgeneric>
                                     </div>
                                 </div>
@@ -242,7 +242,7 @@
                                 <i class="fa fa-times "></i> Cancel
                             </button>
                             <button type="submit" class="btn btn-raised btn-primary">
-                                <i class="far"></i> Submit
+                                <i class="far fa-check-square"></i> Save
                             </button>
                         </div>
                     </form>
