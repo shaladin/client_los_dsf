@@ -4,7 +4,7 @@
       {
         "subSectionId": "POInfoId",
         "subSectionTitle": "Purchase Order Information",
-        "mainInfoUrl": "http://r3app-server.ad-ins.com/LOS/Generic/GetDataViewBySQL",
+        "mainInfoPath": "/Generic/GetDataViewBySQL",
         "mainInfo": [
           {
             "type": "text",

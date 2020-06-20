@@ -5,6 +5,7 @@ import { FormBuilder } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-purchase-order-view',
@@ -22,7 +23,7 @@ export class PurchaseOrderViewComponent implements OnInit {
   AgrmntId: number;
   inputGridObj: InputGridObj;
   result;
-
+  viewEnvironment: string;
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       this.PurchaseOrderHId = params["PurchaseOrderHId"];
@@ -37,6 +38,7 @@ export class PurchaseOrderViewComponent implements OnInit {
     this.POInfo = "./assets/ucviewgeneric/viewPOInfo.json";
     this.ADFinancialInfo = "./assets/ucviewgeneric/viewADFinancialInfo.json";
     this.ARFinancialInfo = "./assets/ucviewgeneric/viewARFinancialInfo.json";
+    this.viewEnvironment = environment.losUrl;
 
     this.http.post(AdInsConstant.GetPurchaseOrderHDetailViewMultiAssetByAgrmntId, { PurchaseOrderHId: this.PurchaseOrderHId, AgrmntId: this.AgrmntId }).subscribe(
       (response) => {
