@@ -98,13 +98,13 @@
                 {
                     "type": "callback",
                     "key": "delete",
-                    "property" : [
+                    "property": [
                         {
-                        "type": "AppAssetId",
-                        "property": "AppAssetId"
+                            "type": "AppAssetId",
+                            "property": "AppAssetId"
                         }
                     ],
-                    "icon" : "ft-trash-2"
+                    "icon": "ft-trash-2"
                 }
             ]
         }
