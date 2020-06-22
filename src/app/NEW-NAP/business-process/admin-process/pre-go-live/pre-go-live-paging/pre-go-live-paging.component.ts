@@ -7,8 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-pre-go-live-paging',
-  templateUrl: './pre-go-live-paging.component.html',
-  styleUrls: ['./pre-go-live-paging.component.scss']
+  templateUrl: './pre-go-live-paging.component.html'
 })
 export class PreGoLivePagingComponent implements OnInit {
 
