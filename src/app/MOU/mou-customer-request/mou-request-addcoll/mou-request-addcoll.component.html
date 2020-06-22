@@ -34,7 +34,7 @@
           <td>{{item.CollateralNo}}</td>
           <td align="left">{{item.FullAssetName}}</td>
           <td align="left">{{item.FullAssetCode}}</td>
-          <td align="left">{{item.CustName}}</td>
+          <td align="left"><a [routerLink]="" (click)="openView(item.CustNo)">{{item.CustName}}</a></td>
           <td align="right">{{item.CollateralValueAmt | number}}</td>
           <td>{{item.CollateralStat}}</td>
           <td>
@@ -223,105 +223,20 @@
     <lib-ucSubsection [id]="'AddCollInfoId'" [title]="'Additional Collateral - Add Existing'" [panel]="'AddCollInfo'">
     </lib-ucSubsection>
     <div id="AddCollInfo">
-      <lib-UCSearch id="ucSearch" style="width:100%;" [searchInput]='inputObj' (result)="getResult($event)">
-      </lib-UCSearch>
-      <div [hidden]="resultData?.Data == null|| resultData?.Data.length == 0">
-        <table class="table table-responsive-md text-center table-hover">
-          <thead>
-            <tr class="table-header">
-              <th><input type="checkbox" [checked]="checkboxAll" (change)="SelectAll($event.target.checked)"
-                  id="checkAll" name="CheckAll"></th>
-              <th><span class="thead-header" name='CollNo' translate>COLLATERAL NO.</span>
-              </th>
-              <th><span style="float: left;" (click)="searchSort($event)" class="thead-header" name='CollName'
-                  translate>COLLATERAL NAME</span>
-              </th>
-              <th><span style="float: left;" (click)="searchSort($event)" class="thead-header" name='CollType'
-                  translate>COLLATERAL TYPE</span>
-              </th>
-              <th><span style="float: left;" (click)="searchSort($event)" class="thead-header" name='MouCustName'
-                  translate>DOCUMENT OWNER
-                  NAME</span>
-              </th>
-              <th><span style="float: right;" (click)="searchSort($event)" class="thead-header" name='CollPrice'
-                  translate>COLLATERAL
-                  PRICE</span>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let item of resultData?.Data; let i = index">
-              <td>
-                <div *ngIf="listSelectedId.indexOf(item.CollateralId) >- 1">
-                  <input type="checkbox" id="checkSame" name="itemSame"
-                    (change)="Checked(item.CollateralId, $event.target.checked)" [checked]="true">
-                </div>
-                <div *ngIf="listSelectedId.indexOf(item.CollateralId) < 0">
-                  <input type="checkbox" id="checkDiff" name="itemDiff"
-                    (change)="Checked(item.CollateralId, $event.target.checked)" [checked]=false>
-                </div>
-              </td>
-              <td>{{item.CollateralNo}}</td>
-              <td align="left">{{item.FullAssetName}}</td>
-              <td align="left">{{item.AssetTypeName}}</td>
-              <td align="left">{{item.CustName}}</td>
-              <td align="right">{{item.CollateralValueAmt | number}}</td>
-            </tr>
-          </tbody>
-        </table>
-        <lib-ucgridfooter (select)="onSelect($event)"></lib-ucgridfooter>
-        <div class="card-header">
-          <div class="text-right">
-            <button type="button" (click)="addToTemp()" class="btn btn-raised btn-warning mr-1">
-              <i class="fa ft-plus"></i> Add Selected Item
-            </button>
-          </div>
-        </div>
 
-        <table class="table table-responsive-md text-center table-hover">
-          <thead>
-            <tr class="table-header">
-              <th><span class="thead-header" name='CollNo' translate>COLLATERAL NO.</span>
-              </th>
-              <th><span style="float: left;" class="thead-header" name='CollName' translate>COLLATERAL NAME</span>
-              </th>
-              <th><span style="float: left;" class="thead-header" name='CollType' translate>COLLATERAL TYPE</span>
-              </th>
-              <th><span style="float: left;" class="thead-header" name='MouCustName' translate>DOCUMENT OWNER
-                  NAME</span>
-              </th>
-              <th><span style="float: right;" class="thead-header" name='CollPrice' translate>COLLATERAL
-                  PRICE</span>
-              </th>
-              <th translate>DELETE</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let item of tempData; let i = index">
-              <td>{{item.CollateralNo}}</td>
-              <td align="left">{{item.FullAssetName}}</td>
-              <td align="left">{{item.AssetTypeName}}</td>
-              <td align="left">{{item.CustName}}</td>
-              <td align="right">{{item.CollateralValueAmt | number}}</td>
-              <td>
-                <div>
-                  <a class="danger p-0" (click)="deleteFromTemp(item.CollateralId)">
-                    <i class="ft-trash-2 font-medium-3 mr-2"></i>
-                  </a></div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div class="card-header">
-      <div class="text-right">
-        <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()">
-          <i class="fa fa-arrow-circle-left"></i> Back
-        </button>
-        <button type="button" (click)="SaveExistingCollateral()" class="btn btn-raised btn-primary" translate>
-          <i class="fa fa-check"></i> Save
-        </button>
+
+      <lib-ucaddtotemp *ngIf="tempPagingObj.isReady" [tempPagingObj]="tempPagingObj" (callback)="getListTemp($event)">
+      </lib-ucaddtotemp>
+
+      <div class="card-header">
+        <div class="text-right">
+          <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()">
+            <i class="fa fa-arrow-circle-left"></i> Back
+          </button>
+          <button type="button" (click)="SaveExistingCollateral()" class="btn btn-raised btn-primary" translate>
+            <i class="fa fa-check"></i> Save
+          </button>
+        </div>
       </div>
     </div>
   </form>

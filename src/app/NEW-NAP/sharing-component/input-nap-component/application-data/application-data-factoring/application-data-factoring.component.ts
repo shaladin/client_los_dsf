@@ -19,6 +19,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
   mode: string;
   salesAppInfoObj: SalesInfoObj = new SalesInfoObj();
   mouCustFctrObj: MouCustFctrObj = new MouCustFctrObj();
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
   SalesAppInfoForm = this.fb.group({
     MouCustId: ['', Validators.required],
@@ -81,6 +82,10 @@ export class ApplicationDataFactoringComponent implements OnInit {
     console.log("Rey test");
     this.loadData();
     this.SalesAppInfoForm.controls.NumOfInst.disable();
+  }
+
+  Cancel(){
+    this.outputCancel.emit();
   }
 
   setDropdown() {

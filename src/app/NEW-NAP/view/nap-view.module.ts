@@ -13,6 +13,7 @@ import { UcviewgenericModule } from "@adins/ucviewgeneric";
 import { CreditProcessSharingModule } from "../business-process/credit-process/credit-process.module";
 import { ViewSharingComponentModule } from "../sharing-component/view-app-component/view-sharing-component.module";
 import { ViewAgrmntComponentModule } from "../sharing-component/view-agrmnt-component/view-agrmnt-component.module";
+import { PurchaseOrderViewComponent } from "./purchase-order-view/purchase-order-view.component";
 
 @NgModule({
   exports: [
@@ -33,7 +34,8 @@ import { ViewAgrmntComponentModule } from "../sharing-component/view-agrmnt-comp
   ],
   declarations: [
     AgreementViewContainerComponent,
-    ApplicationViewComponent
+    ApplicationViewComponent,
+    PurchaseOrderViewComponent
   ],
 })
 export class NapViewModule { }

@@ -193,8 +193,8 @@
                   <div class="col-md-4">
                     <select class="form-control adInsInput" style="width: auto" formControlName="MouCustId">
                       <option value = null>None</option>
-                      <option *ngFor="let it of resMouCustObj" [value]="it.Key">
-                        {{it.Value}} 
+                      <option *ngFor="let it of resMouCustObj" [value]="it.MouCustId">
+                        {{it.MouCustNo}} - {{it.CustName}}
                       </option>
                     </select>
                   </div>
@@ -266,6 +266,9 @@
               
   
               <div class="form-actions right">
+                <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
+                  <i class="ft-x"></i> Cancel
+                </button>
                 <button type="submit" class="btn btn-raised btn-primary">
                   <i class="fa fa-check-square"></i> Save
                 </button>

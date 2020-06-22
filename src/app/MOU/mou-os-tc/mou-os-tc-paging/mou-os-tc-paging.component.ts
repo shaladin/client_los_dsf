@@ -4,6 +4,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-mou-os-tc-paging',
@@ -15,7 +16,7 @@ export class MouOsTcPagingComponent implements OnInit {
   arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   user:any;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,private http: HttpClient) { }
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem("UserAccess"));
@@ -39,6 +40,22 @@ export class MouOsTcPagingComponent implements OnInit {
           environment: environment.FoundationR3Url
         }
       ];
+    }
+  }
+
+  getEvent(event){
+    if(event.Key == "customer"){
+        var link : string;
+        var custObj = { CustNo: event.RowObj.CustNo };
+        this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+          response => {
+            link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
+            window.open(link, '_blank');
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
     }
   }
 }
