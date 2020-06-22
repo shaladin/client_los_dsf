@@ -53,13 +53,13 @@ export class NapAddDetailComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
-        this.mode = params["Mode"];
       }
       if (params["WfTaskListId"] != null) {
         this.wfTaskListId = params["WfTaskListId"];
       }
       if (params["ReturnHandlingHId"] != null) {
         this.ReturnHandlingHId = params["ReturnHandlingHId"];
+        this.mode = 'ReturnHandling';
       }
     });
   }
