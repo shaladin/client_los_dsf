@@ -37,12 +37,14 @@ export class DocSignerDetailComponent implements OnInit {
   MrCustTypeCode: string = "COMPANY";
   CustFullName: string;
   ContactPersonName: string;
+  BizTemplateCode: string;
 
   constructor(private fb: FormBuilder, private http: HttpClient,
     private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params['AppId'];
       this.AgrmntId = params['AgrmntId'];
+      this.BizTemplateCode = params['BizTemplateCode'];
     });
   }
 
@@ -60,6 +62,34 @@ export class DocSignerDetailComponent implements OnInit {
 
     await this.getAllData();
     this.setLookupObj();
+  }
+
+  Callback(event){
+    console.log("agreeno")
+    console.log(event)
+
+    if(event.Key == "agrmnt")
+    {
+      var bizTemplateCode = localStorage.getItem("BizTemplateCode")
+
+      if(bizTemplateCode == "CF4W" || bizTemplateCode == "CFRFN4W" || bizTemplateCode == "FACTORING"){
+        window.open( environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + event.ViewObj.AgrmntId, "_blank");
+      }
+      else if(bizTemplateCode == "FL4W"){
+        window.open( environment.losR3Web + "/Nap/FinanceLeasing/ViewAgrmnt?AgrmntId=" + event.ViewObj.AgrmntId, "_blank");
+      }
+    }
+
+    if(event.Key == "prodOff"){
+      this.http.post(AdInsConstant.GetProdOfferingHByCode, {ProdOfferingCode : event.ViewObj.ProdOfferingCode}).subscribe(
+        response => {
+          window.open(environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=" + response['ProdOfferingHId'], '_blank');
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
   }
 
   async getAllData() {
@@ -285,7 +315,7 @@ export class DocSignerDetailComponent implements OnInit {
       this.http.post(AdInsConstant.EditAgrmntSignerData, this.agrmntSignerObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["Nap/AdminProcess/DocumentSigner/Paging"]);
+          this.router.navigate(["Nap/AdminProcess/DocumentSigner/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode }});
         },
         error => {
           console.log(error);
@@ -295,7 +325,7 @@ export class DocSignerDetailComponent implements OnInit {
       this.http.post(AdInsConstant.SubmitAgrmntSignerData, this.agrmntSignerObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["Nap/AdminProcess/DocumentSigner/Paging"]);
+          this.router.navigate(["Nap/AdminProcess/DocumentSigner/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode }});
         },
         error => {
           console.log(error);
