@@ -480,7 +480,16 @@ export class ApplicationDataFL4WComponent implements OnInit {
   GetAppObjValue(){
     var temp = new NapAppModel();
     temp.AppId = this.resultResponse.AppId;
-    temp.MouCustId = this.NapAppModelForm.controls.MouCustId.value;
+
+    if(this.NapAppModelForm.controls.MouCustId.value == "null")
+    {
+      temp.MouCustId = "";
+    }
+    else
+    {
+      temp.MouCustId = this.NapAppModelForm.controls.MouCustId.value;
+    }
+
     temp.LeadId = this.NapAppModelForm.controls.LeadId.value;
     temp.AppNo = this.NapAppModelForm.controls.AppNo.value;
     temp.OriOfficeCode = this.NapAppModelForm.controls.OriOfficeCode.value;

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UcpagingModule } from '@adins/ucpaging';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-invoice-verif-paging',
@@ -11,7 +12,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 export class InvoiceVerifPagingComponent implements OnInit {
 
   inputPagingObj: any;
-  constructor() { }
+  constructor(private http: HttpClient) {}
 
   ngOnInit() {
     this.inputPagingObj = new UcpagingModule();
@@ -21,4 +22,16 @@ export class InvoiceVerifPagingComponent implements OnInit {
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchInvoiceVerif.json";
   }
 
+  getEvent(ev) {
+    if(ev.Key == "prodOff"){
+      this.http.post(AdInsConstant.GetProdOfferingHByCode, {ProdOfferingCode : ev.RowObj.ProdOfferingCode}).subscribe(
+        response => {
+          window.open(environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=" + response['ProdOfferingHId'], '_blank');
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+  }
 }
