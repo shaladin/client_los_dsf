@@ -81,11 +81,7 @@ export class CustomerDataComponent implements OnInit {
   listShareholder: Array<AppCustCompanyMgmntShrholderObj> = new Array<AppCustCompanyMgmntShrholderObj>();
   listContactPersonCompany: Array<AppCustPersonalContactPersonObj> = new Array<AppCustPersonalContactPersonObj>();
   listLegalDoc: Array<AppCustCompanyLegalDocObj> = new Array<AppCustCompanyLegalDocObj>();
-
   isBindDataDone: boolean = false;
-
-
-
   getRefMasterUrl: any;
   addEditCustDataPersonalUrl: any;
   getCustDataUrl: any;

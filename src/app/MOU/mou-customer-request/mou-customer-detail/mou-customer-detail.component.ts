@@ -7,6 +7,8 @@ import { Location } from '@angular/common';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { MouCustTcComponent } from '../mou-cust-tc/mou-cust-tc.component';
 import Stepper from 'bs-stepper';
+import { environment } from 'environments/environment';
+import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 
 @Component({
   selector: 'app-mou-customer-detail',
@@ -24,7 +26,10 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   mode: string;
   pageType: string;
   pageTitle: string;
-
+  viewObj: string;
+  link: any;
+  resultData: any;
+  mouCustObject: MouCustObj = new MouCustObj();
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -50,10 +55,17 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.viewObj = "./assets/ucviewgeneric/viewMouHeader.json";
+    this.mouCustObject.MouCustId = this.mouCustId;
+    this.httpClient.post(AdInsConstant.GetMouCustById, this.mouCustObject).subscribe(
+      (response: MouCustObj) => {
+        this.resultData = response;
+      }
+    );
     if (this.pageType == "return") {
       this.pageTitle = "MOU Return Detail";
     }
-    else{
+    else {
       this.pageTitle = "MOU Customer Detail";
     }
   }
@@ -232,5 +244,18 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
         break;
     }
   }
-
+  GetCallBack(event) {
+    if (event.Key == "customer") {
+      var custObj = { CustNo: this.resultData['CustNo'] };
+      this.httpClient.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+        response => {
+          this.link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
+          window.open(this.link, '_blank');
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+  }
 }
