@@ -673,9 +673,6 @@ export class AdInsConstant {
   public static GetMouCustClauseByMouCustId = environment.losUrl + "/MouCustClause/GetMouCustClauseByMouCustId";
   public static AddMouCustClause = environment.losUrl + "/MouCustClause/AddMouCustClause";
   public static EditMouCustClause = environment.losUrl + "/MouCustClause/EditMouCustClause";
-  public static AddMouCustFctr = environment.losUrl + "/MouCustFctr/AddMouCustFctr";
-  public static EditMouCustFctr = environment.losUrl + "/MouCustFctr/EditMouCustFctr";
-  public static GetMouCustFctrByMouCustId = environment.losUrl + "/MouCustFctr/GetMouCustFctrByMouCustId";
   public static GetMouCustTcFromRule = environment.losUrl + "/MouCustTc/GetMouCustTcFromRule";
   public static EditListMouCustTc = environment.losUrl + "/MouCustTc/EditListMouCustTc";
   public static GetListMouCustListedCustFctrByMouCustId = environment.losUrl + "/MouCustListedCustFctr/GetListMouCustListedCustFctrByMouCustId";
@@ -693,7 +690,11 @@ export class AdInsConstant {
   public static GetListMouCustByCustNo = environment.losUrl + "/MouCust/GetListMouCustByCustNo";
   public static GetMouCustByAppId = environment.losUrl + "/MouCust/GetMouCustByAppId";
 
-  
+  // MOU CUST FCTR
+  public static AddMouCustFctr = environment.losUrl + "/MouCustFctr/AddMouCustFctr";
+  public static EditMouCustFctr = environment.losUrl + "/MouCustFctr/EditMouCustFctr";
+  public static GetMouCustFctrByMouCustId = environment.losUrl + "/MouCustFctr/GetMouCustFctrByMouCustId";
+  public static GetMouCustFctrForMouViewByMouCustId = environment.losUrl + "/MouCustFctr/GetMouCustFctrForMouViewByMouCustId";
 
   // MOU CUST ASSET
   public static AddMouCustAsset = environment.losUrl + "/MouCustAsset/AddMouCustAsset";

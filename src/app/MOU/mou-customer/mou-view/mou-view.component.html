@@ -31,7 +31,11 @@
                 <app-mou-view-doc></app-mou-view-doc>
               </ng-template>
             </mat-tab>
-
+            <mat-tab label="Listed Customer Factoring"  *ngIf="this.MrMouTypeCode == 'FACTORING'">
+              <ng-template matTabContent>
+                <app-mou-view-listed-cust-factoring [MouCustId]="MouCustId"></app-mou-view-listed-cust-factoring>
+              </ng-template>
+            </mat-tab>
             <mat-tab label="Survey">
               <ng-template matTabContent>
                 <app-mou-view-survey [MouCustId]="MouCustId"></app-mou-view-survey>

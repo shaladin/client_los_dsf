@@ -37,6 +37,15 @@
       <label  *ngIf="WopCode == 'PDC'" class="col-md-2 adInsLabel" translate>{{WopCode}} </label>
     </div>
     <div *ngIf="MouType == 'FACTORING'" class="form-group row">
+      <label class="col-md-2 adInsLabel" translate>Paid By</label>
+      <label class="col-md-2 adInsLabel" translate>{{MrPaidByCode}}</label>
+    </div>
+    <div *ngIf="MouType == 'FACTORING'" class="form-group row">
+      <label class="col-md-2 adInsLabel" translate>Installment Type / Calculate Method</label>
+      <label class="col-md-2 adInsLabel" translate>{{MrInstTypeCode + ' / ' + SingleInstCalcMthd}}</label>
+    </div>
+
+    <div *ngIf="MouType == 'FACTORING'" class="form-group row">
       <label class="col-md-2 adInsLabel" translate>TOP</label>
       <label style="align-items: left;" class="col-md-2 adInsLabel" translate>{{TopDays}} days </label>
     </div>
@@ -56,10 +65,6 @@
     <div *ngIf="MouType == 'GENERAL'" class="form-group row">
       <label class="col-md-2 adInsLabel" translate>Interest Type </label>
       <label class="col-md-2 adInsLabel" translate>{{MrInterestTypeCode}}</label>
-    </div>
-    <div *ngIf="MouType == 'FACTORING'" class="form-group row">
-      <label class="col-md-2 adInsLabel" translate>Payment Frequency </label>
-      <label class="col-md-2 adInsLabel" translate>{{PayFreqCode}} </label>
     </div>
     <div class="form-group row">
       <label class="col-md-2 adInsLabel" translate>Installment Scheme </label>
@@ -90,7 +95,7 @@
       <label class="col-md-2 adInsLabel" translate>{{RetentionPrcnt}}%</label>
     </div>
     <div *ngIf="MouType == 'FACTORING'" class="form-group row">
-      <label class="col-md-2 adInsLabel" translate>Revolving</label>
+      <label class="col-md-2 adInsLabel" translate>Listed Customer Factoring</label>
       <label *ngIf="IsListedCust == true" class="col-md-2 adInsLabel" translate>Yes </label>
       <label *ngIf="IsListedCust == false" class="col-md-2 adInsLabel" translate>No </label>
     </div>
