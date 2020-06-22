@@ -9,8 +9,7 @@ import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 
 @Component({
   selector: 'app-purchase-order',
-  templateUrl: './purchase-order.component.html',
-  styleUrls: ['./purchase-order.component.scss']
+  templateUrl: './purchase-order.component.html'
 })
 export class PurchaseOrderComponent implements OnInit {
   urlDetail: string;
