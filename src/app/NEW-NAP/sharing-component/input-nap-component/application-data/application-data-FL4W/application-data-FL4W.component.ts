@@ -142,7 +142,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
 
         this.http.post(AdInsConstant.GetListMouCustByCustNo, this.mouCustObj).subscribe(
           (response) => {
-            this.resMouCustObj = response;
+            this.resMouCustObj = response["ReturnObject"];
             
               // console.log("resMouCustObj")
               // console.log(this.resMouCustObj)
