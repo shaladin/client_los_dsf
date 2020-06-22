@@ -5,6 +5,8 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { MouCustTcComponent } from 'app/MOU/mou-customer-request/mou-cust-tc/mou-cust-tc.component';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-mou-os-tc-detail',
@@ -17,7 +19,10 @@ export class MouOsTcDetailComponent implements OnInit {
   @ViewChild("MouTcFactoring") public mouTcFactoring: MouCustTcComponent;
   MouCustId: number = 0;
   mouType: string;
-
+  viewObj: string;
+  link: any;
+  resultData: any;
+  mouCustObject: MouCustObj = new MouCustObj();
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       this.MouCustId = params["MouCustId"];
@@ -29,6 +34,13 @@ export class MouOsTcDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.viewObj = "./assets/ucviewgeneric/viewMouHeader.json";
+    this.mouCustObject.MouCustId = this.MouCustId;
+    this.http.post(AdInsConstant.GetMouCustById, this.mouCustObject).subscribe(
+      (response: MouCustObj) => {
+        this.resultData = response;
+      }
+    );
   }
 
   getValue(response) {
@@ -51,6 +63,20 @@ export class MouOsTcDetailComponent implements OnInit {
     }
     else if (this.mouType == AdInsConstant.FACTORING) {
       this.mouTcFactoring.Save();
+    }
+  }
+  GetCallBack(event) {
+    if (event.Key == "customer") {
+      var custObj = { CustNo: this.resultData['CustNo'] };
+      this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+        response => {
+          this.link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
+          window.open(this.link, '_blank');
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     }
   }
 }

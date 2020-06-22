@@ -13,11 +13,11 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
   providers: [NGXToastrService]
 })
 export class GuarantorFL4WComponent implements OnInit {
-
+  @Input() AppId : any;
   @Input() AppGuarantorId : any;
   @Input() MrGuarantorTypeCode : any;
+  @Input() showCancel: boolean = true;
   @Input() mode : any;
-  @Input() AppId : any;
   @Output() closeX: EventEmitter<any> = new EventEmitter();
   closeChk : boolean;
 
@@ -28,6 +28,7 @@ export class GuarantorFL4WComponent implements OnInit {
     private route: ActivatedRoute) {
   }
 
+  isReady: boolean = false;
   param : string;
   key: any;
   criteria: CriteriaObj[] = [];
@@ -44,6 +45,7 @@ export class GuarantorFL4WComponent implements OnInit {
   // AppGuarantorId:any;
   MrCustTypeCode:any;
   ngOnInit() {
+    console.log(this.isReady);
     if(this.AppGuarantorId != null){
       this.mode = "edit";
       this.MrCustTypeCode = this.MrGuarantorTypeCode.toUpperCase();
@@ -75,6 +77,7 @@ export class GuarantorFL4WComponent implements OnInit {
             });
           }
         }
+        this.isReady = true;
       }
     );
   }
