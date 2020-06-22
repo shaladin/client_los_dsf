@@ -49,6 +49,7 @@ export class MouViewComponent implements OnInit {
   }
 
   GetCallBack(event){
+    console.log("aaaa");
     if(event.Key == "customer"){
       var custObj = { CustNo: this.resultData['CustNo'] };
       this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(

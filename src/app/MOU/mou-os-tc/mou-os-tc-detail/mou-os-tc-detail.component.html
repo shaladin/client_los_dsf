@@ -10,8 +10,8 @@
             </div>
           </div>
         </div>
-        <div class="px-3">
-          <app-main-info [MouCustId]="MouCustId"></app-main-info>
+        <lib-ucviewgeneric [viewInput]="viewObj" (callback)="GetCallBack($event)"></lib-ucviewgeneric> 
+        <div class="px-3"> 
           <app-mou-cust-tc *ngIf="mouType == 'GENERAL'" #MouTcGeneral [MouCustId]="MouCustId"
             (ResponseMouCustTc)="getValue($event)"></app-mou-cust-tc>
           <app-mou-cust-tc *ngIf="mouType == 'FACTORING'" #MouTcFactoring [MouCustId]="MouCustId"

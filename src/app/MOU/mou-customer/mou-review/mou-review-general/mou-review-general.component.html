@@ -9,9 +9,9 @@
               </h4>
             </div>
           </div>
-        </div>
+        </div> 
+        <lib-ucviewgeneric [viewInput]="viewObj" (callback)="GetCallBack($event)"></lib-ucviewgeneric> 
         <div class="px-3">
-          <app-main-info [MouCustId]="MouCustId"></app-main-info>
           <mat-tab-group>
             <mat-tab label="MOU Detail">
               <ng-template matTabContent>
