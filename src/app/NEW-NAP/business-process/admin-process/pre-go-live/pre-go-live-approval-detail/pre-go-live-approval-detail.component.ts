@@ -27,7 +27,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   AppNo: any;
   NumOfAsset: any;
   Tenor: any;
-  InstaAmt: any;
+  InstAmt: any;
   DeliveryDt: any;
   ProdOfferingName: any;
   WayOfFinancing: any;
@@ -73,7 +73,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    console.log("APPROVAL DETAIL")
 
     this.http.post(AdInsConstant.GetRfaLogByTrxNoAndApvCategory, { TrxNo : this.TrxNo, ApvCategory : "PRE_GPV_APV" } ).subscribe(
       (response) => {
@@ -158,7 +158,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
         this.http.post(AdInsConstant.GetAgrmntFinDataByAgrmntId, Obj5).subscribe(
           (response) => {
             this.result6 = response;
-            this.InstaAmt = this.result6.InstaAmt;
+            this.InstAmt = this.result6.InstAmt;
           }
         );
 
