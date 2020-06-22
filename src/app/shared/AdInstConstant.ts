@@ -1201,13 +1201,16 @@ export class AdInsConstant {
   public static RequestReturnTask = environment.losUrl + "/ReturnHandlingD/RequestReturnTask";
   public static DeleteReturnHandlingD = environment.losUrl + "/ReturnHandlingD/DeleteReturnHandlingD";
   public static ResumeReturnHandling = environment.losUrl + "/ReturnHandlingH/ResumeReturnHandling";
+  public static GetReturnHandlingDByReturnHandlingDId = environment.losUrl + "/ReturnHandlingD/GetReturnHandlingDByReturnHandlingDId";
+
   // public static Test = environment.losUrl + "/ReturnHandlingD/Test";
 
   public static ReturnHandlingEditApp = "RTN_EDIT_APP";
   public static ReturnHandlingAddPhnVerf = "RTN_ADD_PHN_VERF";
   public static ReturnHandlingEditComRsvFnd = "RTN_EDIT_COM_RSV_FND";
   public static ReturnHandlingAddColtr = "RTN_ADD_COLTR";
-  public static GetReturnHandlingDByReturnHandlingDId = environment.losUrl + "/ReturnHandlingD/GetReturnHandlingDByReturnHandlingDId";
+  public static ReturnStatNew = "NEW";
+  public static ReturnStatRequest = "REQ";
 
   // Deviation Result
   public static GetListDeviationResultForDeviationDataByAppId = environment.losUrl + "/DeviationResult/GetListDeviationResultForDeviationDataByAppId";
