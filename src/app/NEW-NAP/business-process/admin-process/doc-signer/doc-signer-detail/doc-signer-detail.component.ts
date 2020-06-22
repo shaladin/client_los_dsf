@@ -164,6 +164,7 @@ export class DocSignerDetailComponent implements OnInit {
     this.inputLookupOfficeEmp2Obj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupOfficeEmp2Obj.pagingJson = "./assets/uclookup/lookupOfficeEmp.json";
     this.inputLookupOfficeEmp2Obj.genericJson = "./assets/uclookup/lookupOfficeEmp.json";
+    this.inputLookupOfficeEmp2Obj.isRequired = false;
     this.inputLookupOfficeEmp2Obj.addCritInput = new Array();
 
     var crit3Obj = new CriteriaObj();
@@ -188,6 +189,7 @@ export class DocSignerDetailComponent implements OnInit {
     this.inputLookupAppCustCompanyShareHolder2Obj.urlEnviPaging = environment.losUrl;
     this.inputLookupAppCustCompanyShareHolder2Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
     this.inputLookupAppCustCompanyShareHolder2Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
+    this.inputLookupAppCustCompanyShareHolder2Obj.title = "Approver Signer";
     this.inputLookupAppCustCompanyShareHolder2Obj.addCritInput = new Array();
 
     this.inputLookupAppCustCompanyShareHolder3Obj = new InputLookupObj();
@@ -196,12 +198,13 @@ export class DocSignerDetailComponent implements OnInit {
     this.inputLookupAppCustCompanyShareHolder3Obj.urlEnviPaging = environment.losUrl;
     this.inputLookupAppCustCompanyShareHolder3Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
     this.inputLookupAppCustCompanyShareHolder3Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
+    this.inputLookupAppCustCompanyShareHolder3Obj.title = "Approver Signer";
     this.inputLookupAppCustCompanyShareHolder3Obj.addCritInput = new Array();
 
     var crit4Obj = new CriteriaObj();
-    crit4Obj.propName = 'ACCMS.CUST_NO';
+    crit4Obj.propName = 'AC.APP_ID';
     crit4Obj.restriction = AdInsConstant.RestrictionEq;
-    crit4Obj.value = this.CustNo;
+    crit4Obj.value = this.AppId.toString();
 
     this.inputLookupAppCustCompanyShareHolder1Obj.addCritInput.push(crit4Obj);
     this.inputLookupAppCustCompanyShareHolder2Obj.addCritInput.push(crit4Obj);
