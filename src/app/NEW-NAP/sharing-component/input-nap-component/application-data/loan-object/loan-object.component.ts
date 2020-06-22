@@ -127,14 +127,13 @@ export class LoanObjectComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(this.isCollateral==null) this.isCollateral=true;
     this.loadDataTable();
     this.GetAppData();
     this.setLookup();
     this.MainInfoForm.controls.FinancingAmount.disable();
   }
-  
-  CalculateFinancingAmt(){
+
+  CalculateFinancingAmt() {
     var BudgetPlanAmt = this.MainInfoForm.controls.BudgetPlanAmount.value;
     var SelfFinancingAmt = this.MainInfoForm.controls.SelfFinancing.value;
 
@@ -150,7 +149,7 @@ export class LoanObjectComponent implements OnInit {
   }
 
   async GetAppData() {
-    await this.http.post(AdInsConstant.GetAppById, {AppId: this.AppId}).toPromise().then(
+    await this.http.post(AdInsConstant.GetAppById, { AppId: this.AppId }).toPromise().then(
       (response) => {
         this.AppObj = response;
         this.OfficeCode = this.AppObj.OriOfficeCode;
@@ -178,19 +177,26 @@ export class LoanObjectComponent implements OnInit {
     this.loanObjectInputLookupObj.genericJson = "./assets/uclookup/NAP/lookupLoanObject.json";
 
     this.supplierInputLookupObj = new InputLookupObj();
-    if(this.isCollateral){
-      this.supplierInputLookupObj.urlJson = "./assets/uclookup/NAP/lookupSupplier.json";
-      this.supplierInputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupSupplier.json";
-      this.supplierInputLookupObj.genericJson = "./assets/uclookup/NAP/lookupSupplier.json";
-    }else{
-      this.supplierInputLookupObj.urlJson = "./assets/uclookup/NAP/lookupSupplierRefinancingLoanObj.json";
-      this.supplierInputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupSupplierRefinancingLoanObj.json";
-      this.supplierInputLookupObj.genericJson = "./assets/uclookup/NAP/lookupSupplierRefinancingLoanObj.json";
-    }
-
     this.supplierInputLookupObj.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.supplierInputLookupObj.urlEnviPaging = environment.FoundationR3Url;
     this.supplierInputLookupObj.addCritInput = new Array();
+    
+    if (this.isCollateral) {
+      this.supplierInputLookupObj.urlJson = "./assets/uclookup/NAP/lookupSupplierRefinancingLoanObj.json";
+      this.supplierInputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupSupplierRefinancingLoanObj.json";
+      this.supplierInputLookupObj.genericJson = "./assets/uclookup/NAP/lookupSupplierRefinancingLoanObj.json";
+    } else {
+      this.supplierInputLookupObj.urlJson = "./assets/uclookup/NAP/lookupSupplier.json";
+      this.supplierInputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupSupplier.json";
+      this.supplierInputLookupObj.genericJson = "./assets/uclookup/NAP/lookupSupplier.json";
+
+      var critSuppSupplSchmObj = new CriteriaObj();
+      critSuppSupplSchmObj.DataType = 'text';
+      critSuppSupplSchmObj.restriction = AdInsConstant.RestrictionEq;
+      critSuppSupplSchmObj.propName = 'VS.VENDOR_SCHM_CODE';
+      critSuppSupplSchmObj.value = this.RefProdCmptSupplSchm.CompntValue;
+      this.supplierInputLookupObj.addCritInput.push(critSuppSupplSchmObj);
+    }
 
     var critSuppObj = new CriteriaObj();
     critSuppObj.DataType = 'text';
@@ -201,7 +207,7 @@ export class LoanObjectComponent implements OnInit {
 
     if (this.objEdit != null) {
       this.loanObjectInputLookupObj.jsonSelect = { Descr: this.objEdit.MrLoanPurposeDescr };
-      this.supplierInputLookupObj.jsonSelect = {VendorName: this.objEdit.SupplName};
+      this.supplierInputLookupObj.jsonSelect = { VendorName: this.objEdit.SupplName };
     } else {
       this.loanObjectInputLookupObj.jsonSelect = { Descr: "" };
       this.supplierInputLookupObj.jsonSelect = { VendorName: "" };
@@ -216,11 +222,11 @@ export class LoanObjectComponent implements OnInit {
     this.AppLoanPurposeObj.MrLoanPurposeCode = event.MasterCode;
   }
 
-  SaveForm(enjiForm:NgForm) {
+  SaveForm(enjiForm: NgForm) {
     this.AppLoanPurposeObj.AppId = this.AppId;
-    if(this.MainInfoForm.controls.IsDisburseToCust.value == true){
+    if (this.MainInfoForm.controls.IsDisburseToCust.value == true) {
       this.AppLoanPurposeObj.IsDisburseToCust = true;
-    }else{
+    } else {
       this.AppLoanPurposeObj.IsDisburseToCust = false;
     }
     this.AppLoanPurposeObj.BudgetPlanAmt = this.MainInfoForm.controls.BudgetPlanAmount.value;
@@ -270,7 +276,7 @@ export class LoanObjectComponent implements OnInit {
         });
     }
   }
-  
+
   loadDataTable() {
     var obj = {
       AppId: this.AppId
@@ -285,11 +291,11 @@ export class LoanObjectComponent implements OnInit {
     );
   }
 
-  CheckIsDisburseToCust(){
-    if(this.MainInfoForm.controls.IsDisburseToCust.value == true){
+  CheckIsDisburseToCust() {
+    if (this.MainInfoForm.controls.IsDisburseToCust.value == true) {
       this.supplierInputLookupObj.isRequired = false;
       this.MainInfoForm.controls.lookupValueSupplier.clearValidators()
-    }else{
+    } else {
       this.supplierInputLookupObj.isRequired = true;
       this.MainInfoForm.controls.lookupValueSupplier.setValidators(Validators.required)
     }

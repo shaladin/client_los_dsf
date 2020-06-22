@@ -11,6 +11,7 @@ import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalcul
 import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
 import { CalcStepUpStepDownObj } from 'app/shared/model/AppFinData/CalcStepUpStepDownObj.Model';
 import { AppInstStepSchmObj } from 'app/shared/model/AppInstStepSchm/AppInstStepSchmObj.Model';
+import { AppObj } from 'app/shared/model/App/App.Model';
 
 @Component({
   selector: 'app-schm-step-up-step-down-leasing-FL4W',
@@ -28,6 +29,8 @@ export class SchmStepUpStepDownLeasingFL4WComponent implements OnInit {
   listInstallment: any;
   listAppInstStepSchm: Array<AppInstStepSchmObj> = new Array<AppInstStepSchmObj>();
   responseCalc: any;
+  result: AppObj = new AppObj();
+  PriceLabel: string = "Asset Price";
 
   constructor(
     private fb: FormBuilder,
@@ -39,6 +42,17 @@ export class SchmStepUpStepDownLeasingFL4WComponent implements OnInit {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
     this.LoadDDLStepUpStepDownInputType();
+    this.http.post<AppObj>(AdInsConstant.GetAppById, { AppId: this.AppId}).subscribe(
+      (response) => {
+        this.result = response;
+        if(this.result.BizTemplateCode == "CFRFN4W"){
+          this.PriceLabel = "Financing Amount";
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   LoadDDLRateType() {
@@ -155,6 +169,9 @@ export class SchmStepUpStepDownLeasingFL4WComponent implements OnInit {
 
 
   CalculateAmortization() {
+    if(this.ValidateFee() == false){
+      return;
+    }    
     if(this.ParentForm.controls.StepUpStepDownInputType.value == ""){
       this.toastr.errorMessage("Please choose Step Up Step Down Input Type.");
       return;
@@ -185,6 +202,10 @@ export class SchmStepUpStepDownLeasingFL4WComponent implements OnInit {
           TotalAR: response.TotalARAmt,
 
           NtfAmt: response.NtfAmt,
+          ApvAmt: response.ApvAmt,
+
+          TotalLifeInsCustAmt: response.TotalLifeInsCustAmt,
+          LifeInsCptlzAmt: response.LifeInsCptlzAmt
 
         })
         this.SetInstallmentTable();
@@ -261,6 +282,18 @@ export class SchmStepUpStepDownLeasingFL4WComponent implements OnInit {
     }
 
     this.SetNeedReCalculate(true);
+  }
+
+  
+  ValidateFee(){
+    for(let i = 0; i < this.ParentForm.controls["AppFee"]["controls"].length; i++){
+      if(this.ParentForm.controls["AppFee"].value[i].IsCptlz == true
+          && this.ParentForm.controls["AppFee"].value[i].AppFeeAmt < this.ParentForm.controls["AppFee"].value[i].FeeCapitalizeAmt){
+        this.toastr.errorMessage(this.ParentForm.controls["AppFee"].value[i].FeeTypeName + " Capitalized Amount can't be higher than " +  this.ParentForm.controls["AppFee"].value[i].AppFeeAmt);
+        return false;
+      }
+    }
+    return true;
   }
 
   test() {
