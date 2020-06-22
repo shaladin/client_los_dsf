@@ -25,10 +25,10 @@ import { AppGuarantorCompanyLegalDocObj } from 'app/shared/model/AppGuarantorCom
 })
 
 export class GuarantorCompanyFL4WComponent implements OnInit {
-
-  @Input() AppGuarantorId: any;
-  @Input() mode: any;
   @Input() AppId: any;
+  @Input() AppGuarantorId: any;
+  @Input() showCancel: boolean = true;
+  @Input() mode: any;
   @Output() close: EventEmitter<any> = new EventEmitter();
   param: any;
   key: any;
@@ -80,8 +80,6 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
     console.log("company");
     this.initLookup();
     this.initAddr();
-
-
 
     if (this.mode == "edit") {
       var guarantorCompanyObj = new GuarantorCompanyObj();

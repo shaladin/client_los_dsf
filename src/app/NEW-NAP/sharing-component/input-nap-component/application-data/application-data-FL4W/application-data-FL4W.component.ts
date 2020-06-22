@@ -19,6 +19,7 @@ import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 export class ApplicationDataFL4WComponent implements OnInit {
 
   @Input() AppId: any;
+  @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   mode : any;
