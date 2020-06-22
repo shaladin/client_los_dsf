@@ -151,7 +151,8 @@ export class MouReviewGeneralComponent implements OnInit {
 
     var submitMouReviewObj = {
       WfTaskListId: this.WfTaskListId,
-      MouCust: this.mouCustObj, Rfa: this.rfaInfoObj
+      MouCust: this.mouCustObj, Rfa: this.rfaInfoObj,
+      PlafondAmt: this.PlafondAmt
     }
     this.http.post(AdInsConstant.SubmitMouReview, submitMouReviewObj).subscribe(
       (response) => {

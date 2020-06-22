@@ -7,6 +7,7 @@ import { FormBuilder } from '@angular/forms';
 import { MouCustListedCustFctrObj } from 'app/shared/model/MouCustListedCustFctrObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { MouCustListedCustFctrDetailComponent } from './mou-cust-listed-cust-fctr-detail/mou-cust-listed-cust-fctr-detail.component';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-mou-cust-listed-cust-fctr',
@@ -70,6 +71,20 @@ export class MouCustListedCustFctrComponent implements OnInit {
         console.log(error);
       }
     });
+  }
+  
+  openView(custNo) {
+    var link: string;
+    var custObj = { CustNo: custNo };
+    this.httpClient.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+      response => {
+        link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
+        window.open(link, '_blank');
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   deleteCustFctr(custFctrId, idx){

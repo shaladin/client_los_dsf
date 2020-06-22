@@ -26,6 +26,7 @@ export class FinancialDataFctrComponent implements OnInit {
   responseCalc: any;
   NumOfInst: number;
   IsParentLoaded: boolean = false;
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private fb: FormBuilder,
@@ -116,6 +117,10 @@ export class FinancialDataFctrComponent implements OnInit {
       }
     );
     this.LoadAppFinData();
+  }
+
+  Cancel(){
+    this.outputCancel.emit();
   }
 
   LoadAppFinData() {

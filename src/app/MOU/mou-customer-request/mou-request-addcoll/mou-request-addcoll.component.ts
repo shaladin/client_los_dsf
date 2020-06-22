@@ -13,8 +13,9 @@ import { MouCustCollateralObj } from 'app/shared/model/MouCustCollateralObj.Mode
 import { MouCustCollateralRegistrationObj } from 'app/shared/model/MouCustCollateralRegistrationObj.Model';
 import { UcgridfooterComponent } from '@adins/ucgridfooter';
 import { UCSearchComponent } from '@adins/ucsearch';
-import { InputSearchObj } from 'app/shared/model/InputSearchObj.Model';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
+import { UcTempPagingObj } from 'app/shared/model/TempPaging/UcTempPagingObj.model';
+import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 
 @Component({
   selector: 'app-mou-request-addcoll',
@@ -29,29 +30,13 @@ export class MouRequestAddcollComponent implements OnInit {
   @ViewChild(UCSearchComponent) UCSearchComponent;
   @ViewChild('LookupCollateral') ucLookupCollateral: UclookupgenericComponent;
 
-  resultData: any;
-  inputObj: InputSearchObj;
-  arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
-  checkboxAll: boolean = false;
   listSelectedId: Array<number> = new Array<number>();
-  tempListId: Array<number> = new Array<number>();
-  orderByKey: string;
-  orderByValue: boolean;
-  pageNow: number;
-  pageSize: number;
-  apiUrl: string;
-  totalData: number;
-  tempData: any;
-  arrAddCrit: Array<CriteriaObj>;
-  viewObj: string;
-  Data = [];
-  listAssetAndSerialNo: any;
+  tempPagingObj: UcTempPagingObj = new UcTempPagingObj();
 
   mouCustCollateralObj: MouCustCollateralObj;
   mouCustCollateralRegistrationObj: MouCustCollateralRegistrationObj;
   OwnerRelationshipObj: any;
 
-  closeResult: string;
   listCollateralData: any;
   inputLookupObj: InputLookupObj;
   criteriaList: Array<CriteriaObj>;
@@ -82,6 +67,7 @@ export class MouRequestAddcollComponent implements OnInit {
   items: FormArray;
   isUsed: boolean;
   custNo: string;
+  mouCustObj: MouCustObj = new MouCustObj();
 
   AddCollDataForm = this.fb.group({
   })
@@ -99,11 +85,6 @@ export class MouRequestAddcollComponent implements OnInit {
     OwnerIdNo: ['', [Validators.required]],
     MrIdType: ['', [Validators.required]],
     Notes: [''],
-    // SerialNo1: ['', [Validators.required]],
-    // SerialNo2: ['', [Validators.required]],
-    // SerialNo3: ['', [Validators.required]],
-    // SerialNo4: ['', [Validators.required]],
-    // SerialNo5: [''], 
     SerialNo1: [''],
     SerialNo2: [''],
     SerialNo3: [''],
@@ -120,12 +101,35 @@ export class MouRequestAddcollComponent implements OnInit {
   ngOnInit() {
     this.items = this.AddCollForm.get('items') as FormArray;
     this.bindUcLookup()
-    this.bindUcSearch();
     this.initAddrObj();
     this.bindMouData();
+    this.bindUcAddToTempData();
+    this.tempPagingObj.isReady = true;
+  }
+
+  bindUcAddToTempData() {
+    this.tempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/MouExistingCollateralTempPaging.json";
+    this.tempPagingObj.enviromentUrl = environment.FoundationR3Url;
+    this.tempPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.tempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/MouExistingCollateralTempPaging.json";
+
+    const addCritCustNo = new CriteriaObj();
+    addCritCustNo.DataType = 'text';
+    addCritCustNo.propName = 'CU.CUST_NO';
+    addCritCustNo.restriction = AdInsConstant.RestrictionEq;
+    addCritCustNo.value = this.custNo;
+    this.tempPagingObj.addCritInput.push(addCritCustNo);
   }
 
   bindMouData() {
+    this.mouCustObj = new MouCustObj();
+    this.mouCustObj.MouCustId = this.MouCustId;
+    this.http.post(AdInsConstant.GetMouCustById, this.mouCustObj).subscribe(
+      (response: MouCustObj) => {
+        var returnMouCust = response;
+        this.custNo = returnMouCust["CustNo"];
+      });
+
     var refMasterObj = { RefMasterTypeCode: "CUST_PERSONAL_RELATIONSHIP" };
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
@@ -189,25 +193,6 @@ export class MouRequestAddcollComponent implements OnInit {
     this.inputLookupObj.genericJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
   }
 
-  bindUcSearch() {
-    this.arrCrit = new Array();
-
-    this.listSelectedId = new Array();
-    this.tempListId = new Array();
-    this.tempData = new Array();
-    this.arrCrit = new Array();
-
-    this.inputObj = new InputSearchObj();
-    this.inputObj._url = "./assets/ucpaging/mou/searchMouCustCollateral.json";
-    this.inputObj.enviromentUrl = environment.FoundationR3Url;
-    this.inputObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
-
-    this.pageNow = 1;
-    this.pageSize = 10;
-    this.apiUrl = environment.FoundationR3Url + AdInsConstant.GetPagingObjectBySQL;
-    this.inputObj.addCritInput = new Array();
-  }
-
   updateUcLookup(value, firstBind) {
     this.criteriaList = new Array();
     this.criteriaObj = new CriteriaObj();
@@ -234,154 +219,8 @@ export class MouRequestAddcollComponent implements OnInit {
     if (!firstBind) this.ucLookupCollateral.setAddCritInput();
   }
 
-  searchSort(event: any) {
-    if (this.resultData != null) {
-      if (this.orderByKey == event.target.attributes.name.nodeValue) {
-        this.orderByValue = !this.orderByValue
-      } else {
-        this.orderByValue = true
-      }
-      this.orderByKey = event.target.attributes.name.nodeValue
-      let order = {
-        key: this.orderByKey,
-        value: this.orderByValue
-      }
-      this.UCSearchComponent.search(this.apiUrl, this.pageNow, this.pageSize, order)
-    }
-  }
-
-  Checked(CollateralId: number, isChecked: boolean): void {
-    console.log(CollateralId);
-    if (isChecked) {
-      this.listSelectedId.push(CollateralId);
-    } else {
-      const index = this.listSelectedId.indexOf(CollateralId)
-      console.log(index);
-      if (index > -1) { this.listSelectedId.splice(index, 1); }
-    }
-    console.log('Sel', this.listSelectedId);
-  }
-
-  searchPagination(event: number) {
-    this.pageNow = event;
-    let order = null;
-    if (this.orderByKey != null) {
-      order = {
-        key: this.orderByKey,
-        value: this.orderByValue
-      }
-    }
-    this.UCSearchComponent.search(this.apiUrl, this.pageNow, this.pageSize, order)
-  }
-
-  getResult(event) {
-    console.log(event);
-    this.resultData = event.response;
-    this.totalData = event.response.Count;
-    this.UCGridFooter.pageNow = event.pageNow;
-    this.UCGridFooter.totalData = this.totalData;
-    this.UCGridFooter.resultData = this.resultData;
-  }
-
-  onSelect(event) {
-    this.pageNow = event.pageNow;
-    this.pageSize = event.pageSize;
-    this.totalData = event.Count;
-    this.searchPagination(this.pageNow);
-  }
-
-  SelectAll(condition) {
-    this.checkboxAll = condition;
-    console.log(condition);
-    if (condition) {
-      for (let i = 0; i < this.resultData.Data.length; i++) {
-        if (this.listSelectedId.indexOf(this.resultData.Data[i].CollateralId) < 0) {
-          this.listSelectedId.push(this.resultData.Data[i].CollateralId);
-        }
-      }
-
-    } else {
-      for (let i = 0; i < this.resultData.Data.length; i++) {
-        let index = this.listSelectedId.indexOf(this.resultData.Data[i].CollateralId);
-        if (index > -1) {
-          this.listSelectedId.splice(index, 1);
-        }
-        console.log(this.resultData.Data[i]);
-      }
-    }
-    console.log(this.checkboxAll);
-    console.log(this.listSelectedId);
-  }
-
-  addToTemp() {
-    if (this.listSelectedId.length != 0) {
-      for (var i = 0; i < this.listSelectedId.length; i++) {
-        this.tempListId.push(this.listSelectedId[i]);
-        var object = this.resultData.Data.find(x => x.CollateralId == this.listSelectedId[i]);
-        this.tempData.push(object);
-      }
-
-      this.arrAddCrit = new Array();
-      if (this.arrCrit.length != 0) {
-        for (var i = 0; i < this.arrCrit.length; i++) {
-          this.arrAddCrit.push(this.arrCrit[i]);
-        }
-      }
-      var addCrit = new CriteriaObj();
-      addCrit.DataType = "numeric";
-      addCrit.propName = "CL.COLLATERAL_ID";
-      addCrit.restriction = AdInsConstant.RestrictionNotIn;
-      addCrit.listValue = this.tempListId;
-      this.arrAddCrit.push(addCrit);
-
-      var order = null;
-      if (this.orderByKey != null) {
-        order = {
-          key: this.orderByKey,
-          value: this.orderByValue
-        };
-      }
-      this.inputObj.addCritInput = this.arrAddCrit;
-      this.UCSearchComponent.search(this.apiUrl, this.pageNow, this.pageSize, order, this.arrAddCrit);
-      this.listSelectedId = [];
-      this.checkboxAll = false;
-    } else {
-      this.toastr.typeErrorCustom("Please select at least one Collateral");
-    }
-  }
-
-  deleteFromTemp(CollateralId: any) {
-    if (confirm('Are you sure to delete this record?')) {
-      this.arrAddCrit = new Array();
-      if (this.arrCrit.length != 0) {
-        for (var i = 0; i < this.arrCrit.length; i++) {
-          this.arrAddCrit.push(this.arrCrit[i]);
-        }
-      }
-
-      var index = this.tempListId.indexOf(CollateralId);
-      if (index > -1) {
-        this.tempListId.splice(index, 1);
-        this.tempData.splice(index, 1);
-      }
-      var addCrit = new CriteriaObj();
-      addCrit.DataType = "numeric";
-      addCrit.propName = "CL.COLLATERAL_ID";
-      addCrit.restriction = AdInsConstant.RestrictionNotIn;
-      addCrit.listValue = this.tempListId;
-      if (this.tempListId.length != 0) {
-        this.arrAddCrit.push(addCrit);
-      }
-      var order = null;
-      if (this.orderByKey != null) {
-        order = {
-          key: this.orderByKey,
-          value: this.orderByValue
-        };
-      }
-      this.inputObj.addCritInput = this.arrAddCrit;
-      this.UCSearchComponent.search(this.apiUrl, this.pageNow, this.pageSize, order, this.arrAddCrit);
-    }
+  getListTemp(ev) {
+    this.listSelectedId = ev.TempListId;
   }
 
   open(pageType) {
@@ -394,17 +233,25 @@ export class MouRequestAddcollComponent implements OnInit {
           listCollateralNo.push(this.listCollateralData[index].CollateralNo);
       }
 
-      var collObj = { ListCollateralNo: listCollateralNo}
-      this.http.post(AdInsConstant.GetListCollateralByListCollateralNo, collObj).subscribe(
-        (response: any) => {
-          var collateralObj = response['ReturnObject'];
-          for (var i = 0; i < collateralObj.length; i++) {
-            this.listSelectedId.push(collateralObj[i].CollateralId);
-          }
-          if (this.listSelectedId.length > 0)
-            this.addToTemp();
-        })
+      // if (listCollateralNo.length > 0)
+      //   this.BindExistingCollateralSavedData(listCollateralNo);
     }
+  }
+
+  BindExistingCollateralSavedData(listNo: any) {
+    const addCritCustNo = new CriteriaObj();
+    addCritCustNo.DataType = 'text';
+    addCritCustNo.propName = 'CL.CUST_NO';
+    addCritCustNo.restriction = AdInsConstant.RestrictionEq;
+    addCritCustNo.value = this.custNo;
+    this.tempPagingObj.addCritInput.push(addCritCustNo);
+
+    const addCritCollateralNo = new CriteriaObj();
+    addCritCollateralNo.DataType = 'text';
+    addCritCollateralNo.propName = 'CL.COLLATERAL_NO';
+    addCritCollateralNo.restriction = AdInsConstant.RestrictionNeq;
+    addCritCollateralNo.listValue = listNo;
+    this.tempPagingObj.addCritInput.push(addCritCollateralNo);
   }
 
   initAddrObj() {
@@ -485,6 +332,7 @@ export class MouRequestAddcollComponent implements OnInit {
       this.http.post(AdInsConstant.AddMouCustCollateralData, custCollObj).subscribe(
         (response) => {
           console.log(response);
+          this.AddCollForm.reset();
           this.toastr.successMessage(response["message"]);
           this.type = 'Paging';
           this.bindMouData();
@@ -617,7 +465,7 @@ export class MouRequestAddcollComponent implements OnInit {
             for (var i = 0; i < this.SerialNoList["length"]; i++) {
               var eachDataDetail = this.fb.group({
                 SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
-                SerialNoValue: [''],
+                SerialNoValue: ['', Validators.required],
                 IsMandatory: [this.SerialNoList[i].IsMandatory]
               }) as FormGroup;
               this.items.push(eachDataDetail);
@@ -625,6 +473,12 @@ export class MouRequestAddcollComponent implements OnInit {
                 this.items.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required]);
                 this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
               }
+              else
+              {
+                this.items.controls[i]['controls']['SerialNoValue'].clearValidators();
+                this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
+              }
+
               if (this.items.controls[0] != null) {
                 this.items['controls'][0].patchValue({
                   SerialNoValue: this.collateralObj.SerialNo1,
@@ -722,18 +576,11 @@ export class MouRequestAddcollComponent implements OnInit {
     this.mouCustCollateralObj.MouCustId = this.MouCustId;
     this.mouCustCollateralObj.ListCollateralId = new Array();
 
-    for (let index = 0; index < this.tempData.length; index++) {
-      console.log(this.tempData);
-      var mouColtr = {
-        CollateralId: this.tempData[index].CollateralId
-      }
-      this.mouCustCollateralObj.ListCollateralId.push(mouColtr.CollateralId);
-    }
-
-    if (this.mouCustCollateralObj.ListCollateralId.length == 0) {
-      this.toastr.typeErrorCustom('Please Add At Least One Data');
+    if (this.listSelectedId.length == 0) {
+      this.toastr.errorMessage('Please add at least one data');
       return;
     }
+    this.mouCustCollateralObj.ListCollateralId = this.listSelectedId;
 
     this.http.post(AdInsConstant.AddExistingCustCollateralData, this.mouCustCollateralObj).subscribe(
       response => {
@@ -749,10 +596,8 @@ export class MouRequestAddcollComponent implements OnInit {
   }
 
   clearList() {
-    this.resultData = [];
-    this.tempData = [];
-    this.tempListId = [];
-    this.inputObj.addCritInput = new Array();
+    this.listSelectedId = [];
+    this.tempPagingObj.addCritInput = new Array<CriteriaObj>();
   }
 
   delete(MouCustCollId) {

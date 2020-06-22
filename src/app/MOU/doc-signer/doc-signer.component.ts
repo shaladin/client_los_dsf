@@ -6,6 +6,7 @@ import { UcpagingComponent } from '@adins/ucpaging';
 import { environment } from 'environments/environment';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-doc-signer',
@@ -17,7 +18,7 @@ export class DocSignerComponent implements OnInit {
   arrCrit: Array<CriteriaObj>;
   user:any;
   
-  constructor(private router: Router) { }
+  constructor(private router: Router,  private http: HttpClient) { }
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem("UserAccess"));
@@ -57,6 +58,22 @@ export class DocSignerComponent implements OnInit {
       this.arrCrit.push(addCritOfficeCode);
   
       this.inputPagingObj.addCritInput = this.arrCrit;
+    }
+  }
+
+  getEvent(event){
+    if(event.Key == "customer"){
+        var link : string;
+        var custObj = { CustNo: event.RowObj.CustNo };
+        this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+          response => {
+            link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
+            window.open(link, '_blank');
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
     }
   }
 }
