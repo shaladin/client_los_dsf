@@ -19,7 +19,6 @@ import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandli
 })
 export class ReservedFundComponent implements OnInit {
 
-  getAppFinDataUrl: any;
   getAppFeeUrl: any;
   getAppRsvFundUrl: any;
   getAppRsvFundRuleUrl: any;
@@ -44,10 +43,12 @@ export class ReservedFundComponent implements OnInit {
   calcGrossYieldObj: any;
   maxAllocatedAmt: any;
   remainingAllocatedAmt: any;
-  totalRsvFundAmt: any;
+  totalRsvFundAmt: number = 0;
   totalRsvFundAmtWhenSave: any;
   grossYield: any;
   show: boolean = false;
+  maxAllocatedRefundAmt: number = 0;
+  totalExpenseAmt: number = 0;
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.route.queryParams.subscribe(params => {
@@ -58,7 +59,6 @@ export class ReservedFundComponent implements OnInit {
   }
 
   initUrl() {
-    this.getAppFinDataUrl = AdInsConstant.GetAppFinDataByAppId;
     this.getAppFeeUrl = AdInsConstant.GetListAppFeeByAppId;
     this.getAppRsvFundUrl = AdInsConstant.GetListAppReservedFundByAppId;
     this.addEditRsvFundUrl = AdInsConstant.AddEditAppReservedFund;
@@ -117,6 +117,7 @@ export class ReservedFundComponent implements OnInit {
     this.allAppReservedFundObj.ReturnHandlingHId = this.ReturnHandlingHObj.ReturnHandlingHId;
     this.allAppReservedFundObj.WfTaskIdListId = this.ReturnHandlingHObj.WfTaskListId;
     this.allAppReservedFundObj.GrossYield = this.grossYield;
+    this.allAppReservedFundObj.TotalReservedFundAmt = this.totalRsvFundAmt;
     this.allAppReservedFundObj.RequestAppReservedFundObjs = new Array<AppReservedFundObj>();
     for (let i = 0; i < this.RsvForm.controls["ReservedFundObjs"].value.length; i++) {
       var appReservedFundObj = new AppReservedFundObj();
@@ -131,15 +132,22 @@ export class ReservedFundComponent implements OnInit {
   }
 
   GetAppFinData(appObj) {
-    this.http.post(this.getAppFinDataUrl, appObj).subscribe(
+    this.http.post(AdInsConstant.GetIncomeInfoRsvFund, appObj).subscribe(
       (response) => {
         console.log(response);
         this.uppingRate = response["DiffRateAmt"];
         this.insuranceIncome = response["TotalInsCustAmt"] - response["TotalInsInscoAmt"];
         this.lifeInsuranceIncome = response["TotalLifeInsCustAmt"] - response["TotalLifeInsInscoAmt"];
-        this.remainingAllocatedAmt = response["MaxAllocatedRefundAmt"] - response["CommissionAllocatedAmt"] - response["ReservedFundAllocatedAmt"];
+        this.maxAllocatedRefundAmt = response["MaxAllocatedRefundAmt"];
+        this.totalExpenseAmt = response["TotalExpenseAmt"];
+        this.totalRsvFundAmt = response["ReservedFundAllocatedAmt"];
+        this.calculatedRemainingAmt();
       }
     );
+  }
+
+  calculatedRemainingAmt() {
+    this.remainingAllocatedAmt = this.maxAllocatedRefundAmt - this.totalExpenseAmt + this.totalRsvFundAmt;
   }
 
   GetAppFee(appObj) {
@@ -214,6 +222,9 @@ export class ReservedFundComponent implements OnInit {
 
   calculated() {
     this.totalRsvFundAmt = 0;
+    var appObj = {
+      AppId: this.ReturnHandlingHObj.AppId,
+    };
     for (let i = 0; i < this.RsvForm.controls["ReservedFundObjs"].value.length; i++) {
       var temp: number = +this.RsvForm.controls["ReservedFundObjs"].value[i].ReservedFundAmt;
       //temp = this.RsvForm.controls["ReservedFundAmt" + i].value.replace(/\D/g, "");
@@ -224,6 +235,7 @@ export class ReservedFundComponent implements OnInit {
       TotalReserveFundAmt: this.totalRsvFundAmt
     };
 
+    this.calculatedRemainingAmt();
     this.http.post(AdInsConstant.CalculateGrossYieldRsvFund, grossyieldObj).subscribe(
       (response) => {
         this.calcGrossYieldObj = response;
