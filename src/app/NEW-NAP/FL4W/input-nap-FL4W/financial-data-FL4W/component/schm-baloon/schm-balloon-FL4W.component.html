@@ -176,13 +176,13 @@
               <lib-uc-show-errors [control]="ParentForm.controls.EffectiveRatePrcnt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
-            <!-- <div class="col-md-3 form-inline">
+            <div class="col-md-3 form-inline">
               <label>Standard Rate</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.StdEffectiveRatePrcnt.value | number : '1.2-2'}}</label>
-            </div> -->
-            <div class="col-md-3 form-inline">
+            </div>
+            <!-- <div class="col-md-3 form-inline">
               <label>Effective Rate To Supplier</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
@@ -192,7 +192,7 @@
                 currencyMask>
               <lib-uc-show-errors [control]="ParentForm.controls.SupplEffectiveRatePrcnt"
                 [submit]="enjiForm.submitted"></lib-uc-show-errors>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -213,13 +213,13 @@
               <lib-uc-show-errors [control]="ParentForm.controls.FlatRatePrcnt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
-            <!-- <div class="col-md-3 form-inline">
+            <div class="col-md-3 form-inline">
               <label>Diff Rate Amount</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.DiffRateAmt.value | number : '1.2-2'}}</label>
-            </div> -->
-            <div class="col-md-3 form-inline">
+            </div>
+            <!-- <div class="col-md-3 form-inline">
               <label>Flat Rate To Supplier</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
@@ -229,7 +229,7 @@
                 currencyMask>
               <lib-uc-show-errors [control]="ParentForm.controls.SupplFlatRatePrcnt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -249,6 +249,17 @@
               </lib-uc-show-errors>
             </div>
             <div class="col-md-3 form-inline">
+              <label>Residual Value Amount</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <input type="" class="form-control full-width" formControlName="ResidualValueAmt"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.ResidualValueAmt.invalid}" 
+                (keyup)="SetNeedReCalculate(true)"
+                currencyMask>
+              <lib-uc-show-errors [control]="ParentForm.controls.ResidualValueAmt" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
+            </div>
+            <!-- <div class="col-md-3 form-inline">
               <label>Diff Rate Amount (Commission Amount)</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
@@ -258,7 +269,7 @@
                 currencyMask>
               <lib-uc-show-errors [control]="ParentForm.controls.DiffRateAmt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -286,17 +297,6 @@
               </lib-uc-show-errors>
             </div>
             <div class="col-md-3 form-inline">
-              <label>Residual Value Amount</label>
-            </div>
-            <div class="col-md-3 form-inline form-inline-right">
-              <input type="" class="form-control full-width" formControlName="ResidualValueAmt"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.ResidualValueAmt.invalid}" 
-                (keyup)="SetNeedReCalculate(true)"
-                currencyMask>
-              <lib-uc-show-errors [control]="ParentForm.controls.ResidualValueAmt" [submit]="enjiForm.submitted">
-              </lib-uc-show-errors>
-            </div>
-            <div class="col-md-3 form-inline">
               <label class="adins-required-label">Balloon Amount</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
@@ -310,7 +310,7 @@
           </div>
         </div>
       </div>
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 offset-md-6 form-inline">
@@ -326,7 +326,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
       <br />
       <div class="row">
         <div class="col-md-12">
