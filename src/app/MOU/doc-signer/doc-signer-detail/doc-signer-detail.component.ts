@@ -76,7 +76,9 @@ export class DocSignerDetailComponent implements OnInit {
   custCompanyId: string;
   custCompanyCrit: CriteriaObj;
   custNo: any;
-
+  viewObj : string;
+  link : any; 
+  resultData : any;
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.getMouCustById = AdInsConstant.GetMouCustById;
     this.addMouCustSigner = AdInsConstant.AddMouCustSigner;
@@ -153,7 +155,8 @@ export class DocSignerDetailComponent implements OnInit {
       (response) => {
       });
   }
-  ngOnInit() {
+  ngOnInit() { 
+    this.viewObj = "./assets/ucviewgeneric/viewMouHeader.json";
     console.log('docsigner')    
     if (this.WfTaskListId > 0) {
       this.claimTask();
@@ -273,5 +276,20 @@ export class DocSignerDetailComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+  GetCallBack(event)
+  {  
+    if(event.Key == "customer"){
+      var custObj = { CustNo: this.returnMouCust['CustNo'] };
+      this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+        response => {
+          this.link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
+          window.open(this.link, '_blank');
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    } 
   }
 }
