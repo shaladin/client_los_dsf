@@ -4,6 +4,7 @@ import { AgreementViewContainerComponent } from './agreement-view-container/agre
 import { ApplicationViewComponent } from './application-view/application-view.component';
 import { InvoiceViewComponent } from '../business-process/admin-process/invoice/invoice-view/invoice-view.component';
 import { ViewCollateralDataComponent } from '../sharing-component/view-app-component/view-collateral-data/view-collateral-data.component';
+import { PurchaseOrderViewComponent } from './purchase-order-view/purchase-order-view.component';
 const routes: Routes = [
   {
     path: '',
@@ -27,6 +28,13 @@ const routes: Routes = [
         component: AgreementViewContainerComponent,
         data: {
           title: 'Agreement View'
+        }
+      },
+      {
+        path: 'POView',
+        component: PurchaseOrderViewComponent,
+        data: {
+          title: 'Purchase Order View'
         }
       }
     ]

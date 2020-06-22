@@ -43,7 +43,7 @@
         }
     ],
     "querystring": {
-        "select": "SELECT A.APP_NO AS AppNo, A.PROD_OFFERING_NAME AS ProdOfferingName, AC.CUST_NAME As CustName, POH.PURCHASE_ORDER_NO AS PurchaseOrderNo, AG.AGRMNT_NO AS AgrmntNo, POH.PURCHASE_ORDER_DT AS PurchaseOrderDt, POH.PURCHASE_ORDER_EXPIRED_DT AS PurchaseOrderExpiredDt, AA.SUPPL_NAME AS SupplName, DATEDIFF(DAY,POH.PURCHASE_ORDER_DT,POH.PURCHASE_ORDER_EXPIRED_DT) AS RemainingDays, A.APP_ID AS AppId, AG.AGRMNT_ID, POH.PURCHASE_ORDER_H_ID AS PurchaseOrderHId, POH.NUM_OF_EXTENSION AS NumOfExtension, AG.AGRMNT_ID AS AgrmntId, AG.PROD_OFFERING_CODE AS ProdOfferingCode, AA.SUPPL_CODE AS SupplCode",
+        "select": "SELECT A.APP_NO AS AppNo, A.PROD_OFFERING_NAME AS ProdOfferingName, AC.CUST_NAME As CustName, POH.PURCHASE_ORDER_NO AS PurchaseOrderNo, AG.AGRMNT_NO AS AgrmntNo, POH.PURCHASE_ORDER_DT AS PurchaseOrderDt, POH.PURCHASE_ORDER_EXPIRED_DT AS PurchaseOrderExpiredDt, AA.SUPPL_NAME AS SupplName, DATEDIFF(DAY,POH.PURCHASE_ORDER_DT,POH.PURCHASE_ORDER_EXPIRED_DT) AS RemainingDays, A.APP_ID AS AppId, AG.AGRMNT_ID, POH.PURCHASE_ORDER_H_ID AS PurchaseOrderHId, POH.NUM_OF_EXTENSION AS NumOfExtension, AG.AGRMNT_ID AS AgrmntId, AG.PROD_OFFERING_CODE AS ProdOfferingCode, AA.SUPPL_CODE AS SupplCode, A.BIZ_TEMPLATE_CODE as BizTemplateCode",
         "from": "FROM dbo.APP A WITH(NOLOCK) JOIN dbo.APP_CUST AC WITH(NOLOCK) ON A.APP_ID = AC.APP_ID JOIN dbo.AGRMNT AG WITH(NOLOCK) ON A.APP_ID = AG.APP_ID JOIN dbo.APP_ASSET AA ON AA.AGRMNT_ID = AG.AGRMNT_ID JOIN dbo.PURCHASE_ORDER_H POH WITH(NOLOCK) ON AG.AGRMNT_ID = POH.AGRMNT_ID"
     },
     "headerList": [
@@ -109,9 +109,21 @@
     ],
     "bodyList": [
         {
-            "type" : "text",
+            "type": "link",
             "position": "center",
-            "property": "PurchaseOrderNo"
+            "property": "PurchaseOrderNo",
+            "target": "_blank",
+            "path" : "/Nap/View/POView", 
+            "param" : [ 
+                {
+                    "type" : "PurchaseOrderHId", 
+                    "property" : "PurchaseOrderHId" 
+                },
+                {
+                    "type" : "AgrmntId", 
+                    "property" : "AgrmntId" 
+                }
+            ]
         },
         {
             "type": "link",
@@ -127,17 +139,10 @@
             ]
         },
         {
-            "type" : "link",
+            "type" : "callback",
             "position": "center",
             "property": "AgrmntNo",
-            "target": "_blank",
-            "path" : "/Nap/View/AgrmntView", 
-            "param" : [ 
-                {
-                    "type" : "AgrmntId", 
-                    "property" : "AgrmntId" 
-                }
-            ]
+            "key": "agrmnt"
         },
         {
             "type" : "text",
