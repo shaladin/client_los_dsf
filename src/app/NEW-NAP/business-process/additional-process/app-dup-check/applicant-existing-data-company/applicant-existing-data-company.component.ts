@@ -204,4 +204,8 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
     var BizTemplateCode = localStorage.getItem("BizTemplateCode")
     this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
   }
+
+  OpenAppView(appId){
+    window.open( "/Nap/View/AppView?AppId=" + appId, "_blank");
+  }
 }

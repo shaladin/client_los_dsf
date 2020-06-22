@@ -7,6 +7,7 @@ export class AllAppReservedFundObj {
   WfTaskIdListId : number;
   IsPersonal: boolean;
   GrossYield: any;
+  TotalReservedFundAmt: any;
 
   constructor() {
     this.AppId = 0;
