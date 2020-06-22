@@ -37,6 +37,7 @@ export class DocSignerDetailComponent implements OnInit {
   MrCustTypeCode: string = "COMPANY";
   CustFullName: string;
   ContactPersonName: string;
+  token : any = localStorage.getItem("Token");
   BizTemplateCode: string;
 
   constructor(private fb: FormBuilder, private http: HttpClient,
@@ -62,34 +63,6 @@ export class DocSignerDetailComponent implements OnInit {
 
     await this.getAllData();
     this.setLookupObj();
-  }
-
-  Callback(event){
-    console.log("agreeno")
-    console.log(event)
-
-    if(event.Key == "agrmnt")
-    {
-      var bizTemplateCode = localStorage.getItem("BizTemplateCode")
-
-      if(bizTemplateCode == "CF4W" || bizTemplateCode == "CFRFN4W" || bizTemplateCode == "FACTORING"){
-        window.open( environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + event.ViewObj.AgrmntId, "_blank");
-      }
-      else if(bizTemplateCode == "FL4W"){
-        window.open( environment.losR3Web + "/Nap/FinanceLeasing/ViewAgrmnt?AgrmntId=" + event.ViewObj.AgrmntId, "_blank");
-      }
-    }
-
-    if(event.Key == "prodOff"){
-      this.http.post(AdInsConstant.GetProdOfferingHByCode, {ProdOfferingCode : event.ViewObj.ProdOfferingCode}).subscribe(
-        response => {
-          window.open(environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=" + response['ProdOfferingHId'], '_blank');
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    }
   }
 
   async getAllData() {
@@ -328,6 +301,35 @@ export class DocSignerDetailComponent implements OnInit {
           this.router.navigate(["Nap/AdminProcess/DocumentSigner/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode }});
         },
         error => {
+          console.log(error);
+        }
+      );
+    }
+  }
+  
+  GetCallBack(ev: any){
+    if(ev.Key == "ViewProdOffering"){
+      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.ViewObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.ViewObj.ProdOfferingVersion + "&Token=" + this.token; 
+      window.open( link, "_blank");
+    }
+    if(ev.Key == "agrmnt")
+    {
+      var bizTemplateCode = localStorage.getItem("BizTemplateCode")
+
+      if(bizTemplateCode == "CF4W" || bizTemplateCode == "CFRFN4W" || bizTemplateCode == "FACTORING"){
+        window.open( environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + ev.ViewObj.AgrmntId, "_blank");
+      }
+      else if(bizTemplateCode == "FL4W"){
+        window.open( environment.losR3Web + "/Nap/FinanceLeasing/ViewAgrmnt?AgrmntId=" + ev.ViewObj.AgrmntId, "_blank");
+      }
+    }
+
+    if(ev.Key == "prodOff"){
+      this.http.post(AdInsConstant.GetProdOfferingHByCode, {ProdOfferingCode : ev.ViewObj.ProdOfferingCode}).subscribe(
+        response => {
+          window.open(environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=" + response['ProdOfferingHId'], '_blank');
+        },
+        (error) => {
           console.log(error);
         }
       );
