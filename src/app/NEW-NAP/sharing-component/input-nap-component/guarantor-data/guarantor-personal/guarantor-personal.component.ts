@@ -43,6 +43,8 @@ export class GuarantorPersonalComponent implements OnInit {
   selectedNationalityCountryCode: any;
   isLocal: boolean = false;
   isReady: boolean = false;
+  tempCustNo: string;
+
   constructor(private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService, private modalService: NgbModal) {
   }
 
@@ -94,8 +96,8 @@ export class GuarantorPersonalComponent implements OnInit {
             TaxIdNo: this.resultData.appGuarantorObj.TaxIdNo,
             MrReligionCode: this.resultData.appGuarantorPersonalObj.MrReligionCode,
             MobilePhnNo: this.resultData.appGuarantorPersonalObj.MobilePhnNo,
-          })
-
+          });
+          this.tempCustNo = this.resultData.appGuarantorObj.CustNo;
           this.setAddrLegalObj();
           this.clearExpDt();
 
@@ -295,6 +297,7 @@ export class GuarantorPersonalComponent implements OnInit {
   // GuarantorName="";
   lookupGuarantor(event) {
     console.log(event);
+    this.tempCustNo = event.CustNo;
     this.inputLookupObj.isReadonly = true;
     this.http.post(AdInsConstant.GetCustByCustId, { CustId: event.CustId }).subscribe(
       (response) => {
@@ -387,6 +390,10 @@ export class GuarantorPersonalComponent implements OnInit {
   }
 
   setAppGuarantor() {
+    if (this.tempCustNo != null) {
+      this.guarantorPersonalObj.AppGuarantorObj.CustNo = this.tempCustNo;
+    }
+    
     this.guarantorPersonalObj.AppGuarantorObj.GuarantorName = this.inputLookupObj.nameSelect;
     this.guarantorPersonalObj.AppGuarantorObj.MrGuarantorTypeCode = "PERSONAL";
     this.guarantorPersonalObj.AppGuarantorObj.TaxIdNo = this.PersonalForm.controls.TaxIdNo.value;
