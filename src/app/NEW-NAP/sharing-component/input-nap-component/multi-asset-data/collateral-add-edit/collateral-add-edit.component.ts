@@ -746,8 +746,8 @@ export class CollateralAddEditComponent implements OnInit {
           (response) => {
             console.log(response);
             this.toastr.successMessage(response["message"]);
-            //this.router.navigate(["/Nap/AssetData/Paging"]);
             this.collValue.emit({mode : 'paging'});
+            this.clearList();
           },
           (error) => {
             console.log(error);
@@ -785,11 +785,20 @@ export class CollateralAddEditComponent implements OnInit {
     }
   }
 
+  getListTemp(ev) {
+    this.listSelectedId = ev.TempListId;
+  }
+
+  clearList() {
+    this.listSelectedId = [];
+    this.tempPagingObj.addCritInput = new Array<CriteriaObj>();
+  }
+
   SaveExistingCollateral()
   {
     this.appCollateralObj = new AppCollateralObj();
     this.appCollateralObj.AppId = this.AppId;
-    this.appCollateralObj.ListCollateralId =  new Array();
+    this.appCollateralObj.ListCollateralId = new Array();
 
     if (this.listSelectedId.length == 0) {
       this.toastr.errorMessage('Please add at least one data');
@@ -801,6 +810,7 @@ export class CollateralAddEditComponent implements OnInit {
       response => {
         this.toastr.successMessage(response['message']);
         this.collValue.emit({mode : 'paging'});
+        this.clearList();
       },
       error => {
         console.log(error);
@@ -810,7 +820,7 @@ export class CollateralAddEditComponent implements OnInit {
 
   SaveForm()
   {
-
+    this.clearList();
   }
 
   // delete(MouCustCollId) {
