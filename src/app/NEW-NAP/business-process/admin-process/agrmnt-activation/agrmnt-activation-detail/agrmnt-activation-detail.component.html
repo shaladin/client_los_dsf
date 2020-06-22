@@ -9,11 +9,16 @@
               <div class="col-md-6">
                 <div class="row">
                   <label class="col-md-6" translate>Overwrite Agreement No</label>
-                  <div class="col-md-6"><input type="checkbox" [(ngModel)]="isOverwrite"></div>
+                  <div class="col-md-6"><input type="checkbox" [(ngModel)]="isOverwrite" (change)="onChange(isOverwrite)" ></div>
                 </div>
                 <div class="row">
-                  <label class="col-md-6" translate>Agreement No</label>
-                  <div class="col-md-6" translate><input type="text" [(ngModel)]="AgrmntNo"></div>
+                  <label [ngClass]=" isOverwrite ? 'col-md-6 adins-required-label' : 'col-md-6'" translate>Agreement No</label>
+                  <div class="col-md-6" translate>
+                    <input type="text" [(ngModel)]="AgrmntNo">
+                    <span class="text-danger"
+                      *ngIf="AgrmntActForm.controls['AgrmntNo'].hasError('required') && (AgrmntActForm.controls['AgrmntNo'].dirty || AgrmntActForm.controls['AgrmntNo'].touched)">This
+                      field is required</span>
+                  </div>
                 </div>
               </div>
               <div class="col-md-6">

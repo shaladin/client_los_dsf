@@ -38,11 +38,21 @@ export class AgrmntActivationDetailComponent implements OnInit {
     });
 
     this.AgrmntActForm = fb.group({
-      'CreateDt': [this.CreateDt, Validators.compose([Validators.required])]
+      'CreateDt': [this.CreateDt, Validators.compose([Validators.required])],
+      'AgrmntNo' : []
     });
 
   }
-
+  onChange(isOverwrite){
+    if(isOverwrite == true){
+      this.AgrmntActForm.controls['AgrmntNo'].setValidators([Validators.required]);
+      this.AgrmntActForm.controls['AgrmntNo'].updateValueAndValidity();
+    }
+    else{
+      this.AgrmntActForm.controls['AgrmntNo'].clearValidators();
+      this.AgrmntActForm.controls['AgrmntNo'].updateValueAndValidity();
+    }
+  }
   ngOnInit() {
     this.arrValue.push(this.AppId);
     this.ClaimTask(this.WfTaskListId);
