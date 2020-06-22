@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-customer-doc-printing-detail',
@@ -13,22 +15,30 @@ export class CustomerDocPrintingDetailComponent implements OnInit {
   GetListMouCustDocPrintForViewByMouCustIdUrl: string = AdInsConstant.GetListMouCustDocPrintForViewByMouCustId;
   responseObj: Array<any> = new Array<any>();
   EditMouCustDocPrintSequenceNoUrl: string =  AdInsConstant.EditMouCustDocPrintSequenceNo;
-
+  link : any;
+  mouCustObj : any;
+  resultData : any;
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
     private router: Router,
-    // private adInsService: AdInsService,
-    // private fb: FormBuilder
-  ) { }
-
-  ngOnInit(): void {
-    this.viewObj = "./assets/ucviewgeneric/viewMouHeader.json";
+  ) {
     this.route.queryParams.subscribe(params => {
       if (params['MouCustId'] != null) {
         this.MouCustId = params['MouCustId'];
       }
     });
+  }
+
+  ngOnInit(): void {
+    this.viewObj = "./assets/ucviewgeneric/viewMouHeader.json";
+    this.mouCustObj = new MouCustObj();
+    this.mouCustObj.MouCustId = this.MouCustId;
+    this.http.post(AdInsConstant.GetMouCustById, this.mouCustObj).subscribe(
+      (response: MouCustObj) => {
+        this.resultData = response; 
+      } 
+    ); 
     var mouObj = { "MouCustId": this.MouCustId };
     this.http.post(this.GetListMouCustDocPrintForViewByMouCustIdUrl, mouObj).subscribe(
       response => {
@@ -68,6 +78,22 @@ export class CustomerDocPrintingDetailComponent implements OnInit {
         this.router.navigateByUrl('Error');
       }
     );
+  }
+  GetCallBack(event)
+  {
+    if(event.Key == "customer"){
+      var custObj = { CustNo: this.resultData['CustNo'] };
+      this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+        response => {
+          this.link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
+          window.open(this.link, '_blank');
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+    
   }
 }
  

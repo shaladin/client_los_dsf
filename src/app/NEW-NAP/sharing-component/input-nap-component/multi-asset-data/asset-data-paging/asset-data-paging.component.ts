@@ -33,9 +33,7 @@ export class AssetDataPagingComponent implements OnInit {
   editColl: string;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) { 
-    // this.getListAppAssetData = AdInsConstant.GetListAppAssetData;
     this.getListAppAssetData = AdInsConstant.GetAppAssetListByAppId;
-    // this.getListAppCollateral = AdInsConstant.GetListAppCollateral;
     this.getListAppCollateral = AdInsConstant.GetListAppCollateralByAppId;
 
     this.route.queryParams.subscribe(params => {
