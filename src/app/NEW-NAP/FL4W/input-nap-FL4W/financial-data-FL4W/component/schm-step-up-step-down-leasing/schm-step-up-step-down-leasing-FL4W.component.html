@@ -7,7 +7,7 @@
         <div class="col-md-6">
           <div class="row">
             <div class="col-md-6 form-inline">
-              <label>Total Asset Price</label>
+              <label>Total {{PriceLabel}}</label>
             </div>
             <div class="col-md-6 form-inline form-inline-right">
               <label>{{ParentForm.controls.TotalAssetPriceAmt.value | number : '1.2-2'}}</label>
@@ -91,10 +91,10 @@
       <div class="row">
         <div class="col-md-12">
           <div class="row">
-            <div class="col-md-3 form-inline">
+            <div class="col-md-3 form-inline" style="visibility: hidden;">
               <label>DP Asset - Subsidy DP</label>
             </div>
-            <div class="col-md-3 form-inline form-inline-right">
+            <div class="col-md-3 form-inline form-inline-right" style="visibility: hidden;">
               <label>{{ParentForm.controls.DownPaymentNettAmt.value | number : '1.2-2'}}</label>
             </div>
             <div class="col-md-3 form-inline">
@@ -216,10 +216,10 @@
         </div>
       </div>
 
-      <!-- <div class="row">
+      <div class="row">
         <div class="col-md-12">
           <div class="row">
-            <div class="col-md-3 form-inline">
+            <!-- <div class="col-md-3 form-inline">
               <label>Installment Amount</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
@@ -227,16 +227,27 @@
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.InstAmt.invalid}" currencyMask>
               <lib-uc-show-errors [control]="ParentForm.controls.InstAmt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
-            </div>
-            <div class="col-md-3 form-inline">
+            </div> -->
+            <!-- <div class="col-md-3 form-inline">
               <label>Diff Rate Amount</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.DiffRateAmt.value | number : '1.2-2'}}</label>
+            </div> -->
+            <div class="col-md-3 offset-md-6 form-inline">
+              <label>Diff Rate Amount (Commission Amount)</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <input type="" class="form-control full-width" formControlName="DiffRateAmt"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.DiffRateAmt.invalid}" 
+                (keyup)="SetNeedReCalculate(true)"
+                currencyMask>
+              <lib-uc-show-errors [control]="ParentForm.controls.DiffRateAmt" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
             </div>
           </div>
         </div>
-      </div> -->
+      </div>
 
       <div class="row">
         <div class="col-md-12">
@@ -260,6 +271,23 @@
               </lib-uc-show-errors>
             </div>
             <div class="col-md-3 form-inline">
+              <label>Residual Value Amount</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <input type="" class="form-control full-width" formControlName="ResidualValueAmt"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.ResidualValueAmt.invalid}" 
+                (keyup)="SetNeedReCalculate(true)"
+                currencyMask>
+              <lib-uc-show-errors [control]="ParentForm.controls.ResidualValueAmt" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-3 offset-md-6 form-inline">
               <label>Num Of Step / Input Type</label>
             </div>
             <div class="col-md-1 form-inline form-inline-right">
