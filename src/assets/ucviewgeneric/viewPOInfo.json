@@ -17,7 +17,7 @@
             "property": "MouNo"
           },
           {
-            "type": "text",
+            "type": "date",
             "label": "Purchase Order Date",
             "property": "PurchaseOrderDt"
           },
@@ -37,7 +37,7 @@
             "property": "Notes"
           },
           {
-            "type": "text",
+            "type": "currency",
             "label": "Total Purchase Order Amount",
             "property": "TotalPurchaseOrderAmt"
           }
