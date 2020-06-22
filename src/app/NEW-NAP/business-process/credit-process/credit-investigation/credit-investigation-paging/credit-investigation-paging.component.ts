@@ -13,8 +13,9 @@ export class CreditInvestigationPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   BizTemplateCode: string;
   arrCrit: Array<any> = new Array();
+  token : any = localStorage.getItem("Token");
   
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private router: Router) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.BizTemplateCode = params["BizTemplateCode"];
@@ -49,5 +50,13 @@ export class CreditInvestigationPagingComponent implements OnInit {
     critObj.value = "CRD_INV_"+this.BizTemplateCode;
     this.inputPagingObj.addCritInput.push(critObj);
     
+  }
+
+  Callback(event)
+  {
+    if(event.Key == "ViewProdOffering"){
+      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + event.RowObj.ProdOfferingCode + "&prodOfferingVersion=" + event.RowObj.ProdOfferingVersion  + "&Token=" + this.token;
+      this.router.navigate([]).then(result => { window.open(link, '_blank'); });
+    }
   }
 }
