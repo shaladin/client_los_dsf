@@ -666,15 +666,15 @@ export class CommissionComponent implements OnInit {
         RowVersion: ""
       };
       console.log(obj);
-      // this.http.post(AdInsConstant.AddOrEditAppCommissionData, obj).subscribe(
-      //   (response) => {
-      //     this.toastr.successMessage(response["message"]);
-      //     this.outputTab.emit();
-      //   },
-      //   (error) => {
-      //     console.log(error);
-      //   }
-      // );
+      this.http.post(AdInsConstant.AddOrEditAppCommissionData, obj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          this.outputTab.emit();
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     }
   }
 }
