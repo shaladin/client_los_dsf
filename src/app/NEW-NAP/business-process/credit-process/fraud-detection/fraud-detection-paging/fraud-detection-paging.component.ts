@@ -14,20 +14,20 @@ import { HttpClient } from '@angular/common/http';
 })
 export class FraudDetectionPagingComponent implements OnInit {
   inputPagingObj: any;
-  BizTemplateCode : string;
-
-  constructor(private router: Router, private http: HttpClient,private route: ActivatedRoute) { 
+  BizTemplateCode: string;
+  token: any = localStorage.getItem("Token");
+  constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
       if (params['BizTemplateCode'] != null) {
         this.BizTemplateCode = params['BizTemplateCode'];
-        localStorage.setItem("BizTemplateCode",this.BizTemplateCode);
+        localStorage.setItem("BizTemplateCode", this.BizTemplateCode);
       }
     });
   }
 
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
-    this.inputPagingObj._url="./assets/ucpaging/searchFraudDetection.json";
+    this.inputPagingObj._url = "./assets/ucpaging/searchFraudDetection.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchFraudDetection.json";
@@ -42,17 +42,24 @@ export class FraudDetectionPagingComponent implements OnInit {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'WTL.ACT_CODE';
-    critObj.value = "FRD_"+this.BizTemplateCode;
+    critObj.value = "FRD_" + this.BizTemplateCode;
     arrCrit.push(critObj);
     this.inputPagingObj.addCritInput = arrCrit;
   }
 
-  ClaimTask(event){
+  GetCallBack(event) {
 
-    if (event.RowObj.BizTemplateCode == AdInsConstant.FL4W)
-      this.router.navigate(['/Nap/CreditProcess/FraudVerifMultiAsset/Paging'], { queryParams: {"AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId} })
-    else
-      this.router.navigate(["/Nap/CreditProcess/FraudDetection/Detail"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
+    if (event.Key == "ViewProdOffering") {
+      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + event.RowObj.prodOfferingCode + "&prodOfferingVersion=" + event.RowObj.prodOfferingVersion + "&Token=" + this.token;
+      window.open(link, '_blank');
+    }
+    else {
+      if (event.RowObj.BizTemplateCode == AdInsConstant.FL4W)
+        this.router.navigate(['/Nap/CreditProcess/FraudVerifMultiAsset/Paging'], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } })
+      else
+        this.router.navigate(["/Nap/CreditProcess/FraudDetection/Detail"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
+    }
+
 
     // var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     // var wfClaimObj = new ClaimWorkflowObj();
@@ -61,7 +68,7 @@ export class FraudDetectionPagingComponent implements OnInit {
 
     // this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
     //   (response) => {
-    
+
   }
 
 }

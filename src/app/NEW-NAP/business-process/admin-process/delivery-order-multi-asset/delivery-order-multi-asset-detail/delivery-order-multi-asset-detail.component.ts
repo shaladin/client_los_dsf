@@ -62,6 +62,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.arrValue.push(this.appId);
     if (this.wfTaskListId != null || this.wfTaskListId != undefined){
       this.claimTask();
     }

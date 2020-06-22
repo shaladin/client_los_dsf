@@ -49,8 +49,9 @@
             "property": "MrInterestTypeCode"
           },
           {
-            "type": "text",
+            "type": "callback",
             "label": "Product Offering Name",
+            "key": "ViewProdOffering",
             "property": "ProdOfferingName"
           },
           {
