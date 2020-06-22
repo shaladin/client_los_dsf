@@ -50,4 +50,10 @@ export class CreditApprovalDetailComponent implements OnInit {
     this.toastr.successMessage("Success");
     this.router.navigate(["/Nap/CreditProcess/CreditApproval/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
   }
+
+  onCancelClick()
+  {
+    var BizTemplateCode = localStorage.getItem("BizTemplateCode")
+    this.router.navigate(["/Nap/CreditProcess/CreditApproval/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
+  }
 }
