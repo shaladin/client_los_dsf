@@ -37,7 +37,7 @@ export class DocSignerDetailComponent implements OnInit {
   MrCustTypeCode: string = "COMPANY";
   CustFullName: string;
   ContactPersonName: string;
-
+  token : any = localStorage.getItem("Token");
   constructor(private fb: FormBuilder, private http: HttpClient,
     private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -298,6 +298,12 @@ export class DocSignerDetailComponent implements OnInit {
           console.log(error);
         }
       );
+    }
+  }
+  GetCallBack(ev: any){
+    if(ev.Key == "ViewProdOffering"){
+      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.ViewObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.ViewObj.ProdOfferingVersion + "&Token=" + this.token; 
+      window.open( link, "_blank");
     }
   }
 }

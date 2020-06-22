@@ -2,7 +2,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-                <lib-ucviewgeneric [viewInput]="viewObj"></lib-ucviewgeneric>
+                <lib-ucviewgeneric [viewInput]="viewObj"  (callback)="GetCallBack($event)"></lib-ucviewgeneric>
                 <div class="px-3">
                     <form class="form form-horizontal" [formGroup]="DocSignerForm"
                         (ngSubmit)="DocSignerForm.valid && SaveForm()" #enjiForm="ngForm">
