@@ -9,8 +9,7 @@ import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-pre-go-live-approval-detail',
-  templateUrl: './pre-go-live-approval-detail.component.html',
-  styleUrls: ['./pre-go-live-approval-detail.component.scss']
+  templateUrl: './pre-go-live-approval-detail.component.html'
 })
 export class PreGoLiveApprovalDetailComponent implements OnInit {
   inputObj: { taskId: any; instanceId: any; approvalBaseUrl: string; };

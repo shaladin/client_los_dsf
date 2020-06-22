@@ -45,7 +45,7 @@
           },
           {
             "type": "text",
-            "label": "Curreny",
+            "label": "Currency",
             "property": "CurrCode"
           },
           {
