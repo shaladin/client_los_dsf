@@ -64,6 +64,8 @@ export class CommissionComponent implements OnInit {
       MaxAllocatedAmount: 0,
       RemainingAllocatedAmount: 0,
       InterestIncome: 0,
+      ReservedFundAllocatedAmount: 0,
+      ExpenseAmount: 0,
       Other: []
     };
 
@@ -103,9 +105,11 @@ export class CommissionComponent implements OnInit {
             var FormAdd1Idx = 0;
             var FormAdd2Idx = 0;
             var FormAdd3Idx = 0;
+            var totalExpenseAmt = 0;
             for (var i = 0; i < tempObj.length; i++) {
               var obj = tempObj[i];
               console.log(obj);
+              totalExpenseAmt += obj.TotalExpenseAmt;
               if (obj.MrCommissionRecipientTypeCode == AdInsConstant.CommissionReceipientTypeCodeSupplier) {
                 this.FormAdd1.AddNewDataForm();
                 this.FormAdd1.GenerateExistingContentName(obj, FormAdd1Idx);
@@ -123,6 +127,8 @@ export class CommissionComponent implements OnInit {
                 FormAdd3Idx++;
               }
             }
+            this.viewIncomeInfoObj.ExpenseAmount = totalExpenseAmt;
+            this.viewIncomeInfoObj.RemainingAllocatedAmount = this.viewIncomeInfoObj.MaxAllocatedAmount - this.viewIncomeInfoObj.ExpenseAmount - this.viewIncomeInfoObj.ReservedFundAllocatedAmount;
           }, 1000);
 
         } else {
@@ -182,8 +188,10 @@ export class CommissionComponent implements OnInit {
         this.viewIncomeInfoObj.InsuranceIncome = response["TotalInsCustAmt"] - response["TotalInsInscoAmt"],
         this.viewIncomeInfoObj.LifeInsuranceIncome = response["TotalLifeInsCustAmt"] - response["TotalLifeInsInscoAmt"],
         this.viewIncomeInfoObj.MaxAllocatedAmount = response["MaxAllocatedRefundAmt"],
+        this.viewIncomeInfoObj.ReservedFundAllocatedAmount = response["ReservedFundAllocatedAmt"],
         this.viewIncomeInfoObj.RemainingAllocatedAmount = response["MaxAllocatedRefundAmt"] - response["ExpenseAmount"] - response["ReservedFundAllocatedAmt"],
         this.viewIncomeInfoObj.InterestIncome = response["TotalInterestAmt"];
+        this.viewIncomeInfoObj.ExpenseAmount = response["ExpenseAmount"];
         this.GetRuleDataForForm();
         // this.GetAppFeeData();
       },
@@ -424,6 +432,7 @@ export class CommissionComponent implements OnInit {
       this.ContentObjReferantor.push(KVPObj);
       this.FormInputObjReferantor["BankData"] = {
         BankCode: ReturnObject.RefBankCode,
+        BankName: "",
         BankAccNo: ReturnObject.BankAccNo,
         BankAccName: ReturnObject.BankAccName,
         BankBranch: ReturnObject.BankBranch,
@@ -518,7 +527,8 @@ export class CommissionComponent implements OnInit {
       TotalTaxAmmount: 0,
       TotalVATAmount: 0,
       GrossYield: 0
-    }
+    };
+    this.viewIncomeInfoObj.ExpenseAmount = 0;
     if (this.FormGetObj[AdInsConstant.ContentSupplier]) {
       this.FormAdd1.CalculateTax(this.ResultAppData.CurrCode, this.ResultAppData.AppNo, this.ResultAppData.OriOfficeCode, this.AppId);
     }
@@ -537,16 +547,20 @@ export class CommissionComponent implements OnInit {
     var tempTotalCommisionAmount = 0;
     var tempTotalTaxAmmount = 0;
     var tempTotalVATAmount = 0;
+    var tempTotalExpenseAmount = 0;
     for (var i = 0; i < len; i++) {
       var temp = arr["controls"][i].value;
       tempTotalCommisionAmount += temp.TotalCommisionAmount;
       tempTotalTaxAmmount += temp.TotalTaxAmount;
       tempTotalVATAmount += temp.TotalVATAmount;
+      tempTotalExpenseAmount += temp.TotalExpenseAmount;
     }
     this.Summary.TotalCommisionAmount += tempTotalCommisionAmount;
     this.Summary.TotalTaxAmmount += tempTotalTaxAmmount;
     this.Summary.TotalVATAmount += tempTotalVATAmount;
     this.Summary.GrossYield = arr["controls"][0].value.GrossYield;
+    this.viewIncomeInfoObj.ExpenseAmount += tempTotalExpenseAmount;
+    this.viewIncomeInfoObj.RemainingAllocatedAmount = this.viewIncomeInfoObj.MaxAllocatedAmount - this.viewIncomeInfoObj.ExpenseAmount - this.viewIncomeInfoObj.ReservedFundAllocatedAmount;
   }
 
   listAppCommissionHObj;
@@ -576,12 +590,15 @@ export class CommissionComponent implements OnInit {
     temp.BankAccNo = obj.BankAccountNo;
     temp.BankAccName = obj.BankAccountName;
     temp.BankCode = obj.BankCode;
+    temp.BankName = obj.BankName;
     temp.BankBranch = obj.BankBranch;
     temp.TaxAmt = obj.TotalTaxAmount;
     temp.VatAmt = obj.TotalVATAmount;
     temp.PenaltyAmt = obj.TotalPenaltyAmount;
     temp.TotalCommissionAfterTaxAmt = obj.TotalCommisionAmount - (obj.TotalTaxAmount + obj.TotalVATAmount);
     temp.TotalCommissionAmt = obj.TotalCommisionAmount;
+    temp.TotalExpenseAmt = obj.TotalExpenseAmount;
+    temp.TotalDisburseAmt = obj.TotalPenaltyAmount;
     temp.MrCommissionRecipientTypeCode = CommReceipientTypeCode;
     temp.CommissionRecipientRefNo = obj.ContentName;
     temp.MrTaxKindCode = obj.MrIdTypeCode;
@@ -642,22 +659,22 @@ export class CommissionComponent implements OnInit {
       }
 
       // console.log(this.listAppCommissionHObj);
-      var url = AdInsConstant.AddOrEditAppCommissionData;
       var obj = {
         AppId: this.AppId,
         GrossYield: this.Summary.GrossYield,
         ListAppCommissionHObj: this.listAppCommissionHObj,
         RowVersion: ""
       };
-      this.http.post(url, obj).subscribe(
-        (response) => {
-          this.toastr.successMessage(response["message"]);
-          this.outputTab.emit();
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+      console.log(obj);
+      // this.http.post(AdInsConstant.AddOrEditAppCommissionData, obj).subscribe(
+      //   (response) => {
+      //     this.toastr.successMessage(response["message"]);
+      //     this.outputTab.emit();
+      //   },
+      //   (error) => {
+      //     console.log(error);
+      //   }
+      // );
     }
   }
 }
