@@ -276,15 +276,15 @@
 </div>
 
 <div class="form-actions pull-right">
-  <button type="button" class="btn btn-raised btn-warning" [routerLink]="['../../Paging']"
-    [queryParams]="{LobCode:'FL4W'}" translate>
-    <i class="fa fa-check-square-o"></i> Back
+  <button *ngIf="mode != 'ReturnHandling'" type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['../../Paging']"
+    [queryParams]="{BizTemplateCode:'FL4W'}" translate>
+    <i class="ft-arrow-left"></i> Back
   </button>
-  <button *ngIf="mode == 'ReturnHandling'" type="button" class="btn btn-raised btn-warning"
-    [routerLink]="['Nap/AdditionalProcess/ReturnHandling/EditAppPaging']" translate>
-    <i class="fa fa-check-square-o"></i> Back
+  <button *ngIf="mode == 'ReturnHandling'" type="button" class="btn btn-raised btn-warning mr-1"
+    [routerLink]="['/Nap/AdditionalProcess/ReturnHandling/EditAppPaging']" [queryParams]="{BizTemplateCode:'FL4W'}" translate>
+    <i class="ft-arrow-left"></i> Back
   </button>
   <button *ngIf="mode == 'ReturnHandling'" type="button" (click)="Submit()" class="btn btn-raised btn-primary">
-    <i class="fa fa-check-square-o"></i> Submit Return Handling
+    <i class="far fa-check-square"></i> Submit Return Handling
   </button>
 </div>
