@@ -62,10 +62,11 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.arrValue.push(this.appId);
     if (this.wfTaskListId != null || this.wfTaskListId != undefined){
       this.claimTask();
     }
-      
+    this.arrValue.push(this.agrmntId);
     var doRequest = { AppId: this.appId, AgrmntId: this.agrmntId };
     let getDOAssetList = this.httpClient.post(AdInsConstant.GetAssetListForDOMultiAsset, doRequest);
     let getDOList = this.httpClient.post(AdInsConstant.GetListDeliveryOrderHByAppIdAgrmntId, doRequest);

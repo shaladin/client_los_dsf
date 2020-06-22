@@ -3,38 +3,6 @@
     <lib-ucviewgeneric [viewInput]="viewProdMainInfoObj" (callback)="GetCallback($event)"> </lib-ucviewgeneric>
     <div class="card-body">
       <div class="px-3">
-        <lib-ucSubsection *ngIf="mode == 'ReturnHandling'" [id]="'formReturnInfoId'" [title]="'Credit Analysis'"
-          [panel]="'formReturnInfo'">
-        </lib-ucSubsection>
-        <div class="form-body" *ngIf="mode == 'ReturnHandling' && OnFormReturnInfo" [id]="'formReturnInfo'">
-          <form class="form form-horizontal" [formGroup]="FormReturnObj" (ngSubmit)="FormReturnObj.valid"
-            #enjiForm="ngForm">
-            <div class="form-body">
-              <div class="form-group row">
-                <div class="form-group col-md-2">
-                  <label class="adInsLabel">Return Notes</label>
-                </div>
-                <div class="col-md-4">
-                  <label class="adInsLabel">{{ ResponseReturnInfoObj.ReturnHandlingNotes }}</label>
-                </div>
-                <div class="form-group col-md-2">
-                  <label class="adInsLabel">Return Execution Notes</label>
-                </div>
-                <div class="col-md-4">
-                  <textarea type="textarea" row="5" class="form-control" formControlName="ReturnExecNotes"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && FormReturnObj.controls.ReturnExecNotes.invalid}"></textarea>
-                  <lib-uc-show-errors [control]="ReturnExecNotes" [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-
-    <div class="card-body">
-      <div class="px-3">
         <div id="stepperPersonal" class="bs-stepper">
           <div class="bs-stepper-header" role="tablist" style="overflow-x: auto;">
             <!-- your steps here -->
@@ -115,47 +83,47 @@
             <!-- your steps content here -->
             <div id="customer-tab" class="content" role="tabpanel" aria-labelledby="customer-tab-trigger">
               <app-customer-data-FL4W *ngIf="AppStepIndex == 1 && stepperMode == 'PERSONAL'" [appId]="appId"
-                (outputTab)="NextStep('GUAR')" (outputCancel)="Cancel()">
+              [showCancel]="showCancel" (outputTab)="NextStep('GUAR')" (outputCancel)="Cancel()">
               </app-customer-data-FL4W>
             </div>
             <div id="guarantor-tab" class="content" role="tabpanel" aria-labelledby="guarantor-tab-trigger">
               <app-guarantor-paging-FL4W *ngIf="AppStepIndex == 2 && stepperMode == 'PERSONAL'" [AppId]="appId"
-                (outputTab)="NextStep('REF')" (outputCancel)="Cancel()">
+              [showCancel]="showCancel" (outputTab)="NextStep('REF')" (outputCancel)="Cancel()">
               </app-guarantor-paging-FL4W>
             </div>
             <div id="referantor-tab" class="content" role="tabpanel" aria-labelledby="referantor-tab-trigger">
               <app-referantor-data-FL4W *ngIf="AppStepIndex == 3 && stepperMode == 'PERSONAL'" [appId]="appId"
-                (outputTab)="NextStep('APP')" (outputCancel)="Cancel()">
+              [showCancel]="showCancel" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()">
               </app-referantor-data-FL4W>
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
               <app-application-data-FL4W *ngIf="AppStepIndex == 4 && stepperMode == 'PERSONAL'" [AppId]="appId"
-                (outputTab)="NextStep('ASSET')" (outputCancel)="Cancel()">
+              [showCancel]="showCancel" (outputTab)="NextStep('ASSET')" (outputCancel)="Cancel()">
               </app-application-data-FL4W>
             </div>
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
               <app-multi-asset-data *ngIf="AppStepIndex == 5 && stepperMode == 'PERSONAL'" [AppId]="appId"
-                (OutputMultiAsset)="NextStep('INS')" (outputCancel)="Cancel()">
+              [showCancel]="showCancel" (OutputMultiAsset)="NextStep('INS')" (outputCancel)="Cancel()">
               </app-multi-asset-data>
             </div>
             <div id="insurance-tab" class="content  " role="tabpanel" aria-labelledby="insurance-tab-trigger">
               <app-insurance-multi-asset-data *ngIf="AppStepIndex == 6 && stepperMode == 'PERSONAL'" [appId]="appId"
-                (outputTab)="NextStep('LFI')" (outputCancel)="Cancel()">
+              [showCancel]="showCancel" (outputTab)="NextStep('LFI')" (outputCancel)="Cancel()">
               </app-insurance-multi-asset-data>
             </div>
             <div id="lifeInsurance-tab" class="content" role="tabpanel" aria-labelledby="lifeInsurance-tab-trigger">
               <app-life-insurance-data *ngIf="AppStepIndex == 7 && stepperMode == 'PERSONAL'" [AppId]="appId"
-                (outputTab)="NextStep('FIN')" (outputCancel)="Cancel()" [showCancel]="'true'">
+              [showCancel]="showCancel" (outputTab)="NextStep('FIN')" (outputCancel)="Cancel()" [showCancel]="'true'">
               </app-life-insurance-data>
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
               <app-financial-data-FL4W *ngIf="AppStepIndex == 8 && stepperMode == 'PERSONAL'" [AppId]="appId"
-                (outputTab)="NextStep('TC')" (outputCancel)="Cancel()" [showCancel]="'true'">
+              [showCancel]="showCancel" (outputTab)="NextStep('TC')" (outputCancel)="Cancel()" [showCancel]="'true'">
               </app-financial-data-FL4W>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
               <app-tc-data *ngIf="AppStepIndex == 9 && stepperMode == 'PERSONAL'" [AppId]="appId"
-                (outputTab)="LastStepHandler()" (outputCancel)="Cancel()" [showCancel]="'true'"></app-tc-data>
+              [showCancel]="showCancel"  (outputTab)="LastStepHandler()" (outputCancel)="Cancel()" [showCancel]="'true'"></app-tc-data>
             </div>
           </div>
         </div>
@@ -231,42 +199,42 @@
             <!-- your steps content here -->
             <div id="customer-tab" class="content" role="tabpanel" aria-labelledby="customer-tab-trigger">
               <app-customer-data-FL4W *ngIf="AppStepIndex == 1 && stepperMode == 'COMPANY'" [appId]="appId"
-                (outputTab)="NextStep('GUAR')">
+              [showCancel]="showCancel" (outputTab)="NextStep('GUAR')" (outputCancel)="Cancel()">
               </app-customer-data-FL4W>
             </div>
             <div id="guarantor-tab" class="content" role="tabpanel" aria-labelledby="guarantor-tab-trigger">
               <app-guarantor-paging-FL4W *ngIf="AppStepIndex == 2 && stepperMode == 'COMPANY'" [AppId]="appId"
-                (outputTab)="NextStep('REF')">
+              [showCancel]="showCancel" (outputTab)="NextStep('REF')" (outputCancel)="Cancel()">
               </app-guarantor-paging-FL4W>
             </div>
             <div id="referantor-tab" class="content" role="tabpanel" aria-labelledby="referantor-tab-trigger">
               <app-referantor-data-FL4W *ngIf="AppStepIndex == 3 && stepperMode == 'COMPANY'" [appId]="appId"
-                (outputTab)="NextStep('APP')">
+              [showCancel]="showCancel" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()">
               </app-referantor-data-FL4W>
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
               <app-application-data-FL4W *ngIf="AppStepIndex == 4 && stepperMode == 'COMPANY'" [AppId]="appId"
-                (outputTab)="NextStep('ASSET')">
+              [showCancel]="showCancel" (outputTab)="NextStep('ASSET')" (outputCancel)="Cancel()">
               </app-application-data-FL4W>
             </div>
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
               <app-multi-asset-data *ngIf="AppStepIndex == 5 && stepperMode == 'COMPANY'" [AppId]="appId"
-                (OutputMultiAsset)="NextStep('INS')">
+              [showCancel]="showCancel" (OutputMultiAsset)="NextStep('INS')" (outputCancel)="Cancel()">
               </app-multi-asset-data>
             </div>
             <div id="insurance-tab" class="content  " role="tabpanel" aria-labelledby="insurance-tab-trigger">
               <app-insurance-multi-asset-data *ngIf="AppStepIndex == 6 && stepperMode == 'COMPANY'" [appId]="appId"
-                (outputTab)="NextStep('FIN')">
+              [showCancel]="showCancel" (outputTab)="NextStep('FIN')" (outputCancel)="Cancel()">
               </app-insurance-multi-asset-data>
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
               <app-financial-data-FL4W *ngIf="AppStepIndex == 7 && stepperMode == 'COMPANY'" [AppId]="appId"
-                (outputTab)="NextStep('TC')">
+              [showCancel]="showCancel" (outputTab)="NextStep('TC')" (outputCancel)="Cancel()">
               </app-financial-data-FL4W>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
               <app-tc-data *ngIf="AppStepIndex == 8 && stepperMode == 'COMPANY'" [AppId]="appId"
-                (outputTab)="LastStepHandler()"></app-tc-data>
+              [showCancel]="showCancel" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()"></app-tc-data>
             </div>
           </div>
         </div>
@@ -274,8 +242,55 @@
     </div>
   </div>
 </div>
+<br>
+<div class="col-md-12">
+  <div class="card" *ngIf="ReturnHandlingHId > 0">
+    <div class="card-body">
+      <div class="px-3">
+        <lib-ucSubsection [id]="'formReturnInfoId'" [title]="'Return Handling'" [panel]="'formReturnInfo'">
+        </lib-ucSubsection>
+        <div class="form-body" *ngIf="ReturnHandlingHId > 0 && OnFormReturnInfo" [id]="'formReturnInfo'">
+          <form class="form form-horizontal" [formGroup]="FormReturnObj" (ngSubmit)="FormReturnObj.valid"
+            #enjiForm="ngForm">
+            <div class="form-body">
 
-<div class="form-actions pull-right">
+              <div class="form-group row">
+                <div class="form-group col-md-2">
+                  <label class="adInsLabel">Return Notes</label>
+                </div>
+                <div class="col-md-4">
+                  <label class="adInsLabel">{{ ResponseReturnInfoObj.ReturnHandlingNotes }}</label>
+                </div>
+
+                <div class="form-group col-md-2">
+                  <label class="adInsLabel">Return Execution Notes</label>
+                </div>
+                <div class="col-md-4">
+                  <textarea type="textarea" row="5" class="form-control" formControlName="ReturnExecNotes"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && FormReturnObj.controls.ReturnExecNotes.invalid}"></textarea>
+                  <lib-uc-show-errors [control]="ReturnExecNotes" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+
+            </div>
+          </form>
+        </div>
+        <div class="form-action pull-right">
+          <button *ngIf="ReturnHandlingHId > 0" type="button" class="btn btn-raised btn-warning margin-r-5"
+            [routerLink]="['/Nap/AddProcess/ReturnHandling/EditAppPaging']" [queryParams]="{BizTemplateCode:'FL4W'}" translate>
+            <i class="ft-x"></i> Cancel
+          </button>
+          <button *ngIf="ReturnHandlingHId > 0" type="button" (click)="Submit()" class="btn btn-raised btn-primary">
+            <i class="far fa-check-square"></i> Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="form-actions pull-right">
   <button *ngIf="mode != 'ReturnHandling'" type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['../../Paging']"
     [queryParams]="{BizTemplateCode:'FL4W'}" translate>
     <i class="ft-arrow-left"></i> Back
@@ -287,4 +302,4 @@
   <button *ngIf="mode == 'ReturnHandling'" type="button" (click)="Submit()" class="btn btn-raised btn-primary">
     <i class="far fa-check-square"></i> Submit Return Handling
   </button>
-</div>
+</div> -->

@@ -15,7 +15,8 @@
 </section>
 <div class="card">
   <div class="card-body">
-    <lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true" [viewInput]="viewObj" [whereValue]="arrValue"></lib-ucviewgeneric>
+    <!-- <lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true" [viewInput]="viewObj" [whereValue]="arrValue"></lib-ucviewgeneric> -->
+    <app-app-main-info [arrValue]="arrValue"></app-app-main-info>
     <div class="px-3">
     <lib-ucSubsection [id]="'CustDupCheckId'" [title]="'Customer Duplicate Checking'" [panel]="'CustDupCheck'">
     </lib-ucSubsection>
