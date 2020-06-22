@@ -19,9 +19,10 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class GuarantorPersonalFL4WComponent implements OnInit {
 
-  @Input() AppGuarantorId: any;
-  @Input() mode: any;
   @Input() AppId: any;
+  @Input() AppGuarantorId: any;
+  @Input() showCancel: boolean = true;
+  @Input() mode: any;
   @Output() close: EventEmitter<any> = new EventEmitter();
   param: string;
   resultData: any;

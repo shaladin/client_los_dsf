@@ -31,6 +31,7 @@
           },
           {
             "type": "callback",
+            "key": "ViewProdOffering",
             "label": "Product Offering",
             "key": "ViewProdOffering",
             "property": "ProdOfferingName"
