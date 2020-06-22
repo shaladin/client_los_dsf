@@ -30,6 +30,7 @@ export class AgrmntActivationDetailComponent implements OnInit {
   WfTaskListId: number;
   TrxNo: string;
   AgrmntActForm: FormGroup;
+  BizTemplateCode: string;
   constructor(private fb: FormBuilder, private toastr: NGXToastrService, private route: ActivatedRoute, private adminProcessSvc: AdminProcessService, private router: Router, private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
@@ -151,4 +152,9 @@ export class AgrmntActivationDetailComponent implements OnInit {
       else { control.markAsTouched(); };
     });
   };
+
+  Cancel(){
+    this.BizTemplateCode = localStorage.getItem("BizTemplateCode");
+    this.router.navigate(["/Nap/AdminProcess/AgrmntActivation/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
+  }
 }

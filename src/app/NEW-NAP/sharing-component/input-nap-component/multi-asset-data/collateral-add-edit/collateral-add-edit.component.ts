@@ -32,6 +32,7 @@ export class CollateralAddEditComponent implements OnInit {
   @Input() AppId: any;
   @Input() mode: any;
   @Input() AppCollateralId: number;
+  @Input() showCancel: boolean = true;
   @Output() outputValue: EventEmitter<object> = new EventEmitter();
   @Output() collValue: EventEmitter<object> = new EventEmitter();
   @ViewChild(UcgridfooterComponent) UCGridFooter;
@@ -40,7 +41,6 @@ export class CollateralAddEditComponent implements OnInit {
   pageType: string = "add";
   LobCode: any;
   custNo: string;
-  //AppCollateralId: any;
   branchObj : any;
   listBranchObj: any;
   getListAppAssetData: any;
