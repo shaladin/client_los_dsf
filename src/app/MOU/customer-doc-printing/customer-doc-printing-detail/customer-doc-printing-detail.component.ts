@@ -22,9 +22,13 @@ export class CustomerDocPrintingDetailComponent implements OnInit {
     private http: HttpClient,
     private route: ActivatedRoute,
     private router: Router,
-    // private adInsService: AdInsService,
-    // private fb: FormBuilder
-  ) { }
+  ) {
+    this.route.queryParams.subscribe(params => {
+      if (params['MouCustId'] != null) {
+        this.MouCustId = params['MouCustId'];
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.viewObj = "./assets/ucviewgeneric/viewMouHeader.json";
@@ -35,12 +39,6 @@ export class CustomerDocPrintingDetailComponent implements OnInit {
         this.resultData = response; 
       } 
     ); 
-
-    this.route.queryParams.subscribe(params => {
-      if (params['MouCustId'] != null) {
-        this.MouCustId = params['MouCustId'];
-      }
-    });
     var mouObj = { "MouCustId": this.MouCustId };
     this.http.post(this.GetListMouCustDocPrintForViewByMouCustIdUrl, mouObj).subscribe(
       response => {
@@ -82,7 +80,7 @@ export class CustomerDocPrintingDetailComponent implements OnInit {
     );
   }
   GetCallBack(event)
-  {  
+  {
     if(event.Key == "customer"){
       var custObj = { CustNo: this.resultData['CustNo'] };
       this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
