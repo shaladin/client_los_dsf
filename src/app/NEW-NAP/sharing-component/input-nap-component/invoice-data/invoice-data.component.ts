@@ -24,6 +24,7 @@ export class InvoiceDataComponent implements OnInit {
   dataobj: any;
   MouCustLookupObj: InputLookupObj = new InputLookupObj();
   IsDisableCustFctr: boolean = true;
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
   constructor(private httpClient: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
 
@@ -63,6 +64,10 @@ export class InvoiceDataComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  Cancel(){
+    this.outputCancel.emit();
   }
 
   GetListAppInvoiceFctr() {

@@ -98,33 +98,33 @@
           <div class="bs-stepper-content">
             <!-- your steps content here -->
             <div id="customer-tab" class="content" role="tabpanel" aria-labelledby="customer-tab-trigger">
-              <app-customer-data *ngIf="AppStepIndex == 1" [appId]="appId" (outputTab)="NextStep('APP')">
+              <app-customer-data *ngIf="AppStepIndex == 1" [appId]="appId" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()" [showCancel]="'true'">
               </app-customer-data>
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
               <app-application-data-factoring *ngIf="AppStepIndex == 2" [AppId]="appId"
-                (outputTab)="NextStep('INVOICE')"></app-application-data-factoring>
+                (outputTab)="NextStep('INVOICE')" (outputCancel)="Cancel()"></app-application-data-factoring>
             </div>
             <div id="invoice-tab" class="content" role="tabpanel" aria-labelledby="invoice-tab-trigger">
-              <app-invoice-data *ngIf="AppStepIndex == 3" [AppId]="appId" (outputTab)="NextStep('COLL')">
+              <app-invoice-data *ngIf="AppStepIndex == 3" [AppId]="appId" (outputTab)="NextStep('COLL')" (outputCancel)="Cancel()">
               </app-invoice-data>
             </div>
             <div id="coll-tab" class="content" role="tabpanel" aria-labelledby="coll-tab-trigger">
-              <app-multi-coll-data *ngIf="AppStepIndex == 4" [AppId]="appId" (outputTab)="NextStep('INS')">
+              <app-multi-coll-data *ngIf="AppStepIndex == 4" [AppId]="appId" (outputTab)="NextStep('INS')" (outputCancel)="Cancel()">
               </app-multi-coll-data>
             </div>
             <div id="insurance-tab" class="content" role="tabpanel" aria-labelledby="insurance-tab-trigger">
               <!-- <app-insurance-multi-asset-data *ngIf="AppStepIndex == 5" [appId]="appId" (outputTab)="NextStep('FIN')">
               </app-insurance-multi-asset-data> -->
-              <app-insurance-data *ngIf="AppStepIndex == 5" [appId]="appId" (outputTab)="NextStep('FIN')">
+              <app-insurance-data *ngIf="AppStepIndex == 5" [appId]="appId" (outputTab)="NextStep('FIN')" (outputCancel)="Cancel()" [showCancel]="'true'">
               </app-insurance-data>
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
-              <app-financial-data-fctr *ngIf="AppStepIndex == 6" [AppId]=appId (outputTab)="NextStep('TC')">
+              <app-financial-data-fctr *ngIf="AppStepIndex == 6" [AppId]=appId (outputTab)="NextStep('TC')" (outputCancel)="Cancel()">
               </app-financial-data-fctr>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
-              <app-tc-data *ngIf="AppStepIndex == 7" [AppId]="appId" (outputTab)="LastStepHandler()"></app-tc-data>
+              <app-tc-data *ngIf="AppStepIndex == 7" [AppId]="appId" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()" [showCancel]="'true'"></app-tc-data>
             </div>
           </div>
         </div>

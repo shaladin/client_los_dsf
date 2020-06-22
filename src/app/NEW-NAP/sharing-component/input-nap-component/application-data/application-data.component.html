@@ -278,7 +278,7 @@
             </div>
 
             <!-- Loan Object -->
-            <app-loan-object [AppId]="appId" [mode]="mode" *ngIf="IsLoanObject"></app-loan-object>
+            <app-loan-object [AppId]="appId" [mode]="mode" [isCollateral]="isCollateral" *ngIf="IsLoanObject"></app-loan-object>
 
             <div class="form-actions right">
               <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>

@@ -33,7 +33,7 @@ import { LeadMainInfoComponent } from './lead-main-info/lead-main-info.component
   ],
   declarations: [
     MainInfoComponent,
-    LeadMainInfoComponent,
+    LeadMainInfoComponent
   ]
 })
 export class ViewModule { }
