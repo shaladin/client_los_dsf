@@ -13,9 +13,9 @@ import { MouCustCollateralObj } from 'app/shared/model/MouCustCollateralObj.Mode
 import { MouCustCollateralRegistrationObj } from 'app/shared/model/MouCustCollateralRegistrationObj.Model';
 import { UcgridfooterComponent } from '@adins/ucgridfooter';
 import { UCSearchComponent } from '@adins/ucsearch';
-import { InputSearchObj } from 'app/shared/model/InputSearchObj.Model';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { UcTempPagingObj } from 'app/shared/model/TempPaging/UcTempPagingObj.model';
+import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 
 @Component({
   selector: 'app-mou-request-addcoll',
@@ -37,7 +37,6 @@ export class MouRequestAddcollComponent implements OnInit {
   mouCustCollateralRegistrationObj: MouCustCollateralRegistrationObj;
   OwnerRelationshipObj: any;
 
-  closeResult: string;
   listCollateralData: any;
   inputLookupObj: InputLookupObj;
   criteriaList: Array<CriteriaObj>;
@@ -68,6 +67,7 @@ export class MouRequestAddcollComponent implements OnInit {
   items: FormArray;
   isUsed: boolean;
   custNo: string;
+  mouCustObj: MouCustObj = new MouCustObj();
 
   AddCollDataForm = this.fb.group({
   })
@@ -85,11 +85,6 @@ export class MouRequestAddcollComponent implements OnInit {
     OwnerIdNo: ['', [Validators.required]],
     MrIdType: ['', [Validators.required]],
     Notes: [''],
-    // SerialNo1: ['', [Validators.required]],
-    // SerialNo2: ['', [Validators.required]],
-    // SerialNo3: ['', [Validators.required]],
-    // SerialNo4: ['', [Validators.required]],
-    // SerialNo5: [''], 
     SerialNo1: [''],
     SerialNo2: [''],
     SerialNo3: [''],
@@ -104,20 +99,37 @@ export class MouRequestAddcollComponent implements OnInit {
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) { this.type = 'Paging'; }
 
   ngOnInit() {
+    this.items = this.AddCollForm.get('items') as FormArray;
+    this.bindUcLookup()
+    this.initAddrObj();
+    this.bindMouData();
+    this.bindUcAddToTempData();
+    this.tempPagingObj.isReady = true;
+  }
+
+  bindUcAddToTempData() {
     this.tempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/MouExistingCollateralTempPaging.json";
     this.tempPagingObj.enviromentUrl = environment.FoundationR3Url;
     this.tempPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.tempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/MouExistingCollateralTempPaging.json";
 
-
-    this.items = this.AddCollForm.get('items') as FormArray;
-    this.bindUcLookup()
-    this.initAddrObj();
-    this.bindMouData();
-    this.tempPagingObj.isReady = true;
+    const addCritCustNo = new CriteriaObj();
+    addCritCustNo.DataType = 'text';
+    addCritCustNo.propName = 'CU.CUST_NO';
+    addCritCustNo.restriction = AdInsConstant.RestrictionEq;
+    addCritCustNo.value = this.custNo;
+    this.tempPagingObj.addCritInput.push(addCritCustNo);
   }
 
   bindMouData() {
+    this.mouCustObj = new MouCustObj();
+    this.mouCustObj.MouCustId = this.MouCustId;
+    this.http.post(AdInsConstant.GetMouCustById, this.mouCustObj).subscribe(
+      (response: MouCustObj) => {
+        var returnMouCust = response;
+        this.custNo = returnMouCust["CustNo"];
+      });
+
     var refMasterObj = { RefMasterTypeCode: "CUST_PERSONAL_RELATIONSHIP" };
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
@@ -221,26 +233,19 @@ export class MouRequestAddcollComponent implements OnInit {
           listCollateralNo.push(this.listCollateralData[index].CollateralNo);
       }
 
-      // var collObj = { ListCollateralNo: listCollateralNo}
-      // this.http.post(AdInsConstant.GetListCollateralByListCollateralNo, collObj).subscribe(
-      //   (response: any) => {
-      //     var collateralObj = response['ReturnObject'];
-      //     for (var i = 0; i < collateralObj.length; i++) {
-      //       this.listSelectedId.push(collateralObj[i].CollateralId);
-      //     }
-      //     if (this.listSelectedId.length > 0)
-      //     {
-      //       this.BindExistingCollateralSavedData(listCollateralNo);
-      //     }
-      //   })
-
       // if (listCollateralNo.length > 0)
       //   this.BindExistingCollateralSavedData(listCollateralNo);
     }
   }
 
-  BindExistingCollateralSavedData(listNo: any)
-  {
+  BindExistingCollateralSavedData(listNo: any) {
+    const addCritCustNo = new CriteriaObj();
+    addCritCustNo.DataType = 'text';
+    addCritCustNo.propName = 'CL.CUST_NO';
+    addCritCustNo.restriction = AdInsConstant.RestrictionEq;
+    addCritCustNo.value = this.custNo;
+    this.tempPagingObj.addCritInput.push(addCritCustNo);
+
     const addCritCollateralNo = new CriteriaObj();
     addCritCollateralNo.DataType = 'text';
     addCritCollateralNo.propName = 'CL.COLLATERAL_NO';
