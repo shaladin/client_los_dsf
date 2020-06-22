@@ -14,6 +14,8 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 export class AgrmntActivationPagingComponent implements OnInit {
   inputPagingObj: any;
   BizTemplateCode: string;
+  token : any = localStorage.getItem("Token");
+
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {
     this.route.queryParams.subscribe(params => {
       if (params['BizTemplateCode'] != null) {
@@ -50,6 +52,13 @@ export class AgrmntActivationPagingComponent implements OnInit {
     arrCrit.push(critObj);
 
     this.inputPagingObj.addCritInput = arrCrit;
+  }
+
+  GetCallBack(ev: any){
+    if(ev.Key == "ViewProdOffering"){
+      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.RowObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.RowObj.ProdOfferingVersion  + "&Token=" + this.token;
+      this.router.navigate([]).then(result => { window.open(link, '_blank'); });
+    }
   }
 
 }

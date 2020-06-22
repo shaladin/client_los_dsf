@@ -3,16 +3,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder, Validators, NgForm } from '@angular/forms';
-import { WizardComponent } from 'angular-archwizard';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
-import { VendorEmpObj } from 'app/shared/model/VendorEmp.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { UcgridfooterComponent } from '@adins/ucgridfooter';
 import { UCSearchComponent } from '@adins/ucsearch';
-import { InputSearchObj } from 'app/shared/model/InputSearchObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
@@ -20,13 +16,13 @@ import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 import { AppCollateralAttrObj } from 'app/shared/model/AppCollateralAttrObj.Model';
 import { AppCollateralDataObj } from 'app/shared/model/AppCollateralDataObj.Model';
 import { AssetTypeObj } from 'app/shared/model/AssetTypeObj.Model';
-import { AssetCategoryObj } from 'app/shared/model/AssetCategoryObj.Model';
 import { AssetMasterObj } from 'app/shared/model/AssetMasterObj.Model';
 import { AppCollateralRegistrationObj } from 'app/shared/model/AppCollateralRegistrationObj.Model';
-import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LookupTaxCityIssuerComponent } from './lookup-tax-city-issuer/lookup-tax-city-issuer.component';
 import { LookupCollateralComponent } from './lookup-collateral/lookup-collateral.component';
+import { UcTempPagingObj } from 'app/shared/model/TempPaging/UcTempPagingObj.model';
+import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 
 @Component({
   selector: 'app-collateral-add-edit',
@@ -36,6 +32,7 @@ export class CollateralAddEditComponent implements OnInit {
   @Input() AppId: any;
   @Input() mode: any;
   @Input() AppCollateralId: number;
+  @Input() showCancel: boolean = true;
   @Output() outputValue: EventEmitter<object> = new EventEmitter();
   @Output() collValue: EventEmitter<object> = new EventEmitter();
   @ViewChild(UcgridfooterComponent) UCGridFooter;
@@ -43,7 +40,7 @@ export class CollateralAddEditComponent implements OnInit {
 
   pageType: string = "add";
   LobCode: any;
-  //AppCollateralId: any;
+  custNo: string;
   branchObj : any;
   listBranchObj: any;
   getListAppAssetData: any;
@@ -58,7 +55,8 @@ export class CollateralAddEditComponent implements OnInit {
   inputObj: any;
   arrCrit: any[];
   checkboxAll = false;
-  listSelectedId: any;
+  listSelectedId: Array<number> = new Array<number>();
+  tempPagingObj: UcTempPagingObj = new UcTempPagingObj();
   tempListId: any;
   orderByKey: any;
   orderByValue: any;
@@ -205,16 +203,6 @@ export class CollateralAddEditComponent implements OnInit {
       FullAssetName: event.FullAssetName,
       AssetCategoryCode: event.AssetCategoryCode
     });
-    // this.assetCategoryObj = new AssetCategoryObj();
-    // this.assetCategoryObj.AssetCategoryId = event.AssetCategoryId;
-    // this.http.post(this.getAssetCategoryById, this.assetCategoryObj).subscribe(
-    //   (response) => {
-    //     this.returnAssetCategoryObj = response;
-    //     this.AddCollForm.patchValue({ 
-    //       AssetCategoryCode: this.returnAssetCategoryObj.AssetCategoryCode 
-    //     });
-    //   }
-    // );
   }
 
   showModalCollateral(){
@@ -238,8 +226,6 @@ export class CollateralAddEditComponent implements OnInit {
 
   CollChange(){
     this.collateral = this.AddCollForm.controls["Collateral"].value;
-
-    console.log("aaa");
     console.log(this.collateral);
   }
 
@@ -272,162 +258,26 @@ export class CollateralAddEditComponent implements OnInit {
     // component.instance.lookup.subscribe((e) => this.getLookupCollateralName(e));
   }
 
-  bindUcSearch()
-  {
-    this.arrCrit = new Array();
+  bindUcAddToTempData() {
+    this.tempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/MouExistingCollateralTempPaging.json";
+    this.tempPagingObj.enviromentUrl = environment.FoundationR3Url;
+    this.tempPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.tempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/MouExistingCollateralTempPaging.json";
 
-    this.listSelectedId = new Array();
-    this.tempListId = new Array();
-    this.tempData = new Array();
-    this.arrCrit = new Array();
-    
-    this.inputObj = new InputSearchObj();
-    this.inputObj._url = "./assets/ucpaging/mou/searchMouCustCollateral.json";
-    this.inputObj.enviromentUrl = environment.FoundationR3Url; 
-    this.inputObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    var appObj = { AppId: this.AppId }
+    this.http.post(AdInsConstant.GetCustDataByAppId, appObj).subscribe(
+      (response) => {
+        var custObj = response['AppCustObj'];
+        this.custNo = custObj["CustNo"];
 
-    this.pageNow = 1;
-    this.pageSize = 10;
-    this.apiUrl = environment.FoundationR3Url + AdInsConstant.GetPagingObjectBySQL;
-    this.inputObj.addCritInput = new Array();
-    
-  }
-
-  searchPagination(event: number) {
-    this.pageNow = event;
-    let order = null;
-    if (this.orderByKey != null) {
-      order = {
-        key: this.orderByKey,
-        value: this.orderByValue
-      }
-    }
-    this.UCSearchComponent.search(this.apiUrl, this.pageNow, this.pageSize, order)
-  }
-
-  searchSort(event: any) {
-    if (this.resultData != null) {
-      if (this.orderByKey == event.target.attributes.name.nodeValue) {
-        this.orderByValue = !this.orderByValue
-      } else {
-        this.orderByValue = true
-      }
-      this.orderByKey = event.target.attributes.name.nodeValue
-      let order = {
-        key: this.orderByKey,
-        value: this.orderByValue
-      }
-      this.UCSearchComponent.search(this.apiUrl, this.pageNow, this.pageSize, order)
-    }
-  }
-
-  getResult(event) {
-    this.resultData = event.response;
-    this.totalData = event.response.Count;
-    this.UCGridFooter.pageNow = event.pageNow;
-    this.UCGridFooter.totalData = this.totalData;
-    this.UCGridFooter.resultData = this.resultData;
-  }
-
-  onSelect(event) {
-    this.pageNow = event.pageNow;
-    this.pageSize = event.pageSize;
-    this.totalData = event.Count;
-    this.searchPagination(this.pageNow);
-  }
-
-  SelectAll(condition) {
-    this.checkboxAll = condition;
-    console.log(condition);
-    if (condition) {
-      for (let i = 0; i < this.resultData.Data.length; i++) {
-        if (this.listSelectedId.indexOf(this.resultData.Data[i].CollateralId) < 0) {
-          this.listSelectedId.push(this.resultData.Data[i].CollateralId);
-        }
-      }
-
-    } else {
-      for (let i = 0; i < this.resultData.Data.length; i++) {
-        let index = this.listSelectedId.indexOf(this.resultData.Data[i].CollateralId);
-        if (index > -1) {
-          this.listSelectedId.splice(index, 1);
-        }
-        console.log(this.resultData.Data[i]);
-      }
-    }
-    console.log(this.checkboxAll);
-    console.log(this.listSelectedId);
-  }
-
-  addToTemp() {
-    if (this.listSelectedId.length != 0) {
-      for (var i = 0; i < this.listSelectedId.length; i++) {
-        this.tempListId.push(this.listSelectedId[i]);
-        var object = this.resultData.Data.find(x => x.CollateralId == this.listSelectedId[i]);
-        this.tempData.push(object);
-      }
-
-      this.arrAddCrit = new Array();
-      if (this.arrCrit.length != 0) {
-        for (var i = 0; i < this.arrCrit.length; i++) {
-          this.arrAddCrit.push(this.arrCrit[i]);
-        }
-      }
-      var addCrit = new CriteriaObj();
-      addCrit.DataType = "numeric";
-      addCrit.propName = "CL.COLLATERAL_ID";
-      addCrit.restriction = AdInsConstant.RestrictionNotIn;
-      addCrit.listValue = this.tempListId;
-      this.arrAddCrit.push(addCrit);
-
-      var order = null;
-      if (this.orderByKey != null) {
-        order = {
-          key: this.orderByKey,
-          value: this.orderByValue
-        };
-      }
-      this.inputObj.addCritInput = this.arrAddCrit;
-      this.UCSearchComponent.search(this.apiUrl, this.pageNow, this.pageSize, order, this.arrAddCrit);
-      this.listSelectedId = [];
-      this.checkboxAll = false;
-    } else {
-      this.toastr.typeErrorCustom("Please select at least one Collateral");
-    }
-  }
-
-  deleteFromTemp(CollateralId: any) {
-    if (confirm('Are you sure to delete this record?')) {
-      this.arrAddCrit = new Array();
-      if (this.arrCrit.length != 0) {
-        for (var i = 0; i < this.arrCrit.length; i++) {
-          this.arrAddCrit.push(this.arrCrit[i]);
-        }
-      }
-
-      var index = this.tempListId.indexOf(CollateralId);
-      if (index > -1) {
-        this.tempListId.splice(index, 1);
-        this.tempData.splice(index, 1);
-      }
-      var addCrit = new CriteriaObj();
-      addCrit.DataType = "numeric";
-      addCrit.propName = "CL.COLLATERAL_ID";
-      addCrit.restriction = AdInsConstant.RestrictionNotIn;
-      addCrit.listValue = this.tempListId;
-      if (this.tempListId.length != 0) {
-        this.arrAddCrit.push(addCrit);
-      }
-      var order = null;
-      if (this.orderByKey != null) {
-        order = {
-          key: this.orderByKey,
-          value: this.orderByValue
-        };
-      }
-      this.inputObj.addCritInput = this.arrAddCrit;
-      this.UCSearchComponent.search(this.apiUrl, this.pageNow, this.pageSize, order, this.arrAddCrit);
-    }
+        const addCritCustNo = new CriteriaObj();
+        addCritCustNo.DataType = 'text';
+        addCritCustNo.propName = 'CU.CUST_NO';
+        addCritCustNo.restriction = AdInsConstant.RestrictionEq;
+        addCritCustNo.value = this.custNo;
+        this.tempPagingObj.addCritInput.push(addCritCustNo);
+        this.tempPagingObj.isReady = true;
+      });
   }
 
   GetListAddr() {
@@ -490,7 +340,6 @@ export class CollateralAddEditComponent implements OnInit {
   }
   
   ngOnInit() {
-    console.log("ccc")
     console.log(this.mode)
     console.log(this.AppCollateralId)
     var context = JSON.parse(localStorage.getItem("UserAccess"));
@@ -666,9 +515,6 @@ export class CollateralAddEditComponent implements OnInit {
           }
         );
     }
-
-
-    this.bindUcSearch();
     this.GetListAddr();
 
     this.inputFieldLocationAddrObj = new InputFieldObj();
@@ -711,7 +557,6 @@ export class CollateralAddEditComponent implements OnInit {
     this.http.post(this.getListAssetTypeByCode, this.collTypeObj).subscribe(
       (response) => {
         this.returnCollTypeObj = response["ReturnObject"];
-        console.log("aaa");
         console.log(this.returnCollTypeObj);
         this.AddCollForm.patchValue({ AssetTypeCode: response['ReturnObject'][0]['Key'] });
 
@@ -756,6 +601,8 @@ export class CollateralAddEditComponent implements OnInit {
     critDisObj.value = 'DIS';
     disCrit.push(critDisObj);
     this.InputLookupCityIssuerObj.addCritInput = disCrit;
+
+    this.bindUcAddToTempData();
   }
 
   showModalTaxCityIssuer(){
@@ -944,23 +791,15 @@ export class CollateralAddEditComponent implements OnInit {
     this.appCollateralObj.AppId = this.AppId;
     this.appCollateralObj.ListCollateralId =  new Array();
 
-    for (let index = 0; index < this.tempData.length; index++) {
-      console.log(this.tempData);
-      var appColtr = {
-        CollateralId: this.tempData[index].CollateralId
-      }
-      this.appCollateralObj.ListCollateralId.push(appColtr.CollateralId);
-    }
-
-    if (this.appCollateralObj.ListCollateralId.length == 0) {
-      this.toastr.typeErrorCustom('Please Add At Least One Data');
+    if (this.listSelectedId.length == 0) {
+      this.toastr.errorMessage('Please add at least one data');
       return;
     }
+    this.appCollateralObj.ListCollateralId = this.listSelectedId;
 
     this.http.post(AdInsConstant.AddExistingAppCollateralData, this.appCollateralObj).subscribe(
       response => {
         this.toastr.successMessage(response['message']);
-        //this.router.navigate(["/Nap/AssetData/Paging"]);
         this.collValue.emit({mode : 'paging'});
       },
       error => {

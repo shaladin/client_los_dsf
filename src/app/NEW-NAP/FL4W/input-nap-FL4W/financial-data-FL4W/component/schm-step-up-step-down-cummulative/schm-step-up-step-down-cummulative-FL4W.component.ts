@@ -11,6 +11,7 @@ import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalcul
 import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
 import { CalcStepUpStepDownObj } from 'app/shared/model/AppFinData/CalcStepUpStepDownObj.Model';
 import { AppInstStepSchmObj } from 'app/shared/model/AppInstStepSchm/AppInstStepSchmObj.Model';
+import { AppObj } from 'app/shared/model/App/App.Model';
 
 @Component({
   selector: 'app-schm-step-up-step-down-cummulative-FL4W',
@@ -27,6 +28,8 @@ export class SchmStepUpStepDownCummulativeFL4WComponent implements OnInit {
   listInstallment: any;
   listAppInstStepSchm: Array<AppInstStepSchmObj> = new Array<AppInstStepSchmObj>();
   responseCalc: any;
+  result: AppObj = new AppObj();
+  PriceLabel: string = "Asset Price";
 
   constructor(
     private fb: FormBuilder,
@@ -37,6 +40,17 @@ export class SchmStepUpStepDownCummulativeFL4WComponent implements OnInit {
   ngOnInit() {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
+    this.http.post<AppObj>(AdInsConstant.GetAppById, { AppId: this.AppId}).subscribe(
+      (response) => {
+        this.result = response;
+        if(this.result.BizTemplateCode == "CFRFN4W"){
+          this.PriceLabel = "Financing Amount";
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   LoadDDLRateType() {
@@ -109,6 +123,9 @@ export class SchmStepUpStepDownCummulativeFL4WComponent implements OnInit {
   }
 
   CalcBaseOnRate() {
+    if(this.ValidateFee() == false){
+      return;
+    }    
     if(this.ParentForm.controls.CummulativeTenor.value <= 0){
       this.toastr.errorMessage("Cummulative Tenor must be higher than 0.");
       return;
@@ -136,6 +153,13 @@ export class SchmStepUpStepDownCummulativeFL4WComponent implements OnInit {
           TotalAR: response["TotalARAmt"],
 
           NtfAmt: response["NtfAmt"],
+          ApvAmt: response["ApvAmt"],
+
+          TotalLifeInsCustAmt: response["TotalLifeInsCustAmt"],
+          LifeInsCptlzAmt: response["LifeInsCptlzAmt"],
+
+          DownPaymentGrossAmt: response["DownPaymentGrossAmt"],
+          DownPaymentNettAmt: response["DownPaymentNettAmt"]
 
         })
         this.SetInstallmentTable();
@@ -146,6 +170,9 @@ export class SchmStepUpStepDownCummulativeFL4WComponent implements OnInit {
   }
 
   CalcBaseOnInst() {
+    if(this.ValidateFee() == false){
+      return;
+    }    
     if(this.ParentForm.controls.CummulativeTenor.value <= 0){
       this.toastr.errorMessage("Cummulative Tenor must be higher than 0.");
       return;
@@ -171,7 +198,13 @@ export class SchmStepUpStepDownCummulativeFL4WComponent implements OnInit {
           TotalAR: response.TotalARAmt,
 
           NtfAmt: response.NtfAmt,
+          ApvAmt: response.ApvAmt,
 
+          TotalLifeInsCustAmt: response.TotalLifeInsCustAmt,
+          LifeInsCptlzAmt: response.LifeInsCptlzAmt,
+
+          DownPaymentGrossAmt: response.DownPaymentGrossAmt,
+          DownPaymentNettAmt: response.DownPaymentNettAmt
         })
 
         this.SetNeedReCalculate(false);
@@ -246,6 +279,18 @@ export class SchmStepUpStepDownCummulativeFL4WComponent implements OnInit {
     }
 
     this.SetNeedReCalculate(true);
+  }
+
+  
+  ValidateFee(){
+    for(let i = 0; i < this.ParentForm.controls["AppFee"]["controls"].length; i++){
+      if(this.ParentForm.controls["AppFee"].value[i].IsCptlz == true
+          && this.ParentForm.controls["AppFee"].value[i].AppFeeAmt < this.ParentForm.controls["AppFee"].value[i].FeeCapitalizeAmt){
+        this.toastr.errorMessage(this.ParentForm.controls["AppFee"].value[i].FeeTypeName + " Capitalized Amount can't be higher than " +  this.ParentForm.controls["AppFee"].value[i].AppFeeAmt);
+        return false;
+      }
+    }
+    return true;
   }
 
   test() {
