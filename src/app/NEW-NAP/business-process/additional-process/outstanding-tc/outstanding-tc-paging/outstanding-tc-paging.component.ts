@@ -40,6 +40,15 @@ export class OutstandingTcPagingComponent implements OnInit {
           console.log(error);
         }
       );
+    }else if(ev.Key == "agrmnt"){
+      var bizTemplateCode = ev.RowObj.BizTemplateCode;
+
+      if(bizTemplateCode == "CF4W" || bizTemplateCode == "CFRFN4W" || bizTemplateCode == "FACTORING"){
+        window.open( environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + ev.RowObj.AgrmntId, "_blank");
+      }
+      else if(bizTemplateCode == "FL4W"){
+        window.open( environment.losR3Web + "/Nap/FinanceLeasing/ViewAgrmnt?AgrmntId=" + ev.RowObj.AgrmntId, "_blank");
+      }
     }
   }
 }
