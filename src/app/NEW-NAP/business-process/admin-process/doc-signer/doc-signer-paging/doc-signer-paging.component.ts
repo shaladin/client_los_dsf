@@ -4,7 +4,8 @@ import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 
 @Component({
   selector: 'app-doc-signer-paging',
@@ -14,7 +15,15 @@ import { Router } from '@angular/router';
 export class DocSignerPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
   link: string;
-  constructor(private http: HttpClient, private toastr: NGXToastrService, private router: Router) { }
+  BizTemplateCode: string;
+  
+  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private router: Router) { 
+    this.route.queryParams.subscribe(params => {
+      if (params["BizTemplateCode"] != null) {
+        this.BizTemplateCode = params["BizTemplateCode"];
+      }
+  });
+  }
 
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
@@ -22,6 +31,15 @@ export class DocSignerPagingComponent implements OnInit {
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchDocSigner.json";
+
+    this.inputPagingObj.addCritInput = new Array();
+    
+    var critObj = new CriteriaObj();
+    critObj.DataType = 'text';
+    critObj.propName = 'AP.BIZ_TEMPLATE_CODE';
+    critObj.restriction = AdInsConstant.RestrictionEq;
+    critObj.value = this.BizTemplateCode;
+    this.inputPagingObj.addCritInput.push(critObj);
   }
 
   getEvent(ev){

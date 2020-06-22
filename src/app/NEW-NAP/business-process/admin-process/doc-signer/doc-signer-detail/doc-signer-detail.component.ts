@@ -217,7 +217,7 @@ export class DocSignerDetailComponent implements OnInit {
 
   getLookupBranchEmp(event) {
     this.agrmntSignerObj.SupplBranchEmpNo = event.VendorEmpNo;
-    this.agrmntSignerObj.SupplBranchEmpName = event.VerndorEmpName;
+    this.agrmntSignerObj.SupplBranchEmpName = event.VendorEmpName;
     this.agrmntSignerObj.MrJobPositionSupplBranchEmpCode = event.MrVendorEmpPositionCode;
     this.agrmntSignerObj.MrJobPositionSupplBranchEmpName = event.JobTitleName;  
     this.DocSignerForm.patchValue({
@@ -282,7 +282,7 @@ export class DocSignerDetailComponent implements OnInit {
       this.http.post(AdInsConstant.EditAgrmntSignerData, this.agrmntSignerObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["AdminProcess/DocumentSigner/Paging"]);
+          this.router.navigate(["Nap/AdminProcess/DocumentSigner/Paging"]);
         },
         error => {
           console.log(error);
@@ -292,7 +292,7 @@ export class DocSignerDetailComponent implements OnInit {
       this.http.post(AdInsConstant.SubmitAgrmntSignerData, this.agrmntSignerObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["AdminProcess/DocumentSigner/Paging"]);
+          this.router.navigate(["Nap/AdminProcess/DocumentSigner/Paging"]);
         },
         error => {
           console.log(error);

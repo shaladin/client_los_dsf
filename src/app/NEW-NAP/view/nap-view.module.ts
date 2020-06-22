@@ -14,6 +14,7 @@ import { CreditProcessSharingModule } from "../business-process/credit-process/c
 import { ViewSharingComponentModule } from "../sharing-component/view-app-component/view-sharing-component.module";
 import { ViewAgrmntComponentModule } from "../sharing-component/view-agrmnt-component/view-agrmnt-component.module";
 import { PurchaseOrderViewComponent } from "./purchase-order-view/purchase-order-view.component";
+import { UcgridviewModule } from "@adins/ucgridview";
 
 @NgModule({
   exports: [
@@ -31,6 +32,7 @@ import { PurchaseOrderViewComponent } from "./purchase-order-view/purchase-order
     CreditProcessSharingModule,
     ViewSharingComponentModule,
     ViewAgrmntComponentModule,
+    UcgridviewModule
   ],
   declarations: [
     AgreementViewContainerComponent,
