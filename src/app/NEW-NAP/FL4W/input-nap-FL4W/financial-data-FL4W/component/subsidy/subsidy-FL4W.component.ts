@@ -42,6 +42,19 @@ export class SubsidyFL4WComponent implements OnInit {
     })
   }
 
+  editSubsidy(obj){
+    this.listAppFeeObj = this.ParentForm.get("AppFee").value;
+    const modalRef = this.modalService.open(SubsidyAddEditFL4WComponent, { size:'sm' });
+    modalRef.componentInstance.mode = "edit";
+    modalRef.componentInstance.AppId = this.AppId;
+    modalRef.componentInstance.AppSubsidyId = obj.AppSubsidyId;
+    modalRef.componentInstance.listAppFeeObj = this.listAppFeeObj;
+    modalRef.componentInstance.emitData.subscribe(($e) => {
+      this.LoadSubsidyData();
+      this.SetNeedReCalculate(true);
+    })
+  }
+
   deleteSubsidy(obj)
   {
       if (confirm('Are you sure to delete this record?')) {

@@ -16,7 +16,10 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 })
 export class FinancialDataFL4WComponent implements OnInit {
   @Input() AppId: number;
+  @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
+
   //AppId : number;
   FinDataForm: FormGroup;
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
@@ -51,6 +54,7 @@ export class FinancialDataFL4WComponent implements OnInit {
         TotalFeeCptlzAmt: 0,
         TotalInsCustAmt: 0,
         InsCptlzAmt: 0,
+        TotalInsInscoAmt: 0,
         TotalLifeInsCustAmt: 0,
         LifeInsCptlzAmt: 0,
         DownPaymentGrossAmt: 0,
@@ -74,6 +78,7 @@ export class FinancialDataFL4WComponent implements OnInit {
         SupplEffectiveRatePrcnt: 0,
         SupplFlatRatePrcnt: 0,
         DiffRateAmt: 0,
+        ResidualValueAmt: [0, [Validators.min(0)]],
 
         TotalInterestAmt: 0,
         TotalAR: 0,
@@ -100,6 +105,9 @@ export class FinancialDataFL4WComponent implements OnInit {
         PrepaymentPenaltyRate: 0,
         SellEffectiveRatePrcnt: 0,
 
+        ApvAmt: 0,
+        TotalDpAmt: 0,
+
         NeedReCalculate: true
       }
     );
@@ -108,7 +116,7 @@ export class FinancialDataFL4WComponent implements OnInit {
 
   LoadAppFinData() {
     console.log("Load App Fin Data Started...");
-    this.http.post<AppFinDataObj>(environment.losUrl + "/AppFinData/GetInitAppFinDataByAppId", { AppId: this.AppId }).subscribe(
+    this.http.post<AppFinDataObj>(AdInsConstant.GetInitAppFinDataByAppId, { AppId: this.AppId }).subscribe(
       (response) => {
         this.appFinDataObj = response;
 
@@ -122,6 +130,7 @@ export class FinancialDataFL4WComponent implements OnInit {
           TotalFeeCptlzAmt: this.appFinDataObj.TotalFeeCptlzAmt,
           TotalInsCustAmt: this.appFinDataObj.TotalInsCustAmt,
           InsCptlzAmt: this.appFinDataObj.InsCptlzAmt,
+          TotalInsInscoAmt: this.appFinDataObj.TotalInsInscoAmt,
           TotalLifeInsCustAmt: this.appFinDataObj.TotalLifeInsCustAmt,
           LifeInsCptlzAmt: this.appFinDataObj.LifeInsCptlzAmt,
           DownPaymentGrossAmt: this.appFinDataObj.DownPaymentGrossAmt,
@@ -144,12 +153,14 @@ export class FinancialDataFL4WComponent implements OnInit {
           CummulativeTenor: this.appFinDataObj.CummulativeTenor,
 
           NtfAmt: this.appFinDataObj.NtfAmt,
+          ApvAmt: this.appFinDataObj.ApvAmt,
 
           LcRate: this.appFinDataObj.LcRate,
           MrLcCalcMethodCode: this.appFinDataObj.MrLcCalcMethodCode,
           LcGracePeriod: this.appFinDataObj.LcGracePeriod,
           PrepaymentPenaltyRate: this.appFinDataObj.PrepaymentPenaltyRate,
-          SellEffectiveRatePrcnt: this.appFinDataObj.SellEffectiveRatePrcnt
+          SellEffectiveRatePrcnt: this.appFinDataObj.SellEffectiveRatePrcnt,
+          TotalDpAmt: this.appFinDataObj.TotalDpAmt
         });
 
         this.setValidator(this.appFinDataObj.MrInstSchemeCode);
@@ -182,6 +193,10 @@ export class FinancialDataFL4WComponent implements OnInit {
     }
   }
 
+  Cancel(){
+    this.outputCancel.emit();
+  }
+
   ValidateGracePeriode() {
     var valid: boolean = true;
     var gracePeriodType = this.FinDataForm.get("MrGracePeriodTypeCode").value
@@ -198,8 +213,6 @@ export class FinancialDataFL4WComponent implements OnInit {
   }
 
   ValidateGrossYield() {
-    console.log("Standard GY : " + this.FinDataForm.get("StdGrossYieldPrcnt").value);
-    console.log("GY : " + this.FinDataForm.get("GrossYieldPrcnt").value);
     var GrossYieldBhv = this.FinDataForm.get("GrossYieldBhv").value
     var StdGrossYieldPrcnt = this.FinDataForm.get("StdGrossYieldPrcnt").value
     var GrossYieldPrcnt = this.FinDataForm.get("GrossYieldPrcnt").value
@@ -212,11 +225,10 @@ export class FinancialDataFL4WComponent implements OnInit {
       }
     }
     else {
-      this.toastr.successMessage("Sementara Validasi GrossYieldPrcnt < StdGrossYieldPrcnt Tidak Diimplementasikan");
-      // if (GrossYieldPrcnt > StdGrossYieldPrcnt) {
-      //   this.toastr.errorMessage("Gross Yield cannot be greater than " + StdGrossYieldPrcnt + "%");
-      //   valid = false;
-      // }
+      if (GrossYieldPrcnt > StdGrossYieldPrcnt) {
+        this.toastr.errorMessage("Gross Yield cannot be greater than " + StdGrossYieldPrcnt + "%");
+        valid = false;
+      }
     }
     return valid;
   }

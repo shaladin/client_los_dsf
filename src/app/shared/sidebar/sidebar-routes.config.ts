@@ -33,6 +33,7 @@ export const ROUTES: RouteInfo[] = [
         { Path: '/Nap/AddProcess/OutstandingTC/Paging', Title: 'Outstanding TC', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CF4W" }] },
         { Path: '/Nap/AddProcess/POExtension/Paging', Title: 'PO Extension', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CF4W" }] },
         { Path: '/Nap/AdminProcess/AgreementCancellation/Paging', Title: 'Application / Agreement Cancelation', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CF4W" }]},
+        { Path: '/Nap/AdminProcess/OfferingValidityApproval/Paging', Title: 'Offering Validity Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CF4W" }]},
         { Path: '/Nap/AddProcess/CopyCancelledApplication', Title: 'Copy From Cancelled Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] }
       ], Params: []}
     ], Params: []
@@ -54,6 +55,7 @@ export const ROUTES: RouteInfo[] = [
       { Path: '/Nap/AdminProcess/PurchaseOrder/Paging', Title: 'Purchase Order', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "FL4W" }] },
       { Path: '/Nap/AdminProcess/DeliveryOrderMultiAsset/Paging', Title: 'Delivery Order', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "FL4W" }] },
       { Path: '/Nap/AdminProcess/PreGoLive/Paging', Title: 'Pre Go Live', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "FL4W" }] },
+      { Path: '/Nap/AdminProcess/PreGoLive/Approval/Paging', Title: 'Pre Go Live Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "FL4W" }]},
       
       {Path: '', Title: 'Additional Process', Icon: '', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
       Submenu: [
@@ -67,6 +69,7 @@ export const ROUTES: RouteInfo[] = [
         { Path: '/Nap/AddProcess/OutstandingTC/Paging', Title: 'Outstanding TC', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "FL4W" }] },
         { Path: '/Nap/AddProcess/POExtension/Paging', Title: 'PO Extension', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "FL4W" }] },
         { Path: '/Nap/AdminProcess/AgreementCancellation/Paging', Title: 'Application / Agreement Cancelation', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "FL4W" }]},
+        { Path: '/Nap/AdminProcess/OfferingValidityApproval/Paging', Title: 'Offering Validity Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "FL4W" }]},
         { Path: '/Nap/AddProcess/CopyCancelledApplication', Title: 'Copy From Cancelled Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "FL4W" }] }
       
       ], Params: []}
@@ -101,6 +104,7 @@ export const ROUTES: RouteInfo[] = [
         { Path: '/Nap/AddProcess/OutstandingTC/Paging', Title: 'Outstanding TC', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFRFN4W" }] },
         { Path: '/Nap/AddProcess/POExtension/Paging', Title: 'PO Extension', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFRFN4W" }] },
         { Path: '/Nap/AdminProcess/AgreementCancellation/Paging', Title: 'Application / Agreement Cancelation', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFRFN4W" }]},
+        { Path: '/Nap/AdminProcess/OfferingValidityApproval/Paging', Title: 'Offering Validity Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFRFN4W" }]},
         { Path: '/Nap/AddProcess/CopyCancelledApplication', Title: 'Copy From Cancelled Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFRFN4W" }] }
       ], Params: []},
     ], Params: []
