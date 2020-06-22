@@ -8,8 +8,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
   selector: 'app-purchase-order-detail',
-  templateUrl: './purchase-order-detail.component.html',
-  styleUrls: ['./purchase-order-detail.component.scss']
+  templateUrl: './purchase-order-detail.component.html'
 })
 export class PurchaseOrderDetailComponent implements OnInit {
 

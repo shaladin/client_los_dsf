@@ -223,11 +223,8 @@
     <lib-ucSubsection [id]="'AddCollInfoId'" [title]="'Additional Collateral - Add Existing'" [panel]="'AddCollInfo'">
     </lib-ucSubsection>
     <div id="AddCollInfo">
-
-
       <lib-ucaddtotemp *ngIf="tempPagingObj.isReady" [tempPagingObj]="tempPagingObj" (callback)="getListTemp($event)">
       </lib-ucaddtotemp>
-
       <div class="card-header">
         <div class="text-right">
           <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()">

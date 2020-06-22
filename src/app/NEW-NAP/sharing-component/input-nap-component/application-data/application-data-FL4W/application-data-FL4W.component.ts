@@ -19,6 +19,7 @@ import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 export class ApplicationDataFL4WComponent implements OnInit {
 
   @Input() AppId: any;
+  @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   mode : any;
@@ -141,7 +142,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
 
         this.http.post(AdInsConstant.GetListMouCustByCustNo, this.mouCustObj).subscribe(
           (response) => {
-            this.resMouCustObj = response;
+            this.resMouCustObj = response["ReturnObject"];
             
               // console.log("resMouCustObj")
               // console.log(this.resMouCustObj)
