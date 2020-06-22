@@ -332,6 +332,7 @@ export class MouRequestAddcollComponent implements OnInit {
       this.http.post(AdInsConstant.AddMouCustCollateralData, custCollObj).subscribe(
         (response) => {
           console.log(response);
+          this.AddCollForm.reset();
           this.toastr.successMessage(response["message"]);
           this.type = 'Paging';
           this.bindMouData();
@@ -472,6 +473,12 @@ export class MouRequestAddcollComponent implements OnInit {
                 this.items.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required]);
                 this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
               }
+              else
+              {
+                this.items.controls[i]['controls']['SerialNoValue'].clearValidators();
+                this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
+              }
+
               if (this.items.controls[0] != null) {
                 this.items['controls'][0].patchValue({
                   SerialNoValue: this.collateralObj.SerialNo1,
