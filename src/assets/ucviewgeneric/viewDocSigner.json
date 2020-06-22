@@ -48,8 +48,8 @@
           {
             "type": "callback",
             "label": "Product Offering Name",
-            "property": "ProdOfferingName",
-            "key": "prodOff"
+            "key": "ViewProdOffering",
+            "property": "ProdOfferingName"
           },
           {
             "type": "text",
