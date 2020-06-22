@@ -233,8 +233,8 @@ export class MouRequestAddcollComponent implements OnInit {
           listCollateralNo.push(this.listCollateralData[index].CollateralNo);
       }
 
-      // if (listCollateralNo.length > 0)
-      //   this.BindExistingCollateralSavedData(listCollateralNo);
+      if (listCollateralNo.length > 0)
+        this.BindExistingCollateralSavedData(listCollateralNo);
     }
   }
 
