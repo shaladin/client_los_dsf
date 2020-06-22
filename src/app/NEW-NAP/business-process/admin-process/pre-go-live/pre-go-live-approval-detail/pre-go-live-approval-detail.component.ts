@@ -73,8 +73,6 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("APPROVAL DETAIL")
-
     this.http.post(AdInsConstant.GetRfaLogByTrxNoAndApvCategory, { TrxNo : this.TrxNo, ApvCategory : "PRE_GPV_APV" } ).subscribe(
       (response) => {
         this.result = response;
