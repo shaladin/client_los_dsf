@@ -53,6 +53,7 @@ import { AppInsuranceFl4wComponent } from './view-agrmnt-fl4w/app-insurance-fl4w
 import { AppAssetDataFl4wComponent } from './view-agrmnt-fl4w/app-asset-data-fl4w/app-asset-data-fl4w.component';
 import { ViewSummaryFl4wComponent } from './view-agrmnt-fl4w/view-summary-fl4w/view-summary-fl4w.component';
 import { AppAssetDataDetailFl4wComponent } from './view-agrmnt-fl4w/app-asset-data-fl4w/app-asset-data-detail-fl4w/app-asset-data-detail-fl4w.component'; 
+import { ViewInsuranceDetailComponent } from "../sharing-component/view-agrmnt-component/view-insurance-detail/view-insurance-detail.component";
 
  
 export const customCurrencyMaskConfig = {     
@@ -98,6 +99,7 @@ export const customCurrencyMaskConfig = {
     NapViewComponent,  
     NapAddDetailComponent, 
     ViewAgrmntComponent,  
+    ViewInsuranceDetailComponent,
     AgrmntLifeInsuranceComponent,
     ViewCommissionComponent,
     ViewPurchaseOrderComponent,
