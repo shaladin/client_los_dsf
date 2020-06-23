@@ -141,6 +141,7 @@ export class GuarantorPersonalComponent implements OnInit {
             MrIdTypeCode: this.MrIdTypeCode[0].MasterCode
           });
         }
+        this.ChangeIdType();
         this.clearExpDt();
       }
     );
@@ -510,13 +511,22 @@ export class GuarantorPersonalComponent implements OnInit {
     console.log(this.PersonalForm);
   }
   ChangeIdType() {
-    if (this.PersonalForm.controls.MrIdTypeCode.value == "EKTP") {
+    if (this.PersonalForm.controls.MrIdTypeCode.value == "EKTP" || this.PersonalForm.controls.MrIdTypeCode.value == "NPWP") {
       this.PersonalForm.controls.IdExpDt.clearValidators();
       this.PersonalForm.controls.IdExpDt.updateValueAndValidity();
+      if (this.PersonalForm.controls.MrIdTypeCode.value == "NPWP") {
+        this.PersonalForm.controls.TaxIdNo.setValidators([Validators.required]);
+        this.PersonalForm.controls.TaxIdNo.updateValueAndValidity();
+      }
+      else {
+        this.PersonalForm.controls.TaxIdNo.clearValidators();
+        this.PersonalForm.controls.TaxIdNo.updateValueAndValidity();
+      }
     }
     else {
       this.PersonalForm.controls.IdExpDt.setValidators([Validators.required]);
       this.PersonalForm.controls.IdExpDt.updateValueAndValidity();
     }
+
   }
 }

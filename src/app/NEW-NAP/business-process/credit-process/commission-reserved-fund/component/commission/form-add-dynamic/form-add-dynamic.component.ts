@@ -6,7 +6,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ResponseTaxDetailObj } from 'app/shared/model/Tax/ResponseTaxDetail.Model';
 import { ResponseTaxObj } from 'app/shared/model/Tax/ResponseTax.Model';
 import { TaxTrxDObj } from 'app/shared/model/Tax/TaxTrxD.Model';
-import { TaxTrxHObj } from 'app/shared/model/Tax/TaxTrxH.Model';
+import { VendorBankAccObj } from 'app/shared/model/VendorBankAcc.Model';
 
 @Component({
   selector: 'app-form-add-dynamic',
@@ -76,15 +76,13 @@ export class FormAddDynamicComponent implements OnInit {
     var content = this.FormInputObj["content"];
     // console.log("Obj Code");
     // console.log(code);
-    var url;
     var obj;
     if(content == AdInsConstant.ContentSupplier){
-      url = AdInsConstant.GetListVendorBankAccByVendorCode;
       obj = {
         VendorCode: code,
         RowVersion: ""
       };
-      this.http.post(url, obj).subscribe(
+      this.http.post<VendorBankAccObj>(AdInsConstant.GetListVendorBankAccByVendorCode, obj).subscribe(
         (response) =>{
           // console.log("response bank");
           // console.log(response);
@@ -106,12 +104,11 @@ export class FormAddDynamicComponent implements OnInit {
         }
       );
     }else if(content == AdInsConstant.ContentSupplierEmp){
-      url = AdInsConstant.GetListBankByVendorEmpNoAndVendorCode;
       obj = {
         VendorEmpNo: code,
         VendorCode: this.FormObj.value.arr[idx].SupplCode,
       };
-      this.http.post(url, obj).subscribe(
+      this.http.post<VendorBankAccObj>(AdInsConstant.GetListBankByVendorEmpNoAndVendorCode, obj).subscribe(
         (response) =>{
           // console.log("response bank");
           // console.log(response);
