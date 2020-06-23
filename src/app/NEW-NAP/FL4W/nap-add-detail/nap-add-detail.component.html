@@ -199,7 +199,7 @@
             <!-- your steps content here -->
             <div id="customer-tab" class="content" role="tabpanel" aria-labelledby="customer-tab-trigger">
               <app-customer-data-FL4W *ngIf="AppStepIndex == 1 && stepperMode == 'COMPANY'" [appId]="appId"
-              [showCancel]="showCancel" (outputTab)="NextStep('GUAR')" (outputCancel)="Cancel()">
+              [ ]="showCancel" (outputTab)="NextStep('GUAR')" (outputCancel)="Cancel()">
               </app-customer-data-FL4W>
             </div>
             <div id="guarantor-tab" class="content" role="tabpanel" aria-labelledby="guarantor-tab-trigger">
