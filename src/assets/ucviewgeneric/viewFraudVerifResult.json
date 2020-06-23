@@ -17,7 +17,7 @@
             "property": ""
           },
           {
-            "type": "text",
+            "type": "date",
             "label": "Verification Date",
             "property": "VerifyDt"
           },
