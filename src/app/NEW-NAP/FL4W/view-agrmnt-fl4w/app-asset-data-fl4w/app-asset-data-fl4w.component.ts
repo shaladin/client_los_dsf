@@ -7,8 +7,7 @@ import { AppAssetDataDetailFl4wComponent } from './app-asset-data-detail-fl4w/ap
 
 @Component({
   selector: 'app-app-asset-data-fl4w',
-  templateUrl: './app-asset-data-fl4w.component.html',
-  styleUrls: ['./app-asset-data-fl4w.component.scss']
+  templateUrl: './app-asset-data-fl4w.component.html'
 })
 export class AppAssetDataFl4wComponent implements OnInit {
   @Input() AgrmntId: number;

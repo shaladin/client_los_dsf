@@ -241,6 +241,7 @@ export class FeeFL4WComponent implements OnInit {
     calcObj.DownPaymentGrossAmt = this.ParentForm.get("DownPaymentGrossAmt").value;
     calcObj.InsCapitalizedAmt = this.ParentForm.get("InsCptlzAmt").value;
     calcObj.TotalAssetPrice = this.ParentForm.get("TotalAssetPriceAmt").value;
+    calcObj.LifeInsCapitalizedAmt = this.ParentForm.get("LifeInsCptlzAmt").value;
     calcObj.Fee = this.ParentForm.get(this.identifier).value;
 
 

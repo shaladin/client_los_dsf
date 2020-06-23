@@ -143,7 +143,7 @@
             "position": "left",
             "property": "OfficeName"
           },
-        {
+          {
             "type": "link",
             "position": "left",
             "property": "AppNo",
@@ -157,17 +157,10 @@
             ]
           }, 
           {
-            "type": "link",
+            "type": "callback",
+            "key": "ViewAgrmnt",
             "position": "left",
-            "property": "AgrmntNo",
-            "target" : "_blank",
-            "path": "Nap/View/AgrmntView",
-            "param": [
-              {
-                "type": "AgrmntId",
-                "property": "AgrmntId"
-              }
-            ]
+            "property": "AgrmntNo"
           },  
         {
             "type": "text",

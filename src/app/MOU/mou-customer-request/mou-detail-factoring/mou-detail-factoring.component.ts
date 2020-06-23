@@ -140,10 +140,18 @@ export class MouDetailFactoringComponent implements OnInit {
       });
       this.MouDetailFactoringForm.controls["PayFreqCode"].disable();
       this.MouDetailFactoringForm.controls["MrInstSchmCode"].disable();
+      this.MouDetailFactoringForm.controls["SingleInstCalcMthd"].enable();
+      this.MouDetailFactoringForm.patchValue({
+        SingleInstCalcMthd: this.singleInstCalcMthdList.ReturnObject[0].Key
+      });
     }
     else if(value == AdInsConstant.MULTIPLE_INST_TYPE){
       this.MouDetailFactoringForm.controls["PayFreqCode"].enable();
       this.MouDetailFactoringForm.controls["MrInstSchmCode"].enable();
+      this.MouDetailFactoringForm.controls["SingleInstCalcMthd"].disable();
+      this.MouDetailFactoringForm.patchValue({
+        SingleInstCalcMthd : ''
+      });
     }
   }
 
@@ -152,6 +160,12 @@ export class MouDetailFactoringComponent implements OnInit {
     var url;
 
     formData.IsListedCust = this.MouListedFctrComp.MouCustIsListedForm.controls["IsListedCust"].value;
+    if(formData.IsListedCust){
+      if(!this.MouListedFctrComp.listedCusts || this.MouListedFctrComp.listedCusts.length <= 0){
+        this.toastr.errorMessage("At Least 1 Listed Customer Factoring Needed To Submit");
+        return false;
+      }
+    }
 
     if((formData.TenorFrom != "" || formData.TenorTo != "") && formData.TenorFrom > formData.TenorTo){
       console.log("Tenor Invalid");

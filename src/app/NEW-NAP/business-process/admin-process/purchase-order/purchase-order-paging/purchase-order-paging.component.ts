@@ -60,5 +60,9 @@ export class PurchaseOrderPagingComponent implements OnInit {
       var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=" + 0 + "&prodOfferingCode=" + ev.RowObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.RowObj.ProdOfferingVersion  + "&Token=" + this.token;
       this.router.navigate([]).then(result => { window.open(link, '_blank'); });
     }
+    else if(ev.Key == "ViewAgrmnt"){
+      var link = environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + ev.RowObj.AgrmntId;
+      this.router.navigate([]).then(result => { window.open(link, '_blank'); });
+    }    
   }
 }

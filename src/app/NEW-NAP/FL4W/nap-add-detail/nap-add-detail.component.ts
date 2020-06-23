@@ -7,6 +7,7 @@ import Stepper from 'bs-stepper';
 import { FormBuilder } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { environment } from 'environments/environment';
+import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -29,6 +30,7 @@ export class NapAddDetailComponent implements OnInit {
   IsMultiAsset: boolean = false;
   ListAsset: any;
   custType: string = AdInsConstant.CustTypeCompany;
+  showCancel: boolean = true;
   getApp: any;
   token : any = localStorage.getItem("Token");
 
@@ -53,13 +55,14 @@ export class NapAddDetailComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
-        this.mode = params["Mode"];
       }
       if (params["WfTaskListId"] != null) {
         this.wfTaskListId = params["WfTaskListId"];
       }
       if (params["ReturnHandlingHId"] != null) {
         this.ReturnHandlingHId = params["ReturnHandlingHId"];
+        this.mode = 'ReturnHandling';
+        this.showCancel = false
       }
     });
   }
@@ -152,12 +155,12 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   MakeViewReturnInfoObj() {
-    if (this.mode == AdInsConstant.ModeResultHandling) {
+    if (this.ReturnHandlingHId > 0) {
       var obj = {
-        AppId: this.appId,
+        ReturnHandlingHId: this.ReturnHandlingHId,
         MrReturnTaskCode: AdInsConstant.ReturnHandlingEditApp
       }
-      this.http.post(AdInsConstant.GetReturnHandlingDByAppIdAndMrReturnTaskCode, obj).subscribe(
+      this.http.post<ReturnHandlingDObj>(AdInsConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
         (response) => {
           this.ResponseReturnInfoObj = response;
           this.FormReturnObj.patchValue({
@@ -173,14 +176,13 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   NextStep(Step) {
-    if (this.ReturnHandlingHId > 0) {
-      if (this.custType == AdInsConstant.CustTypePersonal) {
-        this.stepperPersonal.next();
-      } else if (this.custType == AdInsConstant.CustTypeCompany) {
-        this.stepperCompany.next();
-      }
-    } else {
-      this.UpdateAppStep(Step);
+    if (this.ReturnHandlingHId == 0) this.UpdateAppStep(Step);
+
+    this.ChangeTab(Step);
+    if (this.custType == AdInsConstant.CustTypePersonal) {
+      this.stepperPersonal.next();
+    } else if (this.custType == AdInsConstant.CustTypeCompany) {
+      this.stepperCompany.next();
     }
   }
 
@@ -250,18 +252,20 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   Submit() {
-    this.ClaimTask();
-    if (this.mode == AdInsConstant.ModeResultHandling) {
-      var obj = {
-        ReturnHandlingDId: this.ResponseReturnInfoObj.ReturnHandlingDId,
-        ReturnHandlingNotes: this.ResponseReturnInfoObj.ReturnHandlingNotes,
-        ReturnHandlingExecNotes: this.FormReturnObj.value.ReturnExecNotes,
-        RowVersion: this.ResponseReturnInfoObj.RowVersion
-      };
+    if (this.ReturnHandlingHId > 0) {
+      var ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
+      ReturnHandlingResult.WfTaskListId = this.wfTaskListId;
+      ReturnHandlingResult.ReturnHandlingDId = this.ResponseReturnInfoObj.ReturnHandlingDId;
+      ReturnHandlingResult.MrReturnTaskCode = this.ResponseReturnInfoObj.MrReturnTaskCode;
+      ReturnHandlingResult.ReturnStat = this.ResponseReturnInfoObj.ReturnStat;
+      ReturnHandlingResult.ReturnHandlingNotes = this.ResponseReturnInfoObj.ReturnHandlingNotes;
+      ReturnHandlingResult.ReturnHandlingExecNotes = this.FormReturnObj.controls['ReturnExecNotes'].value;
+      ReturnHandlingResult.RowVersion = this.ResponseReturnInfoObj.RowVersion;
 
-      this.http.post(AdInsConstant.EditReturnHandlingD, obj).subscribe(
+      this.http.post(AdInsConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
         (response) => {
           console.log(response);
+          this.router.navigate(["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { queryParams: { BizTemplateCode: AdInsConstant.FL4W } })
         },
         (error) => {
           console.log(error);
@@ -278,7 +282,7 @@ export class NapAddDetailComponent implements OnInit {
     wfClaimObj.WfTaskListId = this.wfTaskListId;
 
     this.http.post(AdInsConstant.ClaimTaskNap, wfClaimObj).subscribe(
-      () => {
+      (response) => {
       });
   }
 
