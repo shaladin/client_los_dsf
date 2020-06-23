@@ -140,6 +140,7 @@ export class DocumentViewComponent implements OnInit {
     let Obj = {
       RequestObject: this.RdlcReport
     };
+    //TEMUAN STEVEN INI URL GK BOLEH DI HARDCODE GINI
     this.http.post("http://r3app-server.ad-ins.com/FOUNDATION_R3/Report/GenerateReportSync", Obj).subscribe(
       (response) => {
         let linkSource: string = 'data:application/pdf;base64,' + response["ReturnObject"];

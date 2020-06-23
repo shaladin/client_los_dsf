@@ -214,4 +214,13 @@ export class PreGoLiveComponent implements OnInit {
       });
   }
 
+  GetCallback(event)
+  {
+    var token = localStorage.getItem("Token");
+    if(event.Key == "ViewProdOffering"){
+      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + event.ViewObj.ProdOfferingCode + "&prodOfferingVersion=" + event.ViewObj.ProdOfferingVersion  + "&Token=" + token;
+      this.router.navigate([]).then(result => { window.open(link, '_blank'); });
+    }
+  }
+
 }
