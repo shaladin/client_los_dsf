@@ -134,6 +134,7 @@ export class CommissionComponent implements OnInit {
             }
             this.viewIncomeInfoObj.ExpenseAmount = totalExpenseAmt;
             this.viewIncomeInfoObj.RemainingAllocatedAmount = this.viewIncomeInfoObj.MaxAllocatedAmount - this.viewIncomeInfoObj.ExpenseAmount - this.viewIncomeInfoObj.ReservedFundAllocatedAmount;
+            // console.log(this.viewIncomeInfoObj);
           }, 1000);
 
         } else {
@@ -563,6 +564,8 @@ export class CommissionComponent implements OnInit {
     this.Summary.TotalVATAmount += tempTotalVATAmount;
     this.Summary.GrossYield = arr["controls"][0].value.GrossYield;
     this.viewIncomeInfoObj.ExpenseAmount += tempTotalExpenseAmount;
+    // console.log(tempTotalExpenseAmount);
+    // console.log(this.viewIncomeInfoObj);
     this.viewIncomeInfoObj.RemainingAllocatedAmount = this.viewIncomeInfoObj.MaxAllocatedAmount - this.viewIncomeInfoObj.ExpenseAmount - this.viewIncomeInfoObj.ReservedFundAllocatedAmount;
   }
 
@@ -601,7 +604,7 @@ export class CommissionComponent implements OnInit {
     temp.TotalCommissionAfterTaxAmt = obj.TotalCommisionAmount - (obj.TotalTaxAmount + obj.TotalVATAmount);
     temp.TotalCommissionAmt = obj.TotalCommisionAmount;
     temp.TotalExpenseAmt = obj.TotalExpenseAmount;
-    temp.TotalDisburseAmt = obj.TotalPenaltyAmount;
+    temp.TotalDisburseAmt = obj.TotalDisburseAmount;
     temp.MrCommissionRecipientTypeCode = CommReceipientTypeCode;
     temp.CommissionRecipientRefNo = obj.ContentName;
     temp.MrTaxKindCode = obj.MrIdTypeCode;
