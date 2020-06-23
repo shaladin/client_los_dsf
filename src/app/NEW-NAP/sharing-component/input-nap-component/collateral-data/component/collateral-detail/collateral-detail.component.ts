@@ -344,6 +344,12 @@ export class CollateralDetailComponent implements OnInit {
           RowVersionCollateralRegistration: this.collateralRegistrationObj.RowVersion
         });
 
+        if (this.AddCollForm.controls.MrUserRelationshipCode.value == "SELF") {
+          this.AddCollForm.patchValue({
+            SelfUsage: true
+          })
+        }
+
         this.changeSerialNoValidators(this.appCollateralObj.MrCollateralConditionCode);
         this.onItemChange(this.appCollateralObj.AssetTypeCode);
         this.inputLookupExistColl.nameSelect = this.appCollateralObj.FullAssetName;
