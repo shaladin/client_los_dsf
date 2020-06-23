@@ -9,6 +9,7 @@ import { ViewDeliveryOrderMultiAssetComponent } from './view-agrmnt/view-deliver
 import { ViewDeliveryOrderDetailComponent } from './view-agrmnt/view-delivery-order-multi-asset/view-delivery-order-detail/view-delivery-order-detail.component';
 import { ViewDeliveryOrderAssetDetailComponent } from './view-agrmnt/view-delivery-order-multi-asset/view-delivery-order-asset-detail/view-delivery-order-asset-detail.component';
 import { ViewAgrmntFl4wComponent } from './view-agrmnt-fl4w/view-agrmnt-fl4w.component';
+import { ViewInsuranceDetailComponent } from '../sharing-component/view-agrmnt-component/view-insurance-detail/view-insurance-detail.component';
 
 const routes: Routes = [
   {
@@ -44,6 +45,13 @@ const routes: Routes = [
         component: ViewAgrmntComponent,
         data: {
           title: 'AddDetail'
+        }
+      },
+      {
+        path: 'ViewInsurance',
+        component: ViewInsuranceDetailComponent,
+        data: {
+          title: 'InsuranceDetail'
         }
       },
       {

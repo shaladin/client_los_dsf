@@ -51,8 +51,8 @@ export class LeadVerifComponent implements OnInit {
     this.arrCrit = new Array();
     this.inputObj = new InputSearchObj();
     this.inputObj._url = './assets/search/searchLeadVerf.json';
-
-    
+    this.pageNow = 1;
+    this.pageSize = 10;
     this.inputObj.enviromentUrl = environment.losUrl;
     this.inputObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputObj.addCritInput = new Array();

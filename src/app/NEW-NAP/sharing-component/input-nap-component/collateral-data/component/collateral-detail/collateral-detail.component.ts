@@ -104,12 +104,14 @@ export class CollateralDetailComponent implements OnInit {
     this.initUcLookup();
     this.initDropdownList();
     this.getAppData();
+
     if (this.mode == "edit") {
       this.getAppCollData(0, this.AppCollateralId);
     }
     if (this.isSingleAsset) {
       this.getAppCollData(this.AppId, 0);
-    }
+    }   
+  
     this.AddCollForm.controls.AssetTypeCode.disable();
   }
 
@@ -236,7 +238,7 @@ export class CollateralDetailComponent implements OnInit {
         });
         this.onItemChange(this.AssetTypeCode);
         // Generate Collateral Doc
-        // this.getRefAssetDocList();
+        this.getRefAssetDocList();
 
         this.criteriaList = new Array();
         this.criteriaObj = new CriteriaObj();
@@ -254,7 +256,7 @@ export class CollateralDetailComponent implements OnInit {
     this.http.post(AdInsConstant.GetRefAssetDocList, { AssetTypeCode: this.AssetTypeCode }).subscribe(
       (response) => {
         if (response["ReturnObject"].length > 0) {
-          var ListAttr = this.AddCollForm.get('ListDoc') as FormArray;
+          var ListDoc = this.AddCollForm.get('ListDoc') as FormArray;
           for (var i = 0; i < response["ReturnObject"].length; i++) {
             var assetDocumentDetail = this.fb.group({
               DocCode: response["ReturnObject"][i].AssetDocCode,
@@ -267,7 +269,7 @@ export class CollateralDetailComponent implements OnInit {
               ACDExpiredDt: response["ReturnObject"][i].ACDExpiredDt,
               DocNotes: response["ReturnObject"][i].DocNotes
             }) as FormGroup;
-            ListAttr.push(assetDocumentDetail);
+            ListDoc.push(assetDocumentDetail);
           }
         }
         this.setAppCollateralDoc(this.AppCollateralId);
@@ -341,13 +343,6 @@ export class CollateralDetailComponent implements OnInit {
           MrUserRelationshipCode: this.collateralRegistrationObj.MrUserRelationshipCode,
           RowVersionCollateralRegistration: this.collateralRegistrationObj.RowVersion
         });
-
-        if (this.AddCollForm.controls.MrUserRelationshipCode.value == "SELF") {
-          this.AddCollForm.patchValue({
-            SelfUsage: true
-          })
-        }
-
 
         this.changeSerialNoValidators(this.appCollateralObj.MrCollateralConditionCode);
         this.onItemChange(this.appCollateralObj.AssetTypeCode);
@@ -476,11 +471,16 @@ export class CollateralDetailComponent implements OnInit {
 
     for (var i = 0; i < this.AddCollForm.value.ListDoc["length"]; i++) {
       this.appCollateralDoc = new AppCollateralDocObj();
-      this.appCollateralDoc.DocCode = this.AddCollForm.value.items[i].DocCode;
-      this.appCollateralDoc.IsReceived = this.AddCollForm.value.items[i].IsReceived;
-      this.appCollateralDoc.DocNo = this.AddCollForm.value.items[i].DocNo;
-      this.appCollateralDoc.ExpiredDt = this.AddCollForm.value.items[i].ACDExpiredDt;
-      this.appCollateralDoc.DocNotes = this.AddCollForm.value.items[i].DocNotes;
+      if(this.AddCollForm.value.ListDoc[i].IsReceived == null){
+        this.appCollateralDoc.IsReceived = false;
+      }
+      else{
+         this.appCollateralDoc.IsReceived = this.AddCollForm.value.ListDoc[i].IsReceived;
+      }
+      this.appCollateralDoc.DocCode = this.AddCollForm.value.ListDoc[i].DocCode;
+      this.appCollateralDoc.DocNo = this.AddCollForm.value.ListDoc[i].DocNo;
+      this.appCollateralDoc.ExpiredDt = this.AddCollForm.value.ListDoc[i].ACDExpiredDt;
+      this.appCollateralDoc.DocNotes = this.AddCollForm.value.ListDoc[i].DocNotes;
       this.listAppCollateralDocObj.AppCollateralDocObj.push(this.appCollateralDoc);
     }
     this.appCollateralDataObj.ListAppCollateralDocObj = this.listAppCollateralDocObj.AppCollateralDocObj;
