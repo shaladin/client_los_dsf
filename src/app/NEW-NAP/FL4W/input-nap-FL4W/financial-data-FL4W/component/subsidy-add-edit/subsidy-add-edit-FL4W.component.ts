@@ -14,6 +14,8 @@ import { ResultSubsidySchmMaxRuleObj } from 'app/shared/model/SubsidySchm/Result
   templateUrl: './subsidy-add-edit-FL4W.component.html',
 })
 export class SubsidyAddEditFL4WComponent implements OnInit {
+    @Input() mode: string = "add";
+    @Input() AppSubsidyId: number;
     @Input() AppId: number;
     @Input() listAppFeeObj : Array<AppFeeObj>;
     @Output() emitData = new EventEmitter();
@@ -37,9 +39,11 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
     ngOnInit() {
   
       this.InitForm();
-      // this.LoadSubsidyMaxRule();
       this.LoadDDLFromTypeCode();
-      console.log(this.AppId);
+
+      if(this.mode == "edit"){
+        this.GetAppSubsidy();
+      }
     }
 
     InitForm() {
@@ -56,6 +60,37 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
         }
       );
       this.isSubmitted = false;
+    }
+
+    GetAppSubsidy(){
+      this.http.post<AppSubsidyObj>(AdInsConstant.GetAppSubsidyByAppSubsidyId, { AppSubsidyId: this.AppSubsidyId }).subscribe(
+        (response) => {
+          var subdObj = response;
+
+          this.LoadDDLSubsidyAlloc(subdObj.MrSubsidyFromTypeCode);
+  
+          if (subdObj.MrSubsidyFromTypeCode != 'MF') {
+            this.showFromValue = true;
+            this.LoadDDLFromValue(subdObj.MrSubsidyFromTypeCode);
+          }
+          else {
+            this.showFromValue = false;
+          }
+
+          this.LoadDDLSubsidySource(subdObj.MrSubsidyFromTypeCode, subdObj.MrSubsidyAllocCode);
+          this.LoadDDLSubsidyValueType(subdObj.MrSubsidyFromTypeCode, subdObj.MrSubsidyAllocCode , subdObj.MrSubsidySourceCode);
+
+          this.FormAppSubsidy.patchValue({
+            fromTypeCode: subdObj.MrSubsidyFromTypeCode,
+            fromValueCode: subdObj.MrSubsidyFromValueCode,
+            allocCode: subdObj.MrSubsidyAllocCode,
+            sourceCode: subdObj.MrSubsidySourceCode,
+            valueType: subdObj.MrSubsidyValueTypeCode,
+            subsidyPrcnt: subdObj.SubsidyPrcnt,
+            subsidyAmt: subdObj.SubsidyAmt,
+          });
+        }
+      );
     }
 
     LoadSubsidyMaxRule()
@@ -75,7 +110,7 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
   
     SaveSubsidy() {
       var subdObj: AppSubsidyObj = new AppSubsidyObj();
-      subdObj.AppId = this.FormAppSubsidy.get("appId").value
+      subdObj.AppId = this.FormAppSubsidy.get("appId").value;
       subdObj.MrSubsidyFromTypeCode = this.FormAppSubsidy.get("fromTypeCode").value;
       subdObj.MrSubsidyFromTypeName = (this.FormAppSubsidy.get("fromTypeCode").value == "") ? "" : this.FromTypeCodeOptions.find(f => f.Key == this.FormAppSubsidy.get("fromTypeCode").value).Value;
       subdObj.MrSubsidyFromValueCode = this.FormAppSubsidy.get("fromValueCode").value;
@@ -90,14 +125,28 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
       subdObj.SubsidyPrcnt = this.FormAppSubsidy.get("subsidyPrcnt").value;
       subdObj.AppFees = this.listAppFeeObj;
 
-      this.http.post(environment.losUrl + "/AppSubsidy/AddSubsidy", subdObj ).subscribe(
-        (response) => {
-          console.log(response);
-          var x = response["ReturnObject"];
-          this.emitData.emit(x);
-          this.activeModal.close();
-        }
-      );
+      if(this.mode == "add"){
+        this.http.post(AdInsConstant.AddAppSubsidy, subdObj ).subscribe(
+          (response) => {
+            console.log(response);
+            var x = response["ReturnObject"];
+            this.emitData.emit(x);
+            this.activeModal.close();
+          }
+        );
+      }
+      if(this.mode == "edit"){
+        subdObj.AppSubsidyId = this.AppSubsidyId;
+        
+        this.http.post(AdInsConstant.EditAppSubsidy, subdObj ).subscribe(
+          (response) => {
+            console.log(response);
+            var x = response["ReturnObject"];
+            this.emitData.emit(x);
+            this.activeModal.close();
+          }
+        );
+      }
     }
   
     LoadDDLFromTypeCode() {

@@ -6,6 +6,8 @@ import { FormArray, FormBuilder, FormGroup, FormControl, Validators } from '@ang
 import { MouCustLglReviewObj } from 'app/shared/model/MouCustLglReviewObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { MouCustTcComponent } from 'app/MOU/mou-customer-request/mou-cust-tc/mou-cust-tc.component';
+import { environment } from 'environments/environment';
+import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 
 @Component({
   selector: 'app-legal-review-detail',
@@ -26,6 +28,9 @@ export class LegalReviewDetailComponent implements OnInit {
   responseMouTcObj: any;
   items: FormArray;
   termConditions : FormArray;
+  link : any;
+  mouCustObj : any;
+  resultData : any;
   LegalForm = this.fb.group(
     {
       items: this.fb.array([]),
@@ -53,9 +58,17 @@ export class LegalReviewDetailComponent implements OnInit {
     if (this.WfTaskListId > 0) {
       this.claimTask();
     }
+    
     this.items = this.LegalForm.get('items') as FormArray;
     this.termConditions = this.LegalForm.get('termConditions') as FormArray;
     this.viewObj = "./assets/ucviewgeneric/viewMouHeader.json";
+    this.mouCustObj = new MouCustObj();
+    this.mouCustObj.MouCustId = this.MouCustId;
+    this.http.post(AdInsConstant.GetMouCustById, this.mouCustObj).subscribe(
+      (response: MouCustObj) => {
+        this.resultData = response; 
+      } 
+    );
     var mouObj = { "MouCustId": this.MouCustId };
     this.http.post(this.GetMouCustLglReviewByMouCustIdUrl, mouObj).subscribe(
       response =>{
@@ -82,6 +95,8 @@ export class LegalReviewDetailComponent implements OnInit {
         );
       }
     );
+
+    
   }
 
   async claimTask()
@@ -136,5 +151,22 @@ export class LegalReviewDetailComponent implements OnInit {
       this.mouTc.Save();
      }
    
+  }
+
+  GetCallBack(event)
+  {  
+    if(event.Key == "customer"){
+      var custObj = { CustNo: this.resultData['CustNo'] };
+      this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+        response => {
+          this.link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
+          window.open(this.link, '_blank');
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+    
   }
 }

@@ -48,6 +48,7 @@ export class GuarantorCompanyComponent implements OnInit {
   defLegalDocType: string;
   appLegalDoc: any = new Array();
   isReady: boolean = false;
+  tempCustNo: string;
 
   CompanyForm = this.fb.group({
     MrCustRelationshipCode: ['', [Validators.required, Validators.maxLength(50)]],
@@ -109,7 +110,8 @@ export class GuarantorCompanyComponent implements OnInit {
             PhnArea2: this.resultData.appGuarantorCompanyObj.PhnArea2,
             Phn2: this.resultData.appGuarantorCompanyObj.Phn2,
             PhnExt2: this.resultData.appGuarantorCompanyObj.PhnExt2
-          })
+          });
+          this.tempCustNo = this.resultData.appGuarantorObj.CustNo;
           this.setIndustryTypeName(this.resultData.appGuarantorCompanyObj.IndustryTypeCode);
           this.setAddrLegalObj();
           this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs = this.resultData.appGuarantorCompanyObj.ListAppGuarantorCompanyLegalDoc;
@@ -211,6 +213,7 @@ export class GuarantorCompanyComponent implements OnInit {
   // GuarantorName="";
   lookupGuarantor(event) {
     console.log(event);
+    this.tempCustNo = event.CustNo;
     this.inputLookupObj.isReadonly = true;
     this.http.post(AdInsConstant.GetCustByCustId, { CustId: event.CustId }).subscribe(
       (response) => {
@@ -324,6 +327,10 @@ export class GuarantorCompanyComponent implements OnInit {
   }
 
   setAppGuarantor() {
+    if (this.tempCustNo != null) {
+      this.guarantorCompanyObj.AppGuarantorObj.CustNo = this.tempCustNo;
+    }
+
     this.guarantorCompanyObj.AppGuarantorObj.GuarantorName = this.inputLookupObj.nameSelect;
     this.guarantorCompanyObj.AppGuarantorObj.MrGuarantorTypeCode = "COMPANY";
     this.guarantorCompanyObj.AppGuarantorObj.TaxIdNo = this.CompanyForm.controls.TaxIdNo.value;

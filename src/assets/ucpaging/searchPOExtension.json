@@ -109,9 +109,21 @@
     ],
     "bodyList": [
         {
-            "type" : "text",
+            "type": "link",
             "position": "center",
-            "property": "PurchaseOrderNo"
+            "property": "PurchaseOrderNo",
+            "target": "_blank",
+            "path" : "/Nap/View/POView", 
+            "param" : [ 
+                {
+                    "type" : "PurchaseOrderHId", 
+                    "property" : "PurchaseOrderHId" 
+                },
+                {
+                    "type" : "AgrmntId", 
+                    "property" : "AgrmntId" 
+                }
+            ]
         },
         {
             "type": "link",

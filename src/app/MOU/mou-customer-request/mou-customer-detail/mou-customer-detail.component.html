@@ -18,10 +18,8 @@
             </button>
           </div>
         </div>
-        <div class="row">
-          <div class="col-md-12">
-            <app-main-info [MouCustId]="mouCustId"></app-main-info>
-          </div>
+        <div class="row"> 
+            <lib-ucviewgeneric [viewInput]="viewObj" (callback)="GetCallBack($event)"></lib-ucviewgeneric> 
         </div>
         <div class="row">
           <div class="col-md-12">
