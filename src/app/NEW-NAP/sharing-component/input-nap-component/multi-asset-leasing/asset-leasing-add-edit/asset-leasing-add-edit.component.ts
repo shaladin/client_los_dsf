@@ -591,7 +591,7 @@ copyToLocationAddr() {
     this.allAssetDataObj.AppAssetObj.AssetNotes = this.AssetDataForm.controls["Notes"].value;
     this.allAssetDataObj.AppAssetObj.ManufacturingYear = this.AssetDataForm.controls["ManufacturingYear"].value;
 
-    this.allAssetDataObj.AppAssetObj.AssetSeqNo = "1";
+    this.allAssetDataObj.AppAssetObj.AssetSeqNo = 1;
     this.allAssetDataObj.AppAssetObj.FullAssetCode = this.AssetDataForm.controls["FullAssetCode"].value;
     
     if (this.AppAssetId == 0) {

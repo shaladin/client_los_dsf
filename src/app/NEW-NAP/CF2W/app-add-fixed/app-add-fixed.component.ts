@@ -279,7 +279,7 @@ export class AppAddFixedComponent implements OnInit {
     this.allAppDataObj.AppAssetObj.SupplName = this.supplierName;
     this.allAppDataObj.AppAssetObj.SupplCode = this.supplierCode;
 
-    this.allAppDataObj.AppAssetObj.AssetSeqNo = "1";
+    this.allAppDataObj.AppAssetObj.AssetSeqNo = 1;
     this.allAppDataObj.AppAssetObj.FullAssetCode = this.assetCode;
     
     this.allAppDataObj.AppAssetObj.AssetStat = "NEW";
