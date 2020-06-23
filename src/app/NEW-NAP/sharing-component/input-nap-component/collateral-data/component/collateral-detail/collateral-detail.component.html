@@ -12,8 +12,9 @@
               <div class="form-group row" id="ExistingCollateral">
                 <label class="col-md-5" translate>Existing Collateral</label>
                 <div class="col-md-7">
-                  <lib-uclookupgeneric *ngIf="inputLookupExistColl.isReady" [lookupInput]="inputLookupExistColl" [parentForm]='AddCollForm'
-                    [enjiForm]='enjiForm' [identifier]="'ExistingCollateralObj'" (lookup)="getExistingColl($event)">
+                  <lib-uclookupgeneric *ngIf="inputLookupExistColl.isReady" [lookupInput]="inputLookupExistColl"
+                    [parentForm]='AddCollForm' [enjiForm]='enjiForm' [identifier]="'ExistingCollateralObj'"
+                    (lookup)="getExistingColl($event)">
                   </lib-uclookupgeneric>
                 </div>
               </div>
@@ -42,8 +43,8 @@
                   <label class="col-md-5 adins-required-label" translate>Collateral Name</label>
                   <div class="col-md-7">
                     <lib-uclookupgeneric [lookupInput]="inputLookupColl" [parentForm]='AddCollForm'
-                      [enjiForm]='enjiForm' [identifier]="'FullAssetName'"
-                      (lookup)="getLookupCollateral($event)" #LookupCollateral>
+                      [enjiForm]='enjiForm' [identifier]="'FullAssetName'" (lookup)="getLookupCollateral($event)"
+                      #LookupCollateral>
                     </lib-uclookupgeneric>
                   </div>
                 </div>
@@ -167,7 +168,7 @@
           </div>
             <lib-ucSubsection [id]="'AddCollDocumentId'" [title]="'Collateral Document'" [panel]="'AddCollDocument'">
             </lib-ucSubsection>
-            <div id="AddCollDocument" *ngIf="false">
+            <div id="AddCollDocument">
               <div class="form-body" formArrayName="ListDoc">
                 <table class="table table-responsive-md text-center table-hover">
                   <thead>
@@ -180,7 +181,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let item of AddCollForm.controls.items.controls; let i = index" [formGroupName]="i">
+                    <tr *ngFor="let item of AddCollForm.controls.ListDoc.controls; let i = index" [formGroupName]="i">
                       <td>{{item.controls.AssetDocName.value}}</td>
                       <td>
                         <input type="checkbox" class="border-primary" formControlName="IsReceived">
@@ -298,8 +299,7 @@
                     <div class="col-md-7">
                       <input type="text" class="form-control" formControlName="OwnerIdNo"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerIdNo.invalid }">
-                      <lib-uc-show-errors [control]="AddCollForm.controls.OwnerIdNo"
-                        [submit]="enjiForm.submitted">
+                      <lib-uc-show-errors [control]="AddCollForm.controls.OwnerIdNo" [submit]="enjiForm.submitted">
                       </lib-uc-show-errors>
                     </div>
                   </div>

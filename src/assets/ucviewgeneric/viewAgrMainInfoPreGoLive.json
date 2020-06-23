@@ -1,74 +1,75 @@
 {
-    "title": "",
-    "subsection": [
-      {
-        "subSectionId": "AgrMainInformationId",
-        "subSectionTitle": "Main Information",
-        "mainInfoUrl": "http://r3app-server.ad-ins.com/LOS/Generic/GetDataViewBySQL",
-        "mainInfo": [
-          {
-            "type": "link",
-            "label": "APPLICATION NO",
-            "property": "AppNo",
-            "path": "/Nap/View/AppView",
-            "target" : "_blank",
-            "param": [
-              {
-                "type": "AppId",
-                "property": "AppId"
-              }
-            ]
-          },
-          {
-            "type": "link",
-            "label": "AGREEMENT NO",
-            "property": "AgrmntNo",
-            "path": "/Nap/View/AgrmntView",
-            "target" : "_blank",
-            "param": [
-              {
-                "type": "AgrmntId",
-                "property": "AgrmntId"
-              }
-            ]
-          }, 
-          {
-            "type": "text",
-            "label": "ORIGINAL OFFICE",
-            "property": "OfficeName"
-          },
-          {
-            "type": "text",
-            "label": "CUSTOMER NAME",
-            "property": "CustName"
-          },
-          {
-            "type": "callback",
-            "label": "PRODUCT OFFERING NAME",
-            "key": "ViewProdOffering",
-            "property": "ProdOfferingName"
-          },
-          {
-            "type": "text",
-            "label": "TENOR",
-            "property": "Tenor"
-          },
-          {
-            "type": "text",
-            "label": "ORDER INFORMATION",
-            "property": "MrOrderInfoCode"
-          },
-          {
-            "type": "text",
-            "label": "CURRENCY",
-            "property": "CurrCode"
-          }
-        ],
-        "querystring": {
-          "select": "SELECT A.APP_NO AS AppNo, A.APP_ID As AppId, AGR.AGRMNT_NO AS AgrmntNo, AGR.CUST_NAME AS CustName, AGR.TENOR AS Tenor, AGR.CURR_CODE AS CurrCode, AGR.NUM_OF_ASSET AS NumOfAsset, AGR.OFFICE_NAME AS OfficeName, A.PROD_OFFERING_NAME AS ProdOfferingName, A.PROD_OFFERING_CODE AS ProdOfferingCode, A.PROD_OFFERING_VERSION AS ProdOfferingVersion, A.MR_ORDER_INFO_CODE AS MrOrderInfoCode, AGR.AGRMNT_ID AS AgrmntId",
-          "from": "FROM dbo.AGRMNT AGR WITH(NOLOCK) JOIN dbo.APP A WITH(NOLOCK) ON A.APP_ID = AGR.APP_ID",
-          "where": "WHERE AGR.AGRMNT_ID = {0}"
+  "title": "",
+  "subsection": [
+    {
+      "subSectionId": "AgrMainInformationId",
+      "subSectionTitle": "Main Information",
+      "mainInfoUrl": "http://r3app-server.ad-ins.com/LOS/Generic/GetDataViewBySQL",
+      "mainInfo": [
+        {
+          "type": "link",
+          "label": "APPLICATION NO",
+          "property": "AppNo",
+          "path": "/Nap/View/AppView",
+          "target" : "_blank",
+          "param": [
+            {
+              "type": "AppId",
+              "property": "AppId"
+            }
+          ]
+        },
+        {
+          "type": "link",
+          "label": "AGREEMENT NO",
+          "property": "AgrmntNo",
+          "path": "/Nap/View/AgrmntView",
+          "target" : "_blank",
+          "param": [
+            {
+              "type": "AgrmntId",
+              "property": "AgrmntId"
+            }
+          ]
+        }, 
+        {
+          "type": "text",
+          "label": "ORIGINAL OFFICE",
+          "property": "OfficeName"
+        },
+        {
+          "type": "callback",
+          "key": "customer",
+          "label": "Customer Name",
+          "property": "CustName"
+        },
+        {
+          "type": "callback",
+          "label": "PRODUCT OFFERING NAME",
+          "key": "ViewProdOffering",
+          "property": "ProdOfferingName"
+        },
+        {
+          "type": "text",
+          "label": "TENOR",
+          "property": "Tenor"
+        },
+        {
+          "type": "text",
+          "label": "ORDER INFORMATION",
+          "property": "MrOrderInfoCode"
+        },
+        {
+          "type": "text",
+          "label": "CURRENCY",
+          "property": "CurrCode"
         }
+      ],
+      "querystring": {
+        "select": "SELECT A.APP_NO AS AppNo, AGR.AGRMNT_NO AS AgrmntNo, AGR.CUST_NAME AS CustName, apCust.APP_CUST_ID AS AppCustId ,AGR.CUST_NO AS CustNo, AGR.TENOR AS Tenor, AGR.CURR_CODE AS CurrCode, AGR.NUM_OF_ASSET AS NumOfAsset, AGR.OFFICE_NAME AS OfficeName, A.PROD_OFFERING_NAME AS ProdOfferingName, A.PROD_OFFERING_CODE AS ProdOfferingCode, A.PROD_OFFERING_VERSION AS ProdOfferingVersion, A.MR_ORDER_INFO_CODE AS MrOrderInfoCode, AGR.AGRMNT_ID AS AgrmntId, A.APP_ID AS AppId",
+        "from": "FROM dbo.AGRMNT AGR WITH(NOLOCK) JOIN dbo.APP A WITH(NOLOCK) ON A.APP_ID = AGR.APP_ID JOIN dbo.APP_CUST apCust WITH(NOLOCK) ON apCust.APP_ID = A.APP_ID",
+        "where": "WHERE AGR.AGRMNT_ID = {0}"
       }
-    ]
-  }
+    }
+  ]
+}

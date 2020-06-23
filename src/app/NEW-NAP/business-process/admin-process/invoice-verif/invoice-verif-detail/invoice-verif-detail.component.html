@@ -11,12 +11,12 @@
               <table class="table table-responsive-md text-center table-hover">
                 <thead>
                   <tr class="table-header">
-                    <th><span translate class="thead-header text-left">No</span></th>
-                    <th><span translate class="thead-header text-right">Invoice No</span></th>
-                    <th><span translate class="thead-header text-right">Customer Factoring</span></th>
-                    <th><span translate class="thead-header">Invoice Amount</span></th>
-                    <th><span translate class="thead-header">Invoice Date</span></th>
-                    <th><span translate class="thead-header">Verification</span></th>
+                    <th style="text-align: center;"><span translate class="thead-header text-left">No</span></th>
+                    <th style="text-align: center;"><span translate class="thead-header text-right">Invoice No</span></th>
+                    <th style="text-align: left;"><span translate class="thead-header text-left">Customer Factoring</span></th>
+                    <th style="text-align: right;"><span translate class="thead-header text-right">Invoice Amount</span></th>
+                    <th style="text-align: center;"><span translate class="thead-header">Invoice Date</span></th>
+                    <th style="text-align: left;"><span translate class="thead-header">Verification</span></th>
                     <th><span translate class="thead-header">Notes</span></th>
                   </tr>
                 </thead>
@@ -45,7 +45,7 @@
                 <div class="col-md-6">
                   <div class="row">
                     <label class="col-md-6" translate>OS Plafond Amount</label>
-                    <label class="col-md-6">{{OsPlafondAmt}}</label>
+                    <label class="col-md-6">{{OsPlafondAmt | number}}</label>
                   </div>
                   <div class="row">
                     <label class="col-md-6" translate>Verified By</label>
@@ -53,7 +53,7 @@
                   </div>
                   <div class="row">
                     <label class="col-md-6" translate>Verification Date</label>
-                    <label class="col-md-6">{{BusinessDate | date}}</label>
+                    <label class="col-md-6">{{BusinessDate | date : 'dd-MMM-yyyy'}}</label>
                   </div>
                 </div>
               </div>
