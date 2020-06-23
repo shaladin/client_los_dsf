@@ -13,7 +13,7 @@
         <div class="px-3">
           <app-agr-main-info [arrValue]="arrValue"></app-agr-main-info>
 
-          <mat-tab-group>
+          <mat-tab-group *ngIf="IsReady">
             <mat-tab label="Customer">
               <ng-template matTabContent>
                 <app-view-app-cust-data-company *ngIf="ResponseAppDetailData?.MrCustTypeCode=='COMPANY'" [appId]="ResponseAppDetailData?.AppId"></app-view-app-cust-data-company>

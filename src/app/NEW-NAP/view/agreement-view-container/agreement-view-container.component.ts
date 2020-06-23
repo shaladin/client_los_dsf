@@ -15,6 +15,7 @@ export class AgreementViewContainerComponent implements OnInit {
   AgrmntId;
   BizTemplateCode: string;
   ResponseAppDetailData;
+  IsReady: boolean = false;
   IsCustomer: boolean = true;
   IsAsset: boolean = true;
   IsDocument: boolean = true;
@@ -88,6 +89,7 @@ export class AgreementViewContainerComponent implements OnInit {
         {
           this.IsAsset = false;
         }
+        this.IsReady = true;
       });
     }
 }
