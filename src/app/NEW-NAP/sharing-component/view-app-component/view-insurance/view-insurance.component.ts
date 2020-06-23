@@ -2,9 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { DatePipe } from '@angular/common';
 import { AppInsObjObj } from 'app/shared/model/AppInsObjObj.Model';
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
 import { AppInsuranceObj } from 'app/shared/model/AppInsuranceObj.Model';
@@ -18,7 +17,8 @@ import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
   providers: [NGXToastrService]
 })
 export class ViewInsuranceComponent implements OnInit {
-  @Input() AppId: any;
+  @Input() AppId: number = 0;
+  @Input() AppAssetId: number = 0;
   inputGridObj: InputGridObj;
   appInsuranceObj: AppInsuranceObj = new AppInsuranceObj();
   appInsObjObj: AppInsObjObj = new AppInsObjObj();
@@ -26,46 +26,69 @@ export class ViewInsuranceComponent implements OnInit {
   appCollateralObj: AppCollateralObj = new AppCollateralObj();
   appInsMainCvgObjs: Array<AppInsMainCvgObj> = new Array<AppInsMainCvgObj>();
 
-
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
-
   }
-
-
 
   ngOnInit() {
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucgridview/gridAppInsMainCvg.json";
-
     this.getInsuranceData();
   }
 
   getInsuranceData() {
-    var reqObj = { AppId: this.AppId };
-    this.http.post(AdInsConstant.GetInsuranceDataByAppIdForView, reqObj).subscribe(
-      (response) => {
-        console.log(response);
-        this.appInsuranceObj = response["AppInsuranceObj"];
-        this.appInsObjObj = response["AppInsObjObj"];
-        if (response["AppAssetObj"] != null) {
-          this.appAssetObj = response["AppAssetObj"];
-        }
-        if (response["AppCollateralObj"] != null) {
-          this.appCollateralObj = response["AppCollateralObj"];
-        }
-        this.appInsMainCvgObjs = response["AppInsMainCvgObjs"];
+    if (this.AppId != 0 && this.AppId != null && this.AppId != undefined) {
+      var reqObj = { AppId: this.AppId };
+      this.http.post(AdInsConstant.GetInsuranceDataByAppIdForView, reqObj).subscribe(
+        (response) => {
+          console.log(response);
+          this.appInsuranceObj = response["AppInsuranceObj"];
+          this.appInsObjObj = response["AppInsObjObj"];
+          if (response["AppAssetObj"] != null) {
+            this.appAssetObj = response["AppAssetObj"];
+          }
+          if (response["AppCollateralObj"] != null) {
+            this.appCollateralObj = response["AppCollateralObj"];
+          }
+          this.appInsMainCvgObjs = response["AppInsMainCvgObjs"];
 
-        var detailForGridCoverage = {
-          Data: this.appInsMainCvgObjs,
-          Count: "0"
-        }
+          var detailForGridCoverage = {
+            Data: this.appInsMainCvgObjs,
+            Count: "0"
+          }
 
-        this.inputGridObj.resultData = detailForGridCoverage;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+          this.inputGridObj.resultData = detailForGridCoverage;
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+    else {
+      var reqAssetObj = { AppAssetId: this.AppAssetId };
+      this.http.post(AdInsConstant.GetInsuranceDataByAppIdForView, reqAssetObj).subscribe(
+        (response) => {
+          console.log(response);
+          this.appInsuranceObj = response["AppInsuranceObj"];
+          this.appInsObjObj = response["AppInsObjObj"];
+          if (response["AppAssetObj"] != null) {
+            this.appAssetObj = response["AppAssetObj"];
+          }
+          if (response["AppCollateralObj"] != null) {
+            this.appCollateralObj = response["AppCollateralObj"];
+          }
+          this.appInsMainCvgObjs = response["AppInsMainCvgObjs"];
+
+          var detailForGridCoverage = {
+            Data: this.appInsMainCvgObjs,
+            Count: "0"
+          }
+
+          this.inputGridObj.resultData = detailForGridCoverage;
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
   }
-
 }
