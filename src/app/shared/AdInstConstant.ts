@@ -862,10 +862,6 @@ export class AdInsConstant {
   // APP TC
   public static GetListTCbyAppId = environment.losUrl + "/AppTc/GetListTCbyAppId";
 
-  // Rule
-  public static Rule = "http://r3app-server/RULE_FINAL/RuleService/ExecuteRuleSet";
-
-
   // App Asset
   public static GetAppAssetListByAgrmntId = environment.losUrl + "/AppAsset/GetAppAssetListByAgrmntId";
   public static GetAppAssetByAppId = environment.losUrl + "/AppAsset/GetAppAssetDataByAppId";
