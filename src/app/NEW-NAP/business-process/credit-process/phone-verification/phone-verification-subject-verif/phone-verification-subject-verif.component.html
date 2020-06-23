@@ -4,21 +4,23 @@
       <div class="px-3">
         <form class="form form-horizontal" [formGroup]="PhoneDataForm" #formDirective="ngForm" (ngSubmit)="PhoneDataForm.valid  && SaveForm(formDirective)"
           #enjiForm="ngForm">
-          <div class="form-body">
+          <div class="form-body">  
             <lib-ucSubsection [id]="'custInfoId'" [title]="'Customer Information'" [panel]="'custInfo'">
             </lib-ucSubsection>
             <div id="custInfo">
               <div class="form-group row">
-                <label class="col-md-2  adInsLabel" translate>Application No</label>
-                <a class="col-md-4" (click)="Navigate()">
+                <label class="col-md-2  adInsLabel"  translate>Application No</label>
+                <a class="col-md-4" href="{{AppNoUrl + this.appId}}" target="_blank"   >
                   {{this.AppObj?.AppNo}}
-                </a>
+                </a> 
                 <label class="col-md-2  adInsLabel" translate>Subject</label>
                 <label class="col-md-4" translate>{{subjectType}}</label>
               </div>
               <div class="form-group row">
-                <label class="col-md-2  adInsLabel" translate>Customer No</label>
-                <label class="col-md-4  " translate >{{this.AppCustObj?.CustNo}}</label>
+                <label class="col-md-2  adInsLabel" translate>Customer No</label> 
+                <a class="col-md-4" href="{{CustNoUrl + this.custId}}" target="_blank">
+                  {{this.AppCustObj?.CustNo}}
+                </a>   
                 <label class="col-md-2  adInsLabel" translate>Subject Name</label>
                 <label class="col-md-4  " translate>{{subjectName}}</label>
               </div>

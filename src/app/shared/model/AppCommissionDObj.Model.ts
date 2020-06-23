@@ -1,13 +1,13 @@
 export class AppCommissionDObj{
-    AppCommissionDId: any;
-    AppCommissionHId: any;
-    MrCommissionSourceCode: any;
-    CommissionAmt: any;
-    TaxAmt: any;
-    VatAmt: any;
-    PenaltyAmt: any;
-    CommissionAmtAfterTax: any;
-    RowVersion: any;
+    AppCommissionDId: number;
+    AppCommissionHId: number;
+    MrCommissionSourceCode: string;
+    CommissionAmt: number;
+    TaxAmt: number;
+    VatAmt: number;
+    PenaltyAmt: number;
+    CommissionAmtAfterTax: number;
+    RowVersion: string;
     
     constructor(){}
 }
