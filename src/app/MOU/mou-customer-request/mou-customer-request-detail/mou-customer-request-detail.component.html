@@ -18,7 +18,7 @@
                 <lib-uclookupgeneric [lookupInput]="inputLookupCust" [parentForm]='MOUMainInfoForm' [enjiForm]='enjiForm' [identifier]="'CustLookup'"
                     (lookup)="getCustLookupResponse($event)"></lib-uclookupgeneric>
               </div>
-              <div class="col-md-9" *ngIf="pageType == 'edit' || pageType == 'return' "> 
+              <div class="col-md-9" *ngIf="pageType == 'edit' || pageType == 'return'"> 
                 <a href="{{custUrl}}" target="_blank">{{MOUMainInfoForm.controls.CustName.value}}</a>
               </div>
             </div>

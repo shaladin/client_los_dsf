@@ -14,7 +14,7 @@ export class MultiAssetDataComponent implements OnInit {
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   mode: any = "paging";
   AppAssetId:any;
-  AppCollateralId: any;
+  AppCollateralId: any; 
   type:any;
   constructor( ) {  
   }
