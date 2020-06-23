@@ -7,12 +7,13 @@ import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
+import { ViewInsuranceComponent } from '../../view-app-component/view-insurance/view-insurance.component';
 
 @Component({
   selector: 'agrmnt-view-insurance',
   templateUrl: './view-insurance.component.html'
 })
-export class ViewInsuranceComponent implements OnInit {
+export class ViewAgrmntInsuranceComponent implements OnInit {
   @Input() agrmntId: number = 0;
   AppId: number = 0;
   appInsObjs: any;
@@ -42,7 +43,7 @@ export class ViewInsuranceComponent implements OnInit {
 
   ngOnInit() {
     this.inputGridObj = new InputGridObj();
-    this.inputGridObj.pagingJson = "./assets/ucgridview/gridAssetDataView.json";
+    this.inputGridObj.pagingJson = "./assets/ucgridview/gridInsDataView.json";
     this.inputGridObj.deleteUrl = AdInsConstant.DeleteAppGuarantor;
     
     this.httpClient.post(AdInsConstant.GetAppAssetListForInsuranceByAgrmntId, { AgrmntId: this.agrmntId }).subscribe(
@@ -77,17 +78,13 @@ export class ViewInsuranceComponent implements OnInit {
     );
   }
 
-  viewDetailLoanHandler(appAssetId) {
-    const modalAssetDetail = this.modalService.open(AppAssetDataDetailComponent);
-    modalAssetDetail.componentInstance.AppAssetId = appAssetId;
-    modalAssetDetail.componentInstance.AppId = this.AppId;
-    modalAssetDetail.result.then().catch((error) => {
+  getEvent(event){
+    const modalInsuranceDetail = this.modalService.open(ViewInsuranceComponent);
+    modalInsuranceDetail.componentInstance.AppAssetId = event.RowObj.AppAssetId;
+    modalInsuranceDetail.result.then().catch((error) => {
       if (error != 0) {
         console.log(error);
       }
     });
-  }
-
-  getEvent(event){
   }
 }

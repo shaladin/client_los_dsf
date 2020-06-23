@@ -147,7 +147,7 @@ export class ReservedFundComponent implements OnInit {
   }
 
   calculatedRemainingAmt() {
-    this.remainingAllocatedAmt = this.maxAllocatedRefundAmt - this.totalExpenseAmt + this.totalRsvFundAmt;
+    this.remainingAllocatedAmt = this.maxAllocatedRefundAmt - this.totalExpenseAmt - this.totalRsvFundAmt;
   }
 
   GetAppFee(appObj) {
