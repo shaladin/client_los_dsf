@@ -43,8 +43,9 @@
             "property": "CustName"
           },
           {
-            "type": "text",
+            "type": "callback",
             "label": "PRODUCT OFFERING NAME",
+            "key": "ViewProdOffering",
             "property": "ProdOfferingName"
           },
           {
@@ -64,7 +65,7 @@
           }
         ],
         "querystring": {
-          "select": "SELECT A.APP_NO AS AppNo, AGR.AGRMNT_NO AS AgrmntNo, AGR.CUST_NAME AS CustName, AGR.TENOR AS Tenor, AGR.CURR_CODE AS CurrCode, AGR.NUM_OF_ASSET AS NumOfAsset, AGR.OFFICE_NAME AS OfficeName, A.PROD_OFFERING_NAME AS ProdOfferingName, A.MR_ORDER_INFO_CODE AS MrOrderInfoCode, AGR.AGRMNT_ID AS AgrmntId",
+          "select": "SELECT A.APP_NO AS AppNo, A.APP_ID As AppId, AGR.AGRMNT_NO AS AgrmntNo, AGR.CUST_NAME AS CustName, AGR.TENOR AS Tenor, AGR.CURR_CODE AS CurrCode, AGR.NUM_OF_ASSET AS NumOfAsset, AGR.OFFICE_NAME AS OfficeName, A.PROD_OFFERING_NAME AS ProdOfferingName, A.PROD_OFFERING_CODE AS ProdOfferingCode, A.PROD_OFFERING_VERSION AS ProdOfferingVersion, A.MR_ORDER_INFO_CODE AS MrOrderInfoCode, AGR.AGRMNT_ID AS AgrmntId",
           "from": "FROM dbo.AGRMNT AGR WITH(NOLOCK) JOIN dbo.APP A WITH(NOLOCK) ON A.APP_ID = AGR.APP_ID",
           "where": "WHERE AGR.AGRMNT_ID = {0}"
         }

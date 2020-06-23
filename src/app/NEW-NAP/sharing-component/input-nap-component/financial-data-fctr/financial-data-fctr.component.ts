@@ -195,7 +195,10 @@ export class FinancialDataFctrComponent implements OnInit {
       }
     }
     if(this.IsAppFeePrcntValid == false){
-      this.toastr.errorMessage("App Fee Prcnt Must between 0 - 100");
+      this.toastr.errorMessage("App Fee Prcnt must be between 0 - 100");
+    }
+    if(this.FinDataForm.value.EffectiveRatePrcnt < 0 && this.FinDataForm.value.InterestType == "PRCNT"){
+      this.toastr.errorMessage("Effective Rate must be greater than 0");
     }
     else{
       var isValidGrossYield = this.ValidateGrossYield();
