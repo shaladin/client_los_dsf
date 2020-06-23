@@ -184,12 +184,12 @@
                     "path": "/Nap/AdminProcess/DeliveryOrderMultiAsset/Detail",
                     "param": [
                         {
-                            "type": "AppId",
-                            "property": "AppId"
-                        },
-                        {
                             "type": "AgrmntId",
                             "property": "AgrmntId"
+                        },
+                        {
+                            "type": "AppId",
+                            "property": "AppId"
                         },
                         {
                             "type": "WfTaskListId",
