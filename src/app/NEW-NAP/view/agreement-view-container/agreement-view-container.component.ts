@@ -87,7 +87,7 @@ export class AgreementViewContainerComponent implements OnInit {
         //   }
         else if(bizTemplateCode == AdInsConstant.FL4W)
         {
-          this.IsAsset = false;
+          this.IsAsset = false; 
         }
         this.IsReady = true;
       });
