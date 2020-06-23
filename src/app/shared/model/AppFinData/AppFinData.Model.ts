@@ -72,6 +72,7 @@ export class AppFinDataObj {
     PrepaymentPenaltyRate: number;
     SellEffectiveRatePrcnt: number;
     TotalDpAmt: number;
+    ExpenseAmount: number;
 
     constructor() {
     }

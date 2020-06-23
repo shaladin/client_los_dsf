@@ -124,6 +124,8 @@ export class PurchaseOrderDetailComponent implements OnInit {
     this.purchaseOrderDObj.PurchaseOrderAmt = this.TotalLifeInsCustAmt;
     listPurchaseOrderD.push(this.purchaseOrderDObj);
 
+
+    //TEMUAN STEVEN INI FEE GK BOLEH GINI, KLO GAK NNTI GBS DINAMIS JUGA NIH NTAR
     if (this.AssetObj["AgrmntFeeListObj"].length != 0) {
       for (let i = 0; i < this.AssetObj["AgrmntFeeListObj"].length; i++) {
         this.purchaseOrderDObj = new PurchaseOrderDObj();
