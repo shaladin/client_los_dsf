@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { RFAPreGoLiveObj } from 'app/shared/model/RFAPreGoLiveObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { environment } from 'environments/environment';
 @Component({
   selector: 'app-sharing-pre-go-live-request-for-approval',
   templateUrl: './pre-go-live-request-for-approval.component.html',
@@ -15,17 +16,19 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
   AppId: any;
   itemApprovedBy: any;
   AgrmntNo: any;
-  itemReason : any;
+  itemReason: any;
 
   MainInfoForm = this.fb.group({
-    Reason: ['',Validators.required],
+    Reason: ['', Validators.required],
     ApprovedBy: ['', Validators.required],
     Notes: ['', Validators.required]
   })
   RFAPreGoLive: any;
   TaskListId: any;
   AgrmntId: any;
-  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr : NGXToastrService) {
+  token: any = localStorage.getItem("Token");
+
+  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
       this.AgrmntId = params["AgrmntId"];
@@ -36,8 +39,8 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
 
   ngOnInit() {
     var schmCodeObj = {
-      SchmCode : "PRE_GLV_APV_CF",
-      RowVersion : ""
+      SchmCode: "PRE_GLV_APV_CF",
+      RowVersion: ""
     }
     this.http.post(AdInsConstant.GetListApprovedByForPreGoLive, schmCodeObj).subscribe(
       (response) => {
@@ -50,22 +53,34 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
     this.LoadRefReason();
     this.viewObj = "./assets/ucviewgeneric/viewAgrMainInfoPreGoLive.json";
   }
-LoadRefReason()
-{
-  var refReasonObj = {
-    RefReasonTypeCode: "PRE_GLV_APV"
-  }
-  this.http.post(AdInsConstant.GetListActiveRefReason, refReasonObj).subscribe(
-    (response) => {
-      this.itemReason = response["ReturnObject"];
-      this.MainInfoForm.patchValue({
-        Reason: this.itemReason[0].Key
-      });
-    }
-  );
-}
 
-  SaveForm(){
+  GetCallBack(ev) {
+    if (ev.Key == "ViewProdOffering") {
+      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.ViewObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.ViewObj.ProdOfferingVersion + "&Token=" + this.token;
+
+      window.open(link, "_blank");
+    }
+    if (ev.Key == "customer") {
+      var link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + ev.ViewObj.AppCustId;
+      window.open(link, "_blank");
+    }
+  }
+
+  LoadRefReason() {
+    var refReasonObj = {
+      RefReasonTypeCode: "PRE_GLV_APV"
+    }
+    this.http.post(AdInsConstant.GetListActiveRefReason, refReasonObj).subscribe(
+      (response) => {
+        this.itemReason = response["ReturnObject"];
+        this.MainInfoForm.patchValue({
+          Reason: this.itemReason[0].Key
+        });
+      }
+    );
+  }
+
+  SaveForm() {
     this.RFAPreGoLive = new RFAPreGoLiveObj();
     this.RFAPreGoLive.TransactionNo = this.AgrmntNo;
     this.RFAPreGoLive.Notes = this.MainInfoForm.controls.Notes.value;
@@ -76,7 +91,7 @@ LoadRefReason()
     console.log("SaveForm")
 
     this.http.post(AdInsConstant.CreateRFAPreGoLive, this.RFAPreGoLive).subscribe((response) => {
-      this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Paging?BizTemplateCode='+localStorage.getItem("BizTemplateCode"));
+      this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Paging?BizTemplateCode=' + localStorage.getItem("BizTemplateCode"));
     },
       (error) => {
         console.log(error);

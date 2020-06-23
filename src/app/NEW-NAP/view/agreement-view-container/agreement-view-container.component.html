@@ -21,75 +21,70 @@
               </ng-template>
             </mat-tab>
 
-            <mat-tab label="Asset">
+            <mat-tab *ngIf="IsAsset" label="Asset">
               <ng-template matTabContent>
                 <view-asset-data [appId]="ResponseAppDetailData?.AppId"></view-asset-data>
               </ng-template>
             </mat-tab>
 
-            <mat-tab label="Collateral">
+            <mat-tab *ngIf="IsCollateral" label="Collateral">
               <ng-template matTabContent>
                 <agrmnt-view-collateral [agrmntId]="AgrmntId"></agrmnt-view-collateral>
               </ng-template>
             </mat-tab>
 
-            <mat-tab label="Insurance">
+            <mat-tab *ngIf="IsInsurance" label="Insurance">
               <ng-template matTabContent>
                 <view-insurance [AppId]="ResponseAppDetailData?.AppId"></view-insurance>
               </ng-template>
             </mat-tab>
 
-            <mat-tab label="Agreement Card">
+            <mat-tab *ngIf="IsAgreementCard" label="Agreement Card">
               <ng-template matTabContent>
               </ng-template>
             </mat-tab>
 
-            <mat-tab label="Commission">
+            <mat-tab *ngIf="IsCommission" label="Commission">
               <ng-template matTabContent>
                 <app-view-commission-agrmnt [agrmntId]="AgrmntId"></app-view-commission-agrmnt>
               </ng-template>
             </mat-tab>
 
-            <mat-tab label="Purchase Order">
+            <mat-tab *ngIf="IsPurchaseOrder" label="Purchase Order">
               <ng-template matTabContent>
                 <app-view-purchase-order [agrmntId]="AgrmntId"></app-view-purchase-order>
               </ng-template>
             </mat-tab>
 
-            <mat-tab label="Customer Card">
+            <mat-tab *ngIf="IsCustomerCard" label="Customer Card">
               <ng-template matTabContent>
               </ng-template>
             </mat-tab>
 
-            <mat-tab label="Deviation">
+            <mat-tab *ngIf="IsDeviation" label="Deviation">
               <ng-template matTabContent>
                 <app-view-deviation [AppId]="ResponseAppDetailData?.AppId"></app-view-deviation>
               </ng-template>
             </mat-tab>
 
-            <mat-tab label="Loan Data">
+            <mat-tab *ngIf="IsLoanData" label="Loan Data">
               <ng-template matTabContent>
               </ng-template>
             </mat-tab>
 
-            <mat-tab label="Collateral Data">
-              <ng-template matTabContent>
-              </ng-template>
-            </mat-tab>
-
-            <mat-tab label="Delivery Order">
+            <mat-tab *ngIf="IsDeliveryOrder" label="Delivery Order">
               <ng-template matTabContent>
                 <agrmnt-view-delivery-order [agrmntId]="AgrmntId"></agrmnt-view-delivery-order>
               </ng-template>
             </mat-tab>
 
-            <mat-tab label="Summary">
+            <mat-tab *ngIf="IsSummary" label="Summary">
               <ng-template matTabContent>
                 <agrmnt-view-summary [agrmntId]="AgrmntId"></agrmnt-view-summary>
               </ng-template>
             </mat-tab>
 
-            <mat-tab label="Document">
+            <mat-tab *ngIf="IsDocument" label="Document">
               <ng-template matTabContent>
                 <agrmnt-view-document [agrmntId]="AgrmntId"></agrmnt-view-document>
               </ng-template>
@@ -97,7 +92,6 @@
 
             <mat-tab label="Invoice Data">
               <ng-template matTabContent>
-                <!-- <app-invoice-view></app-invoice-view> -->
               </ng-template>
             </mat-tab>
 
