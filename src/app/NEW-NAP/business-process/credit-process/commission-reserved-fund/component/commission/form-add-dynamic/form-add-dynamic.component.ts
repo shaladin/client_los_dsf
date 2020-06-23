@@ -3,6 +3,10 @@ import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { ResponseTaxDetailObj } from 'app/shared/model/Tax/ResponseTaxDetail.Model';
+import { ResponseTaxObj } from 'app/shared/model/Tax/ResponseTax.Model';
+import { TaxTrxDObj } from 'app/shared/model/Tax/TaxTrxD.Model';
+import { VendorBankAccObj } from 'app/shared/model/VendorBankAcc.Model';
 
 @Component({
   selector: 'app-form-add-dynamic',
@@ -72,15 +76,13 @@ export class FormAddDynamicComponent implements OnInit {
     var content = this.FormInputObj["content"];
     // console.log("Obj Code");
     // console.log(code);
-    var url;
     var obj;
     if(content == AdInsConstant.ContentSupplier){
-      url = AdInsConstant.GetListVendorBankAccByVendorCode;
       obj = {
         VendorCode: code,
         RowVersion: ""
       };
-      this.http.post(url, obj).subscribe(
+      this.http.post<VendorBankAccObj>(AdInsConstant.GetListVendorBankAccByVendorCode, obj).subscribe(
         (response) =>{
           // console.log("response bank");
           // console.log(response);
@@ -90,6 +92,7 @@ export class FormAddDynamicComponent implements OnInit {
               Key: response["ReturnObject"][i]["BankAccountNo"],
               Value: response["ReturnObject"][i]["BankAccountName"],
               BankCode: response["ReturnObject"][i]["BankCode"],
+              BankName: response["ReturnObject"][i]["BankName"],
               BankBranch: ""
             }) as FormGroup;
             this.FormObj.controls.arr["controls"][idx].controls.DropDownList.push(eachDDLDetail);
@@ -101,12 +104,11 @@ export class FormAddDynamicComponent implements OnInit {
         }
       );
     }else if(content == AdInsConstant.ContentSupplierEmp){
-      url = AdInsConstant.GetListBankByVendorEmpNoAndVendorCode;
       obj = {
         VendorEmpNo: code,
         VendorCode: this.FormObj.value.arr[idx].SupplCode,
       };
-      this.http.post(url, obj).subscribe(
+      this.http.post<VendorBankAccObj>(AdInsConstant.GetListBankByVendorEmpNoAndVendorCode, obj).subscribe(
         (response) =>{
           // console.log("response bank");
           // console.log(response);
@@ -116,6 +118,7 @@ export class FormAddDynamicComponent implements OnInit {
               Key: response["ReturnObject"][i]["BankAccountNo"],
               Value: response["ReturnObject"][i]["BankAccountName"],
               BankCode: response["ReturnObject"][i]["BankCode"],
+              BankName: response["ReturnObject"][i]["BankName"],
               BankBranch: ""
             }) as FormGroup;
             this.FormObj.controls.arr["controls"][idx].controls.DropDownList.push(eachDDLDetail);
@@ -131,6 +134,7 @@ export class FormAddDynamicComponent implements OnInit {
         Key: this.FormInputObj["BankData"].BankAccNo,
         Value: this.FormInputObj["BankData"].BankAccName,
         BankCode: this.FormInputObj["BankData"].BankCode,
+        BankName: this.FormInputObj["BankData"].BankName,
         BankBranch: this.FormInputObj["BankData"].BankBranch
       }) as FormGroup;
       this.FormObj.controls.arr["controls"][idx].controls.DropDownList.push(eachDDLDetail);
@@ -149,14 +153,17 @@ export class FormAddDynamicComponent implements OnInit {
       BankAccountName: [''],
       BankBranch: [''],
       BankCode: [''],
+      BankName: [''],
       MrIdTypeCode: [''],
       MrTaxCalcMethodCode: [''],
       TaxpayerNo: [''],
       GrossYield: [0],
       TotalCommisionAmount: [0, Validators.pattern("^[0-9]+([,.][0-9]+)?$")],
+      TotalExpenseAmount: [0, Validators.pattern("^[0-9]+([,.][0-9]+)?$")],
       TotalTaxAmount: [0, Validators.pattern("^[0-9]+([,.][0-9]+)?$")],
       TotalVATAmount: [0, Validators.pattern("^[0-9]+([,.][0-9]+)?$")],
       TotalPenaltyAmount: [0, Validators.pattern("^[0-9]+([,.][0-9]+)?$")],
+      TotalDisburseAmount: [0, Validators.pattern("^[0-9]+([,.][0-9]+)?$")],
       RowVersion: [''],
       ListAllocated: this.fb.array([]),
       DropDownList: this.fb.array([])
@@ -267,49 +274,58 @@ export class FormAddDynamicComponent implements OnInit {
         Content: this.FormInputObj["content"],
       };
       console.log(obj);
-      this.http.post(AdInsConstant.GetAppCommissionTax, obj).subscribe(
+      this.http.post<ResponseTaxDetailObj>(AdInsConstant.GetAppCommissionTax, obj).subscribe(
         (response) => {
-          console.log("response Tax");
-          console.log(this.FormInputObj["content"]);
-          console.log(response);
-          var temp = response["ResponseTaxObjs"];
+          // console.log("response Tax");
+          // console.log(this.FormInputObj["content"]);
+          // console.log(response);
           len = this.arr.controls.length;
-          if(temp.length == len){
-            for(var i=0;i<temp.length;i++){
+          if(response.ResponseTaxObjs.length == len){
+            for(var i=0;i<response.ResponseTaxObjs.length;i++){
               // console.log(len - i - 1);
-              var data = temp[i]["ReturnObject"];
+              var data: ResponseTaxObj = response.ResponseTaxObjs[i];
+              // console.log(data);
               var totalTaxAmount = 0;
               var totalVATAmount = 0;
-              var grandTotalPenalty = 0;
-              for(var j=0;j<data.length;j++){
+              var totalExpenseAmount = 0;
+              var totalDisburseAmount = 0;
+              var totalPenaltyAmt = 0;
+              for(var j=0;j<data.ReturnObject.length;j++){
                 var taxAmt=0;
                 var vatAmt=0;
-                var totalPenaltyAmount = 0;
-                for(var k=0;k<data[j].length;k++){
-                  if(data[j][k].TaxTypeCode == AdInsConstant.TaxTypeCode){
-                    totalTaxAmount += data[j][k].TaxAmt;
-                    totalPenaltyAmount += data[j][k].PenaltyAmt;
-                    taxAmt = data[j][k].TaxAmt;          
-                  }else if(data[j][k].TaxTypeCode == AdInsConstant.VATTypeCode){
-                    totalVATAmount += data[j][k].TaxAmt;
-                    totalPenaltyAmount += data[j][k].PenaltyAmt;
-                    vatAmt = data[j][k].TaxAmt;
+                var totalPenaltyDAmount = 0;
+                totalExpenseAmount += data.ReturnObject[j].ExpenseAmt;
+                totalDisburseAmount += data.ReturnObject[j].DisburseAmt;
+                totalPenaltyAmt += data.ReturnObject[j].PenaltyAmt;
+                var TaxTrxDObjData: Array<TaxTrxDObj> = data.ReturnObject[j].TaxTrxD;
+                // console.log(data.ReturnObject[j].ExpenseAmt);
+                // console.log(TaxTrxDObjData);
+                for(var k=0;k<TaxTrxDObjData.length;k++){
+                  totalPenaltyDAmount += TaxTrxDObjData[k].PenaltyAmt;
+                  if(TaxTrxDObjData[k].TaxTypeCode == AdInsConstant.TaxTypeCode){
+                    totalTaxAmount += TaxTrxDObjData[k].TaxAmt;
+                    taxAmt = TaxTrxDObjData[k].TaxAmt;          
+                  }else if(TaxTrxDObjData[k].TaxTypeCode == AdInsConstant.VATTypeCode){
+                    totalVATAmount += TaxTrxDObjData[k].TaxAmt;
+                    vatAmt = TaxTrxDObjData[k].TaxAmt;
                   }
                 }
-                grandTotalPenalty += totalPenaltyAmount;
+                // grandTotalPenalty += totalPenaltyDAmount;
                 this.FormObj.controls.arr["controls"][len -1 - i].controls.ListAllocated.controls[j].patchValue({
                   TaxAmt: taxAmt,
                   VatAmt: vatAmt,
-                  PenaltyAmt: totalPenaltyAmount,
+                  PenaltyAmt: totalPenaltyDAmount,
                 });
               }
               this.FormObj.controls.arr["controls"][len - 1 - i].patchValue({
-                MrIdTypeCode: temp[i].MrIdTypeCode,
-                MrTaxCalcMethodCode: temp[i].MrTaxCalcMethodCode,
-                TaxpayerNo: temp[i].TaxpayerNo,
+                MrIdTypeCode: data.MrIdTypeCode,
+                MrTaxCalcMethodCode: data.MrTaxCalcMethodCode,
+                TaxpayerNo: data.TaxpayerNo,
                 TotalTaxAmount: totalTaxAmount,
                 TotalVATAmount: totalVATAmount,
-                TotalPenaltyAmount: grandTotalPenalty,
+                TotalExpenseAmount: totalExpenseAmount,
+                TotalPenaltyAmount: totalPenaltyAmt,
+                TotalDisburseAmount: totalDisburseAmount,
                 GrossYield: response["GrossYield"],
               });
             }
@@ -413,7 +429,7 @@ export class FormAddDynamicComponent implements OnInit {
   }
 
   async GenerateExistingContentName(objExist, idx){
-    // console.log(objExist);
+    console.log(objExist);
     var idxDDLContent = this.DDLContentName.indexOf(this.DDLContentName.find(x => x.Key == objExist.CommissionRecipientRefNo));
          
     if(this.FormInputObj["content"]==AdInsConstant.ContentSupplierEmp)
@@ -430,6 +446,7 @@ export class FormAddDynamicComponent implements OnInit {
       BankAccountName: objExist.BankAccName,
       BankBranch: objExist.BankBranch,
       BankCode: objExist.BankCode,
+      BankName: objExist.BankName,
       MrIdTypeCode: objExist.MrTaxKindCode,
       MrTaxCalcMethodCode: objExist.MrTaxCalcMethodCode,
       TaxpayerNo: objExist.TaxpayerNo,
@@ -437,6 +454,8 @@ export class FormAddDynamicComponent implements OnInit {
       TotalTaxAmount: objExist.TaxAmt,
       TotalVATAmount: objExist.VatAmt,
       TotalPenaltyAmount: objExist.PenaltyAmt,
+      TotalDisburseAmount: objExist.TotalDisburseAmt,
+      TotalExpenseAmount: objExist.TotalExpenseAmt,
       RowVersion: objExist.RowVersion
     });
 
@@ -620,7 +639,8 @@ export class FormAddDynamicComponent implements OnInit {
       BankAccountNo: ddlObj.Key,
       BankAccountName: ddlObj.Value,
       BankBranch: ddlObj.BankBranch,
-      BankCode: ddlObj.BankCode
+      BankCode: ddlObj.BankCode,
+      BankName: ddlObj.BankName
     });
     
     this.PassData(AdInsConstant.MessagePassData);

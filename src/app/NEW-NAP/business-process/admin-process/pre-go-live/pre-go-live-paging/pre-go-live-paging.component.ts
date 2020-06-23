@@ -3,7 +3,7 @@ import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-pre-go-live-paging',
@@ -13,7 +13,9 @@ export class PreGoLivePagingComponent implements OnInit {
 
   inputPagingObj: any;
   bizTemplateCode :any;
-  constructor(private route: ActivatedRoute) {
+  token : any = localStorage.getItem("Token");
+  
+  constructor(private route: ActivatedRoute, private router: Router) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.bizTemplateCode = params["BizTemplateCode"];
@@ -50,5 +52,12 @@ export class PreGoLivePagingComponent implements OnInit {
     critBizTemplate.value = this.bizTemplateCode;
     this.inputPagingObj.addCritInput.push(critInput);
     this.inputPagingObj.addCritInput.push(critBizTemplate);
+  }
+
+  GetCallBack(ev: any){
+    if(ev.Key == "ViewProdOffering"){
+      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.RowObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.RowObj.ProdOfferingVersion  + "&Token=" + this.token;
+      this.router.navigate([]).then(result => { window.open(link, '_blank'); });
+    }
   }
 }

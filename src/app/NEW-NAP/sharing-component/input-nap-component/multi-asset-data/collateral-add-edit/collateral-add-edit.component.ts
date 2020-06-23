@@ -146,7 +146,7 @@ export class CollateralAddEditComponent implements OnInit {
     AssetRegion:[''],
     Color:[''],
     Transmition:[''],
-    TaxCityIssuer:[''],
+    TaxCityIssuer:['', [Validators.required]],
     Category:[''],
     CopyFromLegal:[''],
     BpkpIssueDate:[''],
@@ -226,7 +226,38 @@ export class CollateralAddEditComponent implements OnInit {
 
   CollChange(){
     this.collateral = this.AddCollForm.controls["Collateral"].value;
+
+    if (this.collateral == 'Exists')
+    {
+      // this.clearList();
+      // var listCollateralNo: Array<string> = new Array();
+      // for (let index = 0; index < this.listCollateralData.length; index++) {
+      //   if (this.listCollateralData[index].CollateralStat == 'EXISTING')
+      //     listCollateralNo.push(this.listCollateralData[index].CollateralNo);
+      // }
+
+      // if (listCollateralNo.length > 0)
+      //   this.BindExistingCollateralSavedData(listCollateralNo);
+    }
+
     console.log(this.collateral);
+  }
+
+  BindExistingCollateralSavedData(listCollateralNo: any) {
+    const addCritCustNo = new CriteriaObj();
+    addCritCustNo.DataType = 'text';
+    addCritCustNo.propName = 'CU.CUST_NO';
+    addCritCustNo.restriction = AdInsConstant.RestrictionEq;
+    addCritCustNo.value = this.custNo;
+    this.tempPagingObj.addCritInput.push(addCritCustNo);
+
+    const addCritCollateralNo = new CriteriaObj();
+    addCritCollateralNo.DataType = 'text';
+    addCritCollateralNo.propName = 'CL.COLLATERAL_NO';
+    addCritCollateralNo.restriction = AdInsConstant.RestrictionNotIn;
+    addCritCollateralNo.listValue = listCollateralNo;
+    this.tempPagingObj.addCritInput.push(addCritCollateralNo);
+    this.tempPagingObj.isReady = true;
   }
 
   collateralTypeHandler(){
@@ -630,7 +661,7 @@ export class CollateralAddEditComponent implements OnInit {
     this.appCollateralDataObj.AppCollateralObj.SerialNo2 = this.AddCollForm.controls["SerialNo2"].value;
     this.appCollateralDataObj.AppCollateralObj.SerialNo3 = this.AddCollForm.controls["SerialNo3"].value;
     this.appCollateralDataObj.AppCollateralObj.SerialNo4 = this.AddCollForm.controls["SerialNo4"].value;
-    this.appCollateralDataObj.AppCollateralObj.CollateralValueAmt = this.AddCollForm.controls["CollateralValueAmt"].value;
+    
     this.appCollateralDataObj.AppCollateralObj.CollateralNotes = this.AddCollForm.controls["Notes"].value;
     this.appCollateralDataObj.AppCollateralObj.AssetTypeCode = this.AddCollForm.controls["AssetTypeCode"].value;
     this.appCollateralDataObj.AppCollateralObj.CollateralStat = collateralStat == "New" ? "NEW" : "EXISTING";
@@ -735,6 +766,17 @@ export class CollateralAddEditComponent implements OnInit {
       {
         this.appCollateralDataObj = new AppCollateralDataObj();
         this.setCollateralInfo();
+        
+        if(this.AddCollForm.controls["CollateralValueAmt"].value != "")
+        {
+          this.appCollateralDataObj.AppCollateralObj.CollateralValueAmt = this.AddCollForm.controls["CollateralValueAmt"].value;
+        }
+        else
+        {
+          this.toastr.errorMessage("Please Fill The Collateral Price!");
+          return
+        }
+
         this.setCollateralOwner();
         this.setCollateralLocation();
         this.setCollateralPercentage();
@@ -746,8 +788,8 @@ export class CollateralAddEditComponent implements OnInit {
           (response) => {
             console.log(response);
             this.toastr.successMessage(response["message"]);
-            //this.router.navigate(["/Nap/AssetData/Paging"]);
             this.collValue.emit({mode : 'paging'});
+            this.clearList();
           },
           (error) => {
             console.log(error);
@@ -758,6 +800,17 @@ export class CollateralAddEditComponent implements OnInit {
       {
         this.appCollateralDataObj = new AppCollateralDataObj();
         this.setCollateralInfo();
+        
+        if(this.AddCollForm.controls["CollateralValueAmt"].value != "")
+        {
+          this.appCollateralDataObj.AppCollateralObj.CollateralValueAmt = this.AddCollForm.controls["CollateralValueAmt"].value;
+        }
+        else
+        {
+          this.toastr.errorMessage("Please Fill The Collateral Price!");
+          return
+        }
+        
         this.setCollateralOwner();
         this.setCollateralLocation();
         this.setCollateralPercentage();
@@ -785,11 +838,20 @@ export class CollateralAddEditComponent implements OnInit {
     }
   }
 
+  getListTemp(ev) {
+    this.listSelectedId = ev.TempListId;
+  }
+
+  clearList() {
+    this.listSelectedId = [];
+    this.tempPagingObj.addCritInput = new Array<CriteriaObj>();
+  }
+
   SaveExistingCollateral()
   {
     this.appCollateralObj = new AppCollateralObj();
     this.appCollateralObj.AppId = this.AppId;
-    this.appCollateralObj.ListCollateralId =  new Array();
+    this.appCollateralObj.ListCollateralId = new Array();
 
     if (this.listSelectedId.length == 0) {
       this.toastr.errorMessage('Please add at least one data');
@@ -801,6 +863,7 @@ export class CollateralAddEditComponent implements OnInit {
       response => {
         this.toastr.successMessage(response['message']);
         this.collValue.emit({mode : 'paging'});
+        this.clearList();
       },
       error => {
         console.log(error);
@@ -810,7 +873,7 @@ export class CollateralAddEditComponent implements OnInit {
 
   SaveForm()
   {
-
+    this.clearList();
   }
 
   // delete(MouCustCollId) {

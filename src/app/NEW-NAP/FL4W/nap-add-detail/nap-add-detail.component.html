@@ -94,7 +94,7 @@
             <div id="referantor-tab" class="content" role="tabpanel" aria-labelledby="referantor-tab-trigger">
               <app-referantor-data-FL4W *ngIf="AppStepIndex == 3 && stepperMode == 'PERSONAL'" [appId]="appId"
               [showCancel]="showCancel" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()">
-              </app-referantor-data-FL4W>
+              </app-referantor-data-FL4W> 
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
               <app-application-data-FL4W *ngIf="AppStepIndex == 4 && stepperMode == 'PERSONAL'" [AppId]="appId"

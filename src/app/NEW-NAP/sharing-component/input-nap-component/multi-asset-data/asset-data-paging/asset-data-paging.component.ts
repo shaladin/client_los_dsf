@@ -31,7 +31,7 @@ export class AssetDataPagingComponent implements OnInit {
   @Input() AppId: number;
   editAsset: string;
   editColl: string;
-
+  @Input() showCancel: boolean = true;
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) { 
     this.getListAppAssetData = AdInsConstant.GetAppAssetListByAppId;
     this.getListAppCollateral = AdInsConstant.GetListAppCollateralByAppId;

@@ -70,33 +70,6 @@ export class NapFromLeadPagingComponent implements OnInit {
     critObj.propName = 'LEAD_STAT';
     critObj.value = 'RAPP';
     this.arrCrit.push(critObj);
-    
-    critObj = new CriteriaObj();
-    critObj.restriction = AdInsConstant.RestrictionIn;
-    if(this.userAccess.MrOfficeTypeCode!=AdInsConstant.CENTER_GROUP_CODE){
-      critObj.propName = 'L.ORI_OFFICE_CODE';
-      critObj.listValue = [this.userAccess.OfficeCode];
-    }else{
-      critObj.propName = 'L.ORI_OFFICE_CODE';
-      var obj = { CenterGrpCode: AdInsConstant.CENTER_GROUP_CODE };
-      this.http.post(AdInsConstant.GetListCenterGrpMemberByCenterGrpCode, obj).subscribe(
-        (response) => {
-          // console.log(response);
-          var CenterGrpOfficeMbrObjs : Array<CenterGrpOfficeMbrObj> = response["ListCenterGrpOfficeMbr"];
-
-          var listDataTemp = new Array();
-          for(var i=0;i<CenterGrpOfficeMbrObjs.length;i++){
-            listDataTemp.push(CenterGrpOfficeMbrObjs[i].RefOfficeCode);
-          } 
-          critObj.listValue = listDataTemp;
-        },
-        (error) => {
-          console.log(error);
-        }
-      )
-    }
-    // critObj.value = localStorage.getItem("LobCode");
-    this.arrCrit.push(critObj);
   }
 
   AddApp(ev){

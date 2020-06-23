@@ -1,11 +1,12 @@
 export class AppAssetSupplEmpObj {
-  AppAssetSupplEmpId: any;
-  AppAssetId: any;
-  SupplEmpNo: any;
-  SupplEmpName: any;
-  MrSupplEmpPositionCode: any;
-  ReportToSupplEmpNo: any;
-  RowVersion: any;
+  AppAssetSupplEmpId: number;
+  AppAssetId: number;
+  SupplEmpNo: string;
+  SupplEmpName: string;
+  MrSupplEmpPositionCode: string;
+  MrSupplEmpPositionCodeDesc: string;
+  ReportToSupplEmpNo: string;
+  RowVersion: string;
 
   constructor() {
     this.AppAssetSupplEmpId = 0;

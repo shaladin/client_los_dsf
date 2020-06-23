@@ -240,4 +240,8 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
     var BizTemplateCode = localStorage.getItem("BizTemplateCode")
     this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
   }
+
+  OpenAppView(appId){
+    window.open( environment.losR3Web + "/Nap/View/AppView?AppId=" + appId, "_blank");
+  }
 }

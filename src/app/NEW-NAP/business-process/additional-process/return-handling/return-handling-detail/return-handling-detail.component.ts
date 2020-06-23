@@ -96,7 +96,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
     var reqObj = new ReturnHandlingDObj();
     reqObj.ReturnHandlingHId = this.returnHandlingHId;
     reqObj.MrReturnTaskCode = this.ReturnHandlingForm.controls.MrReturnTaskCode.value;
-    reqObj.ReturnStat = "NEW";
+    reqObj.ReturnStat = AdInsConstant.ReturnStatNew;
     reqObj.ReturnHandlingNotes = this.ReturnHandlingForm.controls.ReturnHandlingNotes.value;
 
     this.http.post(AdInsConstant.AddReturnHandlingD, reqObj).subscribe(
@@ -116,7 +116,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
       var reqObj = new ReturnHandlingDObj();
       reqObj.ReturnHandlingDId = item.ReturnHandlingDId;
       reqObj.ReturnHandlingHId = this.returnHandlingHId;
-      reqObj.ReturnStat = "REQ";
+      reqObj.ReturnStat = AdInsConstant.ReturnStatRequest;
       reqObj.MrReturnTaskCode = item.MrReturnTaskCode;
       reqObj.AppId = this.appId;
       reqObj.RowVersion = item.RowVersion;
