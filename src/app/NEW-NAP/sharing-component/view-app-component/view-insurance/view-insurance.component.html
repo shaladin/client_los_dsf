@@ -1,5 +1,5 @@
 <div *ngIf="appInsObjObj?.InsAssetCoveredBy == 'CO'">
-  <lib-ucSubsection [id]="'insuranceObjectId'" [title]="'Insurance Object: ' + appAssetObj.FullAssetName " [panel]="'insuranceObject'">
+  <lib-ucSubsection [id]="'insuranceObjectId'" [title]="'Insurance Object: ' + appAssetObj?.FullAssetName + appCollateralObj?.FullAssetName " [panel]="'insuranceObject'">
   </lib-ucSubsection>
   <div id="insuranceObject">
     <div class="row">
@@ -103,7 +103,7 @@
 </div>
 
 <div *ngIf="appInsObjObj?.InsAssetCoveredBy == 'CU'">
-  <lib-ucSubsection [id]="'insuranceObjectId'" [title]="'Insurance Object: ' + appAssetObj.FullAssetName " [panel]="'insuranceObject'">
+  <lib-ucSubsection [id]="'insuranceObjectId'" [title]="'Insurance Object: ' + appAssetObj?.FullAssetName + appCollateralObj?.FullAssetName " [panel]="'insuranceObject'">
   </lib-ucSubsection>
   <div id="insuranceObject">
     <div class="row">
@@ -148,7 +148,7 @@
 </div>
 
 <div *ngIf="appInsObjObj?.InsAssetCoveredBy == 'CUCO'">
-  <lib-ucSubsection [id]="'insuranceObjectId'" [title]="'Insurance Object: ' + appAssetObj.FullAssetName " [panel]="'insuranceObject'">
+  <lib-ucSubsection [id]="'insuranceObjectId'" [title]="'Insurance Object: ' + appAssetObj?.FullAssetName + appCollateralObj?.FullAssetName " [panel]="'insuranceObject'">
   </lib-ucSubsection>
   <div id="insuranceObject">
     <div class="row">
@@ -291,7 +291,7 @@
 </div>
 
 <div *ngIf="appInsObjObj?.InsAssetCoveredBy == 'OFF'">
-  <lib-ucSubsection [id]="'insuranceObjectId'" [title]="'Insurance Object: ' + appAssetObj.FullAssetName " [panel]="'insuranceObject'">
+  <lib-ucSubsection [id]="'insuranceObjectId'" [title]="'Insurance Object: ' + appAssetObj?.FullAssetName + appCollateralObj?.FullAssetName " [panel]="'insuranceObject'">
   </lib-ucSubsection>
   <div id="insuranceObject">
     <div class="row">

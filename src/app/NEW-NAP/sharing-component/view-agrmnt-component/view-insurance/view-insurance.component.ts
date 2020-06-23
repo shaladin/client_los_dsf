@@ -1,55 +1,81 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { AppAssetDataDetailComponent } from '../../view-app-component/app-asset-data/app-asset-data-detail/app-asset-data-detail.component';
+import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
+import { environment } from 'environments/environment';
+import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
+import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
 
 @Component({
   selector: 'agrmnt-view-insurance',
   templateUrl: './view-insurance.component.html'
 })
-export class ViewInsuranceComponent implements OnInit {
+export class ViewAgrmntInsuranceComponent implements OnInit {
   @Input() agrmntId: number = 0;
   AppId: number = 0;
+  AppAssetId: number = 0;
   appInsObjs: any;
   appCollObjs: any;
   custTotalPremi: number;
   totalCapitalizedAmt: number;
   totalCustPaidAmt: number;
   ResponseAppDetailData: any;
+  PaidAmtByCust: number = 0;
+  InsCpltzAmt: number  = 0;
+  InsDiscAmt: number  = 0;
+  TotalPremiumToCust: number  = 0;
+  link: string = 'false';
+
+  inputGridObj: any;
+  result : any = new Array();
+  resultData : any;
+  closeResult: any;
+  token : any = localStorage.getItem("Token");
+  appAssetObj: AppAssetObj = new AppAssetObj();
+  gridAssetDataObj: InputGridObj = new InputGridObj();
+  listAppAssetObj: any;
 
   constructor(
-    private httpClient: HttpClient,
-    private modalService: NgbModal
-  ) {
-    this.custTotalPremi = 0;
-    this.totalCapitalizedAmt = 0;
-    this.totalCustPaidAmt = 0;
-  }
+    private http: HttpClient,
+  ) {}
 
   ngOnInit() {
-    this.GetAppAndAppCustDetailByAgrmntId();
-    this.httpClient.post(AdInsConstant.GetListAppInsObjByAgrmntIdForView, { AgrmntId: this.agrmntId }).subscribe(
-      (response: any) => {
-        this.appInsObjs = response.LoanAppInsObjects;
-        this.appCollObjs = response.CollateralAppInsObjects;
-        this.custTotalPremi = response.AppInsurance.TotalCustPremiAmt;
-        this.totalCapitalizedAmt = response.AppInsurance.TotalInsCptlzAmt;
-        this.totalCustPaidAmt = response.AppInsurance.TotalPremiPaidByCustAmt;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
-
-  GetAppAndAppCustDetailByAgrmntId() {
-    var obj = { agrmntId: this.agrmntId };
-    this.httpClient.post(AdInsConstant.GetAppAndAppCustDetailByAgrmntId, obj).toPromise().then(
+    console.log('Masuk');
+    this.inputGridObj = new InputGridObj();
+    this.inputGridObj.pagingJson = "./assets/ucgridview/gridInsDataView.json";
+    this.inputGridObj.deleteUrl = AdInsConstant.DeleteAppGuarantor;
+    
+    this.http.post(AdInsConstant.GetAppAssetListForInsuranceByAgrmntId, { AgrmntId: this.agrmntId }).subscribe(
       (response) => {
-        console.log(response);
-        this.ResponseAppDetailData = response;
-        this.AppId = this.ResponseAppDetailData.AppId;
+        this.listAppAssetObj = response["ReturnObject"];
+        console.log(this.listAppAssetObj);
+
+        this.inputGridObj.resultData = {
+          Data: ""
+        }
+        this.inputGridObj.resultData["Data"] = new Array();
+        this.inputGridObj.resultData.Data = response["ReturnObject"];
+        this.result = this.inputGridObj.resultData.Data;
+        console.log(this.result);
+
+        this.PaidAmtByCust = 0;
+        this.InsCpltzAmt = 0;
+        this.InsDiscAmt = 0;
+        this.TotalPremiumToCust = 0;
+
+        for (var i = 0; i < this.listAppAssetObj.length; i++) {
+          if (this.listAppAssetObj[i].PaidAmtByCust != null)
+            this.PaidAmtByCust += this.listAppAssetObj[i].PaidAmtByCust;
+
+          if (this.listAppAssetObj[i].InsCpltzAmt != null)
+            this.InsCpltzAmt += this.listAppAssetObj[i].InsCpltzAmt;
+
+          if (this.listAppAssetObj[i].InsDiscAmt != null)
+            this.InsDiscAmt += this.listAppAssetObj[i].InsDiscAmt;
+
+          if (this.listAppAssetObj[i].TotalCustPremiAmt != null)
+            this.TotalPremiumToCust += this.listAppAssetObj[i].TotalCustPremiAmt;
+        }
       },
       (error) => {
         console.log(error);
@@ -57,14 +83,9 @@ export class ViewInsuranceComponent implements OnInit {
     );
   }
 
-  viewDetailLoanHandler(appAssetId) {
-    const modalAssetDetail = this.modalService.open(AppAssetDataDetailComponent);
-    modalAssetDetail.componentInstance.AppAssetId = appAssetId;
-    modalAssetDetail.componentInstance.AppId = this.AppId;
-    modalAssetDetail.result.then().catch((error) => {
-      if (error != 0) {
-        console.log(error);
-      }
-    });
+  getEvent(event){
+    this.AppAssetId = event.RowObj.AppAssetId;
+    this.link = environment.losR3Web + "/Nap/FinanceLeasing/ViewInsurance?AppAssetId=" + event.RowObj.AppAssetId;
+    window.open(this.link, '_blank');
   }
 }

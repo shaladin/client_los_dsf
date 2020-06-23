@@ -32,7 +32,9 @@ import { AppInsAddCvgObj } from 'app/shared/model/AppInsAddCvgObj.Model';
 })
 export class InsuranceMultiAssetDataComponent implements OnInit {
   @Input() appId: number;
+  @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
   // Insurance Data
   AppAssetId: number = 0;
@@ -141,6 +143,10 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     this.gridAssetDataObj.pagingJson = "./assets/ucgridview/gridAssetDataView.json";
     this.gridAppCollateralObj.pagingJson = "./assets/ucgridview/gridAppCollateralInsurance.json";
     this.BindMultiInsGridData();
+  }
+
+  CancelHandler(){
+    this.outputCancel.emit();
   }
 
   BindMultiInsGridData() {

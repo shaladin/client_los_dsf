@@ -200,6 +200,12 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
   }
 
   Back() {
-    this.router.navigateByUrl("/Nap/AdditionalProcess/AppDupCheck/Company?AppId=" + this.AppId + "&WfTaskListId=" + this.WfTaskListId);
+    // this.router.navigateByUrl("/Nap/AdditionalProcess/AppDupCheck/Company?AppId=" + this.AppId + "&WfTaskListId=" + this.WfTaskListId);
+    var BizTemplateCode = localStorage.getItem("BizTemplateCode")
+    this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
+  }
+
+  OpenAppView(appId){
+    window.open( "/Nap/View/AppView?AppId=" + appId, "_blank");
   }
 }

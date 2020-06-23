@@ -6,6 +6,7 @@ import { AdminProcessService } from 'app/NEW-NAP/business-process/admin-process/
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-agrmnt-activation-detail',
@@ -30,6 +31,7 @@ export class AgrmntActivationDetailComponent implements OnInit {
   WfTaskListId: number;
   TrxNo: string;
   AgrmntActForm: FormGroup;
+  BizTemplateCode: string;
   constructor(private fb: FormBuilder, private toastr: NGXToastrService, private route: ActivatedRoute, private adminProcessSvc: AdminProcessService, private router: Router, private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
@@ -38,11 +40,28 @@ export class AgrmntActivationDetailComponent implements OnInit {
     });
 
     this.AgrmntActForm = fb.group({
-      'CreateDt': [this.CreateDt, Validators.compose([Validators.required])]
+      'CreateDt': [this.CreateDt, Validators.compose([Validators.required])],
+      'AgrmntNo' : [''],
+      'isOverwrite' :[this.isOverwrite]
     });
-
+    this.AgrmntActForm.controls['AgrmntNo'].disable();
   }
-
+  onChange(){
+    console.log(this.CreateDt);
+    if(this.isOverwrite == true){
+      this.AgrmntActForm.controls['AgrmntNo'].setValidators([Validators.required]);
+      this.AgrmntActForm.controls['AgrmntNo'].updateValueAndValidity();
+      this.AgrmntActForm.controls['AgrmntNo'].enable();
+    }
+    else{
+      this.AgrmntActForm.controls['AgrmntNo'].clearValidators();
+      this.AgrmntActForm.controls['AgrmntNo'].updateValueAndValidity();
+      this.AgrmntActForm.controls['AgrmntNo'].disable();
+      this.AgrmntActForm.patchValue({
+        'AgrmntNo' :''
+      });
+    }
+  }
   ngOnInit() {
     this.arrValue.push(this.AppId);
     this.ClaimTask(this.WfTaskListId);
@@ -107,21 +126,22 @@ export class AgrmntActivationDetailComponent implements OnInit {
   }
   Submit() {
     this.markFormTouched(this.AgrmntActForm);
+    if(this.tempListId.length == 0){
+      this.toastr.typeErrorCustom("Please select at least one Asset");
+      return;
+    }
     if (this.AgrmntActForm.valid) {
       var Obj = {
         CreateDt: this.CreateDt,
         ListAppAssetId: this.tempListId,
         TaskListId: this.WfTaskListId,
-        TransactionNo: this.TrxNo
+        TransactionNo: this.TrxNo,
+        AgreementNo : this.AgrmntNo
       }
-      this.adminProcessSvc.SubmitAgrmntActivationByHuman(Obj).subscribe((response) => {
-        this.toastr.successMessage(response["message"]);
-        this.router.navigate(["/Nap/AdminProcess/AgrmntActivation/Paging"]);
-      })
-    }
-    else
-    {
-      this.AgrmntActForm.controls['terms'].setValue(false);
+      this.adminProcessSvc.SubmitAgrmntActivationByHuman(Obj).subscribe((response) => {        
+        var link = environment.losR3Web + "/Nap/AdminProcess/AgrmntActivation/Paging";
+        this.router.navigate([]).then(result => { window.open(link, '_self'); });
+      });
     }
   }
 
@@ -151,4 +171,10 @@ export class AgrmntActivationDetailComponent implements OnInit {
       else { control.markAsTouched(); };
     });
   };
+
+  Cancel(){
+    this.BizTemplateCode = localStorage.getItem("BizTemplateCode");
+    var link = environment.losR3Web + "/Nap/AdminProcess/AgrmntActivation/Paging?BizTemplateCode=" + this.BizTemplateCode;
+    this.router.navigate([]).then(result => { window.open(link, '_self'); });
+  }
 }

@@ -46,7 +46,7 @@
       "isQueryIn": true,
       "url": "",
       "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
-      "label": "OFFICE NAME",
+      "label": "Office Name",
       "items": [],
       "itemsUrl": []
     },
@@ -54,7 +54,7 @@
       "type": "dropdown",
       "name": "wFht.CLAIM_STAT",
       "id": "ActiveStatusId",
-      "label": "TASK CLAIM STATUS",
+      "label": "Task Claim Status",
       "value": "",
       "placeholder": "Placeholder",
       "isFromURL": false,
@@ -81,7 +81,7 @@
     }
   ],
   "querystring": {
-    "select": "SELECT wFht.WF_TASK_LIST_ID AS TaskListId, wFht.USERNAME AS Username, agr.AGRMNT_NO AS AgrmntNo, app.APP_NO AS AppNo, agr.CUST_NAME AS CustName, agr.PROD_OFFERING_NAME AS ProdOfferingName, app.LOB_CODE AS LobCode, agr.AGRMNT_ID AS AgrmntId, app.APP_ID AS AppId, app.BIZ_TEMPLATE_CODE as BizTemplateCode ",
+    "select": "SELECT wFht.WF_TASK_LIST_ID AS TaskListId, wFht.USERNAME AS Username, agr.AGRMNT_NO AS AgrmntNo, app.APP_NO AS AppNo, agr.CUST_NAME AS CustName, agr.PROD_OFFERING_NAME AS ProdOfferingName, agr.PROD_OFFERING_CODE AS ProdOfferingCode, agr.PROD_OFFERING_VERSION AS ProdOfferingVersion, app.LOB_CODE AS LobCode, agr.AGRMNT_ID AS AgrmntId, app.APP_ID AS AppId, app.BIZ_TEMPLATE_CODE as BizTemplateCode ",
     "from": "FROM dbo.AGRMNT agr WITH(NOLOCK) JOIN dbo.APP app WITH(NOLOCK) ON app.APP_ID = agr.APP_ID JOIN dbo.V_WF_TASK_LIST wFht WITH(NOLOCK) ON agr.AGRMNT_NO = wFht.TRANSACTION_CODE",
     "where": "WHERE wFht.END_EXECUTING_DATE IS NULL"
   },
@@ -104,13 +104,13 @@
     },
     {
       "type": "sort",
-      "position": "left",
+      "position": "center",
       "label": "Application No",
       "name": "app.APP_NO"
     },
     {
       "type": "sort",
-      "position": "left",
+      "position": "center",
       "label": "Agreement No",
       "name": "agr.AGRMNT_NO"
     },
@@ -158,7 +158,7 @@
     },
     {
       "type": "link",
-      "position": "left",
+      "position": "center",
       "property": "AgrmntNo",
       "target": "_blank",
       "path": "/Nap/View/AgrmntView",
@@ -175,7 +175,8 @@
       "property": "CustName"
     },
     {
-      "type": "text",
+      "type": "callback",
+      "key": "ViewProdOffering",
       "position": "left",
       "property": "ProdOfferingName"
     },

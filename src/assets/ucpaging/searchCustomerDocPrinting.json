@@ -7,7 +7,7 @@
       "name": "MC.MOU_CUST_NO",
       "id": "MouCustNoId",
       "value": "",
-      "label": "MOU No",
+      "label": "Mou No",
       "placeholder": "Placeholder",
       "datatype": "text"
     },
@@ -22,7 +22,7 @@
       "isSelectOne": false,
       "url": "",
       "path":"/RefMaster/GetListKeyValueActiveByCode",
-      "label": "MOU TYPE",
+      "label": "Mou Type",
       "items": [],
       "itemsUrl": [],
       "criteriaPropName": "RefMasterTypeCode",
@@ -33,7 +33,7 @@
       "name": "MC.CUST_NAME",
       "id": "CustNameId",
       "value": "",
-      "label": "CUSTOMER NAME",
+      "label": "Customer Name",
       "placeholder": "Placeholder",
       "datatype": "text"
     },
@@ -41,7 +41,7 @@
       "type": "dropdown",
       "name": "MC.IS_REVOLVING",
       "id": "IsRevolvingId",
-      "label": "REVOLVING",
+      "label": "Revolving",
       "value": "",
       "placeholder": "Placeholder",
       "isFromURL": false,
@@ -63,7 +63,7 @@
       "name": "MC.MOU_CUST_DT",
       "id": "GreaterMouDtId",
       "value": "",
-      "label": "MOU DATE FROM",
+      "label": "Mou Date From",
       "restriction": "gte",
       "datatype": "date"
     },
@@ -72,7 +72,7 @@
       "name": "MC.MOU_CUST_DT",
       "id": "LessMouDtId",
       "value": "",
-      "label": "MOU DATE TO",
+      "label": "Mou Date To",
       "restriction": "lte",
       "datatype": "date"
     }
@@ -133,7 +133,7 @@
     }
   ],
   "querystring": {
-    "select": "SELECT MC.MOU_CUST_NO AS MouCustNo , MC.CUST_NAME AS CustName, MC.MOU_CUST_ID AS MouCustId, MC.MOU_CUST_DT AS MouCustDt, MC.END_DT AS EndDate, MC.PLAFOND_AMT AS PlafondAmt, MC.IS_REVOLVING AS IsRevolving, MC.REF_NO AS RefNo, MC.MR_MOU_TYPE_CODE AS MrMouTypeCode,  RM.DESCR AS MouType",
+    "select": "SELECT MC.MOU_CUST_NO AS MouCustNo , MC.CUST_NAME AS CustName, MC.MOU_CUST_ID AS MouCustId, MC.MOU_CUST_DT AS MouCustDt, MC.END_DT AS EndDate, MC.PLAFOND_AMT AS PlafondAmt, MC.IS_REVOLVING AS IsRevolving, MC.REF_NO AS RefNo, MC.MR_MOU_TYPE_CODE AS MrMouTypeCode,  RM.DESCR AS MouType, MC.CUST_NO AS CustNo",
     "from": "FROM dbo.MOU_CUST MC WITH(NOLOCK) JOIN dbo.MOU_CUST_SIGNER MCS WITH(NOLOCK) ON MCS.MOU_CUST_ID = MC.MOU_CUST_ID LEFT JOIN dbo.V_REF_MASTER RM ON RM.REF_MASTER_TYPE_CODE='MOU_TYPE' AND RM.MASTER_CODE = MC.MR_MOU_TYPE_CODE"
   },
   "bodyList": [
@@ -151,7 +151,8 @@
       ]
     },
     {
-      "type": "text",
+      "type": "callback",
+      "key": "customer",
       "position": "left",
       "property": "CustName"
     },

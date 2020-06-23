@@ -65,6 +65,8 @@ import { MouCancelComponent } from "./mou-cancel/mou-cancel.component";
 import { MouOsTcPagingComponent } from './mou-os-tc/mou-os-tc-paging/mou-os-tc-paging.component';
 import { MouOsTcDetailComponent } from './mou-os-tc/mou-os-tc-detail/mou-os-tc-detail.component';
 import { UnauthorizedPageComponent } from "./unauthorized-page/unauthorized-page.component";
+import { UcaddtotempModule } from '@adins/ucaddtotemp';
+import { MouViewListedCustFactoringComponent } from './mou-customer/mou-view/mou-view-listed-cust-factoring/mou-view-listed-cust-factoring.component';
 
 export const customCurrencyMaskConfig = {     
   align: "left",     
@@ -103,6 +105,7 @@ export const customCurrencyMaskConfig = {
     UcapprovalModule,
     UcapprovalhistModule,
     UcuploadModule,
+    UcaddtotempModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
   ],
   declarations: [
@@ -158,7 +161,8 @@ export const customCurrencyMaskConfig = {
     MouCancelComponent,
     MouOsTcPagingComponent,
     MouOsTcDetailComponent,
-    UnauthorizedPageComponent
+    UnauthorizedPageComponent,
+    MouViewListedCustFactoringComponent
   ],
   exports: [],
   providers: [NGXToastrService],
@@ -171,6 +175,7 @@ export const customCurrencyMaskConfig = {
     MouApprovalFactoringComponent,
     MouRequestAddcollComponent,
     MouCustListedCustFctrDetailComponent,
+    MouViewListedCustFactoringComponent
   ]
 })
 

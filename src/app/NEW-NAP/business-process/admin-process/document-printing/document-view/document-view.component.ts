@@ -42,6 +42,7 @@ export class DocumentViewComponent implements OnInit {
   agrmntDocPrintObj: AgrmntDocPrintObj;
   getUrl: string;
   RdlcReport: RdlcReportObj = new RdlcReportObj();
+  token = localStorage.getItem("Token");
 
   constructor(private http: HttpClient,
     private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService) {
@@ -139,6 +140,7 @@ export class DocumentViewComponent implements OnInit {
     let Obj = {
       RequestObject: this.RdlcReport
     };
+    //TEMUAN STEVEN INI URL GK BOLEH DI HARDCODE GINI
     this.http.post("http://r3app-server.ad-ins.com/FOUNDATION_R3/Report/GenerateReportSync", Obj).subscribe(
       (response) => {
         let linkSource: string = 'data:application/pdf;base64,' + response["ReturnObject"];
@@ -157,5 +159,13 @@ export class DocumentViewComponent implements OnInit {
       (error) => {
         console.log(error);
       });
+  }
+
+  GetCallBack(ev: any){
+    if(ev.Key == "ViewProdOffering"){
+      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.ViewObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.ViewObj.ProdOfferingVersion + "&Token=" + this.token;
+      // this.router.navigate([]).then(result => { window.open(link, '_blank'); });
+      window.open( link, "_blank");
+    }
   }
 }

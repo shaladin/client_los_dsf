@@ -9,11 +9,16 @@
               <div class="col-md-6">
                 <div class="row">
                   <label class="col-md-6" translate>Overwrite Agreement No</label>
-                  <div class="col-md-6"><input type="checkbox" [(ngModel)]="isOverwrite"></div>
+                  <div class="col-md-6"><input type="checkbox" formControlName="isOverwrite" [(ngModel)]="isOverwrite" (change)="onChange()" ></div>
                 </div>
                 <div class="row">
-                  <label class="col-md-6" translate>Agreement No</label>
-                  <div class="col-md-6" translate><input type="text" [(ngModel)]="AgrmntNo"></div>
+                  <label [ngClass]=" isOverwrite ? 'col-md-6 adins-required-label' : 'col-md-6'" translate>Agreement No</label>
+                  <div class="col-md-6" translate>
+                    <input type="text" formControlName="AgrmntNo" [(ngModel)]="AgrmntNo">
+                    <span class="text-danger"
+                      *ngIf="AgrmntActForm.controls['AgrmntNo'].hasError('required') && (AgrmntActForm.controls['AgrmntNo'].dirty || AgrmntActForm.controls['AgrmntNo'].touched)">This
+                      field is required</span>
+                  </div>
                 </div>
               </div>
               <div class="col-md-6">
@@ -21,7 +26,7 @@
                   <div class="col-md-6"></div>
                 </div>
                 <div class="row">
-                  <label class="col-md-6" translate>Agreement Date</label>
+                  <label class="col-md-6 adins-required-label" translate>Agreement Date</label>
                   <div class="col-md-6">
                     <input type="date" formControlName="CreateDt" [(ngModel)]="CreateDt" required>
                     <span class="text-danger"
@@ -159,13 +164,12 @@
           </div>
           <form>
             <div class="form-actions right">
-              <button type="button" class="btn btn-raised btn-warning mr-1"
-                [routerLink]="['/Nap/AdminProcess/AgrmntActivation/Paging']" [queryParams]="{AgrmntId:AgrmntId}"
+              <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()"
                 translate>
-                <i class="fa fa-arrow-circle-left"></i> Cancel
+                <i class="ft-x"></i> Cancel
               </button>
               <button type="submit" class="btn btn-raised btn-primary" (click)="Submit()">
-                <i class="fa fa-check-square-o"></i> Submit
+                <i class="far fa-check-square"></i> Save
               </button>
             </div>
           </form>

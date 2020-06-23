@@ -43,7 +43,9 @@ export class CustomerDataFL4WComponent implements OnInit {
   });
 
   @Input() appId: any;
+  @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
   refMasterObj = {
     RefMasterTypeCode: "",
@@ -74,11 +76,7 @@ export class CustomerDataFL4WComponent implements OnInit {
   listShareholder: any;
   listContactPersonCompany: any;
   listLegalDoc: any;
-
   isBindDataDone: boolean = false;
-
-
-
   getRefMasterUrl: any;
   addEditCustDataPersonalUrl: any;
   getCustDataUrl: any;
@@ -129,6 +127,10 @@ export class CustomerDataFL4WComponent implements OnInit {
     this.bindCustTypeObj();
     this.initAddrObj();
     await this.getCustData();
+  }
+
+  Cancel(){
+    this.outputCancel.emit();
   }
 
   SaveForm() {

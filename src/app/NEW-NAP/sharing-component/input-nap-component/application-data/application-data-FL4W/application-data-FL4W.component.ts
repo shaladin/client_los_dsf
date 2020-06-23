@@ -19,7 +19,9 @@ import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 export class ApplicationDataFL4WComponent implements OnInit {
 
   @Input() AppId: any;
+  @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   mode : any;
   ListCrossAppObj: any = {};
   constructor(
@@ -136,6 +138,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
         this.mouCustObj = new MouCustObj();
         this.mouCustObj.CustNo = this.CustNo;
         this.mouCustObj.StartDt = user.BusinessDt;
+        this.mouCustObj.MrMouTypeCode = "GENERAL";
 
         this.http.post(AdInsConstant.GetListMouCustByCustNo, this.mouCustObj).subscribe(
           (response) => {
@@ -151,6 +154,10 @@ export class ApplicationDataFL4WComponent implements OnInit {
           }
         );
       });
+  }
+
+  Cancel(){
+    this.outputCancel.emit();
   }
 
   getDDLFromProdOffering(refProdCompntCode:string){
@@ -473,7 +480,16 @@ export class ApplicationDataFL4WComponent implements OnInit {
   GetAppObjValue(){
     var temp = new NapAppModel();
     temp.AppId = this.resultResponse.AppId;
-    temp.MouCustId = this.NapAppModelForm.controls.MouCustId.value;
+
+    if(this.NapAppModelForm.controls.MouCustId.value == "null")
+    {
+      temp.MouCustId = "";
+    }
+    else
+    {
+      temp.MouCustId = this.NapAppModelForm.controls.MouCustId.value;
+    }
+
     temp.LeadId = this.NapAppModelForm.controls.LeadId.value;
     temp.AppNo = this.NapAppModelForm.controls.AppNo.value;
     temp.OriOfficeCode = this.NapAppModelForm.controls.OriOfficeCode.value;

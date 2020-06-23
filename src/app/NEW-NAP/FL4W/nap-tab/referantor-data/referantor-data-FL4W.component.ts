@@ -18,7 +18,9 @@ import { NapAppReferantorModel } from 'app/shared/model/NapAppReferantor.Model';
 export class ReferantorDataFL4WComponent implements OnInit {
 
   @Input() appId: any;
+  @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   inputLookupObj;
   constructor(
     private fb: FormBuilder,
@@ -47,6 +49,10 @@ export class ReferantorDataFL4WComponent implements OnInit {
     this.GetInputLookupObj();
     this.getAppReferantorData();
     console.log(this.bankItems);
+  }
+
+  Cancel(){
+    this.outputCancel.emit();
   }
 
   GetInputLookupObj(){

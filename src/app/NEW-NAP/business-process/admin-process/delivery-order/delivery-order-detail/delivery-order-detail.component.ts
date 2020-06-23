@@ -11,12 +11,10 @@ import { ListAppTCObj } from 'app/shared/model/ListAppTCObj.Model';
 import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueModel';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
-import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-delivery-order-detail',
-  templateUrl: './delivery-order-detail.component.html',
-  styleUrls: ['./delivery-order-detail.component.scss']
+  templateUrl: './delivery-order-detail.component.html'
 })
 
 export class DeliveryOrderDetailComponent implements OnInit {

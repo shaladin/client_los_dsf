@@ -35,6 +35,7 @@
       "isFromURL": true,
       "isSelectOne": false,
       "url": "",
+      "isQueryIn" : true,
       "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
       "label": "Office",
       "items": [],
@@ -44,7 +45,7 @@
       "type": "dropdown",
       "name": "WTL.CLAIM_STAT",
       "id": "ActiveStatusId",
-      "label": "TASK CLAIM STATUS",
+      "label": "Task Claim Status",
       "value": "",
       "placeholder": "Placeholder",
       "isFromURL": false,
@@ -66,7 +67,7 @@
       "name": "WTL.USERNAME",
       "id": "claimById",
       "value": "",
-      "label": "CLAIM BY",
+      "label": "Claim By",
       "placeholder": "Placeholder"
     }
   ],
@@ -108,7 +109,7 @@
     }
   ],
   "querystring": {
-    "select": "SELECT ac.MR_CUST_TYPE_CODE as CustTypeCode, a.BIZ_TEMPLATE_CODE AS BizTemplateCode, a.ORI_OFFICE_NAME AS OfficeName, a.ORI_OFFICE_CODE AS OfficeCode, a.APP_NO AS AppNo, ac.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.APP_ID AS AppId, ac.IS_EXISTING_CUST AS IsExistingCust, WTL.WF_TASK_LIST_ID AS WfTaskListId, WTL.USERNAME AS ClaimBy, a.APP_ID AS AppId" ,
+    "select": "SELECT ac.MR_CUST_TYPE_CODE as CustTypeCode, a.BIZ_TEMPLATE_CODE AS BizTemplateCode, a.ORI_OFFICE_NAME AS OfficeName, a.ORI_OFFICE_CODE AS OfficeCode, a.APP_NO AS AppNo, ac.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.APP_ID AS AppId, ac.IS_EXISTING_CUST AS IsExistingCust, WTL.WF_TASK_LIST_ID AS WfTaskListId, WTL.USERNAME AS ClaimBy, a.APP_ID AS AppId, a.PROD_OFFERING_CODE AS prodOfferingCode, a.PROD_OFFERING_VERSION AS prodOfferingVersion" ,
     "from": "FROM dbo.APP a WITH(NOLOCK) JOIN dbo.APP_CUST ac WITH(NOLOCK) ON a.APP_ID = ac.APP_ID JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON a.APP_NO = WTL.TRANSACTION_CODE",
     "where": "WHERE WTL.END_EXECUTING_DATE IS NULL"
   },
@@ -142,7 +143,8 @@
       "property": "CustName"
     }, 
     {
-      "type": "text",
+      "type": "callback",
+      "key": "ViewProdOffering",
       "position": "left",
       "property": "ProdOfferingName"
     },

@@ -16,6 +16,7 @@ import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 export class AssetDataPagingComponent implements OnInit {
 
   @Output() outputValue: EventEmitter<object> = new EventEmitter();
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   IdCust: any;
   appAssetObj : any;
   listAppAssetObj: any;
@@ -32,9 +33,7 @@ export class AssetDataPagingComponent implements OnInit {
   editColl: string;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) { 
-    // this.getListAppAssetData = AdInsConstant.GetListAppAssetData;
     this.getListAppAssetData = AdInsConstant.GetAppAssetListByAppId;
-    // this.getListAppCollateral = AdInsConstant.GetListAppCollateral;
     this.getListAppCollateral = AdInsConstant.GetListAppCollateralByAppId;
 
     this.route.queryParams.subscribe(params => {
@@ -51,6 +50,10 @@ addAsset() {
 
 addColl() {
   this.outputValue.emit({ mode: 'addColl' });
+}
+
+Cancel(){
+  this.outputCancel.emit();
 }
 
 event(ev){

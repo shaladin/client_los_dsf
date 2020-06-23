@@ -30,6 +30,7 @@ export class PreGoLiveComponent implements OnInit {
   PreGoLiveMainObj: PreGoLiveMainObj = new PreGoLiveMainObj();
   PreGoLiveObj: PreGoLiveObj = new PreGoLiveObj();
   AgrmntObj: AgrmntObj = new AgrmntObj();
+  token : any = localStorage.getItem("Token");
 
   IsCheckedAll: any;
 
@@ -49,7 +50,7 @@ export class PreGoLiveComponent implements OnInit {
   inputObj2: any
   listPreGoLiveAppvrObj: any = new Array(this.inputObj2);
   TrxNo: any;
-
+  hasApproveFinal : boolean = false;
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -70,7 +71,6 @@ export class PreGoLiveComponent implements OnInit {
   ngOnInit() {
     this.http.post(AdInsConstant.GetRfaLogByTrxNoAndApvCategory, { TrxNo: this.AgrmntNo, ApvCategory: "PRE_GPV_APV" }).subscribe(
       (response) => {
-        this.result = response;
         this.ListRfaLogObj = response["ListRfaLogObj"];
         for (let i = 0; i < this.ListRfaLogObj.length; i++) {
           this.listPreGoLiveAppvrObj[i] = {
@@ -78,8 +78,11 @@ export class PreGoLiveComponent implements OnInit {
             type: 'task',
             refId: this.ListRfaLogObj[i].RfaNo
           };
+          if(this.ListRfaLogObj[i].ApvStat == "ApproveFinal"){
+            this.IsCheckedAll = false;
+            this.hasApproveFinal = true;
+          }
         }
-
       },
       (error) => {
         console.log(error);
@@ -104,11 +107,27 @@ export class PreGoLiveComponent implements OnInit {
       }
     );
   }
+
+  GetCallBack(ev){
+    if(ev.Key == "ViewProdOffering"){
+      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.ViewObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.ViewObj.ProdOfferingVersion + "&Token=" + this.token;
+      
+      window.open( link, "_blank");
+    }
+    if (ev.Key == "customer") {
+      console.log("customer")
+          var link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + ev.ViewObj.AppCustId; 
+          window.open(link, '_blank');
+    }
+  }
+
   ReceiveIsChecked(ev) {
-    this.IsCheckedAll = ev;
-    if(this.ListRfaLogObj.length!=0)
+    if(this.hasApproveFinal == false && this.ListRfaLogObj.length != 0)
     {
-      this.IsCheckedAll=true;
+      this.IsCheckedAll=false;
+    }
+    else{
+      this.IsCheckedAll = ev;
     }
   }
 
@@ -195,5 +214,7 @@ export class PreGoLiveComponent implements OnInit {
       (response) => {
       });
   }
+
+
 
 }

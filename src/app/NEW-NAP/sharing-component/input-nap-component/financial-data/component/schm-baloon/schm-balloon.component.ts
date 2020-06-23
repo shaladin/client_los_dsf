@@ -7,6 +7,7 @@ import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
 import { environment } from 'environments/environment';
 import { CalcBalloonObj } from 'app/shared/model/AppFinData/CalcBalloonObj.Model';
+import { AppObj } from 'app/shared/model/App/App.Model';
 
 @Component({
   selector: 'app-schm-balloon',
@@ -22,6 +23,8 @@ export class SchmBalloonComponent implements OnInit {
   calcBalloonObj : CalcBalloonObj = new CalcBalloonObj();
   listInstallment: any;
   responseCalc: any;
+  result: AppObj = new AppObj();
+  PriceLabel: string = "Asset Price";
 
   constructor(
     private fb: FormBuilder,
@@ -32,6 +35,18 @@ export class SchmBalloonComponent implements OnInit {
   ngOnInit() {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
+
+    this.http.post<AppObj>(AdInsConstant.GetAppById, { AppId: this.AppId}).subscribe(
+      (response) => {
+        this.result = response;
+        if(this.result.BizTemplateCode == "CFRFN4W"){
+          this.PriceLabel = "Financing Amount";
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   LoadDDLRateType() {

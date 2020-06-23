@@ -5,7 +5,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { HttpClient } from '@angular/common/http';
 import { CenterGrpOfficeMbrObj } from 'app/shared/model/RefOffice/CenterGrpOfficeMbrObj.Model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-return-handling-com-rsvfund-paging',
@@ -15,8 +15,10 @@ import { ActivatedRoute } from '@angular/router';
 export class ReturnHandlingComRsvfundPagingComponent implements OnInit {
 
   BizTemplateCode: string;
+  token : any = localStorage.getItem("Token");
   constructor(private http: HttpClient,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private router: Router) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.BizTemplateCode = params["BizTemplateCode"];
@@ -53,32 +55,13 @@ export class ReturnHandlingComRsvfundPagingComponent implements OnInit {
     critObj.value = "EDIT_COM_RSV_FND_" + this.BizTemplateCode;
     critObjs.push(critObj);
 
-    critObj = new CriteriaObj();
-    critObj.restriction = AdInsConstant.RestrictionIn;
-    if (this.userAccess.MrOfficeTypeCode != AdInsConstant.CENTER_GROUP_CODE) {
-      critObj.propName = 'a.ORI_OFFICE_CODE';
-      critObj.listValue = [this.userAccess.OfficeCode];
-    } else {
-      critObj.propName = 'a.ORI_OFFICE_CODE';
-      var obj = { CenterGrpCode: AdInsConstant.CENTER_GROUP_CODE };
-      this.http.post(AdInsConstant.GetListCenterGrpMemberByCenterGrpCode, obj).subscribe(
-        (response) => {
-          var CenterGrpOfficeMbrObjs: Array<CenterGrpOfficeMbrObj> = response["ListCenterGrpOfficeMbr"];
-
-          var listDataTemp = new Array();
-          for (var i = 0; i < CenterGrpOfficeMbrObjs.length; i++) {
-            listDataTemp.push(CenterGrpOfficeMbrObjs[i].RefOfficeCode);
-          }
-          critObj.listValue = listDataTemp;
-        },
-        (error) => {
-          console.log(error);
-        }
-      )
-    }
-    critObjs.push(critObj);
-
     return critObjs;
   }
 
+  GetCallBack(ev: any){
+    if(ev.Key == "ViewProdOffering"){
+      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.RowObj.prodOfferingCode + "&prodOfferingVersion=" + ev.RowObj.prodOfferingVersion + "&Token=" + this.token;
+      this.router.navigate([]).then(result => { window.open(link, '_blank'); });
+    }
+  }
 }

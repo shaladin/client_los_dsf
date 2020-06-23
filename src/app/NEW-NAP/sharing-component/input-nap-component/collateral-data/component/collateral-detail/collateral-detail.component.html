@@ -147,23 +147,25 @@
                 <div class="form-group row">
                   <label class="col-md-5 adins-label" translate>Collateral Notes</label>
                   <div class="col-md-7">
-                    <textarea type="textarea" row="5" class="form-control" formControlName="Notes"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.Notes.invalid}"></textarea>
+                    <textarea type="textarea" row="5" class="form-control" formControlName="CollateralNotes"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CollateralNotes.invalid}"></textarea>
                   </div>
                 </div>
               </div>
             </div>
-            <lib-ucSubsection [id]="'AddCollAttributeId'" [title]="'Collateral Attribute'" [panel]="'AddCollAttribute'">
-            </lib-ucSubsection>
-            <div class="form-body" id="AddCollAttribute" formArrayName="ListAttr">
-              <div class="col-md-6 form-group row"
-                *ngFor="let item of AddCollForm.controls.ListAttr.controls; let i = index" [formGroupName]="i">
-                <label class="col-md-5 adins-required-label" translate>Attr</label>
-                <div class="col-md-7">
-                  <input type="text" class=" form-control width-100-per" formControlName="AppAttrValue">
+            <div style="display: none;">
+              <lib-ucSubsection [id]="'AddCollAttributeId'" [title]="'Collateral Attribute'" [panel]="'AddCollAttribute'">
+              </lib-ucSubsection>
+              <div class="form-body" id="AddCollAttribute" formArrayName="ListAttr">
+                <div class="col-md-6 form-group row"
+                  *ngFor="let item of AddCollForm.controls.ListAttr.controls; let i = index" [formGroupName]="i">
+                  <label class="col-md-5 adins-required-label" translate>Attr</label>
+                  <div class="col-md-7">
+                    <input type="text" class=" form-control width-100-per" formControlName="AppAttrValue">
+                  </div>
                 </div>
               </div>
-            </div>
+          </div>
             <lib-ucSubsection [id]="'AddCollDocumentId'" [title]="'Collateral Document'" [panel]="'AddCollDocument'">
             </lib-ucSubsection>
             <div id="AddCollDocument">
@@ -210,9 +212,9 @@
               <div class="form-group row">
                 <div class="col-md-6">
                   <div class="form-group row">
-                    <label class="col-md-5" translate>Self Usage</label>
+                    <label class="col-md-5" for="SelfUsage" translate>Self Usage</label>
                     <div class="col-md-7">
-                      <input type="checkbox" (change)="CopyUser()" formControlName="SelfUsage">
+                      <mat-checkbox formControlName="SelfUsage" (change)="CopyUser($event)"></mat-checkbox>
                     </div>
                   </div>
                 </div>

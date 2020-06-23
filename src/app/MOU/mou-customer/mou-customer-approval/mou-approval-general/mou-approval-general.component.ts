@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { environment } from 'environments/environment';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
 
 @Component({
   selector: 'app-mou-approval-general',
@@ -18,7 +19,10 @@ export class MouApprovalGeneralComponent implements OnInit {
   instanceId: number;
   MouType : string = "GENERAL";
   inputObj: any;
-
+  link : any; 
+  resultData : any;
+  viewObj : string;
+  mouCustObject : MouCustObj = new MouCustObj();
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
 
@@ -38,6 +42,14 @@ export class MouApprovalGeneralComponent implements OnInit {
   
 
   ngOnInit() {
+    this.viewObj = "./assets/ucviewgeneric/viewMouHeader.json";
+    this.mouCustObj = new MouCustObj();
+    this.mouCustObj.MouCustId = this.MouCustId;
+    this.http.post(AdInsConstant.GetMouCustById, this.mouCustObj).subscribe(
+      (response: MouCustObj) => {
+        this.resultData = response; 
+      } 
+    );
   }
 
   MouApprovalDataForm = this.fb.group({
@@ -52,5 +64,26 @@ export class MouApprovalGeneralComponent implements OnInit {
   {
     this.toastr.successMessage("Success");
     this.router.navigate(["/Mou/Cust/Approval"]);
+  }
+
+  onCancelClick()
+  {
+    this.router.navigate(["/Mou/Cust/Approval"]);
+  }
+  GetCallBack(event)
+  {  
+    if(event.Key == "customer"){
+      var custObj = { CustNo: this.resultData['CustNo'] };
+      this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+        response => {
+          this.link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
+          window.open(this.link, '_blank');
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+    
   }
 }

@@ -22,7 +22,7 @@
               <div class="form-group row">
                 <label class="col-md-2  adInsLabel adins-required-label" translate>Collateral Name </label>
                 <div class="col-md-4">
-                  <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupAssetObj" [identifier]="'lookupAsset'" [enjiForm]='enjiForm' [parentForm]='CollateralDataForm' (lookup)="SetAsset($event)">
+                  <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupAssetObj" [identifier]="'lookupAsset'" [enjiForm]='enjiForm' [parentForm]='CollateralDataForm' (lookup)="SetAsset($event)" #lookupAsset>
                   </lib-uclookupgeneric>
                 </div>
                 <label class="col-md-2  adins-required-label" translate>Collateral Price</label>
@@ -234,7 +234,7 @@
                 <i class="ft-x"></i> Cancel
             </button> 
               <button type="submit" class="btn btn-raised btn-primary">
-                <i class="fa fa-check-square"></i> Save
+                <i class="far fa-check-square"></i> Save
               </button>
               <!-- <button type="button" class="btn btn-raised btn-primary" (click)="test()">
                 <i class="fa fa-check-square-o"></i> Check Value

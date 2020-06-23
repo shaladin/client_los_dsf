@@ -33,9 +33,15 @@
 <div *ngIf="result.length > 0">
   <lib-ucgridview [gridInput]="inputGridObj" (callback)="event(content,$event)"></lib-ucgridview>
 </div>
-<button type="button" (click)="SaveAndContinue()" class="btn btn-raised btn-primary pull-right margin-15">
-  <i class="far fa-check-square"></i> Save
-</button>
+<div class="form-actions right" style="text-align: right;">
+  <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
+    <i class="ft-x"></i> Cancel
+  </button>
+  <button type="button" (click)="SaveAndContinue()" class="btn btn-raised btn-primary">
+    <i class="far fa-check-square"></i> Save
+  </button>
+</div>
+
 <ng-template #content let-c="close" let-d="dismiss">
   <div class="modal-header">
     <h4 class="modal-title">Guarantor</h4>

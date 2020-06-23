@@ -9,8 +9,7 @@ import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-pre-go-live-approval-detail',
-  templateUrl: './pre-go-live-approval-detail.component.html',
-  styleUrls: ['./pre-go-live-approval-detail.component.scss']
+  templateUrl: './pre-go-live-approval-detail.component.html'
 })
 export class PreGoLiveApprovalDetailComponent implements OnInit {
   inputObj: { taskId: any; instanceId: any; approvalBaseUrl: string; };
@@ -27,7 +26,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   AppNo: any;
   NumOfAsset: any;
   Tenor: any;
-  InstaAmt: any;
+  InstAmt: any;
   DeliveryDt: any;
   ProdOfferingName: any;
   WayOfFinancing: any;
@@ -35,6 +34,8 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   CustName: any;
   OfficeName: any;
   PurposeOfFinancing: any;
+  ProdOfferingCode: string;
+  ProdOfferingVersion: string;
 
   AppTcList: any = [];
   identifier: string = "TCList";
@@ -52,6 +53,8 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   });
   AppId: any;
   AgrmntId: any;
+  token = localStorage.getItem("Token");
+
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -69,8 +72,6 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-
-
     this.http.post(AdInsConstant.GetRfaLogByTrxNoAndApvCategory, { TrxNo : this.TrxNo, ApvCategory : "PRE_GPV_APV" } ).subscribe(
       (response) => {
         this.result = response;
@@ -102,6 +103,8 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
         this.NumOfAsset = this.result.NumOfAsset;
         this.Tenor = this.result.Tenor;
         this.ProdOfferingName = this.result.ProdOfferingName;
+        this.ProdOfferingCode = this.result.ProdOfferingCode;
+        this.ProdOfferingVersion = this.result.ProdOfferingVersion;
         var Obj2 = {
           ProdOfferingCode: this.result.ProdOfferingCode,
           RefProdCompntCode: "WAY_OF_FINANCING",
@@ -135,6 +138,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
           (response) => {
             this.result4 = response;
             this.AppNo = this.result4.AppNo;
+            this.WayOfFinancing = this.result4.MrWopCode;
           }
         );
 
@@ -145,14 +149,15 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
         this.http.post(AdInsConstant.GetDeliveryOrderHByAgrmntId, Obj5).subscribe(
           (response) => {
             this.result5 = response;
-            this.DeliveryDt = this.result5.DeliveryDt;
+            this.DeliveryDt = formatDate(this.result5.DeliveryDt, 'yyyy-MM-dd', 'en-US');
+
           }
         );
 
         this.http.post(AdInsConstant.GetAgrmntFinDataByAgrmntId, Obj5).subscribe(
           (response) => {
             this.result6 = response;
-            this.InstaAmt = this.result6.InstaAmt;
+            this.InstAmt = this.result6.InstAmt;
           }
         );
 
@@ -221,14 +226,30 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   }
   //nanti bakalan ke View, sementara kek gini dlu
   ToApp(){
-    this.router.navigate(["/Nap/View/AppView"], { queryParams: { "AppId": this.AppId } });
+
+    window.open("/Nap/View/AppView?AppId=" + this.AppId, "_blank");
   }
   ToAgrmnt(){
-    this.router.navigate(["/Nap/View/AgrmntView"], { queryParams: { "AgrmntId": this.AgrmntId } });
+    window.open("/Nap/View/AgrmntView?AgrmntId=" + this.AgrmntId, "_blank");
   }
   ToCust(){
-    this.router.navigate(["/Nap/AdminProcess/PreGoLive/Approval/Detail"], { queryParams: { "CustNo": this.CustNo } });
+    var custObj = { CustNo: this.CustNo };
+    this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+      response => {
+        var link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"] + "&Token=" + this.token;
+        window.open(link, '_blank');
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
+
+  ToProdOffering(){
+    var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + this.ProdOfferingCode + "&prodOfferingVersion=" + this.ProdOfferingVersion + "&Token=" + this.token;
+    window.open(link, '_blank');
+  }
+
   onAvailableNextTask() {
 
   }

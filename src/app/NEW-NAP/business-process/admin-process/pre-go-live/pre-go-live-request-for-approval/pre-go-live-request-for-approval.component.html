@@ -1,4 +1,4 @@
-<lib-ucviewgeneric [viewInput]="viewObj"> </lib-ucviewgeneric>
+<lib-ucviewgeneric [viewInput]="viewObj" (callback)="GetCallBack($event)"> </lib-ucviewgeneric>
 <div class="row text-left">
   <div class="col-md-12">
     <div class="card">
@@ -43,7 +43,7 @@
               </div>
               <div class="form-actions right"></div>
               <button type="submit" class="btn btn-raised btn-primary mr-1" translate>
-                <i class="fa fa-check-square-o"></i> Submit
+                <i class="far fa-check-square"></i> Submit
               </button>
               <div class="form-actions right"></div>
 

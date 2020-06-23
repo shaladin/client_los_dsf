@@ -15,7 +15,7 @@ import { ActivatedRoute } from "@angular/router";
 export class PhoneVerificationPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
   BizTemplateCode : string;
-
+  token : any = localStorage.getItem("Token");
   constructor(private route: ActivatedRoute) { 
     this.route.queryParams.subscribe(params => {
       if (params['BizTemplateCode'] != null) {
@@ -47,12 +47,13 @@ export class PhoneVerificationPagingComponent implements OnInit {
     critObj.value = "PHN_"+this.BizTemplateCode;
     arrCrit.push(critObj);
 
-    critObj = new CriteriaObj();
-    critObj.restriction = AdInsConstant.RestrictionLike;
-    critObj.propName = 'a.ORI_OFFICE_CODE';
-    critObj.value = userAccess.OfficeCode;
-    arrCrit.push(critObj);
-
     this.inputPagingObj.addCritInput = arrCrit;
+  }
+  GetCallBack(ev: any){
+    console.log(ev);
+    if(ev.Key == "ViewProdOffering"){
+      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.RowObj.prodOfferingCode + "&prodOfferingVersion=" + ev.RowObj.prodOfferingVersion + "&Token=" + this.token;
+      window.open(link, '_blank');
+    }
   }
 }

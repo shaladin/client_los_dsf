@@ -10,11 +10,11 @@
             <div class="form-group row">
               <label class="col-md-2 adInsLabel" translate>Application No</label>
               <div class="col-md-4 blue">
-                <label id="AgrmntDt" translate><a (click)="ToApp()">{{AppNo}}</a></label>
+                <label id="AppNo" translate><a (click)="ToApp()">{{AppNo}}</a></label>
               </div>
               <label class="col-md-2 adInsLabel" translate>Num Of Asset</label>
               <div class="col-md-4">
-                <label translate>{{NumOfAsset}}</label>
+                <label id= "NumOfAsset" translate>{{NumOfAsset}}</label>
               </div>
             </div>
 
@@ -25,51 +25,51 @@
               </div>
               <label class="col-md-2 adInsLabel" translate>Tenor</label>
               <div class="col-md-4">
-                <label id="EffectiveDt" translate>{{Tenor}}</label>
+                <label id="Tenor" translate>{{Tenor}}</label>
               </div>
             </div>
 
             <div class="form-group row">
               <label class="col-md-2 adInsLabel" translate>Customer No</label>
               <div class="col-md-4 blue">
-                <label id="AgrmntDt" translate><a (click)="ToCust()">{{CustNo}}</a></label>
+                <label id="CustNo" translate><a (click)="ToCust()">{{CustNo}}</a></label>
               </div>
               <label class="col-md-2 adInsLabel" translate>Installment Amount</label>
               <div class="col-md-4">
-                <label id="EffectiveDt" translate>{{InstAmt}}</label>
+                <label id="InstAmt" translate>{{InstAmt  | number:'.2':'en-US'}}</label>
               </div>
             </div>
 
             <div class="form-group row">
               <label class="col-md-2 adInsLabel" translate>Customer Name</label>
               <div class="col-md-4">
-                <label id="AgrmntDt" translate>{{CustName}}</label>
+                <label id="CustName" translate>{{CustName}}</label>
               </div>
               <label class="col-md-2 adInsLabel" translate>Delivery Date</label>
               <div class="col-md-4">
-                <label id="EffectiveDt" translate>{{DeliveryDt}}</label>
+                <label id="DeliveryDt" translate>{{DeliveryDt}}</label>
               </div>
             </div>
 
             <div class="form-group row">
               <label class="col-md-2 adInsLabel" translate>Office Name</label>
               <div class="col-md-4">
-                <label id="AgrmntDt" translate>{{OfficeName}}</label>
+                <label id="OfficeName" translate>{{OfficeName}}</label>
               </div>
               <label class="col-md-2 adInsLabel" translate>Product Offering Name</label>
-              <div class="col-md-4">
-                <label id="EffectiveDt" translate>{{ProdOfferingName}}</label>
+              <div class="col-md-4 blue">
+                <label id="ProdOfferingName" translate><a (click)="ToProdOffering()">{{ProdOfferingName}}</a></label>
               </div>
             </div>
 
             <div class="form-group row">
               <label class="col-md-2 adInsLabel" translate>Purpose Of Financing</label>
               <div class="col-md-4">
-                <label id="AgrmntDt" translate>{{PurposeOfFinancing}}</label>
+                <label id="PurposeOfFinancing" translate>{{PurposeOfFinancing}}</label>
               </div>
               <label class="col-md-2 adInsLabel" translate>Way Of Financing</label>
               <div class="col-md-4">
-                <label id="EffectiveDt" translate>{{WayOfFinancing}}</label>
+                <label id="WayOfFinancing" translate>{{WayOfFinancing}}</label>
               </div>
             </div>
           </div>

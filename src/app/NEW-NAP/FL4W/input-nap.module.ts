@@ -30,7 +30,7 @@ import { ViewAgrmntReservedFundComponent } from "../sharing-component/view-agrmn
 import { ViewAgrmntSummaryComponent } from "../sharing-component/view-agrmnt-component/view-summary/view-summary.component";
 import { ViewAgrmntDocumentComponent } from "../sharing-component/view-agrmnt-component/view-document/view-document.component";
 import { ViewCollateralComponent } from "../sharing-component/view-agrmnt-component/view-collateral/view-collateral.component";
-import { ViewInsuranceComponent } from "../sharing-component/view-agrmnt-component/view-insurance/view-insurance.component";
+import { ViewAgrmntInsuranceComponent } from "../sharing-component/view-agrmnt-component/view-insurance/view-insurance.component";
 import { FeeFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/fee/fee-FL4W.component";
 import { SchmBalloonFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/schm-baloon/schm-balloon-FL4W.component";
 import { SchmEvenPrincipalFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/schm-even-principal/schm-even-principal-FL4W.component";
@@ -53,6 +53,7 @@ import { AppInsuranceFl4wComponent } from './view-agrmnt-fl4w/app-insurance-fl4w
 import { AppAssetDataFl4wComponent } from './view-agrmnt-fl4w/app-asset-data-fl4w/app-asset-data-fl4w.component';
 import { ViewSummaryFl4wComponent } from './view-agrmnt-fl4w/view-summary-fl4w/view-summary-fl4w.component';
 import { AppAssetDataDetailFl4wComponent } from './view-agrmnt-fl4w/app-asset-data-fl4w/app-asset-data-detail-fl4w/app-asset-data-detail-fl4w.component'; 
+import { ViewInsuranceDetailComponent } from "../sharing-component/view-agrmnt-component/view-insurance-detail/view-insurance-detail.component";
 
  
 export const customCurrencyMaskConfig = {     
@@ -98,6 +99,7 @@ export const customCurrencyMaskConfig = {
     NapViewComponent,  
     NapAddDetailComponent, 
     ViewAgrmntComponent,  
+    ViewInsuranceDetailComponent,
     AgrmntLifeInsuranceComponent,
     ViewCommissionComponent,
     ViewPurchaseOrderComponent,
@@ -107,7 +109,7 @@ export const customCurrencyMaskConfig = {
     ViewAgrmntSummaryComponent,
     ViewAgrmntDocumentComponent,
     ViewCollateralComponent,
-    ViewInsuranceComponent,
+    ViewAgrmntInsuranceComponent,
     FeeFL4WComponent,
     SchmBalloonFL4WComponent,
     SchmEvenPrincipalFL4WComponent,

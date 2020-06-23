@@ -27,19 +27,19 @@
         {
           "type": "sort",
           "position": "left",
-          "label": "Collateral Code",
+          "label": "COLLATERAL CODE",
           "name": "FullAssetCode"
         },
         {
           "type": "sort",
           "position": "left",
-          "label": "Collateral Name",
+          "label": "COLLATERAL NAME",
           "name": "FullAssetName"
         },
         {
           "type": "label",
           "position": "center",
-          "label": "Action"
+          "label": "ACTION"
         }
     ],
     "bodyList": [

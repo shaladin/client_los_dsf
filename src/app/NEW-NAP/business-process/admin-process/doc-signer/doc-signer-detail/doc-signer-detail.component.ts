@@ -37,12 +37,15 @@ export class DocSignerDetailComponent implements OnInit {
   MrCustTypeCode: string = "COMPANY";
   CustFullName: string;
   ContactPersonName: string;
+  token : any = localStorage.getItem("Token");
+  BizTemplateCode: string;
 
   constructor(private fb: FormBuilder, private http: HttpClient,
     private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params['AppId'];
       this.AgrmntId = params['AgrmntId'];
+      this.BizTemplateCode = params['BizTemplateCode'];
     });
   }
 
@@ -162,6 +165,7 @@ export class DocSignerDetailComponent implements OnInit {
     this.inputLookupOfficeEmp2Obj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupOfficeEmp2Obj.pagingJson = "./assets/uclookup/lookupOfficeEmp.json";
     this.inputLookupOfficeEmp2Obj.genericJson = "./assets/uclookup/lookupOfficeEmp.json";
+    this.inputLookupOfficeEmp2Obj.isRequired = false;
     this.inputLookupOfficeEmp2Obj.addCritInput = new Array();
 
     var crit3Obj = new CriteriaObj();
@@ -186,6 +190,7 @@ export class DocSignerDetailComponent implements OnInit {
     this.inputLookupAppCustCompanyShareHolder2Obj.urlEnviPaging = environment.losUrl;
     this.inputLookupAppCustCompanyShareHolder2Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
     this.inputLookupAppCustCompanyShareHolder2Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
+    this.inputLookupAppCustCompanyShareHolder2Obj.title = "Approver Signer";
     this.inputLookupAppCustCompanyShareHolder2Obj.addCritInput = new Array();
 
     this.inputLookupAppCustCompanyShareHolder3Obj = new InputLookupObj();
@@ -194,12 +199,13 @@ export class DocSignerDetailComponent implements OnInit {
     this.inputLookupAppCustCompanyShareHolder3Obj.urlEnviPaging = environment.losUrl;
     this.inputLookupAppCustCompanyShareHolder3Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
     this.inputLookupAppCustCompanyShareHolder3Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
+    this.inputLookupAppCustCompanyShareHolder3Obj.title = "Approver Signer";
     this.inputLookupAppCustCompanyShareHolder3Obj.addCritInput = new Array();
 
     var crit4Obj = new CriteriaObj();
-    crit4Obj.propName = 'ACCMS.CUST_NO';
+    crit4Obj.propName = 'AC.APP_ID';
     crit4Obj.restriction = AdInsConstant.RestrictionEq;
-    crit4Obj.value = this.CustNo;
+    crit4Obj.value = this.AppId.toString();
 
     this.inputLookupAppCustCompanyShareHolder1Obj.addCritInput.push(crit4Obj);
     this.inputLookupAppCustCompanyShareHolder2Obj.addCritInput.push(crit4Obj);
@@ -217,7 +223,7 @@ export class DocSignerDetailComponent implements OnInit {
 
   getLookupBranchEmp(event) {
     this.agrmntSignerObj.SupplBranchEmpNo = event.VendorEmpNo;
-    this.agrmntSignerObj.SupplBranchEmpName = event.VerndorEmpName;
+    this.agrmntSignerObj.SupplBranchEmpName = event.VendorEmpName;
     this.agrmntSignerObj.MrJobPositionSupplBranchEmpCode = event.MrVendorEmpPositionCode;
     this.agrmntSignerObj.MrJobPositionSupplBranchEmpName = event.JobTitleName;  
     this.DocSignerForm.patchValue({
@@ -282,7 +288,7 @@ export class DocSignerDetailComponent implements OnInit {
       this.http.post(AdInsConstant.EditAgrmntSignerData, this.agrmntSignerObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["AdminProcess/DocumentSigner/Paging"]);
+          this.router.navigate(["Nap/AdminProcess/DocumentSigner/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode }});
         },
         error => {
           console.log(error);
@@ -292,9 +298,38 @@ export class DocSignerDetailComponent implements OnInit {
       this.http.post(AdInsConstant.SubmitAgrmntSignerData, this.agrmntSignerObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["AdminProcess/DocumentSigner/Paging"]);
+          this.router.navigate(["Nap/AdminProcess/DocumentSigner/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode }});
         },
         error => {
+          console.log(error);
+        }
+      );
+    }
+  }
+  
+  Callback(ev: any){
+    if(ev.Key == "ViewProdOffering"){
+      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.ViewObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.ViewObj.ProdOfferingVersion + "&Token=" + this.token; 
+      window.open( link, "_blank");
+    }
+    if(ev.Key == "agrmnt")
+    {
+      var bizTemplateCode = localStorage.getItem("BizTemplateCode")
+
+      if(bizTemplateCode == "CF4W" || bizTemplateCode == "CFRFN4W" || bizTemplateCode == "FACTORING"){
+        window.open( environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + ev.ViewObj.AgrmntId, "_blank");
+      }
+      else if(bizTemplateCode == "FL4W"){
+        window.open( environment.losR3Web + "/Nap/FinanceLeasing/ViewAgrmnt?AgrmntId=" + ev.ViewObj.AgrmntId, "_blank");
+      }
+    }
+
+    if(ev.Key == "prodOff"){
+      this.http.post(AdInsConstant.GetProdOfferingHByCode, {ProdOfferingCode : ev.ViewObj.ProdOfferingCode}).subscribe(
+        response => {
+          window.open(environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=" + response['ProdOfferingHId'], '_blank');
+        },
+        (error) => {
           console.log(error);
         }
       );
