@@ -35,7 +35,7 @@ export class LoanObjectComponent implements OnInit {
   MainInfoForm = this.fb.group({
     IsDisburseToCust: [false],
     BudgetPlanAmount: ['', [Validators.required, Validators.min(1)]],
-    SelfFinancing: ['', [Validators.required, Validators.min(1)]],
+    SelfFinancing: ['', [Validators.required, Validators.min(-1)]],
     FinancingAmount: ['']
   })
   resultData: any;
