@@ -108,13 +108,14 @@ export class PreGoLiveComponent implements OnInit {
     );
   }
 
-  GetCallBack(ev: any){
+  GetCallBack(ev){
     if(ev.Key == "ViewProdOffering"){
       var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.ViewObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.ViewObj.ProdOfferingVersion + "&Token=" + this.token;
-      // this.router.navigate([]).then(result => { window.open(link, '_blank'); });
+      
       window.open( link, "_blank");
     }
     if (ev.Key == "customer") {
+      console.log("customer")
           var link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + ev.ViewObj.AppCustId; 
           window.open(link, '_blank');
     }
@@ -214,13 +215,6 @@ export class PreGoLiveComponent implements OnInit {
       });
   }
 
-  GetCallback(event)
-  {
-    var token = localStorage.getItem("Token");
-    if(event.Key == "ViewProdOffering"){
-      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + event.ViewObj.ProdOfferingCode + "&prodOfferingVersion=" + event.ViewObj.ProdOfferingVersion  + "&Token=" + token;
-      this.router.navigate([]).then(result => { window.open(link, '_blank'); });
-    }
-  }
+
 
 }
