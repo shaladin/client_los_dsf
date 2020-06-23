@@ -62,6 +62,9 @@ export class AdInsConstant {
   public static ASSET_TYPE_CAR = "CAR";
   public static LICENSE_PLATE_NO = "LICENSE PLATE NO";
 
+  //APV RESULT
+  public static ApvResultReturn = "Return";
+
   //WORKFLOW (LEWAT FOUNDATION)
   public static ResumeWorkflow = environment.FoundationR3Url + "/Workflow/ResumeWorkflow"
 
@@ -987,6 +990,7 @@ export class AdInsConstant {
   //APP INSURANCE
   public static GetInsuranceDataByAppId = environment.losUrl + "/AppIns/GetInsDataByAppId";
   public static GetInsuranceDataByAppIdForView = environment.losUrl + "/AppIns/GetInsDataByAppIdForView";
+  public static GetInsuranceDataByAppAssetIdForView = environment.losUrl + "/AppIns/GetInsuranceDataByAppAssetIdForView";
   public static GetInsDataByAppIdAndAssetId = environment.losUrl + "/AppIns/GetInsDataByAppIdAndAssetId";
   public static GetInsDataByAppAssetId = environment.losUrl + "/AppIns/GetInsDataByAppAssetId";
   public static AddEditInsuranceData = environment.losUrl + "/AppIns/AddEditInsuranceData";
@@ -1077,6 +1081,7 @@ export class AdInsConstant {
   public static GetListAppReservedFundByAppId = environment.losUrl + "/AppReservedFund/GetListAppReservedFundByAppId";
   public static CreateRsvFundRule = environment.losUrl + "/AppReservedFund/CreateRsvFundRule";
   public static CalculateGrossYieldRsvFund = environment.losUrl + "/AppReservedFund/CalculateGrossYieldRsvFund";
+  public static GetIncomeInfoRsvFund = environment.losUrl + "/AppReservedFund/GetIncomeInfoRsvFund";
   //App Fin Data
   public static GetAppFinDataByAppId = environment.losUrl + "/AppFinData/GetAppFinDataByAppId";
   public static CreateMaxAllocAmtRsvFund = environment.losUrl + "/AppFinData/CreateMaxAllocAmtRsvFund";
@@ -1203,13 +1208,17 @@ export class AdInsConstant {
   public static RequestReturnTask = environment.losUrl + "/ReturnHandlingD/RequestReturnTask";
   public static DeleteReturnHandlingD = environment.losUrl + "/ReturnHandlingD/DeleteReturnHandlingD";
   public static ResumeReturnHandling = environment.losUrl + "/ReturnHandlingH/ResumeReturnHandling";
+  public static GetReturnHandlingDByReturnHandlingDId = environment.losUrl + "/ReturnHandlingD/GetReturnHandlingDByReturnHandlingDId";
+  public static AddReturnHandlingH = environment.losUrl + "/ReturnHandlingH/AddReturnHandlingH";
+
   // public static Test = environment.losUrl + "/ReturnHandlingD/Test";
 
   public static ReturnHandlingEditApp = "RTN_EDIT_APP";
   public static ReturnHandlingAddPhnVerf = "RTN_ADD_PHN_VERF";
   public static ReturnHandlingEditComRsvFnd = "RTN_EDIT_COM_RSV_FND";
   public static ReturnHandlingAddColtr = "RTN_ADD_COLTR";
-  public static GetReturnHandlingDByReturnHandlingDId = environment.losUrl + "/ReturnHandlingD/GetReturnHandlingDByReturnHandlingDId";
+  public static ReturnStatNew = "NEW";
+  public static ReturnStatRequest = "REQ";
 
   // Deviation Result
   public static GetListDeviationResultForDeviationDataByAppId = environment.losUrl + "/DeviationResult/GetListDeviationResultForDeviationDataByAppId";

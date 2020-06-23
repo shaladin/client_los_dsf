@@ -3,7 +3,7 @@ import { UcpagingModule } from '@adins/ucpaging';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-cust-confirmation-paging',
@@ -15,8 +15,9 @@ export class CustConfirmationPagingComponent implements OnInit {
   inputPagingObj: any;
   arrCrit = [];
   bizTemplateCode :any;
+  token : any = localStorage.getItem("Token");
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private router: Router) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.bizTemplateCode = params["BizTemplateCode"];
@@ -54,6 +55,13 @@ export class CustConfirmationPagingComponent implements OnInit {
     this.arrCrit.push(critBizTemplate);
     this.arrCrit.push(critObj);
     this.inputPagingObj.addCritInput = this.arrCrit;
+  }
+
+  GetCallBack(ev: any){
+    if(ev.Key == "ViewProdOffering"){
+      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.RowObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.RowObj.ProdOfferingVersion  + "&Token=" + this.token;
+      this.router.navigate([]).then(result => { window.open(link, '_blank'); });
+    }
   }
 
 }
