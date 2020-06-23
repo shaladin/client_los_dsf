@@ -17,6 +17,7 @@ export class AgreementViewContainerComponent implements OnInit {
   ResponseAppDetailData;
   IsCustomer: boolean = true;
   IsAsset: boolean = true;
+  IsDocument: boolean = true;
   IsInsurance: boolean = true;
   IsAgreementCard: boolean = true;
   IsCommission: boolean = true;
@@ -77,18 +78,16 @@ export class AgreementViewContainerComponent implements OnInit {
         // }
         if (bizTemplateCode == AdInsConstant.CFRFN4W) {
           this.IsAsset = false;
+          this.IsCollateral = false;
+          this.IsLoanData = false;
         }
         //   else if(bizTemplateCode == AdInsConstant.CF4W){
         //     this.IsCollateral = false;
         //   }
-        //   else if(bizTemplateCode == AdInsConstant.FL4W)
-        //   {
-        //     this.IsAsset = false;
-        //     this.IsCollateral = false;
-        //     this.IsInsurance = false;
-        //   }
-        // }
-        //);
+        else if(bizTemplateCode == AdInsConstant.FL4W)
+        {
+          this.IsAsset = false;
+        }
       });
     }
 }
