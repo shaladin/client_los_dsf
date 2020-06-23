@@ -224,6 +224,7 @@ export class MouRequestAddcollComponent implements OnInit {
   }
 
   open(pageType) {
+    this.tempPagingObj.isReady = false;
     this.type = pageType;
     if (pageType == 'AddExisting') {
       this.clearList();
@@ -234,34 +235,25 @@ export class MouRequestAddcollComponent implements OnInit {
       }
 
       if (listCollateralNo.length > 0)
-      {
-      var collObj = { ListCollateralNo: listCollateralNo};
-      this.http.post(AdInsConstant.GetListCollateralByListCollateralNo, collObj).subscribe(
-        (response: any) => {
-          for (let i = 0; i < response['ReturnObject'].length; i++)
-          {
-            this.listSelectedId.push(response['ReturnObject'].CollateralId);
-          }
-          this.BindExistingCollateralSavedData(this.listSelectedId);
-        }
-      )}
+        this.BindExistingCollateralSavedData(listCollateralNo);
     }
   }
 
-  BindExistingCollateralSavedData(listCollateralId: any) {
+  BindExistingCollateralSavedData(listCollateralNo: any) {
     const addCritCustNo = new CriteriaObj();
     addCritCustNo.DataType = 'text';
-    addCritCustNo.propName = 'CL.CUST_NO';
+    addCritCustNo.propName = 'CU.CUST_NO';
     addCritCustNo.restriction = AdInsConstant.RestrictionEq;
     addCritCustNo.value = this.custNo;
     this.tempPagingObj.addCritInput.push(addCritCustNo);
 
-    // const addCritCollateralId = new CriteriaObj();
-    // addCritCollateralId.DataType = 'text';
-    // addCritCollateralId.propName = 'CL.COLLATERAL_ID';
-    // addCritCollateralId.restriction = AdInsConstant.RestrictionEq;
-    // addCritCollateralId.listValue = listCollateralId;
-    // this.tempPagingObj.addCritInput.push(addCritCollateralId);
+    const addCritCollateralNo = new CriteriaObj();
+    addCritCollateralNo.DataType = 'text';
+    addCritCollateralNo.propName = 'CL.COLLATERAL_NO';
+    addCritCollateralNo.restriction = AdInsConstant.RestrictionNotIn;
+    addCritCollateralNo.listValue = listCollateralNo;
+    this.tempPagingObj.addCritInput.push(addCritCollateralNo);
+    this.tempPagingObj.isReady = true;
   }
 
   initAddrObj() {
@@ -483,8 +475,7 @@ export class MouRequestAddcollComponent implements OnInit {
                 this.items.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required]);
                 this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
               }
-              else
-              {
+              else {
                 this.items.controls[i]['controls']['SerialNoValue'].clearValidators();
                 this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
               }
