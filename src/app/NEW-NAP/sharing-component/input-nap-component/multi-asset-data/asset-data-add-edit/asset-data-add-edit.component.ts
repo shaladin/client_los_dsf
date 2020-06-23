@@ -960,7 +960,7 @@ copyToLocationAddr() {
 
   setCollateralAttribute(){
     var collAttr;
-    if(this.AssetDataForm.controls["Color"].value != "" || this.AssetDataForm.controls["Color"].value != null)
+    if(this.AssetDataForm.controls["Color"].value != "" && this.AssetDataForm.controls["Color"].value != null)
     {
       collAttr = new AppCollateralAttrObj();
       collAttr.CollateralAttrCode = "COLOR";
@@ -968,7 +968,7 @@ copyToLocationAddr() {
       collAttr.AttrValue = this.AssetDataForm.controls["Color"].value;
       this.allAssetDataObj.AppCollateralAttrObj.push(collAttr);
     }
-    if(this.AssetDataForm.controls["TaxCityIssuer"].value != "" || this.AssetDataForm.controls["TaxCityIssuer"].value != null)
+    if(this.AssetDataForm.controls["TaxCityIssuer"].value != "" && this.AssetDataForm.controls["TaxCityIssuer"].value != null)
     {
       collAttr = new AppCollateralAttrObj();
       collAttr.CollateralAttrCode = "TAX_CITY_ISSUER";
@@ -976,7 +976,7 @@ copyToLocationAddr() {
       collAttr.AttrValue = this.AssetDataForm.controls["TaxCityIssuer"].value;
       this.allAssetDataObj.AppCollateralAttrObj.push(collAttr);
     }
-    if(this.AssetDataForm.controls["TaxIssueDt"].value != "" || this.AssetDataForm.controls["TaxIssueDt"].value != null)
+    if(this.AssetDataForm.controls["TaxIssueDt"].value != "" && this.AssetDataForm.controls["TaxIssueDt"].value != null)
     {
       collAttr = new AppCollateralAttrObj();
       collAttr.CollateralAttrCode = "BPKB_ISSUE_DATE";
