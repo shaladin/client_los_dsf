@@ -119,6 +119,8 @@ export class AdInsConstant {
   public static DeleteAppReferantor = environment.losUrl + "/AppReferantor/DeleteAppReferantor";
   public static GetAppReferantorByAppReferantorId = environment.losUrl + "/AppReferantor/GetAppReferantorByAppReferantorId";
   public static GetAppReferantorByAppId = environment.losUrl + "/AppReferantor/GetAppReferantorByAppId";
+  public static VendorCategoryAgencyCompany = "AGENCY_COMPANY";
+  public static VendorCategoryAgencyPersonal = "AGENCY_PERSONAL";
 
   // App Cross
   public static EditAppAddAppCross = environment.losUrl + "/Application/EditAppAddAppCross";
