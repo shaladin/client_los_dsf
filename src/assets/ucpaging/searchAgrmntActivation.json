@@ -53,21 +53,25 @@
         },
         {
             "type": "dropdown",
-            "datatype": "text",
-            "name": "TASK_CLAIM_STAT",
+            "name": "WF.CLAIM_STAT",
             "id": "TaskClaimStatId",
+            "label": "Task Claim Status",
             "value": "",
             "placeholder": "Placeholder",
-            "isFromURL": true,
+            "isFromURL": false,
             "isSelectOne": false,
-            "url": "",
-            "path":"/RefMaster/GetListKeyValueActiveByCode",
-            "label": "Task Claim Status",
-            "criteriaPropName": "RefMasterTypeCode",
-            "criteriaPropValue": "OFFICE_CLASS",
-            "items": [],
+            "items": [
+              {
+                "key": "CLAIMED",
+                "value": "CLAIMED"
+              },
+              {
+                "key": "UNCLAIMED",
+                "value": "UNCLAIMED"
+              }
+            ],
             "itemsUrl": []
-          }
+        }
     ],
     "querystring": {
         "select": "SELECT A.APP_NO AS AppNo, A.APP_ID AS AppId, AC.CUST_NAME as CustName, A.PROD_OFFERING_NAME as ProdOfferingName, A.PROD_OFFERING_CODE AS ProdOfferingCode, A.PROD_OFFERING_VERSION AS ProdOfferingVersion, WF.USERNAME as ClaimBy, WF.WF_TASK_LIST_ID as WFTaskListId, WF.TRANSACTION_CODE as TrxNo",
@@ -75,12 +79,6 @@
         "where" : "WHERE WF.END_EXECUTING_DATE IS NULL"
     },
     "headerList": [
-        {
-            "type": "text",
-            "position": "center",
-            "label": "SLA",
-            "name": "SLA"
-        },
         {
             "type": "sort",
             "position": "left",
@@ -120,17 +118,12 @@
     "bodyList": [
         {
             "type": "text",
-            "position": "Center ",
-            "property": "Sla"
-        },
-        {
-            "type": "text",
             "position": "left",
             "property": "ClaimBy"
         },
         {
             "type": "link",
-            "position": "left",
+            "position": "center",
             "property": "AppNo",
             "target": "_blank",
             "path": "/Nap/View/AppView",
