@@ -226,7 +226,38 @@ export class CollateralAddEditComponent implements OnInit {
 
   CollChange(){
     this.collateral = this.AddCollForm.controls["Collateral"].value;
+
+    if (this.collateral == 'Exists')
+    {
+      // this.clearList();
+      // var listCollateralNo: Array<string> = new Array();
+      // for (let index = 0; index < this.listCollateralData.length; index++) {
+      //   if (this.listCollateralData[index].CollateralStat == 'EXISTING')
+      //     listCollateralNo.push(this.listCollateralData[index].CollateralNo);
+      // }
+
+      // if (listCollateralNo.length > 0)
+      //   this.BindExistingCollateralSavedData(listCollateralNo);
+    }
+
     console.log(this.collateral);
+  }
+
+  BindExistingCollateralSavedData(listCollateralNo: any) {
+    const addCritCustNo = new CriteriaObj();
+    addCritCustNo.DataType = 'text';
+    addCritCustNo.propName = 'CU.CUST_NO';
+    addCritCustNo.restriction = AdInsConstant.RestrictionEq;
+    addCritCustNo.value = this.custNo;
+    this.tempPagingObj.addCritInput.push(addCritCustNo);
+
+    const addCritCollateralNo = new CriteriaObj();
+    addCritCollateralNo.DataType = 'text';
+    addCritCollateralNo.propName = 'CL.COLLATERAL_NO';
+    addCritCollateralNo.restriction = AdInsConstant.RestrictionNotIn;
+    addCritCollateralNo.listValue = listCollateralNo;
+    this.tempPagingObj.addCritInput.push(addCritCollateralNo);
+    this.tempPagingObj.isReady = true;
   }
 
   collateralTypeHandler(){
