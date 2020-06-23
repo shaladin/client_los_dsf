@@ -307,7 +307,7 @@ export class DocSignerDetailComponent implements OnInit {
     }
   }
   
-  GetCallBack(ev: any){
+  Callback(ev: any){
     if(ev.Key == "ViewProdOffering"){
       var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.ViewObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.ViewObj.ProdOfferingVersion + "&Token=" + this.token; 
       window.open( link, "_blank");
