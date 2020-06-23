@@ -206,6 +206,6 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
   }
 
   OpenAppView(appId){
-    window.open( "/Nap/View/AppView?AppId=" + appId, "_blank");
+    window.open( environment.losR3Web + "/Nap/View/AppView?AppId=" + appId, "_blank");
   }
 }
