@@ -234,11 +234,21 @@ export class MouRequestAddcollComponent implements OnInit {
       }
 
       if (listCollateralNo.length > 0)
-        this.BindExistingCollateralSavedData(listCollateralNo);
+      {
+      var collObj = { ListCollateralNo: listCollateralNo};
+      this.http.post(AdInsConstant.GetListCollateralByListCollateralNo, collObj).subscribe(
+        (response: any) => {
+          for (let i = 0; i < response['ReturnObject'].length; i++)
+          {
+            this.listSelectedId.push(response['ReturnObject'].CollateralId);
+          }
+          this.BindExistingCollateralSavedData(this.listSelectedId);
+        }
+      )}
     }
   }
 
-  BindExistingCollateralSavedData(listNo: any) {
+  BindExistingCollateralSavedData(listCollateralId: any) {
     const addCritCustNo = new CriteriaObj();
     addCritCustNo.DataType = 'text';
     addCritCustNo.propName = 'CL.CUST_NO';
@@ -246,12 +256,12 @@ export class MouRequestAddcollComponent implements OnInit {
     addCritCustNo.value = this.custNo;
     this.tempPagingObj.addCritInput.push(addCritCustNo);
 
-    const addCritCollateralNo = new CriteriaObj();
-    addCritCollateralNo.DataType = 'text';
-    addCritCollateralNo.propName = 'CL.COLLATERAL_NO';
-    addCritCollateralNo.restriction = AdInsConstant.RestrictionNeq;
-    addCritCollateralNo.listValue = listNo;
-    this.tempPagingObj.addCritInput.push(addCritCollateralNo);
+    // const addCritCollateralId = new CriteriaObj();
+    // addCritCollateralId.DataType = 'text';
+    // addCritCollateralId.propName = 'CL.COLLATERAL_ID';
+    // addCritCollateralId.restriction = AdInsConstant.RestrictionEq;
+    // addCritCollateralId.listValue = listCollateralId;
+    // this.tempPagingObj.addCritInput.push(addCritCollateralId);
   }
 
   initAddrObj() {
