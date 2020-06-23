@@ -30,6 +30,7 @@ export class PreGoLiveComponent implements OnInit {
   PreGoLiveMainObj: PreGoLiveMainObj = new PreGoLiveMainObj();
   PreGoLiveObj: PreGoLiveObj = new PreGoLiveObj();
   AgrmntObj: AgrmntObj = new AgrmntObj();
+  token : any = localStorage.getItem("Token");
 
   IsCheckedAll: any;
 
@@ -106,6 +107,19 @@ export class PreGoLiveComponent implements OnInit {
       }
     );
   }
+
+  GetCallBack(ev: any){
+    if(ev.Key == "ViewProdOffering"){
+      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.ViewObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.ViewObj.ProdOfferingVersion + "&Token=" + this.token;
+      // this.router.navigate([]).then(result => { window.open(link, '_blank'); });
+      window.open( link, "_blank");
+    }
+    if (ev.Key == "customer") {
+          var link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + ev.ViewObj.AppCustId; 
+          window.open(link, '_blank');
+    }
+  }
+
   ReceiveIsChecked(ev) {
     if(this.hasApproveFinal == false && this.ListRfaLogObj.length != 0)
     {
