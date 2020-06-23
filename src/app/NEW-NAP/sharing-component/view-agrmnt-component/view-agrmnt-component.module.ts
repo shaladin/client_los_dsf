@@ -14,6 +14,7 @@ import { ViewCommissionComponent } from './view-commission/view-commission.compo
 import { ViewDeviationComponent } from './view-deviation/view-deviation.component';
 import { ViewCollateralComponent } from './view-collateral/view-collateral.component';
 import { ViewAgrmntInsuranceComponent } from './view-insurance/view-insurance.component';
+import { ViewInsuranceDetailComponent } from './view-insurance-detail/view-insurance-detail.component';
 // import { AgrmntCardComponent } from './agrmnt-card/agrmnt-card.component';
 // import { ListDataCommissionAgrmntComponent } from "./view-commission/list-data-commission/list-data-commission.component";
 
@@ -29,7 +30,8 @@ import { ViewAgrmntInsuranceComponent } from './view-insurance/view-insurance.co
     ViewCommissionComponent,
     ViewDeviationComponent,
     ViewCollateralComponent,
-    ViewAgrmntInsuranceComponent
+    ViewAgrmntInsuranceComponent,
+    ViewInsuranceDetailComponent
     // ListDataCommissionAgrmntComponent,
     // AgrmntCardComponent
   ],
@@ -49,7 +51,8 @@ import { ViewAgrmntInsuranceComponent } from './view-insurance/view-insurance.co
     ViewCommissionComponent,
     ViewDeviationComponent,
     ViewCollateralComponent,
-    ViewAgrmntInsuranceComponent, 
+    ViewAgrmntInsuranceComponent,
+    ViewInsuranceDetailComponent,
     // ListDataCommissionAgrmntComponent,
     // AgrmntCardComponent
   ],
