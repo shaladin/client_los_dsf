@@ -66,7 +66,7 @@ export class AppInquiryPagingComponent implements OnInit {
         window.open( environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + event.RowObj.AgrmntId, "_blank");
       }
       else if(bizTemplateCode == "FL4W"){
-        window.open( environment.losR3Web + "/Nap/FinanceLeasing/ViewAgrmnt?AgrmntId=" + event.RowObj.AgrmntId, "_blank");
+        window.open( environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + event.RowObj.AgrmntId, "_blank");
       }
     }
     else if(event.Key == "application"){

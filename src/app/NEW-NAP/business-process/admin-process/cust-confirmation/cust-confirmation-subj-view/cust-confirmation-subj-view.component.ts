@@ -32,7 +32,7 @@ export class CustConfirmationSubjViewComponent implements OnInit {
   VerfResultHObjDetail: VerfResultHObj = new VerfResultHObj();
   VerfResultDListObj = new Array<VerfResultDObj>();
   IsVerfDetail: boolean = false;
-
+  cust : any;
   constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
       if (params["VerfResultHId"] != null) {
@@ -73,7 +73,7 @@ export class CustConfirmationSubjViewComponent implements OnInit {
         };
         this.http.post<AppObj>(AdInsConstant.GetAppById, appObj).subscribe(
           (response) => {
-            this.AppObj = response;
+            this.AppObj = response; 
           },
           (error) => {
             console.log(error);
@@ -156,22 +156,14 @@ export class CustConfirmationSubjViewComponent implements OnInit {
   BackVerfDetail() {
     this.IsVerfDetail = false;
   }
-
   openUrl(key) {
     if (key == "application") {
       window.open(environment.losR3Web + "/Nap/View/AppView?AppId=" + this.AppObj.AppId, "_blank");
     } else if (key == "lead") {
       window.open(environment.losR3Web + "/Lead/View?LeadId=" + this.AgrmntObj.AgrmntId, "_blank");
     }
-    else if (key == "agreement") {
-      var bizTemplateCode = this.BizTemplateCode;
-
-      if (bizTemplateCode == "CF4W" || bizTemplateCode == "CFRFN4W" || bizTemplateCode == "FACTORING") {
-        window.open(environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + this.AgrmntObj.AgrmntId, "_blank");
-      }
-      else if (bizTemplateCode == "FL4W") {
-        window.open(environment.losR3Web + "/Nap/FinanceLeasing/ViewAgrmnt?AgrmntId=" + this.AgrmntObj.AgrmntId, "_blank");
-      }
-    }
+    else if (key == "agreement") { 
+      window.open(environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + this.AgrmntObj.AgrmntId, "_blank");
+    } 
   }
 }

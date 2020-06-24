@@ -76,26 +76,28 @@
             "type": "link",
             "position": "center",
             "property": "AppNo",
-            "path": "",
+            "target" : "_blank", 
+            "path": "/Nap/View/AppView",
             "param": [
                 {
                     "type": "AppId",
                     "property": "AppId"
                 }
             ]
-        },
+        },  
         {
             "type": "link",
             "position": "center",
             "property": "AgrmntNo",
-            "path": "",
+            "target": "_blank",
+            "path": "/Nap/View/AgrmntView",
             "param": [
                 {
                     "type": "AgrmntId",
                     "property": "AgrmntId"
                 }
             ]
-        },
+        }, 
         {
             "type": "link",
             "position": "left",
@@ -137,7 +139,7 @@
                             ],
                             "result": {
                                 "type": "url",
-                                "path": "/AdminProcess/AgreementCancellation/Detail",
+                                "path": "/Nap/AdminProcess/AgreementCancellation/Detail",
                                 "icon": "ft-edit-2",
                                 "param": [
                                     {
