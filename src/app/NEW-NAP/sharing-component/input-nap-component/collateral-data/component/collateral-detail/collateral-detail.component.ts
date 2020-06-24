@@ -309,9 +309,7 @@ export class CollateralDetailComponent implements OnInit {
           this.editCollateralRegistrationObj = response['AppCollateralRegistration'];
         }
 
-        if (this.appCollateralObj.AppCollateralId != 0) {
-          this.mode = "edit";
-        } else {
+        if (this.appCollateralObj.AppCollateralId == 0) {
           return true;
         }
 
@@ -516,7 +514,7 @@ export class CollateralDetailComponent implements OnInit {
   }
 
   Cancel() {
-    // this.outputValue.emit();
+    this.outputValue.emit();
     this.outputCancel.emit();
   }
 

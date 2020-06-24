@@ -19,13 +19,11 @@
         <div class="row">
           <div class="col-md-6">
             <div class="row">
-              <label class="label-control col-md-6">Application No</label>
-              
+              <label class="label-control col-md-6">Application No</label> 
               <a href="{{appUrl}}" target="_blank" class="label-control col-md-6">{{AppObj.AppNo}}</a>
             </div>
             <div class="row">
-              <label class="label-control col-md-6">Agreement No</label>
-            
+              <label class="label-control col-md-6">Agreement No</label> 
               <a href="{{agrmntUrl}}" target="_blank" class="label-control col-md-6">{{AgrmntObj.AgrmntNo}}</a>
             </div>
             <div class="row">
@@ -65,7 +63,7 @@
             </div>
             <div class="row">
               <label class="label-control col-md-6">Verification By</label>
-              <label class="label-control col-md-6">{{ VerfResultObj?.EmpNo }}</label>
+              <label class="label-control col-md-6">{{ VerfResultObj?.EmpName }}</label>
             </div>
           </div>
           <div class="col-md-6">
@@ -109,17 +107,17 @@
         <table class="table table-responsive-md text-center table-hover">
           <thead>
             <tr class="table-header">
-              <th><span translate class="thead-header text-left">Phone No</span></th>
-              <th><span translate class="thead-header text-left">Status</span></th>
-              <th><span translate class="thead-header text-left">Notes</span></th>
+              <th><span translate class="thead-header">Phone No</span></th>
+              <th><span translate class="thead-header">Status</span></th>
+              <th><span translate class="thead-header">Notes</span></th>
               <th translate>View</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let item of VerfResultHList; let i = index">
-              <td class="text-left">{{item.Phn}}</td>
-              <td class="text-left">{{item.MrVerfResultHStatName}}</td>
-              <td class="text-left">{{item.Notes}}</td>
+              <td>{{item.Phn}}</td>
+              <td>{{item.MrVerfResultHStatName}}</td>
+              <td>{{item.Notes}}</td>
               <td>
                 <a (click)="GetDetailVerf(item.VerfResultHId)">View</a>
               </td>

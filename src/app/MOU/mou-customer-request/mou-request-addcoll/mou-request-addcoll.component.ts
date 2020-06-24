@@ -328,7 +328,7 @@ export class MouRequestAddcollComponent implements OnInit {
           this.AddCollForm.reset();
           this.toastr.successMessage(response["message"]);
           this.type = 'Paging';
-          this.bindMouData();
+          this.ClearForm();
         },
         (error) => {
           console.log(error);
@@ -342,7 +342,7 @@ export class MouRequestAddcollComponent implements OnInit {
           this.toastr.successMessage(response["message"]);
           this.type = 'Paging';
           this.collateralObj = null;
-          this.bindMouData();
+          this.ClearForm();
         },
         (error) => {
           console.log(error);
@@ -560,7 +560,44 @@ export class MouRequestAddcollComponent implements OnInit {
 
   Cancel() {
     this.clearList();
+    this.ClearForm();
     this.type = 'Paging';
+  }
+
+  ClearForm()
+  {
+    this.AddCollForm = this.fb.group({
+      MouCustCollateralId: [''],
+      MouCustCollateralRegistrationId: [''],
+      CopyFromLegal: [''],
+      AssetTypeCode: ['', [Validators.required]],
+      CollateralValueAmt: [0, [Validators.required]],
+      FullAssetCode: [''],
+      AssetCategoryCode: [''],
+      OwnerName: ['', [Validators.required]],
+      OwnerRelationship: ['', [Validators.required]],
+      OwnerIdNo: ['', [Validators.required]],
+      MrIdType: ['', [Validators.required]],
+      Notes: [''],
+      SerialNo1: [''],
+      SerialNo2: [''],
+      SerialNo3: [''],
+      SerialNo4: [''],
+      SerialNo5: [''],
+      RowVersionCollateral: [''],
+      RowVersionCollateralRegistration: [''],
+      items: this.fb.array([]),
+      MrCollateralConditionCode: ['']
+    })
+    this.inputFieldLocationObj.inputLookupObj.nameSelect = '';
+    this.inputFieldLocationObj.inputLookupObj.jsonSelect = { Zipcode: ''}
+    this.inputFieldLegalObj.inputLookupObj.nameSelect = '';
+    this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: ''}
+
+    this.items = this.AddCollForm.get('items') as FormArray;
+    this.bindUcLookup()
+    this.initAddrObj();
+    this.bindMouData();
   }
 
   SaveExistingCollateral() {

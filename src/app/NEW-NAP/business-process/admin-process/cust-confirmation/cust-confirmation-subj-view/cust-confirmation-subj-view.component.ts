@@ -77,7 +77,7 @@ export class CustConfirmationSubjViewComponent implements OnInit {
         };
         this.http.post<AppObj>(AdInsConstant.GetAppById, appObj).subscribe(
           (response) => {
-            this.AppObj = response; 
+            this.AppObj = response;
           },
           (error) => {
             console.log(error);
@@ -163,5 +163,21 @@ export class CustConfirmationSubjViewComponent implements OnInit {
 
   BackVerfDetail() {
     this.IsVerfDetail = false;
+  }
+
+  openUrl(key) {
+    if (key == "application") {
+      window.open(environment.losR3Web + "/Nap/View/AppView?AppId=" + this.AppObj.AppId, "_blank");
+    }
+    else if (key == "agreement") {
+      var bizTemplateCode = this.BizTemplateCode;
+
+      if (bizTemplateCode == "CF4W" || bizTemplateCode == "CFRFN4W" || bizTemplateCode == "FACTORING") {
+        window.open(environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + this.AgrmntObj.AgrmntId, "_blank");
+      }
+      else if (bizTemplateCode == "FL4W") {
+        window.open(environment.losR3Web + "/Nap/FinanceLeasing/ViewAgrmnt?AgrmntId=" + this.AgrmntObj.AgrmntId, "_blank");
+      }
+    }
   }
 }
