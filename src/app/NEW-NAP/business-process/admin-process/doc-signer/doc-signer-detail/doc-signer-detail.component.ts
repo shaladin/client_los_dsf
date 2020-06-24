@@ -39,6 +39,7 @@ export class DocSignerDetailComponent implements OnInit {
   ContactPersonName: string;
   token : any = localStorage.getItem("Token");
   BizTemplateCode: string;
+  isHidden: boolean;
 
   constructor(private fb: FormBuilder, private http: HttpClient,
     private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService) {
@@ -61,6 +62,7 @@ export class DocSignerDetailComponent implements OnInit {
   async ngOnInit() {
     this.viewObj = "./assets/ucviewgeneric/viewDocSigner.json";
 
+    console.log("DOC SIGNER")
     await this.getAllData();
     this.setLookupObj();
   }
@@ -218,6 +220,11 @@ export class DocSignerDetailComponent implements OnInit {
       this.inputLookupAppCustCompanyShareHolder1Obj.jsonSelect = { MgmntShrholderName: this.ResponseAgrmntSignerObj.AppCustCompanyMgmntShrholder1Name };
       this.inputLookupAppCustCompanyShareHolder2Obj.jsonSelect = { MgmntShrholderName: this.ResponseAgrmntSignerObj.AppCustCompanyMgmntShrholder2Name };
       this.inputLookupAppCustCompanyShareHolder3Obj.jsonSelect = { MgmntShrholderName: this.ResponseAgrmntSignerObj.AppCustCompanyMgmntShrholder3Name };
+    }
+
+    if(this.BizTemplateCode == "CFRFN4W" || this.BizTemplateCode == "FCTR"){
+      this.inputLookupBranchEmpObj.isRequired = false;
+      this.isHidden = true;
     }
   }
 
