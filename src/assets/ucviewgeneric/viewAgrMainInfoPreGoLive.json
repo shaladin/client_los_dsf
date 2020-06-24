@@ -8,7 +8,7 @@
       "mainInfo": [
         {
           "type": "link",
-          "label": "APPLICATION NO",
+          "label": "Application No",
           "property": "AppNo",
           "path": "/Nap/View/AppView",
           "target" : "_blank",
@@ -21,20 +21,33 @@
         },
         {
           "type": "link",
-          "label": "AGREEMENT NO",
-          "property": "AgrmntNo",
-          "path": "/Nap/View/AgrmntView",
+          "label": "Application No",
+          "property": "AppNo",
+          "path": "/Nap/View/AppView",
           "target" : "_blank",
           "param": [
             {
-              "type": "AgrmntId",
-              "property": "AgrmntId"
+              "type": "AppId",
+              "property": "AppId"
+            }
+          ]
+        },
+        {
+          "type": "link",
+          "label": "Lead No",
+          "property": "LeadNo",
+          "path": "/Lead/View",
+          "target" : "_blank",
+          "param": [
+            {
+              "type": "LeadId",
+              "property": "LeadId"
             }
           ]
         }, 
         {
           "type": "text",
-          "label": "ORIGINAL OFFICE",
+          "label": "Original Office",
           "property": "OfficeName"
         },
         {
@@ -45,29 +58,29 @@
         },
         {
           "type": "callback",
-          "label": "PRODUCT OFFERING NAME",
+          "label": "Product Offering Name",
           "key": "ViewProdOffering",
           "property": "ProdOfferingName"
         },
         {
           "type": "text",
-          "label": "TENOR",
+          "label": "Tenor",
           "property": "Tenor"
         },
         {
           "type": "text",
-          "label": "ORDER INFORMATION",
+          "label": "Order Information",
           "property": "MrOrderInfoCode"
         },
         {
           "type": "text",
-          "label": "CURRENCY",
+          "label": "Currency",
           "property": "CurrCode"
         }
       ],
       "querystring": {
-        "select": "SELECT A.APP_NO AS AppNo, AGR.AGRMNT_NO AS AgrmntNo, AGR.CUST_NAME AS CustName, apCust.APP_CUST_ID AS AppCustId ,AGR.CUST_NO AS CustNo, AGR.TENOR AS Tenor, AGR.CURR_CODE AS CurrCode, AGR.NUM_OF_ASSET AS NumOfAsset, AGR.OFFICE_NAME AS OfficeName, A.PROD_OFFERING_NAME AS ProdOfferingName, A.PROD_OFFERING_CODE AS ProdOfferingCode, A.PROD_OFFERING_VERSION AS ProdOfferingVersion, A.MR_ORDER_INFO_CODE AS MrOrderInfoCode, AGR.AGRMNT_ID AS AgrmntId, A.APP_ID AS AppId",
-        "from": "FROM dbo.AGRMNT AGR WITH(NOLOCK) JOIN dbo.APP A WITH(NOLOCK) ON A.APP_ID = AGR.APP_ID JOIN dbo.APP_CUST apCust WITH(NOLOCK) ON apCust.APP_ID = A.APP_ID",
+        "select": "SELECT A.APP_NO AS AppNo, AGR.AGRMNT_NO AS AgrmntNo, AGR.CUST_NAME AS CustName, apCust.APP_CUST_ID AS AppCustId ,AGR.CUST_NO AS CustNo, AGR.TENOR AS Tenor, AGR.CURR_CODE AS CurrCode, AGR.NUM_OF_ASSET AS NumOfAsset, AGR.OFFICE_NAME AS OfficeName, A.PROD_OFFERING_NAME AS ProdOfferingName, A.PROD_OFFERING_CODE AS ProdOfferingCode, A.PROD_OFFERING_VERSION AS ProdOfferingVersion, A.MR_ORDER_INFO_CODE AS MrOrderInfoCode, L.LEAD_NO AS LeadNo, A.LEAD_ID AS LeadId, AGR.AGRMNT_ID AS AgrmntId, A.APP_ID AS AppId",
+        "from": "FROM dbo.AGRMNT AGR WITH(NOLOCK) JOIN dbo.APP A WITH(NOLOCK) ON A.APP_ID = AGR.APP_ID JOIN dbo.APP_CUST apCust WITH(NOLOCK) ON apCust.APP_ID = A.APP_ID LEFT JOIN dbo.LEAD L ON L.LEAD_ID = A.LEAD_ID",
         "where": "WHERE AGR.AGRMNT_ID = {0}"
       }
     }
