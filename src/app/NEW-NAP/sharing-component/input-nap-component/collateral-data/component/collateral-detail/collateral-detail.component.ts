@@ -514,7 +514,7 @@ export class CollateralDetailComponent implements OnInit {
   }
 
   Cancel() {
-    // this.outputValue.emit();
+    this.outputValue.emit();
     this.outputCancel.emit();
   }
 
