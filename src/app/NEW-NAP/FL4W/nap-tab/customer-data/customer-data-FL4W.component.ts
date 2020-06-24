@@ -43,8 +43,10 @@ export class CustomerDataFL4WComponent implements OnInit {
   });
 
   @Input() appId: any;
+  @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
-
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
+  cancel:boolean = true;
   refMasterObj = {
     RefMasterTypeCode: "",
   };
@@ -74,11 +76,7 @@ export class CustomerDataFL4WComponent implements OnInit {
   listShareholder: any;
   listContactPersonCompany: any;
   listLegalDoc: any;
-
   isBindDataDone: boolean = false;
-
-
-
   getRefMasterUrl: any;
   addEditCustDataPersonalUrl: any;
   getCustDataUrl: any;
@@ -112,7 +110,6 @@ export class CustomerDataFL4WComponent implements OnInit {
   defCustModelCode: any;
   MrCustTypeCode: any;
   isSocmedValid: boolean = true;
-  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private fb: FormBuilder,
@@ -125,11 +122,14 @@ export class CustomerDataFL4WComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    console.log('customer data')
+     
+    this.cancel = this.showCancel;
     this.initUrl();
     this.bindCustTypeObj();
     this.initAddrObj();
     await this.getCustData();
+    
+
   }
 
   Cancel(){

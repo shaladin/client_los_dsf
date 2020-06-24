@@ -233,24 +233,17 @@ export class MouRequestAddcollComponent implements OnInit {
           listCollateralNo.push(this.listCollateralData[index].CollateralNo);
       }
 
-      // if (listCollateralNo.length > 0)
-      //   this.BindExistingCollateralSavedData(listCollateralNo);
+      if (listCollateralNo.length > 0)
+        this.BindExistingCollateralSavedData(listCollateralNo);
     }
   }
 
-  BindExistingCollateralSavedData(listNo: any) {
-    const addCritCustNo = new CriteriaObj();
-    addCritCustNo.DataType = 'text';
-    addCritCustNo.propName = 'CL.CUST_NO';
-    addCritCustNo.restriction = AdInsConstant.RestrictionEq;
-    addCritCustNo.value = this.custNo;
-    this.tempPagingObj.addCritInput.push(addCritCustNo);
-
+  BindExistingCollateralSavedData(listCollateralNo: any) {
     const addCritCollateralNo = new CriteriaObj();
     addCritCollateralNo.DataType = 'text';
     addCritCollateralNo.propName = 'CL.COLLATERAL_NO';
-    addCritCollateralNo.restriction = AdInsConstant.RestrictionNeq;
-    addCritCollateralNo.listValue = listNo;
+    addCritCollateralNo.restriction = AdInsConstant.RestrictionNotIn;
+    addCritCollateralNo.listValue = listCollateralNo;
     this.tempPagingObj.addCritInput.push(addCritCollateralNo);
   }
 
@@ -335,7 +328,7 @@ export class MouRequestAddcollComponent implements OnInit {
           this.AddCollForm.reset();
           this.toastr.successMessage(response["message"]);
           this.type = 'Paging';
-          this.bindMouData();
+          this.ClearForm();
         },
         (error) => {
           console.log(error);
@@ -349,7 +342,7 @@ export class MouRequestAddcollComponent implements OnInit {
           this.toastr.successMessage(response["message"]);
           this.type = 'Paging';
           this.collateralObj = null;
-          this.bindMouData();
+          this.ClearForm();
         },
         (error) => {
           console.log(error);
@@ -473,8 +466,7 @@ export class MouRequestAddcollComponent implements OnInit {
                 this.items.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required]);
                 this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
               }
-              else
-              {
+              else {
                 this.items.controls[i]['controls']['SerialNoValue'].clearValidators();
                 this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
               }
@@ -568,7 +560,44 @@ export class MouRequestAddcollComponent implements OnInit {
 
   Cancel() {
     this.clearList();
+    this.ClearForm();
     this.type = 'Paging';
+  }
+
+  ClearForm()
+  {
+    this.AddCollForm = this.fb.group({
+      MouCustCollateralId: [''],
+      MouCustCollateralRegistrationId: [''],
+      CopyFromLegal: [''],
+      AssetTypeCode: ['', [Validators.required]],
+      CollateralValueAmt: [0, [Validators.required]],
+      FullAssetCode: [''],
+      AssetCategoryCode: [''],
+      OwnerName: ['', [Validators.required]],
+      OwnerRelationship: ['', [Validators.required]],
+      OwnerIdNo: ['', [Validators.required]],
+      MrIdType: ['', [Validators.required]],
+      Notes: [''],
+      SerialNo1: [''],
+      SerialNo2: [''],
+      SerialNo3: [''],
+      SerialNo4: [''],
+      SerialNo5: [''],
+      RowVersionCollateral: [''],
+      RowVersionCollateralRegistration: [''],
+      items: this.fb.array([]),
+      MrCollateralConditionCode: ['']
+    })
+    this.inputFieldLocationObj.inputLookupObj.nameSelect = '';
+    this.inputFieldLocationObj.inputLookupObj.jsonSelect = { Zipcode: ''}
+    this.inputFieldLegalObj.inputLookupObj.nameSelect = '';
+    this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: ''}
+
+    this.items = this.AddCollForm.get('items') as FormArray;
+    this.bindUcLookup()
+    this.initAddrObj();
+    this.bindMouData();
   }
 
   SaveExistingCollateral() {
@@ -598,6 +627,13 @@ export class MouRequestAddcollComponent implements OnInit {
   clearList() {
     this.listSelectedId = [];
     this.tempPagingObj.addCritInput = new Array<CriteriaObj>();
+
+    const addCritCustNo = new CriteriaObj();
+    addCritCustNo.DataType = 'text';
+    addCritCustNo.propName = 'CU.CUST_NO';
+    addCritCustNo.restriction = AdInsConstant.RestrictionEq;
+    addCritCustNo.value = this.custNo;
+    this.tempPagingObj.addCritInput.push(addCritCustNo);
   }
 
   delete(MouCustCollId) {

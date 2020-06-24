@@ -8,6 +8,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { NapAppReferantorModel } from 'app/shared/model/NapAppReferantor.Model';
+import { AppObj } from 'app/shared/model/App/App.Model';
 
 @Component({
   selector: 'app-referantor-data-FL4W',
@@ -18,6 +19,7 @@ import { NapAppReferantorModel } from 'app/shared/model/NapAppReferantor.Model';
 export class ReferantorDataFL4WComponent implements OnInit {
 
   @Input() appId: any;
+  @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   inputLookupObj;
@@ -41,15 +43,28 @@ export class ReferantorDataFL4WComponent implements OnInit {
   appReferantorObj;
   ExistedData;
   arrAddCrit;
-  ngOnInit() {
+  async ngOnInit() {
     this.appReferantorObj = new NapAppReferantorModel();
     this.ExistedData = false;
-
+    
+    await this.GetAppData();
     this.GetInputLookupObj();
     this.getAppReferantorData();
     console.log(this.bankItems);
   }
 
+  OfficeCode: String;
+  async GetAppData() {
+    var obj = { AppId: this.appId };
+    await this.http.post<AppObj>(AdInsConstant.GetAppById, obj).toPromise().then(
+      (response) => {
+        console.log(response);
+        this.OfficeCode = response.OriOfficeCode;
+        console.log(this.OfficeCode);
+      }
+    );
+  }
+  
   Cancel(){
     this.outputCancel.emit();
   }
@@ -64,12 +79,12 @@ export class ReferantorDataFL4WComponent implements OnInit {
     addCrit.listValue = ["AGENCY_COMPANY", "AGENCY_PERSONAL"];
     this.arrAddCrit.push(addCrit);
 
-    var addCrit1 = new CriteriaObj(); 
-    addCrit1.DataType = "bool";
-    addCrit1.propName = "vba.IS_DEFAULT";
-    addCrit1.restriction = AdInsConstant.RestrictionIn;
-    addCrit1.listValue = [1];
-    this.arrAddCrit.push(addCrit1);
+    var addCrit3 = new CriteriaObj(); 
+    addCrit3.DataType = "text";
+    addCrit3.propName = "ro.OFFICE_CODE";
+    addCrit3.restriction = AdInsConstant.RestrictionIn;
+    addCrit3.listValue = [this.OfficeCode];
+    this.arrAddCrit.push(addCrit3);
 
     //Look Up Obj
     this.inputLookupObj = new InputLookupObj();
