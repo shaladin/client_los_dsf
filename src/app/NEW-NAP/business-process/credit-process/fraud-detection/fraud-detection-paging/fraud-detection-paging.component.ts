@@ -43,7 +43,7 @@ export class FraudDetectionPagingComponent implements OnInit {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionIn;
     critObj.propName = 'WTL.ACT_CODE';
-    critObj.listValue = ["FRD_" + this.BizTemplateCode,"FRD_CHECK_" + this.BizTemplateCode]
+    critObj.listValue = ["FRD_" + this.BizTemplateCode,"FCR_" + this.BizTemplateCode]
     arrCrit.push(critObj);
     this.inputPagingObj.addCritInput = arrCrit;
   }
@@ -55,7 +55,7 @@ export class FraudDetectionPagingComponent implements OnInit {
       window.open(link, '_blank');
     }
     else {
-      if(event.RowObj.ActCode == "FRD_CHECK_" + this.BizTemplateCode){
+      if(event.RowObj.ActCode == "FCR_" + this.BizTemplateCode){
         var appObj = {AppId: event.RowObj.AppId};
         this.http.post(AdInsConstant.SurveyFraudAppCheckingValidationForFraudVerif, appObj).subscribe(
           (response) => {
