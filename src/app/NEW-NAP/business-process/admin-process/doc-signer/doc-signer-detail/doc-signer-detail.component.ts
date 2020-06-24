@@ -324,15 +324,15 @@ export class DocSignerDetailComponent implements OnInit {
       }
     }
 
-    if(ev.Key == "prodOff"){
-      this.http.post(AdInsConstant.GetProdOfferingHByCode, {ProdOfferingCode : ev.ViewObj.ProdOfferingCode}).subscribe(
-        response => {
-          window.open(environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=" + response['ProdOfferingHId'], '_blank');
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    }
+    // if(ev.Key == "prodOff"){
+    //   this.http.post(AdInsConstant.GetProdOfferingHByCode, {ProdOfferingCode : ev.ViewObj.ProdOfferingCode}).subscribe(
+    //     response => {
+    //       window.open(environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=" + response['ProdOfferingHId'], '_blank');
+    //     },
+    //     (error) => {
+    //       console.log(error);
+    //     }
+    //   );
+    // }
   }
 }

@@ -30,6 +30,7 @@ import { ViewInsuranceDetailComponent } from './view-insurance-detail/view-insur
     ViewCommissionComponent,
     ViewDeviationComponent,
     ViewCollateralComponent,
+    AgrmntFinancialComponent,
     ViewAgrmntInsuranceComponent,
     ViewInsuranceDetailComponent
     // ListDataCommissionAgrmntComponent,
