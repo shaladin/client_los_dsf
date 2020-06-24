@@ -42,7 +42,8 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   TaskListId: number;
   BizTemplateCode: string;
   SubjectResponse: RefMasterObj = new RefMasterObj();
-
+  cust : any;
+  custUrl : any;
   appUrl: string;
   agrmntUrl: string;
   constructor(private route: ActivatedRoute, private fb: FormBuilder, private http: HttpClient,
@@ -73,8 +74,10 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("aaaa");
     this.appUrl = environment.losR3Web + "/Nap/View/AppView?AppId=" + this.AppId;
     this.agrmntUrl = environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + this.AgrmntId;
+ 
     console.log(this.appUrl);
     this.GetData();
 
@@ -131,12 +134,18 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
         this.agrmntObj = response;
         this.http.post<AppObj>(AdInsConstant.GetAppById, { AppId: this.agrmntObj.AppId }).subscribe(
           (response) => {
-            this.appObj = response;
+            this.appObj = response; 
           },
           (error) => {
             console.log(error);
           }
         );
+        var custObj = { CustNo: this.agrmntObj.CustNo };
+        this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+          (response) => {
+            this.cust = response;
+            this.custUrl = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" +this.cust.CustId;
+          });
       },
       (error) => {
         console.log(error);

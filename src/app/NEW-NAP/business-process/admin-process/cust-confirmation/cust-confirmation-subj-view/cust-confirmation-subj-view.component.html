@@ -20,15 +20,17 @@
           <div class="col-md-6">
             <div class="row">
               <label class="label-control col-md-6">Application No</label>
-              <label class="label-control col-md-6">{{ AppObj?.AppNo }}</label>
+              
+              <a href="{{appUrl}}" target="_blank" class="label-control col-md-6">{{AppObj.AppNo}}</a>
             </div>
             <div class="row">
               <label class="label-control col-md-6">Agreement No</label>
-              <label class="label-control col-md-6">{{ AgrmntObj?.AgrmntNo }}</label>
+            
+              <a href="{{agrmntUrl}}" target="_blank" class="label-control col-md-6">{{AgrmntObj.AgrmntNo}}</a>
             </div>
             <div class="row">
-              <label class="label-control col-md-6">Customer No</label>
-              <label class="label-control col-md-6">{{ AgrmntObj?.CustNo }}</label>
+              <label class="label-control col-md-6">Customer No</label> 
+              <a href="{{custUrl}}" target="_blank" class="label-control col-md-6">{{AgrmntObj.CustNo}}</a>
             </div>
             <div class="row">
               <label class="label-control col-md-6">Customer Name</label>

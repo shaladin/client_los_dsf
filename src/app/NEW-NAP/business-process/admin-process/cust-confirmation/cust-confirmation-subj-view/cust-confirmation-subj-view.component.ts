@@ -7,6 +7,7 @@ import { AgrmntObj } from 'app/shared/model/Agrmnt/Agrmnt.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { VerfResultObj } from 'app/shared/model/VerfResult/VerfResult.Model';
 import { VerfResultDObj } from 'app/shared/model/VerfResultD/VerfResultH.Model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-cust-confirmation-subj-view',
@@ -29,7 +30,10 @@ export class CustConfirmationSubjViewComponent implements OnInit {
   VerfResultHObjDetail: VerfResultHObj = new VerfResultHObj();
   VerfResultDListObj = new Array<VerfResultDObj>();
   IsVerfDetail: boolean = false;
-
+  appUrl: string;
+  agrmntUrl: string;
+  cust : any;
+  custUrl : any;
   constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
       if (params["VerfResultHId"] != null) {
@@ -54,6 +58,9 @@ export class CustConfirmationSubjViewComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.appUrl = environment.losR3Web + "/Nap/View/AppView?AppId=" + this.AppId;
+    this.agrmntUrl = environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + this.AgrmntId;
+     
     this.GetData();
   }
 
@@ -76,6 +83,13 @@ export class CustConfirmationSubjViewComponent implements OnInit {
             console.log(error);
           }
         );
+        var custObj = { CustNo: this.AgrmntObj.CustNo };
+        this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+          (response) => {
+            this.cust = response;
+            this.custUrl = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" +this.cust.CustId;
+          });
+
       },
       (error) => {
         console.log(error);
