@@ -219,6 +219,7 @@ export class CustPersonalMainDataComponent implements OnInit {
       if(this.custDataPersonalObj.AppCustObj.CustNo != undefined && this.custDataPersonalObj.AppCustObj.CustNo != ""){
         this.InputLookupCustomerObj.isReadonly = true;
       }
+      this.clearExpDt();
     }
     
     if(this.custDataPersonalObj.AppCustPersonalObj != undefined){
@@ -285,10 +286,18 @@ export class CustPersonalMainDataComponent implements OnInit {
   }
 
   clearExpDt(){
-    if(this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == AdInsConstant.MrIdTypeCodeEKTP){
+    if (this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == AdInsConstant.MrIdTypeCodeEKTP){
       this.parentForm.controls[this.identifier].patchValue({
         IdExpiredDt: '',
       });
+    }
+    if (this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == "NPWP") {
+      this.parentForm.controls[this.identifier]['controls'].TaxIdNo.setValidators([Validators.required]);
+      this.parentForm.controls[this.identifier]['controls'].TaxIdNo.updateValueAndValidity();
+    }
+    else {
+      this.parentForm.controls[this.identifier]['controls'].TaxIdNo.clearValidators();
+      this.parentForm.controls[this.identifier]['controls'].TaxIdNo.updateValueAndValidity();
     }
     var idExpiredDate = this.parentForm.controls[this.identifier].get("IdExpiredDt");
     console.log(idExpiredDate);

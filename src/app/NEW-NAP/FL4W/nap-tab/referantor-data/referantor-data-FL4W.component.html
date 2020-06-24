@@ -22,7 +22,7 @@
                 <div class="form-group row adins-required">
                   <label class="col-md-2 adInsLabel">Referantor Name </label>
                   <div class="col-md-5">
-                    <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]='NapAppReferantorForm'
+                    <lib-uclookupgeneric *ngIf="ReferantorOn" [lookupInput]="inputLookupObj" [parentForm]='NapAppReferantorForm'
                       [enjiForm]='enjiForm' ng-disabled="!ReferantorOn" [identifier]="'ProductOfferingIdentifier'"
                       (lookup)="getLookupAppReferantorResponse($event)">
                     </lib-uclookupgeneric>

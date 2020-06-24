@@ -39,6 +39,7 @@ export class DocSignerDetailComponent implements OnInit {
   ContactPersonName: string;
   token : any = localStorage.getItem("Token");
   BizTemplateCode: string;
+  isHidden: boolean;
 
   constructor(private fb: FormBuilder, private http: HttpClient,
     private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService) {
@@ -60,7 +61,6 @@ export class DocSignerDetailComponent implements OnInit {
 
   async ngOnInit() {
     this.viewObj = "./assets/ucviewgeneric/viewDocSigner.json";
-
     await this.getAllData();
     this.setLookupObj();
   }
@@ -219,6 +219,11 @@ export class DocSignerDetailComponent implements OnInit {
       this.inputLookupAppCustCompanyShareHolder2Obj.jsonSelect = { MgmntShrholderName: this.ResponseAgrmntSignerObj.AppCustCompanyMgmntShrholder2Name };
       this.inputLookupAppCustCompanyShareHolder3Obj.jsonSelect = { MgmntShrholderName: this.ResponseAgrmntSignerObj.AppCustCompanyMgmntShrholder3Name };
     }
+
+    if(this.BizTemplateCode == "CFRFN4W" || this.BizTemplateCode == "FCTR"){
+      this.inputLookupBranchEmpObj.isRequired = false;
+      this.isHidden = true;
+    }
   }
 
   getLookupBranchEmp(event) {
@@ -324,15 +329,15 @@ export class DocSignerDetailComponent implements OnInit {
       }
     }
 
-    if(ev.Key == "prodOff"){
-      this.http.post(AdInsConstant.GetProdOfferingHByCode, {ProdOfferingCode : ev.ViewObj.ProdOfferingCode}).subscribe(
-        response => {
-          window.open(environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=" + response['ProdOfferingHId'], '_blank');
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    }
+    // if(ev.Key == "prodOff"){
+    //   this.http.post(AdInsConstant.GetProdOfferingHByCode, {ProdOfferingCode : ev.ViewObj.ProdOfferingCode}).subscribe(
+    //     response => {
+    //       window.open(environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=" + response['ProdOfferingHId'], '_blank');
+    //     },
+    //     (error) => {
+    //       console.log(error);
+    //     }
+    //   );
+    // }
   }
 }
