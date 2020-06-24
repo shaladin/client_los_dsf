@@ -20,8 +20,12 @@
                 <a href="{{agrmntUrl}}" target="_blank" class="label-control col-md-6">{{agrmntObj.AgrmntNo}}</a>
               </div>
               <div class="row">
-                <label class="label-control col-md-6">Customer No</label> 
-                <a href="{{custUrl}}" target="_blank" class="label-control col-md-6">{{agrmntObj.CustNo}}</a>
+                <label class="label-control col-md-6">Lead No</label>
+                <a href="{{leadUrl}}" target="_blank" class="label-control col-md-6">{{leadObj.LeadNo}}</a>
+              </div>
+              <div class="row">
+                <label class="label-control col-md-6">Customer No</label>
+                <label class="label-control col-md-6">{{agrmntObj.CustNo}}</label>
               </div>
               <div class="row">
                 <label class="label-control col-md-6">Customer Name</label>
@@ -104,7 +108,7 @@
                       </lib-uc-show-errors>
                     </span>
                     <span *ngIf="QRList.value.QuestionGrp.VerfAnswerTypeCode == 'UC_INPUT_NUMBER'">
-                      <input type="text" class="form-control" formControlName="Answer"
+                      <input type="" currencyMask class="form-control" formControlName="Answer"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && QRList.controls.ResultGrp?.controls.Answer.invalid }">
                       <lib-uc-show-errors [control]="QRList.controls.ResultGrp.controls.Answer"
                         [submit]="enjiForm.submitted">

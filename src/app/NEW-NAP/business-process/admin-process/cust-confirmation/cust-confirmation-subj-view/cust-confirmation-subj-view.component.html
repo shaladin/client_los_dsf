@@ -20,19 +20,22 @@
           <div class="col-md-6">
             <div class="row">
               <label class="label-control col-md-6">Application No</label>
-              <label class="label-control col-md-6"><a (click)="openUrl('application')" style="color: #299699; cursor: pointer;">{{ AppObj?.AppNo }}</a></label>
+              <label class="label-control col-md-6"><a href="javascript:void(0);"
+                  (click)="openUrl('application')">{{ AppObj?.AppNo }}</a></label>
             </div>
             <div class="row">
               <label class="label-control col-md-6">Agreement No</label>
-              <label class="label-control col-md-6"><a (click)="openUrl('agreement')"style="color: #299699; cursor: pointer;">{{ AgrmntObj?.AgrmntNo }}</a></label>
+              <label class="label-control col-md-6"><a href="javascript:void(0);"
+                  (click)="openUrl('agreement')">{{ AgrmntObj?.AgrmntNo }}</a></label>
             </div>
             <div class="row">
               <label class="label-control col-md-6">Customer No</label> 
               <label class="label-control col-md-6"><a (click)="openUrl('customer')"style="color: #299699; cursor: pointer;">{{ AgrmntObj?.CustNo }}</a></label>  
             </div>
             <div class="row">
-              <label class="label-control col-md-6">Customer Name</label>
-              <label class="label-control col-md-6">{{ AgrmntObj?.CustName }}</label>
+              <label class="label-control col-md-6">Lead No</label>
+              <label class="label-control col-md-6"><a href="javascript:void(0);"
+                  (click)="openUrl('lead')">{{ LeadObj?.LeadNo }}</a></label>
             </div>
           </div>
           <div class="col-md-6">
@@ -43,6 +46,10 @@
             <div class="row">
               <label class="label-control col-md-6">Notes</label>
               <label class="label-control col-md-6">{{ VerfResultHObj?.Notes }}</label>
+            </div>
+            <div class="row">
+              <label class="label-control col-md-6">Customer Name</label>
+              <label class="label-control col-md-6">{{ AgrmntObj?.CustName }}</label>
             </div>
           </div>
         </div>
@@ -71,7 +78,7 @@
               <label class="label-control col-md-6">Transaction No</label>
               <label class="label-control col-md-6">{{ VerfResultObj?.TrxRefNo }}</label>
             </div>
-            <div class="row">
+            <div class="row" hidden>
               <label class="label-control col-md-6">Final Score / Result Criteria</label>
               <label class="label-control col-md-6">{{ VerfResultHObj?.Score }}</label>
             </div>
@@ -98,7 +105,7 @@
               <label class="label-control col-md-6">Time</label>
               <label class="label-control col-md-6">{{ VerfResultHObj?.VerfDt | date:'mediumTime'}}</label>
             </div>
-            <div class="row">
+            <div class="row" hidden>
               <label class="label-control col-md-6">Score</label>
               <label class="label-control col-md-6">{{ VerfResultHObj?.Score }}</label>
             </div>
@@ -119,7 +126,7 @@
               <td>{{item.MrVerfResultHStatName}}</td>
               <td>{{item.Notes}}</td>
               <td>
-                <a (click)="GetDetailVerf(item.VerfResultHId)">View</a>
+                <a href="javascript:void(0);" (click)="GetDetailVerf(item.VerfResultHId)">View</a>
               </td>
             </tr>
           </tbody>

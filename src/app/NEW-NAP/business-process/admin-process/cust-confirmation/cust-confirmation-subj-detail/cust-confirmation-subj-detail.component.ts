@@ -12,6 +12,7 @@ import { VerfResultDObj } from 'app/shared/model/VerfResultD/VerfResultH.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { environment } from 'environments/environment';
+import { LeadObj } from 'app/shared/model/Lead.Model';
 
 @Component({
   selector: 'app-cust-confirmation-subj-detail',
@@ -25,6 +26,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   AppId: number;
   Subject: string;
   agrmntObj: AgrmntObj = new AgrmntObj();
+  leadObj: LeadObj = new LeadObj();
   appObj: AppObj = new AppObj();
   RefStatusList: Array<KeyValueObj> = new Array<KeyValueObj>();
   PhnList: any;
@@ -46,6 +48,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   custUrl : any;
   appUrl: string;
   agrmntUrl: string;
+  leadUrl: string;
   constructor(private route: ActivatedRoute, private fb: FormBuilder, private http: HttpClient,
     private router: Router, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -138,13 +141,14 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
           },
           (error) => {
             console.log(error);
-          }
-        );
-        var custObj = { CustNo: this.agrmntObj.CustNo };
-        this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+          });
+          
+        this.http.post<LeadObj>(AdInsConstant.GetLeadByLeadId, { LeadId: this.agrmntObj.LeadId }).subscribe(
           (response) => {
-            this.cust = response;
-            this.custUrl = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" +this.cust.CustId;
+            console.log("retard");
+            console.log(response);
+            this.leadObj = response;
+            this.leadUrl = environment.losR3Web + "/Lead/View?LeadId=" + this.leadObj.LeadId;
           });
       },
       (error) => {
@@ -237,7 +241,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
               this.ListVerfAnswer[i].push("");
             }
           } else if (QuestionList[j].VerfAnswerTypeCode == "UC_INPUT_NUMBER") {
-            QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
+            QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required, Validators.min(1.00)]);
             this.ListVerfAnswer[i].push("");
           } else {
             this.ListVerfAnswer[i].push("");
@@ -247,7 +251,6 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
       }
     }
   }
-
 
   SaveForm(ev) {
     var FormValue = this.CustConfirm.value.VerfResultDForm;
