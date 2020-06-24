@@ -11,20 +11,7 @@
           "label": "Application No",
           "property": "AppNo",
           "path": "/Nap/View/AppView",
-          "target" : "_blank",
-          "param": [
-            {
-              "type": "AppId",
-              "property": "AppId"
-            }
-          ]
-        },
-        {
-          "type": "link",
-          "label": "Application No",
-          "property": "AppNo",
-          "path": "/Nap/View/AppView",
-          "target" : "_blank",
+          "target": "_blank",
           "param": [
             {
               "type": "AppId",
@@ -37,14 +24,27 @@
           "label": "Lead No",
           "property": "LeadNo",
           "path": "/Lead/View",
-          "target" : "_blank",
+          "target": "_blank",
           "param": [
             {
               "type": "LeadId",
               "property": "LeadId"
             }
           ]
-        }, 
+        },
+        {
+          "type": "link",
+          "label": "Agreement No",
+          "property": "AgrmntNo",
+          "path": "/Nap/View/AgrmntView",
+          "target": "_blank",
+          "param": [
+            {
+              "type": "AgrmntId",
+              "property": "AgrmntId"
+            }
+          ]
+        },
         {
           "type": "text",
           "label": "Original Office",
