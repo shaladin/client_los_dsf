@@ -834,6 +834,13 @@ export class CollateralAddEditComponent implements OnInit {
   clearList() {
     this.listSelectedId = [];
     this.tempPagingObj.addCritInput = new Array<CriteriaObj>();
+
+    const addCritCustNo = new CriteriaObj();
+    addCritCustNo.DataType = 'text';
+    addCritCustNo.propName = 'CU.CUST_NO';
+    addCritCustNo.restriction = AdInsConstant.RestrictionEq;
+    addCritCustNo.value = this.custNo;
+    this.tempPagingObj.addCritInput.push(addCritCustNo);
   }
 
   SaveExistingCollateral()
