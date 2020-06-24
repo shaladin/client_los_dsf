@@ -201,7 +201,12 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   }
 
   setPhoneVerifData() {
-    var businessDt = new Date();
+
+    var businessDt = new Date(localStorage.getItem("BusinessDateRaw"));
+    var todaydate = new Date();
+    businessDt.setHours(todaydate.getHours(), todaydate.getMinutes(), todaydate.getSeconds());
+    var usertimezone = businessDt.getTimezoneOffset() * 60000;
+    businessDt = new Date(businessDt.getTime() - usertimezone);
 
     this.PhoneDataObj = new VerifResulHDetailObj();
     this.PhoneDataObj.VerfResultDListObj = new Array<VerfResultDObj>();
