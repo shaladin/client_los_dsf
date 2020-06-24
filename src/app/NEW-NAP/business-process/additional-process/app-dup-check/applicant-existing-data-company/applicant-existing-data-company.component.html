@@ -17,8 +17,8 @@
             </lib-ucSubsection>
             <div id="custMain">
               <div class="form-group row">
-                <label class="col-md-3 adInsLabel">Customer No</label>
-                <label class="col-md-3 adInsLabel" *ngIf="AppCustObj?.CustNo != ''">{{AppCustObj?.CustNo}} </label>
+                <label class="col-md-3 adInsLabel">Customer No</label>  
+                <a href="{{custUrl}}" target="_blank" class="label-control col-md-3" *ngIf="AppCustObj?.CustNo != ''">{{AppCustObj.CustNo}}</a>
                 <label class="col-md-3 adInsLabel" *ngIf="AppCustObj?.CustNo == ''">- </label>
                 <label class="col-md-3 adInsLabel">NPWP</label>
                 <label class="col-md-3 adInsLabel" *ngIf="AppCustObj?.TaxIdNo != ''">{{AppCustObj?.TaxIdNo}} </label>

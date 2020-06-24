@@ -139,7 +139,7 @@
                             ],
                             "result": {
                                 "type": "url",
-                                "path": "/AdminProcess/AgreementCancellation/Detail",
+                                "path": "/Nap/AdminProcess/AgreementCancellation/Detail",
                                 "icon": "ft-edit-2",
                                 "param": [
                                     {

@@ -33,7 +33,8 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
   listSelectedIdShareholder: any;
   checkboxAllShareholder = false;
   RowVersion: any;
-
+  cust: any;
+  custUrl : string;
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
@@ -71,7 +72,18 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
     var appObj = { "AppId": this.AppId };
     this.http.post(this.GetCustDataByAppId, appObj).subscribe(
       response => {
-        this.AppCustObj = response['AppCustObj'];        
+        this.AppCustObj = response['AppCustObj'];     
+        var custObj = { CustNo: this.AppCustObj['CustNo'] };
+        this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+          response => {
+            this.cust = response;
+            this.custUrl = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" +this.cust.CustId;
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+
         this.RowVersion = response['AppCustObj'].RowVersion;
         this.AppCustCompanyObj = response['AppCustCompanyObj'];
 
