@@ -59,15 +59,8 @@ export class AppInquiryPagingComponent implements OnInit {
       var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + event.RowObj.prodOfferingCode + "&prodOfferingVersion=" + event.RowObj.prodOfferingVersion + "&Token=" + this.token;
       this.router.navigate([]).then(result => { window.open(link, '_blank'); });
     }
-    else if(event.Key == "agreement"){
-      var bizTemplateCode = event.RowObj.BizTemplateCode;
-
-      if(bizTemplateCode == "CF4W" || bizTemplateCode == "CFRFN4W" || bizTemplateCode == "FACTORING"){
-        window.open( environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + event.RowObj.AgrmntId, "_blank");
-      }
-      else if(bizTemplateCode == "FL4W"){
-        window.open( environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + event.RowObj.AgrmntId, "_blank");
-      }
+    else if(event.Key == "agreement"){ 
+      window.open( environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + event.RowObj.AgrmntId, "_blank");
     }
     else if(event.Key == "application"){
       window.open( environment.losR3Web + "/Nap/View/AppView?AppId=" + event.RowObj.AppId, "_blank");
