@@ -61,8 +61,6 @@ export class DocSignerDetailComponent implements OnInit {
 
   async ngOnInit() {
     this.viewObj = "./assets/ucviewgeneric/viewDocSigner.json";
-
-    console.log("DOC SIGNER")
     await this.getAllData();
     this.setLookupObj();
   }
