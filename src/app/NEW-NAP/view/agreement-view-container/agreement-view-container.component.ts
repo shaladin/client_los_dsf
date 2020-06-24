@@ -30,6 +30,15 @@ export class AgreementViewContainerComponent implements OnInit {
   IsDeliveryOrder: boolean = true;
   IsSummary: boolean = true;
 
+  IsInsuranceFL4W: boolean = true;
+  IsLifeInsurance: boolean = true;
+  IsFinancial: boolean = true;
+  IsTC: boolean = true;
+  IsReservedFund: boolean = true;
+  IsInvoiceData: boolean = true;
+  IsComplainHandling: boolean = true;
+  IsAdditionalService: boolean = true;
+
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
@@ -71,25 +80,45 @@ export class AgreementViewContainerComponent implements OnInit {
       (response) => {
         var bizTemplateCode = response["BizTemplateCode"];
 
-        // if(bizTemplateCode == AdInsConstant.FCTR)
-        // {
-        //   this.IsCollateral = false;
-        //   this.IsCommission = false;
-        //   this.IsAsset = false;
-        // }
-        if (bizTemplateCode == AdInsConstant.CFRFN4W) {
+        if (bizTemplateCode == AdInsConstant.FCTR) {
+          this.IsCollateral = false;
+          this.IsCommission = false;
+          this.IsAsset = false;
+          this.IsInsuranceFL4W = false;
+          this.IsLifeInsurance = false;
+          this.IsFinancial = false;
+          this.IsTC = false;
+          this.IsReservedFund = false;
+        }
+        else if (bizTemplateCode == AdInsConstant.CFRFN4W) {
           this.IsAsset = false;
           this.IsCollateral = false;
           this.IsLoanData = false;
+          this.IsInsuranceFL4W = false;
+          this.IsLifeInsurance = false;
+          this.IsFinancial = false;
+          this.IsTC = false;
+          this.IsReservedFund = false;
         }
-        //   else if(bizTemplateCode == AdInsConstant.CF4W){
-        //     this.IsCollateral = false;
-        //   }
-        else if(bizTemplateCode == AdInsConstant.FL4W)
-        {
-          this.IsAsset = false; 
+        else if (bizTemplateCode == AdInsConstant.CF4W) {
+          this.IsCollateral = false;
+          this.IsInsuranceFL4W = false;
+          this.IsLifeInsurance = false;
+          this.IsFinancial = false;
+          this.IsTC = false;
+          this.IsReservedFund = false;
+        }
+        else if (bizTemplateCode == AdInsConstant.FL4W) {
+          this.IsAsset = false;
+          this.IsInsurance = false;
+          this.IsCustomerCard = false;
+          this.IsDeviation = false;
+          this.IsLoanData = false;
+          this.IsInvoiceData = false;
+          this.IsComplainHandling = false;
+          this.IsAdditionalService = false;
         }
         this.IsReady = true;
       });
-    }
+  }
 }
