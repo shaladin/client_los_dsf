@@ -20,23 +20,16 @@
         ]
         },
         {
-          "type": "link",
+          "type": "callback",
+          "key": "customer",
           "label": "Customer No",
-          "property": "CustNo",
-          "path": "/test/paging",
-          "target" : "_blank",
-          "param": [
-            {
-              
-              "property": "CustNo"
-            }
-          ]
+          "property": "CustNo" 
         },  
         {
           "type": "link",
           "label": "Agreement No",
           "property": "AgrmntNo",
-          "path": "/Nap/View/AgrmntViewNap/View/AgrmntView",
+          "path": "/Nap/View/AgrmntView",
           "target" : "_blank",
           "param": [
             {
