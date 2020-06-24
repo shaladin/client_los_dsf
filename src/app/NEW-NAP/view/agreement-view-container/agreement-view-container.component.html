@@ -39,6 +39,30 @@
               </ng-template>
             </mat-tab>
 
+            <mat-tab *ngIf="IsInsuranceFL4W" label="Insurance">
+              <ng-template matTabContent>
+                <agrmnt-view-insurance [agrmntId]="AgrmntId"></agrmnt-view-insurance>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab *ngIf="IsLifeInsurance && ResponseAppDetailData?.MrCustTypeCode=='PERSONAL'" label="Life Insurance">
+              <ng-template matTabContent>
+                <agrmnt-life-insurance [agrmntId]="AgrmntId" ></agrmnt-life-insurance>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab *ngIf="IsFinancial" label="Financial">
+              <ng-template matTabContent> 
+                <app-agrmnt-financial [AgrmntId]="AgrmntId"></app-agrmnt-financial>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab *ngIf="IsTC" label="Term and Conditions">
+              <ng-template matTabContent>
+                <app-app-tc [AppId]="AppId"></app-app-tc>
+              </ng-template>
+            </mat-tab>
+
             <mat-tab *ngIf="IsAgreementCard" label="Agreement Card">
               <ng-template matTabContent>
               </ng-template>
@@ -47,6 +71,12 @@
             <mat-tab *ngIf="IsCommission" label="Commission">
               <ng-template matTabContent>
                 <app-view-commission-agrmnt [agrmntId]="AgrmntId"></app-view-commission-agrmnt>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab *ngIf="IsReservedFund" label="Reserved Fund">
+              <ng-template matTabContent> 
+                <agrmnt-view-reserved-fund [agrmntId]="AgrmntId" ></agrmnt-view-reserved-fund>
               </ng-template>
             </mat-tab>
 
@@ -78,36 +108,34 @@
               </ng-template>
             </mat-tab>
 
-            <mat-tab *ngIf="IsSummary" label="Summary">
-              <ng-template matTabContent>
-                <agrmnt-view-summary [agrmntId]="AgrmntId"></agrmnt-view-summary>
-              </ng-template>
-            </mat-tab>
-
             <mat-tab *ngIf="IsDocument" label="Document">
               <ng-template matTabContent>
                 <agrmnt-view-document [agrmntId]="AgrmntId"></agrmnt-view-document>
               </ng-template>
             </mat-tab>
 
-            <mat-tab label="Invoice Data">
+            <mat-tab *ngIf="IsSummary" label="Summary">
+              <ng-template matTabContent>
+                <agrmnt-view-summary [agrmntId]="AgrmntId"></agrmnt-view-summary>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab *ngIf="IsInvoiceData" label="Invoice Data">
               <ng-template matTabContent>
               </ng-template>
             </mat-tab>
 
-            <mat-tab label="Complain Handling">
+            <mat-tab *ngIf="IsComplainHandling" label="Complain Handling">
               <ng-template matTabContent>
               </ng-template>
             </mat-tab>
 
-            <mat-tab label="Additional Service">
+            <mat-tab *ngIf="IsAdditionalService" label="Additional Service">
               <ng-template matTabContent>
               </ng-template>
             </mat-tab>
 
           </mat-tab-group>
-
-
         </div>
       </div>
     </div>
