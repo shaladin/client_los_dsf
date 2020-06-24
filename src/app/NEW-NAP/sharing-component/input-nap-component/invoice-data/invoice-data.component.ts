@@ -11,8 +11,7 @@ import { AppFctrObj } from 'app/shared/model/AppFctr/AppFctr.model';
 
 @Component({
   selector: 'app-invoice-data',
-  templateUrl: './invoice-data.component.html',
-  styleUrls: ['./invoice-data.component.scss']
+  templateUrl: './invoice-data.component.html'
 })
 export class InvoiceDataComponent implements OnInit {
 
