@@ -190,12 +190,13 @@ export class FinancialDataFctrComponent implements OnInit {
   SaveAndContinue() {
     this.IsAppFeePrcntValid = true;
     for (let i = 0; i < this.FinDataForm.value.AppFee.length; i++) {
-      if (this.FinDataForm.value.AppFee[i].AppFeePrcnt < 0 || this.FinDataForm.value.AppFee[i].AppFeePrcnt > 100 ) {
+      if (this.FinDataForm.value.AppFee[i].AppFeePrcnt < 0) {
         this.IsAppFeePrcntValid = false;
       }
     }
     if(this.IsAppFeePrcntValid == false){
-      this.toastr.errorMessage("App Fee Prcnt must be between 0 - 100");
+      this.toastr.errorMessage("App Fee Prcnt must be greater than 0");
+      return;
     }
     if(this.FinDataForm.value.EffectiveRatePrcnt < 0 && this.FinDataForm.value.InterestType == "PRCNT"){
       this.toastr.errorMessage("Effective Rate must be greater than 0");
