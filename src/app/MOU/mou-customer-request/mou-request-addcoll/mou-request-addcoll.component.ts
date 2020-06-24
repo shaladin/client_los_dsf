@@ -224,7 +224,6 @@ export class MouRequestAddcollComponent implements OnInit {
   }
 
   open(pageType) {
-    this.tempPagingObj.isReady = false;
     this.type = pageType;
     if (pageType == 'AddExisting') {
       this.clearList();
@@ -240,20 +239,12 @@ export class MouRequestAddcollComponent implements OnInit {
   }
 
   BindExistingCollateralSavedData(listCollateralNo: any) {
-    const addCritCustNo = new CriteriaObj();
-    addCritCustNo.DataType = 'text';
-    addCritCustNo.propName = 'CU.CUST_NO';
-    addCritCustNo.restriction = AdInsConstant.RestrictionEq;
-    addCritCustNo.value = this.custNo;
-    this.tempPagingObj.addCritInput.push(addCritCustNo);
-
     const addCritCollateralNo = new CriteriaObj();
     addCritCollateralNo.DataType = 'text';
     addCritCollateralNo.propName = 'CL.COLLATERAL_NO';
     addCritCollateralNo.restriction = AdInsConstant.RestrictionNotIn;
     addCritCollateralNo.listValue = listCollateralNo;
     this.tempPagingObj.addCritInput.push(addCritCollateralNo);
-    this.tempPagingObj.isReady = true;
   }
 
   initAddrObj() {
@@ -599,6 +590,13 @@ export class MouRequestAddcollComponent implements OnInit {
   clearList() {
     this.listSelectedId = [];
     this.tempPagingObj.addCritInput = new Array<CriteriaObj>();
+
+    const addCritCustNo = new CriteriaObj();
+    addCritCustNo.DataType = 'text';
+    addCritCustNo.propName = 'CU.CUST_NO';
+    addCritCustNo.restriction = AdInsConstant.RestrictionEq;
+    addCritCustNo.value = this.custNo;
+    this.tempPagingObj.addCritInput.push(addCritCustNo);
   }
 
   delete(MouCustCollId) {
