@@ -37,7 +37,7 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
   checkboxAllShareholder: false;
   RowVersion: any;
   cust: any;
-  custUrl : string;
+  custUrl: string;
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
@@ -74,7 +74,7 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
         this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
           response => {
             this.cust = response;
-            this.custUrl = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" +this.cust.CustId;
+            this.custUrl = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + this.cust.CustId;
           },
           (error) => {
             console.log(error);
@@ -254,7 +254,14 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
     this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
   }
 
-  OpenAppView(appId){
-    window.open( environment.losR3Web + "/Nap/View/AppView?AppId=" + appId, "_blank");
+  OpenAppView(appId) {
+    window.open(environment.losR3Web + "/Nap/View/AppView?AppId=" + appId, "_blank");
+  }
+  OpenCustView(custNo) {
+    var custObj = { CustNo: custNo };
+    this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+      response => {
+        window.open(environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"], "_blank");
+      });
   }
 }

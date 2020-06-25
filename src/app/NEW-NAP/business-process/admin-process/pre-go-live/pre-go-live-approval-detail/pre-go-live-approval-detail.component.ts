@@ -22,6 +22,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   result4: any;
   result5: any;
   result6: any;
+  arrValue = [];
 
   AppNo: any;
   NumOfAsset: any;
@@ -74,6 +75,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.arrValue.push(this.AppId);
     this.http.post(AdInsConstant.GetRfaLogByTrxNoAndApvCategory, { TrxNo : this.TrxNo, ApvCategory : "PRE_GPV_APV" } ).subscribe(
       (response) => {
         this.result = response;

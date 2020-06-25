@@ -23,24 +23,24 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
   GetAppGuarantorDuplicateCheckUrl = this.LOSUrl + AdInsConstant.GetAppGuarantorDuplicateCheck;
   GetAppShareholderDuplicateCheckUrl = this.LOSUrl + AdInsConstant.GetAppShareholderDuplicateCheck;
   GetCustDataByAppId = AdInsConstant.GetCustDataByAppId;
-  AppCustObj : AppCustObj;
-  AppCustCompanyObj : AppCustCompanyObj;
-  ListAppGuarantorDuplicate : any;
-  ListSpouseDuplicate : any;
-  ListAppShareholderDuplicate : any;
+  AppCustObj: AppCustObj;
+  AppCustCompanyObj: AppCustCompanyObj;
+  ListAppGuarantorDuplicate: any;
+  ListSpouseDuplicate: any;
+  ListAppShareholderDuplicate: any;
   listSelectedIdGuarantor: any;
   checkboxAllGuarantor = false;
   listSelectedIdShareholder: any;
   checkboxAllShareholder = false;
   RowVersion: any;
   cust: any;
-  custUrl : string;
+  custUrl: string;
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
     private router: Router,
     private toastr: NGXToastrService
-  ) { 
+  ) {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
         this.AppId = params['AppId'];
@@ -52,32 +52,33 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
   }
 
   async ngOnInit() {
+    console.log("tes")
     this.ClaimTask();
     await this.bindData();
     await this.processData();
   }
 
-  bindData(){
-  
+  bindData() {
+
     this.AppCustObj = new AppCustObj();
     this.AppCustCompanyObj = new AppCustCompanyObj();
     this.listSelectedIdGuarantor = new Array();
     this.listSelectedIdShareholder = new Array();
   }
 
-  processData(){
+  processData() {
 
-    
+
     //Get App Cust Data
     var appObj = { "AppId": this.AppId };
     this.http.post(this.GetCustDataByAppId, appObj).subscribe(
       response => {
-        this.AppCustObj = response['AppCustObj'];     
+        this.AppCustObj = response['AppCustObj'];
         var custObj = { CustNo: this.AppCustObj['CustNo'] };
         this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
           response => {
             this.cust = response;
-            this.custUrl = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" +this.cust.CustId;
+            this.custUrl = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + this.cust.CustId;
           },
           (error) => {
             console.log(error);
@@ -87,42 +88,44 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
         this.RowVersion = response['AppCustObj'].RowVersion;
         this.AppCustCompanyObj = response['AppCustCompanyObj'];
 
-        var requestDupCheck = {    "CustName": this.AppCustObj.CustName,
-        "MrCustTypeCode": this.AppCustObj.MrCustTypeCode,
-        "MrCustModelCode": this.AppCustObj.CustModelCode,
-        "MrIdTypeCode": this.AppCustObj.MrIdTypeCode,
-        "IdNo": this.AppCustObj.IdNo,
-        "TaxIdNo": this.AppCustObj.TaxIdNo,
-        "BirthDt" : this.AppCustCompanyObj.EstablishmentDt,
-        "MotherMaidenName" : "-",
-        "MobilePhnNo1" : "-",      
-        "RowVersion": this.RowVersion}
-    //List App guarantor Checking
-    this.http.post(this.GetAppGuarantorDuplicateCheckUrl, requestDupCheck).subscribe(
-      response => {
-        this.ListAppGuarantorDuplicate = response['ReturnObject'];
-      },
-      () => {
-        console.log("error")
-      }
-    );
+        var requestDupCheck = {
+          "CustName": this.AppCustObj.CustName,
+          "MrCustTypeCode": this.AppCustObj.MrCustTypeCode,
+          "MrCustModelCode": this.AppCustObj.CustModelCode,
+          "MrIdTypeCode": this.AppCustObj.MrIdTypeCode,
+          "IdNo": this.AppCustObj.IdNo,
+          "TaxIdNo": this.AppCustObj.TaxIdNo,
+          "BirthDt": this.AppCustCompanyObj.EstablishmentDt,
+          "MotherMaidenName": "-",
+          "MobilePhnNo1": "-",
+          "RowVersion": this.RowVersion
+        }
+        //List App guarantor Checking
+        this.http.post(this.GetAppGuarantorDuplicateCheckUrl, requestDupCheck).subscribe(
+          response => {
+            this.ListAppGuarantorDuplicate = response['ReturnObject'];
+          },
+          () => {
+            console.log("error")
+          }
+        );
 
-    //List App Shareholder Duplicate Checking
-    this.http.post(this.GetAppShareholderDuplicateCheckUrl, requestDupCheck).subscribe(
-      response => {
-        this.ListAppShareholderDuplicate = response['ReturnObject'];
-        console.log(this.ListAppShareholderDuplicate[0]);
-      },
-      () => {
-        console.log("error")
-      }
-    );
+        //List App Shareholder Duplicate Checking
+        this.http.post(this.GetAppShareholderDuplicateCheckUrl, requestDupCheck).subscribe(
+          response => {
+            this.ListAppShareholderDuplicate = response['ReturnObject'];
+            console.log(this.ListAppShareholderDuplicate[0]);
+          },
+          () => {
+            console.log("error")
+          }
+        );
       },
       () => {
         console.log("error")
       }
     )
-    
+
   }
 
   SelectAllGuarantor(condition) {
@@ -181,7 +184,7 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
     }
   }
 
-  Submit(){
+  Submit() {
     var appDupCheckObj = new RequestSubmitAppDupCheckCustObj();
     appDupCheckObj.AppGuarantorIds = this.listSelectedIdGuarantor;
     appDupCheckObj.AppCustCompanyMgmntShrholderIds = this.listSelectedIdShareholder;
@@ -199,7 +202,7 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
       });
   }
 
-  ClaimTask(){
+  ClaimTask() {
     var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     var wfClaimObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
@@ -207,7 +210,7 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
 
     this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
-    
+
       });
   }
 
@@ -217,7 +220,14 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
     this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
   }
 
-  OpenAppView(appId){
-    window.open( environment.losR3Web + "/Nap/View/AppView?AppId=" + appId, "_blank");
+  OpenAppView(appId) {
+    window.open(environment.losR3Web + "/Nap/View/AppView?AppId=" + appId, "_blank");
+  }
+  OpenCustView(custNo) {
+    var custObj = { CustNo: custNo };
+    this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+      response => {
+        window.open(environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"], "_blank");
+      }); 
   }
 }
