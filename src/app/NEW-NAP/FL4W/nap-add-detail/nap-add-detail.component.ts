@@ -33,6 +33,7 @@ export class NapAddDetailComponent implements OnInit {
   showCancel: boolean = true;
   getApp: any;
   token : any = localStorage.getItem("Token");
+  IsLastStep: boolean = false;
 
   FormReturnObj = this.fb.group({
     ReturnExecNotes: ['']
@@ -51,7 +52,7 @@ export class NapAddDetailComponent implements OnInit {
     "TC": 9
   };
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router, public toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -68,6 +69,7 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('Shinano');
     this.ClaimTask();
     this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppFL4WMainInformation.json";
     this.NapObj.AppId = this.appId;
@@ -208,6 +210,7 @@ export class NapAddDetailComponent implements OnInit {
       this.http.post(AdInsConstant.SubmitNAP, this.NapObj).subscribe(
         (response) => {
           console.log(response);
+          this.toastr.successMessage(response["message"]);
           this.router.navigate(["/Nap/FinanceLeasing/Paging"], { queryParams: { BizTemplateCode: AdInsConstant.FL4W } })
         },
         (error) => {
@@ -249,6 +252,10 @@ export class NapAddDetailComponent implements OnInit {
       default:
         break;
     }
+    if (AppStep == AdInsConstant.AppStepTC)
+      this.IsLastStep = true;
+    else
+      this.IsLastStep = false;
   }
 
   Submit() {

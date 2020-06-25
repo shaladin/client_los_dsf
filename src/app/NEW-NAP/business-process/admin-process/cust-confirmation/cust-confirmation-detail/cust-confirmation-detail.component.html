@@ -3,7 +3,7 @@
     <h4 class="card-title" translate> Customer Confirmation Detail </h4>
   </div>
   <div class="card-body">
-    <lib-ucviewgeneric [viewInput]="viewObj" [whereValue]="arrValue"></lib-ucviewgeneric>
+    <lib-ucviewgeneric [viewInput]="viewObj" [whereValue]="arrValue" (callback)="GetCallBack($event)"></lib-ucviewgeneric>
 
     <div class="px-3">
       <lib-ucSubsection [id]="'SubjectListId'" [title]="'Subject List'" [panel]="'SubjectList'">

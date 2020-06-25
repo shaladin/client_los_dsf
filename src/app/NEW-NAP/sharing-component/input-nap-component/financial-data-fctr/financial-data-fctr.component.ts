@@ -135,7 +135,7 @@ export class FinancialDataFctrComponent implements OnInit {
         }
 
         this.FinDataForm.patchValue({
-          TotalAssetPriceAmt: this.appFinDataObj.TotalAssetPriceAmt,
+          TotalAssetPriceAmt: this.appFinDataObj.TotalInvcAmt-this.appFinDataObj.TotalRetentionAmt,
           TotalFeeAmt: this.appFinDataObj.TotalFeeAmt,
           TotalFeeCptlzAmt: this.appFinDataObj.TotalFeeCptlzAmt,
           TotalInsCustAmt: this.appFinDataObj.TotalInsCustAmt,

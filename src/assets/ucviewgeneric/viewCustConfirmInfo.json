@@ -36,8 +36,8 @@
           "type": "link",
           "label": "Agreement No",
           "property": "AgrmntNo",
-          "path": "/Nap/View/AgrmntViewNap/View/AgrmntView",
-          "target": "_blank",
+          "path": "/Nap/View/AgrmntView",
+          "target" : "_blank",
           "param": [
             {
               "type": "AgrmntId",
