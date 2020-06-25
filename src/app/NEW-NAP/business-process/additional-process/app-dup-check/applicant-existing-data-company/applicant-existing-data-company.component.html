@@ -1,13 +1,13 @@
 <div class="row text-left">
   <div class="col-md-12">
     <div class="card">
-      <div class="ucSearch-Button-Right">
+      <!-- <div class="ucSearch-Button-Right">
         <span class="mr-1">
           <button type="button" class="backButton" (click)="Back()" translate>
             <i class="ft-x"></i> Cancel
           </button>
         </span>
-      </div>
+      </div> -->
       <div class="card-body">
         <div class="px-3">
 
@@ -148,6 +148,9 @@
             </div>
           </div>
           <div class="pull-right">
+            <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Back()" translate>
+              <i class="ft-x"></i> Cancel
+            </button>
             <button type="button" (click)="Submit()" class="btn btn-raised btn-primary">
               <i class="far fa-check-square"></i> Save
             </button>

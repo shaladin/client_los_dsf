@@ -60,7 +60,7 @@ export class CustConfirmationDetailComponent implements OnInit {
   }
 
   GetVerfResult(IsAdded: boolean = false) {
-    this.http.post(AdInsConstant.GetVerfResultHsByTrxRefNo, {TrxRefNo: this.AgrmntNo}).subscribe(
+    this.http.post(AdInsConstant.GetVerfResultHsByTrxRefNo, { TrxRefNo: this.AgrmntNo }).subscribe(
       (response) => {
         this.VerfResultList = response["responseVerfResultHCustomObjs"];
         this.CustCnfrmObj.Phone = "-";
@@ -116,27 +116,31 @@ export class CustConfirmationDetailComponent implements OnInit {
   }
 
   SaveForm() {
-    if(this.VerfResultList!=null && this.CustCnfrmObj.IsSkip != true){
-      for(var i = 0; i<this.VerfResultList.length; i++){
-        if(this.VerfResultList[i].MrVerfResultHStatCode == "FAIL"){
-          this.toastr.errorMessage("Result can't be Failed");
+    if (this.CustCnfrmObj.IsSkip == false) {
+      for (var i = 0; i < this.VerfResultList.length; i++) {
+        if (this.VerfResultList[i].MrVerfResultHStatCode == "FAIL" || this.VerfResultList[i].MrVerfResultHStatCode == "NEW") {
+          this.toastr.errorMessage("Result can't be New or Failed");
           return;
         }
       }
+      var CustCnfrmWFObj = {
+        RequestCustCnfrmObj: this.CustCnfrmObj,
+        wfTaskListId: this.TaskListId
+      };
+      this.http.post(AdInsConstant.AddCustCnfrm, CustCnfrmWFObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          this.router.navigate(["/Nap/AdminProcess/CustConfirmation/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     }
-    var CustCnfrmWFObj = {
-      RequestCustCnfrmObj: this.CustCnfrmObj,
-      wfTaskListId: this.TaskListId
-    };
-    this.http.post(AdInsConstant.AddCustCnfrm, CustCnfrmWFObj).subscribe(
-      (response) => {
-        this.toastr.successMessage(response["message"]);
-        this.router.navigate(["/Nap/AdminProcess/CustConfirmation/Paging"], {queryParams: {"BizTemplateCode": this.BizTemplateCode}});
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    else if (this.CustCnfrmObj.IsSkip == true) {
+      this.toastr.successMessage("Success !");
+      this.router.navigate(["/Nap/AdminProcess/CustConfirmation/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
+    }
   }
 
   async claimTask() {

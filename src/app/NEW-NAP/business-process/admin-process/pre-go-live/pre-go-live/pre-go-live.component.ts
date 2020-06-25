@@ -78,10 +78,11 @@ export class PreGoLiveComponent implements OnInit {
             type: 'task',
             refId: this.ListRfaLogObj[i].RfaNo
           };
-          if(this.ListRfaLogObj[i].ApvStat == "ApproveFinal"){
+          if(this.ListRfaLogObj[i].ApvStat != "RejectFinal"){
             this.IsCheckedAll = false;
             this.hasApproveFinal = true;
           }
+
         }
       },
       (error) => {
@@ -116,7 +117,7 @@ export class PreGoLiveComponent implements OnInit {
     }
     if (ev.Key == "customer") {
       console.log("customer")
-          var link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + ev.ViewObj.AppCustId; 
+          var link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + ev.ViewObj.CustId + "&Token=" + this.token; 
           window.open(link, '_blank');
     }
   }

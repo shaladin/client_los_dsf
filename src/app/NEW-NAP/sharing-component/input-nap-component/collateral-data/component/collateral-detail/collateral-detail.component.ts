@@ -19,6 +19,8 @@ import { ListAppCollateralDocObj } from 'app/shared/model/ListAppCollateralDocOb
 import { AppCollateralDocObj } from 'app/shared/model/AppCollateralDocObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
+import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
+import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 
 @Component({
   selector: 'app-collateral-detail',
@@ -40,8 +42,10 @@ export class CollateralDetailComponent implements OnInit {
   inputFieldLegalObj: InputFieldObj = new InputFieldObj();
   inputFieldLocationObj: InputFieldObj = new InputFieldObj();
   LocationAddrObj: AddrObj = new AddrObj();
-
-  AppCustObj: AppCustObj;
+  
+  AppCustObj: AppCustObj = new AppCustObj();
+  AppCustAddrObj: AppCustAddrObj = new AppCustAddrObj();
+  AppCustCompanyObj: AppCustCompanyObj = new AppCustCompanyObj();
   OwnerAddrObj: AddrObj = new AddrObj();
   appCollateralDataObj: AppCollateralDataObj = new AppCollateralDataObj();
   listAppCollateralDocObj: ListAppCollateralDocObj = new ListAppCollateralDocObj();
@@ -96,6 +100,7 @@ export class CollateralDetailComponent implements OnInit {
   IdTypeList: Array<KeyValueObj> = new Array<KeyValueObj>();
   OwnerRelationList: Array<KeyValueObj> = new Array<KeyValueObj>();
   AssetTypeCode: string = "";
+ 
 
   constructor(private fb: FormBuilder, private http: HttpClient, private toastr: NGXToastrService) { }
 
@@ -110,8 +115,8 @@ export class CollateralDetailComponent implements OnInit {
     }
     if (this.isSingleAsset) {
       this.getAppCollData(this.AppId, 0);
-    }   
-  
+    }
+
     this.AddCollForm.controls.AssetTypeCode.disable();
   }
 
@@ -299,8 +304,12 @@ export class CollateralDetailComponent implements OnInit {
       (response) => {
         this.appCollateralObj = response['AppCollateral'];
         this.collateralRegistrationObj = response['AppCollateralRegistration'];
-
-        if (IsExisting) {
+        if (!IsExisting) {
+          if (this.appCollateralObj.AppCollateralId != 0) {
+            this.mode = "edit";
+          }else{
+            return true;
+          }
           this.AddCollForm.patchValue({
             CollateralStat: "EXISTING"
           });
@@ -311,6 +320,10 @@ export class CollateralDetailComponent implements OnInit {
 
         if (this.appCollateralObj.AppCollateralId == 0) {
           return true;
+        } else {
+          if (this.isSingleAsset) {
+            this.mode = "edit";
+          }
         }
 
         this.AddCollForm.patchValue({
@@ -417,29 +430,60 @@ export class CollateralDetailComponent implements OnInit {
   CopyUser() {
     if (this.AddCollForm.controls.SelfUsage.value == true) {
       this.AddCollForm.controls.UserName.disable();
-      this.AddCollForm.controls.OwnerName.disable();
-      this.AddCollForm.controls.MrOwnerRelationshipCode.disable();
       this.AddCollForm.controls.MrUserRelationshipCode.disable();
 
       this.AppCustObj = new AppCustObj();
+      this.AppCustCompanyObj = new AppCustCompanyObj();
+      this.AppCustAddrObj = new AppCustAddrObj();
+      
       var appObj = { "AppId": this.AppId };
       this.http.post(AdInsConstant.GetCustDataByAppId, appObj).subscribe(
-        response => {
-          this.AppCustObj = response['AppCustObj'];
+        response => { 
+          this.AppCustObj = response['AppCustObj'];        
+          this.AppCustCompanyObj = response['AppCustCompanyObj'];
+          this.AppCustAddrObj = response['AppCustAddrLegalObj'];
+          
 
           this.AddCollForm.patchValue({
             UserName: this.AppCustObj.CustName,
             OwnerName: this.AppCustObj.CustName,
-            MrOwnerRelationshipCode: this.OwnerRelationList[1].Key,
-            MrUserRelationshipCode: this.OwnerRelationList[1].Key,
+            MrOwnerRelationshipCode: "SELF",
+            MrUserRelationshipCode: "SELF"
           })
+          this.OwnerAddrObj.Addr = this.AppCustAddrObj.Addr
+          this.OwnerAddrObj.AreaCode1 = this.AppCustAddrObj.AreaCode1
+          this.OwnerAddrObj.AreaCode2 = this.AppCustAddrObj.AreaCode2
+          this.OwnerAddrObj.AreaCode3 = this.AppCustAddrObj.AreaCode3
+          this.OwnerAddrObj.AreaCode4 = this.AppCustAddrObj.AreaCode4
+          this.OwnerAddrObj.City = this.AppCustAddrObj.City
+          this.inputFieldLegalObj.inputLookupObj.nameSelect = this.AppCustAddrObj.Zipcode;
+          this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: this.AppCustAddrObj.Zipcode };
+
+          if (this.AppCustObj.MrCustTypeCode == AdInsConstant.CustTypePersonal) {
+            this.AddCollForm.patchValue({
+              MrIdTypeCode: this.AppCustObj.MrIdTypeCode,
+              OwnerIdNo: this.AppCustObj.IdNo,
+            });
+          }
+          if (this.AppCustObj.MrCustTypeCode == AdInsConstant.CustTypeCompany) {
+            this.AddCollForm.patchValue({
+              MrIdTypeCode: this.collateralRegistrationObj.MrIdTypeCode,
+              OwnerIdNo: this.AppCustCompanyObj.RegistrationNo,
+            });
+          }
         }
       )
+      this.AddCollForm.controls.UserName.clearValidators();
+      this.AddCollForm.controls.UserName.updateValueAndValidity();
+      this.AddCollForm.controls.MrUserRelationshipCode.clearValidators();
+      this.AddCollForm.controls.MrUserRelationshipCode.updateValueAndValidity();
     }
-    else {
+    else{
+      this.AddCollForm.controls.UserName.setValidators([Validators.required, Validators.maxLength(100)]);
+      this.AddCollForm.controls.UserName.updateValueAndValidity();
+      this.AddCollForm.controls.MrUserRelationshipCode.setValidators([Validators.required, Validators.maxLength(50)]);
+      this.AddCollForm.controls.MrUserRelationshipCode.updateValueAndValidity();
       this.AddCollForm.controls.UserName.enable();
-      this.AddCollForm.controls.OwnerName.enable();
-      this.AddCollForm.controls.MrOwnerRelationshipCode.enable();
       this.AddCollForm.controls.MrUserRelationshipCode.enable();
     }
   }
@@ -475,11 +519,11 @@ export class CollateralDetailComponent implements OnInit {
 
     for (var i = 0; i < this.AddCollForm.value.ListDoc["length"]; i++) {
       this.appCollateralDoc = new AppCollateralDocObj();
-      if(this.AddCollForm.value.ListDoc[i].IsReceived == null){
+      if (this.AddCollForm.value.ListDoc[i].IsReceived == null) {
         this.appCollateralDoc.IsReceived = false;
       }
-      else{
-         this.appCollateralDoc.IsReceived = this.AddCollForm.value.ListDoc[i].IsReceived;
+      else {
+        this.appCollateralDoc.IsReceived = this.AddCollForm.value.ListDoc[i].IsReceived;
       }
       this.appCollateralDoc.DocCode = this.AddCollForm.value.ListDoc[i].DocCode;
       this.appCollateralDoc.DocNo = this.AddCollForm.value.ListDoc[i].DocNo;
