@@ -32,6 +32,7 @@ export class NapAddDetailComponent implements OnInit {
   showCancel: boolean = true;
   custType: string = AdInsConstant.CustTypeCompany;
   token : any = localStorage.getItem("Token");
+  IsLastStep: boolean = false;
 
   AppStep = {
     "NEW": 1,
@@ -236,6 +237,11 @@ export class NapAddDetailComponent implements OnInit {
       default:
         break;
     }
+    if (AppStep == AdInsConstant.AppStepTC)
+      this.IsLastStep = true;
+    else
+      this.IsLastStep = false;
+
     this.ucViewMainProd.initiateForm();
   }
 

@@ -14,6 +14,7 @@
             "target" : "_blank",
             "param": [
               {
+                "type": "AppId",
                 "property": "AppId"
               }
             ]
@@ -41,22 +42,37 @@
           {
             "type": "callback",
             "key": "ViewProdOffering",
+            "label": "Product Offering",
             "property": "ProdOfferingName"
           },
           {
             "type": "text",
-            "label": "Curreny",
+            "label": "Currency",
             "property": "CurrCode"
           },
           {
             "type": "text",
             "label": "Order Information",
             "property": "MrOrderInfoCode"
+          },
+          {
+            "type": "link",
+            "label": "Lead No.",
+            "property": "LeadNo",
+            "position": "left",
+            "path": "/Lead/View",
+            "target": "_blank",
+            "param": [
+              { 
+                "type": "LeadId",
+                "property": "LeadId" 
+              }
+            ]
           }
         ],
         "querystring": {
-          "select": "SELECT A.APP_NO AS AppNo,  A.APP_ID AS AppId, AC.CUST_NAME AS CustName, A.TENOR AS Tenor, A.CURR_CODE AS CurrCode, A.NUM_OF_ASSET AS NumOfAsset, A.ORI_OFFICE_NAME AS OfficeName, A.PROD_OFFERING_NAME AS ProdOfferingName, A.PROD_OFFERING_CODE AS ProdOfferingCode, A.PROD_OFFERING_VERSION AS ProdOfferingVersion, A.MR_ORDER_INFO_CODE AS MrOrderInfoCode",
-          "from": "FROM APP A WITH(NOLOCK) LEFT JOIN APP_CUST AC WITH(NOLOCK) ON A.APP_ID = AC.APP_ID",
+          "select": "SELECT A.APP_NO AS AppNo,  A.APP_ID AS AppId, AC.CUST_NAME AS CustName, A.TENOR AS Tenor, A.CURR_CODE AS CurrCode, A.NUM_OF_ASSET AS NumOfAsset, A.ORI_OFFICE_NAME AS OfficeName, A.PROD_OFFERING_NAME AS ProdOfferingName, A.PROD_OFFERING_CODE AS ProdOfferingCode, A.PROD_OFFERING_VERSION AS ProdOfferingVersion, A.MR_ORDER_INFO_CODE AS MrOrderInfoCode, A.LEAD_ID AS LeadId, L.LEAD_NO AS LeadNo",
+          "from": "FROM APP A WITH(NOLOCK) LEFT JOIN APP_CUST AC WITH(NOLOCK) ON A.APP_ID = AC.APP_ID LEFT JOIN dbo.LEAD L ON L.LEAD_ID = A.LEAD_ID",
           "where": "WHERE A.APP_ID = {0}"
         }
       }

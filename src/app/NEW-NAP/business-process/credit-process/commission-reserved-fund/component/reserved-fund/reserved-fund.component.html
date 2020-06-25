@@ -75,7 +75,10 @@
                   <label class="col-md-6">Gross Yield</label>
                   <label class="col-md-6">{{grossYield | number:'.2':'en-US'}}</label>
                 </div>
-                <div class="form-actions right">
+                <div class="form-actions right">                  
+                  <button *ngIf="showCancel" type="button"  class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
+                    <i class="ft-x"></i> Cancel
+                  </button>
                   <button type="submit" class="btn btn-raised btn-primary">
                     <i class="far fa-check-square"></i> Save
                   </button>

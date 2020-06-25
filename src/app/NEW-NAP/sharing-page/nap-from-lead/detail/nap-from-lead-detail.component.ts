@@ -240,7 +240,12 @@ getLookupAppResponseName(ev: any) {
         } else if (temp[i].RefProdCompntCode == "CURR") {
           tempCurrCode = temp[i].CompntValue;
         } else if (temp[i].RefProdCompntCode == "PAYFREQ") {
-          tempPayFreqCode = temp[i].CompntValue;
+          var listPayFreqCode = temp[i].CompntValue.split(";");
+          if(listPayFreqCode.length == 1){
+            tempPayFreqCode = temp[i].CompntValue;
+          }else{
+            tempPayFreqCode = null;
+          }
         } else if (temp[i].RefProdCompntCode == "PROD_TYPE") {
           tempRefProdTypeCode = temp[i].CompntValue;
         } else {

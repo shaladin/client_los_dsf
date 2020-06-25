@@ -19,7 +19,7 @@
       }
     ],
     "querystring": {
-      "select": "SELECT apctrl.FULL_ASSET_NAME AS FullAssetName, apctrl.ASSET_TYPE_CODE AS AssetTypeCode, apctrl.COLLATERAL_VALUE_AMT AS CollateralValueAmt, apctrlr.OWNER_NAME AS CollateralOwner, apctrl.COLLATERAL_NOTES AS CollateralNotes, apctrl.APP_COLLATERAL_ID AS AppCollateralId",
+      "select": "SELECT apctrl.FULL_ASSET_NAME AS FullAssetName, apctrl.ASSET_TYPE_CODE AS AssetTypeCode, apctrl.COLLATERAL_VALUE_AMT AS CollateralValueAmt, apctrlr.OWNER_NAME AS CollateralOwner, apctrl.COLLATERAL_NOTES AS CollateralNotes, apctrl.SERIAL_NO_1 AS SerialNo1, apctrl.SERIAL_NO_2 AS SerialNo2, apctrl.SERIAL_NO_3 AS SerialNo3, apctrl.APP_COLLATERAL_ID AS AppCollateralId",
       "from": "FROM dbo.APP_COLLATERAL apctrl WITH(NOLOCK) JOIN dbo.APP_COLLATERAL_REGISTRATION apctrlr WITH(NOLOCK) ON apctrl.APP_COLLATERAL_ID = apctrlr.APP_COLLATERAL_ID"
     },
     "headerList": [
@@ -27,31 +27,49 @@
           "type": "sort",
           "position": "left",
           "label": "Collateral Name",
-          "name": "FullAssetName"
+          "name": "apctrl.FULL_ASSET_NAME"
         },
         {
           "type": "sort",
           "position": "left",
           "label": "Collateral Type",
-          "name": "AssetTypeCode"
+          "name": "apctrl.ASSET_TYPE_CODE"
         },
         {
           "type": "sort",
           "position": "left",
           "label": "Collateral Price",
-          "name": "CollateralValueAmt"
+          "name": "apctrl.COLLATERAL_VALUE_AMT"
         },
         {
           "type": "sort",
           "position": "left",
           "label": "Collateral Owner",
-          "name": "CollateralOwner"
+          "name": "apctrlr.OWNER_NAME"
+        },
+        {
+          "type": "sort",
+          "position": "left",
+          "label": "Serial No 1",
+          "name": "apctrl.SERIAL_NO_1"
+        },
+        {
+          "type": "sort",
+          "position": "left",
+          "label": "Serial No 2",
+          "name": "apctrl.SERIAL_NO_2"
+        },
+        {
+          "type": "sort",
+          "position": "left",
+          "label": "Serial No 3",
+          "name": "apctrl.SERIAL_NO_3"
         },
         {
           "type": "sort",
           "position": "left",
           "label": "Collateral Notes",
-          "name": "CollateralNotes"
+          "name": "apctrl.COLLATERAL_NOTES"
         },
         {
           "type": "label",
@@ -79,6 +97,21 @@
         "type": "text",
         "position": "left",
         "property": "CollateralOwner"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "SerialNo1"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "SerialNo2"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "SerialNo3"
       },
       {
         "type": "text",

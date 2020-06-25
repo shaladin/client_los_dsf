@@ -9,8 +9,7 @@ import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-pre-go-live-approval-detail',
-  templateUrl: './pre-go-live-approval-detail.component.html',
-  styleUrls: ['./pre-go-live-approval-detail.component.scss']
+  templateUrl: './pre-go-live-approval-detail.component.html'
 })
 export class PreGoLiveApprovalDetailComponent implements OnInit {
   inputObj: { taskId: any; instanceId: any; approvalBaseUrl: string; };
@@ -23,11 +22,12 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   result4: any;
   result5: any;
   result6: any;
+  arrValue = [];
 
   AppNo: any;
   NumOfAsset: any;
   Tenor: any;
-  InstaAmt: any;
+  InstAmt: any;
   DeliveryDt: any;
   ProdOfferingName: any;
   WayOfFinancing: any;
@@ -37,6 +37,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   PurposeOfFinancing: any;
   ProdOfferingCode: string;
   ProdOfferingVersion: string;
+  LeadNo : string;
 
   AppTcList: any = [];
   identifier: string = "TCList";
@@ -55,6 +56,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   AppId: any;
   AgrmntId: any;
   token = localStorage.getItem("Token");
+  LeadId: string;
 
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
@@ -73,8 +75,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-
-
+    this.arrValue.push(this.AppId);
     this.http.post(AdInsConstant.GetRfaLogByTrxNoAndApvCategory, { TrxNo : this.TrxNo, ApvCategory : "PRE_GPV_APV" } ).subscribe(
       (response) => {
         this.result = response;
@@ -96,6 +97,9 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
       AgrmntNo: this.TrxNo,
       RowVersion: ""
     }
+
+    
+
     this.http.post(AdInsConstant.GetAgrmntByAppIdGetAgrmntByAgrmntNo, Obj).subscribe(
       (response) => {
         this.result = response;
@@ -117,6 +121,9 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
           (response) => {
             this.result2 = response;
             this.WayOfFinancing = this.result2.CompntValueDesc;
+            console.log("response");
+            console.log(response);
+
           }
         );
 
@@ -141,8 +148,18 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
           (response) => {
             this.result4 = response;
             this.AppNo = this.result4.AppNo;
+
+            this.http.post(AdInsConstant.GetLeadByLeadId, {LeadId : this.result4.LeadId}).subscribe(
+              (response) => {
+                this.LeadNo = response["LeadNo"];
+                this.LeadId = response["LeadId"];
+              }
+            );
           }
+
         );
+
+       
 
         var Obj5 = {
           AgrmntId: this.result.AgrmntId,
@@ -151,14 +168,15 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
         this.http.post(AdInsConstant.GetDeliveryOrderHByAgrmntId, Obj5).subscribe(
           (response) => {
             this.result5 = response;
-            this.DeliveryDt = this.result5.DeliveryDt;
+            this.DeliveryDt = formatDate(this.result5.DeliveryDt, 'yyyy-MM-dd', 'en-US');
+
           }
         );
 
         this.http.post(AdInsConstant.GetAgrmntFinDataByAgrmntId, Obj5).subscribe(
           (response) => {
             this.result6 = response;
-            this.InstaAmt = this.result6.InstaAmt;
+            this.InstAmt = this.result6.InstAmt;
           }
         );
 
@@ -232,6 +250,9 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   }
   ToAgrmnt(){
     window.open("/Nap/View/AgrmntView?AgrmntId=" + this.AgrmntId, "_blank");
+  }
+  ToLead(){
+    window.open("/Lead/View?LeadId=" + this.LeadId, "_blank");
   }
   ToCust(){
     var custObj = { CustNo: this.CustNo };

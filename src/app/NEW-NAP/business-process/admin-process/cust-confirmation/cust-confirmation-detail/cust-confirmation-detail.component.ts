@@ -8,6 +8,7 @@ import { VerfResultObj } from 'app/shared/model/VerfResult/VerfResult.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { CustCnfrmObj } from 'app/shared/model/CustCnfrm/CustCnfrm.Model';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-cust-confirmation-detail',
@@ -28,7 +29,7 @@ export class CustConfirmationDetailComponent implements OnInit {
   verfResultObj: VerfResultObj = new VerfResultObj();
   CustCnfrmObj: CustCnfrmObj = new CustCnfrmObj();
   BizTemplateCode: string;
-
+  link : any;
   constructor(private route: ActivatedRoute, private http: HttpClient,
     private router: Router, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -59,7 +60,7 @@ export class CustConfirmationDetailComponent implements OnInit {
   }
 
   GetVerfResult(IsAdded: boolean = false) {
-    this.http.post(AdInsConstant.GetVerfResultHsByTrxRefNo, {TrxRefNo: this.AgrmntNo}).subscribe(
+    this.http.post(AdInsConstant.GetVerfResultHsByTrxRefNo, { TrxRefNo: this.AgrmntNo }).subscribe(
       (response) => {
         this.VerfResultList = response["responseVerfResultHCustomObjs"];
         this.CustCnfrmObj.Phone = "-";
@@ -115,27 +116,31 @@ export class CustConfirmationDetailComponent implements OnInit {
   }
 
   SaveForm() {
-    if(this.VerfResultList!=null && this.CustCnfrmObj.IsSkip != true){
-      for(var i = 0; i<this.VerfResultList.length; i++){
-        if(this.VerfResultList[i].MrVerfResultHStatCode == "FAIL"){
-          this.toastr.errorMessage("Result can't be Failed");
+    if (this.CustCnfrmObj.IsSkip == false) {
+      for (var i = 0; i < this.VerfResultList.length; i++) {
+        if (this.VerfResultList[i].MrVerfResultHStatCode == "FAIL" || this.VerfResultList[i].MrVerfResultHStatCode == "NEW") {
+          this.toastr.errorMessage("Result can't be New or Failed");
           return;
         }
       }
+      var CustCnfrmWFObj = {
+        RequestCustCnfrmObj: this.CustCnfrmObj,
+        wfTaskListId: this.TaskListId
+      };
+      this.http.post(AdInsConstant.AddCustCnfrm, CustCnfrmWFObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          this.router.navigate(["/Nap/AdminProcess/CustConfirmation/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     }
-    var CustCnfrmWFObj = {
-      RequestCustCnfrmObj: this.CustCnfrmObj,
-      wfTaskListId: this.TaskListId
-    };
-    this.http.post(AdInsConstant.AddCustCnfrm, CustCnfrmWFObj).subscribe(
-      (response) => {
-        this.toastr.successMessage(response["message"]);
-        this.router.navigate(["/Nap/AdminProcess/CustConfirmation/Paging"], {queryParams: {"BizTemplateCode": this.BizTemplateCode}});
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    else if (this.CustCnfrmObj.IsSkip == true) {
+      this.toastr.successMessage("Success !");
+      this.router.navigate(["/Nap/AdminProcess/CustConfirmation/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
+    }
   }
 
   async claimTask() {
@@ -147,4 +152,21 @@ export class CustConfirmationDetailComponent implements OnInit {
       (response) => {
       });
   }
+
+  GetCallBack(event){
+    console.log("aaa");
+    if(event.Key == "customer"){
+      var custObj = { CustNo: event.ViewObj.CustNo };
+      this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+        response => {
+          this.link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
+          window.open(this.link, '_blank');
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+  }
+  }
+  
 }

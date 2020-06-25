@@ -53,7 +53,7 @@ export class CreditInquiryComponent implements OnInit {
       )
     }
     else if(key == "agreement"){
-      window.open( environment.losR3Web + "/Nap/FinanceLeasing/ViewAgrmnt?AgrmntId=" + agrmntId, "_blank");
+      window.open( environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + agrmntId, "_blank");
     }
   }
 }

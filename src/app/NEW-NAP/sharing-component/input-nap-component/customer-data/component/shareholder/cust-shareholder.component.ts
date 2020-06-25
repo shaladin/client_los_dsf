@@ -68,7 +68,7 @@ export class CustShareholderComponent implements OnInit {
     MrGenderCode: ['', [Validators.required, Validators.maxLength(50)]],
     MrIdTypeCode: ['', Validators.maxLength(50)],
     BirthPlace: ['', Validators.maxLength(200)],
-    BirthDt: [''],
+    BirthDt: ['', Validators.required],
     IdNo: ['', Validators.maxLength(50)],
     TaxIdNo: ['', Validators.maxLength(50)],
     IdExpiredDt: [''],
@@ -78,7 +78,7 @@ export class CustShareholderComponent implements OnInit {
     MrJobPositionCode: ['', Validators.maxLength(50)],
     IsSigner: [false],
     MrCompanyTypeCode: ['', Validators.maxLength(50)],
-    EstablishmentDt: ['']
+    EstablishmentDt: ['', Validators.required]
   });
 
 
@@ -150,6 +150,7 @@ export class CustShareholderComponent implements OnInit {
 
   CustTypeChanged(event){
     this.setCriteriaLookupCustomer(event.value);
+    this.setValidator(event.value);
     this.selectedCustTypeName = this.CustTypeObj.find(x => x.Key == event.value).Value;
     this.CustShareholderForm.controls.MrGenderCode.enable();
     this.CustShareholderForm.controls.MrIdTypeCode.enable();
@@ -254,6 +255,7 @@ export class CustShareholderComponent implements OnInit {
     this.InputLookupCustomerObj.nameSelect = this.listShareholder[i].MgmntShrholderName;
     this.InputLookupCustomerObj.jsonSelect = {CustName: this.listShareholder[i].MgmntShrholderName};
     this.selectedCustNo = this.listShareholder[i].CustNo;
+    this.setValidator(this.listShareholder[i].MrCustTypeCode);
     this.open(content);
   }
 
@@ -270,7 +272,7 @@ export class CustShareholderComponent implements OnInit {
       MrGenderCode: [this.defaultGender, [Validators.required, Validators.maxLength(50)]],
       MrIdTypeCode: [this.defaultIdType, Validators.maxLength(50)],
       BirthPlace: ['', Validators.maxLength(200)],
-      BirthDt: [''],
+      BirthDt: ['', Validators.required],
       IdNo: ['', Validators.maxLength(50)],
       TaxIdNo: ['', Validators.maxLength(50)],
       IdExpiredDt: [''],
@@ -280,12 +282,13 @@ export class CustShareholderComponent implements OnInit {
       MrJobPositionCode: [this.defaultJobPosition, Validators.maxLength(50)],
       IsSigner: [false],
       MrCompanyTypeCode: [this.defaultCompanyType, Validators.maxLength(50)],
-      EstablishmentDt: ['']
+      EstablishmentDt: ['', Validators.required]
     });
     this.selectedCustNo = "";
     this.selectedJobPositionName = this.defaultJobPositionName;
     this.selectedCustTypeName = this.defaultCustTypeName;
     this.initLookup();
+    this.setValidator(this.defaultCustType);
     this.isCust = false;
   }
 
@@ -446,6 +449,22 @@ export class CustShareholderComponent implements OnInit {
     );
   }
 
+  setValidator(custType){
+    if(custType == AdInsConstant.CustTypePersonal){
+      this.CustShareholderForm.controls.BirthDt.setValidators(Validators.required);
+      this.CustShareholderForm.controls.BirthDt.updateValueAndValidity();
+      this.CustShareholderForm.controls.EstablishmentDt.clearValidators();
+      this.CustShareholderForm.controls.EstablishmentDt.updateValueAndValidity();
+    }
+
+    if(custType == AdInsConstant.CustTypeCompany){
+      this.CustShareholderForm.controls.BirthDt.clearValidators();
+      this.CustShareholderForm.controls.BirthDt.updateValueAndValidity();
+      this.CustShareholderForm.controls.EstablishmentDt.setValidators(Validators.required);
+      this.CustShareholderForm.controls.EstablishmentDt.updateValueAndValidity();
+    }
+  }
+
   initLookup(){
     this.InputLookupCustomerObj = new InputLookupObj();
     this.InputLookupCustomerObj.urlJson = "./assets/uclookup/lookupCustomer.json";
@@ -478,11 +497,10 @@ export class CustShareholderComponent implements OnInit {
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.CustTypeObj = response["ReturnObject"];
-        console.log("bind cust type");
-        console.log(this.CustTypeObj);
         if(this.CustTypeObj.length > 0){
           this.defaultCustType = this.CustTypeObj[0].Key;
           this.defaultCustTypeName = this.CustTypeObj[0].Value;
+          this.setValidator(this.CustTypeObj[0].Key);
         }
       }
     );

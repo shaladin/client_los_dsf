@@ -7,6 +7,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { NapAppReferantorModel } from 'app/shared/model/NapAppReferantor.Model';
+import { AppObj } from 'app/shared/model/App/App.Model';
 
 @Component({
   selector: 'app-referantor-data',
@@ -21,7 +22,7 @@ export class ReferantorDataComponent implements OnInit {
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
-  inputLookupObj;
+  inputLookupObj: InputLookupObj;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -41,13 +42,26 @@ export class ReferantorDataComponent implements OnInit {
   appReferantorObj;
   ExistedData;
   arrAddCrit;
-  ngOnInit() {
+  async ngOnInit() {
     this.appReferantorObj = new NapAppReferantorModel();
     this.ExistedData = false;
-
+    
+    await this.GetAppData();
     this.GetInputLookupObj();
     this.getAppReferantorData();
     console.log(this.bankItems);
+  }
+
+  OfficeCode: String;
+  async GetAppData() {
+    var obj = { AppId: this.appId };
+    await this.http.post<AppObj>(AdInsConstant.GetAppById, obj).toPromise().then(
+      (response) => {
+        console.log(response);
+        this.OfficeCode = response.OriOfficeCode;
+        console.log(this.OfficeCode);
+      }
+    );
   }
 
   GetInputLookupObj(){
@@ -57,15 +71,22 @@ export class ReferantorDataComponent implements OnInit {
     addCrit.DataType = "text";
     addCrit.propName = "v.MR_VENDOR_CATEGORY_CODE ";
     addCrit.restriction = AdInsConstant.RestrictionIn;
-    addCrit.listValue = ["AGENCY_COMPANY"];
+    addCrit.listValue = [AdInsConstant.VendorCategoryAgencyCompany, AdInsConstant.VendorCategoryAgencyPersonal];
     this.arrAddCrit.push(addCrit);
 
-    var addCrit1 = new CriteriaObj(); 
-    addCrit1.DataType = "bool";
-    addCrit1.propName = "vba.IS_DEFAULT";
-    addCrit1.restriction = AdInsConstant.RestrictionIn;
-    addCrit1.listValue = [1];
-    this.arrAddCrit.push(addCrit1);
+    // var addCrit1 = new CriteriaObj(); 
+    // addCrit1.DataType = "bool";
+    // addCrit1.propName = "vba.IS_DEFAULT";
+    // addCrit1.restriction = AdInsConstant.RestrictionIn;
+    // addCrit1.listValue = [1];
+    // this.arrAddCrit.push(addCrit1);
+
+    var addCrit3 = new CriteriaObj(); 
+    addCrit3.DataType = "text";
+    addCrit3.propName = "ro.OFFICE_CODE";
+    addCrit3.restriction = AdInsConstant.RestrictionIn;
+    addCrit3.listValue = [this.OfficeCode];
+    this.arrAddCrit.push(addCrit3);
 
     //Look Up Obj
     this.inputLookupObj = new InputLookupObj();
@@ -86,13 +107,12 @@ export class ReferantorDataComponent implements OnInit {
     // this.appId = tempId;
 
     // Check Data App Id
-    var url = AdInsConstant.GetAppReferantorByAppId;
     var obj = {
       AppId: this.appId,
       RowVersion: "",
     }
 
-    this.http.post(url, obj).subscribe(
+    this.http.post(AdInsConstant.GetAppReferantorByAppId, obj).subscribe(
       (response) => {
         console.log(response);
         if(response["AppReferantorId"]!=0){
@@ -193,10 +213,10 @@ export class ReferantorDataComponent implements OnInit {
     this.appReferantorObj.ReferantorCode = ev.ReferantorCode;
     this.appReferantorObj.ReferantorName = ev.ReferantorName;
     this.appReferantorObj.MrReferantorType = ev.ReferantorType;
-    this.appReferantorObj.RefBankCode = ev.BankCode;
-    this.appReferantorObj.BankAccNo = ev.BankAccNo;
-    this.appReferantorObj.BankAccName = ev.BankAccName;
-    this.appReferantorObj.BankBranch;
+    // this.appReferantorObj.RefBankCode = ev.BankCode;
+    // this.appReferantorObj.BankAccNo = ev.BankAccNo;
+    // this.appReferantorObj.BankAccName = ev.BankAccName;
+    // this.appReferantorObj.BankBranch;
 
     this.appReferantorObj.TaxpayerNo = ev.TaxPayerNo;
     this.appReferantorObj.TaxIdNo = ev.TaxIdNo;
@@ -212,7 +232,7 @@ export class ReferantorDataComponent implements OnInit {
     console.log(this.appReferantorObj);
 
     this.NapAppReferantorForm.patchValue({
-      AccountBank: ev.BankAccNo
+      AccountBank: ""
     });
     
     // this.NpwpOn = ev.IsNPWPExist;

@@ -1,13 +1,13 @@
 <div class="row text-left">
   <div class="col-md-12">
     <div class="card">
-      <div class="ucSearch-Button-Right">
+      <!-- <div class="ucSearch-Button-Right">
         <span class="mr-1">
           <button type="button" class="backButton" (click)="Back()" translate>
             <i class="ft-x"></i> Cancel
           </button>
         </span>
-      </div>
+      </div> -->
       <div class="card-body">
         <div class="px-3">
 
@@ -18,7 +18,7 @@
             <div id="custMain">
               <div class="form-group row">
                 <label class="col-md-3 adInsLabel">Customer No</label>
-                <label class="col-md-3 adInsLabel" *ngIf="AppCustObj?.CustNo != ''">{{AppCustObj?.CustNo}} </label>
+                <a href="{{custUrl}}" target="_blank" class="label-control col-md-3" *ngIf="AppCustObj?.CustNo != ''">{{AppCustObj.CustNo}}</a>
                 <label class="col-md-3 adInsLabel" *ngIf="AppCustObj?.CustNo == ''">- </label>
                 <label class="col-md-3 adInsLabel">NPWP</label>
                 <label class="col-md-3 adInsLabel" *ngIf="AppCustObj?.TaxIdNo != ''">{{AppCustObj?.TaxIdNo}} </label>
@@ -52,6 +52,9 @@
                     <th>
                       <input type="checkbox" [checked]="checkboxAllGuarantor" (change)="SelectAllGuarantor($event.target.checked)" id="checkAll"
                              name="CheckAll">
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='appNo' translate>Application No</span>
                     </th>
                     <th>
                       <span class="thead-header" (click)="searchSort($event)" name='custNo' translate>Customer No</span>
@@ -102,7 +105,8 @@
                                (change)="CheckedGuarantor(item.AppGuarantorId,  $event.target.checked)" [checked]=false>
                       </div>
                     </td>
-                    <td>{{item.CustNo}}</td>
+                    <td><a href="javascript:void(0);" (click)="OpenAppView(item.AppId)">{{item.AppNo}}</a></td>
+                    <td><a href="javascript:void(0);" (click)="OpenCustView(item.CustNo)">{{item.CustNo}}</a></td>
                     <td>{{item.CustName}}</td>
                     <td>{{item.IdType}}</td>
                     <td>{{item.IdNo}}</td>
@@ -110,7 +114,6 @@
                     <td>{{item.MobilePhnNo1}}</td>
                     <td>{{item.TaxIdNo}}</td>
                     <td>{{item.DuplicateItem}}</td>
-
                   </tr>
                 </tbody>
               </table>
@@ -127,6 +130,9 @@
                     <th>
                       <input type="checkbox" [checked]="checkboxAllSpouse" (change)="SelectAllSpouse($event.target.checked)" id="checkAll"
                              name="CheckAll">
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='appNo' translate>Application No</span>
                     </th>
                     <th>
                       <span class="thead-header" (click)="searchSort($event)" name='custNo' translate>Customer No</span>
@@ -176,7 +182,8 @@
                                (change)="CheckedSpouse(item.AppCustPersonalConstactPersonId,  $event.target.checked)" [checked]=false>
                       </div>
                     </td>
-                    <td>{{item.CustNo}}</td>
+                    <td><a href="javascript:void(0);" (click)="OpenAppView(item.AppId)">{{item.AppNo}}</a></td>
+                    <td><a href="javascript:void(0);" (click)="OpenCustView(item.CustNo)">{{item.CustNo}}</a></td>
                     <td>{{item.CustName}}</td>
                     <td>{{item.IdType}}</td>
                     <td>{{item.IdNo}}</td>
@@ -199,6 +206,9 @@
                     <th>
                       <input type="checkbox" [checked]="checkboxAllShareholder" (change)="SelectAllShareholder($event.target.checked)" id="checkAll"
                              name="CheckAll">
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='appNo' translate>Application No</span>
                     </th>
                     <th>
                       <span class="thead-header" (click)="searchSort($event)" name='custNo' translate>Customer No</span>
@@ -249,7 +259,8 @@
                                (change)="CheckedShareholder(item.AppCustCompanyMgmntShrholderId,  $event.target.checked)" [checked]=false>
                       </div>
                     </td>
-                    <td>{{item.CustNo}}</td>
+                    <td><a href="javascript:void(0);" (click)="OpenAppView(item.AppId)">{{item.AppNo}}</a></td>
+                    <td><a href="javascript:void(0);" (click)="OpenCustView(item.CustNo)">{{item.CustNo}}</a></td> 
                     <td>{{item.CustName}}</td>
                     <td>{{item.IdType}}</td>
                     <td>{{item.IdNo}}</td>
@@ -264,6 +275,9 @@
             </div>
           </div>
           <div class="pull-right">
+            <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Back()" translate>
+              <i class="ft-x"></i> Cancel
+            </button>
             <button type="button" (click)="Submit()" class="btn btn-raised btn-primary">
               <i class="far fa-check-square"></i> Save
             </button>

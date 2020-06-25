@@ -76,9 +76,9 @@ export class MouDetailGeneralComponent implements OnInit {
     var refMasterInstSchm = new RefMasterObj();
     refMasterInstSchm.RefMasterTypeCode = "INST_SCHM";
     let reqInstSchm = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterInstSchm);
-    var refMasterPayFreq = new RefMasterObj();
-    refMasterPayFreq.RefMasterTypeCode = "PAY_FREQ";
-    let reqPayFreq = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterPayFreq);
+    // var refMasterPayFreq = new RefMasterObj();
+    // refMasterPayFreq.RefMasterTypeCode = "PAY_FREQ";
+    let reqPayFreq = this.httpClient.post(AdInsConstant.GetListActiveRefPayFreq, null);
     var refMasterFirstInst = new RefMasterObj();
     refMasterFirstInst.RefMasterTypeCode = "FIRST_INST_TYPE";
     let reqFirstInst = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterFirstInst);
@@ -99,7 +99,7 @@ export class MouDetailGeneralComponent implements OnInit {
           CurrCode: this.currencyList.ReturnObject[0].Key,
           MrInterestTypeCode: this.intrstTypeList.ReturnObject[0].Key,
           MrInstSchmCode: this.instSchmList.ReturnObject[0].Key,
-          PayFreqCode: this.payFreqList.ReturnObject[0].Key,
+          PayFreqCode: this.payFreqList.ReturnObject[0].PayFreqCode,
           MrFirstInstTypeCode : this.firstInstList.ReturnObject[0].Key,
           AssetTypeCode: this.tempMouCustClause.AssetTypeCode
         });

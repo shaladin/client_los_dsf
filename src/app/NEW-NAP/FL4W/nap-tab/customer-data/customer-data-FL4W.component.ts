@@ -46,7 +46,7 @@ export class CustomerDataFL4WComponent implements OnInit {
   @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
-
+  cancel:boolean = true;
   refMasterObj = {
     RefMasterTypeCode: "",
   };
@@ -122,11 +122,14 @@ export class CustomerDataFL4WComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    console.log('customer data')
+     
+    this.cancel = this.showCancel;
     this.initUrl();
     this.bindCustTypeObj();
     this.initAddrObj();
     await this.getCustData();
+    
+
   }
 
   Cancel(){

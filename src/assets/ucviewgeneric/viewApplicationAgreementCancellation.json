@@ -5,22 +5,38 @@
         "subSectionId": "ApplicationAgreementCancellation",
         "subSectionTitle": "Main Information",
         "mainInfoUrl": "http://r3app-server.ad-ins.com/LOS/Generic/GetDataViewBySQL",
-        "mainInfo": [
+        "mainInfo": [ 
           {
-            "type": "text",
+            "type": "link",
             "label": "Application No",
-            "property": "AppNo"
-          },
+            "property": "AppNo",
+            "path": "/Nap/View/AppView",
+            "target" : "_blank",
+            "param": [
+              {
+                "type": "AppId",
+                "property": "AppId"
+              }
+            ]
+          }, 
           {
             "type": "text",
             "label": "Installment Amount",
             "property": "InstAmt"
-          },
+          }, 
           {
-            "type": "text",
+            "type": "link",
             "label": "Agreement No",
-            "property": "AgrmntNo"
-          },
+            "property": "AgrmntNo",
+            "path": "/Nap/View/AgrmntView",
+            "target" : "_blank",
+            "param": [
+              {
+                "type": "AgrmntId",
+                "property": "AgrmntId"
+              }
+            ]
+          }, 
           {
             "type": "text",
             "label": "Number Of Installment",
@@ -38,7 +54,7 @@
           }
         ],
         "querystring": {
-          "select": "SELECT ap.APP_NO AS AppNo, apFinData.INST_AMT AS InstAmt, agr.AGRMNT_NO AS AgrmntNo, ap.NUM_OF_INST AS NumOfInst, apCust.CUST_NAME AS CustName,ap.PROD_OFFERING_NAME AS ProdOfferingName",
+          "select": "SELECT ap.APP_NO AS AppNo, apFinData.INST_AMT AS InstAmt, agr.AGRMNT_NO AS AgrmntNo, ap.NUM_OF_INST AS NumOfInst, apCust.CUST_NAME AS CustName,ap.PROD_OFFERING_NAME AS ProdOfferingName, ap.APP_ID AS AppId, agr.AGRMNT_ID AS AgrmntId",
           "from": "FROM dbo.APP ap LEFT JOIN dbo.AGRMNT agr ON ap.APP_ID = agr.APP_ID LEFT JOIN dbo.APP_CUST apCust ON ap.APP_ID = apCust.APP_ID LEFT JOIN dbo.APP_AGRMNT_CANCEL apagrc ON ap.APP_ID = apagrc.APP_ID LEFT JOIN dbo.APP_FIN_DATA apFinData ON ap.APP_ID = apFinData.APP_ID",
           "where": "WHERE ap.APP_ID = {0}"
         }

@@ -62,6 +62,9 @@ export class AdInsConstant {
   public static ASSET_TYPE_CAR = "CAR";
   public static LICENSE_PLATE_NO = "LICENSE PLATE NO";
 
+  //APV RESULT
+  public static ApvResultReturn = "Return";
+
   //WORKFLOW (LEWAT FOUNDATION)
   public static ResumeWorkflow = environment.FoundationR3Url + "/Workflow/ResumeWorkflow"
 
@@ -116,6 +119,8 @@ export class AdInsConstant {
   public static DeleteAppReferantor = environment.losUrl + "/AppReferantor/DeleteAppReferantor";
   public static GetAppReferantorByAppReferantorId = environment.losUrl + "/AppReferantor/GetAppReferantorByAppReferantorId";
   public static GetAppReferantorByAppId = environment.losUrl + "/AppReferantor/GetAppReferantorByAppId";
+  public static VendorCategoryAgencyCompany = "AGENCY_COMPANY";
+  public static VendorCategoryAgencyPersonal = "AGENCY_PERSONAL";
 
   // App Cross
   public static EditAppAddAppCross = environment.losUrl + "/Application/EditAppAddAppCross";
@@ -859,14 +864,11 @@ export class AdInsConstant {
   // APP TC
   public static GetListTCbyAppId = environment.losUrl + "/AppTc/GetListTCbyAppId";
 
-  // Rule
-  public static Rule = "http://r3app-server/RULE_FINAL/RuleService/ExecuteRuleSet";
-
-
   // App Asset
   public static GetAppAssetListByAgrmntId = environment.losUrl + "/AppAsset/GetAppAssetListByAgrmntId";
   public static GetAppAssetByAppId = environment.losUrl + "/AppAsset/GetAppAssetDataByAppId";
   public static GetAppAssetListByAppId = environment.losUrl + "/AppAsset/GetAppAssetListByAppId";
+  public static GetAppAssetListAndAppAssetSupplEmpListDistinctSupplierByAppId = environment.losUrl + "/AppAsset/GetAppAssetListAndAppAssetSupplEmpListDistinctSupplierByAppId";
   public static GetAppAssetListByAgrmntIdForViewAgrmnt = environment.losUrl + "/AppAsset/GetAppAssetListByAgrmntIdForViewAgrmnt";
   public static GetAppAssetListForInsuranceByAppId = environment.losUrl + "/AppAsset/GetAppAssetListForInsuranceByAppId"
   public static GetAppAssetListForInsuranceByAgrmntId = environment.losUrl + "/AppAsset/GetAppAssetListForInsuranceByAgrmntId"
@@ -987,6 +989,7 @@ export class AdInsConstant {
   //APP INSURANCE
   public static GetInsuranceDataByAppId = environment.losUrl + "/AppIns/GetInsDataByAppId";
   public static GetInsuranceDataByAppIdForView = environment.losUrl + "/AppIns/GetInsDataByAppIdForView";
+  public static GetInsuranceDataByAppAssetIdForView = environment.losUrl + "/AppIns/GetInsDataByAppAssetIdForView";
   public static GetInsDataByAppIdAndAssetId = environment.losUrl + "/AppIns/GetInsDataByAppIdAndAssetId";
   public static GetInsDataByAppAssetId = environment.losUrl + "/AppIns/GetInsDataByAppAssetId";
   public static AddEditInsuranceData = environment.losUrl + "/AppIns/AddEditInsuranceData";
@@ -1077,6 +1080,7 @@ export class AdInsConstant {
   public static GetListAppReservedFundByAppId = environment.losUrl + "/AppReservedFund/GetListAppReservedFundByAppId";
   public static CreateRsvFundRule = environment.losUrl + "/AppReservedFund/CreateRsvFundRule";
   public static CalculateGrossYieldRsvFund = environment.losUrl + "/AppReservedFund/CalculateGrossYieldRsvFund";
+  public static GetIncomeInfoRsvFund = environment.losUrl + "/AppReservedFund/GetIncomeInfoRsvFund";
   //App Fin Data
   public static GetAppFinDataByAppId = environment.losUrl + "/AppFinData/GetAppFinDataByAppId";
   public static CreateMaxAllocAmtRsvFund = environment.losUrl + "/AppFinData/CreateMaxAllocAmtRsvFund";
@@ -1104,6 +1108,9 @@ export class AdInsConstant {
   public static AddAppFraudVerf = environment.losUrl + "/FraudDetection/AddAppFraudVerf";
   public static GetListAppNegativeCheckCustByAppId = environment.losUrl + "/AppDupCheck/GetListAppNegativeCheckCustByAppId";
   public static GetAppFraudVerificationByAppId = environment.losUrl + "/FraudDetection/GetAppFraudVerificationByAppId";
+
+  //Fraud Verif
+  public static SurveyFraudAppCheckingValidationForFraudVerif = environment.losUrl + "/Application/SurveyFraudAppCheckingValidationForFraudVerif";
 
   //Dukcapil
   public static GetFraudDukcapilByTrxNoAndTrxType = environment.losUrl + "/Dukcapil/GetFraudDukcapilByTrxNoAndTrxType"
@@ -1203,13 +1210,17 @@ export class AdInsConstant {
   public static RequestReturnTask = environment.losUrl + "/ReturnHandlingD/RequestReturnTask";
   public static DeleteReturnHandlingD = environment.losUrl + "/ReturnHandlingD/DeleteReturnHandlingD";
   public static ResumeReturnHandling = environment.losUrl + "/ReturnHandlingH/ResumeReturnHandling";
+  public static GetReturnHandlingDByReturnHandlingDId = environment.losUrl + "/ReturnHandlingD/GetReturnHandlingDByReturnHandlingDId";
+  public static AddReturnHandlingH = environment.losUrl + "/ReturnHandlingH/AddReturnHandlingH";
+
   // public static Test = environment.losUrl + "/ReturnHandlingD/Test";
 
   public static ReturnHandlingEditApp = "RTN_EDIT_APP";
   public static ReturnHandlingAddPhnVerf = "RTN_ADD_PHN_VERF";
   public static ReturnHandlingEditComRsvFnd = "RTN_EDIT_COM_RSV_FND";
   public static ReturnHandlingAddColtr = "RTN_ADD_COLTR";
-  public static GetReturnHandlingDByReturnHandlingDId = environment.losUrl + "/ReturnHandlingD/GetReturnHandlingDByReturnHandlingDId";
+  public static ReturnStatNew = "NEW";
+  public static ReturnStatRequest = "REQ";
 
   // Deviation Result
   public static GetListDeviationResultForDeviationDataByAppId = environment.losUrl + "/DeviationResult/GetListDeviationResultForDeviationDataByAppId";
