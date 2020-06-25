@@ -229,7 +229,7 @@ export class TcDataComponent implements OnInit {
       this.http.post(AdInsConstant.EditAppTc, this.ReqTCObj).subscribe(
         (response) => {
           console.log(response);
-          this.toastr.successMessage(response["message"]);
+          // this.toastr.successMessage(response["message"]);
           this.outputTab.emit();
         },
         (error) => {
@@ -240,7 +240,7 @@ export class TcDataComponent implements OnInit {
       this.http.post(AdInsConstant.AddAppTc, this.ReqTCObj).subscribe(
         (response) => {
           console.log(response);
-          this.toastr.successMessage(response["message"]);
+          // this.toastr.successMessage(response["message"]);
           this.outputTab.emit();
         },
         (error) => {

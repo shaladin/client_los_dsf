@@ -53,7 +53,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   getQuestionUrl: any;
   saveVerfResultHDetailUrl: any;
   getPhnNumberUrl: any;
-
+  custId: number;
   viewObj: any;
   VerfResultAfterAddObj: any;
   appId: number;
@@ -64,7 +64,8 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   subjectType: string;
   idSource: number;
   verfSchemeHId: number;
-
+  AppNoUrl = environment.losR3Web + '/Nap/View/AppView?AppId=';
+   CustNoUrl = environment.FoundationR3Web + '/Customer/CustomerView/Page?CustId=';
   appObj = {
     AppId: 0,
   };
@@ -100,8 +101,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   verifResultHObj: any;
   verifResultHDetailObj: any;
   listVerifResultHObj: any;
-  verfResultDListObjs: Array<VerfResultDObj>;
-
+  verfResultDListObjs: Array<VerfResultDObj>; 
   ResultObj: any;
   SubjectRelationObj: any;
   PhoneNumberObj: any;
@@ -156,11 +156,12 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
     await this.GetAppData();
     await this.GetAppCust();
     await this.GetVerfResultData();
-
+    await this.GetCust();
     if (this.verfResultHId != 0) {
       await this.GetVerfResultHData();
       await this.GetListVerfResulHtData(this.verfResHObj);
     };
+
 
 
   }
@@ -200,7 +201,12 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   }
 
   setPhoneVerifData() {
-    var businessDt = new Date();
+
+    var businessDt = new Date(localStorage.getItem("BusinessDateRaw"));
+    var todaydate = new Date();
+    businessDt.setHours(todaydate.getHours(), todaydate.getMinutes(), todaydate.getSeconds());
+    var usertimezone = businessDt.getTimezoneOffset() * 60000;
+    businessDt = new Date(businessDt.getTime() - usertimezone);
 
     this.PhoneDataObj = new VerifResulHDetailObj();
     this.PhoneDataObj.VerfResultDListObj = new Array<VerfResultDObj>();
@@ -255,6 +261,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
       (response) => {
         console.log(response);
         this.AppCustObj = response;
+        console.log("aaaa");
         //this.PhoneDataForm.patchValue({
         //  CustNo: this.AppCustObj.CustNo,
         //  CustName: this.AppCustObj.CustName,
@@ -262,6 +269,16 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
       }
     );
   }
+
+  async GetCust() {
+
+    var custObj = { CustNo: this.AppCustObj['CustNo'] };
+    await this.http.post(AdInsConstant.GetCustByCustNo, custObj).toPromise().then(
+      (response) => {
+
+        this.custId = response["CustId"];
+      })
+  };
 
   async GetQuestionList(VerfQAObj) {
     await this.http.post(this.getQuestionUrl, VerfQAObj).toPromise().then(
@@ -481,7 +498,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
     }
   }
 
-  Navigate(){
+  Navigate() {
     var link = environment.losR3Web + "/Nap/View/AppView/AppId=" + this.AppObj.AppId;
     this.router.navigate([]).then(result => { window.open(link, '_blank'); });
   }

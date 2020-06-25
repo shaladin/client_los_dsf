@@ -8,8 +8,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
   selector: 'app-purchase-order-detail',
-  templateUrl: './purchase-order-detail.component.html',
-  styleUrls: ['./purchase-order-detail.component.scss']
+  templateUrl: './purchase-order-detail.component.html'
 })
 export class PurchaseOrderDetailComponent implements OnInit {
 
@@ -125,6 +124,8 @@ export class PurchaseOrderDetailComponent implements OnInit {
     this.purchaseOrderDObj.PurchaseOrderAmt = this.TotalLifeInsCustAmt;
     listPurchaseOrderD.push(this.purchaseOrderDObj);
 
+
+    //TEMUAN STEVEN INI FEE GK BOLEH GINI, KLO GAK NNTI GBS DINAMIS JUGA NIH NTAR
     if (this.AssetObj["AgrmntFeeListObj"].length != 0) {
       for (let i = 0; i < this.AssetObj["AgrmntFeeListObj"].length; i++) {
         this.purchaseOrderDObj = new PurchaseOrderDObj();

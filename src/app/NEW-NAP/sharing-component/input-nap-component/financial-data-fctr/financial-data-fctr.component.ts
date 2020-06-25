@@ -26,6 +26,7 @@ export class FinancialDataFctrComponent implements OnInit {
   responseCalc: any;
   NumOfInst: number;
   IsParentLoaded: boolean = false;
+  IsAppFeePrcntValid : boolean = true;
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
   constructor(
@@ -119,7 +120,7 @@ export class FinancialDataFctrComponent implements OnInit {
     this.LoadAppFinData();
   }
 
-  Cancel(){
+  Cancel() {
     this.outputCancel.emit();
   }
 
@@ -134,7 +135,7 @@ export class FinancialDataFctrComponent implements OnInit {
         }
 
         this.FinDataForm.patchValue({
-          TotalAssetPriceAmt: this.appFinDataObj.TotalAssetPriceAmt,
+          TotalAssetPriceAmt: this.appFinDataObj.TotalInvcAmt-this.appFinDataObj.TotalRetentionAmt,
           TotalFeeAmt: this.appFinDataObj.TotalFeeAmt,
           TotalFeeCptlzAmt: this.appFinDataObj.TotalFeeCptlzAmt,
           TotalInsCustAmt: this.appFinDataObj.TotalInsCustAmt,
@@ -187,24 +188,39 @@ export class FinancialDataFctrComponent implements OnInit {
   }
 
   SaveAndContinue() {
-    var isValidGrossYield = this.ValidateGrossYield();
-    var isValidGracePeriod = this.ValidateGracePeriode();
-
-    var NeedReCalculate = this.FinDataForm.get("NeedReCalculate").value;
-
-    if (NeedReCalculate) {
-      this.toastr.errorMessage("Please Calculate Again");
+    this.IsAppFeePrcntValid = true;
+    for (let i = 0; i < this.FinDataForm.value.AppFee.length; i++) {
+      if (this.FinDataForm.value.AppFee[i].AppFeePrcnt < 0) {
+        this.IsAppFeePrcntValid = false;
+      }
+    }
+    if(this.IsAppFeePrcntValid == false){
+      this.toastr.errorMessage("App Fee Prcnt must be greater than 0");
       return;
     }
-    if (isValidGrossYield && isValidGracePeriod) {
-
-      this.http.post(AdInsConstant.SaveAppFinDataFctr, this.FinDataForm.value).subscribe(
-        (response) => {
-          console.log(response);
-          this.toastr.successMessage(response["Message"]);
-          this.outputTab.emit();
-        }
-      );
+    if(this.FinDataForm.value.EffectiveRatePrcnt < 0 && this.FinDataForm.value.InterestType == "PRCNT"){
+      this.toastr.errorMessage("Effective Rate must be greater than 0");
+    }
+    else{
+      var isValidGrossYield = this.ValidateGrossYield();
+      var isValidGracePeriod = this.ValidateGracePeriode();
+  
+      var NeedReCalculate = this.FinDataForm.get("NeedReCalculate").value;
+  
+      if (NeedReCalculate) {
+        this.toastr.errorMessage("Please Calculate Again");
+        return;
+      }
+      if (isValidGrossYield && isValidGracePeriod) {
+  
+        this.http.post(AdInsConstant.SaveAppFinDataFctr, this.FinDataForm.value).subscribe(
+          (response) => {
+            console.log(response);
+            this.toastr.successMessage(response["Message"]);
+            this.outputTab.emit();
+          }
+        );
+      }
     }
   }
 

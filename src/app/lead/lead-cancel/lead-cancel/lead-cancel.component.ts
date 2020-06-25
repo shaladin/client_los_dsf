@@ -55,7 +55,8 @@ export class LeadCancelComponent implements OnInit {
     this.inputObj.enviromentUrl = environment.losUrl;
     this.inputObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputObj.addCritInput = new Array();
-
+    this.pageNow = 1;
+    this.pageSize = 10;
     this.inputObj.ddlEnvironments = [
       {
         name: "L.ORI_OFFICE_CODE",

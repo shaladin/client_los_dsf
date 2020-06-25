@@ -37,12 +37,16 @@ export class DocSignerDetailComponent implements OnInit {
   MrCustTypeCode: string = "COMPANY";
   CustFullName: string;
   ContactPersonName: string;
+  token : any = localStorage.getItem("Token");
+  BizTemplateCode: string;
+  isHidden: boolean;
 
   constructor(private fb: FormBuilder, private http: HttpClient,
     private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params['AppId'];
       this.AgrmntId = params['AgrmntId'];
+      this.BizTemplateCode = params['BizTemplateCode'];
     });
   }
 
@@ -57,7 +61,6 @@ export class DocSignerDetailComponent implements OnInit {
 
   async ngOnInit() {
     this.viewObj = "./assets/ucviewgeneric/viewDocSigner.json";
-
     await this.getAllData();
     this.setLookupObj();
   }
@@ -216,6 +219,11 @@ export class DocSignerDetailComponent implements OnInit {
       this.inputLookupAppCustCompanyShareHolder2Obj.jsonSelect = { MgmntShrholderName: this.ResponseAgrmntSignerObj.AppCustCompanyMgmntShrholder2Name };
       this.inputLookupAppCustCompanyShareHolder3Obj.jsonSelect = { MgmntShrholderName: this.ResponseAgrmntSignerObj.AppCustCompanyMgmntShrholder3Name };
     }
+
+    if(this.BizTemplateCode == "CFRFN4W" || this.BizTemplateCode == "FCTR"){
+      this.inputLookupBranchEmpObj.isRequired = false;
+      this.isHidden = true;
+    }
   }
 
   getLookupBranchEmp(event) {
@@ -285,7 +293,7 @@ export class DocSignerDetailComponent implements OnInit {
       this.http.post(AdInsConstant.EditAgrmntSignerData, this.agrmntSignerObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["Nap/AdminProcess/DocumentSigner/Paging"]);
+          this.router.navigate(["Nap/AdminProcess/DocumentSigner/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode }});
         },
         error => {
           console.log(error);
@@ -295,12 +303,41 @@ export class DocSignerDetailComponent implements OnInit {
       this.http.post(AdInsConstant.SubmitAgrmntSignerData, this.agrmntSignerObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["Nap/AdminProcess/DocumentSigner/Paging"]);
+          this.router.navigate(["Nap/AdminProcess/DocumentSigner/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode }});
         },
         error => {
           console.log(error);
         }
       );
     }
+  }
+  
+  Callback(ev: any){
+    if(ev.Key == "ViewProdOffering"){
+      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.ViewObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.ViewObj.ProdOfferingVersion + "&Token=" + this.token; 
+      window.open( link, "_blank");
+    }
+    if(ev.Key == "agrmnt")
+    {
+      var bizTemplateCode = localStorage.getItem("BizTemplateCode")
+
+      if(bizTemplateCode == "CF4W" || bizTemplateCode == "CFRFN4W" || bizTemplateCode == "FACTORING"){
+        window.open( environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + ev.ViewObj.AgrmntId, "_blank");
+      }
+      else if(bizTemplateCode == "FL4W"){
+        window.open( environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + ev.ViewObj.AgrmntId, "_blank");
+      }
+    }
+
+    // if(ev.Key == "prodOff"){
+    //   this.http.post(AdInsConstant.GetProdOfferingHByCode, {ProdOfferingCode : ev.ViewObj.ProdOfferingCode}).subscribe(
+    //     response => {
+    //       window.open(environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=" + response['ProdOfferingHId'], '_blank');
+    //     },
+    //     (error) => {
+    //       console.log(error);
+    //     }
+    //   );
+    // }
   }
 }
