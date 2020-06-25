@@ -292,7 +292,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
               });
             }
             if (PayFreqCode == null){
-              PayFreqCode = "BIMONTHLY"
+              PayFreqCode = "MONTHLY"
               this.SalesAppInfoForm.patchValue({
                 PayFreqCode: PayFreqCode
               });
