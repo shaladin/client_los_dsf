@@ -33,6 +33,7 @@ export class NapAddDetailComponent implements OnInit {
   showCancel: boolean = true;
   getApp: any;
   token : any = localStorage.getItem("Token");
+  IsLastStep: boolean = false;
 
   FormReturnObj = this.fb.group({
     ReturnExecNotes: ['']
@@ -68,6 +69,7 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('Shinano');
     this.ClaimTask();
     this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppFL4WMainInformation.json";
     this.NapObj.AppId = this.appId;
@@ -250,6 +252,10 @@ export class NapAddDetailComponent implements OnInit {
       default:
         break;
     }
+    if (AppStep == AdInsConstant.AppStepTC)
+      this.IsLastStep = true;
+    else
+      this.IsLastStep = false;
   }
 
   Submit() {

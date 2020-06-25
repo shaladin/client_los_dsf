@@ -226,10 +226,6 @@
 <br>
 <div class="col-md-12">
   <div class="form-action pull-right">
-    <!-- <button *ngIf="ReturnHandlingHId == 0" type="button" class="btn btn-raised btn-warning"
-      [routerLink]="['/Nap/ConsumerFinance/Paging']" [queryParams]="{BizTemplateCode:'CF4W'}" translate>
-      <i class="fa fa-check-square-o"></i> Back
-    </button> -->
   </div>
   <div class="card" *ngIf="ReturnHandlingHId > 0">
     <div class="card-body">
@@ -240,7 +236,6 @@
           <form class="form form-horizontal" [formGroup]="FormReturnObj" (ngSubmit)="FormReturnObj.valid"
             #enjiForm="ngForm">
             <div class="form-body">
-
               <div class="form-group row">
                 <div class="form-group col-md-2">
                   <label class="adInsLabel">Return Notes</label>
@@ -259,7 +254,6 @@
                   </lib-uc-show-errors>
                 </div>
               </div>
-
             </div>
           </form>
         </div>
@@ -268,7 +262,7 @@
             [routerLink]="['/Nap/AddProcess/ReturnHandling/EditAppPaging']" [queryParams]="{BizTemplateCode:'CF4W'}" translate>
             <i class="ft-x"></i> Cancel
           </button>
-          <button *ngIf="ReturnHandlingHId > 0" type="button" (click)="Submit()" class="btn btn-raised btn-primary">
+          <button *ngIf="ReturnHandlingHId > 0 && IsLastStep" type="button" (click)="Submit()" class="btn btn-raised btn-primary">
             <i class="far fa-check-square"></i> Submit
           </button>
         </div>
