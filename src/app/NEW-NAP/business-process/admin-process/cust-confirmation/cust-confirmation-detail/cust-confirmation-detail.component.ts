@@ -8,6 +8,7 @@ import { VerfResultObj } from 'app/shared/model/VerfResult/VerfResult.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { CustCnfrmObj } from 'app/shared/model/CustCnfrm/CustCnfrm.Model';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-cust-confirmation-detail',
@@ -28,7 +29,7 @@ export class CustConfirmationDetailComponent implements OnInit {
   verfResultObj: VerfResultObj = new VerfResultObj();
   CustCnfrmObj: CustCnfrmObj = new CustCnfrmObj();
   BizTemplateCode: string;
-
+  link : any;
   constructor(private route: ActivatedRoute, private http: HttpClient,
     private router: Router, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -151,4 +152,21 @@ export class CustConfirmationDetailComponent implements OnInit {
       (response) => {
       });
   }
+
+  GetCallBack(event){
+    console.log("aaa");
+    if(event.Key == "customer"){
+      var custObj = { CustNo: event.ViewObj.CustNo };
+      this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+        response => {
+          this.link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
+          window.open(this.link, '_blank');
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+  }
+  }
+  
 }
