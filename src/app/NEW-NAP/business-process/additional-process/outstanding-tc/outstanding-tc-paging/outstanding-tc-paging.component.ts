@@ -65,7 +65,7 @@ export class OutstandingTcPagingComponent implements OnInit {
         window.open( environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + ev.RowObj.AgrmntId, "_blank");
       }
       else if(bizTemplateCode == "FL4W"){
-        window.open( environment.losR3Web + "/Nap/FinanceLeasing/ViewAgrmnt?AgrmntId=" + ev.RowObj.AgrmntId, "_blank");
+        window.open( environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + ev.RowObj.AgrmntId, "_blank");
       }
     }
   }

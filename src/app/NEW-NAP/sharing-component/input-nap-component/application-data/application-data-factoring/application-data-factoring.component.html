@@ -9,55 +9,57 @@
               <div class="row text-left">
                 <div class="card-body">
                   <div class="px-3">
-                    <lib-ucSubsection [id]="'salesInfoId'" [title]="'Sales Informastion'" [panel]="'salesInfo'">
+                    <lib-ucSubsection [id]="'salesInfoId'" [title]="'Sales Information'" [panel]="'salesInfo'">
                     </lib-ucSubsection>
-                    <div id="salesInfo">
+                    <div class="form-body" id="salesInfo">
+
+
                       <div class="form-group row">
-                        <label class="col-md-3 adins-required-label" translate>Sales Recommendation </label>
-                        <div class="col-md-9">
-                          <select class="form-control adInsInput" style="width: auto"
-                            formControlName="MrSalesRecommendCode"
+                        <!-- Sales Officer -->
+                        <div class="form-group col-md-2 adins-required">
+                          <label class="adInsLabel">Sales Officer </label>
+                        </div>
+                        <div class="col-md-4" *ngIf="isInputLookupObj">
+                          <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]='SalesAppInfoForm'
+                            [enjiForm]='enjiForm' [identifier]="'employeeIdentifier'"
+                            (lookup)="getLookupEmployeeResponse($event)">
+                          </lib-uclookupgeneric>
+                          <lib-uc-show-errors  [control]="SalesAppInfoForm.controls.SalesOfficerName" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                        </div>
+                        <!-- Sales Supervisor -->
+                        <label class="col-md-2 adInsLabel">Sales Supervisor </label>
+                        <label class="col-md-4 adInsLabel">{{SalesAppInfoForm.controls.SalesHeadName.value}} </label>
+                      </div>
+
+                      <div class="form-group row">
+                        <!-- Sales Recommendation -->
+                        <div class="form-group col-md-2 adins-required">
+                          <label class="adInsLabel">Sales Recommendation </label>
+                        </div>
+                        <div class="col-md-4">
+                          <!-- <mat-radio-group formControlName="MrSalesRecommendCode">
+                            <mat-radio-button class="custom-control custom-radio" color="primary"
+                              *ngFor="let item of applicationDDLitems['SLS_RECOM']" [value]="item.Key">
+                              {{item.Value}}
+                            </mat-radio-button>
+                          </mat-radio-group> -->
+                          <select class="form-control adInsInput" style="width: auto" formControlName="MrSalesRecommendCode"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.MrSalesRecommendCode.invalid }">
-                            <option *ngFor="let sr of allSlsRecom" value="{{sr.Key}}">
-                              {{sr.Value}}</option>
+                            <option value="">-Select One-</option>
+                            <option *ngFor="let it of allSlsRecom" value="{{it.Key}}">
+                              {{it.Value}} </option>
                           </select>
-                          <lib-uc-show-errors [control]="SalesAppInfoForm.controls.MrSalesRecommendCode"
-                            [submit]="enjiForm.submitted">
-                          </lib-uc-show-errors>
+                          <lib-uc-show-errors  [control]="SalesAppInfoForm.controls.MrSalesRecommendCode" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                         </div>
-                      </div>
-                      <div class="form-group row">
-                        <label class="col-md-3" translate>Sales Notes </label>
-                        <div class="col-md-9">
-                          <input type="text" class="form-control adInsInput width-30-per" formControlName="SalesNotes">
-                          <lib-uc-show-errors [control]="SalesAppInfoForm.controls.SalesNotes"
-                            [submit]="enjiForm.submitted">
-                          </lib-uc-show-errors>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label class="col-md-3 adins-required-label" translate>Sales Officer</label>
-                        <div class="col-md-9">
-                          <select class="form-control adInsInput" style="width: auto" formControlName="SalesOfficerNo"
-                            [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.SalesOfficerNo.invalid }">
-                            <option *ngFor="let so of allInSalesOffice" value="{{so.EmpNo}}">
-                              {{so.EmpName}}</option>
-                          </select>
-                          <lib-uc-show-errors [control]="SalesAppInfoForm.controls.SalesOfficerNo"
-                            [submit]="enjiForm.submitted">
-                          </lib-uc-show-errors>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label class="col-md-3" translate>Sales Head Officer </label>
-                        <div class="col-md-9">
-                          <input type="text" class="form-control adInsInput width-30-per" formControlName="SalesHeadNo">
-                          <lib-uc-show-errors [control]="SalesAppInfoForm.controls.SalesHeadNo"
-                            [submit]="enjiForm.submitted">
-                          </lib-uc-show-errors>
+                        <!-- Sales Notes -->
+                        <label class="col-md-2 adInsLabel">Sales Notes </label>
+                        <div class="col-md-4">
+                          <textarea class="form-control adInsInput width-75-per" id="basicTextarea" formControlName="SalesNotes"
+                            rows="3"></textarea>
                         </div>
                       </div>
                     </div>
+
                     <lib-ucSubsection [id]="'applicationInfoId'" [title]="'Application Information'"
                       [panel]="'applicationInfo'">
                     </lib-ucSubsection>

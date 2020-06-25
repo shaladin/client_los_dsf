@@ -27,7 +27,9 @@ export class CommissionComponent implements OnInit {
   @ViewChild('Form2') FormAdd2: FormAddDynamicComponent;
   @ViewChild('Form3') FormAdd3: FormAddDynamicComponent;
   @Input() AppId;
+  @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private route: ActivatedRoute,
@@ -682,5 +684,9 @@ export class CommissionComponent implements OnInit {
         }
       );
     }
+  }
+  
+  Cancel(){
+    this.outputCancel.emit();
   }
 }

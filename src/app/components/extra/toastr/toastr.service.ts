@@ -72,6 +72,10 @@ export class NGXToastrService {
         this.toastr.error(msg);
     }
 
+    warningMessage(msg) {
+        this.toastr.warning(msg);
+    }
+
     infoMessageTitle(title,msg)
     {
         this.toastr.info(msg,title);
