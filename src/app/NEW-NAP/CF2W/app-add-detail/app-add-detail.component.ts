@@ -94,6 +94,10 @@ export class AppAddDetailComponent implements OnInit {
     this.MakeViewReturnInfoObj();
   }
 
+  Cancel() {
+    this.router.navigate(["/Nap/CF2W/Paging"]);
+  }
+
   MakeViewReturnInfoObj() {
     if (this.mode == AdInsConstant.ModeResultHandling) {
       var obj = {

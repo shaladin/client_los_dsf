@@ -41,7 +41,17 @@ import { InvoiceVerifDetailComponent } from './invoice-verif/invoice-verif-detai
 import { SharingModule } from "app/shared/sharing.module";
 import { UcapprovalModule } from "@adins/ucapproval";
 import { UcapprovalhistModule } from "@adins/ucapprovalhist";
-
+import { NgxCurrencyModule } from "ngx-currency";
+export const customCurrencyMaskConfig = {     
+  align: "left",     
+  allowNegative: true,     
+  allowZero: true,     
+  decimal: ".",     
+  precision: 2,     
+  prefix: "",     
+  suffix: "",     
+  thousands: ",",     
+  nullable: false };
 
 @NgModule({
   imports: [
@@ -50,6 +60,7 @@ import { UcapprovalhistModule } from "@adins/ucapprovalhist";
     TcSharingComponentModule,
     ViewMainInfoComponentModule,
     ProcessComponentModule,
+    NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     AdInsModule
   ],
   declarations: [

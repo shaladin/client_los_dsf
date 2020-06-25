@@ -7,6 +7,8 @@ import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { RFAInfoObj } from 'app/shared/model/Approval/RFAInfoObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
+import { first } from 'rxjs/operators';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-mou-review-factoring',
@@ -16,6 +18,7 @@ import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 export class MouReviewFactoringComponent implements OnInit {
   rfaInfoObj: RFAInfoObj = new RFAInfoObj();
   mouCustObj: MouCustObj = new MouCustObj();
+  mouCustObject : MouCustObj = new MouCustObj();
   keyValueObj: KeyValueObj;
   MouCustId : number;
   WfTaskListId: any;
@@ -24,6 +27,9 @@ export class MouReviewFactoringComponent implements OnInit {
   listApprover: any;
   listRecommendationObj: any;
   MrCustTypeCode : string;
+  link : any; 
+  resultData : any;
+  viewObj : string;
   listReason: Array<any> = [
     {
       Key: "OTHR_RSN",
@@ -50,6 +56,13 @@ export class MouReviewFactoringComponent implements OnInit {
     if (this.WfTaskListId > 0) {
       this.claimTask();
     }
+    this.viewObj = "./assets/ucviewgeneric/viewMouHeader.json"; 
+    this.mouCustObject.MouCustId = this.MouCustId;
+    this.http.post(AdInsConstant.GetMouCustById, this.mouCustObject).subscribe(
+      (response: MouCustObj) => {
+        this.resultData = response; 
+      } 
+    );
 
     var apvObj = { SchemeCode: 'MOUC_FCTR_APV' }
     this.http.post(AdInsConstant.GetApprovedBy, apvObj).subscribe(
@@ -91,6 +104,15 @@ export class MouReviewFactoringComponent implements OnInit {
           console.log("awdawd");
             this.MrCustTypeCode = response['MrCustTypeCode']; 
         });
+    
+    this.http.post(AdInsConstant.GetListActiveRefReason, {RefReasonTypeCode: AdInsConstant.REF_REASON_MOU_GENERAL}).pipe(first()).subscribe(
+      (response) => {
+        this.listReason = response["ReturnObject"];
+        this.MouReviewDataForm.patchValue({
+          Reason: this.listReason[0].Key
+        });
+      }
+    );
   }
 
   MouReviewDataForm = this.fb.group({
@@ -130,7 +152,8 @@ export class MouReviewFactoringComponent implements OnInit {
 
     var submitMouReviewObj = {
       WfTaskListId: this.WfTaskListId,
-      MouCust: this.mouCustObj, Rfa: this.rfaInfoObj
+      MouCust: this.mouCustObj, Rfa: this.rfaInfoObj,
+      PlafondAmt: this.PlafondAmt
     }
     this.http.post(AdInsConstant.SubmitMouReview, submitMouReviewObj).subscribe(
       (response) => {
@@ -146,5 +169,22 @@ export class MouReviewFactoringComponent implements OnInit {
         this.toastr.successMessage(response["message"]);
         this.router.navigate(["/Mou/Cust/ReviewPaging"]);
       })
+  }
+  
+  GetCallBack(event)
+  {  
+    if(event.Key == "customer"){
+      var custObj = { CustNo: this.resultData['CustNo'] };
+      this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+        response => {
+          this.link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
+          window.open(this.link, '_blank');
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+    
   }
 }

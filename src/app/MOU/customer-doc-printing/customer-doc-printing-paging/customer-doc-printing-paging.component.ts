@@ -3,6 +3,7 @@ import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { environment } from 'environments/environment';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-customer-doc-printing-paging',
@@ -12,14 +13,7 @@ export class CustomerDocPrintingPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
   user:any;
 
-  constructor(private router: Router) { }
-  // 1. menangkap param MouModel dari halaman paging
-//   2. Get data Mou menggunakan param MouModel dari API GetMou(MouModel mouModel)
-// 3. Get data dari rule menggunakan API GetRuleDocPrintList(ResRuleMouDocPrintingModel resRuleMouDocPrintingModel, String custType, String maritalStat)
-// 4. Pada saat klik print hit API engine report dan hit API UpdateMouDocPrint(MouModel mouModel, Datetime PrintDt)
-// 5. Tombol back redirect ke halaman paging
-// 7. Pada saat klik button save memanggil API SaveMouDocPrint(MouDocPrintModel mouDocPrintModel)
-
+  constructor(private router: Router, private http: HttpClient) { }
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem("UserAccess"));
 
@@ -41,6 +35,22 @@ export class CustomerDocPrintingPagingComponent implements OnInit {
           environment: environment.FoundationR3Url
         }
       ];
+    }
+  }
+
+  getEvent(event){
+    if(event.Key == "customer"){
+        var link : string;
+        var custObj = { CustNo: event.RowObj.CustNo };
+        this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+          response => {
+            link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
+            window.open(link, '_blank');
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
     }
   }
 }

@@ -42,7 +42,9 @@ export class CreditReviewMainComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router) { 
       this.route.queryParams.subscribe(params => {
-        this.appId = params["AppId"];
+        if (params["AppId"] != null) {
+          this.appId = params["AppId"];
+        }
         if (params["WfTaskListId"] != null) {
           this.wfTaskListId = params["WfTaskListId"];
         }
@@ -234,7 +236,7 @@ export class CreditReviewMainComponent implements OnInit {
 
   async BindDDLReasonReturn() {
     var obj = { RefReasonTypeCode: "CRD_REVIEW" };
-    await this.http.post(AdInsConstant.GetListActiveRefReasonByRefReasonTypeCode, obj).toPromise().then(
+    await this.http.post(AdInsConstant.GetListActiveRefReason, obj).toPromise().then(
       (response) => {
         console.log(response);
         this.DDLReasonReturn = response[AdInsConstant.ReturnObj];
@@ -289,6 +291,7 @@ export class CreditReviewMainComponent implements OnInit {
   SaveForm() {
     var temp = this.FormObj.value;
     // console.log(temp);
+    console.log(this.appId);
     var tempAppCrdRvwObj = new AppCrdRvwHObj();
     tempAppCrdRvwObj.AppId = this.appId;
     tempAppCrdRvwObj.SubmitDt = this.UserAccess.BusinessDt;
@@ -306,7 +309,7 @@ export class CreditReviewMainComponent implements OnInit {
     var apiObj = {
       appCrdRvwHObj: tempAppCrdRvwObj,
       ApprovedById: temp.Approver,
-      Reason: temp.Reason,
+      Reason: temp.ReasonDesc,
       Notes: temp.Notes,
       WfTaskListId: this.wfTaskListId,
       RowVersion: "",

@@ -11,8 +11,7 @@ import { AppFctrObj } from 'app/shared/model/AppFctr/AppFctr.model';
 
 @Component({
   selector: 'app-invoice-data',
-  templateUrl: './invoice-data.component.html',
-  styleUrls: ['./invoice-data.component.scss']
+  templateUrl: './invoice-data.component.html'
 })
 export class InvoiceDataComponent implements OnInit {
 
@@ -24,6 +23,7 @@ export class InvoiceDataComponent implements OnInit {
   dataobj: any;
   MouCustLookupObj: InputLookupObj = new InputLookupObj();
   IsDisableCustFctr: boolean = true;
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
   constructor(private httpClient: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
 
@@ -63,6 +63,10 @@ export class InvoiceDataComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  Cancel(){
+    this.outputCancel.emit();
   }
 
   GetListAppInvoiceFctr() {

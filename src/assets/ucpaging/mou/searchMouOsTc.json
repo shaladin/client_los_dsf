@@ -7,7 +7,7 @@
             "name": "MOU.MOU_CUST_NO",
             "id": "MouCustNoId",
             "value": "",
-            "label": "MOU NO",
+            "label": "Mou No",
             "placeholder": "Placeholder"
         },
         {
@@ -19,8 +19,8 @@
             "placeholder": "Placeholder",
             "isFromURL": true,
             "isSelectOne": false,
-            "path":"/RefMaster/GetListKeyValueActiveByCode",
-            "label": "MOU TYPE",
+            "path": "/RefMaster/GetListKeyValueActiveByCode",
+            "label": "Mou Type",
             "items": [],
             "itemsUrl": [],
             "criteriaPropName": "RefMasterTypeCode",
@@ -31,62 +31,62 @@
             "name": "MOU.CUST_NAME",
             "id": "CustNameId",
             "value": "",
-            "label": "CUSTOMER NAME",
+            "label": "Customer Name",
             "placeholder": "Placeholder"
         }
     ],
     "querystring": {
-        "select": "SELECT MOU.MOU_CUST_NO AS MouCustNo, MOU.MOU_CUST_ID AS MouCustId, MOU.CUST_NAME AS CustName, MOU.MOU_CUST_DT AS MouCustDt, MOU.START_DT AS StartDt, MOU.END_DT AS EndDt, MOU.PLAFOND_AMT PlafondAmt, MOU.IS_REVOLVING AS IsRevolving, MOU.REF_NO AS RefNo, MOU.MR_MOU_TYPE_CODE AS MrMouTypeCode",
-        "from": "FROM dbo.MOU_CUST MOU WITH(NOLOCK)",
+        "select": "SELECT MOU.MOU_CUST_NO AS MouCustNo, MOU.MOU_CUST_ID AS MouCustId, MOU.CUST_NAME AS CustName, MOU.MOU_CUST_DT AS MouCustDt, MOU.START_DT AS StartDt, MOU.END_DT AS EndDt, MOU.PLAFOND_AMT PlafondAmt, MOU.IS_REVOLVING AS IsRevolving, MOU.REF_NO AS RefNo, MOU.MR_MOU_TYPE_CODE AS MrMouTypeCode , MOU.CUST_NO AS CustNo",
+        "from": "FROM dbo.MOU_CUST MOU WITH(NOLOCK) JOIN(SELECT MOU_CUST_ID, COUNT(1) AS OS_CHECKED FROM dbo.MOU_CUST_TC WITH(NOLOCK) WHERE IS_MANDATORY = 1 AND IS_CHECKED = 0 GROUP BY MOU_CUST_ID) OS_TC ON OS_TC.MOU_CUST_ID = MOU.MOU_CUST_ID",
         "where": "WHERE MOU.MOU_STAT NOT IN ('NEW','RJC','CAN','EXP','ACT')"
     },
     "headerList": [
         {
             "type": "sort",
             "position": "center",
-            "label": "Mou No",
+            "label": "MOU NO",
             "name": "MouCustNo"
         },
         {
             "type": "sort",
             "position": "left",
-            "label": "Customer Name",
+            "label": "CUSTOMER NAME",
             "name": "CustName"
         },
         {
             "type": "sort",
             "position": "center",
-            "label": "Mou Date",
+            "label": "MOU DATE",
             "name": "MouCustDt"
         },
         {
             "type": "sort",
             "position": "center",
-            "label": "Expired Date",
+            "label": "EXPIRED DATE",
             "name": "EndDt"
         },
         {
             "type": "sort",
             "position": "right",
-            "label": "Plafond Amount",
+            "label": "PLAFOND AMOUNT",
             "name": "PlafondAmt"
         },
         {
             "type": "sort",
             "position": "center",
-            "label": "Revolving",
+            "label": "REVOLVING",
             "name": "IsRevolving"
         },
         {
             "type": "sort",
             "position": "center",
-            "label": "Mou Type",
+            "label": "MOU TYPE",
             "name": "MrMouTypeCode"
         },
         {
             "type": "label",
             "position": "center",
-            "label": "Action"
+            "label": "ACTION"
         }
     ],
     "bodyList": [
@@ -104,7 +104,8 @@
             ]
         },
         {
-            "type": "text",
+            "type": "callback",
+            "key": "customer",
             "position": "left",
             "property": "CustName"
         },

@@ -12,6 +12,7 @@ import { VerfResultDObj } from 'app/shared/model/VerfResultD/VerfResultH.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { environment } from 'environments/environment';
+import { LeadObj } from 'app/shared/model/Lead.Model';
 
 @Component({
   selector: 'app-cust-confirmation-subj-detail',
@@ -25,6 +26,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   AppId: number;
   Subject: string;
   agrmntObj: AgrmntObj = new AgrmntObj();
+  leadObj: LeadObj = new LeadObj();
   appObj: AppObj = new AppObj();
   RefStatusList: Array<KeyValueObj> = new Array<KeyValueObj>();
   PhnList: any;
@@ -38,12 +40,14 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   })
   ListVerfAnswer = [];
   VerfResultHList = new Array<VerfResultHObj>();
-  AgrmntNo : any;
-  TaskListId : any;
+  AgrmntNo: string;
+  TaskListId: number;
+  BizTemplateCode: string;
   SubjectResponse: RefMasterObj = new RefMasterObj();
 
-  appUrl : string;
-  agrmntUrl : string;
+  appUrl: string;
+  agrmntUrl: string;
+  leadUrl: string;
   constructor(private route: ActivatedRoute, private fb: FormBuilder, private http: HttpClient,
     private router: Router, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -65,16 +69,19 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
       if (params["TaskListId"] != null) {
         this.TaskListId = params["TaskListId"];
       }
+      if (params["BizTemplateCode"] != null) {
+        this.BizTemplateCode = params["BizTemplateCode"];
+      }
     });
   }
 
   ngOnInit() {
     this.appUrl = environment.losR3Web + "/Nap/View/AppView?AppId=" + this.AppId;
-    this.agrmntUrl =  environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + this.AgrmntId;
+    this.agrmntUrl = environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + this.AgrmntId;
     console.log(this.appUrl);
     this.GetData();
 
-    this.http.post<RefMasterObj>(AdInsConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, {MasterCode: this.Subject, RefMasterTypeCode: "VERF_SUBJ_RELATION" }).subscribe(
+    this.http.post<RefMasterObj>(AdInsConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, { MasterCode: this.Subject, RefMasterTypeCode: "VERF_SUBJ_RELATION" }).subscribe(
       (response) => {
         this.SubjectResponse = response;
       },
@@ -83,7 +90,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
       }
     );
 
-    this.http.post(AdInsConstant.GetListActiveRefStatusByStatusGrpCode, {StatusGrpCode: "VERF_RESULT_STAT"}).subscribe(
+    this.http.post(AdInsConstant.GetListActiveRefStatusByStatusGrpCode, { StatusGrpCode: "VERF_RESULT_STAT" }).subscribe(
       (response) => {
         this.RefStatusList = response["ReturnObject"];
         this.CustConfirm.patchValue({
@@ -95,7 +102,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
       }
     );
 
-    this.http.post(AdInsConstant.GetListKeyValueMobilePhnByAppId, {AppId: this.AppId}).subscribe(
+    this.http.post(AdInsConstant.GetListKeyValueMobilePhnByAppId, { AppId: this.AppId }).subscribe(
       (response) => {
         this.PhnList = response;
         this.CustConfirm.patchValue({
@@ -107,7 +114,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
       }
     );
 
-    this.http.post(AdInsConstant.GetVerfQuestionAnswerListByAppIdAndSubject, {AppId: this.AppId, Subject: this.Subject}).subscribe(
+    this.http.post(AdInsConstant.GetVerfQuestionAnswerListByAppIdAndSubject, { AppId: this.AppId, Subject: this.Subject }).subscribe(
       (response) => {
         this.verfQuestionAnswerObj = response["ReturnObject"];
         if (this.verfQuestionAnswerObj != null && this.verfQuestionAnswerObj.VerfQuestionAnswerListObj.length != 0) {
@@ -122,24 +129,31 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
 
   GetData() {
 
-    this.http.post<AgrmntObj>(AdInsConstant.GetAgrmntByAgrmntId, {AgrmntId: this.AgrmntId}).subscribe(
+    this.http.post<AgrmntObj>(AdInsConstant.GetAgrmntByAgrmntId, { AgrmntId: this.AgrmntId }).subscribe(
       (response) => {
         this.agrmntObj = response;
-        this.http.post<AppObj>(AdInsConstant.GetAppById, {AppId: this.agrmntObj.AppId}).subscribe(
+        this.http.post<AppObj>(AdInsConstant.GetAppById, { AppId: this.agrmntObj.AppId }).subscribe(
           (response) => {
-            this.appObj = response; 
+            this.appObj = response;
           },
           (error) => {
             console.log(error);
-          }
-        );
+          });
+          
+        this.http.post<LeadObj>(AdInsConstant.GetLeadByLeadId, { LeadId: this.agrmntObj.LeadId }).subscribe(
+          (response) => {
+            console.log("retard");
+            console.log(response);
+            this.leadObj = response;
+            this.leadUrl = environment.losR3Web + "/Lead/View?LeadId=" + this.leadObj.LeadId;
+          });
       },
       (error) => {
         console.log(error);
       }
     );
 
-    this.http.post<VerfResultHObj>(AdInsConstant.GetVerfResultHById, { VerfResultHId: this.VerfResultHId}).subscribe(
+    this.http.post<VerfResultHObj>(AdInsConstant.GetVerfResultHById, { VerfResultHId: this.VerfResultHId }).subscribe(
       (response) => {
         this.newVerfResultHObj.VerfResultId = response.VerfResultId;
         this.newVerfResultHObj.VerfSchemeHId = response.VerfSchemeHId;
@@ -173,12 +187,12 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
 
 
     for (let i = 0; i < grpListObj.length; i++) {
-        var QuestionGrp = this.fb.group({
+      var QuestionGrp = this.fb.group({
         VerfQuestionGrpCode: grpListObj[i].VerfQuestionGrpCode,
         VerfQuestionGrpName: grpListObj[i].VerfQuestionGrpName,
         VerfQuestionAnswerList: this.fb.array([])
       }) as FormGroup;
-      
+
       var formArray = this.CustConfirm.get('VerfResultDForm') as FormArray;
       formArray.push(QuestionGrp);
       var ResultGrp = this.CustConfirm.controls.VerfResultDForm['controls'][i].get("VerfQuestionAnswerList") as FormArray;
@@ -224,18 +238,17 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
               this.ListVerfAnswer[i].push("");
             }
           } else if (QuestionList[j].VerfAnswerTypeCode == "UC_INPUT_NUMBER") {
-            QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
+            QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required, Validators.min(1.00)]);
             this.ListVerfAnswer[i].push("");
           } else {
             this.ListVerfAnswer[i].push("");
           }
-         ResultGrp.push(QuestionResultGrp);
+          ResultGrp.push(QuestionResultGrp);
         }
       }
     }
   }
 
-  
   SaveForm(ev) {
     var FormValue = this.CustConfirm.value.VerfResultDForm;
     var VerfResultDList = new Array<VerfResultDObj>();
@@ -270,7 +283,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
     this.http.post(AdInsConstant.AddVerfResultHeaderAndVerfResultDetail, VerfResultHeaderDetail).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["/Nap/AdminProcess/CustConfirmation/Detail"], { queryParams: { "AgrmntId": this.AgrmntId, "AgrmntNo": this.AgrmntNo , "TaskListId" : this.TaskListId,  "AppId" : this.AppId} });
+        this.router.navigate(["/Nap/AdminProcess/CustConfirmation/Detail"], { queryParams: { "AgrmntId": this.AgrmntId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId, "AppId": this.AppId, "BizTemplateCode": this.BizTemplateCode } });
       },
       (error) => {
         console.log(error);

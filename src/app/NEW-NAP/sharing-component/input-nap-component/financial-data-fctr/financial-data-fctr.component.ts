@@ -26,6 +26,8 @@ export class FinancialDataFctrComponent implements OnInit {
   responseCalc: any;
   NumOfInst: number;
   IsParentLoaded: boolean = false;
+  IsAppFeePrcntValid : boolean = true;
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private fb: FormBuilder,
@@ -118,6 +120,10 @@ export class FinancialDataFctrComponent implements OnInit {
     this.LoadAppFinData();
   }
 
+  Cancel() {
+    this.outputCancel.emit();
+  }
+
   LoadAppFinData() {
     this.http.post<AppFinDataObj>(AdInsConstant.GetInitAppFinDataFctrByAppId, { AppId: this.AppId }).subscribe(
       (response) => {
@@ -182,24 +188,38 @@ export class FinancialDataFctrComponent implements OnInit {
   }
 
   SaveAndContinue() {
-    var isValidGrossYield = this.ValidateGrossYield();
-    var isValidGracePeriod = this.ValidateGracePeriode();
-
-    var NeedReCalculate = this.FinDataForm.get("NeedReCalculate").value;
-
-    if (NeedReCalculate) {
-      this.toastr.errorMessage("Please Calculate Again");
-      return;
+    this.IsAppFeePrcntValid = true;
+    for (let i = 0; i < this.FinDataForm.value.AppFee.length; i++) {
+      if (this.FinDataForm.value.AppFee[i].AppFeePrcnt < 0 || this.FinDataForm.value.AppFee[i].AppFeePrcnt > 100 ) {
+        this.IsAppFeePrcntValid = false;
+      }
     }
-    if (isValidGrossYield && isValidGracePeriod) {
-
-      this.http.post(AdInsConstant.SaveAppFinDataFctr, this.FinDataForm.value).subscribe(
-        (response) => {
-          console.log(response);
-          this.toastr.successMessage(response["Message"]);
-          this.outputTab.emit();
-        }
-      );
+    if(this.IsAppFeePrcntValid == false){
+      this.toastr.errorMessage("App Fee Prcnt must be between 0 - 100");
+    }
+    if(this.FinDataForm.value.EffectiveRatePrcnt < 0 && this.FinDataForm.value.InterestType == "PRCNT"){
+      this.toastr.errorMessage("Effective Rate must be greater than 0");
+    }
+    else{
+      var isValidGrossYield = this.ValidateGrossYield();
+      var isValidGracePeriod = this.ValidateGracePeriode();
+  
+      var NeedReCalculate = this.FinDataForm.get("NeedReCalculate").value;
+  
+      if (NeedReCalculate) {
+        this.toastr.errorMessage("Please Calculate Again");
+        return;
+      }
+      if (isValidGrossYield && isValidGracePeriod) {
+  
+        this.http.post(AdInsConstant.SaveAppFinDataFctr, this.FinDataForm.value).subscribe(
+          (response) => {
+            console.log(response);
+            this.toastr.successMessage(response["Message"]);
+            this.outputTab.emit();
+          }
+        );
+      }
     }
   }
 

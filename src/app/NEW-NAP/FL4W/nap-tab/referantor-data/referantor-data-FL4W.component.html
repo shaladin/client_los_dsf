@@ -22,7 +22,7 @@
                 <div class="form-group row adins-required">
                   <label class="col-md-2 adInsLabel">Referantor Name </label>
                   <div class="col-md-5">
-                    <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]='NapAppReferantorForm'
+                    <lib-uclookupgeneric *ngIf="ReferantorOn" [lookupInput]="inputLookupObj" [parentForm]='NapAppReferantorForm'
                       [enjiForm]='enjiForm' ng-disabled="!ReferantorOn" [identifier]="'ProductOfferingIdentifier'"
                       (lookup)="getLookupAppReferantorResponse($event)">
                     </lib-uclookupgeneric>
@@ -100,8 +100,11 @@
             </div>
 
             <div class="form-actions right">
+              <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
+                <i class="ft-x"></i> Cancel
+              </button>
               <button type="submit" class="btn btn-raised btn-primary">
-                <i class="fa fa-check-square"></i> Save
+                <i class="far fa-check-square"></i> Save
               </button>
               <!-- <button type="submit" (click)="ClickSave('next')" class="btn btn-raised btn-primary">
                 <i class="fa fa-check-square-o"></i> Next

@@ -46,7 +46,7 @@
           "isQueryIn" : true,
           "url": "",
           "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
-          "label": "OFFICE NAME",
+          "label": "Office Name",
           "items": [],
           "itemsUrl": []
         },
@@ -54,7 +54,7 @@
           "type": "dropdown",
           "name": "WF.CLAIM_STAT",
           "id": "ActiveStatusId",
-          "label": "TASK CLAIM STATUS",
+          "label": "Task Claim Status",
           "value": "",
           "placeholder": "Placeholder",
           "isFromURL": false,
@@ -143,7 +143,7 @@
             "position": "left",
             "property": "OfficeName"
           },
-        {
+          {
             "type": "link",
             "position": "left",
             "property": "AppNo",
@@ -157,17 +157,10 @@
             ]
           }, 
           {
-            "type": "link",
+            "type": "callback",
+            "key": "ViewAgrmnt",
             "position": "left",
-            "property": "AgrmntNo",
-            "target" : "_blank",
-            "path": "Nap/View/AgrmntView",
-            "param": [
-              {
-                "type": "AgrmntId",
-                "property": "AgrmntId"
-              }
-            ]
+            "property": "AgrmntNo"
           },  
         {
             "type": "text",

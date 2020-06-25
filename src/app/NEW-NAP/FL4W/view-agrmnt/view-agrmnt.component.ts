@@ -26,7 +26,7 @@ export class ViewAgrmntComponent implements OnInit {
   MrCustTypeCode: string;
   ngOnInit() {
     this.viewAgrMainInfo = "./assets/ucviewgeneric/viewAgrMainInfo.json";
-    this.viewEnvironment = environment.FoundationR3Url;
+    this.viewEnvironment = environment.losUrl;
 
     var AgrmntObj = {
       AgrmntId: this.AgrmntId

@@ -1,5 +1,5 @@
 <div class="col-md-12">
-  <lib-ucviewgeneric [viewInput]="inputViewObj"></lib-ucviewgeneric>
+  <lib-ucviewgeneric [viewInput]="inputViewObj" (callback)="GetCallBack($event)"></lib-ucviewgeneric>
   <br/>
   <table class="table table-responsive-md text-center table-hover">
     <thead>
@@ -34,7 +34,7 @@
   <br/>
   <div class="text-right">
     <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['/Nap/AdminProcess/DocPrint/Paging/']">
-      <i class="fa fa-arrow-circle-left"></i> Back
+      <i class="ft-arrow-left"></i> Back
     </button>
   </div>
 </div>

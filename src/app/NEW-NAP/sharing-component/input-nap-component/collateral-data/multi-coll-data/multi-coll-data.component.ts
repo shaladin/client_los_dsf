@@ -14,12 +14,18 @@ export class MultiCollDataComponent implements OnInit {
   mode: string = "add";
   IsDetail: boolean = false;
   AppCollateral: any;
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
+
   constructor(private toastr : NGXToastrService) { }
 
   ngOnInit() {
   }
   GetList(ev) {
     this.AppCollateral = ev;
+  }
+
+  Cancel(){
+    this.outputCancel.emit();
   }
 
   OpenDetail(AppCollateralId: number = 0) {

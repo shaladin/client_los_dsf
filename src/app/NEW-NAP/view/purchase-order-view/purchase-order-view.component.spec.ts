@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PreGoLivePagingComponent } from './pre-go-live-paging.component';
+import { PurchaseOrderViewComponent } from './purchase-order-view.component';
 
-describe('PreGoLivePagingComponent', () => {
-  let component: PreGoLivePagingComponent;
-  let fixture: ComponentFixture<PreGoLivePagingComponent>;
+describe('PurchaseOrderViewComponent', () => {
+  let component: PurchaseOrderViewComponent;
+  let fixture: ComponentFixture<PurchaseOrderViewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PreGoLivePagingComponent ]
+      declarations: [ PurchaseOrderViewComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PreGoLivePagingComponent);
+    fixture = TestBed.createComponent(PurchaseOrderViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

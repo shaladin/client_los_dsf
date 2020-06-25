@@ -1,20 +1,24 @@
+
+
 <div class="col-md-12">
     <div class="card">
       <div class="card-body">
+        <lib-ucviewgeneric [viewInput]="viewObj" (callback)="GetCallBack($event)"></lib-ucviewgeneric>
         <div class="px-3">
             <div class="customerData">
                 <form class="form form-horizontal" [formGroup]="MouCustSignerForm" (ngSubmit)="MouCustSignerForm.valid && SaveForm()"
                     #enjiForm="ngForm">
                 <div class="form-body">
-                    <lib-ucSubsection [id]="'mainInfoId'" [title]="'Main Info'" [panel]="'mainInfo'">
+                 
+                    <!-- <lib-ucSubsection [id]="'mainInfoId'" [title]="'Main Info'" [panel]="'mainInfo'">
                     </lib-ucSubsection>
                     <div id="mainInfo">
                         <div class="form-group row">
-                            <label class="col-md-3 adInsLabel adins-required" translate>MoU No </label>
+                            <label class="col-md-3 adInsLabel adins-required" translate>Mou No </label>
                             <div class="col-md-3"> 
                                 <a href="{{mouUrl}}" target="_blank">{{returnMouCust?.MouCustNo}}</a>
                             </div>
-                            <label class="col-md-3 adInsLabel adins-required" translate>MoU Date </label>
+                            <label class="col-md-3 adInsLabel adins-required" translate>Mou Date</label>
                             <div class="col-md-3">
                                 <label class="adInsLabel" translate>{{returnMouCust?.StartDt | date:'dd/MM/yyyy'}}</label>
                             </div>
@@ -24,7 +28,7 @@
                             <div class="col-md-3"> 
                                 <a href="{{custUrl}}" target="_blank">{{returnMouCust?.CustName}}</a>
                             </div>
-                            <label class="col-md-3 adInsLabel adins-required" translate>MoU Type </label>
+                            <label class="col-md-3 adInsLabel adins-required" translate>Mou Type </label>
                             <div class="col-md-3">
                                 <label class="adInsLabel" translate>{{returnMouCust?.MrMouTypeCode}}</label>
                             </div>
@@ -55,7 +59,7 @@
                                 <label class="adInsLabel" translate>{{returnMouCust?.MouCustStatView}}</label>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <lib-ucSubsection [id]="'mfSignerId'" [title]="'MF Signer'" [panel]="'mfSigner'">
                     </lib-ucSubsection>
                     <div id="mfSigner">

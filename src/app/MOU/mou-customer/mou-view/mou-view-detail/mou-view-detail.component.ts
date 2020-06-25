@@ -42,6 +42,8 @@ export class MouViewDetailComponent implements OnInit {
   mouCustClause: any;
   mouCustFctr: any;
   listAssetData: any;
+  MrPaidByCode: string;
+  SingleInstCalcMthd: string;
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) { }
 
@@ -76,6 +78,8 @@ export class MouViewDetailComponent implements OnInit {
           this.MrFirstInstTypeCode = this.mouCustFctr.MrFirstInstTypeCode;
           this.MrInstTypeCode = this.mouCustFctr.MrInstTypeCode;
           this.MrInstSchmCode = this.mouCustFctr.MrInstSchmCode;
+          this.SingleInstCalcMthd = this.mouCustFctr.SingleInstCalcMthd;
+          this.MrPaidByCode =  this.mouCustFctr.MrPaidByCode;
           this.PayFreqCode = this.mouCustFctr.PayFreqCode;
           this.DownPaymentFromPrcnt = this.mouCustFctr.DownPaymentFromPrcnt;
           this.DownPaymentToPrcnt = this.mouCustFctr.DownPaymentToPrcnt;
@@ -95,7 +99,8 @@ export class MouViewDetailComponent implements OnInit {
     this.http.post(AdInsConstant.GetMouCustAssetByMouCustId, mouCustObj).subscribe(
       (response) => {
         this.listAssetData = response['ReturnObject'];
-      })
+      });
+      
   }
 
   MouDataForm = this.fb.group({

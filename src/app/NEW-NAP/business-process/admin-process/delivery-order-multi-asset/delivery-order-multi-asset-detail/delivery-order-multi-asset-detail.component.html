@@ -10,7 +10,7 @@
           </div>
         </div>
         <!-- <app-agr-main-info [arrValue]="arrValue"></app-agr-main-info> -->
-        <app-app-main-info [arrValue]="arrValue"></app-app-main-info>
+        <app-agr-main-info [arrValue]="arrValue"></app-agr-main-info>
         <div class="px-3">
           <form class="form form-horizontal" [formGroup]="DOAssetForm" (ngSubmit)="createDOHandler()">
             <lib-ucSubsection [id]="'AssetListId'" [title]="'Asset List'" [panel]="'AssetListSection'"></lib-ucSubsection>
@@ -88,7 +88,7 @@
             </div>
             <div class="col-md-12" style="padding: 0; text-align: right">
               <button type="submit" class="btn btn-raised btn-primary">
-                <i class="fa fa-check-square-o"></i> Create DO
+                <i class="ft-plus-circle"></i> Create DO
               </button>
             </div>
             <div *ngIf="isCreateDOInvalid" class="invalid-feedback d-block col-md-12" style="padding: 0; text-align: right;">
@@ -157,10 +157,10 @@
                 <i class="fa fa-check-square-o"></i> Submit
               </button>
               <button type="submit" class="btn btn-raised btn-primary mr-1 ml-1">
-                <i class="fa fa-check-square-o"></i> Save
+                <i class="far fa-check-square"></i> Save
               </button>
               <button type="button" (click)="Back()" class="btn btn-raised btn-warning">
-                <i class="fa fa-arrow-circle-left"></i> Cancel
+                <i class="ft-x"></i> Cancel
               </button>
             </div>
           </form>

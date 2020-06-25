@@ -95,8 +95,11 @@
         </div>
       </div>
       <div class="form-actions right">
+        <button *ngIf="cancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
+          <i class="ft-x"></i> Cancel
+        </button>
         <button type="submit" class="btn btn-raised btn-primary">
-          <i class="fa fa-check-square-o"></i> Save
+          <i class="far fa-check-square"></i> Save
         </button>
         <!-- <button type="button" class="btn btn-raised btn-primary" (click)="test()">
                   <i class="fa fa-check-square-o"></i> test
@@ -157,8 +160,11 @@
         </div>
       </div>
       <div class="form-actions right">
+        <button *ngIf="cancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()"   translate>
+          <i class="ft-x"></i> Cancel
+        </button>
         <button type="submit" class="btn btn-raised btn-primary">
-          <i class="fa fa-check-square"></i> Save
+          <i class="far fa-check-square"></i> Save
         </button>
         <!-- <button type="button" class="btn btn-raised btn-primary" (click)="testCompany()">
                   <i class="fa fa-check-square-o"></i> test

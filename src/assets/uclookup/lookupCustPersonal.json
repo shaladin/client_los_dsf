@@ -27,19 +27,19 @@
         {
             "type": "sort",
             "position": "center",
-            "label": "Customer No",
+            "label": "CUSTOMER NO",
             "name": "C.CUST_NO"
         },
         {
             "type": "sort",
             "position": "left",
-            "label": "Customer Full Name",
+            "label": "CUSTOMER FULL NAME",
             "name": "CP.CUST_FULL_NAME"
         },
         {
             "type": "label",
             "position": "center",
-            "label": "Select"
+            "label": "SELECT"
         }
     ],
     "bodyList": [

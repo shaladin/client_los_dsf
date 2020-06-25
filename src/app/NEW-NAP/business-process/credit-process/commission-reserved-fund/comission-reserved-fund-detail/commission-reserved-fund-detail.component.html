@@ -1,15 +1,15 @@
 <div class="col-md-12 text-left">
   <div class="card">
-    <div class="ucSearch-Button-Right">
+    <!-- <div class="ucSearch-Button-Right">
       <span class="mr-1">
         <button type="button" class="backButton" (click)="Back()" translate>
           <i class="ft-arrow-left"></i> Back
         </button>
       </span>
-    </div>
+    </div> -->
     <app-app-main-info [arrValue]="arrValue"></app-app-main-info>
 
-    <span *ngIf="ReturnHandlingHObj.ReturnHandlingHId != undefined">
+    <span *ngIf="ReturnHandlingHObj.ReturnHandlingHId != 0">
       <div class="px-3">
         <form class="form form-horizontal" [formGroup]="HandlingForm" #enjiForm="ngForm">
           <div class="form-group row">
@@ -29,7 +29,7 @@
           <div class="col-md-2">
             <span *ngIf='show'>
               <button type="button" (click)="SubmitReturnHandling()" class="btn btn-raised btn-primary" translate>
-                <i class="fa fa-check-square-o"></i> Submit
+                <i class="far fa-check-square"></i> Submit
               </button>
             </span>
           </div>
@@ -59,10 +59,10 @@
       <div class="bs-stepper-content">
         <!-- your steps content here -->
         <div id="commission-tab" class="content" role="tabpanel" aria-labelledby="commission-tab-trigger">
-          <app-commission *ngIf="StepIndex == 1" [AppId]="ReturnHandlingHObj.AppId" (outputTab)="NextStep('RSV')"></app-commission>
+          <app-commission *ngIf="StepIndex == 1" [AppId]="ReturnHandlingHObj.AppId" [showCancel]="showCancel" (outputTab)="NextStep('RSV')" (outputCancel)="Back()"></app-commission>
         </div>
         <div id="reserved-fund-tab" class="content" role="tabpanel" aria-labelledby="reserved-fund-tab-trigger">
-          <reserved-fund *ngIf="StepIndex == 2" [ReturnHandlingHObj]="ReturnHandlingHObj" (outputTab)="LastStepHandler($event)"></reserved-fund>
+          <reserved-fund *ngIf="StepIndex == 2" [ReturnHandlingHObj]="ReturnHandlingHObj" [showCancel]="showCancel" (outputTab)="LastStepHandler($event)" (outputCancel)="Back()"></reserved-fund>
         </div>
       </div>
     </div>

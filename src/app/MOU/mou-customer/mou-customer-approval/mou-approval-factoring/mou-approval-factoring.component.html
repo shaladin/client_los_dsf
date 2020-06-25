@@ -1,4 +1,4 @@
 <app-mou-view [inputMouCustId]="MouCustId"></app-mou-view>
-<br />
-<lib-ucapproval [inputObj]="inputObj" (nextTask)="onAvailableNextTask($event)" (result)="onApprovalSubmited($event)">
+<br/>
+<lib-ucapproval [inputObj]="inputObj" [showCancel]="'true'" (onCancel)="onCancelClick()" (nextTask)="onAvailableNextTask($event)" (result)="onApprovalSubmited($event)">
 </lib-ucapproval>   

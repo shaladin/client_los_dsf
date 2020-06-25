@@ -16,8 +16,9 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
   styleUrls: []
 })
 export class ApplicationDataComponent implements OnInit {
-
+  @Input() isCollateral: boolean;
   @Input() appId: number;
+  @Input() showCancel: boolean = true;
   @Input() IsLoanObject: boolean = false;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
@@ -458,7 +459,6 @@ export class ApplicationDataComponent implements OnInit {
   GetListAppCrossValue() {
     var arr = [];
     for (var i = 0; i < this.resultCrossApp.length; i++) {
-      if (this.resultCrossApp[i].AppCrossId == 0) {
         console.log(this.resultCrossApp[i]);
         var temp = new NapAppCrossObj();
         temp.AppId = this.appId;
@@ -468,7 +468,7 @@ export class ApplicationDataComponent implements OnInit {
         temp.MaturityDt = this.resultCrossApp[i].MaturityDt;
         temp.ContractStat = this.resultCrossApp[i].ContractStat;
         arr.push(temp);
-      }
+      
     }
     return arr;
   }

@@ -7,8 +7,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 
 @Component({
   selector: 'app-view-purchase-order',
-  templateUrl: './view-purchase-order.component.html',
-  styleUrls: ['./view-purchase-order.component.scss']
+  templateUrl: './view-purchase-order.component.html'
 })
 export class ViewPurchaseOrderComponent implements OnInit {
 

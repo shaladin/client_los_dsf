@@ -7,6 +7,8 @@ import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { RFAInfoObj } from 'app/shared/model/Approval/RFAInfoObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
+import { first } from 'rxjs/operators';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-mou-review-general',
@@ -24,6 +26,10 @@ export class MouReviewGeneralComponent implements OnInit {
   listApprover: any;
   listRecommendationObj: any;
   MrCustTypeCode : any;
+  link : any; 
+  resultData : any;
+  viewObj : string;
+  mouCustObject: MouCustObj = new MouCustObj();
   listReason: any = [
     {
       Key: "OTHR_RSN",
@@ -54,10 +60,17 @@ export class MouReviewGeneralComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+    console.log("aa");
     if (this.WfTaskListId > 0) {
       this.claimTask();
     }
+    this.viewObj = "./assets/ucviewgeneric/viewMouHeader.json"; 
+    this.mouCustObject.MouCustId = this.MouCustId;
+    this.http.post(AdInsConstant.GetMouCustById, this.mouCustObject).subscribe(
+      (response: MouCustObj) => {
+        this.resultData = response; 
+      } 
+    );
 
     var apvObj = { SchemeCode: 'MOUC_GEN_APV' }
     this.http.post(AdInsConstant.GetApprovedBy, apvObj).subscribe(
@@ -67,7 +80,7 @@ export class MouReviewGeneralComponent implements OnInit {
 
         this.MouReviewDataForm.patchValue({
           ListApprover: this.listApprover[0].Key,
-          Reason: this.listReason[0].Key
+          // Reason: this.listReason[0].Key
         })
       })
 
@@ -99,6 +112,14 @@ export class MouReviewGeneralComponent implements OnInit {
             this.MrCustTypeCode = response['MrCustTypeCode']; 
         });
 
+    this.http.post(AdInsConstant.GetListActiveRefReason, {RefReasonTypeCode: AdInsConstant.REF_REASON_MOU_GENERAL}).pipe(first()).subscribe(
+      (response) => {
+        this.listReason = response["ReturnObject"];
+        this.MouReviewDataForm.patchValue({
+          Reason: this.listReason[0].Key
+        });
+      }
+    );
   }
 
   async claimTask() {
@@ -130,7 +151,8 @@ export class MouReviewGeneralComponent implements OnInit {
 
     var submitMouReviewObj = {
       WfTaskListId: this.WfTaskListId,
-      MouCust: this.mouCustObj, Rfa: this.rfaInfoObj
+      MouCust: this.mouCustObj, Rfa: this.rfaInfoObj,
+      PlafondAmt: this.PlafondAmt
     }
     this.http.post(AdInsConstant.SubmitMouReview, submitMouReviewObj).subscribe(
       (response) => {
@@ -151,4 +173,22 @@ export class MouReviewGeneralComponent implements OnInit {
         this.router.navigate(["/Mou/Cust/ReviewPaging"]);
       })
   }
+
+  GetCallBack(event)
+  {  
+    if(event.Key == "customer"){
+      var custObj = { CustNo: this.resultData['CustNo'] };
+      this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+        response => {
+          this.link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"]; 
+          window.open(this.link, '_blank');
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+    
+  }
+  
 }
