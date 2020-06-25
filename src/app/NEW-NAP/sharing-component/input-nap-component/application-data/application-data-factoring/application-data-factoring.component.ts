@@ -7,6 +7,9 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { MouCustFctrObj } from 'app/shared/model/MouCustFctrObj.Model';
+import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { environment } from 'environments/environment';
+import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 
 @Component({
   selector: 'app-application-data-factoring',
@@ -19,7 +22,13 @@ export class ApplicationDataFactoringComponent implements OnInit {
   mode: string;
   salesAppInfoObj: SalesInfoObj = new SalesInfoObj();
   mouCustFctrObj: MouCustFctrObj = new MouCustFctrObj();
-  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
+
+  inputPagingObj;
+  inputLookupObj;
+  arrAddCrit;
+  employeeIdentifier;
+  salesRecommendationItems = [];
+  isInputLookupObj;
 
   SalesAppInfoForm = this.fb.group({
     MouCustId: ['', Validators.required],
@@ -28,6 +37,8 @@ export class ApplicationDataFactoringComponent implements OnInit {
     SalesNotes: [''],
     SalesOfficerNo: ['', Validators.required],
     SalesHeadNo: [''],
+    SalesHeadName: [''],
+    SalesOfficerName:[''],
     MrInstTypeCode: ['', Validators.required],
     TopDays: ['', [Validators.required,Validators.pattern("^[0-9]+$")]],
     Tenor: ['', [Validators.required,Validators.pattern("^[0-9]+$")]],
@@ -79,13 +90,10 @@ export class ApplicationDataFactoringComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isInputLookupObj = false;
     console.log("Rey test");
     this.loadData();
     this.SalesAppInfoForm.controls.NumOfInst.disable();
-  }
-
-  Cancel(){
-    this.outputCancel.emit();
   }
 
   setDropdown() {
@@ -171,7 +179,8 @@ export class ApplicationDataFactoringComponent implements OnInit {
         this.allInSalesOffice = response['ReturnObject'];
         if (this.mode != 'edit') {
           this.SalesAppInfoForm.patchValue({
-            SalesOfficerNo: this.allInSalesOffice[0].EmpNo
+            SalesOfficerNo: this.allInSalesOffice[0].EmpNo,
+            SalesOfficerName:this.allInSalesOffice[0].EmpName,
           });
         }
       },
@@ -332,6 +341,64 @@ export class ApplicationDataFactoringComponent implements OnInit {
     this.SalesAppInfoForm.controls.TopDays.updateValueAndValidity();
   }
 
+  getLookupEmployeeResponse(ev) {
+    this.SalesAppInfoForm.patchValue({
+      SalesOfficerNo: ev.SalesOfficerNo,
+      SalesOfficerName: ev.SalesOfficerName,
+      SalesHeadNo: ev.SalesHeadNo,
+      SalesHeadName: ev.SalesHeadName
+
+    });
+  }
+  makeLookUpObj(){
+    // Lookup obj
+    this.inputLookupObj = new InputLookupObj();
+    this.inputLookupObj.urlJson = "./assets/uclookup/NAP/lookupEmp.json";
+    this.inputLookupObj.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupEmp.json";
+    this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupEmp.json";
+    this.inputLookupObj.jsonSelect = this.resultData;
+    //this.inputLookupObj.nameSelect = this.NapAppModelForm.controls.SalesOfficerName.value;
+    this.inputLookupObj.addCritInput = this.arrAddCrit;
+    this.isInputLookupObj = true;
+  }
+
+  makeNewLookupCriteria() {
+    this.arrAddCrit = new Array();
+
+    var addCrit1 = new CriteriaObj();
+    addCrit1.DataType = "bit";
+    addCrit1.propName = "re.IS_ACTIVE";
+    addCrit1.restriction = AdInsConstant.RestrictionEq;
+    addCrit1.value = "1";
+    this.arrAddCrit.push(addCrit1);
+
+    var addCrit2 = new CriteriaObj();
+    addCrit2.DataType = "bit";
+    addCrit2.propName = "ru.IS_ACTIVE";
+    addCrit2.restriction = AdInsConstant.RestrictionEq;
+    addCrit2.value = "1";
+    this.arrAddCrit.push(addCrit2);
+    
+    var addCrit3 = new CriteriaObj();
+    addCrit3.DataType = "text";
+    addCrit3.propName = "rbt.JOB_TITLE_CODE";
+    addCrit3.restriction = AdInsConstant.RestrictionIn;
+    addCrit3.listValue = [AdInsConstant.SALES_JOB_CODE];
+    this.arrAddCrit.push(addCrit3);
+
+    var addCrit4 = new CriteriaObj();
+    addCrit4.DataType = "text";
+    addCrit4.propName = "ro.OFFICE_CODE";
+    addCrit4.restriction = AdInsConstant.RestrictionIn;
+    addCrit4.listValue = [this.resultData.OriOfficeCode];
+    this.arrAddCrit.push(addCrit4);
+    
+    //this.inputLookupObj.addCritInput = this.arrAddCrit;
+    this.makeLookUpObj();
+  }
+
   loadData() {
     var obj = {
       AppId: this.AppId
@@ -353,6 +420,8 @@ export class ApplicationDataFactoringComponent implements OnInit {
             MouCustId: this.resultData.MouCustId,
             SalesNotes: this.resultData.SalesNotes,
             SalesOfficerNo: this.resultData.SalesOfficerNo,
+            SalesOfficerName:this.resultData.SalesOfficerName,
+            SalesHeadName: this.resultData.SalesHeadName,
             SalesHeadNo: this.resultData.SalesHeadNo,
             MrInstTypeCode: this.resultData.MrInstTypeCode,
             TopDays: this.resultData.TopDays,
@@ -365,7 +434,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
             MrAppSourceCode: this.resultData.MrAppSourceCode,
             MrWopCode: this.resultData.MrWopCode,
             MrSingleInstCalcMthdCode: this.resultData.MrSingleInstCalcMthdCode
-          })
+          });
         } else if (this.resultData.AppFinDataId != 0 && this.resultData.AppFctrId != 0) {
           this.mode = "edit";
           this.SalesAppInfoForm.patchValue({
@@ -373,6 +442,8 @@ export class ApplicationDataFactoringComponent implements OnInit {
             MouCustId: this.resultData.MouCustId,
             SalesNotes: this.resultData.SalesNotes,
             SalesOfficerNo: this.resultData.SalesOfficerNo,
+            SalesOfficerName:this.resultData.SalesOfficerName,
+            SalesHeadName: this.resultData.SalesHeadName,
             SalesHeadNo: this.resultData.SalesHeadNo,
             MrInstTypeCode: this.resultData.MrInstTypeCode,
             TopDays: this.resultData.TopDays,
@@ -388,15 +459,15 @@ export class ApplicationDataFactoringComponent implements OnInit {
             PayFreqCode: this.resultData.PayFreqCode,
             MrSingleInstCalcMthdCode: this.resultData.MrSingleInstCalcMthdCode,
             InterestType: this.resultData.InterestType
-          })
-        }
+          });
+         } 
+         this.makeNewLookupCriteria();
       },
       (error) => {
         console.log(error);
       }
     );
   }
-
   SaveForm(): void {
     this.salesAppInfoObj = this.SalesAppInfoForm.value;
     this.salesAppInfoObj.AppId = this.AppId;
