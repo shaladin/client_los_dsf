@@ -30,7 +30,9 @@ export class ReservedFundComponent implements OnInit {
   });
 
   @Input() ReturnHandlingHObj: ReturnHandlingHObj;
+  @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<AllAppReservedFundObj> = new EventEmitter();
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
   appReservedFundObjs: Array<AppReservedFundObj>;
   allAppReservedFundObj: AllAppReservedFundObj = new AllAppReservedFundObj();
@@ -263,5 +265,9 @@ export class ReservedFundComponent implements OnInit {
 
   InputChanged() {
     this.isCalculated = false;
+  }
+  
+  Cancel(){
+    this.outputCancel.emit();
   }
 }

@@ -4,8 +4,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-agr-main-info',
-  templateUrl: './agr-main-info.component.html',
-  styleUrls: ['./agr-main-info.component.scss']
+  templateUrl: './agr-main-info.component.html'
 })
 export class AgrMainInfoComponent implements OnInit {
 

@@ -22,11 +22,11 @@ export class CreditInquiryComponent implements OnInit {
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCreditProcessInquiry.json";
     this.inputPagingObj.ddlEnvironments = [
       {
-        name: "A.APP_LAST_STEP",
+        name: "ISNULL(AGR.AGRMNT_LAST_STEP,A.APP_LAST_STEP)",
         environment: environment.FoundationR3Url
       },
       {
-        name: "A.APP_CURR_STEP",
+        name: "ISNULL(AGR.AGRMNT_CURR_STEP,A.APP_CURR_STEP)",
         environment: environment.FoundationR3Url
       },
       {
@@ -53,7 +53,7 @@ export class CreditInquiryComponent implements OnInit {
       )
     }
     else if(key == "agreement"){
-      window.open( environment.losR3Web + "/Nap/FinanceLeasing/ViewAgrmnt?AgrmntId=" + agrmntId, "_blank");
+      window.open( environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + agrmntId, "_blank");
     }
   }
 }

@@ -14,7 +14,8 @@ import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
   templateUrl: './asset-data-paging.component.html'
 })
 export class AssetDataPagingComponent implements OnInit {
-
+  @Input() AppId: number;
+  @Input() showCancel: boolean = true;
   @Output() outputValue: EventEmitter<object> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   IdCust: any;
@@ -28,10 +29,8 @@ export class AssetDataPagingComponent implements OnInit {
   getListAppCollateral: any;
   AppAssetId: number;
   AppCollateralId: number;
-  @Input() AppId: number;
   editAsset: string;
   editColl: string;
-  @Input() showCancel: boolean = true;
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) { 
     this.getListAppAssetData = AdInsConstant.GetAppAssetListByAppId;
     this.getListAppCollateral = AdInsConstant.GetListAppCollateralByAppId;
@@ -42,7 +41,6 @@ export class AssetDataPagingComponent implements OnInit {
        }
      });
   }
-
   
 addAsset() {
   this.outputValue.emit({ mode: 'addAsset' });
@@ -85,7 +83,6 @@ event(ev){
           }
 
           this.gridAssetDataObj.resultData = DetailForGridAsset;
-
           this.listAppCollateralObj = response["ReturnCollateral"];
 
           var DetailForGridCollateral ={
@@ -120,7 +117,6 @@ eventColl(ev){
       var collateralObj = new AppCollateralObj();
       collateralObj.AppCollateralId = ev.RowObj.AppCollateralId;
       collateralObj.AppId = this.AppId;
-      console.log("qwe")
       console.log(collateralObj.AppCollateralId)
       this.http.post(AdInsConstant.DeleteAppCollateral, collateralObj).subscribe(
         (response) => {
@@ -187,9 +183,6 @@ eventColl(ev){
           }
 
         this.gridAppCollateralObj.resultData = DetailForGridCollateral;
-
-        console.log("abc")
-        console.log(this.gridAppCollateralObj.resultData.Data.length)
       },
       (error) => {
         console.log(error);
