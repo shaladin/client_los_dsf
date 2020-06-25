@@ -55,6 +55,7 @@ export class CollateralAddEditComponent implements OnInit {
   inputObj: any;
   arrCrit: any[];
   checkboxAll = false;
+  listCollateralData: any;
   listSelectedId: Array<number> = new Array<number>();
   tempPagingObj: UcTempPagingObj = new UcTempPagingObj();
   tempListId: any;
@@ -227,30 +228,33 @@ export class CollateralAddEditComponent implements OnInit {
   CollChange(){
     this.collateral = this.AddCollForm.controls["Collateral"].value;
 
-    if (this.collateral == 'Exists')
+    if (this.collateral == 'Exist')
     {
-      // this.clearList();
-      // var listCollateralNo: Array<string> = new Array();
-      // for (let index = 0; index < this.listCollateralData.length; index++) {
-      //   if (this.listCollateralData[index].CollateralStat == 'EXISTING')
-      //     listCollateralNo.push(this.listCollateralData[index].CollateralNo);
-      // }
-
-      // if (listCollateralNo.length > 0)
-      //   this.BindExistingCollateralSavedData(listCollateralNo);
+      this.clearList();
+      var listCollateralNo: Array<string> = new Array();
+      this.appCollateralObj = new AppCollateralObj();
+      this.appCollateralObj.AppId = this.AppId;
+      this.http.post(AdInsConstant.GetListAppCollateralByAppId, this.appCollateralObj).subscribe(
+        (response) => {
+            this.listCollateralData = response["ReturnObject"];
+            for (let index = 0; index < this.listCollateralData.length; index++) {
+              if (this.listCollateralData[index].CollateralStat == 'EXISTING')
+                listCollateralNo.push(this.listCollateralData[index].CollateralNo);
+            }
+      
+            if (listCollateralNo.length > 0)
+              this.BindExistingCollateralSavedData(listCollateralNo);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     }
 
     console.log(this.collateral);
   }
 
   BindExistingCollateralSavedData(listCollateralNo: any) {
-    const addCritCustNo = new CriteriaObj();
-    addCritCustNo.DataType = 'text';
-    addCritCustNo.propName = 'CU.CUST_NO';
-    addCritCustNo.restriction = AdInsConstant.RestrictionEq;
-    addCritCustNo.value = this.custNo;
-    this.tempPagingObj.addCritInput.push(addCritCustNo);
-
     const addCritCollateralNo = new CriteriaObj();
     addCritCollateralNo.DataType = 'text';
     addCritCollateralNo.propName = 'CL.COLLATERAL_NO';

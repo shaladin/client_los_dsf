@@ -24,8 +24,7 @@ import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 
 @Component({
   selector: 'app-collateral-detail',
-  templateUrl: './collateral-detail.component.html',
-  styleUrls: ['./collateral-detail.component.scss']
+  templateUrl: './collateral-detail.component.html'
 })
 export class CollateralDetailComponent implements OnInit {
 
