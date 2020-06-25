@@ -12,6 +12,19 @@
             "property": "ApplicationNo"
           },
           {
+            "type": "link",
+            "label": "Mou No",
+            "property": "MouCustNo",
+            "path": "/Mou/Cust/View",
+            "target": "_blank",
+            "param": [
+              {
+                "type": "MouCustId",
+                "property": "MouCustId"
+              }
+            ]
+          },
+          {
             "type": "text",
             "label": "Installment Type",
             "property": "InstallmentType"
@@ -58,8 +71,8 @@
           }
         ],
         "querystring": {
-          "select": "SELECT A.APP_NO AS ApplicationNo,B.AGRMNT_NO AS AgreementNo,B.CUST_NAME AS CustName,B.PROD_OFFERING_NAME AS ProdOfferingName, C.TOP_DAYS AS TermOfPayment, C.PAID_BY AS PaidBy, E.PLAFOND_AMT AS PlafonAmt, A.TENOR AS Tenor, F.DESCR AS InstallmentType, G.DESCR AS InstScheme, C.RETENTION_PRCNT AS Retention",
-           "from":" FROM dbo.APP A WITH (NOLOCK) LEFT JOIN dbo.AGRMNT B ON A.APP_ID = B.APP_ID  JOIN dbo.APP_FCTR C ON C.APP_ID = A.APP_ID JOIN dbo.MOU_CUST E ON E.MOU_CUST_ID = A.MOU_CUST_ID JOIN MOU_CUST_FCTR D ON D.MOU_CUST_ID = E.MOU_CUST_ID JOIN dbo.V_REF_MASTER F ON D.MR_INST_TYPE_CODE = F.MASTER_CODE AND F.REF_MASTER_TYPE_CODE = 'INST_TYPE' JOIN dbo.V_REF_MASTER G ON D.MR_INST_SCHM_CODE = G.MASTER_CODE AND G.REF_MASTER_TYPE_CODE = 'INST_SCHM' ",
+          "select": "SELECT A.APP_NO AS ApplicationNo,B.AGRMNT_NO AS AgreementNo,B.CUST_NAME AS CustName,B.PROD_OFFERING_NAME AS ProdOfferingName, C.TOP_DAYS AS TermOfPayment,E.MOU_CUST_NO AS MouCustNo, E.MOU_CUST_ID AS MouCustId, C.PAID_BY AS PaidBy, E.PLAFOND_AMT AS PlafonAmt, A.TENOR AS Tenor, F.DESCR AS InstallmentType, G.DESCR AS InstScheme, C.RETENTION_PRCNT AS Retention",
+           "from":"FROM dbo.APP A WITH (NOLOCK) LEFT JOIN dbo.AGRMNT B WITH(NOLOCK) ON A.APP_ID = B.APP_ID JOIN dbo.APP_FCTR C WITH(NOLOCK) ON C.APP_ID = A.APP_ID JOIN dbo.MOU_CUST E ON E.MOU_CUST_ID = A.MOU_CUST_ID JOIN MOU_CUST_FCTR D ON D.MOU_CUST_ID = E.MOU_CUST_ID JOIN dbo.V_REF_MASTER F WITH(NOLOCK) ON D.MR_INST_TYPE_CODE = F.MASTER_CODE AND F.REF_MASTER_TYPE_CODE = 'INST_TYPE' JOIN dbo.V_REF_MASTER G WITH(NOLOCK) ON D.MR_INST_SCHM_CODE = G.MASTER_CODE AND G.REF_MASTER_TYPE_CODE = 'INST_SCHM'",
             "where":"WHERE A.APP_ID = {0}"
         }
       }
