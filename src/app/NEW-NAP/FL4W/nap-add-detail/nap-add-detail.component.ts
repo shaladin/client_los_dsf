@@ -69,6 +69,7 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('Shinano');
     this.ClaimTask();
     this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppFL4WMainInformation.json";
     this.NapObj.AppId = this.appId;
