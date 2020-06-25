@@ -114,10 +114,10 @@
               </app-multi-coll-data>
             </div>
             <div id="insurance-tab" class="content" role="tabpanel" aria-labelledby="insurance-tab-trigger">
-              <!-- <app-insurance-multi-asset-data *ngIf="AppStepIndex == 5" [appId]="appId" (outputTab)="NextStep('FIN')">
-              </app-insurance-multi-asset-data> -->
-              <app-insurance-data *ngIf="AppStepIndex == 5" [appId]="appId" (outputTab)="NextStep('FIN')" (outputCancel)="Cancel()" [showCancel]="'true'">
-              </app-insurance-data>
+              <app-insurance-multi-asset-data *ngIf="AppStepIndex == 5" [appId]="appId" (outputTab)="NextStep('FIN')" (outputCancel)="Cancel()" [showCancel]="'true'">
+              </app-insurance-multi-asset-data>
+              <!-- <app-insurance-data *ngIf="AppStepIndex == 5" [appId]="appId" (outputTab)="NextStep('FIN')" (outputCancel)="Cancel()" [showCancel]="'true'">
+              </app-insurance-data> -->
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
               <app-financial-data-fctr *ngIf="AppStepIndex == 6" [AppId]=appId (outputTab)="NextStep('TC')" (outputCancel)="Cancel()">

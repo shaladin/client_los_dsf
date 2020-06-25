@@ -8,8 +8,7 @@ import { AppAgrmntCancelObj } from 'app/shared/model/AppAgrmntCancelObj.Model';
 
 @Component({
   selector: 'app-application-agreement-cancellation-detail',
-  templateUrl: './application-agreement-cancellation-detail.component.html',
-  styleUrls: ['./application-agreement-cancellation-detail.component.scss']
+  templateUrl: './application-agreement-cancellation-detail.component.html'
 })
 export class ApplicationAgreementCancellationDetailComponent implements OnInit {
 

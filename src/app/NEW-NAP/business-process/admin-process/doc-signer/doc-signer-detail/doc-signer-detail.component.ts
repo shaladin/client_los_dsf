@@ -325,7 +325,7 @@ export class DocSignerDetailComponent implements OnInit {
         window.open( environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + ev.ViewObj.AgrmntId, "_blank");
       }
       else if(bizTemplateCode == "FL4W"){
-        window.open( environment.losR3Web + "/Nap/FinanceLeasing/ViewAgrmnt?AgrmntId=" + ev.ViewObj.AgrmntId, "_blank");
+        window.open( environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + ev.ViewObj.AgrmntId, "_blank");
       }
     }
 

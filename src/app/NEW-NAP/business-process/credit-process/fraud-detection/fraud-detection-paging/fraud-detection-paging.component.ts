@@ -6,6 +6,7 @@ import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
   selector: 'app-fraud-detection-paging',
@@ -16,7 +17,7 @@ export class FraudDetectionPagingComponent implements OnInit {
   inputPagingObj: any;
   BizTemplateCode: string;
   token: any = localStorage.getItem("Token");
-  constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute) {
+  constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       if (params['BizTemplateCode'] != null) {
         this.BizTemplateCode = params['BizTemplateCode'];
@@ -40,9 +41,9 @@ export class FraudDetectionPagingComponent implements OnInit {
 
     var arrCrit = new Array();
     var critObj = new CriteriaObj();
-    critObj.restriction = AdInsConstant.RestrictionLike;
+    critObj.restriction = AdInsConstant.RestrictionIn;
     critObj.propName = 'WTL.ACT_CODE';
-    critObj.value = "FRD_" + this.BizTemplateCode;
+    critObj.listValue = ["FRD_" + this.BizTemplateCode,"FCR_" + this.BizTemplateCode]
     arrCrit.push(critObj);
     this.inputPagingObj.addCritInput = arrCrit;
   }
@@ -54,10 +55,42 @@ export class FraudDetectionPagingComponent implements OnInit {
       window.open(link, '_blank');
     }
     else {
-      if (event.RowObj.BizTemplateCode == AdInsConstant.FL4W)
+      if(event.RowObj.ActCode == "FCR_" + this.BizTemplateCode){
+        var appObj = {AppId: event.RowObj.AppId};
+        this.http.post(AdInsConstant.SurveyFraudAppCheckingValidationForFraudVerif, appObj).subscribe(
+          (response) => {
+            var dupCheckErrorMessage = response["DupCheckErrorMessage"];
+            var surveyErrorMessage = response["SurveyErrorMessage"];
+            var fraudDetectionErrorMessage = response["FraudDetectionErrorMessage"];
+            if(dupCheckErrorMessage != null){
+              this.toastr.warningMessage(dupCheckErrorMessage);
+            }
+
+            if(surveyErrorMessage != null){
+              this.toastr.warningMessage(surveyErrorMessage);
+            }
+
+            if(fraudDetectionErrorMessage != null){
+              this.toastr.warningMessage(fraudDetectionErrorMessage);
+            }
+
+            if(dupCheckErrorMessage == null && surveyErrorMessage == null && fraudDetectionErrorMessage == null){
+              if (event.RowObj.BizTemplateCode == AdInsConstant.FL4W)
+                this.router.navigate(['/Nap/CreditProcess/FraudVerifMultiAsset/Paging'], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } })
+              else
+                this.router.navigate(["/Nap/CreditProcess/FraudDetection/Detail"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
+            }
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      }else{
+        if (event.RowObj.BizTemplateCode == AdInsConstant.FL4W)
         this.router.navigate(['/Nap/CreditProcess/FraudVerifMultiAsset/Paging'], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } })
       else
         this.router.navigate(["/Nap/CreditProcess/FraudDetection/Detail"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
+      }     
     }
 
 
