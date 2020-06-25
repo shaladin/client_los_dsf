@@ -18,7 +18,7 @@
                                         <lib-uclookupgeneric [lookupInput]="inputLookupBranchEmpObj"
                                             [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
                                             [identifier]="'lookupBranchEmp'" (lookup)="getLookupBranchEmp($event)"
-                                            *ngIf="inputLookupBranchEmpObj != undefined">
+                                            *ngIf="inputLookupBranchEmpObj.isReady">
                                         </lib-uclookupgeneric>
                                     </div>
                                 </div>
@@ -45,7 +45,7 @@
                                         <lib-uclookupgeneric [lookupInput]="inputLookupOfficeEmp1Obj"
                                             [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
                                             [identifier]="'lookupOfficeEmp1'" (lookup)="getLookupOfficeEmp1($event)"
-                                            *ngIf="inputLookupOfficeEmp1Obj != undefined">
+                                            *ngIf="inputLookupOfficeEmp1Obj.isReady">
                                         </lib-uclookupgeneric>
                                     </div>
                                 </div>
@@ -65,7 +65,7 @@
                                         <lib-uclookupgeneric [lookupInput]="inputLookupOfficeEmp2Obj"
                                             [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
                                             [identifier]="'lookupOfficeEmp2'" (lookup)="getLookupOfficeEmp2($event)"
-                                            *ngIf="inputLookupOfficeEmp2Obj != undefined">
+                                            *ngIf="inputLookupOfficeEmp2Obj.isReady">
                                         </lib-uclookupgeneric>
                                     </div>
                                 </div>
@@ -92,7 +92,7 @@
                                             [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
                                             [identifier]="'lookupAppCustCompanyShareHolder1'"
                                             (lookup)="getLookupAppCustCompanyShareHolder1($event)"
-                                            *ngIf="inputLookupAppCustCompanyShareHolder1Obj != undefined">
+                                            *ngIf="inputLookupAppCustCompanyShareHolder1Obj.isReady">
                                         </lib-uclookupgeneric>
                                     </div>
                                 </div>
@@ -120,7 +120,7 @@
                                             [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
                                             [identifier]="'lookupAppCustCompanyShareHolder2'"
                                             (lookup)="getLookupAppCustCompanyShareHolder2($event)"
-                                            *ngIf="inputLookupAppCustCompanyShareHolder2Obj != undefined">
+                                            *ngIf="inputLookupAppCustCompanyShareHolder2Obj.isReady">
                                         </lib-uclookupgeneric>
                                     </div>
                                 </div>
@@ -143,7 +143,7 @@
                                             [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
                                             [identifier]="'lookupAppCustCompanyShareHolder3'"
                                             (lookup)="getLookupAppCustCompanyShareHolder3($event)"
-                                            *ngIf="inputLookupAppCustCompanyShareHolder3Obj != undefined">
+                                            *ngIf="inputLookupAppCustCompanyShareHolder3Obj.isReady">
                                         </lib-uclookupgeneric>
                                     </div>
                                 </div>
@@ -173,7 +173,7 @@
                                             <lib-uclookupgeneric [lookupInput]="inputLookupBranchEmpObj"
                                                 [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
                                                 [identifier]="'lookupBranchEmp'" (lookup)="getLookupBranchEmp($event)"
-                                                *ngIf="inputLookupBranchEmpObj != undefined">
+                                                *ngIf="inputLookupBranchEmpObj.isReady">
                                             </lib-uclookupgeneric>
                                         </div>
                                     </div>
@@ -201,7 +201,7 @@
                                         <lib-uclookupgeneric [lookupInput]="inputLookupOfficeEmp1Obj"
                                             [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
                                             [identifier]="'lookupOfficeEmp1'" (lookup)="getLookupOfficeEmp1($event)"
-                                            *ngIf="inputLookupOfficeEmp1Obj != undefined">
+                                            *ngIf="inputLookupOfficeEmp1Obj.isReady">
                                         </lib-uclookupgeneric>
                                     </div>
                                 </div>
@@ -221,7 +221,7 @@
                                         <lib-uclookupgeneric [lookupInput]="inputLookupOfficeEmp2Obj"
                                             [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
                                             [identifier]="'lookupOfficeEmp2'" (lookup)="getLookupOfficeEmp2($event)"
-                                            *ngIf="inputLookupOfficeEmp2Obj != undefined">
+                                            *ngIf="inputLookupOfficeEmp2Obj.isReady">
                                         </lib-uclookupgeneric>
                                     </div>
                                 </div>
