@@ -159,7 +159,7 @@ export class CollateralDetailComponent implements OnInit {
         this.CollConditionList = response['ReturnObject'];
         if (this.mode != "edit") {
           this.AddCollForm.patchValue({
-            MrCollateralConditionCode: this.CollConditionList[1].Key
+            MrCollateralConditionCode: this.CollConditionList[0].Key
           });
         }
       });
@@ -311,9 +311,12 @@ export class CollateralDetailComponent implements OnInit {
             return true;
           }
           this.AddCollForm.patchValue({
-            CollateralStat: "EXISTING"
+            CollateralStat: "NEW"
           });
         } else {
+          this.AddCollForm.patchValue({
+            CollateralStat: "EXISTING"
+          });
           this.editAppCollateralObj = response['AppCollateral'];
           this.editCollateralRegistrationObj = response['AppCollateralRegistration'];
         }
@@ -332,7 +335,6 @@ export class CollateralDetailComponent implements OnInit {
           AssetCategoryCode: this.appCollateralObj.AssetCategoryCode,
           MrCollateralConditionCode: this.appCollateralObj.MrCollateralConditionCode,
           MrCollateralUsageCode: this.appCollateralObj.MrCollateralUsageCode,
-          CollateralStat: this.appCollateralObj.CollateralStat,
           SerialNo1: this.appCollateralObj.SerialNo1,
           SerialNo2: this.appCollateralObj.SerialNo2,
           SerialNo3: this.appCollateralObj.SerialNo3,
