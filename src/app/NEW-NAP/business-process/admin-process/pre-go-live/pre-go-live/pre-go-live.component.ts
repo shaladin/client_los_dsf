@@ -115,11 +115,6 @@ export class PreGoLiveComponent implements OnInit {
       
       window.open( link, "_blank");
     }
-    if (ev.Key == "customer") {
-      console.log("customer")
-          var link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + ev.ViewObj.CustId + "&Token=" + this.token; 
-          window.open(link, '_blank');
-    }
   }
 
   ReceiveIsChecked(ev) {

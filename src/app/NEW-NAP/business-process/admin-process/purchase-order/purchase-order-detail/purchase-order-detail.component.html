@@ -119,7 +119,7 @@
                                     <label class="col-md-6 text-right">{{TotalLifeInsCustAmt | number}}
                                     </label>
                                 </div>
-                                <div class="row">
+                                <div *ngIf="AssetObj?.AgrmntObj.MrFirstInstTypeCode == 'AD'" class="row">
                                     <label class="col-md-6">First Installment Amount </label>
                                     <label class="col-md-6 text-right">{{AssetObj?.AgrmntFinDataObj.InstAmt | number}} </label>
                                 </div>
