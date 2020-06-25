@@ -110,8 +110,8 @@ export class CollateralDetailComponent implements OnInit {
     }
     if (this.isSingleAsset) {
       this.getAppCollData(this.AppId, 0);
-    }   
-  
+    }
+
     this.AddCollForm.controls.AssetTypeCode.disable();
   }
 
@@ -311,6 +311,10 @@ export class CollateralDetailComponent implements OnInit {
 
         if (this.appCollateralObj.AppCollateralId == 0) {
           return true;
+        } else {
+          if (this.isSingleAsset) {
+            this.mode = "edit";
+          }
         }
 
         this.AddCollForm.patchValue({
@@ -475,11 +479,11 @@ export class CollateralDetailComponent implements OnInit {
 
     for (var i = 0; i < this.AddCollForm.value.ListDoc["length"]; i++) {
       this.appCollateralDoc = new AppCollateralDocObj();
-      if(this.AddCollForm.value.ListDoc[i].IsReceived == null){
+      if (this.AddCollForm.value.ListDoc[i].IsReceived == null) {
         this.appCollateralDoc.IsReceived = false;
       }
-      else{
-         this.appCollateralDoc.IsReceived = this.AddCollForm.value.ListDoc[i].IsReceived;
+      else {
+        this.appCollateralDoc.IsReceived = this.AddCollForm.value.ListDoc[i].IsReceived;
       }
       this.appCollateralDoc.DocCode = this.AddCollForm.value.ListDoc[i].DocCode;
       this.appCollateralDoc.DocNo = this.AddCollForm.value.ListDoc[i].DocNo;
