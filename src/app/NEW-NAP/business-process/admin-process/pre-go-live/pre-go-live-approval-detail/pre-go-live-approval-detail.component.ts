@@ -36,6 +36,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   PurposeOfFinancing: any;
   ProdOfferingCode: string;
   ProdOfferingVersion: string;
+  LeadNo : string;
 
   AppTcList: any = [];
   identifier: string = "TCList";
@@ -54,6 +55,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   AppId: any;
   AgrmntId: any;
   token = localStorage.getItem("Token");
+  LeadId: string;
 
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
@@ -93,6 +95,9 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
       AgrmntNo: this.TrxNo,
       RowVersion: ""
     }
+
+    
+
     this.http.post(AdInsConstant.GetAgrmntByAppIdGetAgrmntByAgrmntNo, Obj).subscribe(
       (response) => {
         this.result = response;
@@ -114,6 +119,9 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
           (response) => {
             this.result2 = response;
             this.WayOfFinancing = this.result2.CompntValueDesc;
+            console.log("response");
+            console.log(response);
+
           }
         );
 
@@ -138,9 +146,18 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
           (response) => {
             this.result4 = response;
             this.AppNo = this.result4.AppNo;
-            this.WayOfFinancing = this.result4.MrWopCode;
+
+            this.http.post(AdInsConstant.GetLeadByLeadId, {LeadId : this.result4.LeadId}).subscribe(
+              (response) => {
+                this.LeadNo = response["LeadNo"];
+                this.LeadId = response["LeadId"];
+              }
+            );
           }
+
         );
+
+       
 
         var Obj5 = {
           AgrmntId: this.result.AgrmntId,
@@ -231,6 +248,9 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   }
   ToAgrmnt(){
     window.open("/Nap/View/AgrmntView?AgrmntId=" + this.AgrmntId, "_blank");
+  }
+  ToLead(){
+    window.open("/Lead/View?LeadId=" + this.LeadId, "_blank");
   }
   ToCust(){
     var custObj = { CustNo: this.CustNo };
