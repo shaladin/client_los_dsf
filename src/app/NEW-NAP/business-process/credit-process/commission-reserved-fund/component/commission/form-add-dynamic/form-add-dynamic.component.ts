@@ -221,6 +221,7 @@ export class FormAddDynamicComponent implements OnInit {
   }
 
   CalculateTax(CurrCode, AppNo, OriOfficeCode, AppId) {
+    this.FormInputObj["isCalculated"] = true;
     var len = this.arr.controls.length;
     if (len == 0) return;
     var vendorCode = new Array();
@@ -252,6 +253,7 @@ export class FormAddDynamicComponent implements OnInit {
         }
 
       } else {
+        this.FormInputObj["isCalculated"] = false;
         return this.toastr.errorMessage("Please Choose " + this.FormInputObj['labelName'] + " Name at Data " + (i + 1));
       }
     }
@@ -290,8 +292,10 @@ export class FormAddDynamicComponent implements OnInit {
               var totalDisburseAmount = 0;
               var totalPenaltyAmt = 0;
               for (var j = 0; j < data.ReturnObject.length; j++) {
-                if (data.ReturnObject[j] == null || data.ReturnObject[j] == undefined)
+                if (data.ReturnObject[j] == null || data.ReturnObject[j] == undefined){
+                  this.FormInputObj["isCalculated"] = false;
                   return this.toastr.errorMessage("System Error - " + this.FormObj.value.arr[len - 1 - i].ContentNameValue + " don't have TaxpayerNo ");
+                }
 
                 var taxAmt = 0;
                 var vatAmt = 0;
@@ -334,7 +338,6 @@ export class FormAddDynamicComponent implements OnInit {
           }
           this.CheckData();
           this.PassData(AdInsConstant.MessageCalculate);
-          this.FormInputObj["isCalculated"] = true;
         },
         (error) => {
           console.log(error);
