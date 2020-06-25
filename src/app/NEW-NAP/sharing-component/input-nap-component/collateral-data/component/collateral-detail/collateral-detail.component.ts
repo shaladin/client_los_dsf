@@ -248,7 +248,7 @@ export class CollateralDetailComponent implements OnInit {
         this.criteriaList = new Array();
         this.criteriaObj = new CriteriaObj();
         this.criteriaObj.restriction = AdInsConstant.RestrictionEq;
-        this.criteriaObj.propName = 'apctrl.ASSET_TYPE_CODE';
+        this.criteriaObj.propName = 'AC.ASSET_TYPE_CODE';
         this.criteriaObj.value = this.AssetTypeCode;
         this.criteriaList.push(this.criteriaObj);
         this.inputLookupExistColl.addCritInput = this.criteriaList;
