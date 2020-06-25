@@ -20,8 +20,7 @@ import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 
 @Component({
   selector: 'app-collateral-fctr',
-  templateUrl: './collateral-fctr.component.html',
-  styleUrls: ['./collateral-fctr.component.scss']
+  templateUrl: './collateral-fctr.component.html'
 })
 export class CollateralFctrComponent implements OnInit {
   @ViewChild('LookupCollateral') ucLookupCollateral: UclookupgenericComponent;

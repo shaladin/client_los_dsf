@@ -44,7 +44,8 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   TaskListId: number;
   BizTemplateCode: string;
   SubjectResponse: RefMasterObj = new RefMasterObj();
-
+  cust : any;
+  custUrl : any;
   appUrl: string;
   agrmntUrl: string;
   leadUrl: string;
@@ -76,8 +77,10 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("aaaa");
     this.appUrl = environment.losR3Web + "/Nap/View/AppView?AppId=" + this.AppId;
     this.agrmntUrl = environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + this.AgrmntId;
+ 
     console.log(this.appUrl);
     this.GetData();
 
@@ -134,7 +137,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
         this.agrmntObj = response;
         this.http.post<AppObj>(AdInsConstant.GetAppById, { AppId: this.agrmntObj.AppId }).subscribe(
           (response) => {
-            this.appObj = response;
+            this.appObj = response; 
           },
           (error) => {
             console.log(error);

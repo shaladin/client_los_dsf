@@ -145,17 +145,26 @@
             "label": "Take Back"
         }
     ],
-    "bodyList": [
+    "bodyList": [ 
         {
-            "type": "text",
+            "type": "link",
             "position": "center",
-            "property": "ApprNo"
-        },
+            "property": "AppNo",
+            "target" : "_blank", 
+            "path": "/Nap/View/AppView",
+            "param": [
+                {
+                    "type": "AppId",
+                    "property": "AppId"
+                }
+            ]
+        }, 
         {
             "type": "link",
             "position": "center",
             "property": "AgrmntNo",
-            "path": "",
+            "target": "_blank",
+            "path": "/Nap/View/AgrmntView",
             "param": [
                 {
                     "type": "AgrmntId",
