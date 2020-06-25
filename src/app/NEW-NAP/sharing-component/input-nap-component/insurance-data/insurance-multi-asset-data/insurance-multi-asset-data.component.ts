@@ -179,6 +179,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         this.PaidAmtByCust = 0;
         this.InsCpltzAmt = 0;
         this.TotalPremiumToCust = 0;
+        this.InsDiscAmt = 0;
 
         if (this.listAppCollateralObj[0].PaidAmtByCust != null)
           this.PaidAmtByCust = this.listAppCollateralObj[0].PaidAmtByCust;
