@@ -169,6 +169,7 @@ export class PreGoLiveComponent implements OnInit {
     }
     this.AgrmntObj = new AgrmntObj();
     this.AgrmntObj.AgrmntId = this.AgrmntId;
+    this.AgrmntObj.AppId = this.AppId;
     this.AgrmntObj.EffectiveDt = this.MainInfoForm.controls.EffectiveDt.value;
     this.AgrmntObj.AgrmntCreatedDt = this.MainInfoForm.controls.AgrmntCreatedDt.value;
 
