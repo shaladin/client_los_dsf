@@ -182,6 +182,7 @@ export class AdInsConstant {
   public static DeleteAppCommissionData = environment.losUrl + "/AppCommission/DeleteAppCommissionData";
   public static GetAppCommissionRule = environment.losUrl + "/AppCommission/GetAppCommissionRule";
   public static GetAppCommissionTax = environment.losUrl + "/AppCommission/GetAppCommissionTax";
+  public static CalCulateGrossYield = environment.losUrl + "/AppCommission/CalCulateGrossYield";
 
   public static GetRefOfficeByOfficeCode = environment.FoundationR3Url + "/RefOffice/GetRefOfficeByOfficeCode";
   public static GetListCenterGrpMemberByCenterGrpCode = environment.FoundationR3Url + "/CenterGrpOfficeMbr/GetListCenterGrpMemberByCenterGrpCode";
