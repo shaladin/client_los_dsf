@@ -672,6 +672,7 @@ export class CollateralAddEditComponent implements OnInit {
     this.appCollateralDataObj.AppCollateralObj.MrCollateralConditionCode = "USED";
     this.appCollateralDataObj.AppCollateralObj.MrCollateralUsageCode = "NON_COMM";
     this.appCollateralDataObj.AppCollateralObj.AssetCategoryCode = this.AddCollForm.controls["AssetCategoryCode"].value;
+    this.appCollateralDataObj.AppCollateralObj.CollateralValueAmt = this.AddCollForm.controls["CollateralValueAmt"].value;
     // console.log("SetCollateralInfo : " + JSON.stringify(this.appCollateralDataObj.AppCollateralObj));
     // console.log("Asset Category Code Final : " + this.AddCollForm.controls["AssetCategoryCode"].value);
     // this.appCollateralDataObj.AppCollateralObj.AssetCategoryCode = "MOBIL1000";
