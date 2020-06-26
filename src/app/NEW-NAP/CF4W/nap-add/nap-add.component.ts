@@ -344,6 +344,12 @@ export class NapAddComponent implements OnInit {
     addCrit.listValue = [ev.target.selectedOptions[0].value];
     arrCopyLookupCrit.push(addCrit);
 
+    var critObj = new CriteriaObj();
+    critObj.restriction = AdInsConstant.RestrictionEq;
+    critObj.propName = 'vrl.BIZ_TMPLT_CODE';
+    critObj.value = AdInsConstant.CF4W;
+    arrCopyLookupCrit.push(critObj);
+
     this.inputLookupObjCopyProduct.addCritInput = arrCopyLookupCrit;
     this.ucLookupCopyProduct.setAddCritInput();
 

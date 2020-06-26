@@ -32,7 +32,7 @@ export class CustConfirmationSubjViewComponent implements OnInit {
   VerfResultHObjDetail: VerfResultHObj = new VerfResultHObj();
   VerfResultDListObj = new Array<VerfResultDObj>();
   IsVerfDetail: boolean = false;
-  cust : any;
+  cust: any;
   constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
       if (params["VerfResultHId"] != null) {
@@ -64,6 +64,7 @@ export class CustConfirmationSubjViewComponent implements OnInit {
     var agrmntObj = {
       AgrmntId: this.AgrmntId
     };
+    console.log(agrmntObj);
     this.http.post<AgrmntObj>(AdInsConstant.GetAgrmntByAgrmntId, agrmntObj).subscribe(
       (response) => {
         this.AgrmntObj = response;
@@ -73,15 +74,17 @@ export class CustConfirmationSubjViewComponent implements OnInit {
         };
         this.http.post<AppObj>(AdInsConstant.GetAppById, appObj).subscribe(
           (response) => {
-            this.AppObj = response; 
+            this.AppObj = response;
           },
           (error) => {
             console.log(error);
           });
-        this.http.post<LeadObj>(AdInsConstant.GetLeadByLeadId, { LeadId: this.AgrmntObj.LeadId }).subscribe(
-          (response) => {
-            this.LeadObj = response;
-          });
+        if (this.AgrmntObj.LeadId != null) {
+          this.http.post<LeadObj>(AdInsConstant.GetLeadByLeadId, { LeadId: this.AgrmntObj.LeadId }).subscribe(
+            (response) => {
+              this.LeadObj = response;
+            });
+        }
       },
       (error) => {
         console.log(error);
@@ -162,8 +165,8 @@ export class CustConfirmationSubjViewComponent implements OnInit {
     } else if (key == "lead") {
       window.open(environment.losR3Web + "/Lead/View?LeadId=" + this.AgrmntObj.AgrmntId, "_blank");
     }
-    else if (key == "agreement") { 
+    else if (key == "agreement") {
       window.open(environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + this.AgrmntObj.AgrmntId, "_blank");
-    } 
+    }
   }
 }
