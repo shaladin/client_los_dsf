@@ -75,7 +75,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.arrValue.push(this.AppId);
+    this.arrValue.push(this.AgrmntId);
     this.http.post(AdInsConstant.GetRfaLogByTrxNoAndApvCategory, { TrxNo : this.TrxNo, ApvCategory : "PRE_GPV_APV" } ).subscribe(
       (response) => {
         this.result = response;
@@ -149,12 +149,14 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
             this.result4 = response;
             this.AppNo = this.result4.AppNo;
 
-            this.http.post(AdInsConstant.GetLeadByLeadId, {LeadId : this.result4.LeadId}).subscribe(
-              (response) => {
-                this.LeadNo = response["LeadNo"];
-                this.LeadId = response["LeadId"];
-              }
-            );
+            if(this.result4.LeadId != null || this.result4.LeadId != undefined){
+              this.http.post(AdInsConstant.GetLeadByLeadId, {LeadId : this.result4.LeadId}).subscribe(
+                (response) => {
+                  this.LeadNo = response["LeadNo"];
+                  this.LeadId = response["LeadId"];
+                }
+              );
+            }
           }
 
         );
@@ -246,10 +248,13 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   //nanti bakalan ke View, sementara kek gini dlu
   ToApp(){
 
-    window.open("/Nap/View/AppView?AppId=" + this.AppId, "_blank");
+    window.open(environment.losR3Web + "/Nap/View/AppView?AppId=" + this.AppId, "_blank");
   }
   ToAgrmnt(){
-    window.open("/Nap/View/AgrmntView?AgrmntId=" + this.AgrmntId, "_blank");
+    window.open(environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + this.AgrmntId, "_blank");
+  }
+  ToLead(){
+    window.open(environment.losR3Web + "/Lead/View?LeadId=" + this.LeadId, "_blank");
   }
   ToCust(){
     var custObj = { CustNo: this.CustNo };
