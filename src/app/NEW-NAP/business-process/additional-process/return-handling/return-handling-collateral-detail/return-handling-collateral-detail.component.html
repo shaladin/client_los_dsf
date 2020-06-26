@@ -35,7 +35,7 @@
               <div class="form-group row">
                 <label class="col-md-2  adins-required-label" translate>Manufacturing Year</label>
                 <div class="col-md-4">
-                  <input type="number" class="form-control" formControlName="ManufacturingYear">
+                  <input type="text" class="form-control" formControlName="ManufacturingYear">
                 </div>
                 <label class="col-md-2  adins-required-label" translate>Collateral Condition</label>
                 <div class="col-md-4">
@@ -49,29 +49,39 @@
               </div>
               <div *ngIf="this.AssetTypeObj">
                 <div class="form-group row">
-                  <label class="col-md-2" translate *ngIf="this.AssetTypeObj?.SerialNo1Label">{{this.AssetTypeObj.SerialNo1Label}}</label>
+                  <label class="col-md-2 adins-required-label" translate *ngIf="this.AssetTypeObj?.SerialNo1Label && this.CollateralDataForm.controls.MrCollateralConditionCode.value == 'USED'">{{this.AssetTypeObj.SerialNo1Label}}</label>
+                  <label class="col-md-2" translate *ngIf="this.AssetTypeObj?.SerialNo1Label && this.CollateralDataForm.controls.MrCollateralConditionCode.value != 'USED'">{{this.AssetTypeObj.SerialNo1Label}}</label>
                   <div class="col-md-4" *ngIf="this.AssetTypeObj?.SerialNo1Label">
                     <input type="text" class="form-control" formControlName="SerialNo1">
+                    <lib-uc-show-errors [control]="CollateralDataForm.controls.SerialNo1" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                   </div>
-                  <label class="col-md-2" translate *ngIf="this.AssetTypeObj?.SerialNo2Label">{{this.AssetTypeObj.SerialNo2Label}}</label>
+                  <label class="col-md-2 adins-required-label" translate *ngIf="this.AssetTypeObj?.SerialNo2Label && this.CollateralDataForm.controls.MrCollateralConditionCode.value == 'USED'">{{this.AssetTypeObj.SerialNo2Label}}</label>
+                  <label class="col-md-2" translate *ngIf="this.AssetTypeObj?.SerialNo2Label && this.CollateralDataForm.controls.MrCollateralConditionCode.value != 'USED'">{{this.AssetTypeObj.SerialNo2Label}}</label>
                   <div class="col-md-4" *ngIf="this.AssetTypeObj?.SerialNo2Label">
                     <input type="text" class="form-control" formControlName="SerialNo2">
+                    <lib-uc-show-errors [control]="CollateralDataForm.controls.SerialNo2" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-2" translate *ngIf="this.AssetTypeObj?.SerialNo3Label">{{this.AssetTypeObj.SerialNo3Label}}</label>
+                  <label class="col-md-2 adins-required-label" translate *ngIf="this.AssetTypeObj?.SerialNo3Label && this.CollateralDataForm.controls.MrCollateralConditionCode.value == 'USED'">{{this.AssetTypeObj.SerialNo3Label}}</label>
+                  <label class="col-md-2" translate *ngIf="this.AssetTypeObj?.SerialNo3Label && this.CollateralDataForm.controls.MrCollateralConditionCode.value != 'USED'">{{this.AssetTypeObj.SerialNo3Label}}</label>
                   <div class="col-md-4" *ngIf="this.AssetTypeObj?.SerialNo3Label">
                     <input type="text" class="form-control" formControlName="SerialNo3">
+                    <lib-uc-show-errors [control]="CollateralDataForm.controls.SerialNo3" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                   </div>
-                  <label class="col-md-2" translate *ngIf="this.AssetTypeObj?.SerialNo4Label">{{this.AssetTypeObj.SerialNo4Label}}</label>
+                  <label class="col-md-2 adins-required-label" translate *ngIf="this.AssetTypeObj?.SerialNo4Label && this.CollateralDataForm.controls.MrCollateralConditionCode.value == 'USED'">{{this.AssetTypeObj.SerialNo4Label}}</label>
+                  <label class="col-md-2" translate *ngIf="this.AssetTypeObj?.SerialNo4Label && this.CollateralDataForm.controls.MrCollateralConditionCode.value != 'USED'">{{this.AssetTypeObj.SerialNo4Label}}</label>
                   <div class="col-md-4" *ngIf="this.AssetTypeObj?.SerialNo4Label">
                     <input type="text" class="form-control" formControlName="SerialNo4">
+                    <lib-uc-show-errors [control]="CollateralDataForm.controls.SerialNo4" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-2" translate *ngIf="this.AssetTypeObj?.SerialNo5Label">{{this.AssetTypeObj.SerialNo5Label}}</label>
+                  <label class="col-md-2 adins-required-label" translate *ngIf="this.AssetTypeObj?.SerialNo5Label && this.CollateralDataForm.controls.MrCollateralConditionCode.value == 'USED'">{{this.AssetTypeObj.SerialNo5Label}}</label>
+                  <label class="col-md-2" translate *ngIf="this.AssetTypeObj?.SerialNo5Label && this.CollateralDataForm.controls.MrCollateralConditionCode.value != 'USED'">{{this.AssetTypeObj.SerialNo5Label}}</label>
                   <div class="col-md-4" *ngIf="this.AssetTypeObj?.SerialNo5Label">
                     <input type="text" class="form-control" formControlName="SerialNo5">
+                    <lib-uc-show-errors [control]="CollateralDataForm.controls.SerialNo5" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                   </div>
                 </div>
 
@@ -86,9 +96,11 @@
                     </option>
                   </select>
                 </div>
-                <label class="col-md-2" translate>Collateral Tax Date</label>
+                <label class="col-md-2 adins-required-label" translate *ngIf="this.CollateralDataForm.controls.MrCollateralConditionCode.value == 'USED'">Collateral Tax Date</label>
+                <label class="col-md-2" translate *ngIf="this.CollateralDataForm.controls.MrCollateralConditionCode.value != 'USED'">Collateral Tax Date</label>
                 <div class="col-md-4">
                   <input type="date" class="form-control adInsInput" formControlName="AssetTaxDt">
+                  <lib-uc-show-errors [control]="CollateralDataForm.controls.AssetTaxDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
               </div>
 

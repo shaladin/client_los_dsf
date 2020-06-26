@@ -4,15 +4,15 @@
     "component": [
         {
             "type": "textbox",
-            "name": "TRX_NO",
+            "name": "A.MOU_CUST_NO",
             "id": "TrxNoId",
             "value": "",
-            "label": "Transaction No",
+            "label": "MoU No",
             "placeholder": "Placeholder"
         },
         {
             "type": "textbox",
-            "name": "CUST_NAME",
+            "name": "A.CUST_NAME",
             "id": "CustNameId",
             "value": "",
             "label": "Customer Name",
@@ -20,7 +20,7 @@
         },
         {
             "type": "textbox",
-            "name": "APV_NO",
+            "name": "TL.APV_NO",
             "id": "ApvNoId",
             "value": "",
             "label": "Approval No",
@@ -78,20 +78,20 @@
         {
             "type": "sort",
             "position": "center",
-            "label": "APV NO",
-            "name": "APV_NO"
+            "label": "APPROVAL NO",
+            "name": "TL.APV_NO"
         },
         {
             "type": "sort",
             "position": "left",
             "label": "CUSTOMER NAME",
-            "name": "CustName"
+            "name": "A.CUST_NAME"
         },
         {
             "type": "sort",
             "position": "center",
             "label": "MOU NO",
-            "name": "MouCustNo"
+            "name": "A.MOU_CUST_NO"
         },
         {
             "type": "sort",
@@ -127,7 +127,7 @@
         {
             "type": "text",
             "position": "center",
-            "property": "TrxNo"
+            "property": "ApvNo"
         },
         {
             "type": "callback",
