@@ -1238,6 +1238,9 @@ export class AdInsConstant {
   public static DownloadTemplate = environment.FoundationR3Url + '/Download/DownloadTemplate';
   public static GetUploadAssetMasterByUploadMonitoringNoAndTrxType = environment.FoundationR3Url + '/AssetMaster/GetUploadAssetMasterByUploadMonitoringNoAndTrxType';
 
+  // Report
+  public static GenerateReportSync = environment.FoundationR3Url + '/Report/GenerateReportSync';
+
   // Asset Category
   public static GetAssetCategoryById = environment.FoundationR3Url + "/AssetCategory/GetAssetCategoryById";
 
