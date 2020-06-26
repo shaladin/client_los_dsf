@@ -29,6 +29,7 @@ export class ReturnHandlingEditAppPagingComponent implements OnInit {
   
   inputPagingObj;
   userAccess;
+  token : any = localStorage.getItem("Token");
   ngOnInit() {
     this.userAccess = JSON.parse(localStorage.getItem("UserAccess"));
 
@@ -67,6 +68,10 @@ export class ReturnHandlingEditAppPagingComponent implements OnInit {
     }
     if(this.BizTemplateCode == AdInsConstant.CFRFN4W){
       this.router.navigate(["Nap/CFRefinancing/Add/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId } });
+    }
+    if(ev.Key == "ViewProdOffering"){
+      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.RowObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.RowObj.ProdOfferingVersion  + "&Token=" + this.token;
+      this.router.navigate([]).then(result => { window.open(link, '_blank'); });
     }
   }
 
