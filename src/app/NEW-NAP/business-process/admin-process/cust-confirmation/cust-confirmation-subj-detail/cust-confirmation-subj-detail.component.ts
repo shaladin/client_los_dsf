@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, FormArray, FormGroupDirective } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
@@ -143,13 +143,15 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
             console.log(error);
           });
           
-        this.http.post<LeadObj>(AdInsConstant.GetLeadByLeadId, { LeadId: this.agrmntObj.LeadId }).subscribe(
-          (response) => {
-            console.log("retard");
-            console.log(response);
-            this.leadObj = response;
-            this.leadUrl = environment.losR3Web + "/Lead/View?LeadId=" + this.leadObj.LeadId;
-          });
+        if (this.agrmntObj.LeadId != null) {
+          this.http.post<LeadObj>(AdInsConstant.GetLeadByLeadId, { LeadId: this.agrmntObj.LeadId }).subscribe(
+            (response) => {
+              console.log("retard");
+              console.log(response);
+              this.leadObj = response;
+              this.leadUrl = environment.losR3Web + "/Lead/View?LeadId=" + this.leadObj.LeadId;
+            });
+        }
       },
       (error) => {
         console.log(error);
@@ -164,19 +166,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
         this.newVerfResultHObj.Phn = "-";
         this.newVerfResultHObj.PhnType = "-";
         this.newVerfResultHObj.MrVerfObjectCode = "-";
-
-        var verfResultHObj = {
-          VerfResultId: this.newVerfResultHObj.VerfResultId,
-          MrVerfSubjectRelationCode: this.newVerfResultHObj.MrVerfSubjectRelationCode
-        };
-        this.http.post(AdInsConstant.GetVerfResultHsByVerfResultIdAndSubjRelationCode, verfResultHObj).subscribe(
-          (response) => {
-            this.VerfResultHList = response["responseVerfResultHCustomObjs"];
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
+        this.GetListVerfResultH(this.newVerfResultHObj.VerfResultId, this.newVerfResultHObj.MrVerfSubjectRelationCode);
       },
       (error) => {
         console.log(error);
@@ -184,6 +174,20 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
     );
   }
 
+  GetListVerfResultH(id, code) {
+    var verfResultHObj = {
+      VerfResultId: id,
+      MrVerfSubjectRelationCode: code
+    };
+    this.http.post(AdInsConstant.GetVerfResultHsByVerfResultIdAndSubjRelationCode, verfResultHObj).subscribe(
+      (response) => {
+        this.VerfResultHList = response["responseVerfResultHCustomObjs"];
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
   GenerateFormVerfQuestion(obj) {
     this.verfQuestionAnswerObj.VerfQuestionAnswerListObj[0].VerfQuestionGrpName
     var grpListObj = this.verfQuestionAnswerObj.VerfQuestionAnswerListObj;
@@ -252,7 +256,8 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
     }
   }
 
-  SaveForm(ev) {
+  SaveForm(formDirective: FormGroupDirective) {
+    var activeButton = document.activeElement.id;
     var FormValue = this.CustConfirm.value.VerfResultDForm;
     var VerfResultDList = new Array<VerfResultDObj>();
     for (let i = 0; i < FormValue.length; i++) {
@@ -271,6 +276,11 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
         VerfResultDList.push(VerfResultD);
       }
     }
+    var businessDt = new Date(localStorage.getItem("BusinessDateRaw"));
+    var todaydate = new Date();
+    businessDt.setHours(todaydate.getHours(), todaydate.getMinutes(), todaydate.getSeconds());
+    var usertimezone = businessDt.getTimezoneOffset() * 60000;
+    businessDt = new Date(businessDt.getTime() - usertimezone);
 
     this.newVerfResultHObj.MrVerfObjectCode = "-";
     this.newVerfResultHObj.PhnType = "-";
@@ -278,6 +288,8 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
     this.newVerfResultHObj.Phn = this.CustConfirm.controls.Phn.value;
     this.newVerfResultHObj.MrVerfResultHStatCode = this.CustConfirm.controls.MrVerfResultHStatCode.value;
     this.newVerfResultHObj.Notes = this.CustConfirm.controls.Notes.value;
+    this.newVerfResultHObj.VerfDt = businessDt;
+
     var VerfResultHeaderDetail = {
       VerfResultHObj: this.newVerfResultHObj,
       VerfResultDListObj: VerfResultDList
@@ -286,11 +298,43 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
     this.http.post(AdInsConstant.AddVerfResultHeaderAndVerfResultDetail, VerfResultHeaderDetail).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["/Nap/AdminProcess/CustConfirmation/Detail"], { queryParams: { "AgrmntId": this.AgrmntId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId, "AppId": this.AppId, "BizTemplateCode": this.BizTemplateCode } });
+        if (activeButton == "save") {
+          this.router.navigate(["/Nap/AdminProcess/CustConfirmation/Detail"], { queryParams: { "AgrmntId": this.AgrmntId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId, "AppId": this.AppId, "BizTemplateCode": this.BizTemplateCode } });
+        }
+        else {
+          this.GetListVerfResultH(response["VerfResultId"], response["MrVerfSubjectRelationCode"]);
+          formDirective.resetForm();
+          this.clearform();
+        }
       },
       (error) => {
         console.log(error);
       }
     );
+  }
+  clearform() {
+    this.CustConfirm.reset();
+    this.CustConfirm = this.fb.group({
+      Notes: ["", Validators.required],
+      Phn: ["", Validators.required],
+      MrVerfResultHStatCode: ["", Validators.required],
+      VerfResultDForm: this.fb.array([])
+    });
+    this.CustConfirm.controls.Notes.markAsPristine();
+    this.CustConfirm.markAsUntouched();
+
+
+    this.GenerateFormVerfQuestion(this.verfQuestionAnswerObj);
+    if (this.PhnList.length > 0) {
+      this.CustConfirm.patchValue({
+        Phn: this.PhnList[0].Key
+      });
+    }
+    if (this.RefStatusList.length > 0) {
+      this.CustConfirm.patchValue({
+        MrVerfResultHStatCode: this.RefStatusList[0].Key
+      });
+
+    }
   }
 }
