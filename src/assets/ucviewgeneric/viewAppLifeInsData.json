@@ -17,27 +17,27 @@
             "property": "LifeInscoBranchName"
           },
           {
-            "type": "text",
+            "type": "currency",
             "label": "Total Premi to Customer",
             "property": "TotalPremiToCust"
           },
           {
-            "type": "text",
+            "type": "currency",
             "label": "Total Premi from Insco",
             "property": "TotalPremiFromInsco"
           },
           {
-            "type": "text",
+            "type": "currency",
             "label": "Admin Fee to Customer",
             "property": "CustAdminFeeAmt"
           },
           {
-            "type": "text",
+            "type": "currency",
             "label": "Admin Fee from Insco",
             "property": "InscoAdminFeeAmt"
           },
           {
-            "type": "text",
+            "type": "currency",
             "label": "Capitalized Premi",
             "property": "TotalLifeInsCptlzAmt"
           }

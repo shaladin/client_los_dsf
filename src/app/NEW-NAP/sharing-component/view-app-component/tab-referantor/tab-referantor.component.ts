@@ -44,9 +44,18 @@ export class TabReferantorComponent implements OnInit {
         this.existData = true;
         if(response["AppReferantorId"] != 0){
           this.ResponseReferantorData.Name = response["ReferantorName"];
-          this.ResponseReferantorData.Type = response["MrReferantorType"];
+          this.ResponseReferantorData.Type = response["MrReferantorTypeName"];
           this.ResponseReferantorData.BankAcc = response["BankAccName"];
           this.ResponseReferantorData.Tax = response["TaxIdNo"];
+          this.ResponseReferantorData.TaxIdName = response["TaxIdName"];
+          this.ResponseReferantorData.TaxIdAreaCode1 = response["TaxIdAreaCode1"];
+          this.ResponseReferantorData.TaxIdAreaCode2 = response["TaxIdAreaCode2"];
+          this.ResponseReferantorData.TaxIdAreaCode3 = response["TaxIdAreaCode3"];
+          this.ResponseReferantorData.TaxIdAreaCode4 = response["TaxIdAreaCode4"];
+          this.ResponseReferantorData.TaxIdName = response["TaxIdName"];
+          this.ResponseReferantorData.TaxIdAddr = response["TaxIdAddr"];
+          this.ResponseReferantorData.TaxIdCity = response["TaxIdCity"];
+          this.ResponseReferantorData.TaxIdZipcode = response["TaxIdZipcode"];
         }
       },
       (error) => {
