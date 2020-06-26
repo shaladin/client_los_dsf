@@ -240,7 +240,7 @@ export class FormAddDynamicComponent implements OnInit {
         // console.log(totalCommAmt);
         if (totalCommAmt == 0) {
           this.FormInputObj["isCalculated"] = false;
-          return this.toastr.errorMessage("Please Allocate at least 1 item for " + this.arr.controls[i].controls.ContentName.value);
+          return this.toastr.warningMessage("Please Allocate at least 1 item for " + this.arr.controls[i].controls.ContentName.value);
         }
 
         trxAmt.push(tempTrxAmt);
@@ -254,7 +254,7 @@ export class FormAddDynamicComponent implements OnInit {
 
       } else {
         this.FormInputObj["isCalculated"] = false;
-        return this.toastr.errorMessage("Please Choose " + this.FormInputObj['labelName'] + " Name at Data " + (i + 1));
+        return this.toastr.warningMessage("Please Choose " + this.FormInputObj['labelName'] + " Name at Data " + (i + 1));
       }
     }
     if (vendorCode.length > 0) {
@@ -390,7 +390,7 @@ export class FormAddDynamicComponent implements OnInit {
         ContentName: "",
         ContentNameValue: ""
       });
-      return this.toastr.errorMessage("There no rule setting for " + code);
+      return this.toastr.warningMessage("There no rule setting for " + code);
     }
 
     this.FormObj.controls.arr["controls"][indexFormObj].patchValue({
@@ -439,7 +439,7 @@ export class FormAddDynamicComponent implements OnInit {
     }
     var temp = this.GetTempRuleObj(code, idxTemp);
     if (temp == undefined || temp == null)
-      return this.toastr.errorMessage("There no rule setting for " + code);
+      return this.toastr.warningMessage("There no rule setting for " + code);
 
     this.FormObj.controls.arr["controls"][idx].patchValue({
       ContentName: this.DDLContentName[indexFormObj].Key,
