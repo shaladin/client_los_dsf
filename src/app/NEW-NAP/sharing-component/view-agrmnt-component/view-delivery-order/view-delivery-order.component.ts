@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
-import { DatePipe } from '@angular/common';
+import { DatePipe, formatDate } from '@angular/common';
 
 @Component({
   selector: "agrmnt-view-delivery-order",
@@ -13,7 +13,7 @@ import { DatePipe } from '@angular/common';
   providers: [NGXToastrService]
 })
 export class ViewDeliveryOrderComponent implements OnInit {
-
+  DeliveryDt: any;
   @Input() agrmntId: any;
 
   agrmntObj = {
@@ -42,6 +42,7 @@ export class ViewDeliveryOrderComponent implements OnInit {
       (response) => {
         console.log(response);
         this.DeliverOrderData = response;
+        this.DeliveryDt = formatDate(this.DeliverOrderData.DeliveryOrderH.DeliveryDt, 'yyyy-MM-dd', 'en-US');
       }
     );
   }
