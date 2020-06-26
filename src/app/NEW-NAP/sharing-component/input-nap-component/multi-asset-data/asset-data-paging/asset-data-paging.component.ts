@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder } from '@angular/forms';
-import { WizardComponent } from 'angular-archwizard';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
@@ -60,7 +59,6 @@ event(ev){
   if(ev.Key == "edit")
   {
     this.AppAssetId = ev.RowObj.AppAssetId;
-    // this.AppId = ev.RowObj.AppId;
     this.editAsset = ev.RowObj.editAsset;
     this.outputValue.emit({ mode: 'editAsset', AppAssetId: this.AppAssetId });
     console.log("CHECK EVENT");
@@ -104,7 +102,6 @@ eventColl(ev){
   if(ev.Key == "edit")
   {
     this.AppCollateralId = ev.RowObj.AppCollateralId;
-    // this.AppId = ev.RowObj.AppId;
     this.editColl = ev.RowObj.editColl;
     this.AppAssetId = ev.RowObj.AppAssetId;
     this.outputValue.emit({ mode: 'editColl', AppCollateralId: this.AppCollateralId });
@@ -170,14 +167,13 @@ eventColl(ev){
     this.gridAppCollateralObj.deleteUrl = AdInsConstant.DeleteAppCollateral;
     
     this.appCollateralObj = new AppCollateralObj();
-    // this.appCollateralObj.AppCollateralId = "-";
     this.appCollateralObj.AppId = this.AppId;
     this.http.post(this.getListAppCollateral, this.appCollateralObj).subscribe(
       (response) => {
           console.log("Collateral : " + JSON.stringify(response));
           this.listAppCollateralObj = response["ReturnObject"];
 
-          var DetailForGridCollateral ={
+          var DetailForGridCollateral = {
             Data: response["ReturnObject"],
             Count: "0"
           }
@@ -196,21 +192,17 @@ eventColl(ev){
     this.gridAppCollateralObj.deleteUrl = AdInsConstant.DeleteAppCollateral;
     
     this.appCollateralObj = new AppCollateralObj();
-    // this.appCollateralObj.AppCollateralId = "-";
     this.appCollateralObj.AppId = this.AppId;
     this.http.post(this.getListAppCollateral, this.appCollateralObj).subscribe(
       (response) => {
           this.listAppCollateralObj = response["ReturnObject"];
 
-          var DetailForGridCollateral ={
+          var DetailForGridCollateral = {
             Data: response["ReturnObject"],
             Count: "0"
           }
 
         this.gridAppCollateralObj.resultData = DetailForGridCollateral;
-
-        console.log("abc")
-        console.log(this.gridAppCollateralObj.resultData.Data.length)
       },
       (error) => {
         console.log(error);

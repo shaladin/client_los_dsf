@@ -7,8 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-delivery-order-paging',
-  templateUrl: './delivery-order-paging.component.html',
-  styleUrls: ['./delivery-order-paging.component.scss']
+  templateUrl: './delivery-order-paging.component.html'
 })
 export class DeliveryOrderPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
