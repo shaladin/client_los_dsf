@@ -3,9 +3,10 @@
     <div class="card">
       <div class="card-body">
         <div class="px-3">
-          <app-app-main-info [arrValue]="arrValue"></app-app-main-info>
+          <!-- diubah ke yang dulu karena view nya beda, ini mesti diperbaikin jadi pake view generic -->
+          <!-- <app-agr-main-info [arrValue]="arrValue"></app-agr-main-info> -->
 
-          <!-- <lib-ucSubsection [id]="'MainInfoFormId'" [title]="'Main Info'" [panel]="'MainInfoForm'">
+          <lib-ucSubsection [id]="'MainInfoFormId'" [title]="'Main Info'" [panel]="'MainInfoForm'">
           </lib-ucSubsection>
           <div class="form-body" id="MainInfoForm">
 
@@ -16,7 +17,7 @@
               </div>
               <label class="col-md-2 adInsLabel" translate>Num Of Asset</label>
               <div class="col-md-4">
-                <label id= "NumOfAsset" translate>{{NumOfAsset}}</label>
+                <label id="NumOfAsset" translate>{{NumOfAsset}}</label>
               </div>
             </div>
 
@@ -74,9 +75,9 @@
                 <label id="WayOfFinancing" translate>{{WayOfFinancing}}</label>
               </div>
             </div>
-          </div> -->
+          </div>
 
-          
+
           <div class="form-group row">
             <label class="col-md-2 adInsLabel" translate>Lead No</label>
             <div class="col-md-4 blue">
@@ -86,7 +87,8 @@
 
           <div *ngIf="result">
             <div *ngIf="count1>0">
-              <lib-ucSubsection [id]="'PreGoLiveApprovalHistoryId'" [title]="'PreGoLive Approval History'" [panel]="'PreGoLiveApprovalHistory'">
+              <lib-ucSubsection [id]="'PreGoLiveApprovalHistoryId'" [title]="'PreGoLive Approval History'"
+                [panel]="'PreGoLiveApprovalHistory'">
               </lib-ucSubsection>
               <div id="PreGoLiveApprovalHistory">
                 <div *ngFor="let item of listPreGoLiveAppvrObj; let i = index">
@@ -102,47 +104,52 @@
 
           <form class="form form-horizontal" [formGroup]="MainInfoForm" #MainInfoReqForm="ngForm"
             (ngSubmit)="MainInfoForm.valid && SaveForm()">
-          <div id="DataTable">
+            <div id="DataTable">
 
 
-            <div formArrayName="{{identifier}}">
-              <table class="table table-responsive-md text-center table-hover">
-                <thead>
-                  <tr class="table-header">
-                    <th><span translate class="thead-header text-left">No</span></th>
-                    <th><span translate class="thead-header text-left">Document Name</span></th>
-                    <th><span translate class="thead-header">Required</span></th>
-                    <th><span translate class="thead-header">Check</span></th>
-                    <th><span translate class="thead-header">Promise Date</span></th>
-                    <th><span translate class="thead-header">Expired Date</span></th>
-                    <th><span translate class="thead-header">Notes</span></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr [formGroupName]="i" *ngFor="let item of MainInfoForm.controls[identifier].controls; let i = index">
-                    <td class="text-left">{{i+1}}</td>
-                    <td class="text-left">{{MainInfoForm.controls[identifier].controls[i].controls.TcName.value}}</td>
-                    <td class="text-left">{{MainInfoForm.controls[identifier].controls[i].controls.IsMandatory.value}}</td>
-                    <td class="text-left"><input type="checkbox" class="border-primary" (change)="changeValidation(i)"
-                        formControlName="IsChecked"></td>
-                        <td><input type="date" class="form-control" formControlName="PromisedDt"
+              <div formArrayName="{{identifier}}">
+                <table class="table table-responsive-md text-center table-hover">
+                  <thead>
+                    <tr class="table-header">
+                      <th><span translate class="thead-header text-left">No</span></th>
+                      <th><span translate class="thead-header text-left">Document Name</span></th>
+                      <th><span translate class="thead-header">Required</span></th>
+                      <th><span translate class="thead-header">Check</span></th>
+                      <th><span translate class="thead-header">Promise Date</span></th>
+                      <th><span translate class="thead-header">Expired Date</span></th>
+                      <th><span translate class="thead-header">Notes</span></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr [formGroupName]="i"
+                      *ngFor="let item of MainInfoForm.controls[identifier].controls; let i = index">
+                      <td class="text-left">{{i+1}}</td>
+                      <td class="text-left">{{MainInfoForm.controls[identifier].controls[i].controls.TcName.value}}</td>
+                      <td class="text-left">{{MainInfoForm.controls[identifier].controls[i].controls.IsMandatory.value}}
+                      </td>
+                      <td class="text-left"><input type="checkbox" class="border-primary" (change)="changeValidation(i)"
+                          formControlName="IsChecked"></td>
+                      <td><input type="date" class="form-control" formControlName="PromisedDt"
                           [ngClass]="{ 'is-invalid': MainInfoReqForm.submitted && MainInfoForm.controls[identifier].controls[i].controls.PromisedDt.invalid}">
-                        <lib-uc-show-errors [control]="MainInfoForm.controls[identifier].controls[i].controls.PromisedDt" [submit]="MainInfoReqForm.submitted">
+                        <lib-uc-show-errors
+                          [control]="MainInfoForm.controls[identifier].controls[i].controls.PromisedDt"
+                          [submit]="MainInfoReqForm.submitted">
                         </lib-uc-show-errors>
                       </td>
                       <td><input type="date" class="form-control" formControlName="ExpiredDt"
                           [ngClass]="{ 'is-invalid': MainInfoReqForm.submitted && MainInfoForm.controls[identifier].controls[i].controls.ExpiredDt.invalid}">
-                        <lib-uc-show-errors [control]="MainInfoForm.controls[identifier].controls[i].controls.ExpiredDt" [submit]="MainInfoReqForm.submitted">
+                        <lib-uc-show-errors [control]="MainInfoForm.controls[identifier].controls[i].controls.ExpiredDt"
+                          [submit]="MainInfoReqForm.submitted">
                         </lib-uc-show-errors>
                       </td>
                       <td><textarea class="form-control" formControlName="Notes"></textarea></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
 
-          </div>
-  </form>
+            </div>
+          </form>
         </div>
       </div>
     </div>

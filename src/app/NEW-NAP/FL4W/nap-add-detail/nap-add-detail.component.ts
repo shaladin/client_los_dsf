@@ -32,8 +32,9 @@ export class NapAddDetailComponent implements OnInit {
   custType: string = AdInsConstant.CustTypeCompany;
   showCancel: boolean = true;
   getApp: any;
-  token : any = localStorage.getItem("Token");
+  token: any = localStorage.getItem("Token");
   IsLastStep: boolean = false;
+  IsSavedTC: boolean = false;
 
   FormReturnObj = this.fb.group({
     ReturnExecNotes: ['']
@@ -69,7 +70,6 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('Shinano');
     this.ClaimTask();
     this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppFL4WMainInformation.json";
     this.NapObj.AppId = this.appId;
@@ -206,6 +206,7 @@ export class NapAddDetailComponent implements OnInit {
   LastStepHandler() {
     this.NapObj.WfTaskListId = this.wfTaskListId;
     if (this.ReturnHandlingHId > 0) {
+      this.IsSavedTC = true;
     } else {
       this.http.post(AdInsConstant.SubmitNAP, this.NapObj).subscribe(
         (response) => {
@@ -221,6 +222,7 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   ChangeTab(AppStep) {
+    this.IsSavedTC = false;
     switch (AppStep) {
       case AdInsConstant.AppStepCust:
         this.AppStepIndex = this.AppStep[AdInsConstant.AppStepCust];
@@ -260,24 +262,30 @@ export class NapAddDetailComponent implements OnInit {
 
   Submit() {
     if (this.ReturnHandlingHId > 0) {
-      var ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
-      ReturnHandlingResult.WfTaskListId = this.wfTaskListId;
-      ReturnHandlingResult.ReturnHandlingDId = this.ResponseReturnInfoObj.ReturnHandlingDId;
-      ReturnHandlingResult.MrReturnTaskCode = this.ResponseReturnInfoObj.MrReturnTaskCode;
-      ReturnHandlingResult.ReturnStat = this.ResponseReturnInfoObj.ReturnStat;
-      ReturnHandlingResult.ReturnHandlingNotes = this.ResponseReturnInfoObj.ReturnHandlingNotes;
-      ReturnHandlingResult.ReturnHandlingExecNotes = this.FormReturnObj.controls['ReturnExecNotes'].value;
-      ReturnHandlingResult.RowVersion = this.ResponseReturnInfoObj.RowVersion;
+      if (!this.IsSavedTC) {
+        this.toastr.errorMessage("Please Save TC Data First!");
+      }
+      else {
+        var ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
+        ReturnHandlingResult.WfTaskListId = this.wfTaskListId;
+        ReturnHandlingResult.ReturnHandlingDId = this.ResponseReturnInfoObj.ReturnHandlingDId;
+        ReturnHandlingResult.MrReturnTaskCode = this.ResponseReturnInfoObj.MrReturnTaskCode;
+        ReturnHandlingResult.ReturnStat = this.ResponseReturnInfoObj.ReturnStat;
+        ReturnHandlingResult.ReturnHandlingNotes = this.ResponseReturnInfoObj.ReturnHandlingNotes;
+        ReturnHandlingResult.ReturnHandlingExecNotes = this.FormReturnObj.controls['ReturnExecNotes'].value;
+        ReturnHandlingResult.RowVersion = this.ResponseReturnInfoObj.RowVersion;
 
-      this.http.post(AdInsConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
-        (response) => {
-          console.log(response);
-          this.router.navigate(["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { queryParams: { BizTemplateCode: AdInsConstant.FL4W } })
-        },
-        (error) => {
-          console.log(error);
-        }
-      )
+        this.http.post(AdInsConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
+          (response) => {
+            console.log(response);
+            this.toastr.successMessage(response["message"]);
+            this.router.navigate(["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { queryParams: { BizTemplateCode: AdInsConstant.FL4W } })
+          },
+          (error) => {
+            console.log(error);
+          }
+        )
+      }
     }
   }
 
@@ -293,7 +301,7 @@ export class NapAddDetailComponent implements OnInit {
       });
   }
 
-  GetCallback(ev){
+  GetCallback(ev) {
     var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.ViewObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.ViewObj.ProdOfferingVersion + "&Token=" + this.token;
     this.router.navigate([]).then(result => { window.open(link, '_blank'); });
   }
