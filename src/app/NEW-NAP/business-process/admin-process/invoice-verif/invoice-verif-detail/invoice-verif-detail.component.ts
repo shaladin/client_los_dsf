@@ -54,18 +54,22 @@ export class InvoiceVerifDetailComponent implements OnInit {
 
     this.httpClient.post(AdInsConstant.GetMouCustByAppId, request).subscribe((response) => {
       this.PlafondAmt = response["PlafondAmt"];
+
+      this.httpClient.post(AdInsConstant.GetListAppInvoiceFctrByAppId, request).subscribe((response) => {
+        console.log(response);
+        this.listInvoice = response["AppInvoiceFctrObjs"];
+        var totalInvoice = 0;
+        for (let i = 0; i < this.listInvoice.length; i++) {
+          var fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray;
+          fa_listInvoice.push(this.AddInvoiceControl(this.listInvoice[i]))
+          totalInvoice += this.listInvoice[i].InvoiceAmt;
+        }
+        this.OsPlafondAmt = this.PlafondAmt - totalInvoice;
+      });
+      
     })
 
-    this.httpClient.post(AdInsConstant.GetListAppInvoiceFctrByAppId, request).subscribe((response) => {
-      this.listInvoice = response["AppInvoiceFctrObjs"];
-      var totalInvoice = 0;
-      for (let i = 0; i < this.listInvoice.length; i++) {
-        var fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray;
-        fa_listInvoice.push(this.AddInvoiceControl(this.listInvoice[i]))
-        totalInvoice += this.listInvoice[i].InvoiceAmt;
-      }
-      this.OsPlafondAmt = this.PlafondAmt - totalInvoice;
-    });
+    
   }
 
   AddInvoiceControl(obj) {
