@@ -251,9 +251,6 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   ToAgrmnt(){
     window.open("/Nap/View/AgrmntView?AgrmntId=" + this.AgrmntId, "_blank");
   }
-  ToLead(){
-    window.open("/Lead/View?LeadId=" + this.LeadId, "_blank");
-  }
   ToCust(){
     var custObj = { CustNo: this.CustNo };
     this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(

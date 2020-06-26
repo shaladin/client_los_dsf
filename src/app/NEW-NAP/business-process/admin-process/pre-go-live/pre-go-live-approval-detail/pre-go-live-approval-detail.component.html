@@ -76,14 +76,6 @@
             </div>
           </div> -->
 
-          
-          <div class="form-group row">
-            <label class="col-md-2 adInsLabel" translate>Lead No</label>
-            <div class="col-md-4 blue">
-              <label id="LeadNo" translate><a (click)="ToLead()">{{LeadNo}}</a></label>
-            </div>
-          </div>
-
           <div *ngIf="result">
             <div *ngIf="count1>0">
               <lib-ucSubsection [id]="'PreGoLiveApprovalHistoryId'" [title]="'PreGoLive Approval History'" [panel]="'PreGoLiveApprovalHistory'">
