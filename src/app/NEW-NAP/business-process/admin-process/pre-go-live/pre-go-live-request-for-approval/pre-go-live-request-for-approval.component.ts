@@ -51,7 +51,7 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
       }
     );
     this.LoadRefReason();
-    this.viewObj = "./assets/ucviewgeneric/viewAgrMainInfoPreGoLive.json";
+    this.viewObj = "./assets/ucviewgeneric/viewAgrMainInfoPreGoLiveApproval.json";
   }
 
   GetCallBack(ev) {

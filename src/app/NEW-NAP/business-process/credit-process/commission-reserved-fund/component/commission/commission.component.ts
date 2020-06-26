@@ -517,16 +517,39 @@ export class CommissionComponent implements OnInit {
     if (ev.message == AdInsConstant.MessageCalculate) {
       if (this.FormGetObj[AdInsConstant.ContentSupplier] && data == AdInsConstant.ContentSupplier) {
         this.CalculateEachData(this.FormGetObj[AdInsConstant.ContentSupplier]);
+        this.isCalcSuppl = true;
       }
       if (this.FormGetObj[AdInsConstant.ContentSupplierEmp] && data == AdInsConstant.ContentSupplierEmp) {
         this.CalculateEachData(this.FormGetObj[AdInsConstant.ContentSupplierEmp]);
+        this.isCalcSupplEmp = true;
       }
       if (this.FormGetObj[AdInsConstant.ContentReferantor] && data == AdInsConstant.ContentReferantor) {
         this.CalculateEachData(this.FormGetObj[AdInsConstant.ContentReferantor]);
+        this.isCalcReferantor = true;
+      }
+      
+      if (this.isCalcSuppl && this.isCalcSupplEmp && this.isCalcReferantor) {      
+        var obj = {
+          AppId: this.AppId,
+          TotalExpenseAmt: this.viewIncomeInfoObj.ExpenseAmount
+        };
+        console.log(obj);
+        this.http.post(AdInsConstant.CalCulateGrossYield, obj).subscribe(
+          (response) => {
+            console.log(response);
+            this.Summary.GrossYield = response["GrossYield"];          
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
       }
     }
   }
 
+  isCalcSuppl: boolean = true;
+  isCalcSupplEmp: boolean = true;
+  isCalcReferantor: boolean = true;
   CalculateTotal() {
     this.Summary = {
       TotalCommisionAmount: 0,
@@ -536,12 +559,15 @@ export class CommissionComponent implements OnInit {
     };
     this.viewIncomeInfoObj.ExpenseAmount = 0;
     if (this.FormGetObj[AdInsConstant.ContentSupplier]) {
+      this.isCalcSuppl = false;
       this.FormAdd1.CalculateTax(this.ResultAppData.CurrCode, this.ResultAppData.AppNo, this.ResultAppData.OriOfficeCode, this.AppId);
     }
     if (this.FormGetObj[AdInsConstant.ContentSupplierEmp]) {
+      this.isCalcSupplEmp = false;
       this.FormAdd2.CalculateTax(this.ResultAppData.CurrCode, this.ResultAppData.AppNo, this.ResultAppData.OriOfficeCode, this.AppId);
     }
     if (this.FormGetObj[AdInsConstant.ContentReferantor]) {
+      this.isCalcReferantor = false;
       this.FormAdd3.CalculateTax(this.ResultAppData.CurrCode, this.ResultAppData.AppNo, this.ResultAppData.OriOfficeCode, this.AppId);
     }
   }
@@ -564,7 +590,7 @@ export class CommissionComponent implements OnInit {
     this.Summary.TotalCommisionAmount += tempTotalCommisionAmount;
     this.Summary.TotalTaxAmmount += tempTotalTaxAmmount;
     this.Summary.TotalVATAmount += tempTotalVATAmount;
-    this.Summary.GrossYield = arr["controls"][0].value.GrossYield;
+    // this.Summary.GrossYield = arr["controls"][0].value.GrossYield;
     this.viewIncomeInfoObj.ExpenseAmount += tempTotalExpenseAmount;
     // console.log(tempTotalExpenseAmount);
     // console.log(this.viewIncomeInfoObj);
