@@ -61,7 +61,7 @@ export class AdInsConstant {
   public static RtnHandlingReturnStatDone = "DONE"
   public static ASSET_TYPE_CAR = "CAR";
   public static LICENSE_PLATE_NO = "LICENSE PLATE NO";
-
+  public static OFFERING_VALIDITY_APV = "OFF_VLD_APV";
   //APV RESULT
   public static ApvResultReturn = "Return";
 
