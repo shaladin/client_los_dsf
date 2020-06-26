@@ -8,6 +8,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
 import { AppFctrObj } from 'app/shared/model/AppFctr/AppFctr.model';
+import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 
 @Component({
   selector: 'app-invoice-data',
@@ -24,6 +25,7 @@ export class InvoiceDataComponent implements OnInit {
   MouCustLookupObj: InputLookupObj = new InputLookupObj();
   IsDisableCustFctr: boolean = true;
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
+  arrAddCrit;
 
   constructor(private httpClient: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
 
@@ -47,6 +49,8 @@ export class InvoiceDataComponent implements OnInit {
     this.MouCustLookupObj.pagingJson = "./assets/uclookup/NAP/lookupMouCustListedCustFctr.json";
     this.MouCustLookupObj.genericJson = "./assets/uclookup/NAP/lookupMouCustListedCustFctr.json";
 
+
+ 
     var obj = {
       AppId: this.AppId,
     }
@@ -57,6 +61,16 @@ export class InvoiceDataComponent implements OnInit {
           this.InvoiceForm.controls.CustomerFactoringName.clearValidators();
           this.InvoiceForm.controls.CustomerFactoringName.updateValueAndValidity();
         }
+        this.arrAddCrit = new Array();
+        var addCrit = new CriteriaObj();
+        addCrit.DataType = "numeric";
+        addCrit.propName = "A.APP_ID";
+        addCrit.restriction = AdInsConstant.RestrictionIn;
+        addCrit.listValue = [this.AppFactoringObj.AppId];
+        this.arrAddCrit.push(addCrit);
+        this.MouCustLookupObj.addCritInput = this.arrAddCrit;
+       // this.MouCustLookupObj.isReady = true;
+
         this.GetListAppInvoiceFctr();
       },
       (error) => {
