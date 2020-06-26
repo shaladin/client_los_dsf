@@ -528,23 +528,28 @@ export class CommissionComponent implements OnInit {
         this.isCalcReferantor = true;
       }
       
-      if (this.isCalcSuppl && this.isCalcSupplEmp && this.isCalcReferantor) {      
-        var obj = {
-          AppId: this.AppId,
-          TotalExpenseAmt: this.viewIncomeInfoObj.ExpenseAmount
-        };
-        console.log(obj);
-        this.http.post(AdInsConstant.CalCulateGrossYield, obj).subscribe(
-          (response) => {
-            console.log(response);
-            this.Summary.GrossYield = response["GrossYield"];          
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
+      if (this.isCalcSuppl && this.isCalcSupplEmp && this.isCalcReferantor) {  
+        this.CalculateGrossYield(this.viewIncomeInfoObj.ExpenseAmount);
       }
     }
+  }
+
+  CalculateGrossYield(expenseAmt: number) {
+    console.log("Calc GrossYield");
+    var obj = {
+      AppId: this.AppId,
+      TotalExpenseAmt: expenseAmt
+    };
+    console.log(obj);
+    this.http.post(AdInsConstant.CalCulateGrossYield, obj).subscribe(
+      (response) => {
+        console.log(response);
+        this.Summary.GrossYield = response["GrossYield"];
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   isCalcSuppl: boolean = true;
@@ -558,17 +563,21 @@ export class CommissionComponent implements OnInit {
       GrossYield: 0
     };
     this.viewIncomeInfoObj.ExpenseAmount = 0;
-    if (this.FormGetObj[AdInsConstant.ContentSupplier]) {
+    if (this.FormGetObj[AdInsConstant.ContentSupplier].value.arr.length != 0) {
       this.isCalcSuppl = false;
       this.FormAdd1.CalculateTax(this.ResultAppData.CurrCode, this.ResultAppData.AppNo, this.ResultAppData.OriOfficeCode, this.AppId);
     }
-    if (this.FormGetObj[AdInsConstant.ContentSupplierEmp]) {
+    if (this.FormGetObj[AdInsConstant.ContentSupplierEmp].value.arr.length != 0) {
       this.isCalcSupplEmp = false;
       this.FormAdd2.CalculateTax(this.ResultAppData.CurrCode, this.ResultAppData.AppNo, this.ResultAppData.OriOfficeCode, this.AppId);
     }
-    if (this.FormGetObj[AdInsConstant.ContentReferantor]) {
+    if (this.FormGetObj[AdInsConstant.ContentReferantor].value.arr.length != 0) {
       this.isCalcReferantor = false;
       this.FormAdd3.CalculateTax(this.ResultAppData.CurrCode, this.ResultAppData.AppNo, this.ResultAppData.OriOfficeCode, this.AppId);
+    }     
+
+    if (this.isCalcSuppl && this.isCalcSupplEmp && this.isCalcReferantor) {  
+      this.CalculateGrossYield(this.viewIncomeInfoObj.ExpenseAmount);
     }
   }
 
@@ -595,6 +604,7 @@ export class CommissionComponent implements OnInit {
     // console.log(tempTotalExpenseAmount);
     // console.log(this.viewIncomeInfoObj);
     this.viewIncomeInfoObj.RemainingAllocatedAmount = this.viewIncomeInfoObj.MaxAllocatedAmount - this.viewIncomeInfoObj.ExpenseAmount - this.viewIncomeInfoObj.ReservedFundAllocatedAmount;
+      
   }
 
   listAppCommissionHObj;
