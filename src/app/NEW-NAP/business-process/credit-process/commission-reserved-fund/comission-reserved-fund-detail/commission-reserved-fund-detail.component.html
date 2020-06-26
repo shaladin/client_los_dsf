@@ -9,33 +9,6 @@
     </div> -->
     <app-app-main-info [arrValue]="arrValue"></app-app-main-info>
 
-    <span *ngIf="ReturnHandlingHObj.ReturnHandlingHId != 0">
-      <div class="px-3">
-        <form class="form form-horizontal" [formGroup]="HandlingForm" #enjiForm="ngForm">
-          <div class="form-group row">
-            <label class="col-md-3 adInsLabel">Return Notes </label>
-            <label class="col-md-3 adinslabel" translate>{{this.returnHandlingDObj?.ReturnHandlingNotes}}</label>
-            <label class="col-md-3 adInsLabel adins-required-label">Return Execution Notes </label>
-            <div class="col-md-3">
-              <textarea class="form-control adInsInput width-75-per" formControlName="ReturnHandlingExecNotes">
-              </textarea>
-              <lib-uc-show-errors  [control]="HandlingForm.controls.ReturnHandlingExecNotes" [submit]="enjiForm.submitted">
-              </lib-uc-show-errors>
-            </div>
-          </div>
-        </form>
-        <div class="form-actions row">
-          <div class="col-md-10"></div>
-          <div class="col-md-2">
-            <span *ngIf='show'>
-              <button type="button" (click)="SubmitReturnHandling()" class="btn btn-raised btn-primary" translate>
-                <i class="far fa-check-square"></i> Submit
-              </button>
-            </span>
-          </div>
-        </div>
-      </div>
-    </span>
     <div id="stepper1" class="bs-stepper">
       <div class="bs-stepper-header" role="tablist" style="overflow-x: auto;">
         <!-- your steps here -->
@@ -63,6 +36,52 @@
         </div>
         <div id="reserved-fund-tab" class="content" role="tabpanel" aria-labelledby="reserved-fund-tab-trigger">
           <reserved-fund *ngIf="StepIndex == 2" [ReturnHandlingHObj]="ReturnHandlingHObj" [showCancel]="showCancel" (outputTab)="LastStepHandler($event)" (outputCancel)="Back()"></reserved-fund>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<div class="col-md-12">
+  <div class="form-action pull-right">
+  </div>
+  <div class="card" *ngIf="ReturnHandlingHObj.ReturnHandlingHId  > 0">
+    <div class="card-body">
+      <div class="px-3">
+        <lib-ucSubsection [id]="'formReturnInfoId'" [title]="'Return Handling'" [panel]="'formReturnInfo'">
+        </lib-ucSubsection>
+        <div class="form-body" *ngIf="ReturnHandlingHObj.ReturnHandlingHId > 0 && OnFormReturnInfo" [id]="'formReturnInfo'">
+          <form class="form form-horizontal" [formGroup]="HandlingForm" (ngSubmit)="HandlingForm.valid"
+            #enjiForm="ngForm">
+            <div class="form-body">
+              <div class="form-group row">
+                <div class="form-group col-md-2">
+                  <label class="adInsLabel">Return Notes</label>
+                </div>
+                <div class="col-md-4">
+                  <label class="adInsLabel">{{ returnHandlingDObj?.ReturnHandlingNotes }}</label>
+                </div>
+                <div class="form-group col-md-2">
+                  <label class="adInsLabel">Return Execution Notes</label>
+                </div>
+                <div class="col-md-4">
+                  <textarea type="textarea" row="5" class="form-control" formControlName="ReturnHandlingExecNotes"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && HandlingForm.controls.ReturnHandlingExecNotes.invalid}"></textarea>
+                  <lib-uc-show-errors [control]="HandlingForm.controls.ReturnHandlingExecNotes" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="form-action pull-right">
+          <button *ngIf="ReturnHandlingHObj.ReturnHandlingHId > 0" type="button" class="btn btn-raised btn-warning margin-r-5"
+            (click)="Back()" translate>
+            <i class="ft-x"></i> Cancel
+          </button>
+          <button *ngIf="ReturnHandlingHObj.ReturnHandlingHId > 0 && IsLastStep" type="button" (click)="SubmitReturnHandling()" class="btn btn-raised btn-primary">
+            <i class="far fa-check-square"></i> Submit
+          </button>
         </div>
       </div>
     </div>

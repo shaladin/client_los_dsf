@@ -1,7 +1,8 @@
 {
   "title": "Return Handling - Edit Commission & Reserved Fund",
   "exportExcel": false,
-  "component": [{
+  "component": [
+    {
       "type": "textbox",
       "name": "A.APP_NO",
       "id": "AppNoId",
@@ -34,11 +35,11 @@
       "isFromURL": true,
       "isSelectOne": false,
       "url": "",
-      "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
+      "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
       "label": "Office",
       "items": [],
       "itemsUrl": [],
-      "isQueryIn":true
+      "isQueryIn": true
     },
     {
       "type": "dropdown",
@@ -49,7 +50,8 @@
       "placeholder": "Placeholder",
       "isFromURL": false,
       "isSelectOne": false,
-      "items": [{
+      "items": [
+        {
           "key": "CLAIMED",
           "value": "CLAIMED"
         },
@@ -69,7 +71,8 @@
       "placeholder": "Placeholder"
     }
   ],
-  "headerList": [{
+  "headerList": [
+    {
       "type": "sort",
       "position": "left",
       "label": "Claim By",
@@ -106,11 +109,12 @@
     }
   ],
   "querystring": {
-    "select": "SELECT a.ORI_OFFICE_NAME AS OfficeName, a.ORI_OFFICE_CODE AS OfficeCode, a.APP_NO AS AppNo, ac.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.APP_ID AS AppId, WTL.USERNAME AS ClaimBy, WTL.WF_TASK_LIST_ID AS WfTaskListId, rhh.RETURN_HANDLING_H_ID as ReturnHandlingHId",
+    "select": "SELECT a.ORI_OFFICE_NAME AS OfficeName, a.ORI_OFFICE_CODE AS OfficeCode, a.APP_NO AS AppNo, ac.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.PROD_OFFERING_CODE AS prodOfferingCode, a.PROD_OFFERING_VERSION AS prodOfferingVersion, a.APP_ID AS AppId, WTL.USERNAME AS ClaimBy, WTL.WF_TASK_LIST_ID AS WfTaskListId, rhh.RETURN_HANDLING_H_ID as ReturnHandlingHId",
     "from": "FROM dbo.APP a WITH ( NOLOCK ) LEFT JOIN dbo.APP_CUST ac WITH ( NOLOCK ) ON a.APP_ID = ac.APP_ID JOIN [dbo].[V_WF_TASK_LIST] WTL WITH ( NOLOCK ) ON a.APP_NO = WTL.TRANSACTION_CODE JOIN [dbo].[V_REF_OFFICE] vro WITH ( NOLOCK ) ON a.ORI_OFFICE_CODE = vro.OFFICE_CODE  JOIN [dbo].RETURN_HANDLING_H rhh WITH ( NOLOCK ) on a.APP_ID = rhh.APP_ID",
     "where": "WHERE WTL.END_EXECUTING_DATE IS NULL AND a.IS_APP_INIT_DONE = '1' AND RHH.RETURN_H_STATUS <> 'FIN'"
   },
-  "bodyList": [{
+  "bodyList": [
+    {
       "type": "text",
       "position": "left",
       "property": "ClaimBy"
@@ -126,10 +130,12 @@
       "property": "AppNo",
       "target": "_blank",
       "path": "/Nap/View/AppView",
-      "param": [{
-        "type": "AppId",
-        "property": "AppId"
-      }]
+      "param": [
+        {
+          "type": "AppId",
+          "property": "AppId"
+        }
+      ]
     },
     {
       "type": "text",
@@ -145,64 +151,73 @@
     {
       "type": "action",
       "position": "center",
-      "action": [{
-        "type": "switch",
-        "case": [{
-            "conditions": [{
-              "isUser": true,
-              "property": "ClaimBy",
-              "value": "",
-              "restriction": "EQ"
-            }],
-            "result": {
-              "type": "url",
-              "path": "/Nap/CreditProcess/CommissionReservedFund/Detail",
-              "icon": "ft-edit-2",
-              "param": [{
-                  "type": "AppId",
-                  "property": "AppId"
-                },
+      "action": [
+        {
+          "type": "switch",
+          "case": [
+            {
+              "conditions": [
                 {
-                  "type": "WfTaskListId",
-                  "property": "WfTaskListId"
-                },
-                {
-                  "type": "ReturnHandlingHId",
-                  "property": "ReturnHandlingHId"
+                  "isUser": true,
+                  "property": "ClaimBy",
+                  "value": "",
+                  "restriction": "EQ"
                 }
-              ]
+              ],
+              "result": {
+                "type": "url",
+                "path": "/Nap/CreditProcess/CommissionReservedFund/Detail",
+                "icon": "ft-edit-2",
+                "param": [
+                  {
+                    "type": "AppId",
+                    "property": "AppId"
+                  },
+                  {
+                    "type": "WfTaskListId",
+                    "property": "WfTaskListId"
+                  },
+                  {
+                    "type": "ReturnHandlingHId",
+                    "property": "ReturnHandlingHId"
+                  }
+                ]
+              },
+              "isHide": false
             },
-            "isHide": false
-          },
-          {
-            "conditions": [{
-              "isUser": false,
-              "property": "ClaimBy",
-              "value": "",
-              "restriction": "EQ"
-            }],
-            "result": {
-              "type": "url",
-              "path": "/Nap/CreditProcess/CommissionReservedFund/Detail",
-              "icon": "ft-edit-2",
-              "param": [{
-                  "type": "AppId",
-                  "property": "AppId"
-                },
+            {
+              "conditions": [
                 {
-                  "type": "WfTaskListId",
-                  "property": "WfTaskListId"
-                },
-                {
-                  "type": "ReturnHandlingHId",
-                  "property": "ReturnHandlingHId"
+                  "isUser": false,
+                  "property": "ClaimBy",
+                  "value": "",
+                  "restriction": "EQ"
                 }
-              ]
-            },
-            "isHide": false
-          }
-        ]
-      }]
+              ],
+              "result": {
+                "type": "url",
+                "path": "/Nap/CreditProcess/CommissionReservedFund/Detail",
+                "icon": "ft-edit-2",
+                "param": [
+                  {
+                    "type": "AppId",
+                    "property": "AppId"
+                  },
+                  {
+                    "type": "WfTaskListId",
+                    "property": "WfTaskListId"
+                  },
+                  {
+                    "type": "ReturnHandlingHId",
+                    "property": "ReturnHandlingHId"
+                  }
+                ]
+              },
+              "isHide": false
+            }
+          ]
+        }
+      ]
     }
   ]
 }

@@ -3,8 +3,6 @@ import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { HttpClient } from '@angular/common/http';
-import { CenterGrpOfficeMbrObj } from 'app/shared/model/RefOffice/CenterGrpOfficeMbrObj.Model';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -15,8 +13,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ReturnHandlingEditAppPagingComponent implements OnInit {
 
   BizTemplateCode: string;
+  token: any = localStorage.getItem("Token");
   constructor(
-    private http: HttpClient,
     private route: ActivatedRoute,
     private router: Router,) {
       this.route.queryParams.subscribe(params => {
@@ -58,15 +56,22 @@ export class ReturnHandlingEditAppPagingComponent implements OnInit {
     return critObjs;
   }
 
-  GetCallback(ev){
-    if(this.BizTemplateCode == AdInsConstant.CF4W){
-      this.router.navigate(["Nap/ConsumerFinance/Add/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId } });
+  GetCallback(ev) {
+    console.log(ev);
+    if (ev.Key == "Edit") {
+      if (this.BizTemplateCode == AdInsConstant.CF4W) {
+        this.router.navigate(["Nap/ConsumerFinance/Add/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId } });
+      }
+      if (this.BizTemplateCode == AdInsConstant.FL4W) {
+        this.router.navigate(["Nap/FinanceLeasing/Add/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId } });
+      }
+      if (this.BizTemplateCode == AdInsConstant.CFRFN4W) {
+        this.router.navigate(["Nap/CFRefinancing/Add/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId } });
+      }
     }
-    if(this.BizTemplateCode == AdInsConstant.FL4W){
-      this.router.navigate(["Nap/FinanceLeasing/Add/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId } });
-    }
-    if(this.BizTemplateCode == AdInsConstant.CFRFN4W){
-      this.router.navigate(["Nap/CFRefinancing/Add/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId } });
+    if(ev.Key == "ViewProdOffering"){
+      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.RowObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.RowObj.ProdOfferingVersion  + "&Token=" + this.token;
+      this.router.navigate([]).then(() => { window.open(link, '_blank'); });
     }
   }
 
