@@ -183,7 +183,7 @@
                         "position": "center",
                         "property": "AgrmntNo",
                         "target" : "_blank",
-                        "path": "/Nap/FinanceLeasing/ViewAgrmnt",
+                        "path": "/Nap/View/AgrmntView",
                         "param": [
                         {
                             "type": "AgrmntId",

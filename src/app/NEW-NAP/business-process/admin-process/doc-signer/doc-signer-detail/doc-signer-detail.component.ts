@@ -25,12 +25,12 @@ export class DocSignerDetailComponent implements OnInit {
   SupplCode: string;
   OfficeCode: string;
   CustNo: string;
-  inputLookupBranchEmpObj: any;
-  inputLookupOfficeEmp1Obj: any;
-  inputLookupOfficeEmp2Obj: any;
-  inputLookupAppCustCompanyShareHolder1Obj: any;
-  inputLookupAppCustCompanyShareHolder2Obj: any;
-  inputLookupAppCustCompanyShareHolder3Obj: any;
+  inputLookupBranchEmpObj: InputLookupObj = new InputLookupObj();
+  inputLookupOfficeEmp1Obj: InputLookupObj = new InputLookupObj();
+  inputLookupOfficeEmp2Obj: InputLookupObj = new InputLookupObj();
+  inputLookupAppCustCompanyShareHolder1Obj: InputLookupObj = new InputLookupObj();
+  inputLookupAppCustCompanyShareHolder2Obj: InputLookupObj = new InputLookupObj();
+  inputLookupAppCustCompanyShareHolder3Obj: InputLookupObj = new InputLookupObj();
   agrmntSignerObj: AgrmntSignerObj = new AgrmntSignerObj();
   mode: string;
   ResponseAppCustDataObj: any;
@@ -95,10 +95,16 @@ export class DocSignerDetailComponent implements OnInit {
     await this.http.post(AdInsConstant.GetAgrmntSignerByAgrmntId, obj).toPromise().then(
       (response) => {
         this.ResponseAgrmntSignerObj = response;
-        if (this.ResponseAgrmntSignerObj == null) {
+        if (this.ResponseAgrmntSignerObj.AgrmntSignerId == 0) {
           this.mode = "add";
         } else {
           this.mode = "edit";
+
+          this.inputLookupOfficeEmp1Obj.isReady = true;
+          this.inputLookupOfficeEmp2Obj.isReady = true;
+          this.inputLookupAppCustCompanyShareHolder1Obj.isReady = true;
+          this.inputLookupAppCustCompanyShareHolder3Obj.isReady = true;
+          this.inputLookupAppCustCompanyShareHolder2Obj.isReady = true;
 
           this.agrmntSignerObj.AgrmntSignerId = this.ResponseAgrmntSignerObj.AgrmntSignerId;
           this.agrmntSignerObj.SupplBranchEmpNo = this.ResponseAgrmntSignerObj.SupplBranchEmpNo;
@@ -131,7 +137,6 @@ export class DocSignerDetailComponent implements OnInit {
   }
 
   setLookupObj() {
-    this.inputLookupBranchEmpObj = new InputLookupObj();
     this.inputLookupBranchEmpObj.urlJson = "./assets/uclookup/lookupBranchEmp.json";
     this.inputLookupBranchEmpObj.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputLookupBranchEmpObj.urlEnviPaging = environment.FoundationR3Url;
@@ -151,7 +156,6 @@ export class DocSignerDetailComponent implements OnInit {
     crit2Obj.value = 'VENDOR_POSITION';
     this.inputLookupBranchEmpObj.addCritInput.push(crit2Obj);
 
-    this.inputLookupOfficeEmp1Obj = new InputLookupObj();
     this.inputLookupOfficeEmp1Obj.urlJson = "./assets/uclookup/lookupOfficeEmp.json";
     this.inputLookupOfficeEmp1Obj.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputLookupOfficeEmp1Obj.urlEnviPaging = environment.FoundationR3Url;
@@ -159,7 +163,6 @@ export class DocSignerDetailComponent implements OnInit {
     this.inputLookupOfficeEmp1Obj.genericJson = "./assets/uclookup/lookupOfficeEmp.json";
     this.inputLookupOfficeEmp1Obj.addCritInput = new Array();
 
-    this.inputLookupOfficeEmp2Obj = new InputLookupObj();
     this.inputLookupOfficeEmp2Obj.urlJson = "./assets/uclookup/lookupOfficeEmp.json";
     this.inputLookupOfficeEmp2Obj.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputLookupOfficeEmp2Obj.urlEnviPaging = environment.FoundationR3Url;
@@ -176,7 +179,6 @@ export class DocSignerDetailComponent implements OnInit {
     this.inputLookupOfficeEmp1Obj.addCritInput.push(crit3Obj);
     this.inputLookupOfficeEmp2Obj.addCritInput.push(crit3Obj);
 
-    this.inputLookupAppCustCompanyShareHolder1Obj = new InputLookupObj();
     this.inputLookupAppCustCompanyShareHolder1Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
     this.inputLookupAppCustCompanyShareHolder1Obj.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputLookupAppCustCompanyShareHolder1Obj.urlEnviPaging = environment.losUrl;
@@ -184,7 +186,6 @@ export class DocSignerDetailComponent implements OnInit {
     this.inputLookupAppCustCompanyShareHolder1Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
     this.inputLookupAppCustCompanyShareHolder1Obj.addCritInput = new Array();
 
-    this.inputLookupAppCustCompanyShareHolder2Obj = new InputLookupObj();
     this.inputLookupAppCustCompanyShareHolder2Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
     this.inputLookupAppCustCompanyShareHolder2Obj.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputLookupAppCustCompanyShareHolder2Obj.urlEnviPaging = environment.losUrl;
@@ -193,7 +194,6 @@ export class DocSignerDetailComponent implements OnInit {
     this.inputLookupAppCustCompanyShareHolder2Obj.title = "Approver Signer";
     this.inputLookupAppCustCompanyShareHolder2Obj.addCritInput = new Array();
 
-    this.inputLookupAppCustCompanyShareHolder3Obj = new InputLookupObj();
     this.inputLookupAppCustCompanyShareHolder3Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
     this.inputLookupAppCustCompanyShareHolder3Obj.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputLookupAppCustCompanyShareHolder3Obj.urlEnviPaging = environment.losUrl;
@@ -201,7 +201,6 @@ export class DocSignerDetailComponent implements OnInit {
     this.inputLookupAppCustCompanyShareHolder3Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
     this.inputLookupAppCustCompanyShareHolder3Obj.title = "Approver Signer";
     this.inputLookupAppCustCompanyShareHolder3Obj.addCritInput = new Array();
-
     var crit4Obj = new CriteriaObj();
     crit4Obj.propName = 'AC.APP_ID';
     crit4Obj.restriction = AdInsConstant.RestrictionEq;
@@ -224,6 +223,13 @@ export class DocSignerDetailComponent implements OnInit {
       this.inputLookupBranchEmpObj.isRequired = false;
       this.isHidden = true;
     }
+
+    
+    this.inputLookupOfficeEmp1Obj.isReady = true;
+    this.inputLookupOfficeEmp2Obj.isReady = true;
+    this.inputLookupAppCustCompanyShareHolder1Obj.isReady = true;
+    this.inputLookupAppCustCompanyShareHolder3Obj.isReady = true;
+    this.inputLookupAppCustCompanyShareHolder2Obj.isReady = true;
   }
 
   getLookupBranchEmp(event) {
@@ -325,7 +331,7 @@ export class DocSignerDetailComponent implements OnInit {
         window.open( environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + ev.ViewObj.AgrmntId, "_blank");
       }
       else if(bizTemplateCode == "FL4W"){
-        window.open( environment.losR3Web + "/Nap/FinanceLeasing/ViewAgrmnt?AgrmntId=" + ev.ViewObj.AgrmntId, "_blank");
+        window.open( environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + ev.ViewObj.AgrmntId, "_blank");
       }
     }
 

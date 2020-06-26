@@ -27,7 +27,7 @@
         },
         {
             "type": "textbox",
-            "name": "",
+            "name": "AA.SUPPL_NAME",
             "id": "SupplierBranchNameId",
             "value": "",
             "label": "Supplier Branch Name",

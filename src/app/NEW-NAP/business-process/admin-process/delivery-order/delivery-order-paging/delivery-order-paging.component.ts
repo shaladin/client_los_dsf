@@ -7,13 +7,12 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-delivery-order-paging',
-  templateUrl: './delivery-order-paging.component.html',
-  styleUrls: ['./delivery-order-paging.component.scss']
+  templateUrl: './delivery-order-paging.component.html'
 })
 export class DeliveryOrderPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
   bizTemplateCode: string;
-
+  token : any = localStorage.getItem("Token");
   constructor(private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
@@ -49,5 +48,17 @@ export class DeliveryOrderPagingComponent implements OnInit {
     this.inputPagingObj.addCritInput.push(critBizTemplate);
 
     
+  }
+ 
+  
+  GetCallBack(ev: any){ 
+    if(ev.Key == "ViewProdOffering"){
+      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=" + 0 + "&prodOfferingCode=" + ev.RowObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.RowObj.ProdOfferingVersion  + "&Token=" + this.token;
+       window.open(link, '_blank');   
+    }
+    else if(ev.Key == "ViewAgrmnt"){
+      var link = environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + ev.RowObj.AgrmntId;
+      window.open(link, '_blank');  
+    }    
   }
 }

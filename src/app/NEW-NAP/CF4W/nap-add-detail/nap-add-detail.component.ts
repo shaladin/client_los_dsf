@@ -31,7 +31,9 @@ export class NapAddDetailComponent implements OnInit {
   ReturnHandlingHId: number = 0;
   showCancel: boolean = true;
   custType: string = AdInsConstant.CustTypeCompany;
-  token : any = localStorage.getItem("Token");
+  token: any = localStorage.getItem("Token");
+  IsLastStep: boolean = false;
+  IsSavedTC: boolean = false;
 
   AppStep = {
     "NEW": 1,
@@ -56,7 +58,8 @@ export class NapAddDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private http: HttpClient,
     private fb: FormBuilder,
-    private router: Router) {
+    private router: Router,
+    private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -204,6 +207,7 @@ export class NapAddDetailComponent implements OnInit {
 
   ChangeTab(AppStep) {
     console.log(AppStep);
+    this.IsSavedTC = false;
     switch (AppStep) {
       case AdInsConstant.AppStepCust:
         this.AppStepIndex = this.AppStep[AdInsConstant.AppStepCust];
@@ -236,6 +240,11 @@ export class NapAddDetailComponent implements OnInit {
       default:
         break;
     }
+    if (AppStep == AdInsConstant.AppStepTC)
+      this.IsLastStep = true;
+    else
+      this.IsLastStep = false;
+
     this.ucViewMainProd.initiateForm();
   }
 
@@ -255,7 +264,7 @@ export class NapAddDetailComponent implements OnInit {
     this.ucViewMainProd.initiateForm();
   }
 
-  UpdateAppStep(Step : string){
+  UpdateAppStep(Step: string) {
     this.NapObj.AppCurrStep = Step;
     this.http.post<AppObj>(AdInsConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
       (response) => {
@@ -271,11 +280,12 @@ export class NapAddDetailComponent implements OnInit {
   LastStepHandler() {
     this.NapObj.WfTaskListId = this.wfTaskListId;
     if (this.ReturnHandlingHId > 0) {
-
+      this.IsSavedTC = true;
     } else {
       this.http.post(AdInsConstant.SubmitNAP, this.NapObj).subscribe(
         (response) => {
           console.log(response);
+          this.toastr.successMessage(response["message"]);
           this.router.navigate(["/Nap/ConsumerFinance/Paging"], { queryParams: { BizTemplateCode: AdInsConstant.CF4W } })
         },
         (error) => {
@@ -286,29 +296,35 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   Cancel() {
-  this.router.navigate(["/Nap/ConsumerFinance/Paging"], { queryParams: { BizTemplateCode: AdInsConstant.CF4W } });
+    this.router.navigate(["/Nap/ConsumerFinance/Paging"], { queryParams: { BizTemplateCode: AdInsConstant.CF4W } });
   }
 
   Submit() {
     if (this.ReturnHandlingHId > 0) {
-      var ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
-      ReturnHandlingResult.WfTaskListId = this.wfTaskListId;
-      ReturnHandlingResult.ReturnHandlingDId = this.ResponseReturnInfoObj.ReturnHandlingDId;
-      ReturnHandlingResult.MrReturnTaskCode = this.ResponseReturnInfoObj.MrReturnTaskCode;
-      ReturnHandlingResult.ReturnStat = this.ResponseReturnInfoObj.ReturnStat;
-      ReturnHandlingResult.ReturnHandlingNotes = this.ResponseReturnInfoObj.ReturnHandlingNotes;
-      ReturnHandlingResult.ReturnHandlingExecNotes = this.FormReturnObj.controls['ReturnExecNotes'].value;
-      ReturnHandlingResult.RowVersion = this.ResponseReturnInfoObj.RowVersion;
+      if (!this.IsSavedTC) {
+        this.toastr.errorMessage("Please Save TC Data First!");
+      }
+      else {
+        var ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
+        ReturnHandlingResult.WfTaskListId = this.wfTaskListId;
+        ReturnHandlingResult.ReturnHandlingDId = this.ResponseReturnInfoObj.ReturnHandlingDId;
+        ReturnHandlingResult.MrReturnTaskCode = this.ResponseReturnInfoObj.MrReturnTaskCode;
+        ReturnHandlingResult.ReturnStat = this.ResponseReturnInfoObj.ReturnStat;
+        ReturnHandlingResult.ReturnHandlingNotes = this.ResponseReturnInfoObj.ReturnHandlingNotes;
+        ReturnHandlingResult.ReturnHandlingExecNotes = this.FormReturnObj.controls['ReturnExecNotes'].value;
+        ReturnHandlingResult.RowVersion = this.ResponseReturnInfoObj.RowVersion;
 
-      this.http.post(AdInsConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
-        (response) => {
-          console.log(response);
-          this.router.navigate(["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { queryParams: { BizTemplateCode: AdInsConstant.CF4W } })
-        },
-        (error) => {
-          console.log(error);
-        }
-      )
+        this.http.post(AdInsConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
+          (response) => {
+            console.log(response);
+            this.toastr.successMessage(response["message"]);
+            this.router.navigate(["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { queryParams: { BizTemplateCode: AdInsConstant.CF4W } })
+          },
+          (error) => {
+            console.log(error);
+          }
+        )
+      }
     }
   }
 
@@ -321,18 +337,16 @@ export class NapAddDetailComponent implements OnInit {
 
     this.http.post(AdInsConstant.ClaimTaskNap, wfClaimObj).subscribe(
       () => {
-
       });
   }
 
   CheckCustType(ev: string) {
-    // console.log(ev);
     this.custType = ev;
     this.ChangeStepper();
     this.NextStep(AdInsConstant.AppStepGuar);
   }
 
-  GetCallback(ev){
+  GetCallback(ev) {
     var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.ViewObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.ViewObj.ProdOfferingVersion + "&Token=" + this.token;
     this.router.navigate([]).then(result => { window.open(link, '_blank'); });
   }
