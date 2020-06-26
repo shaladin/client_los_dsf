@@ -72,7 +72,6 @@ export class PreGoLiveComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("error");
 
     this.http.post(AdInsConstant.GetRfaLogByTrxNoAndApvCategory, { TrxNo: this.AgrmntNo, ApvCategory: "PRE_GPV_APV" }).subscribe(
       (response) => {
@@ -142,7 +141,6 @@ export class PreGoLiveComponent implements OnInit {
   SaveForm(flag = true) {
     var businessDt = new Date(localStorage.getItem("BusinessDateRaw"));
 
-    console.log(flag);
     this.listAppTCObj = new ListAppTCObj();
     this.listAppTCObj.AppTCObj = new Array();
 
