@@ -25,7 +25,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   private stepper: Stepper;
   returnHandlingDObj: ReturnHandlingDObj;
   showCancel: boolean = true;
-
+  OnFormReturnInfo: boolean = false;
 
   Step = {
     "COM": 1,
@@ -107,7 +107,13 @@ export class CommissionReservedFundDetailComponent implements OnInit {
       }
       this.http.post<ReturnHandlingDObj>(AdInsConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
         (response) => {
-          this.returnHandlingDObj = response;
+          console.log(response);
+          this.returnHandlingDObj = response;          
+          this.HandlingForm.patchValue({
+            ReturnHandlingExecNotes: this.returnHandlingDObj.ReturnHandlingExecNotes
+          });
+          this.OnFormReturnInfo = true;
+          console.log(this.OnFormReturnInfo);
         },
         (error) => {
           console.log(error);
@@ -116,6 +122,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
     }
   }
 
+  IsLastStep: boolean = false;
   ChangeTab(AppStep) {
     switch (AppStep) {
       case AdInsConstant.AppStepComm:
@@ -128,6 +135,11 @@ export class CommissionReservedFundDetailComponent implements OnInit {
       default:
         break;
     }
+    
+    if (AppStep == AdInsConstant.AppStepRSVFund)
+      this.IsLastStep = true;
+    else
+      this.IsLastStep = false;
   }
 
   NextStep(Step) {
@@ -137,6 +149,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
         console.log("Step Change to, Curr Step : "+response.AppCurrStep+", Last Step : "+response.AppLastStep);
         this.ChangeTab(Step);
         this.stepper.next();
+        
       },
       (error)=>{
         console.error("Error when updating AppStep");

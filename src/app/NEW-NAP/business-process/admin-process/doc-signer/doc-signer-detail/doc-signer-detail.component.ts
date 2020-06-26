@@ -200,6 +200,7 @@ export class DocSignerDetailComponent implements OnInit {
     this.inputLookupAppCustCompanyShareHolder3Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
     this.inputLookupAppCustCompanyShareHolder3Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
     this.inputLookupAppCustCompanyShareHolder3Obj.title = "Approver Signer";
+    this.inputLookupAppCustCompanyShareHolder3Obj.isRequired = false;
     this.inputLookupAppCustCompanyShareHolder3Obj.addCritInput = new Array();
     var crit4Obj = new CriteriaObj();
     crit4Obj.propName = 'AC.APP_ID';
