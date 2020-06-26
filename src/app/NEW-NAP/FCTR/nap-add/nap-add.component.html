@@ -13,13 +13,13 @@
             <lib-ucSubsection [id]="'addAppId'" [title]="'Add Application'" [panel]="'addApp'">
             </lib-ucSubsection>
             <div class="form-body" id="addApp">
-              <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Add Application </h4>
               <div class="form-group row adins-required">
                 <label class="col-md-3 adInsLabel">Office </label>
                 <div class="col-md-9">
                   <select class="form-control adInsInput" style="width: auto" formControlName="OriOfficeCode"
                     (change)="ChangeValueOffice($event)"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppForm.controls.OriOfficeCode.invalid }">
+                    <option value="">-Select One-</option>
                     <option *ngFor="let it of officeItems" value="{{it.Key}}">
                       {{it.Value}} </option>
                   </select>

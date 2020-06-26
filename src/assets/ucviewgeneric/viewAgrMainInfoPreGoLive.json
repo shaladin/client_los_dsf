@@ -51,8 +51,7 @@
           "property": "OfficeName"
         },
         {
-          "type": "callback",
-          "key": "customer",
+          "type": "text",
           "label": "Customer Name",
           "property": "CustName"
         },

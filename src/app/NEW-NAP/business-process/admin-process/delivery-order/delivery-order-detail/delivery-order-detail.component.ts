@@ -39,6 +39,8 @@ export class DeliveryOrderDetailComponent implements OnInit {
   AssetCategoryCode: string;
   TaskListId: any;
   arrValue = [];
+  UserAccess: any;
+  MaxDate: Date;
 
   businessDt: Date = new Date();
 
@@ -75,6 +77,8 @@ export class DeliveryOrderDetailComponent implements OnInit {
   ngOnInit() {
     this.claimTask();
     this.arrValue.push(this.AgrmntId);
+    this.UserAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    this.MaxDate = this.UserAccess.BusinessDt;
 
     var appAssetobj = {
       AgrmntId: this.AgrmntId
