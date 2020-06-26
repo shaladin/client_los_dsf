@@ -30,6 +30,7 @@ export class ReturnHandlingEditAppPagingComponent implements OnInit {
   
   inputPagingObj;
   userAccess;
+  token : any = localStorage.getItem("Token");
   ngOnInit() {
     this.userAccess = JSON.parse(localStorage.getItem("UserAccess"));
 
@@ -74,6 +75,10 @@ export class ReturnHandlingEditAppPagingComponent implements OnInit {
     }
     if (ev.Key == "ViewProdOffering") {
       var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.RowObj.prodOfferingCode + "&prodOfferingVersion=" + ev.RowObj.prodOfferingVersion + "&Token=" + this.token;
+      this.router.navigate([]).then(result => { window.open(link, '_blank'); });
+    }
+    if(ev.Key == "ViewProdOffering"){
+      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.RowObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.RowObj.ProdOfferingVersion  + "&Token=" + this.token;
       this.router.navigate([]).then(result => { window.open(link, '_blank'); });
     }
   }
