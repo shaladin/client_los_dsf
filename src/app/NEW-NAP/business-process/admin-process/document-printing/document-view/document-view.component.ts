@@ -80,7 +80,6 @@ export class DocumentViewComponent implements OnInit {
   }
   getResult(event) {
     this.resultData = event.response;
-    console.log(this.resultData);
     this.totalData = event.response.Count;
     this.UCGridFooter.pageNow = event.pageNow;
     this.UCGridFooter.totalData = this.totalData;
@@ -99,7 +98,6 @@ export class DocumentViewComponent implements OnInit {
     }
     this.http.post(AdInsConstant.GetListAgrmntDocByAgrmntId, obj).subscribe(
       (response) => {
-        console.log(response);
         this.AgrmntDocObj = response;
       },
       (error) => {
@@ -108,17 +106,16 @@ export class DocumentViewComponent implements OnInit {
     );
   }
 
-  SaveAgrmntDocPrint(event) {
+  SaveAgrmntDocPrint(agrmntDocId) {
     this.agrmntDocObj = new AgrmntDocObj();
     this.agrmntDocPrintObj = new AgrmntDocPrintObj();
     this.agrmntDocPrintObj.RowVersion = "";
-    this.agrmntDocPrintObj.AgrmntDocId = event;
+    this.agrmntDocPrintObj.AgrmntDocId = agrmntDocId;
 
-    console.log(event);
     this.addUrl = AdInsConstant.AddAgrmntDocPrint;
     this.http.post(this.addUrl, this.agrmntDocPrintObj).subscribe(
       (response) => {
-        console.log(response);
+        this.GetListAgrmntDocByAgrmntId();
       },
       (error) => {
         console.log(error);
@@ -135,13 +132,7 @@ export class DocumentViewComponent implements OnInit {
     this.RdlcReport.MainReportInfoDetail.ReportDataProviderParameter["AgrmntId"] = +this.AgrmntId;
     // this.RdlcReport.MainReportInfoDetail.ReportDataProviderParameter["RptTmpltCode"] = item.RptTmpltCode;
 
-    console.log(this.RdlcReport);
-
-    let Obj = {
-      RequestObject: this.RdlcReport
-    };
-    //TEMUAN STEVEN INI URL GK BOLEH DI HARDCODE GINI
-    this.http.post("http://r3app-server.ad-ins.com/FOUNDATION_R3/Report/GenerateReportSync", Obj).subscribe(
+    this.http.post(AdInsConstant.GenerateReportSync, { RequestObject: this.RdlcReport }).subscribe(
       (response) => {
         let linkSource: string = 'data:application/pdf;base64,' + response["ReturnObject"];
         let fileName: string = item.AgrmntDocName + ".pdf";
@@ -151,7 +142,9 @@ export class DocumentViewComponent implements OnInit {
 
         if (response["ReturnObject"] != undefined) {
           downloadLink.click();
+          this.SaveAgrmntDocPrint(item.AgrmntDocId);
           this.toastr.successMessage(response['message']);
+
         } else {
           this.toastr.errorMessage(response['Message']);
         }
@@ -161,11 +154,10 @@ export class DocumentViewComponent implements OnInit {
       });
   }
 
-  GetCallBack(ev: any){
-    if(ev.Key == "ViewProdOffering"){
+  GetCallBack(ev: any) {
+    if (ev.Key == "ViewProdOffering") {
       var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.ViewObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.ViewObj.ProdOfferingVersion + "&Token=" + this.token;
-      // this.router.navigate([]).then(result => { window.open(link, '_blank'); });
-      window.open( link, "_blank");
+      window.open(link, "_blank");
     }
   }
 }

@@ -182,6 +182,7 @@ export class AdInsConstant {
   public static DeleteAppCommissionData = environment.losUrl + "/AppCommission/DeleteAppCommissionData";
   public static GetAppCommissionRule = environment.losUrl + "/AppCommission/GetAppCommissionRule";
   public static GetAppCommissionTax = environment.losUrl + "/AppCommission/GetAppCommissionTax";
+  public static CalCulateGrossYield = environment.losUrl + "/AppCommission/CalCulateGrossYield";
 
   public static GetRefOfficeByOfficeCode = environment.FoundationR3Url + "/RefOffice/GetRefOfficeByOfficeCode";
   public static GetListCenterGrpMemberByCenterGrpCode = environment.FoundationR3Url + "/CenterGrpOfficeMbr/GetListCenterGrpMemberByCenterGrpCode";
@@ -1236,6 +1237,9 @@ export class AdInsConstant {
   // Download
   public static DownloadTemplate = environment.FoundationR3Url + '/Download/DownloadTemplate';
   public static GetUploadAssetMasterByUploadMonitoringNoAndTrxType = environment.FoundationR3Url + '/AssetMaster/GetUploadAssetMasterByUploadMonitoringNoAndTrxType';
+
+  // Report
+  public static GenerateReportSync = environment.FoundationR3Url + '/Report/GenerateReportSync';
 
   // Asset Category
   public static GetAssetCategoryById = environment.FoundationR3Url + "/AssetCategory/GetAssetCategoryById";
