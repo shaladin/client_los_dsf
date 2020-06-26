@@ -53,6 +53,7 @@ export class PreGoLiveComponent implements OnInit {
   TrxNo: any;
   hasApproveFinal: boolean = false;
   hasRejectFinal: boolean = false;
+  lengthListRfaLogObj: number;
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -71,9 +72,12 @@ export class PreGoLiveComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("error");
+
     this.http.post(AdInsConstant.GetRfaLogByTrxNoAndApvCategory, { TrxNo: this.AgrmntNo, ApvCategory: "PRE_GPV_APV" }).subscribe(
       (response) => {
         this.ListRfaLogObj = response["ListRfaLogObj"];
+        this.lengthListRfaLogObj = this.ListRfaLogObj.length-1;
         for (let i = 0; i < this.ListRfaLogObj.length; i++) {
           this.listPreGoLiveAppvrObj[i] = {
             approvalBaseUrl: environment.ApprovalR3Url,
@@ -83,10 +87,6 @@ export class PreGoLiveComponent implements OnInit {
           if (this.ListRfaLogObj[i].ApvStat == "ApproveFinal") {
             this.IsCheckedAll = true;
             this.hasApproveFinal = true;
-          }
-          if (this.ListRfaLogObj[i].ApvStat == "RejectFinal") {
-            this.IsCheckedAll = false;
-            this.hasRejectFinal = true;
           }
         }
       },
@@ -123,7 +123,8 @@ export class PreGoLiveComponent implements OnInit {
   }
 
   ReceiveIsChecked(ev) {
-    if(this.hasRejectFinal){
+    if (this.ListRfaLogObj[this.lengthListRfaLogObj].ApvStat == "RejectFinal") {
+      this.IsCheckedAll = false;
       return;
     }
     if (this.hasApproveFinal) {
