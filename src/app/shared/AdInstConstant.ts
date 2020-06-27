@@ -1,6 +1,10 @@
 import { environment } from "environments/environment";
 
 export class AdInsConstant {
+  //Application Item
+  public static USER_ACCESS = "UserAccess";
+  public static ERROR_NO_CALLBACK_SETTING = "System Error - No Callback Handler for {0} Callback Trigger";
+  public static NOT_ELIGIBLE_FOR_TAKE_BACK = "You are not Eligible to Take Back this Task";
 
   //App Step
   public static AppStepNew = "NEW";
@@ -42,7 +46,6 @@ export class AdInsConstant {
   public static CFRFN4W = "CFRFN4W";
   public static CFNEWCAR = "CFNEWCAR";
   public static CENTER_GROUP_CODE = "CG";
-  public static ERROR_NO_CALLBACK_SETTING = "System Error - No Callback Handler for {0} Callback Trigger";
 
   public static GENERAL = "GENERAL";
   public static FACTORING = "FACTORING";

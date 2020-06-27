@@ -6,6 +6,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { HttpClient } from '@angular/common/http';
+import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 
 
 @Component({
@@ -43,6 +44,11 @@ export class CreditApprovalDetailComponent implements OnInit {
         approvalBaseUrl: environment.ApprovalR3Url
       }
       this.inputObj = obj;
+      
+      var ApvHoldObj = new ApprovalObj()
+      ApvHoldObj.TaskId = obj.taskId
+  
+      this.HoldTask(ApvHoldObj);
     });
   }
   async ngOnInit(): Promise<void> {
@@ -50,6 +56,17 @@ export class CreditApprovalDetailComponent implements OnInit {
     this.arrValue.push(this.appId);
     this.viewObj = "./assets/ucviewgeneric/viewCreditApprovalInfo.json";
     this.getApp();
+  }
+
+  HoldTask(obj){
+    this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
+      (response)=>{
+        this.toastr.successMessage(response["Message"]);
+      },
+      (error)=>{
+          this.router.navigate(["/Nap/CreditProcess/CreditApproval/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
+      }
+    )
   }
 
   getApp(){
