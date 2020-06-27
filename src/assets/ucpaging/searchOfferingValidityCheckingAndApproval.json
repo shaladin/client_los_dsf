@@ -216,7 +216,7 @@
       "action": [
         {
           "type": "edit",
-          "path": "/AdminProcess/OfferingValidityApproval/Detail",
+          "path": "/Nap/AdminProcess/OfferingValidityApproval/Detail",
           "param": [
             {
               "type": "TrxNo",
