@@ -19,7 +19,7 @@ export class OfferingValidityCheckingApprovalPagingComponent implements OnInit {
     var critInputOnlyOffering = new CriteriaObj();
     critInputOnlyOffering.propName = "vApv.CATEGORY_CODE";
     critInputOnlyOffering.restriction = AdInsConstant.RestrictionEq;
-    critInputOnlyOffering.value = "OFVA";
+    critInputOnlyOffering.value = AdInsConstant.OFFERING_VALIDITY_APV;
 
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchOfferingValidityCheckingAndApproval.json";

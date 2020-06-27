@@ -528,29 +528,36 @@ export class CommissionComponent implements OnInit {
         this.isCalcReferantor = true;
       }
       
-      if (this.isCalcSuppl && this.isCalcSupplEmp && this.isCalcReferantor) {      
-        var obj = {
-          AppId: this.AppId,
-          TotalExpenseAmt: this.viewIncomeInfoObj.ExpenseAmount
-        };
-        console.log(obj);
-        this.http.post(AdInsConstant.CalCulateGrossYield, obj).subscribe(
-          (response) => {
-            console.log(response);
-            this.Summary.GrossYield = response["GrossYield"];          
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
+      if (this.isCalcSuppl && this.isCalcSupplEmp && this.isCalcReferantor) {  
+        this.CalculateGrossYield(this.viewIncomeInfoObj.ExpenseAmount);
       }
     }
   }
 
+  CalculateGrossYield(expenseAmt: number) {
+    console.log("Calc GrossYield");
+    var obj = {
+      AppId: this.AppId,
+      TotalExpenseAmt: expenseAmt
+    };
+    console.log(obj);
+    this.http.post(AdInsConstant.CalCulateGrossYield, obj).subscribe(
+      (response) => {
+        console.log(response);
+        this.Summary.GrossYield = response["GrossYield"];
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  isCalcTotal: boolean = false;
   isCalcSuppl: boolean = true;
   isCalcSupplEmp: boolean = true;
   isCalcReferantor: boolean = true;
   CalculateTotal() {
+    this.isCalcTotal = true;
     this.Summary = {
       TotalCommisionAmount: 0,
       TotalTaxAmmount: 0,
@@ -558,17 +565,21 @@ export class CommissionComponent implements OnInit {
       GrossYield: 0
     };
     this.viewIncomeInfoObj.ExpenseAmount = 0;
-    if (this.FormGetObj[AdInsConstant.ContentSupplier]) {
+    if (this.FormGetObj[AdInsConstant.ContentSupplier].value.arr.length != 0) {
       this.isCalcSuppl = false;
       this.FormAdd1.CalculateTax(this.ResultAppData.CurrCode, this.ResultAppData.AppNo, this.ResultAppData.OriOfficeCode, this.AppId);
     }
-    if (this.FormGetObj[AdInsConstant.ContentSupplierEmp]) {
+    if (this.FormGetObj[AdInsConstant.ContentSupplierEmp].value.arr.length != 0) {
       this.isCalcSupplEmp = false;
       this.FormAdd2.CalculateTax(this.ResultAppData.CurrCode, this.ResultAppData.AppNo, this.ResultAppData.OriOfficeCode, this.AppId);
     }
-    if (this.FormGetObj[AdInsConstant.ContentReferantor]) {
+    if (this.FormGetObj[AdInsConstant.ContentReferantor].value.arr.length != 0) {
       this.isCalcReferantor = false;
       this.FormAdd3.CalculateTax(this.ResultAppData.CurrCode, this.ResultAppData.AppNo, this.ResultAppData.OriOfficeCode, this.AppId);
+    }     
+
+    if (this.isCalcSuppl && this.isCalcSupplEmp && this.isCalcReferantor) {  
+      this.CalculateGrossYield(this.viewIncomeInfoObj.ExpenseAmount);
     }
   }
 
@@ -595,6 +606,7 @@ export class CommissionComponent implements OnInit {
     // console.log(tempTotalExpenseAmount);
     // console.log(this.viewIncomeInfoObj);
     this.viewIncomeInfoObj.RemainingAllocatedAmount = this.viewIncomeInfoObj.MaxAllocatedAmount - this.viewIncomeInfoObj.ExpenseAmount - this.viewIncomeInfoObj.ReservedFundAllocatedAmount;
+      
   }
 
   listAppCommissionHObj;
@@ -672,12 +684,12 @@ export class CommissionComponent implements OnInit {
 
   isCalculated;
   SaveData() {
-    if ((!this.FormInputObjSupplier["isCalculated"] && this.FormInputObjSupplier["isDataInputed"]) || (!this.FormInputObjSupplierEmpl["isCalculated"] && this.FormInputObjSupplierEmpl["isDataInputed"]) || (!this.FormInputObjReferantor["isCalculated"] && this.FormInputObjReferantor["isDataInputed"])) {
-      this.toastr.errorMessage("Must Calculate First");
+    if ((!this.FormInputObjSupplier["isCalculated"] && this.FormInputObjSupplier["isDataInputed"]) || (!this.FormInputObjSupplierEmpl["isCalculated"] && this.FormInputObjSupplierEmpl["isDataInputed"]) || (!this.FormInputObjReferantor["isCalculated"] && this.FormInputObjReferantor["isDataInputed"]) || !this.isCalcTotal) {
+      this.toastr.warningMessage("Must Calculate First");
       return;
     }
     if (this.Summary.TotalCommisionAmount > this.viewIncomeInfoObj.MaxAllocatedAmount) {
-      this.toastr.errorMessage("Total Commision Amount cannot more than Max Allocated Amount");
+      this.toastr.warningMessage("Total Commision Amount cannot more than Max Allocated Amount");
       return;
     }
     this.listAppCommissionHObj = new Array();
