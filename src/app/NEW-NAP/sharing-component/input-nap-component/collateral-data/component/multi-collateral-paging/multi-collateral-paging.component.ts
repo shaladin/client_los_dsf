@@ -42,6 +42,7 @@ export class MultiCollateralPagingComponent implements OnInit {
   }
 
   deleteData(AppCollateralId: number){
+    if (confirm('Are you sure to delete this record?')) {
     this.http.post(AdInsConstant.DeleteAppCollateral, {AppCollateralId: AppCollateralId}).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
@@ -51,5 +52,6 @@ export class MultiCollateralPagingComponent implements OnInit {
         console.log(error);
       }
     );
+    }
   }
 }
