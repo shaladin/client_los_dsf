@@ -11,7 +11,7 @@
           </th>
           <th><span style="float: left;" class="thead-header" name='MouCustName' translate>CURRENT OWNER NAME</span>
           </th>
-          <th><span style="float: left;" class="thead-header" name='MouCustName' translate>COLLATERAL STATUS</span>
+          <th><span style="float: center;" class="thead-header" name='MouCustName' translate>COLLATERAL STATUS</span>
           </th>
           <th><span style="float: right;" class="thead-header" name='CollPrice' translate>COLLATERAL PRICE</span>
           </th>
@@ -22,7 +22,7 @@
           <td>{{item.CollateralNo}}</td>
           <td align="left">{{item.FullAssetName}}</td>
           <td align="left"><a [routerLink]="" (click)="openView(item.CustNo)">{{item.CustName}}</a></td>
-          <td align="text-center">{{item.CollateralStat}}</td>
+          <td align="center">{{item.CollateralStat}}</td>
           <td align="right">{{item.CollateralValueAmt | number}}</td>
         </tr>
       </tbody>
