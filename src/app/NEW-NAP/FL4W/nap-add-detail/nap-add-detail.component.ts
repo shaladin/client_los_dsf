@@ -186,6 +186,7 @@ export class NapAddDetailComponent implements OnInit {
     } else if (this.custType == AdInsConstant.CustTypeCompany) {
       this.stepperCompany.next();
     }
+    window.location.reload();
   }
 
   UpdateAppStep(Step: string) {
