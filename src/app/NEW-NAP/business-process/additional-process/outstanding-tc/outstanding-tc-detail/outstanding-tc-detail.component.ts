@@ -20,10 +20,12 @@ export class OutstandingTcDetailComponent implements OnInit {
   listAppTCObj: any;
   appTC: any;
   outstandingTcObj: any;
+  BizTemplateCode : any;
 
   constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private route: ActivatedRoute, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
+      this.BizTemplateCode = params["BizTemplateCode"]
     });
    }
 
@@ -66,6 +68,10 @@ export class OutstandingTcDetailComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  Back(){
+    this.router.navigate(['/Nap/AddProcess/OutstandingTC/Paging'], { queryParams: { BizTemplateCode: this.BizTemplateCode } });
   }
 
 }
