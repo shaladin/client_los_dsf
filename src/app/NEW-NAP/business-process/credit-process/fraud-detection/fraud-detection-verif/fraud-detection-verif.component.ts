@@ -13,6 +13,10 @@ import { AppCustPersonalObj } from 'app/shared/model/AppCustPersonalObj.Model';
 import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 import { AppDupCheckObj } from 'app/shared/model/AppDupCheckCust/AppDupCheckObj.Model';
 import { NegativeCustObj } from 'app/shared/model/NegativeCust.Model';
+import { NegativeAssetCheckForMultiAssetObj } from 'app/shared/model/NegativeAssetCheckForMultiAssetObj.Model';
+import { NegativeAssetCheckObj } from 'app/shared/model/NegativeAssetCheckObj.Model';
+import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
+
 
 @Component({
   selector: 'app-fraud-detection-verif',
@@ -35,7 +39,7 @@ export class FraudDetectionVerifComponent implements OnInit {
   appId: any;
   appCustObj: any;
   appCustCompanyObj: any;
-  appAssetObj: any;
+  appAssetObj: AppAssetObj;
   leadObj: any;
   appObj: AppObj;
   leadId: any;
@@ -60,6 +64,7 @@ export class FraudDetectionVerifComponent implements OnInit {
   respAssetNegative : any;
 
   WfTaskListId : number;
+
 
 
   constructor(
@@ -220,8 +225,43 @@ export class FraudDetectionVerifComponent implements OnInit {
     this.http.post<AppAssetObj>(this.getAppAssetByAppId, appId).subscribe(
       response => {
         this.appAssetObj = response;
+        if(this.appAssetObj.AppAssetId != 0){
+          this.getNegativeAsset();
+        }else{
+          this.getAppCollateral();
+        }
+      },
+      error => {
+        console.log("error")
+      }
+    );
+  }
 
-        this.getNegativeAsset();
+  getAppCollateral() {
+    var appCollateralObj = new AppCollateralObj();
+    var negativeAssetCheckForMultiAssetObj = new NegativeAssetCheckForMultiAssetObj();
+    negativeAssetCheckForMultiAssetObj.RequestObj = new Array<NegativeAssetCheckObj>();
+    appCollateralObj.AppId = this.appId;
+    this.http.post(AdInsConstant.GetListAppCollateralByAppId, appCollateralObj).subscribe(
+      response => {
+        var listAppCollateral = new Array<AppCollateralObj>();
+        listAppCollateral = response["ReturnObject"];
+
+        for (var i = 0; i < listAppCollateral.length; i++) {
+          var negativeAssetCheckObj = new NegativeAssetCheckObj();
+          negativeAssetCheckObj.AssetTypeCode = listAppCollateral[i].AssetTypeCode;
+          negativeAssetCheckObj.SerialNo1 = listAppCollateral[i].SerialNo1;
+          negativeAssetCheckObj.SerialNo2 = listAppCollateral[i].SerialNo2;
+          negativeAssetCheckObj.SerialNo3 = listAppCollateral[i].SerialNo3;
+          negativeAssetCheckObj.SerialNo4 = listAppCollateral[i].SerialNo4;
+          negativeAssetCheckObj.SerialNo5 = listAppCollateral[i].SerialNo5;
+          negativeAssetCheckForMultiAssetObj.RequestObj[i] = negativeAssetCheckObj;
+        }
+        this.http.post(AdInsConstant.GetAssetNegativeDuplicateCheckByListOfAsset, negativeAssetCheckForMultiAssetObj).subscribe(
+          response => {
+            this.respAssetNegative = response;
+            this.ListAssetNegative = response["ReturnObject"];
+          });
       },
       error => {
         console.log("error")

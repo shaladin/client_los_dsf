@@ -10,6 +10,10 @@ import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
 import { FraudDukcapilObj } from 'app/shared/model/FraudDukcapilObj.Model';
 import { NegativeCustObj } from 'app/shared/model/NegativeCust.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { NegativeAssetCheckForMultiAssetObj } from 'app/shared/model/NegativeAssetCheckForMultiAssetObj.Model';
+import { NegativeAssetCheckObj } from 'app/shared/model/NegativeAssetCheckObj.Model';
+import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
+
 
 
 @Component({
@@ -187,9 +191,45 @@ export class ViewFraudDetectionResultComponent implements OnInit {
     this.http.post<AppAssetObj>(this.getAppAssetByAppId, reqObj).subscribe(
       (response) => {
         this.appAssetObj = response;
-        this.getNegativeAsset();
+
+        if(this.appAssetObj.AppAssetId != 0){
+          this.getNegativeAsset();
+        }else{
+          this.getAppCollateral();
+        }
       },
       () => {
+        console.log("error")
+      }
+    );
+  }
+
+  getAppCollateral() {
+    var appCollateralObj = new AppCollateralObj();
+    var negativeAssetCheckForMultiAssetObj = new NegativeAssetCheckForMultiAssetObj();
+    negativeAssetCheckForMultiAssetObj.RequestObj = new Array<NegativeAssetCheckObj>();
+    appCollateralObj.AppId = this.appId;
+    this.http.post(AdInsConstant.GetListAppCollateralByAppId, appCollateralObj).subscribe(
+      response => {
+        var listAppCollateral = new Array<AppCollateralObj>();
+        listAppCollateral = response["ReturnObject"];
+
+        for (var i = 0; i < listAppCollateral.length; i++) {
+          var negativeAssetCheckObj = new NegativeAssetCheckObj();
+          negativeAssetCheckObj.AssetTypeCode = listAppCollateral[i].AssetTypeCode;
+          negativeAssetCheckObj.SerialNo1 = listAppCollateral[i].SerialNo1;
+          negativeAssetCheckObj.SerialNo2 = listAppCollateral[i].SerialNo2;
+          negativeAssetCheckObj.SerialNo3 = listAppCollateral[i].SerialNo3;
+          negativeAssetCheckObj.SerialNo4 = listAppCollateral[i].SerialNo4;
+          negativeAssetCheckObj.SerialNo5 = listAppCollateral[i].SerialNo5;
+          negativeAssetCheckForMultiAssetObj.RequestObj[i] = negativeAssetCheckObj;
+        }
+        this.http.post(AdInsConstant.GetAssetNegativeDuplicateCheckByListOfAsset, negativeAssetCheckForMultiAssetObj).subscribe(
+          response => {
+            this.listNegativeAsset = response["ReturnObject"];
+          });
+      },
+      error => {
         console.log("error")
       }
     );
