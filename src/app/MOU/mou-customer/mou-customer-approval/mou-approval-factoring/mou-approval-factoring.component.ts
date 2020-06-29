@@ -18,7 +18,8 @@ export class MouApprovalFactoringComponent implements OnInit {
   instanceId: number;
   inputObj: any;
   MouType : string = "FACTORING";
-  
+  viewObj : string;
+
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
 
@@ -38,6 +39,7 @@ export class MouApprovalFactoringComponent implements OnInit {
   
 
   ngOnInit() {
+    this.viewObj = "./assets/ucviewgeneric/viewMouHeader.json";
   }
 
   MouApprovalDataForm = this.fb.group({

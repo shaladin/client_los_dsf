@@ -3,6 +3,8 @@ import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { Router } from '@angular/router';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-application-agreement-cancellation-paging',
@@ -11,15 +13,15 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 })
 export class ApplicationAgreementCancellationPagingComponent implements OnInit {
   inputPagingObj: any;
-
-  constructor() { }
+  token: any = localStorage.getItem("Token");
+  constructor(private router: Router) { }
 
   ngOnInit() {
 
     var critInputAppStatNotCancel = new CriteriaObj();
     critInputAppStatNotCancel.propName = "ap.APP_STAT";
     critInputAppStatNotCancel.restriction = AdInsConstant.RestrictionNeq;
-    critInputAppStatNotCancel.value = "CANCEL";
+    critInputAppStatNotCancel.value = AdInsConstant.AppStatCancel;
 
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchApplicationAgreementCancellation.json";
@@ -29,6 +31,11 @@ export class ApplicationAgreementCancellationPagingComponent implements OnInit {
     this.inputPagingObj.addCritInput = new Array();
 
     this.inputPagingObj.addCritInput.push(critInputAppStatNotCancel);
-    
+
+  }
+  GetCallBack(ev: any) {
+    if (ev.Key == "ViewProdOffering") {
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion, this.token);
+    }
   }
 }
