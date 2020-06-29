@@ -56,7 +56,6 @@ export class CommissionComponent implements OnInit {
   Summary;
   isAutoGenerate: boolean = true;
   async ngOnInit() {
-
     this.OnForm1 = false;
     this.OnForm2 = false;
     this.OnForm3 = false;
@@ -565,15 +564,15 @@ export class CommissionComponent implements OnInit {
       GrossYield: 0
     };
     this.viewIncomeInfoObj.ExpenseAmount = 0;
-    if (this.FormGetObj[AdInsConstant.ContentSupplier].value.arr.length != 0) {
+    if (this.FormGetObj[AdInsConstant.ContentSupplier] != undefined && this.FormGetObj[AdInsConstant.ContentSupplier].value.arr.length != 0) {
       this.isCalcSuppl = false;
       this.FormAdd1.CalculateTax(this.ResultAppData.CurrCode, this.ResultAppData.AppNo, this.ResultAppData.OriOfficeCode, this.AppId);
     }
-    if (this.FormGetObj[AdInsConstant.ContentSupplierEmp].value.arr.length != 0) {
+    if (this.FormGetObj[AdInsConstant.ContentSupplierEmp] != undefined && this.FormGetObj[AdInsConstant.ContentSupplierEmp].value.arr.length != 0) {
       this.isCalcSupplEmp = false;
       this.FormAdd2.CalculateTax(this.ResultAppData.CurrCode, this.ResultAppData.AppNo, this.ResultAppData.OriOfficeCode, this.AppId);
     }
-    if (this.FormGetObj[AdInsConstant.ContentReferantor].value.arr.length != 0) {
+    if (this.FormGetObj[AdInsConstant.ContentReferantor] != undefined && this.FormGetObj[AdInsConstant.ContentReferantor].value.arr.length != 0) {
       this.isCalcReferantor = false;
       this.FormAdd3.CalculateTax(this.ResultAppData.CurrCode, this.ResultAppData.AppNo, this.ResultAppData.OriOfficeCode, this.AppId);
     }     
