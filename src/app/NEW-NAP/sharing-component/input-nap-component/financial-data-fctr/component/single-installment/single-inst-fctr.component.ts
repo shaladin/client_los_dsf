@@ -50,7 +50,6 @@ export class SingleInstFctrComponent implements OnInit {
   }
 
   Calculate() {
-    console.log("asdasd");
     this.IsAppFeePrcntValid = true;
     if (this.ParentForm.value.EstEffDt == "") {
       this.toastr.errorMessage("Insert Estimation Effective Date");
@@ -73,7 +72,6 @@ export class SingleInstFctrComponent implements OnInit {
       this.calcSingleInstObj = this.ParentForm.value;
       this.http.post<ResponseCalculateObj>(AdInsConstant.CalculateSingleInst, this.calcSingleInstObj).subscribe(
         (response) => {
-          console.log(response);
           this.listInstallment = response.InstallmentTable;
           this.ParentForm.patchValue({
             EffectiveRatePrcnt: response.EffectiveRatePrcnt,
