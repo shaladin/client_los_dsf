@@ -116,7 +116,7 @@ export class ViewFraudDetectionResultComponent implements OnInit {
       }
     );
 
-    // this.getAppAsset(appReqObj);
+     this.getAppAsset(appReqObj);
      this.getAppDupCheckCust(appReqObj);
   }
 
@@ -187,6 +187,7 @@ export class ViewFraudDetectionResultComponent implements OnInit {
     this.http.post<AppAssetObj>(this.getAppAssetByAppId, reqObj).subscribe(
       (response) => {
         this.appAssetObj = response;
+        this.getNegativeAsset();
       },
       () => {
         console.log("error")
@@ -197,19 +198,19 @@ export class ViewFraudDetectionResultComponent implements OnInit {
 
   getNegativeAsset() {
     var negativeAssetObj = {
-      "assetCategoryCode": this.appAssetObj.assetCategoryCode,
-      "assetTypeCode": this.appAssetObj.assetTypeCode,
-      "fullAssetCode": this.appAssetObj.fullAssetCode,
-      "serialNo1": this.appAssetObj.serialNo1,
-      "serialNo2": this.appAssetObj.serialNo2,
-      "serialNo3": this.appAssetObj.serialNo3,
-      "serialNo4": this.appAssetObj.serialNo4,
-      "serialNo5": this.appAssetObj.serialNo5,
+      AssetCategoryCode: this.appAssetObj.AssetCategoryCode,
+      AssetTypeCode: this.appAssetObj.AssetTypeCode,
+      FullAssetCode: this.appAssetObj.FullAssetCode,
+      SerialNo1: this.appAssetObj.SerialNo1,
+      SerialNo2: this.appAssetObj.SerialNo2,
+      SerialNo3: this.appAssetObj.SerialNo3,
+      SerialNo4: this.appAssetObj.SerialNo4,
+      SerialNo5: this.appAssetObj.SerialNo5,
     }
     this.http.post(this.getAssetNegativeDuplicateCheck, negativeAssetObj).subscribe(
       (response) => {
         console.log(response);
-        this.listNegativeAsset = response["AssetNegativeObj"];
+        this.listNegativeAsset = response["ReturnObject"];
 
       },
       () => {

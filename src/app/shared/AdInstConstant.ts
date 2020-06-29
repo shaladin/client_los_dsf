@@ -1,6 +1,10 @@
 import { environment } from "environments/environment";
 
 export class AdInsConstant {
+  //Application Item
+  public static USER_ACCESS = "UserAccess";
+  public static ERROR_NO_CALLBACK_SETTING = "System Error - No Callback Handler for {0} Callback Trigger";
+  public static NOT_ELIGIBLE_FOR_TAKE_BACK = "You are not Eligible to Take Back this Task";
 
   //App Step
   public static AppStepNew = "NEW";
@@ -61,7 +65,7 @@ export class AdInsConstant {
   public static RtnHandlingReturnStatDone = "DONE"
   public static ASSET_TYPE_CAR = "CAR";
   public static LICENSE_PLATE_NO = "LICENSE PLATE NO";
-
+  public static OFFERING_VALIDITY_APV = "OFF_VLD_APV";
   //APV RESULT
   public static ApvResultReturn = "Return";
 
@@ -1163,6 +1167,9 @@ export class AdInsConstant {
   // List Approver
   public static GetApprovedBy = environment.ApprovalR3Url + "/api/RFAWeb/GetApprovedBy/";
   public static GetRecommendations = environment.ApprovalR3Url + "/api/RFAWeb/GetRecommendations/";
+  
+  public static ApvHoldTaskUrl = environment.FoundationR3Url + "/Approval/Hold";
+  public static ApvTakeBackTaskUrl = environment.FoundationR3Url + "/Approval/TakeBack";
 
   // PreGoLive
   public static GetListApprovedByForPreGoLive = environment.losUrl + "/PreGoLive/GetListApprovedByForPreGoLive";

@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { environment } from 'environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 
 @Component({
   selector: 'app-offering-validity-checking-approval-detail',
@@ -10,9 +13,10 @@ import { environment } from 'environments/environment';
 })
 export class OfferingValidityCheckingApprovalDetailComponent implements OnInit {
   viewObj: string;
+  BizTemplateCode : string = localStorage.getItem("BizTemplateCode");
   inputObj: { taskId: any; instanceId: any; approvalBaseUrl: any; };
 
-  constructor(private router: Router, private route: ActivatedRoute, private toastr: NGXToastrService) {
+  constructor(private router: Router, private route: ActivatedRoute, private toastr: NGXToastrService, private http:HttpClient) {
     this.route.queryParams.subscribe(params => {
 
       var obj = {
@@ -22,14 +26,40 @@ export class OfferingValidityCheckingApprovalDetailComponent implements OnInit {
       }
 
       this.inputObj = obj;
+    
+      var ApvHoldObj = new ApprovalObj()
+      ApvHoldObj.TaskId = obj.taskId
+  
+      this.HoldTask(ApvHoldObj);
     });
   }
 
   ngOnInit() {
     this.viewObj = "./assets/ucviewgeneric/viewOfferingValidityCheckingApproval.json";
+  }
 
-    
+  HoldTask(obj){
+    this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
+      (response)=>{
+        this.toastr.successMessage(response["Message"]);
+      },
+      (error)=>{
+        this.router.navigate(["/Nap/AdminProcess/OfferingValidityApproval/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
+      }
+    )
+  }
+  
+  onAvailableNextTask() {
 
+  }
+  onApprovalSubmited() {
+    this.toastr.successMessage("Success");
+    this.router.navigate(["/Nap/AdminProcess/OfferingValidityApproval/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
+  }
+
+  onCancelClick()
+  {
+    this.router.navigate(["/Nap/AdminProcess/OfferingValidityApproval/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
   }
 
 }
