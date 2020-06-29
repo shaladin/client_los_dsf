@@ -7,6 +7,7 @@ import { ListAppTCObj } from 'app/shared/model/ListAppTCObj.Model';
 import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
 import { OutstandingTcObj } from 'app/shared/model/OutstandingTcObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-outstanding-tc-detail',
@@ -74,4 +75,10 @@ export class OutstandingTcDetailComponent implements OnInit {
     this.router.navigate(['/Nap/AddProcess/OutstandingTC/Paging'], { queryParams: { BizTemplateCode: this.BizTemplateCode } });
   }
 
+  GetCallBack(ev: any){
+    console.log(ev);
+    if(ev.Key == "ViewApp"){
+      AdInsHelper.OpenAppViewByAppId(ev.ViewObj.AppId);
+    }
+    }
 }

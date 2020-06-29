@@ -4,7 +4,7 @@
       <div class="card-body">
         <div class="px-3">
           <div>
-            <lib-ucviewgeneric [viewInput]="viewObj"></lib-ucviewgeneric>
+            <lib-ucviewgeneric [viewInput]="viewObj" (callback)="GetCallBack($event)"></lib-ucviewgeneric>
           </div>
           <form class="form form-horizontal" [formGroup]="OustandingTCForm"
             (ngSubmit)="OustandingTCForm.valid && SaveForm()" #enjiForm="ngForm">
