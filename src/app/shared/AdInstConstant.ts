@@ -49,6 +49,8 @@ export class AdInsConstant {
 
   public static GENERAL = "GENERAL";
   public static FACTORING = "FACTORING";
+  public static ID_TYPE_NPWP = "NPWP";
+  public static ID_TYPE_EKTP = "EKTP";
 
   public static SALES_JOB_CODE = "SALES_PERSON";
   public static ADMIN_HEAD_JOB_CODE = "ADMIN_HEAD";

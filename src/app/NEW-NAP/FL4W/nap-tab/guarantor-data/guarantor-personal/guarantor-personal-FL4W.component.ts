@@ -43,6 +43,8 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
   isLocal: boolean = false;
   countryCode: string;
   tempCustNo: string;
+  isIdExpiredDateMandatory: boolean = false;
+  businessDt: Date;
   constructor(private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService, private modalService: NgbModal) {
   }
 
@@ -101,7 +103,6 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
           });
           this.setCountryName(this.resultData.appGuarantorPersonalObj.CountryCode);
           this.setAddrLegalObj();
-
         },
         (error) => {
           console.log(error);
@@ -218,9 +219,27 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
         }
       }
     );
+  }
 
-
-
+  IdTypeHandler(){
+    var value = this.PersonalForm.controls["MrIdTypeCode"].value;
+    if(value != AdInsConstant.ID_TYPE_EKTP){
+      this.PersonalForm.controls["IdExpDt"].setValidators([Validators.required]);
+      this.PersonalForm.controls["IdExpDt"].updateValueAndValidity();
+      var context = JSON.parse(localStorage.getItem("UserAccess"));
+      this.businessDt = new Date(context["BusinessDt"]);
+      this.isIdExpiredDateMandatory = true;
+    }
+    else{
+      this.PersonalForm.patchValue({
+        IdExpDt: ''
+      });
+      this.PersonalForm.controls["IdExpDt"].clearValidators();
+      this.PersonalForm.controls["IdExpDt"].updateValueAndValidity();
+      var context = JSON.parse(localStorage.getItem("UserAccess"));
+      this.businessDt = new Date(context["BusinessDt"]);
+      this.isIdExpiredDateMandatory = false;
+    }
   }
 
   UserAccess: any;
@@ -411,11 +430,17 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
   }
 
   clearExpDt() {
-    if (this.PersonalForm.controls.MrIdTypeCode.value == "EKTP") {
+    // if (this.PersonalForm.controls.MrIdTypeCode.value == "EKTP") {
+    if (this.PersonalForm.controls.MrIdTypeCode.value == AdInsConstant.ID_TYPE_EKTP) {
       this.PersonalForm.patchValue({
         IdExpDt: '',
       });
       this.PersonalForm.controls.IdExpDt.clearValidators();
+      this.PersonalForm.controls.IdExpDt.updateValueAndValidity();
+      this.isIdExpiredDateMandatory = false;
+    }
+    else{
+      this.isIdExpiredDateMandatory = true;
     }
   }
 

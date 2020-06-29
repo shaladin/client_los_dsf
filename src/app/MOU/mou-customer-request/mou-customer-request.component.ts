@@ -7,6 +7,7 @@ import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { Router } from '@angular/router';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-mou-customer-request',
@@ -52,7 +53,8 @@ export class MouCustomerRequestComponent implements OnInit {
     this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
       (response) => { 
         custId = response['CustId'];
-        window.open( environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + custId, "_blank");
+        // window.open( environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + custId, "_blank");
+        AdInsHelper.OpenCustomerViewByCustId(custId);
       },
       (error) => {
         console.log(error);
