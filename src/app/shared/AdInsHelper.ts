@@ -98,6 +98,11 @@ export class AdInsHelper {
   public static OpenProdOfferingViewByCodeAndVersion(Code, Version, Token) {
     window.open(environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + Code + "&prodOfferingVersion=" + Version + "&Token=" + Token, "_blank");
   }
+  
+  public static OpenLeadViewByLeadId(LeadId)
+  {
+      window.open(environment.losR3Web + '/Lead/View?LeadId=' + LeadId, "_blank");
+  }
 
   public static CreateUserAccess(response) {
     // var currentUserContext = new CurrentUserContext;
