@@ -54,6 +54,7 @@ import { AppAssetDataFl4wComponent } from './view-agrmnt-fl4w/app-asset-data-fl4
 import { ViewSummaryFl4wComponent } from './view-agrmnt-fl4w/view-summary-fl4w/view-summary-fl4w.component';
 import { AppAssetDataDetailFl4wComponent } from './view-agrmnt-fl4w/app-asset-data-fl4w/app-asset-data-detail-fl4w/app-asset-data-detail-fl4w.component'; 
 import { ViewInsuranceDetailComponent } from "../sharing-component/view-agrmnt-component/view-insurance-detail/view-insurance-detail.component";
+import { UcviewgenericComponent } from "@adins/ucviewgeneric";
 
  
 export const customCurrencyMaskConfig = {     
@@ -132,7 +133,8 @@ export const customCurrencyMaskConfig = {
   ],
   entryComponents: [
     SubsidyAddEditFL4WComponent,
-    AppAssetDataDetailFl4wComponent
+    AppAssetDataDetailFl4wComponent,
+    UcviewgenericComponent
   ]
 })
 export class InputNapFL4WModule { }
