@@ -6,7 +6,6 @@
         </lib-ucSubsection>
         <div class="form-body" [id]="'formReferantorInfo'">
           <div class="form-body">
-
             <div class="form-group row">
               <div class="form-group col-md-4">
                 <label class="adInsLabel">Referantor</label>
@@ -16,7 +15,6 @@
                 <label class="adInsLabel" *ngIf="!existData"> No </label>
               </div>
             </div>
-
             <div *ngIf="existData">
               <div class="form-group row">
                 <div class="form-group col-md-4">
@@ -42,6 +40,12 @@
                   <label class="adInsLabel"> {{ResponseReferantorData.BankAcc}} </label>
                 </div>
               </div>
+            </div>
+          </div>
+          <lib-ucSubsection [id]="'npwpReferantorInfoId'" [title]="'Referantor\'s NPWP Info'" [panel]="'npwpReferantorInfo'">
+          </lib-ucSubsection>
+          <div class="form-body" [id]="'npwpReferantorInfo'">
+            <div *ngIf="existData">
               <div class="form-group row">
                 <div class="form-group col-md-4">
                   <label class="adInsLabel">NPWP No</label>
@@ -50,10 +54,69 @@
                   <label class="adInsLabel"> {{ResponseReferantorData.Tax}} </label>
                 </div>
               </div>
+              <div class="form-group row">
+                <div class="form-group col-md-4">
+                  <label class="adInsLabel">NPWP Name</label>
+                </div>
+                <div class="col-md-8">
+                  <label class="adInsLabel"> {{ResponseReferantorData.TaxIdName}} </label>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="form-group col-md-4">
+                  <label class="adInsLabel">Address</label>
+                </div>
+                <div class="col-md-8">
+                  <label class="adInsLabel"> {{ResponseReferantorData.TaxIdAddr}} </label>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="form-group col-md-4">
+                  <label class="adInsLabel">RT/RW</label>
+                </div>
+                <div class="col-md-8">
+                  <div *ngIf = "ResponseReferantorData.TaxIdAreaCode4!=null || ResponseReferantorData.TaxIdAreaCode3!=null">
+                    <label class="adInsLabel"> {{ResponseReferantorData.TaxIdAreaCode4}} / {{ResponseReferantorData.TaxIdAreaCode3}} </label>
+                  </div>
+                  <div *ngIf = "ResponseReferantorData.TaxIdAreaCode4==null || ResponseReferantorData.TaxIdAreaCode3==null">
+                    -
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="form-group col-md-4">
+                  <label class="adInsLabel">Kelurahan</label>
+                </div>
+                <div class="col-md-8">
+                  <label class="adInsLabel"> {{ResponseReferantorData.TaxIdAreaCode2}} </label>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="form-group col-md-4">
+                  <label class="adInsLabel">Kecamatan</label>
+                </div>
+                <div class="col-md-8">
+                  <label class="adInsLabel"> {{ResponseReferantorData.TaxIdAreaCode1}} </label>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="form-group col-md-4">
+                  <label class="adInsLabel">City</label>
+                </div>
+                <div class="col-md-8">
+                  <label class="adInsLabel"> {{ResponseReferantorData.TaxIdCity}} </label>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="form-group col-md-4">
+                  <label class="adInsLabel">Zipcode</label>
+                </div>
+                <div class="col-md-8">
+                  <label class="adInsLabel"> {{ResponseReferantorData.TaxIdZipcode}} </label>
+                </div>
+              </div>
             </div>
-            
           </div>
-
         </div>
       </div>
     </div>
