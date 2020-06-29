@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppAgrmntCancelObj } from 'app/shared/model/AppAgrmntCancelObj.Model';
+import { AdInsHelper } from '../../../../../shared/AdInsHelper';
 
 @Component({
   selector: 'app-application-agreement-cancellation-detail',
@@ -16,7 +17,7 @@ export class ApplicationAgreementCancellationDetailComponent implements OnInit {
   AppId: any;
   AgrmntId: any;
   AppAgrmntCancelObj: any;
-
+  token: any = localStorage.getItem("Token");
   MainInfoForm = this.fb.group({
     ReasonCode: ['', Validators.required],
     CancelNotes: ['', Validators.required]
@@ -66,5 +67,11 @@ export class ApplicationAgreementCancellationDetailComponent implements OnInit {
       (error) => {
         console.log(error);
       });
+  }
+
+  GetCallBack(ev: any) {
+    if (ev.Key == "ViewProdOffering") {
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion, this.token);
+    }
   }
 }
