@@ -1,0 +1,72 @@
+{
+    "headerList": [
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Loan Object Name",
+            "name": "MrLoanPurposeDescr"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Supplier Name",
+            "name": "SupplName"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Budget Plan Amount",
+            "name": "BudgetPlanAmt"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Self Financing",
+            "name": "SelfFinancingAmt"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Financing Amount",
+            "name": "FinancingAmt"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Is Disburse To Customer",
+            "name": "IsDisburseToCust"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "MrLoanPurposeDescr"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "SupplName"
+        },
+        {
+            "type": "decimal",
+            "position": "left",
+            "property": "BudgetPlanAmt"
+        },
+        {
+            "type": "decimal",
+            "position": "left",
+            "property": "SelfFinancingAmt"
+        },
+        {
+            "type": "decimal",
+            "position": "left",
+            "property": "FinancingAmt"
+        },
+        {
+            "type": "boolean",
+            "position": "center",
+            "property": "IsDisburseToCust"
+        }
+    ]
+}

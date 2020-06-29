@@ -60,6 +60,8 @@ export class GuarantorComponent implements OnInit {
       }
     );
 
+
+
   }
   ViewGuarantorPersonal(content,id) {
     this.guarantorPersonalFiltered = this.listAppGuarantorPersonal.filter(
