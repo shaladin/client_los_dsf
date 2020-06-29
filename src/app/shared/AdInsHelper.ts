@@ -96,6 +96,11 @@ export class AdInsHelper {
         window.open(environment.losR3Web + "/Nap/View/AppView?AppId=" + TrxNo, "_blank");
     }
 
+    public static OpenLeadViewByLeadId(LeadId)
+    {
+        window.open(environment.losR3Web + '/Lead/View?LeadId=' + LeadId, "_blank");
+    }
+
     public static CreateUserAccess(response)
     {
         // var currentUserContext = new CurrentUserContext;
