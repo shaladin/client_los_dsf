@@ -1,6 +1,7 @@
 import { formatDate } from "@angular/common";
 import { AdInsConstant } from "app/shared/AdInstConstant";
 import { CurrentUserContext } from "./model/CurrentUserContext.model";
+import { environment } from "environments/environment";
 
 export class AdInsHelper {
     //Function
@@ -88,6 +89,11 @@ export class AdInsHelper {
         }
         return "0";
 
+    }
+
+    public static OpenAppViewByAppId(TrxNo)
+    {
+        window.open(environment.losR3Web + "/Nap/View/AppView?AppId=" + TrxNo, "_blank");
     }
 
     public static CreateUserAccess(response)
