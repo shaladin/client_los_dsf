@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
+import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 
 @Component({
   selector: 'app-tab-application',
@@ -9,9 +10,11 @@ import { environment } from 'environments/environment';
   styleUrls: ['./tab-application.component.scss']
 })
 export class TabApplicationComponent implements OnInit {
-
   @Input() appId;
   viewProdMainInfoObj;
+  inputGridObj: InputGridObj;
+  IsGridLoanReady: boolean = false;
+
   constructor( 
     private http: HttpClient
   ) { }
@@ -23,6 +26,7 @@ export class TabApplicationComponent implements OnInit {
   async ngOnInit() {
     this.initData();
     await this.GetCrossAppData();
+    this.GetLoanObjData();
   }
 
   ListCrossAppData
@@ -36,5 +40,25 @@ export class TabApplicationComponent implements OnInit {
 
       }
     );
+  }
+
+  GetLoanObjData(){
+    this.inputGridObj = new InputGridObj();
+    this.inputGridObj.pagingJson = "./assets/ucgridview/gridLoanObj.json";
+
+    this.http.post(AdInsConstant.GetListAppLoanPurposeByAppId, {AppId: this.appId}).subscribe(
+      (response) => {
+        this.inputGridObj.resultData = {
+          Data: ""
+        }
+        this.inputGridObj.resultData["Data"] = new Array();
+        this.inputGridObj.resultData.Data = response["listResponseAppLoanPurpose"]
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+    this.IsGridLoanReady = true;
   }
 }

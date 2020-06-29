@@ -40,4 +40,16 @@ export class MultiCollateralPagingComponent implements OnInit {
   editData(AppCollateralId: number){
     this.select.emit(AppCollateralId);
   }
+
+  deleteData(AppCollateralId: number){
+    this.http.post(AdInsConstant.DeleteAppCollateral, {AppCollateralId: AppCollateralId}).subscribe(
+      (response) => {
+        this.toastr.successMessage(response["message"]);
+        this.GetListAppCollateralByAppId();
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
 }
