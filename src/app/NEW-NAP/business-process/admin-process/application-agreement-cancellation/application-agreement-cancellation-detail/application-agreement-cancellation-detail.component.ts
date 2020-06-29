@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppAgrmntCancelObj } from 'app/shared/model/AppAgrmntCancelObj.Model';
-import { AdInsHelper } from '../../../../../shared/AdInsHelper';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-application-agreement-cancellation-detail',
