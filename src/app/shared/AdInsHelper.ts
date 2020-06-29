@@ -88,7 +88,11 @@ export class AdInsHelper {
       localStorage.setItem("LastAccessTime", businessDtNow);
     }
     return "0";
+  }
 
+  public static OpenCustomerViewByCustId(CustId){
+      var url = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + CustId;
+      window.open(url, "_blank");
   }
 
   public static OpenAppViewByAppId(TrxNo) {

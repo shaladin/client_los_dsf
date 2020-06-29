@@ -9,6 +9,7 @@ import { MouCustTcComponent } from '../mou-cust-tc/mou-cust-tc.component';
 import Stepper from 'bs-stepper';
 import { environment } from 'environments/environment';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-mou-customer-detail',
@@ -249,8 +250,9 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
       var custObj = { CustNo: this.resultData['CustNo'] };
       this.httpClient.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
         response => {
-          this.link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
-          window.open(this.link, '_blank');
+          // this.link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
+          // window.open(this.link, '_blank');
+          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         },
         (error) => {
           console.log(error);
