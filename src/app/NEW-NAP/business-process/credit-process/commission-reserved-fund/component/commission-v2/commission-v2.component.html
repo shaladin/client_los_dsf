@@ -55,13 +55,16 @@
           </div>
 
         </div>
+
+        <form class="form form-horizontal" [formGroup]="CommissionForm" (ngSubmit)="CommissionForm.valid && SaveForm()"
+          #enjiForm="ngForm">
+          <div class="form-body">
+            <app-form-commission-generate *ngIf="OnForm1" [enjiForm]="enjiForm" [parentForm]="CommissionForm"
+            [identifier]="identifierSupplier" [FormInputObj]="FormInputObjSupplier"></app-form-commission-generate>
+          </div>
+        </form>
       </div>
     </div>
 
-    <form class="form form-horizontal" [formGroup]="CommissionForm" (ngSubmit)="CommissionForm.valid && SaveForm()"
-      #enjiForm="ngForm">
-      <app-form-commission-generate [enjiForm]="enjiForm" [parentForm]="CommissionForm"
-      [identifier]="identifierSupplier" [FormInputObj]="FormInputObjSupplier"></app-form-commission-generate>
-    </form>
   </div>
 </div>

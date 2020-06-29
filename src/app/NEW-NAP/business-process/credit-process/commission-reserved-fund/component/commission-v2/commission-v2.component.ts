@@ -7,6 +7,8 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppFeeObj } from 'app/shared/model/AppFeeObj.Model';
 import { AppFinDataObj } from 'app/shared/model/AppFinData/AppFinData.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { AppAssetDetailObj } from 'app/shared/model/AppAsset/AppAssetDetailObj.Model';
+import { NapAppReferantorModel } from 'app/shared/model/NapAppReferantor.Model';
 
 @Component({
   selector: 'app-commission-v2',
@@ -15,12 +17,11 @@ import { AppObj } from 'app/shared/model/App/App.Model';
 })
 export class CommissionV2Component implements OnInit {
 
-  
-  @Input() AppId:number = 10936;
+  @Input() AppId: number = 10550;
   @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
-  
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -28,7 +29,7 @@ export class CommissionV2Component implements OnInit {
     private fb: FormBuilder,
     private toastr: NGXToastrService,) { }
 
-  
+
   viewIncomeInfoObj = {
     UppingRate: 0,
     InsuranceIncome: 0,
@@ -47,47 +48,48 @@ export class CommissionV2Component implements OnInit {
   FormInputObjSupplier: any = {};
   FormInputObjSupplierEmpl: any = {};
   FormInputObjReferantor: any = {};
-  CommissionForm = this.fb.group({
-    
-  });
+  CommissionForm = this.fb.group({});
 
+  OnForm1: boolean = false;
+  OnForm2: boolean = false;
+  OnForm3: boolean = false;
   GetFormAddDynamicObj(content) {
     if (content == AdInsConstant.ContentSupplier) {
       this.FormInputObjSupplier["title"] = AdInsConstant.TitleSupplier;
       this.FormInputObjSupplier["content"] = AdInsConstant.ContentSupplier;
       this.FormInputObjSupplier["labelName"] = AdInsConstant.LabelSupplier;
       this.FormInputObjSupplier["AppId"] = this.AppId;
-      // this.FormInputObjSupplier["contentObj"] = this.ContentObjSupplier;
+      this.FormInputObjSupplier["contentObj"] = this.ContentObjSupplier;
       // this.FormInputObjSupplier["ruleObj"] = this.RuleSupplierData;
       // this.FormInputObjSupplier["isAutoGenerate"] = this.isAutoGenerate;
       this.FormInputObjSupplier["isCalculated"] = false;
       this.FormInputObjSupplier["isDataInputed"] = false;
-      // this.OnForm1 = true;
+      this.OnForm1 = true;
       console.log(this.FormInputObjSupplier);
     } else if (content == AdInsConstant.ContentSupplierEmp) {
       this.FormInputObjSupplierEmpl["title"] = AdInsConstant.TitleSupplierEmp;
       this.FormInputObjSupplierEmpl["content"] = AdInsConstant.ContentSupplierEmp;
       this.FormInputObjSupplierEmpl["labelName"] = AdInsConstant.LabelSupplierEmp;
       this.FormInputObjSupplierEmpl["AppId"] = this.AppId;
-      // this.FormInputObjSupplierEmpl["contentObj"] = this.ContentObjSupplierEmp;
+      this.FormInputObjSupplierEmpl["contentObj"] = this.ContentObjSupplierEmp;
       // this.FormInputObjSupplierEmpl["ruleObj"] = this.RuleSupplierEmpData;
       // this.FormInputObjSupplierEmpl["isAutoGenerate"] = this.isAutoGenerate;
       this.FormInputObjSupplierEmpl["isCalculated"] = false;
       this.FormInputObjSupplierEmpl["isDataInputed"] = false;
       // this.FormInputObjSupplierEmpl["dictSuppl"] = this.DictSupplierCode;
-      // this.OnForm2 = true;
+      this.OnForm2 = true;
       console.log(this.FormInputObjSupplierEmpl);
     } else if (content == AdInsConstant.ContentReferantor) {
       this.FormInputObjReferantor["title"] = AdInsConstant.TitleReferantor;
       this.FormInputObjReferantor["content"] = AdInsConstant.ContentReferantor;
       this.FormInputObjReferantor["labelName"] = AdInsConstant.LabelReferantor;
       this.FormInputObjReferantor["AppId"] = this.AppId;
-      // this.FormInputObjReferantor["contentObj"] = this.ContentObjReferantor;
+      this.FormInputObjReferantor["contentObj"] = this.ContentObjReferantor;
       // this.FormInputObjReferantor["ruleObj"] = this.RuleReferantorData;
       // this.FormInputObjReferantor["isAutoGenerate"] = this.isAutoGenerate;
       this.FormInputObjReferantor["isCalculated"] = false;
       this.FormInputObjReferantor["isDataInputed"] = false;
-      // this.OnForm3 = true;
+      this.OnForm3 = true;
       console.log(this.FormInputObjReferantor);
     }
   }
@@ -95,8 +97,11 @@ export class CommissionV2Component implements OnInit {
   async ngOnInit() {
     await this.GetAppFeeData();
     await this.GetIncomeInfoObj();
+    await this.GetContentData();
     console.log(this.CommissionForm);
     this.GetFormAddDynamicObj(AdInsConstant.ContentSupplier);
+    this.GetFormAddDynamicObj(AdInsConstant.ContentSupplierEmp);
+    this.GetFormAddDynamicObj(AdInsConstant.ContentReferantor);
   }
 
   ListAppFeeObj: Array<AppFeeObj> = new Array<AppFeeObj>();
@@ -136,7 +141,7 @@ export class CommissionV2Component implements OnInit {
       }
     );
   }
-  
+
   async GetIncomeInfoObj() {
     var obj = {
       AppId: this.AppId,
@@ -155,7 +160,92 @@ export class CommissionV2Component implements OnInit {
     );
   }
 
-  SaveForm(){
+  async GetContentData() {
+    var obj;
+    obj = {
+      AppId: this.AppId,
+      RowVersion: ""
+    };
+    // console.log("response list appAsset & appAssetSupplEmp");
+    await this.http.post<AppAssetDetailObj>(AdInsConstant.GetAppAssetListAndAppAssetSupplEmpListDistinctSupplierByAppId, obj).toPromise().then(
+      (response) => {
+        // console.log(response);
+        if (response.ListAppAssetObj.length != 0) {
+          this.GetDDLContent(response.ListAppAssetObj, AdInsConstant.ContentSupplier);
+          this.GetDDLContent(response.ListAppAssetSupplEmpObj, AdInsConstant.ContentSupplierEmp);
+        }
+        // this.GetContentName(AdInsConstant.ContentSupplierEmp);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+    obj = {
+      AppId: this.AppId,
+      RowVersion: ""
+    };
+    await this.http.post<NapAppReferantorModel>(AdInsConstant.GetAppReferantorByAppId, obj).toPromise().then(
+      (response) => {
+        // console.log(response);
+        this.GetDDLContent(response, AdInsConstant.ContentReferantor);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+  }
+
+  ContentObjSupplier = new Array();
+  ContentObjSupplierEmp = new Array();
+  ContentObjReferantor = new Array();
+  DictSupplierCode: any = {};
+  GetDDLContent(ReturnObject, content: string) {
+    // console.log(ReturnObject);
+    if (content == AdInsConstant.ContentReferantor) {
+      if (ReturnObject.AppId == null) return;
+      var KVPObj;
+      KVPObj = {
+        Key: ReturnObject.ReferantorCode,
+        Value: ReturnObject.ReferantorName
+      };
+      this.ContentObjReferantor.push(KVPObj);
+      this.FormInputObjReferantor["BankData"] = {
+        BankCode: ReturnObject.RefBankCode,
+        BankName: "",
+        BankAccNo: ReturnObject.BankAccNo,
+        BankAccName: ReturnObject.BankAccName,
+        BankBranch: ReturnObject.BankBranch,
+      };
+    } else {
+      for (var i = 0; i < ReturnObject.length; i++) {
+        var KVPObj;
+        if (content == AdInsConstant.ContentSupplier) {
+          KVPObj = {
+            Key: ReturnObject[i].SupplCode,
+            Value: ReturnObject[i].SupplName
+          };
+          // console.log(this.DictSupplierCode);
+          // console.log(this.DictSupplierCode[ReturnObject[i].SupplCode]);
+          this.DictSupplierCode[ReturnObject[i].SupplCode] = ReturnObject[i].SupplName;
+          this.ContentObjSupplier.push(KVPObj);
+        } else if (content == AdInsConstant.ContentSupplierEmp) {
+          // console.log(ReturnObject[i]);
+          KVPObj = {
+            Key: ReturnObject[i].SupplEmpNo,
+            Value: ReturnObject[i].SupplEmpName,
+            MrSupplEmpPositionCode: ReturnObject[i].MrSupplEmpPositionCode,
+            MrSupplEmpPositionCodeDesc: ReturnObject[i].MrSupplEmpPositionCodeDesc,
+            SupplCode: ReturnObject[i].SupplCode
+          };
+          this.ContentObjSupplierEmp.push(KVPObj);
+        }
+      }
+    }
+  }
+
+  SaveForm() {
 
   }
 }

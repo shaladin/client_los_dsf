@@ -1,5 +1,48 @@
-<div formGroupName="{{identifier}}">  
+<div formArrayName="{{identifier}}">
   <lib-ucSubsection [id]="'formInformation' + FormInputObj['content'] + 'id'" [title]="FormInputObj['title']"
     [panel]="'formInformation' + FormInputObj['content']">
   </lib-ucSubsection>
+  <div class="form-body" [id]="'formInformation' + FormInputObj['content']">
+    <div class="form-actions right">
+      <button type="button" (click)="AddNewDataForm()" class="btn btn-raised btn-primary"
+        [hidden]="lenDDLContentName == 0" translate>
+        <i class="ft-plus-circle"></i> Add
+      </button>
+    </div>
+
+    <div *ngFor="let item of parentForm.controls[identifier].controls; let i = index;">
+      <div [formGroupName]="i">
+        
+        <div class="form-group row">
+          <!-- Content Name -->
+          <div class="col-md-2 adins-required">
+            <label class="adInsLabel">{{FormInputObj['labelName']}} Name</label>
+          </div>
+          <div class="col-md-4">
+            <div class="row">
+              <div class="col-md-10">
+                <select *ngIf="item.controls.ContentName.value == ''" class="form-control adInsInput"
+                  style="width: auto" formControlName="ContentName" (change)="ChooseContentName($event, i)">
+                  <option value="">-Select One-</option>
+                  <option *ngFor="let it of DDLContentName" value="{{it.Key}}">
+                    {{it.Value}} </option>
+                </select>
+                <lib-uc-show-errors [control]="item.controls.ContentName" [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
+                <label class="adInsLabel"
+                  *ngIf="item.controls.ContentName.value != ''">{{item.controls.ContentNameValue.value}}</label>
+              </div>
+              <div class="col-md-2">
+                <button type="button" (click)="DeleteDataForm(i)" class="btn btn-raised"
+                  style="vertical-align: middle;" translate>
+                  <i class="ft-trash-2 font-medium-2"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
 </div>
