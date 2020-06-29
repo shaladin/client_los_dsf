@@ -315,14 +315,8 @@
             "position": "center",
             "action": [
                 {
-                    "type": "edit",
-                    "path": "/AdminProcess/PreGoLive/Approval/Detail",
-                    "param": [
-                        {
-                            "type" : "callback",
-                            "property" : "TrxNo"
-                        }
-                    ]
+                    "type": "callback",
+                    "key": "HoldTask"                 
                 }
             ]
         },
@@ -331,14 +325,8 @@
             "position": "center",
             "action": [
                 {
-                    "type": "edit",
-                    "path": "/AdminProcess/PreGoLive/Approval/Detail",
-                    "param": [
-                        {
-                            "type" : "callback",
-                            "property" : "TrxNo"
-                        }
-                    ]
+                    "type": "callback",
+                    "key": "TakeBack"
                 }
             ]
         }

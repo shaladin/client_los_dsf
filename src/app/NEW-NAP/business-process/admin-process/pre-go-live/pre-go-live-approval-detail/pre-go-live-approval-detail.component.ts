@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { formatDate } from '@angular/common';
 import { environment } from 'environments/environment';
+import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 
 @Component({
   selector: 'app-pre-go-live-approval-detail',
@@ -57,6 +58,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   AgrmntId: any;
   token = localStorage.getItem("Token");
   LeadId: string;
+  bizTemplateCode: string = localStorage.getItem("BizTemplateCode");
 
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
@@ -71,6 +73,11 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
       }
 
       this.inputObj = obj;
+
+      var ApvHoldObj = new ApprovalObj()
+      ApvHoldObj.TaskId = obj.taskId
+  
+      this.HoldTask(ApvHoldObj);
     });
   }
 
@@ -229,6 +236,16 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
 
     
   }
+  HoldTask(obj){
+    this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
+      (response)=>{
+      },
+      (error)=>{
+          this.router.navigate(["/Nap/AdminProcess/PreGoLive/Approval/Paging"], { queryParams: { "BizTemplateCode": this.bizTemplateCode } });
+      }
+    )
+  }
+
   changeValidation(arr) {
     if (this.MainInfoForm.controls[this.identifier]["controls"][arr]["controls"].IsMandatory.value == true) {
       this.MainInfoForm.controls[this.identifier]["controls"][arr]["controls"].PromisedDt.setValidators([Validators.required]);
@@ -279,6 +296,6 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   }
   onApprovalSubmited() {
     this.toastr.successMessage("Success");
-    this.router.navigate(["/Nap/AdminProcess/PreGoLive/Approval/Paging"]);
+    this.router.navigate(["/Nap/AdminProcess/PreGoLive/Approval/Paging"], { queryParams: { "BizTemplateCode": this.bizTemplateCode } });
   }
 }
