@@ -244,8 +244,7 @@ export class NapAddDetailComponent implements OnInit {
       this.IsLastStep = true;
     else
       this.IsLastStep = false;
-
-    this.ucViewMainProd.initiateForm();
+     // this.ucViewMainProd.initiateForm();
   }
 
   NextStep(Step) {
