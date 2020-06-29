@@ -5,9 +5,9 @@
     <table class="table table-responsive-md text-center table-hover">
       <thead>
         <tr class="table-header">
-          <th><span class="thead-header" name='FeeCode' translate>MOU FEE</span>
+          <th class="text-left"><span class="thead-header" name='FeeCode' translate>MOU FEE</span>
           </th>
-          <th><span class="thead-header" name='PaymentType' translate>FEE TYPE</span>
+          <th class="text-left"><span class="thead-header" name='PaymentType' translate>FEE TYPE</span>
           </th>
           <th><span style="float: right;" class="thead-header" name='PaymentType' translate>AMOUNT</span>
           </th>
@@ -15,9 +15,10 @@
       </thead>
       <tbody>
         <tr *ngFor="let item of listFeeData; let i = index">
-          <td>{{item.FeeCode}}</td>
-          <td>{{item.FeeCode}}</td>
-          <td align="right">{{item.FeeAmt | number}}</td>
+          <td class="text-left">{{item.FeeName}}</td>
+          <td class="text-left">{{item.FeeType}}</td>
+          <td align="right" *ngIf="item.FeeAmt != 0">{{item.FeeAmt | number}}</td>
+          <td align="right" *ngIf="item.FeeAmt == 0">{{item.FeePrcnt}}%</td>
         </tr>
       </tbody>
     </table>

@@ -88,7 +88,7 @@
         },
         {
             "type": "sort",
-            "position": "left",
+            "position": "center",
             "label": "Order No",
             "name": "L.ORDER_NO"
         },
@@ -137,7 +137,7 @@
         },
         {
             "type": "text",
-            "position": "left",
+            "position": "center",
             "property": "OrderNo"
         },
         {
