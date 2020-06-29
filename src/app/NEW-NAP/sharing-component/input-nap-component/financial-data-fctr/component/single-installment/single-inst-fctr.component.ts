@@ -23,6 +23,8 @@ export class SingleInstFctrComponent implements OnInit {
   calcSingleInstObj: CalcSingleInstObj = new CalcSingleInstObj();
   listInstallment: any;
   responseCalc: any;
+  IsAppFeePrcntValid : boolean = true;
+
 
   constructor(
     private fb: FormBuilder,
@@ -38,7 +40,7 @@ export class SingleInstFctrComponent implements OnInit {
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "INTEREST_INPUT_TYPE" }).subscribe(
       (response) => {
         this.InterestTypeOptions = response["ReturnObject"];
-        if(this.InterestTypeOptions != undefined && this.InterestTypeOptions != null){
+        if (this.InterestTypeOptions != undefined && this.InterestTypeOptions != null) {
           this.ParentForm.patchValue({
             InterestType: this.InterestTypeOptions[0].Key
           });
@@ -48,31 +50,46 @@ export class SingleInstFctrComponent implements OnInit {
   }
 
   Calculate() {
-    if(this.ParentForm.value.EstEffDt == "")
-    {
+    console.log("asdasd");
+    this.IsAppFeePrcntValid = true;
+    if (this.ParentForm.value.EstEffDt == "") {
       this.toastr.errorMessage("Insert Estimation Effective Date");
       return;
     }
-
-    this.calcSingleInstObj = this.ParentForm.value;
-    this.http.post<ResponseCalculateObj>(AdInsConstant.CalculateSingleInst, this.calcSingleInstObj).subscribe(
-      (response) => {
-        console.log(response);
-        this.listInstallment = response.InstallmentTable;
-        this.ParentForm.patchValue({
-          EffectiveRatePrcnt: response.EffectiveRatePrcnt,
-          InstAmt: response.InstAmt,
-          TotalInterestAmt: response.TotalInterestAmt,
-          TotalAR: response.TotalARAmt,
-          NtfAmt: response.NtfAmt,
-          RefundInterestAmt: response.RefundInterestAmt,
-          TotalDisbAmt: response.TotalDisbAmt,
-          GrossYieldPrcnt: response.GrossYieldPrcnt
-        });
-        this.SetInstallmentTable();
-        this.SetNeedReCalculate(false);
+    for (let i = 0; i < this.ParentForm.value.AppFee.length; i++) {
+      if (this.ParentForm.value.AppFee[i].AppFeePrcnt < 0) {
+        this.IsAppFeePrcntValid = false;
       }
-    );
+    }
+    if (this.IsAppFeePrcntValid == false) {
+      this.toastr.errorMessage("App Fee Prcnt must be greater than 0");
+      return;
+    }
+    if (this.ParentForm.value.EffectiveRatePrcnt < 0 && this.ParentForm.value.InterestType == "PRCNT") {
+      this.toastr.errorMessage("Effective Rate must be greater than 0");
+      return;
+    }
+    else {
+      this.calcSingleInstObj = this.ParentForm.value;
+      this.http.post<ResponseCalculateObj>(AdInsConstant.CalculateSingleInst, this.calcSingleInstObj).subscribe(
+        (response) => {
+          console.log(response);
+          this.listInstallment = response.InstallmentTable;
+          this.ParentForm.patchValue({
+            EffectiveRatePrcnt: response.EffectiveRatePrcnt,
+            InstAmt: response.InstAmt,
+            TotalInterestAmt: response.TotalInterestAmt,
+            TotalAR: response.TotalARAmt,
+            NtfAmt: response.NtfAmt,
+            RefundInterestAmt: response.RefundInterestAmt,
+            TotalDisbAmt: response.TotalDisbAmt,
+            GrossYieldPrcnt: response.GrossYieldPrcnt
+          });
+          this.SetInstallmentTable();
+          this.SetNeedReCalculate(false);
+        }
+      );
+    }
   }
 
   SetInstallmentTable() {
@@ -105,19 +122,19 @@ export class SingleInstFctrComponent implements OnInit {
     });
   }
 
-  EstEffDtFocusOut(event){
+  EstEffDtFocusOut(event) {
     var topBased = this.ParentForm.get("TopBased").value;
     var maturityDate: Date;
-    if(topBased == AdInsConstant.TopCalcBasedInvcDt){
+    if (topBased == AdInsConstant.TopCalcBasedInvcDt) {
       maturityDate = new Date(this.ParentForm.get("InvcDt").value);
       maturityDate.setDate(maturityDate.getDate() + this.ParentForm.get("TopDays").value);
     }
 
-    if(topBased == AdInsConstant.TopCalcBasedEffDt){
+    if (topBased == AdInsConstant.TopCalcBasedEffDt) {
       maturityDate = new Date(this.ParentForm.get("EstEffDt").value);
       maturityDate.setDate(maturityDate.getDate() + this.ParentForm.get("TopDays").value);
     }
-  
+
     this.ParentForm.patchValue({
       MaturityDate: maturityDate
     });
