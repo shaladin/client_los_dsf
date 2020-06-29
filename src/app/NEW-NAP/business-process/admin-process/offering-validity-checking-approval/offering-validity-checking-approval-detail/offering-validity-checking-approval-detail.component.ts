@@ -5,7 +5,7 @@ import { environment } from 'environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
-import { AdInsHelper } from '../../../../../shared/AdInsHelper';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-offering-validity-checking-approval-detail',
