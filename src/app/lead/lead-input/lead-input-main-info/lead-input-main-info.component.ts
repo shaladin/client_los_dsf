@@ -14,6 +14,7 @@ import { RefOfficeObj } from 'app/shared/model/RefOfficeObj.model';
 import { RefLobObj } from 'app/shared/model/RefLobObj.Model';
 import { VendorObj } from 'app/shared/model/Vendor.Model';
 import { RefEmpForLookupObj } from 'app/shared/model/RefEmpForLookupObj.Model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-lead-input-main-info',
@@ -80,7 +81,7 @@ export class LeadInputMainInfoComponent implements OnInit {
     LobCode: ['', [Validators.required]],
     LeadSource: ['', [Validators.required]],
   });
-  leadUrl: string;
+  leadUrl: any;
   WfTaskListId: number;
   isCopyButtonDisabled: boolean = true;
 
@@ -105,8 +106,12 @@ export class LeadInputMainInfoComponent implements OnInit {
       }
       
     });
-    this.leadUrl = environment.losR3Web + '/Lead/View?LeadId=' + this.LeadId;
   }
+
+  AddView(){
+    AdInsHelper.OpenLeadViewByLeadId(this.LeadId);
+  }
+
   backHandler(){
     if(this.pageType == "update"){
         this.router.navigate(['/Lead/LeadUpdate/Paging']);  
