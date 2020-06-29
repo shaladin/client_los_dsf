@@ -5,6 +5,7 @@ import { environment } from 'environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-offering-validity-checking-approval-detail',
@@ -15,7 +16,7 @@ export class OfferingValidityCheckingApprovalDetailComponent implements OnInit {
   viewObj: string;
   BizTemplateCode : string = localStorage.getItem("BizTemplateCode");
   inputObj: { taskId: any; instanceId: any; approvalBaseUrl: any; };
-
+  token: any = localStorage.getItem("Token");
   constructor(private router: Router, private route: ActivatedRoute, private toastr: NGXToastrService, private http:HttpClient) {
     this.route.queryParams.subscribe(params => {
 
@@ -60,6 +61,12 @@ export class OfferingValidityCheckingApprovalDetailComponent implements OnInit {
   onCancelClick()
   {
     this.router.navigate(["/Nap/AdminProcess/OfferingValidityApproval/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
+  }
+
+  GetCallBack(ev: any) {
+    if (ev.Key == "ViewProdOffering") {
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion, this.token);
+    }
   }
 
 }
