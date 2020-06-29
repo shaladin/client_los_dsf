@@ -21,6 +21,12 @@
         </tbody>
       </table>
     </div>
-
+    <div class="px-3">
+      <lib-ucSubsection [id]="'viewLoanObjId'" [title]="'Loan Object'" [panel]="'viewLoanObjInfo'">
+      </lib-ucSubsection>
+      <div class="form-body" id="viewLoanObjInfo">
+          <lib-ucgridview *ngIf="IsGridLoanReady" [gridInput]="inputGridObj"></lib-ucgridview>
+      </div>
+    </div>
   </div>
 </div>
