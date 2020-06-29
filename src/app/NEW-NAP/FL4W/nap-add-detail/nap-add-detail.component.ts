@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -8,6 +8,7 @@ import { FormBuilder } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { environment } from 'environments/environment';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
+import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -35,6 +36,7 @@ export class NapAddDetailComponent implements OnInit {
   token: any = localStorage.getItem("Token");
   IsLastStep: boolean = false;
   IsSavedTC: boolean = false;
+  @ViewChild("FL4WMainInfoContainer", { read: ViewContainerRef }) mainInfoContainer: ViewContainerRef;
 
   FormReturnObj = this.fb.group({
     ReturnExecNotes: ['']
@@ -53,7 +55,7 @@ export class NapAddDetailComponent implements OnInit {
     "TC": 9
   };
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router, public toastr: NGXToastrService) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router, public toastr: NGXToastrService, private componentFactoryResolver: ComponentFactoryResolver) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -97,6 +99,11 @@ export class NapAddDetailComponent implements OnInit {
       );
     }
     this.MakeViewReturnInfoObj();
+
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcviewgenericComponent);
+    const component = this.mainInfoContainer.createComponent(componentFactory);
+    component.instance.viewInput = this.viewProdMainInfoObj;
+    component.instance.callback.subscribe((e) => this.GetCallback(e));
   }
 
   Cancel() {
@@ -186,7 +193,12 @@ export class NapAddDetailComponent implements OnInit {
     } else if (this.custType == AdInsConstant.CustTypeCompany) {
       this.stepperCompany.next();
     }
-    window.location.reload();
+
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcviewgenericComponent);
+    this.mainInfoContainer.clear();
+    const component = this.mainInfoContainer.createComponent(componentFactory);
+    component.instance.viewInput = this.viewProdMainInfoObj;
+    component.instance.callback.subscribe((e) => this.GetCallback(e));
   }
 
   UpdateAppStep(Step: string) {

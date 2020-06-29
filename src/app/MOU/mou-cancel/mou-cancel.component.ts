@@ -6,6 +6,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-mou-cancel',
@@ -55,8 +56,9 @@ export class MouCancelComponent implements OnInit {
       var custObj = { CustNo: event.RowObj.CustNo };
       this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
         response => {
-          link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
-          window.open(link, '_blank');
+          // link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
+          // window.open(link, '_blank');
+          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         },
         (error) => {
           console.log(error);

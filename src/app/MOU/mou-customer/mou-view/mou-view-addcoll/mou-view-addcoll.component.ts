@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { environment } from 'environments/environment';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-mou-view-addcoll',
@@ -31,8 +32,9 @@ export class MouViewAddcollComponent implements OnInit {
     var custObj = { CustNo: custNo };
     this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
       response => {
-        link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
-        window.open(link, '_blank');
+        // link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
+        // window.open(link, '_blank');
+        AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
       },
       (error) => {
         console.log(error);
