@@ -565,18 +565,26 @@ export class CommissionComponent implements OnInit {
       GrossYield: 0
     };
     this.viewIncomeInfoObj.ExpenseAmount = 0;
-    if (this.FormGetObj[AdInsConstant.ContentSupplier].value.arr.length != 0) {
+    if (this.FormGetObj[AdInsConstant.ContentSupplier] != undefined && this.FormGetObj[AdInsConstant.ContentSupplier].value.arr.length != 0) {
       this.isCalcSuppl = false;
       this.FormAdd1.CalculateTax(this.ResultAppData.CurrCode, this.ResultAppData.AppNo, this.ResultAppData.OriOfficeCode, this.AppId);
+    }else{
+      this.FormInputObjSupplier["isCalculated"] = true;
     }
-    if (this.FormGetObj[AdInsConstant.ContentSupplierEmp].value.arr.length != 0) {
+
+    if (this.FormGetObj[AdInsConstant.ContentSupplierEmp] != undefined && this.FormGetObj[AdInsConstant.ContentSupplierEmp].value.arr.length != 0) {
       this.isCalcSupplEmp = false;
       this.FormAdd2.CalculateTax(this.ResultAppData.CurrCode, this.ResultAppData.AppNo, this.ResultAppData.OriOfficeCode, this.AppId);
+    }else{
+      this.FormInputObjSupplierEmpl["isCalculated"] = true;
     }
-    if (this.FormGetObj[AdInsConstant.ContentReferantor].value.arr.length != 0) {
+
+    if (this.FormGetObj[AdInsConstant.ContentReferantor] != undefined && this.FormGetObj[AdInsConstant.ContentReferantor].value.arr.length != 0) {
       this.isCalcReferantor = false;
       this.FormAdd3.CalculateTax(this.ResultAppData.CurrCode, this.ResultAppData.AppNo, this.ResultAppData.OriOfficeCode, this.AppId);
-    }     
+    }else{
+      this.FormInputObjReferantor["isCalculated"] = true;
+    }   
 
     if (this.isCalcSuppl && this.isCalcSupplEmp && this.isCalcReferantor) {  
       this.CalculateGrossYield(this.viewIncomeInfoObj.ExpenseAmount);
@@ -684,6 +692,13 @@ export class CommissionComponent implements OnInit {
 
   isCalculated;
   SaveData() {
+    // console.log(this.FormInputObjSupplier["isCalculated"]);
+    // console.log(this.FormInputObjSupplierEmpl["isCalculated"]);
+    // console.log(this.FormInputObjReferantor["isCalculated"]);
+    // console.log(this.FormInputObjSupplier["isDataInputed"]);
+    // console.log(this.FormInputObjSupplierEmpl["isDataInputed"]);
+    // console.log(this.FormInputObjReferantor["isDataInputed"]);
+    // console.log(this.isCalcTotal);
     if ((!this.FormInputObjSupplier["isCalculated"] && this.FormInputObjSupplier["isDataInputed"]) || (!this.FormInputObjSupplierEmpl["isCalculated"] && this.FormInputObjSupplierEmpl["isDataInputed"]) || (!this.FormInputObjReferantor["isCalculated"] && this.FormInputObjReferantor["isDataInputed"]) || !this.isCalcTotal) {
       this.toastr.warningMessage("Must Calculate First");
       return;

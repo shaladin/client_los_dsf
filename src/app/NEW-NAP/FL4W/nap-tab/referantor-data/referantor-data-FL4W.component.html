@@ -41,11 +41,13 @@
                   <label class="col-md-2 adInsLabel">Account Bank</label>
                   <div class="col-md-10">
                     <select class="form-control adInsInput" style="width: auto" formControlName="AccountBank"
-                      ng-disabled="!ReferantorOn" (change)="ChangeValueBank($event)"
+                      ng-disabled="!ReferantorOn" (change)="ChangeValueBank($event)" required
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppReferantorForm.controls.AccountBank.invalid }">
                       <option *ngFor="let it of bankItems" value="{{it.BankAccountNo}}">
                         {{it.BankAccountName}} </option>
                     </select>
+                    <lib-uc-show-errors  [control]="NapAppReferantorForm.controls.AccountBank" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors >
                   </div>
                 </div>
 
