@@ -153,13 +153,13 @@
             "name": "MOU.IS_REVOLVING"
         },
         {
-            "type": "label",
+            "type": "sort",
             "position": "left",
             "label": "MOU TYPE",
             "name": "RM.DESCR"
         },
         {
-            "type": "label",
+            "type": "sort",
             "position": "center",
             "label": "REF NO",
             "name": "MOU.REF_NO"
