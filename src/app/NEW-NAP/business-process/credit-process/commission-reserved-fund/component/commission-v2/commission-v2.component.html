@@ -1,3 +1,67 @@
-<p>
-  commission-v2 works!
-</p>
+<div class="col-md-12 text-left">
+  <div class="card">
+    <!-- Income Information -->
+    <div class="card-body">
+      <div class="px-3">
+        <lib-ucSubsection [id]="'viewIncomeInfoId'" [title]="'Income Information'" [panel]="'viewIncomeInfo'">
+        </lib-ucSubsection>
+        <div class="form-body" id="viewIncomeInfo">
+          <div class="row">
+            <div class="col-md-6 ">
+              
+              <div class="row" *ngFor="let item of ListItemRule; let i = index">
+                <div class="col-md-6 form-inline">
+                  <label class="adInsLabel"> {{ item.FeeTypeName }} </label>
+                </div>
+                <div class="col-md-6 form-inline form-inline-right">
+                  <label *ngIf="item.AppFeeAmt >= 0"> {{item.AppFeeAmt | number:'.2':'en-US'}} </label>
+                  <label *ngIf="item.AppFeeAmt < 0"> {{0 | number:'.2':'en-US'}} </label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 form-inline">
+                  <label class="adInsLabel"> Max Allocated Amount </label>
+                </div>
+                <div class="col-md-6 form-inline form-inline-right">
+                  <label *ngIf="viewIncomeInfoObj.MaxAllocatedAmount >= 0">
+                    {{viewIncomeInfoObj.MaxAllocatedAmount | number:'.2':'en-US'}} </label>
+                  <label *ngIf="viewIncomeInfoObj.MaxAllocatedAmount < 0"> {{0 | number:'.2':'en-US'}} </label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 form-inline">
+                  <label class="adInsLabel"> Remaining Allocated Amount </label>
+                </div>
+                <div class="col-md-6 form-inline form-inline-right">
+                  <label *ngIf="viewIncomeInfoObj.RemainingAllocatedAmount >= 0">
+                    {{viewIncomeInfoObj.RemainingAllocatedAmount | number:'.2':'en-US'}} </label>
+                  <label *ngIf="viewIncomeInfoObj.RemainingAllocatedAmount < 0" style="color: red;"> (
+                    {{-viewIncomeInfoObj.RemainingAllocatedAmount | number:'.2':'en-US'}} )</label>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 ">
+              <div class="row" *ngFor="let item of ListAppFeeObj; let i = index">
+                <div class="col-md-6 form-inline">
+                  <label class="adInsLabel"> {{ item.FeeTypeName }} </label>
+                </div>
+                <div class="col-md-6 form-inline form-inline-right">
+                  <label *ngIf="item.AppFeeAmt >= 0"> {{item.AppFeeAmt | number:'.2':'en-US'}} </label>
+                  <label *ngIf="item.AppFeeAmt < 0"> {{0 | number:'.2':'en-US'}} </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <form class="form form-horizontal" [formGroup]="CommissionForm" (ngSubmit)="CommissionForm.valid && SaveForm()"
+      #enjiForm="ngForm">
+      <app-form-commission-generate [enjiForm]="enjiForm" [parentForm]="CommissionForm"
+      [identifier]="identifierSupplier" [FormInputObj]="FormInputObjSupplier"></app-form-commission-generate>
+    </form>
+  </div>
+</div>
