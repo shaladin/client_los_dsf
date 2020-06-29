@@ -15,9 +15,10 @@
       </thead>
       <tbody>
         <tr *ngFor="let item of listFeeData; let i = index">
-          <td>{{item.FeeCode}}</td>
-          <td>{{item.FeeCode}}</td>
-          <td align="right">{{item.FeeAmt | number}}</td>
+          <td>{{item.FeeName}}</td>
+          <td>{{item.FeeType}}</td>
+          <td align="right" *ngIf="item.FeeAmt != 0">{{item.FeeAmt | number}}</td>
+          <td align="right" *ngIf="item.FeeAmt == 0">{{item.FeePrcnt}}%</td>
         </tr>
       </tbody>
     </table>
