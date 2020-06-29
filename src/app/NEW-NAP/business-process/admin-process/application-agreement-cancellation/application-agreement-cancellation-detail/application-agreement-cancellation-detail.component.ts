@@ -30,7 +30,7 @@ export class ApplicationAgreementCancellationDetailComponent implements OnInit {
       this.AppId = params["AppId"];
       this.AgrmntId = params["AgrmntId"];
     });
-    if(this.AgrmntId == "AgrmntId"){
+    if (this.AgrmntId == "AgrmntId") {
       this.AgrmntId = -1;
     }
   }
@@ -62,7 +62,7 @@ export class ApplicationAgreementCancellationDetailComponent implements OnInit {
 
     this.http.post(AdInsConstant.AddAppAgrmntCancel, this.AppAgrmntCancelObj).subscribe((response) => {
       this.toastr.successMessage(response['message']);
-      this.router.navigateByUrl('/AdminProcess/AgreementCancellation/Paging');
+      this.router.navigateByUrl("/Nap/AdminProcess/AgreementCancellation/Paging");
     },
       (error) => {
         console.log(error);
