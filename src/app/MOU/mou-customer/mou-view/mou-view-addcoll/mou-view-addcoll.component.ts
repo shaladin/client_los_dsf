@@ -22,24 +22,10 @@ export class MouViewAddcollComponent implements OnInit {
   ngOnInit() {
     var mouCustObj = { MouCustId: this.MouCustId }
     console.log(mouCustObj);
-    this.http.post(AdInsConstant.GetMouCustCollateralByMouCustId, mouCustObj).subscribe(
+    this.http.post(AdInsConstant.GetMouCustCollateralForMouViewByMouCustId, mouCustObj).subscribe(
       (response) => {
         this.listCollateralData = response['ReturnObject'];
       })
-  }
-  openView(custNo) {
-    var link: string;
-    var custObj = { CustNo: custNo };
-    this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
-      response => {
-        // link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
-        // window.open(link, '_blank');
-        AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
   }
 
   AddCollDataForm = this.fb.group({
