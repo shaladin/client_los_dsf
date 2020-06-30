@@ -134,7 +134,7 @@ export class PreGoLiveComponent implements OnInit {
   }
 
   RFA() {
-    this.SaveForm(false);
+    this.router.navigate(["/Nap/AdminProcess/PreGoLive/RequestApproval"], { queryParams: { "AgrmntId": this.AgrmntId, "AppId": this.AppId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId } });
   }
 
   SaveForm(flag = true) {
@@ -191,13 +191,9 @@ export class PreGoLiveComponent implements OnInit {
 
     this.http.post(AdInsConstant.AddPreGoLive, this.PreGoLiveObj).subscribe(
       (response) => {
-        if (flag == false) {
-          this.router.navigate(["/Nap/AdminProcess/PreGoLive/RequestApproval"], { queryParams: { "AgrmntId": this.AgrmntId, "AppId": this.AppId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId } });
-        }
-        else {
           this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Paging');
           this.toastr.successMessage(response['message']);
-        }
+        
       },
       (error) => {
         console.log(error);
