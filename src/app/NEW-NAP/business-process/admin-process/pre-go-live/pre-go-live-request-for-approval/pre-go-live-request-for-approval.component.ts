@@ -95,4 +95,9 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
       });
   }
 
+  Cancel()
+  {
+    this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Paging?BizTemplateCode=' + localStorage.getItem("BizTemplateCode"));
+  }
+
 }
