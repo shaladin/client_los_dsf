@@ -196,8 +196,8 @@ export class PreGoLiveComponent implements OnInit {
         }
         else {
           this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Paging');
+          this.toastr.successMessage(response['message']);
         }
-        this.toastr.successMessage(response['message']);
       },
       (error) => {
         console.log(error);
