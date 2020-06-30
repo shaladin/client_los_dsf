@@ -276,7 +276,7 @@ export class CollateralDetailComponent implements OnInit {
             ListDoc.push(assetDocumentDetail);
           }
         }
-        this.setAppCollateralDoc(this.AppCollateralId);
+        this.setAppCollateralDoc(this.appCollateralObj.AppCollateralId);
       });
   }
 
@@ -538,7 +538,6 @@ export class CollateralDetailComponent implements OnInit {
       this.listAppCollateralDocObj.AppCollateralDocObj.push(this.appCollateralDoc);
     }
     this.appCollateralDataObj.ListAppCollateralDocObj = this.listAppCollateralDocObj.AppCollateralDocObj;
-
     if (this.mode == 'add') {
       this.http.post(AdInsConstant.AddEditAllCollateralDataFactoring, this.appCollateralDataObj).subscribe(
         (response) => {
