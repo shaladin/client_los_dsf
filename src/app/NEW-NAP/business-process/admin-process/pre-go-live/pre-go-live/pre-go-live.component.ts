@@ -16,8 +16,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-sharing-pre-go-live',
-  templateUrl: './pre-go-live.component.html',
-  styleUrls: ['./pre-go-live.component.scss']
+  templateUrl: './pre-go-live.component.html'
 })
 export class PreGoLiveComponent implements OnInit {
 
@@ -73,7 +72,7 @@ export class PreGoLiveComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    console.log('Shinano');
     this.http.post(AdInsConstant.GetRfaLogByTrxNoAndApvCategory, { TrxNo: this.AgrmntNo, ApvCategory: "PRE_GPV_APV" }).subscribe(
       (response) => {
         this.ListRfaLogObj = response["ListRfaLogObj"];
@@ -134,7 +133,7 @@ export class PreGoLiveComponent implements OnInit {
   }
 
   RFA() {
-    this.SaveForm(false);
+    this.router.navigate(["/Nap/AdminProcess/PreGoLive/RequestApproval"], { queryParams: { "AgrmntId": this.AgrmntId, "AppId": this.AppId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId } });
   }
 
   SaveForm(flag = true) {
@@ -191,13 +190,9 @@ export class PreGoLiveComponent implements OnInit {
 
     this.http.post(AdInsConstant.AddPreGoLive, this.PreGoLiveObj).subscribe(
       (response) => {
-        if (flag == false) {
-          this.router.navigate(["/Nap/AdminProcess/PreGoLive/RequestApproval"], { queryParams: { "AgrmntId": this.AgrmntId, "AppId": this.AppId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId } });
-        }
-        else {
           this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Paging');
-        }
-        this.toastr.successMessage(response['message']);
+          this.toastr.successMessage(response['message']);
+        
       },
       (error) => {
         console.log(error);
