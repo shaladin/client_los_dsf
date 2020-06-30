@@ -1,6 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { environment } from 'environments/environment';
@@ -22,20 +21,20 @@ export class ReferantorDataFL4WComponent implements OnInit {
   @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
-  inputLookupObj;
+
+  inputLookupObj: InputLookupObj;
   constructor(
     private fb: FormBuilder,
-    private router: Router,
     private http: HttpClient,
-    private route: ActivatedRoute,
-    private toastr: NGXToastrService
+    private toastr: NGXToastrService,
+    private cdRef: ChangeDetectorRef
   ) { }
 
   NapAppReferantorForm = this.fb.group({
     CheckBoxAppReferantor: [false],
     ReferantorName: [''],
     ReferantorType: [''],
-    AccountBank: ['']
+    AccountBank: ['', Validators.required]
   });
 
   ReferantorOn = false;
@@ -64,10 +63,6 @@ export class ReferantorDataFL4WComponent implements OnInit {
       }
     );
   }
-  
-  Cancel(){
-    this.outputCancel.emit();
-  }
 
   GetInputLookupObj(){
     this.arrAddCrit = new Array();
@@ -76,8 +71,15 @@ export class ReferantorDataFL4WComponent implements OnInit {
     addCrit.DataType = "text";
     addCrit.propName = "v.MR_VENDOR_CATEGORY_CODE ";
     addCrit.restriction = AdInsConstant.RestrictionIn;
-    addCrit.listValue = ["AGENCY_COMPANY", "AGENCY_PERSONAL"];
+    addCrit.listValue = [AdInsConstant.VendorCategoryAgencyCompany, AdInsConstant.VendorCategoryAgencyPersonal];
     this.arrAddCrit.push(addCrit);
+
+    // var addCrit1 = new CriteriaObj(); 
+    // addCrit1.DataType = "bool";
+    // addCrit1.propName = "vba.IS_DEFAULT";
+    // addCrit1.restriction = AdInsConstant.RestrictionIn;
+    // addCrit1.listValue = [1];
+    // this.arrAddCrit.push(addCrit1);
 
     var addCrit3 = new CriteriaObj(); 
     addCrit3.DataType = "text";
@@ -95,7 +97,6 @@ export class ReferantorDataFL4WComponent implements OnInit {
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupVendor.json";
     this.inputLookupObj.addCritInput = this.arrAddCrit;
     this.inputLookupObj.nameSelect = this.appReferantorObj.ReferantorName;
-    this.inputLookupObj.isReady = true;
     this.inputLookupObj.isRequired = false;
     this.NapAppReferantorForm.controls.AccountBank.disable();
   }
@@ -106,13 +107,12 @@ export class ReferantorDataFL4WComponent implements OnInit {
     // this.appId = tempId;
 
     // Check Data App Id
-    var url = AdInsConstant.GetAppReferantorByAppId;
     var obj = {
       AppId: this.appId,
       RowVersion: "",
     }
 
-    this.http.post(url, obj).subscribe(
+    this.http.post(AdInsConstant.GetAppReferantorByAppId, obj).subscribe(
       (response) => {
         console.log(response);
         if(response["AppReferantorId"]!=0){
@@ -127,9 +127,13 @@ export class ReferantorDataFL4WComponent implements OnInit {
             CheckBoxAppReferantor: true,
             AccountBank: this.appReferantorObj.BankAccNo
           });
+          this.NapAppReferantorForm.get("AccountBank").setValidators(Validators.required);
+          this.NapAppReferantorForm.get("AccountBank").updateValueAndValidity();
+          this.cdRef.detectChanges();
           console.log(this.NapAppReferantorForm);
           this.getDDLBank(this.appReferantorObj.ReferantorCode);
         }
+        this.inputLookupObj.isReady = true;
       },
       (error) => {
         console.log(error);
@@ -138,7 +142,6 @@ export class ReferantorDataFL4WComponent implements OnInit {
   }
 
   SaveData(url) {
-
     this.http.post(url, this.appReferantorObj).subscribe(
       (response) => {
         console.log(response);
@@ -151,7 +154,6 @@ export class ReferantorDataFL4WComponent implements OnInit {
 
   ClickSave() {
     console.log(this.appReferantorObj);
-    console.log(this.NapAppReferantorForm);
     var url;
     if (this.ExistedData) {
       if (this.ReferantorOn) {
@@ -188,18 +190,24 @@ export class ReferantorDataFL4WComponent implements OnInit {
     }
   }
 
+  Cancel(){
+    this.outputCancel.emit();
+  }
+
   TurnReferantor() {
+    this.inputLookupObj.isReady = false;
     this.ReferantorOn = this.NapAppReferantorForm.controls.CheckBoxAppReferantor.value;
     // console.log(this.ReferantorOn);
-    if (this.ReferantorOn == false) { 
+    if (this.ReferantorOn == false) {
       this.inputLookupObj.isRequired = false;
+      this.inputLookupObj.isReady = true;
       this.NapAppReferantorForm.controls.AccountBank.disable();
-            
     } else {
-      this.NapAppReferantorForm.controls.AccountBank.enable(); 
       this.inputLookupObj.isRequired = true;
-      this.NapAppReferantorForm.updateValueAndValidity();
-      console.log("aawd");
+      this.inputLookupObj.isReady = true;
+      this.NapAppReferantorForm.controls.AccountBank.enable();      
+      this.NapAppReferantorForm.get("AccountBank").setValidators(Validators.required);
+      this.NapAppReferantorForm.get("AccountBank").updateValueAndValidity();
     }
   }
 
@@ -209,10 +217,10 @@ export class ReferantorDataFL4WComponent implements OnInit {
     this.appReferantorObj.ReferantorCode = ev.ReferantorCode;
     this.appReferantorObj.ReferantorName = ev.ReferantorName;
     this.appReferantorObj.MrReferantorType = ev.ReferantorType;
-    this.appReferantorObj.RefBankCode = ev.BankCode;
-    this.appReferantorObj.BankAccNo = ev.BankAccNo;
-    this.appReferantorObj.BankAccName = ev.BankAccName;
-    this.appReferantorObj.BankBranch;
+    // this.appReferantorObj.RefBankCode = ev.BankCode;
+    // this.appReferantorObj.BankAccNo = ev.BankAccNo;
+    // this.appReferantorObj.BankAccName = ev.BankAccName;
+    // this.appReferantorObj.BankBranch;
 
     this.appReferantorObj.TaxpayerNo = ev.TaxPayerNo;
     this.appReferantorObj.TaxIdNo = ev.TaxIdNo;
@@ -228,7 +236,7 @@ export class ReferantorDataFL4WComponent implements OnInit {
     console.log(this.appReferantorObj);
 
     this.NapAppReferantorForm.patchValue({
-      AccountBank: ev.BankAccNo
+      AccountBank: ""
     });
     
     // this.NpwpOn = ev.IsNPWPExist;
@@ -260,9 +268,11 @@ export class ReferantorDataFL4WComponent implements OnInit {
 
   bankItems = [];
   ChangeValueBank(ev) {
-    // console.log(ev);
-    var idx = ev.target.selectedIndex;
-    // console.log(this.bankItems[idx]);
+    console.log(ev);
+    var idx = ev.target.selectedIndex - 1;
+    console.log(idx);
+    if (idx < 0) return;
+    console.log(this.bankItems[idx]);
     this.appReferantorObj.RefBankCode = this.bankItems[idx].BankCode;
     this.appReferantorObj.BankAccNo = this.bankItems[idx].BankAccountNo;
     this.appReferantorObj.BankAccName = this.bankItems[idx].BankAccountName;
