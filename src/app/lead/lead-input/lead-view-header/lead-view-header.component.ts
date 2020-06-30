@@ -16,6 +16,7 @@ import { RefOfficeObj } from 'app/shared/model/RefOfficeObj.model';
 import { RefLobObj } from 'app/shared/model/RefLobObj.Model';
 import { VendorObj } from 'app/shared/model/Vendor.Model';
 import { RefEmpForLookupObj } from 'app/shared/model/RefEmpForLookupObj.Model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-lead-view-header',
@@ -55,6 +56,9 @@ export class LeadViewHeaderComponent implements OnInit {
     (response) => {
         this.returnLead = response;
     });
-    this.leadUrl = environment.losR3Web + '/Lead/View?LeadId=' + this.LeadId;
+  }
+
+  AddView(){
+    AdInsHelper.OpenLeadViewByLeadId(this.LeadId);
   }
 }

@@ -39,7 +39,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   ProdOfferingCode: string;
   ProdOfferingVersion: string;
   LeadNo : string;
-
+  MouNo : string;
   AppTcList: any = [];
   identifier: string = "TCList";
 
@@ -59,6 +59,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   token = localStorage.getItem("Token");
   LeadId: string;
   bizTemplateCode: string = localStorage.getItem("BizTemplateCode");
+  MouCustId: any;
 
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
@@ -164,6 +165,15 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
                 }
               );
             }
+
+            this.http.post(AdInsConstant.GetMouCustByAppId, Obj4).subscribe(
+              (response) => {
+                this.MouNo = response["MouCustNo"];
+                this.MouCustId = response["MouCustId"];
+              }
+            );
+
+
           }
 
         );
@@ -272,6 +282,10 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   }
   ToLead(){
     window.open(environment.losR3Web + "/Lead/View?LeadId=" + this.LeadId, "_blank");
+  }
+  ToMou(){
+    window.open(environment.losR3Web + "/Mou/Cust/View?MouCustId=" + this.MouCustId, "_blank");
+
   }
   ToCust(){
     var custObj = { CustNo: this.CustNo };

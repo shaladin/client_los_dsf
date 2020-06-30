@@ -190,6 +190,10 @@
                         {
                             "type": "PurchaseOrderHId",
                             "property": "PurchaseOrderHId"
+                        },
+                        {
+                            "type": "BizTemplateCode",
+                            "property": "BizTemplateCode"
                         }
                     ]
                 }

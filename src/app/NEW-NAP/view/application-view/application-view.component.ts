@@ -69,6 +69,7 @@ export class ApplicationViewComponent implements OnInit {
           this.IsAsset = false;
           this.IsMultiAsset = false;
           this.IsFraudDetectionMulti = false;
+          this.IsInsurance = false;
       
         }
         else if(bizTemplateCode == AdInsConstant.CFRFN4W){
