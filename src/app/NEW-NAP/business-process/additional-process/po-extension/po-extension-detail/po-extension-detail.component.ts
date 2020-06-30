@@ -14,11 +14,13 @@ export class PoExtensionDetailComponent implements OnInit {
   AppId: number;
   PurchaseOrderHId: number;
   viewObj: string;
+  BizTemplateCode : any;
 
   constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private route: ActivatedRoute, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
       this.PurchaseOrderHId = params["PurchaseOrderHId"];
+      this.BizTemplateCode = params["BizTemplateCode"];
     });
   }
 
@@ -45,5 +47,9 @@ export class PoExtensionDetailComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  Back(){
+    this.router.navigate(['/Nap/AddProcess/POExtension/Paging'], { queryParams: { BizTemplateCode: this.BizTemplateCode } });
   }
 }

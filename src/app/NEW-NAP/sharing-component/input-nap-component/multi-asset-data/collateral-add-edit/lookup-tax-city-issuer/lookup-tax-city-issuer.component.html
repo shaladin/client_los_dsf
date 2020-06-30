@@ -5,5 +5,5 @@
   </button>
 </div>
 <div class="modal-body">
-  <lib-ucpaging [searchObj]="inputObj" (select)="GetResult($event)"></lib-ucpaging>
+  <lib-ucpaging [searchObj]="inputObj" (callback)="GetResult($event)"></lib-ucpaging>
 </div>
