@@ -8,6 +8,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { environment } from 'environments/environment';
 import { AgrmntSignerObj } from 'app/shared/model/AgrmntSignerObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-doc-signer-detail',
@@ -321,8 +322,7 @@ export class DocSignerDetailComponent implements OnInit {
   
   Callback(ev: any){
     if(ev.Key == "ViewProdOffering"){
-      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.ViewObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.ViewObj.ProdOfferingVersion + "&Token=" + this.token; 
-      window.open( link, "_blank");
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion, this.token );  
     }
     if(ev.Key == "agrmnt")
     {
