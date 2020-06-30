@@ -306,10 +306,10 @@ export class CollateralDetailComponent implements OnInit {
         if (!IsExisting) {
           if (this.appCollateralObj.AppCollateralId != 0) {
             this.mode = "edit";
-            if(this.collateralRegistrationObj.MrUserRelationshipCode == 'SELF'){
-              this.AddCollForm.controls.UserName.disable();
-              this.AddCollForm.controls.MrUserRelationshipCode.disable();
-            }
+            // if(this.collateralRegistrationObj.MrUserRelationshipCode == 'SELF'){
+            //   this.AddCollForm.controls.UserName.disable();
+            //   this.AddCollForm.controls.MrUserRelationshipCode.disable();
+            // }
           } else {
             if (this.mode = "add") {
               this.AddCollForm.patchValue({
