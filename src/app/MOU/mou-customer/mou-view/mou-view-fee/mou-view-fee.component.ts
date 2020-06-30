@@ -22,7 +22,7 @@ export class MouViewFeeComponent implements OnInit {
     console.log(mouCustObj);
     this.http.post(AdInsConstant.GetMouCustFeeByMouCustId, mouCustObj).subscribe(
       (response) => {
-        this.listFeeData = response['ReturnObject'];
+        this.listFeeData = response;
       })
   }
 

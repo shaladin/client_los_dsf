@@ -4,24 +4,31 @@ import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { ActivatedRoute } from '@angular/router';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { String } from 'typescript-string-operations';
+import { HttpClient } from '@angular/common/http';
+import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 
 @Component({
   selector: 'app-credit-approval-paging',
   templateUrl: './credit-approval-paging.component.html',
-  styleUrls: []
+  providers: [NGXToastrService]
 })
 export class CreditApprovalPagingComponent implements OnInit {
   BizTemplateCode: string;
   inputPagingObj: UcPagingObj;
   arrCrit: Array<CriteriaObj>;
-  token : any = localStorage.getItem("Token");
-  constructor(private route: ActivatedRoute) {
+  token: any = localStorage.getItem("Token");
+  userContext: CurrentUserContext = JSON.parse(localStorage.getItem(AdInsConstant.USER_ACCESS));
+  
+  constructor(private route: ActivatedRoute, private toastr: NGXToastrService, private httpClient: HttpClient) {
     this.route.queryParams.subscribe(params => {
       if (params['BizTemplateCode'] != null) {
         this.BizTemplateCode = params['BizTemplateCode'];
-        localStorage.setItem("BizTemplateCode",this.BizTemplateCode);
+        localStorage.setItem("BizTemplateCode", this.BizTemplateCode);
       }
-    }); 
+    });
   }
 
   ngOnInit() {
@@ -46,11 +53,34 @@ export class CreditApprovalPagingComponent implements OnInit {
     arrCrit.push(critObj);
     this.inputPagingObj.addCritInput = arrCrit;
   }
-  GetCallBack(ev: any){
-    console.log(ev);
-    if(ev.Key == "ViewProdOffering"){
+  GetCallBack(ev: any) {
+    var ApvReqObj = new ApprovalObj();
+    if (ev.Key == "ViewProdOffering") {
       var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.RowObj.prodOfferingCode + "&prodOfferingVersion=" + ev.RowObj.prodOfferingVersion + "&Token=" + this.token;
       window.open(link, '_blank');
     }
-  } 
+    else if (ev.Key == "HoldTask") {
+      ApvReqObj.TaskId = ev.RowObj.TaskId
+      this.httpClient.post(AdInsConstant.ApvHoldTaskUrl, ApvReqObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["Message"]);
+        }
+      )
+    }
+    else if (ev.Key == "TakeBack") {
+      if (String.Format("{0:L}", ev.RowObj.CurrentUserId) != String.Format("{0:L}", this.userContext.UserName)) {
+        this.toastr.warningMessage(AdInsConstant.NOT_ELIGIBLE_FOR_TAKE_BACK);
+      } else {
+        ApvReqObj.TaskId = ev.RowObj.TaskId
+        this.httpClient.post(AdInsConstant.ApvTakeBackTaskUrl, ApvReqObj).subscribe(
+          (response) => {
+            this.toastr.successMessage(response["Message"]);
+          }
+        )
+      }
+    }
+    else {
+      this.toastr.errorMessage(String.Format(AdInsConstant.ERROR_NO_CALLBACK_SETTING, ev.Key));
+    }
+  }
 }

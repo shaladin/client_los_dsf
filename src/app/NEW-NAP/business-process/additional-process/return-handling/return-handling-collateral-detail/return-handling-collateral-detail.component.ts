@@ -56,7 +56,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     CollateralPrcnt: ['', [Validators.required, Validators.max(100)]],
     CollateralNotes: ['', Validators.maxLength(4000)],
     AssetTaxDt: [''],
-    ManufacturingYear: [''],
+    ManufacturingYear: ['', Validators.pattern("^[0-9]+$")],
 
     CollateralSeqNo: ['1', Validators.required],
     FullAssetCode: ['', [Validators.required, Validators.maxLength(500)]],
@@ -71,15 +71,15 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     MrIdTypeCode: ['', Validators.maxLength(50)],
     OwnerIdNo: ['', Validators.maxLength(50)],
     MrOwnerRelationshipCode: ['', Validators.maxLength(50)],
-    OwnerAddr: ['', Validators.maxLength(50)],
+    OwnerAddr: [''],
     OwnerAreaCode1: ['', Validators.maxLength(50)],
     OwnerAreaCode2: ['', Validators.maxLength(50)],
     OwnerAreaCode3: ['', Validators.maxLength(50)],
     OwnerAreaCode4: ['', Validators.maxLength(50)],
     OwnerCity: ['', Validators.maxLength(50)],
     OwnerZipcode: ['', Validators.maxLength(50)],
-    OwnerMobilePhnNo: ['', Validators.maxLength(50)],
-    LocationAddr: ['', Validators.maxLength(50)],
+    OwnerMobilePhnNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
+    LocationAddr: [''],
     LocationAreaCode1: ['', Validators.maxLength(50)],
     LocationAreaCode2: ['', Validators.maxLength(50)],
     LocationAreaCode3: ['', Validators.maxLength(50)],
@@ -196,7 +196,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     //this.CollateralDataForm.addControl("AssetAccessoriesObjs", this.fb.array([]));
     //this.AllAssetObjs.splice(0, 1);
 
-    this.getAllCollateralData();
+    await this.getAllCollateralData();
     this.CollateralDataForm.controls["MrCollateralConditionCode"].disable();
   }
 
@@ -272,21 +272,21 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     this.allCollateralDataObj.AppCollateralRegistrationObj.MrIdTypeCode = this.CollateralDataForm.controls.MrIdTypeCode.value;
     this.allCollateralDataObj.AppCollateralRegistrationObj.OwnerIdNo = this.CollateralDataForm.controls.OwnerIdNo.value;
     this.allCollateralDataObj.AppCollateralRegistrationObj.MrOwnerRelationshipCode = this.CollateralDataForm.controls.MrOwnerRelationshipCode.value;
-    this.allCollateralDataObj.AppCollateralRegistrationObj.OwnerAddr = this.CollateralDataForm.controls.OwnerAddr.value;
-    this.allCollateralDataObj.AppCollateralRegistrationObj.OwnerAreaCode1 = this.CollateralDataForm.controls.OwnerAreaCode1.value;
-    this.allCollateralDataObj.AppCollateralRegistrationObj.OwnerAreaCode2 = this.CollateralDataForm.controls.OwnerAreaCode2.value;
-    this.allCollateralDataObj.AppCollateralRegistrationObj.OwnerAreaCode3 = this.CollateralDataForm.controls.OwnerAreaCode3.value;
-    this.allCollateralDataObj.AppCollateralRegistrationObj.OwnerAreaCode4 = this.CollateralDataForm.controls.OwnerAreaCode4.value;
-    this.allCollateralDataObj.AppCollateralRegistrationObj.OwnerCity = this.CollateralDataForm.controls.OwnerCity.value;
-    this.allCollateralDataObj.AppCollateralRegistrationObj.OwnerZipcode = this.CollateralDataForm.controls.OwnerZipcode.value;
+    this.allCollateralDataObj.AppCollateralRegistrationObj.OwnerAddr = this.CollateralDataForm.controls["ownerData"]["controls"].Addr.value;
+    this.allCollateralDataObj.AppCollateralRegistrationObj.OwnerAreaCode1 = this.CollateralDataForm.controls["ownerData"]["controls"].AreaCode1.value;
+    this.allCollateralDataObj.AppCollateralRegistrationObj.OwnerAreaCode2 = this.CollateralDataForm.controls["ownerData"]["controls"].AreaCode2.value;
+    this.allCollateralDataObj.AppCollateralRegistrationObj.OwnerAreaCode3 = this.CollateralDataForm.controls["ownerData"]["controls"].AreaCode3.value;
+    this.allCollateralDataObj.AppCollateralRegistrationObj.OwnerAreaCode4 = this.CollateralDataForm.controls["ownerData"]["controls"].AreaCode4.value;
+    this.allCollateralDataObj.AppCollateralRegistrationObj.OwnerCity = this.CollateralDataForm.controls["ownerData"]["controls"].City.value;
+    this.allCollateralDataObj.AppCollateralRegistrationObj.OwnerZipcode = this.CollateralDataForm.controls["ownerDataZipcode"]["controls"].value.value;
     this.allCollateralDataObj.AppCollateralRegistrationObj.OwnerMobilePhnNo = this.CollateralDataForm.controls.OwnerMobilePhnNo.value;
-    this.allCollateralDataObj.AppCollateralRegistrationObj.LocationAddr = this.CollateralDataForm.controls.LocationAddr.value;
-    this.allCollateralDataObj.AppCollateralRegistrationObj.LocationAreaCode1 = this.CollateralDataForm.controls.LocationAreaCode1.value;
-    this.allCollateralDataObj.AppCollateralRegistrationObj.LocationAreaCode2 = this.CollateralDataForm.controls.LocationAreaCode2.value;
-    this.allCollateralDataObj.AppCollateralRegistrationObj.LocationAreaCode3 = this.CollateralDataForm.controls.LocationAreaCode3.value;
-    this.allCollateralDataObj.AppCollateralRegistrationObj.LocationAreaCode4 = this.CollateralDataForm.controls.LocationAreaCode4.value;
-    this.allCollateralDataObj.AppCollateralRegistrationObj.LocationCity = this.CollateralDataForm.controls.LocationCity.value;
-    this.allCollateralDataObj.AppCollateralRegistrationObj.LocationZipcode = this.CollateralDataForm.controls.LocationZipcode.value;
+    this.allCollateralDataObj.AppCollateralRegistrationObj.LocationAddr = this.CollateralDataForm.controls["locationData"]["controls"].Addr.value;
+    this.allCollateralDataObj.AppCollateralRegistrationObj.LocationAreaCode1 = this.CollateralDataForm.controls["locationData"]["controls"].AreaCode1.value;
+    this.allCollateralDataObj.AppCollateralRegistrationObj.LocationAreaCode2 = this.CollateralDataForm.controls["locationData"]["controls"].AreaCode2.value;
+    this.allCollateralDataObj.AppCollateralRegistrationObj.LocationAreaCode3 = this.CollateralDataForm.controls["locationData"]["controls"].AreaCode3.value;
+    this.allCollateralDataObj.AppCollateralRegistrationObj.LocationAreaCode4 = this.CollateralDataForm.controls["locationData"]["controls"].AreaCode4.value;
+    this.allCollateralDataObj.AppCollateralRegistrationObj.LocationCity = this.CollateralDataForm.controls["locationData"]["controls"].City.value;
+    this.allCollateralDataObj.AppCollateralRegistrationObj.LocationZipcode = this.CollateralDataForm.controls["locationDataZipcode"]["controls"].value.value;
 
     //this.allCollateralDataObj.AppAssetAccessoryObjs = new Array<AppAssetAccessoryObj>();
     //for (let i = 0; i < this.CollateralDataForm.controls["AssetAccessoriesObjs"].value.length; i++) {
@@ -363,9 +363,9 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
   }
 
 
-  getAllCollateralData() {
+  async getAllCollateralData() {
     if (this.AppCollateralId != 0) {
-      this.http.post(this.GetAppCollateralUrl, this.appCollateralObj).subscribe(
+      await this.http.post(this.GetAppCollateralUrl, this.appCollateralObj).subscribe(
         (response) => {
           console.log(response);
           this.appCollateral = response;
@@ -603,7 +603,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     this.ucLookupAsset.setAddCritInput();
 
     if (this.AssetTypeObj.SerialNo1Label != "" && this.AssetTypeObj.SerialNo1Label != null) {
-      if (this.AssetTypeObj.IsMndtrySerialNo1 == true) {
+      if (this.CollateralDataForm.controls.MrCollateralConditionCode.value == "USED") {
         this.CollateralDataForm.controls.SerialNo1.setValidators([Validators.required, Validators.maxLength(50)]);
         this.CollateralDataForm.controls.SerialNo1.updateValueAndValidity();
       }
@@ -618,7 +618,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     }
 
     if (this.AssetTypeObj.SerialNo2Label != "" && this.AssetTypeObj.SerialNo2Label != null) {
-      if (this.AssetTypeObj.IsMndtrySerialNo2 == true) {
+      if (this.CollateralDataForm.controls.MrCollateralConditionCode.value == "USED") {
         this.CollateralDataForm.controls.SerialNo2.setValidators([Validators.required, Validators.maxLength(50)]);
         this.CollateralDataForm.controls.SerialNo2.updateValueAndValidity();
       }
@@ -632,7 +632,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
       this.CollateralDataForm.controls.SerialNo3.updateValueAndValidity();
     }
     if (this.AssetTypeObj.SerialNo3Label != "" && this.AssetTypeObj.SerialNo3Label != null) {
-      if (this.AssetTypeObj.IsMndtrySerialNo3 == true) {
+      if (this.CollateralDataForm.controls.MrCollateralConditionCode.value == "USED") {
         this.CollateralDataForm.controls.SerialNo3.setValidators([Validators.required, Validators.maxLength(50)]);
         this.CollateralDataForm.controls.SerialNo3.updateValueAndValidity();
       }
@@ -646,7 +646,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
       this.CollateralDataForm.controls.SerialNo3.updateValueAndValidity();
     }
     if (this.AssetTypeObj.SerialNo4Label != "" && this.AssetTypeObj.SerialNo4Label != null) {
-      if (this.AssetTypeObj.IsMndtrySerialNo4 == true) {
+      if (this.CollateralDataForm.controls.MrCollateralConditionCode.value == "USED") {
         this.CollateralDataForm.controls.SerialNo4.setValidators([Validators.required, Validators.maxLength(50)]);
         this.CollateralDataForm.controls.SerialNo4.updateValueAndValidity();
       }
@@ -660,7 +660,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
       this.CollateralDataForm.controls.SerialNo4.updateValueAndValidity();
     }
     if (this.AssetTypeObj.SerialNo5Label != "" && this.AssetTypeObj.SerialNo5Label != null) {
-      if (this.AssetTypeObj.IsMndtrySerialNo5 == true) {
+      if (this.CollateralDataForm.controls.MrCollateralConditionCode.value == "USED") {
         this.CollateralDataForm.controls.SerialNo5.setValidators([Validators.required, Validators.maxLength(50)]);
         this.CollateralDataForm.controls.SerialNo5.updateValueAndValidity();
       }
@@ -672,6 +672,14 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     else {
       this.CollateralDataForm.controls.SerialNo5.clearValidators;
       this.CollateralDataForm.controls.SerialNo5.updateValueAndValidity();
+    }
+    if (this.CollateralDataForm.controls.MrCollateralConditionCode.value == "USED") {
+      this.CollateralDataForm.controls.AssetTaxDt.setValidators([Validators.required]);
+      this.CollateralDataForm.controls.AssetTaxDt.updateValueAndValidity();
+    }
+    else {
+      this.CollateralDataForm.controls.AssetTaxDt.clearValidators;
+      this.CollateralDataForm.controls.AssetTaxDt.updateValueAndValidity();
     }
     //this.CollateralDataForm.patchValue({
     //  AssetTypeCode: Code,

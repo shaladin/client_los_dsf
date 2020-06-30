@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
+import { UcPagingObj, WhereValueObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
@@ -31,15 +31,13 @@ export class DocSignerPagingComponent implements OnInit {
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchDocSigner.json";
+    var whereValueObj = new WhereValueObj();
+    whereValueObj.property = "BizTemplateCode";
+    whereValueObj.value = this.BizTemplateCode;
+    this.inputPagingObj.whereValue.push(whereValueObj);
 
-    this.inputPagingObj.addCritInput = new Array();
-    
-    var critObj = new CriteriaObj();
-    critObj.DataType = 'text';
-    critObj.propName = 'AP.BIZ_TEMPLATE_CODE';
-    critObj.restriction = AdInsConstant.RestrictionEq;
-    critObj.value = this.BizTemplateCode;
-    this.inputPagingObj.addCritInput.push(critObj);
+    // this.inputPagingObj.whereValue.push({property: "BizTemplateCode", value: ""});
+    // this.inputPagingObj.whereValue.find(x => x.property == "BizTemplateCode").value = this.BizTemplateCode;
   }
 
   getEvent(ev){

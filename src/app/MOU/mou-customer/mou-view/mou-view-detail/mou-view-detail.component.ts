@@ -52,6 +52,8 @@ export class MouViewDetailComponent implements OnInit {
     console.log(mouCustObj);
     this.http.post(AdInsConstant.GetMouCustDataByMouCustId, mouCustObj).subscribe(
       (response) => {
+        // console.log("cekmoudetail")
+        // console.log(response)
         this.mouCust = response["MouCustObj"];
         this.MouCustId = this.mouCust.MouCustId;
         this.CurrCode = this.mouCust.CurrCode;
@@ -62,7 +64,7 @@ export class MouViewDetailComponent implements OnInit {
         {
           this.mouCustClause = response["MouCustClauseObj"];
           this.AssetTypeCode = this.mouCustClause.AssetTypeCode;
-          this.MrInterestTypeCode = this.mouCustClause.MrInterestTypeCode;
+          this.MrInterestTypeCode = this.mouCustClause.InterestTypeDescr;
           this.MrFirstInstTypeCode = this.mouCustClause.MrFirstInstTypeCode;
           this.MrInstSchmCode = this.mouCustClause.MrInstSchmCode;
           this.PayFreqCode = this.mouCustClause.PayFreqCode;
@@ -76,10 +78,10 @@ export class MouViewDetailComponent implements OnInit {
           this.mouCustFctr = response["MouCustFctrObj"];
           this.AssetTypeCode = this.mouCustFctr.AssetTypeCode;
           this.MrFirstInstTypeCode = this.mouCustFctr.MrFirstInstTypeCode;
-          this.MrInstTypeCode = this.mouCustFctr.MrInstTypeCode;
+          this.MrInstTypeCode = this.mouCustFctr.InstTypeDescr;
           this.MrInstSchmCode = this.mouCustFctr.MrInstSchmCode;
-          this.SingleInstCalcMthd = this.mouCustFctr.SingleInstCalcMthd;
-          this.MrPaidByCode =  this.mouCustFctr.MrPaidByCode;
+          this.SingleInstCalcMthd = this.mouCustFctr.SingleInstCalcMthdDescr;
+          this.MrPaidByCode =  this.mouCustFctr.PaidByDescr;
           this.PayFreqCode = this.mouCustFctr.PayFreqCode;
           this.DownPaymentFromPrcnt = this.mouCustFctr.DownPaymentFromPrcnt;
           this.DownPaymentToPrcnt = this.mouCustFctr.DownPaymentToPrcnt;
