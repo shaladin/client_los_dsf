@@ -295,4 +295,9 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
     this.toastr.successMessage("Success");
     this.router.navigate(["/Nap/AdminProcess/PreGoLive/Approval/Paging"]);
   }
+
+  onCancelClick()
+  {
+    this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Approval/Paging?BizTemplateCode=' + localStorage.getItem("BizTemplateCode"));
+  }
 }
