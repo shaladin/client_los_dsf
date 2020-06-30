@@ -7,6 +7,7 @@ import { ListAppTCObj } from 'app/shared/model/ListAppTCObj.Model';
 import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
 import { OutstandingTcObj } from 'app/shared/model/OutstandingTcObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-outstanding-tc-detail',
@@ -20,10 +21,12 @@ export class OutstandingTcDetailComponent implements OnInit {
   listAppTCObj: any;
   appTC: any;
   outstandingTcObj: any;
+  BizTemplateCode : any;
 
   constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private route: ActivatedRoute, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
+      this.BizTemplateCode = params["BizTemplateCode"];
     });
    }
 
@@ -68,4 +71,14 @@ export class OutstandingTcDetailComponent implements OnInit {
     );
   }
 
+  Back(){
+    this.router.navigate(['/Nap/AddProcess/OutstandingTC/Paging'], { queryParams: { BizTemplateCode: this.BizTemplateCode } });
+  }
+
+  GetCallBack(ev: any){
+    console.log(ev);
+    if(ev.Key == "ViewApp"){
+      AdInsHelper.OpenAppViewByAppId(ev.ViewObj.AppId);
+    }
+    }
 }

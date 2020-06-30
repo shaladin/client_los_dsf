@@ -9,6 +9,7 @@ import { RFAInfoObj } from 'app/shared/model/Approval/RFAInfoObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { first } from 'rxjs/operators';
 import { environment } from 'environments/environment';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-mou-review-general',
@@ -25,10 +26,10 @@ export class MouReviewGeneralComponent implements OnInit {
   PlafondAmt: number;
   listApprover: any;
   listRecommendationObj: any;
-  MrCustTypeCode : any;
-  link : any; 
-  resultData : any;
-  viewObj : string;
+  MrCustTypeCode: any;
+  link: any;
+  resultData: any;
+  viewObj: string;
   mouCustObject: MouCustObj = new MouCustObj();
   listReason: any = [
     {
@@ -64,12 +65,12 @@ export class MouReviewGeneralComponent implements OnInit {
     if (this.WfTaskListId > 0) {
       this.claimTask();
     }
-    this.viewObj = "./assets/ucviewgeneric/viewMouHeader.json"; 
+    this.viewObj = "./assets/ucviewgeneric/viewMouHeader.json";
     this.mouCustObject.MouCustId = this.MouCustId;
     this.http.post(AdInsConstant.GetMouCustById, this.mouCustObject).subscribe(
       (response: MouCustObj) => {
-        this.resultData = response; 
-      } 
+        this.resultData = response;
+      }
     );
 
     var apvObj = { SchemeCode: 'MOUC_GEN_APV' }
@@ -107,12 +108,12 @@ export class MouReviewGeneralComponent implements OnInit {
         this.PlafondAmt = response['PlafondAmt'];
       })
 
-      this.http.post(AdInsConstant.GetMouCustById, mouCustObj).subscribe(
-        (response) => {
-            this.MrCustTypeCode = response['MrCustTypeCode']; 
-        });
+    this.http.post(AdInsConstant.GetMouCustById, mouCustObj).subscribe(
+      (response) => {
+        this.MrCustTypeCode = response['MrCustTypeCode'];
+      });
 
-    this.http.post(AdInsConstant.GetListActiveRefReason, {RefReasonTypeCode: AdInsConstant.REF_REASON_MOU_GENERAL}).pipe(first()).subscribe(
+    this.http.post(AdInsConstant.GetListActiveRefReason, { RefReasonTypeCode: AdInsConstant.REF_REASON_MOU_GENERAL }).pipe(first()).subscribe(
       (response) => {
         this.listReason = response["ReturnObject"];
         this.MouReviewDataForm.patchValue({
@@ -159,10 +160,10 @@ export class MouReviewGeneralComponent implements OnInit {
         this.toastr.successMessage(response["message"]);
         this.router.navigate(["/Mou/Cust/ReviewPaging"]);
       },
-      (error) =>{
+      (error) => {
         console.log(error);
       }
-      )
+    )
   }
 
   Return() {
@@ -174,21 +175,19 @@ export class MouReviewGeneralComponent implements OnInit {
       })
   }
 
-  GetCallBack(event)
-  {  
-    if(event.Key == "customer"){
+  GetCallBack(event) {
+    if (event.Key == "customer") {
       var custObj = { CustNo: this.resultData['CustNo'] };
       this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
         response => {
-          this.link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"]; 
-          window.open(this.link, '_blank');
+          // this.link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"]; 
+          // window.open(this.link, '_blank');
+          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         },
         (error) => {
           console.log(error);
         }
       );
     }
-    
   }
-  
 }
