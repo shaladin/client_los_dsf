@@ -284,9 +284,8 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
     );
   }
 
-  ToProdOffering(){
-    var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + this.ProdOfferingCode + "&prodOfferingVersion=" + this.ProdOfferingVersion + "&Token=" + this.token;
-    window.open(link, '_blank');
+  ToProdOffering(){ 
+    AdInsHelper.OpenProdOfferingViewByCodeAndVersion( this.ProdOfferingCode, this.ProdOfferingVersion, this.token ); 
   }
 
   onAvailableNextTask() {

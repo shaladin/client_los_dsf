@@ -7,6 +7,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-fraud-detection-paging',
@@ -50,9 +51,8 @@ export class FraudDetectionPagingComponent implements OnInit {
 
   GetCallBack(event) {
 
-    if (event.Key == "ViewProdOffering") {
-      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + event.RowObj.prodOfferingCode + "&prodOfferingVersion=" + event.RowObj.prodOfferingVersion + "&Token=" + this.token;
-      window.open(link, '_blank');
+    if (event.Key == "ViewProdOffering") { 
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( event.RowObj.prodOfferingCode, event.RowObj.prodOfferingVersion, this.token );
     }
     else {
       if(event.RowObj.ActCode == "FCR_" + this.BizTemplateCode){

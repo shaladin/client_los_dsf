@@ -12,6 +12,7 @@ import { PreGoLiveObj } from 'app/shared/model/PreGoLiveObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { environment } from 'environments/environment';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-sharing-pre-go-live',
@@ -114,10 +115,8 @@ export class PreGoLiveComponent implements OnInit {
   }
 
   GetCallBack(ev) {
-    if (ev.Key == "ViewProdOffering") {
-      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.ViewObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.ViewObj.ProdOfferingVersion + "&Token=" + this.token;
-
-      window.open(link, "_blank");
+    if (ev.Key == "ViewProdOffering") { 
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion, this.token );  
     }
   }
 

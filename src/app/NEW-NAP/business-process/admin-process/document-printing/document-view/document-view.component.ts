@@ -9,6 +9,7 @@ import { environment } from 'environments/environment';
 import { AgrmntDocObj } from 'app/shared/model/AgrmntDocObj.Model';
 import { AgrmntDocPrintObj } from 'app/shared/model/AgrmntDocPrintObj.Model';
 import { RdlcReportObj } from 'app/shared/model/Report/RdlcReportObj.model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-document-view',
@@ -155,9 +156,8 @@ export class DocumentViewComponent implements OnInit {
   }
 
   GetCallBack(ev: any) {
-    if (ev.Key == "ViewProdOffering") {
-      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.ViewObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.ViewObj.ProdOfferingVersion + "&Token=" + this.token;
-      window.open(link, "_blank");
+    if (ev.Key == "ViewProdOffering") { 
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion, this.token );  
     }
   }
 }
