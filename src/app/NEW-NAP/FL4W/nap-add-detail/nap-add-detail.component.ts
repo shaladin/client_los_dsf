@@ -9,6 +9,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { environment } from 'environments/environment';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -16,6 +17,7 @@ import { UcviewgenericComponent } from '@adins/ucviewgeneric';
   providers: [NGXToastrService]
 })
 export class NapAddDetailComponent implements OnInit {
+  @ViewChild('ucMainInfo') ucMainInfo: any;
 
   private stepperPersonal: Stepper;
   private stepperCompany: Stepper;
@@ -69,6 +71,10 @@ export class NapAddDetailComponent implements OnInit {
         this.showCancel = false
       }
     });
+
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
   }
 
   ngOnInit() {
@@ -225,7 +231,6 @@ export class NapAddDetailComponent implements OnInit {
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["/Nap/FinanceLeasing/Paging"], { queryParams: { BizTemplateCode: AdInsConstant.FL4W } })
         },
         (error) => {
           console.log(error);
@@ -271,6 +276,8 @@ export class NapAddDetailComponent implements OnInit {
       this.IsLastStep = true;
     else
       this.IsLastStep = false;
+
+      // this.ucMainInfo.OnInit();
   }
 
   Submit() {
@@ -314,8 +321,7 @@ export class NapAddDetailComponent implements OnInit {
       });
   }
 
-  GetCallback(ev) {
-    var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.ViewObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.ViewObj.ProdOfferingVersion + "&Token=" + this.token;
-    this.router.navigate([]).then(result => { window.open(link, '_blank'); });
+  GetCallback(ev) { 
+    AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion, this.token );
   }
 }

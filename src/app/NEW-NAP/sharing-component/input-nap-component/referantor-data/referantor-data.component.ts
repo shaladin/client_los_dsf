@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { environment } from 'environments/environment';
@@ -34,7 +34,7 @@ export class ReferantorDataComponent implements OnInit {
     CheckBoxAppReferantor: [false],
     ReferantorName: [''],
     ReferantorType: [''],
-    AccountBank: ['']
+    AccountBank: ['', Validators.required]
   });
 
   ReferantorOn = false;
@@ -127,6 +127,8 @@ export class ReferantorDataComponent implements OnInit {
             CheckBoxAppReferantor: true,
             AccountBank: this.appReferantorObj.BankAccNo
           });
+          this.NapAppReferantorForm.get("AccountBank").setValidators(Validators.required);
+          this.NapAppReferantorForm.get("AccountBank").updateValueAndValidity();
           this.cdRef.detectChanges();
           console.log(this.NapAppReferantorForm);
           this.getDDLBank(this.appReferantorObj.ReferantorCode);
@@ -203,7 +205,9 @@ export class ReferantorDataComponent implements OnInit {
     } else {
       this.inputLookupObj.isRequired = true;
       this.inputLookupObj.isReady = true;
-      this.NapAppReferantorForm.controls.AccountBank.enable();
+      this.NapAppReferantorForm.controls.AccountBank.enable();      
+      this.NapAppReferantorForm.get("AccountBank").setValidators(Validators.required);
+      this.NapAppReferantorForm.get("AccountBank").updateValueAndValidity();
     }
   }
 
@@ -264,9 +268,11 @@ export class ReferantorDataComponent implements OnInit {
 
   bankItems = [];
   ChangeValueBank(ev) {
-    // console.log(ev);
-    var idx = ev.target.selectedIndex;
-    // console.log(this.bankItems[idx]);
+    console.log(ev);
+    var idx = ev.target.selectedIndex - 1;
+    console.log(idx);
+    if (idx < 0) return;
+    console.log(this.bankItems[idx]);
     this.appReferantorObj.RefBankCode = this.bankItems[idx].BankCode;
     this.appReferantorObj.BankAccNo = this.bankItems[idx].BankAccountNo;
     this.appReferantorObj.BankAccName = this.bankItems[idx].BankAccountName;

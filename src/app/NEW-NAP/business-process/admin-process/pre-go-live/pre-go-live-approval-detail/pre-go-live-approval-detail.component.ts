@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { formatDate } from '@angular/common';
 import { environment } from 'environments/environment';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-pre-go-live-approval-detail',
@@ -38,7 +39,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   ProdOfferingCode: string;
   ProdOfferingVersion: string;
   LeadNo : string;
-
+  MouNo : string;
   AppTcList: any = [];
   identifier: string = "TCList";
 
@@ -57,6 +58,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   AgrmntId: any;
   token = localStorage.getItem("Token");
   LeadId: string;
+  MouCustId: any;
 
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
@@ -157,6 +159,15 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
                 }
               );
             }
+
+            this.http.post(AdInsConstant.GetMouCustByAppId, Obj4).subscribe(
+              (response) => {
+                this.MouNo = response["MouCustNo"];
+                this.MouCustId = response["MouCustId"];
+              }
+            );
+
+
           }
 
         );
@@ -256,6 +267,10 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   ToLead(){
     window.open(environment.losR3Web + "/Lead/View?LeadId=" + this.LeadId, "_blank");
   }
+  ToMou(){
+    window.open(environment.losR3Web + "/Mou/Cust/View?MouCustId=" + this.MouCustId, "_blank");
+
+  }
   ToCust(){
     var custObj = { CustNo: this.CustNo };
     this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
@@ -269,9 +284,8 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
     );
   }
 
-  ToProdOffering(){
-    var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + this.ProdOfferingCode + "&prodOfferingVersion=" + this.ProdOfferingVersion + "&Token=" + this.token;
-    window.open(link, '_blank');
+  ToProdOffering(){ 
+    AdInsHelper.OpenProdOfferingViewByCodeAndVersion( this.ProdOfferingCode, this.ProdOfferingVersion, this.token ); 
   }
 
   onAvailableNextTask() {
