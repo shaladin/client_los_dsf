@@ -9,6 +9,9 @@ import { AppFinDataObj } from 'app/shared/model/AppFinData/AppFinData.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { AppAssetDetailObj } from 'app/shared/model/AppAsset/AppAssetDetailObj.Model';
 import { NapAppReferantorModel } from 'app/shared/model/NapAppReferantor.Model';
+import { RuleCommissionObj } from 'app/shared/model/RuleCommission/RuleCommissionObj.Model';
+import { temporaryDeclaration } from '@angular/compiler/src/compiler_util/expression_converter';
+import { AppCommissionHObj } from 'app/shared/model/AppCommissionHObj.Model';
 
 @Component({
   selector: 'app-commission-v2',
@@ -19,6 +22,9 @@ export class CommissionV2Component implements OnInit {
 
   @Input() AppId: number = 10550;
   @Input() showCancel: boolean = true;
+  @Input() maxAllocAmt: number = 0;
+  @Input() totalExpenseAmt: number = 0;
+  @Input() totalRsvFundAmt: number = 0;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
@@ -46,7 +52,7 @@ export class CommissionV2Component implements OnInit {
   identifierSupplierEmp: string = AdInsConstant.CommissionIdentifierSupplierEmp;
   identifierReferantor: string = AdInsConstant.CommissionIdentifierReferantor;
   FormInputObjSupplier: any = {};
-  FormInputObjSupplierEmpl: any = {};
+  FormInputObjSupplierEmp: any = {};
   FormInputObjReferantor: any = {};
   CommissionForm = this.fb.group({});
 
@@ -60,33 +66,33 @@ export class CommissionV2Component implements OnInit {
       this.FormInputObjSupplier["labelName"] = AdInsConstant.LabelSupplier;
       this.FormInputObjSupplier["AppId"] = this.AppId;
       this.FormInputObjSupplier["contentObj"] = this.ContentObjSupplier;
-      // this.FormInputObjSupplier["ruleObj"] = this.RuleSupplierData;
-      // this.FormInputObjSupplier["isAutoGenerate"] = this.isAutoGenerate;
+      this.FormInputObjSupplier["ruleObj"] = this.RuleSupplierData;
+      this.FormInputObjSupplier["isAutoGenerate"] = this.isAutoGenerate;
       this.FormInputObjSupplier["isCalculated"] = false;
       this.FormInputObjSupplier["isDataInputed"] = false;
       this.OnForm1 = true;
       console.log(this.FormInputObjSupplier);
     } else if (content == AdInsConstant.ContentSupplierEmp) {
-      this.FormInputObjSupplierEmpl["title"] = AdInsConstant.TitleSupplierEmp;
-      this.FormInputObjSupplierEmpl["content"] = AdInsConstant.ContentSupplierEmp;
-      this.FormInputObjSupplierEmpl["labelName"] = AdInsConstant.LabelSupplierEmp;
-      this.FormInputObjSupplierEmpl["AppId"] = this.AppId;
-      this.FormInputObjSupplierEmpl["contentObj"] = this.ContentObjSupplierEmp;
-      // this.FormInputObjSupplierEmpl["ruleObj"] = this.RuleSupplierEmpData;
-      // this.FormInputObjSupplierEmpl["isAutoGenerate"] = this.isAutoGenerate;
-      this.FormInputObjSupplierEmpl["isCalculated"] = false;
-      this.FormInputObjSupplierEmpl["isDataInputed"] = false;
-      // this.FormInputObjSupplierEmpl["dictSuppl"] = this.DictSupplierCode;
+      this.FormInputObjSupplierEmp["title"] = AdInsConstant.TitleSupplierEmp;
+      this.FormInputObjSupplierEmp["content"] = AdInsConstant.ContentSupplierEmp;
+      this.FormInputObjSupplierEmp["labelName"] = AdInsConstant.LabelSupplierEmp;
+      this.FormInputObjSupplierEmp["AppId"] = this.AppId;
+      this.FormInputObjSupplierEmp["contentObj"] = this.ContentObjSupplierEmp;
+      this.FormInputObjSupplierEmp["ruleObj"] = this.RuleSupplierEmpData;
+      this.FormInputObjSupplierEmp["isAutoGenerate"] = this.isAutoGenerate;
+      this.FormInputObjSupplierEmp["isCalculated"] = false;
+      this.FormInputObjSupplierEmp["isDataInputed"] = false;
+      this.FormInputObjSupplierEmp["dictSuppl"] = this.DictSupplierCode;
       this.OnForm2 = true;
-      console.log(this.FormInputObjSupplierEmpl);
+      console.log(this.FormInputObjSupplierEmp);
     } else if (content == AdInsConstant.ContentReferantor) {
       this.FormInputObjReferantor["title"] = AdInsConstant.TitleReferantor;
       this.FormInputObjReferantor["content"] = AdInsConstant.ContentReferantor;
       this.FormInputObjReferantor["labelName"] = AdInsConstant.LabelReferantor;
       this.FormInputObjReferantor["AppId"] = this.AppId;
       this.FormInputObjReferantor["contentObj"] = this.ContentObjReferantor;
-      // this.FormInputObjReferantor["ruleObj"] = this.RuleReferantorData;
-      // this.FormInputObjReferantor["isAutoGenerate"] = this.isAutoGenerate;
+      this.FormInputObjReferantor["ruleObj"] = this.RuleReferantorData;
+      this.FormInputObjReferantor["isAutoGenerate"] = this.isAutoGenerate;
       this.FormInputObjReferantor["isCalculated"] = false;
       this.FormInputObjReferantor["isDataInputed"] = false;
       this.OnForm3 = true;
@@ -95,69 +101,15 @@ export class CommissionV2Component implements OnInit {
   }
 
   async ngOnInit() {
-    await this.GetAppFeeData();
-    await this.GetIncomeInfoObj();
+    // await this.GetAppFeeData();
+    // await this.GetIncomeInfoObj();
     await this.GetContentData();
+    await this.GetRuleDataForForm();
     console.log(this.CommissionForm);
-    this.GetFormAddDynamicObj(AdInsConstant.ContentSupplier);
-    this.GetFormAddDynamicObj(AdInsConstant.ContentSupplierEmp);
-    this.GetFormAddDynamicObj(AdInsConstant.ContentReferantor);
-  }
-
-  ListAppFeeObj: Array<AppFeeObj> = new Array<AppFeeObj>();
-  AdminFee;
-  ProvisionFee;
-  UppingAdminFee;
-  UppingProvisionFee;
-  async GetAppFeeData() {
-    var obj = {
-      // AppId: this.AppId,
-      AppId: this.AppId,
-      RowVersion: ""
-    };
-    await this.http.post(AdInsConstant.GetListAppFeeByAppId, obj).toPromise().then(
-      (response) => {
-        console.log("response app fee data");
-        console.log(response);
-        this.ListAppFeeObj = response[AdInsConstant.ReturnObj];
-        for (var i = 0; i < this.ListAppFeeObj.length; i++) {
-          if (this.ListAppFeeObj[i].MrFeeTypeCode == AdInsConstant.MrFeeTypeCodeAdmin) {
-            this.AdminFee = this.ListAppFeeObj[i].AppFeeAmt;
-            this.UppingAdminFee = this.ListAppFeeObj[i].SellFeeAmt - this.ListAppFeeObj[i].AppFeeAmt;
-            // console.log("admin fee");
-            // console.log(this.AdminFee);
-            // console.log(this.UppingProvisionFee);
-          } else if (this.ListAppFeeObj[i].MrFeeTypeCode == AdInsConstant.MrFeeTypeCodeProvision) {
-            this.ProvisionFee = this.ListAppFeeObj[i].AppFeeAmt;
-            this.UppingProvisionFee = this.ListAppFeeObj[i].SellFeeAmt - this.ListAppFeeObj[i].AppFeeAmt;
-            // console.log("provision fee");
-            // console.log(this.ProvisionFee);
-            // console.log(this.UppingProvisionFee);
-          }
-        }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
-
-  async GetIncomeInfoObj() {
-    var obj = {
-      AppId: this.AppId,
-      AdminFee: this.AdminFee,
-      ProvisionFee: this.ProvisionFee,
-      UppingAdminFee: this.UppingAdminFee,
-      UppingProvisionFee: this.UppingProvisionFee,
-    };
-    await this.http.post<AppFinDataObj>(AdInsConstant.GetAppFinDataWithRuleByAppId, obj).toPromise().then(
-      (response) => {
-        console.log(response);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    await this.GetExistingAppCommData();
+    // this.GetFormAddDynamicObj(AdInsConstant.ContentSupplier);
+    // this.GetFormAddDynamicObj(AdInsConstant.ContentSupplierEmp);
+    // this.GetFormAddDynamicObj(AdInsConstant.ContentReferantor);
   }
 
   async GetContentData() {
@@ -243,6 +195,133 @@ export class CommissionV2Component implements OnInit {
         }
       }
     }
+  }
+
+  RuleSupplierData: any = {};
+  RuleSupplierEmpData: any = {};
+  RuleReferantorData: any = {};
+  async GetRuleDataForForm() {
+    var obj = { AppId: this.AppId };
+    await this.http.post(AdInsConstant.GetAppCommissionRule, obj).toPromise().then(
+      (response) => {
+        console.log("Cek Rule");
+        console.log(response);
+        for (var i = 0; i < response["length"]; i++) {
+          var temp: RuleCommissionObj = response[i][AdInsConstant.ReturnObj].RuleDataObjects;
+          // console.log(temp);
+          this.BindRuleData(temp.ResultSupplier, AdInsConstant.ContentSupplier, this.ContentObjSupplier[i].Key);
+          this.BindRuleData(temp.ResultSupplierEmp, AdInsConstant.ContentSupplierEmp, this.ContentObjSupplier[i].Key);
+        }
+        if (response[0][AdInsConstant.ReturnObj].RuleDataObjects.ResultReferantor != null)
+          this.BindRuleData(response[0][AdInsConstant.ReturnObj].RuleDataObjects.ResultReferantor, AdInsConstant.ContentReferantor, this.ContentObjReferantor[0].Key);  
+        
+        console.log(this.RuleSupplierData);
+        console.log(this.RuleSupplierEmpData);
+        console.log(this.RuleReferantorData);
+
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  BindRuleData(tempObj: any, contentType: string, supplCode: string) {
+    // console.log(tempObj);
+    // console.log(contentType);
+    // console.log(supplCode);
+    var listTempObj = new Array();
+    if (contentType == AdInsConstant.ContentSupplier) {
+      for (var i = 0; i < tempObj.AllocationFrom.length; i++) {
+        var temp = {
+          AllocationAmount: tempObj.AllocationAmount[i],
+          AllocationBehaviour: tempObj.AllocationBehaviour[i],
+          AllocationFrom: tempObj.AllocationFrom[i],
+          AllocationFromDesc: tempObj.AllocationFromDesc[tempObj.AllocationFrom[i]],
+          AllocationFromSeq: tempObj.AllocationFromSeq[tempObj.AllocationFrom[i]],
+          MaxAllocationAmount: tempObj.MaxAllocationAmount[i]
+        };
+        listTempObj.push(temp);
+      };
+      // sort
+      listTempObj.sort((a, b) => a.AllocationFromSeq - b.AllocationFromSeq);
+      this.RuleSupplierData[supplCode] = listTempObj;
+    }
+    if (contentType == AdInsConstant.ContentSupplierEmp) {
+      var DictJobPosition: any = {};
+      var tempJobPosition: string = "";
+      var listJobPosition = new Array();
+      for (var i = 0; i < tempObj.AllocationFrom.length; i++) {
+        if (tempJobPosition != tempObj.JobPositionCode[i]) {
+          listTempObj = new Array();
+          tempJobPosition = tempObj.JobPositionCode[i];
+          listJobPosition.push(tempJobPosition);
+        }
+        var temp = {
+          AllocationAmount: tempObj.AllocationAmount[i],
+          AllocationBehaviour: tempObj.AllocationBehaviour[i],
+          AllocationFrom: tempObj.AllocationFrom[i],
+          AllocationFromDesc: tempObj.AllocationFromDesc[tempObj.AllocationFrom[i]],
+          AllocationFromSeq: tempObj.AllocationFromSeq[tempObj.AllocationFrom[i]],
+          MaxAllocationAmount: tempObj.MaxAllocationAmount[i]
+        };
+        listTempObj.push(temp);
+        DictJobPosition[tempObj.JobPositionCode[i]] = listTempObj;
+      }
+
+      // sort 
+      for(var i=0;i<listJobPosition.length;i++){
+        listTempObj= DictJobPosition[listJobPosition[i]];
+        console.log(listTempObj);
+        listTempObj.sort((a, b) => a.AllocationFromSeq - b.AllocationFromSeq);
+      }
+      this.RuleSupplierEmpData[supplCode] = DictJobPosition;
+    }
+    if (contentType == AdInsConstant.ContentReferantor) {
+      for (var i = 0; i < tempObj.AllocationFrom.length; i++) {
+        var temp = {
+          AllocationAmount: tempObj.AllocationAmount[i],
+          AllocationBehaviour: tempObj.AllocationBehaviour[i],
+          AllocationFrom: tempObj.AllocationFrom[i],
+          AllocationFromDesc: tempObj.AllocationFromDesc[tempObj.AllocationFrom[i]],
+          AllocationFromSeq: tempObj.AllocationFromSeq[tempObj.AllocationFrom[i]],
+          MaxAllocationAmount: tempObj.MaxAllocationAmount[i]
+        };
+        listTempObj.push(temp);
+      };
+      // sort
+      listTempObj.sort((a, b) => a.AllocationFromSeq - b.AllocationFromSeq);
+      this.RuleReferantorData[supplCode] = listTempObj;
+    }
+  }
+
+  isAutoGenerate: boolean = true;
+  async GetExistingAppCommData(){
+    var objApi = { AppId: this.AppId };
+    await this.http.post(AdInsConstant.GetAppCommissionDataForEditByAppId, objApi).toPromise().then(
+      (response) => {
+        console.log("response edit comm");
+        console.log(response);
+        var tempObj: Array<AppCommissionHObj> = response[AdInsConstant.ReturnObj];
+        if (tempObj.length > 0) {
+          // console.log("edit data");
+          this.isAutoGenerate = false;
+          this.GetFormAddDynamicObj(AdInsConstant.ContentSupplier);
+          this.GetFormAddDynamicObj(AdInsConstant.ContentSupplierEmp);
+          this.GetFormAddDynamicObj(AdInsConstant.ContentReferantor);
+
+
+        } else {
+          // console.log("new data");
+          this.GetFormAddDynamicObj(AdInsConstant.ContentSupplier);
+          this.GetFormAddDynamicObj(AdInsConstant.ContentSupplierEmp);
+          this.GetFormAddDynamicObj(AdInsConstant.ContentReferantor);
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   SaveForm() {

@@ -34,9 +34,9 @@ export class FormCommissionGenerateComponent implements OnInit {
   initData() {
     this.parentForm.addControl(this.identifier, this.fb.array([]));
     this.arr = this.parentForm.get(this.identifier) as FormArray;
-    console.log(this.arr);
-    console.log(this.parentForm);
-    console.log(this.identifier);
+    // console.log(this.arr);
+    // console.log(this.parentForm);
+    // console.log(this.identifier);
     this.GetDDLContentName();
   }
 
@@ -71,12 +71,12 @@ export class FormCommissionGenerateComponent implements OnInit {
       DropDownList: this.fb.array([])
     }) as FormGroup;
     this.arr.push(NewDataForm);
-    console.log(this.parentForm);
+    // console.log(this.parentForm);
     this.lenDDLContentName--;
     // if(this.FormInputObj["isAutoGenerate"]){
     // }
   }
-  
+
   GetDDLContentName() {
     this.DDLContentName = this.FormInputObj["contentObj"];
     // console.log("DDL Content " + this.FormInputObj["content"]);
@@ -86,7 +86,6 @@ export class FormCommissionGenerateComponent implements OnInit {
     this.totalDDLContentData = this.DDLContentName.length;
   }
 
-  
   ChooseContentName(ev, indexFormObj) {
     // console.log(ev);
     var idx = ev.target.selectedIndex - 1;
@@ -110,19 +109,21 @@ export class FormCommissionGenerateComponent implements OnInit {
       code = this.DDLContentName[idx].Key;
 
     }
-
+    // console.log(code);
+    
     // var idxTemp: number = idx;
     // if (this.FormInputObj["content"] == AdInsConstant.ContentSupplierEmp) {
-    //   idxTemp = this.FormInputObj["contentObj"].indexOf(this.FormInputObj["contentObj"].find(x => x.Key == ev.target.selectedOptions[0].value));
-    // }
-    // var temp = this.GetTempRuleObj(code, idxTemp);
-    // if (temp == undefined || temp == null) {
-    //   this.parentForm.controls[this.identifier]["controls"][indexFormObj].patchValue({
-    //     ContentName: "",
-    //     ContentNameValue: ""
-    //   });
-    //   return this.toastr.warningMessage("There no rule setting for " + code);
-    // }
+      //   idxTemp = this.FormInputObj["contentObj"].indexOf(this.FormInputObj["contentObj"].find(x => x.Key == ev.target.selectedOptions[0].value));
+      // }
+    var temp = this.GetTempRuleObj(code, this.DDLContentName[idx].MrSupplEmpPositionCode);
+    // console.log(temp);
+    if (temp == undefined || temp == null) {
+      this.parentForm.controls[this.identifier]["controls"][indexFormObj].patchValue({
+        ContentName: "",
+        ContentNameValue: ""
+      });
+      return this.toastr.warningMessage("There no rule setting for " + code);
+    }
 
     this.parentForm.controls[this.identifier]["controls"][indexFormObj].patchValue({
       ContentName: ev.target.selectedOptions[0].value,
@@ -134,34 +135,69 @@ export class FormCommissionGenerateComponent implements OnInit {
         SupplCode: this.DDLContentName[idx].SupplCode
       });
     this.GetDDLBankAccount(this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ContentName.value, indexFormObj);
-    // this.SetRule(indexFormObj, code, idxTemp);
+    this.SetRule(code, indexFormObj, this.DDLContentName[idx].MrSupplEmpPositionCode);
     this.tempDDLContentName.push(obj);
     this.DDLContentName.splice(idx, 1);
     // console.log(this.tempDDLContentName);
     // console.log(this.DDLContentName);
-    console.log(this.parentForm);
+    // console.log(this.parentForm);
   }
-  
-  GetTempRuleObj(code: string, idx: number) {
-    var temp;
-    if (this.FormInputObj["content"] == AdInsConstant.ContentSupplier) {
-      temp = this.FormInputObj["ruleObj"][code];
-      // console.log("Rule Suppl");   
-    } else if (this.FormInputObj["content"] == AdInsConstant.ContentSupplierEmp) {
-      // console.log(idx);
-      var behaviour = this.FormInputObj["contentObj"][idx].MrSupplEmpPositionCode;
-      // console.log("behaviour");
-      // console.log(behaviour);
-      // console.log(code);
-      temp = this.FormInputObj["ruleObj"][code][behaviour];
-      // console.log("Rule Suppl Emp");
-    } else if (this.FormInputObj["content"] == AdInsConstant.ContentReferantor) {
-      temp = this.FormInputObj["ruleObj"][0];
-      // console.log("Rule Referantor");
+
+  SetRule(supplCode: string, formIdx: number, role: string) {
+    var ruleObj = this.GetTempRuleObj(supplCode, role);
+    var TotalCommisionAmount: number = 0;
+    // console.log(ruleObj);
+    for (var i = 0; i < ruleObj.length; i++) {
+
+      let behaviour: string = ruleObj[i].AllocationBehaviour;
+      let maxAllocAmt: number = ruleObj[i].MaxAllocationAmount;
+      if (maxAllocAmt <= 0) {
+        behaviour = "LOCK";
+        maxAllocAmt = 0;
+      }
+
+      let allocAmt: number = ruleObj[i].AllocationAmount;
+      if (allocAmt <= 0)
+        allocAmt = 0;
+
+      var eachAllocationDetail = this.fb.group({
+        AppCommissionDId: [0],
+        AppCommissionHId: [0],
+        AllocationFromSeq: [ruleObj[i].AllocationFromSeq],
+        AllocationFrom: [ruleObj[i].AllocationFrom],
+        AllocationFromDesc: [ruleObj[i].AllocationFromDesc],
+        MaxAllocationAmount: [maxAllocAmt],
+        AllocationAmount: [allocAmt, [Validators.pattern("^[0-9]+([,.][0-9]+)?$"), Validators.max(maxAllocAmt)]],
+        AllocationBehaviour: [behaviour],
+        TaxAmt: [0],
+        VatAmt: [0],
+        PenaltyAmt: [0],
+        RowVersion: [''],
+        TotalListAllocatedDivided: [Math.ceil(ruleObj.length / 2)]
+      }) as FormGroup;
+      TotalCommisionAmount += ruleObj[i].AllocationAmount;
+      this.parentForm.controls[this.identifier]["controls"][formIdx].controls.ListAllocated.push(eachAllocationDetail);
+
     }
-    return temp;
+
+    // patch total
+    this.parentForm.controls[this.identifier]["controls"][formIdx].patchValue({
+      TotalCommisionAmount: TotalCommisionAmount,
+    });
   }
-  
+
+  GetTempRuleObj(supplCode: string, role: string) {
+    var tempObj;
+    if (this.FormInputObj['content'] == AdInsConstant.ContentSupplier) {
+      tempObj = this.FormInputObj['ruleObj'][supplCode];
+    } else if (this.FormInputObj['content'] == AdInsConstant.ContentSupplierEmp) {
+      tempObj = this.FormInputObj['ruleObj'][supplCode][role];
+    } else if (this.FormInputObj['content'] == AdInsConstant.ContentReferantor) {
+      tempObj = this.FormInputObj['ruleObj'][supplCode];
+    }
+    return tempObj;
+  }
+
   GetDDLBankAccount(code, idx) {
     var content = this.FormInputObj["content"];
     // console.log("Obj Code");
@@ -230,5 +266,68 @@ export class FormCommissionGenerateComponent implements OnInit {
       this.parentForm.controls[this.identifier]["controls"][idx].controls.DropDownList.push(eachDDLDetail);
       // console.log(this.FormObj);
     }
+  }
+
+  DeleteDataForm(idx) {
+    // console.log(idx);
+    if (confirm('Are you sure to delete this record?')) {
+      this.FormInputObj["isCalculated"] = false;
+      if (this.parentForm.controls[this.identifier]["controls"][idx].controls.AppCommissionHId.value != 0)
+        this.DeleteFromDatabase(this.parentForm.controls[this.identifier]["controls"][idx].controls.AppCommissionHId.value);
+      var tempContentName = this.parentForm.controls[this.identifier]["controls"][idx].controls.ContentName.value;
+      if (tempContentName != "") {
+        var i = this.tempDDLContentName.indexOf(this.tempDDLContentName.find(x => x.Key == tempContentName));
+        this.DDLContentName.push(this.tempDDLContentName[i]);
+        this.tempDDLContentName.splice(i, 1);
+      }
+      this.lenDDLContentName++;
+      // console.log(this.tempDDLContentName);
+      // console.log(this.DDLContentName);
+      if (this.totalDDLContentData == this.lenDDLContentName)
+        this.FormInputObj["isDataInputed"] = false;
+      this.arr.removeAt(idx);
+    }
+  }
+
+  DeleteFromDatabase(AppCommissionHId) {
+    var obj = { AppCommissionHId: AppCommissionHId };
+    this.http.post(AdInsConstant.DeleteAppCommissionData, obj).subscribe(
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  ChangeBankAcc(ev, i) {
+    if (ev.target.selectedIndex == 0) return;
+    // console.log(ev);
+    var idxDDL = ev.target.selectedIndex - 1;
+    var ddlObj = this.parentForm.controls[this.identifier]["controls"][i].controls.DropDownList.value[idxDDL];
+    // console.log(ddlObj);
+
+    this.parentForm.controls[this.identifier]["controls"][i].patchValue({
+      BankAccountNo: ddlObj.Key,
+      BankAccountName: ddlObj.Value,
+      BankBranch: ddlObj.BankBranch,
+      BankCode: ddlObj.BankCode,
+      BankName: ddlObj.BankName
+    });
+  }
+  
+  ChangeDataLabel(indexFormObj) {
+    // console.log(indexFormObj);
+    this.FormInputObj["isCalculated"] = false;
+    var len = this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ListAllocated.controls.length;
+    var tempTotal = 0;
+    for (var i = 0; i < len; i++) {
+      var t: number = +this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ListAllocated.controls[i].controls.AllocationAmount.value;
+      tempTotal += t;
+    }
+    this.parentForm.controls[this.identifier]["controls"][indexFormObj].patchValue({
+      TotalCommisionAmount: tempTotal
+    });
   }
 }
