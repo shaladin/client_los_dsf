@@ -9,6 +9,7 @@ import { RFAInfoObj } from 'app/shared/model/Approval/RFAInfoObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { first } from 'rxjs/operators';
 import { environment } from 'environments/environment';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-mou-review-factoring',
@@ -177,8 +178,9 @@ export class MouReviewFactoringComponent implements OnInit {
       var custObj = { CustNo: this.resultData['CustNo'] };
       this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
         response => {
-          this.link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
-          window.open(this.link, '_blank');
+          // this.link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
+          // window.open(this.link, '_blank');
+          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         },
         (error) => {
           console.log(error);

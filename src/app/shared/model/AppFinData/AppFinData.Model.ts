@@ -1,3 +1,5 @@
+import { ResultRefundObj } from "./ResultRefund.Model";
+
 export class AppFinDataObj {
     AppFinDataId: number;
     AppId: number;
@@ -73,7 +75,8 @@ export class AppFinDataObj {
     SellEffectiveRatePrcnt: number;
     TotalDpAmt: number;
     ExpenseAmount: number;
-
+    ResultRefundRsvFundObjs: Array<ResultRefundObj>;
+    
     constructor() {
     }
 }
