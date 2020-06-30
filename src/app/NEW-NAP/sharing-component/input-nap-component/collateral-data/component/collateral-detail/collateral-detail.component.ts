@@ -312,6 +312,8 @@ export class CollateralDetailComponent implements OnInit {
             // }
           } else {
             if (this.mode = "add") {
+              this.editAppCollateralObj = response['AppCollateral'];
+              this.editCollateralRegistrationObj = response['AppCollateralRegistration'];
               this.AddCollForm.patchValue({
                 CollateralStat: "NEW"
               });
