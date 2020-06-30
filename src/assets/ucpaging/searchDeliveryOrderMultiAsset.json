@@ -19,6 +19,14 @@
         },
         {
             "type": "textbox",
+            "name": "PO.PURCHASE_ORDER_NO",
+            "id": "PurchaseNoId",
+            "value": "",
+            "label": "Purchase Order No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
             "name": "AG.CUST_NAME",
             "id": "CustNameId",
             "value": "",
@@ -111,6 +119,12 @@
         },
         {
             "type": "sort",
+            "position": "center",
+            "label": "PURCHASE ORDER NO",
+            "name": "PO.PURCHASE_ORDER_NO"
+        },
+        {
+            "type": "sort",
             "position": "left",
             "label": "CUSTOMER NAME",
             "name": "AG.CUST_NAME"
@@ -163,6 +177,11 @@
                     "property": "AgrmntId"
                 }
             ]
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "PONumber"
         },
         {
             "type": "text",
