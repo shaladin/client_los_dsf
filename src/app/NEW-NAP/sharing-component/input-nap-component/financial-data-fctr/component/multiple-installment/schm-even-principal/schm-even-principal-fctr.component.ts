@@ -23,6 +23,7 @@ export class SchmEvenPrincipalFctrComponent implements OnInit {
   calcEvenPrincipleObj: CalcEvenPrincipleObj = new CalcEvenPrincipleObj();
     listInstallment: any;
   responseCalc: any;
+  IsAppFeePrcntValid: boolean = true;
 
   constructor(
     private fb: FormBuilder,
@@ -53,9 +54,21 @@ export class SchmEvenPrincipalFctrComponent implements OnInit {
 
   CalculateInstallment() {
 
-    if(this.ParentForm.value.EstEffDt == "")
-    {
+    if (this.ParentForm.value.EstEffDt == "") {
       this.toastr.errorMessage("Insert Estimation Effective Date");
+      return;
+    }
+    for (let i = 0; i < this.ParentForm.value.AppFee.length; i++) {
+      if (this.ParentForm.value.AppFee[i].AppFeePrcnt < 0) {
+        this.IsAppFeePrcntValid = false;
+      }
+    }
+    if (this.IsAppFeePrcntValid == false) {
+      this.toastr.errorMessage("App Fee Prcnt must be greater than 0");
+      return;
+    }
+    if (this.ParentForm.value.EffectiveRatePrcnt < 0 && this.ParentForm.value.InterestType == "PRCNT") {
+      this.toastr.errorMessage("Effective Rate must be greater than 0");
       return;
     }
 
