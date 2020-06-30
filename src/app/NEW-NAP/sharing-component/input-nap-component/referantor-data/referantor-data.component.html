@@ -49,6 +49,8 @@
                       <option *ngFor="let it of bankItems" value="{{it.BankAccountNo}}">
                         {{it.BankAccountName}} </option>
                     </select>
+                    <lib-uc-show-errors [control]="NapAppReferantorForm.controls.AccountBank"
+                      [submit]="enjiForm.submitted"></lib-uc-show-errors>
                   </div>
                 </div>
 

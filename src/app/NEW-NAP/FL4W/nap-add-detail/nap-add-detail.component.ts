@@ -16,6 +16,7 @@ import { UcviewgenericComponent } from '@adins/ucviewgeneric';
   providers: [NGXToastrService]
 })
 export class NapAddDetailComponent implements OnInit {
+  @ViewChild('ucMainInfo') ucMainInfo: any;
 
   private stepperPersonal: Stepper;
   private stepperCompany: Stepper;
@@ -69,6 +70,10 @@ export class NapAddDetailComponent implements OnInit {
         this.showCancel = false
       }
     });
+
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
   }
 
   ngOnInit() {
@@ -225,7 +230,6 @@ export class NapAddDetailComponent implements OnInit {
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["/Nap/FinanceLeasing/Paging"], { queryParams: { BizTemplateCode: AdInsConstant.FL4W } })
         },
         (error) => {
           console.log(error);
@@ -271,6 +275,8 @@ export class NapAddDetailComponent implements OnInit {
       this.IsLastStep = true;
     else
       this.IsLastStep = false;
+
+      // this.ucMainInfo.OnInit();
   }
 
   Submit() {
