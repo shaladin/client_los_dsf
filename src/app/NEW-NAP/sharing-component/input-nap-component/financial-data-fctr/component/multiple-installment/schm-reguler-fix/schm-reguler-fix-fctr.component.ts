@@ -87,6 +87,7 @@ export class SchmRegulerFixFctrComponent implements OnInit {
   }
 
   CalcBaseOnInst() {
+    this.IsAppFeePrcntValid = true;
     if (this.ParentForm.value.EstEffDt == "") {
       this.toastr.errorMessage("Insert Estimation Effective Date");
       return;
@@ -100,7 +101,7 @@ export class SchmRegulerFixFctrComponent implements OnInit {
       this.toastr.errorMessage("App Fee Prcnt must be greater than 0");
       return;
     }
-    if (this.ParentForm.value.EffectiveRatePrcnt < 0 && this.ParentForm.value.InterestType == "PRCNT") {
+    if (this.ParentForm.value.EffectiveRatePrcnt < 0) {
       this.toastr.errorMessage("Effective Rate must be greater than 0");
       return;
     }
