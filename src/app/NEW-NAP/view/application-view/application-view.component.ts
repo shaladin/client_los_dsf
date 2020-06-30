@@ -44,6 +44,7 @@ export class ApplicationViewComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("APP BESARAN")
     this.arrValue.push(this.AppId);
     this.GetApp();
   }

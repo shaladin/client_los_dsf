@@ -12,6 +12,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AppCustPersonalObj } from 'app/shared/model/AppCustPersonalObj.Model';
 import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 import { AppDupCheckObj } from 'app/shared/model/AppDupCheckCust/AppDupCheckObj.Model';
+import { NegativeCustObj } from 'app/shared/model/NegativeCust.Model';
 
 @Component({
   selector: 'app-fraud-detection-verif',
@@ -39,7 +40,7 @@ export class FraudDetectionVerifComponent implements OnInit {
   appObj: AppObj;
   leadId: any;
   dukcapilObj: any;
-  ListAssetNegative: any;
+  ListAssetNegative: Array<any> = new Array<any>();
   listCustDuplicate: any;
   closeResult: string;
   idNo: any;
@@ -50,7 +51,7 @@ export class FraudDetectionVerifComponent implements OnInit {
   appCustPersonalObj: any;
   RowVersion: any;
   GetNegativeCustomerDuplicateCheckUrl = AdInsConstant.GetNegativeCustomerDuplicateCheck;
-  ListNegativeCust: any;
+  ListNegativeCust: Array<NegativeCustObj> = new Array<NegativeCustObj>();;
   viewObj: string;
   arrValue = [];
 
@@ -170,6 +171,10 @@ export class FraudDetectionVerifComponent implements OnInit {
           response => {
             this.respNegativeCust = response;
             this.ListNegativeCust = response['ReturnObject'].NegativeCustDuplicate;
+            var idxSelected = this.ListNegativeCust.findIndex(x => x.CustNo == this.appCustObj.CustNo);
+            if(idxSelected > -1){
+              this.ListNegativeCust[idxSelected].IsSelected = true;
+            }
           },
           error => {
             console.log("error");
@@ -237,14 +242,14 @@ export class FraudDetectionVerifComponent implements OnInit {
 
   getNegativeAsset() {
     var negativeAssetObj = {
-      "assetCategoryCode": this.appAssetObj.assetCategoryCode,
-      "assetTypeCode": this.appAssetObj.assetTypeCode,
-      "fullAssetCode": this.appAssetObj.fullAssetCode,
-      "serialNo1": this.appAssetObj.serialNo1,
-      "serialNo2": this.appAssetObj.serialNo2,
-      "serialNo3": this.appAssetObj.serialNo3,
-      "serialNo4": this.appAssetObj.serialNo4,
-      "serialNo5": this.appAssetObj.serialNo5,
+      AssetCategoryCode: this.appAssetObj.AssetCategoryCode,
+      AssetTypeCode: this.appAssetObj.AssetTypeCode,
+      FullAssetCode: this.appAssetObj.FullAssetCode,
+      SerialNo1: this.appAssetObj.SerialNo1,
+      SerialNo2: this.appAssetObj.SerialNo2,
+      SerialNo3: this.appAssetObj.SerialNo3,
+      SerialNo4: this.appAssetObj.SerialNo4,
+      SerialNo5: this.appAssetObj.SerialNo5,
     }
     this.http.post(this.getAssetNegativeDuplicateCheck, negativeAssetObj).subscribe(
       response => {

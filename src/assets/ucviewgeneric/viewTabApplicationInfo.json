@@ -9,17 +9,17 @@
           {
             "type": "text",
             "label": "Sales Officer",
-            "property": "SalesOfficerNo"
+            "property": "SalesOfficer"
           },
           {
             "type": "text",
             "label": "Sales Supervisor",
-            "property": "SalesHeadNo"
+            "property": "SalesSpv"
           },
           {
             "type": "text",
             "label": "Sales Recommendation",
-            "property": "SalesRecommendCode"
+            "property": "SalesRecommend"
           },
           {
             "type": "text",
@@ -28,8 +28,8 @@
           }
         ],
         "querystring": {
-          "select": "SELECT re1.EMP_NAME AS SalesOfficerNo, a.SALES_NOTES AS SalesNotes, re2.EMP_NAME AS SalesHeadNo, MC.DESCR AS SalesRecommendCode ",
-          "from": "FROM dbo.APP a WITH(NOLOCK) JOIN FOUNDATION.dbo.REF_MASTER MC WITH(NOLOCK)  ON a.MR_SALES_RECOMMEND_CODE = MC.MASTER_CODE JOIN FOUNDATION.dbo.REF_EMP re1 WITH(NOLOCK) ON a.SALES_OFFICER_NO = re1.EMP_NO JOIN FOUNDATION.dbo.REF_EMP re2 WITH(NOLOCK) ON a.SALES_HEAD_NO = re2.EMP_NO",
+          "select": "SELECT SOVEN.EMP_NAME AS SalesOfficer, A.SALES_NOTES AS SalesNotes, SSVEN.EMP_NAME AS SalesSpv, SRRM.DESCR AS SalesRecommend",
+          "from": "FROM dbo.APP A WITH(NOLOCK) LEFT JOIN dbo.V_EMP_NAME SOVEN WITH(NOLOCK) ON A.SALES_OFFICER_NO = SOVEN.EMP_NO LEFT JOIN dbo.V_EMP_NAME SSVEN WITH(NOLOCK) ON A.SALES_HEAD_NO = SSVEN.EMP_NO LEFT JOIN dbo.V_REF_MASTER SRRM WITH(NOLOCK) ON A.MR_SALES_RECOMMEND_CODE = SRRM.MASTER_CODE AND SRRM.REF_MASTER_TYPE_CODE='SLS_RECOM'",
           "where": "WHERE a.APP_ID = {0}"
         }
       },
@@ -41,12 +41,12 @@
           {
             "type": "text",
             "label": "Application Source",
-            "property": "AppSourceCode"
+            "property": "AppSource"
           },
           {
             "type": "text",
             "label": "First Installment Type",
-            "property": "FirstInstTypeCode"
+            "property": "FirstInstType"
           },
           {
             "type": "text",
@@ -61,12 +61,12 @@
           {
             "type": "text",
             "label": "Payment Frequency",
-            "property": "PayFreqCode"
+            "property": "PayFreq"
           },
           {
             "type": "text",
             "label": "Floating Period",
-            "property": "FloatingPeriodCode"
+            "property": "FloatingPeriod"
           },
           {
             "type": "text",
@@ -76,68 +76,36 @@
           {
             "type": "text",
             "label": "Installment Scheme",
-            "property": "InstSchemeCode"
+            "property": "InstScheme"
           },
           {
             "type": "text",
             "label": "Customer Notification By",
-            "property": "CustNotifyOptCode"
+            "property": "CustNotifyOpt"
           },
           {
             "type": "text",
             "label": "Way of Payment",
-            "property": "WopCode"
+            "property": "Wop"
           },
           {
-            "type": "text",
-            "label": "Mou Number",
-            "property": "MouNo"
-          },
-          {
-            "type": "text",
-            "label": "Num of Installment",
-            "property": "NoInstallment"
-          },
-          {
-            "type": "text",
-            "label": "Installment Type",
-            "property": "InstallmentType"
-          },
-          {
-            "type": "text",
-            "label": "TOP Type",
-            "property": "TopType"
-          },
-          {
-            "type": "text",
-            "label": "Calculation Method",
-            "property": "CalcMethod"
-          },
-          {
-            "type": "text",
-            "label": "Term Of Payment (Days)",
-            "property": "TermOfPayment"
-          },
-          {
-            "type": "boolean",
-            "label": "Is Disclosed",
-            "property": "Disclosed"
-          },
-          {
-            "type": "text",
-            "label": "Paid By",
-            "property": "PaidBy"
-          },
-          {
-            "type": "text",
-            "label": "Recourse Type",
-            "property": "RecourseType"
+            "type": "link",
+            "label": "Mou No",
+            "property": "MouCustNo",
+            "path": "/Mou/Cust/View",
+            "target": "_blank",
+            "param": [
+              {
+                "type": "MouCustId",
+                "property": "MouCustId"
+              }
+            ]
           }
         ],
         "querystring": {
-          "select": "SELECT RAS.APP_SRC_NAME AS AppSourceCode, RM3.DESCR AS FirstInstTypeCode, a.TENOR AS Tenor, RM5.DESCR AS InterestType, RM1.DESCR AS PayFreqCode, a.NUM_OF_INST AS NumOfInst, RM2.DESCR AS InstSchemeCode, a.MR_CUST_NOTIFY_OPT_CODE AS CustNotifyOptCode, RM4.DESCR AS WopCode, a.FLOATING_PERIOD_CODE AS FloatingPeriodCode, MC.MOU_CUST_NO AS MouNo,a.NUM_OF_INST AS NoInstallment, RM6.DESCR AS InstallmentType, RM7.DESCR AS TopType, RM8.DESCR AS CalcMethod, AF.TOP_DAYS AS TermOfPayment,AF.IS_DISCLOSED AS Disclosed, RM9.DESCR AS PaidBy,RM10.DESCR AS RecourseType",
-          "from": "JOIN dbo.APP_FIN_DATA afd WITH(NOLOCK) on a.APP_ID = afd.APP_ID JOIN FOUNDATION.dbo.REF_MASTER RM1 WITH(NOLOCK)  ON a.PAY_FREQ_CODE = RM1.MASTER_CODE AND RM1.REF_MASTER_TYPE_CODE = 'PAY_FREQ' JOIN FOUNDATION.dbo.REF_MASTER RM2 WITH(NOLOCK)  ON afd.MR_INST_SCHEME_CODE = RM2.MASTER_CODE AND RM2.REF_MASTER_TYPE_CODE = 'INST_SCHM' JOIN FOUNDATION.dbo.REF_MASTER RM3 WITH(NOLOCK)  ON a.MR_FIRST_INST_TYPE_CODE = RM3.MASTER_CODE AND RM3.REF_MASTER_TYPE_CODE = 'FIRST_INST_TYPE' JOIN FOUNDATION.dbo.REF_MASTER RM4 WITH(NOLOCK)  ON a.MR_WOP_CODE = RM4.MASTER_CODE AND RM4.REF_MASTER_TYPE_CODE = 'WOP' JOIN FOUNDATION.dbo.REF_MASTER RM5 WITH(NOLOCK)  ON afd.INTEREST_TYPE = RM5.MASTER_CODE AND RM5.REF_MASTER_TYPE_CODE = 'INTEREST_INPUT_TYPE' JOIN dbo.REF_APP_SRC RAS WITH (NOLOCK) ON a.MR_APP_SOURCE_CODE = RAS.APP_SRC_CODE JOIN dbo.MOU_CUST MC WITH(NOLOCK) ON a.MOU_CUST_ID = MC.MOU_CUST_ID JOIN dbo.APP_FCTR AF WITH(NOLOCK) ON a.APP_ID = AF.APP_ID JOIN FOUNDATION.dbo.REF_MASTER RM6 WITH(NOLOCK) ON AF.MR_INST_TYPE_CODE = RM6.MASTER_CODE  AND RM6.REF_MASTER_TYPE_CODE = 'INST_TYPE' JOIN FOUNDATION.dbo.REF_MASTER RM7 WITH(NOLOCK) ON AF.TOP_BASED = RM7.MASTER_CODE AND RM7.REF_MASTER_TYPE_CODE = 'TOP_CALC_BASED' JOIN FOUNDATION.dbo.REF_MASTER RM8 WITH(NOLOCK) ON AF.MR_SINGLE_INST_CALC_MTHD_CODE = RM8.MASTER_CODE AND RM8.REF_MASTER_TYPE_CODE = 'SINGLE_INST_CALC_METHOD' JOIN FOUNDATION.dbo.REF_MASTER RM9 WITH(NOLOCK) ON AF.PAID_BY = RM9.MASTER_CODE AND RM9.REF_MASTER_TYPE_CODE = 'APP_PAID_BY' JOIN FOUNDATION.dbo.REF_MASTER RM10 WITH(NOLOCK) ON AF.RECOURSE_TYPE = RM10.MASTER_CODE  AND RM10.REF_MASTER_TYPE_CODE = 'RECOURSE_TYPE'",
-          "where": "WHERE a.APP_ID = {0}"
+          "select": "SELECT RAS.APP_SRC_NAME AS AppSource, FITRM.DESCR AS FirstInstType, A.TENOR AS Tenor, ITRM.DESCR AS InterestType, RPF.DESCR AS PayFreq, A.NUM_OF_INST AS NumOfInst, ISRM.DESCR AS InstScheme, CNORM.DESCR AS CustNotifyOpt, WRM.DESCR AS Wop, FPPF.DESCR AS FloatingPeriod, MC.MOU_CUST_NO AS MouCustNo, A.MOU_CUST_ID AS MouCustId",
+          "from": "FROM dbo.APP A WITH(NOLOCK) INNER JOIN dbo.APP_FIN_DATA AFD WITH(NOLOCK) on A.APP_ID = AFD.APP_ID LEFT JOIN dbo.V_REF_MASTER FITRM WITH(NOLOCK) ON A.MR_FIRST_INST_TYPE_CODE = FITRM.MASTER_CODE AND FITRM.REF_MASTER_TYPE_CODE='FIRST_INST_TYPE' LEFT JOIN dbo.V_REF_MASTER ITRM WITH(NOLOCK) ON AFD.INTEREST_TYPE = ITRM.MASTER_CODE AND ITRM.REF_MASTER_TYPE_CODE='INTRSTTYPE' LEFT JOIN dbo.V_REF_MASTER ISRM WITH(NOLOCK) ON AFD.MR_INST_SCHEME_CODE = ISRM.MASTER_CODE AND ISRM.REF_MASTER_TYPE_CODE='INST_SCHM' LEFT JOIN dbo.V_REF_MASTER CNORM WITH(NOLOCK) ON A.MR_CUST_NOTIFY_OPT_CODE = CNORM.MASTER_CODE AND CNORM.REF_MASTER_TYPE_CODE='CUST_NOTIF_OPT' LEFT JOIN dbo.V_REF_MASTER WRM WITH(NOLOCK) ON A.MR_WOP_CODE = WRM.MASTER_CODE AND WRM.REF_MASTER_TYPE_CODE='WOP' LEFT JOIN dbo.V_REF_PAY_FREQ RPF WITH(NOLOCK) ON A.PAY_FREQ_CODE = RPF.PAY_FREQ_CODE LEFT JOIN dbo.REF_APP_SRC RAS WITH(NOLOCK) ON A.MR_APP_SOURCE_CODE = RAS.APP_SRC_CODE LEFT JOIN dbo.V_REF_PAY_FREQ FPPF WITH(NOLOCK) ON A.FLOATING_PERIOD_CODE = FPPF.PAY_FREQ_CODE JOIN dbo.MOU_CUST MC WITH(NOLOCK) ON MC.MOU_CUST_ID = A.MOU_CUST_ID",
+          "where": "WHERE A.APP_ID = {0}"
         }
       }
     ]

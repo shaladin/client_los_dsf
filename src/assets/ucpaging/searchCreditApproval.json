@@ -44,7 +44,7 @@
       {
         "type": "textbox",
         "name": "ATL.CURRENT_USER_ID",
-        "id": "claimById",
+        "id": "CurrentUserId",
         "value": "",
         "label": "Claim By",
         "placeholder": "Placeholder"
@@ -55,7 +55,7 @@
         "type": "sort",
         "position": "left",
         "label": "Claim By",
-        "name": "ClaimBy"
+        "name": "CurrentUser"
       },
       {
         "type": "sort",
@@ -84,11 +84,21 @@
       {
         "type": "label",
         "position": "center",
-        "label": "Action"
+        "label": "Process"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Hold"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Take Back"
       }
     ],
     "querystring": {
-      "select": "SELECT a.ORI_OFFICE_NAME AS OfficeName, a.ORI_OFFICE_CODE AS OfficeCode, a.APP_NO AS AppNo, ac.CUST_NAME AS CustName, ac.MR_CUST_TYPE_CODE AS MrCustTypeCode, a.PROD_OFFERING_NAME AS ProdOfferingName, a.APP_ID AS AppId, ATL.CURRENT_USER_ID AS ClaimBy, ATL.INSTANCE_ID AS InstanceId, ATL.TASK_ID AS TaskId, vro.IS_ALLOW_APP_CREATED AS IsAllowAppCreated, a.PROD_OFFERING_CODE AS prodOfferingCode, a.PROD_OFFERING_VERSION AS prodOfferingVersion",
+      "select": "SELECT a.ORI_OFFICE_NAME AS OfficeName, a.ORI_OFFICE_CODE AS OfficeCode, a.APP_NO AS AppNo, ac.CUST_NAME AS CustName, ac.MR_CUST_TYPE_CODE AS MrCustTypeCode, a.PROD_OFFERING_NAME AS ProdOfferingName, a.APP_ID AS AppId, ATL.CURRENT_USER_ID AS CurrentUser, ATL.INSTANCE_ID AS InstanceId, ATL.TASK_ID AS TaskId, ATL.IS_HOLD as IsHold, vro.IS_ALLOW_APP_CREATED AS IsAllowAppCreated, a.PROD_OFFERING_CODE AS prodOfferingCode, a.PROD_OFFERING_VERSION AS prodOfferingVersion",
       "from": "FROM dbo.APP a WITH ( NOLOCK ) LEFT JOIN dbo.APP_CUST ac WITH ( NOLOCK ) ON a.APP_ID = ac.APP_ID JOIN [dbo].[V_APV_TASK_LIST] ATL WITH ( NOLOCK ) ON a.APP_NO = ATL.TRX_NO  AND ATL.CATEGORY_CODE = 'CRD_APV' JOIN [dbo].[V_REF_LOB] RL WITH ( NOLOCK ) ON a.BIZ_TEMPLATE_CODE = RL.BIZ_TMPLT_CODE  AND  a.LOB_CODE = RL.LOB_CODE JOIN [dbo].[V_REF_OFFICE] vro WITH ( NOLOCK ) ON a.ORI_OFFICE_CODE = vro.OFFICE_CODE ",
       "where": "WHERE a.IS_APP_INIT_DONE = '1'"
     },
@@ -100,7 +110,7 @@
       {
         "type": "text",
         "position": "left",
-        "property": "ClaimBy"
+        "property": "CurrentUser"
       },
       {
         "type": "text",
@@ -136,77 +146,46 @@
         "position": "center",
         "action": [
           {
-            "type": "switch",
-            "case": [
+            "type": "edit",
+            "path": "/Nap/CreditProcess/CreditApproval/Detail",
+            "param": [
               {
-                "conditions": [
-                  {
-                    "isUser": true,
-                    "property": "ClaimBy",
-                    "value": "",
-                    "restriction": "EQ"
-                  }
-                ],
-                "result": {
-                  "type": "url",
-                  "path": "/Nap/CreditProcess/CreditApproval/Detail",
-                  "icon": "ft-edit-2",
-                  "param": [
-                    {
-                      "type": "AppId",
-                      "property": "AppId"
-                    },
-                    {
-                      "type": "TaskId",
-                      "property": "TaskId"
-                    },
-                    {
-                      "type": "InstanceId",
-                      "property": "InstanceId"
-                    },
-                    {
-                      "type": "MrCustTypeCode",
-                      "property": "MrCustTypeCode"
-                    }
-                  ]
-                },
-                "isHide": false
+                "type": "AppId",
+                "property": "AppId"
               },
               {
-                "conditions": [
-                  {
-                    "isUser": false,
-                    "property": "ClaimBy",
-                    "value": "",
-                    "restriction": "EQ"
-                  }
-                ],
-                "result": {
-                  "type": "url",
-                  "path": "/Nap/CreditProcess/CreditApproval/Detail",
-                  "icon": "ft-edit-2",
-                  "param": [
-                    {
-                      "type": "AppId",
-                      "property": "AppId"
-                    },
-                    {
-                      "type": "TaskId",
-                      "property": "TaskId"
-                    },
-                    {
-                      "type": "InstanceId",
-                      "property": "InstanceId"
-                    },
-                    {
-                      "type": "MrCustTypeCode",
-                      "property": "MrCustTypeCode"
-                    }
-                  ]
-                },
-                "isHide": false
+                "type": "TaskId",
+                "property": "TaskId"
+              },
+              {
+                "type": "InstanceId",
+                "property": "InstanceId"
+              },
+              {
+                "type": "MrCustTypeCode",
+                "property": "MrCustTypeCode"
               }
             ]
+          }
+        ]
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "callback",
+            "key": "HoldTask"
+          }
+        ]
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "callback",
+            "key": "TakeBack"
           }
         ]
       }

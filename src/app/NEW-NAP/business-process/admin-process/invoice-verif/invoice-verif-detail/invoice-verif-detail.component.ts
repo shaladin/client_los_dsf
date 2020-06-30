@@ -4,8 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormArray } from '@angular/forms';
-import { formatDate } from '@angular/common';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-invoice-verif-detail',
@@ -25,6 +25,7 @@ export class InvoiceVerifDetailComponent implements OnInit {
   TrxNo: string;
   PlafondAmt : any;
   OsPlafondAmt : any;
+  token = localStorage.getItem("Token");
 
   InvoiceForm = this.fb.group({
     Invoices: this.fb.array([])
@@ -43,7 +44,6 @@ export class InvoiceVerifDetailComponent implements OnInit {
 
   ngOnInit() {
     this.claimTask();
-    console.log("test");
     this.viewObj = "./assets/ucviewgeneric/viewInvoiceVerif.json";
 
     this.listVerificationStatus = [{ Key: "APV", Value: "Approve" }, { Key: "RJC", Value: "Reject" }];
@@ -53,21 +53,23 @@ export class InvoiceVerifDetailComponent implements OnInit {
     }
 
     this.httpClient.post(AdInsConstant.GetMouCustByAppId, request).subscribe((response) => {
-      console.log(response);
       this.PlafondAmt = response["PlafondAmt"];
+
+      this.httpClient.post(AdInsConstant.GetListAppInvoiceFctrByAppId, request).subscribe((response) => {
+        console.log(response);
+        this.listInvoice = response["AppInvoiceFctrObjs"];
+        var totalInvoice = 0;
+        for (let i = 0; i < this.listInvoice.length; i++) {
+          var fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray;
+          fa_listInvoice.push(this.AddInvoiceControl(this.listInvoice[i]))
+          totalInvoice += this.listInvoice[i].InvoiceAmt;
+        }
+        this.OsPlafondAmt = this.PlafondAmt - totalInvoice;
+      });
+      
     })
 
-    this.httpClient.post(AdInsConstant.GetListAppInvoiceFctrByAppId, request).subscribe((response) => {
-      console.log(response);
-      this.listInvoice = response["AppInvoiceFctrObjs"];
-      var totalInvoice = 0;
-      for (let i = 0; i < this.listInvoice.length; i++) {
-        var fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray;
-        fa_listInvoice.push(this.AddInvoiceControl(this.listInvoice[i]))
-        totalInvoice += this.listInvoice[i].InvoiceAmt;
-      }
-      this.OsPlafondAmt = this.PlafondAmt - totalInvoice;
-    });
+    
   }
 
   AddInvoiceControl(obj) {
@@ -96,9 +98,7 @@ export class InvoiceVerifDetailComponent implements OnInit {
     }
     
     var request = {Invoices : this.listInvoice, TaskListId : this.WfTaskListId};
-    console.log(request);
     this.httpClient.post(AdInsConstant.UpdateAppInvoiceFctr, request).subscribe((response) => {
-      console.log(response);
       this.router.navigate(["/Nap/AdminProcess/InvoiceVerif/Paging"]);
     });
     
@@ -110,7 +110,7 @@ export class InvoiceVerifDetailComponent implements OnInit {
     wfClaimObj.pWFTaskListID = this.WfTaskListId;
     wfClaimObj.pUserID = currentUserContext["UserName"];
     this.httpClient.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
+      () => {
       });
   }
   Calculate(i)
@@ -124,6 +124,14 @@ export class InvoiceVerifDetailComponent implements OnInit {
     else
     {
       this.OsPlafondAmt += item.get("InvoiceAmt").value;
+    }
+  }
+  
+  GetCallBack(ev: any){
+    if(ev.Key == "ViewProdOffering"){
+      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.ViewObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.ViewObj.ProdOfferingVersion + "&Token=" + this.token;
+      // this.router.navigate([]).then(result => { window.open(link, '_blank'); });
+      window.open( link, "_blank");
     }
   }
 }

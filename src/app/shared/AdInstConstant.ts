@@ -1,6 +1,10 @@
 import { environment } from "environments/environment";
 
 export class AdInsConstant {
+  //Application Item
+  public static USER_ACCESS = "UserAccess";
+  public static ERROR_NO_CALLBACK_SETTING = "System Error - No Callback Handler for {0} Callback Trigger";
+  public static NOT_ELIGIBLE_FOR_TAKE_BACK = "You are not Eligible to Take Back this Task";
 
   //App Step
   public static AppStepNew = "NEW";
@@ -45,6 +49,8 @@ export class AdInsConstant {
 
   public static GENERAL = "GENERAL";
   public static FACTORING = "FACTORING";
+  public static ID_TYPE_NPWP = "NPWP";
+  public static ID_TYPE_EKTP = "EKTP";
 
   public static SALES_JOB_CODE = "SALES_PERSON";
   public static ADMIN_HEAD_JOB_CODE = "ADMIN_HEAD";
@@ -61,7 +67,8 @@ export class AdInsConstant {
   public static RtnHandlingReturnStatDone = "DONE"
   public static ASSET_TYPE_CAR = "CAR";
   public static LICENSE_PLATE_NO = "LICENSE PLATE NO";
-
+  public static OFFERING_VALIDITY_APV = "OFF_VLD_APV";
+  public static AppStatCancel = "CANCEL";
   //APV RESULT
   public static ApvResultReturn = "Return";
 
@@ -88,7 +95,7 @@ export class AdInsConstant {
   public static DataTableFeeAndInsNAP = environment.losUrl + "/Application/DataTableFeeAndInsNAP";
   public static UpdateAppStepByAppId = environment.losUrl + "/Application/UpdateAppStepByAppId";
   public static CopyCancelledApp = environment.losUrl + "/Application/CopyCancelledApp";
-  
+
   //App Loan Purpose
   public static AddAppLoanPurpose = environment.losUrl + "/AppLoanPurpose/AddAppLoanPurpose";
   public static EditAppLoanPurpose = environment.losUrl + "/AppLoanPurpose/EditAppLoanPurpose";
@@ -182,6 +189,7 @@ export class AdInsConstant {
   public static DeleteAppCommissionData = environment.losUrl + "/AppCommission/DeleteAppCommissionData";
   public static GetAppCommissionRule = environment.losUrl + "/AppCommission/GetAppCommissionRule";
   public static GetAppCommissionTax = environment.losUrl + "/AppCommission/GetAppCommissionTax";
+  public static CalCulateGrossYield = environment.losUrl + "/AppCommission/CalCulateGrossYield";
 
   public static GetRefOfficeByOfficeCode = environment.FoundationR3Url + "/RefOffice/GetRefOfficeByOfficeCode";
   public static GetListCenterGrpMemberByCenterGrpCode = environment.FoundationR3Url + "/CenterGrpOfficeMbr/GetListCenterGrpMemberByCenterGrpCode";
@@ -468,7 +476,7 @@ export class AdInsConstant {
   public static DeleteRefMaster = "/RefMaster/DeleteRefMaster";
   public static GetRefMasterPaging = "/RefMaster/GetRefMasterPaging";
   public static GetRefMasterListDesc = "/RefMaster/GetRefMasterListDesc";
-  public static GetRefMasterByMasterCode =  environment.FoundationR3Url +"/RefMaster/GetRefMasterByMasterCode";
+  public static GetRefMasterByMasterCode = environment.FoundationR3Url + "/RefMaster/GetRefMasterByMasterCode";
   public static GetRefMasterListKeyValueActiveByCode = environment.FoundationR3Url + "/RefMaster/GetListKeyValueActiveByCode"
   public static GetListActiveRefMaster = environment.FoundationR3Url + "/RefMaster/GetListActiveRefMaster"
   public static GetRefMasterByRefMasterTypeCode = environment.FoundationR3Url + "/RefMaster/GetRefMasterByRefMasterTypeCode"
@@ -533,7 +541,7 @@ export class AdInsConstant {
 
   //NOTIFICATION
   public static NotificationPost = "/Message/Post";
-  public static UpdateReadNotification = environment.FoundationR3Url+"/NotificationD/UpdateReadNotificationD";
+  public static UpdateReadNotification = environment.FoundationR3Url + "/NotificationD/UpdateReadNotificationD";
 
   //REF CURR
   public static GetRefCurrPaging = "/RefCurr/GetRefCurrPaging";
@@ -726,7 +734,7 @@ export class AdInsConstant {
   public static GetMouCustCollateralDataForUpdateByMouCustCollateralId = environment.losUrl + "/MouCustCollateral/GetMouCustCollateralDataForUpdateByMouCustCollateralId";
   public static GetListCollateralByCustNo = environment.FoundationR3Url + "/Collateral/GetListCollateralByCustNo";
   public static GetListCollateralByListCollateralNo = environment.FoundationR3Url + "/Collateral/GetListCollateralByListCollateralNo";
-  
+
   // MOU CUST COLLATERAL DOC
 
   // MOU CUST RVW H
@@ -928,9 +936,9 @@ export class AdInsConstant {
   public static GetAppCollateralAndRegistrationByAppCollateralId = environment.losUrl + "/AppCollateral/GetAppCollateralAndRegistrationByAppCollateralId";
   public static AddEditAllCollateralDataFactoring = environment.losUrl + "/AppCollateral/AddEditAllCollateralDataFactoring"
   public static GetAppCollateralAttrByAppCollateralId = environment.losUrl + "/AppCollateral/GetAppCollateralAttrByAppCollateralId";
-  public static GetAppCollateralListForInsuranceByAppId = environment.losUrl+ "/AppCollateral/GetAppCollateralListForInsuranceByAppId";
+  public static GetAppCollateralListForInsuranceByAppId = environment.losUrl + "/AppCollateral/GetAppCollateralListForInsuranceByAppId";
   public static GetAppCollateralAttrByAppAssetId = environment.losUrl + "/AppCollateral/GetAppCollateralAttrByAppAssetId";
-  
+
   // App Collateral Suppl Emp
   public static GetListAppAssetSupplEmpByAppAssetId = environment.losUrl + "/AppAssetSupplEmp/GetListAppAssetSupplEmpByAppAssetId";
   public static AddEditAllCollateralDataByAppCollateraId = environment.losUrl + "/AppCollateral/AddEditAllCollateralDataByAppCollateraId";
@@ -1095,7 +1103,7 @@ export class AdInsConstant {
   public static CalculateProvisionFee = environment.losUrl + "/AppFee/CalculateProvisionFee";
   public static GetOrInitAppSubsidyByAppId = environment.losUrl + "/AppSubsidy/GetOrInitAppSubsidyByAppId";
   public static GetRuleSubsidyMax = environment.losUrl + "/AppSubsidy/GetRuleSubsidyMax";
-  public static GetInitAppFinDataByAppId = environment.losUrl+ "/AppFinData/GetInitAppFinDataByAppId";
+  public static GetInitAppFinDataByAppId = environment.losUrl + "/AppFinData/GetInitAppFinDataByAppId";
   public static GetAppSubsidyByAppSubsidyId = environment.losUrl + "/AppSubsidy/GetAppSubsidyByAppSubsidyId";
   public static AddAppSubsidy = environment.losUrl + "/AppSubsidy/AddSubsidy";
   public static EditAppSubsidy = environment.losUrl + "/AppSubsidy/EditAppSubsidy";
@@ -1162,6 +1170,9 @@ export class AdInsConstant {
   // List Approver
   public static GetApprovedBy = environment.ApprovalR3Url + "/api/RFAWeb/GetApprovedBy/";
   public static GetRecommendations = environment.ApprovalR3Url + "/api/RFAWeb/GetRecommendations/";
+
+  public static ApvHoldTaskUrl = environment.FoundationR3Url + "/Approval/Hold";
+  public static ApvTakeBackTaskUrl = environment.FoundationR3Url + "/Approval/TakeBack";
 
   // PreGoLive
   public static GetListApprovedByForPreGoLive = environment.losUrl + "/PreGoLive/GetListApprovedByForPreGoLive";
@@ -1236,6 +1247,9 @@ export class AdInsConstant {
   // Download
   public static DownloadTemplate = environment.FoundationR3Url + '/Download/DownloadTemplate';
   public static GetUploadAssetMasterByUploadMonitoringNoAndTrxType = environment.FoundationR3Url + '/AssetMaster/GetUploadAssetMasterByUploadMonitoringNoAndTrxType';
+
+  // Report
+  public static GenerateReportSync = environment.FoundationR3Url + '/Report/GenerateReportSync';
 
   // Asset Category
   public static GetAssetCategoryById = environment.FoundationR3Url + "/AssetCategory/GetAssetCategoryById";

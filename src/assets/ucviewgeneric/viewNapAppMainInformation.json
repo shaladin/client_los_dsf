@@ -21,6 +21,19 @@
           ]
         },
         {
+          "type": "link",
+          "label": "Mou No",
+          "property": "MouCustNo",
+          "path": "/Mou/Cust/View",
+          "target": "_blank",
+          "param": [
+            {
+              "type": "MouCustId",
+              "property": "MouCustId"
+            }
+          ]
+        },
+        {
           "type": "text",
           "label": "Original Office",
           "property": "OriOfficeName"
@@ -72,8 +85,8 @@
         }
       ],
       "querystring": {
-        "select": "SELECT a.APP_NO AS AppNo, a.APP_ID AS AppId, a.ORI_OFFICE_NAME AS OriOfficeName, b.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.PROD_OFFERING_CODE AS ProdOfferingCode, a.PROD_OFFERING_VERSION AS ProdOfferingVersion, a.TENOR AS Tenor, a.CURR_CODE AS CurrCode, a.MR_ORDER_INFO_CODE AS MrOrderInfoCode, c.FULL_ASSET_NAME AS FullAssetName, d.LEAD_NO AS LeadNo, d.LEAD_ID AS LeadId",
-        "from": "FROM dbo.APP a WITH(NOLOCK) LEFT JOIN dbo.APP_CUST b ON a.APP_ID = b.APP_ID LEFT JOIN dbo.APP_ASSET c ON a.APP_ID = c.APP_ID LEFT JOIN dbo.LEAD d WITH(NOLOCK) ON a.LEAD_ID = d.LEAD_ID",
+        "select": "SELECT a.APP_NO AS AppNo, a.APP_ID AS AppId, a.ORI_OFFICE_NAME AS OriOfficeName, b.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.PROD_OFFERING_CODE AS ProdOfferingCode, a.PROD_OFFERING_VERSION AS ProdOfferingVersion, a.TENOR AS Tenor, a.CURR_CODE AS CurrCode, a.MR_ORDER_INFO_CODE AS MrOrderInfoCode, c.FULL_ASSET_NAME AS FullAssetName, d.LEAD_NO AS LeadNo, d.LEAD_ID AS LeadId, E.MOU_CUST_NO AS MouCustNo, E.MOU_CUST_ID AS MouCustId",
+        "from": "FROM dbo.APP a WITH(NOLOCK) LEFT JOIN dbo.APP_CUST b ON a.APP_ID = b.APP_ID LEFT JOIN dbo.APP_ASSET c ON a.APP_ID = c.APP_ID LEFT JOIN dbo.LEAD d WITH(NOLOCK) ON a.LEAD_ID = d.LEAD_ID LEFT JOIN dbo.MOU_CUST E ON E.MOU_CUST_ID = a.MOU_CUST_ID LEFT JOIN MOU_CUST_FCTR f ON f.MOU_CUST_ID = E.MOU_CUST_ID",
         "where": "WHERE a.APP_ID = {0}"
       }
     }

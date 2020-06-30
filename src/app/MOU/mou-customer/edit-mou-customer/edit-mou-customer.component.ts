@@ -7,6 +7,7 @@ import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { Router } from '@angular/router';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-edit-mou-customer',
@@ -58,8 +59,9 @@ export class EditMouCustomerComponent implements OnInit {
         var custObj = { CustNo: event.RowObj.CustNo };
         this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
           response => {
-            link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
-            window.open(link, '_blank');
+            // link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
+            // window.open(link, '_blank');
+            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
           },
           (error) => {
             console.log(error);

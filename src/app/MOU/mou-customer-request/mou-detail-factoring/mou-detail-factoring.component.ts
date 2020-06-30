@@ -77,9 +77,9 @@ export class MouDetailFactoringComponent implements OnInit {
     var rmSingleInstCalcMethod = new RefMasterObj();
     rmSingleInstCalcMethod.RefMasterTypeCode = "SINGLE_INST_CALC_METHOD";
     let getSingleInstCalcMethod = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, rmSingleInstCalcMethod);
-    var rmPayFreq = new RefMasterObj();
-    rmPayFreq.RefMasterTypeCode = "PAY_FREQ";
-    let getPayFreq = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, rmPayFreq);
+    // var rmPayFreq = new RefMasterObj();
+    // rmPayFreq.RefMasterTypeCode = "PAY_FREQ";
+    let getPayFreq = this.httpClient.post(AdInsConstant.GetListActiveRefPayFreq, null);
     var rmInstSchm = new RefMasterObj();
     rmInstSchm.RefMasterTypeCode = "INST_SCHM";
     let getInstSchm = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, rmInstSchm);
@@ -106,7 +106,7 @@ export class MouDetailFactoringComponent implements OnInit {
           MrPaidByCode: this.paidByList.ReturnObject[0].Key,
           MrInstTypeCode: this.instTypeList.ReturnObject[0].Key,
           SingleInstCalcMthd: this.singleInstCalcMthdList.ReturnObject[0].Key,
-          PayFreqCode: this.payFreqList.ReturnObject[0].Key,
+          PayFreqCode: this.payFreqList.ReturnObject[0].PayFreqCode,
           MrInstSchmCode: this.instSchmList.ReturnObject[0].Key,
           CurrCode: this.currencyList.ReturnObject[0].Key
         });

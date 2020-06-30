@@ -4,6 +4,7 @@ import { AdInsConstant } from "app/shared/AdInstConstant";
 import { UcPagingObj } from "app/shared/model/UcPagingObj.Model";
 import { Router } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
+import { AdInsHelper } from "app/shared/AdInsHelper";
 
 @Component({
   selector: "app-inquiry-paging",
@@ -63,7 +64,9 @@ export class AppInquiryPagingComponent implements OnInit {
       window.open( environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + event.RowObj.AgrmntId, "_blank");
     }
     else if(event.Key == "application"){
-      window.open( environment.losR3Web + "/Nap/View/AppView?AppId=" + event.RowObj.AppId, "_blank");
+      //TEMUAN STEVEN : OPEN APPLICATION DIGANTI PAKE HELPER SUPAYA NANTI GANTINYA GAK DIBANYAK TITIK
+      AdInsHelper.OpenAppViewByAppId(event.RowObj.AppId);
+      //window.open( environment.losR3Web + "/Nap/View/AppView?AppId=" + event.RowObj.AppId, "_blank");
     }
     else if(event.Key == "product"){
       window.open( environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=" + 0 + "&prodOfferingCode=" + event.RowObj.prodOfferingCode + "&prodOfferingVersion=" + event.RowObj.prodOfferingVersion, "_blank");

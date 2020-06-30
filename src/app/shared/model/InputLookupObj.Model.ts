@@ -13,6 +13,7 @@ export class InputLookupObj{
     isReadonly: boolean 
     isReady: boolean
     ddlEnvironments : any
+    title: any;
 
     constructor()
     {
@@ -23,5 +24,6 @@ export class InputLookupObj{
         this.isRequired = true;
         this.isReadonly = true;
         this.isReady = false;
+        this.title = "";
     }
 }

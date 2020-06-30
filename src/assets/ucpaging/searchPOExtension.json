@@ -27,7 +27,7 @@
         },
         {
             "type": "textbox",
-            "name": "",
+            "name": "AA.SUPPL_NAME",
             "id": "SupplierBranchNameId",
             "value": "",
             "label": "Supplier Branch Name",
@@ -190,6 +190,10 @@
                         {
                             "type": "PurchaseOrderHId",
                             "property": "PurchaseOrderHId"
+                        },
+                        {
+                            "type": "BizTemplateCode",
+                            "property": "BizTemplateCode"
                         }
                     ]
                 }

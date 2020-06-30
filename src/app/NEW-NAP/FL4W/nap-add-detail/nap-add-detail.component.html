@@ -1,6 +1,7 @@
 <div class="col-md-12 text-left">
   <div class="card">
-    <lib-ucviewgeneric [viewInput]="viewProdMainInfoObj" (callback)="GetCallback($event)"> </lib-ucviewgeneric>
+    <!-- <lib-ucviewgeneric [viewInput]="viewProdMainInfoObj" (callback)="GetCallback($event)"> </lib-ucviewgeneric> -->
+    <ng-template #FL4WMainInfoContainer></ng-template>
     <div class="card-body">
       <div class="px-3">
         <div id="stepperPersonal" class="bs-stepper">
@@ -253,7 +254,6 @@
           <form class="form form-horizontal" [formGroup]="FormReturnObj" (ngSubmit)="FormReturnObj.valid"
             #enjiForm="ngForm">
             <div class="form-body">
-
               <div class="form-group row">
                 <div class="form-group col-md-2">
                   <label class="adInsLabel">Return Notes</label>
@@ -261,7 +261,6 @@
                 <div class="col-md-4">
                   <label class="adInsLabel">{{ ResponseReturnInfoObj.ReturnHandlingNotes }}</label>
                 </div>
-
                 <div class="form-group col-md-2">
                   <label class="adInsLabel">Return Execution Notes</label>
                 </div>
@@ -272,7 +271,6 @@
                   </lib-uc-show-errors>
                 </div>
               </div>
-
             </div>
           </form>
         </div>
@@ -281,7 +279,7 @@
             [routerLink]="['/Nap/AddProcess/ReturnHandling/EditAppPaging']" [queryParams]="{BizTemplateCode:'FL4W'}" translate>
             <i class="ft-x"></i> Cancel
           </button>
-          <button *ngIf="ReturnHandlingHId > 0" type="button" (click)="Submit()" class="btn btn-raised btn-primary">
+          <button *ngIf="ReturnHandlingHId > 0 && IsLastStep" type="button" (click)="Submit()" class="btn btn-raised btn-primary">
             <i class="far fa-check-square"></i> Submit
           </button>
         </div>
@@ -289,17 +287,3 @@
     </div>
   </div>
 </div>
-
-<!-- <div class="form-actions pull-right">
-  <button *ngIf="mode != 'ReturnHandling'" type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['../../Paging']"
-    [queryParams]="{BizTemplateCode:'FL4W'}" translate>
-    <i class="ft-arrow-left"></i> Back
-  </button>
-  <button *ngIf="mode == 'ReturnHandling'" type="button" class="btn btn-raised btn-warning mr-1"
-    [routerLink]="['/Nap/AdditionalProcess/ReturnHandling/EditAppPaging']" [queryParams]="{BizTemplateCode:'FL4W'}" translate>
-    <i class="ft-arrow-left"></i> Back
-  </button>
-  <button *ngIf="mode == 'ReturnHandling'" type="button" (click)="Submit()" class="btn btn-raised btn-primary">
-    <i class="far fa-check-square"></i> Submit Return Handling
-  </button>
-</div> -->

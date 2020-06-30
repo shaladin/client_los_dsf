@@ -150,6 +150,38 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   }
 
   BindMultiInsGridData() {
+    this.InsuranceDataForm.reset();
+    this.InsuranceDataForm.patchValue({
+      InsAssetCoveredBy: '',
+      InsAssetPaidBy: '',
+      InsAssetCoverPeriod: '',
+      InscoBranchCode: '',
+      InscoBranchName: '',
+      CustInscoBranchName: '',
+      InsPolicyNo: '',
+      InsPolicyName: '',
+      CustCoverStartDt: '',
+      EndDt: '',
+      Notes: '',
+      CustNotes: '',
+      InsMainCvgType: '',
+      InsAddCvgTypes: [],
+      InsLength: '',
+      InsAssetRegion: '',
+      AppInsMainCvgs: [],
+      PayPeriodToInsco: '',
+      TotalCustMainPremiAmt: 0,
+      TotalCustAddPremiAmt: 0,
+      TotalInscoMainPremiAmt: 0,
+      TotalInscoAddPremiAmt: 0,
+      InscoAdminFeeAmt: 0,
+      CustAdminFeeAmt: 0,
+      CvgAmt: 0,
+      CustCvgAmt: 0,
+      TotalCustDiscAmt: 0,
+      InsCpltzAmt: 0,
+    });
+
     this.appAssetObj.AppId = this.appId;
     this.http.post(AdInsConstant.GetAppAssetListForInsuranceByAppId, this.appAssetObj).subscribe(
       (response) => {
@@ -179,6 +211,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         this.PaidAmtByCust = 0;
         this.InsCpltzAmt = 0;
         this.TotalPremiumToCust = 0;
+        this.InsDiscAmt = 0;
 
         if (this.listAppCollateralObj[0].PaidAmtByCust != null)
           this.PaidAmtByCust = this.listAppCollateralObj[0].PaidAmtByCust;
@@ -209,7 +242,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     this.bindInsAssetRegionObj();
     this.bindInscoBranchObj();
     this.bindPayPeriodToInscoObj();
-    if (this.appInsuranceObj != null) {
+    if (this.appInsuranceObj != null && this.appInsObjObj != null) {
       await this.bindAppInsAndAppInsObj(this.appInsObjObj.InsAssetCoveredBy);
     }
   }

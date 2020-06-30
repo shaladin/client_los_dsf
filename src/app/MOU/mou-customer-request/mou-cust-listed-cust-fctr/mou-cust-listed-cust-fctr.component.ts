@@ -8,6 +8,7 @@ import { MouCustListedCustFctrObj } from 'app/shared/model/MouCustListedCustFctr
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { MouCustListedCustFctrDetailComponent } from './mou-cust-listed-cust-fctr-detail/mou-cust-listed-cust-fctr-detail.component';
 import { environment } from 'environments/environment';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-mou-cust-listed-cust-fctr',
@@ -78,8 +79,9 @@ export class MouCustListedCustFctrComponent implements OnInit {
     var custObj = { CustNo: custNo };
     this.httpClient.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
       response => {
-        link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
-        window.open(link, '_blank');
+        // link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
+        // window.open(link, '_blank');
+        AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
       },
       (error) => {
         console.log(error);
