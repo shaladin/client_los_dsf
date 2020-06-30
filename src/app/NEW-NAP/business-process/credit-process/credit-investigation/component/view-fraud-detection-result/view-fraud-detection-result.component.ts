@@ -13,6 +13,7 @@ import { AppObj } from 'app/shared/model/App/App.Model';
 import { NegativeAssetCheckForMultiAssetObj } from 'app/shared/model/NegativeAssetCheckForMultiAssetObj.Model';
 import { NegativeAssetCheckObj } from 'app/shared/model/NegativeAssetCheckObj.Model';
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
+import { NegativeAssetObj } from 'app/shared/model/NegativeAssetObj.Model';
 
 
 
@@ -50,7 +51,9 @@ export class ViewFraudDetectionResultComponent implements OnInit {
   listNegativeCust: Array<NegativeCustObj> = new Array<NegativeCustObj>();
   RowVersion: any;
   appAssetObj: any;
-  listNegativeAsset: Array<any> = new Array<any>();
+  listNegativeAsset: Array<NegativeAssetObj> = new Array<NegativeAssetObj>();
+  listNegativeAppAsset: Array<NegativeAssetObj> = new Array<NegativeAssetObj>();
+  listNegativeAppCollateral: Array<NegativeAssetObj> = new Array<NegativeAssetObj>();
   dukcapilObj: any;
   viewDukcapilObj: string;
   listCustDuplicate: Array<any> = new Array<any>();
@@ -62,16 +65,16 @@ export class ViewFraudDetectionResultComponent implements OnInit {
   constructor(private http: HttpClient,
     private modalService: NgbModal) { }
 
-  ngOnInit(){
+  async ngOnInit() : Promise<void>{
 
     this.getApp(this.appId);
-    this.getAppCust();
+    await this.getAppCust();
     this.arrValue.push(this.appId);
     this.viewDukcapilObj = "./assets/ucviewgeneric/viewDukcapilMainInfo.json";
     this.viewFraudVerifResultObj = "./assets/ucviewgeneric/viewFraudVerifResult.json";
   }
 
-  getAppCust() {
+  async getAppCust() {
     this.appCustObj = new AppCustObj();
     this.appCustPersonalObj = new AppCustPersonalObj();
     this.appCustCompanyObj = new AppCustCompanyObj();
@@ -120,7 +123,7 @@ export class ViewFraudDetectionResultComponent implements OnInit {
       }
     );
 
-     this.getAppAsset(appReqObj);
+     await this.getAssetNegative(appReqObj);
      this.getAppDupCheckCust(appReqObj);
   }
 
@@ -187,56 +190,61 @@ export class ViewFraudDetectionResultComponent implements OnInit {
     );
   }
 
-  getAppAsset(reqObj) {
-    this.http.post<AppAssetObj>(this.getAppAssetByAppId, reqObj).subscribe(
-      (response) => {
+  async getAssetNegative(reqObj) {
+    await this.http.post<AppAssetObj>(this.getAppAssetByAppId, reqObj).toPromise().then(
+      response => {
         this.appAssetObj = response;
 
-        if(this.appAssetObj.AppAssetId != 0){
-          this.getNegativeAsset();
-        }else{
-          this.getAppCollateral();
-        }
-      },
-      () => {
-        console.log("error")
-      }
-    );
-  }
-
-  getAppCollateral() {
-    var appCollateralObj = new AppCollateralObj();
-    var negativeAssetCheckForMultiAssetObj = new NegativeAssetCheckForMultiAssetObj();
-    negativeAssetCheckForMultiAssetObj.RequestObj = new Array<NegativeAssetCheckObj>();
-    appCollateralObj.AppId = this.appId;
-    this.http.post(AdInsConstant.GetListAppCollateralByAppId, appCollateralObj).subscribe(
-      response => {
-        var listAppCollateral = new Array<AppCollateralObj>();
-        listAppCollateral = response["ReturnObject"];
-
-        for (var i = 0; i < listAppCollateral.length; i++) {
-          var negativeAssetCheckObj = new NegativeAssetCheckObj();
-          negativeAssetCheckObj.AssetTypeCode = listAppCollateral[i].AssetTypeCode;
-          negativeAssetCheckObj.SerialNo1 = listAppCollateral[i].SerialNo1;
-          negativeAssetCheckObj.SerialNo2 = listAppCollateral[i].SerialNo2;
-          negativeAssetCheckObj.SerialNo3 = listAppCollateral[i].SerialNo3;
-          negativeAssetCheckObj.SerialNo4 = listAppCollateral[i].SerialNo4;
-          negativeAssetCheckObj.SerialNo5 = listAppCollateral[i].SerialNo5;
-          negativeAssetCheckForMultiAssetObj.RequestObj[i] = negativeAssetCheckObj;
-        }
-        this.http.post(AdInsConstant.GetAssetNegativeDuplicateCheckByListOfAsset, negativeAssetCheckForMultiAssetObj).subscribe(
-          response => {
-            this.listNegativeAsset = response["ReturnObject"];
-          });
       },
       error => {
         console.log("error")
       }
     );
+
+    if(this.appAssetObj.AppAssetId != 0){
+      await this.getNegativeAsset();
+    }
+
+    await this.getNegativeCollateral();
+    this.listNegativeAsset = this.listNegativeAppAsset.concat(this.listNegativeAppCollateral);
+  }
+
+  async getNegativeCollateral() {
+    var appCollateralObj = new AppCollateralObj();
+    var negativeAssetCheckForMultiAssetObj = new NegativeAssetCheckForMultiAssetObj();
+    negativeAssetCheckForMultiAssetObj.RequestObj = new Array<NegativeAssetCheckObj>();
+    appCollateralObj.AppId = this.appId;
+    var listAppCollateral = new Array<AppCollateralObj>();
+    await this.http.post(AdInsConstant.GetListAdditionalCollateralByAppId, appCollateralObj).toPromise().then(
+      response => {
+        listAppCollateral = response["ReturnObject"];
+        
+      },
+      error => {
+        console.log("error")
+      }
+    );
+    
+    if(listAppCollateral != null){
+      for (var i = 0; i < listAppCollateral.length; i++) {
+        var negativeAssetCheckObj = new NegativeAssetCheckObj();
+        negativeAssetCheckObj.AssetTypeCode = listAppCollateral[i].AssetTypeCode;
+        negativeAssetCheckObj.SerialNo1 = listAppCollateral[i].SerialNo1;
+        negativeAssetCheckObj.SerialNo2 = listAppCollateral[i].SerialNo2;
+        negativeAssetCheckObj.SerialNo3 = listAppCollateral[i].SerialNo3;
+        negativeAssetCheckObj.SerialNo4 = listAppCollateral[i].SerialNo4;
+        negativeAssetCheckObj.SerialNo5 = listAppCollateral[i].SerialNo5;
+        negativeAssetCheckForMultiAssetObj.RequestObj[i] = negativeAssetCheckObj;
+      }
+      await this.http.post(AdInsConstant.GetAssetNegativeDuplicateCheckByListOfAsset, negativeAssetCheckForMultiAssetObj).toPromise().then(
+        response => {
+          this.listNegativeAppCollateral = response["ReturnObject"];
+        });
+    } 
   }
 
 
-  getNegativeAsset() {
+  async getNegativeAsset() {
     var negativeAssetObj = {
       AssetCategoryCode: this.appAssetObj.AssetCategoryCode,
       AssetTypeCode: this.appAssetObj.AssetTypeCode,
@@ -247,13 +255,11 @@ export class ViewFraudDetectionResultComponent implements OnInit {
       SerialNo4: this.appAssetObj.SerialNo4,
       SerialNo5: this.appAssetObj.SerialNo5,
     }
-    this.http.post(this.getAssetNegativeDuplicateCheck, negativeAssetObj).subscribe(
-      (response) => {
-        console.log(response);
-        this.listNegativeAsset = response["ReturnObject"];
-
+    await this.http.post(this.getAssetNegativeDuplicateCheck, negativeAssetObj).toPromise().then(
+      response => {
+        this.listNegativeAppAsset = response["ReturnObject"];
       },
-      () => {
+      error => {
         console.log("error")
       }
     );

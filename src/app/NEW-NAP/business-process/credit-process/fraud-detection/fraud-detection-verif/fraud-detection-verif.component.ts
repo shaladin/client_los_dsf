@@ -16,6 +16,7 @@ import { NegativeCustObj } from 'app/shared/model/NegativeCust.Model';
 import { NegativeAssetCheckForMultiAssetObj } from 'app/shared/model/NegativeAssetCheckForMultiAssetObj.Model';
 import { NegativeAssetCheckObj } from 'app/shared/model/NegativeAssetCheckObj.Model';
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
+import { NegativeAssetObj } from 'app/shared/model/NegativeAssetObj.Model';
 
 
 @Component({
@@ -44,7 +45,9 @@ export class FraudDetectionVerifComponent implements OnInit {
   appObj: AppObj;
   leadId: any;
   dukcapilObj: any;
-  ListAssetNegative: Array<any> = new Array<any>();
+  ListAssetNegative: Array<NegativeAssetObj> = new Array<NegativeAssetObj>();
+  ListAssetNegativeAsset: Array<NegativeAssetObj> = new Array<NegativeAssetObj>();
+  ListAssetNegativeCollateral: Array<NegativeAssetObj> = new Array<NegativeAssetObj>();
   listCustDuplicate: any;
   closeResult: string;
   idNo: any;
@@ -55,7 +58,7 @@ export class FraudDetectionVerifComponent implements OnInit {
   appCustPersonalObj: any;
   RowVersion: any;
   GetNegativeCustomerDuplicateCheckUrl = AdInsConstant.GetNegativeCustomerDuplicateCheck;
-  ListNegativeCust: Array<NegativeCustObj> = new Array<NegativeCustObj>();;
+  ListNegativeCust: Array<NegativeCustObj> = new Array<NegativeCustObj>();
   viewObj: string;
   arrValue = [];
 
@@ -84,7 +87,7 @@ export class FraudDetectionVerifComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() : Promise<void> {
     if (this.WfTaskListId != null || this.WfTaskListId != undefined)
       this.claimTask();
 
@@ -94,11 +97,11 @@ export class FraudDetectionVerifComponent implements OnInit {
     this.verfUser = context["UserName"];
     this.verfDt = context["BusinessDt"];
     this.verfCode = context["EmpNo"];
-    this.getApp();
+    await this.getApp();
 
   }
 
-  getApp() {
+  async getApp() {
 
     //Get App Cust Data
     this.appCustObj = new AppCustObj();
@@ -191,7 +194,7 @@ export class FraudDetectionVerifComponent implements OnInit {
       }
     );
     
-    this.getAppAsset(appReqObj);
+    await this.getAssetNegative(appReqObj);
     this.getAppDupCheckCust(appReqObj);
   }
 
@@ -221,52 +224,57 @@ export class FraudDetectionVerifComponent implements OnInit {
     );
   }
 
-  getAppAsset(appId) {
-    this.http.post<AppAssetObj>(this.getAppAssetByAppId, appId).subscribe(
+  async getAssetNegative(appId) {
+    await this.http.post<AppAssetObj>(this.getAppAssetByAppId, appId).toPromise().then(
       response => {
         this.appAssetObj = response;
-        if(this.appAssetObj.AppAssetId != 0){
-          this.getNegativeAsset();
-        }else{
-          this.getAppCollateral();
-        }
+
       },
       error => {
         console.log("error")
       }
     );
+
+    if(this.appAssetObj.AppAssetId != 0){
+      await this.getNegativeAsset();
+    }
+
+    await this.getNegativeCollateral();
+    this.ListAssetNegative = this.ListAssetNegativeAsset.concat(this.ListAssetNegativeCollateral);
   }
 
-  getAppCollateral() {
+  async getNegativeCollateral() {
     var appCollateralObj = new AppCollateralObj();
     var negativeAssetCheckForMultiAssetObj = new NegativeAssetCheckForMultiAssetObj();
     negativeAssetCheckForMultiAssetObj.RequestObj = new Array<NegativeAssetCheckObj>();
     appCollateralObj.AppId = this.appId;
-    this.http.post(AdInsConstant.GetListAppCollateralByAppId, appCollateralObj).subscribe(
+    var listAppCollateral = new Array<AppCollateralObj>();
+    await this.http.post(AdInsConstant.GetListAdditionalCollateralByAppId, appCollateralObj).toPromise().then(
       response => {
-        var listAppCollateral = new Array<AppCollateralObj>();
         listAppCollateral = response["ReturnObject"];
-
-        for (var i = 0; i < listAppCollateral.length; i++) {
-          var negativeAssetCheckObj = new NegativeAssetCheckObj();
-          negativeAssetCheckObj.AssetTypeCode = listAppCollateral[i].AssetTypeCode;
-          negativeAssetCheckObj.SerialNo1 = listAppCollateral[i].SerialNo1;
-          negativeAssetCheckObj.SerialNo2 = listAppCollateral[i].SerialNo2;
-          negativeAssetCheckObj.SerialNo3 = listAppCollateral[i].SerialNo3;
-          negativeAssetCheckObj.SerialNo4 = listAppCollateral[i].SerialNo4;
-          negativeAssetCheckObj.SerialNo5 = listAppCollateral[i].SerialNo5;
-          negativeAssetCheckForMultiAssetObj.RequestObj[i] = negativeAssetCheckObj;
-        }
-        this.http.post(AdInsConstant.GetAssetNegativeDuplicateCheckByListOfAsset, negativeAssetCheckForMultiAssetObj).subscribe(
-          response => {
-            this.respAssetNegative = response;
-            this.ListAssetNegative = response["ReturnObject"];
-          });
+        
       },
       error => {
         console.log("error")
       }
     );
+    
+    if(listAppCollateral != null){
+      for (var i = 0; i < listAppCollateral.length; i++) {
+        var negativeAssetCheckObj = new NegativeAssetCheckObj();
+        negativeAssetCheckObj.AssetTypeCode = listAppCollateral[i].AssetTypeCode;
+        negativeAssetCheckObj.SerialNo1 = listAppCollateral[i].SerialNo1;
+        negativeAssetCheckObj.SerialNo2 = listAppCollateral[i].SerialNo2;
+        negativeAssetCheckObj.SerialNo3 = listAppCollateral[i].SerialNo3;
+        negativeAssetCheckObj.SerialNo4 = listAppCollateral[i].SerialNo4;
+        negativeAssetCheckObj.SerialNo5 = listAppCollateral[i].SerialNo5;
+        negativeAssetCheckForMultiAssetObj.RequestObj[i] = negativeAssetCheckObj;
+      }
+      await this.http.post(AdInsConstant.GetAssetNegativeDuplicateCheckByListOfAsset, negativeAssetCheckForMultiAssetObj).toPromise().then(
+        response => {
+          this.ListAssetNegativeCollateral = response["ReturnObject"];
+        });
+    } 
   }
 
   getFraudDukcapil(idNo) {
@@ -280,7 +288,7 @@ export class FraudDetectionVerifComponent implements OnInit {
     );
   }
 
-  getNegativeAsset() {
+  async getNegativeAsset() {
     var negativeAssetObj = {
       AssetCategoryCode: this.appAssetObj.AssetCategoryCode,
       AssetTypeCode: this.appAssetObj.AssetTypeCode,
@@ -291,10 +299,10 @@ export class FraudDetectionVerifComponent implements OnInit {
       SerialNo4: this.appAssetObj.SerialNo4,
       SerialNo5: this.appAssetObj.SerialNo5,
     }
-    this.http.post(this.getAssetNegativeDuplicateCheck, negativeAssetObj).subscribe(
+    await this.http.post(this.getAssetNegativeDuplicateCheck, negativeAssetObj).toPromise().then(
       response => {
         this.respAssetNegative = response;
-        this.ListAssetNegative = response["ReturnObject"];
+        this.ListAssetNegativeAsset = response["ReturnObject"];
       },
       error => {
         console.log("error")

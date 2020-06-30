@@ -925,6 +925,7 @@ export class AdInsConstant {
   // App Collateral
   public static GetListAppCollateral = environment.losUrl + "/AppCollateral/GetListAppCollateral";
   public static GetListAppCollateralByAppId = environment.losUrl + "/AppCollateral/GetListAppCollateralByAppId";
+  public static GetListAdditionalCollateralByAppId = environment.losUrl + "/AppCollateral/GetListAdditionalCollateralByAppId";
   public static DeleteAppCollateral = environment.losUrl + "/AppCollateral/DeleteAppCollateral";
   public static GetRefAttrList = environment.losUrl + "/AppCollateral/GetRefAttrList"
   public static AddEditAllCollateralData = environment.losUrl + "/AppCollateral/AddEditAllCollateralData"
