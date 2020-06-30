@@ -21,7 +21,7 @@
         <tr *ngFor="let item of listCollateralData; let i = index">
           <td>{{item.CollateralNo}}</td>
           <td align="left">{{item.FullAssetName}}</td>
-          <td align="left"><a [routerLink]="" (click)="openView(item.CustNo)">{{item.CustName}}</a></td>
+          <td align="left">{{item.OwnerName}}</td>
           <td align="center">{{item.CollateralStat}}</td>
           <td align="right">{{item.CollateralValueAmt | number}}</td>
         </tr>
