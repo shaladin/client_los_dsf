@@ -300,4 +300,17 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   {
     this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Approval/Paging?BizTemplateCode=' + localStorage.getItem("BizTemplateCode"));
   }
+  
+  openView(custNo){
+    var link: string;
+    var custObj = { CustNo: custNo };
+    this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+      response => {
+        AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
 }
