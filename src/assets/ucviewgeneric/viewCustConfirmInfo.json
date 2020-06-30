@@ -46,16 +46,10 @@
           ]
         },
         {
-          "type": "link",
+          "type": "callback",
+          "key": "customer",
           "label": "Customer No",
-          "property": "CustNo",
-          "path": "/test/paging",
-          "target": "_blank",
-          "param": [
-            {
-              "property": "CustNo"
-            }
-          ]
+          "property": "CustNo"
         },
         {
           "type": "text",
