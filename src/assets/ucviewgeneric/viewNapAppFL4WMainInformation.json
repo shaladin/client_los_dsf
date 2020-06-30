@@ -58,7 +58,7 @@
           {
             "type": "text",
             "label": "Mou No",
-            "property": "LeadNo"
+            "property": "MouCustNo"
           }
         ],
         "querystring": {

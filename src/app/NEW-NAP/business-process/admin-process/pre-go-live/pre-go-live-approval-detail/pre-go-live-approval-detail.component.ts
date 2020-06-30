@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { formatDate } from '@angular/common';
 import { environment } from 'environments/environment';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-pre-go-live-approval-detail',
@@ -283,9 +284,8 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
     );
   }
 
-  ToProdOffering(){
-    var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + this.ProdOfferingCode + "&prodOfferingVersion=" + this.ProdOfferingVersion + "&Token=" + this.token;
-    window.open(link, '_blank');
+  ToProdOffering(){ 
+    AdInsHelper.OpenProdOfferingViewByCodeAndVersion( this.ProdOfferingCode, this.ProdOfferingVersion, this.token ); 
   }
 
   onAvailableNextTask() {
@@ -294,5 +294,23 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   onApprovalSubmited() {
     this.toastr.successMessage("Success");
     this.router.navigate(["/Nap/AdminProcess/PreGoLive/Approval/Paging"]);
+  }
+
+  onCancelClick()
+  {
+    this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Approval/Paging?BizTemplateCode=' + localStorage.getItem("BizTemplateCode"));
+  }
+  
+  openView(custNo){
+    var link: string;
+    var custObj = { CustNo: custNo };
+    this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+      response => {
+        AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 }

@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormArray } from '@angular/forms';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { environment } from 'environments/environment';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-invoice-verif-detail',
@@ -128,10 +129,8 @@ export class InvoiceVerifDetailComponent implements OnInit {
   }
   
   GetCallBack(ev: any){
-    if(ev.Key == "ViewProdOffering"){
-      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.ViewObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.ViewObj.ProdOfferingVersion + "&Token=" + this.token;
-      // this.router.navigate([]).then(result => { window.open(link, '_blank'); });
-      window.open( link, "_blank");
+    if(ev.Key == "ViewProdOffering"){ 
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion, this.token );  
     }
   }
 }

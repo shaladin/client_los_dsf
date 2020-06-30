@@ -6,6 +6,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { RFAPreGoLiveObj } from 'app/shared/model/RFAPreGoLiveObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { environment } from 'environments/environment';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 @Component({
   selector: 'app-sharing-pre-go-live-request-for-approval',
   templateUrl: './pre-go-live-request-for-approval.component.html',
@@ -55,10 +56,8 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
   }
 
   GetCallBack(ev) {
-    if (ev.Key == "ViewProdOffering") {
-      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.ViewObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.ViewObj.ProdOfferingVersion + "&Token=" + this.token;
-
-      window.open(link, "_blank");
+    if (ev.Key == "ViewProdOffering") { 
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion, this.token ); 
     }
     if (ev.Key == "customer") {
       var link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + ev.ViewObj.AppCustId;
@@ -94,6 +93,11 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
       (error) => {
         console.log(error);
       });
+  }
+
+  Cancel()
+  {
+    this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Paging?BizTemplateCode=' + localStorage.getItem("BizTemplateCode"));
   }
 
 }
