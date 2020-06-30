@@ -3,7 +3,7 @@ import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { HttpClient } from '@angular/common/http';
 import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
@@ -21,7 +21,7 @@ export class OfferingValidityCheckingApprovalPagingComponent implements OnInit {
   token: any = localStorage.getItem("Token");
   userContext: CurrentUserContext = JSON.parse(localStorage.getItem(AdInsConstant.USER_ACCESS));
 
-  constructor(private route: ActivatedRoute, private toastr: NGXToastrService, private httpClient: HttpClient) {
+  constructor(private route: ActivatedRoute, private toastr: NGXToastrService, private httpClient: HttpClient, private router: Router) {
     this.route.queryParams.subscribe(params => {
       if (params['BizTemplateCode'] != null) {
         this.BizTemplateCode = params['BizTemplateCode'];
@@ -32,10 +32,13 @@ export class OfferingValidityCheckingApprovalPagingComponent implements OnInit {
 
   ngOnInit() {
 
+    var arrCrit = new Array();
+
     var critInputOnlyOffering = new CriteriaObj();
     critInputOnlyOffering.propName = "vApv.CATEGORY_CODE";
     critInputOnlyOffering.restriction = AdInsConstant.RestrictionEq;
     critInputOnlyOffering.value = AdInsConstant.OFFERING_VALIDITY_APV;
+
 
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchOfferingValidityCheckingAndApproval.json";
@@ -43,35 +46,59 @@ export class OfferingValidityCheckingApprovalPagingComponent implements OnInit {
     this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchOfferingValidityCheckingAndApproval.json";
     this.inputPagingObj.addCritInput = new Array();
-    this.inputPagingObj.addCritInput.push(critInputOnlyOffering);
+    arrCrit.push(critInputOnlyOffering);
 
-    var arrCrit = new Array();
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.propName = 'agr.BIZ_TEMPLATE_CODE';
     critObj.value = this.BizTemplateCode;
     arrCrit.push(critObj);
+
+    critObj = new CriteriaObj();
+    critObj.DataType = 'text';
+    critObj.restriction = AdInsConstant.RestrictionEq;
+    critObj.propName = 'vApv.CURRENT_USER_ID';
+    critObj.value = this.userContext.UserName;
+    arrCrit.push(critObj);
+    
+    critObj = new CriteriaObj();
+    critObj.DataType = 'text';
+    critObj.restriction = AdInsConstant.RestrictionOr;
+    critObj.propName = 'vApv.MAIN_USER_ID';
+    critObj.value = this.userContext.UserName;
+    arrCrit.push(critObj);
+
     this.inputPagingObj.addCritInput = arrCrit;
 
   }
 
   CallbackHandler(ev: any) {
-    console.log("AWAW");
     var ApvReqObj = new ApprovalObj();
     if (ev.Key == "ViewProdOffering") {
       var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.RowObj.prodOfferingCode + "&prodOfferingVersion=" + ev.RowObj.prodOfferingVersion + "&Token=" + this.token;
       window.open(link, '_blank');
     }
+    else if(ev.Key == "Process"){
+      if (String.Format("{0:L}", ev.RowObj.CurrentUserId) != String.Format("{0:L}", this.userContext.UserName)) {
+        this.toastr.warningMessage(AdInsConstant.NOT_ELIGIBLE_FOR_PROCESS_TASK);
+      } else {
+        this.router.navigate(["/Nap/AdminProcess/OfferingValidityApproval/Detail"], { queryParams: { "TrxNo": ev.RowObj.TrxNo, "TaskId" : ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId } });
+      }
+    }
     else if (ev.Key == "HoldTask") {
-      ApvReqObj.TaskId = ev.RowObj.TaskId
-      this.httpClient.post(AdInsConstant.ApvHoldTaskUrl, ApvReqObj).subscribe(
-        (response) => {
-          this.toastr.successMessage(response["Message"]);
-        }
-      )
+      if (String.Format("{0:L}", ev.RowObj.CurrentUserId) != String.Format("{0:L}", this.userContext.UserName)) {
+        this.toastr.warningMessage(AdInsConstant.NOT_ELIGIBLE_FOR_HOLD);
+      }else {
+        ApvReqObj.TaskId = ev.RowObj.TaskId;
+        this.httpClient.post(AdInsConstant.ApvHoldTaskUrl, ApvReqObj).subscribe(
+          (response) => {
+            this.toastr.successMessage(response["Message"]);
+          }
+        )
+      }
     }
     else if (ev.Key == "TakeBack") {
-      if (String.Format("{0:L}", ev.RowObj.CurrentUserId) != String.Format("{0:L}", this.userContext.UserName)) {
+      if (String.Format("{0:L}", ev.RowObj.MainUserId) != String.Format("{0:L}", this.userContext.UserName)) {
         this.toastr.warningMessage(AdInsConstant.NOT_ELIGIBLE_FOR_TAKE_BACK);
       } else {
         ApvReqObj.TaskId = ev.RowObj.TaskId

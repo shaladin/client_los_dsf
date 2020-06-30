@@ -283,30 +283,8 @@
             "position": "center",
             "action": [
                 {
-                    "type": "edit",
-                    "path": "/Nap/AdminProcess/PreGoLive/Approval/Detail",
-                    "param": [
-                        {
-                            "type": "AgrmntId",
-                            "property": "AgrmntId"
-                        },
-                        {
-                            "type": "AppId",
-                            "property": "AppId"
-                        },
-                        {
-                            "type": "TrxNo",
-                            "property": "TrxNo"
-                        },
-                        {
-                            "type": "InstanceId",
-                            "property": "InstanceId"
-                        },
-                        {
-                            "type": "TaskId",
-                            "property": "TaskId"
-                        }
-                    ]
+                    "type": "callback",
+                    "key": "Process"                   
                 }
             ]
         },

@@ -215,22 +215,8 @@
       "position": "center",
       "action": [
         {
-          "type": "edit",
-          "path": "/Nap/AdminProcess/OfferingValidityApproval/Detail",
-          "param": [
-            {
-              "type": "TrxNo",
-              "property": "TrxNo"
-            },
-            {
-              "type": "InstanceId",
-              "property": "InstanceId"
-            },
-            {
-              "type": "TaskId",
-              "property": "TaskId"
-            }
-          ]
+          "type": "callback",
+          "key": "Process"
         }
       ]
     },

@@ -5,6 +5,8 @@ export class AdInsConstant {
   public static USER_ACCESS = "UserAccess";
   public static ERROR_NO_CALLBACK_SETTING = "System Error - No Callback Handler for {0} Callback Trigger";
   public static NOT_ELIGIBLE_FOR_TAKE_BACK = "You are not Eligible to Take Back this Task";
+  public static NOT_ELIGIBLE_FOR_HOLD = "You are not Eligible to Hold this Task";
+  public static NOT_ELIGIBLE_FOR_PROCESS_TASK = "You are not Eligible to Process this Task";
 
   //App Step
   public static AppStepNew = "NEW";
@@ -153,6 +155,8 @@ export class AdInsConstant {
   public static RestrictionNotIn = "NotIn";
   public static RestrictionIsNull = "isnull";
   public static RestrictionIsNotNull = "isnotnull";
+  public static RestrictionOr = "Or"; //pastikan ada 1 criteria sebelumnya
+  public static RestrictionOrNeq = "OrNeq"; //pastikan ada 1 criteria sebelumnya
   public static showData = "10,50,100";
   public static TimeoutSession = 6000000;
   public static GetListProduct = "http://creator_websvr:7272/NEW_FINANCING/api/Catalog/getPopularViewByCriteria";
