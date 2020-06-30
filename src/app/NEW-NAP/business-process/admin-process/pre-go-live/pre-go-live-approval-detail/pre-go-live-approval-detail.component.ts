@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { formatDate } from '@angular/common';
 import { environment } from 'environments/environment';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-pre-go-live-approval-detail',
@@ -294,5 +295,17 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   onApprovalSubmited() {
     this.toastr.successMessage("Success");
     this.router.navigate(["/Nap/AdminProcess/PreGoLive/Approval/Paging"]);
+  }
+  openView(custNo){
+    var link: string;
+    var custObj = { CustNo: custNo };
+    this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+      response => {
+        AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 }
