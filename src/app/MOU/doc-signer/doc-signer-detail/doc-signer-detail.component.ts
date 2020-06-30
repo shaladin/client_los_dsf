@@ -14,6 +14,7 @@ import { MouCustSignerObj } from 'app/shared/model/MouCustSignerObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 
 @Component({
@@ -283,8 +284,9 @@ export class DocSignerDetailComponent implements OnInit {
       var custObj = { CustNo: this.returnMouCust['CustNo'] };
       this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
         response => {
-          this.link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
-          window.open(this.link, '_blank');
+          // this.link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
+          // window.open(this.link, '_blank');
+          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         },
         (error) => {
           console.log(error);

@@ -7,7 +7,8 @@
       "mainInfoUrl": "http://r3app-server.ad-ins.com/LOS/Generic/GetDataViewBySQL",
       "mainInfo": [
         {
-          "type": "text",
+          "type": "callback",
+          "key": "ViewApp",
           "label": "Application No",
           "property": "AppNo"
         },
@@ -18,7 +19,7 @@
         }
       ],
       "querystring": {
-        "select": "SELECT A.APP_NO AS AppNo, AG.CUST_NAME AS CustName",
+        "select": "SELECT A.APP_NO AS AppNo,A.APP_ID AS AppId, AG.CUST_NAME AS CustName",
         "from": "FROM dbo.APP A WITH(NOLOCK) JOIN dbo.AGRMNT AG WITH(NOLOCK) ON A.APP_ID = AG.APP_ID",
         "where": "WHERE A.APP_ID = {0}"
       }

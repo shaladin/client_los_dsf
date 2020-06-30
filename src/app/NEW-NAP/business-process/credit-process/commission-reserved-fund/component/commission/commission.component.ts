@@ -15,6 +15,7 @@ import { AppFinDataObj } from 'app/shared/model/AppFinData/AppFinData.Model';
 import { AppFeeObj } from 'app/shared/model/AppFeeObj.Model';
 import { RuleCommissionObj } from 'app/shared/model/RuleCommission/RuleCommissionObj.Model';
 import { NapAppReferantorModel } from 'app/shared/model/NapAppReferantor.Model';
+import { ResultRefundObj } from 'app/shared/model/AppFinData/ResultRefund.Model';
 
 @Component({
   selector: 'app-commission',
@@ -56,7 +57,6 @@ export class CommissionComponent implements OnInit {
   Summary;
   isAutoGenerate: boolean = true;
   async ngOnInit() {
-
     this.OnForm1 = false;
     this.OnForm2 = false;
     this.OnForm3 = false;
@@ -176,6 +176,8 @@ export class CommissionComponent implements OnInit {
     );
   }
 
+  ListResultRefundIncomeInfo: Array<ResultRefundObj>;
+  TotalHalfListResultRefundIncomeInfo: number = 0;
   GetIncomeInfoObj() {
     var app = new AppObj();
     app = this.ResultAppData;
@@ -191,6 +193,9 @@ export class CommissionComponent implements OnInit {
     this.http.post<AppFinDataObj>(AdInsConstant.GetAppFinDataWithRuleByAppId, obj).subscribe(
       (response) => {
         console.log(response);
+        this.ListResultRefundIncomeInfo = response.ResultRefundRsvFundObjs;
+        this.TotalHalfListResultRefundIncomeInfo=Math.floor(this.ListResultRefundIncomeInfo.length / 2);
+        console.log(this.ListResultRefundIncomeInfo);
         this.viewIncomeInfoObj.UppingRate = response.DiffRateAmt,
         this.viewIncomeInfoObj.InsuranceIncome = response.TotalInsCustAmt - response.TotalInsInscoAmt,
         this.viewIncomeInfoObj.LifeInsuranceIncome = response.TotalLifeInsCustAmt - response.TotalLifeInsInscoAmt,
@@ -571,14 +576,12 @@ export class CommissionComponent implements OnInit {
     }else{
       this.FormInputObjSupplier["isCalculated"] = true;
     }
-
     if (this.FormGetObj[AdInsConstant.ContentSupplierEmp] != undefined && this.FormGetObj[AdInsConstant.ContentSupplierEmp].value.arr.length != 0) {
       this.isCalcSupplEmp = false;
       this.FormAdd2.CalculateTax(this.ResultAppData.CurrCode, this.ResultAppData.AppNo, this.ResultAppData.OriOfficeCode, this.AppId);
     }else{
       this.FormInputObjSupplierEmpl["isCalculated"] = true;
     }
-
     if (this.FormGetObj[AdInsConstant.ContentReferantor] != undefined && this.FormGetObj[AdInsConstant.ContentReferantor].value.arr.length != 0) {
       this.isCalcReferantor = false;
       this.FormAdd3.CalculateTax(this.ResultAppData.CurrCode, this.ResultAppData.AppNo, this.ResultAppData.OriOfficeCode, this.AppId);
