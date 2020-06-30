@@ -11,8 +11,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 
 @Component({
   selector: 'app-doc-signer-detail',
-  templateUrl: './doc-signer-detail.component.html',
-  styleUrls: ['./doc-signer-detail.component.scss']
+  templateUrl: './doc-signer-detail.component.html'
 })
 
 export class DocSignerDetailComponent implements OnInit {
