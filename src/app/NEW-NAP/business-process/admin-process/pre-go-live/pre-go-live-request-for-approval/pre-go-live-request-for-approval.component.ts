@@ -79,16 +79,14 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
       }
     );
   }
-
   SaveForm() {
     this.RFAPreGoLive = new RFAPreGoLiveObj();
     this.RFAPreGoLive.TransactionNo = this.AgrmntNo;
     this.RFAPreGoLive.Notes = this.MainInfoForm.controls.Notes.value;
     this.RFAPreGoLive.ApprovedBy = this.MainInfoForm.controls.ApprovedBy.value;
+    this.RFAPreGoLive.Reason = this.MainInfoForm.controls.Reason.value;
     this.RFAPreGoLive.TaskListId = this.TaskListId;
     this.RFAPreGoLive.RowVersion = "";
-
-    console.log("SaveForm")
 
     this.http.post(AdInsConstant.CreateRFAPreGoLive, this.RFAPreGoLive).subscribe((response) => {
       this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Paging?BizTemplateCode=' + localStorage.getItem("BizTemplateCode"));
