@@ -18,7 +18,7 @@ export class CustPersonalFinancialDataFL4WComponent implements OnInit {
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
   @Input() identifier: any;
-  @Input() appCustPersonalFinDataObj: AppCustPersonalFinDataObj = new AppCustPersonalFinDataObj();
+  @Input() appCustPersonalFinDataObj: AppCustPersonalFinDataObj;
   totalMonthlyIncome: number;
   nettMonthlyIncome: number;
   totalMonthlyExpense: number;
