@@ -41,10 +41,14 @@
                   </lib-uc-show-errors>
                 </div>
               </div>
-              <div class="form-actions right"></div>
-              <button type="submit" class="btn btn-raised btn-primary mr-1" translate>
-                <i class="far fa-check-square"></i> Submit
-              </button>
+              <div class="form-actions right">
+                <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()"   translate>
+                  <i class="ft-x"></i> Cancel
+                </button>
+                <button type="submit" class="btn btn-raised btn-primary mr-1" translate>
+                  <i class="far fa-check-square"></i> Save
+                </button>
+              </div>
               <div class="form-actions right"></div>
 
             </div>

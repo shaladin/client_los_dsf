@@ -167,6 +167,15 @@ export class CustConfirmationSubjViewComponent implements OnInit {
     }
     else if (key == "agreement") {
       window.open(environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + this.AgrmntObj.AgrmntId, "_blank");
+    }else if( key == "customer"){
+      this.http.post(AdInsConstant.GetCustByCustNo, {CustNo: this.AgrmntObj.CustNo}).subscribe(
+        response => {
+          window.open(environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"], '_blank');
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     }
   }
 }

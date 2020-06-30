@@ -18,6 +18,8 @@ import { CustPersonalMainDataFL4WComponent } from './component/personal-main-dat
 import { CustPersonalContactInformationFL4WComponent } from './component/personal-contact-information/cust-personal-contact-information-FL4W.component';
 import { CustGrpMemberFL4WComponent } from './component/cust-grp-member/cust-grp-member-FL4W.component';
 import { CustJobDataFL4WComponent } from './component/job-data/cust-job-data-FL4W.component';
+import { AppCustPersonalFinDataObj } from 'app/shared/model/AppCustPersonalFinDataObj.Model';
+import { CustPersonalFinancialDataFL4WComponent } from './component/personal-financial-data/cust-personal-financial-data-FL4W.component';
 
 @Component({
   selector: 'app-customer-data-FL4W',
@@ -31,6 +33,7 @@ export class CustomerDataFL4WComponent implements OnInit {
   @ViewChild(CustPersonalContactInformationFL4WComponent) custContactInformationComponent;
   @ViewChild(CustJobDataFL4WComponent) custJobDataComponent;
   @ViewChild(CustGrpMemberFL4WComponent) custGrpMemberComponent;
+  @ViewChild("CustPersonalFinDataComp") custPersonalFinDataComponent: CustPersonalFinancialDataFL4WComponent;
 
 
   CustDataForm = this.fb.group({
@@ -981,9 +984,28 @@ export class CustomerDataFL4WComponent implements OnInit {
       this.listAppCustPersonalContactInformation = event["CustPersonalContactPersonObjs"];
     }
 
-    if (event["CustPersonalFinDataObj"] != undefined) {
+    this.custDataPersonalObj.AppCustPersonalFinDataObj = new AppCustPersonalFinDataObj();
+    if (event["CustPersonalFinDataObj"]) {
       this.custDataPersonalObj.AppCustPersonalFinDataObj = event["CustPersonalFinDataObj"];
       this.custDataPersonalObj.AppCustPersonalFinDataObj.MrSourceOfIncomeTypeCode = event["CustPersonalFinDataObj"].MrSourceOfIncomeCode;
+
+      this.CustDataForm.controls["financialData"].patchValue({
+        MonthlyIncomeAmt: event["CustPersonalFinDataObj"].MonthlyIncomeAmt,
+        MonthlyExpenseAmt: event["CustPersonalFinDataObj"].MonthlyExpenseAmt,
+        MonthlyInstallmentAmt: event["CustPersonalFinDataObj"].MonthlyInstallmentAmt,
+        MrSourceOfIncomeTypeCode: event["CustPersonalFinDataObj"].MrSourceOfIncomeTypeCode,
+        IsJoinIncome: event["CustPersonalFinDataObj"].IsJoinIncome,
+        SpouseMonthlyIncomeAmt: event["CustPersonalFinDataObj"].SpouseMonthlyIncomeAmt
+      });
+      if(event["CustPersonalFinDataObj"].IsJoinIncome == true){
+        this.custPersonalFinDataComponent.totalMonthlyIncome = event["CustPersonalFinDataObj"].MonthlyIncomeAmt + event["CustPersonalFinDataObj"].SpouseMonthlyIncomeAmt;
+      }
+      else{
+        this.custPersonalFinDataComponent.totalMonthlyIncome = event["CustPersonalFinDataObj"].MonthlyIncomeAmt;
+      }
+      
+      this.custPersonalFinDataComponent.totalMonthlyExpense = event["CustPersonalFinDataObj"].MonthlyExpenseAmt + event["CustPersonalFinDataObj"].MonthlyInstallmentAmt;
+      this.custPersonalFinDataComponent.nettMonthlyIncome = this.custPersonalFinDataComponent.totalMonthlyIncome - this.custPersonalFinDataComponent.totalMonthlyExpense;
     }
 
     if (event["CustBankAccObjs"] != undefined) {
