@@ -295,4 +295,22 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
     this.toastr.successMessage("Success");
     this.router.navigate(["/Nap/AdminProcess/PreGoLive/Approval/Paging"]);
   }
+
+  onCancelClick()
+  {
+    this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Approval/Paging?BizTemplateCode=' + localStorage.getItem("BizTemplateCode"));
+  }
+  
+  openView(custNo){
+    var link: string;
+    var custObj = { CustNo: custNo };
+    this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+      response => {
+        AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
 }

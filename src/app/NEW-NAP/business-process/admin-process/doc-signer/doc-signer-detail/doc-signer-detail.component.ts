@@ -225,7 +225,7 @@ export class DocSignerDetailComponent implements OnInit {
       this.isHidden = true;
     }
 
-    
+    this.inputLookupBranchEmpObj.isReady = true;
     this.inputLookupOfficeEmp1Obj.isReady = true;
     this.inputLookupOfficeEmp2Obj.isReady = true;
     this.inputLookupAppCustCompanyShareHolder1Obj.isReady = true;
