@@ -27,7 +27,7 @@ export class CreateDoMultiAssetComponent implements OnInit {
   @Input() DeliveryOrderHId: number;
   relationshipList: any;
   context: any;
-  businessDt: Date;
+  PODt: Date;
 
   DeliveryOrderForm = this.fb.group({
     DeliveryOrderHId: [0, [Validators.required]],
@@ -59,7 +59,7 @@ export class CreateDoMultiAssetComponent implements OnInit {
 
     this.httpClient.post(AdInsConstant.GetPurchaseOrderHByAgrmntId, {AgrmntId: this.AgrmntId}).subscribe(
       (response) => {
-        this.businessDt = new Date(response["PurchaseOrderDt"]);
+        this.PODt = new Date(response["PurchaseOrderDt"]);
       },
       (error) => {
         console.log(error);

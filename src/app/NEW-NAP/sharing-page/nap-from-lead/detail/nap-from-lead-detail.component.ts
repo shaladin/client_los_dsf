@@ -103,6 +103,10 @@ export class NapFromLeadDetailComponent implements OnInit {
     });
   }
 
+  openView(){
+    window.open(environment.losR3Web + "/Lead/View?LeadId=" + this.leadId, "_blank");
+  }
+
   arrAddCrit;
   MakeLookUpObj(){   
     this.inputLookupObjName = new InputLookupObj();

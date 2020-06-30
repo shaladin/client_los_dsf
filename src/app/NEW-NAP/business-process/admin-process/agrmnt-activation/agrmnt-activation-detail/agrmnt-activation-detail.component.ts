@@ -63,6 +63,7 @@ export class AgrmntActivationDetailComponent implements OnInit {
     }
   }
   ngOnInit() {
+    this.BizTemplateCode = localStorage.getItem("BizTemplateCode");
     this.arrValue.push(this.AppId);
     this.ClaimTask(this.WfTaskListId);
     var obj = {
@@ -139,7 +140,7 @@ export class AgrmntActivationDetailComponent implements OnInit {
         AgreementNo : this.AgrmntNo
       }
       this.adminProcessSvc.SubmitAgrmntActivationByHuman(Obj).subscribe((response) => {        
-        var link = environment.losR3Web + "/Nap/AdminProcess/AgrmntActivation/Paging";
+        var link = environment.losR3Web + "/Nap/AdminProcess/AgrmntActivation/Paging?BizTemplateCode=" + this.BizTemplateCode;
         this.router.navigate([]).then(result => { window.open(link, '_self'); });
       });
     }
@@ -173,7 +174,6 @@ export class AgrmntActivationDetailComponent implements OnInit {
   };
 
   Cancel(){
-    this.BizTemplateCode = localStorage.getItem("BizTemplateCode");
     var link = environment.losR3Web + "/Nap/AdminProcess/AgrmntActivation/Paging?BizTemplateCode=" + this.BizTemplateCode;
     this.router.navigate([]).then(result => { window.open(link, '_self'); });
   }
