@@ -50,7 +50,7 @@
             </mat-tab>
           </mat-tab-group>
 
-          <form class="form form-horizontal" [formGroup]="MouReviewDataForm" (ngSubmit)="MouReviewDataForm.valid"
+          <form class="form form-horizontal" [formGroup]="MouReviewDataForm" (ngSubmit)="MouReviewDataForm.valid && Submit()"
             #enjiForm="ngForm">
             <lib-ucSubsection [id]="'ApvRecommendationId'" [title]="'Approval Recommendation'"
               [panel]="'ApvRecommendation'">

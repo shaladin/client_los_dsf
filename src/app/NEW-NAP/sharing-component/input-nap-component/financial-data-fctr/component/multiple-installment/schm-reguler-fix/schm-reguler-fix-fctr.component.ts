@@ -22,6 +22,7 @@ export class SchmRegulerFixFctrComponent implements OnInit {
   calcRegFixObj: CalcRegularFixObj = new CalcRegularFixObj();
   listInstallment: any;
   responseCalc: any;
+  IsAppFeePrcntValid: boolean = true;
 
   constructor(
     private fb: FormBuilder,
@@ -86,9 +87,22 @@ export class SchmRegulerFixFctrComponent implements OnInit {
   }
 
   CalcBaseOnInst() {
-    if(this.ParentForm.value.EstEffDt == "")
-    {
+    this.IsAppFeePrcntValid = true;
+    if (this.ParentForm.value.EstEffDt == "") {
       this.toastr.errorMessage("Insert Estimation Effective Date");
+      return;
+    }
+    for (let i = 0; i < this.ParentForm.value.AppFee.length; i++) {
+      if (this.ParentForm.value.AppFee[i].AppFeePrcnt < 0) {
+        this.IsAppFeePrcntValid = false;
+      }
+    }
+    if (this.IsAppFeePrcntValid == false) {
+      this.toastr.errorMessage("App Fee Prcnt must be greater than 0");
+      return;
+    }
+    if (this.ParentForm.value.EffectiveRatePrcnt < 0) {
+      this.toastr.errorMessage("Effective Rate must be greater than 0");
       return;
     }
     this.calcRegFixObj = this.ParentForm.value;
