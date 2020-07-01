@@ -29,8 +29,12 @@ export class CommissionComponent implements OnInit {
   @ViewChild('Form3') FormAdd3: FormAddDynamicComponent;
   @Input() AppId;
   @Input() showCancel: boolean = true;
+  @Input() maxAllocAmt: number = 0;
+  @Input() totalExpenseAmt: number = 0;
+  @Input() totalRsvFundAmt: number = 0;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
+  @Output() outputUpdateRemainingAlloc: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private route: ActivatedRoute,
@@ -137,6 +141,7 @@ export class CommissionComponent implements OnInit {
             this.viewIncomeInfoObj.ExpenseAmount = totalExpenseAmt;
             this.viewIncomeInfoObj.RemainingAllocatedAmount = this.viewIncomeInfoObj.MaxAllocatedAmount - this.viewIncomeInfoObj.ExpenseAmount - this.viewIncomeInfoObj.ReservedFundAllocatedAmount;
             // console.log(this.viewIncomeInfoObj);
+            this.outputUpdateRemainingAlloc.emit(this.viewIncomeInfoObj.ExpenseAmount);
           }, 1000);
 
         } else {
@@ -199,11 +204,11 @@ export class CommissionComponent implements OnInit {
         this.viewIncomeInfoObj.UppingRate = response.DiffRateAmt,
         this.viewIncomeInfoObj.InsuranceIncome = response.TotalInsCustAmt - response.TotalInsInscoAmt,
         this.viewIncomeInfoObj.LifeInsuranceIncome = response.TotalLifeInsCustAmt - response.TotalLifeInsInscoAmt,
-        this.viewIncomeInfoObj.MaxAllocatedAmount = response.MaxAllocatedRefundAmt,
-        this.viewIncomeInfoObj.ReservedFundAllocatedAmount = response.ReservedFundAllocatedAmt,
-        this.viewIncomeInfoObj.RemainingAllocatedAmount = response.MaxAllocatedRefundAmt - response.ExpenseAmount - response.ReservedFundAllocatedAmt,
+        this.viewIncomeInfoObj.MaxAllocatedAmount = this.maxAllocAmt,
+        this.viewIncomeInfoObj.ReservedFundAllocatedAmount = this.totalRsvFundAmt,
+        this.viewIncomeInfoObj.RemainingAllocatedAmount = this.maxAllocAmt - this.totalExpenseAmt - this.totalRsvFundAmt,
         this.viewIncomeInfoObj.InterestIncome = response.TotalInterestAmt;
-        this.viewIncomeInfoObj.ExpenseAmount = response.ExpenseAmount;
+        this.viewIncomeInfoObj.ExpenseAmount = this.totalExpenseAmt;
         this.GetRuleDataForForm();
         // this.GetAppFeeData();
       },
@@ -550,6 +555,7 @@ export class CommissionComponent implements OnInit {
       (response) => {
         console.log(response);
         this.Summary.GrossYield = response["GrossYield"];
+        this.outputUpdateRemainingAlloc.emit(expenseAmt);
       },
       (error) => {
         console.log(error);
@@ -708,6 +714,10 @@ export class CommissionComponent implements OnInit {
     }
     if (this.Summary.TotalCommisionAmount > this.viewIncomeInfoObj.MaxAllocatedAmount) {
       this.toastr.warningMessage("Total Commision Amount cannot more than Max Allocated Amount");
+      return;
+    }
+    if (0 > this.viewIncomeInfoObj.RemainingAllocatedAmount) {
+      this.toastr.warningMessage("Total Commision Amount cannot more than Remaining Allocated Amount");
       return;
     }
     this.listAppCommissionHObj = new Array();

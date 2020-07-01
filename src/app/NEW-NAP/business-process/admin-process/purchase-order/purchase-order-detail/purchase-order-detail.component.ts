@@ -72,10 +72,16 @@ export class PurchaseOrderDetailComponent implements OnInit {
         this.TotalInsCustAmt = this.AssetObj["TotalInsCustAmt"];
         this.TotalLifeInsCustAmt = this.AssetObj["TotalLifeInsCustAmt"];
         this.TotalPurchaseOrderAmt = this.AssetObj["TotalPurchaseOrderAmt"];
-        this.Address = this.AssetObj["AppCustAddrObj"].Addr + ' RT/RW: ' + this.AssetObj["AppCustAddrObj"].AreaCode4 + '/' +
-          this.AssetObj["AppCustAddrObj"].AreaCode3 + ' ' + this.AssetObj["AppCustAddrObj"].AreaCode2 + ' ' +
-          this.AssetObj["AppCustAddrObj"].AreaCode1 + ' ' + this.AssetObj["AppCustAddrObj"].City + ' ' +
-          this.AssetObj["AppCustAddrObj"].Zipcode;
+        var tempAddr = this.AssetObj["AppCustAddrObj"].Addr == null ? '-' : this.AssetObj["AppCustAddrObj"].Addr; 
+        var areaCode4 = this.AssetObj["AppCustAddrObj"].AreaCode4 == null ? '-' : this.AssetObj["AppCustAddrObj"].AreaCode4;
+        var areaCode3 = this.AssetObj["AppCustAddrObj"].AreaCode3 == null ? '-' : this.AssetObj["AppCustAddrObj"].AreaCode3;
+        var areaCode2 = this.AssetObj["AppCustAddrObj"].AreaCode2 == null ? '' : this.AssetObj["AppCustAddrObj"].AreaCode2;
+        var areaCode1 = this.AssetObj["AppCustAddrObj"].AreaCode1 == null ? '' : this.AssetObj["AppCustAddrObj"].AreaCode1;
+        var city = this.AssetObj["AppCustAddrObj"].City == null ? '' : this.AssetObj["AppCustAddrObj"].City;
+        var zipCode = this.AssetObj["AppCustAddrObj"].City == null ? '' : this.AssetObj["AppCustAddrObj"].Zipcode;
+
+        this.Address = tempAddr + ' RT/RW: ' + areaCode4 + '/' +
+        areaCode3 + ' ' + areaCode2 + ' ' + areaCode1 + ' ' + city + ' ' + zipCode;
         this.PurchaseOrderExpiredDt = this.AssetObj["PurchaseOrderExpiredDt"];
 
         this.purchaseOrderHObj.AgrmntId = this.AgrmntId;

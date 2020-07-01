@@ -2,6 +2,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
+                <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Document Signer-Detail</h4>
                 <lib-ucviewgeneric [viewInput]="viewObj" (callback)="Callback($event)"></lib-ucviewgeneric>
                 <div class="px-3">
                     <form class="form form-horizontal" [formGroup]="DocSignerForm"
@@ -19,7 +20,7 @@
                                             <lib-uclookupgeneric [lookupInput]="inputLookupBranchEmpObj"
                                                 [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
                                                 [identifier]="'lookupBranchEmp'" (lookup)="getLookupBranchEmp($event)"
-                                                *ngIf="inputLookupBranchEmpObj.isReady">
+                                                *ngIf="inputLookupBranchEmpObj.isReady"> 
                                             </lib-uclookupgeneric>
                                         </div>
                                     </div>
