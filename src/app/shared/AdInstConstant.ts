@@ -5,6 +5,8 @@ export class AdInsConstant {
   public static USER_ACCESS = "UserAccess";
   public static ERROR_NO_CALLBACK_SETTING = "System Error - No Callback Handler for {0} Callback Trigger";
   public static NOT_ELIGIBLE_FOR_TAKE_BACK = "You are not Eligible to Take Back this Task";
+  public static NOT_ELIGIBLE_FOR_HOLD = "You are not Eligible to Hold this Task";
+  public static NOT_ELIGIBLE_FOR_PROCESS_TASK = "You are not Eligible to Process this Task";
 
   //App Step
   public static AppStepNew = "NEW";
@@ -153,6 +155,8 @@ export class AdInsConstant {
   public static RestrictionNotIn = "NotIn";
   public static RestrictionIsNull = "isnull";
   public static RestrictionIsNotNull = "isnotnull";
+  public static RestrictionOr = "Or"; //pastikan ada 1 criteria sebelumnya
+  public static RestrictionOrNeq = "OrNeq"; //pastikan ada 1 criteria sebelumnya
   public static showData = "10,50,100";
   public static TimeoutSession = 6000000;
   public static GetListProduct = "http://creator_websvr:7272/NEW_FINANCING/api/Catalog/getPopularViewByCriteria";
@@ -731,6 +735,8 @@ export class AdInsConstant {
   public static EditMouCustCollateralData = environment.losUrl + "/MouCustCollateral/EditMouCustCollateralData";
   public static DeleteMouCustCollateral = environment.losUrl + "/MouCustCollateral/DeleteMouCustCollateral";
   public static GetMouCustCollateralByMouCustId = environment.losUrl + "/MouCustCollateral/GetMouCustCollateralByMouCustId";
+  public static GetMouCustCollateralForMouViewByMouCustId = environment.losUrl + "/MouCustCollateral/GetMouCustCollateralForMouViewByMouCustId";
+
   public static GetMouCustCollateralDataForUpdateByMouCustCollateralId = environment.losUrl + "/MouCustCollateral/GetMouCustCollateralDataForUpdateByMouCustCollateralId";
   public static GetListCollateralByCustNo = environment.FoundationR3Url + "/Collateral/GetListCollateralByCustNo";
   public static GetListCollateralByListCollateralNo = environment.FoundationR3Url + "/Collateral/GetListCollateralByListCollateralNo";
@@ -925,6 +931,7 @@ export class AdInsConstant {
   // App Collateral
   public static GetListAppCollateral = environment.losUrl + "/AppCollateral/GetListAppCollateral";
   public static GetListAppCollateralByAppId = environment.losUrl + "/AppCollateral/GetListAppCollateralByAppId";
+  public static GetListAdditionalCollateralByAppId = environment.losUrl + "/AppCollateral/GetListAdditionalCollateralByAppId";
   public static DeleteAppCollateral = environment.losUrl + "/AppCollateral/DeleteAppCollateral";
   public static GetRefAttrList = environment.losUrl + "/AppCollateral/GetRefAttrList"
   public static AddEditAllCollateralData = environment.losUrl + "/AppCollateral/AddEditAllCollateralData"
@@ -1146,7 +1153,8 @@ export class AdInsConstant {
   public static GetPayFreqByProdOfferingD = environment.FoundationR3Url + "/ProductOffering/GetPayFreqByProdOfferingD";
   public static GetListProdOfferingDByProdOfferingCodeAndProdOfferingVersion = environment.FoundationR3Url + "/ProductOffering/GetListProdOfferingDByProdOfferingCodeAndProdOfferingVersion";
   public static GetProdOfferingHByCode = environment.FoundationR3Url + "/ProductOffering/GetProdOfferingHByCode";
-
+  public static RefProdCompFirstInstType = "FIRSTINSTTYPE";
+  public static RefProdCompAssetCond = "ASSETCOND";
   //Ref Pay Freq
   public static GetPayFreqByProdOfferingCodeandRefProdCompntCode = environment.FoundationR3Url + "/RefPayFreq/GetPayFreqByProdOfferingCodeandRefProdCompntCode";
   public static GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeAndACTProdStat = environment.FoundationR3Url + "/ProductOffering/GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeAndACTProdStat";

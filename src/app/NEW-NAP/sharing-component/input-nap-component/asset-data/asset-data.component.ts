@@ -137,6 +137,8 @@ export class AssetDataComponent implements OnInit {
     AppId: 0,
   };
 
+  assetCondObj: any;
+
   vendorObj = {
     VendorId: 0,
     VendorCode: "",
@@ -235,7 +237,7 @@ export class AssetDataComponent implements OnInit {
   getVendorEmpforGetUrl: any;
   getAssetAccessoryUrl: any;
   getAppCustUrl: any;
-
+  AssetConditionName: string = "";
   OfficeCode: any;
   DpTypeBefore: string = "";
 
@@ -291,6 +293,7 @@ export class AssetDataComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.isOnlookup = false;
     this.initUrl();
+    this.bindAllRefMasterObj();
     await this.GetAppData();
     await this.GetRefProdCompt();
     await this.GetAppCust();
@@ -304,7 +307,6 @@ export class AssetDataComponent implements OnInit {
     if (this.CustType == AdInsConstant.CustTypeCompany) {
       await this.GetAppCustCoy();
     }
-    this.bindAllRefMasterObj();
     await this.GetListAddr();
     //this.assetMasterObj.FullAssetCode = 'CAR';
     //this.GetAssetMaster(this.assetMasterObj);
@@ -896,7 +898,7 @@ export class AssetDataComponent implements OnInit {
             });
           }
           console.log(this.AssetDataForm.value)
-
+          this.AssetConditionChanged();
           this.appAssetAccessoriesObjs = this.appAssetObj.ResponseAppAssetAccessoryObjs;
           this.appAssetId = this.appAssetObj.ResponseAppAssetObj.AppAssetId;
           if (this.appAssetObj.ResponseAppCollateralRegistrationObj != null) {
@@ -1083,12 +1085,12 @@ export class AssetDataComponent implements OnInit {
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
         this.AssetConditionObj = response["ReturnObject"];
-        if (this.AssetConditionObj.length > 0) {
-          this.AssetDataForm.patchValue({
-            MrAssetConditionCode: this.AssetConditionObj[0].Key
-          });
+        //if (this.AssetConditionObj.length > 0) {
+        //  this.AssetDataForm.patchValue({
+        //    MrAssetConditionCode: this.AssetConditionObj[0].Key
+        //  });
 
-        }
+        //}
       }
     );
   }
@@ -1143,8 +1145,26 @@ export class AssetDataComponent implements OnInit {
       (response) => {
         console.log(response);
         this.AppObj = response;
+        this.GetProdOfferingAssetCond();
         this.OfficeCode = this.AppObj.OriOfficeCode;
         console.log(this.OfficeCode);
+      }
+    );
+  }
+
+  GetProdOfferingAssetCond() {
+    var obj = {
+      ProdOfferingCode: this.AppObj.ProdOfferingCode,
+      RefProdCompntCode: AdInsConstant.RefProdCompAssetCond,
+      ProdOfferingVersion: this.AppObj.ProdOfferingVersion
+    };
+    this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
+      (response) => {
+        this.assetCondObj = response;
+        this.AssetDataForm.patchValue({
+          MrAssetConditionCode: this.assetCondObj.CompntValue
+        });
+        this.AssetConditionChanged();
       }
     );
   }
@@ -1341,6 +1361,13 @@ export class AssetDataComponent implements OnInit {
   }
 
   AssetConditionChanged() {
+    if (this.AssetConditionObj != null) {
+      var filter: any;
+      filter = this.AssetConditionObj.filter(
+        cond => cond.Key == this.AssetDataForm.controls.MrAssetConditionCode.value);
+      this.AssetConditionName = filter[0].Value;
+    }
+    console.log(this.AssetConditionObj)
     if (this.AssetDataForm.controls.MrAssetConditionCode.value == 'NEW') {
 
       this.AssetDataForm.controls.SerialNo1.clearValidators();

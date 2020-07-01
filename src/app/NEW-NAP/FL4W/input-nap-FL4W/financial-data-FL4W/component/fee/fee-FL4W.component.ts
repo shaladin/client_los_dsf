@@ -38,7 +38,7 @@ export class FeeFL4WComponent implements OnInit {
 
   async LoadAppFeeData(AppId : number)
   {
-    await this.http.post(environment.losUrl + "/AppFee/GetListAppFeeByAppId", { AppId: AppId }).toPromise().then(
+    await this.http.post(AdInsConstant.GetListAppFeeByAppId, { AppId: AppId }).toPromise().then(
       (response) => {
         this.listAppFeeObj = response["ReturnObject"];
         for (let i = 0; i < this.listAppFeeObj.length ; i++) {
@@ -252,7 +252,11 @@ export class FeeFL4WComponent implements OnInit {
  
           fb_provision.patchValue({
             AppFeeAmt : response["ProvisionFeeAmt"],
-            AppFeePrcnt : response["ProvisionFeePercentage"]
+            AppFeePrcnt : response["ProvisionFeePercentage"],
+            StdFeeAmt: response["StdProvisionFeeAmt"],
+            StdFeePrcnt: response["StdProvisionFeePercentage"],
+            SellFeeAmt: response["SellProvisionFeeAmt"],
+            SellFeePrcnt: response["SellProvisionFeePercentage"]
           });
 
           this.CalculateTotalFeeAndCaptlzAmt();

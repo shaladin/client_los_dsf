@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Router } from '@angular/router';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-agr-main-info',
@@ -19,9 +20,8 @@ export class AgrMainInfoComponent implements OnInit {
   }
   
   GetCallBack(ev: any){
-    if(ev.Key == "ViewProdOffering"){
-      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.ViewObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.ViewObj.ProdOfferingVersion + "&Token=" + this.token;
-      this.router.navigate([]).then(result => { window.open(link, '_blank'); });
+    if(ev.Key == "ViewProdOffering"){ 
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion, this.token );  
     }
   }
 
