@@ -37,7 +37,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
         this.AgrmntId = params["AgrmntId"];
       }
       if (params["AppId"] != null) {
-        this.AppId = params["AppId"];
+        this.AppId = params["AppId"]; 
       }
       if (params["AppAssetId"] != null) {
         this.AppAssetId = params["AppAssetId"];
