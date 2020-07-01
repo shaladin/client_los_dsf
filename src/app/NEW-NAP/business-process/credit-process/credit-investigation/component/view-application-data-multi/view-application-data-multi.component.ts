@@ -6,6 +6,7 @@ import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { LifeInsObj } from 'app/shared/model/LifeInsObj.Model';
+import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 
 @Component({
   selector: 'app-view-application-data-multi',
@@ -31,6 +32,8 @@ export class ViewApplicationDataMultiComponent implements OnInit {
   InsuranceTitle;
   ListAssetData;
   closeResult;
+  inputGridObj: InputGridObj;
+  IsGridTcReady: boolean = false;
 
   InitData(){
     // this.appId = 31;
@@ -99,6 +102,7 @@ export class ViewApplicationDataMultiComponent implements OnInit {
     await this.GetListAssetData();
     await this.GetListCollateralData();
     await this.GetLifeInsData();
+    await this.GetAppTc();
 
     if(this.AssetInsuranceAndLifeInsuranceData.CoverBy == "CO"){
       this.InsuranceTitle = "Asset Insurance";
@@ -296,6 +300,31 @@ export class ViewApplicationDataMultiComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  async GetAppTc(){
+    this.inputGridObj = new InputGridObj();
+    this.inputGridObj.pagingJson = "./assets/ucgridview/gridAppTc.json";
+
+    
+    var AppObj = {
+      AppId: this.AppId
+    }
+
+    this.http.post(AdInsConstant.GetListTCbyAppId, AppObj).toPromise().then(
+      (response) => {
+        console.log(response);
+        this.inputGridObj.resultData = {
+          Data: ""
+        }
+        this.inputGridObj.resultData["Data"] = new Array();
+        this.inputGridObj.resultData.Data = response["AppTcs"]
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    this.IsGridTcReady = true;
   }
 
   AssetDealerData;
