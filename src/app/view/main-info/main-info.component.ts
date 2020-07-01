@@ -13,7 +13,6 @@ import { environment } from 'environments/environment';
 @Component({
   selector: 'app-main-info',
   templateUrl: './main-info.component.html',
-  styleUrls: ['./main-info.component.scss'],
   providers: [NGXToastrService, DatePipe]
 })
 export class MainInfoComponent implements OnInit {
