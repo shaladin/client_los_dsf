@@ -51,8 +51,7 @@ export class CustJobDataFL4WComponent implements OnInit {
   InputLookupProfessionObj: any;
   selectedProfessionCode: any;
   InputLookupIndustryTypeObj: any;
-  selectedIndustryTypeCode: any;
-
+  selectedIndustryTypeCode: any; 
   JobPositionObj: any;
   JobStatObj: any;
   CompanyScaleObj: any;
@@ -107,17 +106,25 @@ export class CustJobDataFL4WComponent implements OnInit {
       this.parentForm.removeControl("jobDataAddr");
       this.parentForm.removeControl("jobDataAddrZipcode");
       this.parentForm.removeControl("lookupIndustryType");
+      this.custModelCode = "NONPROF";
+      this.setLookupProfessionCriteria();
     }
     if(this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "PROF"){
       this.parentForm.controls[this.identifier]["controls"].CompanyName.setValidators(null);
+      this.custModelCode = "PROF";
+      this.setLookupProfessionCriteria();
     }
     if(this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "EMP"){
       this.parentForm.controls[this.identifier]["controls"].CompanyName.setValidators([Validators.required, Validators.maxLength(100)]);
+      this.custModelCode = "EMP";
+      this.setLookupProfessionCriteria();
     }
     if(this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "SME"){
       this.parentForm.controls[this.identifier]["controls"].CompanyName.setValidators([Validators.required, Validators.maxLength(100)]);
-    }
-    this.setLookupProfessionCriteria();
+      this.custModelCode = "SME";
+      this.setLookupProfessionCriteria();
+    } 
+
   }
 
   GetProfession(event){
@@ -197,15 +204,14 @@ export class CustJobDataFL4WComponent implements OnInit {
     this.InputLookupIndustryTypeObj.pagingJson = "./assets/uclookup/lookupIndustryType.json";
     this.InputLookupIndustryTypeObj.genericJson = "./assets/uclookup/lookupIndustryType.json";
   }
-  setLookupProfessionCriteria() {
-    var arrCrit = new Array();
+  setLookupProfessionCriteria() {  
+    this.InputLookupProfessionObj.addCritInput = new Array();
     var critObj = new CriteriaObj();
-    critObj.DataType = 'text';
-    critObj.restriction = AdInsConstant.RestrictionIn;
+    critObj.DataType = 'text'; 
+    critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.propName = 'MR_CUST_MODEL_CODE';
-    critObj.listValue = [this.custModelCode];
-    arrCrit.push(critObj);
-    this.InputLookupProfessionObj.addCritInput = arrCrit;
+    critObj.value = this.custModelCode;
+    this.InputLookupProfessionObj.addCritInput.push(critObj);
   }
 
   bindAppCustPersonalJobData(){
@@ -306,6 +312,9 @@ export class CustJobDataFL4WComponent implements OnInit {
         this.CustModelObj = response["ReturnObject"];
         if(this.CustModelObj.length > 0 && this.custModelCode == undefined){
           this.custModelCode = this.CustModelObj[0].Key;
+          console.log("aawdawdwda" + this.custModelCode)
+          this.setLookupProfessionCriteria();
+          console.log("aaaaa" + this.custModelCode)
           this.parentForm.controls[this.identifier].patchValue({
             CustModelCode: this.CustModelObj[0].Key
           });
