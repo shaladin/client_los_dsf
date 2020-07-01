@@ -120,9 +120,12 @@ export class PreGoLiveComponent implements OnInit {
   }
 
   ReceiveIsChecked(ev) {
-    if (this.ListRfaLogObj[this.lengthListRfaLogObj].ApvStat == "RejectFinal") {
+    console.log("for debug");
+    if (this.ListRfaLogObj.length != 0) {
+      if (this.ListRfaLogObj[this.lengthListRfaLogObj].ApvStat == "RejectFinal"){
       this.IsCheckedAll = false;
       return;
+      }
     }
     if (this.hasApproveFinal) {
       return;
