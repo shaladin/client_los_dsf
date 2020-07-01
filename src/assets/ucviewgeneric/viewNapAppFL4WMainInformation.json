@@ -56,13 +56,21 @@
             "property": "TotalAsset"
           },
           {
-            "type": "text",
+            "type": "link",
             "label": "Mou No",
-            "property": "MouCustNo"
+            "property": "MouCustNo",
+            "path": "/Mou/Cust/View",
+            "target": "_blank",
+            "param": [
+              {
+                "type": "MouCustId",
+                "property": "MouCustId"
+              }
+            ]
           }
         ],
         "querystring": {
-          "select": "SELECT a.APP_NO AS AppNo, a.ORI_OFFICE_NAME AS OriOfficeName, b.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.PROD_OFFERING_CODE AS ProdOfferingCode, a.PROD_OFFERING_VERSION AS ProdOfferingVersion, a.TENOR AS Tenor, a.CURR_CODE AS CurrCode, a.MR_ORDER_INFO_CODE AS MrOrderInfoCode, c.FULL_ASSET_NAME AS FullAssetName, COUNT(c.APP_ID) OVER ( PARTITION BY c.APP_ID) AS TotalAsset, a.APP_ID AS AppId, MC.MOU_CUST_NO AS MouCustNo",
+          "select": "SELECT a.APP_NO AS AppNo, a.ORI_OFFICE_NAME AS OriOfficeName, b.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.PROD_OFFERING_CODE AS ProdOfferingCode, a.PROD_OFFERING_VERSION AS ProdOfferingVersion, a.TENOR AS Tenor, a.CURR_CODE AS CurrCode, a.MR_ORDER_INFO_CODE AS MrOrderInfoCode, c.FULL_ASSET_NAME AS FullAssetName, COUNT(c.APP_ID) OVER ( PARTITION BY c.APP_ID) AS TotalAsset, a.APP_ID AS AppId, MC.MOU_CUST_NO AS MouCustNo, MC.MOU_CUST_ID AS MouCustId",
           "from": "FROM dbo.APP a WITH(NOLOCK) LEFT JOIN dbo.APP_CUST b ON a.APP_ID = b.APP_ID LEFT JOIN dbo.APP_ASSET c ON a.APP_ID = c.APP_ID LEFT JOIN dbo.MOU_CUST MC WITH(NOLOCK) ON MC.MOU_CUST_ID = a.MOU_CUST_ID",
           "where": "WHERE a.APP_ID = {0}"
         }
