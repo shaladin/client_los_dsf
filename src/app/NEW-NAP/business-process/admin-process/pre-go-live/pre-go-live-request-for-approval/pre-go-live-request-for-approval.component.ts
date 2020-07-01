@@ -95,4 +95,9 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
       });
   }
 
+  Cancel()
+  {
+    this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Detail?AgrmntId=' + this.AgrmntId + '&AppId=' + this.AppId + '&TaskListId=' + this.TaskListId + '&AgrmntNo=' + this.AgrmntNo);
+  }
+
 }

@@ -306,8 +306,14 @@ export class CollateralDetailComponent implements OnInit {
         if (!IsExisting) {
           if (this.appCollateralObj.AppCollateralId != 0) {
             this.mode = "edit";
+            // if(this.collateralRegistrationObj.MrUserRelationshipCode == 'SELF'){
+            //   this.AddCollForm.controls.UserName.disable();
+            //   this.AddCollForm.controls.MrUserRelationshipCode.disable();
+            // }
           } else {
             if (this.mode = "add") {
+              this.editAppCollateralObj = response['AppCollateral'];
+              this.editCollateralRegistrationObj = response['AppCollateralRegistration'];
               this.AddCollForm.patchValue({
                 CollateralStat: "NEW"
               });
