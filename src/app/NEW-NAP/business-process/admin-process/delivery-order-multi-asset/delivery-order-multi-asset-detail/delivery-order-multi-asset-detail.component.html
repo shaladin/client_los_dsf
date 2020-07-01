@@ -13,7 +13,8 @@
         <app-agr-main-info [arrValue]="arrValue"></app-agr-main-info>
         <div class="px-3">
           <form class="form form-horizontal" [formGroup]="DOAssetForm" (ngSubmit)="createDOHandler()">
-            <lib-ucSubsection [id]="'AssetListId'" [title]="'Asset List'" [panel]="'AssetListSection'"></lib-ucSubsection>
+            <lib-ucSubsection [id]="'AssetListId'" [title]="'Asset List'" [panel]="'AssetListSection'">
+            </lib-ucSubsection>
             <div class="form-body" id="AssetListSection">
               <table class="table table-responsive-md text-center table-hover">
                 <thead>
@@ -53,7 +54,8 @@
                 <tbody formArrayName="DOAssetList">
                   <tr *ngFor="let item of DOAssetForm.get('DOAssetList').controls; index as i" [formGroupName]="i">
                     <td style="text-align: left;">
-                      <input type="checkbox" formControlName="IsSelected" *ngIf="DOAssetForm.get('DOAssetList').at(i).controls.IsAvailable.value == true" />
+                      <input type="checkbox" formControlName="IsSelected"
+                        *ngIf="DOAssetForm.get('DOAssetList').at(i).controls.IsAvailable.value == true" />
                     </td>
                     <td style="text-align: left;">
                       {{DOAssetForm.get('DOAssetList').at(i).controls.AssetSeqNo.value}}
@@ -91,13 +93,15 @@
                 <i class="ft-plus-circle"></i> Create DO
               </button>
             </div>
-            <div *ngIf="isCreateDOInvalid" class="invalid-feedback d-block col-md-12" style="padding: 0; text-align: right;">
+            <div *ngIf="isCreateDOInvalid" class="invalid-feedback d-block col-md-12"
+              style="padding: 0; text-align: right;">
               <div translate>{{createDOInvalidMsg}}</div>
             </div>
           </form>
         </div>
         <div class="px-3">
-          <lib-ucSubsection [id]="'DeliveryListId'" [title]="'Delivery List'" [panel]="'DeliveryListSection'"></lib-ucSubsection>
+          <lib-ucSubsection [id]="'DeliveryListId'" [title]="'Delivery List'" [panel]="'DeliveryListSection'">
+          </lib-ucSubsection>
           <div class="form-body" id="DeliveryListSection">
             <table class="table table-responsive-md text-center table-hover">
               <thead>
@@ -149,8 +153,8 @@
           </div>
         </div>
         <div class="px-3" style="margin-top: 20px;">
-          <form class="form form-horizontal" [formGroup]="AppTcForm"
-            (ngSubmit)="AppTcForm.valid && SaveForm()" #enjiForm="ngForm">
+          <form class="form form-horizontal" [formGroup]="AppTcForm" (ngSubmit)="AppTcForm.valid && SaveForm()"
+            #enjiForm="ngForm">
             <app-term-conditions [AppId]="appId" [parentForm]="AppTcForm" [enjiForm]="enjiForm"></app-term-conditions>
             <div class="form-actions right">
               <button type="button" (click)="Back()" class="btn btn-raised btn-warning">
@@ -158,7 +162,7 @@
               </button>
               <button type="submit" class="btn btn-raised btn-primary mr-1 ml-1">
                 <i class="far fa-check-square"></i> Save
-              </button> 
+              </button>
               <button type="button" class="btn btn-raised btn-primary" (click)="DOSubmitHandler()" *ngIf="isFinal">
                 <i class="far fa-check-square"></i> Submit
               </button>
