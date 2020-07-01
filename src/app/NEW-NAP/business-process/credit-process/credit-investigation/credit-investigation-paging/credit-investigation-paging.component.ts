@@ -4,6 +4,7 @@ import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-credit-investigation-paging',
@@ -54,9 +55,8 @@ export class CreditInvestigationPagingComponent implements OnInit {
 
   Callback(event)
   {
-    if(event.Key == "ViewProdOffering"){
-      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + event.RowObj.ProdOfferingCode + "&prodOfferingVersion=" + event.RowObj.ProdOfferingVersion  + "&Token=" + this.token;
-      this.router.navigate([]).then(result => { window.open(link, '_blank'); });
+    if(event.Key == "ViewProdOffering"){ 
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( event.RowObj.ProdOfferingCode, event.RowObj.ProdOfferingVersion, this.token );
     }
   }
 }

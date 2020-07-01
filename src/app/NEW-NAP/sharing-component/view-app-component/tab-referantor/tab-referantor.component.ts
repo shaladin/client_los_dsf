@@ -41,8 +41,8 @@ export class TabReferantorComponent implements OnInit {
     await this.http.post(AdInsConstant.GetAppReferantorByAppId, obj).toPromise().then(
       (response) => {
         console.log(response);
-        this.existData = true;
         if(response["AppReferantorId"] != 0){
+          this.existData = true;
           this.ResponseReferantorData.Name = response["ReferantorName"];
           this.ResponseReferantorData.Type = response["MrReferantorTypeName"];
           this.ResponseReferantorData.BankAcc = response["BankAccName"];

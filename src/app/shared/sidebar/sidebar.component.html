@@ -28,13 +28,25 @@
             <li *ngFor="let menuItem of menuItems" [ngClass]="[menuItem.Class]"
                 [routerLinkActive]="menuItem.Submenu.length != 0 ? '' : 'active'"
                 [routerLinkActiveOptions]="{exact: true}">
-                <a [routerLink]="menuItem.Class == '' ? [menuItem.Path] : null"
-                    [queryParams]="genParam(menuItem.Params)" *ngIf="!menuItem.IsExternalLink; else externalLinkBlock"
-                    [contextMenu]="basicMenu" [contextMenuSubject]="menuItem">
-                    <i [ngClass]="[menuItem.Icon]"></i>
-                    <span class="menu-title">{{menuItem.Title | translate }}</span>
-                    <span *ngIf="menuItem.Badge != '' " [ngClass]="[menuItem.BadgeClass]">{{menuItem.Badge}}</span>
-                </a>
+                <span *ngIf="menuItem.Class == ''; then internalNoSubBlock else internalHasSubBlock"></span>
+                <ng-template #internalNoSubBlock>
+                    <a [routerLink]="menuItem.Class == '' ? [menuItem.Path] : null"
+                        [queryParams]="genParam(menuItem.Params)"
+                        *ngIf="!menuItem.IsExternalLink; else externalLinkBlock" [contextMenu]="basicMenu"
+                        [contextMenuSubject]="menuItem">
+                        <i [ngClass]="[menuItem.Icon]"></i>
+                        <span class="menu-title">{{menuItem.Title | translate }}</span>
+                        <span *ngIf="menuItem.Badge != '' " [ngClass]="[menuItem.BadgeClass]">{{menuItem.Badge}}</span>
+                    </a>
+                </ng-template>
+                <ng-template #internalHasSubBlock>
+                    <a *ngIf="!menuItem.IsExternalLink; else externalLinkBlock" [contextMenu]="basicMenu"
+                        [contextMenuSubject]="menuItem">
+                        <i [ngClass]="[menuItem.Icon]"></i>
+                        <span class="menu-title">{{menuItem.Title | translate }}</span>
+                        <span *ngIf="menuItem.Badge != '' " [ngClass]="[menuItem.BadgeClass]">{{menuItem.Badge}}</span>
+                    </a>
+                </ng-template>
                 <ng-template #externalLinkBlock>
                     <a [href]="[menuItem.Path]" target="_blank">
                         <i [ngClass]="[menuItem.Icon]"></i>

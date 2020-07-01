@@ -80,7 +80,7 @@
           <app-cust-personal-contact-information-FL4W (callbackCopyAddr)="copyToContactPersonAddr($event)"
             (callbackSubmit)="getCustContactInformation($event)"
             [listContactPersonPersonal]="listAppCustPersonalContactInformation"></app-cust-personal-contact-information-FL4W>
-          <app-cust-personal-financial-data-FL4W [appCustPersonalFinDataObj]="custDataPersonalObj.AppCustPersonalFinDataObj"
+          <app-cust-personal-financial-data-FL4W #CustPersonalFinDataComp [appCustPersonalFinDataObj]="custDataPersonalObj.AppCustPersonalFinDataObj"
             [enjiForm]="enjiForm" [parentForm]="CustDataForm" [identifier]="'financialData'">
           </app-cust-personal-financial-data-FL4W>
           <app-cust-bank-account-FL4W (callbackSubmit)="getAppCustBankAcc($event)" [listBankAcc]="listAppCustBankAcc">
