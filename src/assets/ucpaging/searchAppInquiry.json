@@ -113,8 +113,8 @@
     {
       "type": "dropdown",
       "datatype": "text",
-      "name": "A.APP_STAT",
-      "id": "appStatId",
+      "name": "B.AGRMNT_STAT",
+      "id": "agrmntStatId",
       "value": "",
       "placeholder": "Placeholder",
       "isFromURL": true,

@@ -8,6 +8,7 @@ import { FormBuilder } from '@angular/forms';
 import Stepper from 'bs-stepper';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { environment } from 'environments/environment';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-app-add-detail',
@@ -236,8 +237,7 @@ export class AppAddDetailComponent implements OnInit {
   //     });
   // }
 
-  GetCallback(ev){
-    var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.ViewObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.ViewObj.ProdOfferingVersion + "&Token=" + this.token;
-    this.router.navigate([]).then(result => { window.open(link, '_blank'); });
+  GetCallback(ev){ 
+    AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion, this.token );
   }
 }
