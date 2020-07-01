@@ -1,9 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { formatDate } from '@angular/common';
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
-import { AppCollateralRegistrationObj } from 'app/shared/model/AppCollateralRegistrationObj.Model';
 import { AppCollateralDocObj } from 'app/shared/model/AppCollateralDocObj.Model';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from 'environments/environment';
@@ -16,40 +14,50 @@ export class ViewCollateralDataComponent implements OnInit {
   viewObj: string;
   viewUOLObj: string;
   viewEnvironment: string;
-  AppId: number;
-  @Input() appId: number = 0;
+  AppId: number;  @Input() appId: number = 0;
+  @Input() AppCollateralId: number = 0;
   AppCollateralObj: AppCollateralObj = new AppCollateralObj();
   AppCollateralDocs: AppCollateralDocObj = new AppCollateralDocObj();
-  AppCollateralId: number = 0;
+  IsHidden: boolean = true;
+  arrValue = [];
+  @Output() outputTab: EventEmitter<boolean> = new EventEmitter();
+  @Input() isMulti: boolean = false;
+  IsReady: boolean = false;
 
   constructor(private http: HttpClient, private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
-      this.AppCollateralId = params["AppCollateralId"];
-    });
-  }
+    });}
 
   ngOnInit() {
-    this.viewObj = "./assets/ucviewgeneric/viewCollateralData.json";
+    this.viewObj = "./assets/ucviewgeneric/viewCollateralData.json";  
     this.viewUOLObj = "./assets/ucviewgeneric/viewCollateralDataUserOwnerLocation.json";
-    this.viewEnvironment = environment.losUrl;
-    this.getCollateralData();
-
-  }
-  getCollateralData() {
-    var AppIdObj = {
-      AppId: this.AppId,
-      AppCollateralId: this.AppCollateralId
+    if(this.AppCollateralId!=0){
+      this.arrValue.push(this.AppCollateralId);
+      this.IsReady = true;
+      this.http.post<Array<AppCollateralDocObj>>(AdInsConstant.GetListAppCollateralDocsByAppCollateralId, {AppCollateralId: this.AppCollateralId}).subscribe(
+        (response) => {
+          this.AppCollateralDocs = response["AppCollateralDocs"];
+        }
+      );
+    }else{
+      this.http.post<AppCollateralObj>(AdInsConstant.GetAppCollateralByAppId, {AppId: this.AppId}).subscribe(
+        (response) => {
+          this.AppCollateralObj = response;        
+          this.arrValue.push(this.AppCollateralObj.AppCollateralId);
+          this.IsReady = true;
+          this.http.post<Array<AppCollateralDocObj>>(AdInsConstant.GetListAppCollateralDocsByAppCollateralId, this.AppCollateralObj).subscribe(
+            (response) => {
+              this.AppCollateralDocs = response["AppCollateralDocs"];
+    
+            }
+          );
+        });
     }
-    this.http.post<AppCollateralObj>(AdInsConstant.GetAppCollateralAndRegistrationByAppCollateralId, AppIdObj).subscribe(
-      (response) => {
-        this.AppCollateralObj = response["AppCollateral"];
+    this.viewEnvironment = environment.losUrl;
+  }
 
-        this.http.post<Array<AppCollateralDocObj>>(AdInsConstant.GetListAppCollateralDocsByAppCollateralId, this.AppCollateralObj).subscribe(
-          (response) => {
-            this.AppCollateralDocs = response["AppCollateralDocs"];
-          }
-        );
-      });
+  Back(){
+    this.outputTab.emit(this.IsHidden);
   }
 }

@@ -28,8 +28,8 @@ export class PurchaseOrderDetailComponent implements OnInit {
   PurchaseOrderExpiredDt: Date;
   purchaseOrderHObj: PurchaseOrderHObj;
   purchaseOrderDObj: PurchaseOrderDObj;
-  lobCode : string;
-  TaskListId : string;
+  lobCode: string;
+  TaskListId: string;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -37,7 +37,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
         this.AgrmntId = params["AgrmntId"];
       }
       if (params["AppId"] != null) {
-        this.AppId = params["AppId"];
+        this.AppId = params["AppId"]; 
       }
       if (params["AppAssetId"] != null) {
         this.AppAssetId = params["AppAssetId"];
@@ -55,16 +55,23 @@ export class PurchaseOrderDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("ini po")
+    console.log("ini po");
     this.arrValue.push(this.AgrmntId);
     this.purchaseOrderHObj = new PurchaseOrderHObj();
+
+    let poUrl = "";
+    if (this.lobCode == "CF4W") {
+      poUrl = AdInsConstant.GetAllAssetDataForPOByAsset;
+    } else if (this.lobCode == "FL4W") {
+      poUrl = AdInsConstant.GetAllAssetDataForPOMultiAsset;
+    }
 
     var appAssetObj = {
       AppId: this.AppId,
       AgrmntId: this.AgrmntId,
       SupplCode: this.SupplCode
     }
-    this.http.post(AdInsConstant.GetAllAssetDataForPOByAsset, appAssetObj).subscribe(
+    this.http.post(poUrl, appAssetObj).subscribe(
       (response) => {
         console.log(response);
         this.AssetObj = response["ReturnObject"];
@@ -72,10 +79,16 @@ export class PurchaseOrderDetailComponent implements OnInit {
         this.TotalInsCustAmt = this.AssetObj["TotalInsCustAmt"];
         this.TotalLifeInsCustAmt = this.AssetObj["TotalLifeInsCustAmt"];
         this.TotalPurchaseOrderAmt = this.AssetObj["TotalPurchaseOrderAmt"];
-        this.Address = this.AssetObj["AppCustAddrObj"].Addr + ' RT/RW: ' + this.AssetObj["AppCustAddrObj"].AreaCode4 + '/' +
-          this.AssetObj["AppCustAddrObj"].AreaCode3 + ' ' + this.AssetObj["AppCustAddrObj"].AreaCode2 + ' ' +
-          this.AssetObj["AppCustAddrObj"].AreaCode1 + ' ' + this.AssetObj["AppCustAddrObj"].City + ' ' +
-          this.AssetObj["AppCustAddrObj"].Zipcode;
+        var tempAddr = this.AssetObj["AppCustAddrObj"].Addr == null ? '-' : this.AssetObj["AppCustAddrObj"].Addr;
+        var areaCode4 = this.AssetObj["AppCustAddrObj"].AreaCode4 == null ? '-' : this.AssetObj["AppCustAddrObj"].AreaCode4;
+        var areaCode3 = this.AssetObj["AppCustAddrObj"].AreaCode3 == null ? '-' : this.AssetObj["AppCustAddrObj"].AreaCode3;
+        var areaCode2 = this.AssetObj["AppCustAddrObj"].AreaCode2 == null ? '' : this.AssetObj["AppCustAddrObj"].AreaCode2;
+        var areaCode1 = this.AssetObj["AppCustAddrObj"].AreaCode1 == null ? '' : this.AssetObj["AppCustAddrObj"].AreaCode1;
+        var city = this.AssetObj["AppCustAddrObj"].City == null ? '' : this.AssetObj["AppCustAddrObj"].City;
+        var zipCode = this.AssetObj["AppCustAddrObj"].Zipcode == null ? '' : this.AssetObj["AppCustAddrObj"].Zipcode;
+
+        this.Address = tempAddr + ' RT/RW: ' + areaCode4 + '/' +
+          areaCode3 + ' ' + areaCode2 + ' ' + areaCode1 + ' ' + city + ' ' + zipCode;
         this.PurchaseOrderExpiredDt = this.AssetObj["PurchaseOrderExpiredDt"];
 
         this.purchaseOrderHObj.AgrmntId = this.AgrmntId;
@@ -145,7 +158,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
           this.purchaseOrderDObj.MrPoItemCode = "FDCIA_FEE_NOT_CPTLZ";
           this.purchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFeeListObj"][i].AppFeeAmt;
           listPurchaseOrderD.push(this.purchaseOrderDObj);
-        } else if (this.AssetObj["AgrmntFeeListObj"][i].MrFeeTypeCode == "ADDADMIN"){
+        } else if (this.AssetObj["AgrmntFeeListObj"][i].MrFeeTypeCode == "ADDADMIN") {
           this.purchaseOrderDObj.MrPoItemCode = "ADD_ADMIN_FEE_NOT_CPTLZ";
           this.purchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFeeListObj"][i].AppFeeAmt;
           listPurchaseOrderD.push(this.purchaseOrderDObj);
