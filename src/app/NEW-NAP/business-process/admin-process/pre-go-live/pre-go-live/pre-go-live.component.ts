@@ -12,11 +12,11 @@ import { PreGoLiveObj } from 'app/shared/model/PreGoLiveObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { environment } from 'environments/environment';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-sharing-pre-go-live',
-  templateUrl: './pre-go-live.component.html',
-  styleUrls: ['./pre-go-live.component.scss']
+  templateUrl: './pre-go-live.component.html'
 })
 export class PreGoLiveComponent implements OnInit {
 
@@ -72,7 +72,7 @@ export class PreGoLiveComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    console.log('Shinano');
     this.http.post(AdInsConstant.GetRfaLogByTrxNoAndApvCategory, { TrxNo: this.AgrmntNo, ApvCategory: "PRE_GPV_APV" }).subscribe(
       (response) => {
         this.ListRfaLogObj = response["ListRfaLogObj"];
@@ -114,10 +114,8 @@ export class PreGoLiveComponent implements OnInit {
   }
 
   GetCallBack(ev) {
-    if (ev.Key == "ViewProdOffering") {
-      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.ViewObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.ViewObj.ProdOfferingVersion + "&Token=" + this.token;
-
-      window.open(link, "_blank");
+    if (ev.Key == "ViewProdOffering") { 
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion, this.token );  
     }
   }
 
@@ -135,7 +133,7 @@ export class PreGoLiveComponent implements OnInit {
   }
 
   RFA() {
-    this.SaveForm(false);
+    this.router.navigate(["/Nap/AdminProcess/PreGoLive/RequestApproval"], { queryParams: { "AgrmntId": this.AgrmntId, "AppId": this.AppId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId } });
   }
 
   SaveForm(flag = true) {
@@ -192,13 +190,9 @@ export class PreGoLiveComponent implements OnInit {
 
     this.http.post(AdInsConstant.AddPreGoLive, this.PreGoLiveObj).subscribe(
       (response) => {
-        if (flag == false) {
-          this.router.navigate(["/Nap/AdminProcess/PreGoLive/RequestApproval"], { queryParams: { "AgrmntId": this.AgrmntId, "AppId": this.AppId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId } });
-        }
-        else {
           this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Paging');
-        }
-        this.toastr.successMessage(response['message']);
+          this.toastr.successMessage(response['message']);
+        
       },
       (error) => {
         console.log(error);

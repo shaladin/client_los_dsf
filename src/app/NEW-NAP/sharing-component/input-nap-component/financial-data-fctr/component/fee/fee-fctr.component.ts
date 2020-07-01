@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { AppFeeObj } from 'app/shared/model/AppFeeObj.Model';
 import { CalcProvisionFee } from 'app/shared/model/AppFee/CalcProvisionFee.Model';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
 
 @Component({
   selector: 'app-fee-fctr',
@@ -37,7 +38,7 @@ export class FeeFctrComponent implements OnInit {
 
   async LoadAppFeeData(AppId : number)
   {
-    await this.http.post(environment.losUrl + "/AppFee/GetListAppFeeByAppId", { AppId: AppId }).toPromise().then(
+    await this.http.post(AdInsConstant.GetListAppFeeByAppId, { AppId: AppId }).toPromise().then(
       (response) => {
         this.listAppFeeObj = response["ReturnObject"];
         for (let i = 0; i < this.listAppFeeObj.length ; i++) {
@@ -48,6 +49,7 @@ export class FeeFctrComponent implements OnInit {
         }
 
         this.PatchProvisionFeeValue();
+        this.ProvisionFeeInput_FocusOut();
       }
     );
   }
@@ -241,7 +243,11 @@ export class FeeFctrComponent implements OnInit {
  
           fb_provision.patchValue({
             AppFeeAmt : response["ProvisionFeeAmt"],
-            AppFeePrcnt : response["ProvisionFeePercentage"]
+            AppFeePrcnt : response["ProvisionFeePercentage"],
+            StdFeeAmt: response["StdProvisionFeeAmt"],
+            StdFeePrcnt: response["StdProvisionFeePercentage"],
+            SellFeeAmt: response["SellProvisionFeeAmt"],
+            SellFeePrcnt: response["SellProvisionFeePercentage"]
           });
 
           this.CalculateTotalFeeAndCaptlzAmt();

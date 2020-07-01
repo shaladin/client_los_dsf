@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { formatDate } from '@angular/common';
 import { environment } from 'environments/environment';
+import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
@@ -58,6 +59,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   AgrmntId: any;
   token = localStorage.getItem("Token");
   LeadId: string;
+  bizTemplateCode: string = localStorage.getItem("BizTemplateCode");
   MouCustId: any;
 
 
@@ -73,6 +75,11 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
       }
 
       this.inputObj = obj;
+
+      var ApvHoldObj = new ApprovalObj()
+      ApvHoldObj.TaskId = obj.taskId
+  
+      this.HoldTask(ApvHoldObj);
     });
   }
 
@@ -240,6 +247,16 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
 
     
   }
+  HoldTask(obj){
+    this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
+      (response)=>{
+      },
+      (error)=>{
+          this.router.navigate(["/Nap/AdminProcess/PreGoLive/Approval/Paging"], { queryParams: { "BizTemplateCode": this.bizTemplateCode } });
+      }
+    )
+  }
+
   changeValidation(arr) {
     if (this.MainInfoForm.controls[this.identifier]["controls"][arr]["controls"].IsMandatory.value == true) {
       this.MainInfoForm.controls[this.identifier]["controls"][arr]["controls"].PromisedDt.setValidators([Validators.required]);
@@ -284,9 +301,8 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
     );
   }
 
-  ToProdOffering(){
-    var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + this.ProdOfferingCode + "&prodOfferingVersion=" + this.ProdOfferingVersion + "&Token=" + this.token;
-    window.open(link, '_blank');
+  ToProdOffering(){ 
+    AdInsHelper.OpenProdOfferingViewByCodeAndVersion( this.ProdOfferingCode, this.ProdOfferingVersion, this.token ); 
   }
 
   onAvailableNextTask() {
@@ -294,8 +310,14 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   }
   onApprovalSubmited() {
     this.toastr.successMessage("Success");
-    this.router.navigate(["/Nap/AdminProcess/PreGoLive/Approval/Paging"]);
+    this.router.navigate(["/Nap/AdminProcess/PreGoLive/Approval/Paging"], { queryParams: { "BizTemplateCode": this.bizTemplateCode } });
   }
+
+  onCancelClick()
+  {
+    this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Approval/Paging?BizTemplateCode=' + localStorage.getItem("BizTemplateCode"));
+  }
+  
   openView(custNo){
     var link: string;
     var custObj = { CustNo: custNo };

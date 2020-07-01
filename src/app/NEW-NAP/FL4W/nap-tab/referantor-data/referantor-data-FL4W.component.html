@@ -3,13 +3,15 @@
     <div class="card">
 
       <div class="card-body">
-        <div class="px-3">
+        <!-- <div class="px-3"> -->
 
           <form class="form form-horizontal" [formGroup]="NapAppReferantorForm" (ngSubmit)="NapAppReferantorForm.valid && ClickSave()"
             #enjiForm="ngForm">
             <!-- Main Info -->
-            <div class="form-body">
-              <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Referantor </h4>
+            <lib-ucSubsection [id]="'ReferantorId'" [title]="'Referantor'" [panel]="'Referantor'">
+            </lib-ucSubsection>
+            <div class="form-body" id="Referantor">
+              <!-- <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Referantor </h4> -->
 
               <div class="form-group row">
                 <label class="col-md-2 adInsLabel">Referantor </label>
@@ -41,64 +43,108 @@
                   <label class="col-md-2 adInsLabel">Account Bank</label>
                   <div class="col-md-10">
                     <select class="form-control adInsInput" style="width: auto" formControlName="AccountBank"
-                      ng-disabled="!ReferantorOn" (change)="ChangeValueBank($event)" required
+                      ng-disabled="!ReferantorOn" (change)="ChangeValueBank($event)"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppReferantorForm.controls.AccountBank.invalid }">
+                      <option value="">-Select One-</option>
                       <option *ngFor="let it of bankItems" value="{{it.BankAccountNo}}">
                         {{it.BankAccountName}} </option>
                     </select>
-                    <lib-uc-show-errors  [control]="NapAppReferantorForm.controls.AccountBank" [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors >
+                    <lib-uc-show-errors [control]="NapAppReferantorForm.controls.AccountBank"
+                      [submit]="enjiForm.submitted"></lib-uc-show-errors>
                   </div>
                 </div>
 
                 <lib-ucSubsection [hidden]="!NpwpOn" [id]="'NPWPReferantorInfoId'" [title]="'NPWP REFERANTOR INFO'" [panel]="'NPWPReferantorInfo'">
                 </lib-ucSubsection>
-                <div class="form-body" [hidden]="!NpwpOn" id="NPWPReferantorInfo">
+                <div class="row" [hidden]="!NpwpOn" id="NPWPReferantorInfo">
+                  <!-- <h4 class="form-section card-title" translate><i class="ft-file-text"></i> NPWP REFERANTOR INFO </h4> -->
+                  <div class="col-md-12">
 
-                  <div class="form-group row">
-                    <label class="col-md-2 adInsLabel">Npwp No</label>
-                    <label class="col-md-4 adInsLabel">{{appReferantorObj.TaxIdNo}} </label>
+                    <div class="row">
+                      <div class="col-md-2 form-inline">
+                        <label> Npwp No </label>
+                      </div>
+                      <div class="col-md-4 form-inline">
+                        <label> {{appReferantorObj.TaxIdNo}} </label>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-2 form-inline">
+                        <label> Npwp Name </label>
+                      </div>
+                      <div class="col-md-4 form-inline">
+                        <label> {{appReferantorObj.TaxIdName}} </label>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-2 form-inline">
+                        <label> Address </label>
+                      </div>
+                      <div class="col-md-4 form-inline">
+                        <label *ngIf="appReferantorObj.TaxIdAddr != null"> {{appReferantorObj.TaxIdAddr}} </label>
+                        <label *ngIf="appReferantorObj.TaxIdAddr == null"> - </label>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-2 form-inline">
+                        <label> RT / RW </label>
+                      </div>
+                      <div class="col-md-4 form-inline">
+                        <label *ngIf="appReferantorObj.TaxIdAreaCode4 != null"> {{appReferantorObj.TaxIdAreaCode4}} &nbsp; </label>
+                        <label *ngIf="appReferantorObj.TaxIdAreaCode4 == null"> - &nbsp; </label>
+                        <label *ngIf="appReferantorObj.TaxIdAreaCode3 != null">  / {{appReferantorObj.TaxIdAreaCode3}} </label>
+                        <label *ngIf="appReferantorObj.TaxIdAreaCode3 == null">  / - </label>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-2 form-inline">
+                        <label> Kelurahan </label>
+                      </div>
+                      <div class="col-md-4 form-inline">
+                        <label *ngIf="appReferantorObj.TaxIdAreaCode2 != null"> {{appReferantorObj.TaxIdAreaCode2}} </label>
+                        <label *ngIf="appReferantorObj.TaxIdAreaCode2 == null"> - </label>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-2 form-inline">
+                        <label> Kecamatan </label>
+                      </div>
+                      <div class="col-md-4 form-inline">
+                        <label *ngIf="appReferantorObj.TaxIdAreaCode1 != null"> {{appReferantorObj.TaxIdAreaCode1}} </label>
+                        <label *ngIf="appReferantorObj.TaxIdAreaCode1 == null"> - </label>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-2 form-inline">
+                        <label> City </label>
+                      </div>
+                      <div class="col-md-4 form-inline">
+                        <label *ngIf="appReferantorObj.TaxIdCity != null"> {{appReferantorObj.TaxIdCity}} </label>
+                        <label *ngIf="appReferantorObj.TaxIdCity == null"> - </label>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-2 form-inline">
+                        <label> Zip Code </label>
+                      </div>
+                      <div class="col-md-4 form-inline">
+                        <label *ngIf="appReferantorObj.TaxIdZipcode != null"> {{appReferantorObj.TaxIdZipcode}} </label>
+                        <label *ngIf="appReferantorObj.TaxIdZipcode == null"> - </label>
+                      </div>
+                    </div>
+
                   </div>
-
-                  <div class="form-group row">
-                    <label class="col-md-2 adInsLabel">Npwp Name</label>
-                    <label class="col-md-4 adInsLabel">{{appReferantorObj.TaxIdName}} </label>
-                  </div>
-
-                  <div class="form-group row">
-                    <label class="col-md-2 adInsLabel">Address</label>
-                    <label class="col-md-4 adInsLabel">{{appReferantorObj.TaxIdAddr}} </label>
-                  </div>
-
-                  <div class="form-group row">
-                    <label class="col-md-2 adInsLabel">RT / RW</label>
-                    <label class="col-md-4 adInsLabel">{{appReferantorObj.TaxIdAreaCode4}} / {{appReferantorObj.TaxIdAreaCode3}} </label>
-                    <!-- <label class="col-md-1 adInsLabel">/ </label>
-                    <label class="col-md-2 adInsLabel">{{appReferantorObj.TaxIdAreaCode3}} </label> -->
-                  </div>
-
-                  <div class="form-group row">
-                    <label class="col-md-2 adInsLabel">Kelurahan</label>
-                    <label class="col-md-4 adInsLabel">{{appReferantorObj.TaxIdAreaCode2}} </label>
-                  </div>
-
-                  <div class="form-group row">
-                    <label class="col-md-2 adInsLabel">Kecamatan</label>
-                    <label class="col-md-4 adInsLabel">{{appReferantorObj.TaxIdAreaCode1}} </label>
-                  </div>
-
-                  <div class="form-group row">
-                    <label class="col-md-2 adInsLabel">City </label>
-                    <label class="col-md-4 adInsLabel">{{appReferantorObj.TaxIdCity}} </label>
-                  </div>
-
-                  <div class="form-group row">
-                    <label class="col-md-2 adInsLabel">Zip Code </label>
-                    <label class="col-md-4 adInsLabel">{{appReferantorObj.TaxIdZipcode}} </label>
-                  </div>
-
                 </div>
-              </div> 
+              </div>
+
+
             </div>
 
             <div class="form-actions right">
@@ -115,7 +161,7 @@
 
           </form>
 
-        </div>
+        <!-- </div> -->
       </div>
     </div>
   </div>

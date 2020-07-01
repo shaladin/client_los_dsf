@@ -1,9 +1,9 @@
 export class NegativeAssetCheckObj{ 
-     AssetTypeCode : any;    
-     SerialNo1 : any;  
-     SerialNo2 : any; 
-     SerialNo3 : any; 
-     SerialNo4 : any;  
-     SerialNo5 : any;  
+     AssetTypeCode : string;    
+     SerialNo1 : string;  
+     SerialNo2 : string; 
+     SerialNo3 : string; 
+     SerialNo4 : string;  
+     SerialNo5 : string;  
   
 }

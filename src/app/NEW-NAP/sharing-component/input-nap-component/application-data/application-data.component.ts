@@ -107,7 +107,7 @@ export class ApplicationDataComponent implements OnInit {
     this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeWOP);
     this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeInstSchm);
     this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeCustNotifyOpt);
-    this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeFirstInstType);
+    // this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeFirstInstType);
     // this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeInterestType);
     // this.getPayFregData();
     this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeInterestType);
@@ -247,6 +247,7 @@ export class ApplicationDataComponent implements OnInit {
         this.getInterestTypeCode();
         this.getDDLFromProdOffering(AdInsConstant.RefMasterTypeCodeInstSchm);
         this.getDDLFromProdOffering(AdInsConstant.RefMasterTypeCodePayFreq);
+        this.getDDLFromProdOffering(AdInsConstant.RefProdCompFirstInstType);
         this.getPayFregData();
       },
       (error) => {
