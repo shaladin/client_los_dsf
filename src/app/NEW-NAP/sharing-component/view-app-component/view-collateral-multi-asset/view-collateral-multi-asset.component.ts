@@ -12,7 +12,10 @@ import { Router } from '@angular/router';
 export class ViewCollateralMultiAssetComponent implements OnInit {
 
   @Input() appId: number;
-  AppCollateralObj: AppCollateralObj = new AppCollateralObj();
+  @Input() IsMulti: boolean = false;
+  AppCollateralObj: Array<AppCollateralObj> = new Array<AppCollateralObj>();
+  IsHidden: boolean = true;
+  AppCollateralId: number;
 
   constructor(private http: HttpClient, private router : Router) { }
 
@@ -23,8 +26,15 @@ export class ViewCollateralMultiAssetComponent implements OnInit {
     this.http.post<Array<AppCollateralObj>>(AdInsConstant.GetListAppCollateralByAppId, AppIdObj).subscribe(
       (response) => {
         this.AppCollateralObj = response["ReturnObject"];
-        console.log("this.AppCollateralObj");
-        console.log(this.AppCollateralObj);
       });
+  }
+
+  viewDetailHandler(AppCollateralId){
+    this.IsHidden = false;
+    this.AppCollateralId = AppCollateralId;
+  }
+
+  getValue(event){
+    this.IsHidden = event;
   }
 }
