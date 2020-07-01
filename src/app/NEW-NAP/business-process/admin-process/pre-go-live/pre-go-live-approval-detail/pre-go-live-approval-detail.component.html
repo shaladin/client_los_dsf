@@ -35,7 +35,7 @@
             <div class="form-group row">
               <label class="col-md-2 adInsLabel" translate>Customer No</label>
               <div class="col-md-4 blue">
-                <label id="CustNo" translate><a (click)="ToCust()">{{CustNo}}</a></label>
+                <label id="CustNo" translate><a (click)="openView(CustNo)">{{CustNo}}</a></label>
               </div>
               <label class="col-md-2 adInsLabel" translate>Installment Amount</label>
               <div class="col-md-4">
@@ -164,5 +164,6 @@
   </div>
 </div>
 
-<lib-ucapproval [inputObj]="inputObj" (nextTask)="onAvailableNextTask($event)" (result)="onApprovalSubmited($event)">
+<lib-ucapproval [inputObj]="inputObj" [showCancel]="'true'" (onCancel)="onCancelClick()" 
+(nextTask)="onAvailableNextTask($event)" (result)="onApprovalSubmited($event)">
 </lib-ucapproval>

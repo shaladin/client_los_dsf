@@ -3,12 +3,14 @@ import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { String } from 'typescript-string-operations';
 import { HttpClient } from '@angular/common/http';
 import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { event } from 'jquery';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-credit-approval-paging',
@@ -22,7 +24,7 @@ export class CreditApprovalPagingComponent implements OnInit {
   token: any = localStorage.getItem("Token");
   userContext: CurrentUserContext = JSON.parse(localStorage.getItem(AdInsConstant.USER_ACCESS));
   
-  constructor(private route: ActivatedRoute, private toastr: NGXToastrService, private httpClient: HttpClient) {
+  constructor(private route: ActivatedRoute, private toastr: NGXToastrService, private httpClient: HttpClient, private router: Router) {
     this.route.queryParams.subscribe(params => {
       if (params['BizTemplateCode'] != null) {
         this.BizTemplateCode = params['BizTemplateCode'];
@@ -51,24 +53,49 @@ export class CreditApprovalPagingComponent implements OnInit {
     critObj.propName = 'RL.BIZ_TMPLT_CODE';
     critObj.value = this.BizTemplateCode;
     arrCrit.push(critObj);
+
+    critObj = new CriteriaObj();
+    critObj.DataType = 'text';
+    critObj.restriction = AdInsConstant.RestrictionEq;
+    critObj.propName = 'ATL.CURRENT_USER_ID';
+    critObj.value = this.userContext.UserName;
+    arrCrit.push(critObj);
+    
+    critObj = new CriteriaObj();
+    critObj.DataType = 'text';
+    critObj.restriction = AdInsConstant.RestrictionOr;
+    critObj.propName = 'ATL.MAIN_USER_ID';
+    critObj.value = this.userContext.UserName;
+    arrCrit.push(critObj);
+
     this.inputPagingObj.addCritInput = arrCrit;
   }
   GetCallBack(ev: any) {
     var ApvReqObj = new ApprovalObj();
-    if (ev.Key == "ViewProdOffering") {
-      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.RowObj.prodOfferingCode + "&prodOfferingVersion=" + ev.RowObj.prodOfferingVersion + "&Token=" + this.token;
-      window.open(link, '_blank');
+    if (ev.Key == "ViewProdOffering") { 
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion, this.token );
+    }
+    else if(ev.Key == "Process"){
+      if (String.Format("{0:L}", ev.RowObj.CurrentUser) != String.Format("{0:L}", this.userContext.UserName)) {
+        this.toastr.warningMessage(AdInsConstant.NOT_ELIGIBLE_FOR_PROCESS_TASK);
+      } else {
+        this.router.navigate(["/Nap/CreditProcess/CreditApproval/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "TaskId" : ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "MrCustTypeCode": ev.RowObj.MrCustTypeCode } });
+      }
     }
     else if (ev.Key == "HoldTask") {
-      ApvReqObj.TaskId = ev.RowObj.TaskId
-      this.httpClient.post(AdInsConstant.ApvHoldTaskUrl, ApvReqObj).subscribe(
-        (response) => {
-          this.toastr.successMessage(response["Message"]);
-        }
-      )
+      if (String.Format("{0:L}", ev.RowObj.CurrentUser) != String.Format("{0:L}", this.userContext.UserName)) {
+        this.toastr.warningMessage(AdInsConstant.NOT_ELIGIBLE_FOR_HOLD);
+      } else {
+        ApvReqObj.TaskId = ev.RowObj.TaskId;
+        this.httpClient.post(AdInsConstant.ApvHoldTaskUrl, ApvReqObj).subscribe(
+          (response) => {
+            this.toastr.successMessage(response["Message"]);
+          }
+        )
+      }
     }
     else if (ev.Key == "TakeBack") {
-      if (String.Format("{0:L}", ev.RowObj.CurrentUserId) != String.Format("{0:L}", this.userContext.UserName)) {
+      if (String.Format("{0:L}", ev.RowObj.MainUser) != String.Format("{0:L}", this.userContext.UserName)) {
         this.toastr.warningMessage(AdInsConstant.NOT_ELIGIBLE_FOR_TAKE_BACK);
       } else {
         ApvReqObj.TaskId = ev.RowObj.TaskId

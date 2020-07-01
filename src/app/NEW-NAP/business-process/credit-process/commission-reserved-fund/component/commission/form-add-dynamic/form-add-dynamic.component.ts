@@ -508,42 +508,32 @@ export class FormAddDynamicComponent implements OnInit {
       };
       code = this.DDLContentName[idxDDLContent].Key;
     }
-
+    var idxTemp: number = idx;
+    if (this.FormInputObj["content"] == AdInsConstant.ContentSupplierEmp) {
+      idxTemp = this.FormInputObj["contentObj"].indexOf(this.FormInputObj["contentObj"].find(x => x.Key == this.DDLContentName[idxDDLContent].Key));
+    }
     var tempRuleObj = this.GetTempRuleObj(code, idxDDLContent);
     // console.log(tempRuleObj);
     this.GetDDLBankAccount(this.FormObj.controls.arr["controls"][idx].controls.ContentName.value, idx);
+    this.SetRule(idx, code, idxTemp);
 
-    for (var i = 0; i < objExist.AppCommissionD.length; i++) {
-      var idxRuleObj = tempRuleObj.indexOf(tempRuleObj.find(x => x.AllocationFrom == objExist.AppCommissionD[i].MrCommissionSourceCode));
-      // console.log(tempRuleObj[idxRuleObj]);
+    // patch value from existing commD
+    for(var i=0;i<this.FormObj.controls.arr["controls"][idx].controls.ListAllocated.controls.length;i++){
+      // console.log(this.FormObj.controls.arr["controls"][idx].controls.ListAllocated.controls[i]);
+      var objFound = objExist.AppCommissionD.find(x=>x.MrCommissionSourceCode == this.FormObj.controls.arr["controls"][idx].controls.ListAllocated.controls[i].value.AllocationFrom);
+      // console.log(objFound);
 
-      let behaviour: string = tempRuleObj[idxRuleObj].AllocationBehaviour;
-      let maxAllocAmt: number = tempRuleObj[idxRuleObj].MaxAllocationAmount;
-      if (maxAllocAmt <= 0) {
-        behaviour = "LOCK";
-        maxAllocAmt = 0;
+      if(objFound!=undefined||objFound!=null){
+        this.FormObj.controls.arr["controls"][idx].controls.ListAllocated.controls[i].patchValue({
+          AppCommissionDId: objFound.AppCommissionDId,
+          AppCommissionHId: objFound.AppCommissionHId,
+          AllocationAmount: objFound.CommissionAmt,
+          TaxAmt: objFound.TaxAmt,
+          VatAmt: objFound.VatAmt,
+          PenaltyAmt: objFound.PenaltyAmt,
+          RowVersion: objFound.RowVersion,
+        });
       }
-
-      let allocAmt: number = objExist.AppCommissionD[i].CommissionAmt;
-      if (allocAmt <= 0)
-        allocAmt = 0;
-
-      var eachAllocationDetail = this.fb.group({
-        AppCommissionDId: [objExist.AppCommissionD[i].AppCommissionDId],
-        AppCommissionHId: [objExist.AppCommissionD[i].AppCommissionHId],
-        AllocationFromSeq: [tempRuleObj[idxRuleObj].AllocationFromSeq],
-        AllocationFrom: [objExist.AppCommissionD[i].MrCommissionSourceCode],
-        AllocationFromDesc: [tempRuleObj[idxRuleObj].AllocationFromDesc],
-        MaxAllocationAmount: [maxAllocAmt],
-        AllocationAmount: [allocAmt, [Validators.pattern("^[0-9]+([,.][0-9]+)?$"), Validators.max(maxAllocAmt)]],
-        AllocationBehaviour: [behaviour],
-        TaxAmt: [objExist.AppCommissionD[i].TaxAmt],
-        VatAmt: [objExist.AppCommissionD[i].VatAmt],
-        PenaltyAmt: [objExist.AppCommissionD[i].PenaltyAmt],
-        RowVersion: [objExist.AppCommissionD[i].RowVersion],
-        TotalListAllocatedDivided: [Math.ceil(objExist.AppCommissionD.length / 2)]
-      }) as FormGroup;
-      this.FormObj.controls.arr["controls"][idx].controls.ListAllocated.push(eachAllocationDetail);
     }
     await this.SortDataAllocation(idx, code);
 

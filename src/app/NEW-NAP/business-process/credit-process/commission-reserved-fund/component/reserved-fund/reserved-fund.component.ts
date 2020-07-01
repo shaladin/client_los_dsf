@@ -22,7 +22,7 @@ export class ReservedFundComponent implements OnInit {
   getAppFeeUrl: any;
   getAppRsvFundUrl: any;
   getAppRsvFundRuleUrl: any;
-  getMaxAllocAmtRsvFundUrl: any;
+  // getMaxAllocAmtRsvFundUrl: any;
   addEditRsvFundUrl: any;
 
   RsvForm = this.fb.group({
@@ -31,8 +31,12 @@ export class ReservedFundComponent implements OnInit {
 
   @Input() ReturnHandlingHObj: ReturnHandlingHObj;
   @Input() showCancel: boolean = true;
+  @Input() maxAllocAmt: number = 0;
+  @Input() totalExpenseAmt: number = 0;
+  @Input() totalRsvFundAmt: number = 0;
   @Output() outputTab: EventEmitter<AllAppReservedFundObj> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
+  @Output() outputUpdateRemainingAlloc: EventEmitter<any> = new EventEmitter();
 
   appReservedFundObjs: Array<AppReservedFundObj>;
   allAppReservedFundObj: AllAppReservedFundObj = new AllAppReservedFundObj();
@@ -43,14 +47,14 @@ export class ReservedFundComponent implements OnInit {
   appFeeObj: any;
   ruleObj: any;
   calcGrossYieldObj: any;
-  maxAllocatedAmt: any;
+  // maxAllocatedAmt: any;
   remainingAllocatedAmt: any;
-  totalRsvFundAmt: number = 0;
+  // totalRsvFundAmt: number = 0;
   totalRsvFundAmtWhenSave: any;
   grossYield: any;
   show: boolean = false;
   maxAllocatedRefundAmt: number = 0;
-  totalExpenseAmt: number = 0;
+  // totalExpenseAmt: number = 0;
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.route.queryParams.subscribe(params => {
@@ -65,7 +69,7 @@ export class ReservedFundComponent implements OnInit {
     this.getAppRsvFundUrl = AdInsConstant.GetListAppReservedFundByAppId;
     this.addEditRsvFundUrl = AdInsConstant.AddEditAppReservedFund;
     this.getAppRsvFundRuleUrl = AdInsConstant.CreateRsvFundRule;
-    this.getMaxAllocAmtRsvFundUrl = AdInsConstant.CreateMaxAllocAmtRsvFund;
+    // this.getMaxAllocAmtRsvFundUrl = AdInsConstant.CreateMaxAllocAmtRsvFund;
   }
 
   ngOnInit() {
@@ -75,10 +79,11 @@ export class ReservedFundComponent implements OnInit {
       AppId: this.ReturnHandlingHObj.AppId,
     };
     this.GetAppRsvFundRule(appObj);
-    this.GetAppFinData(appObj);
-    this.GetMaxAllocAmt(appObj);
+    // this.GetAppFinData(appObj);
+    // this.GetMaxAllocAmt(appObj);
     this.GetAppFee(appObj);
     this.GetAppCust(appObj);
+    console.log(this.maxAllocAmt);
   }
 
   SaveForm() {
@@ -91,8 +96,11 @@ export class ReservedFundComponent implements OnInit {
       {
         this.toastr.errorMessage("Please Calculate Again");
       }
-      else if (this.maxAllocatedAmt < this.totalRsvFundAmt) {
-        this.toastr.errorMessage("Total Reserved Fund Amount Must be Less Than Remaining Allocated Amount");
+      else if (this.remainingAllocatedAmt < 0) {
+        this.toastr.warningMessage("Total Reserved Fund Amount Must be Less Than Remaining Allocated Amount");
+      }
+      else if (this.maxAllocAmt < this.totalRsvFundAmt) {
+        this.toastr.warningMessage("Total Reserved Fund Amount Must be Less Than Max Allocated Amount");
       }
       else {
         var lobCode = localStorage.getItem("BizTemplateCode");
@@ -149,7 +157,8 @@ export class ReservedFundComponent implements OnInit {
   }
 
   calculatedRemainingAmt() {
-    this.remainingAllocatedAmt = this.maxAllocatedRefundAmt - this.totalExpenseAmt - this.totalRsvFundAmt;
+    this.remainingAllocatedAmt = this.maxAllocAmt - this.totalExpenseAmt - this.totalRsvFundAmt;
+    this.outputUpdateRemainingAlloc.emit(this.totalRsvFundAmt);
   }
 
   GetAppFee(appObj) {
@@ -172,14 +181,14 @@ export class ReservedFundComponent implements OnInit {
     )
   }
 
-  GetMaxAllocAmt(appObj) {
-    this.http.post(this.getMaxAllocAmtRsvFundUrl, appObj).subscribe(
-      (response) => {
-        console.log(response);
-        this.maxAllocatedAmt = response["MaxRefundAmount"];
-      }
-    );
-  }
+  // GetMaxAllocAmt(appObj) {
+  //   this.http.post(this.getMaxAllocAmtRsvFundUrl, appObj).subscribe(
+  //     (response) => {
+  //       console.log(response);
+  //       this.maxAllocatedAmt = response["MaxRefundAmount"];
+  //     }
+  //   );
+  // }
 
   GetAppRsvFundRule(appObj) {
     this.http.post(this.getAppRsvFundRuleUrl, appObj).subscribe(

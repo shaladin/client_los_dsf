@@ -140,7 +140,7 @@
                       <select class="form-control adInsInput" style="width: 50%" formControlName="MrFirstInstTypeCode"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrFirstInstTypeCode.invalid }">
                         <option value="">-Select One-</option>
-                        <option *ngFor="let it of applicationDDLitems['FIRST_INST_TYPE']" value="{{it.Key}}">
+                        <option *ngFor="let it of applicationDDLitems['FIRSTINSTTYPE']" value="{{it.Key}}">
                           {{it.Value}} </option>
                       </select>
                       <lib-uc-show-errors  [control]="NapAppModelForm.controls.MrFirstInstTypeCode" [submit]="enjiForm.submitted"></lib-uc-show-errors >
