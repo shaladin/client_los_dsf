@@ -29,5 +29,6 @@
   </div>
 </div>
 <div *ngIf="!IsHidden">
-  <app-view-collateral-data [AppCollateralId]="AppCollateralId" (outputTab)="getValue($event)" [isMulti]="true"></app-view-collateral-data>
+  <app-view-app-collateral-single [agrmntId]="agrmntId" [AppCollateralId]="AppCollateralId" (outputTab)="getValue($event)" [isMulti]="true">
+  </app-view-app-collateral-single>
 </div>
