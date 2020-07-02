@@ -8,4 +8,5 @@ export class ResDuplicateCustomerObj{
     MobilePhnNo1 : string;
     MrIdType : string;
     DuplicateItem : string;
+    IsSelected: boolean;
 }

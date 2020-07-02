@@ -19,7 +19,7 @@ export class ListCompanyComponent implements OnInit {
   WfTaskListId: number;
   FondationUrl = environment.FoundationR3Url;
   LOSUrl = environment.losUrl;
-  GetCustomerDuplicateCheckUrl = this.FondationUrl + AdInsConstant.GetCustomerDuplicateCheck;
+  GetCustomerDuplicateCheckUrl = AdInsConstant.GetCustomerAndNegativeCustDuplicateCheck;
   GetNegativeCustomerDuplicateCheckUrl = this.FondationUrl + AdInsConstant.GetNegativeCustomerDuplicateCheck;
   GetAppCustDuplicateCheckUrl = this.LOSUrl + AdInsConstant.GetAppCustDuplicateCheck;
   GetCustDataByAppId = AdInsConstant.GetCustDataByAppId;

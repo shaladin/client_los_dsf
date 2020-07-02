@@ -435,6 +435,7 @@ export class FormAddDynamicComponent implements OnInit {
 
     var idxTemp: number = indexFormObj;
     if (this.FormInputObj["content"] == AdInsConstant.ContentSupplierEmp) {
+      console.log(this.FormInputObj["contentObj"]);
       idxTemp = this.FormInputObj["contentObj"].indexOf(this.FormInputObj["contentObj"].find(x => x.Key == this.DDLContentName[indexFormObj].Key));
     }
     var temp = this.GetTempRuleObj(code, idxTemp);
@@ -512,18 +513,17 @@ export class FormAddDynamicComponent implements OnInit {
     if (this.FormInputObj["content"] == AdInsConstant.ContentSupplierEmp) {
       idxTemp = this.FormInputObj["contentObj"].indexOf(this.FormInputObj["contentObj"].find(x => x.Key == this.DDLContentName[idxDDLContent].Key));
     }
-    var tempRuleObj = this.GetTempRuleObj(code, idxDDLContent);
-    // console.log(tempRuleObj);
+    // var tempRuleObj = this.GetTempRuleObj(code, idxDDLContent);
     this.GetDDLBankAccount(this.FormObj.controls.arr["controls"][idx].controls.ContentName.value, idx);
     this.SetRule(idx, code, idxTemp);
 
+    var TotalCommisionAmount: number = 0;
     // patch value from existing commD
     for(var i=0;i<this.FormObj.controls.arr["controls"][idx].controls.ListAllocated.controls.length;i++){
       // console.log(this.FormObj.controls.arr["controls"][idx].controls.ListAllocated.controls[i]);
-      var objFound = objExist.AppCommissionD.find(x=>x.MrCommissionSourceCode == this.FormObj.controls.arr["controls"][idx].controls.ListAllocated.controls[i].value.AllocationFrom);
-      // console.log(objFound);
+      var objFound = objExist.AppCommissionD.find(x => x.MrCommissionSourceCode == this.FormObj.controls.arr["controls"][idx].controls.ListAllocated.controls[i].value.AllocationFrom);
 
-      if(objFound!=undefined||objFound!=null){
+      if (objFound != undefined || objFound != null) {
         this.FormObj.controls.arr["controls"][idx].controls.ListAllocated.controls[i].patchValue({
           AppCommissionDId: objFound.AppCommissionDId,
           AppCommissionHId: objFound.AppCommissionHId,
@@ -533,9 +533,13 @@ export class FormAddDynamicComponent implements OnInit {
           PenaltyAmt: objFound.PenaltyAmt,
           RowVersion: objFound.RowVersion,
         });
+        TotalCommisionAmount += objFound.CommissionAmt;
       }
     }
-    await this.SortDataAllocation(idx, code);
+    // patch total
+    this.FormObj.controls.arr["controls"][idx].patchValue({
+      TotalCommisionAmount: TotalCommisionAmount,
+    });
 
     this.tempDDLContentName.push(obj);
     this.DDLContentName.splice(idxDDLContent, 1);
@@ -593,6 +597,7 @@ export class FormAddDynamicComponent implements OnInit {
 
   SetRule(indexFormObj, code, idx) {
     var temp = this.GetTempRuleObj(code, idx);
+    console.log(temp);
     var TotalCommisionAmount = 0;
     for (var i = 0; i < temp.length; i++) {
 

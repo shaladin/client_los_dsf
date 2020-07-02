@@ -1019,6 +1019,14 @@ export class CustomerDataComponent implements OnInit {
     if (event["CustPersonalFinDataObj"] != undefined) {
       this.custDataPersonalObj.AppCustPersonalFinDataObj = event["CustPersonalFinDataObj"];
       this.custDataPersonalObj.AppCustPersonalFinDataObj.MrSourceOfIncomeTypeCode = event["CustPersonalFinDataObj"].MrSourceOfIncomeCode;
+      
+      let TotalMonthlyIncome = this.custDataPersonalObj.AppCustPersonalFinDataObj.MonthlyIncomeAmt + this.custDataPersonalObj.AppCustPersonalFinDataObj.SpouseMonthlyIncomeAmt;
+      let TotalMonthlyExpense = this.custDataPersonalObj.AppCustPersonalFinDataObj.MonthlyExpenseAmt + this.custDataPersonalObj.AppCustPersonalFinDataObj.MonthlyInstallmentAmt;
+      this.CustDataForm.controls["financialData"].patchValue({
+        TotalMonthlyIncome: TotalMonthlyIncome,
+        TotalMonthlyExpense: TotalMonthlyExpense,
+        NettMonthlyIncome: TotalMonthlyIncome - TotalMonthlyExpense
+      });
     }
 
     if (event["CustBankAccObjs"] != undefined) {
