@@ -162,11 +162,6 @@
                   "property": "ClaimBy",
                   "value": "",
                   "restriction": "EQ"
-                },
-                {
-                  "property": "BizTemplateCode",
-                  "value": "CF4W",
-                  "restriction": "EQ"
                 }
               ],
               "result": {
@@ -182,31 +177,6 @@
                   "property": "ClaimBy",
                   "value": "",
                   "restriction": "EQ"
-                },
-                {
-                  "property": "BizTemplateCode",
-                  "value": "CF4W",
-                  "restriction": "EQ"
-                }
-              ],
-              "result": {
-                "type": "callback",
-                "key": "url"
-              },
-              "isHide": false
-            },
-            {
-              "conditions": [
-                {
-                  "isUser": true,
-                  "property": "ClaimBy",
-                  "value": "",
-                  "restriction": "EQ"
-                },
-                {
-                  "property": "BizTemplateCode",
-                  "value": "CFRFN4W",
-                  "restriction": "EQ"
                 }
               ],
               "result": {
@@ -220,58 +190,13 @@
                 {
                   "isUser": false,
                   "property": "ClaimBy",
-                  "value": "",
-                  "restriction": "EQ"
-                },
-                {
-                  "property": "BizTemplateCode",
-                  "value": "CFRFN4W",
+                  "value": "SYSTEM",
                   "restriction": "EQ"
                 }
               ],
               "result": {
                 "type": "callback",
                 "key": "url"
-              },
-              "isHide": false
-            },
-            {
-              "conditions": [
-                {
-                  "isUser": true,
-                  "property": "ClaimBy",
-                  "value": "",
-                  "restriction": "EQ"
-                },
-                {
-                  "property": "BizTemplateCode",
-                  "value": "FL4W",
-                  "restriction": "EQ"
-                }
-              ],
-              "result": {
-                "type": "callback",
-                "property": "url"
-              },
-              "isHide": false
-            },
-            {
-              "conditions": [
-                {
-                  "isUser": false,
-                  "property": "ClaimBy",
-                  "value": "",
-                  "restriction": "EQ"
-                },
-                {
-                  "property": "BizTemplateCode",
-                  "value": "FL4W",
-                  "restriction": "EQ"
-                }
-              ],
-              "result": {
-                "type": "callback",
-                "property": "url"
               },
               "isHide": false
             }
