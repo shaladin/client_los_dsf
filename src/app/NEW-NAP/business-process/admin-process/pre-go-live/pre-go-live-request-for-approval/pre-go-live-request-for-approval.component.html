@@ -15,7 +15,7 @@
                 <div class="col-md-4">
                   <select class="form-control adInsInput" style="width: auto" formControlName="Reason"
                     [ngClass]="{ 'is-invalid': MainInfoReqForm.submitted && MainInfoForm.controls.Reason.invalid }">
-                    <option *ngFor="let it of itemReason" value="{{it.Key}}">
+                    <option *ngFor="let it of itemReason" value="{{it.Value}}">
                       {{it.Value}}</option>
                   </select>
                   <lib-uc-show-errors [control]="MainInfoForm.controls.Reason" [submit]="MainInfoReqForm.submitted">
