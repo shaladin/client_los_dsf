@@ -64,7 +64,7 @@
             "name": "vApv.REQUEST_DATE",
             "id": "RequestDateId",
             "value": "BD",
-            "restriction": "gte",
+            "restriction": "lte",
             "label": "Request Date",
             "placeholder": "Placeholder"
         }
