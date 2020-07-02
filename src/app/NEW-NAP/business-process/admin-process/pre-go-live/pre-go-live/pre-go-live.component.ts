@@ -42,6 +42,7 @@ export class PreGoLiveComponent implements OnInit {
     ApprovalStatus: ['']
   })
   listAppTCObj: ListAppTCObj;
+  ListAppTCObj: ListAppTCObj;
 
   count1: number = 0;
   RfaLogObj: {
@@ -136,7 +137,48 @@ export class PreGoLiveComponent implements OnInit {
   }
 
   RFA() {
-    this.router.navigate(["/Nap/AdminProcess/PreGoLive/RequestApproval"], { queryParams: { "AgrmntId": this.AgrmntId, "AppId": this.AppId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId } });
+    console.log("asdasd");
+    var businessDt = new Date(localStorage.getItem("BusinessDateRaw"));   
+    this.ListAppTCObj = new ListAppTCObj();
+    this.ListAppTCObj["ListAppTcObj"] = new Array();
+    for (var i = 0; i < this.MainInfoForm.value.TCList["length"]; i++) {
+      this.appTC = new AppTCObj();
+      this.appTC.AppId = this.MainInfoForm.value.TCList[i].AppId;
+      this.appTC.AppTcId = this.MainInfoForm.value.TCList[i].AppTcId;
+      this.appTC.TcCode = this.MainInfoForm.value.TCList[i].TcCode;
+      this.appTC.TcName = this.MainInfoForm.value.TCList[i].TcName;
+      this.appTC.PriorTo = this.MainInfoForm.value.TCList[i].PriorTo;
+      this.appTC.IsChecked = this.MainInfoForm.value.TCList[i].IsChecked;
+      this.appTC.ExpiredDt = this.MainInfoForm.value.TCList[i].ExpiredDt;
+      this.appTC.IsMandatory = this.MainInfoForm.value.TCList[i].IsMandatory;
+      this.appTC.PromisedDt = this.MainInfoForm.value.TCList[i].PromisedDt;
+      this.appTC.CheckedDt = this.MainInfoForm.value.TCList[i].CheckedDt;
+      this.appTC.Notes = this.MainInfoForm.value.TCList[i].Notes;
+      this.appTC.RowVersion = this.MainInfoForm.value.TCList[i].RowVersion;
+
+      var prmsDt = new Date(this.appTC.PromisedDt);
+      var prmsDtForm = this.MainInfoForm.value.TCList[i].PromisedDt;
+
+      if (this.appTC.IsChecked == false) {
+        if (prmsDtForm != null) {
+          if (prmsDt < businessDt) {
+            this.toastr.errorMessage("Promise Date for " + this.appTC.TcName + " can't be lower than Business Date");
+            return;
+          }
+        }
+      }
+      this.ListAppTCObj["ListAppTcObj"].push(this.appTC);
+    }
+      this.http.post(AdInsConstant.EditAppTc, this.ListAppTCObj).subscribe(
+        (response) => {
+          this.router.navigate(["/Nap/AdminProcess/PreGoLive/RequestApproval"], { queryParams: { "AgrmntId": this.AgrmntId, "AppId": this.AppId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId } });
+            this.toastr.successMessage(response['message']);
+          
+        },
+        (error) => {
+          console.log(error);
+        });
+    
   }
 
   SaveForm(flag = true) {
