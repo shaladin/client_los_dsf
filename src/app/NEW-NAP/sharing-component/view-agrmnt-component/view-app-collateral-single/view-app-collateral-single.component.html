@@ -2,9 +2,7 @@
   <div class="card-body">
     <div class="px-3">
       <div *ngIf="isMulti">
-        <span>
-          <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Back()" translate><i class="ft-arrow-left"></i> Back</button>
-        </span>
+        <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Back()" translate><i class="ft-arrow-left"></i> Back</button>
       </div>
       <lib-ucviewgeneric *ngIf="IsReady" [viewInput]="viewObj" [viewEnvironment]="viewEnvironment" [whereValue]="arrValue"></lib-ucviewgeneric>
       <div *ngIf="this.AppCollateralDocs?.length">

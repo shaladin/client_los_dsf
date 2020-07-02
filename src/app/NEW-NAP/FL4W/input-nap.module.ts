@@ -21,16 +21,6 @@ import { ViewMainInfoComponentModule } from "../sharing-component/view-main-info
 import { ViewAppComponentModule } from "../sharing-component/view-app-component/view-app-component.module";
 import { ViewSharingComponentModule } from "../sharing-component/view-app-component/view-sharing-component.module";
 import { ViewAgrmntComponent } from './view-agrmnt/view-agrmnt.component';
-import { AgrmntLifeInsuranceComponent } from "../sharing-component/view-agrmnt-component/life-insurance/life-insurance.component";
-import { ViewCommissionComponent } from "../sharing-component/view-agrmnt-component/view-commission/view-commission.component";
-import { ViewPurchaseOrderComponent } from "../sharing-component/view-agrmnt-component/view-purchase-order/view-purchase-order.component";
-import { ViewDeliveryOrderComponent } from "../sharing-component/view-agrmnt-component/view-delivery-order/view-delivery-order.component";
-import { AgrmntFinancialComponent } from "../sharing-component/view-agrmnt-component/agrmnt-financial/agrmnt-financial.component";
-import { ViewAgrmntReservedFundComponent } from "../sharing-component/view-agrmnt-component/view-reserved-fund/view-reserved-fund.component";
-import { ViewAgrmntSummaryComponent } from "../sharing-component/view-agrmnt-component/view-summary/view-summary.component";
-import { ViewAgrmntDocumentComponent } from "../sharing-component/view-agrmnt-component/view-document/view-document.component";
-import { ViewCollateralComponent } from "../sharing-component/view-agrmnt-component/view-collateral/view-collateral.component";
-import { ViewAgrmntInsuranceComponent } from "../sharing-component/view-agrmnt-component/view-insurance/view-insurance.component";
 import { FeeFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/fee/fee-FL4W.component";
 import { SchmBalloonFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/schm-baloon/schm-balloon-FL4W.component";
 import { SchmEvenPrincipalFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/schm-even-principal/schm-even-principal-FL4W.component";
@@ -53,8 +43,8 @@ import { AppInsuranceFl4wComponent } from './view-agrmnt-fl4w/app-insurance-fl4w
 import { AppAssetDataFl4wComponent } from './view-agrmnt-fl4w/app-asset-data-fl4w/app-asset-data-fl4w.component';
 import { ViewSummaryFl4wComponent } from './view-agrmnt-fl4w/view-summary-fl4w/view-summary-fl4w.component';
 import { AppAssetDataDetailFl4wComponent } from './view-agrmnt-fl4w/app-asset-data-fl4w/app-asset-data-detail-fl4w/app-asset-data-detail-fl4w.component'; 
-import { ViewInsuranceDetailComponent } from "../sharing-component/view-agrmnt-component/view-insurance-detail/view-insurance-detail.component";
 import { UcviewgenericComponent } from "@adins/ucviewgeneric";
+import { ViewAgrmntComponentModule } from "../sharing-component/view-agrmnt-component/view-agrmnt-component.module";
 
  
 export const customCurrencyMaskConfig = {     
@@ -89,6 +79,7 @@ export const customCurrencyMaskConfig = {
     ViewSharingComponentModule,
     MatTabsModule,
     ViewAppComponentModule,
+    ViewAgrmntComponentModule,
     ViewSharingComponentModule,
     ViewMainInfoComponentModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
@@ -100,17 +91,6 @@ export const customCurrencyMaskConfig = {
     NapViewComponent,  
     NapAddDetailComponent, 
     ViewAgrmntComponent,  
-    ViewInsuranceDetailComponent,
-    AgrmntLifeInsuranceComponent,
-    ViewCommissionComponent,
-    ViewPurchaseOrderComponent,
-    ViewDeliveryOrderComponent,
-    AgrmntFinancialComponent,
-    ViewAgrmntReservedFundComponent,
-    ViewAgrmntSummaryComponent,
-    ViewAgrmntDocumentComponent,
-    ViewCollateralComponent,
-    ViewAgrmntInsuranceComponent,
     FeeFL4WComponent,
     SchmBalloonFL4WComponent,
     SchmEvenPrincipalFL4WComponent,
