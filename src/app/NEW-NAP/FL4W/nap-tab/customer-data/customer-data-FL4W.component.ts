@@ -125,7 +125,7 @@ export class CustomerDataFL4WComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-     
+    console.log('Shinano');
     this.cancel = this.showCancel;
     this.initUrl();
     this.bindCustTypeObj();
@@ -152,7 +152,7 @@ export class CustomerDataFL4WComponent implements OnInit {
           console.log(response);
           if (response["StatusCode"] == 200) {
             this.toastr.successMessage(response["message"]);
-            this.outputTab.emit();
+            this.EmitToMainComp();
           }
           else {
             response["ErrorMessages"].forEach((message: string) => {
@@ -185,7 +185,7 @@ export class CustomerDataFL4WComponent implements OnInit {
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
-          this.outputTab.emit();
+          this.EmitToMainComp();
         },
         (error) => {
           console.log(error);
@@ -726,8 +726,6 @@ export class CustomerDataFL4WComponent implements OnInit {
     }
   }
 
-
-
   test() {
     console.log(this.mainDataComponent);
     console.log(this.CustDataForm);
@@ -1022,7 +1020,6 @@ export class CustomerDataFL4WComponent implements OnInit {
       this.custGrpMemberComponent.appCustGrpObjs = event["CustGrpObjs"];
       this.custGrpMemberComponent.copyAppGrp();
     }
-
   }
 
   CopyCustomerCompany(event) {
@@ -1054,7 +1051,6 @@ export class CustomerDataFL4WComponent implements OnInit {
       this.custGrpMemberComponent.appCustGrpObjs = event["CustGrpObjs"];
       this.custGrpMemberComponent.copyAppGrp();
     }
-
   }
 
   copyAddrFromLookup(event) {
@@ -1172,17 +1168,6 @@ export class CustomerDataFL4WComponent implements OnInit {
     this.getRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
   }
 
-  // bindCopyFrom(){
-  //   this.CustDataForm.patchValue({
-  //     CopyFromResidence: this.copyToResidenceTypeObj[0].Key,
-  //     CopyFromMailing: this.copyToMailingTypeObj[0].Key
-  //   });
-
-  //   this.CustDataCompanyForm.patchValue({
-  //     CopyFromMailing: this.copyToMailingCompanyTypeObj[0].Key
-  //   });
-  // }
-
   bindCustTypeObj() {
     this.refMasterObj.RefMasterTypeCode = "CUST_TYPE";
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
@@ -1193,5 +1178,10 @@ export class CustomerDataFL4WComponent implements OnInit {
         }
       }
     );
+  }
+
+  EmitToMainComp(){
+    console.log(this.MrCustTypeCode);
+    this.outputTab.emit(this.MrCustTypeCode);
   }
 }
