@@ -44,7 +44,7 @@ export class FraudDetectionPagingComponent implements OnInit {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionIn;
     critObj.propName = 'WTL.ACT_CODE';
-    critObj.listValue = ["FRD_" + this.BizTemplateCode,"FCR_" + this.BizTemplateCode]
+    critObj.listValue = ["FRD_" + this.BizTemplateCode,"FCR_" + this.BizTemplateCode, "FRV_" + this.BizTemplateCode]
     arrCrit.push(critObj);
     this.inputPagingObj.addCritInput = arrCrit;
   }
