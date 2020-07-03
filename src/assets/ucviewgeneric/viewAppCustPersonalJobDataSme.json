@@ -48,7 +48,7 @@
         },
         {
           "type": "text",
-          "label": "Number Of Employee",
+          "label": "Number of Employee",
           "property": "NumOfEmp"
         },
         {
