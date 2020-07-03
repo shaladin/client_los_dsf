@@ -29,7 +29,7 @@
         </th>
       </tr>
     </thead>
-    <tbody *ngIf = "listSubsidy == undefined">
+    <tbody *ngIf = "listSubsidy == undefined || listSubsidy.length <= 0 ">
       <tr>
         <td colspan="100%">No Data Available</td>
       </tr>
