@@ -220,17 +220,9 @@ getData(){
       console.log(error);
     }
   );
-
-
-
-  
-   
-
-
-  
 }
 
-  back(){
-    this.ResponseMouDetailGeneral.emit({StatusCode: "-2"});
-  }
+  // back(){
+  //   this.ResponseMouDetailGeneral.emit({StatusCode: "-2"});
+  // }
 }
