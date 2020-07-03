@@ -55,8 +55,8 @@
       </div>
       <div class="row" *ngIf="CustCnfrmObj.IsSkip">
         <label class="col-md-3" translate>Skip Reason</label>
-        <div class="col-md-9">
-          <input type="text" class="form-control" [(ngModel)]="CustCnfrmObj.SkipReason" name="SkipReason">
+        <div class="col-md-3">
+          <textarea class="form-control" [(ngModel)]="CustCnfrmObj.SkipReason" name="SkipReason"></textarea>
         </div>
       </div>
 
