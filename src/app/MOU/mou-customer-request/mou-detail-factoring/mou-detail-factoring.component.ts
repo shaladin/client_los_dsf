@@ -202,8 +202,8 @@ export class MouDetailFactoringComponent implements OnInit {
     );
   }
 
-  back(){
-    this.ResponseMouCustFactoring.emit({StatusCode: "-2"});
-  }
+  // back(){
+  //   this.ResponseMouCustFactoring.emit({StatusCode: "-2"});
+  // }
 
 }

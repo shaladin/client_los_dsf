@@ -149,9 +149,11 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   mouDocumentBack() {
     if (this.mouType == "GENERAL") {
       this.stepperGeneral.previous();
+      this.currentStepIndex--;
     }
     else if (this.mouType == "FACTORING") {
       this.stepperFactoring.previous();
+      this.currentStepIndex--;
     }
   }
 
