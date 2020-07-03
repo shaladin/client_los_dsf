@@ -8,7 +8,7 @@
       "mainInfo": [
         {
           "type": "text",
-          "label": "CUSTOMER MODEL",
+          "label": "Customer Model",
           "property": "Descr"
         },
         {
@@ -18,7 +18,7 @@
         },
         {
           "type": "text",
-          "label": "PROFESSION NAME",
+          "label": "Profession Name",
           "property": "ProfessionName"
         },
         {
@@ -28,7 +28,7 @@
         },
         {
           "type": "text",
-          "label": "COMPANY NAME",
+          "label": "Company Name",
           "property": "CompanyName"
         }
       ],
