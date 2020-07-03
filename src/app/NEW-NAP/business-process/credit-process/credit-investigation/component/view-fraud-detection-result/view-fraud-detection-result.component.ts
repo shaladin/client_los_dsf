@@ -14,6 +14,7 @@ import { NegativeAssetCheckForMultiAssetObj } from 'app/shared/model/NegativeAss
 import { NegativeAssetCheckObj } from 'app/shared/model/NegativeAssetCheckObj.Model';
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { NegativeAssetObj } from 'app/shared/model/NegativeAssetObj.Model';
+import { ResDuplicateCustomerObj } from 'app/shared/model/Lead/ResDuplicateCustomerObj.Model';
 
 
 
@@ -33,7 +34,7 @@ export class ViewFraudDetectionResultComponent implements OnInit {
   foundationUrl = environment.FoundationR3Url;
   getAppById = AdInsConstant.GetAppById;
   getCustDataByAppId = AdInsConstant.GetCustDataByAppId;
-  getAppDupCheckCustByAppId = AdInsConstant.GetAppDupCheckCustByAppId;
+  getAppDupCheckCustByAppId = AdInsConstant.GetCustomerDuplicateCheck;
   getFraudDukcapilByIdNo = AdInsConstant.GetFraudDukcapilByIdNo;
   getNegativeCustomerDuplicateCheckUrl = AdInsConstant.GetNegativeCustomerDuplicateCheck;
   getAppAssetByAppId = AdInsConstant.GetAppAssetByAppId;
@@ -56,7 +57,7 @@ export class ViewFraudDetectionResultComponent implements OnInit {
   listNegativeAppCollateral: Array<NegativeAssetObj> = new Array<NegativeAssetObj>();
   dukcapilObj: any;
   viewDukcapilObj: string;
-  listCustDuplicate: Array<any> = new Array<any>();
+  listCustDuplicate: Array<ResDuplicateCustomerObj> = new Array<ResDuplicateCustomerObj>();
   trxRefNo: string;
   mrSrvySourceCode: string;
   requestDupCheck: any;
@@ -117,6 +118,9 @@ export class ViewFraudDetectionResultComponent implements OnInit {
           };
         }
         this.getNegativeCustomer(this.requestDupCheck);
+        if(this.appCustObj.IsExistingCust == false){
+          this.getAppDupCheckCust(this.requestDupCheck);
+        }
       },
       () => {
         console.log("error")
@@ -124,7 +128,6 @@ export class ViewFraudDetectionResultComponent implements OnInit {
     );
 
      await this.getAssetNegative(appReqObj);
-     this.getAppDupCheckCust(appReqObj);
   }
 
   getApp(appId : number){
@@ -176,11 +179,13 @@ export class ViewFraudDetectionResultComponent implements OnInit {
   getAppDupCheckCust(appId) {
     this.http.post(this.getAppDupCheckCustByAppId, appId).subscribe(
       (response) => {
-        this.listCustDuplicate = response['ReturnObject'];
-        if (this.listCustDuplicate.indexOf(this.appCustObj.CustNo) < 0) {
-          this.custStat = "EXISTING"
+        this.listCustDuplicate = response['ReturnObject']["CustDuplicate"];
+        var idxSelected = this.listCustDuplicate.findIndex(x => x.CustNo == this.appCustObj.CustNo);
+        if (idxSelected < 0) {
+          this.custStat = "EXISTING";
         } else {
-          this.custStat = "NEW"
+          this.custStat = "NEW";
+          this.listCustDuplicate[idxSelected].IsSelected = true;
         }
 
       },

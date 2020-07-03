@@ -44,7 +44,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
     private modalService: NgbModal,
     private spinner: NgxSpinnerService,
     private location: Location
-  ) { 
+  ) {
     this.doList = new Array();
     this.doAssetList = new Array();
     this.isFinal = false;
@@ -55,7 +55,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
       if (params['AgrmntId'] != null) {
         this.agrmntId = params['AgrmntId'];
       }
-      if(params['WfTaskListId'] != null){
+      if (params['WfTaskListId'] != null) {
         this.wfTaskListId = params['WfTaskListId'];
       }
     });
@@ -64,7 +64,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
   ngOnInit() {
     this.arrValue.push(this.agrmntId);
     this.arrValue.push(this.appId);
-    if (this.wfTaskListId != null || this.wfTaskListId != undefined){
+    if (this.wfTaskListId != null || this.wfTaskListId != undefined) {
       this.claimTask();
     }
     var doRequest = { AppId: this.appId, AgrmntId: this.agrmntId };
@@ -78,6 +78,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
         this.custType = response[0]["MrCustTypeCode"];
         this.licensePlateAttr = response[0]["LicensePlateAttr"];
         this.doList = response[1]["DeliveryOrderHObjs"];
+        console.log(this.doList);
         var formArray = this.DOAssetForm.get('DOAssetList') as FormArray;
 
         for (const item of this.doAssetList) {
@@ -85,17 +86,17 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
             AppAssetId: [item.AppAssetId],
             AssetSeqNo: [item.AssetSeqNo],
             FullAssetName: [item.FullAssetName],
-            AssetPriceAmt : [item.AssetPriceAmt],
-            DownPaymentAmt : [item.DownPaymentAmt],
-            SerialNo1 : [item.SerialNo1],
-            SerialNo2 : [item.SerialNo2],
-            SerialNo3 : [item.SerialNo3],
-            SerialNo4 : [item.SerialNo4],
-            SerialNo5 : [item.SerialNo5],
-            OwnerName : [item.OwnerName],
-            DeliveryNo : [item.DeliveryNo],
-            DeliveryDt : [item.DeliveryDt],
-            IsAvailable : [item.IsAvailable],
+            AssetPriceAmt: [item.AssetPriceAmt],
+            DownPaymentAmt: [item.DownPaymentAmt],
+            SerialNo1: [item.SerialNo1],
+            SerialNo2: [item.SerialNo2],
+            SerialNo3: [item.SerialNo3],
+            SerialNo4: [item.SerialNo4],
+            SerialNo5: [item.SerialNo5],
+            OwnerName: [item.OwnerName],
+            DeliveryNo: [item.DeliveryNo],
+            DeliveryDt: [item.DeliveryDt],
+            IsAvailable: [item.IsAvailable],
             ManufacturingYear: [item.ManufacturingYear],
             TempLetterNo: [item.TempLetterNo],
             IsSelected: false
@@ -109,17 +110,16 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
     );
   }
 
-  async claimTask()
-  {
+  async claimTask() {
     var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
-    var wfClaimObj = { pWFTaskListID: this.wfTaskListId, pUserID: currentUserContext["UserName"]};
+    var wfClaimObj = { pWFTaskListID: this.wfTaskListId, pUserID: currentUserContext["UserName"] };
     console.log(wfClaimObj);
     this.httpClient.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
       });
   }
 
-  showModalDO(formArray: FormArray, mode: string, deliveryOrderHId: number){
+  showModalDO(formArray: FormArray, mode: string, deliveryOrderHId: number) {
     const modalCreateDO = this.modalService.open(CreateDoMultiAssetComponent);
     modalCreateDO.componentInstance.SelectedDOAssetList = formArray.value;
     modalCreateDO.componentInstance.LicensePlateAttr = this.licensePlateAttr;
@@ -143,7 +143,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
             this.doList = response[1]["DeliveryOrderHObjs"];
             var formArray = this.DOAssetForm.get('DOAssetList') as FormArray;
 
-            while(formArray.length !== 0){
+            while (formArray.length !== 0) {
               formArray.removeAt(0);
             }
 
@@ -152,17 +152,17 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
                 AppAssetId: [item.AppAssetId],
                 AssetSeqNo: [item.AssetSeqNo],
                 FullAssetName: [item.FullAssetName],
-                AssetPriceAmt : [item.AssetPriceAmt],
-                DownPaymentAmt : [item.DownPaymentAmt],
-                SerialNo1 : [item.SerialNo1],
-                SerialNo2 : [item.SerialNo2],
-                SerialNo3 : [item.SerialNo3],
-                SerialNo4 : [item.SerialNo4],
-                SerialNo5 : [item.SerialNo5],
-                OwnerName : [item.OwnerName],
-                DeliveryNo : [item.DeliveryNo],
-                DeliveryDt : [item.DeliveryDt],
-                IsAvailable : [item.IsAvailable],
+                AssetPriceAmt: [item.AssetPriceAmt],
+                DownPaymentAmt: [item.DownPaymentAmt],
+                SerialNo1: [item.SerialNo1],
+                SerialNo2: [item.SerialNo2],
+                SerialNo3: [item.SerialNo3],
+                SerialNo4: [item.SerialNo4],
+                SerialNo5: [item.SerialNo5],
+                OwnerName: [item.OwnerName],
+                DeliveryNo: [item.DeliveryNo],
+                DeliveryDt: [item.DeliveryDt],
+                IsAvailable: [item.IsAvailable],
                 ManufacturingYear: [item.ManufacturingYear],
                 IsSelected: false
               });
@@ -177,38 +177,38 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
         this.toastr.successMessage(response["message"]);
       }
     ).catch((error) => {
-      if(error != 0){
+      if (error != 0) {
         console.log(error);
       }
     });
   }
 
-  editDOHandler(deliveryOrderHId){
+  editDOHandler(deliveryOrderHId) {
     var formArray = this.DOAssetForm.get('DOAssetList') as FormArray;
     this.showModalDO(formArray, "edit", deliveryOrderHId);
   }
 
-  createDOHandler(){
+  createDOHandler() {
     this.isCreateDOInvalid = true;
     var formArray = this.DOAssetForm.get('DOAssetList') as FormArray;
     for (var i = 0; i < formArray.length; i++) {
-      if(formArray.at(i).get("IsSelected").value == true){
+      if (formArray.at(i).get("IsSelected").value == true) {
         this.isCreateDOInvalid = false;
         break;
       }
     }
-    if(this.isCreateDOInvalid){
+    if (this.isCreateDOInvalid) {
       this.createDOInvalidMsg = "At Least 1 Asset Must Be Selected";
       return false;
     }
-    else{
+    else {
       this.showModalDO(formArray, "add", 0);
     }
   }
 
-  deleteDO(deliveryOrderHId){
+  deleteDO(deliveryOrderHId) {
     var confirmation = confirm("Are you sure to delete this data ?");
-    if(confirmation == true){
+    if (confirmation == true) {
       this.spinner.show();
       var requestObj = { DeliveryOrderHId: deliveryOrderHId }
       this.httpClient.post(AdInsConstant.DeleteDeliveryOrderMultiAsset, requestObj).pipe(
@@ -232,7 +232,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
           this.doList = response[1]["DeliveryOrderHObjs"];
           var formArray = this.DOAssetForm.get('DOAssetList') as FormArray;
 
-          while(formArray.length !== 0){
+          while (formArray.length !== 0) {
             formArray.removeAt(0);
           }
 
@@ -241,17 +241,17 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
               AppAssetId: [item.AppAssetId],
               AssetSeqNo: [item.AssetSeqNo],
               FullAssetName: [item.FullAssetName],
-              AssetPriceAmt : [item.AssetPriceAmt],
-              DownPaymentAmt : [item.DownPaymentAmt],
-              SerialNo1 : [item.SerialNo1],
-              SerialNo2 : [item.SerialNo2],
-              SerialNo3 : [item.SerialNo3],
-              SerialNo4 : [item.SerialNo4],
-              SerialNo5 : [item.SerialNo5],
-              OwnerName : [item.OwnerName],
-              DeliveryNo : [item.DeliveryNo],
-              DeliveryDt : [item.DeliveryDt],
-              IsAvailable : [item.IsAvailable],
+              AssetPriceAmt: [item.AssetPriceAmt],
+              DownPaymentAmt: [item.DownPaymentAmt],
+              SerialNo1: [item.SerialNo1],
+              SerialNo2: [item.SerialNo2],
+              SerialNo3: [item.SerialNo3],
+              SerialNo4: [item.SerialNo4],
+              SerialNo5: [item.SerialNo5],
+              OwnerName: [item.OwnerName],
+              DeliveryNo: [item.DeliveryNo],
+              DeliveryDt: [item.DeliveryDt],
+              IsAvailable: [item.IsAvailable],
               ManufacturingYear: [item.ManufacturingYear],
               TempLetterNo: [item.TempLetterNo],
               IsSelected: false
@@ -272,48 +272,63 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
     }
   }
 
-  Back(){
+  Back() {
     this.location.back();
   }
 
-  SaveForm(){
-    if(this.doList.length > 0){
+  SaveForm() {
+    if (this.doList.length > 0) {
       // var tcFormData = this.AppTcForm.value.TCList;
-      var tcFormData = { "ListAppTcObj": [...this.AppTcForm.value.TCList]};
+      var tcFormData = { "ListAppTcObj": [...this.AppTcForm.value.TCList] };
       this.httpClient.post(AdInsConstant.EditAppTc, tcFormData).subscribe(
         (response) => {
           this.toastr.successMessage(response["Message"]);
-          this.router.navigate(['/Nap/FinanceLeasing/AdminProcess/DeliveryOrderMultiAsset/Paging'], { queryParams: { BizTemplateCode: 'FL4W' }});
+          this.router.navigate(['/Nap/FinanceLeasing/AdminProcess/DeliveryOrderMultiAsset/Paging'], { queryParams: { BizTemplateCode: 'FL4W' } });
         },
         (error) => {
           console.log(error);
         }
       );
     }
-    else{
+    else {
       this.toastr.errorMessage("At Least 1 Delivery Order Needed To Save");
     }
   }
 
-  DOSubmitHandler(){
-    if(!this.isFinal){
+  DOSubmitHandler() {
+    if (!this.isFinal) {
       this.toastr.errorMessage("All Asset Must Be Processed to Submit");
     }
-    else{
-      // var tcFormData = this.AppTcForm.value.TCList;
-      var tcFormData = { "ListAppTcObj": [...this.AppTcForm.value.TCList]};
-      let editTc = this.httpClient.post(AdInsConstant.EditAppTc, tcFormData);
-      let submitDO = this.httpClient.post(AdInsConstant.SubmitDeliveryOrderMultiAsset, { TaskListId: this.wfTaskListId });
-      forkJoin([editTc, submitDO]).subscribe(
-        (response) => {
-          this.toastr.successMessage(response[1]["Message"]);
-          this.router.navigate(['/Nap/FinanceLeasing/AdminProcess/DeliveryOrderMultiAsset/Paging'], { queryParams: { BizTemplateCode: 'FL4W' }});
-        },
-        (error) => {
-          console.log(error);
+    else {
+      var valid: boolean = true;
+
+      for (let index = 0; index < this.doAssetList.length; index++) {
+        if (this.doAssetList[index].SerialNo1 == '' || this.doAssetList[index].SerialNo1 == null || this.doAssetList[index].SerialNo1 == undefined) {
+          valid = false;
         }
-      );
+        if (this.doAssetList[index].SerialNo2 == '' || this.doAssetList[index].SerialNo2 == null || this.doAssetList[index].SerialNo2 == undefined) {
+          valid = false;
+        }
+      }
+
+      if (valid) {
+        // var tcFormData = this.AppTcForm.value.TCList;
+        var tcFormData = { "ListAppTcObj": [...this.AppTcForm.value.TCList] };
+        let editTc = this.httpClient.post(AdInsConstant.EditAppTc, tcFormData);
+        let submitDO = this.httpClient.post(AdInsConstant.SubmitDeliveryOrderMultiAsset, { TaskListId: this.wfTaskListId });
+        forkJoin([editTc, submitDO]).subscribe(
+          (response) => {
+            this.toastr.successMessage(response[1]["Message"]);
+            this.router.navigate(['/Nap/FinanceLeasing/AdminProcess/DeliveryOrderMultiAsset/Paging'], { queryParams: { BizTemplateCode: 'FL4W' } });
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      }
+      else {
+        this.toastr.errorMessage("Please Complete Serial No. 1 and Serial No. 2 on all asset first.");
+      }
     }
   }
-
 }

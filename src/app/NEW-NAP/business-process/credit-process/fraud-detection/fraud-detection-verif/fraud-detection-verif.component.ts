@@ -17,6 +17,7 @@ import { NegativeAssetCheckForMultiAssetObj } from 'app/shared/model/NegativeAss
 import { NegativeAssetCheckObj } from 'app/shared/model/NegativeAssetCheckObj.Model';
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { NegativeAssetObj } from 'app/shared/model/NegativeAssetObj.Model';
+import { ResDuplicateCustomerObj } from 'app/shared/model/Lead/ResDuplicateCustomerObj.Model';
 
 
 @Component({
@@ -30,7 +31,7 @@ export class FraudDetectionVerifComponent implements OnInit {
   foundationUrl = environment.FoundationR3Url;
   getAppById = AdInsConstant.GetAppById;
   getCustDataByAppId = AdInsConstant.GetCustDataByAppId;
-  getAppDupCheckCustByAppId = AdInsConstant.GetAppDupCheckCustByAppId;
+  getAppDupCheckCustByAppId = AdInsConstant.GetCustomerDuplicateCheck;
   getFraudDukcapilByIdNo = AdInsConstant.GetFraudDukcapilByIdNo;
   addAppFraudVerf = AdInsConstant.AddAppFraudVerf;
   getLeadByLeadId = AdInsConstant.GetLeadByLeadId;
@@ -38,7 +39,7 @@ export class FraudDetectionVerifComponent implements OnInit {
   getAssetNegativeDuplicateCheck = AdInsConstant.GetAssetNegativeDuplicateCheck;
   bussinessDt: any;
   appId: any;
-  appCustObj: any;
+  appCustObj: AppCustObj = new AppCustObj();
   appCustCompanyObj: any;
   appAssetObj: AppAssetObj;
   leadObj: any;
@@ -48,7 +49,7 @@ export class FraudDetectionVerifComponent implements OnInit {
   ListAssetNegative: Array<NegativeAssetObj> = new Array<NegativeAssetObj>();
   ListAssetNegativeAsset: Array<NegativeAssetObj> = new Array<NegativeAssetObj>();
   ListAssetNegativeCollateral: Array<NegativeAssetObj> = new Array<NegativeAssetObj>();
-  listCustDuplicate: any;
+  listCustDuplicate: Array<ResDuplicateCustomerObj> = new Array<ResDuplicateCustomerObj>();
   closeResult: string;
   idNo: any;
   verfUser: any;
@@ -67,7 +68,7 @@ export class FraudDetectionVerifComponent implements OnInit {
   respAssetNegative : any;
 
   WfTaskListId : number;
-
+  custStat: string;
 
 
   constructor(
@@ -174,6 +175,10 @@ export class FraudDetectionVerifComponent implements OnInit {
           requestDupCheck = requestDupCheckCompany;
         }
 
+        if(this.appCustObj.IsExistingCust == false){
+          this.getAppDupCheckCust(requestDupCheck);
+        }
+
         //List Negative Cust Duplicate Checking
         this.http.post(this.GetNegativeCustomerDuplicateCheckUrl, requestDupCheck).subscribe(
           response => {
@@ -195,7 +200,6 @@ export class FraudDetectionVerifComponent implements OnInit {
     );
     
     await this.getAssetNegative(appReqObj);
-    this.getAppDupCheckCust(appReqObj);
   }
 
 
@@ -216,7 +220,15 @@ export class FraudDetectionVerifComponent implements OnInit {
     this.http.post(this.getAppDupCheckCustByAppId, appId).subscribe(
       response => {
         this.respAppDupCheck = response;
-        this.listCustDuplicate = response["ReturnObject"];
+        this.listCustDuplicate = response["ReturnObject"]["CustDuplicate"];
+
+        var idxSelected = this.listCustDuplicate.findIndex(x => x.CustNo == this.appCustObj.CustNo);
+        if(idxSelected > -1){
+          this.listCustDuplicate[idxSelected].IsSelected = true;
+          this.custStat = "NEW";
+        }else{
+          this.custStat = "EXISTING";
+        }
       },
       error => {
         console.log("error")

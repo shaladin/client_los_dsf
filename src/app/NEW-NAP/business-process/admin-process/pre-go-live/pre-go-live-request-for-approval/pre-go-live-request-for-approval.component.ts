@@ -73,7 +73,7 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
       (response) => {
         this.itemReason = response["ReturnObject"];
         this.MainInfoForm.patchValue({
-          Reason: this.itemReason[0].Key
+          Reason: this.itemReason[0].Value
         });
       }
     );

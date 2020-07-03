@@ -32,7 +32,8 @@ export class NapAddDetailComponent implements OnInit {
   OnFormReturnInfo: boolean = false;
   IsMultiAsset: boolean = false;
   ListAsset: any;
-  custType: string = AdInsConstant.CustTypeCompany;
+  custType: string = AdInsConstant.CustTypePersonal;
+  stepperMode: string = AdInsConstant.CustTypePersonal;
   showCancel: boolean = true;
   getApp: any;
   token: any = localStorage.getItem("Token");
@@ -116,7 +117,6 @@ export class NapAddDetailComponent implements OnInit {
     this.router.navigate(["/Nap/FinanceLeasing/Paging"], { queryParams: { BizTemplateCode: AdInsConstant.FL4W } });
   }
 
-  stepperMode: string = AdInsConstant.CustTypeCompany;
   ChangeStepper() {
     if (this.custType == AdInsConstant.CustTypePersonal) {
       this.stepperPersonal = new Stepper(document.querySelector('#stepperPersonal'), {
@@ -324,5 +324,11 @@ export class NapAddDetailComponent implements OnInit {
 
   GetCallback(ev) { 
     AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion, this.token );
+  }
+
+  CheckCustType(ev: string) {
+    this.custType = ev;
+    this.ChangeStepper();
+    this.NextStep(AdInsConstant.AppStepGuar);
   }
 }

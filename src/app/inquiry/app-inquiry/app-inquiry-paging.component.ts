@@ -36,6 +36,10 @@ export class AppInquiryPagingComponent implements OnInit {
       {
         name: "ISNULL(B.AGRMNT_CURR_STEP,A.APP_CURR_STEP)",
         environment: environment.FoundationR3Url
+      },
+      {
+        name: "B.AGRMNT_STAT",
+        environment: environment.FoundationR3Url
       }
     ];
   }

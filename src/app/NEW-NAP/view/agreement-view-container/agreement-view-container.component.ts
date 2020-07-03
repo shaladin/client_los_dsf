@@ -38,6 +38,8 @@ export class AgreementViewContainerComponent implements OnInit {
   IsInvoiceData: boolean = true;
   IsComplainHandling: boolean = true;
   IsAdditionalService: boolean = true;
+  IsMulti: boolean = true;
+  IsAppCollateral: boolean = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -92,13 +94,17 @@ export class AgreementViewContainerComponent implements OnInit {
         }
         else if (bizTemplateCode == AdInsConstant.CFRFN4W) {
           this.IsAsset = false;
-          this.IsCollateral = false;
           this.IsLoanData = false;
           this.IsInsuranceFL4W = false;
           this.IsLifeInsurance = false;
           this.IsFinancial = false;
           this.IsTC = false;
           this.IsReservedFund = false;
+          this.IsPurchaseOrder = false;
+          this.IsDeliveryOrder = false;
+          this.IsInvoiceData = false;
+          this.IsMulti = false;
+          this.IsCollateral = false;
         }
         else if (bizTemplateCode == AdInsConstant.CF4W) {
           this.IsCollateral = false;
@@ -107,6 +113,7 @@ export class AgreementViewContainerComponent implements OnInit {
           this.IsFinancial = false;
           this.IsTC = false;
           this.IsReservedFund = false;
+          this.IsAppCollateral = false;
         }
         else if (bizTemplateCode == AdInsConstant.FL4W) {
           this.IsAsset = false;
@@ -117,6 +124,7 @@ export class AgreementViewContainerComponent implements OnInit {
           this.IsInvoiceData = false;
           this.IsComplainHandling = false;
           this.IsAdditionalService = false;
+          this.IsAppCollateral = false;
         }
         this.IsReady = true;
       });
