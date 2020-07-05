@@ -118,7 +118,9 @@ export class ViewFraudDetectionResultComponent implements OnInit {
           };
         }
         this.getNegativeCustomer(this.requestDupCheck);
-        this.getAppDupCheckCust(this.requestDupCheck);
+        if(this.appCustObj.IsExistingCust == false){
+          this.getAppDupCheckCust(this.requestDupCheck);
+        }
       },
       () => {
         console.log("error")

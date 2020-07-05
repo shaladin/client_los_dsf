@@ -80,7 +80,7 @@
           },{},
           {
             "type": "text",
-            "label": "Zipcode",
+            "label": "Zip Code",
             "property": "Zipcode"
           }
         ],
@@ -122,7 +122,7 @@
           },{},
           {
             "type": "text",
-            "label": "Zipcode",
+            "label": "Zip Code",
             "property": "Zipcode"
           }
         ],

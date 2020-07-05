@@ -50,7 +50,7 @@ export class ApplicationDataComponent implements OnInit {
     CurrCode: [''],
     LobCode: [''],
     RefProdTypeCode: [''],
-    Tenor: ["", [Validators.pattern("^[0-9]+$"), Validators.required]],
+    Tenor: ["", [Validators.pattern("^[0-9]+$"), Validators.required, Validators.min(1)]],
     NumOfInst: [''],
     PayFreqCode: ['', Validators.required],
     PayFreqCodeDesc: [''],

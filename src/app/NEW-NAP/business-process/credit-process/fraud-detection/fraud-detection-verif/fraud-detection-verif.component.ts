@@ -39,7 +39,7 @@ export class FraudDetectionVerifComponent implements OnInit {
   getAssetNegativeDuplicateCheck = AdInsConstant.GetAssetNegativeDuplicateCheck;
   bussinessDt: any;
   appId: any;
-  appCustObj: any;
+  appCustObj: AppCustObj = new AppCustObj();
   appCustCompanyObj: any;
   appAssetObj: AppAssetObj;
   leadObj: any;
@@ -175,7 +175,9 @@ export class FraudDetectionVerifComponent implements OnInit {
           requestDupCheck = requestDupCheckCompany;
         }
 
-        this.getAppDupCheckCust(requestDupCheck);
+        if(this.appCustObj.IsExistingCust == false){
+          this.getAppDupCheckCust(requestDupCheck);
+        }
 
         //List Negative Cust Duplicate Checking
         this.http.post(this.GetNegativeCustomerDuplicateCheckUrl, requestDupCheck).subscribe(

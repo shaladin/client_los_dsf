@@ -228,14 +228,10 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
               RowVersion: this.AppTcList[i].RowVersion
             }) as FormGroup;
 
-            if (this.AppTcList[i].IsMandatory == true) {
-              TCDetail.controls.PromisedDt.setValidators([Validators.required]);
-            }
-            if (this.AppTcList[i].IsChecked == false) {
+              TCDetail.controls.IsChecked.disable();
               TCDetail.controls.ExpiredDt.disable();
-            } else {
               TCDetail.controls.PromisedDt.disable();
-            }
+              TCDetail.controls.Notes.disable();
             listTC.push(TCDetail);
           }
         }

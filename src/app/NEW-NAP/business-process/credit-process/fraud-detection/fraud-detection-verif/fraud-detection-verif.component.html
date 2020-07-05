@@ -11,7 +11,7 @@
               <label class="col-md-3 adInsLabel">Customer No</label>
               <label class="col-md-3 adInsLabel">{{appCustObj?.CustNo}} ({{custStat}})</label>
             </div>
-            <table *ngIf="respAppDupCheck" class="table text-center table-hover">
+            <table class="table text-center table-hover">
               <thead>
                 <tr class="table-header">
                   <th>
@@ -58,12 +58,12 @@
                   </th>
                 </tr>
               </thead>
-              <tbody *ngIf="listCustDuplicate.length == 0">
+              <tbody *ngIf="listCustDuplicate?.length == 0">
                 <tr>
                   <td colspan="100%">No Data Available</td>
                 </tr>
               </tbody>
-              <tbody *ngIf="listCustDuplicate.length > 0">
+              <tbody *ngIf="listCustDuplicate?.length > 0">
                 <tr *ngFor="let item of listCustDuplicate">
                   <td>{{item.CustNo}}</td>
                   <td>{{item.CustName}}</td>
