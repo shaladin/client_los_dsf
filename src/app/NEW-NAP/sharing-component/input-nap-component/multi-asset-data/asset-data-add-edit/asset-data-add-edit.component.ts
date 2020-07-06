@@ -1004,6 +1004,8 @@ copyToLocationAddr() {
         return false;
       }
 
+      this.allAssetDataObj.LOBCode = AdInsConstant.FL4W;
+
       this.http.post(this.addEditAllAssetDataUrl, this.allAssetDataObj).subscribe(
         (response) => {
           console.log(response);
@@ -1035,6 +1037,8 @@ copyToLocationAddr() {
         this.toastr.errorMessage("Down Payment Must Be Lower Than Asset Price!");
         return false;
       }
+
+      this.allAssetDataObj.LOBCode = AdInsConstant.FL4W;
 
       this.http.post(this.addEditAllAssetDataUrl, this.allAssetDataObj).subscribe(
         (response) => {
