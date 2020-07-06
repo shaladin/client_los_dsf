@@ -22,7 +22,7 @@
         },
         {
           "type": "text",
-          "label": "Number Of Asset",
+          "label": "Number of Asset",
           "property": "NumOfAsset"
         },
         {

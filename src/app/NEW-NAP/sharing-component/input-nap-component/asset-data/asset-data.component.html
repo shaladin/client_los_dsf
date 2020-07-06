@@ -107,35 +107,40 @@
               </div>
               <div *ngIf="this.AssetMasterObj">
                 <div class="form-group row">
-                    <label class="col-md-2" translate *ngIf="this.AssetMasterObj?.SerialNo1Label">{{this.AssetMasterObj.SerialNo1Label}}</label>
-                    <div class="col-md-4" *ngIf="this.AssetMasterObj?.SerialNo1Label">
-                      <input type="text" class="form-control" formControlName="SerialNo1">
-                      <lib-uc-show-errors [control]="AssetDataForm.controls.SerialNo1" [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                    </div>
-                    <label class="col-md-2" translate *ngIf="this.AssetMasterObj?.SerialNo2Label">{{this.AssetMasterObj.SerialNo2Label}}</label>
-                    <div class="col-md-4" *ngIf="this.AssetMasterObj?.SerialNo2Label">
-                      <input type="text" class="form-control" formControlName="SerialNo2">
-                      <lib-uc-show-errors [control]="AssetDataForm.controls.SerialNo2" [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                    </div>
+                  <label class="col-md-2" translate *ngIf="this.AssetMasterObj?.SerialNo1Label && AssetDataForm.controls.MrAssetConditionCode.value != 'USED'">{{this.AssetMasterObj.SerialNo1Label}}</label>
+                  <label class="col-md-2 adins-required-label" translate *ngIf="this.AssetMasterObj?.SerialNo1Label && AssetDataForm.controls.MrAssetConditionCode.value == 'USED'">{{this.AssetMasterObj.SerialNo1Label}}</label>
+                  <div class="col-md-4" *ngIf="this.AssetMasterObj?.SerialNo1Label">
+                    <input type="text" class="form-control" formControlName="SerialNo1">
+                    <lib-uc-show-errors [control]="AssetDataForm.controls.SerialNo1" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                  </div>
+                  <label class="col-md-2" translate *ngIf="this.AssetMasterObj?.SerialNo2Label && AssetDataForm.controls.MrAssetConditionCode.value != 'USED'">{{this.AssetMasterObj.SerialNo2Label}}</label>
+                  <label class="col-md-2 adins-required-label" translate *ngIf="this.AssetMasterObj?.SerialNo2Label && AssetDataForm.controls.MrAssetConditionCode.value == 'USED'">{{this.AssetMasterObj.SerialNo2Label}}</label>
+                  <div class="col-md-4" *ngIf="this.AssetMasterObj?.SerialNo2Label">
+                    <input type="text" class="form-control" formControlName="SerialNo2">
+                    <lib-uc-show-errors [control]="AssetDataForm.controls.SerialNo2" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                  </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-md-2" translate *ngIf="this.AssetMasterObj?.SerialNo3Label">{{this.AssetMasterObj.SerialNo3Label}}</label>
-                    <div class="col-md-4" *ngIf="this.AssetMasterObj?.SerialNo3Label">
-                      <input type="text" class="form-control" formControlName="SerialNo3">
-                      <lib-uc-show-errors [control]="AssetDataForm.controls.SerialNo3" [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                    </div>
-                    <label class="col-md-2" translate *ngIf="this.AssetMasterObj?.SerialNo4Label">{{this.AssetMasterObj.SerialNo4Label}}</label>
-                    <div class="col-md-4" *ngIf="this.AssetMasterObj?.SerialNo4Label">
-                      <input type="text" class="form-control" formControlName="SerialNo4">
-                      <lib-uc-show-errors [control]="AssetDataForm.controls.SerialNo4" [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                    </div>
+                  <label class="col-md-2" translate *ngIf="this.AssetMasterObj?.SerialNo3Label && AssetDataForm.controls.MrAssetConditionCode.value != 'USED'">{{this.AssetMasterObj.SerialNo3Label}}</label>
+                  <label class="col-md-2 adins-required-label" translate *ngIf="this.AssetMasterObj?.SerialNo3Label && AssetDataForm.controls.MrAssetConditionCode.value == 'USED'">{{this.AssetMasterObj.SerialNo3Label}}</label>
+                  <div class="col-md-4" *ngIf="this.AssetMasterObj?.SerialNo3Label">
+                    <input type="text" class="form-control" formControlName="SerialNo3">
+                    <lib-uc-show-errors [control]="AssetDataForm.controls.SerialNo3" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                  </div>
+                  <label class="col-md-2" translate *ngIf="this.AssetMasterObj?.SerialNo4Label && AssetDataForm.controls.MrAssetConditionCode.value != 'USED'">{{this.AssetMasterObj.SerialNo4Label}}</label>
+                  <label class="col-md-2 adins-required-label" translate *ngIf="this.AssetMasterObj?.SerialNo4Label && AssetDataForm.controls.MrAssetConditionCode.value == 'USED'">{{this.AssetMasterObj.SerialNo4Label}}</label>
+                  <div class="col-md-4" *ngIf="this.AssetMasterObj?.SerialNo4Label">
+                    <input type="text" class="form-control" formControlName="SerialNo4">
+                    <lib-uc-show-errors [control]="AssetDataForm.controls.SerialNo4" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                  </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-md-2" translate *ngIf="this.AssetMasterObj?.SerialNo5Label">{{this.AssetMasterObj.SerialNo5Label}}</label>
-                    <div class="col-md-4" *ngIf="this.AssetMasterObj?.SerialNo5Label">
-                      <input type="text" class="form-control" formControlName="SerialNo5">
-                      <lib-uc-show-errors [control]="AssetDataForm.controls.SerialNo5" [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                    </div>
+                  <label class="col-md-2" translate *ngIf="this.AssetMasterObj?.SerialNo5Label && AssetDataForm.controls.MrAssetConditionCode.value != 'USED'">{{this.AssetMasterObj.SerialNo5Label}}</label>
+                  <label class="col-md-2 adins-required-label" translate *ngIf="this.AssetMasterObj?.SerialNo5Label && AssetDataForm.controls.MrAssetConditionCode.value == 'USED'">{{this.AssetMasterObj.SerialNo5Label}}</label>
+                  <div class="col-md-4" *ngIf="this.AssetMasterObj?.SerialNo5Label">
+                    <input type="text" class="form-control" formControlName="SerialNo5">
+                    <lib-uc-show-errors [control]="AssetDataForm.controls.SerialNo5" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                  </div>
                 </div>
               </div>
               <div class="form-group row">

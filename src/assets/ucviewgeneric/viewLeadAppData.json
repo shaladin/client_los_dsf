@@ -8,7 +8,7 @@
             "mainInfo": [
                 {
                     "type": "text",
-                    "label": "TENOR",
+                    "label": "Tenor",
                     "property": "Tenor"
                 },
                 {
@@ -18,7 +18,7 @@
                 },
                 {
                     "type": "text",
-                    "label": "FIRST INSTALLMENT TYPE",
+                    "label": "First Installment Type",
                     "property": "FirstInstallmentType"
                 },
                 {
@@ -28,7 +28,7 @@
                 },
                 {
                     "type": "currency",
-                    "label": "NTF AMOUNT",
+                    "label": "NTF Amount",
                     "property": "NtfAmt"
                 },
                 {
@@ -38,7 +38,7 @@
                 },
                 {
                     "type": "currency",
-                    "label": "TOTAL DOWN PAYMENT AMOUNT",
+                    "label": "Total Down Payment Amount",
                     "property": "TotalDownPaymentAmt"
                 },
                 {
@@ -48,7 +48,7 @@
                 },
                 {
                     "type": "currency",
-                    "label": "INSTALLMENT AMOUNT",
+                    "label": "Installment Amount",
                     "property": "InstAmt"
                 }
             ],

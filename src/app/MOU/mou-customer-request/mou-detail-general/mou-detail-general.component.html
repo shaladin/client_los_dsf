@@ -98,11 +98,11 @@
 <app-mou-cust-asset *ngIf="isReady" [parentForm]="AssetForm" [identifier]="'Asset'" [MouCustId]="MouCustId" [IsAssetSelected]="MouDetailGeneralForm.controls.AssetTypeCode.value != ''" [AssetTypeCode] ="MouDetailGeneralForm.controls.AssetTypeCode.value"></app-mou-cust-asset>
 <div class="col-md-12" style="padding: 0; text-align: right;">
   <div class="form-actions right">
-    <button type="button" class="btn btn-raised btn-warning mr-1" (click)="back()" translate>
-      <i class="ft-x"></i> Back
-    </button>
+    <!-- <button type="button" class="btn btn-raised btn-warning mr-1" (click)="back()" translate>
+      <i class="fa fa-arrow-left"></i> Back
+    </button> -->
     <button type="submit" class="btn btn-raised btn-primary">
-      <i class="fa fa-check-square-o"></i> Save and Continue
+      <i class="far fa-check-square "></i> Save and Continue
     </button>
   </div>
 </div>

@@ -8,7 +8,7 @@
       "mainInfo": [
         {
           "type": "link",
-          "label": "LEAD NO.",
+          "label": "Lead No.",
           "property": "LeadNo",
           "path": "/Lead/View",
           "target" : "_blank",
@@ -21,52 +21,52 @@
         },
         {
           "type": "text",
-          "label": "CUSTOMER NAME",
+          "label": "Customer Name",
           "property": "CustName"
         },
         {
           "type": "text",
-          "label": "COPY FROM",
+          "label": "Copy From",
           "property": "LeadCopyId"
         },
         {
           "type": "text",
-          "label": "OFFICE NAME",
+          "label": "Office Name",
           "property": "OfficeName"
         },
         {
           "type": "text",
-          "label": "ORDER NO.",
+          "label": "Order No.",
           "property": "OrderNo"
         },
         {
           "type": "text",
-          "label": "LOB CODE",
+          "label": "LOB Code",
           "property": "LobCode"
         },
         {
           "type": "text",
-          "label": "LEAD SOURCE",
+          "label": "Lead Source",
           "property": "MrLeadSourceCode"
         },
         {
           "type": "text",
-          "label": "AGENCY",
+          "label": "Agency",
           "property": "AgencyName"
         },
         {
           "type": "text",
-          "label": "CMO USERNAME",
+          "label": "CMO Username",
           "property": "CmoUsername"
         },
         {
           "type": "text",
-          "label": "SURVEYOR USERNAME",
+          "label": "Surveyor Username",
           "property": "SurveyorUsername"
         },
         {
           "type": "text",
-          "label": "TELE SALES USERNAME",
+          "label": "Tele Sales Username",
           "property": "TeleMarketingUsername"
         }
       ],
