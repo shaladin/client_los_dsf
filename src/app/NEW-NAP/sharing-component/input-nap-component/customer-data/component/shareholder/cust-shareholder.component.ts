@@ -115,14 +115,14 @@ export class CustShareholderComponent implements OnInit {
     if(this.setAppCustCompanyMgmntShrholder() == false) return;
     if(this.mode == "add"){
       if(this.checkSharePrcnt(-1) == false){
-        this.toastr.errorMessage("Total Share Percentage cannot be more than 100.");
+        this.toastr.warningMessage("Total Share Percentage cannot be more than 100.");
         return;
       }
       this.listShareholder.push(this.appCustCompanyMgmntShrholderObj);
     }
     if(this.mode == "edit"){
       if(this.checkSharePrcnt(this.currentEditedIndex) == false){
-        this.toastr.errorMessage("Total Share Percentage cannot be more than 100.");
+        this.toastr.warningMessage("Total Share Percentage cannot be more than 100.");
         return;
       }
       this.listShareholder[this.currentEditedIndex] = this.appCustCompanyMgmntShrholderObj;
@@ -399,12 +399,12 @@ export class CustShareholderComponent implements OnInit {
       let d3 = new Date(this.appCustCompanyMgmntShrholderObj.BirthDt);
       let d4 = new Date(this.Max17YO);
       if(d1<d2){
-        this.toastr.errorMessage("Id Expired Date can not be less than Business Date");
+        this.toastr.warningMessage("Id Expired Date can not be less than Business Date");
         flag = false;
       }
       if(d3>d4){
-        // this.toastr.errorMessage("Birth Date can not be more than " + this.Max17YO);
-        this.toastr.errorMessage("Customer age must be at least 17 year old");
+        // this.toastr.warningMessage("Birth Date can not be more than " + this.Max17YO);
+        this.toastr.warningMessage("Customer age must be at least 17 year old");
         flag = false;
       }
       this.appCustCompanyMgmntShrholderObj.MobilePhnNo = this.CustShareholderForm.controls.MobilePhnNo.value;

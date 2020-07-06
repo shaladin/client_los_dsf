@@ -119,7 +119,7 @@ export class CustConfirmationDetailComponent implements OnInit {
     if (this.CustCnfrmObj.IsSkip == false) {
       for (var i = 0; i < this.VerfResultList.length; i++) {
         if (this.VerfResultList[i].MrVerfResultHStatCode == "FAIL" || this.VerfResultList[i].MrVerfResultHStatCode == "NEW") {
-          this.toastr.errorMessage("Result can't be New or Failed");
+          this.toastr.warningMessage("Result can't be New or Failed");
           return;
         }
       }

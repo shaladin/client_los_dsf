@@ -127,7 +127,7 @@ export class SchmStepUpStepDownCummulativeFL4WComponent implements OnInit {
       return;
     }    
     if(this.ParentForm.controls.CummulativeTenor.value <= 0){
-      this.toastr.errorMessage("Cummulative Tenor must be higher than 0.");
+      this.toastr.warningMessage("Cummulative Tenor must be higher than 0.");
       return;
     }
 

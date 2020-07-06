@@ -172,7 +172,7 @@ export class TcDataComponent implements OnInit {
       // if(item.get("IsChecked").value){
       //   if(expDtForm != null){
       //     if(expDt < businessDt){
-      //       this.toastr.errorMessage("Expired Date for " + item.get("TcName").value + " can't be lower than Business Date");
+      //       this.toastr.warningMessage("Expired Date for " + item.get("TcName").value + " can't be lower than Business Date");
       //       return;
       //     }
       //   }
@@ -180,7 +180,7 @@ export class TcDataComponent implements OnInit {
       // if (item.get("IsChecked").value == false) {
       //   if(prmsDtForm != null){
       //     if(prmsDt < businessDt){
-      //       this.toastr.errorMessage("Promise Date for " + item.get("TcName").value + " can't be lower than Business Date");
+      //       this.toastr.warningMessage("Promise Date for " + item.get("TcName").value + " can't be lower than Business Date");
       //       return;
       //     }
       //   }
@@ -217,7 +217,7 @@ export class TcDataComponent implements OnInit {
       if (appTC.IsChecked == false) {
         if(prmsDtForm != null){
           if(prmsDt < businessDt){
-            this.toastr.errorMessage("Promise Date for " + appTC.TcName + " can't be lower than Business Date");
+            this.toastr.warningMessage("Promise Date for " + appTC.TcName + " can't be lower than Business Date");
             return;
           }
         }

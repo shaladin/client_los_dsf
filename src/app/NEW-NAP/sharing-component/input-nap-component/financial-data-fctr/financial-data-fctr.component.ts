@@ -193,7 +193,7 @@ export class FinancialDataFctrComponent implements OnInit {
       var NeedReCalculate = this.FinDataForm.get("NeedReCalculate").value;
   
       if (NeedReCalculate) {
-        this.toastr.errorMessage("Please Calculate Again");
+        this.toastr.warningMessage("Please Calculate Again");
         return;
       }
       if (isValidGrossYield && isValidGracePeriod) {
@@ -217,7 +217,7 @@ export class FinancialDataFctrComponent implements OnInit {
     if (gracePeriodType != "") {
       if (gracePeriod == 0) {
         valid = false;
-        this.toastr.errorMessage("Grace Period must be set");
+        this.toastr.warningMessage("Grace Period must be set");
       }
     }
 
@@ -232,13 +232,13 @@ export class FinancialDataFctrComponent implements OnInit {
 
     if (GrossYieldBhv == 'MIN') {
       if (GrossYieldPrcnt < StdGrossYieldPrcnt) {
-        this.toastr.errorMessage("Gross Yield cannot be less than " + StdGrossYieldPrcnt + "%");
+        this.toastr.warningMessage("Gross Yield cannot be less than " + StdGrossYieldPrcnt + "%");
         valid = false;
       }
     }
     else {
       if (GrossYieldPrcnt > StdGrossYieldPrcnt) {
-        this.toastr.errorMessage("Gross Yield cannot be greater than " + StdGrossYieldPrcnt + "%");
+        this.toastr.warningMessage("Gross Yield cannot be greater than " + StdGrossYieldPrcnt + "%");
         valid = false;
       }
     }

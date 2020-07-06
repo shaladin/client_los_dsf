@@ -105,7 +105,7 @@ export class LeadCancelConfirmComponent implements OnInit {
       );
     }
     else{
-      this.toastr.errorMessage("No Lead Available to Cancel");
+      this.toastr.warningMessage("No Lead Available to Cancel");
     }
   }
 }

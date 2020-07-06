@@ -162,7 +162,7 @@ export class PreGoLiveComponent implements OnInit {
       if (this.appTC.IsChecked == false) {
         if (prmsDtForm != null) {
           if (prmsDt < businessDt) {
-            this.toastr.errorMessage("Promise Date for " + this.appTC.TcName + " can't be lower than Business Date");
+            this.toastr.warningMessage("Promise Date for " + this.appTC.TcName + " can't be lower than Business Date");
             return;
           }
         }
@@ -208,7 +208,7 @@ export class PreGoLiveComponent implements OnInit {
       if (this.appTC.IsChecked == false) {
         if (prmsDtForm != null) {
           if (prmsDt < businessDt) {
-            this.toastr.errorMessage("Promise Date for " + this.appTC.TcName + " can't be lower than Business Date");
+            this.toastr.warningMessage("Promise Date for " + this.appTC.TcName + " can't be lower than Business Date");
             return;
           }
         }

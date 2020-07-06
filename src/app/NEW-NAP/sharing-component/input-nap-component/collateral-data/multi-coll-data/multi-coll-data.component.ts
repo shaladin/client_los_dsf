@@ -44,7 +44,7 @@ export class MultiCollDataComponent implements OnInit {
 
   Next() {
     if (this.AppCollateral.length == 0) {
-      this.toastr.errorMessage("Please Input At Least 1 Collateral Data");
+      this.toastr.warningMessage("Please Input At Least 1 Collateral Data");
     }
     else {
       this.outputTab.emit();

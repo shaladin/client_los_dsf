@@ -52,7 +52,7 @@ export class SingleInstFctrComponent implements OnInit {
   Calculate() {
     this.IsAppFeePrcntValid = true;
     if (this.ParentForm.value.EstEffDt == "") {
-      this.toastr.errorMessage("Insert Estimation Effective Date");
+      this.toastr.warningMessage("Insert Estimation Effective Date");
       return;
     }
     for (let i = 0; i < this.ParentForm.value.AppFee.length; i++) {
@@ -61,11 +61,11 @@ export class SingleInstFctrComponent implements OnInit {
       }
     }
     if (this.IsAppFeePrcntValid == false) {
-      this.toastr.errorMessage("App Fee Prcnt must be greater than 0");
+      this.toastr.warningMessage("App Fee Prcnt must be greater than 0");
       return;
     }
     if (this.ParentForm.value.EffectiveRatePrcnt < 0 && this.ParentForm.value.InterestType == "PRCNT") {
-      this.toastr.errorMessage("Effective Rate must be greater than 0");
+      this.toastr.warningMessage("Effective Rate must be greater than 0");
       return;
     }
     else {

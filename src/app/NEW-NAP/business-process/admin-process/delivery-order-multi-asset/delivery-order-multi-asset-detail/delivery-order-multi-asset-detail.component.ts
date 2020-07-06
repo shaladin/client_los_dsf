@@ -291,13 +291,13 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
       );
     }
     else {
-      this.toastr.errorMessage("At Least 1 Delivery Order Needed To Save");
+      this.toastr.warningMessage("At Least 1 Delivery Order Needed To Save");
     }
   }
 
   DOSubmitHandler() {
     if (!this.isFinal) {
-      this.toastr.errorMessage("All Asset Must Be Processed to Submit");
+      this.toastr.warningMessage("All Asset Must Be Processed to Submit");
     }
     else {
       var valid: boolean = true;
@@ -327,7 +327,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
         );
       }
       else {
-        this.toastr.errorMessage("Please Complete Serial No. 1 and Serial No. 2 on all asset first.");
+        this.toastr.warningMessage("Please Complete Serial No. 1 and Serial No. 2 on all asset first.");
       }
     }
   }

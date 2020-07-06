@@ -107,14 +107,14 @@ export class CustShareholderFL4WComponent implements OnInit {
     this.setAppCustCompanyMgmntShrholder();
     if(this.mode == "add"){
       if(this.checkSharePrcnt(-1) == false){
-        this.toastr.errorMessage("Total Share Percentage cannot be more than 100.");
+        this.toastr.warningMessage("Total Share Percentage cannot be more than 100.");
         return;
       }
       this.listShareholder.push(this.appCustCompanyMgmntShrholderObj);
     }
     if(this.mode == "edit"){
       if(this.checkSharePrcnt(this.currentEditedIndex) == false){
-        this.toastr.errorMessage("Total Share Percentage cannot be more than 100.");
+        this.toastr.warningMessage("Total Share Percentage cannot be more than 100.");
         return;
       }
       this.listShareholder[this.currentEditedIndex] = this.appCustCompanyMgmntShrholderObj;

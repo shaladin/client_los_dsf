@@ -168,7 +168,7 @@ export class CustomerDataComponent implements OnInit {
       }
 
       if (totalSharePrcnt != 100) {
-        this.toastr.errorMessage("Total Share (%) must be 100.");
+        this.toastr.warningMessage("Total Share (%) must be 100.");
         return;
       }      
       this.custDataCompanyObj = new CustDataCompanyObj();
@@ -234,20 +234,20 @@ export class CustomerDataComponent implements OnInit {
       d2.setDate(d2.getDate() - 1);
       if (d1 < d2) {
         this.isExpiredDate = true;
-        this.toastr.errorMessage(type + "  can not be less than " + MaxDate);
+        this.toastr.warningMessage(type + "  can not be less than " + MaxDate);
       } else this.isExpiredDate = false;
       return;
     }
 
     if(d1 > d2){
-      this.toastr.errorMessage(type + "  can not be more than " + MaxDate);
+      this.toastr.warningMessage(type + "  can not be more than " + MaxDate);
       if (type == AdInsConstant.DateErrorMessageEstablishmentDate)
         this.isExpiredEstablishmentDt = true;
       if (type == AdInsConstant.DateErrorMessageBirthDate)
         this.isExpiredBirthDt = true;
 
     }else if(type == AdInsConstant.DateErrorMessageBirthDate && d1 > max17Yodt){
-      this.toastr.errorMessage("Customer age must be at least 17 year old");
+      this.toastr.warningMessage("Customer age must be at least 17 year old");
       // this.toastr.errorMessage(type + "  can not be more than " + Max17YO);
       this.isExpiredBirthDt = true;
     }
