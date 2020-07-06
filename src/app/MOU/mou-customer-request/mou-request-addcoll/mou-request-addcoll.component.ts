@@ -130,7 +130,7 @@ export class MouRequestAddcollComponent implements OnInit {
         this.custNo = returnMouCust["CustNo"];
       });
 
-    var refMasterObj = { RefMasterTypeCode: "CUST_PERSONAL_RELATIONSHIP" };
+    var refMasterObj = { RefMasterTypeCode: AdInsConstant.RefMasterTypeCodeCustPersonalRelationship };
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
         this.OwnerRelationshipObj = response["ReturnObject"];
@@ -142,14 +142,14 @@ export class MouRequestAddcollComponent implements OnInit {
         }
       }
     );
-    var refMasterObj = { RefMasterTypeCode: "ASSET_CONDITION" };
+    var refMasterObj = { RefMasterTypeCode: AdInsConstant.RefMasterTypeCodeAssetCondition };
 
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
         this.AssetConditionList = response["ReturnObject"];
         this.AddCollForm.patchValue({ MrCollateralConditionCode: response['ReturnObject'][0]['Key'] });
 
-        if (response['ReturnObject'][0]['Key'] == "USED") {
+        if (response['ReturnObject'][0]['Key'] == AdInsConstant.AssetConditionUsed) {
           this.isUsed = true;
         } else {
           this.isUsed = false;
@@ -174,7 +174,7 @@ export class MouRequestAddcollComponent implements OnInit {
         this.updateUcLookup(this.CollTypeList[0].Value, true);
       })
 
-    var refMasterObj = { RefMasterTypeCode: 'ID_TYPE' };
+    var refMasterObj = { RefMasterTypeCode: AdInsConstant.RefMasterTypeCodeIdType };
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
         this.IdTypeList = response['ReturnObject'];
@@ -298,7 +298,7 @@ export class MouRequestAddcollComponent implements OnInit {
   }
 
   radioChange(event) {
-    if (event.target.value == "USED") {
+    if (event.target.value == AdInsConstant.AssetConditionUsed) {
       this.isUsed = true;
     } else {
       this.isUsed = false;
@@ -440,7 +440,7 @@ export class MouRequestAddcollComponent implements OnInit {
 
         this.collateralObj = response['MouCustCollateral'];
         this.collateralRegistrationObj = response['MouCustCollateralRegistration'];
-        if (this.collateralObj.MrCollateralConditionCode == "USED") {
+        if (this.collateralObj.MrCollateralConditionCode == AdInsConstant.AssetConditionUsed) {
           this.isUsed = true;
         } else {
           this.isUsed = false;
