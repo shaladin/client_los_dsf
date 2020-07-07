@@ -686,6 +686,8 @@ export class CommissionComponent implements OnInit {
       if (tempObj.AppCommissionDId != 0) {
         tempAppCommissionDObj.AppCommissionHId = tempObj.AppCommissionHId;
         tempAppCommissionDObj.AppCommissionDId = tempObj.AppCommissionDId;
+      }else{
+        tempAppCommissionDObj.AppCommissionDId = 0;
       }
       tempAppCommissionDObj.MrCommissionSourceCode = tempObj.AllocationFrom;
       tempAppCommissionDObj.CommissionAmt = tempObj.AllocationAmount;
