@@ -63,7 +63,7 @@ export class LifeInsuranceDataComponent implements OnInit {
 
     this.http.post<AppCustObj>(AdInsConstant.GetAppCustByAppId, { AppId: this.AppId }).subscribe(
       (response) => {
-        if (response.MrCustTypeCode == "COMPANY") {
+        if (response.MrCustTypeCode == AdInsConstant.CustTypeCompany) {
           this.LifeInsForm.controls["IsChecked"].disable();
         }
       },
@@ -105,7 +105,7 @@ export class LifeInsuranceDataComponent implements OnInit {
 
   async initPaidMethod() {
     var paidMethodObj = {
-      RefMasterTypeCode: "LIFE_INS_PAY_METHOD",
+      RefMasterTypeCode: AdInsConstant.RefMasterTypeCodeLifeInsPayMethod,
       RowVersion: ""
     }
     await this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, paidMethodObj).toPromise().then(
@@ -118,7 +118,7 @@ export class LifeInsuranceDataComponent implements OnInit {
     );
   }
   LifeInscoBranchNameObj = {
-    MrVendorCategory: "LIFE_INSCO_BRANCH",
+    MrVendorCategory: AdInsConstant.RefMasterTypeCodeLifeInscoBranch,
     OfficeCode: "",
     RowVersion: ""
   }
@@ -350,14 +350,15 @@ export class LifeInsuranceDataComponent implements OnInit {
   }
 
   PremiMethodChanged(event) {
-    if (event.target.value == "PAID_IN_ADV") {
+    if (event.target.value == AdInsConstant.LifeInsPayMethodFullPaidInAdvance
+      ) {
       this.LifeInsForm.patchValue({
         PaidInAdvPrcnt: 0
 
       });
       this.LifeInsForm.controls["PaidInAdvPrcnt"].disable();
     }
-    else if (event.target.value == "CPTLZ") {
+    else if (event.target.value == AdInsConstant.LifeInsPayMethodFullCapitalized) {
       this.LifeInsForm.patchValue({
         PaidInAdvPrcnt: 100
 
@@ -370,14 +371,14 @@ export class LifeInsuranceDataComponent implements OnInit {
   }
 
   PremiMethodForm() {
-    if (this.LifeInsForm.controls["MrLifeInsPaidMethodCode"].value == "PAID_IN_ADV") {
+    if (this.LifeInsForm.controls["MrLifeInsPaidMethodCode"].value == AdInsConstant.LifeInsPayMethodFullPaidInAdvance) {
       this.LifeInsForm.patchValue({
         PaidInAdvPrcnt: 0
 
       });
       this.LifeInsForm.controls["PaidInAdvPrcnt"].disable();
     }
-    else if (this.LifeInsForm.controls["MrLifeInsPaidMethodCode"].value == "CPTLZ") {
+    else if (this.LifeInsForm.controls["MrLifeInsPaidMethodCode"].value == AdInsConstant.LifeInsPayMethodFullCapitalized) {
       this.LifeInsForm.patchValue({
         PaidInAdvPrcnt: 100
 

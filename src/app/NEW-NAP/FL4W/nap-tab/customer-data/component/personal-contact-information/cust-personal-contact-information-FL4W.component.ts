@@ -299,7 +299,7 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
   }
 
   bindGenderObj(){
-    this.refMasterObj.RefMasterTypeCode = "GENDER";
+    this.refMasterObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeGender;
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
         this.GenderObj = response["ReturnObject"];
@@ -312,7 +312,7 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
   }
 
   bindIdTypeObj(){
-    this.refMasterObj.RefMasterTypeCode = "ID_TYPE";
+    this.refMasterObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeIdType;
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
         this.IdTypeObj = response["ReturnObject"];
@@ -324,7 +324,7 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
   }
 
   bindCustRelationshipObj(){
-    this.refMasterObj.RefMasterTypeCode = "CUST_RELATIONSHIP";  
+    this.refMasterObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeCustRelationship;  
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
         this.CustRelationshipObj = response["ReturnObject"];

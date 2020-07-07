@@ -117,7 +117,7 @@ export class CustUcaddressFL4WComponent implements OnInit {
 
   bindHouseOwnershipObj(){
     var refMasterObj = {RefMasterTypeCode: ""};
-    refMasterObj.RefMasterTypeCode = "BUILDING_OWNERSHIP";
+    refMasterObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeBuildingOwnership;
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
         this.houseOwnershipObj = response["ReturnObject"];

@@ -242,7 +242,7 @@ export class CustBankAccountFL4WComponent implements OnInit {
   }
 
   bindMonthObj(){
-    this.refMasterObj.RefMasterTypeCode = "MONTH";
+    this.refMasterObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeMonth;
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.MonthObj = response["ReturnObject"];
