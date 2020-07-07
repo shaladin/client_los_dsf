@@ -343,28 +343,28 @@ export class AssetDataComponent implements OnInit {
     if (this.CheckValidationObj != null) {
       if (this.CheckValidationObj.MinManufYear != 0) {
         if (this.CheckValidationObj.MinManufYear > this.AssetDataForm.controls.ManufacturingYear.value) {
-          this.toastr.errorMessage("Manufacturing Year must be more than " + this.CheckValidationObj.MinManufYear);
+          this.toastr.warningMessage("Manufacturing Year must be more than " + this.CheckValidationObj.MinManufYear);
           this.isValidOk = false;
         }
         if (this.CheckValidationObj.GrossDPPrctg != 0) {
           if (this.AssetDataForm.controls.selectedDpType.value == 'PRCTG') {
             if (this.CheckValidationObj.GrossDPPrctg > this.AssetDataForm.controls.DownPaymentAmt.value && this.CheckValidationObj.DPGrossBehaviour == 'MIN') {
-              this.toastr.errorMessage("DP must be more than " + this.CheckValidationObj.GrossDPPrctg + "% from Asset Price");
+              this.toastr.warningMessage("DP must be more than " + this.CheckValidationObj.GrossDPPrctg + "% from Asset Price");
               this.isValidOk = false;
             }
             if (this.CheckValidationObj.GrossDPPrctg < this.AssetDataForm.controls.DownPaymentAmt.value && this.CheckValidationObj.DPGrossBehaviour == 'MAX') {
-              this.toastr.errorMessage("DP must be less than " + this.CheckValidationObj.GrossDPPrctg + "% from Asset Price");
+              this.toastr.warningMessage("DP must be less than " + this.CheckValidationObj.GrossDPPrctg + "% from Asset Price");
               this.isValidOk = false;
             }
           }
           if (this.AssetDataForm.controls.selectedDpType.value == 'AMT') {
             var tempPrcnt = this.AssetDataForm.controls.DownPaymentAmt.value / this.AssetDataForm.controls.AssetPriceAmt.value * 100
             if (this.CheckValidationObj.GrossDPPrctg > tempPrcnt && this.CheckValidationObj.DPGrossBehaviour == 'MIN') {
-              this.toastr.errorMessage("DP must be more than " + this.CheckValidationObj.GrossDPPrctg + "% from Asset Price");
+              this.toastr.warningMessage("DP must be more than " + this.CheckValidationObj.GrossDPPrctg + "% from Asset Price");
               this.isValidOk = false;
             }
             if (this.CheckValidationObj.GrossDPPrctg < tempPrcnt && this.CheckValidationObj.DPGrossBehaviour == 'MAX') {
-              this.toastr.errorMessage("DP must be less than " + this.CheckValidationObj.GrossDPPrctg + "% from Asset Price");
+              this.toastr.warningMessage("DP must be less than " + this.CheckValidationObj.GrossDPPrctg + "% from Asset Price");
               this.isValidOk = false;
             }
           }
@@ -373,22 +373,22 @@ export class AssetDataComponent implements OnInit {
     }
     if (this.AssetDataForm.controls.selectedDpType.value == 'AMT') {
       if (this.AssetDataForm.controls.DownPaymentAmt.value < 0) {
-        this.toastr.errorMessage("DP must be more than 0");
+        this.toastr.warningMessage("DP must be more than 0");
         this.isValidOk = false;
       }
       if (this.AssetDataForm.controls.DownPaymentAmt.value > this.AssetDataForm.controls.AssetPriceAmt.value) {
-        this.toastr.errorMessage("DP must be less than Asset Price");
+        this.toastr.warningMessage("DP must be less than Asset Price");
         this.isValidOk = false;
       }
     }
     if (this.AssetDataForm.controls.selectedDpType.value == 'PRCTG') {
       var tempAmt = this.AssetDataForm.controls.AssetPriceAmt.value * this.AssetDataForm.controls.DownPaymentAmt.value / 100;
       if (tempAmt < 0) {
-        this.toastr.errorMessage("DP must be more than 0");
+        this.toastr.warningMessage("DP must be more than 0");
         this.isValidOk = false;
       }
       if (tempAmt > this.AssetDataForm.controls.AssetPriceAmt.value) {
-        this.toastr.errorMessage("DP must be less than Asset Price");
+        this.toastr.warningMessage("DP must be less than Asset Price");
         this.isValidOk = false;
       }
     }
@@ -1470,7 +1470,7 @@ export class AssetDataComponent implements OnInit {
 
   addAccessories() {
     if(this.AssetDataForm.get("AssetTypeCode").value == ""){
-      return this.toastr.errorMessage("Please Choose Asset First");      
+      return this.toastr.warningMessage("Please Choose Asset First");      
     }
     var appAccessoryObj = this.AssetDataForm.controls["AssetAccessoriesObjs"] as FormArray;
     var length = this.AssetDataForm.value["AssetAccessoriesObjs"].length;

@@ -778,7 +778,7 @@ export class CollateralAddEditComponent implements OnInit {
         }
         else
         {
-          this.toastr.errorMessage("Please Fill The Collateral Price!");
+          this.toastr.warningMessage("Please Fill The Collateral Price!");
           return
         }
 
@@ -855,7 +855,7 @@ export class CollateralAddEditComponent implements OnInit {
     this.appCollateralObj.ListCollateralId = new Array();
 
     if (this.listSelectedId.length == 0) {
-      this.toastr.errorMessage('Please add at least one data');
+      this.toastr.warningMessage('Please add at least one data');
       return;
     }
     this.appCollateralObj.ListCollateralId = this.listSelectedId;

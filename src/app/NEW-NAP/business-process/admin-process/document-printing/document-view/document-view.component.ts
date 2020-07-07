@@ -147,7 +147,7 @@ export class DocumentViewComponent implements OnInit {
           this.toastr.successMessage(response['message']);
 
         } else {
-          this.toastr.errorMessage(response['Message']);
+          this.toastr.errorMessage(response['message']);
         }
       },
       (error) => {

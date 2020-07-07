@@ -436,7 +436,7 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
     // var IdxSelected=
     if (this.selectedListLegalDocType.length > 0) {
       if (this.selectedListLegalDocType.find(x => x.Key == this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs[i].MrLegalDocTypeCode)) {
-        this.toastr.errorMessage("Legal Document Type " + this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs[i].MrLegalDocTypeCode + " is duplicated ");
+        this.toastr.warningMessage("Legal Document Type " + this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs[i].MrLegalDocTypeCode + " is duplicated ");
         return false;
       }
     }

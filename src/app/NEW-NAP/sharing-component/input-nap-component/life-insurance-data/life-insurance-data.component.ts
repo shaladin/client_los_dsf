@@ -267,7 +267,7 @@ export class LifeInsuranceDataComponent implements OnInit {
 
   checkSubject() {
     if (this.LifeInsObj.ListAppLifeInsD.length == 0) {
-      this.toastr.errorMessage("Minimal 1 Subject ");
+      this.toastr.warningMessage("Minimal 1 Subject ");
       return false;
     } else {
       return true;

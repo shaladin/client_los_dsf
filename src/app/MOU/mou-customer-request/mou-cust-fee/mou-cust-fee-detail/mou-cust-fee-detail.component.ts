@@ -102,11 +102,11 @@ export class MouCustFeeDetailComponent implements OnInit {
     }
     if(this.UsedRefFeeIdList.includes(parseInt(formData.RefFeeId)) == true){
       var message = this.getDdlName(formData.RefFeeId) + " Already Exists";
-      this.toastr.errorMessage(message);
+      this.toastr.warningMessage(message);
       return;
     }
     if(formData['MrFeeTypeCode'] == 'AMT' && formData['FeeAmt'] == 0){
-      this.toastr.errorMessage(message);
+      this.toastr.warningMessage(message);
       return;
     }
 
