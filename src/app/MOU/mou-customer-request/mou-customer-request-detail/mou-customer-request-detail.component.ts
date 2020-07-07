@@ -72,6 +72,8 @@ export class MouCustomerRequestDetailComponent implements OnInit {
    }
 
   ngOnInit() {
+    console.log('Shinano');
+
     if (this.WfTaskListId > 0)
       this.claimTask();
 

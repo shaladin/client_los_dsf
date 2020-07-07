@@ -75,7 +75,7 @@ export class LegalReviewDetailComponent implements OnInit {
       response =>{
         this.responseMouObj = response['ReturnObject'];
 
-          var refLglReviewObj = { "RefMasterTypeCode": "LGL_REVIEW" };
+          var refLglReviewObj = { "RefMasterTypeCode":   AdInsConstant.RefMasterTypeLegalReview };
         this.http.post(this.GetListActiveRefMasterUrl, refLglReviewObj).subscribe(
           (response) => {
             var lengthDataReturnObj = response["ReturnObject"].length;

@@ -9,8 +9,7 @@ import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-mou-cust-fee-detail',
-  templateUrl: './mou-cust-fee-detail.component.html',
-  styleUrls: ['./mou-cust-fee-detail.component.scss']
+  templateUrl: './mou-cust-fee-detail.component.html'
 })
 export class MouCustFeeDetailComponent implements OnInit {
   @Input() MouCustId: number;
@@ -35,7 +34,7 @@ export class MouCustFeeDetailComponent implements OnInit {
     public activeModal: NgbActiveModal
   ) {
     var rmFeeType = new RefMasterObj();
-    rmFeeType.RefMasterTypeCode = "FEE_TYPE";
+    rmFeeType.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeFeeType;
     let getRefFee = this.httpClient.post(AdInsConstant.GetRefFeeList, null);
     let getFeeType = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, rmFeeType);
     forkJoin([getRefFee, getFeeType]).subscribe(
@@ -71,7 +70,7 @@ export class MouCustFeeDetailComponent implements OnInit {
   }
 
   feeTypeHandler(e){
-    if(e.target.value == 'AMT'){
+    if(e.target.value == AdInsConstant.FeeTypeAmt){
       this.MouCustFeeForm.patchValue({
         FeePrcnt: 0
       });
@@ -79,7 +78,7 @@ export class MouCustFeeDetailComponent implements OnInit {
       this.MouCustFeeForm.controls['FeeAmt'].setValidators([Validators.required, Validators.min(1)]);
       this.MouCustFeeForm.controls['FeeAmt'].updateValueAndValidity();
     }
-    else if(e.target.value == 'PRCNT'){
+    else if(e.target.value ==  AdInsConstant.FeeTypePrcnt){
       this.MouCustFeeForm.patchValue({
         FeeAmt: 0
       });
@@ -103,11 +102,11 @@ export class MouCustFeeDetailComponent implements OnInit {
     }
     if(this.UsedRefFeeIdList.includes(parseInt(formData.RefFeeId)) == true){
       var message = this.getDdlName(formData.RefFeeId) + " Already Exists";
-      this.toastr.errorMessage(message);
+      this.toastr.warningMessage(message);
       return;
     }
     if(formData['MrFeeTypeCode'] == 'AMT' && formData['FeeAmt'] == 0){
-      this.toastr.errorMessage(message);
+      this.toastr.warningMessage(message);
       return;
     }
 

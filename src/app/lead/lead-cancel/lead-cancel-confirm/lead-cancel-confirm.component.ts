@@ -84,8 +84,8 @@ export class LeadCancelConfirmComponent implements OnInit {
   SaveLeadConfirmCancel() {
     if(this.responseObj.length > 0){
       var leadObj : LeadConfirmCancelObj = new LeadConfirmCancelObj();
-      leadObj.LeadStat = "CAN";
-      leadObj.LeadStep = "CAN";
+      leadObj.LeadStat = AdInsConstant.LeadStatCancel;
+      leadObj.LeadStep = AdInsConstant.LeadStepCancel;
       leadObj.Notes = this.LeadConfirmCancelForm.controls.CancelReason.value;
       leadObj.MrCancelReasonCode = this.LeadConfirmCancelForm.controls.CancelReason.value;
       leadObj.Notes = this.LeadConfirmCancelForm.controls.Notes.value;
@@ -105,7 +105,7 @@ export class LeadCancelConfirmComponent implements OnInit {
       );
     }
     else{
-      this.toastr.errorMessage("No Lead Available to Cancel");
+      this.toastr.warningMessage("No Lead Available to Cancel");
     }
   }
 }

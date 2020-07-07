@@ -10,8 +10,7 @@ import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-mou-cust-asset',
-  templateUrl: './mou-cust-asset.component.html',
-  styleUrls: ['./mou-cust-asset.component.scss']
+  templateUrl: './mou-cust-asset.component.html'
 })
 export class MouCustAssetComponent implements OnInit {
   @Input() MouCustId: number;

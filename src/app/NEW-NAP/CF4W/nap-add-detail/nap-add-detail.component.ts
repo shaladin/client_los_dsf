@@ -303,7 +303,7 @@ export class NapAddDetailComponent implements OnInit {
   Submit() {
     if (this.ReturnHandlingHId > 0) {
       if (!this.IsSavedTC) {
-        this.toastr.errorMessage("Please Save TC Data First!");
+        this.toastr.warningMessage("Please Save TC Data First!");
       }
       else {
         var ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();

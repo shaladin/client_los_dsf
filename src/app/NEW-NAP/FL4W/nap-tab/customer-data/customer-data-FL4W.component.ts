@@ -156,7 +156,7 @@ export class CustomerDataFL4WComponent implements OnInit {
           }
           else {
             response["ErrorMessages"].forEach((message: string) => {
-              this.toastr.errorMessage(message["Message"]);
+              this.toastr.warningMessage(message["Message"]);
             });
           }
         },
@@ -176,7 +176,7 @@ export class CustomerDataFL4WComponent implements OnInit {
       }
 
       if (totalSharePrcnt != 100) {
-        this.toastr.errorMessage("Total Share (%) must be 100.");
+        this.toastr.warningMessage("Total Share (%) must be 100.");
         return;
       }
       this.custDataCompanyObj = new CustDataCompanyObj();
@@ -508,7 +508,7 @@ export class CustomerDataFL4WComponent implements OnInit {
 
       var index = selectedSocmedCode.indexOf(tempKey);
       if (index > -1) {
-        this.toastr.errorMessage("Social Media cannot be duplicate!");
+        this.toastr.warningMessage("Social Media cannot be duplicate!");
         this.isSocmedValid = false;
         return;
       }

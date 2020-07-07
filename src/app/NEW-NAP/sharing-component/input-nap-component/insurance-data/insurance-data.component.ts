@@ -147,19 +147,19 @@ export class InsuranceDataComponent implements OnInit {
       var insCpltzAmt = this.InsuranceDataForm.controls.InsCpltzAmt.value;
 
       if (this.isGenerate == false) {
-        this.toastr.errorMessage("Please click Generate Insurance.");
+        this.toastr.warningMessage("Please click Generate Insurance.");
         return;
       }
       if (this.isCalculate == false) {
-        this.toastr.errorMessage("Please click Calculate Insurance.");
+        this.toastr.warningMessage("Please click Calculate Insurance.");
         return;
       }
       if (custDiscAmt > totalPremiToCust) {
-        this.toastr.errorMessage("Discount Amount can't be higher than Total Premi to Customer.");
+        this.toastr.warningMessage("Discount Amount can't be higher than Total Premi to Customer.");
         return;
       }
       if (insCpltzAmt > totalPremiToCust - custDiscAmt) {
-        this.toastr.errorMessage("Capitalize Amount can't be higher than Total Premi to Customer after Discount.");
+        this.toastr.warningMessage("Capitalize Amount can't be higher than Total Premi to Customer after Discount.");
         return;
       }
     }
@@ -170,12 +170,12 @@ export class InsuranceDataComponent implements OnInit {
       var businessDt = new Date(localStorage.getItem("BusinessDateRaw"));
 
       if (endDt < businessDt) {
-        this.toastr.errorMessage("End Date can't be lower than Business Date.");
+        this.toastr.warningMessage("End Date can't be lower than Business Date.");
         return;
       }
 
       if (endDt < startDt) {
-        this.toastr.errorMessage("End Date can't be lower than Start Date.");
+        this.toastr.warningMessage("End Date can't be lower than Start Date.");
         return;
       }
     }
@@ -544,31 +544,31 @@ export class InsuranceDataComponent implements OnInit {
   async GenerateInsurance(appInsMainCvgObj: Array<AppInsMainCvgObj>) {
     if (appInsMainCvgObj == undefined) {
       if (this.InsuranceDataForm.controls.InscoBranchCode.value == "") {
-        this.toastr.errorMessage("Please choose Insco Branch.");
+        this.toastr.warningMessage("Please choose Insco Branch.");
         return;
       }
       if (this.InsuranceDataForm.controls.InsAssetPaidBy.value == "") {
-        this.toastr.errorMessage("Please choose Paid By.");
+        this.toastr.warningMessage("Please choose Paid By.");
         return;
       }
       if (this.InsuranceDataForm.controls.InsAssetRegion.value == "") {
-        this.toastr.errorMessage("Please choose Region.");
+        this.toastr.warningMessage("Please choose Region.");
         return;
       }
       if (this.InsuranceDataForm.controls.InsAssetCoverPeriod.value == "") {
-        this.toastr.errorMessage("Please choose Cover Period.");
+        this.toastr.warningMessage("Please choose Cover Period.");
         return;
       }
       if (this.InsuranceDataForm.controls.InsLength.value == "") {
-        this.toastr.errorMessage("Please input Insurance Length.");
+        this.toastr.warningMessage("Please input Insurance Length.");
         return;
       }
       if (this.InsuranceDataForm.controls.InsLength.value < this.minInsLength) {
-        this.toastr.errorMessage("Insurance Length must be higher than " + (this.minInsLength - 1).toString());
+        this.toastr.warningMessage("Insurance Length must be higher than " + (this.minInsLength - 1).toString());
         return;
       }
       if (this.InsuranceDataForm.controls.InsLength.value > this.maxInsLength) {
-        this.toastr.errorMessage("Insurance Length must be lower than " + (this.maxInsLength + 1).toString());
+        this.toastr.warningMessage("Insurance Length must be lower than " + (this.maxInsLength + 1).toString());
         return;
       }
       // this.InsuranceDataForm.controls.InscoBranchCode.markAsTouched();
@@ -595,7 +595,7 @@ export class InsuranceDataComponent implements OnInit {
         console.log(response);
         this.ruleObj = response["Result"];
         if (this.ruleObj.InsAssetCategory == "") {
-          this.toastr.errorMessage("Please setting rule first.");
+          this.toastr.warningMessage("Please setting rule first.");
           return;
         }
         this.InsuranceDataForm.patchValue({

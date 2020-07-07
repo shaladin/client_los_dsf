@@ -82,7 +82,7 @@ export class FraudVerifPageComponent implements OnInit {
           (response) => {
             this.tempLeadCustPersonalObj = response;
             this.DuplicateCustObj.CustName = this.tempLeadCustObj.CustName;
-            this.DuplicateCustObj.MrCustTypeCode = "PERSONAL";
+            this.DuplicateCustObj.MrCustTypeCode = AdInsConstant.CustTypePersonal;
             this.DuplicateCustObj.IdNo = this.tempLeadCustObj.IdNo;
             this.DuplicateCustObj.TaxIdNo = this.tempLeadCustObj.TaxIdNo;
             this.DuplicateCustObj.BirthDt = this.tempLeadCustPersonalObj.BirthDt;
