@@ -25,7 +25,7 @@ export class MouCustomerRequestComponent implements OnInit {
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem("UserAccess"));
 
-    if (this.user.MrOfficeTypeCode != "HO") {
+    if (this.user.MrOfficeTypeCode != AdInsConstant.HeadOffice) {
       this.router.navigate(["/Mou/UnauthorizedPage"]);
       return;
     }
