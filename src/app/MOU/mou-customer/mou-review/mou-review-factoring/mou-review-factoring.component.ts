@@ -31,20 +31,6 @@ export class MouReviewFactoringComponent implements OnInit {
   link : any; 
   resultData : any;
   viewObj : string;
-  //listReason: Array<any> = [
-  //  {
-  //    Key: "OTHR_RSN",
-  //    Value: "Reason 1"
-  //  },
-  //  {
-  //    Key: "REASON2",
-  //    Value: "Reason 3"
-  //  },
-  //  {
-  //    Key: "REASON2",
-  //    Value: "Reason 3"
-  //  },
-  //];
   listReason: any;
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
