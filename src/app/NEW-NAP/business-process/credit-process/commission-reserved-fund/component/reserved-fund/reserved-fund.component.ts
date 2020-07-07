@@ -88,13 +88,13 @@ export class ReservedFundComponent implements OnInit {
 
   SaveForm() {
     if (this.isCalculated == false) {
-      this.toastr.errorMessage("Please Calculate First");
+      this.toastr.warningMessage("Please Calculate First");
     }
     else {
       this.calculating()
       if (this.totalRsvFundAmtWhenSave != this.totalRsvFundAmt)
       {
-        this.toastr.errorMessage("Please Calculate Again");
+        this.toastr.warningMessage("Please Calculate Again");
       }
       else if (this.remainingAllocatedAmt < 0) {
         this.toastr.warningMessage("Total Reserved Fund Amount Must be Less Than Remaining Allocated Amount");

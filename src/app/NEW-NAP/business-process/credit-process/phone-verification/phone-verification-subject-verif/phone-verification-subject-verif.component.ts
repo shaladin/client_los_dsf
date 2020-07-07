@@ -169,7 +169,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   SaveForm(formDirective: FormGroupDirective) {
     var activeButton = document.activeElement.id;
     if (this.isQuestionLoaded == false) {
-      this.toastr.errorMessage("Can't process further because questions are not loaded");
+      this.toastr.warningMessage("Can't process further because questions are not loaded");
     }
     else {
       this.setPhoneVerifData();
@@ -292,7 +292,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
         }
         else {
           this.isQuestionLoaded = false;
-          this.toastr.errorMessage("Questions are not loaded, please check RULE or Question Scheme if there're any typos in RULE or question scheme is not available for this BizTemplateCode");
+          this.toastr.warningMessage("Questions are not loaded, please check RULE or Question Scheme if there're any typos in RULE or question scheme is not available for this BizTemplateCode");
         }
       }
     );

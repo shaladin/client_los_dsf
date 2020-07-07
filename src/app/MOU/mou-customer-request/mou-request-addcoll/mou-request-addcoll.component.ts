@@ -606,7 +606,7 @@ export class MouRequestAddcollComponent implements OnInit {
     this.mouCustCollateralObj.ListCollateralId = new Array();
 
     if (this.listSelectedId.length == 0) {
-      this.toastr.errorMessage('Please add at least one data');
+      this.toastr.warningMessage('Please add at least one data');
       return;
     }
     this.mouCustCollateralObj.ListCollateralId = this.listSelectedId;

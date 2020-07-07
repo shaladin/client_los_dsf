@@ -119,7 +119,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
     var birthDt = new Date(this.ContactInfoPersonalForm.controls.BirthDt.value);
 
     if(birthDt > businessDt){
-      this.toastr.errorMessage("Birth Date can not be more than " + businessDtStr);
+      this.toastr.warningMessage("Birth Date can not be more than " + businessDtStr);
       return;
     }
 

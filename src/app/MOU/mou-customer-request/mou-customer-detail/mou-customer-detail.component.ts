@@ -194,7 +194,7 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
       );
     }
     else {
-      this.toastr.errorMessage("Please follow the steps first");
+      this.toastr.warningMessage("Please follow the steps first");
     }
   }
 
