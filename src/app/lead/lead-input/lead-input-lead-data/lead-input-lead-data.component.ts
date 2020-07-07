@@ -643,15 +643,15 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.DPAmount = this.LeadDataForm.controls["DownPaymentAmount"].value;
 
     if (this.DPAmount > this.AssetPrice) {
-      this.toastr.errorMessage("Down Payment Amount Must Be Lower Than Asset Price!");
+      this.toastr.warningMessage("Down Payment Amount Must Be Lower Than Asset Price!");
       return;
     }
     if (this.DPAmount <= 0) {
-      this.toastr.errorMessage("Please Check Down Payment Amount!");
+      this.toastr.warningMessage("Please Check Down Payment Amount!");
       return;
     }
     if (this.Tenor == '') {
-      this.toastr.errorMessage("Fill The Tenor First!");
+      this.toastr.warningMessage("Fill The Tenor First!");
       return;
     }
     this.NTFAmt = this.AssetPrice - this.DPAmount;
@@ -676,11 +676,11 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.DPAmount = this.LeadDataForm.controls["DownPaymentAmount"].value;
 
     if (this.DPAmount > this.AssetPrice) {
-      this.toastr.errorMessage("Down Payment Amount Must Be Lower Than Asset Price!");
+      this.toastr.warningMessage("Down Payment Amount Must Be Lower Than Asset Price!");
       return;
     }
     if (this.Tenor == '') {
-      this.toastr.errorMessage("Fill The Tenor First!");
+      this.toastr.warningMessage("Fill The Tenor First!");
       return;
     }
     this.NTFAmt = this.LeadDataForm.controls["NTFAmt"].value;
@@ -732,7 +732,7 @@ export class LeadInputLeadDataComponent implements OnInit {
 
   save() {
     if (this.Calculate == false) {
-      this.toastr.errorMessage("Calculate First");
+      this.toastr.warningMessage("Calculate First");
       return;
     }
     if (this.typePage == "edit" || this.typePage == "update") {
@@ -784,7 +784,7 @@ export class LeadInputLeadDataComponent implements OnInit {
         }
         else {
           if (this.LeadDataForm.controls["ManufacturingYear"].value > this.year) {
-            this.toastr.errorMessage("Manufacturing Year must be lower or equal than current year.");
+            this.toastr.warningMessage("Manufacturing Year must be lower or equal than current year.");
             return;
           }
           this.leadInputLeadDataObj = new LeadInputLeadDataObj();
@@ -864,7 +864,7 @@ export class LeadInputLeadDataComponent implements OnInit {
 
   SaveForm() {
     if (this.Calculate == false) {
-      this.toastr.errorMessage("Calculate First");
+      this.toastr.warningMessage("Calculate First");
       return;
     }
 
@@ -921,7 +921,7 @@ export class LeadInputLeadDataComponent implements OnInit {
         }
         else {
           if (this.LeadDataForm.controls["ManufacturingYear"].value > this.year) {
-            this.toastr.errorMessage("Manufacturing Year must be lower or equal than current year.");
+            this.toastr.warningMessage("Manufacturing Year must be lower or equal than current year.");
             return;
           }
           this.leadInputLeadDataObj = new LeadInputLeadDataObj();

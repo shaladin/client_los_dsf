@@ -413,8 +413,8 @@ export class GuarantorPersonalComponent implements OnInit {
     let d3 = new Date(this.guarantorPersonalObj.AppGuarantorPersonalObj.BirthDt);
     let d4 = new Date(this.Max17YO);
     if (d3 > d4) {
-      // this.toastr.errorMessage("Birth Date can not be more than " + this.Max17YO);
-      this.toastr.errorMessage("Guarantor age must be at least 17 year old");
+      // this.toastr.warningMessage("Birth Date can not be more than " + this.Max17YO);
+      this.toastr.warningMessage("Guarantor age must be at least 17 year old");
       flag = false;
     }
     this.guarantorPersonalObj.AppGuarantorPersonalObj.IdExpDt = this.PersonalForm.controls.IdExpDt.value;
@@ -425,7 +425,7 @@ export class GuarantorPersonalComponent implements OnInit {
       var value = datePipe.transform(Business_Date, "yyyy-MM-dd");
       var businessDt = new Date(value);
       if (businessDt > a) {
-        this.toastr.errorMessage("Id Expired Date can not be more than business date");
+        this.toastr.warningMessage("Id Expired Date can not be more than business date");
         flag = false;
       }
     }

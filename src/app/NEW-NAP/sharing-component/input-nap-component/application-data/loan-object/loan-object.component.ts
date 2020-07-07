@@ -138,7 +138,7 @@ export class LoanObjectComponent implements OnInit {
     var SelfFinancingAmt = this.MainInfoForm.controls.SelfFinancing.value;
 
     if (SelfFinancingAmt > BudgetPlanAmt) {
-      this.toastr.errorMessage("Self Financing Amount Must Be Lower Than Budget Plan Amount!");
+      this.toastr.warningMessage("Self Financing Amount Must Be Lower Than Budget Plan Amount!");
       return;
     }
 

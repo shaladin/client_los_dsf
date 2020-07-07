@@ -213,7 +213,7 @@ DPAmtChange()
   this.DPAmount = this.AssetDataForm.controls["DownPayment"].value;
 
   if (this.DPAmount > this.AssetPrice) {
-    this.toastr.errorMessage("Down Payment Must Be Lower Than Asset Price!");
+    this.toastr.warningMessage("Down Payment Must Be Lower Than Asset Price!");
     return;
   }
 }
@@ -1000,7 +1000,7 @@ copyToLocationAddr() {
       this.allAssetDataObj.AppAssetObj.AppAssetId = 0;
 
       if(this.allAssetDataObj.AppAssetObj.DownPaymentAmt > this.allAssetDataObj.AppAssetObj.AssetPriceAmt){
-        this.toastr.errorMessage("Down Payment Must Be Lower Than Asset Price!");
+        this.toastr.warningMessage("Down Payment Must Be Lower Than Asset Price!");
         return false;
       }
 
@@ -1032,7 +1032,7 @@ copyToLocationAddr() {
       this.allAssetDataObj.AppCollateralRegistrationObj.AppCollateralRegistrationId = this.returnAppCollateralRegistObj.AppCollateralRegistrationId;
 
       if(this.allAssetDataObj.AppAssetObj.DownPaymentAmt > this.allAssetDataObj.AppAssetObj.AssetPriceAmt){
-        this.toastr.errorMessage("Down Payment Must Be Lower Than Asset Price!");
+        this.toastr.warningMessage("Down Payment Must Be Lower Than Asset Price!");
         return false;
       }
 

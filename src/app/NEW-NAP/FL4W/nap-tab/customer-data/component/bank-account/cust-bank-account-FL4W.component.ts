@@ -79,7 +79,7 @@ export class CustBankAccountFL4WComponent implements OnInit {
         var check = this.listBankAcc.find(x => x.IsDefault == true);
   
         if(check != undefined){
-          this.toastr.errorMessage("Other bank account is already default");
+          this.toastr.warningMessage("Other bank account is already default");
           return;
         }
       }
@@ -91,7 +91,7 @@ export class CustBankAccountFL4WComponent implements OnInit {
         var check = this.listBankAcc.find(x => x.IsDefault == true);
   
         if(check != undefined){
-          this.toastr.errorMessage("Other bank account is already default");
+          this.toastr.warningMessage("Other bank account is already default");
           return;
         }
       }
