@@ -50,8 +50,8 @@ export class LeadUpdateComponent implements OnInit {
     if (confirm("Are you sure to reject this Lead?"))
     {
       var leadReject = new LeadForRejectObj;
-      leadReject.LeadStat = "RJC";
-      leadReject.LeadStep = "RJC";
+      leadReject.LeadStat = AdInsConstant.LeadStatReject;
+      leadReject.LeadStep = AdInsConstant.LeadStatReject;
       leadReject.LeadId = event.RowObj.LeadId;
       leadReject.WfTaskListId = event.RowObj.WfTaskListId;
 

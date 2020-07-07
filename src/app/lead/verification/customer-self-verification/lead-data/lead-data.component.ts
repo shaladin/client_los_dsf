@@ -190,7 +190,7 @@ export class LeadDataComponent implements OnInit {
     );
 
     this.assetConditionObj = new RefMasterObj();
-    this.assetConditionObj.RefMasterTypeCode = "ASSET_CONDITION";
+    this.assetConditionObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeAssetCondition;
     this.http.post(this.getListActiveRefMasterUrl, this.assetConditionObj).subscribe(
       (response) => {
         this.returnAssetConditionObj = response["ReturnObject"];
@@ -199,7 +199,7 @@ export class LeadDataComponent implements OnInit {
     );
 
     this.downPaymentObj = new RefMasterObj();
-    this.downPaymentObj.RefMasterTypeCode = "DOWN_PAYMENT_TYPE";
+    this.downPaymentObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeDownPaymentType;
     this.http.post(this.getListActiveRefMasterUrl, this.downPaymentObj).subscribe(
       (response) => {
         this.returnDownPaymentObj = response["ReturnObject"];
@@ -208,7 +208,7 @@ export class LeadDataComponent implements OnInit {
     );
 
     this.firstInstObj = new RefMasterObj();
-    this.firstInstObj.RefMasterTypeCode = "FIRST_INST_TYPE";
+    this.firstInstObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeFirstInstType;
     this.http.post(this.getListActiveRefMasterUrl, this.firstInstObj).subscribe(
       (response) => {
         this.returnFirstInstObj = response["ReturnObject"];
@@ -222,7 +222,7 @@ export class LeadDataComponent implements OnInit {
       this.http.post(this.getLeadAssetByLeadId, this.reqLeadAssetObj).subscribe(
         (response) => {
           this.resLeadAssetObj = response;
-          if (this.resLeadAssetObj.MrAssetConditionCode == "USED") {
+          if (this.resLeadAssetObj.MrAssetConditionCode == AdInsConstant.AssetConditionUsed) {
             this.isUsed = true;
           } else {
             this.isUsed = false;

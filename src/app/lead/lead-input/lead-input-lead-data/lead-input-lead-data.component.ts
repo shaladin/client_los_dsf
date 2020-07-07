@@ -166,7 +166,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   // }
 
   radioChange(event) {
-    if (event.target.value == "USED") {
+    if (event.target.value == AdInsConstant.AssetConditionUsed) {
       this.isUsed = true;
     } else {
       this.isUsed = false;
@@ -227,13 +227,13 @@ export class LeadInputLeadDataComponent implements OnInit {
     );
 
     this.assetConditionObj = new RefMasterObj();
-    this.assetConditionObj.RefMasterTypeCode = "ASSET_CONDITION";
+    this.assetConditionObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeAssetCondition;
     this.http.post(this.getListActiveRefMasterUrl, this.assetConditionObj).subscribe(
       (response) => {
         this.returnAssetConditionObj = response["ReturnObject"];
         this.LeadDataForm.patchValue({ MrAssetConditionCode: response['ReturnObject'][0]['Key'] });
 
-        if (response['ReturnObject'][0]['Key'] == "USED") {
+        if (response['ReturnObject'][0]['Key'] == AdInsConstant.AssetConditionUsed) {
           this.isUsed = true;
         } else {
           this.isUsed = false;
@@ -242,7 +242,7 @@ export class LeadInputLeadDataComponent implements OnInit {
     );
 
     this.downPaymentObj = new RefMasterObj();
-    this.downPaymentObj.RefMasterTypeCode = "DOWN_PAYMENT_TYPE";
+    this.downPaymentObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeDownPaymentType;
     this.http.post(this.getListActiveRefMasterUrl, this.downPaymentObj).subscribe(
       (response) => {
         this.returnDownPaymentObj = response["ReturnObject"];
@@ -251,7 +251,7 @@ export class LeadInputLeadDataComponent implements OnInit {
     );
 
     this.firstInstObj = new RefMasterObj();
-    this.firstInstObj.RefMasterTypeCode = "FIRST_INST_TYPE";
+    this.firstInstObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeFirstInstType;
     this.http.post(this.getListActiveRefMasterUrl, this.firstInstObj).subscribe(
       (response) => {
         this.returnFirstInstObj = response["ReturnObject"];
@@ -265,7 +265,7 @@ export class LeadInputLeadDataComponent implements OnInit {
       this.http.post(this.getLeadAssetByLeadId, this.reqLeadAssetObj).subscribe(
         (response) => {
           this.resLeadAssetObj = response;
-          if (this.resLeadAssetObj.MrAssetConditionCode == "USED") {
+          if (this.resLeadAssetObj.MrAssetConditionCode == AdInsConstant.AssetConditionUsed) {
             this.isUsed = true;
           } else {
             this.isUsed = false;
@@ -372,7 +372,7 @@ export class LeadInputLeadDataComponent implements OnInit {
       this.http.post(this.getLeadAssetByLeadId, this.reqLeadAssetObj).subscribe(
         (response) => {
           this.resLeadAssetObj = response;
-          if (this.resLeadAssetObj.MrAssetConditionCode == "USED") {
+          if (this.resLeadAssetObj.MrAssetConditionCode == AdInsConstant.AssetConditionUsed) {
             this.isUsed = true;
           } else {
             this.isUsed = false;
@@ -387,7 +387,7 @@ export class LeadInputLeadDataComponent implements OnInit {
               DownPaymentPercent: this.resLeadAssetObj.DownPaymentPrcnt,
             });
 
-            if (this.resLeadAssetObj.MrDownPaymentTypeCode == "AMT") {
+            if (this.resLeadAssetObj.MrDownPaymentTypeCode ==  AdInsConstant.DownPaymentTypeAmt) {
               this.LeadDataForm.controls.DownPaymentPercent.disable();
               this.LeadDataForm.controls.DownPaymentAmount.enable();
             }
@@ -467,7 +467,7 @@ export class LeadInputLeadDataComponent implements OnInit {
                 assetType.AssetTypeId = this.resAssetMasterObj.AssetTypeId;
                 this.http.post(AdInsConstant.GetAssetTypeById, assetType).subscribe(
                   (response: any) => {
-                    if (response.IsMndtrySerialNo1 == "1" && this.resLeadAssetObj.MrAssetConditionCode == "USED") {
+                    if (response.IsMndtrySerialNo1 == "1" && this.resLeadAssetObj.MrAssetConditionCode == AdInsConstant.AssetConditionUsed) {
                       this.LeadDataForm.controls['SerialNo1'].setValidators([Validators.required]);
                       this.LeadDataForm.controls['SerialNo1'].updateValueAndValidity();
                       this.serial1Mandatory = true;
@@ -478,7 +478,7 @@ export class LeadInputLeadDataComponent implements OnInit {
                       this.serial1Mandatory = false;
                     }
 
-                    if (response.IsMndtrySerialNo2 == "1" && this.resLeadAssetObj.MrAssetConditionCode == "USED") {
+                    if (response.IsMndtrySerialNo2 == "1" && this.resLeadAssetObj.MrAssetConditionCode == AdInsConstant.AssetConditionUsed) {
                       this.LeadDataForm.controls['SerialNo2'].setValidators([Validators.required]);
                       this.LeadDataForm.controls['SerialNo2'].updateValueAndValidity();
                       this.serial2Mandatory = true;
@@ -489,7 +489,7 @@ export class LeadInputLeadDataComponent implements OnInit {
                       this.serial2Mandatory = false;
                     }
 
-                    if (response.IsMndtrySerialNo3 == "1" && this.resLeadAssetObj.MrAssetConditionCode == "USED") {
+                    if (response.IsMndtrySerialNo3 == "1" && this.resLeadAssetObj.MrAssetConditionCode == AdInsConstant.AssetConditionUsed) {
                       this.LeadDataForm.controls['SerialNo3'].setValidators([Validators.required]);
                       this.LeadDataForm.controls['SerialNo3'].updateValueAndValidity();
                       this.serial3Mandatory = true;
@@ -500,7 +500,7 @@ export class LeadInputLeadDataComponent implements OnInit {
                       this.serial3Mandatory = false;
                     }
 
-                    if (response.IsMndtrySerialNo4 == "1" && this.resLeadAssetObj.MrAssetConditionCode == "USED") {
+                    if (response.IsMndtrySerialNo4 == "1" && this.resLeadAssetObj.MrAssetConditionCode == AdInsConstant.AssetConditionUsed) {
                       this.LeadDataForm.controls['SerialNo4'].setValidators([Validators.required]);
                       this.LeadDataForm.controls['SerialNo4'].updateValueAndValidity();
                       this.serial4Mandatory = true;
@@ -511,7 +511,7 @@ export class LeadInputLeadDataComponent implements OnInit {
                       this.serial4Mandatory = false;
                     }
 
-                    if (response.IsMndtrySerialNo5 == "1" && this.resLeadAssetObj.MrAssetConditionCode == "USED") {
+                    if (response.IsMndtrySerialNo5 == "1" && this.resLeadAssetObj.MrAssetConditionCode == AdInsConstant.AssetConditionUsed) {
                       this.LeadDataForm.controls['SerialNo5'].setValidators([Validators.required]);
                       this.LeadDataForm.controls['SerialNo5'].updateValueAndValidity();
                       this.serial5Mandatory = true;
@@ -561,7 +561,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   }
 
   DownPaymentChange() {
-    if (this.LeadDataForm.controls["MrDownPaymentTypeCode"].value == "AMT") {
+    if (this.LeadDataForm.controls["MrDownPaymentTypeCode"].value == AdInsConstant.DownPaymentTypeAmt) {
       this.LeadDataForm.controls.DownPaymentPercent.disable();
       this.LeadDataForm.controls.DownPaymentAmount.enable();
 
@@ -607,7 +607,7 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.LeadDataForm.controls['DownPaymentAmount'].setValidators([Validators.required, Validators.min(1.00), Validators.max(this.AssetPrice)]);
     this.LeadDataForm.controls['DownPaymentAmount'].updateValueAndValidity();
 
-    if (this.LeadDataForm.controls["MrDownPaymentTypeCode"].value == "AMT") {
+    if (this.LeadDataForm.controls["MrDownPaymentTypeCode"].value == AdInsConstant.DownPaymentTypeAmt) {
       this.DPPercentage = this.DPAmount / this.AssetPrice * 100;
 
       this.LeadDataForm.patchValue({
@@ -656,7 +656,7 @@ export class LeadInputLeadDataComponent implements OnInit {
     }
     this.NTFAmt = this.AssetPrice - this.DPAmount;
     this.InstAmt = this.NTFAmt / this.Tenor;
-    if (this.LeadDataForm.controls["MrFirstInstTypeCode"].value == "AD") {
+    if (this.LeadDataForm.controls["MrFirstInstTypeCode"].value == AdInsConstant.FirstInstTypeAdvance) {
       this.TotalDownPayment = this.DPAmount + this.InstAmt;
     }
     else {
