@@ -40,11 +40,11 @@
             <lib-ucSubsection [id]="'PreGoLiveApprovalHistoryId'" [title]="'PreGoLive Approval History'"
               [panel]="'PreGoLiveApprovalHistory'">
             </lib-ucSubsection>
-            <div id="PreGoLiveApprovalHistory">
-              <div *ngFor="let item of listPreGoLiveAppvrObj; let i = index">
-                <lib-ucapprovalhist [inputObj]="listPreGoLiveAppvrObj[i]">
+            <div *ngIf='IsApvReady' id="PreGoLiveApprovalHistory">
+              <!-- <div *ngFor="let item of listPreGoLiveAppvrObj; let i = index"> -->
+                <lib-ucapprovalhist [inputObj]="listPreGoLiveAppvrObj">
                 </lib-ucapprovalhist>
-              </div>
+              <!-- </div> -->
             </div>
             <lib-ucSubsection [id]="'TCListId'" [title]="'Term and Condition'" [panel]="'TCList'">
             </lib-ucSubsection>

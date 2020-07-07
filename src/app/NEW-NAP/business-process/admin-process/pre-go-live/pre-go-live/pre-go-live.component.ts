@@ -55,6 +55,7 @@ export class PreGoLiveComponent implements OnInit {
   hasApproveFinal: boolean = false;
   hasRejectFinal: boolean = false;
   lengthListRfaLogObj: number;
+  IsApvReady: boolean = false;
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -82,13 +83,15 @@ export class PreGoLiveComponent implements OnInit {
           this.listPreGoLiveAppvrObj[i] = {
             approvalBaseUrl: environment.ApprovalR3Url,
             type: 'task',
-            refId: this.ListRfaLogObj[i].RfaNo
+            refId: this.ListRfaLogObj[i].RfaNo,
+            apvStat: this.ListRfaLogObj[i].ApvStat,
           };
           if (this.ListRfaLogObj[i].ApvStat == "ApproveFinal") {
             this.IsCheckedAll = true;
             this.hasApproveFinal = true;
           }
         }
+        this.IsApvReady = true;
       },
       (error) => {
         console.log(error);
