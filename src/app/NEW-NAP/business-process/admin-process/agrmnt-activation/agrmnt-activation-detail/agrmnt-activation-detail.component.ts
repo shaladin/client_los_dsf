@@ -32,6 +32,7 @@ export class AgrmntActivationDetailComponent implements OnInit {
   TrxNo: string;
   AgrmntActForm: FormGroup;
   BizTemplateCode: string;
+  IsEnd: boolean = false;
   constructor(private fb: FormBuilder, private toastr: NGXToastrService, private route: ActivatedRoute, private adminProcessSvc: AdminProcessService, private router: Router, private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
@@ -99,6 +100,9 @@ export class AgrmntActivationDetailComponent implements OnInit {
 
       this.adminProcessSvc.GetListAppAssetAgrmntActivation(obj).subscribe((response) => {
         this.AssetObj = response["ListAppAsset"];
+        if(this.AssetObj.length == 0)
+          this.IsEnd = true;
+        console.log(this.IsEnd);
       });
       var objFinDataAndFee = {
         AppId: this.AppId,
@@ -137,7 +141,8 @@ export class AgrmntActivationDetailComponent implements OnInit {
         ListAppAssetId: this.tempListId,
         TaskListId: this.WfTaskListId,
         TransactionNo: this.TrxNo,
-        AgreementNo : this.AgrmntNo
+        AgreementNo : this.AgrmntNo,
+        IsEnd : this.IsEnd
       }
       this.adminProcessSvc.SubmitAgrmntActivationByHuman(Obj).subscribe((response) => {        
         var link = environment.losR3Web + "/Nap/AdminProcess/AgrmntActivation/Paging?BizTemplateCode=" + this.BizTemplateCode;
