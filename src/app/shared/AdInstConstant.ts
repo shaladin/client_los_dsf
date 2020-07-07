@@ -183,6 +183,25 @@ export class AdInsConstant {
   public static CustGrupIndentifierTypeCompany = "custGrpMemberCompany";
 
 
+  //OFFICE TYPE
+  public static HeadOffice = "HO";
+  public static CollectionGroup = "CG"
+  //MOU STAT
+  public static MouStatCancel = "CAN";
+  public static MouDocSigner = "DSG";
+
+  //LEAD STAT
+  public static LeadStatCancel = "CAN";
+  public static LeadStatNew = "NEW";
+  public static LeadStatReject ="RJC";
+
+  //LEAD STEP
+  public static LeadStepCancel = "CAN";
+  public static LeadStepNew = "NEW";
+  public static LeadStepReject ="RJC";
+
+  //Asset Condition
+  public static AssetConditionUsed ="USED";
 
   //Asset Master
   public static GetAssetMasterTypeByFullAssetCode = environment.FoundationR3Url + "/AssetMaster/GetAssetMasterTypeByFullAssetCode";
@@ -217,6 +236,7 @@ export class AdInsConstant {
   public static GetAppByCustNoAndIsAppInitDone = environment.losUrl + "/Application/GetAppByCustNoAndIsAppInitDone";
   public static GetAppByCustNoAndAppStat = environment.losUrl + "/Application/GetAppByCustNoAndAppStat";
 
+  
   //COVER PERIOD
   public static CoverPeriodAnnually = "AN";
   public static CoverPeriodFullTenor = "FT";
@@ -226,6 +246,17 @@ export class AdInsConstant {
   //PREMIUM TYPE
   public static PremiumTypeAmt = "AMT";
   public static PremiumTypePrcnt = "PRCNT";
+
+  //FIRST INST TYPE
+  public static FirstInstTypeAdvance = "AD"
+  //FEE TYPE
+  public static FeeTypeAmt = "AMT";
+  public static FeeTypePrcnt = "PRCNT";
+
+ //DOWM PAYMENT TYPE
+ public static DownPaymentTypeAmt = "AMT";
+ public static DownPaymentTypePrcnt = "PRCNT";
+
 
   //TOP CALC BASED
   public static TopCalcBasedInvcDt = "INVC_DT";
@@ -503,6 +534,20 @@ export class AdInsConstant {
   public static RefMasterTypeCodeRateType = "RATE_TYPE";
   public static RefMasterTypeCodeAddrType = "ADDR_TYPE";
   public static RefMasterTypeCodeGracePeriodType = "GRACE_PERIOD_TYPE";
+  public static RefMasterTypeLegalReview  = "LGL_REVIEW";
+  public static RefMasterTypeCodeFeeType = "FEE_TYPE";
+  public static RefMasterTypeCodeRecourseType = "RECOURSE_TYPE";
+  public static RefMasterTypeCodePaidBy = "PAID_BY"; 
+  public static RefMasterTypeCodeInstType = "INST_TYPE";
+  public static RefMasterTypeCodeSingleInstCalcMethod = "SINGLE_INST_CALC_METHOD"; 
+  public static RefMasterTypeCodeCurrency = "CURRENCY"; 
+  public static RefMasterTypeCodeGender = "GENDER";   
+  public static RefMasterTypeCodeMaritalStat = "MARITAL_STAT";   
+  public static RefMasterTypeCodeCustModel = "CUST_MODEL"; 
+  public static RefMasterTypeCodeDownPaymentType = "DOWN_PAYMENT_TYPE";
+  public static RefMasterTypeCodeLeadSource = "LEAD_SOURCE";
+  
+
   //REF PROV DISTRICT
   public static GetRefProvDistrictPaging = "/RefProvDistrict/GetRefProvDistrictPaging";
   public static GetRefProvDistrictByProvDistrictCode = environment.FoundationR3Url + "/RefProvDistrict/GetRefProvDistrictByProvDistrictCode";

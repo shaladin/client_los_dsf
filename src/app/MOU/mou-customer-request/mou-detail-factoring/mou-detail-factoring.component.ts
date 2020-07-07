@@ -63,28 +63,28 @@ export class MouDetailFactoringComponent implements OnInit {
 
   ngOnInit() {
     var rmRecourseType = new RefMasterObj();
-    rmRecourseType.RefMasterTypeCode = "RECOURSE_TYPE";
+    rmRecourseType.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeRecourseType;
     let getRecourseType = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, rmRecourseType);
     var rmWop = new RefMasterObj();
-    rmWop.RefMasterTypeCode = "WOP";
+    rmWop.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeWOP;
     let getWop = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, rmWop);
     var rmPaidBy = new RefMasterObj();
-    rmPaidBy.RefMasterTypeCode = "PAID_BY";
+    rmPaidBy.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodePaidBy;
     let getPaidBy = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, rmPaidBy);
     var rmInstType = new RefMasterObj();
-    rmInstType.RefMasterTypeCode = "INST_TYPE";
+    rmInstType.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeInstType;
     let getInstType = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, rmInstType);
     var rmSingleInstCalcMethod = new RefMasterObj();
-    rmSingleInstCalcMethod.RefMasterTypeCode = "SINGLE_INST_CALC_METHOD";
+    rmSingleInstCalcMethod.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeSingleInstCalcMethod;
     let getSingleInstCalcMethod = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, rmSingleInstCalcMethod);
     // var rmPayFreq = new RefMasterObj();
     // rmPayFreq.RefMasterTypeCode = "PAY_FREQ";
     let getPayFreq = this.httpClient.post(AdInsConstant.GetListActiveRefPayFreq, null);
     var rmInstSchm = new RefMasterObj();
-    rmInstSchm.RefMasterTypeCode = "INST_SCHM";
+    rmInstSchm.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeInstSchm;
     let getInstSchm = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, rmInstSchm);
     var refMasterCurrency = new RefMasterObj();
-    refMasterCurrency.RefMasterTypeCode = "CURRENCY";
+    refMasterCurrency.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeCurrency;
     let getCurrency = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterCurrency);
     var mouCustFctr = new MouCustFctrObj();
     mouCustFctr.MouCustId = this.MouCustId;

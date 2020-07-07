@@ -43,7 +43,7 @@
     "querystring": {
         "select": "SELECT MASTER_CODE AS MasterCode, DESCR AS Descr, IS_ACTIVE AS IsActive",
         "from": "FROM dbo.V_REF_MASTER WITH(NOLOCK)",
-        "where": "WHERE REF_MASTER_TYPE_CODE = 'LOAN_PURPOSE'"
+        "where": "WHERE REF_MASTER_TYPE_CODE = N'LOAN_PURPOSE'"
     },
     "headerList": [
         {

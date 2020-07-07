@@ -243,20 +243,6 @@ export class AssetDataComponent implements OnInit {
 
   copyFromAppCustAddrForOwner: any;
   copyFromAppCustAddrForLocation: any;
-  copyAddrObj: any = [
-    {
-      Key: "LEGAL",
-      Value: "Legal"
-    },
-    {
-      Key: "RESIDENCE",
-      Value: "Residence"
-    },
-    {
-      Key: "MAILING",
-      Value: "Mailing"
-    }
-  ];
 
   dpTypeValue: any = [
     {
@@ -418,6 +404,7 @@ export class AssetDataComponent implements OnInit {
 
   async CheckValidation() {
     var CheckValidObj = {
+      AppId: this.AppId,
       SupplCode: this.AssetDataForm.controls.SupplCode.value,
       FullAssetCode: this.AssetDataForm.controls.FullAssetCode.value,
       AssetCondition: this.AssetDataForm.controls.MrAssetConditionCode.value,
@@ -439,6 +426,7 @@ export class AssetDataComponent implements OnInit {
   }
   SetDpValue() {
     var CheckValidObj = {
+      AppId: this.AppId,
       AssetCondition: this.AssetDataForm.controls.MrAssetConditionCode.value,
       ManufacturingYear: this.AssetDataForm.controls.ManufacturingYear.value,
       Tenor: this.AppObj.Tenor,
@@ -472,6 +460,7 @@ export class AssetDataComponent implements OnInit {
 
   SetMinManuYear() {
     var CheckValidObj = {
+      AppId: this.AppId,
       SupplCode: this.AssetDataForm.controls.SupplCode.value,
       FullAssetCode: this.AssetDataForm.controls.FullAssetCode.value,
     }
