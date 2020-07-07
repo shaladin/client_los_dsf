@@ -84,7 +84,7 @@ export class InvoiceVerifDetailComponent implements OnInit {
   }
 
   GetListVerifStatus(){
-    this.httpClient.post(AdInsConstant.GetListKeyValueActiveGrpCodeByCode, {statusGrpCode : "INV_VERF_RESULT_STAT"}).subscribe((response) => {
+    this.httpClient.post(AdInsConstant.GetListActiveRefStatusByStatusGrpCode, {statusGrpCode : "INV_VERF_RESULT_STAT"}).subscribe((response) => {
       console.log(response);
       this.listVerificationStatus = response["ReturnObject"];
 
