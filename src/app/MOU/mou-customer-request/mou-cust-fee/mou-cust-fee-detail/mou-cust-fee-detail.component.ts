@@ -35,7 +35,7 @@ export class MouCustFeeDetailComponent implements OnInit {
     public activeModal: NgbActiveModal
   ) {
     var rmFeeType = new RefMasterObj();
-    rmFeeType.RefMasterTypeCode = "FEE_TYPE";
+    rmFeeType.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeFeeType;
     let getRefFee = this.httpClient.post(AdInsConstant.GetRefFeeList, null);
     let getFeeType = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, rmFeeType);
     forkJoin([getRefFee, getFeeType]).subscribe(
@@ -71,7 +71,7 @@ export class MouCustFeeDetailComponent implements OnInit {
   }
 
   feeTypeHandler(e){
-    if(e.target.value == 'AMT'){
+    if(e.target.value == AdInsConstant.FeeTypeAmt){
       this.MouCustFeeForm.patchValue({
         FeePrcnt: 0
       });
@@ -79,7 +79,7 @@ export class MouCustFeeDetailComponent implements OnInit {
       this.MouCustFeeForm.controls['FeeAmt'].setValidators([Validators.required, Validators.min(1)]);
       this.MouCustFeeForm.controls['FeeAmt'].updateValueAndValidity();
     }
-    else if(e.target.value == 'PRCNT'){
+    else if(e.target.value ==  AdInsConstant.FeeTypePrcnt){
       this.MouCustFeeForm.patchValue({
         FeeAmt: 0
       });
