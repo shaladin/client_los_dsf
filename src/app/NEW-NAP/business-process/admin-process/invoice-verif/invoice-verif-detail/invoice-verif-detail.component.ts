@@ -7,6 +7,7 @@ import { FormBuilder, FormArray } from '@angular/forms';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-invoice-verif-detail',
@@ -84,7 +85,7 @@ export class InvoiceVerifDetailComponent implements OnInit {
   }
 
   GetListVerifStatus(){
-    this.httpClient.post(AdInsConstant.GetListActiveRefStatusByStatusGrpCode, {statusGrpCode : "INV_VERF_RESULT_STAT"}).subscribe((response) => {
+    this.httpClient.post(AdInsConstant.GetListActiveRefStatusByStatusGrpCode, {statusGrpCode : CommonConstant.INV_VERF_RESULT_STAT}).subscribe((response) => {
       console.log(response);
       this.listVerificationStatus = response["ReturnObject"];
 
