@@ -9,8 +9,7 @@ import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-mou-cust-fee-detail',
-  templateUrl: './mou-cust-fee-detail.component.html',
-  styleUrls: ['./mou-cust-fee-detail.component.scss']
+  templateUrl: './mou-cust-fee-detail.component.html'
 })
 export class MouCustFeeDetailComponent implements OnInit {
   @Input() MouCustId: number;

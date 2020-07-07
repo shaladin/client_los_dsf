@@ -30,6 +30,7 @@ import { TabDeviationComponent } from "./tab-deviation/tab-deviation.component";
 import { InvoiceViewComponent } from "app/NEW-NAP/business-process/admin-process/invoice/invoice-view/invoice-view.component";
 import { ViewCollateralDataComponent } from "./view-collateral-data/view-collateral-data.component";
 import { ViewCollateralMultiAssetComponent } from "./view-collateral-multi-asset/view-collateral-multi-asset.component";
+import { ApprovalhistDevComponent } from 'app/NEW-NAP/sharing-component/approvalhist-dev/approvalhist-dev.component';
 
 @NgModule({
   exports: [
@@ -55,7 +56,8 @@ import { ViewCollateralMultiAssetComponent } from "./view-collateral-multi-asset
     AppInsuranceComponent,
     AppInsuranceDetailComponent,
     AppAssetDataDetailComponent,
-    ApprovalHistComponent
+    ApprovalHistComponent,
+    ApprovalhistDevComponent
   ],
   imports: [
     CommonModule,
@@ -90,6 +92,7 @@ import { ViewCollateralMultiAssetComponent } from "./view-collateral-multi-asset
     InvoiceViewComponent,
     ViewCollateralDataComponent,
     ViewCollateralMultiAssetComponent,
+    ApprovalhistDevComponent
   ],
   providers: [
     NGXToastrService
