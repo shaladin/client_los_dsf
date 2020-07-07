@@ -12,60 +12,65 @@ export class ApprovalHistComponent implements OnInit {
 
   @Input() AppId;
   AppNo;
-  result : any;
+  result: any;
   constructor(private http: HttpClient) { }
 
-  RfaLogObj :{
+  RfaLogObj: {
     RfaNo: any
   }
-  ListRfaLogObj : any = new Array(this.RfaLogObj); 
-  inputObj:  any;
-  listCreditApprvObj : any = new Array(this.inputObj);
-  listPckgValObj : any = new Array(this.inputObj);
-  listPreGoObj : any = new Array(this.inputObj);
-  count1 : number = 0;
-  count2 : number = 0;
-  count3 : number = 0;
+  ListRfaLogObj: any = new Array(this.RfaLogObj);
+  inputObj: any;
+  listCreditApprvObj: any = new Array(this.inputObj);
+  listPckgValObj: any = new Array(this.inputObj);
+  listPreGoObj: any = new Array(this.inputObj);
+  IsApvReady: boolean = false;
+  count1: number = 0;
+  count2: number = 0;
+  count3: number = 0;
 
   ngOnInit() {
 
-    this.http.post(AdInsConstant.GetAppById, {AppId : this.AppId}).subscribe(
+    this.http.post(AdInsConstant.GetAppById, { AppId: this.AppId }).subscribe(
       (response) => {
         this.AppNo = response["AppNo"];
         console.log(this.AppNo);
-        this.http.post(AdInsConstant.GetRfaLogByTrxNo, {TrxNo : this.AppNo}).subscribe(
+        this.http.post(AdInsConstant.GetRfaLogByTrxNo, { TrxNo: this.AppNo }).subscribe(
           (response) => {
             console.log(response);
             this.result = response;
             this.ListRfaLogObj = response["ListRfaLogObj"];
             console.log(this.ListRfaLogObj);
-            for(let i =0;i<this.ListRfaLogObj.length;i++){
-              if(this.ListRfaLogObj[i]["ApvCategory"]=="CRD_APV"){
+            for (let i = 0; i < this.ListRfaLogObj.length; i++) {
+              if (this.ListRfaLogObj[i]["ApvCategory"] == "CRD_APV") {
                 console.log(this.ListRfaLogObj[i]["RfaNo"])
                 this.listCreditApprvObj[i] = {
                   approvalBaseUrl: environment.ApprovalR3Url,
                   type: 'task',
-                  refId: this.ListRfaLogObj[i]["RfaNo"]
+                  refId: this.ListRfaLogObj[i]["RfaNo"],
+                  apvStat: this.ListRfaLogObj[i]["ApvStat"]
                 };
                 this.count1++;
-              }else if(this.ListRfaLogObj[i]["ApvCategory"]=="PCKG_VLDT_APV"){
+              } else if (this.ListRfaLogObj[i]["ApvCategory"] == "PCKG_VLDT_APV") {
                 console.log(this.ListRfaLogObj[i]["RfaNo"])
                 this.listPckgValObj[i] = {
                   approvalBaseUrl: environment.ApprovalR3Url,
                   type: 'task',
-                  refId: this.ListRfaLogObj[i]["RfaNo"]
+                  refId: this.ListRfaLogObj[i]["RfaNo"],
+                  apvStat: this.ListRfaLogObj[i]["ApvStat"]
                 };
                 this.count2++;
-              }else if(this.ListRfaLogObj[i]["ApvCategory"]=="PRE_GPV_APV"){
+              } else if (this.ListRfaLogObj[i]["ApvCategory"] == "PRE_GPV_APV") {
                 console.log(this.ListRfaLogObj[i]["RfaNo"])
                 this.listPreGoObj[i] = {
                   approvalBaseUrl: environment.ApprovalR3Url,
                   type: 'task',
-                  refId: this.ListRfaLogObj[i]["RfaNo"]
+                  refId: this.ListRfaLogObj[i]["RfaNo"],
+                  apvStat: this.ListRfaLogObj[i]["ApvStat"]
                 };
                 this.count3++;
               }
             }
+            this.IsApvReady = true;
           },
           (error) => {
             console.log(error);
@@ -77,6 +82,4 @@ export class ApprovalHistComponent implements OnInit {
       }
     );
   }
-
-
 }

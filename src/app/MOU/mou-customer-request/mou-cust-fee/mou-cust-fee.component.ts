@@ -9,8 +9,7 @@ import { MouCustFeeDetailComponent } from './mou-cust-fee-detail/mou-cust-fee-de
 
 @Component({
   selector: 'app-mou-cust-fee',
-  templateUrl: './mou-cust-fee.component.html',
-  styleUrls: ['./mou-cust-fee.component.scss']
+  templateUrl: './mou-cust-fee.component.html'
 })
 export class MouCustFeeComponent implements OnInit {
   @Input() MouCustId: number;
