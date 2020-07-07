@@ -47,8 +47,7 @@ export class InvoiceVerifDetailComponent implements OnInit {
     this.claimTask();
     this.viewObj = "./assets/ucviewgeneric/viewInvoiceVerif.json";
 
-    this.listVerificationStatus = [{ Key: "APV", Value: "Approve" }, { Key: "RJC", Value: "Reject" }];
-
+    this.GetListVerifStatus();
     var request = {
       AppId : this.AppId
     }
@@ -82,6 +81,15 @@ export class InvoiceVerifDetailComponent implements OnInit {
       InvoiceNotes: obj.InvoiceNotes,
       InvoiceDt : obj.InvoiceDueDt
     })
+  }
+
+  GetListVerifStatus(){
+    this.httpClient.post(AdInsConstant.GetListKeyValueActiveGrpCodeByCode, {statusGrpCode : "INV_VERF_RESULT_STAT"}).subscribe((response) => {
+      console.log(response);
+      this.listVerificationStatus = response["ReturnObject"];
+
+    })
+
   }
 
   Cancel()
