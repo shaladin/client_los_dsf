@@ -26,7 +26,7 @@ export class MouCancelComponent implements OnInit {
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem("UserAccess"));
 
-    if (this.user.MrOfficeTypeCode != "HO") {
+    if (this.user.MrOfficeTypeCode != AdInsConstant.HeadOffice) {
       this.router.navigate(["/Mou/UnauthorizedPage"]);
       return;
     }
@@ -68,7 +68,7 @@ export class MouCancelComponent implements OnInit {
     else if (event.Key == "cancel") {
       if (confirm("Are you sure to cancel this?")) {
         var mouCancel = new MouCustConfirmCancelObj;
-        mouCancel.MouStat = "CAN";
+        mouCancel.MouStat = AdInsConstant.MouStatCancel;
         mouCancel.MouCustId = event.RowObj.MouCustId;
         mouCancel.WfTaskListId = event.RowObj.WfTaskListId;
         this.http.post(AdInsConstant.EditMouForCancelByMouId, mouCancel).subscribe(
