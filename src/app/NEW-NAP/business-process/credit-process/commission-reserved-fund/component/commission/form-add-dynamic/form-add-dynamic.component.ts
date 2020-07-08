@@ -627,7 +627,7 @@ export class FormAddDynamicComponent implements OnInit {
         RowVersion: [''],
         TotalListAllocatedDivided: [Math.ceil(temp.length / 2)]
       }) as FormGroup;
-      TotalCommisionAmount += temp[i].AllocationAmount;
+      TotalCommisionAmount += allocAmt;
       this.FormObj.controls.arr["controls"][indexFormObj].controls.ListAllocated.push(eachAllocationDetail);
 
     }
