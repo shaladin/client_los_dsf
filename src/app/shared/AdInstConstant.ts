@@ -214,6 +214,16 @@ export class AdInsConstant {
   public static VerfAnswerTypeCodeUcInputNumber = "UC_INPUT_NUMBER"; 
   
 
+  //PO ITEM CODE
+  public static PoItemCodeTotalAssetPrice = "TOTAL_ASSET_PRICE";
+  public static PoItemCodeDpNett= "DP_NETT";
+
+
+  public static PoItemCodeTdpAtCoy = "TDP_AT_COY";
+  public static PoItemCodeInstAmt = "INST_AMT";
+  public static PoItemCodeInsNotCptlz = "INS_NOT_CPTLZ";
+  public static PoItemCodeLfiNotCptlz = "LFI_NOT_CPTLZ";
+  
   //STATUS GRP
   public static StatusGrpVerfResultStat= "VERF_RESULT_STAT";
 
