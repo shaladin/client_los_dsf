@@ -42,24 +42,24 @@ export class AgrmntActivationDetailComponent implements OnInit {
 
     this.AgrmntActForm = fb.group({
       'CreateDt': [this.CreateDt, Validators.compose([Validators.required])],
-      'AgrmntNo' : [''],
-      'isOverwrite' :[this.isOverwrite]
+      'AgrmntNo': [''],
+      'isOverwrite': [this.isOverwrite]
     });
     this.AgrmntActForm.controls['AgrmntNo'].disable();
   }
-  onChange(){
+  onChange() {
     console.log(this.CreateDt);
-    if(this.isOverwrite == true){
+    if (this.isOverwrite == true) {
       this.AgrmntActForm.controls['AgrmntNo'].setValidators([Validators.required]);
       this.AgrmntActForm.controls['AgrmntNo'].updateValueAndValidity();
       this.AgrmntActForm.controls['AgrmntNo'].enable();
     }
-    else{
+    else {
       this.AgrmntActForm.controls['AgrmntNo'].clearValidators();
       this.AgrmntActForm.controls['AgrmntNo'].updateValueAndValidity();
       this.AgrmntActForm.controls['AgrmntNo'].disable();
       this.AgrmntActForm.patchValue({
-        'AgrmntNo' :''
+        'AgrmntNo': ''
       });
     }
   }
@@ -100,18 +100,19 @@ export class AgrmntActivationDetailComponent implements OnInit {
 
       this.adminProcessSvc.GetListAppAssetAgrmntActivation(obj).subscribe((response) => {
         this.AssetObj = response["ListAppAsset"];
-        if(this.AssetObj.length == 0)
+        if (this.AssetObj.length == 0)
           this.IsEnd = true;
-        console.log(this.IsEnd);
+        // console.log(this.IsEnd);
+        var objFinDataAndFee = {
+          AppId: this.AppId,
+          ListAppAssetId: this.tempListId,
+          IsEnd: this.IsEnd
+        };
+        this.adminProcessSvc.GetAppFinDataAndFeeByAppIdAndListAppAssetId(objFinDataAndFee).subscribe((response) => {
+          this.AppFees = response["ListAppFeeObj"];
+          this.AppFinData = response["AppFinDataObj"];
+        })
       });
-      var objFinDataAndFee = {
-        AppId: this.AppId,
-        ListAppAssetId: this.tempListId
-      };
-      this.adminProcessSvc.GetAppFinDataAndFeeByAppIdAndListAppAssetId(objFinDataAndFee).subscribe((response) => {
-        this.AppFees = response["ListAppFeeObj"];
-        this.AppFinData = response["AppFinDataObj"];
-      })
 
       this.listSelectedId = new Array();
 
@@ -131,7 +132,7 @@ export class AgrmntActivationDetailComponent implements OnInit {
   }
   Submit() {
     this.markFormTouched(this.AgrmntActForm);
-    if(this.tempListId.length == 0){
+    if (this.tempListId.length == 0) {
       this.toastr.typeErrorCustom("Please select at least one Asset");
       return;
     }
@@ -141,10 +142,10 @@ export class AgrmntActivationDetailComponent implements OnInit {
         ListAppAssetId: this.tempListId,
         TaskListId: this.WfTaskListId,
         TransactionNo: this.TrxNo,
-        AgreementNo : this.AgrmntNo,
-        IsEnd : this.IsEnd
+        AgreementNo: this.AgrmntNo,
+        IsEnd: this.IsEnd
       }
-      this.adminProcessSvc.SubmitAgrmntActivationByHuman(Obj).subscribe((response) => {        
+      this.adminProcessSvc.SubmitAgrmntActivationByHuman(Obj).subscribe((response) => {
         var link = environment.losR3Web + "/Nap/AdminProcess/AgrmntActivation/Paging?BizTemplateCode=" + this.BizTemplateCode;
         this.router.navigate([]).then(result => { window.open(link, '_self'); });
       });
@@ -178,7 +179,7 @@ export class AgrmntActivationDetailComponent implements OnInit {
     });
   };
 
-  Cancel(){
+  Cancel() {
     var link = environment.losR3Web + "/Nap/AdminProcess/AgrmntActivation/Paging?BizTemplateCode=" + this.BizTemplateCode;
     this.router.navigate([]).then(result => { window.open(link, '_self'); });
   }
