@@ -43,6 +43,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   MouNo : string;
   AppTcList: any = [];
   identifier: string = "TCList";
+  IsApvReady: boolean = false;
 
   count1 : number = 0;
   RfaLogObj :{
@@ -93,9 +94,11 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
             this.listPreGoLiveAppvrObj[i] = {
               approvalBaseUrl: environment.ApprovalR3Url,
               type: 'task',
-              refId: this.ListRfaLogObj[i]["RfaNo"]
+              refId: this.ListRfaLogObj[i]["RfaNo"],
+              apvStat: this.ListRfaLogObj[i]["ApvStat"],
             }
           } 
+          this.IsApvReady = true;
       },
       (error) => {
         console.log(error);

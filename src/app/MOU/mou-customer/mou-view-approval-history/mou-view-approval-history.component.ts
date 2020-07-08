@@ -21,6 +21,7 @@ export class MouViewApprovalHistoryComponent implements OnInit {
   MouCustNo: string;
   MrMouTypeCode : string;
   result : any;
+  IsApvReady: boolean = false;
   constructor(private http: HttpClient, private router: Router) { 
     this.GetMouCustRvwHByMouCustIdUrl = AdInsConstant.GetMouCustRvwHByMouCustId;
     this.GetListMouCustRvwDUrl = AdInsConstant.GetListMouCustRvwD;
@@ -66,6 +67,7 @@ export class MouViewApprovalHistoryComponent implements OnInit {
             console.log(error);
           }
         );
+        this.IsApvReady = true;
       },
       (error) => {
         console.log(error);
