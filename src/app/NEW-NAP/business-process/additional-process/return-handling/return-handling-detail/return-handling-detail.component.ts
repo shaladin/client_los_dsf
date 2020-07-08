@@ -169,7 +169,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
   }
 
   async bindTaskObj(){
-    var refMasterObj = { RefMasterTypeCode: "RETURN_TASK", ReserveField1: this.lobCode};
+    var refMasterObj = { RefMasterTypeCode: AdInsConstant.RefMasterTypeCodeReturnTask, ReserveField1: this.lobCode};
     await this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
       (response) => {
         this.taskObj = response["ReturnObject"];

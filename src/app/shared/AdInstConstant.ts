@@ -66,7 +66,9 @@ export class AdInsConstant {
   public static TrxTypeCodePhn = "PHN";
   public static VerfTrxTypeCodePhn = "PHN_VERIF";
   public static VerfResultStatCodeNew = "NEW";
-  public static RtnHandlingReturnStatDone = "DONE"
+  public static RtnHandlingReturnStatDone = "DONE";
+  public static CrdInvstgStatDone = "DONE";
+  public static CrdRvwStatDone = "DONE";
   public static ASSET_TYPE_CAR = "CAR";
   public static LICENSE_PLATE_NO = "LICENSE PLATE NO";
   public static OFFERING_VALIDITY_APV = "OFF_VLD_APV";
@@ -182,10 +184,13 @@ export class AdInsConstant {
   public static CustGrupIndentifierTypePersonal = "custGrpMember";
   public static CustGrupIndentifierTypeCompany = "custGrpMemberCompany";
 
+  //CUST PERSONAL RELATIONSHIP
+  public static SelfCustomer = "SELF";
 
   //OFFICE TYPE
   public static HeadOffice = "HO";
   public static CollectionGroup = "CG"
+
   //MOU STAT
   public static MouStatCancel = "CAN";
   public static MouDocSigner = "DSG";
@@ -200,9 +205,26 @@ export class AdInsConstant {
   public static LeadStepNew = "NEW";
   public static LeadStepReject ="RJC";
 
-  //Asset Condition
+  //ASSET CONDITION 
   public static AssetConditionUsed ="USED";
+  public static AssetConditionNew = "NEW";
+  
+  //REF VERF ANSWER_TYPE
+  public static VerfAnswerTypeCodeDdl = "DDL"; 
+  public static VerfAnswerTypeCodeUcInputNumber = "UC_INPUT_NUMBER"; 
+  
 
+  //STATUS GRP
+  public static StatusGrpVerfResultStat= "VERF_RESULT_STAT";
+
+  //REF PROD COMPNT
+  public static RefProdCompntCodeWayOfFinancing = "WAY_OF_FINANCING";
+  public static RefProdCompntCodePurposeOfFinancing = "PURPOSE_OF_FINANCING";
+  
+
+  //VERIFICATION
+  public static VerificationNew = "NEW";
+  public static VerificationFail= "FAIL";
   //Asset Usage 
   public static AssetUsageNonComm = "NON_COMM" 
   
@@ -220,9 +242,15 @@ export class AdInsConstant {
   //Interest Type
   public static InterestTypeFixed ="FIXED";
 
-  //Asset Stat
+  //ASSET STAT
   public static AssetStatNew = "NEW";
   public static AssetStatExisting = "EXISTING";
+
+  //CUST STAT
+  public static CustStatNew = "NEW";
+  public static CustStatExisting = "EXISTING";
+  //VERF TRX TYPE
+  public static VerfTrxTypeCodeCustConfirm = "CUST_CONFIRM";
   
   //Asset Master
   public static GetAssetMasterTypeByFullAssetCode = environment.FoundationR3Url + "/AssetMaster/GetAssetMasterTypeByFullAssetCode";
@@ -270,6 +298,7 @@ export class AdInsConstant {
 
   //FIRST INST TYPE
   public static FirstInstTypeAdvance = "AD"
+
   //FEE TYPE
   public static FeeTypeAmt = "AMT";
   public static FeeTypePrcnt = "PRCNT";
@@ -383,6 +412,12 @@ export class AdInsConstant {
   //REF REASON
   public static GetListActiveRefReason = environment.FoundationR3Url + "/RefReason/GetListActiveRefReason";
   public static GetListActiveRefReasonByRefReasonTypeCode = environment.FoundationR3Url + "/RefReason/GetListKeyValueByCode";
+  
+
+  public static RefReasonTypeCodeAppAgrCncl = "APP_AGR_CNCL";
+  public static RefReasonTypeCodePreGlvApv  = "PRE_GLV_APV";
+  public static RefReasonTypeCodeCrdReview  = "CRD_REVIEW"; 
+  
   // AppAgrmntCancel
   public static AddAppAgrmntCancel = environment.losUrl + "/AppAgrmntCancel/AddAppAgrmntCancel"
 
@@ -606,6 +641,11 @@ export class AdInsConstant {
   public static RefMasterTypeCodePayPeriodToInsco= "PAY_PERIOD_TO_INSCO"; 
   public static RefMasterTypeCodeLifeInsPayMethod= "LIFE_INS_PAY_METHOD"; 
   public static RefMasterTypeCodeLifeInscoBranch= "LIFE_INSCO_BRANCH"; 
+  public static RefMasterTypeCodeReturnTask = "RETURN_TASK"; 
+  public static RefMasterTypeCodeVerfSubjRelation = "VERF_SUBJ_RELATION"; 
+  public static RefMasterTypeCodeCrdRvwAnalysisItem = "CRD_RVW_ANALYSIS_ITEM"; 
+  public static RefMasterTypeCodeCrdInvstgAnalysisItem = "CRD_INVSTG_ANALYSIS_ITEM"; 
+  
   
   
   //REF PROV DISTRICT

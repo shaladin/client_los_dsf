@@ -61,10 +61,10 @@ export class OutstandingTcPagingComponent implements OnInit {
     }else if(ev.Key == "agrmnt"){
       var bizTemplateCode = ev.RowObj.BizTemplateCode;
 
-      if(bizTemplateCode == "CF4W" || bizTemplateCode == "CFRFN4W" || bizTemplateCode == "FACTORING"){
+      if(bizTemplateCode == AdInsConstant.CF4W || bizTemplateCode == AdInsConstant.CFRFN4W || bizTemplateCode == AdInsConstant.FACTORING ){
         window.open( environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + ev.RowObj.AgrmntId, "_blank");
       }
-      else if(bizTemplateCode == "FL4W"){
+      else if(bizTemplateCode == AdInsConstant.FL4W){
         window.open( environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + ev.RowObj.AgrmntId, "_blank");
       }
     }

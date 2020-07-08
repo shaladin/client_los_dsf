@@ -220,7 +220,7 @@ export class DocSignerDetailComponent implements OnInit {
       this.inputLookupAppCustCompanyShareHolder3Obj.jsonSelect = { MgmntShrholderName: this.ResponseAgrmntSignerObj.AppCustCompanyMgmntShrholder3Name };
     }
 
-    if(this.BizTemplateCode == "CFRFN4W" || this.BizTemplateCode == "FCTR"){
+    if(this.BizTemplateCode == AdInsConstant.CFRFN4W || this.BizTemplateCode == AdInsConstant.FCTR){
       this.inputLookupBranchEmpObj.isRequired = false;
       this.isHidden = true;
     }
@@ -287,11 +287,11 @@ export class DocSignerDetailComponent implements OnInit {
   SaveForm() {
     this.agrmntSignerObj.AgrmntId = this.AgrmntId;
 
-    if (this.MrCustTypeCode == "COMPANY") {
+    if (this.MrCustTypeCode == AdInsConstant.CustTypeCompany) {
       this.agrmntSignerObj.MrJobPositionMgmntShrholder1Code = this.DocSignerForm.controls.MrJobPositionMgmntShrholder1Code.value;
       this.agrmntSignerObj.MrJobPositionMgmntShrholder2Code = this.DocSignerForm.controls.MrJobPositionMgmntShrholder2Code.value;
       this.agrmntSignerObj.MrJobPositionMgmntShrholder3Code = this.DocSignerForm.controls.MrJobPositionMgmntShrholder3Code.value;
-    } else if (this.MrCustTypeCode == "PERSONAL") {
+    } else if (this.MrCustTypeCode == AdInsConstant.CustTypePersonal) {
       this.agrmntSignerObj.AppCustPersonalId = this.ResponseAppCustDataObj.AppCustPersonalId;
       this.agrmntSignerObj.AppCustSpouseId = this.ResponseAppCustDataObj.AppCustSpouseId;
     }
@@ -327,10 +327,10 @@ export class DocSignerDetailComponent implements OnInit {
     {
       var bizTemplateCode = localStorage.getItem("BizTemplateCode")
 
-      if(bizTemplateCode == "CF4W" || bizTemplateCode == "CFRFN4W" || bizTemplateCode == "FACTORING"){
+      if(bizTemplateCode == AdInsConstant.CF4W|| bizTemplateCode == AdInsConstant.CFRFN4W || bizTemplateCode == AdInsConstant.FACTORING){
         window.open( environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + ev.ViewObj.AgrmntId, "_blank");
       }
-      else if(bizTemplateCode == "FL4W"){
+      else if(bizTemplateCode == AdInsConstant.FL4W){
         window.open( environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + ev.ViewObj.AgrmntId, "_blank");
       }
     }

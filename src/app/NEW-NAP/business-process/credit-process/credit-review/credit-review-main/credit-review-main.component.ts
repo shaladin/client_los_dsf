@@ -162,7 +162,7 @@ export class CreditReviewMainComponent implements OnInit {
   }
 
   async BindCreditAnalysisItemFormObj() {
-    var refMasterObj = { RefMasterTypeCode: "CRD_RVW_ANALYSIS_ITEM" };
+    var refMasterObj = { RefMasterTypeCode: AdInsConstant.RefMasterTypeCodeCrdRvwAnalysisItem };
     await this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
       (response) => {
         console.log(response);
@@ -221,7 +221,7 @@ export class CreditReviewMainComponent implements OnInit {
   }
 
   async BindDDLRecommendation() {
-    var Obj = { RefReasonTypeCode: "CRD_REVIEW" };
+    var Obj = { RefReasonTypeCode: AdInsConstant.RefReasonTypeCodeCrdReview };
     await this.http.post(AdInsConstant.GetListActiveRefReason, Obj).toPromise().then(
       (response) => {
         console.log(response);
@@ -235,7 +235,7 @@ export class CreditReviewMainComponent implements OnInit {
   }
 
   async BindDDLReasonReturn() {
-    var obj = { RefReasonTypeCode: "CRD_REVIEW" };
+    var obj = { RefReasonTypeCode:  AdInsConstant.RefReasonTypeCodeCrdReview  };
     await this.http.post(AdInsConstant.GetListActiveRefReason, obj).toPromise().then(
       (response) => {
         console.log(response);
@@ -295,7 +295,7 @@ export class CreditReviewMainComponent implements OnInit {
     var tempAppCrdRvwObj = new AppCrdRvwHObj();
     tempAppCrdRvwObj.AppId = this.appId;
     tempAppCrdRvwObj.SubmitDt = this.UserAccess.BusinessDt;
-    tempAppCrdRvwObj.CrdRvwStat = "DONE";
+    tempAppCrdRvwObj.CrdRvwStat = AdInsConstant.CrdRvwStatDone;
     tempAppCrdRvwObj.ReturnNotes = "";
     if (this.ResponseExistCreditReview != null) {
       tempAppCrdRvwObj.RowVersion = this.ResponseExistCreditReview.RowVersion;

@@ -62,7 +62,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
     let poUrl = "";
     if (this.lobCode == "CF4W") {
       poUrl = AdInsConstant.GetAllAssetDataForPOByAsset;
-    } else if (this.lobCode == "FL4W") {
+    } else if (this.lobCode == AdInsConstant.FL4W) {
       poUrl = AdInsConstant.GetAllAssetDataForPOMultiAsset;
     }
 
