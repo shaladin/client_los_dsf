@@ -1005,7 +1005,7 @@ copyToLocationAddr() {
         return false;
       }
 
-      this.allAssetDataObj.LOBCode = AdInsConstant.FL4W;
+      this.allAssetDataObj.LOBCode = CommonConstant.FL4W;
 
       this.http.post(this.addEditAllAssetDataUrl, this.allAssetDataObj).subscribe(
         (response) => {
@@ -1039,7 +1039,7 @@ copyToLocationAddr() {
         return false;
       }
 
-      this.allAssetDataObj.LOBCode = AdInsConstant.FL4W;
+      this.allAssetDataObj.LOBCode = CommonConstant.FL4W;
 
       this.http.post(this.addEditAllAssetDataUrl, this.allAssetDataObj).subscribe(
         (response) => {
