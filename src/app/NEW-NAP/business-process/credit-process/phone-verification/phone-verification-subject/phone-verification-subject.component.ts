@@ -240,7 +240,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
 
       }
     );
-    if (this.verifResultObj == "") {
+    if (this.verifResultObj.VerfResultId == 0) {
       var Business_Date = localStorage.getItem('BusinessDate');
       var datePipe = new DatePipe("en-US");
       var value = datePipe.transform(Business_Date, "yyyy-MM-dd");
