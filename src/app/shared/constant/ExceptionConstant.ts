@@ -9,4 +9,5 @@ export class ExceptionConstant {
     public static NOT_ELIGIBLE_FOR_TAKE_BACK = "You are not Eligible to Take Back this Task";
     public static NOT_ELIGIBLE_FOR_HOLD = "You are not Eligible to Hold this Task";
     public static NOT_ELIGIBLE_FOR_PROCESS_TASK = "You are not Eligible to Process this Task";
+    public static DataErrorMessageTcData = "Please Save TC Data First!";
 }

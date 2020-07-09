@@ -12,6 +12,7 @@ import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -305,7 +306,7 @@ export class NapAddDetailComponent implements OnInit {
   Submit() {
     if (this.ReturnHandlingHId > 0) {
       if (!this.IsSavedTC) {
-        this.toastr.warningMessage("Please Save TC Data First!");
+        this.toastr.warningMessage(ExceptionConstant.DataErrorMessageTcData);
       }
       else {
         var ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();

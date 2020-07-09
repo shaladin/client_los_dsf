@@ -99,7 +99,7 @@ export class AppAddFreeComponent implements OnInit {
 
     this.GetOfficeDDL();
 
-    if (this.user.MrOfficeTypeCode == "HO") {
+    if (this.user.MrOfficeTypeCode == CommonConstant.HeadOffice) {
       this.NapAppForm.controls.OriOfficeCode.disable();
       this.NapAppForm.patchValue({
         OriOfficeCode: this.user.OfficeCode,
@@ -107,7 +107,7 @@ export class AppAddFreeComponent implements OnInit {
         CrtOfficeCode: this.user.OfficeCode,
         CrtOfficeName: this.user.OfficeName,
       });
-    } else if (this.user.MrOfficeTypeCode == "Center Group") {
+    } else if (this.user.MrOfficeTypeCode == CommonConstant.CenterGroup) {
       this.NapAppForm.patchValue({
         CrtOfficeCode: this.user.OfficeCode,
         CrtOfficeName: this.user.OfficeName,
@@ -201,9 +201,9 @@ export class AppAddFreeComponent implements OnInit {
     napAppObj.AppCurrStep = CommonConstant.AppStepNew;
 
     napAppObj = this.CheckValue(napAppObj);
-    if (this.user.MrOfficeTypeCode == "HO") {
+    if (this.user.MrOfficeTypeCode == CommonConstant.HeadOffice) {
       napAppObj.OriOfficeCode = this.user.OfficeCode;
-    } else if (this.user.MrOfficeTypeCode == "Center Group") {
+    } else if (this.user.MrOfficeTypeCode == CommonConstant.CenterGroup) {
 
     }
     console.log(napAppObj);
@@ -263,13 +263,13 @@ export class AppAddFreeComponent implements OnInit {
         // console.log(response);
         var temp = response["ReturnObject"];
         for(var i=0;i<temp.length;i++){
-          if(temp[i].RefProdCompntCode == "LOB"){
+          if(temp[i].RefProdCompntCode == CommonConstant.RefProdCompntLob){
             tempLobCode = temp[i].CompntValue;
-          }else if(temp[i].RefProdCompntCode == "CURR"){
+          }else if(temp[i].RefProdCompntCode == CommonConstant.RefProdCompntCurr){
             tempCurrCode = temp[i].CompntValue;
-          }else if(temp[i].RefProdCompntCode == "PAYFREQ"){
+          }else if(temp[i].RefProdCompntCode == CommonConstant.RefProdCompntPayFreq){
             tempPayFreqCode = temp[i].CompntValue;
-          }else if(temp[i].RefProdCompntCode == "PROD_TYPE"){
+          }else if(temp[i].RefProdCompntCode == CommonConstant.RefProdCompntProdType){
             tempRefProdTypeCode = temp[i].CompntValue;
           }else{
             console.log("Not");
