@@ -273,7 +273,7 @@ copyToLocationAddr() {
 
     this.branchObj = new VendorEmpObj();
     this.branchObj.VendorId = event.VendorId;
-    this.branchObj.MrVendorEmpPositionCode = AdInsConstant.BRANCH_MANAGER_JOB_CODE;
+    this.branchObj.MrVendorEmpPositionCode = CommonConstant.BRANCH_MANAGER_JOB_CODE;
     this.http.post(this.getListVendorEmp, this.branchObj).subscribe(
     (response) => {
         this.listBranchObj = response["ReturnObject"];
@@ -289,7 +289,7 @@ copyToLocationAddr() {
 
     this.salesObj = new VendorEmpObj();
     this.salesObj.VendorId = event.VendorId;
-    this.salesObj.MrVendorEmpPositionCode = AdInsConstant.SALES_JOB_CODE;
+    this.salesObj.MrVendorEmpPositionCode = CommonConstant.SALES_JOB_CODE;
     this.http.post(this.getListVendorEmp, this.salesObj).subscribe(
     (response) => {
         this.listSalesObj = response["ReturnObject"];
@@ -305,7 +305,7 @@ copyToLocationAddr() {
 
     this.adminHeadObj = new VendorEmpObj();
     this.adminHeadObj.VendorId = event.VendorId;
-    this.adminHeadObj.MrVendorEmpPositionCode = AdInsConstant.ADMIN_HEAD_JOB_CODE;
+    this.adminHeadObj.MrVendorEmpPositionCode = CommonConstant.ADMIN_HEAD_JOB_CODE;
     this.http.post(this.getListVendorEmp, this.adminHeadObj).subscribe(
     (response) => {
         this.listAdminHeadObj = response["ReturnObject"];
@@ -573,14 +573,14 @@ copyToLocationAddr() {
 
               this.appAssetSupplEmpBranchObj = new AppAssetSupplEmpObj();
               this.appAssetSupplEmpBranchObj.AppAssetId = this.AppAssetId;
-              this.appAssetSupplEmpBranchObj.MrSupplEmpPositionCode = AdInsConstant.BRANCH_MANAGER_JOB_CODE;
+              this.appAssetSupplEmpBranchObj.MrSupplEmpPositionCode = CommonConstant.BRANCH_MANAGER_JOB_CODE;
               this.http.post(this.getAppAssetSupplEmpByAppAssetIdAndCode, this.appAssetSupplEmpBranchObj).subscribe(
               (response) => {
                 this.branchAppAssetSupplEmpObj = response;
 
                 this.branchObj = new VendorEmpObj();
                 this.branchObj.VendorId = this.returnVendorObj.VendorId;
-                this.branchObj.MrVendorEmpPositionCode = AdInsConstant.BRANCH_MANAGER_JOB_CODE;
+                this.branchObj.MrVendorEmpPositionCode = CommonConstant.BRANCH_MANAGER_JOB_CODE;
                 this.http.post(this.getListVendorEmp, this.branchObj).subscribe(
                 (response) => {
                     this.listBranchObj = response["ReturnObject"];
@@ -599,14 +599,14 @@ copyToLocationAddr() {
 
               this.appAssetSupplEmpHeadObj = new AppAssetSupplEmpObj();
               this.appAssetSupplEmpHeadObj.AppAssetId = this.AppAssetId;
-              this.appAssetSupplEmpHeadObj.MrSupplEmpPositionCode = AdInsConstant.ADMIN_HEAD_JOB_CODE;
+              this.appAssetSupplEmpHeadObj.MrSupplEmpPositionCode = CommonConstant.ADMIN_HEAD_JOB_CODE;
               this.http.post(this.getAppAssetSupplEmpByAppAssetIdAndCode, this.appAssetSupplEmpHeadObj).subscribe(
               (response) => {
                 this.headAppAssetSupplEmpObj = response;
 
                 this.adminHeadObj = new VendorEmpObj();
                 this.adminHeadObj.VendorId = this.returnVendorObj.VendorId;
-                this.adminHeadObj.MrVendorEmpPositionCode = AdInsConstant.ADMIN_HEAD_JOB_CODE;
+                this.adminHeadObj.MrVendorEmpPositionCode = CommonConstant.ADMIN_HEAD_JOB_CODE;
                 this.http.post(this.getListVendorEmp, this.adminHeadObj).subscribe(
                 (response) => {
                     this.listAdminHeadObj = response["ReturnObject"];
@@ -619,14 +619,14 @@ copyToLocationAddr() {
 
               this.appAssetSupplEmpSalesObj = new AppAssetSupplEmpObj();
               this.appAssetSupplEmpSalesObj.AppAssetId = this.AppAssetId;
-              this.appAssetSupplEmpSalesObj.MrSupplEmpPositionCode = AdInsConstant.SALES_JOB_CODE;
+              this.appAssetSupplEmpSalesObj.MrSupplEmpPositionCode = CommonConstant.SALES_JOB_CODE;
               this.http.post(this.getAppAssetSupplEmpByAppAssetIdAndCode, this.appAssetSupplEmpSalesObj).subscribe(
               (response) => {
                 this.salesAppAssetSupplEmpObj = response;
 
                 this.salesObj = new VendorEmpObj();
                 this.salesObj.VendorId = this.returnVendorObj.VendorId;
-                this.salesObj.MrVendorEmpPositionCode = AdInsConstant.SALES_JOB_CODE;
+                this.salesObj.MrVendorEmpPositionCode = CommonConstant.SALES_JOB_CODE;
                 this.http.post(this.getListVendorEmp, this.salesObj).subscribe(
                 (response) => {
                     this.listSalesObj = response["ReturnObject"];
@@ -851,12 +851,12 @@ copyToLocationAddr() {
     else{
       this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpName = this.AssetDataForm.controls["AdminHeadName"].value;
       this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpNo = this.AssetDataForm.controls["AdminHeadNo"].value;
-      this.allAssetDataObj.AppAssetSupplEmpAdminObj.MrSupplEmpPositionCode = AdInsConstant.ADMIN_HEAD_JOB_CODE;
+      this.allAssetDataObj.AppAssetSupplEmpAdminObj.MrSupplEmpPositionCode = CommonConstant.ADMIN_HEAD_JOB_CODE;
     }
 
     this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpName = this.AssetDataForm.controls["SalesPersonName"].value;
     this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpNo = this.AssetDataForm.controls["SalesPersonNo"].value;
-    this.allAssetDataObj.AppAssetSupplEmpSalesObj.MrSupplEmpPositionCode = AdInsConstant.SALES_JOB_CODE;
+    this.allAssetDataObj.AppAssetSupplEmpSalesObj.MrSupplEmpPositionCode = CommonConstant.SALES_JOB_CODE;
 
     // if(this.AssetDataForm.controls["BranchManagerName"].value == "undefined" || this.AssetDataForm.controls["BranchManagerName"].value == "")
     if(!this.AssetDataForm.controls["BranchManagerName"].value)
@@ -867,7 +867,7 @@ copyToLocationAddr() {
     } else {
       this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpName = this.AssetDataForm.controls["BranchManagerName"].value;
       this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpNo = this.AssetDataForm.controls["BranchManagerNo"].value;
-      this.allAssetDataObj.AppAssetSupplEmpManagerObj.MrSupplEmpPositionCode = AdInsConstant.BRANCH_MANAGER_JOB_CODE;
+      this.allAssetDataObj.AppAssetSupplEmpManagerObj.MrSupplEmpPositionCode = CommonConstant.BRANCH_MANAGER_JOB_CODE;
     }
   }
 

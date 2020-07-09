@@ -8,6 +8,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-fraud-detection-paging',
@@ -75,7 +76,7 @@ export class FraudDetectionPagingComponent implements OnInit {
             }
 
             if(dupCheckErrorMessage == null && surveyErrorMessage == null && fraudDetectionErrorMessage == null){
-              if (event.RowObj.BizTemplateCode == AdInsConstant.FL4W)
+              if (event.RowObj.BizTemplateCode == CommonConstant.FL4W)
                 this.router.navigate(['/Nap/CreditProcess/FraudVerifMultiAsset/Paging'], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } })
               else
                 this.router.navigate(["/Nap/CreditProcess/FraudDetection/Detail"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
@@ -86,7 +87,7 @@ export class FraudDetectionPagingComponent implements OnInit {
           }
         );
       }else{
-        if (event.RowObj.BizTemplateCode == AdInsConstant.FL4W)
+        if (event.RowObj.BizTemplateCode == CommonConstant.FL4W)
         this.router.navigate(['/Nap/CreditProcess/FraudVerifMultiAsset/Paging'], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } })
       else
         this.router.navigate(["/Nap/CreditProcess/FraudDetection/Detail"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });

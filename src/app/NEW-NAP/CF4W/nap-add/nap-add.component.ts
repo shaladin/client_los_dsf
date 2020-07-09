@@ -10,6 +10,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueModel';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-nap-add',
@@ -136,7 +137,7 @@ export class NapAddComponent implements OnInit {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.propName = 'vrl.BIZ_TMPLT_CODE';
-    critObj.value = AdInsConstant.CF4W;
+    critObj.value = CommonConstant.CF4W;
     arrCopyLookupCrit.push(critObj);
     this.inputLookupObjCopyProduct.addCritInput = arrCopyLookupCrit;
 
@@ -152,7 +153,7 @@ export class NapAddComponent implements OnInit {
     addCritBizTempalte.DataType = "text";
     addCritBizTempalte.propName = "rlob.BIZ_TMPLT_CODE";
     addCritBizTempalte.restriction = AdInsConstant.RestrictionEq;
-    addCritBizTempalte.value = AdInsConstant.CF4W;
+    addCritBizTempalte.value = CommonConstant.CF4W;
     arrAddCrit.push(addCritBizTempalte);
 
     this.inputLookupObjName.addCritInput = arrAddCrit;
@@ -203,7 +204,7 @@ export class NapAddComponent implements OnInit {
     return obj;
   }
 
-  testData(){
+  testData() {
     console.log(this.NapAppForm);
     console.log(this.NapAppForm.valid);
     this.getFormValidationErrors();
@@ -215,29 +216,29 @@ export class NapAddComponent implements OnInit {
     const invalid = [];
     const controls = this.NapAppForm.controls;
     for (const name in controls) {
-        if (controls[name].invalid) {
-            invalid.push(name);
-            console.log(name);
-        }
+      if (controls[name].invalid) {
+        invalid.push(name);
+        console.log(name);
+      }
     }
     console.log(invalid);
   }
-  
+
   SaveForm() {
     console.log("masuk save");
     var napAppObj = new NapAppModel();
     napAppObj = this.NapAppForm.value;
     napAppObj.AppCreatedDt = this.user.BusinessDt;
     napAppObj.IsAppInitDone = false;
-    napAppObj.AppStat = AdInsConstant.AppStepNew;
-    napAppObj.AppCurrStep = AdInsConstant.AppStepNew;
-    napAppObj.BizTemplateCode = AdInsConstant.CF4W;
+    napAppObj.AppStat = CommonConstant.AppStepNew;
+    napAppObj.AppCurrStep = CommonConstant.AppStepNew;
+    napAppObj.BizTemplateCode = CommonConstant.CF4W;
     napAppObj.LobCode = this.NapAppForm.controls.LobCode.value;
     napAppObj.OriOfficeCode = this.NapAppForm.controls['OriOfficeCode'].value;
     napAppObj.OriOfficeName = this.NapAppForm.controls['OriOfficeName'].value;
     napAppObj = this.CheckValue(napAppObj);
 
-    var url =AdInsConstant.AddApp;
+    var url = AdInsConstant.AddApp;
     this.http.post(url, napAppObj).subscribe(
       (response) => {
         console.log(response);
@@ -257,7 +258,7 @@ export class NapAddComponent implements OnInit {
       ProdOfferingVersion: ev.ProdOfferingVersion,
       AppNo: ev.AppNo,
       MouCustId: ev.MouCustId,
-      LeadId: ev.LeadId, 
+      LeadId: ev.LeadId,
       CurrCode: ev.CurrCode,
       LobCode: ev.LobCode,
       RefProdTypeCode: ev.RefProdTypeCode,
@@ -277,7 +278,7 @@ export class NapAddComponent implements OnInit {
     console.log(this.NapAppForm);
     // this.inputLookupObjName.nameSelect = ev.ProdOfferingName;
     this.inputLookupObjName.isRequired = false;
-    this.isCopyData=true;
+    this.isCopyData = true;
   }
 
   getLookupAppResponseName(ev: any) {
@@ -301,9 +302,9 @@ export class NapAddComponent implements OnInit {
             tempCurrCode = temp[i].CompntValue;
           } else if (temp[i].RefProdCompntCode == "PAYFREQ") {
             var listPayFreqCode = temp[i].CompntValue.split(";");
-            if(listPayFreqCode.length == 1){
+            if (listPayFreqCode.length == 1) {
               tempPayFreqCode = temp[i].CompntValue;
-            }else{
+            } else {
               tempPayFreqCode = null;
             }
           } else if (temp[i].RefProdCompntCode == "PROD_TYPE") {
@@ -347,7 +348,7 @@ export class NapAddComponent implements OnInit {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.propName = 'vrl.BIZ_TMPLT_CODE';
-    critObj.value = AdInsConstant.CF4W;
+    critObj.value = CommonConstant.CF4W;
     arrCopyLookupCrit.push(critObj);
 
     this.inputLookupObjCopyProduct.addCritInput = arrCopyLookupCrit;
@@ -365,7 +366,7 @@ export class NapAddComponent implements OnInit {
     addCritBizTempalte.DataType = "text";
     addCritBizTempalte.propName = "rlob.BIZ_TMPLT_CODE";
     addCritBizTempalte.restriction = AdInsConstant.RestrictionEq;
-    addCritBizTempalte.value = AdInsConstant.CF4W;
+    addCritBizTempalte.value = CommonConstant.CF4W;
     arrAddCrit.push(addCritBizTempalte);
 
     this.inputLookupObjName.addCritInput = arrAddCrit;

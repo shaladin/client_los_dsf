@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-mou-view-detail',
@@ -60,7 +61,7 @@ export class MouViewDetailComponent implements OnInit {
         this.PlafondAmt = this.mouCust.PlafondAmt;
         this.IsRevolving = this.mouCust.IsRevolving;
 
-        if (this.MouType == AdInsConstant.GENERAL)
+        if (this.MouType == CommonConstant.GENERAL)
         {
           this.mouCustClause = response["MouCustClauseObj"];
           this.AssetTypeCode = this.mouCustClause.AssetTypeCode;
@@ -73,7 +74,7 @@ export class MouViewDetailComponent implements OnInit {
           this.TenorFrom = this.mouCustClause.TenorFrom;
           this.TenorTo = this.mouCustClause.TenorTo;
         }
-        else if (this.MouType == AdInsConstant.FACTORING)
+        else if (this.MouType == CommonConstant.FACTORING)
         {
           this.mouCustFctr = response["MouCustFctrObj"];
           this.AssetTypeCode = this.mouCustFctr.AssetTypeCode;

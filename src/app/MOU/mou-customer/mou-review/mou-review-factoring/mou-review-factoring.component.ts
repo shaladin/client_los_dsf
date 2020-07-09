@@ -10,6 +10,7 @@ import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { first } from 'rxjs/operators';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-mou-review-factoring',
@@ -92,7 +93,7 @@ export class MouReviewFactoringComponent implements OnInit {
             this.MrCustTypeCode = response['MrCustTypeCode']; 
         });
     
-    this.http.post(AdInsConstant.GetListActiveRefReason, {RefReasonTypeCode: AdInsConstant.REF_REASON_MOU_FACTORING}).pipe(first()).subscribe(
+    this.http.post(AdInsConstant.GetListActiveRefReason, {RefReasonTypeCode: CommonConstant.REF_REASON_MOU_FACTORING}).pipe(first()).subscribe(
       (response) => {
         this.listReason = response["ReturnObject"];
         this.MouReviewDataForm.patchValue({

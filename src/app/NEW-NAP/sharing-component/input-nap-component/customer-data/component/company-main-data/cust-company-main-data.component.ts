@@ -222,7 +222,7 @@ export class CustCompanyMainDataComponent implements OnInit {
       (response) => {
         this.AppObj = response;
         
-        if (this.AppObj.BizTemplateCode != AdInsConstant.FCTR) {
+        if (this.AppObj.BizTemplateCode != CommonConstant.FCTR) {
           this.InputLookupCustomerObj.isReadonly = false;
         }
 

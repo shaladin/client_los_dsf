@@ -10,11 +10,11 @@ import { MouCustFctrObj } from 'app/shared/model/MouCustFctrObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-application-data-factoring',
-  templateUrl: './application-data-factoring.component.html',
-  styleUrls: ['./application-data-factoring.component.scss']
+  templateUrl: './application-data-factoring.component.html'
 })
 export class ApplicationDataFactoringComponent implements OnInit {
   @Input() AppId: number;
@@ -385,7 +385,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
     addCrit3.DataType = "text";
     addCrit3.propName = "rbt.JOB_TITLE_CODE";
     addCrit3.restriction = AdInsConstant.RestrictionIn;
-    addCrit3.listValue = [AdInsConstant.SALES_JOB_CODE];
+    addCrit3.listValue = [CommonConstant.SALES_JOB_CODE];
     this.arrAddCrit.push(addCrit3);
 
     var addCrit4 = new CriteriaObj();

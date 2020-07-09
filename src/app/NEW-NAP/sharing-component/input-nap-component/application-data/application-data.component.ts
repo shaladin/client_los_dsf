@@ -364,7 +364,7 @@ export class ApplicationDataComponent implements OnInit {
     addCrit3.DataType = "text";
     addCrit3.propName = "rbt.JOB_TITLE_CODE";
     addCrit3.restriction = AdInsConstant.RestrictionIn;
-    addCrit3.listValue = [AdInsConstant.SALES_JOB_CODE];
+    addCrit3.listValue = [CommonConstant.SALES_JOB_CODE];
     this.arrAddCrit.push(addCrit3);
 
     var addCrit4 = new CriteriaObj();

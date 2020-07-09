@@ -8,58 +8,6 @@ export class AdInsConstant {
   public static NOT_ELIGIBLE_FOR_HOLD = "You are not Eligible to Hold this Task";
   public static NOT_ELIGIBLE_FOR_PROCESS_TASK = "You are not Eligible to Process this Task";
 
-  //App Step
-  public static AppStepNew = "NEW";
-  public static AppStepCust = "CUST";
-  public static AppStepGuar = "GUAR";
-  public static AppStepRef = "REF";
-  public static AppStepApp = "APP";
-  public static AppStepAsset = "ASSET";
-  public static AppStepIns = "INS";
-  public static AppStepLIns = "LFI";
-  public static AppStepFin = "FIN";
-  public static AppStepTC = "TC";
-  public static AppStepColl = "COLL";
-  public static AppStepInvoice = "INVOICE";
-  public static AppStepOther = "OTH";
-  public static AppStepCrdIns = "CRI";
-  public static AppStepComm = "COM";
-  public static AppStepRSVFund = "RSV";
-  public static AppStepPhnVerif = "PHN";
-  public static AppStepSurvey = "SRVY";
-  public static AppStepFraud = "FRD";
-  public static AppStepCrdInv = "CINV";
-  public static AppStepScoring = "SCOR";
-  public static AppStepDev = "DEVC";
-  public static AppStepRvw = "RVW";
-  public static AppStepApv = "APV";
-  public static AppStepRtn = "RTN";
-  public static AppStepAgr = "AGR";
-  public static AppStepPO = "PO";
-  public static AppStepOFVC = "OFVC";
-  public static AppStepOFVA = "OFVA";
-  public static AppStepDO = "DO";
-  public static AppStepCNFR = "CNFR";
-  public static AppStepPGLV = "PGLV";
-  public static AppStepCSR = "CSR";
-  public static FL4W = "FL4W";
-  public static CF4W = "CF4W";
-  public static FCTR = "FCTR";
-  public static CFRFN4W = "CFRFN4W";
-  public static CFNEWCAR = "CFNEWCAR";
-  public static CENTER_GROUP_CODE = "CG";
-
-  public static GENERAL = "GENERAL";
-  public static FACTORING = "FACTORING";
-  public static ID_TYPE_NPWP = "NPWP";
-  public static ID_TYPE_EKTP = "EKTP";
-
-  public static SALES_JOB_CODE = "SALES_PERSON";
-  public static ADMIN_HEAD_JOB_CODE = "ADMIN_HEAD";
-  public static BRANCH_MANAGER_JOB_CODE = "BRANCH_MANAGER";
-  public static REF_REASON_MOU_GENERAL = "MOUC_GEN_RVW";
-  public static REF_REASON_MOU_FACTORING = "MOUC_FCTR_RVW";
-
   public static WebSocketUrl = environment.WebSocketURL + "/Notificationhub";
   public static GetListNotificationHByRefUserId = environment.FoundationR3Url + "/NotificationH/GetListNotificationHByRefUserId";
 

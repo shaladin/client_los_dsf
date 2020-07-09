@@ -5,6 +5,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-return-handling-edit-app-paging',
@@ -60,13 +61,13 @@ export class ReturnHandlingEditAppPagingComponent implements OnInit {
   GetCallback(ev) {
     console.log(ev);
     if (ev.Key == "Edit") {
-      if (this.BizTemplateCode == AdInsConstant.CF4W) {
+      if (this.BizTemplateCode == CommonConstant.CF4W) {
         this.router.navigate(["Nap/ConsumerFinance/Add/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId } });
       }
-      if (this.BizTemplateCode == AdInsConstant.FL4W) {
+      if (this.BizTemplateCode == CommonConstant.FL4W) {
         this.router.navigate(["Nap/FinanceLeasing/Add/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId } });
       }
-      if (this.BizTemplateCode == AdInsConstant.CFRFN4W) {
+      if (this.BizTemplateCode == CommonConstant.CFRFN4W) {
         this.router.navigate(["Nap/CFRefinancing/Add/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId } });
       }
     }

@@ -143,7 +143,7 @@ export class AssetDataComponent implements OnInit {
   vendorObj = {
     VendorId: 0,
     VendorCode: "",
-    MrVendorEmpPositionCodes: [AdInsConstant.ADMIN_HEAD_JOB_CODE, AdInsConstant.SALES_JOB_CODE],
+    MrVendorEmpPositionCodes: [CommonConstant.ADMIN_HEAD_JOB_CODE, CommonConstant.SALES_JOB_CODE],
   };
 
   vendorAccSuppObj = {
@@ -546,7 +546,7 @@ export class AssetDataComponent implements OnInit {
 
     this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpName = this.AssetDataForm.controls.BranchManagerName.value;
     this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpNo = this.AssetDataForm.controls.BranchManagerNo.value;
-    this.allAssetDataObj.AppAssetSupplEmpManagerObj.MrSupplEmpPositionCode = AdInsConstant.BRANCH_MANAGER_JOB_CODE;
+    this.allAssetDataObj.AppAssetSupplEmpManagerObj.MrSupplEmpPositionCode = CommonConstant.BRANCH_MANAGER_JOB_CODE;
 
 
     this.allAssetDataObj.AppAssetObj.TaxCityIssuer = this.AssetDataForm.controls.TaxCityIssuer.value;
@@ -1251,9 +1251,9 @@ export class AssetDataComponent implements OnInit {
         console.log(this.vendorObj);
         this.EmpObj = response["ReturnObject"];
         this.AdminHeadObj = this.EmpObj.filter(
-          emp => emp.MrVendorEmpPositionCode === AdInsConstant.ADMIN_HEAD_JOB_CODE);
+          emp => emp.MrVendorEmpPositionCode === CommonConstant.ADMIN_HEAD_JOB_CODE);
         this.SalesPersonObj = this.EmpObj.filter(
-          emp => emp.MrVendorEmpPositionCode === AdInsConstant.SALES_JOB_CODE);
+          emp => emp.MrVendorEmpPositionCode === CommonConstant.SALES_JOB_CODE);
 
         //if (this.AdminHeadObj.length > 0) {
         //  this.AssetDataForm.patchValue({

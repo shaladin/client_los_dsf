@@ -9,6 +9,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { LeadObj } from 'app/shared/model/Lead.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-nap-from-lead-detail',
@@ -181,8 +182,8 @@ export class NapFromLeadDetailComponent implements OnInit {
     napAppObj = this.NapAppForm.value;
     napAppObj.AppCreatedDt = this.user.BusinessDt;
     napAppObj.IsAppInitDone = false;
-    napAppObj.AppStat = AdInsConstant.AppStepNew;
-    napAppObj.AppCurrStep = AdInsConstant.AppStepNew;
+    napAppObj.AppStat = CommonConstant.AppStepNew;
+    napAppObj.AppCurrStep = CommonConstant.AppStepNew;
     napAppObj.BizTemplateCode = this.bizTemplateCode;
     napAppObj.LobCode = this.NapAppForm.controls.LobCode.value;
     napAppObj.OriOfficeCode = this.NapAppForm.controls['OriOfficeCode'].value;
@@ -192,16 +193,16 @@ export class NapFromLeadDetailComponent implements OnInit {
       (response) => {
         console.log(response);
         this.toastr.successMessage(response["message"]);
-        if(this.bizTemplateCode == AdInsConstant.CF4W){
+        if(this.bizTemplateCode == CommonConstant.CF4W){
           this.router.navigate(["Nap/ConsumerFinance/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
         }
-        if(this.bizTemplateCode == AdInsConstant.FL4W){
+        if(this.bizTemplateCode == CommonConstant.FL4W){
           this.router.navigate(["Nap/FinanceLeasing/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
         }
-        if(this.bizTemplateCode == AdInsConstant.CFRFN4W){
+        if(this.bizTemplateCode == CommonConstant.CFRFN4W){
           this.router.navigate(["Nap/CFRefinancing/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
         }
-        if(this.bizTemplateCode == AdInsConstant.FCTR){
+        if(this.bizTemplateCode == CommonConstant.FCTR){
           this.router.navigate(["Nap/Factoring/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
         }
       },
@@ -217,8 +218,8 @@ export class NapFromLeadDetailComponent implements OnInit {
     napAppObj = this.NapAppForm.value;
     napAppObj.AppCreatedDt = this.user.BusinessDt;
     napAppObj.IsAppInitDone = false;
-    napAppObj.AppStat = AdInsConstant.AppStepNew;
-    napAppObj.AppCurrStep = AdInsConstant.AppStepNew;
+    napAppObj.AppStat = CommonConstant.AppStepNew;
+    napAppObj.AppCurrStep = CommonConstant.AppStepNew;
 
     napAppObj = this.CheckValue(napAppObj);
     console.log(napAppObj);

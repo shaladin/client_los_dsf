@@ -224,7 +224,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
 
   IdTypeHandler(){
     var value = this.PersonalForm.controls["MrIdTypeCode"].value;
-    if(value != AdInsConstant.ID_TYPE_EKTP){
+    if(value != CommonConstant.ID_TYPE_EKTP){
       this.PersonalForm.controls["IdExpDt"].setValidators([Validators.required]);
       this.PersonalForm.controls["IdExpDt"].updateValueAndValidity();
       var context = JSON.parse(localStorage.getItem("UserAccess"));
@@ -433,7 +433,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
 
   clearExpDt() {
     // if (this.PersonalForm.controls.MrIdTypeCode.value == "EKTP") {
-    if (this.PersonalForm.controls.MrIdTypeCode.value == AdInsConstant.ID_TYPE_EKTP) {
+    if (this.PersonalForm.controls.MrIdTypeCode.value == CommonConstant.ID_TYPE_EKTP) {
       this.PersonalForm.patchValue({
         IdExpDt: '',
       });
