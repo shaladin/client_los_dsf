@@ -284,8 +284,6 @@ export class DocSignerDetailComponent implements OnInit {
       var custObj = { CustNo: this.returnMouCust['CustNo'] };
       this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
         response => {
-          // this.link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
-          // window.open(this.link, '_blank');
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         },
         (error) => {

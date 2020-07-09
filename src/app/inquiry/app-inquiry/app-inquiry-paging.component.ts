@@ -13,7 +13,6 @@ import { AdInsHelper } from "app/shared/AdInsHelper";
 export class AppInquiryPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
   link: string;
-  token : any = localStorage.getItem("Token");
 
   constructor(private router:Router, private http:HttpClient) { }
 
@@ -52,8 +51,7 @@ export class AppInquiryPagingComponent implements OnInit {
         var custObj = { CustNo: event.RowObj.custNo };
         this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
           response => {
-            this.link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
-            window.open(this.link, '_blank');
+            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
           },
           (error) => {
             console.log(error);
@@ -61,18 +59,13 @@ export class AppInquiryPagingComponent implements OnInit {
         );
     }
     else if(event.Key == "product"){
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(event.RowObj.prodOfferingCode,event.RowObj.prodOfferingVersion, this.token ); 
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(event.RowObj.prodOfferingCode,event.RowObj.prodOfferingVersion); 
     }
-    else if(event.Key == "agreement"){ 
-      window.open( environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + event.RowObj.AgrmntId, "_blank");
+    else if(event.Key == "agreement"){
+      AdInsHelper.OpenAgrmntViewByAgrmntId(event.RowObj.AgrmntId);
     }
     else if(event.Key == "application"){
-      //TEMUAN STEVEN : OPEN APPLICATION DIGANTI PAKE HELPER SUPAYA NANTI GANTINYA GAK DIBANYAK TITIK
       AdInsHelper.OpenAppViewByAppId(event.RowObj.AppId);
-      //window.open( environment.losR3Web + "/Nap/View/AppView?AppId=" + event.RowObj.AppId, "_blank");
-    }
-    else if(event.Key == "product"){
-      window.open( environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=" + 0 + "&prodOfferingCode=" + event.RowObj.prodOfferingCode + "&prodOfferingVersion=" + event.RowObj.prodOfferingVersion, "_blank");
     }
   }
 }

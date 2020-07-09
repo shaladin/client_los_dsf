@@ -14,7 +14,7 @@ export class PreGoLivePagingComponent implements OnInit {
 
   inputPagingObj: any;
   bizTemplateCode :any;
-  token : any = localStorage.getItem("Token");
+ 
   
   constructor(private route: ActivatedRoute, private router: Router) {
     this.route.queryParams.subscribe(params => {
@@ -51,7 +51,7 @@ export class PreGoLivePagingComponent implements OnInit {
 
   GetCallBack(ev: any){
     if(ev.Key == "ViewProdOffering"){ 
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion, this.token );
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);
     }
   }
 }

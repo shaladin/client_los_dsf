@@ -14,7 +14,6 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 export class DeliveryOrderMultiAssetComponent implements OnInit {
   inputPagingObj: UcPagingObj;
   bizTemplateCode: string;
-  token : any = localStorage.getItem("Token");
   
   constructor(
     private route: ActivatedRoute,
@@ -58,7 +57,7 @@ export class DeliveryOrderMultiAssetComponent implements OnInit {
 
   GetCallBack(ev: any){
     if(ev.Key == "ViewProdOffering"){ 
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion, this.token ); 
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion); 
     }
   }
 

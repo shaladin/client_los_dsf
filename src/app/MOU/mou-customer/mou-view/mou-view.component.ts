@@ -58,8 +58,6 @@ export class MouViewComponent implements OnInit {
       var custObj = { CustNo: this.resultData['CustNo'] };
       this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
         response => {
-          // var link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
-          // window.open(link, '_blank');
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         },
         (error) => {

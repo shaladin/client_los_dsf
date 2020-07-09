@@ -9,6 +9,7 @@ import { DatePipe } from '@angular/common';
 import { map, mergeMap } from 'rxjs/operators';
 import { forkJoin } from 'rxjs';
 import { environment } from 'environments/environment';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-main-info',
@@ -57,6 +58,7 @@ export class MainInfoComponent implements OnInit {
         var custData = response[1];
 
         this.mouCustNo = mouData['MouCustNo'];
+        this.MouCustId = mouData['MouCustId'];
         this.custName = mouData['CustName'];
         this.mouCustDt = this.datepipe.transform(mouData['MouCustDt'], 'dd-MM-yyyy');
         this.startDt = this.datepipe.transform(mouData['StartDt'], 'dd-MM-yyyy');
@@ -68,13 +70,18 @@ export class MainInfoComponent implements OnInit {
         this.isRevolving = mouData['IsRevolving'] == 1 ? "Yes" : "No";
         this.custId = custData['CustId'];
         this.mouCustStatView = mouData['MouCustStatView'];
-        this.custUrl = environment.FoundationR3Web + '/Customer/CustomerView/Page?CustId=' + this.custId;
-        // this.custUrl = environment.FoundationR3Web + '/CustomerView/Page?CustId=' + this.custId;
-        this.mouUrl = environment.losR3Web + "/Mou/Cust/View?MouCustId=" + mouData['MouCustId'];
       }
     );
   }
 
   MainInfoForm = this.fb.group({
   })
+
+  OpenView(key: string){
+    if(key == "mou"){
+      AdInsHelper.OpenMOUCustViewByMouCustId(this.MouCustId);
+    }else if(key == "cust"){
+      AdInsHelper.OpenCustomerViewByCustId(this.custId);
+    }
+  }
 }

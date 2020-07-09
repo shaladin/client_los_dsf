@@ -12,7 +12,6 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 })
 export class DocumentPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
-  token = localStorage.getItem("Token");
 
 
   constructor(private router: Router) { }
@@ -27,7 +26,7 @@ export class DocumentPagingComponent implements OnInit {
 
   GetCallback(ev: any){
     if(ev.Key == "ViewProdOffering"){
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion, this.token );   
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);   
     }
   }
 

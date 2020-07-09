@@ -38,7 +38,6 @@ export class DocSignerDetailComponent implements OnInit {
   MrCustTypeCode: string = "COMPANY";
   CustFullName: string;
   ContactPersonName: string;
-  token : any = localStorage.getItem("Token");
   BizTemplateCode: string;
   isHidden: boolean;
 
@@ -322,18 +321,11 @@ export class DocSignerDetailComponent implements OnInit {
   
   Callback(ev: any){
     if(ev.Key == "ViewProdOffering"){
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion, this.token );  
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);  
     }
     if(ev.Key == "agrmnt")
     {
-      var bizTemplateCode = localStorage.getItem("BizTemplateCode")
-
-      if(bizTemplateCode == CommonConstant.CF4W|| bizTemplateCode == CommonConstant.CFRFN4W || bizTemplateCode == CommonConstant.FACTORING){
-        window.open( environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + ev.ViewObj.AgrmntId, "_blank");
-      }
-      else if(bizTemplateCode == CommonConstant.FL4W){
-        window.open( environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + ev.ViewObj.AgrmntId, "_blank");
-      }
+      AdInsHelper.OpenAgrmntViewByAgrmntId(ev.ViewObj.AgrmntId);
     }
 
     // if(ev.Key == "prodOff"){

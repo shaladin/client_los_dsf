@@ -75,7 +75,7 @@ export class CreditApprovalPagingComponent implements OnInit {
   GetCallBack(ev: any) {
     var ApvReqObj = new ApprovalObj();
     if (ev.Key == "ViewProdOffering") { 
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion, this.token );
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
     }
     else if(ev.Key == "Process"){
       if (String.Format("{0:L}", ev.RowObj.CurrentUser) != String.Format("{0:L}", this.userContext.UserName)) {

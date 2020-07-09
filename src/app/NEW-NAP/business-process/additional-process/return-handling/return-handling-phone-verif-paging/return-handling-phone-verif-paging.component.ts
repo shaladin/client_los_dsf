@@ -18,7 +18,6 @@ export class ReturnHandlingPhoneVerifPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
   BizTemplateCode: string;
   userAccess;
-  token : any = localStorage.getItem("Token");
   constructor(private http: HttpClient,
     private route: ActivatedRoute,
     private router: Router) {
@@ -61,7 +60,7 @@ export class ReturnHandlingPhoneVerifPagingComponent implements OnInit {
 
   GetCallBack(ev: any){
     if(ev.Key == "ViewProdOffering"){ 
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion, this.token );  
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);  
     }
   }
 }

@@ -10,6 +10,7 @@ import { VerfResultDObj } from 'app/shared/model/VerfResultD/VerfResultH.Model';
 import { VerifResulHDetailObj } from 'app/shared/model/VerfResultH/VerifResulHDetailObj.model';
 import { environment } from 'environments/environment';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 
 
@@ -65,8 +66,6 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   subjectType: string;
   idSource: number;
   verfSchemeHId: number;
-  AppNoUrl = environment.losR3Web + '/Nap/View/AppView?AppId=';
-   CustNoUrl = environment.FoundationR3Web + '/Customer/CustomerView/Page?CustId=';
   appObj = {
     AppId: 0,
   };
@@ -102,7 +101,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   verifResultHObj: any;
   verifResultHDetailObj: any;
   listVerifResultHObj: any;
-  verfResultDListObjs: Array<VerfResultDObj>; 
+  verfResultDListObjs: Array<VerfResultDObj>;
   ResultObj: any;
   SubjectRelationObj: any;
   PhoneNumberObj: any;
@@ -162,9 +161,14 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
       await this.GetVerfResultHData();
       await this.GetListVerfResulHtData(this.verfResHObj);
     };
+  }
 
-
-
+  OpenView(key: string) {
+    if (key == 'app') {
+      AdInsHelper.OpenAppViewByAppId(this.appId);
+    } else if (key == 'cust') {
+      AdInsHelper.OpenCustomerViewByCustId(this.custId);
+    }
   }
 
   SaveForm(formDirective: FormGroupDirective) {
@@ -500,8 +504,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   }
 
   Navigate() {
-    var link = environment.losR3Web + "/Nap/View/AppView/AppId=" + this.AppObj.AppId;
-    this.router.navigate([]).then(result => { window.open(link, '_blank'); });
+    AdInsHelper.OpenAppViewByAppId(this.AppObj.AppId);
   }
 
   test() {

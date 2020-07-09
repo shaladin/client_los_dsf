@@ -9,6 +9,7 @@ import { VerfResultObj } from 'app/shared/model/VerfResult/VerfResult.Model';
 import { VerfResultDObj } from 'app/shared/model/VerfResultD/VerfResultH.Model';
 import { environment } from 'environments/environment';
 import { LeadObj } from 'app/shared/model/Lead.Model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-cust-confirmation-subj-view',
@@ -159,18 +160,19 @@ export class CustConfirmationSubjViewComponent implements OnInit {
   BackVerfDetail() {
     this.IsVerfDetail = false;
   }
-  openUrl(key) {
+
+  openUrl(key:string) {
     if (key == "application") {
-      window.open(environment.losR3Web + "/Nap/View/AppView?AppId=" + this.AppObj.AppId, "_blank");
+      AdInsHelper.OpenAppViewByAppId(this.AppObj.AppId);
     } else if (key == "lead") {
-      window.open(environment.losR3Web + "/Lead/View?LeadId=" + this.AgrmntObj.AgrmntId, "_blank");
+      AdInsHelper.OpenLeadViewByLeadId(this.AgrmntObj.LeadId);
     }
     else if (key == "agreement") {
-      window.open(environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + this.AgrmntObj.AgrmntId, "_blank");
+      AdInsHelper.OpenAgrmntViewByAgrmntId(this.AgrmntObj.AgrmntId);
     }else if( key == "customer"){
       this.http.post(AdInsConstant.GetCustByCustNo, {CustNo: this.AgrmntObj.CustNo}).subscribe(
         response => {
-          window.open(environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"], '_blank');
+          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         },
         (error) => {
           console.log(error);

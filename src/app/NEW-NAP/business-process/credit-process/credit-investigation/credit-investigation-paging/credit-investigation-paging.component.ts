@@ -14,7 +14,6 @@ export class CreditInvestigationPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   BizTemplateCode: string;
   arrCrit: Array<any> = new Array();
-  token : any = localStorage.getItem("Token");
   
   constructor(private route: ActivatedRoute, private router: Router) {
     this.route.queryParams.subscribe(params => {
@@ -56,7 +55,7 @@ export class CreditInvestigationPagingComponent implements OnInit {
   Callback(event)
   {
     if(event.Key == "ViewProdOffering"){ 
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( event.RowObj.ProdOfferingCode, event.RowObj.ProdOfferingVersion, this.token );
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( event.RowObj.ProdOfferingCode, event.RowObj.ProdOfferingVersion);
     }
   }
 }

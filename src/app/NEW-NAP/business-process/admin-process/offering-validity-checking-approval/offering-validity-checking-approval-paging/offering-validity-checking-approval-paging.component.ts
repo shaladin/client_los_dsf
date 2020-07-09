@@ -78,7 +78,7 @@ export class OfferingValidityCheckingApprovalPagingComponent implements OnInit {
   CallbackHandler(ev: any) {
     var ApvReqObj = new ApprovalObj();
     if (ev.Key == "ViewProdOffering") { 
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion, this.token );  
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);  
     }
     else if(ev.Key == "Process"){
       if (String.Format("{0:L}", ev.RowObj.CurrentUserId) != String.Format("{0:L}", this.userContext.UserName)) {

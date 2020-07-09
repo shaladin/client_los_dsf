@@ -14,7 +14,7 @@ export class AppMainInfoComponent implements OnInit {
 
   viewObj: string;
   @Input() arrValue = [];
-  token : any = localStorage.getItem("Token");
+ 
   AppObj : any;
   constructor(private http: HttpClient,
     private router: Router ) { }
@@ -37,7 +37,7 @@ export class AppMainInfoComponent implements OnInit {
 
   GetCallBack(ev: any){
     if(ev.Key == "ViewProdOffering"){ 
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion, this.token );  
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);  
     }
   }
 

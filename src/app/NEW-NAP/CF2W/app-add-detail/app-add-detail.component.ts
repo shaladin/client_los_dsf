@@ -28,7 +28,7 @@ export class AppAddDetailComponent implements OnInit {
   NapObj: AppObj;
   IsMultiAsset: string;
   ListAsset: any;
-  token : any = localStorage.getItem("Token");
+ 
 
   AppStep = {
     "NEW": 1,
@@ -239,6 +239,6 @@ export class AppAddDetailComponent implements OnInit {
   // }
 
   GetCallback(ev){ 
-    AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion, this.token );
+    AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
   }
 }

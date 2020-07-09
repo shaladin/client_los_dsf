@@ -28,7 +28,7 @@ export class NapAddDetailComponent implements OnInit {
   OnFormReturnInfo: boolean = false;
   IsMultiAsset: boolean = false;
   ListAsset: any;
-  token : any = localStorage.getItem("Token");
+ 
 
   FormReturnObj = this.fb.group({
     ReturnExecNotes: ['']
@@ -226,6 +226,6 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   GetCallback(ev){
-    AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion, this.token ); 
+    AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion); 
   }
 }

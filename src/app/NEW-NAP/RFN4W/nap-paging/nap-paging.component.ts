@@ -20,7 +20,6 @@ export class NapPagingComponent implements OnInit {
   inputPagingObj: any;
   arrCrit: any;
   userAccess: any;
-  token: any = localStorage.getItem("Token");
 
   constructor(
     private http: HttpClient,
@@ -107,7 +106,7 @@ export class NapPagingComponent implements OnInit {
 
   GetCallBack(ev: any) {
     if (ev.Key == "ViewProdOffering") {
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion, this.token);
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
     }
     if (ev.Key == "Edit") {
       this.router.navigate(["Nap/CFRefinancing/Add/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId } });

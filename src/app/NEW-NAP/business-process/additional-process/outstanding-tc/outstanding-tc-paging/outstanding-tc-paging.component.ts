@@ -7,6 +7,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-outstanding-tc-paging',
@@ -52,21 +53,14 @@ export class OutstandingTcPagingComponent implements OnInit {
     if(ev.Key == "prodOff"){
       this.http.post(AdInsConstant.GetProdOfferingHByCode, {ProdOfferingCode : ev.RowObj.ProdOfferingCode}).subscribe(
         response => {
-          window.open(environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=" + response['ProdOfferingHId'], '_blank');
+          AdInsHelper.OpenProdOfferingViewByProdOfferingHId(response['ProdOfferingHId'])
         },
         (error) => {
           console.log(error);
         }
       );
     }else if(ev.Key == "agrmnt"){
-      var bizTemplateCode = ev.RowObj.BizTemplateCode;
-
-      if(bizTemplateCode == CommonConstant.CF4W || bizTemplateCode == CommonConstant.CFRFN4W || bizTemplateCode == CommonConstant.FACTORING ){
-        window.open( environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + ev.RowObj.AgrmntId, "_blank");
-      }
-      else if(bizTemplateCode == CommonConstant.FL4W){
-        window.open( environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + ev.RowObj.AgrmntId, "_blank");
-      }
+      AdInsHelper.OpenAgrmntViewByAgrmntId(ev.RowObj.AgrmntId);
     }
   }
 }

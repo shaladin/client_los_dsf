@@ -8,6 +8,7 @@ import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 import { RequestSubmitAppDupCheckCustObj } from 'app/shared/model/AppDupCheckCust/RequestSubmitAppDupCheckCustObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-applicant-existing-data-company',
@@ -78,7 +79,6 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
         this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
           response => {
             this.cust = response;
-            this.custUrl = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + this.cust.CustId;
           },
           (error) => {
             console.log(error);
@@ -220,14 +220,11 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
     this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
   }
 
-  OpenAppView(appId) {
-    window.open(environment.losR3Web + "/Nap/View/AppView?AppId=" + appId, "_blank");
-  }
-  OpenCustView(custNo) {
-    var custObj = { CustNo: custNo };
-    this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
-      response => {
-        window.open(environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"], "_blank");
-      }); 
+  OpenView(key: string, value: number){
+    if(key == "app"){
+      AdInsHelper.OpenAppViewByAppId(value);
+    }else if( key == "cust"){
+        AdInsHelper.OpenCustomerViewByCustId(this.cust.CustId);
+    }
   }
 }

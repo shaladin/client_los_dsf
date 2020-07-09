@@ -43,7 +43,6 @@ export class DocumentViewComponent implements OnInit {
   agrmntDocPrintObj: AgrmntDocPrintObj;
   getUrl: string;
   RdlcReport: RdlcReportObj = new RdlcReportObj();
-  token = localStorage.getItem("Token");
 
   constructor(private http: HttpClient,
     private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService) {
@@ -157,7 +156,7 @@ export class DocumentViewComponent implements OnInit {
 
   GetCallBack(ev: any) {
     if (ev.Key == "ViewProdOffering") { 
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion, this.token );  
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);  
     }
   }
 }

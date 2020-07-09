@@ -10,6 +10,7 @@ import { CustCnfrmObj } from 'app/shared/model/CustCnfrm/CustCnfrm.Model';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { environment } from 'environments/environment';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-cust-confirmation-detail',
@@ -174,8 +175,7 @@ export class CustConfirmationDetailComponent implements OnInit {
       var custObj = { CustNo: event.ViewObj.CustNo };
       this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
         response => {
-          this.link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
-          window.open(this.link, '_blank');
+          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         },
         (error) => {
           console.log(error);

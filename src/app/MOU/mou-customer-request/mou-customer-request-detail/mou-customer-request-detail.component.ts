@@ -9,6 +9,7 @@ import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { RefOfficeObj } from 'app/shared/model/RefOfficeObj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-mou-customer-request-detail',
@@ -96,8 +97,6 @@ export class MouCustomerRequestDetailComponent implements OnInit {
         environment: environment.FoundationR3Url
       }
     ];
-    
-    this.mouCustUrl =  environment.losR3Web + "/Mou/Cust/View?MouCustId=" + this.mouCustId;
    
     var refOffice = new RefOfficeObj();
     refOffice.OfficeCode = currentUserContext["OfficeCode"];
@@ -125,7 +124,6 @@ export class MouCustomerRequestDetailComponent implements OnInit {
           this.httpClient.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
             (response: any) => { 
               this.custId = response['CustId'];
-              this.custUrl = environment.FoundationR3Web + '/Customer/CustomerView/Page?CustId=' + this.custId;
             });
 
         },
@@ -196,4 +194,11 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     }
   }
 
+  OpenView(key: string){
+    if(key == "mou"){
+      AdInsHelper.OpenMOUCustViewByMouCustId(this.mouCustId);
+    }else if( key == "cust"){
+      AdInsHelper.OpenCustomerViewByCustId(this.custId);
+    }
+  }
 }

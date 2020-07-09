@@ -18,7 +18,6 @@ export class ApplicationAgreementCancellationDetailComponent implements OnInit {
   AppId: any;
   AgrmntId: any;
   AppAgrmntCancelObj: any;
-  token: any = localStorage.getItem("Token");
   MainInfoForm = this.fb.group({
     ReasonCode: ['', Validators.required],
     CancelNotes: ['', Validators.required]
@@ -72,7 +71,7 @@ export class ApplicationAgreementCancellationDetailComponent implements OnInit {
 
   GetCallBack(ev: any) {
     if (ev.Key == "ViewProdOffering") {
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion, this.token);
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
     }
   }
 }

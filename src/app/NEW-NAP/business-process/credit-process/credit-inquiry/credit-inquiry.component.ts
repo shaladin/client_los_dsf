@@ -3,6 +3,7 @@ import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-credit-inquiry',
@@ -36,24 +37,18 @@ export class CreditInquiryComponent implements OnInit {
     ];
   }
   openView(ev){
-    var key = ev.Key;
-    var appId = ev.RowObj.AppId;
-    var custNo = ev.RowObj.CustNo;
-    var agrmntId = ev.RowObj.agrmntId;
-
-    if(key == "application"){
-      window.open( environment.losR3Web + "/Nap/View/AppView?AppId=" + appId, "_blank");
+    if(ev.Key == "application"){
+      AdInsHelper.OpenAppViewByAppId(ev.RowObj.AppId);
     }
-    else if(key == "customer"){
-      var custObj = {CustNo : custNo};
-      this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+    else if(ev.Key == "customer"){
+      this.http.post(AdInsConstant.GetCustByCustNo, {CustNo: ev.RowObj.CustNo}).subscribe(
         (response)=>{
-          window.open( environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response['CustId'], "_blank");
+          AdInsHelper.OpenCustomerViewByCustId(response['CustId']);
         }
       )
     }
-    else if(key == "agreement"){
-      window.open( environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + agrmntId, "_blank");
+    else if(ev.Key == "agreement"){
+      AdInsHelper.OpenAgrmntViewByAgrmntId(ev.RowObj.agrmntId);
     }
   }
 }

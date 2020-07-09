@@ -14,8 +14,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 export class CreditReviewPagingComponent implements OnInit {
   BizTemplateCode: string;
   inputPagingObj: UcPagingObj = new UcPagingObj();
-  arrCrit: Array<any> = new Array(); 
-  token : any = localStorage.getItem("Token");
+  arrCrit: Array<any> = new Array();
   constructor(private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
@@ -52,7 +51,7 @@ export class CreditReviewPagingComponent implements OnInit {
   GetCallBack(ev: any){
     console.log(ev);
     if(ev.Key == "ViewProdOffering"){ 
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion, this.token );
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
     }
   }
 

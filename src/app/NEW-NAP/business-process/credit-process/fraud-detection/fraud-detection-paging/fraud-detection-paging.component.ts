@@ -53,7 +53,7 @@ export class FraudDetectionPagingComponent implements OnInit {
   GetCallBack(event) {
 
     if (event.Key == "ViewProdOffering") { 
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( event.RowObj.prodOfferingCode, event.RowObj.prodOfferingVersion, this.token );
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( event.RowObj.prodOfferingCode, event.RowObj.prodOfferingVersion);
     }
     else {
       if(event.RowObj.ActCode == "FCR_" + this.BizTemplateCode){

@@ -16,7 +16,6 @@ import { AdInsHelper } from "app/shared/AdInsHelper";
 export class PhoneVerificationPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
   BizTemplateCode : string;
-  token : any = localStorage.getItem("Token");
   constructor(private route: ActivatedRoute) { 
     this.route.queryParams.subscribe(params => {
       if (params['BizTemplateCode'] != null) {
@@ -53,7 +52,7 @@ export class PhoneVerificationPagingComponent implements OnInit {
   GetCallBack(ev: any){
     console.log(ev);
     if(ev.Key == "ViewProdOffering"){ 
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion, this.token );
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
     }
   }
 }

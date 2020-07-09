@@ -58,11 +58,10 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
 
   GetCallBack(ev) {
     if (ev.Key == "ViewProdOffering") { 
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion, this.token ); 
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion); 
     }
     if (ev.Key == "customer") {
-      var link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + ev.ViewObj.AppCustId;
-      window.open(link, "_blank");
+      AdInsHelper.OpenCustomerViewByCustId(ev.ViewObj.AppCustId);
     }
   }
 
