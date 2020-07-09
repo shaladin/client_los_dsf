@@ -15,10 +15,10 @@ export class AppInsuranceDetailComponent implements OnInit {
   appInsObj: AppInsObjObj;
   appInsCvgs: any;
   appInsCvgsFinal: Array<any>;
-  public static CUSTOMER: string = "CU";
-  public static COMPANY: string = "CO";
-  public static CUSTOMER_COMPANY: string = "CUCO";
-  public static OFF_SYSTEM: string = "OFF";
+  public static CUSTOMER: string = AdInsConstant.InsuredByCustomer;
+  public static COMPANY: string = AdInsConstant.InsuredByCompany;
+  public static CUSTOMER_COMPANY: string = AdInsConstant.InsuredByCustomerCompany;
+  public static OFF_SYSTEM: string = AdInsConstant.InsuredByOffSystem;
   reqInsuranceDataObj: any;
 
   constructor(

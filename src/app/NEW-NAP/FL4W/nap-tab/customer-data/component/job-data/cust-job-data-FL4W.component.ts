@@ -101,7 +101,7 @@ export class CustJobDataFL4WComponent implements OnInit {
   CustModelChanged(){
     console.log(this.parentForm);
     this.custModelCode = this.parentForm.controls[this.identifier]["controls"].CustModelCode.value;
-    if(this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "NONPROF"){
+    if(this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == AdInsConstant.CustModelNonProfessional){
       this.parentForm.controls[this.identifier]["controls"].CompanyName.setValidators(null);
       this.parentForm.removeControl("jobDataAddr");
       this.parentForm.removeControl("jobDataAddrZipcode");
@@ -109,17 +109,17 @@ export class CustJobDataFL4WComponent implements OnInit {
       this.custModelCode = "NONPROF";
       this.setLookupProfessionCriteria();
     }
-    if(this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "PROF"){
+    if(this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == AdInsConstant.CustModelProfessional){
       this.parentForm.controls[this.identifier]["controls"].CompanyName.setValidators(null);
       this.custModelCode = "PROF";
       this.setLookupProfessionCriteria();
     }
-    if(this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "EMP"){
+    if(this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == AdInsConstant.CustModelEmployee){
       this.parentForm.controls[this.identifier]["controls"].CompanyName.setValidators([Validators.required, Validators.maxLength(100)]);
       this.custModelCode = "EMP";
       this.setLookupProfessionCriteria();
     }
-    if(this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "SME"){
+    if(this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == AdInsConstant.CustModelSmallMediumEnterprise){
       this.parentForm.controls[this.identifier]["controls"].CompanyName.setValidators([Validators.required, Validators.maxLength(100)]);
       this.custModelCode = "SME";
       this.setLookupProfessionCriteria();
@@ -249,7 +249,7 @@ export class CustJobDataFL4WComponent implements OnInit {
   
 
   bindJobPositionObj(){
-    this.refMasterObj.RefMasterTypeCode = "JOB_POSITION";
+    this.refMasterObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeJobPosition;
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.JobPositionObj = response["ReturnObject"];
@@ -264,7 +264,7 @@ export class CustJobDataFL4WComponent implements OnInit {
   }
 
   bindCompanyScaleObj(){
-    this.refMasterObj.RefMasterTypeCode = "COY_SCALE";
+    this.refMasterObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeCoyScale;
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.CompanyScaleObj = response["ReturnObject"];
@@ -278,7 +278,7 @@ export class CustJobDataFL4WComponent implements OnInit {
   }
 
   bindJobStatObj(){
-    this.refMasterObj.RefMasterTypeCode = "JOB_STAT";
+    this.refMasterObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeJobStat;
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.JobStatObj = response["ReturnObject"];
@@ -292,7 +292,7 @@ export class CustJobDataFL4WComponent implements OnInit {
   }
 
   bindInvestmentTypeObj(){
-    this.refMasterObj.RefMasterTypeCode = "INVESTMENT_TYPE";
+    this.refMasterObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeInvestmentType;
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.InvestmentTypeObj = response["ReturnObject"];

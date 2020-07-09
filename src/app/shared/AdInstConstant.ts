@@ -66,7 +66,9 @@ export class AdInsConstant {
   public static TrxTypeCodePhn = "PHN";
   public static VerfTrxTypeCodePhn = "PHN_VERIF";
   public static VerfResultStatCodeNew = "NEW";
-  public static RtnHandlingReturnStatDone = "DONE"
+  public static RtnHandlingReturnStatDone = "DONE";
+  public static CrdInvstgStatDone = "DONE";
+  public static CrdRvwStatDone = "DONE";
   public static ASSET_TYPE_CAR = "CAR";
   public static LICENSE_PLATE_NO = "LICENSE PLATE NO";
   public static OFFERING_VALIDITY_APV = "OFF_VLD_APV";
@@ -182,10 +184,13 @@ export class AdInsConstant {
   public static CustGrupIndentifierTypePersonal = "custGrpMember";
   public static CustGrupIndentifierTypeCompany = "custGrpMemberCompany";
 
+  //CUST PERSONAL RELATIONSHIP
+  public static SelfCustomer = "SELF";
 
   //OFFICE TYPE
   public static HeadOffice = "HO";
   public static CollectionGroup = "CG"
+
   //MOU STAT
   public static MouStatCancel = "CAN";
   public static MouDocSigner = "DSG";
@@ -200,9 +205,63 @@ export class AdInsConstant {
   public static LeadStepNew = "NEW";
   public static LeadStepReject ="RJC";
 
-  //Asset Condition
+  //ASSET CONDITION 
   public static AssetConditionUsed ="USED";
+  public static AssetConditionNew = "NEW";
+  
+  //REF VERF ANSWER_TYPE
+  public static VerfAnswerTypeCodeDdl = "DDL"; 
+  public static VerfAnswerTypeCodeUcInputNumber = "UC_INPUT_NUMBER"; 
+  
 
+  //PO ITEM CODE
+  public static PoItemCodeTotalAssetPrice = "TOTAL_ASSET_PRICE";
+  public static PoItemCodeDpNett= "DP_NETT";
+
+
+  public static PoItemCodeTdpAtCoy = "TDP_AT_COY";
+  public static PoItemCodeInstAmt = "INST_AMT";
+  public static PoItemCodeInsNotCptlz = "INS_NOT_CPTLZ";
+  public static PoItemCodeLfiNotCptlz = "LFI_NOT_CPTLZ";
+  
+  //STATUS GRP
+  public static StatusGrpVerfResultStat= "VERF_RESULT_STAT";
+
+  //REF PROD COMPNT
+  public static RefProdCompntCodeWayOfFinancing = "WAY_OF_FINANCING";
+  public static RefProdCompntCodePurposeOfFinancing = "PURPOSE_OF_FINANCING";
+  
+
+  //VERIFICATION
+  public static VerificationNew = "NEW";
+  public static VerificationFail= "FAIL";
+  //Asset Usage 
+  public static AssetUsageNonComm = "NON_COMM" 
+  
+  //Nationality
+  public static NationalityLocal = "LOCAL";
+
+  //App Collateral Attr
+  public static AppCollateralAttrAssetRegion = "ASSET_REGION";
+  public static AppCollateralAttrColor= "COLOR";
+  public static AppCollateralAttrCategory= "CATEGORY";
+  public static AppCollateralAttrTransmition= "TRANSMITION";
+  public static AppCollateralAttrTaxCityIssuer= "TAX_CITY_ISSUER"; 
+  public static AppCollateralAttrBpkbIssueDate= "BPKB_ISSUE_DATE";
+ 
+  //Interest Type
+  public static InterestTypeFixed ="FIXED";
+
+  //ASSET STAT
+  public static AssetStatNew = "NEW";
+  public static AssetStatExisting = "EXISTING";
+
+  //CUST STAT
+  public static CustStatNew = "NEW";
+  public static CustStatExisting = "EXISTING";
+  //VERF TRX TYPE
+  public static VerfTrxTypeCodeCustConfirm = "CUST_CONFIRM";
+  
   //Asset Master
   public static GetAssetMasterTypeByFullAssetCode = environment.FoundationR3Url + "/AssetMaster/GetAssetMasterTypeByFullAssetCode";
 
@@ -249,14 +308,19 @@ export class AdInsConstant {
 
   //FIRST INST TYPE
   public static FirstInstTypeAdvance = "AD"
+
   //FEE TYPE
   public static FeeTypeAmt = "AMT";
   public static FeeTypePrcnt = "PRCNT";
 
- //DOWM PAYMENT TYPE
- public static DownPaymentTypeAmt = "AMT";
- public static DownPaymentTypePrcnt = "PRCNT";
+  //DOWM PAYMENT TYPE
+  public static DownPaymentTypeAmt = "AMT";
+  public static DownPaymentTypePrcnt = "PRCNT";
 
+
+  //DEVIATION TYPE
+  public static DeviationTypeManualDev = "MANUAL_DEV"
+  public static DeviationTypeAutomaticDev = "AUTOMATIC_DEV"
 
   //TOP CALC BASED
   public static TopCalcBasedInvcDt = "INVC_DT";
@@ -296,6 +360,12 @@ export class AdInsConstant {
   //INS PAID BY
   public static InsPaidByCustomer = "CU";
   public static InsPaidByAtCost = "CO";
+ 
+  //LIFE INS PAY METHOD 
+  public static LifeInsPayMethodFullPaidInAdvance = "PAID_IN_ADV";
+  public static LifeInsPayMethodFullCapitalized = "CPTLZ";
+  public static LifeInsPayMethodPaidInAdvanceAndCapitalizedMix = "IN_ADV_CPTLZ_MIX";
+  
 
   //INST SCHM
   public static InstSchmBalloon = "BL";
@@ -306,6 +376,10 @@ export class AdInsConstant {
   public static RefProdCompntAssetType = "ASSETTYPE";
   public static RefProdCompntSupplSchm = "SUPPLSCHM";
   public static RefProdCompntAssetSchm = "ASSETSCHM";
+  public static RefProdCompntLob = "LOB";
+  public static RefProdCompntCurr = "CURR";
+  public static RefProdCompntPayFreq = "PAYFREQ";
+  public static RefProdCompntProdType = "PROD_TYPE";
 
   //GENERAL SETTING
   public static GetBusinessDt = "/GeneralSetting/GetBusinessDate";
@@ -348,6 +422,12 @@ export class AdInsConstant {
   //REF REASON
   public static GetListActiveRefReason = environment.FoundationR3Url + "/RefReason/GetListActiveRefReason";
   public static GetListActiveRefReasonByRefReasonTypeCode = environment.FoundationR3Url + "/RefReason/GetListKeyValueByCode";
+  
+
+  public static RefReasonTypeCodeAppAgrCncl = "APP_AGR_CNCL";
+  public static RefReasonTypeCodePreGlvApv  = "PRE_GLV_APV";
+  public static RefReasonTypeCodeCrdReview  = "CRD_REVIEW"; 
+  
   // AppAgrmntCancel
   public static AddAppAgrmntCancel = environment.losUrl + "/AppAgrmntCancel/AddAppAgrmntCancel"
 
@@ -530,6 +610,7 @@ export class AdInsConstant {
   public static RefMasterTypeCodeAssetCondition = "ASSET_CONDITION";
   public static RefMasterTypeCodeAssetUsage = "ASSET_USAGE";
   public static RefMasterTypeCodeCustPersonalRelationship = "CUST_PERSONAL_RELATIONSHIP";
+  public static RefMasterTypeCodeCustCompanyRelationship = "CUST_COMPANY_RELATIONSHIP"; 
   public static RefMasterTypeCodeIdType = "ID_TYPE";
   public static RefMasterTypeCodeRateType = "RATE_TYPE";
   public static RefMasterTypeCodeAddrType = "ADDR_TYPE";
@@ -546,8 +627,37 @@ export class AdInsConstant {
   public static RefMasterTypeCodeCustModel = "CUST_MODEL"; 
   public static RefMasterTypeCodeDownPaymentType = "DOWN_PAYMENT_TYPE";
   public static RefMasterTypeCodeLeadSource = "LEAD_SOURCE";
+  public static RefMasterTypeCodeStepUpStepDownInputType = "STEP_UP_STEP_DOWN_INPUT_TYPE";
+  public static RefMasterTypeCodeBuildingOwnership = "BUILDING_OWNERSHIP";
+  public static RefMasterTypeCodeMonth = "MONTH";
+  public static RefMasterTypeCodeJobPosition= "JOB_POSITION";
+  public static RefMasterTypeCodeCoyScale = "COY_SCALE";
+  public static RefMasterTypeCodeJobStat = "JOB_STAT";
+  public static RefMasterTypeCodeInvestmentType = "INVESTMENT_TYPE";
+  public static RefMasterTypeCodeLegalDocType = "LEGAL_DOC_TYPE";
+  public static RefMasterTypeCodeCustRelationship = "CUST_RELATIONSHIP";
+  public static RefMasterTypeCodeSourceIncome = "SOURCE_INCOME";
+  public static RefMasterTypeCodeNationality = "NATIONALITY";
+  public static RefMasterTypeCodeEducation = "EDUCATION";
+  public static RefMasterTypeCodeReligion = "RELIGION";
+  public static RefMasterTypeCodeCompanyType = "COMPANY_TYPE";
+  public static RefMasterTypeCodeSocmedType = "SOCMED_TYPE";
+  public static RefMasterTypeCodeAssetInsRegion = "ASSET_INS_REGION";
+  public static RefMasterTypeCodeInsuredBy = "INSURED_BY";
+  public static RefMasterTypeCodeInsPaidBy = "INS_PAID_BY";
+  public static RefMasterTypeCodeInsMainCvgType = "INS_MAIN_CVG_TYPE";
+  public static RefMasterTypeCodeInsAddCvgType = "INS_ADD_CVG_TYPE";
+  public static RefMasterTypeCodeInsCoverPeriod= "INS_COVER_PERIOD"; 
+  public static RefMasterTypeCodePayPeriodToInsco= "PAY_PERIOD_TO_INSCO"; 
+  public static RefMasterTypeCodeLifeInsPayMethod= "LIFE_INS_PAY_METHOD"; 
+  public static RefMasterTypeCodeLifeInscoBranch= "LIFE_INSCO_BRANCH"; 
+  public static RefMasterTypeCodeReturnTask = "RETURN_TASK"; 
+  public static RefMasterTypeCodeVerfSubjRelation = "VERF_SUBJ_RELATION"; 
+  public static RefMasterTypeCodeCrdRvwAnalysisItem = "CRD_RVW_ANALYSIS_ITEM"; 
+  public static RefMasterTypeCodeCrdInvstgAnalysisItem = "CRD_INVSTG_ANALYSIS_ITEM"; 
   
-
+  
+  
   //REF PROV DISTRICT
   public static GetRefProvDistrictPaging = "/RefProvDistrict/GetRefProvDistrictPaging";
   public static GetRefProvDistrictByProvDistrictCode = environment.FoundationR3Url + "/RefProvDistrict/GetRefProvDistrictByProvDistrictCode";
@@ -1148,11 +1258,15 @@ export class AdInsConstant {
   public static GetAppFinDataByAppId = environment.losUrl + "/AppFinData/GetAppFinDataByAppId";
   public static CreateMaxAllocAmtRsvFund = environment.losUrl + "/AppFinData/CreateMaxAllocAmtRsvFund";
   public static CalculateInstallmentStepUpStepDown = environment.losUrl + "/AppFinData/CalculateInstallmentStepUpStepDown";
-  public static CalculateInstallmentEvenPrincipal = environment.losUrl + "/AppFinData/CalculateInstallmentEvenPrincipal";
+  public static CalculateInstallmentEvenPrincipal = environment.losUrl + "/AppFinData/CalculateInstallmentEvenPrincipal"; 
+  public static CalculateInstallmentBalloon = environment.losUrl + "/AppFinData/CalculateInstallmentBalloon";
+  public static CalculateIrregular = environment.losUrl + "/AppFinData/CalculateIrregular";
+  public static CalculateInstallmentRegularFix = environment.losUrl + "/AppFinData/CalculateInstallmentRegularFix"
   public static GetFinancialDataByAppIdForView = environment.losUrl + "/AppFinData/GetFinancialDataByAppIdForView";
   public static GetInitAppFinDataFctrByAppId = environment.losUrl + "/AppFinData/GetInitAppFinDataFctrByAppId";
   public static CalculateInstallmentRegularFixFctr = environment.losUrl + "/AppFinData/CalculateInstallmentRegularFixFctr";
-  public static SaveAppFinDataFctr = environment.losUrl + "/AppFinData/SaveAppFinDataFctr";
+  public static SaveAppFinDataFctr = environment.losUrl + "/AppFinData/SaveAppFinDataFctr"; 
+  public static SaveAppFinData = environment.losUrl + "/AppFinData/SaveAppFinData"; 
   public static CalculateInstallmentEvenPrincipalFctr = environment.losUrl + "/AppFinData/CalculateInstallmentEvenPrincipalFctr";
   public static CalculateSingleInst = environment.losUrl + "/AppFinData/CalculateSingleInst";
   public static CalculateProvisionFee = environment.losUrl + "/AppFee/CalculateProvisionFee";
@@ -1162,7 +1276,6 @@ export class AdInsConstant {
   public static GetAppSubsidyByAppSubsidyId = environment.losUrl + "/AppSubsidy/GetAppSubsidyByAppSubsidyId";
   public static AddAppSubsidy = environment.losUrl + "/AppSubsidy/AddSubsidy";
   public static EditAppSubsidy = environment.losUrl + "/AppSubsidy/EditAppSubsidy";
-
 
 
   //Fraud Detection
@@ -1220,6 +1333,11 @@ export class AdInsConstant {
 
   // APP SUBSIDY
   public static GetListAppSubsidyByAppId = environment.losUrl + "/AppSubsidy/GetListAppSubsidyByAppId";
+  public static GetListSubsidyFromValue = environment.losUrl + "/AppSubsidy/GetListSubsidyFromValue";
+  public static GetListSubsidyAllocation = environment.losUrl + "/AppSubsidy/GetListSubsidyAllocation"
+  public static GetListSubsidySource = environment.losUrl + "/AppSubsidy/GetListSubsidySource";
+  public static GetListSubsidyValueType = environment.losUrl + "/AppSubsidy/GetListSubsidyValueType";
+  public static DeleteSubsidy = environment.losUrl + "/AppSubsidy/DeleteSubsidy";
 
   // ASSET TYPE
   // public static GetAssetTypeById = environment.FoundationR3Url + "/AssetType/GetAssetTypeById"

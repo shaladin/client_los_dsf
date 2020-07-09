@@ -8,6 +8,7 @@ import { formatDate } from '@angular/common';
 import { environment } from 'environments/environment';
 import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-pre-go-live-approval-detail',
@@ -86,7 +87,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
 
   ngOnInit() {
     this.arrValue.push(this.AgrmntId);
-    this.http.post(AdInsConstant.GetRfaLogByTrxNoAndApvCategory, { TrxNo : this.TrxNo, ApvCategory : "PRE_GPV_APV" } ).subscribe(
+    this.http.post(AdInsConstant.GetRfaLogByTrxNoAndApvCategory, { TrxNo : this.TrxNo, ApvCategory : CommonConstant.ApvCategoryPreGoLive} ).subscribe(
       (response) => {
         this.result = response;
         this.ListRfaLogObj = response["ListRfaLogObj"];
@@ -126,7 +127,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
         this.ProdOfferingVersion = this.result.ProdOfferingVersion;
         var Obj2 = {
           ProdOfferingCode: this.result.ProdOfferingCode,
-          RefProdCompntCode: "WAY_OF_FINANCING",
+          RefProdCompntCode: AdInsConstant.RefProdCompntCodeWayOfFinancing,
           RowVersion: ""
         }
         this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeAndACTProdStat, Obj2).subscribe(
@@ -141,7 +142,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
 
         var Obj3 = {
           ProdOfferingCode: this.result.ProdOfferingCode,
-          RefProdCompntCode: "PURPOSE_OF_FINANCING",
+          RefProdCompntCode: AdInsConstant.RefProdCompntCodePurposeOfFinancing,
           RowVersion: ""
         }
         this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeAndACTProdStat, Obj3).subscribe(

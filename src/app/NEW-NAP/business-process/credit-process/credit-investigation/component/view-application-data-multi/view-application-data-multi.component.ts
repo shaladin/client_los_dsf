@@ -104,7 +104,7 @@ export class ViewApplicationDataMultiComponent implements OnInit {
     await this.GetLifeInsData();
     await this.GetAppTc();
 
-    if(this.AssetInsuranceAndLifeInsuranceData.CoverBy == "CO"){
+    if(this.AssetInsuranceAndLifeInsuranceData.CoverBy == AdInsConstant.InsuredByCompany){
       this.InsuranceTitle = "Asset Insurance";
     } else {
       this.InsuranceTitle = "Asset Insurance & Life Insurance"

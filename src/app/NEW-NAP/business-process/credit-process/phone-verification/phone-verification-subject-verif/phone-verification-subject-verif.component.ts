@@ -341,7 +341,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
               VerfQuestionGroupCode: grpListObj[i].VerfQuestionGrpCode
             })
           }) as FormGroup;
-          if (QuestionList[j].VerfAnswerTypeCode == "DDL") {
+          if (QuestionList[j].VerfAnswerTypeCode == AdInsConstant.VerfAnswerTypeCodeDdl) {
             if (QuestionList[j].VerfAnswer != "") {
               var ddlList = QuestionList[j].VerfAnswer.split(";");
               this.ListVerfAnswer[i].push(ddlList);
@@ -352,7 +352,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
               this.ListVerfAnswer[i].push("");
             }
             QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required])
-          } else if (QuestionList[j].VerfAnswerTypeCode == "UC_INPUT_NUMBER") {
+          } else if (QuestionList[j].VerfAnswerTypeCode == AdInsConstant.VerfAnswerTypeCodeUcInputNumber) {
             QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required]);
             this.ListVerfAnswer[i].push("");
           } else {
@@ -425,7 +425,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   }
 
   bindSubjectRelationObj() {
-    this.refMasterObj.RefMasterTypeCode = "CUST_PERSONAL_RELATIONSHIP";
+    this.refMasterObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeCustPersonalRelationship;
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
         this.SubjectRelationObj = response["ReturnObject"];

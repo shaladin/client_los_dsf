@@ -40,7 +40,7 @@ export class ApplicationAgreementCancellationDetailComponent implements OnInit {
     this.viewObj = "./assets/ucviewgeneric/viewApplicationAgreementCancellation.json";
 
     var refReasonObj = {
-      RefReasonTypeCode: "APP_AGR_CNCL"
+      RefReasonTypeCode: AdInsConstant.RefReasonTypeCodeAppAgrCncl
     }
     this.http.post(AdInsConstant.GetListActiveRefReason, refReasonObj).subscribe(
       (response) => {

@@ -93,7 +93,7 @@ export class CustSocmedFL4WComponent implements OnInit {
   }
 
   bindSocmedTypeObj(){
-    this.refMasterObj.RefMasterTypeCode = "SOCMED_TYPE";
+    this.refMasterObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeSocmedType;
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.SocmedObj = response["ReturnObject"];

@@ -67,7 +67,7 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
 
   LoadRefReason() {
     var refReasonObj = {
-      RefReasonTypeCode: "PRE_GLV_APV"
+      RefReasonTypeCode: AdInsConstant.RefReasonTypeCodePreGlvApv
     }
     this.http.post(AdInsConstant.GetListActiveRefReason, refReasonObj).subscribe(
       (response) => {

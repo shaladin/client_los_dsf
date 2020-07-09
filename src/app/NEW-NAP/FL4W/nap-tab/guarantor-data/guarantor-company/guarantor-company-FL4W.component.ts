@@ -157,15 +157,15 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
     }
 
     var refCompObj = {
-      RefMasterTypeCode: "COMPANY_TYPE",
+      RefMasterTypeCode: AdInsConstant.RefMasterTypeCodeCompanyType,
       RowVersion: ""
     }
     var refCustRelObj = {
-      RefMasterTypeCode: "CUST_COMPANY_RELATIONSHIP",
+      RefMasterTypeCode: AdInsConstant.RefMasterTypeCodeCustCompanyRelationship,
       RowVersion: ""
     }
     var refJobObj = {
-      RefMasterTypeCode: "JOB_POSITION",
+      RefMasterTypeCode: AdInsConstant.RefMasterTypeCodeJobPosition,
       RowVersion: ""
     }
     this.http.post(AdInsConstant.GetListActiveRefMaster, refCompObj).subscribe(
@@ -279,7 +279,7 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
             );
           }
         );
-        this.http.post(AdInsConstant.GetCustAddrByMrCustAddrType, { CustId: event.CustId, MrCustAddrTypeCode: "LEGAL" }).subscribe(
+        this.http.post(AdInsConstant.GetCustAddrByMrCustAddrType, { CustId: event.CustId, MrCustAddrTypeCode: AdInsConstant.AddrTypeLegal }).subscribe(
           (response) => {
             console.log(response);
             this.resultData = response;
@@ -374,7 +374,7 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
       this.guarantorCompanyObj.AppGuarantorObj.CustNo = this.tempCustNo;
     }
     this.guarantorCompanyObj.AppGuarantorObj.GuarantorName = this.inputLookupObj.nameSelect;
-    this.guarantorCompanyObj.AppGuarantorObj.MrGuarantorTypeCode = "COMPANY";
+    this.guarantorCompanyObj.AppGuarantorObj.MrGuarantorTypeCode = AdInsConstant.CustTypeCompany;
     this.guarantorCompanyObj.AppGuarantorObj.TaxIdNo = this.CompanyForm.controls.TaxIdNo.value;
     this.guarantorCompanyObj.AppGuarantorObj.MrCustRelationshipCode = this.CompanyForm.controls.MrCustRelationshipCode.value;
     this.guarantorCompanyObj.AppGuarantorObj.RowVersion = "";
@@ -524,7 +524,7 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
 
   getDocType() {
     var legalDocObj = {
-      RefMasterTypeCode: "LEGAL_DOC_TYPE",
+      RefMasterTypeCode: AdInsConstant.RefMasterTypeCodeLegalDocType,
       RowVersion: ""
     }
     this.http.post(AdInsConstant.GetListActiveRefMaster, legalDocObj).subscribe(

@@ -129,7 +129,7 @@ export class CustLegalDocFL4WComponent implements OnInit {
   }
 
   bindLegalDocTypeObj(){
-    this.refMasterObj.RefMasterTypeCode = "LEGAL_DOC_TYPE";
+    this.refMasterObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeLegalDocType;
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.LegalDocTypeObj = response["ReturnObject"];

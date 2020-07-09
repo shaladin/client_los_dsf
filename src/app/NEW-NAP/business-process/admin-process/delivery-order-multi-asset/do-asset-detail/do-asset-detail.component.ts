@@ -145,7 +145,7 @@ export class DoAssetDetailComponent implements OnInit {
         var formArray = this.DOAssetDetail.get('DOAssetDocList') as FormArray;
         for (const item of appCollateral) {
           var isMandatory = false;
-          if(item.MrCollateralConditionCode == "NEW"){
+          if(item.MrCollateralConditionCode == AdInsConstant.AssetConditionNew){
             console.log("New Collateral");
             if(item.IsMandatoryNew == true){
               isMandatory = true;

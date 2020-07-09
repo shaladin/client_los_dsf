@@ -59,7 +59,7 @@ export class SubsidyFL4WComponent implements OnInit {
   {
       if (confirm('Are you sure to delete this record?')) {
         console.log(obj)
-        this.http.post(environment.losUrl + "/AppSubsidy/DeleteSubsidy", { AppSubsidyId : obj.AppSubsidyId }).subscribe(
+        this.http.post(AdInsConstant.DeleteSubsidy, { AppSubsidyId : obj.AppSubsidyId }).subscribe(
           (response) => {
             this.LoadSubsidyDataWithoutRule();
             this.SetNeedReCalculate(true);

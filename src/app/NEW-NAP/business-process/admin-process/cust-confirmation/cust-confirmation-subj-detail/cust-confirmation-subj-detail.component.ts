@@ -84,7 +84,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
     console.log(this.appUrl);
     this.GetData();
 
-    this.http.post<RefMasterObj>(AdInsConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, { MasterCode: this.Subject, RefMasterTypeCode: "VERF_SUBJ_RELATION" }).subscribe(
+    this.http.post<RefMasterObj>(AdInsConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, { MasterCode: this.Subject, RefMasterTypeCode: AdInsConstant.RefMasterTypeCodeVerfSubjRelation }).subscribe(
       (response) => {
         this.SubjectResponse = response;
       },
@@ -93,7 +93,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
       }
     );
 
-    this.http.post(AdInsConstant.GetListActiveRefStatusByStatusGrpCode, { StatusGrpCode: "VERF_RESULT_STAT" }).subscribe(
+    this.http.post(AdInsConstant.GetListActiveRefStatusByStatusGrpCode, { StatusGrpCode: AdInsConstant.StatusGrpVerfResultStat }).subscribe(
       (response) => {
         this.RefStatusList = response["ReturnObject"];
         this.CustConfirm.patchValue({
@@ -234,7 +234,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
               VerfQuestionGroupCode: grpListObj[i].VerfQuestionGrpCode
             })
           }) as FormGroup;
-          if (QuestionList[j].VerfAnswerTypeCode == "DDL") {
+          if (QuestionList[j].VerfAnswerTypeCode == AdInsConstant.VerfAnswerTypeCodeDdl) {
             if (QuestionList[j].VerfAnswer != "") {
               var ddlList = QuestionList[j].VerfAnswer.split(";");
               this.ListVerfAnswer[i].push(ddlList);
@@ -244,7 +244,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
             } else {
               this.ListVerfAnswer[i].push("");
             }
-          } else if (QuestionList[j].VerfAnswerTypeCode == "UC_INPUT_NUMBER") {
+          } else if (QuestionList[j].VerfAnswerTypeCode == AdInsConstant.VerfAnswerTypeCodeUcInputNumber) {
             QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required, Validators.min(1.00)]);
             this.ListVerfAnswer[i].push("");
           } else {

@@ -90,7 +90,7 @@ export class ViewFraudDetectionResultComponent implements OnInit {
         var fraudDukcapilReqObj = { "IdNo": this.idNo };
         this.getFraudDukcapil(fraudDukcapilReqObj);
 
-        if (this.appCustObj.MrCustTypeCode == "PERSONAL") {
+        if (this.appCustObj.MrCustTypeCode == AdInsConstant.CustTypePersonal) {
           this.requestDupCheck = {
             "CustName": this.appCustObj.CustName,
             "MrCustTypeCode": this.appCustObj.MrCustTypeCode,
@@ -103,7 +103,7 @@ export class ViewFraudDetectionResultComponent implements OnInit {
             "MobilePhnNo1": this.appCustPersonalObj.MobilePhnNo1,
             "RowVersion": this.RowVersion
           };
-        } else if (this.appCustObj.MrCustTypeCode == "COMPANY") {
+        } else if (this.appCustObj.MrCustTypeCode == AdInsConstant.CustTypeCompany) {
           this.requestDupCheck = {
             "CustName": this.appCustObj.CustName,
             "MrCustTypeCode": this.appCustObj.MrCustTypeCode,
@@ -182,9 +182,9 @@ export class ViewFraudDetectionResultComponent implements OnInit {
         this.listCustDuplicate = response['ReturnObject']["CustDuplicate"];
         var idxSelected = this.listCustDuplicate.findIndex(x => x.CustNo == this.appCustObj.CustNo);
         if (idxSelected < 0) {
-          this.custStat = "EXISTING";
+          this.custStat = AdInsConstant.CustStatExisting;
         } else {
-          this.custStat = "NEW";
+          this.custStat = AdInsConstant.CustStatNew;
           this.listCustDuplicate[idxSelected].IsSelected = true;
         }
 

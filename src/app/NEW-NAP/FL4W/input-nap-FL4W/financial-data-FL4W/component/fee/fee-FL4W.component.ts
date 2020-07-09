@@ -194,11 +194,11 @@ export class FeeFL4WComponent implements OnInit {
     var feeSource = "";
     var feeType = obj.FeeType;
 
-    if(obj.MrFeeTypeCode == 'PROVISION')
+    if(obj.MrFeeTypeCode == AdInsConstant.MrFeeTypeCodeProvision)
     {
       if(feeType == "" || feeType == null)
       {
-        feeType = "PRCNT"
+        feeType = AdInsConstant.FeeTypePrcnt
       }
       feeSource = "NTF_WITHOUT_CAP"
     }

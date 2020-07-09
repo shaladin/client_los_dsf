@@ -127,7 +127,7 @@ export class CustCompanyContactInformationFL4WComponent implements OnInit {
   }
 
   bindJobPositionObj(){
-    this.refMasterObj.RefMasterTypeCode = "JOB_POSITION";
+    this.refMasterObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeJobPosition;
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.JobPositionObj = response["ReturnObject"];
