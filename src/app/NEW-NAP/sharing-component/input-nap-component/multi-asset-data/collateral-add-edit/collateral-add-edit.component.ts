@@ -24,6 +24,7 @@ import { LookupCollateralComponent } from './lookup-collateral/lookup-collateral
 import { UcTempPagingObj } from 'app/shared/model/TempPaging/UcTempPagingObj.model';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-collateral-add-edit',
@@ -856,7 +857,7 @@ export class CollateralAddEditComponent implements OnInit {
     this.appCollateralObj.ListCollateralId = new Array();
 
     if (this.listSelectedId.length == 0) {
-      this.toastr.warningMessage('Please add at least one data');
+      this.toastr.warningMessage(ExceptionConstant.ADD_MIN_1_DATA);
       return;
     }
     this.appCollateralObj.ListCollateralId = this.listSelectedId;

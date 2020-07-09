@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { formatDate } from '@angular/common';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-guarantor-legal-doc',
@@ -144,13 +145,13 @@ export class GuarantorLegalDocComponent implements OnInit {
     console.log(d2);
     console.log(d3);
     if (d1 > d3 && d1 != d3) {
-      this.toastr.warningMessage("Expired Date can not be less than " + this.MaxDate);
+      this.toastr.warningMessage(ExceptionConstant.EXPIRED_DATE_CANNOT_LESS_THAN+ this.MaxDate);
       flag = false;
     }
     d1.setDate(d1.getDate()+1);
     console.log(d1);
     if (d1 < d2 && d1 != d2) {
-      this.toastr.warningMessage("Issued Date can not be more than " + this.MaxDate);
+      this.toastr.warningMessage(ExceptionConstant.ISSUED_DATE_CANNOT_MORE_THAN + this.MaxDate);
       flag = false;
     }    
     return flag;

@@ -7,6 +7,7 @@ import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
 import { environment } from 'environments/environment';
 import { CalcBalloonObj } from 'app/shared/model/AppFinData/CalcBalloonObj.Model';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-schm-balloon-FL4W',
@@ -55,7 +56,7 @@ export class SchmBalloonFL4WComponent implements OnInit {
       return;
     }
     if(this.ParentForm.get("BalloonValueAmt").value < 1){
-      this.toastr.warningMessage("Balloon Amount must be higher than 0.");
+      this.toastr.warningMessage(ExceptionConstant.BALLOON_AMOUNT_MUST_HIGHER_THAN + '0.');
       return;
     }
     this.calcBalloonObj = this.ParentForm.value;
@@ -99,7 +100,7 @@ export class SchmBalloonFL4WComponent implements OnInit {
       return;
     }    
     if(this.ParentForm.get("BalloonValueAmt").value < 1){
-      this.toastr.warningMessage("Balloon Amount must be higher than 0.");
+      this.toastr.warningMessage(ExceptionConstant.BALLOON_AMOUNT_MUST_HIGHER_THAN + '0.');
       return;
     }
     

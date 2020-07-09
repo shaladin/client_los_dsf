@@ -17,6 +17,7 @@ import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { UcTempPagingObj } from 'app/shared/model/TempPaging/UcTempPagingObj.model';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-mou-request-addcoll',
@@ -607,7 +608,7 @@ export class MouRequestAddcollComponent implements OnInit {
     this.mouCustCollateralObj.ListCollateralId = new Array();
 
     if (this.listSelectedId.length == 0) {
-      this.toastr.warningMessage('Please add at least one data');
+      this.toastr.warningMessage(ExceptionConstant.ADD_MIN_1_DATA);
       return;
     }
     this.mouCustCollateralObj.ListCollateralId = this.listSelectedId;

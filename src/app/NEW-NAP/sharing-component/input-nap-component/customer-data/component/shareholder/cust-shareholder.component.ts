@@ -11,6 +11,7 @@ import { formatDate } from '@angular/common';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AppCustCompanyMgmntShrholderObj } from 'app/shared/model/AppCustCompanyMgmntShrholderObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-cust-shareholder',
@@ -116,14 +117,14 @@ export class CustShareholderComponent implements OnInit {
     if(this.setAppCustCompanyMgmntShrholder() == false) return;
     if(this.mode == "add"){
       if(this.checkSharePrcnt(-1) == false){
-        this.toastr.warningMessage("Total Share Percentage cannot be more than 100.");
+        this.toastr.warningMessage(ExceptionConstant.TOTAL_SHARE_PERCENTAGE_MAX_100);
         return;
       }
       this.listShareholder.push(this.appCustCompanyMgmntShrholderObj);
     }
     if(this.mode == "edit"){
       if(this.checkSharePrcnt(this.currentEditedIndex) == false){
-        this.toastr.warningMessage("Total Share Percentage cannot be more than 100.");
+        this.toastr.warningMessage(ExceptionConstant.TOTAL_SHARE_PERCENTAGE_MAX_100);
         return;
       }
       this.listShareholder[this.currentEditedIndex] = this.appCustCompanyMgmntShrholderObj;
@@ -400,12 +401,12 @@ export class CustShareholderComponent implements OnInit {
       let d3 = new Date(this.appCustCompanyMgmntShrholderObj.BirthDt);
       let d4 = new Date(this.Max17YO);
       if(d1<d2){
-        this.toastr.warningMessage("Id Expired Date can not be less than Business Date");
+        this.toastr.warningMessage( ExceptionConstant.ID_EXPIRED_DATE_CANNOT_LESS_THAN + "Business Date");
         flag = false;
       }
       if(d3>d4){
         // this.toastr.warningMessage("Birth Date can not be more than " + this.Max17YO);
-        this.toastr.warningMessage("Customer age must be at least 17 year old");
+        this.toastr.warningMessage(ExceptionConstant.CUSTOMER_AGE_MUST_17_YEARS_OLD);
         flag = false;
       }
       this.appCustCompanyMgmntShrholderObj.MobilePhnNo = this.CustShareholderForm.controls.MobilePhnNo.value;

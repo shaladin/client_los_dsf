@@ -10,6 +10,7 @@ import { CustCnfrmObj } from 'app/shared/model/CustCnfrm/CustCnfrm.Model';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { environment } from 'environments/environment';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-cust-confirmation-detail',
@@ -119,7 +120,7 @@ export class CustConfirmationDetailComponent implements OnInit {
     if (this.CustCnfrmObj.IsSkip == false) {
       for (var i = 0; i < this.VerfResultList.length; i++) {
         if (this.VerfResultList[i].MrVerfResultHStatCode == CommonConstant.VerificationFail || this.VerfResultList[i].MrVerfResultHStatCode == CommonConstant.VerificationNew) {
-          this.toastr.warningMessage("Result can't be New or Failed");
+          this.toastr.warningMessage(ExceptionConstant.RESULT_CANNOT_NEW_OR_FAILED);
           return;
         }
       }

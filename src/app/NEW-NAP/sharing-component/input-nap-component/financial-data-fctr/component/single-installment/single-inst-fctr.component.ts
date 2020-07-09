@@ -9,6 +9,7 @@ import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalcul
 import { environment } from 'environments/environment';
 import { CalcSingleInstObj } from 'app/shared/model/AppFinData/CalcSingleInstObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-single-inst-fctr',
@@ -53,7 +54,7 @@ export class SingleInstFctrComponent implements OnInit {
   Calculate() {
     this.IsAppFeePrcntValid = true;
     if (this.ParentForm.value.EstEffDt == "") {
-      this.toastr.warningMessage("Insert Estimation Effective Date");
+      this.toastr.warningMessage(ExceptionConstant.INSERT_ESTIMATION_EFFECTIVE_DATE);
       return;
     }
     for (let i = 0; i < this.ParentForm.value.AppFee.length; i++) {
@@ -62,11 +63,11 @@ export class SingleInstFctrComponent implements OnInit {
       }
     }
     if (this.IsAppFeePrcntValid == false) {
-      this.toastr.warningMessage("App Fee Prcnt must be greater than 0");
+      this.toastr.warningMessage(ExceptionConstant.APP_FEE_PRCNT_MUST_GREATER + '0.');
       return;
     }
     if (this.ParentForm.value.EffectiveRatePrcnt < 0 && this.ParentForm.value.InterestType == "PRCNT") {
-      this.toastr.warningMessage("Effective Rate must be greater than 0");
+      this.toastr.warningMessage(ExceptionConstant.EFFECTIVE_RATE_MUST_GREATER + '0.');
       return;
     }
     else {

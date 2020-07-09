@@ -9,6 +9,7 @@ import { environment } from 'environments/environment';
 import { CalcIrregularObj } from 'app/shared/model/AppFinData/CalcIrregularObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-schm-irregular-FL4W',
@@ -177,7 +178,7 @@ export class SchmIrregularFL4WComponent implements OnInit {
     for(let i = 0; i < this.ParentForm.controls["AppFee"]["controls"].length; i++){
       if(this.ParentForm.controls["AppFee"].value[i].IsCptlz == true
           && this.ParentForm.controls["AppFee"].value[i].AppFeeAmt < this.ParentForm.controls["AppFee"].value[i].FeeCapitalizeAmt){
-        this.toastr.warningMessage(this.ParentForm.controls["AppFee"].value[i].FeeTypeName + " Capitalized Amount can't be higher than " +  this.ParentForm.controls["AppFee"].value[i].AppFeeAmt);
+        this.toastr.warningMessage(this.ParentForm.controls["AppFee"].value[i].FeeTypeName + " " + ExceptionConstant.CAPITALIZE_AMOUNT_CANNOT_HIGHER_THAN +  this.ParentForm.controls["AppFee"].value[i].AppFeeAmt);
         return false;
       }
     }

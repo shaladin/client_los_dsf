@@ -12,6 +12,7 @@ import { formatDate } from '@angular/common';
 import { environment } from 'environments/environment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 @Component({
   selector: 'app-guarantor-personal-FL4W',
   templateUrl: './guarantor-personal-FL4W.component.html',
@@ -469,7 +470,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
     let d4 = new Date(this.Max17YO);
     if (d3 > d4) {
       // this.toastr.errorMessage("Birth Date can not be more than " + this.Max17YO);
-      this.toastr.warningMessage("Customer age must be at least 17 year old");
+      this.toastr.warningMessage(ExceptionConstant.CUSTOMER_AGE_MUST_17_YEARS_OLD);
       
       flag = false;
     }
