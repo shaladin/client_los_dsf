@@ -22,6 +22,8 @@ import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
 import { AppCustCompanyMgmntShrholderObj } from 'app/shared/model/AppCustCompanyMgmntShrholderObj.Model';
 import { AppCustPersonalContactPersonObj } from 'app/shared/model/AppCustPersonalContactPersonObj.Model';
 import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalDocObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-customer-data',
@@ -135,7 +137,7 @@ export class CustomerDataComponent implements OnInit {
   }
 
   SaveForm() {
-    if (this.MrCustTypeCode == AdInsConstant.CustTypePersonal) {
+    if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
       this.custDataPersonalObj = new CustDataPersonalObj();
       this.setCustPersonalObjForSave();
       if(this.isExpiredBirthDt || this.isExpiredEstablishmentDt || this.isExpiredDate) return;
@@ -158,7 +160,7 @@ export class CustomerDataComponent implements OnInit {
       );
     }
 
-    if (this.MrCustTypeCode == AdInsConstant.CustTypeCompany) {
+    if (this.MrCustTypeCode == CommonConstant.CustTypeCompany) {
       var totalSharePrcnt = 0;
 
       if (this.listShareholder != undefined) {
@@ -230,7 +232,7 @@ export class CustomerDataComponent implements OnInit {
     let d2 = new Date(MaxDate);
     max17Yodt.setFullYear(d2.getFullYear()-17);
 
-    if (type == AdInsConstant.DateErrorMessageIdExpiredDate) {
+    if (type == ExceptionConstant.DateErrorMessageIdExpiredDate) {
       d2.setDate(d2.getDate() - 1);
       if (d1 < d2) {
         this.isExpiredDate = true;
@@ -241,26 +243,26 @@ export class CustomerDataComponent implements OnInit {
 
     if(d1 > d2){
       this.toastr.warningMessage(type + "  can not be more than " + MaxDate);
-      if (type == AdInsConstant.DateErrorMessageEstablishmentDate)
+      if (type == ExceptionConstant.DateErrorMessageEstablishmentDate)
         this.isExpiredEstablishmentDt = true;
-      if (type == AdInsConstant.DateErrorMessageBirthDate)
+      if (type == ExceptionConstant.DateErrorMessageBirthDate)
         this.isExpiredBirthDt = true;
 
-    }else if(type == AdInsConstant.DateErrorMessageBirthDate && d1 > max17Yodt){
+    }else if(type == ExceptionConstant.DateErrorMessageBirthDate && d1 > max17Yodt){
       this.toastr.warningMessage("Customer age must be at least 17 year old");
       // this.toastr.errorMessage(type + "  can not be more than " + Max17YO);
       this.isExpiredBirthDt = true;
     }
     else{
-      if (type == AdInsConstant.DateErrorMessageBirthDate)
+      if (type == ExceptionConstant.DateErrorMessageBirthDate)
         this.isExpiredBirthDt = false;
-      if (type == AdInsConstant.DateErrorMessageEstablishmentDate)
+      if (type == ExceptionConstant.DateErrorMessageEstablishmentDate)
         this.isExpiredEstablishmentDt = false;
     }
   }
 
   setAppCust() {
-    if (this.MrCustTypeCode == AdInsConstant.CustTypePersonal) {
+    if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
       this.custDataPersonalObj.AppCustObj.MrCustTypeCode = this.MrCustTypeCode;
       this.custDataPersonalObj.AppCustObj.CustName = this.mainDataComponent.InputLookupCustomerObj.nameSelect;
       this.custDataPersonalObj.AppCustObj.CustNo = this.mainDataComponent.selectedCustNo;
@@ -268,7 +270,7 @@ export class CustomerDataComponent implements OnInit {
       this.custDataPersonalObj.AppCustObj.IdNo = this.CustDataForm.controls["personalMainData"]["controls"].IdNo.value;
       this.custDataPersonalObj.AppCustObj.IdExpiredDt = this.CustDataForm.controls["personalMainData"]["controls"].IdExpiredDt.value;
       if(this.custDataPersonalObj.AppCustObj.MrIdTypeCode=="KITAS" || this.custDataPersonalObj.AppCustObj.MrIdTypeCode=="SIM"){
-        this.CekDt(this.custDataPersonalObj.AppCustObj.IdExpiredDt, AdInsConstant.DateErrorMessageIdExpiredDate);}
+        this.CekDt(this.custDataPersonalObj.AppCustObj.IdExpiredDt, ExceptionConstant.DateErrorMessageIdExpiredDate);}
       this.custDataPersonalObj.AppCustObj.TaxIdNo = this.CustDataForm.controls["personalMainData"]["controls"].TaxIdNo.value;
       this.custDataPersonalObj.AppCustObj.IsVip = this.CustDataForm.controls["personalMainData"]["controls"].IsVip.value;
       this.custDataPersonalObj.AppCustObj.AppId = this.appId;
@@ -280,7 +282,7 @@ export class CustomerDataComponent implements OnInit {
       }
     }
 
-    if (this.MrCustTypeCode == AdInsConstant.CustTypeCompany) {
+    if (this.MrCustTypeCode == CommonConstant.CustTypeCompany) {
       this.custDataCompanyObj.AppCustObj.MrCustTypeCode = this.MrCustTypeCode;
       this.custDataCompanyObj.AppCustObj.CustName = this.CustDataCompanyForm.controls["lookupCustomerCompany"]["controls"].value.value;
       this.custDataCompanyObj.AppCustObj.CustNo = this.CustDataCompanyForm.controls["companyMainData"]["controls"].CustNo.value;
@@ -306,7 +308,7 @@ export class CustomerDataComponent implements OnInit {
     this.custDataCompanyObj.AppCustCompanyObj.NumOfEmp = this.CustDataCompanyForm.controls["companyMainData"]["controls"].NumOfEmp.value;
     this.custDataCompanyObj.AppCustCompanyObj.IsAffiliated = this.CustDataCompanyForm.controls["companyMainData"]["controls"].IsAffiliated.value;
     this.custDataCompanyObj.AppCustCompanyObj.EstablishmentDt = this.CustDataCompanyForm.controls["companyMainData"]["controls"].EstablishmentDt.value;
-    this.CekDt(this.custDataCompanyObj.AppCustCompanyObj.EstablishmentDt, AdInsConstant.DateErrorMessageEstablishmentDate);
+    this.CekDt(this.custDataCompanyObj.AppCustCompanyObj.EstablishmentDt, ExceptionConstant.DateErrorMessageEstablishmentDate);
   }
 
   setAppCustPersonal() {
@@ -316,7 +318,7 @@ export class CustomerDataComponent implements OnInit {
     this.custDataPersonalObj.AppCustPersonalObj.MrMaritalStatCode = this.CustDataForm.controls["personalMainData"]["controls"].MrMaritalStatCode.value;
     this.custDataPersonalObj.AppCustPersonalObj.BirthPlace = this.CustDataForm.controls["personalMainData"]["controls"].BirthPlace.value;
     this.custDataPersonalObj.AppCustPersonalObj.BirthDt = this.CustDataForm.controls["personalMainData"]["controls"].BirthDt.value;
-    this.CekDt(this.custDataPersonalObj.AppCustPersonalObj.BirthDt, AdInsConstant.DateErrorMessageBirthDate);
+    this.CekDt(this.custDataPersonalObj.AppCustPersonalObj.BirthDt, ExceptionConstant.DateErrorMessageBirthDate);
     this.custDataPersonalObj.AppCustPersonalObj.MrNationalityCode = this.CustDataForm.controls["personalMainData"]["controls"].MrNationalityCode.value;
     this.custDataPersonalObj.AppCustPersonalObj.NationalityCountryCode = this.mainDataComponent.selectedNationalityCountryCode;
     this.custDataPersonalObj.AppCustPersonalObj.MobilePhnNo1 = this.CustDataForm.controls["personalMainData"]["controls"].MobilePhnNo1.value;
@@ -333,8 +335,8 @@ export class CustomerDataComponent implements OnInit {
   }
 
   setAppCustAddrLegal() {
-    if (this.MrCustTypeCode == AdInsConstant.CustTypePersonal) {
-      this.custDataPersonalObj.AppCustAddrLegalObj.MrCustAddrTypeCode = AdInsConstant.AddrTypeLegal;
+    if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
+      this.custDataPersonalObj.AppCustAddrLegalObj.MrCustAddrTypeCode = CommonConstant.AddrTypeLegal;
       this.custDataPersonalObj.AppCustAddrLegalObj.Addr = this.CustDataForm.controls["legalAddr"]["controls"].Addr.value;
       this.custDataPersonalObj.AppCustAddrLegalObj.AreaCode3 = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode3.value;
       this.custDataPersonalObj.AppCustAddrLegalObj.AreaCode4 = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode4.value;
@@ -353,8 +355,8 @@ export class CustomerDataComponent implements OnInit {
       this.custDataPersonalObj.AppCustAddrLegalObj.SubZipcode = this.CustDataForm.controls["legalAddr"]["controls"].SubZipcode.value;
     }
 
-    if (this.MrCustTypeCode == AdInsConstant.CustTypeCompany) {
-      this.custDataCompanyObj.AppCustAddrLegalObj.MrCustAddrTypeCode = AdInsConstant.AddrTypeLegal;
+    if (this.MrCustTypeCode == CommonConstant.CustTypeCompany) {
+      this.custDataCompanyObj.AppCustAddrLegalObj.MrCustAddrTypeCode = CommonConstant.AddrTypeLegal;
       this.custDataCompanyObj.AppCustAddrLegalObj.Addr = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].Addr.value;
       this.custDataCompanyObj.AppCustAddrLegalObj.AreaCode3 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].AreaCode3.value;
       this.custDataCompanyObj.AppCustAddrLegalObj.AreaCode4 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].AreaCode4.value;
@@ -375,7 +377,7 @@ export class CustomerDataComponent implements OnInit {
   }
 
   setAppCustAddrResidence() {
-    this.custDataPersonalObj.AppCustAddrResidenceObj.MrCustAddrTypeCode = AdInsConstant.AddrTypeResidence;
+    this.custDataPersonalObj.AppCustAddrResidenceObj.MrCustAddrTypeCode = CommonConstant.AddrTypeResidence;
     this.custDataPersonalObj.AppCustAddrResidenceObj.Addr = this.CustDataForm.controls["residenceAddr"]["controls"].Addr.value;
     this.custDataPersonalObj.AppCustAddrResidenceObj.AreaCode3 = this.CustDataForm.controls["residenceAddr"]["controls"].AreaCode3.value;
     this.custDataPersonalObj.AppCustAddrResidenceObj.AreaCode4 = this.CustDataForm.controls["residenceAddr"]["controls"].AreaCode4.value;
@@ -396,8 +398,8 @@ export class CustomerDataComponent implements OnInit {
   }
 
   setAppCustAddrMailing() {
-    if (this.MrCustTypeCode == AdInsConstant.CustTypePersonal) {
-      this.custDataPersonalObj.AppCustAddrMailingObj.MrCustAddrTypeCode = AdInsConstant.AddrTypeMailing;
+    if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
+      this.custDataPersonalObj.AppCustAddrMailingObj.MrCustAddrTypeCode = CommonConstant.AddrTypeMailing;
       this.custDataPersonalObj.AppCustAddrMailingObj.Addr = this.CustDataForm.controls["mailingAddr"]["controls"].Addr.value;
       this.custDataPersonalObj.AppCustAddrMailingObj.AreaCode3 = this.CustDataForm.controls["mailingAddr"]["controls"].AreaCode3.value;
       this.custDataPersonalObj.AppCustAddrMailingObj.AreaCode4 = this.CustDataForm.controls["mailingAddr"]["controls"].AreaCode4.value;
@@ -416,8 +418,8 @@ export class CustomerDataComponent implements OnInit {
       this.custDataPersonalObj.AppCustAddrMailingObj.SubZipcode = this.CustDataForm.controls["mailingAddr"]["controls"].SubZipcode.value;
     }
 
-    if (this.MrCustTypeCode == AdInsConstant.CustTypeCompany) {
-      this.custDataCompanyObj.AppCustAddrMailingObj.MrCustAddrTypeCode = AdInsConstant.AddrTypeMailing;
+    if (this.MrCustTypeCode == CommonConstant.CustTypeCompany) {
+      this.custDataCompanyObj.AppCustAddrMailingObj.MrCustAddrTypeCode = CommonConstant.AddrTypeMailing;
       this.custDataCompanyObj.AppCustAddrMailingObj.Addr = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].Addr.value;
       this.custDataCompanyObj.AppCustAddrMailingObj.AreaCode3 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].AreaCode3.value;
       this.custDataCompanyObj.AppCustAddrMailingObj.AreaCode4 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].AreaCode4.value;
@@ -439,7 +441,7 @@ export class CustomerDataComponent implements OnInit {
 
   setAppCustAddrJob() {
     this.custDataPersonalObj.AppCustPersonalJobDataObj.AppCustAddrJobObj = new AppCustAddrObj();
-    this.custDataPersonalObj.AppCustPersonalJobDataObj.AppCustAddrJobObj.MrCustAddrTypeCode = AdInsConstant.AddrTypeJob;
+    this.custDataPersonalObj.AppCustPersonalJobDataObj.AppCustAddrJobObj.MrCustAddrTypeCode = CommonConstant.AddrTypeJob;
     this.custDataPersonalObj.AppCustPersonalJobDataObj.AppCustAddrJobObj.Addr = this.CustDataForm.controls["jobDataAddr"]["controls"].Addr.value;
     this.custDataPersonalObj.AppCustPersonalJobDataObj.AppCustAddrJobObj.AreaCode3 = this.CustDataForm.controls["jobDataAddr"]["controls"].AreaCode3.value;
     this.custDataPersonalObj.AppCustPersonalJobDataObj.AppCustAddrJobObj.AreaCode4 = this.CustDataForm.controls["jobDataAddr"]["controls"].AreaCode4.value;
@@ -497,7 +499,7 @@ export class CustomerDataComponent implements OnInit {
   setAppCustPersonalJobData() {
     this.custDataPersonalObj.AppCustObj.CustModelCode = this.CustDataForm.controls["jobData"]["controls"].CustModelCode.value;
 
-    if (this.custDataPersonalObj.AppCustObj.CustModelCode == AdInsConstant.CustModelProfessional) {
+    if (this.custDataPersonalObj.AppCustObj.CustModelCode == CommonConstant.CustModelProfessional) {
       this.custDataPersonalObj.AppCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
       this.custDataPersonalObj.AppCustPersonalJobDataObj.IndustryTypeCode = this.custJobDataComponent.selectedIndustryTypeCode;
       this.custDataPersonalObj.AppCustPersonalJobDataObj.ProfessionalNo = this.CustDataForm.controls["jobData"]["controls"].ProfessionalNo.value;
@@ -506,7 +508,7 @@ export class CustomerDataComponent implements OnInit {
       this.setAppCustAddrJob();
     }
 
-    if (this.custDataPersonalObj.AppCustObj.CustModelCode == AdInsConstant.CustModelEmployee) {
+    if (this.custDataPersonalObj.AppCustObj.CustModelCode == CommonConstant.CustModelEmployee) {
       this.custDataPersonalObj.AppCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
       this.custDataPersonalObj.AppCustPersonalJobDataObj.IndustryTypeCode = this.custJobDataComponent.selectedIndustryTypeCode;
       this.custDataPersonalObj.AppCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
@@ -520,7 +522,7 @@ export class CustomerDataComponent implements OnInit {
       this.setAppCustAddrJob();
     }
 
-    if (this.custDataPersonalObj.AppCustObj.CustModelCode == AdInsConstant.CustModelSmallMediumEnterprise) {
+    if (this.custDataPersonalObj.AppCustObj.CustModelCode == CommonConstant.CustModelSmallMediumEnterprise) {
       this.custDataPersonalObj.AppCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
       this.custDataPersonalObj.AppCustPersonalJobDataObj.IndustryTypeCode = this.custJobDataComponent.selectedIndustryTypeCode;
       this.custDataPersonalObj.AppCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
@@ -534,10 +536,10 @@ export class CustomerDataComponent implements OnInit {
       this.setAppCustAddrJob();
     }
 
-    if (this.custDataPersonalObj.AppCustObj.CustModelCode == AdInsConstant.CustModelNonProfessional) {
+    if (this.custDataPersonalObj.AppCustObj.CustModelCode == CommonConstant.CustModelNonProfessional) {
       this.custDataPersonalObj.AppCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
     }
-    this.CekDt(this.custDataPersonalObj.AppCustPersonalJobDataObj.EstablishmentDt, AdInsConstant.DateErrorMessageEstablishmentDate);      
+    this.CekDt(this.custDataPersonalObj.AppCustPersonalJobDataObj.EstablishmentDt, ExceptionConstant.DateErrorMessageEstablishmentDate);      
   }
 
   setAppCustSocmedObj() {
@@ -552,7 +554,7 @@ export class CustomerDataComponent implements OnInit {
   }
 
   setAppCustGrpObj() {
-    if (this.MrCustTypeCode == AdInsConstant.CustTypePersonal) {
+    if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
       this.custDataPersonalObj.AppCustGrpObjs = new Array<AppCustGrpObj>();
       for (let i = 0; i < this.CustDataForm.controls["custGrpMember"].value.length; i++) {
         var appCustGrpObj = new AppCustGrpObj();
@@ -564,7 +566,7 @@ export class CustomerDataComponent implements OnInit {
       }
     }
 
-    if (this.MrCustTypeCode == AdInsConstant.CustTypeCompany) {
+    if (this.MrCustTypeCode == CommonConstant.CustTypeCompany) {
       this.custDataCompanyObj.AppCustGrpObjs = new Array<AppCustGrpObj>();
       for (let i = 0; i < this.CustDataCompanyForm.controls["custGrpMemberCompany"].value.length; i++) {
         var appCustGrpObj = new AppCustGrpObj();
@@ -603,7 +605,7 @@ export class CustomerDataComponent implements OnInit {
   }
 
   copyToContactPersonAddr(event) {
-    if (event == AdInsConstant.AddrTypeLegal) {
+    if (event == CommonConstant.AddrTypeLegal) {
       this.custContactInformationComponent.contactPersonAddrObj.Addr = this.CustDataForm.controls["legalAddr"]["controls"].Addr.value;
       this.custContactInformationComponent.contactPersonAddrObj.AreaCode1 = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode1.value;
       this.custContactInformationComponent.contactPersonAddrObj.AreaCode2 = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode2.value;
@@ -623,7 +625,7 @@ export class CustomerDataComponent implements OnInit {
       this.custContactInformationComponent.inputFieldContactPersonObj.inputLookupObj.jsonSelect = { Zipcode: this.CustDataForm.controls["legalAddrZipcode"]["controls"].value.value };
     }
 
-    if (event == AdInsConstant.AddrTypeResidence) {
+    if (event == CommonConstant.AddrTypeResidence) {
       this.custContactInformationComponent.contactPersonAddrObj.Addr = this.CustDataForm.controls["residenceAddr"]["controls"].Addr.value;
       this.custContactInformationComponent.contactPersonAddrObj.AreaCode1 = this.CustDataForm.controls["residenceAddr"]["controls"].AreaCode1.value;
       this.custContactInformationComponent.contactPersonAddrObj.AreaCode2 = this.CustDataForm.controls["residenceAddr"]["controls"].AreaCode2.value;
@@ -643,7 +645,7 @@ export class CustomerDataComponent implements OnInit {
       this.custContactInformationComponent.inputFieldContactPersonObj.inputLookupObj.jsonSelect = { Zipcode: this.CustDataForm.controls["residenceAddrZipcode"]["controls"].value.value };
     }
 
-    if (event == AdInsConstant.AddrTypeMailing) {
+    if (event == CommonConstant.AddrTypeMailing) {
       this.custContactInformationComponent.contactPersonAddrObj.Addr = this.CustDataForm.controls["mailingAddr"]["controls"].Addr.value;
       this.custContactInformationComponent.contactPersonAddrObj.AreaCode1 = this.CustDataForm.controls["mailingAddr"]["controls"].AreaCode1.value;
       this.custContactInformationComponent.contactPersonAddrObj.AreaCode2 = this.CustDataForm.controls["mailingAddr"]["controls"].AreaCode2.value;
@@ -665,7 +667,7 @@ export class CustomerDataComponent implements OnInit {
   }
 
   copyToResidence() {
-    if (this.copyFromResidence == AdInsConstant.AddrTypeLegal) {
+    if (this.copyFromResidence == CommonConstant.AddrTypeLegal) {
       this.residenceAddrObj.Addr = this.CustDataForm.controls["legalAddr"]["controls"].Addr.value;
       this.residenceAddrObj.AreaCode1 = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode1.value;
       this.residenceAddrObj.AreaCode2 = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode2.value;
@@ -688,7 +690,7 @@ export class CustomerDataComponent implements OnInit {
   }
 
   copyToMailing() {
-    if (this.copyFromMailing == AdInsConstant.AddrTypeLegal) {
+    if (this.copyFromMailing == CommonConstant.AddrTypeLegal) {
       this.mailingAddrObj.Addr = this.CustDataForm.controls["legalAddr"]["controls"].Addr.value;
       this.mailingAddrObj.AreaCode1 = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode1.value;
       this.mailingAddrObj.AreaCode2 = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode2.value;
@@ -709,7 +711,7 @@ export class CustomerDataComponent implements OnInit {
       this.inputFieldMailingObj.inputLookupObj.jsonSelect = { Zipcode: this.CustDataForm.controls["legalAddrZipcode"]["controls"].value.value };
     }
 
-    if (this.copyFromMailing == AdInsConstant.AddrTypeResidence) {
+    if (this.copyFromMailing == CommonConstant.AddrTypeResidence) {
       this.mailingAddrObj.Addr = this.CustDataForm.controls["residenceAddr"]["controls"].Addr.value;
       this.mailingAddrObj.AreaCode1 = this.CustDataForm.controls["residenceAddr"]["controls"].AreaCode1.value;
       this.mailingAddrObj.AreaCode2 = this.CustDataForm.controls["residenceAddr"]["controls"].AreaCode2.value;
@@ -732,7 +734,7 @@ export class CustomerDataComponent implements OnInit {
   }
 
   copyToMailingCompany() {
-    if (this.copyFromMailingCompany == AdInsConstant.AddrTypeLegal) {
+    if (this.copyFromMailingCompany == CommonConstant.AddrTypeLegal) {
       this.mailingAddrCompanyObj.Addr = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].Addr.value;
       this.mailingAddrCompanyObj.AreaCode1 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].AreaCode1.value;
       this.mailingAddrCompanyObj.AreaCode2 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].AreaCode2.value;
@@ -772,7 +774,7 @@ export class CustomerDataComponent implements OnInit {
       (response) => {
         // console.log(response);
         if (response != "") {
-          if (response["AppCustObj"]["MrCustTypeCode"] == AdInsConstant.CustTypePersonal) {
+          if (response["AppCustObj"]["MrCustTypeCode"] == CommonConstant.CustTypePersonal) {
             this.custDataPersonalObj = new CustDataPersonalObj();
             this.custDataPersonalObj.AppCustObj = response["AppCustObj"];
             this.custDataPersonalObj.AppCustPersonalObj = response["AppCustPersonalObj"];
@@ -792,15 +794,15 @@ export class CustomerDataComponent implements OnInit {
               this.defCustModelCode = this.custDataPersonalObj.AppCustObj.CustModelCode;
             }
 
-            this.setAddrLegalObj(AdInsConstant.CustTypePersonal);
+            this.setAddrLegalObj(CommonConstant.CustTypePersonal);
             this.setAddrResidenceObj();
-            this.setAddrMailingObj(AdInsConstant.CustTypePersonal);
+            this.setAddrMailingObj(CommonConstant.CustTypePersonal);
 
             this.appCustPersonalId = this.custDataPersonalObj.AppCustPersonalObj.AppCustPersonalId;
             this.MrCustTypeCode = this.custDataPersonalObj.AppCustObj.MrCustTypeCode;
           }
 
-          if (response["AppCustObj"]["MrCustTypeCode"] == AdInsConstant.CustTypeCompany) {
+          if (response["AppCustObj"]["MrCustTypeCode"] == CommonConstant.CustTypeCompany) {
             this.custDataCompanyObj = new CustDataCompanyObj();
             this.custDataCompanyObj.AppCustObj = response["AppCustObj"];
             this.custDataCompanyObj.AppCustCompanyObj = response["AppCustCompanyObj"];
@@ -822,8 +824,8 @@ export class CustomerDataComponent implements OnInit {
             this.listLegalDoc = this.custDataCompanyObj.AppCustCompanyLegalDocObjs;
             this.custDataCompanyObj.AppCustGrpObjs = response["AppCustGrpObjs"];
 
-            this.setAddrLegalObj(AdInsConstant.CustTypeCompany);
-            this.setAddrMailingObj(AdInsConstant.CustTypeCompany);
+            this.setAddrLegalObj(CommonConstant.CustTypeCompany);
+            this.setAddrMailingObj(CommonConstant.CustTypeCompany);
 
             this.MrCustTypeCode = this.custDataCompanyObj.AppCustObj.MrCustTypeCode;
           }
@@ -879,7 +881,7 @@ export class CustomerDataComponent implements OnInit {
   }
 
   setAddrLegalObj(custTypeCode) {
-    if (custTypeCode == AdInsConstant.CustTypePersonal) {
+    if (custTypeCode == CommonConstant.CustTypePersonal) {
       this.initAddrLegalObj();
 
       if (this.custDataPersonalObj.AppCustAddrLegalObj != undefined) {
@@ -904,7 +906,7 @@ export class CustomerDataComponent implements OnInit {
       }
     }
 
-    if (custTypeCode == AdInsConstant.CustTypeCompany) {
+    if (custTypeCode == CommonConstant.CustTypeCompany) {
       this.initAddrLegalCompanyObj();
 
       if (this.custDataCompanyObj.AppCustAddrLegalObj != undefined) {
@@ -957,7 +959,7 @@ export class CustomerDataComponent implements OnInit {
   }
 
   setAddrMailingObj(custTypeCode) {
-    if (custTypeCode == AdInsConstant.CustTypePersonal) {
+    if (custTypeCode == CommonConstant.CustTypePersonal) {
       this.initAddrMailingObj();
 
       if (this.custDataPersonalObj.AppCustAddrMailingObj != undefined) {
@@ -982,7 +984,7 @@ export class CustomerDataComponent implements OnInit {
       }
     }
 
-    if (custTypeCode == AdInsConstant.CustTypeCompany) {
+    if (custTypeCode == CommonConstant.CustTypeCompany) {
       this.initAddrMailingCompanyObj();
 
       if (this.custDataCompanyObj.AppCustAddrMailingObj != undefined) {

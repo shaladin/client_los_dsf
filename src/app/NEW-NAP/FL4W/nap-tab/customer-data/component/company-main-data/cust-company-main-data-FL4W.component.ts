@@ -10,6 +10,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { formatDate } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { CustDataCompanyObj } from 'app/shared/model/CustDataCompanyObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-cust-company-main-data-FL4W',
@@ -201,7 +202,7 @@ export class CustCompanyMainDataFL4WComponent implements OnInit {
     this.InputLookupCustomerObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustomerObj.genericJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustomerObj.isReadonly = false;
-    this.setCriteriaLookupCustomer(AdInsConstant.CustTypeCompany);
+    this.setCriteriaLookupCustomer(CommonConstant.CustTypeCompany);
 
     this.InputLookupIndustryTypeObj = new InputLookupObj();
     this.InputLookupIndustryTypeObj.urlJson = "./assets/uclookup/lookupIndustryType.json";
@@ -228,7 +229,7 @@ export class CustCompanyMainDataFL4WComponent implements OnInit {
   }
 
   async bindCustModelObj(){
-    this.custModelReqObj.MrCustTypeCode = AdInsConstant.CustTypeCompany;
+    this.custModelReqObj.MrCustTypeCode = CommonConstant.CustTypeCompany;
     await this.http.post(AdInsConstant.GetListKeyValueByMrCustTypeCode, this.custModelReqObj).toPromise().then(
       (response) => {
         this.CustModelObj = response["ReturnObject"];

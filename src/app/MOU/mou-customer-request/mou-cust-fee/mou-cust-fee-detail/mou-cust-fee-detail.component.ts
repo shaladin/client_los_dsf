@@ -6,6 +6,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { forkJoin } from 'rxjs';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-mou-cust-fee-detail',
@@ -34,7 +35,7 @@ export class MouCustFeeDetailComponent implements OnInit {
     public activeModal: NgbActiveModal
   ) {
     var rmFeeType = new RefMasterObj();
-    rmFeeType.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeFeeType;
+    rmFeeType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeFeeType;
     let getRefFee = this.httpClient.post(AdInsConstant.GetRefFeeList, null);
     let getFeeType = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, rmFeeType);
     forkJoin([getRefFee, getFeeType]).subscribe(
@@ -70,7 +71,7 @@ export class MouCustFeeDetailComponent implements OnInit {
   }
 
   feeTypeHandler(e){
-    if(e.target.value == AdInsConstant.FeeTypeAmt){
+    if(e.target.value == CommonConstant.FeeTypeAmt){
       this.MouCustFeeForm.patchValue({
         FeePrcnt: 0
       });
@@ -78,7 +79,7 @@ export class MouCustFeeDetailComponent implements OnInit {
       this.MouCustFeeForm.controls['FeeAmt'].setValidators([Validators.required, Validators.min(1)]);
       this.MouCustFeeForm.controls['FeeAmt'].updateValueAndValidity();
     }
-    else if(e.target.value ==  AdInsConstant.FeeTypePrcnt){
+    else if(e.target.value ==  CommonConstant.FeeTypePrcnt){
       this.MouCustFeeForm.patchValue({
         FeeAmt: 0
       });

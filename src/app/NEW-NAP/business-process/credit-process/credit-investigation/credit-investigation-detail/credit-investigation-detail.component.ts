@@ -12,6 +12,7 @@ import { RequestAppCrdInvstgObj } from 'app/shared/model/AppCrdInvstg/RequestApp
 import { AppCrdInvstgDObj } from 'app/shared/model/AppCrdInvstg/AppCrdInvstgDObj.Model';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { AppCrdInvstgHObj } from 'app/shared/model/AppCrdInvstg/AppCrdInvstgHObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 
 @Component({
@@ -140,7 +141,7 @@ export class CreditInvestigationDetailComponent implements OnInit {
       }
     );
     if(this.appCrdInvstgHObj.AppId == 0){
-      var refMasterObj = { RefMasterTypeCode: AdInsConstant.RefMasterTypeCodeCrdInvstgAnalysisItem };
+      var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCrdInvstgAnalysisItem };
       await this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
         (response) => {
           this.analysisItemObj = response["ReturnObject"];

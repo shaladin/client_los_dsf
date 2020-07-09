@@ -15,6 +15,7 @@ import { NegativeAssetCheckObj } from 'app/shared/model/NegativeAssetCheckObj.Mo
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { NegativeAssetObj } from 'app/shared/model/NegativeAssetObj.Model';
 import { ResDuplicateCustomerObj } from 'app/shared/model/Lead/ResDuplicateCustomerObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 
 
@@ -90,7 +91,7 @@ export class ViewFraudDetectionResultComponent implements OnInit {
         var fraudDukcapilReqObj = { "IdNo": this.idNo };
         this.getFraudDukcapil(fraudDukcapilReqObj);
 
-        if (this.appCustObj.MrCustTypeCode == AdInsConstant.CustTypePersonal) {
+        if (this.appCustObj.MrCustTypeCode == CommonConstant.CustTypePersonal) {
           this.requestDupCheck = {
             "CustName": this.appCustObj.CustName,
             "MrCustTypeCode": this.appCustObj.MrCustTypeCode,
@@ -103,7 +104,7 @@ export class ViewFraudDetectionResultComponent implements OnInit {
             "MobilePhnNo1": this.appCustPersonalObj.MobilePhnNo1,
             "RowVersion": this.RowVersion
           };
-        } else if (this.appCustObj.MrCustTypeCode == AdInsConstant.CustTypeCompany) {
+        } else if (this.appCustObj.MrCustTypeCode == CommonConstant.CustTypeCompany) {
           this.requestDupCheck = {
             "CustName": this.appCustObj.CustName,
             "MrCustTypeCode": this.appCustObj.MrCustTypeCode,
@@ -182,9 +183,9 @@ export class ViewFraudDetectionResultComponent implements OnInit {
         this.listCustDuplicate = response['ReturnObject']["CustDuplicate"];
         var idxSelected = this.listCustDuplicate.findIndex(x => x.CustNo == this.appCustObj.CustNo);
         if (idxSelected < 0) {
-          this.custStat = AdInsConstant.CustStatExisting;
+          this.custStat = CommonConstant.CustStatExisting;
         } else {
-          this.custStat = AdInsConstant.CustStatNew;
+          this.custStat = CommonConstant.CustStatNew;
           this.listCustDuplicate[idxSelected].IsSelected = true;
         }
 

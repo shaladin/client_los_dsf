@@ -9,6 +9,7 @@ import { environment } from 'environments/environment';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { ActivatedRoute } from '@angular/router';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-app',
@@ -161,29 +162,29 @@ export class AppComponent implements OnInit {
       RowVersion: ""
     };
     var refMasterFirstInstType = new RefMasterObj();
-    refMasterFirstInstType.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeFirstInstType;
+    refMasterFirstInstType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeFirstInstType;
     var refMasterInterestType = new RefMasterObj();
-    refMasterInterestType.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeInterestType;
+    refMasterInterestType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeInterestType;
     var refMasterCustNotifyOpt = new RefMasterObj();
-    refMasterCustNotifyOpt.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeCustNotifyOpt;
+    refMasterCustNotifyOpt.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustNotifyOpt;
     var refMasterWop = new RefMasterObj();
-    refMasterWop.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeWOP;
+    refMasterWop.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeWOP;
     var refMasterCodeInterestType = new RefMasterObj();
-    refMasterCodeInterestType.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeInterestType;
+    refMasterCodeInterestType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeInterestType;
     var refMasterCodeAssetCondition = new RefMasterObj();
-    refMasterCodeAssetCondition.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeAssetCondition;
+    refMasterCodeAssetCondition.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetCondition;
     var refMasterCodeAssetUsage = new RefMasterObj();
-    refMasterCodeAssetUsage.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeAssetUsage;
+    refMasterCodeAssetUsage.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetUsage;
     var refMasterCodeCustPersonalRelationship = new RefMasterObj();
-    refMasterCodeCustPersonalRelationship.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeCustPersonalRelationship;
+    refMasterCodeCustPersonalRelationship.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
     var refMasterCodeIdType = new RefMasterObj();
-    refMasterCodeIdType.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeIdType;
+    refMasterCodeIdType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
     var refMasterCodeRateType = new RefMasterObj();
-    refMasterCodeRateType.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeRateType;
+    refMasterCodeRateType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeRateType;
     var refMasterTypeCodeAddrType = new RefMasterObj();
-    refMasterTypeCodeAddrType.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeAddrType;
+    refMasterTypeCodeAddrType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAddrType;
     var refMasterTypeCodeGracePeriodType = new RefMasterObj();
-    refMasterTypeCodeGracePeriodType.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeGracePeriodType;
+    refMasterTypeCodeGracePeriodType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeGracePeriodType;
 
     this.http.post(this.getRefMasterListKeyValueActiveByCodeUrl, refMasterSalesRecommendation).subscribe(
       (response) => {
@@ -420,18 +421,18 @@ export class AppComponent implements OnInit {
         console.log(response);
         this.AppCustAddrObj = response["ReturnObject"];
         this.AddrLegalObj = this.AppCustAddrObj.filter(
-          emp => emp.MrCustAddrTypeCode === AdInsConstant.AddrTypeLegal);
+          emp => emp.MrCustAddrTypeCode === CommonConstant.AddrTypeLegal);
         this.AddrResidenceObj = this.AppCustAddrObj.filter(
-          emp => emp.MrCustAddrTypeCode === AdInsConstant.AddrTypeResidence);
+          emp => emp.MrCustAddrTypeCode === CommonConstant.AddrTypeResidence);
         this.AddrMailingObj = this.AppCustAddrObj.filter(
-          emp => emp.MrCustAddrTypeCode === AdInsConstant.AddrTypeMailing);
+          emp => emp.MrCustAddrTypeCode === CommonConstant.AddrTypeMailing);
       }
     );
   }
 
   copyToOwnerAddr() {
     console.log(this.appForm.controls.CopyAddrLocationFrom.value);
-    if (this.CopyAddrOwnerFromType == AdInsConstant.AddrTypeLegal) {
+    if (this.CopyAddrOwnerFromType == CommonConstant.AddrTypeLegal) {
 
       this.ownerAddrObj = new AddrObj();
       this.ownerAddrObj.Addr = this.AddrLegalObj[0].Addr;
@@ -445,7 +446,7 @@ export class AppComponent implements OnInit {
 
     }
 
-    if (this.CopyAddrOwnerFromType == AdInsConstant.AddrTypeResidence) {
+    if (this.CopyAddrOwnerFromType == CommonConstant.AddrTypeResidence) {
 
       this.appForm.patchValue({
         OwnerAddr: this.AddrResidenceObj[0].Addr,
@@ -468,7 +469,7 @@ export class AppComponent implements OnInit {
       this.inputFieldOwnerAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.AddrResidenceObj[0].Zipcode };
     }
 
-    if (this.CopyAddrOwnerFromType == AdInsConstant.AddrTypeMailing) {
+    if (this.CopyAddrOwnerFromType == CommonConstant.AddrTypeMailing) {
 
       this.appForm.patchValue({
         OwnerAddr: this.AddrMailingObj[0].Addr,
@@ -494,7 +495,7 @@ export class AppComponent implements OnInit {
 
   copyToLocationAddr() {
 
-    if (this.CopyAddrLocationFromType == AdInsConstant.AddrTypeLegal) {
+    if (this.CopyAddrLocationFromType == CommonConstant.AddrTypeLegal) {
 
       this.appForm.patchValue({
         LocationAddr: this.AddrLegalObj[0].Addr,
@@ -518,7 +519,7 @@ export class AppComponent implements OnInit {
 
     }
 
-    if (this.CopyAddrLocationFromType == AdInsConstant.AddrTypeResidence) {
+    if (this.CopyAddrLocationFromType == CommonConstant.AddrTypeResidence) {
 
       this.appForm.patchValue({
         LocationAddr: this.AddrResidenceObj[0].Addr,
@@ -541,7 +542,7 @@ export class AppComponent implements OnInit {
       this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.AddrResidenceObj[0].Zipcode };
     }
 
-    if (this.CopyAddrLocationFromType == AdInsConstant.AddrTypeMailing) {
+    if (this.CopyAddrLocationFromType == CommonConstant.AddrTypeMailing) {
       this.appForm.patchValue({
         LocationAddr: this.AddrMailingObj[0].Addr,
         LocationAreaCode1: this.AddrMailingObj[0].AreaCode1,

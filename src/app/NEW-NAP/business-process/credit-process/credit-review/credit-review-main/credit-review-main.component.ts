@@ -10,6 +10,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { ScoringResultHObj } from 'app/shared/model/ScoringResultHObj.Model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-credit-review-main',
@@ -162,11 +163,11 @@ export class CreditReviewMainComponent implements OnInit {
   }
 
   async BindCreditAnalysisItemFormObj() {
-    var refMasterObj = { RefMasterTypeCode: AdInsConstant.RefMasterTypeCodeCrdRvwAnalysisItem };
+    var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCrdRvwAnalysisItem };
     await this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
       (response) => {
         console.log(response);
-        var temp = response[AdInsConstant.ReturnObj];
+        var temp = response[CommonConstant.ReturnObj];
         for (var i = 0; i < temp.length; i++) {
           var NewDataForm = this.fb.group({
             QuestionCode: temp[i].Key,
@@ -221,11 +222,11 @@ export class CreditReviewMainComponent implements OnInit {
   }
 
   async BindDDLRecommendation() {
-    var Obj = { RefReasonTypeCode: AdInsConstant.RefReasonTypeCodeCrdReview };
+    var Obj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview };
     await this.http.post(AdInsConstant.GetListActiveRefReason, Obj).toPromise().then(
       (response) => {
         console.log(response);
-        this.DDLRecommendation = response[AdInsConstant.ReturnObj];
+        this.DDLRecommendation = response[CommonConstant.ReturnObj];
         // console.log(this.DDLRecommendation);   
       },
       (error) => {
@@ -235,11 +236,11 @@ export class CreditReviewMainComponent implements OnInit {
   }
 
   async BindDDLReasonReturn() {
-    var obj = { RefReasonTypeCode:  AdInsConstant.RefReasonTypeCodeCrdReview  };
+    var obj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview  };
     await this.http.post(AdInsConstant.GetListActiveRefReason, obj).toPromise().then(
       (response) => {
         console.log(response);
-        this.DDLReasonReturn = response[AdInsConstant.ReturnObj];
+        this.DDLReasonReturn = response[CommonConstant.ReturnObj];
         console.log(this.DDLReasonReturn);
       },
       (error) => {

@@ -5,6 +5,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { PurchaseOrderHObj } from 'app/shared/model/PurchaseOrderHObj.Model';
 import { PurchaseOrderDObj } from 'app/shared/model/PurchaseOrderDObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-purchase-order-detail',
@@ -112,28 +113,28 @@ export class PurchaseOrderDetailComponent implements OnInit {
     var listPurchaseOrderD = new Array();
     this.purchaseOrderDObj = new PurchaseOrderDObj();
 
-    this.purchaseOrderDObj.MrPoItemCode = AdInsConstant.PoItemCodeTotalAssetPrice ;
+    this.purchaseOrderDObj.MrPoItemCode = CommonConstant.PoItemCodeTotalAssetPrice ;
     this.purchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFinDataObj"].TotalAssetPriceAmt;
     listPurchaseOrderD.push(this.purchaseOrderDObj);
 
     this.purchaseOrderDObj = new PurchaseOrderDObj();
-    this.purchaseOrderDObj.MrPoItemCode = AdInsConstant.PoItemCodeDpNett;
+    this.purchaseOrderDObj.MrPoItemCode = CommonConstant.PoItemCodeDpNett;
     this.purchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFinDataObj"].TotalDownPaymentNettAmt ? this.AssetObj["AgrmntFinDataObj"].TotalDownPaymentNettAmt : 0;
     listPurchaseOrderD.push(this.purchaseOrderDObj);
     this.purchaseOrderDObj = new PurchaseOrderDObj();
-    this.purchaseOrderDObj.MrPoItemCode = AdInsConstant.PoItemCodeTdpAtCoy;
+    this.purchaseOrderDObj.MrPoItemCode = CommonConstant.PoItemCodeTdpAtCoy;
     this.purchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFinDataObj"].TdpPaidCoyAmt;
     listPurchaseOrderD.push(this.purchaseOrderDObj);
     this.purchaseOrderDObj = new PurchaseOrderDObj();
-    this.purchaseOrderDObj.MrPoItemCode = AdInsConstant.PoItemCodeInstAmt;
+    this.purchaseOrderDObj.MrPoItemCode = CommonConstant.PoItemCodeInstAmt;
     this.purchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFinDataObj"].InstAmt;
     listPurchaseOrderD.push(this.purchaseOrderDObj);
     this.purchaseOrderDObj = new PurchaseOrderDObj();
-    this.purchaseOrderDObj.MrPoItemCode = AdInsConstant.PoItemCodeInsNotCptlz;
+    this.purchaseOrderDObj.MrPoItemCode = CommonConstant.PoItemCodeInsNotCptlz;
     this.purchaseOrderDObj.PurchaseOrderAmt = this.TotalInsCustAmt;
     listPurchaseOrderD.push(this.purchaseOrderDObj);
     this.purchaseOrderDObj = new PurchaseOrderDObj();
-    this.purchaseOrderDObj.MrPoItemCode = AdInsConstant.PoItemCodeLfiNotCptlz;
+    this.purchaseOrderDObj.MrPoItemCode = CommonConstant.PoItemCodeLfiNotCptlz;
     this.purchaseOrderDObj.PurchaseOrderAmt = this.TotalLifeInsCustAmt;
     listPurchaseOrderD.push(this.purchaseOrderDObj);
 

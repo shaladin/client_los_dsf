@@ -8,6 +8,7 @@ import { AppCustBankStmntObj } from 'app/shared/model/AppCustBankStmntObj.Model'
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { environment } from 'environments/environment';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
  
 @Component({
   selector: 'app-cust-bank-account-FL4W',
@@ -242,7 +243,7 @@ export class CustBankAccountFL4WComponent implements OnInit {
   }
 
   bindMonthObj(){
-    this.refMasterObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeMonth;
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeMonth;
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.MonthObj = response["ReturnObject"];

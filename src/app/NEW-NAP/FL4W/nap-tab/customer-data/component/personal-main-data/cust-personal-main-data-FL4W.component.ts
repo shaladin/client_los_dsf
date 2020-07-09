@@ -10,6 +10,7 @@ import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { formatDate } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-cust-personal-main-data-FL4W',
@@ -274,7 +275,7 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
     this.InputLookupCustomerObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustomerObj.genericJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustomerObj.isReadonly = false;
-    this.setCriteriaLookupCustomer(AdInsConstant.CustTypePersonal);
+    this.setCriteriaLookupCustomer(CommonConstant.CustTypePersonal);
 
     this.InputLookupCountryObj = new InputLookupObj();
     this.InputLookupCountryObj.urlJson = "./assets/uclookup/lookupCountry.json";
@@ -296,7 +297,7 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
   }
 
   async bindIdTypeObj(){
-    this.refMasterObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeIdType;
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
     await this.http.post(this.getRefMasterUrl, this.refMasterObj).toPromise().then(
       (response) => {
         this.IdTypeObj = response["ReturnObject"];
@@ -305,7 +306,7 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
             MrIdTypeCode: this.IdTypeObj[0].Key
           });
         }
-        if(this.IdTypeObj[0].Key == AdInsConstant.MrIdTypeCodeEKTP){
+        if(this.IdTypeObj[0].Key == CommonConstant.MrIdTypeCodeEKTP){
           this.parentForm.controls[this.identifier].patchValue({
             IdExpiredDt: null
           });
@@ -321,7 +322,7 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
   }
 
   async bindGenderObj(){
-    this.refMasterObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeGender;
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeGender;
     await this.http.post(this.getRefMasterUrl, this.refMasterObj).toPromise().then(
       (response) => {
         this.GenderObj = response["ReturnObject"];
@@ -335,7 +336,7 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
   }
 
   async bindMaritalStatObj(){
-    this.refMasterObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeMaritalStat;
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeMaritalStat;
     await this.http.post(this.getRefMasterUrl, this.refMasterObj).toPromise().then(
       (response) => {
         this.MaritalStatObj = response["ReturnObject"];
@@ -350,7 +351,7 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
 
   async bindNationalityObj(){
     // this.refMasterObj.RefMasterTypeCode = "NATIONALITY";
-    var obj = { RefMasterTypeCodes: [AdInsConstant.RefMasterTypeCodeNationality] };
+    var obj = { RefMasterTypeCodes: [CommonConstant.RefMasterTypeCodeNationality] };
     await this.http.post(AdInsConstant.GetListRefMasterByRefMasterTypeCodes, obj).toPromise().then(
       (response) => {
         console.log(response);
@@ -365,7 +366,7 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
   }
 
   async bindEducationObj(){
-    this.refMasterObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeEducation;
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeEducation;
     await this.http.post(this.getRefMasterUrl, this.refMasterObj).toPromise().then(
       (response) => {
         this.EducationObj = response["ReturnObject"];
@@ -379,7 +380,7 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
   }
 
   async bindReligionObj(){
-    this.refMasterObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeReligion;
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeReligion;
     await this.http.post(this.getRefMasterUrl, this.refMasterObj).toPromise().then(
       (response) => {
         this.ReligionObj = response["ReturnObject"];
@@ -392,7 +393,7 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
     );
   }
   ddlIdTypeChanged(event){
-    if(event.target.value == AdInsConstant.MrIdTypeCodeEKTP){
+    if(event.target.value == CommonConstant.MrIdTypeCodeEKTP){
       this.parentForm.controls[this.identifier].patchValue({
         IdExpiredDt: null
       });

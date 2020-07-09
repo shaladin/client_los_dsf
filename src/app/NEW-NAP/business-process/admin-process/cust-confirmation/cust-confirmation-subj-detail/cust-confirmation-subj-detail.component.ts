@@ -13,11 +13,11 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { environment } from 'environments/environment';
 import { LeadObj } from 'app/shared/model/Lead.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-cust-confirmation-subj-detail',
-  templateUrl: './cust-confirmation-subj-detail.component.html',
-  styleUrls: ['./cust-confirmation-subj-detail.component.scss']
+  templateUrl: './cust-confirmation-subj-detail.component.html'
 })
 export class CustConfirmationSubjDetailComponent implements OnInit {
 
@@ -84,7 +84,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
     console.log(this.appUrl);
     this.GetData();
 
-    this.http.post<RefMasterObj>(AdInsConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, { MasterCode: this.Subject, RefMasterTypeCode: AdInsConstant.RefMasterTypeCodeVerfSubjRelation }).subscribe(
+    this.http.post<RefMasterObj>(AdInsConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, { MasterCode: this.Subject, RefMasterTypeCode: CommonConstant.RefMasterTypeCodeVerfSubjRelation }).subscribe(
       (response) => {
         this.SubjectResponse = response;
       },
@@ -93,7 +93,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
       }
     );
 
-    this.http.post(AdInsConstant.GetListActiveRefStatusByStatusGrpCode, { StatusGrpCode: AdInsConstant.StatusGrpVerfResultStat }).subscribe(
+    this.http.post(AdInsConstant.GetListActiveRefStatusByStatusGrpCode, { StatusGrpCode: CommonConstant.StatusGrpVerfResultStat }).subscribe(
       (response) => {
         this.RefStatusList = response["ReturnObject"];
         this.CustConfirm.patchValue({
@@ -234,7 +234,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
               VerfQuestionGroupCode: grpListObj[i].VerfQuestionGrpCode
             })
           }) as FormGroup;
-          if (QuestionList[j].VerfAnswerTypeCode == AdInsConstant.VerfAnswerTypeCodeDdl) {
+          if (QuestionList[j].VerfAnswerTypeCode == CommonConstant.VerfAnswerTypeCodeDdl) {
             if (QuestionList[j].VerfAnswer != "") {
               var ddlList = QuestionList[j].VerfAnswer.split(";");
               this.ListVerfAnswer[i].push(ddlList);
@@ -244,7 +244,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
             } else {
               this.ListVerfAnswer[i].push("");
             }
-          } else if (QuestionList[j].VerfAnswerTypeCode == AdInsConstant.VerfAnswerTypeCodeUcInputNumber) {
+          } else if (QuestionList[j].VerfAnswerTypeCode == CommonConstant.VerfAnswerTypeCodeUcInputNumber) {
             QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required, Validators.min(1.00)]);
             this.ListVerfAnswer[i].push("");
           } else {

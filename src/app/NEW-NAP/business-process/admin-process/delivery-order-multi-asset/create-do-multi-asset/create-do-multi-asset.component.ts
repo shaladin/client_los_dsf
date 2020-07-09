@@ -10,6 +10,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { map, mergeMap } from 'rxjs/operators';
 import { forkJoin } from 'rxjs';
 import { DatePipe } from '@angular/common';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-create-do-multi-asset',
@@ -68,7 +69,7 @@ export class CreateDoMultiAssetComponent implements OnInit {
 
     this.context = JSON.parse(localStorage.getItem("UserAccess"));
     var rmRelation = new RefMasterObj();
-    rmRelation.RefMasterTypeCode = this.CustType == AdInsConstant.CustTypePersonal ? AdInsConstant.RefMasterTypeCodeCustPersonalRelationship : AdInsConstant.RefMasterTypeCodeCustCompanyRelationship;
+    rmRelation.RefMasterTypeCode = this.CustType == CommonConstant.CustTypePersonal ? CommonConstant.RefMasterTypeCodeCustPersonalRelationship : CommonConstant.RefMasterTypeCodeCustCompanyRelationship;
     if(this.Mode == "add"){
       this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, rmRelation).subscribe(
         (response) => {

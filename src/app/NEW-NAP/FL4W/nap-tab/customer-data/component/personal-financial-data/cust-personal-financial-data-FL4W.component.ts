@@ -4,6 +4,7 @@ import { FormBuilder, Validators, NgForm, FormGroup, ControlContainer, FormGroup
 import { HttpClient } from '@angular/common/http';
 import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 import { AppCustPersonalFinDataObj } from 'app/shared/model/AppCustPersonalFinDataObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-cust-personal-financial-data-FL4W',
@@ -84,7 +85,7 @@ export class CustPersonalFinancialDataFL4WComponent implements OnInit {
   }
 
   bindSourceOfIncomeObj(){
-    this.refMasterObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeSourceIncome;
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeSourceIncome;
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
         this.SourceOfIncomeObj = response["ReturnObject"];

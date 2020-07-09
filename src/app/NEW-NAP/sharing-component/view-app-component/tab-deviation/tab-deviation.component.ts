@@ -6,6 +6,7 @@ import { FormBuilder } from '@angular/forms';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { Sort } from '@angular/material';
 import { DeviationResultObj } from 'app/shared/model/DeviationResultObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-tab-deviation',
@@ -63,7 +64,7 @@ export class TabDeviationComponent implements OnInit {
         this.DDLApproveAtData = response["ApproveAt"];
         for(var i=0;i<temp.length;i++){
           var tempObj;
-          if(temp[i].MrDeviationType == AdInsConstant.DeviationTypeAutomaticDev){
+          if(temp[i].MrDeviationType == CommonConstant.DeviationTypeAutomaticDev){
             tempObj={
               SeqNo: temp[i].SeqNo,
               DeviationType: temp[i].MrDeviationTypeDesc,
@@ -73,7 +74,7 @@ export class TabDeviationComponent implements OnInit {
               Notes: temp[i].Notes
             };
             this.AutoDeviationData.push(tempObj);
-          }else if(temp[i].MrDeviationType == AdInsConstant.DeviationTypeManualDev){
+          }else if(temp[i].MrDeviationType == CommonConstant.DeviationTypeManualDev){
             this.BindManualDeviationData(temp[i]);
           }
         }

@@ -127,7 +127,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
         this.ProdOfferingVersion = this.result.ProdOfferingVersion;
         var Obj2 = {
           ProdOfferingCode: this.result.ProdOfferingCode,
-          RefProdCompntCode: AdInsConstant.RefProdCompntCodeWayOfFinancing,
+          RefProdCompntCode: CommonConstant.RefProdCompntCodeWayOfFinancing,
           RowVersion: ""
         }
         this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeAndACTProdStat, Obj2).subscribe(
@@ -142,7 +142,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
 
         var Obj3 = {
           ProdOfferingCode: this.result.ProdOfferingCode,
-          RefProdCompntCode: AdInsConstant.RefProdCompntCodePurposeOfFinancing,
+          RefProdCompntCode: CommonConstant.RefProdCompntCodePurposeOfFinancing,
           RowVersion: ""
         }
         this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeAndACTProdStat, Obj3).subscribe(

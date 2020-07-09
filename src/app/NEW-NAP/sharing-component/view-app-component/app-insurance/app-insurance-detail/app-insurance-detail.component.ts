@@ -4,6 +4,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppInsObjObj } from 'app/shared/model/AppInsObjObj.Model';
 import { RequestInsuranceDataObj } from 'app/shared/model/RequestInsuranceDataObj.model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-app-insurance-detail',
@@ -15,10 +16,10 @@ export class AppInsuranceDetailComponent implements OnInit {
   appInsObj: AppInsObjObj;
   appInsCvgs: any;
   appInsCvgsFinal: Array<any>;
-  public static CUSTOMER: string = AdInsConstant.InsuredByCustomer;
-  public static COMPANY: string = AdInsConstant.InsuredByCompany;
-  public static CUSTOMER_COMPANY: string = AdInsConstant.InsuredByCustomerCompany;
-  public static OFF_SYSTEM: string = AdInsConstant.InsuredByOffSystem;
+  public static CUSTOMER: string = CommonConstant.InsuredByCustomer;
+  public static COMPANY: string = CommonConstant.InsuredByCompany;
+  public static CUSTOMER_COMPANY: string = CommonConstant.InsuredByCustomerCompany;
+  public static OFF_SYSTEM: string = CommonConstant.InsuredByOffSystem;
   reqInsuranceDataObj: any;
 
   constructor(
@@ -44,10 +45,10 @@ export class AppInsuranceDetailComponent implements OnInit {
         for (const item of this.appInsCvgs) {
           var addCvg = "";
           for (var i = 0; i < item.appInsAddCvgObjs.length; i++) {
-            if(i == (item.appInsAddCvgObjs.length - 1)){
+            if (i == (item.appInsAddCvgObjs.length - 1)) {
               addCvg += item.appInsAddCvgObjs[i].MrAddCvgTypeCode;
             }
-            else{
+            else {
               addCvg += item.appInsAddCvgObjs[i].MrAddCvgTypeCode + ", ";
             }
           }
@@ -67,5 +68,4 @@ export class AppInsuranceDetailComponent implements OnInit {
       }
     );
   }
-
 }

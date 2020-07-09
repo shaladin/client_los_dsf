@@ -7,6 +7,7 @@ import { ResponseTaxDetailObj } from 'app/shared/model/Tax/ResponseTaxDetail.Mod
 import { ResponseTaxObj } from 'app/shared/model/Tax/ResponseTax.Model';
 import { TaxTrxDObj } from 'app/shared/model/Tax/TaxTrxD.Model';
 import { VendorBankAccObj } from 'app/shared/model/VendorBankAcc.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-form-add-dynamic',
@@ -56,7 +57,7 @@ export class FormAddDynamicComponent implements OnInit {
         this.GenerateContentName(i, j);
 
       }
-      this.PassData(AdInsConstant.MessagePassData);
+      this.PassData(CommonConstant.MessagePassData);
     }
   }
 
@@ -77,7 +78,7 @@ export class FormAddDynamicComponent implements OnInit {
     // console.log("Obj Code");
     // console.log(code);
     var obj;
-    if (content == AdInsConstant.ContentSupplier) {
+    if (content == CommonConstant.ContentSupplier) {
       obj = {
         VendorCode: code,
         RowVersion: ""
@@ -103,7 +104,7 @@ export class FormAddDynamicComponent implements OnInit {
           console.log(error);
         }
       );
-    } else if (content == AdInsConstant.ContentSupplierEmp) {
+    } else if (content == CommonConstant.ContentSupplierEmp) {
       obj = {
         VendorEmpNo: code,
         VendorCode: this.FormObj.value.arr[idx].SupplCode,
@@ -129,7 +130,7 @@ export class FormAddDynamicComponent implements OnInit {
           console.log(error);
         }
       );
-    } else if (content == AdInsConstant.ContentReferantor) {
+    } else if (content == CommonConstant.ContentReferantor) {
       var eachDDLDetail = this.fb.group({
         Key: this.FormInputObj["BankData"].BankAccNo,
         Value: this.FormInputObj["BankData"].BankAccName,
@@ -209,7 +210,7 @@ export class FormAddDynamicComponent implements OnInit {
       if (this.totalDDLContentData == this.lenDDLContentName)
         this.FormInputObj["isDataInputed"] = false;
       this.arr.removeAt(idx);
-      this.PassData(AdInsConstant.MessageDel);
+      this.PassData(CommonConstant.MessageDel);
 
     }
   }
@@ -244,7 +245,7 @@ export class FormAddDynamicComponent implements OnInit {
         }
 
         trxAmt.push(tempTrxAmt);
-        if (this.FormInputObj["content"] == AdInsConstant.ContentSupplierEmp) {
+        if (this.FormInputObj["content"] == CommonConstant.ContentSupplierEmp) {
           let idxTempDDDLContentName = this.tempDDLContentName.indexOf(this.tempDDLContentName.find(x => x.Key == this.arr.controls[i].controls.ContentName.value));
           vendorCode.push(this.tempDDLContentName[idxTempDDDLContentName].SupplCode);
           vendorEmpNo.push(this.arr.controls[i].controls.ContentName.value);
@@ -267,10 +268,10 @@ export class FormAddDynamicComponent implements OnInit {
         TrxDt: this.UserAccess.BusinessDt,
         TrxAmt: trxAmt,
         RefNo: AppNo,
-        TrxTypeCode: AdInsConstant.TrxTypeCode,
+        TrxTypeCode: CommonConstant.TrxTypeCode,
         CurrCode: CurrCode,
         OfficeCode: OriOfficeCode,
-        ExchangeRateAmt: AdInsConstant.ExchangeRateAmt,
+        ExchangeRateAmt: CommonConstant.ExchangeRateAmt,
         IsSave: false,
         Content: this.FormInputObj["content"],
       };
@@ -308,10 +309,10 @@ export class FormAddDynamicComponent implements OnInit {
                 // console.log(TaxTrxDObjData);
                 for (var k = 0; k < TaxTrxDObjData.length; k++) {
                   totalPenaltyDAmount += TaxTrxDObjData[k].PenaltyAmt;
-                  if (TaxTrxDObjData[k].TaxTypeCode == AdInsConstant.TaxTypeCode) {
+                  if (TaxTrxDObjData[k].TaxTypeCode == CommonConstant.TaxTypeCode) {
                     totalTaxAmount += TaxTrxDObjData[k].TaxAmt;
                     taxAmt = TaxTrxDObjData[k].TaxAmt;
-                  } else if (TaxTrxDObjData[k].TaxTypeCode == AdInsConstant.VATTypeCode) {
+                  } else if (TaxTrxDObjData[k].TaxTypeCode == CommonConstant.VATTypeCode) {
                     totalVATAmount += TaxTrxDObjData[k].TaxAmt;
                     vatAmt = TaxTrxDObjData[k].TaxAmt;
                   }
@@ -337,7 +338,7 @@ export class FormAddDynamicComponent implements OnInit {
             }
           }
           this.CheckData();
-          this.PassData(AdInsConstant.MessageCalculate);
+          this.PassData(CommonConstant.MessageCalculate);
         },
         (error) => {
           console.log(error);
@@ -362,7 +363,7 @@ export class FormAddDynamicComponent implements OnInit {
 
     var obj;
     var code;
-    if (this.FormInputObj["content"] == AdInsConstant.ContentSupplierEmp) {
+    if (this.FormInputObj["content"] == CommonConstant.ContentSupplierEmp) {
       obj = {
         Key: ev.target.selectedOptions[0].value,
         Value: ev.target.selectedOptions[0].text,
@@ -381,7 +382,7 @@ export class FormAddDynamicComponent implements OnInit {
     }
 
     var idxTemp: number = idx;
-    if (this.FormInputObj["content"] == AdInsConstant.ContentSupplierEmp) {
+    if (this.FormInputObj["content"] == CommonConstant.ContentSupplierEmp) {
       idxTemp = this.FormInputObj["contentObj"].indexOf(this.FormInputObj["contentObj"].find(x => x.Key == ev.target.selectedOptions[0].value));
     }
     var temp = this.GetTempRuleObj(code, idxTemp);
@@ -397,7 +398,7 @@ export class FormAddDynamicComponent implements OnInit {
       ContentName: ev.target.selectedOptions[0].value,
       ContentNameValue: ev.target.selectedOptions[0].text
     });
-    if (this.FormInputObj["content"] == AdInsConstant.ContentSupplierEmp)
+    if (this.FormInputObj["content"] == CommonConstant.ContentSupplierEmp)
       this.FormObj.controls.arr["controls"][indexFormObj].patchValue({
         MrSupplEmpPositionCodeDesc: this.DDLContentName[idx].MrSupplEmpPositionCodeDesc,
         SupplCode: this.DDLContentName[idx].SupplCode
@@ -416,7 +417,7 @@ export class FormAddDynamicComponent implements OnInit {
     // console.log(idx);
     var obj;
     var code;
-    if (this.FormInputObj["content"] == AdInsConstant.ContentSupplierEmp) {
+    if (this.FormInputObj["content"] == CommonConstant.ContentSupplierEmp) {
       obj = {
         Key: this.DDLContentName[indexFormObj].Key,
         Value: this.DDLContentName[indexFormObj].Value,
@@ -434,7 +435,7 @@ export class FormAddDynamicComponent implements OnInit {
     }
 
     var idxTemp: number = indexFormObj;
-    if (this.FormInputObj["content"] == AdInsConstant.ContentSupplierEmp) {
+    if (this.FormInputObj["content"] == CommonConstant.ContentSupplierEmp) {
       console.log(this.FormInputObj["contentObj"]);
       idxTemp = this.FormInputObj["contentObj"].indexOf(this.FormInputObj["contentObj"].find(x => x.Key == this.DDLContentName[indexFormObj].Key));
     }
@@ -447,7 +448,7 @@ export class FormAddDynamicComponent implements OnInit {
       ContentNameValue: this.DDLContentName[indexFormObj].Value
     });
 
-    if (this.FormInputObj["content"] == AdInsConstant.ContentSupplierEmp)
+    if (this.FormInputObj["content"] == CommonConstant.ContentSupplierEmp)
       this.FormObj.controls.arr["controls"][idx].patchValue({
         MrSupplEmpPositionCodeDesc: this.DDLContentName[indexFormObj].MrSupplEmpPositionCodeDesc,
         SupplCode: this.DDLContentName[indexFormObj].SupplCode
@@ -465,7 +466,7 @@ export class FormAddDynamicComponent implements OnInit {
     console.log(objExist);
     var idxDDLContent = this.DDLContentName.indexOf(this.DDLContentName.find(x => x.Key == objExist.CommissionRecipientRefNo));
 
-    if (this.FormInputObj["content"] == AdInsConstant.ContentSupplierEmp)
+    if (this.FormInputObj["content"] == CommonConstant.ContentSupplierEmp)
       this.FormObj.controls.arr["controls"][idx].patchValue({
         MrSupplEmpPositionCodeDesc: this.DDLContentName[idxDDLContent].MrSupplEmpPositionCodeDesc,
         SupplCode: this.DDLContentName[idxDDLContent].SupplCode
@@ -494,7 +495,7 @@ export class FormAddDynamicComponent implements OnInit {
 
     var obj;
     var code;
-    if (this.FormInputObj["content"] == AdInsConstant.ContentSupplierEmp) {
+    if (this.FormInputObj["content"] == CommonConstant.ContentSupplierEmp) {
       obj = {
         Key: this.DDLContentName[idxDDLContent].Key,
         Value: this.DDLContentName[idxDDLContent].Value,
@@ -510,7 +511,7 @@ export class FormAddDynamicComponent implements OnInit {
       code = this.DDLContentName[idxDDLContent].Key;
     }
     var idxTemp: number = idx;
-    if (this.FormInputObj["content"] == AdInsConstant.ContentSupplierEmp) {
+    if (this.FormInputObj["content"] == CommonConstant.ContentSupplierEmp) {
       idxTemp = this.FormInputObj["contentObj"].indexOf(this.FormInputObj["contentObj"].find(x => x.Key == this.DDLContentName[idxDDLContent].Key));
     }
     // var tempRuleObj = this.GetTempRuleObj(code, idxDDLContent);
@@ -544,7 +545,7 @@ export class FormAddDynamicComponent implements OnInit {
     this.tempDDLContentName.push(obj);
     this.DDLContentName.splice(idxDDLContent, 1);
     console.log(this.DDLContentName);
-    this.PassData(AdInsConstant.MessagePassData);
+    this.PassData(CommonConstant.MessagePassData);
   }
 
   SortDataAllocationV2(indexFormObj, ruleObj) {
@@ -577,10 +578,10 @@ export class FormAddDynamicComponent implements OnInit {
 
   GetTempRuleObj(code: string, idx: number) {
     var temp;
-    if (this.FormInputObj["content"] == AdInsConstant.ContentSupplier) {
+    if (this.FormInputObj["content"] == CommonConstant.ContentSupplier) {
       temp = this.FormInputObj["ruleObj"][code];
       // console.log("Rule Suppl");   
-    } else if (this.FormInputObj["content"] == AdInsConstant.ContentSupplierEmp) {
+    } else if (this.FormInputObj["content"] == CommonConstant.ContentSupplierEmp) {
       // console.log(idx);
       var behaviour = this.FormInputObj["contentObj"][idx].MrSupplEmpPositionCode;
       // console.log("behaviour");
@@ -588,7 +589,7 @@ export class FormAddDynamicComponent implements OnInit {
       // console.log(code);
       temp = this.FormInputObj["ruleObj"][code][behaviour];
       // console.log("Rule Suppl Emp");
-    } else if (this.FormInputObj["content"] == AdInsConstant.ContentReferantor) {
+    } else if (this.FormInputObj["content"] == CommonConstant.ContentReferantor) {
       temp = this.FormInputObj["ruleObj"][0];
       // console.log("Rule Referantor");
     }
@@ -652,7 +653,7 @@ export class FormAddDynamicComponent implements OnInit {
     this.FormObj.controls.arr["controls"][indexFormObj].patchValue({
       TotalCommisionAmount: tempTotal
     });
-    this.PassData(AdInsConstant.MessagePassData);
+    this.PassData(CommonConstant.MessagePassData);
   }
 
   ChangeBankAcc(ev, i) {
@@ -670,6 +671,6 @@ export class FormAddDynamicComponent implements OnInit {
       BankName: ddlObj.BankName
     });
 
-    this.PassData(AdInsConstant.MessagePassData);
+    this.PassData(CommonConstant.MessagePassData);
   }
 }

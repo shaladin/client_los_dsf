@@ -5,6 +5,7 @@ import { environment } from 'environments/environment';
 import { AppFeeObj } from 'app/shared/model/AppFeeObj.Model';
 import { CalcProvisionFee } from 'app/shared/model/AppFee/CalcProvisionFee.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-fee-FL4W',
@@ -194,11 +195,11 @@ export class FeeFL4WComponent implements OnInit {
     var feeSource = "";
     var feeType = obj.FeeType;
 
-    if(obj.MrFeeTypeCode == AdInsConstant.MrFeeTypeCodeProvision)
+    if(obj.MrFeeTypeCode == CommonConstant.MrFeeTypeCodeProvision)
     {
       if(feeType == "" || feeType == null)
       {
-        feeType = AdInsConstant.FeeTypePrcnt
+        feeType = CommonConstant.FeeTypePrcnt
       }
       feeSource = "NTF_WITHOUT_CAP"
     }

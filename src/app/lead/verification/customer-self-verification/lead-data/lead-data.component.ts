@@ -14,6 +14,7 @@ import { LeadAssetObj } from 'app/shared/model/LeadAssetObj.Model';
 import { LeadAppObj } from 'app/shared/model/LeadAppObj.Model';
 import { AssetMasterObj } from 'app/shared/model/AssetMasterObj.Model';
 import { LeadInputLeadDataObj } from 'app/shared/model/LeadInputLeadDataObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-lead-data',
@@ -190,7 +191,7 @@ export class LeadDataComponent implements OnInit {
     );
 
     this.assetConditionObj = new RefMasterObj();
-    this.assetConditionObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeAssetCondition;
+    this.assetConditionObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetCondition;
     this.http.post(this.getListActiveRefMasterUrl, this.assetConditionObj).subscribe(
       (response) => {
         this.returnAssetConditionObj = response["ReturnObject"];
@@ -199,7 +200,7 @@ export class LeadDataComponent implements OnInit {
     );
 
     this.downPaymentObj = new RefMasterObj();
-    this.downPaymentObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeDownPaymentType;
+    this.downPaymentObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeDownPaymentType;
     this.http.post(this.getListActiveRefMasterUrl, this.downPaymentObj).subscribe(
       (response) => {
         this.returnDownPaymentObj = response["ReturnObject"];
@@ -208,7 +209,7 @@ export class LeadDataComponent implements OnInit {
     );
 
     this.firstInstObj = new RefMasterObj();
-    this.firstInstObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeFirstInstType;
+    this.firstInstObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeFirstInstType;
     this.http.post(this.getListActiveRefMasterUrl, this.firstInstObj).subscribe(
       (response) => {
         this.returnFirstInstObj = response["ReturnObject"];
@@ -222,7 +223,7 @@ export class LeadDataComponent implements OnInit {
       this.http.post(this.getLeadAssetByLeadId, this.reqLeadAssetObj).subscribe(
         (response) => {
           this.resLeadAssetObj = response;
-          if (this.resLeadAssetObj.MrAssetConditionCode == AdInsConstant.AssetConditionUsed) {
+          if (this.resLeadAssetObj.MrAssetConditionCode == CommonConstant.AssetConditionUsed) {
             this.isUsed = true;
           } else {
             this.isUsed = false;

@@ -13,6 +13,7 @@ import { formatDate, DatePipe } from '@angular/common';
 import { environment } from 'environments/environment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 @Component({
   selector: 'app-guarantor-personal',
   templateUrl: './guarantor-personal.component.html',
@@ -278,7 +279,7 @@ export class GuarantorPersonalComponent implements OnInit {
     this.inputLookupObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/lookupCustomer.json";
     this.inputLookupObj.isReadonly = false;
-    this.setCriteriaLookupCustomer(AdInsConstant.CustTypePersonal);
+    this.setCriteriaLookupCustomer(CommonConstant.CustTypePersonal);
 
     this.inputLookupObj1 = new InputLookupObj();
     this.inputLookupObj1.urlJson = "./assets/uclookup/lookupCountry.json";

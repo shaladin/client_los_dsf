@@ -12,55 +12,57 @@ import { environment } from 'environments/environment';
 })
 export class MouViewApprovalHistoryComponent implements OnInit {
   @Input() MouCustId: number;
-  GetMouCustRvwHByMouCustIdUrl : string;
-  GetListMouCustRvwDUrl : string;
+  GetMouCustRvwHByMouCustIdUrl: string;
+  GetListMouCustRvwDUrl: string;
   responseMouCustRvwH: MouCustRvwHObj;
-  mouCustRvwHObj : MouCustRvwHObj;
-  mouCustRvwDObj : MouCustRvwDObj;
-  listMouCustRvwDObj : any;
+  mouCustRvwHObj: MouCustRvwHObj;
+  mouCustRvwDObj: MouCustRvwDObj;
+  listMouCustRvwDObj: any;
   MouCustNo: string;
-  MrMouTypeCode : string;
-  result : any;
+  MrMouTypeCode: string;
+  result: any;
   IsApvReady: boolean = false;
-  constructor(private http: HttpClient, private router: Router) { 
+  constructor(private http: HttpClient, private router: Router) {
     this.GetMouCustRvwHByMouCustIdUrl = AdInsConstant.GetMouCustRvwHByMouCustId;
     this.GetListMouCustRvwDUrl = AdInsConstant.GetListMouCustRvwD;
   }
 
-  RfaLogObj :{
+  RfaLogObj: {
     RfaNo: any
   }
-  ListRfaLogObj : any = new Array(this.RfaLogObj); 
-  inputObj:  any;
-  listMouAppvrObj : any = new Array(this.inputObj);   
-  count1 : number = 0; 
+  ListRfaLogObj: any = new Array(this.RfaLogObj);
+  inputObj: any;
+  listMouAppvrObj: any = new Array(this.inputObj);
+  count1: number = 0;
 
   ngOnInit() {
-    this.http.post(AdInsConstant.GetMouCustById, {MouCustID : this.MouCustId}).subscribe(
+    this.http.post(AdInsConstant.GetMouCustById, { MouCustID: this.MouCustId }).subscribe(
       (response) => {
         this.MouCustNo = response["MouCustNo"];
         this.MrMouTypeCode = response["MrMouTypeCode"];
         console.log(response);
-        this.http.post(AdInsConstant.GetRfaLogByTrxNo, {TrxNo : this.MouCustNo}).subscribe(
+        this.http.post(AdInsConstant.GetRfaLogByTrxNo, { TrxNo: this.MouCustNo }).subscribe(
           (response) => {
             this.result = response;
             this.ListRfaLogObj = response["ListRfaLogObj"];
-            for(let i =0;i<this.ListRfaLogObj.length;i++){
-              if(this.ListRfaLogObj[i]["ApvCategory"]=="MOUC_GEN_APV" && this.MrMouTypeCode == "GENERAL"){
+            for (let i = 0; i < this.ListRfaLogObj.length; i++) {
+              if (this.ListRfaLogObj[i]["ApvCategory"] == "MOUC_GEN_APV" && this.MrMouTypeCode == "GENERAL") {
                 this.listMouAppvrObj[i] = {
                   approvalBaseUrl: environment.ApprovalR3Url,
                   type: 'task',
-                  refId: this.ListRfaLogObj[i]["RfaNo"]
+                  refId: this.ListRfaLogObj[i]["RfaNo"],
+                  apvStat: this.ListRfaLogObj[i]["ApvStat"]
                 };
                 this.count1++;
-              }else if(this.ListRfaLogObj[i]["ApvCategory"]=="MOUC_FCTR_APV" && this.MrMouTypeCode == "FACTORING"){
+              } else if (this.ListRfaLogObj[i]["ApvCategory"] == "MOUC_FCTR_APV" && this.MrMouTypeCode == "FACTORING") {
                 this.listMouAppvrObj[i] = {
                   approvalBaseUrl: environment.ApprovalR3Url,
                   type: 'task',
-                  refId: this.ListRfaLogObj[i]["RfaNo"]
+                  refId: this.ListRfaLogObj[i]["RfaNo"],
+                  apvStat: this.ListRfaLogObj[i]["ApvStat"]
                 };
                 this.count1++;
-              } 
+              }
             }
           },
           (error) => {

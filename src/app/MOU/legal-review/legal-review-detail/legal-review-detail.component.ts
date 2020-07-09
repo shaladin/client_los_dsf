@@ -9,6 +9,7 @@ import { MouCustTcComponent } from 'app/MOU/mou-customer-request/mou-cust-tc/mou
 import { environment } from 'environments/environment';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-legal-review-detail',
@@ -75,7 +76,7 @@ export class LegalReviewDetailComponent implements OnInit {
       response =>{
         this.responseMouObj = response['ReturnObject'];
 
-          var refLglReviewObj = { "RefMasterTypeCode":   AdInsConstant.RefMasterTypeLegalReview };
+          var refLglReviewObj = { "RefMasterTypeCode": CommonConstant.RefMasterTypeLegalReview };
         this.http.post(this.GetListActiveRefMasterUrl, refLglReviewObj).subscribe(
           (response) => {
             var lengthDataReturnObj = response["ReturnObject"].length;

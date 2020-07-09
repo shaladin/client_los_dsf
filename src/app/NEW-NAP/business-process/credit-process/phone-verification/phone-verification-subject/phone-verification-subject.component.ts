@@ -11,6 +11,7 @@ import { ReturnHandlingDObj } from '../../../../../shared/model/ReturnHandling/R
 import { ReturnHandlingHObj } from '../../../../../shared/model/ReturnHandling/ReturnHandlingHObj.Model';
 import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { environment } from 'environments/environment';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 
 
@@ -200,7 +201,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     if (this.returnHandlingHId > 0) {
       var obj = {
         ReturnHandlingHId: this.returnHandlingHId,
-        MrReturnTaskCode: AdInsConstant.ReturnHandlingAddPhnVerf
+        MrReturnTaskCode: CommonConstant.ReturnHandlingAddPhnVerf
       }
       this.http.post<ReturnHandlingDObj>(AdInsConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
         (response) => {

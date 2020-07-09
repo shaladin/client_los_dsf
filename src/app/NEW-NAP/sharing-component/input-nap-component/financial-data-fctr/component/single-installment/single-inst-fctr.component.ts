@@ -8,6 +8,7 @@ import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj
 import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
 import { environment } from 'environments/environment';
 import { CalcSingleInstObj } from 'app/shared/model/AppFinData/CalcSingleInstObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-single-inst-fctr',
@@ -123,12 +124,12 @@ export class SingleInstFctrComponent implements OnInit {
   EstEffDtFocusOut(event) {
     var topBased = this.ParentForm.get("TopBased").value;
     var maturityDate: Date;
-    if (topBased == AdInsConstant.TopCalcBasedInvcDt) {
+    if (topBased == CommonConstant.TopCalcBasedInvcDt) {
       maturityDate = new Date(this.ParentForm.get("InvcDt").value);
       maturityDate.setDate(maturityDate.getDate() + this.ParentForm.get("TopDays").value);
     }
 
-    if (topBased == AdInsConstant.TopCalcBasedEffDt) {
+    if (topBased == CommonConstant.TopCalcBasedEffDt) {
       maturityDate = new Date(this.ParentForm.get("EstEffDt").value);
       maturityDate.setDate(maturityDate.getDate() + this.ParentForm.get("TopDays").value);
     }

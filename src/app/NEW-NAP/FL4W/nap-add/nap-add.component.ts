@@ -10,6 +10,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueModel';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-nap-add',
@@ -86,7 +87,7 @@ export class NapAddComponent implements OnInit {
     this.MakeLookUpObj();
     this.GetOfficeDDL();
 
-    if (this.user.MrOfficeTypeCode == AdInsConstant.CollectionGroup) {
+    if (this.user.MrOfficeTypeCode == CommonConstant.CollectionGroup) {
       this.NapAppForm.patchValue({
         CrtOfficeCode: this.user.OfficeCode,
         CrtOfficeName: this.user.OfficeName,
@@ -157,7 +158,7 @@ export class NapAddComponent implements OnInit {
 
     this.inputLookupObjName.addCritInput = arrAddCrit;
 
-    if (this.user.MrOfficeTypeCode != AdInsConstant.CollectionGroup) {
+    if (this.user.MrOfficeTypeCode != CommonConstant.CollectionGroup) {
       this.NapAppForm.patchValue({
         OriOfficeCode: this.user.OfficeCode,
         OriOfficeName: this.user.OfficeName,
@@ -267,18 +268,18 @@ export class NapAddComponent implements OnInit {
         // console.log(response);
         var temp = response["ReturnObject"];
         for (var i = 0; i < temp.length; i++) {
-          if (temp[i].RefProdCompntCode == AdInsConstant.RefProdCompntLob) {
+          if (temp[i].RefProdCompntCode == CommonConstant.RefProdCompntLob) {
             tempLobCode = temp[i].CompntValue;
-          } else if (temp[i].RefProdCompntCode == AdInsConstant.RefProdCompntCurr) {
+          } else if (temp[i].RefProdCompntCode == CommonConstant.RefProdCompntCurr) {
             tempCurrCode = temp[i].CompntValue;
-          } else if (temp[i].RefProdCompntCode == AdInsConstant.RefProdCompntPayFreq) {
+          } else if (temp[i].RefProdCompntCode == CommonConstant.RefProdCompntPayFreq) {
             var listPayFreqCode = temp[i].CompntValue.split(";");
             if(listPayFreqCode.length == 1){
               tempPayFreqCode = temp[i].CompntValue;
             }else{
               tempPayFreqCode = null;
             }            
-          } else if (temp[i].RefProdCompntCode == AdInsConstant.RefProdCompntProdType) {
+          } else if (temp[i].RefProdCompntCode == CommonConstant.RefProdCompntProdType) {
             tempRefProdTypeCode = temp[i].CompntValue;
           } else {
             console.log("Not");

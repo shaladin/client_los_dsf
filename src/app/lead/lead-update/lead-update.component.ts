@@ -8,6 +8,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { Router } from '@angular/router';
 import { LeadForRejectObj } from 'app/shared/model/LeadForRejectObj.model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-lead-update',
@@ -50,8 +51,8 @@ export class LeadUpdateComponent implements OnInit {
     if (confirm("Are you sure to reject this Lead?"))
     {
       var leadReject = new LeadForRejectObj;
-      leadReject.LeadStat = AdInsConstant.LeadStatReject;
-      leadReject.LeadStep = AdInsConstant.LeadStatReject;
+      leadReject.LeadStat = CommonConstant.LeadStatReject;
+      leadReject.LeadStep = CommonConstant.LeadStatReject;
       leadReject.LeadId = event.RowObj.LeadId;
       leadReject.WfTaskListId = event.RowObj.WfTaskListId;
 

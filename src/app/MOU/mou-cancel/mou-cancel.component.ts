@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-mou-cancel',
@@ -26,7 +27,7 @@ export class MouCancelComponent implements OnInit {
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem("UserAccess"));
 
-    if (this.user.MrOfficeTypeCode != AdInsConstant.HeadOffice) {
+    if (this.user.MrOfficeTypeCode != CommonConstant.HeadOffice) {
       this.router.navigate(["/Mou/UnauthorizedPage"]);
       return;
     }
@@ -68,7 +69,7 @@ export class MouCancelComponent implements OnInit {
     else if (event.Key == "cancel") {
       if (confirm("Are you sure to cancel this?")) {
         var mouCancel = new MouCustConfirmCancelObj;
-        mouCancel.MouStat = AdInsConstant.MouStatCancel;
+        mouCancel.MouStat = CommonConstant.MouStatCancel;
         mouCancel.MouCustId = event.RowObj.MouCustId;
         mouCancel.WfTaskListId = event.RowObj.WfTaskListId;
         this.http.post(AdInsConstant.EditMouForCancelByMouId, mouCancel).subscribe(

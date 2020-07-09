@@ -17,6 +17,7 @@ import { ResDuplicateNegativeCustomerObj } from 'app/shared/model/Lead/ResDuplic
 import { ResDuplicateNegativeAssetObj } from 'app/shared/model/Lead/ResDuplicateNegativeAssetObj.Model';
 import { ResLeadCustObj } from 'app/shared/model/Lead/ResLeadCustObj.Model';
 import { ResDuplicateDoubleFinancingObj } from 'app/shared/model/Lead/ResDuplicateDoubleFinancingObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-fraud-verif-page',
@@ -82,7 +83,7 @@ export class FraudVerifPageComponent implements OnInit {
           (response) => {
             this.tempLeadCustPersonalObj = response;
             this.DuplicateCustObj.CustName = this.tempLeadCustObj.CustName;
-            this.DuplicateCustObj.MrCustTypeCode = AdInsConstant.CustTypePersonal;
+            this.DuplicateCustObj.MrCustTypeCode = CommonConstant.CustTypePersonal;
             this.DuplicateCustObj.IdNo = this.tempLeadCustObj.IdNo;
             this.DuplicateCustObj.TaxIdNo = this.tempLeadCustObj.TaxIdNo;
             this.DuplicateCustObj.BirthDt = this.tempLeadCustPersonalObj.BirthDt;
@@ -129,7 +130,7 @@ export class FraudVerifPageComponent implements OnInit {
   reject(): void {
     this.leadFraudVerfObj = new LeadFraudVerfObj();
     this.leadFraudVerfObj.LeadId = this.LeadId;
-    this.leadFraudVerfObj.VerifyStat = AdInsConstant.Reject;
+    this.leadFraudVerfObj.VerifyStat = CommonConstant.Reject;
     this.leadFraudVerfObj.Notes = this.FraudVerfForm.controls["Notes"].value;
     this.leadFraudVerfObj.WfTaskListId = this.WfTaskListId;
     this.http.post(this.AddLeadFraudVerfUrl, this.leadFraudVerfObj).subscribe(
@@ -142,7 +143,7 @@ export class FraudVerifPageComponent implements OnInit {
   verify(): void {
     this.leadFraudVerfObj = new LeadFraudVerfObj();
     this.leadFraudVerfObj.LeadId = this.LeadId;
-    this.leadFraudVerfObj.VerifyStat = AdInsConstant.Verify;
+    this.leadFraudVerfObj.VerifyStat = CommonConstant.Verify;
     this.leadFraudVerfObj.Notes = this.FraudVerfForm.controls["Notes"].value;
     this.leadFraudVerfObj.WfTaskListId = this.WfTaskListId;
 

@@ -8,6 +8,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj.Model';
 import { ActivatedRoute } from '@angular/router';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 
 @Component({
@@ -233,11 +234,11 @@ export class FinancialDataComponent implements OnInit {
   }
 
   setValidator(mrInstSchemeCode){
-    if(mrInstSchemeCode == AdInsConstant.InstSchmBalloon){
+    if(mrInstSchemeCode == CommonConstant.InstSchmBalloon){
       this.FinDataForm.controls.BalloonValueAmt.setValidators([Validators.required]);
       this.FinDataForm.controls.BalloonValueAmt.updateValueAndValidity();
     }
-    if(mrInstSchemeCode == AdInsConstant.InstSchmStepUpStepDownNormal || mrInstSchemeCode == AdInsConstant.InstSchmStepUpStepDownLeasing){
+    if(mrInstSchemeCode == CommonConstant.InstSchmStepUpStepDownNormal || mrInstSchemeCode == CommonConstant.InstSchmStepUpStepDownLeasing){
       this.FinDataForm.controls.NumOfStep.setValidators([Validators.required, Validators.min(1)]);
       this.FinDataForm.controls.NumOfStep.updateValueAndValidity();
       this.FinDataForm.controls.StepUpStepDownInputType.setValidators([Validators.required]);

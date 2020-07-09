@@ -16,6 +16,7 @@ import { formatDate } from '@angular/common';
 import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalDocObj.Model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppGuarantorCompanyLegalDocObj } from 'app/shared/model/AppGuarantorCompanyLegalDocObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-guarantor-company-FL4W',
@@ -157,15 +158,15 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
     }
 
     var refCompObj = {
-      RefMasterTypeCode: AdInsConstant.RefMasterTypeCodeCompanyType,
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCompanyType,
       RowVersion: ""
     }
     var refCustRelObj = {
-      RefMasterTypeCode: AdInsConstant.RefMasterTypeCodeCustCompanyRelationship,
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustCompanyRelationship,
       RowVersion: ""
     }
     var refJobObj = {
-      RefMasterTypeCode: AdInsConstant.RefMasterTypeCodeJobPosition,
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeJobPosition,
       RowVersion: ""
     }
     this.http.post(AdInsConstant.GetListActiveRefMaster, refCompObj).subscribe(
@@ -279,7 +280,7 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
             );
           }
         );
-        this.http.post(AdInsConstant.GetCustAddrByMrCustAddrType, { CustId: event.CustId, MrCustAddrTypeCode: AdInsConstant.AddrTypeLegal }).subscribe(
+        this.http.post(AdInsConstant.GetCustAddrByMrCustAddrType, { CustId: event.CustId, MrCustAddrTypeCode: CommonConstant.AddrTypeLegal }).subscribe(
           (response) => {
             console.log(response);
             this.resultData = response;
@@ -374,7 +375,7 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
       this.guarantorCompanyObj.AppGuarantorObj.CustNo = this.tempCustNo;
     }
     this.guarantorCompanyObj.AppGuarantorObj.GuarantorName = this.inputLookupObj.nameSelect;
-    this.guarantorCompanyObj.AppGuarantorObj.MrGuarantorTypeCode = AdInsConstant.CustTypeCompany;
+    this.guarantorCompanyObj.AppGuarantorObj.MrGuarantorTypeCode = CommonConstant.CustTypeCompany;
     this.guarantorCompanyObj.AppGuarantorObj.TaxIdNo = this.CompanyForm.controls.TaxIdNo.value;
     this.guarantorCompanyObj.AppGuarantorObj.MrCustRelationshipCode = this.CompanyForm.controls.MrCustRelationshipCode.value;
     this.guarantorCompanyObj.AppGuarantorObj.RowVersion = "";
@@ -524,7 +525,7 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
 
   getDocType() {
     var legalDocObj = {
-      RefMasterTypeCode: AdInsConstant.RefMasterTypeCodeLegalDocType,
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeLegalDocType,
       RowVersion: ""
     }
     this.http.post(AdInsConstant.GetListActiveRefMaster, legalDocObj).subscribe(

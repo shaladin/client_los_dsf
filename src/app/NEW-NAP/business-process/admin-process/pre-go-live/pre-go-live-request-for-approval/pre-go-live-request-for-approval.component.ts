@@ -7,6 +7,7 @@ import { RFAPreGoLiveObj } from 'app/shared/model/RFAPreGoLiveObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 @Component({
   selector: 'app-sharing-pre-go-live-request-for-approval',
   templateUrl: './pre-go-live-request-for-approval.component.html',
@@ -67,7 +68,7 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
 
   LoadRefReason() {
     var refReasonObj = {
-      RefReasonTypeCode: AdInsConstant.RefReasonTypeCodePreGlvApv
+      RefReasonTypeCode: CommonConstant.RefReasonTypeCodePreGlvApv
     }
     this.http.post(AdInsConstant.GetListActiveRefReason, refReasonObj).subscribe(
       (response) => {

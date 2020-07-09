@@ -5,6 +5,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute } from '@angular/router';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-guarantor-FL4W',
@@ -59,7 +60,7 @@ export class GuarantorFL4WComponent implements OnInit {
   }
 
   bindCustTypeObj(MrCustTypeCode? : string) {
-    this.refMasterObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeCustType;
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustType;
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
         console.log("Response");

@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-cust-ucaddress-FL4W',
@@ -117,7 +118,7 @@ export class CustUcaddressFL4WComponent implements OnInit {
 
   bindHouseOwnershipObj(){
     var refMasterObj = {RefMasterTypeCode: ""};
-    refMasterObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeBuildingOwnership;
+    refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeBuildingOwnership;
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
         this.houseOwnershipObj = response["ReturnObject"];
